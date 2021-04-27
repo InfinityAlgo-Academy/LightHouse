@@ -513,13 +513,13 @@
     "message": "Уменьшите размер кода JavaScript"
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | description": {
-    "message": "Чтобы сократить расход трафика, удалите ненужные правила из таблиц стилей и отложите загрузку кода CSS, который не используется в верхней части страницы. [Подробнее…](https://web.dev/unused-css-rules/)"
+    "message": "Чтобы сократить расход трафика, удалите ненужные правила из таблиц стилей и отложите загрузку кода CSS, который не используется в видимой части страницы. [Подробнее…](https://web.dev/unused-css-rules/)"
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | title": {
     "message": "Удалите неиспользуемый код CSS"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "Чтобы сократить расход трафика, удалите неиспользуемый код JavaScript. [Подробнее…](https://web.dev/unused-javascript/)"
+    "message": "Чтобы сократить расход трафика, удалите неиспользуемый код JavaScript и отложите загрузку скриптов до тех пор, пока они не понадобятся. [Подробнее…](https://web.dev/unused-javascript/)"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
     "message": "Удалите неиспользуемый код JavaScript"
@@ -1725,7 +1725,7 @@
     "message": "Директива reflected-xss не используется, начиная с версии CSP2. Используйте вместо нее заголовок X-XSS-Protection."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingBaseUri": {
-    "message": "Missing base-uri allows injected <base> tags to set the base URL for all relative URLs (e.g. scripts) to an attacker controlled domain. Consider setting base-uri to 'none' or 'self'."
+    "message": "Отсутствие директивы base-uri позволяет внедрять теги <base>. С их помощью в качестве базового URL для всех относительных URL (например, скриптов) можно установить домен, контролируемый злоумышленником. Задайте для base-uri значение none или self."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingObjectSrc": {
     "message": "Элементы, управляемые директивой object-src, считаются устаревшими. Присвойте ей значение none, чтобы не допустить внедрения плагинов, исполняющих небезопасные скрипты."

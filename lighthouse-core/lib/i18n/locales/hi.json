@@ -513,16 +513,16 @@
     "message": "JavaScript का आकार कम करें"
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | description": {
-    "message": "स्टाइलशीट से इस्तेमाल न किए गए नियमों को हटाएं और पेज के ऊपरी हिस्से की सामग्री के लिए इस्तेमाल न होने वाले CSS को लोड होने से टालें. ऐसा करके, नेटवर्क गतिविधि में खर्च होने वाले गैर-ज़रूरी बाइट कम किए जा सकते हैं. [ज़्यादा जानें](https://web.dev/unused-css-rules/)."
+    "message": "स्टाइलशीट से इस्तेमाल न किए गए नियमों को कम करें और पेज के ऊपरी हिस्से वाले कॉन्टेंट के लिए जो सीएसएस इस्तेमाल न हुए हों उन्हें अभी लोड न होने दें. इससे नेटवर्क गतिविधि के लिए खपत होने वाले बाइट कम होंगे. [ज़्यादा जानें](https://web.dev/unused-css-rules/)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | title": {
-    "message": "इस्तेमाल नहीं किए गए CSS को हटाएं"
+    "message": "इस्तेमाल न किए गए सीएसएस को कम करना"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "अपना इंटरनेट डेटा बचाने के लिए, इस्तेमाल नहीं होने वाले JavaScript को हटाएं. [ज़्यादा जानें](https://web.dev/unused-javascript/)."
+    "message": "इस्तेमाल न किए गए JavaScript को कम करें और स्क्रिप्ट को तब तक लोड न करें, जब तक उनके लिए नेटवर्क गतिविधि के तहत खपत होने वाले बाइट को कम करना ज़रूरी न हो जाए. [ज़्यादा जानें](https://web.dev/unused-javascript/)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
-    "message": "इस्तेमाल नहीं किया गया JavaScript हटाएं"
+    "message": "इस्तेमाल न किए गए JavaScript को कम करना"
   },
   "lighthouse-core/audits/byte-efficiency/uses-long-cache-ttl.js | description": {
     "message": "अगर कैश मेमोरी ज़्यादा समय तक रहेगी, तो लोगों के आपकी साइट पर लौटने की प्रक्रिया में तेज़ी आएगी. [ज़्यादा जानें](https://web.dev/uses-long-cache-ttl/)."
@@ -1725,7 +1725,7 @@
     "message": "CSP2 के बाद से reflected-xss काम नहीं करता. इसके बजाय, कृपया X-XSS-Protection हेडर का इस्तेमाल करें."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingBaseUri": {
-    "message": "Missing base-uri allows injected <base> tags to set the base URL for all relative URLs (e.g. scripts) to an attacker controlled domain. Consider setting base-uri to 'none' or 'self'."
+    "message": "base-uri डायरेक्टिव शामिल न करने पर, इंजेक्ट किए गए <base> टैग की मदद से सभी मिलते-जुलते यूआरएल (जैसे, स्क्रिप्ट) के लिए बेस यूआरएल सेट हो जाता है. ऐसा उस डोमेन में होता है जिसे कोई हमलावर कंट्रोल करता है. base-uri को 'none' या 'self' पर सेट करें."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingObjectSrc": {
     "message": "object-src की मदद से कंट्रोल किए जा रहे एलिमेंट, विरासती फ़ीचर माने जाते हैं. object-src को 'none' पर सेट करें, ताकि प्लग इन न डाले जा सकें. इनमें ऐसे प्लग इन शामिल हैं जो असुरक्षित स्क्रिप्ट चलाते हैं."

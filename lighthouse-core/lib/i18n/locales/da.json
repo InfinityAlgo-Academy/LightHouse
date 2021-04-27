@@ -513,16 +513,16 @@
     "message": "Formindsk JavaScript"
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | description": {
-    "message": "Skær ned på unødvendigt forbrug af bytes i forbindelse med netværksaktivitet ved at fjerne forældede regler fra typografiark og udskyde indlæsning af CSS, der ikke bruges til indhold over skillelinjen. [Få flere oplysninger](https://web.dev/unused-css-rules/)."
+    "message": "Reducer antallet af regler fra typografiark, som ikke bruges, og udskyd CSS, som ikke bruges til indhold over skillelinjen, for at skære ned på unødvendigt forbrug af bytes i forbindelse med netværksaktivitet. [Få flere oplysninger](https://web.dev/unused-css-rules/)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | title": {
-    "message": "Fjern CSS, som ikke bruges"
+    "message": "Reducer antallet af CSS, som ikke bruges"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "Fjern JavaScript, der ikke anvendes, for at reducere antallet af bytes, der bruges til netværksaktivitet. [Få flere oplysninger](https://web.dev/unused-javascript/)."
+    "message": "Reducer antallet af JavaScript, som ikke bruges, og udskyd indlæsningen af scripts, indtil de er nødvendige, for at skære ned på unødvendigt forbrug af bytes i forbindelse med netværksaktivitet. [Få flere oplysninger](https://web.dev/unused-javascript/)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
-    "message": "Fjern JavaScript, som ikke bruges"
+    "message": "Reducer antallet af JavaScript, som ikke bruges"
   },
   "lighthouse-core/audits/byte-efficiency/uses-long-cache-ttl.js | description": {
     "message": "En lang cachelevetid kan gøre indlæsningen hurtigere for tilbagevendende besøgende på din side. [Få flere oplysninger](https://web.dev/uses-long-cache-ttl/)."
@@ -1725,7 +1725,7 @@
     "message": "\"reflected-xss\" har været udfaset siden CSP2. Brug headeren \"X-XSS-Protection\" i stedet."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingBaseUri": {
-    "message": "Missing base-uri allows injected <base> tags to set the base URL for all relative URLs (e.g. scripts) to an attacker controlled domain. Consider setting base-uri to 'none' or 'self'."
+    "message": "En manglende basis-uri tillader indsatte <base>-tags at angive basewebadressen for alle relative webadresser (f.eks. scripts) for et domæne, der styres af en hacker. Du bør overveje at angive basis-uri'en som \"none\" eller \"self\"."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingObjectSrc": {
     "message": "Elementer, der styres af \"object-src\" anses som forældede funktioner. Overvej at angive \"object-src\" som \"none\" for at forhindre indsættelse af plugins, der kører usikre scripts."

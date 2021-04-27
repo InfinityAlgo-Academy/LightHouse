@@ -513,16 +513,16 @@
     "message": "壓縮 JavaScript"
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | description": {
-    "message": "從樣式表中移除無用的規則，並延遲載在毋需捲動的當眼位置內容中未使用的 CSS，減少網絡活動耗用不必要的位元組。[瞭解詳情](https://web.dev/unused-css-rules/)。"
+    "message": "從樣式表中減少未使用的規則，並延遲毋需捲動的當眼位置內容中未使用的 CSS，以減少網絡活動耗用的字節數。[瞭解詳情](https://web.dev/unused-css-rules/)。"
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | title": {
-    "message": "移除未使用的 CSS"
+    "message": "減少未使用的 CSS"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "移除未使用的 JavaScript，以減少網絡活動耗用的位元組。[瞭解詳情](https://web.dev/unused-javascript/)。"
+    "message": "減少未使用的 JavaScript，並延後載入指令碼，直至系統需要指令碼來減少網絡活動耗用的字節數為止。[瞭解詳情](https://web.dev/unused-javascript/)。"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
-    "message": "移除未使用的 JavaScript"
+    "message": "減少未使用的 JavaScript"
   },
   "lighthouse-core/audits/byte-efficiency/uses-long-cache-ttl.js | description": {
     "message": "延長快取期限可加快重覆瀏覽頁面的速度。[瞭解詳情](https://web.dev/uses-long-cache-ttl/)。"
@@ -1725,7 +1725,7 @@
     "message": "reflected-xss 已於 CSP2 淘汰，請改用 X-XSS-Protection 標題。"
   },
   "lighthouse-core/lib/csp-evaluator.js | missingBaseUri": {
-    "message": "Missing base-uri allows injected <base> tags to set the base URL for all relative URLs (e.g. scripts) to an attacker controlled domain. Consider setting base-uri to 'none' or 'self'."
+    "message": "如果遺漏 base-uri，有心人士便可透過已插入的 <base> 標籤將所有相對網址 (例如指令碼) 的基底網址設定為攻擊者控制的網域。建議將 base-uri 指定為「none」或「self」。"
   },
   "lighthouse-core/lib/csp-evaluator.js | missingObjectSrc": {
     "message": "系統會將由 object-src 控制的元素視為舊功能。建議將 object-src 設為「none」，以免有心人士插入會執行不安全指令碼的外掛程式。"

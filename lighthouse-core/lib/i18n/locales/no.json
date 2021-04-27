@@ -513,16 +513,16 @@
     "message": "Forminsk JavaScript"
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | description": {
-    "message": "Fjern overflødige regler fra stilark og utsett å laste inn CSS som ikke brukes på innholdet i den synlige delen av nettsiden. Da reduserer du antall byte som går med til unødvendig nettverksaktivitet. [Finn ut mer](https://web.dev/unused-css-rules/)."
+    "message": "Reduser antall ubrukte regler i stilark, og utsett innlasting av CSS som ikke brukes på innholdet på den synlige delen av nettsiden, for å redusere antall byte som går med til nettverksaktivitet. [Finn ut mer](https://web.dev/unused-css-rules/)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | title": {
-    "message": "Fjern ubrukt CSS"
+    "message": "Reduser mengden ubrukt CSS"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "Fjern ubrukt JavaScript for å redusere antall byte som brukes av nettverksaktiviteten. [Finn ut mer](https://web.dev/unused-javascript/)."
+    "message": "Reduser mengden ubrukt JavaScript, og utsett innlasting av skript frem til de trengs, for å redusere antall byte som går med til nettverksaktivitet. [Finn ut mer](https://web.dev/unused-javascript/)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
-    "message": "Fjern ubrukt JavaScript"
+    "message": "Reduser mengden ubrukt JavaScript"
   },
   "lighthouse-core/audits/byte-efficiency/uses-long-cache-ttl.js | description": {
     "message": "En lang bufferlevetid kan gjøre at gjentatte besøk på siden din går raskere. [Finn ut mer](https://web.dev/uses-long-cache-ttl/)."
@@ -1725,7 +1725,7 @@
     "message": "reflected-xss er avviklet siden CSP2. Bruk hodet X-XSS-Protection i stedet."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingBaseUri": {
-    "message": "Missing base-uri allows injected <base> tags to set the base URL for all relative URLs (e.g. scripts) to an attacker controlled domain. Consider setting base-uri to 'none' or 'self'."
+    "message": "Når base-uri mangler, kan injiserte <base>-tagger sette grunn-nettadressen for alle relative nettadresser (f.eks. skript) til et domene som en angriper kontrollerer. Vurder å sette base-uri til «none» eller «self»."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingObjectSrc": {
     "message": "Elementer som kontrolleres av object-src, anses som foreldede funksjoner. Vurder å sette object-src til «none» for å forhindre injisering av programtillegg som kjører utrygge skript."

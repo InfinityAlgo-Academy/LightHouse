@@ -513,16 +513,16 @@
     "message": "Sumažinkite „JavaScript“"
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | description": {
-    "message": "Pašalinkite neveikiančias taisykles iš stiliaus failų ir atidėkite CSS kalbos, nenaudojamos turiniui virš matomos ribos, įkėlimą, kad tinklo veikla sunaudotų mažiau baitų. [Sužinokite daugiau](https://web.dev/unused-css-rules/)."
+    "message": "Sumažinkite nenaudojamas taisykles iš stiliaus failų ir atidėkite CSS scenarijų, nenaudojamų turiniui virš matomos ribos, įkėlimą, kad tinklo veikla sunaudotų mažiau baitų. [Sužinokite daugiau](https://web.dev/unused-css-rules/)"
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | title": {
-    "message": "Pašalinkite nevartojamą CSS kalbą"
+    "message": "Sumažinkite nenaudojamą CSS turinį"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "Pašalinkite nenaudojamą „JavaScript“, kad tinklo veikla sunaudotų mažiau baitų. [Sužinokite daugiau](https://web.dev/unused-javascript/)."
+    "message": "Sumažinkite nenaudojamą „JavaScript“ turinį ir atidėkite scenarijų įkėlimą, kol jų prireiks, kad tinklo veikla sunaudotų mažiau baitų. [Sužinokite daugiau](https://web.dev/unused-javascript/)"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
-    "message": "Pašalinkite nenaudojamą „JavaScript“"
+    "message": "Sumažinkite nenaudojamą „JavaScript“ turinį"
   },
   "lighthouse-core/audits/byte-efficiency/uses-long-cache-ttl.js | description": {
     "message": "Jei talpykla galios ilgiau, greičiau sulauksite pakartotinių apsilankymų puslapyje. [Sužinokite daugiau](https://web.dev/uses-long-cache-ttl/)."
@@ -1725,7 +1725,7 @@
     "message": "Direktyva „reflected-xss“ nebenaudojama nuo CSP2. Vietoj jos naudokite antraštę „X-XSS-Protection“."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingBaseUri": {
-    "message": "Missing base-uri allows injected <base> tags to set the base URL for all relative URLs (e.g. scripts) to an attacker controlled domain. Consider setting base-uri to 'none' or 'self'."
+    "message": "Jei nėra direktyvos „base-uri“, galima įterpti žymas <base>. Jas naudojant galima nustatyti visų susijusių URL (pvz., scenarijų) pagrindinį URL kaip atakos vykdytojo kontroliuojamą domeną. Apsvarstykite galimybę nustatyti direktyvos „base-uri“ vertę „none“ arba „self“."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingObjectSrc": {
     "message": "Elementai, kuriuos kontroliuoja direktyva „object-src“, laikomi pasenusiomis funkcijomis. Apsvarstykite galimybę nustatyti direktyvos „object-src“ vertę „none“, kad nebūtų leidžiama įterpti papildinių, vykdančių nesaugius scenarijus."

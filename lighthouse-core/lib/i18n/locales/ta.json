@@ -513,16 +513,16 @@
     "message": "JavaScriptடைச் சிறிதாக்கவும்"
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | description": {
-    "message": "நெட்வொர்க் செயல்பாட்டின்போது பயன்படுத்தப்படும் தேவையற்ற பைட்களைக் குறைக்க, ஸ்டைல்ஷீட்களிலிருந்து காலாவதியான விதிகளை அகற்றி, பக்கத்தின் மேல் பகுதியில் உள்ள உள்ளடக்கத்தை ஏற்றுவதற்குப் பயன்படுத்தப்படுத்தப்படாத CSSஸை ஏற்றுவதைத் தவிர்க்கவும். [மேலும் அறிக](https://web.dev/unused-css-rules/)."
+    "message": "நெட்வொர்க் செயல்பாட்டின்போது உபயோகிக்கப்படும் பைட்டுகளைக் குறைக்க, ஸ்டைல்ஷீட்டுகளில் உள்ள பயன்படுத்தப்படாத விதிகளைக் குறைப்பதுடன் பக்கத்தின் மேல் பகுதியில் உள்ள உள்ளடக்கத்திற்குப் பயன்படுத்தப்படாத CSS ஏற்றப்படுவதையும் தாமதப்படுத்தவும். [மேலும் அறிக](https://web.dev/unused-css-rules/)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | title": {
-    "message": "பயன்படுத்தப்படாத CSSசை அகற்றவும்"
+    "message": "பயன்படுத்தப்படாத CSSஸைக் குறையுங்கள்"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "நெட்வொர்க் செயல்பாடு பயன்படுத்தும் பைட்களைக் குறைப்பதற்கு, பயன்படுத்தப்படாத JavaScriptடை அகற்றவும். [மேலும் அறிக](https://web.dev/unused-javascript/)."
+    "message": "நெட்வொர்க் செயல்பாட்டின்போது உபயோகிக்கப்படும் பைட்டுகளைக் குறைக்க, பயன்படுத்தப்படாத JavaScriptடைக் குறைப்பதுடன் தேவைப்படாத வரை ஸ்கிரிப்ட்டுகள் ஏற்றப்படுவதையும் தாமதப்படுத்தவும். [மேலும் அறிக](https://web.dev/unused-javascript/)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
-    "message": "பயன்படுத்தப்படாத JavaScriptடை அகற்றவும்"
+    "message": "பயன்படுத்தப்படாத JavaScriptடைக் குறையுங்கள்"
   },
   "lighthouse-core/audits/byte-efficiency/uses-long-cache-ttl.js | description": {
     "message": "தற்காலிக நினைவகத்தின் ஆயுட்காலம் நீண்டதாக இருந்தால் அது மீண்டும் மீண்டும் திறக்கப்படும் உங்கள் இணையப் பக்கங்களை விரைவாக ஏற்றக்கூடும். [மேலும் அறிக](https://web.dev/uses-long-cache-ttl/)."
@@ -1725,7 +1725,7 @@
     "message": "CSP2 முதல் reflected-xss நிறுத்தப்பட்டது. இதற்குப் பதிலாக X-XSS-Protection தலைப்பைப் பயன்படுத்தவும்."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingBaseUri": {
-    "message": "Missing base-uri allows injected <base> tags to set the base URL for all relative URLs (e.g. scripts) to an attacker controlled domain. Consider setting base-uri to 'none' or 'self'."
+    "message": "தீங்கிழைப்பவர் கட்டுப்படுத்தும் டொமைனிற்கான தொடர்புடைய URLகள் (எ.கா. ஸ்கிரிப்ட்டுகள்) அனைத்திற்கும் அடிப்படை URLலை அமைக்க base-uri டைரெக்டிவ் இல்லாதது <base> குறியீடுகள் திணிப்பை அனுமதிக்கிறது. base-uri என்பதை 'none' அல்லது 'self' என அமைக்கவும்."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingObjectSrc": {
     "message": "object-src மூலம் கட்டுப்படுத்தப்படும் உறுப்புகள் லெகஸி அம்சங்களாகக் கருதப்படுகின்றன. பாதுகாப்பற்ற ஸ்கிரிப்ட்டுகளை இயக்கும் செருகுநிரல்கள் திணிப்பைத் தடுக்க, object-src என்பதை 'none' என்று அமைக்கவும்."

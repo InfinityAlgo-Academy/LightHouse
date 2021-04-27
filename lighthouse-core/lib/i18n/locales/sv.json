@@ -513,16 +513,16 @@
     "message": "Minifiera JavaScript"
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | description": {
-    "message": "Ta bort regler som inte används från formatmallar och skjut upp inläsning av CSS som inte används för innehåll ovanför mitten för att minska onödig nätverksaktivitet. [Läs mer](https://web.dev/unused-css-rules/)."
+    "message": "Reducera regler som inte används från formatmallar och skjut upp CSS som inte används för innehåll ovanför mitten så att färre byte skickas via nätverket. [Läs mer](https://web.dev/unused-css-rules/)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | title": {
-    "message": "Ta bort oanvänd CSS"
+    "message": "Reducera CSS som inte används"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "Ta bort JavaScript som inte används så att färre byte skickas via nätverket. [Läs mer](https://web.dev/unused-javascript/)."
+    "message": "Reducera JavaScript som inte används och skjut upp inläsningen av skript tills de krävs så att färre byte skickas via nätverket. [Läs mer](https://web.dev/unused-javascript/)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
-    "message": "Ta bort JavaScript som inte används"
+    "message": "Reducera JavaScript som inte används"
   },
   "lighthouse-core/audits/byte-efficiency/uses-long-cache-ttl.js | description": {
     "message": "Om filerna cachelagras under längre tid kan upprepade besök på sidan gå snabbare. [Läs mer](https://web.dev/uses-long-cache-ttl/)."
@@ -1725,7 +1725,7 @@
     "message": "reflected-xss har utfasats sedan CSP2. Använd huvudet X-XSS-Protection i stället."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingBaseUri": {
-    "message": "Missing base-uri allows injected <base> tags to set the base URL for all relative URLs (e.g. scripts) to an attacker controlled domain. Consider setting base-uri to 'none' or 'self'."
+    "message": "Om base-uri saknas går det att använda <base>-taggar för att ställa in baswebbadressen för alla relativa webbadresser (t.ex. skript) till en domän som styrs av en angripare. Du kan ställa in base-uri på none eller self."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingObjectSrc": {
     "message": "Element som styrs av object-src anses vara äldre funktioner. Du kan ställa in object-src på none för att förhindra användningen av pluginprogram som kör osäkra skript."

@@ -513,13 +513,13 @@
     "message": "Minifikujte JavaScript"
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | description": {
-    "message": "Odstraňte ze šablon stylů nepoužívaná pravidla a odložte načítání stylů CSS, které se nepoužívají pro obsah zobrazený bez posouvání, abyste snížili množství nepotřebných dat využívaných síťovou aktivitou. [Další informace](https://web.dev/unused-css-rules/)"
+    "message": "Odstraňte ze šablon stylů nepoužívaná pravidla a odložte styly CSS, které se nepoužívají pro obsah nad okrajem, abyste snížili množství dat využívaných síťovou aktivitou. [Další informace](https://web.dev/unused-css-rules/)"
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | title": {
     "message": "Odstraňte nepoužívané styly CSS"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "Odstraněním nepoužívaného JavaScriptu zmenšíte množství přenášených dat. [Další informace](https://web.dev/unused-javascript/)"
+    "message": "Odstraňte nepoužívaný JavaScript a odložte načítání skriptů, abyste snížili množství dat využívaných síťovou aktivitou. [Další informace](https://web.dev/unused-javascript/)"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
     "message": "Odstraňte nepoužívaný JavaScript"
@@ -1725,7 +1725,7 @@
     "message": "Direktiva reflected-xss je od verze CSP2 zastaralá. Použijte místo ní hlavičku X-XSS-Protection."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingBaseUri": {
-    "message": "Missing base-uri allows injected <base> tags to set the base URL for all relative URLs (e.g. scripts) to an attacker controlled domain. Consider setting base-uri to 'none' or 'self'."
+    "message": "Chybějící base-uri umožňuje vložení značek <base> za účelem nastavení základní adresy URL pro všechny relativní adresy URL (např. skripty) na doménu kontrolovanou útočníkem. Nastavte base-uri na hodnotu „none“ nebo „self“."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingObjectSrc": {
     "message": "Prvky řízené pomocí object-src se považují za starší funkce. Zvažte, zda nenastavit object-src na „none“, abyste předešli vložení pluginů spouštějících skripty, které nejsou bezpečné."

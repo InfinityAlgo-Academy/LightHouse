@@ -513,16 +513,16 @@
     "message": "자바스크립트 줄이기"
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | description": {
-    "message": "스타일시트에서 사용하지 않는 규칙을 삭제하고 스크롤 없이 볼 수 있는 부분에 사용되지 않는 CSS의 로드를 지연시켜 네트워크 활동에 소비되는 불필요한 바이트를 줄이세요. [자세히 알아보기](https://web.dev/unused-css-rules/)"
+    "message": "스타일시트에서 사용하지 않는 규칙을 줄이고 스크롤 없이 볼 수 있는 부분에 사용되지 않는 CSS의 로딩을 지연시켜 네트워크 활동에 소비되는 바이트를 줄이세요. [자세히 알아보기](https://web.dev/unused-css-rules/)"
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | title": {
-    "message": "사용하지 않는 CSS 제거"
+    "message": "사용하지 않는 CSS 줄이기"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "사용하지 않는 자바스크립트를 삭제하여 네트워크 활동에 소비되는 바이트를 줄입니다. [자세히 알아보기](https://web.dev/unused-javascript/)"
+    "message": "사용하지 않는 자바스크립트를 줄이고 스크립트가 필요할 때까지 로딩을 지연시켜 네트워크 활동에 소비되는 바이트를 줄이세요. [자세히 알아보기](https://web.dev/unused-javascript/)"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
-    "message": "사용하지 않는 자바스크립트 삭제하기"
+    "message": "사용하지 않는 자바스크립트 줄이기"
   },
   "lighthouse-core/audits/byte-efficiency/uses-long-cache-ttl.js | description": {
     "message": "캐시 수명이 길면 페이지를 반복해서 방문하는 속도가 빨라질 수 있습니다. [자세히 알아보기](https://web.dev/uses-long-cache-ttl/)"
@@ -1725,7 +1725,7 @@
     "message": "reflected-xss는 CSP2부터 지원 중단되었습니다. 대신 X-XSS-Protection 헤더를 사용해 주시기 바랍니다."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingBaseUri": {
-    "message": "Missing base-uri allows injected <base> tags to set the base URL for all relative URLs (e.g. scripts) to an attacker controlled domain. Consider setting base-uri to 'none' or 'self'."
+    "message": "base-uri가 없으면 삽입된 <base> 태그로 인해 모든 상대 URL(예: 스크립트)에 대한 기본 URL이 공격자가 관리하는 도메인으로 설정될 수 있습니다. base-uri를 'none' 또는 'self'로 설정하는 것을 고려하세요."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingObjectSrc": {
     "message": "object-src에 의해 제어되는 요소는 레거시 기능으로 간주됩니다. object-src를 'none'으로 설정하여 안전하지 않은 스크립트를 실행하는 플러그인이 삽입되지 않도록 하는 것이 좋습니다."

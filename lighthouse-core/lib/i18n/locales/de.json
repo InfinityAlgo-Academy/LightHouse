@@ -513,16 +513,16 @@
     "message": "JavaScript komprimieren"
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | description": {
-    "message": "Sie können ungültige Regeln aus Stylesheets entfernen und das Laden von CSS aufschieben, die nicht für ohne Scrollen sichtbare Inhalte verwendet werden, um unnötigen Datenverbrauch durch Netzwerkaktivität zu vermeiden. [Weitere Informationen.](https://web.dev/unused-css-rules/)"
+    "message": "Sie können ungültige Regeln in Stylesheets reduzieren und CSS aufschieben, die nicht für ohne Scrollen sichtbare Inhalte verwendet werden, um den Datenverbrauch durch Netzwerkaktivität zu senken. [Weitere Informationen](https://web.dev/unused-css-rules/)"
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | title": {
-    "message": "Nicht verwendete CSS entfernen"
+    "message": "Reduzieren Sie nicht verwendete CSS"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "Entfernen Sie nicht verwendetes JavaScript, um die Datenmenge bei Netzwerkaktivitäten zu reduzieren. [Weitere Informationen](https://web.dev/unused-javascript/)"
+    "message": "Sie können nicht verwendetes JavaScript reduzieren und das Laden von Skripts aufschieben, bis sie benötigt werden, um den Datenverbrauch durch Netzwerkaktivität zu senken. [Weitere Informationen](https://web.dev/unused-javascript/)"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
-    "message": "Nicht genutztes JavaScript entfernen"
+    "message": "Reduzieren Sie nicht verwendetes JavaScript"
   },
   "lighthouse-core/audits/byte-efficiency/uses-long-cache-ttl.js | description": {
     "message": "Eine lange Lebensdauer des Cache kann wiederholte Besuche Ihrer Seite beschleunigen. [Weitere Informationen.](https://web.dev/uses-long-cache-ttl/)"
@@ -1725,7 +1725,7 @@
     "message": "„reflected-xss“ ist seit CSP2 veraltet. Verwenden Sie stattdessen den Header „X-XSS-Protection“."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingBaseUri": {
-    "message": "Missing base-uri allows injected <base> tags to set the base URL for all relative URLs (e.g. scripts) to an attacker controlled domain. Consider setting base-uri to 'none' or 'self'."
+    "message": "Durch eingeschleuste <base>-Tags kann „base-uri“ für alle relativen URLs (beispielsweise für Skripts) auf eine von Angreifern kontrollierte Domain festgelegt werden. Sie können „base-uri“ auf „none“ oder „self“ setzen."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingObjectSrc": {
     "message": "Durch „object-src“ kontrollierte Elemente werden als alte Funktionen angesehen. Sie können „object-src“ auf „none“ setzen, um das Einschleusen von Plug-ins zu verhindern, die unsichere Skripts ausführen."

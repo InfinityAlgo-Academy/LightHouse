@@ -513,16 +513,16 @@
     "message": "ลดขนาด JavaScript"
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | description": {
-    "message": "นำกฎที่ไม่มีผลแล้วออกจากสไตล์ชีตและเลื่อนเวลาการโหลด CSS ที่ไม่ได้ใช้สำหรับเนื้อหาครึ่งหน้าบนเพื่อลดจำนวนไบต์ที่ไม่จำเป็นที่กิจกรรมเครือข่ายใช้ [ดูข้อมูลเพิ่มเติม](https://web.dev/unused-css-rules/)"
+    "message": "ลดกฎที่ไม่ได้ใช้ในสไตล์ชีตและเลื่อนเวลาโหลด CSS ที่ไม่ได้ใช้สำหรับเนื้อหาครึ่งหน้าบนเพื่อลดจำนวนไบต์ที่กิจกรรมเครือข่ายใช้ [ดูข้อมูลเพิ่มเติม](https://web.dev/unused-css-rules/)"
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | title": {
-    "message": "นำ CSS ที่ไม่ได้ใช้ออก"
+    "message": "ลด CSS ที่ไม่ได้ใช้"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "นำ JavaScript ที่ไม่ได้ใช้ออกเพื่อลดจำนวนไบต์ที่กิจกรรมเครือข่ายใช้ [ดูข้อมูลเพิ่มเติม](https://web.dev/unused-javascript/)"
+    "message": "ลดจำนวน JavaScript ที่ไม่ได้ใช้และเลื่อนเวลาโหลดสคริปต์ไปจนกว่าจะจำเป็นต้องใช้เพื่อลดจำนวนไบต์ที่กิจกรรมเครือข่ายใช้ [ดูข้อมูลเพิ่มเติม](https://web.dev/unused-javascript/)"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
-    "message": "นำ JavaScript ที่ไม่ได้ใช้ออก"
+    "message": "ลดจำนวน JavaScript ที่ไม่ได้ใช้"
   },
   "lighthouse-core/audits/byte-efficiency/uses-long-cache-ttl.js | description": {
     "message": "อายุการใช้งานแคชที่ยาวนานช่วยเพิ่มการเข้าชมหน้าเว็บซ้ำได้ [ดูข้อมูลเพิ่มเติม](https://web.dev/uses-long-cache-ttl/)"
@@ -1725,7 +1725,7 @@
     "message": "reflected-xss เลิกใช้งานไปตั้งแต่ CSP2 โปรดใช้ส่วนหัว X-XSS-Protection แทน"
   },
   "lighthouse-core/lib/csp-evaluator.js | missingBaseUri": {
-    "message": "Missing base-uri allows injected <base> tags to set the base URL for all relative URLs (e.g. scripts) to an attacker controlled domain. Consider setting base-uri to 'none' or 'self'."
+    "message": "เมื่อไม่มี base-uri จะอนุญาตแท็ก <base> ที่แทรก เพื่อตั้งค่า URL ฐานสำหรับ URL (เช่น สคริปต์) ทั้งหมดที่เกี่ยวข้องกับโดเมนที่ผู้โจมตีควบคุม ลองตั้งค่า base-uri เป็น \"none\" หรือ \"self\""
   },
   "lighthouse-core/lib/csp-evaluator.js | missingObjectSrc": {
     "message": "เอลิเมนต์ที่ควบคุมโดย object-src จะถือว่าเป็นฟีเจอร์เดิม ลองตั้งค่า object-src เป็น \"none\" เพื่อป้องกันการแทรกปลั๊กอินที่รันสคริปต์ที่ไม่ปลอดภัย"

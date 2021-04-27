@@ -513,16 +513,16 @@
     "message": "Умањите JavaScript"
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | description": {
-    "message": "Уклоните неактивна правила из описа стилова и одложите учитавање CSS-а који се не користи за садржај изнад прелома да бисте смањили непотребну потрошњу података током мрежних активности. [Сазнајте више](https://web.dev/unused-css-rules/)."
+    "message": "Смањите некоришћена правила из описа стилова и одложите CSS који се не користи за садржај изнад прелома да бисте смањили потрошњу бајтова током мрежних активности. [Сазнајте више](https://web.dev/unused-css-rules/)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | title": {
-    "message": "Уклоните некоришћени CSS"
+    "message": "Смањите некоришћени CSS"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "Уклоните некоришћени JavaScript да бисте смањили потрошњу података током мрежних активности. [Сазнајте више](https://web.dev/unused-javascript/)."
+    "message": "Смањите некоришћени JavaScript и одложите учитавање скрипти док не буду потребне да бисте смањили потрошњу бајтова током мрежних активности. [Сазнајте више](https://web.dev/unused-javascript/)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
-    "message": "Уклоните некоришћени JavaScript"
+    "message": "Смањите некоришћени JavaScript"
   },
   "lighthouse-core/audits/byte-efficiency/uses-long-cache-ttl.js | description": {
     "message": "Дуго трајање кеша може да убрза поновне посете страници. [Сазнајте више](https://web.dev/uses-long-cache-ttl/)."
@@ -1725,7 +1725,7 @@
     "message": "Директива reflected-xss је застарела од смерница CSP2. Користите заглавље за X-XSS-Protection."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingBaseUri": {
-    "message": "Missing base-uri allows injected <base> tags to set the base URL for all relative URLs (e.g. scripts) to an attacker controlled domain. Consider setting base-uri to 'none' or 'self'."
+    "message": "Base-uri који недостаје омогућава уметнутим ознакама <base> да подесе основни URL за све релативне URL-ове (нпр. скрипте) до домена који контролише нападач. Саветујемо вам да подесите base-uri на „none“ или „self“."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingObjectSrc": {
     "message": "Елементи које контролише object-src сматрају се застарелим функцијама. Саветујемо вам да подесите директиву object-src на „none“ да бисте спречили уметање додатних компоненти које извршавају небезбедне скрипте."

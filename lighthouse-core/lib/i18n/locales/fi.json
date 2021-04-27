@@ -513,16 +513,16 @@
     "message": "Pienennä JavaScript-tiedostoja"
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | description": {
-    "message": "Poista käyttämättömät säännöt tyylisivuilta ja lykkää sellaisen CSS:n lataamista, jota ei käytetä sivun yläosan sisältöön, niin vähennät verkkotoiminnan turhaa tavujen kulutusta. [Lue lisää](https://web.dev/unused-css-rules/)."
+    "message": "Vähennä tyylisivujen käyttämättömiä sääntöjä ja lykkää sellaista CSS:ää, jota ei käytetä sivun yläosan sisältöön, niin vähennät verkkotoiminnan tavujen kulutusta. [Lue lisää](https://web.dev/unused-css-rules/)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | title": {
-    "message": "Poista käyttämätön CSS"
+    "message": "Vähennä käyttämätöntä CSS:ää"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "Poista tarpeeton JavaScript pienentääksesi verkkotoiminnan tavunkulutusta. [Lue lisää](https://web.dev/unused-javascript/)."
+    "message": "Vähennä käyttämätöntä JavaScriptiä ja lykkää skriptien lataamista, kunnes niiden on vähennettävä verkkotoiminnan tavujen kulutusta. [Lue lisää](https://web.dev/unused-javascript/)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
-    "message": "Poista käyttämätön JavaScript"
+    "message": "Vähennä käyttämätöntä JavaScriptiä"
   },
   "lighthouse-core/audits/byte-efficiency/uses-long-cache-ttl.js | description": {
     "message": "Pitkä välimuistin käyttöikä voi nopeuttaa sivun lataamista, kun käyttäjä avaa sen uudelleen. [Lue lisää](https://web.dev/uses-long-cache-ttl/)."
@@ -1725,7 +1725,7 @@
     "message": "CSP2:sta lähtien reflected-xss on poistettu käytöstä. Käytä sen sijaan X-XSS-Protection-ylätunnistetta."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingBaseUri": {
-    "message": "Missing base-uri allows injected <base> tags to set the base URL for all relative URLs (e.g. scripts) to an attacker controlled domain. Consider setting base-uri to 'none' or 'self'."
+    "message": "Puuttuva base-uri sallii injektoitujen <base>-tagien määrittää kaikkien suhteellisten URL-osoitteiden (esim. skriptien) pohja-URL-osoitteen hyökkääjän hallitsemaan verkkotunnukseen. Sinun kannattaa valita base-urin arvoksi \"none\" tai \"self\"."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingObjectSrc": {
     "message": "object-srcin ohjaamat elementit ovat vanhoja ominaisuuksia. Määritä object-srcin arvoksi \"none\" estääksesi vaarallisten skriptejä suorittavien liitännäisten injektointi."

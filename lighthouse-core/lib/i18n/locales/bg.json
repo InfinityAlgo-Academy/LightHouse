@@ -513,16 +513,16 @@
     "message": "Минимизирайте JavaScript"
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | description": {
-    "message": "Премахнете ненужните правила от стиловите листове и отложете зареждането на CSS кода, който не се използва за съдържанието на видимата на екрана част от страницата, за да намалите ненужния пренос на данни в мрежата. [Научете повече](https://web.dev/unused-css-rules/)."
+    "message": "Намалете ненужните правила от стиловите листове и отложете зареждането на CSS кода, който не се използва за съдържанието на видимата на екрана част от страницата, за да намалите преноса на данни през мрежата. [Научете повече](https://web.dev/unused-css-rules/)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | title": {
-    "message": "Премахнете неизползвания CSS код"
+    "message": "Намалете неизползваните CSS стилове"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "Премахнете неизползвания JavaScript, за да намалите преноса на данни при мрежова активност. [Научете повече](https://web.dev/unused-javascript/)."
+    "message": "Намалете неизползвания JavaScript и отложете зареждането на скриптове, докато не станат нужни, за да намалите преноса на данни през мрежата. [Научете повече](https://web.dev/unused-javascript/)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
-    "message": "Премахнете неизползвания JavaScript"
+    "message": "Намалете неизползвания JavaScript"
   },
   "lighthouse-core/audits/byte-efficiency/uses-long-cache-ttl.js | description": {
     "message": "Продължителното съхраняване в кеша може да ускори повторните посещения на страницата ви. [Научете повече](https://web.dev/uses-long-cache-ttl/)."
@@ -1725,7 +1725,7 @@
     "message": "reflected-xss е оттеглено от CSP2 насам. Вместо това използвайте заглавката X-XSS-Protection."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingBaseUri": {
-    "message": "Missing base-uri allows injected <base> tags to set the base URL for all relative URLs (e.g. scripts) to an attacker controlled domain. Consider setting base-uri to 'none' or 'self'."
+    "message": "Липсата на base-uri дава възможност за инжектиране на маркери <base> с цел задаване на базовия URL адрес за всички относителни URL адреси (напр. скриптове), така че да бъде от домейн, контролиран от хакера. Обмислете дали да не зададете base-uri на none или self."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingObjectSrc": {
     "message": "Елементите, контролирани от object-src, се смятат за наследени функции. Обмислете дали да не зададете object-src на none, за да предотвратите инжектирането на приставки, които изпълняват опасни скриптове."

@@ -513,16 +513,16 @@
     "message": "Minimalizálja a JavaScript-kódot"
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | description": {
-    "message": "A stíluslapok érvénytelen szabályainak eltávolításával és a hajtás feletti tartalomhoz nem használt CSS-kód betöltésének késleltetésével csökkentheti a hálózati tevékenység által felhasznált bájtmennyiséget. [További információ](https://web.dev/unused-css-rules/)."
+    "message": "A stíluslapok nem használt szabályainak eltávolításával és a hajtás feletti tartalomhoz nem használt CSS-kódok késleltetésével csökkentheti a hálózati tevékenység által felhasznált bájtmennyiséget. [További információ](https://web.dev/unused-css-rules/)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | title": {
-    "message": "Távolítsa el a nem használt CSS-kódot"
+    "message": "Nem használt CSS-kódok számának csökkentése"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "A nem használt JavaScript-kód eltávolításával csökkentheti a hálózati tevékenység adatforgalmát. [További információ](https://web.dev/unused-javascript/)."
+    "message": "A nem használt JavaScript-kódok számának csökkentésével és a betöltési szkriptek késleltetésével csökkentheti a hálózati tevékenység által felhasznált bájtmennyiséget. [További információ](https://web.dev/unused-javascript/)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
-    "message": "Távolítsa el a nem használt JavaScript-kódot"
+    "message": "Nem használt JavaScript-kódok számának csökkentése"
   },
   "lighthouse-core/audits/byte-efficiency/uses-long-cache-ttl.js | description": {
     "message": "Ha a gyorsítótárak élettartama hosszú, gyorsabbá válnak a weboldal későbbi ismételt megnyitásai. [További információ](https://web.dev/uses-long-cache-ttl/)."
@@ -1725,7 +1725,7 @@
     "message": "A reflected-xss a CSP2 bevezetésekor megszűnt. Használja helyette az X-XSS-Protection fejlécet."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingBaseUri": {
-    "message": "Missing base-uri allows injected <base> tags to set the base URL for all relative URLs (e.g. scripts) to an attacker controlled domain. Consider setting base-uri to 'none' or 'self'."
+    "message": "A hiányzó base-uri lehetővé teszi az injektált <base> címkéknek alap-URL-ek beállítását minden relatív URL-nél (pl. szkripttel) a támadó által irányított domainre. Állítsa a base-uri direktívát „none” vagy „self” értékre."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingObjectSrc": {
     "message": "Az object-src által vezérelt elemek régi funkcióknak minősülnek. Fontolja meg az object-src beállítását a „none” értékre, hogy megakadályozza nem biztonságos szkriptek végrehajtását lehetővé tévő beépülő modulok beszúrását."

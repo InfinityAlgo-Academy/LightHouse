@@ -513,16 +513,16 @@
     "message": "Minifikuj JavaScript"
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | description": {
-    "message": "Usuń nieużywane reguły z arkuszy stylów i opóźnij ładowanie kodu CSS, który nie jest używany w części strony widocznej na ekranie bez przewijania, by zmniejszyć ilość danych niepotrzebnie przesyłanych w sieci. [Więcej informacji](https://web.dev/unused-css-rules/)"
+    "message": "Ogranicz nieużywane reguły z arkuszy stylów i opóźnij ładowanie kodu CSS, który nie jest używany w części strony widocznej na ekranie. W ten sposób zmniejszysz ilość danych przesyłanych w sieci. [Więcej informacji](https://web.dev/unused-css-rules/)"
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | title": {
-    "message": "Usuń nieużywany kod CSS"
+    "message": "Ogranicz nieużywany kod CSS"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "Usuń nieużywany kod JavaScript, by zmniejszyć ilość danych przesyłanych w sieci. [Więcej informacji](https://web.dev/unused-javascript/)"
+    "message": "Ogranicz nieużywany JavaScript i opóźnij ładowanie skryptów do momentu, aż będą wymagane. W ten sposób zmniejszysz ilość danych przesyłanych w sieci. [Więcej informacji](https://web.dev/unused-javascript/)"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
-    "message": "Usuń nieużywany JavaScript"
+    "message": "Ogranicz nieużywany JavaScript"
   },
   "lighthouse-core/audits/byte-efficiency/uses-long-cache-ttl.js | description": {
     "message": "Długi czas przechowywania w pamięci podręcznej może przyśpieszyć ponowne otwarcie strony. [Więcej informacji](https://web.dev/uses-long-cache-ttl/)"
@@ -1725,7 +1725,7 @@
     "message": "Od momentu wprowadzenia CSP2 dyrektywa reflected-xss jest wycofana. Zamiast niej użyj nagłówka X-XSS-Protection."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingBaseUri": {
-    "message": "Missing base-uri allows injected <base> tags to set the base URL for all relative URLs (e.g. scripts) to an attacker controlled domain. Consider setting base-uri to 'none' or 'self'."
+    "message": "Brak dyrektywy base-uri umożliwia wstrzyknięcie tagów <base>. W ten sposób hakerzy mogą ustawić podstawowy adres URL dla wszystkich względnych adresów URL (np. skryptów) na domenę, którą kontrolują. Warto ustawić base-uri na wartość „none” lub „self”."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingObjectSrc": {
     "message": "Elementy kontrolowane przez dyrektywę object-src są uważane za funkcje w starszych wersjach. Możesz ustawić dyrektywę object-src na wartość „none”, aby zapobiegała wstrzykiwaniu wtyczek wykonujących niebezpieczne skrypty."

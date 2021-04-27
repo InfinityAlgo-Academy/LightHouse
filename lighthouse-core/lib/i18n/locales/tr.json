@@ -513,16 +513,16 @@
     "message": "JavaScript'i küçült"
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | description": {
-    "message": "Ağ etkinliğinin gereksiz yere kullandığı bayt sayısını azaltmak için, kullanılmayan kuralları stil sayfalarından kaldırın ve ekranın üst kısmında içerik için kullanılmayan CSS'nin yüklenmesini erteleyin. [Daha fazla bilgi](https://web.dev/unused-css-rules/)."
+    "message": "Ağ etkinliğinin kullandığı bayt sayısını azaltmak üzere stil sayfalarında kullanılmayan kuralları azaltıp ekranın üst kısmında içerik için kullanılmayan CSS'yi erteleyin. [Daha fazla bilgi](https://web.dev/unused-css-rules/)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | title": {
-    "message": "Kullanılmayan CSS'yi kaldırın"
+    "message": "Kullanılmayan CSS'yi azaltın"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "Ağ etkinliğinin kullandığı bayt sayısını azaltmak için kullanılmayan JavaScript'i kaldırın. [Daha fazla bilgi](https://web.dev/unused-javascript/)."
+    "message": "Ağ etkinliğinin kullandığı bayt sayısını azaltılmaları gerekene kadar kullanılmayan JavaScript'i azaltıp komut dosyalarını erteleyin. [Daha fazla bilgi](https://web.dev/unused-javascript/)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
-    "message": "Kullanılmayan JavaScript'i kaldırın"
+    "message": "Kullanılmayan JavaScript'i azaltın"
   },
   "lighthouse-core/audits/byte-efficiency/uses-long-cache-ttl.js | description": {
     "message": "Uzun önbellek ömrü, sayfanızın tekrar ziyaret edilmesi sürecini hızlandırabilir. [Daha fazla bilgi](https://web.dev/uses-long-cache-ttl/)."
@@ -1725,7 +1725,7 @@
     "message": "reflected-xss yönergesi CSP2'den beri kullanılmamaktadır. Lütfen onun yerine X-XSS-Protection başlığını kullanın."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingBaseUri": {
-    "message": "Missing base-uri allows injected <base> tags to set the base URL for all relative URLs (e.g. scripts) to an attacker controlled domain. Consider setting base-uri to 'none' or 'self'."
+    "message": "Base-uri yönergesinin olmaması, yerleştirilen <base> etiketlerinin tüm göreli URL'ler (örneğin, komut dosyaları) için temel URL'yi saldırgan kontrolündeki bir alana ayarlamaya olanak tanır. Base-uri'yi \"none\" veya \"self\" olarak ayarlamayı düşünün."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingObjectSrc": {
     "message": "object-src tarafından kontrol edilen öğeler eski özellik olarak kabul edilir. Güvenli olmayan komut satırları yürüten eklentilerin yerleştirilmesine engel olmak için object-src yönergesini \"none\" olarak ayarlamayı düşünün."

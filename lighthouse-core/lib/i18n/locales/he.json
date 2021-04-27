@@ -513,16 +513,16 @@
     "message": "יש לקצר את קוד JavaScript למינימום ההכרחי"
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | description": {
-    "message": "יש להסיר מגיליונות הסגנונות כללים שאינם בשימוש ולדחות את הטעינה של רכיבי CSS שאינם חלק מהתוכן בחלק העליון והקבוע. הפעולה הזו תצמצם צריכה בלתי נחוצה של בייטים כתוצאה מפעילות הרשת. [מידע נוסף](https://web.dev/unused-css-rules/)."
+    "message": "ניתן לצמצם את צריכת הבייטים כתוצאה מפעילות הרשת על ידי הפחתת כללים שאינם בשימוש מגיליונות הסגנונות ודחיית הטעינה של רכיבי CSS שלא משמשים את התוכן בחלק העליון והקבוע. [מידע נוסף](https://web.dev/unused-css-rules/)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | title": {
-    "message": "יש להסיר CSS שאינו בשימוש"
+    "message": "הפחתת CSS שאינו בשימוש"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "יש להסיר JavaScript שאינו בשימוש כדי לצמצם צריכת בייטים על-ידי פעילות ברשת. [מידע נוסף](https://web.dev/unused-javascript/)"
+    "message": "ניתן לצמצם את צריכת הבייטים כתוצאה מפעילות הרשת על ידי הפחתת תוכן JavaScript שלא נמצא בשימוש ודחיית הטעינה של הסקריטפים עד שהם יידרשו. [מידע נוסף](https://web.dev/unused-javascript/)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
-    "message": "יש להסיר JavaScript שאינו בשימוש"
+    "message": "הפחתת תוכן JavaScript שאינו בשימוש"
   },
   "lighthouse-core/audits/byte-efficiency/uses-long-cache-ttl.js | description": {
     "message": "משך חיים ארוך של מטמון יכול לזרז את הביקורים החוזרים בדף. [מידע נוסף](https://web.dev/uses-long-cache-ttl/)."
@@ -1725,7 +1725,7 @@
     "message": "הוראת reflected-xss הוצאה משימוש החל מ-CSP2. במקום זאת, יש להשתמש בכותרת X-XSS-Protection."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingBaseUri": {
-    "message": "Missing base-uri allows injected <base> tags to set the base URL for all relative URLs (e.g. scripts) to an attacker controlled domain. Consider setting base-uri to 'none' or 'self'."
+    "message": "חסר base-uri, המאפשר להחדיר תגי <base> כדי להגדיר את כתובת ה-URL הבסיסית לכל כתובות ה-URL היחסיות (למשל, סקריפטים) לדומיין שנשלט על ידי תוקף. כדאי להגדיר את base-uri ל-none או ל-self."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingObjectSrc": {
     "message": "רכיבים שנשלטים על ידי object-src נחשבים לתכונות מדור קודם. כדאי להגדיר את object-src ל-none כדי למנוע החדרת יישומי פלאגין שמפעילים סקריפטים לא בטוחים."

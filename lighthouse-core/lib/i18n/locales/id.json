@@ -513,16 +513,16 @@
     "message": "Kecilkan ukuran JavaScript"
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | description": {
-    "message": "Hapus aturan yang tidak berlaku dari stylesheet dan tunda pemuatan CSS yang tidak digunakan untuk konten paruh atas, guna mengurangi byte yang tidak perlu yang digunakan oleh aktivitas jaringan. [Pelajari lebih lanjut](https://web.dev/unused-css-rules/)."
+    "message": "Mengurangi aturan yang tidak digunakan dari stylesheet dan menunda CSS yang tidak digunakan untuk konten paruh atas guna menurunkan byte yang digunakan oleh aktivitas jaringan. [Pelajari lebih lanjut](https://web.dev/unused-css-rules/)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | title": {
-    "message": "Hapus CSS yang tidak digunakan"
+    "message": "Kurangi CSS yang tidak digunakan"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "Menghapus JavaScript yang tidak digunakan untuk mengurangi byte yang digunakan oleh aktivitas jaringan. [Pelajari lebih lanjut](https://web.dev/unused-javascript/)."
+    "message": "Mengurangi JavaScript yang tidak digunakan dan menunda pemuatan skrip sampai diperlukan untuk menurunkan byte yang digunakan oleh aktivitas jaringan. [Pelajari lebih lanjut](https://web.dev/unused-javascript/)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
-    "message": "Hapus JavaScript yang tidak digunakan"
+    "message": "Kurangi JavaScript yang tidak digunakan"
   },
   "lighthouse-core/audits/byte-efficiency/uses-long-cache-ttl.js | description": {
     "message": "Durasi cache yang panjang dapat mempercepat kunjungan berulang ke halaman Anda. [Pelajari lebih lanjut](https://web.dev/uses-long-cache-ttl/)."
@@ -1725,7 +1725,7 @@
     "message": "reflected-xss tidak digunakan lagi sejak CSP2. Sebagai gantinya, gunakan header X-XSS-Protection."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingBaseUri": {
-    "message": "Missing base-uri allows injected <base> tags to set the base URL for all relative URLs (e.g. scripts) to an attacker controlled domain. Consider setting base-uri to 'none' or 'self'."
+    "message": "Base-uri yang tidak ada memungkinkan injeksi tag <base> untuk menyetel URL dasar bagi semua URL relatif (misalnya, skrip) ke domain yang dikontrol penyerang. Sebaiknya setel base-uri ke 'none' atau 'self'."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingObjectSrc": {
     "message": "Elemen yang dikontrol oleh object-src dianggap sebagai fitur lama. Sebaiknya setel object-src ke 'none' untuk mencegah injeksi plugin yang mengeksekusi skrip yang tidak aman."

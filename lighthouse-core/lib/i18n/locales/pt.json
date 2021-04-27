@@ -513,16 +513,16 @@
     "message": "Reduza o JavaScript"
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | description": {
-    "message": "Remova as regras inativas das folhas de estilo e adie o carregamento de CSS não usado para conteúdo acima da dobra, a fim de reduzir o consumo desnecessário de bytes da atividade da rede. [Saiba mais](https://web.dev/unused-css-rules/)."
+    "message": "Para diminuir o consumo de bytes da atividade da rede, reduza as regras não usadas nas folhas de estilo e adie o CSS não usado para conteúdo acima da dobra. [Saiba mais](https://web.dev/unused-css-rules/)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | title": {
-    "message": "Remova CSS não utilizado"
+    "message": "Reduza o CSS não usado"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "Remova o JavaScript não utilizado para reduzir o consumo de bytes da atividade de rede. [Saiba mais](https://web.dev/unused-javascript/)."
+    "message": "Para diminuir o consumo de bytes da atividade da rede, reduza o JavaScript não usado e adie o carregamento de scripts até que eles sejam necessários. [Saiba mais](https://web.dev/unused-javascript/)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
-    "message": "Remova o JavaScript não utilizado"
+    "message": "Reduza o JavaScript não usado"
   },
   "lighthouse-core/audits/byte-efficiency/uses-long-cache-ttl.js | description": {
     "message": "Um cache com ciclo de vida longo pode acelerar visitas repetidas à sua página. [Saiba mais](https://web.dev/uses-long-cache-ttl/)."
@@ -1725,7 +1725,7 @@
     "message": "O uso de reflected-xss está suspenso desde a CSP2. Use o cabeçalho X-XSS-Protection."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingBaseUri": {
-    "message": "Missing base-uri allows injected <base> tags to set the base URL for all relative URLs (e.g. scripts) to an attacker controlled domain. Consider setting base-uri to 'none' or 'self'."
+    "message": "A ausência de base-uri permite a injeção de tags <base> para definir o URL base de todos os URLs relativos (como scripts) em um domínio controlado por invasores. Recomendamos definir base-uri como \"none\" ou \"self\"."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingObjectSrc": {
     "message": "Os elementos controlados por object-src são considerados recursos legados. Defina object-src como \"none\" para evitar a injeção de plug-ins que executam scripts não seguros."

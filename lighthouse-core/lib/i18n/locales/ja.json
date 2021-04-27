@@ -513,16 +513,16 @@
     "message": "JavaScript の最小化"
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | description": {
-    "message": "スタイルシートから古いルールを削除し、スクロールせずに見える範囲のコンテンツに使用されていない CSS の読み込みを遅延させると、データ通信量を減らすことができます。[詳細](https://web.dev/unused-css-rules/)"
+    "message": "スタイルシートから使用していないルールを削除して、スクロールせずに見える範囲のコンテンツで使用されていない CSS の読み込みを遅らせると、ネットワークの通信量を減らすことができます。[詳細](https://web.dev/unused-css-rules/)"
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | title": {
-    "message": "使用していない CSS を削除してください"
+    "message": "使用していない CSS の削減"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "使用していない JavaScript を削除して、データ通信量を減らしてください。[詳細](https://web.dev/unused-javascript/)"
+    "message": "使用していない JavaScript を減らして、必要になるまでスクリプトの読み込みを遅らせると、ネットワークの通信量を減らすことができます。[詳細](https://web.dev/unused-javascript/)"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
-    "message": "使用していない JavaScript の削除"
+    "message": "使用していない JavaScript の削減"
   },
   "lighthouse-core/audits/byte-efficiency/uses-long-cache-ttl.js | description": {
     "message": "キャッシュの有効期間を長くすると、再訪問したユーザーへのページの読み込み速度を向上できます。[詳細](https://web.dev/uses-long-cache-ttl/)"
@@ -1725,7 +1725,7 @@
     "message": "reflected-xss は CSP2 以降ではサポートされていません。代わりに、X-XSS-Protection ヘッダーを使用してください。"
   },
   "lighthouse-core/lib/csp-evaluator.js | missingBaseUri": {
-    "message": "Missing base-uri allows injected <base> tags to set the base URL for all relative URLs (e.g. scripts) to an attacker controlled domain. Consider setting base-uri to 'none' or 'self'."
+    "message": "base-uri を指定しないと、挿入された <base> タグによって、すべての相対 URL（スクリプトなど）のベース URL が攻撃者の管理ドメインに設定される可能性があります。base-uri を 'none' か 'self' に設定することをご検討ください。"
   },
   "lighthouse-core/lib/csp-evaluator.js | missingObjectSrc": {
     "message": "object-src で制御される要素は、古い機能とみなされます。安全でないスクリプトを実行するプラグインが挿入されないよう、object-src を 'none' に設定することを検討してください。"

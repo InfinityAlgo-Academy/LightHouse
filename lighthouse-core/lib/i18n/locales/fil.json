@@ -513,16 +513,16 @@
     "message": "Paliitin ang JavaScript"
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | description": {
-    "message": "Alisin ang mga hindi na gumaganang panuntunan sa mga stylesheet at ipagpaliban ang pag-load ng CSS na hindi ginagamit para sa content sa itaas ng fold para mabawasan ang mga hindi kinakailangang byte na nakokonsumo ng aktibidad sa network. [Matuto pa](https://web.dev/unused-css-rules/)."
+    "message": "Bawasan ang mga hindi ginagamit na panuntunan mula sa mga stylesheet at ipagpaliban ang CSS na hindi ginagamit para sa content sa itaas ng fold para mabawasan ang mga byte na kinokonsumo ng aktibidad ng network. [Matuto pa](https://web.dev/unused-css-rules/)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | title": {
-    "message": "Alisin ang hindi ginagamit na CSS"
+    "message": "Bawasan ang hindi ginagamit na CSS"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "Alisin ang hindi nagamit na JavaScript para mabawasan ang mga byte na nakokonsumo ng aktibidad sa network. [Matuto pa](https://web.dev/unused-javascript/)."
+    "message": "Bawasan ang hindi ginagamit na JavaScript at ipagpaliban ang pag-load ng mga script hanggang sa kailanganin ang mga ito para mabawasan ang mga byte na kinokonsumo ng aktibidad ng network. [Matuto pa](https://web.dev/unused-javascript/)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
-    "message": "Alisin ang hindi nagamit na JavaScript"
+    "message": "Bawasan ang hindi ginagamit na JavaScript"
   },
   "lighthouse-core/audits/byte-efficiency/uses-long-cache-ttl.js | description": {
     "message": "Puwedeng mapabilis ng mahabang lifetime ng cache ang mga umuulit na pagbisita sa iyong page. [Matuto pa](https://web.dev/uses-long-cache-ttl/)."
@@ -1725,7 +1725,7 @@
     "message": "Hindi na ginagamit ang reflected-xss simula sa CSP2. Pakigamit na lang ang header na X-XSS-Protection."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingBaseUri": {
-    "message": "Missing base-uri allows injected <base> tags to set the base URL for all relative URLs (e.g. scripts) to an attacker controlled domain. Consider setting base-uri to 'none' or 'self'."
+    "message": "Binibigyang-daan ng nawawalang base-uri ang mga na-inject na <base> na tag na itakda ang base na URL para sa lahat ng relative URL (hal. mga script) sa isang domain na kinokontrol ng attacker. Pag-isipang itakda ang base-uri sa 'none' o 'self.'"
   },
   "lighthouse-core/lib/csp-evaluator.js | missingObjectSrc": {
     "message": "Itinuturing na mga legacy na feature ang mga element na kinokontrol ng object-src. Pag-isipang itakda ang object-src sa 'none' para maiwasan ang pag-inject ng mga plugin na nagpapatupad ng mga hindi ligtas na script."

@@ -513,16 +513,16 @@
     "message": "تصغير JavaScript"
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | description": {
-    "message": "يمكنك إزالة القواعد الضارة من أوراق الأنماط وتأجيل تحميل خدمة CSS غير المستخدمة في محتوى الجزء المرئي من الصفحة للحد من وحدات البايت غير الضرورية المستهلكة من خلال نشاط الشبكة. [مزيد من المعلومات](https://web.dev/unused-css-rules/)"
+    "message": "يمكنك الحدّ من القواعد غير المستخدَمة الواردة من أوراق الأنماط، كما يمكنك تأجيل تحميل محتوى CSS غير المستخدَم في الجزء المرئي من الصفحة لتقليل وحدات البايت التي يستهلكها نشاط الشبكة. [مزيد من المعلومات](https://web.dev/unused-css-rules/)"
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | title": {
-    "message": "إزالة خدمة CSS غير المُستخدَمة"
+    "message": "الحدّ من محتوى CSS غير المُستخدَم"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "يمكنك إزالة نصوص JavaScript غير المستخدمة لتقليل وحدات البايت التي يستهلكها نشاط الشبكة. [مزيد من المعلومات](https://web.dev/unused-javascript/)"
+    "message": "يمكنك الحدّ من محتوى JavaScript غير المستخدَم وتأجيل تحميل النصوص البرمجية لتقليل وحدات البايت التي يستهلكها نشاط الشبكة. [مزيد من المعلومات](https://web.dev/unused-javascript/)"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
-    "message": "إزالة JavaScript غير المستخدم"
+    "message": "الحدّ من محتوى JavaScript غير المستخدَم"
   },
   "lighthouse-core/audits/byte-efficiency/uses-long-cache-ttl.js | description": {
     "message": "يمكن لفترة التخزين المؤقت الطويلة تسريع عملية تكرار الزيارات إلى صفحتك. [مزيد من المعلومات](https://web.dev/uses-long-cache-ttl/)"
@@ -1725,7 +1725,7 @@
     "message": "تم إيقاف reflected-xss منذ بدء استخدام سياسة CSP2. يُرجى استخدام العنوان X-XSS-Protection بدلاً من ذلك."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingBaseUri": {
-    "message": "Missing base-uri allows injected <base> tags to set the base URL for all relative URLs (e.g. scripts) to an attacker controlled domain. Consider setting base-uri to 'none' or 'self'."
+    "message": "يسمح عدم توفُّر base-uri بأن تضبط علامات <base> التي تم إدراجها عنوان URL الأساسي لجميع عناوين URL النسبية (على سبيل المثال، النصوص البرمجية) على نطاق يتحكّم فيه مهاجم. ننصحك بضبط base-uri على \"none\" أو \"self\"."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingObjectSrc": {
     "message": "تُعتبر العناصر التي يتم التحكُّم فيها بواسطة object-src ميزات قديمة. ننصحك بضبط object-src على 'none' لمنع إدخال المكوّنات الإضافية التي تنفِّذ نصوصًا برمجية غير آمنة."

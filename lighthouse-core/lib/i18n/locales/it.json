@@ -513,16 +513,16 @@
     "message": "Minimizza JavaScript"
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | description": {
-    "message": "Rimuovi le regole non valide dai fogli di stile e rimanda il caricamento dei CSS non utilizzati per i contenuti above the fold per ridurre i byte inutili consumati dall'attività di rete. [Ulteriori informazioni](https://web.dev/unused-css-rules/)."
+    "message": "Riduci le regole inutilizzate dei fogli di stile e rimanda i contenuti CSS non utilizzati per i contenuti above the fold al fine di ridurre i byte consumati dall'attività di rete. [Scopri di più](https://web.dev/unused-css-rules/)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | title": {
-    "message": "Rimuovi il CSS inutilizzato"
+    "message": "Riduci i contenuti CSS inutilizzati"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "Rimuovi il codice JavaScript inutilizzato per ridurre i byte consumati dall'attività di rete. [Ulteriori informazioni](https://web.dev/unused-javascript/)."
+    "message": "Riduci il codice JavaScript inutilizzato e rimanda il caricamento degli script finché non sono necessari al fine di ridurre i byte consumati dall'attività di rete. [Scopri di più](https://web.dev/unused-javascript/)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
-    "message": "Rimuovi il codice JavaScript inutilizzato"
+    "message": "Riduci il codice JavaScript inutilizzato"
   },
   "lighthouse-core/audits/byte-efficiency/uses-long-cache-ttl.js | description": {
     "message": "La memorizzazione nella cache per un lungo periodo di tempo può velocizzare le visite abituali alla tua pagina. [Ulteriori informazioni](https://web.dev/uses-long-cache-ttl/)."
@@ -1725,7 +1725,7 @@
     "message": "L'istruzione reflected-xss è deprecata da CSP2. Usa invece l'intestazione X-XSS-Protection."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingBaseUri": {
-    "message": "Missing base-uri allows injected <base> tags to set the base URL for all relative URLs (e.g. scripts) to an attacker controlled domain. Consider setting base-uri to 'none' or 'self'."
+    "message": "A causa della mancanza di un'istruzione base-uri, i tag <base> inseriti possono impostare l'URL di base di tutti gli URL relativi (ad esempio gli script) per un dominio controllato da un utente malintenzionato. Potresti impostare base-uri su \"none\" o \"self\"."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingObjectSrc": {
     "message": "Gli elementi controllati tramite object-src sono considerati funzionalità precedenti. Potresti impostare object-src su \"none\" per impedire l'inserimento di plug-in che eseguono script non sicuri."

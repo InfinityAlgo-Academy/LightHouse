@@ -399,7 +399,7 @@
     "message": "Os elementos `<video>` contêm um elemento `<track>` com `[kind=\"captions\"]`"
   },
   "lighthouse-core/audits/apple-touch-icon.js | description": {
-    "message": "Para um aspeto ideal no iOS quando os utilizadores adicionam uma progressive web app ao ecrã principal, defina um `apple-touch-icon`. Deve apontar para um PNG quadrado não transparente de 192 px (ou 180 px). [Saiba mais](https://web.dev/apple-touch-icon/)."
+    "message": "Para um aspeto ideal no iOS quando os utilizadores adicionam uma app web progressiva ao ecrã principal, defina um `apple-touch-icon`. Deve apontar para um PNG quadrado não transparente de 192 px (ou 180 px). [Saiba mais](https://web.dev/apple-touch-icon/)."
   },
   "lighthouse-core/audits/apple-touch-icon.js | failureTitle": {
     "message": "Não fornece um `apple-touch-icon` válido"
@@ -513,16 +513,16 @@
     "message": "Reduza o JavaScript"
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | description": {
-    "message": "Remova as regras vazias das folhas de estilo e adie o carregamento de CSS não utilizado para conteúdo na parte superior para reduzir a quantidade de bytes desnecessários consumidos pela atividade da rede. [Saiba mais](https://web.dev/unused-css-rules/)."
+    "message": "Reduza as regras não utilizadas das folhas de estilos e adie o CSS não utilizado de conteúdo na parte superior para diminuir a quantidade de bytes consumidos pela atividade da rede. [Saiba mais](https://web.dev/unused-css-rules/)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | title": {
-    "message": "Remova o CSS não utilizado"
+    "message": "Reduza o CSS"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "Remova o JavaScript não utilizado para reduzir os bytes consumidos pela atividade da rede. [Saber mais](https://web.dev/unused-javascript/)"
+    "message": "Reduza o JavaScript não utilizado e adie o carregamento de scripts até serem necessários para diminuir a quantidade de bytes consumidos pela atividade da rede. [Saiba mais](https://web.dev/unused-javascript/)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
-    "message": "Remova o JavaScript não utilizado"
+    "message": "Reduza o JavaScript não utilizado"
   },
   "lighthouse-core/audits/byte-efficiency/uses-long-cache-ttl.js | description": {
     "message": "Uma longa duração total da cache pode acelerar as visitas repetidas à sua página. [Saiba mais](https://web.dev/uses-long-cache-ttl/)."
@@ -876,7 +876,7 @@
     "message": "Motivo da falha"
   },
   "lighthouse-core/audits/installable-manifest.js | description": {
-    "message": "O service worker é a tecnologia que permite à app utilizar muitas funcionalidades de progressive web app, tais como offline, adicionar ao ecrã principal e notificações push. Com as implementações adequadas do service worker e do manifesto, os navegadores podem solicitar proativamente aos utilizadores que adicionem a sua app ao respetivo ecrã principal, o que pode resultar numa maior interação. [Saiba mais](https://web.dev/installable-manifest/)."
+    "message": "O service worker é a tecnologia que permite à app utilizar muitas funcionalidades de app web progressiva, tais como offline, adicionar ao ecrã principal e notificações push. Com as implementações adequadas do service worker e do manifesto, os navegadores podem solicitar proativamente aos utilizadores que adicionem a sua app ao respetivo ecrã principal, o que pode resultar numa maior interação. [Saiba mais](https://web.dev/installable-manifest/)."
   },
   "lighthouse-core/audits/installable-manifest.js | displayValue": {
     "message": "{itemCount,plural, =1{1 motivo}other{# motivos}}"
@@ -1386,7 +1386,7 @@
     "message": "O tempo de resposta do servidor inicial foi curto"
   },
   "lighthouse-core/audits/service-worker.js | description": {
-    "message": "O service worker é a tecnologia que permite que a sua aplicação utilize muitas funcionalidades de progressive web app, tais como offline, adicionar ao ecrã principal e envios de notificações. [Saiba mais](https://web.dev/service-worker/)."
+    "message": "O service worker é a tecnologia que permite que a sua aplicação utilize muitas funcionalidades de app web progressiva, tais como offline, adicionar ao ecrã principal e envios de notificações. [Saiba mais](https://web.dev/service-worker/)."
   },
   "lighthouse-core/audits/service-worker.js | explanationBadManifest": {
     "message": "Esta página é controlada por um service worker, no entanto, não foi encontrado nenhum `start_url` porque o manifesto falhou ao analisar como um JSON válido."
@@ -1662,7 +1662,7 @@
     "message": "Desempenho"
   },
   "lighthouse-core/config/default-config.js | pwaCategoryDescription": {
-    "message": "Estas verificações validam os aspetos de uma progressive web app. [Saiba mais](https://developers.google.com/web/progressive-web-apps/checklist)."
+    "message": "Estas verificações validam os aspetos de uma app web progressiva. [Saiba mais](https://developers.google.com/web/progressive-web-apps/checklist)."
   },
   "lighthouse-core/config/default-config.js | pwaCategoryManualDescription": {
     "message": "A [Lista de verificação de PWA](https://developers.google.com/web/progressive-web-apps/checklist) de referência requer estas verificações, mas as mesmas não são verificadas automaticamente pelo Lighthouse. Não afetam a sua pontuação, mas é importante que as valide manualmente."
@@ -1725,7 +1725,7 @@
     "message": "A diretiva reflected-xss foi descontinuada desde a CSP2. Em alternativa, utilize o cabeçalho X-XSS-Protection."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingBaseUri": {
-    "message": "Missing base-uri allows injected <base> tags to set the base URL for all relative URLs (e.g. scripts) to an attacker controlled domain. Consider setting base-uri to 'none' or 'self'."
+    "message": "A diretiva base-uri em falta permite que as etiquetas <base> injetadas definam o URL de base para todos os URLs relativos (por exemplo, scripts) como um domínio controlado por um atacante. Considere definir base-uri como \"none\" ou \"self\"."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingObjectSrc": {
     "message": "Os elementos controlados por object-src são considerados funcionalidades antigas. Considere definir object-src como \"none\" para evitar a injeção de plug-ins que executam scripts inseguros."

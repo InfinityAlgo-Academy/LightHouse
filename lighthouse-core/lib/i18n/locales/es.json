@@ -513,16 +513,16 @@
     "message": "Minifica los recursos JavaScript"
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | description": {
-    "message": "Elimina las reglas inactivas de las hojas de estilo y retrasa la carga de los archivos CSS que no se utilicen para el contenido de la parte visible a primera vista. Así, se reducirán los bytes consumidos innecesariamente por la actividad de red. [Más información](https://web.dev/unused-css-rules/)"
+    "message": "Reduce las reglas que no se usen de las hojas de estilo y retrasa las CSS que no se utilicen para el contenido de la parte visible a primera vista. Así, se reducirán los bytes consumidos por la actividad de red. [Más información](https://web.dev/unused-css-rules/)"
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | title": {
-    "message": "Elimina archivos CSS sin usar"
+    "message": "Reduce el contenido CSS que no se use"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "Quita el contenido JavaScript que no se use para reducir el número de bytes que consume la actividad de red. [Más información](https://web.dev/unused-javascript/)"
+    "message": "Reduce el contenido JavaScript que no se use y retrasa la carga de secuencias de comandos hasta que se necesiten. Así, se reducirán los bytes consumidos por la actividad de red. [Más información](https://web.dev/unused-javascript/)"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
-    "message": "Quita los recursos JavaScript que no se usen"
+    "message": "Reduce el contenido JavaScript que no se use"
   },
   "lighthouse-core/audits/byte-efficiency/uses-long-cache-ttl.js | description": {
     "message": "Una duración en caché más larga puede aumentar el número de visitas repetidas a tu página. [Más información](https://web.dev/uses-long-cache-ttl/)"
@@ -1725,7 +1725,7 @@
     "message": "La directiva reflected-xss está obsoleta desde CSP2. Usa el encabezado X-XSS-Protection en su lugar."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingBaseUri": {
-    "message": "Missing base-uri allows injected <base> tags to set the base URL for all relative URLs (e.g. scripts) to an attacker controlled domain. Consider setting base-uri to 'none' or 'self'."
+    "message": "La falta de base-uri permite que las etiquetas <base> insertadas establezcan la URL base para todas las URLs relativas (por ejemplo, secuencias de comandos) en un dominio controlado por un atacante. Puedes asignar el valor 'none' o 'self' a base-uri."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingObjectSrc": {
     "message": "Los elementos que controla la directiva object-src se consideran características antiguas. Puedes asignar el valor none a object-src para evitar la inserción de complementos que ejecuten secuencias de comandos que no son seguras."

@@ -513,16 +513,16 @@
     "message": "[Mîñîƒý ĴåvåŠçŕîþţ one two three]"
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | description": {
-    "message": "[Ŕémövé ðéåð ŕûļéš ƒŕöm šţýļéšĥééţš åñð ðéƒéŕ ţĥé ļöåðîñĝ öƒ ÇŠŠ ñöţ ûšéð ƒöŕ åбövé-ţĥé-ƒöļð çöñţéñţ ţö ŕéðûçé ûññéçéššåŕý бýţéš çöñšûméð бý ñéţŵöŕķ åçţîvîţý. ᐅ[ᐊĻéåŕñ möŕéᐅ](https://web.dev/unused-css-rules/)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone twentytwo twentythree twentyfour]"
+    "message": "[Ŕéðûçé ûñûšéð ŕûļéš ƒŕöm šţýļéšĥééţš åñð ðéƒéŕ ÇŠŠ ñöţ ûšéð ƒöŕ åбövé-ţĥé-ƒöļð çöñţéñţ ţö ðéçŕéåšé бýţéš çöñšûméð бý ñéţŵöŕķ åçţîvîţý. ᐅ[ᐊĻéåŕñ möŕéᐅ](https://web.dev/unused-css-rules/)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone twentytwo]"
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | title": {
-    "message": "[Ŕémövé ûñûšéð ÇŠŠ one two three]"
+    "message": "[Ŕéðûçé ûñûšéð ÇŠŠ one two three]"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "[Ŕémövé ûñûšéð ĴåvåŠçŕîþţ ţö ŕéðûçé бýţéš çöñšûméð бý ñéţŵöŕķ åçţîvîţý. ᐅ[ᐊĻéåŕñ möŕéᐅ](https://web.dev/unused-javascript/)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen]"
+    "message": "[Ŕéðûçé ûñûšéð ĴåvåŠçŕîþţ åñð ðéƒéŕ ļöåðîñĝ šçŕîþţš ûñţîļ ţĥéý åŕé ŕéqûîŕéð ţö ðéçŕéåšé бýţéš çöñšûméð бý ñéţŵöŕķ åçţîvîţý. ᐅ[ᐊĻéåŕñ möŕéᐅ](https://web.dev/unused-javascript/)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone]"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
-    "message": "[Ŕémövé ûñûšéð ĴåvåŠçŕîþţ one two three]"
+    "message": "[Ŕéðûçé ûñûšéð ĴåvåŠçŕîþţ one two three]"
   },
   "lighthouse-core/audits/byte-efficiency/uses-long-cache-ttl.js | description": {
     "message": "[Å ļöñĝ çåçĥé ļîƒéţîmé çåñ šþééð ûþ ŕéþéåţ vîšîţš ţö ýöûŕ þåĝé. ᐅ[ᐊĻéåŕñ möŕéᐅ](https://web.dev/uses-long-cache-ttl/)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen]"
@@ -1725,7 +1725,7 @@
     "message": "[ŕéƒļéçţéð-xšš îš ðéþŕéçåţéð šîñçé ÇŠÞ2. Þļéåšé, ûšé ţĥé X-XŠŠ-Þŕöţéçţîöñ ĥéåðéŕ îñšţéåð. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen]"
   },
   "lighthouse-core/lib/csp-evaluator.js | missingBaseUri": {
-    "message": "Missing base-uri allows injected <base> tags to set the base URL for all relative URLs (e.g. scripts) to an attacker controlled domain. Consider setting base-uri to 'none' or 'self'."
+    "message": "[Mîššîñĝ бåšé-ûŕî åļļöŵš îñĵéçţéð <base> ţåĝš ţö šéţ ţĥé бåšé ÛŔĻ ƒöŕ åļļ ŕéļåţîvé ÛŔĻš (é.ĝ. šçŕîþţš) ţö åñ åţţåçķéŕ çöñţŕöļļéð ðömåîñ. Çöñšîðéŕ šéţţîñĝ бåšé-ûŕî ţö 'ñöñé' öŕ 'šéļƒ'. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone twentytwo twentythree twentyfour twentyfive]"
   },
   "lighthouse-core/lib/csp-evaluator.js | missingObjectSrc": {
     "message": "[Éļéméñţš çöñţŕöļļéð бý öбĵéçţ-šŕç åŕé çöñšîðéŕéð ļéĝåçý ƒéåţûŕéš. Çöñšîðéŕ šéţţîñĝ öбĵéçţ-šŕç ţö 'ñöñé' ţö þŕévéñţ ţĥé îñĵéçţîöñ öƒ þļûĝîñš ţĥåţ éxéçûţé ûñšåƒé šçŕîþţš. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone twentytwo twentythree twentyfour]"

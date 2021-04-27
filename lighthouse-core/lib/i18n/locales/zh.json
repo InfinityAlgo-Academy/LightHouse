@@ -513,16 +513,16 @@
     "message": "缩减 JavaScript"
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | description": {
-    "message": "从样式表中移除无效规则并延迟加载首屏内容未使用的 CSS 可减少网络活动的无谓消耗。[了解详情](https://web.dev/unused-css-rules/)。"
+    "message": "请从样式表中减少未使用的规则，并延迟加载首屏内容未用到的 CSS，以减少网络活动耗用的字节数。[了解详情](https://web.dev/unused-css-rules/)。"
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | title": {
-    "message": "移除未使用的 CSS"
+    "message": "减少未使用的 CSS"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "移除未使用的 JavaScript 以减少网络活动消耗的字节数据。[了解详情](https://web.dev/unused-javascript/)。"
+    "message": "请减少未使用的 JavaScript，并等到需要使用时再加载脚本，以减少网络活动耗用的字节数。[了解详情](https://web.dev/unused-javascript/)。"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
-    "message": "移除未使用的 JavaScript"
+    "message": "减少未使用的 JavaScript"
   },
   "lighthouse-core/audits/byte-efficiency/uses-long-cache-ttl.js | description": {
     "message": "延长缓存期限可加快重访您网页的速度。[了解详情](https://web.dev/uses-long-cache-ttl/)。"
@@ -1725,7 +1725,7 @@
     "message": "自 CSP2 起，reflected-xss 已被弃用。请改用 X-XSS-Protection 标头。"
   },
   "lighthouse-core/lib/csp-evaluator.js | missingBaseUri": {
-    "message": "Missing base-uri allows injected <base> tags to set the base URL for all relative URLs (e.g. scripts) to an attacker controlled domain. Consider setting base-uri to 'none' or 'self'."
+    "message": "缺少 base-uri 意味着允许使用注入的 <base> 标记将所有相对网址（例如脚本）的基准网址设为一个受攻击者控制的网域。建议您将 base-uri 设为“none”或“self”。"
   },
   "lighthouse-core/lib/csp-evaluator.js | missingObjectSrc": {
     "message": "由 object-src 控制的元素会被视为旧版功能。建议您将 object-src 设为“none”，以防止不良之徒注入会执行不安全脚本的插件。"

@@ -513,16 +513,16 @@
     "message": "Ελαχιστοποίηση JavaScript"
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | description": {
-    "message": "Καταργήστε τους ανενεργούς κανόνες από τα φύλλα στιλ και αναβάλετε τη φόρτωση των CSS που δεν χρησιμοποιούνται για το περιεχόμενο στο πάνω μέρος της σελίδας, για να ελαττώσετε τα περιττά byte που καταναλώνονται από τη δραστηριότητα δικτύου. [Μάθετε περισσότερα](https://web.dev/unused-css-rules/)."
+    "message": "Μειώστε τους κανόνες που δεν χρησιμοποιούνται από τα φύλλα στιλ και αναβάλλετε τη φόρτωση στοιχείων CSS που δεν χρησιμοποιούνται για περιεχόμενο στο επάνω μέρος, προκειμένου να μειωθούν τα byte που καταναλώνονται από τη δραστηριότητα δικτύου. [Μάθετε περισσότερα](https://web.dev/unused-css-rules/)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | title": {
-    "message": "Κατάργηση CSS που δεν χρησιμοποιείται"
+    "message": "Μείωση στοιχείων CSS που δεν χρησιμοποιούνται"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "Καταργήστε τυχόν JavaScript που δεν χρησιμοποιείται, για να μειώσετε τα byte που καταναλώνονται από τη δραστηριότητα δικτύου. [Μάθετε περισσότερα](https://web.dev/unused-javascript/)."
+    "message": "Μειώστε τα στοιχεία JavaScript που δεν χρησιμοποιούνται και αναβάλλετε τη φόρτωση σεναρίων μέχρι να ζητηθούν, προκειμένου να μειωθούν τα byte που καταναλώνονται από τη δραστηριότητα δικτύου. [Μάθετε περισσότερα](https://web.dev/unused-javascript/)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
-    "message": "Κατάργηση JavaScript που δεν χρησιμοποιείται"
+    "message": "Μείωση στοιχείων JavaScript που δεν χρησιμοποιούνται"
   },
   "lighthouse-core/audits/byte-efficiency/uses-long-cache-ttl.js | description": {
     "message": "Η μεγάλη διάρκεια ζωής της κρυφής μνήμης μπορεί να επιταχύνει τις επαναλαμβανόμενες επισκέψεις στη σελίδα σας. [Μάθετε περισσότερα](https://web.dev/uses-long-cache-ttl/)."
@@ -1725,7 +1725,7 @@
     "message": "Η οδηγία reflected-xss καταργήθηκε από την έκδοση CSP2. Αντ' αυτού, χρησιμοποιήστε την κεφαλίδα X-XSS-Protection."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingBaseUri": {
-    "message": "Missing base-uri allows injected <base> tags to set the base URL for all relative URLs (e.g. scripts) to an attacker controlled domain. Consider setting base-uri to 'none' or 'self'."
+    "message": "Το base-uri που λείπει επιτρέπει στις ενσωματωμένες ετικέτες <base> να ορίζουν το βασικό URL για όλα τα σχετικά URL (π.χ. σενάρια) σε έναν τομέα που ελέγχεται από έναν υπεύθυνο επίθεσης. Εξετάστε το ενδεχόμενο ρύθμισης του base-uri στις επιλογές \"none\" ή \"self\"."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingObjectSrc": {
     "message": "Τα στοιχεία που ελέγχονται από το object-src θεωρούνται λειτουργίες παλαιού τύπου. Εξετάστε το ενδεχόμενο ρύθμισης του object-src σε none για να αποτρέψετε την εισαγωγή προσθηκών που εκτελούν μη ασφαλή σενάρια."

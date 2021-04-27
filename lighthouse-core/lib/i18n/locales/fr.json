@@ -513,16 +513,16 @@
     "message": "Réduisez la taille des ressources JavaScript"
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | description": {
-    "message": "Supprimez les règles inutilisées des feuilles de style et différez le chargement des ressources CSS inutilisées pour le contenu au-dessus de la ligne de flottaison afin de réduire la quantité d'octets inutiles consommés par l'activité réseau. [En savoir plus](https://web.dev/unused-css-rules/)"
+    "message": "Réduisez les règles inutilisées des feuilles de style et différez les ressources CSS non utilisées pour le contenu au-dessus de la ligne de flottaison afin de réduire la quantité d'octets consommés par l'activité réseau. [En savoir plus](https://web.dev/unused-css-rules/)"
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | title": {
-    "message": "Supprimer les ressources CSS inutilisées"
+    "message": "Réduisez les ressources CSS inutilisées"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "Supprimez les ressources JavaScript inutilisées pour réduire la quantité d'octets consommés par l'activité réseau. [En savoir plus](https://web.dev/unused-javascript/)"
+    "message": "Réduisez les ressources JavaScript inutilisées et différez le chargement des scripts tant qu'ils ne sont pas requis afin de réduire la quantité d'octets consommés par l'activité réseau. [En savoir plus](https://web.dev/unused-javascript/)"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
-    "message": "Supprimez les ressources JavaScript inutilisées"
+    "message": "Réduisez les ressources JavaScript inutilisées"
   },
   "lighthouse-core/audits/byte-efficiency/uses-long-cache-ttl.js | description": {
     "message": "Une longue durée de vie du cache peut accélérer les visites répétées sur votre page. [En savoir plus](https://web.dev/uses-long-cache-ttl/)"
@@ -1725,7 +1725,7 @@
     "message": "reflected-xss est obsolète depuis CSP2. Veuillez utiliser l'en-tête X-XSS-Protection à la place."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingBaseUri": {
-    "message": "Missing base-uri allows injected <base> tags to set the base URL for all relative URLs (e.g. scripts) to an attacker controlled domain. Consider setting base-uri to 'none' or 'self'."
+    "message": "L'absence de directive base-uri permet aux balises <base> injectées de définir l'URL de base pour toutes les URL relatives (scripts, par exemple) en tant que domaine contrôlé par un pirate informatique. Envisagez de définir base-uri sur \"none\" ou \"self\"."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingObjectSrc": {
     "message": "Les éléments contrôlés par object-src sont considérés comme des anciennes fonctionnalités. Pensez à définir object-src sur 'none' pour empêcher l'injection de plug-ins qui exécutent des scripts non sécurisés."

@@ -513,16 +513,16 @@
     "message": "JavaScript·samazināšana"
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | description": {
-    "message": "Noņemiet stila lapās kārtulas, kas nedarbojas, un atlieciet pirmajā ekrāna saturā neizmantotā CSS ielādi, lai samazinātu tīkla aktivitātes nevajadzīgi izmantoto baitu apjomu. [Uzziniet vairāk](https://web.dev/unused-css-rules/)."
+    "message": "Noņemiet neizmantotās kārtulas no stilu lapām un atlieciet pirmā ekrāna saturā neizmantotā CSS koda ielādi, lai samazinātu tīkla aktivitātes izmantoto baitu apjomu. [Uzziniet vairāk](https://web.dev/unused-css-rules/)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | title": {
-    "message": "Noņemt neizmantoto CSS"
+    "message": "Noņemiet neizmantoto CSS kodu"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "Noņemiet neizmantoto JavaScript, lai samazinātu tīkla aktivitātes izmantoto baitu apjomu. [Uzziniet vairāk](https://web.dev/unused-javascript/)."
+    "message": "Noņemiet neizmantoto JavaScript kodu un atlieciet skriptu ielādi, līdz tie būs nepieciešami, lai samazinātu tīkla aktivitātes izmantoto baitu apjomu. [Uzziniet vairāk](https://web.dev/unused-javascript/)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
-    "message": "Noņemiet neizmantoto JavaScript"
+    "message": "Noņemiet neizmantoto JavaScript kodu"
   },
   "lighthouse-core/audits/byte-efficiency/uses-long-cache-ttl.js | description": {
     "message": "Iestatot ilgu kešatmiņas mūžu, lapas atkārtoti apmeklējumi varētu paātrināties. [Uzziniet vairāk](https://web.dev/uses-long-cache-ttl/)."
@@ -1725,7 +1725,7 @@
     "message": "Direktīvai “reflected-xss” ir pārtraukts atbalsts kopš politikas versijas CSP2. Tās vietā izmantojiet galveni X-XSS-Protection."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingBaseUri": {
-    "message": "Missing base-uri allows injected <base> tags to set the base URL for all relative URLs (e.g. scripts) to an attacker controlled domain. Consider setting base-uri to 'none' or 'self'."
+    "message": "Direktīvai “base-uri” nav iestatīta vērtība, tāpēc var iepludināt <base> tagus, lai visiem relatīvajiem vietrāžiem URL (piemēram, skriptiem) iestatītu pamata URL, kas atbilst uzbrucēju kontrolētam domēnam. Ieteicams direktīvai “base-uri” iestatīt vērtību “none” vai “self”."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingObjectSrc": {
     "message": "Elementi, kurus kontrolē direktīva “object-src”, ir uzskatāmi par mantotām funkcijām. Apsveriet iespēju iestatīt direktīvai “object-src” vērtību “none”, lai neļautu iepludināt spraudņus, kas izpilda nedrošus skriptus."

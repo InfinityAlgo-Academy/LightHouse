@@ -513,16 +513,16 @@
     "message": "‏‮Minify‬‏ ‏‮JavaScript‬‏"
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | description": {
-    "message": "‏‮Remove‬‏ ‏‮dead‬‏ ‏‮rules‬‏ ‏‮from‬‏ ‏‮stylesheets‬‏ ‏‮and‬‏ ‏‮defer‬‏ ‏‮the‬‏ ‏‮loading‬‏ ‏‮of‬‏ ‏‮CSS‬‏ ‏‮not‬‏ ‏‮used‬‏ ‏‮for‬‏ ‏‮above‬‏-‏‮the‬‏-‏‮fold‬‏ ‏‮content‬‏ ‏‮to‬‏ ‏‮reduce‬‏ ‏‮unnecessary‬‏ ‏‮bytes‬‏ ‏‮consumed‬‏ ‏‮by‬‏ ‏‮network‬‏ ‏‮activity‬‏. [‏‮Learn‬‏ ‏‮more‬‏](https://web.dev/unused-css-rules/)."
+    "message": "‏‮Reduce‬‏ ‏‮unused‬‏ ‏‮rules‬‏ ‏‮from‬‏ ‏‮stylesheets‬‏ ‏‮and‬‏ ‏‮defer‬‏ ‏‮CSS‬‏ ‏‮not‬‏ ‏‮used‬‏ ‏‮for‬‏ ‏‮above‬‏-‏‮the‬‏-‏‮fold‬‏ ‏‮content‬‏ ‏‮to‬‏ ‏‮decrease‬‏ ‏‮bytes‬‏ ‏‮consumed‬‏ ‏‮by‬‏ ‏‮network‬‏ ‏‮activity‬‏. [‏‮Learn‬‏ ‏‮more‬‏](https://web.dev/unused-css-rules/)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | title": {
-    "message": "‏‮Remove‬‏ ‏‮unused‬‏ ‏‮CSS‬‏"
+    "message": "‏‮Reduce‬‏ ‏‮unused‬‏ ‏‮CSS‬‏"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "‏‮Remove‬‏ ‏‮unused‬‏ ‏‮JavaScript‬‏ ‏‮to‬‏ ‏‮reduce‬‏ ‏‮bytes‬‏ ‏‮consumed‬‏ ‏‮by‬‏ ‏‮network‬‏ ‏‮activity‬‏. [‏‮Learn‬‏ ‏‮more‬‏](https://web.dev/unused-javascript/)."
+    "message": "‏‮Reduce‬‏ ‏‮unused‬‏ ‏‮JavaScript‬‏ ‏‮and‬‏ ‏‮defer‬‏ ‏‮loading‬‏ ‏‮scripts‬‏ ‏‮until‬‏ ‏‮they‬‏ ‏‮are‬‏ ‏‮required‬‏ ‏‮to‬‏ ‏‮decrease‬‏ ‏‮bytes‬‏ ‏‮consumed‬‏ ‏‮by‬‏ ‏‮network‬‏ ‏‮activity‬‏. [‏‮Learn‬‏ ‏‮more‬‏](https://web.dev/unused-javascript/)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
-    "message": "‏‮Remove‬‏ ‏‮unused‬‏ ‏‮JavaScript‬‏"
+    "message": "‏‮Reduce‬‏ ‏‮unused‬‏ ‏‮JavaScript‬‏"
   },
   "lighthouse-core/audits/byte-efficiency/uses-long-cache-ttl.js | description": {
     "message": "‏‮A‬‏ ‏‮long‬‏ ‏‮cache‬‏ ‏‮lifetime‬‏ ‏‮can‬‏ ‏‮speed‬‏ ‏‮up‬‏ ‏‮repeat‬‏ ‏‮visits‬‏ ‏‮to‬‏ ‏‮your‬‏ ‏‮page‬‏. [‏‮Learn‬‏ ‏‮more‬‏](https://web.dev/uses-long-cache-ttl/)."
@@ -1725,7 +1725,7 @@
     "message": "‏‮reflected‬‏-‏‮xss‬‏ ‏‮is‬‏ ‏‮deprecated‬‏ ‏‮since‬‏ ‏‮CSP‬‏2. ‏‮Please‬‏, ‏‮use‬‏ ‏‮the‬‏ ‏‮X‬‏-‏‮XSS‬‏-‏‮Protection‬‏ ‏‮header‬‏ ‏‮instead‬‏."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingBaseUri": {
-    "message": "Missing base-uri allows injected <base> tags to set the base URL for all relative URLs (e.g. scripts) to an attacker controlled domain. Consider setting base-uri to 'none' or 'self'."
+    "message": "‏‮Missing‬‏ ‏‮base‬‏-‏‮uri‬‏ ‏‮allows‬‏ ‏‮injected‬‏ <base> ‏‮tags‬‏ ‏‮to‬‏ ‏‮set‬‏ ‏‮the‬‏ ‏‮base‬‏ ‏‮URL‬‏ ‏‮for‬‏ ‏‮all‬‏ ‏‮relative‬‏ ‏‮URLs‬‏ (‏‮e‬‏.‏‮g‬‏. ‏‮scripts‬‏) ‏‮to‬‏ ‏‮an‬‏ ‏‮attacker‬‏ ‏‮controlled‬‏ ‏‮domain‬‏. ‏‮Consider‬‏ ‏‮setting‬‏ ‏‮base‬‏-‏‮uri‬‏ ‏‮to‬‏ '‏‮none‬‏' ‏‮or‬‏ '‏‮self‬‏'."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingObjectSrc": {
     "message": "‏‮Elements‬‏ ‏‮controlled‬‏ ‏‮by‬‏ ‏‮object‬‏-‏‮src‬‏ ‏‮are‬‏ ‏‮considered‬‏ ‏‮legacy‬‏ ‏‮features‬‏. ‏‮Consider‬‏ ‏‮setting‬‏ ‏‮object‬‏-‏‮src‬‏ ‏‮to‬‏ '‏‮none‬‏' ‏‮to‬‏ ‏‮prevent‬‏ ‏‮the‬‏ ‏‮injection‬‏ ‏‮of‬‏ ‏‮plugins‬‏ ‏‮that‬‏ ‏‮execute‬‏ ‏‮unsafe‬‏ ‏‮scripts‬‏."

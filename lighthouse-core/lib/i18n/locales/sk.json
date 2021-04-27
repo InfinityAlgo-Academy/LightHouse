@@ -513,16 +513,16 @@
     "message": "Minifikujte JavaScript"
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | description": {
-    "message": "Odstráňte nepoužívané pravidlá zo šablón štýlov a odložte načítavanie šablón CSS, ktoré sa nepoužívajú pre obsah nad záhybom stránky, čím znížite zbytočnú spotrebu bajtov sieťovou aktivitou. [Ďalšie informácie](https://web.dev/unused-css-rules/)"
+    "message": "Zredukujte nepoužívané pravidlá v šablónach štýlov a odložte šablóny CSS, ktoré sa nepoužívajú pre obsah nad záhybom stránky, čím znížite spotrebu bajtov aktivitou v sieti. [Ďalšie informácie](https://web.dev/unused-css-rules/)"
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | title": {
-    "message": "Odstráňte nepoužívané šablóny CSS"
+    "message": "Zredukujte nepoužívané šablóny CSS"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "Odstráňte nepoužívaný JavaScript a znížte tak spotrebu bajtov sieťovou aktivitou. [Ďalšie informácie](https://web.dev/unused-javascript/)"
+    "message": "Zredukujte nepoužívaný jazyk JavaScript a odložte načítavanie skriptov do okamihu, kedy budú potrebné, čím znížite spotrebu bajtov aktivitou v sieti. [Ďalšie informácie](https://web.dev/unused-javascript/)"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
-    "message": "Odstráňte nepoužívaný JavaScript"
+    "message": "Zredukujte nepoužívaný jazyk JavaScript"
   },
   "lighthouse-core/audits/byte-efficiency/uses-long-cache-ttl.js | description": {
     "message": "Dlhá životnosť vyrovnávacej pamäte môže zrýchliť opakované návštevy stránky. [Ďalšie informácie](https://web.dev/uses-long-cache-ttl/)"
@@ -1725,7 +1725,7 @@
     "message": "Podpora direktívy reflected-xss bola ukončená vo verzii PZO2. Použite namiesto nej hlavičku X-XSS-Protection."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingBaseUri": {
-    "message": "Missing base-uri allows injected <base> tags to set the base URL for all relative URLs (e.g. scripts) to an attacker controlled domain. Consider setting base-uri to 'none' or 'self'."
+    "message": "Chýbajúci prvok base-uri umožňuje vloženým značkám <base> nastaviť základnú webovú adresu pre všetky relatívne webové adresy (napr. skripty) na doménu ovládanú útočníkom. Prvok base-uri odporúčame nastaviť na „none“ alebo „self“."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingObjectSrc": {
     "message": "Prvky ovládané direktívou object-src sa považujú za staré funkcie. Odporúčame direktívu object-src nastaviť na none, aby ste zabránili vloženiu doplnkov spúšťajúcich nebezpečné skripty."

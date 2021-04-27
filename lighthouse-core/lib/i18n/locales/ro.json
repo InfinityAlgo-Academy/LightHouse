@@ -513,16 +513,16 @@
     "message": "Comprimă codul JavaScript"
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | description": {
-    "message": "Elimină regulile nefolosite din foile de stil și amână încărcarea conținutului CSS nefolosit pentru conținutul din partea superioară a paginii ca să reduci numărul de byți consumați de activitatea în rețea. [Află mai multe](https://web.dev/unused-css-rules/)."
+    "message": "Redu regulile nefolosite din foile de stil și amână codul CSS nefolosit pentru conținutul din partea superioară a paginii ca să reduci numărul de byți consumați de activitatea în rețea. [Află mai multe](https://web.dev/unused-css-rules/)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | title": {
-    "message": "Elimină conținutul CSS nefolosit"
+    "message": "Redu conținutul CSS nefolosit"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "Elimină codul JavaScript nefolosit pentru a reduce byții consumați de activitatea rețelei. [Află mai multe](https://web.dev/unused-javascript/)."
+    "message": "Redu codul JavaScript nefolosit și amână încărcarea scripturilor până când sunt necesare ca să reduci numărul de byți consumați de activitatea în rețea. [Află mai multe](https://web.dev/unused-javascript/)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
-    "message": "Elimină codul JavaScript nefolosit"
+    "message": "Redu codul JavaScript nefolosit"
   },
   "lighthouse-core/audits/byte-efficiency/uses-long-cache-ttl.js | description": {
     "message": "O durată lungă a memoriei cache poate grăbi accesările repetate ale paginii. [Află mai multe](https://web.dev/uses-long-cache-ttl/)."
@@ -1725,7 +1725,7 @@
     "message": "Directiva reflected-xss este învechită începând cu versiunea CSP2. Folosește antetul X-XSS-Protection în locul acesteia."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingBaseUri": {
-    "message": "Missing base-uri allows injected <base> tags to set the base URL for all relative URLs (e.g. scripts) to an attacker controlled domain. Consider setting base-uri to 'none' or 'self'."
+    "message": "Lipsa directivei base-uri permite etichetelor <base> injectate să seteze adresa URL de bază pentru toate adresele URL relative (de ex., cu scripturi) ale unui domeniu controlat de atacatori. Îți recomandăm să setezi base-uri la none sau self."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingObjectSrc": {
     "message": "Elementele controlate prin object-src sunt considerate funcții moștenite. Îți recomandăm să setezi object-src la none pentru a preveni injectarea de pluginuri care execută scripturi nesigure."
