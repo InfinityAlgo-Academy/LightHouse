@@ -17,21 +17,12 @@ Unless required by applicable law or agreed to in writing, software distributed 
   <link rel="stylesheet" href="styles/bundled.css">
 </head>
 
-<body>
+<body class="vars">
   <main class="lh-main">
     <div class="lh-settings">
       <header>
         <div class="lh-header--section">
-          <style>
-            .lh-topbar__logo {
-              width: 24px;
-              height: 24px;
-              user-select: none;
-              flex: none;
-            }
-          </style>
-
-          <div>
+          <span>
             <!-- Lighthouse logo. Stolen from templates.html -->
             <svg class="lh-topbar__logo" viewBox="0 0 24 24">
               <defs>
@@ -62,14 +53,16 @@ Unless required by applicable law or agreed to in writing, software distributed 
                 <path fill="url(#lh-topbar__logo--d)" fill-rule="nonzero" d="M6 0l4.125 2.625v3.75H12v2.25h-1.688l1.5 9.375H.188l1.5-9.375H0v-2.25h1.875V2.648z" transform="translate(6 3)"/>
               </g>
             </svg>
-
+  
             <span class="lh-header--title lh-text-dim">Lighthouse Treemap</span>
-          </div>
+          </span>
+
+          <select class="bundle-selector"></select>
         </div>
 
         <div class="lh-header--section">
           <span class="lh-header--url-and-size">
-            <a href="" class="lh-header--url" target="_blank" rel="noopener"></a> • <span class="lh-header--size lh-text-dim"></span></span>
+            <a href="" class="lh-header--url" target="_blank" rel="noopener"></a> <span class="lh-text-dim">·</span> <span class="lh-header--size lh-text-dim"></span></span>
           </span>
           <div class="lh-mode-wrapper">
             <div class="lh-modes">

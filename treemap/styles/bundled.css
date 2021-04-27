@@ -4,8 +4,21 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
+.vars {
+  /* Palette using Material Design Colors
+   * https://www.materialui.co/colors */
+  --color-gray-600: #757575;
+  --color-gray-900: #212121;
+
+  --text-color-secondary: var(--color-gray-600);
+  --text-color: var(--color-gray-900);
+  --view-mode-label-color-active: #2a67ce;
+  --view-mode-sublabel-color-active: #4484f3c7;
+}
+
 body {
   font-family: '.SFNSDisplay-Regular', 'Helvetica Neue', 'Lucida Grande', sans-serif;
+  color: var(--text-color);
   margin: 0;
   overflow-y: hidden;
   height: 100vh;
@@ -14,7 +27,7 @@ body {
 }
 
 .lh-text-dim {
-  color: grey;
+  color: var(--text-color-secondary);
 }
 
 .lh-main {
@@ -27,8 +40,10 @@ body {
 
 .lh-header--section {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+}
+.lh-header--section:nth-of-type(2) {
   font-size: 20px;
 }
 .lh-header--url {
@@ -37,6 +52,18 @@ body {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+}
+
+.bundle-selector {
+  width: 50%;
+  padding: 2px;
+}
+
+.lh-topbar__logo {
+  width: 24px;
+  height: 24px;
+  user-select: none;
+  flex: none;
 }
 
 .lh-modes {
@@ -49,7 +76,8 @@ body {
 
 .view-mode {
   cursor: pointer;
-  border: solid 1px blue;
+  border: solid 1px #e1e2e5;
+  box-shadow: 0 0 0 1px #e1e2e5;
   padding: 5px;
   font-size: 16px;
 }
@@ -62,7 +90,14 @@ body {
   border-bottom-right-radius: 2px;
 }
 .view-mode--active {
-  background-color: lightblue;
+  background-color: #e7f1fe;
+  border-color: #d2e3fc;
+}
+.view-mode--active .view-mode__label {
+  color: var(--view-mode-label-color-active);
+}
+.view-mode--active .view-mode__sublabel {
+  color: var(--view-mode-sublabel-color-active);
 }
 
 .view-mode__button {
@@ -71,7 +106,7 @@ body {
   left: -9999px;
 }
 
-label.view-mode__label {
+.view-mode label {
   cursor: pointer;
 }
 
