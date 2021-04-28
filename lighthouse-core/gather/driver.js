@@ -72,13 +72,13 @@ class Driver {
   online = true;
 
   // eslint-disable-next-line no-invalid-this
-  fetcher = new Fetcher(this);
-
-  // eslint-disable-next-line no-invalid-this
   executionContext = new ExecutionContext(this);
 
   // eslint-disable-next-line no-invalid-this
   defaultSession = this;
+
+  // eslint-disable-next-line no-invalid-this
+  fetcher = new Fetcher(this.defaultSession, this.executionContext);
 
   /**
    * @param {Connection} connection

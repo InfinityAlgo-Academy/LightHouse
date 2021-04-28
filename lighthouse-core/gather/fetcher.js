@@ -14,13 +14,16 @@
 /* global document */
 
 const log = require('lighthouse-logger');
+const {getBrowserVersion} = require('./driver/environment.js');
 
 class Fetcher {
   /**
-   * @param {import('./driver.js')} driver
+   * @param {LH.Gatherer.FRProtocolSession} session
+   * @param {import('./driver/execution-context.js')} executionContext
    */
-  constructor(driver) {
-    this.driver = driver;
+  constructor(session, executionContext) {
+    this.session = session;
+    this.executionContext = executionContext;
     /** @type {Map<string, (event: LH.Crdp.Fetch.RequestPausedEvent) => void>} */
     this._onRequestPausedHandlers = new Map();
     this._onRequestPaused = this._onRequestPaused.bind(this);
@@ -49,18 +52,18 @@ class Fetcher {
     if (this._enabled) return;
 
     this._enabled = true;
-    await this.driver.sendCommand('Fetch.enable', {
+    await this.session.sendCommand('Fetch.enable', {
       patterns: [{requestStage: 'Request'}, {requestStage: 'Response'}],
     });
-    await this.driver.on('Fetch.requestPaused', this._onRequestPaused);
+    await this.session.on('Fetch.requestPaused', this._onRequestPaused);
   }
 
   async disable() {
     if (!this._enabled) return;
 
     this._enabled = false;
-    await this.driver.off('Fetch.requestPaused', this._onRequestPaused);
-    await this.driver.sendCommand('Fetch.disable');
+    await this.session.off('Fetch.requestPaused', this._onRequestPaused);
+    await this.session.sendCommand('Fetch.disable');
     this._onRequestPausedHandlers.clear();
   }
 
@@ -81,7 +84,7 @@ class Fetcher {
       handler(event);
     } else {
       // Nothing cares about this URL, so continue.
-      this.driver.sendCommand('Fetch.continueRequest', {requestId: event.requestId}).catch(err => {
+      this.session.sendCommand('Fetch.continueRequest', {requestId: event.requestId}).catch(err => {
         log.error('Fetcher', `Failed to continueRequest: ${err.message}`);
       });
     }
@@ -104,7 +107,7 @@ class Fetcher {
     // `Network.loadNetworkResource` was introduced in M88.
     // The long timeout bug with `IO.read` was fixed in M92:
     // https://bugs.chromium.org/p/chromium/issues/detail?id=1191757
-    const milestone = await this.driver.getBrowserVersion().then(v => v.milestone);
+    const milestone = await getBrowserVersion(this.session).then(v => v.milestone);
     if (milestone >= 92) {
       return await this._fetchResourceOverProtocol(url, options);
     }
@@ -126,7 +129,7 @@ class Fetcher {
       if (elapsedTime > options.timeout) {
         throw new Error('Waiting for the end of the IO stream exceeded the allotted time.');
       }
-      ioResponse = await this.driver.sendCommand('IO.read', {handle});
+      ioResponse = await this.session.sendCommand('IO.read', {handle});
       const responseData = ioResponse.base64Encoded ?
         Buffer.from(ioResponse.data, 'base64').toString('utf-8') :
         ioResponse.data;
@@ -141,9 +144,9 @@ class Fetcher {
    * @return {Promise<LH.Crdp.IO.StreamHandle>}
    */
   async _loadNetworkResource(url) {
-    await this.driver.sendCommand('Network.enable');
-    const frameTreeResponse = await this.driver.sendCommand('Page.getFrameTree');
-    const networkResponse = await this.driver.sendCommand('Network.loadNetworkResource', {
+    await this.session.sendCommand('Network.enable');
+    const frameTreeResponse = await this.session.sendCommand('Page.getFrameTree');
+    const networkResponse = await this.session.sendCommand('Network.loadNetworkResource', {
       frameId: frameTreeResponse.frameTree.frame.id,
       url,
       options: {
@@ -151,7 +154,7 @@ class Fetcher {
         includeCredentials: true,
       },
     });
-    await this.driver.sendCommand('Network.disable');
+    await this.session.sendCommand('Network.disable');
 
     if (!networkResponse.resource.success || !networkResponse.resource.stream) {
       const statusCode = networkResponse.resource.httpStatusCode || '';
@@ -206,7 +209,7 @@ class Fetcher {
               return {name, value};
             });
 
-          await this.driver.sendCommand('Fetch.continueRequest', {
+          await this.session.sendCommand('Fetch.continueRequest', {
             requestId,
             headers,
           });
@@ -219,7 +222,7 @@ class Fetcher {
           return;
         }
 
-        const responseBody = await this.driver.sendCommand('Fetch.getResponseBody', {requestId});
+        const responseBody = await this.session.sendCommand('Fetch.getResponseBody', {requestId});
         if (responseBody.base64Encoded) {
           resolve(Buffer.from(responseBody.body, 'base64').toString());
         } else {
@@ -227,7 +230,7 @@ class Fetcher {
         }
 
         // Fail the request (from the page's perspective) so that the iframe never loads.
-        await this.driver.sendCommand('Fetch.failRequest', {requestId, errorReason: 'Aborted'});
+        await this.session.sendCommand('Fetch.failRequest', {requestId, errorReason: 'Aborted'});
       };
       this._setOnRequestPausedHandler(url, event => handlerAsync(event).catch(reject));
     });
@@ -270,19 +273,19 @@ class Fetcher {
     ]).finally(() => clearTimeout(timeoutHandle));
 
     // Temporarily disable auto-attaching for this iframe.
-    await this.driver.sendCommand('Target.setAutoAttach', {
+    await this.session.sendCommand('Target.setAutoAttach', {
       autoAttach: false,
       waitForDebuggerOnStart: false,
     });
 
-    const injectionPromise = this.driver.executionContext.evaluate(injectIframe, {
+    const injectionPromise = this.executionContext.evaluate(injectIframe, {
       args: [url],
       useIsolation: true,
     });
 
     const [fetchResult] = await Promise.all([racePromise, injectionPromise]);
 
-    await this.driver.sendCommand('Target.setAutoAttach', {
+    await this.session.sendCommand('Target.setAutoAttach', {
       flatten: true,
       autoAttach: true,
       waitForDebuggerOnStart: true,

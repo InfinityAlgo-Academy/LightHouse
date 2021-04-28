@@ -5,12 +5,21 @@
  */
 'use strict';
 
+/* eslint-env jest */
+
+/** @type {number} */
+let browserMilestone;
+
+jest.mock('../../gather/driver/environment.js', () => ({
+  getBrowserVersion: jest.fn().mockImplementation(() => {
+    return Promise.resolve({milestone: browserMilestone});
+  }),
+}));
+
 const Fetcher = require('../../gather/fetcher.js');
 const Driver = require('../../gather/driver.js');
 const Connection = require('../../gather/connections/connection.js');
 const {createMockSendCommandFn} = require('../test-utils.js');
-
-/* eslint-env jest */
 
 /** @type {Connection} */
 let connectionStub;
@@ -18,17 +27,12 @@ let connectionStub;
 let driver;
 /** @type {Fetcher} */
 let fetcher;
-/** @type {number} */
-let browserMilestone;
 
 beforeEach(() => {
   connectionStub = new Connection();
   driver = new Driver(connectionStub);
-  fetcher = new Fetcher(driver);
+  fetcher = new Fetcher(driver.defaultSession, driver.executionContext);
   browserMilestone = 92;
-  driver.getBrowserVersion = jest.fn().mockImplementation(() => {
-    return Promise.resolve({milestone: browserMilestone});
-  });
 });
 
 describe('.fetchResource', () => {
