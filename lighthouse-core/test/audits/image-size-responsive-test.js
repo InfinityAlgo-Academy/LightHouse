@@ -140,6 +140,18 @@ describe('Images: size audit', () => {
     },
   });
 
+  testImage('wider than the viewport', {
+    score: 1,
+    clientSize: [1000, 100],
+    naturalSize: [5, 5],
+  });
+
+  testImage('taller than the viewport', {
+    score: 1,
+    clientSize: [100, 1000],
+    naturalSize: [5, 5],
+  });
+
   describe('visibility', () => {
     testImage('has no client area', {
       score: 1,

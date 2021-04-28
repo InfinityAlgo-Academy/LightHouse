@@ -61,6 +61,18 @@ function isVisible(imageRect, viewportDimensions) {
 }
 
 /**
+ * @param {{top: number, bottom: number, left: number, right: number}} imageRect
+ * @param {{innerWidth: number, innerHeight: number}} viewportDimensions
+ * @return {boolean}
+ */
+function isSmallerThanViewport(imageRect, viewportDimensions) {
+  return (
+    (imageRect.bottom - imageRect.top) <= viewportDimensions.innerHeight &&
+    (imageRect.right - imageRect.left) <= viewportDimensions.innerWidth
+  );
+}
+
+/**
  * @param {LH.Artifacts.ImageElement} image
  * @return {boolean}
  */
@@ -239,6 +251,7 @@ class ImageSizeResponsive extends Audit {
       .filter(imageHasNaturalDimensions)
       .filter(image => !imageHasRightSize(image, DPR))
       .filter(image => isVisible(image.clientRect, artifacts.ViewportDimensions))
+      .filter(image => isSmallerThanViewport(image.clientRect, artifacts.ViewportDimensions))
       .map(image => getResult(image, DPR));
 
     /** @type {LH.Audit.Details.Table['headings']} */
