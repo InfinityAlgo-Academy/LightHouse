@@ -151,6 +151,16 @@ class ReportUIFeatures {
       toggleInputEl.checked = true;
     }
 
+    const showTreemapApp =
+      this.json.audits['script-treemap-data'] && this.json.audits['script-treemap-data'].details;
+    if (showTreemapApp) {
+      this.addButton({
+        text: Util.i18n.strings.viewTreemapLabel,
+        icon: 'treemap',
+        onClick: () => ReportUIFeatures.openTreemap(this.json),
+      });
+    }
+
     // Fill in all i18n data.
     for (const node of this._dom.findAll('[data-i18n]', this._dom.document())) {
       // These strings are guaranteed to (at least) have a default English string in Util.UIStrings,
@@ -167,6 +177,25 @@ class ReportUIFeatures {
    */
   setTemplateContext(context) {
     this._templateContext = context;
+  }
+
+  /**
+   * @param {{text: string, icon?: string, onClick: () => void}} opts
+   */
+  addButton(opts) {
+    const metricsEl = this._dom.find('.lh-audit-group--metrics', this._document);
+    const classes = [
+      'lh-button',
+    ];
+    if (opts.icon) {
+      classes.push('report-icon');
+      classes.push(`report-icon--${opts.icon}`);
+    }
+    const buttonEl = this._dom.createChildOf(metricsEl, 'button', classes.join(' '));
+    buttonEl.addEventListener('click', opts.onClick);
+    buttonEl.textContent = opts.text;
+    metricsEl.append(buttonEl);
+    return buttonEl;
   }
 
   /**

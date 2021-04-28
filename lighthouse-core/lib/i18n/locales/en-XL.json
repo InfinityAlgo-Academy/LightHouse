@@ -2087,6 +2087,9 @@
   "lighthouse-core/report/html/renderer/util.js | varianceDisclaimer": {
     "message": "V̂ál̂úêś âŕê éŝt́îḿât́êd́ âńd̂ ḿâý v̂ár̂ý. T̂h́ê [ṕêŕf̂ór̂ḿâńĉé ŝćôŕê íŝ ćâĺĉúl̂át̂éd̂](https://web.dev/performance-scoring/) d́îŕêćt̂ĺŷ f́r̂óm̂ t́ĥéŝé m̂ét̂ŕîćŝ."
   },
+  "lighthouse-core/report/html/renderer/util.js | viewTreemapLabel": {
+    "message": "V̂íêẃ T̂ŕêém̂áp̂"
+  },
   "lighthouse-core/report/html/renderer/util.js | warningAuditsGroupTitle": {
     "message": "P̂áŝśêd́ âúd̂ít̂ś b̂út̂ ẃît́ĥ ẃâŕn̂ín̂ǵŝ"
   },

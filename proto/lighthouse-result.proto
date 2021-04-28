@@ -485,6 +485,9 @@ message I18n {
 
     // Label for a row in a table that shows the version of the Axe library used
     string runtime_settings_axe_version = 46;
+
+    // Label for a button that opens the Treemap App
+    string view_treemap_label = 47;
   }
 
   // The message holding all formatted strings
