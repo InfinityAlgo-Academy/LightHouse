@@ -15,6 +15,8 @@ const LoadSimulator = require('../../../computed/load-simulator.js');
 
 const trace = require('../../fixtures/traces/progressive-app-m60.json');
 const devtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
+const traceM78 = require('../../fixtures/traces/lcp-m78.json');
+const devtoolsLogM78 = require('../../fixtures/traces/lcp-m78.devtools.log.json');
 const assert = require('assert').strict;
 
 /* eslint-env jest */
@@ -230,13 +232,45 @@ describe('Byte efficiency base audit', () => {
     let result = await MockAudit.audit(artifacts, {settings, computedCache});
     // expect modest savings
     expect(result.numericValue).toBeLessThan(5000);
-    expect(result.numericValue).toMatchSnapshot();
+    expect(result.numericValue).toMatchInlineSnapshot(`960`);
 
     settings = {throttlingMethod: 'simulate', throttling: ultraSlowThrottling};
     result = await MockAudit.audit(artifacts, {settings, computedCache});
     // expect lots of savings
     expect(result.numericValue).not.toBeLessThan(5000);
-    expect(result.numericValue).toMatchSnapshot();
+    expect(result.numericValue).toMatchInlineSnapshot(`21500`);
+  });
+
+  it('should compute TTI savings differently from load savings', async () => {
+    class MockAudit extends ByteEfficiencyAudit {
+      static audit_(artifacts, records) {
+        return {
+          items: records.map(record => ({url: record.url, wastedBytes: record.transferSize * 0.5})),
+          headings: [],
+        };
+      }
+    }
+
+    class MockTtiAudit extends MockAudit {
+      static computeWasteWithTTIGraph(results, graph, simulator) {
+        return ByteEfficiencyAudit.computeWasteWithTTIGraph(results, graph, simulator,
+          {includeLoad: false});
+      }
+    }
+
+    const artifacts = {
+      traces: {defaultPass: traceM78},
+      devtoolsLogs: {defaultPass: devtoolsLogM78},
+    };
+    const computedCache = new Map();
+
+    const modestThrottling = {rttMs: 150, throughputKbps: 1000, cpuSlowdownMultiplier: 2};
+    const settings = {throttlingMethod: 'simulate', throttling: modestThrottling};
+    const result = await MockAudit.audit(artifacts, {settings, computedCache});
+    const resultTti = await MockTtiAudit.audit(artifacts, {settings, computedCache});
+    expect(resultTti.numericValue).toBeLessThan(result.numericValue);
+    expect(result.numericValue).toMatchInlineSnapshot(`2120`);
+    expect(resultTti.numericValue).toMatchInlineSnapshot(`150`);
   });
 
   it('should allow overriding of computeWasteWithTTIGraph', async () => {
@@ -249,12 +283,9 @@ describe('Byte efficiency base audit', () => {
       }
     }
 
-    class MockJustTTIAudit extends MockAudit {
+    class MockOverrideAudit extends MockAudit {
       static computeWasteWithTTIGraph(results, graph, simulator) {
-        // TODO: Pass in a graph that organically has a lower TTI result rather than forcing it
-        // to be scaled down.
-        return 0.9 * ByteEfficiencyAudit.computeWasteWithTTIGraph(results, graph, simulator,
-          {includeLoad: false});
+        return 0.5 * ByteEfficiencyAudit.computeWasteWithTTIGraph(results, graph, simulator);
       }
     }
 
@@ -267,9 +298,7 @@ describe('Byte efficiency base audit', () => {
     const modestThrottling = {rttMs: 150, throughputKbps: 1000, cpuSlowdownMultiplier: 2};
     const settings = {throttlingMethod: 'simulate', throttling: modestThrottling};
     const result = await MockAudit.audit(artifacts, {settings, computedCache});
-    const resultTti = await MockJustTTIAudit.audit(artifacts, {settings, computedCache});
-    // expect less savings with just TTI
-    expect(resultTti.numericValue).toBeLessThan(result.numericValue);
-    expect({default: result.numericValue, justTTI: resultTti.numericValue}).toMatchSnapshot();
+    const resultOverride = await MockOverrideAudit.audit(artifacts, {settings, computedCache});
+    expect(resultOverride.numericValue).toEqual(result.numericValue * 0.5);
   });
 });
