@@ -17,7 +17,7 @@ const mime = require('mime-types');
 const parseQueryString = require('querystring').parse;
 const parseURL = require('url').parse;
 const URLSearchParams = require('url').URLSearchParams;
-const HEADER_SAFELIST = new Set(['x-robots-tag', 'link']);
+const HEADER_SAFELIST = new Set(['x-robots-tag', 'link', 'content-security-policy']);
 
 const lhRootDirPath = path.join(__dirname, '../../../');
 

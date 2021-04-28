@@ -88,6 +88,10 @@ const smokeTests = [{
   id: 'screenshot',
   expectations: require('./screenshot/expectations.js'),
   config: require('./screenshot/screenshot-config.js'),
+}, {
+  id: 'csp',
+  expectations: require('./csp/csp-expectations.js'),
+  config: require('./csp/csp-config.js'),
 }];
 
 module.exports = smokeTests;
