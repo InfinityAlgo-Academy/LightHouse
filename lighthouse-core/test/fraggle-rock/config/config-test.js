@@ -243,13 +243,6 @@ describe('Fraggle Rock Config', () => {
       expect(() => initializeConfig(configJson, {gatherMode: 'navigation'}))
         .toThrow(/Dependency.*is invalid/);
     });
-
-    it('should throw when navigation needs snapshot', () => {
-      dependentGatherer.meta.supportedModes = ['navigation'];
-      dependencyGatherer.meta.supportedModes = ['snapshot'];
-      expect(() => initializeConfig(configJson, {gatherMode: 'navigation'}))
-        .toThrow(/Dependency.*is invalid/);
-    });
   });
 
   it.todo('should support extension');

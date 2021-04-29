@@ -110,14 +110,16 @@ declare global {
       afterPass(context: LH.Gatherer.PassContext, loadData: LH.Gatherer.LoadData): PhaseResult;
     }
 
+    export type FRGatherPhase = keyof Omit<LH.Gatherer.FRGathererInstance, 'name'|'meta'>
+
     export interface FRGathererInstance<TDependencies extends DependencyKey = DefaultDependenciesKey> {
       name: keyof LH.GathererArtifacts; // temporary COMPAT measure until artifact config support is available
       meta: GathererMeta<TDependencies>;
-      beforeNavigation(context: FRTransitionalContext<DefaultDependenciesKey>): Promise<void>|void;
-      beforeTimespan(context: FRTransitionalContext<DefaultDependenciesKey>): Promise<void>|void;
-      afterTimespan(context: FRTransitionalContext<TDependencies>): PhaseResult;
-      afterNavigation(context: FRTransitionalContext<TDependencies>): PhaseResult;
-      snapshot(context: FRTransitionalContext<TDependencies>): PhaseResult;
+      startInstrumentation(context: FRTransitionalContext<DefaultDependenciesKey>): Promise<void>|void;
+      startSensitiveInstrumentation(context: FRTransitionalContext<DefaultDependenciesKey>): Promise<void>|void;
+      stopSensitiveInstrumentation(context: FRTransitionalContext<TDependencies>): Promise<void>|void;
+      stopInstrumentation(context: FRTransitionalContext<TDependencies>): Promise<void>|void;
+      getArtifact(context: FRTransitionalContext<TDependencies>): PhaseResult;
     }
 
     namespace Simulation {

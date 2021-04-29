@@ -49,7 +49,7 @@ class MetaElements extends FRGatherer {
    * @param {LH.Gatherer.FRTransitionalContext} passContext
    * @return {Promise<LH.Artifacts['MetaElements']>}
    */
-  snapshot(passContext) {
+  getArtifact(passContext) {
     const driver = passContext.driver;
 
     // We'll use evaluateAsync because the `node.getAttribute` method doesn't actually normalize

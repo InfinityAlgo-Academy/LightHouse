@@ -51,10 +51,10 @@ describe('Snapshot Runner', () => {
     });
 
     gathererA = createMockGathererInstance({supportedModes: ['snapshot']});
-    gathererA.snapshot.mockResolvedValue('Artifact A');
+    gathererA.getArtifact.mockResolvedValue('Artifact A');
 
     gathererB = createMockGathererInstance({supportedModes: ['snapshot']});
-    gathererB.snapshot.mockResolvedValue('Artifact B');
+    gathererB.getArtifact.mockResolvedValue('Artifact B');
 
     config = {
       artifacts: [
@@ -85,8 +85,17 @@ describe('Snapshot Runner', () => {
     await snapshot({page, config});
     const artifacts = await mockRunnerRun.mock.calls[0][0]();
     expect(artifacts).toMatchObject({A: 'Artifact A', B: 'Artifact B'});
-    expect(gathererA.snapshot).toHaveBeenCalled();
-    expect(gathererB.snapshot).toHaveBeenCalled();
+    expect(gathererA.getArtifact).toHaveBeenCalled();
+    expect(gathererB.getArtifact).toHaveBeenCalled();
+  });
+
+  it('should not invoke instrumentation methods', async () => {
+    await snapshot({page, config});
+    await mockRunnerRun.mock.calls[0][0]();
+    expect(gathererA.startInstrumentation).not.toHaveBeenCalled();
+    expect(gathererA.startSensitiveInstrumentation).not.toHaveBeenCalled();
+    expect(gathererA.stopSensitiveInstrumentation).not.toHaveBeenCalled();
+    expect(gathererA.stopInstrumentation).not.toHaveBeenCalled();
   });
 
   it('should skip timespan artifacts', async () => {
@@ -96,7 +105,7 @@ describe('Snapshot Runner', () => {
     const artifacts = await mockRunnerRun.mock.calls[0][0]();
     expect(artifacts).toMatchObject({A: 'Artifact A'});
     expect(artifacts).not.toHaveProperty('B');
-    expect(gathererB.snapshot).not.toHaveBeenCalled();
+    expect(gathererB.getArtifact).not.toHaveBeenCalled();
   });
 
   it('should support artifact dependencies', async () => {
@@ -108,7 +117,7 @@ describe('Snapshot Runner', () => {
     await snapshot({page, config});
     const artifacts = await mockRunnerRun.mock.calls[0][0]();
     expect(artifacts).toMatchObject({A: 'Artifact A', B: 'Artifact B'});
-    expect(gathererB.snapshot.mock.calls[0][0]).toMatchObject({
+    expect(gathererB.getArtifact.mock.calls[0][0]).toMatchObject({
       dependencies: {
         ImageElements: 'Artifact A',
       },

@@ -51,10 +51,10 @@ describe('Timespan Runner', () => {
     });
 
     gathererA = createMockGathererInstance({supportedModes: ['timespan']});
-    gathererA.afterTimespan.mockResolvedValue('Artifact A');
+    gathererA.getArtifact.mockResolvedValue('Artifact A');
 
     gathererB = createMockGathererInstance({supportedModes: ['timespan']});
-    gathererB.afterTimespan.mockResolvedValue('Artifact B');
+    gathererB.getArtifact.mockResolvedValue('Artifact B');
 
     config = {
       artifacts: [
@@ -71,10 +71,12 @@ describe('Timespan Runner', () => {
     expect(mockRunnerRun).toHaveBeenCalled();
   });
 
-  it('should invoke beforeTimespan', async () => {
+  it('should invoke startInstrumentation', async () => {
     const timespan = await startTimespan({page, config});
-    expect(gathererA.beforeTimespan).toHaveBeenCalled();
-    expect(gathererB.beforeTimespan).toHaveBeenCalled();
+    expect(gathererA.startInstrumentation).toHaveBeenCalled();
+    expect(gathererB.startInstrumentation).toHaveBeenCalled();
+    expect(gathererA.startSensitiveInstrumentation).toHaveBeenCalled();
+    expect(gathererB.startSensitiveInstrumentation).toHaveBeenCalled();
     await timespan.endTimespan();
   });
 
@@ -96,25 +98,33 @@ describe('Timespan Runner', () => {
     });
   });
 
+  it('should invoke stop instrumentation', async () => {
+    const timespan = await startTimespan({page, config});
+    await timespan.endTimespan();
+    await mockRunnerRun.mock.calls[0][0]();
+    expect(gathererA.stopSensitiveInstrumentation).toHaveBeenCalled();
+    expect(gathererB.stopSensitiveInstrumentation).toHaveBeenCalled();
+    expect(gathererA.stopInstrumentation).toHaveBeenCalled();
+    expect(gathererB.stopInstrumentation).toHaveBeenCalled();
+  });
+
   it('should collect timespan artifacts', async () => {
     const timespan = await startTimespan({page, config});
     await timespan.endTimespan();
     const artifacts = await mockRunnerRun.mock.calls[0][0]();
     expect(artifacts).toMatchObject({A: 'Artifact A', B: 'Artifact B'});
-    expect(gathererA.afterTimespan).toHaveBeenCalled();
-    expect(gathererB.afterTimespan).toHaveBeenCalled();
   });
 
-  it('should carryover failures from beforeTimespan', async () => {
+  it('should carryover failures from startInstrumentation', async () => {
     const artifactError = new Error('BEFORE_TIMESPAN_ERROR');
-    gathererA.beforeTimespan.mockRejectedValue(artifactError);
+    gathererA.startInstrumentation.mockRejectedValue(artifactError);
 
     const timespan = await startTimespan({page, config});
     await timespan.endTimespan();
     const artifacts = await mockRunnerRun.mock.calls[0][0]();
     expect(artifacts).toMatchObject({A: artifactError, B: 'Artifact B'});
-    expect(gathererA.afterTimespan).not.toHaveBeenCalled();
-    expect(gathererB.afterTimespan).toHaveBeenCalled();
+    expect(gathererA.stopInstrumentation).not.toHaveBeenCalled();
+    expect(gathererB.stopInstrumentation).toHaveBeenCalled();
   });
 
   it('should skip snapshot artifacts', async () => {
@@ -125,7 +135,8 @@ describe('Timespan Runner', () => {
     const artifacts = await mockRunnerRun.mock.calls[0][0]();
     expect(artifacts).toMatchObject({A: 'Artifact A'});
     expect(artifacts).not.toHaveProperty('B');
-    expect(gathererB.afterTimespan).not.toHaveBeenCalled();
+    expect(gathererB.startInstrumentation).not.toHaveBeenCalled();
+    expect(gathererB.getArtifact).not.toHaveBeenCalled();
   });
 
   it('should support artifact dependencies', async () => {
@@ -138,7 +149,7 @@ describe('Timespan Runner', () => {
     await timespan.endTimespan();
     const artifacts = await mockRunnerRun.mock.calls[0][0]();
     expect(artifacts).toMatchObject({A: 'Artifact A', B: 'Artifact B'});
-    expect(gathererB.afterTimespan.mock.calls[0][0]).toMatchObject({
+    expect(gathererB.getArtifact.mock.calls[0][0]).toMatchObject({
       dependencies: {
         ImageElements: 'Artifact A',
       },

@@ -7,7 +7,11 @@
 
 const Driver = require('./driver.js');
 const Runner = require('../../runner.js');
-const {collectArtifactDependencies} = require('./runner-helpers.js');
+const {
+  getEmptyArtifactState,
+  collectPhaseArtifacts,
+  awaitArtifacts,
+} = require('./runner-helpers.js');
 const {defaultNavigationConfig} = require('../../config/constants.js');
 const {initializeConfig} = require('../config/config.js');
 const {getBaseArtifacts} = require('./base-artifacts.js');
@@ -19,16 +23,6 @@ const {getBaseArtifacts} = require('./base-artifacts.js');
  * @property {string} requestedUrl
  */
 
-/** @typedef {Record<string, Promise<any>>} IntermediateArtifacts */
-
-/**
- * @typedef CollectPhaseArtifactOptions
- * @property {NavigationContext} navigationContext
- * @property {ArtifactState} artifacts
- * @property {keyof Omit<LH.Gatherer.FRGathererInstance, 'name'|'meta'>} phase
- */
-
-/** @typedef {Record<CollectPhaseArtifactOptions['phase'], IntermediateArtifacts>} ArtifactState */
 
 /**
  * @param {{driver: Driver, config: LH.Config.FRConfig, requestedUrl: string}} args
@@ -56,63 +50,6 @@ async function _setupNavigation({driver, navigation}) {
   // TODO(FR-COMPAT): setup network conditions (throttling & cache state)
 }
 
-/** @type {Set<CollectPhaseArtifactOptions['phase']>} */
-const phasesRequiringDependencies = new Set(['afterTimespan', 'afterNavigation', 'snapshot']);
-/** @type {Record<CollectPhaseArtifactOptions['phase'], LH.Gatherer.GatherMode>} */
-const phaseToGatherMode = {
-  beforeNavigation: 'navigation',
-  beforeTimespan: 'timespan',
-  afterTimespan: 'timespan',
-  afterNavigation: 'navigation',
-  snapshot: 'snapshot',
-};
-/** @type {Record<CollectPhaseArtifactOptions['phase'], CollectPhaseArtifactOptions['phase'] | undefined>} */
-const phaseToPriorPhase = {
-  beforeNavigation: undefined,
-  beforeTimespan: undefined,
-  afterTimespan: 'beforeTimespan',
-  afterNavigation: 'beforeNavigation',
-  snapshot: undefined,
-};
-
-/**
- * Runs the gatherer methods for a particular navigation phase (beforeTimespan/afterNavigation/etc).
- * All gatherer method return values are stored on the artifact state object, organized by phase.
- * This method collects required dependencies, runs the applicable gatherer methods, and saves the
- * result on the artifact state object that was passed as part of `options`.
- *
- * @param {CollectPhaseArtifactOptions} options
- */
-async function _collectPhaseArtifacts({navigationContext, artifacts, phase}) {
-  const gatherMode = phaseToGatherMode[phase];
-  const priorPhase = phaseToPriorPhase[phase];
-  const priorPhaseArtifacts = (priorPhase && artifacts[priorPhase]) || {};
-
-  for (const artifactDefn of navigationContext.navigation.artifacts) {
-    const gatherer = artifactDefn.gatherer.instance;
-    if (!gatherer.meta.supportedModes.includes(gatherMode)) continue;
-
-    const priorArtifactPromise = priorPhaseArtifacts[artifactDefn.id] || Promise.resolve();
-    const artifactPromise = priorArtifactPromise.then(async () => {
-      const dependencies = phasesRequiringDependencies.has(phase)
-        ? await collectArtifactDependencies(artifactDefn, await _mergeArtifacts(artifacts))
-        : {};
-
-      return gatherer[phase]({
-        url: await navigationContext.driver.url(),
-        driver: navigationContext.driver,
-        gatherMode: 'navigation',
-        dependencies,
-      });
-    });
-
-    // Do not set the artifact promise if the result was `undefined`.
-    const result = await artifactPromise.catch(err => err);
-    if (result === undefined) continue;
-    artifacts[phase][artifactDefn.id] = artifactPromise;
-  }
-}
-
 /**
  * @param {NavigationContext} navigationContext
  */
@@ -125,62 +62,28 @@ async function _navigate(navigationContext) {
   // TODO(FR-COMPAT): capture page load errors
 }
 
-/**
- * Merges artifact in Lighthouse order of specificity.
- * If a gatherer method returns `undefined`, the artifact is skipped for that phase (treated as not set).
- *
- *  - Navigation artifacts are the most specific. These win over anything.
- *  - Snapshot artifacts win out next as they have access to all available information.
- *  - Timespan artifacts win when nothing else is defined.
- *
- * @param {ArtifactState} artifactState
- * @return {Promise<Partial<LH.GathererArtifacts>>}
- */
-async function _mergeArtifacts(artifactState) {
-  /** @type {IntermediateArtifacts} */
-  const artifacts = {};
-
-  const artifactResultsInIncreasingPriority = [
-    artifactState.afterTimespan,
-    artifactState.snapshot,
-    artifactState.afterNavigation,
-  ];
-
-  for (const artifactResults of artifactResultsInIncreasingPriority) {
-    for (const [id, promise] of Object.entries(artifactResults)) {
-      const artifact = await promise.catch(err => err);
-      if (artifact === undefined) continue;
-      artifacts[id] = artifact;
-    }
-  }
-
-  return artifacts;
-}
 
 /**
  * @param {NavigationContext} navigationContext
  */
 async function _navigation(navigationContext) {
-  /** @type {ArtifactState} */
-  const artifactState = {
-    beforeNavigation: {},
-    beforeTimespan: {},
-    afterTimespan: {},
-    afterNavigation: {},
-    snapshot: {},
+  const artifactState = getEmptyArtifactState();
+  const options = {
+    gatherMode: /** @type {'navigation'} */ ('navigation'),
+    driver: navigationContext.driver,
+    artifactDefinitions: navigationContext.navigation.artifacts,
+    artifactState,
   };
 
-  const options = {navigationContext, artifacts: artifactState};
-
   await _setupNavigation(navigationContext);
-  await _collectPhaseArtifacts({phase: 'beforeNavigation', ...options});
-  await _collectPhaseArtifacts({phase: 'beforeTimespan', ...options});
+  await collectPhaseArtifacts({phase: 'startInstrumentation', ...options});
+  await collectPhaseArtifacts({phase: 'startSensitiveInstrumentation', ...options});
   await _navigate(navigationContext);
-  await _collectPhaseArtifacts({phase: 'afterTimespan', ...options});
-  await _collectPhaseArtifacts({phase: 'afterNavigation', ...options});
-  await _collectPhaseArtifacts({phase: 'snapshot', ...options});
+  await collectPhaseArtifacts({phase: 'stopSensitiveInstrumentation', ...options});
+  await collectPhaseArtifacts({phase: 'stopInstrumentation', ...options});
+  await collectPhaseArtifacts({phase: 'getArtifact', ...options});
 
-  const artifacts = await _mergeArtifacts(artifactState);
+  const artifacts = await awaitArtifacts(artifactState);
   return {artifacts};
 }
 
@@ -242,7 +145,6 @@ module.exports = {
   navigation,
   _setup,
   _setupNavigation,
-  _collectPhaseArtifacts,
   _navigate,
   _navigation,
   _navigations,

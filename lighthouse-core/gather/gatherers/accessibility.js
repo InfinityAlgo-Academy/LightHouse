@@ -124,7 +124,7 @@ class Accessibility extends FRGatherer {
    * @param {LH.Gatherer.FRTransitionalContext} passContext
    * @return {Promise<LH.Artifacts.Accessibility>}
    */
-  snapshot(passContext) {
+  getArtifact(passContext) {
     const driver = passContext.driver;
 
     return driver.executionContext.evaluate(runA11yChecks, {

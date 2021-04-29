@@ -42,9 +42,11 @@ function createMockSession() {
 function createMockGathererInstance(meta) {
   return {
     meta,
-    beforeTimespan: jest.fn(),
-    afterTimespan: jest.fn(),
-    snapshot: jest.fn(),
+    startInstrumentation: jest.fn(),
+    stopInstrumentation: jest.fn(),
+    startSensitiveInstrumentation: jest.fn(),
+    stopSensitiveInstrumentation: jest.fn(),
+    getArtifact: jest.fn(),
 
     /** @return {LH.Gatherer.FRGathererInstance} */
     asGatherer() {
