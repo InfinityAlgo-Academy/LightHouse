@@ -10,10 +10,11 @@
   --color-gray-600: #757575;
   --color-gray-900: #212121;
 
+  --control-background-color: #e7f1fe;
   --text-color-secondary: var(--color-gray-600);
   --text-color: var(--color-gray-900);
-  --view-mode-label-color-active: #2a67ce;
-  --view-mode-sublabel-color-active: #4484f3c7;
+  --text-color-active: #2a67ce;
+  --text-color-active-secondary: #4484f3c7;
 }
 
 body {
@@ -26,6 +27,15 @@ body {
   flex-direction: column;
 }
 
+.lh-button {
+  background: none;
+  color: var(--text-color-active);
+  border: solid 1px #e1e2e5;
+}
+.lh-button--active {
+  background-color: var(--control-background-color);
+}
+
 .lh-text-dim {
   color: var(--text-color-secondary);
 }
@@ -36,8 +46,14 @@ body {
   grid-template-rows: 0.1fr 1fr 0fr;
   grid-column-gap: 0px;
   grid-row-gap: 0px;
+  transition: grid-template-rows 0.2s;
+  animation: 0.7s curtain cubic-bezier(0.86, 0, 0.07, 1) 0.4s both;
+}
+.lh-main--show-table {
+  grid-template-rows: 0.1fr 1fr 0.3fr;
 }
 
+/* TODO: BEM is backwards here and many other places */
 .lh-header--section {
   display: flex;
   align-items: center;
@@ -52,6 +68,15 @@ body {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+}
+.lh-header__inputs {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.bundle-selector {
+  width: 50%;
+  padding: 2px;
 }
 
 .bundle-selector {
@@ -71,7 +96,35 @@ body {
 }
 
 .lh-treemap {
-  margin: 10px;
+  margin: 2px;
+  contain: content;
+}
+
+.lh-table {
+  overflow-y: hidden;
+}
+
+.tabulator {
+  /* Better default for unloaded portions of table. */
+  background-color: #f3f3f3;
+  contain: strict;
+}
+
+.lh-coverage-bar {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+.lh-coverage-bar--used {
+  background-color: #63acbe;
+  width: calc(100% * var(--used) / var(--max));
+  height: 7px;
+}
+.lh-coverage-bar--unused {
+  background-color: #ee442f;
+  width: calc(100% * var(--unused) / var(--max));
+  height: 7px;
+  margin-left: 2px;
 }
 
 .view-mode {
@@ -90,14 +143,14 @@ body {
   border-bottom-right-radius: 2px;
 }
 .view-mode--active {
-  background-color: #e7f1fe;
+  background-color: var(--control-background-color);
   border-color: #d2e3fc;
 }
 .view-mode--active .view-mode__label {
-  color: var(--view-mode-label-color-active);
+  color: var(--text-color-active);
 }
 .view-mode--active .view-mode__sublabel {
-  color: var(--view-mode-sublabel-color-active);
+  color: var(--text-color-active-secondary);
 }
 
 .view-mode__button {

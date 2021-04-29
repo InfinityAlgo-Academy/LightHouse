@@ -18,7 +18,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
 </head>
 
 <body class="vars">
-  <main class="lh-main">
+  <main class="lh-main lh-main--show-table">
     <div class="lh-settings">
       <header>
         <div class="lh-header--section">
@@ -57,7 +57,10 @@ Unless required by applicable law or agreed to in writing, software distributed 
             <span class="lh-header--title lh-text-dim">Lighthouse Treemap</span>
           </span>
 
-          <select class="bundle-selector"></select>
+          <span class="lh-header__inputs">
+            <select class="bundle-selector"></select>
+            <button class="lh-button lh-button--active lh-button--toggle-table">Toggle Table</button>
+          </span>
         </div>
 
         <div class="lh-header--section">
@@ -75,6 +78,10 @@ Unless required by applicable law or agreed to in writing, software distributed 
 
     <div class="lh-treemap">
       <!-- treemap goes here -->
+    </div>
+
+    <div class="lh-table">
+      <!-- table goes here -->
     </div>
   </main>
 
