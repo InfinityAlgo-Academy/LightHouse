@@ -6,7 +6,7 @@ on:
   pull_request: # run on all PRs, not just PRs to a particular branch
 
 jobs:
-  smoke-devtools:
+  integration:
     runs-on: macos-latest # while macbots are much slower, linux reliably crashes running this
 
     steps:

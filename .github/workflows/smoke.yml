@@ -1,0 +1,110 @@
+name: smoke
+
+on:
+  push:
+    branches: [master]
+  pull_request: # run on all PRs, not just PRs to a particular branch
+
+jobs:
+  # `smoke` runs as a matrix across 4 jobs:
+  #  * The smoke tests are split into two batches, to parallelize.
+  #  * Then, those are run with both Chrome stable and ToT Chromium, in parallel
+  smoke:
+    strategy:
+      matrix:
+        chrome-channel: ['stable', 'ToT']
+        smoke-test-invert: [false, true]
+      # e.g. if set 1 fails, continue with set 2 anyway
+      fail-fast: false
+    runs-on: ubuntu-latest
+    env:
+      # The smokehouse tests run by job `test set 1`. `test set 2` will run the rest.
+      SMOKE_BATCH_1: a11y oopif pwa pwa2 pwa3 dbw redirects errors offline
+    # Job named e.g. "Chrome stable, test set 1".
+    name: Chrome ${{ matrix.chrome-channel }}, batch ${{ matrix.smoke-test-invert == false && '1' || '2' }}
+
+    steps:
+    - name: git clone
+      uses: actions/checkout@v2
+      with:
+        # Depth of at least 2 for codecov coverage diffs. See https://github.com/GoogleChrome/lighthouse/pull/12079
+        fetch-depth: 2
+
+    - name: Use Node.js 12.x
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12.x
+
+    - name: Define ToT chrome path
+      if: matrix.chrome-channel == 'ToT'
+      run: echo "CHROME_PATH=/home/runner/chrome-linux-tot/chrome" >> $GITHUB_ENV
+
+    # Chrome Stable is already installed by default.
+    - name: Install Chrome ToT
+      if: matrix.chrome-channel == 'ToT'
+      working-directory: /home/runner
+      run: bash $GITHUB_WORKSPACE/lighthouse-core/scripts/download-chrome.sh && mv chrome-linux chrome-linux-tot
+
+    - run: yarn install --frozen-lockfile --network-timeout 1000000
+
+    - run: sudo apt-get install xvfb
+    - name: Run smoke tests
+      run: |
+        xvfb-run --auto-servernum yarn c8 yarn smoke --debug -j=1 --retries=2 --invert-match ${{ matrix.smoke-test-invert }} $SMOKE_BATCH_1
+        yarn c8 report --reporter text-lcov > smoke-coverage.lcov
+
+    - name: Upload test coverage to Codecov
+      if: matrix.chrome-channel == 'ToT'
+      uses: codecov/codecov-action@6004246f47ab62d32be025ce173b241cd84ac58e
+      with:
+        flags: smoke
+        file: ./smoke-coverage.lcov
+
+    # Fail if any changes were written to source files.
+    - run: git diff --exit-code
+
+  # Only run smoke tests for windows against stable chrome.
+  smoke-windows:
+    runs-on: windows-latest
+    name: Windows
+
+    steps:
+    - name: git clone
+      uses: actions/checkout@v2
+
+    - name: Use Node.js 12.x
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12.x
+
+    - run: yarn install --frozen-lockfile --network-timeout 1000000
+
+    - name: Run smoke tests
+      # Windows bots are slow, so only run enough tests to verify matching behavior.
+      run: yarn smoke --debug -j=1 --retries=2 dbw oopif offline lantern metrics
+
+    # Fail if any changes were written to source files.
+    - run: git diff --exit-code
+
+  smoke-bundle:
+    runs-on: ubuntu-latest
+    name: Bundled Lighthouse
+
+    steps:
+    - name: git clone
+      uses: actions/checkout@v2
+
+    - name: Use Node.js 12.x
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12.x
+
+    - run: yarn install --frozen-lockfile --network-timeout 1000000
+    - run: yarn build-devtools
+
+    - run: sudo apt-get install xvfb
+    - name: yarn test-bundle
+      run: xvfb-run --auto-servernum yarn test-bundle
+
+    # Fail if any changes were written to source files.
+    - run: git diff --exit-code
