@@ -19,7 +19,7 @@ const log = require('lighthouse-logger');
 const {runSmokehouse} = require('../smokehouse.js');
 const {server, serverForOffline} = require('../../fixtures/static-server.js');
 
-const coreTestDefnsPath = require.resolve('../test-definitions/core-tests.js');
+const coreTestDefnsPath = `${__dirname}/../test-definitions/core-tests.js`;
 
 /**
  * Possible Lighthouse runners. Loaded dynamically so e.g. a CLI run isn't
