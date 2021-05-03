@@ -70,7 +70,7 @@ class LanternEstimatedInputLatency extends LanternMetric {
 
   /**
    * @param {LH.Artifacts.MetricComputationDataInput} data
-   * @param {LH.Audit.Context} context
+   * @param {LH.Artifacts.ComputedContext} context
    * @return {Promise<LH.Artifacts.LanternMetric>}
    */
   static async compute_(data, context) {

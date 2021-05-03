@@ -15,7 +15,7 @@ const LayoutShiftVariants = require('../layout-shift-variants.js');
 class CumulativeLayoutShiftAllFrames {
   /**
    * @param {LH.Trace} trace
-   * @param {LH.Audit.Context} context
+   * @param {LH.Artifacts.ComputedContext} context
    * @return {Promise<{value: number}>}
    */
   static async compute_(trace, context) {

@@ -27,15 +27,16 @@ class TimingSummary {
   /**
      * @param {LH.Trace} trace
      * @param {LH.DevtoolsLog} devtoolsLog
-     * @param {LH.Audit.Context} context
+     * @param {ImmutableObject<LH.Config.Settings>} settings
+     * @param {LH.Artifacts.ComputedContext} context
      * @return {Promise<{metrics: LH.Artifacts.TimingSummary, debugInfo: Record<string,boolean>}>}
      */
-  static async summarize(trace, devtoolsLog, context) {
-    const metricComputationData = {trace, devtoolsLog, settings: context.settings};
+  static async summarize(trace, devtoolsLog, settings, context) {
+    const metricComputationData = {trace, devtoolsLog, settings};
     /**
      * @template TArtifacts
      * @template TReturn
-     * @param {{request: (artifact: TArtifacts, context: LH.Audit.Context) => Promise<TReturn>}} Artifact
+     * @param {{request: (artifact: TArtifacts, context: LH.Artifacts.ComputedContext) => Promise<TReturn>}} Artifact
      * @param {TArtifacts} artifact
      * @return {Promise<TReturn|undefined>}
      */
@@ -141,12 +142,12 @@ class TimingSummary {
     return {metrics, debugInfo};
   }
   /**
-   * @param {{trace: LH.Trace, devtoolsLog: LH.DevtoolsLog}} data
-   * @param {LH.Audit.Context} context
+   * @param {{trace: LH.Trace, devtoolsLog: LH.DevtoolsLog, settings: ImmutableObject<LH.Config.Settings>}} data
+   * @param {LH.Artifacts.ComputedContext} context
    * @return {Promise<{metrics: LH.Artifacts.TimingSummary, debugInfo: Record<string,boolean>}>}
    */
   static async compute_(data, context) {
-    return TimingSummary.summarize(data.trace, data.devtoolsLog, context);
+    return TimingSummary.summarize(data.trace, data.devtoolsLog, data.settings, context);
   }
 }
 

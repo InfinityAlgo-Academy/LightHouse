@@ -140,7 +140,7 @@ class LayoutShiftVariants {
 
   /**
    * @param {LH.Trace} trace
-   * @param {LH.Audit.Context} context
+   * @param {LH.Artifacts.ComputedContext} context
    * @return {Promise<{avgSessionGap5s: number, maxSessionGap1s: number, maxSessionGap1sLimit5s: number, maxSliding1s: number, maxSliding300ms: number}>}
    */
   static async compute_(trace, context) {
