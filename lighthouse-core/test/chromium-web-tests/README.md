@@ -14,6 +14,22 @@ yarn test-devtools
 yarn update:test-devtools
 ```
 
+### Prerequistes
+
+<details>
+  <summary> Install `requests`</summary>
+  
+  Ensure you have `requests` module available globally on your python 2.7 install. New Macs do not come with pip for python 2.7 which is deprecated, so you might have to install that too.
+  
+  
+  ```sh
+  curl https://bootstrap.pypa.io/pip/2.7/get-pip.py -o get-pip.py
+  python get-pip.py
+  pip -m pip install requests
+  ```
+  
+</details>
+
 ### Debugging
 
 * Want logs from Lighthouse? Add `log.log('status', '**** hello test output ' + JSON.stringify({obj}));` which will be visible in the `lighthouse-successful-run.js` output thanks to `LighthouseTestRunner.addStatusListener`.
