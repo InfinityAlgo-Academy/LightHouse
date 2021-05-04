@@ -27,6 +27,8 @@ function createMockSession() {
     once: createMockOnceFn(),
     on: createMockOnFn(),
     off: jest.fn(),
+    addProtocolMessageListener: createMockOnFn(),
+    removeProtocolMessageListener: jest.fn(),
 
     /** @return {LH.Gatherer.FRProtocolSession} */
     asSession() {

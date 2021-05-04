@@ -40,6 +40,7 @@ describe('NetworkMonitor', () => {
     const on = (session.on = jest.fn());
     const addProtocolMessageListener = (session.addProtocolMessageListener = jest.fn());
     sendCommandMock = session.sendCommand = createMockSendCommandFn()
+      .mockResponse('Page.enable')
       .mockResponse('Network.enable');
     /** @type {(event: LH.Protocol.RawEventMessage) => void} */
     session.dispatch = event => {
@@ -109,7 +110,7 @@ describe('NetworkMonitor', () => {
       await monitor.enable();
       expect(sessionMock.on).toHaveBeenCalledTimes(1);
       expect(sessionMock.addProtocolMessageListener).toHaveBeenCalledTimes(1);
-      expect(sendCommandMock).toHaveBeenCalledTimes(1);
+      expect(sendCommandMock).toHaveBeenCalledTimes(2);
     });
   });
 

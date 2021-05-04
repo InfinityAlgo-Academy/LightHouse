@@ -153,6 +153,9 @@ beforeEach(() => {
 
   const storage = require('../../gather/driver/storage.js');
   storage.clearDataForOrigin = jest.fn();
+
+  const navigation = jest.requireMock('../../gather/driver/navigation.js');
+  navigation.gotoURL = jest.fn().mockResolvedValue({finalUrl: 'https://example.com'});
 });
 
 afterEach(() => {
@@ -164,11 +167,9 @@ describe('GatherRunner', function() {
   it('loads a page and updates passContext.URL on redirect', () => {
     const url1 = 'https://example.com';
     const url2 = 'https://example.com/interstitial';
-    const driver = {
-      gotoURL() {
-        return Promise.resolve({finalUrl: url2, timedOut: false});
-      },
-    };
+    const driver = {};
+    const gotoURL = jest.requireMock('../../gather/driver/navigation.js').gotoURL;
+    gotoURL.mockResolvedValue({finalUrl: url2});
 
     const passContext = {
       url: url1,
@@ -186,11 +187,9 @@ describe('GatherRunner', function() {
   it('loads a page and returns a pageLoadError', async () => {
     const url = 'https://example.com';
     const error = new LHError(LHError.errors.NO_FCP);
-    const driver = {
-      gotoURL() {
-        return Promise.reject(error);
-      },
-    };
+    const driver = {};
+    const gotoURL = jest.requireMock('../../gather/driver/navigation.js').gotoURL;
+    gotoURL.mockRejectedValue(error);
 
     const passContext = {
       url,
@@ -237,13 +236,10 @@ describe('GatherRunner', function() {
   it('collects requested and final URLs as an artifact', () => {
     const requestedUrl = 'https://example.com';
     const finalUrl = 'https://example.com/interstitial';
-    const driver = Object.assign({}, fakeDriver, {
-      gotoURL() {
-        return Promise.resolve({finalUrl, timedOut: false});
-      },
-    });
+    const gotoURL = jest.requireMock('../../gather/driver/navigation.js').gotoURL;
+    gotoURL.mockResolvedValue({finalUrl, timedOut: false});
     const config = makeConfig({passes: [{passName: 'defaultPass'}]});
-    const options = {requestedUrl, driver, settings: config.settings};
+    const options = {requestedUrl, driver: fakeDriver, settings: config.settings};
 
     return GatherRunner.run(config.passes, options).then(artifacts => {
       assert.deepStrictEqual(artifacts.URL, {requestedUrl, finalUrl},
@@ -528,12 +524,16 @@ describe('GatherRunner', function() {
     const navigationError = new LHError(LHError.errors.NO_FCP);
     const driver = Object.assign({}, fakeDriver, {
       online: true,
-      /** @param {string} url */
-      gotoURL: url => url.includes('blank') ? null : Promise.reject(navigationError),
       endDevtoolsLog() {
         return networkRecordsToDevtoolsLog([{url: requestedUrl}]);
       },
     });
+
+    const gotoURL = jest.requireMock('../../gather/driver/navigation.js').gotoURL;
+    gotoURL.mockImplementation(
+      /** @param {any} _ @param {string} url */
+      (_, url) => url.includes('blank') ? null : Promise.reject(navigationError)
+    );
 
     const config = makeConfig({
       passes: [{
@@ -567,12 +567,16 @@ describe('GatherRunner', function() {
       .mockRejectedValueOnce(navigationError);
     const driver = Object.assign({}, fakeDriver, {
       online: true,
-      /** @param {string} url */
-      gotoURL: url => url.includes('blank') ? gotoUrlForAboutBlank() : gotoUrlForRealUrl(),
       endDevtoolsLog() {
         return networkRecordsToDevtoolsLog([{url: requestedUrl}]);
       },
     });
+
+    const gotoURL = jest.requireMock('../../gather/driver/navigation.js').gotoURL;
+    gotoURL.mockImplementation(
+      /** @param {any} _ @param {string} url */
+      (_, url) => url.includes('blank') ? gotoUrlForAboutBlank() : gotoUrlForRealUrl()
+    );
 
     const config = makeConfig({
       passes: [{passName: 'defaultPass', recordTrace: true}, {
@@ -938,9 +942,17 @@ describe('GatherRunner', function() {
 
     const requestedUrl = 'https://www.reddit.com/r/nba';
     let firstLoad = true;
-    const driver = Object.assign({}, fakeDriver, {
-      /** @param {string} url Loads the page successfully in the first pass, fails with NO_FCP in the second. */
-      async gotoURL(url) {
+    const driver = Object.assign({}, fakeDriver, {online: true});
+
+    const gotoURL = jest.requireMock('../../gather/driver/navigation.js').gotoURL;
+
+    gotoURL.mockImplementation(
+      /**
+       * Loads the page successfully in the first pass, fails with NO_FCP in the second.
+       * @param {any} _
+       * @param {string} url
+       */
+      (_, url) => {
         if (url.includes('blank')) return null;
         if (firstLoad) {
           firstLoad = false;
@@ -948,9 +960,7 @@ describe('GatherRunner', function() {
         } else {
           throw new LHError(LHError.errors.NO_FCP);
         }
-      },
-      online: true,
-    });
+      });
     const options = {driver, requestedUrl, settings: config.settings};
     const artifacts = await GatherRunner.run(config.passes, options);
 
@@ -1704,10 +1714,10 @@ describe('GatherRunner', function() {
       const requestedUrl = 'http://www.slow-loading-page.com/';
       const timedoutDriver = Object.assign({}, fakeDriver, {
         online: true,
-        gotoURL() {
-          return Promise.resolve({finalUrl: requestedUrl, timedOut: true});
-        },
       });
+
+      const gotoURL = jest.requireMock('../../gather/driver/navigation.js').gotoURL;
+      gotoURL.mockResolvedValue({finalUrl: requestedUrl, timedOut: true});
 
       return GatherRunner.run(config.passes, {
         driver: timedoutDriver,

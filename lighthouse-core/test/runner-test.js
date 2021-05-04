@@ -799,15 +799,17 @@ describe('Runner', () => {
       const errorDriverMock = Object.assign({}, driverMock, {
         online: true,
         // Loads the page successfully in the first pass, fails with PAGE_HUNG in the second.
-        async gotoURL(url) {
-          if (url.includes('blank')) return {finalUrl: '', timedOut: false};
-          if (firstLoad) {
-            firstLoad = false;
-            return {finalUrl: url, timedOut: false};
-          } else {
-            throw new LHError(LHError.errors.PAGE_HUNG);
-          }
-        },
+      });
+
+      const gotoURL = jest.requireMock('../gather/driver/navigation.js').gotoURL;
+      gotoURL.mockImplementation((_, url) => {
+        if (url.includes('blank')) return {finalUrl: '', timedOut: false};
+        if (firstLoad) {
+          firstLoad = false;
+          return {finalUrl: url, timedOut: false};
+        } else {
+          throw new LHError(LHError.errors.PAGE_HUNG);
+        }
       });
 
       const config = new Config(configJson);

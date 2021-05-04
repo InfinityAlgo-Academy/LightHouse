@@ -15,6 +15,7 @@ const i18n = require('../lib/i18n/i18n.js');
 const URL = require('../lib/url-shim.js');
 const {getBenchmarkIndex} = require('./driver/environment.js');
 const storage = require('./driver/storage.js');
+const navigation = require('./driver/navigation.js');
 const serviceWorkers = require('./driver/service-workers.js');
 const WebAppManifest = require('./gatherers/web-app-manifest.js');
 const InstallabilityErrors = require('./gatherers/installability-errors.js');
@@ -79,7 +80,7 @@ class GatherRunner {
   static async loadBlank(driver, url = constants.defaultPassConfig.blankPage) {
     const status = {msg: 'Resetting state with about:blank', id: 'lh:gather:loadBlank'};
     log.time(status);
-    await driver.gotoURL(url, {waitForNavigated: true});
+    await navigation.gotoURL(driver, url, {waitUntil: ['navigated']});
     log.timeEnd(status);
   }
 
@@ -100,10 +101,12 @@ class GatherRunner {
     };
     log.time(status);
     try {
-      const {finalUrl, timedOut} = await driver.gotoURL(passContext.url, {
-        waitForFcp: passContext.passConfig.recordTrace,
-        waitForLoad: true,
-        passContext,
+      const {finalUrl, timedOut} = await navigation.gotoURL(driver, passContext.url, {
+        waitUntil: passContext.passConfig.recordTrace ?
+          ['load', 'fcp'] : ['load'],
+        maxWaitForFcp: passContext.settings.maxWaitForFcp,
+        maxWaitForLoad: passContext.settings.maxWaitForLoad,
+        ...passContext.passConfig,
       });
       passContext.url = finalUrl;
       if (timedOut) passContext.LighthouseRunWarnings.push(str_(UIStrings.warningTimeout));

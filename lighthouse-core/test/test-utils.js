@@ -246,6 +246,9 @@ function makeMocksForGatherRunner() {
     cleanBrowserCaches: jest.fn(),
     getImportantStorageWarning: jest.fn(),
   }));
+  jest.mock('../gather/driver/navigation.js', () => ({
+    gotoURL: jest.fn().mockResolvedValue({finalUrl: 'http://example.com', timedOut: false}),
+  }));
 }
 
 module.exports = {

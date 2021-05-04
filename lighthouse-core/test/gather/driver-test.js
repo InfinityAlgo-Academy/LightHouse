@@ -11,7 +11,6 @@ const LHElement = require('../../lib/lh-element.js');
 const {protocolGetVersionResponse} = require('./fake-driver.js');
 const {
   createMockSendCommandFn,
-  createMockOnceFn,
   makePromiseInspectable,
   flushAllTimersAndMicrotasks,
 } = require('../test-utils.js');
@@ -25,9 +24,6 @@ jest.useFakeTimers();
  * @typedef DriverMockMethods
  * @property {Driver['evaluate']} evaluate redefined to remove "private" designation
  * @property {Driver['evaluateAsync']} evaluateAsync redefined to remove "private" designation
- * @property {ReturnType<typeof createMockOnceFn>} on
- * @property {ReturnType<typeof createMockOnceFn>} once
- * @property {(...args: RecursivePartial<Parameters<Driver['gotoURL']>>) => ReturnType<Driver['gotoURL']>} gotoURL
 */
 
 /** @typedef {Omit<Driver, keyof DriverMockMethods> & DriverMockMethods} TestDriver */
@@ -199,85 +195,6 @@ describe('.beginTrace', () => {
     expect(tracingStartArgs.categories).toContain('xtra_cat');
     // Make sure it deduplicates categories too
     expect(tracingStartArgs.categories).not.toMatch(/loading.*loading/);
-  });
-});
-
-describe('.gotoURL', () => {
-  beforeEach(() => {
-    connectionStub.sendCommand = createMockSendCommandFn()
-      .mockResponse('Network.enable')
-      .mockResponse('Page.enable')
-      .mockResponse('Page.setLifecycleEventsEnabled')
-      .mockResponse('Emulation.setScriptExecutionDisabled')
-      .mockResponse('Page.navigate')
-      .mockResponse('Target.setAutoAttach')
-      .mockResponse('Runtime.evaluate')
-      .mockResponse('Page.getResourceTree', {frameTree: {frame: {id: 'ABC'}}});
-  });
-
-  it('will track redirects through gotoURL load', async () => {
-    driver.on = driver.once = createMockOnceFn();
-
-    const url = 'https://www.example.com';
-
-    const loadOptions = {
-      waitForNavigated: true,
-    };
-
-    const loadPromise = makePromiseInspectable(driver.gotoURL(url, loadOptions));
-    await flushAllTimersAndMicrotasks();
-    expect(loadPromise).not.toBeDone('Did not wait for frameNavigated');
-
-    // Use `getListeners` instead of `mockEvent` so we can control exactly when the promise resolves
-    // The first listener is from the network monitor and the second is from the load watcher.
-    const [networkMonitorListener, loadListener] = driver.on.getListeners('Page.frameNavigated');
-
-    /** @param {LH.Crdp.Page.Frame} frame */
-    const navigate = frame => networkMonitorListener({frame});
-    const baseFrame = {
-      id: 'ABC', loaderId: '', securityOrigin: '', mimeType: 'text/html', domainAndRegistry: '',
-      secureContextType: /** @type {'Secure'} */ ('Secure'),
-      crossOriginIsolatedContextType: /** @type {'Isolated'} */ ('Isolated'),
-      gatedAPIFeatures: [],
-    };
-    navigate({...baseFrame, url: 'http://example.com'});
-    navigate({...baseFrame, url: 'https://example.com'});
-    navigate({...baseFrame, url: 'https://www.example.com'});
-    navigate({...baseFrame, url: 'https://m.example.com'});
-    navigate({...baseFrame, id: 'ad1', url: 'https://frame-a.example.com'});
-    navigate({...baseFrame, url: 'https://m.example.com/client'});
-    navigate({...baseFrame, id: 'ad2', url: 'https://frame-b.example.com'});
-    navigate({...baseFrame, id: 'ad3', url: 'https://frame-c.example.com'});
-
-    loadListener(baseFrame);
-    await flushAllTimersAndMicrotasks();
-    expect(loadPromise).toBeDone('Did not resolve after frameNavigated');
-
-    const results = await loadPromise;
-    expect(results.finalUrl).toEqual('https://m.example.com/client');
-  });
-
-  describe('when waitForNavigated', () => {
-    it('waits for Page.frameNavigated', async () => {
-      driver.on = driver.once = createMockOnceFn();
-
-      const url = 'https://www.example.com';
-      const loadOptions = {
-        waitForNavigated: true,
-      };
-
-      const loadPromise = makePromiseInspectable(driver.gotoURL(url, loadOptions));
-      await flushAllTimersAndMicrotasks();
-      expect(loadPromise).not.toBeDone('Did not wait for frameNavigated');
-
-      // Use `getListeners` instead of `mockEvent` so we can control exactly when the promise resolves
-      const [_, listener] = driver.on.getListeners('Page.frameNavigated');
-      listener({frame: {url: 'https://www.example.com'}});
-      await flushAllTimersAndMicrotasks();
-      expect(loadPromise).toBeDone('Did not resolve after frameNavigated');
-
-      await loadPromise;
-    });
   });
 });
 
