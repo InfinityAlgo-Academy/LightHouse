@@ -30,7 +30,7 @@ describe('SourceMaps gatherer', () => {
    * `resolvedSourceMapUrl` is used to assert that the SourceMaps gatherer is using the expected
    *                        url to fetch the source map.
    * `fetchError` mocks an error that happens in the page. Only fetch error message make sense.
-   * @param {Array<{scriptParsedEvent: LH.Crdp.Debugger.ScriptParsedEvent, map: string, resolvedSourceMapUrl?: string, fetchError: string}>} mapsAndEvents
+   * @param {Array<{scriptParsedEvent: LH.Crdp.Debugger.ScriptParsedEvent, map: string, status?: number, resolvedSourceMapUrl?: string, fetchError: string}>} mapsAndEvents
    * @return {Promise<LH.Artifacts['SourceMaps']>}
    */
   async function runSourceMaps(mapsAndEvents) {
@@ -50,7 +50,14 @@ describe('SourceMaps gatherer', () => {
       .mockResponse('Fetch.disable', {});
     const fetchMock = jest.fn();
 
-    for (const {scriptParsedEvent, map, resolvedSourceMapUrl, fetchError} of mapsAndEvents) {
+    for (const mapAndEvents of mapsAndEvents) {
+      const {
+        scriptParsedEvent,
+        map,
+        status = null,
+        resolvedSourceMapUrl,
+        fetchError,
+      } = mapAndEvents;
       onMock.mockEvent('protocolevent', {
         method: 'Debugger.scriptParsed',
         params: scriptParsedEvent,
@@ -71,7 +78,7 @@ describe('SourceMaps gatherer', () => {
           throw new Error(fetchError);
         }
 
-        return map;
+        return {content: map, status};
       });
     }
     const connectionStub = new Connection();
@@ -169,6 +176,28 @@ describe('SourceMaps gatherer', () => {
         scriptUrl: mapsAndEvents[2].scriptParsedEvent.url,
         sourceMapUrl: mapsAndEvents[2].scriptParsedEvent.sourceMapURL,
         map: JSON.parse(mapsAndEvents[2].map),
+      },
+    ]);
+  });
+
+  it('throws an error message when fetching map returns bad status code', async () => {
+    const mapsAndEvents = [
+      {
+        scriptParsedEvent: {
+          url: 'http://www.example.com/bundle.js',
+          sourceMapURL: 'http://www.example.com/bundle.js.map',
+        },
+        status: 404,
+        map: null,
+      },
+    ];
+    const artifact = await runSourceMaps(mapsAndEvents);
+    expect(artifact).toEqual([
+      {
+        scriptUrl: mapsAndEvents[0].scriptParsedEvent.url,
+        sourceMapUrl: mapsAndEvents[0].scriptParsedEvent.sourceMapURL,
+        errorMessage: 'Error: Failed fetching source map (404)',
+        map: undefined,
       },
     ]);
   });

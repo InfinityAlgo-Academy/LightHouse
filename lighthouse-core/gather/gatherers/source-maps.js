@@ -27,9 +27,11 @@ class SourceMaps extends Gatherer {
    * @return {Promise<LH.Artifacts.RawSourceMap>}
    */
   async fetchSourceMap(driver, sourceMapUrl) {
-    /** @type {string} */
-    const sourceMapJson = await driver.fetcher.fetchResource(sourceMapUrl, {timeout: 1500});
-    return JSON.parse(sourceMapJson);
+    const response = await driver.fetcher.fetchResource(sourceMapUrl, {timeout: 1500});
+    if (response.content === null) {
+      throw new Error(`Failed fetching source map (${response.status})`);
+    }
+    return JSON.parse(response.content);
   }
 
   /**
