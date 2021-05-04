@@ -7,7 +7,6 @@
 
 const Driver = require('../../gather/driver.js');
 const Connection = require('../../gather/connections/connection.js');
-const LHElement = require('../../lib/lh-element.js');
 const {protocolGetVersionResponse} = require('./fake-driver.js');
 const {
   createMockSendCommandFn,
@@ -42,59 +41,6 @@ beforeEach(() => {
   };
   // @ts-expect-error - driver has a mocked version of on/once implemented in each test
   driver = new Driver(connectionStub);
-});
-
-describe('.querySelector(All)', () => {
-  it('returns null when DOM.querySelector finds no node', async () => {
-    connectionStub.sendCommand = createMockSendCommandFn()
-      .mockResponse('DOM.getDocument', {root: {nodeId: 249}})
-      .mockResponse('DOM.querySelector', {nodeId: 0});
-
-    const result = await driver.querySelector('invalid');
-    expect(result).toEqual(null);
-  });
-
-  it('returns element instance when DOM.querySelector finds a node', async () => {
-    connectionStub.sendCommand = createMockSendCommandFn()
-      .mockResponse('DOM.getDocument', {root: {nodeId: 249}})
-      .mockResponse('DOM.querySelector', {nodeId: 231});
-
-    const result = await driver.querySelector('meta head');
-    expect(result).toBeInstanceOf(LHElement);
-  });
-});
-
-describe('.getObjectProperty', () => {
-  it('returns value when getObjectProperty finds property name', async () => {
-    const property = {
-      name: 'testProp',
-      value: {
-        value: 123,
-      },
-    };
-
-    connectionStub.sendCommand = createMockSendCommandFn()
-      .mockResponse('Runtime.getProperties', {result: [property]});
-
-    const result = await driver.getObjectProperty('objectId', 'testProp');
-    expect(result).toEqual(123);
-  });
-
-  it('returns null when getObjectProperty finds no property name', async () => {
-    connectionStub.sendCommand = createMockSendCommandFn()
-      .mockResponse('Runtime.getProperties', {result: []});
-
-    const result = await driver.getObjectProperty('objectId', 'testProp');
-    expect(result).toEqual(null);
-  });
-
-  it('returns null when getObjectProperty finds property name with no value', async () => {
-    connectionStub.sendCommand = createMockSendCommandFn()
-      .mockResponse('Runtime.getProperties', {result: [{name: 'testProp'}]});
-
-    const result = await driver.getObjectProperty('objectId', 'testProp');
-    expect(result).toEqual(null);
-  });
 });
 
 describe('.getRequestContent', () => {

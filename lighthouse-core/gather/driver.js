@@ -7,7 +7,6 @@
 
 const Fetcher = require('./fetcher.js');
 const ExecutionContext = require('./driver/execution-context.js');
-const LHElement = require('../lib/lh-element.js');
 const LHError = require('../lib/lh-error.js');
 const NetworkRequest = require('../lib/network-request.js');
 const EventEmitter = require('events').EventEmitter;
@@ -380,29 +379,6 @@ class Driver {
   }
 
   /**
-   * @param {string} objectId Object ID for the resolved DOM node
-   * @param {string} propName Name of the property
-   * @return {Promise<string|null>} The property value, or null, if property not found
-  */
-  async getObjectProperty(objectId, propName) {
-    const propertiesResponse = await this.sendCommand('Runtime.getProperties', {
-      objectId,
-      accessorPropertiesOnly: true,
-      generatePreview: false,
-      ownProperties: false,
-    });
-
-    const propertyForName = propertiesResponse.result
-        .find(property => property.name === propName);
-
-    if (propertyForName && propertyForName.value) {
-      return propertyForName.value.value;
-    } else {
-      return null;
-    }
-  }
-
-  /**
    * Return the body of the response with the given ID. Rejects if getting the
    * body times out.
    * @param {string} requestId
@@ -417,68 +393,6 @@ class Driver {
     this.setNextProtocolTimeout(timeout);
     const result = await this.sendCommand('Network.getResponseBody', {requestId});
     return result.body;
-  }
-
-  /**
-   * @param {string} selector Selector to find in the DOM
-   * @return {Promise<LHElement|null>} The found element, or null, resolved in a promise
-   */
-  async querySelector(selector) {
-    const documentResponse = await this.sendCommand('DOM.getDocument');
-    const rootNodeId = documentResponse.root.nodeId;
-
-    const targetNode = await this.sendCommand('DOM.querySelector', {
-      nodeId: rootNodeId,
-      selector,
-    });
-
-    if (targetNode.nodeId === 0) {
-      return null;
-    }
-    return new LHElement(targetNode, this);
-  }
-
-  /**
-   * Resolves a backend node ID (from a trace event, protocol, etc) to the object ID for use with
-   * `Runtime.callFunctionOn`. `undefined` means the node could not be found.
-   *
-   * @param {number} backendNodeId
-   * @return {Promise<string|undefined>}
-   */
-  async resolveNodeIdToObjectId(backendNodeId) {
-    try {
-      const resolveNodeResponse = await this.sendCommand('DOM.resolveNode', {backendNodeId});
-      return resolveNodeResponse.object.objectId;
-    } catch (err) {
-      if (/No node.*found/.test(err.message) ||
-        /Node.*does not belong to the document/.test(err.message)) return undefined;
-      throw err;
-    }
-  }
-
-  /**
-   * Resolves a proprietary devtools node path (created from page-function.js) to the object ID for use
-   * with `Runtime.callFunctionOn`. `undefined` means the node could not be found.
-   * Requires `DOM.getDocument` to have been called since the object's creation or it will always be `undefined`.
-   *
-   * @param {string} devtoolsNodePath
-   * @return {Promise<string|undefined>}
-   */
-  async resolveDevtoolsNodePathToObjectId(devtoolsNodePath) {
-    try {
-      const {nodeId} = await this.sendCommand('DOM.pushNodeByPathToFrontend', {
-        path: devtoolsNodePath,
-      });
-
-      const {object: {objectId}} = await this.sendCommand('DOM.resolveNode', {
-        nodeId,
-      });
-
-      return objectId;
-    } catch (err) {
-      if (/No node.*found/.test(err.message)) return undefined;
-      throw err;
-    }
   }
 
   /**

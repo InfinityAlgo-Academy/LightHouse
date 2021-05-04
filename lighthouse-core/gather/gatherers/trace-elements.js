@@ -14,6 +14,7 @@
  */
 
 const Gatherer = require('./gatherer.js');
+const dom = require('../driver/dom.js');
 const pageFunctions = require('../../lib/page-functions.js');
 const TraceProcessor = require('../../lib/tracehouse/trace-processor.js');
 const RectHelpers = require('../../lib/rect-helpers.js');
@@ -275,7 +276,7 @@ class TraceElements extends Gatherer {
         const backendNodeId = backendNodeData[i].nodeId;
         let response;
         try {
-          const objectId = await driver.resolveNodeIdToObjectId(backendNodeId);
+          const objectId = await dom.resolveNodeIdToObjectId(driver.defaultSession, backendNodeId);
           if (!objectId) continue;
           response = await driver.sendCommand('Runtime.callFunctionOn', {
             objectId,

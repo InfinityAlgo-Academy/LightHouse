@@ -13,6 +13,7 @@ const artifacts = {
   DevtoolsLog: '',
   Trace: '',
   Accessibility: '',
+  AnchorElements: '',
   AppCacheManifest: '',
   CacheContents: '',
   ConsoleMessages: '',
@@ -49,6 +50,7 @@ const defaultConfig = {
 
     /* eslint-disable max-len */
     {id: artifacts.Accessibility, gatherer: 'accessibility'},
+    {id: artifacts.AnchorElements, gatherer: 'anchor-elements'},
     {id: artifacts.AppCacheManifest, gatherer: 'dobetterweb/appcache'},
     {id: artifacts.CacheContents, gatherer: 'cache-contents'},
     {id: artifacts.ConsoleMessages, gatherer: 'console-messages'},
@@ -83,6 +85,7 @@ const defaultConfig = {
         artifacts.Trace,
 
         artifacts.Accessibility,
+        artifacts.AnchorElements,
         artifacts.AppCacheManifest,
         artifacts.CacheContents,
         artifacts.ConsoleMessages,
