@@ -11,6 +11,8 @@
 
 const UNUSED_BYTES_IGNORE_THRESHOLD = 20 * 1024;
 const UNUSED_BYTES_IGNORE_BUNDLE_SOURCE_RATIO = 0.5;
+const DUPLICATED_MODULES_IGNORE_THRESHOLD = 1024;
+const DUPLICATED_MODULES_IGNORE_ROOT_RATIO = 0.01;
 
 /** @type {TreemapViewer} */
 let treemapViewer;
@@ -63,7 +65,8 @@ class TreemapViewer {
 
     this.documentUrl = options.lhr.requestedUrl;
     this.el = el;
-    this.getHueForKey = TreemapUtil.stableHasher(TreemapUtil.COLOR_HUES);
+    this.getHueForD1NodeName = TreemapUtil.stableHasher(TreemapUtil.COLOR_HUES);
+    this.getHueForModuleNodeName = TreemapUtil.stableHasher(TreemapUtil.COLOR_HUES);
 
     /* eslint-disable no-unused-expressions */
     /** @type {LH.Treemap.Node} */
@@ -218,8 +221,66 @@ class TreemapViewer {
         label: 'Unused Bytes',
         subLabel: TreemapUtil.formatBytes(root.unusedBytes),
         highlightNodePaths,
+        enabled: true,
       };
     }
+
+    /**
+     * @param {LH.Treemap.Node} root
+     * @return {LH.Treemap.ViewMode|undefined}
+     */
+    const createDuplicateModulesViewMode = (root) => {
+      /** @type {Map<string, Array<{node: LH.Treemap.Node, path: string[]}>>} */
+      const moduleNameToNodes = new Map();
+      for (const d1Node of root.children || []) {
+        TreemapUtil.walk(d1Node, (node, path) => {
+          if (node.children) return;
+          if (!node.duplicatedNormalizedModuleName) return;
+
+          const nodes = moduleNameToNodes.get(node.duplicatedNormalizedModuleName) || [];
+          nodes.push({node, path});
+          moduleNameToNodes.set(node.duplicatedNormalizedModuleName, nodes);
+        });
+      }
+
+      let potentialByteSavings = 0;
+
+      /** @type {LH.Treemap.NodePath[]} */
+      const highlightNodePaths = [];
+      for (const nodesWithSameModuleName of moduleNameToNodes.values()) {
+        if (nodesWithSameModuleName.length === 1) continue;
+
+        const bytes = [];
+        for (const {node} of nodesWithSameModuleName) {
+          bytes.push(node.resourceBytes);
+        }
+
+        // Sum all but the largest copy.
+        bytes.sort((a, b) => b - a);
+        let duplicatedBytes = 0;
+        for (let i = 1; i < bytes.length; i++) duplicatedBytes += bytes[i];
+        if (duplicatedBytes < DUPLICATED_MODULES_IGNORE_THRESHOLD) continue;
+
+        for (const {path} of nodesWithSameModuleName) {
+          highlightNodePaths.push([root.name, ...path]);
+        }
+        potentialByteSavings += duplicatedBytes;
+      }
+
+      let enabled = true;
+      if (highlightNodePaths.length === 0) enabled = false;
+      if (potentialByteSavings / root.resourceBytes < DUPLICATED_MODULES_IGNORE_ROOT_RATIO) {
+        enabled = false;
+      }
+
+      return {
+        id: 'duplicate-modules',
+        label: 'Duplicate Modules',
+        subLabel: enabled ? TreemapUtil.formatBytes(potentialByteSavings) : 'N/A',
+        highlightNodePaths,
+        enabled,
+      };
+    };
 
     /** @type {LH.Treemap.ViewMode[]} */
     const viewModes = [];
@@ -228,10 +289,14 @@ class TreemapViewer {
       id: 'all',
       label: `All`,
       subLabel: TreemapUtil.formatBytes(this.currentTreemapRoot.resourceBytes),
+      enabled: true,
     });
 
     const unusedBytesViewMode = createUnusedBytesViewMode(this.currentTreemapRoot);
     if (unusedBytesViewMode) viewModes.push(unusedBytesViewMode);
+
+    const duplicateModulesViewMode = createDuplicateModulesViewMode(this.currentTreemapRoot);
+    if (duplicateModulesViewMode) viewModes.push(duplicateModulesViewMode);
 
     return viewModes;
   }
@@ -266,7 +331,11 @@ class TreemapViewer {
     }
 
     this.viewModes = this.createViewModes();
-    if (!this.currentViewMode) this.currentViewMode = this.viewModes[0];
+    const currentViewModeIsDisabled = this.currentViewMode &&
+      this.viewModes.find(v => v.id === this.currentViewMode.id && !v.enabled);
+    if (!this.currentViewMode || currentViewModeIsDisabled) {
+      this.currentViewMode = this.viewModes[0];
+    }
   }
 
   /**
@@ -471,10 +540,14 @@ class TreemapViewer {
 
   updateColors() {
     TreemapUtil.walk(this.currentTreemapRoot, node => {
-      // Color a depth one node and all children the same color.
-      const depthOneNode = this.nodeToDepthOneNodeMap.get(node);
-      const hueKey = depthOneNode ? depthOneNode.name : node.name;
-      const hue = this.getHueForKey(hueKey);
+      let hue;
+      if (this.currentViewMode.id === 'duplicate-modules') {
+        hue = this.getHueForModuleNodeName(node.duplicatedNormalizedModuleName || '');
+      } else {
+        // Color a depth one node and all children the same color.
+        const depthOneNode = this.nodeToDepthOneNodeMap.get(node);
+        hue = this.getHueForD1NodeName(depthOneNode ? depthOneNode.name : node.name);
+      }
 
       let backgroundColor = 'white';
       let color = 'black';
@@ -515,6 +588,7 @@ function renderViewModeButtons(viewModes) {
    */
   function render(viewMode) {
     const viewModeEl = TreemapUtil.createChildOf(viewModesEl, 'div', 'view-mode');
+    if (!viewMode.enabled) viewModeEl.classList.add('view-mode--disabled');
     viewModeEl.id = `view-mode--${viewMode.id}`;
 
     const labelEl = TreemapUtil.createChildOf(viewModeEl, 'label');
@@ -525,6 +599,7 @@ function renderViewModeButtons(viewModes) {
     const inputEl = TreemapUtil.createChildOf(labelEl, 'input', 'view-mode__button', {
       type: 'radio',
       name: 'view-mode',
+      disabled: viewMode.enabled ? undefined : '',
     });
 
     inputEl.addEventListener('click', () => {

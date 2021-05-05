@@ -12356,7 +12356,8 @@
                             {
                               "name": "jquery/2.2.4/jquery.min.js",
                               "resourceBytes": 85500,
-                              "unusedBytes": 35591
+                              "unusedBytes": 35591,
+                              "duplicatedNormalizedModuleName": "jquery/2.2.4/jquery.min.js"
                             },
                             {
                               "name": "angular.js/1.3.20",
@@ -12697,18 +12698,25 @@
             },
             {
               "name": "https://www.coursehero.com/sym-assets/js/bundle-3593e6a-d7b13f6.js",
-              "resourceBytes": 4908,
+              "resourceBytes": 90408,
               "unusedBytes": 1254,
               "children": [
                 {
                   "name": "coursehero:////js",
-                  "resourceBytes": 4908,
+                  "resourceBytes": 90408,
                   "unusedBytes": 1254,
                   "children": [
                     {
                       "name": "webpack/bootstrap?",
                       "resourceBytes": 913,
                       "unusedBytes": 315
+                    },
+                    {
+                      "__note": "Manually added to force duplicate",
+                      "name": "jquery/2.2.4/jquery.min.js",
+                      "resourceBytes": 85500,
+                      "unusedBytes": 0,
+                      "duplicatedNormalizedModuleName": "jquery/2.2.4/jquery.min.js"
                     },
                     {
                       "name": "node_modules/@babel/runtime/helpers/defineProperty.js?",

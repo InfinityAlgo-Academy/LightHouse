@@ -134,6 +134,9 @@ body {
   padding: 5px;
   font-size: 16px;
 }
+.view-mode--disabled {
+  text-decoration: line-through;
+}
 .view-mode:first-child {
   border-top-left-radius: 2px;
   border-bottom-left-radius: 2px;
