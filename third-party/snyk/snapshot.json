@@ -66,6 +66,7 @@
       {"id":"SNYK-JS-GSAP-1054614","severity":"high","semver":{"vulnerable":["<3.6.0"]}}
     ],
     "handlebars":[
+      {"id":"SNYK-JS-HANDLEBARS-1279029","severity":"medium","semver":{"vulnerable":["<4.7.7"]}},
       {"id":"SNYK-JS-HANDLEBARS-1056767","severity":"medium","semver":{"vulnerable":["<4.7.7"]}},
       {"id":"SNYK-JS-HANDLEBARS-567742","severity":"medium","semver":{"vulnerable":["<4.6.0"]}},
       {"id":"SNYK-JS-HANDLEBARS-534988","severity":"high","semver":{"vulnerable":[">=4.0.0 <4.5.3","<3.0.8"]}},
