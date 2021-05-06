@@ -31,6 +31,7 @@ const artifacts = {
   RobotsTxt: '',
   Stacks: '',
   TapTargets: '',
+  TraceElements: '',
   ViewportDimensions: '',
   WebAppManifest: '',
   devtoolsLogs: '',
@@ -68,6 +69,7 @@ const defaultConfig = {
     {id: artifacts.RobotsTxt, gatherer: 'seo/robots-txt'},
     {id: artifacts.Stacks, gatherer: 'stacks'},
     {id: artifacts.TapTargets, gatherer: 'seo/tap-targets'},
+    {id: artifacts.TraceElements, gatherer: 'trace-elements'},
     {id: artifacts.ViewportDimensions, gatherer: 'viewport-dimensions'},
     {id: artifacts.WebAppManifest, gatherer: 'web-app-manifest'},
     /* eslint-enable max-len */
@@ -103,6 +105,7 @@ const defaultConfig = {
         artifacts.RobotsTxt,
         artifacts.Stacks,
         artifacts.TapTargets,
+        artifacts.TraceElements,
         artifacts.ViewportDimensions,
         artifacts.WebAppManifest,
 

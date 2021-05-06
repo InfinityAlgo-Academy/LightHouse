@@ -37,7 +37,6 @@ declare global {
       | 'ServiceWorker'
       | 'SourceMaps'
       | 'TagsBlockingFirstPaint'
-      | 'TraceElements'
       | keyof FRBaseArtifacts
     >;
 
