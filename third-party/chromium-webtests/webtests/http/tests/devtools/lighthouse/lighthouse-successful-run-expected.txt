@@ -25,8 +25,8 @@ Benchmarking machine
 Initializing…
 Running defaultPass pass
 Resetting state with about:blank
-Setting up network for the pass trace
 Cleaning browser cache
+Preparing network conditions
 Running beforePass methods
 Gathering setup: CSSUsage
 Gathering setup: JsUsage
@@ -124,7 +124,7 @@ Get webapp manifest
 Collect stacks
 Running offlinePass pass
 Resetting state with about:blank
-Setting up network for the pass trace
+Preparing network conditions
 Running beforePass methods
 Gathering setup: ServiceWorker
 Beginning devtoolsLog and trace
@@ -136,7 +136,7 @@ Running afterPass methods
 Gathering: ServiceWorker
 Running redirectPass pass
 Resetting state with about:blank
-Setting up network for the pass trace
+Preparing network conditions
 Running beforePass methods
 Gathering setup: HTTPRedirect
 Beginning devtoolsLog and trace

@@ -14,6 +14,7 @@ const constants = require('../config/constants.js');
 const i18n = require('../lib/i18n/i18n.js');
 const URL = require('../lib/url-shim.js');
 const {getBenchmarkIndex} = require('./driver/environment.js');
+const prepare = require('./driver/prepare.js');
 const storage = require('./driver/storage.js');
 const navigation = require('./driver/navigation.js');
 const serviceWorkers = require('./driver/service-workers.js');
@@ -174,46 +175,19 @@ class GatherRunner {
   /**
    * @param {Driver} driver
    * @param {{requestedUrl: string, settings: LH.Config.Settings}} options
-   * @param {(string | LH.IcuMessage)[]} LighthouseRunWarnings
    * @return {Promise<void>}
    */
-  static async setupDriver(driver, options, LighthouseRunWarnings) {
+  static async setupDriver(driver, options) {
     const status = {msg: 'Initializing…', id: 'lh:gather:setupDriver'};
     log.time(status);
-    const resetStorage = !options.settings.disableStorageReset;
     const session = driver.defaultSession;
 
     // Assert no service workers are still installed, so we test that they would actually be installed for a new user.
     // TODO(FR-COMPAT): re-evaluate the necessity of this check
     await GatherRunner.assertNoSameOriginServiceWorkerClients(session, options.requestedUrl);
 
-    // Emulate our target device screen and user agent.
-    await emulation.emulate(driver.defaultSession, options.settings);
+    await prepare.prepareTargetForNavigationMode(driver, options.settings);
 
-    // Enable `Debugger` domain to receive async stacktrace information on network request initiators.
-    // This is critical for tracing certain performance simulation situations.
-    session.on('Debugger.paused', () => session.sendCommand('Debugger.resume'));
-    await session.sendCommand('Debugger.enable');
-    await session.sendCommand('Debugger.setSkipAllPauses', {skip: true});
-    await session.sendCommand('Debugger.setAsyncCallStackDepth', {maxDepth: 8});
-
-    // Inject our snippet to cache important web platform APIs before they're (possibly) ponyfilled by the page.
-    await driver.executionContext.cacheNativesOnNewDocument();
-
-    // Automatically handle any JavaScript dialogs to prevent a hung renderer.
-    await driver.dismissJavaScriptDialogs();
-
-    // Wrap requestIdleCallback so pages under simulation receive the correct rIC deadlines.
-    await driver.registerRequestIdleCallbackWrap(options.settings);
-
-    // Reset the storage and warn if there appears to be other important data.
-    if (resetStorage) {
-      const warning = await storage.getImportantStorageWarning(session, options.requestedUrl);
-      if (warning) {
-        LighthouseRunWarnings.push(warning);
-      }
-      await storage.clearDataForOrigin(session, options.requestedUrl);
-    }
     log.timeEnd(status);
   }
 
@@ -405,35 +379,6 @@ class GatherRunner {
     if (baseArtifacts.BenchmarkIndex > SLOW_CPU_BENCHMARK_INDEX_THRESHOLD) return;
 
     return str_(UIStrings.warningSlowHostCpu);
-  }
-
-  /**
-   * Initialize network settings for the pass, e.g. throttling, blocked URLs,
-   * and manual request headers.
-   * @param {LH.Gatherer.PassContext} passContext
-   * @return {Promise<void>}
-   */
-  static async setupPassNetwork(passContext) {
-    const status = {msg: 'Setting up network for the pass trace', id: `lh:gather:setupPassNetwork`};
-    log.time(status);
-
-    const session = passContext.driver.defaultSession;
-    const passConfig = passContext.passConfig;
-    if (passConfig.useThrottling) await emulation.throttle(session, passContext.settings);
-    else await emulation.clearThrottling(session);
-
-    const blockedUrls = (passContext.passConfig.blockedUrlPatterns || [])
-      .concat(passContext.settings.blockedUrlPatterns || []);
-
-    // Set request blocking before any network activity
-    // No "clearing" is done at the end of the pass since Network.setBlockedURLs([]) will unset all if
-    // neccessary at the beginning of the next pass.
-    await session.sendCommand('Network.setBlockedURLs', {urls: blockedUrls});
-
-    const headers = passContext.settings.extraHeaders;
-    if (headers) await session.sendCommand('Network.setExtraHTTPHeaders', {headers});
-
-    log.timeEnd(status);
   }
 
   /**
@@ -728,7 +673,7 @@ class GatherRunner {
       const baseArtifacts = await GatherRunner.initializeBaseArtifacts(options);
       baseArtifacts.BenchmarkIndex = await getBenchmarkIndex(driver.executionContext);
 
-      await GatherRunner.setupDriver(driver, options, baseArtifacts.LighthouseRunWarnings);
+      await GatherRunner.setupDriver(driver, options);
 
       let isFirstPass = true;
       for (const passConfig of passConfigs) {
@@ -775,17 +720,6 @@ class GatherRunner {
   }
 
   /**
-   * Returns whether this pass should clear the caches.
-   * Only if it is a performance run and the settings don't disable it.
-   * @param {LH.Gatherer.PassContext} passContext
-   * @return {boolean}
-   */
-  static shouldClearCaches(passContext) {
-    const {settings, passConfig} = passContext;
-    return !settings.disableStorageReset && passConfig.recordTrace && passConfig.useThrottling;
-  }
-
-  /**
    * Save the devtoolsLog and trace (if applicable) to baseArtifacts.
    * @param {LH.Gatherer.PassContext} passContext
    * @param {LH.Gatherer.LoadData} loadData
@@ -816,10 +750,17 @@ class GatherRunner {
 
     // Go to about:blank, set up, and run `beforePass()` on gatherers.
     await GatherRunner.loadBlank(driver, passConfig.blankPage);
-    await GatherRunner.setupPassNetwork(passContext);
-    if (GatherRunner.shouldClearCaches(passContext)) {
-      await storage.cleanBrowserCaches(driver.defaultSession); // Clear disk & memory cache if it's a perf run
-    }
+    const {warnings} = await prepare.prepareTargetForIndividualNavigation(
+      driver.defaultSession,
+      passContext.settings,
+      {
+        url: passContext.url,
+        disableStorageReset: !passConfig.useThrottling,
+        disableThrottling: !passConfig.useThrottling,
+        blockedUrlPatterns: passConfig.blockedUrlPatterns,
+      }
+    );
+    passContext.LighthouseRunWarnings.push(...warnings);
     await GatherRunner.beforePass(passContext, gathererResults);
 
     // Navigate, start recording, and run `pass()` on gatherers.

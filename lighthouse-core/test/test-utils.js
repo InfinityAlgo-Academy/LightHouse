@@ -241,6 +241,10 @@ function makeMocksForGatherRunner() {
     throttle: jest.fn(),
     clearThrottling: jest.fn(),
   }));
+  jest.mock('../gather/driver/prepare.js', () => ({
+    prepareTargetForNavigationMode: jest.fn(),
+    prepareTargetForIndividualNavigation: jest.fn().mockResolvedValue({warnings: []}),
+  }));
   jest.mock('../gather/driver/storage.js', () => ({
     clearDataForOrigin: jest.fn(),
     cleanBrowserCaches: jest.fn(),

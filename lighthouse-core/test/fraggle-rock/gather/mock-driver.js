@@ -73,8 +73,18 @@ function createMockPage() {
 }
 
 function createMockExecutionContext() {
-  const context = /** @type {ExecutionContext} */ ({});
-  return {...context, evaluate: jest.fn(), evaluateAsync: jest.fn()};
+  return {
+    evaluate: jest.fn(),
+    evaluateAsync: jest.fn(),
+    evaluateOnNewDocument: jest.fn(),
+    cacheNativesOnNewDocument: jest.fn(),
+
+    /** @return {ExecutionContext} */
+    asExecutionContext() {
+      // @ts-expect-error - We'll rely on the tests passing to know this matches.
+      return this;
+    },
+  };
 }
 
 function createMockDriver() {
@@ -89,7 +99,7 @@ function createMockDriver() {
     url: () => page.url(),
     defaultSession: session,
     connect: jest.fn(),
-    executionContext: context,
+    executionContext: context.asExecutionContext(),
 
     /** @return {Driver} */
     asDriver() {

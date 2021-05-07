@@ -13,7 +13,6 @@ const Gatherer = require('../../gather/gatherers/gatherer.js');
 const GatherRunner_ = require('../../gather/gather-runner.js');
 const assert = require('assert').strict;
 const Config = require('../../config/config.js');
-const constants = require('../../config/constants.js');
 const unresolvedPerfLog = require('./../fixtures/unresolved-perflog.json');
 const NetworkRequest = require('../../lib/network-request.js');
 const LHError = require('../../lib/lh-error.js');
@@ -42,7 +41,6 @@ const GatherRunner = {
   run: makeParamsOptional(GatherRunner_.run),
   runPass: makeParamsOptional(GatherRunner_.runPass),
   setupDriver: makeParamsOptional(GatherRunner_.setupDriver),
-  setupPassNetwork: makeParamsOptional(GatherRunner_.setupPassNetwork),
   // Spies that should have mock implemenations most of the time.
   assertNoSameOriginServiceWorkerClients: jest.spyOn(GatherRunner_,
     'assertNoSameOriginServiceWorkerClients'),
@@ -124,17 +122,6 @@ function resetDefaultMockResponses() {
     .mockResponse('ServiceWorker.enable');
 }
 
-/**
- * Restore the emulation to its original implementation for testing emulation-sensitive logic.
- */
-function restoreActualEmulation() {
-  const actualEmulation = jest.requireActual('../../lib/emulation.js');
-  const emulation = require('../../lib/emulation.js');
-  emulation.emulate = actualEmulation.emulate;
-  emulation.throttle = actualEmulation.throttle;
-  emulation.clearThrottling = actualEmulation.clearThrottling;
-}
-
 beforeEach(() => {
   jest.useFakeTimers();
   // @ts-expect-error - connectionStub has a mocked version of sendCommand implemented in each test
@@ -151,8 +138,9 @@ beforeEach(() => {
   emulation.throttle = jest.fn();
   emulation.clearThrottling = jest.fn();
 
-  const storage = require('../../gather/driver/storage.js');
-  storage.clearDataForOrigin = jest.fn();
+  const prepare = require('../../gather/driver/prepare.js');
+  prepare.prepareTargetForNavigationMode = jest.fn();
+  prepare.prepareTargetForIndividualNavigation = jest.fn().mockResolvedValue({warnings: []});
 
   const navigation = jest.requireMock('../../gather/driver/navigation.js');
   navigation.gotoURL = jest.fn().mockResolvedValue({finalUrl: 'https://example.com'});
@@ -282,31 +270,6 @@ describe('GatherRunner', function() {
     test('works when running on mobile device', IOS_UA, 'mobile');
     test('works when running on android device', ANDROID_UA, 'mobile');
     test('works when running on desktop device', DESKTOP_UA, 'desktop');
-  });
-
-  /** @param {NonNullable<LH.SharedFlagsSettings['formFactor']>}formFactor */
-  const getSettings = formFactor => ({
-    formFactor: formFactor,
-    screenEmulation: constants.screenEmulationMetrics[formFactor],
-  });
-
-  it('sets up the driver to begin emulation when all flags are undefined', async () => {
-    restoreActualEmulation();
-    await GatherRunner.setupDriver(driver, {settings: getSettings('mobile')});
-
-    connectionStub.sendCommand.findInvocation('Emulation.setDeviceMetricsOverride');
-  });
-
-  it('applies the correct emulation given a particular formFactor', async () => {
-    restoreActualEmulation();
-    await GatherRunner.setupDriver(driver, {settings: getSettings('mobile')});
-    expect(connectionStub.sendCommand.findInvocation('Emulation.setDeviceMetricsOverride'))
-      .toMatchObject({mobile: true});
-
-    resetDefaultMockResponses();
-    await GatherRunner.setupDriver(driver, {settings: getSettings('desktop')});
-    expect(connectionStub.sendCommand.findInvocation('Emulation.setDeviceMetricsOverride'))
-      .toMatchObject({mobile: false});
   });
 
   describe('.assertNoSameOriginServiceWorkerClients', () => {
@@ -447,19 +410,7 @@ describe('GatherRunner', function() {
     });
   });
 
-  it('clears origin storage', async () => {
-    const storage = jest.requireMock('../../gather/driver/storage.js');
-    await GatherRunner.setupDriver(driver, {settings: {}});
-    expect(storage.clearDataForOrigin).toHaveBeenCalled();
-  });
-
-  it('does not clear origin storage with flag --disable-storage-reset', async () => {
-    const storage = jest.requireMock('../../gather/driver/storage.js');
-    await GatherRunner.setupDriver(driver, {settings: {disableStorageReset: true}});
-    expect(storage.clearDataForOrigin).not.toHaveBeenCalled();
-  });
-
-  it('clears the disk & memory cache on a perf run', async () => {
+  it('prepares target for navigation', async () => {
     const passConfig = {
       passName: 'default',
       loadFailureMode: LoadFailureMode.ignore,
@@ -476,11 +427,12 @@ describe('GatherRunner', function() {
       passConfig,
       settings,
       baseArtifacts: await GatherRunner.initializeBaseArtifacts({driver, settings, requestedUrl}),
+      LighthouseRunWarnings: [],
     };
 
-    const storage = jest.requireMock('../../gather/driver/storage.js');
+    const prepare = jest.requireMock('../../gather/driver/prepare.js');
     await GatherRunner.runPass(passContext);
-    expect(storage.cleanBrowserCaches).toHaveBeenCalled();
+    expect(prepare.prepareTargetForIndividualNavigation).toHaveBeenCalled();
   });
 
   it('returns a pageLoadError and no artifacts when there is a network error', async () => {
@@ -598,111 +550,6 @@ describe('GatherRunner', function() {
     // @ts-expect-error: Test-only gatherer.
     expect(artifacts.TestGatherer).toBeUndefined();
     expect(artifacts.devtoolsLogs).toHaveProperty('pageLoadError-nextPass');
-  });
-
-  it('sets throttling appropriately', async () => {
-    restoreActualEmulation();
-    await GatherRunner.setupPassNetwork({
-      driver,
-      settings: {
-        formFactor: 'mobile',
-        screenEmulation: constants.screenEmulationMetrics.mobile,
-        throttlingMethod: 'devtools',
-        throttling: {
-          requestLatencyMs: 100,
-          downloadThroughputKbps: 8,
-          uploadThroughputKbps: 8,
-          cpuSlowdownMultiplier: 2,
-        },
-      },
-      passConfig: {
-        useThrottling: true,
-        gatherers: [],
-      },
-    });
-
-    expect(connectionStub.sendCommand.findInvocation('Network.emulateNetworkConditions')).toEqual({
-      latency: 100, downloadThroughput: 1024, uploadThroughput: 1024, offline: false,
-    });
-    expect(connectionStub.sendCommand.findInvocation('Emulation.setCPUThrottlingRate')).toEqual({
-      rate: 2,
-    });
-  });
-
-  it('clears throttling when useThrottling=false', async () => {
-    restoreActualEmulation();
-    await GatherRunner.setupPassNetwork({
-      driver,
-      settings: {
-        formFactor: 'mobile',
-        screenEmulation: constants.screenEmulationMetrics.mobile,
-        throttlingMethod: 'devtools',
-        throttling: {
-          requestLatencyMs: 100,
-          downloadThroughputKbps: 8,
-          uploadThroughputKbps: 8,
-          cpuSlowdownMultiplier: 2,
-        },
-      },
-      passConfig: {
-        useThrottling: false,
-        gatherers: [],
-      },
-    });
-
-    expect(connectionStub.sendCommand.findInvocation('Network.emulateNetworkConditions')).toEqual({
-      latency: 0, downloadThroughput: 0, uploadThroughput: 0, offline: false,
-    });
-    expect(connectionStub.sendCommand.findInvocation('Emulation.setCPUThrottlingRate')).toEqual({
-      rate: 1,
-    });
-  });
-
-  it('tells the driver to block given URL patterns when blockedUrlPatterns is given', async () => {
-    await GatherRunner.setupPassNetwork({
-      driver,
-      settings: {
-        blockedUrlPatterns: ['http://*.evil.com', '.jpg', '.woff2'],
-      },
-      passConfig: {
-        blockedUrlPatterns: ['*.jpeg'],
-        gatherers: [],
-      },
-    });
-
-    const blockedUrlsResult = connectionStub.sendCommand.findInvocation('Network.setBlockedURLs');
-    blockedUrlsResult.urls.sort();
-    expect(blockedUrlsResult)
-      .toEqual({urls: ['*.jpeg', '.jpg', '.woff2', 'http://*.evil.com']});
-  });
-
-  it('does not throw when blockedUrlPatterns is not given', async () => {
-    await GatherRunner.setupPassNetwork({
-      driver,
-      settings: {},
-      passConfig: {gatherers: []},
-    });
-
-    expect(connectionStub.sendCommand.findInvocation('Network.setBlockedURLs'))
-      .toEqual({urls: []});
-  });
-
-  it('tells the driver to set additional http when extraHeaders flag is given', async () => {
-    const extraHeaders = {
-      'Cookie': 'monster',
-      'x-men': 'wolverine',
-    };
-
-    await GatherRunner.setupPassNetwork({
-      driver,
-      settings: {
-        extraHeaders,
-      },
-      passConfig: {gatherers: []},
-    });
-
-    expect(connectionStub.sendCommand.findInvocation('Network.setExtraHTTPHeaders'))
-      .toEqual({headers: extraHeaders});
   });
 
   it('tells the driver to begin tracing', async () => {

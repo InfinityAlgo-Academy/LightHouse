@@ -100,8 +100,8 @@ async function getImportantStorageWarning(session, url) {
  * @param {LH.Gatherer.FRProtocolSession} session
  * @return {Promise<void>}
  */
-async function cleanBrowserCaches(session) {
-  const status = {msg: 'Cleaning browser cache', id: 'lh:storage:cleanBrowserCaches'};
+async function clearBrowserCaches(session) {
+  const status = {msg: 'Cleaning browser cache', id: 'lh:storage:clearBrowserCaches'};
   log.time(status);
 
   // Wipe entire disk cache
@@ -115,7 +115,7 @@ async function cleanBrowserCaches(session) {
 
 module.exports = {
   clearDataForOrigin,
-  cleanBrowserCaches,
+  clearBrowserCaches,
   getImportantStorageWarning,
   UIStrings,
 };
