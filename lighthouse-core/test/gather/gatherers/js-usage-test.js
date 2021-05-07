@@ -13,6 +13,7 @@ const Driver = require('../../../gather/driver.js');
 const Connection = require('../../../gather/connections/connection.js');
 const JsUsage = require('../../../gather/gatherers/js-usage.js');
 const {createMockSendCommandFn, createMockOnFn} = require('../mock-commands.js');
+const {flushAllTimersAndMicrotasks} = require('../../test-utils.js');
 
 describe('JsUsage gatherer', () => {
   /**
@@ -45,10 +46,20 @@ describe('JsUsage gatherer', () => {
     const driver = new Driver(connectionStub);
 
     const gatherer = new JsUsage();
-    await gatherer.beforePass({driver});
+    await gatherer.startInstrumentation({driver});
+    await gatherer.startSensitiveInstrumentation({driver});
+
     // Needed for protocol events to emit.
-    jest.advanceTimersByTime(1);
-    return gatherer.afterPass({driver});
+    await flushAllTimersAndMicrotasks(1);
+
+    expect(gatherer._scriptParsedEvents).toEqual(scriptParsedEvents);
+
+    await gatherer.stopSensitiveInstrumentation({driver});
+    await gatherer.stopInstrumentation({driver});
+
+    expect(gatherer._scriptUsages).toEqual(coverage);
+
+    return gatherer.getArtifact();
   }
 
   it('combines coverage data by url', async () => {

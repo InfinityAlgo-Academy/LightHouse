@@ -26,7 +26,6 @@ declare global {
       | 'HTTPRedirect'
       | 'ImageElements'
       | 'InspectorIssues'
-      | 'JsUsage'
       | 'LinkElements'
       | 'MainDocumentContent'
       | 'Manifest'
