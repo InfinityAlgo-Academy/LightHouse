@@ -111,7 +111,7 @@ function assertNonNegativeInteger(loggableName, value) {
  * once all are finished.
  * @param {ConcurrentMapper} concurrentMapper
  * @param {Smokehouse.TestDfn} smokeTestDefn
- * @param {{concurrency: number, retries: number, lighthouseRunner: Smokehouse.LighthouseRunner, isDebug?: boolean, takeNetworkRequestUrls: () => string[]}} defnOptions
+ * @param {{concurrency: number, retries: number, lighthouseRunner: Smokehouse.LighthouseRunner, isDebug?: boolean, takeNetworkRequestUrls?: () => string[]}} defnOptions
  * @return {Promise<SmokehouseResult>}
  */
 async function runSmokeTestDefn(concurrentMapper, smokeTestDefn, defnOptions) {
@@ -126,7 +126,6 @@ async function runSmokeTestDefn(concurrentMapper, smokeTestDefn, defnOptions) {
       lighthouseRunner,
       retries,
       isDebug,
-      isSync: concurrency === 1,
       takeNetworkRequestUrls,
     };
   });
@@ -176,7 +175,7 @@ function purpleify(str) {
 /**
  * Run Lighthouse in the selected runner. Returns `log`` for logging once
  * all tests in a defn are complete.
- * @param {{requestedUrl: string, configJson?: LH.Config.Json, expectation: Smokehouse.ExpectedRunnerResult, lighthouseRunner: Smokehouse.LighthouseRunner, retries: number, isDebug?: boolean, isSync?: boolean, takeNetworkRequestUrls: () => string[]}} testOptions
+ * @param {{requestedUrl: string, configJson?: LH.Config.Json, expectation: Smokehouse.ExpectedRunnerResult, lighthouseRunner: Smokehouse.LighthouseRunner, retries: number, isDebug?: boolean, takeNetworkRequestUrls?: () => string[]}} testOptions
  * @return {Promise<{passed: number, failed: number, log: string}>}
  */
 async function runSmokeTest(testOptions) {
@@ -190,7 +189,6 @@ async function runSmokeTest(testOptions) {
     lighthouseRunner,
     retries,
     isDebug,
-    isSync,
     takeNetworkRequestUrls,
   } = testOptions;
 
@@ -208,7 +206,7 @@ async function runSmokeTest(testOptions) {
     try {
       result = {
         ...await lighthouseRunner(requestedUrl, configJson, {isDebug}),
-        networkRequests: takeNetworkRequestUrls(),
+        networkRequests: takeNetworkRequestUrls ? takeNetworkRequestUrls() : undefined,
       };
     } catch (e) {
       logChildProcessError(localConsole, e);
@@ -216,7 +214,7 @@ async function runSmokeTest(testOptions) {
     }
 
     // Assert result.
-    report = getAssertionReport(result, expectation, {isDebug, isSync});
+    report = getAssertionReport(result, expectation, {isDebug});
     if (report.failed) {
       localConsole.log(`${report.failed} assertion(s) failed.`);
       continue; // Retry, if possible.

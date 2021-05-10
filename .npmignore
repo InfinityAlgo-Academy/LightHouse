@@ -24,9 +24,9 @@ lighthouse-logger/
 
 # Exclude the CLI smoketests but keep the smoketest runner that is used
 # by downstream projects (e.g. publisher ads).
-lighthouse-cli/test/cli
-lighthouse-cli/test/fixtures
-lighthouse-cli/test/smokehouse/test-definitions
+lighthouse-cli/test/*
+!lighthouse-cli/test/smokehouse/
+lighthouse-cli/test/smokehouse/test-definitions/
 
 results/
 lantern-data/

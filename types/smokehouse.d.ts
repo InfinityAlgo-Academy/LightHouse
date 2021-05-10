@@ -43,7 +43,7 @@
     /** A function that runs Lighthouse with the given options. Defaults to running Lighthouse via the CLI. */
     lighthouseRunner?: LighthouseRunner;
     /** A function that gets a list of URLs requested to the server since the last fetch. */
-    takeNetworkRequestUrls: () => string[];
+    takeNetworkRequestUrls?: () => string[];
   }
 
   export interface SmokehouseLibOptions extends SmokehouseOptions {
