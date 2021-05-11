@@ -17,13 +17,19 @@ declare global {
       value: string;
     }
 
+    interface Highlight {
+      path: NodePath;
+      /** If not set, will use the color based on the d1Node. */
+      color?: string;
+    }
+
     interface ViewMode {
       id: 'all' | 'unused-bytes' | 'duplicate-modules';
       label: string;
       subLabel: string;
-      partitionBy?: 'resourceBytes' | 'unusedBytes';
-      highlightNodePaths?: NodePath[];
       enabled: boolean;
+      partitionBy?: 'resourceBytes' | 'unusedBytes';
+      highlights?: Highlight[];
     }
 
     interface Node {

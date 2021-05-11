@@ -148,21 +148,23 @@ class TreemapUtil {
    * The hash function is stable and deterministic, so the same key->item mapping will be
    * produced given the same call order.
    * @template T
-   * @param {T[]} items
-   * @return {(key: string) => T|undefined}
+   * @param {T[]} originalItems
+   * @return {(key: string) => T}
    */
-  static stableHasher(items) {
-    // Clone.
-    items = [...items];
+  static stableHasher(originalItems) {
+    let items = [...originalItems];
 
     /** @type {Map<string, T>} */
     const assignedItems = new Map();
     return key => {
       // Key has already been assigned an item.
-      if (assignedItems.has(key)) return assignedItems.get(key);
+      const alreadyAssignedItem = assignedItems.get(key);
+      if (alreadyAssignedItem !== undefined) return alreadyAssignedItem;
 
       // Ran out of items.
-      if (items.length === 0) return;
+      if (items.length === 0) {
+        items = [...originalItems];
+      }
 
       // Select a random item using a stable hash.
       const hash = [...key].reduce((acc, char) => acc + char.charCodeAt(0), 0);

@@ -12221,8 +12221,7 @@
                             {
                               "name": "jquery/2.2.4/jquery.min.js",
                               "resourceBytes": 85500,
-                              "unusedBytes": 35751,
-                              "duplicatedNormalizedModuleName": "jquery/2.2.4/jquery.min.js"
+                              "unusedBytes": 35751
                             },
                             {
                               "name": "angular.js/1.3.20",
@@ -12454,16 +12453,9 @@
             },
             {
               "name": "https://www.coursehero.com/sym-assets/js/bundle-8ed4419-3cfb752.js",
-              "resourceBytes": 1311780,
+              "resourceBytes": 1111780,
               "unusedBytes": 685723,
               "children": [
-                {
-                  "_comment": "fake data, added for duplicatedNormalizedModuleName",
-                  "name": "jquery/2.2.4/jquery.min.js",
-                  "resourceBytes": 200000,
-                  "unusedBytes": 0,
-                  "duplicatedNormalizedModuleName": "jquery/2.2.4/jquery.min.js"
-                },
                 {
                   "name": "coursehero:///",
                   "resourceBytes": 1111780,

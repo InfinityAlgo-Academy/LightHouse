@@ -66,7 +66,6 @@ class TreemapViewer {
     this.documentUrl = options.lhr.requestedUrl;
     this.el = el;
     this.getHueForD1NodeName = TreemapUtil.stableHasher(TreemapUtil.COLOR_HUES);
-    this.getHueForModuleNodeName = TreemapUtil.stableHasher(TreemapUtil.COLOR_HUES);
 
     /* eslint-disable no-unused-expressions */
     /** @type {LH.Treemap.Node} */
@@ -198,8 +197,8 @@ class TreemapViewer {
     function createUnusedBytesViewMode(root) {
       if (root.unusedBytes === undefined) return;
 
-      /** @type {LH.Treemap.NodePath[]} */
-      const highlightNodePaths = [];
+      /** @type {LH.Treemap.Highlight[]} */
+      const highlights = [];
       for (const d1Node of root.children || []) {
         // Only highlight leaf nodes if entire node (ie a JS bundle) has greater than a certain
         // number of unused bytes.
@@ -213,14 +212,14 @@ class TreemapViewer {
             return;
           }
 
-          highlightNodePaths.push([root.name, ...path]);
+          highlights.push({path: [root.name, ...path]});
         });
       }
       return {
         id: 'unused-bytes',
         label: 'Unused Bytes',
         subLabel: TreemapUtil.formatBytes(root.unusedBytes),
-        highlightNodePaths,
+        highlights,
         enabled: true,
       };
     }
@@ -230,7 +229,7 @@ class TreemapViewer {
      * @return {LH.Treemap.ViewMode|undefined}
      */
     const createDuplicateModulesViewMode = (root) => {
-      /** @type {Map<string, Array<{node: LH.Treemap.Node, path: string[]}>>} */
+      /** @type {Map<string, Array<{node: LH.Treemap.Node, path: LH.Treemap.NodePath}>>} */
       const moduleNameToNodes = new Map();
       for (const d1Node of root.children || []) {
         TreemapUtil.walk(d1Node, (node, path) => {
@@ -243,11 +242,12 @@ class TreemapViewer {
         });
       }
 
+      const getHueForModuleNodeName = TreemapUtil.stableHasher(TreemapUtil.COLOR_HUES);
       let potentialByteSavings = 0;
 
-      /** @type {LH.Treemap.NodePath[]} */
-      const highlightNodePaths = [];
-      for (const nodesWithSameModuleName of moduleNameToNodes.values()) {
+      /** @type {LH.Treemap.Highlight[]} */
+      const highlights = [];
+      for (const [moduleName, nodesWithSameModuleName] of moduleNameToNodes.entries()) {
         if (nodesWithSameModuleName.length === 1) continue;
 
         const bytes = [];
@@ -262,13 +262,16 @@ class TreemapViewer {
         if (duplicatedBytes < DUPLICATED_MODULES_IGNORE_THRESHOLD) continue;
 
         for (const {path} of nodesWithSameModuleName) {
-          highlightNodePaths.push([root.name, ...path]);
+          highlights.push({
+            path: [root.name, ...path],
+            color: this.getColorFromHue(getHueForModuleNodeName(moduleName)),
+          });
         }
         potentialByteSavings += duplicatedBytes;
       }
 
       let enabled = true;
-      if (highlightNodePaths.length === 0) enabled = false;
+      if (highlights.length === 0) enabled = false;
       if (potentialByteSavings / root.resourceBytes < DUPLICATED_MODULES_IGNORE_ROOT_RATIO) {
         enabled = false;
       }
@@ -277,7 +280,7 @@ class TreemapViewer {
         id: 'duplicate-modules',
         label: 'Duplicate Modules',
         subLabel: enabled ? TreemapUtil.formatBytes(potentialByteSavings) : 'N/A',
-        highlightNodePaths,
+        highlights,
         enabled,
       };
     };
@@ -538,42 +541,40 @@ class TreemapViewer {
     return parts.join(' · ');
   }
 
+  /**
+   * @param {number} hue
+   */
+  getColorFromHue(hue) {
+    return TreemapUtil.hsl(hue, 60, 90);
+  }
+
   updateColors() {
     TreemapUtil.walk(this.currentTreemapRoot, node => {
-      let hue;
-      if (this.currentViewMode.id === 'duplicate-modules') {
-        hue = this.getHueForModuleNodeName(node.duplicatedNormalizedModuleName || '');
-      } else {
-        // Color a depth one node and all children the same color.
-        const depthOneNode = this.nodeToDepthOneNodeMap.get(node);
-        hue = this.getHueForD1NodeName(depthOneNode ? depthOneNode.name : node.name);
-      }
+      // Color a depth one node and all children the same color.
+      const depthOneNode = this.nodeToDepthOneNodeMap.get(node);
+      const hue = depthOneNode &&
+        this.getHueForD1NodeName(depthOneNode ? depthOneNode.name : node.name);
+      const depthOneNodeColor = hue !== undefined ? this.getColorFromHue(hue) : 'white';
 
-      let backgroundColor = 'white';
-      let color = 'black';
-
-      if (hue !== undefined) {
-        const sat = 60;
-        const lig = 90;
-        backgroundColor = TreemapUtil.hsl(hue, sat, lig);
-        color = lig > 50 ? 'black' : 'white';
-      } else {
-        // Ran out of colors.
-      }
-
-      // A view can set nodes to highlight. If so, don't color anything else.
-      if (this.currentViewMode.highlightNodePaths) {
+      let backgroundColor;
+      if (this.currentViewMode.highlights) {
+        // A view can set nodes to highlight. If so, don't color anything else.
         const path = this.nodeToPathMap.get(node);
-        const shouldHighlight = path && this.currentViewMode.highlightNodePaths
-          .some(pathToHighlight => TreemapUtil.pathsAreEqual(pathToHighlight, path));
-        if (!shouldHighlight) backgroundColor = 'white';
+        const highlight = path && this.currentViewMode.highlights
+          .find(highlight => TreemapUtil.pathsAreEqual(path, highlight.path));
+        if (highlight) {
+          backgroundColor = highlight.color || depthOneNodeColor;
+        } else {
+          backgroundColor = 'white';
+        }
+      } else {
+        backgroundColor = depthOneNodeColor;
       }
 
       // @ts-ignore: webtreemap will add a dom node property to every node.
       const dom = /** @type {HTMLElement?} */ (node.dom);
       if (dom) {
         dom.style.backgroundColor = backgroundColor;
-        dom.style.color = color;
       }
     });
   }

@@ -34,6 +34,7 @@ describe('TreemapUtil', () => {
   });
 
   it('stableHasher works', () => {
+    const values = [1, 2, 3, 4, 5];
     let hasher = TreemapUtil.stableHasher([1, 2, 3, 4, 5]);
     const expectedValues = [
       hasher('value0'),
@@ -43,13 +44,18 @@ describe('TreemapUtil', () => {
       hasher('value4'),
       hasher('value5'),
     ];
+
+    for (const expectedValue of expectedValues) {
+      expect(values).toContain(expectedValue);
+    }
+
     // Expect the same values using the same invocation.
     expect(hasher('value0')).toBe(expectedValues[0]);
     expect(hasher('value1')).toBe(expectedValues[1]);
     expect(hasher('value2')).toBe(expectedValues[2]);
     expect(hasher('value3')).toBe(expectedValues[3]);
     expect(hasher('value4')).toBe(expectedValues[4]);
-    expect(hasher('value5')).toBeUndefined();
+    expect(hasher('value5')).toBe(expectedValues[5]);
 
     // Repeat, expecting the same values.
     hasher = TreemapUtil.stableHasher([1, 2, 3, 4, 5]);
@@ -58,6 +64,9 @@ describe('TreemapUtil', () => {
     expect(hasher('value2')).toBe(expectedValues[2]);
     expect(hasher('value3')).toBe(expectedValues[3]);
     expect(hasher('value4')).toBe(expectedValues[4]);
-    expect(hasher('value5')).toBeUndefined();
+    expect(hasher('value5')).toBe(expectedValues[5]);
+
+    // Expect values array is not modified.
+    expect(values).toEqual([1, 2, 3, 4, 5]);
   });
 });
