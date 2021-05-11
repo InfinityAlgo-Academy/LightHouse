@@ -223,6 +223,17 @@ class ScriptTreemapDataAudit extends Audit {
           sourcesData[source] = sourceData;
         }
 
+        if (bundle.sizes.unmappedBytes) {
+          /** @type {SourceData} */
+          const sourceData = {
+            resourceBytes: bundle.sizes.unmappedBytes,
+          };
+          if (unusedJavascriptSummary.sourcesWastedBytes) {
+            sourceData.unusedBytes = unusedJavascriptSummary.sourcesWastedBytes['(unmapped)'];
+          }
+          sourcesData['(unmapped)'] = sourceData;
+        }
+
         node = this.makeScriptNode(scriptElement.src, bundle.rawMap.sourceRoot || '', sourcesData);
       } else {
         // No valid source map for this script, so we can only produce a single node.

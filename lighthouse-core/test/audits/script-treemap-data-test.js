@@ -66,7 +66,18 @@ describe('ScriptTreemapData audit', () => {
         }
       `);
 
-      expect(JSON.stringify(treemapData).length).toMatchInlineSnapshot(`6612`);
+      const bundleNode = treemapData.find(s => s.name === 'https://squoosh.app/main-app.js');
+      // @ts-expect-error
+      const unmapped = bundleNode.children[0].children.find(m => m.name === '(unmapped)');
+      expect(unmapped).toMatchInlineSnapshot(`
+        Object {
+          "name": "(unmapped)",
+          "resourceBytes": 10061,
+          "unusedBytes": 3760,
+        }
+      `);
+
+      expect(JSON.stringify(treemapData).length).toMatchInlineSnapshot(`6740`);
       expect(treemapData).toMatchSnapshot();
     });
   });
@@ -101,12 +112,12 @@ describe('ScriptTreemapData audit', () => {
     });
 
     it('has nodes', () => {
-      expect(JSON.stringify(treemapData).length).toMatchInlineSnapshot(`86735`);
+      expect(JSON.stringify(treemapData).length).toMatchInlineSnapshot(`86817`);
       expect(treemapData).toMatchSnapshot();
     });
 
     it('finds duplicates', () => {
-      expect(JSON.stringify(treemapData).length).toMatchInlineSnapshot(`86735`);
+      expect(JSON.stringify(treemapData).length).toMatchInlineSnapshot(`86817`);
       // @ts-ignore all these children exist.
       const leafNode = treemapData[0].
         children[0].
