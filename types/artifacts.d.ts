@@ -20,7 +20,6 @@ declare global {
     export interface Artifacts extends BaseArtifacts, GathererArtifacts {}
 
     export type FRArtifacts = StrictOmit<Artifacts,
-      | 'CSSUsage'
       | 'Fonts'
       | 'FullPageScreenshot'
       | 'HTTPRedirect'
