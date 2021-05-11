@@ -13,6 +13,7 @@ const Driver = require('../../../gather/driver.js');
 const Connection = require('../../../gather/connections/connection.js');
 const SourceMaps = require('../../../gather/gatherers/source-maps.js');
 const {createMockSendCommandFn, createMockOnFn} = require('../mock-commands.js');
+const {flushAllTimersAndMicrotasks} = require('../../test-utils.js');
 
 const mapJson = JSON.stringify({
   version: 3,
@@ -89,10 +90,17 @@ describe('SourceMaps gatherer', () => {
     driver.fetcher.fetchResource = fetchMock;
 
     const sourceMaps = new SourceMaps();
-    await sourceMaps.beforePass({driver});
+
+    await sourceMaps.startInstrumentation({driver});
+    await sourceMaps.startSensitiveInstrumentation({driver});
+
     // Needed for protocol events to emit.
-    jest.advanceTimersByTime(1);
-    return sourceMaps.afterPass({driver});
+    await flushAllTimersAndMicrotasks(1);
+
+    await sourceMaps.stopSensitiveInstrumentation({driver});
+    await sourceMaps.stopInstrumentation({driver});
+
+    return sourceMaps.getArtifact({driver});
   }
 
   function makeJsonDataUrl(data) {

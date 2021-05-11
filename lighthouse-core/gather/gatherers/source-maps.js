@@ -5,15 +5,18 @@
  */
 'use strict';
 
-/** @typedef {import('../driver.js')} Driver */
-
-const Gatherer = require('./gatherer.js');
+const FRGatherer = require('../../fraggle-rock/gather/base-gatherer.js');
 const URL = require('../../lib/url-shim.js');
 
 /**
  * @fileoverview Gets JavaScript source maps.
  */
-class SourceMaps extends Gatherer {
+class SourceMaps extends FRGatherer {
+  /** @type {LH.Gatherer.GathererMeta} */
+  meta = {
+    supportedModes: ['timespan', 'navigation'],
+  }
+
   constructor() {
     super();
     /** @type {LH.Crdp.Debugger.ScriptParsedEvent[]} */
@@ -22,7 +25,7 @@ class SourceMaps extends Gatherer {
   }
 
   /**
-   * @param {Driver} driver
+   * @param {LH.Gatherer.FRTransitionalDriver} driver
    * @param {string} sourceMapUrl
    * @return {Promise<LH.Artifacts.RawSourceMap>}
    */
@@ -53,15 +56,6 @@ class SourceMaps extends Gatherer {
   }
 
   /**
-   * @param {LH.Gatherer.PassContext} passContext
-   */
-  async beforePass(passContext) {
-    const driver = passContext.driver;
-    driver.on('Debugger.scriptParsed', this.onScriptParsed);
-    await driver.sendCommand('Debugger.enable');
-  }
-
-  /**
    * @param {string} url
    * @param {string} base
    * @return {string|undefined}
@@ -75,7 +69,7 @@ class SourceMaps extends Gatherer {
   }
 
   /**
-   * @param {Driver} driver
+   * @param {LH.Gatherer.FRTransitionalDriver} driver
    * @param {LH.Crdp.Debugger.ScriptParsedEvent} event
    * @return {Promise<LH.Artifacts.SourceMap>}
    */
@@ -124,18 +118,31 @@ class SourceMaps extends Gatherer {
   }
 
   /**
-   * @param {LH.Gatherer.PassContext} passContext
+   * @param {LH.Gatherer.FRTransitionalContext} context
+   */
+  async startSensitiveInstrumentation(context) {
+    const session = context.driver.defaultSession;
+    session.on('Debugger.scriptParsed', this.onScriptParsed);
+    await session.sendCommand('Debugger.enable');
+  }
+
+  /**
+   * @param {LH.Gatherer.FRTransitionalContext} context
+   */
+  async stopSensitiveInstrumentation(context) {
+    const session = context.driver.defaultSession;
+    await session.sendCommand('Debugger.disable');
+    session.off('Debugger.scriptParsed', this.onScriptParsed);
+  }
+
+  /**
+   * @param {LH.Gatherer.FRTransitionalContext} context
    * @return {Promise<LH.Artifacts['SourceMaps']>}
    */
-  async afterPass(passContext) {
-    const driver = passContext.driver;
-
-    driver.off('Debugger.scriptParsed', this.onScriptParsed);
-    await driver.sendCommand('Debugger.disable');
-
-    await driver.fetcher.enable();
+  async getArtifact(context) {
+    await context.driver.fetcher.enable();
     const eventProcessPromises = this._scriptParsedEvents
-      .map((event) => this._retrieveMapFromScriptParsedEvent(driver, event));
+      .map((event) => this._retrieveMapFromScriptParsedEvent(context.driver, event));
     return Promise.all(eventProcessPromises);
   }
 }

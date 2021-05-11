@@ -33,7 +33,6 @@ declare global {
       | 'ResponseCompression'
       | 'ScriptElements'
       | 'ServiceWorker'
-      | 'SourceMaps'
       | 'TagsBlockingFirstPaint'
       | keyof FRBaseArtifacts
     >;
