@@ -79,6 +79,7 @@
       {"id":"npm:handlebars:20110425","severity":"medium","semver":{"vulnerable":["<=1.0.0-beta.3"]}}
     ],
     "highcharts":[
+      {"id":"SNYK-JS-HIGHCHARTS-1290057","severity":"medium","semver":{"vulnerable":["<9.0.0"]}},
       {"id":"SNYK-JS-HIGHCHARTS-1018906","severity":"medium","semver":{"vulnerable":["<9.0.0"]}},
       {"id":"SNYK-JS-HIGHCHARTS-571995","severity":"high","semver":{"vulnerable":["<7.2.2",">=8.0.0 <8.1.1"]}},
       {"id":"npm:highcharts:20180225","severity":"high","semver":{"vulnerable":["<6.1.0"]}}
