@@ -90,6 +90,9 @@ class FRGatherer {
    * @return {Promise<LH.Gatherer.PhaseResultNonPromise>}
    */
   async afterPass(passContext, loadData) {
+    if ('dependencies' in this.meta) {
+      throw Error('Gatherer with dependencies should override afterPass');
+    }
     await this.stopSensitiveInstrumentation({...passContext, dependencies: {}});
     await this.stopInstrumentation({...passContext, dependencies: {}});
     return this.getArtifact({...passContext, dependencies: {}});

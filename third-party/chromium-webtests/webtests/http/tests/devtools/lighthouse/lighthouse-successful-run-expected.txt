@@ -89,6 +89,7 @@ Gathering in-page: SourceMaps
 Gathering in-page: FullPageScreenshot
 Gathering trace
 Gathering devtoolsLog & network records
+Computing artifact: NetworkRecords
 Running afterPass methods
 Gathering: CSSUsage
 Gathering: JsUsage
@@ -132,6 +133,7 @@ Loading page & waiting for onload
 Running pass methods
 Gathering in-page: ServiceWorker
 Gathering devtoolsLog & network records
+Computing artifact: NetworkRecords
 Running afterPass methods
 Gathering: ServiceWorker
 Running redirectPass pass
@@ -144,12 +146,12 @@ Loading page & waiting for onload
 Running pass methods
 Gathering in-page: HTTPRedirect
 Gathering devtoolsLog & network records
+Computing artifact: NetworkRecords
 Running afterPass methods
 Gathering: HTTPRedirect
 Disconnecting from browser...
 Analyzing and running audits...
 Auditing: Uses HTTPS
-Computing artifact: NetworkRecords
 Auditing: Redirects HTTP traffic to HTTPS
 Auditing: Registers a service worker that controls page and `start_url`
 Auditing: Has a `<meta name="viewport">` tag with `width` or `initial-scale`

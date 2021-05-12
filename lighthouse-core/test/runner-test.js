@@ -30,7 +30,7 @@ const i18n = require('../lib/i18n/i18n.js');
 describe('Runner', () => {
   const defaultGatherFn = opts => Runner._gatherArtifactsFromBrowser(
     opts.requestedUrl,
-    opts,
+    {...opts, computedCache: new Map()},
     null
   );
 
@@ -316,7 +316,7 @@ describe('Runner', () => {
       ],
     });
 
-    return Runner.run({}, {config}).then(results => {
+    return Runner.run({}, {config, computedCache: new Map()}).then(results => {
       const audits = results.lhr.audits;
       assert.equal(audits['user-timings'].displayValue, '2 user timings');
       assert.deepStrictEqual(audits['user-timings'].details.items.map(i => i.startTime),
@@ -555,7 +555,7 @@ describe('Runner', () => {
       ],
     });
 
-    return Runner.run({}, {config}).then(results => {
+    return Runner.run({}, {config, computedCache: new Map()}).then(results => {
       const audits = results.lhr.audits;
       assert.equal(audits['critical-request-chains'].displayValue, '5 chains found');
       assert.equal(audits['critical-request-chains'].details.longestChain.transferSize, 2468);

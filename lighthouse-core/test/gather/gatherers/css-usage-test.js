@@ -36,6 +36,7 @@ describe('.getArtifact', () => {
       driver: driver.asDriver(),
       url: 'https://example.com',
       gatherMode: 'snapshot',
+      computedCache: new Map(),
       dependencies: {},
     };
     const gatherer = new CSSUsage();
@@ -89,6 +90,7 @@ describe('.getArtifact', () => {
       driver: driver.asDriver(),
       url: 'https://example.com',
       gatherMode: 'snapshot',
+      computedCache: new Map(),
       dependencies: {},
     };
     const gatherer = new CSSUsage();

@@ -51,6 +51,7 @@ async function startTimespan(options) {
         {
           url: finalUrl,
           config,
+          computedCache: new Map(),
         }
       );
     },

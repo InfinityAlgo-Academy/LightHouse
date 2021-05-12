@@ -10,6 +10,7 @@ import _Simulator = require('../lighthouse-core/lib/dependency-graph/simulator/s
 import Driver = require('../lighthouse-core/gather/driver');
 import ExecutionContext = require('../lighthouse-core/gather/driver/execution-context');
 import Fetcher = require('../lighthouse-core/gather/fetcher');
+import ArbitraryEqualityMap = require('../lighthouse-core/lib/arbitrary-equality-map');
 
 declare global {
   module LH.Gatherer {
@@ -41,6 +42,8 @@ declare global {
       gatherMode: GatherMode;
       /** The connection to the page being analyzed. */
       driver: FRTransitionalDriver;
+      /** The cached results of computed artifacts. */
+      computedCache: Map<string, ArbitraryEqualityMap>;
       /** The set of available dependencies requested by the current gatherer. */
       dependencies: TDependencies extends DefaultDependenciesKey ?
         {} :
@@ -54,6 +57,7 @@ declare global {
       driver: Driver;
       passConfig: Config.Pass
       settings: Config.Settings;
+      computedCache: Map<string, ArbitraryEqualityMap>
       /** Gatherers can push to this array to add top-level warnings to the LHR. */
       LighthouseRunWarnings: Array<string | IcuMessage>;
       baseArtifacts: BaseArtifacts;

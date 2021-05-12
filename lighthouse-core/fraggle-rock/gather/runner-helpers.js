@@ -76,6 +76,7 @@ async function collectPhaseArtifacts(options) {
         gatherMode,
         driver,
         dependencies,
+        computedCache: new Map(),
       });
     });
 

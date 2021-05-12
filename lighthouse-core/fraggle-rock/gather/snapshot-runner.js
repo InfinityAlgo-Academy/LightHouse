@@ -45,6 +45,7 @@ async function snapshot(options) {
     {
       url,
       config,
+      computedCache: new Map(),
     }
   );
 }

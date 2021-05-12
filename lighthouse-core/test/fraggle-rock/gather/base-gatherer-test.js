@@ -68,5 +68,20 @@ describe('BaseGatherer', () => {
       expect(gatherer.stopInstrumentation).toHaveBeenCalled();
       expect(gatherer.stopSensitiveInstrumentation).toHaveBeenCalled();
     });
+
+    it('throws if no override and has dependencies', async () => {
+      class MyGatherer extends Gatherer {
+        /** @type {LH.Gatherer.GathererMeta<'Trace'>} */
+        meta = {supportedModes: ['timespan'], dependencies: {Trace: Symbol('Trace')}};
+        stopInstrumentation = jest.fn();
+        stopSensitiveInstrumentation = jest.fn();
+      }
+
+      const gatherer = new MyGatherer();
+      const afterPassPromise = gatherer.afterPass(fakeParam, fakeParam);
+      await expect(afterPassPromise).rejects.toThrowError(/Gatherer with dependencies/);
+      expect(gatherer.stopInstrumentation).not.toHaveBeenCalled();
+      expect(gatherer.stopSensitiveInstrumentation).not.toHaveBeenCalled();
+    });
   });
 });
