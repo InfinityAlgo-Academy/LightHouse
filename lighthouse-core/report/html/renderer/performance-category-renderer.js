@@ -310,7 +310,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
 
     const filterChoices = /** @type {LH.ReportResult.AuditRef[]} */ ([
       ({acronym: 'All'}),
-      ...filterableMetrics
+      ...filterableMetrics,
     ]);
     for (const metric of filterChoices) {
       // The radio elements are appended into `categoryEl` to allow the sweet ~ selectors to work
