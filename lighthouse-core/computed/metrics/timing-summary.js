@@ -135,6 +135,10 @@ class TimingSummary {
       layoutShiftMaxSessionGap1sLimit5s: layoutShiftVariants.maxSessionGap1sLimit5s,
       layoutShiftMaxSliding1s: layoutShiftVariants.maxSliding1s,
       layoutShiftMaxSliding300ms: layoutShiftVariants.maxSliding300ms,
+
+      // And new CLS (layoutShiftMaxSessionGap1sLimit5s) across all frames.
+      // eslint-disable-next-line max-len
+      layoutShiftMaxSessionGap1sLimit5sAllFrames: layoutShiftVariants.layoutShiftMaxSessionGap1sLimit5sAllFrames,
     };
     /** @type {Record<string,boolean>} */
     const debugInfo = {lcpInvalidated: traceOfTab.lcpInvalidated};

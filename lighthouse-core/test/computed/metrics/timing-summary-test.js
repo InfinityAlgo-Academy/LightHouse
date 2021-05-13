@@ -40,6 +40,7 @@ describe('Timing summary', () => {
         "layoutShiftAvgSessionGap5s": 0.0011656245471340055,
         "layoutShiftMaxSessionGap1s": 0.0011656245471340055,
         "layoutShiftMaxSessionGap1sLimit5s": 0.0011656245471340055,
+        "layoutShiftMaxSessionGap1sLimit5sAllFrames": 0.026463014612806653,
         "layoutShiftMaxSliding1s": 0.0011656245471340055,
         "layoutShiftMaxSliding300ms": 0.0011656245471340055,
         "maxPotentialFID": 51.056,

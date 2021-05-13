@@ -160,6 +160,26 @@ describe('Performance: metrics', () => {
       layoutShiftMaxSessionGap1sLimit5s: expect.toBeApproximately(2.268816, 6),
       layoutShiftMaxSliding1s: expect.toBeApproximately(1.911799, 6),
       layoutShiftMaxSliding300ms: expect.toBeApproximately(1.436742, 6),
+      layoutShiftMaxSessionGap1sLimit5sAllFrames: expect.toBeApproximately(2.268816, 6),
+    });
+  });
+
+  it('evaluates new CLS correctly across all frames', async () => {
+    const artifacts = {
+      traces: {
+        [MetricsAudit.DEFAULT_PASS]: clsAllFramesTrace,
+      },
+      devtoolsLogs: {
+        [MetricsAudit.DEFAULT_PASS]: clsAllFramesDevtoolsLog,
+      },
+    };
+
+    const context = {settings: {throttlingMethod: 'provided'}, computedCache: new Map()};
+    const {details} = await MetricsAudit.audit(artifacts, context);
+    expect(details.items[0]).toMatchObject({
+      cumulativeLayoutShift: expect.toBeApproximately(0.001166, 6),
+      cumulativeLayoutShiftAllFrames: expect.toBeApproximately(0.027629, 6),
+      layoutShiftMaxSessionGap1sLimit5sAllFrames: expect.toBeApproximately(0.026463, 6),
     });
   });
 });
