@@ -9,6 +9,7 @@
 
 const constants = require('./constants.js');
 const i18n = require('../lib/i18n/i18n.js');
+const m2a = require('./metrics-to-audits.js');
 
 const UIStrings = {
   /** Title of the Performance category of audits. Equivalent to 'Web performance', this term is inclusive of all web page speed and loading optimization topics. Also used as a label of a score gauge; try to limit to 20 characters. */
@@ -420,16 +421,17 @@ const defaultConfig = {
     'performance': {
       title: str_(UIStrings.performanceCategoryTitle),
       auditRefs: [
-        {id: 'first-contentful-paint', weight: 15, group: 'metrics'},
-        {id: 'speed-index', weight: 15, group: 'metrics'},
-        {id: 'largest-contentful-paint', weight: 25, group: 'metrics'},
-        {id: 'interactive', weight: 15, group: 'metrics'},
-        {id: 'total-blocking-time', weight: 25, group: 'metrics'},
-        {id: 'cumulative-layout-shift', weight: 5, group: 'metrics'},
-        // intentionally left out of metrics group so they won't be displayed
-        {id: 'first-cpu-idle', weight: 0},
+        {id: 'first-contentful-paint', weight: 15, group: 'metrics', acronym: 'FCP', relevantAudits: m2a.fcpRelevantAudits},
+        {id: 'speed-index', weight: 15, group: 'metrics', acronym: 'SI'},
+        {id: 'largest-contentful-paint', weight: 25, group: 'metrics', acronym: 'LCP', relevantAudits: m2a.lcpRelevantAudits},
+        {id: 'interactive', weight: 15, group: 'metrics', acronym: 'TTI'},
+        {id: 'total-blocking-time', weight: 25, group: 'metrics', acronym: 'TBT', relevantAudits: m2a.tbtRelevantAudits},
+        {id: 'cumulative-layout-shift', weight: 5, group: 'metrics', acronym: 'CLS', relevantAudits: m2a.clsRelevantAudits},
+
+        // These are our "invisible" metrics. Not displayed, but still in the LHR
+        {id: 'first-cpu-idle', weight: 0, acronym: 'FCI'},
         {id: 'max-potential-fid', weight: 0},
-        {id: 'first-meaningful-paint', weight: 0},
+        {id: 'first-meaningful-paint', weight: 0, acronym: 'FMP'},
         {id: 'estimated-input-latency', weight: 0},
 
         {id: 'render-blocking-resources', weight: 0, group: 'load-opportunities'},

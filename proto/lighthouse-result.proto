@@ -233,8 +233,14 @@ message LhrCategory {
     // The weight of the audit's score in the overall category score.
     google.protobuf.DoubleValue weight = 2;
 
-    // The category group that the audit belongs to
+    // The category group that the audit belongs to.
     string group = 3;
+
+    // The conventional acronym for the audit/metric.
+    string acronym = 4;
+
+    // Any audit IDs closely relevant to this one.
+    repeated string relevant_audits = 5;
   }
 
   // References to all the audit members and their weight in this category.
