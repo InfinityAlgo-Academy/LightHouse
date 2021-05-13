@@ -127,6 +127,28 @@ function mockDriverModule(driverProvider) {
   };
 }
 
+function createMockContext() {
+  return {
+    driver: createMockDriver(),
+    url: 'https://example.com',
+    gatherMode: 'navigation',
+    computedCache: new Map(),
+    dependencies: {},
+
+    /** @return {LH.Gatherer.FRTransitionalContext} */
+    asContext() {
+      // @ts-expect-error - We'll rely on the tests passing to know this matches.
+      return this;
+    },
+
+    /** @return {LH.Gatherer.PassContext} */
+    asLegacyContext() {
+      // @ts-expect-error - We'll rely on the tests passing to know this matches.
+      return this;
+    },
+  };
+}
+
 module.exports = {
   mockRunnerModule,
   mockDriverModule,
@@ -134,4 +156,5 @@ module.exports = {
   createMockPage,
   createMockSession,
   createMockGathererInstance,
+  createMockContext,
 };
