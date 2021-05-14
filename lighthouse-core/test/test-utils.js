@@ -14,6 +14,18 @@ const {default: {toBeCloseTo}} = require('expect/build/matchers.js');
 
 expect.extend({
   toBeDisplayString(received, expected) {
+    if (!i18n.isIcuMessage(received)) {
+      const message = () =>
+      [
+        `${this.utils.matcherHint('.toBeDisplayString')}\n`,
+        `Expected object to be an ${this.utils.printExpected('LH.IcuMessage')}`,
+        `Received ${typeof received}`,
+        `  ${this.utils.printReceived(received)}`,
+      ].join('\n');
+
+      return {message, pass: false};
+    }
+
     const actual = i18n.getFormatted(received, 'en-US');
     const pass = expected instanceof RegExp ?
       expected.test(actual) :
@@ -28,7 +40,7 @@ expect.extend({
         `  ${this.utils.printReceived(actual)}`,
       ].join('\n');
 
-    return {actual, message, pass};
+    return {message, pass};
   },
 
   // Expose toBeCloseTo() so it can be used as an asymmetric matcher.

@@ -154,7 +154,7 @@ describe('PWA: webapp install banner audit', () => {
       return InstallableManifestAudit.audit(artifacts, context).then(result => {
         assert.strictEqual(result.score, 0);
         const items = result.details.items;
-        expect(items[0].reason).toBeDisplayString(/number of arguments/);
+        expect(items[0].reason).toMatch(/number of arguments/);
       });
     });
 
@@ -167,7 +167,7 @@ describe('PWA: webapp install banner audit', () => {
       return InstallableManifestAudit.audit(artifacts, context).then(result => {
         assert.strictEqual(result.score, 0);
         const items = result.details.items;
-        expect(items[0].reason).toBeDisplayString(/unexpected arguments/);
+        expect(items[0].reason).toMatch(/unexpected arguments/);
       });
     });
 

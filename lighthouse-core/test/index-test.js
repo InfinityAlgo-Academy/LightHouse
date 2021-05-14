@@ -92,8 +92,7 @@ describe('Module Tests', function() {
     try {
       await lighthouse('i-am-not-valid', {}, {});
     } catch (err) {
-      expect(err.friendlyMessage)
-          .toBeDisplayString('The URL you have provided appears to be invalid.');
+      expect(err.friendlyMessage).toBe('The URL you have provided appears to be invalid.');
       expect(err.code).toEqual('INVALID_URL');
     }
   });
@@ -103,8 +102,7 @@ describe('Module Tests', function() {
     try {
       await lighthouse('file:///a/fake/index.html', {}, {});
     } catch (err) {
-      expect(err.friendlyMessage)
-          .toBeDisplayString('The URL you have provided appears to be invalid.');
+      expect(err.friendlyMessage).toBe('The URL you have provided appears to be invalid.');
       expect(err.code).toEqual('INVALID_URL');
     }
   });
