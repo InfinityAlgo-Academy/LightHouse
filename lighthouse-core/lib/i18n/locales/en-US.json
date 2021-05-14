@@ -2096,6 +2096,30 @@
   "lighthouse-core/report/html/renderer/util.js | warningHeader": {
     "message": "Warnings: "
   },
+  "lighthouse-treemap/app/src/util.js | allLabel": {
+    "message": "All"
+  },
+  "lighthouse-treemap/app/src/util.js | allScriptsDropdownLabel": {
+    "message": "All Scripts"
+  },
+  "lighthouse-treemap/app/src/util.js | coverageColumnName": {
+    "message": "Coverage"
+  },
+  "lighthouse-treemap/app/src/util.js | duplicateModulesLabel": {
+    "message": "Duplicate Modules"
+  },
+  "lighthouse-treemap/app/src/util.js | resourceBytesLabel": {
+    "message": "Resource Bytes"
+  },
+  "lighthouse-treemap/app/src/util.js | tableColumnName": {
+    "message": "Name"
+  },
+  "lighthouse-treemap/app/src/util.js | toggleTableButtonLabel": {
+    "message": "Toggle Table"
+  },
+  "lighthouse-treemap/app/src/util.js | unusedBytesLabel": {
+    "message": "Unused Bytes"
+  },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "For animated content, use [`amp-anim`](https://amp.dev/documentation/components/amp-anim/) to minimize CPU usage when the content is offscreen."
   },

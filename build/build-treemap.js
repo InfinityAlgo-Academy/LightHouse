@@ -9,6 +9,33 @@ const fs = require('fs');
 const GhPagesApp = require('./gh-pages-app.js');
 
 /**
+ * Extract only the strings needed for lighthouse-treemap into
+ * a script that sets a global variable `strings`, whose keys
+ * are locale codes (en-US, es, etc.) and values are localized UIStrings.
+ */
+function buildStrings() {
+  const locales = require('../lighthouse-core/lib/i18n/locales.js');
+  const UIStrings = require('../lighthouse-treemap/app/src/util.js').UIStrings;
+  const strings = /** @type {import('../lighthouse-treemap/types/treemap').Strings} */ ({});
+
+  for (const [locale, lhlMessages] of Object.entries(locales)) {
+    const localizedStrings = Object.fromEntries(
+      Object.entries(lhlMessages).map(([icuMessageId, v]) => {
+        const [filename, varName] = icuMessageId.split(' | ');
+        if (!filename.endsWith('util.js') || !(varName in UIStrings)) {
+          return [];
+        }
+
+        return [varName, v];
+      })
+    );
+    strings[/** @type {LH.Locale} */ (locale)] = localizedStrings;
+  }
+
+  return 'const strings =' + JSON.stringify(strings, null, 2) + ';';
+}
+
+/**
  * Build treemap app, optionally deploying to gh-pages if `--deploy` flag was set.
  */
 async function run() {
@@ -28,7 +55,9 @@ async function run() {
       fs.readFileSync(require.resolve('tabulator-tables/dist/js/modules/format.js'), 'utf8'),
       fs.readFileSync(require.resolve('tabulator-tables/dist/js/modules/resize_columns.js'), 'utf8'),
       /* eslint-enable max-len */
-      {path: 'src/*'},
+      buildStrings(),
+      {path: '../../lighthouse-core/report/html/renderer/i18n.js'},
+      {path: 'src/**/*'},
     ],
     assets: [
       {path: 'debug.json'},

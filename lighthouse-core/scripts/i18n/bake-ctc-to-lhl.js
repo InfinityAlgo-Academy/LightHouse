@@ -118,10 +118,9 @@ function saveLhlStrings(path, localeStrings) {
 
 /**
  * @param {string} dir
- * @param {string} outputDir
  * @return {Array<string>}
  */
-function collectAndBakeCtcStrings(dir, outputDir) {
+function collectAndBakeCtcStrings(dir) {
   const lhlFilenames = [];
   for (const filename of fs.readdirSync(dir)) {
     const fullPath = path.join(dir, filename);
@@ -131,7 +130,7 @@ function collectAndBakeCtcStrings(dir, outputDir) {
       if (!process.env.CI) console.log('Baking', relativePath);
       const ctcStrings = loadCtcStrings(relativePath);
       const strings = bakePlaceholders(ctcStrings);
-      const outputFile = outputDir + path.basename(filename).replace('.ctc', '');
+      const outputFile = path.join(dir, path.basename(filename).replace('.ctc', ''));
       saveLhlStrings(outputFile, strings);
       lhlFilenames.push(path.basename(filename));
     }

@@ -7,6 +7,9 @@
 
 /* eslint-env jest */
 
+const assert = require('assert');
+const fs = require('fs');
+const jsdom = require('jsdom');
 const TreemapUtil = require('../app/src/util.js');
 
 describe('TreemapUtil', () => {
@@ -68,5 +71,16 @@ describe('TreemapUtil', () => {
 
     // Expect values array is not modified.
     expect(values).toEqual([1, 2, 3, 4, 5]);
+  });
+
+  describe('data-i18n', () => {
+    it('should have only valid data-i18n values in treemap html', () => {
+      const TREEMAP_INDEX = fs.readFileSync(__dirname + '/../app/index.html', 'utf8');
+      const dom = new jsdom.JSDOM(TREEMAP_INDEX);
+      for (const node of dom.window.document.querySelectorAll('[data-i18n]')) {
+        const val = node.getAttribute('data-i18n');
+        assert.ok(val in TreemapUtil.UIStrings, `Invalid data-i18n value of: "${val}" not found.`);
+      }
+    });
   });
 });

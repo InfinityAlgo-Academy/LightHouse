@@ -18,7 +18,7 @@
 
 /* globals self */
 
-/** @typedef {import('./i18n')} I18n */
+/** @template T @typedef {import('./i18n')<T>} I18n */
 
 const ELLIPSIS = '\u2026';
 const NBSP = '\xa0';
@@ -508,7 +508,7 @@ Util.getUniqueSuffix = (() => {
   };
 })();
 
-/** @type {I18n} */
+/** @type {I18n<typeof Util['UIStrings']>} */
 // @ts-expect-error: Is set in report renderer.
 Util.i18n = null;
 

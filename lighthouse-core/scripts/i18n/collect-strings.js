@@ -28,6 +28,7 @@ const UISTRINGS_REGEX = /UIStrings = .*?\};\n/s;
 
 const foldersWithStrings = [
   `${LH_ROOT}/lighthouse-core`,
+  `${LH_ROOT}/lighthouse-treemap`,
   path.dirname(require.resolve('lighthouse-stack-packs')) + '/packs',
 ];
 
@@ -39,6 +40,7 @@ const ignoredPathComponents = [
   '**/test/**',
   '**/*-test.js',
   '**/*-renderer.js',
+  'lighthouse-treemap/app/src/main.js',
 ];
 
 /**
@@ -586,7 +588,9 @@ function collectAllStringsInDir(dir) {
       if (seenStrings.has(ctc.message)) {
         ctc.meaning = ctc.description;
         const seenId = seenStrings.get(ctc.message);
-        if (seenId) {
+        // TODO: `strings[seenId]` check shouldn't be necessary here ...
+        // see https://github.com/GoogleChrome/lighthouse/pull/12441/files#r630521367
+        if (seenId && strings[seenId]) {
           if (!strings[seenId].meaning) {
             strings[seenId].meaning = strings[seenId].description;
             collisions++;
@@ -646,8 +650,7 @@ if (require.main === module) {
   console.log('Written to disk!', 'en-XL.ctc.json');
 
   // Bake the ctc en-US and en-XL files into en-US and en-XL LHL format
-  const lhl = collectAndBakeCtcStrings(path.join(LH_ROOT, 'lighthouse-core/lib/i18n/locales/'),
-      path.join(LH_ROOT, 'lighthouse-core/lib/i18n/locales/'));
+  const lhl = collectAndBakeCtcStrings(path.join(LH_ROOT, 'lighthouse-core/lib/i18n/locales/'));
   lhl.forEach(function(locale) {
     console.log(`Baked ${locale} into LHL format.`);
   });
