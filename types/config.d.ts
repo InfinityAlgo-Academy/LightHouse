@@ -146,8 +146,8 @@ declare global {
         id: string;
         weight: number;
         group?: string;
-        relevantAudits?: string[];
         acronym?: string;
+        relevantAudits?: string[];
       }
 
       export interface Settings extends Required<SharedFlagsSettings> {
