@@ -12,7 +12,7 @@ const acceptableDevToolsLog = require('../fixtures/traces/lcp-m78.devtools.log.j
 
 /* eslint-env jest */
 describe('Performance: predictive performance audit', () => {
-  it('should compute the predicted values', () => {
+  it('should compute the predicted values', async () => {
     const artifacts = {
       traces: {
         [PredictivePerf.DEFAULT_PASS]: acceptableTrace,
@@ -23,13 +23,12 @@ describe('Performance: predictive performance audit', () => {
     };
     const context = {computedCache: new Map(), settings: {locale: 'en'}};
 
-    return PredictivePerf.audit(artifacts, context).then(output => {
-      const metrics = output.details.items[0];
-      for (const [key, value] of Object.entries(metrics)) {
-        metrics[key] = Math.round(value);
-      }
-
-      expect(metrics).toMatchSnapshot();
-    });
+    const output = await PredictivePerf.audit(artifacts, context);
+    expect(output.displayValue).toBeDisplayString('4,670 ms');
+    const metrics = output.details.items[0];
+    for (const [key, value] of Object.entries(metrics)) {
+      metrics[key] = Math.round(value);
+    }
+    expect(metrics).toMatchSnapshot();
   });
 });

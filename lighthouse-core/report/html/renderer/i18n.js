@@ -18,7 +18,7 @@ const MiB = KiB * KiB;
 class I18n {
   /**
    * @param {LH.Locale} locale
-   * @param {T=} strings
+   * @param {T} strings
    */
   constructor(locale, strings) {
     // When testing, use a locale with more exciting numeric formatting.
@@ -27,7 +27,7 @@ class I18n {
     this._numberDateLocale = locale;
     this._numberFormatter = new Intl.NumberFormat(locale);
     this._percentFormatter = new Intl.NumberFormat(locale, {style: 'percent'});
-    this._strings = /** @type {T} */ (strings || {});
+    this._strings = strings;
   }
 
   get strings() {

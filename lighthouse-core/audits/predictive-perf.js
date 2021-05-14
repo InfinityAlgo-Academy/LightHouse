@@ -6,7 +6,7 @@
 'use strict';
 
 const Audit = require('./audit.js');
-const I18n = require('../report/html/renderer/i18n.js');
+const i18n = require('../lib/i18n/i18n.js');
 
 const LanternFcp = require('../computed/metrics/lantern-first-contentful-paint.js');
 const LanternFmp = require('../computed/metrics/lantern-first-meaningful-paint.js');
@@ -20,6 +20,8 @@ const LanternLcp = require('../computed/metrics/lantern-largest-contentful-paint
 //   https://www.desmos.com/calculator/bksgkihhj8
 const SCORING_P10 = 3651;
 const SCORING_MEDIAN = 10000;
+
+const str_ = i18n.createMessageInstanceIdFn(__filename, {});
 
 class PredictivePerf extends Audit {
   /**
@@ -91,13 +93,11 @@ class PredictivePerf extends Audit {
       values.roughEstimateOfTTI
     );
 
-    const i18n = new I18n(context.settings.locale);
-
     return {
       score,
       numericValue: values.roughEstimateOfTTI,
       numericUnit: 'millisecond',
-      displayValue: i18n.formatMilliseconds(values.roughEstimateOfTTI),
+      displayValue: str_(i18n.UIStrings.ms, {timeInMs: values.roughEstimateOfTTI}),
       details: {
         type: 'debugdata',
         // TODO: Consider not nesting values under `items`.
