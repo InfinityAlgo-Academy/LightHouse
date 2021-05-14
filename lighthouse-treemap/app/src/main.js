@@ -93,10 +93,6 @@ class TreemapViewer {
     urlEl.textContent = this.documentUrl;
     urlEl.href = this.documentUrl;
 
-    const bytes = this.wrapNodesInNewRootNode(this.depthOneNodesByGroup.scripts).resourceBytes;
-    TreemapUtil.find('.lh-header--size').textContent =
-      TreemapUtil.i18n.formatBytesWithBestUnit(bytes);
-
     this.createBundleSelector();
 
     const toggleTableBtn = TreemapUtil.find('.lh-button--toggle-table');
