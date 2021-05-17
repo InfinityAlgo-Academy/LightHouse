@@ -1703,6 +1703,9 @@
   "lighthouse-core/config/default-config.js | seoMobileGroupTitle": {
     "message": "Vhodné pre mobilné zariadenia"
   },
+  "lighthouse-core/gather/driver/storage.js | warningData": {
+    "message": "{locationCount,plural, =1{V nasledujúcom umiestnení môžu byť uložené údaje, ktoré ovplyvňujú výkonnosť načítavania: {locations}. Skontrolujte túto stránku v okne inkognito, aby príslušné zdroje neovplyvnili vaše skóre.}few{V nasledujúcich umiestneniach môžu byť uložené údaje, ktoré ovplyvňujú výkonnosť načítavania: {locations}. Skontrolujte túto stránku v okne inkognito, aby príslušné zdroje neovplyvnili vaše skóre.}many{V nasledujúcich umiestneniach môžu byť uložené údaje, ktoré ovplyvňujú výkonnosť načítavania: {locations}. Skontrolujte túto stránku v okne inkognito, aby príslušné zdroje neovplyvnili vaše skóre.}other{V nasledujúcich umiestneniach môžu byť uložené údaje, ktoré ovplyvňujú výkonnosť načítavania: {locations}. Skontrolujte túto stránku v okne inkognito, aby príslušné zdroje neovplyvnili vaše skóre.}}"
+  },
   "lighthouse-core/lib/csp-evaluator.js | allowlistFallback": {
     "message": "Odporúčame pridať schémy webovej adresy HTTPS alebo HTTP (ignorované prehliadačmi podporujúcimi direktívu strict-dynamic), aby boli pravidlá spätne kompatibilné so staršími prehliadačmi."
   },
@@ -2074,6 +2077,9 @@
   },
   "lighthouse-core/report/html/renderer/util.js | varianceDisclaimer": {
     "message": "Hodnoty sú odhady, ktoré sa môžu líšiť. [Skóre výkonnosti sa vypočítava](https://web.dev/performance-scoring/) priamo z týchto metrík."
+  },
+  "lighthouse-core/report/html/renderer/util.js | viewTreemapLabel": {
+    "message": "Zobraziť stromovú mapu"
   },
   "lighthouse-core/report/html/renderer/util.js | warningAuditsGroupTitle": {
     "message": "Úspešne absolvované kontroly, ale s upozorneniami"

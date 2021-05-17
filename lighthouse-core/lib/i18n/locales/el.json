@@ -1703,6 +1703,9 @@
   "lighthouse-core/config/default-config.js | seoMobileGroupTitle": {
     "message": "Φιλική προς κινητά"
   },
+  "lighthouse-core/gather/driver/storage.js | warningData": {
+    "message": "{locationCount,plural, =1{Ενδέχεται να υπάρχουν αποθηκευμένα δεδομένα που επηρεάζουν την απόδοση φόρτωσης σε αυτήν την τοποθεσία: {locations}. Ελέγξτε αυτήν τη σελίδα σε παράθυρο για ανώνυμη περιήγηση για να εμποδίσετε αυτούς τους πόρους από το να επηρεάσουν τις βαθμολογίες σας.}other{Ενδέχεται να υπάρχουν αποθηκευμένα δεδομένα που επηρεάζουν την απόδοση φόρτωσης σε αυτές τις τοποθεσίες: {locations}. Ελέγξτε αυτήν τη σελίδα σε παράθυρο για ανώνυμη περιήγηση για να εμποδίσετε αυτούς τους πόρους από το να επηρεάσουν τις βαθμολογίες σας.}}"
+  },
   "lighthouse-core/lib/csp-evaluator.js | allowlistFallback": {
     "message": "Εξετάστε το ενδεχόμενο προσθήκης συνδυασμών URL https: και http: (παραβλέπονται από προγράμματα περιήγησης που υποστηρίζουν strict-dynamic) για συμβατότητα με παλαιότερα προγράμματα περιήγησης."
   },
@@ -2074,6 +2077,9 @@
   },
   "lighthouse-core/report/html/renderer/util.js | varianceDisclaimer": {
     "message": "Οι τιμές εκτιμώνται και μπορεί να ποικίλουν. Η [βαθμολογία απόδοσης υπολογίζεται](https://web.dev/performance-scoring/) απευθείας από αυτές τις μετρήσεις."
+  },
+  "lighthouse-core/report/html/renderer/util.js | viewTreemapLabel": {
+    "message": "Προβολή δενδροειδούς χάρτη"
   },
   "lighthouse-core/report/html/renderer/util.js | warningAuditsGroupTitle": {
     "message": "Έλεγχοι που ολοκληρώθηκαν αλλά με προειδοποιήσεις"

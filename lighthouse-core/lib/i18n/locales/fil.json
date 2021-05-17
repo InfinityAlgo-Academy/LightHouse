@@ -1703,6 +1703,9 @@
   "lighthouse-core/config/default-config.js | seoMobileGroupTitle": {
     "message": "Pang-mobile"
   },
+  "lighthouse-core/gather/driver/storage.js | warningData": {
+    "message": "{locationCount,plural, =1{Posibleng may naka-store na data na nakakaapekto sa bilis ng pag-load sa lokasyong ito: {locations}. I-audit ang page na ito sa incognito window para hindi maapektuhan ng mga resource na iyon ang iyong mga score.}one{Posibleng may naka-store na data na nakakaapekto sa bilis ng pag-load sa mga lokasyong ito: {locations}. I-audit ang page na ito sa incognito window para hindi maapektuhan ng mga resource na iyon ang iyong mga score.}other{Posibleng may naka-store na data na nakakaapekto sa bilis ng pag-load sa mga lokasyong ito: {locations}. I-audit ang page na ito sa incognito window para hindi maapektuhan ng mga resource na iyon ang iyong mga score.}}"
+  },
   "lighthouse-core/lib/csp-evaluator.js | allowlistFallback": {
     "message": "Pag-isipang magdagdag ng https: at http: na URL scheme (binabalewala ng mga browser na sumusuporta sa 'strict-dynamic') para maging backward compatible sa mga lumang browser."
   },
@@ -2074,6 +2077,9 @@
   },
   "lighthouse-core/report/html/renderer/util.js | varianceDisclaimer": {
     "message": "Tinantya at puwedeng mag-iba ang mga value. [Kinakalkula ang score ng performance](https://web.dev/performance-scoring/) nang direkta mula sa mga sukatang ito."
+  },
+  "lighthouse-core/report/html/renderer/util.js | viewTreemapLabel": {
+    "message": "Tingnan ang Treemap"
   },
   "lighthouse-core/report/html/renderer/util.js | warningAuditsGroupTitle": {
     "message": "Pumasa sa mga pag-audit ngunit may mga babala"

@@ -1703,6 +1703,9 @@
   "lighthouse-core/config/default-config.js | seoMobileGroupTitle": {
     "message": "Удобство за мобилни устройства"
   },
+  "lighthouse-core/gather/driver/storage.js | warningData": {
+    "message": "{locationCount,plural, =1{Възможно е в следното място да се съхраняват данни, които засягат ефективността при зареждане: {locations}. Проверете тази страница в прозорец в режим „инкогнито“, така че тези ресурси да не влияят върху резултатите.}other{Възможно е в следните места да се съхраняват данни, които засягат ефективността при зареждане: {locations}. Проверете тази страница в прозорец в режим „инкогнито“, така че тези ресурси да не влияят върху резултатите.}}"
+  },
   "lighthouse-core/lib/csp-evaluator.js | allowlistFallback": {
     "message": "Обмислете дали да не добавите схемите на URL адреси https: и http: URL (пренебрегвани от браузърите, поддържащи strict-dynamic), за да се обезпечи обратна съвместимост с по-стари браузъри."
   },
@@ -2074,6 +2077,9 @@
   },
   "lighthouse-core/report/html/renderer/util.js | varianceDisclaimer": {
     "message": "Стойностите са приблизителни и може да варират. [Рейтингът за ефективността се изчислява](https://web.dev/performance-scoring/) директно от тези показатели."
+  },
+  "lighthouse-core/report/html/renderer/util.js | viewTreemapLabel": {
+    "message": "Преглед на дървовидната карта"
   },
   "lighthouse-core/report/html/renderer/util.js | warningAuditsGroupTitle": {
     "message": "Проверките бяха преминати успешно, но има предупреждения"
