@@ -41,6 +41,10 @@ const MESSAGE_I18N_ID_REGEX = / | [^\s]+$/;
     Intl.NumberFormat = IntlPolyfill.NumberFormat;
     Intl.DateTimeFormat = IntlPolyfill.DateTimeFormat;
   }
+  // Deal with buggy regex caching. https://github.com/andyearnshaw/Intl.js/issues/308
+  if (IntlPolyfill.__disableRegExpRestore) {
+    IntlPolyfill.__disableRegExpRestore();
+  }
 })();
 
 const UIStrings = {
