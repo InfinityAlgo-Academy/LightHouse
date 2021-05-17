@@ -55,7 +55,7 @@ const license = `/*
  * @return {string[]}
  */
 function loadFiles(pattern) {
-  const filePaths = glob.sync(pattern);
+  const filePaths = glob.sync(pattern, {nodir: true});
   return filePaths.map(path => fs.readFileSync(path, {encoding: 'utf8'}));
 }
 

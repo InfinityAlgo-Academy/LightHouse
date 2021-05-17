@@ -790,7 +790,7 @@ describe('Runner', () => {
 
       // And it bubbled up to the runtimeError.
       expect(lhr.runtimeError.code).toEqual(NO_FCP.code);
-      expect(lhr.runtimeError.message).toBeDisplayString(/did not paint any content.*\(NO_FCP\)/);
+      expect(lhr.runtimeError.message).toMatch(/did not paint any content.*\(NO_FCP\)/);
     });
 
     it('includes a pageLoadError runtimeError over any gatherer runtimeErrors', async () => {
@@ -803,10 +803,10 @@ describe('Runner', () => {
 
       const gotoURL = jest.requireMock('../gather/driver/navigation.js').gotoURL;
       gotoURL.mockImplementation((_, url) => {
-        if (url.includes('blank')) return {finalUrl: '', timedOut: false};
+        if (url.includes('blank')) return {finalUrl: '', warnings: []};
         if (firstLoad) {
           firstLoad = false;
-          return {finalUrl: url, timedOut: false};
+          return {finalUrl: url, warnings: []};
         } else {
           throw new LHError(LHError.errors.PAGE_HUNG);
         }
@@ -821,7 +821,7 @@ describe('Runner', () => {
 
       // But top-level runtimeError is the pageLoadError.
       expect(lhr.runtimeError.code).toEqual(LHError.errors.PAGE_HUNG.code);
-      expect(lhr.runtimeError.message).toBeDisplayString(/because the page stopped responding/);
+      expect(lhr.runtimeError.message).toMatch(/because the page stopped responding/);
     });
   });
 

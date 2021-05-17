@@ -84,7 +84,7 @@ describe('Security: HTTPS audit', () => {
     // Unknown blocked resolution string is used as fallback.
     expect(result.details.items[2]).toMatchObject({
       url: 'http://localhost/image2.jpeg',
-      resolution: expect.toBeDisplayString('MixedContentBlockedLOL'),
+      resolution: 'MixedContentBlockedLOL',
     });
 
     expect(result.score).toBe(0);

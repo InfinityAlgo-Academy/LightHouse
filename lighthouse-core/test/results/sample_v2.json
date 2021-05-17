@@ -1507,7 +1507,8 @@
             "layoutShiftMaxSessionGap1s": 0.42,
             "layoutShiftMaxSessionGap1sLimit5s": 0.42,
             "layoutShiftMaxSliding1s": 0.42,
-            "layoutShiftMaxSliding300ms": 0.42
+            "layoutShiftMaxSliding300ms": 0.42,
+            "layoutShiftMaxSessionGap1sLimit5sAllFrames": -1
           },
           {
             "lcpInvalidated": false
