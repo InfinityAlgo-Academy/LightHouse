@@ -161,6 +161,12 @@ class TreemapViewer {
       this.updateColors();
     });
 
+    treemapEl.addEventListener('keypress', (e) => {
+      if (!(e instanceof KeyboardEvent)) return;
+
+      if (e.key === 'Enter') this.updateColors();
+    });
+
     treemapEl.addEventListener('mouseover', (e) => {
       if (!(e.target instanceof HTMLElement)) return;
       const nodeEl = e.target.closest('.webtreemap-node');
