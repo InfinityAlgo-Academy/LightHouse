@@ -26,6 +26,7 @@ class I18n {
 
     this._numberDateLocale = locale;
     this._numberFormatter = new Intl.NumberFormat(locale);
+    console.log({locale, strings});
     this._percentFormatter = new Intl.NumberFormat(locale, {style: 'percent'});
     this._strings = strings;
   }
