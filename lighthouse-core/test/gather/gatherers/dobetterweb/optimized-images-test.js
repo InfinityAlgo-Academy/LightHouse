@@ -8,8 +8,9 @@
 /* eslint-env jest */
 
 const OptimizedImages = require('../../../../gather/gatherers/dobetterweb/optimized-images.js');
+const {createMockContext} = require('../../../fraggle-rock/gather/mock-driver.js');
 
-let options;
+let context = createMockContext();
 let optimizedImages;
 
 const traceData = {
@@ -112,19 +113,16 @@ describe('Optimized images', () => {
   // Reset the Gatherer before each test.
   beforeEach(() => {
     optimizedImages = new OptimizedImages();
-    options = {
-      url: 'http://google.com/',
-      driver: {
-        sendCommand: function(command, params) {
-          const encodedSize = params.encoding === 'webp' ? 60 : 80;
-          return Promise.resolve({encodedSize});
-        },
-      },
-    };
+    context = createMockContext();
+    context.url = 'http://google.com';
+    context.driver.defaultSession.sendCommand.mockImplementation((_, params) => {
+      const encodedSize = params.encoding === 'webp' ? 60 : 80;
+      return Promise.resolve({encodedSize});
+    });
   });
 
   it('returns all images, sorted with sizes', async () => {
-    const artifact = await optimizedImages.afterPass(options, traceData);
+    const artifact = await optimizedImages.afterPass(context, traceData);
     expect(artifact).toHaveLength(5);
     expect(artifact).toMatchObject([
       {
@@ -162,16 +160,16 @@ describe('Optimized images', () => {
 
   it('handles partial driver failure', () => {
     let calls = 0;
-    options.driver.sendCommand = () => {
+    context.driver.defaultSession.sendCommand.mockImplementation(() => {
       calls++;
       if (calls > 2) {
         return Promise.reject(new Error('whoops driver failed'));
       } else {
         return Promise.resolve({encodedSize: 60});
       }
-    };
+    });
 
-    return optimizedImages.afterPass(options, traceData).then(artifact => {
+    return optimizedImages.afterPass(context, traceData).then(artifact => {
       const failed = artifact.find(record => record.failed);
 
       expect(artifact).toHaveLength(5);
@@ -194,7 +192,7 @@ describe('Optimized images', () => {
       ],
     };
 
-    const artifact = await optimizedImages.afterPass(options, traceData);
+    const artifact = await optimizedImages.afterPass(context, traceData);
     expect(artifact).toHaveLength(1);
   });
 });
