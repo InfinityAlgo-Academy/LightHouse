@@ -16,7 +16,7 @@ describe('installabilityErrors', () => {
 
   beforeAll(async () => {
     const installableLoggingGitTilesUrl =
-      'https://chromium.googlesource.com/chromium/src/+/master/components/webapps/installable/installable_logging.cc?format=TEXT';
+      'https://chromium.googlesource.com/chromium/src/+/master/components/webapps/browser/installable/installable_logging.cc?format=TEXT';
     const resp = await fetch(installableLoggingGitTilesUrl);
     if (!resp.ok) {
       throw new Error(`Chromium source fetch failed: ${resp.status} ${resp.statusText}`);
