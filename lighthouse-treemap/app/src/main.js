@@ -78,6 +78,8 @@ class TreemapViewer {
     this.viewModes;
     /** @type {RenderState=} */
     this.previousRenderState;
+    /** @type {WeakMap<HTMLElement, LH.Treemap.Node>} */
+    this.tableRowToNodeMap = new WeakMap();
     /** @type {WebTreeMap} */
     this.treemap;
     /*  eslint-enable no-unused-expressions */
@@ -172,6 +174,24 @@ class TreemapViewer {
       if (!nodeEl) return;
 
       nodeEl.classList.remove('webtreemap-node--hover');
+    });
+
+    TreemapUtil.find('.lh-table').addEventListener('mouseover', e => {
+      const target = e.target;
+      if (!(target instanceof HTMLElement)) return;
+
+      const el = target.closest('.tabulator-row');
+      if (!(el instanceof HTMLElement)) return;
+
+      const node = this.tableRowToNodeMap.get(el);
+      if (!node || !node.dom) return;
+
+      node.dom.classList.add('webtreemap-node--hover');
+      el.addEventListener('mouseout', () => {
+        for (const hoverEl of treemapEl.querySelectorAll('.webtreemap-node--hover')) {
+          hoverEl.classList.remove('webtreemap-node--hover');
+        }
+      }, {once: true});
     });
   }
 
@@ -360,7 +380,7 @@ class TreemapViewer {
       renderViewModeButtons(this.viewModes);
 
       TreemapUtil.walk(this.currentTreemapRoot, node => {
-        // @ts-ignore: webtreemap will store `dom` on the data to speed up operations.
+        // webtreemap will store `dom` on the data to speed up operations.
         // However, when we change the underlying data representation, we need to delete
         // all the cached DOM elements. Otherwise, the rendering will be incorrect when,
         // for example, switching between "All JavaScript" and a specific bundle.
@@ -398,7 +418,7 @@ class TreemapViewer {
     const tableEl = TreemapUtil.find('.lh-table');
     tableEl.innerHTML = '';
 
-    /** @type {Array<{name: string, bundleNode?: LH.Treemap.Node, resourceBytes: number, unusedBytes?: number}>} */
+    /** @type {Array<{node: LH.Treemap.Node, name: string, bundleNode?: LH.Treemap.Node, resourceBytes: number, unusedBytes?: number}>} */
     const data = [];
     TreemapUtil.walk(this.currentTreemapRoot, (node, path) => {
       if (node.children) return;
@@ -426,6 +446,7 @@ class TreemapViewer {
       }
 
       data.push({
+        node,
         name,
         bundleNode,
         resourceBytes: node.resourceBytes,
@@ -472,6 +493,7 @@ class TreemapViewer {
     const children = this.currentTreemapRoot.children || [];
     const maxSize = Math.max(...children.map(node => node.resourceBytes));
 
+    this.tableRowToNodeMap = new WeakMap();
     this.table = new Tabulator(gridEl, {
       data,
       height: '100%',
@@ -514,6 +536,9 @@ class TreemapViewer {
           return el;
         }},
       ],
+      rowFormatter: (row) => {
+        this.tableRowToNodeMap.set(row.getElement(), row.getData().node);
+      },
     });
   }
 
@@ -592,10 +617,8 @@ class TreemapViewer {
         backgroundColor = depthOneNodeColor;
       }
 
-      // @ts-ignore: webtreemap will add a dom node property to every node.
-      const dom = /** @type {HTMLElement?} */ (node.dom);
-      if (dom) {
-        dom.style.backgroundColor = backgroundColor;
+      if (node.dom) {
+        node.dom.style.backgroundColor = backgroundColor;
       }
     });
   }

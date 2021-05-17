@@ -40,6 +40,8 @@ declare global {
       /** If present, this module is a duplicate. String is normalized source path. See ModuleDuplication.normalizeSource */
       duplicatedNormalizedModuleName?: string;
       children?: Node[];
+      /** Added by webtreemap lib. */
+      dom?: HTMLElement;
     }
   }
 }
