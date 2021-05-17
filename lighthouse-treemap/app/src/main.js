@@ -640,16 +640,19 @@ function renderViewModeButtons(viewModes) {
     if (!viewMode.enabled) viewModeEl.classList.add('view-mode--disabled');
     viewModeEl.id = `view-mode--${viewMode.id}`;
 
-    const labelEl = TreemapUtil.createChildOf(viewModeEl, 'label');
-    TreemapUtil.createChildOf(labelEl, 'span', 'view-mode__label').textContent = viewMode.label;
-    TreemapUtil.createChildOf(labelEl, 'span', 'view-mode__sublabel lh-text-dim').textContent =
-      ` (${viewMode.subLabel})`;
-
-    const inputEl = TreemapUtil.createChildOf(labelEl, 'input', 'view-mode__button', {
+    const inputEl = TreemapUtil.createChildOf(viewModeEl, 'input', 'view-mode__button', {
+      id: `view-mode--${viewMode.id}__label`,
       type: 'radio',
       name: 'view-mode',
       disabled: viewMode.enabled ? undefined : '',
     });
+
+    const labelEl = TreemapUtil.createChildOf(viewModeEl, 'label', undefined, {
+      for: inputEl.id,
+    });
+    TreemapUtil.createChildOf(labelEl, 'span', 'view-mode__label').textContent = viewMode.label;
+    TreemapUtil.createChildOf(labelEl, 'span', 'view-mode__sublabel lh-text-dim').textContent =
+      ` (${viewMode.subLabel})`;
 
     inputEl.addEventListener('click', () => {
       treemapViewer.setViewMode(viewMode);
