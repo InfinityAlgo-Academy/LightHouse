@@ -735,17 +735,22 @@ function showError(message) {
 }
 
 async function main() {
-  const params = new URLSearchParams(window.location.search);
+  /** @type {Record<string, string>} */
+  let params = {};
+  if (Object.fromEntries) {
+    const queryParams = new URLSearchParams(window.location.search);
+    const hashParams = new URLSearchParams(location.hash.replace('#', '?'));
+    params = Object.fromEntries([...queryParams.entries(), ...hashParams.entries()]);
+  }
 
   if (window.__treemapOptions) {
     // Prefer the hardcoded options from a saved HTML file above all.
     init(window.__treemapOptions);
-  } else if (params.has('debug')) {
+  } else if ('debug' in params) {
     const response = await fetch('debug.json');
     init(await response.json());
-  } else if (params.has('lhr')) {
-    const base64Lhr = params.get('lhr') || '';
-    const lhr = JSON.parse(atob(base64Lhr));
+  } else if (params.lhr) {
+    const lhr = JSON.parse(atob(params.lhr));
     const options = {
       lhr,
     };

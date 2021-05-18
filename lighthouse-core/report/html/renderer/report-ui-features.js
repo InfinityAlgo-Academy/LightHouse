@@ -576,12 +576,11 @@ class ReportUIFeatures {
     const url = getAppsOrigin() + '/treemap/';
     const windowName = `treemap-${json.requestedUrl}`;
 
-    ReportUIFeatures.openTabWithUrlData(treemapOptions, url, windowName);
-    // if (method === 'postMessage') {
-    //   ReportUIFeatures.openTabAndSendData(treemapOptions, url, windowName);
-    // } else {
-    //   ReportUIFeatures.openTabWithUrlData(treemapOptions, url, windowName);
-    // }
+    if (method === 'postMessage') {
+      ReportUIFeatures.openTabAndSendData(treemapOptions, url, windowName);
+    } else {
+      ReportUIFeatures.openTabWithUrlData(treemapOptions, url, windowName);
+    }
   }
 
   /**
@@ -620,9 +619,11 @@ class ReportUIFeatures {
    */
   static openTabWithUrlData(data, url_, windowName) {
     const url = new URL(url_);
+    const params = new URLSearchParams();
     for (const [key, value] of Object.entries(data)) {
-      url.searchParams.set(key, btoa(JSON.stringify(value)));
+      params.set(key, btoa(JSON.stringify(value)));
     }
+    url.hash = params.toString();
 
     // The popup's window.name is keyed by version+url+fetchTime, so we reuse/select tabs correctly
     window.open(url.toString(), windowName);
