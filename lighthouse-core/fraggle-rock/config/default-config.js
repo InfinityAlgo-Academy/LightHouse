@@ -95,6 +95,10 @@ const defaultConfig = {
   navigations: [
     {
       id: 'default',
+      pauseAfterFcpMs: 1000,
+      pauseAfterLoadMs: 1000,
+      networkQuietThresholdMs: 1000,
+      cpuQuietThresholdMs: 1000,
       artifacts: [
         // Artifacts which can be depended on come first.
         artifacts.DevtoolsLog,

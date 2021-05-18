@@ -129,6 +129,7 @@ describe('collectPhaseArtifacts', () => {
           artifactState,
           phase,
           gatherMode: /** @type {any} */ (gatherMode),
+          computedCache: new Map(),
         });
         expect(artifactState[phase]).toEqual({
           Timespan: expect.any(Promise),
@@ -150,6 +151,7 @@ describe('collectPhaseArtifacts', () => {
       artifactState,
       gatherMode: 'navigation',
       phase: 'getArtifact',
+      computedCache: new Map(),
     });
     expect(await artifactState.getArtifact.Snapshot).toEqual({type: 'snapshot'});
     expect(await artifactState.getArtifact.Timespan).toEqual({type: 'timespan'});
@@ -170,6 +172,7 @@ describe('collectPhaseArtifacts', () => {
       artifactState,
       gatherMode: 'navigation',
       phase: 'getArtifact',
+      computedCache: new Map(),
     });
     expect(artifactState.getArtifact).toEqual({
       Dependency: expect.any(Promise),
@@ -200,6 +203,7 @@ describe('collectPhaseArtifacts', () => {
       artifactState,
       gatherMode: 'navigation',
       phase: 'getArtifact',
+      computedCache: new Map(),
     });
     expect(artifactState.getArtifact).toEqual({
       Snapshot: expect.any(Promise),
