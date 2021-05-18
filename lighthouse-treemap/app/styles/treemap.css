@@ -132,6 +132,13 @@ body {
   width: calc(100% * var(--unused) / var(--max));
   height: 7px;
   margin-left: 2px;
+  background: repeating-linear-gradient(
+          -45deg,
+          hsl(7, 85%, 58%),
+          hsl(7, 85%, 58%) 2px,
+          hsla(7, 80%, 45%, 1) 2px,
+          hsla(7, 80%, 45%, 1) 4px
+  );
 }
 
 .view-mode {
@@ -199,6 +206,23 @@ header {
 
 .webtreemap-node--hover {
   outline: 2px solid black;
+}
+
+.lh-treemap--view-mode--unused-bytes .webtreemap-node::before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  content: '';
+  display: block;
+  width: var(--pctUsed);
+  background: repeating-linear-gradient(
+          -45deg,
+          hsla(0, 0%, 0%, 0),
+          hsla(0, 0%, 0%, 0) 2px,
+          hsla(7, 85%, 56%, 0.3) 2px,
+          hsla(7, 85%, 56%, 0.3) 4px
+  );
 }
 
 .webtreemap-caption {
