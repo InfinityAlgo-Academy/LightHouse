@@ -257,13 +257,12 @@ class ScriptTreemapDataAudit extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
-    const treemapData = await ScriptTreemapDataAudit.makeNodes(artifacts, context);
+    const nodes = await ScriptTreemapDataAudit.makeNodes(artifacts, context);
 
-    // TODO: when out of experimental should make a new detail type.
-    /** @type {LH.Audit.Details.DebugData} */
+    /** @type {LH.Audit.Details.TreemapData} */
     const details = {
-      type: 'debugdata',
-      treemapData,
+      type: 'treemap-data',
+      nodes,
     };
 
     return {

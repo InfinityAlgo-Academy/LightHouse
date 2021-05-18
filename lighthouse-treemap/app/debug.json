@@ -12077,8 +12077,8 @@
         "score": null,
         "scoreDisplayMode": "informative",
         "details": {
-          "type": "debugdata",
-          "treemapData": [
+          "type": "treemap-data",
+          "nodes": [
             {
               "name": "https://www.coursehero.com/",
               "resourceBytes": 69863

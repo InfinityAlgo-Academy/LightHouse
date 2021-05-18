@@ -28,7 +28,7 @@ function generateRecord(url, resourceSize, resourceType) {
 
 describe('ScriptTreemapData audit', () => {
   describe('squoosh fixture', () => {
-    /** @type {LH.Treemap.Node[]} */
+    /** @type {LH.Audit.Details.TreemapData} */
     let treemapData;
     beforeAll(async () => {
       const context = {computedCache: new Map()};
@@ -52,13 +52,15 @@ describe('ScriptTreemapData audit', () => {
         ScriptElements: [{src: scriptUrl, content}, noSourceMapScript],
       };
       const results = await ScriptTreemapData.audit(artifacts, context);
+      if (!results.details || results.details.type !== 'treemap-data') {
+        throw new Error('should not happen.');
+      }
 
-      // @ts-expect-error: Debug data.
-      treemapData = results.details.treemapData;
+      treemapData = results.details;
     });
 
     it('has nodes', () => {
-      expect(treemapData.find(s => s.name === 'https://sqoosh.app/no-map-or-usage.js'))
+      expect(treemapData.nodes.find(s => s.name === 'https://sqoosh.app/no-map-or-usage.js'))
         .toMatchInlineSnapshot(`
         Object {
           "name": "https://sqoosh.app/no-map-or-usage.js",
@@ -66,7 +68,7 @@ describe('ScriptTreemapData audit', () => {
         }
       `);
 
-      const bundleNode = treemapData.find(s => s.name === 'https://squoosh.app/main-app.js');
+      const bundleNode = treemapData.nodes.find(s => s.name === 'https://squoosh.app/main-app.js');
       // @ts-expect-error
       const unmapped = bundleNode.children[0].children.find(m => m.name === '(unmapped)');
       expect(unmapped).toMatchInlineSnapshot(`
@@ -77,13 +79,13 @@ describe('ScriptTreemapData audit', () => {
         }
       `);
 
-      expect(JSON.stringify(treemapData).length).toMatchInlineSnapshot(`6740`);
-      expect(treemapData).toMatchSnapshot();
+      expect(JSON.stringify(treemapData.nodes).length).toMatchInlineSnapshot(`6740`);
+      expect(treemapData.nodes).toMatchSnapshot();
     });
   });
 
   describe('coursehero fixture', () => {
-    /** @type {LH.Treemap.Node[]} */
+    /** @type {LH.Audit.Details.TreemapData} */
     let treemapData;
     beforeAll(async () => {
       const context = {computedCache: new Map()};
@@ -106,20 +108,22 @@ describe('ScriptTreemapData audit', () => {
         ScriptElements: [{src: scriptUrl1, content}, {src: scriptUrl2, content}],
       };
       const results = await ScriptTreemapData.audit(artifacts, context);
+      if (!results.details || results.details.type !== 'treemap-data') {
+        throw new Error('should not happen.');
+      }
 
-      // @ts-expect-error: Debug data.
-      treemapData = results.details.treemapData;
+      treemapData = results.details;
     });
 
     it('has nodes', () => {
-      expect(JSON.stringify(treemapData).length).toMatchInlineSnapshot(`86817`);
-      expect(treemapData).toMatchSnapshot();
+      expect(JSON.stringify(treemapData.nodes).length).toMatchInlineSnapshot(`86817`);
+      expect(treemapData.nodes).toMatchSnapshot();
     });
 
     it('finds duplicates', () => {
-      expect(JSON.stringify(treemapData).length).toMatchInlineSnapshot(`86817`);
+      expect(JSON.stringify(treemapData.nodes).length).toMatchInlineSnapshot(`86817`);
       // @ts-ignore all these children exist.
-      const leafNode = treemapData[0].
+      const leafNode = treemapData.nodes[0].
         children[0].
         children[0].
         children[0].

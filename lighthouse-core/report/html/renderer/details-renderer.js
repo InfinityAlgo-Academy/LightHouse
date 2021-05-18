@@ -70,6 +70,7 @@ class DetailsRenderer {
       case 'screenshot':
       case 'debugdata':
       case 'full-page-screenshot':
+      case 'treemap-data':
         return null;
 
       default: {

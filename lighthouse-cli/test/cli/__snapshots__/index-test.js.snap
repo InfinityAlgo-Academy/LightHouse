@@ -172,6 +172,9 @@ Object {
       "path": "full-page-screenshot",
     },
     Object {
+      "path": "script-treemap-data",
+    },
+    Object {
       "path": "manual/pwa-cross-browser",
     },
     Object {

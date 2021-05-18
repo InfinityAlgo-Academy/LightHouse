@@ -183,7 +183,10 @@ class ReportUIFeatures {
    * @param {{text: string, icon?: string, onClick: () => void}} opts
    */
   addButton(opts) {
-    const metricsEl = this._dom.find('.lh-audit-group--metrics', this._document);
+    const metricsEl = this._document.querySelector('.lh-audit-group--metrics');
+    // Not supported without metrics group.
+    if (!metricsEl) return;
+
     const classes = [
       'lh-button',
     ];
@@ -546,9 +549,8 @@ class ReportUIFeatures {
    * @param {LH.Result} json
    */
   static openTreemap(json) {
-    const treemapDebugData = /** @type {LH.Audit.Details.DebugData} */ (
-      json.audits['script-treemap-data'].details);
-    if (!treemapDebugData) {
+    const treemapData = json.audits['script-treemap-data'].details;
+    if (!treemapData) {
       throw new Error('no script treemap data found');
     }
 

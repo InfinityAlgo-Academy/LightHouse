@@ -31,18 +31,14 @@ class TreemapViewer {
    * @param {HTMLElement} el
    */
   constructor(options, el) {
-    const treemapDebugData = /** @type {LH.Audit.Details.DebugData} */ (
-      options.lhr.audits['script-treemap-data'].details);
-    if (!treemapDebugData || !treemapDebugData.treemapData) {
+    const scriptTreemapData = options.lhr.audits['script-treemap-data'].details;
+    if (!scriptTreemapData || scriptTreemapData.type !== 'treemap-data') {
       throw new Error('missing script-treemap-data');
     }
 
-    /** @type {LH.Treemap.Node[]} */
-    const scriptNodes = treemapDebugData.treemapData;
-
     /** @type {{[group: string]: LH.Treemap.Node[]}} */
     this.depthOneNodesByGroup = {
-      scripts: scriptNodes,
+      scripts: scriptTreemapData.nodes,
     };
 
     /**
@@ -76,7 +72,7 @@ class TreemapViewer {
     this.viewModes;
     /** @type {RenderState=} */
     this.previousRenderState;
-    /** @type {WeakMap<HTMLElement, LH.Treemap.Node>} */
+    /** @type {WeakMap<HTMLElement, NodeWithElement>} */
     this.tableRowToNodeMap = new WeakMap();
     /** @type {WebTreeMap} */
     this.treemap;
@@ -408,7 +404,7 @@ class TreemapViewer {
     const tableEl = TreemapUtil.find('.lh-table');
     tableEl.innerHTML = '';
 
-    /** @type {Array<{node: LH.Treemap.Node, name: string, bundleNode?: LH.Treemap.Node, resourceBytes: number, unusedBytes?: number}>} */
+    /** @type {Array<{node: NodeWithElement, name: string, bundleNode?: LH.Treemap.Node, resourceBytes: number, unusedBytes?: number}>} */
     const data = [];
     TreemapUtil.walk(this.currentTreemapRoot, (node, path) => {
       if (node.children) return;

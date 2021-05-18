@@ -22,6 +22,11 @@ declare global {
     viewMode: LH.Treemap.ViewMode;
   }
 
+  interface NodeWithElement extends LH.Treemap.Node {
+    /** webtreemap adds dom to node data. */
+    dom?: HTMLElement;
+  }
+
   var webtreemap: {
     TreeMap: typeof WebTreeMap;
     render(el: HTMLElement, data: any, options: WebTreeMapOptions): void;

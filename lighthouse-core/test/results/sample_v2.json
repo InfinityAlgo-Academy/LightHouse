@@ -2505,6 +2505,42 @@
         }
       }
     },
+    "script-treemap-data": {
+      "id": "script-treemap-data",
+      "title": "Script Treemap Data",
+      "description": "Used for treemap app",
+      "score": null,
+      "scoreDisplayMode": "informative",
+      "details": {
+        "type": "treemap-data",
+        "nodes": [
+          {
+            "name": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "resourceBytes": 5806
+          },
+          {
+            "name": "http://localhost:10200/dobetterweb/dbw_tester.js",
+            "resourceBytes": 48
+          },
+          {
+            "name": "http://localhost:10200/dobetterweb/empty_module.js?delay=500",
+            "resourceBytes": 60
+          },
+          {
+            "name": "http://localhost:10200/dobetterweb/fcp-delayer.js?delay=5000",
+            "resourceBytes": 60
+          },
+          {
+            "name": "http://localhost:10200/zone.js",
+            "resourceBytes": 30
+          },
+          {
+            "name": "http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js",
+            "resourceBytes": 63
+          }
+        ]
+      }
+    },
     "pwa-cross-browser": {
       "id": "pwa-cross-browser",
       "title": "Site works cross-browser",
@@ -6393,6 +6429,24 @@
       {
         "startTime": 0,
         "name": "lh:audit:full-page-screenshot",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:script-treemap-data",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:JSBundles",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:ModuleDuplication",
         "duration": 100,
         "entryType": "measure"
       },

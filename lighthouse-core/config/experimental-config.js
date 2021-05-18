@@ -16,7 +16,6 @@ const config = {
   audits: [
     'autocomplete',
     'large-javascript-libraries',
-    'script-treemap-data',
     'csp-xss',
   ],
   categories: {
