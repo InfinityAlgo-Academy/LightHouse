@@ -7,6 +7,7 @@ declare global {
     constructor(data: any, options: WebTreeMapOptions);
     render(el: HTMLElement): void;
     layout(data: any, el: HTMLElement): void;
+    zoom(address: number[]): void
   }
 
   interface WebTreeMapOptions {

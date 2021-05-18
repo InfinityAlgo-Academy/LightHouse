@@ -159,10 +159,14 @@ class TreemapViewer {
       this.updateColors();
     });
 
-    treemapEl.addEventListener('keypress', (e) => {
+    treemapEl.addEventListener('keyup', (e) => {
       if (!(e instanceof KeyboardEvent)) return;
 
       if (e.key === 'Enter') this.updateColors();
+
+      if (e.key === 'Escape' && this.treemap) {
+        this.treemap.zoom([]); // zoom out to root
+      }
     });
 
     treemapEl.addEventListener('mouseover', (e) => {
