@@ -153,7 +153,8 @@ class ReportUIFeatures {
 
     const showTreemapApp =
       this.json.audits['script-treemap-data'] && this.json.audits['script-treemap-data'].details;
-    if (showTreemapApp) {
+    // TODO: need window.opener to work in DevTools.
+    if (showTreemapApp && !this._dom.isDevTools()) {
       this.addButton({
         text: Util.i18n.strings.viewTreemapLabel,
         icon: 'treemap',

@@ -1,3 +1,116 @@
+<a name="7.5.0"></a>
+# 7.5.0 (2021-05-18)
+[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v7.4.0...v7.5.0)
+
+We expect this release to ship in the DevTools of [Chrome 92](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
+
+## New contributors
+
+Thanks to our new contributor 👽🐷🐰🐯🐻!
+
+- Johannes Weber @johannes-weber
+
+## Notable Changes
+
+We are releasing the Lighthouse Treemap!
+
+![image](https://user-images.githubusercontent.com/4071474/118602146-2d08d480-b767-11eb-9273-9a8de7000e67.png)
+
+You may already be familiar with treemaps thanks to [webtreemap](https://github.com/evmar/webtreemap) (which we use!) or [source-map-explorer](https://github.com/danvk/source-map-explorer). With Lighthouse Treemap, you'll be able to view all the JavaScript bundles on your page easily from a Lighthouse report, in addition to some insights that may help reduce the amount of JavaScript on a page. The only requirement is that source maps are accessible (either publicly, or securely from the same computer that is running the Lighthouse audit).
+
+We even collect code coverage data from Chrome, and extrapolate the coverage of individual modules in a bundle:
+
+![image](https://user-images.githubusercontent.com/4071474/118602240-4742b280-b767-11eb-9f6a-433788029a30.png)
+
+Note: this only takes into account a cold-load: code only used after user interaction will be marked as unused. Stay tuned for a future release, which will enable you to configure user flows and capture even more accurate performance insights.
+
+If we detect a large module included by multiple bundles, we'll alert you of that too.
+
+You can access Lighthouse Treemap from the report:
+
+![image](https://user-images.githubusercontent.com/4071474/118600879-6e4cb480-b766-11eb-85f7-e8281006711b.png)
+
+Currently, only reports generated with the Lighthouse Node CLI will connect to the Lighthouse Treemap App. We are working on adding this functionality to Lighthouse in DevTools and PageSpeed Insights.
+
+## Core
+
+* add new CLS (all frames) to hidden metrics audit ([#12476](https://github.com/GoogleChrome/lighthouse/pull/12476))
+* script-treemap-data: default config ([#12494](https://github.com/GoogleChrome/lighthouse/pull/12494))
+* script-treemap-data: include unmapped bytes ([#12452](https://github.com/GoogleChrome/lighthouse/pull/12452))
+* driver: extract gotoURL to navigation module ([#12421](https://github.com/GoogleChrome/lighthouse/pull/12421))
+* responsive-images: ignore images larger than viewport ([#12414](https://github.com/GoogleChrome/lighthouse/pull/12414))
+* robots: use new fetcher to get robots.txt ([#12423](https://github.com/GoogleChrome/lighthouse/pull/12423))
+
+## Fraggle Rock
+
+Support for auditing user flows ([#11313](https://github.com/GoogleChrome/lighthouse/issues/11313))
+
+* computed-artifact: remove settings and options from context ([#12435](https://github.com/GoogleChrome/lighthouse/pull/12435))
+* convert optimized-images gatherer ([#12491](https://github.com/GoogleChrome/lighthouse/pull/12491))
+* convert image-elements gatherer ([#12474](https://github.com/GoogleChrome/lighthouse/pull/12474))
+* convert source-maps gatherer ([#12467](https://github.com/GoogleChrome/lighthouse/pull/12467))
+* convert js-usage gatherer ([#12450](https://github.com/GoogleChrome/lighthouse/pull/12450))
+* convert main-document-content gatherer ([#12470](https://github.com/GoogleChrome/lighthouse/pull/12470))
+* convert css-usage gatherer ([#12460](https://github.com/GoogleChrome/lighthouse/pull/12460))
+* convert trace-elements gatherer ([#12442](https://github.com/GoogleChrome/lighthouse/pull/12442))
+* extract warnings from gather-runner ([#12469](https://github.com/GoogleChrome/lighthouse/pull/12469))
+* extract driver preparation methods ([#12445](https://github.com/GoogleChrome/lighthouse/pull/12445))
+* extract navigation errors from gather-runner ([#12461](https://github.com/GoogleChrome/lighthouse/pull/12461))
+* split out DOM utilities from legacy driver ([#12431](https://github.com/GoogleChrome/lighthouse/pull/12431))
+* separate phase from gatherMode ([#12370](https://github.com/GoogleChrome/lighthouse/pull/12370))
+* add fetcher to transitional driver ([#12419](https://github.com/GoogleChrome/lighthouse/pull/12419))
+* add computed cache to pass context ([#12427](https://github.com/GoogleChrome/lighthouse/pull/12427))
+
+## Report
+
+* map metrics to audits, add metric filter ([#11732](https://github.com/GoogleChrome/lighthouse/pull/11732), [#12477](https://github.com/GoogleChrome/lighthouse/pull/12477))
+* add treemap button, refactor icon styles ([#12392](https://github.com/GoogleChrome/lighthouse/pull/12392))
+
+## Deps
+
+* snyk: update snyk snapshot ([#12443](https://github.com/GoogleChrome/lighthouse/pull/12443), [#12468](https://github.com/GoogleChrome/lighthouse/pull/12468))
+* update transitive dependencies ([#12466](https://github.com/GoogleChrome/lighthouse/pull/12466))
+* update marky to latest ([#12440](https://github.com/GoogleChrome/lighthouse/pull/12440))
+
+## I18n
+
+* import new strings ([#12492](https://github.com/GoogleChrome/lighthouse/pull/12492))
+
+## Docs
+
+* remove AMP Plugin example ([#12390](https://github.com/GoogleChrome/lighthouse/pull/12390))
+* add python requests install to webtests ([#12436](https://github.com/GoogleChrome/lighthouse/pull/12436))
+
+## Tests
+
+* update chromium installable source path ([#12364](https://github.com/GoogleChrome/lighthouse/pull/12364))
+* i18n: only accept IcuMessages in toBeDisplayString ([#12487](https://github.com/GoogleChrome/lighthouse/pull/12487))
+* add smokehouse to bin for downstream use ([#12446](https://github.com/GoogleChrome/lighthouse/pull/12446))
+* split CI into unit and smoke workflows ([#12422](https://github.com/GoogleChrome/lighthouse/pull/12422))
+* smoke: verify CSP violations caused by lighthouse ([#12391](https://github.com/GoogleChrome/lighthouse/pull/12391))
+* add organic TTI savings case to byte efficieny audit ([#12418](https://github.com/GoogleChrome/lighthouse/pull/12418))
+
+## Misc
+
+* treemap: esc to zoom out ([#12498](https://github.com/GoogleChrome/lighthouse/pull/12498))
+* treemap: remove too similar color hues ([#12497](https://github.com/GoogleChrome/lighthouse/pull/12497))
+* treemap: shade background for unused bytes ([#12486](https://github.com/GoogleChrome/lighthouse/pull/12486))
+* treemap: update colors on enter keypress ([#12496](https://github.com/GoogleChrome/lighthouse/pull/12496))
+* treemap: set focus-visible styles for view mode buttons ([#12495](https://github.com/GoogleChrome/lighthouse/pull/12495))
+* treemap: tweak styles for mobile ([#12493](https://github.com/GoogleChrome/lighthouse/pull/12493))
+* treemap: highlight treemap node on mouse hover table row ([#12483](https://github.com/GoogleChrome/lighthouse/pull/12483))
+* treemap: upgrade to 3.2.0 for keyboard navigation ([#12488](https://github.com/GoogleChrome/lighthouse/pull/12488))
+* treemap: use 0.1 for default granularity ([#12485](https://github.com/GoogleChrome/lighthouse/pull/12485))
+* treemap: remove byte size from title ([#12484](https://github.com/GoogleChrome/lighthouse/pull/12484))
+* treemap: add GA snippet for new property ([#12481](https://github.com/GoogleChrome/lighthouse/pull/12481))
+* treemap: i18n ([#12441](https://github.com/GoogleChrome/lighthouse/pull/12441))
+* treemap: fix colors ([#12462](https://github.com/GoogleChrome/lighthouse/pull/12462))
+* treemap: duplicate-modules view mode ([#12424](https://github.com/GoogleChrome/lighthouse/pull/12424))
+* treemap: add data table ([#12363](https://github.com/GoogleChrome/lighthouse/pull/12363))
+* cli: destructure args in import ([#12398](https://github.com/GoogleChrome/lighthouse/pull/12398))
+* move predictive-perf off renderer i18n ([#12482](https://github.com/GoogleChrome/lighthouse/pull/12482))
+* do not publish lighthouse-cli/test except smokehouse ([#12415](https://github.com/GoogleChrome/lighthouse/pull/12415))
+
 <a name="7.4.0"></a>
 # 7.4.0 (2021-04-27)
 [Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v7.3.0...v7.4.0)

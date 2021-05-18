@@ -1161,6 +1161,10 @@ Object {
           "id": "final-screenshot",
           "weight": 0,
         },
+        Object {
+          "id": "script-treemap-data",
+          "weight": 0,
+        },
       ],
       "title": "Performance",
     },

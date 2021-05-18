@@ -483,6 +483,7 @@ const defaultConfig = {
         {id: 'metrics', weight: 0},
         {id: 'screenshot-thumbnails', weight: 0},
         {id: 'final-screenshot', weight: 0},
+        {id: 'script-treemap-data', weight: 0},
       ],
     },
     'accessibility': {
