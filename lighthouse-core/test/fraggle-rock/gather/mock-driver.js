@@ -150,14 +150,16 @@ function createMockContext() {
 }
 
 function mockDriverSubmodules() {
-  const navigationMock = {gotoURL: jest.fn(),
-  };
+  const navigationMock = {gotoURL: jest.fn()};
   const prepareMock = {
     prepareTargetForNavigationMode: jest.fn(),
     prepareTargetForIndividualNavigation: jest.fn(),
   };
   const storageMock = {clearDataForOrigin: jest.fn()};
   const emulationMock = {clearThrottling: jest.fn()};
+  const networkMock = {
+    fetchResponseBodyFromCache: jest.fn(),
+  };
 
   function reset() {
     navigationMock.gotoURL = jest.fn().mockResolvedValue({finalUrl: 'https://example.com', warnings: [], timedOut: false});
@@ -165,6 +167,7 @@ function mockDriverSubmodules() {
     prepareMock.prepareTargetForIndividualNavigation = jest.fn().mockResolvedValue({warnings: []});
     storageMock.clearDataForOrigin = jest.fn();
     emulationMock.clearThrottling = jest.fn();
+    networkMock.fetchResponseBodyFromCache = jest.fn().mockResolvedValue('');
   }
 
   /**
@@ -178,6 +181,7 @@ function mockDriverSubmodules() {
   jest.mock('../../../gather/driver/navigation.js', () => new Proxy(navigationMock, {get}));
   jest.mock('../../../gather/driver/prepare.js', () => new Proxy(prepareMock, {get}));
   jest.mock('../../../gather/driver/storage.js', () => new Proxy(storageMock, {get}));
+  jest.mock('../../../gather/driver/network.js', () => new Proxy(networkMock, {get}));
   jest.mock('../../../lib/emulation.js', () => new Proxy(emulationMock, {get}));
 
   return {
@@ -185,6 +189,7 @@ function mockDriverSubmodules() {
     prepareMock,
     storageMock,
     emulationMock,
+    networkMock,
     reset,
   };
 }
