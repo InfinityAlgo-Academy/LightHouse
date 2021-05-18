@@ -735,12 +735,21 @@ function showError(message) {
 }
 
 async function main() {
+  const params = new URLSearchParams(window.location.search);
+
   if (window.__treemapOptions) {
     // Prefer the hardcoded options from a saved HTML file above all.
     init(window.__treemapOptions);
-  } else if (new URLSearchParams(window.location.search).has('debug')) {
+  } else if (params.has('debug')) {
     const response = await fetch('debug.json');
     init(await response.json());
+  } else if (params.has('lhr')) {
+    const base64Lhr = params.get('lhr') || '';
+    const lhr = JSON.parse(atob(base64Lhr));
+    const options = {
+      lhr,
+    };
+    init(options);
   } else {
     window.addEventListener('message', e => {
       if (e.source !== self.opener) return;
