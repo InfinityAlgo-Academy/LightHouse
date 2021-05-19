@@ -188,6 +188,9 @@ class ReportUIFeatures {
     // Not supported without metrics group.
     if (!metricsEl) return;
 
+    let buttonsEl = metricsEl.querySelector('.lh-buttons');
+    if (!buttonsEl) buttonsEl = this._dom.createChildOf(metricsEl, 'div', 'lh-buttons');
+
     const classes = [
       'lh-button',
     ];
@@ -195,10 +198,9 @@ class ReportUIFeatures {
       classes.push('report-icon');
       classes.push(`report-icon--${opts.icon}`);
     }
-    const buttonEl = this._dom.createChildOf(metricsEl, 'button', classes.join(' '));
-    buttonEl.addEventListener('click', opts.onClick);
+    const buttonEl = this._dom.createChildOf(buttonsEl, 'button', classes.join(' '));
     buttonEl.textContent = opts.text;
-    metricsEl.append(buttonEl);
+    buttonEl.addEventListener('click', opts.onClick);
     return buttonEl;
   }
 
