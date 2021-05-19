@@ -153,12 +153,12 @@ class ReportUIFeatures {
 
     const showTreemapApp =
       this.json.audits['script-treemap-data'] && this.json.audits['script-treemap-data'].details;
-    // TODO: need window.opener to work in DevTools.
-    if (showTreemapApp && !this._dom.isDevTools()) {
+    if (showTreemapApp) {
       this.addButton({
         text: Util.i18n.strings.viewTreemapLabel,
         icon: 'treemap',
-        onClick: () => ReportUIFeatures.openTreemap(this.json),
+        onClick: () => ReportUIFeatures.openTreemap(
+          this.json, this._dom.isDevTools() ? 'url' : 'postMessage'),
       });
     }
 
@@ -548,20 +548,36 @@ class ReportUIFeatures {
   /**
    * Opens a new tab to the treemap app and sends the JSON results using postMessage.
    * @param {LH.Result} json
+   * @param {'postMessage'|'url'} method
+   * @protected
    */
-  static openTreemap(json) {
+  static openTreemap(json, method = 'postMessage') {
     const treemapData = json.audits['script-treemap-data'].details;
     if (!treemapData) {
       throw new Error('no script treemap data found');
     }
 
-    const windowName = `treemap-${json.requestedUrl}`;
     /** @type {LH.Treemap.Options} */
     const treemapOptions = {
-      lhr: json,
+      lhr: {
+        requestedUrl: json.requestedUrl,
+        finalUrl: json.finalUrl,
+        audits: {
+          'script-treemap-data': json.audits['script-treemap-data'],
+        },
+        configSettings: {
+          locale: json.configSettings.locale,
+        },
+      },
     };
     const url = getAppsOrigin() + '/treemap/';
-    ReportUIFeatures.openTabAndSendData(treemapOptions, url, windowName);
+    const windowName = `treemap-${json.requestedUrl}`;
+
+    if (method === 'postMessage') {
+      ReportUIFeatures.openTabAndSendData(treemapOptions, url, windowName);
+    } else {
+      ReportUIFeatures.openTabWithUrlData(treemapOptions, url, windowName);
+    }
   }
 
   /**
@@ -589,6 +605,32 @@ class ReportUIFeatures {
 
     // The popup's window.name is keyed by version+url+fetchTime, so we reuse/select tabs correctly
     const popup = window.open(url, windowName);
+  }
+
+  /**
+   * Opens a new tab to an external page and sends data via base64 encoded url params.
+   * @param {{lhr: LH.Result} | LH.Treemap.Options} data
+   * @param {string} url_
+   * @param {string} windowName
+   * @protected
+   */
+  static openTabWithUrlData(data, url_, windowName) {
+    const url = new URL(url_);
+    url.hash = toBinary(JSON.stringify(data));
+
+    // The popup's window.name is keyed by version+url+fetchTime, so we reuse/select tabs correctly
+    window.open(url.toString(), windowName);
+
+    /**
+     * @param {string} string
+     */
+    function toBinary(string) {
+      const codeUnits = new Uint16Array(string.length);
+      for (let i = 0; i < codeUnits.length; i++) {
+        codeUnits[i] = string.charCodeAt(i);
+      }
+      return btoa(String.fromCharCode(...new Uint8Array(codeUnits.buffer)));
+    }
   }
 
   /**

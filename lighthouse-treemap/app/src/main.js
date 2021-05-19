@@ -734,13 +734,41 @@ function showError(message) {
   document.body.textContent = message;
 }
 
+/**
+ * @param {string} encoded
+ */
+function fromBinary(encoded) {
+  const binary = atob(encoded);
+  const bytes = new Uint8Array(binary.length);
+  for (let i = 0; i < bytes.length; i++) {
+    bytes[i] = binary.charCodeAt(i);
+  }
+  return String.fromCharCode(...new Uint16Array(bytes.buffer));
+}
+
 async function main() {
+  /** @type {Record<string, any>} */
+  let params = {};
+  if (Object.fromEntries) {
+    const queryParams = new URLSearchParams(window.location.search);
+    const hashParams = location.hash ? JSON.parse(fromBinary(location.hash.substr(1))) : {};
+    params = {
+      ...Object.fromEntries(queryParams.entries()),
+      ...hashParams,
+    };
+  }
+
   if (window.__treemapOptions) {
     // Prefer the hardcoded options from a saved HTML file above all.
     init(window.__treemapOptions);
-  } else if (new URLSearchParams(window.location.search).has('debug')) {
+  } else if ('debug' in params) {
     const response = await fetch('debug.json');
     init(await response.json());
+  } else if (params.lhr) {
+    const options = {
+      lhr: params.lhr,
+    };
+    init(options);
   } else {
     window.addEventListener('message', e => {
       if (e.source !== self.opener) return;
