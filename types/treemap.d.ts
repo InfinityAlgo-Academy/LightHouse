@@ -7,7 +7,16 @@
 declare global {
   module LH.Treemap {
     interface Options {
-      lhr: LH.Result;
+      lhr: {
+        requestedUrl: string;
+        finalUrl: string;
+        audits: {
+          'script-treemap-data': LH.Audit.Result;
+        };
+        configSettings: {
+          locale: LH.Locale;
+        }
+      }
     }
 
     type NodePath = string[];

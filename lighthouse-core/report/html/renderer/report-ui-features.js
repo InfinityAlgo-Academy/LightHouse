@@ -558,9 +558,8 @@ class ReportUIFeatures {
       throw new Error('no script treemap data found');
     }
 
-    // Only send the minimum lhr needed for the treemap app.
-    /** @type {RecursivePartial<LH.Treemap.Options>} */
-    const treemapOptionsTrimmed = {
+    /** @type {LH.Treemap.Options} */
+    const treemapOptions = {
       lhr: {
         requestedUrl: json.requestedUrl,
         finalUrl: json.finalUrl,
@@ -572,7 +571,6 @@ class ReportUIFeatures {
         },
       },
     };
-    const treemapOptions = /** @type {LH.Treemap.Options} */ (treemapOptionsTrimmed);
     const url = getAppsOrigin() + '/treemap/';
     const windowName = `treemap-${json.requestedUrl}`;
 
@@ -619,14 +617,21 @@ class ReportUIFeatures {
    */
   static openTabWithUrlData(data, url_, windowName) {
     const url = new URL(url_);
-    const params = new URLSearchParams();
-    for (const [key, value] of Object.entries(data)) {
-      params.set(key, btoa(JSON.stringify(value)));
-    }
-    url.hash = params.toString();
+    url.hash = toBinary(JSON.stringify(data));
 
     // The popup's window.name is keyed by version+url+fetchTime, so we reuse/select tabs correctly
     window.open(url.toString(), windowName);
+
+    /**
+     * @param {string} string
+     */
+    function toBinary(string) {
+      const codeUnits = new Uint16Array(string.length);
+      for (let i = 0; i < codeUnits.length; i++) {
+        codeUnits[i] = string.charCodeAt(i);
+      }
+      return btoa(String.fromCharCode(...new Uint8Array(codeUnits.buffer)));
+    }
   }
 
   /**
