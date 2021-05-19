@@ -34,6 +34,14 @@ declare global {
   var ReportUIFeatures: typeof _ReportUIFeatures;
   var Util: typeof _Util;
   var prepareLabData: typeof _prepareLabData;
+  const CompressionStream: {
+    prototype: CompressionStream,
+    new (format: string): CompressionStream,
+  };
+
+  interface CompressionStream extends GenericTransformStream {
+    readonly format: string;
+  }
 
   interface Window {
     CategoryRenderer: typeof _CategoryRenderer;
@@ -49,7 +57,10 @@ declare global {
     ReportUIFeatures: typeof _ReportUIFeatures;
     Util: typeof _Util;
     prepareLabData: typeof _prepareLabData;
+
   }
+
+
 
   module LH {
     // During report generation, the LHR object is transformed a bit for convenience

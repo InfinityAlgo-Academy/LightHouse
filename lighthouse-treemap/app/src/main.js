@@ -734,8 +734,11 @@ function showError(message) {
   document.body.textContent = message;
 }
 
+/**
+ * @param {string} compText
+ */
 async function decompress(compText) {
-  const byteArray = str2ab(compText)
+  const byteArray = str2ab(compText);
   const cs = new DecompressionStream('gzip');
   const writer = cs.writable.getWriter();
   writer.write(byteArray);
@@ -744,6 +747,9 @@ async function decompress(compText) {
   const decompText = new TextDecoder().decode(arrayBuffer);
   return decompText;
 
+  /**
+   * @param {string} str
+   */
   function str2ab(str) {
     const buf = new ArrayBuffer(str.length);
     const bufView = new Uint8Array(buf);

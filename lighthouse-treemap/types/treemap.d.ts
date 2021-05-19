@@ -35,8 +35,16 @@ declare global {
   var TreemapUtil: typeof _TreemapUtil;
   var strings: Strings;
 
+  interface DecompressionStream extends GenericTransformStream {
+    readonly format: string;
+  }
+  const DecompressionStream: {
+    prototype: DecompressionStream,
+    new (format: string): DecompressionStream,
+  };
   interface Window {
     __treemapOptions?: LH.Treemap.Options;
+
   }
 }
 

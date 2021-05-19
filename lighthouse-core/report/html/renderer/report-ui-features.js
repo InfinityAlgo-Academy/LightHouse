@@ -622,6 +622,9 @@ class ReportUIFeatures {
     // The popup's window.name is keyed by version+url+fetchTime, so we reuse/select tabs correctly
     window.open(url.toString(), windowName);
 
+    /**
+     * @param {string} text
+     */
     async function compress(text) {
       const byteArray = new TextEncoder().encode(text);
       const cs = new CompressionStream('gzip');
@@ -629,7 +632,7 @@ class ReportUIFeatures {
       writer.write(byteArray);
       writer.close();
       const compAb = await new Response(cs.readable).arrayBuffer();
-      return String.fromCharCode.apply(null, new Uint8Array(compAb));
+      return String.fromCharCode.apply(null, [...new Uint8Array(compAb).values()]);
     }
   }
 
