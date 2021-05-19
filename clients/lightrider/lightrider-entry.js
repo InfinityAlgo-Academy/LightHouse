@@ -5,19 +5,30 @@
  */
 'use strict';
 
-const lighthouse = require('../../lighthouse-core/index.js');
+// Use runner directly.
+const runner = require('../../lighthouse-core/runner.js');
+
+// Inline pre-saved artifacts.
+const fs = require('fs');
+const staticArtifacts = JSON.parse(fs.readFileSync(__dirname +
+    '/../../clients/lightrider/paulirish_artifact.json', {encoding: 'utf8'}));
 
 const LHError = require('../../lighthouse-core/lib/lh-error.js');
 const preprocessor = require('../../lighthouse-core/lib/proto-preprocessor.js');
 const assetSaver = require('../../lighthouse-core/lib/asset-saver.js');
+const Config = require('../../lighthouse-core/config/config.js');
 
-/** @type {Record<'mobile'|'desktop', LH.Config.Json>} */
+/** @type {Record<'mobile', LH.Config.Json>} */
 const LR_PRESETS = {
   mobile: require('../../lighthouse-core/config/lr-mobile-config.js'),
-  desktop: require('../../lighthouse-core/config/lr-desktop-config.js'),
 };
 
 /** @typedef {import('../../lighthouse-core/gather/connections/connection.js')} Connection */
+
+/** @return {Promise<LH.Artifacts>} */
+async function getArtifactsCallback() {
+  return staticArtifacts;
+}
 
 /**
  * Run lighthouse for connection and provide similar results as in CLI.
@@ -30,7 +41,7 @@ const LR_PRESETS = {
  * @return {Promise<string>}
  */
 async function runLighthouseInLR(connection, url, flags, lrOpts) {
-  const {lrDevice, categoryIDs, logAssets, configOverride} = lrOpts;
+  const {logAssets} = lrOpts;
 
   // Certain fixes need to kick in under LR, see https://github.com/GoogleChrome/lighthouse/issues/5839
   global.isLightrider = true;
@@ -40,19 +51,13 @@ async function runLighthouseInLR(connection, url, flags, lrOpts) {
   flags.logLevel = flags.logLevel || 'info';
   flags.channel = 'lr';
 
-  let config;
-  if (configOverride) {
-    config = configOverride;
-  } else {
-    config = lrDevice === 'desktop' ? LR_PRESETS.desktop : LR_PRESETS.mobile;
-    if (categoryIDs) {
-      config.settings = config.settings || {};
-      config.settings.onlyCategories = categoryIDs;
-    }
-  }
-
   try {
-    const runnerResult = await lighthouse(url, flags, config, connection);
+    const config = new Config(LR_PRESETS.mobile, flags);
+    const runnerResult = await runner.run(getArtifactsCallback, {
+      config,
+      computedCache: new Map(),
+      url,
+    });
     if (!runnerResult) throw new Error('Lighthouse finished without a runnerResult');
 
     // pre process the LHR for proto

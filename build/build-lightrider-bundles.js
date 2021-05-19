@@ -48,10 +48,15 @@ function buildReportGenerator() {
     });
 }
 
+function copyTestHtml() {
+  fs.copyFileSync(`${sourceDir}/lr-test-page.html`, `${distDir}/lr-test-page.html`);
+}
+
 async function run() {
   await Promise.all([
     buildEntryPoint(),
     buildReportGenerator(),
+    copyTestHtml(),
   ]);
 }
 

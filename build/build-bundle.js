@@ -15,7 +15,6 @@ const path = require('path');
 const assert = require('assert').strict;
 const mkdir = fs.promises.mkdir;
 
-const LighthouseRunner = require('../lighthouse-core/runner.js');
 const exorcist = require('exorcist');
 const browserify = require('browserify');
 const terser = require('terser');
@@ -25,19 +24,15 @@ const COMMIT_HASH = require('child_process')
   .execSync('git rev-parse HEAD')
   .toString().trim();
 
-const audits = LighthouseRunner.getAuditList()
-    .map(f => './lighthouse-core/audits/' + f.replace(/\.js$/, ''));
+// Just speed-index for audits.
+const audits = ['./lighthouse-core/audits/metrics/speed-index'];
 
-const gatherers = LighthouseRunner.getGathererList()
-    .map(f => './lighthouse-core/gather/gatherers/' + f.replace(/\.js$/, ''));
+// No gatherers.
 
 const locales = fs.readdirSync(__dirname + '/../lighthouse-core/lib/i18n/locales/')
     .map(f => require.resolve(`../lighthouse-core/lib/i18n/locales/${f}`));
 
-// HACK: manually include the lighthouse-plugin-publisher-ads audits.
-/** @type {Array<string>} */
-// @ts-expect-error
-const pubAdsAudits = require('lighthouse-plugin-publisher-ads/plugin.js').audits.map(a => a.path);
+// No pubAdsAudits.
 
 /** @param {string} file */
 const isDevtools = file =>
@@ -84,36 +79,30 @@ async function browserifyFile(entryPath, distPath) {
   // Don't include the desktop protocol connection.
   bundle.ignore(require.resolve('../lighthouse-core/gather/connections/cri.js'));
 
+  // Or gatherRunner or driver.
+  bundle.ignore(require.resolve('../lighthouse-core/gather/gather-runner.js'));
+  bundle.ignore(require.resolve('../lighthouse-core/gather/driver.js'));
+
   // Don't include the stringified report in DevTools - see devtools-report-assets.js
   // Don't include in Lightrider - HTML generation isn't supported, so report assets aren't needed.
   if (isDevtools(entryPath) || isLightrider(entryPath)) {
     bundle.ignore(require.resolve('../lighthouse-core/report/html/html-report-assets.js'));
   }
 
-  // Don't include locales in DevTools.
-  if (isDevtools(entryPath)) {
-    // @ts-expect-error bundle.ignore does accept an array of strings.
-    bundle.ignore(locales);
-  }
+  // Don't include locales in bundle.
+  // @ts-expect-error bundle.ignore does accept an array of strings.
+  bundle.ignore(locales);
 
   // Expose the audits, gatherers, and computed artifacts so they can be dynamically loaded.
   // Exposed path must be a relative path from lighthouse-core/config/config-helpers.js (where loading occurs).
   const corePath = './lighthouse-core/';
-  const driverPath = `${corePath}gather/`;
   audits.forEach(audit => {
     bundle = bundle.require(audit, {expose: audit.replace(corePath, '../')});
   });
-  gatherers.forEach(gatherer => {
-    bundle = bundle.require(gatherer, {expose: gatherer.replace(driverPath, '../gather/')});
-  });
 
-  // HACK: manually include the lighthouse-plugin-publisher-ads audits.
-  if (isDevtools(entryPath) || isLightrider(entryPath)) {
-    bundle.require('lighthouse-plugin-publisher-ads');
-    pubAdsAudits.forEach(pubAdAudit => {
-      bundle = bundle.require(pubAdAudit);
-    });
-  }
+  // Don't include any gatherers.
+
+  // Don't include lighthouse-plugin-publisher-ads audits.
 
   // browerify's url shim doesn't work with .URL in node_modules,
   // and within robots-parser, it does `var URL = require('url').URL`, so we expose our own.

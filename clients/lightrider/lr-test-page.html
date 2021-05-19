@@ -1,0 +1,17 @@
+<!doctype html>
+<head>
+  <meta charset="utf-8">
+  <script src="lighthouse-lr-bundle.js"></script>
+  <script>
+    async function run() {
+      console.log('running lighthouse on inlined artifacts...');
+      const lhrString = await runLighthouseInLR({}, 'https://paulirish.com/', {}, {logAssets: false});
+      window.__LIGHTHOUSE_JSON__ = JSON.parse(lhrString);
+      console.log('window.__LIGHTHOUSE_JSON__', __LIGHTHOUSE_JSON__);
+    }
+    run();
+  </script>
+</head>
+<body>
+  test page to see if bundle can actually compute speed index in a browser
+</body>
