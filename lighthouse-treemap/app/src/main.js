@@ -734,24 +734,35 @@ function showError(message) {
   document.body.textContent = message;
 }
 
-/**
- * @param {string} encoded
- */
-function fromBinary(encoded) {
-  const binary = atob(encoded);
-  const bytes = new Uint8Array(binary.length);
-  for (let i = 0; i < bytes.length; i++) {
-    bytes[i] = binary.charCodeAt(i);
+async function decompress(compText) {
+  const byteArray = str2ab(compText)
+  const cs = new DecompressionStream('gzip');
+  const writer = cs.writable.getWriter();
+  writer.write(byteArray);
+  writer.close();
+  const arrayBuffer = await new Response(cs.readable).arrayBuffer();
+  const decompText = new TextDecoder().decode(arrayBuffer);
+  return decompText;
+
+  function str2ab(str) {
+    const buf = new ArrayBuffer(str.length);
+    const bufView = new Uint8Array(buf);
+    for (let i = 0, strLen = str.length; i < strLen; i++) {
+      bufView[i] = str.charCodeAt(i);
+    }
+    return buf;
   }
-  return String.fromCharCode(...new Uint16Array(bytes.buffer));
 }
+
 
 async function main() {
   /** @type {Record<string, any>} */
   let params = {};
   if (Object.fromEntries) {
     const queryParams = new URLSearchParams(window.location.search);
-    const hashParams = location.hash ? JSON.parse(fromBinary(location.hash.substr(1))) : {};
+    const hashValue = decodeURIComponent(location.hash.substr(1));
+    const jsonText = hashValue && await decompress(hashValue);
+    const hashParams = location.hash ? JSON.parse(jsonText) : {};
     params = {
       ...Object.fromEntries(queryParams.entries()),
       ...hashParams,

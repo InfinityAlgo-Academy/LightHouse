@@ -158,7 +158,7 @@ class ReportUIFeatures {
         text: Util.i18n.strings.viewTreemapLabel,
         icon: 'treemap',
         onClick: () => ReportUIFeatures.openTreemap(
-          this.json, this._dom.isDevTools() ? 'url' : 'postMessage'),
+          this.json, true ? 'url' : 'postMessage'),
       });
     }
 
@@ -614,22 +614,22 @@ class ReportUIFeatures {
    * @param {string} windowName
    * @protected
    */
-  static openTabWithUrlData(data, url_, windowName) {
+  static async openTabWithUrlData(data, url_, windowName) {
     const url = new URL(url_);
-    url.hash = toBinary(JSON.stringify(data));
+    const compText = await compress(JSON.stringify(data));
+    url.hash = encodeURIComponent(compText);
 
     // The popup's window.name is keyed by version+url+fetchTime, so we reuse/select tabs correctly
     window.open(url.toString(), windowName);
 
-    /**
-     * @param {string} string
-     */
-    function toBinary(string) {
-      const codeUnits = new Uint16Array(string.length);
-      for (let i = 0; i < codeUnits.length; i++) {
-        codeUnits[i] = string.charCodeAt(i);
-      }
-      return btoa(String.fromCharCode(...new Uint8Array(codeUnits.buffer)));
+    async function compress(text) {
+      const byteArray = new TextEncoder().encode(text);
+      const cs = new CompressionStream('gzip');
+      const writer = cs.writable.getWriter();
+      writer.write(byteArray);
+      writer.close();
+      const compAb = await new Response(cs.readable).arrayBuffer();
+      return String.fromCharCode.apply(null, new Uint8Array(compAb));
     }
   }
 
