@@ -1703,6 +1703,15 @@
   "lighthouse-core/config/default-config.js | seoMobileGroupTitle": {
     "message": "Mobile Friendly"
   },
+  "lighthouse-core/gather/driver/environment.js | warningSlowHostCpu": {
+    "message": "Perangkat yang diuji sepertinya memiliki CPU yang lebih lambat daripada perkiraan Lighthouse. Hal ini dapat berdampak buruk pada skor performa Anda. Pelajari lebih lanjut [cara mengalibrasi pengali pelambatan CPU yang sesuai](https://github.com/GoogleChrome/lighthouse/blob/master/docs/throttling.md#cpu-throttling)."
+  },
+  "lighthouse-core/gather/driver/navigation.js | warningRedirected": {
+    "message": "Halaman tersebut mungkin tidak dimuat sesuai harapan karena URL uji Anda ({requested}) dialihkan ke {final}. Coba uji URL kedua secara langsung."
+  },
+  "lighthouse-core/gather/driver/navigation.js | warningTimeout": {
+    "message": "Pemuatan halaman terlalu lambat untuk bisa selesai tepat waktu. Hasil mungkin tidak lengkap."
+  },
   "lighthouse-core/gather/driver/storage.js | warningData": {
     "message": "{locationCount,plural, =1{Mungkin terdapat data tersimpan yang memengaruhi performa pemuatan di lokasi ini: {locations}. Audit halaman ini di jendela Samaran untuk mencegah resource tersebut memengaruhi performa Anda.}other{Mungkin terdapat data tersimpan yang memengaruhi performa pemuatan di lokasi ini {locations}. Audit halaman ini di jendela Samaran untuk mencegah resource tersebut memengaruhi performa Anda.}}"
   },
@@ -2060,6 +2069,9 @@
   "lighthouse-core/report/html/renderer/util.js | runtimeUnknown": {
     "message": "Tidak dikenal"
   },
+  "lighthouse-core/report/html/renderer/util.js | showRelevantAudits": {
+    "message": "Show audits relevant to:"
+  },
   "lighthouse-core/report/html/renderer/util.js | snippetCollapseButtonLabel": {
     "message": "Ciutkan cuplikan"
   },
@@ -2086,6 +2098,30 @@
   },
   "lighthouse-core/report/html/renderer/util.js | warningHeader": {
     "message": "Peringatan: "
+  },
+  "lighthouse-treemap/app/src/util.js | allLabel": {
+    "message": "Semua"
+  },
+  "lighthouse-treemap/app/src/util.js | allScriptsDropdownLabel": {
+    "message": "Semua Skrip"
+  },
+  "lighthouse-treemap/app/src/util.js | coverageColumnName": {
+    "message": "Cakupan"
+  },
+  "lighthouse-treemap/app/src/util.js | duplicateModulesLabel": {
+    "message": "Modul Duplikat"
+  },
+  "lighthouse-treemap/app/src/util.js | resourceBytesLabel": {
+    "message": "Byte Resource"
+  },
+  "lighthouse-treemap/app/src/util.js | tableColumnName": {
+    "message": "Nama"
+  },
+  "lighthouse-treemap/app/src/util.js | toggleTableButtonLabel": {
+    "message": "Tampilkan/Sembunyikan Tabel"
+  },
+  "lighthouse-treemap/app/src/util.js | unusedBytesLabel": {
+    "message": "Byte yang Tidak Digunakan"
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "Untuk konten animasi, gunakan [`amp-anim`](https://amp.dev/documentation/components/amp-anim/) untuk meminimalkan penggunaan CPU saat konten tidak berada di layar."

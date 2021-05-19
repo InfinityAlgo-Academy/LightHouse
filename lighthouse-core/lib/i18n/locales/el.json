@@ -1703,6 +1703,15 @@
   "lighthouse-core/config/default-config.js | seoMobileGroupTitle": {
     "message": "Φιλική προς κινητά"
   },
+  "lighthouse-core/gather/driver/environment.js | warningSlowHostCpu": {
+    "message": "Η δοκιμασμένη συσκευή φαίνεται να έχει πιο αργή CPU από ό,τι αναμένει το Lighthouse. Αυτό μπορεί να επηρεάσει αρνητικά τη βαθμολογία απόδοσης. Μάθετε περισσότερα σχετικά με τη [βαθμονόμηση ενός κατάλληλου πολλαπλασιαστή επιβράδυνσης CPU](https://github.com/GoogleChrome/lighthouse/blob/master/docs/throttling.md#cpu-throttling)."
+  },
+  "lighthouse-core/gather/driver/navigation.js | warningRedirected": {
+    "message": "Η σελίδα μπορεί να μην φορτώνεται με τον αναμενόμενο τρόπο επειδή το URL δοκιμής ({requested}) ανακατευθύνθηκε στο {final}. Προσπαθήστε να δοκιμάσετε απευθείας το δεύτερο URL."
+  },
+  "lighthouse-core/gather/driver/navigation.js | warningTimeout": {
+    "message": "Η φόρτωση της σελίδας ήταν υπερβολικά αργή και δεν ολοκληρώθηκε εντός του χρονικού ορίου. Τα αποτελέσματα ενδέχεται να μην είναι ολοκληρωμένα."
+  },
   "lighthouse-core/gather/driver/storage.js | warningData": {
     "message": "{locationCount,plural, =1{Ενδέχεται να υπάρχουν αποθηκευμένα δεδομένα που επηρεάζουν την απόδοση φόρτωσης σε αυτήν την τοποθεσία: {locations}. Ελέγξτε αυτήν τη σελίδα σε παράθυρο για ανώνυμη περιήγηση για να εμποδίσετε αυτούς τους πόρους από το να επηρεάσουν τις βαθμολογίες σας.}other{Ενδέχεται να υπάρχουν αποθηκευμένα δεδομένα που επηρεάζουν την απόδοση φόρτωσης σε αυτές τις τοποθεσίες: {locations}. Ελέγξτε αυτήν τη σελίδα σε παράθυρο για ανώνυμη περιήγηση για να εμποδίσετε αυτούς τους πόρους από το να επηρεάσουν τις βαθμολογίες σας.}}"
   },
@@ -2060,6 +2069,9 @@
   "lighthouse-core/report/html/renderer/util.js | runtimeUnknown": {
     "message": "Άγνωστη"
   },
+  "lighthouse-core/report/html/renderer/util.js | showRelevantAudits": {
+    "message": "Show audits relevant to:"
+  },
   "lighthouse-core/report/html/renderer/util.js | snippetCollapseButtonLabel": {
     "message": "Σύμπτυξη αποσπάσματος"
   },
@@ -2086,6 +2098,30 @@
   },
   "lighthouse-core/report/html/renderer/util.js | warningHeader": {
     "message": "Προειδοποιήσεις: "
+  },
+  "lighthouse-treemap/app/src/util.js | allLabel": {
+    "message": "Όλα"
+  },
+  "lighthouse-treemap/app/src/util.js | allScriptsDropdownLabel": {
+    "message": "Όλες οι γραφές"
+  },
+  "lighthouse-treemap/app/src/util.js | coverageColumnName": {
+    "message": "Κάλυψη"
+  },
+  "lighthouse-treemap/app/src/util.js | duplicateModulesLabel": {
+    "message": "Διπλότυπες λειτουργικές μονάδες"
+  },
+  "lighthouse-treemap/app/src/util.js | resourceBytesLabel": {
+    "message": "Byte πόρου"
+  },
+  "lighthouse-treemap/app/src/util.js | tableColumnName": {
+    "message": "Όνομα"
+  },
+  "lighthouse-treemap/app/src/util.js | toggleTableButtonLabel": {
+    "message": "Εναλλαγή πίνακα"
+  },
+  "lighthouse-treemap/app/src/util.js | unusedBytesLabel": {
+    "message": "Byte που δεν χρησιμοποιούνται"
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "Για περιεχόμενο κινούμενης εικόνας, χρησιμοποιήστε το [`amp-anim`](https://amp.dev/documentation/components/amp-anim/) για να ελαχιστοποιήσετε τη χρήση CPU όταν το περιεχόμενο είναι εκτός οθόνης."

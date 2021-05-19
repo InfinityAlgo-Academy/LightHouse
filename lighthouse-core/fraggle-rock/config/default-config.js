@@ -34,6 +34,7 @@ const artifacts = {
   NetworkUserAgent: '',
   OptimizedImages: '',
   PasswordInputsWithPreventedPaste: '',
+  ResponseCompression: '',
   RobotsTxt: '',
   SourceMaps: '',
   Stacks: '',
@@ -79,6 +80,7 @@ const defaultConfig = {
     {id: artifacts.NetworkUserAgent, gatherer: 'network-user-agent'},
     {id: artifacts.OptimizedImages, gatherer: 'dobetterweb/optimized-images'},
     {id: artifacts.PasswordInputsWithPreventedPaste, gatherer: 'dobetterweb/password-inputs-with-prevented-paste'},
+    {id: artifacts.ResponseCompression, gatherer: 'dobetterweb/response-compression'},
     {id: artifacts.RobotsTxt, gatherer: 'seo/robots-txt'},
     {id: artifacts.SourceMaps, gatherer: 'source-maps'},
     {id: artifacts.Stacks, gatherer: 'stacks'},
@@ -95,6 +97,10 @@ const defaultConfig = {
   navigations: [
     {
       id: 'default',
+      pauseAfterFcpMs: 1000,
+      pauseAfterLoadMs: 1000,
+      networkQuietThresholdMs: 1000,
+      cpuQuietThresholdMs: 1000,
       artifacts: [
         // Artifacts which can be depended on come first.
         artifacts.DevtoolsLog,
@@ -122,6 +128,7 @@ const defaultConfig = {
         artifacts.NetworkUserAgent,
         artifacts.OptimizedImages,
         artifacts.PasswordInputsWithPreventedPaste,
+        artifacts.ResponseCompression,
         artifacts.RobotsTxt,
         artifacts.SourceMaps,
         artifacts.Stacks,

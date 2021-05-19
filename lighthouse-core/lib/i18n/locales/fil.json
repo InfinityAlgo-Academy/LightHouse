@@ -1703,6 +1703,15 @@
   "lighthouse-core/config/default-config.js | seoMobileGroupTitle": {
     "message": "Pang-mobile"
   },
+  "lighthouse-core/gather/driver/environment.js | warningSlowHostCpu": {
+    "message": "Mukhang mas mabagal ang CPU ng tine-test na device kaysa sa inaasahan ng Lighthouse. Puwede itong magkaroon ng negatibong epekto sa score ng iyong performance. Matuto pa tungkol sa [pag-calibrate ng naaangkop na CPU slowdown multiplier](https://github.com/GoogleChrome/lighthouse/blob/master/docs/throttling.md#cpu-throttling)."
+  },
+  "lighthouse-core/gather/driver/navigation.js | warningRedirected": {
+    "message": "Posibleng hindi naglo-load ang page gaya ng inaasahan dahil na-redirect ang iyong pansubok na URL ({requested}) sa {final}. Direktang subukan ang pangalawang URL."
+  },
+  "lighthouse-core/gather/driver/navigation.js | warningTimeout": {
+    "message": "Masyadong matagal ang pag-load ng page para matapos sa inilaang limitasyon sa oras. Posibleng hindi kumpleto ang mga resulta."
+  },
   "lighthouse-core/gather/driver/storage.js | warningData": {
     "message": "{locationCount,plural, =1{Posibleng may naka-store na data na nakakaapekto sa bilis ng pag-load sa lokasyong ito: {locations}. I-audit ang page na ito sa incognito window para hindi maapektuhan ng mga resource na iyon ang iyong mga score.}one{Posibleng may naka-store na data na nakakaapekto sa bilis ng pag-load sa mga lokasyong ito: {locations}. I-audit ang page na ito sa incognito window para hindi maapektuhan ng mga resource na iyon ang iyong mga score.}other{Posibleng may naka-store na data na nakakaapekto sa bilis ng pag-load sa mga lokasyong ito: {locations}. I-audit ang page na ito sa incognito window para hindi maapektuhan ng mga resource na iyon ang iyong mga score.}}"
   },
@@ -2060,6 +2069,9 @@
   "lighthouse-core/report/html/renderer/util.js | runtimeUnknown": {
     "message": "Hindi alam"
   },
+  "lighthouse-core/report/html/renderer/util.js | showRelevantAudits": {
+    "message": "Show audits relevant to:"
+  },
   "lighthouse-core/report/html/renderer/util.js | snippetCollapseButtonLabel": {
     "message": "I-collapse ang snippet"
   },
@@ -2086,6 +2098,30 @@
   },
   "lighthouse-core/report/html/renderer/util.js | warningHeader": {
     "message": "Mga Babala: "
+  },
+  "lighthouse-treemap/app/src/util.js | allLabel": {
+    "message": "Lahat"
+  },
+  "lighthouse-treemap/app/src/util.js | allScriptsDropdownLabel": {
+    "message": "Lahat ng Script"
+  },
+  "lighthouse-treemap/app/src/util.js | coverageColumnName": {
+    "message": "Sakop"
+  },
+  "lighthouse-treemap/app/src/util.js | duplicateModulesLabel": {
+    "message": "Mga Duplicate na Module"
+  },
+  "lighthouse-treemap/app/src/util.js | resourceBytesLabel": {
+    "message": "Mga Byte ng Resource"
+  },
+  "lighthouse-treemap/app/src/util.js | tableColumnName": {
+    "message": "Pangalan"
+  },
+  "lighthouse-treemap/app/src/util.js | toggleTableButtonLabel": {
+    "message": "I-toggle ang Talahanayan"
+  },
+  "lighthouse-treemap/app/src/util.js | unusedBytesLabel": {
+    "message": "Mga Hindi Nagamit na Byte"
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "Para sa animated na content, gamitin ang [`amp-anim`](https://amp.dev/documentation/components/amp-anim/) para mabawasan ang paggamit ng CPU kapag offscreen ang content."

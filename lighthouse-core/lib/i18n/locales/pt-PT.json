@@ -1703,6 +1703,15 @@
   "lighthouse-core/config/default-config.js | seoMobileGroupTitle": {
     "message": "Compatível com dispositivos móveis"
   },
+  "lighthouse-core/gather/driver/environment.js | warningSlowHostCpu": {
+    "message": "O dispositivo testado parece ter uma CPU mais lenta do que o Lighthouse esperava. Isto pode prejudicar a sua pontuação de desempenho. Saiba mais sobre como [calibrar um multiplicador de abrandamento da CPU adequado](https://github.com/GoogleChrome/lighthouse/blob/master/docs/throttling.md#cpu-throttling)."
+  },
+  "lighthouse-core/gather/driver/navigation.js | warningRedirected": {
+    "message": "A página pode não estar a ser carregada conforme o esperado porque o seu URL de teste ({requested}) foi redirecionado para {final}. Experimente testar o segundo URL diretamente."
+  },
+  "lighthouse-core/gather/driver/navigation.js | warningTimeout": {
+    "message": "A página foi carregada demasiado lentamente para terminar dentro do limite de tempo. Os resultados podem estar incompletos."
+  },
   "lighthouse-core/gather/driver/storage.js | warningData": {
     "message": "{locationCount,plural, =1{Podem existir dados armazenados que estão a afetar o desempenho do carregamento nesta localização: {locations}. Audite esta página numa janela de navegação anónima para impedir esses recursos de afetarem as suas pontuações.}other{Podem existir dados armazenados que estão a afetar o desempenho do carregamento nestas localizações: {locations}. Audite esta página numa janela de navegação anónima para impedir esses recursos de afetarem as suas pontuações.}}"
   },
@@ -2060,6 +2069,9 @@
   "lighthouse-core/report/html/renderer/util.js | runtimeUnknown": {
     "message": "Desconhecido"
   },
+  "lighthouse-core/report/html/renderer/util.js | showRelevantAudits": {
+    "message": "Show audits relevant to:"
+  },
   "lighthouse-core/report/html/renderer/util.js | snippetCollapseButtonLabel": {
     "message": "Reduzir fragmento"
   },
@@ -2086,6 +2098,30 @@
   },
   "lighthouse-core/report/html/renderer/util.js | warningHeader": {
     "message": "Avisos: "
+  },
+  "lighthouse-treemap/app/src/util.js | allLabel": {
+    "message": "Tudo"
+  },
+  "lighthouse-treemap/app/src/util.js | allScriptsDropdownLabel": {
+    "message": "Todos os scripts"
+  },
+  "lighthouse-treemap/app/src/util.js | coverageColumnName": {
+    "message": "Cobertura"
+  },
+  "lighthouse-treemap/app/src/util.js | duplicateModulesLabel": {
+    "message": "Módulos duplicados"
+  },
+  "lighthouse-treemap/app/src/util.js | resourceBytesLabel": {
+    "message": "Bytes de recursos"
+  },
+  "lighthouse-treemap/app/src/util.js | tableColumnName": {
+    "message": "Nome"
+  },
+  "lighthouse-treemap/app/src/util.js | toggleTableButtonLabel": {
+    "message": "Ativar/desativar tabela"
+  },
+  "lighthouse-treemap/app/src/util.js | unusedBytesLabel": {
+    "message": "Bytes não utilizados"
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "Para conteúdo animado, utilize [`amp-anim`](https://amp.dev/documentation/components/amp-anim/) para minimizar a utilização da CPU quando o conteúdo não está visível."

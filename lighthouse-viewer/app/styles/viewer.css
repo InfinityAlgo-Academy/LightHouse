@@ -123,12 +123,12 @@
   z-index: 3;
 }
 
-/* open-in-viewer option hidden in Viewer */
-.lh-tools__dropdown .lh-tools--viewer {
+/* open-viewer option hidden in Viewer */
+.lh-tools__dropdown a[data-action="open-viewer"] {
   display: none;
 }
 
-/* open-in-gist option visible in Viewer */
-.lh-tools__dropdown .lh-tools--gist {
-  display: block !important;
+/* save-gist option visible in Viewer */
+.lh-tools__dropdown a[data-action="save-gist"] {
+  display: flex !important;
 }

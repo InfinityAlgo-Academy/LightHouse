@@ -1703,6 +1703,15 @@
   "lighthouse-core/config/default-config.js | seoMobileGroupTitle": {
     "message": "Thân thiện với thiết bị di động"
   },
+  "lighthouse-core/gather/driver/environment.js | warningSlowHostCpu": {
+    "message": "Có vẻ như thiết bị được thử nghiệm có CPU chậm hơn mức Lighthouse mong đợi. Điều này có thể ảnh hưởng tiêu cực đến điểm hiệu suất của bạn. Tìm hiểu thêm về cách [hiệu chỉnh một hệ số giảm tốc CPU phù hợp](https://github.com/GoogleChrome/lighthouse/blob/master/docs/throttling.md#cpu-throttling)."
+  },
+  "lighthouse-core/gather/driver/navigation.js | warningRedirected": {
+    "message": "Trang có thể không tải như dự kiến do URL kiểm tra của bạn ({requested}) đã được chuyển hướng tới {final}. Hãy thử kiểm tra trực tiếp URL thứ hai."
+  },
+  "lighthouse-core/gather/driver/navigation.js | warningTimeout": {
+    "message": "Trang này tải quá chậm nên không hoàn tất được trong giới hạn thời gian. Các kết quả có thể chưa hoàn chỉnh."
+  },
   "lighthouse-core/gather/driver/storage.js | warningData": {
     "message": "{locationCount,plural, =1{Dữ liệu đã lưu trữ có thể ảnh hưởng đến hiệu suất tải ở vị trí này: {locations}. Hãy kiểm tra trang này trong một cửa sổ ẩn danh để ngăn các tài nguyên đó ảnh hưởng đến điểm hiệu suất của bạn.}other{Dữ liệu đã lưu trữ có thể ảnh hưởng đến hiệu suất tải ở các vị trí này: {locations}. Hãy kiểm tra trang này trong một cửa sổ ẩn danh để ngăn các tài nguyên đó ảnh hưởng đến điểm hiệu suất của bạn.}}"
   },
@@ -2060,6 +2069,9 @@
   "lighthouse-core/report/html/renderer/util.js | runtimeUnknown": {
     "message": "Không xác định"
   },
+  "lighthouse-core/report/html/renderer/util.js | showRelevantAudits": {
+    "message": "Show audits relevant to:"
+  },
   "lighthouse-core/report/html/renderer/util.js | snippetCollapseButtonLabel": {
     "message": "Thu gọn đoạn mã"
   },
@@ -2086,6 +2098,30 @@
   },
   "lighthouse-core/report/html/renderer/util.js | warningHeader": {
     "message": "Cảnh báo: "
+  },
+  "lighthouse-treemap/app/src/util.js | allLabel": {
+    "message": "Tất cả"
+  },
+  "lighthouse-treemap/app/src/util.js | allScriptsDropdownLabel": {
+    "message": "Tất cả tập lệnh"
+  },
+  "lighthouse-treemap/app/src/util.js | coverageColumnName": {
+    "message": "Độ bao phủ"
+  },
+  "lighthouse-treemap/app/src/util.js | duplicateModulesLabel": {
+    "message": "Mô-đun trùng lặp"
+  },
+  "lighthouse-treemap/app/src/util.js | resourceBytesLabel": {
+    "message": "Số byte tài nguyên"
+  },
+  "lighthouse-treemap/app/src/util.js | tableColumnName": {
+    "message": "Tên"
+  },
+  "lighthouse-treemap/app/src/util.js | toggleTableButtonLabel": {
+    "message": "Ẩn/hiện bảng"
+  },
+  "lighthouse-treemap/app/src/util.js | unusedBytesLabel": {
+    "message": "Số byte chưa dùng đến"
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "Đối với nội dung động, hãy sử dụng [`amp-anim`](https://amp.dev/documentation/components/amp-anim/) để giảm thiểu mức sử dụng CPU khi nội dung nằm ngoài màn hình."

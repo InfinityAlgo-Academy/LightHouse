@@ -158,7 +158,7 @@ class ReportUIFeatures {
         text: Util.i18n.strings.viewTreemapLabel,
         icon: 'treemap',
         onClick: () => ReportUIFeatures.openTreemap(
-          this.json, true ? 'url' : 'postMessage'),
+          this.json, this._dom.isDevTools() ? 'url' : 'postMessage'),
       });
     }
 

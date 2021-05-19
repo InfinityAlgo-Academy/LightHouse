@@ -149,9 +149,55 @@ function createMockContext() {
   };
 }
 
+function mockDriverSubmodules() {
+  const navigationMock = {gotoURL: jest.fn()};
+  const prepareMock = {
+    prepareTargetForNavigationMode: jest.fn(),
+    prepareTargetForIndividualNavigation: jest.fn(),
+  };
+  const storageMock = {clearDataForOrigin: jest.fn()};
+  const emulationMock = {clearThrottling: jest.fn()};
+  const networkMock = {
+    fetchResponseBodyFromCache: jest.fn(),
+  };
+
+  function reset() {
+    navigationMock.gotoURL = jest.fn().mockResolvedValue({finalUrl: 'https://example.com', warnings: [], timedOut: false});
+    prepareMock.prepareTargetForNavigationMode = jest.fn().mockResolvedValue({warnings: []});
+    prepareMock.prepareTargetForIndividualNavigation = jest.fn().mockResolvedValue({warnings: []});
+    storageMock.clearDataForOrigin = jest.fn();
+    emulationMock.clearThrottling = jest.fn();
+    networkMock.fetchResponseBodyFromCache = jest.fn().mockResolvedValue('');
+  }
+
+  /**
+   * @param {Record<string, (...args: any[]) => any>} target
+   * @param {string} name
+   * @return {(...args: any[]) => void}
+   */
+  const get = (target, name) => {
+    return (...args) => target[name](...args);
+  };
+  jest.mock('../../../gather/driver/navigation.js', () => new Proxy(navigationMock, {get}));
+  jest.mock('../../../gather/driver/prepare.js', () => new Proxy(prepareMock, {get}));
+  jest.mock('../../../gather/driver/storage.js', () => new Proxy(storageMock, {get}));
+  jest.mock('../../../gather/driver/network.js', () => new Proxy(networkMock, {get}));
+  jest.mock('../../../lib/emulation.js', () => new Proxy(emulationMock, {get}));
+
+  return {
+    navigationMock,
+    prepareMock,
+    storageMock,
+    emulationMock,
+    networkMock,
+    reset,
+  };
+}
+
 module.exports = {
   mockRunnerModule,
   mockDriverModule,
+  mockDriverSubmodules,
   createMockDriver,
   createMockPage,
   createMockSession,

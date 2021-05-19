@@ -1703,6 +1703,15 @@
   "lighthouse-core/config/default-config.js | seoMobileGroupTitle": {
     "message": "Оптимизация для мобильных устройств"
   },
+  "lighthouse-core/gather/driver/environment.js | warningSlowHostCpu": {
+    "message": "У тестируемого устройства недостаточно быстрый процессор. Это может негативно повлиять на показатель производительности. Подробнее [о калибровке множителя замедления процессора](https://github.com/GoogleChrome/lighthouse/blob/master/docs/throttling.md#cpu-throttling)…"
+  },
+  "lighthouse-core/gather/driver/navigation.js | warningRedirected": {
+    "message": "Эта страница может загружаться неправильно, потому что тестовый URL ({requested}) был перенаправлен на {final}. Попробуйте напрямую проверить второй URL."
+  },
+  "lighthouse-core/gather/driver/navigation.js | warningTimeout": {
+    "message": "Страница загружалась слишком медленно и не загрузилась в отведенное время. Результаты могут быть неполными."
+  },
   "lighthouse-core/gather/driver/storage.js | warningData": {
     "message": "{locationCount,plural, =1{На скорость загрузки могут влиять данные из этого хранилища: {locations}. Попробуйте открыть страницу в режиме инкогнито.}one{На скорость загрузки могут влиять данные из этих хранилищ: {locations}. Попробуйте открыть страницу в режиме инкогнито.}few{На скорость загрузки могут влиять данные из этих хранилищ: {locations}. Попробуйте открыть страницу в режиме инкогнито.}many{На скорость загрузки могут влиять данные из этих хранилищ: {locations}. Попробуйте открыть страницу в режиме инкогнито.}other{На скорость загрузки могут влиять данные из этих хранилищ: {locations}. Попробуйте открыть страницу в режиме инкогнито.}}"
   },
@@ -2060,6 +2069,9 @@
   "lighthouse-core/report/html/renderer/util.js | runtimeUnknown": {
     "message": "Неизвестно"
   },
+  "lighthouse-core/report/html/renderer/util.js | showRelevantAudits": {
+    "message": "Show audits relevant to:"
+  },
   "lighthouse-core/report/html/renderer/util.js | snippetCollapseButtonLabel": {
     "message": "Свернуть фрагмент"
   },
@@ -2086,6 +2098,30 @@
   },
   "lighthouse-core/report/html/renderer/util.js | warningHeader": {
     "message": "Предупреждения: "
+  },
+  "lighthouse-treemap/app/src/util.js | allLabel": {
+    "message": "Все"
+  },
+  "lighthouse-treemap/app/src/util.js | allScriptsDropdownLabel": {
+    "message": "Все скрипты"
+  },
+  "lighthouse-treemap/app/src/util.js | coverageColumnName": {
+    "message": "Доля использования"
+  },
+  "lighthouse-treemap/app/src/util.js | duplicateModulesLabel": {
+    "message": "Повторяющиеся модули"
+  },
+  "lighthouse-treemap/app/src/util.js | resourceBytesLabel": {
+    "message": "Размер в байтах"
+  },
+  "lighthouse-treemap/app/src/util.js | tableColumnName": {
+    "message": "Название"
+  },
+  "lighthouse-treemap/app/src/util.js | toggleTableButtonLabel": {
+    "message": "Показать или скрыть таблицу"
+  },
+  "lighthouse-treemap/app/src/util.js | unusedBytesLabel": {
+    "message": "Неиспользуемые байты"
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "Если на странице есть анимированный контент, используйте [`amp-anim`](https://amp.dev/documentation/components/amp-anim/), чтобы уменьшить нагрузку на процессор, когда контент не отображается на экране."
