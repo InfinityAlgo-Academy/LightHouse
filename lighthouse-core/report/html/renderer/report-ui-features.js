@@ -632,7 +632,13 @@ class ReportUIFeatures {
       writer.write(byteArray);
       writer.close();
       const compAb = await new Response(cs.readable).arrayBuffer();
-      return String.fromCharCode.apply(null, [...new Uint8Array(compAb).values()]);
+      const u8ar = [...new Uint8Array(compAb).values()];
+
+      let compText = '';
+      for (let i = 0; i < u8ar.length;i++) {
+        compText += String.fromCharCode(u8ar[i]);
+      }
+      return compText;
     }
   }
 
