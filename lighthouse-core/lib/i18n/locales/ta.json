@@ -1703,6 +1703,15 @@
   "lighthouse-core/config/default-config.js | seoMobileGroupTitle": {
     "message": "மொபைலுக்கேற்றது"
   },
+  "lighthouse-core/gather/driver/environment.js | warningSlowHostCpu": {
+    "message": "சோதனை செய்யப்பட்ட சாதனம் Lighthouse எதிர்பார்ப்பதை விட வேகம் குறைவான CPUவைக் கொண்டிருப்பதுபோல் தெரிகிறது. இது உங்கள் செயல்திறனைப் பாதிக்கும். [பொருத்தமான CPU ஸ்லோடவுன் மல்டிபிளையரை அளவிடுதல்](https://github.com/GoogleChrome/lighthouse/blob/master/docs/throttling.md#cpu-throttling) குறித்து மேலும் அறிக."
+  },
+  "lighthouse-core/gather/driver/navigation.js | warningRedirected": {
+    "message": "உங்கள் சோதனை URL ({requested}) {final}என்பதற்குத் திசைதிருப்பப்பட்டதால் எதிர்பரர்த்த அளவிற்குப் பக்கம் ஏற்றப்படாமல் போகக்கூடும். நேரடியாக இரண்டாவது URLலை சோதித்துப் பாருங்கள்."
+  },
+  "lighthouse-core/gather/driver/navigation.js | warningTimeout": {
+    "message": "நேர வரம்பிற்குள் பக்கத்தை முழுமையாக ஏற்ற முடியவில்லை. இதனால் முடிவுகள் காட்டப்படாமல் போகலாம்."
+  },
   "lighthouse-core/gather/driver/storage.js | warningData": {
     "message": "{locationCount,plural, =1{செயல்திறன் அளவீட்டைப் பாதிக்கக்கூடிய, சேமித்தத் தரவு இந்த இடத்தில் இருக்கலாம்: {locations}. இவை உங்கள் ஸ்கோர்களைப் பாதிப்பதைத் தவிர்க்கும் வகையில், மறைநிலைச் சாளரத்தில் இந்தப் பக்கத்தின் செயல்பாட்டை ஆய்வு செய்யவும்.}other{செயல்திறன் அளவீட்டைப் பாதிக்கக்கூடிய, சேமித்தத் தரவு இந்த இடத்தில் இருக்கலாம்: {locations}. இவை உங்கள் ஸ்கோர்களைப் பாதிப்பதைத் தவிர்க்கும் வகையில், மறைநிலைச் சாளரத்தில் இந்தப் பக்கத்தின் செயல்பாட்டை ஆய்வு செய்யவும்.}}"
   },
@@ -2060,6 +2069,9 @@
   "lighthouse-core/report/html/renderer/util.js | runtimeUnknown": {
     "message": "தெரியவில்லை"
   },
+  "lighthouse-core/report/html/renderer/util.js | showRelevantAudits": {
+    "message": "Show audits relevant to:"
+  },
   "lighthouse-core/report/html/renderer/util.js | snippetCollapseButtonLabel": {
     "message": "துணுக்கைச் சுருக்கு"
   },
@@ -2086,6 +2098,30 @@
   },
   "lighthouse-core/report/html/renderer/util.js | warningHeader": {
     "message": "எச்சரிக்கைகள்: "
+  },
+  "lighthouse-treemap/app/src/util.js | allLabel": {
+    "message": "All"
+  },
+  "lighthouse-treemap/app/src/util.js | allScriptsDropdownLabel": {
+    "message": "All Scripts"
+  },
+  "lighthouse-treemap/app/src/util.js | coverageColumnName": {
+    "message": "Coverage"
+  },
+  "lighthouse-treemap/app/src/util.js | duplicateModulesLabel": {
+    "message": "Duplicate Modules"
+  },
+  "lighthouse-treemap/app/src/util.js | resourceBytesLabel": {
+    "message": "Resource Bytes"
+  },
+  "lighthouse-treemap/app/src/util.js | tableColumnName": {
+    "message": "Name"
+  },
+  "lighthouse-treemap/app/src/util.js | toggleTableButtonLabel": {
+    "message": "Toggle Table"
+  },
+  "lighthouse-treemap/app/src/util.js | unusedBytesLabel": {
+    "message": "Unused Bytes"
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "அனிமேஷன் செய்யப்பட்ட உள்ளடக்கமாக இருந்தால், உள்ளடக்கம் திரைக்கு வெளியில் இருக்கும்போது CPU உபயோகத்தைக் குறைக்கும் வகையில் [`amp-anim`](https://amp.dev/documentation/components/amp-anim/) காம்பனென்ட்டைப் பயன்படுத்தவும்."

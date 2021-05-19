@@ -1703,6 +1703,15 @@
   "lighthouse-core/config/default-config.js | seoMobileGroupTitle": {
     "message": "เหมาะกับอุปกรณ์เคลื่อนที่"
   },
+  "lighthouse-core/gather/driver/environment.js | warningSlowHostCpu": {
+    "message": "ดูเหมือนว่า CPU ของอุปกรณ์ที่ใช้ทดสอบจะช้ากว่าที่ Lighthouse คาดไว้ ซึ่งอาจส่งผลเสียต่อคะแนนประสิทธิภาพของคุณ ดูข้อมูลเพิ่มเติมเกี่ยวกับ[การปรับเทียบตัวคูณการชะลอตัวของ CPU ที่เหมาะสม](https://github.com/GoogleChrome/lighthouse/blob/master/docs/throttling.md#cpu-throttling)."
+  },
+  "lighthouse-core/gather/driver/navigation.js | warningRedirected": {
+    "message": "หน้านี้อาจไม่โหลดขึ้นตามที่คาดไว้เนื่องจาก URL ทดสอบของคุณ ({requested}) มีการเปลี่ยนเส้นทางไปยัง {final} ลองทดสอบ URL ที่ 2 โดยตรง"
+  },
+  "lighthouse-core/gather/driver/navigation.js | warningTimeout": {
+    "message": "หน้าโหลดช้าเกินกำหนดเวลา หน้าที่โหลดมาได้อาจไม่ครบถ้วน"
+  },
   "lighthouse-core/gather/driver/storage.js | warningData": {
     "message": "{locationCount,plural, =1{อาจมีข้อมูลที่จัดเก็บไว้ที่ส่งผลกระทบต่อประสิทธิภาพการโหลดในตำแหน่ง {locations} ทดสอบหน้านี้ในหน้าต่างที่ไม่ระบุตัวตนเพื่อป้องกันไม่ให้ทรัพยากรเหล่านั้นส่งผลกระทบต่อคะแนนของคุณ}other{อาจมีข้อมูลที่จัดเก็บไว้ที่ส่งผลกระทบต่อประสิทธิภาพการโหลดในตำแหน่ง {locations} ทดสอบหน้านี้ในหน้าต่างที่ไม่ระบุตัวตนเพื่อป้องกันไม่ให้ทรัพยากรเหล่านั้นส่งผลกระทบต่อคะแนนของคุณ}}"
   },
@@ -2060,6 +2069,9 @@
   "lighthouse-core/report/html/renderer/util.js | runtimeUnknown": {
     "message": "ไม่ทราบ"
   },
+  "lighthouse-core/report/html/renderer/util.js | showRelevantAudits": {
+    "message": "Show audits relevant to:"
+  },
   "lighthouse-core/report/html/renderer/util.js | snippetCollapseButtonLabel": {
     "message": "ยุบตัวอย่างข้อมูล"
   },
@@ -2086,6 +2098,30 @@
   },
   "lighthouse-core/report/html/renderer/util.js | warningHeader": {
     "message": "คำเตือน "
+  },
+  "lighthouse-treemap/app/src/util.js | allLabel": {
+    "message": "ทั้งหมด"
+  },
+  "lighthouse-treemap/app/src/util.js | allScriptsDropdownLabel": {
+    "message": "สคริปต์ทั้งหมด"
+  },
+  "lighthouse-treemap/app/src/util.js | coverageColumnName": {
+    "message": "การครอบคลุม"
+  },
+  "lighthouse-treemap/app/src/util.js | duplicateModulesLabel": {
+    "message": "โมดูลที่ซ้ำกัน"
+  },
+  "lighthouse-treemap/app/src/util.js | resourceBytesLabel": {
+    "message": "ขนาดไฟล์ทรัพยากร (ไบต์)"
+  },
+  "lighthouse-treemap/app/src/util.js | tableColumnName": {
+    "message": "ชื่อ"
+  },
+  "lighthouse-treemap/app/src/util.js | toggleTableButtonLabel": {
+    "message": "ซ่อน/แสดงตาราง"
+  },
+  "lighthouse-treemap/app/src/util.js | unusedBytesLabel": {
+    "message": "ไบต์ที่ไม่ได้ใช้"
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "สำหรับเนื้อหาที่เป็นภาพเคลื่อนไหว ให้ใช้ [`amp-anim`](https://amp.dev/documentation/components/amp-anim/) เพื่อลดการใช้ CPU ขณะที่เนื้อหาไม่ได้อยู่ในหน้าจอ"

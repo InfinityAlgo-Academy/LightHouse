@@ -1703,6 +1703,15 @@
   "lighthouse-core/config/default-config.js | seoMobileGroupTitle": {
     "message": "متوافق مع الجوّال"
   },
+  "lighthouse-core/gather/driver/environment.js | warningSlowHostCpu": {
+    "message": "يبدو أنّ الجهاز المختبَر يحتوي على وحدة معالجة مركزية (CPU) أبطأ مما توقعته أداة Lighthouse. قد يؤثر ذلك سلبيًا على نتيجة الأداء. تعرّف على المزيد من المعلومات عن [معايرة مُضاعِف بطء وحدة المعالجة المركزية (CPU) المناسب](https://github.com/GoogleChrome/lighthouse/blob/master/docs/throttling.md#cpu-throttling)."
+  },
+  "lighthouse-core/gather/driver/navigation.js | warningRedirected": {
+    "message": "قد لا يتم تحميل الصفحة كما هو متوقَع لأن عنوان URL للاختبار ({requested}) تمت إعادة توجيهه إلى {final}. يُرجى محاولة اختبار عنوان URL الثاني مباشرةً."
+  },
+  "lighthouse-core/gather/driver/navigation.js | warningTimeout": {
+    "message": "أدّى عدم تحميل الصفحة بسرعة كافية إلى تعذّر انتهاء تحميلها في الوقت المحدّد. وقد تكون النتائج غير مكتملة."
+  },
   "lighthouse-core/gather/driver/storage.js | warningData": {
     "message": "{locationCount,plural, =1{قد تكون هناك بيانات مخزَّنة تؤثر على أداء التحميل في مكان تخزين البيانات التالي: {locations} يُرجى إجراء تدقيق لهذه الصفحة في نافذة التصفح المتخفي لمنع هذه المصادر من التأثير على نتيجتك.}zero{قد تكون هناك بيانات مخزَّنة تؤثر على أداء التحميل في أماكن تخزين البيانات التالية: {locations} يُرجى إجراء تدقيق لهذه الصفحة في نافذة التصفح المتخفي لمنع هذه المصادر من التأثير على نتيجتك.}two{قد تكون هناك بيانات مخزَّنة تؤثر على أداء التحميل في مكانَي تخزين البيانات التاليَين: {locations} يُرجى إجراء تدقيق لهذه الصفحة في نافذة التصفح المتخفي لمنع هذه المصادر من التأثير على نتيجتك.}few{قد تكون هناك بيانات مخزَّنة تؤثر على أداء التحميل في أماكن تخزين البيانات التالية: {locations} يُرجى إجراء تدقيق لهذه الصفحة في نافذة التصفح المتخفي لمنع هذه المصادر من التأثير على نتيجتك.}many{قد تكون هناك بيانات مخزَّنة تؤثر على أداء التحميل في أماكن تخزين البيانات التالية: {locations} يُرجى إجراء تدقيق لهذه الصفحة في نافذة التصفح المتخفي لمنع هذه المصادر من التأثير على نتيجتك.}other{قد تكون هناك بيانات مخزَّنة تؤثر على أداء التحميل في أماكن تخزين البيانات التالية: {locations} يُرجى إجراء تدقيق لهذه الصفحة في نافذة التصفح المتخفي لمنع هذه المصادر من التأثير على نتيجتك.}}"
   },
@@ -2060,6 +2069,9 @@
   "lighthouse-core/report/html/renderer/util.js | runtimeUnknown": {
     "message": "غير معروف"
   },
+  "lighthouse-core/report/html/renderer/util.js | showRelevantAudits": {
+    "message": "Show audits relevant to:"
+  },
   "lighthouse-core/report/html/renderer/util.js | snippetCollapseButtonLabel": {
     "message": "تصغير المقتطف"
   },
@@ -2086,6 +2098,30 @@
   },
   "lighthouse-core/report/html/renderer/util.js | warningHeader": {
     "message": "التحذيرات: "
+  },
+  "lighthouse-treemap/app/src/util.js | allLabel": {
+    "message": "الكل"
+  },
+  "lighthouse-treemap/app/src/util.js | allScriptsDropdownLabel": {
+    "message": "جميع النصوص البرمجية"
+  },
+  "lighthouse-treemap/app/src/util.js | coverageColumnName": {
+    "message": "التغطية"
+  },
+  "lighthouse-treemap/app/src/util.js | duplicateModulesLabel": {
+    "message": "الوحدات المكرَّرة"
+  },
+  "lighthouse-treemap/app/src/util.js | resourceBytesLabel": {
+    "message": "حجم الموارد بوحدة البايت"
+  },
+  "lighthouse-treemap/app/src/util.js | tableColumnName": {
+    "message": "الاسم"
+  },
+  "lighthouse-treemap/app/src/util.js | toggleTableButtonLabel": {
+    "message": "تبديل الجدول"
+  },
+  "lighthouse-treemap/app/src/util.js | unusedBytesLabel": {
+    "message": "وحدات بايت غير المستخدمة"
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "بالنسبة إلى المحتوى الذي يتضمن صورًا متحركة، يمكنك استخدام [`amp-anim`](https://amp.dev/documentation/components/amp-anim/) لتقليل استخدام وحدة المعالجة المركزية (CPU) عندما يكون المحتوى خارج الشاشة."

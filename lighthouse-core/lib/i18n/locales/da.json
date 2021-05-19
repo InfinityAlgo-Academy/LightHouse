@@ -1703,6 +1703,15 @@
   "lighthouse-core/config/default-config.js | seoMobileGroupTitle": {
     "message": "Mobilvenlig"
   },
+  "lighthouse-core/gather/driver/environment.js | warningSlowHostCpu": {
+    "message": "Den testede enhed ser ud til at have en langsommere CPU, end Lighthouse forventer. Dette kan påvirke resultatet negativt. Få flere oplysninger om [kalibrering af en passende CPU-multiplikator for køkørsel](https://github.com/GoogleChrome/lighthouse/blob/master/docs/throttling.md#cpu-throttling)."
+  },
+  "lighthouse-core/gather/driver/navigation.js | warningRedirected": {
+    "message": "Siden indlæses muligvis ikke som forventet, da din testwebadresse ({requested}) blev omdirigeret til {final}. Prøv at teste den anden webadresse direkte."
+  },
+  "lighthouse-core/gather/driver/navigation.js | warningTimeout": {
+    "message": "Siden blev indlæst for langsomt til at afslutte inden for tidsgrænsen. Resultaterne kan være ufuldstændige."
+  },
   "lighthouse-core/gather/driver/storage.js | warningData": {
     "message": "{locationCount,plural, =1{Der kan være gemte data, som påvirker indlæsningseffektiviteten på følgende placering: {locations}. Gennemgå denne side i et inkognitovindue for at forhindre, at disse ressourcer påvirker dine resultater.}one{Der kan være gemte data, som påvirker indlæsningseffektiviteten på følgende placering: {locations}. Gennemgå denne side i et inkognitovindue for at forhindre, at disse ressourcer påvirker dine resultater.}other{Der kan være gemte data, som påvirker indlæsningseffektiviteten på følgende placeringer: {locations}. Gennemgå denne side i et inkognitovindue for at forhindre, at disse ressourcer påvirker dine resultater.}}"
   },
@@ -2060,6 +2069,9 @@
   "lighthouse-core/report/html/renderer/util.js | runtimeUnknown": {
     "message": "Ukendt"
   },
+  "lighthouse-core/report/html/renderer/util.js | showRelevantAudits": {
+    "message": "Show audits relevant to:"
+  },
   "lighthouse-core/report/html/renderer/util.js | snippetCollapseButtonLabel": {
     "message": "Skjul uddrag"
   },
@@ -2086,6 +2098,30 @@
   },
   "lighthouse-core/report/html/renderer/util.js | warningHeader": {
     "message": "Advarsler! "
+  },
+  "lighthouse-treemap/app/src/util.js | allLabel": {
+    "message": "Alle"
+  },
+  "lighthouse-treemap/app/src/util.js | allScriptsDropdownLabel": {
+    "message": "Alle scripts"
+  },
+  "lighthouse-treemap/app/src/util.js | coverageColumnName": {
+    "message": "Dækning"
+  },
+  "lighthouse-treemap/app/src/util.js | duplicateModulesLabel": {
+    "message": "Identiske moduler"
+  },
+  "lighthouse-treemap/app/src/util.js | resourceBytesLabel": {
+    "message": "Bytes i ressourcefil"
+  },
+  "lighthouse-treemap/app/src/util.js | tableColumnName": {
+    "message": "Navn"
+  },
+  "lighthouse-treemap/app/src/util.js | toggleTableButtonLabel": {
+    "message": "Vis/skjul tabel"
+  },
+  "lighthouse-treemap/app/src/util.js | unusedBytesLabel": {
+    "message": "Ubrugte bytes"
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "Ved animeret indhold bør du bruge [`amp-anim`](https://amp.dev/documentation/components/amp-anim/) til at minimere brugen af CPU, når indholdet er uden for skærmbilledet."

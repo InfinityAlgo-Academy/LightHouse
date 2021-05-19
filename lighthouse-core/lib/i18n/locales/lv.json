@@ -1703,6 +1703,15 @@
   "lighthouse-core/config/default-config.js | seoMobileGroupTitle": {
     "message": "Piemērota mobilajām ierīcēm"
   },
+  "lighthouse-core/gather/driver/environment.js | warningSlowHostCpu": {
+    "message": "Šķiet, testējamās ierīces centrālā procesora ātrums ir mazāks, nekā paredzēts Lighthouse prasībās. Tas var negatīvi ietekmēt veiktspējas rezultātu. Uzziniet vairāk par to, [kā kalibrēt atbilstošu centrālā procesora palēninājuma reizinātāju](https://github.com/GoogleChrome/lighthouse/blob/master/docs/throttling.md#cpu-throttling)."
+  },
+  "lighthouse-core/gather/driver/navigation.js | warningRedirected": {
+    "message": "Iespējams, lapa netiek ielādēta, kā paredzēts, jo jūsu testa URL ({requested}) tika novirzīts uz: {final}. Mēģiniet tieši testēt otro URL."
+  },
+  "lighthouse-core/gather/driver/navigation.js | warningTimeout": {
+    "message": "Lapa tika ielādēta pārāk lēni, lai ielāde tiktu pabeigta noteiktajā laika ierobežojumā. Rezultāti var būt nepilnīgi."
+  },
   "lighthouse-core/gather/driver/storage.js | warningData": {
     "message": "{locationCount,plural, =1{Iespējams, ielādes veiktspēju ietekmē dati, kas tiek glabāti šajā atrašanās vietā: {locations}. Lai šie resursi neietekmētu jūsu rezultātus, pārbaudiet šo lapu inkognito logā.}zero{Iespējams, ielādes veiktspēju ietekmē dati, kas tiek glabāti šajās atrašanās vietās: {locations}. Lai šie resursi neietekmētu jūsu rezultātus, pārbaudiet šo lapu inkognito logā.}one{Iespējams, ielādes veiktspēju ietekmē dati, kas tiek glabāti šajās atrašanās vietās: {locations}. Lai šie resursi neietekmētu jūsu rezultātus, pārbaudiet šo lapu inkognito logā.}other{Iespējams, ielādes veiktspēju ietekmē dati, kas tiek glabāti šajās atrašanās vietās: {locations}. Lai šie resursi neietekmētu jūsu rezultātus, pārbaudiet šo lapu inkognito logā.}}"
   },
@@ -2060,6 +2069,9 @@
   "lighthouse-core/report/html/renderer/util.js | runtimeUnknown": {
     "message": "Nezināms"
   },
+  "lighthouse-core/report/html/renderer/util.js | showRelevantAudits": {
+    "message": "Show audits relevant to:"
+  },
   "lighthouse-core/report/html/renderer/util.js | snippetCollapseButtonLabel": {
     "message": "Sakļaut fragmentu"
   },
@@ -2086,6 +2098,30 @@
   },
   "lighthouse-core/report/html/renderer/util.js | warningHeader": {
     "message": "Brīdinājumi: "
+  },
+  "lighthouse-treemap/app/src/util.js | allLabel": {
+    "message": "Visi"
+  },
+  "lighthouse-treemap/app/src/util.js | allScriptsDropdownLabel": {
+    "message": "Visi skripti"
+  },
+  "lighthouse-treemap/app/src/util.js | coverageColumnName": {
+    "message": "Tvērums"
+  },
+  "lighthouse-treemap/app/src/util.js | duplicateModulesLabel": {
+    "message": "Dublēti moduļi"
+  },
+  "lighthouse-treemap/app/src/util.js | resourceBytesLabel": {
+    "message": "Faila lielums baitos"
+  },
+  "lighthouse-treemap/app/src/util.js | tableColumnName": {
+    "message": "Nosaukums"
+  },
+  "lighthouse-treemap/app/src/util.js | toggleTableButtonLabel": {
+    "message": "Pārslēgt tabulu"
+  },
+  "lighthouse-treemap/app/src/util.js | unusedBytesLabel": {
+    "message": "Neizmantotais apjoms baitos"
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "Animētam saturam izmantojiet komponentu [`amp-anim`](https://amp.dev/documentation/components/amp-anim/), lai samazinātu centrālā procesora lietojumu, kamēr saturs nav redzams ekrānā."

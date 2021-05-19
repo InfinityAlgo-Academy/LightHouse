@@ -1703,6 +1703,15 @@
   "lighthouse-core/config/default-config.js | seoMobileGroupTitle": {
     "message": "Vhodné pre mobilné zariadenia"
   },
+  "lighthouse-core/gather/driver/environment.js | warningSlowHostCpu": {
+    "message": "Testované zariadenie má zrejme pomalší procesor ako Lighthouse očakáva. Môže to záporne ovplyvniť vaše skóre výkonnosti. [Ďalšie informácie o kalibrácii vhodného multiplikátora spomalenia procesora](https://github.com/GoogleChrome/lighthouse/blob/master/docs/throttling.md#cpu-throttling)"
+  },
+  "lighthouse-core/gather/driver/navigation.js | warningRedirected": {
+    "message": "Táto stránka sa nemusí načítavať podľa očakávaní, pretože testovacia webová adresa ({requested}) bola presmerovaná na {final}. Skúste priamo otestovať druhú webovú adresu."
+  },
+  "lighthouse-core/gather/driver/navigation.js | warningTimeout": {
+    "message": "Načítanie stránky bolo príliš pomalé, aby sa dokončilo v časovom limite. Výsledky nemusia byť úplné."
+  },
   "lighthouse-core/gather/driver/storage.js | warningData": {
     "message": "{locationCount,plural, =1{V nasledujúcom umiestnení môžu byť uložené údaje, ktoré ovplyvňujú výkonnosť načítavania: {locations}. Skontrolujte túto stránku v okne inkognito, aby príslušné zdroje neovplyvnili vaše skóre.}few{V nasledujúcich umiestneniach môžu byť uložené údaje, ktoré ovplyvňujú výkonnosť načítavania: {locations}. Skontrolujte túto stránku v okne inkognito, aby príslušné zdroje neovplyvnili vaše skóre.}many{V nasledujúcich umiestneniach môžu byť uložené údaje, ktoré ovplyvňujú výkonnosť načítavania: {locations}. Skontrolujte túto stránku v okne inkognito, aby príslušné zdroje neovplyvnili vaše skóre.}other{V nasledujúcich umiestneniach môžu byť uložené údaje, ktoré ovplyvňujú výkonnosť načítavania: {locations}. Skontrolujte túto stránku v okne inkognito, aby príslušné zdroje neovplyvnili vaše skóre.}}"
   },
@@ -2060,6 +2069,9 @@
   "lighthouse-core/report/html/renderer/util.js | runtimeUnknown": {
     "message": "Neznáme"
   },
+  "lighthouse-core/report/html/renderer/util.js | showRelevantAudits": {
+    "message": "Show audits relevant to:"
+  },
   "lighthouse-core/report/html/renderer/util.js | snippetCollapseButtonLabel": {
     "message": "Zbaliť útržok"
   },
@@ -2086,6 +2098,30 @@
   },
   "lighthouse-core/report/html/renderer/util.js | warningHeader": {
     "message": "Upozornenia: "
+  },
+  "lighthouse-treemap/app/src/util.js | allLabel": {
+    "message": "Všetko"
+  },
+  "lighthouse-treemap/app/src/util.js | allScriptsDropdownLabel": {
+    "message": "Všetky skripty"
+  },
+  "lighthouse-treemap/app/src/util.js | coverageColumnName": {
+    "message": "Pokrytie"
+  },
+  "lighthouse-treemap/app/src/util.js | duplicateModulesLabel": {
+    "message": "Duplikovať moduly"
+  },
+  "lighthouse-treemap/app/src/util.js | resourceBytesLabel": {
+    "message": "Počet bajtov zdroja"
+  },
+  "lighthouse-treemap/app/src/util.js | tableColumnName": {
+    "message": "Názov"
+  },
+  "lighthouse-treemap/app/src/util.js | toggleTableButtonLabel": {
+    "message": "Prepnúť tabuľku"
+  },
+  "lighthouse-treemap/app/src/util.js | unusedBytesLabel": {
+    "message": "Nepoužité bajty"
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "V prípade animovaného obsahu minimalizujete využitie procesora pomocou komponenta [`amp-anim`](https://amp.dev/documentation/components/amp-anim/), keď je tento obsah mimo obrazovky."

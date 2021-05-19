@@ -1703,6 +1703,15 @@
   "lighthouse-core/config/default-config.js | seoMobileGroupTitle": {
     "message": "Mobilanpassad"
   },
+  "lighthouse-core/gather/driver/environment.js | warningSlowHostCpu": {
+    "message": "Enheten som testas verkar ha en lägre CPU-hastighet än vad som förväntas i Lighthouse. Det här kan påverka prestandavärdet negativt. Läs mer om att [kalibrera en lämplig CPU-multiplicerare](https://github.com/GoogleChrome/lighthouse/blob/master/docs/throttling.md#cpu-throttling)."
+  },
+  "lighthouse-core/gather/driver/navigation.js | warningRedirected": {
+    "message": "Sidan kanske inte läses in eftersom testwebbadressen ({requested}) omdirigerades till {final}. Testa den andra webbadressen direkt i stället."
+  },
+  "lighthouse-core/gather/driver/navigation.js | warningTimeout": {
+    "message": "Sidan lästes in för långsamt för att slutföra sidhämtningen inom tidsgränsen. Resultatet kan vara ofullständigt."
+  },
   "lighthouse-core/gather/driver/storage.js | warningData": {
     "message": "{locationCount,plural, =1{På följande plats kan det finnas lagrad data som påverkar inläsningen: {locations}. Granska sidan i ett inkognitofönster för att förhindra att resurserna påverkar dina resultat.}other{På följande platser kan det finnas lagrad data som påverkar inläsningen: {locations}. Granska sidan i ett inkognitofönster för att förhindra att resurserna påverkar dina resultat.}}"
   },
@@ -2060,6 +2069,9 @@
   "lighthouse-core/report/html/renderer/util.js | runtimeUnknown": {
     "message": "Okänd"
   },
+  "lighthouse-core/report/html/renderer/util.js | showRelevantAudits": {
+    "message": "Show audits relevant to:"
+  },
   "lighthouse-core/report/html/renderer/util.js | snippetCollapseButtonLabel": {
     "message": "Komprimera utdrag"
   },
@@ -2086,6 +2098,30 @@
   },
   "lighthouse-core/report/html/renderer/util.js | warningHeader": {
     "message": "Varningar: "
+  },
+  "lighthouse-treemap/app/src/util.js | allLabel": {
+    "message": "Alla"
+  },
+  "lighthouse-treemap/app/src/util.js | allScriptsDropdownLabel": {
+    "message": "Alla skript"
+  },
+  "lighthouse-treemap/app/src/util.js | coverageColumnName": {
+    "message": "Täckning"
+  },
+  "lighthouse-treemap/app/src/util.js | duplicateModulesLabel": {
+    "message": "Moduldubbletter"
+  },
+  "lighthouse-treemap/app/src/util.js | resourceBytesLabel": {
+    "message": "Resursstorlek i byte"
+  },
+  "lighthouse-treemap/app/src/util.js | tableColumnName": {
+    "message": "Namn"
+  },
+  "lighthouse-treemap/app/src/util.js | toggleTableButtonLabel": {
+    "message": "Aktivera och inaktivera tabell"
+  },
+  "lighthouse-treemap/app/src/util.js | unusedBytesLabel": {
+    "message": "Byte som inte används"
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "För animerat innehåll använder du [`amp-anim`](https://amp.dev/documentation/components/amp-anim/) till att minimera CPU-användningen när innehållet inte visas på skärmen."

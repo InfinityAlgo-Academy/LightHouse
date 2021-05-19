@@ -1703,6 +1703,15 @@
   "lighthouse-core/config/default-config.js | seoMobileGroupTitle": {
     "message": "Pritaikyta mobiliesiems"
   },
+  "lighthouse-core/gather/driver/environment.js | warningSlowHostCpu": {
+    "message": "Išbandyto įrenginio centrinis procesorius pasirodė lėtesnis, nei tikėjosi „Lighthouse“. Tai gali neigiamai paveikti našumo įvertinimą. Sužinokite daugiau apie [atitinkamo centrinio procesoriaus sulėtėjimo koeficiento kalibravimą](https://github.com/GoogleChrome/lighthouse/blob/master/docs/throttling.md#cpu-throttling)."
+  },
+  "lighthouse-core/gather/driver/navigation.js | warningRedirected": {
+    "message": "Puslapis gali būti neįkeliamas, kaip numatyta, nes bandomasis URL ({requested}) peradresavo į {final}. Išbandykite antrąjį URL tiesiogiai."
+  },
+  "lighthouse-core/gather/driver/navigation.js | warningTimeout": {
+    "message": "Puslapis įkeliamas per lėtai, kad įkėlimas būtų baigtas atitinkant laiko apribojimą. Rezultatai gali būti neišsamūs."
+  },
   "lighthouse-core/gather/driver/storage.js | warningData": {
     "message": "{locationCount,plural, =1{Šioje vietoje gali būti išsaugotų duomenų, turinčių poveikio įkėlimo našumui: {locations}. Patikrinkite šį puslapį inkognito lange, kad šie šaltiniai nepaveiktų rezultatų.}one{Šiose vietose gali būti išsaugotų duomenų, turinčių poveikio įkėlimo našumui: {locations}. Patikrinkite šį puslapį inkognito lange, kad šie šaltiniai nepaveiktų rezultatų.}few{Šiose vietose gali būti išsaugotų duomenų, turinčių poveikio įkėlimo našumui: {locations}. Patikrinkite šį puslapį inkognito lange, kad šie šaltiniai nepaveiktų rezultatų.}many{Šiose vietose gali būti išsaugotų duomenų, turinčių poveikio įkėlimo našumui: {locations}. Patikrinkite šį puslapį inkognito lange, kad šie šaltiniai nepaveiktų rezultatų.}other{Šiose vietose gali būti išsaugotų duomenų, turinčių poveikio įkėlimo našumui: {locations}. Patikrinkite šį puslapį inkognito lange, kad šie šaltiniai nepaveiktų rezultatų.}}"
   },
@@ -2060,6 +2069,9 @@
   "lighthouse-core/report/html/renderer/util.js | runtimeUnknown": {
     "message": "Nežinoma"
   },
+  "lighthouse-core/report/html/renderer/util.js | showRelevantAudits": {
+    "message": "Show audits relevant to:"
+  },
   "lighthouse-core/report/html/renderer/util.js | snippetCollapseButtonLabel": {
     "message": "Sutraukti fragmentą"
   },
@@ -2086,6 +2098,30 @@
   },
   "lighthouse-core/report/html/renderer/util.js | warningHeader": {
     "message": "Įspėjimai: "
+  },
+  "lighthouse-treemap/app/src/util.js | allLabel": {
+    "message": "Viskas"
+  },
+  "lighthouse-treemap/app/src/util.js | allScriptsDropdownLabel": {
+    "message": "Visi scenarijai"
+  },
+  "lighthouse-treemap/app/src/util.js | coverageColumnName": {
+    "message": "Aprėptis"
+  },
+  "lighthouse-treemap/app/src/util.js | duplicateModulesLabel": {
+    "message": "Tikslios modulių kopijos"
+  },
+  "lighthouse-treemap/app/src/util.js | resourceBytesLabel": {
+    "message": "Šaltinių baitai"
+  },
+  "lighthouse-treemap/app/src/util.js | tableColumnName": {
+    "message": "Pavadinimas"
+  },
+  "lighthouse-treemap/app/src/util.js | toggleTableButtonLabel": {
+    "message": "Perjungti lentelę"
+  },
+  "lighthouse-treemap/app/src/util.js | unusedBytesLabel": {
+    "message": "Nenaudojami baitai"
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "Jei teikiate animuotą turinį, naudokite [„`amp-anim`“](https://amp.dev/documentation/components/amp-anim/), kad būtų naudojama mažiau centrinio procesoriaus galios, kai turinys nerodomas ekrane."

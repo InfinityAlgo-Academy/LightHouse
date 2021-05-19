@@ -1703,6 +1703,15 @@
   "lighthouse-core/config/default-config.js | seoMobileGroupTitle": {
     "message": "मोबाइल फ़्रेंडली"
   },
+  "lighthouse-core/gather/driver/environment.js | warningSlowHostCpu": {
+    "message": "ऐसा लगता है कि जांचे गए डिवाइस का सीपीयू, अनुमानित Lighthouse बेसलाइन से धीमा है. इससे आपके परफ़ॉर्मेंस स्कोर पर बुरा असर पड़ सकता है. [सही सीपीयू स्लोडाउन मल्टिप्लायर को कैलिब्रेट करने](https://github.com/GoogleChrome/lighthouse/blob/master/docs/throttling.md#cpu-throttling) के बारे में ज़्यादा जानें."
+  },
+  "lighthouse-core/gather/driver/navigation.js | warningRedirected": {
+    "message": "शायद पेज उम्मीद के मुताबिक लोड नहीं हो रहा है, क्योंकि आपके टेस्ट यूआरएल ({requested}) को {final} की ओर रीडायरेक्ट किया गया था. टेस्टिंग के लिए दूसरा यूआरएल आज़माएं."
+  },
+  "lighthouse-core/gather/driver/navigation.js | warningTimeout": {
+    "message": "धीरे लोड होने की वजह से, पेज तय समयसीमा में पूरी तरह लोड नहीं हो पाया. नतीजे अधूरे हो सकते हैं."
+  },
   "lighthouse-core/gather/driver/storage.js | warningData": {
     "message": "{locationCount,plural, =1{हो सकता है कि सेव किया गया डेटा इस जगह पर, लोड होने की परफ़ॉर्मेंस पर असर डाल रहा हो: {locations}. इस पेज को गुप्त विंडो में ऑडिट करें, ताकि उन संसाधनों का आपके स्कोर पर कोई असर न पड़े.}one{हो सकता है कि सेव किया गया डेटा इस जगह पर, लोड होने की परफ़ॉर्मेंस पर असर डाल रहा हो: {locations}. इस पेज को गुप्त विंडो में ऑडिट करें, ताकि उन संसाधनों का आपके स्कोर पर कोई असर न पड़े.}other{हो सकता है कि सेव किया गया डेटा इन जगहों पर, लोड होने की परफ़ॉर्मेंस पर असर डाल रहा हो: {locations}. इस पेज को गुप्त विंडो में ऑडिट करें, ताकि उन संसाधनों का आपके स्कोर पर कोई असर न पड़े.}}"
   },
@@ -2060,6 +2069,9 @@
   "lighthouse-core/report/html/renderer/util.js | runtimeUnknown": {
     "message": "अज्ञात"
   },
+  "lighthouse-core/report/html/renderer/util.js | showRelevantAudits": {
+    "message": "Show audits relevant to:"
+  },
   "lighthouse-core/report/html/renderer/util.js | snippetCollapseButtonLabel": {
     "message": "स्निपेट को छोटा करें"
   },
@@ -2086,6 +2098,30 @@
   },
   "lighthouse-core/report/html/renderer/util.js | warningHeader": {
     "message": "चेतावनियां: "
+  },
+  "lighthouse-treemap/app/src/util.js | allLabel": {
+    "message": "सभी"
+  },
+  "lighthouse-treemap/app/src/util.js | allScriptsDropdownLabel": {
+    "message": "सभी स्क्रिप्ट"
+  },
+  "lighthouse-treemap/app/src/util.js | coverageColumnName": {
+    "message": "कवरेज"
+  },
+  "lighthouse-treemap/app/src/util.js | duplicateModulesLabel": {
+    "message": "डुप्लीकेट मॉड्यूल"
+  },
+  "lighthouse-treemap/app/src/util.js | resourceBytesLabel": {
+    "message": "रिसॉर्स का साइज़ (बाइट में)"
+  },
+  "lighthouse-treemap/app/src/util.js | tableColumnName": {
+    "message": "नाम"
+  },
+  "lighthouse-treemap/app/src/util.js | toggleTableButtonLabel": {
+    "message": "टेबल को टॉगल करें"
+  },
+  "lighthouse-treemap/app/src/util.js | unusedBytesLabel": {
+    "message": "इस्तेमाल न की गई बाइट की संख्या"
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "ऐनिमेशन वाले कॉन्टेंट के लिए, [`amp-anim`](https://amp.dev/documentation/components/amp-anim/) का इस्तेमाल करें. इससे, कॉन्टेंट के ऑफ़स्क्रीन होने पर सीपीयू का इस्तेमाल कम होगा."
