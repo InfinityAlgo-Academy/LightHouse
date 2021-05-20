@@ -28,7 +28,6 @@ declare global {
       | 'MixedContent'
       | 'ScriptElements'
       | 'ServiceWorker'
-      | 'TagsBlockingFirstPaint'
       | keyof FRBaseArtifacts
     >;
 

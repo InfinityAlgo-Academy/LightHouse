@@ -9,7 +9,8 @@
 
 const TagsBlockingFirstPaint =
     require('../../../../gather/gatherers/dobetterweb/tags-blocking-first-paint.js');
-const assert = require('assert').strict;
+const {createMockContext} = require('../../../fraggle-rock/gather/mock-driver.js');
+
 let tagsBlockingFirstPaint;
 const traceData = {
   networkRecords: [
@@ -150,13 +151,11 @@ describe('First paint blocking tags', () => {
       src: 'http://google.com/js/app.js',
     };
 
-    const artifact = await tagsBlockingFirstPaint.afterPass({
-      driver: {executionContext: {
-        evaluate() {
-          return Promise.resolve([linkDetails, linkDetails, scriptDetails]);
-        },
-      }},
-    }, traceData);
+    const mockContext = createMockContext();
+    mockContext.driver._executionContext.evaluate
+      .mockResolvedValue([linkDetails, linkDetails, scriptDetails]);
+
+    const artifact = await tagsBlockingFirstPaint.afterPass(mockContext, traceData);
 
     const expected = [
       {
@@ -172,6 +171,6 @@ describe('First paint blocking tags', () => {
         endTime: 22,
       },
     ];
-    assert.deepEqual(artifact, expected);
+    expect(artifact).toEqual(expected);
   });
 });
