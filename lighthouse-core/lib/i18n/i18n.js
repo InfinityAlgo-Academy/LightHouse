@@ -5,6 +5,8 @@
  */
 'use strict';
 
+/** @typedef {import('../../lib/i18n/locales').LhlMessages} LhlMessages */
+
 const path = require('path');
 const MessageFormat = require('intl-messageformat').default;
 const lookupClosestLocale = require('lookup-closest-locale');
@@ -507,8 +509,6 @@ function replaceIcuMessages(inputObject, locale) {
   replaceInObject(inputObject, icuMessagePaths);
   return icuMessagePaths;
 }
-
-/** @typedef {import('./locales').LhlMessages} LhlMessages */
 
 /**
  * Populate the i18n string lookup dict with locale data

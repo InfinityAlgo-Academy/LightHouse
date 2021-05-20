@@ -5,12 +5,14 @@
  */
 'use strict';
 
+/* global logger */
+
 /**
  * Manages drag and drop file input for the page.
  */
 class DragAndDrop {
   /**
-   * @param {function(File): void} fileHandlerCallback Invoked when the user chooses a new file.
+   * @param {function(string): void} fileHandlerCallback Invoked when the user chooses a new file.
    */
   constructor(fileHandlerCallback) {
     const dropZone = document.querySelector('.drop_zone');
@@ -23,6 +25,27 @@ class DragAndDrop {
     this._dragging = false;
 
     this._addListeners();
+  }
+
+  /**
+   * Reads a file and returns its content as a string.
+   * @param {File} file
+   * @return {Promise<string>}
+   */
+  readFile(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const result = /** @type {?string} */ (e.target && e.target.result);
+        if (!result) {
+          reject('Could not read file');
+          return;
+        }
+        resolve(result);
+      };
+      reader.onerror = reject;
+      reader.readAsText(file);
+    });
   }
 
   _addListeners() {
@@ -56,7 +79,9 @@ class DragAndDrop {
 
       // Note, this ignores multiple files in the drop, only taking the first.
       if (e.dataTransfer) {
-        this._fileHandlerCallback(e.dataTransfer.files[0]);
+        this.readFile(e.dataTransfer.files[0]).then((str) => {
+          this._fileHandlerCallback(str);
+        }).catch(e => logger.error(e));
       }
     });
   }

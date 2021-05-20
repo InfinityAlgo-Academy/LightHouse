@@ -5,6 +5,8 @@
  */
 'use strict';
 
+/** @typedef {import('../lighthouse-core/lib/i18n/locales').LhlMessages} LhlMessages */
+
 const fs = require('fs');
 const GhPagesApp = require('./gh-pages-app.js');
 
@@ -15,8 +17,11 @@ const GhPagesApp = require('./gh-pages-app.js');
  */
 function buildStrings() {
   const locales = require('../lighthouse-core/lib/i18n/locales.js');
-  const UIStrings = require('../lighthouse-treemap/app/src/util.js').UIStrings;
-  const strings = /** @type {import('../lighthouse-treemap/types/treemap').Strings} */ ({});
+  const UIStrings = require(
+    // Prevent `tsc -p .` from evaluating util.js using core types, it is already typchecked by `tsc -p lighthouse-treemap`.
+    '' + '../lighthouse-treemap/app/src/util.js'
+  ).UIStrings;
+  const strings = /** @type {Record<LH.Locale, LhlMessages>} */ ({});
 
   for (const [locale, lhlMessages] of Object.entries(locales)) {
     const localizedStrings = Object.fromEntries(
@@ -49,6 +54,8 @@ async function run() {
     ],
     javascripts: [
       /* eslint-disable max-len */
+      fs.readFileSync(require.resolve('idb-keyval/dist/idb-keyval-min.js'), 'utf8'),
+      fs.readFileSync(require.resolve('event-target-shim/umd'), 'utf8'),
       fs.readFileSync(require.resolve('webtreemap-cdt'), 'utf8'),
       fs.readFileSync(require.resolve('tabulator-tables/dist/js/tabulator_core.js'), 'utf8'),
       fs.readFileSync(require.resolve('tabulator-tables/dist/js/modules/sort.js'), 'utf8'),
@@ -56,10 +63,15 @@ async function run() {
       fs.readFileSync(require.resolve('tabulator-tables/dist/js/modules/resize_columns.js'), 'utf8'),
       /* eslint-enable max-len */
       buildStrings(),
+      {path: '../../lighthouse-core/report/html/renderer/logger.js'},
       {path: '../../lighthouse-core/report/html/renderer/i18n.js'},
+      {path: '../../lighthouse-viewer/app/src/drag-and-drop.js'},
+      {path: '../../lighthouse-viewer/app/src/github-api.js'},
+      {path: '../../lighthouse-viewer/app/src/firebase-auth.js'},
       {path: 'src/**/*'},
     ],
     assets: [
+      {path: 'images/**/*'},
       {path: 'debug.json'},
     ],
   });

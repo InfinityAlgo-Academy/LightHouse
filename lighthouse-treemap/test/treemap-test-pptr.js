@@ -77,9 +77,12 @@ describe('Lighthouse Treemap', () => {
       await new Promise(resolve => browser.on('targetcreated', resolve));
       const target = (await browser.targets()).find(target => target.url() === treemapUrl);
       page = await target.page();
-      await openerPage.close();
-      await page.waitForFunction(
-        () => window.__treemapOptions || document.body.textContent.startsWith('Error'));
+      await page.waitForFunction(() => {
+        if (window.__treemapOptions) return true;
+
+        const el = document.querySelector('#lh-log');
+        if (el && el.textContent.startsWith('Error')) return true;
+      });
     }
 
     it('from window postMessage', async () => {
@@ -92,7 +95,7 @@ describe('Lighthouse Treemap', () => {
       await loadFromPostMessage({});
       const options = await page.evaluate(() => window.__treemapOptions);
       expect(options).toBeUndefined();
-      const error = await page.evaluate(() => document.body.textContent);
+      const error = await page.evaluate(() => document.querySelector('#lh-log').textContent);
       expect(error).toBe('Error: Invalid options');
     });
   });

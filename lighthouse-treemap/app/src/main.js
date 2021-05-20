@@ -5,12 +5,17 @@
  */
 'use strict';
 
+/** @typedef {import('../../../lighthouse-core/lib/i18n/locales').LhlMessages} LhlMessages */
+
 /* eslint-env browser */
 
-/* globals I18n webtreemap strings TreemapUtil Tabulator Cell Row */
+/* globals I18n webtreemap strings TreemapUtil Tabulator Cell Row DragAndDrop Logger GithubApi */
 
 const DUPLICATED_MODULES_IGNORE_THRESHOLD = 1024;
 const DUPLICATED_MODULES_IGNORE_ROOT_RATIO = 0.01;
+
+const logEl = document.querySelector('#lh-log');
+const logger = new Logger(logEl);
 
 /** @type {TreemapViewer} */
 let treemapViewer;
@@ -31,6 +36,8 @@ class TreemapViewer {
    * @param {HTMLElement} el
    */
   constructor(options, el) {
+    this.abortController = new AbortController();
+
     const scriptTreemapData = options.lhr.audits['script-treemap-data'].details;
     if (!scriptTreemapData || scriptTreemapData.type !== 'treemap-data') {
       throw new Error('missing script-treemap-data');
@@ -91,9 +98,6 @@ class TreemapViewer {
     urlEl.href = this.documentUrl;
 
     this.createBundleSelector();
-
-    const toggleTableBtn = TreemapUtil.find('.lh-button--toggle-table');
-    toggleTableBtn.addEventListener('click', () => treemapViewer.toggleTable());
   }
 
   createBundleSelector() {
@@ -142,6 +146,7 @@ class TreemapViewer {
   }
 
   initListeners() {
+    const options = {signal: this.abortController.signal};
     const treemapEl = TreemapUtil.find('.lh-treemap');
 
     const resizeObserver = new ResizeObserver(() => this.resize());
@@ -153,7 +158,7 @@ class TreemapViewer {
       if (!nodeEl) return;
 
       this.updateColors();
-    });
+    }, options);
 
     treemapEl.addEventListener('keyup', (e) => {
       if (!(e instanceof KeyboardEvent)) return;
@@ -163,7 +168,7 @@ class TreemapViewer {
       if (e.key === 'Escape' && this.treemap) {
         this.treemap.zoom([]); // zoom out to root
       }
-    });
+    }, options);
 
     treemapEl.addEventListener('mouseover', (e) => {
       if (!(e.target instanceof HTMLElement)) return;
@@ -171,7 +176,7 @@ class TreemapViewer {
       if (!nodeEl) return;
 
       nodeEl.classList.add('webtreemap-node--hover');
-    });
+    }, options);
 
     treemapEl.addEventListener('mouseout', (e) => {
       if (!(e.target instanceof HTMLElement)) return;
@@ -179,7 +184,7 @@ class TreemapViewer {
       if (!nodeEl) return;
 
       nodeEl.classList.remove('webtreemap-node--hover');
-    });
+    }, options);
 
     TreemapUtil.find('.lh-table').addEventListener('mouseover', e => {
       const target = e.target;
@@ -197,7 +202,10 @@ class TreemapViewer {
           hoverEl.classList.remove('webtreemap-node--hover');
         }
       }, {once: true});
-    });
+    }, options);
+
+    const toggleTableBtn = TreemapUtil.find('.lh-button--toggle-table');
+    toggleTableBtn.addEventListener('click', () => treemapViewer.toggleTable(), options);
   }
 
   /**
@@ -676,17 +684,19 @@ function applyActiveClass(currentViewModeId, el) {
  * @param {LH.Treemap.Options} options
  */
 function injectOptions(options) {
-  if (window.__treemapOptions) return;
+  let scriptEl = document.querySelector('.lh-injectedoptions');
+  if (scriptEl) {
+    scriptEl.remove();
+  }
 
-  const scriptEl = document.createElement('script');
+  scriptEl = TreemapUtil.createChildOf(document.head, 'script', 'lh-injectedoptions');
   scriptEl.textContent = `
     window.__treemapOptions = ${JSON.stringify(options)};
   `;
-  document.head.append(scriptEl);
 }
 
 /**
- * @param {import('../../../lighthouse-core/lib/i18n/locales').LhlMessages} localeMessages
+ * @param {LhlMessages} localeMessages
  */
 function getStrings(localeMessages) {
   const strings = /** @type {TreemapUtil['UIStrings']} */ ({});
@@ -699,39 +709,179 @@ function getStrings(localeMessages) {
   return strings;
 }
 
-/**
- * @param {LH.Treemap.Options} options
- */
-function init(options) {
-  const i18n = new I18n(options.lhr.configSettings.locale, {
-    // Set missing renderer strings to default (english) values.
-    ...TreemapUtil.UIStrings,
-    // `strings` is generated in build/build-treemap.js
-    ...getStrings(strings[options.lhr.configSettings.locale]),
-  });
-  TreemapUtil.i18n = i18n;
-
-  // Fill in all i18n data.
-  for (const node of document.querySelectorAll('[data-i18n]')) {
-    // These strings are guaranteed to (at least) have a default English string in TreemapUtil.UIStrings,
-    // so this cannot be undefined as long as `report-ui-features.data-i18n` test passes.
-    const i18nAttr = /** @type {keyof TreemapUtil['UIStrings']} */ (node.getAttribute('data-i18n'));
-    node.textContent = TreemapUtil.i18n.strings[i18nAttr];
+class LighthouseTreemap {
+  static get APP_URL() {
+    return `${location.origin}${location.pathname}`;
   }
 
-  treemapViewer = new TreemapViewer(options, TreemapUtil.find('div.lh-treemap'));
+  constructor() {
+    this._onPaste = this._onPaste.bind(this);
+    this._onFileLoad = this._onFileLoad.bind(this);
 
-  injectOptions(options);
+    this._dragAndDrop = new DragAndDrop(this._onFileLoad);
+    this._github = new GithubApi();
 
-  // eslint-disable-next-line no-console
-  console.log('window.__treemapOptions', window.__treemapOptions);
-}
+    document.addEventListener('paste', this._onPaste);
 
-/**
- * @param {string} message
- */
-function showError(message) {
-  document.body.textContent = message;
+    // Hidden file input to trigger manual file selector.
+    const fileInput = TreemapUtil.find('input#hidden-file-input', document);
+    fileInput.addEventListener('change', e => {
+      if (!e.target) {
+        return;
+      }
+
+      const inputTarget = /** @type {HTMLInputElement} */ (e.target);
+      if (inputTarget.files) {
+        this._dragAndDrop.readFile(inputTarget.files[0]).then(str => {
+          this._onFileLoad(str);
+        });
+      }
+      inputTarget.value = '';
+    });
+
+    // A click on the visual placeholder will trigger the hidden file input.
+    const placeholderTarget = TreemapUtil.find('.treemap-placeholder-inner', document);
+    placeholderTarget.addEventListener('click', e => {
+      const target = /** @type {?Element} */ (e.target);
+
+      if (target && target.localName !== 'input' && target.localName !== 'a') {
+        fileInput.click();
+      }
+    });
+  }
+
+  /**
+   * @param {LH.Treemap.Options} options
+   */
+  init(options) {
+    TreemapUtil.find('.treemap-placeholder').classList.add('hidden');
+    TreemapUtil.find('main').classList.remove('hidden');
+
+    const i18n = new I18n(options.lhr.configSettings.locale, {
+      // Set missing renderer strings to default (english) values.
+      ...TreemapUtil.UIStrings,
+      // `strings` is generated in build/build-treemap.js
+      ...getStrings(strings[options.lhr.configSettings.locale]),
+    });
+    TreemapUtil.i18n = i18n;
+
+    // Fill in all i18n data.
+    for (const node of document.querySelectorAll('[data-i18n]')) {
+      // These strings are guaranteed to (at least) have a default English string in TreemapUtil.UIStrings,
+      // so this cannot be undefined as long as `report-ui-features.data-i18n` test passes.
+      const i18nAttr = /** @type {keyof TreemapUtil['UIStrings']} */ (
+        node.getAttribute('data-i18n'));
+      node.textContent = TreemapUtil.i18n.strings[i18nAttr];
+    }
+
+    if (treemapViewer) {
+      TreemapUtil.find('.lh-treemap').innerHTML = '';
+      TreemapUtil.find('.lh-table').innerHTML = '';
+      treemapViewer.abortController.abort();
+    }
+    treemapViewer = new TreemapViewer(options, TreemapUtil.find('div.lh-treemap'));
+
+    injectOptions(options);
+
+    // eslint-disable-next-line no-console
+    console.log('window.__treemapOptions', window.__treemapOptions);
+  }
+
+  /**
+   * @param {any} json
+   * @return {LH.Treemap.Options}
+   */
+  convertToOptions(json) {
+    if (json && typeof json === 'object') {
+      if (json.audits) json = {lhr: json};
+      if (json.lhr && json.lhr.audits && typeof json.lhr.audits === 'object') return json;
+    }
+
+    throw new Error('unknown json');
+  }
+
+  /**
+   * Loads report json from gist URL, if valid. Updates page URL with gist id
+   * and loads from github.
+   * @param {string} urlStr gist URL
+   */
+  async loadFromGistUrl(urlStr) {
+    try {
+      const url = new URL(urlStr);
+
+      if (url.origin !== 'https://gist.github.com') {
+        logger.error('URL was not a gist');
+        return;
+      }
+
+      const match = url.pathname.match(/[a-f0-9]{5,}/);
+      if (match) {
+        const gistId = match[0];
+        history.pushState({}, '', `${LighthouseTreemap.APP_URL}?gist=${gistId}`);
+        const json = await this._github.getGistFileContentAsJson(gistId);
+        const options = this.convertToOptions(json);
+        this.init(options);
+      }
+    } catch (err) {
+      logger.error(err);
+    }
+  }
+
+  /**
+   * @param {string} str
+   */
+  _onFileLoad(str) {
+    let json;
+    let options;
+    try {
+      json = JSON.parse(str);
+      options = this.convertToOptions(json);
+    } catch (e) {
+      logger.error('Could not parse JSON file.');
+    }
+
+    if (options) this.init(options);
+  }
+
+  /**
+   * Enables pasting a JSON report or gist URL on the page.
+   * @param {ClipboardEvent} e
+   */
+  _onPaste(e) {
+    if (!e.clipboardData) return;
+    e.preventDefault();
+
+    // Try paste as gist URL.
+    try {
+      const url = new URL(e.clipboardData.getData('text'));
+      this.loadFromGistUrl(url.href);
+
+      if (window.ga) {
+        window.ga('send', 'event', 'report', 'paste-link');
+      }
+
+      return;
+    } catch (err) {
+      // noop
+    }
+
+    // Try paste as json content.
+    try {
+      const json = JSON.parse(e.clipboardData.getData('text'));
+      const options = this.convertToOptions(json);
+      this.init(options);
+
+      if (window.ga) {
+        window.ga('send', 'event', 'report', 'paste');
+      }
+
+      return;
+    } catch (err) {
+      // noop
+    }
+
+    logger.error('Pasted content did not have JSON or gist URL');
+  }
 }
 
 /**
@@ -747,28 +897,31 @@ function fromBinary(encoded) {
 }
 
 async function main() {
+  const app = new LighthouseTreemap();
+  const queryParams = new URLSearchParams(window.location.search);
+  const hashParams = location.hash ? JSON.parse(fromBinary(location.hash.substr(1))) : {};
   /** @type {Record<string, any>} */
-  let params = {};
-  if (Object.fromEntries) {
-    const queryParams = new URLSearchParams(window.location.search);
-    const hashParams = location.hash ? JSON.parse(fromBinary(location.hash.substr(1))) : {};
-    params = {
-      ...Object.fromEntries(queryParams.entries()),
-      ...hashParams,
-    };
-  }
+  const params = {
+    ...Object.fromEntries(queryParams.entries()),
+    ...hashParams,
+  };
 
   if (window.__treemapOptions) {
     // Prefer the hardcoded options from a saved HTML file above all.
-    init(window.__treemapOptions);
+    app.init(window.__treemapOptions);
   } else if ('debug' in params) {
     const response = await fetch('debug.json');
-    init(await response.json());
-  } else if (params.lhr) {
-    const options = {
-      lhr: params.lhr,
-    };
-    init(options);
+    app.init(await response.json());
+  } else if (params.gist) {
+    let json;
+    let options;
+    try {
+      json = await app._github.getGistFileContentAsJson(params.gist || '');
+      options = app.convertToOptions(json);
+    } catch (err) {
+      logger.log(err);
+    }
+    if (options) app.init(options);
   } else {
     window.addEventListener('message', e => {
       if (e.source !== self.opener) return;
@@ -776,12 +929,12 @@ async function main() {
       /** @type {LH.Treemap.Options} */
       const options = e.data;
       const {lhr} = options;
-      if (!lhr) return showError('Error: Invalid options');
+      if (!lhr) return logger.error('Error: Invalid options');
 
       const documentUrl = lhr.requestedUrl;
-      if (!documentUrl) return showError('Error: Invalid options');
+      if (!documentUrl) return logger.error('Error: Invalid options');
 
-      init(options);
+      app.init(options);
     });
   }
 

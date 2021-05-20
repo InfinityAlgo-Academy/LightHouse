@@ -18,7 +18,29 @@ Unless required by applicable law or agreed to in writing, software distributed 
 </head>
 
 <body class="vars">
-  <main class="lh-main lh-main--show-table">
+  <div class="drop_zone"></div>
+
+  <div class="treemap-placeholder">
+    <div class="treemap-placeholder-inner">
+      <div>
+        <img src="images/lighthouse-logo.svg" class="treemap-placeholder-logo" alt="Lighthouse logo">
+      </div>
+      <div>
+        <h1 class="treemap-placeholder__heading">Lighthouse Treemap</h1>
+        <div class="treemap-placeholder__help">To view a treemap: Paste the Lighthouse result json or a Gist URL.<br>
+          You can also drag 'n drop the file or click here to select it.<br><br>
+        </div>
+        <input type="url" class="treemap-placeholder__url js-gist-url"
+               placeholder="Enter or paste Gist URL">
+      </div>
+    </div>
+  </div>
+
+  <div id="lh-log"></div>
+
+  <input id="hidden-file-input" type="file" hidden accept="application/json">
+
+  <main class="hidden lh-main lh-main--show-table">
     <div class="lh-settings">
       <header>
         <div class="lh-header--section">
@@ -85,6 +107,8 @@ Unless required by applicable law or agreed to in writing, software distributed 
     </div>
   </main>
 
+  <script src="https://www.gstatic.com/firebasejs/4.1.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.1.2/firebase-auth.js"></script>
   <script src="src/bundled.js"></script>
 
   <!-- Global site tag (gtag.js) - Google Analytics -->

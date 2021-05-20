@@ -90,10 +90,6 @@
   margin-top: 16px;
   display: none;
 }
-.share:disabled {
-  opacity: 0.2;
-  cursor: default;
-}
 
 @media screen and (max-width: 635px) {
   .viewer-placeholder-inner {

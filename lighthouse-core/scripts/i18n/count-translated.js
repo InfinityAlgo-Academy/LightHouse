@@ -5,10 +5,10 @@
  */
 'use strict';
 
+/** @typedef {import('../../lib/i18n/locales').LhlMessages} LhlMessages */
+
 const fs = require('fs');
 const glob = require('glob');
-
-/** @typedef {import('../../lib/i18n/locales.js').LhlMessages} LhlMessages */
 
 const lhRoot = `${__dirname}/../../../`;
 const enUsLhlFilename = lhRoot + 'lighthouse-core/lib/i18n/locales/en-US.json';
