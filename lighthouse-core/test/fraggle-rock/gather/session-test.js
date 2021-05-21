@@ -33,8 +33,8 @@ describe('ProtocolSession', () => {
 
       puppeteerSession.on('Foo', regularListener);
       puppeteerSession.on('*', allListener);
-      puppeteerSession.emit('Foo', 1, 2, 3);
-      puppeteerSession.emit('Bar', 1, 2, 3);
+      puppeteerSession.emit('Foo', 1);
+      puppeteerSession.emit('Bar', 1);
 
       expect(regularListener).toHaveBeenCalledTimes(1);
       expect(allListener).toHaveBeenCalledTimes(2);
@@ -53,8 +53,8 @@ describe('ProtocolSession', () => {
 
       puppeteerSession.on('Foo', regularListener);
       puppeteerSession.on('*', allListener);
-      puppeteerSession.emit('Foo', 1, 2, 3);
-      puppeteerSession.emit('Bar', 1, 2, 3);
+      puppeteerSession.emit('Foo', 1);
+      puppeteerSession.emit('Bar', 1);
 
       expect(regularListener).toHaveBeenCalledTimes(1);
       expect(allListener).toHaveBeenCalledTimes(2);

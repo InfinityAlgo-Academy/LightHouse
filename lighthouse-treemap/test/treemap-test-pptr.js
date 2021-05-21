@@ -9,7 +9,7 @@
 
 /* global document, window */
 
-const puppeteer = require('../../node_modules/puppeteer/index.js');
+const puppeteer = require('puppeteer');
 const {server} = require('../../lighthouse-cli/test/fixtures/static-server.js');
 const portNumber = 10200;
 const treemapUrl = `http://localhost:${portNumber}/dist/gh-pages/treemap/index.html`;

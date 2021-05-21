@@ -19,8 +19,6 @@ const fs = require('fs');
 const readline = require('readline');
 const yargs = require('yargs/yargs');
 
-/** @typedef {{result?: {value?: string, objectId?: number}, exceptionDetails?: object}} RuntimeEvaluateResponse */
-
 const argv = yargs(process.argv.slice(2))
   .usage('$0 [url]')
   .help('help').alias('help', 'h')
@@ -116,7 +114,7 @@ async function testPage(browser, url) {
       .catch(reject);
   });
 
-  /** @type {RuntimeEvaluateResponse|undefined} */
+  /** @type {Omit<puppeteer.Protocol.Runtime.EvaluateResponse, 'result'>|undefined} */
   let startLHResponse;
   while (!startLHResponse || startLHResponse.exceptionDetails) {
     startLHResponse = await session.send('Runtime.evaluate', {
@@ -125,7 +123,7 @@ async function testPage(browser, url) {
     }).catch(err => ({exceptionDetails: err}));
   }
 
-  /** @type {RuntimeEvaluateResponse} */
+  /** @type {puppeteer.Protocol.Runtime.EvaluateResponse} */
   const remoteLhrResponse = await session.send('Runtime.evaluate', {
     expression: sniffLhr,
     awaitPromise: true,
