@@ -2081,7 +2081,39 @@
         ]
       }
     ],
-    "incomplete": [],
+    "incomplete": [
+      {
+        "id": "empty-table-header",
+        "impact": "minor",
+        "tags": [
+          "wcag131",
+          "cat.aria"
+        ],
+        "nodes": [
+          {
+            "target": [
+              "th"
+            ],
+            "failureSummary": "Fix any of the following:\n  Unable to determine if element has children",
+            "node": {
+              "lhId": "6-44-TH",
+              "devtoolsNodePath": "3,HTML,1,BODY,34,TABLE,0,TBODY,0,TR,0,TH",
+              "selector": "table > tbody > tr > th",
+              "boundingRect": {
+                "top": 1328,
+                "bottom": 1330,
+                "left": 10,
+                "right": 12,
+                "width": 2,
+                "height": 2
+              },
+              "snippet": "<th>",
+              "nodeLabel": "th"
+            }
+          }
+        ]
+      }
+    ],
     "notApplicable": [
       {
         "id": "accesskeys"
