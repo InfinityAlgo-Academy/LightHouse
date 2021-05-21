@@ -227,6 +227,15 @@
   "lighthouse-core/audits/accessibility/duplicate-id-aria.js | title": {
     "message": "ÂŔÎÁ ÎD́ŝ ár̂é ûńîq́ûé"
   },
+  "lighthouse-core/audits/accessibility/empty-table-header.js | description": {
+    "message": "T̂áb̂ĺê h́êád̂ér̂ś ŝh́ôúl̂d́ ĥáv̂é d̂íŝćêŕn̂íb̂ĺê t́êx́t̂."
+  },
+  "lighthouse-core/audits/accessibility/empty-table-header.js | failureTitle": {
+    "message": "T̂áb̂ĺê h́êád̂ér̂ t́êx́t̂ ḿûśt̂ ńôt́ b̂é êḿp̂t́ŷ"
+  },
+  "lighthouse-core/audits/accessibility/empty-table-header.js | title": {
+    "message": "Êńŝúr̂éŝ t́âb́l̂é ĥéâd́êŕŝ h́âv́ê d́îśĉér̂ńîb́l̂é t̂éx̂t́"
+  },
   "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | description": {
     "message": "F̂ór̂ḿ f̂íêĺd̂ś ŵít̂h́ m̂úl̂t́îṕl̂é l̂áb̂él̂ś ĉán̂ b́ê ćôńf̂úŝín̂ǵl̂ý âńn̂óûńĉéd̂ b́ŷ áŝśîśt̂ív̂é t̂éĉh́n̂ól̂óĝíêś l̂ík̂é ŝćr̂éêń r̂éâd́êŕŝ ẃĥíĉh́ ûśê éît́ĥér̂ t́ĥé f̂ír̂śt̂, t́ĥé l̂áŝt́, ôŕ âĺl̂ óf̂ t́ĥé l̂áb̂él̂ś. [L̂éâŕn̂ ḿôŕê](https://web.dev/form-field-multiple-labels/)."
   },
@@ -235,6 +244,15 @@
   },
   "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | title": {
     "message": "N̂ó f̂ór̂ḿ f̂íêĺd̂ś ĥáv̂é m̂úl̂t́îṕl̂é l̂áb̂él̂ś"
+  },
+  "lighthouse-core/audits/accessibility/frame-focusable-content.js | description": {
+    "message": "`<iframe>` ŝh́ôúl̂d́ ôńl̂ý ĥáv̂é `tabindex=1` îf́ t̂h́êŕê ít̂ ćôńt̂áîńŝ ńô f́ôćûśâb́l̂é êĺêḿêńt̂ś."
+  },
+  "lighthouse-core/audits/accessibility/frame-focusable-content.js | failureTitle": {
+    "message": "`<iframe tabindex=-1>` ĥáŝ f́ôćûśâb́l̂é ĉón̂t́êńt̂"
+  },
+  "lighthouse-core/audits/accessibility/frame-focusable-content.js | title": {
+    "message": "N̂ó `<iframe tabindex=-1>` ĥáŝ f́ôćûśâb́l̂é ĉón̂t́êńt̂"
   },
   "lighthouse-core/audits/accessibility/frame-title.js | description": {
     "message": "Ŝćr̂éêń r̂éâd́êŕ ûśêŕŝ ŕêĺŷ ón̂ f́r̂ám̂é t̂ít̂ĺêś t̂ó d̂éŝćr̂íb̂é t̂h́ê ćôńt̂én̂t́ŝ óf̂ f́r̂ám̂éŝ. [Ĺêár̂ń m̂ór̂é](https://web.dev/frame-title/)."

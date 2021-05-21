@@ -268,7 +268,9 @@ const defaultConfig = {
     'accessibility/document-title',
     'accessibility/duplicate-id-active',
     'accessibility/duplicate-id-aria',
+    'accessibility/empty-table-header',
     'accessibility/form-field-multiple-labels',
+    'accessibility/frame-focusable-content',
     'accessibility/frame-title',
     'accessibility/heading-order',
     'accessibility/html-has-lang',
@@ -281,6 +283,7 @@ const defaultConfig = {
     'accessibility/listitem',
     'accessibility/meta-refresh',
     'accessibility/meta-viewport',
+    'accessibility/nested-interactive',
     'accessibility/object-alt',
     'accessibility/tabindex',
     'accessibility/td-headers-attr',
@@ -521,7 +524,11 @@ const defaultConfig = {
         {id: 'document-title', weight: 3, group: 'a11y-names-labels'},
         {id: 'duplicate-id-active', weight: 3, group: 'a11y-navigation'},
         {id: 'duplicate-id-aria', weight: 10, group: 'a11y-aria'},
+        /** TODO: add weight for v8 */
+        {id: 'empty-table-header', weight: 0, group: 'a11y-tables-lists'},
         {id: 'form-field-multiple-labels', weight: 2, group: 'a11y-names-labels'},
+        /** TODO: add weight for v8 */
+        {id: 'frame-focusable-content', weight: 0, group: 'a11y-best-practices'},
         {id: 'frame-title', weight: 3, group: 'a11y-names-labels'},
         {id: 'heading-order', weight: 2, group: 'a11y-navigation'},
         {id: 'html-has-lang', weight: 3, group: 'a11y-language'},
@@ -534,6 +541,8 @@ const defaultConfig = {
         {id: 'listitem', weight: 3, group: 'a11y-tables-lists'},
         {id: 'meta-refresh', weight: 10, group: 'a11y-best-practices'},
         {id: 'meta-viewport', weight: 10, group: 'a11y-best-practices'},
+        /** TODO: add weight for v8 */
+        {id: 'nested-interactive', weight: 0, group: 'a11y-navigation'},
         {id: 'object-alt', weight: 3, group: 'a11y-names-labels'},
         {id: 'tabindex', weight: 3, group: 'a11y-navigation'},
         {id: 'td-headers-attr', weight: 3, group: 'a11y-tables-lists'},

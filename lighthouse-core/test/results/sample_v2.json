@@ -2836,12 +2836,36 @@
         "items": []
       }
     },
+    "empty-table-header": {
+      "id": "empty-table-header",
+      "title": "Ensures table headers have discernible text",
+      "description": "Table headers should have discernible text.",
+      "score": 1,
+      "scoreDisplayMode": "binary",
+      "details": {
+        "type": "table",
+        "headings": [],
+        "items": []
+      }
+    },
     "form-field-multiple-labels": {
       "id": "form-field-multiple-labels",
       "title": "No form fields have multiple labels",
       "description": "Form fields with multiple labels can be confusingly announced by assistive technologies like screen readers which use either the first, the last, or all of the labels. [Learn more](https://web.dev/form-field-multiple-labels/).",
       "score": null,
       "scoreDisplayMode": "notApplicable"
+    },
+    "frame-focusable-content": {
+      "id": "frame-focusable-content",
+      "title": "No `<iframe tabindex=-1>` has focusable content",
+      "description": "`<iframe>` should only have `tabindex=1` if there it contains no focusable elements.",
+      "score": 1,
+      "scoreDisplayMode": "binary",
+      "details": {
+        "type": "table",
+        "headings": [],
+        "items": []
+      }
     },
     "frame-title": {
       "id": "frame-title",
@@ -5410,9 +5434,19 @@
           "group": "a11y-aria"
         },
         {
+          "id": "empty-table-header",
+          "weight": 0,
+          "group": "a11y-tables-lists"
+        },
+        {
           "id": "form-field-multiple-labels",
           "weight": 0,
           "group": "a11y-names-labels"
+        },
+        {
+          "id": "frame-focusable-content",
+          "weight": 0,
+          "group": "a11y-best-practices"
         },
         {
           "id": "frame-title",
@@ -6669,7 +6703,19 @@
       },
       {
         "startTime": 0,
+        "name": "lh:audit:empty-table-header",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:audit:form-field-multiple-labels",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:frame-focusable-content",
         "duration": 100,
         "entryType": "measure"
       },
@@ -8053,11 +8099,23 @@
       "lighthouse-core/audits/accessibility/duplicate-id-aria.js | description": [
         "audits[duplicate-id-aria].description"
       ],
+      "lighthouse-core/audits/accessibility/empty-table-header.js | title": [
+        "audits[empty-table-header].title"
+      ],
+      "lighthouse-core/audits/accessibility/empty-table-header.js | description": [
+        "audits[empty-table-header].description"
+      ],
       "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | title": [
         "audits[form-field-multiple-labels].title"
       ],
       "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | description": [
         "audits[form-field-multiple-labels].description"
+      ],
+      "lighthouse-core/audits/accessibility/frame-focusable-content.js | title": [
+        "audits[frame-focusable-content].title"
+      ],
+      "lighthouse-core/audits/accessibility/frame-focusable-content.js | description": [
+        "audits[frame-focusable-content].description"
       ],
       "lighthouse-core/audits/accessibility/frame-title.js | title": [
         "audits[frame-title].title"

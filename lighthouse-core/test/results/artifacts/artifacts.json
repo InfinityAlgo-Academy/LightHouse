@@ -1588,6 +1588,41 @@
   "Accessibility": {
     "violations": [
       {
+        "id": "frame-title",
+        "impact": "serious",
+        "tags": [
+          "cat.text-alternatives",
+          "wcag2a",
+          "wcag241",
+          "wcag412",
+          "section508",
+          "section508.22.i"
+        ],
+        "nodes": [
+          {
+            "target": [
+              "iframe"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element has no title attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element's default semantics were not overridden with role=\"none\" or role=\"presentation\"",
+            "node": {
+              "lhId": "6-40-IFRAME",
+              "devtoolsNodePath": "3,HTML,1,BODY,30,IFRAME",
+              "selector": "body > iframe",
+              "boundingRect": {
+                "top": 1166,
+                "bottom": 1320,
+                "left": 8,
+                "right": 312,
+                "width": 304,
+                "height": 154
+              },
+              "snippet": "<iframe tabindex=\"-1\" src=\"focusable-iframe.html\">",
+              "nodeLabel": "iframe"
+            }
+          }
+        ]
+      },
+      {
         "id": "html-has-lang",
         "impact": "serious",
         "tags": [
@@ -1959,6 +1994,38 @@
         ]
       },
       {
+        "id": "nested-interactive",
+        "impact": "serious",
+        "tags": [
+          "cat.keyboard",
+          "wcag2a",
+          "wcag412"
+        ],
+        "nodes": [
+          {
+            "target": [
+              "#fail1"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element has focusable descendants",
+            "node": {
+              "lhId": "6-58-BUTTON",
+              "devtoolsNodePath": "3,HTML,1,BODY,32,BUTTON",
+              "selector": "body > button#fail1",
+              "boundingRect": {
+                "top": 1305,
+                "bottom": 1326,
+                "left": 316,
+                "right": 349,
+                "width": 33,
+                "height": 21
+              },
+              "snippet": "<button id=\"fail1\">",
+              "nodeLabel": "fail"
+            }
+          }
+        ]
+      },
+      {
         "id": "object-alt",
         "impact": "serious",
         "tags": [
@@ -2014,40 +2081,7 @@
         ]
       }
     ],
-    "incomplete": [
-      {
-        "id": "color-contrast",
-        "impact": "serious",
-        "tags": [
-          "cat.color",
-          "wcag2aa",
-          "wcag143"
-        ],
-        "nodes": [
-          {
-            "target": [
-              "a[rel=\"noopener\"]"
-            ],
-            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it partially overlaps other elements",
-            "node": {
-              "lhId": "5-5-A",
-              "devtoolsNodePath": "3,HTML,1,BODY,46,A",
-              "selector": "body > a",
-              "boundingRect": {
-                "top": 1220,
-                "bottom": 1256,
-                "left": 8,
-                "right": 348,
-                "width": 340,
-                "height": 36
-              },
-              "snippet": "<a href=\"https://www.google.com/\" target=\"_blank\" rel=\"noopener\">",
-              "nodeLabel": "external link that uses rel noopener"
-            }
-          }
-        ]
-      }
-    ],
+    "incomplete": [],
     "notApplicable": [
       {
         "id": "accesskeys"

@@ -227,6 +227,15 @@
   "lighthouse-core/audits/accessibility/duplicate-id-aria.js | title": {
     "message": "ARIA IDs are unique"
   },
+  "lighthouse-core/audits/accessibility/empty-table-header.js | description": {
+    "message": "Table headers should have discernible text."
+  },
+  "lighthouse-core/audits/accessibility/empty-table-header.js | failureTitle": {
+    "message": "Table header text must not be empty"
+  },
+  "lighthouse-core/audits/accessibility/empty-table-header.js | title": {
+    "message": "Ensures table headers have discernible text"
+  },
   "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | description": {
     "message": "Form fields with multiple labels can be confusingly announced by assistive technologies like screen readers which use either the first, the last, or all of the labels. [Learn more](https://web.dev/form-field-multiple-labels/)."
   },
@@ -235,6 +244,15 @@
   },
   "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | title": {
     "message": "No form fields have multiple labels"
+  },
+  "lighthouse-core/audits/accessibility/frame-focusable-content.js | description": {
+    "message": "`<iframe>` should only have `tabindex=1` if there it contains no focusable elements."
+  },
+  "lighthouse-core/audits/accessibility/frame-focusable-content.js | failureTitle": {
+    "message": "`<iframe tabindex=-1>` has focusable content"
+  },
+  "lighthouse-core/audits/accessibility/frame-focusable-content.js | title": {
+    "message": "No `<iframe tabindex=-1>` has focusable content"
   },
   "lighthouse-core/audits/accessibility/frame-title.js | description": {
     "message": "Screen reader users rely on frame titles to describe the contents of frames. [Learn more](https://web.dev/frame-title/)."
