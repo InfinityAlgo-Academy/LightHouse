@@ -237,6 +237,7 @@ const defaultConfig = {
     'unsized-images',
     'valid-source-maps',
     'preload-lcp-image',
+    'csp-xss',
     'full-page-screenshot',
     'script-treemap-data',
     'manual/pwa-cross-browser',
@@ -561,6 +562,7 @@ const defaultConfig = {
         {id: 'geolocation-on-start', weight: 1, group: 'best-practices-trust-safety'},
         {id: 'notification-on-start', weight: 1, group: 'best-practices-trust-safety'},
         {id: 'no-vulnerable-libraries', weight: 1, group: 'best-practices-trust-safety'},
+        {id: 'csp-xss', weight: 0, group: 'best-practices-trust-safety'},
         // User Experience
         {id: 'password-inputs-can-be-pasted-into', weight: 1, group: 'best-practices-ux'},
         {id: 'image-aspect-ratio', weight: 1, group: 'best-practices-ux'},

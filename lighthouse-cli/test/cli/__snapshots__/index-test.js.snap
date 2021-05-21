@@ -169,6 +169,9 @@ Object {
       "path": "preload-lcp-image",
     },
     Object {
+      "path": "csp-xss",
+    },
+    Object {
       "path": "full-page-screenshot",
     },
     Object {
@@ -763,6 +766,11 @@ Object {
           "group": "best-practices-trust-safety",
           "id": "no-vulnerable-libraries",
           "weight": 1,
+        },
+        Object {
+          "group": "best-practices-trust-safety",
+          "id": "csp-xss",
+          "weight": 0,
         },
         Object {
           "group": "best-practices-ux",

@@ -244,6 +244,7 @@ Auditing: Page has valid source maps
 Auditing: Preload Largest Contentful Paint image
 Computing artifact: LanternLargestContentfulPaint
 Computing artifact: LanternFirstContentfulPaint
+Auditing: Ensure CSP is effective against XSS attacks
 Auditing: Full-page screenshot
 Auditing: Script Treemap Data
 Computing artifact: JSBundles
@@ -433,6 +434,7 @@ color-contrast: pass
 content-width: fail
 crawlable-anchors: pass
 critical-request-chains: informative
+csp-xss: informative
 cumulative-ad-shift: notApplicable
 cumulative-layout-shift: numeric
 custom-controls-labels: manual
@@ -571,7 +573,7 @@ viewport: fail
 viewport-ad-density: notApplicable
 visual-order-follows-dom: manual
 
-# of .lh-audit divs: 156
+# of .lh-audit divs: 157
 
 .lh-audit divs:
 accesskeys
@@ -612,6 +614,7 @@ color-contrast
 content-width
 crawlable-anchors
 critical-request-chains
+csp-xss
 cumulative-ad-shift
 custom-controls-labels
 custom-controls-roles

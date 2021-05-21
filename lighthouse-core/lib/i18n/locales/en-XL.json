@@ -585,7 +585,7 @@
     "message": "D̂ír̂éĉt́îv́ê"
   },
   "lighthouse-core/audits/csp-xss.js | description": {
-    "message": "Â śt̂ŕôńĝ Ćôńt̂én̂t́ Ŝéĉúr̂ít̂ý P̂ól̂íĉý (ĈŚP̂) śîǵn̂íf̂íĉán̂t́l̂ý r̂éd̂úĉéŝ t́ĥé r̂íŝḱ ôf́ X̂ŚŜ át̂t́âćk̂ś. [L̂éâŕn̂ ḿôŕê](https://csp.withgoogle.com/docs/index.html)"
+    "message": "Â śt̂ŕôńĝ Ćôńt̂én̂t́ Ŝéĉúr̂ít̂ý P̂ól̂íĉý (ĈŚP̂) śîǵn̂íf̂íĉán̂t́l̂ý r̂éd̂úĉéŝ t́ĥé r̂íŝḱ ôf́ ĉŕôśŝ-śît́ê śĉŕîṕt̂ín̂ǵ (X̂ŚŜ) át̂t́âćk̂ś. [L̂éâŕn̂ ḿôŕê](https://web.dev/strict-csp/)"
   },
   "lighthouse-core/audits/csp-xss.js | metaTagMessage": {
     "message": "T̂h́ê ṕâǵê ćôńt̂áîńŝ á ĈŚP̂ d́êf́îńêd́ îń â <ḿêt́â> t́âǵ. Ĉón̂śîd́êŕ d̂éf̂ín̂ín̂ǵ t̂h́ê ĆŜṔ îń âń ĤT́T̂Ṕ ĥéâd́êŕ îf́ ŷóû ćâń."
