@@ -293,7 +293,7 @@ describe('ReportRenderer', () => {
       global.Element = undefined;
     });
 
-    it('renders without axe violations', (done) => {
+    it('renders without axe violations', async () => {
       const container = renderer._dom._document.createElement('main');
       const output = renderer.renderReport(sampleResults, container);
       renderer._dom._document.body.appendChild(container);
@@ -311,13 +311,17 @@ describe('ReportRenderer', () => {
           'link-in-text-block': {enabled: false},
           // Report has empty links prior to i18n-ing.
           'link-name': {enabled: false},
+          // TODO .lh-category-wrapper:nth-child(2) > .lh-category > .lh-clump--manual.lh-clump.lh-audit-group > summary
+          'nested-interactive': {enabled: false},
         },
       };
 
-      axe.run(output, config, (error, {violations}) => {
-        assert.ifError(error);
-        assert.ok(violations.length === 0, JSON.stringify(violations, null, 1));
-        done();
+      await new Promise(resolve => {
+        axe.run(output, config, (error, {violations}) => {
+          expect(error).toBeNull();
+          expect(violations).toEqual([]);
+          resolve();
+        });
       });
 
     // Set timeout to 10s to give axe-core enough time to complete
