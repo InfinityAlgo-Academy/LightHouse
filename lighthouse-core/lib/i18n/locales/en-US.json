@@ -107,6 +107,15 @@
   "lighthouse-core/audits/accessibility/aria-roles.js | title": {
     "message": "`[role]` values are valid"
   },
+  "lighthouse-core/audits/accessibility/aria-text.js | description": {
+    "message": "Browsers may ignore `role=text` if it contains focusable descendants."
+  },
+  "lighthouse-core/audits/accessibility/aria-text.js | failureTitle": {
+    "message": "`role=text` elements should not have focusable descendants"
+  },
+  "lighthouse-core/audits/accessibility/aria-text.js | title": {
+    "message": "Ensures `role=text` is only used on elements with no focusable descendants"
+  },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
     "message": "When a toggle field doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://web.dev/aria-name/)."
   },
@@ -361,6 +370,15 @@
   },
   "lighthouse-core/audits/accessibility/meta-viewport.js | title": {
     "message": "`[user-scalable=\"no\"]` is not used in the `<meta name=\"viewport\">` element and the `[maximum-scale]` attribute is not less than 5."
+  },
+  "lighthouse-core/audits/accessibility/nested-interactive.js | description": {
+    "message": "Nested interactive controls should not be nested, because that would result in confusing screen reader experiences."
+  },
+  "lighthouse-core/audits/accessibility/nested-interactive.js | failureTitle": {
+    "message": "Interactive controls should not be nested"
+  },
+  "lighthouse-core/audits/accessibility/nested-interactive.js | title": {
+    "message": "Ensure interactive controls are not nested"
   },
   "lighthouse-core/audits/accessibility/object-alt.js | description": {
     "message": "Screen readers cannot translate non-text content. Adding alt text to `<object>` elements helps screen readers convey meaning to users. [Learn more](https://web.dev/object-alt/)."

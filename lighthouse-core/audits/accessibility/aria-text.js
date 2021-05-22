@@ -5,10 +5,8 @@
  */
 'use strict';
 
-// TODO
-
 /**
- * @fileoverview Ensures table headers have discernible text.
+ * @fileoverview Ensures `role=text` is used on elements with no focusable descendants.
  * See base class in axe-audit.js for audit() implementation.
  */
 
@@ -16,24 +14,24 @@ const AxeAudit = require('./axe-audit.js');
 const i18n = require('../../lib/i18n/i18n.js');
 
 const UIStrings = {
-  /** Title of an accesibility audit that checks if there are any duplicate ARIA IDs on the page. This title is descriptive of the successful state and is shown to users when no user action is required. */
-  title: 'Ensures table headers have discernible text',
-  /** Title of an accesibility audit that checks if there are any duplicate ARIA IDs on the page. This title is descriptive of the failing state and is shown to users when there is a failure that needs to be addressed. */
-  failureTitle: 'Table header text must not be empty',
+  /** Title of an accesibility audit that checks if there are any elements with `role=text` that have focusable descendants. This title is descriptive of the successful state and is shown to users when no user action is required. */
+  title: 'Ensures `role=text` is only used on elements with no focusable descendants',
+  /** Title of an accesibility audit that checks if there are any elements with `role=text` that have focusable descendants. This title is descriptive of the failing state and is shown to users when there is a failure that needs to be addressed. */
+  failureTitle: '`role=text` elements should not have focusable descendants',
   // TODO: need web.dev article.
   /** Description of a Lighthouse audit that tells the user *why* they should try to pass. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
-  description: 'Table headers should have discernible text.',
+  description: 'Browsers may ignore `role=text` if it contains focusable descendants.',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
-class RoleText extends AxeAudit {
+class AriaText extends AxeAudit {
   /**
    * @return {LH.Audit.Meta}
    */
   static get meta() {
     return {
-      id: 'role-text',
+      id: 'aria-text',
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
@@ -42,5 +40,5 @@ class RoleText extends AxeAudit {
   }
 }
 
-module.exports = RoleText;
+module.exports = AriaText;
 module.exports.UIStrings = UIStrings;

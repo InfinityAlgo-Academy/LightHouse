@@ -255,6 +255,7 @@ const defaultConfig = {
     'accessibility/aria-required-children',
     'accessibility/aria-required-parent',
     'accessibility/aria-roles',
+    'accessibility/aria-text',
     'accessibility/aria-toggle-field-name',
     'accessibility/aria-tooltip-name',
     'accessibility/aria-treeitem-name',
@@ -511,6 +512,8 @@ const defaultConfig = {
         {id: 'aria-required-children', weight: 10, group: 'a11y-aria'},
         {id: 'aria-required-parent', weight: 10, group: 'a11y-aria'},
         {id: 'aria-roles', weight: 10, group: 'a11y-aria'},
+        /** TODO: add weight for v8 */
+        {id: 'aria-text', weight: 0, group: 'a11y-navigation'},
         {id: 'aria-toggle-field-name', weight: 3, group: 'a11y-aria'},
         {id: 'aria-tooltip-name', weight: 3, group: 'a11y-aria'},
         {id: 'aria-treeitem-name', weight: 3, group: 'a11y-aria'},
