@@ -223,6 +223,9 @@ Object {
       "path": "accessibility/aria-roles",
     },
     Object {
+      "path": "accessibility/aria-text",
+    },
+    Object {
       "path": "accessibility/aria-toggle-field-name",
     },
     Object {
@@ -262,7 +265,13 @@ Object {
       "path": "accessibility/duplicate-id-aria",
     },
     Object {
+      "path": "accessibility/empty-table-header",
+    },
+    Object {
       "path": "accessibility/form-field-multiple-labels",
+    },
+    Object {
+      "path": "accessibility/frame-focusable-content",
     },
     Object {
       "path": "accessibility/frame-title",
@@ -299,6 +308,9 @@ Object {
     },
     Object {
       "path": "accessibility/meta-viewport",
+    },
+    Object {
+      "path": "accessibility/nested-interactive",
     },
     Object {
       "path": "accessibility/object-alt",
@@ -536,6 +548,11 @@ Object {
           "weight": 10,
         },
         Object {
+          "group": "a11y-navigation",
+          "id": "aria-text",
+          "weight": 0,
+        },
+        Object {
           "group": "a11y-aria",
           "id": "aria-toggle-field-name",
           "weight": 3,
@@ -601,9 +618,19 @@ Object {
           "weight": 10,
         },
         Object {
+          "group": "a11y-tables-lists",
+          "id": "empty-table-header",
+          "weight": 0,
+        },
+        Object {
           "group": "a11y-names-labels",
           "id": "form-field-multiple-labels",
           "weight": 2,
+        },
+        Object {
+          "group": "a11y-best-practices",
+          "id": "frame-focusable-content",
+          "weight": 0,
         },
         Object {
           "group": "a11y-names-labels",
@@ -664,6 +691,11 @@ Object {
           "group": "a11y-best-practices",
           "id": "meta-viewport",
           "weight": 10,
+        },
+        Object {
+          "group": "a11y-navigation",
+          "id": "nested-interactive",
+          "weight": 0,
         },
         Object {
           "group": "a11y-names-labels",
