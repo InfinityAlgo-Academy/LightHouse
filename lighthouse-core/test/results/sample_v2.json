@@ -2712,8 +2712,8 @@
     },
     "aria-text": {
       "id": "aria-text",
-      "title": "`role=text` elements should not have focusable descendants",
-      "description": "Browsers may ignore `role=text` if it contains focusable descendants.",
+      "title": "`role=text` elements contain focusable descendants",
+      "description": "Browsers may ignore `role=text` if it contains focusable descendants. [Learn more.](https://dequeuniversity.com/rules/axe/4.2/aria-text)",
       "score": 0,
       "scoreDisplayMode": "binary",
       "details": {
@@ -2884,8 +2884,8 @@
     },
     "empty-table-header": {
       "id": "empty-table-header",
-      "title": "Ensures table headers have discernible text",
-      "description": "Table headers should have discernible text.",
+      "title": "Table headers have discernible text",
+      "description": "Table headers should have discernible text, so assistive technologies like screen readers may describe table contents appropriately. [Learn more](https://dequeuniversity.com/rules/axe/4.2/empty-table-header).",
       "score": 1,
       "scoreDisplayMode": "binary",
       "details": {
@@ -2903,8 +2903,8 @@
     },
     "frame-focusable-content": {
       "id": "frame-focusable-content",
-      "title": "No `<iframe tabindex=-1>` has focusable content",
-      "description": "`<iframe>` should only have `tabindex=1` if there it contains no focusable elements.",
+      "title": "`<iframe>` elements with focusable content do not have a negative `tabindex`",
+      "description": "Focusable elements within an `<iframe>` element with a negative `tabindex` cannot be reached via keyboard navigation. [Learn more.](https://dequeuniversity.com/rules/axe/4.2/frame-focusable-content)",
       "score": 1,
       "scoreDisplayMode": "binary",
       "details": {
@@ -3390,8 +3390,8 @@
     },
     "nested-interactive": {
       "id": "nested-interactive",
-      "title": "Interactive controls should not be nested",
-      "description": "Nested interactive controls should not be nested, because that would result in confusing screen reader experiences.",
+      "title": "Interactive controls are nested",
+      "description": "Nested interactive controls will not be announced by assistive technologies such as screen readers. [Learn more.](https://dequeuniversity.com/rules/axe/4.2/nested-interactive)",
       "score": 0,
       "scoreDisplayMode": "binary",
       "details": {
@@ -5544,7 +5544,7 @@
         {
           "id": "frame-focusable-content",
           "weight": 0,
-          "group": "a11y-best-practices"
+          "group": "a11y-navigation"
         },
         {
           "id": "frame-title",

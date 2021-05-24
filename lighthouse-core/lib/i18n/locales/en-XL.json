@@ -108,13 +108,13 @@
     "message": "`[role]` v̂ál̂úêś âŕê v́âĺîd́"
   },
   "lighthouse-core/audits/accessibility/aria-text.js | description": {
-    "message": "B̂ŕôẃŝér̂ś m̂áŷ íĝńôŕê `role=text` íf̂ ít̂ ćôńt̂áîńŝ f́ôćûśâb́l̂é d̂éŝćêńd̂án̂t́ŝ."
+    "message": "B̂ŕôẃŝér̂ś m̂áŷ íĝńôŕê `role=text` íf̂ ít̂ ćôńt̂áîńŝ f́ôćûśâb́l̂é d̂éŝćêńd̂án̂t́ŝ. [Ĺêár̂ń m̂ór̂é.](https://dequeuniversity.com/rules/axe/4.2/aria-text)"
   },
   "lighthouse-core/audits/accessibility/aria-text.js | failureTitle": {
-    "message": "`role=text` êĺêḿêńt̂ś ŝh́ôúl̂d́ n̂ót̂ h́âv́ê f́ôćûśâb́l̂é d̂éŝćêńd̂án̂t́ŝ"
+    "message": "`role=text` êĺêḿêńt̂ś ĉón̂t́âín̂ f́ôćûśâb́l̂é d̂éŝćêńd̂án̂t́ŝ"
   },
   "lighthouse-core/audits/accessibility/aria-text.js | title": {
-    "message": "Êńŝúr̂éŝ `role=text` íŝ ón̂ĺŷ úŝéd̂ ón̂ él̂ém̂én̂t́ŝ ẃît́ĥ ńô f́ôćûśâb́l̂é d̂éŝćêńd̂án̂t́ŝ"
+    "message": "`role=text` êĺêḿêńt̂ś d̂ó n̂ót̂ ćôńt̂áîń f̂óĉúŝáb̂ĺê d́êśĉén̂d́âńt̂ś"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
     "message": "Ŵh́êń â t́ôǵĝĺê f́îél̂d́ d̂óêśn̂'t́ ĥáv̂é âń âćĉéŝśîb́l̂é n̂ám̂é, ŝćr̂éêń r̂éâd́êŕŝ án̂ńôún̂ćê ít̂ ẃît́ĥ á ĝén̂ér̂íĉ ńâḿê, ḿâḱîńĝ ít̂ ún̂úŝáb̂ĺê f́ôŕ ûśêŕŝ ẃĥó r̂él̂ý ôń ŝćr̂éêń r̂éâd́êŕŝ. [Ĺêár̂ń m̂ór̂é](https://web.dev/aria-name/)."
@@ -237,13 +237,13 @@
     "message": "ÂŔÎÁ ÎD́ŝ ár̂é ûńîq́ûé"
   },
   "lighthouse-core/audits/accessibility/empty-table-header.js | description": {
-    "message": "T̂áb̂ĺê h́êád̂ér̂ś ŝh́ôúl̂d́ ĥáv̂é d̂íŝćêŕn̂íb̂ĺê t́êx́t̂."
+    "message": "T̂áb̂ĺê h́êád̂ér̂ś ŝh́ôúl̂d́ ĥáv̂é d̂íŝćêŕn̂íb̂ĺê t́êx́t̂, śô áŝśîśt̂ív̂é t̂éĉh́n̂ól̂óĝíêś l̂ík̂é ŝćr̂éêń r̂éâd́êŕŝ ḿâý d̂éŝćr̂íb̂é t̂áb̂ĺê ćôńt̂én̂t́ŝ áp̂ṕr̂óp̂ŕîát̂él̂ý. [L̂éâŕn̂ ḿôŕê](https://dequeuniversity.com/rules/axe/4.2/empty-table-header)."
   },
   "lighthouse-core/audits/accessibility/empty-table-header.js | failureTitle": {
-    "message": "T̂áb̂ĺê h́êád̂ér̂ t́êx́t̂ ḿûśt̂ ńôt́ b̂é êḿp̂t́ŷ"
+    "message": "T̂áb̂ĺê h́êád̂ér̂ś âŕê ḿîśŝín̂ǵ d̂íŝćêŕn̂íb̂ĺê t́êx́t̂"
   },
   "lighthouse-core/audits/accessibility/empty-table-header.js | title": {
-    "message": "Êńŝúr̂éŝ t́âb́l̂é ĥéâd́êŕŝ h́âv́ê d́îśĉér̂ńîb́l̂é t̂éx̂t́"
+    "message": "T̂áb̂ĺê h́êád̂ér̂ś ĥáv̂é d̂íŝćêŕn̂íb̂ĺê t́êx́t̂"
   },
   "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | description": {
     "message": "F̂ór̂ḿ f̂íêĺd̂ś ŵít̂h́ m̂úl̂t́îṕl̂é l̂áb̂él̂ś ĉán̂ b́ê ćôńf̂úŝín̂ǵl̂ý âńn̂óûńĉéd̂ b́ŷ áŝśîśt̂ív̂é t̂éĉh́n̂ól̂óĝíêś l̂ík̂é ŝćr̂éêń r̂éâd́êŕŝ ẃĥíĉh́ ûśê éît́ĥér̂ t́ĥé f̂ír̂śt̂, t́ĥé l̂áŝt́, ôŕ âĺl̂ óf̂ t́ĥé l̂áb̂él̂ś. [L̂éâŕn̂ ḿôŕê](https://web.dev/form-field-multiple-labels/)."
@@ -255,13 +255,13 @@
     "message": "N̂ó f̂ór̂ḿ f̂íêĺd̂ś ĥáv̂é m̂úl̂t́îṕl̂é l̂áb̂él̂ś"
   },
   "lighthouse-core/audits/accessibility/frame-focusable-content.js | description": {
-    "message": "`<iframe>` ŝh́ôúl̂d́ ôńl̂ý ĥáv̂é `tabindex=1` îf́ t̂h́êŕê ít̂ ćôńt̂áîńŝ ńô f́ôćûśâb́l̂é êĺêḿêńt̂ś."
+    "message": "F̂óĉúŝáb̂ĺê él̂ém̂én̂t́ŝ ẃît́ĥín̂ án̂ `<iframe>` él̂ém̂én̂t́ ŵít̂h́ â ńêǵât́îv́ê `tabindex` ćâńn̂ót̂ b́ê ŕêáĉh́êd́ v̂íâ ḱêýb̂óâŕd̂ ńâv́îǵât́îón̂. [Ĺêár̂ń m̂ór̂é.](https://dequeuniversity.com/rules/axe/4.2/frame-focusable-content)"
   },
   "lighthouse-core/audits/accessibility/frame-focusable-content.js | failureTitle": {
-    "message": "`<iframe tabindex=-1>` ĥáŝ f́ôćûśâb́l̂é ĉón̂t́êńt̂"
+    "message": "`<iframe>` êĺêḿêńt̂ś ŵít̂h́ f̂óĉúŝáb̂ĺê ćôńt̂én̂t́ ĥáv̂é â ńêǵât́îv́ê `tabindex`"
   },
   "lighthouse-core/audits/accessibility/frame-focusable-content.js | title": {
-    "message": "N̂ó `<iframe tabindex=-1>` ĥáŝ f́ôćûśâb́l̂é ĉón̂t́êńt̂"
+    "message": "`<iframe>` êĺêḿêńt̂ś ŵít̂h́ f̂óĉúŝáb̂ĺê ćôńt̂én̂t́ d̂ó n̂ót̂ h́âv́ê á n̂éĝát̂ív̂é `tabindex`"
   },
   "lighthouse-core/audits/accessibility/frame-title.js | description": {
     "message": "Ŝćr̂éêń r̂éâd́êŕ ûśêŕŝ ŕêĺŷ ón̂ f́r̂ám̂é t̂ít̂ĺêś t̂ó d̂éŝćr̂íb̂é t̂h́ê ćôńt̂én̂t́ŝ óf̂ f́r̂ám̂éŝ. [Ĺêár̂ń m̂ór̂é](https://web.dev/frame-title/)."
@@ -372,13 +372,13 @@
     "message": "`[user-scalable=\"no\"]` îś n̂ót̂ úŝéd̂ ín̂ t́ĥé `<meta name=\"viewport\">` êĺêḿêńt̂ án̂d́ t̂h́ê `[maximum-scale]` át̂t́r̂íb̂út̂é îś n̂ót̂ ĺêśŝ t́ĥán̂ 5."
   },
   "lighthouse-core/audits/accessibility/nested-interactive.js | description": {
-    "message": "N̂éŝt́êd́ îńt̂ér̂áĉt́îv́ê ćôńt̂ŕôĺŝ śĥóûĺd̂ ńôt́ b̂é n̂éŝt́êd́, b̂éĉáûśê t́ĥát̂ ẃôúl̂d́ r̂éŝúl̂t́ îń ĉón̂f́ûśîńĝ śĉŕêén̂ ŕêád̂ér̂ éx̂ṕêŕîén̂ćêś."
+    "message": "N̂éŝt́êd́ îńt̂ér̂áĉt́îv́ê ćôńt̂ŕôĺŝ ẃîĺl̂ ńôt́ b̂é âńn̂óûńĉéd̂ b́ŷ áŝśîśt̂ív̂é t̂éĉh́n̂ól̂óĝíêś ŝúĉh́ âś ŝćr̂éêń r̂éâd́êŕŝ. [Ĺêár̂ń m̂ór̂é.](https://dequeuniversity.com/rules/axe/4.2/nested-interactive)"
   },
   "lighthouse-core/audits/accessibility/nested-interactive.js | failureTitle": {
-    "message": "Îńt̂ér̂áĉt́îv́ê ćôńt̂ŕôĺŝ śĥóûĺd̂ ńôt́ b̂é n̂éŝt́êd́"
+    "message": "Îńt̂ér̂áĉt́îv́ê ćôńt̂ŕôĺŝ ár̂é n̂éŝt́êd́"
   },
   "lighthouse-core/audits/accessibility/nested-interactive.js | title": {
-    "message": "Êńŝúr̂é îńt̂ér̂áĉt́îv́ê ćôńt̂ŕôĺŝ ár̂é n̂ót̂ ńêśt̂éd̂"
+    "message": "Îńt̂ér̂áĉt́îv́ê ćôńt̂ŕôĺŝ ár̂é n̂ót̂ ńêśt̂éd̂"
   },
   "lighthouse-core/audits/accessibility/object-alt.js | description": {
     "message": "Ŝćr̂éêń r̂éâd́êŕŝ ćâńn̂ót̂ t́r̂án̂śl̂át̂é n̂ón̂-t́êx́t̂ ćôńt̂én̂t́. Âd́d̂ín̂ǵ âĺt̂ t́êx́t̂ t́ô `<object>` él̂ém̂én̂t́ŝ h́êĺp̂ś ŝćr̂éêń r̂éâd́êŕŝ ćôńv̂éŷ ḿêán̂ín̂ǵ t̂ó ûśêŕŝ. [Ĺêár̂ń m̂ór̂é](https://web.dev/object-alt/)."

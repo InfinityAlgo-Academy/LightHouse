@@ -18,9 +18,8 @@ const UIStrings = {
   title: '`role=text` elements do not contain focusable descendants',
   /** Title of an accesibility audit that checks if there are any elements with `role=text` that have focusable descendants. This title is descriptive of the failing state and is shown to users when there is a failure that needs to be addressed. */
   failureTitle: '`role=text` elements contain focusable descendants',
-  // TODO: need web.dev article.
   /** Description of a Lighthouse audit that tells the user *why* they should try to pass. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
-  description: 'Browsers may ignore `role=text` if it contains focusable descendants.',
+  description: 'Browsers may ignore `role=text` if it contains focusable descendants. [Learn more.](https://dequeuniversity.com/rules/axe/4.2/aria-text)',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
