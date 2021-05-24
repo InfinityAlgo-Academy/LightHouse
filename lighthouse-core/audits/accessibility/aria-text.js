@@ -6,7 +6,7 @@
 'use strict';
 
 /**
- * @fileoverview Ensures `role=text` is used on elements with no focusable descendants.
+ * @fileoverview Ensures `role=text` is only used on elements with no focusable descendants.
  * See base class in axe-audit.js for audit() implementation.
  */
 
@@ -15,9 +15,9 @@ const i18n = require('../../lib/i18n/i18n.js');
 
 const UIStrings = {
   /** Title of an accesibility audit that checks if there are any elements with `role=text` that have focusable descendants. This title is descriptive of the successful state and is shown to users when no user action is required. */
-  title: 'Ensures `role=text` is only used on elements with no focusable descendants',
+  title: '`role=text` elements do not contain focusable descendants',
   /** Title of an accesibility audit that checks if there are any elements with `role=text` that have focusable descendants. This title is descriptive of the failing state and is shown to users when there is a failure that needs to be addressed. */
-  failureTitle: '`role=text` elements should not have focusable descendants',
+  failureTitle: '`role=text` elements contain focusable descendants',
   // TODO: need web.dev article.
   /** Description of a Lighthouse audit that tells the user *why* they should try to pass. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'Browsers may ignore `role=text` if it contains focusable descendants.',
