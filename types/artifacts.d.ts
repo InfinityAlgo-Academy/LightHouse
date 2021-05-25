@@ -747,14 +747,16 @@ declare global {
         estimatedInputLatencyTs: number | undefined;
         maxPotentialFID: number | undefined;
         cumulativeLayoutShift: number | undefined;
-        cumulativeLayoutShiftAllFrames: number | undefined;
+        cumulativeLayoutShiftMainFrame: number | undefined;
+        totalCumulativeLayoutShift: number | undefined;
         totalBlockingTime: number;
         observedTimeOrigin: number;
         observedTimeOriginTs: number;
         observedNavigationStart: number;
         observedNavigationStartTs: number;
         observedCumulativeLayoutShift: number | undefined;
-        observedCumulativeLayoutShiftAllFrames: number | undefined;
+        observedCumulativeLayoutShiftMainFrame: number | undefined;
+        observedTotalCumulativeLayoutShift: number | undefined;
         observedFirstPaint: number | undefined;
         observedFirstPaintTs: number | undefined;
         observedFirstContentfulPaint: number;
@@ -779,12 +781,6 @@ declare global {
         observedLastVisualChangeTs: number;
         observedSpeedIndex: number;
         observedSpeedIndexTs: number;
-        layoutShiftAvgSessionGap5s: number,
-        layoutShiftMaxSessionGap1s: number,
-        layoutShiftMaxSessionGap1sLimit5s: number,
-        layoutShiftMaxSliding1s: number,
-        layoutShiftMaxSliding300ms: number,
-        layoutShiftMaxSessionGap1sLimit5sAllFrames: number,
       }
 
       export interface Form {

@@ -20,9 +20,6 @@ const lcpAllFramesDevtoolsLog = require('../fixtures/traces/frame-metrics-m89.de
 const clsAllFramesTrace = require('../fixtures/traces/frame-metrics-m90.json');
 const clsAllFramesDevtoolsLog = require('../fixtures/traces/frame-metrics-m90.devtools.log.json'); // eslint-disable-line max-len
 
-const artifactsTrace = require('../results/artifacts/defaultPass.trace.json');
-const artifactsDevtoolsLog = require('../results/artifacts/defaultPass.devtoolslog.json');
-
 const jumpyClsTrace = require('../fixtures/traces/jumpy-cls-m90.json');
 const jumpyClsDevtoolsLog = require('../fixtures/traces/jumpy-cls-m90.devtoolslog.json');
 
@@ -89,23 +86,29 @@ describe('Performance: metrics', () => {
     expect(result.details.items[0]).toMatchSnapshot();
   });
 
-  it('evaluates valid input (with CLS) correctly', async () => {
+  it('leaves CLS undefined in an old trace without weighted scores', async () => {
     const artifacts = {
       traces: {
-        [MetricsAudit.DEFAULT_PASS]: artifactsTrace,
+        [MetricsAudit.DEFAULT_PASS]: lcpAllFramesTrace,
       },
       devtoolsLogs: {
-        [MetricsAudit.DEFAULT_PASS]: artifactsDevtoolsLog,
+        [MetricsAudit.DEFAULT_PASS]: lcpAllFramesDevtoolsLog,
       },
     };
 
     const context = {settings: {throttlingMethod: 'simulate'}, computedCache: new Map()};
     const {details} = await MetricsAudit.audit(artifacts, context);
-    expect(details.items[0].cumulativeLayoutShift).toMatchInlineSnapshot(`0.42`);
-    expect(details.items[0].observedCumulativeLayoutShift).toMatchInlineSnapshot(`0.42`);
+    expect(details.items[0]).toMatchObject({
+      cumulativeLayoutShift: undefined,
+      cumulativeLayoutShiftMainFrame: undefined,
+      totalCumulativeLayoutShift: undefined,
+      observedCumulativeLayoutShift: undefined,
+      observedCumulativeLayoutShiftMainFrame: undefined,
+      observedTotalCumulativeLayoutShift: undefined,
+    });
   });
 
-  it('evaluates valid input (with CLS from all frames) correctly', async () => {
+  it('evaluates new CLS correctly across all frames', async () => {
     const artifacts = {
       traces: {
         [MetricsAudit.DEFAULT_PASS]: clsAllFramesTrace,
@@ -117,10 +120,17 @@ describe('Performance: metrics', () => {
 
     const context = {settings: {throttlingMethod: 'provided'}, computedCache: new Map()};
     const {details} = await MetricsAudit.audit(artifacts, context);
-    expect(details.items[0].cumulativeLayoutShift).toBeCloseTo(0.0011);
-    expect(details.items[0].observedCumulativeLayoutShift).toBeCloseTo(0.0011);
-    expect(details.items[0].cumulativeLayoutShiftAllFrames).toBeCloseTo(0.0276);
-    expect(details.items[0].observedCumulativeLayoutShiftAllFrames).toBeCloseTo(0.0276);
+
+    // Only a single main-frame shift event, so mfCls and oldCls are equal.
+    expect(details.items[0]).toMatchObject({
+      cumulativeLayoutShift: expect.toBeApproximately(0.026463, 6),
+      cumulativeLayoutShiftMainFrame: expect.toBeApproximately(0.001166, 6),
+      totalCumulativeLayoutShift: expect.toBeApproximately(0.001166, 6),
+
+      observedCumulativeLayoutShift: expect.toBeApproximately(0.026463, 6),
+      observedCumulativeLayoutShiftMainFrame: expect.toBeApproximately(0.001166, 6),
+      observedTotalCumulativeLayoutShift: expect.toBeApproximately(0.001166, 6),
+    });
   });
 
   it('does not fail the entire audit when TTI errors', async () => {
@@ -140,7 +150,7 @@ describe('Performance: metrics', () => {
     expect(result.details.items[0].interactive).toEqual(undefined);
   });
 
-  it('evaluates LayoutShift variants correctly', async () => {
+  it('evaluates CLS correctly', async () => {
     const artifacts = {
       traces: {
         [MetricsAudit.DEFAULT_PASS]: jumpyClsTrace,
@@ -153,33 +163,13 @@ describe('Performance: metrics', () => {
     const context = {settings: {throttlingMethod: 'simulate'}, computedCache: new Map()};
     const {details} = await MetricsAudit.audit(artifacts, context);
     expect(details.items[0]).toMatchObject({
-      cumulativeLayoutShift: expect.toBeApproximately(4.809794, 6),
-      cumulativeLayoutShiftAllFrames: expect.toBeApproximately(4.809794, 6),
-      layoutShiftAvgSessionGap5s: expect.toBeApproximately(4.809794, 6),
-      layoutShiftMaxSessionGap1s: expect.toBeApproximately(2.897995, 6),
-      layoutShiftMaxSessionGap1sLimit5s: expect.toBeApproximately(2.268816, 6),
-      layoutShiftMaxSliding1s: expect.toBeApproximately(1.911799, 6),
-      layoutShiftMaxSliding300ms: expect.toBeApproximately(1.436742, 6),
-      layoutShiftMaxSessionGap1sLimit5sAllFrames: expect.toBeApproximately(2.268816, 6),
-    });
-  });
+      cumulativeLayoutShift: expect.toBeApproximately(2.268816, 6),
+      cumulativeLayoutShiftMainFrame: expect.toBeApproximately(2.268816, 6),
+      totalCumulativeLayoutShift: expect.toBeApproximately(4.809794, 6),
 
-  it('evaluates new CLS correctly across all frames', async () => {
-    const artifacts = {
-      traces: {
-        [MetricsAudit.DEFAULT_PASS]: clsAllFramesTrace,
-      },
-      devtoolsLogs: {
-        [MetricsAudit.DEFAULT_PASS]: clsAllFramesDevtoolsLog,
-      },
-    };
-
-    const context = {settings: {throttlingMethod: 'provided'}, computedCache: new Map()};
-    const {details} = await MetricsAudit.audit(artifacts, context);
-    expect(details.items[0]).toMatchObject({
-      cumulativeLayoutShift: expect.toBeApproximately(0.001166, 6),
-      cumulativeLayoutShiftAllFrames: expect.toBeApproximately(0.027629, 6),
-      layoutShiftMaxSessionGap1sLimit5sAllFrames: expect.toBeApproximately(0.026463, 6),
+      observedCumulativeLayoutShift: expect.toBeApproximately(2.268816, 6),
+      observedCumulativeLayoutShiftMainFrame: expect.toBeApproximately(2.268816, 6),
+      observedTotalCumulativeLayoutShift: expect.toBeApproximately(4.809794, 6),
     });
   });
 });
