@@ -69,7 +69,7 @@
       "id": "first-contentful-paint",
       "title": "First Contentful Paint",
       "description": "First Contentful Paint marks the time at which the first text or image is painted. [Learn more](https://web.dev/first-contentful-paint/).",
-      "score": 0.51,
+      "score": 0.24,
       "scoreDisplayMode": "numeric",
       "numericValue": 3969.135,
       "numericUnit": "millisecond",
@@ -5277,7 +5277,7 @@
         }
       ],
       "id": "performance",
-      "score": 0.64
+      "score": 0.6
     },
     "accessibility": {
       "title": "Accessibility",
