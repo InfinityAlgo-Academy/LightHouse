@@ -37,6 +37,7 @@ main-thread-tasks
 mainthread-work-breakdown
 max-potential-fid
 metrics
+modern-image-formats
 network-requests
 network-rtt
 network-server-latency
@@ -71,7 +72,6 @@ uses-rel-preconnect
 uses-rel-preload
 uses-responsive-images
 uses-text-compression
-uses-webp-images
 
 View Trace Button Text: "View Original Trace"
 View Trace Button Title: "The performance metrics above are simulated and won't match the timings found in this trace. Disable simulated throttling in "Lighthouse Settings" if you want the timings to match."

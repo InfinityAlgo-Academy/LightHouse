@@ -10605,8 +10605,8 @@
           "overallSavingsBytes": 745853
         }
       },
-      "uses-webp-images": {
-        "id": "uses-webp-images",
+      "modern-image-formats": {
+        "id": "modern-image-formats",
         "title": "Serve images in next-gen formats",
         "description": "Image formats like JPEG 2000, JPEG XR, and WebP often provide better compression than PNG or JPEG, which means faster downloads and less data consumption. [Learn more](https://web.dev/uses-webp-images/).",
         "score": 0.64,
@@ -20010,7 +20010,7 @@
             "group": "load-opportunities"
           },
           {
-            "id": "uses-webp-images",
+            "id": "modern-image-formats",
             "weight": 0,
             "group": "load-opportunities"
           },
@@ -22746,7 +22746,7 @@
         },
         {
           "startTime": 24767.53,
-          "name": "lh:audit:uses-webp-images",
+          "name": "lh:audit:modern-image-formats",
           "duration": 8.77,
           "entryType": "measure"
         },
@@ -23237,7 +23237,7 @@
           "audits[render-blocking-resources].details.headings[0].label",
           "audits[unused-css-rules].details.headings[0].label",
           "audits[unused-javascript].details.headings[0].label",
-          "audits[uses-webp-images].details.headings[1].label",
+          "audits[modern-image-formats].details.headings[1].label",
           "audits[uses-optimized-images].details.headings[1].label",
           "audits[uses-responsive-images].details.headings[1].label",
           "audits[legacy-javascript].details.headings[0].label"
@@ -23439,7 +23439,7 @@
           "audits[render-blocking-resources].details.headings[2].label",
           "audits[unused-css-rules].details.headings[2].label",
           "audits[unused-javascript].details.headings[2].label",
-          "audits[uses-webp-images].details.headings[3].label",
+          "audits[modern-image-formats].details.headings[3].label",
           "audits[uses-optimized-images].details.headings[3].label",
           "audits[uses-responsive-images].details.headings[3].label",
           "audits[duplicated-javascript].details.headings[2].label",
@@ -24031,7 +24031,7 @@
             "values": {
               "wastedBytes": 83065
             },
-            "path": "audits[uses-webp-images].displayValue"
+            "path": "audits[modern-image-formats].displayValue"
           },
           {
             "values": {
@@ -24060,7 +24060,7 @@
         ],
         "lighthouse-core/lib/i18n/i18n.js | columnResourceSize": [
           "audits[offscreen-images].details.headings[2].label",
-          "audits[uses-webp-images].details.headings[2].label",
+          "audits[modern-image-formats].details.headings[2].label",
           "audits[uses-optimized-images].details.headings[2].label",
           "audits[uses-responsive-images].details.headings[2].label"
         ],
@@ -24094,11 +24094,11 @@
         "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": [
           "audits[unused-javascript].description"
         ],
-        "lighthouse-core/audits/byte-efficiency/uses-webp-images.js | title": [
-          "audits[uses-webp-images].title"
+        "lighthouse-core/audits/byte-efficiency/modern-image-formats-images.js | title": [
+          "audits[modern-image-formats].title"
         ],
-        "lighthouse-core/audits/byte-efficiency/uses-webp-images.js | description": [
-          "audits[uses-webp-images].description"
+        "lighthouse-core/audits/byte-efficiency/modern-image-formats.js | description": [
+          "audits[modern-image-formats].description"
         ],
         "lighthouse-core/audits/byte-efficiency/uses-optimized-images.js | title": [
           "audits[uses-optimized-images].title"

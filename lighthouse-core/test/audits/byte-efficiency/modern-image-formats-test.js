@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const WebPImagesAudit = require('../../../audits/byte-efficiency/uses-webp-images.js');
+const ModernImageFormats = require('../../../audits/byte-efficiency/modern-image-formats.js');
 
 function generateArtifacts(images) {
   const optimizedImages = [];
@@ -49,14 +49,14 @@ function generateArtifacts(images) {
 describe('Page uses optimized images', () => {
   it('ignores files when there is only insignificant savings', () => {
     const artifacts = generateArtifacts([{originalSize: 5000, webpSize: 4500}]);
-    const auditResult = WebPImagesAudit.audit_(artifacts);
+    const auditResult = ModernImageFormats.audit_(artifacts);
 
     expect(auditResult.items).toEqual([]);
   });
 
   it('flags files when there is only small savings', () => {
     const artifacts = generateArtifacts([{originalSize: 15000, webpSize: 4500}]);
-    const auditResult = WebPImagesAudit.audit_(artifacts);
+    const auditResult = ModernImageFormats.audit_(artifacts);
 
     expect(auditResult.items).toEqual([
       {
@@ -71,7 +71,7 @@ describe('Page uses optimized images', () => {
 
   it('estimates savings on files without webpSize', () => {
     const artifacts = generateArtifacts([{originalSize: 1e6, width: 1000, height: 1000}]);
-    const auditResult = WebPImagesAudit.audit_(artifacts);
+    const auditResult = ModernImageFormats.audit_(artifacts);
 
     expect(auditResult.items).toEqual([
       {
@@ -88,7 +88,7 @@ describe('Page uses optimized images', () => {
     const artifacts = generateArtifacts([{
       url: 'http://localhost:1234/image.jpeg', originalSize: 50000, webpSize: 20000,
     }]);
-    const auditResult = WebPImagesAudit.audit_(artifacts);
+    const auditResult = ModernImageFormats.audit_(artifacts);
 
     expect(auditResult.items).toMatchObject([
       {
@@ -106,7 +106,7 @@ describe('Page uses optimized images', () => {
       {type: 'bmp', originalSize: 4000, webpSize: 2000},
     ]);
 
-    const auditResult = WebPImagesAudit.audit_(artifacts);
+    const auditResult = ModernImageFormats.audit_(artifacts);
 
     expect(auditResult.items).toEqual([]);
   });
@@ -116,7 +116,7 @@ describe('Page uses optimized images', () => {
       {type: 'data:webp', originalSize: 15000, webpSize: 4500},
     ]);
 
-    const auditResult = WebPImagesAudit.audit_(artifacts);
+    const auditResult = ModernImageFormats.audit_(artifacts);
 
     expect(auditResult.items).toHaveLength(1);
     expect(auditResult.items[0].url).toMatch(/^data.{2,40}/);
@@ -124,7 +124,7 @@ describe('Page uses optimized images', () => {
 
   it('warns when images have failed', () => {
     const artifacts = generateArtifacts([{failed: true, url: 'http://localhost/image.jpeg'}]);
-    const auditResult = WebPImagesAudit.audit_(artifacts);
+    const auditResult = ModernImageFormats.audit_(artifacts);
 
     expect(auditResult.items).toHaveLength(0);
     expect(auditResult.warnings).toHaveLength(1);
@@ -133,7 +133,7 @@ describe('Page uses optimized images', () => {
   it('warns when missing ImageElement', () => {
     const artifacts = generateArtifacts([{originalSize: 1e6}]);
     artifacts.ImageElements = [];
-    const auditResult = WebPImagesAudit.audit_(artifacts);
+    const auditResult = ModernImageFormats.audit_(artifacts);
 
     expect(auditResult.items).toHaveLength(0);
     expect(auditResult.warnings).toHaveLength(1);
