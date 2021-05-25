@@ -755,15 +755,6 @@
   "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | failureTitle": {
     "message": "הדף מכיל ספריות JavaScript חזיתיות בעלות פגיעויות ידועות באבטחה"
   },
-  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | rowSeverityHigh": {
-    "message": "גבוהה"
-  },
-  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | rowSeverityLow": {
-    "message": "נמוכה"
-  },
-  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | rowSeverityMedium": {
-    "message": "בינונית"
-  },
   "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | title": {
     "message": "הדף לא מכיל ספריות JavaScript חזיתיות בעלות פגיעויות ידועות באבטחה"
   },

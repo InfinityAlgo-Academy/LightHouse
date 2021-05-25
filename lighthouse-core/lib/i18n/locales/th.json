@@ -755,15 +755,6 @@
   "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | failureTitle": {
     "message": "มีไลบรารี JavaScript ส่วนหน้าที่มีช่องโหว่ด้านความปลอดภัย"
   },
-  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | rowSeverityHigh": {
-    "message": "สูง"
-  },
-  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | rowSeverityLow": {
-    "message": "ต่ำ"
-  },
-  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | rowSeverityMedium": {
-    "message": "ปานกลาง"
-  },
   "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | title": {
     "message": "หลีกเลี่ยงการใช้ไลบรารี JavaScript ส่วนหน้าที่มีช่องโหว่ด้านความปลอดภัย"
   },

@@ -140,6 +140,12 @@ const UIStrings = {
   largestContentfulPaintMetric: 'Largest Contentful Paint',
   /** The name of the metric "Cumulative Layout Shift" that indicates how much the page changes its layout while it loads. If big segments of the page shift their location during load, the Cumulative Layout Shift will be higher. Shown to users as the label for the numeric metric value. Ideally fits within a ~40 character limit. */
   cumulativeLayoutShiftMetric: 'Cumulative Layout Shift',
+  /** Table item value for the severity of a small, or low impact vulnerability. Part of a ranking scale in the form: low, medium, high. */
+  itemSeverityLow: 'Low',
+  /** Table item value for the severity of a vulnerability. Part of a ranking scale in the form: low, medium, high. */
+  itemSeverityMedium: 'Medium',
+  /** Table item value for the severity of a high impact, or dangerous vulnerability. Part of a ranking scale in the form: low, medium, high. */
+  itemSeverityHigh: 'High',
 };
 
 const formats = {

@@ -755,15 +755,6 @@
   "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | failureTitle": {
     "message": "తెలిసిన భద్రతా ప్రమాదాలను కలిగి ఉండే ఫ్రంట్-ఎండ్ JavaScript లైబ్రరీలను జోడిస్తుంది"
   },
-  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | rowSeverityHigh": {
-    "message": "అధికం"
-  },
-  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | rowSeverityLow": {
-    "message": "తక్కువ"
-  },
-  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | rowSeverityMedium": {
-    "message": "మధ్యస్థం"
-  },
   "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | title": {
     "message": "తెలిసిన భద్రతా ప్రమాదాలను కలిగి ఉండే ఫ్రంట్-ఎండ్ JavaScript లైబ్రరీలను నివారిస్తుంది"
   },

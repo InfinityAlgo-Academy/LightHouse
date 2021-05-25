@@ -755,15 +755,6 @@
   "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | failureTitle": {
     "message": "தெரிந்த பாதுகாப்புக் குறைபாடுகளுள்ள ஃபிரண்ட் எண்டு JavaScript லைப்ரரிகள் இதில் அடங்கும்"
   },
-  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | rowSeverityHigh": {
-    "message": "அதிகம்"
-  },
-  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | rowSeverityLow": {
-    "message": "குறைவானது"
-  },
-  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | rowSeverityMedium": {
-    "message": "நடுத்தரமானது"
-  },
   "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | title": {
     "message": "தெரிந்த பாதுகாப்புக் குறைபாடுகளுடைய ஃபிரண்ட் எண்ட் JavaScript லைப்ரரிகளைத் தவிர்க்கிறது"
   },

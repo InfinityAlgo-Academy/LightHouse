@@ -755,15 +755,6 @@
   "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | failureTitle": {
     "message": "ऐसी फ़्रंट-एंड JavaScript लाइब्रेरी का इस्तेमाल करता है जिनमें शामिल सुरक्षा जोखिमों के बारे में सबको पता होता है."
   },
-  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | rowSeverityHigh": {
-    "message": "ज़्यादा"
-  },
-  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | rowSeverityLow": {
-    "message": "कम"
-  },
-  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | rowSeverityMedium": {
-    "message": "मीडियम"
-  },
   "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | title": {
     "message": "ऐसी फ़्रंट-एंड JavaScript लाइब्रेरी का इस्तेमाल नहीं करता जिनमें शामिल सुरक्षा जोखिमों के बारे में सबको पता होता है."
   },

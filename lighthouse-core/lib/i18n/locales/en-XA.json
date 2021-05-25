@@ -755,15 +755,6 @@
   "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | failureTitle": {
     "message": "[Îñçļûðéš ƒŕöñţ-éñð ĴåvåŠçŕîþţ ļîбŕåŕîéš ŵîţĥ ķñöŵñ šéçûŕîţý vûļñéŕåбîļîţîéš one two three four five six seven eight nine ten eleven twelve thirteen fourteen]"
   },
-  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | rowSeverityHigh": {
-    "message": "[Ĥîĝĥ one]"
-  },
-  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | rowSeverityLow": {
-    "message": "[Ļöŵ one]"
-  },
-  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | rowSeverityMedium": {
-    "message": "[Méðîûm one]"
-  },
   "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | title": {
     "message": "[Åvöîðš ƒŕöñţ-éñð ĴåvåŠçŕîþţ ļîбŕåŕîéš ŵîţĥ ķñöŵñ šéçûŕîţý vûļñéŕåбîļîţîéš one two three four five six seven eight nine ten eleven twelve thirteen fourteen]"
   },
