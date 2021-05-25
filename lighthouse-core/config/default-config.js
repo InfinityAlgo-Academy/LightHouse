@@ -527,11 +527,9 @@ const defaultConfig = {
         {id: 'document-title', weight: 3, group: 'a11y-names-labels'},
         {id: 'duplicate-id-active', weight: 3, group: 'a11y-navigation'},
         {id: 'duplicate-id-aria', weight: 10, group: 'a11y-aria'},
-        /** TODO: add weight for v8 */
-        {id: 'empty-table-header', weight: 0, group: 'a11y-tables-lists'},
+        {id: 'empty-table-header', weight: 2, group: 'a11y-tables-lists'},
         {id: 'form-field-multiple-labels', weight: 2, group: 'a11y-names-labels'},
-        /** TODO: add weight for v8 */
-        {id: 'frame-focusable-content', weight: 0, group: 'a11y-navigation'},
+        {id: 'frame-focusable-content', weight: 3, group: 'a11y-navigation'},
         {id: 'frame-title', weight: 3, group: 'a11y-names-labels'},
         {id: 'heading-order', weight: 2, group: 'a11y-navigation'},
         {id: 'html-has-lang', weight: 3, group: 'a11y-language'},

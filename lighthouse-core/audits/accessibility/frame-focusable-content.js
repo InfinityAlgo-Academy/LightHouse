@@ -14,12 +14,12 @@ const AxeAudit = require('./axe-audit.js');
 const i18n = require('../../lib/i18n/i18n.js');
 
 const UIStrings = {
-  /** Title of an accesibility audit that checks if there are any iframes with focusable content that mistakently set tabindex=1. This title is descriptive of the successful state and is shown to users when no user action is required. */
+  /** Title of an accesibility audit that checks if there are any iframes with focusable content that mistakenly set tabindex = -1. This title is descriptive of the successful state and is shown to users when no user action is required. */
   title: '`<iframe>` elements with focusable content do not have a negative `tabindex`',
   /** Title of an accesibility audit that checks if there are any iframes with focusable content that mistakently set tabindex=-1. This title is descriptive of the failing state and is shown to users when there is a failure that needs to be addressed. */
   failureTitle: '`<iframe>` elements with focusable content have a negative `tabindex`',
   /** Description of a Lighthouse audit that tells the user *why* they should try to pass. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
-  description: 'Focusable elements within an `<iframe>` element with a negative `tabindex` cannot be reached via keyboard navigation. [Learn more.](https://dequeuniversity.com/rules/axe/4.2/frame-focusable-content)',
+  description: 'Focusable elements within an `<iframe>` element with a negative `tabindex` cannot be reached via keyboard navigation. [Learn more](https://dequeuniversity.com/rules/axe/4.2/frame-focusable-content).',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);

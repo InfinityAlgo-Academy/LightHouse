@@ -19,7 +19,7 @@ const UIStrings = {
   /** Title of an accesibility audit that checks if there are any table headers without readable text. This title is descriptive of the failing state and is shown to users when there is a failure that needs to be addressed. */
   failureTitle: 'Table headers are missing discernible text',
   /** Description of a Lighthouse audit that tells the user *why* they should try to pass. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
-  description: 'Table headers should have discernible text, so assistive technologies like screen readers may describe table contents appropriately. [Learn more](https://dequeuniversity.com/rules/axe/4.2/empty-table-header).',
+  description: 'Table headers should have discernible text so assistive technologies like screen readers may describe table contents appropriately. [Learn more](https://dequeuniversity.com/rules/axe/4.2/empty-table-header).',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
