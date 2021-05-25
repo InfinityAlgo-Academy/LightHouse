@@ -828,6 +828,8 @@ describe('Config', () => {
     it('uses config setting for locale if set', () => {
       const locale = 'ar-XB';
       const config = new Config({settings: {locale}});
+      // COMPAT: Node 12 only has 'en' by default.
+      if (process.versions.node.startsWith('12')) return;
       assert.strictEqual(config.settings.locale, locale);
     });
 
@@ -835,6 +837,8 @@ describe('Config', () => {
       const settingsLocale = 'en-XA';
       const flagsLocale = 'ar-XB';
       const config = new Config({settings: {locale: settingsLocale}}, {locale: flagsLocale});
+      // COMPAT: Node 12 only has 'en' by default.
+      if (process.versions.node.startsWith('12')) return;
       assert.strictEqual(config.settings.locale, flagsLocale);
     });
   });

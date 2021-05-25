@@ -12,6 +12,7 @@ const MessageFormat = require('intl-messageformat').default;
 const lookupClosestLocale = require('lookup-closest-locale');
 const LOCALES = require('./locales.js');
 const {isObjectOfUnknownValues, isObjectOrArrayOfUnknownValues} = require('../type-verifiers.js');
+const log = require('lighthouse-logger');
 
 const DEFAULT_LOCALE = 'en';
 
@@ -20,34 +21,6 @@ const DEFAULT_LOCALE = 'en';
 
 const LH_ROOT = path.join(__dirname, '../../../');
 const MESSAGE_I18N_ID_REGEX = / | [^\s]+$/;
-
-(() => {
-  // Node without full-icu doesn't come with the locales we want built-in. Load the polyfill if needed.
-  // See https://nodejs.org/api/intl.html#intl_options_for_building_node_js
-
-  // Conditionally polyfills itself. Bundler removes this dep, so this will be a no-op in browsers.
-  // @ts-expect-error
-  require('intl-pluralrules');
-
-  // @ts-expect-error
-  const IntlPolyfill = require('intl');
-
-  // The bundler also removes this dep, so there's nothing to do if it's empty.
-  if (!IntlPolyfill.NumberFormat) return;
-
-  // Check if global implementation supports a minimum set of locales.
-  const minimumLocales = ['en', 'es', 'ru', 'zh'];
-  const supportedLocales = Intl.NumberFormat.supportedLocalesOf(minimumLocales);
-
-  if (supportedLocales.length !== minimumLocales.length) {
-    Intl.NumberFormat = IntlPolyfill.NumberFormat;
-    Intl.DateTimeFormat = IntlPolyfill.DateTimeFormat;
-  }
-  // Deal with buggy regex caching. https://github.com/andyearnshaw/Intl.js/issues/308
-  if (IntlPolyfill.__disableRegExpRestore) {
-    IntlPolyfill.__disableRegExpRestore();
-  }
-})();
 
 const UIStrings = {
   /** Used to show the duration in milliseconds that something lasted. The `{timeInMs}` placeholder will be replaced with the time duration, shown in milliseconds (e.g. 63 ms) */
@@ -173,16 +146,35 @@ const formats = {
  * Look up the best available locale for the requested language through these fall backs:
  * - exact match
  * - progressively shorter prefixes (`de-CH-1996` -> `de-CH` -> `de`)
+ * - supported locales in Intl formatters
  *
  * If `locale` isn't provided or one could not be found, DEFAULT_LOCALE is returned.
  * @param {string|string[]=} locales
  * @return {LH.Locale}
  */
 function lookupLocale(locales) {
-  // TODO: could do more work to sniff out default locale
+  // If Node was built with `--with-intl=none`, `Intl` won't exist.
+  if (typeof Intl !== 'object') {
+    throw new Error('Lighthouse must be run in Node with `Intl` support. See https://nodejs.org/api/intl.html for help');
+  }
+
+  // TODO: could do more work to sniff out the user's locale
   const canonicalLocales = Intl.getCanonicalLocales(locales);
 
-  const closestLocale = lookupClosestLocale(canonicalLocales, LOCALES);
+  // Filter by what's available in this runtime.
+  const availableLocales = Intl.NumberFormat.supportedLocalesOf(canonicalLocales);
+
+  const closestLocale = lookupClosestLocale(availableLocales, LOCALES);
+
+  if (!closestLocale) {
+    // Log extra info if we're pretty sure this version of Node was built with `--with-intl=small-icu`.
+    if (Intl.NumberFormat.supportedLocalesOf('es').length === 0) {
+      log.warn('i18n', 'Requested locale not available in this version of node. The `full-icu` npm module can provide additional locales. For help, see https://github.com/GoogleChrome/lighthouse/blob/master/readme.md#how-do-i-get-localized-lighthouse-results-via-the-cli');
+    }
+    // eslint-disable-next-line max-len
+    log.warn('i18n', `locale(s) '${locales}' not available. Falling back to default '${DEFAULT_LOCALE}'`);
+  }
+
   return closestLocale || DEFAULT_LOCALE;
 }
 

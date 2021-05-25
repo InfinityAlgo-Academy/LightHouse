@@ -106,6 +106,9 @@ describe('util helpers', () => {
   });
 
   it('formats numbers based on locale', () => {
+    // COMPAT: Node 12 only has 'en' by default.
+    if (process.versions.node.startsWith('12')) return;
+
     // Requires full-icu or Intl polyfill.
     const number = 12346.858558;
 
@@ -117,6 +120,9 @@ describe('util helpers', () => {
   });
 
   it('uses decimal comma with en-XA test locale', () => {
+    // COMPAT: Node 12 only has 'en' by default.
+    if (process.versions.node.startsWith('12')) return;
+
     // Requires full-icu or Intl polyfill.
     const number = 12346.858558;
 
