@@ -495,7 +495,10 @@ message I18n {
     // Label for a button that opens the Treemap App
     string view_treemap_label = 47;
 
-    // Label preceding a radio control for filtering the list of audits. The radio choices are various performance metrics (FCP, LCP, TBT), and if chosen, the audits in the report are hidden if they are not relevant to the selected metric.
+    // Label preceding a radio control for filtering the list of audits. The
+    // radio choices are various performance metrics (FCP, LCP, TBT), and if
+    // chosen, the audits in the report are hidden if they are not relevant to
+    // the selected metric.
     string show_relevant_audits = 48;
   }
 
