@@ -1055,14 +1055,8 @@
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
     "message": "Kumulatívna zmena rozloženia meria pohyb viditeľných prvkov v rámci oblasti zobrazenia. [Ďalšie informácie](https://web.dev/cls/)"
   },
-  "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
-    "message": "Odhadovaná latencia vstupu je odhadovaný čas odozvy na vstup používateľa v milisekundách počas najrušnejších 5 sekúnd načítania stránky. Ak latencia prevyšuje 50 ms, používateľom sa môžu zdať odozvy aplikácie oneskorené. [Ďalšie informácie](https://web.dev/estimated-input-latency/)"
-  },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
     "message": "Prvé vykreslenie obsahu označuje čas, za ktorý je vykreslený prvý text alebo obrázok. [Ďalšie informácie](https://web.dev/first-contentful-paint/)"
-  },
-  "lighthouse-core/audits/metrics/first-cpu-idle.js | description": {
-    "message": "Prvá nečinnosť procesora označuje, kedy je hlavné vlákno stránky prvýkrát dostatočne nečinné na spracovanie vstupu.  [Ďalšie informácie](https://web.dev/first-cpu-idle/)"
   },
   "lighthouse-core/audits/metrics/first-meaningful-paint.js | description": {
     "message": "Prvé zmysluplné vykreslenie meria, kedy je hlavný obsah stránky viditeľný. [Ďalšie informácie](https://web.dev/first-meaningful-paint/)"
@@ -1825,12 +1819,6 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Dokument"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
-    "message": "Odhadovaná latencia vstupu"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
-    "message": "Prvá nečinnosť procesora"
   },
   "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
     "message": "First Contentful Paint"

@@ -260,7 +260,6 @@ describe('PerfCategoryRenderer', () => {
           "TTI=4927",
           "TBT=117",
           "CLS=0",
-          "FCI=4927",
           "FMP=3969",
         ]
       `);
@@ -282,7 +281,6 @@ describe('PerfCategoryRenderer', () => {
             "TTI=4927",
             "TBT=117",
             "CLS=0.42",
-            "FCI=4927",
             "FMP=3969",
             "device=mobile",
             "version=6.0.0",

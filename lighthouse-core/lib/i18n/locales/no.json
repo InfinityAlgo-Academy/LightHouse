@@ -1055,14 +1055,8 @@
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
     "message": "Akkumulert utseendeforskyvning (CLS) måler bevegelsen av synlige elementer i det synlige området. [Finn ut mer](https://web.dev/cls/)."
   },
-  "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
-    "message": "Beregnet inndataforsinkelse er et estimat av hvor lang tid (i millisekunder) det tar for appen å svare på brukerinndata i det travleste 5-sekunders tidsrommet mens siden lastes inn. Hvis tidsforsinkelsen er høyere enn 50 ms, kan brukere oppleve appen som treg. [Finn ut mer](https://web.dev/estimated-input-latency/)."
-  },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
     "message": "Den første innholdsrike opptegningen (FCP) markerer den første gangen tekst eller bilder tegnes opp. [Finn ut mer](https://web.dev/first-contentful-paint/)."
-  },
-  "lighthouse-core/audits/metrics/first-cpu-idle.js | description": {
-    "message": "Første prosessor ledig markerer den første gangen at sidens hovedtråd er rolig nok til å klare å håndtere inndata.  [Finn ut mer](https://web.dev/first-cpu-idle/)."
   },
   "lighthouse-core/audits/metrics/first-meaningful-paint.js | description": {
     "message": "Første vesentlige opptegning måler når hovedinnholdet på en side er synlig. [Finn ut mer](https://web.dev/first-meaningful-paint/)."
@@ -1825,12 +1819,6 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Dokument"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
-    "message": "Anslått tidsforsinkelse for inndata"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
-    "message": "Første prosessor ledig"
   },
   "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
     "message": "First Contentful Paint"

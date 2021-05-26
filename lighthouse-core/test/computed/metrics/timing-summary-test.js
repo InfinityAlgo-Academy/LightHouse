@@ -21,10 +21,6 @@ describe('Timing summary', () => {
       Object {
         "cumulativeLayoutShift": 0.026463014612806653,
         "cumulativeLayoutShiftMainFrame": 0.0011656245471340055,
-        "estimatedInputLatency": 16,
-        "estimatedInputLatencyTs": undefined,
-        "firstCPUIdle": 8654.264,
-        "firstCPUIdleTs": 10335842173,
         "firstContentfulPaint": 5668.275,
         "firstContentfulPaintAllFrames": 697.751,
         "firstContentfulPaintAllFramesTs": 10327885660,

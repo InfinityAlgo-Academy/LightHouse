@@ -1055,14 +1055,8 @@
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
     "message": "Cumulative Layout Shift, görüntü alanı içindeki görünür öğelerin hareketini ölçer. [Daha fazla bilgi](https://web.dev/cls/)."
   },
-  "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
-    "message": "Tahmini Giriş Gecikmesi, sayfa yüklemesinin en yoğun olduğu 5 saniyelik zaman aralığında uygulamanızın kullanıcı girişine kaç milisaniye içinde yanıt vereceğine dair bir tahmindir. Gecikmeniz 50 ms.nin üzerinde olursa kullanıcılar uygulamanızın durakladığını düşünebilir. [Daha fazla bilgi](https://web.dev/estimated-input-latency/)."
-  },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
     "message": "İlk Zengin İçerikli Boyama, ilk metnin veya resmin boyandığı zamanı işaret eder. [Daha fazla bilgi](https://web.dev/first-contentful-paint/)."
-  },
-  "lighthouse-core/audits/metrics/first-cpu-idle.js | description": {
-    "message": "İlk CPU Boşta metriği, sayfanın ana iş parçacığının girişi işlemek için yeterli olduğu ilk anı işaret eder.  [Daha fazla bilgi](https://web.dev/first-cpu-idle/)."
   },
   "lighthouse-core/audits/metrics/first-meaningful-paint.js | description": {
     "message": "İlk Anlamlı Boyama, bir sayfanın ana içeriğinin ne zaman görünür hale geldiğini ölçer. [Daha fazla bilgi](https://web.dev/first-meaningful-paint/)."
@@ -1825,12 +1819,6 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Doküman"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
-    "message": "Tahmini Giriş Gecikmesi"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
-    "message": "İlk CPU Boşta"
   },
   "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
     "message": "First Contentful Paint"

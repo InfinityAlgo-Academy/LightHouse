@@ -1055,14 +1055,8 @@
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
     "message": "[Çûmûļåţîvé Ļåýöûţ Šĥîƒţ méåšûŕéš ţĥé mövéméñţ öƒ vîšîбļé éļéméñţš ŵîţĥîñ ţĥé vîéŵþöŕţ. ᐅ[ᐊĻéåŕñ möŕéᐅ](https://web.dev/cls/)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen]"
   },
-  "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
-    "message": "[Éšţîmåţéð Îñþûţ Ļåţéñçý îš åñ éšţîmåţé öƒ ĥöŵ ļöñĝ ýöûŕ åþþ ţåķéš ţö ŕéšþöñð ţö ûšéŕ îñþûţ, îñ mîļļîšéçöñðš, ðûŕîñĝ ţĥé бûšîéšţ 5š ŵîñðöŵ öƒ þåĝé ļöåð. Îƒ ýöûŕ ļåţéñçý îš ĥîĝĥéŕ ţĥåñ 50 mš, ûšéŕš måý þéŕçéîvé ýöûŕ åþþ åš ļåĝĝý. ᐅ[ᐊĻéåŕñ möŕéᐅ](https://web.dev/estimated-input-latency/)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone twentytwo twentythree twentyfour twentyfive twentysix twentyseven twentyeight twentynine thirty thirtyone]"
-  },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
     "message": "[Fîŕšţ Çöñţéñţƒûļ Þåîñţ måŕķš ţĥé ţîmé åţ ŵĥîçĥ ţĥé ƒîŕšţ ţéxţ öŕ îmåĝé îš þåîñţéð. ᐅ[ᐊĻéåŕñ möŕéᐅ](https://web.dev/first-contentful-paint/)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen]"
-  },
-  "lighthouse-core/audits/metrics/first-cpu-idle.js | description": {
-    "message": "[Fîŕšţ ÇÞÛ Îðļé måŕķš ţĥé ƒîŕšţ ţîmé åţ ŵĥîçĥ ţĥé þåĝé'š måîñ ţĥŕéåð îš qûîéţ éñöûĝĥ ţö ĥåñðļé îñþûţ.  ᐅ[ᐊĻéåŕñ möŕéᐅ](https://web.dev/first-cpu-idle/)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen]"
   },
   "lighthouse-core/audits/metrics/first-meaningful-paint.js | description": {
     "message": "[Fîŕšţ Méåñîñĝƒûļ Þåîñţ méåšûŕéš ŵĥéñ ţĥé þŕîmåŕý çöñţéñţ öƒ å þåĝé îš vîšîбļé. ᐅ[ᐊĻéåŕñ möŕéᐅ](https://web.dev/first-meaningful-paint/)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen]"
@@ -1825,12 +1819,6 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "[Ðöçûméñţ one]"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
-    "message": "[Éšţîmåţéð Îñþûţ Ļåţéñçý one two three]"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
-    "message": "[Fîŕšţ ÇÞÛ Îðļé one two]"
   },
   "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
     "message": "[Fîŕšţ Çöñţéñţƒûļ Þåîñţ one two three]"

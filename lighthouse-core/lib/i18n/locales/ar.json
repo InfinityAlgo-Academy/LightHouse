@@ -1055,14 +1055,8 @@
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
     "message": "تقيس \"متغيّرات التصميم التراكمية\" حركة العناصر المرئية في إطار العرض. [مزيد من المعلومات](https://web.dev/cls/)"
   },
-  "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
-    "message": "إن \"وقت الاستجابة المقدر للإدخال\" هو تقدير لطول المدة التي يستغرقها تطبيقك للاستجابة لإدخال المستخدم بالمللي ثانية، وذلك أثناء الثواني الخمس الأكثر انشغالاً في فترة تحميل الصفحة. وفي حال كان وقت الاستجابة أكثر من 50 مللي ثانية، يمكن للمستخدمين اعتبار تطبيقك بأنه بطيء في التفاعل. [مزيد من المعلومات](https://web.dev/estimated-input-latency/)"
-  },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
     "message": "تحدد \"سرعة عرض المحتوى على الصفحة\" الوقت الذي يُعرَض فيه أول صورة أو نص. [مزيد من المعلومات](https://web.dev/first-contentful-paint/)"
-  },
-  "lighthouse-core/audits/metrics/first-cpu-idle.js | description": {
-    "message": "تشير \"وحدة المعالجة المركزية الأولى الخاملة\" إلى المرة الأولى التي يتوفر فيها وقت كافٍ للعملية الرئيسية للصفحة حتى تعالج إدخالات المستخدم.  [مزيد من المعلومات](https://web.dev/first-cpu-idle/)"
   },
   "lighthouse-core/audits/metrics/first-meaningful-paint.js | description": {
     "message": "تقيس \"سرعة عرض أوّل محتوى مفيد على الصفحة\" الوقت الذي يكون فيه المحتوى الأساسي لصفحة مرئيًا. [مزيد من المعلومات](https://web.dev/first-meaningful-paint/)"
@@ -1825,12 +1819,6 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "المستند"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
-    "message": "وقت الاستجابة المُقدّر للإدخال"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
-    "message": "وحدة المعالجة المركزية الأولى الخاملة"
   },
   "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
     "message": "First Contentful Paint"

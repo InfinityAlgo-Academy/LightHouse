@@ -1055,14 +1055,8 @@
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
     "message": "Kopējā izkārtojuma nobīde norāda redzamo elementu kustību skatvietā. [Uzziniet vairāk](https://web.dev/cls/)."
   },
-  "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
-    "message": "Paredzētais ievades latentums aptuveni norāda, pēc cik ilga laika (milisekundēs) uz lietotāja ievadi reaģēs jūsu lietotne aizņemtākajā lapas ielādes 5 s periodā. Ja latentums pārsniedz 50 ms, iespējams, lietotājiem liksies, ka jūsu lietotne strādā ar traucējumiem. [Uzziniet vairāk](https://web.dev/estimated-input-latency/)."
-  },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
     "message": "Metrika \"Pirmais satura marķējums\" atzīmē laiku, kad tiek marķēts pirmais teksts vai attēls. [Uzziniet vairāk](https://web.dev/first-contentful-paint/)."
-  },
-  "lighthouse-core/audits/metrics/first-cpu-idle.js | description": {
-    "message": "Metrika “Pirmā CPU dīkstāve” norāda laiku, kad lapas galvenais pavediens ir kļuvis pietiekami mazs, lai varētu apstrādāt ievadi.  [Uzziniet vairāk](https://web.dev/first-cpu-idle/)."
   },
   "lighthouse-core/audits/metrics/first-meaningful-paint.js | description": {
     "message": "Metrika “Pirmais nozīmīgais satura atveidojums” norāda, kad kļūst redzams lapas galvenais saturs. [Uzziniet vairāk](https://web.dev/first-meaningful-paint/)."
@@ -1825,12 +1819,6 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Dokuments"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
-    "message": "Paredzētais ievades latentums"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
-    "message": "Pirmā CPU dīkstāve"
   },
   "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
     "message": "First Contentful Paint"

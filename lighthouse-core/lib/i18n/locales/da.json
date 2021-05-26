@@ -1055,14 +1055,8 @@
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
     "message": "Akkumuleret layoutskift måler synlige elementers bevægelse i det synlige område. [Få flere oplysninger](https://web.dev/cls/)."
   },
-  "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
-    "message": "Estimeret inputforsinkelse er en anslået værdi af, hvor længe din app er om at reagere på brugerinput i millisekunder i det travleste femsekundersvindue under en sideindlæsning. Hvis din forsinkelse er længere end 50 ms, kan brugerne opfatte din app som langsom. [Få flere oplysninger](https://web.dev/estimated-input-latency/)."
-  },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
     "message": "Første visning af indhold markerer tidspunktet, hvor den første tekst eller det første billede vises. [Få flere oplysninger](https://web.dev/first-contentful-paint/)."
-  },
-  "lighthouse-core/audits/metrics/first-cpu-idle.js | description": {
-    "message": "Første stillestående CPU markerer det tidspunkt, hvor sidens primære tråd er stabil nok til at behandle input.  [Få flere oplysninger](https://web.dev/first-cpu-idle/)."
   },
   "lighthouse-core/audits/metrics/first-meaningful-paint.js | description": {
     "message": "Første meningsfulde visning måler, hvornår det primære indhold på en side kan ses. [Få flere oplysninger](https://web.dev/first-meaningful-paint/)."
@@ -1825,12 +1819,6 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Dokument"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
-    "message": "Estimeret inputforsinkelse"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
-    "message": "Første stillestående CPU"
   },
   "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
     "message": "First Contentful Paint"

@@ -1055,14 +1055,8 @@
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
     "message": "Skumulowane przesunięcie układu to miara ruchu elementów w widocznym obszarze. [Więcej informacji](https://web.dev/cls/)"
   },
-  "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
-    "message": "Szacowane opóźnienie reakcji jest szacunkowym czasem (w milisekundach), po którym aplikacja reaguje na działanie użytkownika w trakcie najbardziej intensywnego, pięciosekundowego okresu ładowania strony. Jeśli opóźnienie jest większe niż 50 ms, użytkownicy mogą uznać aplikację za powolną. [Więcej informacji](https://web.dev/estimated-input-latency/)"
-  },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
     "message": "Pierwsze wyrenderowanie treści oznacza czas wyrenderowania pierwszego tekstu lub obrazu. [Więcej informacji](https://web.dev/first-contentful-paint/)"
-  },
-  "lighthouse-core/audits/metrics/first-cpu-idle.js | description": {
-    "message": "CPU bezczynny po raz pierwszy oznacza czas, gdy wątek główny na stronie jest po raz pierwszy na tyle mało obciążony, że może obsługiwać działania użytkownika.  [Więcej informacji](https://web.dev/first-cpu-idle/)"
   },
   "lighthouse-core/audits/metrics/first-meaningful-paint.js | description": {
     "message": "Pierwsze wyrenderowanie elementu znaczącego oznacza czas pojawienia się na ekranie głównej zawartości strony. [Więcej informacji](https://web.dev/first-meaningful-paint/)"
@@ -1825,12 +1819,6 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Dokument"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
-    "message": "Szacowane opóźnienie reakcji"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
-    "message": "CPU bezczynny po raz pierwszy"
   },
   "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
     "message": "First Contentful Paint"

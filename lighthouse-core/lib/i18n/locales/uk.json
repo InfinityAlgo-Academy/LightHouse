@@ -1055,14 +1055,8 @@
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
     "message": "Сукупне зміщення макета вимірює рух видимих елементів у межах області перегляду. [Докладніше](https://web.dev/cls/)."
   },
-  "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
-    "message": "Приблизна затримка введення показує, скільки часу в мілісекундах додаток відповідає на ввід користувача під час п'ятисекундного періоду завантаження сторінки. Якщо затримка перевищує 50 мс, користувачі можуть вважати ваш додаток повільним. [Докладніше](https://web.dev/estimated-input-latency/)."
-  },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
     "message": "Перша візуалізація вмісту показує, коли з'являється текст чи зображення. [Докладніше](https://web.dev/first-contentful-paint/)."
-  },
-  "lighthouse-core/audits/metrics/first-cpu-idle.js | description": {
-    "message": "Перший простій ЦП вказує, коли основний ланцюжок сторінки вперше може обробити введення.  [Докладніше](https://web.dev/first-cpu-idle/)."
   },
   "lighthouse-core/audits/metrics/first-meaningful-paint.js | description": {
     "message": "Час початку візуалізації вказує, коли видно основний вміст сторінки. [Докладніше](https://web.dev/first-meaningful-paint/)."
@@ -1825,12 +1819,6 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Документ"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
-    "message": "Приблизна затримка введення"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
-    "message": "Перший простій ЦП"
   },
   "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
     "message": "First Contentful Paint"

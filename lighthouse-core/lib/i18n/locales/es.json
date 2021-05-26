@@ -1055,14 +1055,8 @@
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
     "message": "Los cambios de diseño acumulados miden el movimiento de los elementos visibles dentro de la ventana gráfica. [Más información](https://web.dev/cls/)."
   },
-  "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
-    "message": "La latencia de entrada estimada es el tiempo, en milisegundos, que tarda tu aplicación en responder a las acciones de los usuarios durante el periodo de 5 s más activo de carga de la página. Si tu latencia es superior a 50 ms, es posible que los usuarios perciban cierto retardo en tu aplicación. [Más información](https://web.dev/estimated-input-latency/)"
-  },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
     "message": "El primer renderizado con contenido indica el momento en el que se renderiza el primer texto o la primera imagen. [Más información](https://web.dev/first-contentful-paint/)"
-  },
-  "lighthouse-core/audits/metrics/first-cpu-idle.js | description": {
-    "message": "El primer tiempo inactivo de la CPU indica la primera vez que el hilo principal de la página está lo suficientemente inactivo para recibir acciones del usuario.  [Más información](https://web.dev/first-cpu-idle/)"
   },
   "lighthouse-core/audits/metrics/first-meaningful-paint.js | description": {
     "message": "El primer renderizado significativo mide el momento en que se muestra el contenido principal de la página. [Más información](https://web.dev/first-meaningful-paint/)"
@@ -1825,12 +1819,6 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Documento"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
-    "message": "Latencia de entrada estimada"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
-    "message": "Primer tiempo inactivo de la CPU"
   },
   "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
     "message": "First Contentful Paint"

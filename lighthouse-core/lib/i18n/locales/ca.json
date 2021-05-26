@@ -1055,14 +1055,8 @@
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
     "message": "El canvi de disseny acumulatiu mesura el moviment d'elements visibles a la finestra gràfica. [Obtén més informació](https://web.dev/cls/)."
   },
-  "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
-    "message": "La latència estimada d'una acció és un càlcul de quant tarda en mil·lisegons la teva aplicació a respondre a una acció de l'usuari durant el període de 5 segons amb més càrregues de pàgines. Si la latència és superior a 50 ms, és possible que els usuaris considerin que l'aplicació és lenta. [Obtén més informació](https://web.dev/estimated-input-latency/)."
-  },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
     "message": "La mètrica Primera renderització de contingut marca el moment en què es renderitza el primer text o la primera imatge. [Obtén més informació](https://web.dev/first-contentful-paint/)."
-  },
-  "lighthouse-core/audits/metrics/first-cpu-idle.js | description": {
-    "message": "La mètrica Primera inactivitat de la CPU marca el primer moment en què el fil principal de la pàgina està suficientment inactiu per gestionar accions.  [Obtén més informació](https://web.dev/first-cpu-idle/)."
   },
   "lighthouse-core/audits/metrics/first-meaningful-paint.js | description": {
     "message": "La mètrica Primera renderització significativa mesura el moment en què el contingut principal d'una pàgina és visible. [Obtén més informació](https://web.dev/first-meaningful-paint/)."
@@ -1825,12 +1819,6 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Document"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
-    "message": "Latència estimada de les accions"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
-    "message": "Primera inactivitat de la CPU"
   },
   "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
     "message": "First Contentful Paint"

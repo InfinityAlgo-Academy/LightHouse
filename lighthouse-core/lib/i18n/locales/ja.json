@@ -1055,14 +1055,8 @@
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
     "message": "Cumulative Layout Shift はビューポート内の視覚要素がどのくらい移動しているかを測定する指標です。[詳細](https://web.dev/cls/)"
   },
-  "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
-    "message": "入力の推定待ち時間とは、ページ読み込みの最もビジーな 5 秒間における、ユーザーの入力に対するアプリの推定応答時間（ミリ秒単位）です。待ち時間が 50 ミリ秒より長い場合、ユーザーはアプリの反応が悪いと感じる可能性があります。[詳細](https://web.dev/estimated-input-latency/)"
-  },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
     "message": "First Contentful Paint は、テキストまたは画像が初めてペイントされるまでにかかった時間です。[詳細](https://web.dev/first-contentful-paint/)"
-  },
-  "lighthouse-core/audits/metrics/first-cpu-idle.js | description": {
-    "message": "CPU の初回アイドルは、ページのメインスレッド処理が静止し、初めて入力の処理が可能になるまでにかかった時間です。[詳細](https://web.dev/first-cpu-idle/)"
   },
   "lighthouse-core/audits/metrics/first-meaningful-paint.js | description": {
     "message": "First Meaningful Paint は、ページの主要なコンテンツが可視化されるまでにかかった時間です。[詳細](https://web.dev/first-meaningful-paint/)"
@@ -1825,12 +1819,6 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "ドキュメント"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
-    "message": "入力の推定待ち時間"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
-    "message": "CPU の初回アイドル"
   },
   "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
     "message": "First Contentful Paint"

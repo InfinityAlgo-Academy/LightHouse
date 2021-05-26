@@ -9,9 +9,7 @@
     // metrics
     'first-contentful-paint',
     'first-meaningful-paint',
-    'first-cpu-idle',
     'interactive',
-    'estimated-input-latency',
     'speed-index',
     'metrics',
     'screenshot-thumbnails',

@@ -26,9 +26,6 @@ module.exports = [
         'first-meaningful-paint': {
           score: '>=0.90', // primarily just making sure it didn't fail/go crazy, specific value isn't that important
         },
-        'first-cpu-idle': {
-          score: '>=0.90', // primarily just making sure it didn't fail/go crazy, specific value isn't that important
-        },
         'interactive': {
           score: '>=0.90', // primarily just making sure it didn't fail/go crazy, specific value isn't that important
         },

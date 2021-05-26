@@ -1055,14 +1055,8 @@
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
     "message": "La metrica Cumulative Layout Shift misura lo spostamento degli elementi visibili all'interno dell'area visibile. [Ulteriori informazioni](https://web.dev/cls/)."
   },
-  "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
-    "message": "La metrica Latenza input stimata fornisce una stima del tempo impiegato dall'app, espresso in millisecondi, per rispondere all'input dell'utente durante il periodo di 5 s più impegnativo del caricamento della pagina. Se la latenza è superiore a 50 ms, gli utenti potrebbero considerare lenta la tua app. [Ulteriori informazioni](https://web.dev/estimated-input-latency/)."
-  },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
     "message": "La metrica First Contentful Paint (prima visualizzazione con contenuti) indica il momento in cui vengono visualizzati il primo testo o la prima immagine. [Ulteriori informazioni](https://web.dev/first-contentful-paint/)."
-  },
-  "lighthouse-core/audits/metrics/first-cpu-idle.js | description": {
-    "message": "La metrica Prima inattività CPU indica la prima volta in cui il thread principale della pagina è abbastanza tranquillo da poter gestire l'input.  [Ulteriori informazioni](https://web.dev/first-cpu-idle/)."
   },
   "lighthouse-core/audits/metrics/first-meaningful-paint.js | description": {
     "message": "La metrica First Meaningful Paint (visualizzazione primo elemento utile) indica quando diventano visibili i contenuti principali di una pagina. [Ulteriori informazioni](https://web.dev/first-meaningful-paint/)."
@@ -1825,12 +1819,6 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Documento"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
-    "message": "Latenza input stimata"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
-    "message": "Prima inattività CPU"
   },
   "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
     "message": "First Contentful Paint"

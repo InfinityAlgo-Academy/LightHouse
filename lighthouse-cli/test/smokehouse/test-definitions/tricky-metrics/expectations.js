@@ -17,10 +17,6 @@ module.exports = [
       requestedUrl: 'http://localhost:10200/tricky-tti.html',
       finalUrl: 'http://localhost:10200/tricky-tti.html',
       audits: {
-        'first-cpu-idle': {
-          // stalls for ~5 seconds, ~5 seconds out, so should be at least ~10s
-          numericValue: '>9900',
-        },
         'interactive': {
           // stalls for ~5 seconds, ~5 seconds out, so should be at least ~10s
           numericValue: '>9900',
@@ -33,10 +29,6 @@ module.exports = [
       requestedUrl: 'http://localhost:10200/tricky-tti-late-fcp.html',
       finalUrl: 'http://localhost:10200/tricky-tti-late-fcp.html',
       audits: {
-        'first-cpu-idle': {
-          // FCP at least ~5 seconds out
-          numericValue: '>4900',
-        },
         'interactive': {
           // FCP at least ~5 seconds out
           numericValue: '>4900',

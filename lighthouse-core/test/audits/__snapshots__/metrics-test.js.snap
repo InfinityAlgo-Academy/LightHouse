@@ -4,10 +4,6 @@ exports[`Performance: metrics evaluates valid input (with lcp from all frames) c
 Object {
   "cumulativeLayoutShift": undefined,
   "cumulativeLayoutShiftMainFrame": undefined,
-  "estimatedInputLatency": 16,
-  "estimatedInputLatencyTs": undefined,
-  "firstCPUIdle": 863,
-  "firstCPUIdleTs": 23466886143,
   "firstContentfulPaint": 863,
   "firstContentfulPaintAllFrames": 683,
   "firstContentfulPaintAllFramesTs": 23466705983,
@@ -63,10 +59,6 @@ exports[`Performance: metrics evaluates valid input (with lcp) correctly 1`] = `
 Object {
   "cumulativeLayoutShift": 0,
   "cumulativeLayoutShiftMainFrame": 0,
-  "estimatedInputLatency": 543,
-  "estimatedInputLatencyTs": undefined,
-  "firstCPUIdle": 3790,
-  "firstCPUIdleTs": undefined,
   "firstContentfulPaint": 2289,
   "firstContentfulPaintAllFrames": undefined,
   "firstContentfulPaintAllFramesTs": undefined,
@@ -122,10 +114,6 @@ exports[`Performance: metrics evaluates valid input correctly (throttlingMethod=
 Object {
   "cumulativeLayoutShift": 0,
   "cumulativeLayoutShiftMainFrame": 0,
-  "estimatedInputLatency": 17,
-  "estimatedInputLatencyTs": undefined,
-  "firstCPUIdle": 1582,
-  "firstCPUIdleTs": 225415754204,
   "firstContentfulPaint": 499,
   "firstContentfulPaintAllFrames": 499,
   "firstContentfulPaintAllFramesTs": 225414670885,
@@ -181,10 +169,6 @@ exports[`Performance: metrics evaluates valid input correctly 1`] = `
 Object {
   "cumulativeLayoutShift": 0,
   "cumulativeLayoutShiftMainFrame": 0,
-  "estimatedInputLatency": 78,
-  "estimatedInputLatencyTs": undefined,
-  "firstCPUIdle": 4313,
-  "firstCPUIdleTs": undefined,
   "firstContentfulPaint": 1337,
   "firstContentfulPaintAllFrames": undefined,
   "firstContentfulPaintAllFramesTs": undefined,

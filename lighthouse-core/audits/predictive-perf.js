@@ -11,9 +11,7 @@ const i18n = require('../lib/i18n/i18n.js');
 const LanternFcp = require('../computed/metrics/lantern-first-contentful-paint.js');
 const LanternFmp = require('../computed/metrics/lantern-first-meaningful-paint.js');
 const LanternInteractive = require('../computed/metrics/lantern-interactive.js');
-const LanternFirstCPUIdle = require('../computed/metrics/lantern-first-cpu-idle.js');
 const LanternSpeedIndex = require('../computed/metrics/lantern-speed-index.js');
-const LanternEil = require('../computed/metrics/lantern-estimated-input-latency.js');
 const LanternLcp = require('../computed/metrics/lantern-largest-contentful-paint.js');
 
 // Parameters (in ms) for log-normal CDF scoring. To see the curve:
@@ -53,9 +51,7 @@ class PredictivePerf extends Audit {
     const fcp = await LanternFcp.request({trace, devtoolsLog, settings}, context);
     const fmp = await LanternFmp.request({trace, devtoolsLog, settings}, context);
     const tti = await LanternInteractive.request({trace, devtoolsLog, settings}, context);
-    const ttfcpui = await LanternFirstCPUIdle.request({trace, devtoolsLog, settings}, context);
     const si = await LanternSpeedIndex.request({trace, devtoolsLog, settings}, context);
-    const eil = await LanternEil.request({trace, devtoolsLog, settings}, context);
     const lcp = await LanternLcp.request({trace, devtoolsLog, settings}, context);
 
     const values = {
@@ -71,17 +67,9 @@ class PredictivePerf extends Audit {
       optimisticTTI: tti.optimisticEstimate.timeInMs,
       pessimisticTTI: tti.pessimisticEstimate.timeInMs,
 
-      roughEstimateOfTTFCPUI: ttfcpui.timing,
-      optimisticTTFCPUI: ttfcpui.optimisticEstimate.timeInMs,
-      pessimisticTTFCPUI: ttfcpui.pessimisticEstimate.timeInMs,
-
       roughEstimateOfSI: si.timing,
       optimisticSI: si.optimisticEstimate.timeInMs,
       pessimisticSI: si.pessimisticEstimate.timeInMs,
-
-      roughEstimateOfEIL: eil.timing,
-      optimisticEIL: eil.optimisticEstimate.timeInMs,
-      pessimisticEIL: eil.pessimisticEstimate.timeInMs,
 
       roughEstimateOfLCP: lcp.timing,
       optimisticLCP: lcp.optimisticEstimate.timeInMs,

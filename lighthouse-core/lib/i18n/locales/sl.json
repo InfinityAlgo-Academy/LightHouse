@@ -1055,14 +1055,8 @@
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
     "message": "Kumulativna sprememba postavitve meri premikanje vidnih elementov znotraj vidnega območja. [Več o tem](https://web.dev/cls/)."
   },
-  "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
-    "message": "Predvidena vhodna zakasnitev je ocena, koliko milisekund potrebuje vaša aplikacija za odziv na uporabnikovo dejavnost med najaktivnejšimi 5 sekundami pri nalaganju strani. Če je zakasnitev večja od 50 ms, se lahko uporabnikom zdi, da se aplikacija zatika. [Več o tem](https://web.dev/estimated-input-latency/)."
-  },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
     "message": "Prvi vsebinski izris označuje čas, ko je izrisano prvo besedilo oziroma je izrisana prva slika. [Več o tem](https://web.dev/first-contentful-paint/)."
-  },
-  "lighthouse-core/audits/metrics/first-cpu-idle.js | description": {
-    "message": "Prva nedejavnost CPE-ja označuje čas, po katerem je glavna nit strani dovolj neobremenjena, da lahko obravnava vnos.  [Več o tem](https://web.dev/first-cpu-idle/)."
   },
   "lighthouse-core/audits/metrics/first-meaningful-paint.js | description": {
     "message": "Prvo smiselno barvanje meri, kdaj je vidna glavna vsebina strani. [Več o tem](https://web.dev/first-meaningful-paint/)."
@@ -1825,12 +1819,6 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Dokument"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
-    "message": "Ocenjena zakasnitev vnosa"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
-    "message": "Prva nedejavnost CPE-ja"
   },
   "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
     "message": "First Contentful Paint"

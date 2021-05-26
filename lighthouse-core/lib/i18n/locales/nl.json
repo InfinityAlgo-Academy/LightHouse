@@ -1055,14 +1055,8 @@
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
     "message": "Cumulatieve indelingsverschuiving (CLS) meet de beweging van zichtbare elementen binnen het kijkvenster. [Meer informatie](https://web.dev/cls/)"
   },
-  "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
-    "message": "Geschatte invoerlatentie is een schatting van de tijd die je app nodig heeft om te reageren op gebruikersinvoer (in milliseconden), gemeten voor de drukste periode van 5 seconden tijdens het laden van de pagina. Als de latentie langer dan 50 ms is, kunnen gebruikers je app als traag beschouwen. [Meer informatie](https://web.dev/estimated-input-latency/)"
-  },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
     "message": "'Eerste tekenbewerking met content' (FCP) geeft het tijdstip aan waarop de eerste tekst of afbeelding wordt getoond. [Meer informatie](https://web.dev/first-contentful-paint/)"
-  },
-  "lighthouse-core/audits/metrics/first-cpu-idle.js | description": {
-    "message": "'Eerste keer dat CPU inactief was' geeft de eerste keer aan dat de primaire thread van de pagina rustig genoeg was om invoer te verwerken.  [Meer informatie](https://web.dev/first-cpu-idle/)."
   },
   "lighthouse-core/audits/metrics/first-meaningful-paint.js | description": {
     "message": "'Eerste nuttige weergave' (FMP) meet wanneer de primaire content van een pagina zichtbaar is. [Meer informatie](https://web.dev/first-meaningful-paint/)"
@@ -1825,12 +1819,6 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Document"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
-    "message": "Geschatte invoerlatentie"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
-    "message": "Eerste keer dat CPU inactief was"
   },
   "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
     "message": "First Contentful Paint"

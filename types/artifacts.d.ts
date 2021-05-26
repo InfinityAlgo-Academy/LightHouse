@@ -737,14 +737,10 @@ declare global {
         largestContentfulPaintTs: number | undefined;
         largestContentfulPaintAllFrames: number | undefined;
         largestContentfulPaintAllFramesTs: number | undefined;
-        firstCPUIdle: number | undefined;
-        firstCPUIdleTs: number | undefined;
         interactive: number | undefined;
         interactiveTs: number | undefined;
         speedIndex: number | undefined;
         speedIndexTs: number | undefined;
-        estimatedInputLatency: number;
-        estimatedInputLatencyTs: number | undefined;
         maxPotentialFID: number | undefined;
         cumulativeLayoutShift: number | undefined;
         cumulativeLayoutShiftMainFrame: number | undefined;

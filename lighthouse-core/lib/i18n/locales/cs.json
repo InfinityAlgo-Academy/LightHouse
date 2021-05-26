@@ -1055,14 +1055,8 @@
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
     "message": "Metrika Cumulative Layout Shift (kumulativní změna rozvržení) měří přesuny viditelných prvků v zobrazované oblasti. [Další informace](https://web.dev/cls/)"
   },
-  "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
-    "message": "Odhadovaná latence vstupu udává, jak dlouho (v milisekundách) bude aplikaci během nejvytíženějších pěti sekund při načítání stránky odhadem trvat reakce na uživatelský vstup. Pokud je latence větší než 50 ms, mohou uživatelé chování aplikace vnímat jako přerušované. [Další informace](https://web.dev/estimated-input-latency/)"
-  },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
     "message": "Metrika First Contentful Paint (první vykreslení obsahu) udává okamžik vykreslení prvního textu nebo obrázku. [Další informace](https://web.dev/first-contentful-paint/)"
-  },
-  "lighthouse-core/audits/metrics/first-cpu-idle.js | description": {
-    "message": "První nečinnost procesoru udává čas, kdy je hlavní podproces stránky dostatečně nečinný na to, aby bylo možné zpracovat vstup.  [Další informace](https://web.dev/first-cpu-idle/)"
   },
   "lighthouse-core/audits/metrics/first-meaningful-paint.js | description": {
     "message": "Metrika First Meaningful Paint (první smysluplné vykreslení) udává, kdy začne být viditelný primární obsah stránky. [Další informace](https://web.dev/first-meaningful-paint/)"
@@ -1825,12 +1819,6 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Dokument"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
-    "message": "Odhadovaná latence vstupu"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
-    "message": "První nečinnost procesoru"
   },
   "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
     "message": "First Contentful Paint"

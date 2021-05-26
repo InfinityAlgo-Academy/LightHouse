@@ -1055,14 +1055,8 @@
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
     "message": "Điểm số tổng hợp về mức thay đổi bố cục đo lường mức độ dịch chuyển của các thành phần hiển thị trong khung nhìn. [Tìm hiểu thêm](https://web.dev/cls/)."
   },
-  "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
-    "message": "Thời gian chờ nhập thông tin theo ước tính là thời gian ước tính mà ứng dụng cần để phản hồi thông tin do người dùng nhập (tính bằng mili giây) trong khoảng thời gian 5 giây tải nhiều trang nhất. Nếu người dùng phải chờ quá 50 mili giây, thì ứng dụng của bạn bị coi là chạy chậm. [Tìm hiểu thêm](https://web.dev/estimated-input-latency/)."
-  },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
     "message": "Chỉ số Hiển thị nội dung đầu tiên đánh dấu thời điểm hiển thị văn bản hoặc hình ảnh đầu tiên. [Tìm hiểu thêm](https://web.dev/first-contentful-paint/)."
-  },
-  "lighthouse-core/audits/metrics/first-cpu-idle.js | description": {
-    "message": "Chỉ số CPU nhàn rỗi đầu tiên đánh dấu thời điểm đầu tiên chuỗi chính của trang không phải xử lý quá nhiều thông tin nhập vào.  [Tìm hiểu thêm](https://web.dev/first-cpu-idle/)"
   },
   "lighthouse-core/audits/metrics/first-meaningful-paint.js | description": {
     "message": "Chỉ số Hiển thị nội dung đầu tiên đo lường thời điểm hiển thị nội dung chính của trang. [Tìm hiểu thêm](https://web.dev/first-meaningful-paint/)."
@@ -1825,12 +1819,6 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Tài liệu"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
-    "message": "Thời gian chờ nhập thông tin theo ước tính"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
-    "message": "CPU nhàn rỗi đầu tiên"
   },
   "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
     "message": "First Contentful Paint"

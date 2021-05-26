@@ -1055,14 +1055,8 @@
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
     "message": "Sinusukat ng Cumulative Layout Shift ang paggalaw ng mga nakikitang element sa loob ng viewport. [Matuto pa](https://web.dev/cls/)."
   },
-  "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
-    "message": "Ang Tinantyang Latency ng Input ay isang pagtatantya ng bilis ng pagtugon ng iyong app sa input ng user, na nasa millisecond, sa pinakaabalang 5 segundong palugit ng pag-load ng page. Kung mas mataas kaysa sa 50 ms ang iyong latency, puwedeng ituring ng mga user na mabagal ang app mo. [Matuto pa](https://web.dev/estimated-input-latency/)."
-  },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
     "message": "Minamarkahan ng First Contentful Paint ang tagal bago ma-paint ang unang text o larawan. [Matuto pa](https://web.dev/first-contentful-paint/)."
-  },
-  "lighthouse-core/audits/metrics/first-cpu-idle.js | description": {
-    "message": "Minamarkahan ng First CPU Idle ang unang beses kung kailan hindi abala ang pangunahing thread ng page at puwede itong mangasiwa ng input.  [Matuto pa](https://web.dev/first-cpu-idle/)."
   },
   "lighthouse-core/audits/metrics/first-meaningful-paint.js | description": {
     "message": "Sinusukat ng First Meaningful Paint ang bilis ng pagpapakita ng pangunahing content ng isang page. [Matuto pa](https://web.dev/first-meaningful-paint/)."
@@ -1825,12 +1819,6 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Dokumento"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
-    "message": "Tinatayang Latency ng Input"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
-    "message": "First CPU Idle"
   },
   "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
     "message": "First Contentful Paint"

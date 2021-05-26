@@ -1055,14 +1055,8 @@
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
     "message": "Cumulative Layout Shift misst die Bewegung sichtbarer Elemente innerhalb des Darstellungsbereichs. [Weitere Informationen](https://web.dev/cls/)"
   },
-  "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
-    "message": "Die geschätzte Eingabelatenz ist eine Schätzung dessen, wie viele Millisekunden Ihre App benötigt, um während des 5-s-Fensters mit der stärksten Auslastung beim Seitenaufbau auf Nutzereingaben zu reagieren. Wenn die Latenz bei Ihnen über 50 ms beträgt, empfinden Nutzer Ihre App möglicherweise als langsam. [Weitere Informationen.](https://web.dev/estimated-input-latency/)"
-  },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
     "message": "First Contentful Paint gibt an, wann der erste Text oder das erste Bild gezeichnet wird. [Weitere Informationen.](https://web.dev/first-contentful-paint/)"
-  },
-  "lighthouse-core/audits/metrics/first-cpu-idle.js | description": {
-    "message": "Der Messwert \"Erster CPU-Leerlauf\" gibt an, wann die Aktivität des Hauptthreads der Seite das erste Mal gering genug ist, um Eingaben zu verarbeiten.  [Weitere Informationen.](https://web.dev/first-cpu-idle/)"
   },
   "lighthouse-core/audits/metrics/first-meaningful-paint.js | description": {
     "message": "\"First Meaningful Paint\" gibt an, wann die Hauptinhalte einer Seite sichtbar sind. [Weitere Informationen.](https://web.dev/first-meaningful-paint/)"
@@ -1825,12 +1819,6 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Dokument"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
-    "message": "Geschätzte Eingabelatenz"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
-    "message": "Erster CPU-Leerlauf"
   },
   "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
     "message": "First Contentful Paint"

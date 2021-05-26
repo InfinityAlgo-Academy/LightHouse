@@ -1055,14 +1055,8 @@
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
     "message": "Pergeseran Tata Letak Kumulatif (CLS) mengukur gerakan elemen yang terlihat dalam area pandang. [Pelajari lebih lanjut](https://web.dev/cls/)."
   },
-  "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
-    "message": "Perkiraan Latensi Masukan adalah perkiraan durasi yang diperlukan aplikasi untuk merespons masukan pengguna, dalam milidetik, selama durasi 5 detik tersibuk saat pemuatan halaman. Jika latensi di atas 50 md, pengguna dapat menganggap aplikasi Anda lambat. [Pelajari lebih lanjut](https://web.dev/estimated-input-latency/)."
-  },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
     "message": "First Contentful Paint menandai waktu saat teks atau gambar pertama di-paint. [Pelajari lebih lanjut](https://web.dev/first-contentful-paint/)."
-  },
-  "lighthouse-core/audits/metrics/first-cpu-idle.js | description": {
-    "message": "CPU Pertama Tanpa Aktivitas menandai saat pertama kalinya thread utama halaman menjadi cukup tenang untuk menangani masukan.  [Pelajari lebih lanjut](https://web.dev/first-cpu-idle/)."
   },
   "lighthouse-core/audits/metrics/first-meaningful-paint.js | description": {
     "message": "First Meaningful Paint mengukur waktu saat konten utama halaman terlihat. [Pelajari lebih lanjut](https://web.dev/first-meaningful-paint/)."
@@ -1825,12 +1819,6 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Dokumen"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
-    "message": "Perkiraan Latensi Masukan"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
-    "message": "CPU Pertama Tidak Ada Aktivitas"
   },
   "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
     "message": "First Contentful Paint"

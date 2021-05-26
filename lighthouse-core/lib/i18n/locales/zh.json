@@ -1055,14 +1055,8 @@
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
     "message": "“累积布局偏移”旨在衡量可见元素在视口内的移动情况。[了解详情](https://web.dev/cls/)。"
   },
-  "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
-    "message": "预计输入延迟是估算值，表示您的应用在网页加载最繁忙的 5 秒期间大概需要花费多长时间（以毫秒为单位）才能对用户输入做出响应。如果您的延迟时间超过了 50 毫秒，用户可能会感觉您的应用运行迟缓。[了解详情](https://web.dev/estimated-input-latency/)。"
-  },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
     "message": "首次内容渲染时间标记了渲染出首个文本或首张图片的时间。[了解详情](https://web.dev/first-contentful-paint/)。"
-  },
-  "lighthouse-core/audits/metrics/first-cpu-idle.js | description": {
-    "message": "首次 CPU 闲置时间标记了网页的主线程首次有空处理输入操作的时间。[了解详情](https://web.dev/first-cpu-idle/)。"
   },
   "lighthouse-core/audits/metrics/first-meaningful-paint.js | description": {
     "message": "首次有效渲染时间测量了网页主要内容开始对用户显示的时间。[了解详情](https://web.dev/first-meaningful-paint/)。"
@@ -1825,12 +1819,6 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "文档"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
-    "message": "输入延迟（估算值）"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
-    "message": "首次 CPU 闲置时间"
   },
   "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
     "message": "First Contentful Paint"

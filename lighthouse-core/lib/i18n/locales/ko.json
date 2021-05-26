@@ -1055,14 +1055,8 @@
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
     "message": "누적 레이아웃 변경은 표시 영역 안에 보이는 요소의 이동을 측정합니다. [자세히 알아보기](https://web.dev/cls/)"
   },
-  "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
-    "message": "예상 입력 대기시간은 페이지 로드가 가장 많은 5초 동안 앱이 사용자 입력에 응답하는 데 걸리는 시간(밀리초)의 추정치입니다. 지연 시간이 50밀리초보다 길면 사용자가 앱이 느리다고 인식할 수 있습니다. [자세히 알아보기](https://web.dev/estimated-input-latency/)"
-  },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
     "message": "콘텐츠가 포함된 첫 페인트는 첫 번째 텍스트 또는 이미지가 표시되는 시간을 나타냅니다. [자세히 알아보기](https://web.dev/first-contentful-paint/)"
-  },
-  "lighthouse-core/audits/metrics/first-cpu-idle.js | description": {
-    "message": "최초 CPU 유휴 상태는 페이지의 기본 스레드가 입력을 처리할 수 있을 만큼 조용한 상태가 된 첫 번째 시간을 표시합니다.  [자세히 알아보기](https://web.dev/first-cpu-idle/)"
   },
   "lighthouse-core/audits/metrics/first-meaningful-paint.js | description": {
     "message": "유의미한 첫 페인트는 페이지의 기본 콘텐츠가 표시되는 경우를 측정합니다. [자세히 알아보기](https://web.dev/first-meaningful-paint/)"
@@ -1825,12 +1819,6 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "문서"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
-    "message": "예상 입력 대기시간"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
-    "message": "최초 CPU 유휴 상태"
   },
   "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
     "message": "First Contentful Paint"

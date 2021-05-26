@@ -48,11 +48,9 @@ class TimingBudget extends Audit {
     /** @type {Record<LH.Budget.TimingMetric, string>} */
     const strMappings = {
       'first-contentful-paint': i18n.UIStrings.firstContentfulPaintMetric,
-      'first-cpu-idle': i18n.UIStrings.firstCPUIdleMetric,
       'interactive': i18n.UIStrings.interactiveMetric,
       'first-meaningful-paint': i18n.UIStrings.firstMeaningfulPaintMetric,
       'max-potential-fid': i18n.UIStrings.maxPotentialFIDMetric,
-      'estimated-input-latency': i18n.UIStrings.estimatedInputLatencyMetric,
       'total-blocking-time': i18n.UIStrings.totalBlockingTimeMetric,
       'speed-index': i18n.UIStrings.speedIndexMetric,
       'largest-contentful-paint': i18n.UIStrings.largestContentfulPaintMetric,
@@ -70,11 +68,9 @@ class TimingBudget extends Audit {
     /** @type {Record<LH.Budget.TimingMetric, number|undefined>} */
     const measurements = {
       'first-contentful-paint': summary.firstContentfulPaint,
-      'first-cpu-idle': summary.firstCPUIdle,
       'interactive': summary.interactive,
       'first-meaningful-paint': summary.firstMeaningfulPaint,
       'max-potential-fid': summary.maxPotentialFID,
-      'estimated-input-latency': summary.estimatedInputLatency,
       'total-blocking-time': summary.totalBlockingTime,
       'speed-index': summary.speedIndex,
       'largest-contentful-paint': summary.largestContentfulPaint,
@@ -115,14 +111,14 @@ class TimingBudget extends Audit {
     // Defining type here overrides the column setting so that it doesn't receive ms units.
     const clsItem = items.find(item => item.metric === 'cumulative-layout-shift');
     if (clsItem) {
-      if (typeof clsItem.measurement !== 'object') {
+      if (typeof clsItem.measurement === 'number') {
         clsItem.measurement = {
           type: 'numeric',
           value: Number(clsItem.measurement),
           granularity: 0.01,
         };
       }
-      if (typeof clsItem.overBudget !== 'object') {
+      if (typeof clsItem.overBudget === 'number') {
         clsItem.overBudget = {
           type: 'numeric',
           value: Number(clsItem.overBudget),

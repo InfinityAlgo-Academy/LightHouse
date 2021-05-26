@@ -40,7 +40,6 @@ const budgetedConfig = {
       ],
       timings: [
         {metric: 'first-contentful-paint', budget: 3000},
-        {metric: 'first-cpu-idle', budget: 2900},
         {metric: 'interactive', budget: 2900},
         {metric: 'first-meaningful-paint', budget: 2000},
         {metric: 'max-potential-fid', budget: 100},

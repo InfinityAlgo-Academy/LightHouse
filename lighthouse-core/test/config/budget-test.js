@@ -237,11 +237,9 @@ describe('Budget', () => {
       budgets[0].timings = [{metric: 'blah', budget: 0}];
       const metrics = [
         'first-contentful-paint',
-        'first-cpu-idle',
         'interactive',
         'first-meaningful-paint',
         'max-potential-fid',
-        'estimated-input-latency',
         'total-blocking-time',
         'speed-index',
         'largest-contentful-paint',

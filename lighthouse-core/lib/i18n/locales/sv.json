@@ -1055,14 +1055,8 @@
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
     "message": "Kumulativ layoutförskjutning mäter rörelsen hos synliga element inom visningsområdet. [Läs mer](https://web.dev/cls/)."
   },
-  "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
-    "message": "Uppskattad inmatningslatens är en uppskattning av hur lång tid (i millisekunder) det tar innan appen svarar på användarens inmatning under den mest aktiva femsekundersperioden av sidinläsningen. Om latensen är högre än 50 ms kan användarna uppfatta appen som seg. [Läs mer](https://web.dev/estimated-input-latency/)."
-  },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
     "message": "Första innehållsrenderingen anger när den första texten eller bilden ritades upp. [Läs mer](https://web.dev/first-contentful-paint/)."
-  },
-  "lighthouse-core/audits/metrics/first-cpu-idle.js | description": {
-    "message": "Första CPU-avbrottet anger när sidans modertråd först blev inaktiv nog att hantera indata.  [Läs mer](https://web.dev/first-cpu-idle/)."
   },
   "lighthouse-core/audits/metrics/first-meaningful-paint.js | description": {
     "message": "Första användbara renderingen anger när sidans primära innehåll blev synligt. [Läs mer](https://web.dev/first-meaningful-paint/)."
@@ -1825,12 +1819,6 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Dokument"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
-    "message": "Beräknad inmatningslatens"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
-    "message": "Första CPU-inaktivitet"
   },
   "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
     "message": "First Contentful Paint"

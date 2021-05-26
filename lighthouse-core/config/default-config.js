@@ -192,13 +192,11 @@ const defaultConfig = {
     'metrics/speed-index',
     'screenshot-thumbnails',
     'final-screenshot',
-    'metrics/estimated-input-latency',
     'metrics/total-blocking-time',
     'metrics/max-potential-fid',
     'metrics/cumulative-layout-shift',
     'errors-in-console',
     'server-response-time',
-    'metrics/first-cpu-idle',
     'metrics/interactive',
     'user-timings',
     'critical-request-chains',
@@ -431,10 +429,8 @@ const defaultConfig = {
         {id: 'cumulative-layout-shift', weight: 5, group: 'metrics', acronym: 'CLS', relevantAudits: m2a.clsRelevantAudits},
 
         // These are our "invisible" metrics. Not displayed, but still in the LHR
-        {id: 'first-cpu-idle', weight: 0, acronym: 'FCI'},
         {id: 'max-potential-fid', weight: 0},
         {id: 'first-meaningful-paint', weight: 0, acronym: 'FMP'},
-        {id: 'estimated-input-latency', weight: 0},
 
         {id: 'render-blocking-resources', weight: 0, group: 'load-opportunities'},
         {id: 'uses-responsive-images', weight: 0, group: 'load-opportunities'},

@@ -1055,14 +1055,8 @@
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
     "message": "Nustatant kaupiamąjį išdėstymo poslinkį įvertinamas peržiūros srityje matomų elementų judėjimas. [Sužinokite daugiau](https://web.dev/cls/)"
   },
-  "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
-    "message": "Įvertinta įvesties delsa yra įvertintas laikas milisekundėmis, per kurį programa atsako į naudotojo įvestį per labiausiai užimtas puslapio įkėlimo 5 sekundes. Jei delsa ilgesnė nei 50 ms, naudotojams gali atrodyti, kad programa veikia lėtai. [Sužinokite daugiau](https://web.dev/estimated-input-latency/)."
-  },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
     "message": "Pirmas turiningas žymėjimas nurodo laiką, kada pažymimas pirmasis tekstas ar vaizdas. [Sužinokite daugiau](https://web.dev/first-contentful-paint/)."
-  },
-  "lighthouse-core/audits/metrics/first-cpu-idle.js | description": {
-    "message": "Pirmas centrinio procesoriaus neaktyvumo laikas nurodo pirmą kartą, kai pagrindinė puslapio grupė yra pakankamai neaktyvi, kad galėtų apdoroti įvestį.  [Sužinokite daugiau](https://web.dev/first-cpu-idle/)"
   },
   "lighthouse-core/audits/metrics/first-meaningful-paint.js | description": {
     "message": "Pirmasis reikšmingas parodymas nurodo, kada parodomas pagrindinis puslapio turinys. [Sužinokite daugiau](https://web.dev/first-meaningful-paint/)."
@@ -1825,12 +1819,6 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Dokumentas"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
-    "message": "Įvertinta įvesties delsa"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
-    "message": "Pirmas cent. procesoriaus laisvas laikas"
   },
   "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
     "message": "First Contentful Paint"

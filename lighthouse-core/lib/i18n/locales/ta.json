@@ -1055,14 +1055,8 @@
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
     "message": "காட்சிப் பகுதிக்குள் தெரியக்கூடிய கூறுகளின் நகர்வை கியூமுலேட்டிவ் லேஅவுட் ஷிஃப்ட் அளவிடுகிறது. [மேலும் அறிக](https://web.dev/cls/)."
   },
-  "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
-    "message": "'தோராய உள்ளீட்டுத் தாமதம்' என்பது பக்கம் ஏற்றப்படும் பிஸியான 5 வினாடி காலஅளவின்போது பயனரின் உள்ளீட்டுக்கு பதிலளிக்க உங்கள் ஆப்ஸ் எவ்வளவு நேரம் எடுத்துக் கொள்கிறது என்பதற்கான தோராய மதிப்பாகும். பதிலளிக்க 50 மி.வி.க்கு மேல் தாமதமானால் உங்கள் ஆப்ஸ் மெதுவானது என்று பயனர்கள் கருதக்கூடும். [மேலும் அறிக](https://web.dev/estimated-input-latency/)."
-  },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
     "message": "'உள்ளடக்கமுள்ள முதல் தோற்றம்' என்பது முதல் உரையோ படமோ தோன்றும் நேரத்தைக் குறிக்கிறது. [மேலும் அறிக](https://web.dev/first-contentful-paint/)."
-  },
-  "lighthouse-core/audits/metrics/first-cpu-idle.js | description": {
-    "message": "'CPU செயல்படாநிலையின் தொடக்க நேரம்' என்பது உள்ளீட்டை பக்கத்தின் முக்கியத் தொடரிழை கையாள்வதற்குத் தயாராக செயல்படாநிலையில் இருக்கும் நேரத்தின் தொடக்கத்தைக் குறிக்கிறது.  [மேலும் அறிக](https://web.dev/first-cpu-idle/)."
   },
   "lighthouse-core/audits/metrics/first-meaningful-paint.js | description": {
     "message": "'பயனுள்ள முதல் தோற்றம்' என்பது பக்கத்தின் முதன்மை உள்ளடக்கம் எப்போது தெரிகிறது என்பதை அளவிடுகிறது. [மேலும் அறிக](https://web.dev/first-meaningful-paint/)."
@@ -1825,12 +1819,6 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "ஆவணம்"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
-    "message": "தோராயமான உள்ளீட்டுத் தாமதம்"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
-    "message": "CPU செயல்படாநிலையின் தொடக்க நேரம்"
   },
   "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
     "message": "First Contentful Paint"

@@ -1055,14 +1055,8 @@
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
     "message": "המדד Cumulative Layout Shift מודד את התנועה של הרכיבים הגלויים לעין בתוך אזור התצוגה. [מידע נוסף](https://web.dev/cls/)."
   },
-  "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
-    "message": "זמן אחזור מוערך של קלט הוא אומדן של משך הזמן הנדרש לאפליקציה כדי להגיב לקלט של משתמש. הערך מצוין באלפיות שנייה ומתייחס ל-5 השניות העמוסות ביותר בטעינת הדף. אם זמן האחזור ארוך מ-50 אלפיות שנייה, ייתכן שהמשתמשים יבחינו בעיכוב בפעילות האפליקציה. [מידע נוסף](https://web.dev/estimated-input-latency/)."
-  },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
     "message": "המדד 'הצגת תוכן ראשוני (FCP)' מציין את הזמן שבו הטקסט או התמונה הראשונים מוצגים. [מידע נוסף](https://web.dev/first-contentful-paint/)."
-  },
-  "lighthouse-core/audits/metrics/first-cpu-idle.js | description": {
-    "message": "הערך 'מצב ראשון של חוסר פעילות ב-CPU' מציין את הפעם הראשונה שבה התהליכון הראשי של הדף פנוי מספיק בשביל להגיב לקלט.  [מידע נוסף](https://web.dev/first-cpu-idle/)."
   },
   "lighthouse-core/audits/metrics/first-meaningful-paint.js | description": {
     "message": "הערך 'הצגת התוכן העיקרי (FMP)' מציין מתי מוצג התוכן העיקרי של הדף. [מידע נוסף](https://web.dev/first-meaningful-paint/)."
@@ -1825,12 +1819,6 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "מסמך"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
-    "message": "אומדן זמן האחזור של קלט"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
-    "message": "מצב ראשון של חוסר פעילות ב-CPU"
   },
   "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
     "message": "First Contentful Paint"

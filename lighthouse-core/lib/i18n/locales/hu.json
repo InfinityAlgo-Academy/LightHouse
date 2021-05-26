@@ -1055,14 +1055,8 @@
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
     "message": "Az Elrendezés összmozgása mutató az oldal megjelenítési területén látható elemek mozgását méri. [További információ](https://web.dev/cls/)."
   },
-  "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
-    "message": "A becsült bemeneti késés annak a becsült értéke, hogy az alkalmazás mennyi idő alatt reagál – ezredmásodpercben (ms) megadva – a felhasználói interakciókra az oldalbetöltés legforgalmasabb 5 másodperces időkeretében. Ha a várakozási idő meghaladja az 50 ms-ot, a felhasználók lassúnak érezhetik az alkalmazást. [További információ](https://web.dev/estimated-input-latency/)."
-  },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
     "message": "Az első vizuális tartalomválasz azt az időpontot jelöli, amikor a rendszer megkezdi az első szöveg vagy kép megjelenítését. [További információ](https://web.dev/first-contentful-paint/)."
-  },
-  "lighthouse-core/audits/metrics/first-cpu-idle.js | description": {
-    "message": "Az első processzor-üresjárat mutató az első olyan alkalmat jelöli, amikor az oldal főszálának aktivitása elég alacsonnyá vált ahhoz, hogy kezelni tudja a felhasználói interakciókat.  [További információ](https://web.dev/first-cpu-idle/)."
   },
   "lighthouse-core/audits/metrics/first-meaningful-paint.js | description": {
     "message": "Az első releváns vizuális válasz azt méri, hogy mikor válik láthatóvá az oldal elsődleges tartalma. [További információ](https://web.dev/first-meaningful-paint/)."
@@ -1825,12 +1819,6 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Dokumentum"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
-    "message": "Becsült bemeneti késés"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
-    "message": "Első processzor-üresjárat"
   },
   "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
     "message": "First Contentful Paint"

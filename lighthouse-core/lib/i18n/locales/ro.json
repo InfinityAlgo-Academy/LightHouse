@@ -1055,14 +1055,8 @@
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
     "message": "Schimbarea cumulată a aspectului măsoară deplasarea elementelor vizibile în aria vizibilă. [Află mai multe](https://web.dev/cls/)."
   },
-  "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
-    "message": "Latența estimată a comenzilor reprezintă o estimare a duratei necesare pentru ca aplicația să răspundă la comanda utilizatorului, în milisecunde, în cea mai aglomerată fereastră de cinci secunde de încărcare a paginii. Dacă latența este mai mare de 50 ms, utilizatorii îți pot percepe aplicația ca fiind lentă. [Află mai multe](https://web.dev/estimated-input-latency/)."
-  },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
     "message": "Prima redare de conținut arată momentul când se redă primul text sau prima imagine. [Află mai multe](https://web.dev/first-contentful-paint/)."
-  },
-  "lighthouse-core/audits/metrics/first-cpu-idle.js | description": {
-    "message": "Primul „CPU inactiv” semnalează primul moment în care firul principal al paginii este suficient de liber pentru a accepta comenzi.  [Află mai multe](https://web.dev/first-cpu-idle/)."
   },
   "lighthouse-core/audits/metrics/first-meaningful-paint.js | description": {
     "message": "Prima redare semnificativă arată momentul când este vizibil conținutul principal al unei pagini. [Află mai multe](https://web.dev/first-meaningful-paint/)."
@@ -1825,12 +1819,6 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Document"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
-    "message": "Latența estimată a comenzilor"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
-    "message": "Primul „CPU inactiv”"
   },
   "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
     "message": "First Contentful Paint"

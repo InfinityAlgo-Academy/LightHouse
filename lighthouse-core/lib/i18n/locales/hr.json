@@ -1055,14 +1055,8 @@
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
     "message": "Kumulativni pomak izgleda mjeri kretanje vidljivih elemenata u vidljivom dijelu. [Saznajte više](https://web.dev/cls/)."
   },
-  "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
-    "message": "Procijenjena latencija unosa procjena je vremena koje je potrebno da vaša aplikacija reagira na korisnički unos, u milisekundama, tijekom najintenzivnijih pet sekundi učitavanja stranice. Ako je latencija viša od 50 ms, korisnici mogu doživjeti vašu aplikaciju kao usporenu. [Saznajte više](https://web.dev/estimated-input-latency/)."
-  },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
     "message": "Prvo renderiranje sadržaja označava vrijeme renderiranja prvog teksta ili slike. [Saznajte više](https://web.dev/first-contentful-paint/)."
-  },
-  "lighthouse-core/audits/metrics/first-cpu-idle.js | description": {
-    "message": "Prvi procesor u mirovanju označava prvi trenutak u kojem je glavna nit stranice dovoljno neopterećena da bi obradila unos.  [Saznajte više](https://web.dev/first-cpu-idle/)."
   },
   "lighthouse-core/audits/metrics/first-meaningful-paint.js | description": {
     "message": "Prvo korisno renderiranje mjeri kada je vidljiv primarni sadržaj stranice. [Saznajte više](https://web.dev/first-meaningful-paint/)."
@@ -1825,12 +1819,6 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Dokument"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
-    "message": "Procijenjena latencija unosa"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
-    "message": "Prvi procesor u mirovanju"
   },
   "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
     "message": "First Contentful Paint"

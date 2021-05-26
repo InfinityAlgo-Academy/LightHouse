@@ -1055,14 +1055,8 @@
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
     "message": "कुल लेआउट शिफ़्ट, व्यूपोर्ट में दिखने वाले एलिमेंट की हलचल बताता है. [ज़्यादा जानें](https://web.dev/cls/)."
   },
-  "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
-    "message": "इनपुट के इंतज़ार के समय का अंदाज़ा, इस बात से लगाया जाता है कि पेज लोड होने की सबसे व्यस्त पांच सेकंड की विंडो के दौरान आपके ऐप्लिकेशन को इस्तेमाल करने वाले के इनपुट का जवाब देने में कितना समय लगेगा. इस समय का हिसाब मिलीसेकंड में लगाया जाता है. अगर इंतज़ार का समय 50 मिलीसेकंड से ज़्यादा हो, तो इस्तेमाल करने वाले आपके ऐप्लिकेशन को धीमा मान सकते हैं. [ज़्यादा जानें](https://web.dev/estimated-input-latency/)."
-  },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
     "message": "फ़र्स्ट कॉन्टेंटफ़ुल पेंट से उस समय का पता चलता है जब पहले टेक्स्ट या इमेज को पेंट किया गया था. [ज़्यादा जानें](https://web.dev/first-contentful-paint/)."
-  },
-  "lighthouse-core/audits/metrics/first-cpu-idle.js | description": {
-    "message": "इस्तेमाल में न होने वाले पहले सीपीयू (CPU) का आंकड़ा उस समय के बारे में बताता है जब पेज का मुख्य थ्रेड पहली बार इनपुट को संभालने के लिए काफ़ी होता है.  [ज़्यादा जानें](https://web.dev/first-cpu-idle/)."
   },
   "lighthouse-core/audits/metrics/first-meaningful-paint.js | description": {
     "message": "फ़र्स्ट मीनिंगफ़ुल पेंट, पेज की मुख्य सामग्री दिखाई देने का समय बताता है. [ज़्यादा जानें](https://web.dev/first-meaningful-paint/)."
@@ -1825,12 +1819,6 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "दस्तावेज़"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
-    "message": "अनुमानित इनपुट प्रतीक्षा समय"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
-    "message": "पहला सीपीयू (CPU) इस्तेमाल में नहीं"
   },
   "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
     "message": "First Contentful Paint"

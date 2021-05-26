@@ -1055,14 +1055,8 @@
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
     "message": "A \"Mudança de layout cumulativa\" mede o movimento de elementos visíveis na janela de visualização. [Saiba mais](https://web.dev/cls/)."
   },
-  "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
-    "message": "\"Latência de entrada estimada\" é uma estimativa de quanto tempo o app leva para responder à entrada do usuário, em milésimos de segundo, durante a janela de carregamento de página mais movimentada de cinco segundos. Se a latência for maior que 50 ms, o usuário poderá notar lentidão no app. [Saiba mais](https://web.dev/estimated-input-latency/)."
-  },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
     "message": "\"Primeira exibição de conteúdo\" marca o momento em que o primeiro texto ou imagem é disponibilizado. [Saiba mais](https://web.dev/first-contentful-paint/)."
-  },
-  "lighthouse-core/audits/metrics/first-cpu-idle.js | description": {
-    "message": "\"Primeira CPU ociosa\" marca a primeira vez que a linha de execução principal da página fica silenciosa o suficiente para lidar com a entrada.  [Saiba mais](https://web.dev/first-cpu-idle/)."
   },
   "lighthouse-core/audits/metrics/first-meaningful-paint.js | description": {
     "message": "\"Primeira exibição significativa\" marca o momento em que o conteúdo principal de uma página se torna visível. [Saiba mais](https://web.dev/first-meaningful-paint/)."
@@ -1825,12 +1819,6 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Documento"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
-    "message": "Latência de entrada estimada"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
-    "message": "Primeira CPU ociosa"
   },
   "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
     "message": "First Contentful Paint"

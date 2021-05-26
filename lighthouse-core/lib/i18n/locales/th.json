@@ -1055,14 +1055,8 @@
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
     "message": "Cumulative Layout Shift จะวัดการเคลื่อนไหวขององค์ประกอบที่มองเห็นได้ภายในวิวพอร์ต [ดูข้อมูลเพิ่มเติม](https://web.dev/cls/)"
   },
-  "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
-    "message": "เวลาตอบสนองต่ออินพุตโดยประมาณเป็นระยะเวลาโดยประมาณที่แอปใช้เพื่อตอบสนองอินพุตของผู้ใช้ระหว่างการโหลดหน้าเว็บในกรอบเวลา 5 วินาทีที่ทำงานหนักที่สุด มีหน่วยเป็นมิลลิวินาที หากเวลาในการตอบสนองนานกว่า 50 มิลลิวินาที ผู้ใช้อาจรู้สึกว่าแอปช้า [ดูข้อมูลเพิ่มเติม](https://web.dev/estimated-input-latency/)"
-  },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
     "message": "First Contentful Paint ระบุเวลาที่มีการแสดงผลข้อความหรือรูปภาพครั้งแรก [ดูข้อมูลเพิ่มเติม](https://web.dev/first-contentful-paint/)"
-  },
-  "lighthouse-core/audits/metrics/first-cpu-idle.js | description": {
-    "message": "First CPU Idle ระบุครั้งแรกที่เทรดหลักของหน้าเว็บว่างพอที่จะจัดการกับอินพุต  [ดูข้อมูลเพิ่มเติม](https://web.dev/first-cpu-idle/)"
   },
   "lighthouse-core/audits/metrics/first-meaningful-paint.js | description": {
     "message": "การแสดงผลที่มีความหมายครั้งแรกวัดเมื่อเนื้อหาหลักของหน้าเว็บปรากฏ [ดูข้อมูลเพิ่มเติม](https://web.dev/first-meaningful-paint/)"
@@ -1825,12 +1819,6 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "เอกสาร"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
-    "message": "เวลาในการตอบสนองต่ออินพุตโดยประมาณ"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
-    "message": "CPU ไม่ได้ใช้งานครั้งแรก"
   },
   "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
     "message": "First Contentful Paint"

@@ -1055,14 +1055,8 @@
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
     "message": "Cumulative Layout Shift mesure le mouvement des éléments visibles dans la fenêtre d'affichage. [En savoir plus](https://web.dev/cls/)"
   },
-  "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
-    "message": "La valeur \"Estimated Input Latency\" est une estimation du temps en millisecondes que prend votre application pour réagir à l'intervention de l'utilisateur, pendant la fenêtre de pointe de 5 s de chargement de la page. Si le temps de latence est supérieur à 50 ms, les utilisateurs peuvent percevoir votre application comme étant lente. [En savoir plus](https://web.dev/estimated-input-latency/)"
-  },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
     "message": "La statistique \"First Contentful Paint\" indique le moment où le premier texte ou la première image sont affichés. [En savoir plus](https://web.dev/first-contentful-paint/)"
-  },
-  "lighthouse-core/audits/metrics/first-cpu-idle.js | description": {
-    "message": "La statistique \"Premier processeur inactif\" marque la première fois que le thread principal de la page est suffisamment silencieux pour gérer l'entrée.  [Découvrez-en davantage.](https://web.dev/first-cpu-idle/)"
   },
   "lighthouse-core/audits/metrics/first-meaningful-paint.js | description": {
     "message": "La statistique \"First Meaningful Paint\" mesure quand le contenu principal d'une page est visible. [En savoir plus](https://web.dev/first-meaningful-paint/)"
@@ -1825,12 +1819,6 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Document"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
-    "message": "Estimation du temps de latence avant intervention"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
-    "message": "Premier processeur inactif"
   },
   "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
     "message": "First Contentful Paint"
