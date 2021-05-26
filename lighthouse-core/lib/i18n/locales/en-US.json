@@ -107,15 +107,6 @@
   "lighthouse-core/audits/accessibility/aria-roles.js | title": {
     "message": "`[role]` values are valid"
   },
-  "lighthouse-core/audits/accessibility/aria-text.js | description": {
-    "message": "Browsers may ignore `role=text` if it contains focusable descendants. [Learn more.](https://dequeuniversity.com/rules/axe/4.2/aria-text)"
-  },
-  "lighthouse-core/audits/accessibility/aria-text.js | failureTitle": {
-    "message": "`role=text` elements contain focusable descendants"
-  },
-  "lighthouse-core/audits/accessibility/aria-text.js | title": {
-    "message": "`role=text` elements do not contain focusable descendants"
-  },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
     "message": "When a toggle field doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://web.dev/aria-name/)."
   },
@@ -370,15 +361,6 @@
   },
   "lighthouse-core/audits/accessibility/meta-viewport.js | title": {
     "message": "`[user-scalable=\"no\"]` is not used in the `<meta name=\"viewport\">` element and the `[maximum-scale]` attribute is not less than 5."
-  },
-  "lighthouse-core/audits/accessibility/nested-interactive.js | description": {
-    "message": "Nested interactive controls will not be announced by assistive technologies such as screen readers. [Learn more.](https://dequeuniversity.com/rules/axe/4.2/nested-interactive)"
-  },
-  "lighthouse-core/audits/accessibility/nested-interactive.js | failureTitle": {
-    "message": "Interactive controls are nested"
-  },
-  "lighthouse-core/audits/accessibility/nested-interactive.js | title": {
-    "message": "Interactive controls are not nested"
   },
   "lighthouse-core/audits/accessibility/object-alt.js | description": {
     "message": "Screen readers cannot translate non-text content. Adding alt text to `<object>` elements helps screen readers convey meaning to users. [Learn more](https://web.dev/object-alt/)."

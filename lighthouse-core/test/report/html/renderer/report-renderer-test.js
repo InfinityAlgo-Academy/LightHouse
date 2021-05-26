@@ -311,7 +311,7 @@ describe('ReportRenderer', () => {
           'link-in-text-block': {enabled: false},
           // Report has empty links prior to i18n-ing.
           'link-name': {enabled: false},
-          // TODO .lh-category-wrapper:nth-child(2) > .lh-category > .lh-clump--manual.lh-clump.lh-audit-group > summary
+          // May not be a real issue. https://github.com/dequelabs/axe-core/issues/2958
           'nested-interactive': {enabled: false},
         },
       };
