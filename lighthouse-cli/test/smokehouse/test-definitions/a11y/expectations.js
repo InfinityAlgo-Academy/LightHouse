@@ -690,6 +690,20 @@ const expectations = [
             ],
           },
         },
+        'frame-focusable-content': {
+          score: 0,
+          details: {
+            items: [
+            ],
+          },
+        },
+        'empty-table-header': {
+          score: 0,
+          details: {
+            items: [
+            ],
+          },
+        },
       },
     },
   },
