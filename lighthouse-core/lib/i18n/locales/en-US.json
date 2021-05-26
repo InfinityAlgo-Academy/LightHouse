@@ -237,13 +237,13 @@
     "message": "ARIA IDs are unique"
   },
   "lighthouse-core/audits/accessibility/empty-table-header.js | description": {
-    "message": "Table headers should have discernible text, so assistive technologies like screen readers may describe table contents appropriately. [Learn more](https://dequeuniversity.com/rules/axe/4.2/empty-table-header)."
+    "message": "`table` headers should have visible text so assistive technologies like screen readers may describe table contents appropriately. [Learn more](https://dequeuniversity.com/rules/axe/4.2/empty-table-header)."
   },
   "lighthouse-core/audits/accessibility/empty-table-header.js | failureTitle": {
-    "message": "Table headers are missing discernible text"
+    "message": "`table` headers do not have visible text"
   },
   "lighthouse-core/audits/accessibility/empty-table-header.js | title": {
-    "message": "Table headers have discernible text"
+    "message": "`table` headers have visible text"
   },
   "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | description": {
     "message": "Form fields with multiple labels can be confusingly announced by assistive technologies like screen readers which use either the first, the last, or all of the labels. [Learn more](https://web.dev/form-field-multiple-labels/)."
@@ -255,7 +255,7 @@
     "message": "No form fields have multiple labels"
   },
   "lighthouse-core/audits/accessibility/frame-focusable-content.js | description": {
-    "message": "Focusable elements within an `<iframe>` element with a negative `tabindex` cannot be reached via keyboard navigation. [Learn more.](https://dequeuniversity.com/rules/axe/4.2/frame-focusable-content)"
+    "message": "Focusable elements within an `<iframe>` element with a negative `tabindex` cannot be reached via keyboard navigation. [Learn more](https://dequeuniversity.com/rules/axe/4.2/frame-focusable-content)."
   },
   "lighthouse-core/audits/accessibility/frame-focusable-content.js | failureTitle": {
     "message": "`<iframe>` elements with focusable content have a negative `tabindex`"

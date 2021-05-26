@@ -2114,6 +2114,38 @@
     ],
     "incomplete": [
       {
+        "id": "color-contrast",
+        "impact": "serious",
+        "tags": [
+          "cat.color",
+          "wcag2aa",
+          "wcag143"
+        ],
+        "nodes": [
+          {
+            "target": [
+              "a[rel=\"noopener\"]"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it partially overlaps other elements",
+            "node": {
+              "lhId": "5-5-A",
+              "devtoolsNodePath": "3,HTML,1,BODY,46,A",
+              "selector": "body > a",
+              "boundingRect": {
+                "top": 1220,
+                "bottom": 1256,
+                "left": 8,
+                "right": 348,
+                "width": 340,
+                "height": 36
+              },
+              "snippet": "<a href=\"https://www.google.com/\" target=\"_blank\" rel=\"noopener\">",
+              "nodeLabel": "external link that uses rel noopener"
+            }
+          }
+        ]
+      },
+      {
         "id": "empty-table-header",
         "impact": "minor",
         "tags": [

@@ -2884,8 +2884,8 @@
     },
     "empty-table-header": {
       "id": "empty-table-header",
-      "title": "Table headers have discernible text",
-      "description": "Table headers should have discernible text, so assistive technologies like screen readers may describe table contents appropriately. [Learn more](https://dequeuniversity.com/rules/axe/4.2/empty-table-header).",
+      "title": "`table` headers have visible text",
+      "description": "`table` headers should have visible text so assistive technologies like screen readers may describe table contents appropriately. [Learn more](https://dequeuniversity.com/rules/axe/4.2/empty-table-header).",
       "score": 1,
       "scoreDisplayMode": "binary",
       "details": {
@@ -2904,7 +2904,7 @@
     "frame-focusable-content": {
       "id": "frame-focusable-content",
       "title": "`<iframe>` elements with focusable content do not have a negative `tabindex`",
-      "description": "Focusable elements within an `<iframe>` element with a negative `tabindex` cannot be reached via keyboard navigation. [Learn more.](https://dequeuniversity.com/rules/axe/4.2/frame-focusable-content)",
+      "description": "Focusable elements within an `<iframe>` element with a negative `tabindex` cannot be reached via keyboard navigation. [Learn more](https://dequeuniversity.com/rules/axe/4.2/frame-focusable-content).",
       "score": 1,
       "scoreDisplayMode": "binary",
       "details": {
@@ -5533,7 +5533,7 @@
         },
         {
           "id": "empty-table-header",
-          "weight": 0,
+          "weight": 2,
           "group": "a11y-tables-lists"
         },
         {
@@ -5543,7 +5543,7 @@
         },
         {
           "id": "frame-focusable-content",
-          "weight": 0,
+          "weight": 3,
           "group": "a11y-navigation"
         },
         {
