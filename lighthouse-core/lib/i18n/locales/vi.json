@@ -554,12 +554,6 @@
   "lighthouse-core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "Bật tính năng nén văn bản"
   },
-  "lighthouse-core/audits/byte-efficiency/uses-webp-images.js | description": {
-    "message": "Các định dạng hình ảnh như JPEG 2000, JPEG XR và WebP thường nén tốt hơn PNG hoặc JPEG, tức là tải xuống nhanh hơn và tiêu tốn ít dữ liệu hơn. [Tìm hiểu thêm](https://web.dev/uses-webp-images/)."
-  },
-  "lighthouse-core/audits/byte-efficiency/uses-webp-images.js | title": {
-    "message": "Phân phối hình ảnh ở định dạng mới và hiệu quả hơn"
-  },
   "lighthouse-core/audits/content-width.js | description": {
     "message": "Nếu chiều rộng của nội dung trong ứng dụng không khớp với chiều rộng của khung nhìn, thì ứng dụng có thể không được tối ưu hóa cho màn hình thiết bị di động. [Tìm hiểu thêm](https://web.dev/content-width/)"
   },
@@ -760,15 +754,6 @@
   },
   "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | failureTitle": {
     "message": "Bao gồm các thư viện giao diện người dùng JavaScript có những lỗ hổng bảo mật đã biết"
-  },
-  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | rowSeverityHigh": {
-    "message": "Cao"
-  },
-  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | rowSeverityLow": {
-    "message": "Thấp"
-  },
-  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | rowSeverityMedium": {
-    "message": "Trung bình"
   },
   "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | title": {
     "message": "Tránh các thư viện giao diện người dùng JavaScript có lỗ hổng bảo mật đã biết"
@@ -1070,14 +1055,8 @@
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
     "message": "Điểm số tổng hợp về mức thay đổi bố cục đo lường mức độ dịch chuyển của các thành phần hiển thị trong khung nhìn. [Tìm hiểu thêm](https://web.dev/cls/)."
   },
-  "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
-    "message": "Thời gian chờ nhập thông tin theo ước tính là thời gian ước tính mà ứng dụng cần để phản hồi thông tin do người dùng nhập (tính bằng mili giây) trong khoảng thời gian 5 giây tải nhiều trang nhất. Nếu người dùng phải chờ quá 50 mili giây, thì ứng dụng của bạn bị coi là chạy chậm. [Tìm hiểu thêm](https://web.dev/estimated-input-latency/)."
-  },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
     "message": "Chỉ số Hiển thị nội dung đầu tiên đánh dấu thời điểm hiển thị văn bản hoặc hình ảnh đầu tiên. [Tìm hiểu thêm](https://web.dev/first-contentful-paint/)."
-  },
-  "lighthouse-core/audits/metrics/first-cpu-idle.js | description": {
-    "message": "Chỉ số CPU nhàn rỗi đầu tiên đánh dấu thời điểm đầu tiên chuỗi chính của trang không phải xử lý quá nhiều thông tin nhập vào.  [Tìm hiểu thêm](https://web.dev/first-cpu-idle/)"
   },
   "lighthouse-core/audits/metrics/first-meaningful-paint.js | description": {
     "message": "Chỉ số Hiển thị nội dung đầu tiên đo lường thời điểm hiển thị nội dung chính của trang. [Tìm hiểu thêm](https://web.dev/first-meaningful-paint/)."
@@ -1841,12 +1820,6 @@
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Tài liệu"
   },
-  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
-    "message": "Thời gian chờ nhập thông tin theo ước tính"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
-    "message": "CPU nhàn rỗi đầu tiên"
-  },
   "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
     "message": "First Contentful Paint"
   },
@@ -2138,9 +2111,6 @@
   "node_modules/lighthouse-stack-packs/packs/amp.js | uses-responsive-images": {
     "message": "Thành phần [`amp-img`](https://amp.dev/documentation/components/amp-img/?format=websites) hỗ trợ thuộc tính [`srcset`](https://web.dev/use-srcset-to-automatically-choose-the-right-image/) để chỉ định tài sản hình ảnh sẽ sử dụng dựa trên kích thước màn hình. [Tìm hiểu thêm](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/art_direction/)."
   },
-  "node_modules/lighthouse-stack-packs/packs/amp.js | uses-webp-images": {
-    "message": "Cân nhắc hiển thị tất cả các thành phần [`amp-img`](https://amp.dev/documentation/components/amp-img/?format=websites) của bạn ở định dạng WebP, đồng thời chỉ định phương án dự phòng thích hợp cho các trình duyệt khác. [Tìm hiểu thêm](https://amp.dev/documentation/components/amp-img/#example:-specifying-a-fallback-image)."
-  },
   "node_modules/lighthouse-stack-packs/packs/angular.js | dom-size": {
     "message": "Cân nhắc cuộn ảo bằng Component Dev Kit (CDK) nếu đang hiển thị danh sách rất lớn. [Tìm hiểu thêm](https://web.dev/virtualize-lists-with-angular-cdk/)."
   },
@@ -2171,9 +2141,6 @@
   "node_modules/lighthouse-stack-packs/packs/drupal.js | render-blocking-resources": {
     "message": "Hãy cân nhắc sử dụng một mô-đun cùng dòng với CSS và JavaScript quan trọng, hoặc có khả năng tải không đồng bộ các tài sản qua JavaScript, chẳng hạn như mô-đun [Tổng hợp CSS/JavaScript nâng cao](https://www.drupal.org/project/advagg). Hãy lưu ý rằng những tùy chọn tối ưu hóa mà mô-đun này cung cấp có thể làm hỏng trang web của bạn. Do đó, bạn có thể phải thay đổi mã."
   },
-  "node_modules/lighthouse-stack-packs/packs/drupal.js | time-to-first-byte": {
-    "message": "Giao diện, mô-đun và thông số máy chủ đều tác động đến thời gian phản hồi của máy chủ. Hãy cân nhắc tìm một giao diện tối ưu hóa hơn, lựa chọn cẩn thận mô-đun tối ưu hóa và/hoặc nâng cấp máy chủ. Các máy chủ lưu trữ nên tận dụng tính năng lưu mã vận hành PHP vào bộ nhớ đệm, tính năng lưu vào bộ nhớ đệm để giảm thiểu số lần truy vấn cơ sở dữ liệu, chẳng hạn như Redis hoặc Memcached, cũng như tận dụng logic của ứng dụng được tối ưu hóa để tải trang nhanh hơn."
-  },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | total-byte-weight": {
     "message": "Hãy cân nhắc sử dụng [Kiểu hình ảnh thích ứng](https://www.drupal.org/docs/8/mobile-guide/responsive-images-in-drupal-8) để giảm kích thước của hình ảnh tải trên trang. Nếu bạn đang sử dụng Views để hiển thị nhiều mục nội dung trên một trang, hãy cân nhắc triển khai quá trình phân trang để giới hạn số mục nội dung hiển thị trên trang cụ thể."
   },
@@ -2200,9 +2167,6 @@
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | uses-responsive-images": {
     "message": "Đảm bảo rằng bạn đang sử dụng [Kiểu hình ảnh thích ứng](https://www.drupal.org/docs/8/mobile-guide/responsive-images-in-drupal-8) gốc do Drupal cung cấp (có trong Drupal 8 trở lên). Hãy sử dụng Kiểu hình ảnh thích ứng khi hiển thị các trường hình ảnh thông qua chế độ xem, giao diện xem hoặc hình ảnh tải lên bằng trình chỉnh sửa WYSIWYG."
-  },
-  "node_modules/lighthouse-stack-packs/packs/drupal.js | uses-webp-images": {
-    "message": "Hãy cân nhắc cài đặt và định cấu hình [một mô-đun để tận dụng các định dạng hình ảnh WebP](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=webp&solrsort=iss_project_release_usage+desc&op=Search) trên trang web của bạn. Những mô-đun như vậy sẽ tự động tạo một phiên bản WebP của hình ảnh mà bạn đã tải lên để tối ưu hóa thời gian tải."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | efficient-animated-content": {
     "message": "Hãy cân nhắc tải ảnh GIF lên một dịch vụ để có thể nhúng ảnh này ở dạng video HTML5."
@@ -2243,9 +2207,6 @@
   "node_modules/lighthouse-stack-packs/packs/joomla.js | uses-text-compression": {
     "message": "Bạn có thể bật tính năng nén văn bản bằng cách bật tính năng Nén trang Gzip trong Joomla (System > Global configuration > Server (Hệ thống > Cấu hình chung > Máy chủ))."
   },
-  "node_modules/lighthouse-stack-packs/packs/joomla.js | uses-webp-images": {
-    "message": "Hãy cân nhắc sử dụng một [trình bổ trợ](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=webp) hoặc dịch vụ tự động chuyển đổi các hình ảnh đã tải lên sang định dạng tối ưu."
-  },
   "node_modules/lighthouse-stack-packs/packs/magento.js | critical-request-chains": {
     "message": "Nếu bạn hiện không nhóm các nội dung JavaScript của mình, hãy cân nhắc dùng [trình đóng gói](https://github.com/magento/baler)."
   },
@@ -2257,9 +2218,6 @@
   },
   "node_modules/lighthouse-stack-packs/packs/magento.js | offscreen-images": {
     "message": "Cân nhắc sửa đổi mẫu danh mục và sản phẩm để tận dụng tính năng [tải từng phần](https://web.dev/native-lazy-loading) của nền tảng web."
-  },
-  "node_modules/lighthouse-stack-packs/packs/magento.js | time-to-first-byte": {
-    "message": "Sử dụng tính năng [tích hợp Varnish](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html) của Magento."
   },
   "node_modules/lighthouse-stack-packs/packs/magento.js | unminified-css": {
     "message": "Bật tùy chọn \"Giảm kích thước tệp CSS\" trong phần cài đặt dành cho Nhà phát triển của cửa hàng. [Tìm hiểu thêm](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)."
@@ -2279,9 +2237,6 @@
   "node_modules/lighthouse-stack-packs/packs/magento.js | uses-rel-preload": {
     "message": "Có thể thêm thẻ `<link rel=preload>` bằng cách [sửa đổi bố cục của một giao diện](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
   },
-  "node_modules/lighthouse-stack-packs/packs/magento.js | uses-webp-images": {
-    "message": "Cân nhắc tìm kiếm nhiều tiện ích của bên thứ ba trên [Magento Marketplace](https://marketplace.magento.com/catalogsearch/result/?q=webp) để tận dụng những định dạng hình ảnh mới."
-  },
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | efficient-animated-content": {
     "message": "[Thay thế ảnh GIF động bằng video](https://web.dev/replace-gifs-with-videos/) để tải trang web nhanh hơn, đồng thời cân nhắc sử dụng các định dạng tệp hiện đại như [WebM](https://web.dev/replace-gifs-with-videos/#create-webm-videos) hay [AV1](https://developers.google.com/web/updates/2018/09/chrome-70-media-updates#av1-decoder) để cải thiện hiệu quả nén thêm hơn 30% so với codec video tiên tiến hiện tại là VP9."
   },
@@ -2290,9 +2245,6 @@
   },
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | render-blocking-resources": {
     "message": "Có nhiều trình bổ trợ giúp [đưa các tài sản quan trọng vào cùng dòng](https://octobercms.com/plugins?search=css). Các trình bổ trợ này có thể phá hỏng những trình bổ trợ khác. Do đó, bạn nên thử nghiệm kỹ lưỡng."
-  },
-  "node_modules/lighthouse-stack-packs/packs/octobercms.js | time-to-first-byte": {
-    "message": "Giao diện, trình bổ trợ và thông số máy chủ đều tác động đến thời gian phản hồi của máy chủ. Hãy cân nhắc tìm một giao diện tối ưu hóa hơn, lựa chọn cẩn thận trình bổ trợ tối ưu hóa và/hoặc nâng cấp máy chủ. October CMS cũng cho phép nhà phát triển dùng [`Queues`](https://octobercms.com/docs/services/queues) để trì hoãn quá trình xử lý một nhiệm vụ tốn nhiều thời gian, chẳng hạn như gửi email. Điều này giúp tăng tốc đáng kể cho các yêu cầu web."
   },
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | total-byte-weight": {
     "message": "Hãy cân nhắc hiển thị phần trích dẫn trong danh sách bài đăng (ví dụ: sử dụng nút `show more`), giảm số lượng bài đăng hiển thị trên một trang web cụ thể, chia các bài đăng dài thành nhiều trang web hoặc sử dụng một trình bổ trợ để tải bình luận theo từng phần."
@@ -2321,17 +2273,11 @@
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | uses-text-compression": {
     "message": "Bật tính năng nén văn bản trong cấu hình máy chủ web."
   },
-  "node_modules/lighthouse-stack-packs/packs/octobercms.js | uses-webp-images": {
-    "message": "Hãy cân nhắc sử dụng một [trình bổ trợ](https://octobercms.com/plugins?search=image) hoặc dịch vụ tự động chuyển đổi các hình ảnh đã tải lên sang định dạng tối ưu. [Hình ảnh ở định dạng WebP không suy hao](https://developers.google.com/speed/webp) có kích thước nhỏ hơn 26% so với hình ảnh ở định dạng PNG và 25 – 34% so với hình ảnh JPEG tương đương với chỉ số chất lượng SSIM như nhau. Một định dạng hình ảnh mới khác nên cân nhắc là [AVIF](https://jakearchibald.com/2020/avif-has-landed/)."
-  },
   "node_modules/lighthouse-stack-packs/packs/react.js | dom-size": {
     "message": "Hãy cân nhắc dùng một thư viện \"tạo cửa sổ\" như `react-window` để giảm thiểu số nút DOM được tạo nếu bạn đang hiển thị nhiều phần tử lặp lại trên trang. [Tìm hiểu thêm](https://web.dev/virtualize-long-lists-react-window/). Đồng thời, hãy giảm thiểu các thao tác hiển thị lại không cần thiết bằng [`shouldComponentUpdate`](https://reactjs.org/docs/optimizing-performance.html#shouldcomponentupdate-in-action), [`PureComponent`](https://reactjs.org/docs/react-api.html#reactpurecomponent) hoặc [`React.memo`](https://reactjs.org/docs/react-api.html#reactmemo) và tùy chọn [bỏ qua hiệu ứng](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects) cho đến khi một số phần phụ thuộc thay đổi, nếu bạn đang dùng hook `Effect` để cải thiện hiệu suất trong thời gian chạy."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | redirects": {
     "message": "Nếu bạn đang dùng React Router, hãy giảm thiểu mức sử dụng thành phần `<Redirect>` để [định tuyến](https://reacttraining.com/react-router/web/api/Redirect)."
-  },
-  "node_modules/lighthouse-stack-packs/packs/react.js | time-to-first-byte": {
-    "message": "Nếu bạn đang hiển thị bất kỳ thành phần React nào ở phía máy chủ, hãy cân nhắc dùng `renderToNodeStream()` hoặc `renderToStaticNodeStream()` để cho phép ứng dụng nhận và nhập những phần khác nhau của mục đánh dấu thay vì tất cả cùng lúc. [Tìm hiểu thêm](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | unminified-css": {
     "message": "Nếu hệ thống bản dựng của bạn tự động giảm kích thước tệp CSS, hãy đảm bảo rằng bạn đang triển khai bản phát hành chính thức của ứng dụng. Bạn có thể kiểm tra điều này bằng tiện ích React Developer Tools. [Tìm hiểu thêm](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
@@ -2353,9 +2299,6 @@
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | render-blocking-resources": {
     "message": "Có một số plugin của WordPress có thể giúp bạn [đưa phần tử quan trọng vào nội tuyến](https://wordpress.org/plugins/search/critical+css/) hoặc [trì hoãn tài nguyên ít quan trọng hơn](https://wordpress.org/plugins/search/defer+css+javascript/). Xin lưu ý rằng những phương thức tối ưu hóa mà các plugin này cung cấp có thể làm gián đoạn tính năng của giao diện hoặc plugin, do đó, có thể bạn cần thay đổi mã."
-  },
-  "node_modules/lighthouse-stack-packs/packs/wordpress.js | time-to-first-byte": {
-    "message": "Giao diện, plugin và thông số máy chủ đều tác động đến thời gian phản hồi của máy chủ. Hãy cân nhắc tìm một giao diện được tối ưu hóa, lựa chọn cẩn thận một plugin tối ưu hóa và/hoặc nâng cấp máy chủ."
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | total-byte-weight": {
     "message": "Hãy cân nhắc hiển thị phần trích dẫn trong danh sách bài đăng (ví dụ như qua thẻ thêm), giảm số lượng bài đăng hiển thị trên một trang cụ thể, chia các bài đăng dài thành nhiều trang hoặc sử dụng một plugin để tải nhận xét theo từng phần."
@@ -2383,8 +2326,5 @@
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | uses-text-compression": {
     "message": "Bạn có thể bật tính năng nén văn bản trong cấu hình máy chủ web."
-  },
-  "node_modules/lighthouse-stack-packs/packs/wordpress.js | uses-webp-images": {
-    "message": "Hãy cân nhắc sử dụng một [trình bổ trợ](https://wordpress.org/plugins/search/convert+webp/) hoặc dịch vụ tự động chuyển đổi các hình ảnh đã tải lên sang định dạng tối ưu."
   }
 }

@@ -229,10 +229,6 @@ evaluateAndPrintAccuracy('firstMeaningfulPaint', 'optimisticFMP');
 evaluateAndPrintAccuracy('firstMeaningfulPaint', 'pessimisticFMP');
 evaluateAndPrintAccuracy('firstMeaningfulPaint', 'roughEstimateOfFMP');
 
-evaluateAndPrintAccuracy('timeToFirstInteractive', 'optimisticTTFCPUI');
-evaluateAndPrintAccuracy('timeToFirstInteractive', 'pessimisticTTFCPUI');
-evaluateAndPrintAccuracy('timeToFirstInteractive', 'roughEstimateOfTTFCPUI');
-
 evaluateAndPrintAccuracy('timeToConsistentlyInteractive', 'optimisticTTI');
 evaluateAndPrintAccuracy('timeToConsistentlyInteractive', 'pessimisticTTI');
 evaluateAndPrintAccuracy('timeToConsistentlyInteractive', 'roughEstimateOfTTI');
@@ -259,11 +255,6 @@ findAndPrintWorst10Sites('firstMeaningfulPaint', [
   'optimisticFMP',
   'pessimisticFMP',
   'roughEstimateOfFMP',
-]);
-findAndPrintWorst10Sites('timeToFirstInteractive', [
-  'optimisticTTFCPUI',
-  'pessimisticTTFCPUI',
-  'roughEstimateOfTTFCPUI',
 ]);
 findAndPrintWorst10Sites('timeToConsistentlyInteractive', [
   'optimisticTTI',

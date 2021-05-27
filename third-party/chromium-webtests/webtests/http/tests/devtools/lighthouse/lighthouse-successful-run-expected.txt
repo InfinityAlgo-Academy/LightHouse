@@ -176,9 +176,6 @@ Computing artifact: Speedline
 Auditing: Screenshot Thumbnails
 Auditing: Final Screenshot
 Computing artifact: Screenshots
-Auditing: Estimated Input Latency
-Computing artifact: EstimatedInputLatency
-Computing artifact: LanternEstimatedInputLatency
 Auditing: Total Blocking Time
 Computing artifact: TotalBlockingTime
 Computing artifact: LanternTotalBlockingTime
@@ -191,9 +188,6 @@ Computing artifact: CumulativeLayoutShift
 Auditing: No browser errors logged to the console
 Auditing: Initial server response time was short
 Computing artifact: MainResource
-Auditing: First CPU Idle
-Computing artifact: FirstCPUIdle
-Computing artifact: LanternFirstCPUIdle
 Auditing: Time to Interactive
 Computing artifact: Interactive
 Auditing: User Timing marks and measures
@@ -452,12 +446,10 @@ duplicate-tags: notApplicable
 duplicated-javascript: numeric
 efficient-animated-content: flaky
 errors-in-console: pass
-estimated-input-latency: flaky
 external-anchors-use-rel-noopener: pass
 final-screenshot: ERROR Chrome didn't collect any screenshots during the page load. Please make sure there is content visible on the page, and then try re-running Lighthouse. (NO_SCREENSHOTS)
 first-ad-render: notApplicable
 first-contentful-paint: flaky
-first-cpu-idle: flaky
 first-meaningful-paint: flaky
 focus-traps: manual
 focusable-controls: manual
@@ -506,6 +498,7 @@ meta-description: fail
 meta-refresh: notApplicable
 meta-viewport: notApplicable
 metrics: flaky
+modern-image-formats: flaky
 network-requests: informative
 network-rtt: informative
 network-server-latency: informative
@@ -565,7 +558,6 @@ uses-rel-preconnect: numeric
 uses-rel-preload: flaky
 uses-responsive-images: flaky
 uses-text-compression: flaky
-uses-webp-images: flaky
 valid-lang: notApplicable
 valid-source-maps: pass
 video-caption: notApplicable
@@ -675,6 +667,7 @@ maskable-icon
 meta-description
 meta-refresh
 meta-viewport
+modern-image-formats
 no-document-write
 no-unload-listeners
 no-vulnerable-libraries
@@ -725,7 +718,6 @@ uses-rel-preconnect
 uses-rel-preload
 uses-responsive-images
 uses-text-compression
-uses-webp-images
 valid-lang
 valid-source-maps
 video-caption

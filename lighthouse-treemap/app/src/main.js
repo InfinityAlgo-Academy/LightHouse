@@ -568,7 +568,7 @@ class TreemapViewer {
     const total = this.currentTreemapRoot[partitionBy];
 
     const parts = [
-      TreemapUtil.elide(node.name, 60),
+      TreemapUtil.elide(node.name || '', 60),
     ];
 
     if (bytes !== undefined && total !== undefined) {

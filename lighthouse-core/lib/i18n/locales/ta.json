@@ -554,12 +554,6 @@
   "lighthouse-core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "உரைச் சுருக்கத்தை இயக்கவும்"
   },
-  "lighthouse-core/audits/byte-efficiency/uses-webp-images.js | description": {
-    "message": "JPEG 2000, JPEG XR, WebP போன்ற பட வடிவமைப்புகளானது PNG அல்லது JPEGயைக் காட்டிலும் சிறந்த அளவு சுருக்கத்தை வழங்குகின்றன, இதன் மூலம் பதிவிறக்கங்கள் வேகமாக நடைபெறுவதுடன் டேட்டா உபயோகமும் குறையும். [மேலும் அறிக](https://web.dev/uses-webp-images/)."
-  },
-  "lighthouse-core/audits/byte-efficiency/uses-webp-images.js | title": {
-    "message": "படங்களை நவீன வடிவமைப்புகளில் வழங்கவும்"
-  },
   "lighthouse-core/audits/content-width.js | description": {
     "message": "ஆப்ஸின் உள்ளடக்க அகலம் காட்சிப் பகுதியின் அகலத்துடன் பொருந்தவில்லை எனில் மொபைல் திரைகளுக்கு ஏற்ற வகையில் உங்கள் ஆப்ஸ் மேம்படுத்தப்படாமல் போகலாம். [மேலும் அறிக](https://web.dev/content-width/)."
   },
@@ -760,15 +754,6 @@
   },
   "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | failureTitle": {
     "message": "தெரிந்த பாதுகாப்புக் குறைபாடுகளுள்ள ஃபிரண்ட் எண்டு JavaScript லைப்ரரிகள் இதில் அடங்கும்"
-  },
-  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | rowSeverityHigh": {
-    "message": "அதிகம்"
-  },
-  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | rowSeverityLow": {
-    "message": "குறைவானது"
-  },
-  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | rowSeverityMedium": {
-    "message": "நடுத்தரமானது"
   },
   "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | title": {
     "message": "தெரிந்த பாதுகாப்புக் குறைபாடுகளுடைய ஃபிரண்ட் எண்ட் JavaScript லைப்ரரிகளைத் தவிர்க்கிறது"
@@ -1070,14 +1055,8 @@
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
     "message": "காட்சிப் பகுதிக்குள் தெரியக்கூடிய கூறுகளின் நகர்வை கியூமுலேட்டிவ் லேஅவுட் ஷிஃப்ட் அளவிடுகிறது. [மேலும் அறிக](https://web.dev/cls/)."
   },
-  "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
-    "message": "'தோராய உள்ளீட்டுத் தாமதம்' என்பது பக்கம் ஏற்றப்படும் பிஸியான 5 வினாடி காலஅளவின்போது பயனரின் உள்ளீட்டுக்கு பதிலளிக்க உங்கள் ஆப்ஸ் எவ்வளவு நேரம் எடுத்துக் கொள்கிறது என்பதற்கான தோராய மதிப்பாகும். பதிலளிக்க 50 மி.வி.க்கு மேல் தாமதமானால் உங்கள் ஆப்ஸ் மெதுவானது என்று பயனர்கள் கருதக்கூடும். [மேலும் அறிக](https://web.dev/estimated-input-latency/)."
-  },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
     "message": "'உள்ளடக்கமுள்ள முதல் தோற்றம்' என்பது முதல் உரையோ படமோ தோன்றும் நேரத்தைக் குறிக்கிறது. [மேலும் அறிக](https://web.dev/first-contentful-paint/)."
-  },
-  "lighthouse-core/audits/metrics/first-cpu-idle.js | description": {
-    "message": "'CPU செயல்படாநிலையின் தொடக்க நேரம்' என்பது உள்ளீட்டை பக்கத்தின் முக்கியத் தொடரிழை கையாள்வதற்குத் தயாராக செயல்படாநிலையில் இருக்கும் நேரத்தின் தொடக்கத்தைக் குறிக்கிறது.  [மேலும் அறிக](https://web.dev/first-cpu-idle/)."
   },
   "lighthouse-core/audits/metrics/first-meaningful-paint.js | description": {
     "message": "'பயனுள்ள முதல் தோற்றம்' என்பது பக்கத்தின் முதன்மை உள்ளடக்கம் எப்போது தெரிகிறது என்பதை அளவிடுகிறது. [மேலும் அறிக](https://web.dev/first-meaningful-paint/)."
@@ -1841,12 +1820,6 @@
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "ஆவணம்"
   },
-  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
-    "message": "தோராயமான உள்ளீட்டுத் தாமதம்"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
-    "message": "CPU செயல்படாநிலையின் தொடக்க நேரம்"
-  },
   "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
     "message": "First Contentful Paint"
   },
@@ -2138,9 +2111,6 @@
   "node_modules/lighthouse-stack-packs/packs/amp.js | uses-responsive-images": {
     "message": "திரை அளவின் அடிப்படையில் எந்தப் பட அசெட்டுகளைப் பயன்படுத்த வேண்டும் என்பதைக் குறிப்பிடும் வகையில் [`amp-img`](https://amp.dev/documentation/components/amp-img/?format=websites) காம்பனென்ட் [`srcset`](https://web.dev/use-srcset-to-automatically-choose-the-right-image/) பண்புக்கூறை ஆதரிக்கும். [மேலும் அறிக](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/art_direction/)."
   },
-  "node_modules/lighthouse-stack-packs/packs/amp.js | uses-webp-images": {
-    "message": "மற்ற உலாவிகளுக்குத் தகுந்த ஒரு ஃபால்பேக்கைக் குறிப்பிடும்போது [`amp-img`](https://amp.dev/documentation/components/amp-img/?format=websites) காம்பனென்ட்கள் அனைத்தையும் WebP வடிவங்களில் காட்சிப்படுத்தவும். [மேலும் அறிக](https://amp.dev/documentation/components/amp-img/#example:-specifying-a-fallback-image)."
-  },
   "node_modules/lighthouse-stack-packs/packs/angular.js | dom-size": {
     "message": "பெரிய பட்டியல்கள் ரெண்டரிங் செய்யப்பட்டால் Component Dev Kitஐ (CDK) பயன்படுத்தி விர்ச்சுவல் ஸ்கிராலிங்க் செய்வதைப் பரிசீலிக்கவும். [மேலும் அறிக](https://web.dev/virtualize-lists-with-angular-cdk/)."
   },
@@ -2171,9 +2141,6 @@
   "node_modules/lighthouse-stack-packs/packs/drupal.js | render-blocking-resources": {
     "message": "முக்கியமான CSS & JavaScriptடை முன்னிலைப்படுத்த, மாடியூலைப் பயன்படுத்தவும் அல்லது [மேம்பட்ட CSS/JS ஒருங்கிணைப்பு](https://www.drupal.org/project/advagg) மாடியூல் போன்ற JavaScript மூலம் ஒத்திசைவின்றி அசெட்டுகளை ஏற்றவும். இந்த மாடியூல் வழங்கும் மேம்படுத்துதல்கள் உங்கள் இணையதளத்தைப் பாதிக்கலாம் என்பதால் நீங்கள் குறியீட்டில் மாற்றங்களைச் செய்ய வேண்டியிருக்கும்."
   },
-  "node_modules/lighthouse-stack-packs/packs/drupal.js | time-to-first-byte": {
-    "message": "தீம்கள், மாடியூல்கள், சேவையக விவரக்குறிப்புகள் ஆகிய அனைத்தும் சேவையகத்தின் வேகத்தை நிர்ணயிக்கின்றன. மேலும் மேம்படுத்தப்பட்ட தீமினைக் கண்டறிந்து, மேம்படுத்தல் மாடியூலைக் கவனமாகத் தேர்ந்தெடுக்கவும் மற்றும்/அல்லது சேவையகத்தை மேம்படுத்தவும். PHP ஆப்கோட் தற்காலிகச் சேமிப்பு, Redis/Memcached போன்ற தரவுத்தள வினவல் நேரங்களைக் குறைப்பதற்கான தற்காலிக நினைவகச் சேமிப்பு, பக்கங்கள் விரைவாக ஏற்றப்படுவதற்கான மேம்பட்ட பயன்பாட்டு லாஜிக் ஆகியவற்றை உங்கள் ஹோஸ்டிங் சேவையகங்கள் பயன்படுத்த அனுமதிக்க வேண்டும்."
-  },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | total-byte-weight": {
     "message": "உங்கள் பக்கத்தில் ஏற்றப்படும் படங்களின் அளவைக் குறைக்க [திரைக்கு ஏற்ப அளவு மாறும் பட ஸ்டைல்களைப்](https://www.drupal.org/docs/8/mobile-guide/responsive-images-in-drupal-8) பயன்படுத்தவும். பக்கத்தில் பல உள்ளடக்கத்தைக் காட்டுவதற்கு ’காட்சிகளைப்’ பயன்படுத்தினால் அந்தப் பக்கத்தில் காட்டப்படும் உள்ளடக்கத்தின் எண்ணிக்கையை வரம்பிட அதைப் பக்கங்களாகப் பிரிக்கவும்."
   },
@@ -2200,9 +2167,6 @@
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | uses-responsive-images": {
     "message": "Drupalலில் வழங்கப்பட்டுள்ள இயல்பான [திரைக்கு ஏற்ப அளவு மாறும் பட ஸ்டைல்களை](https://www.drupal.org/docs/8/mobile-guide/responsive-images-in-drupal-8) (Drupal 8 & அதற்குப் பிந்தைய பதிப்பில் கிடைக்கும்) பயன்படுத்துவதை உறுதிசெய்துகொள்ளவும். காட்சிப் பயன்முறைகள், காட்சிகள் ஆகியவற்றின் மூலமாகவோ WYSIWYG எடிட்டரைப் பயன்படுத்திப் பதிவேற்றப்பட்ட படங்களின் மூலமாகவோ படப் புலங்களை ரெண்டர் செய்யும்போது திரைக்கு ஏற்ப அளவு மாறும் பட ஸ்டைல்களைப் பயன்படுத்தவும்."
-  },
-  "node_modules/lighthouse-stack-packs/packs/drupal.js | uses-webp-images": {
-    "message": "உங்கள் தளத்தில் [WebP பட வடிவமைப்புகளைப் பயன்படுத்துவதற்கான ஒரு மாடியூலை](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=webp&solrsort=iss_project_release_usage+desc&op=Search) நிறுவி உள்ளமைக்கவும். ஏற்றும் நேரத்தைக் குறைப்பதற்காக இந்த மாடியூல்கள் நீங்கள் பதிவேற்றிய படங்களின் WebP பதிப்பைத் தானாகவே உருவாக்கும்."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | efficient-animated-content": {
     "message": "GIFஃபை HTML5 வீடியோவாக உட்பொதிக்க உதவும் சேவையில் அதைப் பதிவேற்றவும்."
@@ -2243,9 +2207,6 @@
   "node_modules/lighthouse-stack-packs/packs/joomla.js | uses-text-compression": {
     "message": "Joomlaவில் Gzip பக்கச் சுருக்குதலை இயக்கி உரைச் சுருக்கத்தை இயக்கலாம் (சிஸ்டம் > பொது உள்ளமைவு > சேவையகம்)."
   },
-  "node_modules/lighthouse-stack-packs/packs/joomla.js | uses-webp-images": {
-    "message": "நீங்கள் பதிவேற்றிய படங்களை மேம்படுத்தப்பட்ட வடிவமைப்புகளுக்குத் தானாக மாற்றும் ஒரு [செருகுநிரல்](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=webp)/சேவையைப் பயன்படுத்தவும்."
-  },
   "node_modules/lighthouse-stack-packs/packs/magento.js | critical-request-chains": {
     "message": "JavaScript உரிமையுடையவற்றை நீங்கள் தொகுக்கப்போவதில்லை எனில் [பேலரைப்](https://github.com/magento/baler) பயன்படுத்துவதைப் பரிசீலிக்கவும்."
   },
@@ -2257,9 +2218,6 @@
   },
   "node_modules/lighthouse-stack-packs/packs/magento.js | offscreen-images": {
     "message": "இணைய பிளாட்ஃபார்மின் [படங்களை மெதுவாக ஏற்றும்](https://web.dev/native-lazy-loading) அம்சத்தைப் பயன்படுத்த உங்கள் தயாரிப்பையும் கேட்டலாக் டெம்ப்ளேட்டுகளையும் மாற்றுவதைப் பரிசீலிக்கவும்."
-  },
-  "node_modules/lighthouse-stack-packs/packs/magento.js | time-to-first-byte": {
-    "message": "Magentoவின் [வார்னிஷ் ஒருங்கிணைப்பு](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html) அம்சத்தைப் பயன்படுத்தவும்."
   },
   "node_modules/lighthouse-stack-packs/packs/magento.js | unminified-css": {
     "message": "\"CSS கோப்புகளைச் சிறிதாக்குதல்\" என்ற விருப்பத்தேர்வை உங்கள் ஸ்டோரின் டெவெலப்பர் அமைப்புகளில் இயக்கவும். [மேலும் அறிக](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)."
@@ -2279,9 +2237,6 @@
   "node_modules/lighthouse-stack-packs/packs/magento.js | uses-rel-preload": {
     "message": "[தீம்களின் தளவமைப்பை மாற்றுவதன்](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html) மூலம் `<link rel=preload>` குறியிடல்களைச் சேர்க்க முடியும்."
   },
-  "node_modules/lighthouse-stack-packs/packs/magento.js | uses-webp-images": {
-    "message": "பல்வேறு மூன்றாம் தரப்பு நீட்டிப்புகள் புதிய பட ஃபார்மேட்டுகளை அளவிட [Magento சந்தையைத்](https://marketplace.magento.com/catalogsearch/result/?q=webp) தேடுவதைப் பரிசீலிக்கவும்."
-  },
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | efficient-animated-content": {
     "message": "இணையப் பக்கம் விரைவாக ஏற்றப்படுவதற்கு, [வீடியோவிற்குப் பதிலாக அனிமேஷன் செய்யப்பட்ட GIFகளைப் பயன்படுத்தவும்](https://web.dev/replace-gifs-with-videos/). மேலும் சுருக்குதல் செயல்திறனைத் தற்போதைய அதிநவீன VP9 வீடியோ கோடெக்கை விட 30% கூடுதலாக மேம்படுத்த [WebM](https://web.dev/replace-gifs-with-videos/#create-webm-videos), [AV1](https://developers.google.com/web/updates/2018/09/chrome-70-media-updates#av1-decoder) போன்ற நவீன கோப்பு வடிவமைப்புகளைப் பயன்படுத்தவும்."
   },
@@ -2290,9 +2245,6 @@
   },
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | render-blocking-resources": {
     "message": "[முக்கியமான இன்லைன் அசெட்டுகளுக்கு](https://octobercms.com/plugins?search=css) உதவும் பல செருகுநிரல்கள் உள்ளன. இந்தச் செருகுநிரல்கள் பிற செருகுநிரல்களின் செயல்பாட்டைப் பாதிக்கக்கூடும் என்பதால் அவற்றை முழுமையாகச் சோதனை செய்ய வேண்டும்."
-  },
-  "node_modules/lighthouse-stack-packs/packs/octobercms.js | time-to-first-byte": {
-    "message": "தீம்கள், செருகுநிரல்கள், சேவையக விவரக்குறிப்புகள் ஆகிய அனைத்தும் சேவையகத்தின் வேகத்தை நிர்ணயிக்கும். மேலும் மேம்படுத்தப்பட்ட தீமினைக் கண்டறிந்து, மேம்படுத்தல் நீட்டிப்பைக் கவனமாகத் தேர்ந்தெடுக்கவும் மற்றும்/அல்லது சேவையகத்தை மேம்படுத்தவும். மின்னஞ்சல் அனுப்புவது போன்ற அதிக நேரம் எடுத்துக்கொள்ளும் பணியின் செயலாக்கத்தைத் தாமதப்படுத்த [`Queues`](https://octobercms.com/docs/services/queues) ஐ டெவெலப்பர்கள் பயன்படுத்துவதற்கு October CMS அனுமதிக்கிறது. இது இணைய கோரிக்கைகளை நன்கு வேகப்படுத்துகிறது."
   },
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | total-byte-weight": {
     "message": "இடுகைப் பட்டியல்களில் முக்கியமான பகுதியை மட்டும் காட்டவும் (உதாரணமாக `show more` பட்டனைப் பயன்படுத்துவதன் மூலம்), இணையப் பக்கத்தில் இடுகைகளின் எண்ணிக்கையைக் குறைக்கவும், பெரிய இடுகைகளை ஒன்றுக்கும் மேற்பட்ட இணையப் பக்கங்களாகப் பிரிக்கவும் அல்லது செருகுநிரல் மூலம் தேவையுள்ளபோது மட்டும் கருத்துகளை ஏற்றவும்."
@@ -2321,17 +2273,11 @@
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | uses-text-compression": {
     "message": "இணையச் சேவையக உள்ளமைவில் உரைச் சுருக்குதலை இயக்கவும்."
   },
-  "node_modules/lighthouse-stack-packs/packs/octobercms.js | uses-webp-images": {
-    "message": "பதிவேற்றிய படங்களை மேம்படுத்தப்பட்ட வடிவமைப்புகளுக்குத் தானாக மாற்றும் [செருகுநிரல்](https://octobercms.com/plugins?search=image)/சேவையைப் பயன்படுத்தவும். SSIM தரக் குறியீட்டின்படி [தரம் குறையாத WebP படங்கள்](https://developers.google.com/speed/webp) PNGகளுடன் ஒப்பிடும்போது 26% சிறியதாகவும் ஒப்பிடக்கூடிய JPEG படங்களைக் காட்டிலும் 25-34% சிறியதாகவும் இருக்கும். [AVIF](https://jakearchibald.com/2020/avif-has-landed/) என்ற மற்றொரு புதிய பட வடிவமைப்பைப் பயன்படுத்தவும்."
-  },
   "node_modules/lighthouse-stack-packs/packs/react.js | dom-size": {
     "message": "ஒரு பக்கத்தில் தொடர்ந்து நிகழ்கின்ற பல கூறுகளை ரெண்டரிங் செய்கிறீர்கள் எனில் DOM கணுக்கள் உருவாக்கப்படும் எண்ணிக்கையைக் குறைக்கும் வகையில் `react-window` போன்ற “விண்டோவிங்” லைப்ரரியைப் பயன்படுத்தவும். [மேலும் அறிக](https://web.dev/virtualize-long-lists-react-window/). இயங்கும் நேரச் செயல்திறனை மேம்படுத்த `Effect` ஹுக்கைப் பயன்படுத்துகிறீர்கள் எனில் குறிப்பிட்ட சார்புநிலைகள் மாறும் வரை மட்டும் [`shouldComponentUpdate`](https://reactjs.org/docs/optimizing-performance.html#shouldcomponentupdate-in-action), [`PureComponent`](https://reactjs.org/docs/react-api.html#reactpurecomponent), [`React.memo`](https://reactjs.org/docs/react-api.html#reactmemo) போன்றவற்றைப் பயன்படுத்தித் தேவையற்ற மறு ரெண்டரிங்குகளைக் குறைத்துக்கொள்ளவும் [விளைவுகளைத் தவிர்க்கவும்](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects) வேண்டும்."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | redirects": {
     "message": "நீங்கள் ரியாக்ட் ரூட்டரைப் பயன்படுத்தினால் [ரூட் வழிசெலுத்தல்களுக்கு](https://reacttraining.com/react-router/web/api/Redirect) `<Redirect>` உறுப்பைப் பயன்படுத்துவதைக் குறைத்துக்கொள்ளவும்."
-  },
-  "node_modules/lighthouse-stack-packs/packs/react.js | time-to-first-byte": {
-    "message": "நீங்கள் சேவையகம் தரப்பாக இருந்து ரியாக்ட் கூறுகளை ரெண்டரிங் செய்பவராக இருந்தால் அனைத்தையும் ஒரே நேரத்தில் அல்லாமல் மார்க் அப்பின் வெவ்வேறு பகுதிகளைப் பெறவும் ஹைட்ரேட் செய்யவும் கிளையண்ட்டை அனுமதிப்பதற்கு `renderToNodeStream()` அல்லது `renderToStaticNodeStream()`ஐப் பயன்படுத்துவதைப் பரிசீலிக்கவும். [மேலும் அறிக](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | unminified-css": {
     "message": "உங்கள் பதிப்பு சிஸ்டம் உங்கள் CSS கோப்புகளைத் தானாகவே சிறிதாக்கினால் உங்கள் ஆப்ஸின் தயாரிப்புப் பதிப்பைப் பயன்படுத்துவதை உறுதிசெய்துகொள்ளவும். React Developer Tools நீட்டிப்பில் இதைப் பார்க்கலாம். [மேலும் அறிக](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
@@ -2353,9 +2299,6 @@
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | render-blocking-resources": {
     "message": "[முக்கியமான உடைமைகளை முன்னிலைப்படுத்தவோ](https://wordpress.org/plugins/search/critical+css/) [முக்கியத்துவம் குறைவான ஆதாரங்களைத் தவிர்க்கவோ](https://wordpress.org/plugins/search/defer+css+javascript/) உங்களுக்கு உதவக்கூடிய பல WordPress செருகுநிரல்கள் உள்ளன. இந்த செருகுநிரல்கள் வழங்கும் மேம்படுத்துதல்கள் உங்கள் தீமிலோ செருகுநிரலிலோ உள்ள அம்சத்தைப் பாதிக்கலாம். அதனால் நீங்கள் குறியீட்டில் சில மாற்றங்களை செய்ய வேண்டியிருக்கும்."
-  },
-  "node_modules/lighthouse-stack-packs/packs/wordpress.js | time-to-first-byte": {
-    "message": "தீம்கள், செருகுநிரல்கள், சேவையக விவரக்குறிப்புகள் அனைத்தும் சேவையகத்தின் வேகத்தை நிர்ணயிக்கும். மேலும் மேம்படுத்தப்பட்ட தீமைக் கண்டறிந்து, மேம்படுத்தும் செருகுநிரலைக் கவனமாகத் தேர்ந்தெடுத்து மற்றும்/அல்லது சேவையகத்தை மேம்படுத்தவும்."
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | total-byte-weight": {
     "message": "இடுகைப் பட்டியல்களில் முக்கியமான பகுதியை மட்டும் காட்டலாம் (உதாரணமாக மேலும் என்ற குறிச்சொல்லுடன்), பக்கத்தில் இடுகைகளின் எண்ணிக்கையைக் குறைக்கலாம், ஒரு பெரிய இடுகையைப் பல சின்ன பக்கங்களாகப் பிரிக்கலாம் அல்லது தேவையுள்ள போது மட்டும் கருத்துகளைச் செருகுநிரல்கள் மூலம் ஏற்றலாம்."
@@ -2383,8 +2326,5 @@
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | uses-text-compression": {
     "message": "இணையச் சேவையக உள்ளமைவில் உரை சுருக்குதலை இயக்கலாம்."
-  },
-  "node_modules/lighthouse-stack-packs/packs/wordpress.js | uses-webp-images": {
-    "message": "நீங்கள் பதிவேற்றிய படங்களை மேம்படுத்தப்பட்ட வடிவமைப்புகளுக்குத் தானாக மாற்றும் ஒரு [செருகுநிரல்](https://wordpress.org/plugins/search/convert+webp/)/சேவையைப் பயன்படுத்தவும்."
   }
 }

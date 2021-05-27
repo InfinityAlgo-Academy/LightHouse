@@ -554,12 +554,6 @@
   "lighthouse-core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "Iespējojiet teksta saspiešanu"
   },
-  "lighthouse-core/audits/byte-efficiency/uses-webp-images.js | description": {
-    "message": "Tādi attēlu formāti kā JPEG 2000, JPEG XR un WebP bieži ir veiksmīgāk saspiežami nekā PNG vai JPEG. Tas nozīmē ātrāku lejupielādi un mazāku datu patēriņu. [Uzziniet vairāk](https://web.dev/uses-webp-images/)."
-  },
-  "lighthouse-core/audits/byte-efficiency/uses-webp-images.js | title": {
-    "message": "Rādiet attēlus nākamās paaudzes formātos"
-  },
   "lighthouse-core/audits/content-width.js | description": {
     "message": "Ja lietotnes satura platums neatbilst skatvietas platumam, lietotne var nebūt optimizēta mobilo ierīču ekrāniem. [Uzziniet vairāk](https://web.dev/content-width/)."
   },
@@ -760,15 +754,6 @@
   },
   "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | failureTitle": {
     "message": "Ietver JavaScript priekšgalsistēmas bibliotēkas ar zināmu drošības ievainojamību"
-  },
-  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | rowSeverityHigh": {
-    "message": "Augsts"
-  },
-  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | rowSeverityLow": {
-    "message": "Zems"
-  },
-  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | rowSeverityMedium": {
-    "message": "Vidējs"
   },
   "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | title": {
     "message": "Nepieļauj JavaScript priekšgalsistēmas bibliotēkas ar zināmām drošības ievainojamībām"
@@ -1070,14 +1055,8 @@
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
     "message": "Kopējā izkārtojuma nobīde norāda redzamo elementu kustību skatvietā. [Uzziniet vairāk](https://web.dev/cls/)."
   },
-  "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
-    "message": "Paredzētais ievades latentums aptuveni norāda, pēc cik ilga laika (milisekundēs) uz lietotāja ievadi reaģēs jūsu lietotne aizņemtākajā lapas ielādes 5 s periodā. Ja latentums pārsniedz 50 ms, iespējams, lietotājiem liksies, ka jūsu lietotne strādā ar traucējumiem. [Uzziniet vairāk](https://web.dev/estimated-input-latency/)."
-  },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
     "message": "Metrika \"Pirmais satura marķējums\" atzīmē laiku, kad tiek marķēts pirmais teksts vai attēls. [Uzziniet vairāk](https://web.dev/first-contentful-paint/)."
-  },
-  "lighthouse-core/audits/metrics/first-cpu-idle.js | description": {
-    "message": "Metrika “Pirmā CPU dīkstāve” norāda laiku, kad lapas galvenais pavediens ir kļuvis pietiekami mazs, lai varētu apstrādāt ievadi.  [Uzziniet vairāk](https://web.dev/first-cpu-idle/)."
   },
   "lighthouse-core/audits/metrics/first-meaningful-paint.js | description": {
     "message": "Metrika “Pirmais nozīmīgais satura atveidojums” norāda, kad kļūst redzams lapas galvenais saturs. [Uzziniet vairāk](https://web.dev/first-meaningful-paint/)."
@@ -1841,12 +1820,6 @@
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Dokuments"
   },
-  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
-    "message": "Paredzētais ievades latentums"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
-    "message": "Pirmā CPU dīkstāve"
-  },
   "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
     "message": "First Contentful Paint"
   },
@@ -2138,9 +2111,6 @@
   "node_modules/lighthouse-stack-packs/packs/amp.js | uses-responsive-images": {
     "message": "Komponents [`amp-img`](https://amp.dev/documentation/components/amp-img/?format=websites) atbalsta atribūtu [`srcset`](https://web.dev/use-srcset-to-automatically-choose-the-right-image/), lai varētu norādīt, kurus attēlu līdzekļus izmantot atkarībā no ekrāna izmēra. [Uzziniet vairāk](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/art_direction/)."
   },
-  "node_modules/lighthouse-stack-packs/packs/amp.js | uses-webp-images": {
-    "message": "Apsveriet iespēju attēlot visus [`amp-img`](https://amp.dev/documentation/components/amp-img/?format=websites) komponentus WebP formātos un norādīt piemērotu atkāpšanās formātu citām pārlūkprogrammām. [Uzziniet vairāk](https://amp.dev/documentation/components/amp-img/#example:-specifying-a-fallback-image)."
-  },
   "node_modules/lighthouse-stack-packs/packs/angular.js | dom-size": {
     "message": "Ja tiek renderēti ļoti lieli saraksti, apsveriet iespēju izmantot virtuālo ritināšanu ar komponentu izstrādes komplektu (Component Dev Kit — CDK). [Uzziniet vairāk](https://web.dev/virtualize-lists-with-angular-cdk/)."
   },
@@ -2171,9 +2141,6 @@
   "node_modules/lighthouse-stack-packs/packs/drupal.js | render-blocking-resources": {
     "message": "Ieteicams izmantot moduli, piemēram, moduli [Izvērstā CSS/JS apkopošana](https://www.drupal.org/project/advagg), lai iekļautu būtisku CSS un JavaScript kodu vai potenciāli ielādētu līdzekļus asinhronā veidā, izmantojot JavaScript. Ņemiet vērā, ka šī moduļa nodrošinātā optimizācija var traucēt vietnes darbībai, tādēļ, visticamāk, jums būs jāveic izmaiņas kodā."
   },
-  "node_modules/lighthouse-stack-packs/packs/drupal.js | time-to-first-byte": {
-    "message": "Motīvi, moduļi un servera specifikācijas ietekmē servera atbildes laiku. Ieteicams atrast optimizētu motīvu, rūpīgi izvēlēties optimizācijas moduli un/vai jaunināt serveri. Mitināšanas serveros ir jāievieš PHP operācijas koda saglabāšana kešatmiņā, atmiņas saglabāšana kešatmiņā, lai samazinātu datu bāzes vaicājumu apstrādei nepieciešamo laiku, piemēram, Redis vai Memcached, kā arī optimizēta lietojumprogrammas loģika, lai varētu ātrāk sagatavot lapas."
-  },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | total-byte-weight": {
     "message": "Ieteicams izmantot [adaptīvo attēlu stilus](https://www.drupal.org/docs/8/mobile-guide/responsive-images-in-drupal-8), lai samazinātu lapā ielādēto attēlu lielumu. Ja saskarni Views izmantojat, lai lapā rādītu vairākus satura elementus, ieteicams ieviest lapdali, lai ierobežotu attiecīgajā lapā redzamo satura elementu skaitu."
   },
@@ -2200,9 +2167,6 @@
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | uses-responsive-images": {
     "message": "Jāizmanto iebūvētie [adaptīvo attēlu stili](https://www.drupal.org/docs/8/mobile-guide/responsive-images-in-drupal-8), kas ir sniegti programmatūrā Drupal (pieejami programmatūrā Drupal 8 un jaunākās versijās). Lietojiet adaptīvo attēlu stilus, kad renderējat attēlu laukus skatīšanas režīmos, skatos vai attēlos, kas augšupielādēti, izmantojot WYSIWYG redaktoru."
-  },
-  "node_modules/lighthouse-stack-packs/packs/drupal.js | uses-webp-images": {
-    "message": "Ieteicams instalēt un konfigurēt [moduli, lai vietnē varētu izmantot WebP attēlu formātus](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=webp&solrsort=iss_project_release_usage+desc&op=Search). Šādi moduļi automātiski ģenerē augšupielādēto attēlu WebP versiju, lai optimizētu ielādes laiku."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | efficient-animated-content": {
     "message": "Ieteicams augšupielādēt GIF failu pakalpojumā, kuru varēs izmantot, lai iegultu GIF failu kā HTML5 videoklipu."
@@ -2243,9 +2207,6 @@
   "node_modules/lighthouse-stack-packs/packs/joomla.js | uses-text-compression": {
     "message": "Varat iespējot teksta saspiešanu, iespējojot Gzip lapu saspiešanu sistēmā Joomla (Sistēma > Globālā konfigurācija > Serveris)."
   },
-  "node_modules/lighthouse-stack-packs/packs/joomla.js | uses-webp-images": {
-    "message": "Ieteicams izmantot [spraudni](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=webp) vai pakalpojumu, kurā jūsu augšupielādētie attēli tiks automātiski pārveidoti optimālos formātos."
-  },
   "node_modules/lighthouse-stack-packs/packs/magento.js | critical-request-chains": {
     "message": "Ja negrupējat JavaScript līdzekļus, apsveriet iespēju izmantot programmu [baler](https://github.com/magento/baler)."
   },
@@ -2257,9 +2218,6 @@
   },
   "node_modules/lighthouse-stack-packs/packs/magento.js | offscreen-images": {
     "message": "Apsveriet iespēju modificēt produktu un katalogu veidnes, lai izmantotu tīmekļa platformas [lēnas ielādes](https://web.dev/native-lazy-loading) funkciju."
-  },
-  "node_modules/lighthouse-stack-packs/packs/magento.js | time-to-first-byte": {
-    "message": "Izmantojiet platformas Magento [Varnish integrāciju](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html)."
   },
   "node_modules/lighthouse-stack-packs/packs/magento.js | unminified-css": {
     "message": "Veikala izstrādātāja iestatījumos iespējojiet opciju Minify CSS Files (Samazināt CSS failus). [Uzziniet vairāk](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)."
@@ -2279,9 +2237,6 @@
   "node_modules/lighthouse-stack-packs/packs/magento.js | uses-rel-preload": {
     "message": "Varat pievienot `<link rel=preload>` tagus, [modificējot motīva izkārtojumu](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
   },
-  "node_modules/lighthouse-stack-packs/packs/magento.js | uses-webp-images": {
-    "message": "Veikalā [Magento Marketplace](https://marketplace.magento.com/catalogsearch/result/?q=webp) varat atrast dažādus trešo pušu paplašinājumus jaunāku attēlu formātu izmantošanai."
-  },
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | efficient-animated-content": {
     "message": "[Aizstājiet animētus GIF attēlus ar videoklipiem](https://web.dev/replace-gifs-with-videos/), lai paātrinātu tīmekļa lapas ielādi, un apsveriet iespēju izmantot modernus failu formātus, piemēram, [WebM](https://web.dev/replace-gifs-with-videos/#create-webm-videos) vai [AV1](https://developers.google.com/web/updates/2018/09/chrome-70-media-updates#av1-decoder), lai uzlabotu saspiešanas efektivitāti par vairāk nekā 30%, salīdzinot ar pašreizējo nozarē vadošo video kodeku VP9."
   },
@@ -2290,9 +2245,6 @@
   },
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | render-blocking-resources": {
     "message": "Ir vairāki spraudņi, kas palīdz [iekļaut būtiskus līdzekļus](https://octobercms.com/plugins?search=css). Šie spraudņi var traucēt citu spraudņu darbību, tāpēc ieteicams tos rūpīgi testēt."
-  },
-  "node_modules/lighthouse-stack-packs/packs/octobercms.js | time-to-first-byte": {
-    "message": "Motīvi, spraudņi un servera specifikācijas ietekmē servera atbildes laiku. Ieteicams atrast optimizētu motīvu, rūpīgi izvēlēties optimizācijas spraudni un/vai jaunināt serveri. Satura pārvaldības sistēmā October izstrādātāji var izmantot arī [`Queues`](https://octobercms.com/docs/services/queues), lai atliktu laikietilpīgu uzdevumu apstrādi, piemēram, e-pasta ziņojumu nosūtīšanu. Tas krietni paātrina tīmekļa pieprasījumus."
   },
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | total-byte-weight": {
     "message": "Ieteicams ziņu sarakstos rādīt fragmentus (piemēram, izmantojot pogu `show more`), samazināt vienā tīmekļa lapā rādāmo ziņu skaitu, sadalīt garas ziņas starp vairākām tīmekļa lapām vai izmantot spraudni, lai atliktu komentāru ielādi."
@@ -2321,17 +2273,11 @@
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | uses-text-compression": {
     "message": "Iespējojiet teksta saspiešanu tīmekļa servera konfigurācijā."
   },
-  "node_modules/lighthouse-stack-packs/packs/octobercms.js | uses-webp-images": {
-    "message": "Ieteicams izmantot [spraudni](https://octobercms.com/plugins?search=image) vai pakalpojumu, lai automātiski pārveidotu augšupielādētos attēlus optimālos formātos. [WebP bezzudumu attēlu](https://developers.google.com/speed/webp) faili ir par 26% mazāki nekā PNG faili un par 25–34% mazāki nekā salīdzināmu JPEG attēlu faili ar līdzvērtīgu SSIM kvalitātes rādītāju. Varat izmantot arī citu nākamās paaudzes attēlu formātu — [AVIF](https://jakearchibald.com/2020/avif-has-landed/)."
-  },
   "node_modules/lighthouse-stack-packs/packs/react.js | dom-size": {
     "message": "Ja lapā atveidojat daudzus atkārtotus elementus, apsveriet iespēju izmantot logošanas bibliotēku, piemēram, `react-window`, lai samazinātu izveidoto DOM mezglu skaitu. [Uzziniet vairāk](https://web.dev/virtualize-long-lists-react-window/). Turklāt, ja izmantojat `Effect` aizķeri izpildlaika veiktspējas uzlabošanai, varat samazināt lieko atkārtoto atveidošanu, izmantojot [`shouldComponentUpdate`](https://reactjs.org/docs/optimizing-performance.html#shouldcomponentupdate-in-action), [`PureComponent`](https://reactjs.org/docs/react-api.html#reactpurecomponent) vai [`React.memo`](https://reactjs.org/docs/react-api.html#reactmemo) un [izlaišanas efektus](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects) tikai līdz noteiktu atkarību maiņas brīdim."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | redirects": {
     "message": "Ja izmantojat bibliotēku React Router, samaziniet komponenta `<Redirect>` lietojumu [maršrutu navigācijai](https://reacttraining.com/react-router/web/api/Redirect)."
-  },
-  "node_modules/lighthouse-stack-packs/packs/react.js | time-to-first-byte": {
-    "message": "Ja renderējat React komponentus servera pusē, apsveriet iespēju izmantot metodi `renderToNodeStream()` vai `renderToStaticNodeStream()`, lai klients varētu saņemt un aizpildīt dažādas marķējuma daļas, nevis visu marķējumu reizē. [Uzziniet vairāk](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | unminified-css": {
     "message": "Ja būvējuma sistēmā CSS faili tiek automātiski samazināti, pārbaudiet, vai ir izvietots jūsu lietojumprogrammas produkcijas būvējums. To var pārbaudīt, izmantojot paplašinājumu React Developer Tools. [Uzziniet vairāk](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
@@ -2353,9 +2299,6 @@
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | render-blocking-resources": {
     "message": "Ir vairāki WordPress spraudņi, kas var palīdzēt [iekļaut būtiskus līdzekļus](https://wordpress.org/plugins/search/critical+css/) vai [atlikt mazāk svarīgus resursus](https://wordpress.org/plugins/search/defer+css+javascript/). Ņemiet vērā, ka šo spraudņu nodrošinātā optimizācija var traucēt funkciju darbībai jūsu motīvā vai spraudņos, tādēļ, visticamāk, jums būs jāveic koda izmaiņas."
-  },
-  "node_modules/lighthouse-stack-packs/packs/wordpress.js | time-to-first-byte": {
-    "message": "Motīvi, spraudņi un servera specifikācijas ietekmē servera atbildes laiku. Apsveriet iespēju atrast optimizētāku motīvu, rūpīgi izvēlēties optimizācijas spraudni un/vai jaunināt serveri."
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | total-byte-weight": {
     "message": "Apsveriet iespēju rādīt fragmentus ziņu sarakstos (piemēram, izmantojot tagu “more”), samazināt attiecīgajā lapā rādāmo ziņu skaitu, sadalīt garas ziņas vairākās lapās vai izmantot spraudni, lai atliktu komentāru ielādi."
@@ -2383,8 +2326,5 @@
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | uses-text-compression": {
     "message": "Varat iespējot teksta saspiešanu tīmekļa servera konfigurācijā."
-  },
-  "node_modules/lighthouse-stack-packs/packs/wordpress.js | uses-webp-images": {
-    "message": "Ieteicams izmantot [spraudni](https://wordpress.org/plugins/search/convert+webp/) vai pakalpojumu, kurā jūsu augšupielādētie attēli tiks automātiski pārveidoti optimālos formātos."
   }
 }

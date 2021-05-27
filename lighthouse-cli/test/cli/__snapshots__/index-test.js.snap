@@ -34,9 +34,6 @@ Object {
       "path": "final-screenshot",
     },
     Object {
-      "path": "metrics/estimated-input-latency",
-    },
-    Object {
       "path": "metrics/total-blocking-time",
     },
     Object {
@@ -50,9 +47,6 @@ Object {
     },
     Object {
       "path": "server-response-time",
-    },
-    Object {
-      "path": "metrics/first-cpu-idle",
     },
     Object {
       "path": "metrics/interactive",
@@ -379,7 +373,7 @@ Object {
       "path": "byte-efficiency/unused-javascript",
     },
     Object {
-      "path": "byte-efficiency/uses-webp-images",
+      "path": "byte-efficiency/modern-image-formats",
     },
     Object {
       "path": "byte-efficiency/uses-optimized-images",
@@ -941,21 +935,12 @@ Object {
           "weight": 5,
         },
         Object {
-          "acronym": "FCI",
-          "id": "first-cpu-idle",
-          "weight": 0,
-        },
-        Object {
           "id": "max-potential-fid",
           "weight": 0,
         },
         Object {
           "acronym": "FMP",
           "id": "first-meaningful-paint",
-          "weight": 0,
-        },
-        Object {
-          "id": "estimated-input-latency",
           "weight": 0,
         },
         Object {
@@ -1000,7 +985,7 @@ Object {
         },
         Object {
           "group": "load-opportunities",
-          "id": "uses-webp-images",
+          "id": "modern-image-formats",
           "weight": 0,
         },
         Object {

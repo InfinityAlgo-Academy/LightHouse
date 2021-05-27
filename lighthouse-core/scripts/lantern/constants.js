@@ -54,19 +54,16 @@ const path = require('path');
  * @property {number} optimisticFCP
  * @property {number} optimisticFMP
  * @property {number} optimisticSI
- * @property {number} optimisticTTFCPUI
  * @property {number} optimisticTTI
  * @property {number} optimisticLCP
  * @property {number} pessimisticFCP
  * @property {number} pessimisticFMP
  * @property {number} pessimisticSI
- * @property {number} pessimisticTTFCPUI
  * @property {number} pessimisticTTI
  * @property {number} pessimisticLCP
  * @property {number} roughEstimateOfFCP
  * @property {number} roughEstimateOfFMP
  * @property {number} roughEstimateOfSI
- * @property {number} roughEstimateOfTTFCPUI
  * @property {number} roughEstimateOfTTI
  * @property {number} roughEstimateOfLCP
  */
@@ -196,7 +193,6 @@ module.exports = {
       roughEstimateOfFCP: evaluate('firstContentfulPaint', 'roughEstimateOfFCP'),
       roughEstimateOfFMP: evaluate('firstMeaningfulPaint', 'roughEstimateOfFMP'),
       roughEstimateOfSI: evaluate('speedIndex', 'roughEstimateOfSI'),
-      roughEstimateOfTTFCPUI: evaluate('timeToFirstInteractive', 'roughEstimateOfTTFCPUI'),
       roughEstimateOfTTI: evaluate('timeToConsistentlyInteractive', 'roughEstimateOfTTI'),
       roughEstimateOfLCP: evaluate('largestContentfulPaint', 'roughEstimateOfLCP'),
     };

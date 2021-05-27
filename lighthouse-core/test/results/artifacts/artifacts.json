@@ -122,10 +122,6 @@
             "budget": 3000
           },
           {
-            "metric": "first-cpu-idle",
-            "budget": 2900
-          },
-          {
             "metric": "interactive",
             "budget": 2900
           },

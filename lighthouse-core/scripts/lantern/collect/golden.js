@@ -95,7 +95,6 @@ async function main() {
       wpt3g: {
         firstContentfulPaint: wptMetrics.firstContentfulPaint,
         firstMeaningfulPaint: wptMetrics.firstMeaningfulPaint,
-        timeToFirstInteractive: wptMetrics.firstCPUIdle,
         timeToConsistentlyInteractive: wptMetrics.interactive,
         speedIndex: wptMetrics.speedIndex,
         largestContentfulPaint: wptMetrics.largestContentfulPaint,

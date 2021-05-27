@@ -192,9 +192,7 @@ function assertLhr(lhr) {
   if (lhr.runtimeError) throw new Error(`runtime error: ${lhr.runtimeError}`);
   const metrics = common.getMetrics(lhr);
   if (metrics &&
-      metrics.estimatedInputLatency &&
       metrics.firstContentfulPaint &&
-      metrics.firstCPUIdle &&
       metrics.firstMeaningfulPaint &&
       metrics.interactive &&
       // WPT won't have this, we'll just get from the trace.

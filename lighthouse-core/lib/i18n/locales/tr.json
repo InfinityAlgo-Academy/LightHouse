@@ -554,12 +554,6 @@
   "lighthouse-core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "Metin sıkıştırmayı etkinleştirin"
   },
-  "lighthouse-core/audits/byte-efficiency/uses-webp-images.js | description": {
-    "message": "JPEG 2000, JPEG XR ve WebP gibi resim biçimleri genellikle PNG veya JPEG'den daha iyi sıkıştırma sağlar. Böylece indirme işlemleri daha hızlı tamamlanır ve veri tüketimi daha az olur. [Daha fazla bilgi](https://web.dev/uses-webp-images/)."
-  },
-  "lighthouse-core/audits/byte-efficiency/uses-webp-images.js | title": {
-    "message": "Resimleri yeni nesil biçimlerde yayınlayın"
-  },
   "lighthouse-core/audits/content-width.js | description": {
     "message": "Uygulamanızın içeriğinin genişliği, görüntü alanının genişliğiyle eşleşmiyorsa uygulamanız mobil ekranlar için optimize edilmemiş olabilir. [Daha fazla bilgi](https://web.dev/content-width/)."
   },
@@ -760,15 +754,6 @@
   },
   "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | failureTitle": {
     "message": "Bilinen güvenlik açıklarına sahip JavaScript kitaplıkları kullanıcı arabirimi içeriyor"
-  },
-  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | rowSeverityHigh": {
-    "message": "Yüksek"
-  },
-  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | rowSeverityLow": {
-    "message": "Düşük"
-  },
-  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | rowSeverityMedium": {
-    "message": "Orta"
   },
   "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | title": {
     "message": "Bilinen güvenlik açıklarına sahip JavaScript kitaplıkları kullanıcı arabirimini önlüyor"
@@ -1070,14 +1055,8 @@
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
     "message": "Cumulative Layout Shift, görüntü alanı içindeki görünür öğelerin hareketini ölçer. [Daha fazla bilgi](https://web.dev/cls/)."
   },
-  "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
-    "message": "Tahmini Giriş Gecikmesi, sayfa yüklemesinin en yoğun olduğu 5 saniyelik zaman aralığında uygulamanızın kullanıcı girişine kaç milisaniye içinde yanıt vereceğine dair bir tahmindir. Gecikmeniz 50 ms.nin üzerinde olursa kullanıcılar uygulamanızın durakladığını düşünebilir. [Daha fazla bilgi](https://web.dev/estimated-input-latency/)."
-  },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
     "message": "İlk Zengin İçerikli Boyama, ilk metnin veya resmin boyandığı zamanı işaret eder. [Daha fazla bilgi](https://web.dev/first-contentful-paint/)."
-  },
-  "lighthouse-core/audits/metrics/first-cpu-idle.js | description": {
-    "message": "İlk CPU Boşta metriği, sayfanın ana iş parçacığının girişi işlemek için yeterli olduğu ilk anı işaret eder.  [Daha fazla bilgi](https://web.dev/first-cpu-idle/)."
   },
   "lighthouse-core/audits/metrics/first-meaningful-paint.js | description": {
     "message": "İlk Anlamlı Boyama, bir sayfanın ana içeriğinin ne zaman görünür hale geldiğini ölçer. [Daha fazla bilgi](https://web.dev/first-meaningful-paint/)."
@@ -1841,12 +1820,6 @@
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Doküman"
   },
-  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
-    "message": "Tahmini Giriş Gecikmesi"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
-    "message": "İlk CPU Boşta"
-  },
   "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
     "message": "First Contentful Paint"
   },
@@ -2138,9 +2111,6 @@
   "node_modules/lighthouse-stack-packs/packs/amp.js | uses-responsive-images": {
     "message": "[`amp-img`](https://amp.dev/documentation/components/amp-img/?format=websites) bileşeni, ekran boyutuna göre kullanılacak görüntü öğelerini belirtmek için [`srcset`](https://web.dev/use-srcset-to-automatically-choose-the-right-image/) özelliğini destekler. [Daha fazla bilgi edinin](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/art_direction/)."
   },
-  "node_modules/lighthouse-stack-packs/packs/amp.js | uses-webp-images": {
-    "message": "Diğer tarayıcılar için uygun bir yedek belirtirken tüm [`amp-img`](https://amp.dev/documentation/components/amp-img/?format=websites) bileşenlerinizin WebP biçimlerinde görüntülenmesi seçeneğini değerlendirin. [Daha fazla bilgi edinin](https://amp.dev/documentation/components/amp-img/#example:-specifying-a-fallback-image)."
-  },
   "node_modules/lighthouse-stack-packs/packs/angular.js | dom-size": {
     "message": "Çok büyük listeler oluşturuluyorsa Bileşen Geliştirme Kiti (CDK) ile sanal kaydırma seçeneğini düşünün. [Daha fazla bilgi](https://web.dev/virtualize-lists-with-angular-cdk/)."
   },
@@ -2171,9 +2141,6 @@
   "node_modules/lighthouse-stack-packs/packs/drupal.js | render-blocking-resources": {
     "message": "[Advanced CSS/JS Aggregation](https://www.drupal.org/project/advagg) modülü gibi bir modül kullanarak kritik CSS ve JavaScript'leri satır içi yapmayı veya JavaScript ile öğeleri potansiyel olarak eşzamansız bir şekilde yüklemeyi değerlendirin. Bu modülün sağlayacağı optimizasyonların sitenizi bozabileceğine dikkat edin. Bunu engellemek için muhtemelen kodda değişiklik yapmanız gerekecektir."
   },
-  "node_modules/lighthouse-stack-packs/packs/drupal.js | time-to-first-byte": {
-    "message": "Temalar, modüller ve sunucu özellikleri öğelerinin tümü sunucunun yanıt süresini etkiler. Bir optimizayon modülünü dikkatle seçerek ve/veya sunucunuzu yeni sürüme geçirerek, daha ileri düzeyde optimize edilmiş bir tema bulmayı düşünün. Barındırma sunucularınız sorgu sürelerini azaltmak için Redis veya Memcached gibi sistemlerin kullandığı PHP işlem kodunu önbelleğe alma, belleği önbelleğe alma tekniklerinden ve sayfaları daha hızlı hazırlamak için optimize edilmiş uygulama mantığından yararlanmalıdır."
-  },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | total-byte-weight": {
     "message": "Sayfanıza yüklenen resimlerin boyutunu azaltmak için [Duyarlı Resim Stilleri](https://www.drupal.org/docs/8/mobile-guide/responsive-images-in-drupal-8)'ni kullanmayı değerlendirin. Bir sayfada birden çok içerik öğesini göstermek için Görünümler'i kullanıyorsanız belirli bir sayfada gösterilen içerik öğelerinin sayısını sınırlamak üzere sayfalara ayırma işlevini uygulamayı değerlendirin."
   },
@@ -2200,9 +2167,6 @@
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | uses-responsive-images": {
     "message": "Drupal'ın sağladığı yerel [Duyarlı Resim Stilleri](https://www.drupal.org/docs/8/mobile-guide/responsive-images-in-drupal-8)'ni kullandığınızdan emin olun (Drupal 8 ve sonraki sürümlerde kullanılabilir). Görünüm modları, görünümler ile resim alanlarını veya WYSIWYG düzenleyicisi ile yüklenen resimleri oluştururken Duyarlı Resim Stilleri'ni kullanın."
-  },
-  "node_modules/lighthouse-stack-packs/packs/drupal.js | uses-webp-images": {
-    "message": "Sitenizde [WebP resim biçimlerinden yararlanmak için bir modül](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=webp&solrsort=iss_project_release_usage+desc&op=Search) yüklemeyi ve yapılandırmayı değerlendirin. Bu tür modüller, yükleme sürelerini optimize etmek için yüklediğiniz resimlerin WebP sürümünü otomatik olarak oluşturur."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | efficient-animated-content": {
     "message": "GIF dosyanızı, HTML5 videosu olarak yerleştirmek için kullanılabilmesini sağlayacak bir hizmete yüklemeyi düşünün."
@@ -2243,9 +2207,6 @@
   "node_modules/lighthouse-stack-packs/packs/joomla.js | uses-text-compression": {
     "message": "Joomla'da Gzip Page Compression'ı (Gzip Sayfa Sıkıştırma) etkinleştirerek (System (Sistem) > Global configuration (Genel yapılandırma) > Server (Sunucu)) metin sıkıştırmayı etkinleştirebilirsiniz."
   },
-  "node_modules/lighthouse-stack-packs/packs/joomla.js | uses-webp-images": {
-    "message": "Yüklediğiniz resimleri ideal biçimlere otomatik olarak dönüştürecek bir [eklenti](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=webp) veya hizmet kullanmayı değerlendirin."
-  },
   "node_modules/lighthouse-stack-packs/packs/magento.js | critical-request-chains": {
     "message": "JavaScript öğelerinizi grupluyorsanız [gruplayıcı](https://github.com/magento/baler) kullanmayı düşünün."
   },
@@ -2257,9 +2218,6 @@
   },
   "node_modules/lighthouse-stack-packs/packs/magento.js | offscreen-images": {
     "message": "Ürün ve katalog şablonlarınızı, web platformunun [geç yükleme](https://web.dev/native-lazy-loading) özelliğinden yararlanacak şekilde değiştirme seçeneğini değerlendirin."
-  },
-  "node_modules/lighthouse-stack-packs/packs/magento.js | time-to-first-byte": {
-    "message": "Magento'nun [Cila entegrasyonunu](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html) kullanın."
   },
   "node_modules/lighthouse-stack-packs/packs/magento.js | unminified-css": {
     "message": "Mağazanızın Geliştirici ayarlarında \"CSS Dosyalarını Küçült\" seçeneğini etkinleştirin. [Daha fazla bilgi](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)."
@@ -2279,9 +2237,6 @@
   "node_modules/lighthouse-stack-packs/packs/magento.js | uses-rel-preload": {
     "message": "`<link rel=preload>` etiketleri, [bir temanın düzeni değiştirilerek](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html) eklenebilir."
   },
-  "node_modules/lighthouse-stack-packs/packs/magento.js | uses-webp-images": {
-    "message": "Daha yeni görüntü biçimlerinden yararlanmak için [Magento Marketplace](https://marketplace.magento.com/catalogsearch/result/?q=webp)'te çeşitli üçüncü taraf uzantılarını arama seçeneğini değerlendirin."
-  },
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | efficient-animated-content": {
     "message": "Web sayfalarının daha hızlı yüklenmesi için [animasyonlu GIF'lerin yerine video koyun](https://web.dev/replace-gifs-with-videos/) ve mevcut son teknoloji video codec'i VP9'da sıkıştırma etkinliğini %30'dan fazla artırmak için [WebM](https://web.dev/replace-gifs-with-videos/#create-webm-videos) veya [AV1](https://developers.google.com/web/updates/2018/09/chrome-70-media-updates#av1-decoder) gibi modern dosya biçimlerini kullanın."
   },
@@ -2290,9 +2245,6 @@
   },
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | render-blocking-resources": {
     "message": "[Kritik öğelerin satır içi yapılmasına](https://octobercms.com/plugins?search=css) yardımcı olan birçok eklenti bulunmaktadır. Diğer eklentileri bozabileceğinden bu eklentileri iyice test etmeniz gerekir."
-  },
-  "node_modules/lighthouse-stack-packs/packs/octobercms.js | time-to-first-byte": {
-    "message": "Temalar, eklentiler ve sunucu özellikleri öğelerinin tümü sunucunun yanıt süresini etkiler. Bir optimizasyon eklentisini dikkatle seçerek ve/veya sunucuyu yeni sürüme geçirerek, daha ileri düzeyde optimize edilmiş bir tema bulmayı düşünün. Ekim CMS ayrıca geliştiricilerin e-posta gönderme gibi zaman alan görevlerin işlenmesini ertelemek için [`Queues`](https://octobercms.com/docs/services/queues) kullanmasına olanak tanır. Bu sayede web istekleri önemli ölçüde hızlanır."
   },
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | total-byte-weight": {
     "message": "Yayın listelerinde altınılar göstermeyi (ör. `show more` düğmesini kullanarak), belirli bir web sayfasında gösterilen yayınların sayısını azaltmayı, uzun yayınları birden fazla web sayfasına bölmeyi veya yorumların geç yüklenmesi için bir eklenti kullanmayı düşünün."
@@ -2321,17 +2273,11 @@
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | uses-text-compression": {
     "message": "Web sunucusu yapılandırmasında metin sıkıştırmayı etkinleştirin."
   },
-  "node_modules/lighthouse-stack-packs/packs/octobercms.js | uses-webp-images": {
-    "message": "Yüklediğiniz resimleri ideal biçimlere otomatik olarak dönüştürecek bir [eklenti](https://octobercms.com/plugins?search=image) veya hizmet kullanmayı düşünün. [WebP kayıpsız görüntüler](https://developers.google.com/speed/webp), eşdeğer SSIM kalite endeksindeki benzer JPEG resimlerinden %25-34, PNG'lerden ise boyut olarak %26 daha küçüktür. Kullanmayı düşünebileceğiniz diğer bir yeni nesil resim biçimi de [AVIF](https://jakearchibald.com/2020/avif-has-landed/)'dir."
-  },
   "node_modules/lighthouse-stack-packs/packs/react.js | dom-size": {
     "message": "Sayfada çok sayıda yinelenen öğe oluşturuyorsanız oluşturulan DOM düğümlerinin sayısını en aza indirmek için `react-window` gibi bir \"pencereleme\" kitaplığı kullanmayı düşünün. [Daha fazla bilgi edinin](https://web.dev/virtualize-long-lists-react-window/). Ayrıca, çalışma zamanı performansını yükseltmek için `Effect` kancası kullanıyorsanız bazı bağımlılıklar değişinceye kadar [`shouldComponentUpdate`](https://reactjs.org/docs/optimizing-performance.html#shouldcomponentupdate-in-action), [`PureComponent`](https://reactjs.org/docs/react-api.html#reactpurecomponent) veya [`React.memo`](https://reactjs.org/docs/react-api.html#reactmemo) ve [atlama efektleri](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects) kullanarak gereksiz yeniden oluşturma sayısını en aza indirin."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | redirects": {
     "message": "React Router kullanıyorsanız [rota gezinmeleri](https://reacttraining.com/react-router/web/api/Redirect) için `<Redirect>` bileşeninin kullanımını en aza indirin."
-  },
-  "node_modules/lighthouse-stack-packs/packs/react.js | time-to-first-byte": {
-    "message": "Sunucu tarafında React bileşenleri oluşturuyorsanız istemcinin tüm işaretleme parçalarını bir defada alması yerine farklı parçaları alıp birleştirmesine izin vermek için `renderToNodeStream()` veya `renderToStaticNodeStream()` kullanmayı düşünün. [Daha fazla bilgi](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | unminified-css": {
     "message": "Derleme sisteminiz CSS dosyalarını otomatik olarak küçültüyorsa uygulamanızın üretim derlemesini dağıttığınızdan emin olun. Bunu React Geliştirici Araçları uzantısıyla kontrol edebilirsiniz. [Daha fazla bilgi edinin](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
@@ -2353,9 +2299,6 @@
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | render-blocking-resources": {
     "message": "[Kritik öğeleri satır içi yapmanıza](https://wordpress.org/plugins/search/critical+css/) veya [daha az önemli kaynakları ertelemenize](https://wordpress.org/plugins/search/defer+css+javascript/) yardımcı olabilecek çeşitli WordPress eklentileri vardır. Bu eklentilerin sağlayacağı optimizasyonların tema veya eklentilerinizin özelliklerini bozabileceğine dikkat edin. Bunu engellemek için muhtemelen kodda değişiklik yapmanız gerekecektir."
-  },
-  "node_modules/lighthouse-stack-packs/packs/wordpress.js | time-to-first-byte": {
-    "message": "Temalar, eklentiler ve sunucu özellikleri öğelerinin tümü sunucunun yanıt süresini etkiler. Bir optimizayon eklentisini dikkatle seçerek ve/veya sunucunuzu yeni sürüme geçirerek, daha ileri düzeyde optimize edilmiş bir tema bulmayı düşünün."
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | total-byte-weight": {
     "message": "Yayın listelerinizde alıntılar göstermeyi (ör. daha fazla etiket kullanarak), belirli bir sayfada gösterilen yayınların sayısını azaltmayı, uzun yayınlarınızı birden fazla sayfaya bölmeyi veya yorumların geç yüklenmesi için bir eklenti kullanmayı düşünün."
@@ -2383,8 +2326,5 @@
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | uses-text-compression": {
     "message": "Web sunucunuzun yapılandırmasında metin sıkıştırmayı etkinleştirebilirsiniz."
-  },
-  "node_modules/lighthouse-stack-packs/packs/wordpress.js | uses-webp-images": {
-    "message": "Yüklediğiniz resimleri ideal biçimlere otomatik olarak dönüştürecek bir [eklenti](https://wordpress.org/plugins/search/convert+webp/) veya hizmet kullanmayı değerlendirin."
   }
 }

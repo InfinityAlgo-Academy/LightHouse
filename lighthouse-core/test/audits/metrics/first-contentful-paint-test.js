@@ -4,13 +4,16 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
-const Audit = require('../../../audits/metrics/first-contentful-paint.js');
+const FcpAudit = require('../../../audits/metrics/first-contentful-paint.js');
 const assert = require('assert').strict;
-const options = Audit.defaultOptions;
+const options = FcpAudit.defaultOptions;
 const constants = require('../../../config/constants.js');
 
 const pwaTrace = require('../../fixtures/traces/progressive-app-m60.json');
 const pwaDevtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
+
+const frameTrace = require('../../fixtures/traces/frame-metrics-m90.json');
+const frameDevtoolsLog = require('../../fixtures/traces/frame-metrics-m90.devtools.log.json');
 
 /**
  * @param {{
@@ -35,16 +38,32 @@ describe('Performance: first-contentful-paint audit', () => {
   it('evaluates valid input correctly', async () => {
     const artifacts = {
       traces: {
-        [Audit.DEFAULT_PASS]: pwaTrace,
+        [FcpAudit.DEFAULT_PASS]: pwaTrace,
       },
       devtoolsLogs: {
-        [Audit.DEFAULT_PASS]: pwaDevtoolsLog,
+        [FcpAudit.DEFAULT_PASS]: pwaDevtoolsLog,
       },
     };
 
     const context = getFakeContext({formFactor: 'mobile', throttlingMethod: 'provided'});
-    const result = await Audit.audit(artifacts, context);
+    const result = await FcpAudit.audit(artifacts, context);
     assert.equal(result.score, 1);
     assert.equal(result.numericValue, 498.87);
+  });
+
+  it('evaluates a modern trace correctly', async () => {
+    const artifacts = {
+      traces: {
+        [FcpAudit.DEFAULT_PASS]: frameTrace,
+      },
+      devtoolsLogs: {
+        [FcpAudit.DEFAULT_PASS]: frameDevtoolsLog,
+      },
+    };
+
+    const context = getFakeContext({formFactor: 'mobile', throttlingMethod: 'provided'});
+    const result = await FcpAudit.audit(artifacts, context);
+    assert.equal(result.score, 0.06);
+    assert.equal(result.numericValue, 5668.275);
   });
 });

@@ -554,12 +554,6 @@
   "lighthouse-core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "Zet tekstcompressie aan"
   },
-  "lighthouse-core/audits/byte-efficiency/uses-webp-images.js | description": {
-    "message": "Afbeeldingsindelingen zoals JPEG 2000, JPEG XR en WebP bieden vaak betere compressie dan PNG of JPEG. Dit resulteert in snellere downloads en minder dataverbruik. [Meer informatie](https://web.dev/uses-webp-images/)"
-  },
-  "lighthouse-core/audits/byte-efficiency/uses-webp-images.js | title": {
-    "message": "Lever afbeeldingen in moderne indelingen"
-  },
   "lighthouse-core/audits/content-width.js | description": {
     "message": "Als de breedte van de content van je app niet overeenkomt met de breedte van het kijkvenster, is je app mogelijk niet geoptimaliseerd voor mobiele schermen. [Meer informatie](https://web.dev/content-width/)"
   },
@@ -760,15 +754,6 @@
   },
   "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | failureTitle": {
     "message": "Omvat front end JavaScript-bibliotheken met bekende beveiligingskwetsbaarheden"
-  },
-  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | rowSeverityHigh": {
-    "message": "Hoog"
-  },
-  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | rowSeverityLow": {
-    "message": "Laag"
-  },
-  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | rowSeverityMedium": {
-    "message": "Normaal"
   },
   "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | title": {
     "message": "Vermijdt front end JavaScript-bibliotheken met bekende beveiligingskwetsbaarheden"
@@ -1070,14 +1055,8 @@
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
     "message": "Cumulatieve indelingsverschuiving (CLS) meet de beweging van zichtbare elementen binnen het kijkvenster. [Meer informatie](https://web.dev/cls/)"
   },
-  "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
-    "message": "Geschatte invoerlatentie is een schatting van de tijd die je app nodig heeft om te reageren op gebruikersinvoer (in milliseconden), gemeten voor de drukste periode van 5 seconden tijdens het laden van de pagina. Als de latentie langer dan 50 ms is, kunnen gebruikers je app als traag beschouwen. [Meer informatie](https://web.dev/estimated-input-latency/)"
-  },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
     "message": "'Eerste tekenbewerking met content' (FCP) geeft het tijdstip aan waarop de eerste tekst of afbeelding wordt getoond. [Meer informatie](https://web.dev/first-contentful-paint/)"
-  },
-  "lighthouse-core/audits/metrics/first-cpu-idle.js | description": {
-    "message": "'Eerste keer dat CPU inactief was' geeft de eerste keer aan dat de primaire thread van de pagina rustig genoeg was om invoer te verwerken.  [Meer informatie](https://web.dev/first-cpu-idle/)."
   },
   "lighthouse-core/audits/metrics/first-meaningful-paint.js | description": {
     "message": "'Eerste nuttige weergave' (FMP) meet wanneer de primaire content van een pagina zichtbaar is. [Meer informatie](https://web.dev/first-meaningful-paint/)"
@@ -1841,12 +1820,6 @@
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Document"
   },
-  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
-    "message": "Geschatte invoerlatentie"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
-    "message": "Eerste keer dat CPU inactief was"
-  },
   "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
     "message": "First Contentful Paint"
   },
@@ -2138,9 +2111,6 @@
   "node_modules/lighthouse-stack-packs/packs/amp.js | uses-responsive-images": {
     "message": "De component [`amp-img`](https://amp.dev/documentation/components/amp-img/?format=websites) ondersteunt het kenmerk [`srcset`](https://web.dev/use-srcset-to-automatically-choose-the-right-image/) om te specificeren welke afbeeldingsitems moeten worden gebruikt op basis van het schermformaat. [Meer informatie](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/art_direction/)"
   },
-  "node_modules/lighthouse-stack-packs/packs/amp.js | uses-webp-images": {
-    "message": "Overweeg alle [`amp-img`](https://amp.dev/documentation/components/amp-img/?format=websites)-componenten weer te geven in WebP-indelingen, terwijl je een geschikte reserve specificeert voor andere browsers. [Meer informatie](https://amp.dev/documentation/components/amp-img/#example:-specifying-a-fallback-image)"
-  },
   "node_modules/lighthouse-stack-packs/packs/angular.js | dom-size": {
     "message": "Overweeg virtueel scrollen met de Component Dev Kit (CDK) als er zeer grote lijsten worden weergegeven. [Meer informatie](https://web.dev/virtualize-lists-with-angular-cdk/)"
   },
@@ -2171,9 +2141,6 @@
   "node_modules/lighthouse-stack-packs/packs/drupal.js | render-blocking-resources": {
     "message": "Overweeg een module te gebruiken om kritieke css en JavaScript inline te plaatsen of items potentieel asynchroon te laden via JavaScript, zoals de module [Advanced CSS/JS Aggregation](https://www.drupal.org/project/advagg). Bedenk wel dat de optimalisatie die deze module biedt, de werking van je site kan verstoren. Het is daarom goed mogelijk dat je de code moet wijzigen."
   },
-  "node_modules/lighthouse-stack-packs/packs/drupal.js | time-to-first-byte": {
-    "message": "Thema's, modules en serverspecificaties zijn allemaal van invloed op de reactietijd van de server. Overweeg een thema te gebruiken dat beter is geoptimaliseerd, kies met zorg een optimalisatiemodule en/of upgrade je server. Je hostingservers moeten gebruikmaken van PHP-opcode-caching, geheugencaching (zoals Redis of Memcached) om de databasequerytijden te beperken en geoptimaliseerde app-logica om pagina's sneller voor te bereiden."
-  },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | total-byte-weight": {
     "message": "Overweeg [responsieve afbeeldingsstijlen](https://www.drupal.org/docs/8/mobile-guide/responsive-images-in-drupal-8) te gebruiken om de grootte van geladen afbeeldingen op je pagina te verkleinen. Als je Views gebruikt om meerdere contentitems op een pagina te tonen, kun je overwegen paginering te gebruiken om het aantal zichtbare contentitems op een pagina te beperken."
   },
@@ -2200,9 +2167,6 @@
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | uses-responsive-images": {
     "message": "Zorg ervoor dat je de eigen [stijlen voor responsieve afbeeldingen](https://www.drupal.org/docs/8/mobile-guide/responsive-images-in-drupal-8) gebruikt die bij Drupal worden geleverd (beschikbaar in Drupal 8 en hoger). Gebruik de stijlen voor responsieve afbeeldingen voor het renderen van afbeeldingsvelden via weergavemodi, weergaven of afbeeldingen die worden geüpload via de WYSIWYG-editor."
-  },
-  "node_modules/lighthouse-stack-packs/packs/drupal.js | uses-webp-images": {
-    "message": "Overweeg [een module te installeren en te configureren om gebruik te maken van WebP-afbeeldingsindelingen](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=webp&solrsort=iss_project_release_usage+desc&op=Search) op je site. Dergelijke modules genereren automatisch een WebP-versie van je geüploade afbeeldingen om de laadtijden te optimaliseren."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | efficient-animated-content": {
     "message": "Overweeg je gif te uploaden naar een service waarmee het mogelijk is de gif in te sluiten als html5-video."
@@ -2243,9 +2207,6 @@
   "node_modules/lighthouse-stack-packs/packs/joomla.js | uses-text-compression": {
     "message": "Je kunt tekstcompressie aanzetten door Gzip-paginacompressie in Joomla aan te zetten via System > Global configuration > Server (Systeem > Algemene configuratie > Server)."
   },
-  "node_modules/lighthouse-stack-packs/packs/joomla.js | uses-webp-images": {
-    "message": "Overweeg een [plug-in](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=webp) of service te gebruiken die je geüploade afbeeldingen automatisch converteert naar de optimale indelingen."
-  },
   "node_modules/lighthouse-stack-packs/packs/magento.js | critical-request-chains": {
     "message": "Als je je JavaScript-items niet bundelt, kun je [baler](https://github.com/magento/baler) gebruiken."
   },
@@ -2257,9 +2218,6 @@
   },
   "node_modules/lighthouse-stack-packs/packs/magento.js | offscreen-images": {
     "message": "Overweeg om je product- en catalogustemplates te wijzigen voor gebruik van de functie van het webplatform voor [lazy loading](https://web.dev/native-lazy-loading)."
-  },
-  "node_modules/lighthouse-stack-packs/packs/magento.js | time-to-first-byte": {
-    "message": "Gebruik de [Varnish-integratie](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html) van Magento."
   },
   "node_modules/lighthouse-stack-packs/packs/magento.js | unminified-css": {
     "message": "Zet de optie 'Css-bestanden verkleinen' in de ontwikkelaarsinstellingen van je winkel aan. [Meer informatie](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)"
@@ -2279,9 +2237,6 @@
   "node_modules/lighthouse-stack-packs/packs/magento.js | uses-rel-preload": {
     "message": "`<link rel=preload>`-tags kunnen worden toegevoegd door [de lay-out van een thema te wijzigen](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
   },
-  "node_modules/lighthouse-stack-packs/packs/magento.js | uses-webp-images": {
-    "message": "Overweeg te zoeken in de [Magento-marktplaats](https://marketplace.magento.com/catalogsearch/result/?q=webp) voor verschillende extensies van derden om nieuwere afbeeldingsindelingen te gebruiken."
-  },
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | efficient-animated-content": {
     "message": "[Vervang geanimeerde gif's door video](https://web.dev/replace-gifs-with-videos/) zodat de webpagina sneller laadt en overweeg moderne bestandsindelingen zoals [webm](https://web.dev/replace-gifs-with-videos/#create-webm-videos) of [av1](https://developers.google.com/web/updates/2018/09/chrome-70-media-updates#av1-decoder) te gebruiken voor een tot 30% efficiëntere compressie vergeleken met de huidige geavanceerde videocodec, vp9."
   },
@@ -2290,9 +2245,6 @@
   },
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | render-blocking-resources": {
     "message": "Er zijn veel plug-ins waarmee [essentiële inline items](https://octobercms.com/plugins?search=css) beter werken. Deze plug-ins kunnen andere plug-ins verstoren. Je moet ze daarom grondig testen."
-  },
-  "node_modules/lighthouse-stack-packs/packs/octobercms.js | time-to-first-byte": {
-    "message": "Thema's, plug-ins en serverspecificaties zijn allemaal van invloed op de reactietijd van de server. Overweeg een thema te gebruiken dat beter is geoptimaliseerd, kies met zorg een optimalisatieplug-in en/of upgrade de server. Met de CMS van oktober kunnen ontwikkelaars ook [`Queues`](https://octobercms.com/docs/services/queues) gebruiken om de verwerking van tijdrovende taken uit te stellen, zoals het sturen van een e-mail. Dit kan webverzoeken drastisch versnellen."
   },
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | total-byte-weight": {
     "message": "Overweeg fragmenten te tonen in de postlijsten (bijvoorbeeld met een knop `show more`), zodat er per webpagina minder posts worden getoond. Ook kun je lange posts verdelen over meerdere webpagina's of een plug-in voor lazy loading van reacties gebruiken."
@@ -2321,17 +2273,11 @@
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | uses-text-compression": {
     "message": "Hiermee kun je tekstcompressie aanzetten in de webserverinstellingen."
   },
-  "node_modules/lighthouse-stack-packs/packs/octobercms.js | uses-webp-images": {
-    "message": "Overweeg een [plug-in](https://octobercms.com/plugins?search=image) of service te gebruiken die de geüploade afbeeldingen automatisch converteert naar de optimale indelingen. [Webp-afbeeldingen zonder verlies](https://developers.google.com/speed/webp) zijn 26% kleiner vergeleken met png-afbeeldingen en zijn 25-34% kleiner dan vergelijkbare jpeg-afbeeldingen met dezelfde SSIM-kwaliteitsindex. Je kunt ook de moderne bestandsindeling [avif](https://jakearchibald.com/2020/avif-has-landed/) overwegen."
-  },
   "node_modules/lighthouse-stack-packs/packs/react.js | dom-size": {
     "message": "Overweeg een vensterbibliotheek zoals `react-window` te gebruiken om het aantal gemaakte DOM-nodes te minimaliseren als je veel herhaalde elementen op de pagina weergeeft. [Meer informatie](https://web.dev/virtualize-long-lists-react-window/) Minimaliseer daarnaast onnodige nieuwe weergaven met [`shouldComponentUpdate`](https://reactjs.org/docs/optimizing-performance.html#shouldcomponentupdate-in-action), [`PureComponent`](https://reactjs.org/docs/react-api.html#reactpurecomponent) of [`React.memo`](https://reactjs.org/docs/react-api.html#reactmemo) en [sla effecten alleen over](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects) totdat bepaalde afhankelijkheden zijn gewijzigd als je de `Effect`-hook gebruikt om de runtime-prestaties te verbeteren."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | redirects": {
     "message": "Als je React Router gebruikt, moet je het gebruik van de `<Redirect>`-component voor [routenavigatie](https://reacttraining.com/react-router/web/api/Redirect) minimaliseren."
-  },
-  "node_modules/lighthouse-stack-packs/packs/react.js | time-to-first-byte": {
-    "message": "Als je React-componenten aan de serverzijde rendert, kun je `renderToNodeStream()` of `renderToStaticNodeStream()` gebruiken om de client toestemming te geven verschillende onderdelen van de opmaak te ontvangen en verwerken, in plaats van alles tegelijk. [Meer informatie](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)"
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | unminified-css": {
     "message": "Als je buildsysteem css-bestanden automatisch verkleint, moet je ervoor zorgen dat je de productiebuild van je app implementeert. Je kunt dit checken via de React Developer Tools-extensie. [Meer informatie](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)"
@@ -2353,9 +2299,6 @@
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | render-blocking-resources": {
     "message": "Er zijn een aantal WordPress-plug-ins om [kritieke items inline te plaatsen](https://wordpress.org/plugins/search/critical+css/) of [minder belangrijke bronnen uit te stellen](https://wordpress.org/plugins/search/defer+css+javascript/). Bedenk wel dat de optimalisatie die deze plug-ins bieden, bepaalde functies van je thema of plug-ins kunnen verstoren. Het is daarom goed mogelijk dat je de code moet wijzigen."
-  },
-  "node_modules/lighthouse-stack-packs/packs/wordpress.js | time-to-first-byte": {
-    "message": "Thema's, plug-ins en serverspecificaties zijn allemaal van invloed op de reactietijd van de server. Overweeg een thema te gebruiken dat beter is geoptimaliseerd, kies met zorg een optimalisatieplug-in en/of upgrade je server."
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | total-byte-weight": {
     "message": "Overweeg fragmenten te tonen in je postlijsten (bijvoorbeeld via de tag 'more'), zodat er per pagina minder posts worden getoond. Ook kun je lange posts verdelen over meerdere pagina's of een plug-in voor lazy loading van reacties gebruiken."
@@ -2383,8 +2326,5 @@
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | uses-text-compression": {
     "message": "Je kunt tekstcompressie in de webserverinstellingen aanzetten."
-  },
-  "node_modules/lighthouse-stack-packs/packs/wordpress.js | uses-webp-images": {
-    "message": "Overweeg een [plug-in](https://wordpress.org/plugins/search/convert+webp/) of service te gebruiken die je geüploade afbeeldingen automatisch converteert naar de optimale indelingen."
   }
 }

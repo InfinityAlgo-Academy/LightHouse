@@ -79,6 +79,8 @@ class ScriptTreemapDataAudit extends Audit {
       // Strip off the shared root.
       const sourcePathSegments = source.replace(sourceRoot, '').split(/\/+/);
       sourcePathSegments.forEach((sourcePathSegment, i) => {
+        if (sourcePathSegment.length === 0) return;
+
         const isLeaf = i === sourcePathSegments.length - 1;
 
         let child = node.children && node.children.find(child => child.name === sourcePathSegment);
@@ -123,6 +125,17 @@ class ScriptTreemapDataAudit extends Audit {
       }
     }
     collapseAll(sourceRootNode);
+
+    // If sourceRootNode.name is falsy (no defined sourceRoot + no collapsed common prefix),
+    // collapse the sourceRootNode children into the scriptNode.
+    // Otherwise, we add another node.
+    if (!sourceRootNode.name) {
+      return {
+        ...sourceRootNode,
+        name: src,
+        children: sourceRootNode.children,
+      };
+    }
 
     // Script node should be just the script src.
     const scriptNode = {...sourceRootNode};

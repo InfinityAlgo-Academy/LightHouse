@@ -311,17 +311,17 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
     ]);
     for (const metric of filterChoices) {
       const elemId = `metric-${metric.acronym}`;
+      const radioEl = this.dom.createChildOf(metricFilterEl, 'input', 'lh-metricfilter__radio', {
+        type: 'radio',
+        name: 'metricsfilter',
+        id: elemId,
+      });
+
       const labelEl = this.dom.createChildOf(metricFilterEl, 'label', 'lh-metricfilter__label', {
         for: elemId,
         title: metric.result && metric.result.title,
       });
       labelEl.textContent = metric.acronym || metric.id;
-      const radioEl = this.dom.createChildOf(labelEl, 'input', 'lh-metricfilter__radio', {
-        type: 'radio',
-        name: 'metricsfilter',
-        id: elemId,
-        hidden: 'true',
-      });
 
       if (metric.acronym === 'All') {
         radioEl.checked = true;

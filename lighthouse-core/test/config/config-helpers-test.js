@@ -149,6 +149,11 @@ describe('.deepCloneConfigJson', () => {
 describe('.resolveSettings', () => {
   it('resolves the locale', () => {
     const settings = resolveSettings({locale: 'zh-CN'});
+    // COMPAT: Node 12 only has 'en' by default.
+    if (process.versions.node.startsWith('12')) {
+      expect(settings.locale).toEqual('en');
+      return;
+    }
     expect(settings.locale).toEqual('zh');
   });
 

@@ -544,25 +544,25 @@ describe('Config', () => {
       audits: [
         'accessibility/color-contrast',
         'metrics/first-meaningful-paint',
-        'metrics/first-cpu-idle',
-        'metrics/estimated-input-latency',
+        'metrics/first-contentful-paint',
+        'metrics/cumulative-layout-shift',
       ],
       categories: {
         'needed-category': {
           auditRefs: [
             {id: 'first-meaningful-paint'},
-            {id: 'first-cpu-idle'},
+            {id: 'first-contentful-paint'},
           ],
         },
         'other-category': {
           auditRefs: [
             {id: 'color-contrast'},
-            {id: 'estimated-input-latency'},
+            {id: 'cumulative-layout-shift'},
           ],
         },
         'unused-category': {
           auditRefs: [
-            {id: 'estimated-input-latency'},
+            {id: 'cumulative-layout-shift'},
           ],
         },
       },
@@ -588,21 +588,21 @@ describe('Config', () => {
       audits: [
         'accessibility/color-contrast',
         'metrics/first-meaningful-paint',
-        'metrics/first-cpu-idle',
-        'metrics/estimated-input-latency',
+        'metrics/first-contentful-paint',
+        'metrics/cumulative-layout-shift',
       ],
       categories: {
         'needed-category': {
           auditRefs: [
             {id: 'first-meaningful-paint'},
-            {id: 'first-cpu-idle'},
+            {id: 'first-contentful-paint'},
             {id: 'color-contrast'},
           ],
         },
         'other-category': {
           auditRefs: [
             {id: 'color-contrast'},
-            {id: 'estimated-input-latency'},
+            {id: 'cumulative-layout-shift'},
           ],
         },
       },
@@ -679,7 +679,7 @@ describe('Config', () => {
       extends: 'lighthouse:default',
       settings: {
         onlyCategories: ['performance', 'missing-category'],
-        onlyAudits: ['first-cpu-idle', 'missing-audit'],
+        onlyAudits: ['first-contentful-paint', 'missing-audit'],
       },
     });
 
@@ -828,6 +828,8 @@ describe('Config', () => {
     it('uses config setting for locale if set', () => {
       const locale = 'ar-XB';
       const config = new Config({settings: {locale}});
+      // COMPAT: Node 12 only has 'en' by default.
+      if (process.versions.node.startsWith('12')) return;
       assert.strictEqual(config.settings.locale, locale);
     });
 
@@ -835,6 +837,8 @@ describe('Config', () => {
       const settingsLocale = 'en-XA';
       const flagsLocale = 'ar-XB';
       const config = new Config({settings: {locale: settingsLocale}}, {locale: flagsLocale});
+      // COMPAT: Node 12 only has 'en' by default.
+      if (process.versions.node.startsWith('12')) return;
       assert.strictEqual(config.settings.locale, flagsLocale);
     });
   });

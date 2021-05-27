@@ -11,6 +11,25 @@ const lhr = require('../../results/sample_v2.json');
 
 /* eslint-env jest */
 describe('swap-locale', () => {
+  // COMPAT: Node 12 only has 'en' by default. Skip these tests since they're all about swapping locales.
+  if (process.versions.node.startsWith('12')) {
+    // Jest requires at least one test per suite.
+    it('runs even if other locales are not supported', () => {
+      /** @type {LH.Result} */
+      const lhrClone = JSON.parse(JSON.stringify(lhr));
+
+      // Even though 'pt' is requested, 'en' is all that's available.
+      const lhrEn = swapLocale(lhr, 'pt').lhr;
+      expect(lhrEn.configSettings.locale).toBe('en');
+
+      // Set locale back to full 'en-US' do do the comparison.
+      lhrEn.configSettings.locale = 'en-US';
+      expect(lhrEn).toStrictEqual(lhrClone);
+    });
+
+    return;
+  }
+
   it('does not mutate the original lhr', () => {
     /** @type {LH.Result} */
     const lhrClone = JSON.parse(JSON.stringify(lhr));

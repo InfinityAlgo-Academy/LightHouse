@@ -5216,584 +5216,577 @@ Array [
               Object {
                 "children": Array [
                   Object {
-                    "children": Array [
-                      Object {
-                        "name": "util.ts",
-                        "resourceBytes": 4043,
-                        "unusedBytes": 500,
-                      },
-                      Object {
-                        "name": "icons.tsx",
-                        "resourceBytes": 2531,
-                        "unusedBytes": 24,
-                      },
-                      Object {
-                        "name": "clean-modify.ts",
-                        "resourceBytes": 331,
-                      },
-                    ],
-                    "name": "lib",
-                    "resourceBytes": 6905,
-                    "unusedBytes": 524,
+                    "name": "util.ts",
+                    "resourceBytes": 4043,
+                    "unusedBytes": 500,
                   },
                   Object {
-                    "children": Array [
-                      Object {
-                        "children": Array [
-                          Object {
-                            "name": "style.scss",
-                            "resourceBytes": 410,
-                          },
-                          Object {
-                            "name": "index.tsx",
-                            "resourceBytes": 2176,
-                            "unusedBytes": 37,
-                          },
-                        ],
-                        "name": "Options",
-                        "resourceBytes": 2586,
-                        "unusedBytes": 37,
-                      },
-                      Object {
-                        "children": Array [
-                          Object {
-                            "children": Array [
-                              Object {
-                                "children": Array [
-                                  Object {
-                                    "name": "styles.css",
-                                    "resourceBytes": 75,
-                                  },
-                                  Object {
-                                    "name": "index.ts",
-                                    "resourceBytes": 2088,
-                                    "unusedBytes": 42,
-                                  },
-                                ],
-                                "name": "TwoUp",
-                                "resourceBytes": 2163,
-                                "unusedBytes": 42,
-                              },
-                              Object {
-                                "children": undefined,
-                                "name": "PinchZoom/index.ts",
-                                "resourceBytes": 3653,
-                                "unusedBytes": 73,
-                              },
-                            ],
-                            "name": "custom-els",
-                            "resourceBytes": 5816,
-                            "unusedBytes": 115,
-                          },
-                          Object {
-                            "name": "style.scss",
-                            "resourceBytes": 447,
-                          },
-                          Object {
-                            "name": "index.tsx",
-                            "resourceBytes": 5199,
-                            "unusedBytes": 73,
-                          },
-                        ],
-                        "name": "Output",
-                        "resourceBytes": 11462,
-                        "unusedBytes": 188,
-                      },
-                      Object {
-                        "children": Array [
-                          Object {
-                            "name": "style.scss",
-                            "resourceBytes": 780,
-                          },
-                          Object {
-                            "name": "FileSize.tsx",
-                            "resourceBytes": 445,
-                            "unusedBytes": 21,
-                          },
-                          Object {
-                            "name": "index.tsx",
-                            "resourceBytes": 1538,
-                            "unusedBytes": 19,
-                          },
-                        ],
-                        "name": "results",
-                        "resourceBytes": 2763,
-                        "unusedBytes": 40,
-                      },
-                      Object {
-                        "children": Array [
-                          Object {
-                            "name": "style.scss",
-                            "resourceBytes": 132,
-                          },
-                          Object {
-                            "children": Array [
-                              Object {
-                                "name": "styles.css",
-                                "resourceBytes": 105,
-                              },
-                              Object {
-                                "name": "index.ts",
-                                "resourceBytes": 3461,
-                                "unusedBytes": 28,
-                              },
-                            ],
-                            "name": "custom-els/MultiPanel",
-                            "resourceBytes": 3566,
-                            "unusedBytes": 28,
-                          },
-                          Object {
-                            "name": "result-cache.ts",
-                            "resourceBytes": 611,
-                            "unusedBytes": 20,
-                          },
-                          Object {
-                            "name": "index.tsx",
-                            "resourceBytes": 8782,
-                            "unusedBytes": 28,
-                          },
-                        ],
-                        "name": "compress",
-                        "resourceBytes": 13091,
-                        "unusedBytes": 76,
-                      },
-                      Object {
-                        "children": Array [
-                          Object {
-                            "name": "style.scss",
-                            "resourceBytes": 200,
-                          },
-                          Object {
-                            "name": "index.tsx",
-                            "resourceBytes": 566,
-                            "unusedBytes": 9,
-                          },
-                        ],
-                        "name": "range",
-                        "resourceBytes": 766,
-                        "unusedBytes": 9,
-                      },
-                      Object {
-                        "children": Array [
-                          Object {
-                            "name": "style.scss",
-                            "resourceBytes": 106,
-                          },
-                          Object {
-                            "name": "index.tsx",
-                            "resourceBytes": 247,
-                            "unusedBytes": 1,
-                          },
-                        ],
-                        "name": "checkbox",
-                        "resourceBytes": 353,
-                        "unusedBytes": 1,
-                      },
-                      Object {
-                        "children": Array [
-                          Object {
-                            "name": "style.scss",
-                            "resourceBytes": 66,
-                          },
-                          Object {
-                            "name": "index.tsx",
-                            "resourceBytes": 901,
-                            "unusedBytes": 21,
-                          },
-                        ],
-                        "name": "expander",
-                        "resourceBytes": 967,
-                        "unusedBytes": 21,
-                      },
-                      Object {
-                        "children": Array [
-                          Object {
-                            "name": "style.scss",
-                            "resourceBytes": 103,
-                          },
-                          Object {
-                            "name": "index.tsx",
-                            "resourceBytes": 291,
-                            "unusedBytes": 21,
-                          },
-                        ],
-                        "name": "select",
-                        "resourceBytes": 394,
-                        "unusedBytes": 21,
-                      },
-                    ],
-                    "name": "components",
-                    "resourceBytes": 32382,
-                    "unusedBytes": 393,
+                    "name": "icons.tsx",
+                    "resourceBytes": 2531,
+                    "unusedBytes": 24,
                   },
                   Object {
-                    "children": Array [
-                      Object {
-                        "children": Array [
-                          Object {
-                            "name": "util.ts",
-                            "resourceBytes": 159,
-                          },
-                          Object {
-                            "name": "quality-option.tsx",
-                            "resourceBytes": 398,
-                            "unusedBytes": 19,
-                          },
-                        ],
-                        "name": "generic",
-                        "resourceBytes": 557,
-                        "unusedBytes": 19,
-                      },
-                      Object {
-                        "children": Array [
-                          Object {
-                            "name": "encoder-meta.ts",
-                            "resourceBytes": 268,
-                            "unusedBytes": 44,
-                          },
-                          Object {
-                            "name": "encoder.tsx",
-                            "resourceBytes": 101,
-                            "unusedBytes": 22,
-                          },
-                        ],
-                        "name": "browser-png",
-                        "resourceBytes": 369,
-                        "unusedBytes": 66,
-                      },
-                      Object {
-                        "children": Array [
-                          Object {
-                            "name": "encoder-meta.ts",
-                            "resourceBytes": 282,
-                            "unusedBytes": 44,
-                          },
-                          Object {
-                            "name": "encoder.ts",
-                            "resourceBytes": 115,
-                            "unusedBytes": 22,
-                          },
-                          Object {
-                            "name": "options.ts",
-                            "resourceBytes": 35,
-                            "unusedBytes": 35,
-                          },
-                        ],
-                        "name": "browser-jpeg",
-                        "resourceBytes": 432,
-                        "unusedBytes": 101,
-                      },
-                      Object {
-                        "children": Array [
-                          Object {
-                            "name": "encoder-meta.ts",
-                            "resourceBytes": 358,
-                            "unusedBytes": 44,
-                          },
-                          Object {
-                            "name": "encoder.ts",
-                            "resourceBytes": 115,
-                            "unusedBytes": 22,
-                          },
-                          Object {
-                            "name": "options.ts",
-                            "resourceBytes": 34,
-                            "unusedBytes": 34,
-                          },
-                        ],
-                        "name": "browser-webp",
-                        "resourceBytes": 507,
-                        "unusedBytes": 100,
-                      },
-                      Object {
-                        "children": Array [
-                          Object {
-                            "name": "encoder-meta.ts",
-                            "resourceBytes": 343,
-                            "unusedBytes": 44,
-                          },
-                          Object {
-                            "name": "encoder.ts",
-                            "resourceBytes": 101,
-                            "unusedBytes": 22,
-                          },
-                        ],
-                        "name": "browser-gif",
-                        "resourceBytes": 444,
-                        "unusedBytes": 66,
-                      },
-                      Object {
-                        "children": Array [
-                          Object {
-                            "name": "encoder-meta.ts",
-                            "resourceBytes": 347,
-                            "unusedBytes": 44,
-                          },
-                          Object {
-                            "name": "encoder.ts",
-                            "resourceBytes": 101,
-                            "unusedBytes": 22,
-                          },
-                        ],
-                        "name": "browser-tiff",
-                        "resourceBytes": 448,
-                        "unusedBytes": 66,
-                      },
-                      Object {
-                        "children": Array [
-                          Object {
-                            "name": "encoder-meta.ts",
-                            "resourceBytes": 349,
-                            "unusedBytes": 44,
-                          },
-                          Object {
-                            "name": "encoder.ts",
-                            "resourceBytes": 101,
-                            "unusedBytes": 22,
-                          },
-                        ],
-                        "name": "browser-jp2",
-                        "resourceBytes": 450,
-                        "unusedBytes": 66,
-                      },
-                      Object {
-                        "children": Array [
-                          Object {
-                            "name": "encoder-meta.ts",
-                            "resourceBytes": 343,
-                            "unusedBytes": 44,
-                          },
-                          Object {
-                            "name": "encoder.ts",
-                            "resourceBytes": 101,
-                            "unusedBytes": 22,
-                          },
-                        ],
-                        "name": "browser-bmp",
-                        "resourceBytes": 444,
-                        "unusedBytes": 66,
-                      },
-                      Object {
-                        "children": Array [
-                          Object {
-                            "name": "encoder-meta.ts",
-                            "resourceBytes": 349,
-                            "unusedBytes": 44,
-                          },
-                          Object {
-                            "name": "encoder.ts",
-                            "resourceBytes": 101,
-                            "unusedBytes": 22,
-                          },
-                        ],
-                        "name": "browser-pdf",
-                        "resourceBytes": 450,
-                        "unusedBytes": 66,
-                      },
-                      Object {
-                        "name": "tiny.webp",
-                        "resourceBytes": 89,
-                      },
-                      Object {
-                        "name": "processor.ts",
-                        "resourceBytes": 2380,
-                        "unusedBytes": 22,
-                      },
-                      Object {
-                        "children": undefined,
-                        "name": "processor-worker/index.ts",
-                        "resourceBytes": 50,
-                      },
-                      Object {
-                        "children": Array [
-                          Object {
-                            "name": "util.ts",
-                            "resourceBytes": 134,
-                          },
-                          Object {
-                            "name": "processor-sync.ts",
-                            "resourceBytes": 462,
-                            "unusedBytes": 13,
-                          },
-                          Object {
-                            "name": "processor-meta.ts",
-                            "resourceBytes": 225,
-                          },
-                          Object {
-                            "name": "options.tsx",
-                            "resourceBytes": 3970,
-                            "unusedBytes": 53,
-                          },
-                        ],
-                        "name": "resize",
-                        "resourceBytes": 4791,
-                        "unusedBytes": 66,
-                      },
-                      Object {
-                        "children": Array [
-                          Object {
-                            "name": "encoder-meta.ts",
-                            "resourceBytes": 436,
-                            "unusedBytes": 3,
-                          },
-                          Object {
-                            "name": "options.tsx",
-                            "resourceBytes": 4416,
-                            "unusedBytes": 21,
-                          },
-                        ],
-                        "name": "mozjpeg",
-                        "resourceBytes": 4852,
-                        "unusedBytes": 24,
-                      },
-                      Object {
-                        "children": Array [
-                          Object {
-                            "name": "options.tsx",
-                            "resourceBytes": 366,
-                            "unusedBytes": 21,
-                          },
-                          Object {
-                            "name": "encoder-meta.ts",
-                            "resourceBytes": 59,
-                          },
-                        ],
-                        "name": "optipng",
-                        "resourceBytes": 425,
-                        "unusedBytes": 21,
-                      },
-                      Object {
-                        "children": Array [
-                          Object {
-                            "name": "encoder-meta.ts",
-                            "resourceBytes": 660,
-                            "unusedBytes": 660,
-                          },
-                          Object {
-                            "name": "options.tsx",
-                            "resourceBytes": 5114,
-                            "unusedBytes": 93,
-                          },
-                        ],
-                        "name": "webp",
-                        "resourceBytes": 5774,
-                        "unusedBytes": 753,
-                      },
-                      Object {
-                        "children": Array [
-                          Object {
-                            "name": "options.tsx",
-                            "resourceBytes": 1052,
-                            "unusedBytes": 44,
-                          },
-                          Object {
-                            "name": "processor-meta.ts",
-                            "resourceBytes": 40,
-                          },
-                        ],
-                        "name": "imagequant",
-                        "resourceBytes": 1092,
-                        "unusedBytes": 44,
-                      },
-                      Object {
-                        "children": undefined,
-                        "name": "identity/encoder-meta.ts",
-                        "resourceBytes": 46,
-                      },
-                      Object {
-                        "name": "encoders.ts",
-                        "resourceBytes": 336,
-                      },
-                      Object {
-                        "name": "preprocessors.ts",
-                        "resourceBytes": 75,
-                      },
-                      Object {
-                        "name": "decoders.ts",
-                        "resourceBytes": 206,
-                      },
-                      Object {
-                        "children": undefined,
-                        "name": "rotate/processor-meta.ts",
-                        "resourceBytes": 18,
-                        "unusedBytes": 18,
-                      },
-                      Object {
-                        "name": "input-processors.ts",
-                        "resourceBytes": 11,
-                        "unusedBytes": 11,
-                      },
-                    ],
-                    "name": "codecs",
-                    "resourceBytes": 24246,
-                    "unusedBytes": 1575,
-                  },
-                  Object {
-                    "children": Array [
-                      Object {
-                        "name": "styles.css",
-                        "resourceBytes": 180,
-                      },
-                      Object {
-                        "name": "index.ts",
-                        "resourceBytes": 2138,
-                        "unusedBytes": 293,
-                      },
-                    ],
-                    "name": "custom-els/RangeInput",
-                    "resourceBytes": 2318,
-                    "unusedBytes": 293,
+                    "name": "clean-modify.ts",
+                    "resourceBytes": 331,
                   },
                 ],
-                "name": "src",
-                "resourceBytes": 65851,
-                "unusedBytes": 2785,
+                "name": "lib",
+                "resourceBytes": 6905,
+                "unusedBytes": 524,
               },
               Object {
                 "children": Array [
                   Object {
-                    "children": undefined,
-                    "name": "comlink/comlink.js",
-                    "resourceBytes": 4117,
-                    "unusedBytes": 256,
+                    "children": Array [
+                      Object {
+                        "name": "style.scss",
+                        "resourceBytes": 410,
+                      },
+                      Object {
+                        "name": "index.tsx",
+                        "resourceBytes": 2176,
+                        "unusedBytes": 37,
+                      },
+                    ],
+                    "name": "Options",
+                    "resourceBytes": 2586,
+                    "unusedBytes": 37,
                   },
                   Object {
-                    "children": undefined,
-                    "name": "pretty-bytes/index.js",
-                    "resourceBytes": 635,
-                    "unusedBytes": 11,
+                    "children": Array [
+                      Object {
+                        "children": Array [
+                          Object {
+                            "children": Array [
+                              Object {
+                                "name": "styles.css",
+                                "resourceBytes": 75,
+                              },
+                              Object {
+                                "name": "index.ts",
+                                "resourceBytes": 2088,
+                                "unusedBytes": 42,
+                              },
+                            ],
+                            "name": "TwoUp",
+                            "resourceBytes": 2163,
+                            "unusedBytes": 42,
+                          },
+                          Object {
+                            "children": undefined,
+                            "name": "PinchZoom/index.ts",
+                            "resourceBytes": 3653,
+                            "unusedBytes": 73,
+                          },
+                        ],
+                        "name": "custom-els",
+                        "resourceBytes": 5816,
+                        "unusedBytes": 115,
+                      },
+                      Object {
+                        "name": "style.scss",
+                        "resourceBytes": 447,
+                      },
+                      Object {
+                        "name": "index.tsx",
+                        "resourceBytes": 5199,
+                        "unusedBytes": 73,
+                      },
+                    ],
+                    "name": "Output",
+                    "resourceBytes": 11462,
+                    "unusedBytes": 188,
                   },
                   Object {
-                    "children": undefined,
-                    "name": "pointer-tracker/dist/PointerTracker.mjs",
-                    "resourceBytes": 2672,
-                    "unusedBytes": 13,
+                    "children": Array [
+                      Object {
+                        "name": "style.scss",
+                        "resourceBytes": 780,
+                      },
+                      Object {
+                        "name": "FileSize.tsx",
+                        "resourceBytes": 445,
+                        "unusedBytes": 21,
+                      },
+                      Object {
+                        "name": "index.tsx",
+                        "resourceBytes": 1538,
+                        "unusedBytes": 19,
+                      },
+                    ],
+                    "name": "results",
+                    "resourceBytes": 2763,
+                    "unusedBytes": 40,
                   },
                   Object {
-                    "children": undefined,
-                    "name": "linkstate/dist/linkstate.es.js",
-                    "resourceBytes": 412,
+                    "children": Array [
+                      Object {
+                        "name": "style.scss",
+                        "resourceBytes": 132,
+                      },
+                      Object {
+                        "children": Array [
+                          Object {
+                            "name": "styles.css",
+                            "resourceBytes": 105,
+                          },
+                          Object {
+                            "name": "index.ts",
+                            "resourceBytes": 3461,
+                            "unusedBytes": 28,
+                          },
+                        ],
+                        "name": "custom-els/MultiPanel",
+                        "resourceBytes": 3566,
+                        "unusedBytes": 28,
+                      },
+                      Object {
+                        "name": "result-cache.ts",
+                        "resourceBytes": 611,
+                        "unusedBytes": 20,
+                      },
+                      Object {
+                        "name": "index.tsx",
+                        "resourceBytes": 8782,
+                        "unusedBytes": 28,
+                      },
+                    ],
+                    "name": "compress",
+                    "resourceBytes": 13091,
+                    "unusedBytes": 76,
+                  },
+                  Object {
+                    "children": Array [
+                      Object {
+                        "name": "style.scss",
+                        "resourceBytes": 200,
+                      },
+                      Object {
+                        "name": "index.tsx",
+                        "resourceBytes": 566,
+                        "unusedBytes": 9,
+                      },
+                    ],
+                    "name": "range",
+                    "resourceBytes": 766,
+                    "unusedBytes": 9,
+                  },
+                  Object {
+                    "children": Array [
+                      Object {
+                        "name": "style.scss",
+                        "resourceBytes": 106,
+                      },
+                      Object {
+                        "name": "index.tsx",
+                        "resourceBytes": 247,
+                        "unusedBytes": 1,
+                      },
+                    ],
+                    "name": "checkbox",
+                    "resourceBytes": 353,
                     "unusedBytes": 1,
                   },
+                  Object {
+                    "children": Array [
+                      Object {
+                        "name": "style.scss",
+                        "resourceBytes": 66,
+                      },
+                      Object {
+                        "name": "index.tsx",
+                        "resourceBytes": 901,
+                        "unusedBytes": 21,
+                      },
+                    ],
+                    "name": "expander",
+                    "resourceBytes": 967,
+                    "unusedBytes": 21,
+                  },
+                  Object {
+                    "children": Array [
+                      Object {
+                        "name": "style.scss",
+                        "resourceBytes": 103,
+                      },
+                      Object {
+                        "name": "index.tsx",
+                        "resourceBytes": 291,
+                        "unusedBytes": 21,
+                      },
+                    ],
+                    "name": "select",
+                    "resourceBytes": 394,
+                    "unusedBytes": 21,
+                  },
                 ],
-                "name": "node_modules",
-                "resourceBytes": 7836,
-                "unusedBytes": 281,
+                "name": "components",
+                "resourceBytes": 32382,
+                "unusedBytes": 393,
+              },
+              Object {
+                "children": Array [
+                  Object {
+                    "children": Array [
+                      Object {
+                        "name": "util.ts",
+                        "resourceBytes": 159,
+                      },
+                      Object {
+                        "name": "quality-option.tsx",
+                        "resourceBytes": 398,
+                        "unusedBytes": 19,
+                      },
+                    ],
+                    "name": "generic",
+                    "resourceBytes": 557,
+                    "unusedBytes": 19,
+                  },
+                  Object {
+                    "children": Array [
+                      Object {
+                        "name": "encoder-meta.ts",
+                        "resourceBytes": 268,
+                        "unusedBytes": 44,
+                      },
+                      Object {
+                        "name": "encoder.tsx",
+                        "resourceBytes": 101,
+                        "unusedBytes": 22,
+                      },
+                    ],
+                    "name": "browser-png",
+                    "resourceBytes": 369,
+                    "unusedBytes": 66,
+                  },
+                  Object {
+                    "children": Array [
+                      Object {
+                        "name": "encoder-meta.ts",
+                        "resourceBytes": 282,
+                        "unusedBytes": 44,
+                      },
+                      Object {
+                        "name": "encoder.ts",
+                        "resourceBytes": 115,
+                        "unusedBytes": 22,
+                      },
+                      Object {
+                        "name": "options.ts",
+                        "resourceBytes": 35,
+                        "unusedBytes": 35,
+                      },
+                    ],
+                    "name": "browser-jpeg",
+                    "resourceBytes": 432,
+                    "unusedBytes": 101,
+                  },
+                  Object {
+                    "children": Array [
+                      Object {
+                        "name": "encoder-meta.ts",
+                        "resourceBytes": 358,
+                        "unusedBytes": 44,
+                      },
+                      Object {
+                        "name": "encoder.ts",
+                        "resourceBytes": 115,
+                        "unusedBytes": 22,
+                      },
+                      Object {
+                        "name": "options.ts",
+                        "resourceBytes": 34,
+                        "unusedBytes": 34,
+                      },
+                    ],
+                    "name": "browser-webp",
+                    "resourceBytes": 507,
+                    "unusedBytes": 100,
+                  },
+                  Object {
+                    "children": Array [
+                      Object {
+                        "name": "encoder-meta.ts",
+                        "resourceBytes": 343,
+                        "unusedBytes": 44,
+                      },
+                      Object {
+                        "name": "encoder.ts",
+                        "resourceBytes": 101,
+                        "unusedBytes": 22,
+                      },
+                    ],
+                    "name": "browser-gif",
+                    "resourceBytes": 444,
+                    "unusedBytes": 66,
+                  },
+                  Object {
+                    "children": Array [
+                      Object {
+                        "name": "encoder-meta.ts",
+                        "resourceBytes": 347,
+                        "unusedBytes": 44,
+                      },
+                      Object {
+                        "name": "encoder.ts",
+                        "resourceBytes": 101,
+                        "unusedBytes": 22,
+                      },
+                    ],
+                    "name": "browser-tiff",
+                    "resourceBytes": 448,
+                    "unusedBytes": 66,
+                  },
+                  Object {
+                    "children": Array [
+                      Object {
+                        "name": "encoder-meta.ts",
+                        "resourceBytes": 349,
+                        "unusedBytes": 44,
+                      },
+                      Object {
+                        "name": "encoder.ts",
+                        "resourceBytes": 101,
+                        "unusedBytes": 22,
+                      },
+                    ],
+                    "name": "browser-jp2",
+                    "resourceBytes": 450,
+                    "unusedBytes": 66,
+                  },
+                  Object {
+                    "children": Array [
+                      Object {
+                        "name": "encoder-meta.ts",
+                        "resourceBytes": 343,
+                        "unusedBytes": 44,
+                      },
+                      Object {
+                        "name": "encoder.ts",
+                        "resourceBytes": 101,
+                        "unusedBytes": 22,
+                      },
+                    ],
+                    "name": "browser-bmp",
+                    "resourceBytes": 444,
+                    "unusedBytes": 66,
+                  },
+                  Object {
+                    "children": Array [
+                      Object {
+                        "name": "encoder-meta.ts",
+                        "resourceBytes": 349,
+                        "unusedBytes": 44,
+                      },
+                      Object {
+                        "name": "encoder.ts",
+                        "resourceBytes": 101,
+                        "unusedBytes": 22,
+                      },
+                    ],
+                    "name": "browser-pdf",
+                    "resourceBytes": 450,
+                    "unusedBytes": 66,
+                  },
+                  Object {
+                    "name": "tiny.webp",
+                    "resourceBytes": 89,
+                  },
+                  Object {
+                    "name": "processor.ts",
+                    "resourceBytes": 2380,
+                    "unusedBytes": 22,
+                  },
+                  Object {
+                    "children": undefined,
+                    "name": "processor-worker/index.ts",
+                    "resourceBytes": 50,
+                  },
+                  Object {
+                    "children": Array [
+                      Object {
+                        "name": "util.ts",
+                        "resourceBytes": 134,
+                      },
+                      Object {
+                        "name": "processor-sync.ts",
+                        "resourceBytes": 462,
+                        "unusedBytes": 13,
+                      },
+                      Object {
+                        "name": "processor-meta.ts",
+                        "resourceBytes": 225,
+                      },
+                      Object {
+                        "name": "options.tsx",
+                        "resourceBytes": 3970,
+                        "unusedBytes": 53,
+                      },
+                    ],
+                    "name": "resize",
+                    "resourceBytes": 4791,
+                    "unusedBytes": 66,
+                  },
+                  Object {
+                    "children": Array [
+                      Object {
+                        "name": "encoder-meta.ts",
+                        "resourceBytes": 436,
+                        "unusedBytes": 3,
+                      },
+                      Object {
+                        "name": "options.tsx",
+                        "resourceBytes": 4416,
+                        "unusedBytes": 21,
+                      },
+                    ],
+                    "name": "mozjpeg",
+                    "resourceBytes": 4852,
+                    "unusedBytes": 24,
+                  },
+                  Object {
+                    "children": Array [
+                      Object {
+                        "name": "options.tsx",
+                        "resourceBytes": 366,
+                        "unusedBytes": 21,
+                      },
+                      Object {
+                        "name": "encoder-meta.ts",
+                        "resourceBytes": 59,
+                      },
+                    ],
+                    "name": "optipng",
+                    "resourceBytes": 425,
+                    "unusedBytes": 21,
+                  },
+                  Object {
+                    "children": Array [
+                      Object {
+                        "name": "encoder-meta.ts",
+                        "resourceBytes": 660,
+                        "unusedBytes": 660,
+                      },
+                      Object {
+                        "name": "options.tsx",
+                        "resourceBytes": 5114,
+                        "unusedBytes": 93,
+                      },
+                    ],
+                    "name": "webp",
+                    "resourceBytes": 5774,
+                    "unusedBytes": 753,
+                  },
+                  Object {
+                    "children": Array [
+                      Object {
+                        "name": "options.tsx",
+                        "resourceBytes": 1052,
+                        "unusedBytes": 44,
+                      },
+                      Object {
+                        "name": "processor-meta.ts",
+                        "resourceBytes": 40,
+                      },
+                    ],
+                    "name": "imagequant",
+                    "resourceBytes": 1092,
+                    "unusedBytes": 44,
+                  },
+                  Object {
+                    "children": undefined,
+                    "name": "identity/encoder-meta.ts",
+                    "resourceBytes": 46,
+                  },
+                  Object {
+                    "name": "encoders.ts",
+                    "resourceBytes": 336,
+                  },
+                  Object {
+                    "name": "preprocessors.ts",
+                    "resourceBytes": 75,
+                  },
+                  Object {
+                    "name": "decoders.ts",
+                    "resourceBytes": 206,
+                  },
+                  Object {
+                    "children": undefined,
+                    "name": "rotate/processor-meta.ts",
+                    "resourceBytes": 18,
+                    "unusedBytes": 18,
+                  },
+                  Object {
+                    "name": "input-processors.ts",
+                    "resourceBytes": 11,
+                    "unusedBytes": 11,
+                  },
+                ],
+                "name": "codecs",
+                "resourceBytes": 24246,
+                "unusedBytes": 1575,
+              },
+              Object {
+                "children": Array [
+                  Object {
+                    "name": "styles.css",
+                    "resourceBytes": 180,
+                  },
+                  Object {
+                    "name": "index.ts",
+                    "resourceBytes": 2138,
+                    "unusedBytes": 293,
+                  },
+                ],
+                "name": "custom-els/RangeInput",
+                "resourceBytes": 2318,
+                "unusedBytes": 293,
               },
             ],
-            "name": "webpack:/.",
-            "resourceBytes": 73687,
-            "unusedBytes": 3066,
+            "name": "src",
+            "resourceBytes": 65851,
+            "unusedBytes": 2785,
           },
           Object {
-            "name": "(unmapped)",
-            "resourceBytes": 10061,
-            "unusedBytes": 3760,
+            "children": Array [
+              Object {
+                "children": undefined,
+                "name": "comlink/comlink.js",
+                "resourceBytes": 4117,
+                "unusedBytes": 256,
+              },
+              Object {
+                "children": undefined,
+                "name": "pretty-bytes/index.js",
+                "resourceBytes": 635,
+                "unusedBytes": 11,
+              },
+              Object {
+                "children": undefined,
+                "name": "pointer-tracker/dist/PointerTracker.mjs",
+                "resourceBytes": 2672,
+                "unusedBytes": 13,
+              },
+              Object {
+                "children": undefined,
+                "name": "linkstate/dist/linkstate.es.js",
+                "resourceBytes": 412,
+                "unusedBytes": 1,
+              },
+            ],
+            "name": "node_modules",
+            "resourceBytes": 7836,
+            "unusedBytes": 281,
           },
         ],
-        "name": "",
-        "resourceBytes": 83748,
-        "unusedBytes": 6826,
+        "name": "webpack:/.",
+        "resourceBytes": 73687,
+        "unusedBytes": 3066,
+      },
+      Object {
+        "name": "(unmapped)",
+        "resourceBytes": 10061,
+        "unusedBytes": 3760,
       },
     ],
     "name": "https://squoosh.app/main-app.js",

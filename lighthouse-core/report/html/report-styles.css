@@ -589,6 +589,14 @@
   margin-top: var(--default-padding);
 }
 
+.lh-metricfilter__radio {
+  position: absolute;
+  left: -9999px;
+}
+.lh-metricfilter input[type='radio']:focus-visible + label {
+  outline: -webkit-focus-ring-color auto 1px;
+}
+
 .lh-metricfilter__label {
   border: solid 1px var(--color-gray-400);
   align-items: center;

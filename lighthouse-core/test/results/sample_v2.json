@@ -69,7 +69,7 @@
       "id": "first-contentful-paint",
       "title": "First Contentful Paint",
       "description": "First Contentful Paint marks the time at which the first text or image is painted. [Learn more](https://web.dev/first-contentful-paint/).",
-      "score": 0.51,
+      "score": 0.24,
       "scoreDisplayMode": "numeric",
       "numericValue": 3969.135,
       "numericUnit": "millisecond",
@@ -181,16 +181,6 @@
         "data": "data:image/jpeg;base64,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"
       }
     },
-    "estimated-input-latency": {
-      "id": "estimated-input-latency",
-      "title": "Estimated Input Latency",
-      "description": "Estimated Input Latency is an estimate of how long your app takes to respond to user input, in milliseconds, during the busiest 5s window of page load. If your latency is higher than 50 ms, users may perceive your app as laggy. [Learn more](https://web.dev/estimated-input-latency/).",
-      "score": 1,
-      "scoreDisplayMode": "numeric",
-      "numericValue": 16,
-      "numericUnit": "millisecond",
-      "displayValue": "20 ms"
-    },
     "total-blocking-time": {
       "id": "total-blocking-time",
       "title": "Total Blocking Time",
@@ -224,7 +214,8 @@
         "type": "debugdata",
         "items": [
           {
-            "finalLayoutShiftTraceEventFound": true
+            "cumulativeLayoutShiftMainFrame": 0.42,
+            "totalCumulativeLayoutShift": 0.42
           }
         ]
       }
@@ -380,16 +371,6 @@
         ],
         "overallSavingsMs": 470.5630000000001
       }
-    },
-    "first-cpu-idle": {
-      "id": "first-cpu-idle",
-      "title": "First CPU Idle",
-      "description": "First CPU Idle marks the first time at which the page's main thread is quiet enough to handle input.  [Learn more](https://web.dev/first-cpu-idle/).",
-      "score": 0.72,
-      "scoreDisplayMode": "numeric",
-      "numericValue": 4927.278,
-      "numericUnit": "millisecond",
-      "displayValue": "4.9 s"
     },
     "interactive": {
       "id": "interactive",
@@ -1462,17 +1443,15 @@
             "largestContentfulPaintTs": 185608247190,
             "largestContentfulPaintAllFrames": 4927,
             "largestContentfulPaintAllFramesTs": 185608247190,
-            "firstCPUIdle": 4927,
-            "firstCPUIdleTs": 185608247190,
             "interactive": 4927,
             "interactiveTs": 185608247190,
             "speedIndex": 4417,
             "speedIndexTs": 185607736912,
-            "estimatedInputLatency": 16,
             "totalBlockingTime": 117,
             "maxPotentialFID": 123,
             "cumulativeLayoutShift": 0.42,
-            "cumulativeLayoutShiftAllFrames": 0.42,
+            "cumulativeLayoutShiftMainFrame": 0.42,
+            "totalCumulativeLayoutShift": 0.42,
             "observedTimeOrigin": 0,
             "observedTimeOriginTs": 185603319912,
             "observedNavigationStart": 0,
@@ -1496,19 +1475,14 @@
             "observedDomContentLoaded": 4901,
             "observedDomContentLoadedTs": 185608220734,
             "observedCumulativeLayoutShift": 0.42,
-            "observedCumulativeLayoutShiftAllFrames": 0.42,
+            "observedCumulativeLayoutShiftMainFrame": 0.42,
+            "observedTotalCumulativeLayoutShift": 0.42,
             "observedFirstVisualChange": 3969,
             "observedFirstVisualChangeTs": 185607288912,
             "observedLastVisualChange": 4791,
             "observedLastVisualChangeTs": 185608110912,
             "observedSpeedIndex": 4417,
-            "observedSpeedIndexTs": 185607736763,
-            "layoutShiftAvgSessionGap5s": 0.42,
-            "layoutShiftMaxSessionGap1s": 0.42,
-            "layoutShiftMaxSessionGap1sLimit5s": 0.42,
-            "layoutShiftMaxSliding1s": 0.42,
-            "layoutShiftMaxSliding300ms": 0.42,
-            "layoutShiftMaxSessionGap1sLimit5sAllFrames": -1
+            "observedSpeedIndexTs": 185607736763
           },
           {
             "lcpInvalidated": false
@@ -1644,12 +1618,6 @@
           }
         ],
         "items": [
-          {
-            "metric": "first-cpu-idle",
-            "label": "First CPU Idle",
-            "measurement": 4927,
-            "overBudget": 2027
-          },
           {
             "metric": "interactive",
             "label": "Time to Interactive",
@@ -2192,11 +2160,19 @@
               "key": "directive"
             },
             "text": "Directive"
+          },
+          {
+            "key": "severity",
+            "itemType": "text",
+            "subItemsHeading": {
+              "key": "severity"
+            },
+            "text": "Severity"
           }
         ],
         "items": [
           {
-            "severity": "Bypass",
+            "severity": "High",
             "description": "No CSP found in enforcement mode"
           }
         ]
@@ -3853,8 +3829,8 @@
         "overallSavingsBytes": 0
       }
     },
-    "uses-webp-images": {
-      "id": "uses-webp-images",
+    "modern-image-formats": {
+      "id": "modern-image-formats",
       "title": "Serve images in next-gen formats",
       "description": "Image formats like JPEG 2000, JPEG XR, and WebP often provide better compression than PNG or JPEG, which means faster downloads and less data consumption. [Learn more](https://web.dev/uses-webp-images/).",
       "score": 0.88,
@@ -4937,10 +4913,6 @@
             "budget": 3000
           },
           {
-            "metric": "first-cpu-idle",
-            "budget": 2900
-          },
-          {
             "metric": "interactive",
             "budget": 2900
           },
@@ -5051,11 +5023,6 @@
           ]
         },
         {
-          "id": "first-cpu-idle",
-          "weight": 0,
-          "acronym": "FCI"
-        },
-        {
           "id": "max-potential-fid",
           "weight": 0
         },
@@ -5063,10 +5030,6 @@
           "id": "first-meaningful-paint",
           "weight": 0,
           "acronym": "FMP"
-        },
-        {
-          "id": "estimated-input-latency",
-          "weight": 0
         },
         {
           "id": "render-blocking-resources",
@@ -5109,7 +5072,7 @@
           "group": "load-opportunities"
         },
         {
-          "id": "uses-webp-images",
+          "id": "modern-image-formats",
           "weight": 0,
           "group": "load-opportunities"
         },
@@ -5301,7 +5264,7 @@
         }
       ],
       "id": "performance",
-      "score": 0.64
+      "score": 0.6
     },
     "accessibility": {
       "title": "Accessibility",
@@ -6067,18 +6030,6 @@
       },
       {
         "startTime": 0,
-        "name": "lh:audit:estimated-input-latency",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:computed:EstimatedInputLatency",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
         "name": "lh:audit:total-blocking-time",
         "duration": 100,
         "entryType": "measure"
@@ -6134,18 +6085,6 @@
       {
         "startTime": 0,
         "name": "lh:computed:MainResource",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:audit:first-cpu-idle",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:computed:FirstCPUIdle",
         "duration": 100,
         "entryType": "measure"
       },
@@ -6392,18 +6331,6 @@
       {
         "startTime": 0,
         "name": "lh:computed:LargestContentfulPaintAllFrames",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:computed:CumulativeLayoutShiftAllFrames",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:computed:LayoutShiftVariants",
         "duration": 100,
         "entryType": "measure"
       },
@@ -6967,7 +6894,7 @@
       },
       {
         "startTime": 0,
-        "name": "lh:audit:uses-webp-images",
+        "name": "lh:audit:modern-image-formats",
         "duration": 100,
         "entryType": "measure"
       },
@@ -7277,7 +7204,7 @@
       ],
       "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": [
         "audits[first-contentful-paint].title",
-        "audits[timing-budget].details.items[3].label"
+        "audits[timing-budget].details.items[2].label"
       ],
       "lighthouse-core/audits/metrics/first-contentful-paint.js | description": [
         "audits[first-contentful-paint].description"
@@ -7311,12 +7238,6 @@
           "values": {
             "timeInMs": 4927.278
           },
-          "path": "audits[first-cpu-idle].displayValue"
-        },
-        {
-          "values": {
-            "timeInMs": 4927.278
-          },
           "path": "audits.interactive.displayValue"
         },
         {
@@ -7340,7 +7261,7 @@
       ],
       "lighthouse-core/lib/i18n/i18n.js | firstMeaningfulPaintMetric": [
         "audits[first-meaningful-paint].title",
-        "audits[timing-budget].details.items[2].label"
+        "audits[timing-budget].details.items[1].label"
       ],
       "lighthouse-core/audits/metrics/first-meaningful-paint.js | description": [
         "audits[first-meaningful-paint].description"
@@ -7351,19 +7272,13 @@
       "lighthouse-core/audits/metrics/speed-index.js | description": [
         "audits[speed-index].description"
       ],
-      "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": [
-        "audits[estimated-input-latency].title"
+      "lighthouse-core/lib/i18n/i18n.js | totalBlockingTimeMetric": [
+        "audits[total-blocking-time].title"
       ],
-      "lighthouse-core/audits/metrics/estimated-input-latency.js | description": [
-        "audits[estimated-input-latency].description"
+      "lighthouse-core/audits/metrics/total-blocking-time.js | description": [
+        "audits[total-blocking-time].description"
       ],
       "lighthouse-core/lib/i18n/i18n.js | ms": [
-        {
-          "values": {
-            "timeInMs": 16
-          },
-          "path": "audits[estimated-input-latency].displayValue"
-        },
         {
           "values": {
             "timeInMs": 116.79800000000023
@@ -7389,15 +7304,9 @@
           "path": "audits[network-server-latency].displayValue"
         }
       ],
-      "lighthouse-core/lib/i18n/i18n.js | totalBlockingTimeMetric": [
-        "audits[total-blocking-time].title"
-      ],
-      "lighthouse-core/audits/metrics/total-blocking-time.js | description": [
-        "audits[total-blocking-time].description"
-      ],
       "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": [
         "audits[max-potential-fid].title",
-        "audits[timing-budget].details.items[4].label"
+        "audits[timing-budget].details.items[3].label"
       ],
       "lighthouse-core/audits/metrics/max-potential-fid.js | description": [
         "audits[max-potential-fid].description"
@@ -7455,7 +7364,7 @@
         "audits[total-byte-weight].details.headings[0].text",
         "audits[render-blocking-resources].details.headings[0].label",
         "audits[unminified-javascript].details.headings[0].label",
-        "audits[uses-webp-images].details.headings[1].label",
+        "audits[modern-image-formats].details.headings[1].label",
         "audits[uses-text-compression].details.headings[0].label",
         "audits[legacy-javascript].details.headings[0].label"
       ],
@@ -7465,16 +7374,9 @@
         "audits[network-rtt].details.headings[1].text",
         "audits[network-server-latency].details.headings[1].text"
       ],
-      "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": [
-        "audits[first-cpu-idle].title",
-        "audits[timing-budget].details.items[0].label"
-      ],
-      "lighthouse-core/audits/metrics/first-cpu-idle.js | description": [
-        "audits[first-cpu-idle].description"
-      ],
       "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": [
         "audits.interactive.title",
-        "audits[timing-budget].details.items[1].label"
+        "audits[timing-budget].details.items[0].label"
       ],
       "lighthouse-core/audits/metrics/interactive.js | description": [
         "audits.interactive.description"
@@ -7928,6 +7830,12 @@
       "lighthouse-core/audits/csp-xss.js | columnDirective": [
         "audits[csp-xss].details.headings[1].text"
       ],
+      "lighthouse-core/audits/csp-xss.js | columnSeverity": [
+        "audits[csp-xss].details.headings[2].text"
+      ],
+      "lighthouse-core/lib/i18n/i18n.js | itemSeverityHigh": [
+        "audits[csp-xss].details.items[0].severity"
+      ],
       "lighthouse-core/audits/csp-xss.js | noCsp": [
         "audits[csp-xss].details.items[0].description"
       ],
@@ -8279,7 +8187,7 @@
       "lighthouse-core/lib/i18n/i18n.js | columnWastedBytes": [
         "audits[render-blocking-resources].details.headings[2].label",
         "audits[unminified-javascript].details.headings[2].label",
-        "audits[uses-webp-images].details.headings[3].label",
+        "audits[modern-image-formats].details.headings[3].label",
         "audits[uses-text-compression].details.headings[2].label",
         "audits[legacy-javascript].details.headings[2].label"
       ],
@@ -8306,7 +8214,7 @@
           "values": {
             "wastedBytes": 9028
           },
-          "path": "audits[uses-webp-images].displayValue"
+          "path": "audits[modern-image-formats].displayValue"
         },
         {
           "values": {
@@ -8333,14 +8241,14 @@
       "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": [
         "audits[unused-javascript].description"
       ],
-      "lighthouse-core/audits/byte-efficiency/uses-webp-images.js | title": [
-        "audits[uses-webp-images].title"
+      "lighthouse-core/audits/byte-efficiency/modern-image-formats.js | title": [
+        "audits[modern-image-formats].title"
       ],
-      "lighthouse-core/audits/byte-efficiency/uses-webp-images.js | description": [
-        "audits[uses-webp-images].description"
+      "lighthouse-core/audits/byte-efficiency/modern-image-formats.js | description": [
+        "audits[modern-image-formats].description"
       ],
       "lighthouse-core/lib/i18n/i18n.js | columnResourceSize": [
-        "audits[uses-webp-images].details.headings[2].label"
+        "audits[modern-image-formats].details.headings[2].label"
       ],
       "lighthouse-core/audits/byte-efficiency/uses-optimized-images.js | title": [
         "audits[uses-optimized-images].title"
@@ -8491,7 +8399,7 @@
       "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | columnSeverity": [
         "audits[no-vulnerable-libraries].details.headings[2].text"
       ],
-      "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | rowSeverityMedium": [
+      "lighthouse-core/lib/i18n/i18n.js | itemSeverityMedium": [
         "audits[no-vulnerable-libraries].details.items[0].highestSeverity"
       ],
       "lighthouse-core/audits/dobetterweb/js-libraries.js | title": [
@@ -8780,8 +8688,8 @@
       "node_modules/lighthouse-stack-packs/packs/wordpress.js | unused-css-rules": [
         "stackPacks[0].descriptions[unused-css-rules]"
       ],
-      "node_modules/lighthouse-stack-packs/packs/wordpress.js | uses-webp-images": [
-        "stackPacks[0].descriptions[uses-webp-images]"
+      "node_modules/lighthouse-stack-packs/packs/wordpress.js | modern-image-formats": [
+        "stackPacks[0].descriptions[modern-image-formats]"
       ],
       "node_modules/lighthouse-stack-packs/packs/wordpress.js | offscreen-images": [
         "stackPacks[0].descriptions[offscreen-images]"
@@ -8816,8 +8724,8 @@
       "node_modules/lighthouse-stack-packs/packs/wordpress.js | uses-responsive-images": [
         "stackPacks[0].descriptions[uses-responsive-images]"
       ],
-      "node_modules/lighthouse-stack-packs/packs/wordpress.js | time-to-first-byte": [
-        "stackPacks[0].descriptions[time-to-first-byte]"
+      "node_modules/lighthouse-stack-packs/packs/wordpress.js | server-response-time": [
+        "stackPacks[0].descriptions[server-response-time]"
       ]
     }
   },
@@ -8828,7 +8736,7 @@
       "iconDataURL": "data:image/svg+xml,%3Csvg viewBox=\"0 0 122.5 122.5\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"%232f3439\"%3E%3Cpath d=\"M8.7 61.3c0 20.8 12.1 38.7 29.6 47.3l-25-68.7c-3 6.5-4.6 13.7-4.6 21.4zM96.7 58.6c0-6.5-2.3-11-4.3-14.5-2.7-4.3-5.2-8-5.2-12.3 0-4.8 3.7-9.3 8.9-9.3h.7a52.4 52.4 0 0 0-79.4 9.9h3.3c5.5 0 14-.6 14-.6 2.9-.2 3.2 4 .4 4.3 0 0-2.9.4-6 .5l19.1 57L59.7 59l-8.2-22.5c-2.8-.1-5.5-.5-5.5-.5-2.8-.1-2.5-4.5.3-4.3 0 0 8.7.7 13.9.7 5.5 0 14-.7 14-.7 2.8-.2 3.2 4 .3 4.3 0 0-2.8.4-6 .5l19 56.5 5.2-17.5c2.3-7.3 4-12.5 4-17z\"/%3E%3Cpath d=\"M62.2 65.9l-15.8 45.8a52.6 52.6 0 0 0 32.3-.9l-.4-.7zM107.4 36a49.6 49.6 0 0 1-3.6 24.2l-16.1 46.5A52.5 52.5 0 0 0 107.4 36z\"/%3E%3Cpath d=\"M61.3 0a61.3 61.3 0 1 0 .1 122.7A61.3 61.3 0 0 0 61.3 0zm0 119.7a58.5 58.5 0 1 1 .1-117 58.5 58.5 0 0 1-.1 117z\"/%3E%3C/g%3E%3C/svg%3E",
       "descriptions": {
         "unused-css-rules": "Consider reducing, or switching, the number of [WordPress plugins](https://wordpress.org/plugins/) loading unused CSS in your page. To identify plugins that are adding extraneous CSS, try running [code coverage](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) in Chrome DevTools. You can identify the theme/plugin responsible from the URL of the stylesheet. Look out for plugins that have many stylesheets in the list which have a lot of red in code coverage. A plugin should only enqueue a stylesheet if it is actually used on the page.",
-        "uses-webp-images": "Consider using a [plugin](https://wordpress.org/plugins/search/convert+webp/) or service that will automatically convert your uploaded images to the optimal formats.",
+        "modern-image-formats": "Consider using a [plugin](https://wordpress.org/plugins/search/convert+webp/) or service that will automatically convert your uploaded images to the optimal formats.",
         "offscreen-images": "Install a [lazy-load WordPress plugin](https://wordpress.org/plugins/search/lazy+load/) that provides the ability to defer any offscreen images, or switch to a theme that provides that functionality. Also consider using [the AMP plugin](https://wordpress.org/plugins/amp/).",
         "total-byte-weight": "Consider showing excerpts in your post lists (e.g. via the more tag), reducing the number of posts shown on a given page, breaking your long posts into multiple pages, or using a plugin to lazy-load comments.",
         "render-blocking-resources": "There are a number of WordPress plugins that can help you [inline critical assets](https://wordpress.org/plugins/search/critical+css/) or [defer less important resources](https://wordpress.org/plugins/search/defer+css+javascript/). Beware that optimizations provided by these plugins may break features of your theme or plugins, so you will likely need to make code changes.",
@@ -8840,7 +8748,7 @@
         "uses-optimized-images": "Consider using an [image optimization WordPress plugin](https://wordpress.org/plugins/search/optimize+images/) that compresses your images while retaining quality.",
         "uses-text-compression": "You can enable text compression in your web server configuration.",
         "uses-responsive-images": "Upload images directly through the [media library](https://wordpress.org/support/article/media-library-screen/) to ensure that the required image sizes are available, and then insert them from the media library or use the image widget to ensure the optimal image sizes are used (including those for the responsive breakpoints). Avoid using `Full Size` images unless the dimensions are adequate for their usage. [Learn More](https://wordpress.org/support/article/inserting-images-into-posts-and-pages/).",
-        "time-to-first-byte": "Themes, plugins, and server specifications all contribute to server response time. Consider finding a more optimized theme, carefully selecting an optimization plugin, and/or upgrading your server."
+        "server-response-time": "Themes, plugins, and server specifications all contribute to server response time. Consider finding a more optimized theme, carefully selecting an optimization plugin, and/or upgrading your server."
       }
     }
   ]

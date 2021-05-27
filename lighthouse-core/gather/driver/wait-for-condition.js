@@ -285,7 +285,7 @@ function registerPerformanceObserverInPage() {
     }
   });
 
-  observer.observe({entryTypes: ['longtask'], buffered: true});
+  observer.observe({type: 'longtask', buffered: true});
 }
 
 /**

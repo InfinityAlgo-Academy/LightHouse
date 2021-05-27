@@ -554,12 +554,6 @@
   "lighthouse-core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "Engedélyezze a szövegtömörítést"
   },
-  "lighthouse-core/audits/byte-efficiency/uses-webp-images.js | description": {
-    "message": "Az olyan képformátumok, mint a JPEG 2000, a JPEG XR és a WebP gyakran jobb tömörítést nyújtanak, mint a PNG és a JPEG, azaz kevesebb adatforgalom mellett gyorsabb letöltést biztosítanak. [További információ](https://web.dev/uses-webp-images/)."
-  },
-  "lighthouse-core/audits/byte-efficiency/uses-webp-images.js | title": {
-    "message": "Jelenítse meg a képeket következő generációs formátumokban"
-  },
   "lighthouse-core/audits/content-width.js | description": {
     "message": "Ha az alkalmazás tartalmának szélessége nem egyezik a megjelenítési terület szélességével, akkor lehet, hogy alkalmazása nincs optimalizálva a mobilok képernyőjére. [További információ](https://web.dev/content-width/)."
   },
@@ -760,15 +754,6 @@
   },
   "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | failureTitle": {
     "message": "Ismert sebezhetőségeket tartalmazó front-end JavaScript-függvénytárakat használ"
-  },
-  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | rowSeverityHigh": {
-    "message": "Magas"
-  },
-  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | rowSeverityLow": {
-    "message": "Alacsony"
-  },
-  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | rowSeverityMedium": {
-    "message": "Közepes"
   },
   "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | title": {
     "message": "Kerüli az ismert sebezhetőségeket tartalmazó front-end JavaScript-függvénytárakat"
@@ -1070,14 +1055,8 @@
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
     "message": "Az Elrendezés összmozgása mutató az oldal megjelenítési területén látható elemek mozgását méri. [További információ](https://web.dev/cls/)."
   },
-  "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
-    "message": "A becsült bemeneti késés annak a becsült értéke, hogy az alkalmazás mennyi idő alatt reagál – ezredmásodpercben (ms) megadva – a felhasználói interakciókra az oldalbetöltés legforgalmasabb 5 másodperces időkeretében. Ha a várakozási idő meghaladja az 50 ms-ot, a felhasználók lassúnak érezhetik az alkalmazást. [További információ](https://web.dev/estimated-input-latency/)."
-  },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
     "message": "Az első vizuális tartalomválasz azt az időpontot jelöli, amikor a rendszer megkezdi az első szöveg vagy kép megjelenítését. [További információ](https://web.dev/first-contentful-paint/)."
-  },
-  "lighthouse-core/audits/metrics/first-cpu-idle.js | description": {
-    "message": "Az első processzor-üresjárat mutató az első olyan alkalmat jelöli, amikor az oldal főszálának aktivitása elég alacsonnyá vált ahhoz, hogy kezelni tudja a felhasználói interakciókat.  [További információ](https://web.dev/first-cpu-idle/)."
   },
   "lighthouse-core/audits/metrics/first-meaningful-paint.js | description": {
     "message": "Az első releváns vizuális válasz azt méri, hogy mikor válik láthatóvá az oldal elsődleges tartalma. [További információ](https://web.dev/first-meaningful-paint/)."
@@ -1841,12 +1820,6 @@
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Dokumentum"
   },
-  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
-    "message": "Becsült bemeneti késés"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
-    "message": "Első processzor-üresjárat"
-  },
   "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
     "message": "First Contentful Paint"
   },
@@ -2138,9 +2111,6 @@
   "node_modules/lighthouse-stack-packs/packs/amp.js | uses-responsive-images": {
     "message": "Az [`amp-img`](https://amp.dev/documentation/components/amp-img/?format=websites) elem támogatja az [`srcset`](https://web.dev/use-srcset-to-automatically-choose-the-right-image/) attribútumot annak megadásához, hogy mely képtartalmat használja a képernyő mérete alapján. [További információ](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/art_direction/)."
   },
-  "node_modules/lighthouse-stack-packs/packs/amp.js | uses-webp-images": {
-    "message": "Vegye fontolóra az összes [`amp-img`](https://amp.dev/documentation/components/amp-img/?format=websites) komponens WebP-formátumban való megjelenítését és megfelelő tartalékképek megadását más böngészők számára. [További információ](https://amp.dev/documentation/components/amp-img/#example:-specifying-a-fallback-image)."
-  },
   "node_modules/lighthouse-stack-packs/packs/angular.js | dom-size": {
     "message": "Ha nagy listák megjelenítésére készül, fontolja meg a Component Dev Kit (CDK) és a virtuális görgetés használatát. [További információ](https://web.dev/virtualize-lists-with-angular-cdk/)."
   },
@@ -2171,9 +2141,6 @@
   "node_modules/lighthouse-stack-packs/packs/drupal.js | render-blocking-resources": {
     "message": "Érdemes lehet valamilyen (például az [Advanced CSS/JS Aggregation](https://www.drupal.org/project/advagg)) modult használni a kritikus CSS- és JavaScript-elemek beágyazásához, illetve a tartalmak JavaScripten keresztüli, lehetőség szerint aszinkron módon történő betöltéséhez. Fontos, hogy az ilyen jellegű modulok által nyújtott optimalizációk működésképtelenné tehetik webhelyét, ezért valószínűleg módosítania kell majd a meglévő kódokat."
   },
-  "node_modules/lighthouse-stack-packs/packs/drupal.js | time-to-first-byte": {
-    "message": "A témák, a modulok és a szerver specifikációi mind befolyásolják a szerver válaszidejét. Érdemes lehet jobban optimalizált témát keresnie, megfelelő optimalizáló modult választania és/vagy nagyobb teljesítményű szerverre váltania. Alkalmazásszolgáltató szerverei a PHP-műveletkódok és a memória gyorsítótárazásával (pl. Redis vagy Memcached) csökkenthetik az adatbázisok lekérdezési idejét, illetve az alkalmazások optimalizált logikai hálózatával gyorsabban előkészíthetik az oldalakat."
-  },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | total-byte-weight": {
     "message": "Érdemes lehet [reszponzív képstílusokat](https://www.drupal.org/docs/8/mobile-guide/responsive-images-in-drupal-8) használni, melyek csökkentik az oldalon betöltött képek méretét. Ha a Views funkciót használja ahhoz, hogy egy oldalon több tartalmi elemet jelenítsen meg, fontolja meg az oldalak számozását, amivel korlátozhatja az egy adott oldalon megjelenő tartalmi elemek számát."
   },
@@ -2200,9 +2167,6 @@
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | uses-responsive-images": {
     "message": "Győződjön meg róla, hogy azokat a natív [reszponzív képstílusokat](https://www.drupal.org/docs/8/mobile-guide/responsive-images-in-drupal-8) használja, amelyek a Drupal (Drupal 8 vagy újabb) rendszeréből származnak. Használja a reszponzív képstílusokat, ha megtekintési módokon, megtekintéseken vagy a WYSIWYG-szerkesztővel feltöltött képeken keresztül jeleníti meg a képmezőket."
-  },
-  "node_modules/lighthouse-stack-packs/packs/drupal.js | uses-webp-images": {
-    "message": "Érdemes lehet webhelyén [olyan modult telepítenie, amellyel WebP-képformátumot használhat](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=webp&solrsort=iss_project_release_usage+desc&op=Search). Az ilyen modulok automatikusan WebP-verziót generálnak a feltöltött képekből, így optimalizálják a betöltési időt."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | efficient-animated-content": {
     "message": "Fontolja meg a GIF-fájlok olyan szolgáltatóhoz való feltöltését, amely lehetővé teszi a fájlok HTML5-videóként történő beágyazását."
@@ -2243,9 +2207,6 @@
   "node_modules/lighthouse-stack-packs/packs/joomla.js | uses-text-compression": {
     "message": "A szövegtömörítést a Gzip oldaltömörítés bekapcsolásával engedélyezheti a Joomlában (Rendszer > Globális konfiguráció > Kiszolgáló)."
   },
-  "node_modules/lighthouse-stack-packs/packs/joomla.js | uses-webp-images": {
-    "message": "Érdemes olyan [bővítményt](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=webp) vagy szolgáltatást használnia, amely automatikusan az optimális formátumba konvertálja a feltöltött képeket."
-  },
   "node_modules/lighthouse-stack-packs/packs/magento.js | critical-request-chains": {
     "message": "Ha a JavaScript-tartalmakat nem teszi csomagba, fontolja meg a [baler](https://github.com/magento/baler) metódus használatát."
   },
@@ -2257,9 +2218,6 @@
   },
   "node_modules/lighthouse-stack-packs/packs/magento.js | offscreen-images": {
     "message": "A webes platformok [késleltetett betöltés](https://web.dev/native-lazy-loading) funkciójának használata érdekében vegye fontolóra a termék- és katalógussablonok módosítását."
-  },
-  "node_modules/lighthouse-stack-packs/packs/magento.js | time-to-first-byte": {
-    "message": "Használja a Magento [Varnish-integrációját](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html)."
   },
   "node_modules/lighthouse-stack-packs/packs/magento.js | unminified-css": {
     "message": "Engedélyezze a „Minify CSS Files” (CSS-fájlok kicsinyítése) beállítást az üzlet fejlesztői beállításaiban. [További információ](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)."
@@ -2279,9 +2237,6 @@
   "node_modules/lighthouse-stack-packs/packs/magento.js | uses-rel-preload": {
     "message": "`<link rel=preload>` címkéket [valamelyik téma elrendezésének módosításával](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html) adhat hozzá."
   },
-  "node_modules/lighthouse-stack-packs/packs/magento.js | uses-webp-images": {
-    "message": "Ha ki szeretné használni az újabb képformátumok előnyeit, keressen harmadik felektől származó bővítményeket a [Magento Marketplace](https://marketplace.magento.com/catalogsearch/result/?q=webp) webhelyén."
-  },
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | efficient-animated-content": {
     "message": "[Cserélje le az animált GIF-eket videókra](https://web.dev/replace-gifs-with-videos/) a gyorsabban betöltődő weboldalak érdekében, és fontolja meg modern fájlformátumok (pl. [WebM](https://web.dev/replace-gifs-with-videos/#create-webm-videos) vagy [AV1](https://developers.google.com/web/updates/2018/09/chrome-70-media-updates#av1-decoder)) használatát, amelyekkel a tömörítési hatékonyságot több mint 30%-kal javíthatja a jelenlegi legmodernebb videokodekkel, a VP9-cel szemben."
   },
@@ -2290,9 +2245,6 @@
   },
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | render-blocking-resources": {
     "message": "Számos bővítmény segíthet a [kritikus elemek beágyazásában](https://octobercms.com/plugins?search=css). Ezek a bővítmények elronthatják más bővítmények működését, ezért végezzen alapos tesztelést."
-  },
-  "node_modules/lighthouse-stack-packs/packs/octobercms.js | time-to-first-byte": {
-    "message": "A témák, a bővítmények és a szerver specifikációi mind befolyásolják a szerver válaszidejét. Érdemes lehet jobban optimalizált témát keresnie, megfelelő optimalizáló bővítményt választania és/vagy nagyobb teljesítményű szerverre váltania. Az October CMS a(z) [`Queues`](https://octobercms.com/docs/services/queues) használatát is lehetővé teszi a fejlesztőknek az időigényes feladatok (pl. e-mail-küldés) feldolgozásának késleltetéséhez. Ez drámaian felgyorsítja a webes kéréseket."
   },
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | total-byte-weight": {
     "message": "Fontolja meg kivonatok megjelenítését a bejegyzéslistákban (pl. a[z] `show more` gombbal), az oldalanként megjelenített bejegyzések számának csökkentését, a hosszabb bejegyzések több oldalra tördelését, valamint a hozzászólások késleltetett betöltését bővítmény segítségével."
@@ -2321,17 +2273,11 @@
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | uses-text-compression": {
     "message": "A szövegtömörítést a webszerver konfigurációjában engedélyezheti."
   },
-  "node_modules/lighthouse-stack-packs/packs/octobercms.js | uses-webp-images": {
-    "message": "Érdemes olyan [bővítményt](https://octobercms.com/plugins?search=image) vagy szolgáltatást használnia, amely automatikusan az optimális formátumba konvertálja a feltöltött képeket. A [WebP veszteségmentes képek](https://developers.google.com/speed/webp) mérete 26%-kal kisebb a PNG-knél, és 25-34%-kal kisebb a hasonló JPEG-képeknél azonos SSIM minőségi index mellett. Érdemes megfontolni az [AVIF](https://jakearchibald.com/2020/avif-has-landed/) következő generációs képformátum használatát is."
-  },
   "node_modules/lighthouse-stack-packs/packs/react.js | dom-size": {
     "message": "Ha sok ismétlődő elemet jelenít meg az oldalon, fontolja meg „windowing” függvénytár (pl. `react-window`) használatát annak érdekében, hogy csökkentse a létrehozott DOM-csomópontok számát. [További információ](https://web.dev/virtualize-long-lists-react-window/). Ezenkívül csökkentse a szükségtelen újrarenderelések számát a [`shouldComponentUpdate`](https://reactjs.org/docs/optimizing-performance.html#shouldcomponentupdate-in-action), a [`PureComponent`](https://reactjs.org/docs/react-api.html#reactpurecomponent) vagy a [`React.memo`](https://reactjs.org/docs/react-api.html#reactmemo) segítségével, valamint [hagyja ki az effektusokat](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects), amíg bizonyos függőségek nem módosulnak, amennyiben az `Effect` hook használatával javítja a futásidejű teljesítményt."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | redirects": {
     "message": "Ha a React Routert használja, csökkentse minimálisra a `<Redirect>` komponens használatát az [útválasztási navigációban](https://reacttraining.com/react-router/web/api/Redirect)."
-  },
-  "node_modules/lighthouse-stack-packs/packs/react.js | time-to-first-byte": {
-    "message": "Ha szerveroldali renderelést alkalmaz bármilyen React-összetevőnél, fontolja meg a következők valamelyikének használatát: `renderToNodeStream()` vagy `renderToStaticNodeStream()`. Ezekkel engedélyezheti az ügyfél számára, hogy a markupot ne egyben, hanem részletekben kapja meg és hidratálja. [További információ](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | unminified-css": {
     "message": "Ha a buildrendszere automatikusan kicsinyíti a CSS-fájlokat, akkor ügyeljen arra, hogy az alkalmazás éles buildjét telepítse. Ezt a React Developer Tools bővítménnyel ellenőrizheti. [További információ](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
@@ -2353,9 +2299,6 @@
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | render-blocking-resources": {
     "message": "Számos WordPress-bővítmény segíthet a [kritikus elemek beágyazásában](https://wordpress.org/plugins/search/critical+css/) és a [kevésbé fontos források](https://wordpress.org/plugins/search/defer+css+javascript/) késleltetésében. Fontos, hogy az ilyen jellegű bővítmények által nyújtott optimalizációk működésképtelenné tehetik a témák vagy más bővítmények funkcióit, ezért valószínűleg módosítania kell majd a meglévő kódot."
-  },
-  "node_modules/lighthouse-stack-packs/packs/wordpress.js | time-to-first-byte": {
-    "message": "A témák, a bővítmények és a szerver specifikációi mind befolyásolják a szerver válaszidejét. Érdemes lehet jobban optimalizált témát keresnie, megfelelő optimalizáló bővítményt választania és/vagy nagyobb teljesítményű szerverre váltania."
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | total-byte-weight": {
     "message": "Fontolja meg kivonatok megjelenítését a bejegyzéslistákban (pl. a more címkével), az oldalanként megjelenített bejegyzések számának csökkentését, a hosszabb bejegyzések több oldalra tördelését, valamint a hozzászólások lusta betöltését bővítmény segítségével."
@@ -2383,8 +2326,5 @@
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | uses-text-compression": {
     "message": "A szövegtömörítést a webszerver konfigurációjában engedélyezheti."
-  },
-  "node_modules/lighthouse-stack-packs/packs/wordpress.js | uses-webp-images": {
-    "message": "Érdemes olyan [bővítményt](https://wordpress.org/plugins/search/convert+webp/) vagy szolgáltatást használnia, amely automatikusan az optimális formátumba konvertálja a feltöltött képeket."
   }
 }

@@ -26,9 +26,6 @@ module.exports = [
         'first-meaningful-paint': {
           score: '>=0.90', // primarily just making sure it didn't fail/go crazy, specific value isn't that important
         },
-        'first-cpu-idle': {
-          score: '>=0.90', // primarily just making sure it didn't fail/go crazy, specific value isn't that important
-        },
         'interactive': {
           score: '>=0.90', // primarily just making sure it didn't fail/go crazy, specific value isn't that important
         },
@@ -328,14 +325,9 @@ module.exports = [
                 firstContentfulPaintAllFrames: '<5000',
                 largestContentfulPaint: '>5000',
                 largestContentfulPaintAllFrames: '<5000',
-                cumulativeLayoutShift: '0.001 +/- 0.0005',
-                cumulativeLayoutShiftAllFrames: '0.197 +/- 0.001',
-                layoutShiftAvgSessionGap5s: '>0',
-                layoutShiftMaxSessionGap1s: '>0',
-                layoutShiftMaxSessionGap1sLimit5s: '>0',
-                layoutShiftMaxSliding1s: '>0',
-                layoutShiftMaxSliding300ms: '>0',
-                layoutShiftMaxSessionGap1sLimit5sAllFrames: '0.197 +/- 0.001',
+                cumulativeLayoutShift: '0.197 +/- 0.001',
+                cumulativeLayoutShiftMainFrame: '0.001 +/- 0.0005',
+                totalCumulativeLayoutShift: '0.001 +/- 0.0005',
               },
               {
                 lcpInvalidated: false,

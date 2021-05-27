@@ -19,12 +19,8 @@ describe('Timing summary', () => {
 
     expect(result.metrics).toMatchInlineSnapshot(`
       Object {
-        "cumulativeLayoutShift": 0.0011656245471340055,
-        "cumulativeLayoutShiftAllFrames": 0.027628639159940658,
-        "estimatedInputLatency": 16,
-        "estimatedInputLatencyTs": undefined,
-        "firstCPUIdle": 8654.264,
-        "firstCPUIdleTs": 10335842173,
+        "cumulativeLayoutShift": 0.026463014612806653,
+        "cumulativeLayoutShiftMainFrame": 0.0011656245471340055,
         "firstContentfulPaint": 5668.275,
         "firstContentfulPaintAllFrames": 697.751,
         "firstContentfulPaintAllFramesTs": 10327885660,
@@ -37,15 +33,9 @@ describe('Timing summary', () => {
         "largestContentfulPaintAllFrames": 697.751,
         "largestContentfulPaintAllFramesTs": 10327885660,
         "largestContentfulPaintTs": 10332856184,
-        "layoutShiftAvgSessionGap5s": 0.0011656245471340055,
-        "layoutShiftMaxSessionGap1s": 0.0011656245471340055,
-        "layoutShiftMaxSessionGap1sLimit5s": 0.0011656245471340055,
-        "layoutShiftMaxSessionGap1sLimit5sAllFrames": 0.026463014612806653,
-        "layoutShiftMaxSliding1s": 0.0011656245471340055,
-        "layoutShiftMaxSliding300ms": 0.0011656245471340055,
         "maxPotentialFID": 51.056,
-        "observedCumulativeLayoutShift": 0.0011656245471340055,
-        "observedCumulativeLayoutShiftAllFrames": 0.027628639159940658,
+        "observedCumulativeLayoutShift": 0.026463014612806653,
+        "observedCumulativeLayoutShiftMainFrame": 0.0011656245471340055,
         "observedDomContentLoaded": 604.135,
         "observedDomContentLoadedTs": 10327792044,
         "observedFirstContentfulPaint": 5668.275,
@@ -72,11 +62,13 @@ describe('Timing summary', () => {
         "observedSpeedIndexTs": 10328522489.12,
         "observedTimeOrigin": 0,
         "observedTimeOriginTs": 10327187909,
+        "observedTotalCumulativeLayoutShift": 0.0011656245471340055,
         "observedTraceEnd": 14214.313,
         "observedTraceEndTs": 10341402222,
         "speedIndex": 1335,
         "speedIndexTs": 10328522909,
         "totalBlockingTime": 2.7429999999994834,
+        "totalCumulativeLayoutShift": 0.0011656245471340055,
       }
     `);
     // Includes performance metrics
