@@ -140,7 +140,7 @@ function _getFinalScreenshot(perfCategory) {
 }
 
 // Defined by lib/file-namer.js, but that file does not exist in PSI. PSI doesn't use it, but
-// needs some basic definition so report-ui-features.js typechecks in PSI.
+// needs some basic definition so closure compiler accepts report-ui-features.js
 // @ts-expect-error
 // eslint-disable-next-line no-unused-vars
 function getFilenamePrefix(lhr) {
