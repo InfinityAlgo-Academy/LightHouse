@@ -184,6 +184,9 @@ class ReportUIFeatures {
    * @param {{container?: Element, text: string, icon?: string, onClick: () => void}} opts
    */
   addButton(opts) {
+    // report-ui-features doesn't have a reference to the root report el, and PSI has
+    // 2 reports on the page (and not even attached to DOM when installFeatures is called..)
+    // so we need a container option to specify where the element should go.
     const metricsEl = this._document.querySelector('.lh-audit-group--metrics');
     const containerEl = opts.container || metricsEl;
     if (!metricsEl) return;
