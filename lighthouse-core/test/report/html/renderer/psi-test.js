@@ -21,6 +21,8 @@ const CriticalRequestChainRenderer =
     require('../../../../report/html/renderer/crc-details-renderer.js');
 const ElementScreenshotRenderer =
     require('../../../../report/html/renderer/element-screenshot-renderer.js');
+const ReportUIFeatures =
+    require('../../../../report/html/renderer/report-ui-features.js');
 
 const {itIfProtoExists, sampleResultsRoundtripStr} = testUtils.getProtoRoundTrip();
 const sampleResultsStr = fs.readFileSync(__dirname + '/../../../results/sample_v2.json', 'utf-8');
@@ -48,6 +50,7 @@ describe('DOM', () => {
     global.PerformanceCategoryRenderer = PerformanceCategoryRenderer;
     global.CriticalRequestChainRenderer = CriticalRequestChainRenderer;
     global.ElementScreenshotRenderer = ElementScreenshotRenderer;
+    global.ReportUIFeatures = ReportUIFeatures;
 
     const {window} = new jsdom.JSDOM(TEMPLATE_FILE);
     document = window.document;
@@ -62,6 +65,7 @@ describe('DOM', () => {
     global.PerformanceCategoryRenderer = undefined;
     global.CriticalRequestChainRenderer = undefined;
     global.ElementScreenshotRenderer = undefined;
+    global.ReportUIFeatures = undefined;
   });
 
   describe('psi prepareLabData helpers', () => {
