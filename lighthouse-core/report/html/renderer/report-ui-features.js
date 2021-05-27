@@ -181,14 +181,17 @@ class ReportUIFeatures {
   }
 
   /**
-   * @param {{text: string, icon?: string, onClick: () => void}} opts
+   * @param {{container?: Element, text: string, icon?: string, onClick: () => void}} opts
    */
   addButton(opts) {
+    // report-ui-features doesn't have a reference to the root report el, and PSI has
+    // 2 reports on the page (and not even attached to DOM when installFeatures is called..)
+    // so we need a container option to specify where the element should go.
     const metricsEl = this._document.querySelector('.lh-audit-group--metrics');
-    // Not supported without metrics group.
+    const containerEl = opts.container || metricsEl;
     if (!metricsEl) return;
 
-    let buttonsEl = metricsEl.querySelector('.lh-buttons');
+    let buttonsEl = containerEl.querySelector('.lh-buttons');
     if (!buttonsEl) buttonsEl = this._dom.createChildOf(metricsEl, 'div', 'lh-buttons');
 
     const classes = [
@@ -551,7 +554,6 @@ class ReportUIFeatures {
    * Opens a new tab to the treemap app and sends the JSON results using postMessage.
    * @param {LH.Result} json
    * @param {'postMessage'|'url'} method
-   * @protected
    */
   static openTreemap(json, method = 'postMessage') {
     const treemapData = json.audits['script-treemap-data'].details;

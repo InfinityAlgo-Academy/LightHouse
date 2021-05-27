@@ -16,8 +16,7 @@
  */
 'use strict';
 
-/* globals self DOM PerformanceCategoryRenderer Util I18n DetailsRenderer ElementScreenshotRenderer */
-
+/* globals self DOM PerformanceCategoryRenderer Util I18n DetailsRenderer ElementScreenshotRenderer ReportUIFeatures */
 
 /**
  * Returns all the elements that PSI needs to render the report
@@ -81,6 +80,9 @@ function prepareLabData(LHResult, document) {
   const clonedScoreTemplate = dom.cloneTemplate('#tmpl-lh-scorescale', dom.document());
   const scoreScaleEl = dom.find('.lh-scorescale', clonedScoreTemplate);
 
+  const reportUIFeatures = new ReportUIFeatures(dom);
+  reportUIFeatures.json = lhResult;
+
   /** @param {HTMLElement} reportEl */
   const installFeatures = (reportEl) => {
     if (fullPageScreenshot) {
@@ -109,6 +111,17 @@ function prepareLabData(LHResult, document) {
       ElementScreenshotRenderer.installFullPageScreenshot(
         screenshotEl, fullPageScreenshot.screenshot);
     }
+
+    const showTreemapApp =
+      lhResult.audits['script-treemap-data'] && lhResult.audits['script-treemap-data'].details;
+    if (showTreemapApp) {
+      reportUIFeatures.addButton({
+        container: reportEl.querySelector('.lh-audit-group--metrics'),
+        text: Util.i18n.strings.viewTreemapLabel,
+        icon: 'treemap',
+        onClick: () => ReportUIFeatures.openTreemap(lhResult, 'url'),
+      });
+    }
   };
 
   return {scoreGaugeEl, perfCategoryEl, finalScreenshotDataUri, scoreScaleEl, installFeatures};
@@ -124,6 +137,13 @@ function _getFinalScreenshot(perfCategory) {
   const details = auditRef.result.details;
   if (!details || details.type !== 'screenshot') return null;
   return details.data;
+}
+
+// Defined by lib/file-namer.js, but that file does not exist in PSI. PSI doesn't use it, but
+// needs some basic definition so closure compiler accepts report-ui-features.js
+// @ts-expect-error - unused by typescript, used by closure compiler
+// eslint-disable-next-line no-unused-vars
+function getFilenamePrefix(lhr) {
 }
 
 if (typeof module !== 'undefined' && module.exports) {
