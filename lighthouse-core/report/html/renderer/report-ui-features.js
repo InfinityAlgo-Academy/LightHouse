@@ -186,7 +186,10 @@ class ReportUIFeatures {
   addButton(opts) {
     const metricsEl = this._document.querySelector('.lh-audit-group--metrics');
     const containerEl = opts.container || metricsEl;
-    if (!containerEl) return;
+    if (!metricsEl) return;
+
+    let buttonsEl = containerEl.querySelector('.lh-buttons');
+    if (!buttonsEl) buttonsEl = this._dom.createChildOf(metricsEl, 'div', 'lh-buttons');
 
     const classes = [
       'lh-button',
@@ -195,9 +198,9 @@ class ReportUIFeatures {
       classes.push('report-icon');
       classes.push(`report-icon--${opts.icon}`);
     }
-    const buttonEl = this._dom.createChildOf(containerEl, 'button', classes.join(' '));
-    buttonEl.addEventListener('click', opts.onClick);
+    const buttonEl = this._dom.createChildOf(buttonsEl, 'button', classes.join(' '));
     buttonEl.textContent = opts.text;
+    buttonEl.addEventListener('click', opts.onClick);
     return buttonEl;
   }
 
@@ -548,6 +551,7 @@ class ReportUIFeatures {
    * Opens a new tab to the treemap app and sends the JSON results using postMessage.
    * @param {LH.Result} json
    * @param {'postMessage'|'url'} method
+   * @protected
    */
   static openTreemap(json, method = 'postMessage') {
     const treemapData = json.audits['script-treemap-data'].details;
