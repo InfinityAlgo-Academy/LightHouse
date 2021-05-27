@@ -684,14 +684,50 @@
     },
     "image-size-responsive": {
       "id": "image-size-responsive",
-      "title": "Serves images with appropriate resolution",
+      "title": "Serves images with low resolution",
       "description": "Image natural dimensions should be proportional to the display size and the pixel ratio to maximize image clarity. [Learn more](https://web.dev/serve-responsive-images/).",
-      "score": 1,
+      "score": 0,
       "scoreDisplayMode": "binary",
       "details": {
         "type": "table",
-        "headings": [],
-        "items": []
+        "headings": [
+          {
+            "key": "url",
+            "itemType": "thumbnail",
+            "text": ""
+          },
+          {
+            "key": "elidedUrl",
+            "itemType": "url",
+            "text": "URL"
+          },
+          {
+            "key": "displayedSize",
+            "itemType": "text",
+            "text": "Displayed size"
+          },
+          {
+            "key": "actualSize",
+            "itemType": "text",
+            "text": "Actual size"
+          },
+          {
+            "key": "expectedSize",
+            "itemType": "text",
+            "text": "Expected size"
+          }
+        ],
+        "items": [
+          {
+            "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg?isr1",
+            "elidedUrl": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg?isr1",
+            "displayedSize": "360 x 240",
+            "actualSize": "480 x 318",
+            "actualPixels": 152640,
+            "expectedSize": "720 x 480",
+            "expectedPixels": 345600
+          }
+        ]
       }
     },
     "preload-fonts": {
@@ -2091,7 +2127,7 @@
             "node": {
               "type": "node",
               "lhId": "page-8-IMG",
-              "path": "3,HTML,1,BODY,72,IMG",
+              "path": "3,HTML,1,BODY,73,IMG",
               "selector": "body > img",
               "boundingRect": {
                 "top": 1317,
@@ -5611,7 +5647,7 @@
         }
       ],
       "id": "best-practices",
-      "score": 0.25
+      "score": 0.19
     },
     "seo": {
       "title": "SEO",
@@ -7308,6 +7344,7 @@
       "lighthouse-core/lib/i18n/i18n.js | columnURL": [
         "audits[server-response-time].details.headings[0].label",
         "audits[image-aspect-ratio].details.headings[1].text",
+        "audits[image-size-responsive].details.headings[1].text",
         "audits[preload-fonts].details.headings[0].text",
         "audits[bootup-time].details.headings[0].text",
         "audits[network-rtt].details.headings[0].text",
@@ -7420,11 +7457,20 @@
       "lighthouse-core/audits/image-aspect-ratio.js | columnActual": [
         "audits[image-aspect-ratio].details.headings[3].text"
       ],
-      "lighthouse-core/audits/image-size-responsive.js | title": [
+      "lighthouse-core/audits/image-size-responsive.js | failureTitle": [
         "audits[image-size-responsive].title"
       ],
       "lighthouse-core/audits/image-size-responsive.js | description": [
         "audits[image-size-responsive].description"
+      ],
+      "lighthouse-core/audits/image-size-responsive.js | columnDisplayed": [
+        "audits[image-size-responsive].details.headings[2].text"
+      ],
+      "lighthouse-core/audits/image-size-responsive.js | columnActual": [
+        "audits[image-size-responsive].details.headings[3].text"
+      ],
+      "lighthouse-core/audits/image-size-responsive.js | columnExpected": [
+        "audits[image-size-responsive].details.headings[4].text"
       ],
       "lighthouse-core/audits/preload-fonts.js | failureTitle": [
         "audits[preload-fonts].title"

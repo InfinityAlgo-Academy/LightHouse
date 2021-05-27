@@ -95,8 +95,10 @@ class ModernImageFormats extends ByteEfficiencyAudit {
           continue;
         }
 
-        const naturalHeight = imageElement.naturalHeight;
-        const naturalWidth = imageElement.naturalWidth;
+        // Skip if we couldn't collect natural image size information.
+        if (!imageElement.naturalDimensions) continue;
+        const naturalHeight = imageElement.naturalDimensions.height;
+        const naturalWidth = imageElement.naturalDimensions.width;
         // If naturalHeight or naturalWidth are falsy, information is not valid, skip.
         if (!naturalWidth || !naturalHeight) continue;
 

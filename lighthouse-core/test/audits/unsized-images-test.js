@@ -10,8 +10,8 @@ const UnsizedImagesAudit = require('../../audits/unsized-images.js');
 /* eslint-env jest */
 
 function generateImage(props, src = 'https://google.com/logo.png', isCss = false,
-  isInShadowDOM = false, cssComputedPosition = 'static', node = {boundingRect: {}}) {
-  const image = {src, isCss, isInShadowDOM, cssComputedPosition, node};
+  isInShadowDOM = false, computedStyles = {position: 'static'}, node = {boundingRect: {}}) {
+  const image = {src, isCss, isInShadowDOM, computedStyles, node};
   Object.assign(image, props);
   return image;
 }
@@ -31,7 +31,7 @@ describe('Sized images audit', () => {
       isCss: true,
       attributeWidth: '',
       attributeHeight: '',
-      _privateCssSizing: {
+      cssEffectiveRules: {
         width: null,
         height: null,
       },
@@ -44,7 +44,7 @@ describe('Sized images audit', () => {
       isInShadowDOM: true,
       attributeWidth: '',
       attributeHeight: '',
-      _privateCssSizing: {
+      cssEffectiveRules: {
         width: null,
         height: null,
       },
@@ -54,10 +54,10 @@ describe('Sized images audit', () => {
 
   it('passes when an image has absolute css position', async () => {
     const result = await runAudit({
-      cssComputedPosition: 'absolute',
+      computedStyles: {position: 'absolute'},
       attributeWidth: '',
       attributeHeight: '',
-      _privateCssSizing: {
+      cssEffectiveRules: {
         width: null,
         height: null,
       },
@@ -67,10 +67,10 @@ describe('Sized images audit', () => {
 
   it('passes when an image has fixed css position', async () => {
     const result = await runAudit({
-      cssComputedPosition: 'fixed',
+      computedStyles: {position: 'fixed'},
       attributeWidth: '',
       attributeHeight: '',
-      _privateCssSizing: {
+      cssEffectiveRules: {
         width: null,
         height: null,
       },
@@ -80,10 +80,9 @@ describe('Sized images audit', () => {
 
   it('passes when an image is a non-network SVG', async () => {
     const result = await runAudit({
-      cssComputedPosition: '',
       attributeWidth: '',
       attributeHeight: '',
-      _privateCssSizing: {
+      cssEffectiveRules: {
         width: null,
         height: null,
       },
@@ -98,7 +97,7 @@ describe('Sized images audit', () => {
       const result = await runAudit({
         attributeWidth: '',
         attributeHeight: '100',
-        _privateCssSizing: {
+        cssEffectiveRules: {
           width: null,
           height: null,
         },
@@ -110,7 +109,7 @@ describe('Sized images audit', () => {
       const result = await runAudit({
         attributeWidth: '',
         attributeHeight: '',
-        _privateCssSizing: {
+        cssEffectiveRules: {
           width: null,
           height: '100',
         },
@@ -122,7 +121,7 @@ describe('Sized images audit', () => {
       const result = await runAudit({
         attributeWidth: '',
         attributeHeight: '100',
-        _privateCssSizing: {
+        cssEffectiveRules: {
           width: null,
           height: '100',
         },
@@ -134,7 +133,7 @@ describe('Sized images audit', () => {
       const result = await runAudit({
         attributeWidth: '',
         attributeHeight: '100',
-        _privateCssSizing: {
+        cssEffectiveRules: {
           width: null,
           height: '100',
         },
@@ -149,7 +148,7 @@ describe('Sized images audit', () => {
       const result = await runAudit({
         attributeWidth: '100',
         attributeHeight: '',
-        _privateCssSizing: {
+        cssEffectiveRules: {
           width: null,
           height: null,
         },
@@ -161,7 +160,7 @@ describe('Sized images audit', () => {
       const result = await runAudit({
         attributeWidth: '',
         attributeHeight: '',
-        _privateCssSizing: {
+        cssEffectiveRules: {
           width: '100',
           height: null,
         },
@@ -173,7 +172,7 @@ describe('Sized images audit', () => {
       const result = await runAudit({
         attributeWidth: '100',
         attributeHeight: '',
-        _privateCssSizing: {
+        cssEffectiveRules: {
           width: '100',
           height: null,
         },
@@ -186,7 +185,7 @@ describe('Sized images audit', () => {
     const result = await runAudit({
       attributeWidth: '',
       attributeHeight: '',
-      _privateCssSizing: {
+      cssEffectiveRules: {
         width: null,
         height: null,
       },
@@ -199,7 +198,7 @@ describe('Sized images audit', () => {
       const result = await runAudit({
         attributeWidth: '100',
         attributeHeight: '',
-        _privateCssSizing: {
+        cssEffectiveRules: {
           width: null,
           height: '100',
         },
@@ -211,7 +210,7 @@ describe('Sized images audit', () => {
       const result = await runAudit({
         attributeWidth: '100',
         attributeHeight: '100',
-        _privateCssSizing: {
+        cssEffectiveRules: {
           width: null,
           height: null,
         },
@@ -223,7 +222,7 @@ describe('Sized images audit', () => {
       const result = await runAudit({
         attributeWidth: '',
         attributeHeight: '100',
-        _privateCssSizing: {
+        cssEffectiveRules: {
           width: '100',
           height: null,
         },
@@ -235,7 +234,7 @@ describe('Sized images audit', () => {
       const result = await runAudit({
         attributeWidth: '',
         attributeHeight: '',
-        _privateCssSizing: {
+        cssEffectiveRules: {
           width: '100',
           height: '100',
         },
@@ -247,7 +246,7 @@ describe('Sized images audit', () => {
       const result = await runAudit({
         attributeWidth: '100',
         attributeHeight: '',
-        _privateCssSizing: {
+        cssEffectiveRules: {
           width: '100',
           height: '100',
         },
@@ -259,7 +258,7 @@ describe('Sized images audit', () => {
       const result = await runAudit({
         attributeWidth: '100',
         attributeHeight: '100',
-        _privateCssSizing: {
+        cssEffectiveRules: {
           width: '100',
           height: null,
         },
@@ -271,7 +270,7 @@ describe('Sized images audit', () => {
       const result = await runAudit({
         attributeWidth: '',
         attributeHeight: '100',
-        _privateCssSizing: {
+        cssEffectiveRules: {
           width: '100',
           height: '100',
         },
@@ -283,7 +282,7 @@ describe('Sized images audit', () => {
       const result = await runAudit({
         attributeWidth: '100',
         attributeHeight: '100',
-        _privateCssSizing: {
+        cssEffectiveRules: {
           width: null,
           height: '100',
         },
@@ -295,7 +294,7 @@ describe('Sized images audit', () => {
       const result = await runAudit({
         attributeWidth: '100',
         attributeHeight: '100',
-        _privateCssSizing: {
+        cssEffectiveRules: {
           width: '100',
           height: '100',
         },
@@ -307,7 +306,7 @@ describe('Sized images audit', () => {
       const result = await runAudit({
         attributeWidth: '0',
         attributeHeight: '0',
-        _privateCssSizing: {
+        cssEffectiveRules: {
           width: null,
           height: null,
         },
@@ -325,7 +324,7 @@ describe('Sized images audit', () => {
       const result = await runAudit({
         attributeWidth: '',
         attributeHeight: '',
-        _privateCssSizing: {
+        cssEffectiveRules: {
           width: null,
           height: null,
         },
@@ -345,7 +344,7 @@ describe('Sized images audit', () => {
       const result = await runAudit({
         attributeWidth: '-200',
         attributeHeight: '100',
-        _privateCssSizing: {
+        cssEffectiveRules: {
           width: null,
           height: null,
         },
@@ -357,7 +356,7 @@ describe('Sized images audit', () => {
       const result = await runAudit({
         attributeWidth: '100',
         attributeHeight: '-200',
-        _privateCssSizing: {
+        cssEffectiveRules: {
           width: null,
           height: null,
         },
@@ -369,7 +368,7 @@ describe('Sized images audit', () => {
       const result = await runAudit({
         attributeWidth: '',
         attributeHeight: '',
-        _privateCssSizing: {
+        cssEffectiveRules: {
           width: 'auto',
           height: '100',
         },
@@ -381,7 +380,7 @@ describe('Sized images audit', () => {
       const result = await runAudit({
         attributeWidth: '',
         attributeHeight: '',
-        _privateCssSizing: {
+        cssEffectiveRules: {
           width: '100',
           height: 'auto',
         },
@@ -393,7 +392,7 @@ describe('Sized images audit', () => {
       const result = await runAudit({
         attributeWidth: '-200',
         attributeHeight: '100',
-        _privateCssSizing: {
+        cssEffectiveRules: {
           width: '100',
           height: null,
         },
@@ -405,7 +404,7 @@ describe('Sized images audit', () => {
       const result = await runAudit({
         attributeWidth: '100',
         attributeHeight: '-200',
-        _privateCssSizing: {
+        cssEffectiveRules: {
           width: null,
           height: '100',
         },
@@ -417,7 +416,7 @@ describe('Sized images audit', () => {
       const result = await runAudit({
         attributeWidth: '100',
         attributeHeight: '',
-        _privateCssSizing: {
+        cssEffectiveRules: {
           width: 'auto',
           height: '100',
         },
@@ -429,7 +428,7 @@ describe('Sized images audit', () => {
       const result = await runAudit({
         attributeWidth: '',
         attributeHeight: '100',
-        _privateCssSizing: {
+        cssEffectiveRules: {
           width: '100',
           height: 'auto',
         },
@@ -442,7 +441,7 @@ describe('Sized images audit', () => {
       const result = await runAudit({
         attributeWidth: '100',
         attributeHeight: '100',
-        _privateCssSizing: {
+        cssEffectiveRules: {
           width: 'auto',
           height: 'auto',
         },
@@ -455,7 +454,7 @@ describe('Sized images audit', () => {
       const result = await runAudit({
         attributeWidth: '-200',
         attributeHeight: '-200',
-        _privateCssSizing: {
+        cssEffectiveRules: {
           width: '100',
           height: '100',
         },
@@ -468,7 +467,7 @@ describe('Sized images audit', () => {
       const result = await runAudit({
         attributeWidth: '-200',
         attributeHeight: '-200',
-        _privateCssSizing: {
+        cssEffectiveRules: {
           width: 'auto',
           height: 'auto',
         },
@@ -482,7 +481,7 @@ describe('Sized images audit', () => {
       const result = await runAudit({
         attributeWidth: '',
         attributeHeight: '',
-        _privateCssSizing: {
+        cssEffectiveRules: {
           width: null,
           height: null,
           aspectRatio: '1 / 1',
@@ -495,7 +494,7 @@ describe('Sized images audit', () => {
       const result = await runAudit({
         attributeWidth: '100',
         attributeHeight: '',
-        _privateCssSizing: {
+        cssEffectiveRules: {
           width: null,
           height: null,
           aspectRatio: 'auto',
@@ -508,7 +507,7 @@ describe('Sized images audit', () => {
       const result = await runAudit({
         attributeWidth: '100',
         attributeHeight: '',
-        _privateCssSizing: {
+        cssEffectiveRules: {
           width: null,
           height: null,
           aspectRatio: '1 / 1',
@@ -521,7 +520,7 @@ describe('Sized images audit', () => {
       const result = await runAudit({
         attributeWidth: '',
         attributeHeight: '',
-        _privateCssSizing: {
+        cssEffectiveRules: {
           width: '100',
           height: null,
           aspectRatio: '1 / 1',
@@ -546,7 +545,7 @@ describe('Sized images audit', () => {
           {
             attributeWidth: '',
             attributeHeight: '',
-            _privateCssSizing: {
+            cssEffectiveRules: {
               width: null,
               height: null,
             },
@@ -564,7 +563,7 @@ describe('Sized images audit', () => {
           {
             attributeWidth: '',
             attributeHeight: '',
-            _privateCssSizing: {
+            cssEffectiveRules: {
               width: null,
               height: null,
             },
@@ -585,7 +584,7 @@ describe('Sized images audit', () => {
       const result = await runAudit({
         attributeWidth: '',
         attributeHeight: '',
-        _privateCssSizing: undefined,
+        cssEffectiveRules: undefined,
       });
       expect(result.details.items.length).toEqual(0);
       expect(result.score).toEqual(1);
@@ -595,7 +594,7 @@ describe('Sized images audit', () => {
       const result = await runAudit({
         attributeWidth: '10',
         attributeHeight: '10',
-        _privateCssSizing: undefined,
+        cssEffectiveRules: undefined,
       });
       expect(result.details.items.length).toEqual(0);
       expect(result.score).toEqual(1);

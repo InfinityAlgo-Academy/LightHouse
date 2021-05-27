@@ -48,17 +48,12 @@ function mockElement(partial = {}) {
     },
     attributeWidth: '',
     attributeHeight: '',
-    naturalWidth: undefined,
-    naturalHeight: undefined,
-    cssWidth: undefined,
-    cssHeight: undefined,
-    _privateCssSizing: undefined,
-    cssComputedPosition: 'absolute',
+    naturalDimensions: undefined,
+    cssEffectiveRules: undefined,
+    computedStyles: {position: 'absolute', objectFit: '', imageRendering: ''},
     isCss: false,
     isPicture: false,
     isInShadowDOM: false,
-    cssComputedObjectFit: '',
-    cssComputedImageRendering: '',
     node: {
       lhId: '__nodeid__',
       devtoolsNodePath: '1,HTML,1,BODY,1,DIV,1,IMG',
@@ -107,8 +102,10 @@ describe('.fetchElementsWithSizingInformation', () => {
 
     expect(driver._executionContext.evaluate).not.toHaveBeenCalled();
     expect(element).toEqual(mockElement({
-      naturalWidth: 200,
-      naturalHeight: 200,
+      naturalDimensions: {
+        width: 200,
+        height: 200,
+      },
     }));
   });
 
@@ -126,8 +123,10 @@ describe('.fetchElementsWithSizingInformation', () => {
       naturalHeight: 200,
     });
     expect(element).toEqual(mockElement({
-      naturalWidth: 200,
-      naturalHeight: 200,
+      naturalDimensions: {
+        width: 200,
+        height: 200,
+      },
     }));
   });
 
@@ -177,9 +176,7 @@ describe('.fetchSourceRules', () => {
     await gatherer.fetchSourceRules(session.asSession(), element.node.devtoolsNodePath, element);
 
     expect(element).toEqual(mockElement({
-      cssWidth: '200px',
-      cssHeight: '200px',
-      _privateCssSizing: {
+      cssEffectiveRules: {
         width: '200px',
         height: '200px',
         aspectRatio: '1 / 1',
@@ -199,9 +196,7 @@ describe('.fetchSourceRules', () => {
     await gatherer.fetchSourceRules(session.asSession(), element.node.devtoolsNodePath, element);
 
     expect(element).toEqual(mockElement({
-      cssWidth: '200px',
-      cssHeight: '200px',
-      _privateCssSizing: {
+      cssEffectiveRules: {
         width: '200px',
         height: '200px',
         aspectRatio: null,
@@ -238,9 +233,7 @@ describe('.fetchSourceRules', () => {
     await gatherer.fetchSourceRules(session.asSession(), element.node.devtoolsNodePath, element);
 
     expect(element).toEqual(mockElement({
-      cssWidth: '200px',
-      cssHeight: '200px',
-      _privateCssSizing: {
+      cssEffectiveRules: {
         width: '200px',
         height: '200px',
         aspectRatio: '1 / 1',
@@ -427,9 +420,7 @@ describe('FR compat', () => {
     expect(artifact).toEqual([
       mockElement({
         mimeType: 'image/jpeg',
-        cssWidth: '200px',
-        cssHeight: '200px',
-        _privateCssSizing: {
+        cssEffectiveRules: {
           width: '200px',
           height: '200px',
           aspectRatio: null,
@@ -462,9 +453,7 @@ describe('FR compat', () => {
     expect(artifact).toEqual([
       mockElement({
         mimeType: 'image/jpeg',
-        cssWidth: '200px',
-        cssHeight: '200px',
-        _privateCssSizing: {
+        cssEffectiveRules: {
           width: '200px',
           height: '200px',
           aspectRatio: null,

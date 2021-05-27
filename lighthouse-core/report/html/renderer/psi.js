@@ -141,7 +141,7 @@ function _getFinalScreenshot(perfCategory) {
 
 // Defined by lib/file-namer.js, but that file does not exist in PSI. PSI doesn't use it, but
 // needs some basic definition so closure compiler accepts report-ui-features.js
-// @ts-expect-error
+// @ts-expect-error - unused by typescript, used by closure compiler
 // eslint-disable-next-line no-unused-vars
 function getFilenamePrefix(lhr) {
 }

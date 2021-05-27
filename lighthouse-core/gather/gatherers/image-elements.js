@@ -70,19 +70,20 @@ function getHTMLImages(allElements) {
       displayedWidth: element.width,
       displayedHeight: element.height,
       clientRect: getClientRect(element),
-      naturalWidth: canTrustNaturalDimensions ? element.naturalWidth : undefined,
-      naturalHeight: canTrustNaturalDimensions ? element.naturalHeight : undefined,
-      attributeWidth: element.getAttribute('width') || '',
-      attributeHeight: element.getAttribute('height') || '',
-      cssWidth: undefined, // this will get overwritten below
-      cssHeight: undefined, // this will get overwritten below
-      _privateCssSizing: undefined, // this will get overwritten below
-      cssComputedPosition: getPosition(element, computedStyle),
+      attributeWidth: element.getAttribute('width'),
+      attributeHeight: element.getAttribute('height'),
+      naturalDimensions: canTrustNaturalDimensions ?
+        {width: element.naturalWidth, height: element.naturalHeight} :
+        undefined,
+      cssRules: undefined, // this will get overwritten below
+      computedStyles: {
+        position: getPosition(element, computedStyle),
+        objectFit: computedStyle.getPropertyValue('object-fit'),
+        imageRendering: computedStyle.getPropertyValue('image-rendering'),
+      },
       isCss: false,
       isPicture,
       loading: element.loading,
-      cssComputedObjectFit: computedStyle.getPropertyValue('object-fit'),
-      cssComputedImageRendering: computedStyle.getPropertyValue('image-rendering'),
       isInShadowDOM: element.getRootNode() instanceof ShadowRoot,
       // @ts-expect-error - getNodeDetails put into scope via stringification
       node: getNodeDetails(element),
@@ -119,17 +120,18 @@ function getCSSImages(allElements) {
       displayedWidth: element.clientWidth,
       displayedHeight: element.clientHeight,
       clientRect: getClientRect(element),
-      attributeWidth: '',
-      attributeHeight: '',
-      cssWidth: undefined,
-      cssHeight: undefined,
-      _privateCssSizing: undefined,
-      cssComputedPosition: getPosition(element, style),
+      attributeWidth: null,
+      attributeHeight: null,
+      naturalDimensions: undefined,
+      cssEffectiveRules: undefined,
+      computedStyles: {
+        position: getPosition(element, style),
+        objectFit: '',
+        imageRendering: style.getPropertyValue('image-rendering'),
+      },
       isCss: true,
       isPicture: false,
       isInShadowDOM: element.getRootNode() instanceof ShadowRoot,
-      cssComputedObjectFit: '',
-      cssComputedImageRendering: style.getPropertyValue('image-rendering'),
       // @ts-expect-error - getNodeDetails put into scope via stringification
       node: getNodeDetails(element),
     });
@@ -241,23 +243,22 @@ class ImageElements extends FRGatherer {
    */
   async fetchElementWithSizeInformation(driver, element) {
     const url = element.src;
-    if (this._naturalSizeCache.has(url)) {
-      Object.assign(element, this._naturalSizeCache.get(url));
-      return;
+    let size = this._naturalSizeCache.get(url);
+    if (!size) {
+      try {
+        // We don't want this to take forever, 250ms should be enough for images that are cached
+        driver.defaultSession.setNextProtocolTimeout(250);
+        size = await driver.executionContext.evaluate(determineNaturalSize, {
+          args: [url],
+        });
+        this._naturalSizeCache.set(url, size);
+      } catch (_) {
+        // determineNaturalSize fails on invalid images, which we treat as non-visible
+      }
     }
 
-    try {
-      // We don't want this to take forever, 250ms should be enough for images that are cached
-      driver.defaultSession.setNextProtocolTimeout(250);
-      const size = await driver.executionContext.evaluate(determineNaturalSize, {
-        args: [url],
-      });
-      this._naturalSizeCache.set(url, size);
-      Object.assign(element, size);
-    } catch (_) {
-      // determineNaturalSize fails on invalid images, which we treat as non-visible
-      return;
-    }
+    if (!size) return;
+    element.naturalDimensions = {width: size.naturalWidth, height: size.naturalHeight};
   }
 
   /**
@@ -281,10 +282,7 @@ class ImageElements extends FRGatherer {
       const width = getEffectiveSizingRule(matchedRules, 'width');
       const height = getEffectiveSizingRule(matchedRules, 'height');
       const aspectRatio = getEffectiveSizingRule(matchedRules, 'aspect-ratio');
-      // COMPAT: Maintain backcompat for <= 7.0.1
-      element.cssWidth = width === null ? undefined : width;
-      element.cssHeight = height === null ? undefined : height;
-      element._privateCssSizing = {width, height, aspectRatio};
+      element.cssEffectiveRules = {width, height, aspectRatio};
     } catch (err) {
       if (/No node.*found/.test(err.message)) return;
       throw err;

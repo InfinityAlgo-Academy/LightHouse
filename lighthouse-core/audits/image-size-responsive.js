@@ -14,6 +14,8 @@ const Audit = require('./audit.js');
 const URL = require('../lib/url-shim.js');
 const i18n = require('../lib/i18n/i18n.js');
 
+/** @typedef {LH.Artifacts.ImageElement & Required<Pick<LH.Artifacts.ImageElement, 'naturalDimensions'>>} ImageWithNaturalDimensions */
+
 const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on the size of visible images on the page. This descriptive title is shown to users when all images have correct sizes. */
   title: 'Serves images with appropriate resolution',
@@ -86,7 +88,11 @@ function isCandidate(image) {
   if (image.displayedWidth <= 1 || image.displayedHeight <= 1) {
     return false;
   }
-  if (!image.naturalWidth || !image.naturalHeight) {
+  if (
+    !image.naturalDimensions ||
+    !image.naturalDimensions.width ||
+    !image.naturalDimensions.height
+  ) {
     return false;
   }
   if (image.mimeType === 'image/svg+xml') {
@@ -95,11 +101,11 @@ function isCandidate(image) {
   if (image.isCss) {
     return false;
   }
-  if (image.cssComputedObjectFit !== 'fill') {
+  if (image.computedStyles.objectFit !== 'fill') {
     return false;
   }
   // Check if pixel art scaling is used.
-  if (artisticImageRenderingValues.includes(image.cssComputedImageRendering)) {
+  if (artisticImageRenderingValues.includes(image.computedStyles.imageRendering)) {
     return false;
   }
   // Check if density descriptor is used.
@@ -113,25 +119,26 @@ function isCandidate(image) {
  * Type check to ensure that the ImageElement has natural dimensions.
  *
  * @param {LH.Artifacts.ImageElement} image
- * @return {image is LH.Artifacts.ImageElement & {naturalWidth: number, naturalHeight: number}}
+ * @return {image is ImageWithNaturalDimensions}
  */
 function imageHasNaturalDimensions(image) {
-  return image.naturalHeight !== undefined && image.naturalWidth !== undefined;
+  return !!image.naturalDimensions;
 }
 
 /**
- * @param {LH.Artifacts.ImageElement & {naturalHeight: number, naturalWidth: number}} image
+ * @param {ImageWithNaturalDimensions} image
  * @param {number} DPR
  * @return {boolean}
  */
 function imageHasRightSize(image, DPR) {
   const [expectedWidth, expectedHeight] =
       allowedImageSize(image.displayedWidth, image.displayedHeight, DPR);
-  return image.naturalWidth >= expectedWidth && image.naturalHeight >= expectedHeight;
+  return image.naturalDimensions.width >= expectedWidth &&
+    image.naturalDimensions.height >= expectedHeight;
 }
 
 /**
- * @param {LH.Artifacts.ImageElement & {naturalWidth: number, naturalHeight: number}} image
+ * @param {ImageWithNaturalDimensions} image
  * @param {number} DPR
  * @return {Result}
  */
@@ -142,8 +149,8 @@ function getResult(image, DPR) {
     url: image.src,
     elidedUrl: URL.elideDataURI(image.src),
     displayedSize: `${image.displayedWidth} x ${image.displayedHeight}`,
-    actualSize: `${image.naturalWidth} x ${image.naturalHeight}`,
-    actualPixels: image.naturalWidth * image.naturalHeight,
+    actualSize: `${image.naturalDimensions.width} x ${image.naturalDimensions.height}`,
+    actualPixels: image.naturalDimensions.width * image.naturalDimensions.height,
     expectedSize: `${expectedWidth} x ${expectedHeight}`,
     expectedPixels: expectedWidth * expectedHeight,
   };
