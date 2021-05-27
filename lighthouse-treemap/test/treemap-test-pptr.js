@@ -9,6 +9,7 @@
 
 /* global document, window */
 
+const fs = require('fs');
 const puppeteer = require('puppeteer');
 const {server} = require('../../lighthouse-cli/test/fixtures/static-server.js');
 const portNumber = 10200;
@@ -42,7 +43,11 @@ describe('Lighthouse Treemap', () => {
   });
 
   beforeEach(async () => {
-    if (!browser) browser = await puppeteer.launch({headless: true});
+    if (!browser) {
+      browser = await puppeteer.launch({
+        headless: true,
+      });
+    }
     page = await browser.newPage();
     page.on('pageerror', pageError => pageErrors.push(pageError));
   });
@@ -66,6 +71,7 @@ describe('Lighthouse Treemap', () => {
       expect(options.lhr.requestedUrl).toBe(debugOptions.lhr.requestedUrl);
     });
 
+    // TODO: remove for v8
     async function loadFromPostMessage(options) {
       const openerPage = await browser.newPage();
       await openerPage.evaluate((treemapUrl, options) => {
@@ -87,16 +93,52 @@ describe('Lighthouse Treemap', () => {
 
     it('from window postMessage', async () => {
       await loadFromPostMessage(debugOptions);
-      const options = await page.evaluate(() => window.__treemapOptions);
-      expect(options.lhr.requestedUrl).toBe(debugOptions.lhr.requestedUrl);
+      const optionsInPage = await page.evaluate(() => window.__treemapOptions);
+      expect(optionsInPage.lhr.requestedUrl).toBe(debugOptions.lhr.requestedUrl);
     });
 
     it('handles errors', async () => {
       await loadFromPostMessage({});
-      const options = await page.evaluate(() => window.__treemapOptions);
-      expect(options).toBeUndefined();
+      const optionsInPage = await page.evaluate(() => window.__treemapOptions);
+      expect(optionsInPage).toBeUndefined();
       const error = await page.evaluate(() => document.querySelector('#lh-log').textContent);
       expect(error).toBe('Error: Invalid options');
+    });
+
+    it('from encoded fragment (gzip)', async () => {
+      const options = JSON.parse(JSON.stringify(debugOptions));
+      options.lhr.requestedUrl += '😃😃😃';
+      const json = JSON.stringify(options);
+      const encoded = await page.evaluate(`
+        ${fs.readFileSync(
+          require.resolve('../../lighthouse-core/report/html/renderer/text-encoding.js'), 'utf-8')}
+        TextEncoding.toBase64(${JSON.stringify(json)}, {gzip: true});
+      `);
+
+      await page.goto(`${treemapUrl}?gzip=1#${encoded}`);
+      await page.waitForFunction(
+        () => window.__treemapOptions || document.body.textContent.startsWith('Error'));
+
+      const optionsInPage = await page.evaluate(() => window.__treemapOptions);
+      expect(optionsInPage.lhr.requestedUrl).toBe(options.lhr.requestedUrl);
+    });
+
+    it('from encoded fragment (no gzip)', async () => {
+      const options = JSON.parse(JSON.stringify(debugOptions));
+      options.lhr.requestedUrl += '😃😃😃';
+      const json = JSON.stringify(options);
+      const encoded = await page.evaluate(`
+        ${fs.readFileSync(
+          require.resolve('../../lighthouse-core/report/html/renderer/text-encoding.js'), 'utf-8')}
+        TextEncoding.toBase64(${JSON.stringify(json)}, {gzip: false});
+      `);
+
+      await page.goto(`${treemapUrl}#${encoded}`);
+      await page.waitForFunction(
+        () => window.__treemapOptions || document.body.textContent.startsWith('Error'));
+
+      const optionsInPage = await page.evaluate(() => window.__treemapOptions);
+      expect(optionsInPage.lhr.requestedUrl).toBe(options.lhr.requestedUrl);
     });
   });
 });

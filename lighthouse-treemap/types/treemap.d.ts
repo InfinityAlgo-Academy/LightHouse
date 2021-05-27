@@ -1,4 +1,5 @@
 import _TreemapUtil = require('../app/src/util.js');
+import _TextEncoding = require('../../lighthouse-core/report/html/renderer/text-encoding.js');
 import _DragAndDrop = require('../../lighthouse-viewer/app/src/drag-and-drop.js');
 import _FirebaseAuth = require('../../lighthouse-viewer/app/src/firebase-auth.js');
 import _GithubApi = require('../../lighthouse-viewer/app/src/github-api.js');
@@ -36,6 +37,7 @@ declare global {
     sort(data: any): void;
   };
   var TreemapUtil: typeof _TreemapUtil;
+  var TextEncoding: typeof _TextEncoding;
   var Logger: typeof _Logger;
   var DragAndDrop: typeof _DragAndDrop;
   var GithubApi: typeof _GithubApi;

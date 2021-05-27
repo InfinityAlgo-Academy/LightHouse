@@ -119,7 +119,7 @@ function prepareLabData(LHResult, document) {
         container: reportEl.querySelector('.lh-audit-group--metrics'),
         text: Util.i18n.strings.viewTreemapLabel,
         icon: 'treemap',
-        onClick: () => ReportUIFeatures.openTreemap(lhResult, 'url'),
+        onClick: () => ReportUIFeatures.openTreemap(lhResult),
       });
     }
   };

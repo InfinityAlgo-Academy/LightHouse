@@ -9,7 +9,7 @@
 
 /* eslint-env browser */
 
-/* globals I18n webtreemap strings TreemapUtil Tabulator Cell Row DragAndDrop Logger GithubApi */
+/* globals I18n webtreemap strings TreemapUtil TextEncoding Tabulator Cell Row DragAndDrop Logger GithubApi */
 
 const DUPLICATED_MODULES_IGNORE_THRESHOLD = 1024;
 const DUPLICATED_MODULES_IGNORE_ROOT_RATIO = 0.01;
@@ -884,22 +884,13 @@ class LighthouseTreemap {
   }
 }
 
-/**
- * @param {string} encoded
- */
-function fromBinary(encoded) {
-  const binary = atob(encoded);
-  const bytes = new Uint8Array(binary.length);
-  for (let i = 0; i < bytes.length; i++) {
-    bytes[i] = binary.charCodeAt(i);
-  }
-  return String.fromCharCode(...new Uint16Array(bytes.buffer));
-}
-
 async function main() {
   const app = new LighthouseTreemap();
   const queryParams = new URLSearchParams(window.location.search);
-  const hashParams = location.hash ? JSON.parse(fromBinary(location.hash.substr(1))) : {};
+  const gzip = queryParams.get('gzip') === '1';
+  const hashParams = location.hash ?
+    JSON.parse(TextEncoding.fromBase64(location.hash.substr(1), {gzip})) :
+    {};
   /** @type {Record<string, any>} */
   const params = {
     ...Object.fromEntries(queryParams.entries()),
@@ -912,6 +903,11 @@ async function main() {
   } else if ('debug' in params) {
     const response = await fetch('debug.json');
     app.init(await response.json());
+  } else if (params.lhr) {
+    const options = {
+      lhr: params.lhr,
+    };
+    app.init(options);
   } else if (params.gist) {
     let json;
     let options;
@@ -923,6 +919,7 @@ async function main() {
     }
     if (options) app.init(options);
   } else {
+    // TODO: remove for v8.
     window.addEventListener('message', e => {
       if (e.source !== self.opener) return;
 
@@ -938,6 +935,7 @@ async function main() {
     });
   }
 
+  // TODO: remove for v8.
   // If the page was opened as a popup, tell the opening window we're ready.
   if (self.opener && !self.opener.closed) {
     self.opener.postMessage({opened: true}, '*');

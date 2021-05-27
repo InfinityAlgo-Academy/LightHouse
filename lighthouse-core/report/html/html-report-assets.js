@@ -23,6 +23,7 @@ const REPORT_JAVASCRIPT = [
   fs.readFileSync(__dirname + '/renderer/pwa-category-renderer.js', 'utf8'),
   fs.readFileSync(__dirname + '/renderer/report-renderer.js', 'utf8'),
   fs.readFileSync(__dirname + '/renderer/i18n.js', 'utf8'),
+  fs.readFileSync(__dirname + '/renderer/text-encoding.js', 'utf8'),
 ].join(';\n');
 const REPORT_CSS = fs.readFileSync(__dirname + '/report-styles.css', 'utf8');
 const REPORT_TEMPLATES = fs.readFileSync(__dirname + '/templates.html', 'utf8');
