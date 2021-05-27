@@ -28,8 +28,8 @@ function generateSize(width, height, prefix = 'displayed') {
   return size;
 }
 
-function generateImage(clientSize, naturalSize, src = 'https://google.com/logo.png') {
-  return {src, ...clientSize, ...naturalSize};
+function generateImage(clientSize, naturalDimensions, src = 'https://google.com/logo.png') {
+  return {src, ...clientSize, naturalDimensions};
 }
 
 describe('Page uses responsive images', () => {
@@ -44,14 +44,14 @@ describe('Page uses responsive images', () => {
       ImageElements: [
         generateImage(
           generateSize(...data.clientSize),
-          generateSize(...data.naturalSize, 'natural')
+          {width: data.naturalSize[0], height: data.naturalSize[1]}
         ),
       ],
     };
     it(description, () => {
       // eslint-disable-next-line max-len
       const result = UsesResponsiveImagesAudit.audit_(artifacts, [generateRecord(data.sizeInKb, data.durationInMs || 200)]);
-      assert.equal(result.items.length, data.listed ? 1 : 0);
+      expect(result.items).toHaveLength(data.listed ? 1 : 0);
       if (data.listed) {
         assert.equal(Math.round(result.items[0].wastedBytes / 1024), data.expectedWaste);
       }
@@ -115,7 +115,7 @@ describe('Page uses responsive images', () => {
       ImageElements: [
         generateImage(
           generateSize(100, 100),
-          generateSize(300, 300, 'natural'),
+          {width: 300, height: 300},
           null
         ),
       ],
@@ -133,17 +133,17 @@ describe('Page uses responsive images', () => {
       ImageElements: [
         generateImage(
           generateSize(200, 200),
-          generateSize(450, 450, 'natural'),
+          {width: 450, height: 450},
           'https://google.com/logo.png'
         ),
         generateImage(
           generateSize(100, 100),
-          generateSize(210, 210, 'natural'),
+          {width: 210, height: 210},
           'https://google.com/logo2.png'
         ),
         generateImage(
           generateSize(100, 100),
-          generateSize(80, 80, 'natural'),
+          {width: 80, height: 80},
           'data:image/jpeg;base64,foobar'
         ),
       ],
@@ -156,7 +156,7 @@ describe('Page uses responsive images', () => {
 
   it('ignores vectors', () => {
     const urlA = 'https://google.com/logo.svg';
-    const naturalSizeA = generateSize(450, 450, 'natural');
+    const naturalSizeA = {width: 450, height: 450};
     const image =
       {...generateImage(generateSize(10, 10), naturalSizeA, urlA), mimeType: 'image/svg+xml'};
     const auditResult = UsesResponsiveImagesAudit.audit_({
@@ -172,7 +172,7 @@ describe('Page uses responsive images', () => {
 
   it('ignores CSS', () => {
     const urlA = 'https://google.com/logo.png';
-    const naturalSizeA = generateSize(450, 450, 'natural');
+    const naturalSizeA = {width: 450, height: 450};
 
     const auditResult = UsesResponsiveImagesAudit.audit_({
       ViewportDimensions: {innerWidth: 1000, innerHeight: 1000, devicePixelRatio: 1},
@@ -188,7 +188,7 @@ describe('Page uses responsive images', () => {
 
   it('handles failure', () => {
     const urlA = 'https://google.com/logo.png';
-    const naturalSizeA = generateSize(NaN, 450, 'natural');
+    const naturalSizeA = {width: NaN, height: 450};
     const auditResult = UsesResponsiveImagesAudit.audit_({
       ViewportDimensions: {innerWidth: 1000, innerHeight: 1000, devicePixelRatio: 1},
       ImageElements: [
@@ -203,10 +203,10 @@ describe('Page uses responsive images', () => {
 
   it('de-dupes images', () => {
     const urlA = 'https://google.com/logo.png';
-    const naturalSizeA = generateSize(450, 450, 'natural');
+    const naturalSizeA = {width: 450, height: 450};
     const recordA = generateRecord(100, 300, urlA);
     const urlB = 'https://google.com/logoB.png';
-    const naturalSizeB = generateSize(1000, 1000, 'natural');
+    const naturalSizeB = {width: 1000, height: 1000};
     const recordB = generateRecord(10, 20, urlB); // make it small to keep test passing
     const networkRecords = [recordA, recordB];
 

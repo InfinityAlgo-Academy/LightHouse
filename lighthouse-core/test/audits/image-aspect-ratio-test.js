@@ -10,13 +10,13 @@ const assert = require('assert').strict;
 
 /* eslint-env jest */
 
-function generateImage(clientSize, naturalSize, props, src = 'https://google.com/logo.png') {
+function generateImage(clientSize, naturalDimensions, props, src = 'https://google.com/logo.png') {
   return {
     src,
     mimeType: 'image/png',
-    cssComputedObjectFit: 'fill',
+    computedStyles: {objectFit: 'fill'},
+    naturalDimensions,
     ...clientSize,
-    ...naturalSize,
     ...props,
   };
 }
@@ -29,7 +29,7 @@ describe('Images: aspect-ratio audit', () => {
         ImageElements: [
           generateImage(
             {displayedWidth: data.clientSize[0], displayedHeight: data.clientSize[1]},
-            {naturalWidth: data.naturalSize[0], naturalHeight: data.naturalSize[1]},
+            {width: data.naturalSize[0], height: data.naturalSize[1]},
             data.props
           ),
         ],
@@ -81,7 +81,7 @@ describe('Images: aspect-ratio audit', () => {
     naturalSize: [800, 500],
     props: {
       isCss: false,
-      cssComputedObjectFit: 'cover',
+      computedStyles: {objectFit: 'cover'},
     },
   });
 
