@@ -551,7 +551,6 @@ class ReportUIFeatures {
    * Opens a new tab to the treemap app and sends the JSON results using postMessage.
    * @param {LH.Result} json
    * @param {'postMessage'|'url'} method
-   * @protected
    */
   static openTreemap(json, method = 'postMessage') {
     const treemapData = json.audits['script-treemap-data'].details;
