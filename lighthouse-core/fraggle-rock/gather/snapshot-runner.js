@@ -40,6 +40,7 @@ async function snapshot(options) {
         artifactDefinitions,
         artifactState,
         computedCache,
+        settings: config.settings,
       });
 
       const artifacts = await awaitArtifacts(artifactState);

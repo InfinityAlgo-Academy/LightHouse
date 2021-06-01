@@ -36,6 +36,7 @@ async function startTimespan(options) {
     artifactState,
     computedCache,
     gatherMode: 'timespan',
+    settings: config.settings,
   };
 
   await collectPhaseArtifacts({phase: 'startInstrumentation', ...phaseOptions});

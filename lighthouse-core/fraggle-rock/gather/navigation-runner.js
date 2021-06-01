@@ -171,6 +171,7 @@ async function _navigation(navigationContext) {
     computedCache: navigationContext.computedCache,
     artifactDefinitions: navigationContext.navigation.artifacts,
     artifactState,
+    settings: navigationContext.config.settings,
   };
 
   const setupResult = await _setupNavigation(navigationContext);

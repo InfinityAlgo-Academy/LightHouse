@@ -8,6 +8,7 @@
 /* eslint-env jest */
 
 const CSSUsage = require('../../../gather/gatherers/css-usage.js');
+const {defaultSettings} = require('../../../config/constants.js');
 const {createMockDriver} = require('../../fraggle-rock/gather/mock-driver.js');
 
 describe('.getArtifact', () => {
@@ -38,6 +39,7 @@ describe('.getArtifact', () => {
       gatherMode: 'snapshot',
       computedCache: new Map(),
       dependencies: {},
+      settings: defaultSettings,
     };
     const gatherer = new CSSUsage();
     const artifact = await gatherer.getArtifact(context);
@@ -92,6 +94,7 @@ describe('.getArtifact', () => {
       gatherMode: 'snapshot',
       computedCache: new Map(),
       dependencies: {},
+      settings: defaultSettings,
     };
     const gatherer = new CSSUsage();
     const artifact = await gatherer.getArtifact(context);

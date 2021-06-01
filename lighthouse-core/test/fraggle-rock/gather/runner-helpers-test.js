@@ -7,6 +7,7 @@
 
 const helpers = require('../../../fraggle-rock/gather/runner-helpers.js');
 const Gatherer = require('../../../fraggle-rock/gather/base-gatherer.js');
+const {defaultSettings} = require('../../../config/constants.js');
 const {createMockDriver, createMockGathererInstance} = require('./mock-driver.js');
 
 /* eslint-env jest */
@@ -130,6 +131,7 @@ describe('collectPhaseArtifacts', () => {
           phase,
           gatherMode: /** @type {any} */ (gatherMode),
           computedCache: new Map(),
+          settings: defaultSettings,
         });
         expect(artifactState[phase]).toEqual({
           Timespan: expect.any(Promise),
@@ -152,6 +154,7 @@ describe('collectPhaseArtifacts', () => {
       gatherMode: 'navigation',
       phase: 'getArtifact',
       computedCache: new Map(),
+      settings: defaultSettings,
     });
     expect(await artifactState.getArtifact.Snapshot).toEqual({type: 'snapshot'});
     expect(await artifactState.getArtifact.Timespan).toEqual({type: 'timespan'});
@@ -173,6 +176,7 @@ describe('collectPhaseArtifacts', () => {
       gatherMode: 'navigation',
       phase: 'getArtifact',
       computedCache: new Map(),
+      settings: defaultSettings,
     });
     expect(artifactState.getArtifact).toEqual({
       Dependency: expect.any(Promise),
@@ -204,6 +208,7 @@ describe('collectPhaseArtifacts', () => {
       gatherMode: 'navigation',
       phase: 'getArtifact',
       computedCache: new Map(),
+      settings: defaultSettings,
     });
     expect(artifactState.getArtifact).toEqual({
       Snapshot: expect.any(Promise),

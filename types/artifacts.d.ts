@@ -21,7 +21,6 @@ declare global {
 
     export type FRArtifacts = StrictOmit<Artifacts,
       | 'Fonts'
-      | 'FullPageScreenshot'
       | 'HTTPRedirect'
       | 'Manifest'
       | 'MixedContent'
