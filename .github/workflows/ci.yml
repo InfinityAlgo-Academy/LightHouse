@@ -1,0 +1,73 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request: # run on all PRs, not just PRs to a particular branch
+
+jobs:
+  # `basics` includes all non-smoke and non-unit CI
+  basics:
+    runs-on: ubuntu-latest
+
+    # A few steps are duplicated across all jobs. Can be done better when this feature lands:
+    #   https://github.community/t/reusing-sharing-inheriting-steps-between-jobs-declarations/16851
+    #   https://github.com/actions/runner/issues/438
+    steps:
+    - name: git clone
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 100
+    - run: bash lighthouse-core/scripts/github-actions-commit-range.sh
+      env:
+        GITHUB_CONTEXT_PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        GITHUB_CONTEXT_BASE_SHA: ${{ github.event.before }}
+
+    - name: Use Node.js 12.x
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12.x
+
+    - run: yarn install --frozen-lockfile --network-timeout 1000000
+    - run: yarn build-all
+
+    # Run tests that require headfull Chrome.
+    - run: sudo apt-get install xvfb
+    - name: yarn test-clients
+      run: xvfb-run --auto-servernum bash $GITHUB_WORKSPACE/.github/scripts/jest-retry.sh yarn test-clients
+    - name: yarn test-docs
+      run: xvfb-run --auto-servernum yarn test-docs
+    - name: yarn test-viewer
+      run: xvfb-run --auto-servernum bash $GITHUB_WORKSPACE/.github/scripts/jest-retry.sh yarn test-viewer
+    - name: yarn test-treemap
+      run: xvfb-run --auto-servernum bash $GITHUB_WORKSPACE/.github/scripts/jest-retry.sh yarn test-treemap
+
+    - run: yarn diff:sample-json
+    - run: yarn type-check
+    - run: yarn lint
+    - run: yarn test-lantern
+    - run: yarn test-legacy-javascript
+    - run: yarn i18n:checks
+    - run: yarn dogfood-lhci
+
+    # Fail if any changes were written to any source files or generated untracked files (ex, from: build/build-cdt-lib.js).
+    - run: git add -A && git diff --cached --exit-code
+
+    # buildtracker needs history and a common merge commit.
+    - name: Fixup git history (for buildtracker)
+      run: bash $GITHUB_WORKSPACE/.github/scripts/git-get-shared-history.sh
+      env:
+        # https://buildtracker.dev/docs/guides/github-actions#configuration
+        BT_API_AUTH_TOKEN: ${{ secrets.BT_API_AUTH_TOKEN }}
+    - name: Store in buildtracker
+      # TODO(paulirish): Don't allow this to fail the build. https://github.com/paularmstrong/build-tracker/issues/200
+      run: yarn bt-cli upload-build || true
+      env:
+        # https://buildtracker.dev/docs/guides/github-actions#configuration
+        BT_API_AUTH_TOKEN: ${{ secrets.BT_API_AUTH_TOKEN }}
+
+    - name: Upload dist
+      uses: actions/upload-artifact@v1
+      with:
+        name: dist
+        path: dist/

@@ -1,12 +1,29 @@
 /**
- * @license Copyright 2016 Google Inc. All Rights Reserved.
+ * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
 
+/* eslint-env jest */
+
+/**
+ * @param {{protocolGetVersionResponse: LH.CrdpCommands['Browser.getVersion']['returnType']}} param0
+ */
 function makeFakeDriver({protocolGetVersionResponse}) {
+  let scrollPosition = {x: 0, y: 0};
+
   return {
+    get fetcher() {
+      return {
+        disable: () => Promise.resolve(),
+      };
+    },
+    get defaultSession() {
+      return this;
+    },
+    on: jest.fn(),
+    sendCommand: jest.fn().mockResolvedValue(undefined),
     getBrowserVersion() {
       return Promise.resolve(Object.assign({}, protocolGetVersionResponse, {milestone: 71}));
     },
@@ -22,15 +39,6 @@ function makeFakeDriver({protocolGetVersionResponse}) {
     disconnect() {
       return Promise.resolve();
     },
-    gotoURL() {
-      return Promise.resolve('https://www.reddit.com/r/nba');
-    },
-    beginEmulation() {
-      return Promise.resolve();
-    },
-    setThrottling() {
-      return Promise.resolve();
-    },
     dismissJavaScriptDialogs() {
       return Promise.resolve();
     },
@@ -40,39 +48,40 @@ function makeFakeDriver({protocolGetVersionResponse}) {
     reloadForCleanStateIfNeeded() {
       return Promise.resolve();
     },
-    enableRuntimeEvents() {
+    executionContext: {
+      evaluateAsync() {
+        return Promise.resolve({});
+      },
+      evaluate() {
+        return Promise.resolve({});
+      },
+      cacheNativesOnNewDocument() {
+        return Promise.resolve();
+      },
+    },
+    /** @param {{x: number, y: number}} position */
+    scrollTo(position) {
+      scrollPosition = position;
       return Promise.resolve();
     },
-    evaluateScriptOnLoad() {
-      return Promise.resolve();
-    },
-    cleanBrowserCaches() {},
-    clearDataForOrigin() {},
-    cacheNatives() {
-      return Promise.resolve();
-    },
-    evaluateAsync() {
-      return Promise.resolve({});
-    },
-    registerPerformanceObserver() {
-      return Promise.resolve();
+    getScrollPosition() {
+      return Promise.resolve(scrollPosition);
     },
     beginTrace() {
       return Promise.resolve();
     },
     endTrace() {
-      return Promise.resolve(
-      require('../fixtures/traces/progressive-app.json')
-      );
+      // Minimal indirection so TypeScript doesn't crash trying to infer a type.
+      const modulePath = '../fixtures/traces/progressive-app.json';
+      return Promise.resolve(require(modulePath));
     },
     beginDevtoolsLog() {},
     endDevtoolsLog() {
-      return require('../fixtures/artifacts/perflog/defaultPass.devtoolslog.json');
+      // Minimal indirection so TypeScript doesn't crash trying to infer a type.
+      const modulePath = '../fixtures/artifacts/perflog/defaultPass.devtoolslog.json';
+      return require(modulePath);
     },
-    blockUrlPatterns() {
-      return Promise.resolve();
-    },
-    setExtraHTTPHeaders() {
+    registerRequestIdleCallbackWrap() {
       return Promise.resolve();
     },
   };
@@ -97,6 +106,8 @@ const fakeDriverUsingRealMobileDevice = makeFakeDriver({
   },
 });
 
-module.exports = fakeDriver;
-module.exports.fakeDriverUsingRealMobileDevice = fakeDriverUsingRealMobileDevice;
-module.exports.protocolGetVersionResponse = protocolGetVersionResponse;
+module.exports = {
+  ...fakeDriver,
+  fakeDriverUsingRealMobileDevice,
+  protocolGetVersionResponse,
+};

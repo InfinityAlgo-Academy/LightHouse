@@ -1,11 +1,11 @@
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
 
-const assert = require('assert');
+const assert = require('assert').strict;
 const fs = require('fs');
 const jsdom = require('jsdom');
 const ReportGenerator = require('../../report/report-generator.js');
@@ -55,15 +55,17 @@ describe('ReportGenerator', () => {
     it('should inject the report templates', () => {
       const page = new jsdom.JSDOM(ReportGenerator.generateReportHtml({}));
       const templates = new jsdom.JSDOM(TEMPLATES_FILE);
-      assert.equal(page.window.document.querySelectorAll('template[id^="tmpl-"]').length,
+      assert.equal(
+        page.window.document.querySelectorAll('template[id^="tmpl-"]').length,
         templates.window.document.querySelectorAll('template[id^="tmpl-"]').length,
-        'all templates injected');
+        'all templates injected'
+      );
     });
 
     it('should inject the report CSS', () => {
       const result = ReportGenerator.generateReportHtml({});
       assert.ok(!result.includes('/*%%LIGHTHOUSE_CSS%%*/'));
-      assert.ok(result.includes('--pass-color'));
+      assert.ok(result.includes('--color-green'));
     });
 
     it('should inject the report renderer javascript', () => {
@@ -100,6 +102,15 @@ describe('ReportGenerator', () => {
       const csvOutput = ReportGenerator.generateReport(sampleResults, 'csv');
       fs.writeFileSync(path, csvOutput);
 
+      const lines = csvOutput.split('\n');
+      expect(lines.length).toBeGreaterThan(100);
+      expect(lines.slice(0, 3).join('\n')).toMatchInlineSnapshot(`
+        "requestedUrl,finalUrl,category,name,title,type,score
+        \\"http://localhost:10200/dobetterweb/dbw_tester.html\\",\\"http://localhost:10200/dobetterweb/dbw_tester.html\\",\\"Performance\\",\\"performance-score\\",\\"Overall Performance Category Score\\",\\"numeric\\",\\"0.57\\"
+        \\"http://localhost:10200/dobetterweb/dbw_tester.html\\",\\"http://localhost:10200/dobetterweb/dbw_tester.html\\",\\"Performance\\",\\"first-contentful-paint\\",\\"First Contentful Paint\\",\\"numeric\\",\\"0.24\\"
+        "
+      `);
+
       try {
         await csvValidator(path, headers);
       } catch (err) {
@@ -107,6 +118,15 @@ describe('ReportGenerator', () => {
       } finally {
         fs.unlinkSync(path);
       }
+    });
+
+    it('creates CSV for results including overall category scores', () => {
+      const csvOutput = ReportGenerator.generateReport(sampleResults, 'csv');
+      expect(csvOutput).toContain('performance-score');
+      expect(csvOutput).toContain('accessibility-score');
+      expect(csvOutput).toContain('best-practices-score');
+      expect(csvOutput).toContain('seo-score');
+      expect(csvOutput).toContain('pwa-score');
     });
 
     it('writes extended info', () => {

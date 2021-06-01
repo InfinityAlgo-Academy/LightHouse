@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -9,7 +9,7 @@
  * @fileoverview Base class for boolean audits that can have multiple reasons for failure
  */
 
-const Audit = require('./audit');
+const Audit = require('./audit.js');
 
 class MultiCheckAudit extends Audit {
   /**
@@ -42,9 +42,9 @@ class MultiCheckAudit extends Audit {
     }
 
     // Include the detailed pass/fail checklist as a diagnostic.
-    /** @type {LH.Audit.Details.Diagnostic} */
+    /** @type {LH.Audit.Details.DebugData} */
     const details = {
-      type: 'diagnostic',
+      type: 'debugdata',
       // TODO: Consider not nesting detailsItem under `items`.
       items: [detailsItem],
     };
@@ -52,7 +52,8 @@ class MultiCheckAudit extends Audit {
     // If we fail, share the failures
     if (result.failures.length > 0) {
       return {
-        rawValue: false,
+        score: 0,
+        // TODO(#11495): make this i18n-able.
         explanation: `Failures: ${result.failures.join(',\n')}.`,
         details,
       };
@@ -60,7 +61,7 @@ class MultiCheckAudit extends Audit {
 
     // Otherwise, we pass
     return {
-      rawValue: true,
+      score: 1,
       details,
     };
   }

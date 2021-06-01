@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2018 Google Inc. All Rights Reserved.
+ * @license Copyright 2018 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -11,9 +11,18 @@
  * @see https://cs.chromium.org/chromium/src/third_party/blink/renderer/devtools/front_end/sdk/NetworkManager.js
  */
 
-const URL = require('./url-shim');
+const URL = require('./url-shim.js');
 
-const SECURE_SCHEMES = ['data', 'https', 'wss', 'blob', 'chrome', 'chrome-extension', 'about'];
+
+// Lightrider X-Header names for timing information.
+// See: _updateTransferSizeForLightrider and _updateTimingsForLightrider.
+const HEADER_TCP = 'X-TCPMs';
+const HEADER_SSL = 'X-SSLMs';
+const HEADER_REQ = 'X-RequestMs';
+const HEADER_RES = 'X-ResponseMs';
+const HEADER_TOTAL = 'X-TotalMs';
+const HEADER_FETCHED_SIZE = 'X-TotalFetchedSize';
+const HEADER_PROTOCOL_IS_H2 = 'X-ProtocolIsH2';
 
 /**
  * @typedef HeaderEntry
@@ -23,12 +32,24 @@ const SECURE_SCHEMES = ['data', 'https', 'wss', 'blob', 'chrome', 'chrome-extens
 
 /**
  * @typedef ParsedURL
- * @property {string} scheme
- * @property {string} host
+ * @property {string} scheme Equivalent to a `new URL(url).protocol` BUT w/o the trailing colon (:)
+ * @property {string} host Equivalent to a `new URL(url).hostname`
  * @property {string} securityOrigin
  */
 
-/** @type {SelfMap<LH.Crdp.Page.ResourceType>} */
+/**
+ * @typedef LightriderStatistics
+ * The difference in endTime between the observed Lighthouse endTime and Lightrider's derived endTime.
+ * @property {number} endTimeDeltaMs
+ * The time spent making a TCP connection (connect + SSL).
+ * @property {number} TCPMs
+ * The time spent requesting a resource from a remote server, we use this to approx RTT.
+ * @property {number} requestMs
+ * The time spent transferring a resource from a remote server.
+ * @property {number} responseMs
+ */
+
+/** @type {SelfMap<LH.Crdp.Network.ResourceType>} */
 const RESOURCE_TYPES = {
   XHR: 'XHR',
   Fetch: 'Fetch',
@@ -45,10 +66,11 @@ const RESOURCE_TYPES = {
   Manifest: 'Manifest',
   SignedExchange: 'SignedExchange',
   Ping: 'Ping',
+  Preflight: 'Preflight',
   CSPViolationReport: 'CSPViolationReport',
 };
 
-module.exports = class NetworkRequest {
+class NetworkRequest {
   constructor() {
     this.requestId = '';
     this.connectionId = '0';
@@ -67,10 +89,15 @@ module.exports = class NetworkRequest {
     /** @type {number} */
     this.responseReceivedTime = -1;
 
+    // Go read the comment on _updateTransferSizeForLightrider.
     this.transferSize = 0;
     this.resourceSize = 0;
     this.fromDiskCache = false;
     this.fromMemoryCache = false;
+    this.fromPrefetchCache = false;
+
+    /** @type {LightriderStatistics|undefined} Extra timing information available only when run in Lightrider. */
+    this.lrStatistics = undefined;
 
     this.finished = false;
     this.requestMethod = '';
@@ -84,10 +111,11 @@ module.exports = class NetworkRequest {
     this.failed = false;
     this.localizedFailDescription = '';
 
-    this.initiator = /** @type {LH.Crdp.Network.Initiator} */ ({type: 'other'});
+    /** @type {LH.Crdp.Network.Initiator} */
+    this.initiator = {type: 'other'};
     /** @type {LH.Crdp.Network.ResourceTiming|undefined} */
     this.timing = undefined;
-    /** @type {LH.Crdp.Page.ResourceType|undefined} */
+    /** @type {LH.Crdp.Network.ResourceType|undefined} */
     this.resourceType = undefined;
     this.mimeType = '';
     /** @type {LH.Crdp.Network.ResourcePriority} */
@@ -102,6 +130,12 @@ module.exports = class NetworkRequest {
     this.fetchedViaServiceWorker = false;
     /** @type {string|undefined} */
     this.frameId = '';
+    /**
+     * @type {string|undefined}
+     * Only set for child targets (OOPIFs). This is the sessionId of the protocol connection on
+     * which this request was discovered. `undefined` means it came from the root.
+     */
+    this.sessionId = undefined;
     this.isLinkPreload = false;
   }
 
@@ -113,10 +147,10 @@ module.exports = class NetworkRequest {
   }
 
   /**
-   * @param {NetworkRequest} initiator
+   * @param {NetworkRequest} initiatorRequest
    */
-  setInitiatorRequest(initiator) {
-    this.initiatorRequest = initiator;
+  setInitiatorRequest(initiatorRequest) {
+    this.initiatorRequest = initiatorRequest;
   }
 
   /**
@@ -140,7 +174,7 @@ module.exports = class NetworkRequest {
       host: url.hostname,
       securityOrigin: url.origin,
     };
-    this.isSecure = SECURE_SCHEMES.includes(this.parsedURL.scheme);
+    this.isSecure = URL.isSecureScheme(this.parsedURL.scheme);
 
     this.startTime = data.timestamp;
 
@@ -164,6 +198,7 @@ module.exports = class NetworkRequest {
    */
   onResponseReceived(data) {
     this._onResponse(data.response, data.timestamp, data.type);
+    this._updateProtocolForLightrider();
     this.frameId = data.frameId;
   }
 
@@ -191,7 +226,8 @@ module.exports = class NetworkRequest {
     }
 
     this._updateResponseReceivedTimeIfNecessary();
-    this._updateTransferSizeForLightRiderIfNecessary();
+    this._updateTransferSizeForLightrider();
+    this._updateTimingsForLightrider();
   }
 
   /**
@@ -209,6 +245,8 @@ module.exports = class NetworkRequest {
     this.localizedFailDescription = data.errorText;
 
     this._updateResponseReceivedTimeIfNecessary();
+    this._updateTransferSizeForLightrider();
+    this._updateTimingsForLightrider();
   }
 
   /**
@@ -232,6 +270,13 @@ module.exports = class NetworkRequest {
   }
 
   /**
+   * @param {string=} sessionId
+   */
+  setSession(sessionId) {
+    this.sessionId = sessionId;
+  }
+
+  /**
    * @param {LH.Crdp.Network.Response} response
    * @param {number} timestamp
    * @param {LH.Crdp.Network.ResponseReceivedEvent['type']=} resourceType
@@ -248,6 +293,9 @@ module.exports = class NetworkRequest {
 
     this.transferSize = response.encodedDataLength;
     if (typeof response.fromDiskCache === 'boolean') this.fromDiskCache = response.fromDiskCache;
+    if (typeof response.fromPrefetchCache === 'boolean') {
+      this.fromPrefetchCache = response.fromPrefetchCache;
+    }
 
     this.statusCode = response.status;
 
@@ -261,8 +309,6 @@ module.exports = class NetworkRequest {
 
     if (this.fromMemoryCache) this.timing = undefined;
     if (this.timing) this._recomputeTimesWithResourceTiming(this.timing);
-
-    this._updateTransferSizeForLightRiderIfNecessary();
   }
 
   /**
@@ -284,6 +330,8 @@ module.exports = class NetworkRequest {
 
     this.responseReceivedTime = Math.min(this.responseReceivedTime, headersReceivedTime);
     this.responseReceivedTime = Math.max(this.responseReceivedTime, this.startTime);
+    // We're only at responseReceived (_onResponse) at this point.
+    // This endTime may be redefined again after onLoading is done.
     this.endTime = Math.max(this.endTime, this.responseReceivedTime);
   }
 
@@ -297,17 +345,102 @@ module.exports = class NetworkRequest {
 
   /**
    * LR loses transfer size information, but passes it in the 'X-TotalFetchedSize' header.
+   * 'X-TotalFetchedSize' is the canonical transfer size in LR. Nothing should supersede it.
+   *
+   * The total length of the encoded data is spread out among multiple events. The sum of the
+   * values in onResponseReceived and all the onDataReceived events typically equals the value
+   * seen on the onLoadingFinished event. In <1% of cases we see the values differ. As we process
+   * onResponseReceived and onDataReceived we accumulate the total encodedDataLength. When we
+   * process onLoadingFinished, we override the accumulated total. We do this so that if the
+   * request is aborted or fails, we still get a value via the accumulation.
+   *
+   * In Lightrider, due to instrumentation limitations, our values for encodedDataLength are bogus
+   * and not valid. However the resource's true encodedDataLength/transferSize is shared via a
+   * special response header, X-TotalFetchedSize. In this situation, we read this value from
+   * responseReceived, use it for the transferSize and ignore the encodedDataLength values in
+   * both dataReceived and loadingFinished.
    */
-  _updateTransferSizeForLightRiderIfNecessary() {
-    // Bail if we're not in LightRider, this only applies there.
-    if (!global.isLightRider) return;
-    // Bail if we somehow already have transfer size data.
-    if (this.transferSize) return;
+  _updateTransferSizeForLightrider() {
+    // Bail if we aren't in Lightrider.
+    if (!global.isLightrider) return;
 
-    const totalFetchedSize = this.responseHeaders.find(item => item.name === 'X-TotalFetchedSize');
+    const totalFetchedSize = this.responseHeaders.find(item => item.name === HEADER_FETCHED_SIZE);
     // Bail if the header was missing.
     if (!totalFetchedSize) return;
-    this.transferSize = parseFloat(totalFetchedSize.value);
+    const floatValue = parseFloat(totalFetchedSize.value);
+    // Bail if the header cannot be parsed.
+    if (isNaN(floatValue)) return;
+    this.transferSize = floatValue;
+  }
+
+  /**
+   * LR loses protocol information.
+   */
+  _updateProtocolForLightrider() {
+    // Bail if we aren't in Lightrider.
+    if (!global.isLightrider) return;
+
+    if (this.responseHeaders.some(item => item.name === HEADER_PROTOCOL_IS_H2)) {
+      this.protocol = 'h2';
+    }
+  }
+
+  /**
+   * LR gets additional, accurate timing information from its underlying fetch infrastructure.  This
+   * is passed in via X-Headers similar to 'X-TotalFetchedSize'.
+   */
+  _updateTimingsForLightrider() {
+    // Bail if we aren't in Lightrider.
+    if (!global.isLightrider) return;
+
+    // For more info on timing nomenclature: https://www.w3.org/TR/resource-timing-2/#processing-model
+
+    //    StartTime
+    //    | ConnectStart
+    //    | |     SSLStart  SSLEnd
+    //    | |     |         | ConnectEnd
+    //    | |     |         | | SendStart/End   ReceiveHeadersEnd
+    //    | |     |         | | |               |                EndTime
+    //    ▼ ▼     ▼         ▼ ▼ ▼               ▼                ▼
+    //    [ [TCP  [   SSL   ] ] [   Request   ] [   Response   ] ]
+    //    ▲ ▲     ▲         ▲ ▲ ▲             ▲ ▲              ▲ ▲
+    //    | |     '-SSLMs---' | '-requestMs---' '-responseMs---' |
+    //    | '----TCPMs--------'                                  |
+    //    |                                                      |
+    //    '------------------------TotalMs-----------------------'
+
+    const totalHeader = this.responseHeaders.find(item => item.name === HEADER_TOTAL);
+    // Bail if there was no totalTime.
+    if (!totalHeader) return;
+
+    const totalMs = parseInt(totalHeader.value);
+    const TCPMsHeader = this.responseHeaders.find(item => item.name === HEADER_TCP);
+    const SSLMsHeader = this.responseHeaders.find(item => item.name === HEADER_SSL);
+    const requestMsHeader = this.responseHeaders.find(item => item.name === HEADER_REQ);
+    const responseMsHeader = this.responseHeaders.find(item => item.name === HEADER_RES);
+
+    // Make sure all times are initialized and are non-negative.
+    const TCPMs = TCPMsHeader ? Math.max(0, parseInt(TCPMsHeader.value)) : 0;
+    const SSLMs = SSLMsHeader ? Math.max(0, parseInt(SSLMsHeader.value)) : 0;
+    const requestMs = requestMsHeader ? Math.max(0, parseInt(requestMsHeader.value)) : 0;
+    const responseMs = responseMsHeader ? Math.max(0, parseInt(responseMsHeader.value)) : 0;
+
+    // Bail if the timings don't add up.
+    if (TCPMs + requestMs + responseMs !== totalMs) {
+      return;
+    }
+
+    // Bail if SSL time is > TCP time.
+    if (SSLMs > TCPMs) {
+      return;
+    }
+
+    this.lrStatistics = {
+      endTimeDeltaMs: (this.endTime - (this.startTime + (totalMs / 1000))) * 1000,
+      TCPMs: TCPMs,
+      requestMs: requestMs,
+      responseMs: responseMs,
+    };
   }
 
   /**
@@ -340,4 +473,36 @@ module.exports = class NetworkRequest {
   static get TYPES() {
     return RESOURCE_TYPES;
   }
-};
+
+  /**
+   * @param {NetworkRequest} record
+   * @return {boolean}
+   */
+  static isNonNetworkRequest(record) {
+    // The 'protocol' field in devtools a string more like a `scheme`
+    return URL.isNonNetworkProtocol(record.protocol);
+  }
+
+  /**
+   * Technically there's not alignment on URLs that create "secure connections" vs "secure contexts"
+   * https://github.com/GoogleChrome/lighthouse/pull/11766#discussion_r582340683
+   * But for our purposes, we don't need to worry too much.
+   * @param {NetworkRequest} record
+   * @return {boolean}
+   */
+  static isSecureRequest(record) {
+    return URL.isSecureScheme(record.parsedURL.scheme) ||
+        URL.isSecureScheme(record.protocol) ||
+        URL.isLikeLocalhost(record.parsedURL.host);
+  }
+}
+
+NetworkRequest.HEADER_TCP = HEADER_TCP;
+NetworkRequest.HEADER_SSL = HEADER_SSL;
+NetworkRequest.HEADER_REQ = HEADER_REQ;
+NetworkRequest.HEADER_RES = HEADER_RES;
+NetworkRequest.HEADER_TOTAL = HEADER_TOTAL;
+NetworkRequest.HEADER_FETCHED_SIZE = HEADER_FETCHED_SIZE;
+NetworkRequest.HEADER_PROTOCOL_IS_H2 = HEADER_PROTOCOL_IS_H2;
+
+module.exports = NetworkRequest;

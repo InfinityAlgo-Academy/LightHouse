@@ -2,22 +2,24 @@
 
 _Some incomplete notes_
 
-![Lighthouse Architecture](https://raw.githubusercontent.com/GoogleChrome/lighthouse/master/assets/architecture.jpg)
+![Lighthouse Architecture](https://raw.githubusercontent.com/GoogleChrome/lighthouse/master/assets/architecture.png)
 
 ## Components & Terminology
 
 * **Driver** - Interfaces with [Chrome Debugging Protocol](https://developer.chrome.com/devtools/docs/debugger-protocol)  ([API viewer](https://chromedevtools.github.io/debugger-protocol-viewer/))
-* **Gatherers** - Uses Driver to collect information about the page. Minimal post-processing.
-  * **Artifacts** - output of a gatherer
-* **Audit** - Tests for a single feature/optimization/metric. Using the Artifacts as input, an audit evaluates a test and resolves to a numeric score. See [Understanding Results](./understanding-results.md) for details of the LHR (Lighthouse Result object).
-  * **Computed Artifacts** - Generated on-demand from artifacts, these add additional meaning, and are often shared amongst multiple audits.
+* **Gatherers** - Uses Driver to collect information about the page. Minimal post-processing.  Run Lighthouse with `--gather-mode` to see the 3 primary outputs from gathering:
+  1. `artifacts.json`: The output from all [gatherers](../lighthouse-core/gather/gatherers).
+  2. `defaultPass.trace.json`: Most performance characteristics come from here. You can view it in the DevTools Peformance panel.
+  3. `defaultPass.devtoolslog.json`: A log of all the [DevTools Protocol](https://chromedevtools.github.io/devtools-protocol/) events. Primary signal about network requests and page state.
+* **Audit** - The [audits](../lighthouse-core/audits) are tests for a single feature/optimization/metric. Using the Artifacts as input, an audit evaluates a test and resolves to a numeric score. See [Understanding Results](./understanding-results.md) for details of the LHR (Lighthouse Result object).
+  * **Computed Artifacts** - [Generated](../lighthouse-core/computed) on-demand from artifacts, these add additional meaning, and are often shared amongst multiple audits.
 * **Report** - The report UI, created client-side from the LHR. See [HTML Report Generation Overview](../lighthouse-core/report/html/readme.md) for details.
 
 ### Audit/Report terminology
 * **Category** - Roll-up collection of audits and audit groups into a user-facing section of the report (eg. `Best Practices`). Applies weighting and overall scoring to the section. Examples: PWA, Accessibility, Best Practices.
 * **Audit title** - Short user-visible title for the successful audit. eg. “All image elements have `[alt]` attributes.”
-* **Audit failureTitle** - Short user-visible title for a failing  audit. eg. “Some image elements do not have `[alt]` attributes.”
-* **Audit description** - Explanation of why the user should care about the audit. Not necessarily how to fix it, unless there is no external link that explains it. ([See description guidelines](CONTRIBUTING.md#description-guidelines)). eg. “Informative elements should aim for short, descriptive alternate text. Decorative elements can be ignored with an empty alt attribute. [Learn more].”
+* **Audit failureTitle** - Short user-visible title for a failing audit. eg. “Some image elements do not have `[alt]` attributes.”
+* **Audit description** - Explanation of why the user should care about the audit. Not necessarily how to fix it, unless there is no external link that explains it. ([See description guidelines](../CONTRIBUTING.md#audit-description-guidelines)). eg. “Informative elements should aim for short, descriptive alternate text. Decorative elements can be ignored with an empty alt attribute. [Learn more].”
 
 ## Protocol
 
@@ -39,7 +41,7 @@ driver.sendCommand('Security.enable');
 
 ## Understanding a Trace
 
-`lighthouse-core/computed/trace-of-tab.js` and `lighthouse-core/lib/traces/tracing-processor.js` provide the core transformation of a trace into more meaningful objects. Each raw trace event has a monotonically increasing timestamp in microseconds, a thread ID, a process ID, a duration in microseconds (potentially), and other applicable metadata properties such as the event type, the task name, the frame, etc. [Learn more about trace events](https://docs.google.com/document/d/1CvAClvFfyA5R-PhYUmn5OOQtYMH4h6I0nSsKchNAySU/preview).
+`lighthouse-core/lib/tracehouse/trace-processor.js` provides the core transformation of a trace into more meaningful objects. Each raw trace event has a monotonically increasing timestamp in microseconds, a thread ID, a process ID, a duration in microseconds (potentially), and other applicable metadata properties such as the event type, the task name, the frame, etc. [Learn more about trace events](https://docs.google.com/document/d/1CvAClvFfyA5R-PhYUmn5OOQtYMH4h6I0nSsKchNAySU/preview).
 
 ### Example Trace Event
 ```js
@@ -64,13 +66,13 @@ Trace-of-tab identifies trace events for key moments (navigation start, first me
   processEvents: [/* all trace events in the main process */],
   mainThreadEvents: [/* all trace events on the main thread */],
   timings: {
-    navigationStart: 0,
-    firstPaint: 150, // firstPaint time in ms after nav start
+    timeOrigin: 0, // timeOrigin is always 0 ms
+    firstPaint: 150, // firstPaint time in ms after time origin
     /* other key moments */
-    traceEnd: 16420, // traceEnd time in ms after nav start
+    traceEnd: 16420, // traceEnd time in ms after time origin
   },
   timestamps: {
-    navigationStart: 623000000, // navigationStart timestamp in microseconds
+    timeOrigin: 623000000, // timeOrigin timestamp in microseconds, marks the start of the navigation of interest
     firstPaint: 623150000, // firstPaint timestamp in microseconds
     /* other key moments */
     traceEnd: 639420000, // traceEnd timestamp in microseconds
@@ -84,12 +86,16 @@ Tracing processor takes the output of trace of tab and identifies the top-level 
 
 ## Audits
 
-The return value of each audit [takes this shape](https://github.com/GoogleChrome/lighthouse/blob/09cc741c54bfdf6f6851dae1c749dd46a52d6a1f/typings/audit.d.ts#L133-L159).
+The return value of each audit [takes this shape](https://github.com/GoogleChrome/lighthouse/blob/623b789497f6c87f85d366b4038deae5dc701c90/types/audit.d.ts#L69-L87).
 
 The `details` object is parsed in report-renderer.js. View other audits for guidance on how to structure `details`.
 
 ## Lighthouse-core internal module dependencies
 
-![image](https://user-images.githubusercontent.com/39191/42241426-609d15f6-7ebf-11e8-9e40-411d9ede43e6.png)
+![image](https://user-images.githubusercontent.com/39191/86166329-786fb100-bac9-11ea-919a-d6c3b156d3a4.png)
 
-(Generated July 3, 2018 via `madge lighthouse-core/index.js --image arch.png --layout dot --backgroundColor "#fafafa" --nodeColor "#4d4afc" --noDependencyColor "#48ad00"`)
+(Generated June 30, 2020 via `madge lighthouse-core/index.js --image arch.png --layout dot --exclude="(locales\/)|(stack-packs\/packs)"`)
+
+## Lantern
+
+[Lantern](./lantern.md) is how Lighthouse simulates network and cpu throttling.

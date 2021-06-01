@@ -1,14 +1,21 @@
 /**
- * @license Copyright 2018 Google Inc. All Rights Reserved.
+ * @license Copyright 2018 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
 
-const processForProto = require('../../lib/proto-preprocessor').processForProto;
+const {processForProto} = require('../../lib/proto-preprocessor.js');
+const sampleJson = require('../results/sample_v2.json');
 
 /* eslint-env jest */
 describe('processing for proto', () => {
+  it('doesn\'t modify the input object', () => {
+    const input = JSON.parse(JSON.stringify(sampleJson));
+    processForProto(input);
+    expect(input).toEqual(sampleJson);
+  });
+
   it('keeps only necessary configSettings', () => {
     const input = {
       'configSettings': {
@@ -27,8 +34,7 @@ describe('processing for proto', () => {
         },
         'gatherMode': false,
         'disableStorageReset': false,
-        'disableDeviceEmulation': false,
-        'emulatedFormFactor': 'mobile',
+        'formFactor': 'mobile',
         'locale': 'en-US',
         'blockedUrlPatterns': null,
         'additionalTraceCategories': null,
@@ -40,14 +46,14 @@ describe('processing for proto', () => {
     };
     const expectation = {
       'configSettings': {
-        'emulatedFormFactor': 'mobile',
+        'formFactor': 'mobile',
         'locale': 'en-US',
         'onlyCategories': null,
       },
     };
-    const output = processForProto(JSON.stringify(input));
+    const output = processForProto(input);
 
-    expect(JSON.parse(output)).toMatchObject(expectation);
+    expect(output).toMatchObject(expectation);
   });
 
   it('cleans up default runtimeErrors', () => {
@@ -57,9 +63,9 @@ describe('processing for proto', () => {
       },
     };
 
-    const output = processForProto(JSON.stringify(input));
+    const output = processForProto(input);
 
-    expect(JSON.parse(output)).not.toHaveProperty('runtimeError');
+    expect(output).not.toHaveProperty('runtimeError');
   });
 
   it('non-default runtimeErrors are untouched', () => {
@@ -69,9 +75,9 @@ describe('processing for proto', () => {
       },
     };
 
-    const output = processForProto(JSON.stringify(input));
+    const output = processForProto(input);
 
-    expect(JSON.parse(output)).toMatchObject(input);
+    expect(output).toMatchObject(input);
   });
 
   it('cleans up audits', () => {
@@ -79,7 +85,7 @@ describe('processing for proto', () => {
       'audits': {
         'critical-request-chains': {
           'scoreDisplayMode': 'not-applicable',
-          'rawValue': 14.3,
+          'numericValue': 14.3,
           'displayValue': ['hello %d', 123],
         },
       },
@@ -92,9 +98,9 @@ describe('processing for proto', () => {
         },
       },
     };
-    const output = processForProto(JSON.stringify(input));
+    const output = processForProto(input);
 
-    expect(JSON.parse(output)).toMatchObject(expectation);
+    expect(output).toMatchObject(expectation);
   });
 
 
@@ -109,9 +115,9 @@ describe('processing for proto', () => {
     const expectation = {
       'i18n': {},
     };
-    const output = processForProto(JSON.stringify(input));
+    const output = processForProto(input);
 
-    expect(JSON.parse(output)).toMatchObject(expectation);
+    expect(output).toMatchObject(expectation);
   });
 
   it('removes empty strings', () => {
@@ -152,8 +158,8 @@ describe('processing for proto', () => {
         ],
       },
     };
-    const output = processForProto(JSON.stringify(input));
+    const output = processForProto(input);
 
-    expect(JSON.parse(output)).toMatchObject(expectation);
+    expect(output).toMatchObject(expectation);
   });
 });

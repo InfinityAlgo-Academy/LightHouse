@@ -1,68 +1,113 @@
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
 
 /* eslint-env jest */
-const assert = require('assert');
+const assert = require('assert').strict;
 const path = require('path');
 const fs = require('fs');
 
-const run = require('../../run');
-const parseChromeFlags = require('../../run').parseChromeFlags;
-const fastConfig = {
+const run = require('../../run.js');
+const parseChromeFlags = require('../../run.js').parseChromeFlags;
+/** @type {LH.Config.Json} */
+const testConfig = {
   'extends': 'lighthouse:default',
   'settings': {
-    'onlyAudits': ['viewport'],
+    'throttlingMethod': 'devtools',
   },
 };
 
-const getFlags = require('../../cli-flags').getFlags;
+// Map plugin name to fixture since not actually installed in node_modules/.
+jest.mock('lighthouse-plugin-simple', () => {
+  // eslint-disable-next-line max-len
+  return require('../../../lighthouse-core/test/fixtures/config-plugins/lighthouse-plugin-simple/plugin-simple.js');
+}, {virtual: true});
+
+const getFlags = require('../../cli-flags.js').getFlags;
 
 describe('CLI run', function() {
-  it('runLighthouse completes a LH round trip', () => {
-    const url = 'chrome://version';
+  describe('runLighthouse runs Lighthouse as a node module', () => {
+    /** @type {LH.RunnerResult} */
+    let passedResults;
     const filename = path.join(process.cwd(), 'run.ts.results.json');
-    const timeoutFlag = `--max-wait-for-load=${9000}`;
-    const flags = getFlags(`--output=json --output-path=${filename} ${timeoutFlag} ${url}`);
-    return run.runLighthouse(url, flags, fastConfig).then(passedResults => {
-      if (!passedResults) {
-        assert.fail('no results');
-        return;
+    /** @type {LH.Result} */
+    let fileResults;
+
+    beforeAll(async () => {
+      const url = 'http://localhost:10200/dobetterweb/dbw_tester.html';
+      // eslint-disable-next-line max-len
+      const samplev2ArtifactsPath = __dirname + '/../../../lighthouse-core/test/results/artifacts/';
+
+      // eslint-disable-next-line max-len
+      const flags = getFlags([
+        '--output=json',
+        `--output-path=${filename}`,
+        '--plugins=lighthouse-plugin-simple',
+        // Use sample artifacts to avoid gathering during a unit test.
+        `--audit-mode=${samplev2ArtifactsPath}`,
+        url,
+      ].join(' '));
+
+      const rawResult = await run.runLighthouse(url, flags, testConfig);
+
+      if (!rawResult) {
+        return assert.fail('no results');
       }
+      passedResults = rawResult;
 
-      const {lhr} = passedResults;
       assert.ok(fs.existsSync(filename));
-      /** @type {LH.Result} */
-      const results = JSON.parse(fs.readFileSync(filename, 'utf-8'));
-      assert.equal(results.audits.viewport.rawValue, false);
+      fileResults = JSON.parse(fs.readFileSync(filename, 'utf-8'));
+    }, 60 * 1000);
 
-      // passed results match saved results
-      assert.strictEqual(results.fetchTime, lhr.fetchTime);
-      assert.strictEqual(results.requestedUrl, lhr.requestedUrl);
-      assert.strictEqual(results.finalUrl, lhr.finalUrl);
-      assert.strictEqual(results.audits.viewport.rawValue, lhr.audits.viewport.rawValue);
-      assert.strictEqual(
-          Object.keys(results.audits).length,
-          Object.keys(lhr.audits).length);
-      assert.deepStrictEqual(results.timing, lhr.timing);
-      assert.ok(results.timing.total !== 0);
-
-      assert.equal(results.configSettings.channel, 'cli');
-
+    afterAll(() => {
       fs.unlinkSync(filename);
     });
-  }, 20 * 1000);
+
+    it('returns results that match the saved results', () => {
+      const {lhr} = passedResults;
+      assert.equal(fileResults.audits.viewport.score, 1);
+
+      // passed results match saved results
+      assert.strictEqual(fileResults.fetchTime, lhr.fetchTime);
+      assert.strictEqual(fileResults.requestedUrl, lhr.requestedUrl);
+      assert.strictEqual(fileResults.finalUrl, lhr.finalUrl);
+      assert.strictEqual(fileResults.audits.viewport.score, lhr.audits.viewport.score);
+      assert.strictEqual(
+          Object.keys(fileResults.audits).length,
+          Object.keys(lhr.audits).length);
+      assert.deepStrictEqual(fileResults.timing, lhr.timing);
+    });
+
+    it('includes timing information', () => {
+      assert.ok(passedResults.lhr.timing.total !== 0);
+    });
+
+    it('correctly sets the channel', () => {
+      assert.equal(passedResults.lhr.configSettings.channel, 'cli');
+    });
+
+    it('merged the plugin into the config', () => {
+      // Audits have been pruned because of onlyAudits, but groups get merged in.
+      const groupNames = Object.keys(passedResults.lhr.categoryGroups || {});
+      assert.ok(groupNames.includes('lighthouse-plugin-simple-new-group'));
+    });
+  });
 });
 
 describe('flag coercing', () => {
   it('should force to array', () => {
-    assert.deepStrictEqual(getFlags(`--only-audits foo chrome://version`).onlyAudits, ['foo']);
+    assert.deepStrictEqual(
+      getFlags('https://www.example.com --only-audits foo').onlyAudits, ['foo']);
+  });
+
+  it('should allow csv', () => {
+    assert.deepStrictEqual(
+      getFlags('https://www.example.com --output html,json').output, ['html', 'json']);
   });
 });
-
 
 describe('saveResults', () => {
   it('will quit early if we\'re in gather mode', async () => {
@@ -106,6 +151,41 @@ describe('Parsing --chrome-flags', () => {
     assert.deepStrictEqual(
       parseChromeFlags('--spaces="1 2 3 4" --debug=false --verbose --more-spaces="9 9 9"'),
       ['--spaces=1 2 3 4', '--debug=false', '--verbose', '--more-spaces=9 9 9']
+    );
+  });
+
+  it('handles muliple --chrome-flags', () => {
+    assert.deepStrictEqual(
+      parseChromeFlags(['--no-sandbox', '--log-level=0']),
+      ['--no-sandbox', '--log-level=0']
+    );
+  });
+
+  it('removes wrapping single quotes', () => {
+    assert.deepStrictEqual(
+      parseChromeFlags('\'--no-sandbox --log-level=0\''),
+      ['--no-sandbox', '--log-level=0']
+    );
+  });
+
+  it('removes wrapping double quotes', () => {
+    assert.deepStrictEqual(
+      parseChromeFlags('"--no-sandbox --log-level=0"'),
+      ['--no-sandbox', '--log-level=0']
+    );
+  });
+
+  it('removes wrapping single quotes from arrays', () => {
+    assert.deepStrictEqual(
+      parseChromeFlags(['\'--no-sandbox --log-level=0\'', '--headless']),
+      ['--no-sandbox', '--log-level=0', '--headless']
+    );
+  });
+
+  it('removes wrapping double quotes from arrays', () => {
+    assert.deepStrictEqual(
+      parseChromeFlags(['"--no-sandbox --log-level=0"', '--headless']),
+      ['--no-sandbox', '--log-level=0', '--headless']
     );
   });
 });

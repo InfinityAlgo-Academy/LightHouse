@@ -1,119 +1,164 @@
 ### Release guide for maintainers
 
+This doc is only relevant to core member.
+
 ## Release Policy
 
 ### Cadence
 
-We ship once a month, on the Thursday before the 1st. While not necessary, followup minor/patch releases may be done if warranted. The planned ship dates are added to the internal Lighthouse calendar.
+We aim to release every 3 weeks. Our schedule is set as follows: Two days before the [expected Chromium branch point](https://www.chromium.org/developers/calendar) (which is every six weeks) and again exactly 3 weeks after that day. These are Tuesdays.
+
+For example, following this schedule, we will attempt a release on these dates:
+
+* _Sep 29 2020_ (M87)
+* Oct 20 2020
+* _Nov 10 2020_ (M88)
+* Dec 1 2020
+* ...
+
+Italicized dates are two days before the expected Chromium branch point.
+
+The planned ship dates are added to the internal Lighthouse calendar.
+
+If a release is necessary outside these scheduled dates, we may choose to skip the next scheduled release.
+
+In general, the above release dates are when new versions will be available in npm. Within 2 weeks, it will be reflected in LR / PSI. Some 10 weeks later, it will be available in Stable Chrome.
 
 ### Release manager
 
 Release manager is appointed, according to the list below. However, if the appointed manager is absent, the next engineer in line in the list would own it.
 
-    bckenny, paulirish, patrickhulce
+    @cjamcl, @adamraine
 
 Release manager follows the below _Release Process_.
 
 ### Release publicity
 
+Note: actively undergoing changes by @exterkamp and @egsweeny.
+
 1. Release mgr copies changelog to a new [Releases](https://github.com/GoogleChrome/lighthouse/releases). Tags and ships it.
-   * Include a line of `We expect this release to ship in the DevTools of Chrome XX`.
 1. Release mgr tells the _LH public_ Hangout chat about the new version.
 1. V & Kayce write and publish the [/updates](https://developers.google.com/web/updates/) blog post
-1. Paul writes the tweet (linking the /updates post) and sends it on [@____lighthouse](https://twitter.com/____lighthouse).
-1. Paul prepares a roll for DevTools frontend
+1. Addy writes the tweet (linking the /updates post) and sends it on [@____lighthouse](https://twitter.com/____lighthouse).
 
 ### Versioning
 
-We follow [semver](https://semver.org/) versioning semantics (`vMajor.Minor.Patch`), to align with the greater Node community. Generally, this means our bi-weekly releases will bump a minor. Though we will release a new patch version if high-priority fixes are required before the next schedule release. Additionally, if a schedule release contains no new features, then we'll only bump the patch version.
-
+We follow [semver](https://semver.org/) versioning semantics (`vMajor.Minor.Patch`). Breaking changes will bump the major version. New features or bug fixes will bump the minor version. If a release contains no new features, then we'll only bump the patch version.
 
 ## Release Process
 
+### On the scheduled release date
+
+Before starting, you should announce to the LH eng channel that you are releasing,
+and that no new PRs should be merged until you are done.
+
 ```sh
-# use a custom lighthouse-pristine checkout to make sure your dev files aren't involved.
+# Run the tests.
+bash ./lighthouse-core/scripts/release/test.sh
+```
 
-# * Install the latest.*
-yarn
+Confirm DevTools integration will work:
+```sh
+# Change into the newly-created pristine folder.
+cd ../lighthouse-pristine
 
-# * Bump it *
-yarn version --no-git-tag-version
-# manually bump extension v in clients/extension/manifest.json
-yarn update:sample-json
+yarn test-devtools
 
-# * Build it. This also builds the cli, extension, and viewer. *
-yarn build-all
+# Do some manual testing on a number of sites.
+yarn open-devtools
 
-# * Test err'thing *
-echo "Test the CLI."
-yarn start "https://example.com" --view
-yarn smoke
+# Done with DevTools for now, will open a CL later.
 
-echo "Test the extension"
-# ...
+# Leave pristine folder.
+cd ../lighthouse
+```
 
-echo "Test a fresh local install"
-# (starting from lighthouse-pristine root...)
-npm pack
-cd ..; rm -rf tmp; mkdir tmp; cd tmp
-npm init -y
-npm install ../lighthouse-pristine/lighthouse-*.tgz
-npm explore lighthouse -- npm run smoke
-npm explore lighthouse -- npm run chrome # try the manual launcher
-npm explore lighthouse -- npm run fast -- http://example.com
-cd ..; rm -rf ./tmp;
+### Lightrider
 
-cd ../lighthouse-pristine; command rm -f lighthouse-*.tgz
+Confirm Lightrider integration will work.
 
-echo "Test the lighthouse-viewer build"
-# Manual test for now:
-# Start a server in dist/viewer/ and open the page in a tab. You should see the viewer.
-# Drop in a results.json or paste an existing gist url (e.g. https://gist.github.com/ebidel/b9fd478b5f40bf5fab174439dc18f83a).
-# Check for errors!
-cd dist/viewer ; python -m SimpleHTTPServer
-# go to http://localhost:8000/
+1. See the internal README for updating Lighthouse: go/lightrider-doc
+1. Roll to the canary feed in a workspace
+1. Run the tests
+1. Update/fix any failing tests
+1. All good: Hold on submitting a CL until after cutting a release
 
-# * Update changelog *
-git fetch --tags
-yarn changelog
-# add new contributors, e.g. from git shortlog -s -e -n v2.3.0..HEAD
-#    and https://github.com/GoogleChrome/lighthouse/graphs/contributors
-echo "Edit the changelog for readability and brevity"
+### Open the PR
 
-# * Put up the PR *
-echo "Branch and commit the version bump."
-git checkout -b bumpv240
-git commit -am "2.4.0"
-echo "Generate a PR and get it merged."
+Now that the integrations are confirmed to work, go back to `lighthouse` folder.
 
-echo "Once it's merged, pull master and tag the (squashed) commit"
-git tag -a v2.4.0 -m "v2.4.0"
-git push --tags
+```sh
+# Prepare the commit, replace x.x.x with the desired version
+bash ./lighthouse-core/scripts/release/prepare-commit.sh x.x.x
 
+# Rebaseline DevTools tests one more time (only version number should change).
+yarn build-devtools && yarn update:test-devtools
+```
 
-# * Deploy-time *
-echo "Rebuild extension and viewer to get the latest, tagged master commit"
-yarn build-all;
+1. Edit changelog.md before opening the PR
+1. Open the PR with title `vx.x.x`
+1. Hold until approved and merged
 
-# zip the extension files
-node build/build-extension.js package; cd dist/extension-package/
-echo "Go here: https://chrome.google.com/webstore/developer/edit/blipmdconlkpinefehnmjammfjpmpbjk "
-echo "Upload the package zip to CWS dev dashboard"
+### Cut the release
+
+```sh
+# One last test (this script uses origin/master, so we also get the commit with the new changelog - that commit should be HEAD).
+bash ./lighthouse-core/scripts/release/test.sh
+# Package everything for publishing
+bash ./lighthouse-core/scripts/release/prepare-package.sh
+
+# Make sure you're in the Lighthouse pristine repo we just tested.
+cd ../lighthouse-pristine
+
+# Last chance to abort.
+git status
+git log
+
+# Publish tag.
+git push --follow-tags
+
+# Publish to npm.
+npm publish
+
+# Publish viewer and treemap.
+yarn deploy-viewer
+yarn deploy-treemap
+```
+
+### Extensions
+
+If the extensions changed, publish them.
+
+```sh
+# Publish the extensions (if it changed).
+open https://chrome.google.com/webstore/developer/edit/blipmdconlkpinefehnmjammfjpmpbjk
+cd dist/extension-package/
+echo "Upload the package zip to CWS dev dashboard..."
 # Be in lighthouse-extension-owners group
 # Open <https://chrome.google.com/webstore/developer/dashboard>
 # Click _Edit_ on lighthouse
 # _Upload Updated Package_
-# Select `lighthouse-4.X.X.zip`
+# Select `lighthouse-X.X.X.X.zip`
 # _Publish_ at the bottom
 
-echo "Verify the npm package won't include unncessary files"
-npm pack --dry-run
-npx pkgfiles
-
-echo "ship it"
-npm publish
-yarn deploy-viewer
+# For Firefox: https://addons.mozilla.org/en-US/developers/addon/google-lighthouse/versions/submit/
 
 # * Tell the world!!! *
 echo "Complete the _Release publicity_ tasks documented above"
+
+# Roll the tagged commit to Chromium and update the CL you made. Do not land, see next section.
+# Roll the tagged commit to LR and land the CL.
+```
+
+### Chromium CL
+
+```sh
+git checkout vx.x.x # Checkout the specific version.
+yarn build-devtools
+yarn devtools ~/src/devtools/devtools-frontend
+
+cd ~/src/devtools/devtools-frontend
+git new-branch rls
+git commit -am "[Lighthouse] Roll Lighthouse x.x.x"
+git cl upload -b 772558
 ```

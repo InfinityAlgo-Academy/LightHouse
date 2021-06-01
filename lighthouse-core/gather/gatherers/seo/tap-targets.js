@@ -1,15 +1,15 @@
 /**
- * @license Copyright 2018 Google Inc. All Rights Reserved.
+ * @license Copyright 2018 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
 
-/* global getComputedStyle, getElementsInDocument, Node, getNodePath, getNodeSelector */
+/* global document, window, getComputedStyle, getElementsInDocument, Node, getNodeDetails, getRectCenterPoint */
 
-const Gatherer = require('../gatherer');
+const FRGatherer = require('../../../fraggle-rock/gather/base-gatherer.js');
 const pageFunctions = require('../../../lib/page-functions.js');
-const {rectContainsString, rectContains} = require('../../../lib/rect-helpers');
+const RectHelpers = require('../../../lib/rect-helpers.js');
 
 const TARGET_SELECTORS = [
   'button',
@@ -32,103 +32,20 @@ const TARGET_SELECTORS = [
 const tapTargetsSelector = TARGET_SELECTORS.join(',');
 
 /**
- * @param {Element} element
- * @returns {boolean}
+ * @param {HTMLElement} element
+ * @return {boolean}
  */
-/* istanbul ignore next */
+/* c8 ignore start */
 function elementIsVisible(element) {
-  const {overflowX, overflowY, display, visibility} = getComputedStyle(element);
-
-  if (
-    display === 'none' ||
-    (visibility === 'collapse' && ['TR', 'TBODY', 'COL', 'COLGROUP'].includes(element.tagName))
-  ) {
-    // Element not displayed
-    return false;
-  }
-
-  // only for block and inline-block, since clientWidth/Height are always 0 for inline elements
-  if (display === 'block' || display === 'inline-block') {
-    // if height/width is 0 and no overflow in that direction then
-    // there's no content that the user can see and tap on
-    if ((element.clientWidth === 0 && overflowX === 'hidden') ||
-        (element.clientHeight === 0 && overflowY === 'hidden')) {
-      return false;
-    }
-  }
-
-  const parent = element.parentElement;
-  if (parent && parent.tagName !== 'BODY') {
-    // if a parent is invisible then the current element is also invisible
-    return elementIsVisible(parent);
-  }
-
-  return true;
+  return !!(element.offsetWidth || element.offsetHeight || element.getClientRects().length);
 }
-
-/**
- * @param {LH.Artifacts.Rect[]} clientRects
- */
-/* istanbul ignore next */
-function allClientRectsEmpty(clientRects) {
-  return clientRects.every(cr => cr.width === 0 && cr.height === 0);
-}
+/* c8 ignore stop */
 
 /**
  * @param {Element} element
+ * @return {LH.Artifacts.Rect[]}
  */
-/* istanbul ignore next */
-function getVisibleClientRects(element) {
-  if (!elementIsVisible(element)) {
-    return [];
-  }
-
-  let clientRects = getClientRects(element);
-
-  if (allClientRectsEmpty(clientRects)) {
-    return [];
-  }
-
-  // Treating overflowing content in scroll containers as invisible could mean that
-  // most of a given page is deemed invisible. But:
-  // - tap targets audit doesn't consider different containers/layers
-  // - having most content in an explicit scroll container is rare
-  // - treating them as hidden only generates false passes, which is better than false failures
-  clientRects = filterClientRectsWithinAncestorsVisibleScrollArea(element, clientRects);
-
-  return clientRects;
-}
-
-/**
- *
- * @param {Element} element
- * @param {LH.Artifacts.Rect[]} clientRects
- * @returns {LH.Artifacts.Rect[]}
- */
-/* istanbul ignore next */
-function filterClientRectsWithinAncestorsVisibleScrollArea(element, clientRects) {
-  const parent = element.parentElement;
-  if (!parent) {
-    return clientRects;
-  }
-  if (getComputedStyle(parent).overflowY !== 'visible') {
-    const parentBCR = parent.getBoundingClientRect();
-    clientRects = clientRects.filter(cr => rectContains(parentBCR, cr));
-  }
-  if (parent.parentElement && parent.parentElement.tagName !== 'BODY') {
-    return filterClientRectsWithinAncestorsVisibleScrollArea(
-      parent,
-      clientRects
-    );
-  }
-  return clientRects;
-}
-
-/**
- * @param {Element} element
- * @returns {LH.Artifacts.Rect[]}
- */
-/* istanbul ignore next */
+/* c8 ignore start */
 function getClientRects(element) {
   const clientRects = Array.from(
     element.getClientRects()
@@ -145,26 +62,29 @@ function getClientRects(element) {
 
   return clientRects;
 }
+/* c8 ignore stop */
 
 /**
  * @param {Element} element
- * @returns {boolean}
+ * @param {string} tapTargetsSelector
+ * @return {boolean}
  */
-/* istanbul ignore next */
-function elementHasAncestorTapTarget(element) {
+/* c8 ignore start */
+function elementHasAncestorTapTarget(element, tapTargetsSelector) {
   if (!element.parentElement) {
     return false;
   }
   if (element.parentElement.matches(tapTargetsSelector)) {
     return true;
   }
-  return elementHasAncestorTapTarget(element.parentElement);
+  return elementHasAncestorTapTarget(element.parentElement, tapTargetsSelector);
 }
+/* c8 ignore stop */
 
 /**
  * @param {Element} element
  */
-/* istanbul ignore next */
+/* c8 ignore start */
 function hasTextNodeSiblingsFormingTextBlock(element) {
   if (!element.parentElement) {
     return false;
@@ -196,15 +116,16 @@ function hasTextNodeSiblingsFormingTextBlock(element) {
 
   return false;
 }
+/* c8 ignore stop */
 
 /**
  * Check if element is in a block of text, such as paragraph with a bunch of links in it.
  * Makes a reasonable guess, but for example gets it wrong if the element is surrounded by other
  * HTML elements instead of direct text nodes.
  * @param {Element} element
- * @returns {boolean}
+ * @return {boolean}
  */
-/* istanbul ignore next */
+/* c8 ignore start */
 function elementIsInTextBlock(element) {
   const {display} = getComputedStyle(element);
   if (display !== 'inline' && display !== 'inline-block') {
@@ -219,51 +140,81 @@ function elementIsInTextBlock(element) {
     return false;
   }
 }
+/* c8 ignore stop */
 
 /**
- * @param {Element} element
- * @returns {boolean}
+ * @param {Element} el
+ * @param {{x: number, y: number}} elCenterPoint
  */
-/* istanbul ignore next */
-function elementIsPositionFixedOrAbsolute(element) {
-  const {position} = getComputedStyle(element);
-  if (position === 'fixed' || position === 'absolute') {
-    return true;
+/* c8 ignore start */
+function elementCenterIsAtZAxisTop(el, elCenterPoint) {
+  const viewportHeight = window.innerHeight;
+  const targetScrollY = Math.floor(elCenterPoint.y / viewportHeight) * viewportHeight;
+  if (window.scrollY !== targetScrollY) {
+    window.scrollTo(0, targetScrollY);
   }
-  if (element.parentElement) {
-    return elementIsPositionFixedOrAbsolute(element.parentElement);
-  }
-  return false;
+
+  const topEl = document.elementFromPoint(
+    elCenterPoint.x,
+    elCenterPoint.y - window.scrollY
+  );
+
+  return topEl === el || el.contains(topEl);
 }
+/* c8 ignore stop */
 
 /**
- * @param {string} str
- * @param {number} maxLength
- * @returns {string}
+ * Finds all position sticky/absolute elements on the page and adds a class
+ * that disables pointer events on them.
+ * @return {() => void} - undo function to re-enable pointer events
  */
-/* istanbul ignore next */
-function truncate(str, maxLength) {
-  if (str.length <= maxLength) {
-    return str;
-  }
-  return str.slice(0, maxLength - 1) + '…';
+/* c8 ignore start */
+function disableFixedAndStickyElementPointerEvents() {
+  const className = 'lighthouse-disable-pointer-events';
+  const styleTag = document.createElement('style');
+  styleTag.textContent = `.${className} { pointer-events: none !important }`;
+  document.body.appendChild(styleTag);
+
+  document.querySelectorAll('*').forEach(el => {
+    const position = getComputedStyle(el).position;
+    if (position === 'fixed' || position === 'sticky') {
+      el.classList.add(className);
+    }
+  });
+
+  return function undo() {
+    Array.from(document.getElementsByClassName(className)).forEach(el => {
+      el.classList.remove(className);
+    });
+    styleTag.remove();
+  };
 }
+/* c8 ignore stop */
 
 /**
- * @returns {LH.Artifacts.TapTarget[]}
+ * @param {string} tapTargetsSelector
+ * @return {LH.Artifacts.TapTarget[]}
  */
-/* istanbul ignore next */
-function gatherTapTargets() {
+/* c8 ignore start */
+function gatherTapTargets(tapTargetsSelector) {
   /** @type {LH.Artifacts.TapTarget[]} */
   const targets = [];
 
-  /** @type {Element[]} */
-  // @ts-ignore - getElementsInDocument put into scope via stringification
+  // Capture element positions relative to the top of the page
+  window.scrollTo(0, 0);
+
+  /** @type {HTMLElement[]} */
+  // @ts-expect-error - getElementsInDocument put into scope via stringification
   const tapTargetElements = getElementsInDocument(tapTargetsSelector);
 
+  /** @type {{
+    tapTargetElement: Element,
+    clientRects: ClientRect[]
+  }[]} */
+  const tapTargetsWithClientRects = [];
   tapTargetElements.forEach(tapTargetElement => {
     // Filter out tap targets that are likely to cause false failures:
-    if (elementHasAncestorTapTarget(tapTargetElement)) {
+    if (elementHasAncestorTapTarget(tapTargetElement, tapTargetsSelector)) {
       // This is usually intentional, either the tap targets trigger the same action
       // or there's a child with a related action (like a delete button for an item)
       return;
@@ -273,62 +224,94 @@ function gatherTapTargets() {
       // in the Web Content Accessibility Guidelines https://www.w3.org/TR/WCAG21/#target-size
       return;
     }
-    if (elementIsPositionFixedOrAbsolute(tapTargetElement)) {
-      // Absolutely positioned elements might not be visible if they have a lower z-index
-      // than other tap targets, but if we don't ignore them we can get false failures.
-      //
-      // TODO: rewrite logic to use elementFromPoint to check if an element is visible
-      // (this should also mean we'd no longer need to check ancestor visible scroll area)
+    if (!elementIsVisible(tapTargetElement)) {
       return;
     }
 
-    const visibleClientRects = getVisibleClientRects(tapTargetElement);
-    if (visibleClientRects.length === 0) {
-      return;
-    }
-
-    targets.push({
-      clientRects: visibleClientRects,
-      snippet: truncate(tapTargetElement.outerHTML, 300),
-      // @ts-ignore - getNodePath put into scope via stringification
-      path: getNodePath(tapTargetElement),
-      // @ts-ignore - getNodeSelector put into scope via stringification
-      selector: getNodeSelector(tapTargetElement),
-      href: /** @type {HTMLAnchorElement} */(tapTargetElement)['href'] || '',
+    tapTargetsWithClientRects.push({
+      tapTargetElement,
+      clientRects: getClientRects(tapTargetElement),
     });
   });
 
+  // Disable pointer events so that tap targets below them don't get
+  // detected as non-tappable (they are tappable, just not while the viewport
+  // is at the current scroll position)
+  const reenableFixedAndStickyElementPointerEvents = disableFixedAndStickyElementPointerEvents();
+
+  /** @type {{
+    tapTargetElement: Element,
+    visibleClientRects: ClientRect[]
+  }[]} */
+  const tapTargetsWithVisibleClientRects = [];
+  // We use separate loop here to get visible client rects because that involves
+  // scrolling around the page for elementCenterIsAtZAxisTop, which would affect the
+  // client rect positions.
+  tapTargetsWithClientRects.forEach(({tapTargetElement, clientRects}) => {
+    // Filter out empty client rects
+    let visibleClientRects = clientRects.filter(cr => cr.width !== 0 && cr.height !== 0);
+
+    // Filter out client rects that are invisible, e.g because they are in a position absolute element
+    // with a lower z-index than the main content.
+    // This will also filter out all position fixed or sticky tap targets elements because we disable pointer
+    // events on them before running this. That's the correct behavior because whether a position fixed/stick
+    // element overlaps with another tap target depends on the scroll position.
+    visibleClientRects = visibleClientRects.filter(rect => {
+      // Just checking the center can cause false failures for large partially hidden tap targets,
+      // but that should be a rare edge case
+      // @ts-expect-error - put into scope via stringification
+      const rectCenterPoint = getRectCenterPoint(rect);
+      return elementCenterIsAtZAxisTop(tapTargetElement, rectCenterPoint);
+    });
+
+    if (visibleClientRects.length > 0) {
+      tapTargetsWithVisibleClientRects.push({
+        tapTargetElement,
+        visibleClientRects,
+      });
+    }
+  });
+
+  for (const {tapTargetElement, visibleClientRects} of tapTargetsWithVisibleClientRects) {
+    targets.push({
+      clientRects: visibleClientRects,
+      href: /** @type {HTMLAnchorElement} */(tapTargetElement)['href'] || '',
+      // @ts-expect-error - getNodeDetails put into scope via stringification
+      node: getNodeDetails(tapTargetElement),
+    });
+  }
+
+  reenableFixedAndStickyElementPointerEvents();
+
   return targets;
 }
+/* c8 ignore stop */
 
-class TapTargets extends Gatherer {
+class TapTargets extends FRGatherer {
   /**
-   * @param {LH.Gatherer.PassContext} passContext
+   * @param {LH.Gatherer.FRTransitionalContext} passContext
    * @return {Promise<LH.Artifacts.TapTarget[]>} All visible tap targets with their positions and sizes
    */
-  afterPass(passContext) {
-    const expression = `(function() {
-      const tapTargetsSelector = "${tapTargetsSelector}";
-      ${pageFunctions.getElementsInDocumentString};
-      ${filterClientRectsWithinAncestorsVisibleScrollArea.toString()};
-      ${elementIsPositionFixedOrAbsolute.toString()};
-      ${elementIsVisible.toString()};
-      ${elementHasAncestorTapTarget.toString()};
-      ${getVisibleClientRects.toString()};
-      ${truncate.toString()};
-      ${getClientRects.toString()};
-      ${hasTextNodeSiblingsFormingTextBlock.toString()};
-      ${elementIsInTextBlock.toString()};
-      ${allClientRectsEmpty.toString()};
-      ${rectContainsString};
-      ${pageFunctions.getNodePathString};
-      ${pageFunctions.getNodeSelectorString};
-      ${gatherTapTargets.toString()};
-
-      return gatherTapTargets();
-    })()`;
-
-    return passContext.driver.evaluateAsync(expression, {useIsolation: true});
+  getArtifact(passContext) {
+    return passContext.driver.executionContext.evaluate(gatherTapTargets, {
+      args: [tapTargetsSelector],
+      useIsolation: true,
+      deps: [
+        pageFunctions.getNodeDetailsString,
+        pageFunctions.getElementsInDocument,
+        disableFixedAndStickyElementPointerEvents,
+        elementIsVisible,
+        elementHasAncestorTapTarget,
+        elementCenterIsAtZAxisTop,
+        getClientRects,
+        hasTextNodeSiblingsFormingTextBlock,
+        elementIsInTextBlock,
+        RectHelpers.getRectCenterPoint,
+        pageFunctions.getNodePath,
+        pageFunctions.getNodeSelector,
+        pageFunctions.getNodeLabel,
+      ],
+    });
   }
 }
 

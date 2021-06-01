@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -7,7 +7,7 @@
 
 /* eslint-env jest */
 const PageExecutionTimings = require('../../audits/mainthread-work-breakdown.js');
-const assert = require('assert');
+const assert = require('assert').strict;
 const options = PageExecutionTimings.defaultOptions;
 
 const acceptableTrace = require('../fixtures/traces/progressive-app-m60.json');
@@ -56,7 +56,7 @@ describe('Performance: page execution timings audit', () => {
 
     const output = await PageExecutionTimings.audit(artifacts, {options, computedCache: new Map()});
     assert.deepStrictEqual(keyOutput(output), acceptableTraceExpectations);
-    assert.equal(Math.round(output.rawValue), 1360);
+    assert.equal(Math.round(output.numericValue), 1360);
     assert.equal(output.details.items.length, 7);
     assert.equal(output.score, 0.98);
   });
@@ -75,7 +75,7 @@ describe('Performance: page execution timings audit', () => {
       assert.ok(Math.abs(actual - expected) <= 2, `expected ${expected} got ${actual}`);
     }
 
-    assert.equal(Math.round(output.rawValue), 4081);
+    assert.equal(Math.round(output.numericValue), 4081);
     assert.equal(output.details.items.length, 7);
     assert.equal(output.score, 0.49);
   });
@@ -85,7 +85,7 @@ describe('Performance: page execution timings audit', () => {
 
     const output = await PageExecutionTimings.audit(artifacts, {options, computedCache: new Map()});
     assert.deepStrictEqual(keyOutput(output), siteWithRedirectTraceExpectations);
-    assert.equal(Math.round(output.rawValue), 784);
+    assert.equal(Math.round(output.numericValue), 784);
     assert.equal(output.details.items.length, 7);
     assert.equal(output.score, 1);
   });
@@ -95,7 +95,7 @@ describe('Performance: page execution timings audit', () => {
 
     const output = await PageExecutionTimings.audit(artifacts, {options, computedCache: new Map()});
     assert.deepStrictEqual(keyOutput(output), loadTraceExpectations);
-    assert.equal(Math.round(output.rawValue), 933);
+    assert.equal(Math.round(output.numericValue), 933);
     assert.equal(output.details.items.length, 6);
     assert.equal(output.score, 1);
   });
@@ -107,7 +107,7 @@ describe('Performance: page execution timings audit', () => {
     return PageExecutionTimings.audit(artifacts, context).then(output => {
       assert.equal(output.details.items.length, 0);
       assert.equal(output.score, 1);
-      assert.equal(Math.round(output.rawValue), 0);
+      assert.equal(Math.round(output.numericValue), 0);
     });
   });
 });

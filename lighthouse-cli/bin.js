@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2016 Google Inc. All Rights Reserved.
+ * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -23,16 +23,16 @@ const path = require('path');
 
 const commands = require('./commands/commands.js');
 const printer = require('./printer.js');
-const getFlags = require('./cli-flags.js').getFlags;
-const runLighthouse = require('./run.js').runLighthouse;
-const generateConfig = require('../lighthouse-core/index.js').generateConfig;
+const {getFlags} = require('./cli-flags.js');
+const {runLighthouse} = require('./run.js');
+const {generateConfig} = require('../lighthouse-core/index.js');
 
 const log = require('lighthouse-logger');
 const pkg = require('../package.json');
 const Sentry = require('../lighthouse-core/lib/sentry.js');
 
 const updateNotifier = require('update-notifier');
-const askPermission = require('./sentry-prompt.js').askPermission;
+const {askPermission} = require('./sentry-prompt.js');
 
 /**
  * @return {boolean}
@@ -67,14 +67,16 @@ async function begin() {
   if (cliFlags.configPath) {
     // Resolve the config file path relative to where cli was called.
     cliFlags.configPath = path.resolve(process.cwd(), cliFlags.configPath);
-    configJson = /** @type {LH.Config.Json} */ (require(cliFlags.configPath));
+    configJson = require(cliFlags.configPath);
   } else if (cliFlags.preset) {
-    if (cliFlags.preset === 'mixed-content') {
-      // The mixed-content audits require headless Chrome (https://crbug.com/764505).
-      cliFlags.chromeFlags = `${cliFlags.chromeFlags} --headless`;
-    }
-
     configJson = require(`../lighthouse-core/config/${cliFlags.preset}-config.js`);
+  }
+
+  if (cliFlags.budgetPath) {
+    cliFlags.budgetPath = path.resolve(process.cwd(), cliFlags.budgetPath);
+    /** @type {Array<LH.Budget>} */
+    const parsedBudget = JSON.parse(fs.readFileSync(cliFlags.budgetPath, 'utf8'));
+    cliFlags.budgets = parsedBudget;
   }
 
   // set logging preferences
@@ -92,21 +94,6 @@ async function begin() {
     !cliFlags.outputPath
   ) {
     cliFlags.outputPath = 'stdout';
-  }
-
-  if (cliFlags.extraHeaders) {
-    // TODO: LH.Flags.extraHeaders is actually a string at this point, but needs to be
-    // copied over to LH.Settings.extraHeaders, which is LH.Crdp.Network.Headers. Force
-    // the conversion here, but long term either the CLI flag or the setting should have
-    // a different name.
-    // @ts-ignore
-    let extraHeadersStr = /** @type {string} */ (cliFlags.extraHeaders);
-    // If not a JSON object, assume it's a path to a JSON file.
-    if (extraHeadersStr.substr(0, 1) !== '{') {
-      extraHeadersStr = fs.readFileSync(extraHeadersStr, 'utf-8');
-    }
-
-    cliFlags.extraHeaders = JSON.parse(extraHeadersStr);
   }
 
   if (cliFlags.precomputedLanternDataPath) {

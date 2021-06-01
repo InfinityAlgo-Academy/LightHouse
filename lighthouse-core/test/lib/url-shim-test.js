@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2016 Google Inc. All Rights Reserved.
+ * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -7,8 +7,8 @@
 
 /* eslint-env jest */
 
-const URL = require('../../lib/url-shim');
-const assert = require('assert');
+const URL = require('../../lib/url-shim.js');
+const assert = require('assert').strict;
 const superLongName =
     'https://example.com/thisIsASuperLongURLThatWillTriggerFilenameTruncationWhichWeWantToTest.js';
 
@@ -103,15 +103,6 @@ describe('URL Shim', () => {
     assert.equal(URL.getOrigin(urlB), null);
     assert.equal(URL.getOrigin(urlC), null);
     assert.equal(URL.getOrigin(urlD), null);
-  });
-
-  describe('getTld', () => {
-    it('returns the correct tld', () => {
-      assert.equal(URL.getTld('example.com'), '.com');
-      assert.equal(URL.getTld('example.co.uk'), '.co.uk');
-      assert.equal(URL.getTld('example.com.br'), '.com.br');
-      assert.equal(URL.getTld('example.tokyo.jp'), '.jp');
-    });
   });
 
   describe('rootDomainsMatch', () => {
@@ -311,5 +302,37 @@ describe('URL Shim', () => {
     it('returns false for invalid URLs', () => {
       assert.ok(!URL.equalWithExcludedFragments('utter nonsense', 'http://example.com'));
     });
+  });
+
+  describe('isLikeLocalhost', () => {
+    assert.ok(URL.isLikeLocalhost(new URL('http://localhost/').hostname));
+    assert.ok(URL.isLikeLocalhost(new URL('http://localhost:10200/').hostname));
+    assert.ok(URL.isLikeLocalhost(new URL('http://127.0.0.1/page.html').hostname));
+    assert.ok(URL.isLikeLocalhost(new URL('https://localhost/').hostname));
+    assert.ok(URL.isLikeLocalhost(new URL('https://dev.localhost/').hostname));
+
+    assert.ok(!URL.isLikeLocalhost(new URL('http://8.8.8.8/').hostname));
+    assert.ok(!URL.isLikeLocalhost(new URL('http://example.com/').hostname));
+  });
+
+  describe('isSecureScheme', () => {
+    assert.ok(URL.isSecureScheme('wss'));
+    assert.ok(URL.isSecureScheme('about'));
+    assert.ok(URL.isSecureScheme('data'));
+    assert.ok(URL.isSecureScheme('filesystem'));
+
+    assert.ok(!URL.isSecureScheme('http'));
+    assert.ok(!URL.isSecureScheme('ws'));
+  });
+
+  describe('isNonNetworkProtocol', () => {
+    assert.ok(URL.isNonNetworkProtocol('blob'));
+    assert.ok(URL.isNonNetworkProtocol('data'));
+    assert.ok(URL.isNonNetworkProtocol('data:'));
+    assert.ok(URL.isNonNetworkProtocol('intent:'));
+
+    assert.ok(!URL.isNonNetworkProtocol('filesystem'));
+    assert.ok(!URL.isNonNetworkProtocol('http'));
+    assert.ok(!URL.isNonNetworkProtocol('ws'));
   });
 });

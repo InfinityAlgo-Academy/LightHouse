@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -86,6 +86,13 @@ class BaseNode {
   }
 
   /**
+   * @return {number}
+   */
+  getNumberOfDependents() {
+    return this._dependents.length;
+  }
+
+  /**
    * @return {Node[]}
    */
   getDependencies() {
@@ -122,6 +129,9 @@ class BaseNode {
    * @param {Node} node
    */
   addDependency(node) {
+    // @ts-expect-error - in checkJs, ts doesn't know that CPUNode and NetworkNode *are* BaseNodes.
+    if (node === this) throw new Error('Cannot add dependency on itself');
+
     if (this._dependencies.includes(node)) {
       return;
     }
@@ -157,6 +167,28 @@ class BaseNode {
   }
 
   /**
+   * Computes whether the given node is anywhere in the dependency graph of this node.
+   * While this method can prevent cycles, it walks the graph and should be used sparingly.
+   * Nodes are always considered dependent on themselves for the purposes of cycle detection.
+   * @param {BaseNode} node
+   * @return {boolean}
+   */
+  isDependentOn(node) {
+    let isDependentOnNode = false;
+    this.traverse(currentNode => {
+      if (isDependentOnNode) return;
+      isDependentOnNode = currentNode === node;
+    }, currentNode => {
+      // If we've already found the dependency, don't traverse further.
+      if (isDependentOnNode) return [];
+      // Otherwise, traverse the dependencies.
+      return currentNode.getDependencies();
+    });
+
+    return isDependentOnNode;
+  }
+
+  /**
    * Clones the node's information without adding any dependencies/dependents.
    * @return {Node}
    */
@@ -168,96 +200,98 @@ class BaseNode {
 
   /**
    * Clones the entire graph connected to this node filtered by the optional predicate. If a node is
-   * included by the predicate, all nodes along the paths between the two will be included. If the
-   * node that was called clone is not included in the resulting filtered graph, the method will throw.
+   * included by the predicate, all nodes along the paths between the node and the root will be included. If the
+   * node this was called on is not included in the resulting filtered graph, the method will throw.
    * @param {function(Node):boolean} [predicate]
    * @return {Node}
    */
   cloneWithRelationships(predicate) {
     const rootNode = this.getRootNode();
 
-    /** @type {function(Node): boolean} */
-    let shouldIncludeNode = () => true;
-    if (predicate) {
-      const idsToInclude = new Set();
-      rootNode.traverse(node => {
-        if (predicate(node)) {
-          node.traverse(
-            node => idsToInclude.add(node.id),
-            node => node._dependencies.filter(parent => !idsToInclude.has(parent))
-          );
-        }
-      });
+    /** @type {Map<string, Node>} */
+    const idsToIncludedClones = new Map();
 
-      shouldIncludeNode = node => idsToInclude.has(node.id);
-    }
+    // Walk down dependents.
+    rootNode.traverse(node => {
+      if (idsToIncludedClones.has(node.id)) return;
 
-    const idToNodeMap = new Map();
-    rootNode.traverse(originalNode => {
-      if (!shouldIncludeNode(originalNode)) return;
-      const clonedNode = originalNode.cloneWithoutRelationships();
-      idToNodeMap.set(clonedNode.id, clonedNode);
+      if (predicate === undefined) {
+        // No condition for entry, so clone every node.
+        idsToIncludedClones.set(node.id, node.cloneWithoutRelationships());
+        return;
+      }
+
+      if (predicate(node)) {
+        // Node included, so walk back up dependencies, cloning nodes from here back to the root.
+        node.traverse(
+          node => idsToIncludedClones.set(node.id, node.cloneWithoutRelationships()),
+          // Dependencies already cloned have already cloned ancestors, so no need to visit again.
+          node => node._dependencies.filter(parent => !idsToIncludedClones.has(parent.id))
+        );
+      }
     });
 
+    // Copy dependencies between nodes.
     rootNode.traverse(originalNode => {
-      if (!shouldIncludeNode(originalNode)) return;
-      const clonedNode = idToNodeMap.get(originalNode.id);
+      const clonedNode = idsToIncludedClones.get(originalNode.id);
+      if (!clonedNode) return;
 
       for (const dependency of originalNode._dependencies) {
-        const clonedDependency = idToNodeMap.get(dependency.id);
+        const clonedDependency = idsToIncludedClones.get(dependency.id);
+        if (!clonedDependency) throw new Error('Dependency somehow not cloned');
         clonedNode.addDependency(clonedDependency);
       }
     });
 
-    if (!idToNodeMap.has(this.id)) throw new Error('Cloned graph missing node');
-    return idToNodeMap.get(this.id);
+    const clonedThisNode = idsToIncludedClones.get(this.id);
+    if (!clonedThisNode) throw new Error('Cloned graph missing node');
+    return clonedThisNode;
   }
 
   /**
-   * Traverses all paths in the graph, calling iterator on each node visited. Decides which nodes to
-   * visit with the getNext function.
-   * @param {function(Node, Node[]): void} iterator
-   * @param {function(Node): Node[]} getNext
+   * Traverses all connected nodes in BFS order, calling `callback` exactly once
+   * on each. `traversalPath` is the shortest (though not necessarily unique)
+   * path from `node` to the root of the iteration.
+   *
+   * The `getNextNodes` function takes a visited node and returns which nodes to
+   * visit next. It defaults to returning the node's dependents.
+   * @param {(node: Node, traversalPath: Node[]) => void} callback
+   * @param {function(Node): Node[]} [getNextNodes]
    */
-  _traversePaths(iterator, getNext) {
-    const stack = [[/** @type {Node} */(/** @type {BaseNode} */(this))]];
-    while (stack.length) {
-      /** @type {Node[]} */
-      // @ts-ignore - stack has length so it's guaranteed to have an item
-      const path = stack.shift();
-      const node = path[0];
-      iterator(node, path);
+  traverse(callback, getNextNodes) {
+    for (const {node, traversalPath} of this.traverseGenerator(getNextNodes)) {
+      callback(node, traversalPath);
+    }
+  }
 
-      const nodesToAdd = getNext(node);
-      for (const nextNode of nodesToAdd) {
-        stack.push([nextNode].concat(path));
+  /**
+   * @see BaseNode.traverse
+   * @param {function(Node): Node[]} [getNextNodes]
+   */
+  * traverseGenerator(getNextNodes) {
+    if (!getNextNodes) {
+      getNextNodes = node => node.getDependents();
+    }
+
+    /** @type {Node[][]} */
+    // @ts-expect-error - only traverses graphs of Node, so force tsc to treat `this` as one
+    const queue = [[this]];
+    const visited = new Set([this.id]);
+
+    while (queue.length) {
+      /** @type {Node[]} */
+      // @ts-expect-error - queue has length so it's guaranteed to have an item
+      const traversalPath = queue.shift();
+      const node = traversalPath[0];
+      yield {node, traversalPath};
+
+      for (const nextNode of getNextNodes(node)) {
+        if (visited.has(nextNode.id)) continue;
+        visited.add(nextNode.id);
+
+        queue.push([nextNode, ...traversalPath]);
       }
     }
-  }
-
-  /**
-   * Traverses all connected nodes exactly once, calling iterator on each. Decides which nodes to
-   * visit with the getNext function.
-   * @param {function(Node, Node[]): void} iterator
-   * @param {function(Node): Node[]} [getNext] Defaults to returning the dependents.
-   */
-  traverse(iterator, getNext) {
-    if (!getNext) {
-      getNext = node => node.getDependents();
-    }
-
-    const visited = new Set();
-    const originalGetNext = getNext;
-
-    getNext = node => {
-      visited.add(node.id);
-      const allNodesToVisit = originalGetNext(node);
-      const nodesToVisit = allNodesToVisit.filter(nextNode => !visited.has(nextNode.id));
-      nodesToVisit.forEach(nextNode => visited.add(nextNode.id));
-      return nodesToVisit;
-    };
-
-    this._traversePaths(iterator, getNext);
   }
 
   /**
@@ -282,7 +316,7 @@ class BaseNode {
     while (toVisit.length) {
       // Get the last node in the stack (DFS uses stack, not queue)
       /** @type {Node} */
-      // @ts-ignore - toVisit has length so it's guaranteed to have an item
+      // @ts-expect-error - toVisit has length so it's guaranteed to have an item
       const currentNode = toVisit.pop();
 
       // We've hit a cycle if the node we're visiting is in our current dependency path
@@ -291,7 +325,7 @@ class BaseNode {
       if (visited.has(currentNode)) continue;
 
       // Since we're visiting this node, clear out any nodes in our path that we had to backtrack
-      // @ts-ignore
+      // @ts-expect-error
       while (currentPath.length > depthAdded.get(currentNode)) currentPath.pop();
 
       // Update our data structures to reflect that we're adding this node to our path

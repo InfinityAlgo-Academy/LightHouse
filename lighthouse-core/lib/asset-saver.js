@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2016 Google Inc. All Rights Reserved.
+ * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -9,13 +9,14 @@ const fs = require('fs');
 const path = require('path');
 const log = require('lighthouse-logger');
 const stream = require('stream');
+const {promisify} = require('util');
 const Simulator = require('./dependency-graph/simulator/simulator.js');
 const lanternTraceSaver = require('./lantern-trace-saver.js');
 const Metrics = require('./traces/pwmetrics-events.js');
-const rimraf = require('rimraf');
-const mkdirp = require('mkdirp');
 const NetworkAnalysisComputed = require('../computed/network-analysis.js');
 const LoadSimulatorComputed = require('../computed/load-simulator.js');
+const LHError = require('../lib/lh-error.js');
+const pipeline = promisify(stream.pipeline);
 
 const artifactsFilename = 'artifacts.json';
 const traceSuffix = '.trace.json';
@@ -33,18 +34,19 @@ const devtoolsLogSuffix = '.devtoolslog.json';
  * Load artifacts object from files located within basePath
  * Also save the traces to their own files
  * @param {string} basePath
- * @return {Promise<LH.Artifacts>}
+ * @return {LH.Artifacts}
  */
-async function loadArtifacts(basePath) {
+function loadArtifacts(basePath) {
   log.log('Reading artifacts from disk:', basePath);
 
   if (!fs.existsSync(basePath)) {
     throw new Error('No saved artifacts found at ' + basePath);
   }
 
-  // load artifacts.json
+  // load artifacts.json using a reviver to deserialize any LHErrors in artifacts.
+  const artifactsStr = fs.readFileSync(path.join(basePath, artifactsFilename), 'utf8');
   /** @type {LH.Artifacts} */
-  const artifacts = JSON.parse(fs.readFileSync(path.join(basePath, artifactsFilename), 'utf8'));
+  const artifacts = JSON.parse(artifactsStr, LHError.parseReviver);
 
   const filenames = fs.readdirSync(basePath);
 
@@ -74,7 +76,22 @@ async function loadArtifacts(basePath) {
 }
 
 /**
- * Save artifacts object mostly to single file located at basePath/artifacts.log.
+ * A replacer function for JSON.stingify of the artifacts. Used to serialize objects that
+ * JSON won't normally handle.
+ * @param {string} key
+ * @param {any} value
+ */
+function stringifyReplacer(key, value) {
+  // Currently only handle LHError and other Error types.
+  if (value instanceof Error) {
+    return LHError.stringifyReplacer(value);
+  }
+
+  return value;
+}
+
+/**
+ * Save artifacts object mostly to single file located at basePath/artifacts.json.
  * Also save the traces & devtoolsLogs to their own files
  * @param {LH.Artifacts} artifacts
  * @param {string} basePath
@@ -83,9 +100,16 @@ async function loadArtifacts(basePath) {
 async function saveArtifacts(artifacts, basePath) {
   const status = {msg: 'Saving artifacts', id: 'lh:assetSaver:saveArtifacts'};
   log.time(status);
-  mkdirp.sync(basePath);
-  rimraf.sync(`${basePath}/*${traceSuffix}`);
-  rimraf.sync(`${basePath}/${artifactsFilename}`);
+  fs.mkdirSync(basePath, {recursive: true});
+
+  // Delete any previous artifacts in this directory.
+  const filenames = fs.readdirSync(basePath);
+  for (const filename of filenames) {
+    if (filename.endsWith(traceSuffix) || filename.endsWith(devtoolsLogSuffix) ||
+        filename === artifactsFilename) {
+      fs.unlinkSync(`${basePath}/${filename}`);
+    }
+  }
 
   const {traces, devtoolsLogs, ...restArtifacts} = artifacts;
 
@@ -96,15 +120,23 @@ async function saveArtifacts(artifacts, basePath) {
 
   // save devtools log
   for (const [passName, devtoolsLog] of Object.entries(devtoolsLogs)) {
-    const log = JSON.stringify(devtoolsLog);
-    fs.writeFileSync(`${basePath}/${passName}${devtoolsLogSuffix}`, log, 'utf8');
+    await saveDevtoolsLog(devtoolsLog, `${basePath}/${passName}${devtoolsLogSuffix}`);
   }
 
-  // save everything else
-  const restArtifactsString = JSON.stringify(restArtifacts, null, 2);
+  // save everything else, using a replacer to serialize LHErrors in the artifacts.
+  const restArtifactsString = JSON.stringify(restArtifacts, stringifyReplacer, 2) + '\n';
   fs.writeFileSync(`${basePath}/${artifactsFilename}`, restArtifactsString, 'utf8');
   log.log('Artifacts saved to disk in folder:', basePath);
   log.timeEnd(status);
+}
+
+/**
+ * Save LHR to file located at basePath/lhr.report.json.
+ * @param {LH.Result} lhr
+ * @param {string} basePath
+ */
+function saveLhr(lhr, basePath) {
+  fs.writeFileSync(`${basePath}/lhr.report.json`, JSON.stringify(lhr, null, 2));
 }
 
 /**
@@ -139,48 +171,55 @@ async function prepareAssets(artifacts, audits) {
 }
 
 /**
- * Generates a JSON representation of traceData line-by-line to avoid OOM due to very large traces.
- * COMPAT: As of Node 9, JSON.parse/stringify can handle 256MB+ strings. Once we drop support for
- * Node 8, we can 'revert' PR #2593. See https://stackoverflow.com/a/47781288/89484
+ * Generates a JSON representation of an array of objects with the objects
+ * printed one per line for a more readable (but not too verbose) version.
+ * @param {Array<unknown>} arrayOfObjects
+ * @return {IterableIterator<string>}
+ */
+function* arrayOfObjectsJsonGenerator(arrayOfObjects) {
+  const ITEMS_PER_ITERATION = 500;
+
+  // Stringify and emit items separately to avoid a giant string in memory.
+  yield '[\n';
+  if (arrayOfObjects.length > 0) {
+    const itemsIterator = arrayOfObjects[Symbol.iterator]();
+    // Emit first item manually to avoid a trailing comma.
+    const firstItem = itemsIterator.next().value;
+    yield `  ${JSON.stringify(firstItem)}`;
+
+    let itemsRemaining = ITEMS_PER_ITERATION;
+    let itemsJSON = '';
+    for (const item of itemsIterator) {
+      itemsJSON += `,\n  ${JSON.stringify(item)}`;
+      itemsRemaining--;
+      if (itemsRemaining === 0) {
+        yield itemsJSON;
+        itemsRemaining = ITEMS_PER_ITERATION;
+        itemsJSON = '';
+      }
+    }
+    yield itemsJSON;
+  }
+  yield '\n]';
+}
+
+/**
+ * Generates a JSON representation of traceData line-by-line for a nicer printed
+ * version with one trace event per line.
  * @param {LH.Trace} traceData
  * @return {IterableIterator<string>}
  */
 function* traceJsonGenerator(traceData) {
-  const EVENTS_PER_ITERATION = 500;
-  const keys = Object.keys(traceData);
+  const {traceEvents, ...rest} = traceData;
 
   yield '{\n';
 
-  // Stringify and emit trace events separately to avoid a giant string in memory.
-  yield '"traceEvents": [\n';
-  if (traceData.traceEvents.length > 0) {
-    const eventsIterator = traceData.traceEvents[Symbol.iterator]();
-    // Emit first item manually to avoid a trailing comma.
-    const firstEvent = eventsIterator.next().value;
-    yield `  ${JSON.stringify(firstEvent)}`;
+  yield '"traceEvents": ';
+  yield* arrayOfObjectsJsonGenerator(traceEvents);
 
-    let eventsRemaining = EVENTS_PER_ITERATION;
-    let eventsJSON = '';
-    for (const event of eventsIterator) {
-      eventsJSON += `,\n  ${JSON.stringify(event)}`;
-      eventsRemaining--;
-      if (eventsRemaining === 0) {
-        yield eventsJSON;
-        eventsRemaining = EVENTS_PER_ITERATION;
-        eventsJSON = '';
-      }
-    }
-    yield eventsJSON;
-  }
-  yield '\n]';
-
-  // Emit the rest of the object (usually just `metadata`)
-  if (keys.length > 1) {
-    for (const key of keys) {
-      if (key === 'traceEvents') continue;
-
-      yield `,\n"${key}": ${JSON.stringify(traceData[key], null, 2)}`;
-    }
+  // Emit the rest of the object (usually just `metadata`, if anything).
+  for (const [key, value] of Object.entries(rest)) {
+    yield `,\n"${key}": ${JSON.stringify(value, null, 2)}`;
   }
 
   yield '}\n';
@@ -192,24 +231,26 @@ function* traceJsonGenerator(traceData) {
  * @param {string} traceFilename
  * @return {Promise<void>}
  */
-function saveTrace(traceData, traceFilename) {
-  return new Promise((resolve, reject) => {
-    const traceIter = traceJsonGenerator(traceData);
-    // A stream that pulls in the next traceJsonGenerator chunk as writeStream
-    // reads from it. Closes stream with null when iteration is complete.
-    const traceStream = new stream.Readable({
-      read() {
-        const next = traceIter.next();
-        this.push(next.done ? null : next.value);
-      },
-    });
+async function saveTrace(traceData, traceFilename) {
+  const traceIter = traceJsonGenerator(traceData);
+  const writeStream = fs.createWriteStream(traceFilename);
 
-    const writeStream = fs.createWriteStream(traceFilename);
-    writeStream.on('finish', resolve);
-    writeStream.on('error', reject);
+  // TODO: Can remove Readable.from() in Node 13, promisify(pipeline) in Node 15.
+  // https://nodejs.org/api/stream.html#stream_stream_pipeline_streams_callback
+  return pipeline(stream.Readable.from(traceIter), writeStream);
+}
 
-    traceStream.pipe(writeStream);
-  });
+/**
+ * Save a devtoolsLog as JSON by streaming to disk at devtoolLogFilename.
+ * @param {LH.DevtoolsLog} devtoolsLog
+ * @param {string} devtoolLogFilename
+ * @return {Promise<void>}
+ */
+function saveDevtoolsLog(devtoolsLog, devtoolLogFilename) {
+  const logIter = arrayOfObjectsJsonGenerator(devtoolsLog);
+  const writeStream = fs.createWriteStream(devtoolLogFilename);
+
+  return pipeline(stream.Readable.from(logIter), writeStream);
 }
 
 /**
@@ -253,34 +294,14 @@ async function saveAssets(artifacts, audits, pathWithBasename) {
 }
 
 /**
- * Log trace(s) and associated devtoolsLog(s) to console.
- * @param {LH.Artifacts} artifacts
- * @param {LH.Audit.Results} audits
- * @return {Promise<void>}
- */
-async function logAssets(artifacts, audits) {
-  const allAssets = await prepareAssets(artifacts, audits);
-  allAssets.map(passAssets => {
-    const dtlogdata = JSON.stringify(passAssets.devtoolsLog);
-    // eslint-disable-next-line no-console
-    console.log(`loggedAsset %%% devtoolslog-${passAssets.passName}.json %%% ${dtlogdata}`);
-    const traceIter = traceJsonGenerator(passAssets.traceData);
-    let traceJson = '';
-    for (const trace of traceIter) {
-      traceJson += trace;
-    }
-    // eslint-disable-next-line no-console
-    console.log(`loggedAsset %%% trace-${passAssets.passName}.json %%% ${traceJson}`);
-  });
-}
-
-/**
  * @param {LH.DevtoolsLog} devtoolsLog
  * @param {string} outputPath
  * @return {Promise<void>}
  */
 async function saveLanternNetworkData(devtoolsLog, outputPath) {
-  const context = /** @type {LH.Audit.Context} */ ({computedCache: new Map()});
+  /** @type {LH.Audit.Context} */
+  // @ts-expect-error - the full audit context isn't needed for analysis.
+  const context = {computedCache: new Map()};
   const networkAnalysis = await NetworkAnalysisComputed.request(devtoolsLog, context);
   const lanternData = LoadSimulatorComputed.convertAnalysisToSaveableLanternData(networkAnalysis);
 
@@ -289,10 +310,12 @@ async function saveLanternNetworkData(devtoolsLog, outputPath) {
 
 module.exports = {
   saveArtifacts,
+  saveLhr,
   loadArtifacts,
   saveAssets,
   prepareAssets,
   saveTrace,
-  logAssets,
+  saveDevtoolsLog,
   saveLanternNetworkData,
+  stringifyReplacer,
 };

@@ -1,12 +1,13 @@
 /**
- * @license Copyright 2016 Google Inc. All Rights Reserved.
+ * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
 
-const statistics = require('../lib/statistics');
-const Util = require('../report/html/renderer/util');
+const {isUnderTest} = require('../lib/lh-env.js');
+const statistics = require('../lib/statistics.js');
+const Util = require('../report/html/renderer/util.js');
 
 const DEFAULT_PASS = 'defaultPass';
 
@@ -68,37 +69,40 @@ class Audit {
   /* eslint-enable no-unused-vars */
 
   /**
-   * Computes a clamped score between 0 and 1 based on the measured value. Score is determined by
-   * considering a log-normal distribution governed by the two control points, point of diminishing
-   * returns and the median value, and returning the percentage of sites that have higher value.
-   *
-   * @param {number} measuredValue
-   * @param {number} diminishingReturnsValue
-   * @param {number} medianValue
+   * Computes a score between 0 and 1 based on the measured `value`. Score is determined by
+   * considering a log-normal distribution governed by two control points (the 10th
+   * percentile value and the median value) and represents the percentage of sites that are
+   * greater than `value`.
+   * @param {{median: number, p10: number}} controlPoints
+   * @param {number} value
    * @return {number}
    */
-  static computeLogNormalScore(measuredValue, diminishingReturnsValue, medianValue) {
-    const distribution = statistics.getLogNormalDistribution(
-      medianValue,
-      diminishingReturnsValue
-    );
-
-    let score = distribution.computeComplementaryPercentile(measuredValue);
-    score = Math.min(1, score);
-    score = Math.max(0, score);
-    return clampTo2Decimals(score);
+  static computeLogNormalScore(controlPoints, value) {
+    const percentile = statistics.getLogNormalScore(controlPoints, value);
+    return clampTo2Decimals(percentile);
   }
 
   /**
-   * @param {typeof Audit} audit
-   * @param {string} errorMessage
-   * @return {LH.Audit.Result}
+   * This catches typos in the `key` property of a heading definition of table/opportunity details.
+   * Throws an error if any of keys referenced by headings don't exist in at least one of the items.
+   *
+   * @param {LH.Audit.Details.Table['headings']|LH.Audit.Details.Opportunity['headings']} headings
+   * @param {LH.Audit.Details.Opportunity['items']|LH.Audit.Details.Table['items']} items
    */
-  static generateErrorAuditResult(audit, errorMessage) {
-    return Audit.generateAuditResult(audit, {
-      rawValue: null,
-      errorMessage,
-    });
+  static assertHeadingKeysExist(headings, items) {
+    // If there are no items, there's nothing to check.
+    if (!items.length) return;
+    // Only do this in tests for now.
+    if (!isUnderTest) return;
+
+    for (const heading of headings) {
+      // `null` heading key means it's a column for subrows only
+      if (heading.key === null) continue;
+
+      const key = heading.key;
+      if (items.some(item => key in item)) continue;
+      throw new Error(`"${heading.key}" is missing from items`);
+    }
   }
 
   /**
@@ -116,6 +120,8 @@ class Audit {
         summary,
       };
     }
+
+    Audit.assertHeadingKeysExist(headings, results);
 
     return {
       type: 'table',
@@ -199,6 +205,8 @@ class Audit {
    * @return {LH.Audit.Details.Opportunity}
    */
   static makeOpportunityDetails(headings, items, overallSavingsMs, overallSavingsBytes) {
+    Audit.assertHeadingKeysExist(headings, items);
+
     return {
       type: 'opportunity',
       headings: items.length === 0 ? [] : headings,
@@ -209,62 +217,109 @@ class Audit {
   }
 
   /**
-   * @param {typeof Audit} audit
-   * @param {LH.Audit.Product} result
-   * @return {{score: number|null, scoreDisplayMode: LH.Audit.ScoreDisplayMode}}
+   * @param {LH.Artifacts.NodeDetails} node
+   * @return {LH.Audit.Details.NodeValue}
    */
-  static _normalizeAuditScore(audit, result) {
-    // Cast true/false to 1/0
-    let score = result.score === undefined ? Number(result.rawValue) : result.score;
-
-    if (!Number.isFinite(score)) throw new Error(`Invalid score: ${score}`);
-    if (score > 1) throw new Error(`Audit score for ${audit.meta.id} is > 1`);
-    if (score < 0) throw new Error(`Audit score for ${audit.meta.id} is < 0`);
-
-    score = clampTo2Decimals(score);
-
-    const scoreDisplayMode = audit.meta.scoreDisplayMode || Audit.SCORING_MODES.BINARY;
-
+  static makeNodeItem(node) {
     return {
-      score,
-      scoreDisplayMode,
+      type: 'node',
+      lhId: node.lhId,
+      path: node.devtoolsNodePath,
+      selector: node.selector,
+      boundingRect: node.boundingRect,
+      snippet: node.snippet,
+      nodeLabel: node.nodeLabel,
     };
   }
 
   /**
-   * @param {typeof Audit} audit
-   * @param {LH.Audit.Product} result
-   * @return {LH.Audit.Result}
+   * @param {LH.Artifacts.ConsoleMessage} entry
+   * @return {LH.Audit.Details.SourceLocationValue | undefined}
    */
-  static generateAuditResult(audit, result) {
-    if (typeof result.rawValue === 'undefined') {
-      throw new Error('generateAuditResult requires a rawValue');
+  static makeSourceLocationFromConsoleMessage(entry) {
+    if (!entry.url) return;
+
+    return {
+      type: 'source-location',
+      url: entry.url,
+      urlProvider: 'network',
+      line: entry.lineNumber || 0,
+      column: entry.columnNumber || 0,
+    };
+  }
+
+  /**
+   * @param {number|null} score
+   * @param {LH.Audit.ScoreDisplayMode} scoreDisplayMode
+   * @param {string} auditId
+   * @return {number|null}
+   */
+  static _normalizeAuditScore(score, scoreDisplayMode, auditId) {
+    if (scoreDisplayMode !== Audit.SCORING_MODES.BINARY &&
+        scoreDisplayMode !== Audit.SCORING_MODES.NUMERIC) {
+      return null;
     }
 
-    // TODO(bckenny): cleanup the flow of notApplicable/error/binary/numeric
-    let {score, scoreDisplayMode} = Audit._normalizeAuditScore(audit, result);
+    // Otherwise, score must be a number in [0, 1].
+    if (score === null || !Number.isFinite(score)) {
+      throw new Error(`Invalid score for ${auditId}: ${score}`);
+    }
+    if (score > 1) throw new Error(`Audit score for ${auditId} is > 1`);
+    if (score < 0) throw new Error(`Audit score for ${auditId} is < 0`);
 
-    // If the audit was determined to not apply to the page, set score display mode appropriately
-    if (result.notApplicable) {
-      scoreDisplayMode = Audit.SCORING_MODES.NOT_APPLICABLE;
-      result.rawValue = true;
+    score = clampTo2Decimals(score);
+
+    return score;
+  }
+
+  /**
+   * @param {typeof Audit} audit
+   * @param {string | LH.IcuMessage} errorMessage
+   * @return {LH.RawIcu<LH.Audit.Result>}
+   */
+  static generateErrorAuditResult(audit, errorMessage) {
+    return Audit.generateAuditResult(audit, {
+      score: null,
+      errorMessage,
+    });
+  }
+
+  /**
+   * @param {typeof Audit} audit
+   * @param {LH.Audit.Product} product
+   * @return {LH.RawIcu<LH.Audit.Result>}
+   */
+  static generateAuditResult(audit, product) {
+    if (product.score === undefined) {
+      throw new Error('generateAuditResult requires a score');
     }
 
-    if (result.errorMessage) {
+    // Default to binary scoring.
+    let scoreDisplayMode = audit.meta.scoreDisplayMode || Audit.SCORING_MODES.BINARY;
+
+    // But override if product contents require it.
+    if (product.errorMessage) {
+      // Error result.
       scoreDisplayMode = Audit.SCORING_MODES.ERROR;
+    } else if (product.notApplicable) {
+      // Audit was determined to not apply to the page.
+      scoreDisplayMode = Audit.SCORING_MODES.NOT_APPLICABLE;
     }
+
+    const score = Audit._normalizeAuditScore(product.score, scoreDisplayMode, audit.meta.id);
 
     let auditTitle = audit.meta.title;
     if (audit.meta.failureTitle) {
-      if (Number(score) < Util.PASS_THRESHOLD) {
+      if (score !== null && score < Util.PASS_THRESHOLD) {
         auditTitle = audit.meta.failureTitle;
       }
     }
 
-    if (scoreDisplayMode !== Audit.SCORING_MODES.BINARY &&
-        scoreDisplayMode !== Audit.SCORING_MODES.NUMERIC) {
-      score = null;
-    }
+    // The Audit.Product type is bifurcated to enforce numericUnit accompanying numericValue;
+    // the existence of `numericUnit` is our discriminant.
+    // Make ts happy and enforce this contract programmatically by only pulling numericValue off of
+    // a `NumericProduct` type.
+    const numericProduct = 'numericUnit' in product ? product : undefined;
 
     return {
       id: audit.meta.id,
@@ -273,14 +328,15 @@ class Audit {
 
       score,
       scoreDisplayMode,
-      rawValue: result.rawValue,
+      numericValue: numericProduct && numericProduct.numericValue,
+      numericUnit: numericProduct && numericProduct.numericUnit,
 
-      displayValue: result.displayValue,
-      explanation: result.explanation,
-      errorMessage: result.errorMessage,
-      warnings: result.warnings,
+      displayValue: product.displayValue,
+      explanation: product.explanation,
+      errorMessage: product.errorMessage,
+      warnings: product.warnings,
 
-      details: result.details,
+      details: product.details,
     };
   }
 }

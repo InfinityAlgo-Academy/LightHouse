@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -7,9 +7,10 @@
 
 /* eslint-env jest */
 
-const OptimizedImages = require('../../../../gather/gatherers/dobetterweb/optimized-images');
+const OptimizedImages = require('../../../../gather/gatherers/dobetterweb/optimized-images.js');
+const {createMockContext} = require('../../../fraggle-rock/gather/mock-driver.js');
 
-let options;
+let context = createMockContext();
 let optimizedImages;
 
 const traceData = {
@@ -70,6 +71,16 @@ const traceData = {
     },
     {
       requestId: '1',
+      url: 'http://gmail.com/image.jpg',
+      mimeType: 'image/jpeg',
+      resourceSize: 15000,
+      transferSize: 20000,
+      resourceType: 'Image',
+      finished: true,
+      sessionId: 'oopif', // ignore for being an oopif
+    },
+    {
+      requestId: '1',
       url: 'data: image/jpeg ; base64 ,SgVcAT32587935321...',
       mimeType: 'image/jpeg',
       resourceType: 'Image',
@@ -102,19 +113,16 @@ describe('Optimized images', () => {
   // Reset the Gatherer before each test.
   beforeEach(() => {
     optimizedImages = new OptimizedImages();
-    options = {
-      url: 'http://google.com/',
-      driver: {
-        sendCommand: function(command, params) {
-          const encodedSize = params.encoding === 'webp' ? 60 : 80;
-          return Promise.resolve({encodedSize});
-        },
-      },
-    };
+    context = createMockContext();
+    context.url = 'http://google.com';
+    context.driver.defaultSession.sendCommand.mockImplementation((_, params) => {
+      const encodedSize = params.encoding === 'webp' ? 60 : 80;
+      return Promise.resolve({encodedSize});
+    });
   });
 
   it('returns all images, sorted with sizes', async () => {
-    const artifact = await optimizedImages.afterPass(options, traceData);
+    const artifact = await optimizedImages.afterPass(context, traceData);
     expect(artifact).toHaveLength(5);
     expect(artifact).toMatchObject([
       {
@@ -152,16 +160,16 @@ describe('Optimized images', () => {
 
   it('handles partial driver failure', () => {
     let calls = 0;
-    options.driver.sendCommand = () => {
+    context.driver.defaultSession.sendCommand.mockImplementation(() => {
       calls++;
       if (calls > 2) {
         return Promise.reject(new Error('whoops driver failed'));
       } else {
         return Promise.resolve({encodedSize: 60});
       }
-    };
+    });
 
-    return optimizedImages.afterPass(options, traceData).then(artifact => {
+    return optimizedImages.afterPass(context, traceData).then(artifact => {
       const failed = artifact.find(record => record.failed);
 
       expect(artifact).toHaveLength(5);
@@ -184,7 +192,7 @@ describe('Optimized images', () => {
       ],
     };
 
-    const artifact = await optimizedImages.afterPass(options, traceData);
+    const artifact = await optimizedImages.afterPass(context, traceData);
     expect(artifact).toHaveLength(1);
   });
 });

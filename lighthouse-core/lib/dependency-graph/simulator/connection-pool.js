@@ -1,12 +1,12 @@
 /**
- * @license Copyright 2018 Google Inc. All Rights Reserved.
+ * @license Copyright 2018 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
 
-const NetworkAnalyzer = require('./network-analyzer');
-const TcpConnection = require('./tcp-connection');
+const NetworkAnalyzer = require('./network-analyzer.js');
+const TcpConnection = require('./tcp-connection.js');
 
 const DEFAULT_SERVER_RESPONSE_TIME = 30;
 const TLS_SCHEMES = ['https', 'wss'];
@@ -18,22 +18,10 @@ const CONNECTIONS_PER_ORIGIN = 6;
 module.exports = class ConnectionPool {
   /**
    * @param {LH.Artifacts.NetworkRequest[]} records
-   * @param {Object=} options
+   * @param {Required<LH.Gatherer.Simulation.Options>} options
    */
   constructor(records, options) {
-    this._options = Object.assign(
-      {
-        rtt: undefined,
-        throughput: undefined,
-        additionalRttByOrigin: new Map(),
-        serverResponseTimeByOrigin: new Map(),
-      },
-      options
-    );
-
-    if (!this._options.rtt || !this._options.throughput) {
-      throw new Error('Cannot create pool with no rtt or throughput');
-    }
+    this._options = options;
 
     this._records = records;
     /** @type {Map<string, TcpConnection[]>} */
@@ -86,8 +74,10 @@ module.exports = class ConnectionPool {
         throw new Error(`Could not find a connection for origin: ${origin}`);
       }
 
-      // Make sure each origin has minimum number of connections available for max throughput
-      while (connections.length < CONNECTIONS_PER_ORIGIN) connections.push(connections[0].clone());
+      // Make sure each origin has minimum number of connections available for max throughput.
+      // But only if it's not over H2 which maximizes throughput already.
+      const minConnections = connections[0].isH2() ? 1 : CONNECTIONS_PER_ORIGIN;
+      while (connections.length < minConnections) connections.push(connections[0].clone());
 
       this._connectionsByOrigin.set(origin, connections);
     }
@@ -139,14 +129,10 @@ module.exports = class ConnectionPool {
    * @return {?TcpConnection}
    */
   acquire(record, options = {}) {
-    if (this._connectionsByRecord.has(record)) {
-      // @ts-ignore
-      return this._connectionsByRecord.get(record);
-    }
+    if (this._connectionsByRecord.has(record)) throw new Error('Record already has a connection');
 
-    const origin = String(record.parsedURL.securityOrigin);
+    const origin = record.parsedURL.securityOrigin;
     const observedConnectionWasReused = !!this._connectionReusedByRequestId.get(record.requestId);
-    /** @type {TcpConnection[]} */
     const connections = this._connectionsByOrigin.get(origin) || [];
     const connectionToUse = this._findAvailableConnectionWithLargestCongestionWindow(connections, {
       ignoreConnectionReused: options.ignoreConnectionReused,
@@ -158,6 +144,20 @@ module.exports = class ConnectionPool {
     this._connectionsInUse.add(connectionToUse);
     this._connectionsByRecord.set(record, connectionToUse);
     return connectionToUse;
+  }
+
+  /**
+   * Return the connection currently being used to fetch a record. If no connection
+   * currently being used for this record, an error will be thrown.
+   *
+   * @param {LH.Artifacts.NetworkRequest} record
+   * @return {TcpConnection}
+   */
+  acquireActiveConnectionFromRecord(record) {
+    const activeConnection = this._connectionsByRecord.get(record);
+    if (!activeConnection) throw new Error('Could not find an active connection for record');
+
+    return activeConnection;
   }
 
   /**

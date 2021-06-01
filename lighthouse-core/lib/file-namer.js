@@ -1,11 +1,9 @@
 /**
- * @license Copyright 2017 Google Inc. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
-
-/* global URL */
 
 /**
  * @fileoverview
@@ -20,28 +18,20 @@
  * @return {string}
  */
 function getFilenamePrefix(lhr) {
-  const hostname = new (getUrlConstructor())(lhr.finalUrl).hostname;
+  const hostname = new URL(lhr.finalUrl).hostname;
   const date = (lhr.fetchTime && new Date(lhr.fetchTime)) || new Date();
 
   const timeStr = date.toLocaleTimeString('en-US', {hour12: false});
   const dateParts = date.toLocaleDateString('en-US', {
     year: 'numeric', month: '2-digit', day: '2-digit',
   }).split('/');
-  // @ts-ignore - parts exists
+  // @ts-expect-error - parts exists
   dateParts.unshift(dateParts.pop());
   const dateStr = dateParts.join('-');
 
   const filenamePrefix = `${hostname}_${dateStr}_${timeStr}`;
   // replace characters that are unfriendly to filenames
-  return filenamePrefix.replace(/[/?<>\\:*|":]/g, '-');
-}
-
-function getUrlConstructor() {
-  if (typeof module !== 'undefined' && module.exports) {
-    return require('./url-shim');
-  } else {
-    return URL;
-  }
+  return filenamePrefix.replace(/[/?<>\\:*|"]/g, '-');
 }
 
 // don't attempt to export in the browser.

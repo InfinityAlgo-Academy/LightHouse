@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2016 Google Inc. All Rights Reserved.
+ * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -7,42 +7,91 @@
 
 const defaultConfigPath = './default-config.js';
 const defaultConfig = require('./default-config.js');
-const fullConfig = require('./full-config.js');
 const constants = require('./constants.js');
 const i18n = require('./../lib/i18n/i18n.js');
 
-const isDeepEqual = require('lodash.isequal');
 const log = require('lighthouse-logger');
 const path = require('path');
-const Audit = require('../audits/audit.js');
 const Runner = require('../runner.js');
 const ConfigPlugin = require('./config-plugin.js');
+const {
+  mergeConfigFragment,
+  resolveSettings,
+  resolveAuditsToDefns,
+  resolveGathererToDefn,
+  resolveModulePath,
+  deepClone,
+  deepCloneConfigJson,
+} = require('./config-helpers.js');
 
 /** @typedef {typeof import('../gather/gatherers/gatherer.js')} GathererConstructor */
 /** @typedef {InstanceType<GathererConstructor>} Gatherer */
 
 /**
+ * Define with object literal so that tsc will require it to stay updated.
+ * @type {Record<keyof LH.BaseArtifacts, ''>}
+ */
+const BASE_ARTIFACT_BLANKS = {
+  fetchTime: '',
+  LighthouseRunWarnings: '',
+  HostFormFactor: '',
+  HostUserAgent: '',
+  NetworkUserAgent: '',
+  BenchmarkIndex: '',
+  WebAppManifest: '',
+  InstallabilityErrors: '',
+  Stacks: '',
+  traces: '',
+  devtoolsLogs: '',
+  settings: '',
+  URL: '',
+  Timing: '',
+  PageLoadError: '',
+};
+const BASE_ARTIFACT_NAMES = Object.keys(BASE_ARTIFACT_BLANKS);
+
+/**
  * @param {Config['passes']} passes
  * @param {Config['audits']} audits
  */
-function validatePasses(passes, audits) {
+function assertValidPasses(passes, audits) {
   if (!Array.isArray(passes)) {
     return;
   }
 
-  const requiredGatherers = Config.getGatherersNeededByAudits(audits);
+  const requestedGatherers = Config.getGatherersRequestedByAudits(audits);
+  // Base artifacts are provided by GatherRunner, so start foundGatherers with them.
+  const foundGatherers = new Set(BASE_ARTIFACT_NAMES);
 
   // Log if we are running gathers that are not needed by the audits listed in the config
-  passes.forEach(pass => {
+  passes.forEach((pass, passIndex) => {
+    if (passIndex === 0 && pass.loadFailureMode !== 'fatal') {
+      log.warn(`"${pass.passName}" is the first pass but was marked as non-fatal. ` +
+        `The first pass will always be treated as loadFailureMode=fatal.`);
+      pass.loadFailureMode = 'fatal';
+    }
+
     pass.gatherers.forEach(gathererDefn => {
       const gatherer = gathererDefn.instance;
-      const isGatherRequiredByAudits = requiredGatherers.has(gatherer.name);
+      foundGatherers.add(gatherer.name);
+      const isGatherRequiredByAudits = requestedGatherers.has(gatherer.name);
       if (!isGatherRequiredByAudits) {
         const msg = `${gatherer.name} gatherer requested, however no audit requires it.`;
         log.warn('config', msg);
       }
     });
   });
+
+  // All required gatherers must be found in the config. Throw otherwise.
+  for (const auditDefn of audits || []) {
+    const auditMeta = auditDefn.implementation.meta;
+    for (const requiredArtifact of auditMeta.requiredArtifacts) {
+      if (!foundGatherers.has(requiredArtifact)) {
+        throw new Error(`${requiredArtifact} gatherer, required by audit ${auditMeta.id}, ` +
+            'was not found in config.');
+      }
+    }
+  }
 
   // Passes must have unique `passName`s. Throw otherwise.
   const usedNames = new Set();
@@ -60,15 +109,15 @@ function validatePasses(passes, audits) {
  * @param {Config['audits']} audits
  * @param {Config['groups']} groups
  */
-function validateCategories(categories, audits, groups) {
+function assertValidCategories(categories, audits, groups) {
   if (!categories) {
     return;
   }
 
-  const auditsKeyedById = new Map((audits || []).map(audit =>
-    /** @type {[string, LH.Config.AuditDefn]} */
-    ([audit.implementation.meta.id, audit])
-  ));
+  /** @type {Map<string, LH.Config.AuditDefn>} */
+  const auditsKeyedById = new Map((audits || []).map(audit => {
+    return [audit.implementation.meta.id, audit];
+  }));
 
   Object.keys(categories).forEach(categoryId => {
     categories[categoryId].auditRefs.forEach((auditRef, index) => {
@@ -99,51 +148,6 @@ function validateCategories(categories, audits, groups) {
 }
 
 /**
- * @param {typeof Audit} auditDefinition
- * @param {string=} auditPath
- */
-function assertValidAudit(auditDefinition, auditPath) {
-  const auditName = auditPath ||
-    (auditDefinition && auditDefinition.meta && auditDefinition.meta.id);
-
-  if (typeof auditDefinition.audit !== 'function' || auditDefinition.audit === Audit.audit) {
-    throw new Error(`${auditName} has no audit() method.`);
-  }
-
-  if (typeof auditDefinition.meta.id !== 'string') {
-    throw new Error(`${auditName} has no meta.id property, or the property is not a string.`);
-  }
-
-  if (typeof auditDefinition.meta.title !== 'string') {
-    throw new Error(
-      `${auditName} has no meta.title property, or the property is not a string.`
-    );
-  }
-
-  // If it'll have a ✔ or ✖ displayed alongside the result, it should have failureTitle
-  if (typeof auditDefinition.meta.failureTitle !== 'string' &&
-    auditDefinition.meta.scoreDisplayMode === Audit.SCORING_MODES.BINARY) {
-    throw new Error(`${auditName} has no failureTitle and should.`);
-  }
-
-  if (typeof auditDefinition.meta.description !== 'string') {
-    throw new Error(
-      `${auditName} has no meta.description property, or the property is not a string.`
-    );
-  } else if (auditDefinition.meta.description === '') {
-    throw new Error(
-      `${auditName} has an empty meta.description string. Please add a description for the UI.`
-    );
-  }
-
-  if (!Array.isArray(auditDefinition.meta.requiredArtifacts)) {
-    throw new Error(
-      `${auditName} has no meta.requiredArtifacts property, or the property is not an array.`
-    );
-  }
-}
-
-/**
  * @param {Gatherer} gathererInstance
  * @param {string=} gathererName
  */
@@ -163,6 +167,29 @@ function assertValidGatherer(gathererInstance, gathererName) {
   }
 }
 
+
+/**
+ * Validate the LH.Flags
+ * @param {LH.Flags} flags
+ */
+function assertValidFlags(flags) {
+  // COMPAT: compatibility layer for devtools as it uses the old way and we need tests to pass
+  // TODO(paulirish): remove this from LH once emulation refactor has rolled into DevTools
+  // @ts-expect-error Deprecated flag
+  if (flags.channel === 'devtools' && flags.internalDisableDeviceScreenEmulation) {
+    // @ts-expect-error Deprecated flag
+    flags.formFactor = flags.emulatedFormFactor;
+    // @ts-expect-error Deprecated flag
+    flags.emulatedFormFactor = flags.internalDisableDeviceScreenEmulation = undefined;
+  }
+
+
+  // @ts-expect-error Checking for removed flags
+  if (flags.emulatedFormFactor || flags.internalDisableDeviceScreenEmulation) {
+    throw new Error('Invalid emulation flag. Emulation configuration changed in LH 7.0. See https://github.com/GoogleChrome/lighthouse/blob/master/docs/emulation.md');
+  }
+}
+
 /**
  * Throws if pluginName is invalid or (somehow) collides with a category in the
  * configJSON being added to.
@@ -179,156 +206,13 @@ function assertValidPluginName(configJSON, pluginName) {
   }
 }
 
-/**
- * Creates a settings object from potential flags object by dropping all the properties
- * that don't exist on Config.Settings.
- * @param {Partial<LH.Flags>=} flags
- * @return {RecursivePartial<LH.Config.Settings>}
-*/
-function cleanFlagsForSettings(flags = {}) {
-  /** @type {RecursivePartial<LH.Config.Settings>} */
-  const settings = {};
-
-  for (const key of Object.keys(flags)) {
-    // @ts-ignore - intentionally testing some keys not on defaultSettings to discard them.
-    if (typeof constants.defaultSettings[key] !== 'undefined') {
-      // Cast since key now must be able to index both Flags and Settings.
-      const safekey = /** @type {Extract<keyof LH.Flags, keyof LH.Config.Settings>} */ (key);
-      settings[safekey] = flags[safekey];
-    }
-  }
-
-  return settings;
-}
 
 /**
- * More widely typed than exposed merge() function, below.
- * @param {Object<string, any>|Array<any>|undefined|null} base
- * @param {Object<string, any>|Array<any>} extension
- * @param {boolean=} overwriteArrays
+ * @implements {LH.Config.Config}
  */
-function _merge(base, extension, overwriteArrays = false) {
-  // If the default value doesn't exist or is explicitly null, defer to the extending value
-  if (typeof base === 'undefined' || base === null) {
-    return extension;
-  } else if (typeof extension === 'undefined') {
-    return base;
-  } else if (Array.isArray(extension)) {
-    if (overwriteArrays) return extension;
-    if (!Array.isArray(base)) throw new TypeError(`Expected array but got ${typeof base}`);
-    const merged = base.slice();
-    extension.forEach(item => {
-      if (!merged.some(candidate => isDeepEqual(candidate, item))) merged.push(item);
-    });
-
-    return merged;
-  } else if (typeof extension === 'object') {
-    if (typeof base !== 'object') throw new TypeError(`Expected object but got ${typeof base}`);
-    if (Array.isArray(base)) throw new TypeError('Expected object but got Array');
-    Object.keys(extension).forEach(key => {
-      const localOverwriteArrays = overwriteArrays ||
-        (key === 'settings' && typeof base[key] === 'object');
-      base[key] = _merge(base[key], extension[key], localOverwriteArrays);
-    });
-    return base;
-  }
-
-  return extension;
-}
-
-/**
- * Until support of jsdoc templates with constraints, type in config.d.ts.
- * See https://github.com/Microsoft/TypeScript/issues/24283
- * @type {LH.Config.Merge}
- */
-const merge = _merge;
-
-/**
- * @template T
- * @param {Array<T>} array
- * @return {Array<T>}
- */
-function cloneArrayWithPluginSafety(array) {
-  return array.map(item => {
-    if (typeof item === 'object') {
-      // Return copy of instance and prototype chain (in case item is instantiated class).
-      return Object.assign(
-        Object.create(
-          Object.getPrototypeOf(item)
-        ),
-        item
-      );
-    }
-
-    return item;
-  });
-}
-
-/**
- * // TODO(bckenny): could adopt "jsonified" type to ensure T will survive JSON
- * round trip: https://github.com/Microsoft/TypeScript/issues/21838
- * @template T
- * @param {T} json
- * @return {T}
- */
-function deepClone(json) {
-  return JSON.parse(JSON.stringify(json));
-}
-
-/**
- * Deep clone a ConfigJson, copying over any "live" gatherer or audit that
- * wouldn't make the JSON round trip.
- * @param {LH.Config.Json} json
- * @return {LH.Config.Json}
- */
-function deepCloneConfigJson(json) {
-  const cloned = deepClone(json);
-
-  // Copy arrays that could contain plugins to allow for programmatic
-  // injection of plugins.
-  if (Array.isArray(cloned.passes) && Array.isArray(json.passes)) {
-    for (let i = 0; i < cloned.passes.length; i++) {
-      const pass = cloned.passes[i];
-      pass.gatherers = cloneArrayWithPluginSafety(json.passes[i].gatherers || []);
-    }
-  }
-
-  if (Array.isArray(json.audits)) {
-    cloned.audits = cloneArrayWithPluginSafety(json.audits);
-  }
-
-  return cloned;
-}
-
-/**
- * If any items with identical `path` properties are found in the input array,
- * merge their `options` properties into the first instance and then discard any
- * other instances.
- * Until support of jsdoc templates with constraints, type in config.d.ts.
- * See https://github.com/Microsoft/TypeScript/issues/24283
- * @type {LH.Config.MergeOptionsOfItems}
- */
-const mergeOptionsOfItems = (function(items) {
-  /** @type {Array<{path?: string, options?: Object<string, any>}>} */
-  const mergedItems = [];
-
-  for (const item of items) {
-    const existingItem = item.path && mergedItems.find(candidate => candidate.path === item.path);
-    if (!existingItem) {
-      mergedItems.push(item);
-      continue;
-    }
-
-    existingItem.options = Object.assign({}, existingItem.options, item.options);
-  }
-
-  return mergedItems;
-});
-
 class Config {
   /**
    * @constructor
-   * @implements {LH.Config.Json}
    * @param {LH.Config.Json=} configJSON
    * @param {LH.Flags=} flags
    */
@@ -349,12 +233,11 @@ class Config {
     // We don't want to mutate the original config object
     configJSON = deepCloneConfigJson(configJSON);
 
-    // Extend the default or full config if specified
-    if (configJSON.extends === 'lighthouse:full') {
-      const explodedFullConfig = Config.extendConfigJSON(deepCloneConfigJson(defaultConfig),
-          deepCloneConfigJson(fullConfig));
-      configJSON = Config.extendConfigJSON(explodedFullConfig, configJSON);
-    } else if (configJSON.extends) {
+    // Extend the default config if specified
+    if (configJSON.extends) {
+      if (configJSON.extends !== 'lighthouse:default') {
+        throw new Error('`lighthouse:default` is the only valid extension method.');
+      }
       configJSON = Config.extendConfigJSON(deepCloneConfigJson(defaultConfig), configJSON);
     }
 
@@ -362,9 +245,12 @@ class Config {
     const configDir = configPath ? path.dirname(configPath) : undefined;
 
     // Validate and merge in plugins (if any).
-    configJSON = Config.mergePlugins(configJSON, configDir);
+    configJSON = Config.mergePlugins(configJSON, flags, configDir);
 
-    const settings = Config.initSettings(configJSON.settings, flags);
+    if (flags) {
+      assertValidFlags(flags);
+    }
+    const settings = resolveSettings(configJSON.settings || {}, flags);
 
     // Augment passes with necessary defaults and require gatherers.
     const passesWithDefaults = Config.augmentPassesWithDefaults(configJSON.passes);
@@ -384,12 +270,9 @@ class Config {
 
     Config.filterConfigIfNeeded(this);
 
-    validatePasses(this.passes, this.audits);
-    validateCategories(this.categories, this.audits, this.groups);
+    assertValidPasses(this.passes, this.audits);
+    assertValidCategories(this.categories, this.audits, this.groups);
 
-    // TODO(bckenny): until tsc adds @implements support, assert that Config is a ConfigJson.
-    /** @type {LH.Config.Json} */
-    const configJson = this; // eslint-disable-line no-unused-vars
     log.timeEnd(status);
   }
 
@@ -405,29 +288,25 @@ class Config {
       for (const pass of jsonConfig.passes) {
         for (const gathererDefn of pass.gatherers) {
           gathererDefn.implementation = undefined;
-          // @ts-ignore Breaking the Config.GathererDefn type.
+          // @ts-expect-error Breaking the Config.GathererDefn type.
           gathererDefn.instance = undefined;
-          if (Object.keys(gathererDefn.options).length === 0) {
-            // @ts-ignore Breaking the Config.GathererDefn type.
-            gathererDefn.options = undefined;
-          }
         }
       }
     }
 
     if (jsonConfig.audits) {
       for (const auditDefn of jsonConfig.audits) {
-        // @ts-ignore Breaking the Config.AuditDefn type.
+        // @ts-expect-error Breaking the Config.AuditDefn type.
         auditDefn.implementation = undefined;
         if (Object.keys(auditDefn.options).length === 0) {
-          // @ts-ignore Breaking the Config.AuditDefn type.
+          // @ts-expect-error Breaking the Config.AuditDefn type.
           auditDefn.options = undefined;
         }
       }
     }
 
     // Printed config is more useful with localized strings.
-    i18n.replaceIcuMessageInstanceIds(jsonConfig, jsonConfig.settings.locale);
+    i18n.replaceIcuMessages(jsonConfig, jsonConfig.settings.locale);
 
     return JSON.stringify(jsonConfig, null, 2);
   }
@@ -447,34 +326,38 @@ class Config {
         if (!basePass) {
           baseJSON.passes.push(pass);
         } else {
-          merge(basePass, pass);
+          mergeConfigFragment(basePass, pass);
         }
       }
 
       delete extendJSON.passes;
     }
 
-    return merge(baseJSON, extendJSON);
+    return mergeConfigFragment(baseJSON, extendJSON);
   }
 
   /**
    * @param {LH.Config.Json} configJSON
+   * @param {LH.Flags=} flags
    * @param {string=} configDir
    * @return {LH.Config.Json}
    */
-  static mergePlugins(configJSON, configDir) {
-    const pluginNames = configJSON.plugins;
+  static mergePlugins(configJSON, flags, configDir) {
+    const configPlugins = configJSON.plugins || [];
+    const flagPlugins = (flags && flags.plugins) || [];
+    const pluginNames = new Set([...configPlugins, ...flagPlugins]);
 
-    if (pluginNames) {
-      for (const pluginName of pluginNames) {
-        assertValidPluginName(configJSON, pluginName);
+    for (const pluginName of pluginNames) {
+      assertValidPluginName(configJSON, pluginName);
 
-        const pluginPath = Config.resolveModule(pluginName, configDir, 'plugin');
-        const rawPluginJson = require(pluginPath);
-        const pluginJson = ConfigPlugin.parsePlugin(rawPluginJson, pluginName);
+      // TODO: refactor and delete `global.isDevtools`.
+      const pluginPath = global.isDevtools || global.isLightrider ?
+        pluginName :
+        resolveModulePath(pluginName, configDir, 'plugin');
+      const rawPluginJson = require(pluginPath);
+      const pluginJson = ConfigPlugin.parsePlugin(rawPluginJson, pluginName);
 
-        configJSON = Config.extendConfigJSON(configJSON, pluginJson);
-      }
+      configJSON = Config.extendConfigJSON(configJSON, pluginJson);
     }
 
     return configJSON;
@@ -490,101 +373,7 @@ class Config {
     }
 
     const {defaultPassConfig} = constants;
-    return passes.map(pass => merge(deepClone(defaultPassConfig), pass));
-  }
-
-  /**
-   * @param {LH.Config.SettingsJson=} settingsJson
-   * @param {LH.Flags=} flags
-   * @return {LH.Config.Settings}
-   */
-  static initSettings(settingsJson = {}, flags) {
-    // If a locale is requested in flags or settings, use it. A typical CLI run will not have one,
-    // however `lookupLocale` will always determine which of our supported locales to use (falling
-    // back if necessary).
-    const locale = i18n.lookupLocale((flags && flags.locale) || settingsJson.locale);
-
-    // Fill in missing settings with defaults
-    const {defaultSettings} = constants;
-    const settingWithDefaults = merge(deepClone(defaultSettings), settingsJson, true);
-
-    // Override any applicable settings with CLI flags
-    const settingsWithFlags = merge(settingWithDefaults || {}, cleanFlagsForSettings(flags), true);
-
-    // Locale is special and comes only from flags/settings/lookupLocale.
-    settingsWithFlags.locale = locale;
-
-    return settingsWithFlags;
-  }
-
-  /**
-   * Expands the audits from user-specified JSON to an internal audit definition format.
-   * @param {LH.Config.Json['audits']} audits
-   * @return {?Array<{path: string, options?: {}} | {implementation: typeof Audit, path?: string, options?: {}}>}
-   */
-  static expandAuditShorthand(audits) {
-    if (!audits) {
-      return null;
-    }
-
-    const newAudits = audits.map(audit => {
-      if (typeof audit === 'string') {
-        // just 'path/to/audit'
-        return {path: audit, options: {}};
-      } else if ('implementation' in audit && typeof audit.implementation.audit === 'function') {
-        // {implementation: AuditClass, ...}
-        return audit;
-      } else if ('path' in audit && typeof audit.path === 'string') {
-        // {path: 'path/to/audit', ...}
-        return audit;
-      } else if ('audit' in audit && typeof audit.audit === 'function') {
-        // just AuditClass
-        return {implementation: audit, options: {}};
-      } else {
-        throw new Error('Invalid Audit type ' + JSON.stringify(audit));
-      }
-    });
-
-    return newAudits;
-  }
-
-  /**
-   * Expands the gatherers from user-specified to an internal gatherer definition format.
-   *
-   * Input Examples:
-   *  - 'my-gatherer'
-   *  - class MyGatherer extends Gatherer { }
-   *  - {instance: myGathererInstance}
-   *
-   * @param {Array<LH.Config.GathererJson>} gatherers
-   * @return {Array<{instance?: Gatherer, implementation?: GathererConstructor, path?: string, options?: {}}>} passes
-   */
-  static expandGathererShorthand(gatherers) {
-    const expanded = gatherers.map(gatherer => {
-      if (typeof gatherer === 'string') {
-        // just 'path/to/gatherer'
-        return {path: gatherer, options: {}};
-      } else if ('implementation' in gatherer || 'instance' in gatherer) {
-        // {implementation: GathererConstructor, ...} or {instance: GathererInstance, ...}
-        return gatherer;
-      } else if ('path' in gatherer) {
-        // {path: 'path/to/gatherer', ...}
-        if (typeof gatherer.path !== 'string') {
-          throw new Error('Invalid Gatherer type ' + JSON.stringify(gatherer));
-        }
-        return gatherer;
-      } else if (typeof gatherer === 'function') {
-        // just GathererConstructor
-        return {implementation: gatherer, options: {}};
-      } else if (gatherer && typeof gatherer.beforePass === 'function') {
-        // just GathererInstance
-        return {instance: gatherer, options: {}};
-      } else {
-        throw new Error('Invalid Gatherer type ' + JSON.stringify(gatherer));
-      }
-    });
-
-    return expanded;
+    return passes.map(pass => mergeConfigFragment(deepClone(defaultPassConfig), pass));
   }
 
   /**
@@ -602,6 +391,8 @@ class Config {
     const defaultPass = passes.find(pass => pass.passName === 'defaultPass');
     if (!defaultPass) return;
     const overrides = constants.nonSimulatedPassConfigOverrides;
+    defaultPass.pauseAfterFcpMs =
+      Math.max(overrides.pauseAfterFcpMs, defaultPass.pauseAfterFcpMs);
     defaultPass.pauseAfterLoadMs =
       Math.max(overrides.pauseAfterLoadMs, defaultPass.pauseAfterLoadMs);
     defaultPass.cpuQuietThresholdMs =
@@ -629,10 +420,10 @@ class Config {
         requestedAuditNames.has(auditDefn.implementation.meta.id));
 
     // 3. Resolve which gatherers will need to run
-    const requiredGathererIds = Config.getGatherersNeededByAudits(audits);
+    const requestedGathererIds = Config.getGatherersRequestedByAudits(audits);
 
     // 4. Filter to only the neccessary passes
-    const passes = Config.generatePassesNeededByGatherers(config.passes, requiredGathererIds);
+    const passes = Config.generatePassesNeededByGatherers(config.passes, requestedGathererIds);
 
     config.categories = categories;
     config.audits = audits;
@@ -693,12 +484,12 @@ class Config {
       const category = deepClone(oldCategories[categoryId]);
 
       if (filterByIncludedCategory && filterByIncludedAudit) {
-        // If we're filtering to the category and audit whitelist, include the union of the two
+        // If we're filtering by category and audit, include the union of the two
         if (!categoryIds.includes(categoryId)) {
           category.auditRefs = category.auditRefs.filter(audit => auditIds.includes(audit.id));
         }
       } else if (filterByIncludedCategory) {
-        // If we're filtering to just the category whitelist and the category is not included, skip it
+        // If we're filtering by just category, and the category is not included, skip it
         if (!categoryIds.includes(categoryId)) {
           return;
         }
@@ -706,7 +497,7 @@ class Config {
         category.auditRefs = category.auditRefs.filter(audit => auditIds.includes(audit.id));
       }
 
-      // always filter to the audit blacklist
+      // always filter based on skipAuditIds
       category.auditRefs = category.auditRefs.filter(audit => !skipAuditIds.includes(audit.id));
 
       if (category.auditRefs.length) {
@@ -715,60 +506,59 @@ class Config {
       }
     });
 
+    // The `full-page-screenshot` audit belongs to no category, but we still want to include
+    // it (unless explictly excluded) because there are audits in every category that can use it.
+    if (settings.onlyCategories) {
+      const explicitlyExcludesFullPageScreenshot =
+        settings.skipAudits && settings.skipAudits.includes('full-page-screenshot');
+      if (!explicitlyExcludesFullPageScreenshot) {
+        includedAudits.add('full-page-screenshot');
+      }
+    }
+
     return {categories, requestedAuditNames: includedAudits};
   }
 
   /**
-   * @param {LH.Config.Json} config
-   * @return {Array<{id: string, title: string}>}
-   */
-  static getCategories(config) {
-    const categories = config.categories;
-    if (!categories) {
-      return [];
-    }
-
-    return Object.keys(categories).map(id => {
-      const title = categories[id].title;
-      return {id, title};
-    });
-  }
-
-  /**
-   * From some requested audits, return names of all required artifacts
+   * From some requested audits, return names of all required and optional artifacts
    * @param {Config['audits']} audits
    * @return {Set<string>}
    */
-  static getGatherersNeededByAudits(audits) {
+  static getGatherersRequestedByAudits(audits) {
     // It's possible we weren't given any audits (but existing audit results), in which case
     // there is no need to do any work here.
     if (!audits) {
       return new Set();
     }
 
-    return audits.reduce((list, auditDefn) => {
-      auditDefn.implementation.meta.requiredArtifacts.forEach(artifact => list.add(artifact));
-      return list;
-    }, new Set());
+    const gatherers = new Set();
+    for (const auditDefn of audits) {
+      const {requiredArtifacts, __internalOptionalArtifacts} = auditDefn.implementation.meta;
+      requiredArtifacts.forEach(artifact => gatherers.add(artifact));
+      if (__internalOptionalArtifacts) {
+        __internalOptionalArtifacts.forEach(artifact => gatherers.add(artifact));
+      }
+    }
+    return gatherers;
   }
 
   /**
-   * Filters to only required passes and gatherers, returning a new passes array.
+   * Filters to only requested passes and gatherers, returning a new passes array.
    * @param {Config['passes']} passes
-   * @param {Set<string>} requiredGatherers
+   * @param {Set<string>} requestedGatherers
    * @return {Config['passes']}
    */
-  static generatePassesNeededByGatherers(passes, requiredGatherers) {
+  static generatePassesNeededByGatherers(passes, requestedGatherers) {
     if (!passes) {
       return null;
     }
 
-    const auditsNeedTrace = requiredGatherers.has('traces');
+    const auditsNeedTrace = requestedGatherers.has('traces');
     const filteredPasses = passes.map(pass => {
       // remove any unncessary gatherers from within the passes
       pass.gatherers = pass.gatherers.filter(gathererDefn => {
         const gatherer = gathererDefn.instance;
-        return requiredGatherers.has(gatherer.name);
+        return requestedGatherers.has(gatherer.name);
       });
 
       // disable the trace if no audit requires a trace
@@ -791,7 +581,7 @@ class Config {
 
   /**
    * Take an array of audits and audit paths and require any paths (possibly
-   * relative to the optional `configDir`) using `Config.resolveModule`,
+   * relative to the optional `configDir`) using `resolveModulePath`,
    * leaving only an array of AuditDefns.
    * @param {LH.Config.Json['audits']} audits
    * @param {string=} configDir
@@ -800,71 +590,15 @@ class Config {
   static requireAudits(audits, configDir) {
     const status = {msg: 'Requiring audits', id: 'lh:config:requireAudits'};
     log.time(status, 'verbose');
-    const expandedAudits = Config.expandAuditShorthand(audits);
-    if (!expandedAudits) {
-      return null;
-    }
-
-    const coreList = Runner.getAuditList();
-    const auditDefns = expandedAudits.map(audit => {
-      let implementation;
-      if ('implementation' in audit) {
-        implementation = audit.implementation;
-      } else {
-        // See if the audit is a Lighthouse core audit.
-        const auditPathJs = `${audit.path}.js`;
-        const coreAudit = coreList.find(a => a === auditPathJs);
-        let requirePath = `../audits/${audit.path}`;
-        if (!coreAudit) {
-          // Otherwise, attempt to find it elsewhere. This throws if not found.
-          requirePath = Config.resolveModule(audit.path, configDir, 'audit');
-        }
-        implementation = /** @type {typeof Audit} */ (require(requirePath));
-      }
-
-      return {
-        implementation,
-        path: audit.path,
-        options: audit.options || {},
-      };
-    });
-
-    const mergedAuditDefns = mergeOptionsOfItems(auditDefns);
-    mergedAuditDefns.forEach(audit => assertValidAudit(audit.implementation, audit.path));
+    const auditDefns = resolveAuditsToDefns(audits, configDir);
     log.timeEnd(status);
-    return mergedAuditDefns;
-  }
-
-  /**
-   * @param {string} path
-   * @param {{}=} options
-   * @param {Array<string>} coreAuditList
-   * @param {string=} configDir
-   * @return {LH.Config.GathererDefn}
-   */
-  static requireGathererFromPath(path, options, coreAuditList, configDir) {
-    const coreGatherer = coreAuditList.find(a => a === `${path}.js`);
-
-    let requirePath = `../gather/gatherers/${path}`;
-    if (!coreGatherer) {
-      // Otherwise, attempt to find it elsewhere. This throws if not found.
-      requirePath = Config.resolveModule(path, configDir, 'gatherer');
-    }
-
-    const GathererClass = /** @type {GathererConstructor} */ (require(requirePath));
-
-    return {
-      instance: new GathererClass(),
-      implementation: GathererClass,
-      path,
-      options: options || {},
-    };
+    return auditDefns;
   }
 
   /**
    * Takes an array of passes with every property now initialized except the
    * gatherers and requires them, (relative to the optional `configDir` if
-   * provided) using `Config.resolveModule`, returning an array of full Passes.
+   * provided) using `resolveModulePath`, returning an array of full Passes.
    * @param {?Array<Required<LH.Config.PassJson>>} passes
    * @param {string=} configDir
    * @return {Config['passes']}
@@ -878,84 +612,19 @@ class Config {
 
     const coreList = Runner.getGathererList();
     const fullPasses = passes.map(pass => {
-      const gathererDefns = Config.expandGathererShorthand(pass.gatherers).map(gathererDefn => {
-        if (gathererDefn.instance) {
-          return {
-            instance: gathererDefn.instance,
-            implementation: gathererDefn.implementation,
-            path: gathererDefn.path,
-            options: gathererDefn.options || {},
-          };
-        } else if (gathererDefn.implementation) {
-          const GathererClass = gathererDefn.implementation;
-          return {
-            instance: new GathererClass(),
-            implementation: gathererDefn.implementation,
-            path: gathererDefn.path,
-            options: gathererDefn.options || {},
-          };
-        } else if (gathererDefn.path) {
-          const path = gathererDefn.path;
-          const options = gathererDefn.options;
-          return Config.requireGathererFromPath(path, options, coreList, configDir);
-        } else {
-          throw new Error('Invalid expanded Gatherer: ' + JSON.stringify(gathererDefn));
-        }
-      });
+      const gathererDefns = pass.gatherers
+        .map(gatherer => resolveGathererToDefn(gatherer, coreList, configDir));
 
-      const mergedDefns = mergeOptionsOfItems(gathererDefns);
-      mergedDefns.forEach(gatherer => assertValidGatherer(gatherer.instance, gatherer.path));
+      // De-dupe gatherers by artifact name because artifact IDs must be unique at runtime.
+      const uniqueDefns = Array.from(
+        new Map(gathererDefns.map(defn => [defn.instance.name, defn])).values()
+      );
+      uniqueDefns.forEach(gatherer => assertValidGatherer(gatherer.instance, gatherer.path));
 
-      return Object.assign(pass, {gatherers: mergedDefns});
+      return Object.assign(pass, {gatherers: uniqueDefns});
     });
     log.timeEnd(status);
     return fullPasses;
-  }
-
-  /**
-   * Resolves the location of the specified module and returns an absolute
-   * string path to the file. Used for loading custom audits and gatherers.
-   * Throws an error if no module is found.
-   * @param {string} moduleIdentifier
-   * @param {string=} configDir The absolute path to the directory of the config file, if there is one.
-   * @param {string=} category Optional plugin category (e.g. 'audit') for better error messages.
-   * @return {string}
-   * @throws {Error}
-   */
-  static resolveModule(moduleIdentifier, configDir, category) {
-    // First try straight `require()`. Unlikely to be specified relative to this
-    // file, but adds support for Lighthouse modules from npm since
-    // `require()` walks up parent directories looking inside any node_modules/
-    // present. Also handles absolute paths.
-    try {
-      return require.resolve(moduleIdentifier);
-    } catch (e) {}
-
-    // See if the module resolves relative to the current working directory.
-    // Most useful to handle the case of invoking Lighthouse as a module, since
-    // then the config is an object and so has no path.
-    const cwdPath = path.resolve(process.cwd(), moduleIdentifier);
-    try {
-      return require.resolve(cwdPath);
-    } catch (e) {}
-
-    const errorString = 'Unable to locate ' +
-        (category ? `${category}: ` : '') +
-        `${moduleIdentifier} (tried to require() from '${__dirname}' and load from '${cwdPath}'`;
-
-    if (!configDir) {
-      throw new Error(errorString + ')');
-    }
-
-    // Finally, try looking up relative to the config file path. Just like the
-    // relative path passed to `require()` is found relative to the file it's
-    // in, this allows module paths to be specified relative to the config file.
-    const relativePath = path.resolve(configDir, moduleIdentifier);
-    try {
-      return require.resolve(relativePath);
-    } catch (requireError) {}
-
-    throw new Error(errorString + ` and '${relativePath}')`);
   }
 }
 

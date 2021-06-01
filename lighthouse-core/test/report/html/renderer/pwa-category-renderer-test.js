@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2018 Google Inc. All Rights Reserved.
+ * @license Copyright 2018 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -7,11 +7,11 @@
 
 /* eslint-env jest, browser */
 
-const assert = require('assert');
+const assert = require('assert').strict;
 const fs = require('fs');
 const jsdom = require('jsdom');
 const Util = require('../../../../report/html/renderer/util.js');
-const URL = require('../../../../lib/url-shim.js');
+const I18n = require('../../../../report/html/renderer/i18n.js');
 const DOM = require('../../../../report/html/renderer/dom.js');
 const DetailsRenderer = require('../../../../report/html/renderer/details-renderer.js');
 const CategoryRenderer = require('../../../../report/html/renderer/category-renderer.js');
@@ -26,8 +26,8 @@ describe('PwaCategoryRenderer', () => {
   let sampleResults;
 
   beforeAll(() => {
-    global.URL = URL;
     global.Util = Util;
+    global.Util.i18n = new I18n('en', {...Util.UIStrings});
     global.CategoryRenderer = CategoryRenderer;
 
     const PwaCategoryRenderer =
@@ -43,12 +43,12 @@ describe('PwaCategoryRenderer', () => {
 
   beforeEach(() => {
     // Clone category to allow modifications.
-    const pwaCategory = sampleResults.reportCategories.find(cat => cat.id === 'pwa');
+    const pwaCategory = sampleResults.categories.pwa;
     category = JSON.parse(JSON.stringify(pwaCategory));
   });
 
   afterAll(() => {
-    global.URL = undefined;
+    global.Util.i18n = undefined;
     global.Util = undefined;
     global.CategoryRenderer = undefined;
   });
@@ -61,7 +61,6 @@ describe('PwaCategoryRenderer', () => {
 
     const nonManualAudits = category.auditRefs
       .filter(audit => audit.result.scoreDisplayMode !== 'manual');
-
     assert.strictEqual(regularAuditElements.length, nonManualAudits.length);
   });
 
@@ -84,7 +83,7 @@ describe('PwaCategoryRenderer', () => {
 
   it('renders the audit groups', () => {
     const categoryGroupIds = new Set(category.auditRefs.filter(a => a.group).map(a => a.group));
-    assert.strictEqual(categoryGroupIds.size, 3); // Ensure there's something to test.
+    assert.strictEqual(categoryGroupIds.size, 2); // Ensure there's something to test.
 
     const categoryElem = pwaRenderer.render(category, sampleResults.categoryGroups);
 
@@ -104,21 +103,40 @@ describe('PwaCategoryRenderer', () => {
       auditRefs = category.auditRefs
         .filter(audit => audit.result.scoreDisplayMode !== 'manual');
 
-      // Expect results to all be scorable.
+      // Expect results to all be scorable or n/a
       for (const auditRef of auditRefs) {
-        assert.strictEqual(auditRef.result.scoreDisplayMode, 'binary');
+        const matcher = expect.stringMatching(/(binary)|(notApplicable)/);
+        expect(auditRef.result.scoreDisplayMode).toEqual(matcher);
       }
 
       groupIds = [...new Set(auditRefs.map(ref => ref.group))];
     });
 
+    it('gives passing even if an audit is notApplicable', () => {
+      const clone = JSON.parse(JSON.stringify(sampleResults));
+      const category = clone.categories.pwa;
+
+      // Set everything to passing, except redirects-http set to n/a (as it is on localhost)
+      for (const auditRef of category.auditRefs) {
+        auditRef.result.score = 1;
+        auditRef.result.scoreDisplayMode = 'binary';
+      }
+      const audit = category.auditRefs.find(ref => ref.id === 'redirects-http');
+      audit.result.scoreDisplayMode = 'notApplicable';
+      audit.result.score = null;
+
+      const categoryElem = pwaRenderer.render(category, clone.categoryGroups);
+      const badgedElems = categoryElem.querySelectorAll(`.lh-audit-group--pwa-optimized.lh-badged`);
+      expect(badgedElems.length).toEqual(1);
+    });
+
     it('only gives a group a badge when all the group\'s audits are passing', () => {
       for (const auditRef of auditRefs) {
         auditRef.result.score = 0;
+        auditRef.result.scoreDisplayMode = 'binary';
       }
 
-      const targetGroupId = groupIds[2];
-      assert.ok(targetGroupId);
+      const targetGroupId = 'pwa-optimized';
       const targetGroupTitle = sampleResults.categoryGroups[targetGroupId].title;
       const targetAuditRefs = auditRefs.filter(ref => ref.group === targetGroupId);
 
@@ -181,6 +199,7 @@ describe('PwaCategoryRenderer', () => {
     it('renders no badges when no audit groups are passing', () => {
       for (const auditRef of auditRefs) {
         auditRef.result.score = 0;
+        auditRef.result.scoreDisplayMode = 'binary';
       }
 
       const categoryElem = pwaRenderer.render(category, sampleResults.categoryGroups);
@@ -242,7 +261,7 @@ describe('PwaCategoryRenderer', () => {
   describe('#renderScoreGauge', () => {
     it('renders an error score gauge in case of category error', () => {
       category.score = null;
-      const badgeGauge = pwaRenderer.renderScoreGauge(category);
+      const badgeGauge = pwaRenderer.renderScoreGauge(category, sampleResults.categoryGroups);
 
       // Not a PWA gauge.
       assert.strictEqual(badgeGauge.querySelector('.lh-gauge--pwa__wrapper'), null);
@@ -250,6 +269,38 @@ describe('PwaCategoryRenderer', () => {
       const percentageElem = badgeGauge.querySelector('.lh-gauge__percentage');
       assert.strictEqual(percentageElem.textContent, '?');
       assert.strictEqual(percentageElem.title, Util.UIStrings.errorLabel);
+    });
+
+    it('renders score gauges with unique ids for items in <defs>', () => {
+      const gauge1 = pwaRenderer.renderScoreGauge(category, sampleResults.categoryGroups);
+      const gauge1Ids = [...gauge1.querySelectorAll('defs [id]')].map(el => el.id);
+      assert.ok(gauge1Ids.length > 2);
+
+      const gauge2 = pwaRenderer.renderScoreGauge(category, sampleResults.categoryGroups);
+      const gauge2Ids = [...gauge2.querySelectorAll('defs [id]')].map(el => el.id);
+      assert.ok(gauge2Ids.length === gauge1Ids.length);
+
+      /** Returns whether id is used by at least one <use> or fill under `rootEl`. */
+      function idInUseElOrFillAttr(rootEl, id) {
+        const isUse = rootEl.querySelector(`use[href="#${id}"]`);
+        const isFill = rootEl.querySelector(`[fill="url(#${id})"]`);
+
+        return !!(isUse || isFill);
+      }
+
+      // Check that each gauge1 ID is actually used in gauge1 and isn't used in gauge2.
+      for (const gauge1Id of gauge1Ids) {
+        assert.equal(idInUseElOrFillAttr(gauge1, gauge1Id), true);
+        assert.ok(!gauge2Ids.includes(gauge1Id));
+        assert.equal(idInUseElOrFillAttr(gauge2, gauge1Id), false);
+      }
+
+      // And that the reverse is true for gauge2 IDs.
+      for (const gauge2Id of gauge2Ids) {
+        assert.equal(idInUseElOrFillAttr(gauge1, gauge2Id), false);
+        assert.equal(idInUseElOrFillAttr(gauge2, gauge2Id), true);
+        assert.ok(!gauge1Ids.includes(gauge2Id));
+      }
     });
   });
 });

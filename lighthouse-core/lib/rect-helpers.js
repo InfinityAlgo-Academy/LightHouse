@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2018 Google Inc. All Rights Reserved.
+ * @license Copyright 2018 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -21,18 +21,14 @@ function rectContainsPoint(rect, {x, y}) {
  */
 // We sometimes run this as a part of a gatherer script injected into the page, so prevent
 // renaming the function for code coverage.
-/* istanbul ignore next */
+/* c8 ignore start */
 function rectContains(rect1, rect2) {
   return rect2.top >= rect1.top &&
     rect2.right <= rect1.right &&
     rect2.bottom <= rect1.bottom &&
     rect2.left >= rect1.left;
 }
-
-
-const rectContainsString = `
-  ${rectContains.toString()};
-`;
+/* c8 ignore stop */
 
 /**
  * @param {LH.Artifacts.Rect[]} rects
@@ -68,12 +64,14 @@ function filterOutRectsContainedByOthers(rects) {
 /**
  * @param {LH.Artifacts.Rect} rect
  */
+/* c8 ignore start */
 function getRectCenterPoint(rect) {
   return {
     x: rect.left + rect.width / 2,
     y: rect.top + rect.height / 2,
   };
 }
+/* c8 ignore stop */
 
 /**
  * @param {LH.Artifacts.Rect} rectA
@@ -92,12 +90,12 @@ function rectsTouchOrOverlap(rectA, rectB) {
 
 /**
  * Returns a bounding rect for all the passed in rects, with padded with half of
- * `minimumSize` on all sides.
+ * `padding` on all sides.
  * @param {LH.Artifacts.Rect[]} rects
- * @param {number} minimumSize
+ * @param {number} padding
  * @return {LH.Artifacts.Rect}
  */
-function getBoundingRectWithPadding(rects, minimumSize) {
+function getBoundingRectWithPadding(rects, padding) {
   if (rects.length === 0) {
     throw new Error('No rects to take bounds of');
   }
@@ -114,7 +112,7 @@ function getBoundingRectWithPadding(rects, minimumSize) {
   }
 
   // Pad on all sides.
-  const halfMinSize = minimumSize / 2;
+  const halfMinSize = padding / 2;
   left -= halfMinSize;
   right += halfMinSize;
   top -= halfMinSize;
@@ -131,20 +129,10 @@ function getBoundingRectWithPadding(rects, minimumSize) {
 }
 
 /**
- * @param {LH.Artifacts.Rect} rectA
- * @param {LH.Artifacts.Rect} rectB
+ * @param {LH.Artifacts.Rect[]} rects
  */
-function getBoundingRect(rectA, rectB) {
-  const left = Math.min(rectA.left, rectB.left);
-  const right = Math.max(rectA.right, rectB.right);
-  const top = Math.min(rectA.top, rectB.top);
-  const bottom = Math.max(rectA.bottom, rectB.bottom);
-  return addRectWidthAndHeight({
-    left,
-    right,
-    top,
-    bottom,
-  });
+function getBoundingRect(rects) {
+  return getBoundingRectWithPadding(rects, 0);
 }
 
 /**
@@ -208,13 +196,16 @@ function getRectAtCenter(rect, centerRectSize) {
 /**
  * @param {LH.Artifacts.Rect} rect
  */
+/* c8 ignore start */
 function getRectArea(rect) {
   return rect.width * rect.height;
 }
+/* c8 ignore stop */
 
 /**
  * @param {LH.Artifacts.Rect[]} rects
  */
+/* c8 ignore start */
 function getLargestRect(rects) {
   let largestRect = rects[0];
   for (const rect of rects) {
@@ -224,6 +215,7 @@ function getLargestRect(rects) {
   }
   return largestRect;
 }
+/* c8 ignore stop */
 
 /**
  *
@@ -244,12 +236,12 @@ function allRectsContainedWithinEachOther(rectListA, rectListB) {
 module.exports = {
   rectContainsPoint,
   rectContains,
-  rectContainsString,
   addRectWidthAndHeight,
   addRectTopAndBottom,
   getRectOverlapArea,
   getRectAtCenter,
   getLargestRect,
+  getRectArea,
   getRectCenterPoint,
   getBoundingRect,
   getBoundingRectWithPadding,

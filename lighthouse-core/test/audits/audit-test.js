@@ -1,12 +1,12 @@
 /**
- * @license Copyright 2016 Google Inc. All Rights Reserved.
+ * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
 
 const Audit = require('../../audits/audit.js');
-const assert = require('assert');
+const assert = require('assert').strict;
 
 /* eslint-env jest */
 
@@ -18,6 +18,30 @@ class B extends Audit {
   }
 
   static audit() {}
+}
+
+class PassOrFailAudit extends Audit {
+  static get meta() {
+    return {
+      id: 'pass-or-fail',
+      title: 'Passing',
+      failureTitle: 'Failing',
+      description: 'A pass or fail audit',
+      requiredArtifacts: [],
+    };
+  }
+}
+
+class NumericAudit extends Audit {
+  static get meta() {
+    return {
+      id: 'numeric-time',
+      title: 'Numbersssss',
+      description: '01000000001011011111100001010100',
+      requiredArtifacts: [],
+      scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
+    };
+  }
 }
 
 describe('Audit', () => {
@@ -37,64 +61,103 @@ describe('Audit', () => {
     assert.doesNotThrow(_ => B.audit());
   });
 
-  describe('_normalizeAuditScore', () => {
-    it('returns a score that is always 0-1', () => {
-      const auditResult = Audit._normalizeAuditScore(B, {rawValue: true});
-      assert.equal(Number.isFinite(auditResult.score), true);
-      assert.equal(auditResult.score, 1);
-      assert.equal(auditResult.score <= 1, true);
+  describe('generateAuditResult', () => {
+    describe('scoreDisplayMode', () => {
+      it('defaults to BINARY scoring when no scoreDisplayMode is set', () => {
+        assert.strictEqual(PassOrFailAudit.meta.scoreDisplayMode, undefined);
+        const auditResult = Audit.generateAuditResult(PassOrFailAudit, {score: 1});
+        assert.strictEqual(auditResult.scoreDisplayMode, Audit.SCORING_MODES.BINARY);
+        assert.strictEqual(auditResult.score, 1);
+      });
 
-      const auditResultFail = Audit._normalizeAuditScore(B, {rawValue: false});
-      assert.equal(Number.isFinite(auditResultFail.score), true);
-      assert.equal(auditResultFail.score, 0);
-      assert.equal(auditResultFail.score <= 1, true);
-      assert.equal(auditResultFail.score >= 0, true);
+      it('does not override scoreDisplayMode and is scored when it is NUMERIC', () => {
+        assert.strictEqual(NumericAudit.meta.scoreDisplayMode, Audit.SCORING_MODES.NUMERIC);
+        const auditResult = Audit.generateAuditResult(NumericAudit, {score: 1});
+        assert.strictEqual(auditResult.scoreDisplayMode, Audit.SCORING_MODES.NUMERIC);
+        assert.strictEqual(auditResult.score, 1);
+      });
+
+      it('switches to an ERROR and is not scored if an errorMessage is passed in', () => {
+        const errorMessage = 'ERRRRR';
+        const auditResult = Audit.generateAuditResult(NumericAudit, {score: 1, errorMessage});
+
+        assert.strictEqual(auditResult.scoreDisplayMode, Audit.SCORING_MODES.ERROR);
+        assert.strictEqual(auditResult.errorMessage, errorMessage);
+        assert.strictEqual(auditResult.score, null);
+      });
+
+      it('switches to an ERROR and is not scored if an errorMessage is passed in with null', () => {
+        const errorMessage = 'ERRRRR';
+        const auditResult = Audit.generateAuditResult(NumericAudit, {score: null, errorMessage});
+
+        assert.strictEqual(auditResult.scoreDisplayMode, Audit.SCORING_MODES.ERROR);
+        assert.strictEqual(auditResult.errorMessage, errorMessage);
+        assert.strictEqual(auditResult.score, null);
+      });
+
+      it('switches to NOT_APPLICABLE and is not scored if product was marked notApplicable', () => {
+        const auditResult = Audit.generateAuditResult(PassOrFailAudit,
+            {score: 1, notApplicable: true});
+
+        assert.strictEqual(auditResult.scoreDisplayMode, Audit.SCORING_MODES.NOT_APPLICABLE);
+        assert.strictEqual(auditResult.score, null);
+      });
     });
 
-    it('throws if an audit returns a score >1', () => {
-      assert.throws(_ => Audit._normalizeAuditScore(B, {rawValue: true, score: 100}), /is > 1/);
-      assert.throws(_ => Audit._normalizeAuditScore(B, {rawValue: true, score: 2}), /is > 1/);
+    it('throws if an audit returns a score > 1', () => {
+      assert.throws(_ => Audit.generateAuditResult(PassOrFailAudit, {score: 100}), /is > 1/);
+      assert.throws(_ => Audit.generateAuditResult(PassOrFailAudit, {score: 2}), /is > 1/);
+    });
+
+    it('throws if an audit returns a score < 0', () => {
+      assert.throws(_ => Audit.generateAuditResult(PassOrFailAudit, {score: -0.1}), /is < 0/);
+      assert.throws(_ => Audit.generateAuditResult(PassOrFailAudit, {score: -100}), /is < 0/);
     });
 
     it('throws if an audit returns a score that\'s not a number', () => {
       const re = /Invalid score/;
-      assert.throws(_ => Audit._normalizeAuditScore(B, {rawValue: true, score: NaN}), re);
-      assert.throws(_ => Audit._normalizeAuditScore(B, {rawValue: true, score: 'string'}), re);
-      assert.throws(_ => Audit._normalizeAuditScore(B, {rawValue: true, score: 50}), /is > 1/);
+      assert.throws(_ => Audit.generateAuditResult(PassOrFailAudit, {score: NaN}), re);
+      assert.throws(_ => Audit.generateAuditResult(PassOrFailAudit, {score: 'string'}), re);
     });
-  });
 
-  describe('generateAuditResult', () => {
-    it('throws if an audit does return a result with a rawValue', () => {
-      assert.throws(_ => Audit.generateAuditResult(B, {}), /requires a rawValue/);
+    it('throws if an audit does not return a result with a score', () => {
+      assert.throws(_ => Audit.generateAuditResult(PassOrFailAudit, {}), /requires a score/);
+    });
+
+    it('clamps the score to two decimals', () => {
+      const auditResult = Audit.generateAuditResult(PassOrFailAudit, {score: 0.29666666666666663});
+      assert.strictEqual(auditResult.score, 0.3);
+    });
+
+    it('chooses the title if score is passing', () => {
+      const auditResult = Audit.generateAuditResult(PassOrFailAudit, {score: 1});
+      assert.strictEqual(auditResult.score, 1);
+      assert.equal(auditResult.title, 'Passing');
     });
 
     it('chooses the failureTitle if score is failing', () => {
-      class FailingAudit extends Audit {
-        static get meta() {
-          return {
-            title: 'Passing',
-            failureTitle: 'Failing',
-          };
-        }
-      }
-
-      const auditResult = Audit.generateAuditResult(FailingAudit, {rawValue: false});
-      assert.ok(Number.isFinite(auditResult.score));
-      assert.equal(auditResult.score, 0);
+      const auditResult = Audit.generateAuditResult(PassOrFailAudit, {score: 0});
+      assert.strictEqual(auditResult.score, 0);
       assert.equal(auditResult.title, 'Failing');
+    });
+
+    it('chooses the title if audit is not scored due to scoreDisplayMode', () => {
+      const auditResult = Audit.generateAuditResult(PassOrFailAudit,
+          {score: 0, errorMessage: 'what errors lurk'});
+      assert.strictEqual(auditResult.score, null);
+      assert.equal(auditResult.title, 'Passing');
     });
   });
 
   it('sets state of non-applicable audits', () => {
-    const providedResult = {rawValue: true, notApplicable: true};
+    const providedResult = {score: 1, notApplicable: true};
     const result = Audit.generateAuditResult(B, providedResult);
     assert.equal(result.score, null);
     assert.equal(result.scoreDisplayMode, 'notApplicable');
   });
 
   it('sets state of failed audits', () => {
-    const providedResult = {rawValue: true, errorMessage: 'It did not work'};
+    const providedResult = {score: 1, errorMessage: 'It did not work'};
     const result = Audit.generateAuditResult(B, providedResult);
     assert.equal(result.score, null);
     assert.equal(result.scoreDisplayMode, 'error');
@@ -205,6 +268,22 @@ describe('Audit', () => {
         type: 'list',
         items: [1, 2, 3],
       });
+    });
+  });
+
+  describe('#computeLogNormalScore', () => {
+    it('clamps the score to two decimal places', () => {
+      const params = {
+        median: 1000,
+        p10: 500,
+      };
+
+      assert.strictEqual(Audit.computeLogNormalScore(params, 0), 1);
+      assert.strictEqual(Audit.computeLogNormalScore(params, 250), 0.99);
+      assert.strictEqual(Audit.computeLogNormalScore(params, 1500), 0.23);
+      assert.strictEqual(Audit.computeLogNormalScore(params, 2500), 0.05);
+      assert.strictEqual(Audit.computeLogNormalScore(params, 4000), 0.01);
+      assert.strictEqual(Audit.computeLogNormalScore(params, 4100), 0);
     });
   });
 });

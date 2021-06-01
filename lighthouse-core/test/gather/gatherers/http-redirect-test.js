@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2016 Google Inc. All Rights Reserved.
+ * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -7,8 +7,8 @@
 
 /* eslint-env jest */
 
-const HTTPRedirectGather = require('../../../gather/gatherers/http-redirect');
-const assert = require('assert');
+const HTTPRedirectGather = require('../../../gather/gatherers/http-redirect.js');
+const assert = require('assert').strict;
 let httpRedirectGather;
 
 describe('HTTP Redirect gatherer', () => {
@@ -29,8 +29,10 @@ describe('HTTP Redirect gatherer', () => {
     const opts = {
       url: 'https://example.com',
       driver: {
-        evaluateAsync: function() {
-          return Promise.resolve(true);
+        executionContext: {
+          evaluateAsync: function() {
+            return Promise.resolve(true);
+          },
         },
       },
     };
@@ -46,8 +48,10 @@ describe('HTTP Redirect gatherer', () => {
   it('returns an artifact', () => {
     return httpRedirectGather.afterPass({
       driver: {
-        evaluateAsync: function() {
-          return Promise.resolve(true);
+        executionContext: {
+          evaluateAsync: function() {
+            return Promise.resolve(true);
+          },
         },
       },
     }).then(artifact => {
@@ -58,8 +62,10 @@ describe('HTTP Redirect gatherer', () => {
   it('fails a non-redirecting page', () => {
     return httpRedirectGather.afterPass({
       driver: {
-        evaluateAsync: function() {
-          return Promise.resolve(false);
+        executionContext: {
+          evaluateAsync: function() {
+            return Promise.resolve(false);
+          },
         },
       },
     }).then(artifact => {
@@ -70,8 +76,10 @@ describe('HTTP Redirect gatherer', () => {
   it('throws an error on driver failure', () => {
     return httpRedirectGather.afterPass({
       driver: {
-        evaluateAsync: function() {
-          return Promise.reject(new Error('an unexpected driver error occurred'));
+        executionContext: {
+          evaluateAsync: function() {
+            return Promise.reject(new Error('an unexpected driver error occurred'));
+          },
         },
       },
     }).then(
