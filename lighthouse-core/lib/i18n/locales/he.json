@@ -476,6 +476,12 @@
   "lighthouse-core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "יש להימנע משימוש ב-JavaScript מדור קודם בדפדפנים מודרניים"
   },
+  "lighthouse-core/audits/byte-efficiency/modern-image-formats.js | description": {
+    "message": "לעתים קרובות, פורמטים של תמונות כמו JPEG 2000‏, JPEG XR ו-WebP מספקים דחיסה טובה יותר מאשר PNG או JPEG. הדחיסה המשופרת מקצרת את זמן ההורדות ומצמצמת את צריכת הנתונים. [מידע נוסף](https://web.dev/uses-webp-images/)."
+  },
+  "lighthouse-core/audits/byte-efficiency/modern-image-formats.js | title": {
+    "message": "יש להציג תמונות בפורמטים עדכניים"
+  },
   "lighthouse-core/audits/byte-efficiency/offscreen-images.js | description": {
     "message": "כדי לקצר את הזמן עד לפעילות מלאה, כדאי לשקול לבצע טעינה הדרגתית של תמונות מוסתרות ותמונות שלא מופיעות מיד במסך, כך שייטענו רק אחרי סיום הטעינה של כל המשאבים הקריטיים. [מידע נוסף](https://web.dev/offscreen-images/)."
   },
@@ -578,8 +584,14 @@
   "lighthouse-core/audits/csp-xss.js | columnDirective": {
     "message": "הוראה"
   },
+  "lighthouse-core/audits/csp-xss.js | columnSeverity": {
+    "message": "מידת החומרה"
+  },
   "lighthouse-core/audits/csp-xss.js | description": {
-    "message": "שימוש במדיניות חזקה מסוג Content Security Policy ‏(CSP) מפחית באופן משמעותי את הסיכון למתקפות XSS. [מידע נוסף](https://csp.withgoogle.com/docs/index.html)"
+    "message": "שימוש במדיניות חזקה מסוג Content Security Policy (‏CSP) מפחית באופן משמעותי את הסיכון למתקפות שמקורן בפרצת אבטחה מסוג XSS ‏(cross-site scripting). [למידע נוסף](https://web.dev/strict-csp/)"
+  },
+  "lighthouse-core/audits/csp-xss.js | itemSeveritySyntax": {
+    "message": "תחביר"
   },
   "lighthouse-core/audits/csp-xss.js | metaTagMessage": {
     "message": "הדף מכיל מדיניות CSP שהוגדרה עם תג <meta>. אם אפשר, כדאי להגדיר את ה-CSP בכותרת HTTP."
@@ -1835,6 +1847,15 @@
   "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
     "message": "Time to Interactive"
   },
+  "lighthouse-core/lib/i18n/i18n.js | itemSeverityHigh": {
+    "message": "גבוהה"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | itemSeverityLow": {
+    "message": "נמוכה"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | itemSeverityMedium": {
+    "message": "בינונית"
+  },
   "lighthouse-core/lib/i18n/i18n.js | largestContentfulPaintMetric": {
     "message": "Largest Contentful Paint"
   },
@@ -2043,7 +2064,7 @@
     "message": "ערך לא ידוע"
   },
   "lighthouse-core/report/html/renderer/util.js | showRelevantAudits": {
-    "message": "Show audits relevant to:"
+    "message": "הצגת הביקורות שרלוונטיות למדדים:"
   },
   "lighthouse-core/report/html/renderer/util.js | snippetCollapseButtonLabel": {
     "message": "כיווץ קטע הטקסט"
@@ -2099,6 +2120,9 @@
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "להצגת תוכן באנימציה, כשהתוכן לא מוצג במסך כדאי להשתמש ב-[`amp-anim`](https://amp.dev/documentation/components/amp-anim/) כדי לצמצם את השימוש ביחידת העיבוד המרכזית (CPU)."
   },
+  "node_modules/lighthouse-stack-packs/packs/amp.js | modern-image-formats": {
+    "message": "כדאי להציג את כל רכיבי [`amp-img`](https://amp.dev/documentation/components/amp-img/?format=websites) בפורמטים של WebP, וכן לציין פורמט גיבוי חלופי שמתאים לדפדפנים אחרים. [מידע נוסף](https://amp.dev/documentation/components/amp-img/#example:-specifying-a-fallback-image)."
+  },
   "node_modules/lighthouse-stack-packs/packs/amp.js | offscreen-images": {
     "message": "יש להקפיד להשתמש ב-[`amp-img`](https://amp.dev/documentation/components/amp-img/?format=websites) לטעינה הדרגתית של תמונות באופן אוטומטי. [מידע נוסף](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)."
   },
@@ -2135,11 +2159,17 @@
   "node_modules/lighthouse-stack-packs/packs/drupal.js | font-display": {
     "message": "ניתן לציין `@font-display` כשמגדירים גופנים בהתאמה אישית בעיצוב."
   },
+  "node_modules/lighthouse-stack-packs/packs/drupal.js | modern-image-formats": {
+    "message": "כדאי לשקול התקנה והגדרה של [מודול לשיפור פורמט תמונה מסוג WebP](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=webp&solrsort=iss_project_release_usage+desc&op=Search) באתר. מודולים מסוג זה ייצרו באופן אוטומטי גרסת WebP של התמונות שהעלית כדי לבצע אופטימיזציה של זמני הטעינה."
+  },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | offscreen-images": {
     "message": "כדאי להתקין [מודול של Drupal](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=im_vid_3%3A67&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=%22lazy+load%22&solrsort=iss_project_release_usage+desc&op=Search) שיכול לטעון תמונות בהדרגה. כדי לשפר ביצועים, מודולים מסוג זה מאפשרים לדחות את טעינת התמונות שאינן מופיעות מייד במסך."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | render-blocking-resources": {
     "message": "יש לשקול להשתמש במודול כדי להטביע נכסים קריטיים של CSS ושל JavaScript או כדי לטעון נכסים באופן אסינכרוני באמצעות JavaScript כגון מודול של [צבירת CSS/JS מתקדמת](https://www.drupal.org/project/advagg). חשוב: ייתכן שהאופטימיזציות המבוצעות על ידי המודול הזה יגרמו לתקלות באתר, ולכן כנראה שיהיה צורך לערוך שינויים בקוד."
+  },
+  "node_modules/lighthouse-stack-packs/packs/drupal.js | server-response-time": {
+    "message": "עיצובים, מודולים ומפרטי שרתים משפיעים על זמן התגובה של השרת. אפשר להשתמש בעיצוב שעבר אופטימיזציה, לבחור בקפידה מודול לאופטימיזציה ו/או לשדרג את השרת. שרתי האירוח שלך צריכים להשתמש בהעברה למטמון של PHP opcode ושל הזיכרון כדי לצמצם את זמני השאילתות של מסדי נתונים כגון Redis או Memcache, וגם להשתמש בלוגיקה באיכות אופטימלית של האפליקציה כדי להכין דפים במהירות רבה יותר."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | total-byte-weight": {
     "message": "כדאי לשקול שימוש ב[סגנונות התמונות הרספונסיביות](https://www.drupal.org/docs/8/mobile-guide/responsive-images-in-drupal-8) כדי לצמצם את הגודל של התמונות שטענת לדף. אם נעשה שימוש בתצוגות להצגת פריטי תוכן מרובים בדף, כדאי לשקול יישום עימוד כדי להגביל את מספר פריטי התוכן המופיעים בכל דף נתון."
@@ -2170,6 +2200,9 @@
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | efficient-animated-content": {
     "message": "כדאי לשקול העלאה של ה-GIF לשירות שיאפשר להטמיע אותו כסרטון HTML5."
+  },
+  "node_modules/lighthouse-stack-packs/packs/joomla.js | modern-image-formats": {
+    "message": "כדאי לשקול להשתמש ב[פלאגין](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=webp) או בשירות שימירו את התמונות שהועלו לפורמטים האופטימליים באופן אוטומטי."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | offscreen-images": {
     "message": "ניתן להתקין [פלאגין של Joomla לטעינה מדורגת](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=lazy%20loading) שמאפשר לדחות את הטעינה של תמונות שאינן מופיעות מיד במסך. ניתן גם לעבור לתבנית שמספקת את הפונקציונליות הזו. בגרסה 4.0 ואילך של Joomla, כל התמונות החדשות יקבלו את המאפיין `loading` [באופן אוטומטי](https://github.com/joomla/joomla-cms/pull/30748) מהליבה."
@@ -2216,8 +2249,14 @@
   "node_modules/lighthouse-stack-packs/packs/magento.js | font-display": {
     "message": "אפשר לציין `@font-display` כש[מגדירים גופנים בהתאמה אישית](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/css-topics/using-fonts.html)."
   },
+  "node_modules/lighthouse-stack-packs/packs/magento.js | modern-image-formats": {
+    "message": "ב-[Magento Marketplace](https://marketplace.magento.com/catalogsearch/result/?q=webp) אפשר למצוא מגוון תוספים של צד שלישי שבעזרתם ניתן להשתמש בפורמטים חדשים של תמונות, וכדאי לשקול לבצע בו חיפוש."
+  },
   "node_modules/lighthouse-stack-packs/packs/magento.js | offscreen-images": {
     "message": "כדאי לשקול את שינוי המוצר ותבניות הקטלוג כך שישתמשו בתכונת ה[טעינה המדורגת](https://web.dev/native-lazy-loading) של פלטפורמת האינטרנט."
+  },
+  "node_modules/lighthouse-stack-packs/packs/magento.js | server-response-time": {
+    "message": "אפשר להשתמש ב[שילוב Varnish](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html) של Magento."
   },
   "node_modules/lighthouse-stack-packs/packs/magento.js | unminified-css": {
     "message": "ניתן להפעיל את האפשרות \"הקטנת קובצי CSS\" בהגדרות המפתח של החנות. [מידע נוסף](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)."
@@ -2240,11 +2279,17 @@
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | efficient-animated-content": {
     "message": "[כדאי להחליף אנימציות GIF בסרטונים](https://web.dev/replace-gifs-with-videos/) כדי להאיץ את הטעינה של דפי אינטרנט. מומלץ גם להשתמש בפורמטים מודרניים של קבצים כמו [WebM](https://web.dev/replace-gifs-with-videos/#create-webm-videos) או [AV1](https://developers.google.com/web/updates/2018/09/chrome-70-media-updates#av1-decoder) כדי לייעל את דחיסת הנתונים ביותר מ-30% עם קידוד הווידאו המתקדם ביותר, VP9."
   },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | modern-image-formats": {
+    "message": "כדאי לשקול להשתמש ב[פלאגין](https://octobercms.com/plugins?search=image) או בשירות שימירו את התמונות שהועלו לפורמטים האופטימליים באופן אוטומטי. הגודל של [תמונות WebP ללא אובדן נתונים](https://developers.google.com/speed/webp) קטן ב-26% ביחס לתמונות בפורמט PNG וקטן ב-25-34% ביחס לתמונות JPEG דומות באינדקס המתאים של ציוני איכות SSIM. אפשר גם להשתמש בפורמט תמונות נוסף מהדור הבא, [AVIF](https://jakearchibald.com/2020/avif-has-landed/)."
+  },
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | offscreen-images": {
     "message": "כדאי לשקול להתקין [פלאגין לטעינה מדורגת של תמונות](https://octobercms.com/plugins?search=lazy) שמאפשר לדחות את הטעינה של תמונות שאינן מופיעות מיד במסך. ניתן גם לעבור לעיצוב שמספק את הפונקציונליות הזו. אפשרות נוספת היא להשתמש ב[פלאגין של AMP](https://octobercms.com/plugins?search=Accelerated+Mobile+Pages)."
   },
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | render-blocking-resources": {
     "message": "יש הרבה יישומי פלאגין שעוזרים [להטביע נכסים קריטיים](https://octobercms.com/plugins?search=css). יישומי הפלאגין האלה עשויים לגרום לתקלות ביישומי פלאגין אחרים, לכן כדאי לבדוק אותם באופן יסודי."
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | server-response-time": {
+    "message": "עיצובים, יישומי פלאגין ומפרטי שרתים משפיעים על זמן התגובה של השרת. אפשר להשתמש בעיצוב שעבר אופטימיזציה, לבחור בקפידה פלאגין לאופטימיזציה ו/או לשדרג את השרת. מערכת ניהול התוכן October גם מאפשרת למפתחים להשתמש ב[`Queues`](https://octobercms.com/docs/services/queues) כדי לדחות את העיבוד של משימה שגוזלת זמן רב, כמו שליחת אימייל. אפשרות זו מאיצה בקשות אינטרנט באופן משמעותי."
   },
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | total-byte-weight": {
     "message": "אפשר להציג קטעים ברשימות הפוסטים (למשל, עם לחצן `show more`), לצמצם את מספר הפוסטים המוצגים בדף נתון, לחלק פוסטים ארוכים למספר דפים או להשתמש בפלאגין כדי לטעון תגובות בצורה מדורגת."
@@ -2279,6 +2324,9 @@
   "node_modules/lighthouse-stack-packs/packs/react.js | redirects": {
     "message": "אם בחרת להשתמש ב-React Router, יש לצמצם את השימוש ברכיב `<Redirect>` בשביל [ניווט במסלול](https://reacttraining.com/react-router/web/api/Redirect)."
   },
+  "node_modules/lighthouse-stack-packs/packs/react.js | server-response-time": {
+    "message": "אם מתבצע רינדור בצד השרת של רכיבי React כלשהם, כדאי לשקול להשתמש ב-`renderToNodeStream()` או `renderToStaticNodeStream()` כדי לאפשר ללקוח לקבל ולמלא חלקים שונים של הסימון, במקום את הכול בבת אחת. [מידע נוסף](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)."
+  },
   "node_modules/lighthouse-stack-packs/packs/react.js | unminified-css": {
     "message": "אם מערכת ה-build שלך מקטינה את קובצי ה-CSS באופן אוטומטי, יש להקפיד לפרוס את גרסת ה-build של סביבת הייצור של האפליקציה. אפשר לבדוק זאת עם תוסף הכלים למפתחים של React. [מידע נוסף](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
   },
@@ -2294,11 +2342,17 @@
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | efficient-animated-content": {
     "message": "כדאי לשקול העלאה של ה-GIF לשירות שיאפשר להטמיע אותו כסרטון HTML5."
   },
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | modern-image-formats": {
+    "message": "כדאי לשקול להשתמש ב[פלאגין](https://wordpress.org/plugins/search/convert+webp/) או בשירות שימירו את התמונות שהועלו לפורמטים האופטימליים באופן אוטומטי."
+  },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | offscreen-images": {
     "message": "ניתן להתקין [פלאגין של WordPress לטעינה מדורגת](https://wordpress.org/plugins/search/lazy+load/) שמאפשר לדחות את הטעינה של רכיבים שאינם מופיעים מיד במסך. ניתן גם להשתמש בעיצוב שמספק את האפשרות הזו. אפשרות נוספת היא להשתמש ב[פלאגין של AMP](https://wordpress.org/plugins/amp/)."
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | render-blocking-resources": {
     "message": "יש כמה יישומי פלאגין של WordPress שיכולים לעזור לך [להטביע נכסים קריטיים](https://wordpress.org/plugins/search/critical+css/) או [לדחות טעינה של משאבים פחות חשובים](https://wordpress.org/plugins/search/defer+css+javascript/). חשוב: ייתכן שהאופטימיזציות המבוצעות על ידי יישומי הפלאגין האלה יגרמו לתקלות בתכונות של העיצוב או יישומי הפלאגין האחרים, ולכן כנראה שיהיה צורך לבצע שינויים בקוד."
+  },
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | server-response-time": {
+    "message": "עיצובים, יישומי פלאגין ומפרטי שרתים משפיעים על זמן התגובה של השרת. אפשר להשתמש בעיצוב שעבר אופטימיזציה, לבחור בקפידה פלאגין לאופטימיזציה ו/או לשדרג את השרת."
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | total-byte-weight": {
     "message": "אפשר להציג קטעים ברשימות הפוסטים (למשל, עם תג 'עוד'), לצמצם את מספר הפוסטים המוצגים בדף נתון, לחלק פוסטים ארוכים למספר דפים או להשתמש בפלאגין כדי לטעון תגובות בצורה מדורגת."

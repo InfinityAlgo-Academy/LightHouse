@@ -476,6 +476,12 @@
   "lighthouse-core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "避免向新型瀏覽器提供舊版 JavaScript"
   },
+  "lighthouse-core/audits/byte-efficiency/modern-image-formats.js | description": {
+    "message": "JPEG 2000、JPEG XR 和 WebP 等圖片格式通常比 PNG 或 JPEG 有更好的壓縮效果，能夠更快完成下載及減少數據用量。[瞭解詳情](https://web.dev/uses-webp-images/)。"
+  },
+  "lighthouse-core/audits/byte-efficiency/modern-image-formats.js | title": {
+    "message": "提供 next-gen 格式的圖片"
+  },
   "lighthouse-core/audits/byte-efficiency/offscreen-images.js | description": {
     "message": "建議延遲載入螢幕外的項目並隱藏圖片，直到重要資源全部載入後再開始操作，以縮短可互動時間。[瞭解詳情](https://web.dev/offscreen-images/)。"
   },
@@ -578,8 +584,14 @@
   "lighthouse-core/audits/csp-xss.js | columnDirective": {
     "message": "指令"
   },
+  "lighthouse-core/audits/csp-xss.js | columnSeverity": {
+    "message": "嚴重性"
+  },
   "lighthouse-core/audits/csp-xss.js | description": {
-    "message": "強大的內容安全政策 (CSP) 可大幅降低被 XSS 攻擊的風險。[瞭解詳情](https://csp.withgoogle.com/docs/index.html)"
+    "message": "強大的內容安全政策 (CSP) 可大幅降低被跨網站指令碼 (XSS) 攻擊的風險。[瞭解詳情](https://web.dev/strict-csp/)"
+  },
+  "lighthouse-core/audits/csp-xss.js | itemSeveritySyntax": {
+    "message": "語法"
   },
   "lighthouse-core/audits/csp-xss.js | metaTagMessage": {
     "message": "網頁包含在 <meta> 標籤中定義的 CSP。如果可以，請考慮在 HTTP 標題中定義 CSP。"
@@ -1835,6 +1847,15 @@
   "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
     "message": "Time to Interactive"
   },
+  "lighthouse-core/lib/i18n/i18n.js | itemSeverityHigh": {
+    "message": "高"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | itemSeverityLow": {
+    "message": "低"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | itemSeverityMedium": {
+    "message": "中"
+  },
   "lighthouse-core/lib/i18n/i18n.js | largestContentfulPaintMetric": {
     "message": "Largest Contentful Paint"
   },
@@ -2043,7 +2064,7 @@
     "message": "不明"
   },
   "lighthouse-core/report/html/renderer/util.js | showRelevantAudits": {
-    "message": "Show audits relevant to:"
+    "message": "顯示與下列數據相關的審核："
   },
   "lighthouse-core/report/html/renderer/util.js | snippetCollapseButtonLabel": {
     "message": "收合片段"
@@ -2099,6 +2120,9 @@
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "當動畫內容在顯示螢幕之外時，您可以使用 [`amp-anim`](https://amp.dev/documentation/components/amp-anim/) 標籤來節省 CPU 用量。"
   },
+  "node_modules/lighthouse-stack-packs/packs/amp.js | modern-image-formats": {
+    "message": "建議以 WebP 格式顯示您的所有 [`amp-img`](https://amp.dev/documentation/components/amp-img/?format=websites) 組件，同時為其他瀏覽器指定適合的備用圖片。[瞭解詳情](https://amp.dev/documentation/components/amp-img/#example:-specifying-a-fallback-image)。"
+  },
   "node_modules/lighthouse-stack-packs/packs/amp.js | offscreen-images": {
     "message": "請確保您正在使用 [`amp-img`](https://amp.dev/documentation/components/amp-img/?format=websites)，讓圖片自動延遲載入。[瞭解詳情](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)。"
   },
@@ -2135,11 +2159,17 @@
   "node_modules/lighthouse-stack-packs/packs/drupal.js | font-display": {
     "message": "在主題中定義自訂字體時，請指定 `@font-display`。"
   },
+  "node_modules/lighthouse-stack-packs/packs/drupal.js | modern-image-formats": {
+    "message": "建議在您的網站中安裝並設定[模組以使用 WebP 圖片格式](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=webp&solrsort=iss_project_release_usage+desc&op=Search)。這些模組會為您上載的圖片自動產生 WebP 版本，以優化載入時間。"
+  },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | offscreen-images": {
     "message": "請安裝可以延遲載入圖片的 [Drupal 模組](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=im_vid_3%3A67&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=%22lazy+load%22&solrsort=iss_project_release_usage+desc&op=Search)。這些模組可延遲載入所有畫面外的圖片，進而提升效能。"
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | render-blocking-resources": {
     "message": "建議使用模組來內嵌重要的 CSS 和 JavaScript，或透過[進階 CSS/JS 彙整](https://www.drupal.org/project/advagg)模組等 JavaScript 來非同步載入資產。請注意，此模組提供的優化可能令網站無法正常運作，因此您可能需要修改程式碼。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/drupal.js | server-response-time": {
+    "message": "主題、模組和伺服器規格均會影響伺服器回應時間。建議尋找更優化的主題、謹慎選擇優化模組和/或升級伺服器。您的代管伺服器應使用 PHP opcode 快取、記憶體快取來降低資料庫查詢時間 (例如 Redis 或 Memcached)，還可優化應用程式邏輯以提升頁面載入速度。"
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | total-byte-weight": {
     "message": "建議使用[回應式圖片樣式](https://www.drupal.org/docs/8/mobile-guide/responsive-images-in-drupal-8)來縮減頁面上載入圖片的大小。如果您使用 Views 在頁面上顯示多個內容項目，建議透過分頁來控制特定頁面上顯示的內容項目數量。"
@@ -2170,6 +2200,9 @@
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | efficient-animated-content": {
     "message": "建議將 GIF 上載至可將 GIF 用作 HTML5 影片嵌入的伺服器。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/joomla.js | modern-image-formats": {
+    "message": "建議使用會自動將已上載圖片轉換成最佳格式的[外掛程式](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=webp)或服務。"
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | offscreen-images": {
     "message": "安裝可延遲載入所有畫面外圖片的[延遲載入 Joomla 外掛程式](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=lazy%20loading)，或改用提供此功能的範本。從 Joomla 4.0 版本開始，所有新圖片將[自動](https://github.com/joomla/joomla-cms/pull/30748)從核心程式取得 `loading` 屬性。"
@@ -2216,8 +2249,14 @@
   "node_modules/lighthouse-stack-packs/packs/magento.js | font-display": {
     "message": "在[定義自訂字體](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/css-topics/using-fonts.html)時指定 `@font-display`。"
   },
+  "node_modules/lighthouse-stack-packs/packs/magento.js | modern-image-formats": {
+    "message": "建議在 [Magento Marketplace](https://marketplace.magento.com/catalogsearch/result/?q=webp) 搜尋更多第三方擴充程式，以便運用較新的圖片格式。"
+  },
   "node_modules/lighthouse-stack-packs/packs/magento.js | offscreen-images": {
     "message": "建議修改產品和目錄範本，以使用網絡平台的[延遲載入](https://web.dev/native-lazy-loading)功能。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/magento.js | server-response-time": {
+    "message": "使用 Magento 的 [Varnish 整合](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html)。"
   },
   "node_modules/lighthouse-stack-packs/packs/magento.js | unminified-css": {
     "message": "在商店的開發人員設定中啟用「壓縮 CSS 檔案」選項。[瞭解詳情](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)。"
@@ -2240,11 +2279,17 @@
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | efficient-animated-content": {
     "message": "[以影片取代動態 GIF](https://web.dev/replace-gifs-with-videos/) 以加快網頁載入速度，並考慮使用新型檔案格式，例如 [WebM](https://web.dev/replace-gifs-with-videos/#create-webm-videos) 或 [AV1](https://developers.google.com/web/updates/2018/09/chrome-70-media-updates#av1-decoder)，以將壓縮效率提升 30% 以上 (與目前最先進的影片編解碼器 VP9 相比)。"
   },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | modern-image-formats": {
+    "message": "建議使用會自動將已上載圖片轉換成最佳格式的[外掛程式](https://octobercms.com/plugins?search=image)或服務。[WebP 無損圖片](https://developers.google.com/speed/webp)的尺寸比 PNG 小 26%，並且在相等 SSIM 畫質指標下，比相類的 JPEG 圖片小 25-34%。其他建議使用的 next-gen 圖像格式包括 [AVIF](https://jakearchibald.com/2020/avif-has-landed/)。"
+  },
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | offscreen-images": {
     "message": "建議安裝可延遲載入所有畫面外圖片的[圖片延遲載入外掛程式](https://octobercms.com/plugins?search=lazy)，或改用提供此功能的主題。您亦可考慮使用 [AMP 外掛程式](https://octobercms.com/plugins?search=Accelerated+Mobile+Pages)。"
   },
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | render-blocking-resources": {
     "message": "很多外掛程式都可助您[內嵌重要資產](https://octobercms.com/plugins?search=css)。這些外掛程式可能會破壞其他外掛程式，因此您需要全面測試。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | server-response-time": {
+    "message": "主題、外掛程式和伺服器規格均會影響伺服器回應時間。建議尋找更優化的主題、謹慎選擇優化外掛程式及/或升級伺服器。October CMS 亦可讓開發人員使用 [`Queues`](https://octobercms.com/docs/services/queues) 來延遲處理耗時工作，例如傳送電郵，從而大幅提升網絡要求的速度。"
   },
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | total-byte-weight": {
     "message": "建議在文章清單中顯示摘錄 (例如使用 `show more` 按鈕)、減少特定頁面顯示的文章數量、將較長的文章分為多個頁面，或使用可延遲載入留言的外掛程式。"
@@ -2279,6 +2324,9 @@
   "node_modules/lighthouse-stack-packs/packs/react.js | redirects": {
     "message": "如果使用 React Router，請盡量避免在[路線導航](https://reacttraining.com/react-router/web/api/Redirect)使用 `<Redirect>` 組件。"
   },
+  "node_modules/lighthouse-stack-packs/packs/react.js | server-response-time": {
+    "message": "如果您在伺服器端輸出任何 React 組件，建議使用 `renderToNodeStream()` 或 `renderToStaticNodeStream()`，允許用戶端接收並混合標記的不同部分，而非同時完成。[瞭解詳情](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)。"
+  },
   "node_modules/lighthouse-stack-packs/packs/react.js | unminified-css": {
     "message": "如果您建立自動壓縮 CSS 檔案的系統，請確定部署的應用程式為正式版本。您可以使用 React Developer Tools 擴充程式執行這項檢查。[瞭解詳情](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)。"
   },
@@ -2294,11 +2342,17 @@
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | efficient-animated-content": {
     "message": "建議將 GIF 上載至可將 GIF 用作 HTML5 影片嵌入的伺服器。"
   },
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | modern-image-formats": {
+    "message": "建議使用會自動將已上載圖片轉換成最佳格式的[外掛程式](https://wordpress.org/plugins/search/convert+webp/)或服務。"
+  },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | offscreen-images": {
     "message": "安裝可延遲載入所有畫面外圖片的[延遲載入 WordPress 外掛程式](https://wordpress.org/plugins/search/lazy+load/)，或改用提供此功能的主題。您亦可考慮使用 [AMP 外掛程式](https://wordpress.org/plugins/amp/)。"
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | render-blocking-resources": {
     "message": "部分 WordPress 外掛程式可助您[內嵌重要資產](https://wordpress.org/plugins/search/critical+css/)或[延後載入較不重要的資源](https://wordpress.org/plugins/search/defer+css+javascript/)。請注意，這些外掛程式的優化設定可能影響主題或外掛程式的功能，因此您可能需要變更程式碼。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | server-response-time": {
+    "message": "主題、外掛程式和伺服器規格均會影響伺服器回應時間。建議尋找更優化的主題、謹慎選擇優化外掛程式和/或升級伺服器。"
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | total-byte-weight": {
     "message": "建議在文章清單中顯示摘錄 (例如加入更多標籤)、減少特定頁面顯示的文章數量、將較長的文章分為多個頁面，或使用可延遲載入留言的外掛程式。"

@@ -476,6 +476,12 @@
   "lighthouse-core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "[Åvöîð šéŕvîñĝ ļéĝåçý ĴåvåŠçŕîþţ ţö möðéŕñ бŕöŵšéŕš one two three four five six seven eight nine ten eleven]"
   },
+  "lighthouse-core/audits/byte-efficiency/modern-image-formats.js | description": {
+    "message": "[Îmåĝé ƒöŕmåţš ļîķé ĴÞÉĜ 2000, ĴÞÉĜ XŔ, åñð ŴéбÞ öƒţéñ þŕövîðé бéţţéŕ çömþŕéššîöñ ţĥåñ ÞÑĜ öŕ ĴÞÉĜ, ŵĥîçĥ méåñš ƒåšţéŕ ðöŵñļöåðš åñð ļéšš ðåţå çöñšûmþţîöñ. ᐅ[ᐊĻéåŕñ möŕéᐅ](https://web.dev/uses-webp-images/)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone twentytwo twentythree twentyfour]"
+  },
+  "lighthouse-core/audits/byte-efficiency/modern-image-formats.js | title": {
+    "message": "[Šéŕvé îmåĝéš îñ ñéxţ-ĝéñ ƒöŕmåţš one two three four five six seven]"
+  },
   "lighthouse-core/audits/byte-efficiency/offscreen-images.js | description": {
     "message": "[Çöñšîðéŕ ļåžý-ļöåðîñĝ öƒƒšçŕééñ åñð ĥîððéñ îmåĝéš åƒţéŕ åļļ çŕîţîçåļ ŕéšöûŕçéš ĥåvé ƒîñîšĥéð ļöåðîñĝ ţö ļöŵéŕ ţîmé ţö îñţéŕåçţîvé. ᐅ[ᐊĻéåŕñ möŕéᐅ](https://web.dev/offscreen-images/)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone twentytwo]"
   },
@@ -578,8 +584,14 @@
   "lighthouse-core/audits/csp-xss.js | columnDirective": {
     "message": "[Ðîŕéçţîvé one two]"
   },
+  "lighthouse-core/audits/csp-xss.js | columnSeverity": {
+    "message": "[Šévéŕîţý one]"
+  },
   "lighthouse-core/audits/csp-xss.js | description": {
-    "message": "[Å šţŕöñĝ Çöñţéñţ Šéçûŕîţý Þöļîçý (ÇŠÞ) šîĝñîƒîçåñţļý ŕéðûçéš ţĥé ŕîšķ öƒ XŠŠ åţţåçķš. ᐅ[ᐊĻéåŕñ möŕéᐅ](https://csp.withgoogle.com/docs/index.html)ᐊ one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen]"
+    "message": "[Å šţŕöñĝ Çöñţéñţ Šéçûŕîţý Þöļîçý (ÇŠÞ) šîĝñîƒîçåñţļý ŕéðûçéš ţĥé ŕîšķ öƒ çŕöšš-šîţé šçŕîþţîñĝ (XŠŠ) åţţåçķš. ᐅ[ᐊĻéåŕñ möŕéᐅ](https://web.dev/strict-csp/)ᐊ one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen]"
+  },
+  "lighthouse-core/audits/csp-xss.js | itemSeveritySyntax": {
+    "message": "[Šýñţåx one]"
   },
   "lighthouse-core/audits/csp-xss.js | metaTagMessage": {
     "message": "[Ţĥé þåĝé çöñţåîñš å ÇŠÞ ðéƒîñéð îñ å <meta> ţåĝ. Çöñšîðéŕ ðéƒîñîñĝ ţĥé ÇŠÞ îñ åñ ĤŢŢÞ ĥéåðéŕ îƒ ýöû çåñ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen]"
@@ -1835,6 +1847,15 @@
   "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
     "message": "[Ţîmé ţö Îñţéŕåçţîvé one two three]"
   },
+  "lighthouse-core/lib/i18n/i18n.js | itemSeverityHigh": {
+    "message": "[Ĥîĝĥ one]"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | itemSeverityLow": {
+    "message": "[Ļöŵ one]"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | itemSeverityMedium": {
+    "message": "[Méðîûm one]"
+  },
   "lighthouse-core/lib/i18n/i18n.js | largestContentfulPaintMetric": {
     "message": "[Ļåŕĝéšţ Çöñţéñţƒûļ Þåîñţ one two three]"
   },
@@ -2099,6 +2120,9 @@
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "[Föŕ åñîmåţéð çöñţéñţ, ûšé ᐅ[ᐊᐅ`amp-anim`ᐊᐅ](https://amp.dev/documentation/components/amp-anim/)ᐊ ţö mîñîmîžé ÇÞÛ ûšåĝé ŵĥéñ ţĥé çöñţéñţ îš öƒƒšçŕééñ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen]"
   },
+  "node_modules/lighthouse-stack-packs/packs/amp.js | modern-image-formats": {
+    "message": "[Çöñšîðéŕ ðîšþļåýîñĝ åļļ ᐅ[ᐊᐅ`amp-img`ᐊᐅ](https://amp.dev/documentation/components/amp-img/?format=websites)ᐊ çömþöñéñţš îñ ŴéбÞ ƒöŕmåţš ŵĥîļé šþéçîƒýîñĝ åñ åþþŕöþŕîåţé ƒåļļбåçķ ƒöŕ öţĥéŕ бŕöŵšéŕš. ᐅ[ᐊĻéåŕñ möŕéᐅ](https://amp.dev/documentation/components/amp-img/#example:-specifying-a-fallback-image)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone]"
+  },
   "node_modules/lighthouse-stack-packs/packs/amp.js | offscreen-images": {
     "message": "[Éñšûŕé ţĥåţ ýöû åŕé ûšîñĝ ᐅ[ᐊᐅ`amp-img`ᐊᐅ](https://amp.dev/documentation/components/amp-img/?format=websites)ᐊ ƒöŕ îmåĝéš ţö åûţömåţîçåļļý ļåžý-ļöåð. ᐅ[ᐊĻéåŕñ möŕéᐅ](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen]"
   },
@@ -2135,11 +2159,17 @@
   "node_modules/lighthouse-stack-packs/packs/drupal.js | font-display": {
     "message": "[Šþéçîƒý ᐅ`@font-display`ᐊ ŵĥéñ ðéƒîñîñĝ çûšţöm ƒöñţš îñ ýöûŕ ţĥémé. one two three four five six seven eight nine ten eleven]"
   },
+  "node_modules/lighthouse-stack-packs/packs/drupal.js | modern-image-formats": {
+    "message": "[Çöñšîðéŕ îñšţåļļîñĝ åñð çöñƒîĝûŕîñĝ ᐅ[ᐊå möðûļé ţö ļévéŕåĝé ŴéбÞ îmåĝé ƒöŕmåţšᐅ](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=webp&solrsort=iss_project_release_usage+desc&op=Search)ᐊ îñ ýöûŕ šîţé. Šûçĥ möðûļéš åûţömåţîçåļļý ĝéñéŕåţé å ŴéбÞ véŕšîöñ öƒ ýöûŕ ûþļöåðéð îmåĝéš ţö öþţîmîžé ļöåðîñĝ ţîméš. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone twentytwo twentythree twentyfour twentyfive twentysix twentyseven]"
+  },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | offscreen-images": {
     "message": "[Îñšţåļļ ᐅ[ᐊå Ðŕûþåļ möðûļéᐅ](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=im_vid_3%3A67&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=%22lazy+load%22&solrsort=iss_project_release_usage+desc&op=Search)ᐊ ţĥåţ çåñ ļåžý ļöåð îmåĝéš. Šûçĥ möðûļéš þŕövîðé ţĥé åбîļîţý ţö ðéƒéŕ åñý öƒƒšçŕééñ îmåĝéš ţö îmþŕövé þéŕƒöŕmåñçé. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone twentytwo]"
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | render-blocking-resources": {
     "message": "[Çöñšîðéŕ ûšîñĝ å möðûļé ţö îñļîñé çŕîţîçåļ ÇŠŠ åñð ĴåvåŠçŕîþţ, öŕ þöţéñţîåļļý ļöåð åššéţš åšýñçĥŕöñöûšļý vîå ĴåvåŠçŕîþţ šûçĥ åš ţĥé ᐅ[ᐊÅðvåñçéð ÇŠŠ/ĴŠ Åĝĝŕéĝåţîöñᐅ](https://www.drupal.org/project/advagg)ᐊ möðûļé. Бéŵåŕé ţĥåţ öþţîmîžåţîöñš þŕövîðéð бý ţĥîš möðûļé måý бŕéåķ ýöûŕ šîţé, šö ýöû ŵîļļ ļîķéļý ñééð ţö måķé çöðé çĥåñĝéš. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone twentytwo twentythree twentyfour twentyfive twentysix twentyseven twentyeight twentynine thirty thirtyone thirtytwo thirtythree thirtyfour thirtyfive]"
+  },
+  "node_modules/lighthouse-stack-packs/packs/drupal.js | server-response-time": {
+    "message": "[Ţĥéméš, möðûļéš, åñð šéŕvéŕ šþéçîƒîçåţîöñš åļļ çöñţŕîбûţé ţö šéŕvéŕ ŕéšþöñšé ţîmé. Çöñšîðéŕ ƒîñðîñĝ å möŕé öþţîmîžéð ţĥémé, çåŕéƒûļļý šéļéçţîñĝ åñ öþţîmîžåţîöñ möðûļé, åñð/öŕ ûþĝŕåðîñĝ ýöûŕ šéŕvéŕ. Ýöûŕ ĥöšţîñĝ šéŕvéŕš šĥöûļð måķé ûšé öƒ ÞĤÞ öþçöðé çåçĥîñĝ, mémöŕý-çåçĥîñĝ ţö ŕéðûçé ðåţåбåšé qûéŕý ţîméš šûçĥ åš Ŕéðîš öŕ Mémçåçĥéð, åš ŵéļļ åš öþţîmîžéð åþþļîçåţîöñ ļöĝîç ţö þŕéþåŕé þåĝéš ƒåšţéŕ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone twentytwo twentythree twentyfour twentyfive twentysix twentyseven twentyeight twentynine thirty thirtyone thirtytwo thirtythree thirtyfour thirtyfive thirtysix thirtyseven thirtyeight thirtynine forty one two three four five six seven eight nine ten eleven]"
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | total-byte-weight": {
     "message": "[Çöñšîðéŕ ûšîñĝ ᐅ[ᐊŔéšþöñšîvé Îmåĝé Šţýļéšᐅ](https://www.drupal.org/docs/8/mobile-guide/responsive-images-in-drupal-8)ᐊ ţö ŕéðûçé ţĥé šîžé öƒ îmåĝéš ļöåðéð öñ ýöûŕ þåĝé. Îƒ ýöû åŕé ûšîñĝ Vîéŵš ţö šĥöŵ mûļţîþļé çöñţéñţ îţémš öñ å þåĝé, çöñšîðéŕ îmþļéméñţîñĝ þåĝîñåţîöñ ţö ļîmîţ ţĥé ñûmбéŕ öƒ çöñţéñţ îţémš šĥöŵñ öñ å ĝîvéñ þåĝé. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone twentytwo twentythree twentyfour twentyfive twentysix twentyseven twentyeight twentynine thirty thirtyone thirtytwo]"
@@ -2170,6 +2200,9 @@
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | efficient-animated-content": {
     "message": "[Çöñšîðéŕ ûþļöåðîñĝ ýöûŕ ĜÎF ţö å šéŕvîçé ŵĥîçĥ ŵîļļ måķé îţ åvåîļåбļé ţö émбéð åš åñ ĤŢMĻ5 vîðéö. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen]"
+  },
+  "node_modules/lighthouse-stack-packs/packs/joomla.js | modern-image-formats": {
+    "message": "[Çöñšîðéŕ ûšîñĝ å ᐅ[ᐊþļûĝîñᐅ](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=webp)ᐊ öŕ šéŕvîçé ţĥåţ ŵîļļ åûţömåţîçåļļý çöñvéŕţ ýöûŕ ûþļöåðéð îmåĝéš ţö ţĥé öþţîmåļ ƒöŕmåţš. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen]"
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | offscreen-images": {
     "message": "[Îñšţåļļ å ᐅ[ᐊļåžý-ļöåð Ĵöömļå þļûĝîñᐅ](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=lazy%20loading)ᐊ ţĥåţ þŕövîðéš ţĥé åбîļîţý ţö ðéƒéŕ åñý öƒƒšçŕééñ îmåĝéš, öŕ šŵîţçĥ ţö å ţémþļåţé ţĥåţ þŕövîðéš ţĥåţ ƒûñçţîöñåļîţý. Šţåŕţîñĝ ŵîţĥ Ĵöömļå 4.0, åļļ ñéŵ îmåĝéš ŵîļļ ᐅ[ᐊåûţömåţîçåļļýᐅ](https://github.com/joomla/joomla-cms/pull/30748)ᐊ ĝéţ ţĥé ᐅ`loading`ᐊ åţţŕîбûţé ƒŕöm ţĥé çöŕé. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone twentytwo twentythree twentyfour twentyfive twentysix twentyseven twentyeight twentynine thirty thirtyone thirtytwo]"
@@ -2216,8 +2249,14 @@
   "node_modules/lighthouse-stack-packs/packs/magento.js | font-display": {
     "message": "[Šþéçîƒý ᐅ`@font-display`ᐊ ŵĥéñ ᐅ[ᐊðéƒîñîñĝ çûšţöm ƒöñţšᐅ](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/css-topics/using-fonts.html)ᐊ. one two three four five six seven eight nine]"
   },
+  "node_modules/lighthouse-stack-packs/packs/magento.js | modern-image-formats": {
+    "message": "[Çöñšîðéŕ šéåŕçĥîñĝ ţĥé ᐅ[ᐊMåĝéñţö Måŕķéţþļåçéᐅ](https://marketplace.magento.com/catalogsearch/result/?q=webp)ᐊ ƒöŕ å våŕîéţý öƒ ţĥîŕð-þåŕţý éxţéñšîöñš ţö ļévéŕåĝé ñéŵéŕ îmåĝé ƒöŕmåţš. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen]"
+  },
   "node_modules/lighthouse-stack-packs/packs/magento.js | offscreen-images": {
     "message": "[Çöñšîðéŕ möðîƒýîñĝ ýöûŕ þŕöðûçţ åñð çåţåļöĝ ţémþļåţéš ţö måķé ûšé öƒ ţĥé ŵéб þļåţƒöŕm'š ᐅ[ᐊļåžý ļöåðîñĝᐅ](https://web.dev/native-lazy-loading)ᐊ ƒéåţûŕé. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen]"
+  },
+  "node_modules/lighthouse-stack-packs/packs/magento.js | server-response-time": {
+    "message": "[Ûšé Måĝéñţö'š ᐅ[ᐊVåŕñîšĥ îñţéĝŕåţîöñᐅ](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html)ᐊ. one two three four five six seven eight]"
   },
   "node_modules/lighthouse-stack-packs/packs/magento.js | unminified-css": {
     "message": "[Éñåбļé ţĥé \"Mîñîƒý ÇŠŠ Fîļéš\" öþţîöñ îñ ýöûŕ šţöŕé'š Ðévéļöþéŕ šéţţîñĝš. ᐅ[ᐊĻéåŕñ möŕéᐅ](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen]"
@@ -2240,11 +2279,17 @@
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | efficient-animated-content": {
     "message": "[ᐅ[ᐊŔéþļåçé åñîmåţéð ĜÎFš ŵîţĥ vîðéöᐅ](https://web.dev/replace-gifs-with-videos/)ᐊ ƒöŕ ƒåšţéŕ ŵéб þåĝé ļöåðš åñð çöñšîðéŕ ûšîñĝ möðéŕñ ƒîļé ƒöŕmåţš šûçĥ åš ᐅ[ᐊŴéбMᐅ](https://web.dev/replace-gifs-with-videos/#create-webm-videos)ᐊ öŕ ᐅ[ᐊÅV1ᐅ](https://developers.google.com/web/updates/2018/09/chrome-70-media-updates#av1-decoder)ᐊ ţö îmþŕövé çömþŕéššîöñ éƒƒîçîéñçý бý ĝŕéåţéŕ ţĥåñ 30% ovéŕ ţĥé çûŕŕéñţ šţåţé-öƒ-ţĥé-åŕţ vîðéö çöðéç, VÞ9. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone twentytwo twentythree twentyfour twentyfive twentysix twentyseven twentyeight twentynine thirty thirtyone]"
   },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | modern-image-formats": {
+    "message": "[Çöñšîðéŕ ûšîñĝ å ᐅ[ᐊþļûĝîñᐅ](https://octobercms.com/plugins?search=image)ᐊ öŕ šéŕvîçé ţĥåţ ŵîļļ åûţömåţîçåļļý çöñvéŕţ ţĥé ûþļöåðéð îmåĝéš ţö ţĥé öþţîmåļ ƒöŕmåţš. ᐅ[ᐊŴéбÞ ļöššļéšš îmåĝéšᐅ](https://developers.google.com/speed/webp)ᐊ åŕé 26% småļļéŕ îñ šîžé çömþåŕéð ţö ÞÑĜš åñð 25-34% småļļéŕ ţĥåñ çömþåŕåбļé ĴÞÉĜ îmåĝéš åţ ţĥé éqûîvåļéñţ ŠŠÎM qûåļîţý îñðéx. Åñöţĥéŕ ñéxţ-ĝéñ îmåĝé ƒöŕmåţ ţö çöñšîðéŕ îš ᐅ[ᐊÅVÎFᐅ](https://jakearchibald.com/2020/avif-has-landed/)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone twentytwo twentythree twentyfour twentyfive twentysix twentyseven twentyeight twentynine thirty thirtyone thirtytwo thirtythree thirtyfour thirtyfive thirtysix thirtyseven thirtyeight]"
+  },
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | offscreen-images": {
     "message": "[Çöñšîðéŕ îñšţåļļîñĝ åñ ᐅ[ᐊîmåĝé ļåžý ļöåðîñĝ þļûĝîñᐅ](https://octobercms.com/plugins?search=lazy)ᐊ ţĥåţ þŕövîðéš ţĥé åбîļîţý ţö ðéƒéŕ åñý öƒƒšçŕééñ îmåĝéš, öŕ šŵîţçĥ ţö å ţĥémé ţĥåţ þŕövîðéš ţĥåţ ƒûñçţîöñåļîţý. Åļšö çöñšîðéŕ ûšîñĝ ᐅ[ᐊţĥé ÅMÞ þļûĝîñᐅ](https://octobercms.com/plugins?search=Accelerated+Mobile+Pages)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone twentytwo twentythree twentyfour twentyfive twentysix twentyseven]"
   },
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | render-blocking-resources": {
     "message": "[Ţĥéŕé åŕé måñý þļûĝîñš ţĥåţ ĥéļþ ᐅ[ᐊîñļîñé çŕîţîçåļ åššéţšᐅ](https://octobercms.com/plugins?search=css)ᐊ. Ţĥéšé þļûĝîñš måý бŕéåķ öţĥéŕ þļûĝîñš, šö ýöû šĥöûļð ţéšţ ţĥöŕöûĝĥļý. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty]"
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | server-response-time": {
+    "message": "[Ţĥéméš, þļûĝîñš åñð šéŕvéŕ šþéçîƒîçåţîöñš åļļ çöñţŕîбûţé ţö ţĥé šéŕvéŕ ŕéšþöñšé ţîmé. Çöñšîðéŕ ƒîñðîñĝ å möŕé öþţîmîžéð ţĥémé, çåŕéƒûļļý šéļéçţîñĝ åñ öþţîmîžåţîöñ þļûĝîñ åñð/öŕ ûþĝŕåðé ţĥé šéŕvéŕ. Öçţöбéŕ ÇMŠ åļšö åļļöŵš ðévéļöþéŕš ţö ûšé ᐅ[ᐊᐅ`Queues`ᐊᐅ](https://octobercms.com/docs/services/queues)ᐊ ţö ðéƒéŕ ţĥé þŕöçéššîñĝ öƒ å ţîmé çöñšûmîñĝ ţåšķ, šûçĥ åš šéñðîñĝ åñ é-måîļ. Ţĥîš ðŕåšţîçåļļý šþééðš ûþ ŵéб ŕéqûéšţš. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone twentytwo twentythree twentyfour twentyfive twentysix twentyseven twentyeight twentynine thirty thirtyone thirtytwo thirtythree thirtyfour thirtyfive thirtysix thirtyseven thirtyeight thirtynine forty one two three four five]"
   },
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | total-byte-weight": {
     "message": "[Çöñšîðéŕ šĥöŵîñĝ éxçéŕþţš îñ ţĥé þöšţ ļîšţš (é.ĝ. ûšîñĝ å ᐅ`show more`ᐊ бûţţöñ), ŕéðûçîñĝ ţĥé ñûmбéŕ öƒ þöšţš šĥöŵñ öñ å ĝîvéñ ŵéб þåĝé, бŕéåķîñĝ ļöñĝ þöšţš îñţö mûļţîþļé ŵéб þåĝéš, öŕ ûšîñĝ å þļûĝîñ ţö ļåžý-ļöåð çömméñţš. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone twentytwo twentythree twentyfour twentyfive twentysix twentyseven twentyeight]"
@@ -2279,6 +2324,9 @@
   "node_modules/lighthouse-stack-packs/packs/react.js | redirects": {
     "message": "[Îƒ ýöû åŕé ûšîñĝ Ŕéåçţ Ŕöûţéŕ, mîñîmîžé ûšåĝé öƒ ţĥé ᐅ`<Redirect>`ᐊ çömþöñéñţ ƒöŕ ᐅ[ᐊŕöûţé ñåvîĝåţîöñšᐅ](https://reacttraining.com/react-router/web/api/Redirect)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen]"
   },
+  "node_modules/lighthouse-stack-packs/packs/react.js | server-response-time": {
+    "message": "[Îƒ ýöû åŕé šéŕvéŕ-šîðé ŕéñðéŕîñĝ åñý Ŕéåçţ çömþöñéñţš, çöñšîðéŕ ûšîñĝ ᐅ`renderToNodeStream()`ᐊ öŕ ᐅ`renderToStaticNodeStream()`ᐊ ţö åļļöŵ ţĥé çļîéñţ ţö ŕéçéîvé åñð ĥýðŕåţé ðîƒƒéŕéñţ þåŕţš öƒ ţĥé måŕķûþ îñšţéåð öƒ åļļ åţ öñçé. ᐅ[ᐊĻéåŕñ möŕéᐅ](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone twentytwo twentythree twentyfour twentyfive twentysix]"
+  },
   "node_modules/lighthouse-stack-packs/packs/react.js | unminified-css": {
     "message": "[Îƒ ýöûŕ бûîļð šýšţém mîñîƒîéš ÇŠŠ ƒîļéš åûţömåţîçåļļý, éñšûŕé ţĥåţ ýöû åŕé ðéþļöýîñĝ ţĥé þŕöðûçţîöñ бûîļð öƒ ýöûŕ åþþļîçåţîöñ. Ýöû çåñ çĥéçķ ţĥîš ŵîţĥ ţĥé Ŕéåçţ Ðévéļöþéŕ Ţööļš éxţéñšîöñ. ᐅ[ᐊĻéåŕñ möŕéᐅ](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone twentytwo twentythree twentyfour twentyfive twentysix twentyseven]"
   },
@@ -2294,11 +2342,17 @@
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | efficient-animated-content": {
     "message": "[Çöñšîðéŕ ûþļöåðîñĝ ýöûŕ ĜÎF ţö å šéŕvîçé ŵĥîçĥ ŵîļļ måķé îţ åvåîļåбļé ţö émбéð åš åñ ĤŢMĻ5 vîðéö. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen]"
   },
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | modern-image-formats": {
+    "message": "[Çöñšîðéŕ ûšîñĝ å ᐅ[ᐊþļûĝîñᐅ](https://wordpress.org/plugins/search/convert+webp/)ᐊ öŕ šéŕvîçé ţĥåţ ŵîļļ åûţömåţîçåļļý çöñvéŕţ ýöûŕ ûþļöåðéð îmåĝéš ţö ţĥé öþţîmåļ ƒöŕmåţš. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen]"
+  },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | offscreen-images": {
     "message": "[Îñšţåļļ å ᐅ[ᐊļåžý-ļöåð ŴöŕðÞŕéšš þļûĝîñᐅ](https://wordpress.org/plugins/search/lazy+load/)ᐊ ţĥåţ þŕövîðéš ţĥé åбîļîţý ţö ðéƒéŕ åñý öƒƒšçŕééñ îmåĝéš, öŕ šŵîţçĥ ţö å ţĥémé ţĥåţ þŕövîðéš ţĥåţ ƒûñçţîöñåļîţý. Åļšö çöñšîðéŕ ûšîñĝ ᐅ[ᐊţĥé ÅMÞ þļûĝîñᐅ](https://wordpress.org/plugins/amp/)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone twentytwo twentythree twentyfour twentyfive twentysix]"
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | render-blocking-resources": {
     "message": "[Ţĥéŕé åŕé å ñûmбéŕ öƒ ŴöŕðÞŕéšš þļûĝîñš ţĥåţ çåñ ĥéļþ ýöû ᐅ[ᐊîñļîñé çŕîţîçåļ åššéţšᐅ](https://wordpress.org/plugins/search/critical+css/)ᐊ öŕ ᐅ[ᐊðéƒéŕ ļéšš îmþöŕţåñţ ŕéšöûŕçéšᐅ](https://wordpress.org/plugins/search/defer+css+javascript/)ᐊ. Бéŵåŕé ţĥåţ öþţîmîžåţîöñš þŕövîðéð бý ţĥéšé þļûĝîñš måý бŕéåķ ƒéåţûŕéš öƒ ýöûŕ ţĥémé öŕ þļûĝîñš, šö ýöû ŵîļļ ļîķéļý ñééð ţö måķé çöðé çĥåñĝéš. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone twentytwo twentythree twentyfour twentyfive twentysix twentyseven twentyeight twentynine thirty thirtyone thirtytwo thirtythree]"
+  },
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | server-response-time": {
+    "message": "[Ţĥéméš, þļûĝîñš, åñð šéŕvéŕ šþéçîƒîçåţîöñš åļļ çöñţŕîбûţé ţö šéŕvéŕ ŕéšþöñšé ţîmé. Çöñšîðéŕ ƒîñðîñĝ å möŕé öþţîmîžéð ţĥémé, çåŕéƒûļļý šéļéçţîñĝ åñ öþţîmîžåţîöñ þļûĝîñ, åñð/öŕ ûþĝŕåðîñĝ ýöûŕ šéŕvéŕ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone twentytwo twentythree twentyfour twentyfive twentysix twentyseven]"
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | total-byte-weight": {
     "message": "[Çöñšîðéŕ šĥöŵîñĝ éxçéŕþţš îñ ýöûŕ þöšţ ļîšţš (é.ĝ. vîå ţĥé möŕé ţåĝ), ŕéðûçîñĝ ţĥé ñûmбéŕ öƒ þöšţš šĥöŵñ öñ å ĝîvéñ þåĝé, бŕéåķîñĝ ýöûŕ ļöñĝ þöšţš îñţö mûļţîþļé þåĝéš, öŕ ûšîñĝ å þļûĝîñ ţö ļåžý-ļöåð çömméñţš. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone twentytwo twentythree twentyfour twentyfive twentysix twentyseven]"

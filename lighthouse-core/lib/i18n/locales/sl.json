@@ -476,6 +476,12 @@
   "lighthouse-core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "Izogibajte se prikazovanju starejšega JavaScripta v sodobnih brskalnikih"
   },
+  "lighthouse-core/audits/byte-efficiency/modern-image-formats.js | description": {
+    "message": "Oblike zapisa slik, kot so JPEG 2000, JPEG XR in WebP, pogosto omogočajo učinkovitejše stiskanje kot oblika zapisa PNG ali JPEG, kar pomeni hitrejše prenose in manjšo porabo podatkov. [Več o tem](https://web.dev/uses-webp-images/)."
+  },
+  "lighthouse-core/audits/byte-efficiency/modern-image-formats.js | title": {
+    "message": "Dostavljajte slike v sodobnih oblikah zapisa"
+  },
   "lighthouse-core/audits/byte-efficiency/offscreen-images.js | description": {
     "message": "Razmislite o odloženem nalaganju slik zunaj zaslona in skritih slik po dokončanem nalaganju kritičnih sredstev zaradi skrajšanja časa do interaktivnosti strani. [Več o tem](https://web.dev/offscreen-images/)."
   },
@@ -578,8 +584,14 @@
   "lighthouse-core/audits/csp-xss.js | columnDirective": {
     "message": "Direktiva"
   },
+  "lighthouse-core/audits/csp-xss.js | columnSeverity": {
+    "message": "Resnost"
+  },
   "lighthouse-core/audits/csp-xss.js | description": {
-    "message": "Močan pravilnik o varnosti vsebine (CSP) znatno zmanjša tveganje za napade XSS. [Več o tem](https://csp.withgoogle.com/docs/index.html)"
+    "message": "Močan pravilnik o varnosti vsebine (CSP) znatno zmanjša tveganje za napade s skriptnim izvajanjem na več mestih (XSS). [Več o tem](https://web.dev/strict-csp/)"
+  },
+  "lighthouse-core/audits/csp-xss.js | itemSeveritySyntax": {
+    "message": "Sintaksa"
   },
   "lighthouse-core/audits/csp-xss.js | metaTagMessage": {
     "message": "Stran vsebuje pravilnik CSP, določen z oznako <meta>. Razmislite o določanju pravilnika CSP v glavi HTTP-ja, če je to mogoče."
@@ -1835,6 +1847,15 @@
   "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
     "message": "Time to Interactive"
   },
+  "lighthouse-core/lib/i18n/i18n.js | itemSeverityHigh": {
+    "message": "Visoka"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | itemSeverityLow": {
+    "message": "Nizka"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | itemSeverityMedium": {
+    "message": "Srednja"
+  },
   "lighthouse-core/lib/i18n/i18n.js | largestContentfulPaintMetric": {
     "message": "Largest Contentful Paint"
   },
@@ -2043,7 +2064,7 @@
     "message": "Neznano"
   },
   "lighthouse-core/report/html/renderer/util.js | showRelevantAudits": {
-    "message": "Show audits relevant to:"
+    "message": "Prikaz revizij, pomembnih za to:"
   },
   "lighthouse-core/report/html/renderer/util.js | snippetCollapseButtonLabel": {
     "message": "Strni delček"
@@ -2099,6 +2120,9 @@
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "Za animirano vsebino uporabite [`amp-anim`](https://amp.dev/documentation/components/amp-anim/), da zmanjšate uporabo CPE-ja, ko vsebina ni na zaslonu."
   },
+  "node_modules/lighthouse-stack-packs/packs/amp.js | modern-image-formats": {
+    "message": "Razmislite o tem, da bi vse komponente za [`amp-img`](https://amp.dev/documentation/components/amp-img/?format=websites) prikazali v oblikah zapisa WebP, pri tem pa določili ustrezno rezervno možnost za druge brskalnike. [Več o tem](https://amp.dev/documentation/components/amp-img/#example:-specifying-a-fallback-image)."
+  },
   "node_modules/lighthouse-stack-packs/packs/amp.js | offscreen-images": {
     "message": "Poskrbite, da uporabljate oznake [`amp-img`](https://amp.dev/documentation/components/amp-img/?format=websites) za slike, ki se samodejno odloženo nalagajo. [Več o tem](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)."
   },
@@ -2135,11 +2159,17 @@
   "node_modules/lighthouse-stack-packs/packs/drupal.js | font-display": {
     "message": "Pri definiranju pisav po meri v temi določite `@font-display`."
   },
+  "node_modules/lighthouse-stack-packs/packs/drupal.js | modern-image-formats": {
+    "message": "Razmislite o tem, da bi namestili in konfigurirali [modul za uporabo oblik zapisov slik WebP](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=webp&solrsort=iss_project_release_usage+desc&op=Search) na svojem spletnem mestu. Tovrstni moduli samodejno ustvarijo različico WebP naloženih slik in tako optimizirajo čase nalaganja."
+  },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | offscreen-images": {
     "message": "Namestite [modul sistema Drupal](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=im_vid_3%3A67&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=%22lazy+load%22&solrsort=iss_project_release_usage+desc&op=Search), ki lahko uporablja odloženo nalaganje slik. Taki moduli omogočajo odlog nalaganja slik, ki niso na zaslonu, za večjo učinkovitost delovanja."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | render-blocking-resources": {
     "message": "Razmislite o uporabi modula za vstavljanje kritičnega CSS-ja in JavaScripta ali potencialno asinhrono nalaganje elementov prek JavaScripta, kot je modul [Napredno združevanje za CSS/JS](https://www.drupal.org/project/advagg). Upoštevajte, da lahko optimizacije, ki jih ponuja ta modul, pokvarijo delovanje vašega spletnega mesta, zato boste verjetno morali spremeniti kodo."
+  },
+  "node_modules/lighthouse-stack-packs/packs/drupal.js | server-response-time": {
+    "message": "Teme, moduli in strežniške specifikacije prispevajo k odzivnemu času strežnika. Razmislite o tem, da bi poiskali bolj optimizirano temo, skrbno izbrali optimizacijski modul in/ali nadgradili strežnik. Vaši gostiteljski strežniki bi morali izkoriščati predpomnjenje operativne kode, predpomnjenje pomnilnika za skrajšanje časa poizvedbe v zbirki podatkov (denimo programsko opremo Redis ali Memcached) ter tudi optimizirano logiko aplikacij za hitrejšo pripravo strani."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | total-byte-weight": {
     "message": "Razmislite o uporabi [slogov odzivnih slik](https://www.drupal.org/docs/8/mobile-guide/responsive-images-in-drupal-8) za zmanjšanje velikosti slik, naloženih na strani. Če za prikaz več vsebinskih elementov na strani uporabljate funkcijo Pogledi, razmislite o razdelitvi na več strani, da omejite število vsebinskih elementov, prikazanih na določeni strani."
@@ -2170,6 +2200,9 @@
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | efficient-animated-content": {
     "message": "Razmislite o tem, da bi GIF naložili v storitev, prek katere bo na voljo za vdelavo kot videoposnetek v obliki HTML5."
+  },
+  "node_modules/lighthouse-stack-packs/packs/joomla.js | modern-image-formats": {
+    "message": "Razmislite o tem, da bi uporabili [vtičnik](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=webp) ali storitev, ki naložene slike samodejno pretvori v optimalne oblike."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | offscreen-images": {
     "message": "Namestite [vtičnik za odloženo nalaganje za sistem Joomla](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=lazy%20loading), ki omogoča odlog nalaganja slik, ki niso na zaslonu, ali preidite na predlogo, ki ponuja to funkcijo. Od različice sistema Joomla 4.0 naprej bodo vse nove slike [samodejno](https://github.com/joomla/joomla-cms/pull/30748) dobile atribut `loading` iz jedra."
@@ -2216,8 +2249,14 @@
   "node_modules/lighthouse-stack-packs/packs/magento.js | font-display": {
     "message": "Pri [definiranju pisav po meri](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/css-topics/using-fonts.html) določite `@font-display`."
   },
+  "node_modules/lighthouse-stack-packs/packs/magento.js | modern-image-formats": {
+    "message": "Razmislite o tem, da na tržnici [Magento Marketplace](https://marketplace.magento.com/catalogsearch/result/?q=webp) poiščete različne razširitve drugih ponudnikov, s katerimi lahko izkoristite novejše oblike zapisa slik."
+  },
   "node_modules/lighthouse-stack-packs/packs/magento.js | offscreen-images": {
     "message": "Razmislite o tem, da bi svoje predloge izdelkov in kataloga spremenili tako, da uporabljajo funkcijo spletne platforme za [»leno« nalaganje](https://web.dev/native-lazy-loading)."
+  },
+  "node_modules/lighthouse-stack-packs/packs/magento.js | server-response-time": {
+    "message": "Uporabite Magentovo [integracijo za Varnish](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html)."
   },
   "node_modules/lighthouse-stack-packs/packs/magento.js | unminified-css": {
     "message": "V nastavitvah za razvijalce v svoji trgovini omogočite možnost »Pomanjšaj datoteke CSS«. [Preberite več o tem](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)."
@@ -2240,11 +2279,17 @@
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | efficient-animated-content": {
     "message": "Za hitrejše nalaganje spletnih strani lahko [animirane slike GIF nadomestite z videoposnetki](https://web.dev/replace-gifs-with-videos/), razmislite pa tudi o uporabi sodobnih oblik datotek, kot je [WebM](https://web.dev/replace-gifs-with-videos/#create-webm-videos) ali [AV1](https://developers.google.com/web/updates/2018/09/chrome-70-media-updates#av1-decoder), da učinkovitost stiskanja izboljšate za več kot 30 % v primerjavi s trenutno najboljšim videokodekom VP9."
   },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | modern-image-formats": {
+    "message": "Razmislite o uporabi [vtičnika](https://octobercms.com/plugins?search=image) ali storitve, ki naložene slike samodejno pretvori v optimalne oblike. [Slike WebP brez izgub](https://developers.google.com/speed/webp) so 26 % manjše od slik PNG in 25–34 % manjše od primerljivih slik JPEG pri enakovrednem indeksu kakovosti SSIM. Še ena sodobna oblika zapisa slike, o kateri je vredno razmisliti, je [AVIF](https://jakearchibald.com/2020/avif-has-landed/)."
+  },
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | offscreen-images": {
     "message": "Razmislite o namestitvi [vtičnika za odloženo nalaganje](https://octobercms.com/plugins?search=lazy), ki omogoča odlog nalaganja slik, ki niso na zaslonu, ali preidite na temo, ki ponuja to funkcijo. Razmislite tudi o uporabi [vtičnika AMP](https://octobercms.com/plugins?search=Accelerated+Mobile+Pages)."
   },
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | render-blocking-resources": {
     "message": "Na voljo so številni vtičniki, ki pomagajo [uvrstiti nujna sredstva](https://octobercms.com/plugins?search=css). Ti vtičniki lahko pokvarijo delovanje drugih vtičnikov, zato jih morate temeljito preizkusiti."
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | server-response-time": {
+    "message": "Teme, vtičniki in strežniške specifikacije prispevajo k odzivnemu času strežnika. Razmislite o tem, da bi poiskali bolj optimizirano temo, skrbno izbrali optimizacijski vtičnik in/ali nadgradili strežnik. Sistem za upravljanje vsebine October razvijalcem omogoča tudi uporabo elementa [`Queues`](https://octobercms.com/docs/services/queues), ki omogoča odlog obdelave zamudnega opravila, kot je pošiljanje e-pošte. To znatno pospeši spletne zahteve."
   },
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | total-byte-weight": {
     "message": "Razmislite o tem, da bi na seznamih objav prikazali izvlečke (npr. z gumbom `show more`), zmanjšali število objav, prikazanih na posamezni spletni strani, daljše objave razdelili na več spletnih strani ali uporabili vtičnik za odloženo nalaganje komentarjev."
@@ -2279,6 +2324,9 @@
   "node_modules/lighthouse-stack-packs/packs/react.js | redirects": {
     "message": "Če uporabljate React Router, karseda omejite uporabo komponente `<Redirect>` za[krmarjenje po poteh](https://reacttraining.com/react-router/web/api/Redirect)."
   },
+  "node_modules/lighthouse-stack-packs/packs/react.js | server-response-time": {
+    "message": "Če na strežniški strani upodabljate morebitne komponente React, razmislite o uporabi elementa `renderToNodeStream()` ali `renderToStaticNodeStream()`, da bi odjemalcu dovolili prejemanje in hidriranje različnih delov oznak, namesto vseh hkrati. [Preberite več o tem](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)."
+  },
   "node_modules/lighthouse-stack-packs/packs/react.js | unminified-css": {
     "message": "Če vaš sistem gradnje samodejno pomanjša datoteke CSS, se prepričajte, da uvajate gradnjo aplikacije za splošno razpoložljivost. To lahko preverite z razširitvijo React Developer Tools. [Več o tem](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
   },
@@ -2294,11 +2342,17 @@
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | efficient-animated-content": {
     "message": "Razmislite o tem, da bi GIF naložili v storitev, prek katere bo na voljo za vdelavo kot videoposnetek v obliki HTML5."
   },
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | modern-image-formats": {
+    "message": "Razmislite o tem, da bi uporabili [vtičnik](https://wordpress.org/plugins/search/convert+webp/) ali storitev, ki naložene slike samodejno pretvori v optimalne oblike."
+  },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | offscreen-images": {
     "message": "Namestite [vtičnik za postopno nalaganje za WordPress](https://wordpress.org/plugins/search/lazy+load/) ki omogoča odlog nalaganja slik, ki niso na zaslonu, ali preidite na temo, ki ponuja to funkcijo. Razmislite tudi o uporabi [vtičnika AMP](https://wordpress.org/plugins/amp/)."
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | render-blocking-resources": {
     "message": "Na voljo je več vtičnikov za WordPress, ki vam lahko pomagajo [uvrstiti nujna sredstva](https://wordpress.org/plugins/search/critical+css/) ali [odložiti manj pomembna sredstva](https://wordpress.org/plugins/search/defer+css+javascript/). Upoštevajte, da lahko optimizacije, ki jih ponujajo ti vtičniki, pokvarijo delovanje funkcij vaših tem ali vtičnikov, zato boste verjetno morali spremeniti kodo."
+  },
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | server-response-time": {
+    "message": "Teme, vtičniki in strežniške specifikacije prispevajo k odzivnemu času strežnika. Razmislite o tem, da bi poiskali bolj optimizirano temo, skrbno izbrali optimizacijski vtičnik in/ali nadgradili strežnik."
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | total-byte-weight": {
     "message": "Razmislite o tem, da bi na seznamih objav prikazali izvlečke (npr. z oznako »more«), zmanjšali število objav, prikazanih na posamezni strani, daljše objave razdelili na več strani ali uporabili vtičnik za odloženo nalaganje komentarjev."

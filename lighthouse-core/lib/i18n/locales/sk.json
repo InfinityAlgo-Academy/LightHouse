@@ -476,6 +476,12 @@
   "lighthouse-core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "Nezobrazujte starý JavaScript v moderných prehliadačoch"
   },
+  "lighthouse-core/audits/byte-efficiency/modern-image-formats.js | description": {
+    "message": "Formáty obrázka, napríklad JPEG 2000, JPEG XR a WebP, zvyčajne poskytujú lepšiu kompresiu než PNG alebo JPEG, čo znamená rýchlejšie sťahovanie a nižšiu spotrebu dát. [Ďalšie informácie](https://web.dev/uses-webp-images/)"
+  },
+  "lighthouse-core/audits/byte-efficiency/modern-image-formats.js | title": {
+    "message": "Zobrazujte obrázky vo formátoch ďalšej generácie"
+  },
   "lighthouse-core/audits/byte-efficiency/offscreen-images.js | description": {
     "message": "Zvážte oneskorené načítanie obrázkov, ktoré sú mimo obrazovky alebo skryté, a to až po dokončení načítania všetkých podstatných zdrojov, čím skrátite čas do interaktívneho vykreslenia. [Ďalšie informácie](https://web.dev/offscreen-images/)"
   },
@@ -578,8 +584,14 @@
   "lighthouse-core/audits/csp-xss.js | columnDirective": {
     "message": "Direktíva"
   },
+  "lighthouse-core/audits/csp-xss.js | columnSeverity": {
+    "message": "Severity"
+  },
   "lighthouse-core/audits/csp-xss.js | description": {
-    "message": "Prísne pravidlá na zabezpečenie obsahu (PZO) výrazne znižujú riziko útokov XSS. [Ďalšie informácie](https://csp.withgoogle.com/docs/index.html)"
+    "message": "Prísne pravidlá na zabezpečenie obsahu (PZO) výrazne znižujú riziko útokov skriptovaním medzi webmi. [Ďalšie informácie](https://web.dev/strict-csp/)"
+  },
+  "lighthouse-core/audits/csp-xss.js | itemSeveritySyntax": {
+    "message": "Syntax"
   },
   "lighthouse-core/audits/csp-xss.js | metaTagMessage": {
     "message": "Stránka obsahuje PZO definované v značke <meta>. Ak je to možné, odporúčame definovať PZO v hlavičke HTTP."
@@ -1835,6 +1847,15 @@
   "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
     "message": "Time to Interactive"
   },
+  "lighthouse-core/lib/i18n/i18n.js | itemSeverityHigh": {
+    "message": "Vysoká"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | itemSeverityLow": {
+    "message": "Nízka"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | itemSeverityMedium": {
+    "message": "Stredné"
+  },
   "lighthouse-core/lib/i18n/i18n.js | largestContentfulPaintMetric": {
     "message": "Largest Contentful Paint"
   },
@@ -2043,7 +2064,7 @@
     "message": "Neznáme"
   },
   "lighthouse-core/report/html/renderer/util.js | showRelevantAudits": {
-    "message": "Show audits relevant to:"
+    "message": "Zobraziť kontroly relevantné pre:"
   },
   "lighthouse-core/report/html/renderer/util.js | snippetCollapseButtonLabel": {
     "message": "Zbaliť útržok"
@@ -2099,6 +2120,9 @@
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "V prípade animovaného obsahu minimalizujete využitie procesora pomocou komponenta [`amp-anim`](https://amp.dev/documentation/components/amp-anim/), keď je tento obsah mimo obrazovky."
   },
+  "node_modules/lighthouse-stack-packs/packs/amp.js | modern-image-formats": {
+    "message": "Skúste zobraziť všetky komponenty [`amp-img`](https://amp.dev/documentation/components/amp-img/?format=websites) vo formátoch WebP a zároveň nastaviť vhodné záložné riešenie pre ďalšie prehliadače. [Ďalšie informácie](https://amp.dev/documentation/components/amp-img/#example:-specifying-a-fallback-image)"
+  },
   "node_modules/lighthouse-stack-packs/packs/amp.js | offscreen-images": {
     "message": "Skontrolujte, či používate atribút [`amp-img`](https://amp.dev/documentation/components/amp-img/?format=websites) na automatické načítavanie obrázkov až v poslednej chvíli. [Ďalšie informácie](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)"
   },
@@ -2135,11 +2159,17 @@
   "node_modules/lighthouse-stack-packs/packs/drupal.js | font-display": {
     "message": "Pri definovaní vlastných písiem vo svojom motíve špecifikujte `@font-display`."
   },
+  "node_modules/lighthouse-stack-packs/packs/drupal.js | modern-image-formats": {
+    "message": "Zvážte inštaláciu a konfiguráciu [modulu, aby ste mohli na svojom webe využívať formáty obrázka WebP](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=webp&solrsort=iss_project_release_usage+desc&op=Search). Tieto moduly automaticky generujú verziu WebP vašich nahraných obrázkov, aby sa optimalizovali časy načítania."
+  },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | offscreen-images": {
     "message": "Nainštalujte [modul Drupal](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=im_vid_3%3A67&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=%22lazy+load%22&solrsort=iss_project_release_usage+desc&op=Search), ktorý môže načítavať obrázky až v poslednej chvíli. Tieto moduly umožňujú odložiť obrázky mimo obrazovky na zlepšenie výkonnosti."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | render-blocking-resources": {
     "message": "Zvážte použitie modulu na vloženie kľúčovej šablóny CSS a JavaSciptu do textu, prípadne potenciálne načítavajte podklady asynchrónne prostredníctvom JavaScriptu, ako je modul [Rozšírená agregácia šablóny CSS a JavaScriptu](https://www.drupal.org/project/advagg). Upozorňujeme, že optimalizácie poskytnuté týmto modulom môžu porušiť váš web, takže budete musieť zrejme zmeniť kód."
+  },
+  "node_modules/lighthouse-stack-packs/packs/drupal.js | server-response-time": {
+    "message": "Čas odpovede servera ovplyvňujú motívy, moduly a špecifikácie servera. Odporúčame nájsť optimalizovanejší motív, opatrne vybrať modul na optimalizáciu alebo inovovať server. Vaše hostiteľské servery by mali využívať ukladanie kódov operácií PHP do vyrovnávacej pamäte, ukladanie do vyrovnávacej pamäte na zníženie časov dopytov databázy (napríklad Redis alebo Memcached), ako aj optimalizovanú aplikačnú logiku na skrátenie prípravy stránok."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | total-byte-weight": {
     "message": "Zvážte použitie [štýlov responzívnych obrázkov](https://www.drupal.org/docs/8/mobile-guide/responsive-images-in-drupal-8), aby ste znížili veľkosť obrázkov načítavaných na stránke. Ak zobrazujete viacero položiek obsahu na stránke pomocou Zobrazení, zvážte implementáciu stránkovania, aby ste obmedzili počet položiek obsahu zobrazovaných na danej stránke."
@@ -2170,6 +2200,9 @@
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | efficient-animated-content": {
     "message": "Zvážte nahranie gifu do služby, ktorá umožní jeho vloženie v podobe videa HTML5."
+  },
+  "node_modules/lighthouse-stack-packs/packs/joomla.js | modern-image-formats": {
+    "message": "Zvážte použitie [doplnku](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=webp) alebo služby, ktorá automaticky konvertuje nahrané obrázky do optimálnych formátov."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | offscreen-images": {
     "message": "Nainštalujte si [doplnok Joomla na odložené načítavanie](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=lazy%20loading) umožňujúci odloženie načítania všetkých obrázkov mimo obrazovky alebo prejdite na šablónu, ktorá poskytuje túto funkciu. Od verzie Joomla 4.0 budú všetky nové obrázky [automaticky](https://github.com/joomla/joomla-cms/pull/30748) získavať z jadra atribút `loading`."
@@ -2216,8 +2249,14 @@
   "node_modules/lighthouse-stack-packs/packs/magento.js | font-display": {
     "message": "Pri [definovaní vlastných písmen](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/css-topics/using-fonts.html) nastavte parameter `@font-display`."
   },
+  "node_modules/lighthouse-stack-packs/packs/magento.js | modern-image-formats": {
+    "message": "Na trhovisku [Magento Marketplace](https://marketplace.magento.com/catalogsearch/result/?q=webp) nájdete veľké množstvo rozšírení tretích strán, ktoré podporujú nové formáty obrázkov."
+  },
   "node_modules/lighthouse-stack-packs/packs/magento.js | offscreen-images": {
     "message": "Ak chcete využiť funkciu [oneskoreného načítania](https://web.dev/native-lazy-loading) danej webovej platformy, upravte šablóny svojho produktu a katalógu."
+  },
+  "node_modules/lighthouse-stack-packs/packs/magento.js | server-response-time": {
+    "message": "Použite [integráciu Varnish](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html) platformy Magento."
   },
   "node_modules/lighthouse-stack-packs/packs/magento.js | unminified-css": {
     "message": "Povoľte možnosť Minifikovať súbory CSS v nastaveniach vášho obchodu pre vývojárov. [Ďalšie informácie](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)"
@@ -2240,11 +2279,17 @@
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | efficient-animated-content": {
     "message": "[Nahraďte animované obrázky GIF videom](https://web.dev/replace-gifs-with-videos/), aby ste zrýchlili načítavanie stránok. Zvážte použitie moderných formátov súborov, napríklad [WebM](https://web.dev/replace-gifs-with-videos/#create-webm-videos) alebo [AV1](https://developers.google.com/web/updates/2018/09/chrome-70-media-updates#av1-decoder), ktoré v porovnaní s aktuálnym špičkovým videokodekom VP9 zvyšujú účinnosť kompresie o viac ako 30 %."
   },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | modern-image-formats": {
+    "message": "Zvážte použitie [doplnku](https://octobercms.com/plugins?search=image) alebo služby, ktorá automaticky konvertuje nahrané obrázky do optimálnych formátov. Veľkosť [bezstratových obrázkov WebP](https://developers.google.com/speed/webp) je o 26 % menšia než veľkosť obrázkov PNG a o 25 až 34 % menšia ako veľkosť porovnateľných obrázkov JPEG pri ekvivalentnom indexe kvality SSIM. Prípadne zvážte formát obrázkov ďalšej generácie [AVIF](https://jakearchibald.com/2020/avif-has-landed/)."
+  },
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | offscreen-images": {
     "message": "Zvážte inštaláciu [doplnku na odložené načítavanie obrázkov](https://octobercms.com/plugins?search=lazy), ktorý umožňuje odložiť načítanie všetkých obrázkov mimo obrazovky, alebo prejdite na motív, ktorý poskytuje túto funkciu. Tiež zvážte použitie [doplnku AMP](https://octobercms.com/plugins?search=Accelerated+Mobile+Pages)."
   },
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | render-blocking-resources": {
     "message": "Existuje mnoho doplnkov, ktoré zlepšujú fungovanie [vložených kľúčových podkladov](https://octobercms.com/plugins?search=css). Tieto doplnky môžu narušiť fungovanie iných, takže to dôsledne otestujte."
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | server-response-time": {
+    "message": "Čas odpovede servera ovplyvňujú motívy, doplnky a jeho špecifikácie. Odporúčame nájsť optimalizovanejší motív, opatrne vybrať doplnok na optimalizáciu alebo server aktualizovať. October CMS tiež vývojárom umožňuje odložiť spracovanie časovo náročnej úlohy, napríklad odoslanie e‑mailu, pomocou funkcie [`Queues`](https://octobercms.com/docs/services/queues). To výrazne zrýchli webové požiadavky."
   },
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | total-byte-weight": {
     "message": "Zvážte zobrazovanie úryvkov v zoznamoch príspevkov (napríklad pomocou tlačidla `show more`), zníženie počtu príspevkov zobrazovaných na danej webovej stránke alebo rozdelenie dlhých príspevkov na niekoľko stránok, prípadne použitie doplnku na odložené načítanie komentárov."
@@ -2279,6 +2324,9 @@
   "node_modules/lighthouse-stack-packs/packs/react.js | redirects": {
     "message": "Ak používate React Router, minimalizujte používanie komponentu `<Redirect>` na [určenie smerovania](https://reacttraining.com/react-router/web/api/Redirect)."
   },
+  "node_modules/lighthouse-stack-packs/packs/react.js | server-response-time": {
+    "message": "Ak na strane servera vykresľujete komponenty knižnice React, zvážte použitie funkcie `renderToNodeStream()` alebo `renderToStaticNodeStream()`, aby ste klientovi umožnili prijať a spracovať rôzne časti značiek namiesto všetkých naraz. [Ďalšie informácie](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)"
+  },
   "node_modules/lighthouse-stack-packs/packs/react.js | unminified-css": {
     "message": "Ak vaša zostava automaticky minifikuje súbory CSS, mali by ste nasadzovať ostrú verziu zostavy aplikácie. Môžete to skontrolovať pomocou rozšírenia React Developer Tools. [Ďalšie informácie](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)"
   },
@@ -2294,11 +2342,17 @@
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | efficient-animated-content": {
     "message": "Zvážte nahranie gifu do služby, ktorá umožní jeho vloženie v podobe videa HTML5."
   },
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | modern-image-formats": {
+    "message": "Zvážte použitie [doplnku](https://wordpress.org/plugins/search/convert+webp/) alebo služby, ktorá automaticky konvertuje nahrané obrázky do optimálnych formátov."
+  },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | offscreen-images": {
     "message": "Nainštalujte si [doplnok WordPress na predbežné načítanie](https://wordpress.org/plugins/search/lazy+load/) poskytujúci možnosť odložiť všetky obrázky mimo obrazovky alebo prepnúť na motív, ktorý túto funkciu poskytuje. Tiež zvážte použitie [doplnku AMP](https://wordpress.org/plugins/amp/)."
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | render-blocking-resources": {
     "message": "Existuje niekoľko doplnkov WordPress, ktoré vám pomôžu [vložiť do textu kľúčové podklady](https://wordpress.org/plugins/search/critical+css/) alebo [odložiť menej dôležité zdroje](https://wordpress.org/plugins/search/defer+css+javascript/). Dajte pozor, pretože optimalizácie poskytované týmito doplnkami môžu porušiť funkcie motívu či doplnkov, takže budete musieť zrejme zmeniť kód."
+  },
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | server-response-time": {
+    "message": "Čas odpovede servera ovplyvňujú motívy, doplnky a špecifikácie servera. Odporúčame nájsť optimalizovanejší motív, opatrne vybrať doplnok na optimalizáciu a/alebo aktualizovať server."
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | total-byte-weight": {
     "message": "Zvážte zobrazovanie úryvkov v zoznamoch príspevkov (napr. prostredníctvom značky Viac), znížte počet príspevkov zobrazovaných na danej stránke alebo rozdeľte dlhé príspevky na niekoľko stránok. Prípadne použite doplnok na predbežné načítavanie komentárov."

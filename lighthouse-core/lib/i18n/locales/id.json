@@ -476,6 +476,12 @@
   "lighthouse-core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "Hindari penayangan JavaScript lama di browser modern"
   },
+  "lighthouse-core/audits/byte-efficiency/modern-image-formats.js | description": {
+    "message": "Format gambar seperti JPEG 2000, JPEG XR, dan WebP biasanya memberikan kompresi yang lebih baik daripada PNG atau JPEG, sehingga download lebih cepat dan konsumsi data lebih kecil. [Pelajari lebih lanjut](https://web.dev/uses-webp-images/)."
+  },
+  "lighthouse-core/audits/byte-efficiency/modern-image-formats.js | title": {
+    "message": "Tayangkan gambar dalam format generasi berikutnya"
+  },
   "lighthouse-core/audits/byte-efficiency/offscreen-images.js | description": {
     "message": "Sebaiknya lakukan pemuatan lambat di balik layar dan gambar tersembunyi setelah semua resource kritis selesai dimuat guna mengurangi waktu untuk interaktif. [Pelajari lebih lanjut](https://web.dev/offscreen-images/)."
   },
@@ -578,8 +584,14 @@
   "lighthouse-core/audits/csp-xss.js | columnDirective": {
     "message": "Perintah"
   },
+  "lighthouse-core/audits/csp-xss.js | columnSeverity": {
+    "message": "Severity"
+  },
   "lighthouse-core/audits/csp-xss.js | description": {
-    "message": "Kebijakan Keamanan Konten (CSP) yang kuat mengurangi risiko serangan XSS secara signifikan. [Pelajari lebih lanjut](https://csp.withgoogle.com/docs/index.html)"
+    "message": "Kebijakan Keamanan Konten (CSP) yang kuat mengurangi risiko serangan pembuatan skrip lintas situs (XSS) secara signifikan. [Pelajari lebih lanjut](https://web.dev/strict-csp/)"
+  },
+  "lighthouse-core/audits/csp-xss.js | itemSeveritySyntax": {
+    "message": "Syntax"
   },
   "lighthouse-core/audits/csp-xss.js | metaTagMessage": {
     "message": "Halaman ini memuat CSP yang ditentukan dalam tag <meta>. Sebaiknya tentukan CSP di header HTTP jika Anda dapat melakukannya."
@@ -1835,6 +1847,15 @@
   "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
     "message": "Time to Interactive"
   },
+  "lighthouse-core/lib/i18n/i18n.js | itemSeverityHigh": {
+    "message": "Tinggi"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | itemSeverityLow": {
+    "message": "Rendah"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | itemSeverityMedium": {
+    "message": "Sedang"
+  },
   "lighthouse-core/lib/i18n/i18n.js | largestContentfulPaintMetric": {
     "message": "Largest Contentful Paint"
   },
@@ -2043,7 +2064,7 @@
     "message": "Tidak dikenal"
   },
   "lighthouse-core/report/html/renderer/util.js | showRelevantAudits": {
-    "message": "Show audits relevant to:"
+    "message": "Tampilkan audit yang relevan dengan:"
   },
   "lighthouse-core/report/html/renderer/util.js | snippetCollapseButtonLabel": {
     "message": "Ciutkan cuplikan"
@@ -2099,6 +2120,9 @@
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "Untuk konten animasi, gunakan [`amp-anim`](https://amp.dev/documentation/components/amp-anim/) untuk meminimalkan penggunaan CPU saat konten tidak berada di layar."
   },
+  "node_modules/lighthouse-stack-packs/packs/amp.js | modern-image-formats": {
+    "message": "Sebaiknya tampilkan semua komponen [`amp-img`](https://amp.dev/documentation/components/amp-img/?format=websites) dalam format WebP saat menentukan fallback yang tepat untuk browser lainnya. [Pelajari lebih lanjut](https://amp.dev/documentation/components/amp-img/#example:-specifying-a-fallback-image)."
+  },
   "node_modules/lighthouse-stack-packs/packs/amp.js | offscreen-images": {
     "message": "Pastikan Anda menggunakan [`amp-img`](https://amp.dev/documentation/components/amp-img/?format=websites) untuk gambar agar otomatis dimuat dengan lambat. [Pelajari lebih lanjut](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)."
   },
@@ -2135,11 +2159,17 @@
   "node_modules/lighthouse-stack-packs/packs/drupal.js | font-display": {
     "message": "Sebutkan `@font-display` saat menentukan font khusus di tema Anda."
   },
+  "node_modules/lighthouse-stack-packs/packs/drupal.js | modern-image-formats": {
+    "message": "Sebaiknya instal dan konfigurasi [modul untuk memanfaatkan format gambar WebP](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=webp&solrsort=iss_project_release_usage+desc&op=Search) di situs Anda. Modul tersebut otomatis menghasilkan versi WebP dari gambar yang Anda upload untuk mengoptimalkan waktu pemuatan."
+  },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | offscreen-images": {
     "message": "Instal [modul Drupal](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=im_vid_3%3A67&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=%22lazy+load%22&solrsort=iss_project_release_usage+desc&op=Search) yang dapat memuat gambar dengan lambat. Modul tersebut mampu menunda pemuatan gambar di bagian halaman yang belum ditampilkan untuk meningkatkan performa."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | render-blocking-resources": {
     "message": "Sebaiknya gunakan modul untuk menyejajarkan CSS dan JavaScript penting, atau memuat aset potensial secara asinkron melalui JavaScript, seperti modul [Agregasi CSS/JS Lanjutan](https://www.drupal.org/project/advagg). Harap berhati-hati karena pengoptimalan yang disediakan oleh modul ini dapat merusak situs, sehingga Anda cenderung perlu mengubah kode."
+  },
+  "node_modules/lighthouse-stack-packs/packs/drupal.js | server-response-time": {
+    "message": "Semua spesifikasi tema, modul, dan server berkontribusi pada waktu respons server. Sebaiknya cari tema yang lebih optimal, pilih modul pengoptimalan dengan hati-hati, dan/atau upgrade server Anda. Server hosting Anda harus memanfaatkan cache opcode dan cache memori PHP untuk mengurangi waktu kueri database, seperti Redis atau Memcached, serta logika aplikasi yang dioptimalkan guna menyiapkan halaman dengan lebih cepat."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | total-byte-weight": {
     "message": "Sebaiknya gunakan [Responsive Image Styles](https://www.drupal.org/docs/8/mobile-guide/responsive-images-in-drupal-8) untuk mengurangi ukuran gambar yang dimuat di halaman Anda. Jika Anda menggunakan Views untuk menampilkan beberapa item konten di halaman, sebaiknya implementasikan penomoran halaman guna membatasi jumlah item konten yang ditampilkan di halaman tersebut."
@@ -2170,6 +2200,9 @@
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | efficient-animated-content": {
     "message": "Sebaiknya upload GIF ke layanan yang akan menyediakannya untuk disematkan sebagai video HTML5."
+  },
+  "node_modules/lighthouse-stack-packs/packs/joomla.js | modern-image-formats": {
+    "message": "Sebaiknya gunakan [plugin](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=webp) atau layanan yang otomatis mengonversi gambar yang diupload ke format optimal."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | offscreen-images": {
     "message": "Instal [plugin pemuatan lambat di Joomla](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=lazy%20loading) yang menyediakan kemampuan untuk menunda pemuatan gambar di bagian halaman yang belum ditampilkan, atau beralihlah ke template yang menyediakan fungsi tersebut. Mulai dari Joomla 4.0, semua gambar baru akan [otomatis](https://github.com/joomla/joomla-cms/pull/30748) mendapatkan atribut `loading` dari core."
@@ -2216,8 +2249,14 @@
   "node_modules/lighthouse-stack-packs/packs/magento.js | font-display": {
     "message": "Tetapkan `@font-display` saat [menentukan font kustom](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/css-topics/using-fonts.html)."
   },
+  "node_modules/lighthouse-stack-packs/packs/magento.js | modern-image-formats": {
+    "message": "Pertimbangkan untuk menelusuri [Magento Marketplace](https://marketplace.magento.com/catalogsearch/result/?q=webp) guna menemukan berbagai ekstensi pihak ketiga untuk memanfaatkan format gambar terbaru."
+  },
   "node_modules/lighthouse-stack-packs/packs/magento.js | offscreen-images": {
     "message": "Pertimbangkan untuk mengubah template produk dan katalog Anda untuk memanfaatkan fitur [pemuatan lambat](https://web.dev/native-lazy-loading) platform web."
+  },
+  "node_modules/lighthouse-stack-packs/packs/magento.js | server-response-time": {
+    "message": "Gunakan [Varnish integration](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html) dari Magento."
   },
   "node_modules/lighthouse-stack-packs/packs/magento.js | unminified-css": {
     "message": "Aktifkan opsi \"Minifikasi File CSS\" di setelan Developer toko Anda. [Pelajari lebih lanjut](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)."
@@ -2240,11 +2279,17 @@
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | efficient-animated-content": {
     "message": "[Ganti animasi GIF dengan video](https://web.dev/replace-gifs-with-videos/) untuk pemuatan halaman yang lebih cepat dan sebaiknya gunakan format file modern seperti [WebM](https://web.dev/replace-gifs-with-videos/#create-webm-videos) atau [AV1](https://developers.google.com/web/updates/2018/09/chrome-70-media-updates#av1-decoder) untuk meningkatkan efisiensi kompresi lebih dari 30% dibandingkan codec video tercanggih saat ini, VP9."
   },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | modern-image-formats": {
+    "message": "Sebaiknya gunakan [plugin](https://octobercms.com/plugins?search=image) atau layanan yang otomatis mengonversi gambar yang diupload ke format optimal. [Gambar WebP lossless](https://developers.google.com/speed/webp) berukuran 26% lebih kecil daripada PNG dan 25-34% lebih kecil daripada gambar JPEG yang sebanding pada indeks kualitas SSIM yang setara. [AVIF](https://jakearchibald.com/2020/avif-has-landed/) juga bisa dipertimbangkan sebagai format gambar generasi berikutnya."
+  },
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | offscreen-images": {
     "message": "Sebaiknya instal [plugin pemuatan lambat gambar](https://octobercms.com/plugins?search=lazy) yang menyediakan kemampuan untuk menunda pemuatan gambar di bagian halaman yang belum ditampilkan, atau beralihlah ke tema yang menyediakan fungsi tersebut. Selain itu, sebaiknya gunakan [plugin AMP](https://octobercms.com/plugins?search=Accelerated+Mobile+Pages)."
   },
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | render-blocking-resources": {
     "message": "Terdapat banyak plugin yang membantu [menyejajarkan aset penting](https://octobercms.com/plugins?search=css). Plugin ini dapat merusak plugin lain, sehingga Anda perlu mengujinya secara menyeluruh."
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | server-response-time": {
+    "message": "Semua spesifikasi tema, plugin, dan server berkontribusi pada waktu respons server. Sebaiknya cari tema yang lebih optimal, pilih plugin pengoptimalan dengan hati-hati, dan/atau upgrade server. CMS Oktober juga memungkinkan developer menggunakan [`Queues`](https://octobercms.com/docs/services/queues) untuk menunda pemrosesan tugas yang memakan waktu lama, seperti pengiriman email. Ini mempercepat permintaan web secara drastis."
   },
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | total-byte-weight": {
     "message": "Sebaiknya tampilkan kutipan dalam daftar postingan (misalnya menggunakan tombol `show more`), kurangi jumlah postingan yang ditampilkan pada halaman web yang ada, bagi postingan panjang menjadi beberapa halaman web, atau gunakan plugin untuk memuat komentar dengan lambat."
@@ -2279,6 +2324,9 @@
   "node_modules/lighthouse-stack-packs/packs/react.js | redirects": {
     "message": "Jika Anda menggunakan React Router, minimalkan penggunaan komponen `<Redirect>` untuk [navigasi rute](https://reacttraining.com/react-router/web/api/Redirect)."
   },
+  "node_modules/lighthouse-stack-packs/packs/react.js | server-response-time": {
+    "message": "Jika Anda merender komponen React pada sistem server, pertimbangkan untuk menggunakan `renderToNodeStream()` atau `renderToStaticNodeStream()` agar klien dapat menerima dan mengisi beberapa bagian markup yang berbeda, bukan sekaligus. [Pelajari lebih lanjut](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)."
+  },
   "node_modules/lighthouse-stack-packs/packs/react.js | unminified-css": {
     "message": "Jika sistem build otomatis meminifikasi file CSS, pastikan Anda men-deploy build produksi aplikasi Anda. Anda dapat memeriksanya dengan ekstensi React Developer Tools. [Pelajari lebih lanjut](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
   },
@@ -2294,11 +2342,17 @@
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | efficient-animated-content": {
     "message": "Sebaiknya upload GIF ke layanan yang akan menyediakannya untuk disematkan sebagai video HTML5."
   },
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | modern-image-formats": {
+    "message": "Sebaiknya gunakan [plugin](https://wordpress.org/plugins/search/convert+webp/) atau layanan yang otomatis mengonversi gambar yang diupload ke format optimal."
+  },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | offscreen-images": {
     "message": "Instal [plugin pemuatan lambat di WordPress ](https://wordpress.org/plugins/search/lazy+load/) yang menyediakan kemampuan untuk menunda pemuatan gambar di bagian halaman yang belum ditampilkan, atau beralihlah ke tema yang menyediakan fungsi tersebut. Sebaiknya juga gunakan [plugin AMP](https://wordpress.org/plugins/amp/)."
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | render-blocking-resources": {
     "message": "Terdapat sejumlah plugin di WordPress yang dapat membantu Anda [menyejajarkan aset penting](https://wordpress.org/plugins/search/critical+css/) atau [menunda resource yang tidak penting](https://wordpress.org/plugins/search/defer+css+javascript/). Harap berhati-hati karena pengoptimalan yang disediakan oleh plugin ini dapat merusak fitur tema atau plugin, sehingga Anda cenderung perlu mengubah kode."
+  },
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | server-response-time": {
+    "message": "Semua spesifikasi tema, plugin, dan server berkontribusi pada waktu respons server. Sebaiknya cari tema yang lebih optimal, pilih plugin pengoptimalan dengan hati-hati, dan/atau upgrade server Anda."
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | total-byte-weight": {
     "message": "Sebaiknya tampilkan kutipan dalam daftar postingan (misalnya melalui tag lainnya), kurangi jumlah postingan yang ditampilkan pada halaman yang ada, bagi postingan panjang menjadi beberapa halaman, atau gunakan plugin untuk menunda pemuatan (lazy-load) komentar."

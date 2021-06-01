@@ -476,6 +476,12 @@
   "lighthouse-core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "Neteikite pasenusios „JavaScript“ modernioms naršyklėms"
   },
+  "lighthouse-core/audits/byte-efficiency/modern-image-formats.js | description": {
+    "message": "Tokių formatų kaip JPEG 2000, JPEG XR ir „WebP“ vaizdai dažniausiai glaudinami geriau nei PNG ar JPEG vaizdai, todėl yra atsisiunčiami greičiau ir sunaudoja mažiau duomenų. [Sužinokite daugiau](https://web.dev/uses-webp-images/)."
+  },
+  "lighthouse-core/audits/byte-efficiency/modern-image-formats.js | title": {
+    "message": "Pateikite naujos kartos formatų vaizdus"
+  },
   "lighthouse-core/audits/byte-efficiency/offscreen-images.js | description": {
     "message": "Apsvarstykite galimybę įkelti ne ekraninius ir paslėptus vaizdus tik tada, kai bus įkelti visi svarbiausi ištekliai, kad sutrumpėtų laikas iki sąveikos. [Sužinokite daugiau](https://web.dev/offscreen-images/)."
   },
@@ -578,8 +584,14 @@
   "lighthouse-core/audits/csp-xss.js | columnDirective": {
     "message": "Direktyva"
   },
+  "lighthouse-core/audits/csp-xss.js | columnSeverity": {
+    "message": "Severity"
+  },
   "lighthouse-core/audits/csp-xss.js | description": {
-    "message": "Griežta turinio apsaugos politika (CSP) gerokai sumažina XSS atakų riziką. [Sužinokite daugiau](https://csp.withgoogle.com/docs/index.html)"
+    "message": "Griežta turinio apsaugos politika (CSP) gerokai sumažina svetainių scenarijų (XSS) atakų riziką. [Sužinokite daugiau](https://web.dev/strict-csp/)"
+  },
+  "lighthouse-core/audits/csp-xss.js | itemSeveritySyntax": {
+    "message": "Syntax"
   },
   "lighthouse-core/audits/csp-xss.js | metaTagMessage": {
     "message": "Puslapyje yra CSP, apibrėžta žymoje <meta>. Jei galite, apsvarstykite galimybę apibrėžti CSP HTTP antraštėje."
@@ -1835,6 +1847,15 @@
   "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
     "message": "Time to Interactive"
   },
+  "lighthouse-core/lib/i18n/i18n.js | itemSeverityHigh": {
+    "message": "Didelis"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | itemSeverityLow": {
+    "message": "Mažas"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | itemSeverityMedium": {
+    "message": "Vidutinis"
+  },
   "lighthouse-core/lib/i18n/i18n.js | largestContentfulPaintMetric": {
     "message": "Largest Contentful Paint"
   },
@@ -2043,7 +2064,7 @@
     "message": "Nežinoma"
   },
   "lighthouse-core/report/html/renderer/util.js | showRelevantAudits": {
-    "message": "Show audits relevant to:"
+    "message": "Rodyti patikras, aktualias:"
   },
   "lighthouse-core/report/html/renderer/util.js | snippetCollapseButtonLabel": {
     "message": "Sutraukti fragmentą"
@@ -2099,6 +2120,9 @@
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "Jei teikiate animuotą turinį, naudokite [„`amp-anim`“](https://amp.dev/documentation/components/amp-anim/), kad būtų naudojama mažiau centrinio procesoriaus galios, kai turinys nerodomas ekrane."
   },
+  "node_modules/lighthouse-stack-packs/packs/amp.js | modern-image-formats": {
+    "message": "Apsvarstykite galimybę pateikti visus [„`amp-img`“](https://amp.dev/documentation/components/amp-img/?format=websites) komponentus „WebP“ formatais ir nurodyti atitinkamus kitų naršyklių atsarginius elementus. [Sužinokite daugiau](https://amp.dev/documentation/components/amp-img/#example:-specifying-a-fallback-image)."
+  },
   "node_modules/lighthouse-stack-packs/packs/amp.js | offscreen-images": {
     "message": "Įsitikinkite, kad naudojate [„`amp-img`“](https://amp.dev/documentation/components/amp-img/?format=websites), kad vaizdai būtų įkeliami automatiškai naudojant atidėtąjį įkėlimą. [Sužinokite daugiau](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)."
   },
@@ -2135,11 +2159,17 @@
   "node_modules/lighthouse-stack-packs/packs/drupal.js | font-display": {
     "message": "Nurodykite „`@font-display`“ apibrėždami tinkintus temos šriftus."
   },
+  "node_modules/lighthouse-stack-packs/packs/drupal.js | modern-image-formats": {
+    "message": "Apsvarstykite galimybę įdiegti ir konfigūruoti [modulį, kad galėtumėte naudoti „WebP“ vaizdo formatus](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=webp&solrsort=iss_project_release_usage+desc&op=Search) svetainėje. Tokie moduliai automatiškai generuoja įkeltų vaizdų „WebP“ versiją, kad būtų optimizuotas įkėlimo laikas."
+  },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | offscreen-images": {
     "message": "Įdiekite [„Drupal“ modulį](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=im_vid_3%3A67&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=%22lazy+load%22&solrsort=iss_project_release_usage+desc&op=Search), kuris galėtų įkelti vaizdus naudojant atidėtąjį įkėlimą. Naudojant tokius modulius galima atidėti bet kokius ne ekraninius vaizdus, kad būtų padidintas našumas."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | render-blocking-resources": {
     "message": "Apsvarstykite galimybę naudoti modulį, kad galėtumėte įterpti svarbią CSS kalbą ir „JavaScript“ arba galimai nesinchronizuotai įkelti išteklius naudodami „JavaScript“, pvz., [išplėstinio CSS kalbos ir (arba) JS apibendrinimo](https://www.drupal.org/project/advagg) modulį. Atminkite, kad dėl šio modulio teikiamo optimizavimo gali būti pažeistos jūsų svetainės funkcijos, todėl tikriausiai turėsite atlikti kodo pakeitimų."
+  },
+  "node_modules/lighthouse-stack-packs/packs/drupal.js | server-response-time": {
+    "message": "Temos, moduliai ir serverio specifikacijos – visa tai turi įtakos serverio atsako laikui. Galbūt vertėtų surasti geriau optimizuotą temą, atidžiai pasirinkti optimizavimo modulį ir (arba) naujovinti serverį. Prieglobos serveriai turėtų naudoti PHP operacijos kodų talpyklą, atminties talpyklą, kad sumažintų duomenų bazės užklausų skaičių, pvz., „Redis“ ar „Memcached“, bei optimizuotą programos logiką, kad puslapiai būtų sparčiau parengti."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | total-byte-weight": {
     "message": "Apsvarstykite galimybę naudoti [interaktyvių vaizdų stilius](https://www.drupal.org/docs/8/mobile-guide/responsive-images-in-drupal-8), kad sumažintumėte puslapyje įkeliamus vaizdus. Jei naudojate rodinius keliems turinio elementams rodyti puslapyje, apsvarstykite galimybę įdiegti puslapių numeravimą, kad apribotumėte nurodytame puslapyje rodomų turinio elementų skaičių."
@@ -2170,6 +2200,9 @@
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | efficient-animated-content": {
     "message": "Apsvarstykite galimybę įkelti savo GIF į paslaugą, kuri leis jį įterpti kaip HTML5 vaizdo įrašą."
+  },
+  "node_modules/lighthouse-stack-packs/packs/joomla.js | modern-image-formats": {
+    "message": "Apsvarstykite galimybę naudoti [papildinį](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=webp) arba paslaugą, kuri automatiškai konvertuotų įkeltus vaizdus į optimalius formatus."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | offscreen-images": {
     "message": "Įdiekite [atidėtojo įkėlimo „Joomla“ papildinį](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=lazy%20loading), leidžiantį atidėti bet kokius ne ekraninius vaizdus, arba perjunkite į šią funkciją teikiantį šabloną. Nuo „Joomla“ 4.0 versijos visi nauji vaizdai [automatiškai](https://github.com/joomla/joomla-cms/pull/30748) gaus svarbų atributą „`loading`“."
@@ -2216,8 +2249,14 @@
   "node_modules/lighthouse-stack-packs/packs/magento.js | font-display": {
     "message": "[Apibrėždami tinkintus šriftus](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/css-topics/using-fonts.html) nurodykite „`@font-display`“."
   },
+  "node_modules/lighthouse-stack-packs/packs/magento.js | modern-image-formats": {
+    "message": "Apsvarstykite galimybę [„Magento Marketplace“](https://marketplace.magento.com/catalogsearch/result/?q=webp) ieškoti įvairių trečiųjų šalių plėtinių, kad galėtumėte pasinaudoti naujesniais vaizdo formatais."
+  },
   "node_modules/lighthouse-stack-packs/packs/magento.js | offscreen-images": {
     "message": "Apsvarstykite galimybę keisti produkto ir katalogo šablonus, kad galėtumėte išnaudoti žiniatinklio platformos [atidėtojo įkėlimo](https://web.dev/native-lazy-loading) funkciją."
+  },
+  "node_modules/lighthouse-stack-packs/packs/magento.js | server-response-time": {
+    "message": "Naudokite platformos „Magento“ [„Varnish“ integravimą](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html)."
   },
   "node_modules/lighthouse-stack-packs/packs/magento.js | unminified-css": {
     "message": "Parduotuvės skiltyje „Kūrėjų nustatymai“ įgalinkite parinktį „Pašalinti nereikalingus CSS failų duomenis“. [Sužinokite daugiau](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)"
@@ -2240,11 +2279,17 @@
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | efficient-animated-content": {
     "message": "[Pakeiskite animuotus GIF failus vaizdo įrašu](https://web.dev/replace-gifs-with-videos/), taip tinklalapis bus įkeliamas greičiau. Taip pat apsvarstykite galimybę naudoti modernius failų formatus, pvz., [„WebM“](https://web.dev/replace-gifs-with-videos/#create-webm-videos) arba [AV1](https://developers.google.com/web/updates/2018/09/chrome-70-media-updates#av1-decoder), taip pagerinsite glaudinimo efektyvumą daugiau nei 30 proc., palyginti su dabartiniu naujausiu vaizdo kodeku – VP9."
   },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | modern-image-formats": {
+    "message": "Apsvarstykite galimybę naudoti [papildinį](https://octobercms.com/plugins?search=image) arba paslaugą, kuri automatiškai konvertuotų įkeltus vaizdus į optimalius formatus. [„WebP“ nenuostolingai suglaudinti vaizdai](https://developers.google.com/speed/webp) yra 26 proc. mažesni, palyginti su PNG, ir 25–34 proc. mažesni, palyginti su JPEG formato tapataus SSIM kokybės indekso vaizdais. Apsvarstykite galimybę naudoti ir kitą naujos kartos vaizdo formatą – [AVIF](https://jakearchibald.com/2020/avif-has-landed/)."
+  },
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | offscreen-images": {
     "message": "Apsvarstykite galimybę įdiegti [atidėtojo vaizdų įkėlimo papildinį](https://octobercms.com/plugins?search=lazy), kuriuo galima atidėti bet kokius ne ekraninius vaizdus, arba perjunkite į šią funkciją teikiantį šabloną. Be to, apsvarstykite galimybę naudoti [AMP papildinį](https://octobercms.com/plugins?search=Accelerated+Mobile+Pages)."
   },
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | render-blocking-resources": {
     "message": "Yra daugybė papildinių, kuriuos naudodami galite [įterpti svarbių išteklių](https://octobercms.com/plugins?search=css). Šie papildiniai gali sugadinti kitus papildinius, todėl reikia bandyti atidžiai."
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | server-response-time": {
+    "message": "Temos, papildiniai ir serverio specifikacijos – visa tai turi įtakos serverio atsako laikui. Apsvarstykite galimybę paieškoti geriau optimizuotos temos, atidžiau pasirinkti optimizavimo papildinį ir (arba) naujovinti serverį. Platfomoje „October CMS“ kūrėjams taip pat leidžiama naudoti atributą[„`Queues`“](https://octobercms.com/docs/services/queues), kad galėtų atidėti daug laiko reikalaujančių užduočių, pvz., el. laiško siuntimo, apdorojimą. Tai žymiai paspartina žiniatinklio užklausas."
   },
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | total-byte-weight": {
     "message": "Apsvarstykite galimybę rodyti ištraukas įrašų sąrašuose (pvz., naudodami mygtuką „`show more`“), sumažinti nurodytame tinklalapyje rodomų įrašų skaičių, suskaidyti ilgus įrašus į kelis tinklalapius arba naudoti komentarų atidėtojo įkėlimo papildinį."
@@ -2279,6 +2324,9 @@
   "node_modules/lighthouse-stack-packs/packs/react.js | redirects": {
     "message": "Jei naudojate „React“ maršruto parinktuvą, sumažinkite komponento „`<Redirect>`“ naudojimą [parenkant maršrutą](https://reacttraining.com/react-router/web/api/Redirect)."
   },
+  "node_modules/lighthouse-stack-packs/packs/react.js | server-response-time": {
+    "message": "Jei serveryje pateikiate „React“ komponentų, apsvarstykite galimybę naudoti „`renderToNodeStream()`“ arba „`renderToStaticNodeStream()`“, kad klientas galėtų gauti ir užpildyti skirtingas žymėjimo dalis, o ne viską iš karto. [Sužinokite daugiau](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)"
+  },
   "node_modules/lighthouse-stack-packs/packs/react.js | unminified-css": {
     "message": "Jei versijų sistemoje iš CSS failų nereikalingi duomenys pašalinami automatiškai, įsitikinkite, kad pritaikote gamybinę programos versiją. Galite tai patikrinti naudodami „React“ kūrėjo įrankių plėtinį. [Sužinokite daugiau](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
   },
@@ -2294,11 +2342,17 @@
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | efficient-animated-content": {
     "message": "Apsvarstykite galimybę įkelti savo GIF į paslaugą, kuri leis jį įterpti kaip HTML5 vaizdo įrašą."
   },
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | modern-image-formats": {
+    "message": "Apsvarstykite galimybę naudoti [papildinį](https://wordpress.org/plugins/search/convert+webp/) arba paslaugą, kuri automatiškai konvertuotų įkeltus vaizdus į optimalius formatus."
+  },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | offscreen-images": {
     "message": "Įdiekite [atidėtojo įkėlimo „WordPress“ papildinį](https://wordpress.org/plugins/search/lazy+load/), leidžiantį atidėti bet kokius ne ekraninius vaizdus, arba perjunkite į šią funkciją teikiančią temą. Be to, apsvarstykite galimybę naudoti [AMP papildinį](https://wordpress.org/plugins/amp/)."
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | render-blocking-resources": {
     "message": "Yra įvairių „WordPress“ papildinių, kuriuos naudodami galite [įterpti svarbių išteklių](https://wordpress.org/plugins/search/critical+css/) arba [atidėti mažiau svarbius šaltinius](https://wordpress.org/plugins/search/defer+css+javascript/). Atminkite, kad dėl šių papildinių teikiamo optimizavimo gali būti pažeistos jūsų temos ar papildinių funkcijos, todėl tikriausiai turėsite atlikti kodo pakeitimų."
+  },
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | server-response-time": {
+    "message": "Temos, papildiniai ir serverio specifikacijos – visa tai turi įtakos serverio atsako laikui. Galbūt vertėtų surasti geriau optimizuotą temą, atidžiai pasirinkti optimizavimo papildinį ir (arba) naujovinti serverį."
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | total-byte-weight": {
     "message": "Apsvarstykite galimybę rodyti ištraukas įrašų sąrašuose (pvz., naudodami daugiau elementų žymą), sumažinti nurodytame puslapyje rodomų įrašų skaičių, suskaidyti ilgus įrašus į kelis puslapius arba naudoti komentarų atidėtojo įkėlimo papildinį."

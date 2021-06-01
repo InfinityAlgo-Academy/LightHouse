@@ -476,6 +476,12 @@
   "lighthouse-core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "Избегавајте приказивање застарелог JavaScript-а модерним прегледачима"
   },
+  "lighthouse-core/audits/byte-efficiency/modern-image-formats.js | description": {
+    "message": "Формати слика као што су JPEG 2000, JPEG XR и WebP често пружају бољу компресију него PNG или JPEG, што подразумева бржа преузимања и мању потрошњу података. [Сазнајте више](https://web.dev/uses-webp-images/)."
+  },
+  "lighthouse-core/audits/byte-efficiency/modern-image-formats.js | title": {
+    "message": "Приказујте слике у форматима следеће генерације"
+  },
   "lighthouse-core/audits/byte-efficiency/offscreen-images.js | description": {
     "message": "Препоручујемо вам да одложите учитавање слика ван екрана и скривених слика док се сви веома важни ресурси не учитају како бисте смањили време до почетка интеракције. [Сазнајте више](https://web.dev/offscreen-images/)."
   },
@@ -578,8 +584,14 @@
   "lighthouse-core/audits/csp-xss.js | columnDirective": {
     "message": "Директива"
   },
+  "lighthouse-core/audits/csp-xss.js | columnSeverity": {
+    "message": "Severity"
+  },
   "lighthouse-core/audits/csp-xss.js | description": {
-    "message": "Јаке смернице за безбедност садржаја (CSP) знатно смањују ризик од XSS напада. [Сазнајте више](https://csp.withgoogle.com/docs/index.html)"
+    "message": "Снажне смернице за безбедност садржаја знатно смањују ризик од напада скриптовањем динамички генерисаних веб-страница. [Сазнајте више](https://web.dev/strict-csp/)"
+  },
+  "lighthouse-core/audits/csp-xss.js | itemSeveritySyntax": {
+    "message": "Syntax"
   },
   "lighthouse-core/audits/csp-xss.js | metaTagMessage": {
     "message": "Страница садржи CSP дефинисан у <meta> ознаци. Саветујемо вам да дефинишете CSP у HTTP заглављу ако можете."
@@ -1835,6 +1847,15 @@
   "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
     "message": "Time to Interactive"
   },
+  "lighthouse-core/lib/i18n/i18n.js | itemSeverityHigh": {
+    "message": "Висока"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | itemSeverityLow": {
+    "message": "Ниска"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | itemSeverityMedium": {
+    "message": "Средња"
+  },
   "lighthouse-core/lib/i18n/i18n.js | largestContentfulPaintMetric": {
     "message": "Largest Contentful Paint"
   },
@@ -2043,7 +2064,7 @@
     "message": "Непознато"
   },
   "lighthouse-core/report/html/renderer/util.js | showRelevantAudits": {
-    "message": "Show audits relevant to:"
+    "message": "Прикажи ревизије релевантне за:"
   },
   "lighthouse-core/report/html/renderer/util.js | snippetCollapseButtonLabel": {
     "message": "Скупи фрагмент"
@@ -2076,7 +2097,7 @@
     "message": "Све"
   },
   "lighthouse-treemap/app/src/util.js | allScriptsDropdownLabel": {
-    "message": "Сва скрипте"
+    "message": "Све скрипте"
   },
   "lighthouse-treemap/app/src/util.js | coverageColumnName": {
     "message": "Покривеност"
@@ -2098,6 +2119,9 @@
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "Када је у питању анимирани садржај, користите [`amp-anim`](https://amp.dev/documentation/components/amp-anim/) да бисте смањили коришћење процесора када садржај није на екрану."
+  },
+  "node_modules/lighthouse-stack-packs/packs/amp.js | modern-image-formats": {
+    "message": "Размислите о томе да прикажете све компоненте [`amp-img`](https://amp.dev/documentation/components/amp-img/?format=websites) у WebP форматима уз навођење прикладног резервног решења за друге прегледаче. [Сазнајте више](https://amp.dev/documentation/components/amp-img/#example:-specifying-a-fallback-image)."
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | offscreen-images": {
     "message": "Уверите се да користите ознаке [`amp-img`](https://amp.dev/documentation/components/amp-img/?format=websites) за слике како би се оне аутоматски одложено учитавале. [Сазнајте више](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)."
@@ -2135,11 +2159,17 @@
   "node_modules/lighthouse-stack-packs/packs/drupal.js | font-display": {
     "message": "Наведите `@font-display` кад дефинишете прилагођене фонтове у теми."
   },
+  "node_modules/lighthouse-stack-packs/packs/drupal.js | modern-image-formats": {
+    "message": "Предлажемо да инсталирате и конфигуришете [модул за коришћење WebP формата слике](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=webp&solrsort=iss_project_release_usage+desc&op=Search) на сајту. Такви модули аутоматски генеришу WebP верзију отпремљених слика да би оптимизовали брзину учитавања."
+  },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | offscreen-images": {
     "message": "Инсталирајте [Drupal модул](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=im_vid_3%3A67&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=%22lazy+load%22&solrsort=iss_project_release_usage+desc&op=Search) који може одложено да учитава слике. Такви модули пружају могућност одлагања свих слика ван екрана да би се побољшао учинак."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | render-blocking-resources": {
     "message": "Предлажемо да користите модул за уградњу кључног CSS-а и JavaScipt-а или потенцијално асинхроно учитавање елемената путем JavaScript-а, попут модула [Напредно CSS/JS груписање](https://www.drupal.org/project/advagg). Имајте на уму да оптимизације које пружа овај модул могу да оштете сајт, па ћете вероватно морати да унесете неке промене у кôд."
+  },
+  "node_modules/lighthouse-stack-packs/packs/drupal.js | server-response-time": {
+    "message": "Теме, модули и спецификације сервера доприносе времену одговора сервера. Предлажемо да пронађете оптимизованију тему, пажљиво изаберете модул за оптимизацију и/или надоградите сервер. Сервери за хостовање треба да користе кеширање PHP опкода, кеширање меморије ради смањења времена одговарања на упит из базе података, попут Redis-а или Memcached-а, као и оптимизовану логику апликације ради брже припреме страница."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | total-byte-weight": {
     "message": "Предлажемо да користите [прилагодљиве стилове слика](https://www.drupal.org/docs/8/mobile-guide/responsive-images-in-drupal-8) како бисте смањили величину слика које се учитавају на страници. Ако користите Views (прикази) да бисте приказали више ставки садржаја на страници, размислите о примени нумерисања страница да бисте ограничили број ставки садржаја које се приказују на одређеној страници."
@@ -2170,6 +2200,9 @@
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | efficient-animated-content": {
     "message": "Предлажемо да отпремите GIF у услугу која ће га кодирати за уградњу као HTML5 видео."
+  },
+  "node_modules/lighthouse-stack-packs/packs/joomla.js | modern-image-formats": {
+    "message": "Предлажемо да користите [додатну компоненту](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=webp) или услугу која аутоматски конвертује отпремљене слике у оптималне формате."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | offscreen-images": {
     "message": "Инсталирајте [Joomla додатну компоненту за одложено учитавање](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=lazy%20loading) која омогућава да одложите све слике ван екрана или пређите на шаблон који пружа ту функцију. Почев од верзије Joomla 4.0, све нове слике ће [аутоматски](https://github.com/joomla/joomla-cms/pull/30748) добити атрибут `loading` од основних функција."
@@ -2216,8 +2249,14 @@
   "node_modules/lighthouse-stack-packs/packs/magento.js | font-display": {
     "message": "Назначите ознаку `@font-display` када [дефинишете прилагођене фонтове](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/css-topics/using-fonts.html)."
   },
+  "node_modules/lighthouse-stack-packs/packs/magento.js | modern-image-formats": {
+    "message": "Размислите о томе да потражите мноштво додатака трећих страна на [Magento Marketplace-у](https://marketplace.magento.com/catalogsearch/result/?q=webp) да бисте искористили новије формате слика."
+  },
   "node_modules/lighthouse-stack-packs/packs/magento.js | offscreen-images": {
     "message": "Размислите о томе да измените шаблоне производа и каталога да бисте искористили функцију [одложеног учитавања](https://web.dev/native-lazy-loading) на веб-платформи."
+  },
+  "node_modules/lighthouse-stack-packs/packs/magento.js | server-response-time": {
+    "message": "Користите [Varnish интеграцију](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html) платформе Magento."
   },
   "node_modules/lighthouse-stack-packs/packs/magento.js | unminified-css": {
     "message": "Омогућите опцију „Умањи CSS датотеке“ у подешавањима за програмере у продавници. [Сазнајте више](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)."
@@ -2240,11 +2279,17 @@
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | efficient-animated-content": {
     "message": "[Замените анимиране GIF-ове видео садржајем](https://web.dev/replace-gifs-with-videos/) да би се веб-странице брже учитавале, а предлажемо и да користите модерне формате фајлова, као што је [WebM](https://web.dev/replace-gifs-with-videos/#create-webm-videos) или [AV1](https://developers.google.com/web/updates/2018/09/chrome-70-media-updates#av1-decoder), да бисте побољшали ефикасност компримовања за више од 30% у односу на актуелни најсавременији видео кодек, VP9."
   },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | modern-image-formats": {
+    "message": "Предлажемо да користите [додатну компоненту](https://octobercms.com/plugins?search=image) или услугу која аутоматски конвертује отпремљене слике у оптималне формате. Величина [WebP слика без губитака](https://developers.google.com/speed/webp) је за 26% мања од величине PNG слика и за 25–34% мања од величине одговарајућих JPEG слика еквивалентног SSIM индекса квалитета. Још један формат слике следеће генерације који треба да узмете у обзир је [AVIF](https://jakearchibald.com/2020/avif-has-landed/)."
+  },
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | offscreen-images": {
     "message": "Предлажемо да инсталирате [додатну компоненту за одложено учитавање слика](https://octobercms.com/plugins?search=lazy) која пружа могућност одлагања свих слика ван екрана или преласка на тему која пружа ту функцију. Предлажемо и да користите [додатну компоненту за AMP странице](https://octobercms.com/plugins?search=Accelerated+Mobile+Pages)."
   },
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | render-blocking-resources": {
     "message": "Има много додатних компоненти које вам помажу да [уметнете критичне елементе](https://octobercms.com/plugins?search=css). Те додатне компоненте могу да оштете друге додатне компоненте, па морате детаљно да их тестирате."
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | server-response-time": {
+    "message": "Теме, додатне компоненте и спецификације сервера доприносе времену одговора сервера. Предлажемо да пронађете оптимизованију тему, пажљиво изаберете додатну компоненту за оптимизацију и/или надоградите сервер. Систем за управљање садржајем October омогућава програмерима и да користе ставку [`Queues`](https://octobercms.com/docs/services/queues) да би одложили обраду неког задатка који одузима много времена, попут слања имејла. То драстично убрзава веб-захтеве."
   },
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | total-byte-weight": {
     "message": "Предлажемо да прикажете одломке на листама постова (на пример, помоћу дугмета `show more`), смањите број постова који се приказују на одређеној веб-страници, раздвојите дугачке постове на више веб-страница или користите додатну компоненту за одложено учитавање коментара."
@@ -2279,6 +2324,9 @@
   "node_modules/lighthouse-stack-packs/packs/react.js | redirects": {
     "message": "Ако користите React рутер, смањите коришћење компоненте `<Redirect>` за [навигације помоћу руте](https://reacttraining.com/react-router/web/api/Redirect)."
   },
+  "node_modules/lighthouse-stack-packs/packs/react.js | server-response-time": {
+    "message": "Ако приказујете било какве React компоненте на серверу, размислите о томе да користите `renderToNodeStream()` или `renderToStaticNodeStream()` како бисте омогућили клијенту да прима и попуњава различите делове ознаке уместо свих делова одједном. [Сазнајте више](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)."
+  },
   "node_modules/lighthouse-stack-packs/packs/react.js | unminified-css": {
     "message": "Ако систем за превођење и повезивање аутоматски умањује CSS фајлове, уверите се да примењујете производну верзију апликације. То можете да проверите помоћу додатка React Developer Tools. [Сазнајте више](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
   },
@@ -2294,11 +2342,17 @@
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | efficient-animated-content": {
     "message": "Предлажемо да отпремите GIF у услугу која ће га кодирати за уградњу као HTML5 видео."
   },
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | modern-image-formats": {
+    "message": "Предлажемо да користите [додатну компоненту](https://wordpress.org/plugins/search/convert+webp/) или услугу која аутоматски конвертује отпремљене слике у оптималне формате."
+  },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | offscreen-images": {
     "message": "Инсталирајте [WordPress додатну компоненту за лако учитавање](https://wordpress.org/plugins/search/lazy+load/) која омогућава да одложите све слике ван екрана или да пређете на тему која пружа ту функцију. Препоручујемо и да користите [додатну компоненту за AMP странице](https://wordpress.org/plugins/amp/)."
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | render-blocking-resources": {
     "message": "Неке WordPress додатне компоненте могу да вам помогну да [уметнете критичне елементе](https://wordpress.org/plugins/search/critical+css/) или [одложите мање важне ресурсе](https://wordpress.org/plugins/search/defer+css+javascript/). Имајте на уму да оптимизације које пружају ове додатне компоненте могу да оштете функције или теме додатних компоненти, па ћете вероватно морати да уносите промене у кôд."
+  },
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | server-response-time": {
+    "message": "Теме, додатне компоненте и спецификације сервера доприносе времену одговора сервера. Препоручујемо да пронађете оптимизованију тему, пажљиво изаберете додатну компоненту за оптимизацију и/или надоградите сервер."
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | total-byte-weight": {
     "message": "Препоручујемо да прикажете одломке у листама постова (на пример, преко још ознака), смањите број постова који се приказују на одређеној страници, раздвојите дугачке постове на више странциа или користите додатну компоненту за лако учитавање коментара."

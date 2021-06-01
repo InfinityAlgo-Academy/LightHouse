@@ -476,6 +476,12 @@
   "lighthouse-core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "Evita utilitzar JavaScript heretat als navegadors moderns"
   },
+  "lighthouse-core/audits/byte-efficiency/modern-image-formats.js | description": {
+    "message": "Els formats d'imatge com JPEG 2000, JPEG XR i WebP solen oferir millors resultats de compressió que PNG o JPEG. Això implica baixades més ràpides i menys consum de dades. [Obtén més informació](https://web.dev/uses-webp-images/)."
+  },
+  "lighthouse-core/audits/byte-efficiency/modern-image-formats.js | title": {
+    "message": "Publica imatges en format d'última generació"
+  },
   "lighthouse-core/audits/byte-efficiency/offscreen-images.js | description": {
     "message": "Et recomanem que utilitzis la càrrega diferida de les imatges amagades i que no es mostren a la pantalla un cop s'acabin de carregar tots els recursos essencials a fi de reduir el temps necessari perquè la pàgina sigui interactiva. [Obtén més informació](https://web.dev/offscreen-images/)."
   },
@@ -578,8 +584,14 @@
   "lighthouse-core/audits/csp-xss.js | columnDirective": {
     "message": "Directiva"
   },
+  "lighthouse-core/audits/csp-xss.js | columnSeverity": {
+    "message": "Gravetat"
+  },
   "lighthouse-core/audits/csp-xss.js | description": {
-    "message": "Una política de seguretat del contingut (CSP) sòlida redueix significativament el risc de patir atacs XSS. [Més informació](https://csp.withgoogle.com/docs/index.html)"
+    "message": "Una política de seguretat del contingut (CSP) sòlida redueix significativament el risc de patir atacs d'injecció indirecta de scripts (XSS). [Més informació](https://web.dev/strict-csp/)"
+  },
+  "lighthouse-core/audits/csp-xss.js | itemSeveritySyntax": {
+    "message": "Sintaxi"
   },
   "lighthouse-core/audits/csp-xss.js | metaTagMessage": {
     "message": "La pàgina conté una CSP definida en una etiqueta <meta>. Si pots, també pots optar per definir la CSP en una capçalera HTTP."
@@ -1835,6 +1847,15 @@
   "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
     "message": "Time to Interactive"
   },
+  "lighthouse-core/lib/i18n/i18n.js | itemSeverityHigh": {
+    "message": "Alta"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | itemSeverityLow": {
+    "message": "Baixa"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | itemSeverityMedium": {
+    "message": "Mitjana"
+  },
   "lighthouse-core/lib/i18n/i18n.js | largestContentfulPaintMetric": {
     "message": "Largest Contentful Paint"
   },
@@ -2043,7 +2064,7 @@
     "message": "Desconegut"
   },
   "lighthouse-core/report/html/renderer/util.js | showRelevantAudits": {
-    "message": "Show audits relevant to:"
+    "message": "Mostra auditories relacionades amb:"
   },
   "lighthouse-core/report/html/renderer/util.js | snippetCollapseButtonLabel": {
     "message": "Replega el fragment"
@@ -2099,6 +2120,9 @@
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "En el cas de contingut animat, fes servir [`amp-anim`](https://amp.dev/documentation/components/amp-anim/) per minimitzar l'ús de la CPU quan el contingut és fora de la pantalla."
   },
+  "node_modules/lighthouse-stack-packs/packs/amp.js | modern-image-formats": {
+    "message": "Pots mostrar tots els components [`amp-img`](https://amp.dev/documentation/components/amp-img/?format=websites) en formats WebP i, al mateix temps, especificar una alternativa adequada per a altres navegadors. [Obtén més informació](https://amp.dev/documentation/components/amp-img/#example:-specifying-a-fallback-image)."
+  },
   "node_modules/lighthouse-stack-packs/packs/amp.js | offscreen-images": {
     "message": "Comprova que estiguis utilitzant [`amp-img`](https://amp.dev/documentation/components/amp-img/?format=websites) perquè les imatges es carreguin automàticament de manera lenta. [Obtén més informació](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)."
   },
@@ -2135,11 +2159,17 @@
   "node_modules/lighthouse-stack-packs/packs/drupal.js | font-display": {
     "message": "Especifica `@font-display` quan defineixis tipus de lletra personalitzats al teu tema."
   },
+  "node_modules/lighthouse-stack-packs/packs/drupal.js | modern-image-formats": {
+    "message": "Pots instal·lar i configurar [un mòdul per utilitzar els formats d'imatge WebP](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=webp&solrsort=iss_project_release_usage+desc&op=Search) al teu lloc web. Per optimitzar els temps de càrrega, aquests mòduls generen automàticament una versió WebP de les imatges que has penjat."
+  },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | offscreen-images": {
     "message": "Instal·la [un mòdul de Drupal](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=im_vid_3%3A67&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=%22lazy+load%22&solrsort=iss_project_release_usage+desc&op=Search) que pugui carregar les imatges de forma lenta. Aquests mòduls ofereixen la possibilitat d'ajornar les imatges fora de la pantalla per millorar el rendiment."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | render-blocking-resources": {
     "message": "Pots utilitzar un mòdul per inserir fitxers JavaScript i CSS essencials o per carregar recursos de manera asíncrona mitjançant JavaScript, com el mòdul [Advanced CSS/JS Aggregation](https://www.drupal.org/project/advagg). Tingues en compte que les optimitzacions que proporciona aquest mòdul poden afectar el teu lloc web, de manera que és probable que hagis de fer canvis al codi."
+  },
+  "node_modules/lighthouse-stack-packs/packs/drupal.js | server-response-time": {
+    "message": "Els temes, els mòduls i les especificacions del servidor repercuteixen en el temps de resposta del servidor. Pots buscar un tema més optimitzat, seleccionar amb cura un mòdul d'optimització o actualitzar el servidor. Els servidors d'allotjament haurien d'utilitzar l'opció de desar a la memòria cau del codi d'operacions PHP, l'opció de desar a la memòria cau per reduir els temps de consulta de la base de dades, com ara Redis o Memcached, així com la lògica de l'aplicació optimitzada per preparar les pàgines més ràpidament."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | total-byte-weight": {
     "message": "Pots utilitzar [estils d'imatges responsives](https://www.drupal.org/docs/8/mobile-guide/responsive-images-in-drupal-8) per reduir la mida de les imatges que carregues a la pàgina. Si utilitzes Views per mostrar diversos elements de contingut en una pàgina, pots implementar paginació per limitar el nombre d'elements de contingut que es mostren en una pàgina determinada."
@@ -2170,6 +2200,9 @@
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | efficient-animated-content": {
     "message": "Pots penjar el GIF en un servei que permeti inserir-lo com un vídeo HTML5."
+  },
+  "node_modules/lighthouse-stack-packs/packs/joomla.js | modern-image-formats": {
+    "message": "Pots fer servir un [connector](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=webp) o un servei que converteixi automàticament les imatges penjades als formats òptims."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | offscreen-images": {
     "message": "Instal·la un [connector de Joomla de càrrega lenta](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=lazy%20loading) que t'ofereixi la possibilitat d'ajornar les imatges fora de pantalla o bé canvia a una plantilla que t'ofereixi aquesta funcionalitat. A partir de Joomla 4.0, totes les imatges noves obtenen [automàticament](https://github.com/joomla/joomla-cms/pull/30748) l'atribut `loading` del nucli."
@@ -2216,8 +2249,14 @@
   "node_modules/lighthouse-stack-packs/packs/magento.js | font-display": {
     "message": "Especifica `@font-display` en [definir tipus de lletra personalitzats](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/css-topics/using-fonts.html)."
   },
+  "node_modules/lighthouse-stack-packs/packs/magento.js | modern-image-formats": {
+    "message": "Pots optar per cercar diverses extensions de tercers a [Magento Marketplace](https://marketplace.magento.com/catalogsearch/result/?q=webp) per utilitzar formats d'imatge més nous."
+  },
   "node_modules/lighthouse-stack-packs/packs/magento.js | offscreen-images": {
     "message": "Pots optar per modificar les plantilles de producte i de catàleg perquè utilitzin la funció de [càrrega diferida](https://web.dev/native-lazy-loading) de la plataforma web."
+  },
+  "node_modules/lighthouse-stack-packs/packs/magento.js | server-response-time": {
+    "message": "Fes servir la [integració amb Varnish](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html) de Magento."
   },
   "node_modules/lighthouse-stack-packs/packs/magento.js | unminified-css": {
     "message": "Activa l'opció \"Redueix els fitxers CSS\" a la configuració del desenvolupador de la botiga. [Obtén més informació](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)."
@@ -2240,11 +2279,17 @@
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | efficient-animated-content": {
     "message": "[Suprimeix els GIF animats amb vídeo](https://web.dev/replace-gifs-with-videos/) per carregar les pàgines web més ràpidament i planteja't l'opció d'utilitzar formats de fitxer moderns, com ara [WebM](https://web.dev/replace-gifs-with-videos/#create-webm-videos) o [AV1](https://developers.google.com/web/updates/2018/09/chrome-70-media-updates#av1-decoder), per millorar l'eficàcia de compressió en més d'un 30% respecte al còdec de vídeo actual més avançat, VP9."
   },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | modern-image-formats": {
+    "message": "Pots fer servir un [connector](https://octobercms.com/plugins?search=image) o un servei que converteixi automàticament les imatges penjades als formats òptims. [Les imatges WebP sense pèrdua](https://developers.google.com/speed/webp) són un 26% més petites en comparació amb les imatges PNG i entre un 25 i un 34% més petites que les imatges JPEG comparables a l'índex de qualitat SSIM equivalent. Un altre format d'imatge d'última generació que cal tenir en compte és [AVIF](https://jakearchibald.com/2020/avif-has-landed/)."
+  },
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | offscreen-images": {
     "message": "Pots instal·lar un [connector de càrrega lenta d'imatges](https://octobercms.com/plugins?search=lazy) que t'ofereixi la possibilitat d'ajornar les imatges fora de pantalla o bé canviar a un tema que t'ofereixi aquesta funcionalitat. També pots fer servir [el connector AMP](https://octobercms.com/plugins?search=Accelerated+Mobile+Pages)."
   },
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | render-blocking-resources": {
     "message": "Hi ha molts connectors que ajuden a [inserir recursos essencials](https://octobercms.com/plugins?search=css). Aquests connectors, però, poden malmetre altres connectors; et recomanem que els provis a fons."
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | server-response-time": {
+    "message": "Els temes, els connectors i les especificacions del servidor contribueixen al temps de resposta del servidor. Pots buscar un tema més optimitzat, seleccionar amb cura un connector d'optimització o actualitzar el servidor. El CMS d'October també permet als desenvolupadors fer servir [`Queues`](https://octobercms.com/docs/services/queues) per ajornar el processament d'una tasca llarga, com ara enviar un correu electrònic. Això accelera enormement les sol·licituds web."
   },
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | total-byte-weight": {
     "message": "Pots mostrar extractes a les llistes de publicacions (per exemple, utilitzar un botó `show more`), reduir el nombre de publicacions que es mostren en una pàgina web determinada, dividir les publicacions llargues en diverses pàgines web o utilitzar un connector per carregar lentament els comentaris."
@@ -2279,6 +2324,9 @@
   "node_modules/lighthouse-stack-packs/packs/react.js | redirects": {
     "message": "Si estàs utilitzant un encaminador de React, redueix l'ús del component `<Redirect>` a les [navegacions per rutes](https://reacttraining.com/react-router/web/api/Redirect)."
   },
+  "node_modules/lighthouse-stack-packs/packs/react.js | server-response-time": {
+    "message": "Si estàs renderitzant qualsevol component de React des del servidor, pots optar per utilitzar `renderToNodeStream()` o `renderToStaticNodeStream()` per permetre que el client rebi i hidrati diferents parts de l'etiquetatge en lloc de fer-ho amb tots a la vegada. [Obtén més informació](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)."
+  },
   "node_modules/lighthouse-stack-packs/packs/react.js | unminified-css": {
     "message": "Si el sistema de compilació redueix automàticament els fitxers CSS, comprova que estiguis implementant la compilació de producció de l'aplicació. Pots comprovar-ho amb l'extensió React Developer Tools. [Obtén més informació](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
   },
@@ -2294,11 +2342,17 @@
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | efficient-animated-content": {
     "message": "Pots penjar el GIF en un servei que permeti inserir-lo com un vídeo HTML5."
   },
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | modern-image-formats": {
+    "message": "Pots fer servir un [connector](https://wordpress.org/plugins/search/convert+webp/) o un servei que converteixi automàticament les imatges penjades als formats òptims."
+  },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | offscreen-images": {
     "message": "Instal·la un [connector de WordPress de càrrega diferida](https://wordpress.org/plugins/search/lazy+load/) que t'ofereixi la possibilitat d'ajornar les imatges fora de pantalla o canviar a un tema que t'ofereixi aquesta funcionalitat. També pots fer servir [el connector AMP](https://wordpress.org/plugins/amp/)."
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | render-blocking-resources": {
     "message": "Hi ha diversos connectors de WordPress que et poden ajudar a [inserir recursos essencials](https://wordpress.org/plugins/search/critical+css/) o a [ajornar els recursos menys importants](https://wordpress.org/plugins/search/defer+css+javascript/). Tingues en compte que les optimitzacions que proporcionen aquests connectors poden afectar les funcions del tema o dels connectors, de manera que és possible que hagis de fer canvis al codi."
+  },
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | server-response-time": {
+    "message": "Els temes, els connectors i les especificacions del servidor repercuteixen en el temps de resposta del servidor. Pots buscar un tema més optimitzat, seleccionar amb cura un connector d'optimització o actualitzar el servidor."
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | total-byte-weight": {
     "message": "Pots mostrar extractes a les llistes de publicacions (per exemple, amb l'etiqueta més), reduir el nombre de publicacions que es mostren en una pàgina concreta, tallar les publicacions llargues en diverses pàgines o fer servir un connector per als comentaris de càrrega diferida."

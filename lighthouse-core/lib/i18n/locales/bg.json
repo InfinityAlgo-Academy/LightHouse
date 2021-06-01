@@ -476,6 +476,12 @@
   "lighthouse-core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "Избягвайте показването на остарял JavaScript в съвременни браузъри"
   },
+  "lighthouse-core/audits/byte-efficiency/modern-image-formats.js | description": {
+    "message": "Графични формати, като JPEG 2000, JPEG XR и WebP, често осигуряват по-ефективно компресиране от PNG или JPEG. Това означава по-бързо изтегляне и използване на по-малко данни. [Научете повече](https://web.dev/uses-webp-images/)."
+  },
+  "lighthouse-core/audits/byte-efficiency/modern-image-formats.js | title": {
+    "message": "Използвайте съвременни формати за показване на изображения"
+  },
   "lighthouse-core/audits/byte-efficiency/offscreen-images.js | description": {
     "message": "За да намалите времето до интерактивност, препоръчваме скритите изображения и тези извън видимата част на екрана да се зареждат след всички критични ресурси. [Научете повече](https://web.dev/offscreen-images/)."
   },
@@ -578,8 +584,14 @@
   "lighthouse-core/audits/csp-xss.js | columnDirective": {
     "message": "Директива"
   },
+  "lighthouse-core/audits/csp-xss.js | columnSeverity": {
+    "message": "Severity"
+  },
   "lighthouse-core/audits/csp-xss.js | description": {
-    "message": "Строги правила за сигурност на съдържанието (CSP) значително намаляват риска от XSS атаки. [Научете повече](https://csp.withgoogle.com/docs/index.html)"
+    "message": "Строги правила за сигурност на съдържанието (CSP) значително намаляват риска от атаки чрез изпълняване на скриптове между сайтове (XSS). [Научете повече](https://web.dev/strict-csp/)"
+  },
+  "lighthouse-core/audits/csp-xss.js | itemSeveritySyntax": {
+    "message": "Syntax"
   },
   "lighthouse-core/audits/csp-xss.js | metaTagMessage": {
     "message": "Страницата съдържа CSP, дефинирани в <meta> маркер. Обмислете дали да не дефинирате CSP в HTTP заглавка, ако можете."
@@ -1835,6 +1847,15 @@
   "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
     "message": "Time to Interactive"
   },
+  "lighthouse-core/lib/i18n/i18n.js | itemSeverityHigh": {
+    "message": "Високо"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | itemSeverityLow": {
+    "message": "Ниско"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | itemSeverityMedium": {
+    "message": "Средно"
+  },
   "lighthouse-core/lib/i18n/i18n.js | largestContentfulPaintMetric": {
     "message": "Largest Contentful Paint"
   },
@@ -2043,7 +2064,7 @@
     "message": "Неизвестно"
   },
   "lighthouse-core/report/html/renderer/util.js | showRelevantAudits": {
-    "message": "Show audits relevant to:"
+    "message": "Показване на проверките, уместни за:"
   },
   "lighthouse-core/report/html/renderer/util.js | snippetCollapseButtonLabel": {
     "message": "Свиване на фрагмента"
@@ -2099,6 +2120,9 @@
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "При анимирано съдържание използвайте маркера [`amp-anim`](https://amp.dev/documentation/components/amp-anim/), за да намалите използването на процесора, когато съдържанието е извън екрана."
   },
+  "node_modules/lighthouse-stack-packs/packs/amp.js | modern-image-formats": {
+    "message": "Бихте могли да изобразявате всички компоненти от типа [`amp-img`](https://amp.dev/documentation/components/amp-img/?format=websites) във формати WebP, като посочвате подходящи резервни варианти за другите браузъри. [Научете повече](https://amp.dev/documentation/components/amp-img/#example:-specifying-a-fallback-image)."
+  },
   "node_modules/lighthouse-stack-packs/packs/amp.js | offscreen-images": {
     "message": "Проверете дали използвате маркера [`amp-img`](https://amp.dev/documentation/components/amp-img/?format=websites) за изображенията с цел автоматично забавяне на зареждането. [Научете повече](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)."
   },
@@ -2135,11 +2159,17 @@
   "node_modules/lighthouse-stack-packs/packs/drupal.js | font-display": {
     "message": "Посочете стойности за `@font-display`, когато дефинирате персонализирани шрифтове в темата си."
   },
+  "node_modules/lighthouse-stack-packs/packs/drupal.js | modern-image-formats": {
+    "message": "Добре е да инсталирате и конфигурирате [модул, за да се възползвате от графичните формати WebP](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=webp&solrsort=iss_project_release_usage+desc&op=Search) в сайта си. Тези модули автоматично генерират WebP версии на качените от вас изображения, за да оптимизират времето за зареждане."
+  },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | offscreen-images": {
     "message": "Инсталирайте [модул на Drupal](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=im_vid_3%3A67&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=%22lazy+load%22&solrsort=iss_project_release_usage+desc&op=Search), който поддържа забавено зареждане на изображенията. Тези модули дават възможност за отлагане на зареждането на изображенията извън видимата част на екрана, за да се подобри ефективността."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | render-blocking-resources": {
     "message": "Добре е да използвате модул за вграждане на важния CSS и JavaScript код или за потенциално асинхронно зареждане на активите чрез JavaScript, като например модула [Advanced CSS/JS Aggregation](https://www.drupal.org/project/advagg). Имайте предвид, че оптимизациите, които той извършва, може да възпрепятстват работата на сайта ви, така че вероятно ще се наложи да промените кода."
+  },
+  "node_modules/lighthouse-stack-packs/packs/drupal.js | server-response-time": {
+    "message": "Времето за реакция на сървъра зависи от спецификациите му, темите и модулите. Добре е да намерите по-оптимизирана тема, внимателно да изберете модул за оптимизиране и/или да надстроите сървъра си. Сървърите ви за хостинг трябва да използват функциите на PHP за кеширане на операционните кодове и кеширане в паметта чрез услуги като Redis или Memcached, за да се намали времето за подаване на заявки към базата от данни, както и оптимизирана логика за приложенията, така че страниците да се подготвят по-бързо."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | total-byte-weight": {
     "message": "Бихте могли да използвате [стилове за адаптивни изображения](https://www.drupal.org/docs/8/mobile-guide/responsive-images-in-drupal-8), за да намалите размера на графичните файлове, зареждани на страницата ви. Ако си служите с изгледи, за да показвате няколко елемента със съдържание на една страница, можете да внедрите функция за страниране, за да ограничите броя елементи, които да се извеждат на страница."
@@ -2170,6 +2200,9 @@
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | efficient-animated-content": {
     "message": "Добре е да качите GIF файла си в услуга, която ще даде възможност да бъде вграден като видеоклип с HTML5."
+  },
+  "node_modules/lighthouse-stack-packs/packs/joomla.js | modern-image-formats": {
+    "message": "Добре е да използвате [приставка](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=webp) или услуга за автоматично преобразуване на качените изображения в оптималния формат."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | offscreen-images": {
     "message": "Инсталирайте [приставка за Joomla за забавено зареждане](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=lazy%20loading), която дава възможност за отлагане на зареждането на изображенията извън видимата част на екрана, или преминете към шаблон с такава функционалност. В Joomla 4.0 и следващи версии всички нови изображения [автоматично](https://github.com/joomla/joomla-cms/pull/30748) ще получават атрибута `loading` от основния код."
@@ -2216,8 +2249,14 @@
   "node_modules/lighthouse-stack-packs/packs/magento.js | font-display": {
     "message": "Посочете `@font-display`, когато [дефинирате персонализирани шрифтове](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/css-topics/using-fonts.html)."
   },
+  "node_modules/lighthouse-stack-packs/packs/magento.js | modern-image-formats": {
+    "message": "Потърсете [пазара на Magento](https://marketplace.magento.com/catalogsearch/result/?q=webp) за разширения от трети страни, позволяващи работа с по-нови графични формати."
+  },
   "node_modules/lighthouse-stack-packs/packs/magento.js | offscreen-images": {
     "message": "Бихте могли да промените шаблоните си за продукти и каталози, за да използват функцията за [отложено зареждане](https://web.dev/native-lazy-loading) в уеб платформата."
+  },
+  "node_modules/lighthouse-stack-packs/packs/magento.js | server-response-time": {
+    "message": "Използвайте [интегрирането на Magento с Varnish](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html)."
   },
   "node_modules/lighthouse-stack-packs/packs/magento.js | unminified-css": {
     "message": "Активирайте опцията „Minify CSS Files“ в настройките за програмисти в магазина. [Научете повече](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)."
@@ -2240,11 +2279,17 @@
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | efficient-animated-content": {
     "message": "[Заменете анимираните GIF файлове с видеосъдържание](https://web.dev/replace-gifs-with-videos/), за да ускорите зареждането на уеб страницата, и помислете за използването на съвременни файлови формати, като [WebM](https://web.dev/replace-gifs-with-videos/#create-webm-videos) или [AV1](https://developers.google.com/web/updates/2018/09/chrome-70-media-updates#av1-decoder), за да подобрите ефективността при компресиране с повече от 30% спрямо най-модерния понастоящем видеокодек VP9."
   },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | modern-image-formats": {
+    "message": "Добре е да използвате [приставка](https://octobercms.com/plugins?search=image) или услуга за автоматично преобразуване на качените изображения в оптималния формат. Размерът на [графичните файлове в беззагубния формат WebP](https://developers.google.com/speed/webp) е с 26% по-малък в сравнение с PNG и с 25 – 34% по-малък от този на съответните JPEG изображения с еквивалентен SSIM индекс за качество. Друг препоръчителен графичен формат от следващо поколение е [AVIF](https://jakearchibald.com/2020/avif-has-landed/)."
+  },
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | offscreen-images": {
     "message": "Бихте могли да инсталирате [приставка за забавено зареждане](https://octobercms.com/plugins?search=lazy), която дава възможност за отлагане на зареждането на изображенията извън видимата част на екрана, или да преминете към тема с такава функционалност. Можете също да използвате [приставката за AMP](https://octobercms.com/plugins?search=Accelerated+Mobile+Pages)."
   },
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | render-blocking-resources": {
     "message": "Има много приставки, с чиято помощ [да вградите важни активи](https://octobercms.com/plugins?search=css). Тези приставки може да възпрепятстват работата на други, така че е добре да ги тествате обстойно."
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | server-response-time": {
+    "message": "Времето за реакция на сървъра зависи от спецификациите му, темите и приставките. Добре е да намерите по-оптимизирана тема, внимателно да изберете приставка за оптимизиране и/или да надстроите сървъра. Системата за управление на съдържанието October също така дава възможност на програмистите да използват [`Queues`](https://octobercms.com/docs/services/queues), за да отлагат обработването на времеемки задачи, като например изпращане на имейли. Това драстично повишава скоростта на заявките в мрежата."
   },
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | total-byte-weight": {
     "message": "Бихте могли да показвате извадки в списъците с публикации (напр. чрез бутон `show more`), да намалите броя на публикациите, извеждани на дадена уеб страница, да разделите дългите публикации на няколко страници или да използвате приставка, която да забави зареждането на коментарите."
@@ -2279,6 +2324,9 @@
   "node_modules/lighthouse-stack-packs/packs/react.js | redirects": {
     "message": "Ако използвате React Router, сведете до минимум употребата на компонента `<Redirect>` за [навигация по маршрути](https://reacttraining.com/react-router/web/api/Redirect)."
   },
+  "node_modules/lighthouse-stack-packs/packs/react.js | server-response-time": {
+    "message": "Ако компоненти в React се рендерират върху сървъра, бихте могли да използвате `renderToNodeStream()` или `renderToStaticNodeStream()`, за да дадете възможност на клиентската програма да получава и хидратира различни части от кода за маркиране, вместо целия наведнъж. [Научете повече](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)."
+  },
   "node_modules/lighthouse-stack-packs/packs/react.js | unminified-css": {
     "message": "Ако системата ви за компилиране автоматично минимизира CSS файловете, уверете се, че внедрявате стандартната версия на приложението си. Можете да проверите това с разширението React Developer Tools. [Научете повече](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
   },
@@ -2294,11 +2342,17 @@
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | efficient-animated-content": {
     "message": "Добре е да качите GIF файла си в услуга, която ще даде възможност да бъде вграден като видеоклип с HTML5."
   },
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | modern-image-formats": {
+    "message": "Добре е да използвате [приставка](https://wordpress.org/plugins/search/convert+webp/) или услуга за автоматично преобразуване на качените изображения в оптималния формат."
+  },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | offscreen-images": {
     "message": "Инсталирайте [приставка за WordPress за забавено зареждане](https://wordpress.org/plugins/search/lazy+load/), която дава възможност за отлагане на зареждането на изображенията извън видимата част на екрана, или преминете към тема с такава функционалност. Можете също да използвате [приставката за AMP](https://wordpress.org/plugins/amp/)."
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | render-blocking-resources": {
     "message": "Има различни приставки за WordPress, с чиято помощ можете [да вградите важни активи](https://wordpress.org/plugins/search/critical+css/) или [да отложите зареждането на не толкова важни ресурси](https://wordpress.org/plugins/search/defer+css+javascript/). Имайте предвид, че оптимизациите, извършвани чрез тези приставки, може да възпрепятстват работата на функциите на темата ви или други приставки, така че вероятно ще се наложи да промените кода."
+  },
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | server-response-time": {
+    "message": "Времето за реакция на сървъра зависи от спецификациите му, темите и приставките. Добре е да намерите по-оптимизирана тема, внимателно да изберете приставка за оптимизиране и/или да надстроите сървъра си."
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | total-byte-weight": {
     "message": "Обмислете възможността да показвате извадки в списъците си с публикации (напр. чрез маркера more), да намалите броя на публикациите, извеждани на дадена страница, да разделите дългите публикации на няколко страници или да използвате приставка, която да забави зареждането на коментарите."

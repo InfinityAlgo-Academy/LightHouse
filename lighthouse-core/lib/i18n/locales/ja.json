@@ -476,6 +476,12 @@
   "lighthouse-core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "最新ブラウザに従来の JavaScript を配信しないようにしてください"
   },
+  "lighthouse-core/audits/byte-efficiency/modern-image-formats.js | description": {
+    "message": "JPEG 2000、JPEG XR、WebP などの画像フォーマットは、PNG や JPEG より圧縮性能が高く、ダウンロード時間やデータ使用量を抑えることができます。[詳細](https://web.dev/uses-webp-images/)"
+  },
+  "lighthouse-core/audits/byte-efficiency/modern-image-formats.js | title": {
+    "message": "次世代フォーマットでの画像の配信"
+  },
   "lighthouse-core/audits/byte-efficiency/offscreen-images.js | description": {
     "message": "オフスクリーンの非表示の画像は、重要なリソースをすべて読み込んだ後に遅れて読み込むようにして、操作可能になるまでの時間を短縮することをご検討ください。[詳細](https://web.dev/offscreen-images/)"
   },
@@ -578,8 +584,14 @@
   "lighthouse-core/audits/csp-xss.js | columnDirective": {
     "message": "ディレクティブ"
   },
+  "lighthouse-core/audits/csp-xss.js | columnSeverity": {
+    "message": "Severity"
+  },
   "lighthouse-core/audits/csp-xss.js | description": {
-    "message": "厳格なコンテンツ セキュリティ ポリシー（CSP）を設定すると、XSS 攻撃のリスクを大幅に軽減できます。[詳細](https://csp.withgoogle.com/docs/index.html)"
+    "message": "厳格なコンテンツ セキュリティ ポリシー（CSP）を設定すると、クロスサイト スクリプティング（XSS）攻撃のリスクを大幅に軽減できます。[詳細](https://web.dev/strict-csp/)"
+  },
+  "lighthouse-core/audits/csp-xss.js | itemSeveritySyntax": {
+    "message": "Syntax"
   },
   "lighthouse-core/audits/csp-xss.js | metaTagMessage": {
     "message": "このページでは CSP が <meta> タグで定義されています。可能な場合は、HTTP ヘッダーで CSP を定義することを検討してください。"
@@ -1835,6 +1847,15 @@
   "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
     "message": "Time to Interactive"
   },
+  "lighthouse-core/lib/i18n/i18n.js | itemSeverityHigh": {
+    "message": "高"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | itemSeverityLow": {
+    "message": "低"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | itemSeverityMedium": {
+    "message": "中"
+  },
   "lighthouse-core/lib/i18n/i18n.js | largestContentfulPaintMetric": {
     "message": "Largest Contentful Paint"
   },
@@ -2043,7 +2064,7 @@
     "message": "不明"
   },
   "lighthouse-core/report/html/renderer/util.js | showRelevantAudits": {
-    "message": "Show audits relevant to:"
+    "message": "次に関連する監査を表示:"
   },
   "lighthouse-core/report/html/renderer/util.js | snippetCollapseButtonLabel": {
     "message": "スニペットを折りたたむ"
@@ -2073,31 +2094,34 @@
     "message": "警告: "
   },
   "lighthouse-treemap/app/src/util.js | allLabel": {
-    "message": "All"
+    "message": "すべて"
   },
   "lighthouse-treemap/app/src/util.js | allScriptsDropdownLabel": {
-    "message": "All Scripts"
+    "message": "すべてのスクリプト"
   },
   "lighthouse-treemap/app/src/util.js | coverageColumnName": {
-    "message": "Coverage"
+    "message": "カバレッジ"
   },
   "lighthouse-treemap/app/src/util.js | duplicateModulesLabel": {
-    "message": "Duplicate Modules"
+    "message": "重複モジュール"
   },
   "lighthouse-treemap/app/src/util.js | resourceBytesLabel": {
-    "message": "Resource Bytes"
+    "message": "リソースのサイズ（バイト）"
   },
   "lighthouse-treemap/app/src/util.js | tableColumnName": {
-    "message": "Name"
+    "message": "名前"
   },
   "lighthouse-treemap/app/src/util.js | toggleTableButtonLabel": {
-    "message": "Toggle Table"
+    "message": "表を切り替える"
   },
   "lighthouse-treemap/app/src/util.js | unusedBytesLabel": {
-    "message": "Unused Bytes"
+    "message": "使用していないバイト"
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "アニメーション コンテンツの場合は、[`amp-anim`](https://amp.dev/documentation/components/amp-anim/) を使用して、コンテンツが画面外にあるときの CPU 使用量を最小限に抑えることができます。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/amp.js | modern-image-formats": {
+    "message": "すべての [`amp-img`](https://amp.dev/documentation/components/amp-img/?format=websites) コンポーネントを WebP 形式で表示し、他のブラウザには適切な代替画像を表示することを検討してください。[詳細](https://amp.dev/documentation/components/amp-img/#example:-specifying-a-fallback-image)"
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | offscreen-images": {
     "message": "自動的に遅延読み込みされる画像に対し、[`amp-img`](https://amp.dev/documentation/components/amp-img/?format=websites) を使用していることを確認します。[詳細](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)"
@@ -2135,11 +2159,17 @@
   "node_modules/lighthouse-stack-packs/packs/drupal.js | font-display": {
     "message": "テーマ内でカスタム フォントを定義する際に `@font-display` を指定します。"
   },
+  "node_modules/lighthouse-stack-packs/packs/drupal.js | modern-image-formats": {
+    "message": "サイトで [WebP 画像形式を活用するためのモジュール](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=webp&solrsort=iss_project_release_usage+desc&op=Search)をインストールして設定することをご検討ください。このようなモジュールにより、アップロードした画像の WebP バージョンが自動的に生成され、読み込み時間が最適化されます。"
+  },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | offscreen-images": {
     "message": "[Drupal のモジュール](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=im_vid_3%3A67&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=%22lazy+load%22&solrsort=iss_project_release_usage+desc&op=Search)をインストールすると、画像を遅延読み込みできます。このようなモジュールにより、画面外の画像の読み込みを遅らせてパフォーマンスを改善できます。"
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | render-blocking-resources": {
     "message": "モジュールを使用して、重要な CSS と JavaScript をインラインで読み込むか、JavaScript 経由でアセットを非同期で読み込むことをご検討ください（[Advanced CSS/JS Aggregation](https://www.drupal.org/project/advagg) モジュールなど）。ただし、このモジュールの最適化処理によってサイトが破壊されることがあります。その場合は、コードを変更する必要があります。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/drupal.js | server-response-time": {
+    "message": "テーマ、モジュール、サーバー仕様はすべてサーバーの応答時間に影響します。より最適化されたテーマを探す、最適化モジュールを慎重に選ぶ、サーバーをアップグレードすることをおすすめします。ホスティング サーバーでは、PHP OPcode キャッシング、データベースのクエリ時間を減らす Redis や Memcached などのメモリ キャッシング、ページの準備を速くするために最適化されたアプリケーション ロジックを利用する必要があります。"
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | total-byte-weight": {
     "message": "ページに読み込まれる画像のサイズを小さくするには、[Responsive Image Styles](https://www.drupal.org/docs/8/mobile-guide/responsive-images-in-drupal-8) の使用をご検討ください。Views を使用して複数のコンテンツ アイテムを 1 つのページに表示している場合、ページに表示されるコンテンツ アイテムの数を制限するため、ページ分けの実装をご検討ください。"
@@ -2170,6 +2200,9 @@
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | efficient-animated-content": {
     "message": "GIF を HTML5 動画として埋め込み可能なサービスにアップロードすることをご検討ください。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/joomla.js | modern-image-formats": {
+    "message": "アップロードした画像を最適なフォーマットに自動変換する[プラグイン](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=webp)またはサービスの使用をご検討ください。"
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | offscreen-images": {
     "message": "[Joomla の遅延読み込みプラグイン](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=lazy%20loading)をインストールして画面外の画像の読み込みを遅らせるか、遅延読み込み機能のあるテンプレートに切り替えてください。Joomla 4.0 より、新しい画像はすべて、コアから[自動的に](https://github.com/joomla/joomla-cms/pull/30748) `loading` 属性を取得します。"
@@ -2216,8 +2249,14 @@
   "node_modules/lighthouse-stack-packs/packs/magento.js | font-display": {
     "message": "[カスタム フォントを定義](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/css-topics/using-fonts.html)する際に `@font-display` を指定します。"
   },
+  "node_modules/lighthouse-stack-packs/packs/magento.js | modern-image-formats": {
+    "message": "より新しい画像形式を活用するには、[Magento Marketplace](https://marketplace.magento.com/catalogsearch/result/?q=webp) にさまざまな第三者の拡張機能がありますので、検索してみてください。"
+  },
   "node_modules/lighthouse-stack-packs/packs/magento.js | offscreen-images": {
     "message": "ウェブ プラットフォームの[遅延読み込み](https://web.dev/native-lazy-loading)機能を活用できるように、ご使用のサービスとカタログのテンプレートを編集することを検討してください。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/magento.js | server-response-time": {
+    "message": "Magento の [Varnish 統合](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html)を使用します。"
   },
   "node_modules/lighthouse-stack-packs/packs/magento.js | unminified-css": {
     "message": "ストアのデベロッパー設定で [CSS ファイルを圧縮] オプションを有効にします。[詳細](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)"
@@ -2240,11 +2279,17 @@
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | efficient-animated-content": {
     "message": "[アニメーション GIF を動画に置き換えて](https://web.dev/replace-gifs-with-videos/)ウェブページの読み込みを速くし、[WebM](https://web.dev/replace-gifs-with-videos/#create-webm-videos)、[AV1](https://developers.google.com/web/updates/2018/09/chrome-70-media-updates#av1-decoder) などの最先端のファイル形式を使用して、圧縮効率を現在の最新の動画コーデック VP9 より 30% 以上改善することをご検討ください。"
   },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | modern-image-formats": {
+    "message": "アップロードした画像を最適なフォーマットに自動変換する[プラグイン](https://octobercms.com/plugins?search=image)またはサービスの使用をご検討ください。[WebP の非可逆圧縮画像](https://developers.google.com/speed/webp)のサイズは、PNG に比べて 26%、SSIM 画質指標が同等の JPEG 画像より 25～34% 小さくなります。検討すべきもう 1 つの次世代画像形式は [AVIF](https://jakearchibald.com/2020/avif-has-landed/) です。"
+  },
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | offscreen-images": {
     "message": "[画像遅延読み込みプラグイン](https://octobercms.com/plugins?search=lazy)をインストールして画面外の画像の読み込みを遅らせるか、遅延読み込み機能のあるテーマに切り替えることをご検討ください。[AMP プラグイン](https://octobercms.com/plugins?search=Accelerated+Mobile+Pages)の使用もご検討ください。"
   },
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | render-blocking-resources": {
     "message": "[重要なアセットをインラインで読み込む](https://octobercms.com/plugins?search=css)ために役立つさまざまなプラグインがあります。これらのプラグインは他のプラグインを阻害することがあるため、十分にテストする必要があります。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | server-response-time": {
+    "message": "テーマ、プラグイン、サーバー仕様はすべてサーバーの応答時間に影響します。より最適化されたテーマを探す、最適化プラグインを慎重に選ぶ、サーバーをアップグレードすることをご検討ください。October CMS でも、デベロッパーは [`Queues`](https://octobercms.com/docs/services/queues) を使用して、メールの送信など、時間のかかるタスクの処理を遅延させることができます。この方法を使用すると、ウェブ リクエストの処理が大幅に迅速化されます。"
   },
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | total-byte-weight": {
     "message": "[`show more`] ボタンなどを使用して投稿リストに抜粋を表示する、所定のウェブページに表示する投稿の数を減らず、長い投稿を複数のページに分けて表示する、またはコメントを遅延読み込みするプラグインを使用することをご検討ください。"
@@ -2279,6 +2324,9 @@
   "node_modules/lighthouse-stack-packs/packs/react.js | redirects": {
     "message": "React Router を使用している場合、`<Redirect>` コンポーネントを使った[ナビゲーションのルーティング](https://reacttraining.com/react-router/web/api/Redirect)は最小限にします。"
   },
+  "node_modules/lighthouse-stack-packs/packs/react.js | server-response-time": {
+    "message": "React コンポーネントをサーバーサイドでレンダリングする場合は、クライアントでマークアップの全体を一度に受信するのではなく一部ずつ受信してデータを挿入できるように、`renderToNodeStream()` または `renderToStaticNodeStream()` を使用することを検討してください。[詳細](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)"
+  },
   "node_modules/lighthouse-stack-packs/packs/react.js | unminified-css": {
     "message": "ご使用のビルドシステムで CSS ファイルが自動的に圧縮される場合は、アプリケーションの本番環境用ビルドをデプロイしていることを確認します。確認には React Developer Tools 拡張機能を使用できます。[詳細](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)"
   },
@@ -2294,11 +2342,17 @@
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | efficient-animated-content": {
     "message": "GIF を HTML5 動画として埋め込み可能なサービスにアップロードすることをご検討ください。"
   },
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | modern-image-formats": {
+    "message": "アップロードした画像を最適なフォーマットに自動変換する[プラグイン](https://wordpress.org/plugins/search/convert+webp/)またはサービスの使用をご検討ください。"
+  },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | offscreen-images": {
     "message": "[WordPress の遅延読み込みプラグイン](https://wordpress.org/plugins/search/lazy+load/)をインストールすると、画面外の画像の読み込みを遅らせたり、遅延読み込み機能のあるテーマに切り替えたりできます。[AMP プラグイン](https://wordpress.org/plugins/amp/)の使用もご検討ください。"
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | render-blocking-resources": {
     "message": "[重要なアセットをインラインで読み込む](https://wordpress.org/plugins/search/critical+css/)または[重要度が低いリソースの読み込みを遅らせる](https://wordpress.org/plugins/search/defer+css+javascript/)ために役立つ、さまざまな WordPress プラグインがあります。ただし、これらのプラグインの最適化処理によって、テーマやプラグインの機能が阻害されることがあります。その場合は、コードを変更する必要があります。"
+  },
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | server-response-time": {
+    "message": "テーマ、プラグイン、サーバー仕様はすべてサーバーの応答時間に影響します。より最適化されたテーマを探す、最適化プラグインを慎重に選ぶ、サーバーをアップグレードすることをおすすめします。"
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | total-byte-weight": {
     "message": "「詳しく読む」タグなどを使用して投稿リストに抜粋を表示する、ページに表示する投稿の数を減らす、長い投稿を複数のページに分けて表示する、またはコメントを遅延読み込みするプラグインを使用することをご検討ください。"

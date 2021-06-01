@@ -476,6 +476,12 @@
   "lighthouse-core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "पुरानी JavaScript को नए ब्राउज़र में खोलने से बचें"
   },
+  "lighthouse-core/audits/byte-efficiency/modern-image-formats.js | description": {
+    "message": "JPEG 2000, JPEG XR, और WebP जैसे इमेज फ़ॉर्मैट, ज़्यादातर PNG या JPEG से बेहतर कंप्रेस करते हैं जिससे उपयोगकर्ता कम डेटा खर्च करके तेज़ डाउनलोड कर सकते हैं. [ज़्यादा जानें](https://web.dev/uses-webp-images/)."
+  },
+  "lighthouse-core/audits/byte-efficiency/modern-image-formats.js | title": {
+    "message": "इमेज अगली जेनरेशन के फ़ॉर्मेट में ऑफ़र करें"
+  },
   "lighthouse-core/audits/byte-efficiency/offscreen-images.js | description": {
     "message": "इंटरैक्टिव में लगने वाला समय कम करने के लिए, सभी अहम संसाधन लोड हो जाने के बाद ऑफ़स्क्रीन और छिपी हुई इमेज को धीरे-धीरे लोड करें. [ज़्यादा जानें](https://web.dev/offscreen-images/)."
   },
@@ -578,8 +584,14 @@
   "lighthouse-core/audits/csp-xss.js | columnDirective": {
     "message": "डायरेक्टिव"
   },
+  "lighthouse-core/audits/csp-xss.js | columnSeverity": {
+    "message": "Severity"
+  },
   "lighthouse-core/audits/csp-xss.js | description": {
-    "message": "एक मज़बूत 'कॉन्टेंट की सुरक्षा के बारे में नीति' (CSP) की मदद से, XSS हमलाें का खतरा काफ़ी हद तक कम हो जाता है. [ज़्यादा जानें](https://csp.withgoogle.com/docs/index.html)"
+    "message": "कॉन्टेंट की सुरक्षा के बारे में एक मज़बूत नीति (CSP) से, क्रॉस-साइट स्क्रिप्टिंग (XSS) हमलाें का खतरा काफ़ी हद तक कम हो जाता है. [ज़्यादा जानें](https://web.dev/strict-csp/)"
+  },
+  "lighthouse-core/audits/csp-xss.js | itemSeveritySyntax": {
+    "message": "Syntax"
   },
   "lighthouse-core/audits/csp-xss.js | metaTagMessage": {
     "message": "इस पेज पर एक <meta> टैग में CSP की जानकारी दी गई है. अगर हो पाए, तो CSP की जानकारी किसी एचटीटीपी हेडर में दें."
@@ -1835,6 +1847,15 @@
   "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
     "message": "Time to Interactive"
   },
+  "lighthouse-core/lib/i18n/i18n.js | itemSeverityHigh": {
+    "message": "ज़्यादा"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | itemSeverityLow": {
+    "message": "कम"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | itemSeverityMedium": {
+    "message": "मीडियम"
+  },
   "lighthouse-core/lib/i18n/i18n.js | largestContentfulPaintMetric": {
     "message": "Largest Contentful Paint"
   },
@@ -2043,7 +2064,7 @@
     "message": "अज्ञात"
   },
   "lighthouse-core/report/html/renderer/util.js | showRelevantAudits": {
-    "message": "Show audits relevant to:"
+    "message": "वे ऑडिट दिखाएं जो इनके लिए काम के हों:"
   },
   "lighthouse-core/report/html/renderer/util.js | snippetCollapseButtonLabel": {
     "message": "स्निपेट को छोटा करें"
@@ -2085,7 +2106,7 @@
     "message": "डुप्लीकेट मॉड्यूल"
   },
   "lighthouse-treemap/app/src/util.js | resourceBytesLabel": {
-    "message": "रिसॉर्स का साइज़ (बाइट में)"
+    "message": "फ़ाइल का साइज़ (बाइट में)"
   },
   "lighthouse-treemap/app/src/util.js | tableColumnName": {
     "message": "नाम"
@@ -2098,6 +2119,9 @@
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "ऐनिमेशन वाले कॉन्टेंट के लिए, [`amp-anim`](https://amp.dev/documentation/components/amp-anim/) का इस्तेमाल करें. इससे, कॉन्टेंट के ऑफ़स्क्रीन होने पर सीपीयू का इस्तेमाल कम होगा."
+  },
+  "node_modules/lighthouse-stack-packs/packs/amp.js | modern-image-formats": {
+    "message": "अपने सभी [`amp-img`](https://amp.dev/documentation/components/amp-img/?format=websites) कॉम्पोनेंट को WebP फ़ॉर्मैट में दिखाएं. साथ ही, अन्य ब्राउज़र के लिए सही फ़ॉलबैक तय करें. [ज़्यादा जानें](https://amp.dev/documentation/components/amp-img/#example:-specifying-a-fallback-image)."
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | offscreen-images": {
     "message": "पक्का करें कि आप इमेज को अपने-आप धीमे लोड करने के लिए, [`amp-img`](https://amp.dev/documentation/components/amp-img/?format=websites) का इस्तेमाल कर रहे हैं. [ज़्यादा जानें](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)."
@@ -2135,11 +2159,17 @@
   "node_modules/lighthouse-stack-packs/packs/drupal.js | font-display": {
     "message": "अपनी थीम में पसंद के मुताबिक फ़ॉन्ट की जानकारी देने के दौरान, `@font-display` के बारे में बताएं."
   },
+  "node_modules/lighthouse-stack-packs/packs/drupal.js | modern-image-formats": {
+    "message": "अपनी साइट में [WebP इमेज फ़ॉर्मैट का ज़्यादा फ़ायदा पाने के लिए, किसी मॉड्यूल](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=webp&solrsort=iss_project_release_usage+desc&op=Search) को इंस्टॉल और कॉन्फ़िगर करें. ऐसे मॉड्यूल, आपकी अपलोड की गई इमेज का WebP वर्शन अपने-आप जनरेट कर देते हैं, ताकि कॉन्टेंट लोड होने में लगने वाले समय को ऑप्टिमाइज़ किया जा सके."
+  },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | offscreen-images": {
     "message": "ऐसा [Drupal मॉड्यूल](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=im_vid_3%3A67&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=%22lazy+load%22&solrsort=iss_project_release_usage+desc&op=Search) इंस्टॉल करें जो इमेज को धीमे लोड कर पाए. परफ़ॉर्मेंस को बेहतर बनाने के लिए, इस तरह के मॉड्यूल किसी भी ऑफ़स्क्रीन इमेज को अलग करने की सुविधा देते हैं."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | render-blocking-resources": {
     "message": "ज़रूरी सीएसएस और JavaScipt को इनलाइन करने के लिए या एसिंक्रोनस तौर पर JavaScript से लोड हो सकने वाली एसेट के लिए किसी मॉड्यूल का इस्तेमाल करें, जैसे कि [सीएसएस/जेएस का, बेहतर तरीके से एक साथ दिखने वाला](https://www.drupal.org/project/advagg) मॉड्यूल. ध्यान रखें कि इस मॉड्यूल से मिलने वाली ऑप्टिमाइज़ेशन आपकी साइट को नुकसान पहुंचा सकती हैं. इसलिए, शायद आपको कोड में बदलाव करना पड़े."
+  },
+  "node_modules/lighthouse-stack-packs/packs/drupal.js | server-response-time": {
+    "message": "थीम, मॉड्यूल, और सर्वर की खास बातें, सर्वर से जवाब मिलने का समय तय करने में मदद करती हैं. ज़्यादा ऑप्टिमाइज़ की हुई थीम ढूंढें, ऑप्टिमाइज़ेशन मॉड्यूल को सावधानी से चुनें, और/या अपना सर्वर अपग्रेड करें. आपके होस्टिंग सर्वर को डेटाबेस क्वेरी में लगने वाले समय को कम करने के लिए, Redis या Memcached जैसे PHP opcode कैशिंग, मेमोरी-कैशिंग का इस्तेमाल करना चाहिए. साथ ही, पेजों को तेज़ी से तैयार करने के लिए, ऑप्टिमाइज़ किए हुए ऐप्लिकेशन का लॉजिक भी होना चाहिए."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | total-byte-weight": {
     "message": "आपके पेज पर लोड की गई इमेज के साइज़ को कम करने के लिए, [जवाब देने वाली इमेज की शैली](https://www.drupal.org/docs/8/mobile-guide/responsive-images-in-drupal-8) का इस्तेमाल करें. अगर आप किसी पेज पर कई कॉन्टेंट आइटम को दिखाने के लिए, व्यू की सुविधा का इस्तेमाल कर रहे हैं, तो उस पेज पर दिखने वाले कॉन्टेंट आइटम को कम करने के लिए, आप पेज पर नंबर डालने की सुविधा को लागू कर सकते हैं."
@@ -2170,6 +2200,9 @@
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | efficient-animated-content": {
     "message": "किसी ऐसी सेवा में अपनी GIF अपलोड करें जो उसे HTML5 वीडियो में जोड़ने के लिए तैयार रख सके."
+  },
+  "node_modules/lighthouse-stack-packs/packs/joomla.js | modern-image-formats": {
+    "message": "ऐसे [प्लग इन](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=webp) या सेवा का इस्तेमाल करें जो आपकी अपलोड की गई इमेज को अपने-आप ही सबसे सही फ़ॉर्मैट में बदल दे."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | offscreen-images": {
     "message": "[धीमी रफ़्तार से लोड करने वाला ऐसा Joomla प्लग इन](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=lazy%20loading) इंस्टॉल करें जिसमें किसी भी ऑफ़स्क्रीन इमेज को अलग करने की सुविधा हो या किसी ऐसे टेंप्लेट का इस्तेमाल करें जो यह सुविधा मुहैया कराता हो. Joomla 4.0 से शुरू करते हुए, सभी नई इमेज में `loading` एट्रिब्यूट [अपने-आप](https://github.com/joomla/joomla-cms/pull/30748) शामिल हो जाएगा."
@@ -2216,8 +2249,14 @@
   "node_modules/lighthouse-stack-packs/packs/magento.js | font-display": {
     "message": "[पसंद के मुताबिक फ़ॉन्ट बनाते समय](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/css-topics/using-fonts.html), `@font-display` तय करें."
   },
+  "node_modules/lighthouse-stack-packs/packs/magento.js | modern-image-formats": {
+    "message": "तीसरे पक्ष के कई तरह के एक्सटेंशन [Magento मार्केटप्लेस](https://marketplace.magento.com/catalogsearch/result/?q=webp) में खोजें, ताकि आप नए इमेज फ़ॉर्मैट का फ़ायदा पा सकें."
+  },
   "node_modules/lighthouse-stack-packs/packs/magento.js | offscreen-images": {
     "message": "वेब प्लैटफ़ॉर्म की [धीमे लोड होने](https://web.dev/native-lazy-loading) की सुविधा का इस्तेमाल करने के लिए, अपने प्रॉडक्ट और कैटलॉग टेम्प्लेट में बदलाव करें."
+  },
+  "node_modules/lighthouse-stack-packs/packs/magento.js | server-response-time": {
+    "message": "Magento का [Varnish इंटीग्रेशन](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html) इस्तेमाल करें."
   },
   "node_modules/lighthouse-stack-packs/packs/magento.js | unminified-css": {
     "message": "अपने स्टोर की डेवलपर सेटिंग में, \"सीएसएस फ़ाइलें छोटी करें\" विकल्प चालू करें. [ज़्यादा जानें](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)."
@@ -2240,11 +2279,17 @@
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | efficient-animated-content": {
     "message": "वेब पेजों को तेज़ी से लोड करने के लिए, [ऐनिमेट किए गए GIF की जगह वीडियो का इस्तेमाल करें](https://web.dev/replace-gifs-with-videos/). साथ ही, [WebM](https://web.dev/replace-gifs-with-videos/#create-webm-videos) या [AV1](https://developers.google.com/web/updates/2018/09/chrome-70-media-updates#av1-decoder) जैसे मॉडर्न फ़ाइल फ़ॉर्मैट इस्तेमाल करें, ताकि कंप्रेस करने पर क्वालिटी, मौजूदा state-of-the-art वीडियो कोडेक VP9 के मुकाबले 30% से ज़्यादा हो."
   },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | modern-image-formats": {
+    "message": "ऐसे [प्लग इन](https://octobercms.com/plugins?search=image) या सेवा का इस्तेमाल करें जो अपलोड की गई इमेज को अपने-आप सबसे सही फ़ॉर्मैट में बदल दे. [WebP लॉसलेस इमेज](https://developers.google.com/speed/webp), PNG इमेज से साइज़ में 26% छोटी होती हैं. साथ ही, इक्विवैलेंट SSIM क्वालिटी इंडेक्स में JPEG इमेज से 25-34% छोटी होती हैं. आप अगली जनरेशन के [AVIF](https://jakearchibald.com/2020/avif-has-landed/) इमेज फ़ॉर्मैट का भी इस्तेमाल कर सकते हैं."
+  },
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | offscreen-images": {
     "message": "[इमेज को धीमी रफ़्तार से लोड करने वाला ऐसा प्लग इन](https://octobercms.com/plugins?search=lazy) इंस्टॉल करें जो किसी भी ऑफ़स्क्रीन इमेज को अलग करने की सुविधा देता हो या किसी ऐसी थीम का इस्तेमाल करें जो यह सुविधा मुहैया कराती हो. साथ ही, [एएमपी प्लग इन](https://octobercms.com/plugins?search=Accelerated+Mobile+Pages) का इस्तेमाल करें."
   },
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | render-blocking-resources": {
     "message": "ऐसे कई प्लग इन हैं जो [क्रिटिकल एसेट को इनलाइन](https://octobercms.com/plugins?search=css) करने में आपकी मदद कर सकते हैं. ये प्लग इन अन्य प्लग इन के काम में रुकावट डाल सकते हैं, इसलिए आपको इनकी अच्छी तरह जांच करनी चाहिए."
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | server-response-time": {
+    "message": "थीम, प्लग इन, और सर्वर की विशेषताओं से तय होता है कि सर्वर से कितनी देर में रिस्पॉन्स मिलेगा. ज़्यादा ऑप्टिमाइज़ की गई थीम ढूंढें, किसी ऑप्टिमाइज़ेशन प्लग इन को सावधानी से चुनें, और/या अपना सर्वर अपग्रेड करें. October CMS, डेवलपर को [`Queues`](https://octobercms.com/docs/services/queues) का भी इस्तेमाल करने देता है, ताकि वे किसी ऐसे टास्क की प्रोसेस को अलग कर सकें जिसमें ज़्यादा समय लगता हो. जैसे, ईमेल भेजना. इससे, वेब अनुरोधों की रफ़्तार बहुत ज़्यादा बढ़ जाती है."
   },
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | total-byte-weight": {
     "message": "पोस्ट की सूचियों में खास हिस्से दिखाएं (जैसे, `show more` बटन की मदद से), किसी वेब पेज पर दिखाई गई पोस्ट की संख्या कम करें, लंबी पोस्ट को कई वेब पेजों में बांटें या टिप्पणियों को धीमी रफ़्तार से लोड करने वाले प्लग इन का इस्तेमाल करें."
@@ -2279,6 +2324,9 @@
   "node_modules/lighthouse-stack-packs/packs/react.js | redirects": {
     "message": "अगर आप React Router इस्तेमाल कर रहे हैं, तो [रूट नेविगेशन](https://reacttraining.com/react-router/web/api/Redirect) के लिए `<Redirect>` कॉम्पोनेंट का इस्तेमाल कम करें."
   },
+  "node_modules/lighthouse-stack-packs/packs/react.js | server-response-time": {
+    "message": "अगर आप सर्वर-साइड पर किसी React कॉम्पोनेंट को रेंडर कर रहे हैं, तो `renderToNodeStream()` या `renderToStaticNodeStream()` का इस्तेमाल करें. इससे क्लाइंट को एक साथ पूरे मार्कअप के बजाय, उसके अलग-अलग हिस्से मिलेंगे और वह उन्हें अलग-अलग हाइड्रेट कर पाएगा. [ज़्यादा जानें](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)."
+  },
   "node_modules/lighthouse-stack-packs/packs/react.js | unminified-css": {
     "message": "अगर बिल्ड सिस्टम आपकी सीएसएस फ़ाइलों को अपने-आप छोटा कर देता है, तो पक्का करें कि आप अपने ऐप्लिकेशन के प्रोडक्शन बिल्ड को डिप्लॉय कर रहे हैं. आप React डेवलपर टूल एक्सटेंशन की मदद से इसकी पुष्टि कर सकते हैं. [ज़्यादा जानें](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
   },
@@ -2294,11 +2342,17 @@
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | efficient-animated-content": {
     "message": "किसी ऐसी सेवा में अपनी GIF अपलोड करें जो उसे HTML5 वीडियो में जोड़ने के लिए तैयार रख सके."
   },
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | modern-image-formats": {
+    "message": "ऐसे [प्लग इन](https://wordpress.org/plugins/search/convert+webp/) या सेवा का इस्तेमाल करें जो आपकी अपलोड की गई इमेज को अपने-आप ही सबसे सही फ़ॉर्मैट में बदल दे."
+  },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | offscreen-images": {
     "message": "ऐसा [धीमे लोड होने वाले WordPress प्लग इन](https://wordpress.org/plugins/search/lazy+load/) इंस्टॉल करें जिसमें किसी भी ऑफ़स्क्रीन इमेज को अलग करने की सुविधा हो. अगर नहीं, तो किसी ऐसी थीम पर जाएं जो यह सुविधा मुहैया कराती हो. साथ ही, [एएमपी प्लग इन](https://wordpress.org/plugins/amp/) का इस्तेमाल करें."
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | render-blocking-resources": {
     "message": "ऐसे कई WordPress प्लग इन हैं जो [क्रिटिकल एसेट इनलाइन करने ](https://wordpress.org/plugins/search/critical+css/) या [कम ज़रूरी संसाधनों को डेफ़र करने](https://wordpress.org/plugins/search/defer+css+javascript/) में आपकी मदद कर सकते हैं. ध्यान रखें कि ऐसी प्लग इन से मिलने वाले ऑप्टिमाइज़ेशन आपकी थीम या प्लग इन की सुविधाएं बिगाड़ सकते हैं. इसलिए, आपको कोड में बदलावों को करने की ज़रुरत हो सकती है."
+  },
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | server-response-time": {
+    "message": "थीम, प्लगइन, और सर्वर की खास बातें सर्वर से जवाब मिलने के समय में योगदान करती हैं. ज़्यादा ऑप्टिमाइज़ की हुई थीम ढूंढने, एक ऑप्टिमाइज़ेशन प्लगइन को सावधानी से चुनने, और/या अपना सर्वर अपग्रेड करने पर विचार करें."
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | total-byte-weight": {
     "message": "अपनी पोस्ट सूचियों में खास हिस्से दिखाने पर विचार करें (जैसे 'ज़्यादा' टैग से), किसी पेज पर दिखाई गई पोस्ट की संख्या घटाने, अपनी लंबी पोस्ट को कई पेज में बाँटने या फिर टिप्पणियों को धीरे-धीरे लोड करने वाले प्लगइन का इस्तेमाल करने पर विचार करें."
