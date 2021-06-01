@@ -188,10 +188,10 @@ class ReportUIFeatures {
     // so we need a container option to specify where the element should go.
     const metricsEl = this._document.querySelector('.lh-audit-group--metrics');
     const containerEl = opts.container || metricsEl;
-    if (!metricsEl) return;
+    if (!containerEl) return;
 
     let buttonsEl = containerEl.querySelector('.lh-buttons');
-    if (!buttonsEl) buttonsEl = this._dom.createChildOf(metricsEl, 'div', 'lh-buttons');
+    if (!buttonsEl) buttonsEl = this._dom.createChildOf(containerEl, 'div', 'lh-buttons');
 
     const classes = [
       'lh-button',
