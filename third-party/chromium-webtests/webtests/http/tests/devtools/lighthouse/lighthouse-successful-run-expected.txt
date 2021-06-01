@@ -376,6 +376,8 @@ Computing artifact: TagLoadTime
 Computing artifact: LanternTagLoadTime
 Auditing: Ad density is within recommended range
 Auditing: Cumulative ad shift
+Auditing: Deprecated GPT API Usage
+Auditing: GPT Errors
 Generating results...
 
 =============== Lighthouse Results ===============
@@ -434,6 +436,7 @@ cumulative-layout-shift: numeric
 custom-controls-labels: manual
 custom-controls-roles: manual
 definition-list: notApplicable
+deprecated-gpt-api-usage: informative
 deprecations: pass
 diagnostics: informative
 dlitem: notApplicable
@@ -460,6 +463,7 @@ frame-title: notApplicable
 full-page-screenshot: informative
 geolocation-on-start: pass
 gpt-bids-parallel: notApplicable
+gpt-errors-overall: informative
 heading-order: notApplicable
 hreflang: pass
 html-has-lang: fail
@@ -565,7 +569,7 @@ viewport: fail
 viewport-ad-density: notApplicable
 visual-order-follows-dom: manual
 
-# of .lh-audit divs: 157
+# of .lh-audit divs: 159
 
 .lh-audit divs:
 accesskeys
@@ -611,6 +615,7 @@ cumulative-ad-shift
 custom-controls-labels
 custom-controls-roles
 definition-list
+deprecated-gpt-api-usage
 deprecations
 dlitem
 doctype
@@ -633,6 +638,7 @@ form-field-multiple-labels
 frame-title
 geolocation-on-start
 gpt-bids-parallel
+gpt-errors-overall
 heading-order
 hreflang
 html-has-lang
