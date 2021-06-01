@@ -4954,7 +4954,7 @@
       "auditRefs": [
         {
           "id": "first-contentful-paint",
-          "weight": 15,
+          "weight": 10,
           "group": "metrics",
           "acronym": "FCP",
           "relevantAudits": [
@@ -4973,7 +4973,7 @@
         },
         {
           "id": "speed-index",
-          "weight": 15,
+          "weight": 10,
           "group": "metrics",
           "acronym": "SI"
         },
@@ -5003,13 +5003,13 @@
         },
         {
           "id": "interactive",
-          "weight": 15,
+          "weight": 10,
           "group": "metrics",
           "acronym": "TTI"
         },
         {
           "id": "total-blocking-time",
-          "weight": 25,
+          "weight": 30,
           "group": "metrics",
           "acronym": "TBT",
           "relevantAudits": [
@@ -5025,7 +5025,7 @@
         },
         {
           "id": "cumulative-layout-shift",
-          "weight": 5,
+          "weight": 15,
           "group": "metrics",
           "acronym": "CLS",
           "relevantAudits": [
@@ -5276,7 +5276,7 @@
         }
       ],
       "id": "performance",
-      "score": 0.59
+      "score": 0.57
     },
     "accessibility": {
       "title": "Accessibility",

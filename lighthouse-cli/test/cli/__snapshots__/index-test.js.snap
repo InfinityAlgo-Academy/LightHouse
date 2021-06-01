@@ -853,13 +853,13 @@ Object {
             "unminified-css",
             "unused-css-rules",
           ],
-          "weight": 15,
+          "weight": 10,
         },
         Object {
           "acronym": "SI",
           "group": "metrics",
           "id": "speed-index",
-          "weight": 15,
+          "weight": 10,
         },
         Object {
           "acronym": "LCP",
@@ -889,7 +889,7 @@ Object {
           "acronym": "TTI",
           "group": "metrics",
           "id": "interactive",
-          "weight": 15,
+          "weight": 10,
         },
         Object {
           "acronym": "TBT",
@@ -905,7 +905,7 @@ Object {
             "duplicated-javascript",
             "legacy-javascript",
           ],
-          "weight": 25,
+          "weight": 30,
         },
         Object {
           "acronym": "CLS",
@@ -916,7 +916,7 @@ Object {
             "non-composited-animations",
             "unsized-images",
           ],
-          "weight": 5,
+          "weight": 15,
         },
         Object {
           "id": "max-potential-fid",

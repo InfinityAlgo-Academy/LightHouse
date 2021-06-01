@@ -112,11 +112,12 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
    * @return {string}
    */
   _getScoringCalculatorHref(auditRefs) {
-    const v5andv6metrics = auditRefs.filter(audit => audit.group === 'metrics');
+    // TODO: filter by !!acronym when dropping renderer support of v7 LHRs.
+    const metrics = auditRefs.filter(audit => audit.group === 'metrics');
     const fci = auditRefs.find(audit => audit.id === 'first-cpu-idle');
     const fmp = auditRefs.find(audit => audit.id === 'first-meaningful-paint');
-    if (fci) v5andv6metrics.push(fci);
-    if (fmp) v5andv6metrics.push(fmp);
+    if (fci) metrics.push(fci);
+    if (fmp) metrics.push(fmp);
 
     /**
      * Clamp figure to 2 decimal places
@@ -125,7 +126,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
      */
     const clampTo2Decimals = val => Math.round(val * 100) / 100;
 
-    const metricPairs = v5andv6metrics.map(audit => {
+    const metricPairs = metrics.map(audit => {
       let value;
       if (typeof audit.result.numericValue === 'number') {
         value = audit.id === 'cumulative-layout-shift' ?

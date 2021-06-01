@@ -55,9 +55,11 @@ describe('ReportGenerator', () => {
     it('should inject the report templates', () => {
       const page = new jsdom.JSDOM(ReportGenerator.generateReportHtml({}));
       const templates = new jsdom.JSDOM(TEMPLATES_FILE);
-      assert.equal(page.window.document.querySelectorAll('template[id^="tmpl-"]').length,
+      assert.equal(
+        page.window.document.querySelectorAll('template[id^="tmpl-"]').length,
         templates.window.document.querySelectorAll('template[id^="tmpl-"]').length,
-        'all templates injected');
+        'all templates injected'
+      );
     });
 
     it('should inject the report CSS', () => {
@@ -104,7 +106,7 @@ describe('ReportGenerator', () => {
       expect(lines.length).toBeGreaterThan(100);
       expect(lines.slice(0, 3).join('\n')).toMatchInlineSnapshot(`
         "requestedUrl,finalUrl,category,name,title,type,score
-        \\"http://localhost:10200/dobetterweb/dbw_tester.html\\",\\"http://localhost:10200/dobetterweb/dbw_tester.html\\",\\"Performance\\",\\"performance-score\\",\\"Overall Performance Category Score\\",\\"numeric\\",\\"0.59\\"
+        \\"http://localhost:10200/dobetterweb/dbw_tester.html\\",\\"http://localhost:10200/dobetterweb/dbw_tester.html\\",\\"Performance\\",\\"performance-score\\",\\"Overall Performance Category Score\\",\\"numeric\\",\\"0.57\\"
         \\"http://localhost:10200/dobetterweb/dbw_tester.html\\",\\"http://localhost:10200/dobetterweb/dbw_tester.html\\",\\"Performance\\",\\"first-contentful-paint\\",\\"First Contentful Paint\\",\\"numeric\\",\\"0.24\\"
         "
       `);
