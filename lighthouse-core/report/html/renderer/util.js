@@ -596,7 +596,7 @@ Util.UIStrings = {
   dropdownSaveJSON: 'Save as JSON',
   /** Option in a dropdown menu that opens the current report in the Lighthouse Viewer Application. */
   dropdownViewer: 'Open in Viewer',
-  /** Option in a dropdown menu that saves the current report as a new Github Gist. */
+  /** Option in a dropdown menu that saves the current report as a new GitHub Gist. */
   dropdownSaveGist: 'Save as Gist',
   /** Option in a dropdown menu that toggles the themeing of the report between Light(default) and Dark themes. */
   dropdownDarkTheme: 'Toggle Dark Theme',
@@ -624,7 +624,7 @@ Util.UIStrings = {
   /** Label for a row in a table that shows the version of the Axe library used. Example row values: 2.1.0, 3.2.3 */
   runtimeSettingsAxeVersion: 'Axe version',
 
-  /** Label for button to create an issue against the Lighthouse Github project. */
+  /** Label for button to create an issue against the Lighthouse GitHub project. */
   footerIssue: 'File an issue',
 
   /** Descriptive explanation for emulation setting when no device emulation is set. */

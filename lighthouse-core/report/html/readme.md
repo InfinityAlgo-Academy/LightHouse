@@ -1,6 +1,6 @@
 # Lighthouse HTML Report Renderer
 
-[Source on Github](https://github.com/GoogleChrome/lighthouse/tree/master/lighthouse-core/report/html)
+[Source on GitHub](https://github.com/GoogleChrome/lighthouse/tree/master/lighthouse-core/report/html)
 
 
 ## Overview
