@@ -20,6 +20,7 @@ const WebAppManifest = require('./gatherers/web-app-manifest.js');
 const InstallabilityErrors = require('./gatherers/installability-errors.js');
 const NetworkUserAgent = require('./gatherers/network-user-agent.js');
 const Stacks = require('./gatherers/stacks.js');
+const {finalizeArtifacts} = require('../fraggle-rock/gather/base-artifacts.js');
 
 /** @typedef {import('../gather/driver.js')} Driver */
 /** @typedef {import('../lib/arbitrary-equality-map.js')} ArbitraryEqualityMap */
@@ -447,18 +448,6 @@ class GatherRunner {
   }
 
   /**
-   * Finalize baseArtifacts after gathering is fully complete.
-   * @param {LH.BaseArtifacts} baseArtifacts
-   */
-  static finalizeBaseArtifacts(baseArtifacts) {
-    // Take only unique LighthouseRunWarnings.
-    baseArtifacts.LighthouseRunWarnings = Array.from(new Set(baseArtifacts.LighthouseRunWarnings));
-
-    // Take the timing entries we've gathered so far.
-    baseArtifacts.Timing = log.getTimeEntries();
-  }
-
-  /**
    * @param {Array<LH.Config.Pass>} passConfigs
    * @param {{driver: Driver, requestedUrl: string, settings: LH.Config.Settings, computedCache: Map<string, ArbitraryEqualityMap>}} options
    * @return {Promise<LH.Artifacts>}
@@ -515,8 +504,7 @@ class GatherRunner {
       }
 
       await GatherRunner.disposeDriver(driver, options);
-      GatherRunner.finalizeBaseArtifacts(baseArtifacts);
-      return /** @type {LH.Artifacts} */ ({...baseArtifacts, ...artifacts}); // Cast to drop Partial<>.
+      return finalizeArtifacts(baseArtifacts, artifacts);
     } catch (err) {
       // Clean up on error. Don't await so that the root error, not a disposal error, is shown.
       GatherRunner.disposeDriver(driver, options);

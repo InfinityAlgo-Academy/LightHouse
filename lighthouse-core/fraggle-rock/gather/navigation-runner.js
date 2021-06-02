@@ -19,7 +19,7 @@ const storage = require('../../gather/driver/storage.js');
 const emulation = require('../../lib/emulation.js');
 const {defaultNavigationConfig} = require('../../config/constants.js');
 const {initializeConfig} = require('../config/config.js');
-const {getBaseArtifacts} = require('./base-artifacts.js');
+const {getBaseArtifacts, finalizeArtifacts} = require('./base-artifacts.js');
 const i18n = require('../../lib/i18n/i18n.js');
 const LighthouseError = require('../../lib/lh-error.js');
 const {getPageLoadError} = require('../../lib/navigation-error.js');
@@ -126,7 +126,7 @@ async function _collectNetworkRecords(navigationContext, phaseState) {
  * @param {PhaseState} phaseState
  * @param {UnPromise<ReturnType<typeof _setupNavigation>>} setupResult
  * @param {UnPromise<ReturnType<typeof _navigate>>} navigateResult
- * @return {Promise<{artifacts: Partial<LH.GathererArtifacts>, warnings: Array<LH.IcuMessage>, pageLoadError: LH.LighthouseError | undefined}>}
+ * @return {Promise<{finalUrl: string, artifacts: Partial<LH.GathererArtifacts>, warnings: Array<LH.IcuMessage>, pageLoadError: LH.LighthouseError | undefined}>}
  */
 async function _computeNavigationResult(
   navigationContext,
@@ -150,12 +150,17 @@ async function _computeNavigationResult(
     const localizedMessage = i18n.getFormatted(pageLoadError.friendlyMessage, locale);
     log.error('NavigationRunner', localizedMessage, navigationContext.requestedUrl);
 
-    return {artifacts: {}, warnings: [...warnings, pageLoadError.friendlyMessage], pageLoadError};
+    return {
+      finalUrl,
+      pageLoadError,
+      artifacts: {},
+      warnings: [...warnings, pageLoadError.friendlyMessage],
+    };
   } else {
     await collectPhaseArtifacts({phase: 'getArtifact', ...phaseState});
 
     const artifacts = await awaitArtifacts(phaseState.artifactState);
-    return {artifacts, warnings, pageLoadError: undefined};
+    return {finalUrl, artifacts, warnings, pageLoadError: undefined};
   }
 }
 
@@ -194,6 +199,8 @@ async function _navigations({driver, config, requestedUrl, computedCache}) {
 
   /** @type {Partial<LH.FRArtifacts & LH.FRBaseArtifacts>} */
   const artifacts = {};
+  /** @type {Array<LH.IcuMessage>} */
+  const LighthouseRunWarnings = [];
 
   for (const navigation of config.navigations) {
     const navigationContext = {
@@ -205,16 +212,20 @@ async function _navigations({driver, config, requestedUrl, computedCache}) {
     };
 
     const navigationResult = await _navigation(navigationContext);
-    if (navigationResult.pageLoadError && navigation.loadFailureMode === 'fatal') {
-      artifacts.PageLoadError = navigationResult.pageLoadError;
-      break;
+    if (navigation.loadFailureMode === 'fatal') {
+      if (navigationResult.pageLoadError) {
+        artifacts.PageLoadError = navigationResult.pageLoadError;
+        break;
+      }
+
+      artifacts.URL = {requestedUrl, finalUrl: navigationResult.finalUrl};
     }
 
-    // TODO(FR-COMPAT): merge RunWarnings between navigations
+    LighthouseRunWarnings.push(...navigationResult.warnings);
     Object.assign(artifacts, navigationResult.artifacts);
   }
 
-  return {artifacts};
+  return {artifacts: {...artifacts, LighthouseRunWarnings}};
 }
 
 /**
@@ -243,7 +254,7 @@ async function navigation(options) {
       const {artifacts} = await _navigations({driver, config, requestedUrl, computedCache});
       await _cleanup({driver, config, requestedUrl});
 
-      return /** @type {LH.Artifacts} */ ({...baseArtifacts, ...artifacts}); // Cast to drop Partial<>
+      return finalizeArtifacts(baseArtifacts, artifacts);
     },
     {
       url: requestedUrl,

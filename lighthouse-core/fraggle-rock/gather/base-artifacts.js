@@ -5,7 +5,13 @@
  */
 'use strict';
 
-const {getBrowserVersion, getBenchmarkIndex} = require('../../gather/driver/environment.js');
+const log = require('lighthouse-logger');
+const isEqual = require('lodash.isequal');
+const {
+  getBrowserVersion,
+  getBenchmarkIndex,
+  getEnvironmentWarnings,
+} = require('../../gather/driver/environment.js');
 
 /**
  * @param {LH.Config.FRConfig} config
@@ -21,17 +27,11 @@ async function getBaseArtifacts(config, driver) {
 
   const BenchmarkIndex = await getBenchmarkIndex(driver.executionContext);
 
-  /** @type {Array<string | LH.IcuMessage>} */
-  const LighthouseRunWarnings = [];
-
-  // TODO(FR-COMPAT): support slow host CPU warning
-  // TODO(FR-COMPAT): support redirected URL warning
-
   return {
     // Meta artifacts.
     fetchTime: new Date().toJSON(),
     Timing: [],
-    LighthouseRunWarnings,
+    LighthouseRunWarnings: [],
     settings: config.settings,
     // Environment artifacts that can always be computed.
     HostFormFactor,
@@ -39,17 +39,59 @@ async function getBaseArtifacts(config, driver) {
     BenchmarkIndex,
     // Contextual artifacts whose collection changes based on gather mode.
     URL: {requestedUrl: '', finalUrl: ''},
-    PageLoadError: null, // TODO(FR-COMPAT): support PageLoadError
+    PageLoadError: null,
     // Artifacts that have been replaced by regular gatherers in Fraggle Rock.
     Stacks: [],
     NetworkUserAgent: '',
-    WebAppManifest: null, // replaced by standard gatherer
-    InstallabilityErrors: {errors: []}, // replaced by standard gatherer
+    WebAppManifest: null,
+    InstallabilityErrors: {errors: []},
     traces: {},
     devtoolsLogs: {},
   };
 }
 
+/**
+ * Deduplicates identical warnings.
+ * @param {Array<string | LH.IcuMessage>} warnings
+ * @return {Array<string | LH.IcuMessage>}
+ */
+function deduplicateWarnings(warnings) {
+  /** @type {Array<string | LH.IcuMessage>} */
+  const unique = [];
+
+  for (const warning of warnings) {
+    if (unique.some(existing => isEqual(warning, existing))) continue;
+    unique.push(warning);
+  }
+
+  return unique;
+}
+
+/**
+ * @param {LH.FRBaseArtifacts} baseArtifacts
+ * @param {Partial<LH.Artifacts>} gathererArtifacts
+ * @return {LH.Artifacts}
+ */
+function finalizeArtifacts(baseArtifacts, gathererArtifacts) {
+  const warnings = baseArtifacts.LighthouseRunWarnings
+    .concat(gathererArtifacts.LighthouseRunWarnings || [])
+    .concat(getEnvironmentWarnings({settings: baseArtifacts.settings, baseArtifacts}));
+
+  // Cast to remove the partial from gathererArtifacts.
+  const artifacts = /** @type {LH.Artifacts} */ ({...baseArtifacts, ...gathererArtifacts});
+
+  // Set the post-run meta artifacts.
+  artifacts.Timing = log.getTimeEntries();
+  artifacts.LighthouseRunWarnings = deduplicateWarnings(warnings);
+
+  // Check that the runner remembered to mutate the special-case URL artifact.
+  if (!artifacts.URL.requestedUrl) throw new Error('Runner did not set requestedUrl');
+  if (!artifacts.URL.finalUrl) throw new Error('Runner did not set finalUrl');
+
+  return artifacts;
+}
+
 module.exports = {
   getBaseArtifacts,
+  finalizeArtifacts,
 };

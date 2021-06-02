@@ -7,6 +7,21 @@
 
 const Audit = require('../../audits/audit.js');
 
+/** @type {Record<keyof LH.FRBaseArtifacts, string>} */
+const baseArtifactKeySource = {
+  fetchTime: '',
+  LighthouseRunWarnings: '',
+  HostFormFactor: '',
+  HostUserAgent: '',
+  BenchmarkIndex: '',
+  settings: '',
+  Timing: '',
+  URL: '',
+  PageLoadError: '',
+};
+
+const baseArtifactKeys = Object.keys(baseArtifactKeySource);
+
 /**
  * Filters an array of artifacts down to the set that supports the specified gather mode.
  *
@@ -31,8 +46,9 @@ function filterArtifactsByGatherMode(artifacts, mode) {
 function filterAuditsByAvailableArtifacts(audits, availableArtifacts) {
   if (!audits) return null;
 
-  const availableAritfactIds = new Set(availableArtifacts.map(artifact => artifact.id));
-
+  const availableAritfactIds = new Set(
+    availableArtifacts.map(artifact => artifact.id).concat(baseArtifactKeys)
+  );
   return audits.filter(audit =>
     audit.implementation.meta.requiredArtifacts.every(id => availableAritfactIds.has(id))
   );
