@@ -1,5 +1,7 @@
 # Lighthouse Treemap Viewer
 
+[Demo](https://googlechrome.github.io/lighthouse/treemap/?gist=30a18304de56e7be08f10976a1b11702)
+
 ## Development
 
 ```sh

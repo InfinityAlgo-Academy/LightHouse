@@ -1,3 +1,81 @@
+<a name="8.0.0"></a>
+# 8.0.0 (2021-06-02)
+[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v7.5.0...v8.0.0)
+
+We expect this release to ship in the DevTools of [Chrome 93](https://chromiumdash.appspot.com/schedule), and is already in PageSpeed Insights!
+
+## Notable changes
+* The **Performance Category** had a number of scoring changes to align with other performance tools and to better reflect the state of the web.
+  - The Performance Score has been reweighted ([#12577](https://github.com/GoogleChrome/lighthouse/pull/12577))
+  - The TBT and FCP score curves have been updated ([#12576](https://github.com/GoogleChrome/lighthouse/pull/12576), [#12556](https://github.com/GoogleChrome/lighthouse/pull/12556))
+  - CLS has been updated to its new, windowed
+definition ([#12554](https://github.com/GoogleChrome/lighthouse/pull/12554))
+
+  See the [v8.0 Performance FAQ](https://github.com/GoogleChrome/lighthouse/blob/master/docs/v8-perf-faq.md) for more detail.
+
+  <a href="https://github.com/GoogleChrome/lighthouse/blob/master/docs/v8-perf-faq.md"><img width="500" alt="the new metric weightings in the Lighthouse score calculator" src="https://user-images.githubusercontent.com/39191/120410971-de337100-c308-11eb-9fb6-368a33c0855e.png"></a>
+
+
+* The report includes a new metric filter. Pick a metric to focus on the opportunities and diagnostics most relevant to improving just that metric:
+
+  <img width="350" alt="the new metric filter in the lighthouse report" src="https://user-images.githubusercontent.com/316891/120384128-61de6500-c2eb-11eb-9d15-5b92981d897e.png">
+* The [Lighthouse Treemap](#treemap-release) is now available across all the major Lighthouse clients. If your site exposes source maps to Lighthouse, look for the "View Treemap" button to see a breakdown of your shipped JavaScript, filterable by size and coverage on load.
+
+## 🆕 New audits
+* The new audit `csp-xss` has been added to Best Practices to evaluate Content Security Policies and suggest ways of making them more secure. This can be a challenging audit to pass depending on hosting environment and page content, so for now it is unscored ([#12514](https://github.com/GoogleChrome/lighthouse/pull/12514), [#12551](https://github.com/GoogleChrome/lighthouse/pull/12551))
+
+## 🤖💥 Breaking changes for programmatic users
+* Legacy metrics `estimated-input-latency` and `first-cpu-idle` have been deprecated, unweighted, and hidden since Lighthouse 6. They have now been removed ([#12553](https://github.com/GoogleChrome/lighthouse/pull/12553))
+* Starting with Node 13, Node is built with `full-icu` by default, so the very large `intl` polyfill has been removed from Lighthouse's dependencies. See the [readme FAQ](https://github.com/GoogleChrome/lighthouse#how-do-i-get-localized-lighthouse-results-via-the-cli) if you're stuck with `small-icu` but need localization support ([#12426](https://github.com/GoogleChrome/lighthouse/pull/12426))
+* Long-time audit `uses-webp-images` has a new ID, `modern-image-formats`. WebP is now rather mainstream, and this frees the audit to start including details on other cutting-edge image formats in the future ([#12535](https://github.com/GoogleChrome/lighthouse/pull/12535))
+* The `image-elements` artifact has been restructured for clarity ([#12568](https://github.com/GoogleChrome/lighthouse/pull/12568))
+
+## 🧱 Core
+
+* navigate: only observe longtasks in PerfObserver ([#12545](https://github.com/GoogleChrome/lighthouse/pull/12545))
+* script-treemap-data: do not create nodes with blank names ([#12569](https://github.com/GoogleChrome/lighthouse/pull/12569))
+
+## ⛏️👷 Fraggle Rock
+
+  Support for auditing user flows ([#11313](https://github.com/GoogleChrome/lighthouse/issues/11313))
+
+* add `settings` to gather context ([#12574](https://github.com/GoogleChrome/lighthouse/pull/12574))
+* fix usage of distributed conditional type ([#12565](https://github.com/GoogleChrome/lighthouse/pull/12565))
+* support `inspector-issues` gatherer ([#12530](https://github.com/GoogleChrome/lighthouse/pull/12530))
+* support `tags-blocking-first-paint` gatherer ([#12527](https://github.com/GoogleChrome/lighthouse/pull/12527))
+* support `response-compression` gatherer ([#12508](https://github.com/GoogleChrome/lighthouse/pull/12508))
+* align `navigation-runner` with legacy `gather-runner` ([#12478](https://github.com/GoogleChrome/lighthouse/pull/12478))
+
+## 📔 Report
+
+* improve accessibility of metric filter ([#12552](https://github.com/GoogleChrome/lighthouse/pull/12552))
+* treemap: add placeholder, gist, and file upload features ([#12511](https://github.com/GoogleChrome/lighthouse/pull/12511))
+* treemap: support passing gzipped data in url ([#12509](https://github.com/GoogleChrome/lighthouse/pull/12509), [#12519](https://github.com/GoogleChrome/lighthouse/pull/12519))
+* viewer: fix gist icon ([#12505](https://github.com/GoogleChrome/lighthouse/pull/12505))
+
+## 👥 Clients
+
+* fix main session OOPIF checks for devtools ([#12533](https://github.com/GoogleChrome/lighthouse/pull/12533))
+* render treemap button in all clients ([#12516](https://github.com/GoogleChrome/lighthouse/pull/12516), [#12570](https://github.com/GoogleChrome/lighthouse/pull/12570), [#12590](https://github.com/GoogleChrome/lighthouse/pull/12590))
+* backport proto formatting fixes ([#12566](https://github.com/GoogleChrome/lighthouse/pull/12566))
+
+## 🌍 i18n
+
+* import new strings ([#12515](https://github.com/GoogleChrome/lighthouse/pull/12515), [#12591](https://github.com/GoogleChrome/lighthouse/pull/12591))
+
+## 📋 Tests
+
+* run unit tests on all active node versions in CI ([#12513](https://github.com/GoogleChrome/lighthouse/pull/12513))
+* sync devtools webtests ([#12578](https://github.com/GoogleChrome/lighthouse/pull/12578))
+* treemap: reduce `debug.json` ([#12555](https://github.com/GoogleChrome/lighthouse/pull/12555))
+
+## 🕸️ Deps
+
+* update `lighthouse-plugin-publisher-ads` to 1.4.1 ([#12592](https://github.com/GoogleChrome/lighthouse/pull/12592))
+* update `axe-core` to 4.2.1 ([#12575](https://github.com/GoogleChrome/lighthouse/pull/12575))
+* update `puppeteer` to 9.1.1 ([#12284](https://github.com/GoogleChrome/lighthouse/pull/12284))
+* update `chrome-launcher` to 0.14.0 ([#12507](https://github.com/GoogleChrome/lighthouse/pull/12507))
+
 <a name="7.5.0"></a>
 # 7.5.0 (2021-05-18)
 [Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v7.4.0...v7.5.0)
@@ -12,25 +90,24 @@ Thanks to our new contributor 👽🐷🐰🐯🐻!
 
 ## Notable Changes
 
+<a name="treemap-release"></a>
 We are releasing the Lighthouse Treemap!
 
-![image](https://user-images.githubusercontent.com/4071474/118602146-2d08d480-b767-11eb-9273-9a8de7000e67.png)
+<a href="https://user-images.githubusercontent.com/4071474/118602146-2d08d480-b767-11eb-9273-9a8de7000e67.png"><img src="https://user-images.githubusercontent.com/4071474/118602146-2d08d480-b767-11eb-9273-9a8de7000e67.png" width="48%"></a> <a href="https://user-images.githubusercontent.com/4071474/118602240-4742b280-b767-11eb-9f6a-433788029a30.png"><img src="https://user-images.githubusercontent.com/4071474/118602240-4742b280-b767-11eb-9f6a-433788029a30.png" width="48%"></a>
 
 You may already be familiar with treemaps thanks to [webtreemap](https://github.com/evmar/webtreemap) (which we use!) or [source-map-explorer](https://github.com/danvk/source-map-explorer). With Lighthouse Treemap, you'll be able to view all the JavaScript bundles on your page easily from a Lighthouse report, in addition to some insights that may help reduce the amount of JavaScript on a page. The only requirement is that source maps are accessible (either publicly, or securely from the same computer that is running the Lighthouse audit).
 
-We even collect code coverage data from Chrome, and extrapolate the coverage of individual modules in a bundle:
-
-![image](https://user-images.githubusercontent.com/4071474/118602240-4742b280-b767-11eb-9f6a-433788029a30.png)
-
-Note: this only takes into account a cold-load: code only used after user interaction will be marked as unused. Stay tuned for a future release, which will enable you to configure user flows and capture even more accurate performance insights.
+We even collect **code coverage** data from Chrome, and extrapolate the coverage of individual modules in a bundle. Note: this only takes into account a cold-load: code only used after user interaction will be marked as unused. Stay tuned for a future release, which will enable you to configure user flows and capture even more accurate performance insights.
 
 If we detect a large module included by multiple bundles, we'll alert you of that too.
 
 You can access Lighthouse Treemap from the report:
 
-![image](https://user-images.githubusercontent.com/4071474/118600879-6e4cb480-b766-11eb-85f7-e8281006711b.png)
+<img src="https://user-images.githubusercontent.com/39191/120411450-aed13400-c309-11eb-9746-2f07d5efd276.png" width="350">
 
-Currently, only reports generated with the Lighthouse Node CLI will connect to the Lighthouse Treemap App. We are working on adding this functionality to Lighthouse in DevTools and PageSpeed Insights.
+Currently, only reports generated with the Lighthouse Node CLI will connect to the Lighthouse Treemap App. This functionality will be in  DevTools and PageSpeed Insights as of Lighthouse v8.0.
+
+[Demo](https://googlechrome.github.io/lighthouse/treemap/?gist=30a18304de56e7be08f10976a1b11702)
 
 ## Core
 
