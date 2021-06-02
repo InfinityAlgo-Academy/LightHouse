@@ -79,7 +79,7 @@ describe('Lighthouse Viewer', () => {
     if (pageErrors.length > 0) console.error(pageErrors);
 
     await Promise.all([
-      new Promise(resolve => server.close(resolve)),
+      server.close(),
       browser && browser.close(),
     ]);
   });

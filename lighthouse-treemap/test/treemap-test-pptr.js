@@ -37,7 +37,7 @@ describe('Lighthouse Treemap', () => {
 
   afterAll(async function() {
     await Promise.all([
-      new Promise(resolve => server.close(resolve)),
+      server.close(),
       browser && browser.close(),
     ]);
   });

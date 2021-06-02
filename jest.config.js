@@ -32,4 +32,5 @@ module.exports = {
     '**/docs/**/*.test.js',
   ],
   transform: {},
+  prettierPath: null,
 };

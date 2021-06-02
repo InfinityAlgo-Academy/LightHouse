@@ -103,7 +103,6 @@ describe('ReportUIFeatures', () => {
     global.I18n = undefined;
     global.ReportUIFeatures = undefined;
     global.matchMedia = undefined;
-    global.self.matchMedia = undefined;
     global.CriticalRequestChainRenderer = undefined;
     global.DetailsRenderer = undefined;
     global.CategoryRenderer = undefined;
