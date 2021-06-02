@@ -700,9 +700,9 @@ var ScoringGuide = /*@__PURE__*/(function (Component) {
 
     var title = h( 'h2', null, name );
     if (name === 'v8') {
-      title = h( 'h2', null, "latest", h( 'br', null ), h( 'i', null, h( 'a', { href: "https://github.com/GoogleChrome/lighthouse/releases/" }, "v8") ) );
+      title = h( 'h2', null, "latest", h( 'br', null ), h( 'i', null, h( 'a', { href: "https://github.com/GoogleChrome/lighthouse/releases/tag/v8.0.0" }, "v8") ) );
     } else if (name === 'v6') {
-      title = h( 'h2', null, h( 'i', null, h( 'a', { href: "https://github.com/GoogleChrome/lighthouse/releases/" }, "v6, v7") ) );
+      title = h( 'h2', null, h( 'i', null, h( 'a', { href: "https://github.com/GoogleChrome/lighthouse/releases/tag/v6.0.0" }, "v6, v7") ) );
     }
 
     return h( 'form', { class: "wrapper" },
@@ -840,7 +840,7 @@ var App = /*@__PURE__*/(function (Component) {
 function getInitialState() {
   var versions = params.has('version') ?
     params.getAll('version').map(getMajorVersion) :
-    ['6']; // version to show by default
+    ['6', '8']; // version to show by default
 
   // Default to mobile if it's not matching our known emulatedFormFactors. https://github.com/GoogleChrome/lighthouse/blob/master/types/externs.d.ts#:~:text=emulatedFormFactor
   var device = params.get('device');
