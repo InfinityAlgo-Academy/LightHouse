@@ -620,8 +620,8 @@ class TreemapViewer {
 
       // Shade the element to communicate coverage.
       if (this.currentViewMode.id === 'unused-bytes') {
-        const pctUsed = (1 - (node.unusedBytes || 0) / node.resourceBytes) * 100;
-        node.dom.style.setProperty('--pctUsed', `${pctUsed}%`);
+        const pctUnused = (node.unusedBytes || 0) / node.resourceBytes * 100;
+        node.dom.style.setProperty('--pctUnused', `${pctUnused}%`);
       }
     });
   }

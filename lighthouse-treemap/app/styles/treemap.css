@@ -219,7 +219,7 @@ header {
   right: 0;
   content: '';
   display: block;
-  width: var(--pctUsed);
+  width: var(--pctUnused);
   background: repeating-linear-gradient(
           -45deg,
           hsla(0, 0%, 0%, 0),
