@@ -19,7 +19,7 @@ function headersParam(headers) {
 // Easiest way to get script contents with whitespace is by copying script node in DevTools.
 const blockAllExceptInlineScriptCsp = headersParam([[
   'Content-Security-Policy',
-  `default-src 'none'; script-src 'sha256-qZLV55/xxILbIrha9pgX0OdkZMhOlaIgfpEo/6Dly2U='`,
+  `default-src 'none'; script-src 'sha256-NCWlI90TxQpIfghtBWJyNU5Y92Nj8XhO+AYMm0gqGfQ='`,
 ]]);
 
 /**
