@@ -69,14 +69,7 @@ declare global {
       trace?: Trace;
     }
 
-    export type PhaseArtifact = |
-        LH.GathererArtifacts[keyof LH.GathererArtifacts] |
-      LH.Artifacts['devtoolsLogs'] |
-      LH.Artifacts['traces'] |
-      LH.Artifacts['WebAppManifest'] |
-      LH.Artifacts['InstallabilityErrors'] |
-      LH.Artifacts['Stacks'];
-    export type PhaseResultNonPromise = void|PhaseArtifact
+    export type PhaseResultNonPromise = void | LH.GathererArtifacts[keyof LH.GathererArtifacts];
     export type PhaseResult = PhaseResultNonPromise | Promise<PhaseResultNonPromise>
 
     export type GatherMode = 'snapshot'|'timespan'|'navigation';

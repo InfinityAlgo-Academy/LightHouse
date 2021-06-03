@@ -25,6 +25,8 @@ const artifacts = {
   FormElements: '',
   FullPageScreenshot: '',
   GlobalListeners: '',
+  HostFormFactor: '',
+  HostUserAgent: '',
   IFrameElements: '',
   ImageElements: '',
   InstallabilityErrors: '',
@@ -57,6 +59,8 @@ for (const key of Object.keys(artifacts)) {
 const defaultConfig = {
   artifacts: [
     // Artifacts which can be depended on come first.
+    {id: artifacts.HostUserAgent, gatherer: 'host-user-agent'},
+    {id: artifacts.HostFormFactor, gatherer: 'host-form-factor'},
     {id: artifacts.DevtoolsLog, gatherer: 'devtools-log'},
     {id: artifacts.Trace, gatherer: 'trace'},
 
@@ -109,6 +113,8 @@ const defaultConfig = {
       cpuQuietThresholdMs: 1000,
       artifacts: [
         // Artifacts which can be depended on come first.
+        artifacts.HostUserAgent,
+        artifacts.HostFormFactor,
         artifacts.DevtoolsLog,
         artifacts.Trace,
 

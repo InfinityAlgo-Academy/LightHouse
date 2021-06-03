@@ -114,7 +114,7 @@ describe('NavigationRunner', () => {
 
     it('should collect base artifacts', async () => {
       const {baseArtifacts} = await runner._setup({driver, config, requestedUrl});
-      expect(baseArtifacts).toMatchObject({HostUserAgent: 'Chrome', URL: {requestedUrl}});
+      expect(baseArtifacts).toMatchObject({URL: {requestedUrl}});
     });
 
     it('should prepare the target for navigation', async () => {
@@ -123,8 +123,8 @@ describe('NavigationRunner', () => {
     });
 
     it('should prepare the target for navigation *after* base artifact collection', async () => {
-      mockDriver._session.sendCommand.mockReset();
-      mockDriver._session.sendCommand.mockRejectedValue(new Error('Not available'));
+      mockDriver._executionContext.evaluate.mockReset();
+      mockDriver._executionContext.evaluate.mockRejectedValue(new Error('Not available'));
       const setupPromise = runner._setup({driver, config, requestedUrl});
       await expect(setupPromise).rejects.toThrowError(/Not available/);
       expect(mocks.prepareMock.prepareTargetForNavigationMode).not.toHaveBeenCalled();

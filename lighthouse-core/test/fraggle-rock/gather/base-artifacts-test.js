@@ -15,40 +15,17 @@ const {initializeConfig} = require('../../../fraggle-rock/config/config.js');
 const {createMockDriver} = require('./mock-driver.js');
 const LighthouseError = require('../../../lib/lh-error.js');
 
-/** @param {{userAgent: string}} params */
-function getMockDriverForArtifacts({userAgent}) {
+function getMockDriverForArtifacts() {
   const driverMock = createMockDriver();
-  driverMock._session.sendCommand.mockResponse('Browser.getVersion', {
-    userAgent,
-    product: '',
-  });
-
   driverMock._executionContext.evaluate.mockResolvedValue(500);
-
   return driverMock;
 }
 
 describe('getBaseArtifacts', () => {
-  let driverMock = getMockDriverForArtifacts({userAgent: 'Desktop Chrome'});
+  let driverMock = getMockDriverForArtifacts();
 
   beforeEach(() => {
-    driverMock = getMockDriverForArtifacts({userAgent: 'Desktop Chrome'});
-  });
-
-  it('should fetch the desktop user agent', async () => {
-    const {config} = initializeConfig(undefined, {gatherMode: 'navigation'});
-    const artifacts = await getBaseArtifacts(config, driverMock.asDriver());
-    expect(artifacts.HostUserAgent).toEqual('Desktop Chrome');
-    expect(artifacts.HostFormFactor).toEqual('desktop');
-  });
-
-  it('should fetch the mobile user agent', async () => {
-    driverMock = getMockDriverForArtifacts({userAgent: 'Mobile Chrome'});
-
-    const {config} = initializeConfig(undefined, {gatherMode: 'navigation'});
-    const artifacts = await getBaseArtifacts(config, driverMock.asDriver());
-    expect(artifacts.HostUserAgent).toEqual('Mobile Chrome');
-    expect(artifacts.HostFormFactor).toEqual('mobile');
+    driverMock = getMockDriverForArtifacts();
   });
 
   it('should fetch benchmark index', async () => {
@@ -72,7 +49,7 @@ describe('finalizeArtifacts', () => {
 
   beforeEach(async () => {
     const {config} = initializeConfig(undefined, {gatherMode: 'navigation'});
-    const driver = getMockDriverForArtifacts({userAgent: 'Desktop Chrome'}).asDriver();
+    const driver = getMockDriverForArtifacts().asDriver();
     baseArtifacts = await getBaseArtifacts(config, driver);
     baseArtifacts.URL = {requestedUrl: 'http://example.com', finalUrl: 'https://example.com'};
     gathererArtifacts = {};
@@ -81,6 +58,7 @@ describe('finalizeArtifacts', () => {
   it('should merge the two objects', () => {
     baseArtifacts.LighthouseRunWarnings = [{i18nId: '1', formattedDefault: 'Yes'}];
     gathererArtifacts.LighthouseRunWarnings = [{i18nId: '2', formattedDefault: 'No'}];
+    gathererArtifacts.HostUserAgent = 'Desktop Chrome';
 
     const winningError = new LighthouseError(LighthouseError.errors.NO_LCP);
     baseArtifacts.PageLoadError = new LighthouseError(LighthouseError.errors.NO_FCP);

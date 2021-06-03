@@ -11,8 +11,6 @@ const Audit = require('../../audits/audit.js');
 const baseArtifactKeySource = {
   fetchTime: '',
   LighthouseRunWarnings: '',
-  HostFormFactor: '',
-  HostUserAgent: '',
   BenchmarkIndex: '',
   settings: '',
   Timing: '',

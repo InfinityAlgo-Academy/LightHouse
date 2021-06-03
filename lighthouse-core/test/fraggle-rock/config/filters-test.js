@@ -92,7 +92,7 @@ describe('Fraggle Rock Config Filtering', () => {
       class SnapshotWithBase extends BaseAudit {
         static meta = {
           id: 'snapshot',
-          requiredArtifacts: /** @type {any} */ (['Snapshot', 'URL', 'HostUserAgent']),
+          requiredArtifacts: /** @type {any} */ (['Snapshot', 'URL', 'Timing']),
           ...auditMeta,
         };
       }
