@@ -323,8 +323,8 @@ describe('ReportRenderer', () => {
           resolve();
         });
       });
-    // Set timeout to 10s to give axe-core enough time to complete
+    // This test takes 40s on fast hardware, and 50-60s on GHA.
     // https://github.com/dequelabs/axe-core/tree/b573b1c1/doc/examples/jest_react#timeout-issues
-    }, /* timeout= */ 10 * 1000);
+    }, /* timeout= */ 100 * 1000);
   });
 });
