@@ -14,7 +14,7 @@
 
 const Audit = require('../audit.js');
 const Sentry = require('../../lib/sentry.js');
-const semver = require('semver');
+const semver = require('../../lib/semver.js');
 const snykDatabase = require('../../../third-party/snyk/snapshot.json');
 const i18n = require('../../lib/i18n/i18n.js');
 
@@ -118,9 +118,9 @@ class NoVulnerableLibrariesAudit extends Audit {
     }
 
     // Verify the version is well-formed first
-    try {
-      semver.satisfies(normalizedVersion, '*');
-    } catch (err) {
+    if (!semver.valid(normalizedVersion)) {
+      const err = new Error('Invalid package version');
+      // @ts-expect-error: We can add extra data to Error.
       err.pkgName = lib.npm;
       // Report the failure and skip this library if the version was ill-specified
       Sentry.captureException(err, {level: 'warning'});

@@ -8,7 +8,7 @@
 const NoVulnerableLibrariesAudit =
   require('../../../audits/dobetterweb/no-vulnerable-libraries.js');
 const assert = require('assert').strict;
-const semver = require('semver');
+const semver = require('../../../lib/semver.js');
 
 /* eslint-env jest */
 describe('Avoids front-end JavaScript libraries with known vulnerabilities', () => {
