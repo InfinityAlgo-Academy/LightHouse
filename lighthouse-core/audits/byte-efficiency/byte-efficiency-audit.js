@@ -111,6 +111,7 @@ class UnusedBytes extends Audit {
     const settings = context && context.settings || {};
     const simulatorOptions = {
       devtoolsLog,
+      trace,
       settings,
     };
 

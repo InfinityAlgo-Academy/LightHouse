@@ -135,12 +135,12 @@ class UnusedCSS {
   }
 
   /**
-   * @param {{CSSUsage: LH.Artifacts['CSSUsage'], URL: LH.Artifacts['URL'], devtoolsLog: LH.DevtoolsLog}} data
+   * @param {{CSSUsage: LH.Artifacts['CSSUsage'], URL: LH.Artifacts['URL'], trace: LH.Trace}} data
    * @param {LH.Artifacts.ComputedContext} context
    * @return {Promise<LH.Audit.ByteEfficiencyItem[]>}
   */
   static async compute_(data, context) {
-    const {CSSUsage, URL, devtoolsLog} = data;
+    const {CSSUsage, URL, trace} = data;
     const networkRecords = await TraceNetworkRecords.request(trace, context);
     const indexedSheets = UnusedCSS.indexStylesheetsById(CSSUsage.stylesheets, networkRecords);
     UnusedCSS.indexUsedRules(CSSUsage.rules, indexedSheets);

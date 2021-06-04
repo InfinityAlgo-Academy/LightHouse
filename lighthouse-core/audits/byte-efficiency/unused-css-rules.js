@@ -48,7 +48,7 @@ class UnusedCSSRules extends ByteEfficiencyAudit {
     const unusedCssItems = await UnusedCSS.request({
       CSSUsage: artifacts.CSSUsage,
       URL: artifacts.URL,
-      devtoolsLog: artifacts.devtoolsLogs[ByteEfficiencyAudit.DEFAULT_PASS],
+      trace: artifacts.traces[ByteEfficiencyAudit.DEFAULT_PASS],
     }, context);
     const items = unusedCssItems
       .filter(sheet => sheet && sheet.wastedBytes > IGNORE_THRESHOLD_IN_BYTES);

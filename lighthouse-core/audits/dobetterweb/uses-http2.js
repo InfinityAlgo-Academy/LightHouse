@@ -202,7 +202,7 @@ class UsesHTTP2Audit extends Audit {
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     const settings = context && context.settings || {};
     const simulatorOptions = {
-      devtoolsLog,
+      trace,
       settings,
     };
 
