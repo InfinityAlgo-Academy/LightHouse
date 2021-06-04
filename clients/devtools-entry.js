@@ -63,6 +63,12 @@ function listenForStatus(listenCallback) {
 
 /**
  * With just a trace, provide Lighthouse performance report
+ * From DevTools it'll look something like this
+ *
+    self.analyzeTrace({traceEvents: tEvents}, {url: 'http://page', device: 'desktop'})
+      .then(console.log)
+      .catch(console.warn);
+ *
  * @param {LH.Trace} trace
  * @param {{device: "mobile" | "desktop", url: string}} opts
  * @return {Promise<LH.RunnerResult|undefined>}
@@ -78,7 +84,7 @@ function analyzeTrace(trace, opts) {
     extends: 'lighthouse:default',
     settings: {
       onlyAudits: metricIds,
-      output: ['html'],
+      output: ['json'],
       formFactor: opts.device,
       throttlingMethod: 'devtools', // can't do lantern right now, so need real throttling applied.
       // In DevTools, emulation is applied _before_ Lighthouse starts (to deal with viewport emulation bugs). go/xcnjf
@@ -147,18 +153,19 @@ if (typeof self !== 'undefined') {
   self.analyzeTrace = analyzeTrace;
 }
 
-// If invoked as CLI, we're gonna read latest-run's trace and analyze that (as desktop)
-if (require.main === module) {
 
-  const trace = JSON.parse(
-    require('fs').readFileSync(__dirname + '/../latest-run/defaultPass.trace.json', 'utf8')
-  );
+// // If invoked as CLI, we're gonna read latest-run's trace and analyze that (as desktop)
+// if (require.main === module) {
+//   const trace = JSON.parse(
+//     // require('fs').readFileSync(__dirname + '/../latest-run/defaultPass.trace.json', 'utf8')
+//     require('fs').readFileSync(__dirname + '/../latest-run/tevents.json', 'utf8')
+//   );
 
-  analyzeTrace(trace, {
-    device: 'desktop',
-    url: 'https://devtools/inspected-page',
-  }).then(res => {
-    fs.writeFileSync('./tracereport.html', res?.report[0], 'utf8');
-    console.log('done. written to ./tracereport.html');
-  });
-}
+//   analyzeTrace(trace, {
+//     device: 'desktop',
+//     url: 'https://devtools/inspected-page',
+//   }).then(res => {
+//     require('fs').writeFileSync('./tracereport.html', res?.report[0], 'utf8');
+//     console.log('done. written to ./tracereport.html');
+//   });
+// }

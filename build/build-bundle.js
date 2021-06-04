@@ -46,7 +46,7 @@ const isDevtools = file =>
 const isLightrider = file => path.basename(file).includes('lightrider');
 
 // Set to true for source maps.
-const DEBUG = false;
+const DEBUG = true;
 
 /**
  * Browserify starting at the file at entryPath. Contains entry-point-specific
@@ -142,21 +142,8 @@ async function browserifyFile(entryPath, distPath) {
  */
 async function minifyScript(filePath) {
   const code = fs.readFileSync(filePath, 'utf-8');
-  const result = await terser.minify(code, {
-    ecma: 2019,
-    output: {
-      comments: /^!/,
-      max_line_len: 1000,
-    },
-    // The config relies on class names for gatherers.
-    keep_classnames: true,
-    // Runtime.evaluate errors if function names are elided.
-    keep_fnames: true,
-    sourceMap: DEBUG && {
-      content: JSON.parse(fs.readFileSync(`${filePath}.map`, 'utf-8')),
-      url: path.basename(`${filePath}.map`),
-    },
-  });
+
+  const result = {code};
 
   // Add the banner and modify globals for DevTools if necessary.
   if (isDevtools(filePath) && result.code) {
@@ -173,7 +160,7 @@ async function minifyScript(filePath) {
   }
 
   fs.writeFileSync(filePath, result.code);
-  if (DEBUG) fs.writeFileSync(`${filePath}.map`, result.map);
+  // if (DEBUG) fs.writeFileSync(`${filePath}.map`, result.map);
 }
 
 /**

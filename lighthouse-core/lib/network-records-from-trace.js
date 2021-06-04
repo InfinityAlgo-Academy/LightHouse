@@ -66,6 +66,13 @@ class NetworkRecordsMaker {
         continue;
       }
 
+      // If we have an incomplete set of events here, we choose to drop the network
+      // request rather than attempt to synthesize the missing data.
+      if (!evtBag.sendRequest || !evtBag.receiveResponse) {
+        console.log('missing some trace events.... skipping :(')
+        continue;
+      }
+
       // Handle request
       /** @type {LH.Crdp.Network.RequestWillBeSentEvent} */
       const requestWillBeSentEventData = {
