@@ -6,6 +6,7 @@
 'use strict';
 
 const lighthouse = require('../lighthouse-core/index.js');
+const Runner = require('../lighthouse-core/runner.js');
 const RawProtocol = require('../lighthouse-core/gather/connections/raw.js');
 const log = require('lighthouse-logger');
 const {registerLocaleData, lookupLocale} = require('../lighthouse-core/lib/i18n/i18n.js');
@@ -59,6 +60,65 @@ function listenForStatus(listenCallback) {
   log.events.addListener('status', listenCallback);
 }
 
+/**
+ * With just a trace, provide Lighthouse performance report
+ * @param {LH.Trace} trace
+ * @param {{device: string, url: string}} opts
+ * @return {Promise<LH.RunnerResult|undefined>}
+ */
+function analyzeTrace(trace, opts) {
+  const configJSON = createConfig(['performance'], opts.device);
+  configJSON.settings.output = ['html'];
+  configJSON.settings.onlyAudits = [
+    'first-contentful-paint',
+'speed-index',
+'largest-contentful-paint',
+'interactive',
+'total-blocking-time',
+'cumulative-layout-shift',
+
+  ];
+  const config = lighthouse.generateConfig(configJSON, {});
+  const computedCache = new Map();
+  const url = opts.url;
+  const runOpts = {url, config, computedCache};
+
+  const gatherFn = ({requestedUrl}) => {
+    /** @type {Partial<LH.GathererArtifacts>} */
+    const artifacts = {
+      traces: {defaultPass: trace},
+      devtoolsLogs: {defaultPass: []},
+
+
+      URL: {requestedUrl: url, finalUrl: url},
+      HostFormFactor: opts.device,
+      HostUserAgent: 'UA ',
+      NetworkUserAgent: 'UA ',
+      Stacks: [],
+      InstallabilityErrors: {errors: []},
+      fetchTime: new Date().toJSON(),
+      LighthouseRunWarnings: [],
+      BenchmarkIndex: 1000,
+      Timing: [],
+      PageLoadError: null,
+      WebAppManifest: null,
+    };
+    return artifacts;
+  };
+  return Runner.run(gatherFn, runOpts);
+}
+
+async function testAnalyzeTrace() {
+  const fs = require('fs');
+  const trace = JSON.parse(fs.readFileSync(
+    __dirname + '/../lighthouse-core/test/fixtures/traces/frame-metrics-m90.json', 'utf8'));
+  const res = await analyzeTrace(trace, {device: 'mobile', url: 'http://example.com'});
+
+  fs.writeFileSync('./tracereport.html', res?.report[0], 'utf8');
+  delete res?.report;
+  console.log({res});
+  console.log('done');
+}
 // For the bundle smoke test.
 if (typeof module !== 'undefined' && module.exports) {
   // Ideally this could be exposed via browserify's `standalone`, but it doesn't
@@ -67,6 +127,15 @@ if (typeof module !== 'undefined' && module.exports) {
   // bundle entry point as global.
   // @ts-expect-error
   global.runBundledLighthouse = lighthouse;
+
+  // TODO: remove once i dont need it here
+  global.analyzeTrace = analyzeTrace;
+}
+
+// if invoked as CLI
+if (require.main === module) {
+  console.log('\n\n\n\n\n\n\n\n\n')
+  testAnalyzeTrace();
 }
 
 // Expose only in DevTools' worker
@@ -86,4 +155,6 @@ if (typeof self !== 'undefined') {
   self.registerLocaleData = registerLocaleData;
   // @ts-expect-error
   self.lookupLocale = lookupLocale;
+  // @ts-expect-error
+  self.analyzeTrace = analyzeTrace;
 }

@@ -28,7 +28,7 @@ class LargestContentfulPaint extends Audit {
       title: str_(i18n.UIStrings.largestContentfulPaintMetric),
       description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
-      requiredArtifacts: ['HostUserAgent', 'traces', 'devtoolsLogs'],
+      requiredArtifacts: ['HostUserAgent', 'traces'],
     };
   }
 

@@ -62,6 +62,7 @@ class FirstContentfulPaint extends Audit {
    */
   static async audit(artifacts, context) {
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
+    console.log(artifacts)
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     const metricComputationData = {trace, devtoolsLog, settings: context.settings};
     const metricResult = await ComputedFcp.request(metricComputationData, context);
