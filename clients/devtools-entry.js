@@ -109,12 +109,15 @@ function analyzeTrace(trace, opts) {
 async function testAnalyzeTrace() {
   const fs = require('fs');
   const trace = JSON.parse(
-    fs.readFileSync(
-      __dirname + '/../lighthouse-core/test/fixtures/traces/frame-metrics-m90.json',
-      'utf8'
-    )
+    fs.readFileSync(__dirname + '/../latest-run/defaultPass.trace.json', 'utf8')
   );
-  const res = await analyzeTrace(trace, {device: 'mobile', url: 'http://example.com'});
+  const artifacts = JSON.parse(
+    fs.readFileSync(__dirname + '/../latest-run/artifacts.json', 'utf8')
+  );
+  const res = await analyzeTrace(trace, {
+    device: artifacts.settings.formFactor,
+    url: artifacts.URL.finalUrl,
+  });
 
   fs.writeFileSync('./tracereport.html', res?.report[0], 'utf8');
   delete res?.report;
