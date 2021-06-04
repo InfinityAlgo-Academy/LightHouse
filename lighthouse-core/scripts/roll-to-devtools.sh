@@ -43,6 +43,13 @@ lh_bg_js="dist/lighthouse-dt-bundle.js"
 cp -pPR "$lh_bg_js" "$fe_lh_dir/lighthouse-dt-bundle.js"
 echo -e "$check (Potentially stale) lighthouse-dt-bundle copied."
 
+# copy report code $fe_lh_dir
+fe_lh_report_dir="$fe_lh_dir/report/"
+rsync -avh lighthouse-core/report/html/renderer/ "$fe_lh_report_dir" --exclude="BUILD.gn" --delete
+# file-namer.js is not used, but we should export something so it compiles.
+echo 'export const getFilenamePrefix = () => {};' > "$fe_lh_report_dir/file-namer.js"
+echo -e "$check Report code copied."
+
 # copy report generator + cached resources into $fe_lh_dir
 fe_lh_report_assets_dir="$fe_lh_dir/report-assets/"
 rsync -avh dist/dt-report-resources/ "$fe_lh_report_assets_dir" --delete

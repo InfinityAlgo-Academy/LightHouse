@@ -23,12 +23,17 @@
  * Dummy text for ensuring report robustness: </script> pre$`post %%LIGHTHOUSE_JSON%%
  */
 
-/** @typedef {import('./category-renderer')} CategoryRenderer */
-/** @typedef {import('./dom.js')} DOM */
+/** @typedef {import('./dom.js').DOM} DOM */
 
-/* globals self, Util, DetailsRenderer, CategoryRenderer, I18n, PerformanceCategoryRenderer, PwaCategoryRenderer, ElementScreenshotRenderer */
+import {CategoryRenderer} from './category-renderer.js';
+import {DetailsRenderer} from './details-renderer.js';
+import {ElementScreenshotRenderer} from './element-screenshot-renderer.js';
+import {I18n} from './i18n.js';
+import {PerformanceCategoryRenderer} from './performance-category-renderer.js';
+import {PwaCategoryRenderer} from './pwa-category-renderer.js';
+import {Util} from './util.js';
 
-class ReportRenderer {
+export class ReportRenderer {
   /**
    * @param {DOM} dom
    */
@@ -275,10 +280,4 @@ class ReportRenderer {
 
     return reportFragment;
   }
-}
-
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = ReportRenderer;
-} else {
-  self.ReportRenderer = ReportRenderer;
 }

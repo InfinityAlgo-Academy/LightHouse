@@ -23,9 +23,12 @@
  * the report.
  */
 
-/* globals getFilenamePrefix Util TextEncoding ElementScreenshotRenderer */
+/** @typedef {import('./dom').DOM} DOM */
 
-/** @typedef {import('./dom')} DOM */
+import {getFilenamePrefix} from './file-namer.js';
+import {ElementScreenshotRenderer} from './element-screenshot-renderer.js';
+import {TextEncoding} from './text-encoding.js';
+import {Util} from './util.js';
 
 /**
  * @param {HTMLTableElement} tableEl
@@ -44,7 +47,7 @@ function getAppsOrigin() {
   return 'https://googlechrome.github.io/lighthouse';
 }
 
-class ReportUIFeatures {
+export class ReportUIFeatures {
   /**
    * @param {DOM} dom
    */
@@ -957,10 +960,4 @@ class DropDown {
     const nodes = Array.from(this._menuEl.childNodes).reverse();
     return this._getNextSelectableNode(nodes, startEl);
   }
-}
-
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = ReportUIFeatures;
-} else {
-  self.ReportUIFeatures = ReportUIFeatures;
 }

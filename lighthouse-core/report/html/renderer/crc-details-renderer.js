@@ -21,12 +21,12 @@
  * critical request chains network tree.
  */
 
-/* globals self Util */
+/** @typedef {import('./dom.js').DOM} DOM */
+/** @typedef {import('./details-renderer.js').DetailsRenderer} DetailsRenderer */
 
-/** @typedef {import('./dom.js')} DOM */
-/** @typedef {import('./details-renderer.js')} DetailsRenderer */
+import {Util} from './util.js';
 
-class CriticalRequestChainRenderer {
+export class CriticalRequestChainRenderer {
   /**
    * Create render context for critical-request-chain tree display.
    * @param {LH.Audit.SimpleCriticalRequestNode} tree
@@ -192,13 +192,6 @@ class CriticalRequestChainRenderer {
 
 // Alias b/c the name is really long.
 const CRCRenderer = CriticalRequestChainRenderer;
-
-// Allow Node require()'ing.
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = CriticalRequestChainRenderer;
-} else {
-  self.CriticalRequestChainRenderer = CriticalRequestChainRenderer;
-}
 
 /** @typedef {{
       node: LH.Audit.SimpleCriticalRequestNode[string],
