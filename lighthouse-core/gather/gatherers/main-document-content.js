@@ -9,6 +9,7 @@ const FRGatherer = require('../../fraggle-rock/gather/base-gatherer.js');
 const NetworkAnalyzer = require('../../lib/dependency-graph/simulator/network-analyzer.js');
 const TraceNetworkRecords = require('../../computed/trace-network-records.js');
 const DevtoolsLog = require('./devtools-log.js');
+const Trace = require('./trace.js');
 const {fetchResponseBodyFromCache} = require('../driver/network.js');
 
 /**
@@ -18,7 +19,10 @@ class MainDocumentContent extends FRGatherer {
   /** @type {LH.Gatherer.GathererMeta<'DevtoolsLog'>} */
   meta = {
     supportedModes: ['navigation'],
-    dependencies: {DevtoolsLog: DevtoolsLog.symbol},
+    dependencies: {
+      DevtoolsLog: DevtoolsLog.symbol,
+      Trace: Trace.symbol,
+    },
   }
 
   /**
@@ -39,6 +43,7 @@ class MainDocumentContent extends FRGatherer {
    */
   async getArtifact(context) {
     const devtoolsLog = context.dependencies.DevtoolsLog;
+    const trace = context.dependencies.Trace;
     // TODO. figure out this one…
     const networkRecords = await TraceNetworkRecords.request(trace, context);
     return this._getArtifact(context, networkRecords);

@@ -30,7 +30,7 @@ class NetworkServerLatency extends Audit {
       scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['devtoolsLogs'],
+      requiredArtifacts: ['devtoolsLogs', 'traces'],
     };
   }
 
@@ -41,7 +41,8 @@ class NetworkServerLatency extends Audit {
    */
   static async audit(artifacts, context) {
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
-    const analysis = await NetworkAnalysisComputed.request(devtoolsLog, context);
+    const trace = artifacts.traces[Audit.DEFAULT_PASS];
+    const analysis = await NetworkAnalysisComputed.request(trace, context);
 
     /** @type {number} */
     let maxLatency = 0;

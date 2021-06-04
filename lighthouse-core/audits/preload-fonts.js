@@ -37,7 +37,7 @@ class PreloadFontsAudit extends Audit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['devtoolsLogs', 'URL', 'CSSUsage'],
+      requiredArtifacts: ['devtoolsLogs', 'traces', 'URL', 'CSSUsage'],
     };
   }
 

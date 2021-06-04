@@ -33,7 +33,7 @@ class HTTPStatusCode extends Audit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['devtoolsLogs', 'URL'],
+      requiredArtifacts: ['devtoolsLogs', 'traces', 'URL'],
     };
   }
 

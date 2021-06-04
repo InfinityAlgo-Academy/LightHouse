@@ -62,7 +62,7 @@ class UsesRelPreconnectAudit extends Audit {
       id: 'uses-rel-preconnect',
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['traces', 'devtoolsLogs', 'URL', 'LinkElements'],
+      requiredArtifacts: ['traces', 'devtoolsLogs', 'traces', 'URL', 'LinkElements'],
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
     };
   }

@@ -19,7 +19,7 @@ class NetworkRequests extends Audit {
       scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
       title: 'Network Requests',
       description: 'Lists the network requests that were made during page load.',
-      requiredArtifacts: ['devtoolsLogs'],
+      requiredArtifacts: ['devtoolsLogs', 'traces'],
     };
   }
 
@@ -30,6 +30,7 @@ class NetworkRequests extends Audit {
    */
   static audit(artifacts, context) {
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+    const trace = artifacts.traces[Audit.DEFAULT_PASS];
     return TraceNetworkRecords.request(trace, context).then(records => {
       const earliestStartTime = records.reduce(
         (min, record) => Math.min(min, record.startTime),

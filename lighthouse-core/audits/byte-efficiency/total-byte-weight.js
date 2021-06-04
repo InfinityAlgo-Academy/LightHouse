@@ -36,7 +36,7 @@ class TotalByteWeight extends ByteEfficiencyAudit {
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
       scoreDisplayMode: ByteEfficiencyAudit.SCORING_MODES.NUMERIC,
-      requiredArtifacts: ['devtoolsLogs'],
+      requiredArtifacts: ['devtoolsLogs', 'traces'],
     };
   }
 
@@ -60,6 +60,7 @@ class TotalByteWeight extends ByteEfficiencyAudit {
    */
   static async audit(artifacts, context) {
     const devtoolsLog = artifacts.devtoolsLogs[ByteEfficiencyAudit.DEFAULT_PASS];
+    const trace = artifacts.traces[ByteEfficiencyAudit.DEFAULT_PASS];
     const records = await TraceNetworkRecords.request(trace, context);
 
     let totalBytes = 0;

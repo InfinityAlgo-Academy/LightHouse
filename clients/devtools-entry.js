@@ -67,16 +67,18 @@ function listenForStatus(listenCallback) {
  * @return {Promise<LH.RunnerResult|undefined>}
  */
 function analyzeTrace(trace, opts) {
-  const configJSON = createConfig(undefined, opts.device);
+  const configJSON = createConfig(['performance'], opts.device);
   configJSON.settings.output = ['html'];
-  configJSON.settings.onlyAudits = [
-    'first-contentful-paint',
-    'speed-index',
-    'largest-contentful-paint',
-    'interactive',
-    'total-blocking-time',
-    'cumulative-layout-shift',
-  ];
+  // configJSON.settings.onlyAudits = [
+  //   'first-contentful-paint',
+  //   'speed-index',
+  //   'largest-contentful-paint',
+  //   'interactive',
+  //   'total-blocking-time',
+  //   'cumulative-layout-shift',
+  // ];
+
+  // TODO: use FR's initializeConfig. it'll filter for navigation-y things.
   const config = lighthouse.generateConfig(configJSON, {});
   const computedCache = new Map();
   const url = opts.url;

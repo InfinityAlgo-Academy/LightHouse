@@ -33,7 +33,7 @@ class ResourceSummary extends Audit {
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
-      requiredArtifacts: ['devtoolsLogs', 'URL'],
+      requiredArtifacts: ['devtoolsLogs', 'traces', 'URL'],
     };
   }
 
@@ -44,8 +44,9 @@ class ResourceSummary extends Audit {
    */
   static async audit(artifacts, context) {
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+    const trace = artifacts.traces[Audit.DEFAULT_PASS];
     const summary = await ComputedResourceSummary
-      .request({devtoolsLog, URL: artifacts.URL, budgets: context.settings.budgets}, context);
+      .request({trace, URL: artifacts.URL, budgets: context.settings.budgets}, context);
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [

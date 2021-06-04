@@ -42,7 +42,7 @@ class UsesRelPreloadAudit extends Audit {
       id: 'uses-rel-preload',
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['devtoolsLogs', 'traces', 'URL'],
+      requiredArtifacts: ['devtoolsLogs', 'traces', 'traces', 'URL'],
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
     };
   }

@@ -248,7 +248,7 @@ class HeaderPoliceAudit {
       title: 'All headers stripped of debug data',
       failureTitle: 'Headers contained debug data',
       description: 'Pages should mask debug data in production.',
-      requiredArtifacts: ['devtoolsLogs'],
+      requiredArtifacts: ['devtoolsLogs', 'traces'],
     };
   }
 

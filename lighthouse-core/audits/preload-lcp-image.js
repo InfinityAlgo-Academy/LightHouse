@@ -32,7 +32,7 @@ class PreloadLCPImageAudit extends Audit {
       id: 'preload-lcp-image',
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['traces', 'devtoolsLogs', 'URL', 'TraceElements', 'ImageElements'],
+      requiredArtifacts: ['traces', 'devtoolsLogs', 'traces', 'URL', 'TraceElements', 'ImageElements'],
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
     };
   }
