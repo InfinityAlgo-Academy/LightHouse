@@ -31,46 +31,6 @@ limitations under the License.
 
   <div id="lh-log"></div>
 
-  %%LIGHTHOUSE_JAVASCRIPT_MODULES%%
-
-  <!-- Adapted from https://stackoverflow.com/a/43834063/2788187 -->
-  <script type="module">
-    for (const original of document.querySelectorAll('script[type=lh-inline-module]')) {
-      const replacement = document.createElement('script');
-
-      // Preserve the ID so the element can be selected for import.
-      if (original.id) {
-        replacement.id = original.id;
-      }
-
-      replacement.type = 'module';
-
-      const transformedSource = original.textContent
-        // Find anything that looks like an import.
-        .replace(/(from\s+|import\s+)['"](.*)['"]/g, (unmodified, action, selector) => {
-          // If we can find a suitable script with that id...
-          const refEl = document.querySelector(`script[type=module][src][id="${selector}"]`);
-          return refEl ?
-            // ..then update the import to use that script's src URL instead.
-            `${action}/* ${selector} */ '${refEl.src}'` :
-            unmodified;
-        })
-        // Simple commonjs -> esmodules transpilation.
-        .replace('module.exports =', 'export');
-
-      // Include the updated code in the src attribute as a blob URL that can be re-imported.
-      replacement.src = URL.createObjectURL(
-        new Blob([transformedSource], {type: 'application/javascript'}));
-
-      // Insert the updated code inline, for debugging (it will be ignored).
-      replacement.textContent = transformedSource;
-
-      original.replaceWith(replacement);
-    }
-
-    export {};
-  </script>
-
   <script>%%LIGHTHOUSE_JAVASCRIPT%%
   //# sourceURL=compiled-reportrenderer.js
   </script>

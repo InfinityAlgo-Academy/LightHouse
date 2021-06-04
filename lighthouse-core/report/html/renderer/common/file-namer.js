@@ -5,4 +5,6 @@
  */
 'use strict';
 
-export * from '../../../lib/file-namer.js';
+// export * from '../../../lib/file-namer.js';
+
+export {getFilenamePrefix} from '../../../../lib/file-namer.js';

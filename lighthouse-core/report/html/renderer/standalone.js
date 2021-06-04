@@ -7,10 +7,10 @@
 
 /* global document window */
 
-import {DOM} from './dom.js';
-import {Logger} from './logger.js';
-import {ReportRenderer} from './report-renderer.js';
-import {ReportUIFeatures} from './report-ui-features.js';
+import {DOM} from './common/dom.js';
+import {Logger} from './common/logger.js';
+import {ReportRenderer} from './common/report-renderer.js';
+import {ReportUIFeatures} from './common/report-ui-features.js';
 
 function __initLighthouseReport__() {
   const dom = new DOM(document);

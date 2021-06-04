@@ -169,6 +169,12 @@ class Runner {
         assetSaver.saveLhr(lhr, path);
       }
 
+      // Build report if in local dev env so we don't have to run a watch command.
+      // TODO: dev checkout only. what to look for? existence of `dist/`?
+      if (settings.output === 'html') {
+        await require('../build/build-report.js').buildStandaloneReport();
+      }
+
       // Create the HTML, JSON, and/or CSV string
       const report = generateReport(lhr, settings.output);
 

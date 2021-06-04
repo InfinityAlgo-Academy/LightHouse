@@ -1,3 +1,8 @@
+// TODO: restructure folders?
+// html/renderer/common -> mostly everything, including index.js
+// html/renderer/clients -> psi.js, standalone.js
+// TODO: figure out how psi.js / report code should be added to google3.
+
 /**
  * @license
  * Copyright 2018 The Lighthouse Authors. All Rights Reserved.
@@ -16,13 +21,13 @@
  */
 'use strict';
 
-import {DetailsRenderer} from './details-renderer.js';
-import {DOM} from './dom.js';
-import {ElementScreenshotRenderer} from './element-screenshot-renderer.js';
-import {I18n} from './i18n.js';
-import {PerformanceCategoryRenderer} from './performance-category-renderer.js';
-import {ReportUIFeatures} from './report-ui-features.js';
-import {Util} from './util.js';
+import {DetailsRenderer} from './common/details-renderer.js';
+import {DOM} from './common/dom.js';
+import {ElementScreenshotRenderer} from './common/element-screenshot-renderer.js';
+import {I18n} from './common/i18n.js';
+import {PerformanceCategoryRenderer} from './common/performance-category-renderer.js';
+import {ReportUIFeatures} from './common/report-ui-features.js';
+import {Util} from './common/util.js';
 
 /**
  * Returns all the elements that PSI needs to render the report
