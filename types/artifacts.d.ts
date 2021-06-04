@@ -24,7 +24,6 @@ declare global {
       | 'HTTPRedirect'
       | 'Manifest'
       | 'MixedContent'
-      | 'ScriptElements'
       | 'ServiceWorker'
       | keyof FRBaseArtifacts
     >;
