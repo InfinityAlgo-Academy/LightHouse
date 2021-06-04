@@ -11,6 +11,7 @@ const RawProtocol = require('../lighthouse-core/gather/connections/raw.js');
 const log = require('lighthouse-logger');
 const {registerLocaleData, lookupLocale} = require('../lighthouse-core/lib/i18n/i18n.js');
 const constants = require('../lighthouse-core/config/constants.js');
+const defaultConfig = require('../lighthouse-core/config/default-config.js');
 
 /** @typedef {import('../lighthouse-core/gather/connections/connection.js')} Connection */
 
@@ -63,37 +64,44 @@ function listenForStatus(listenCallback) {
 /**
  * With just a trace, provide Lighthouse performance report
  * @param {LH.Trace} trace
- * @param {{device: string, url: string}} opts
+ * @param {{device: "mobile" | "desktop", url: string}} opts
  * @return {Promise<LH.RunnerResult|undefined>}
  */
 function analyzeTrace(trace, opts) {
-  const configJSON = createConfig(['performance'], opts.device);
-  configJSON.settings.output = ['html'];
-  // configJSON.settings.onlyAudits = [
-  //   'first-contentful-paint',
-  //   'speed-index',
-  //   'largest-contentful-paint',
-  //   'interactive',
-  //   'total-blocking-time',
-  //   'cumulative-layout-shift',
-  // ];
+  const url = opts.url;
+  const metricIds = defaultConfig.categories.performance.auditRefs
+    .filter(ref => ref.group === 'metrics')
+    .map(ref => ref.id);
+
+  /** @type {LH.Config.Json} */
+  const configJSON = {
+    extends: 'lighthouse:default',
+    settings: {
+      onlyAudits: metricIds,
+      output: ['html'],
+      formFactor: opts.device,
+      throttlingMethod: 'devtools', // can't do lantern right now, so need real throttling applied.
+      // In DevTools, emulation is applied _before_ Lighthouse starts (to deal with viewport emulation bugs). go/xcnjf
+      // As a result, we don't double-apply viewport emulation.
+      screenEmulation: {disabled: true},
+    },
+  };
 
   // TODO: use FR's initializeConfig. it'll filter for navigation-y things.
   const config = lighthouse.generateConfig(configJSON, {});
-  const computedCache = new Map();
-  const url = opts.url;
-  const runOpts = {url, config, computedCache};
+  const runOpts = {url, config, computedCache: new Map()};
 
-  const gatherFn = ({requestedUrl}) => {
-    /** @type {Partial<LH.GathererArtifacts>} */
+  const gatherFn = _ => {
+    /** @type {Partial<LH.Artifacts>} */
     const artifacts = {
       traces: {defaultPass: trace},
       devtoolsLogs: {defaultPass: []},
 
+      settings: config.settings,
       URL: {requestedUrl: url, finalUrl: url},
       HostFormFactor: opts.device,
-      HostUserAgent: 'UA ',
-      NetworkUserAgent: 'UA ',
+      HostUserAgent: '',
+      NetworkUserAgent: '',
       Stacks: [],
       InstallabilityErrors: {errors: []},
       fetchTime: new Date().toJSON(),
@@ -103,29 +111,11 @@ function analyzeTrace(trace, opts) {
       PageLoadError: null,
       WebAppManifest: null,
     };
-    return artifacts;
+    return Promise.resolve(artifacts);
   };
   return Runner.run(gatherFn, runOpts);
 }
 
-async function testAnalyzeTrace() {
-  const fs = require('fs');
-  const trace = JSON.parse(
-    fs.readFileSync(__dirname + '/../latest-run/defaultPass.trace.json', 'utf8')
-  );
-  const artifacts = JSON.parse(
-    fs.readFileSync(__dirname + '/../latest-run/artifacts.json', 'utf8')
-  );
-  const res = await analyzeTrace(trace, {
-    device: artifacts.settings.formFactor,
-    url: artifacts.URL.finalUrl,
-  });
-
-  fs.writeFileSync('./tracereport.html', res?.report[0], 'utf8');
-  delete res?.report;
-  console.log({res});
-  console.log('done');
-}
 // For the bundle smoke test.
 if (typeof module !== 'undefined' && module.exports) {
   // Ideally this could be exposed via browserify's `standalone`, but it doesn't
@@ -134,15 +124,6 @@ if (typeof module !== 'undefined' && module.exports) {
   // bundle entry point as global.
   // @ts-expect-error
   global.runBundledLighthouse = lighthouse;
-
-  // TODO: remove once i dont need it here
-  global.analyzeTrace = analyzeTrace;
-}
-
-// if invoked as CLI
-if (require.main === module) {
-  console.log('\n\n\n\n\n\n\n\n\n');
-  testAnalyzeTrace();
 }
 
 // Expose only in DevTools' worker
@@ -164,4 +145,20 @@ if (typeof self !== 'undefined') {
   self.lookupLocale = lookupLocale;
   // @ts-expect-error
   self.analyzeTrace = analyzeTrace;
+}
+
+// If invoked as CLI, we're gonna read latest-run's trace and analyze that (as desktop)
+if (require.main === module) {
+
+  const trace = JSON.parse(
+    require('fs').readFileSync(__dirname + '/../latest-run/defaultPass.trace.json', 'utf8')
+  );
+
+  analyzeTrace(trace, {
+    device: 'desktop',
+    url: 'https://devtools/inspected-page',
+  }).then(res => {
+    fs.writeFileSync('./tracereport.html', res?.report[0], 'utf8');
+    console.log('done. written to ./tracereport.html');
+  });
 }
