@@ -67,7 +67,7 @@ function listenForStatus(listenCallback) {
  * @return {Promise<LH.RunnerResult|undefined>}
  */
 function analyzeTrace(trace, opts) {
-  const configJSON = createConfig(['performance'], opts.device);
+  const configJSON = createConfig(undefined, opts.device);
   configJSON.settings.output = ['html'];
   configJSON.settings.onlyAudits = [
     'first-contentful-paint',

@@ -56,7 +56,7 @@ class CharsetDefined extends Audit {
    */
   static async audit(artifacts, context) {
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
-    const mainResource = await MainResource.request({devtoolsLog, URL: artifacts.URL}, context);
+    const mainResource = await MainResource.request({trace, URL: artifacts.URL}, context);
     let isCharsetSet = false;
     // Check the http header 'content-type' to see if charset is defined there
     if (mainResource.responseHeaders) {

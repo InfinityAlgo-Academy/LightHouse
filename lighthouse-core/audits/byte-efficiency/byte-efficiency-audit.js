@@ -9,7 +9,7 @@ const Audit = require('../audit.js');
 const linearInterpolation = require('../../lib/statistics.js').linearInterpolation;
 const Interactive = require('../../computed/metrics/lantern-interactive.js');
 const i18n = require('../../lib/i18n/i18n.js');
-const NetworkRecords = require('../../computed/network-records.js');
+const TraceNetworkRecords = require('../../computed/trace-network-records.js');
 const LoadSimulator = require('../../computed/load-simulator.js');
 const PageDependencyGraph = require('../../computed/page-dependency-graph.js');
 
@@ -114,7 +114,7 @@ class UnusedBytes extends Audit {
       settings,
     };
 
-    return NetworkRecords.request(devtoolsLog, context)
+    return TraceNetworkRecords.request(trace, context)
       .then(networkRecords =>
         Promise.all([
           this.audit_(artifacts, networkRecords, context),

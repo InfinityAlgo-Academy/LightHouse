@@ -10,7 +10,7 @@ const Audit = require('./audit.js');
 const UnusedBytes = require('./byte-efficiency/byte-efficiency-audit.js');
 const URL = require('../lib/url-shim.js');
 const i18n = require('../lib/i18n/i18n.js');
-const NetworkRecords = require('../computed/network-records.js');
+const TraceNetworkRecords = require('../computed/trace-network-records.js');
 const MainResource = require('../computed/main-resource.js');
 const LoadSimulator = require('../computed/load-simulator.js');
 const TraceOfTab = require('../computed/trace-of-tab.js');
@@ -114,9 +114,9 @@ class UsesRelPreconnectAudit extends Audit {
     const warnings = [];
 
     const [networkRecords, mainResource, loadSimulator, traceOfTab, pageGraph] = await Promise.all([
-      NetworkRecords.request(devtoolsLog, context),
-      MainResource.request({devtoolsLog, URL: artifacts.URL}, context),
-      LoadSimulator.request({devtoolsLog, settings}, context),
+      TraceNetworkRecords.request(trace, context),
+      MainResource.request({trace, URL: artifacts.URL}, context),
+      LoadSimulator.request({trace, settings}, context),
       TraceOfTab.request(trace, context),
       PageDependencyGraph.request({trace, devtoolsLog}, context),
     ]);

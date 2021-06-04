@@ -138,7 +138,7 @@ class TimingBudget extends Audit {
   static async audit(artifacts, context) {
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
-    const mainResource = await MainResource.request({URL: artifacts.URL, devtoolsLog}, context);
+    const mainResource = await MainResource.request({URL: artifacts.URL, trace}, context);
     const data = {trace, devtoolsLog, settings: context.settings};
     const summary = (await TimingSummary.request(data, context)).metrics;
     const budget = Budget.getMatchingBudget(context.settings.budgets, mainResource.url);

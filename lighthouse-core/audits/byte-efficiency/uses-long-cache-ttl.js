@@ -11,7 +11,7 @@ const NetworkRequest = require('../../lib/network-request.js');
 const URL = require('../../lib/url-shim.js');
 const linearInterpolation = require('../../lib/statistics.js').linearInterpolation;
 const i18n = require('../../lib/i18n/i18n.js');
-const NetworkRecords = require('../../computed/network-records.js');
+const TraceNetworkRecords = require('../../computed/trace-network-records.js');
 
 const UIStrings = {
   /** Title of a diagnostic audit that provides detail on the cache policy applies to the page's static assets. Cache refers to browser disk cache, which keeps old versions of network resources around for future use. This is displayed in a list of audit titles that Lighthouse generates. */
@@ -195,7 +195,7 @@ class CacheHeaders extends Audit {
    */
   static audit(artifacts, context) {
     const devtoolsLogs = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
-    return NetworkRecords.request(devtoolsLogs, context).then(records => {
+    return TraceNetworkRecords.request(traces, context).then(records => {
       const results = [];
       let totalWastedBytes = 0;
 

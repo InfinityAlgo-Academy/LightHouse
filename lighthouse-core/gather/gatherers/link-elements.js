@@ -8,7 +8,7 @@
 const LinkHeader = require('http-link-header');
 const FRGatherer = require('../../fraggle-rock/gather/base-gatherer.js');
 const {URL} = require('../../lib/url-shim.js');
-const NetworkRecords = require('../../computed/network-records.js');
+const TraceNetworkRecords = require('../../computed/trace-network-records.js');
 const NetworkAnalyzer = require('../../lib/dependency-graph/simulator/network-analyzer.js');
 const pageFunctions = require('../../lib/page-functions.js');
 const DevtoolsLog = require('./devtools-log.js');
@@ -176,7 +176,7 @@ class LinkElements extends FRGatherer {
    * @return {Promise<LH.Artifacts['LinkElements']>}
    */
   async getArtifact(context) {
-    const records = await NetworkRecords.request(context.dependencies.DevtoolsLog, context);
+    const records = await TraceNetworkRecords.request(context.dependencies.DevtoolsLog, context);
     return this._getArtifact(context, records);
   }
 }

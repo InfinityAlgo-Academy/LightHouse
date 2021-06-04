@@ -7,7 +7,7 @@
 
 const makeComputedArtifact = require('./computed-artifact.js');
 const NetworkAnalyzer = require('../lib/dependency-graph/simulator/network-analyzer.js');
-const NetworkRecords = require('./network-records.js');
+const TraceNetworkRecords = require('./trace-network-records.js');
 
 /**
  * @fileoverview This artifact identifies the main resource on the page. Current solution assumes
@@ -15,13 +15,13 @@ const NetworkRecords = require('./network-records.js');
  */
 class MainResource {
   /**
-   * @param {{URL: LH.Artifacts['URL'], devtoolsLog: LH.DevtoolsLog}} data
+   * @param {{URL: LH.Artifacts['URL'], trace: LH.Trace}} data
    * @param {LH.Artifacts.ComputedContext} context
    * @return {Promise<LH.Artifacts.NetworkRequest>}
    */
   static async compute_(data, context) {
     const finalUrl = data.URL.finalUrl;
-    const requests = await NetworkRecords.request(data.devtoolsLog, context);
+    const requests = await TraceNetworkRecords.request(data.trace, context);
     const mainResource = NetworkAnalyzer.findMainDocument(requests, finalUrl);
     if (!mainResource) {
       throw new Error('Unable to identify the main resource');

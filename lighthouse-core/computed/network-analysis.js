@@ -7,7 +7,7 @@
 
 const makeComputedArtifact = require('./computed-artifact.js');
 const NetworkAnalyzer = require('../lib/dependency-graph/simulator/network-analyzer.js');
-const NetworkRecords = require('./network-records.js');
+const TraceNetworkRecords = require('./trace-network-records.js');
 
 class NetworkAnalysis {
   /**
@@ -49,12 +49,12 @@ class NetworkAnalysis {
   }
 
   /**
-   * @param {LH.DevtoolsLog} devtoolsLog
+   * @param {LH.Trace} trace
    * @param {LH.Artifacts.ComputedContext} context
    * @return {Promise<LH.Artifacts.NetworkAnalysis>}
    */
-  static async compute_(devtoolsLog, context) {
-    const records = await NetworkRecords.request(devtoolsLog, context);
+  static async compute_(trace, context) {
+    const records = await TraceNetworkRecords.request(trace, context);
     const throughput = NetworkAnalyzer.estimateThroughput(records);
     const rttAndServerResponseTime = NetworkAnalysis.computeRTTAndServerResponseTime(records);
     return {throughput, ...rttAndServerResponseTime};

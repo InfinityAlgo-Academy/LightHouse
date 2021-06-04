@@ -7,7 +7,7 @@
 
 const TracingProcessor = require('../../lib/tracehouse/trace-processor.js');
 const TraceOfTab = require('../trace-of-tab.js');
-const NetworkRecords = require('../network-records.js');
+const TraceNetworkRecords = require('../trace-network-records.js');
 
 /**
  * @fileOverview Encapsulates logic for choosing the correct metric computation method based on the
@@ -45,13 +45,13 @@ class ComputedMetric {
    * @return {Promise<LH.Artifacts.LanternMetric|LH.Artifacts.Metric>}
    */
   static async compute_(data, context) {
-    const {trace, devtoolsLog, settings} = data;
-    if (!trace || !devtoolsLog || !settings) {
+    const {trace, settings} = data;
+    if (!trace || !settings) {
       throw new Error('Did not provide necessary metric computation data');
     }
 
     const augmentedData = Object.assign({
-      networkRecords: await NetworkRecords.request(devtoolsLog, context),
+      networkRecords: await TraceNetworkRecords.request(trace, context),
       traceOfTab: await TraceOfTab.request(trace, context),
     }, data);
 

@@ -7,7 +7,7 @@
 
 const Audit = require('./audit.js');
 const URL = require('../lib/url-shim.js');
-const NetworkRecords = require('../computed/network-records.js');
+const TraceNetworkRecords = require('../computed/trace-network-records.js');
 
 class NetworkRequests extends Audit {
   /**
@@ -30,7 +30,7 @@ class NetworkRequests extends Audit {
    */
   static audit(artifacts, context) {
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
-    return NetworkRecords.request(devtoolsLog, context).then(records => {
+    return TraceNetworkRecords.request(trace, context).then(records => {
       const earliestStartTime = records.reduce(
         (min, record) => Math.min(min, record.startTime),
         Infinity

@@ -103,7 +103,7 @@ class LanternMetricArtifact {
     const graph = await PageDependencyGraph.request({trace, devtoolsLog}, context);
     const traceOfTab = await TraceOfTab.request(trace, context);
     const simulator = data.simulator ||
-        await LoadSimulator.request({devtoolsLog, settings}, context);
+        await LoadSimulator.request({trace, settings}, context);
 
     const optimisticGraph = this.getOptimisticGraph(graph, traceOfTab);
     const pessimisticGraph = this.getPessimisticGraph(graph, traceOfTab);

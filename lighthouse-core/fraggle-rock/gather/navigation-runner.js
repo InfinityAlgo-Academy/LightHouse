@@ -24,7 +24,7 @@ const i18n = require('../../lib/i18n/i18n.js');
 const LighthouseError = require('../../lib/lh-error.js');
 const {getPageLoadError} = require('../../lib/navigation-error.js');
 const DevtoolsLog = require('../../gather/gatherers/devtools-log.js');
-const NetworkRecords = require('../../computed/network-records.js');
+const TraceNetworkRecords = require('../../computed/trace-network-records.js');
 
 /**
  * @typedef NavigationContext
@@ -117,7 +117,7 @@ async function _collectNetworkRecords(navigationContext, phaseState) {
   await collectPhaseArtifacts({...phaseState, phase: 'getArtifact', artifactDefinitions});
 
   const devtoolsLog = await phaseState.artifactState.getArtifact[devtoolsLogArtifactId];
-  const records = await NetworkRecords.request(devtoolsLog, navigationContext);
+  const records = await TraceNetworkRecords.request(trace, navigationContext);
   return records;
 }
 

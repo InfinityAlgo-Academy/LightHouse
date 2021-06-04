@@ -14,7 +14,7 @@ const FRGatherer = require('../../fraggle-rock/gather/base-gatherer.js');
 const pageFunctions = require('../../lib/page-functions.js');
 const DevtoolsLog = require('./devtools-log.js');
 const FontSize = require('./seo/font-size.js');
-const NetworkRecords = require('../../computed/network-records.js');
+const TraceNetworkRecords = require('../../computed/trace-network-records.js');
 
 /* global window, getElementsInDocument, Image, getNodeDetails, ShadowRoot */
 
@@ -398,7 +398,7 @@ class ImageElements extends FRGatherer {
    */
   async getArtifact(context) {
     const devtoolsLog = context.dependencies.DevtoolsLog;
-    const networkRecords = await NetworkRecords.request(devtoolsLog, context);
+    const networkRecords = await TraceNetworkRecords.request(trace, context);
     return this._getArtifact(context, networkRecords);
   }
 

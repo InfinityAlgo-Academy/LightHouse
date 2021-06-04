@@ -12,7 +12,6 @@ const NetworkAnalyzer = require('../lib/dependency-graph/simulator/network-analy
 const TracingProcessor = require('../lib/tracehouse/trace-processor.js');
 const NetworkRequest = require('../lib/network-request.js');
 const TraceOfTab = require('./trace-of-tab.js');
-const NetworkRecords = require('./network-records.js');
 const TraceNetworkRecords = require('./trace-network-records.js');
 
 /** @typedef {import('../lib/dependency-graph/base-node.js').Node} Node */

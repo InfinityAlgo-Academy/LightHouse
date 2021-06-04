@@ -8,7 +8,7 @@
 const UsesHTTP2Audit = require('../../../audits/dobetterweb/uses-http2.js');
 const trace = require('../../fixtures/traces/progressive-app-m60.json');
 const devtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
-const NetworkRecords = require('../../../computed/network-records.js');
+const TraceNetworkRecords = require('../../../computed/trace-network-records.js');
 const networkRecordsToDevtoolsLog = require('../../network-records-to-devtools-log.js');
 
 /* eslint-env jest */

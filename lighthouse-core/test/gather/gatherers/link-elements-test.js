@@ -8,7 +8,7 @@
 /* eslint-env jest */
 
 const LinkElements = require('../../../gather/gatherers/link-elements.js');
-const NetworkRecords = require('../../../computed/network-records.js');
+const TraceNetworkRecords = require('../../../computed/trace-network-records.js');
 
 jest.mock('../../../computed/network-records.js');
 
@@ -108,7 +108,7 @@ describe('FR compat', () => {
     devtoolsLog = ['3', '4'];
     gatherer = new LinkElements();
     gatherer._getArtifact = jest.fn();
-    NetworkRecords.request = jest.fn().mockReturnValue(Promise.resolve(networkRecords));
+    TraceNetworkRecords.request = jest.fn().mockReturnValue(Promise.resolve(networkRecords));
   });
 
   it('uses loadData in legacy mode', async () => {
