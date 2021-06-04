@@ -13,6 +13,7 @@ const TracingProcessor = require('../lib/tracehouse/trace-processor.js');
 const NetworkRequest = require('../lib/network-request.js');
 const TraceOfTab = require('./trace-of-tab.js');
 const NetworkRecords = require('./network-records.js');
+const TraceNetworkRecords = require('./trace-network-records.js');
 
 /** @typedef {import('../lib/dependency-graph/base-node.js').Node} Node */
 
@@ -457,10 +458,9 @@ class PageDependencyGraph {
    */
   static async compute_(data, context) {
     const trace = data.trace;
-    const devtoolsLog = data.devtoolsLog;
     const [traceOfTab, networkRecords] = await Promise.all([
       TraceOfTab.request(trace, context),
-      NetworkRecords.request(devtoolsLog, context),
+      TraceNetworkRecords.request(trace, context),
     ]);
 
     return PageDependencyGraph.createGraph(traceOfTab, networkRecords);
