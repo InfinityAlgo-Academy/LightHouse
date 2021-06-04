@@ -316,6 +316,8 @@ class NetworkAnalyzer {
       useHeadersEndEstimates = true,
     } = options || {};
 
+    debugger;
+
     let estimatesByOrigin = NetworkAnalyzer._estimateRTTByOriginViaTCPTiming(records);
     if (!estimatesByOrigin.size || forceCoarseEstimates) {
       estimatesByOrigin = new Map();

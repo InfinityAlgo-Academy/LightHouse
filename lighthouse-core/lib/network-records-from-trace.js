@@ -83,7 +83,7 @@ class NetworkRecordsMaker {
         initiator: {type: 'other'}, // No preload signals in trace…
         requestId,
         timestamp: evtBag.receiveResponse.args.data.timing.requestTime,
-        // type:    // not there.. only mimetype
+        type: evtBag.receiveResponse.args.data.mimeType === 'text/html' ? 'Document' : undefined, // This is imperfect.
       };
       request.onRequestWillBeSent(requestWillBeSentEventData);
 

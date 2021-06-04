@@ -71,12 +71,11 @@ function analyzeTrace(trace, opts) {
   configJSON.settings.output = ['html'];
   configJSON.settings.onlyAudits = [
     'first-contentful-paint',
-'speed-index',
-'largest-contentful-paint',
-'interactive',
-'total-blocking-time',
-'cumulative-layout-shift',
-
+    'speed-index',
+    'largest-contentful-paint',
+    'interactive',
+    'total-blocking-time',
+    'cumulative-layout-shift',
   ];
   const config = lighthouse.generateConfig(configJSON, {});
   const computedCache = new Map();
@@ -88,7 +87,6 @@ function analyzeTrace(trace, opts) {
     const artifacts = {
       traces: {defaultPass: trace},
       devtoolsLogs: {defaultPass: []},
-
 
       URL: {requestedUrl: url, finalUrl: url},
       HostFormFactor: opts.device,
@@ -110,8 +108,12 @@ function analyzeTrace(trace, opts) {
 
 async function testAnalyzeTrace() {
   const fs = require('fs');
-  const trace = JSON.parse(fs.readFileSync(
-    __dirname + '/../lighthouse-core/test/fixtures/traces/frame-metrics-m90.json', 'utf8'));
+  const trace = JSON.parse(
+    fs.readFileSync(
+      __dirname + '/../lighthouse-core/test/fixtures/traces/frame-metrics-m90.json',
+      'utf8'
+    )
+  );
   const res = await analyzeTrace(trace, {device: 'mobile', url: 'http://example.com'});
 
   fs.writeFileSync('./tracereport.html', res?.report[0], 'utf8');
@@ -134,7 +136,7 @@ if (typeof module !== 'undefined' && module.exports) {
 
 // if invoked as CLI
 if (require.main === module) {
-  console.log('\n\n\n\n\n\n\n\n\n')
+  console.log('\n\n\n\n\n\n\n\n\n');
   testAnalyzeTrace();
 }
 
