@@ -8384,10 +8384,10 @@ webidl-conversions@^6.1.0:
   resolved "https://registry.yarnpkg.com/webidl-conversions/-/webidl-conversions-6.1.0.tgz#9111b4d7ea80acd40f5270d666621afa78b69514"
   integrity sha512-qBIvFLGiBpLjfwmYAaHPXsn+ho5xZnGvyGvsarywGNc8VyQJUMHJ8OBKGGrPER0okBeMDaan4mNBlgBROxuI8w==
 
-webtreemap-cdt@^3.2.0:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/webtreemap-cdt/-/webtreemap-cdt-3.2.0.tgz#1cd4854f4fc45e16466ac18b227e9c335bc8575e"
-  integrity sha512-K9K53oWi+LCFQBrxke4+mOMcVrMSuGCJ8/+ZpzuqDl9kF+IPUEn7eF8CedzumlPcKe3bz/trfGBw4n8bnaW0cw==
+webtreemap-cdt@^3.2.1:
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/webtreemap-cdt/-/webtreemap-cdt-3.2.1.tgz#5daef0bae057b900c1f912ddbcae63987c4c42f0"
+  integrity sha512-wW+QKwSBmC8HBi8GE0lSpq+I1tWljC3gZPXFK0ErC1EXVs6p/0ewFsNiOGO+V+pwCbkDzz8iUE2Q00pPp2WiHw==
   dependencies:
     commander "^2.11.0"
 
