@@ -8,7 +8,7 @@
 /**
  * @typedef CollectPhaseArtifactOptions
  * @property {import('./driver.js')} driver
- * @property {Array<LH.Config.ArtifactDefn>} artifactDefinitions
+ * @property {Array<LH.Config.AnyArtifactDefn>} artifactDefinitions
  * @property {ArtifactState} artifactState
  * @property {LH.Gatherer.FRGatherPhase} phase
  * @property {LH.Gatherer.GatherMode} gatherMode
@@ -99,7 +99,7 @@ async function collectPhaseArtifacts(options) {
 }
 
 /**
- * @param {LH.Config.ArtifactDefn} artifact
+ * @param {LH.Config.AnyArtifactDefn} artifact
  * @param {Record<string, LH.Gatherer.PhaseResult>} artifactsById
  * @return {Promise<Dependencies>}
  */

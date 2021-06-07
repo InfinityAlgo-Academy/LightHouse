@@ -38,7 +38,7 @@ function filterArtifactsByGatherMode(artifacts, mode) {
  * Filters an array of audits down to the set that can be computed using only the specified artifacts.
  *
  * @param {LH.Config.FRConfig['audits']} audits
- * @param {Array<LH.Config.ArtifactDefn>} availableArtifacts
+ * @param {Array<LH.Config.AnyArtifactDefn>} availableArtifacts
  * @return {LH.Config.FRConfig['audits']}
  */
 function filterAuditsByAvailableArtifacts(audits, availableArtifacts) {
