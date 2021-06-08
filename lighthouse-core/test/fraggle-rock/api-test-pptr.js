@@ -160,7 +160,7 @@ describe('Fraggle Rock API', () => {
       const {auditResults, failedAudits, erroredAudits} = getAuditsBreakdown(lhr);
       // TODO(FR-COMPAT): This assertion can be removed when full compatibility is reached.
       expect(auditResults.length).toMatchInlineSnapshot(`151`);
-      expect(erroredAudits).toHaveLength(1); // FIXME: MainDocumentContent broken from merge
+      expect(erroredAudits).toHaveLength(0);
 
       const failedAuditIds = failedAudits.map(audit => audit.id);
       expect(failedAuditIds).toContain('label');

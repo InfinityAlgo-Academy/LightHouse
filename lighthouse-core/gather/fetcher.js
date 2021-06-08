@@ -146,7 +146,6 @@ class Fetcher {
    * @return {Promise<{stream: LH.Crdp.IO.StreamHandle|null, status: number|null}>}
    */
   async _loadNetworkResource(url) {
-    await this.session.sendCommand('Network.enable');
     const frameTreeResponse = await this.session.sendCommand('Page.getFrameTree');
     const networkResponse = await this.session.sendCommand('Network.loadNetworkResource', {
       frameId: frameTreeResponse.frameTree.frame.id,
@@ -156,7 +155,6 @@ class Fetcher {
         includeCredentials: true,
       },
     });
-    await this.session.sendCommand('Network.disable');
 
     return {
       stream: networkResponse.resource.success ? (networkResponse.resource.stream || null) : null,
