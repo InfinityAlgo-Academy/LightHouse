@@ -21,6 +21,10 @@ const parentLocales = require('./cldrdata/parentLocales.json');
  *
  * See scripts/validate-locale-lookups.js as well.
  *
+ * @url https://github.com/tc39/ecma402/issues/87
+ * @url https://github.com/rxaviers/ecma402-fix-lookup-matcher
+ * @url https://docs.google.com/document/d/1wRfFjvg80lU6bx6kaq25BBiNuQaA7IIiu6h5qG63b0s/edit
+ *
  * @param {!Array<string>} availableLocales The canonicalized list of available locales
  * @param {string} locale The locale identifier to check
  * @returns {string|undefined} The best fit available locale, using CLDR's locale fallback mechanism.
