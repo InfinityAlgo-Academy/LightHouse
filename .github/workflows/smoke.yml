@@ -25,6 +25,15 @@ jobs:
     - name: Run smoke tests
       # Windows bots are slow, so only run enough tests to verify matching behavior.
       run: yarn smoke --debug -j=1 --retries=2 dbw
+      env:
+        LANTERN_DEBUG: 1
+
+
+    - name: artifact stuff results
+      uses: actions/upload-artifact@v2
+      with:
+        name: artifactsandstuff
+        path: funtime
 
     # Fail if any changes were written to source files.
     - run: git diff --exit-code

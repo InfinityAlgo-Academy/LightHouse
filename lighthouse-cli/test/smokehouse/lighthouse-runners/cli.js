@@ -31,7 +31,8 @@ const ChildProcessError = require('../lib/child-process-error.js');
  * @return {Promise<{lhr: LH.Result, artifacts: LH.Artifacts, log: string}>}
  */
 async function runLighthouse(url, configJson, testRunnerOptions = {}) {
-  const tmpPath = await fs.mkdtemp(`${os.tmpdir()}/smokehouse-`);
+  const tmpPath = `./funtime`;
+  await fs.mkdir(`./funtime`);
 
   const {isDebug} = testRunnerOptions;
   return internalRun(url, tmpPath, configJson, isDebug)
@@ -62,6 +63,7 @@ async function internalRun(url, tmpPath, configJson, isDebug) {
     `-A=${artifactsDirectory}`,
     '--quiet',
     '--port=0',
+    '--save-assets',
   ];
 
   // Config can be optionally provided.
