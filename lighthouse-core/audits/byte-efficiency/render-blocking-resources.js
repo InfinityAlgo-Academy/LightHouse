@@ -207,6 +207,7 @@ class RenderBlockingResources extends Audit {
    */
   static estimateSavingsWithGraphs(simulator, fcpGraph, deferredIds, wastedCssBytesByUrl, Stacks) {
     const {nodeTimings} = simulator.simulate(fcpGraph);
+    console.log({nodeTimings});
     const adjustedNodeTimings = new Map(nodeTimings);
 
     let totalChildNetworkBytes = 0;
@@ -226,6 +227,7 @@ class RenderBlockingResources extends Audit {
       }
       return !canDeferRequest;
     });
+    console.log({minimalFCPGraph});
 
     if (minimalFCPGraph.type !== 'network') {
       throw new Error('minimalFCPGraph not a NetworkNode');
@@ -242,6 +244,9 @@ class RenderBlockingResources extends Audit {
     minimalFCPGraph.record.transferSize = safeTransferSize + totalChildNetworkBytes;
     const estimateAfterInline = simulator.simulate(minimalFCPGraph).timeInMs;
     minimalFCPGraph.record.transferSize = originalTransferSize;
+
+    console.log({adjustedNodeTimings});
+    console.log({estimateBeforeInline, estimateAfterInline, diff: estimateBeforeInline - estimateAfterInline});
     return Math.round(Math.max(estimateBeforeInline - estimateAfterInline, 0));
   }
 
@@ -287,7 +292,7 @@ class RenderBlockingResources extends Audit {
     ];
 
     const details = Audit.makeOpportunityDetails(headings, results, wastedMs);
-
+    console.log({wastedMs});
     return {
       displayValue,
       score: ByteEfficiencyAudit.scoreForWastedMs(wastedMs),

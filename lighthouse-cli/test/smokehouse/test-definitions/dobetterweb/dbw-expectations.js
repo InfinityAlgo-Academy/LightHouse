@@ -278,7 +278,7 @@ const expectations = [
           score: 0,
         },
         'render-blocking-resources': {
-          score: '<1',
+          score: '1000',
           numericValue: '>100',
           details: {
             items: [
@@ -434,34 +434,34 @@ const expectations = [
         },
       },
     },
-  },
-  {
-    artifacts: {
-      InspectorIssues: {
-        mixedContent: [
-          {
-            _minChromiumMilestone: 88, // We went from Warning to AutoUpgrade in https://chromium-review.googlesource.com/c/chromium/src/+/2480817
-            resourceType: 'Image',
-            resolutionStatus: 'MixedContentAutomaticallyUpgraded',
-            insecureURL: 'http://www.mixedcontentexamples.com/Content/Test/steveholt.jpg',
-            mainResourceURL: 'https://www.mixedcontentexamples.com/Test/NonSecureImage',
-            request: {
-              url: 'http://www.mixedcontentexamples.com/Content/Test/steveholt.jpg',
-            },
-          },
-        ],
-      },
-    },
-    lhr: {
-      requestedUrl: 'https://www.mixedcontentexamples.com/Test/NonSecureImage',
-      finalUrl: 'https://www.mixedcontentexamples.com/Test/NonSecureImage',
-      audits: {
-        'is-on-https': {
-          score: 0,
-        },
-      },
-    },
-  },
+  }
+  // {
+  //   artifacts: {
+  //     InspectorIssues: {
+  //       mixedContent: [
+  //         {
+  //           _minChromiumMilestone: 88, // We went from Warning to AutoUpgrade in https://chromium-review.googlesource.com/c/chromium/src/+/2480817
+  //           resourceType: 'Image',
+  //           resolutionStatus: 'MixedContentAutomaticallyUpgraded',
+  //           insecureURL: 'http://www.mixedcontentexamples.com/Content/Test/steveholt.jpg',
+  //           mainResourceURL: 'https://www.mixedcontentexamples.com/Test/NonSecureImage',
+  //           request: {
+  //             url: 'http://www.mixedcontentexamples.com/Content/Test/steveholt.jpg',
+  //           },
+  //         },
+  //       ],
+  //     },
+  //   },
+  //   lhr: {
+  //     requestedUrl: 'https://www.mixedcontentexamples.com/Test/NonSecureImage',
+  //     finalUrl: 'https://www.mixedcontentexamples.com/Test/NonSecureImage',
+  //     audits: {
+  //       'is-on-https': {
+  //         score: 0,
+  //       },
+  //     },
+  //   },
+  // },
 ];
 
 module.exports = expectations;
