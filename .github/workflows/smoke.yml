@@ -24,7 +24,7 @@ jobs:
 
     - name: Run smoke tests
       # Windows bots are slow, so only run enough tests to verify matching behavior.
-      run: yarn smoke --debug -j=1 --retries=2 dbw oopif offline lantern metrics
+      run: yarn smoke --debug -j=1 --retries=2 dbw
 
     # Fail if any changes were written to source files.
     - run: git diff --exit-code

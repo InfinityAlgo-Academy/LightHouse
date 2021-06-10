@@ -208,6 +208,7 @@ class RenderBlockingResources extends Audit {
   static estimateSavingsWithGraphs(simulator, fcpGraph, deferredIds, wastedCssBytesByUrl, Stacks) {
     const {nodeTimings} = simulator.simulate(fcpGraph);
     console.log({nodeTimings});
+    console.log({fcpGraph});
     const adjustedNodeTimings = new Map(nodeTimings);
 
     let totalChildNetworkBytes = 0;
