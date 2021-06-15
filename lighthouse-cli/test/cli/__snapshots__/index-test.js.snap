@@ -1429,6 +1429,9 @@ Object {
           "path": "main-document-content",
         },
         Object {
+          "path": "gather-context",
+        },
+        Object {
           "path": "global-listeners",
         },
         Object {
@@ -1676,7 +1679,11 @@ Object {
       "blankPage": "about:blank",
       "blockedUrlPatterns": Array [],
       "cpuQuietThresholdMs": 1000,
-      "gatherers": Array [],
+      "gatherers": Array [
+        Object {
+          "path": "gather-context",
+        },
+      ],
       "loadFailureMode": "fatal",
       "networkQuietThresholdMs": 1000,
       "passName": "defaultPass",

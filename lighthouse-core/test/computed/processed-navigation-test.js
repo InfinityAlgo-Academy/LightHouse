@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2019 The Lighthouse Authors. All Rights Reserved.
+ * @license Copyright 2021 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -7,41 +7,19 @@
 
 /* eslint-env jest */
 
-const TraceOfTab = require('../../computed/trace-of-tab.js');
+const ProcessedTrace = require('../../computed/processed-trace.js');
+const ProcessedNavigation = require('../../computed/processed-navigation.js');
 const pwaTrace = require('../fixtures/traces/progressive-app-m60.json');
+const noFCPtrace = require('../fixtures/traces/airhorner_no_fcp.json');
+const noNavStartTrace = require('../fixtures/traces/no_navstart_event.json');
 
-describe('TraceOfTab', () => {
+describe('ProcessedTrace', () => {
   it('computes the artifact', async () => {
     const context = {computedCache: new Map()};
-    const traceOfTab = await TraceOfTab.request(pwaTrace, context);
+    const processedTrace = await ProcessedTrace.request(pwaTrace, context);
+    const processedNavigation = await ProcessedNavigation.request(processedTrace, context);
 
-    expect(traceOfTab.processEvents.length).toEqual(12865);
-    expect(traceOfTab.mainThreadEvents.length).toEqual(7629);
-
-    delete traceOfTab.processEvents;
-    delete traceOfTab.mainThreadEvents;
-    delete traceOfTab.frameTreeEvents;
-    delete traceOfTab.frameEvents;
-
-    expect(traceOfTab).toEqual({
-      mainFrameIds: {
-        frameId: '0x25a638821e30',
-        pid: 44277,
-        tid: 775,
-      },
-      timeOriginEvt: {
-        args: {
-          frame: '0x25a638821e30',
-        },
-        cat: 'blink.user_timing',
-        name: 'navigationStart',
-        ph: 'R',
-        pid: 44277,
-        tid: 775,
-        ts: 225414172015,
-        tts: 455539,
-      },
-      frames: [],
+    expect(processedNavigation).toEqual({
       domContentLoadedEvt: {
         args: {
           frame: '0x25a638821e30',
@@ -140,5 +118,25 @@ describe('TraceOfTab', () => {
         traceEnd: 12539.872,
       },
     });
+  });
+
+  it('fails with NO_NAVSTART', async () => {
+    const context = {computedCache: new Map()};
+    const compute = async () => {
+      const processedTrace = await ProcessedTrace.request(noNavStartTrace, context);
+      await ProcessedNavigation.request(processedTrace, context);
+    };
+    await expect(compute()).rejects.toMatchObject({code: 'NO_NAVSTART'});
+  });
+
+  it('fails with NO_FCP', async () => {
+    const context = {computedCache: new Map()};
+
+    const compute = async () => {
+      const processedTrace = await ProcessedTrace.request(noFCPtrace, context);
+      await ProcessedNavigation.request(processedTrace, context);
+    };
+
+    await expect(compute()).rejects.toMatchObject({code: 'NO_FCP'});
   });
 });

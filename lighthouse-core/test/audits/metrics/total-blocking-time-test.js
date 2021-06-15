@@ -17,6 +17,7 @@ const lcpDevtoolsLog = require('../../fixtures/traces/lcp-m78.devtools.log.json'
 
 function generateArtifacts({trace, devtoolsLog}) {
   return {
+    GatherContext: {gatherMode: 'navigation'},
     traces: {[TBTAudit.DEFAULT_PASS]: trace},
     devtoolsLogs: {[TBTAudit.DEFAULT_PASS]: devtoolsLog},
   };

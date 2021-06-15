@@ -32,8 +32,13 @@ describe('Main Thread Tasks', () => {
   });
 
   function run(trace) {
-    const {mainThreadEvents, frames, timestamps} = TraceProcessor.computeTraceOfTab(trace);
+    const {mainThreadEvents, frames, timestamps} = TraceProcessor.processTrace(trace);
     return MainThreadTasks.getMainThreadTasks(mainThreadEvents, frames, timestamps.traceEnd);
+  }
+
+  /** @param {string} s */
+  function trimTrailingWhitespace(s) {
+    return s.split('\n').map(line => line.trimEnd()).join('\n');
   }
 
   it('should get all main thread tasks from a trace', () => {
@@ -854,14 +859,14 @@ describe('Main Thread Tasks', () => {
 
       const tasks = run({traceEvents});
       const taskTreeAsString = MainThreadTasks.printTaskTreeToDebugString(tasks, {printWidth: 50});
-      expect(taskTreeAsString).toMatchInlineSnapshot(`
+      expect(trimTrailingWhitespace(taskTreeAsString)).toMatchInlineSnapshot(`
         "Trace Duration: 100ms
         Range: [0, 100]
         █ = 2.00ms
 
         █████████████████████████A█████████████████████████
-          ████████████B█████████████  ███████D████████    
-             ███████C████████                             
+          ████████████B█████████████  ███████D████████
+             ███████C████████
 
         A = TaskA
         B = TaskB

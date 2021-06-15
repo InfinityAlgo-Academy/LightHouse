@@ -18,7 +18,7 @@ async function run() {
   const tracePath = path.resolve(process.cwd(), process.argv[2]);
   const traces = {defaultPass: require(tracePath)};
   const devtoolsLogs = {defaultPass: require(path.resolve(process.cwd(), process.argv[3]))};
-  const artifacts = {traces, devtoolsLogs};
+  const artifacts = {traces, devtoolsLogs, GatherContext: {gatherMode: 'navigation'}};
   const context = {computedCache: new Map(), settings: {locale: 'en-us'}};
 
   // @ts-expect-error - We don't need the full artifacts or context.

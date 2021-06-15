@@ -18,6 +18,7 @@ describe('Performance: Timing budget audit', () => {
   let context;
   beforeEach(() => {
     artifacts = {
+      GatherContext: {gatherMode: 'navigation'},
       devtoolsLogs: {
         defaultPass: devtoolsLog,
       },

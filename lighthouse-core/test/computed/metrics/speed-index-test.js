@@ -16,10 +16,13 @@ const devtoolsLog1msLayout = require('../../fixtures/traces/speedindex-1ms-layou
 /* eslint-env jest */
 
 describe('Metrics: Speed Index', () => {
+  const gatherContext = {gatherMode: 'navigation'};
+
   it('should compute a simulated value', async () => {
     const settings = {throttlingMethod: 'simulate'};
     const context = {settings, computedCache: new Map()};
-    const result = await SpeedIndex.request({trace, devtoolsLog, settings}, context);
+    const result = await SpeedIndex.request({trace, devtoolsLog, gatherContext, settings},
+      context);
 
     expect({
       timing: Math.round(result.timing),
@@ -47,6 +50,7 @@ describe('Metrics: Speed Index', () => {
     const context = {settings, computedCache: new Map()};
     const result = await SpeedIndex.request(
       {
+        gatherContext,
         trace: trace1msLayout,
         devtoolsLog: devtoolsLog1msLayout,
         settings,
@@ -70,7 +74,8 @@ describe('Metrics: Speed Index', () => {
   it('should compute an observed value (desktop)', async () => {
     const settings = {throttlingMethod: 'provided', formFactor: 'desktop'};
     const context = {settings, computedCache: new Map()};
-    const result = await SpeedIndex.request({trace, devtoolsLog, settings}, context);
+    const result = await SpeedIndex.request({trace, devtoolsLog, gatherContext, settings},
+      context);
 
     assert.equal(result.timing, 605);
     assert.equal(result.timestamp, 225414777015);
@@ -79,7 +84,8 @@ describe('Metrics: Speed Index', () => {
   it('should compute an observed value (mobile)', async () => {
     const settings = {throttlingMethod: 'provided', formFactor: 'mobile'};
     const context = {settings, computedCache: new Map()};
-    const result = await SpeedIndex.request({trace, devtoolsLog, settings}, context);
+    const result = await SpeedIndex.request({trace, devtoolsLog, gatherContext, settings},
+      context);
 
     assert.equal(result.timing, 605);
     assert.equal(result.timestamp, 225414777015);

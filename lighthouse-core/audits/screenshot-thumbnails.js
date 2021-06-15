@@ -9,7 +9,6 @@ const Audit = require('./audit.js');
 const LHError = require('../lib/lh-error.js');
 const jpeg = require('jpeg-js');
 const Speedline = require('../computed/speedline.js');
-const Interactive = require('../computed/metrics/interactive.js');
 
 const NUMBER_OF_THUMBNAILS = 10;
 const THUMBNAIL_WIDTH = 120;
@@ -79,16 +78,7 @@ class ScreenshotThumbnails extends Audit {
     const speedline = await Speedline.request(trace, context);
 
     // Make the minimum time range 3s so sites that load super quickly don't get a single screenshot
-    let minimumTimelineDuration = context.options.minimumTimelineDuration || 3000;
-    // Ensure thumbnails cover the full range of the trace (TTI can be later than visually complete)
-    if (context.settings.throttlingMethod !== 'simulate') {
-      const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
-      const metricComputationData = {trace, devtoolsLog, settings: context.settings};
-      const tti = Interactive.request(metricComputationData, context);
-      try {
-        minimumTimelineDuration = Math.max((await tti).timing, minimumTimelineDuration);
-      } catch (_) {}
-    }
+    const minimumTimelineDuration = context.options.minimumTimelineDuration || 3000;
 
     const thumbnails = [];
     const analyzedFrames = speedline.frames.filter(frame => !frame.isProgressInterpolated());

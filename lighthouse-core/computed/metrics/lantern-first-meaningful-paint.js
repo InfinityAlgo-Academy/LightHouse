@@ -26,11 +26,11 @@ class LanternFirstMeaningfulPaint extends LanternMetric {
 
   /**
    * @param {Node} dependencyGraph
-   * @param {LH.Artifacts.TraceOfTab} traceOfTab
+   * @param {LH.Artifacts.ProcessedNavigation} processedNavigation
    * @return {Node}
    */
-  static getOptimisticGraph(dependencyGraph, traceOfTab) {
-    const fmp = traceOfTab.timestamps.firstMeaningfulPaint;
+  static getOptimisticGraph(dependencyGraph, processedNavigation) {
+    const fmp = processedNavigation.timestamps.firstMeaningfulPaint;
     if (!fmp) {
       throw new LHError(LHError.errors.NO_FMP);
     }
@@ -46,11 +46,11 @@ class LanternFirstMeaningfulPaint extends LanternMetric {
 
   /**
    * @param {Node} dependencyGraph
-   * @param {LH.Artifacts.TraceOfTab} traceOfTab
+   * @param {LH.Artifacts.ProcessedNavigation} processedNavigation
    * @return {Node}
    */
-  static getPessimisticGraph(dependencyGraph, traceOfTab) {
-    const fmp = traceOfTab.timestamps.firstMeaningfulPaint;
+  static getPessimisticGraph(dependencyGraph, processedNavigation) {
+    const fmp = processedNavigation.timestamps.firstMeaningfulPaint;
     if (!fmp) {
       throw new LHError(LHError.errors.NO_FMP);
     }

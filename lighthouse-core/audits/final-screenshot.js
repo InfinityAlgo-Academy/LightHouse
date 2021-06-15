@@ -7,7 +7,7 @@
 
 const Audit = require('./audit.js');
 const LHError = require('../lib/lh-error.js');
-const TraceOfTab = require('../computed/trace-of-tab.js');
+const ProcessedTrace = require('../computed/processed-trace.js');
 const Screenshots = require('../computed/screenshots.js');
 
 class FinalScreenshot extends Audit {
@@ -31,9 +31,9 @@ class FinalScreenshot extends Audit {
    */
   static async audit(artifacts, context) {
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
-    const traceOfTab = await TraceOfTab.request(trace, context);
+    const processedTrace = await ProcessedTrace.request(trace, context);
     const screenshots = await Screenshots.request(trace, context);
-    const {timeOrigin} = traceOfTab.timestamps;
+    const {timeOrigin} = processedTrace.timestamps;
     const finalScreenshot = screenshots[screenshots.length - 1];
 
     if (!finalScreenshot) {

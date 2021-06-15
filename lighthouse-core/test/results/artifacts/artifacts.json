@@ -145,6 +145,7 @@
     "onlyCategories": null,
     "skipAudits": null
   },
+  "GatherContext": {"gatherMode": "navigation"},
   "Timing": [],
   "LinkElements": [
     {
