@@ -44,12 +44,29 @@ function filterArtifactsByGatherMode(artifacts, mode) {
 function filterAuditsByAvailableArtifacts(audits, availableArtifacts) {
   if (!audits) return null;
 
-  const availableAritfactIds = new Set(
+  const availableArtifactIds = new Set(
     availableArtifacts.map(artifact => artifact.id).concat(baseArtifactKeys)
   );
-  return audits.filter(audit =>
-    audit.implementation.meta.requiredArtifacts.every(id => availableAritfactIds.has(id))
-  );
+  return audits.filter(audit => {
+    const meta = audit.implementation.meta;
+    return meta.requiredArtifacts.every(id => availableArtifactIds.has(id));
+  });
+}
+
+/**
+ * Optional `supportedModes` property can explicitly exclude an audit even if all required artifacts are available.
+ *
+ * @param {LH.Config.FRConfig['audits']} audits
+ * @param {LH.Gatherer.GatherMode} mode
+ * @return {LH.Config.FRConfig['audits']}
+ */
+function filterAuditsByGatherMode(audits, mode) {
+  if (!audits) return null;
+
+  return audits.filter(audit => {
+    const meta = audit.implementation.meta;
+    return !meta.supportedModes || meta.supportedModes.includes(mode);
+  });
 }
 
 /**
@@ -100,7 +117,8 @@ function filterCategoriesByAvailableAudits(categories, availableAudits) {
  */
 function filterConfigByGatherMode(config, mode) {
   const artifacts = filterArtifactsByGatherMode(config.artifacts, mode);
-  const audits = filterAuditsByAvailableArtifacts(config.audits, artifacts || []);
+  const availableAudits = filterAuditsByAvailableArtifacts(config.audits, artifacts || []);
+  const audits = filterAuditsByGatherMode(availableAudits, mode);
   const categories = filterCategoriesByAvailableAudits(config.categories, audits || []);
 
   return {
@@ -115,5 +133,6 @@ module.exports = {
   filterConfigByGatherMode,
   filterArtifactsByGatherMode,
   filterAuditsByAvailableArtifacts,
+  filterAuditsByGatherMode,
   filterCategoriesByAvailableAudits,
 };
