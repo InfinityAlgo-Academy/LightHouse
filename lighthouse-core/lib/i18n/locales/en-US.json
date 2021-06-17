@@ -588,7 +588,7 @@
     "message": "Severity"
   },
   "lighthouse-core/audits/csp-xss.js | description": {
-    "message": "A strong Content Security Policy (CSP) significantly reduces the risk of cross-site scripting (XSS) attacks. [Learn more](https://web.dev/strict-csp/)"
+    "message": "A strong Content Security Policy (CSP) significantly reduces the risk of cross-site scripting (XSS) attacks. [Learn more](https://web.dev/csp-xss/)"
   },
   "lighthouse-core/audits/csp-xss.js | itemSeveritySyntax": {
     "message": "Syntax"

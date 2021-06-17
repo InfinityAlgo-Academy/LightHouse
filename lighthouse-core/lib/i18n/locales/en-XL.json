@@ -588,7 +588,7 @@
     "message": "Ŝév̂ér̂ít̂ý"
   },
   "lighthouse-core/audits/csp-xss.js | description": {
-    "message": "Â śt̂ŕôńĝ Ćôńt̂én̂t́ Ŝéĉúr̂ít̂ý P̂ól̂íĉý (ĈŚP̂) śîǵn̂íf̂íĉán̂t́l̂ý r̂éd̂úĉéŝ t́ĥé r̂íŝḱ ôf́ ĉŕôśŝ-śît́ê śĉŕîṕt̂ín̂ǵ (X̂ŚŜ) át̂t́âćk̂ś. [L̂éâŕn̂ ḿôŕê](https://web.dev/strict-csp/)"
+    "message": "Â śt̂ŕôńĝ Ćôńt̂én̂t́ Ŝéĉúr̂ít̂ý P̂ól̂íĉý (ĈŚP̂) śîǵn̂íf̂íĉán̂t́l̂ý r̂éd̂úĉéŝ t́ĥé r̂íŝḱ ôf́ ĉŕôśŝ-śît́ê śĉŕîṕt̂ín̂ǵ (X̂ŚŜ) át̂t́âćk̂ś. [L̂éâŕn̂ ḿôŕê](https://web.dev/csp-xss/)"
   },
   "lighthouse-core/audits/csp-xss.js | itemSeveritySyntax": {
     "message": "Ŝýn̂t́âx́"

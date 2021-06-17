@@ -2175,7 +2175,7 @@
     "csp-xss": {
       "id": "csp-xss",
       "title": "Ensure CSP is effective against XSS attacks",
-      "description": "A strong Content Security Policy (CSP) significantly reduces the risk of cross-site scripting (XSS) attacks. [Learn more](https://web.dev/strict-csp/)",
+      "description": "A strong Content Security Policy (CSP) significantly reduces the risk of cross-site scripting (XSS) attacks. [Learn more](https://web.dev/csp-xss/)",
       "score": null,
       "scoreDisplayMode": "informative",
       "details": {
