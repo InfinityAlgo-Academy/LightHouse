@@ -63,8 +63,8 @@ describe('Fraggle Rock Config', () => {
   });
 
   it('should throw on invalid artifact definitions', () => {
-    const configJson = {artifacts: [{id: 'ServiceWorker', gatherer: 'service-worker'}]};
-    expect(() => initializeConfig(configJson, {gatherMode})).toThrow(/ServiceWorker gatherer/);
+    const configJson = {artifacts: [{id: 'HTTPRedirect', gatherer: 'http-redirect'}]};
+    expect(() => initializeConfig(configJson, {gatherMode})).toThrow(/HTTPRedirect gatherer/);
   });
 
   it('should resolve navigation definitions', () => {
