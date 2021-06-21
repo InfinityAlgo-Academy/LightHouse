@@ -17,6 +17,8 @@ function generateRecord(resourceSizeInKb, durationInMs, url = 'https://google.co
     transferSize: resourceSizeInKb * 1024,
     endTime: durationInMs / 1000,
     responseReceivedTime: 0,
+    statusCode: 200,
+    finished: true,
     url,
   };
 }
@@ -48,9 +50,13 @@ describe('Page uses responsive images', () => {
         ),
       ],
     };
-    it(description, () => {
+    it(description, async () => {
       // eslint-disable-next-line max-len
-      const result = UsesResponsiveImagesAudit.audit_(artifacts, [generateRecord(data.sizeInKb, data.durationInMs || 200)]);
+      const result = await UsesResponsiveImagesAudit.audit_(
+        artifacts,
+        [generateRecord(data.sizeInKb, data.durationInMs || 200)],
+        {computedCache: new Map()}
+      );
       expect(result.items).toHaveLength(data.listed ? 1 : 0);
       if (data.listed) {
         assert.equal(Math.round(result.items[0].wastedBytes / 1024), data.expectedWaste);
@@ -109,8 +115,8 @@ describe('Page uses responsive images', () => {
     expectedWaste: 840, // 1000 * 21/25
   });
 
-  it('handles images without network record', () => {
-    const auditResult = UsesResponsiveImagesAudit.audit_({
+  it('handles images without network record', async () => {
+    const auditResult = await UsesResponsiveImagesAudit.audit_({
       ViewportDimensions: {innerWidth: 1000, innerHeight: 1000, devicePixelRatio: 2},
       ImageElements: [
         generateImage(
@@ -120,15 +126,16 @@ describe('Page uses responsive images', () => {
         ),
       ],
     },
-      []
+      [],
+      {computedCache: new Map()}
     );
 
     assert.equal(auditResult.items.length, 0);
   });
 
-  it('identifies when images are not wasteful', () => {
+  it('identifies when images are not wasteful', async () => {
     const networkRecords = [generateRecord(100, 300, 'https://google.com/logo.png'), generateRecord(90, 500, 'https://google.com/logo2.png'), generateRecord(20, 100, 'data:image/jpeg;base64,foobar')];
-    const auditResult = UsesResponsiveImagesAudit.audit_({
+    const auditResult = await UsesResponsiveImagesAudit.audit_({
       ViewportDimensions: {innerWidth: 1000, innerHeight: 1000, devicePixelRatio: 2},
       ImageElements: [
         generateImage(
@@ -148,60 +155,64 @@ describe('Page uses responsive images', () => {
         ),
       ],
     },
-      networkRecords
+      networkRecords,
+      {computedCache: new Map()}
     );
 
     assert.equal(auditResult.items.length, 2);
   });
 
-  it('ignores vectors', () => {
+  it('ignores vectors', async () => {
     const urlA = 'https://google.com/logo.svg';
     const naturalSizeA = {width: 450, height: 450};
     const image =
-      {...generateImage(generateSize(10, 10), naturalSizeA, urlA), mimeType: 'image/svg+xml'};
-    const auditResult = UsesResponsiveImagesAudit.audit_({
+      {...generateImage(generateSize(10, 10), naturalSizeA, urlA)};
+    const auditResult = await UsesResponsiveImagesAudit.audit_({
       ViewportDimensions: {innerWidth: 1000, innerHeight: 1000, devicePixelRatio: 1},
       ImageElements: [
         image,
       ],
     },
-      [generateRecord(100, 300, urlA, 'image/svg+xml')]
+      [generateRecord(100, 300, urlA, 'image/svg+xml')],
+      {computedCache: new Map()}
     );
     assert.equal(auditResult.items.length, 0);
   });
 
-  it('ignores CSS', () => {
+  it('ignores CSS', async () => {
     const urlA = 'https://google.com/logo.png';
     const naturalSizeA = {width: 450, height: 450};
 
-    const auditResult = UsesResponsiveImagesAudit.audit_({
+    const auditResult = await UsesResponsiveImagesAudit.audit_({
       ViewportDimensions: {innerWidth: 1000, innerHeight: 1000, devicePixelRatio: 1},
       ImageElements: [
         {...generateImage(generateSize(10, 10), naturalSizeA, urlA), isCss: true},
       ],
     },
-      [generateRecord(100, 300, urlA)]
+      [generateRecord(100, 300, urlA)],
+      {computedCache: new Map()}
     );
 
     assert.equal(auditResult.items.length, 0);
   });
 
-  it('handles failure', () => {
+  it('handles failure', async () => {
     const urlA = 'https://google.com/logo.png';
     const naturalSizeA = {width: NaN, height: 450};
-    const auditResult = UsesResponsiveImagesAudit.audit_({
+    const auditResult = await UsesResponsiveImagesAudit.audit_({
       ViewportDimensions: {innerWidth: 1000, innerHeight: 1000, devicePixelRatio: 1},
       ImageElements: [
         generateImage(generateSize(10, 10), naturalSizeA, urlA),
       ],
     },
-      [generateRecord(100, 300, urlA)]
+      [generateRecord(100, 300, urlA)],
+      {computedCache: new Map()}
     );
 
     assert.equal(auditResult.items.length, 0);
   });
 
-  it('de-dupes images', () => {
+  it('de-dupes images', async () => {
     const urlA = 'https://google.com/logo.png';
     const naturalSizeA = {width: 450, height: 450};
     const recordA = generateRecord(100, 300, urlA);
@@ -210,7 +221,7 @@ describe('Page uses responsive images', () => {
     const recordB = generateRecord(10, 20, urlB); // make it small to keep test passing
     const networkRecords = [recordA, recordB];
 
-    const auditResult = UsesResponsiveImagesAudit.audit_({
+    const auditResult = await UsesResponsiveImagesAudit.audit_({
       ViewportDimensions: {innerWidth: 1000, innerHeight: 1000, devicePixelRatio: 1},
       ImageElements: [
         generateImage(generateSize(10, 10), naturalSizeA, urlA),
@@ -220,7 +231,8 @@ describe('Page uses responsive images', () => {
         generateImage(generateSize(100, 100), naturalSizeB, urlB),
       ],
     },
-      networkRecords
+      networkRecords,
+      {computedCache: new Map()}
     );
 
     assert.equal(auditResult.items.length, 1);

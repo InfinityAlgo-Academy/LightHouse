@@ -316,6 +316,7 @@ Auditing: Serve images in next-gen formats
 Auditing: Efficiently encode images
 Auditing: Enable text compression
 Auditing: Properly size images
+Computing artifact: ImageRecords
 Auditing: Use video formats for animated content
 Auditing: Remove duplicate modules in JavaScript bundles
 Computing artifact: ModuleDuplication

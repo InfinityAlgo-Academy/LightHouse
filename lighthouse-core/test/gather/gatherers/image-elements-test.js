@@ -9,7 +9,6 @@
 
 const ImageElements = require('../../../gather/gatherers/image-elements.js');
 const NetworkRecorder = require('../../../lib/network-recorder.js');
-const NetworkRequest = require('../../../lib/network-request.js');
 const {
   createMockContext,
   createMockDriver,
@@ -20,15 +19,6 @@ const devtoolsLog = /** @type {LH.DevtoolsLog} */ (require('../../fixtures/trace
 const networkRecords = NetworkRecorder.recordsFromLogs(devtoolsLog);
 
 jest.useFakeTimers();
-
-/**
- * @param {Partial<LH.Artifacts.NetworkRequest>=} partial
- * @return {LH.Artifacts.NetworkRequest}
- */
-function mockRequest(partial = {}) {
-  const request = new NetworkRequest();
-  return Object.assign(request, partial);
-}
 
 /**
  * @param {Partial<LH.Artifacts.ImageElement>=} partial
@@ -75,9 +65,7 @@ function mockElement(partial = {}) {
 
 function makeImageElements() {
   const gatherer = new ImageElements();
-  jest.spyOn(gatherer, '_getArtifact');
   jest.spyOn(gatherer, 'collectExtraDetails');
-  jest.spyOn(gatherer, 'indexNetworkRecords');
   jest.spyOn(gatherer, 'fetchSourceRules');
   jest.spyOn(gatherer, 'fetchElementWithSizeInformation');
   return gatherer;
@@ -242,89 +230,6 @@ describe('.fetchSourceRules', () => {
   });
 });
 
-describe('.indexNetworkRecords', () => {
-  it('maps image urls to network records', () => {
-    const gatherer = makeImageElements();
-    const networkRecords = [
-      mockRequest({
-        mimeType: 'image/png',
-        url: 'https://example.com/img.png',
-        finished: true,
-        statusCode: 200,
-      }),
-      mockRequest({
-        mimeType: 'application/octect-stream',
-        url: 'https://example.com/img.webp',
-        finished: true,
-        statusCode: 200,
-      }),
-      mockRequest({
-        mimeType: 'application/octect-stream',
-        url: 'https://example.com/img.avif',
-        finished: true,
-        statusCode: 200,
-      }),
-    ];
-
-    const index = gatherer.indexNetworkRecords(networkRecords);
-
-    expect(index).toEqual({
-      'https://example.com/img.avif': mockRequest({
-        finished: true,
-        mimeType: 'application/octect-stream',
-        statusCode: 200,
-        url: 'https://example.com/img.avif',
-      }),
-      'https://example.com/img.png': mockRequest({
-        finished: true,
-        mimeType: 'image/png',
-        statusCode: 200,
-        url: 'https://example.com/img.png',
-      }),
-      'https://example.com/img.webp': mockRequest({
-        finished: true,
-        mimeType: 'application/octect-stream',
-        statusCode: 200,
-        url: 'https://example.com/img.webp',
-      }),
-    });
-  });
-
-  it('ignores bad status codes', () => {
-    const gatherer = makeImageElements();
-    const networkRecords = [
-      mockRequest({
-        mimeType: 'image/png',
-        url: 'https://example.com/img.png',
-        finished: true,
-        statusCode: 200,
-      }),
-      mockRequest({
-        mimeType: 'application/octect-stream',
-        url: 'https://example.com/img.webp',
-        finished: false,
-      }),
-      mockRequest({
-        mimeType: 'application/octect-stream',
-        url: 'https://example.com/img.avif',
-        finished: true,
-        statusCode: 404,
-      }),
-    ];
-
-    const index = gatherer.indexNetworkRecords(networkRecords);
-
-    expect(index).toEqual({
-      'https://example.com/img.png': mockRequest({
-        finished: true,
-        mimeType: 'image/png',
-        statusCode: 200,
-        url: 'https://example.com/img.png',
-      }),
-    });
-  });
-});
-
 describe('.collectExtraDetails', () => {
   let gatherer = makeImageElements();
   let driver = createMockDriver().asDriver();
@@ -346,7 +251,7 @@ describe('.collectExtraDetails', () => {
       jest.advanceTimersByTime(6000);
     });
 
-    await gatherer.collectExtraDetails(driver, elements, {});
+    await gatherer.collectExtraDetails(driver, elements);
 
     expect(gatherer.fetchSourceRules).toHaveBeenCalledTimes(1);
   });
@@ -358,7 +263,7 @@ describe('.collectExtraDetails', () => {
       mockElement({isInShadowDOM: false, isCss: true}),
     ];
 
-    await gatherer.collectExtraDetails(driver, elements, {});
+    await gatherer.collectExtraDetails(driver, elements);
 
     expect(gatherer.fetchSourceRules).toHaveBeenCalledTimes(1);
   });
@@ -369,7 +274,7 @@ describe('.collectExtraDetails', () => {
       mockElement({isInShadowDOM: false, isCss: false}),
     ];
 
-    await gatherer.collectExtraDetails(driver, elements, {});
+    await gatherer.collectExtraDetails(driver, elements);
 
     expect(gatherer.fetchSourceRules).toHaveBeenCalledTimes(2);
   });
@@ -380,16 +285,9 @@ describe('.collectExtraDetails', () => {
       mockElement({src: 'https://example.com/b.png', isPicture: true, isCss: false, srcset: 'src'}),
       mockElement({src: 'https://example.com/c.png', isPicture: false, isCss: true}),
       mockElement({src: 'https://example.com/d.png', isPicture: false, isCss: false}),
-      mockElement({src: 'https://example.com/e.png', isPicture: false, isCss: true, srcset: 'src'}),
     ];
-    const indexedNetworkRecords = {
-      'https://example.com/a.png': mockRequest(),
-      'https://example.com/b.png': mockRequest(),
-      'https://example.com/c.png': mockRequest(),
-      'https://example.com/d.png': mockRequest(),
-    };
 
-    await gatherer.collectExtraDetails(driver, elements, indexedNetworkRecords);
+    await gatherer.collectExtraDetails(driver, elements);
 
     expect(gatherer.fetchElementWithSizeInformation).toHaveBeenCalledTimes(3);
   });

@@ -6902,6 +6902,12 @@
       },
       {
         "startTime": 0,
+        "name": "lh:computed:ImageRecords",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:audit:efficient-animated-content",
         "duration": 100,
         "entryType": "measure"

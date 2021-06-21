@@ -14,6 +14,7 @@
 'use strict';
 
 const ByteEfficiencyAudit = require('./byte-efficiency-audit.js');
+const ImageRecords = require('../../computed/image-records.js');
 const URL = require('../../lib/url-shim.js');
 const i18n = require('../../lib/i18n/i18n.js');
 
@@ -102,10 +103,14 @@ class UsesResponsiveImages extends ByteEfficiencyAudit {
   /**
    * @param {LH.Artifacts} artifacts
    * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
-   * @return {ByteEfficiencyAudit.ByteEfficiencyProduct}
+   * @param {LH.Audit.Context} context
+   * @return {Promise<ByteEfficiencyAudit.ByteEfficiencyProduct>}
    */
-  static audit_(artifacts, networkRecords) {
-    const images = artifacts.ImageElements;
+  static async audit_(artifacts, networkRecords, context) {
+    const images = await ImageRecords.request({
+      ImageElements: artifacts.ImageElements,
+      networkRecords,
+    }, context);
     const ViewportDimensions = artifacts.ViewportDimensions;
     /** @type {Map<string, LH.Audit.ByteEfficiencyItem>} */
     const resultsMap = new Map();
