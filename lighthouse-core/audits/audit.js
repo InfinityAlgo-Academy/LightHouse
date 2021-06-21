@@ -7,59 +7,7 @@
 
 const {isUnderTest} = require('../lib/lh-env.js');
 const statistics = require('../lib/statistics.js');
-// const Util = require('../report/html/renderer/util.js');
-class Util {
-  static PASS_THRESHOLD = 0.9;
-
-  /**
-   * Returns only lines that are near a message, or the first few lines if there are
-   * no line messages.
-   * @param {LH.Audit.Details.SnippetValue['lines']} lines
-   * @param {LH.Audit.Details.SnippetValue['lineMessages']} lineMessages
-   * @param {number} surroundingLineCount Number of lines to include before and after
-   * the message. If this is e.g. 2 this function might return 5 lines.
-   */
-  static filterRelevantLines(lines, lineMessages, surroundingLineCount) {
-    if (lineMessages.length === 0) {
-      // no lines with messages, just return the first bunch of lines
-      return lines.slice(0, surroundingLineCount * 2 + 1);
-    }
-
-    const minGapSize = 3;
-    const lineNumbersToKeep = new Set();
-    // Sort messages so we can check lineNumbersToKeep to see how big the gap to
-    // the previous line is.
-    lineMessages = lineMessages.sort((a, b) => (a.lineNumber || 0) - (b.lineNumber || 0));
-    lineMessages.forEach(({lineNumber}) => {
-      let firstSurroundingLineNumber = lineNumber - surroundingLineCount;
-      let lastSurroundingLineNumber = lineNumber + surroundingLineCount;
-
-      while (firstSurroundingLineNumber < 1) {
-        // make sure we still show (surroundingLineCount * 2 + 1) lines in total
-        firstSurroundingLineNumber++;
-        lastSurroundingLineNumber++;
-      }
-      // If only a few lines would be omitted normally then we prefer to include
-      // extra lines to avoid the tiny gap
-      if (lineNumbersToKeep.has(firstSurroundingLineNumber - minGapSize - 1)) {
-        firstSurroundingLineNumber -= minGapSize;
-      }
-      for (let i = firstSurroundingLineNumber; i <= lastSurroundingLineNumber; i++) {
-        const surroundingLineNumber = i;
-        lineNumbersToKeep.add(surroundingLineNumber);
-      }
-    });
-
-    return lines.filter(line => lineNumbersToKeep.has(line.lineNumber));
-  }
-
-  /**
-   * @param {string} categoryId
-   */
-  static isPluginCategory(categoryId) {
-    return categoryId.startsWith('lighthouse-plugin-');
-  }
-}
+const Util = require('../util-commonjs.js');
 
 const DEFAULT_PASS = 'defaultPass';
 
