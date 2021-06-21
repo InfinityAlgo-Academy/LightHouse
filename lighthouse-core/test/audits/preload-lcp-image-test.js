@@ -20,6 +20,7 @@ const imageUrl = 'http://www.example.com/image.png';
 describe('Performance: preload-lcp audit', () => {
   const mockArtifacts = (networkRecords, finalUrl, imageUrl) => {
     return {
+      GatherContext: {gatherMode: 'navigation'},
       traces: {
         [PreloadLCPImage.DEFAULT_PASS]: createTestTrace({
           traceEnd: 6e3,

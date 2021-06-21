@@ -31,7 +31,7 @@ describe('NavigationRunner', () => {
   /** @type {Map<string, LH.ArbitraryEqualityMap>} */
   let computedCache;
 
-  /** @return {LH.Config.FRGathererDefn} */
+  /** @return {LH.Config.AnyFRGathererDefn} */
   function createGathererDefn() {
     return {
       instance: {

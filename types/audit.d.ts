@@ -57,6 +57,8 @@ declare global {
       __internalOptionalArtifacts?: Array<keyof Artifacts>;
       /** A string identifying how the score should be interpreted for display. */
       scoreDisplayMode?: Audit.ScoreDisplayMode;
+      /** A list of gather modes that this audit is applicable to. */
+      supportedModes?: Gatherer.GatherMode[],
     }
 
     export interface ByteEfficiencyItem extends Audit.Details.OpportunityItem {

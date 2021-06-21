@@ -13,6 +13,7 @@ const jumpyClsTrace = require('../../fixtures/traces/jumpy-cls-m90.json');
 describe('Cumulative Layout Shift', () => {
   it('evaluates CLS correctly', async () => {
     const artifacts = {
+      GatherContext: {gatherMode: 'navigation'},
       traces: {
         [CumulativeLayoutShift.DEFAULT_PASS]: jumpyClsTrace,
       },

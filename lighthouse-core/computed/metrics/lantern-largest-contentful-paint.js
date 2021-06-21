@@ -41,11 +41,11 @@ class LanternLargestContentfulPaint extends LanternMetric {
 
   /**
    * @param {Node} dependencyGraph
-   * @param {LH.Artifacts.TraceOfTab} traceOfTab
+   * @param {LH.Artifacts.ProcessedNavigation} processedNavigation
    * @return {Node}
    */
-  static getOptimisticGraph(dependencyGraph, traceOfTab) {
-    const lcp = traceOfTab.timestamps.largestContentfulPaint;
+  static getOptimisticGraph(dependencyGraph, processedNavigation) {
+    const lcp = processedNavigation.timestamps.largestContentfulPaint;
     if (!lcp) {
       throw new LHError(LHError.errors.NO_LCP);
     }
@@ -59,11 +59,11 @@ class LanternLargestContentfulPaint extends LanternMetric {
 
   /**
    * @param {Node} dependencyGraph
-   * @param {LH.Artifacts.TraceOfTab} traceOfTab
+   * @param {LH.Artifacts.ProcessedNavigation} processedNavigation
    * @return {Node}
    */
-  static getPessimisticGraph(dependencyGraph, traceOfTab) {
-    const lcp = traceOfTab.timestamps.largestContentfulPaint;
+  static getPessimisticGraph(dependencyGraph, processedNavigation) {
+    const lcp = processedNavigation.timestamps.largestContentfulPaint;
     if (!lcp) {
       throw new LHError(LHError.errors.NO_LCP);
     }

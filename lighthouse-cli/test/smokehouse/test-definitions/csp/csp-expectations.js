@@ -63,13 +63,6 @@ module.exports = [
             isReportOnly: false,
             contentSecurityPolicyViolationType: 'kURLViolation',
           },
-          {
-            // TODO: Fix style-src-elem violation when checking tap targets.
-            // https://github.com/GoogleChrome/lighthouse/issues/11862
-            violatedDirective: 'style-src-elem',
-            isReportOnly: false,
-            contentSecurityPolicyViolationType: 'kInlineViolation',
-          },
         ],
       },
       SourceMaps: [{
@@ -98,13 +91,6 @@ module.exports = [
       },
       InspectorIssues: {
         contentSecurityPolicy: [
-          {
-            // TODO: Fix style-src-elem violation when checking tap targets.
-            // https://github.com/GoogleChrome/lighthouse/issues/11862
-            violatedDirective: 'style-src-elem',
-            isReportOnly: false,
-            contentSecurityPolicyViolationType: 'kInlineViolation',
-          },
         ],
       },
       SourceMaps: [{

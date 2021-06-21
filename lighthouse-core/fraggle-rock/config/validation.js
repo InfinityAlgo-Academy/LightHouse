@@ -6,8 +6,8 @@
 'use strict';
 
 /**
- * @param {LH.Config.GathererDefn | LH.Config.FRGathererDefn} gathererDefn
- * @return {gathererDefn is LH.Config.FRGathererDefn}
+ * @param {LH.Config.GathererDefn | LH.Config.AnyFRGathererDefn} gathererDefn
+ * @return {gathererDefn is LH.Config.AnyFRGathererDefn}
  */
 function isFRGathererDefn(gathererDefn) {
   return 'meta' in gathererDefn.instance;
@@ -17,8 +17,8 @@ function isFRGathererDefn(gathererDefn) {
  * Determines if the artifact dependency direction is valid. The dependency's minimum supported mode
  * must be less than or equal to the dependent's.
  *
- * @param {LH.Config.FRGathererDefn} dependent The artifact that depends on the other.
- * @param {LH.Config.FRGathererDefn} dependency The artifact that is being depended on by the other.
+ * @param {LH.Config.AnyFRGathererDefn} dependent The artifact that depends on the other.
+ * @param {LH.Config.AnyFRGathererDefn} dependency The artifact that is being depended on by the other.
  * @return {boolean}
  */
 function isValidArtifactDependency(dependent, dependency) {

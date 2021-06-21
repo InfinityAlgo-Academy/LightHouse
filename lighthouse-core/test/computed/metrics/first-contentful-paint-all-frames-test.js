@@ -13,11 +13,13 @@ const devtoolsLog = require('../../fixtures/traces/frame-metrics-m89.devtools.lo
 /* eslint-env jest */
 
 describe('Metrics: FCP all frames', () => {
+  const gatherContext = {gatherMode: 'navigation'};
+
   it('should throw for simulated throttling', async () => {
     const settings = {throttlingMethod: 'simulate'};
     const context = {settings, computedCache: new Map()};
     const resultPromise = FirstContentfulPaintAllFrames.request(
-      {trace, devtoolsLog, settings},
+      {trace, devtoolsLog, gatherContext, settings},
       context
     );
 
@@ -30,11 +32,11 @@ describe('Metrics: FCP all frames', () => {
     const context = {settings, computedCache: new Map()};
 
     const result = await FirstContentfulPaintAllFrames.request(
-      {trace, devtoolsLog, settings},
+      {trace, devtoolsLog, gatherContext, settings},
       context
     );
     const mainFrameResult = await FirstContentfulPaint.request(
-      {trace, devtoolsLog, settings},
+      {trace, devtoolsLog, gatherContext, settings},
       context
     );
 

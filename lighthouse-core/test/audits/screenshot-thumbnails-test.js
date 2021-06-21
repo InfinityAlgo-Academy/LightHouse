@@ -42,31 +42,12 @@ describe('Screenshot thumbnails', () => {
     });
   }, 10000);
 
-  it('should scale the timeline to TTI when observed', () => {
+  it('should scale the timeline to last visual change', () => {
     const options = {minimumTimelineDuration: 500};
     const settings = {throttlingMethod: 'devtools'};
     const artifacts = {
       traces: {defaultPass: pwaTrace},
       devtoolsLogs: {defaultPass: pwaDevtoolsLog},
-    };
-
-    const context = {settings, options, computedCache: new Map()};
-    return ScreenshotThumbnailsAudit.audit(artifacts, context).then(results => {
-      assert.equal(results.details.items[0].timing, 158);
-      assert.equal(results.details.items[9].timing, 1582);
-
-      // last 5 frames should be equal to the last real frame
-      const extrapolatedFrames = new Set(results.details.items.slice(5).map(f => f.data));
-      assert.ok(results.details.items[9].data.length > 100, 'did not have last frame');
-      assert.ok(extrapolatedFrames.size === 1, 'did not extrapolate last frame');
-    });
-  });
-
-  it('should not scale the timeline to TTI when simulate', () => {
-    const options = {minimumTimelineDuration: 500};
-    const settings = {throttlingMethod: 'simulate'};
-    const artifacts = {
-      traces: {defaultPass: pwaTrace},
     };
 
     const context = {settings, options, computedCache: new Map()};

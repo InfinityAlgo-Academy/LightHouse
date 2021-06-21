@@ -588,7 +588,7 @@
     "message": "Ŝév̂ér̂ít̂ý"
   },
   "lighthouse-core/audits/csp-xss.js | description": {
-    "message": "Â śt̂ŕôńĝ Ćôńt̂én̂t́ Ŝéĉúr̂ít̂ý P̂ól̂íĉý (ĈŚP̂) śîǵn̂íf̂íĉán̂t́l̂ý r̂éd̂úĉéŝ t́ĥé r̂íŝḱ ôf́ ĉŕôśŝ-śît́ê śĉŕîṕt̂ín̂ǵ (X̂ŚŜ) át̂t́âćk̂ś. [L̂éâŕn̂ ḿôŕê](https://web.dev/strict-csp/)"
+    "message": "Â śt̂ŕôńĝ Ćôńt̂én̂t́ Ŝéĉúr̂ít̂ý P̂ól̂íĉý (ĈŚP̂) śîǵn̂íf̂íĉán̂t́l̂ý r̂éd̂úĉéŝ t́ĥé r̂íŝḱ ôf́ ĉŕôśŝ-śît́ê śĉŕîṕt̂ín̂ǵ (X̂ŚŜ) át̂t́âćk̂ś. [L̂éâŕn̂ ḿôŕê](https://web.dev/csp-xss/)"
   },
   "lighthouse-core/audits/csp-xss.js | itemSeveritySyntax": {
     "message": "Ŝýn̂t́âx́"
@@ -903,10 +903,10 @@
     "message": "M̂án̂íf̂éŝt́ d̂óêś n̂ót̂ ćôńt̂áîń â 'ńâḿê' ór̂ 'śĥór̂t́_n̂ám̂é' f̂íêĺd̂"
   },
   "lighthouse-core/audits/installable-manifest.js | manifest-missing-suitable-icon": {
-    "message": "M̂án̂íf̂éŝt́ d̂óêś n̂ót̂ ćôńt̂áîń â śûít̂áb̂ĺê íĉón̂ - ṔN̂Ǵ, ŜV́Ĝ ór̂ Ẃêb́P̂ f́ôŕm̂át̂ óf̂ át̂ ĺêáŝt́ {value0} p̂x́ îś r̂éq̂úîŕêd́, t̂h́ê śîźêś ât́t̂ŕîb́ût́ê ḿûśt̂ b́ê śêt́, âńd̂ t́ĥé p̂úr̂ṕôśê át̂t́r̂íb̂út̂é, îf́ ŝét̂, ḿûśt̂ ín̂ćl̂úd̂é \"âńŷ\" ór̂ \"ḿâśk̂áb̂ĺê\"."
+    "message": "M̂án̂íf̂éŝt́ d̂óêś n̂ót̂ ćôńt̂áîń â śûít̂áb̂ĺê íĉón̂ - ṔN̂Ǵ, ŜV́Ĝ ór̂ Ẃêb́P̂ f́ôŕm̂át̂ óf̂ át̂ ĺêáŝt́ {value0} p̂x́ îś r̂éq̂úîŕêd́, t̂h́ê śîźêś ât́t̂ŕîb́ût́ê ḿûśt̂ b́ê śêt́, âńd̂ t́ĥé p̂úr̂ṕôśê át̂t́r̂íb̂út̂é, îf́ ŝét̂, ḿûśt̂ ín̂ćl̂úd̂é \"âńŷ\"."
   },
   "lighthouse-core/audits/installable-manifest.js | no-acceptable-icon": {
-    "message": "N̂ó ŝúp̂ṕl̂íêd́ îćôń îś ât́ l̂éâśt̂ {value0} ṕx̂ śq̂úâŕê ín̂ ṔN̂Ǵ, ŜV́Ĝ ór̂ Ẃêb́P̂ f́ôŕm̂át̂"
+    "message": "N̂ó ŝúp̂ṕl̂íêd́ îćôń îś ât́ l̂éâśt̂ {value0} ṕx̂ śq̂úâŕê ín̂ ṔN̂Ǵ, ŜV́Ĝ ór̂ Ẃêb́P̂ f́ôŕm̂át̂, ẃît́ĥ t́ĥé p̂úr̂ṕôśê át̂t́r̂íb̂út̂é ûńŝét̂ ór̂ śêt́ t̂ó \"âńŷ\""
   },
   "lighthouse-core/audits/installable-manifest.js | no-icon-available": {
     "message": "D̂óŵńl̂óâd́êd́ îćôń ŵáŝ ém̂ṕt̂ý ôŕ ĉór̂ŕûṕt̂éd̂"

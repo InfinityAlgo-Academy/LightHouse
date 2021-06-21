@@ -136,7 +136,7 @@ async function testPage(browser, url) {
 
   await page.close();
 
-  return JSON.stringify(remoteLhrResponse.result.value);
+  return JSON.stringify(remoteLhrResponse.result.value, null, 2);
 }
 
 /**
@@ -180,8 +180,12 @@ async function run() {
 
   const urlList = await readUrlList();
   for (let i = 0; i < urlList.length; ++i) {
-    const lhr = await testPage(browser, urlList[i]);
-    fs.writeFileSync(`${argv.o}/lhr-${i}.json`, lhr);
+    try {
+      const lhr = await testPage(browser, urlList[i]);
+      fs.writeFileSync(`${argv.o}/lhr-${i}.json`, lhr);
+    } catch (error) {
+      fs.writeFileSync(`${argv.o}/lhr-${i}.json`, JSON.stringify({error: error.message}, null, 2));
+    }
   }
 
   await browser.close();

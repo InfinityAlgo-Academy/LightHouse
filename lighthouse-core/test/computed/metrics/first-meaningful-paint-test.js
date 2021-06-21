@@ -20,6 +20,7 @@ const noFMPtrace = require(`${TRACE_FIXTURES}/no_fmp_event.json`);
 /* eslint-env jest */
 
 describe('Metrics: FMP', () => {
+  const gatherContext = {gatherMode: 'navigation'};
   let settings;
   let trace;
   let devtoolsLog;
@@ -44,7 +45,8 @@ describe('Metrics: FMP', () => {
     devtoolsLog = pwaDevtoolsLog;
 
     const context = {computedCache: new Map()};
-    const result = await FirstMeaningfulPaint.request({trace, devtoolsLog, settings}, context);
+    const result = await FirstMeaningfulPaint.request({trace, devtoolsLog, gatherContext, settings},
+      context);
 
     expect({
       timing: Math.round(result.timing),
@@ -60,7 +62,8 @@ describe('Metrics: FMP', () => {
   it('should compute an observed value (desktop)', async () => {
     settings = {throttlingMethod: 'provided', formFactor: 'desktop'};
     const context = {computedCache: new Map()};
-    const result = await FirstMeaningfulPaint.request({trace, devtoolsLog, settings}, context);
+    const result = await FirstMeaningfulPaint.request({trace, devtoolsLog, gatherContext, settings},
+      context);
 
     assert.equal(Math.round(result.timing), 783);
     assert.equal(result.timestamp, 225414955343);
@@ -69,7 +72,8 @@ describe('Metrics: FMP', () => {
   it('should compute an observed value (mobile)', async () => {
     settings = {throttlingMethod: 'provided', formFactor: 'mobile'};
     const context = {computedCache: new Map()};
-    const result = await FirstMeaningfulPaint.request({trace, devtoolsLog, settings}, context);
+    const result = await FirstMeaningfulPaint.request({trace, devtoolsLog, gatherContext, settings},
+      context);
 
     assert.equal(Math.round(result.timing), 783);
     assert.equal(result.timestamp, 225414955343);
@@ -79,7 +83,8 @@ describe('Metrics: FMP', () => {
     trace = lateTracingStartedTrace;
     addEmptyTask();
     const context = {computedCache: new Map()};
-    const result = await FirstMeaningfulPaint.request({trace, devtoolsLog, settings}, context);
+    const result = await FirstMeaningfulPaint.request({trace, devtoolsLog, gatherContext, settings},
+      context);
     assert.equal(Math.round(result.timing), 530);
     assert.equal(result.timestamp, 29344070867);
   });
@@ -88,7 +93,8 @@ describe('Metrics: FMP', () => {
     trace = badNavStartTrace;
     addEmptyTask();
     const context = {computedCache: new Map()};
-    const result = await FirstMeaningfulPaint.request({trace, devtoolsLog, settings}, context);
+    const result = await FirstMeaningfulPaint.request({trace, devtoolsLog, gatherContext, settings},
+      context);
     assert.equal(Math.round(result.timing), 632);
     assert.equal(result.timestamp, 8886056891);
   });
@@ -97,7 +103,8 @@ describe('Metrics: FMP', () => {
     trace = preactTrace;
     addEmptyTask();
     const context = {computedCache: new Map()};
-    const result = await FirstMeaningfulPaint.request({trace, devtoolsLog, settings}, context);
+    const result = await FirstMeaningfulPaint.request({trace, devtoolsLog, gatherContext, settings},
+      context);
     assert.equal(Math.round(result.timing), 878);
     assert.equal(result.timestamp, 1805797262960);
   });
@@ -106,7 +113,8 @@ describe('Metrics: FMP', () => {
     trace = noFMPtrace;
     addEmptyTask();
     const context = {computedCache: new Map()};
-    const result = await FirstMeaningfulPaint.request({trace, devtoolsLog, settings}, context);
+    const result = await FirstMeaningfulPaint.request({trace, devtoolsLog, gatherContext, settings},
+      context);
     assert.equal(Math.round(result.timing), 4461);
     assert.equal(result.timestamp, 2146740268666);
   });

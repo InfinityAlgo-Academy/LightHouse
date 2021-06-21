@@ -37,6 +37,7 @@ const getFakeContext = ({formFactor, throttlingMethod}) => ({
 describe('Performance: first-contentful-paint audit', () => {
   it('evaluates valid input correctly', async () => {
     const artifacts = {
+      GatherContext: {gatherMode: 'navigation'},
       traces: {
         [FcpAudit.DEFAULT_PASS]: pwaTrace,
       },
@@ -53,6 +54,7 @@ describe('Performance: first-contentful-paint audit', () => {
 
   it('evaluates a modern trace correctly', async () => {
     const artifacts = {
+      GatherContext: {gatherMode: 'navigation'},
       traces: {
         [FcpAudit.DEFAULT_PASS]: frameTrace,
       },

@@ -17,6 +17,7 @@ const preLcpDevtoolsLog = require('../../fixtures/traces/progressive-app-m60.dev
 
 function generateArtifacts({trace, devtoolsLog, HostUserAgent}) {
   return {
+    GatherContext: {gatherMode: 'navigation'},
     traces: {[LCPAudit.DEFAULT_PASS]: trace},
     devtoolsLogs: {[LCPAudit.DEFAULT_PASS]: devtoolsLog},
     HostUserAgent,

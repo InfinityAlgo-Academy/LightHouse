@@ -127,6 +127,9 @@ async function prepareNetworkForNavigation(session, settings, navigation) {
  * @param {LH.Config.Settings} settings
  */
 async function prepareTargetForNavigationMode(driver, settings) {
+  // Enable network domain here so future calls to `emulate()` don't clear cache (#12631)
+  await driver.defaultSession.sendCommand('Network.enable');
+
   // Emulate our target device screen and user agent.
   await emulation.emulate(driver.defaultSession, settings);
 

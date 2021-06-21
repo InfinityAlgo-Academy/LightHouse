@@ -202,18 +202,30 @@ describe('DetailsRenderer', () => {
       assert.strictEqual(diagnosticEl, null);
     });
 
-    it('renders an unknown details type', () => {
-      // Disallowed by type system, but test that we get an error message out just in case.
-      const details = {
-        type: 'imaginary',
-        items: 5,
-      };
+    describe('unknown types', () => {
+      // console.error is set to a no-op, to avoid distracting log spam in the test output.
+      let consoleError;
+      beforeEach(() => {
+        consoleError = console.error;
+        console.error = () => {};
+      });
+      afterEach(() => {
+        console.error = consoleError;
+      });
 
-      const el = renderer.render(details);
-      const summaryEl = el.querySelector('summary');
-      expect(summaryEl.textContent)
-        .toContain('We don\'t know how to render audit details of type `imaginary`');
-      assert.strictEqual(el.lastChild.textContent, JSON.stringify(details, null, 2));
+      it('renders an unknown details type', () => {
+        // Disallowed by type system, but test that we get an error message out just in case.
+        const details = {
+          type: 'imaginary',
+          items: 5,
+        };
+
+        const el = renderer.render(details);
+        const summaryEl = el.querySelector('summary');
+        expect(summaryEl.textContent)
+          .toContain('We don\'t know how to render audit details of type `imaginary`');
+        assert.strictEqual(el.lastChild.textContent, JSON.stringify(details, null, 2));
+      });
     });
   });
 
@@ -659,41 +671,52 @@ describe('DetailsRenderer', () => {
       assert.strictEqual(codeItemEl.innerHTML, '<pre class="lh-code">invalid-url://example.com/</pre>');
     });
 
-    it('renders an unknown heading itemType', () => {
-      // Disallowed by type system, but test that we get an error message out just in case.
-      const details = {
-        type: 'table',
-        headings: [{key: 'content', itemType: 'notRealValueType', text: 'Heading'}],
-        items: [{content: 'some string'}],
-      };
+    describe('unknown types', () => {
+      let consoleError;
+      beforeEach(() => {
+        consoleError = console.error;
+        console.error = () => {};
+      });
+      afterEach(() => {
+        console.error = consoleError;
+      });
 
-      const el = renderer.render(details);
-      const unknownEl = el.querySelector('td.lh-table-column--notRealValueType .lh-unknown');
-      const summaryEl = unknownEl.querySelector('summary');
-      expect(summaryEl.textContent)
-        .toContain('We don\'t know how to render audit details of type `notRealValueType`');
-      assert.strictEqual(unknownEl.lastChild.textContent, '"some string"');
-    });
+      it('renders an unknown heading itemType', () => {
+        // Disallowed by type system, but test that we get an error message out just in case.
+        const details = {
+          type: 'table',
+          headings: [{key: 'content', itemType: 'notRealValueType', text: 'Heading'}],
+          items: [{content: 'some string'}],
+        };
 
-    it('renders an unknown item object type', () => {
-      // Disallowed by type system, but test that we get an error message out just in case.
-      const item = {
-        type: 'imaginaryItem',
-        items: 'alllll the items',
-      };
+        const el = renderer.render(details);
+        const unknownEl = el.querySelector('td.lh-table-column--notRealValueType .lh-unknown');
+        const summaryEl = unknownEl.querySelector('summary');
+        expect(summaryEl.textContent)
+          .toContain('We don\'t know how to render audit details of type `notRealValueType`');
+        assert.strictEqual(unknownEl.lastChild.textContent, '"some string"');
+      });
 
-      const details = {
-        type: 'table',
-        headings: [{key: 'content', itemType: 'url', text: 'Heading'}],
-        items: [{content: item}],
-      };
+      it('renders an unknown item object type', () => {
+        // Disallowed by type system, but test that we get an error message out just in case.
+        const item = {
+          type: 'imaginaryItem',
+          items: 'alllll the items',
+        };
 
-      const el = renderer.render(details);
-      const unknownEl = el.querySelector('td.lh-table-column--url .lh-unknown');
-      const summaryEl = unknownEl.querySelector('summary');
-      expect(summaryEl.textContent)
-        .toContain('We don\'t know how to render audit details of type `imaginaryItem`');
-      assert.strictEqual(unknownEl.lastChild.textContent, JSON.stringify(item, null, 2));
+        const details = {
+          type: 'table',
+          headings: [{key: 'content', itemType: 'url', text: 'Heading'}],
+          items: [{content: item}],
+        };
+
+        const el = renderer.render(details);
+        const unknownEl = el.querySelector('td.lh-table-column--url .lh-unknown');
+        const summaryEl = unknownEl.querySelector('summary');
+        expect(summaryEl.textContent)
+          .toContain('We don\'t know how to render audit details of type `imaginaryItem`');
+        assert.strictEqual(unknownEl.lastChild.textContent, JSON.stringify(item, null, 2));
+      });
     });
 
     it('uses the item\'s type over the heading type', () => {

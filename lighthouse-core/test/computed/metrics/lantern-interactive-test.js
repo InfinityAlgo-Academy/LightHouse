@@ -16,10 +16,12 @@ const iframeDevtoolsLog = require('../../fixtures/traces/iframe-m79.devtoolslog.
 /* eslint-env jest */
 
 describe('Metrics: Lantern TTI', () => {
+  const gatherContext = {gatherMode: 'navigation'};
+
   it('should compute predicted value', async () => {
     const settings = {};
     const context = {settings, computedCache: new Map()};
-    const result = await LanternInteractive.request({trace, devtoolsLog,
+    const result = await LanternInteractive.request({trace, devtoolsLog, gatherContext,
       settings}, context);
 
     expect({
@@ -39,6 +41,7 @@ describe('Metrics: Lantern TTI', () => {
     const result = await LanternInteractive.request({
       trace: iframeTrace,
       devtoolsLog: iframeDevtoolsLog,
+      gatherContext,
       settings,
     }, context);
 

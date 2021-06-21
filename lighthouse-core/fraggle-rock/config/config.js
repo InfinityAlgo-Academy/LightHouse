@@ -57,9 +57,9 @@ function resolveWorkingCopy(configJSON, context) {
  * Looks up the required artifact IDs for each dependency, throwing if no earlier artifact satisfies the dependency.
  *
  * @param {LH.Config.ArtifactJson} artifact
- * @param {LH.Config.FRGathererDefn} gatherer
- * @param {Map<Symbol, LH.Config.ArtifactDefn>} artifactDefnsBySymbol
- * @return {LH.Config.ArtifactDefn['dependencies']}
+ * @param {LH.Config.AnyFRGathererDefn} gatherer
+ * @param {Map<Symbol, LH.Config.AnyArtifactDefn>} artifactDefnsBySymbol
+ * @return {LH.Config.AnyArtifactDefn['dependencies']}
  */
 function resolveArtifactDependencies(artifact, gatherer, artifactDefnsBySymbol) {
   if (!('dependencies' in gatherer.instance.meta)) return undefined;
@@ -86,7 +86,7 @@ function resolveArtifactDependencies(artifact, gatherer, artifactDefnsBySymbol) 
  *
  * @param {LH.Config.ArtifactJson[]|null|undefined} artifacts
  * @param {string|undefined} configDir
- * @return {LH.Config.ArtifactDefn[] | null}
+ * @return {LH.Config.AnyArtifactDefn[] | null}
  */
 function resolveArtifactsToDefns(artifacts, configDir) {
   if (!artifacts) return null;
@@ -94,7 +94,7 @@ function resolveArtifactsToDefns(artifacts, configDir) {
   const status = {msg: 'Resolve artifact definitions', id: 'lh:config:resolveArtifactsToDefns'};
   log.time(status, 'verbose');
 
-  /** @type {Map<Symbol, LH.Config.ArtifactDefn>} */
+  /** @type {Map<Symbol, LH.Config.AnyArtifactDefn>} */
   const artifactDefnsBySymbol = new Map();
 
   const coreGathererList = Runner.getGathererList();
@@ -108,7 +108,9 @@ function resolveArtifactsToDefns(artifacts, configDir) {
       throw new Error(`${gatherer.instance.name} gatherer does not support Fraggle Rock`);
     }
 
-    /** @type {LH.Config.ArtifactDefn<LH.Gatherer.DependencyKey>} */
+    /** @type {LH.Config.AnyArtifactDefn} */
+    // @ts-expect-error - Typescript can't validate the gatherer and dependencies match
+    // even though it knows that they're each valid on their own.
     const artifact = {
       id: artifactJson.id,
       gatherer,
@@ -127,7 +129,7 @@ function resolveArtifactsToDefns(artifacts, configDir) {
 /**
  *
  * @param {LH.Config.NavigationJson[]|null|undefined} navigations
- * @param {LH.Config.ArtifactDefn[]|null|undefined} artifactDefns
+ * @param {LH.Config.AnyArtifactDefn[]|null|undefined} artifactDefns
  * @return {LH.Config.NavigationDefn[] | null}
  */
 function resolveNavigationsToDefns(navigations, artifactDefns) {

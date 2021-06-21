@@ -16,10 +16,13 @@ const invalidDevtoolsLog = require('../../fixtures/traces/progressive-app-m60.de
 /* eslint-env jest */
 
 describe('Metrics: LCP', () => {
+  const gatherContext = {gatherMode: 'navigation'};
+
   it('should compute predicted value', async () => {
     const settings = {throttlingMethod: 'simulate'};
     const context = {settings, computedCache: new Map()};
-    const result = await LargestContentfulPaint.request({trace, devtoolsLog, settings}, context);
+    const result = await LargestContentfulPaint.request({trace, devtoolsLog, gatherContext,
+      settings}, context);
 
     expect({
       timing: Math.round(result.timing),
@@ -37,7 +40,8 @@ describe('Metrics: LCP', () => {
   it('should compute an observed value', async () => {
     const settings = {throttlingMethod: 'provided'};
     const context = {settings, computedCache: new Map()};
-    const result = await LargestContentfulPaint.request({trace, devtoolsLog, settings}, context);
+    const result = await LargestContentfulPaint.request({trace, devtoolsLog, gatherContext,
+      settings}, context);
 
     assert.equal(Math.round(result.timing), 1122);
     assert.equal(result.timestamp, 713038144775);
@@ -47,7 +51,7 @@ describe('Metrics: LCP', () => {
     const settings = {throttlingMethod: 'provided'};
     const context = {settings, computedCache: new Map()};
     const resultPromise = LargestContentfulPaint.request(
-      {trace: invalidTrace, devtoolsLog: invalidDevtoolsLog, settings},
+      {gatherContext, trace: invalidTrace, devtoolsLog: invalidDevtoolsLog, settings},
       context
     );
     await expect(resultPromise).rejects.toThrow('NO_LCP');
