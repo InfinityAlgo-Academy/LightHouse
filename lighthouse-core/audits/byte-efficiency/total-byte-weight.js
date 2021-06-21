@@ -7,6 +7,7 @@
 
 const ByteEfficiencyAudit = require('./byte-efficiency-audit.js');
 const i18n = require('../../lib/i18n/i18n.js');
+const NetworkRequest = require('../../lib/network-request.js');
 const NetworkRecords = require('../../computed/network-records.js');
 
 const UIStrings = {
@@ -66,9 +67,9 @@ class TotalByteWeight extends ByteEfficiencyAudit {
     /** @type {Array<{url: string, totalBytes: number}>} */
     let results = [];
     records.forEach(record => {
-      // exclude data URIs since their size is reflected in other resources
-      // exclude unfinished requests since they won't have transfer size information
-      if (record.parsedURL.scheme === 'data' || !record.finished) return;
+      // Exclude non-network URIs since their size is reflected in other resources.
+      // Exclude records without transfer size information (or 0 bytes which won't matter anyway).
+      if (NetworkRequest.isNonNetworkRequest(record) || !record.transferSize) return;
 
       const result = {
         url: record.url,
