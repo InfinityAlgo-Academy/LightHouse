@@ -43,12 +43,21 @@ lh_bg_js="dist/lighthouse-dt-bundle.js"
 cp -pPR "$lh_bg_js" "$fe_lh_dir/lighthouse-dt-bundle.js"
 echo -e "$check (Potentially stale) lighthouse-dt-bundle copied."
 
+# generate .d.ts files
+npx tsc --allowJs --declaration --emitDeclarationOnly lighthouse-core/report/html/renderer/standalone.js
+
 # copy report code $fe_lh_dir
 fe_lh_report_dir="$fe_lh_dir/report/"
 rsync -avh lighthouse-core/report/html/renderer/ "$fe_lh_report_dir" --exclude="BUILD.gn" --exclude="report-tsconfig.json" --exclude="generated" --exclude="psi.js" --delete
 # file-namer.js is not used, but we should export something so it compiles.
-echo 'export const getFilenamePrefix = () => {};' > "$fe_lh_report_dir/common/file-namer.js"
+echo 'export const getFilenamePrefix = () => {throw new Error("not used in CDT")};' > "$fe_lh_report_dir/common/file-namer.js"
 echo -e "$check Report code copied."
+
+# delete those .d.ts files
+rm -rf lighthouse-core/report/html/renderer/**/*.d.ts
+rm lighthouse-core/lib/file-namer.d.ts
+# weird that this is needed too ...
+rm     lighthouse-core/report/html/renderer/standalone.d.ts
 
 # copy report generator + cached resources into $fe_lh_dir
 fe_lh_report_assets_dir="$fe_lh_dir/report-assets/"
