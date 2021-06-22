@@ -41,17 +41,19 @@ module.exports = [
           },
         },
         'uses-rel-preload': {
-          score: '<1',
-          numericValue: '>500',
-          warnings: {
-            0: /level-2.*warning/,
-            length: 1,
-          },
-          details: {
-            items: {
-              length: 1,
-            },
-          },
+          scoreDisplayMode: 'notApplicable',
+          // Disabled for now, see https://github.com/GoogleChrome/lighthouse/issues/11960
+          // score: '<1',
+          // numericValue: '>500',
+          // warnings: {
+          //   0: /level-2.*warning/,
+          //   length: 1,
+          // },
+          // details: {
+          //   items: {
+          //     length: 1,
+          //   },
+          // },
         },
         'uses-rel-preconnect': {
           score: 1,
@@ -163,14 +165,16 @@ module.exports = [
           },
         },
         'preload-fonts': {
-          score: 0,
-          details: {
-            items: [
-              {
-                url: 'http://localhost:10200/perf/lobster-two-v10-latin-700.woff2?delay=1000',
-              },
-            ],
-          },
+          scoreDisplayMode: 'notApplicable',
+          // Disabled for now, see https://github.com/GoogleChrome/lighthouse/issues/11960
+          // score: 0,
+          // details: {
+          //   items: [
+          //     {
+          //       url: 'http://localhost:10200/perf/lobster-two-v10-latin-700.woff2?delay=1000',
+          //     },
+          //   ],
+          // },
         },
       },
     },

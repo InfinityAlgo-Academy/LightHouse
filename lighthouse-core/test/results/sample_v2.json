@@ -732,25 +732,10 @@
     },
     "preload-fonts": {
       "id": "preload-fonts",
-      "title": "Fonts with `font-display: optional` are not preloaded",
+      "title": "Fonts with `font-display: optional` are preloaded",
       "description": "Preload `optional` fonts so first-time visitors may use them. [Learn more](https://web.dev/preload-optional-fonts/)",
-      "score": 0,
-      "scoreDisplayMode": "binary",
-      "details": {
-        "type": "table",
-        "headings": [
-          {
-            "key": "url",
-            "itemType": "url",
-            "text": "URL"
-          }
-        ],
-        "items": [
-          {
-            "url": "http://localhost:10200/perf/lobster-two-v10-latin-700.woff2?cors=true"
-          }
-        ]
-      }
+      "score": null,
+      "scoreDisplayMode": "notApplicable"
     },
     "deprecations": {
       "id": "deprecations",
@@ -941,11 +926,8 @@
       "id": "uses-rel-preload",
       "title": "Preload key requests",
       "description": "Consider using `<link rel=preload>` to prioritize fetching resources that are currently requested later in page load. [Learn more](https://web.dev/uses-rel-preload/).",
-      "score": 1,
-      "scoreDisplayMode": "numeric",
-      "numericValue": 0,
-      "numericUnit": "millisecond",
-      "displayValue": "",
+      "score": null,
+      "scoreDisplayMode": "notApplicable",
       "details": {
         "type": "opportunity",
         "headings": [],
@@ -2160,11 +2142,8 @@
       "id": "preload-lcp-image",
       "title": "Preload Largest Contentful Paint image",
       "description": "Preload the image used by the LCP element in order to improve your LCP time. [Learn more](https://web.dev/optimize-lcp/#preload-important-resources).",
-      "score": 1,
-      "scoreDisplayMode": "numeric",
-      "numericValue": 0,
-      "numericUnit": "millisecond",
-      "displayValue": "",
+      "score": null,
+      "scoreDisplayMode": "notApplicable",
       "details": {
         "type": "opportunity",
         "headings": [],
@@ -5597,7 +5576,7 @@
         },
         {
           "id": "preload-fonts",
-          "weight": 1,
+          "weight": 0,
           "group": "best-practices-ux"
         },
         {
@@ -5647,7 +5626,7 @@
         }
       ],
       "id": "best-practices",
-      "score": 0.19
+      "score": 0.2
     },
     "seo": {
       "title": "SEO",
@@ -6411,12 +6390,6 @@
       {
         "startTime": 0,
         "name": "lh:audit:preload-lcp-image",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:computed:LanternLargestContentfulPaint",
         "duration": 100,
         "entryType": "measure"
       },
@@ -7345,7 +7318,6 @@
         "audits[server-response-time].details.headings[0].label",
         "audits[image-aspect-ratio].details.headings[1].text",
         "audits[image-size-responsive].details.headings[1].text",
-        "audits[preload-fonts].details.headings[0].text",
         "audits[bootup-time].details.headings[0].text",
         "audits[network-rtt].details.headings[0].text",
         "audits[network-server-latency].details.headings[0].text",
@@ -7472,7 +7444,7 @@
       "lighthouse-core/audits/image-size-responsive.js | columnExpected": [
         "audits[image-size-responsive].details.headings[4].text"
       ],
-      "lighthouse-core/audits/preload-fonts.js | failureTitle": [
+      "lighthouse-core/audits/preload-fonts.js | title": [
         "audits[preload-fonts].title"
       ],
       "lighthouse-core/audits/preload-fonts.js | description": [

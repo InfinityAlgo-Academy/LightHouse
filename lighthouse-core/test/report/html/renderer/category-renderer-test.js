@@ -231,8 +231,15 @@ describe('CategoryRenderer', () => {
         notApplicableCount,
         'score shows informative and dash icon'
       );
+    });
 
-      const bestPracticeCat = sampleResults.categories['best-practices'];
+    it('does not render a not applicable section if the category does not contain them', () => {
+      const category = sampleResults.categories['best-practices'];
+      const bestPracticeCat = {
+        ...category,
+        auditRefs: category.auditRefs
+          .filter(ref => ref.result.scoreDisplayMode !== 'notApplicable'),
+      };
       const categoryDOM2 = renderer.render(bestPracticeCat, sampleResults.categoryGroups);
       assert.ok(!categoryDOM2.querySelector('.lh-clump--notapplicable'));
     });

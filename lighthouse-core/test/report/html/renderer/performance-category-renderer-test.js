@@ -101,7 +101,7 @@ describe('PerfCategoryRenderer', () => {
     const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
 
     const oppAudits = category.auditRefs.filter(audit => audit.group === 'load-opportunities' &&
-        audit.result.score !== 1);
+        audit.result.score !== 1 && audit.result.scoreDisplayMode !== 'notApplicable');
     const oppElements = categoryDOM.querySelectorAll('.lh-audit--load-opportunity');
     assert.equal(oppElements.length, oppAudits.length);
 
