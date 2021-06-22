@@ -493,7 +493,23 @@ class NetworkRequest {
   static isSecureRequest(record) {
     return URL.isSecureScheme(record.parsedURL.scheme) ||
         URL.isSecureScheme(record.protocol) ||
-        URL.isLikeLocalhost(record.parsedURL.host);
+        URL.isLikeLocalhost(record.parsedURL.host) ||
+        NetworkRequest.isHstsRequest(record);
+  }
+
+  /**
+   * Returns whether the network request was an HSTS redirect request.
+   * @param {NetworkRequest} record
+   * @return {boolean}
+   */
+  static isHstsRequest(record) {
+    const destination = record.redirectDestination;
+    if (!destination) return false;
+
+    const reasonHeader = record.responseHeaders
+      .find(header => header.name === 'Non-Authoritative-Reason');
+    const reason = reasonHeader && reasonHeader.value;
+    return reason === 'HSTS' && NetworkRequest.isSecureRequest(destination);
   }
 }
 
