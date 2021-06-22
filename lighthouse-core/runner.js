@@ -170,9 +170,11 @@ class Runner {
       }
 
       // Build report if in local dev env so we don't have to run a watch command.
-      // TODO: dev checkout only. what to look for? existence of `dist/`?
-      if (settings.output === 'html') {
-        await require('../build/build-report.js').buildStandaloneReport();
+      if (settings.output === 'html' && !global.isDevtools && !global.isLightrider &&
+          fs.existsSync('dist') && fs.existsSync('.git')) {
+        // Prevent bundling.
+        const buildReportPath = '../build/build-report.js';
+        await require(buildReportPath).buildStandaloneReport();
       }
 
       // Create the HTML, JSON, and/or CSV string

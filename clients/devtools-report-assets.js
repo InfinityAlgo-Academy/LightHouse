@@ -25,7 +25,7 @@ module.exports = {
     return cachedResources.get('third_party/lighthouse/report-assets/report.css');
   },
   get REPORT_JAVASCRIPT() {
-    return cachedResources.get('third_party/lighthouse/report-assets/report.js');
+    return cachedResources.get('third_party/lighthouse/report/standalone.js');
   },
   get REPORT_TEMPLATE() {
     return cachedResources.get('third_party/lighthouse/report-assets/template.html');
