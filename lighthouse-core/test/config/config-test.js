@@ -1297,7 +1297,7 @@ describe('Config', () => {
 
       const expectedInstance = {
         meta: {
-          supportedModes: ['snapshot', 'navigation'],
+          supportedModes: ['snapshot', 'timespan', 'navigation'],
         },
       };
       assert.deepEqual(mergedJson[0].gatherers,
