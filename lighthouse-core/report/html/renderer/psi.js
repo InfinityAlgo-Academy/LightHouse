@@ -21,6 +21,7 @@
  */
 'use strict';
 
+// import {renderLighthouseReport} from './common/render.js';
 import {DetailsRenderer} from './common/details-renderer.js';
 import {DOM} from './common/dom.js';
 import {ElementScreenshotRenderer} from './common/element-screenshot-renderer.js';

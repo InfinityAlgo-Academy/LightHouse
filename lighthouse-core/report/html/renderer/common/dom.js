@@ -129,6 +129,7 @@ export class DOM {
    * Resets the "stamped" state of the templates.
    */
   resetTemplates() {
+    // TODO: this should only act on `templateContext`
     this.findAll('template[data-stamped]', this._document).forEach(t => {
       t.removeAttribute('data-stamped');
     });

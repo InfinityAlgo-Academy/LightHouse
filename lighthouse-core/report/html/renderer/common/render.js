@@ -21,13 +21,18 @@ import {ReportUIFeatures} from './report-ui-features.js';
 
 // TODO: we could instead return an Element (not appending to the dom),
 //       and replace `containerEl` with an options `document: Document` property.
+//       oh, and `templateContext` ...
 
 /**
  * @param {RenderOptions} opts
  */
 export function renderLighthouseReport(opts) {
   const dom = new DOM(opts.containerEl.ownerDocument);
+  // Assume fresh styles needed on every call, so mark all template styles as unused.
+  dom.resetTemplates();
+
   const renderer = new ReportRenderer(dom);
+  // if (opts.templateContext) renderer.setTemplateContext(opts.templateContext);
   renderer.renderReport(opts.lhr, opts.containerEl);
 
   // Hook in JS features and page-level event listeners after the report
