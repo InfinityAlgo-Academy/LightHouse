@@ -106,6 +106,10 @@ class UnusedBytes extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static audit(artifacts, context) {
+    if (artifacts.GatherContext && artifacts.GatherContext.gatherMode === 'snapshot') {
+      return this.auditSnapshot_(artifacts, context);
+    }
+
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     const settings = context && context.settings || {};
@@ -228,6 +232,15 @@ class UnusedBytes extends Audit {
    */
   static audit_(artifacts, networkRecords, context) {
     throw new Error('audit_ unimplemented');
+  }
+
+  /**
+   * @param {LH.Artifacts} artifacts
+   * @param {LH.Audit.Context} context
+   * @return {Promise<LH.Audit.Product>}
+   */
+  static auditSnapshot_(artifacts, context) {
+    throw new Error('auditSnapshot_ unimplemented');
   }
 
   /* eslint-enable no-unused-vars */

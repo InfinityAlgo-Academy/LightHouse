@@ -320,7 +320,9 @@ class Runner {
         if (noArtifact || noRequiredTrace || noRequiredDevtoolsLog) {
           log.warn('Runner',
               `${artifactName} gatherer, required by audit ${audit.meta.id}, did not run.`);
-          throw new LHError(LHError.errors.MISSING_REQUIRED_ARTIFACT, {artifactName});
+          if (!audit.meta.supportedModes) {
+            throw new LHError(LHError.errors.MISSING_REQUIRED_ARTIFACT, {artifactName});
+          }
         }
 
         // If artifact was an error, output error result on behalf of audit.

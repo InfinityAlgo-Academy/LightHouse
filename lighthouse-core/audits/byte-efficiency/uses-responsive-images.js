@@ -42,7 +42,10 @@ class UsesResponsiveImages extends ByteEfficiencyAudit {
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
       scoreDisplayMode: ByteEfficiencyAudit.SCORING_MODES.NUMERIC,
-      requiredArtifacts: ['ImageElements', 'ViewportDimensions', 'devtoolsLogs', 'traces'],
+      supportedModes: ['snapshot', 'navigation'],
+      requiredArtifacts: [
+        'ImageElements', 'ViewportDimensions', 'devtoolsLogs', 'traces', 'GatherContext',
+      ],
     };
   }
 
@@ -156,6 +159,39 @@ class UsesResponsiveImages extends ByteEfficiencyAudit {
     return {
       items,
       headings,
+    };
+  }
+
+  /**
+   * @param {LH.Artifacts} artifacts
+   * @return {Promise<LH.Audit.Product>}
+   */
+  static async auditSnapshot_(artifacts) {
+    /** @type {LH.Audit.Details.TableItem[]} */
+    const items = [];
+    for (const image of artifacts.ImageElements) {
+      if (!image.naturalDimensions) continue;
+      const {width: naturalWidth, height: naturalHeight} = image.naturalDimensions;
+
+      // TODO: Filter by some heuristic (e.g. wasted pixels, byte estimate)
+
+      items.push({
+        url: image.src,
+        displayedDimensions: `${image.displayedWidth}x${image.displayedHeight}`,
+        actualDimensions: `${naturalWidth}x${naturalHeight}`,
+      });
+    }
+
+    /** @type {LH.Audit.Details.Table['headings']} */
+    const headings = [
+      {key: 'url', itemType: 'thumbnail', text: ''},
+      {key: 'url', itemType: 'url', text: str_(i18n.UIStrings.columnURL)},
+      {key: 'displayedDimensions', itemType: 'text', text: 'Displayed dimensions'},
+      {key: 'actualDimensions', itemType: 'text', text: 'Actual dimensions'},
+    ];
+    return {
+      score: items.length ? 0 : 1,
+      details: ByteEfficiencyAudit.makeTableDetails(headings, items),
     };
   }
 }

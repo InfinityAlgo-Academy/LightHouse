@@ -49,6 +49,7 @@ function filterAuditsByAvailableArtifacts(audits, availableArtifacts) {
   );
   return audits.filter(audit => {
     const meta = audit.implementation.meta;
+    if (meta.supportedModes) return true;
     return meta.requiredArtifacts.every(id => availableArtifactIds.has(id));
   });
 }
