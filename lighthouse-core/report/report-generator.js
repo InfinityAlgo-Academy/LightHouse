@@ -39,17 +39,9 @@ class ReportGenerator {
       .replace(/\u2029/g, '\\u2029'); // replaces paragraph separators
     const sanitizedJavascript = htmlReportAssets.REPORT_JAVASCRIPT.replace(/<\//g, '\\u003c/');
 
-    // let sanitizedJavascriptModules = '';
-    // for (const [id, code] of Object.entries(htmlReportAssets.REPORT_JAVASCRIPT_MODULES)) {
-    //   const sanitizedCode = code.replace(/<\//g, '\\u003c/');
-    //   sanitizedJavascriptModules +=
-    //     `<script type='lh-inline-module' id='${id}'>${sanitizedCode}</script>`;
-    // }
-
     return ReportGenerator.replaceStrings(htmlReportAssets.REPORT_TEMPLATE, [
       {search: '%%LIGHTHOUSE_JSON%%', replacement: sanitizedJson},
       {search: '%%LIGHTHOUSE_JAVASCRIPT%%', replacement: sanitizedJavascript},
-      // {search: '%%LIGHTHOUSE_JAVASCRIPT_MODULES%%', replacement: sanitizedJavascriptModules},
       {search: '/*%%LIGHTHOUSE_CSS%%*/', replacement: htmlReportAssets.REPORT_CSS},
       {search: '%%LIGHTHOUSE_TEMPLATES%%', replacement: htmlReportAssets.REPORT_TEMPLATES},
     ]);
