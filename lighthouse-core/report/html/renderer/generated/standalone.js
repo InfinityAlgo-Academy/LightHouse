@@ -896,82 +896,6 @@
    * limitations under the License.
    */
 
-  /**
-   * Logs messages via a UI butter.
-   */
-  class Logger {
-    /**
-     * @param {Element} element
-     */
-    constructor(element) {
-      this.el = element;
-      this._id = undefined;
-    }
-
-    /**
-     * Shows a butter bar.
-     * @param {string} msg The message to show.
-     * @param {boolean=} autoHide True to hide the message after a duration.
-     *     Default is true.
-     */
-    log(msg, autoHide = true) {
-      this._id && clearTimeout(this._id);
-
-      this.el.textContent = msg;
-      this.el.classList.add('show');
-      if (autoHide) {
-        this._id = setTimeout(_ => {
-          this.el.classList.remove('show');
-        }, 7000);
-      }
-    }
-
-    /**
-     * @param {string} msg
-     */
-    warn(msg) {
-      this.log('Warning: ' + msg);
-    }
-
-    /**
-     * @param {string} msg
-     */
-    error(msg) {
-      this.log(msg);
-
-      // Rethrow to make sure it's auditable as an error, but in a setTimeout so page
-      // recovers gracefully and user can try loading a report again.
-      setTimeout(_ => {
-        throw new Error(msg);
-      }, 0);
-    }
-
-    /**
-     * Explicitly hides the butter bar.
-     */
-    hide() {
-      this._id && clearTimeout(this._id);
-      this.el.classList.remove('show');
-    }
-  }
-
-  /**
-   * @license
-   * Copyright 2017 The Lighthouse Authors. All Rights Reserved.
-   *
-   * Licensed under the Apache License, Version 2.0 (the "License");
-   * you may not use this file except in compliance with the License.
-   * You may obtain a copy of the License at
-   *
-   *      http://www.apache.org/licenses/LICENSE-2.0
-   *
-   * Unless required by applicable law or agreed to in writing, software
-   * distributed under the License is distributed on an "AS-IS" BASIS,
-   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   * See the License for the specific language governing permissions and
-   * limitations under the License.
-   */
-
   class CategoryRenderer {
     /**
      * @param {DOM} dom
@@ -4944,43 +4868,150 @@
    * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
    */
 
-  function __initLighthouseReport__() {
-    const dom = new DOM(document);
-    const renderer = new ReportRenderer(dom);
+  // OR: we could take an options objec
+  /**
+   * @typedef RenderOptions
+   * @property {LH.Result} lhr
+   * @property {Element} containerEl Parent element to render the report into.
+   */
 
-    const container = document.querySelector('main');
-    renderer.renderReport(window.__LIGHTHOUSE_JSON__, container);
+
+  // TODO: we could instead return an Element (not appending to the dom),
+  //       and replace `containerEl` with an options `document: Document` property.
+
+  /**
+   * @param {RenderOptions} opts
+   */
+  function renderLighthouseReport(opts) {
+    const dom = new DOM(opts.containerEl.ownerDocument);
+    const renderer = new ReportRenderer(dom);
+    renderer.renderReport(opts.lhr, opts.containerEl);
 
     // Hook in JS features and page-level event listeners after the report
     // is in the document.
     const features = new ReportUIFeatures(dom);
-    features.initFeatures(window.__LIGHTHOUSE_JSON__);
+    features.initFeatures(opts.lhr);
   }
 
-  if (document.readyState === 'loading') {
-    window.addEventListener('DOMContentLoaded', __initLighthouseReport__);
-  } else {
-    __initLighthouseReport__();
-  }
+  /**
+   * @license
+   * Copyright 2017 The Lighthouse Authors. All Rights Reserved.
+   *
+   * Licensed under the Apache License, Version 2.0 (the "License");
+   * you may not use this file except in compliance with the License.
+   * You may obtain a copy of the License at
+   *
+   *      http://www.apache.org/licenses/LICENSE-2.0
+   *
+   * Unless required by applicable law or agreed to in writing, software
+   * distributed under the License is distributed on an "AS-IS" BASIS,
+   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   * See the License for the specific language governing permissions and
+   * limitations under the License.
+   */
 
-  document.addEventListener('lh-analytics', e => {
-    if (window.ga) {
-      ga(e.detail.cmd, e.detail.fields);
+  /**
+   * Logs messages via a UI butter.
+   */
+  class Logger {
+    /**
+     * @param {Element} element
+     */
+    constructor(element) {
+      this.el = element;
+      this._id = undefined;
     }
+
+    /**
+     * Shows a butter bar.
+     * @param {string} msg The message to show.
+     * @param {boolean=} autoHide True to hide the message after a duration.
+     *     Default is true.
+     */
+    log(msg, autoHide = true) {
+      this._id && clearTimeout(this._id);
+
+      this.el.textContent = msg;
+      this.el.classList.add('show');
+      if (autoHide) {
+        this._id = setTimeout(_ => {
+          this.el.classList.remove('show');
+        }, 7000);
+      }
+    }
+
+    /**
+     * @param {string} msg
+     */
+    warn(msg) {
+      this.log('Warning: ' + msg);
+    }
+
+    /**
+     * @param {string} msg
+     */
+    error(msg) {
+      this.log(msg);
+
+      // Rethrow to make sure it's auditable as an error, but in a setTimeout so page
+      // recovers gracefully and user can try loading a report again.
+      setTimeout(_ => {
+        throw new Error(msg);
+      }, 0);
+    }
+
+    /**
+     * Explicitly hides the butter bar.
+     */
+    hide() {
+      this._id && clearTimeout(this._id);
+      this.el.classList.remove('show');
+    }
+  }
+
+  /**
+   * @license Copyright 2021 The Lighthouse Authors. All Rights Reserved.
+   * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
+   * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+   */
+
+  function __initLighthouseReport__() {
+    const mainEl = document.querySelector('main');
+    if (!mainEl) return;
+
+    /** @type {LH.ReportResult} */
+    // @ts-expect-error
+    const lhr = window.__LIGHTHOUSE_JSON__;
+    renderLighthouseReport({
+      lhr,
+      containerEl: mainEl,
+    });
+  }
+
+  __initLighthouseReport__();
+
+  document.addEventListener('lh-analytics', /** @param {Event} e */ e => {
+    // @ts-expect-error
+    if (window.ga) ga(e.detail.cmd, e.detail.fields);
   });
 
-  document.addEventListener('lh-log', e => {
-    const logger = new Logger(document.querySelector('#lh-log'));
+  document.addEventListener('lh-log', /** @param {Event} e */ e => {
+    const el = document.querySelector('#lh-log');
+    if (!el) return;
 
-    switch (e.detail.cmd) {
+    const logger = new Logger(el);
+    // @ts-expect-error
+    const detail = e.detail;
+
+    switch (detail.cmd) {
       case 'log':
-        logger.log(e.detail.msg);
+        logger.log(detail.msg);
         break;
       case 'warn':
-        logger.warn(e.detail.msg);
+        logger.warn(detail.msg);
         break;
       case 'error':
-        logger.error(e.detail.msg);
+        logger.error(detail.msg);
         break;
       case 'hide':
         logger.hide();

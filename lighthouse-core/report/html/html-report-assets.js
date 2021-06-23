@@ -8,23 +8,7 @@
 const fs = require('fs');
 
 const REPORT_TEMPLATE = fs.readFileSync(__dirname + '/report-template.html', 'utf8');
-const REPORT_JAVASCRIPT = [
-  fs.readFileSync(__dirname + '/renderer/util.js', 'utf8'),
-  fs.readFileSync(__dirname + '/renderer/dom.js', 'utf8'),
-  fs.readFileSync(__dirname + '/renderer/details-renderer.js', 'utf8'),
-  fs.readFileSync(__dirname + '/renderer/crc-details-renderer.js', 'utf8'),
-  fs.readFileSync(__dirname + '/renderer/snippet-renderer.js', 'utf8'),
-  fs.readFileSync(__dirname + '/renderer/element-screenshot-renderer.js', 'utf8'),
-  fs.readFileSync(__dirname + '/../../lib/file-namer.js', 'utf8'),
-  fs.readFileSync(__dirname + '/renderer/logger.js', 'utf8'),
-  fs.readFileSync(__dirname + '/renderer/report-ui-features.js', 'utf8'),
-  fs.readFileSync(__dirname + '/renderer/category-renderer.js', 'utf8'),
-  fs.readFileSync(__dirname + '/renderer/performance-category-renderer.js', 'utf8'),
-  fs.readFileSync(__dirname + '/renderer/pwa-category-renderer.js', 'utf8'),
-  fs.readFileSync(__dirname + '/renderer/report-renderer.js', 'utf8'),
-  fs.readFileSync(__dirname + '/renderer/i18n.js', 'utf8'),
-  fs.readFileSync(__dirname + '/renderer/text-encoding.js', 'utf8'),
-].join(';\n');
+const REPORT_JAVASCRIPT = fs.readFileSync(__dirname + '/renderer/generated/standalone.js', 'utf8');
 const REPORT_CSS = fs.readFileSync(__dirname + '/report-styles.css', 'utf8');
 const REPORT_TEMPLATES = fs.readFileSync(__dirname + '/templates.html', 'utf8');
 

@@ -7,31 +7,23 @@
 
 /* global document window ga */
 
-import {DOM} from './common/dom.js';
+import {renderLighthouseReport} from './common/render.js';
 import {Logger} from './common/logger.js';
-import {ReportRenderer} from './common/report-renderer.js';
-import {ReportUIFeatures} from './common/report-ui-features.js';
 
 function __initLighthouseReport__() {
-  const dom = new DOM(document);
-  const renderer = new ReportRenderer(dom);
-  const container = dom.find('main', document);
+  const mainEl = document.querySelector('main');
+  if (!mainEl) return;
+
   /** @type {LH.ReportResult} */
   // @ts-expect-error
   const lhr = window.__LIGHTHOUSE_JSON__;
-  renderer.renderReport(lhr, container);
-
-  // Hook in JS features and page-level event listeners after the report
-  // is in the document.
-  const features = new ReportUIFeatures(dom);
-  features.initFeatures(lhr);
+  renderLighthouseReport({
+    lhr,
+    containerEl: mainEl,
+  });
 }
 
-if (document.readyState === 'loading') {
-  window.addEventListener('DOMContentLoaded', __initLighthouseReport__);
-} else {
-  __initLighthouseReport__();
-}
+__initLighthouseReport__();
 
 document.addEventListener('lh-analytics', /** @param {Event} e */ e => {
   // @ts-expect-error

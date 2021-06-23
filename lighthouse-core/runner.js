@@ -170,7 +170,9 @@ class Runner {
       }
 
       // Build report if in local dev env so we don't have to run a watch command.
-      if (settings.output === 'html' && !global.isDevtools && !global.isLightrider &&
+      const forHtml = settings.output === 'html' ||
+        (Array.isArray(settings.output) && settings.output.includes('html'));
+      if (forHtml && !global.isDevtools && !global.isLightrider &&
           fs.existsSync('dist') && fs.existsSync('.git')) {
         // Prevent bundling.
         const buildReportPath = '../build/build-report.js';
