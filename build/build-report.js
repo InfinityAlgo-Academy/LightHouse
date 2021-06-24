@@ -32,20 +32,19 @@ async function buildStandaloneReport() {
 
 async function buildEsModulesBundle() {
   const bundle = await rollup.rollup({
-    input: 'lighthouse-core/report/html/renderer/common/index.js',
+    input: 'lighthouse-core/report/html/renderer/bundle.js',
     plugins: [
       commonjs(),
     ],
   });
 
   await bundle.write({
-    file: 'dist/report.mjs',
+    file: 'dist/report.js',
     format: 'esm',
   });
 }
 
 buildStandaloneReport();
-// TODO buildPsiReport(); ?
 buildEsModulesBundle();
 
 module.exports = {

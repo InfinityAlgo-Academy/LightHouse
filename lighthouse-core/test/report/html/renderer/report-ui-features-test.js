@@ -10,18 +10,18 @@
 const assert = require('assert').strict;
 const fs = require('fs');
 const jsdom = require('jsdom');
-const Util = require('../../../../report/html/renderer/util.js');
-const I18n = require('../../../../report/html/renderer/i18n.js');
-const DOM = require('../../../../report/html/renderer/dom.js');
-const DetailsRenderer = require('../../../../report/html/renderer/details-renderer.js');
-const ReportUIFeatures = require('../../../../report/html/renderer/report-ui-features.js');
-const CategoryRenderer = require('../../../../report/html/renderer/category-renderer.js');
+const Util = require('../../../../report/html/renderer/common/util.js');
+const I18n = require('../../../../report/html/renderer/common/i18n.js');
+const DOM = require('../../../../report/html/renderer/common/dom.js');
+const DetailsRenderer = require('../../../../report/html/renderer/common/details-renderer.js');
+const ReportUIFeatures = require('../../../../report/html/renderer/common/report-ui-features.js');
+const CategoryRenderer = require('../../../../report/html/renderer/common/category-renderer.js');
 const ElementScreenshotRenderer =
-  require('../../../../report/html/renderer/element-screenshot-renderer.js');
+  require('../../../../report/html/renderer/common/element-screenshot-renderer.js');
 const RectHelpers = require('../../../../../lighthouse-core/lib/rect-helpers.js');
 const CriticalRequestChainRenderer = require(
-    '../../../../report/html/renderer/crc-details-renderer.js');
-const ReportRenderer = require('../../../../report/html/renderer/report-renderer.js');
+    '../../../../report/html/renderer/common/crc-details-renderer.js');
+const ReportRenderer = require('../../../../report/html/renderer/common/report-renderer.js');
 const sampleResultsOrig = require('../../../results/sample_v2.json');
 
 const TEMPLATE_FILE = fs.readFileSync(__dirname +
@@ -60,9 +60,9 @@ describe('ReportUIFeatures', () => {
 
     // lazy loaded because they depend on CategoryRenderer to be available globally
     global.PerformanceCategoryRenderer =
-        require('../../../../report/html/renderer/performance-category-renderer.js');
+        require('../../../../report/html/renderer/common/performance-category-renderer.js');
     global.PwaCategoryRenderer =
-        require('../../../../report/html/renderer/pwa-category-renderer.js');
+        require('../../../../report/html/renderer/common/pwa-category-renderer.js');
 
     // Stub out matchMedia for Node.
     global.matchMedia = function() {

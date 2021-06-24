@@ -10,11 +10,11 @@
 const fs = require('fs');
 const jsdom = require('jsdom');
 const ElementScreenshotRenderer =
-  require('../../../../report/html/renderer/element-screenshot-renderer.js');
+  require('../../../../report/html/renderer/common/element-screenshot-renderer.js');
 const RectHelpers = require('../../../../../lighthouse-core/lib/rect-helpers.js');
-const Util = require('../../../../report/html/renderer/util.js');
-const I18n = require('../../../../report/html/renderer/i18n.js');
-const DOM = require('../../../../report/html/renderer/dom.js');
+const Util = require('../../../../report/html/renderer/common/util.js');
+const I18n = require('../../../../report/html/renderer/common/i18n.js');
+const DOM = require('../../../../report/html/renderer/common/dom.js');
 
 const TEMPLATE_FILE = fs.readFileSync(
   __dirname + '/../../../../report/html/templates.html',

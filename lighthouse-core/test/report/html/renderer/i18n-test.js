@@ -6,8 +6,8 @@
 'use strict';
 
 const assert = require('assert').strict;
-const Util = require('../../../../report/html/renderer/util.js');
-const I18n = require('../../../../report/html/renderer/i18n.js');
+const Util = require('../../../../report/html/renderer/common/util.js');
+const I18n = require('../../../../report/html/renderer/common/i18n.js');
 
 // Require i18n to make sure Intl is polyfilled in Node without full-icu for testing.
 // When Util is run in a browser, Intl will be supplied natively (IE11+).

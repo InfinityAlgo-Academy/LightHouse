@@ -10,14 +10,14 @@
 const assert = require('assert').strict;
 const fs = require('fs');
 const jsdom = require('jsdom');
-const Util = require('../../../../report/html/renderer/util.js');
-const I18n = require('../../../../report/html/renderer/i18n.js');
+const Util = require('../../../../report/html/renderer/common/util.js');
+const I18n = require('../../../../report/html/renderer/common/i18n.js');
 const URL = require('../../../../lib/url-shim.js');
-const DOM = require('../../../../report/html/renderer/dom.js');
-const DetailsRenderer = require('../../../../report/html/renderer/details-renderer.js');
+const DOM = require('../../../../report/html/renderer/common/dom.js');
+const DetailsRenderer = require('../../../../report/html/renderer/common/details-renderer.js');
 const CriticalRequestChainRenderer = require(
-    '../../../../report/html/renderer/crc-details-renderer.js');
-const CategoryRenderer = require('../../../../report/html/renderer/category-renderer.js');
+    '../../../../report/html/renderer/common/crc-details-renderer.js');
+const CategoryRenderer = require('../../../../report/html/renderer/common/category-renderer.js');
 const sampleResultsOrig = require('../../../results/sample_v2.json');
 
 const TEMPLATE_FILE = fs.readFileSync(__dirname +
@@ -35,7 +35,7 @@ describe('PerfCategoryRenderer', () => {
     global.CategoryRenderer = CategoryRenderer;
 
     const PerformanceCategoryRenderer =
-        require('../../../../report/html/renderer/performance-category-renderer.js');
+        require('../../../../report/html/renderer/common/performance-category-renderer.js');
 
     const {document} = new jsdom.JSDOM(TEMPLATE_FILE).window;
     const dom = new DOM(document);

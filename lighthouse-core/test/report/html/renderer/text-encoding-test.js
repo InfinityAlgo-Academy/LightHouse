@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const TextEncoding = require('../../../../report/html/renderer/text-encoding.js');
+const TextEncoding = require('../../../../report/html/renderer/common/text-encoding.js');
 
 /* eslint-env jest */
 

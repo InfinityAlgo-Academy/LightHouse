@@ -5,4 +5,12 @@
  */
 'use strict';
 
-export {getFilenamePrefix} from '../../../../lib/file-namer.js';
+// This file is used to generate a bundle that can be imported
+// into an esmodules codebase to render the lighthouse report.
+// Currently, embedders must handle some boilerplate themselves (like standalone.js)
+// until we work out a common rendering interface.
+// See: https://github.com/GoogleChrome/lighthouse/pull/12623
+
+export {DOM} from './common/dom.js';
+export {ReportRenderer} from './common/report-renderer.js';
+export {ReportUIFeatures} from './common/report-ui-features.js';

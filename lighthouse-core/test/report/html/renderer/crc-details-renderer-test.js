@@ -10,12 +10,12 @@
 const assert = require('assert').strict;
 const fs = require('fs');
 const jsdom = require('jsdom');
-const Util = require('../../../../report/html/renderer/util.js');
-const I18n = require('../../../../report/html/renderer/i18n.js');
-const DOM = require('../../../../report/html/renderer/dom.js');
-const DetailsRenderer = require('../../../../report/html/renderer/details-renderer.js');
+const Util = require('../../../../report/html/renderer/common/util.js');
+const I18n = require('../../../../report/html/renderer/common/i18n.js');
+const DOM = require('../../../../report/html/renderer/common/dom.js');
+const DetailsRenderer = require('../../../../report/html/renderer/common/details-renderer.js');
 const CriticalRequestChainRenderer =
-    require('../../../../report/html/renderer/crc-details-renderer.js');
+    require('../../../../report/html/renderer/common/crc-details-renderer.js');
 
 const TEMPLATE_FILE = fs.readFileSync(__dirname +
     '/../../../../report/html/templates.html', 'utf8');
