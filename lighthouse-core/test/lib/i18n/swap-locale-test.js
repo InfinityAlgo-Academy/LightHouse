@@ -6,13 +6,14 @@
 'use strict';
 
 const swapLocale = require('../../../lib/i18n/swap-locale.js');
+const {isNode12SmallIcu} = require('../../test-utils.js');
 
 const lhr = require('../../results/sample_v2.json');
 
 /* eslint-env jest */
 describe('swap-locale', () => {
   // COMPAT: Node 12 only has 'en' by default. Skip these tests since they're all about swapping locales.
-  if (process.versions.node.startsWith('12')) {
+  if (isNode12SmallIcu()) {
     // Jest requires at least one test per suite.
     it('runs even if other locales are not supported', () => {
       /** @type {LH.Result} */
