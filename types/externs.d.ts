@@ -317,6 +317,7 @@ declare global {
       args: {
         fileName?: string;
         snapshot?: string;
+        sync_id?: string;
         beginData?: {
           frame?: string;
           startLine?: number;

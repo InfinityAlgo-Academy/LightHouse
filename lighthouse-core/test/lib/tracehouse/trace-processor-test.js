@@ -17,6 +17,7 @@ const noTracingStartedTrace = require('../../fixtures/traces/no-tracingstarted-m
 const preactTrace = require('../../fixtures/traces/preactjs.com_ts_of_undefined.json');
 const noFMPtrace = require('../../fixtures/traces/no_fmp_event.json');
 const noFCPtrace = require('../../fixtures/traces/airhorner_no_fcp.json');
+const timespanTrace = require('../../fixtures/traces/timespan-trace-m91.json');
 const noNavStartTrace = require('../../fixtures/traces/no_navstart_event.json');
 const backgroundTabTrace = require('../../fixtures/traces/backgrounded-tab-missing-paints.json');
 const lcpTrace = require('../../fixtures/traces/lcp-m78.json');
@@ -420,6 +421,16 @@ describe('TraceProcessor', () => {
         });
 
         expect(trace.timestamps.timeOrigin).toEqual(713037332092);
+      });
+
+      it('supports lighthouseMarker', () => {
+        const trace = TraceProcessor.processTrace(timespanTrace);
+
+        expect(trace.timings).toMatchObject({
+          traceEnd: 3626.13,
+        });
+
+        expect(trace.timestamps.timeOrigin).toEqual(260759206050);
       });
     });
 
