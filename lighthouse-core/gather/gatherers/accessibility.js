@@ -64,10 +64,6 @@ async function runA11yChecks(forTest = false) {
       'color-contrast': {enabled: !forTest}, // See gatherer's test
       'aria-roledescription': {enabled: false},
       'scrollable-region-focusable': {enabled: false},
-      // TODO(paulirish): create audits and enable these 3.
-      'input-button-name': {enabled: false},
-      'role-img-alt': {enabled: false},
-      'select-name': {enabled: false},
     },
   });
 
