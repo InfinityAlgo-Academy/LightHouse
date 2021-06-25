@@ -8,7 +8,9 @@ build/
 coverage/
 dist/
 proto/
+docs/
 
+lighthouse-core/lib/sd-validation/
 lighthouse-core/scripts/*
 lighthouse-core/test/
 lighthouse-core/third_party/src/
@@ -50,6 +52,9 @@ npm-debug.log
 yarn-error.log
 results.html
 *.lcov
+
+# large files
+changelog.md
 
 # dev files
 .DS_Store
