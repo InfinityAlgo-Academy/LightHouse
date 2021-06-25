@@ -36,7 +36,6 @@ if ! which gn ; then
   export PYTHONPATH="${PYTHONPATH:-}:$BLINK_TOOLS_PATH/latest/third_party/typ"
 fi
 
-yarn build-devtools
 yarn devtools "$DEVTOOLS_PATH"
 
 cd "$DEVTOOLS_PATH"

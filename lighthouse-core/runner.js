@@ -169,6 +169,16 @@ class Runner {
         assetSaver.saveLhr(lhr, path);
       }
 
+      // Build report if in local dev env so we don't have to run a watch command.
+      const forHtml = settings.output === 'html' ||
+        (Array.isArray(settings.output) && settings.output.includes('html'));
+      if (forHtml && !global.isDevtools && !global.isLightrider &&
+          fs.existsSync('dist') && fs.existsSync('.git')) {
+        // Prevent bundling.
+        const buildReportPath = '../build/build-report.js';
+        await require(buildReportPath).buildStandaloneReport();
+      }
+
       // Create the HTML, JSON, and/or CSV string
       const report = generateReport(lhr, settings.output);
 

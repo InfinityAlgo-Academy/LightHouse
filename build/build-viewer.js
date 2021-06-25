@@ -9,6 +9,7 @@ const fs = require('fs');
 const browserify = require('browserify');
 const GhPagesApp = require('./gh-pages-app.js');
 const {minifyFileTransform} = require('./build-utils.js');
+const {buildStandaloneReport} = require('./build-report.js');
 const htmlReportAssets = require('../report/report-assets.js');
 
 /**
@@ -29,6 +30,8 @@ async function run() {
       resolve(src.toString());
     });
   });
+
+  await buildStandaloneReport();
 
   const app = new GhPagesApp({
     name: 'viewer',
