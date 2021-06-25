@@ -16,7 +16,7 @@ const commonjs =
 
 async function buildStandaloneReport() {
   const bundle = await rollup.rollup({
-    input: 'report/renderer/standalone.js',
+    input: 'report/clients/standalone.js',
     plugins: [
       commonjs(),
     ],
@@ -32,7 +32,7 @@ async function buildStandaloneReport() {
 
 async function buildEsModulesBundle() {
   const bundle = await rollup.rollup({
-    input: 'report/renderer/bundle.js',
+    input: 'report/clients/bundle.js',
     plugins: [
       commonjs(),
     ],

@@ -11,6 +11,6 @@
 // until we work out a common rendering interface.
 // See: https://github.com/GoogleChrome/lighthouse/pull/12623
 
-export {DOM} from './common/dom.js';
-export {ReportRenderer} from './common/report-renderer.js';
-export {ReportUIFeatures} from './common/report-ui-features.js';
+export {DOM} from '../renderer/dom.js';
+export {ReportRenderer} from '../renderer/report-renderer.js';
+export {ReportUIFeatures} from '../renderer/report-ui-features.js';
