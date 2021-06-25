@@ -14,6 +14,7 @@ const log = require('lighthouse-logger');
 const Gatherer = require('../../gather/gatherers/gatherer.js');
 const Audit = require('../../audits/audit.js');
 const i18n = require('../../lib/i18n/i18n.js');
+const {isNode12SmallIcu} = require('../test-utils.js');
 
 /* eslint-env jest */
 
@@ -829,7 +830,7 @@ describe('Config', () => {
       const locale = 'ar-XB';
       const config = new Config({settings: {locale}});
       // COMPAT: Node 12 only has 'en' by default.
-      if (process.versions.node.startsWith('12')) return;
+      if (isNode12SmallIcu()) return;
       assert.strictEqual(config.settings.locale, locale);
     });
 
@@ -838,7 +839,7 @@ describe('Config', () => {
       const flagsLocale = 'ar-XB';
       const config = new Config({settings: {locale: settingsLocale}}, {locale: flagsLocale});
       // COMPAT: Node 12 only has 'en' by default.
-      if (process.versions.node.startsWith('12')) return;
+      if (isNode12SmallIcu()) return;
       assert.strictEqual(config.settings.locale, flagsLocale);
     });
   });
