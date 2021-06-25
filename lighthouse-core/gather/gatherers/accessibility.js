@@ -18,7 +18,7 @@ const pageFunctions = require('../../lib/page-functions.js');
  * @return {Promise<LH.Artifacts.Accessibility>}
  */
 /* c8 ignore start */
-async function runA11yChecks(forTest = false) {
+async function runA11yChecks(isTestMode = false) {
   /** @type {import('axe-core/axe')} */
   // @ts-expect-error - axe defined by axeLibSource
   const axe = window.axe;
@@ -38,9 +38,9 @@ async function runA11yChecks(forTest = false) {
         'wcag2aa',
       ],
     },
-    resultTypes: forTest ? undefined : ['violations', 'inapplicable'],
+    resultTypes: isTestMode ? undefined : ['violations', 'inapplicable'],
     rules: {
-      // Consider http://go/prcpg for expert review of the rules.
+      // Consider http://go/prcpg for expert review of the aXe rules.
       'tabindex': {enabled: true},
       'accesskeys': {enabled: true},
       'heading-order': {enabled: true},
@@ -61,7 +61,7 @@ async function runA11yChecks(forTest = false) {
       // https://github.com/dequelabs/axe-core/issues/2958
       'nested-interactive': {enabled: false},
       'frame-focusable-content': {enabled: false},
-      'color-contrast': {enabled: !forTest}, // See gatherer's test
+      'color-contrast': {enabled: !isTestMode}, // See gatherer's test for explanation
       'aria-roledescription': {enabled: false},
       'scrollable-region-focusable': {enabled: false},
       // TODO(paulirish): create audits and enable these 3.
@@ -75,7 +75,8 @@ async function runA11yChecks(forTest = false) {
   // are relative to the top of the page
   document.documentElement.scrollTop = 0;
 
-  if (forTest) {
+  if (isTestMode) {
+    // @ts-expect-error Type doesn't match, but not critical for test purposes.
     return axeResults;
   }
 
@@ -155,4 +156,4 @@ class Accessibility extends FRGatherer {
 }
 
 module.exports = Accessibility;
-module.exports._runA11yChecksForTesting = runA11yChecks;
+module.exports._runA11yChecksInTestMode = () => runA11yChecks(true);
