@@ -40,7 +40,7 @@ async function runA11yChecks(forTest = false) {
     },
     resultTypes: forTest ? undefined : ['violations', 'inapplicable'],
     rules: {
-      'color-contrast': { enabled: !forTest },
+      // Consider http://go/prcpg for expert review of the rules.
       'tabindex': {enabled: true},
       'accesskeys': {enabled: true},
       'heading-order': {enabled: true},
@@ -61,6 +61,13 @@ async function runA11yChecks(forTest = false) {
       // https://github.com/dequelabs/axe-core/issues/2958
       'nested-interactive': {enabled: false},
       'frame-focusable-content': {enabled: false},
+      'color-contrast': {enabled: !forTest}, // See gatherer's test
+      'aria-roledescription': {enabled: false},
+      'scrollable-region-focusable': {enabled: false},
+      // TODO(paulirish): create audits and enable these 3.
+      'input-button-name': {enabled: false},
+      'role-img-alt': {enabled: false},
+      'select-name': {enabled: false},
     },
   });
 
