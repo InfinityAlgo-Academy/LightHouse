@@ -66,7 +66,7 @@ describe('axe-run', () => {
 
     const axeRuleIds = new Set();
     for (const type of ['violations', 'incomplete', 'inapplicable', 'passes']) {
-      axeResults[type]?.forEach(result => axeRuleIds.add(result.id));
+      axeResults[type] && axeResults[type].forEach(result => axeRuleIds.add(result.id));
     }
     // The color-contrast rule is manually disabled as jsdom doesn't support the APIs needed. https://github.com/dequelabs/axe-core/blob/581c441c/doc/examples/jsdom/test/a11y.js#L40
     axeRuleIds.add('color-contrast');
