@@ -25,7 +25,6 @@
     "lighthouse-core/report/html/renderer/generated",
     "lighthouse-core/test/audits/**/*.js",
     "lighthouse-core/test/fixtures/**/*.js",
-    "lighthouse-core/test/report/**/*.js",
     "lighthouse-core/test/computed/**/*.js",
     "clients/test/**/*.js",
     "lighthouse-cli/test/fixtures/**/*.js",

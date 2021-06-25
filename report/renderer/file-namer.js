@@ -5,4 +5,4 @@
  */
 'use strict';
 
-export {getFilenamePrefix} from '../../../../lib/file-namer.js';
+export {getFilenamePrefix} from '../../lighthouse-core/lib/file-namer.js';

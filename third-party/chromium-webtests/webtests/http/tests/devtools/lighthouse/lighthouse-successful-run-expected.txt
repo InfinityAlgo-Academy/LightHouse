@@ -520,7 +520,7 @@ password-inputs-can-be-pasted-into: pass
 performance-budget: notApplicable
 plugins: pass
 preload-fonts: notApplicable
-preload-lcp-image: numeric
+preload-lcp-image: notApplicable
 pwa-cross-browser: manual
 pwa-each-page-has-url: manual
 pwa-page-transitions: manual

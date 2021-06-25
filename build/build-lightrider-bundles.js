@@ -15,7 +15,7 @@ const distDir = path.join(__dirname, '..', 'dist', 'lightrider');
 const sourceDir = __dirname + '/../clients/lightrider';
 
 const bundleOutFile = `${distDir}/report-generator-bundle.js`;
-const generatorFilename = `./lighthouse-core/report/report-generator.js`;
+const generatorFilename = `./report/report-generator.js`;
 
 const entrySourceName = 'lightrider-entry.js';
 const entryDistName = 'lighthouse-lr-bundle.js';

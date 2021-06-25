@@ -6,8 +6,8 @@
 'use strict';
 
 // TODO: where to output?
-// standalone: lighthouse-core/report/html/renderer/generated/standalone.js + checking into source seems simplest for publishing.
-// esmodules bundle (for devtools/whatever): dist/report.mjs seems good. don't check in cuz dont need it for publishing.
+// standalone: report/generated/standalone.js + checking into source seems simplest for publishing.
+// esmodules bundle (for devtools/whatever): dist/report.js seems good. don't check in cuz dont need it for publishing.
 
 const rollup = require('rollup');
 const commonjs =
@@ -16,14 +16,14 @@ const commonjs =
 
 async function buildStandaloneReport() {
   const bundle = await rollup.rollup({
-    input: 'lighthouse-core/report/html/renderer/standalone.js',
+    input: 'report/renderer/standalone.js',
     plugins: [
       commonjs(),
     ],
   });
 
   await bundle.write({
-    file: 'lighthouse-core/report/html/renderer/generated/standalone.js',
+    file: 'report/generated/standalone.js',
     format: 'iife',
   });
 
@@ -32,7 +32,7 @@ async function buildStandaloneReport() {
 
 async function buildEsModulesBundle() {
   const bundle = await rollup.rollup({
-    input: 'lighthouse-core/report/html/renderer/bundle.js',
+    input: 'report/renderer/bundle.js',
     plugins: [
       commonjs(),
     ],

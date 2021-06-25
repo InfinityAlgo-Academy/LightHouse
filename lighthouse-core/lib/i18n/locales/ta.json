@@ -588,7 +588,7 @@
     "message": "Severity"
   },
   "lighthouse-core/audits/csp-xss.js | description": {
-    "message": "மாற்ற முடியாதபடி உள்ளடக்கப் பாதுகாப்புக் கொள்கையை (CSP - Content Security Policy) அமைப்பது வேற்று தள ஸ்கிரிப்டிங் (XSS - cross-site scripting) தாக்குதல்களின் ஆபத்தைக் குறைக்கும். [மேலும் அறிக](https://web.dev/strict-csp/)"
+    "message": "மாற்ற முடியாதபடி உள்ளடக்கப் பாதுகாப்புக் கொள்கையை (CSP - Content Security Policy) அமைப்பது வேற்று தள ஸ்கிரிப்டிங் (XSS - cross-site scripting) தாக்குதல்களின் ஆபத்தைக் குறைக்கும். [மேலும் அறிக](https://web.dev/csp-xss/)"
   },
   "lighthouse-core/audits/csp-xss.js | itemSeveritySyntax": {
     "message": "Syntax"
@@ -903,10 +903,10 @@
     "message": "'name' அல்லது 'short_name' புலத்தை மெனிஃபெஸ்ட் கொண்டிருக்கவில்லை"
   },
   "lighthouse-core/audits/installable-manifest.js | manifest-missing-suitable-icon": {
-    "message": "பொருத்தமான ஐகானை மெனிஃபெஸ்ட் கொண்டிருக்கவில்லை. PNG, SVG, WebP போன்ற வடிவமைப்பில் குறைந்தபட்சம் {value0} பிக்சல்களுடன் இருக்க வேண்டும், sizes பண்புக்கூறு அமைக்கப்பட வேண்டும், purpose பண்புக்கூறு அமைக்கப்பட்டால் அது “any” அல்லது “maskable” என்பதைக் கொண்டிருக்க வேண்டும்."
+    "message": "Manifest does not contain a suitable icon - PNG, SVG or WebP format of at least {value0} px is required, the sizes attribute must be set, and the purpose attribute, if set, must include \"any\"."
   },
   "lighthouse-core/audits/installable-manifest.js | no-acceptable-icon": {
-    "message": "வழங்கப்பட்ட எந்தவொரு ஐகானும் PNG, SVG, WebP போன்ற வடிவமைப்பில் குறைந்தபட்சம் {value0} சதுர பிக்சல்களுடன் இல்லை"
+    "message": "No supplied icon is at least {value0} px square in PNG, SVG or WebP format, with the purpose attribute unset or set to \"any\""
   },
   "lighthouse-core/audits/installable-manifest.js | no-icon-available": {
     "message": "பதிவிறக்கிய ஐகான் காலியாக உள்ளது அல்லது சிதைந்துள்ளது"
@@ -1955,144 +1955,6 @@
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "நீங்கள் அளித்துள்ள URL செல்லாததெனத் தோன்றுகிறது."
   },
-  "lighthouse-core/report/html/renderer/util.js | calculatorLink": {
-    "message": "கால்குலேட்டரைக் காட்டு."
-  },
-  "lighthouse-core/report/html/renderer/util.js | crcInitialNavigation": {
-    "message": "துவக்க நெட்வொர்க் கோரிக்கை"
-  },
-  "lighthouse-core/report/html/renderer/util.js | crcLongestDurationLabel": {
-    "message": "முக்கியக் கோரிக்கைத் தடத்தின் அதிகபட்சத் தாமதம்:"
-  },
-  "lighthouse-core/report/html/renderer/util.js | dropdownCopyJSON": {
-    "message": "JSONனை நகலெடு"
-  },
-  "lighthouse-core/report/html/renderer/util.js | dropdownDarkTheme": {
-    "message": "டார்க் தீம் நிலைமாற்று"
-  },
-  "lighthouse-core/report/html/renderer/util.js | dropdownPrintExpanded": {
-    "message": "விரிக்கப்பட்ட பிரிண்ட்"
-  },
-  "lighthouse-core/report/html/renderer/util.js | dropdownPrintSummary": {
-    "message": "பிரிண்ட் சுருக்கம்"
-  },
-  "lighthouse-core/report/html/renderer/util.js | dropdownSaveGist": {
-    "message": "Gistடாக சேமி"
-  },
-  "lighthouse-core/report/html/renderer/util.js | dropdownSaveHTML": {
-    "message": "HTMLலாக சேமி"
-  },
-  "lighthouse-core/report/html/renderer/util.js | dropdownSaveJSON": {
-    "message": "JSONனாக சேமி"
-  },
-  "lighthouse-core/report/html/renderer/util.js | dropdownViewer": {
-    "message": "வியூவரில் திற"
-  },
-  "lighthouse-core/report/html/renderer/util.js | errorLabel": {
-    "message": "பிழை!"
-  },
-  "lighthouse-core/report/html/renderer/util.js | errorMissingAuditInfo": {
-    "message": "அறிக்கைப் பிழை: தணிக்கைத் தகவல் இல்லை"
-  },
-  "lighthouse-core/report/html/renderer/util.js | footerIssue": {
-    "message": "சிக்கலைப் புகார் செய்க"
-  },
-  "lighthouse-core/report/html/renderer/util.js | labDataTitle": {
-    "message": "ஆய்வகத் தரவு"
-  },
-  "lighthouse-core/report/html/renderer/util.js | lsPerformanceCategoryDescription": {
-    "message": "மாதிரியாக உருவாக்கப்பட்ட மொபைல் நெட்வொர்க்கில் தற்போதைய பக்கத்திற்கான [Lighthouse](https://developers.google.com/web/tools/lighthouse/) பகுப்பாய்வு. மதிப்புகள் தோராயமானவை, மாறுபடக்கூடியவை."
-  },
-  "lighthouse-core/report/html/renderer/util.js | manualAuditsGroupTitle": {
-    "message": "கைமுறையாகச் சரிபார்க்க வேண்டிய கூடுதல் விஷயங்கள்"
-  },
-  "lighthouse-core/report/html/renderer/util.js | notApplicableAuditsGroupTitle": {
-    "message": "பொருந்தாதது"
-  },
-  "lighthouse-core/report/html/renderer/util.js | opportunityResourceColumnLabel": {
-    "message": "பரிந்துரை"
-  },
-  "lighthouse-core/report/html/renderer/util.js | opportunitySavingsColumnLabel": {
-    "message": "தோராயமான சேமிப்பு"
-  },
-  "lighthouse-core/report/html/renderer/util.js | passedAuditsGroupTitle": {
-    "message": "தேர்ச்சி பெற்ற தணிக்கைகள்"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeDesktopEmulation": {
-    "message": "மாதிரி இயக்கப்பட்ட டெஸ்க்டாப்"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeMobileEmulation": {
-    "message": "மாதிரி இயக்கப்பட்ட Moto G4"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeNoEmulation": {
-    "message": "மாதிரி இயக்கப்படவில்லை"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsAxeVersion": {
-    "message": "Axe பதிப்பு"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsBenchmark": {
-    "message": "CPU/நினைவகத் திறன்"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsCPUThrottling": {
-    "message": "CPU த்ராட்லிங்"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsChannel": {
-    "message": "இயங்கும் கருவி"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsDevice": {
-    "message": "சாதனம்"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsFetchTime": {
-    "message": "எடுக்கப்பட்ட நேரம்"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsNetworkThrottling": {
-    "message": "நெட்வொர்க் த்ராட்லிங்"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsTitle": {
-    "message": "இயக்க நேர அமைப்புகள்"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsUA": {
-    "message": "பயனர் ஏஜெண்ட் (ஹோஸ்ட்)"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsUANetwork": {
-    "message": "பயனர் ஏஜெண்ட் (நெட்வொர்க்)"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsUrl": {
-    "message": "URL"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeUnknown": {
-    "message": "தெரியவில்லை"
-  },
-  "lighthouse-core/report/html/renderer/util.js | showRelevantAudits": {
-    "message": "இதற்குத் தொடர்புடைய தணிக்கைகளைக் காட்டு:"
-  },
-  "lighthouse-core/report/html/renderer/util.js | snippetCollapseButtonLabel": {
-    "message": "துணுக்கைச் சுருக்கு"
-  },
-  "lighthouse-core/report/html/renderer/util.js | snippetExpandButtonLabel": {
-    "message": "துணுக்கை விரி"
-  },
-  "lighthouse-core/report/html/renderer/util.js | thirdPartyResourcesLabel": {
-    "message": "மூன்றாம் தரப்பு ஆதாரங்களைக் காட்டு"
-  },
-  "lighthouse-core/report/html/renderer/util.js | throttlingProvided": {
-    "message": "இயக்கச் சூழல் வழங்கியது"
-  },
-  "lighthouse-core/report/html/renderer/util.js | toplevelWarningsMessage": {
-    "message": "Lighthouseஸின் இந்த இயக்கத்தைச் சில சிக்கல்கள் பாதிக்கின்றன:"
-  },
-  "lighthouse-core/report/html/renderer/util.js | varianceDisclaimer": {
-    "message": "மதிப்புகள் தோராயமானவை, மாறுபடக்கூடியவை. இந்த அளவீடுகளிலிருந்து நேரடியாக [செயல்திறன் ஸ்கோர் கணக்கிடப்படும்](https://web.dev/performance-scoring/)."
-  },
-  "lighthouse-core/report/html/renderer/util.js | viewTreemapLabel": {
-    "message": "ட்ரீமேப்பைக் காட்டு"
-  },
-  "lighthouse-core/report/html/renderer/util.js | warningAuditsGroupTitle": {
-    "message": "தணிக்கைகளில் தேர்ச்சிபெற்றவை, ஆனால் எச்சரிக்கைகள் உள்ளவை"
-  },
-  "lighthouse-core/report/html/renderer/util.js | warningHeader": {
-    "message": "எச்சரிக்கைகள்: "
-  },
   "lighthouse-treemap/app/src/util.js | allLabel": {
     "message": "எல்லாம்"
   },
@@ -2380,5 +2242,143 @@
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | uses-text-compression": {
     "message": "இணையச் சேவையக உள்ளமைவில் உரை சுருக்குதலை இயக்கலாம்."
+  },
+  "report/renderer/util.js | calculatorLink": {
+    "message": "கால்குலேட்டரைக் காட்டு."
+  },
+  "report/renderer/util.js | crcInitialNavigation": {
+    "message": "துவக்க நெட்வொர்க் கோரிக்கை"
+  },
+  "report/renderer/util.js | crcLongestDurationLabel": {
+    "message": "முக்கியக் கோரிக்கைத் தடத்தின் அதிகபட்சத் தாமதம்:"
+  },
+  "report/renderer/util.js | dropdownCopyJSON": {
+    "message": "JSONனை நகலெடு"
+  },
+  "report/renderer/util.js | dropdownDarkTheme": {
+    "message": "டார்க் தீம் நிலைமாற்று"
+  },
+  "report/renderer/util.js | dropdownPrintExpanded": {
+    "message": "விரிக்கப்பட்ட பிரிண்ட்"
+  },
+  "report/renderer/util.js | dropdownPrintSummary": {
+    "message": "பிரிண்ட் சுருக்கம்"
+  },
+  "report/renderer/util.js | dropdownSaveGist": {
+    "message": "Gistடாக சேமி"
+  },
+  "report/renderer/util.js | dropdownSaveHTML": {
+    "message": "HTMLலாக சேமி"
+  },
+  "report/renderer/util.js | dropdownSaveJSON": {
+    "message": "JSONனாக சேமி"
+  },
+  "report/renderer/util.js | dropdownViewer": {
+    "message": "வியூவரில் திற"
+  },
+  "report/renderer/util.js | errorLabel": {
+    "message": "பிழை!"
+  },
+  "report/renderer/util.js | errorMissingAuditInfo": {
+    "message": "அறிக்கைப் பிழை: தணிக்கைத் தகவல் இல்லை"
+  },
+  "report/renderer/util.js | footerIssue": {
+    "message": "சிக்கலைப் புகார் செய்க"
+  },
+  "report/renderer/util.js | labDataTitle": {
+    "message": "ஆய்வகத் தரவு"
+  },
+  "report/renderer/util.js | lsPerformanceCategoryDescription": {
+    "message": "மாதிரியாக உருவாக்கப்பட்ட மொபைல் நெட்வொர்க்கில் தற்போதைய பக்கத்திற்கான [Lighthouse](https://developers.google.com/web/tools/lighthouse/) பகுப்பாய்வு. மதிப்புகள் தோராயமானவை, மாறுபடக்கூடியவை."
+  },
+  "report/renderer/util.js | manualAuditsGroupTitle": {
+    "message": "கைமுறையாகச் சரிபார்க்க வேண்டிய கூடுதல் விஷயங்கள்"
+  },
+  "report/renderer/util.js | notApplicableAuditsGroupTitle": {
+    "message": "பொருந்தாதது"
+  },
+  "report/renderer/util.js | opportunityResourceColumnLabel": {
+    "message": "பரிந்துரை"
+  },
+  "report/renderer/util.js | opportunitySavingsColumnLabel": {
+    "message": "தோராயமான சேமிப்பு"
+  },
+  "report/renderer/util.js | passedAuditsGroupTitle": {
+    "message": "தேர்ச்சி பெற்ற தணிக்கைகள்"
+  },
+  "report/renderer/util.js | runtimeDesktopEmulation": {
+    "message": "மாதிரி இயக்கப்பட்ட டெஸ்க்டாப்"
+  },
+  "report/renderer/util.js | runtimeMobileEmulation": {
+    "message": "மாதிரி இயக்கப்பட்ட Moto G4"
+  },
+  "report/renderer/util.js | runtimeNoEmulation": {
+    "message": "மாதிரி இயக்கப்படவில்லை"
+  },
+  "report/renderer/util.js | runtimeSettingsAxeVersion": {
+    "message": "Axe பதிப்பு"
+  },
+  "report/renderer/util.js | runtimeSettingsBenchmark": {
+    "message": "CPU/நினைவகத் திறன்"
+  },
+  "report/renderer/util.js | runtimeSettingsCPUThrottling": {
+    "message": "CPU த்ராட்லிங்"
+  },
+  "report/renderer/util.js | runtimeSettingsChannel": {
+    "message": "இயங்கும் கருவி"
+  },
+  "report/renderer/util.js | runtimeSettingsDevice": {
+    "message": "சாதனம்"
+  },
+  "report/renderer/util.js | runtimeSettingsFetchTime": {
+    "message": "எடுக்கப்பட்ட நேரம்"
+  },
+  "report/renderer/util.js | runtimeSettingsNetworkThrottling": {
+    "message": "நெட்வொர்க் த்ராட்லிங்"
+  },
+  "report/renderer/util.js | runtimeSettingsTitle": {
+    "message": "இயக்க நேர அமைப்புகள்"
+  },
+  "report/renderer/util.js | runtimeSettingsUA": {
+    "message": "பயனர் ஏஜெண்ட் (ஹோஸ்ட்)"
+  },
+  "report/renderer/util.js | runtimeSettingsUANetwork": {
+    "message": "பயனர் ஏஜெண்ட் (நெட்வொர்க்)"
+  },
+  "report/renderer/util.js | runtimeSettingsUrl": {
+    "message": "URL"
+  },
+  "report/renderer/util.js | runtimeUnknown": {
+    "message": "தெரியவில்லை"
+  },
+  "report/renderer/util.js | showRelevantAudits": {
+    "message": "இதற்குத் தொடர்புடைய தணிக்கைகளைக் காட்டு:"
+  },
+  "report/renderer/util.js | snippetCollapseButtonLabel": {
+    "message": "துணுக்கைச் சுருக்கு"
+  },
+  "report/renderer/util.js | snippetExpandButtonLabel": {
+    "message": "துணுக்கை விரி"
+  },
+  "report/renderer/util.js | thirdPartyResourcesLabel": {
+    "message": "மூன்றாம் தரப்பு ஆதாரங்களைக் காட்டு"
+  },
+  "report/renderer/util.js | throttlingProvided": {
+    "message": "இயக்கச் சூழல் வழங்கியது"
+  },
+  "report/renderer/util.js | toplevelWarningsMessage": {
+    "message": "Lighthouseஸின் இந்த இயக்கத்தைச் சில சிக்கல்கள் பாதிக்கின்றன:"
+  },
+  "report/renderer/util.js | varianceDisclaimer": {
+    "message": "மதிப்புகள் தோராயமானவை, மாறுபடக்கூடியவை. இந்த அளவீடுகளிலிருந்து நேரடியாக [செயல்திறன் ஸ்கோர் கணக்கிடப்படும்](https://web.dev/performance-scoring/)."
+  },
+  "report/renderer/util.js | viewTreemapLabel": {
+    "message": "ட்ரீமேப்பைக் காட்டு"
+  },
+  "report/renderer/util.js | warningAuditsGroupTitle": {
+    "message": "தணிக்கைகளில் தேர்ச்சிபெற்றவை, ஆனால் எச்சரிக்கைகள் உள்ளவை"
+  },
+  "report/renderer/util.js | warningHeader": {
+    "message": "எச்சரிக்கைகள்: "
   }
 }

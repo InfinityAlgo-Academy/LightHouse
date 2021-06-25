@@ -6,20 +6,15 @@
 'use strict';
 
 const assert = require('assert').strict;
-const fs = require('fs');
 const jsdom = require('jsdom');
-const DOM = require('../../../../report/html/renderer/common/dom.js');
-const Util = require('../../../../report/html/renderer/common/util.js');
-const I18n = require('../../../../report/html/renderer/common/i18n.js');
-const DetailsRenderer = require('../../../../report/html/renderer/common/details-renderer.js');
-const SnippetRenderer = require('../../../../report/html/renderer/common/snippet-renderer.js');
-const CrcDetailsRenderer =
-  require('../../../../report/html/renderer/common/crc-details-renderer.js');
-const ElementScreenshotRenderer =
-  require('../../../../report/html/renderer/common/element-screenshot-renderer.js');
-
-const TEMPLATE_FILE = fs.readFileSync(__dirname +
-    '/../../../../report/html/templates.html', 'utf8');
+const reportAssets = require('../../report-assets.js');
+const DOM = require('../../renderer/dom.js');
+const Util = require('../../renderer/util.js');
+const I18n = require('../../renderer/i18n.js');
+const DetailsRenderer = require('../../renderer/details-renderer.js');
+const SnippetRenderer = require('../../renderer/snippet-renderer.js');
+const CrcDetailsRenderer = require('../../renderer/crc-details-renderer.js');
+const ElementScreenshotRenderer = require('../../renderer/element-screenshot-renderer.js');
 
 /* eslint-env jest */
 
@@ -27,7 +22,7 @@ describe('DetailsRenderer', () => {
   let renderer;
 
   function createRenderer(options) {
-    const {document} = new jsdom.JSDOM(TEMPLATE_FILE).window;
+    const {document} = new jsdom.JSDOM(reportAssets.REPORT_TEMPLATES).window;
     const dom = new DOM(document);
     renderer = new DetailsRenderer(dom, options);
     renderer.setTemplateContext(dom.document());

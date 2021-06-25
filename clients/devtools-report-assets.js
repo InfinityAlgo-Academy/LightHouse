@@ -8,7 +8,7 @@
 /**
  * @fileoverview Instead of loading report assets form the filesystem, in Devtools we must load
  * them via Runtime.cachedResources. We use this module to shim
- * lighthouse-core/report/html/html-report-assets.js in Devtools.
+ * report/report-assets.js in Devtools.
  */
 
 /* global globalThis */
@@ -28,7 +28,7 @@ module.exports = {
     return cachedResources.get('third_party/lighthouse/report-assets/report.js');
   },
   get REPORT_TEMPLATE() {
-    return cachedResources.get('third_party/lighthouse/report-assets/template.html');
+    return cachedResources.get('third_party/lighthouse/report-assets/standalone-template.html');
   },
   get REPORT_TEMPLATES() {
     return cachedResources.get('third_party/lighthouse/report-assets/templates.html');

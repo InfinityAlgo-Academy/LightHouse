@@ -4,12 +4,12 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import _ReportGenerator = require('../../lighthouse-core/report/report-generator.js');
-import {DOM as _DOM} from '../../lighthouse-core/report/html/renderer/common/dom.js';
-import {ReportRenderer as _ReportRenderer} from '../../lighthouse-core/report/html/renderer/common/report-renderer.js';
-import {ReportUIFeatures as _ReportUIFeatures} from '../../lighthouse-core/report/html/renderer/common/report-ui-features.js';
-import {Logger as _Logger} from '../../lighthouse-core/report/html/renderer/common/logger.js';
-import {getFilenamePrefix as _getFilenamePrefix} from '../../lighthouse-core/report/html/renderer/common/file-namer.js';
+import _ReportGenerator = require('../../report/report-generator.js');
+import {DOM as _DOM} from '../../report/renderer/dom.js';
+import {ReportRenderer as _ReportRenderer} from '../../report/renderer/report-renderer.js';
+import {ReportUIFeatures as _ReportUIFeatures} from '../../report/renderer/report-ui-features.js';
+import {Logger as _Logger} from '../../report/renderer/logger.js';
+import {getFilenamePrefix as _getFilenamePrefix} from '../../report/renderer/file-namer.js';
 import _LighthouseReportViewer = require('../app/src/lighthouse-report-viewer.js');
 import _DragAndDrop = require('../app/src/drag-and-drop.js');
 import _GithubApi = require('../app/src/github-api.js');

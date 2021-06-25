@@ -9,14 +9,14 @@ const fs = require('fs');
 const browserify = require('browserify');
 const GhPagesApp = require('./gh-pages-app.js');
 const {minifyFileTransform} = require('./build-utils.js');
-const htmlReportAssets = require('../lighthouse-core/report/html/html-report-assets.js');
+const htmlReportAssets = require('../report/report-assets.js');
 
 /**
  * Build viewer, optionally deploying to gh-pages if `--deploy` flag was set.
  */
 async function run() {
   // JS bundle from browserified ReportGenerator.
-  const generatorFilename = `${__dirname}/../lighthouse-core/report/report-generator.js`;
+  const generatorFilename = `${__dirname}/../report/report-generator.js`;
   const generatorBrowserify = browserify(generatorFilename, {standalone: 'ReportGenerator'})
     .transform('@wardpeet/brfs', {
       readFileSyncTransform: minifyFileTransform,

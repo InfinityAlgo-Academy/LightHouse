@@ -7,10 +7,10 @@
 
 const fs = require('fs');
 
-const REPORT_TEMPLATE = fs.readFileSync(__dirname + '/report-template.html', 'utf8');
+const REPORT_TEMPLATE = fs.readFileSync(__dirname + '/assets/standalone-template.html', 'utf8');
 const REPORT_JAVASCRIPT = fs.readFileSync(__dirname + '/renderer/generated/standalone.js', 'utf8');
-const REPORT_CSS = fs.readFileSync(__dirname + '/report-styles.css', 'utf8');
-const REPORT_TEMPLATES = fs.readFileSync(__dirname + '/templates.html', 'utf8');
+const REPORT_CSS = fs.readFileSync(__dirname + '/assets/styles.css', 'utf8');
+const REPORT_TEMPLATES = fs.readFileSync(__dirname + '/assets/templates.html', 'utf8');
 
 // Changes to this export interface should be reflected in build/build-dt-report-resources.js
 // and clients/devtools-report-assets.js
