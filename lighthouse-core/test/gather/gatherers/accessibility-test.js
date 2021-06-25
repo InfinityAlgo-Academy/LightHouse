@@ -52,7 +52,7 @@ describe('axe-run', () => {
     global.getNodeDetails = pageFunctions.getNodeDetails;
 
     // axe-core must be required after the global polyfills
-    axe = require('axe-core');
+    axe = require('axe-core'); // eslint-disable-line no-unused-vars
   });
 
   afterAll(() => {
@@ -62,8 +62,7 @@ describe('axe-run', () => {
   });
 
   it('tests only the checks we have audits defined for', async () => {
-    const forTest = true;
-    const axeResults = await AccessibilityGather._runA11yChecksForTesting(forTest);
+    const axeResults = await AccessibilityGather._runA11yChecksInTestMode();
 
     const axeRuleIds = new Set();
     for (const type of ['violations', 'incomplete', 'inapplicable', 'passes']) {
