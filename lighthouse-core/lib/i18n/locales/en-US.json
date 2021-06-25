@@ -63,7 +63,7 @@
     "message": "ARIA `meter` elements have accessible names"
   },
   "lighthouse-core/audits/accessibility/aria-progressbar-name.js | description": {
-    "message": "When an element doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://web.dev/aria-name/)."
+    "message": "When a `progressbar` element doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://web.dev/aria-name/)."
   },
   "lighthouse-core/audits/accessibility/aria-progressbar-name.js | failureTitle": {
     "message": "ARIA `progressbar` elements do not have accessible names."

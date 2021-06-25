@@ -2649,7 +2649,7 @@
     "aria-progressbar-name": {
       "id": "aria-progressbar-name",
       "title": "ARIA `progressbar` elements have accessible names",
-      "description": "When an element doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://web.dev/aria-name/).",
+      "description": "When a `progressbar` element doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://web.dev/aria-name/).",
       "score": null,
       "scoreDisplayMode": "notApplicable"
     },
