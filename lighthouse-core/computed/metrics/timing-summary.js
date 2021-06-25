@@ -42,19 +42,21 @@ class TimingSummary {
       return Artifact.request(artifact, context).catch(_ => undefined);
     };
 
+    /* eslint-disable max-len */
+
     const processedTrace = await ProcessedTrace.request(trace, context);
-    const processedNavigation = await ProcessedNavigation.request(processedTrace, context);
+    const processedNavigation = await requestOrUndefined(ProcessedNavigation, processedTrace);
     const speedline = await Speedline.request(trace, context);
-    const firstContentfulPaint = await FirstContentfulPaint.request(metricComputationData, context);
-    const firstContentfulPaintAllFrames = await requestOrUndefined(FirstContentfulPaintAllFrames, metricComputationData); // eslint-disable-line max-len
-    const firstMeaningfulPaint = await FirstMeaningfulPaint.request(metricComputationData, context);
-    const largestContentfulPaint = await requestOrUndefined(LargestContentfulPaint, metricComputationData); // eslint-disable-line max-len
-    const largestContentfulPaintAllFrames = await requestOrUndefined(LargestContentfulPaintAllFrames, metricComputationData); // eslint-disable-line max-len
+    const firstContentfulPaint = await requestOrUndefined(FirstContentfulPaint, metricComputationData);
+    const firstContentfulPaintAllFrames = await requestOrUndefined(FirstContentfulPaintAllFrames, metricComputationData);
+    const firstMeaningfulPaint = await requestOrUndefined(FirstMeaningfulPaint, metricComputationData);
+    const largestContentfulPaint = await requestOrUndefined(LargestContentfulPaint, metricComputationData);
+    const largestContentfulPaintAllFrames = await requestOrUndefined(LargestContentfulPaintAllFrames, metricComputationData);
     const interactive = await requestOrUndefined(Interactive, metricComputationData);
     const cumulativeLayoutShiftValues = await requestOrUndefined(CumulativeLayoutShift, trace);
     const maxPotentialFID = await requestOrUndefined(MaxPotentialFID, metricComputationData);
     const speedIndex = await requestOrUndefined(SpeedIndex, metricComputationData);
-    const totalBlockingTime = await TotalBlockingTime.request(metricComputationData, context); // eslint-disable-line max-len
+    const totalBlockingTime = await requestOrUndefined(TotalBlockingTime, metricComputationData);
 
     const {
       cumulativeLayoutShift,
@@ -65,21 +67,21 @@ class TimingSummary {
     /** @type {LH.Artifacts.TimingSummary} */
     const metrics = {
       // Include the simulated/observed performance metrics
-      firstContentfulPaint: firstContentfulPaint.timing,
-      firstContentfulPaintTs: firstContentfulPaint.timestamp,
-      firstContentfulPaintAllFrames: firstContentfulPaintAllFrames && firstContentfulPaintAllFrames.timing, // eslint-disable-line max-len
-      firstContentfulPaintAllFramesTs: firstContentfulPaintAllFrames && firstContentfulPaintAllFrames.timestamp, // eslint-disable-line max-len
-      firstMeaningfulPaint: firstMeaningfulPaint.timing,
-      firstMeaningfulPaintTs: firstMeaningfulPaint.timestamp,
+      firstContentfulPaint: firstContentfulPaint && firstContentfulPaint.timing,
+      firstContentfulPaintTs: firstContentfulPaint && firstContentfulPaint.timestamp,
+      firstContentfulPaintAllFrames: firstContentfulPaintAllFrames && firstContentfulPaintAllFrames.timing,
+      firstContentfulPaintAllFramesTs: firstContentfulPaintAllFrames && firstContentfulPaintAllFrames.timestamp,
+      firstMeaningfulPaint: firstMeaningfulPaint && firstMeaningfulPaint.timing,
+      firstMeaningfulPaintTs: firstMeaningfulPaint && firstMeaningfulPaint.timestamp,
       largestContentfulPaint: largestContentfulPaint && largestContentfulPaint.timing,
       largestContentfulPaintTs: largestContentfulPaint && largestContentfulPaint.timestamp,
-      largestContentfulPaintAllFrames: largestContentfulPaintAllFrames && largestContentfulPaintAllFrames.timing, // eslint-disable-line max-len
-      largestContentfulPaintAllFramesTs: largestContentfulPaintAllFrames && largestContentfulPaintAllFrames.timestamp, // eslint-disable-line max-len
+      largestContentfulPaintAllFrames: largestContentfulPaintAllFrames && largestContentfulPaintAllFrames.timing,
+      largestContentfulPaintAllFramesTs: largestContentfulPaintAllFrames && largestContentfulPaintAllFrames.timestamp,
       interactive: interactive && interactive.timing,
       interactiveTs: interactive && interactive.timestamp,
       speedIndex: speedIndex && speedIndex.timing,
       speedIndexTs: speedIndex && speedIndex.timestamp,
-      totalBlockingTime: totalBlockingTime.timing,
+      totalBlockingTime: totalBlockingTime && totalBlockingTime.timing,
       maxPotentialFID: maxPotentialFID && maxPotentialFID.timing,
       cumulativeLayoutShift,
       cumulativeLayoutShiftMainFrame,
@@ -89,27 +91,26 @@ class TimingSummary {
       observedTimeOrigin: processedTrace.timings.timeOrigin,
       observedTimeOriginTs: processedTrace.timestamps.timeOrigin,
       // For now, navigationStart is always timeOrigin.
-      // These properties might be undefined in a future major version, but preserve them for now.
-      observedNavigationStart: processedTrace.timings.timeOrigin,
-      observedNavigationStartTs: processedTrace.timestamps.timeOrigin,
-      observedFirstPaint: processedNavigation.timings.firstPaint,
-      observedFirstPaintTs: processedNavigation.timestamps.firstPaint,
-      observedFirstContentfulPaint: processedNavigation.timings.firstContentfulPaint,
-      observedFirstContentfulPaintTs: processedNavigation.timestamps.firstContentfulPaint,
-      observedFirstContentfulPaintAllFrames: processedNavigation.timings.firstContentfulPaintAllFrames, // eslint-disable-line max-len
-      observedFirstContentfulPaintAllFramesTs: processedNavigation.timestamps.firstContentfulPaintAllFrames, // eslint-disable-line max-len
-      observedFirstMeaningfulPaint: processedNavigation.timings.firstMeaningfulPaint,
-      observedFirstMeaningfulPaintTs: processedNavigation.timestamps.firstMeaningfulPaint,
-      observedLargestContentfulPaint: processedNavigation.timings.largestContentfulPaint,
-      observedLargestContentfulPaintTs: processedNavigation.timestamps.largestContentfulPaint,
-      observedLargestContentfulPaintAllFrames: processedNavigation.timings.largestContentfulPaintAllFrames, // eslint-disable-line max-len
-      observedLargestContentfulPaintAllFramesTs: processedNavigation.timestamps.largestContentfulPaintAllFrames, // eslint-disable-line max-len
+      observedNavigationStart: processedNavigation && processedNavigation.timings.timeOrigin,
+      observedNavigationStartTs: processedNavigation && processedNavigation.timestamps.timeOrigin,
+      observedFirstPaint: processedNavigation && processedNavigation.timings.firstPaint,
+      observedFirstPaintTs: processedNavigation && processedNavigation.timestamps.firstPaint,
+      observedFirstContentfulPaint: processedNavigation && processedNavigation.timings.firstContentfulPaint,
+      observedFirstContentfulPaintTs: processedNavigation && processedNavigation.timestamps.firstContentfulPaint,
+      observedFirstContentfulPaintAllFrames: processedNavigation && processedNavigation.timings.firstContentfulPaintAllFrames,
+      observedFirstContentfulPaintAllFramesTs: processedNavigation && processedNavigation.timestamps.firstContentfulPaintAllFrames,
+      observedFirstMeaningfulPaint: processedNavigation && processedNavigation.timings.firstMeaningfulPaint,
+      observedFirstMeaningfulPaintTs: processedNavigation && processedNavigation.timestamps.firstMeaningfulPaint,
+      observedLargestContentfulPaint: processedNavigation && processedNavigation.timings.largestContentfulPaint,
+      observedLargestContentfulPaintTs: processedNavigation && processedNavigation.timestamps.largestContentfulPaint,
+      observedLargestContentfulPaintAllFrames: processedNavigation && processedNavigation.timings.largestContentfulPaintAllFrames,
+      observedLargestContentfulPaintAllFramesTs: processedNavigation && processedNavigation.timestamps.largestContentfulPaintAllFrames,
       observedTraceEnd: processedTrace.timings.traceEnd,
       observedTraceEndTs: processedTrace.timestamps.traceEnd,
-      observedLoad: processedNavigation.timings.load,
-      observedLoadTs: processedNavigation.timestamps.load,
-      observedDomContentLoaded: processedNavigation.timings.domContentLoaded,
-      observedDomContentLoadedTs: processedNavigation.timestamps.domContentLoaded,
+      observedLoad: processedNavigation && processedNavigation.timings.load,
+      observedLoadTs: processedNavigation && processedNavigation.timestamps.load,
+      observedDomContentLoaded: processedNavigation && processedNavigation.timings.domContentLoaded,
+      observedDomContentLoadedTs: processedNavigation && processedNavigation.timestamps.domContentLoaded,
       observedCumulativeLayoutShift: cumulativeLayoutShift,
       observedCumulativeLayoutShiftMainFrame: cumulativeLayoutShiftMainFrame,
       observedTotalCumulativeLayoutShift: totalCumulativeLayoutShift,
@@ -122,8 +123,13 @@ class TimingSummary {
       observedSpeedIndex: speedline.speedIndex,
       observedSpeedIndexTs: (speedline.speedIndex + speedline.beginning) * 1000,
     };
+
+    /* eslint-enable max-len */
+
     /** @type {Record<string,boolean>} */
-    const debugInfo = {lcpInvalidated: processedNavigation.lcpInvalidated};
+    const debugInfo = {
+      lcpInvalidated: !!(processedNavigation && processedNavigation.lcpInvalidated),
+    };
 
     return {metrics, debugInfo};
   }

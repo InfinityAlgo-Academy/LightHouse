@@ -20,6 +20,7 @@ class FirstContentfulPaint3G extends Audit {
       description: 'First Contentful Paint 3G marks the time at which the first text or image is ' +
         `painted while on a 3G network. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint).`,
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
+      supportedModes: ['navigation'],
       requiredArtifacts: ['traces', 'devtoolsLogs', 'GatherContext'],
     };
   }

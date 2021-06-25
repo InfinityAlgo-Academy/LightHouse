@@ -25,7 +25,7 @@ class ScreenshotThumbnails extends Audit {
       scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
       title: 'Screenshot Thumbnails',
       description: 'This is what the load of your site looked like.',
-      requiredArtifacts: ['traces', 'devtoolsLogs'],
+      requiredArtifacts: ['traces'],
     };
   }
 
