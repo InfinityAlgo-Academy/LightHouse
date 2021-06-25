@@ -43,7 +43,7 @@ node generate_report.js > temp.report.html; open temp.report.html
 // generate_report.js
 'use strict';
 
-const ReportGenerator = require('./lighthouse-core/report/report-generator');
+const ReportGenerator = require('./report/report-generator.js');
 const results = require('./temp.report.json');
 const html = ReportGenerator.generateReportHtml(results);
 

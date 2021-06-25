@@ -8,9 +8,9 @@
 const assert = require('assert').strict;
 const fs = require('fs');
 const jsdom = require('jsdom');
-const ReportGenerator = require('../../report/report-generator.js');
-const TEMPLATES_FILE = fs.readFileSync(__dirname + '/../../report/html/templates.html', 'utf8');
-const sampleResults = require('../../../lighthouse-core/test/results/sample_v2.json');
+const ReportGenerator = require('../report-generator.js');
+const reportAssets = require('../report-assets.js');
+const sampleResults = require('../../lighthouse-core/test/results/sample_v2.json');
 const csvValidator = require('csv-validator');
 
 /* eslint-env jest */
@@ -54,7 +54,7 @@ describe('ReportGenerator', () => {
 
     it('should inject the report templates', () => {
       const page = new jsdom.JSDOM(ReportGenerator.generateReportHtml({}));
-      const templates = new jsdom.JSDOM(TEMPLATES_FILE);
+      const templates = new jsdom.JSDOM(reportAssets.REPORT_TEMPLATES);
       assert.equal(
         page.window.document.querySelectorAll('template[id^="tmpl-"]').length,
         templates.window.document.querySelectorAll('template[id^="tmpl-"]').length,

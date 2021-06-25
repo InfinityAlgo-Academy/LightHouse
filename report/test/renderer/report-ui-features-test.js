@@ -8,26 +8,19 @@
 /* eslint-env jest */
 
 const assert = require('assert').strict;
-const fs = require('fs');
 const jsdom = require('jsdom');
-const Util = require('../../../../report/html/renderer/util.js');
-const I18n = require('../../../../report/html/renderer/i18n.js');
-const DOM = require('../../../../report/html/renderer/dom.js');
-const DetailsRenderer = require('../../../../report/html/renderer/details-renderer.js');
-const ReportUIFeatures = require('../../../../report/html/renderer/report-ui-features.js');
-const CategoryRenderer = require('../../../../report/html/renderer/category-renderer.js');
-const ElementScreenshotRenderer =
-  require('../../../../report/html/renderer/element-screenshot-renderer.js');
-const RectHelpers = require('../../../../../lighthouse-core/lib/rect-helpers.js');
-const CriticalRequestChainRenderer = require(
-    '../../../../report/html/renderer/crc-details-renderer.js');
-const ReportRenderer = require('../../../../report/html/renderer/report-renderer.js');
-const sampleResultsOrig = require('../../../results/sample_v2.json');
-
-const TEMPLATE_FILE = fs.readFileSync(__dirname +
-    '/../../../../report/html/templates.html', 'utf8');
-const TEMPLATE_FILE_REPORT = fs.readFileSync(__dirname +
-  '/../../../../report/html/report-template.html', 'utf8');
+const reportAssets = require('../../report-assets.js');
+const Util = require('../../renderer/util.js');
+const I18n = require('../../renderer/i18n.js');
+const DOM = require('../../renderer/dom.js');
+const DetailsRenderer = require('../../renderer/details-renderer.js');
+const ReportUIFeatures = require('../../renderer/report-ui-features.js');
+const CategoryRenderer = require('../../renderer/category-renderer.js');
+const ElementScreenshotRenderer = require('../../renderer/element-screenshot-renderer.js');
+const RectHelpers = require('../../../lighthouse-core/lib/rect-helpers.js');
+const CriticalRequestChainRenderer = require('../../renderer/crc-details-renderer.js');
+const ReportRenderer = require('../../renderer/report-renderer.js');
+const sampleResultsOrig = require('../../../lighthouse-core/test/results/sample_v2.json');
 
 describe('ReportUIFeatures', () => {
   let sampleResults;
@@ -60,9 +53,9 @@ describe('ReportUIFeatures', () => {
 
     // lazy loaded because they depend on CategoryRenderer to be available globally
     global.PerformanceCategoryRenderer =
-        require('../../../../report/html/renderer/performance-category-renderer.js');
+        require('../../renderer/performance-category-renderer.js');
     global.PwaCategoryRenderer =
-        require('../../../../report/html/renderer/pwa-category-renderer.js');
+        require('../../renderer/pwa-category-renderer.js');
 
     // Stub out matchMedia for Node.
     global.matchMedia = function() {
@@ -71,8 +64,8 @@ describe('ReportUIFeatures', () => {
       };
     };
 
-    const reportWithTemplates = TEMPLATE_FILE_REPORT
-      .replace('%%LIGHTHOUSE_TEMPLATES%%', TEMPLATE_FILE);
+    const reportWithTemplates = reportAssets.REPORT_TEMPLATE
+      .replace('%%LIGHTHOUSE_TEMPLATES%%', reportAssets.REPORT_TEMPLATES);
     const document = new jsdom.JSDOM(reportWithTemplates);
     global.self = document.window;
     global.self.matchMedia = function() {

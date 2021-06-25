@@ -14,7 +14,7 @@ const path = require('path');
 const assert = require('assert').strict;
 const tsc = require('typescript');
 const MessageParser = require('intl-messageformat-parser').default;
-const Util = require('../../report/html/renderer/util.js');
+const Util = require('../../../report/renderer/util.js');
 const {collectAndBakeCtcStrings} = require('./bake-ctc-to-lhl.js');
 const {pruneObsoleteLhlMessages} = require('./prune-obsolete-lhl-messages.js');
 const {countTranslatedMessages} = require('./count-translated.js');
@@ -28,6 +28,7 @@ const UISTRINGS_REGEX = /UIStrings = .*?\};\n/s;
 
 const foldersWithStrings = [
   `${LH_ROOT}/lighthouse-core`,
+  `${LH_ROOT}/report`,
   `${LH_ROOT}/lighthouse-treemap`,
   path.dirname(require.resolve('lighthouse-stack-packs')) + '/packs',
 ];
@@ -640,7 +641,7 @@ if (require.main === module) {
 
   if (collisions > 0) {
     console.log(`MEANING COLLISION: ${collisions} string(s) have the same content.`);
-    assert.equal(collisions, 30, `The number of duplicate strings have changed, update this assertion if that is expected, or reword strings. Collisions: ${collisionStrings.join('\n')}`);
+    assert.equal(collisions, 28, `The number of duplicate strings have changed, update this assertion if that is expected, or reword strings. Collisions: ${collisionStrings.join('\n')}`);
   }
 
   writeStringsToCtcFiles('en-US', strings);

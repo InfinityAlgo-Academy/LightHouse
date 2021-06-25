@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const TextEncoding = require('../../../../report/html/renderer/text-encoding.js');
+const TextEncoding = require('../../renderer/text-encoding.js');
 
 /* eslint-env jest */
 
@@ -36,6 +36,6 @@ describe('TextEncoding', () => {
     await test('Some examples of emoji are 😃, 🧘🏻‍♂️, 🌍, 🍞, 🚗, 📞, 🎉, ♥️, 🍆, and 🏁.');
     await test('.'.repeat(125183));
     await test('😃'.repeat(125183));
-    await test(JSON.stringify(require('../../../../../lighthouse-treemap/app/debug.json')));
+    await test(JSON.stringify(require('../../../lighthouse-treemap/app/debug.json')));
   });
 });

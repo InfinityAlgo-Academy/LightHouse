@@ -8,25 +8,21 @@
 /* eslint-env jest */
 
 const assert = require('assert').strict;
-const fs = require('fs');
 const jsdom = require('jsdom');
-const Util = require('../../../../report/html/renderer/util.js');
-const I18n = require('../../../../report/html/renderer/i18n.js');
-const URL = require('../../../../lib/url-shim.js');
-const DOM = require('../../../../report/html/renderer/dom.js');
-const DetailsRenderer = require('../../../../report/html/renderer/details-renderer.js');
-const ReportUIFeatures = require('../../../../report/html/renderer/report-ui-features.js');
-const CategoryRenderer = require('../../../../report/html/renderer/category-renderer.js');
-const ElementScreenshotRenderer =
-  require('../../../../report/html/renderer/element-screenshot-renderer.js');
-const CriticalRequestChainRenderer = require(
-    '../../../../report/html/renderer/crc-details-renderer.js');
-const ReportRenderer = require('../../../../report/html/renderer/report-renderer.js');
-const sampleResultsOrig = require('../../../results/sample_v2.json');
+const reportAssets = require('../../report-assets.js');
+const Util = require('../../renderer/util.js');
+const I18n = require('../../renderer/i18n.js');
+const URL = require('../../../lighthouse-core/lib/url-shim.js');
+const DOM = require('../../renderer/dom.js');
+const DetailsRenderer = require('../../renderer/details-renderer.js');
+const ReportUIFeatures = require('../../renderer/report-ui-features.js');
+const CategoryRenderer = require('../../renderer/category-renderer.js');
+const ElementScreenshotRenderer = require('../../renderer/element-screenshot-renderer.js');
+const CriticalRequestChainRenderer = require('../../renderer/crc-details-renderer.js');
+const ReportRenderer = require('../../renderer/report-renderer.js');
+const sampleResultsOrig = require('../../../lighthouse-core/test/results/sample_v2.json');
 
 const TIMESTAMP_REGEX = /\d+, \d{4}.*\d+:\d+/;
-const TEMPLATE_FILE = fs.readFileSync(__dirname +
-    '/../../../../report/html/templates.html', 'utf8');
 
 describe('ReportRenderer', () => {
   let renderer;
@@ -43,9 +39,8 @@ describe('ReportRenderer', () => {
 
     // lazy loaded because they depend on CategoryRenderer to be available globally
     global.PerformanceCategoryRenderer =
-        require('../../../../report/html/renderer/performance-category-renderer.js');
-    global.PwaCategoryRenderer =
-        require('../../../../report/html/renderer/pwa-category-renderer.js');
+        require('../../renderer/performance-category-renderer.js');
+    global.PwaCategoryRenderer = require('../../renderer/pwa-category-renderer.js');
 
     // Stub out matchMedia for Node.
     global.matchMedia = function() {
@@ -54,7 +49,7 @@ describe('ReportRenderer', () => {
       };
     };
 
-    const {window} = new jsdom.JSDOM(TEMPLATE_FILE);
+    const {window} = new jsdom.JSDOM(reportAssets.REPORT_TEMPLATES);
     global.self = window;
 
     const dom = new DOM(window.document);
@@ -226,7 +221,7 @@ describe('ReportRenderer', () => {
   it('can set a custom templateContext', () => {
     assert.equal(renderer._templateContext, renderer._dom.document());
 
-    const {window} = new jsdom.JSDOM(TEMPLATE_FILE);
+    const {window} = new jsdom.JSDOM(reportAssets.REPORT_TEMPLATES);
     const otherDocument = window.document;
     renderer.setTemplateContext(otherDocument);
     assert.equal(renderer._templateContext, otherDocument);

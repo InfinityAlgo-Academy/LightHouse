@@ -6,9 +6,9 @@
 'use strict';
 
 const assert = require('assert').strict;
-const Util = require('../../../../report/html/renderer/util.js');
-const I18n = require('../../../../report/html/renderer/i18n.js');
-const sampleResult = require('../../../results/sample_v2.json');
+const Util = require('../../renderer/util.js');
+const I18n = require('../../renderer/i18n.js');
+const sampleResult = require('../../../lighthouse-core/test/results/sample_v2.json');
 
 /* eslint-env jest */
 

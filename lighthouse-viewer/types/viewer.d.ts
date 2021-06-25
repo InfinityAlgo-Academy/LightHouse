@@ -4,8 +4,8 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import _ReportGenerator = require('../../lighthouse-core/report/report-generator.js');
-import _Logger = require('../../lighthouse-core/report/html/renderer/logger.js');
+import _ReportGenerator = require('../../report/report-generator.js');
+import _Logger = require('../../report/renderer/logger.js');
 import _LighthouseReportViewer = require('../app/src/lighthouse-report-viewer.js');
 import _DragAndDrop = require('../app/src/drag-and-drop.js');
 import _GithubApi = require('../app/src/github-api.js');

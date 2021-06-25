@@ -9,7 +9,7 @@
  * URL shim so we keep our code DRY
  */
 
-const Util = require('../report/html/renderer/util.js');
+const Util = require('../../report/renderer/util.js');
 
 /** @typedef {import('./network-request.js')} NetworkRequest */
 
