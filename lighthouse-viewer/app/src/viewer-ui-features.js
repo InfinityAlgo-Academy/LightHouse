@@ -7,7 +7,7 @@
 
 /* global ReportUIFeatures, ReportGenerator */
 
-/** @typedef {import('../../../lighthouse-core/report/html/renderer/dom')} DOM */
+/** @typedef {import('../../../report/renderer/dom')} DOM */
 
 /**
  * Extends ReportUIFeatures to add an (optional) ability to save to a gist and

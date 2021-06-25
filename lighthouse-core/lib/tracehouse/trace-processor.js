@@ -17,7 +17,7 @@
  */
 
 /** @typedef {Omit<LH.Artifacts.NavigationTraceTimes, 'firstContentfulPaintAllFrames'|'traceEnd'>} TraceNavigationTimesForFrame */
-/** @typedef {'lastNavigationStart'|'firstResourceSendRequest'} TimeOriginDeterminationMethod */
+/** @typedef {'lastNavigationStart'|'firstResourceSendRequest'|'lighthouseMarker'|'auto'} TimeOriginDeterminationMethod */
 /** @typedef {Omit<LH.TraceEvent, 'name'|'args'> & {name: 'FrameCommittedInBrowser', args: {data: {frame: string, url: string, parent?: string}}}} FrameCommittedEvent */
 /** @typedef {Omit<LH.TraceEvent, 'name'|'args'> & {name: 'largestContentfulPaint::Invalidate'|'largestContentfulPaint::Candidate', args: {data?: {size?: number}, frame: string}}} LCPEvent */
 /** @typedef {Omit<LH.TraceEvent, 'name'|'args'> & {name: 'largestContentfulPaint::Candidate', args: {data: {size: number}, frame: string}}} LCPCandidateEvent */
@@ -39,6 +39,10 @@ const SCHEDULABLE_TASK_TITLE_ALT2 = 'ThreadControllerImpl::DoWork';
 const SCHEDULABLE_TASK_TITLE_ALT3 = 'TaskQueueManager::ProcessTaskFromWorkQueue';
 
 class TraceProcessor {
+  static get TIMESPAN_MARKER_ID() {
+    return '__lighthouseTimespanStart__';
+  }
+
   /**
    * @return {Error}
    */
@@ -65,6 +69,13 @@ class TraceProcessor {
    */
   static createNoFirstContentfulPaintError() {
     return new Error('No FirstContentfulPaint event found');
+  }
+
+  /**
+   * @return {Error}
+   */
+  static createNoLighthouseMarkerError() {
+    return new Error('No Lighthouse timespan marker event found');
   }
 
   /**
@@ -584,7 +595,7 @@ class TraceProcessor {
    * @return {LH.Artifacts.ProcessedTrace}
   */
   static processTrace(trace, options) {
-    const {timeOriginDeterminationMethod = 'lastNavigationStart'} = options || {};
+    const {timeOriginDeterminationMethod = 'auto'} = options || {};
 
     // Parse the trace for our key events and sort them by timestamp. Note: sort
     // *must* be stable to keep events correctly nested.
@@ -780,6 +791,21 @@ class TraceProcessor {
    * @return {LH.TraceEvent}
    */
   static computeTimeOrigin(traceEventSubsets, method) {
+    const lastNavigationStart = () => {
+      // Our time origin will be the last frame navigation in the trace
+      const frameEvents = traceEventSubsets.frameEvents;
+      return frameEvents.filter(this._isNavigationStartOfInterest).pop();
+    };
+
+    const lighthouseMarker = () => {
+      const frameEvents = traceEventSubsets.keyEvents;
+      return frameEvents.find(
+        evt =>
+          evt.name === 'clock_sync' &&
+          evt.args.sync_id === TraceProcessor.TIMESPAN_MARKER_ID
+      );
+    };
+
     switch (method) {
       case 'firstResourceSendRequest': {
         // Our time origin will be the timestamp of the first request that's sent in the frame.
@@ -792,11 +818,19 @@ class TraceProcessor {
         return fetchStart;
       }
       case 'lastNavigationStart': {
-        // Our time origin will be the last frame navigation in the trace
-        const frameEvents = traceEventSubsets.frameEvents;
-        const navigationStart = frameEvents.filter(this._isNavigationStartOfInterest).pop();
+        const navigationStart = lastNavigationStart();
         if (!navigationStart) throw this.createNoNavstartError();
         return navigationStart;
+      }
+      case 'lighthouseMarker': {
+        const marker = lighthouseMarker();
+        if (!marker) throw this.createNoLighthouseMarkerError();
+        return marker;
+      }
+      case 'auto': {
+        const marker = lighthouseMarker() || lastNavigationStart();
+        if (!marker) throw this.createNoNavstartError();
+        return marker;
       }
     }
   }

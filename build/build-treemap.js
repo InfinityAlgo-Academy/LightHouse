@@ -64,9 +64,9 @@ async function run() {
       fs.readFileSync(require.resolve('pako/dist/pako_inflate.js'), 'utf-8'),
       /* eslint-enable max-len */
       buildStrings(),
-      {path: '../../lighthouse-core/report/html/renderer/logger.js'},
-      {path: '../../lighthouse-core/report/html/renderer/i18n.js'},
-      {path: '../../lighthouse-core/report/html/renderer/text-encoding.js'},
+      {path: '../../report/renderer/logger.js'},
+      {path: '../../report/renderer/i18n.js'},
+      {path: '../../report/renderer/text-encoding.js'},
       {path: '../../lighthouse-viewer/app/src/drag-and-drop.js'},
       {path: '../../lighthouse-viewer/app/src/github-api.js'},
       {path: '../../lighthouse-viewer/app/src/firebase-auth.js'},

@@ -743,11 +743,11 @@ declare global {
       }
 
       export interface TimingSummary {
-        firstContentfulPaint: number;
+        firstContentfulPaint: number | undefined;
         firstContentfulPaintTs: number | undefined;
         firstContentfulPaintAllFrames: number | undefined;
         firstContentfulPaintAllFramesTs: number | undefined;
-        firstMeaningfulPaint: number;
+        firstMeaningfulPaint: number | undefined;
         firstMeaningfulPaintTs: number | undefined;
         largestContentfulPaint: number | undefined;
         largestContentfulPaintTs: number | undefined;
@@ -761,20 +761,20 @@ declare global {
         cumulativeLayoutShift: number | undefined;
         cumulativeLayoutShiftMainFrame: number | undefined;
         totalCumulativeLayoutShift: number | undefined;
-        totalBlockingTime: number;
+        totalBlockingTime: number | undefined;
         observedTimeOrigin: number;
         observedTimeOriginTs: number;
-        observedNavigationStart: number;
-        observedNavigationStartTs: number;
+        observedNavigationStart: number | undefined;
+        observedNavigationStartTs: number | undefined;
         observedCumulativeLayoutShift: number | undefined;
         observedCumulativeLayoutShiftMainFrame: number | undefined;
         observedTotalCumulativeLayoutShift: number | undefined;
         observedFirstPaint: number | undefined;
         observedFirstPaintTs: number | undefined;
-        observedFirstContentfulPaint: number;
-        observedFirstContentfulPaintTs: number;
-        observedFirstContentfulPaintAllFrames: number;
-        observedFirstContentfulPaintAllFramesTs: number;
+        observedFirstContentfulPaint: number | undefined;
+        observedFirstContentfulPaintTs: number | undefined;
+        observedFirstContentfulPaintAllFrames: number | undefined;
+        observedFirstContentfulPaintAllFramesTs: number | undefined;
         observedFirstMeaningfulPaint: number | undefined;
         observedFirstMeaningfulPaintTs: number | undefined;
         observedLargestContentfulPaint: number | undefined;

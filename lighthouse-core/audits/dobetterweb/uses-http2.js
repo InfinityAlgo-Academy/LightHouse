@@ -60,6 +60,7 @@ class UsesHTTP2Audit extends Audit {
       id: 'uses-http2',
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
+      supportedModes: ['navigation'],
       requiredArtifacts: ['URL', 'devtoolsLogs', 'traces'],
     };
   }

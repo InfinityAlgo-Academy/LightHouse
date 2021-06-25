@@ -43,10 +43,11 @@
     "test-proto": "yarn compile-proto && yarn build-proto-roundtrip",
     "unit-core": "jest \"lighthouse-core\"",
     "unit-cli": "jest \"lighthouse-cli/\"",
+    "unit-report": "jest \"report/\"",
     "unit-treemap": "jest \"lighthouse-treemap/.*-test.js\"",
     "unit-viewer": "jest \"lighthouse-viewer/.*-test.js\"",
-    "unit": "yarn unit-core && yarn unit-cli && yarn unit-viewer && yarn unit-treemap",
-    "unit:ci": "NODE_OPTIONS=--max-old-space-size=8192 npm run unit-core -- --ci && npm run unit-cli -- --ci && npm run unit-viewer -- --ci && npm run unit-treemap -- --ci",
+    "unit": "yarn unit-core && yarn unit-cli && yarn unit-report && yarn unit-viewer && yarn unit-treemap",
+    "unit:ci": "NODE_OPTIONS=--max-old-space-size=8192 npm run unit-core -- --ci && npm run unit-cli -- --ci && npm run unit-report -- --ci && npm run unit-viewer -- --ci && npm run unit-treemap -- --ci",
     "core-unit": "yarn unit-core",
     "cli-unit": "yarn unit-cli",
     "viewer-unit": "yarn unit-viewer",
@@ -159,7 +160,7 @@
     "webtreemap-cdt": "^3.2.1"
   },
   "dependencies": {
-    "axe-core": "4.2.1",
+    "axe-core": "4.2.3",
     "chrome-launcher": "^0.14.0",
     "configstore": "^5.0.1",
     "csp_evaluator": "^1.0.1",

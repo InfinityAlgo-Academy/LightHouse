@@ -7,7 +7,7 @@
 
 const assert = require('assert').strict;
 const jsdom = require('jsdom');
-const DOM = require('../../report/html/renderer/dom.js');
+const DOM = require('../../../report/renderer/dom.js');
 const pageFunctions = require('../../lib/page-functions.js');
 
 /* eslint-env jest */

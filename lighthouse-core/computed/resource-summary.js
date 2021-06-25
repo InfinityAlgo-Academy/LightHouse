@@ -11,7 +11,7 @@ const URL = require('../lib/url-shim.js');
 const NetworkRequest = require('../lib/network-request.js');
 const MainResource = require('./main-resource.js');
 const Budget = require('../config/budget.js');
-const Util = require('../report/html/renderer/util.js');
+const Util = require('../../report/renderer/util.js');
 
 /** @typedef {{count: number, resourceSize: number, transferSize: number}} ResourceEntry */
 

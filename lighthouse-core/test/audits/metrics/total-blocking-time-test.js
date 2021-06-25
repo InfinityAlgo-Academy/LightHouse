@@ -15,9 +15,9 @@ const devtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.
 const lcpTrace = require('../../fixtures/traces/lcp-m78.json');
 const lcpDevtoolsLog = require('../../fixtures/traces/lcp-m78.devtools.log.json');
 
-function generateArtifacts({trace, devtoolsLog}) {
+function generateArtifacts({gatherMode = 'navigation', trace, devtoolsLog}) {
   return {
-    GatherContext: {gatherMode: 'navigation'},
+    GatherContext: {gatherMode},
     traces: {[TBTAudit.DEFAULT_PASS]: trace},
     devtoolsLogs: {[TBTAudit.DEFAULT_PASS]: devtoolsLog},
   };
@@ -70,5 +70,13 @@ describe('Performance: total-blocking-time audit', () => {
     expect(outputDesktop.numericValue).toBeCloseTo(333, 1);
     expect(outputDesktop.score).toBe(0.53);
     expect(outputDesktop.displayValue).toBeDisplayString('330\xa0ms');
+  });
+
+  it('marks metric not applicable (throttlingMethod=simulate, gatherMode=timespan)', async () => {
+    const artifacts = generateArtifacts({gatherMode: 'timespan', trace, devtoolsLog});
+    const context = getFakeContext({formFactor: 'mobile', throttlingMethod: 'simulate'});
+
+    const output = await TBTAudit.audit(artifacts, context);
+    expect(output.notApplicable).toBe(true);
   });
 });

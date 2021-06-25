@@ -87,7 +87,7 @@ async function browserifyFile(entryPath, distPath) {
   // Don't include the stringified report in DevTools - see devtools-report-assets.js
   // Don't include in Lightrider - HTML generation isn't supported, so report assets aren't needed.
   if (isDevtools(entryPath) || isLightrider(entryPath)) {
-    bundle.ignore(require.resolve('../lighthouse-core/report/html/html-report-assets.js'));
+    bundle.ignore(require.resolve('../report/report-assets.js'));
   }
 
   // Don't include locales in DevTools.

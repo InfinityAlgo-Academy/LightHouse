@@ -7,19 +7,13 @@
 
 /* eslint-env jest */
 
-const fs = require('fs');
 const jsdom = require('jsdom');
-const ElementScreenshotRenderer =
-  require('../../../../report/html/renderer/element-screenshot-renderer.js');
-const RectHelpers = require('../../../../../lighthouse-core/lib/rect-helpers.js');
-const Util = require('../../../../report/html/renderer/util.js');
-const I18n = require('../../../../report/html/renderer/i18n.js');
-const DOM = require('../../../../report/html/renderer/dom.js');
-
-const TEMPLATE_FILE = fs.readFileSync(
-  __dirname + '/../../../../report/html/templates.html',
-  'utf8'
-);
+const ElementScreenshotRenderer = require('../../renderer/element-screenshot-renderer.js');
+const RectHelpers = require('../../../lighthouse-core/lib/rect-helpers.js');
+const Util = require('../../renderer/util.js');
+const I18n = require('../../renderer/i18n.js');
+const DOM = require('../../renderer/dom.js');
+const reportAssets = require('../../report-assets.js');
 
 /**
  * @param {{left: number, top: number, width: number, height:number}} opts
@@ -40,7 +34,7 @@ describe('ElementScreenshotRenderer', () => {
     global.RectHelpers = RectHelpers;
     global.Util = Util;
     global.Util.i18n = new I18n('en', {...Util.UIStrings});
-    const {document} = new jsdom.JSDOM(TEMPLATE_FILE).window;
+    const {document} = new jsdom.JSDOM(reportAssets.REPORT_TEMPLATES).window;
     dom = new DOM(document);
   });
 

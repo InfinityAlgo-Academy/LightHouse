@@ -4,20 +4,20 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import _CategoryRenderer = require('../lighthouse-core/report/html/renderer/category-renderer.js');
-import _CriticalRequestChainRenderer = require('../lighthouse-core/report/html/renderer/crc-details-renderer.js');
-import _SnippetRenderer = require('../lighthouse-core/report/html/renderer/snippet-renderer.js');
-import _ElementScreenshotRenderer = require('../lighthouse-core/report/html/renderer/element-screenshot-renderer.js');
-import _DetailsRenderer = require('../lighthouse-core/report/html/renderer/details-renderer.js');
-import _DOM = require('../lighthouse-core/report/html/renderer/dom.js');
-import _I18n = require('../lighthouse-core/report/html/renderer/i18n.js');
-import _PerformanceCategoryRenderer = require('../lighthouse-core/report/html/renderer/performance-category-renderer.js');
-import _PwaCategoryRenderer = require('../lighthouse-core/report/html/renderer/pwa-category-renderer.js');
-import _ReportRenderer = require('../lighthouse-core/report/html/renderer/report-renderer.js');
-import _ReportUIFeatures = require('../lighthouse-core/report/html/renderer/report-ui-features.js');
-import _Util = require('../lighthouse-core/report/html/renderer/util.js');
-import _TextEncoding = require('../lighthouse-core/report/html/renderer/text-encoding.js');
-import _prepareLabData = require('../lighthouse-core/report/html/renderer/psi.js');
+import _CategoryRenderer = require('../report/renderer/category-renderer.js');
+import _CriticalRequestChainRenderer = require('../report/renderer/crc-details-renderer.js');
+import _SnippetRenderer = require('../report/renderer/snippet-renderer.js');
+import _ElementScreenshotRenderer = require('../report/renderer/element-screenshot-renderer.js');
+import _DetailsRenderer = require('../report/renderer/details-renderer.js');
+import _DOM = require('../report/renderer/dom.js');
+import _I18n = require('../report/renderer/i18n.js');
+import _PerformanceCategoryRenderer = require('../report/renderer/performance-category-renderer.js');
+import _PwaCategoryRenderer = require('../report/renderer/pwa-category-renderer.js');
+import _ReportRenderer = require('../report/renderer/report-renderer.js');
+import _ReportUIFeatures = require('../report/renderer/report-ui-features.js');
+import _Util = require('../report/renderer/util.js');
+import _TextEncoding = require('../report/renderer/text-encoding.js');
+import _prepareLabData = require('../report/renderer/psi.js');
 import _FileNamer = require('../lighthouse-core/lib/file-namer.js');
 
 declare global {

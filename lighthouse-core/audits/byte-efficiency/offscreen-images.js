@@ -48,6 +48,7 @@ class OffscreenImages extends ByteEfficiencyAudit {
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
       scoreDisplayMode: ByteEfficiencyAudit.SCORING_MODES.NUMERIC,
+      supportedModes: ['navigation'],
       requiredArtifacts: ['ImageElements', 'ViewportDimensions', 'GatherContext', 'devtoolsLogs',
         'traces'],
     };

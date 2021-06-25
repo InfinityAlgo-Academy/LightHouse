@@ -12,6 +12,7 @@
  */
 
 const FRGatherer = require('../../fraggle-rock/gather/base-gatherer.js');
+const TraceProcessor = require('../../lib/tracehouse/trace-processor.js');
 
 class Trace extends FRGatherer {
   /** @type {LH.Trace} */
@@ -95,7 +96,7 @@ class Trace extends FRGatherer {
   /**
    * @param {LH.Gatherer.FRTransitionalContext} passContext
    */
-  async startSensitiveInstrumentation({driver}) {
+  async startSensitiveInstrumentation({driver, gatherMode}) {
     // TODO(FR-COMPAT): read additional trace categories from overall settings?
     // TODO(FR-COMPAT): check if CSS/DOM domains have been enabled in another session and warn?
     await driver.defaultSession.sendCommand('Page.enable');
@@ -103,6 +104,11 @@ class Trace extends FRGatherer {
       categories: Trace.getDefaultTraceCategories().join(','),
       options: 'sampling-frequency=10000', // 1000 is default and too slow.
     });
+
+    if (gatherMode === 'timespan') {
+      await driver.defaultSession.sendCommand('Tracing.recordClockSyncMarker',
+        {syncId: TraceProcessor.TIMESPAN_MARKER_ID});
+    }
   }
 
   /**

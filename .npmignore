@@ -39,7 +39,6 @@ chromium-webtests
 .tmp
 
 # generated files
-**/pages/scripts/lighthouse-report.js
 *.report.html
 *.dom.html
 *.devtoolslog.json

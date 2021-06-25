@@ -32,6 +32,7 @@ class MaxPotentialFID extends Audit {
       title: str_(i18n.UIStrings.maxPotentialFIDMetric),
       description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
+      supportedModes: ['navigation'],
       requiredArtifacts: ['traces', 'devtoolsLogs', 'GatherContext'],
     };
   }
