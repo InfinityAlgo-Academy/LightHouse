@@ -18,7 +18,7 @@ const pageFunctions = require('../../lib/page-functions.js');
  * @return {Promise<LH.Artifacts.Accessibility>}
  */
 /* c8 ignore start */
-async function runA11yChecks() {
+async function runA11yChecks(forTest = false) {
   /** @type {import('axe-core/axe')} */
   // @ts-expect-error - axe defined by axeLibSource
   const axe = window.axe;
@@ -38,8 +38,9 @@ async function runA11yChecks() {
         'wcag2aa',
       ],
     },
-    resultTypes: ['violations', 'inapplicable'],
+    resultTypes: forTest ? undefined : ['violations', 'inapplicable'],
     rules: {
+      'color-contrast': { enabled: !forTest },
       'tabindex': {enabled: true},
       'accesskeys': {enabled: true},
       'heading-order': {enabled: true},
@@ -66,6 +67,10 @@ async function runA11yChecks() {
   // axe just scrolled the page, scroll back to the top of the page so that element positions
   // are relative to the top of the page
   document.documentElement.scrollTop = 0;
+
+  if (forTest) {
+    return axeResults;
+  }
 
   return {
     violations: axeResults.violations.map(createAxeRuleResultArtifact),
@@ -143,3 +148,4 @@ class Accessibility extends FRGatherer {
 }
 
 module.exports = Accessibility;
+module.exports._runA11yChecksForTesting = runA11yChecks;
