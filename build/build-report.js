@@ -27,6 +27,20 @@ async function buildStandaloneReport() {
   });
 }
 
+async function buildViewerReport() {
+  const bundle = await rollup.rollup({
+    input: 'report/clients/viewer.js',
+    plugins: [
+      commonjs(),
+    ],
+  });
+
+  await bundle.write({
+    file: 'dist/viewer-report.js',
+    format: 'iife',
+  });
+}
+
 async function buildEsModulesBundle() {
   const bundle = await rollup.rollup({
     input: 'report/clients/bundle.js',
@@ -41,9 +55,13 @@ async function buildEsModulesBundle() {
   });
 }
 
-buildStandaloneReport();
-buildEsModulesBundle();
+
+if (require.main === module) {
+  buildStandaloneReport();
+  buildEsModulesBundle();
+}
 
 module.exports = {
   buildStandaloneReport,
+  buildViewerReport,
 };
