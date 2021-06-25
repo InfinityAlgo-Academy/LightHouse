@@ -1,8 +1,3 @@
-// TODO: restructure folders?
-// html/renderer/common -> mostly everything, including index.js
-// html/renderer/clients -> psi.js, standalone.js
-// TODO: figure out how psi.js / report code should be added to google3.
-
 /**
  * @license
  * Copyright 2018 The Lighthouse Authors. All Rights Reserved.

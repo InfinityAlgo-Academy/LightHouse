@@ -5,10 +5,6 @@
  */
 'use strict';
 
-// TODO: where to output?
-// standalone: report/generated/standalone.js + checking into source seems simplest for publishing.
-// esmodules bundle (for devtools/whatever): dist/report.js seems good. don't check in cuz dont need it for publishing.
-
 const rollup = require('rollup');
 const {terser} = require('rollup-plugin-terser');
 // Only needed b/c getFilenamePrefix loads a commonjs module.
