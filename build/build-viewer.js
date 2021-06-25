@@ -9,7 +9,7 @@ const fs = require('fs');
 const browserify = require('browserify');
 const GhPagesApp = require('./gh-pages-app.js');
 const {minifyFileTransform} = require('./build-utils.js');
-const {buildStandaloneReport} = require('./build-report.js');
+const {concatRendererCode} = require('./build-report.js');
 const htmlReportAssets = require('../report/report-assets.js');
 
 /**
@@ -31,8 +31,6 @@ async function run() {
     });
   });
 
-  await buildStandaloneReport();
-
   const app = new GhPagesApp({
     name: 'viewer',
     appDir: `${__dirname}/../lighthouse-viewer/app`,
@@ -46,7 +44,7 @@ async function run() {
     ],
     javascripts: [
       await generatorJsPromise,
-      htmlReportAssets.REPORT_JAVASCRIPT,
+      concatRendererCode(),
       fs.readFileSync(require.resolve('idb-keyval/dist/idb-keyval-min.js'), 'utf8'),
       {path: 'src/*'},
     ],

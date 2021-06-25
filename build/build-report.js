@@ -7,8 +7,8 @@
 
 const fs = require('fs');
 
-async function buildStandaloneReport() {
-  const REPORT_JAVASCRIPT = [
+function concatRendererCode() {
+  return [
     fs.readFileSync(__dirname + '/../report/renderer/util.js', 'utf8'),
     fs.readFileSync(__dirname + '/../report/renderer/dom.js', 'utf8'),
     fs.readFileSync(__dirname + '/../report/renderer/details-renderer.js', 'utf8'),
@@ -24,6 +24,12 @@ async function buildStandaloneReport() {
     fs.readFileSync(__dirname + '/../report/renderer/report-renderer.js', 'utf8'),
     fs.readFileSync(__dirname + '/../report/renderer/i18n.js', 'utf8'),
     fs.readFileSync(__dirname + '/../report/renderer/text-encoding.js', 'utf8'),
+  ].join(';\n');
+}
+
+async function buildStandaloneReport() {
+  const REPORT_JAVASCRIPT = [
+    concatRendererCode(),
     fs.readFileSync(__dirname + '/../report/clients/standalone.js', 'utf8'),
   ].join(';\n');
   fs.mkdirSync(__dirname + '/../report/generated', {recursive: true});
@@ -36,4 +42,5 @@ if (require.main === module) {
 
 module.exports = {
   buildStandaloneReport,
+  concatRendererCode,
 };
