@@ -26,6 +26,7 @@ async function buildStandaloneReport() {
     fs.readFileSync(__dirname + '/../report/renderer/text-encoding.js', 'utf8'),
     fs.readFileSync(__dirname + '/../report/clients/standalone.js', 'utf8'),
   ].join(';\n');
+  fs.mkdirSync(__dirname + '/../report/generated', {recursive: true});
   fs.writeFileSync(__dirname + '/../report/generated/standalone.js', REPORT_JAVASCRIPT);
 }
 
