@@ -156,6 +156,7 @@
     "puppeteer": "^9.1.1",
     "rollup": "^2.50.6",
     "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-terser": "^7.0.2",
     "tabulator-tables": "^4.9.3",
     "terser": "^5.3.8",
     "typed-query-selector": "^2.4.0",

@@ -10,6 +10,8 @@
 // esmodules bundle (for devtools/whatever): dist/report.js seems good. don't check in cuz dont need it for publishing.
 
 const rollup = require('rollup');
+const {terser} = require('rollup-plugin-terser');
+// Only needed b/c getFilenamePrefix loads a commonjs module.
 const commonjs =
   // @ts-expect-error types are wrong.
   /** @type {import('rollup-plugin-commonjs').default} */ (require('rollup-plugin-commonjs'));
@@ -19,6 +21,7 @@ async function buildStandaloneReport() {
     input: 'report/clients/standalone.js',
     plugins: [
       commonjs(),
+      terser(),
     ],
   });
 
@@ -26,8 +29,6 @@ async function buildStandaloneReport() {
     file: 'report/generated/standalone.js',
     format: 'iife',
   });
-
-  // TODO: run thru terser.
 }
 
 async function buildEsModulesBundle() {
