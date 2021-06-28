@@ -10,6 +10,7 @@ const storage = require('./storage.js');
 const emulation = require('../../lib/emulation.js');
 const pageFunctions = require('../../lib/page-functions.js');
 
+
 /**
  * Enables `Debugger` domain to receive async stacktrace information on network request initiators.
  * This is critical for tracking attribution of tasks and performance simulation accuracy.
@@ -139,6 +140,9 @@ async function prepareTargetForNavigationMode(driver, settings) {
   // Automatically handle any JavaScript dialogs to prevent a hung renderer.
   await dismissJavaScriptDialogs(driver.defaultSession);
 
+  // Issue input commands for any potential "user-centric" event handlers
+  await issueSomeInputPostFCP(driver.defaultSession);
+
   // Inject our snippet to cache important web platform APIs before they're (possibly) ponyfilled by the page.
   await driver.executionContext.cacheNativesOnNewDocument();
 
@@ -146,6 +150,49 @@ async function prepareTargetForNavigationMode(driver, settings) {
   if (settings.throttlingMethod === 'simulate') {
     await shimRequestIdleCallbackOnNewDocument(driver, settings);
   }
+}
+
+/**
+ * Issue input commands for any potential "user-centric" event handlers
+ * @param {LH.Gatherer.FRProtocolSession} session
+ */
+async function issueSomeInputPostFCP(session) {
+  // return;
+  /** @param {LH.Crdp.Page.LifecycleEventEvent} e */
+  const fcpCallback = async e => {
+    if (e.name !== 'firstContentfulPaint') return;
+
+    // Issue these events "on average" 750ms after FCP
+    await new Promise(resolve => setTimeout(resolve, 500 + (Math.random() * 500)));
+
+    const status = {msg: 'Issue input commands', id: `lh:gather:issueSomeInput`};
+    log.time(status, 'verbose');
+
+    const {cssVisualViewport} = await session.sendCommand('Page.getLayoutMetrics');
+    const start = {
+      x: Math.floor(Math.random() * cssVisualViewport.clientWidth),
+      y: 0,
+    };
+    const end = {
+      x: Math.floor(Math.random() * cssVisualViewport.clientWidth),
+      y: Math.floor(Math.random() * cssVisualViewport.clientHeight),
+    };
+    const steps = Math.floor(Math.random() * 10) + 10;
+
+    for (let i = 1; i <= steps; i++) {
+      const mouseParams = /** @type {LH.Crdp.Input.DispatchMouseEventRequest} */ ({
+        type: 'mouseMoved',
+        button: 'none',
+        x: start.x + (end.x - start.x) * (i / steps),
+        y: start.y + (end.y - start.y) * (i / steps),
+      });
+      // Don't await these, just spam them in.
+      session.sendCommand('Input.dispatchMouseEvent', mouseParams);
+    }
+    log.timeEnd(status);
+  };
+
+  session.on('Page.lifecycleEvent', fcpCallback);
 }
 
 /**
