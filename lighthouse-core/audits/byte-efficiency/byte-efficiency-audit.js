@@ -105,7 +105,8 @@ class UnusedBytes extends Audit {
    * @param {LH.Audit.Context} context
    * @return {Promise<LH.Audit.Product>}
    */
-  static audit(artifacts, context) {
+  static async audit(artifacts, context) {
+    const gatherContext = artifacts.GatherContext;
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     const settings = context && context.settings || {};
@@ -114,15 +115,14 @@ class UnusedBytes extends Audit {
       settings,
     };
 
-    return NetworkRecords.request(devtoolsLog, context)
-      .then(networkRecords =>
-        Promise.all([
-          this.audit_(artifacts, networkRecords, context),
-          PageDependencyGraph.request({trace, devtoolsLog}, context),
-          LoadSimulator.request(simulatorOptions, context),
-        ])
-      )
-      .then(([result, graph, simulator]) => this.createAuditProduct(result, graph, simulator));
+    const networkRecords = await NetworkRecords.request(devtoolsLog, context);
+    const [result, graph, simulator] = await Promise.all([
+      this.audit_(artifacts, networkRecords, context),
+      PageDependencyGraph.request({trace, devtoolsLog}, context),
+      LoadSimulator.request(simulatorOptions, context),
+    ]);
+
+    return this.createAuditProduct(result, graph, simulator, gatherContext);
   }
 
   /**
@@ -187,18 +187,33 @@ class UnusedBytes extends Audit {
   }
 
   /**
+   * TODO(FR-COMPAT): Rework opportunities to remove emphasis on `wastedMs`
+   * @param {number} wastedBytes
+   * @param {Simulator} simulator
+   */
+  static computeWastedMsWithThroughput(wastedBytes, simulator) {
+    const bitsPerSecond = simulator.getOptions().throughput;
+    const wastedBits = wastedBytes * 8;
+    const wastedMs = wastedBits / bitsPerSecond * 1000;
+    return wastedMs;
+  }
+
+  /**
    * @param {ByteEfficiencyProduct} result
    * @param {Node} graph
    * @param {Simulator} simulator
+   * @param {LH.Artifacts['GatherContext']} gatherContext
    * @return {LH.Audit.Product}
    */
-  static createAuditProduct(result, graph, simulator) {
+  static createAuditProduct(result, graph, simulator, gatherContext) {
     const results = result.items.sort((itemA, itemB) => itemB.wastedBytes - itemA.wastedBytes);
 
     const wastedBytes = results.reduce((sum, item) => sum + item.wastedBytes, 0);
-    const wastedMs = this.computeWasteWithTTIGraph(results, graph, simulator, {
-      providedWastedBytesByUrl: result.wastedBytesByUrl,
-    });
+    const wastedMs = gatherContext.gatherMode === 'navigation' ?
+      this.computeWasteWithTTIGraph(results, graph, simulator, {
+        providedWastedBytesByUrl: result.wastedBytesByUrl,
+      }) :
+      this.computeWastedMsWithThroughput(wastedBytes, simulator);
 
     let displayValue = result.displayValue || '';
     if (typeof result.displayValue === 'undefined' && wastedBytes) {

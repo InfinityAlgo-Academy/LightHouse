@@ -113,6 +113,7 @@ class RenderBlockingResources extends Audit {
     return {
       id: 'render-blocking-resources',
       title: str_(UIStrings.title),
+      supportedModes: ['navigation'],
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
       description: str_(UIStrings.description),
       // TODO: look into adding an `optionalArtifacts` property that captures the non-required nature

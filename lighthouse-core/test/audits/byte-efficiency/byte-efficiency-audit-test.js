@@ -90,7 +90,7 @@ describe('Byte efficiency base audit', () => {
     const result = ByteEfficiencyAudit.createAuditProduct({
       headings: baseHeadings,
       items: [],
-    }, graph, simulator);
+    }, graph, simulator, {gatherMode: 'navigation'});
 
     assert.deepEqual(result.details.items, []);
   });
@@ -104,7 +104,8 @@ describe('Byte efficiency base audit', () => {
         ],
       },
       graph,
-      simulator
+      simulator,
+      {gatherMode: 'navigation'}
     );
 
     // 900ms savings comes from the graph calculation
@@ -115,22 +116,22 @@ describe('Byte efficiency base audit', () => {
     const perfectResult = ByteEfficiencyAudit.createAuditProduct({
       headings: baseHeadings,
       items: [{url: 'http://example.com/', wastedBytes: 1 * 1000}],
-    }, graph, simulator);
+    }, graph, simulator, {gatherMode: 'navigation'});
 
     const goodResult = ByteEfficiencyAudit.createAuditProduct({
       headings: baseHeadings,
       items: [{url: 'http://example.com/', wastedBytes: 20 * 1000}],
-    }, graph, simulator);
+    }, graph, simulator, {gatherMode: 'navigation'});
 
     const averageResult = ByteEfficiencyAudit.createAuditProduct({
       headings: baseHeadings,
       items: [{url: 'http://example.com/', wastedBytes: 100 * 1000}],
-    }, graph, simulator);
+    }, graph, simulator, {gatherMode: 'navigation'});
 
     const failingResult = ByteEfficiencyAudit.createAuditProduct({
       headings: baseHeadings,
       items: [{url: 'http://example.com/', wastedBytes: 400 * 1000}],
-    }, graph, simulator);
+    }, graph, simulator, {gatherMode: 'navigation'});
 
     assert.equal(perfectResult.score, 1, 'scores perfect wastedMs');
     assert.ok(goodResult.score > 0.75 && goodResult.score < 1, 'scores good wastedMs');
@@ -143,7 +144,7 @@ describe('Byte efficiency base audit', () => {
       ByteEfficiencyAudit.createAuditProduct({
         headings: baseHeadings,
         items: [{wastedBytes: 350, totalBytes: 700, wastedPercent: 50}],
-      }, null);
+      }, null, simulator, {gatherMode: 'navigation'});
     });
   });
 
@@ -154,7 +155,7 @@ describe('Byte efficiency base audit', () => {
         {wastedBytes: 2048, totalBytes: 4096, wastedPercent: 50},
         {wastedBytes: 1986, totalBytes: 5436},
       ],
-    }, graph, simulator);
+    }, graph, simulator, {gatherMode: 'navigation'});
 
     assert.equal(result.details.items[0].wastedBytes, 2048);
     assert.equal(result.details.items[0].totalBytes, 4096);
@@ -170,7 +171,7 @@ describe('Byte efficiency base audit', () => {
         {wastedBytes: 450, totalBytes: 1000, wastedPercent: 50},
         {wastedBytes: 400, totalBytes: 450, wastedPercent: 50},
       ],
-    }, graph, simulator);
+    }, graph, simulator, {gatherMode: 'navigation'});
 
     assert.equal(result.details.items[0].wastedBytes, 450);
     assert.equal(result.details.items[1].wastedBytes, 400);
@@ -185,7 +186,7 @@ describe('Byte efficiency base audit', () => {
         {wastedBytes: 512, totalBytes: 1000, wastedPercent: 50},
         {wastedBytes: 1024, totalBytes: 1200, wastedPercent: 50},
       ],
-    }, graph, simulator);
+    }, graph, simulator, {gatherMode: 'navigation'});
 
     expect(result.displayValue).toBeDisplayString(/savings of 2/);
   });
@@ -204,7 +205,8 @@ describe('Byte efficiency base audit', () => {
         ],
       },
       graph,
-      simulator
+      simulator,
+      {gatherMode: 'navigation'}
     );
 
     assert.equal(result.numericValue, 300);
@@ -221,6 +223,7 @@ describe('Byte efficiency base audit', () => {
     }
 
     const artifacts = {
+      GatherContext: {gatherMode: 'navigation'},
       traces: {defaultPass: trace},
       devtoolsLogs: {defaultPass: devtoolsLog},
     };
@@ -259,6 +262,7 @@ describe('Byte efficiency base audit', () => {
     }
 
     const artifacts = {
+      GatherContext: {gatherMode: 'navigation'},
       traces: {defaultPass: traceM78},
       devtoolsLogs: {defaultPass: devtoolsLogM78},
     };
@@ -290,6 +294,7 @@ describe('Byte efficiency base audit', () => {
     }
 
     const artifacts = {
+      GatherContext: {gatherMode: 'navigation'},
       traces: {defaultPass: trace},
       devtoolsLogs: {defaultPass: devtoolsLog},
     };
@@ -300,5 +305,28 @@ describe('Byte efficiency base audit', () => {
     const result = await MockAudit.audit(artifacts, {settings, computedCache});
     const resultOverride = await MockOverrideAudit.audit(artifacts, {settings, computedCache});
     expect(resultOverride.numericValue).toEqual(result.numericValue * 0.5);
+  });
+
+  it('should compute savings with throughput in timespan mode', async () => {
+    class MockAudit extends ByteEfficiencyAudit {
+      static audit_(artifacts, records) {
+        return {
+          items: records.map(record => ({url: record.url, wastedBytes: record.transferSize * 0.5})),
+          headings: [],
+        };
+      }
+    }
+
+    const artifacts = {
+      GatherContext: {gatherMode: 'timespan'},
+      traces: {defaultPass: trace},
+      devtoolsLogs: {defaultPass: devtoolsLog},
+    };
+    const computedCache = new Map();
+
+    const modestThrottling = {rttMs: 150, throughputKbps: 1000, cpuSlowdownMultiplier: 2};
+    const settings = {throttlingMethod: 'simulate', throttling: modestThrottling};
+    const result = await MockAudit.audit(artifacts, {settings, computedCache});
+    expect(result.details.overallSavingsMs).toBeCloseTo(914.2695);
   });
 });

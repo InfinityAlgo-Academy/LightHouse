@@ -35,7 +35,8 @@ class ModernImageFormats extends ByteEfficiencyAudit {
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
       scoreDisplayMode: ByteEfficiencyAudit.SCORING_MODES.NUMERIC,
-      requiredArtifacts: ['OptimizedImages', 'devtoolsLogs', 'traces', 'URL', 'ImageElements'],
+      requiredArtifacts: ['OptimizedImages', 'devtoolsLogs', 'traces', 'URL', 'GatherContext',
+        'ImageElements'],
     };
   }
 
