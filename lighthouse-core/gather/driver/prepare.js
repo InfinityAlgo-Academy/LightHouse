@@ -157,7 +157,6 @@ async function prepareTargetForNavigationMode(driver, settings) {
  * @param {LH.Gatherer.FRProtocolSession} session
  */
 async function issueSomeInputPostFCP(session) {
-  // return;
   /** @param {LH.Crdp.Page.LifecycleEventEvent} e */
   const fcpCallback = async e => {
     if (e.name !== 'firstContentfulPaint') return;

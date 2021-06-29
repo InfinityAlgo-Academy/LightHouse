@@ -23,8 +23,6 @@ const {getBrowserVersion} = require('./driver/environment.js');
 // Controls how long to wait for a response after sending a DevTools protocol command.
 const DEFAULT_PROTOCOL_TIMEOUT = 30000;
 
-let u = 0;
-
 /**
  * @typedef {LH.Protocol.StrictEventEmitter<LH.CrdpEvents>} CrdpEventEmitter
  */
@@ -315,8 +313,6 @@ class Driver {
   sendCommandToSession(method, sessionId, ...params) {
     const timeout = this._nextProtocolTimeout;
     this._nextProtocolTimeout = DEFAULT_PROTOCOL_TIMEOUT;
-    const st = {msg: 'sC' + method, id: `lh:sC:${method}${u++}`};
-    log.time(st);
 
     /** @type {NodeJS.Timer|undefined} */
     let asyncTimeout;
@@ -335,7 +331,6 @@ class Driver {
       this._innerSendCommand(method, sessionId, ...params),
       timeoutPromise,
     ]).finally(() => {
-      log.timeEnd(st);
       asyncTimeout && clearTimeout(asyncTimeout);
     });
   }
