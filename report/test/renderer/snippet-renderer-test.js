@@ -7,13 +7,14 @@
 
 /* eslint-env jest */
 
-const assert = require('assert').strict;
-const jsdom = require('jsdom');
-const reportAssets = require('../../report-assets.js');
-const Util = require('../../renderer/util.js');
-const I18n = require('../../renderer/i18n.js');
-const DOM = require('../../renderer/dom.js');
-const SnippetRenderer = require('../../renderer/snippet-renderer.js');
+import { strict as assert } from 'assert';
+
+import jsdom from 'jsdom';
+import reportAssets from '../../report-assets.js';
+import Util from '../../renderer/util.js';
+import I18n from '../../renderer/i18n.js';
+import DOM from '../../renderer/dom.js';
+import SnippetRenderer from '../../renderer/snippet-renderer.js';
 
 /* Generates a snippet lines array like this (for a single range from 1 to 4):
   [

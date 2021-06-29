@@ -7,20 +7,21 @@
 
 /* eslint-env jest */
 
-const assert = require('assert').strict;
-const jsdom = require('jsdom');
-const reportAssets = require('../../report-assets.js');
-const Util = require('../../renderer/util.js');
-const I18n = require('../../renderer/i18n.js');
-const URL = require('../../../lighthouse-core/lib/url-shim.js');
-const DOM = require('../../renderer/dom.js');
-const DetailsRenderer = require('../../renderer/details-renderer.js');
-const ReportUIFeatures = require('../../renderer/report-ui-features.js');
-const CategoryRenderer = require('../../renderer/category-renderer.js');
-const ElementScreenshotRenderer = require('../../renderer/element-screenshot-renderer.js');
-const CriticalRequestChainRenderer = require('../../renderer/crc-details-renderer.js');
-const ReportRenderer = require('../../renderer/report-renderer.js');
-const sampleResultsOrig = require('../../../lighthouse-core/test/results/sample_v2.json');
+import { strict as assert } from 'assert';
+
+import jsdom from 'jsdom';
+import reportAssets from '../../report-assets.js';
+import Util from '../../renderer/util.js';
+import I18n from '../../renderer/i18n.js';
+import URL from '../../../lighthouse-core/lib/url-shim.js';
+import DOM from '../../renderer/dom.js';
+import DetailsRenderer from '../../renderer/details-renderer.js';
+import ReportUIFeatures from '../../renderer/report-ui-features.js';
+import CategoryRenderer from '../../renderer/category-renderer.js';
+import ElementScreenshotRenderer from '../../renderer/element-screenshot-renderer.js';
+import CriticalRequestChainRenderer from '../../renderer/crc-details-renderer.js';
+import ReportRenderer from '../../renderer/report-renderer.js';
+import sampleResultsOrig from '../../../lighthouse-core/test/results/sample_v2.json';
 
 const TIMESTAMP_REGEX = /\d+, \d{4}.*\d+:\d+/;
 

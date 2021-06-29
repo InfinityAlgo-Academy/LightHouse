@@ -5,12 +5,12 @@
  */
 'use strict';
 
-const assert = require('assert').strict;
-const jsdom = require('jsdom');
-const reportAssets = require('../../report-assets.js');
-const DOM = require('../../renderer/dom.js');
-const Util = require('../../renderer/util.js');
-const I18n = require('../../renderer/i18n.js');
+import { strict as assert } from 'assert';
+import jsdom from 'jsdom';
+import reportAssets from '../../report-assets.js';
+import DOM from '../../renderer/dom.js';
+import Util from '../../renderer/util.js';
+import I18n from '../../renderer/i18n.js';
 
 /* eslint-env jest */
 

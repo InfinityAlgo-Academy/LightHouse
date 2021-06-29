@@ -7,17 +7,18 @@
 
 /* eslint-env jest, browser */
 
-const assert = require('assert').strict;
-const jsdom = require('jsdom');
-const Util = require('../../renderer/util.js');
-const I18n = require('../../renderer/i18n.js');
-const URL = require('../../../lighthouse-core/lib/url-shim.js');
-const DOM = require('../../renderer/dom.js');
-const DetailsRenderer = require('../../renderer/details-renderer.js');
-const CriticalRequestChainRenderer = require('../../renderer/crc-details-renderer.js');
-const CategoryRenderer = require('../../renderer/category-renderer.js');
-const sampleResultsOrig = require('../../../lighthouse-core/test/results/sample_v2.json');
-const reportAssets = require('../../report-assets.js');
+import { strict as assert } from 'assert';
+
+import jsdom from 'jsdom';
+import Util from '../../renderer/util.js';
+import I18n from '../../renderer/i18n.js';
+import URL from '../../../lighthouse-core/lib/url-shim.js';
+import DOM from '../../renderer/dom.js';
+import DetailsRenderer from '../../renderer/details-renderer.js';
+import CriticalRequestChainRenderer from '../../renderer/crc-details-renderer.js';
+import CategoryRenderer from '../../renderer/category-renderer.js';
+import sampleResultsOrig from '../../../lighthouse-core/test/results/sample_v2.json';
+import reportAssets from '../../report-assets.js';
 
 describe('PerfCategoryRenderer', () => {
   let category;

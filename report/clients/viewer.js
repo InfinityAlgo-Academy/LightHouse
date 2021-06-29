@@ -5,6 +5,8 @@
  */
 'use strict';
 
+/* global window */
+
 import {DOM} from '../renderer/dom.js';
 import {Logger} from '../renderer/logger.js';
 import {ReportRenderer} from '../renderer/report-renderer.js';
