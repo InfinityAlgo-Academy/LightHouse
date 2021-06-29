@@ -538,17 +538,14 @@ function collectAllStringsInDir(dir) {
     if (!process.env.CI) console.log('Collecting from', relativeToRootPath);
 
     const content = fs.readFileSync(absolutePath, 'utf8');
-    const exportVars = require(absolutePath);
     const regexMatch = content.match(UISTRINGS_REGEX);
-    const exportedUIStrings = exportVars.UIStrings;
-
     if (!regexMatch) {
-      // No UIStrings found in the file text or exports, so move to the next.
-      if (!exportedUIStrings) continue;
-
-      throw new Error('UIStrings exported but no definition found');
+      // No UIStrings found in the file text, so move to the next.
+      continue;
     }
 
+    const exportVars = require(absolutePath);
+    const exportedUIStrings = exportVars.UIStrings;
     if (!exportedUIStrings) {
       throw new Error('UIStrings defined in file but not exported');
     }
