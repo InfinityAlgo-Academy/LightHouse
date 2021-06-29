@@ -5,16 +5,16 @@
  */
 'use strict';
 
-import { strict as assert } from 'assert';
+import {strict as assert} from 'assert';
 import jsdom from 'jsdom';
 import reportAssets from '../../report-assets.js';
-import DOM from '../../renderer/dom.js';
-import Util from '../../renderer/util.js';
-import I18n from '../../renderer/i18n.js';
-import DetailsRenderer from '../../renderer/details-renderer.js';
-import SnippetRenderer from '../../renderer/snippet-renderer.js';
-import CrcDetailsRenderer from '../../renderer/crc-details-renderer.js';
-import ElementScreenshotRenderer from '../../renderer/element-screenshot-renderer.js';
+import {DOM} from '../../renderer/dom.js';
+import {Util} from '../../renderer/util.js';
+import {I18n} from '../../renderer/i18n.js';
+import {DetailsRenderer} from '../../renderer/details-renderer.js';
+import {SnippetRenderer} from '../../renderer/snippet-renderer.js';
+import {CriticalRequestChainRenderer} from '../../renderer/crc-details-renderer.js';
+import {ElementScreenshotRenderer} from '../../renderer/element-screenshot-renderer.js';
 
 /* eslint-env jest */
 
@@ -31,7 +31,7 @@ describe('DetailsRenderer', () => {
   beforeAll(() => {
     global.Util = Util;
     global.Util.i18n = new I18n('en', {...Util.UIStrings});
-    global.CriticalRequestChainRenderer = CrcDetailsRenderer;
+    global.CriticalRequestChainRenderer = CriticalRequestChainRenderer;
     global.SnippetRenderer = SnippetRenderer;
     global.ElementScreenshotRenderer = ElementScreenshotRenderer;
     createRenderer();

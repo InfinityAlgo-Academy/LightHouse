@@ -9,11 +9,11 @@
 
 import jsdom from 'jsdom';
 
-import ElementScreenshotRenderer from '../../renderer/element-screenshot-renderer.js';
+import {ElementScreenshotRenderer} from '../../renderer/element-screenshot-renderer.js';
 import RectHelpers from '../../../lighthouse-core/lib/rect-helpers.js';
-import Util from '../../renderer/util.js';
-import I18n from '../../renderer/i18n.js';
-import DOM from '../../renderer/dom.js';
+import {Util} from '../../renderer/util.js';
+import {I18n} from '../../renderer/i18n.js';
+import {DOM} from '../../renderer/dom.js';
 import reportAssets from '../../report-assets.js';
 
 /**

@@ -8,6 +8,8 @@
 /* eslint-env jest */
 
 const fs = require('fs');
+const url = require('url');
+const path = require('path');
 const i18n = require('../lib/i18n/i18n.js');
 const mockCommands = require('./gather/mock-commands.js');
 const {default: {toBeCloseTo}} = require('expect/build/matchers.js');
@@ -283,6 +285,14 @@ function isNode12SmallIcu() {
     Intl.NumberFormat.supportedLocalesOf('es').length === 0;
 }
 
+/**
+ * @param {ImportMeta} importMeta
+ * @return {string}
+ */
+function esmGetDirname(importMeta) {
+  return path.dirname(url.fileURLToPath(importMeta.url));
+}
+
 module.exports = {
   getProtoRoundTrip,
   loadSourceMapFixture,
@@ -293,5 +303,6 @@ module.exports = {
   flushAllTimersAndMicrotasks,
   makeMocksForGatherRunner,
   isNode12SmallIcu,
+  esmGetDirname,
   ...mockCommands,
 };

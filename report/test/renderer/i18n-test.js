@@ -5,10 +5,10 @@
  */
 'use strict';
 
-import { strict as assert } from 'assert';
-import Util from '../../renderer/util.js';
-import I18n from '../../renderer/i18n.js';
-import { isNode12SmallIcu } from '../../../lighthouse-core/test/test-utils.js';
+import {strict as assert} from 'assert';
+import {Util} from '../../renderer/util.js';
+import {I18n} from '../../renderer/i18n.js';
+import {isNode12SmallIcu} from '../../../lighthouse-core/test/test-utils.js';
 
 // Require i18n to make sure Intl is polyfilled in Node without full-icu for testing.
 // When Util is run in a browser, Intl will be supplied natively (IE11+).

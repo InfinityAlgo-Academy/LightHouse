@@ -7,16 +7,17 @@
 
 /* eslint-env jest, browser */
 
-import { strict as assert } from 'assert';
+import {strict as assert} from 'assert';
 
 import jsdom from 'jsdom';
-import Util from '../../renderer/util.js';
-import I18n from '../../renderer/i18n.js';
+import {Util} from '../../renderer/util.js';
+import {I18n} from '../../renderer/i18n.js';
 import URL from '../../../lighthouse-core/lib/url-shim.js';
-import DOM from '../../renderer/dom.js';
-import DetailsRenderer from '../../renderer/details-renderer.js';
-import CriticalRequestChainRenderer from '../../renderer/crc-details-renderer.js';
-import CategoryRenderer from '../../renderer/category-renderer.js';
+import {DOM} from '../../renderer/dom.js';
+import {DetailsRenderer} from '../../renderer/details-renderer.js';
+import {CriticalRequestChainRenderer} from '../../renderer/crc-details-renderer.js';
+import {CategoryRenderer} from '../../renderer/category-renderer.js';
+import {PerformanceCategoryRenderer} from '../../renderer/performance-category-renderer.js';
 import sampleResultsOrig from '../../../lighthouse-core/test/results/sample_v2.json';
 import reportAssets from '../../report-assets.js';
 
@@ -30,9 +31,6 @@ describe('PerfCategoryRenderer', () => {
     global.Util.i18n = new I18n('en', {...Util.UIStrings});
     global.CriticalRequestChainRenderer = CriticalRequestChainRenderer;
     global.CategoryRenderer = CategoryRenderer;
-
-    // Delayed so that CategoryRenderer is in global scope
-    const PerformanceCategoryRenderer = require('../../renderer/performance-category-renderer.js');
 
     const {document} = new jsdom.JSDOM(reportAssets.REPORT_TEMPLATES).window;
     const dom = new DOM(document);

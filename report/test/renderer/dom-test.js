@@ -5,12 +5,12 @@
  */
 'use strict';
 
-import { strict as assert } from 'assert';
+import {strict as assert} from 'assert';
 import jsdom from 'jsdom';
 import reportAssets from '../../report-assets.js';
-import DOM from '../../renderer/dom.js';
-import Util from '../../renderer/util.js';
-import I18n from '../../renderer/i18n.js';
+import {DOM} from '../../renderer/dom.js';
+import {Util} from '../../renderer/util.js';
+import {I18n} from '../../renderer/i18n.js';
 
 /* eslint-env jest */
 

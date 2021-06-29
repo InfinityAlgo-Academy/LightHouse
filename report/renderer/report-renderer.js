@@ -13,15 +13,10 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */
-'use strict';
-
-/**
- * @fileoverview The entry point for rendering the Lighthouse report based on the JSON output.
- *    This file is injected into the report HTML along with the JSON report.
  *
  * Dummy text for ensuring report robustness: </script> pre$`post %%LIGHTHOUSE_JSON%%
  */
+'use strict';
 
 /** @typedef {import('./dom.js').DOM} DOM */
 

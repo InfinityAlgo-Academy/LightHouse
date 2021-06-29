@@ -5,24 +5,27 @@
  */
 'use strict';
 
-import { strict as assert } from 'assert';
+import {strict as assert} from 'assert';
 import fs from 'fs';
 import jsdom from 'jsdom';
 import testUtils from '../../../lighthouse-core/test/test-utils.js';
 import reportAssets from '../../report-assets.js';
-import prepareLabData from '../../clients/psi.js';
-import Util from '../../renderer/util.js';
-import I18n from '../../renderer/i18n.js';
-import DOM from '../../renderer/dom.js';
-import CategoryRenderer from '../../renderer/category-renderer.js';
-import DetailsRenderer from '../../renderer/details-renderer.js';
-import CriticalRequestChainRenderer from '../../renderer/crc-details-renderer.js';
-import ElementScreenshotRenderer from '../../renderer/element-screenshot-renderer.js';
-import ReportUIFeatures from '../../renderer/report-ui-features.js';
+import {prepareLabData} from '../../clients/psi.js';
+import {Util} from '../../renderer/util.js';
+import {I18n} from '../../renderer/i18n.js';
+import {DOM} from '../../renderer/dom.js';
+import {CategoryRenderer} from '../../renderer/category-renderer.js';
+import {PerformanceCategoryRenderer} from '../../renderer/performance-category-renderer.js';
+import {DetailsRenderer} from '../../renderer/details-renderer.js';
+import {CriticalRequestChainRenderer} from '../../renderer/crc-details-renderer.js';
+import {ElementScreenshotRenderer} from '../../renderer/element-screenshot-renderer.js';
+import {ReportUIFeatures} from '../../renderer/report-ui-features.js';
 
 const {itIfProtoExists, sampleResultsRoundtripStr} = testUtils.getProtoRoundTrip();
+
+const dir = testUtils.esmGetDirname(import.meta);
 const sampleResultsStr =
-  fs.readFileSync(__dirname + '/../../../lighthouse-core/test/results/sample_v2.json', 'utf-8');
+  fs.readFileSync(dir + '/../../../lighthouse-core/test/results/sample_v2.json', 'utf-8');
 
 /* eslint-env jest */
 
@@ -31,14 +34,9 @@ describe('DOM', () => {
   beforeAll(() => {
     global.Util = Util;
     global.I18n = I18n;
-
     global.DOM = DOM;
     global.CategoryRenderer = CategoryRenderer;
     global.DetailsRenderer = DetailsRenderer;
-
-    // Delayed so that CategoryRenderer is in global scope
-    const PerformanceCategoryRenderer =
-        require('../../renderer/performance-category-renderer.js');
     global.PerformanceCategoryRenderer = PerformanceCategoryRenderer;
     global.CriticalRequestChainRenderer = CriticalRequestChainRenderer;
     global.ElementScreenshotRenderer = ElementScreenshotRenderer;
