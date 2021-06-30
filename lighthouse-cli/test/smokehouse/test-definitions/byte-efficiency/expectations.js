@@ -215,10 +215,15 @@ const expectations = [
         },
         'modern-image-formats': {
           details: {
-            overallSavingsBytes: '>60000',
-            items: {
-              length: 6,
-            },
+            overallSavingsBytes: '137000 +/- 10000',
+            items: [
+              {url: /lighthouse-1024x680.jpg$/},
+              {url: /lighthouse-unoptimized.jpg$/},
+              {url: /lighthouse-480x320.jpg$/},
+              {url: /lighthouse-480x320.jpg\?attributesized/},
+              {url: /lighthouse-480x320.jpg\?css/},
+              {url: /lighthouse-480x320.jpg\?sprite/},
+            ],
           },
         },
         'uses-text-compression': {

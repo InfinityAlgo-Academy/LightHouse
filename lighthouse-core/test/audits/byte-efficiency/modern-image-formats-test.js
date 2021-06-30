@@ -48,14 +48,14 @@ function generateArtifacts(images) {
 
 describe('Page uses optimized images', () => {
   it('ignores files when there is only insignificant savings', () => {
-    const artifacts = generateArtifacts([{originalSize: 5000, webpSize: 4500}]);
+    const artifacts = generateArtifacts([{originalSize: 5000, jpegSize: 10000, webpSize: 4500}]);
     const auditResult = ModernImageFormats.audit_(artifacts);
 
     expect(auditResult.items).toEqual([]);
   });
 
-  it('flags files when there is only small savings', () => {
-    const artifacts = generateArtifacts([{originalSize: 15000, webpSize: 4500}]);
+  it('flags files using AVIF savings', () => {
+    const artifacts = generateArtifacts([{originalSize: 15000, jpegSize: 8000, webpSize: 5000}]);
     const auditResult = ModernImageFormats.audit_(artifacts);
 
     expect(auditResult.items).toEqual([
@@ -63,7 +63,8 @@ describe('Page uses optimized images', () => {
         fromProtocol: true,
         isCrossOrigin: false,
         totalBytes: 15000,
-        wastedBytes: 15000 - 4500,
+        wastedBytes: 15000 - (5000 * 0.8),
+        wastedWebpBytes: 15000 - 5000,
         url: 'http://google.com/image.jpeg',
       },
     ]);
@@ -78,7 +79,8 @@ describe('Page uses optimized images', () => {
         fromProtocol: false,
         isCrossOrigin: false,
         totalBytes: 1e6,
-        wastedBytes: 1e6 - 1000 * 1000 * 2 / 10,
+        wastedBytes: Math.round(1e6 - 1000 * 1000 * 2 / 12),
+        wastedWebpBytes: Math.round(1e6 - 1000 * 1000 * 2 / 10),
         url: 'http://google.com/image.jpeg',
       },
     ]);
@@ -86,7 +88,7 @@ describe('Page uses optimized images', () => {
 
   it('estimates savings on cross-origin files', () => {
     const artifacts = generateArtifacts([{
-      url: 'http://localhost:1234/image.jpeg', originalSize: 50000, webpSize: 20000,
+      url: 'http://localhost:1234/image.jpg', originalSize: 50000, jpegSize: 50000, webpSize: 20000,
     }]);
     const auditResult = ModernImageFormats.audit_(artifacts);
 
@@ -94,16 +96,27 @@ describe('Page uses optimized images', () => {
       {
         fromProtocol: true,
         isCrossOrigin: true,
-        url: 'http://localhost:1234/image.jpeg',
+        url: 'http://localhost:1234/image.jpg',
       },
     ]);
   });
 
   it('passes when all images are sufficiently optimized', () => {
     const artifacts = generateArtifacts([
-      {type: 'png', originalSize: 50000, webpSize: 50001},
-      {type: 'jpeg', originalSize: 50000, webpSize: 50001},
-      {type: 'bmp', originalSize: 4000, webpSize: 2000},
+      {type: 'png', originalSize: 50000, jpegSize: 100001, webpSize: 60001},
+      {type: 'jpeg', originalSize: 50000, jpegSize: 100001, webpSize: 60001},
+      {type: 'bmp', originalSize: 4000, webpSize: 5001},
+    ]);
+
+    const auditResult = ModernImageFormats.audit_(artifacts);
+
+    expect(auditResult.items).toEqual([]);
+  });
+
+  it('passes when all images are already using a modern format', () => {
+    const artifacts = generateArtifacts([
+      {type: 'webp', originalSize: 50000, jpegSize: 100000, webpSize: 100000},
+      {type: 'avif', originalSize: 50000, jpegSize: 100000, webpSize: 100000},
     ]);
 
     const auditResult = ModernImageFormats.audit_(artifacts);
@@ -113,7 +126,7 @@ describe('Page uses optimized images', () => {
 
   it('elides data URIs', () => {
     const artifacts = generateArtifacts([
-      {type: 'data:webp', originalSize: 15000, webpSize: 4500},
+      {type: 'data:jpeg', originalSize: 15000, jpegSize: 10000, webpSize: 4500},
     ]);
 
     const auditResult = ModernImageFormats.audit_(artifacts);
