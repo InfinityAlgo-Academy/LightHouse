@@ -32,8 +32,8 @@ async function buildStandaloneReport() {
     concatRendererCode(),
     fs.readFileSync(__dirname + '/../report/clients/standalone.js', 'utf8'),
   ].join(';\n');
-  fs.mkdirSync(__dirname + '/../report/generated', {recursive: true});
-  fs.writeFileSync(__dirname + '/../report/generated/standalone.js', REPORT_JAVASCRIPT);
+  fs.mkdirSync(__dirname + '/../dist/report', {recursive: true});
+  fs.writeFileSync(__dirname + '/../dist/report/standalone.js', REPORT_JAVASCRIPT);
 }
 
 if (require.main === module) {

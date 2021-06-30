@@ -51,6 +51,9 @@ yarn-error.log
 results.html
 *.lcov
 
+# generated files needed for publish
+!dist/report/standalone.js
+
 # dev files
 .DS_Store
 .editorconfig
