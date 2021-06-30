@@ -104,7 +104,6 @@ jobs:
     - run: yarn install --frozen-lockfile --network-timeout 1000000
     - run: yarn build-report
     - run: yarn build-devtools
-    - run: yarn build-report
 
     - run: sudo apt-get install xvfb
     - name: yarn test-bundle
