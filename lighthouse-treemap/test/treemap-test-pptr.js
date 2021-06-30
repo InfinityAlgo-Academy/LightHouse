@@ -110,7 +110,7 @@ describe('Lighthouse Treemap', () => {
       expect(error).toBe('Error: Invalid options');
     });
 
-    it.only('from encoded fragment (gzip)', async () => {
+    it('from encoded fragment (gzip)', async () => {
       const options = JSON.parse(JSON.stringify(debugOptions));
       options.lhr.requestedUrl += '😃😃😃';
       const json = JSON.stringify(options);
