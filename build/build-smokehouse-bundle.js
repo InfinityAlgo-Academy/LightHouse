@@ -7,8 +7,9 @@
 
 const browserify = require('browserify');
 const fs = require('fs');
+const {LH_ROOT} = require('../root.js');
 
-const distDir = `${__dirname}/../dist`;
+const distDir = `${LH_ROOT}/dist`;
 const bundleOutFile = `${distDir}/smokehouse-bundle.js`;
 const smokehouseLibFilename = './lighthouse-cli/test/smokehouse/frontends/lib.js';
 

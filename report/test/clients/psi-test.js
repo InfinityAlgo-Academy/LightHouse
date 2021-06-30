@@ -20,12 +20,11 @@ import {DetailsRenderer} from '../../renderer/details-renderer.js';
 import {CriticalRequestChainRenderer} from '../../renderer/crc-details-renderer.js';
 import {ElementScreenshotRenderer} from '../../renderer/element-screenshot-renderer.js';
 import {ReportUIFeatures} from '../../renderer/report-ui-features.js';
+import {LH_ROOT} from '../../../root.js';
 
 const {itIfProtoExists, sampleResultsRoundtripStr} = testUtils.getProtoRoundTrip();
-
-const dir = testUtils.esmGetDirname(import.meta);
 const sampleResultsStr =
-  fs.readFileSync(dir + '/../../../lighthouse-core/test/results/sample_v2.json', 'utf-8');
+  fs.readFileSync(LH_ROOT + '/lighthouse-core/test/results/sample_v2.json', 'utf-8');
 
 /* eslint-env jest */
 

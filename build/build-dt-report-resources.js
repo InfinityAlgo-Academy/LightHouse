@@ -9,8 +9,9 @@ const browserify = require('browserify');
 const fs = require('fs');
 const path = require('path');
 const assert = require('assert').strict;
+const {LH_ROOT} = require('../root.js');
 
-const distDir = path.join(__dirname, '..', 'dist', 'dt-report-resources');
+const distDir = path.join(LH_ROOT, 'dist', 'dt-report-resources');
 const bundleOutFile = `${distDir}/report-generator.js`;
 const generatorFilename = `./report/report-generator.js`;
 const htmlReportAssets = require('../report/report-assets.js');

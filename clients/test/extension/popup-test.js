@@ -11,8 +11,9 @@ const path = require('path');
 const puppeteer = require('puppeteer');
 const {DEFAULT_CATEGORIES, STORAGE_KEYS} =
   require('../../extension/scripts/settings-controller.js');
+const {LH_ROOT} = require('../../../root.js');
 
-const lighthouseExtensionPath = path.resolve(__dirname, '../../../dist/extension-chrome');
+const lighthouseExtensionPath = path.resolve(LH_ROOT, 'dist/extension-chrome');
 
 const mockStorage = {
   [STORAGE_KEYS.Categories]: {

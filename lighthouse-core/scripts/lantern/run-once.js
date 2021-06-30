@@ -11,6 +11,7 @@ const path = require('path');
 const PredictivePerf = require('../../audits/predictive-perf.js');
 const Simulator = require('../../lib/dependency-graph/simulator/simulator.js');
 const traceSaver = require('../../lib/lantern-trace-saver.js');
+const {LH_ROOT} = require('../../../root.js');
 
 if (process.argv.length !== 4) throw new Error('Usage $0 <trace file> <devtools file>');
 
@@ -32,7 +33,7 @@ async function run() {
   const pessimisticTTINodeTimings = Simulator.ALL_NODE_TIMINGS.get('pessimisticInteractive');
   if (process.env.LANTERN_DEBUG && pessimisticTTINodeTimings) {
     const outputTraceFile = path.basename(tracePath).replace(/.trace.json$/, '.lantern.trace.json');
-    const outputTracePath = path.join(__dirname, '../../../.tmp', outputTraceFile);
+    const outputTracePath = path.join(LH_ROOT, '.tmp', outputTraceFile);
     const trace = traceSaver.convertNodeTimingsToTrace(pessimisticTTINodeTimings);
     fs.writeFileSync(outputTracePath, JSON.stringify(trace, null, 2));
   }

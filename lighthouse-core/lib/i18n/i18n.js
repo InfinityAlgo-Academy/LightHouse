@@ -13,13 +13,13 @@ const lookupClosestLocale = require('lookup-closest-locale');
 const LOCALES = require('./locales.js');
 const {isObjectOfUnknownValues, isObjectOrArrayOfUnknownValues} = require('../type-verifiers.js');
 const log = require('lighthouse-logger');
+const {LH_ROOT} = require('../../../root.js');
 
 const DEFAULT_LOCALE = 'en';
 
 /** @typedef {import('intl-messageformat-parser').Element} MessageElement */
 /** @typedef {import('intl-messageformat-parser').ArgumentElement} ArgumentElement */
 
-const LH_ROOT = path.join(__dirname, '../../../');
 const MESSAGE_I18N_ID_REGEX = / | [^\s]+$/;
 
 const UIStrings = {
