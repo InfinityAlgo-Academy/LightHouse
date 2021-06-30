@@ -46,6 +46,7 @@ jobs:
       run: bash $GITHUB_WORKSPACE/lighthouse-core/scripts/download-chrome.sh && mv chrome-linux chrome-linux-tot
 
     - run: yarn install --frozen-lockfile --network-timeout 1000000
+    - run: yarn build-report
 
     - run: sudo apt-get install xvfb
     - name: Run smoke tests
@@ -78,6 +79,7 @@ jobs:
         node-version: 12.x
 
     - run: yarn install --frozen-lockfile --network-timeout 1000000
+    - run: yarn build-report
 
     - name: Run smoke tests
       # Windows bots are slow, so only run enough tests to verify matching behavior.
@@ -100,6 +102,7 @@ jobs:
         node-version: 12.x
 
     - run: yarn install --frozen-lockfile --network-timeout 1000000
+    - run: yarn build-report
     - run: yarn build-devtools
 
     - run: sudo apt-get install xvfb

@@ -39,6 +39,9 @@ mkdir -p "$fe_lh_dir"
 
 lh_bg_js="dist/lighthouse-dt-bundle.js"
 
+yarn build-report
+yarn build-devtools
+
 # copy lighthouse-dt-bundle (potentially stale)
 cp -pPR "$lh_bg_js" "$fe_lh_dir/lighthouse-dt-bundle.js"
 echo -e "$check (Potentially stale) lighthouse-dt-bundle copied."

@@ -53,6 +53,9 @@ yarn-error.log
 results.html
 *.lcov
 
+# generated files needed for publish
+!dist/report/standalone.js
+
 # large files
 changelog.md
 
