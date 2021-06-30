@@ -12,9 +12,6 @@ import {DOM} from '../../renderer/dom.js';
 import {Util} from '../../renderer/util.js';
 import {I18n} from '../../renderer/i18n.js';
 import {DetailsRenderer} from '../../renderer/details-renderer.js';
-import {SnippetRenderer} from '../../renderer/snippet-renderer.js';
-import {CriticalRequestChainRenderer} from '../../renderer/crc-details-renderer.js';
-import {ElementScreenshotRenderer} from '../../renderer/element-screenshot-renderer.js';
 
 /* eslint-env jest */
 
@@ -29,20 +26,12 @@ describe('DetailsRenderer', () => {
   }
 
   beforeAll(() => {
-    global.Util = Util;
-    global.Util.i18n = new I18n('en', {...Util.UIStrings});
-    global.CriticalRequestChainRenderer = CriticalRequestChainRenderer;
-    global.SnippetRenderer = SnippetRenderer;
-    global.ElementScreenshotRenderer = ElementScreenshotRenderer;
+    Util.i18n = new I18n('en', {...Util.UIStrings});
     createRenderer();
   });
 
   afterAll(() => {
-    global.Util.i18n = undefined;
-    global.Util = undefined;
-    global.CriticalRequestChainRenderer = undefined;
-    global.SnippetRenderer = undefined;
-    global.ElementScreenshotRenderer = undefined;
+    Util.i18n = undefined;
   });
 
   describe('render', () => {

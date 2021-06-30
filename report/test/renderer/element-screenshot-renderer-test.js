@@ -10,7 +10,6 @@
 import jsdom from 'jsdom';
 
 import {ElementScreenshotRenderer} from '../../renderer/element-screenshot-renderer.js';
-import RectHelpers from '../../../lighthouse-core/lib/rect-helpers.js';
 import {Util} from '../../renderer/util.js';
 import {I18n} from '../../renderer/i18n.js';
 import {DOM} from '../../renderer/dom.js';
@@ -32,17 +31,14 @@ describe('ElementScreenshotRenderer', () => {
   let dom;
 
   beforeAll(() => {
-    global.RectHelpers = RectHelpers;
-    global.Util = Util;
-    global.Util.i18n = new I18n('en', {...Util.UIStrings});
+    Util.i18n = new I18n('en', {...Util.UIStrings});
+
     const {document} = new jsdom.JSDOM(reportAssets.REPORT_TEMPLATES).window;
     dom = new DOM(document);
   });
 
   afterAll(() => {
-    global.RectHelpers = undefined;
-    global.Util.i18n = undefined;
-    global.Util = undefined;
+    Util.i18n = undefined;
   });
 
   it('renders screenshot', () => {

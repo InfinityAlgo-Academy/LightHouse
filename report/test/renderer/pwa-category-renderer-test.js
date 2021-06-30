@@ -15,7 +15,6 @@ import {Util} from '../../renderer/util.js';
 import {I18n} from '../../renderer/i18n.js';
 import {DOM} from '../../renderer/dom.js';
 import {DetailsRenderer} from '../../renderer/details-renderer.js';
-import {CategoryRenderer} from '../../renderer/category-renderer.js';
 import {PwaCategoryRenderer} from '../../renderer/pwa-category-renderer.js';
 import sampleResultsOrig from '../../../lighthouse-core/test/results/sample_v2.json';
 
@@ -25,9 +24,7 @@ describe('PwaCategoryRenderer', () => {
   let sampleResults;
 
   beforeAll(() => {
-    global.Util = Util;
-    global.Util.i18n = new I18n('en', {...Util.UIStrings});
-    global.CategoryRenderer = CategoryRenderer;
+    Util.i18n = new I18n('en', {...Util.UIStrings});
 
     const {document} = new jsdom.JSDOM(reportAssets.REPORT_TEMPLATES).window;
     const dom = new DOM(document);
@@ -44,9 +41,7 @@ describe('PwaCategoryRenderer', () => {
   });
 
   afterAll(() => {
-    global.Util.i18n = undefined;
-    global.Util = undefined;
-    global.CategoryRenderer = undefined;
+    Util.i18n = undefined;
   });
 
   it('renders the regular audits', () => {

@@ -76,16 +76,15 @@ describe('DetailsRenderer', () => {
   let detailsRenderer;
 
   beforeAll(() => {
-    global.Util = Util;
-    global.Util.i18n = new I18n('en', {...Util.UIStrings});
+    Util.i18n = new I18n('en', {...Util.UIStrings});
+
     const {document} = new jsdom.JSDOM(reportAssets.REPORT_TEMPLATES).window;
     dom = new DOM(document);
     detailsRenderer = new DetailsRenderer(dom);
   });
 
   afterAll(() => {
-    global.Util.i18n = undefined;
-    global.Util = undefined;
+    Util.i18n = undefined;
   });
 
   it('renders tree structure', () => {

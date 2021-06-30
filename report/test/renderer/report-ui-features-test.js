@@ -8,20 +8,13 @@
 /* eslint-env jest */
 
 import {strict as assert} from 'assert';
-
 import jsdom from 'jsdom';
 import reportAssets from '../../report-assets.js';
 import {Util} from '../../renderer/util.js';
-import {I18n} from '../../renderer/i18n.js';
 import {DOM} from '../../renderer/dom.js';
 import {DetailsRenderer} from '../../renderer/details-renderer.js';
 import {ReportUIFeatures} from '../../renderer/report-ui-features.js';
 import {CategoryRenderer} from '../../renderer/category-renderer.js';
-import {PerformanceCategoryRenderer} from '../../renderer/performance-category-renderer.js';
-import {PwaCategoryRenderer} from '../../renderer/pwa-category-renderer.js';
-import {ElementScreenshotRenderer} from '../../renderer/element-screenshot-renderer.js';
-import RectHelpers from '../../../lighthouse-core/lib/rect-helpers.js';
-import {CriticalRequestChainRenderer} from '../../renderer/crc-details-renderer.js';
 import {ReportRenderer} from '../../renderer/report-renderer.js';
 import sampleResultsOrig from '../../../lighthouse-core/test/results/sample_v2.json';
 
@@ -45,17 +38,6 @@ describe('ReportUIFeatures', () => {
   }
 
   beforeAll(() => {
-    global.Util = Util;
-    global.I18n = I18n;
-    global.ReportUIFeatures = ReportUIFeatures;
-    global.CriticalRequestChainRenderer = CriticalRequestChainRenderer;
-    global.DetailsRenderer = DetailsRenderer;
-    global.CategoryRenderer = CategoryRenderer;
-    global.ElementScreenshotRenderer = ElementScreenshotRenderer;
-    global.RectHelpers = RectHelpers;
-    global.PerformanceCategoryRenderer = PerformanceCategoryRenderer;
-    global.PwaCategoryRenderer = PwaCategoryRenderer;
-
     // Stub out matchMedia for Node.
     global.matchMedia = function() {
       return {
@@ -90,18 +72,6 @@ describe('ReportUIFeatures', () => {
   });
 
   afterAll(() => {
-    global.self = undefined;
-    global.Util = undefined;
-    global.I18n = undefined;
-    global.ReportUIFeatures = undefined;
-    global.matchMedia = undefined;
-    global.CriticalRequestChainRenderer = undefined;
-    global.DetailsRenderer = undefined;
-    global.CategoryRenderer = undefined;
-    global.ElementScreenshotRenderer = undefined;
-    global.RectHelpers = undefined;
-    global.PerformanceCategoryRenderer = undefined;
-    global.PwaCategoryRenderer = undefined;
     global.window = undefined;
     global.HTMLElement = undefined;
     global.HTMLInputElement = undefined;

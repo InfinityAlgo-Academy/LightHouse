@@ -58,15 +58,13 @@ describe('DetailsRenderer', () => {
   let dom;
 
   beforeAll(() => {
-    global.Util = Util;
-    global.Util.i18n = new I18n('en', {...Util.UIStrings});
+    Util.i18n = new I18n('en', {...Util.UIStrings});
     const {document} = new jsdom.JSDOM(reportAssets.REPORT_TEMPLATES).window;
     dom = new DOM(document);
   });
 
   afterAll(() => {
-    global.Util.i18n = undefined;
-    global.Util = undefined;
+    Util.i18n = undefined;
   });
 
   function renderSnippet(details) {

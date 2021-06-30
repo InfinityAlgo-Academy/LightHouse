@@ -12,16 +12,10 @@ import {strict as assert} from 'assert';
 import jsdom from 'jsdom';
 import reportAssets from '../../report-assets.js';
 import {Util} from '../../renderer/util.js';
-import {I18n} from '../../renderer/i18n.js';
 import URL from '../../../lighthouse-core/lib/url-shim.js';
 import {DOM} from '../../renderer/dom.js';
 import {DetailsRenderer} from '../../renderer/details-renderer.js';
-import {ReportUIFeatures} from '../../renderer/report-ui-features.js';
 import {CategoryRenderer} from '../../renderer/category-renderer.js';
-import {PerformanceCategoryRenderer} from '../../renderer/performance-category-renderer.js';
-import {PwaCategoryRenderer} from '../../renderer/pwa-category-renderer.js';
-import {ElementScreenshotRenderer} from '../../renderer/element-screenshot-renderer.js';
-import {CriticalRequestChainRenderer} from '../../renderer/crc-details-renderer.js';
 import {ReportRenderer} from '../../renderer/report-renderer.js';
 import sampleResultsOrig from '../../../lighthouse-core/test/results/sample_v2.json';
 
@@ -32,16 +26,6 @@ describe('ReportRenderer', () => {
   let sampleResults;
 
   beforeAll(() => {
-    global.Util = Util;
-    global.I18n = I18n;
-    global.ReportUIFeatures = ReportUIFeatures;
-    global.CriticalRequestChainRenderer = CriticalRequestChainRenderer;
-    global.DetailsRenderer = DetailsRenderer;
-    global.CategoryRenderer = CategoryRenderer;
-    global.ElementScreenshotRenderer = ElementScreenshotRenderer;
-    global.PerformanceCategoryRenderer = PerformanceCategoryRenderer;
-    global.PwaCategoryRenderer = PwaCategoryRenderer;
-
     // Stub out matchMedia for Node.
     global.matchMedia = function() {
       return {
@@ -61,16 +45,7 @@ describe('ReportRenderer', () => {
 
   afterAll(() => {
     global.self = undefined;
-    global.Util = undefined;
-    global.I18n = undefined;
-    global.ReportUIFeatures = undefined;
     global.matchMedia = undefined;
-    global.CriticalRequestChainRenderer = undefined;
-    global.DetailsRenderer = undefined;
-    global.CategoryRenderer = undefined;
-    global.ElementScreenshotRenderer = undefined;
-    global.PerformanceCategoryRenderer = undefined;
-    global.PwaCategoryRenderer = undefined;
   });
 
   describe('renderReport', () => {
