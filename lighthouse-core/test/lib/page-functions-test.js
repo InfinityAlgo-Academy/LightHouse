@@ -7,8 +7,10 @@
 
 const assert = require('assert').strict;
 const jsdom = require('jsdom');
-const DOM = require('../../../report/renderer/dom.js');
 const pageFunctions = require('../../lib/page-functions.js');
+
+/** @type {import('../../../report/renderer/dom.js').DOM} */
+let DOM;
 
 /* eslint-env jest */
 
@@ -17,6 +19,8 @@ describe('Page Functions', () => {
   let dom;
 
   beforeAll(() => {
+    // TODO(esmodules): remove when this file is esm.
+    DOM = await import('../../../report/renderer/dom.js');
     const {document, ShadowRoot, Node, HTMLElement} = new jsdom.JSDOM('', {url}).window;
     global.ShadowRoot = ShadowRoot;
     global.Node = Node;
