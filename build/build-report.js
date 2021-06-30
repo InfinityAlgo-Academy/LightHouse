@@ -71,8 +71,14 @@ async function buildEsModulesBundle() {
 
 
 if (require.main === module) {
-  buildStandaloneReport();
-  buildEsModulesBundle();
+  if (process.argv[2] === '--only-standalone') {
+    buildStandaloneReport();
+  } else if (process.argv[2] === '--only-bundle') {
+    buildEsModulesBundle();
+  } else {
+    buildStandaloneReport();
+    buildEsModulesBundle();
+  }
 }
 
 module.exports = {
