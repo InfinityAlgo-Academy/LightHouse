@@ -7,14 +7,12 @@
 
 /* global window */
 
-// TODO(esmodules): delete when viewer app is esm.
+// TODO(esmodules): delete when treemap app is esm.
 
-import {DOM} from '../renderer/dom.js';
+import {I18n} from '../renderer/i18n.js';
 import {Logger} from '../renderer/logger.js';
-import {ReportRenderer} from '../renderer/report-renderer.js';
-import {ReportUIFeatures} from '../renderer/report-ui-features.js';
+import {TextEncoding} from '../renderer/text-encoding.js';
 
-window.DOM = DOM;
+window.I18n = I18n;
 window.Logger = Logger;
-window.ReportRenderer = ReportRenderer;
-window.ReportUIFeatures = ReportUIFeatures;
+window.TextEncoding = TextEncoding;

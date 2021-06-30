@@ -41,6 +41,20 @@ async function buildViewerReport() {
   });
 }
 
+async function buildTreemapReport() {
+  const bundle = await rollup.rollup({
+    input: 'report/clients/treemap.js',
+    plugins: [
+      commonjs(),
+    ],
+  });
+
+  await bundle.write({
+    file: 'dist/treemap-report.js',
+    format: 'iife',
+  });
+}
+
 async function buildEsModulesBundle() {
   const bundle = await rollup.rollup({
     input: 'report/clients/bundle.js',
@@ -64,4 +78,5 @@ if (require.main === module) {
 module.exports = {
   buildStandaloneReport,
   buildViewerReport,
+  buildTreemapReport,
 };

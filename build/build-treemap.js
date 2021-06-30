@@ -8,6 +8,7 @@
 /** @typedef {import('../lighthouse-core/lib/i18n/locales').LhlMessages} LhlMessages */
 
 const fs = require('fs');
+const {buildTreemapReport} = require('./build-report.js');
 const GhPagesApp = require('./gh-pages-app.js');
 
 /**
@@ -44,6 +45,8 @@ function buildStrings() {
  * Build treemap app, optionally deploying to gh-pages if `--deploy` flag was set.
  */
 async function run() {
+  await buildTreemapReport();
+
   const app = new GhPagesApp({
     name: 'treemap',
     appDir: `${__dirname}/../lighthouse-treemap/app`,
@@ -64,9 +67,7 @@ async function run() {
       fs.readFileSync(require.resolve('pako/dist/pako_inflate.js'), 'utf-8'),
       /* eslint-enable max-len */
       buildStrings(),
-      {path: '../../report/renderer/logger.js'},
-      {path: '../../report/renderer/i18n.js'},
-      {path: '../../report/renderer/text-encoding.js'},
+      fs.readFileSync(__dirname + '/../dist/treemap-report.js', 'utf8'),
       {path: '../../lighthouse-viewer/app/src/drag-and-drop.js'},
       {path: '../../lighthouse-viewer/app/src/github-api.js'},
       {path: '../../lighthouse-viewer/app/src/firebase-auth.js'},
