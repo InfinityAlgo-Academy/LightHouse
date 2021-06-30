@@ -22,7 +22,7 @@ async function buildStandaloneReport() {
   });
 
   await bundle.write({
-    file: 'report/generated/standalone.js',
+    file: 'dist/report/standalone.js',
     format: 'iife',
   });
 }
@@ -36,7 +36,7 @@ async function buildViewerReport() {
   });
 
   await bundle.write({
-    file: 'dist/viewer-report.js',
+    file: 'dist/report/viewer.js',
     format: 'iife',
   });
 }
@@ -50,7 +50,7 @@ async function buildTreemapReport() {
   });
 
   await bundle.write({
-    file: 'dist/treemap-report.js',
+    file: 'dist/report/treemap.js',
     format: 'iife',
   });
 }
@@ -64,7 +64,7 @@ async function buildEsModulesBundle() {
   });
 
   await bundle.write({
-    file: 'dist/report.js',
+    file: 'dist/report/bundle.js',
     format: 'esm',
   });
 }

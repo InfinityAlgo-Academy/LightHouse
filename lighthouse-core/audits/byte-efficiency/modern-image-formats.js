@@ -16,7 +16,7 @@ const UIStrings = {
   /** Imperative title of a Lighthouse audit that tells the user to serve images in newer and more efficient image formats in order to enhance the performance of a page. A non-modern image format was designed 20+ years ago. This is displayed in a list of audit titles that Lighthouse generates. */
   title: 'Serve images in next-gen formats',
   /** Description of a Lighthouse audit that tells the user *why* they should use newer and more efficient image formats. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
-  description: 'Image formats like JPEG 2000, JPEG XR, and WebP often provide better ' +
+  description: 'Image formats like WebP and AVIF often provide better ' +
     'compression than PNG or JPEG, which means faster downloads and less data consumption. ' +
     '[Learn more](https://web.dev/uses-webp-images/).',
 };
@@ -41,16 +41,6 @@ class ModernImageFormats extends ByteEfficiencyAudit {
   }
 
   /**
-   * @param {{originalSize: number, webpSize: number}} image
-   * @return {{bytes: number, percent: number}}
-   */
-  static computeSavings(image) {
-    const bytes = image.originalSize - image.webpSize;
-    const percent = 100 * bytes / image.originalSize;
-    return {bytes, percent};
-  }
-
-  /**
    * @param {{naturalWidth: number, naturalHeight: number}} imageElement
    * @return {number}
    */
@@ -63,6 +53,38 @@ class ModernImageFormats extends ByteEfficiencyAudit {
     // https://developers.google.com/speed/webp/docs/webp_lossless_alpha_study#results
     const expectedBytesPerPixel = 2 * 1 / 10;
     return Math.round(totalPixels * expectedBytesPerPixel);
+  }
+
+  /**
+   * @param {{naturalWidth: number, naturalHeight: number}} imageElement
+   * @return {number}
+   */
+  static estimateAvifSizeFromDimensions(imageElement) {
+    const totalPixels = imageElement.naturalWidth * imageElement.naturalHeight;
+    // See above for the rationale behind our 2 byte-per-pixel baseline and WebP ratio of 10:1.
+    // AVIF usually gives ~20% additional savings on top of that, so we will use 12:1.
+    // This is quite pessimistic as Netflix study shows a photographic compression ratio of ~40:1
+    // (0.4 *bits* per pixel at SSIM 0.97).
+    // https://netflixtechblog.com/avif-for-next-generation-image-coding-b1d75675fe4
+    const expectedBytesPerPixel = 2 * 1 / 12;
+    return Math.round(totalPixels * expectedBytesPerPixel);
+  }
+
+  /**
+   * @param {{jpegSize: number | undefined, webpSize: number | undefined}} otherFormatSizes
+   * @return {number|undefined}
+   */
+  static estimateAvifSizeFromWebPAndJpegEstimates(otherFormatSizes) {
+    if (!otherFormatSizes.jpegSize || !otherFormatSizes.webpSize) return undefined;
+
+    // AVIF saves at least ~50% on JPEG, ~20% on WebP at low quality.
+    // http://downloads.aomedia.org/assets/pdf/symposium-2019/slides/CyrilConcolato_Netflix-AVIF-AOM-Research-Symposium-2019.pdf
+    // https://jakearchibald.com/2020/avif-has-landed/
+    // https://www.finally.agency/blog/what-is-avif-image-format
+    // See https://github.com/GoogleChrome/lighthouse/issues/12295#issue-840261460 for more.
+    const estimateFromJpeg = otherFormatSizes.jpegSize * 5 / 10;
+    const estimateFromWebp = otherFormatSizes.webpSize * 8 / 10;
+    return estimateFromJpeg / 2 + estimateFromWebp / 2;
   }
 
   /**
@@ -86,7 +108,15 @@ class ModernImageFormats extends ByteEfficiencyAudit {
         continue;
       }
 
+      // Skip if the image was already using a modern format.
+      if (image.mimeType === 'image/webp' || image.mimeType === 'image/avif') continue;
+
+      const jpegSize = image.jpegSize;
       let webpSize = image.webpSize;
+      let avifSize = ModernImageFormats.estimateAvifSizeFromWebPAndJpegEstimates({
+        jpegSize,
+        webpSize,
+      });
       let fromProtocol = true;
 
       if (typeof webpSize === 'undefined') {
@@ -107,21 +137,30 @@ class ModernImageFormats extends ByteEfficiencyAudit {
           naturalHeight,
           naturalWidth,
         });
+        avifSize = ModernImageFormats.estimateAvifSizeFromDimensions({
+          naturalHeight,
+          naturalWidth,
+        });
         fromProtocol = false;
       }
 
-      if (image.originalSize < webpSize + IGNORE_THRESHOLD_IN_BYTES) continue;
+      if (webpSize === undefined || avifSize === undefined) continue;
+
+      // Visible wasted bytes uses AVIF, but we still include the WebP savings in the LHR.
+      const wastedWebpBytes = image.originalSize - webpSize;
+      const wastedBytes = image.originalSize - avifSize;
+      if (wastedBytes < IGNORE_THRESHOLD_IN_BYTES) continue;
 
       const url = URL.elideDataURI(image.url);
       const isCrossOrigin = !URL.originsMatch(pageURL, image.url);
-      const webpSavings = ModernImageFormats.computeSavings({...image, webpSize: webpSize});
 
       items.push({
         url,
         fromProtocol,
         isCrossOrigin,
         totalBytes: image.originalSize,
-        wastedBytes: webpSavings.bytes,
+        wastedBytes,
+        wastedWebpBytes,
       });
     }
 

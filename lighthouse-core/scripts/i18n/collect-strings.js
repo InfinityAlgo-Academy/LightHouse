@@ -28,7 +28,7 @@ const UISTRINGS_REGEX = /UIStrings = .*?\};\n/s;
 
 const foldersWithStrings = [
   `${LH_ROOT}/lighthouse-core`,
-  `${LH_ROOT}/report`,
+  `${LH_ROOT}/report/renderer`,
   `${LH_ROOT}/lighthouse-treemap`,
   path.dirname(require.resolve('lighthouse-stack-packs')) + '/packs',
 ];

@@ -102,6 +102,7 @@ jobs:
         node-version: 12.x
 
     - run: yarn install --frozen-lockfile --network-timeout 1000000
+    - run: yarn build-report
     - run: yarn build-devtools
     - run: yarn build-report
 

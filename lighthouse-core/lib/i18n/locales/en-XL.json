@@ -477,7 +477,7 @@
     "message": "Âv́ôíd̂ śêŕv̂ín̂ǵ l̂éĝáĉý Ĵáv̂áŜćr̂íp̂t́ t̂ó m̂ód̂ér̂ń b̂ŕôẃŝér̂ś"
   },
   "lighthouse-core/audits/byte-efficiency/modern-image-formats.js | description": {
-    "message": "Îḿâǵê f́ôŕm̂át̂ś l̂ík̂é ĴṔÊǴ 2000, ĴṔÊǴ X̂Ŕ, âńd̂ Ẃêb́P̂ óf̂t́êń p̂ŕôv́îd́ê b́êt́t̂ér̂ ćôḿp̂ŕêśŝíôń t̂h́âń P̂ŃĜ ór̂ J́P̂ÉĜ, ẃĥíĉh́ m̂éâńŝ f́âśt̂ér̂ d́ôẃn̂ĺôád̂ś âńd̂ ĺêśŝ d́ât́â ćôńŝúm̂ṕt̂íôń. [L̂éâŕn̂ ḿôŕê](https://web.dev/uses-webp-images/)."
+    "message": "Îḿâǵê f́ôŕm̂át̂ś l̂ík̂é Ŵéb̂Ṕ âńd̂ ÁV̂ÍF̂ óf̂t́êń p̂ŕôv́îd́ê b́êt́t̂ér̂ ćôḿp̂ŕêśŝíôń t̂h́âń P̂ŃĜ ór̂ J́P̂ÉĜ, ẃĥíĉh́ m̂éâńŝ f́âśt̂ér̂ d́ôẃn̂ĺôád̂ś âńd̂ ĺêśŝ d́ât́â ćôńŝúm̂ṕt̂íôń. [L̂éâŕn̂ ḿôŕê](https://web.dev/uses-webp-images/)."
   },
   "lighthouse-core/audits/byte-efficiency/modern-image-formats.js | title": {
     "message": "Ŝér̂v́ê ím̂áĝéŝ ín̂ ńêx́t̂-ǵêń f̂ór̂ḿât́ŝ"

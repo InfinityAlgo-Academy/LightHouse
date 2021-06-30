@@ -3823,12 +3823,12 @@
     "modern-image-formats": {
       "id": "modern-image-formats",
       "title": "Serve images in next-gen formats",
-      "description": "Image formats like JPEG 2000, JPEG XR, and WebP often provide better compression than PNG or JPEG, which means faster downloads and less data consumption. [Learn more](https://web.dev/uses-webp-images/).",
+      "description": "Image formats like WebP and AVIF often provide better compression than PNG or JPEG, which means faster downloads and less data consumption. [Learn more](https://web.dev/uses-webp-images/).",
       "score": 0.88,
       "scoreDisplayMode": "numeric",
       "numericValue": 150,
       "numericUnit": "millisecond",
-      "displayValue": "Potential savings of 9 KiB",
+      "displayValue": "Potential savings of 13 KiB",
       "warnings": [],
       "details": {
         "type": "opportunity",
@@ -3860,11 +3860,12 @@
             "fromProtocol": true,
             "isCrossOrigin": false,
             "totalBytes": 24620,
-            "wastedBytes": 9028
+            "wastedBytes": 12989.45,
+            "wastedWebpBytes": 9028
           }
         ],
         "overallSavingsMs": 150,
-        "overallSavingsBytes": 9028
+        "overallSavingsBytes": 12989.45
       }
     },
     "uses-optimized-images": {
@@ -8172,7 +8173,7 @@
         },
         {
           "values": {
-            "wastedBytes": 9028
+            "wastedBytes": 12989.45
           },
           "path": "audits[modern-image-formats].displayValue"
         },
