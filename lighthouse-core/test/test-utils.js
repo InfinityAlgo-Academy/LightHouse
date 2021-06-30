@@ -11,6 +11,7 @@ const fs = require('fs');
 const i18n = require('../lib/i18n/i18n.js');
 const mockCommands = require('./gather/mock-commands.js');
 const {default: {toBeCloseTo}} = require('expect/build/matchers.js');
+const {LH_ROOT} = require('../../root.js');
 
 expect.extend({
   toBeDisplayString(received, expected) {
@@ -89,7 +90,7 @@ function getProtoRoundTrip() {
   let itIfProtoExists;
   try {
     sampleResultsRoundtripStr =
-      fs.readFileSync(__dirname + '/../../.tmp/sample_v2_round_trip.json', 'utf-8');
+      fs.readFileSync(LH_ROOT + '/.tmp/sample_v2_round_trip.json', 'utf-8');
     describeIfProtoExists = describe;
     itIfProtoExists = it;
   } catch (err) {

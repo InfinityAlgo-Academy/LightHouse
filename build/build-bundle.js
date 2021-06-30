@@ -14,12 +14,12 @@ const fs = require('fs');
 const path = require('path');
 const assert = require('assert').strict;
 const mkdir = fs.promises.mkdir;
-
 const LighthouseRunner = require('../lighthouse-core/runner.js');
 const exorcist = require('exorcist');
 const browserify = require('browserify');
 const terser = require('terser');
 const {minifyFileTransform} = require('./build-utils.js');
+const {LH_ROOT} = require('../root.js');
 
 const COMMIT_HASH = require('child_process')
   .execSync('git rev-parse HEAD')
@@ -31,7 +31,7 @@ const audits = LighthouseRunner.getAuditList()
 const gatherers = LighthouseRunner.getGathererList()
     .map(f => './lighthouse-core/gather/gatherers/' + f.replace(/\.js$/, ''));
 
-const locales = fs.readdirSync(__dirname + '/../lighthouse-core/lib/i18n/locales/')
+const locales = fs.readdirSync(LH_ROOT + '/lighthouse-core/lib/i18n/locales/')
     .map(f => require.resolve(`../lighthouse-core/lib/i18n/locales/${f}`));
 
 // HACK: manually include the lighthouse-plugin-publisher-ads audits.

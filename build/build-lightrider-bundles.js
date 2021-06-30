@@ -10,9 +10,10 @@ const fs = require('fs');
 const path = require('path');
 const bundleBuilder = require('./build-bundle.js');
 const {minifyFileTransform} = require('./build-utils.js');
+const {LH_ROOT} = require('../root.js');
 
-const distDir = path.join(__dirname, '..', 'dist', 'lightrider');
-const sourceDir = __dirname + '/../clients/lightrider';
+const distDir = path.join(LH_ROOT, 'dist', 'lightrider');
+const sourceDir = path.join(LH_ROOT, 'clients', 'lightrider');
 
 const bundleOutFile = `${distDir}/report-generator-bundle.js`;
 const generatorFilename = `./report/report-generator.js`;

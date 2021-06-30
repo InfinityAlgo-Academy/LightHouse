@@ -18,8 +18,8 @@ const Util = require('../../../report/renderer/util.js');
 const {collectAndBakeCtcStrings} = require('./bake-ctc-to-lhl.js');
 const {pruneObsoleteLhlMessages} = require('./prune-obsolete-lhl-messages.js');
 const {countTranslatedMessages} = require('./count-translated.js');
+const {LH_ROOT} = require('../../../root.js');
 
-const LH_ROOT = path.join(__dirname, '../../../');
 const UISTRINGS_REGEX = /UIStrings = .*?\};\n/s;
 
 /** @typedef {import('./bake-ctc-to-lhl.js').CtcMessage} CtcMessage */

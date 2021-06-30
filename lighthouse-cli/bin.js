@@ -5,11 +5,8 @@
  */
 'use strict';
 
-const fs = require('fs');
-const path = require('path');
-
-/*
- * The relationship between these CLI modules:
+/**
+ * @fileoverview The relationship between these CLI modules:
  *
  *   index.js     : only calls bin.js's begin()
  *   cli-flags.js : leverages yargs to read argv, outputs LH.CliFlags
@@ -21,24 +18,25 @@ const path = require('path');
  *               cli-flags        lh-core/index
  */
 
+const fs = require('fs');
+const path = require('path');
 const commands = require('./commands/commands.js');
 const printer = require('./printer.js');
 const {getFlags} = require('./cli-flags.js');
 const {runLighthouse} = require('./run.js');
 const {generateConfig} = require('../lighthouse-core/index.js');
-
 const log = require('lighthouse-logger');
 const pkg = require('../package.json');
 const Sentry = require('../lighthouse-core/lib/sentry.js');
-
 const updateNotifier = require('update-notifier');
 const {askPermission} = require('./sentry-prompt.js');
+const {LH_ROOT} = require('../root.js');
 
 /**
  * @return {boolean}
  */
 function isDev() {
-  return fs.existsSync(path.join(__dirname, '../.git'));
+  return fs.existsSync(path.join(LH_ROOT, '/.git'));
 }
 
 /**

@@ -10,8 +10,7 @@
 
 const fs = require('fs');
 const path = require('path');
-
-const LH_ROOT = path.join(__dirname, '../../../');
+const {LH_ROOT} = require('../../../root.js');
 
 /**
  * @typedef CtcMessage

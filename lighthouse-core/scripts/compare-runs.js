@@ -21,10 +21,10 @@ const glob = require('glob');
 const util = require('util');
 const execFile = util.promisify(require('child_process').execFile);
 const yargs = require('yargs');
+const {LH_ROOT} = require('../../root.js');
 
 const {ProgressLogger} = require('./lantern/collect/common.js');
 
-const LH_ROOT = `${__dirname}/../..`;
 const ROOT_OUTPUT_DIR = `${LH_ROOT}/timings-data`;
 
 const rawArgv = yargs

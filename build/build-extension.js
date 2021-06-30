@@ -7,11 +7,11 @@
 
 const fs = require('fs');
 const mkdir = fs.promises.mkdir;
-
 const archiver = require('archiver');
 const cpy = require('cpy');
 const browserify = require('browserify');
 const path = require('path');
+const {LH_ROOT} = require('../root.js');
 
 const argv = process.argv.slice(2);
 const browserBrand = argv[0];
@@ -19,8 +19,8 @@ const browserBrand = argv[0];
 const sourceName = 'popup.js';
 const distName = 'popup-bundle.js';
 
-const sourceDir = `${__dirname}/../clients/extension`;
-const distDir = `${__dirname}/../dist/extension-${browserBrand}`;
+const sourceDir = `${LH_ROOT}/clients/extension`;
+const distDir = `${LH_ROOT}/dist/extension-${browserBrand}`;
 const packagePath = `${distDir}/../extension-${browserBrand}-package`;
 
 const manifestVersion = require(`${sourceDir}/manifest.json`).version;

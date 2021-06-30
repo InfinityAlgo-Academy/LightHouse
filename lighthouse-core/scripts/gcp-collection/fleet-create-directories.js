@@ -14,8 +14,8 @@
 
 const fs = require('fs');
 const path = require('path');
+const {LH_ROOT} = require('../../../root.js');
 
-const LH_ROOT = path.join(__dirname, '../../../');
 const TMP_DIR = path.join(LH_ROOT, '.tmp/gcp-instances');
 const URLS_LIST = process.argv[2]
   ? path.resolve(process.cwd(), process.argv[2])

@@ -21,10 +21,11 @@ const DetailsRenderer = require('../../renderer/details-renderer.js');
 const CriticalRequestChainRenderer = require('../../renderer/crc-details-renderer.js');
 const ElementScreenshotRenderer = require('../../renderer/element-screenshot-renderer.js');
 const ReportUIFeatures = require('../../renderer/report-ui-features.js');
+const {LH_ROOT} = require('../../../root.js');
 
 const {itIfProtoExists, sampleResultsRoundtripStr} = testUtils.getProtoRoundTrip();
 const sampleResultsStr =
-  fs.readFileSync(__dirname + '/../../../lighthouse-core/test/results/sample_v2.json', 'utf-8');
+  fs.readFileSync(LH_ROOT + '/lighthouse-core/test/results/sample_v2.json', 'utf-8');
 
 /* eslint-env jest */
 

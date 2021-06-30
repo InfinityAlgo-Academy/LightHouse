@@ -9,9 +9,10 @@
 const assert = require('assert').strict;
 const path = require('path');
 const fs = require('fs');
-
 const run = require('../../run.js');
 const parseChromeFlags = require('../../run.js').parseChromeFlags;
+const {LH_ROOT} = require('../../../root.js');
+
 /** @type {LH.Config.Json} */
 const testConfig = {
   'extends': 'lighthouse:default',
@@ -39,7 +40,7 @@ describe('CLI run', function() {
     beforeAll(async () => {
       const url = 'http://localhost:10200/dobetterweb/dbw_tester.html';
       // eslint-disable-next-line max-len
-      const samplev2ArtifactsPath = __dirname + '/../../../lighthouse-core/test/results/artifacts/';
+      const samplev2ArtifactsPath = LH_ROOT + '/lighthouse-core/test/results/artifacts/';
 
       // eslint-disable-next-line max-len
       const flags = getFlags([
