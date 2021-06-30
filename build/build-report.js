@@ -27,6 +27,20 @@ async function buildStandaloneReport() {
   });
 }
 
+async function buildPsiReport() {
+  const bundle = await rollup.rollup({
+    input: 'report/clients/psi.js',
+    plugins: [
+      commonjs(),
+    ],
+  });
+
+  await bundle.write({
+    file: 'dist/report/psi.js',
+    format: 'esm',
+  });
+}
+
 async function buildViewerReport() {
   const bundle = await rollup.rollup({
     input: 'report/clients/viewer.js',
@@ -69,7 +83,6 @@ async function buildEsModulesBundle() {
   });
 }
 
-
 if (require.main === module) {
   if (process.argv[2] === '--only-standalone') {
     buildStandaloneReport();
@@ -81,6 +94,7 @@ if (require.main === module) {
 
 module.exports = {
   buildStandaloneReport,
+  buildPsiReport,
   buildViewerReport,
   buildTreemapReport,
 };
