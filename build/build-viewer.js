@@ -47,8 +47,8 @@ async function run() {
     ],
     javascripts: [
       await generatorJsPromise,
-      fs.readFileSync(LH_ROOT + '/dist/report/viewer.js', 'utf8'),
       fs.readFileSync(require.resolve('idb-keyval/dist/idb-keyval-min.js'), 'utf8'),
+      {path: '../../dist/report/viewer.js'},
       {path: 'src/*'},
     ],
     assets: [
