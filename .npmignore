@@ -8,7 +8,9 @@ build/
 coverage/
 dist/
 proto/
+docs/
 
+lighthouse-core/lib/sd-validation/
 lighthouse-core/scripts/*
 lighthouse-core/test/
 lighthouse-core/third_party/src/
@@ -53,6 +55,9 @@ results.html
 
 # generated files needed for publish
 !dist/report/standalone.js
+
+# large files
+changelog.md
 
 # dev files
 .DS_Store

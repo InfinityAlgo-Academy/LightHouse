@@ -109,7 +109,8 @@ class LegacyJavascript extends ByteEfficiencyAudit {
       scoreDisplayMode: ByteEfficiencyAudit.SCORING_MODES.NUMERIC,
       description: str_(UIStrings.description),
       title: str_(UIStrings.title),
-      requiredArtifacts: ['devtoolsLogs', 'traces', 'ScriptElements', 'SourceMaps', 'URL'],
+      requiredArtifacts: ['devtoolsLogs', 'traces', 'ScriptElements', 'SourceMaps',
+        'GatherContext', 'URL'],
     };
   }
 
@@ -376,7 +377,7 @@ class LegacyJavascript extends ByteEfficiencyAudit {
     let transferRatio = transferRatioByUrl.get(url);
     if (transferRatio !== undefined) return transferRatio;
 
-    const mainDocumentRecord = await NetworkAnalyzer.findMainDocument(networkRecords);
+    const mainDocumentRecord = NetworkAnalyzer.findOptionalMainDocument(networkRecords);
     const networkRecord = url === artifacts.URL.finalUrl ?
       mainDocumentRecord :
       networkRecords.find(n => n.url === url);

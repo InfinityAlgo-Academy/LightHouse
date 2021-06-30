@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const ByteEfficiencyAudit = require('./byte-efficiency-audit.js');
+const Audit = require('../audit.js');
 const i18n = require('../../lib/i18n/i18n.js');
 const NetworkRequest = require('../../lib/network-request.js');
 const NetworkRecords = require('../../computed/network-records.js');
@@ -26,7 +26,7 @@ const UIStrings = {
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
-class TotalByteWeight extends ByteEfficiencyAudit {
+class TotalByteWeight extends Audit {
   /**
    * @return {LH.Audit.Meta}
    */
@@ -36,7 +36,7 @@ class TotalByteWeight extends ByteEfficiencyAudit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
-      scoreDisplayMode: ByteEfficiencyAudit.SCORING_MODES.NUMERIC,
+      scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
       requiredArtifacts: ['devtoolsLogs'],
     };
   }
@@ -60,7 +60,7 @@ class TotalByteWeight extends ByteEfficiencyAudit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
-    const devtoolsLog = artifacts.devtoolsLogs[ByteEfficiencyAudit.DEFAULT_PASS];
+    const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     const records = await NetworkRecords.request(devtoolsLog, context);
 
     let totalBytes = 0;
@@ -84,7 +84,7 @@ class TotalByteWeight extends ByteEfficiencyAudit {
         itemA.url.localeCompare(itemB.url);
     }).slice(0, 10);
 
-    const score = ByteEfficiencyAudit.computeLogNormalScore(
+    const score = Audit.computeLogNormalScore(
       {p10: context.options.p10, median: context.options.median},
       totalBytes
     );
@@ -95,7 +95,7 @@ class TotalByteWeight extends ByteEfficiencyAudit {
       {key: 'totalBytes', itemType: 'bytes', text: str_(i18n.UIStrings.columnTransferSize)},
     ];
 
-    const tableDetails = ByteEfficiencyAudit.makeTableDetails(headings, results);
+    const tableDetails = Audit.makeTableDetails(headings, results);
 
     return {
       score,
