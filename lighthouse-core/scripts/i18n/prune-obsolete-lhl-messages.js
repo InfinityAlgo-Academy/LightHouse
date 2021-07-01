@@ -5,12 +5,14 @@
  */
 'use strict';
 
-const fs = require('fs');
-const path = require('path');
-const glob = require('glob');
-const MessageParser = require('intl-messageformat-parser').default;
-const {collectAllCustomElementsFromICU} = require('../../lib/i18n/i18n.js');
-const {LH_ROOT} = require('../../../root.js');
+import fs from 'fs';
+import glob from 'glob';
+import path from 'path';
+import url from 'url';
+import MessageParser from 'intl-messageformat-parser';
+import {collectAllCustomElementsFromICU} from '../../lib/i18n/i18n.js';
+
+const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 
 /** @typedef {Record<string, {message: string}>} LhlMessages */
 
@@ -114,8 +116,9 @@ function getGoldenLocaleArgumentIds(goldenLhl) {
  * translations should no longer be used, it's up to the author to remove them
  * (e.g. by picking a new message id).
  */
-function pruneObsoleteLhlMessages() {
-  const goldenLhl = require('../../lib/i18n/locales/en-US.json');
+export function pruneObsoleteLhlMessages() {
+  const goldenLhlPath = new URL('../../lib/i18n/locales/en-US.json', import.meta.url);
+  const goldenLhl = JSON.parse(fs.readFileSync(goldenLhlPath, 'utf-8'));
   const goldenLocaleArgumentIds = getGoldenLocaleArgumentIds(goldenLhl);
 
   // Find all locale files, ignoring self-generated en-US, en-XL, and ctc files.
@@ -125,15 +128,16 @@ function pruneObsoleteLhlMessages() {
     '**/en-XL.json',
   ];
   const globPattern = 'lighthouse-core/lib/i18n/locales/**/+([-a-zA-Z0-9]).json';
+  const lhRoot = `${__dirname}/../../../`;
   const localePaths = glob.sync(globPattern, {
     ignore,
-    cwd: LH_ROOT,
+    cwd: lhRoot,
   });
 
   /** @type {Set<string>} */
   const alreadyLoggedPrunes = new Set();
   for (const localePath of localePaths) {
-    const absoluteLocalePath = path.join(LH_ROOT, localePath);
+    const absoluteLocalePath = path.join(lhRoot, localePath);
     // readFileSync so that the file is pulled again once updated by a collect-strings run
     const localeLhl = JSON.parse(fs.readFileSync(absoluteLocalePath, 'utf-8'));
     const prunedLocale = pruneLocale(goldenLocaleArgumentIds, localeLhl, alreadyLoggedPrunes);
@@ -143,10 +147,8 @@ function pruneObsoleteLhlMessages() {
   }
 }
 
-module.exports = {
-  pruneObsoleteLhlMessages,
-
-  // Exported for testing.
+// Exported for testing.
+export {
   getGoldenLocaleArgumentIds,
-  pruneLocale,
+  pruneLocale
 };

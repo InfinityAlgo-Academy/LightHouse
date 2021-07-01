@@ -1955,6 +1955,9 @@
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "The URL you have provided appears to be invalid."
   },
+  "lighthouse-core/scripts/i18n/tmp-esm-strings.js | varianceDisclaimer": {
+    "message": "Values are estimated and may vary. The [performance score is calculated](https://web.dev/performance-scoring/) directly from these metrics."
+  },
   "lighthouse-treemap/app/src/util.js | allLabel": {
     "message": "All"
   },
