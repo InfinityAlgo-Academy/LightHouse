@@ -36,7 +36,7 @@
     "jest": "node --experimental-vm-modules node_modules/.bin/jest",
     "test": "yarn diff:sample-json && yarn lint --quiet && yarn unit && yarn type-check",
     "test-bundle": "yarn smoke --runner bundle -j=1 --retries=2 --invert-match forms",
-    "test-clients": "yarn jest \"clients/\"",
+    "test-clients": "yarn jest \"$PWD/clients/\"",
     "test-viewer": "yarn unit-viewer && jest lighthouse-viewer/test/viewer-test-pptr.js",
     "test-treemap": "yarn unit-treemap && jest lighthouse-treemap/test/treemap-test-pptr.js",
     "test-lantern": "bash lighthouse-core/scripts/test-lantern.sh",
