@@ -375,7 +375,7 @@ class Util {
   /**
    * Returns a primary domain for provided hostname (e.g. www.example.com -> example.com).
    * @param {string|URL} url hostname or URL object
-   * @returns {string}
+   * @return {string}
    */
   static getRootDomain(url) {
     const hostname = Util.createOrReturnURL(url).hostname;
@@ -581,7 +581,7 @@ Util.UIStrings = {
 
   /** This label is for a checkbox above a table of items loaded by a web page. The checkbox is used to show or hide third-party (or "3rd-party") resources in the table, where "third-party resources" refers to items loaded by a web page from URLs that aren't controlled by the owner of the web page. */
   thirdPartyResourcesLabel: 'Show 3rd-party resources',
-  /** This label is for a button that opens a new tab to a webapp called "Treemap", which is a nested visual representation of a heierarchy of data releated to the reports (script bytes and coverage, resource breakdown, etc.) */
+  /** This label is for a button that opens a new tab to a webapp called "Treemap", which is a nested visual representation of a heierarchy of data related to the reports (script bytes and coverage, resource breakdown, etc.) */
   viewTreemapLabel: 'View Treemap',
 
   /** Option in a dropdown menu that opens a small, summary report in a print dialog.  */

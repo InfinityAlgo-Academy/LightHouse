@@ -469,7 +469,7 @@ class NetworkAnalyzer {
    * See: {@link NetworkAnalyzer.findMainDocument}) for how to retrieve main document.
    *
    * @param {LH.Artifacts.NetworkRequest} request
-   * @returns {LH.Artifacts.NetworkRequest}
+   * @return {LH.Artifacts.NetworkRequest}
    */
   static resolveRedirects(request) {
     while (request.redirectDestination) request = request.redirectDestination;
