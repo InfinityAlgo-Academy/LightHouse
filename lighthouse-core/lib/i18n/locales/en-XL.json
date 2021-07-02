@@ -1955,9 +1955,6 @@
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "T̂h́ê ÚR̂Ĺ ŷóû h́âv́ê ṕr̂óv̂íd̂éd̂ áp̂ṕêár̂ś t̂ó b̂é îńv̂ál̂íd̂."
   },
-  "lighthouse-core/scripts/i18n/tmp-esm-strings.js | varianceDisclaimer": {
-    "message": "V̂ál̂úêś âŕê éŝt́îḿât́êd́ âńd̂ ḿâý v̂ár̂ý. T̂h́ê [ṕêŕf̂ór̂ḿâńĉé ŝćôŕê íŝ ćâĺĉúl̂át̂éd̂](https://web.dev/performance-scoring/) d́îŕêćt̂ĺŷ f́r̂óm̂ t́ĥéŝé m̂ét̂ŕîćŝ."
-  },
   "lighthouse-treemap/app/src/util.js | allLabel": {
     "message": "Âĺl̂"
   },
