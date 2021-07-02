@@ -19,7 +19,7 @@
 /**
  * Logs messages via a UI butter.
  */
-class Logger {
+export class Logger {
   /**
    * @param {Element} element
    */
@@ -73,8 +73,4 @@ class Logger {
     this._id && clearTimeout(this._id);
     this.el.classList.remove('show');
   }
-}
-
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = Logger;
 }

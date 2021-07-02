@@ -16,9 +16,10 @@
  */
 'use strict';
 
-/* globals self, Util, CategoryRenderer */
+import {Util} from './util.js';
+import {CategoryRenderer} from './category-renderer.js';
 
-class PwaCategoryRenderer extends CategoryRenderer {
+export class PwaCategoryRenderer extends CategoryRenderer {
   /**
    * @param {LH.ReportResult.Category} category
    * @param {Object<string, LH.Result.ReportGroup>} [groupDefinitions]
@@ -183,10 +184,4 @@ class PwaCategoryRenderer extends CategoryRenderer {
       }
     }
   }
-}
-
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = PwaCategoryRenderer;
-} else {
-  self.PwaCategoryRenderer = PwaCategoryRenderer;
 }

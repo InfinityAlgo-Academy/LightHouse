@@ -5,7 +5,11 @@
  */
 
 import _ReportGenerator = require('../../report/report-generator.js');
-import _Logger = require('../../report/renderer/logger.js');
+import {DOM as _DOM} from '../../report/renderer/dom.js';
+import {ReportRenderer as _ReportRenderer} from '../../report/renderer/report-renderer.js';
+import {ReportUIFeatures as _ReportUIFeatures} from '../../report/renderer/report-ui-features.js';
+import {Logger as _Logger} from '../../report/renderer/logger.js';
+import {getFilenamePrefix as _getFilenamePrefix} from '../../report/renderer/file-namer.js';
 import _LighthouseReportViewer = require('../app/src/lighthouse-report-viewer.js');
 import _DragAndDrop = require('../app/src/drag-and-drop.js');
 import _GithubApi = require('../app/src/github-api.js');
@@ -19,8 +23,12 @@ import '@firebase/auth-types';
 
 declare global {
   var ReportGenerator: typeof _ReportGenerator;
+  var DOM: typeof _DOM;
+  var ReportRenderer: typeof _ReportRenderer;
+  var ReportUIFeatures: typeof _ReportUIFeatures;
   var Logger: typeof _Logger;
   var logger: _Logger;
+  var getFilenamePrefix: typeof _getFilenamePrefix;
   var LighthouseReportViewer: typeof _LighthouseReportViewer;
   var DragAndDrop: typeof _DragAndDrop;
   var GithubApi: typeof _GithubApi;

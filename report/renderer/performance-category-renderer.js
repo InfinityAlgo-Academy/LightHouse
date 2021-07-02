@@ -16,11 +16,12 @@
  */
 'use strict';
 
-/* globals self, Util, CategoryRenderer */
+/** @typedef {import('./dom.js').DOM} DOM */
 
-/** @typedef {import('./dom.js')} DOM */
+import {Util} from './util.js';
+import {CategoryRenderer} from './category-renderer.js';
 
-class PerformanceCategoryRenderer extends CategoryRenderer {
+export class PerformanceCategoryRenderer extends CategoryRenderer {
   /**
    * @param {LH.ReportResult.AuditRef} audit
    * @return {!Element}
@@ -360,10 +361,4 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
       });
     }
   }
-}
-
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = PerformanceCategoryRenderer;
-} else {
-  self.PerformanceCategoryRenderer = PerformanceCategoryRenderer;
 }

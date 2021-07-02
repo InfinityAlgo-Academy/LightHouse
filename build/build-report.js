@@ -5,42 +5,96 @@
  */
 'use strict';
 
-const fs = require('fs');
-
-function concatRendererCode() {
-  return [
-    fs.readFileSync(__dirname + '/../report/renderer/util.js', 'utf8'),
-    fs.readFileSync(__dirname + '/../report/renderer/dom.js', 'utf8'),
-    fs.readFileSync(__dirname + '/../report/renderer/details-renderer.js', 'utf8'),
-    fs.readFileSync(__dirname + '/../report/renderer/crc-details-renderer.js', 'utf8'),
-    fs.readFileSync(__dirname + '/../report/renderer/snippet-renderer.js', 'utf8'),
-    fs.readFileSync(__dirname + '/../report/renderer/element-screenshot-renderer.js', 'utf8'),
-    fs.readFileSync(__dirname + '/../lighthouse-core/lib/file-namer.js', 'utf8'),
-    fs.readFileSync(__dirname + '/../report/renderer/logger.js', 'utf8'),
-    fs.readFileSync(__dirname + '/../report/renderer/report-ui-features.js', 'utf8'),
-    fs.readFileSync(__dirname + '/../report/renderer/category-renderer.js', 'utf8'),
-    fs.readFileSync(__dirname + '/../report/renderer/performance-category-renderer.js', 'utf8'),
-    fs.readFileSync(__dirname + '/../report/renderer/pwa-category-renderer.js', 'utf8'),
-    fs.readFileSync(__dirname + '/../report/renderer/report-renderer.js', 'utf8'),
-    fs.readFileSync(__dirname + '/../report/renderer/i18n.js', 'utf8'),
-    fs.readFileSync(__dirname + '/../report/renderer/text-encoding.js', 'utf8'),
-  ].join(';\n');
-}
+const rollup = require('rollup');
+const {terser} = require('rollup-plugin-terser');
+// Only needed b/c getFilenamePrefix loads a commonjs module.
+const commonjs =
+  // @ts-expect-error types are wrong.
+  /** @type {import('rollup-plugin-commonjs').default} */ (require('rollup-plugin-commonjs'));
 
 async function buildStandaloneReport() {
-  const REPORT_JAVASCRIPT = [
-    concatRendererCode(),
-    fs.readFileSync(__dirname + '/../report/clients/standalone.js', 'utf8'),
-  ].join(';\n');
-  fs.mkdirSync(__dirname + '/../dist/report', {recursive: true});
-  fs.writeFileSync(__dirname + '/../dist/report/standalone.js', REPORT_JAVASCRIPT);
+  const bundle = await rollup.rollup({
+    input: 'report/clients/standalone.js',
+    plugins: [
+      commonjs(),
+      terser(),
+    ],
+  });
+
+  await bundle.write({
+    file: 'dist/report/standalone.js',
+    format: 'iife',
+  });
+}
+
+async function buildPsiReport() {
+  const bundle = await rollup.rollup({
+    input: 'report/clients/psi.js',
+    plugins: [
+      commonjs(),
+    ],
+  });
+
+  await bundle.write({
+    file: 'dist/report/psi.js',
+    format: 'esm',
+  });
+}
+
+async function buildViewerReport() {
+  const bundle = await rollup.rollup({
+    input: 'report/clients/viewer.js',
+    plugins: [
+      commonjs(),
+    ],
+  });
+
+  await bundle.write({
+    file: 'dist/report/viewer.js',
+    format: 'iife',
+  });
+}
+
+async function buildTreemapReport() {
+  const bundle = await rollup.rollup({
+    input: 'report/clients/treemap.js',
+    plugins: [
+      commonjs(),
+    ],
+  });
+
+  await bundle.write({
+    file: 'dist/report/treemap.js',
+    format: 'iife',
+  });
+}
+
+async function buildEsModulesBundle() {
+  const bundle = await rollup.rollup({
+    input: 'report/clients/bundle.js',
+    plugins: [
+      commonjs(),
+    ],
+  });
+
+  await bundle.write({
+    file: 'dist/report/bundle.js',
+    format: 'esm',
+  });
 }
 
 if (require.main === module) {
-  buildStandaloneReport();
+  if (process.argv[2] === '--only-standalone') {
+    buildStandaloneReport();
+  } else {
+    buildStandaloneReport();
+    buildEsModulesBundle();
+  }
 }
 
 module.exports = {
   buildStandaloneReport,
-  concatRendererCode,
+  buildPsiReport,
+  buildViewerReport,
+  buildTreemapReport,
 };

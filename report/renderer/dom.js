@@ -16,12 +16,12 @@
  */
 'use strict';
 
-/* globals self Util */
-
 /** @typedef {HTMLElementTagNameMap & {[id: string]: HTMLElement}} HTMLElementByTagName */
 /** @template {string} T @typedef {import('typed-query-selector/parser').ParseSelector<T, Element>} ParseSelector */
 
-class DOM {
+import {Util} from './util.js';
+
+export class DOM {
   /**
    * @param {Document} document
    */
@@ -241,10 +241,4 @@ class DOM {
     const elements = Array.from(context.querySelectorAll(query));
     return elements;
   }
-}
-
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = DOM;
-} else {
-  self.DOM = DOM;
 }
