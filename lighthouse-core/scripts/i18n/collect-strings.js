@@ -14,19 +14,16 @@ import path from 'path';
 import expect from 'expect';
 import tsc from 'typescript';
 import MessageParser from 'intl-messageformat-parser';
+import module from 'module';
+import esMain from 'es-main';
 import Util from '../../../report/renderer/util.js';
 import {collectAndBakeCtcStrings} from './bake-ctc-to-lhl.js';
 import {pruneObsoleteLhlMessages} from './prune-obsolete-lhl-messages.js';
 import {countTranslatedMessages} from './count-translated.js';
-import module from 'module';
-import url from 'url';
-import esMain from 'es-main';
+import {LH_ROOT} from '../../../root.js';
 
 const require = module.createRequire(import.meta.url);
 
-const dir = path.dirname(url.fileURLToPath(import.meta.url));
-
-const LH_ROOT = path.join(dir, '../../..');
 const UISTRINGS_REGEX = /UIStrings = .*?\};\n/s;
 
 /** @typedef {import('./bake-ctc-to-lhl.js').CtcMessage} CtcMessage */
