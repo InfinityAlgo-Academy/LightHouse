@@ -20,6 +20,7 @@
     "build-extension-chrome": "node ./build/build-extension.js chrome",
     "build-extension-firefox": "node ./build/build-extension.js firefox",
     "build-devtools": "yarn reset-link && node ./build/build-bundle.js clients/devtools-entry.js dist/lighthouse-dt-bundle.js && node ./build/build-dt-report-resources.js",
+    "esbuild-devtools": "yarn reset-link && node ./build/esbuild-devtools && node ./build/build-dt-report-resources.js",
     "build-smokehouse-bundle": "node ./build/build-smokehouse-bundle.js",
     "build-lr": "yarn reset-link && node ./build/build-lightrider-bundles.js",
     "build-pack": "bash build/build-pack.sh",
@@ -34,7 +35,7 @@
     "debug": "node --inspect-brk ./lighthouse-cli/index.js",
     "start": "yarn build-report && node ./lighthouse-cli/index.js",
     "test": "yarn diff:sample-json && yarn lint --quiet && yarn unit && yarn type-check",
-    "test-bundle": "yarn smoke --runner bundle -j=1 --retries=2 --invert-match forms",
+    "test-bundle": "yarn smoke --runner bundle -j=1 --retries=2 dbw",
     "test-clients": "jest \"clients/\"",
     "test-viewer": "yarn unit-viewer && jest lighthouse-viewer/test/viewer-test-pptr.js",
     "test-treemap": "yarn unit-treemap && jest lighthouse-treemap/test/treemap-test-pptr.js",
@@ -112,6 +113,7 @@
     "@types/pako": "^1.0.1",
     "@types/raven": "^2.5.1",
     "@types/resize-observer-browser": "^0.1.1",
+    "@types/resolve": "^1.20.0",
     "@types/semver": "^5.5.0",
     "@types/tabulator-tables": "^4.9.1",
     "@types/update-notifier": "^4.1.0",
@@ -120,6 +122,7 @@
     "@types/yargs-parser": "^15.0.0",
     "@typescript-eslint/parser": "^4.21.0",
     "@wardpeet/brfs": "2.1.0",
+    "acorn": "^8.4.1",
     "angular": "^1.7.4",
     "archiver": "^3.0.0",
     "browserify": "^17.0.0",
@@ -133,6 +136,7 @@
     "cross-env": "^7.0.2",
     "csv-validator": "^0.0.3",
     "devtools-protocol": "0.0.863986",
+    "esbuild": "^0.12.12",
     "eslint": "^7.23.0",
     "eslint-config-google": "^0.9.1",
     "eslint-plugin-local-rules": "0.1.0",
@@ -147,6 +151,7 @@
     "jsonld": "^5.2.0",
     "jsonlint-mod": "^1.7.6",
     "lighthouse-plugin-publisher-ads": "^1.4.1",
+    "magic-string": "^0.25.7",
     "mime-types": "^2.1.30",
     "node-fetch": "^2.6.1",
     "npm-run-posix-or-windows": "^2.0.2",
@@ -154,6 +159,7 @@
     "pako": "^2.0.3",
     "pretty-json-stringify": "^0.0.2",
     "puppeteer": "^9.1.1",
+    "resolve": "^1.20.0",
     "tabulator-tables": "^4.9.3",
     "terser": "^5.3.8",
     "typed-query-selector": "^2.4.0",
@@ -218,6 +224,12 @@
       "**/test/",
       "**/scripts/"
     ]
+  },
+  "browser": {
+    "path": "path-browserify",
+    "fs": false,
+    "http": false,
+    "stream": "stream-browserify"
   },
   "homepage": "https://github.com/GoogleChrome/lighthouse#readme"
 }

@@ -32,6 +32,7 @@ module.exports = {
     '**/third-party/**/*-test.js',
     '**/clients/test/**/*-test.js',
     '**/docs/**/*.test.js',
+    '**/build/**/*-test.js',
   ],
   transform: {},
   prettierPath: null,
