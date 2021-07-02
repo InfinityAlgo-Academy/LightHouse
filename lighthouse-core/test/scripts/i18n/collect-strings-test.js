@@ -7,7 +7,7 @@
 
 /* eslint-env jest */
 
-const collect = require('../../../scripts/i18n/collect-strings.js');
+import * as collect from '../../../scripts/i18n/collect-strings.js';
 
 function evalJustUIStrings(justUIStrings) {
   return Function(`'use strict'; ${justUIStrings} return UIStrings;`)();

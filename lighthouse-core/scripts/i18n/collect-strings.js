@@ -8,17 +8,21 @@
 
 /* eslint-disable no-console, max-len */
 
-const fs = require('fs');
-const glob = require('glob');
-const path = require('path');
-const expect = require('expect');
-const tsc = require('typescript');
-const MessageParser = require('intl-messageformat-parser').default;
-const Util = require('../../util-commonjs.js');
-const {collectAndBakeCtcStrings} = require('./bake-ctc-to-lhl.js');
-const {pruneObsoleteLhlMessages} = require('./prune-obsolete-lhl-messages.js');
-const {countTranslatedMessages} = require('./count-translated.js');
-const {LH_ROOT} = require('../../../root.js');
+import fs from 'fs';
+import glob from 'glob';
+import path from 'path';
+import expect from 'expect';
+import tsc from 'typescript';
+import MessageParser from 'intl-messageformat-parser';
+import module from 'module';
+import esMain from 'es-main';
+import {Util} from '../../../report/renderer/util.js';
+import {collectAndBakeCtcStrings} from './bake-ctc-to-lhl.js';
+import {pruneObsoleteLhlMessages} from './prune-obsolete-lhl-messages.js';
+import {countTranslatedMessages} from './count-translated.js';
+import {LH_ROOT} from '../../../root.js';
+
+const require = module.createRequire(import.meta.url);
 
 const UISTRINGS_REGEX = /UIStrings = .*?\};\n/s;
 
@@ -28,7 +32,7 @@ const UISTRINGS_REGEX = /UIStrings = .*?\};\n/s;
 
 const foldersWithStrings = [
   `${LH_ROOT}/lighthouse-core`,
-  `${LH_ROOT}/report/renderer`,
+  `${LH_ROOT}/report`,
   `${LH_ROOT}/lighthouse-treemap`,
   path.dirname(require.resolve('lighthouse-stack-packs')) + '/packs',
 ];
@@ -41,6 +45,8 @@ const ignoredPathComponents = [
   '**/test/**',
   '**/*-test.js',
   '**/*-renderer.js',
+  '**/report/clients/*.js',
+  '**/util-commonjs.js',
   'lighthouse-treemap/app/src/main.js',
 ];
 
@@ -143,7 +149,7 @@ function parseExampleJsDoc(rawExample) {
  * @param {Record<string, string>} examples
  * @return {IncrementalCtc}
  */
-function convertMessageToCtc(lhlMessage, examples = {}) {
+export function convertMessageToCtc(lhlMessage, examples = {}) {
   _lhlValidityChecks(lhlMessage);
 
   /** @type {IncrementalCtc} */
@@ -414,7 +420,7 @@ function _ctcValidityChecks(icu) {
  * @param {Record<string, CtcMessage>} messages
  * @return {Record<string, CtcMessage>}
  */
-function createPsuedoLocaleStrings(messages) {
+export function createPsuedoLocaleStrings(messages) {
   /** @type {Record<string, CtcMessage>} */
   const psuedoLocalizedStrings = {};
   for (const [key, ctc] of Object.entries(messages)) {
@@ -479,7 +485,7 @@ function getIdentifier(node) {
  * @param {Record<string, string>} liveUIStrings The actual imported UIStrings object.
  * @return {Record<string, ParsedUIString>}
  */
-function parseUIStrings(sourceStr, liveUIStrings) {
+export function parseUIStrings(sourceStr, liveUIStrings) {
   const tsAst = tsc.createSourceFile('uistrings', sourceStr, tsc.ScriptTarget.ES2019, true, tsc.ScriptKind.JS);
 
   const extractionError = new Error('UIStrings declaration was not extracted correctly by the collect-strings regex.');
@@ -521,9 +527,9 @@ function parseUIStrings(sourceStr, liveUIStrings) {
  * Collects all LHL messsages defined in UIString from Javascript files in dir,
  * and converts them into CTC.
  * @param {string} dir absolute path
- * @return {Record<string, CtcMessage>}
+ * @return {Promise<Record<string, CtcMessage>>}
  */
-function collectAllStringsInDir(dir) {
+async function collectAllStringsInDir(dir) {
   /** @type {Record<string, CtcMessage>} */
   const strings = {};
 
@@ -538,9 +544,9 @@ function collectAllStringsInDir(dir) {
     if (!process.env.CI) console.log('Collecting from', relativeToRootPath);
 
     const content = fs.readFileSync(absolutePath, 'utf8');
-    const exportVars = require(absolutePath);
+    const exportVars = await import(absolutePath);
     const regexMatch = content.match(UISTRINGS_REGEX);
-    const exportedUIStrings = exportVars.UIStrings;
+    const exportedUIStrings = exportVars.UIStrings || (exportVars.default && exportVars.default.UIStrings);
 
     if (!regexMatch) {
       // No UIStrings found in the file text or exports, so move to the next.
@@ -550,7 +556,8 @@ function collectAllStringsInDir(dir) {
     }
 
     if (!exportedUIStrings) {
-      throw new Error('UIStrings defined in file but not exported');
+      console.log({exportVars});
+      throw new Error(`UIStrings defined in file but not exported: ${absolutePath}`);
     }
 
     // just parse the UIStrings substring to avoid ES version issues, save time, etc
@@ -606,6 +613,7 @@ function writeStringsToCtcFiles(locale, strings) {
  *
  * @param {Record<string, CtcMessage>} strings
  */
+// eslint-disable-next-line no-unused-vars
 function resolveMessageCollisions(strings) {
   /** @type {Map<string, Array<[string, CtcMessage]>>} */
   const stringsByMessage = new Map();
@@ -689,14 +697,13 @@ function resolveMessageCollisions(strings) {
   }
 }
 
-// Test if called from the CLI or as a module.
-if (require.main === module) {
+async function main() {
   /** @type {Record<string, CtcMessage>} */
   const strings = {};
 
   for (const folderWithStrings of foldersWithStrings) {
     console.log(`\n====\nCollecting strings from ${folderWithStrings}\n====`);
-    const moreStrings = collectAllStringsInDir(folderWithStrings);
+    const moreStrings = await collectAllStringsInDir(folderWithStrings);
     Object.assign(strings, moreStrings);
   }
 
@@ -730,8 +737,7 @@ if (require.main === module) {
   console.log('✨ Complete!');
 }
 
-module.exports = {
-  parseUIStrings,
-  createPsuedoLocaleStrings,
-  convertMessageToCtc,
-};
+// Test if called from the CLI or as a module.
+if (esMain(import.meta)) {
+  main();
+}
