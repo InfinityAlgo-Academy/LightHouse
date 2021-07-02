@@ -7,7 +7,7 @@
 
 /* eslint-env jest */
 
-import * as pruneObsoleteLhlMessages from '../../../scripts/i18n/prune-obsolete-lhl-messages.js';
+const pruneObsoleteLhlMessages = require('../../../scripts/i18n/prune-obsolete-lhl-messages.js');
 
 /**
  * Prune `localeLhl` based on `goldenLhl`.
