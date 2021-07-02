@@ -8,35 +8,17 @@
 
 /* eslint-disable no-console, max-len */
 
-<<<<<<< HEAD
 const fs = require('fs');
 const glob = require('glob');
 const path = require('path');
 const expect = require('expect');
 const tsc = require('typescript');
 const MessageParser = require('intl-messageformat-parser').default;
-const Util = require('../../../report/renderer/util.js');
+const Util = require('../../../lighthouse-core/util-commonjs.js');
 const {collectAndBakeCtcStrings} = require('./bake-ctc-to-lhl.js');
 const {pruneObsoleteLhlMessages} = require('./prune-obsolete-lhl-messages.js');
 const {countTranslatedMessages} = require('./count-translated.js');
 const {LH_ROOT} = require('../../../root.js');
-=======
-import fs from 'fs';
-import glob from 'glob';
-import path from 'path';
-import expect from 'expect';
-import tsc from 'typescript';
-import MessageParser from 'intl-messageformat-parser';
-import module from 'module';
-import esMain from 'es-main';
-import {Util} from '../../../report/renderer/util.js';
-import {collectAndBakeCtcStrings} from './bake-ctc-to-lhl.js';
-import {pruneObsoleteLhlMessages} from './prune-obsolete-lhl-messages.js';
-import {countTranslatedMessages} from './count-translated.js';
-import {LH_ROOT} from '../../../root.js';
-
-const require = module.createRequire(import.meta.url);
->>>>>>> 2e013444f7eaf7d3b1249f5166a607274aa7c2c9
 
 const UISTRINGS_REGEX = /UIStrings = .*?\};\n/s;
 
@@ -59,6 +41,7 @@ const ignoredPathComponents = [
   '**/test/**',
   '**/*-test.js',
   '**/*-renderer.js',
+  '**/util-commonjs.js',
   'lighthouse-treemap/app/src/main.js',
 ];
 
