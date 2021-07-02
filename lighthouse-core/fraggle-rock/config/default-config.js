@@ -7,6 +7,29 @@
 
 const legacyDefaultConfig = require('../../config/default-config.js');
 
+/** @type {LH.Config.AuditJson[]} */
+const frAudits = [
+  'byte-efficiency/uses-responsive-images-snapshot',
+];
+
+/** @type {Record<string, LH.Config.AuditRefJson[]>} */
+const frCategoryAuditRefExtensions = {
+  'performance': [
+    {id: 'uses-responsive-images-snapshot', weight: 0, group: 'diagnostics'},
+  ],
+};
+
+/** @return {LH.Config.Json['categories']} */
+function mergeCategories() {
+  if (!legacyDefaultConfig.categories) return {};
+  const categories = legacyDefaultConfig.categories;
+  for (const key of Object.keys(frCategoryAuditRefExtensions)) {
+    if (!categories[key]) continue;
+    categories[key].auditRefs.push(...frCategoryAuditRefExtensions[key]);
+  }
+  return categories;
+}
+
 // Ensure all artifact IDs match the typedefs.
 /** @type {Record<keyof LH.FRArtifacts, string>} */
 const artifacts = {
@@ -168,8 +191,8 @@ const defaultConfig = {
     },
   ],
   settings: legacyDefaultConfig.settings,
-  audits: legacyDefaultConfig.audits,
-  categories: legacyDefaultConfig.categories,
+  audits: [...(legacyDefaultConfig.audits || []), ...frAudits],
+  categories: mergeCategories(),
   groups: legacyDefaultConfig.groups,
 };
 
