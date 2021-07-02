@@ -7,20 +7,21 @@
 
 /** @typedef {import('../../lib/i18n/locales').LhlMessages} LhlMessages */
 
-import fs from 'fs';
-import path from 'path';
-import glob from 'glob';
-import {LH_ROOT, importJson} from '../../../root.js';
+const fs = require('fs');
+const glob = require('glob');
+const path = require('path');
+const {LH_ROOT} = require('../../../root.js');
 
+const enUsLhlFilename = LH_ROOT + '/lighthouse-core/lib/i18n/locales/en-US.json';
 /** @type {LhlMessages} */
-const enUsLhl = importJson('../../../lighthouse-core/lib/i18n/locales/en-US.json', import.meta);
+const enUsLhl = JSON.parse(fs.readFileSync(enUsLhlFilename, 'utf8'));
 
 /**
  * Count how many locale files have a translated version of each string found in
  * the `en-US.json` i18n messages.
  * @return {{localeCount: number, messageCount: number, translatedCount: number, partiallyTranslatedCount: number, notTranslatedCount: number}}
  */
-export function countTranslatedMessages() {
+function countTranslatedMessages() {
   // Find all locale files, ignoring self-generated en-US and en-XL, and ctc files.
   const ignore = [
     '**/.ctc.json',
@@ -65,3 +66,7 @@ export function countTranslatedMessages() {
     notTranslatedCount,
   };
 }
+
+module.exports = {
+  countTranslatedMessages,
+};

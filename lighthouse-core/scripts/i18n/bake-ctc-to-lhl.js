@@ -8,8 +8,9 @@
 
 /* eslint-disable no-console */
 
-import fs from 'fs';
-import path from 'path';
+const fs = require('fs');
+const path = require('path');
+const {LH_ROOT} = require('../../../root.js');
 
 /**
  * @typedef CtcMessage
@@ -63,7 +64,7 @@ import path from 'path';
  * @param {Record<string, CtcMessage>} messages
  * @return {Record<string, LhlMessage>}
  */
-export function bakePlaceholders(messages) {
+function bakePlaceholders(messages) {
   /** @type {Record<string, LhlMessage>} */
   const bakedMessages = {};
 
@@ -118,13 +119,15 @@ function saveLhlStrings(path, localeStrings) {
  * @param {string} dir
  * @return {Array<string>}
  */
-export function collectAndBakeCtcStrings(dir) {
+function collectAndBakeCtcStrings(dir) {
   const lhlFilenames = [];
   for (const filename of fs.readdirSync(dir)) {
+    const fullPath = path.join(dir, filename);
+    const relativePath = path.relative(LH_ROOT, fullPath);
+
     if (filename.endsWith('.ctc.json')) {
-      const fullPath = path.join(dir, filename);
-      if (!process.env.CI) console.log('Baking', fullPath);
-      const ctcStrings = loadCtcStrings(fullPath);
+      if (!process.env.CI) console.log('Baking', relativePath);
+      const ctcStrings = loadCtcStrings(relativePath);
       const strings = bakePlaceholders(ctcStrings);
       const outputFile = path.join(dir, path.basename(filename).replace('.ctc', ''));
       saveLhlStrings(outputFile, strings);
@@ -133,3 +136,8 @@ export function collectAndBakeCtcStrings(dir) {
   }
   return lhlFilenames;
 }
+
+module.exports = {
+  collectAndBakeCtcStrings,
+  bakePlaceholders,
+};

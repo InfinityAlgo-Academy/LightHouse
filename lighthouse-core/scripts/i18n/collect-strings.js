@@ -8,21 +8,17 @@
 
 /* eslint-disable no-console, max-len */
 
-import fs from 'fs';
-import glob from 'glob';
-import path from 'path';
-import expect from 'expect';
-import tsc from 'typescript';
-import MessageParser from 'intl-messageformat-parser';
-import module from 'module';
-import esMain from 'es-main';
-import Util from '../../../report/renderer/util.js';
-import {collectAndBakeCtcStrings} from './bake-ctc-to-lhl.js';
-import {pruneObsoleteLhlMessages} from './prune-obsolete-lhl-messages.js';
-import {countTranslatedMessages} from './count-translated.js';
-import {LH_ROOT} from '../../../root.js';
-
-const require = module.createRequire(import.meta.url);
+const fs = require('fs');
+const glob = require('glob');
+const path = require('path');
+const expect = require('expect');
+const tsc = require('typescript');
+const MessageParser = require('intl-messageformat-parser').default;
+const Util = require('../../../report/renderer/util.js');
+const {collectAndBakeCtcStrings} = require('./bake-ctc-to-lhl.js');
+const {pruneObsoleteLhlMessages} = require('./prune-obsolete-lhl-messages.js');
+const {countTranslatedMessages} = require('./count-translated.js');
+const {LH_ROOT} = require('../../../root.js');
 
 const UISTRINGS_REGEX = /UIStrings = .*?\};\n/s;
 
@@ -32,25 +28,19 @@ const UISTRINGS_REGEX = /UIStrings = .*?\};\n/s;
 
 const foldersWithStrings = [
   `${LH_ROOT}/lighthouse-core`,
-  `${LH_ROOT}/report`,
+  `${LH_ROOT}/report/renderer`,
   `${LH_ROOT}/lighthouse-treemap`,
   path.dirname(require.resolve('lighthouse-stack-packs')) + '/packs',
 ];
 
 const ignoredPathComponents = [
   '**/.git/**',
-  // TODO(esmodules): remove when some other file with real strings is esm.
-  '**/scripts/!(i18n)/**', // ignore all scripts *except* test esm file
-  '**/collect-strings.js',
-  // '**/scripts/**',
-  // end TODO
+  '**/scripts/**',
   '**/node_modules/!(lighthouse-stack-packs)/**', // ignore all node modules *except* stack packs
   '**/lighthouse-core/lib/stack-packs.js',
   '**/test/**',
   '**/*-test.js',
   '**/*-renderer.js',
-  '**/report/clients/*.js',
-  '**/util-commonjs.js',
   'lighthouse-treemap/app/src/main.js',
 ];
 
@@ -153,7 +143,7 @@ function parseExampleJsDoc(rawExample) {
  * @param {Record<string, string>} examples
  * @return {IncrementalCtc}
  */
-export function convertMessageToCtc(lhlMessage, examples = {}) {
+function convertMessageToCtc(lhlMessage, examples = {}) {
   _lhlValidityChecks(lhlMessage);
 
   /** @type {IncrementalCtc} */
@@ -424,7 +414,7 @@ function _ctcValidityChecks(icu) {
  * @param {Record<string, CtcMessage>} messages
  * @return {Record<string, CtcMessage>}
  */
-export function createPsuedoLocaleStrings(messages) {
+function createPsuedoLocaleStrings(messages) {
   /** @type {Record<string, CtcMessage>} */
   const psuedoLocalizedStrings = {};
   for (const [key, ctc] of Object.entries(messages)) {
@@ -489,7 +479,7 @@ function getIdentifier(node) {
  * @param {Record<string, string>} liveUIStrings The actual imported UIStrings object.
  * @return {Record<string, ParsedUIString>}
  */
-export function parseUIStrings(sourceStr, liveUIStrings) {
+function parseUIStrings(sourceStr, liveUIStrings) {
   const tsAst = tsc.createSourceFile('uistrings', sourceStr, tsc.ScriptTarget.ES2019, true, tsc.ScriptKind.JS);
 
   const extractionError = new Error('UIStrings declaration was not extracted correctly by the collect-strings regex.');
@@ -560,8 +550,7 @@ async function collectAllStringsInDir(dir) {
     }
 
     if (!exportedUIStrings) {
-      console.log({exportVars});
-      throw new Error(`UIStrings defined in file but not exported: ${absolutePath}`);
+      throw new Error('UIStrings defined in file but not exported');
     }
 
     // just parse the UIStrings substring to avoid ES version issues, save time, etc
@@ -617,7 +606,6 @@ function writeStringsToCtcFiles(locale, strings) {
  *
  * @param {Record<string, CtcMessage>} strings
  */
-// eslint-disable-next-line no-unused-vars
 function resolveMessageCollisions(strings) {
   /** @type {Map<string, Array<[string, CtcMessage]>>} */
   const stringsByMessage = new Map();
@@ -711,9 +699,7 @@ async function main() {
     Object.assign(strings, moreStrings);
   }
 
-  // TODO: commenting out for now. After PR review, will uncomment and delete the "tmp-esm-strings.js"
-  // that shows esm working.
-  // resolveMessageCollisions(strings);
+  resolveMessageCollisions(strings);
 
   writeStringsToCtcFiles('en-US', strings);
   console.log('Written to disk!', 'en-US.ctc.json');
@@ -744,6 +730,12 @@ async function main() {
 }
 
 // Test if called from the CLI or as a module.
-if (esMain(import.meta)) {
+if (require.main === module) {
   main();
 }
+
+module.exports = {
+  parseUIStrings,
+  createPsuedoLocaleStrings,
+  convertMessageToCtc,
+};
