@@ -5,19 +5,4 @@
  */
 'use strict';
 
-const fs = require('fs');
-const url = require('url');
-
-/**
- * @param {string} path
- * @param {ImportMeta} importMeta
- */
-function importJson(path, importMeta) {
-  const json = fs.readFileSync(url.fileURLToPath(new URL(path, importMeta.url)), 'utf-8');
-  return JSON.parse(json);
-}
-
-module.exports = {
-  LH_ROOT: __dirname,
-  importJson,
-};
+module.exports.LH_ROOT = __dirname;
