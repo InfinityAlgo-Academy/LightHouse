@@ -5,11 +5,13 @@
  */
 'use strict';
 
-const lighthouse = require('../lighthouse-core/index.js');
-const RawProtocol = require('../lighthouse-core/gather/connections/raw.js');
-const log = require('lighthouse-logger');
-const {registerLocaleData, lookupLocale} = require('../lighthouse-core/lib/i18n/i18n.js');
-const constants = require('../lighthouse-core/config/constants.js');
+import * as lighthouse from '../lighthouse-core/index.js';
+import * as RawProtocol from '../lighthouse-core/gather/connections/raw.js';
+import * as log from 'lighthouse-logger';
+import {registerLocaleData, lookupLocale} from '../lighthouse-core/lib/i18n/i18n.js';
+import * as constants from '../lighthouse-core/config/constants.js';
+
+import * as configHelpers from '../lighthouse-core/config/tmpdir/config-helpers.js';
 
 /** @typedef {import('../lighthouse-core/gather/connections/connection.js')} Connection */
 
@@ -87,3 +89,6 @@ if (typeof self !== 'undefined') {
   // @ts-expect-error
   self.lookupLocale = lookupLocale;
 }
+
+
+console.log(configHelpers.resolveModulePath('./audits/viewport.js'));

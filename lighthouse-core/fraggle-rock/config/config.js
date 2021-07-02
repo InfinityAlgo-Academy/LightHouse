@@ -23,7 +23,7 @@ const {
   resolveSettings,
   resolveAuditsToDefns,
   resolveGathererToDefn,
-} = require('../../config/config-helpers.js');
+} = require('../../config/tmpdir/config-helpers.js');
 const defaultConfigPath = path.join(__dirname, './default-config.js');
 
 /**

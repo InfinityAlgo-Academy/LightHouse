@@ -22,7 +22,7 @@ const {
   resolveModulePath,
   deepClone,
   deepCloneConfigJson,
-} = require('./config-helpers.js');
+} = require('./tmpdir/config-helpers.js');
 
 /** @typedef {typeof import('../gather/gatherers/gatherer.js')} GathererConstructor */
 /** @typedef {InstanceType<GathererConstructor>} Gatherer */

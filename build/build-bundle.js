@@ -17,6 +17,7 @@ const mkdir = fs.promises.mkdir;
 const LighthouseRunner = require('../lighthouse-core/runner.js');
 const exorcist = require('exorcist');
 const browserify = require('browserify');
+const babelify = require('babelify');
 const terser = require('terser');
 const {minifyFileTransform} = require('./build-utils.js');
 const {LH_ROOT} = require('../root.js');
@@ -64,6 +65,7 @@ async function browserifyFile(entryPath, distPath) {
       pkg: Object.assign({COMMIT_HASH}, require('../package.json')),
       file: require.resolve('./banner.txt'),
     })
+    .transform(babelify, {presets: [['@babel/preset-env']]})
     // Transform the fs.readFile etc into inline strings.
     .transform('@wardpeet/brfs', {
       readFileSyncTransform: minifyFileTransform,
@@ -183,8 +185,44 @@ async function minifyScript(filePath) {
  * @return {Promise<void>}
  */
 async function build(entryPath, distPath) {
-  await browserifyFile(entryPath, distPath);
-  await minifyScript(distPath);
+  const rollup = require('rollup');
+  // const {terser} = require('rollup-plugin-terser');
+  // Only needed b/c getFilenamePrefix loads a commonjs module.
+  const commonjs =
+    // @ts-expect-error types are wrong.
+  /** @type {import('rollup-plugin-commonjs').default} */ (require('rollup-plugin-commonjs'));
+
+  const bundle = await rollup.rollup({
+    input: entryPath,
+    plugins: [
+      require('rollup-plugin-shim')({
+        [LH_ROOT + '/root.js']: 'export default {LH_ROOT: "."}',
+        './lighthouse-core/lib/i18n/locales.js': 'export default {}',
+        'debug/node': 'export default {}',
+        'intl-pluralrules': 'export default {}',
+        'intl': 'export default {}',
+        'lighthouse-logger': 'export default {}',
+        'pako/lib/zlib/inflate.js': 'export default {}',
+        'raven': 'export default {}',
+        'source-map': 'export default {}',
+        'ws': 'export default {}',
+      }),
+      commonjs(),
+      // require('rollup-plugin-node-globals')(),
+      // terser(),
+      require('@rollup/plugin-json')(),
+      require("rollup-plugin-node-resolve")({preferBuiltins: true}),
+      require('rollup-plugin-node-polyfills')(),
+    ],
+  });
+
+  await bundle.write({
+    file: distPath,
+    format: 'iife',
+  });
+
+  // await browserifyFile(entryPath, distPath);
+  // await minifyScript(distPath);
 }
 
 /**

@@ -7,13 +7,13 @@
 
 const path = require('path');
 const isDeepEqual = require('lodash.isequal');
-const constants = require('./constants.js');
-const Budget = require('./budget.js');
-const Audit = require('../audits/audit.js');
-const Runner = require('../runner.js');
-const i18n = require('../lib/i18n/i18n.js');
+const constants = require('../constants.js');
+const Budget = require('../budget.js');
+const Audit = require('../../audits/audit.js');
+const Runner = require('../../runner.js');
+const i18n = require('../../lib/i18n/i18n.js');
 
-/** @typedef {typeof import('../gather/gatherers/gatherer.js')} GathererConstructor */
+/** @typedef {typeof import('../../gather/gatherers/gatherer.js')} GathererConstructor */
 /** @typedef {InstanceType<GathererConstructor>} Gatherer */
 
 /**
