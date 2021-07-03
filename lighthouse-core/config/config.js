@@ -16,13 +16,14 @@ const Runner = require('../runner.js');
 const ConfigPlugin = require('./config-plugin.js');
 const {
   mergeConfigFragment,
+  requireWrapper,
   resolveSettings,
   resolveAuditsToDefns,
   resolveGathererToDefn,
   resolveModulePath,
   deepClone,
   deepCloneConfigJson,
-} = require('./tmpdir/config-helpers.js');
+} = require('./config-helpers.js');
 
 /** @typedef {typeof import('../gather/gatherers/gatherer.js')} GathererConstructor */
 /** @typedef {InstanceType<GathererConstructor>} Gatherer */
@@ -354,7 +355,7 @@ class Config {
       const pluginPath = global.isDevtools || global.isLightrider ?
         pluginName :
         resolveModulePath(pluginName, configDir, 'plugin');
-      const rawPluginJson = require(pluginPath);
+      const rawPluginJson = requireWrapper(pluginPath);
       const pluginJson = ConfigPlugin.parsePlugin(rawPluginJson, pluginName);
 
       configJSON = Config.extendConfigJSON(configJSON, pluginJson);

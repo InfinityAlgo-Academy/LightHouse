@@ -224,7 +224,7 @@ class URLShim extends URL {
     let url;
     try {
       url = new URL(src);
-    } catch {
+    } catch (e) {
       return undefined;
     }
 

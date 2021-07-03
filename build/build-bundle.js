@@ -17,9 +17,10 @@ const mkdir = fs.promises.mkdir;
 const LighthouseRunner = require('../lighthouse-core/runner.js');
 const exorcist = require('exorcist');
 const browserify = require('browserify');
-const babelify = require('babelify');
 const terser = require('terser');
 const {minifyFileTransform} = require('./build-utils.js');
+const Runner = require('../lighthouse-core/runner.js');
+const rollupBrfs = require('./rollup-brfs.js');
 const {LH_ROOT} = require('../root.js');
 
 const COMMIT_HASH = require('child_process')
@@ -65,7 +66,6 @@ async function browserifyFile(entryPath, distPath) {
       pkg: Object.assign({COMMIT_HASH}, require('../package.json')),
       file: require.resolve('./banner.txt'),
     })
-    .transform(babelify, {presets: [['@babel/preset-env']]})
     // Transform the fs.readFile etc into inline strings.
     .transform('@wardpeet/brfs', {
       readFileSyncTransform: minifyFileTransform,
@@ -186,33 +186,132 @@ async function minifyScript(filePath) {
  */
 async function build(entryPath, distPath) {
   const rollup = require('rollup');
-  // const {terser} = require('rollup-plugin-terser');
+  const {terser} = require('rollup-plugin-terser');
   // Only needed b/c getFilenamePrefix loads a commonjs module.
   const commonjs =
     // @ts-expect-error types are wrong.
   /** @type {import('rollup-plugin-commonjs').default} */ (require('rollup-plugin-commonjs'));
 
+  // List of paths (absolute / relative to config-helpers.js) to include
+  // in bundle and make accessible via config-helpers.js `requireWrapper`.
+  const dynamicModulePaths = [
+    ...Runner.getGathererList().map(gatherer => `../gather/gatherers/${gatherer}`),
+    ...Runner.getAuditList().map(gatherer => `../audits/${gatherer}`),
+  ];
+
+  // Include lighthouse-plugin-publisher-ads.
+  if (isDevtools(entryPath) || isLightrider(entryPath)) {
+    // TODO: doesn't work yet (circular deps?)
+    // dynamicModulePaths.push('lighthouse-plugin-publisher-ads');
+    // pubAdsAudits.forEach(pubAdAudit => {
+    //   dynamicModulePaths.push(pubAdAudit);
+    // });
+  }
+
+  const bundledMapEntriesCode = dynamicModulePaths.map(modulePath => {
+    const pathNoExt = modulePath.replace('.js', '');
+    return `['${pathNoExt}', require('${modulePath}')]`;
+  }).join(',\n');
+
+  const shimsObj = {};
+  const modulesToIgnore = [
+    'intl-pluralrules',
+    'intl',
+    'pako/lib/zlib/inflate.js',
+    'raven',
+    'source-map',
+    'ws',
+  ];
+
+  // Don't include the stringified report in DevTools - see devtools-report-assets.js
+  // Don't include in Lightrider - HTML generation isn't supported, so report assets aren't needed.
+  if (isDevtools(entryPath) || isLightrider(entryPath)) {
+    modulesToIgnore.push(require.resolve('../report/report-assets.js'));
+  }
+
+  // Don't include locales in DevTools.
+  if (isDevtools(entryPath)) {
+    const localeKeys = Object.keys(require('../lighthouse-core/lib/i18n/locales.js'));
+    const localesShim = {};
+    for (const key of localeKeys) localesShim[key] = {};
+    shimsObj['./locales.js'] = `export default ${JSON.stringify(localesShim)}`;
+  }
+
+  for (const modulePath of modulesToIgnore) {
+    shimsObj[modulePath] = 'export default {}';
+  }
+
+  // rollup inject?
+
   const bundle = await rollup.rollup({
     input: entryPath,
+    context: 'globalThis',
     plugins: [
-      require('rollup-plugin-shim')({
-        [LH_ROOT + '/root.js']: 'export default {LH_ROOT: "."}',
-        './lighthouse-core/lib/i18n/locales.js': 'export default {}',
-        'debug/node': 'export default {}',
-        'intl-pluralrules': 'export default {}',
-        'intl': 'export default {}',
-        'lighthouse-logger': 'export default {}',
-        'pako/lib/zlib/inflate.js': 'export default {}',
-        'raven': 'export default {}',
-        'source-map': 'export default {}',
-        'ws': 'export default {}',
-      }),
-      commonjs(),
-      // require('rollup-plugin-node-globals')(),
-      // terser(),
       require('@rollup/plugin-json')(),
-      require("rollup-plugin-node-resolve")({preferBuiltins: true}),
+      require('rollup-plugin-replace')({
+        delimiters: ['', ''],
+        values: {
+          'const bundledModules = new Map();':
+            `const bundledModules = new Map([\n${bundledMapEntriesCode},\n]);`,
+          '__dirname': (id) => `'${path.relative(LH_ROOT, path.dirname(id))}'`,
+          '__filename': (id) => `'${path.relative(LH_ROOT, id)}'`,
+        },
+      }),
+      require('rollup-plugin-shim')({
+        ...shimsObj,
+
+        'debug': `export * from '${require.resolve('debug/src/browser.js')}'`,
+        // 'lighthouse-logger': 'export default {}',
+
+        // This allows for plugins to import lighthouse. TODO: lol no it doesnt
+        // [require.resolve('lighthouse')]: 'export {__moduleExports: {Audit: 1}};',
+        // [require.resolve('debug/node')]: 'export default {}',
+        // 'intl-pluralrules': 'export default {}',
+        // 'intl': 'export default {}',
+        // 'pako/lib/zlib/inflate.js': 'export default {}',
+        // 'raven': 'export default {}',
+        // 'source-map': 'export default {}',
+        // 'ws': 'export default {}',
+      }),
+      // Currently must run before commonjs (brfs does not support import).
+      rollupBrfs({
+        readFileSyncTransform: minifyFileTransform,
+        global: true,
+        parserOpts: {ecmaVersion: 12, sourceType: 'module'},
+      }),
+
+      commonjs({
+        // https://github.com/rollup/plugins/issues/922
+        ignoreGlobal: true,
+      }),
+
+      require('rollup-plugin-node-resolve')({preferBuiltins: true}),
+      require('rollup-plugin-node-builtins')(),
       require('rollup-plugin-node-polyfills')(),
+      // Rollup sees the usages of these functions in page functions (ex: see AnchorElements)
+      // and treats them as globals. Because the names are "taken" by the global, Rollup renames
+      // the actual functions. The page functions expect a certain name, and so here we undo what
+      // Rollup did.
+      require('./rollup-postprocess.js')([
+        [/getElementsInDocument\$1/, 'getElementsInDocument'],
+        [/getNodeDetails\$1/, 'getNodeDetails'],
+        [/getRectCenterPoint\$1/, 'getRectCenterPoint'],
+      ]),
+      terser({
+        ecma: 2019,
+        output: {
+          comments: /^!/,
+          max_line_len: 1000,
+        },
+        // The config relies on class names for gatherers.
+        keep_classnames: true,
+        // Runtime.evaluate errors if function names are elided.
+        keep_fnames: true,
+        // sourceMap: DEBUG && {
+        //   content: JSON.parse(fs.readFileSync(`${filePath}.map`, 'utf-8')),
+        //   url: path.basename(`${filePath}.map`),
+        // },
+      }),
     ],
   });
 

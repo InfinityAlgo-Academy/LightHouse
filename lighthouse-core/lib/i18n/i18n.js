@@ -8,7 +8,7 @@
 /** @typedef {import('../../lib/i18n/locales').LhlMessages} LhlMessages */
 
 const path = require('path');
-const MessageFormat = require('intl-messageformat').default;
+const MessageFormat = require('intl-messageformat').default || require('intl-messageformat');
 const lookupClosestLocale = require('lookup-closest-locale');
 const LOCALES = require('./locales.js');
 const {isObjectOfUnknownValues, isObjectOrArrayOfUnknownValues} = require('../type-verifiers.js');

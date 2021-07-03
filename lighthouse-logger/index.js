@@ -5,8 +5,11 @@
  */
 'use strict';
 
-const debug = require('debug');
+let debug = require('debug');
 const marky = require('marky');
+const process = require('process');
+
+if (debug.__moduleExports) debug = debug.__moduleExports;
 
 const EventEmitter = require('events').EventEmitter;
 const isWindows = process.platform === 'win32';
@@ -24,7 +27,11 @@ const colors = {
 };
 
 // allow non-red/yellow colors for debug()
-debug.colors = [colors.cyan, colors.green, colors.blue, colors.magenta];
+try {
+  debug.colors = [colors.cyan, colors.green, colors.blue, colors.magenta];
+} catch {
+  // Might be made readonly in rollup bundle.
+}
 
 class Emitter extends EventEmitter {
   /**

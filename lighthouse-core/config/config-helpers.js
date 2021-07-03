@@ -7,13 +7,13 @@
 
 const path = require('path');
 const isDeepEqual = require('lodash.isequal');
-const constants = require('../constants.js');
-const Budget = require('../budget.js');
-const Audit = require('../../audits/audit.js');
-const Runner = require('../../runner.js');
-const i18n = require('../../lib/i18n/i18n.js');
+const constants = require('./constants.js');
+const Budget = require('./budget.js');
+const Audit = require('../audits/audit.js');
+const Runner = require('../runner.js');
+const i18n = require('../lib/i18n/i18n.js');
 
-/** @typedef {typeof import('../../gather/gatherers/gatherer.js')} GathererConstructor */
+/** @typedef {typeof import('../gather/gatherers/gatherer.js')} GathererConstructor */
 /** @typedef {InstanceType<GathererConstructor>} Gatherer */
 
 /**
@@ -218,6 +218,18 @@ function expandAuditShorthand(audit) {
   }
 }
 
+/** @type {Map<string, any>} */
+const bundledModules = new Map();
+
+/**
+ * Wraps `require` with an entrypoint for bundled dynamic modules.
+ * See build-bundle.js
+ * @param {string} requirePath
+ */
+function requireWrapper(requirePath) {
+  return bundledModules.get(requirePath) || require(requirePath);
+}
+
 /**
  * @param {string} gathererPath
  * @param {Array<string>} coreGathererList
@@ -233,7 +245,7 @@ function requireGatherer(gathererPath, coreGathererList, configDir) {
     requirePath = resolveModulePath(gathererPath, configDir, 'gatherer');
   }
 
-  const GathererClass = /** @type {GathererConstructor} */ (require(requirePath));
+  const GathererClass = /** @type {GathererConstructor} */ (requireWrapper(requirePath));
 
   return {
     instance: new GathererClass(),
@@ -243,31 +255,30 @@ function requireGatherer(gathererPath, coreGathererList, configDir) {
 }
 
 /**
- *
  * @param {string} auditPath
  * @param {Array<string>} coreAuditList
  * @param {string=} configDir
  * @return {LH.Config.AuditDefn['implementation']}
  */
 function requireAudit(auditPath, coreAuditList, configDir) {
-// See if the audit is a Lighthouse core audit.
+  // See if the audit is a Lighthouse core audit.
   const auditPathJs = `${auditPath}.js`;
   const coreAudit = coreAuditList.find(a => a === auditPathJs);
   let requirePath = `../audits/${auditPath}`;
   if (!coreAudit) {
-  // TODO: refactor and delete `global.isDevtools`.
+    // TODO: refactor and delete `global.isDevtools`.
     if (global.isDevtools || global.isLightrider) {
-    // This is for pubads bundling.
+      // This is for pubads bundling.
       requirePath = auditPath;
     } else {
-    // Otherwise, attempt to find it elsewhere. This throws if not found.
+      // Otherwise, attempt to find it elsewhere. This throws if not found.
       const absolutePath = resolveModulePath(auditPath, configDir, 'audit');
       // Use a relative path so bundler can easily expose it.
       requirePath = path.relative(__dirname, absolutePath);
     }
   }
 
-  return require(requirePath);
+  return requireWrapper(requirePath);
 }
 
 /**
@@ -327,7 +338,6 @@ function resolveSettings(settingsJson = {}, overrides = undefined) {
   assertValidSettings(settingsWithFlags);
   return settingsWithFlags;
 }
-
 
 /**
  * Turns a GathererJson into a GathererDefn which involves a few main steps:
@@ -558,6 +568,7 @@ module.exports = {
   deepCloneConfigJson,
   mergeOptionsOfItems,
   mergeConfigFragment,
+  requireWrapper,
   resolveSettings,
   resolveGathererToDefn,
   resolveAuditsToDefns,

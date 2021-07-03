@@ -9,14 +9,12 @@ const fs = require('fs');
 const path = require('path');
 const log = require('lighthouse-logger');
 const stream = require('stream');
-const {promisify} = require('util');
 const Simulator = require('./dependency-graph/simulator/simulator.js');
 const lanternTraceSaver = require('./lantern-trace-saver.js');
 const Metrics = require('./traces/pwmetrics-events.js');
 const NetworkAnalysisComputed = require('../computed/network-analysis.js');
 const LoadSimulatorComputed = require('../computed/load-simulator.js');
 const LHError = require('../lib/lh-error.js');
-const pipeline = promisify(stream.pipeline);
 
 const artifactsFilename = 'artifacts.json';
 const traceSuffix = '.trace.json';
@@ -249,8 +247,10 @@ async function saveTrace(traceData, traceFilename) {
 function saveDevtoolsLog(devtoolsLog, devtoolLogFilename) {
   const logIter = arrayOfObjectsJsonGenerator(devtoolsLog);
   const writeStream = fs.createWriteStream(devtoolLogFilename);
-
-  return pipeline(stream.Readable.from(logIter), writeStream);
+  return new Promise((resolve, reject) => {
+    stream.on('error', reject);
+    stream.on('done', resolve);
+  });
 }
 
 /**
