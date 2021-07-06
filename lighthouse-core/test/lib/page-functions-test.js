@@ -21,12 +21,14 @@ describe('Page Functions', () => {
     global.ShadowRoot = ShadowRoot;
     global.Node = Node;
     global.HTMLElement = HTMLElement;
+    global.window = {};
     dom = new DOM(document);
   });
 
   afterAll(() => {
     global.ShadowRoot = undefined;
     global.Node = undefined;
+    global.window = undefined;
   });
 
   describe('wrapRuntimeEvalErrorInBrowser()', () => {
@@ -177,16 +179,11 @@ describe('Page Functions', () => {
       assert.equal(pageFunctions.getNodeLabel(el), Array(78).fill('a').join('') + '💡…');
     });
 
-    it('Uses tag name for html tags', () => {
-      const el = dom.createElement('html');
-      assert.equal(pageFunctions.getNodeLabel(el), 'html');
-    });
-
-    it('Uses tag name if there is no better label', () => {
+    it('Returns null if there is no better label', () => {
       const el = dom.createElement('div');
       const childEl = dom.createElement('span');
       el.appendChild(childEl);
-      assert.equal(pageFunctions.getNodeLabel(el), 'div');
+      assert.equal(pageFunctions.getNodeLabel(el), null);
     });
   });
 
@@ -215,6 +212,16 @@ describe('Page Functions', () => {
       shadowRoot.append(sectionEl);
 
       assert.equal(pageFunctions.getNodePath(img), '0,MAIN,a,#document-fragment,0,SECTION,0,IMG');
+    });
+  });
+
+  describe('getNodeDetails', () => {
+    it('Returns selector as fallback if nodeLabel equals html tag name', () => {
+      const el = dom.createElement('div', '', {id: 'parent', class: 'parent-el'});
+      const childEl = dom.createElement('p', '', {id: 'child', class: 'child-el'});
+      el.appendChild(childEl);
+      const {nodeLabel} = pageFunctions.getNodeDetails(el);
+      assert.equal(nodeLabel, 'div#parent');
     });
   });
 });
