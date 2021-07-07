@@ -105,7 +105,7 @@ const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
  *
  * Requirements based on Chrome Devtools' installability requirements.
  * Origin of logging:
- * https://source.chromium.org/chromium/chromium/src/+/master:chrome/browser/installable/installable_logging.cc
+ * https://source.chromium.org/chromium/chromium/src/+/main:chrome/browser/installable/installable_logging.cc
  * DevTools InstallabilityError implementation:
  * https://source.chromium.org/search?q=getInstallabilityErrorMessages&ss=chromium%2Fchromium%2Fsrc:third_party%2Fdevtools-frontend%2Fsrc%2Ffront_end%2Fresources%2F
  */
