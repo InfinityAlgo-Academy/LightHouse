@@ -10,23 +10,29 @@
  * in the browser (as long as they have access to a debugger protocol Connection).
  */
 
-const fs = require('fs');
+/**
+ * Rollup plugins don't export types that work with commonjs.
+ * @template T
+ * @param {T} module
+ * @return {T['default']}
+ */
+function rollupPluginTypeCoerce(module) {
+  // @ts-expect-error
+  return module;
+}
+
 const path = require('path');
-const assert = require('assert').strict;
-const mkdir = fs.promises.mkdir;
 const rollup = require('rollup');
-const alias = require('@rollup/plugin-alias');
-const commonjs =
-// @ts-expect-error types are wrong.
-/** @type {import('rollup-plugin-commonjs').default} */ (require('rollup-plugin-commonjs'));
-const json = require('@rollup/plugin-json');
-const nodePolyfills = require('rollup-plugin-node-polyfills');
-const nodeResolve = require('rollup-plugin-node-resolve');
-const postprocess = require('./rollup-postprocess.js');
-const replace = require('rollup-plugin-replace');
+const alias = rollupPluginTypeCoerce(require('@rollup/plugin-alias'));
+const commonjs = rollupPluginTypeCoerce(require('rollup-plugin-commonjs'));
+const json = rollupPluginTypeCoerce(require('@rollup/plugin-json'));
+const nodePolyfills = rollupPluginTypeCoerce(require('rollup-plugin-node-polyfills'));
+const nodeResolve = rollupPluginTypeCoerce(require('rollup-plugin-node-resolve'));
+const replace = rollupPluginTypeCoerce(require('rollup-plugin-replace'));
+// @ts-expect-error: no types
 const shim = require('rollup-plugin-shim');
 const {terser} = require('rollup-plugin-terser');
-const LighthouseRunner = require('../lighthouse-core/runner.js');
+const postprocess = require('./rollup-postprocess.js');
 const {minifyFileTransform} = require('./build-utils.js');
 const Runner = require('../lighthouse-core/runner.js');
 const rollupBrfs = require('./rollup-brfs.js');
@@ -50,60 +56,34 @@ const isLightrider = file => path.basename(file).includes('lightrider');
 // Set to true for source maps.
 const DEBUG = false;
 
-// TODO
-// bundle
-//   .plugin('browserify-banner', {
-//     pkg: Object.assign({COMMIT_HASH}, require('../package.json')),
-//     file: require.resolve('./banner.txt'),
-//   })
-
+const pkg = require('../package.json');
+const today = (() => {
+  const date = new Date();
+  const year = new Intl.DateTimeFormat('en', {year: 'numeric'}).format(date);
+  const month = new Intl.DateTimeFormat('en', {month: 'short'}).format(date);
+  const day = new Intl.DateTimeFormat('en', {day: '2-digit'}).format(date);
+  return `${month} ${day} ${year}`;
+})();
+const banner = `
 /**
- * Minify a javascript file, in place.
- * @param {string} filePath
+ * Lighthouse v${pkg.version} ${COMMIT_HASH} (${today})
+ *
+ * ${pkg.description}
+ *
+ * @homepage ${pkg.homepage}
+ * @author   ${pkg.author}
+ * @license  ${pkg.license}
  */
-async function minifyScript(filePath) {
-  const code = fs.readFileSync(filePath, 'utf-8');
-  const result = await terser.minify(code, {
-    ecma: 2019,
-    output: {
-      comments: /^!/,
-      max_line_len: 1000,
-    },
-    // The config relies on class names for gatherers.
-    keep_classnames: true,
-    // Runtime.evaluate errors if function names are elided.
-    keep_fnames: true,
-    sourceMap: DEBUG && {
-      content: JSON.parse(fs.readFileSync(`${filePath}.map`, 'utf-8')),
-      url: path.basename(`${filePath}.map`),
-    },
-  });
-
-  // Add the banner and modify globals for DevTools if necessary.
-  if (isDevtools(filePath) && result.code) {
-    // Add a comment for TypeScript, but not if in DEBUG mode so that source maps are not affected.
-    // See lighthouse-cli/test/smokehouse/lighthouse-runners/bundle.js
-    if (!DEBUG) {
-      result.code =
-        '// @ts-nocheck - Prevent tsc stepping into any required bundles.\n' + result.code;
-    }
-
-    assert.ok(result.code.includes('\nrequire='), 'missing browserify require stub');
-    result.code = result.code.replace('\nrequire=', '\nglobalThis.require=');
-    assert.ok(!result.code.includes('\nrequire='), 'contained unexpected browserify require stub');
-  }
-
-  fs.writeFileSync(filePath, result.code);
-  if (DEBUG) fs.writeFileSync(`${filePath}.map`, result.map);
-}
+`.trim();
 
 /**
  * Browserify starting at entryPath, writing the minified result to distPath.
  * @param {string} entryPath
  * @param {string} distPath
+ * @param {{minify: boolean}=} opts
  * @return {Promise<void>}
  */
-async function build(entryPath, distPath) {
+async function build(entryPath, distPath, opts = {minify: true}) {
   // List of paths (absolute / relative to config-helpers.js) to include
   // in bundle and make accessible via config-helpers.js `requireWrapper`.
   const dynamicModulePaths = [
@@ -124,6 +104,7 @@ async function build(entryPath, distPath) {
     return `['${pathNoExt}', require('${modulePath}')]`;
   }).join(',\n');
 
+  /** @type {Record<string, string>} */
   const shimsObj = {};
   const modulesToIgnore = [
     'intl-pluralrules',
@@ -144,6 +125,7 @@ async function build(entryPath, distPath) {
   // Don't include locales in DevTools.
   if (isDevtools(entryPath)) {
     const localeKeys = Object.keys(require('../lighthouse-core/lib/i18n/locales.js'));
+    /** @type {Record<string, {}>} */
     const localesShim = {};
     for (const key of localeKeys) localesShim[key] = {};
     shimsObj['./locales.js'] = `export default ${JSON.stringify(localesShim)}`;
@@ -154,7 +136,8 @@ async function build(entryPath, distPath) {
   }
 
   const packageJsonShim = {version: require('../package.json').version};
-  shimsObj[require.resolve('../package.json')] = `export default ${JSON.stringify(packageJsonShim)}`;
+  shimsObj[require.resolve('../package.json')] =
+    `export default ${JSON.stringify(packageJsonShim)}`;
 
   const bundle = await rollup.rollup({
     input: entryPath,
@@ -177,7 +160,10 @@ async function build(entryPath, distPath) {
       shim({
         ...shimsObj,
         // Allows for plugins to import lighthouse.
-        'lighthouse': `import Audit from '${require.resolve('../lighthouse-core/audits/audit.js')}'; export {Audit};`,
+        'lighthouse': `
+          import Audit from '${require.resolve('../lighthouse-core/audits/audit.js')}';
+          export {Audit};
+        `,
       }),
       // Currently must run before commonjs (brfs does not support import).
       // This currenty messes up source maps.
@@ -190,9 +176,7 @@ async function build(entryPath, distPath) {
         // https://github.com/rollup/plugins/issues/922
         ignoreGlobal: true,
       }),
-      json({
-        preferConst: true,
-      }),
+      json(),
       nodeResolve({preferBuiltins: true}),
       nodePolyfills(),
       // Rollup sees the usages of these functions in page functions (ex: see AnchorElements)
@@ -204,10 +188,14 @@ async function build(entryPath, distPath) {
         [/getNodeDetails\$1/, 'getNodeDetails'],
         [/getRectCenterPoint\$1/, 'getRectCenterPoint'],
       ]),
-      terser({
+      opts.minify && terser({
         ecma: 2019,
         output: {
-          comments: /^!/,
+          comments: (node, comment) => {
+            const text = comment.value;
+            if (text.includes('The Lighthouse Authors') && comment.line > 1) return false;
+            return /@ts-nocheck - Prevent tsc|@preserve|@license|@cc_on/i.test(text);
+          },
           max_line_len: 1000,
         },
         // The config relies on class names for gatherers.
@@ -220,6 +208,16 @@ async function build(entryPath, distPath) {
 
   await bundle.write({
     file: distPath,
+    banner: () => {
+      let result = banner;
+
+      // Add the banner and modify globals for DevTools if necessary.
+      if (isDevtools(entryPath) && !DEBUG) {
+        result += '\n// @ts-nocheck - Prevent tsc stepping into any required bundles.';
+      }
+
+      return result;
+    },
     format: 'iife',
     sourcemap: DEBUG,
   });

@@ -29,7 +29,7 @@ fs.mkdirSync(path.dirname(distDir), {recursive: true});
 function buildEntryPoint() {
   const inFile = `${sourceDir}/${entrySourceName}`;
   const outFile = `${distDir}/${entryDistName}`;
-  return bundleBuilder.build(inFile, outFile);
+  return bundleBuilder.build(inFile, outFile, {minify: false});
 }
 
 /**
