@@ -213,13 +213,13 @@ async function build(entryPath, distPath) {
 
   const shimsObj = {};
   const modulesToIgnore = [
-    'http',
     'intl-pluralrules',
     'intl',
     'pako/lib/zlib/inflate.js',
     'raven',
     'source-map',
     'ws',
+    require.resolve('../lighthouse-core/gather/connections/cri.js'),
   ];
 
   // Don't include the stringified report in DevTools - see devtools-report-assets.js
@@ -240,8 +240,6 @@ async function build(entryPath, distPath) {
     shimsObj[modulePath] = 'export default {}';
   }
 
-  // rollup inject?
-
   const bundle = await rollup.rollup({
     input: entryPath,
     context: 'globalThis',
@@ -255,38 +253,29 @@ async function build(entryPath, distPath) {
           '__filename': (id) => `'${path.relative(LH_ROOT, id)}'`,
         },
       }),
+      require('@rollup/plugin-alias')({
+        entries: {
+          debug: require.resolve('debug/src/browser.js'),
+          url: require.resolve('../lighthouse-core/lib/url-shim.js'),
+        },
+      }),
       require('rollup-plugin-shim')({
         ...shimsObj,
-
-        'debug': `export * from '${require.resolve('debug/src/browser.js')}'`,
-        'url': `import URL from '${require.resolve('../lighthouse-core/lib/url-shim.js')}'; export {URL};`,
-        // 'lighthouse-logger': 'export default {}',
-
-        // This allows for plugins to import lighthouse. TODO: lol no it doesnt
-        // ['lighthouse']: `export default await import('${require.resolve('../lighthouse-core/index.js')}');`,
+        // Allows for plugins to import lighthouse.
         'lighthouse': `import Audit from '${require.resolve('../lighthouse-core/audits/audit.js')}'; export {Audit};`,
-        // [require.resolve('debug/node')]: 'export default {}',
-        // 'intl-pluralrules': 'export default {}',
-        // 'intl': 'export default {}',
-        // 'pako/lib/zlib/inflate.js': 'export default {}',
-        // 'raven': 'export default {}',
-        // 'source-map': 'export default {}',
-        // 'ws': 'export default {}',
       }),
       // Currently must run before commonjs (brfs does not support import).
+      // This currenty messes up source maps.
       rollupBrfs({
         readFileSyncTransform: minifyFileTransform,
         global: true,
         parserOpts: {ecmaVersion: 12, sourceType: 'module'},
       }),
-
       commonjs({
         // https://github.com/rollup/plugins/issues/922
         ignoreGlobal: true,
       }),
-
       require('rollup-plugin-node-resolve')({preferBuiltins: true}),
-      // require('rollup-plugin-node-builtins')(),
       require('rollup-plugin-node-polyfills')(),
       // Rollup sees the usages of these functions in page functions (ex: see AnchorElements)
       // and treats them as globals. Because the names are "taken" by the global, Rollup renames
@@ -316,9 +305,6 @@ async function build(entryPath, distPath) {
     format: 'iife',
     sourcemap: DEBUG,
   });
-
-  // await browserifyFile(entryPath, distPath);
-  // await minifyScript(distPath);
 }
 
 /**
