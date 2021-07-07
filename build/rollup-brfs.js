@@ -5,12 +5,10 @@
  */
 'use strict';
 
-
-const {Plugin} = require('rollup');
 const path = require('path');
 const {Readable} = require('stream');
-
 const brfs = require('@wardpeet/brfs');
+
 const EXTENSIONS = ['.js', '.jsx', '.ts', '.tsx'];
 
 const rollupBrfs = function rollUpBrfs(options = {}) {
@@ -24,11 +22,6 @@ const rollupBrfs = function rollUpBrfs(options = {}) {
       return new Promise((resolve, reject) => {
         let output = '';
         const src = new Readable();
-        // if (id.endsWith('stacks.js')) {
-        // debugger;
-        // code = code.replace(/commonjsHelpers\.commonjsRequire\.resolve\(/g, 'require.resolve(');
-        // code = code.replace(/import fs from '\u0000fs\?commonjs-proxy';/g, "import fs from 'fs';");
-        // }
         src.push(code);
         src.push(null);
         const stream = src.pipe(brfs(id, options));
@@ -36,9 +29,6 @@ const rollupBrfs = function rollUpBrfs(options = {}) {
           output += data.toString();
         });
         stream.on('end', function() {
-          // if (id.endsWith('stacks.js')) {
-          //   console.log({id, code});
-          // }
           resolve({
             code: output,
             map: {mappings: ''},
@@ -51,4 +41,5 @@ const rollupBrfs = function rollUpBrfs(options = {}) {
     },
   };
 };
+
 module.exports = rollupBrfs;

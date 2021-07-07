@@ -149,12 +149,15 @@ async function build(entryPath, distPath, opts = {minify: true}) {
           '/* BUILD_REPLACE_BUNDLED_MODULES */': `[\n${bundledMapEntriesCode},\n]`,
           '__dirname': (id) => `'${path.relative(LH_ROOT, path.dirname(id))}'`,
           '__filename': (id) => `'${path.relative(LH_ROOT, id)}'`,
+          // This package exports to default in a way that causes Rollup to get confused,
+          // resulting in MessageFormat being undefined.
+          'require(\'intl-messageformat\').default': 'require(\'intl-messageformat\')',
         },
       }),
       alias({
         entries: {
-          debug: require.resolve('debug/src/browser.js'),
-          url: require.resolve('../lighthouse-core/lib/url-shim.js'),
+          'debug': require.resolve('debug/src/browser.js'),
+          'url': require.resolve('../lighthouse-core/lib/url-shim.js'),
         },
       }),
       shim({

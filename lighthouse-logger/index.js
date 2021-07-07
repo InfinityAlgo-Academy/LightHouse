@@ -5,16 +5,14 @@
  */
 'use strict';
 
-let debug = require('debug');
-const marky = require('marky');
 const process = require('process');
-
-if (debug.__moduleExports) debug = debug.__moduleExports;
+const debug = require('debug');
+const marky = require('marky');
 
 const EventEmitter = require('events').EventEmitter;
 const isWindows = process.platform === 'win32';
 
-// process.browser is set when browserify'd via the `process` npm module
+// @ts-expect-error: process.browser is set when browserify'd via the `process` npm module
 const isBrowser = process.browser;
 
 const colors = {
@@ -27,11 +25,7 @@ const colors = {
 };
 
 // allow non-red/yellow colors for debug()
-try {
-  debug.colors = [colors.cyan, colors.green, colors.blue, colors.magenta];
-} catch {
-  // Might be made readonly in rollup bundle.
-}
+debug.colors = [colors.cyan, colors.green, colors.blue, colors.magenta];
 
 class Emitter extends EventEmitter {
   /**
