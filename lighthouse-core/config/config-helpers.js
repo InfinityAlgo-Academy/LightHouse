@@ -219,7 +219,7 @@ function expandAuditShorthand(audit) {
 }
 
 /** @type {Map<string, any>} */
-const bundledModules = new Map();
+const bundledModules = new Map(/* BUILD_REPLACE_BUNDLED_MODULES */);
 
 /**
  * Wraps `require` with an entrypoint for bundled dynamic modules.

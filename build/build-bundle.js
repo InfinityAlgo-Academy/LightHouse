@@ -187,7 +187,6 @@ async function minifyScript(filePath) {
 async function build(entryPath, distPath) {
   const rollup = require('rollup');
   const {terser} = require('rollup-plugin-terser');
-  // Only needed b/c getFilenamePrefix loads a commonjs module.
   const commonjs =
     // @ts-expect-error types are wrong.
   /** @type {import('rollup-plugin-commonjs').default} */ (require('rollup-plugin-commonjs'));
@@ -201,11 +200,10 @@ async function build(entryPath, distPath) {
 
   // Include lighthouse-plugin-publisher-ads.
   if (isDevtools(entryPath) || isLightrider(entryPath)) {
-    // TODO: doesn't work yet (circular deps?)
-    // dynamicModulePaths.push('lighthouse-plugin-publisher-ads');
-    // pubAdsAudits.forEach(pubAdAudit => {
-    //   dynamicModulePaths.push(pubAdAudit);
-    // });
+    dynamicModulePaths.push('lighthouse-plugin-publisher-ads');
+    pubAdsAudits.forEach(pubAdAudit => {
+      dynamicModulePaths.push(pubAdAudit);
+    });
   }
 
   const bundledMapEntriesCode = dynamicModulePaths.map(modulePath => {
@@ -215,6 +213,7 @@ async function build(entryPath, distPath) {
 
   const shimsObj = {};
   const modulesToIgnore = [
+    'http',
     'intl-pluralrules',
     'intl',
     'pako/lib/zlib/inflate.js',
@@ -251,8 +250,7 @@ async function build(entryPath, distPath) {
       require('rollup-plugin-replace')({
         delimiters: ['', ''],
         values: {
-          'const bundledModules = new Map();':
-            `const bundledModules = new Map([\n${bundledMapEntriesCode},\n]);`,
+          '/* BUILD_REPLACE_BUNDLED_MODULES */': `[\n${bundledMapEntriesCode},\n]`,
           '__dirname': (id) => `'${path.relative(LH_ROOT, path.dirname(id))}'`,
           '__filename': (id) => `'${path.relative(LH_ROOT, id)}'`,
         },
@@ -261,10 +259,12 @@ async function build(entryPath, distPath) {
         ...shimsObj,
 
         'debug': `export * from '${require.resolve('debug/src/browser.js')}'`,
+        'url': `import URL from '${require.resolve('../lighthouse-core/lib/url-shim.js')}'; export {URL};`,
         // 'lighthouse-logger': 'export default {}',
 
         // This allows for plugins to import lighthouse. TODO: lol no it doesnt
-        // [require.resolve('lighthouse')]: 'export {__moduleExports: {Audit: 1}};',
+        // ['lighthouse']: `export default await import('${require.resolve('../lighthouse-core/index.js')}');`,
+        'lighthouse': `import Audit from '${require.resolve('../lighthouse-core/audits/audit.js')}'; export {Audit};`,
         // [require.resolve('debug/node')]: 'export default {}',
         // 'intl-pluralrules': 'export default {}',
         // 'intl': 'export default {}',
@@ -286,12 +286,12 @@ async function build(entryPath, distPath) {
       }),
 
       require('rollup-plugin-node-resolve')({preferBuiltins: true}),
-      require('rollup-plugin-node-builtins')(),
+      // require('rollup-plugin-node-builtins')(),
       require('rollup-plugin-node-polyfills')(),
       // Rollup sees the usages of these functions in page functions (ex: see AnchorElements)
       // and treats them as globals. Because the names are "taken" by the global, Rollup renames
-      // the actual functions. The page functions expect a certain name, and so here we undo what
-      // Rollup did.
+      // the actual functions (getNodeDetails$1). The page functions expect a certain name, so
+      // here we undo what Rollup did.
       require('./rollup-postprocess.js')([
         [/getElementsInDocument\$1/, 'getElementsInDocument'],
         [/getNodeDetails\$1/, 'getNodeDetails'],
