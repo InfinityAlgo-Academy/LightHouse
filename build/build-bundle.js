@@ -307,10 +307,6 @@ async function build(entryPath, distPath) {
         keep_classnames: true,
         // Runtime.evaluate errors if function names are elided.
         keep_fnames: true,
-        // sourceMap: DEBUG && {
-        //   content: JSON.parse(fs.readFileSync(`${filePath}.map`, 'utf-8')),
-        //   url: path.basename(`${filePath}.map`),
-        // },
       }),
     ],
   });
@@ -318,6 +314,7 @@ async function build(entryPath, distPath) {
   await bundle.write({
     file: distPath,
     format: 'iife',
+    sourcemap: DEBUG,
   });
 
   // await browserifyFile(entryPath, distPath);
