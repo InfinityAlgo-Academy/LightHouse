@@ -12,7 +12,7 @@ const path = require('path');
 const acorn = require('acorn');
 const {
   collapseToStringLiteral,
-  replaceReadFileSync,
+  replaceFsMethods,
 } = require('../../esbuild/esbuild-plugin-inline-fs.js');
 
 const {LH_ROOT} = require('../../../root.js');
@@ -59,7 +59,7 @@ describe('inline-fs', () => {
   });
 
   describe('replaceReadFileSync', () => {
-    const tmpPath = `${LH_ROOT}/.tmp/inline-file.js`;
+    const tmpPath = `${LH_ROOT}/.tmp/inline-fs/test.js`;
 
     beforeAll(() => {
       fs.mkdirSync(path.dirname(tmpPath), {recursive: true});
@@ -69,40 +69,53 @@ describe('inline-fs', () => {
       fs.unlinkSync(tmpPath);
     });
 
-    it('returns null for content with no fs.readFileSync calls', async () => {
+    it('returns null for content with no fs calls', async () => {
       const content = 'const val = 1;';
-      const result = await replaceReadFileSync(content, contextPath);
+      const result = await replaceFsMethods(content, contextPath);
       expect(result).toBe(null);
     });
 
-    it('inlines content from fs.readFileSync calls', async () => {
-      fs.writeFileSync(tmpPath, 'some text content');
-      const content = `const myTextContent = fs.readFileSync('${tmpPath}', 'utf8');`;
-      const result = await replaceReadFileSync(content, contextPath);
-      expect(result).toBe(`const myTextContent = "some text content";`);
+    describe('fs.readFileSync', () => {
+      it('inlines content from fs.readFileSync calls', async () => {
+        fs.writeFileSync(tmpPath, 'some text content');
+        const content = `const myTextContent = fs.readFileSync('${tmpPath}', 'utf8');`;
+        const result = await replaceFsMethods(content, contextPath);
+        expect(result).toBe(`const myTextContent = "some text content";`);
+      });
+
+      it('inlines content with quotes', async () => {
+        fs.writeFileSync(tmpPath, `"quoted", and an unbalanced quote: "`);
+        const content = `const myTextContent = fs.readFileSync('${tmpPath}', 'utf8');`;
+        const result = await replaceFsMethods(content, contextPath);
+        expect(result).toBe(`const myTextContent = "\\"quoted\\", and an unbalanced quote: \\"";`);
+      });
+
+      it('inlines multiple fs.readFileSync calls', async () => {
+        fs.writeFileSync(tmpPath, 'some text content');
+        // eslint-disable-next-line max-len
+        const content = `fs.readFileSync('${tmpPath}', 'utf8')fs.readFileSync(require.resolve('${tmpPath}'), 'utf8')`;
+        const result = await replaceFsMethods(content, contextPath);
+        expect(result).toBe(`"some text content""some text content"`);
+      });
+
+      it('throws on nested fs.readFileSync calls', async () => {
+        fs.writeFileSync(tmpPath, `${LH_ROOT}/lighthouse-cli/index.js`);
+        // eslint-disable-next-line max-len
+        const content = `const myTextContent = fs.readFileSync(fs.readFileSync('${tmpPath}', 'utf8'), 'utf8');`;
+        await expect(() => replaceFsMethods(content, contextPath))
+          .rejects.toThrow('Only require.resolve() calls are supported');
+      });
     });
 
-    it('inlines content with quotes', async () => {
-      fs.writeFileSync(tmpPath, `"quoted", and an unbalanced quote: "`);
-      const content = `const myTextContent = fs.readFileSync('${tmpPath}', 'utf8');`;
-      const result = await replaceReadFileSync(content, contextPath);
-      expect(result).toBe(`const myTextContent = "\\"quoted\\", and an unbalanced quote: \\"";`);
-    });
-
-    it('inlines multiple fs.readFileSync calls', async () => {
-      fs.writeFileSync(tmpPath, 'some text content');
-      // eslint-disable-next-line max-len
-      const content = `fs.readFileSync('${tmpPath}', 'utf8')fs.readFileSync(require.resolve('${tmpPath}'), 'utf8')`;
-      const result = await replaceReadFileSync(content, contextPath);
-      expect(result).toBe(`"some text content""some text content"`);
-    });
-
-    it('throws on nested fs.readFileSync calls', async () => {
-      fs.writeFileSync(tmpPath, `${LH_ROOT}/lighthouse-cli/index.js`);
-      // eslint-disable-next-line max-len
-      const content = `const myTextContent = fs.readFileSync(fs.readFileSync('${tmpPath}', 'utf8'), 'utf8');`;
-      await expect(() => replaceReadFileSync(content, contextPath))
-        .rejects.toThrow('Only require.resolve() calls are supported');
+    describe('fs.readdirSync', () => {
+      it('inlines content from fs.readdirSync calls', async () => {
+        fs.writeFileSync(tmpPath, 'text');
+        const tmpDir = path.dirname(tmpPath);
+        const content = `const files = fs.readdirSync('${tmpDir}');`;
+        const result = await replaceFsMethods(content, contextPath);
+        const tmpFilename = path.basename(tmpPath);
+        expect(result).toBe(`const files = ["${tmpFilename}"];`);
+      });
     });
   });
 });

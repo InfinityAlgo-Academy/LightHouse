@@ -99,42 +99,86 @@ function isUtf8Options(node) {
 }
 
 /**
- * Replaces instances of `fs.readFileSync()` with an inlined version of the read
- * file. Returns `null` if `fs.readFileSync` was not found in the code.
+ * Attempts to statically determine the target of a `fs.readFileSync()` call and
+ * returns the already-quoted contents of the file to be loaded.
+ * @param {Node} node ESTree node for `fs.readFileSync` call.
+ * @param {string} contextPath
+ * @return {Promise<string>}
+ */
+async function getReadFileReplacement(node, contextPath) {
+  assert.equal(node.callee.property.name, 'readFileSync');
+
+  assert.equal(node.arguments.length, 2, 'fs.readFileSync() must have two arguments');
+  const constructedPath = collapseToStringLiteral(node.arguments[0], contextPath);
+  assert.equal(isUtf8Options(node.arguments[1]), true, 'only utf8 readFileSync is supported');
+
+  const readContent = await fs.promises.readFile(constructedPath, 'utf8');
+
+  // Escape quotes, new lines, etc so inlined string doesn't break host file.
+  return JSON.stringify(readContent);
+}
+
+/**
+ * Attempts to statically determine the target of a `fs.readdirSync()` call and
+ * returns a JSON.stringified array with the contents of the target directory.
+ * @param {Node} node ESTree node for `fs.readdirSync` call.
+ * @param {string} contextPath
+ * @return {Promise<string>}
+ */
+async function getReaddirReplacement(node, contextPath) {
+  assert.equal(node.callee.property.name, 'readdirSync');
+
+  // If there's no second argument, fs.readdirSync defaults to 'utf8'.
+  if (node.arguments.length === 2) {
+    assert.equal(isUtf8Options(node.arguments[1]), true, 'only utf8 readdirSync is supported');
+  }
+
+  const constructedPath = collapseToStringLiteral(node.arguments[0], contextPath);
+  const contents = await fs.promises.readdir(constructedPath, 'utf8');
+
+  return JSON.stringify(contents);
+}
+
+/**
+ * Inlines the values of selected `fs` methods if their targets can be
+ * statically determined. Currently `readFileSync` and `readdirSync` are
+ * supported.
  * @param {string} code
  * @param {string} contextPath
  * @return {Promise<string|null>}
  */
-async function replaceReadFileSync(code, contextPath) {
-  // Return null for not applicable files with as little work as possible.
-  let foundIndex = code.indexOf('fs.readFileSync');
-  if (foundIndex === -1) return null;
+async function replaceFsMethods(code, contextPath) {
+  // Return null for not-applicable files with as little work as possible.
+  const fsSearch = /fs\.(?:readFileSync|readdirSync)/g;
+  let found = fsSearch.exec(code);
 
-  const s = new MagicString(code);
+  if (found === null) return null;
+
+  const output = new MagicString(code);
 
   // Can iterate forwards in string because MagicString always uses original indices.
-  while (foundIndex !== -1) {
-    const parsed = acorn.parseExpressionAt(code, foundIndex, {ecmaVersion: 'latest'});
+  while (found !== null) {
+    const parsed = acorn.parseExpressionAt(code, found.index, {ecmaVersion: 'latest'});
     assert.equal(parsed.type, 'CallExpression');
     assert.equal(parsed.callee.type, 'MemberExpression');
     assert.equal(parsed.callee.object.name, 'fs');
-    assert.equal(parsed.callee.property.name, 'readFileSync');
 
-    assert.equal(parsed.arguments.length, 2, 'fs.readFileSync() must have two arguments');
-    const constructedPath = collapseToStringLiteral(parsed.arguments[0], contextPath);
-    assert.equal(isUtf8Options(parsed.arguments[1]), true, 'only utf8 readFileSync is supported');
+    let content;
+    if (parsed.callee.property.name === 'readFileSync') {
+      content = await getReadFileReplacement(parsed, contextPath);
+    } else if (parsed.callee.property.name === 'readdirSync') {
+      content = await getReaddirReplacement(parsed, contextPath);
+    } else {
+      throw new Error(`unexpected fs call 'fs.${parsed.callee.property.name}'`);
+    }
 
-    const readContent = await fs.promises.readFile(constructedPath, 'utf8');
-    // Escape quotes, new lines, etc so inlined string doesn't break host file.
-    const escapedContent = JSON.stringify(readContent);
+    // TODO(bckenny): use options to customize `storeName` for source maps.
+    output.overwrite(parsed.start, parsed.end, content);
 
-    // TODO(bckenny): can use options to customize `storeName` for source maps.
-    s.overwrite(parsed.start, parsed.end, escapedContent);
-
-    foundIndex = code.indexOf('fs.readFileSync', foundIndex + 1);
+    found = fsSearch.exec(code);
   }
 
-  return s.toString();
+  return output.toString();
 }
 
 const inlineFs = {
@@ -145,10 +189,10 @@ const inlineFs = {
       const rawContents = await fs.promises.readFile(args.path, 'utf8');
 
       // TODO(bckenny): turn try/catch into warnings.
-      // const contents = await replaceReadFileSync(rawContents, args.path);
+      // const contents = await replaceFsMethods(rawContents, args.path);
       let contents;
       try {
-        contents = await replaceReadFileSync(rawContents, args.path);
+        contents = await replaceFsMethods(rawContents, args.path);
       } catch (e) {
         return;
       }
@@ -161,6 +205,6 @@ const inlineFs = {
 
 module.exports = {
   collapseToStringLiteral,
-  replaceReadFileSync,
+  replaceFsMethods,
   inlineFs,
 };
