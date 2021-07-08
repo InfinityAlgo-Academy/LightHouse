@@ -645,3 +645,6 @@ if (typeof module !== 'undefined' && module.exports) {
 } else {
   self.Util = Util;
 }
+
+// TODO(esmodules): export these strings too, then collect-strings will work when this file is esm.
+// export const UIStrings = Util.UIStrings;

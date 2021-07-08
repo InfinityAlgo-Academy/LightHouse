@@ -521,9 +521,9 @@ function parseUIStrings(sourceStr, liveUIStrings) {
  * Collects all LHL messsages defined in UIString from Javascript files in dir,
  * and converts them into CTC.
  * @param {string} dir absolute path
- * @return {Record<string, CtcMessage>}
+ * @return {Promise<Record<string, CtcMessage>>}
  */
-function collectAllStringsInDir(dir) {
+async function collectAllStringsInDir(dir) {
   /** @type {Record<string, CtcMessage>} */
   const strings = {};
 
@@ -538,9 +538,9 @@ function collectAllStringsInDir(dir) {
     if (!process.env.CI) console.log('Collecting from', relativeToRootPath);
 
     const content = fs.readFileSync(absolutePath, 'utf8');
-    const exportVars = require(absolutePath);
+    const exportVars = await import(absolutePath);
     const regexMatch = content.match(UISTRINGS_REGEX);
-    const exportedUIStrings = exportVars.UIStrings;
+    const exportedUIStrings = exportVars.UIStrings || (exportVars.default && exportVars.default.UIStrings);
 
     if (!regexMatch) {
       // No UIStrings found in the file text or exports, so move to the next.
@@ -674,14 +674,13 @@ function resolveMessageCollisions(strings) {
   }
 }
 
-// Test if called from the CLI or as a module.
-if (require.main === module) {
+async function main() {
   /** @type {Record<string, CtcMessage>} */
   const strings = {};
 
   for (const folderWithStrings of foldersWithStrings) {
     console.log(`\n====\nCollecting strings from ${folderWithStrings}\n====`);
-    const moreStrings = collectAllStringsInDir(folderWithStrings);
+    const moreStrings = await collectAllStringsInDir(folderWithStrings);
     Object.assign(strings, moreStrings);
   }
 
@@ -713,6 +712,11 @@ if (require.main === module) {
   console.log(`  ${progress.notTranslatedCount}/${progress.messageCount} untranslated messages`);
 
   console.log('✨ Complete!');
+}
+
+// Test if called from the CLI or as a module.
+if (require.main === module) {
+  main();
 }
 
 module.exports = {
