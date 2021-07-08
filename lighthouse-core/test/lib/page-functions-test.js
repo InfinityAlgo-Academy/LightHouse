@@ -18,7 +18,7 @@ describe('Page Functions', () => {
   const url = 'http://www.example.com';
   let dom;
 
-  beforeAll(() => {
+  beforeAll(async () => {
     // TODO(esmodules): remove when this file is esm.
     DOM = await import('../../../report/renderer/dom.js');
     const {document, ShadowRoot, Node, HTMLElement} = new jsdom.JSDOM('', {url}).window;
