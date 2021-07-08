@@ -20,7 +20,7 @@ describe('Page Functions', () => {
 
   beforeAll(async () => {
     // TODO(esmodules): remove when this file is esm.
-    DOM = await import('../../../report/renderer/dom.js');
+    DOM = (await import('../../../report/renderer/dom.js')).DOM;
     const {document, ShadowRoot, Node, HTMLElement} = new jsdom.JSDOM('', {url}).window;
     global.ShadowRoot = ShadowRoot;
     global.Node = Node;
