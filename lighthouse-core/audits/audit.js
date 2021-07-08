@@ -133,7 +133,7 @@ class Audit {
 
   /**
    * @param {LH.Audit.Details.List['items']} items
-   * @returns {LH.Audit.Details.List}
+   * @return {LH.Audit.Details.List}
    */
   static makeListDetails(items) {
     return {
@@ -180,7 +180,7 @@ class Audit {
   /**
    * @param {string} content
    * @param {number} maxLineLength
-   * @returns {LH.Audit.Details.SnippetValue['lines']}
+   * @return {LH.Audit.Details.SnippetValue['lines']}
    */
   static _makeSnippetLinesArray(content, maxLineLength) {
     return content.split('\n').map((line, lineIndex) => {

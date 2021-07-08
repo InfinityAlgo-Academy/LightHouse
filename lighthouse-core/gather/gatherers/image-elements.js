@@ -190,7 +190,7 @@ function findSizeDeclaration(rule, property) {
  *
  * @param {Array<LH.Crdp.CSS.RuleMatch>|undefined} matchedCSSRules
  * @param {string} property
- * @returns {string | undefined}
+ * @return {string | undefined}
  */
 function findMostSpecificCSSRule(matchedCSSRules, property) {
   /** @param {LH.Crdp.CSS.CSSStyle} declaration */
@@ -204,7 +204,7 @@ function findMostSpecificCSSRule(matchedCSSRules, property) {
 /**
  * @param {LH.Crdp.CSS.GetMatchedStylesForNodeResponse} matched CSS rules}
  * @param {string} property
- * @returns {string | null}
+ * @return {string | null}
  */
 function getEffectiveSizingRule({attributesStyle, inlineStyle, matchedCSSRules}, property) {
   // CSS sizing can't be inherited.

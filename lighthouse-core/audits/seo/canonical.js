@@ -32,7 +32,7 @@ const UIStrings = {
    * @description Explanatory message stating that there was a failure in an audit caused by a URL being relative instead of absolute.
    * @example {https://example.com/} url
    * */
-  explanationRelative: 'Relative URL ({url})',
+  explanationRelative: 'Is not an absolute URL ({url})',
   /**
    * @description Explanatory message stating that there was a failure in an audit caused by a URL pointing to a different hreflang than the current context.'hreflang' is an HTML attribute and should not be translated.
    * @example {https://example.com/} url

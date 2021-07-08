@@ -102,7 +102,7 @@ function fillDevToolsShortcut() {
 
 /**
  * Create the settings from the state of the options form, save in storage, and return it.
- * @returns {SettingsController.Settings}
+ * @return {SettingsController.Settings}
  */
 function readSettingsFromDomAndPersist() {
   const optionsEl = find('.section--options');

@@ -548,6 +548,12 @@
   "lighthouse-core/audits/byte-efficiency/uses-optimized-images.js | title": {
     "message": "Êf́f̂íĉíêńt̂ĺŷ én̂ćôd́ê ím̂áĝéŝ"
   },
+  "lighthouse-core/audits/byte-efficiency/uses-responsive-images-snapshot.js | columnActualDimensions": {
+    "message": "Âćt̂úâĺ d̂ím̂én̂śîón̂ś"
+  },
+  "lighthouse-core/audits/byte-efficiency/uses-responsive-images-snapshot.js | columnDisplayedDimensions": {
+    "message": "D̂íŝṕl̂áŷéd̂ d́îḿêńŝíôńŝ"
+  },
   "lighthouse-core/audits/byte-efficiency/uses-responsive-images.js | description": {
     "message": "Ŝér̂v́ê ím̂áĝéŝ t́ĥát̂ ár̂é âṕp̂ŕôṕr̂íât́êĺŷ-śîźêd́ t̂ó ŝáv̂é ĉél̂ĺûĺâŕ d̂át̂á âńd̂ ím̂ṕr̂óv̂é l̂óâd́ t̂ím̂é. [L̂éâŕn̂ ḿôŕê](https://web.dev/uses-responsive-images/)."
   },
@@ -1200,7 +1206,7 @@
     "message": "P̂óîńt̂ś t̂ó âńôt́ĥér̂ `hreflang` ĺôćât́îón̂ ({url})"
   },
   "lighthouse-core/audits/seo/canonical.js | explanationRelative": {
-    "message": "R̂él̂át̂ív̂é ÛŔL̂ ({url})"
+    "message": "Îś n̂ót̂ án̂ áb̂śôĺût́ê ÚR̂Ĺ ({url})"
   },
   "lighthouse-core/audits/seo/canonical.js | explanationRoot": {
     "message": "P̂óîńt̂ś t̂ó t̂h́ê d́ôḿâín̂'ś r̂óôt́ ÛŔL̂ (t́ĥé ĥóm̂ép̂áĝé), îńŝt́êád̂ óf̂ án̂ éq̂úîv́âĺêńt̂ ṕâǵê óf̂ ćôńt̂én̂t́"

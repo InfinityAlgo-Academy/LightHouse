@@ -44,7 +44,7 @@ function almostEqual(a, b) {
 /**
  * Merge touching rects based on what appears as one tappable area to the user.
  * @param {LH.Artifacts.Rect[]} clientRects
- * @returns {LH.Artifacts.Rect[]}
+ * @return {LH.Artifacts.Rect[]}
  */
 function mergeTouchingClientRects(clientRects) {
   for (let i = 0; i < clientRects.length; i++) {
