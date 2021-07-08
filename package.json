@@ -33,7 +33,7 @@
     "smoke": "node lighthouse-cli/test/smokehouse/frontends/smokehouse-bin.js",
     "debug": "node --inspect-brk ./lighthouse-cli/index.js",
     "start": "yarn build-report --only-standalone && node ./lighthouse-cli/index.js",
-    "jest": "node --experimental-vm-modules node_modules/.bin/jest",
+    "jest": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js",
     "test": "yarn diff:sample-json && yarn lint --quiet && yarn unit && yarn type-check",
     "test-bundle": "yarn smoke --runner bundle -j=1 --retries=2 --invert-match forms",
     "test-clients": "yarn jest \"$PWD/clients/\"",
