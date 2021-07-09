@@ -7,8 +7,8 @@
 
 describe('Tests', function() {
   beforeAll(async () => {
-    const semver = await import('semver');
-    console.log(semver);
+    const dep = await import('../../lighthouse-core/lib/navigation-error.js');
+    console.log(dep);
   });
 
   it('pass', async function() {
