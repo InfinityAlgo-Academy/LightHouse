@@ -187,6 +187,7 @@ async function build(entryPath, distPath, opts = {minify: true}) {
       // the actual functions (getNodeDetails$1). The page functions expect a certain name, so
       // here we undo what Rollup did.
       postprocess([
+        [/getBoundingClientRect\$1/, 'getBoundingClientRect'],
         [/getElementsInDocument\$1/, 'getElementsInDocument'],
         [/getNodeDetails\$1/, 'getNodeDetails'],
         [/getRectCenterPoint\$1/, 'getRectCenterPoint'],
