@@ -2,8 +2,7 @@
 
 /* eslint-env jest */
 
-// require('jsdom');
-require('fs');
+require('jsdom');
 
 describe('Tests', function() {
   it('pass', async function() {
