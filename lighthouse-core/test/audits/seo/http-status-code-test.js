@@ -24,6 +24,7 @@ describe('SEO: HTTP code audit', () => {
       const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
 
       const artifacts = {
+        GatherContext: {gatherMode: 'timespan'},
         devtoolsLogs: {[HTTPStatusCodeAudit.DEFAULT_PASS]: devtoolsLog},
         URL: {finalUrl},
       };
@@ -46,6 +47,7 @@ describe('SEO: HTTP code audit', () => {
     const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
 
     const artifacts = {
+      GatherContext: {gatherMode: 'navigation'},
       devtoolsLogs: {[HTTPStatusCodeAudit.DEFAULT_PASS]: devtoolsLog},
       URL: {finalUrl},
     };
@@ -53,5 +55,31 @@ describe('SEO: HTTP code audit', () => {
     return HTTPStatusCodeAudit.audit(artifacts, {computedCache: new Map()}).then(auditResult => {
       assert.equal(auditResult.score, 1);
     });
+  });
+
+  it('throws when main resource cannot be found in navigation', async () => {
+    const finalUrl = 'https://example.com';
+
+    const artifacts = {
+      GatherContext: {gatherMode: 'navigation'},
+      devtoolsLogs: {[HTTPStatusCodeAudit.DEFAULT_PASS]: []},
+      URL: {finalUrl},
+    };
+
+    const resultPromise = HTTPStatusCodeAudit.audit(artifacts, {computedCache: new Map()});
+    await expect(resultPromise).rejects.toThrow();
+  });
+
+  it('notApplicable when main resource cannot be found in timespan', async () => {
+    const finalUrl = 'https://example.com';
+
+    const artifacts = {
+      GatherContext: {gatherMode: 'timespan'},
+      devtoolsLogs: {[HTTPStatusCodeAudit.DEFAULT_PASS]: []},
+      URL: {finalUrl},
+    };
+
+    const results = await HTTPStatusCodeAudit.audit(artifacts, {computedCache: new Map()});
+    expect(results.notApplicable).toBe(true);
   });
 });
