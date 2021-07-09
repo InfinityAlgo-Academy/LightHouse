@@ -9,8 +9,8 @@ let dom;
 
 describe('Tests', function() {
   it('pass', async function() {
-    const {DOM} = await import('../../report/renderer/dom.js');
-    expect(DOM).toBeTruthy();
+    // const {DOM} = await import('../../report/renderer/dom.js');
+    // expect(DOM).toBeTruthy();
 
     const {document, ShadowRoot, Node, HTMLElement} = new jsdom.JSDOM('', {url}).window;
     global.ShadowRoot = ShadowRoot;
