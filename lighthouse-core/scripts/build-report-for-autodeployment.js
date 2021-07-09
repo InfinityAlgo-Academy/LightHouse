@@ -11,9 +11,16 @@
 const fs = require('fs');
 const path = require('path');
 const swapLocale = require('../lib/i18n/swap-locale.js');
+
+// Must build before importing report-generator.
+const br = require('../../build/build-report.js');
+br.buildStandaloneReport();
+br.buildPSIReport();
+
 const ReportGenerator = require('../../report/report-generator.js');
 const {defaultSettings} = require('../config/constants.js');
 const lighthouse = require('../index.js');
+
 const lhr = /** @type {LH.Result} */ (require('../../lighthouse-core/test/results/sample_v2.json'));
 const {LH_ROOT} = require('../../root.js');
 
@@ -29,6 +36,8 @@ const DIST = path.join(LH_ROOT, `dist/now`);
     'ɑrabic': swapLocale(lhr, 'ar').lhr,
     'xl-accented': swapLocale(lhr, 'en-XL').lhr,
     'error': errorLhr,
+    'psi': generatePsiLHR(lhr),
+    'soloperf': generatePsiLHR(lhr),
   };
 
   // Generate and write reports
@@ -61,6 +70,17 @@ function addPluginCategory(lhr) {
     score: 0.5,
     auditRefs: [],
   };
+}
+
+/**
+ * @param {LH.Result} lhr
+ */
+function generatePsiLHR(lhr) {
+  const clone = JSON.parse(JSON.stringify(lhr));
+  clone.categories = {
+    'performance': clone.categories.performance,
+  };
+  return clone;
 }
 
 /**
