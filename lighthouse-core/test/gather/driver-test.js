@@ -5,6 +5,11 @@
  */
 'use strict';
 
+const SegfaultHandler = require('segfault-handler');
+SegfaultHandler.registerHandler("crash.log", (...args) => {
+  console.log(JSON.stringify(args));
+});
+
 const Driver = require('../../gather/driver.js');
 const Connection = require('../../gather/connections/connection.js');
 const {protocolGetVersionResponse} = require('./fake-driver.js');
