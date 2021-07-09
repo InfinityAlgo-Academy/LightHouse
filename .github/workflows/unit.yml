@@ -30,4 +30,4 @@ jobs:
         node-version: ${{ matrix.node }}
 
     - run: yarn install --frozen-lockfile --network-timeout 1000000
-    - run: yarn jest audits/network-rtt-test.js audits/network-server-latency-test.js audits/no-unload-listeners-test.js audits/non-composited-animations-test.js audits/performance-budget-test.js audits/predictive-perf-test.js audits/preload-fonts-test.js audits/preload-lcp-image-test.js audits/redirects-http-test.js audits/redirects-test.js audits/resource-summary-test.js audits/screenshot-thumbnails-test.js audits/script-treemap-data-test.js repro-test.js
+    - run: yarn jest 'audits/[^/]*-test.js' repro-test.js
