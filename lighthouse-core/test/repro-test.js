@@ -2,6 +2,7 @@
 
 /* eslint-env jest */
 
+// can be any commonjs module
 require('semver');
 
 describe('Tests', function() {
