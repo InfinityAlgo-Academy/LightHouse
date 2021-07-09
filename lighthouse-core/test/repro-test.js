@@ -2,7 +2,7 @@
 
 /* eslint-env jest */
 
-// require('jsdom');
+require('semver');
 
 describe('Tests', function() {
   it('pass', async function() {
