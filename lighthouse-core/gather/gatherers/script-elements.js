@@ -82,7 +82,7 @@ class ScriptElements extends FRGatherer {
   async _getArtifact(context, networkRecords, formFactor) {
     const session = context.driver.defaultSession;
     const executionContext = context.driver.executionContext;
-    const mainResource = NetworkAnalyzer.findMainDocument(networkRecords, context.url);
+    const mainResource = NetworkAnalyzer.findOptionalMainDocument(networkRecords, context.url);
 
     const scripts = await executionContext.evaluate(collectAllScriptElements, {
       args: [],
@@ -94,7 +94,7 @@ class ScriptElements extends FRGatherer {
     });
 
     for (const script of scripts) {
-      if (script.content) script.requestId = mainResource.requestId;
+      if (mainResource && script.content) script.requestId = mainResource.requestId;
     }
 
     const scriptRecords = networkRecords

@@ -35,7 +35,7 @@ const argv = yargs(process.argv.slice(2))
   .argv;
 
 /**
- * https://source.chromium.org/chromium/chromium/src/+/master:third_party/devtools-frontend/src/front_end/test_runner/TestRunner.js;l=170;drc=f59e6de269f4f50bca824f8ca678d5906c7d3dc8
+ * https://source.chromium.org/chromium/chromium/src/+/main:third_party/devtools-frontend/src/front_end/test_runner/TestRunner.js;l=170;drc=f59e6de269f4f50bca824f8ca678d5906c7d3dc8
  * @param {Record<string, function>} receiver
  * @param {string} methodName
  * @param {function} override

@@ -17,7 +17,7 @@ const reportAssets = require('../../report-assets.js');
 
 /**
  * @param {{left: number, top: number, width: number, height:number}} opts
- * @returns {LH.Artifacts.Rect}
+ * @return {LH.Artifacts.Rect}
  */
 function makeRect(opts) {
   return {

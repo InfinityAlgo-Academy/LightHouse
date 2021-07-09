@@ -7,7 +7,7 @@
 /**
  * @fileoverview Audits a page to determine whether it generates issues in the Issues panel of Chrome Devtools.
  * The audit is meant to maintain parity with the Chrome Devtools Issues panel front end.
- * https://source.chromium.org/chromium/chromium/src/+/master:third_party/devtools-frontend/src/front_end/sdk/
+ * https://source.chromium.org/chromium/chromium/src/+/main:third_party/devtools-frontend/src/front_end/sdk/
  */
 
 'use strict';

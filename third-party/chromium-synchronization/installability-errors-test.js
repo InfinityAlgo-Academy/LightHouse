@@ -16,7 +16,7 @@ describe('installabilityErrors', () => {
 
   beforeAll(async () => {
     const installableLoggingGitTilesUrl =
-      'https://chromium.googlesource.com/chromium/src/+/master/components/webapps/browser/installable/installable_logging.cc?format=TEXT';
+      'https://chromium.googlesource.com/chromium/src/+/main/components/webapps/browser/installable/installable_logging.cc?format=TEXT';
     const resp = await fetch(installableLoggingGitTilesUrl);
     if (!resp.ok) {
       throw new Error(`Chromium source fetch failed: ${resp.status} ${resp.statusText}`);
@@ -25,7 +25,7 @@ describe('installabilityErrors', () => {
     const buff = Buffer.from(base64, 'base64');
     const text = buff.toString('utf-8');
 
-    // Apply some *beautiful* regexes to parse the C++ of https://chromium.googlesource.com/chromium/src/+/master/chrome/browser/installable/installable_logging.cc
+    // Apply some *beautiful* regexes to parse the C++ of https://chromium.googlesource.com/chromium/src/+/main/chrome/browser/installable/installable_logging.cc
     const handledErrorConsts = [...text.matchAll(/error_id = (k.*?);/g)].map(([_, match]) => match);
     const errorConstsToIdsCode = [...text.matchAll(/static const char k.*?Id\[\](.|\n)*?;/g)].map(
       ([match]) => match.replace(/\n/, '')

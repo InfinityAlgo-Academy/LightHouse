@@ -21,6 +21,7 @@ const Sentry = require('../../lib/sentry.js');
 const Trace = require('./trace.js');
 const ProcessedTrace = require('../../computed/processed-trace.js');
 const ProcessedNavigation = require('../../computed/processed-navigation.js');
+const LighthouseError = require('../../lib/lh-error.js');
 
 /** @typedef {{nodeId: number, score?: number, animations?: {name?: string, failureReasonsMask?: number, unsupportedProperties?: string[]}[]}} TraceElementData */
 
@@ -257,7 +258,16 @@ class TraceElements extends FRGatherer {
     }
 
     const processedTrace = await ProcessedTrace.request(trace, context);
-    const {largestContentfulPaintEvt} = await ProcessedNavigation.request(processedTrace, context);
+    const {largestContentfulPaintEvt} = await ProcessedNavigation
+      .request(processedTrace, context)
+      .catch(err => {
+        // If we were running in timespan mode and there was no paint, treat LCP as missing.
+        if (context.gatherMode === 'timespan' && err.code === LighthouseError.errors.NO_FCP.code) {
+          return {largestContentfulPaintEvt: undefined};
+        }
+
+        throw err;
+      });
     const {mainThreadEvents} = processedTrace;
 
     const lcpNodeId = TraceElements.getNodeIDFromTraceEvent(largestContentfulPaintEvt);

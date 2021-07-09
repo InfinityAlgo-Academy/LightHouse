@@ -18,23 +18,23 @@ yarn update:test-devtools
 
 <details>
   <summary> Install `requests`</summary>
-  
+
   Ensure you have `requests` module available globally on your python 2.7 install. New Macs do not come with pip for python 2.7 which is deprecated, so you might have to install that too.
-  
-  
+
+
   ```sh
   curl https://bootstrap.pypa.io/pip/2.7/get-pip.py -o get-pip.py
   python get-pip.py
   pip -m pip install requests
   ```
-  
+
 </details>
 
 ### Debugging
 
 * Want logs from Lighthouse? Add `log.log('status', '**** hello test output ' + JSON.stringify({obj}));` which will be visible in the `lighthouse-successful-run.js` output thanks to `LighthouseTestRunner.addStatusListener`.
 * Want logs from test files? Adding these flags to the invocation `yarn test-devtools --driver-logging --no-retry-failures` will print to terminal.
-* Want logs from the inspected page? Add `testRunner.setDumpConsoleMessages(true);` to a test file. (also, [beware](https://source.chromium.org/chromium/chromium/src/+/master:content/web_test/renderer/web_view_test_proxy.cc;l=125-129;drc=437e5d9a05535b9e2cd7b983f78b23ebc3d92b3f) w/e this is about)
+* Want logs from the inspected page? Add `testRunner.setDumpConsoleMessages(true);` to a test file. (also, [beware](https://source.chromium.org/chromium/chromium/src/+/main:content/web_test/renderer/web_view_test_proxy.cc;l=125-129;drc=437e5d9a05535b9e2cd7b983f78b23ebc3d92b3f) w/e this is about)
 
 
 ## How it works
@@ -47,7 +47,7 @@ Normally, running these webtests requires a full Chromium checkout. However, tha
 
 * `third_party/blink/tools`.
 * `third_party/blink/web_tests/fast/harness`
-* [`third_party/catapult/third_party/typ`](https://source.chromium.org/chromium/chromium/src/+/master:third_party/catapult/third_party/typ/)–necessary third party Python library
+* [`third_party/catapult/third_party/typ`](https://source.chromium.org/chromium/chromium/src/+/main:third_party/catapult/third_party/typ/)–necessary third party Python library
 
 2) **Apply a few custom patches**
 
@@ -65,7 +65,7 @@ DevTools had a script for this, but it was removed. `download-content-shell.js` 
 
 To run the devtools webtests, `run_web_tests.py` requires the inspector resources (the output of the frontend build process). These files are actually included in the content shell download from before, but instead we want to build the currently checked out Lighthouse, roll to DevTools, build DevTools, and use the newly created inspector files.
 
-`run_web_tests.py` normally serves these files by mounting the Chromium build folder for the DevTools output to the path `/inspector-sources` [1](https://source.chromium.org/chromium/chromium/src/+/master:third_party/blink/tools/blinkpy/web_tests/port/base.py;l=1280;drc=e8e4dcd1d1684251c33cda9b9fc93d7ea808e4bd) [2](https://source.chromium.org/chromium/chromium/src/+/master:third_party/blink/tools/blinkpy/web_tests/servers/apache_http.py;l=118;drc=32408e19204a7ffceebfe774d7e99f2041cf4338). Instead, we fetch the DevTools frontend, roll Lighthouse, build it, then copy the build output to the `inspector-sources` at the root of our `npx http-server` web server.
+`run_web_tests.py` normally serves these files by mounting the Chromium build folder for the DevTools output to the path `/inspector-sources` [1](https://source.chromium.org/chromium/chromium/src/+/main:third_party/blink/tools/blinkpy/web_tests/port/base.py;l=1280;drc=e8e4dcd1d1684251c33cda9b9fc93d7ea808e4bd) [2](https://source.chromium.org/chromium/chromium/src/+/main:third_party/blink/tools/blinkpy/web_tests/servers/apache_http.py;l=118;drc=32408e19204a7ffceebfe774d7e99f2041cf4338). Instead, we fetch the DevTools frontend, roll Lighthouse, build it, then copy the build output to the `inspector-sources` at the root of our `npx http-server` web server.
 
 ## Testing Lighthouse from DevTools
 
@@ -108,4 +108,4 @@ Simply make your changes in `.tmp/chromium-web-tests/blink_tools`, and run: `git
 
 #### How does the python module `typ` get added to python sys path?
 
-Via a [hack](https://source.chromium.org/chromium/chromium/src/+/master:third_party/blink/tools/blinkpy/web_tests/models/typ_types.py;l=7?q=add_typ_dir_to_sys_path).
+Via a [hack](https://source.chromium.org/chromium/chromium/src/+/main:third_party/blink/tools/blinkpy/web_tests/models/typ_types.py;l=7?q=add_typ_dir_to_sys_path).

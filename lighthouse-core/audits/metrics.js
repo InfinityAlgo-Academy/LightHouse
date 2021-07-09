@@ -28,6 +28,7 @@ class Metrics extends Audit {
       scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
       title: 'Metrics',
       description: 'Collects all available metrics.',
+      supportedModes: ['navigation'],
       requiredArtifacts: ['traces', 'devtoolsLogs', 'GatherContext'],
     };
   }

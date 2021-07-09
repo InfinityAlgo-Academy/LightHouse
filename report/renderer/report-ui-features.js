@@ -911,7 +911,7 @@ class DropDown {
   /**
    * @param {Array<Node>} allNodes
    * @param {?HTMLElement=} startNode
-   * @returns {HTMLElement}
+   * @return {HTMLElement}
    */
   _getNextSelectableNode(allNodes, startNode) {
     const nodes = allNodes.filter(/** @return {node is HTMLElement} */ (node) => {
@@ -942,7 +942,7 @@ class DropDown {
 
   /**
    * @param {?HTMLElement=} startEl
-   * @returns {HTMLElement}
+   * @return {HTMLElement}
    */
   _getNextMenuItem(startEl) {
     const nodes = Array.from(this._menuEl.childNodes);
@@ -951,7 +951,7 @@ class DropDown {
 
   /**
    * @param {?HTMLElement=} startEl
-   * @returns {HTMLElement}
+   * @return {HTMLElement}
    */
   _getPreviousMenuItem(startEl) {
     const nodes = Array.from(this._menuEl.childNodes).reverse();

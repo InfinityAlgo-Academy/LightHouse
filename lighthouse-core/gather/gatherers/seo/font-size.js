@@ -68,7 +68,7 @@ function computeSelectorSpecificity(selector) {
  *
  * @param {Array<LH.Crdp.CSS.RuleMatch>} matchedCSSRules
  * @param {function(LH.Crdp.CSS.CSSStyle):boolean|string|undefined} isDeclarationOfInterest
- * @returns {NodeFontData['cssRule']|undefined}
+ * @return {NodeFontData['cssRule']|undefined}
  */
 function findMostSpecificMatchedCSSRule(matchedCSSRules = [], isDeclarationOfInterest) {
   let maxSpecificity = -Infinity;
@@ -105,7 +105,7 @@ function findMostSpecificMatchedCSSRule(matchedCSSRules = [], isDeclarationOfInt
  * Finds the most specific directly matched CSS font-size rule from the list.
  *
  * @param {Array<LH.Crdp.CSS.InheritedStyleEntry>} [inheritedEntries]
- * @returns {NodeFontData['cssRule']|undefined}
+ * @return {NodeFontData['cssRule']|undefined}
  */
 function findInheritedCSSRule(inheritedEntries = []) {
   // The inherited array contains the array of matched rules for all parents in ascending tree order.
@@ -126,7 +126,7 @@ function findInheritedCSSRule(inheritedEntries = []) {
  *
  * @see https://cs.chromium.org/chromium/src/third_party/blink/renderer/devtools/front_end/sdk/CSSMatchedStyles.js?q=CSSMatchedStyles+f:devtools+-f:out&sq=package:chromium&dr=C&l=59-134
  * @param {LH.Crdp.CSS.GetMatchedStylesForNodeResponse} matched CSS rules
- * @returns {NodeFontData['cssRule']|undefined}
+ * @return {NodeFontData['cssRule']|undefined}
  */
 function getEffectiveFontRule({attributesStyle, inlineStyle, matchedCSSRules, inherited}) {
   // Inline styles have highest priority
@@ -148,7 +148,7 @@ function getEffectiveFontRule({attributesStyle, inlineStyle, matchedCSSRules, in
 
 /**
  * @param {string} text
- * @returns {number}
+ * @return {number}
  */
 function getTextLength(text) {
   // Array.from to count symbols not unicode code points. See: #6973
@@ -158,7 +158,7 @@ function getTextLength(text) {
 /**
  * @param {LH.Gatherer.FRProtocolSession} session
  * @param {number} nodeId text node
- * @returns {Promise<NodeFontData['cssRule']|undefined>}
+ * @return {Promise<NodeFontData['cssRule']|undefined>}
  */
 async function fetchSourceRule(session, nodeId) {
   const matchedRules = await session.sendCommand('CSS.getMatchedStylesForNode', {

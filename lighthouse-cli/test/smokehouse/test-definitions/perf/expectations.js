@@ -188,7 +188,7 @@ module.exports = [
         {
           traceEventType: 'largest-contentful-paint',
           node: {
-            nodeLabel: 'img',
+            nodeLabel: 'section > img',
             snippet: '<img src="../dobetterweb/lighthouse-480x318.jpg">',
             boundingRect: {
               top: 108,
@@ -274,7 +274,7 @@ module.exports = [
               {
                 node: {
                   type: 'node',
-                  nodeLabel: 'img',
+                  nodeLabel: 'section > img',
                   path: '0,HTML,1,BODY,1,DIV,a,#document-fragment,0,SECTION,0,IMG',
                 },
               },

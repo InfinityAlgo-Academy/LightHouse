@@ -32,7 +32,7 @@ const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 /**
  * Checks if given directive is a valid unavailable_after directive with a date in the past
  * @param {string} directive
- * @returns {boolean}
+ * @return {boolean}
  */
 function isUnavailable(directive) {
   const parts = directive.split(':');
@@ -49,7 +49,7 @@ function isUnavailable(directive) {
 /**
  * Returns true if any of provided directives blocks page from being indexed
  * @param {string} directives
- * @returns {boolean}
+ * @return {boolean}
  */
 function hasBlockingDirective(directives) {
   return directives.split(',')
@@ -60,7 +60,7 @@ function hasBlockingDirective(directives) {
 /**
  * Returns true if robots header specifies user agent (e.g. `googlebot: noindex`)
  * @param {string} directives
- * @returns {boolean}
+ * @return {boolean}
  */
 function hasUserAgent(directives) {
   const parts = directives.match(/^([^,:]+):/);
@@ -80,6 +80,7 @@ class IsCrawlable extends Audit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
+      supportedModes: ['navigation'],
       requiredArtifacts: ['MetaElements', 'RobotsTxt', 'URL', 'devtoolsLogs'],
     };
   }
