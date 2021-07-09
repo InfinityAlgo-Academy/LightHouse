@@ -9,6 +9,7 @@ jobs:
   # `unit` includes just unit and proto tests.
   unit:
     strategy:
+      fail-fast: false
       matrix:
         node: ['12', '14', '16']
     runs-on: ubuntu-latest
