@@ -103,7 +103,7 @@ describe('inline-fs', () => {
         // eslint-disable-next-line max-len
         const content = `const myTextContent = fs.readFileSync(fs.readFileSync('${tmpPath}', 'utf8'), 'utf8');`;
         await expect(() => replaceFsMethods(content, contextPath))
-          .rejects.toThrow('Only require.resolve() calls are supported');
+          .rejects.toThrow('Only `require.resolve()` and `path` methods are supported');
       });
     });
 
@@ -116,6 +116,21 @@ describe('inline-fs', () => {
         const tmpFilename = path.basename(tmpPath);
         expect(result).toBe(`const files = ["${tmpFilename}"];`);
       });
+
+      it('handles methods chained on fs.readdirSync result', async () => {
+        fs.writeFileSync(tmpPath, 'text');
+        const tmpDir = path.dirname(tmpPath);
+        // eslint-disable-next-line max-len
+        const content = `const files = [...fs.readdirSync('${tmpDir}'), ...fs.readdirSync('${tmpDir}').map(f => \`metrics/\${f}\`)]`;
+        const result = await replaceFsMethods(content, contextPath);
+        expect(result)
+            .toBe('const files = [...["test.js"], ...["test.js"].map(f => `metrics/${f}`)]');
+      });
+
+      // TODO(bckenny): non-existent directory
     });
+
+  // TODO(bckenny): zero length path.resolve() (resolves to cwd?)
+  // syntax errors, warnings but resume on unsupported syntax
   });
 });

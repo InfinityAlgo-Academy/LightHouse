@@ -17,8 +17,6 @@ const audits = LighthouseRunner.getAuditList()
     .map(f => `./lighthouse-core/audits/${f}`);
 const gatherers = LighthouseRunner.getGathererList()
     .map(f => `./lighthouse-core/gather/gatherers/${f}`);
-const locales = fs.readdirSync(LH_ROOT + '/lighthouse-core/lib/i18n/locales/')
-    .map(f => require.resolve(`../lighthouse-core/lib/i18n/locales/${f}`));
 
 // @ts-expect-error - no types
 const pubAdsAudits = require('lighthouse-plugin-publisher-ads/plugin.js').audits.map(a => a.path);
@@ -52,7 +50,6 @@ async function run() {
       'raven',
       'pako/lib/zlib/inflate.js',
     ],
-    // inject: ['lighthouse-core/lib/file-namer.js'],
     plugins: [localeLoadPlugin, inlineFs],
     charset: 'utf8',
     absWorkingDir: LH_ROOT,

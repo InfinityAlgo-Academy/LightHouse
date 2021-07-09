@@ -12,10 +12,24 @@ const acorn = require('acorn');
 const resolve = require('resolve');
 const MagicString = require('magic-string').default;
 
-/* eslint-disable max-len */
+const {LH_ROOT} = require('../../root.js');
 
 /** @typedef {import('acorn').Node} Node */
 /** @typedef {import('esbuild').PluginBuild} PluginBuild */
+
+/**
+ * A version of acorn's parseExpressionAt that stops at commas, allowing parsing
+ * non-sequence expressions, like inside arrays.
+ * @param {string} input
+ * @param {number} offset
+ * @param {import('acorn').Options} options
+ * @return {Node}
+ */
+function parseExpressionAt(input, offset, options) {
+  const parser = new acorn.Parser(options, input, offset);
+  parser.nextToken();
+  return parser.parseMaybeAssign();
+}
 
 /**
  * Collapse tree using supported transforms until only a string literal is
@@ -41,14 +55,7 @@ function collapseToStringLiteral(node, contextPath) {
     }
 
     case 'CallExpression': {
-      assert.equal(node.callee.type, 'MemberExpression');
-      const requireResolveMsg = 'Only require.resolve() calls are supported within fs function calls';
-      assert.equal(node.callee.object.name, 'require', requireResolveMsg);
-      assert.equal(node.callee.property.name, 'resolve', requireResolveMsg);
-
-      assert.equal(node.arguments.length, 1, 'only single-argument `require.resolve` call is supported');
-      const argument = collapseToStringLiteral(node.arguments[0], contextPath);
-      return resolve.sync(argument, {basedir: path.dirname(contextPath)});
+      return collapseCallExpression(node, contextPath);
     }
 
     case 'BinaryExpression': {
@@ -79,6 +86,48 @@ function collapseToStringLiteral(node, contextPath) {
 }
 
 /**
+ * Evaluate supported function calls and return the string result. Limited to
+ * `require.resolve` and a subset of `path` methods.
+ * @param {Node} node ESTree CallExpression node.
+ * @param {string} contextPath The path of the file containing this node.
+ * @return {string}
+ */
+function collapseCallExpression(node, contextPath) {
+  // eslint-disable-next-line max-len
+  const unsupportedMsg = 'Only `require.resolve()` and `path` methods are supported within `fs` function calls';
+
+  assert.equal(node.callee.type, 'MemberExpression', unsupportedMsg);
+
+  if (node.callee.object.name === 'require') {
+    assert.equal(node.callee.property.name, 'resolve', unsupportedMsg);
+    // eslint-disable-next-line max-len
+    assert.equal(node.arguments.length, 1, 'only single-argument `require.resolve` call is supported');
+    const argument = collapseToStringLiteral(node.arguments[0], contextPath);
+    return resolve.sync(argument, {basedir: path.dirname(contextPath)});
+  }
+
+  if (node.callee.object.name !== 'path') throw new Error(unsupportedMsg);
+
+  // Support path methods that take string arguments and return a string.
+  const supportedPathMethods = [
+    'resolve',
+    'normalize',
+    'join',
+    'relative',
+    'dirname',
+    'basename',
+    'extname',
+  ];
+  if (!supportedPathMethods.includes(node.callee.property.name)) {
+    // eslint-disable-next-line max-len
+    throw new Error(`'path.${node.callee.property.name}' is not supported with 'fs' function calls`);
+  }
+
+  const args = node.arguments.map(arg => collapseToStringLiteral(arg, contextPath));
+  return path[node.callee.property.name](...args);
+}
+
+/**
  * Returns whether the options object/string specifies the allowed utf8/utf-8
  * encoding.
  * @param {Node} node ESTree node.
@@ -88,11 +137,11 @@ function isUtf8Options(node) {
   // Node allows 'utf-8' as an alias for 'utf8'.
   if (node.type === 'Literal') {
     return node.value === 'utf8' || node.value === 'utf-8';
-  } else if (options.type === 'ObjectExpression') {
+  } else if (node.type === 'ObjectExpression') {
     // Matches type `{encoding: 'utf8'|'utf-8'}`.
     return node.properties.some(prop => {
       return prop.key.name === 'encoding' &&
-      (prop.value.value === 'utf8' || prop.value.value === 'utf-8');
+          (prop.value.value === 'utf8' || prop.value.value === 'utf-8');
     });
   }
   return false;
@@ -158,10 +207,22 @@ async function replaceFsMethods(code, contextPath) {
 
   // Can iterate forwards in string because MagicString always uses original indices.
   while (found !== null) {
-    const parsed = acorn.parseExpressionAt(code, found.index, {ecmaVersion: 'latest'});
-    assert.equal(parsed.type, 'CallExpression');
-    assert.equal(parsed.callee.type, 'MemberExpression');
-    assert.equal(parsed.callee.object.name, 'fs');
+    let parsed;
+    try {
+      parsed = parseExpressionAt(code, found.index, {ecmaVersion: 'latest'});
+    } catch (err) {
+      // TODO(bckenny): can use err.pos. Move this into parseExpressionAt.
+      // eslint-disable-next-line max-len
+      throw new Error(`${err.message} - ${path.relative(LH_ROOT, contextPath)}:${found.index} '${code.substr(found.index, 50)}'`);
+    }
+
+    // Descend down chained methods on result of fs call (e.g. `fs.readdirSync().map(...)`).
+    // TODO(bckenny): figure out this wonky assert business.
+    while (parsed.callee.object.name !== 'fs') {
+      assert.equal(parsed.type, 'CallExpression');
+      assert.equal(parsed.callee.type, 'MemberExpression');
+      parsed = parsed.callee.object;
+    }
 
     let content;
     if (parsed.callee.property.name === 'readFileSync') {
