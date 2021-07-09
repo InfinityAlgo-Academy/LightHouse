@@ -30,4 +30,5 @@ jobs:
         node-version: ${{ matrix.node }}
 
     - run: yarn install --frozen-lockfile --network-timeout 1000000
-    - run: yarn jest repro.js
+    - run: node node_modules/.bin/jest repro-test.js
+    - run: yarn jest repro-test.js
