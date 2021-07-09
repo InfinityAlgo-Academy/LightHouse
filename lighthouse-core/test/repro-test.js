@@ -17,6 +17,6 @@ describe('Tests', function() {
     global.Node = Node;
     global.HTMLElement = HTMLElement;
     global.window = {};
-    dom = new DOM(document);
+    // dom = new DOM(document);
   });
 });
