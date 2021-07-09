@@ -30,4 +30,4 @@ jobs:
         node-version: ${{ matrix.node }}
 
     - run: yarn install --frozen-lockfile --network-timeout 1000000
-    - run: yarn jest unsized-images-test.js page-functions-test.js
+    - run: yarn jest audits/seo page-functions-test.js
