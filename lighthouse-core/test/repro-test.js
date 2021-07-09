@@ -12,7 +12,7 @@ describe('Tests', function() {
     const {DOM} = await import('../../report/renderer/dom.js');
     expect(DOM).toBeTruthy();
 
-    const {document, ShadowRoot, Node, HTMLElement} = new jsdom.JSDOM('', {url}).window;
+    // new jsdom.JSDOM('', {url}).window;
     // global.ShadowRoot = ShadowRoot;
     // global.Node = Node;
     // global.HTMLElement = HTMLElement;
