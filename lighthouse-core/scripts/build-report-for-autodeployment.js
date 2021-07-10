@@ -42,8 +42,14 @@ const DIST = path.join(LH_ROOT, `dist/now`);
 
   // Generate and write reports
   Object.entries(filenameToLhr).forEach(([filename, lhr]) => {
-    let html = ReportGenerator.generateReportHtml(lhr);
-    // TODO: PSI is another variant to consider
+    let reportTemplate;
+    let reportJs;
+    if (filename === 'psi') {
+      reportTemplate = fs.readFileSync(__dirname + '/../../report/assets/psi-template.html', 'utf8');
+      reportJs = fs.readFileSync(__dirname + '/../../dist/report/psi-report.js', 'utf8');
+    }
+    let html = ReportGenerator.generateReportHtml(lhr, reportTemplate, reportJs);
+
     for (const variant of ['', '⌣.cdt.']) {
       if (variant.includes('cdt')) {
         // TODO: Make the DevTools Audits panel "emulation" more comprehensive
