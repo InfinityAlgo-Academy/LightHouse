@@ -21,6 +21,7 @@ function rollupPluginTypeCoerce(module) {
   return module;
 }
 
+const fs = require('fs');
 const path = require('path');
 const rollup = require('rollup');
 const alias = rollupPluginTypeCoerce(require('@rollup/plugin-alias'));
@@ -84,6 +85,10 @@ const banner = `
  * @return {Promise<void>}
  */
 async function build(entryPath, distPath, opts = {minify: true}) {
+  if (fs.existsSync(LH_ROOT + '/lighthouse-logger/node_modules')) {
+    throw new Error('delete `lighthouse-logger/node_modules` because it messes up rollup bundle');
+  }
+
   // List of paths (absolute / relative to config-helpers.js) to include
   // in bundle and make accessible via config-helpers.js `requireWrapper`.
   const dynamicModulePaths = [
@@ -158,6 +163,7 @@ async function build(entryPath, distPath, opts = {minify: true}) {
       alias({
         entries: {
           'debug': require.resolve('debug/src/browser.js'),
+          'lighthouse-logger': require.resolve('../lighthouse-logger/index.js'),
           'url': require.resolve('../lighthouse-core/lib/url-shim.js'),
         },
       }),
@@ -192,6 +198,7 @@ async function build(entryPath, distPath, opts = {minify: true}) {
         [/getElementsInDocument\$1/, 'getElementsInDocument'],
         [/getNodeDetails\$1/, 'getNodeDetails'],
         [/getRectCenterPoint\$1/, 'getRectCenterPoint'],
+        [/isPositionFixed\$1/, 'isPositionFixed'],
       ]),
       opts.minify && terser({
         ecma: 2019,

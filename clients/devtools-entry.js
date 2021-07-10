@@ -7,7 +7,7 @@
 
 const lighthouse = require('../lighthouse-core/index.js');
 const RawProtocol = require('../lighthouse-core/gather/connections/raw.js');
-const log = require('../lighthouse-logger/index.js');
+const log = require('lighthouse-logger');
 const {registerLocaleData, lookupLocale} = require('../lighthouse-core/lib/i18n/i18n.js');
 const constants = require('../lighthouse-core/config/constants.js');
 

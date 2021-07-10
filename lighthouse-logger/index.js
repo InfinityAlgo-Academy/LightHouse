@@ -12,7 +12,7 @@ const marky = require('marky');
 const EventEmitter = require('events').EventEmitter;
 const isWindows = process.platform === 'win32';
 
-// @ts-expect-error: process.browser is set when browserify'd via the `process` npm module
+// @ts-expect-error: process.browser is set via Rollup.
 const isBrowser = process.browser;
 
 const colors = {
