@@ -9,12 +9,17 @@ const fs = require('fs');
 const path = require('path');
 const log = require('lighthouse-logger');
 const stream = require('stream');
+const {promisify} = require('util');
 const Simulator = require('./dependency-graph/simulator/simulator.js');
 const lanternTraceSaver = require('./lantern-trace-saver.js');
 const Metrics = require('./traces/pwmetrics-events.js');
 const NetworkAnalysisComputed = require('../computed/network-analysis.js');
 const LoadSimulatorComputed = require('../computed/load-simulator.js');
 const LHError = require('../lib/lh-error.js');
+// TODO(esmodules): Rollup does not support `promisfy` or `stream.pipeline`. Bundled files
+// don't need anything in this file except for `stringifyReplacer`, so a check for
+// truthiness before using is enough.
+const pipeline = promisify && promisify(stream.pipeline);
 
 const artifactsFilename = 'artifacts.json';
 const traceSuffix = '.trace.json';
@@ -247,10 +252,8 @@ async function saveTrace(traceData, traceFilename) {
 function saveDevtoolsLog(devtoolsLog, devtoolLogFilename) {
   const logIter = arrayOfObjectsJsonGenerator(devtoolsLog);
   const writeStream = fs.createWriteStream(devtoolLogFilename);
-  return new Promise((resolve, reject) => {
-    stream.on('error', reject);
-    stream.on('done', resolve);
-  });
+
+  return pipeline(stream.Readable.from(logIter), writeStream);
 }
 
 /**

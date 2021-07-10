@@ -7,6 +7,7 @@
 
 /* global document window ga DOM ReportRenderer ReportUIFeatures Logger */
 
+// eslint-disable-next-line no-unused-vars
 function __initLighthouseReport__() {
   const dom = new DOM(document);
   const renderer = new ReportRenderer(dom);
