@@ -11,6 +11,7 @@ const path = require('path');
 const acorn = require('acorn');
 const resolve = require('resolve');
 const MagicString = require('magic-string').default;
+const esbuild = require('esbuild');
 
 const {LH_ROOT} = require('../../root.js');
 
@@ -150,6 +151,7 @@ function isUtf8Options(node) {
 /**
  * Attempts to statically determine the target of a `fs.readFileSync()` call and
  * returns the already-quoted contents of the file to be loaded.
+ * If it's a JS file, it's minified before inlining.
  * @param {Node} node ESTree node for `fs.readFileSync` call.
  * @param {string} contextPath
  * @return {Promise<string>}
@@ -161,7 +163,17 @@ async function getReadFileReplacement(node, contextPath) {
   const constructedPath = collapseToStringLiteral(node.arguments[0], contextPath);
   assert.equal(isUtf8Options(node.arguments[1]), true, 'only utf8 readFileSync is supported');
 
-  const readContent = await fs.promises.readFile(constructedPath, 'utf8');
+  let readContent = await fs.promises.readFile(constructedPath, 'utf8');
+
+  if (constructedPath.endsWith('.js')) {
+    // TODO(bckenny): turn any thrown errors to warning.
+    const result = await esbuild.transform(readContent, {
+      target: 'esnext',
+      minify: true,
+      keepNames: true,
+    });
+    readContent = result.code;
+  }
 
   // Escape quotes, new lines, etc so inlined string doesn't break host file.
   return JSON.stringify(readContent);

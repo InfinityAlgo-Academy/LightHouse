@@ -23,6 +23,7 @@ const {
   deepClone,
   deepCloneConfigJson,
 } = require('./config-helpers.js');
+const {requireModule} = require('./config-loader.js');
 
 /** @typedef {typeof import('../gather/gatherers/gatherer.js')} GathererConstructor */
 /** @typedef {InstanceType<GathererConstructor>} Gatherer */
@@ -350,11 +351,8 @@ class Config {
     for (const pluginName of pluginNames) {
       assertValidPluginName(configJSON, pluginName);
 
-      // TODO: refactor and delete `global.isDevtools`.
-      const pluginPath = global.isDevtools || global.isLightrider ?
-        pluginName :
-        resolveModulePath(pluginName, configDir, 'plugin');
-      const rawPluginJson = require(pluginPath);
+      const pluginPath = resolveModulePath(pluginName, configDir, 'plugin');
+      const rawPluginJson = requireModule(pluginPath);
       const pluginJson = ConfigPlugin.parsePlugin(rawPluginJson, pluginName);
 
       configJSON = Config.extendConfigJSON(configJSON, pluginJson);

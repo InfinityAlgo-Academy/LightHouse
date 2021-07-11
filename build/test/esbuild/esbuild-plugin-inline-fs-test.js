@@ -59,7 +59,7 @@ describe('inline-fs', () => {
   });
 
   describe('replaceReadFileSync', () => {
-    const tmpPath = `${LH_ROOT}/.tmp/inline-fs/test.js`;
+    const tmpPath = `${LH_ROOT}/.tmp/inline-fs/test.txt`;
 
     beforeAll(() => {
       fs.mkdirSync(path.dirname(tmpPath), {recursive: true});

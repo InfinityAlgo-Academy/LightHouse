@@ -229,7 +229,8 @@
     "path": "path-browserify",
     "fs": false,
     "http": false,
-    "stream": "stream-browserify"
+    "stream": "stream-browserify",
+    "zlib": "browserify-zlib"
   },
   "homepage": "https://github.com/GoogleChrome/lighthouse#readme"
 }

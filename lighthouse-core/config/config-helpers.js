@@ -12,6 +12,7 @@ const Budget = require('./budget.js');
 const Audit = require('../audits/audit.js');
 const Runner = require('../runner.js');
 const i18n = require('../lib/i18n/i18n.js');
+const {requireModule} = require('./config-loader.js');
 
 /** @typedef {typeof import('../gather/gatherers/gatherer.js')} GathererConstructor */
 /** @typedef {InstanceType<GathererConstructor>} Gatherer */
@@ -233,7 +234,7 @@ function requireGatherer(gathererPath, coreGathererList, configDir) {
     requirePath = resolveModulePath(gathererPath, configDir, 'gatherer');
   }
 
-  const GathererClass = /** @type {GathererConstructor} */ (require(requirePath));
+  const GathererClass = /** @type {GathererConstructor} */ (requireModule(requirePath));
 
   return {
     instance: new GathererClass(),
@@ -255,19 +256,11 @@ function requireAudit(auditPath, coreAuditList, configDir) {
   const coreAudit = coreAuditList.find(a => a === auditPathJs);
   let requirePath = `../audits/${auditPath}`;
   if (!coreAudit) {
-  // TODO: refactor and delete `global.isDevtools`.
-    if (global.isDevtools || global.isLightrider) {
-    // This is for pubads bundling.
-      requirePath = auditPath;
-    } else {
     // Otherwise, attempt to find it elsewhere. This throws if not found.
-      const absolutePath = resolveModulePath(auditPath, configDir, 'audit');
-      // Use a relative path so bundler can easily expose it.
-      requirePath = path.relative(__dirname, absolutePath);
-    }
+    requirePath = resolveModulePath(auditPath, configDir, 'audit');
   }
 
-  return require(requirePath);
+  return requireModule(requirePath);
 }
 
 /**

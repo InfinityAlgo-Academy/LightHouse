@@ -5,6 +5,8 @@
  */
 'use strict';
 
+/* eslint-disable max-len */
+
 const esbuild = require('esbuild');
 const path = require('path');
 const fs = require('fs');
@@ -13,28 +15,56 @@ const LighthouseRunner = require('../lighthouse-core/runner.js');
 const {inlineFs} = require('./esbuild/esbuild-plugin-inline-fs.js');
 
 const {LH_ROOT} = require('../root.js');
-const audits = LighthouseRunner.getAuditList()
-    .map(f => `./lighthouse-core/audits/${f}`);
-const gatherers = LighthouseRunner.getGathererList()
-    .map(f => `./lighthouse-core/gather/gatherers/${f}`);
 
-// @ts-expect-error - no types
-const pubAdsAudits = require('lighthouse-plugin-publisher-ads/plugin.js').audits.map(a => a.path);
+// Manually add audits, gatherers, and the pubAds plugin that can be dynamically loaded.
+// Path is relative to `lighthouse-core/config/` for loading from files in that directory.
+/** @type {Array<string>} */
+const dynamicLoads = [
+  ...LighthouseRunner.getAuditList().map(f => `../audits/${f.replace(/\.js$/, '')}`),
+  ...LighthouseRunner.getGathererList().map(f => `../gather/gatherers/${f.replace(/\.js$/, '')}`),
+  'lighthouse-plugin-publisher-ads',
+  // @ts-expect-error - no types.
+  ...require('lighthouse-plugin-publisher-ads/plugin.js').audits.map(a => a.path),
+];
 
 /** @typedef {import('esbuild').PluginBuild} PluginBuild */
 
-// TODO: Devtools only
-const localeLoadPlugin = {
-  name: 'localeLoad',
+const lighthousePlugin = {
+  name: 'lighthouse',
   /** @param {PluginBuild} build */
   setup(build) {
-    // replace locales with empty files.
+    // Resolve pubAds lighthouse dep loads back to LH_ROOT.
+    // build.onResolve({filter: /^lighthouse\/$/}, args => {
+    //   return {path: args.path.replace(/^lighthouse$/, LH_ROOT)};
+    // });
+    // TODO: Devtools only
+    // Replace locales with empty files.
     build.onLoad({filter: /locales\/[\w-]+\.json$/}, () => {
       return {contents: '{}'};
     });
+    // Replace dynamically-loaded audits and gatherers with static load function.
+    build.onLoad({filter: /config-loader.js$/}, () => {
+      return {
+        contents: `
+          'use strict';
+
+          const loadMap = {
+          ${dynamicLoads.map(id => `  '${id}': () => require('${id}'),`).join('\n')}
+          }
+
+          function requireModule(id) {
+            const requireFn = loadMap[id];
+            if (!requireFn) throw new Error(\`unable to load '\${id}'\`);
+            return requireFn();
+          }
+
+          module.exports = {
+            requireModule,
+          };
+      `};
+    });
   },
 };
-
 
 async function run() {
   const result = await esbuild.build({
@@ -42,18 +72,34 @@ async function run() {
     logLevel: 'warning',
     bundle: true,
     platform: 'browser',
-    target: 'es2020',
+    target: 'esnext',
     outfile: 'dist/lighthouse-dt-bundle.js',
     external: [
-      // 'js-library-detector/library/libraries.js',
       'debug/node',
       'raven',
       'pako/lib/zlib/inflate.js',
     ],
-    plugins: [localeLoadPlugin, inlineFs],
+    plugins: [lighthousePlugin, inlineFs],
+    banner: {
+      js:
+        // esbuild does not mock `require.resolve`. Provide a simple identity
+        // version with a banner-define combo so it can still be used for loading
+        // the pubAds plugin and audits. TODO: remove when moving to ES modules.
+        'global.requireResolve = (path) => path;',
+    },
+    define: {
+      'require.resolve': 'requireResolve',
+    },
     charset: 'utf8',
     absWorkingDir: LH_ROOT,
     metafile: true,
+
+    // Minification.
+    minifyWhitespace: true,
+    minifySyntax: true,
+    minifyIdentifiers: false,
+    legalComments: 'none',
+    // keepNames: true,
   }).catch(() => process.exit(1));
 
   console.log(result.metafile);

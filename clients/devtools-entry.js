@@ -71,9 +71,6 @@ if (typeof module !== 'undefined' && module.exports) {
 
 // Expose only in DevTools' worker
 if (typeof self !== 'undefined') {
-  // TODO: refactor and delete `global.isDevtools`.
-  global.isDevtools = true;
-
   // @ts-expect-error
   self.setUpWorkerConnection = setUpWorkerConnection;
   // @ts-expect-error
