@@ -63,7 +63,7 @@
     "message": "May mga naa-access na pangalan ang mga element ng `meter` ng ARIA"
   },
   "lighthouse-core/audits/accessibility/aria-progressbar-name.js | description": {
-    "message": "Kapag walang naa-access na pangalan ang isang element, iaanunsyo ito ng mga screen reader gamit ang generic na pangalan, kaya hindi ito magagamit ng mga user na umaasa sa mga screen reader. [Matuto pa](https://web.dev/aria-name/)."
+    "message": "Kapag walang naa-access na pangalan ang isang `progressbar` element, iaanunsyo ito ng mga screen reader gamit ang generic na pangalan, kaya hindi ito magagamit ng mga user na umaasa sa mga screen reader. [Matuto pa](https://web.dev/aria-name/)."
   },
   "lighthouse-core/audits/accessibility/aria-progressbar-name.js | failureTitle": {
     "message": "Walang naa-access na pangalan ang mga element ng `progressbar` ng ARIA."
@@ -903,10 +903,10 @@
     "message": "Walang field na 'name' o 'short_name' ang manifest"
   },
   "lighthouse-core/audits/installable-manifest.js | manifest-missing-suitable-icon": {
-    "message": "Manifest does not contain a suitable icon - PNG, SVG or WebP format of at least {value0} px is required, the sizes attribute must be set, and the purpose attribute, if set, must include \"any\"."
+    "message": "Walang lamang naaangkop na icon ang manifest - kinakailangang nasa format na PNG, SVG, o WebP at hindi bababa sa {value0} px dapat nakatakda ang attribute ng mga laki, at kung nakatakda ang attribute ng layunin, may \"any.\""
   },
   "lighthouse-core/audits/installable-manifest.js | no-acceptable-icon": {
-    "message": "No supplied icon is at least {value0} px square in PNG, SVG or WebP format, with the purpose attribute unset or set to \"any\""
+    "message": "Walang ibinigay na icon na may sukat na kahit {value0} px square at nasa format na PNG, SVG, o WebP, na may attribute ng layunin na naka-unset o nakatakda sa \"any\""
   },
   "lighthouse-core/audits/installable-manifest.js | no-icon-available": {
     "message": "Walang laman o sira ang na-download na icon"

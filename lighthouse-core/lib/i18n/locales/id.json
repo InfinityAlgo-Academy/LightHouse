@@ -63,7 +63,7 @@
     "message": "Elemen `meter` ARIA memiliki nama yang dapat diakses"
   },
   "lighthouse-core/audits/accessibility/aria-progressbar-name.js | description": {
-    "message": "Jika elemen tidak memiliki nama yang dapat diakses, pembaca layar akan mengucapkannya dengan nama umum, sehingga tidak dapat digunakan oleh pengguna yang mengandalkan pembaca layar. [Pelajari lebih lanjut](https://web.dev/aria-name/)."
+    "message": "Jika elemen `progressbar` tidak memiliki label aksesibilitas, pembaca layar akan mengucapkannya dengan nama umum, sehingga tidak dapat digunakan oleh pengguna yang mengandalkan pembaca layar. [Pelajari lebih lanjut](https://web.dev/aria-name/)."
   },
   "lighthouse-core/audits/accessibility/aria-progressbar-name.js | failureTitle": {
     "message": "Elemen `progressbar` ARIA tidak memiliki nama yang dapat diakses."
@@ -903,10 +903,10 @@
     "message": "Manifes tidak berisi kolom 'name' atau 'short_name'"
   },
   "lighthouse-core/audits/installable-manifest.js | manifest-missing-suitable-icon": {
-    "message": "Manifest does not contain a suitable icon - PNG, SVG or WebP format of at least {value0} px is required, the sizes attribute must be set, and the purpose attribute, if set, must include \"any\"."
+    "message": "Manifes tidak berisi ikon yang cocok - perlu format PNG, SVG, atau WebP minimal {value0} px, atribut sizes harus disetel, dan atribut purpose harus menyertakan \"any\" jika disetel."
   },
   "lighthouse-core/audits/installable-manifest.js | no-acceptable-icon": {
-    "message": "No supplied icon is at least {value0} px square in PNG, SVG or WebP format, with the purpose attribute unset or set to \"any\""
+    "message": "Tidak ada ikon yang disediakan berukuran minimal {value0} px persegi dalam format PNG, SVG, atau WebP, dengan atribut purpose yang tidak disetel atau disetel ke \"any\""
   },
   "lighthouse-core/audits/installable-manifest.js | no-icon-available": {
     "message": "Ikon yang didownload kosong atau rusak"

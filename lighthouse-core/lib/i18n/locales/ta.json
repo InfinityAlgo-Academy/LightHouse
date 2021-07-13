@@ -63,7 +63,7 @@
     "message": "ARIA `meter` உறுப்புகளுக்குத் தெளிவான பெயர்கள் உள்ளன"
   },
   "lighthouse-core/audits/accessibility/aria-progressbar-name.js | description": {
-    "message": "ஓர் உறுப்பிற்குத் தெளிவான பெயர் இல்லையெனில் ஸ்கிரீன் ரீடர்கள் அதைப் பொதுவான பெயரைப் பயன்படுத்தி அறிவிக்கும். இது ஸ்க்ரீன் ரீடர்களைப் பயன்படுத்தும் பயனர்களுக்கு உதவியாக இருக்காது. [மேலும் அறிக](https://web.dev/aria-name/)."
+    "message": "`progressbar` உறுப்பிற்குத் தெளிவான பெயர் இல்லையெனில் ஸ்கிரீன் ரீடர்கள் ஒரு பொதுவான பெயரில் அதைக் குறிப்பிடும். ஸ்கிரீன் ரீடர்களைப் பயன்படுத்திக் கேட்பவர்களுக்கு இது பயனுள்ளதாக இருக்காது. [மேலும் அறிக](https://web.dev/aria-name/)."
   },
   "lighthouse-core/audits/accessibility/aria-progressbar-name.js | failureTitle": {
     "message": "ARIA `progressbar` உறுப்புகளுக்குத் தெளிவான பெயர்கள் இல்லை."
@@ -585,13 +585,13 @@
     "message": "டைரெக்டிவ்"
   },
   "lighthouse-core/audits/csp-xss.js | columnSeverity": {
-    "message": "Severity"
+    "message": "தீவிரத்தன்மை"
   },
   "lighthouse-core/audits/csp-xss.js | description": {
     "message": "மாற்ற முடியாதபடி உள்ளடக்கப் பாதுகாப்புக் கொள்கையை (CSP - Content Security Policy) அமைப்பது வேற்று தள ஸ்கிரிப்டிங் (XSS - cross-site scripting) தாக்குதல்களின் ஆபத்தைக் குறைக்கும். [மேலும் அறிக](https://web.dev/csp-xss/)"
   },
   "lighthouse-core/audits/csp-xss.js | itemSeveritySyntax": {
-    "message": "Syntax"
+    "message": "தொடரியல்"
   },
   "lighthouse-core/audits/csp-xss.js | metaTagMessage": {
     "message": "<meta> குறியீட்டில் வரையறுக்கப்பட்டுள்ள CSPயைப் பக்கம் கொண்டுள்ளது. முடியுமெனில் HTTP தலைப்பில் CSPயை வரையறுக்கவும்."
@@ -903,10 +903,10 @@
     "message": "'name' அல்லது 'short_name' புலத்தை மெனிஃபெஸ்ட் கொண்டிருக்கவில்லை"
   },
   "lighthouse-core/audits/installable-manifest.js | manifest-missing-suitable-icon": {
-    "message": "Manifest does not contain a suitable icon - PNG, SVG or WebP format of at least {value0} px is required, the sizes attribute must be set, and the purpose attribute, if set, must include \"any\"."
+    "message": "பொருத்தமான ஐகானை மெனிஃபெஸ்ட் கொண்டிருக்கவில்லை. PNG, SVG, WebP போன்ற வடிவமைப்பில் குறைந்தபட்சம் {value0} பிக்சல்களுடன் இருக்க வேண்டும், sizes பண்புக்கூறு அமைக்கப்பட்டிருக்க வேண்டும், purpose பண்புக்கூறு அமைக்கப்பட்டிருந்தால் \"any\" என்பதைக் கொண்டிருக்க வேண்டும்."
   },
   "lighthouse-core/audits/installable-manifest.js | no-acceptable-icon": {
-    "message": "No supplied icon is at least {value0} px square in PNG, SVG or WebP format, with the purpose attribute unset or set to \"any\""
+    "message": "வழங்கப்பட்ட எந்தவொரு ஐகானும் PNG, SVG, WebP போன்ற வடிவமைப்பில் குறைந்தபட்சம் {value0} சதுர பிக்சல்களுடன் இல்லை. purpose பண்புக்கூறு அமைக்கப்படவில்லை அல்லது “any” என அமைக்கப்பட்டு உள்ளது"
   },
   "lighthouse-core/audits/installable-manifest.js | no-icon-available": {
     "message": "பதிவிறக்கிய ஐகான் காலியாக உள்ளது அல்லது சிதைந்துள்ளது"
@@ -2121,7 +2121,7 @@
     "message": "Magentoவின் [வார்னிஷ் ஒருங்கிணைப்பு](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html) அம்சத்தைப் பயன்படுத்தவும்."
   },
   "node_modules/lighthouse-stack-packs/packs/magento.js | unminified-css": {
-    "message": "\"CSS கோப்புகளைச் சிறிதாக்குதல்\" என்ற விருப்பத்தேர்வை உங்கள் ஸ்டோரின் டெவெலப்பர் அமைப்புகளில் இயக்கவும். [மேலும் அறிக](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)."
+    "message": "\"CSS ஃபைல்களைச் சிறிதாக்குதல்\" என்ற விருப்பத்தேர்வை உங்கள் ஸ்டோரின் டெவெலப்பர் அமைப்புகளில் இயக்கவும். [மேலும் அறிக](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)."
   },
   "node_modules/lighthouse-stack-packs/packs/magento.js | unminified-javascript": {
     "message": "நிலையான உள்ளடக்க வழங்கலில் உள்ள JavaScript அசெட்டுகள் அனைத்தையும் சிறிதாக்க [Terser](https://www.npmjs.com/package/terser)ரைப் பயன்படுத்தி, உள்ளமைந்த சிறிதாக்குதல் அம்சத்தை முடக்கவும்."
@@ -2190,10 +2190,10 @@
     "message": "நீங்கள் சேவையகம் தரப்பாக இருந்து ரியாக்ட் கூறுகளை ரெண்டரிங் செய்பவராக இருந்தால் அனைத்தையும் ஒரே நேரத்தில் அல்லாமல் மார்க் அப்பின் வெவ்வேறு பகுதிகளைப் பெறவும் ஹைட்ரேட் செய்யவும் கிளையண்ட்டை அனுமதிப்பதற்கு `renderToNodeStream()` அல்லது `renderToStaticNodeStream()`ஐப் பயன்படுத்துவதைப் பரிசீலிக்கவும். [மேலும் அறிக](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | unminified-css": {
-    "message": "உங்கள் பதிப்பு சிஸ்டம் உங்கள் CSS கோப்புகளைத் தானாகவே சிறிதாக்கினால் உங்கள் ஆப்ஸின் தயாரிப்புப் பதிப்பைப் பயன்படுத்துவதை உறுதிசெய்துகொள்ளவும். React Developer Tools நீட்டிப்பில் இதைப் பார்க்கலாம். [மேலும் அறிக](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
+    "message": "உங்கள் பதிப்பு சிஸ்டம் உங்கள் CSS ஃபைல்களைத் தானாகவே சிறிதாக்கினால் உங்கள் ஆப்ஸின் தயாரிப்புப் பதிப்பைப் பயன்படுத்துவதை உறுதிசெய்துகொள்ளவும். React Developer Tools நீட்டிப்பில் இதைப் பார்க்கலாம். [மேலும் அறிக](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | unminified-javascript": {
-    "message": "உங்கள் பதிப்பு சிஸ்டம் உங்கள் JS கோப்புகளைத் தானாகவே சிறிதாக்கினால் உங்கள் ஆப்ஸின் தயாரிப்புப் பதிப்பைப் பயன்படுத்துவதை உறுதிசெய்துகொள்ளவும். React Developer Tools நீட்டிப்பில் இதைப் பார்க்கலாம். [மேலும் அறிக](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
+    "message": "உங்கள் பதிப்பு சிஸ்டம் உங்கள் JS ஃபைல்களைத் தானாகவே சிறிதாக்கினால் உங்கள் ஆப்ஸின் தயாரிப்புப் பதிப்பைப் பயன்படுத்துவதை உறுதிசெய்துகொள்ளவும். React Developer Tools நீட்டிப்பில் இதைப் பார்க்கலாம். [மேலும் அறிக](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | unused-javascript": {
     "message": "நீங்கள் சேவையகத் தரப்பு ரெண்டரிங் செய்யவில்லை என்றால் `React.lazy()` மூலம் [JavaScript தொகுப்புகளை பிரிக்கவும்](https://web.dev/code-splitting-suspense/). இல்லையென்றால் [loadable-components](https://www.smooth-code.com/open-source/loadable-components/docs/getting-started/) போன்ற மூன்றாம் தரப்பு லைப்ரரி மூலம் குறியீட்டைப் பிரிக்கவும்."

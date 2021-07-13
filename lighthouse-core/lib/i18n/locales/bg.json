@@ -63,7 +63,7 @@
     "message": "ARIA елементите `meter` имат достъпни имена"
   },
   "lighthouse-core/audits/accessibility/aria-progressbar-name.js | description": {
-    "message": "Когато даден елемент няма достъпно име, екранните четци ще произнасят за него общо име и той ще бъде неизползваем за потребителите, разчитащи на тази технология. [Научете повече](https://web.dev/aria-name/)."
+    "message": "Когато елемент за `progressbar` няма достъпно име, екранните четци ще произнасят за него общо име и той ще бъде неизползваем за потребителите, разчитащи на тази технология. [Научете повече](https://web.dev/aria-name/)."
   },
   "lighthouse-core/audits/accessibility/aria-progressbar-name.js | failureTitle": {
     "message": "ARIA елементите `progressbar` нямат достъпни имена"
@@ -903,10 +903,10 @@
     "message": "Манифестът не съдържа поле name или short_name"
   },
   "lighthouse-core/audits/installable-manifest.js | manifest-missing-suitable-icon": {
-    "message": "Manifest does not contain a suitable icon - PNG, SVG or WebP format of at least {value0} px is required, the sizes attribute must be set, and the purpose attribute, if set, must include \"any\"."
+    "message": "Манифестът не съдържа подходяща икона – изисква се файл във формат PNG, SVG или WebP с поне {value0} пкс, атрибутът за размери трябва да е зададен, а атрибутът за предназначение, ако е зададен, трябва да включва стойността any."
   },
   "lighthouse-core/audits/installable-manifest.js | no-acceptable-icon": {
-    "message": "No supplied icon is at least {value0} px square in PNG, SVG or WebP format, with the purpose attribute unset or set to \"any\""
+    "message": "Никоя от предоставените икони не е квадрат с размери поне {value0} пиксела във формат PNG, SVG или WebP, за който атрибутът за предназначение не е зададен или е със стойност any"
   },
   "lighthouse-core/audits/installable-manifest.js | no-icon-available": {
     "message": "Изтегленият файл за икона бе празен или повреден"

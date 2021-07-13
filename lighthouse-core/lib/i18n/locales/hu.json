@@ -63,7 +63,7 @@
     "message": "A(z) `meter` ARIA-elemek akadálymentes névvel rendelkeznek"
   },
   "lighthouse-core/audits/accessibility/aria-progressbar-name.js | description": {
-    "message": "Ha valamelyik elem nem rendelkezik akadálymentes névvel, a képernyőolvasók általános néven olvassák fel, ami használhatatlan a képernyőolvasóra hagyatkozó felhasználók számára. [További információ](https://web.dev/aria-name/)."
+    "message": "Ha egy `progressbar` elem nem rendelkezik kisegítő névvel, a képernyőolvasók általános néven olvassák fel, ami használhatatlan a képernyőolvasóra hagyatkozó felhasználók számára. [További információ](https://web.dev/aria-name/)."
   },
   "lighthouse-core/audits/accessibility/aria-progressbar-name.js | failureTitle": {
     "message": "A(z) `progressbar` ARIA-elemek nem rendelkeznek akadálymentes névvel."
@@ -903,10 +903,10 @@
     "message": "A manifest nem tartalmaz „name” vagy „short_name” mezőt."
   },
   "lighthouse-core/audits/installable-manifest.js | manifest-missing-suitable-icon": {
-    "message": "Manifest does not contain a suitable icon - PNG, SVG or WebP format of at least {value0} px is required, the sizes attribute must be set, and the purpose attribute, if set, must include \"any\"."
+    "message": "A manifest nem tartalmaz megfelelő ikont. PNG-, SVG- vagy WebP-formátumra van szükség legalább {value0} px méretben. Be kell állítani a méretek attribútumát. Ha be van állítva a cél attribútuma, tartalmaznia kell az „any” (bármilyen) értéket."
   },
   "lighthouse-core/audits/installable-manifest.js | no-acceptable-icon": {
-    "message": "No supplied icon is at least {value0} px square in PNG, SVG or WebP format, with the purpose attribute unset or set to \"any\""
+    "message": "Nincs megadva olyan ikon legalább {value0} képpontos, négyzetes méretben, PNG-, SVG- vagy WebP-formátumban, amelynek célattribútuma nincs beállítva, vagy „any” (bármely) értékre van állítva."
   },
   "lighthouse-core/audits/installable-manifest.js | no-icon-available": {
     "message": "A letöltött ikon üres vagy sérült"

@@ -63,7 +63,7 @@
     "message": "Prvky `meter` ARIA majú dostupné názvy"
   },
   "lighthouse-core/audits/accessibility/aria-progressbar-name.js | description": {
-    "message": "Keď prvok nemá dostupný názov, čítačky obrazovky ho oznamujú pod generickým názvom, takže je pre používateľov nanič. [Ďalšie informácie](https://web.dev/aria-name/)"
+    "message": "Keď prvok `progressbar` nemá dostupný názov, čítačky obrazovky ho oznamujú pod generickým názvom, takže je pre používateľov nanič. [Ďalšie informácie](https://web.dev/aria-name/)"
   },
   "lighthouse-core/audits/accessibility/aria-progressbar-name.js | failureTitle": {
     "message": "Prvky `progressbar` ARIA nemajú dostupné názvy."
@@ -903,10 +903,10 @@
     "message": "Manifest neobsahuje pole „name“ alebo „short_name“"
   },
   "lighthouse-core/audits/installable-manifest.js | manifest-missing-suitable-icon": {
-    "message": "Manifest does not contain a suitable icon - PNG, SVG or WebP format of at least {value0} px is required, the sizes attribute must be set, and the purpose attribute, if set, must include \"any\"."
+    "message": "Manifest neobsahuje vhodnú ikonu. Vyžaduje sa formát PNG, SVG alebo WebP s minimálnou veľkosťou {value0} px, musí byť nastavený atribút Veľkosti a ak je nastavený atribút Účel, musí obsahovať hodnotu „všetko“."
   },
   "lighthouse-core/audits/installable-manifest.js | no-acceptable-icon": {
-    "message": "No supplied icon is at least {value0} px square in PNG, SVG or WebP format, with the purpose attribute unset or set to \"any\""
+    "message": "Žiadna dodaná ikona nie je štvorec s minimálnou veľkosťou {value0} px vo formáte PNG, SVG alebo WebP s atribútom účelu nastaveným na hodnotu „všetko“, prípadne vôbec nenastaveným"
   },
   "lighthouse-core/audits/installable-manifest.js | no-icon-available": {
     "message": "Stiahnutá ikona bola prázdna alebo poškodená"

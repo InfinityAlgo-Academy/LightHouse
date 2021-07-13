@@ -63,7 +63,7 @@
     "message": "ARIA `meter` 要素にユーザー補助機能向けの名前が設定されています"
   },
   "lighthouse-core/audits/accessibility/aria-progressbar-name.js | description": {
-    "message": "要素にユーザー補助機能向けの名前が設定されていない場合、スクリーン リーダーでは一般名で読み上げられるため、スクリーン リーダーのみを使用するユーザーには用途がわかりません。[詳細](https://web.dev/aria-name/)"
+    "message": "`progressbar` 要素にユーザー補助機能向けの名前が設定されていない場合、スクリーン リーダーでは一般名で読み上げられるため、スクリーン リーダーのみを使用するユーザーには用途がわかりません。[詳細](https://web.dev/aria-name/)"
   },
   "lighthouse-core/audits/accessibility/aria-progressbar-name.js | failureTitle": {
     "message": "ARIA `progressbar` 要素にユーザー補助機能向けの名前が設定されていません。"
@@ -903,10 +903,10 @@
     "message": "マニフェストに「name」または「short_name」フィールドがありません"
   },
   "lighthouse-core/audits/installable-manifest.js | manifest-missing-suitable-icon": {
-    "message": "Manifest does not contain a suitable icon - PNG, SVG or WebP format of at least {value0} px is required, the sizes attribute must be set, and the purpose attribute, if set, must include \"any\"."
+    "message": "マニフェストに適切なアイコンが含まれていません。{value0} ピクセル以上の PNG、SVG、または WebP 形式のアイコンが必要です。また、そのアイコンには sizes 属性を設定し、purpose 属性が設定されている場合は「any」を含める必要があります。"
   },
   "lighthouse-core/audits/installable-manifest.js | no-acceptable-icon": {
-    "message": "No supplied icon is at least {value0} px square in PNG, SVG or WebP format, with the purpose attribute unset or set to \"any\""
+    "message": "purpose 属性を設定しないか、「any」に設定した状態で、PNG、SVG、または WebP 形式の {value0} ピクセル以上の正方形のアイコンが提供されていません"
   },
   "lighthouse-core/audits/installable-manifest.js | no-icon-available": {
     "message": "ダウンロードしたアイコンが空か、破損しています"
@@ -2256,7 +2256,7 @@
     "message": "JSON をコピー"
   },
   "report/renderer/util.js | dropdownDarkTheme": {
-    "message": "ダークテーマの切り替え"
+    "message": "ダークモードの切り替え"
   },
   "report/renderer/util.js | dropdownPrintExpanded": {
     "message": "完全版を印刷"

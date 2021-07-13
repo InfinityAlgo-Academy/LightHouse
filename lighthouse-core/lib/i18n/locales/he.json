@@ -63,7 +63,7 @@
     "message": "לרכיבי `meter` מסוג ARIA יש שמות נגישים"
   },
   "lighthouse-core/audits/accessibility/aria-progressbar-name.js | description": {
-    "message": "כשאין לרכיב שם נגיש, קוראי מסך מציינים שם גנרי, ובמצב כזה אנשים שמסתמכים על קוראי מסך יתקשו להשתמש בשדה. [למידע נוסף](https://web.dev/aria-name/)."
+    "message": "כשאין לרכיב `progressbar` תווית נגישות, קוראי מסך מציינים שם גנרי, ובמצב כזה אנשים שמסתמכים על קוראי מסך יתקשו להשתמש בו. [מידע נוסף](https://web.dev/aria-name/)."
   },
   "lighthouse-core/audits/accessibility/aria-progressbar-name.js | failureTitle": {
     "message": "לרכיבי `progressbar` מסוג ARIA אין שמות נגישים."
@@ -903,10 +903,10 @@
     "message": "קובץ המניפסט אינו מכיל את השדות 'שם' או 'שם מקוצר'"
   },
   "lighthouse-core/audits/installable-manifest.js | manifest-missing-suitable-icon": {
-    "message": "Manifest does not contain a suitable icon - PNG, SVG or WebP format of at least {value0} px is required, the sizes attribute must be set, and the purpose attribute, if set, must include \"any\"."
+    "message": "קובץ המניפסט אינו מכיל סמל מתאים. דרוש פורמט PNG‏, SVG או WebP ברזולוציה של ‎{value0}px לפחות, ויש להגדיר את מאפיין הגודל. אם הוגדר המאפיין 'שימוש', הוא חייב לציין \"הכול\"."
   },
   "lighthouse-core/audits/installable-manifest.js | no-acceptable-icon": {
-    "message": "No supplied icon is at least {value0} px square in PNG, SVG or WebP format, with the purpose attribute unset or set to \"any\""
+    "message": "לא סופק סמל ברזולוציה של {value0}px לפחות, בצורת ריבוע, בפורמט PNG‏, SVG או WebP, עם מאפיין מטרה לא מוגדר או מוגדר ל\"הכול\""
   },
   "lighthouse-core/audits/installable-manifest.js | no-icon-available": {
     "message": "הסמל שהורד היה ריק או פגום"
@@ -1809,7 +1809,7 @@
     "message": "גודל ההעברה"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnURL": {
-    "message": "כתובת אתר"
+    "message": "כתובת ה-URL"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnWastedBytes": {
     "message": "פוטנציאל חיסכון"

@@ -63,7 +63,7 @@
     "message": "ARIA `meter` öğelerinin erişilebilir özellikli adları var"
   },
   "lighthouse-core/audits/accessibility/aria-progressbar-name.js | description": {
-    "message": "Bir öğenin erişilebilir özellikli adı olmadığında ekran okuyucular tarafından genel adla okunur ve öğe, ekran okuyuculardan yararlanan kullanıcılar için kullanılamaz hale gelir. [Daha fazla bilgi](https://web.dev/aria-name/)."
+    "message": "`progressbar` öğesinin erişilebilir özellikli adı olmadığında ekran okuyucular tarafından genel adla okunur, dolayısıyla ekran okuyuculardan yararlananlar için kullanışsız olur. [Daha fazla bilgi](https://web.dev/aria-name/)"
   },
   "lighthouse-core/audits/accessibility/aria-progressbar-name.js | failureTitle": {
     "message": "ARIA `progressbar` öğelerinin erişilebilir özellikli adları yok."
@@ -903,10 +903,10 @@
     "message": "Manifest dosyası bir \"name\" veya \"short_name\" alanı içermiyor"
   },
   "lighthouse-core/audits/installable-manifest.js | manifest-missing-suitable-icon": {
-    "message": "Manifest does not contain a suitable icon - PNG, SVG or WebP format of at least {value0} px is required, the sizes attribute must be set, and the purpose attribute, if set, must include \"any\"."
+    "message": "Manifest dosyası uygun bir simge içermiyor. En az {value0} piksel değerinde bir PNG, SVG veya WebP biçimi gerekli olup sizes özelliği ayarlanmalıdır. Ayrıca purpose özelliği ayarlanacaksa \"any\" ifadesini içermelidir."
   },
   "lighthouse-core/audits/installable-manifest.js | no-acceptable-icon": {
-    "message": "No supplied icon is at least {value0} px square in PNG, SVG or WebP format, with the purpose attribute unset or set to \"any\""
+    "message": "Sağlananlar arasında PNG, SVG veya WebP biçiminde, en az {value0} piksel ölçüsünde bir kare şeklinde, amaç özelliği ayarlanmamış ya da \"any\" olarak ayarlanmış bir simge yok"
   },
   "lighthouse-core/audits/installable-manifest.js | no-icon-available": {
     "message": "İndirilen simge boş veya bozuktu"

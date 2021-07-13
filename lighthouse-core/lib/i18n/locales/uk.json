@@ -63,7 +63,7 @@
     "message": "Елементи ARIA з роллю `meter` мають зрозумілі назви для зчитування з екрана"
   },
   "lighthouse-core/audits/accessibility/aria-progressbar-name.js | description": {
-    "message": "Без такої назви програма зачитує тільки загальну назву (тобто роль або тип) елемента, що незручно для користувачів спеціальних можливостей. [Докладніше.](https://web.dev/aria-name/)"
+    "message": "Коли елемент \"`progressbar`\" не має доступної назви, програма зачитує тільки його загальну назву (тобто роль або тип), що незручно для користувачів спеціальних можливостей. [Докладніше.](https://web.dev/aria-name/)"
   },
   "lighthouse-core/audits/accessibility/aria-progressbar-name.js | failureTitle": {
     "message": "Елементи ARIA з роллю `progressbar` не мають зрозумілих назв для зчитування з екрана."
@@ -903,10 +903,10 @@
     "message": "Маніфест не містить полів name або short_name"
   },
   "lighthouse-core/audits/installable-manifest.js | manifest-missing-suitable-icon": {
-    "message": "Manifest does not contain a suitable icon - PNG, SVG or WebP format of at least {value0} px is required, the sizes attribute must be set, and the purpose attribute, if set, must include \"any\"."
+    "message": "У маніфесті немає відповідного значка. Потрібен значок у форматі PNG, SVG або WebP із роздільною здатністю принаймні {value0} пікс. і визначеним атрибутом purpose. Якщо він задається, слід указати значення \"any\"."
   },
   "lighthouse-core/audits/installable-manifest.js | no-acceptable-icon": {
-    "message": "No supplied icon is at least {value0} px square in PNG, SVG or WebP format, with the purpose attribute unset or set to \"any\""
+    "message": "Немає значка розміром принаймні {value0} пікс. (квадрат) у форматі PNG, SVG або WebP, у якого атрибут purpose не заданий або заданий зі значенням \"any\""
   },
   "lighthouse-core/audits/installable-manifest.js | no-icon-available": {
     "message": "Завантажений значок порожній або пошкоджений"
