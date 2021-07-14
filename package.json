@@ -1,6 +1,6 @@
 {
   "name": "lighthouse",
-  "version": "8.0.0",
+  "version": "8.1.0",
   "description": "Automated auditing, performance metrics, and best practices for the web.",
   "main": "./lighthouse-core/index.js",
   "bin": {
@@ -58,7 +58,7 @@
     "coverage:smoke": "yarn c8 yarn smoke -j=1 && c8 report --reporter html",
     "devtools": "bash lighthouse-core/scripts/roll-to-devtools.sh",
     "chrome": "node lighthouse-core/scripts/manual-chrome-launcher.js",
-    "fast": "yarn start --preset=desktop --throttlingMethod=provided",
+    "fast": "node ./lighthouse-cli/index.js --preset=desktop --throttlingMethod=provided",
     "deploy-treemap": "yarn build-treemap --deploy",
     "deploy-viewer": "yarn build-viewer --deploy",
     "now-build": "yarn build-report && node lighthouse-core/scripts/build-report-for-autodeployment.js && yarn build-viewer && yarn build-treemap && cp -r dist/gh-pages dist/now/gh-pages",
