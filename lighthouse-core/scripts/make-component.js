@@ -8,6 +8,7 @@
 const fs = require('fs');
 const jsdom = require('jsdom');
 const {LH_ROOT} = require('../../root.js');
+const { serializeArguments } = require('../gather/driver/execution-context.js');
 
 // TODO: should change templates.html to use `div` instead of `template`.
 // idea: have paremeters in template?
@@ -220,25 +221,27 @@ function compileTemplate(tmpEl) {
   function process(el) {
     if (el.nodeType === window.Node.COMMENT_NODE) return;
 
-    let varName;
-
     if (el.nodeType === window.Node.TEXT_NODE) {
-      if (el.textContent.trim()) {
-        varName = makeOrGetVarName(el);
+      if (el.textContent && el.textContent.trim()) {
+        const varName = makeOrGetVarName(el);
         lines.push(
           `const ${varName} = document.createTextNode(${JSON.stringify(el.textContent)});`);
       }
-    } else if (el.namespaceURI && el.namespaceURI.endsWith('/svg')) {
-      varName = makeOrGetVarName(el);
-      lines.push(
-        `const ${varName} = document.createElement('${el.tagName}', '${el.namespaceURI}');`);
-    } else {
-      varName = makeOrGetVarName(el);
-      lines.push(`const ${varName} = document.createElement('${el.tagName}');`);
+
+      return;
     }
+
+    const args = [el.tagName];
+    const isSvg = el.namespaceURI && el.namespaceURI.endsWith('/svg');
+    const namespaceURI = isSvg ? el.namespaceURI : '';
+    if (namespaceURI || el.className) args.push(namespaceURI || '', el.className);
+
+    const varName = makeOrGetVarName(el);
+    lines.push(`const ${varName} = dom.createElement(${serializeArguments(args)});`);
 
     if (el.getAttributeNames) {
       for (const attr of el.getAttributeNames() || []) {
+        if (attr === 'class') continue;
         lines.push(`${varName}.setAttribute('${attr}', '${el.getAttribute(attr)}');`);
       }
     }
@@ -270,6 +273,10 @@ function createFunctionCode(functionName, bodyLines, parameterNames = []) {
   return functionCode;
 }
 
+/**
+ * @param {string} str
+ * @return
+ */
 function upperFirst(str) {
   return str.charAt(0).toUpperCase() + str.substr(1);
 }
