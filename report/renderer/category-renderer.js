@@ -16,15 +16,14 @@
  */
 'use strict';
 
-/* globals self, Util */
-
-/** @typedef {import('./dom.js')} DOM */
-/** @typedef {import('./report-renderer.js')} ReportRenderer */
-/** @typedef {import('./details-renderer.js')} DetailsRenderer */
-/** @typedef {import('./util.js')} Util */
+/** @typedef {import('./dom.js').DOM} DOM */
+/** @typedef {import('./report-renderer.js').ReportRenderer} ReportRenderer */
+/** @typedef {import('./details-renderer.js').DetailsRenderer} DetailsRenderer */
 /** @typedef {'failed'|'warning'|'manual'|'passed'|'notApplicable'} TopLevelClumpId */
 
-class CategoryRenderer {
+import {Util} from './util.js';
+
+export class CategoryRenderer {
   /**
    * @param {DOM} dom
    * @param {DetailsRenderer} detailsRenderer
@@ -501,10 +500,4 @@ class CategoryRenderer {
     const permalinkEl = this.dom.createChildOf(element, 'span', 'lh-permalink');
     permalinkEl.id = id;
   }
-}
-
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = CategoryRenderer;
-} else {
-  self.CategoryRenderer = CategoryRenderer;
 }

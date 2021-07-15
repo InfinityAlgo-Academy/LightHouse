@@ -34,7 +34,4 @@ function getFilenamePrefix(lhr) {
   return filenamePrefix.replace(/[/?<>\\:*|"]/g, '-');
 }
 
-// don't attempt to export in the browser.
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = {getFilenamePrefix};
-}
+module.exports = {getFilenamePrefix};

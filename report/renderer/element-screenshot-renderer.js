@@ -11,9 +11,7 @@
  *   2. Display coords (DC suffix): that match the CSS pixel coordinate space of the LH report's page.
  */
 
-/* globals self Util */
-
-/** @typedef {import('./dom.js')} DOM */
+/** @typedef {import('./dom.js').DOM} DOM */
 /** @typedef {LH.Artifacts.Rect} Rect */
 /** @typedef {{width: number, height: number}} Size */
 
@@ -25,6 +23,8 @@
  * @property {ParentNode} templateContext
  * @property {LH.Artifacts.FullPageScreenshot} fullPageScreenshot
  */
+
+import {Util} from './util.js';
 
 /**
  * @param {LH.Artifacts.FullPageScreenshot['screenshot']} screenshot
@@ -59,7 +59,7 @@ function getRectCenterPoint(rect) {
   };
 }
 
-class ElementScreenshotRenderer {
+export class ElementScreenshotRenderer {
   /**
    * Given the location of an element and the sizes of the preview and screenshot,
    * compute the absolute positions (in screenshot coordinate scale) of the screenshot content
@@ -287,10 +287,4 @@ class ElementScreenshotRenderer {
 
     return containerEl;
   }
-}
-
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = ElementScreenshotRenderer;
-} else {
-  self.ElementScreenshotRenderer = ElementScreenshotRenderer;
 }
