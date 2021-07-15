@@ -5,6 +5,8 @@
  */
 'use strict';
 
+// dumact
+
 const fs = require('fs');
 const jsdom = require('jsdom');
 const {LH_ROOT} = require('../../root.js');
@@ -231,10 +233,19 @@ function compileTemplate(tmpEl) {
       return;
     }
 
-    const args = [el.tagName.toLowerCase()];
     const isSvg = el.namespaceURI && el.namespaceURI.endsWith('/svg');
+    const tagName = el.tagName.toLowerCase();
     const namespaceURI = isSvg ? el.namespaceURI : '';
-    if (namespaceURI || el.className) args.push(namespaceURI || '', el.className);
+    const className = el.classList.toString();
+
+    let args;
+    if (!namespaceURI && !className) {
+      args = [tagName];
+    } else if (namespaceURI && !className) {
+      args = [tagName, namespaceURI];
+    } else {
+      args = [tagName, namespaceURI || '', className];
+    }
 
     const varName = makeOrGetVarName(el);
     lines.push(`const ${varName} = dom.createElement(${serializeArguments(args)});`);
