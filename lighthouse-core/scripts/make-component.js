@@ -208,6 +208,7 @@ function compileTemplate(tmpEl) {
 
   /**
    * @param {HTMLElement} el
+   * @return {string}
    */
   function makeOrGetVarName(el) {
     const varName = map.get(el) || ('el' + map.size);
@@ -224,14 +225,13 @@ function compileTemplate(tmpEl) {
     if (el.nodeType === window.Node.TEXT_NODE) {
       if (el.parentElement && el.textContent && el.textContent.trim()) {
         const varName = makeOrGetVarName(el.parentElement);
-        lines.push(
-          `${varName}.textContent = ${JSON.stringify(el.textContent)});`);
+        lines.push(`${varName}.textContent = ${JSON.stringify(el.textContent)});`);
       }
 
       return;
     }
 
-    const args = [el.tagName];
+    const args = [el.tagName.toLowerCase()];
     const isSvg = el.namespaceURI && el.namespaceURI.endsWith('/svg');
     const namespaceURI = isSvg ? el.namespaceURI : '';
     if (namespaceURI || el.className) args.push(namespaceURI || '', el.className);
@@ -254,7 +254,7 @@ function compileTemplate(tmpEl) {
   }
 
   process(tmpEl);
-  lines.push('return el0;');
+  lines.push(`return ${makeOrGetVarName(tmpEl)};`);
 
   const componentName = tmpEl.id.replace('tmpl-lh-', '');
   const functionName = `create${upperFirst(componentName)}Component`;
