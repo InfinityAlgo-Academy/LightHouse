@@ -222,10 +222,10 @@ function compileTemplate(tmpEl) {
     if (el.nodeType === window.Node.COMMENT_NODE) return;
 
     if (el.nodeType === window.Node.TEXT_NODE) {
-      if (el.textContent && el.textContent.trim()) {
-        const varName = makeOrGetVarName(el);
+      if (el.parentElement && el.textContent && el.textContent.trim()) {
+        const varName = makeOrGetVarName(el.parentElement);
         lines.push(
-          `const ${varName} = document.createTextNode(${JSON.stringify(el.textContent)});`);
+          `${varName}.textContent = ${JSON.stringify(el.textContent)});`);
       }
 
       return;
