@@ -105,7 +105,7 @@ export class DOM {
   }
 
   /**
-   * @param {Parameters<createComponent>[1]} componentName
+   * @param {Parameters<typeof createComponent>[1]} componentName
    * @return {!DocumentFragment} A clone of the template content.
    * @throws {Error}
    */

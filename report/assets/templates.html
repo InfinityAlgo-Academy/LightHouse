@@ -868,33 +868,34 @@ limitations under the License.
           color: var(--color-gray-600);
           user-select: none;
         }
-      </style>
-      <!-- TODO: fixme not nested bois -->
-      <template id="snippetHeader">
-        <div class="lh-snippet__header">
-          <div class="lh-snippet__title"></div>
-          <div class="lh-snippet__node"></div>
-          <button class="lh-snippet__toggle-expand">
-            <span class="lh-snippet__btn-label-collapse lh-snippet__show-if-expanded"></span>
-            <span class="lh-snippet__btn-label-expand lh-snippet__show-if-collapsed"></span>
-          </button>
-        </div>
-      </template>
-      <template id="snippetContent">
-        <div class="lh-snippet__snippet">
-          <div class="lh-snippet__snippet-inner"></div>
-        </div>
-      </template>
-      <template id="snippetLine">
-          <div class="lh-snippet__line">
-            <div class="lh-snippet__line-number"></div>
-            <div class="lh-snippet__line-icon"></div>
-            <code></code>
-          </div>
-        </template>
-    </div>
-  </template>
+    </style>
+  </div>
+</template>
 
+<template id="snippetHeader">
+  <div class="lh-snippet__header">
+    <div class="lh-snippet__title"></div>
+    <div class="lh-snippet__node"></div>
+    <button class="lh-snippet__toggle-expand">
+      <span class="lh-snippet__btn-label-collapse lh-snippet__show-if-expanded"></span>
+      <span class="lh-snippet__btn-label-expand lh-snippet__show-if-collapsed"></span>
+    </button>
+  </div>
+</template>
+
+<template id="snippetContent">
+  <div class="lh-snippet__snippet">
+    <div class="lh-snippet__snippet-inner"></div>
+  </div>
+</template>
+
+<template id="snippetLine">
+  <div class="lh-snippet__line">
+    <div class="lh-snippet__line-number"></div>
+    <div class="lh-snippet__line-icon"></div>
+    <code></code>
+  </div>
+</template>
 
 <!-- Lighthouse element screenshot -->
 <template id="elementScreenshot">

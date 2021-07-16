@@ -29,7 +29,7 @@ function compileTemplate(tmpEl) {
   const lines = [];
 
   /**
-   * @param {HTMLElement} el
+   * @param {Element} el
    * @return {string}
    */
   function makeOrGetVarName(el) {
@@ -39,22 +39,9 @@ function compileTemplate(tmpEl) {
   }
 
   /**
-   * @param {HTMLElement} el
+   * @param {Element} el
    */
   function process(el) {
-    if (el.nodeType === window.Node.COMMENT_NODE) return;
-
-    if (el.nodeType === window.Node.TEXT_NODE) {
-      if (el.parentElement && el.textContent && el.textContent.trim()) {
-        const varName = makeOrGetVarName(el.parentElement);
-        // lines.push(`${varName}.textContent = ${JSON.stringify(el.textContent)};`);
-        lines.push(
-          `${varName}.append(dom.document().createTextNode(${JSON.stringify(el.textContent)}));`);
-      }
-
-      return;
-    }
-
     const isSvg = el.namespaceURI && el.namespaceURI.endsWith('/svg');
     const namespaceURI = isSvg ? el.namespaceURI : '';
     const tagName = el.localName;
@@ -82,6 +69,19 @@ function compileTemplate(tmpEl) {
     }
 
     for (const childEl of el.childNodes) {
+      if (childEl.nodeType === window.Node.COMMENT_NODE) continue;
+
+      if (childEl.nodeType === window.Node.TEXT_NODE) {
+        if (childEl.parentElement && childEl.textContent && childEl.textContent.trim()) {
+          const varName = makeOrGetVarName(childEl.parentElement);
+          const textContent = JSON.stringify(childEl.textContent);
+          lines.push(`${varName}.append(dom.document().createTextNode(${textContent}));`);
+        }
+
+        continue;
+      }
+
+      // @ts-expect-error: it's an Element.
       process(childEl);
       const childVarName = elemToVarNames.get(childEl);
       if (childVarName) lines.push(`${varName}.append(${childVarName});`);
@@ -143,7 +143,8 @@ function makeGenericCreateComponentFunctionCode(processedTemplates) {
  * @param {DOM} dom
  * @param {${paramType}} componentName
  */`;
-  return jsdoc + '\nexport ' + createFunctionCode('createComponent', lines, ['dom', 'componentName']);
+  return jsdoc + '\nexport ' +
+    createFunctionCode('createComponent', lines, ['dom', 'componentName']);
 }
 
 /**
@@ -221,6 +222,7 @@ async function main() {
   fs.writeFileSync(LH_ROOT + '/report/renderer/components.js', code);
 
   for (const {tmpEl, functionCode} of processedTemplates) {
+    // TODO fixme
     // await assertDOMTreeMatches(tmpEl, functionCode);
   }
 }

@@ -555,17 +555,56 @@ function createSnippetComponent(dom) {
   const v0 = dom.document().createDocumentFragment();
   const v1 = dom.createElement('div', 'lh-snippet');
   const v2 = dom.createElement('style');
-  v2.append(dom.document().createTextNode('\n          :root {\n            --snippet-highlight-light: #fbf1f2;\n            --snippet-highlight-dark: #ffd6d8;\n          }\n\n         .lh-snippet__header {\n          position: relative;\n          overflow: hidden;\n          padding: 10px;\n          border-bottom: none;\n          color: var(--snippet-color);\n          background-color: var(--snippet-background-color);\n          border: 1px solid var(--report-border-color-secondary);\n        }\n        .lh-snippet__title {\n          font-weight: bold;\n          float: left;\n        }\n        .lh-snippet__node {\n          float: left;\n          margin-left: 4px;\n        }\n        .lh-snippet__toggle-expand {\n          padding: 1px 7px;\n          margin-top: -1px;\n          margin-right: -7px;\n          float: right;\n          background: transparent;\n          border: none;\n          cursor: pointer;\n          font-size: 14px;\n          color: #0c50c7;\n        }\n\n        .lh-snippet__snippet {\n          overflow: auto;\n          border: 1px solid var(--report-border-color-secondary);\n        }\n        /* Container needed so that all children grow to the width of the scroll container */\n        .lh-snippet__snippet-inner {\n          display: inline-block;\n          min-width: 100%;\n        }\n\n        .lh-snippet:not(.lh-snippet--expanded) .lh-snippet__show-if-expanded {\n          display: none;\n        }\n        .lh-snippet.lh-snippet--expanded .lh-snippet__show-if-collapsed {\n          display: none;\n        }\n\n        .lh-snippet__line {\n          background: white;\n          white-space: pre;\n          display: flex;\n        }\n        .lh-snippet__line:not(.lh-snippet__line--message):first-child {\n          padding-top: 4px;\n        }\n        .lh-snippet__line:not(.lh-snippet__line--message):last-child {\n          padding-bottom: 4px;\n        }\n        .lh-snippet__line--content-highlighted {\n          background: var(--snippet-highlight-dark);\n        }\n        .lh-snippet__line--message {\n          background: var(--snippet-highlight-light);\n        }\n        .lh-snippet__line--message .lh-snippet__line-number {\n          padding-top: 10px;\n          padding-bottom: 10px;\n        }\n        .lh-snippet__line--message code {\n          padding: 10px;\n          padding-left: 5px;\n          color: var(--color-fail);\n          font-family: var(--report-font-family);\n        }\n        .lh-snippet__line--message code {\n          white-space: normal;\n        }\n        .lh-snippet__line-icon {\n          padding-top: 10px;\n          display: none;\n        }\n        .lh-snippet__line--message .lh-snippet__line-icon {\n          display: block;\n        }\n        .lh-snippet__line-icon:before {\n          content: "";\n          display: inline-block;\n          vertical-align: middle;\n          margin-right: 4px;\n          width: var(--score-icon-size);\n          height: var(--score-icon-size);\n          background-image: var(--fail-icon-url);\n        }\n        .lh-snippet__line-number {\n          flex-shrink: 0;\n          width: 40px;\n          text-align: right;\n          font-family: monospace;\n          padding-right: 5px;\n          margin-right: 5px;\n          color: var(--color-gray-600);\n          user-select: none;\n        }\n      '));
+  v2.append(dom.document().createTextNode('\n          :root {\n            --snippet-highlight-light: #fbf1f2;\n            --snippet-highlight-dark: #ffd6d8;\n          }\n\n         .lh-snippet__header {\n          position: relative;\n          overflow: hidden;\n          padding: 10px;\n          border-bottom: none;\n          color: var(--snippet-color);\n          background-color: var(--snippet-background-color);\n          border: 1px solid var(--report-border-color-secondary);\n        }\n        .lh-snippet__title {\n          font-weight: bold;\n          float: left;\n        }\n        .lh-snippet__node {\n          float: left;\n          margin-left: 4px;\n        }\n        .lh-snippet__toggle-expand {\n          padding: 1px 7px;\n          margin-top: -1px;\n          margin-right: -7px;\n          float: right;\n          background: transparent;\n          border: none;\n          cursor: pointer;\n          font-size: 14px;\n          color: #0c50c7;\n        }\n\n        .lh-snippet__snippet {\n          overflow: auto;\n          border: 1px solid var(--report-border-color-secondary);\n        }\n        /* Container needed so that all children grow to the width of the scroll container */\n        .lh-snippet__snippet-inner {\n          display: inline-block;\n          min-width: 100%;\n        }\n\n        .lh-snippet:not(.lh-snippet--expanded) .lh-snippet__show-if-expanded {\n          display: none;\n        }\n        .lh-snippet.lh-snippet--expanded .lh-snippet__show-if-collapsed {\n          display: none;\n        }\n\n        .lh-snippet__line {\n          background: white;\n          white-space: pre;\n          display: flex;\n        }\n        .lh-snippet__line:not(.lh-snippet__line--message):first-child {\n          padding-top: 4px;\n        }\n        .lh-snippet__line:not(.lh-snippet__line--message):last-child {\n          padding-bottom: 4px;\n        }\n        .lh-snippet__line--content-highlighted {\n          background: var(--snippet-highlight-dark);\n        }\n        .lh-snippet__line--message {\n          background: var(--snippet-highlight-light);\n        }\n        .lh-snippet__line--message .lh-snippet__line-number {\n          padding-top: 10px;\n          padding-bottom: 10px;\n        }\n        .lh-snippet__line--message code {\n          padding: 10px;\n          padding-left: 5px;\n          color: var(--color-fail);\n          font-family: var(--report-font-family);\n        }\n        .lh-snippet__line--message code {\n          white-space: normal;\n        }\n        .lh-snippet__line-icon {\n          padding-top: 10px;\n          display: none;\n        }\n        .lh-snippet__line--message .lh-snippet__line-icon {\n          display: block;\n        }\n        .lh-snippet__line-icon:before {\n          content: "";\n          display: inline-block;\n          vertical-align: middle;\n          margin-right: 4px;\n          width: var(--score-icon-size);\n          height: var(--score-icon-size);\n          background-image: var(--fail-icon-url);\n        }\n        .lh-snippet__line-number {\n          flex-shrink: 0;\n          width: 40px;\n          text-align: right;\n          font-family: monospace;\n          padding-right: 5px;\n          margin-right: 5px;\n          color: var(--color-gray-600);\n          user-select: none;\n        }\n    '));
   v1.append(v2);
-  const v3 = dom.createElement('template');
-  v3.setAttribute('id', 'snippetHeader');
+  v0.append(v1);
+  return v0;
+}
+
+/**
+ * @param {DOM} dom
+ */
+function createSnippetContentComponent(dom) {
+  const v0 = dom.document().createDocumentFragment();
+  const v1 = dom.createElement('div', 'lh-snippet__snippet');
+  const v2 = dom.createElement('div', 'lh-snippet__snippet-inner');
+  v1.append(v2);
+  v0.append(v1);
+  return v0;
+}
+
+/**
+ * @param {DOM} dom
+ */
+function createSnippetHeaderComponent(dom) {
+  const v0 = dom.document().createDocumentFragment();
+  const v1 = dom.createElement('div', 'lh-snippet__header');
+  const v2 = dom.createElement('div', 'lh-snippet__title');
+  v1.append(v2);
+  const v3 = dom.createElement('div', 'lh-snippet__node');
   v1.append(v3);
-  const v4 = dom.createElement('template');
-  v4.setAttribute('id', 'snippetContent');
+  const v4 = dom.createElement('button', 'lh-snippet__toggle-expand');
+  const v5 = dom.createElement('span', 'lh-snippet__btn-label-collapse lh-snippet__show-if-expanded');
+  v4.append(v5);
+  const v6 = dom.createElement('span', 'lh-snippet__btn-label-expand lh-snippet__show-if-collapsed');
+  v4.append(v6);
   v1.append(v4);
-  const v5 = dom.createElement('template');
-  v5.setAttribute('id', 'snippetLine');
-  v1.append(v5);
+  v0.append(v1);
+  return v0;
+}
+
+/**
+ * @param {DOM} dom
+ */
+function createSnippetLineComponent(dom) {
+  const v0 = dom.document().createDocumentFragment();
+  const v1 = dom.createElement('div', 'lh-snippet__line');
+  const v2 = dom.createElement('div', 'lh-snippet__line-number');
+  v1.append(v2);
+  const v3 = dom.createElement('div', 'lh-snippet__line-icon');
+  v1.append(v3);
+  const v4 = dom.createElement('code');
+  v1.append(v4);
   v0.append(v1);
   return v0;
 }
@@ -802,7 +841,7 @@ function createWarningsToplevelComponent(dom) {
 
 /**
  * @param {DOM} dom
- * @param {'3pFilter'|'audit'|'categoryHeader'|'chevron'|'clump'|'crc'|'crcChain'|'elementScreenshot'|'envItem'|'footer'|'gauge'|'gaugePwa'|'heading'|'metric'|'metricsToggle'|'opportunity'|'opportunityHeader'|'scorescale'|'scoresWrapper'|'snippet'|'topbar'|'warningsToplevel'} componentName
+ * @param {'3pFilter'|'audit'|'categoryHeader'|'chevron'|'clump'|'crc'|'crcChain'|'elementScreenshot'|'envItem'|'footer'|'gauge'|'gaugePwa'|'heading'|'metric'|'metricsToggle'|'opportunity'|'opportunityHeader'|'scorescale'|'scoresWrapper'|'snippet'|'snippetContent'|'snippetHeader'|'snippetLine'|'topbar'|'warningsToplevel'} componentName
  */
 export function createComponent(dom, componentName) {
   switch (componentName) {
@@ -826,6 +865,9 @@ export function createComponent(dom, componentName) {
     case 'scorescale': return createScorescaleComponent(dom);
     case 'scoresWrapper': return createScoresWrapperComponent(dom);
     case 'snippet': return createSnippetComponent(dom);
+    case 'snippetContent': return createSnippetContentComponent(dom);
+    case 'snippetHeader': return createSnippetHeaderComponent(dom);
+    case 'snippetLine': return createSnippetLineComponent(dom);
     case 'topbar': return createTopbarComponent(dom);
     case 'warningsToplevel': return createWarningsToplevelComponent(dom);
   }
