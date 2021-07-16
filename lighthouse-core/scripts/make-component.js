@@ -177,10 +177,27 @@ async function assertDOMTreeMatches(tmplEl, functionCode) {
     }
   }
 
+  function reorderAttributes(elem) {
+    elem.querySelectorAll('*').forEach(elem => {
+      const clonedAttrNodes = Array.from(elem.attributes);
+      // Clear existing
+      clonedAttrNodes.forEach(attr => elem.removeAttribute(attr.localName));
+      // Apply class first, then the rest.
+      const classAttr = clonedAttrNodes.find(attr => attr.localName === 'class');
+      if (classAttr) {
+        elem.setAttributeNode(classAttr);
+      }
+      clonedAttrNodes.forEach(attr => {
+        if (attr !== classAttr) elem.setAttributeNode(attr);
+      });
+    });
+  }
+
   /** @type {DocumentFragment} */
   const generatedFragment = eval(`(${functionCode})()`);
   const originalFragment = tmplEl.content.cloneNode(true);
   cleanUselessNodes(originalFragment);
+  reorderAttributes(originalFragment);
 
   expect(generatedFragment.childNodes.length).toEqual(originalFragment.childNodes.length);
   for (let i = 0; i < generatedFragment.childNodes.length; i++) {
