@@ -141,11 +141,35 @@ function upperFirst(str) {
   return str.charAt(0).toUpperCase() + str.substr(1);
 }
 
+const processedTemplates = [...tmplEls].map(compileTemplate);
+
+for (const {functionCode} of processedTemplates) {
+  console.log(functionCode, '');
+}
+
+function makeGenericCreateComponentFunctionCode() {
+  const lines = [];
+
+  lines.push('switch (componentName) {');
+  for (const {componentName, functionName} of processedTemplates) {
+    lines.push(`  case '${componentName}': return ${functionName}();`);
+  }
+  lines.push('}');
+  lines.push('throw new Error(\'unexpected component: \' + componentName)');
+
+  return createFunctionCode('createComponent', lines, ['componentName']);
+}
+
+console.log(makeGenericCreateComponentFunctionCode());
+
+
+
+
 /**
  * @param {string} tmplId
  * @param {string} functionCode
  */
-async function assertDOMTreeMatches(tmplId, functionCode) {
+ async function assertDOMTreeMatches(tmplId, functionCode) {
   global.document = window.document;
   global.Node = window.Node;
   global.DocumentFragment = window.DocumentFragment;
@@ -179,24 +203,3 @@ async function assertDOMTreeMatches(tmplId, functionCode) {
 
   // TODO: also assert something else to catch how SVG elements serialize the same, even if they dont get built correctly (with createAttributeNS, etc)
 }
-
-const processedTemplates = [...tmplEls].map(compileTemplate);
-
-for (const {functionCode} of processedTemplates) {
-  console.log(functionCode, '');
-}
-
-function makeGenericCreateComponentFunctionCode() {
-  const lines = [];
-
-  lines.push('switch (componentName) {');
-  for (const {componentName, functionName} of processedTemplates) {
-    lines.push(`  case '${componentName}': return ${functionName}();`);
-  }
-  lines.push('}');
-  lines.push('throw new Error(\'unexpected component: \' + componentName)');
-
-  return createFunctionCode('createComponent', lines, ['componentName']);
-}
-
-console.log(makeGenericCreateComponentFunctionCode());
