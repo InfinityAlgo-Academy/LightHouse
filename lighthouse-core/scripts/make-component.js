@@ -99,7 +99,7 @@ function compileTemplate(tmpEl) {
 
   lines.push(`return ${fragmentVarName};`);
 
-  const {functionCode, functionName, componentName} = createFunctionCode(tmpEl.id, lines);
+  const {functionCode, functionName, componentName} = createTmplFunctionCode(tmpEl.id, lines);
   return {componentName, functionName, functionCode};
 }
 
@@ -108,17 +108,29 @@ function compileTemplate(tmpEl) {
  * @param {string[]} bodyLines
  * @param {string[]} parameterNames
  */
-function createFunctionCode(tmplId, bodyLines, parameterNames = []) {
+function createTmplFunctionCode(tmplId, bodyLines, parameterNames = []) {
   // TODO: use more parseable names for template id
   const componentName = tmplId.replace('tmpl-lh-', '').replace(/-/g, '');
   const functionName = `create${upperFirst(componentName)}Component`;
 
-  const body = bodyLines.map(l => `  ${l}`).join('\n');
-  const functionCode = `function ${functionName}(${parameterNames.join(', ')}) {\n${body}\n}`;
+  const functionCode = createFunctionCode(functionName, bodyLines, parameterNames)
 
   assertDOMTreeMatches(tmplId, functionCode);
 
   return {functionCode, functionName, componentName};
+}
+
+/**
+ * @param {string} functionName
+ * @param {string[]} bodyLines
+ * @param {string[]} parameterNames
+ */
+ function createFunctionCode(functionName, bodyLines, parameterNames = []) {
+
+  const body = bodyLines.map(l => `  ${l}`).join('\n');
+  const functionCode = `function ${functionName}(${parameterNames.join(', ')}) {\n${body}\n}`;
+
+  return functionCode;
 }
 
 /**
@@ -156,6 +168,7 @@ async function assertDOMTreeMatches(tmplId, functionCode) {
   }
 
   let generatedElem;
+  console.log('tmplId', tmplId);
   expect(_ => {
     generatedElem = eval(`(${functionCode})()`);
   }).not.toThrow();
