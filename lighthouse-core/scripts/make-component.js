@@ -53,21 +53,22 @@ function compileTemplate(tmpEl) {
     }
 
     const isSvg = el.namespaceURI && el.namespaceURI.endsWith('/svg');
-    const tagName = el.tagName.toLowerCase();
     const namespaceURI = isSvg ? el.namespaceURI : '';
+    const tagName = el.tagName.toLowerCase();
     const className = el.classList.toString();
 
-    let args;
-    if (!namespaceURI && !className) {
-      args = [tagName];
-    } else if (namespaceURI && !className) {
-      args = [tagName, namespaceURI];
-    } else {
-      args = [tagName, namespaceURI || '', className];
+    let createElementFnName = 'createElement';
+    const args = [tagName];
+    if (className) {
+      args.push(className);
+    }
+    if (namespaceURI) {
+      createElementFnName = 'createElementNS';
+      args.unshift(namespaceURI);
     }
 
     const varName = makeOrGetVarName(el);
-    lines.push(`const ${varName} = dom.createElement(${serializeArguments(args)});`);
+    lines.push(`const ${varName} = dom.${createElementFnName}(${serializeArguments(args)});`);
 
     if (el.getAttributeNames) {
       for (const attr of el.getAttributeNames() || []) {
@@ -90,31 +91,21 @@ function compileTemplate(tmpEl) {
   }
 
   const fragmentVarName = makeOrGetVarName(tmpEl);
-  lines.push(`const ${fragmentVarName} = new DocumentFragment();`);
+  lines.push(`const ${fragmentVarName} = dom.document().createDocumentFragment();`);
 
   for (const topLevelEl of tmpEl.content.children) {
     process(topLevelEl);
     lines.push(`${fragmentVarName}.append(${makeOrGetVarName(topLevelEl)})`);
   }
 
-  lines.push(`return ${fragmentVarName};`);
+  lines.push(`debugger; return ${fragmentVarName};`);
 
-  const {functionCode, functionName, componentName} = createTmplFunctionCode(tmpEl.id, lines);
-  return {componentName, functionName, functionCode};
-}
-
-/**
- * @param {string} tmplId
- * @param {string[]} bodyLines
- * @param {string[]} parameterNames
- */
-function createTmplFunctionCode(tmplId, bodyLines, parameterNames = []) {
   // TODO: use more parseable names for template id
-  const componentName = tmplId.replace('tmpl-lh-', '').replace(/-/g, '');
+  const componentName = tmpEl.id.replace('tmpl-lh-', '').replace(/-/g, '');
   const functionName = `create${upperFirst(componentName)}Component`;
-  const functionCode = createFunctionCode(functionName, bodyLines, parameterNames);
-  assertDOMTreeMatches(tmplId, functionCode);
-  return {functionCode, functionName, componentName};
+  const functionCode = createFunctionCode(functionName, lines);
+  assertDOMTreeMatches(tmpEl, functionCode);
+  return {componentName, functionName, functionCode};
 }
 
 /**
@@ -150,10 +141,10 @@ function makeGenericCreateComponentFunctionCode() {
 }
 
 /**
- * @param {string} tmplId
+ * @param {HTMLTemplateElement} tmplEl
  * @param {string} functionCode
  */
-async function assertDOMTreeMatches(tmplId, functionCode) {
+async function assertDOMTreeMatches(tmplEl, functionCode) {
   global.document = window.document;
   global.Node = window.Node;
   global.DocumentFragment = window.DocumentFragment;
@@ -174,15 +165,19 @@ async function assertDOMTreeMatches(tmplId, functionCode) {
     }
   }
 
-  let generatedElem;
-  console.log('tmplId', tmplId);
-  expect(_ => {
-    generatedElem = eval(`(${functionCode})()`);
-  }).not.toThrow();
+  console.log('tmplEl.id', tmplEl.id);
+  console.log(functionCode);
+  /** @type {DocumentFragment} */
+  const generatedFragment = eval(`(${functionCode})()`);
+  console.log('eval OK');
+  const originalFragment = tmplEl.content.cloneNode(true);
+  cleanUselessNodes(originalFragment);
 
-  const origTemplElem = window.document.querySelector(`#${tmplId}`).cloneNode(true);
-  cleanUselessNodes(origTemplElem);
-  expect(generatedElem.innerHTML).toEqual(origTemplElem.innerHTML);
+  expect(generatedFragment.childNodes.length).toEqual(originalFragment.childNodes.length);
+  for (let i = 0; i < generatedFragment.childNodes.length; i++) {
+    expect(generatedFragment.childNodes[0].innerHTML)
+      .toEqual(originalFragment.childNodes[0].innerHTML);
+  }
 
   // TODO: also assert something else to catch how SVG elements serialize the same, even if they dont get built correctly (with createAttributeNS, etc)
 }
