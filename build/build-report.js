@@ -17,7 +17,7 @@ async function buildStandaloneReport() {
     input: 'report/clients/standalone.js',
     plugins: [
       commonjs(),
-      terser(),
+      // terser(),
     ],
   });
 

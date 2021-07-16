@@ -20,6 +20,7 @@
 /** @template {string} T @typedef {import('typed-query-selector/parser').ParseSelector<T, Element>} ParseSelector */
 
 import {Util} from './util.js';
+import {createComponent} from './components.js';
 
 export class DOM {
   /**
@@ -30,6 +31,8 @@ export class DOM {
     this._document = document;
     /** @type {string} */
     this._lighthouseChannel = 'unknown';
+    /** @type {Map<string, DocumentFragment>} */
+    this._componentCache = new Map();
   }
 
   /**
@@ -108,6 +111,27 @@ export class DOM {
    * @throws {Error}
    */
   cloneTemplate(selector, context) {
+    try {
+      if (selector.includes('crc')) throw new Error('nested sux');
+      if (selector.includes('footer')) throw new Error('nested sux');
+
+      // quick n dirty way to get correct component
+      const componentName = selector.replace('#tmpl-lh-', '').replace(/-/g, '');
+      let component = this._componentCache.get(componentName);
+      if (component) {
+        const cloned = component.cloneNode(true);
+        this.findAll('style', cloned).forEach(style => style.remove());
+        return cloned;
+      }
+
+      component = createComponent(this, componentName);
+      this._componentCache.set(componentName, component);
+      return component.cloneNode(true);
+    } catch (e) {
+      // lol nested templates ouchie
+      console.log('missing component', e);
+    }
+
     const template = /** @type {?HTMLTemplateElement} */ (context.querySelector(selector));
     if (!template) {
       throw new Error(`Template not found: template${selector}`);

@@ -47,7 +47,9 @@ function compileTemplate(tmpEl) {
     if (el.nodeType === window.Node.TEXT_NODE) {
       if (el.parentElement && el.textContent && el.textContent.trim()) {
         const varName = makeOrGetVarName(el.parentElement);
-        lines.push(`${varName}.textContent = ${JSON.stringify(el.textContent)};`);
+        // lines.push(`${varName}.textContent = ${JSON.stringify(el.textContent)};`);
+        lines.push(
+          `${varName}.append(dom.document().createTextNode(${JSON.stringify(el.textContent)}));`);
       }
 
       return;
@@ -191,11 +193,6 @@ async function assertDOMTreeMatches(tmplEl, functionCode) {
 
 async function main() {
   const processedTemplates = [...tmplEls].map(compileTemplate);
-  for (const {tmpEl, functionCode} of processedTemplates) {
-    // console.log(functionCode, '');
-    // await assertDOMTreeMatches(tmpEl, functionCode);
-  }
-
   const code = `
     'use strict';
 
@@ -209,8 +206,11 @@ async function main() {
 
     ${makeGenericCreateComponentFunctionCode(processedTemplates)}
   `.trim();
-
   fs.writeFileSync(LH_ROOT + '/report/renderer/components.js', code);
+
+  for (const {tmpEl, functionCode} of processedTemplates) {
+    // await assertDOMTreeMatches(tmpEl, functionCode);
+  }
 }
 
 main();
