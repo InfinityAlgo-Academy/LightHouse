@@ -11,6 +11,7 @@ const fs = require('fs');
 const jsdom = require('jsdom');
 const {LH_ROOT} = require('../../root.js');
 const {serializeArguments} = require('../gather/driver/execution-context.js');
+const expect = require('expect');
 
 // idea: have paremeters in template?
 const html = fs.readFileSync(LH_ROOT + '/report/assets/templates.html', 'utf-8');
@@ -98,23 +99,26 @@ function compileTemplate(tmpEl) {
 
   lines.push(`return ${fragmentVarName};`);
 
-  // TODO: use more parseable names for template id
-  const componentName = tmpEl.id.replace('tmpl-lh-', '').replace(/-/g, '_');
-  const functionName = `create${upperFirst(componentName)}Component`;
-  const functionCode = createFunctionCode(functionName, lines);
+  const {functionCode, functionName, componentName} = createFunctionCode(tmpEl.id, lines);
   return {componentName, functionName, functionCode};
 }
 
 /**
- * @param {string} functionName
+ * @param {string} tmplId
  * @param {string[]} bodyLines
  * @param {string[]} parameterNames
  */
-function createFunctionCode(functionName, bodyLines, parameterNames = []) {
+function createFunctionCode(tmplId, bodyLines, parameterNames = []) {
+  // TODO: use more parseable names for template id
+  const componentName = tmplId.replace('tmpl-lh-', '').replace(/-/g, '');
+  const functionName = `create${upperFirst(componentName)}Component`;
+
   const body = bodyLines.map(l => `  ${l}`).join('\n');
   const functionCode = `function ${functionName}(${parameterNames.join(', ')}) {\n${body}\n}`;
-  eval(functionCode);
-  return functionCode;
+
+  assertDOMTreeMatches(tmplId, functionCode);
+
+  return {functionCode, functionName, componentName};
 }
 
 /**
@@ -123,6 +127,35 @@ function createFunctionCode(functionName, bodyLines, parameterNames = []) {
  */
 function upperFirst(str) {
   return str.charAt(0).toUpperCase() + str.substr(1);
+}
+
+/**
+ * @param {string} tmplId
+ * @param {string} functionCode
+ */
+function assertDOMTreeMatches(tmplId, functionCode) {
+  global.document = window.document;
+  global.Node = window.Node;
+
+  function cleanUselessNodes(parent) {
+    for (const child of Array.from(parent.childNodes)) {
+      if (
+        (child.nodeType === Node.TEXT_NODE && (child.nodeValue || '').trim().length === 0) ||
+        child.nodeType === Node.COMMENT_NODE
+      ) {
+        parent.removeChild(child);
+      } else if (child.nodeType === Node.ELEMENT_NODE) {
+        cleanUselessNodes(child);
+      }
+    }
+  }
+
+  const generatedElem = eval(`(${functionCode})()`);
+  const origTemplElem = window.document.querySelector(`#${tmplId}`).cloneNode(true);
+  cleanUselessNodes(origTemplElem);
+  expect(generatedElem.innerHTML).toEqual(origTemplElem.innerHTML);
+
+  // TODO: also assert something else to catch how SVG elements serialize the same, even if they dont get built correctly (with createAttributeNS, etc)
 }
 
 const processedTemplates = [...tmplEls].map(compileTemplate);
