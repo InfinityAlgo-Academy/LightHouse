@@ -57,7 +57,7 @@ function compileTemplate(tmpEl) {
 
     const isSvg = el.namespaceURI && el.namespaceURI.endsWith('/svg');
     const namespaceURI = isSvg ? el.namespaceURI : '';
-    const tagName = el.tagName.toLowerCase();
+    const tagName = el.localName;
     const className = el.classList.toString();
 
     let createElementFnName = 'createElement';
@@ -77,12 +77,7 @@ function compileTemplate(tmpEl) {
       for (const attr of el.getAttributeNames() || []) {
         if (attr === 'class') continue;
 
-        if (namespaceURI) {
-          lines.push(
-            `${varName}.setAttributeNS('${namespaceURI}', '${attr}', '${el.getAttribute(attr)}');`);
-        } else {
-          lines.push(`${varName}.setAttribute('${attr}', '${el.getAttribute(attr)}');`);
-        }
+        lines.push(`${varName}.setAttribute('${attr}', '${el.getAttribute(attr)}');`);
       }
     }
 
