@@ -122,7 +122,7 @@ export class ReportRenderer {
     for (const runtime of runtimeValues) {
       if (!runtime.description) continue;
 
-      const item = this._dom.cloneTemplate('#tmpl-lh-env__items', env);
+      const item = this._dom.cloneTemplate('#tmpl-lh-env__item', env);
       this._dom.find('.lh-env__name', item).textContent = runtime.name;
       this._dom.find('.lh-env__description', item).textContent = runtime.description;
       env.appendChild(item);

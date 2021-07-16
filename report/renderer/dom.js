@@ -112,14 +112,13 @@ export class DOM {
    */
   cloneTemplate(selector, context) {
     try {
-      if (selector.includes('crc')) throw new Error('nested sux');
-      if (selector.includes('footer')) throw new Error('nested sux');
-
       // quick n dirty way to get correct component
       const componentName = selector.replace('#tmpl-lh-', '').replace(/-/g, '');
       let component = this._componentCache.get(componentName);
       if (component) {
-        const cloned = component.cloneNode(true);
+        const cloned = /** @type {DocumentFragment} */ (component.cloneNode(true));
+        // Prevent duplicate styles in the DOM. After a template has been stamped
+        // for the first time, remove the clone's styles so they're not re-added.
         this.findAll('style', cloned).forEach(style => style.remove());
         return cloned;
       }
@@ -153,6 +152,7 @@ export class DOM {
    * Resets the "stamped" state of the templates.
    */
   resetTemplates() {
+    // TODO delete me
     this.findAll('template[data-stamped]', this._document).forEach(t => {
       t.removeAttribute('data-stamped');
     });

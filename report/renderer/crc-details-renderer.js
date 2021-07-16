@@ -89,12 +89,12 @@ export class CriticalRequestChainRenderer {
    * @return {Node}
    */
   static createChainNode(dom, tmpl, segment, detailsRenderer) {
-    const chainsEl = dom.cloneTemplate('#tmpl-lh-crc__chains', tmpl);
+    const chainEl = dom.cloneTemplate('#tmpl-lh-crc__chain', tmpl);
 
     // Hovering over request shows full URL.
-    dom.find('.crc-node', chainsEl).setAttribute('title', segment.node.request.url);
+    dom.find('.crc-node', chainEl).setAttribute('title', segment.node.request.url);
 
-    const treeMarkeEl = dom.find('.crc-node__tree-marker', chainsEl);
+    const treeMarkeEl = dom.find('.crc-node__tree-marker', chainEl);
 
     // Construct lines and add spacers for sub requests.
     segment.treeMarkers.forEach(separator => {
@@ -124,7 +124,7 @@ export class CriticalRequestChainRenderer {
     // Fill in url, host, and request size information.
     const url = segment.node.request.url;
     const linkEl = detailsRenderer.renderTextURL(url);
-    const treevalEl = dom.find('.crc-node__tree-value', chainsEl);
+    const treevalEl = dom.find('.crc-node__tree-value', chainEl);
     treevalEl.appendChild(linkEl);
 
     if (!segment.hasChildren) {
@@ -138,7 +138,7 @@ export class CriticalRequestChainRenderer {
       treevalEl.appendChild(span2);
     }
 
-    return chainsEl;
+    return chainEl;
   }
 
   /**

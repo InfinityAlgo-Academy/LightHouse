@@ -529,12 +529,7 @@ limitations under the License.
     <div class="lh-env">
       <div class="lh-env__title">Runtime Settings</div>
       <ul class="lh-env__items">
-        <template id="tmpl-lh-env__items">
-          <li class="lh-env__item">
-            <span class="lh-env__name"></span>
-            <span class="lh-env__description"></span>
-          </li>
-        </template>
+        <!-- tmpl-lh-env__item -->
       </ul>
     </div>
 
@@ -544,6 +539,14 @@ limitations under the License.
       <a href="https://github.com/GoogleChrome/Lighthouse/issues" target="_blank" rel="noopener" class="lh-footer__version_issue">File an issue</a>
     </div>
   </footer>
+</template>
+
+<!-- Lighthouse footer env item -->
+<template id="tmpl-lh-env__item">
+  <li class="lh-env__item">
+    <span class="lh-env__name"></span>
+    <span class="lh-env__description"></span>
+  </li>
 </template>
 
 <!-- Lighthouse score gauge -->
@@ -719,16 +722,17 @@ limitations under the License.
       <div class="crc-initial-nav"></div>
       <!-- stamp for each chain -->
       <template id="tmpl-lh-crc__chains">
-        <div class="crc-node">
-          <span class="crc-node__tree-marker">
-
-          </span>
-          <span class="crc-node__tree-value">
-
-          </span>
-        </div>
+        <!-- tmpl-lh-crc__chain -->
       </template>
     </div>
+  </div>
+</template>
+
+<!-- Lighthouse crtiical request chains component, single chain -->
+<template id="tmpl-lh-crc__chain">
+  <div class="crc-node">
+    <span class="crc-node__tree-marker"></span>
+    <span class="crc-node__tree-value"></span>
   </div>
 </template>
 
