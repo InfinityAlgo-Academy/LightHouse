@@ -9,9 +9,9 @@
 
 const fs = require('fs');
 const jsdom = require('jsdom');
+const expect = require('expect');
 const {LH_ROOT} = require('../../root.js');
 const {serializeArguments} = require('../gather/driver/execution-context.js');
-const expect = require('expect');
 
 // idea: have paremeters in template?
 const html = fs.readFileSync(LH_ROOT + '/report/assets/templates.html', 'utf-8');
@@ -112,11 +112,8 @@ function createTmplFunctionCode(tmplId, bodyLines, parameterNames = []) {
   // TODO: use more parseable names for template id
   const componentName = tmplId.replace('tmpl-lh-', '').replace(/-/g, '');
   const functionName = `create${upperFirst(componentName)}Component`;
-
-  const functionCode = createFunctionCode(functionName, bodyLines, parameterNames)
-
+  const functionCode = createFunctionCode(functionName, bodyLines, parameterNames);
   assertDOMTreeMatches(tmplId, functionCode);
-
   return {functionCode, functionName, componentName};
 }
 
@@ -125,11 +122,9 @@ function createTmplFunctionCode(tmplId, bodyLines, parameterNames = []) {
  * @param {string[]} bodyLines
  * @param {string[]} parameterNames
  */
- function createFunctionCode(functionName, bodyLines, parameterNames = []) {
-
+function createFunctionCode(functionName, bodyLines, parameterNames = []) {
   const body = bodyLines.map(l => `  ${l}`).join('\n');
   const functionCode = `function ${functionName}(${parameterNames.join(', ')}) {\n${body}\n}`;
-
   return functionCode;
 }
 
@@ -139,12 +134,6 @@ function createTmplFunctionCode(tmplId, bodyLines, parameterNames = []) {
  */
 function upperFirst(str) {
   return str.charAt(0).toUpperCase() + str.substr(1);
-}
-
-const processedTemplates = [...tmplEls].map(compileTemplate);
-
-for (const {functionCode} of processedTemplates) {
-  console.log(functionCode, '');
 }
 
 function makeGenericCreateComponentFunctionCode() {
@@ -160,16 +149,11 @@ function makeGenericCreateComponentFunctionCode() {
   return createFunctionCode('createComponent', lines, ['componentName']);
 }
 
-console.log(makeGenericCreateComponentFunctionCode());
-
-
-
-
 /**
  * @param {string} tmplId
  * @param {string} functionCode
  */
- async function assertDOMTreeMatches(tmplId, functionCode) {
+async function assertDOMTreeMatches(tmplId, functionCode) {
   global.document = window.document;
   global.Node = window.Node;
   global.DocumentFragment = window.DocumentFragment;
@@ -177,15 +161,14 @@ console.log(makeGenericCreateComponentFunctionCode());
   const DOM = (await import('../../report/renderer/dom.js')).DOM;
   global.dom = new DOM(window.document);
 
-
   function cleanUselessNodes(parent) {
     for (const child of Array.from(parent.childNodes)) {
       if (
-        (child.nodeType === Node.TEXT_NODE && (child.nodeValue || '').trim().length === 0) ||
-        child.nodeType === Node.COMMENT_NODE
+        (child.nodeType === window.Node.TEXT_NODE && (child.nodeValue || '').trim().length === 0) ||
+        child.nodeType === window.Node.COMMENT_NODE
       ) {
         parent.removeChild(child);
-      } else if (child.nodeType === Node.ELEMENT_NODE) {
+      } else if (child.nodeType === window.Node.ELEMENT_NODE) {
         cleanUselessNodes(child);
       }
     }
@@ -203,3 +186,9 @@ console.log(makeGenericCreateComponentFunctionCode());
 
   // TODO: also assert something else to catch how SVG elements serialize the same, even if they dont get built correctly (with createAttributeNS, etc)
 }
+
+const processedTemplates = [...tmplEls].map(compileTemplate);
+for (const {functionCode} of processedTemplates) {
+  console.log(functionCode, '');
+}
+console.log(makeGenericCreateComponentFunctionCode());
