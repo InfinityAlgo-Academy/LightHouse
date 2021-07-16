@@ -98,7 +98,7 @@ function compileTemplate(tmpEl) {
     lines.push(`${fragmentVarName}.append(${makeOrGetVarName(topLevelEl)})`);
   }
 
-  lines.push(`debugger; return ${fragmentVarName};`);
+  lines.push(`return ${fragmentVarName};`);
 
   // TODO: use more parseable names for template id
   const componentName = tmpEl.id.replace('tmpl-lh-', '').replace(/-/g, '');

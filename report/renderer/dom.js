@@ -67,7 +67,7 @@ export class DOM {
   createElementNS(namespaceURI, name, className, attrs = {}) {
     const element = this._document.createElementNS(namespaceURI, name);
     if (className) {
-      element.classList.add(className);
+      for (const token of className.split(' ')) element.classList.add(token);
     }
     Object.keys(attrs).forEach(key => {
       const value = attrs[key];
