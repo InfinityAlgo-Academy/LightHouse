@@ -12,7 +12,6 @@ const jsdom = require('jsdom');
 const {LH_ROOT} = require('../../root.js');
 const {serializeArguments} = require('../gather/driver/execution-context.js');
 
-// TODO: should change templates.html to use `div` instead of `template`.
 // idea: have paremeters in template?
 const html = fs.readFileSync(LH_ROOT + '/report/assets/templates.html', 'utf-8');
 
@@ -46,7 +45,7 @@ function compileTemplate(tmpEl) {
     if (el.nodeType === window.Node.TEXT_NODE) {
       if (el.parentElement && el.textContent && el.textContent.trim()) {
         const varName = makeOrGetVarName(el.parentElement);
-        lines.push(`${varName}.textContent = ${JSON.stringify(el.textContent)});`);
+        lines.push(`${varName}.textContent = ${JSON.stringify(el.textContent)};`);
       }
 
       return;
@@ -114,6 +113,7 @@ function compileTemplate(tmpEl) {
 function createFunctionCode(functionName, bodyLines, parameterNames = []) {
   const body = bodyLines.map(l => `  ${l}`).join('\n');
   const functionCode = `function ${functionName}(${parameterNames.join(', ')}) {\n${body}\n}`;
+  eval(functionCode);
   return functionCode;
 }
 
