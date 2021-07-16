@@ -104,8 +104,7 @@ function compileTemplate(tmpEl) {
   const componentName = tmpEl.id.replace('tmpl-lh-', '').replace(/-/g, '');
   const functionName = `create${upperFirst(componentName)}Component`;
   const functionCode = createFunctionCode(functionName, lines);
-  assertDOMTreeMatches(tmpEl, functionCode);
-  return {componentName, functionName, functionCode};
+  return {tmpEl, componentName, functionName, functionCode};
 }
 
 /**
@@ -182,8 +181,13 @@ async function assertDOMTreeMatches(tmplEl, functionCode) {
   // TODO: also assert something else to catch how SVG elements serialize the same, even if they dont get built correctly (with createAttributeNS, etc)
 }
 
-const processedTemplates = [...tmplEls].map(compileTemplate);
-for (const {functionCode} of processedTemplates) {
-  console.log(functionCode, '');
+async function main() {
+  const processedTemplates = await Promise.all([...tmplEls].map(compileTemplate));
+  for (const {tmpEl, functionCode} of processedTemplates) {
+    await assertDOMTreeMatches(tmpEl, functionCode);
+    console.log(functionCode, '');
+  }
+  console.log(makeGenericCreateComponentFunctionCode());
 }
-console.log(makeGenericCreateComponentFunctionCode());
+
+main();
