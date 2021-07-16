@@ -88,7 +88,7 @@ export class CriticalRequestChainRenderer {
    * @return {Node}
    */
   static createChainNode(dom, segment, detailsRenderer) {
-    const chainEl = dom.cloneTemplate('crcChain');
+    const chainEl = dom.createComponent('crcChain');
 
     // Hovering over request shows full URL.
     dom.find('.crc-node', chainEl).setAttribute('title', segment.node.request.url);
@@ -167,7 +167,7 @@ export class CriticalRequestChainRenderer {
    * @return {Element}
    */
   static render(dom, details, detailsRenderer) {
-    const tmpl = dom.cloneTemplate('crc');
+    const tmpl = dom.createComponent('crc');
     const containerEl = dom.find('.lh-crc', tmpl);
 
     // Fill in top summary.

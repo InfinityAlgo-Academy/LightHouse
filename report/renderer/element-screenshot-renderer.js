@@ -225,7 +225,7 @@ export class ElementScreenshotRenderer {
       return null;
     }
 
-    const tmpl = dom.cloneTemplate('elementScreenshot');
+    const tmpl = dom.createComponent('elementScreenshot');
     const containerEl = dom.find('div.lh-element-screenshot', tmpl);
 
     containerEl.dataset['rectWidth'] = elementRectSC.width.toString();

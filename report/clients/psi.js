@@ -80,7 +80,7 @@ export function prepareLabData(LHResult, document) {
 
   const finalScreenshotDataUri = _getFinalScreenshot(perfCategory);
 
-  const clonedScoreTemplate = dom.cloneTemplate('#tmpl-lh-scorescale', dom.document());
+  const clonedScoreTemplate = dom.createComponent('#tmpl-lh-scorescale', dom.document());
   const scoreScaleEl = dom.find('.lh-scorescale', clonedScoreTemplate);
 
   const reportUIFeatures = new ReportUIFeatures(dom);

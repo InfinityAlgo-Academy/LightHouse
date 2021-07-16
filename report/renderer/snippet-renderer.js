@@ -100,7 +100,7 @@ export class SnippetRenderer {
     const linesWhenCollapsed = getLinesWhenCollapsed(details);
     const canExpand = linesWhenCollapsed.length < details.lines.length;
 
-    const header = dom.cloneTemplate('snippetHeader', tmpl);
+    const header = dom.createComponent('snippetHeader', tmpl);
     dom.find('.lh-snippet__title', header).textContent = details.title;
 
     const {
@@ -148,7 +148,7 @@ export class SnippetRenderer {
       tmpl,
       {content, lineNumber, truncated, contentType, visibility}
   ) {
-    const clonedTemplate = dom.cloneTemplate('snippetLine');
+    const clonedTemplate = dom.createComponent('snippetLine');
     const contentLine = dom.find('.lh-snippet__line', clonedTemplate);
     const {classList} = contentLine;
 
@@ -214,7 +214,7 @@ export class SnippetRenderer {
    * @return {DocumentFragment}
    */
   static renderSnippetContent(dom, tmpl, details) {
-    const template = dom.cloneTemplate('snippetContent');
+    const template = dom.createComponent('snippetContent');
     const snippetEl = dom.find('.lh-snippet__snippet-inner', template);
 
     // First render messages that don't belong to specific lines
@@ -339,7 +339,7 @@ export class SnippetRenderer {
    * @return {!Element}
    */
   static render(dom, details, detailsRenderer) {
-    const tmpl = dom.cloneTemplate('snippet');
+    const tmpl = dom.createComponent('snippet');
     const snippetEl = dom.find('.lh-snippet', tmpl);
 
     const header = SnippetRenderer.renderHeader(

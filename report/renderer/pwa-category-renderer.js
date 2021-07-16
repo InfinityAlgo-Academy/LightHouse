@@ -58,7 +58,7 @@ export class PwaCategoryRenderer extends CategoryRenderer {
       return super.renderScoreGauge(category, groupDefinitions);
     }
 
-    const tmpl = this.dom.cloneTemplate('gaugePwa');
+    const tmpl = this.dom.createComponent('gaugePwa');
     const wrapper = this.dom.find('a.lh-gauge--pwa__wrapper', tmpl);
     wrapper.href = `#${category.id}`;
 

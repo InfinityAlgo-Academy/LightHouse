@@ -56,7 +56,7 @@ export class CategoryRenderer {
    * @return {Element}
    */
   renderAudit(audit) {
-    const component = this.dom.cloneTemplate('audit');
+    const component = this.dom.createComponent('audit');
     return this.populateAuditValues(audit, component);
   }
 
@@ -153,7 +153,7 @@ export class CategoryRenderer {
    * @return {Element}
    */
   _createChevron() {
-    const component = this.dom.cloneTemplate('chevron');
+    const component = this.dom.createComponent('chevron');
     const chevronEl = this.dom.find('svg.lh-chevron', component);
     return chevronEl;
   }
@@ -179,7 +179,7 @@ export class CategoryRenderer {
    * @return {DocumentFragment}
    */
   renderCategoryHeader(category, groupDefinitions) {
-    const component = this.dom.cloneTemplate('categoryHeader');
+    const component = this.dom.createComponent('categoryHeader');
 
     const gaugeContainerEl = this.dom.find('.lh-score__gauge', component);
     const gaugeEl = this.renderScoreGauge(category, groupDefinitions);
@@ -286,7 +286,7 @@ export class CategoryRenderer {
    * @return {!Element}
    */
   renderClump(clumpId, {auditRefs, description}) {
-    const clumpComponent = this.dom.cloneTemplate('clump');
+    const clumpComponent = this.dom.createComponent('clump');
     const clumpElement = this.dom.find('.lh-clump', clumpComponent);
 
     if (clumpId === 'warning') {
@@ -330,7 +330,7 @@ export class CategoryRenderer {
    * @return {DocumentFragment}
    */
   renderScoreGauge(category, groupDefinitions) { // eslint-disable-line no-unused-vars
-    const tmpl = this.dom.cloneTemplate('gauge');
+    const tmpl = this.dom.createComponent('gauge');
     const wrapper = this.dom.find('a.lh-gauge__wrapper', tmpl);
     wrapper.href = `#${category.id}`;
 

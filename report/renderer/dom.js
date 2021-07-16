@@ -106,10 +106,9 @@ export class DOM {
 
   /**
    * @param {Parameters<typeof createComponent>[1]} componentName
-   * @return {!DocumentFragment} A clone of the template content.
-   * @throws {Error}
+   * @return {!DocumentFragment} A clone of the cached component.
    */
-  cloneTemplate(componentName) {
+  createComponent(componentName) {
     let component = this._componentCache.get(componentName);
     if (component) {
       const cloned = /** @type {DocumentFragment} */ (component.cloneNode(true));
