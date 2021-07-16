@@ -240,7 +240,7 @@ class ExecutionContext {
    * @return {string}
    */
   static serializeArguments(args) {
-    return args.map(arg => arg === undefined ? 'undefined' : JSON.stringify(arg)).join(',');
+    return args.map(arg => arg === undefined ? 'undefined' : JSON.stringify(arg)).join(', ');
   }
 }
 

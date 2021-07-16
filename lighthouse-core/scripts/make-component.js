@@ -25,7 +25,7 @@ const tmplEls = window.document.querySelectorAll('template');
  * @param {HTMLTemplateElement} tmpEl
  */
 function compileTemplate(tmpEl) {
-  const map = new Map();
+  const elemToVarNames = new Map();
   const lines = [];
 
   /**
@@ -33,8 +33,8 @@ function compileTemplate(tmpEl) {
    * @return {string}
    */
   function makeOrGetVarName(el) {
-    const varName = map.get(el) || ('v' + map.size);
-    map.set(el, varName);
+    const varName = elemToVarNames.get(el) || ('v' + elemToVarNames.size);
+    elemToVarNames.set(el, varName);
     return varName;
   }
 
@@ -83,7 +83,7 @@ function compileTemplate(tmpEl) {
 
     for (const childEl of el.childNodes) {
       process(childEl);
-      const childVarName = map.get(childEl);
+      const childVarName = elemToVarNames.get(childEl);
       if (childVarName) lines.push(`${varName}.append(${childVarName});`);
     }
   }
@@ -93,7 +93,7 @@ function compileTemplate(tmpEl) {
 
   for (const topLevelEl of tmpEl.content.children) {
     process(topLevelEl);
-    lines.push(`${fragmentVarName}.append(${makeOrGetVarName(topLevelEl)})`);
+    lines.push(`${fragmentVarName}.append(${makeOrGetVarName(topLevelEl)});`);
   }
 
   lines.push(`return ${fragmentVarName};`);
