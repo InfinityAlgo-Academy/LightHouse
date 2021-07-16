@@ -11,8 +11,8 @@
 const fs = require('fs');
 const jsdom = require('jsdom');
 const expect = require('expect');
-const {LH_ROOT} = require('../../root.js');
 const {serializeArguments} = require('../gather/driver/execution-context.js');
+const {LH_ROOT} = require('../../root.js');
 
 // idea: have paremeters in template?
 const html = fs.readFileSync(LH_ROOT + '/report/assets/templates.html', 'utf-8');
@@ -121,7 +121,6 @@ function createFunctionCode(functionName, bodyLines, parameterNames = []) {
 
 /**
  * @param {string} str
- * @return
  */
 function upperFirst(str) {
   return str.charAt(0).toUpperCase() + str.substr(1);
@@ -189,7 +188,7 @@ async function assertDOMTreeMatches(tmplEl, functionCode) {
   }
 
   /** @type {DocumentFragment} */
-  const generatedFragment = eval(`(${functionCode})()`);
+  const generatedFragment = eval(`(${functionCode})(dom)`);
   const originalFragment = tmplEl.content.cloneNode(true);
   cleanUselessNodes(originalFragment);
   reorderAttributes(originalFragment);
@@ -222,8 +221,7 @@ async function main() {
   fs.writeFileSync(LH_ROOT + '/report/renderer/components.js', code);
 
   for (const {tmpEl, functionCode} of processedTemplates) {
-    // TODO fixme
-    // await assertDOMTreeMatches(tmpEl, functionCode);
+    await assertDOMTreeMatches(tmpEl, functionCode);
   }
 }
 
