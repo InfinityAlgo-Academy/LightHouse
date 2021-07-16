@@ -16,7 +16,7 @@ limitations under the License.
 -->
 
 <!-- Lighthouse run warnings -->
-<template id="tmpl-lh-warnings--toplevel">
+<template id="warningsToplevel">
   <div class="lh-warnings lh-warnings--toplevel">
     <p class="lh-warnings__msg"></p>
     <ul></ul>
@@ -24,7 +24,7 @@ limitations under the License.
 </template>
 
 <!-- Lighthouse score scale -->
-<template id="tmpl-lh-scorescale">
+<template id="scorescale">
   <div class="lh-scorescale">
       <span class="lh-scorescale-range lh-scorescale-range--fail">0&ndash;49</span>
       <span class="lh-scorescale-range lh-scorescale-range--average">50&ndash;89</span>
@@ -33,7 +33,7 @@ limitations under the License.
 </template>
 
 <!-- Toggle arrow chevron -->
-<template id="tmpl-lh-chevron">
+<template id="chevron">
   <svg class="lh-chevron" viewbox="0 0 100 100">
     <g class="lh-chevron__lines">
       <path class="lh-chevron__line lh-chevron__line-left" d="M10 50h40"></path>
@@ -43,7 +43,7 @@ limitations under the License.
 </template>
 
 <!-- Lighthouse category header -->
-<template id="tmpl-lh-category-header">
+<template id="categoryHeader">
   <div class="lh-category-header">
     <div class="lh-score__gauge" role="heading" aria-level="2"></div>
     <div class="lh-category-header__description"></div>
@@ -51,7 +51,7 @@ limitations under the License.
 </template>
 
 <!-- Lighthouse clump -->
-<template id="tmpl-lh-clump">
+<template id="clump">
   <!-- TODO: group classes shouldn't be reused for clumps. -->
   <details class="lh-clump lh-audit-group">
     <summary>
@@ -68,7 +68,7 @@ limitations under the License.
 </template>
 
 <!-- Lighthouse metrics toggle -->
-<template id="tmpl-lh-metrics-toggle">
+<template id="metricsToggle">
   <div class="lh-metrics-toggle">
     <input class="lh-metrics-toggle__input" type="checkbox" id="toggle-metric-descriptions" aria-label="Toggle the display of metric descriptions">
     <label class="lh-metrics-toggle__label" for="toggle-metric-descriptions">
@@ -87,7 +87,7 @@ limitations under the License.
 </template>
 
 <!-- Lighthouse audit -->
-<template id="tmpl-lh-audit">
+<template id="audit">
   <div class="lh-audit">
     <details class="lh-expandable-details">
       <summary>
@@ -107,7 +107,7 @@ limitations under the License.
 </template>
 
 <!-- Lighthouse perf metric -->
-<template id="tmpl-lh-metric">
+<template id="metric">
   <div class="lh-metric">
     <div class="lh-metric__innerwrap">
       <span class="lh-metric__title"></span>
@@ -118,7 +118,7 @@ limitations under the License.
 </template>
 
 <!-- Lighthouse perf opportunity -->
-<template id="tmpl-lh-opportunity">
+<template id="opportunity">
   <div class="lh-audit lh-audit--load-opportunity">
     <details class="lh-expandable-details">
         <summary>
@@ -145,7 +145,7 @@ limitations under the License.
 </template>
 
 <!-- Lighthouse perf opportunity header -->
-<template id="tmpl-lh-opportunity-header">
+<template id="opportunityHeader">
   <div class="lh-load-opportunity__header lh-load-opportunity__cols">
     <div class="lh-load-opportunity__col lh-load-opportunity__col--one"></div>
     <div class="lh-load-opportunity__col lh-load-opportunity__col--two"></div>
@@ -153,7 +153,7 @@ limitations under the License.
 </template>
 
 <!-- Lighthouse score container -->
-<template id="tmpl-lh-scores-wrapper">
+<template id="scoresWrapper">
   <style>
     .lh-scores-container {
       display: flex;
@@ -230,7 +230,7 @@ limitations under the License.
 </template>
 
 <!-- Lighthouse topbar -->
-<template id="tmpl-lh-topbar">
+<template id="topbar">
   <style>
     .lh-topbar {
       position: sticky;
@@ -401,7 +401,7 @@ limitations under the License.
 </template>
 
 <!-- Lighthouse header -->
-<template id="tmpl-lh-heading">
+<template id="heading">
   <style>
     /* CSS Fireworks. Originally by Eddie Lin
        https://codepen.io/paulirish/pen/yEVMbP
@@ -481,7 +481,7 @@ limitations under the License.
 
 
 <!-- Lighthouse footer -->
-<template id="tmpl-lh-footer">
+<template id="footer">
   <style>
     .lh-footer {
       padding: var(--footer-padding-vertical) calc(var(--default-padding) * 2);
@@ -529,7 +529,7 @@ limitations under the License.
     <div class="lh-env">
       <div class="lh-env__title">Runtime Settings</div>
       <ul class="lh-env__items">
-        <!-- tmpl-lh-env__item -->
+        <!-- envItem -->
       </ul>
     </div>
 
@@ -542,7 +542,7 @@ limitations under the License.
 </template>
 
 <!-- Lighthouse footer env item -->
-<template id="tmpl-lh-env__item">
+<template id="envItem">
   <li class="lh-env__item">
     <span class="lh-env__name"></span>
     <span class="lh-env__description"></span>
@@ -550,7 +550,7 @@ limitations under the License.
 </template>
 
 <!-- Lighthouse score gauge -->
-<template id="tmpl-lh-gauge">
+<template id="gauge">
   <a href="#" class="lh-gauge__wrapper">
     <!-- Wrapper exists for the ::before plugin icon. Cannot create pseudo-elements on svgs. -->
     <div class="lh-gauge__svg-wrapper">
@@ -567,7 +567,7 @@ limitations under the License.
 
 
 <!-- Lighthouse PWA badge gauge -->
-<template id="tmpl-lh-gauge--pwa">
+<template id="gaugePwa">
   <style>
     .lh-gauge--pwa .lh-gauge--pwa__component {
       display: none;
@@ -661,7 +661,7 @@ limitations under the License.
 </template>
 
 <!-- Lighthouse crtiical request chains component -->
-<template id="tmpl-lh-crc">
+<template id="crc">
   <div class="lh-crc-container">
     <style>
       .lh-crc .tree-marker {
@@ -720,23 +720,20 @@ limitations under the License.
     </div>
     <div class="lh-crc">
       <div class="crc-initial-nav"></div>
-      <!-- stamp for each chain -->
-      <template id="tmpl-lh-crc__chains">
-        <!-- tmpl-lh-crc__chain -->
-      </template>
+      <!-- crcChain -->
     </div>
   </div>
 </template>
 
 <!-- Lighthouse crtiical request chains component, single chain -->
-<template id="tmpl-lh-crc__chain">
+<template id="crcChain">
   <div class="crc-node">
     <span class="crc-node__tree-marker"></span>
     <span class="crc-node__tree-value"></span>
   </div>
 </template>
 
-<template id="tmpl-lh-3p-filter">
+<template id="3pFilter">
   <style>
     .lh-3p-filter {
       background-color: var(--table-higlight-background-color);
@@ -761,7 +758,7 @@ limitations under the License.
 </template>
 
 <!-- Lighthouse snippet component -->
-<template id="tmpl-lh-snippet">
+<template id="snippet">
     <div class="lh-snippet">
       <style>
           :root {
@@ -872,7 +869,8 @@ limitations under the License.
           user-select: none;
         }
       </style>
-      <template id="tmpl-lh-snippet__header">
+      <!-- TODO: fixme not nested bois -->
+      <template id="snippetHeader">
         <div class="lh-snippet__header">
           <div class="lh-snippet__title"></div>
           <div class="lh-snippet__node"></div>
@@ -882,12 +880,12 @@ limitations under the License.
           </button>
         </div>
       </template>
-      <template id="tmpl-lh-snippet__content">
+      <template id="snippetContent">
         <div class="lh-snippet__snippet">
           <div class="lh-snippet__snippet-inner"></div>
         </div>
       </template>
-      <template id="tmpl-lh-snippet__line">
+      <template id="snippetLine">
           <div class="lh-snippet__line">
             <div class="lh-snippet__line-number"></div>
             <div class="lh-snippet__line-icon"></div>
@@ -899,7 +897,7 @@ limitations under the License.
 
 
 <!-- Lighthouse element screenshot -->
-<template id="tmpl-lh-element-screenshot">
+<template id="elementScreenshot">
   <div class="lh-element-screenshot">
     <div class="lh-element-screenshot__content">
       <div class="lh-element-screenshot__mask">

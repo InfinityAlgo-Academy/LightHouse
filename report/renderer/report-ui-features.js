@@ -293,7 +293,7 @@ export class ReportUIFeatures {
       const thirdPartyRows = this._getThirdPartyRows(rowEls, this.json.finalUrl);
 
       // create input box
-      const filterTemplate = this._dom.cloneTemplate('#tmpl-lh-3p-filter', this._templateContext);
+      const filterTemplate = this._dom.cloneTemplate('3pFilter');
       const filterInput = this._dom.find('input', filterTemplate);
       const id = `lh-3p-filter-label--${index}`;
 

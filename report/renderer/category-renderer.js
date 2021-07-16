@@ -56,19 +56,19 @@ export class CategoryRenderer {
    * @return {Element}
    */
   renderAudit(audit) {
-    const tmpl = this.dom.cloneTemplate('#tmpl-lh-audit', this.templateContext);
-    return this.populateAuditValues(audit, tmpl);
+    const component = this.dom.cloneTemplate('audit');
+    return this.populateAuditValues(audit, component);
   }
 
   /**
    * Populate an DOM tree with audit details. Used by renderAudit and renderOpportunity
    * @param {LH.ReportResult.AuditRef} audit
-   * @param {DocumentFragment} tmpl
+   * @param {DocumentFragment} component
    * @return {!Element}
    */
-  populateAuditValues(audit, tmpl) {
+  populateAuditValues(audit, component) {
     const strings = Util.i18n.strings;
-    const auditEl = this.dom.find('.lh-audit', tmpl);
+    const auditEl = this.dom.find('.lh-audit', component);
     auditEl.id = audit.result.id;
     const scoreDisplayMode = audit.result.scoreDisplayMode;
 
@@ -153,8 +153,8 @@ export class CategoryRenderer {
    * @return {Element}
    */
   _createChevron() {
-    const chevronTmpl = this.dom.cloneTemplate('#tmpl-lh-chevron', this.templateContext);
-    const chevronEl = this.dom.find('svg.lh-chevron', chevronTmpl);
+    const component = this.dom.cloneTemplate('chevron');
+    const chevronEl = this.dom.find('svg.lh-chevron', component);
     return chevronEl;
   }
 
@@ -179,18 +179,18 @@ export class CategoryRenderer {
    * @return {DocumentFragment}
    */
   renderCategoryHeader(category, groupDefinitions) {
-    const tmpl = this.dom.cloneTemplate('#tmpl-lh-category-header', this.templateContext);
+    const component = this.dom.cloneTemplate('categoryHeader');
 
-    const gaugeContainerEl = this.dom.find('.lh-score__gauge', tmpl);
+    const gaugeContainerEl = this.dom.find('.lh-score__gauge', component);
     const gaugeEl = this.renderScoreGauge(category, groupDefinitions);
     gaugeContainerEl.appendChild(gaugeEl);
 
     if (category.description) {
       const descEl = this.dom.convertMarkdownLinkSnippets(category.description);
-      this.dom.find('.lh-category-header__description', tmpl).appendChild(descEl);
+      this.dom.find('.lh-category-header__description', component).appendChild(descEl);
     }
 
-    return tmpl;
+    return component;
   }
 
   /**
@@ -286,8 +286,8 @@ export class CategoryRenderer {
    * @return {!Element}
    */
   renderClump(clumpId, {auditRefs, description}) {
-    const clumpTmpl = this.dom.cloneTemplate('#tmpl-lh-clump', this.templateContext);
-    const clumpElement = this.dom.find('.lh-clump', clumpTmpl);
+    const clumpComponent = this.dom.cloneTemplate('clump');
+    const clumpElement = this.dom.find('.lh-clump', clumpComponent);
 
     if (clumpId === 'warning') {
       clumpElement.setAttribute('open', '');
@@ -330,7 +330,7 @@ export class CategoryRenderer {
    * @return {DocumentFragment}
    */
   renderScoreGauge(category, groupDefinitions) { // eslint-disable-line no-unused-vars
-    const tmpl = this.dom.cloneTemplate('#tmpl-lh-gauge', this.templateContext);
+    const tmpl = this.dom.cloneTemplate('gauge');
     const wrapper = this.dom.find('a.lh-gauge__wrapper', tmpl);
     wrapper.href = `#${category.id}`;
 

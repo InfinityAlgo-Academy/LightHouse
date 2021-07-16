@@ -65,7 +65,7 @@ export class DetailsRenderer {
       case 'table':
         return this._renderTable(details);
       case 'criticalrequestchain':
-        return CriticalRequestChainRenderer.render(this._dom, this._templateContext, details, this);
+        return CriticalRequestChainRenderer.render(this._dom, details, this);
       case 'opportunity':
         return this._renderTable(details);
 
@@ -494,7 +494,7 @@ export class DetailsRenderer {
     const listContainer = this._dom.createElement('div', 'lh-list');
 
     details.items.forEach(item => {
-      const snippetEl = SnippetRenderer.render(this._dom, this._templateContext, item, this);
+      const snippetEl = SnippetRenderer.render(this._dom, item, this);
       listContainer.appendChild(snippetEl);
     });
 

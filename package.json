@@ -53,7 +53,7 @@
     "core-unit": "yarn unit-core",
     "cli-unit": "yarn unit-cli",
     "viewer-unit": "yarn unit-viewer",
-    "compile-components": "node lighthouse-core/scripts/make-component.js && yarn eslint --fix report/renderer/components.js",
+    "compile-components": "node lighthouse-core/scripts/make-components.js && yarn eslint --fix report/renderer/components.js",
     "watch": "yarn unit-core --watch",
     "unit:cicoverage": "yarn c8 --all yarn unit:ci",
     "coverage": "yarn unit:cicoverage && c8 report --reporter html",

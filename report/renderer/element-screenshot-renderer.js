@@ -215,18 +215,17 @@ export class ElementScreenshotRenderer {
    * Used to render both the thumbnail preview in details tables and the full-page screenshot in the lightbox.
    * Returns null if element rect is outside screenshot bounds.
    * @param {DOM} dom
-   * @param {ParentNode} templateContext
    * @param {LH.Artifacts.FullPageScreenshot['screenshot']} screenshot
    * @param {LH.Artifacts.Rect} elementRectSC Region of screenshot to highlight.
    * @param {Size} maxRenderSizeDC e.g. maxThumbnailSize or maxLightboxSize.
    * @return {Element|null}
    */
-  static render(dom, templateContext, screenshot, elementRectSC, maxRenderSizeDC) {
+  static render(dom, screenshot, elementRectSC, maxRenderSizeDC) {
     if (!screenshotOverlapsRect(screenshot, elementRectSC)) {
       return null;
     }
 
-    const tmpl = dom.cloneTemplate('#tmpl-lh-element-screenshot', templateContext);
+    const tmpl = dom.cloneTemplate('elementScreenshot');
     const containerEl = dom.find('div.lh-element-screenshot', tmpl);
 
     containerEl.dataset['rectWidth'] = elementRectSC.width.toString();

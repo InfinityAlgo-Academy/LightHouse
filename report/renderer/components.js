@@ -10,128 +10,26 @@
 /**
  * @param {DOM} dom
  */
-function createWarningstoplevelComponent(dom) {
+function create3pFilterComponent(dom) {
   const v0 = dom.document().createDocumentFragment();
-  const v1 = dom.createElement('div', 'lh-warnings lh-warnings--toplevel');
-  const v2 = dom.createElement('p', 'lh-warnings__msg');
-  v1.append(v2);
-  const v3 = dom.createElement('ul');
-  v1.append(v3);
+  const v1 = dom.createElement('style');
+  v1.append(dom.document().createTextNode('\n    .lh-3p-filter {\n      background-color: var(--table-higlight-background-color);\n      color: var(--color-gray-600);\n      float: right;\n      padding: 6px;\n    }\n    .lh-3p-filter-label, .lh-3p-filter-input {\n      vertical-align: middle;\n      user-select: none;\n    }\n    .lh-3p-filter-input:disabled + .lh-3p-ui-string {\n      text-decoration: line-through;\n    }\n  '));
   v0.append(v1);
-  return v0;
-}
-
-/**
- * @param {DOM} dom
- */
-function createScorescaleComponent(dom) {
-  const v0 = dom.document().createDocumentFragment();
-  const v1 = dom.createElement('div', 'lh-scorescale');
-  const v2 = dom.createElement('span', 'lh-scorescale-range lh-scorescale-range--fail');
-  v2.append(dom.document().createTextNode('0–49'));
-  v1.append(v2);
-  const v3 = dom.createElement('span', 'lh-scorescale-range lh-scorescale-range--average');
-  v3.append(dom.document().createTextNode('50–89'));
-  v1.append(v3);
-  const v4 = dom.createElement('span', 'lh-scorescale-range lh-scorescale-range--pass');
-  v4.append(dom.document().createTextNode('90–100'));
-  v1.append(v4);
-  v0.append(v1);
-  return v0;
-}
-
-/**
- * @param {DOM} dom
- */
-function createChevronComponent(dom) {
-  const v0 = dom.document().createDocumentFragment();
-  const v1 = dom.createElementNS('http://www.w3.org/2000/svg', 'svg', 'lh-chevron');
-  v1.setAttribute('viewBox', '0 0 100 100');
-  const v2 = dom.createElementNS('http://www.w3.org/2000/svg', 'g', 'lh-chevron__lines');
-  const v3 = dom.createElementNS('http://www.w3.org/2000/svg', 'path', 'lh-chevron__line lh-chevron__line-left');
-  v3.setAttribute('d', 'M10 50h40');
-  v2.append(v3);
-  const v4 = dom.createElementNS('http://www.w3.org/2000/svg', 'path', 'lh-chevron__line lh-chevron__line-right');
-  v4.setAttribute('d', 'M90 50H50');
-  v2.append(v4);
-  v1.append(v2);
-  v0.append(v1);
-  return v0;
-}
-
-/**
- * @param {DOM} dom
- */
-function createCategoryheaderComponent(dom) {
-  const v0 = dom.document().createDocumentFragment();
-  const v1 = dom.createElement('div', 'lh-category-header');
-  const v2 = dom.createElement('div', 'lh-score__gauge');
-  v2.setAttribute('role', 'heading');
-  v2.setAttribute('aria-level', '2');
-  v1.append(v2);
-  const v3 = dom.createElement('div', 'lh-category-header__description');
-  v1.append(v3);
-  v0.append(v1);
-  return v0;
-}
-
-/**
- * @param {DOM} dom
- */
-function createClumpComponent(dom) {
-  const v0 = dom.document().createDocumentFragment();
-  const v1 = dom.createElement('details', 'lh-clump lh-audit-group');
-  const v2 = dom.createElement('summary');
-  const v3 = dom.createElement('div', 'lh-audit-group__summary');
-  const v4 = dom.createElement('div', 'lh-audit-group__header');
-  const v5 = dom.createElement('span', 'lh-audit-group__title');
-  v4.append(v5);
-  const v6 = dom.createElement('span', 'lh-audit-group__itemcount');
-  v4.append(v6);
+  const v2 = dom.createElement('div', 'lh-3p-filter');
+  const v3 = dom.createElement('label', 'lh-3p-filter-label');
+  const v4 = dom.createElement('input', 'lh-3p-filter-input');
+  v4.setAttribute('type', 'checkbox');
+  v4.setAttribute('checked', '');
   v3.append(v4);
+  const v5 = dom.createElement('span', 'lh-3p-ui-string');
+  v5.append(dom.document().createTextNode('Show 3rd party resources'));
+  v3.append(v5);
+  v3.append(dom.document().createTextNode(' ('));
+  const v6 = dom.createElement('span', 'lh-3p-filter-count');
+  v3.append(v6);
+  v3.append(dom.document().createTextNode(')\n    '));
   v2.append(v3);
-  v1.append(v2);
-  v0.append(v1);
-  return v0;
-}
-
-/**
- * @param {DOM} dom
- */
-function createMetricstoggleComponent(dom) {
-  const v0 = dom.document().createDocumentFragment();
-  const v1 = dom.createElement('div', 'lh-metrics-toggle');
-  const v2 = dom.createElement('input', 'lh-metrics-toggle__input');
-  v2.setAttribute('type', 'checkbox');
-  v2.setAttribute('id', 'toggle-metric-descriptions');
-  v2.setAttribute('aria-label', 'Toggle the display of metric descriptions');
-  v1.append(v2);
-  const v3 = dom.createElement('label', 'lh-metrics-toggle__label');
-  v3.setAttribute('for', 'toggle-metric-descriptions');
-  const v4 = dom.createElement('div', 'lh-metrics-toggle__icon lh-metrics-toggle__icon--less');
-  v4.setAttribute('aria-hidden', 'true');
-  const v5 = dom.createElementNS('http://www.w3.org/2000/svg', 'svg');
-  v5.setAttribute('width', '24');
-  v5.setAttribute('height', '24');
-  v5.setAttribute('viewBox', '0 0 24 24');
-  const v6 = dom.createElementNS('http://www.w3.org/2000/svg', 'path', 'lh-metrics-toggle__lines');
-  v6.setAttribute('d', 'M4 9h16v2H4zm0 4h10v2H4z');
-  v5.append(v6);
-  v4.append(v5);
-  v3.append(v4);
-  const v7 = dom.createElement('div', 'lh-metrics-toggle__icon lh-metrics-toggle__icon--more');
-  v7.setAttribute('aria-hidden', 'true');
-  const v8 = dom.createElementNS('http://www.w3.org/2000/svg', 'svg');
-  v8.setAttribute('width', '24');
-  v8.setAttribute('height', '24');
-  v8.setAttribute('viewBox', '0 0 24 24');
-  const v9 = dom.createElementNS('http://www.w3.org/2000/svg', 'path', 'lh-metrics-toggle__lines');
-  v9.setAttribute('d', 'M3 18h12v-2H3v2zM3 6v2h18V6H3zm0 7h18v-2H3v2z');
-  v8.append(v9);
-  v7.append(v8);
-  v3.append(v7);
-  v1.append(v3);
-  v0.append(v1);
+  v0.append(v2);
   return v0;
 }
 
@@ -168,6 +66,339 @@ function createAuditComponent(dom) {
 /**
  * @param {DOM} dom
  */
+function createCategoryHeaderComponent(dom) {
+  const v0 = dom.document().createDocumentFragment();
+  const v1 = dom.createElement('div', 'lh-category-header');
+  const v2 = dom.createElement('div', 'lh-score__gauge');
+  v2.setAttribute('role', 'heading');
+  v2.setAttribute('aria-level', '2');
+  v1.append(v2);
+  const v3 = dom.createElement('div', 'lh-category-header__description');
+  v1.append(v3);
+  v0.append(v1);
+  return v0;
+}
+
+/**
+ * @param {DOM} dom
+ */
+function createChevronComponent(dom) {
+  const v0 = dom.document().createDocumentFragment();
+  const v1 = dom.createElementNS('http://www.w3.org/2000/svg', 'svg', 'lh-chevron');
+  v1.setAttribute('viewBox', '0 0 100 100');
+  const v2 = dom.createElementNS('http://www.w3.org/2000/svg', 'g', 'lh-chevron__lines');
+  const v3 = dom.createElementNS('http://www.w3.org/2000/svg', 'path', 'lh-chevron__line lh-chevron__line-left');
+  v3.setAttribute('d', 'M10 50h40');
+  v2.append(v3);
+  const v4 = dom.createElementNS('http://www.w3.org/2000/svg', 'path', 'lh-chevron__line lh-chevron__line-right');
+  v4.setAttribute('d', 'M90 50H50');
+  v2.append(v4);
+  v1.append(v2);
+  v0.append(v1);
+  return v0;
+}
+
+/**
+ * @param {DOM} dom
+ */
+function createClumpComponent(dom) {
+  const v0 = dom.document().createDocumentFragment();
+  const v1 = dom.createElement('details', 'lh-clump lh-audit-group');
+  const v2 = dom.createElement('summary');
+  const v3 = dom.createElement('div', 'lh-audit-group__summary');
+  const v4 = dom.createElement('div', 'lh-audit-group__header');
+  const v5 = dom.createElement('span', 'lh-audit-group__title');
+  v4.append(v5);
+  const v6 = dom.createElement('span', 'lh-audit-group__itemcount');
+  v4.append(v6);
+  v3.append(v4);
+  v2.append(v3);
+  v1.append(v2);
+  v0.append(v1);
+  return v0;
+}
+
+/**
+ * @param {DOM} dom
+ */
+function createCrcComponent(dom) {
+  const v0 = dom.document().createDocumentFragment();
+  const v1 = dom.createElement('div', 'lh-crc-container');
+  const v2 = dom.createElement('style');
+  v2.append(dom.document().createTextNode('\n      .lh-crc .tree-marker {\n        width: 12px;\n        height: 26px;\n        display: block;\n        float: left;\n        background-position: top left;\n      }\n      .lh-crc .horiz-down {\n        background: url(\'data:image/svg+xml;utf8,<svg width="16" height="26" viewBox="0 0 16 26" xmlns="http://www.w3.org/2000/svg"><g fill="%23D8D8D8" fill-rule="evenodd"><path d="M16 12v2H-2v-2z"/><path d="M9 12v14H7V12z"/></g></svg>\');\n      }\n      .lh-crc .right {\n        background: url(\'data:image/svg+xml;utf8,<svg width="16" height="26" viewBox="0 0 16 26" xmlns="http://www.w3.org/2000/svg"><path d="M16 12v2H0v-2z" fill="%23D8D8D8" fill-rule="evenodd"/></svg>\');\n      }\n      .lh-crc .up-right {\n        background: url(\'data:image/svg+xml;utf8,<svg width="16" height="26" viewBox="0 0 16 26" xmlns="http://www.w3.org/2000/svg"><path d="M7 0h2v14H7zm2 12h7v2H9z" fill="%23D8D8D8" fill-rule="evenodd"/></svg>\');\n      }\n      .lh-crc .vert-right {\n        background: url(\'data:image/svg+xml;utf8,<svg width="16" height="26" viewBox="0 0 16 26" xmlns="http://www.w3.org/2000/svg"><path d="M7 0h2v27H7zm2 12h7v2H9z" fill="%23D8D8D8" fill-rule="evenodd"/></svg>\');\n      }\n      .lh-crc .vert {\n        background: url(\'data:image/svg+xml;utf8,<svg width="16" height="26" viewBox="0 0 16 26" xmlns="http://www.w3.org/2000/svg"><path d="M7 0h2v26H7z" fill="%23D8D8D8" fill-rule="evenodd"/></svg>\');\n      }\n      .lh-crc .crc-tree {\n        font-size: 14px;\n        width: 100%;\n        overflow-x: auto;\n      }\n      .lh-crc .crc-node {\n        height: 26px;\n        line-height: 26px;\n        white-space: nowrap;\n      }\n      .lh-crc .crc-node__tree-value {\n        margin-left: 10px;\n      }\n      .lh-crc .crc-node__tree-value div {\n        display: inline;\n      }\n      .lh-crc .crc-node__chain-duration {\n        font-weight: 700;\n      }\n      .lh-crc .crc-initial-nav {\n        color: #595959;\n        font-style: italic;\n      }\n      .lh-crc__summary-value {\n        margin-bottom: 10px;\n      }\n    '));
+  v1.append(v2);
+  const v3 = dom.createElement('div');
+  const v4 = dom.createElement('div', 'lh-crc__summary-value');
+  const v5 = dom.createElement('span', 'lh-crc__longest_duration_label');
+  v4.append(v5);
+  const v6 = dom.createElement('b', 'lh-crc__longest_duration');
+  v4.append(v6);
+  v3.append(v4);
+  v1.append(v3);
+  const v7 = dom.createElement('div', 'lh-crc');
+  const v8 = dom.createElement('div', 'crc-initial-nav');
+  v7.append(v8);
+  v1.append(v7);
+  v0.append(v1);
+  return v0;
+}
+
+/**
+ * @param {DOM} dom
+ */
+function createCrcChainComponent(dom) {
+  const v0 = dom.document().createDocumentFragment();
+  const v1 = dom.createElement('div', 'crc-node');
+  const v2 = dom.createElement('span', 'crc-node__tree-marker');
+  v1.append(v2);
+  const v3 = dom.createElement('span', 'crc-node__tree-value');
+  v1.append(v3);
+  v0.append(v1);
+  return v0;
+}
+
+/**
+ * @param {DOM} dom
+ */
+function createElementScreenshotComponent(dom) {
+  const v0 = dom.document().createDocumentFragment();
+  const v1 = dom.createElement('div', 'lh-element-screenshot');
+  const v2 = dom.createElement('div', 'lh-element-screenshot__content');
+  const v3 = dom.createElement('div', 'lh-element-screenshot__mask');
+  const v4 = dom.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  v4.setAttribute('height', '0');
+  v4.setAttribute('width', '0');
+  const v5 = dom.createElementNS('http://www.w3.org/2000/svg', 'defs');
+  const v6 = dom.createElementNS('http://www.w3.org/2000/svg', 'clipPath');
+  v6.setAttribute('clipPathUnits', 'objectBoundingBox');
+  v5.append(v6);
+  v4.append(v5);
+  v3.append(v4);
+  v2.append(v3);
+  const v7 = dom.createElement('div', 'lh-element-screenshot__image');
+  v2.append(v7);
+  const v8 = dom.createElement('div', 'lh-element-screenshot__element-marker');
+  v2.append(v8);
+  v1.append(v2);
+  v0.append(v1);
+  return v0;
+}
+
+/**
+ * @param {DOM} dom
+ */
+function createEnvItemComponent(dom) {
+  const v0 = dom.document().createDocumentFragment();
+  const v1 = dom.createElement('li', 'lh-env__item');
+  const v2 = dom.createElement('span', 'lh-env__name');
+  v1.append(v2);
+  const v3 = dom.createElement('span', 'lh-env__description');
+  v1.append(v3);
+  v0.append(v1);
+  return v0;
+}
+
+/**
+ * @param {DOM} dom
+ */
+function createFooterComponent(dom) {
+  const v0 = dom.document().createDocumentFragment();
+  const v1 = dom.createElement('style');
+  v1.append(dom.document().createTextNode('\n    .lh-footer {\n      padding: var(--footer-padding-vertical) calc(var(--default-padding) * 2);\n      max-width: var(--report-width);\n      margin: 0 auto;\n    }\n    .lh-footer .lh-generated {\n      text-align: center;\n    }\n    .lh-env__title {\n      font-size: var(--env-item-font-size-big);\n      line-height: var(--env-item-line-height-big);\n      text-align: center;\n      padding: var(--score-container-padding);\n    }\n    .lh-env {\n      padding: var(--default-padding) 0;\n    }\n    .lh-env__items {\n      padding-left: 16px;\n      margin: 0 0 var(--audits-margin-bottom);\n      padding: 0;\n    }\n    .lh-env__items .lh-env__item:nth-child(2n) {\n      background-color: var(--env-item-background-color);\n    }\n    .lh-env__item {\n      display: flex;\n      padding: var(--env-item-padding);\n      position: relative;\n    }\n    span.lh-env__name {\n      font-weight: bold;\n      min-width: var(--env-name-min-width);\n      flex: 0.5;\n      padding: 0 8px;\n    }\n    span.lh-env__description {\n      text-align: left;\n      flex: 1;\n    }\n  '));
+  v0.append(v1);
+  const v2 = dom.createElement('footer', 'lh-footer');
+  const v3 = dom.createElement('div', 'lh-env');
+  const v4 = dom.createElement('div', 'lh-env__title');
+  v4.append(dom.document().createTextNode('Runtime Settings'));
+  v3.append(v4);
+  const v5 = dom.createElement('ul', 'lh-env__items');
+  v3.append(v5);
+  v2.append(v3);
+  const v6 = dom.createElement('div', 'lh-generated');
+  v6.append(dom.document().createTextNode('\n      Generated by '));
+  const v7 = dom.createElement('b');
+  v7.append(dom.document().createTextNode('Lighthouse'));
+  v6.append(v7);
+  const v8 = dom.createElement('span', 'lh-footer__version');
+  v6.append(v8);
+  v6.append(dom.document().createTextNode(' |\n      '));
+  const v9 = dom.createElement('a', 'lh-footer__version_issue');
+  v9.setAttribute('href', 'https://github.com/GoogleChrome/Lighthouse/issues');
+  v9.setAttribute('target', '_blank');
+  v9.setAttribute('rel', 'noopener');
+  v9.append(dom.document().createTextNode('File an issue'));
+  v6.append(v9);
+  v2.append(v6);
+  v0.append(v2);
+  return v0;
+}
+
+/**
+ * @param {DOM} dom
+ */
+function createGaugeComponent(dom) {
+  const v0 = dom.document().createDocumentFragment();
+  const v1 = dom.createElement('a', 'lh-gauge__wrapper');
+  v1.setAttribute('href', '#');
+  const v2 = dom.createElement('div', 'lh-gauge__svg-wrapper');
+  const v3 = dom.createElementNS('http://www.w3.org/2000/svg', 'svg', 'lh-gauge');
+  v3.setAttribute('viewBox', '0 0 120 120');
+  const v4 = dom.createElementNS('http://www.w3.org/2000/svg', 'circle', 'lh-gauge-base');
+  v4.setAttribute('r', '56');
+  v4.setAttribute('cx', '60');
+  v4.setAttribute('cy', '60');
+  v4.setAttribute('stroke-width', '8');
+  v3.append(v4);
+  const v5 = dom.createElementNS('http://www.w3.org/2000/svg', 'circle', 'lh-gauge-arc');
+  v5.setAttribute('r', '56');
+  v5.setAttribute('cx', '60');
+  v5.setAttribute('cy', '60');
+  v5.setAttribute('stroke-width', '8');
+  v3.append(v5);
+  v2.append(v3);
+  v1.append(v2);
+  const v6 = dom.createElement('div', 'lh-gauge__percentage');
+  v1.append(v6);
+  const v7 = dom.createElement('div', 'lh-gauge__label');
+  v1.append(v7);
+  v0.append(v1);
+  return v0;
+}
+
+/**
+ * @param {DOM} dom
+ */
+function createGaugePwaComponent(dom) {
+  const v0 = dom.document().createDocumentFragment();
+  const v1 = dom.createElement('style');
+  v1.append(dom.document().createTextNode('\n    .lh-gauge--pwa .lh-gauge--pwa__component {\n      display: none;\n    }\n    .lh-gauge--pwa__wrapper:not(.lh-badged--all) .lh-gauge--pwa__logo > path {\n      /* Gray logo unless everything is passing. */\n      fill: #B0B0B0;\n    }\n\n    .lh-gauge--pwa__disc {\n      fill: var(--color-gray-200);\n    }\n\n    .lh-gauge--pwa__logo--primary-color {\n      fill: #304FFE;\n    }\n\n    .lh-gauge--pwa__logo--secondary-color {\n      fill: #3D3D3D;\n    }\n    .dark .lh-gauge--pwa__logo--secondary-color {\n      fill: #D8B6B6;\n    }\n\n    /* No passing groups. */\n    .lh-gauge--pwa__wrapper:not([class*=\'lh-badged--\']) .lh-gauge--pwa__na-line {\n      display: inline;\n    }\n    /* Just optimized. Same n/a line as no passing groups. */\n    .lh-gauge--pwa__wrapper.lh-badged--pwa-optimized:not(.lh-badged--pwa-installable) .lh-gauge--pwa__na-line {\n      display: inline;\n    }\n\n    /* Just installable. */\n    .lh-gauge--pwa__wrapper.lh-badged--pwa-installable .lh-gauge--pwa__installable-badge {\n      display: inline;\n    }\n\n    /* All passing groups. */\n    .lh-gauge--pwa__wrapper.lh-badged--all .lh-gauge--pwa__check-circle {\n      display: inline;\n    }\n  '));
+  v0.append(v1);
+  const v2 = dom.createElement('a', 'lh-gauge__wrapper lh-gauge--pwa__wrapper');
+  v2.setAttribute('href', '#');
+  const v3 = dom.createElementNS('http://www.w3.org/2000/svg', 'svg', 'lh-gauge lh-gauge--pwa');
+  v3.setAttribute('viewBox', '0 0 60 60');
+  const v4 = dom.createElementNS('http://www.w3.org/2000/svg', 'defs');
+  const v5 = dom.createElementNS('http://www.w3.org/2000/svg', 'linearGradient');
+  v5.setAttribute('id', 'lh-gauge--pwa__check-circle__gradient');
+  v5.setAttribute('x1', '50%');
+  v5.setAttribute('y1', '0%');
+  v5.setAttribute('x2', '50%');
+  v5.setAttribute('y2', '100%');
+  const v6 = dom.createElementNS('http://www.w3.org/2000/svg', 'stop');
+  v6.setAttribute('stop-color', '#00C852');
+  v6.setAttribute('offset', '0%');
+  v5.append(v6);
+  const v7 = dom.createElementNS('http://www.w3.org/2000/svg', 'stop');
+  v7.setAttribute('stop-color', '#009688');
+  v7.setAttribute('offset', '100%');
+  v5.append(v7);
+  v4.append(v5);
+  const v8 = dom.createElementNS('http://www.w3.org/2000/svg', 'linearGradient');
+  v8.setAttribute('id', 'lh-gauge--pwa__installable__shadow-gradient');
+  v8.setAttribute('x1', '76.056%');
+  v8.setAttribute('x2', '24.111%');
+  v8.setAttribute('y1', '82.995%');
+  v8.setAttribute('y2', '24.735%');
+  const v9 = dom.createElementNS('http://www.w3.org/2000/svg', 'stop');
+  v9.setAttribute('stop-color', '#A5D6A7');
+  v9.setAttribute('offset', '0%');
+  v8.append(v9);
+  const v10 = dom.createElementNS('http://www.w3.org/2000/svg', 'stop');
+  v10.setAttribute('stop-color', '#80CBC4');
+  v10.setAttribute('offset', '100%');
+  v8.append(v10);
+  v4.append(v8);
+  const v11 = dom.createElementNS('http://www.w3.org/2000/svg', 'g');
+  v11.setAttribute('id', 'lh-gauge--pwa__installable-badge');
+  const v12 = dom.createElementNS('http://www.w3.org/2000/svg', 'circle');
+  v12.setAttribute('fill', '#FFFFFF');
+  v12.setAttribute('cx', '10');
+  v12.setAttribute('cy', '10');
+  v12.setAttribute('r', '10');
+  v11.append(v12);
+  const v13 = dom.createElementNS('http://www.w3.org/2000/svg', 'path');
+  v13.setAttribute('fill', '#009688');
+  v13.setAttribute('d', 'M10 4.167A5.835 5.835 0 0 0 4.167 10 5.835 5.835 0 0 0 10 15.833 5.835 5.835 0 0 0 15.833 10 5.835 5.835 0 0 0 10 4.167zm2.917 6.416h-2.334v2.334H9.417v-2.334H7.083V9.417h2.334V7.083h1.166v2.334h2.334v1.166z');
+  v11.append(v13);
+  v4.append(v11);
+  v3.append(v4);
+  const v14 = dom.createElementNS('http://www.w3.org/2000/svg', 'g');
+  v14.setAttribute('stroke', 'none');
+  v14.setAttribute('fill-rule', 'nonzero');
+  const v15 = dom.createElementNS('http://www.w3.org/2000/svg', 'circle', 'lh-gauge--pwa__disc');
+  v15.setAttribute('cx', '30');
+  v15.setAttribute('cy', '30');
+  v15.setAttribute('r', '30');
+  v14.append(v15);
+  const v16 = dom.createElementNS('http://www.w3.org/2000/svg', 'g', 'lh-gauge--pwa__logo');
+  const v17 = dom.createElementNS('http://www.w3.org/2000/svg', 'path', 'lh-gauge--pwa__logo--secondary-color');
+  v17.setAttribute('d', 'M35.66 19.39l.7-1.75h2L37.4 15 38.6 12l3.4 9h-2.51l-.58-1.61z');
+  v16.append(v17);
+  const v18 = dom.createElementNS('http://www.w3.org/2000/svg', 'path', 'lh-gauge--pwa__logo--primary-color');
+  v18.setAttribute('d', 'M33.52 21l3.65-9h-2.42l-2.5 5.82L30.5 12h-1.86l-1.9 5.82-1.35-2.65-1.21 3.72L25.4 21h2.38l1.72-5.2 1.64 5.2z');
+  v16.append(v18);
+  const v19 = dom.createElementNS('http://www.w3.org/2000/svg', 'path', 'lh-gauge--pwa__logo--secondary-color');
+  v19.setAttribute('fill-rule', 'nonzero');
+  v19.setAttribute('d', 'M20.3 17.91h1.48c.45 0 .85-.05 1.2-.15l.39-1.18 1.07-3.3a2.64 2.64 0 0 0-.28-.37c-.55-.6-1.36-.91-2.42-.91H18v9h2.3V17.9zm1.96-3.84c.22.22.33.5.33.87 0 .36-.1.65-.29.87-.2.23-.59.35-1.15.35h-.86v-2.41h.87c.52 0 .89.1 1.1.32z');
+  v16.append(v19);
+  v14.append(v16);
+  const v20 = dom.createElementNS('http://www.w3.org/2000/svg', 'rect', 'lh-gauge--pwa__component lh-gauge--pwa__na-line');
+  v20.setAttribute('fill', '#FFFFFF');
+  v20.setAttribute('x', '20');
+  v20.setAttribute('y', '32');
+  v20.setAttribute('width', '20');
+  v20.setAttribute('height', '4');
+  v20.setAttribute('rx', '2');
+  v14.append(v20);
+  const v21 = dom.createElementNS('http://www.w3.org/2000/svg', 'g', 'lh-gauge--pwa__component lh-gauge--pwa__installable-badge');
+  v21.setAttribute('transform', 'translate(20, 29)');
+  const v22 = dom.createElementNS('http://www.w3.org/2000/svg', 'path');
+  v22.setAttribute('fill', 'url(#lh-gauge--pwa__installable__shadow-gradient)');
+  v22.setAttribute('d', 'M33.629 19.487c-4.272 5.453-10.391 9.39-17.415 10.869L3 17.142 17.142 3 33.63 19.487z');
+  v21.append(v22);
+  const v23 = dom.createElementNS('http://www.w3.org/2000/svg', 'use');
+  v23.setAttribute('href', '#lh-gauge--pwa__installable-badge');
+  v21.append(v23);
+  v14.append(v21);
+  const v24 = dom.createElementNS('http://www.w3.org/2000/svg', 'g', 'lh-gauge--pwa__component lh-gauge--pwa__check-circle');
+  v24.setAttribute('transform', 'translate(18, 28)');
+  const v25 = dom.createElementNS('http://www.w3.org/2000/svg', 'circle');
+  v25.setAttribute('fill', '#FFFFFF');
+  v25.setAttribute('cx', '12');
+  v25.setAttribute('cy', '12');
+  v25.setAttribute('r', '12');
+  v24.append(v25);
+  const v26 = dom.createElementNS('http://www.w3.org/2000/svg', 'path');
+  v26.setAttribute('fill', 'url(#lh-gauge--pwa__check-circle__gradient)');
+  v26.setAttribute('d', 'M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z');
+  v24.append(v26);
+  v14.append(v24);
+  v3.append(v14);
+  v2.append(v3);
+  const v27 = dom.createElement('div', 'lh-gauge__label');
+  v2.append(v27);
+  v0.append(v2);
+  return v0;
+}
+
+/**
+ * @param {DOM} dom
+ */
+function createHeadingComponent(dom) {
+  const v0 = dom.document().createDocumentFragment();
+  const v1 = dom.createElement('style');
+  v1.append(dom.document().createTextNode('\n    /* CSS Fireworks. Originally by Eddie Lin\n       https://codepen.io/paulirish/pen/yEVMbP\n    */\n    .pyro {\n      display: none;\n      z-index: 1;\n      pointer-events: none;\n    }\n    .score100 .pyro {\n      display: block;\n    }\n    .score100 .lh-lighthouse stop:first-child {\n      stop-color: hsla(200, 12%, 95%, 0);\n    }\n    .score100 .lh-lighthouse stop:last-child {\n      stop-color: hsla(65, 81%, 76%, 1);\n    }\n\n    .pyro > .before, .pyro > .after {\n      position: absolute;\n      width: 5px;\n      height: 5px;\n      border-radius: 2.5px;\n      box-shadow: 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff;\n      animation: 1s bang ease-out infinite backwards,  1s gravity ease-in infinite backwards,  5s position linear infinite backwards;\n      animation-delay: 1s, 1s, 1s;\n    }\n\n    .pyro > .after {\n      animation-delay: 2.25s, 2.25s, 2.25s;\n      animation-duration: 1.25s, 1.25s, 6.25s;\n    }\n    .fireworks-paused .pyro > div {\n      animation-play-state: paused;\n    }\n\n    @keyframes bang {\n      to {\n        box-shadow: -70px -115.67px #47ebbc, -28px -99.67px #eb47a4, 58px -31.67px #7eeb47, 13px -141.67px #eb47c5, -19px 6.33px #7347eb, -2px -74.67px #ebd247, 24px -151.67px #eb47e0, 57px -138.67px #b4eb47, -51px -104.67px #479eeb, 62px 8.33px #ebcf47, -93px 0.33px #d547eb, -16px -118.67px #47bfeb, 53px -84.67px #47eb83, 66px -57.67px #eb47bf, -93px -65.67px #91eb47, 30px -13.67px #86eb47, -2px -59.67px #83eb47, -44px 1.33px #eb47eb, 61px -58.67px #47eb73, 5px -22.67px #47e8eb, -66px -28.67px #ebe247, 42px -123.67px #eb5547, -75px 26.33px #7beb47, 15px -52.67px #a147eb, 36px -51.67px #eb8347, -38px -12.67px #eb5547, -46px -59.67px #47eb81, 78px -114.67px #eb47ba, 15px -156.67px #eb47bf, -36px 1.33px #eb4783, -72px -86.67px #eba147, 31px -46.67px #ebe247, -68px 29.33px #47e2eb, -55px 19.33px #ebe047, -56px 27.33px #4776eb, -13px -91.67px #eb5547, -47px -138.67px #47ebc7, -18px -96.67px #eb47ac, 11px -88.67px #4783eb, -67px -28.67px #47baeb, 53px 10.33px #ba47eb, 11px 19.33px #5247eb, -5px -11.67px #eb4791, -68px -4.67px #47eba7, 95px -37.67px #eb478b, -67px -162.67px #eb5d47, -54px -120.67px #eb6847, 49px -12.67px #ebe047, 88px 8.33px #47ebda, 97px 33.33px #eb8147, 6px -71.67px #ebbc47;\n      }\n    }\n    @keyframes gravity {\n      to {\n        transform: translateY(80px);\n        opacity: 0;\n      }\n    }\n    @keyframes position {\n      0%, 19.9% {\n        margin-top: 4%;\n        margin-left: 47%;\n      }\n      20%, 39.9% {\n        margin-top: 7%;\n        margin-left: 30%;\n      }\n      40%, 59.9% {\n        margin-top: 6%;\n        margin-left: 70%;\n      }\n      60%, 79.9% {\n        margin-top: 3%;\n        margin-left: 20%;\n      }\n      80%, 99.9% {\n        margin-top: 3%;\n        margin-left: 80%;\n      }\n    }\n  '));
+  v0.append(v1);
+  const v2 = dom.createElement('div', 'lh-header-container');
+  const v3 = dom.createElement('div', 'lh-scores-wrapper-placeholder');
+  v2.append(v3);
+  v0.append(v2);
+  return v0;
+}
+
+/**
+ * @param {DOM} dom
+ */
 function createMetricComponent(dom) {
   const v0 = dom.document().createDocumentFragment();
   const v1 = dom.createElement('div', 'lh-metric');
@@ -179,6 +410,46 @@ function createMetricComponent(dom) {
   const v5 = dom.createElement('div', 'lh-metric__description');
   v2.append(v5);
   v1.append(v2);
+  v0.append(v1);
+  return v0;
+}
+
+/**
+ * @param {DOM} dom
+ */
+function createMetricsToggleComponent(dom) {
+  const v0 = dom.document().createDocumentFragment();
+  const v1 = dom.createElement('div', 'lh-metrics-toggle');
+  const v2 = dom.createElement('input', 'lh-metrics-toggle__input');
+  v2.setAttribute('type', 'checkbox');
+  v2.setAttribute('id', 'toggle-metric-descriptions');
+  v2.setAttribute('aria-label', 'Toggle the display of metric descriptions');
+  v1.append(v2);
+  const v3 = dom.createElement('label', 'lh-metrics-toggle__label');
+  v3.setAttribute('for', 'toggle-metric-descriptions');
+  const v4 = dom.createElement('div', 'lh-metrics-toggle__icon lh-metrics-toggle__icon--less');
+  v4.setAttribute('aria-hidden', 'true');
+  const v5 = dom.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  v5.setAttribute('width', '24');
+  v5.setAttribute('height', '24');
+  v5.setAttribute('viewBox', '0 0 24 24');
+  const v6 = dom.createElementNS('http://www.w3.org/2000/svg', 'path', 'lh-metrics-toggle__lines');
+  v6.setAttribute('d', 'M4 9h16v2H4zm0 4h10v2H4z');
+  v5.append(v6);
+  v4.append(v5);
+  v3.append(v4);
+  const v7 = dom.createElement('div', 'lh-metrics-toggle__icon lh-metrics-toggle__icon--more');
+  v7.setAttribute('aria-hidden', 'true');
+  const v8 = dom.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  v8.setAttribute('width', '24');
+  v8.setAttribute('height', '24');
+  v8.setAttribute('viewBox', '0 0 24 24');
+  const v9 = dom.createElementNS('http://www.w3.org/2000/svg', 'path', 'lh-metrics-toggle__lines');
+  v9.setAttribute('d', 'M3 18h12v-2H3v2zM3 6v2h18V6H3zm0 7h18v-2H3v2z');
+  v8.append(v9);
+  v7.append(v8);
+  v3.append(v7);
+  v1.append(v3);
   v0.append(v1);
   return v0;
 }
@@ -226,7 +497,7 @@ function createOpportunityComponent(dom) {
 /**
  * @param {DOM} dom
  */
-function createOpportunityheaderComponent(dom) {
+function createOpportunityHeaderComponent(dom) {
   const v0 = dom.document().createDocumentFragment();
   const v1 = dom.createElement('div', 'lh-load-opportunity__header lh-load-opportunity__cols');
   const v2 = dom.createElement('div', 'lh-load-opportunity__col lh-load-opportunity__col--one');
@@ -240,7 +511,26 @@ function createOpportunityheaderComponent(dom) {
 /**
  * @param {DOM} dom
  */
-function createScoreswrapperComponent(dom) {
+function createScorescaleComponent(dom) {
+  const v0 = dom.document().createDocumentFragment();
+  const v1 = dom.createElement('div', 'lh-scorescale');
+  const v2 = dom.createElement('span', 'lh-scorescale-range lh-scorescale-range--fail');
+  v2.append(dom.document().createTextNode('0–49'));
+  v1.append(v2);
+  const v3 = dom.createElement('span', 'lh-scorescale-range lh-scorescale-range--average');
+  v3.append(dom.document().createTextNode('50–89'));
+  v1.append(v3);
+  const v4 = dom.createElement('span', 'lh-scorescale-range lh-scorescale-range--pass');
+  v4.append(dom.document().createTextNode('90–100'));
+  v1.append(v4);
+  v0.append(v1);
+  return v0;
+}
+
+/**
+ * @param {DOM} dom
+ */
+function createScoresWrapperComponent(dom) {
   const v0 = dom.document().createDocumentFragment();
   const v1 = dom.createElement('style');
   v1.append(dom.document().createTextNode('\n    .lh-scores-container {\n      display: flex;\n      flex-direction: column;\n      padding: var(--scores-container-padding);\n      position: relative;\n      width: 100%;\n    }\n\n    .lh-sticky-header {\n      --gauge-circle-size: 36px;\n      --plugin-badge-size: 18px;\n      --plugin-icon-size: 75%;\n      --gauge-wrapper-width: 60px;\n      --gauge-percentage-font-size: 13px;\n      position: fixed;\n      left: 0;\n      right: 0;\n      top: var(--topbar-height);\n      font-weight: 700;\n      display: none;\n      justify-content: center;\n      background-color: var(--sticky-header-background-color);\n      border-bottom: 1px solid var(--color-gray-200);\n      padding-top: var(--score-container-padding);\n      padding-bottom: 4px;\n      z-index: 1;\n      pointer-events: none;\n    }\n\n    .lh-devtools .lh-sticky-header {\n      /* The report within DevTools is placed in a container with overflow, which changes the placement of this header unless we change `position` to `sticky.` */\n      position: sticky;\n    }\n\n    .lh-sticky-header--visible {\n      display: grid;\n      grid-auto-flow: column;\n      pointer-events: auto;\n    }\n\n    /* Disable the gauge arc animation for the sticky header, so toggling display: none\n       does not play the animation. */\n    .lh-sticky-header .lh-gauge-arc {\n      animation: none;\n    }\n\n    .lh-sticky-header .lh-gauge__label {\n      display: none;\n    }\n\n    .lh-highlighter {\n      width: var(--gauge-wrapper-width);\n      height: 1px;\n      background-color: var(--highlighter-background-color);\n      /* Position at bottom of first gauge in sticky header. */\n      position: absolute;\n      grid-column: 1;\n      bottom: -1px;\n    }\n\n    .lh-gauge__wrapper:first-of-type {\n      contain: none;\n    }\n  '));
@@ -255,6 +545,28 @@ function createScoreswrapperComponent(dom) {
   v3.append(v4);
   v2.append(v3);
   v0.append(v2);
+  return v0;
+}
+
+/**
+ * @param {DOM} dom
+ */
+function createSnippetComponent(dom) {
+  const v0 = dom.document().createDocumentFragment();
+  const v1 = dom.createElement('div', 'lh-snippet');
+  const v2 = dom.createElement('style');
+  v2.append(dom.document().createTextNode('\n          :root {\n            --snippet-highlight-light: #fbf1f2;\n            --snippet-highlight-dark: #ffd6d8;\n          }\n\n         .lh-snippet__header {\n          position: relative;\n          overflow: hidden;\n          padding: 10px;\n          border-bottom: none;\n          color: var(--snippet-color);\n          background-color: var(--snippet-background-color);\n          border: 1px solid var(--report-border-color-secondary);\n        }\n        .lh-snippet__title {\n          font-weight: bold;\n          float: left;\n        }\n        .lh-snippet__node {\n          float: left;\n          margin-left: 4px;\n        }\n        .lh-snippet__toggle-expand {\n          padding: 1px 7px;\n          margin-top: -1px;\n          margin-right: -7px;\n          float: right;\n          background: transparent;\n          border: none;\n          cursor: pointer;\n          font-size: 14px;\n          color: #0c50c7;\n        }\n\n        .lh-snippet__snippet {\n          overflow: auto;\n          border: 1px solid var(--report-border-color-secondary);\n        }\n        /* Container needed so that all children grow to the width of the scroll container */\n        .lh-snippet__snippet-inner {\n          display: inline-block;\n          min-width: 100%;\n        }\n\n        .lh-snippet:not(.lh-snippet--expanded) .lh-snippet__show-if-expanded {\n          display: none;\n        }\n        .lh-snippet.lh-snippet--expanded .lh-snippet__show-if-collapsed {\n          display: none;\n        }\n\n        .lh-snippet__line {\n          background: white;\n          white-space: pre;\n          display: flex;\n        }\n        .lh-snippet__line:not(.lh-snippet__line--message):first-child {\n          padding-top: 4px;\n        }\n        .lh-snippet__line:not(.lh-snippet__line--message):last-child {\n          padding-bottom: 4px;\n        }\n        .lh-snippet__line--content-highlighted {\n          background: var(--snippet-highlight-dark);\n        }\n        .lh-snippet__line--message {\n          background: var(--snippet-highlight-light);\n        }\n        .lh-snippet__line--message .lh-snippet__line-number {\n          padding-top: 10px;\n          padding-bottom: 10px;\n        }\n        .lh-snippet__line--message code {\n          padding: 10px;\n          padding-left: 5px;\n          color: var(--color-fail);\n          font-family: var(--report-font-family);\n        }\n        .lh-snippet__line--message code {\n          white-space: normal;\n        }\n        .lh-snippet__line-icon {\n          padding-top: 10px;\n          display: none;\n        }\n        .lh-snippet__line--message .lh-snippet__line-icon {\n          display: block;\n        }\n        .lh-snippet__line-icon:before {\n          content: "";\n          display: inline-block;\n          vertical-align: middle;\n          margin-right: 4px;\n          width: var(--score-icon-size);\n          height: var(--score-icon-size);\n          background-image: var(--fail-icon-url);\n        }\n        .lh-snippet__line-number {\n          flex-shrink: 0;\n          width: 40px;\n          text-align: right;\n          font-family: monospace;\n          padding-right: 5px;\n          margin-right: 5px;\n          color: var(--color-gray-600);\n          user-select: none;\n        }\n      '));
+  v1.append(v2);
+  const v3 = dom.createElement('template');
+  v3.setAttribute('id', 'snippetHeader');
+  v1.append(v3);
+  const v4 = dom.createElement('template');
+  v4.setAttribute('id', 'snippetContent');
+  v1.append(v4);
+  const v5 = dom.createElement('template');
+  v5.setAttribute('id', 'snippetLine');
+  v1.append(v5);
+  v0.append(v1);
   return v0;
 }
 
@@ -476,361 +788,46 @@ function createTopbarComponent(dom) {
 /**
  * @param {DOM} dom
  */
-function createHeadingComponent(dom) {
+function createWarningsToplevelComponent(dom) {
   const v0 = dom.document().createDocumentFragment();
-  const v1 = dom.createElement('style');
-  v1.append(dom.document().createTextNode('\n    /* CSS Fireworks. Originally by Eddie Lin\n       https://codepen.io/paulirish/pen/yEVMbP\n    */\n    .pyro {\n      display: none;\n      z-index: 1;\n      pointer-events: none;\n    }\n    .score100 .pyro {\n      display: block;\n    }\n    .score100 .lh-lighthouse stop:first-child {\n      stop-color: hsla(200, 12%, 95%, 0);\n    }\n    .score100 .lh-lighthouse stop:last-child {\n      stop-color: hsla(65, 81%, 76%, 1);\n    }\n\n    .pyro > .before, .pyro > .after {\n      position: absolute;\n      width: 5px;\n      height: 5px;\n      border-radius: 2.5px;\n      box-shadow: 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff;\n      animation: 1s bang ease-out infinite backwards,  1s gravity ease-in infinite backwards,  5s position linear infinite backwards;\n      animation-delay: 1s, 1s, 1s;\n    }\n\n    .pyro > .after {\n      animation-delay: 2.25s, 2.25s, 2.25s;\n      animation-duration: 1.25s, 1.25s, 6.25s;\n    }\n    .fireworks-paused .pyro > div {\n      animation-play-state: paused;\n    }\n\n    @keyframes bang {\n      to {\n        box-shadow: -70px -115.67px #47ebbc, -28px -99.67px #eb47a4, 58px -31.67px #7eeb47, 13px -141.67px #eb47c5, -19px 6.33px #7347eb, -2px -74.67px #ebd247, 24px -151.67px #eb47e0, 57px -138.67px #b4eb47, -51px -104.67px #479eeb, 62px 8.33px #ebcf47, -93px 0.33px #d547eb, -16px -118.67px #47bfeb, 53px -84.67px #47eb83, 66px -57.67px #eb47bf, -93px -65.67px #91eb47, 30px -13.67px #86eb47, -2px -59.67px #83eb47, -44px 1.33px #eb47eb, 61px -58.67px #47eb73, 5px -22.67px #47e8eb, -66px -28.67px #ebe247, 42px -123.67px #eb5547, -75px 26.33px #7beb47, 15px -52.67px #a147eb, 36px -51.67px #eb8347, -38px -12.67px #eb5547, -46px -59.67px #47eb81, 78px -114.67px #eb47ba, 15px -156.67px #eb47bf, -36px 1.33px #eb4783, -72px -86.67px #eba147, 31px -46.67px #ebe247, -68px 29.33px #47e2eb, -55px 19.33px #ebe047, -56px 27.33px #4776eb, -13px -91.67px #eb5547, -47px -138.67px #47ebc7, -18px -96.67px #eb47ac, 11px -88.67px #4783eb, -67px -28.67px #47baeb, 53px 10.33px #ba47eb, 11px 19.33px #5247eb, -5px -11.67px #eb4791, -68px -4.67px #47eba7, 95px -37.67px #eb478b, -67px -162.67px #eb5d47, -54px -120.67px #eb6847, 49px -12.67px #ebe047, 88px 8.33px #47ebda, 97px 33.33px #eb8147, 6px -71.67px #ebbc47;\n      }\n    }\n    @keyframes gravity {\n      to {\n        transform: translateY(80px);\n        opacity: 0;\n      }\n    }\n    @keyframes position {\n      0%, 19.9% {\n        margin-top: 4%;\n        margin-left: 47%;\n      }\n      20%, 39.9% {\n        margin-top: 7%;\n        margin-left: 30%;\n      }\n      40%, 59.9% {\n        margin-top: 6%;\n        margin-left: 70%;\n      }\n      60%, 79.9% {\n        margin-top: 3%;\n        margin-left: 20%;\n      }\n      80%, 99.9% {\n        margin-top: 3%;\n        margin-left: 80%;\n      }\n    }\n  '));
-  v0.append(v1);
-  const v2 = dom.createElement('div', 'lh-header-container');
-  const v3 = dom.createElement('div', 'lh-scores-wrapper-placeholder');
-  v2.append(v3);
-  v0.append(v2);
-  return v0;
-}
-
-/**
- * @param {DOM} dom
- */
-function createFooterComponent(dom) {
-  const v0 = dom.document().createDocumentFragment();
-  const v1 = dom.createElement('style');
-  v1.append(dom.document().createTextNode('\n    .lh-footer {\n      padding: var(--footer-padding-vertical) calc(var(--default-padding) * 2);\n      max-width: var(--report-width);\n      margin: 0 auto;\n    }\n    .lh-footer .lh-generated {\n      text-align: center;\n    }\n    .lh-env__title {\n      font-size: var(--env-item-font-size-big);\n      line-height: var(--env-item-line-height-big);\n      text-align: center;\n      padding: var(--score-container-padding);\n    }\n    .lh-env {\n      padding: var(--default-padding) 0;\n    }\n    .lh-env__items {\n      padding-left: 16px;\n      margin: 0 0 var(--audits-margin-bottom);\n      padding: 0;\n    }\n    .lh-env__items .lh-env__item:nth-child(2n) {\n      background-color: var(--env-item-background-color);\n    }\n    .lh-env__item {\n      display: flex;\n      padding: var(--env-item-padding);\n      position: relative;\n    }\n    span.lh-env__name {\n      font-weight: bold;\n      min-width: var(--env-name-min-width);\n      flex: 0.5;\n      padding: 0 8px;\n    }\n    span.lh-env__description {\n      text-align: left;\n      flex: 1;\n    }\n  '));
-  v0.append(v1);
-  const v2 = dom.createElement('footer', 'lh-footer');
-  const v3 = dom.createElement('div', 'lh-env');
-  const v4 = dom.createElement('div', 'lh-env__title');
-  v4.append(dom.document().createTextNode('Runtime Settings'));
-  v3.append(v4);
-  const v5 = dom.createElement('ul', 'lh-env__items');
-  v3.append(v5);
-  v2.append(v3);
-  const v6 = dom.createElement('div', 'lh-generated');
-  v6.append(dom.document().createTextNode('\n      Generated by '));
-  const v7 = dom.createElement('b');
-  v7.append(dom.document().createTextNode('Lighthouse'));
-  v6.append(v7);
-  const v8 = dom.createElement('span', 'lh-footer__version');
-  v6.append(v8);
-  v6.append(dom.document().createTextNode(' |\n      '));
-  const v9 = dom.createElement('a', 'lh-footer__version_issue');
-  v9.setAttribute('href', 'https://github.com/GoogleChrome/Lighthouse/issues');
-  v9.setAttribute('target', '_blank');
-  v9.setAttribute('rel', 'noopener');
-  v9.append(dom.document().createTextNode('File an issue'));
-  v6.append(v9);
-  v2.append(v6);
-  v0.append(v2);
-  return v0;
-}
-
-/**
- * @param {DOM} dom
- */
-function createEnv__itemComponent(dom) {
-  const v0 = dom.document().createDocumentFragment();
-  const v1 = dom.createElement('li', 'lh-env__item');
-  const v2 = dom.createElement('span', 'lh-env__name');
+  const v1 = dom.createElement('div', 'lh-warnings lh-warnings--toplevel');
+  const v2 = dom.createElement('p', 'lh-warnings__msg');
   v1.append(v2);
-  const v3 = dom.createElement('span', 'lh-env__description');
+  const v3 = dom.createElement('ul');
   v1.append(v3);
   v0.append(v1);
   return v0;
 }
 
-/**
- * @param {DOM} dom
- */
-function createGaugeComponent(dom) {
-  const v0 = dom.document().createDocumentFragment();
-  const v1 = dom.createElement('a', 'lh-gauge__wrapper');
-  v1.setAttribute('href', '#');
-  const v2 = dom.createElement('div', 'lh-gauge__svg-wrapper');
-  const v3 = dom.createElementNS('http://www.w3.org/2000/svg', 'svg', 'lh-gauge');
-  v3.setAttribute('viewBox', '0 0 120 120');
-  const v4 = dom.createElementNS('http://www.w3.org/2000/svg', 'circle', 'lh-gauge-base');
-  v4.setAttribute('r', '56');
-  v4.setAttribute('cx', '60');
-  v4.setAttribute('cy', '60');
-  v4.setAttribute('stroke-width', '8');
-  v3.append(v4);
-  const v5 = dom.createElementNS('http://www.w3.org/2000/svg', 'circle', 'lh-gauge-arc');
-  v5.setAttribute('r', '56');
-  v5.setAttribute('cx', '60');
-  v5.setAttribute('cy', '60');
-  v5.setAttribute('stroke-width', '8');
-  v3.append(v5);
-  v2.append(v3);
-  v1.append(v2);
-  const v6 = dom.createElement('div', 'lh-gauge__percentage');
-  v1.append(v6);
-  const v7 = dom.createElement('div', 'lh-gauge__label');
-  v1.append(v7);
-  v0.append(v1);
-  return v0;
-}
 
 /**
  * @param {DOM} dom
- */
-function createGaugepwaComponent(dom) {
-  const v0 = dom.document().createDocumentFragment();
-  const v1 = dom.createElement('style');
-  v1.append(dom.document().createTextNode('\n    .lh-gauge--pwa .lh-gauge--pwa__component {\n      display: none;\n    }\n    .lh-gauge--pwa__wrapper:not(.lh-badged--all) .lh-gauge--pwa__logo > path {\n      /* Gray logo unless everything is passing. */\n      fill: #B0B0B0;\n    }\n\n    .lh-gauge--pwa__disc {\n      fill: var(--color-gray-200);\n    }\n\n    .lh-gauge--pwa__logo--primary-color {\n      fill: #304FFE;\n    }\n\n    .lh-gauge--pwa__logo--secondary-color {\n      fill: #3D3D3D;\n    }\n    .dark .lh-gauge--pwa__logo--secondary-color {\n      fill: #D8B6B6;\n    }\n\n    /* No passing groups. */\n    .lh-gauge--pwa__wrapper:not([class*=\'lh-badged--\']) .lh-gauge--pwa__na-line {\n      display: inline;\n    }\n    /* Just optimized. Same n/a line as no passing groups. */\n    .lh-gauge--pwa__wrapper.lh-badged--pwa-optimized:not(.lh-badged--pwa-installable) .lh-gauge--pwa__na-line {\n      display: inline;\n    }\n\n    /* Just installable. */\n    .lh-gauge--pwa__wrapper.lh-badged--pwa-installable .lh-gauge--pwa__installable-badge {\n      display: inline;\n    }\n\n    /* All passing groups. */\n    .lh-gauge--pwa__wrapper.lh-badged--all .lh-gauge--pwa__check-circle {\n      display: inline;\n    }\n  '));
-  v0.append(v1);
-  const v2 = dom.createElement('a', 'lh-gauge__wrapper lh-gauge--pwa__wrapper');
-  v2.setAttribute('href', '#');
-  const v3 = dom.createElementNS('http://www.w3.org/2000/svg', 'svg', 'lh-gauge lh-gauge--pwa');
-  v3.setAttribute('viewBox', '0 0 60 60');
-  const v4 = dom.createElementNS('http://www.w3.org/2000/svg', 'defs');
-  const v5 = dom.createElementNS('http://www.w3.org/2000/svg', 'linearGradient');
-  v5.setAttribute('id', 'lh-gauge--pwa__check-circle__gradient');
-  v5.setAttribute('x1', '50%');
-  v5.setAttribute('y1', '0%');
-  v5.setAttribute('x2', '50%');
-  v5.setAttribute('y2', '100%');
-  const v6 = dom.createElementNS('http://www.w3.org/2000/svg', 'stop');
-  v6.setAttribute('stop-color', '#00C852');
-  v6.setAttribute('offset', '0%');
-  v5.append(v6);
-  const v7 = dom.createElementNS('http://www.w3.org/2000/svg', 'stop');
-  v7.setAttribute('stop-color', '#009688');
-  v7.setAttribute('offset', '100%');
-  v5.append(v7);
-  v4.append(v5);
-  const v8 = dom.createElementNS('http://www.w3.org/2000/svg', 'linearGradient');
-  v8.setAttribute('id', 'lh-gauge--pwa__installable__shadow-gradient');
-  v8.setAttribute('x1', '76.056%');
-  v8.setAttribute('x2', '24.111%');
-  v8.setAttribute('y1', '82.995%');
-  v8.setAttribute('y2', '24.735%');
-  const v9 = dom.createElementNS('http://www.w3.org/2000/svg', 'stop');
-  v9.setAttribute('stop-color', '#A5D6A7');
-  v9.setAttribute('offset', '0%');
-  v8.append(v9);
-  const v10 = dom.createElementNS('http://www.w3.org/2000/svg', 'stop');
-  v10.setAttribute('stop-color', '#80CBC4');
-  v10.setAttribute('offset', '100%');
-  v8.append(v10);
-  v4.append(v8);
-  const v11 = dom.createElementNS('http://www.w3.org/2000/svg', 'g');
-  v11.setAttribute('id', 'lh-gauge--pwa__installable-badge');
-  const v12 = dom.createElementNS('http://www.w3.org/2000/svg', 'circle');
-  v12.setAttribute('fill', '#FFFFFF');
-  v12.setAttribute('cx', '10');
-  v12.setAttribute('cy', '10');
-  v12.setAttribute('r', '10');
-  v11.append(v12);
-  const v13 = dom.createElementNS('http://www.w3.org/2000/svg', 'path');
-  v13.setAttribute('fill', '#009688');
-  v13.setAttribute('d', 'M10 4.167A5.835 5.835 0 0 0 4.167 10 5.835 5.835 0 0 0 10 15.833 5.835 5.835 0 0 0 15.833 10 5.835 5.835 0 0 0 10 4.167zm2.917 6.416h-2.334v2.334H9.417v-2.334H7.083V9.417h2.334V7.083h1.166v2.334h2.334v1.166z');
-  v11.append(v13);
-  v4.append(v11);
-  v3.append(v4);
-  const v14 = dom.createElementNS('http://www.w3.org/2000/svg', 'g');
-  v14.setAttribute('stroke', 'none');
-  v14.setAttribute('fill-rule', 'nonzero');
-  const v15 = dom.createElementNS('http://www.w3.org/2000/svg', 'circle', 'lh-gauge--pwa__disc');
-  v15.setAttribute('cx', '30');
-  v15.setAttribute('cy', '30');
-  v15.setAttribute('r', '30');
-  v14.append(v15);
-  const v16 = dom.createElementNS('http://www.w3.org/2000/svg', 'g', 'lh-gauge--pwa__logo');
-  const v17 = dom.createElementNS('http://www.w3.org/2000/svg', 'path', 'lh-gauge--pwa__logo--secondary-color');
-  v17.setAttribute('d', 'M35.66 19.39l.7-1.75h2L37.4 15 38.6 12l3.4 9h-2.51l-.58-1.61z');
-  v16.append(v17);
-  const v18 = dom.createElementNS('http://www.w3.org/2000/svg', 'path', 'lh-gauge--pwa__logo--primary-color');
-  v18.setAttribute('d', 'M33.52 21l3.65-9h-2.42l-2.5 5.82L30.5 12h-1.86l-1.9 5.82-1.35-2.65-1.21 3.72L25.4 21h2.38l1.72-5.2 1.64 5.2z');
-  v16.append(v18);
-  const v19 = dom.createElementNS('http://www.w3.org/2000/svg', 'path', 'lh-gauge--pwa__logo--secondary-color');
-  v19.setAttribute('fill-rule', 'nonzero');
-  v19.setAttribute('d', 'M20.3 17.91h1.48c.45 0 .85-.05 1.2-.15l.39-1.18 1.07-3.3a2.64 2.64 0 0 0-.28-.37c-.55-.6-1.36-.91-2.42-.91H18v9h2.3V17.9zm1.96-3.84c.22.22.33.5.33.87 0 .36-.1.65-.29.87-.2.23-.59.35-1.15.35h-.86v-2.41h.87c.52 0 .89.1 1.1.32z');
-  v16.append(v19);
-  v14.append(v16);
-  const v20 = dom.createElementNS('http://www.w3.org/2000/svg', 'rect', 'lh-gauge--pwa__component lh-gauge--pwa__na-line');
-  v20.setAttribute('fill', '#FFFFFF');
-  v20.setAttribute('x', '20');
-  v20.setAttribute('y', '32');
-  v20.setAttribute('width', '20');
-  v20.setAttribute('height', '4');
-  v20.setAttribute('rx', '2');
-  v14.append(v20);
-  const v21 = dom.createElementNS('http://www.w3.org/2000/svg', 'g', 'lh-gauge--pwa__component lh-gauge--pwa__installable-badge');
-  v21.setAttribute('transform', 'translate(20, 29)');
-  const v22 = dom.createElementNS('http://www.w3.org/2000/svg', 'path');
-  v22.setAttribute('fill', 'url(#lh-gauge--pwa__installable__shadow-gradient)');
-  v22.setAttribute('d', 'M33.629 19.487c-4.272 5.453-10.391 9.39-17.415 10.869L3 17.142 17.142 3 33.63 19.487z');
-  v21.append(v22);
-  const v23 = dom.createElementNS('http://www.w3.org/2000/svg', 'use');
-  v23.setAttribute('href', '#lh-gauge--pwa__installable-badge');
-  v21.append(v23);
-  v14.append(v21);
-  const v24 = dom.createElementNS('http://www.w3.org/2000/svg', 'g', 'lh-gauge--pwa__component lh-gauge--pwa__check-circle');
-  v24.setAttribute('transform', 'translate(18, 28)');
-  const v25 = dom.createElementNS('http://www.w3.org/2000/svg', 'circle');
-  v25.setAttribute('fill', '#FFFFFF');
-  v25.setAttribute('cx', '12');
-  v25.setAttribute('cy', '12');
-  v25.setAttribute('r', '12');
-  v24.append(v25);
-  const v26 = dom.createElementNS('http://www.w3.org/2000/svg', 'path');
-  v26.setAttribute('fill', 'url(#lh-gauge--pwa__check-circle__gradient)');
-  v26.setAttribute('d', 'M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z');
-  v24.append(v26);
-  v14.append(v24);
-  v3.append(v14);
-  v2.append(v3);
-  const v27 = dom.createElement('div', 'lh-gauge__label');
-  v2.append(v27);
-  v0.append(v2);
-  return v0;
-}
-
-/**
- * @param {DOM} dom
- */
-function createCrcComponent(dom) {
-  const v0 = dom.document().createDocumentFragment();
-  const v1 = dom.createElement('div', 'lh-crc-container');
-  const v2 = dom.createElement('style');
-  v2.append(dom.document().createTextNode('\n      .lh-crc .tree-marker {\n        width: 12px;\n        height: 26px;\n        display: block;\n        float: left;\n        background-position: top left;\n      }\n      .lh-crc .horiz-down {\n        background: url(\'data:image/svg+xml;utf8,<svg width="16" height="26" viewBox="0 0 16 26" xmlns="http://www.w3.org/2000/svg"><g fill="%23D8D8D8" fill-rule="evenodd"><path d="M16 12v2H-2v-2z"/><path d="M9 12v14H7V12z"/></g></svg>\');\n      }\n      .lh-crc .right {\n        background: url(\'data:image/svg+xml;utf8,<svg width="16" height="26" viewBox="0 0 16 26" xmlns="http://www.w3.org/2000/svg"><path d="M16 12v2H0v-2z" fill="%23D8D8D8" fill-rule="evenodd"/></svg>\');\n      }\n      .lh-crc .up-right {\n        background: url(\'data:image/svg+xml;utf8,<svg width="16" height="26" viewBox="0 0 16 26" xmlns="http://www.w3.org/2000/svg"><path d="M7 0h2v14H7zm2 12h7v2H9z" fill="%23D8D8D8" fill-rule="evenodd"/></svg>\');\n      }\n      .lh-crc .vert-right {\n        background: url(\'data:image/svg+xml;utf8,<svg width="16" height="26" viewBox="0 0 16 26" xmlns="http://www.w3.org/2000/svg"><path d="M7 0h2v27H7zm2 12h7v2H9z" fill="%23D8D8D8" fill-rule="evenodd"/></svg>\');\n      }\n      .lh-crc .vert {\n        background: url(\'data:image/svg+xml;utf8,<svg width="16" height="26" viewBox="0 0 16 26" xmlns="http://www.w3.org/2000/svg"><path d="M7 0h2v26H7z" fill="%23D8D8D8" fill-rule="evenodd"/></svg>\');\n      }\n      .lh-crc .crc-tree {\n        font-size: 14px;\n        width: 100%;\n        overflow-x: auto;\n      }\n      .lh-crc .crc-node {\n        height: 26px;\n        line-height: 26px;\n        white-space: nowrap;\n      }\n      .lh-crc .crc-node__tree-value {\n        margin-left: 10px;\n      }\n      .lh-crc .crc-node__tree-value div {\n        display: inline;\n      }\n      .lh-crc .crc-node__chain-duration {\n        font-weight: 700;\n      }\n      .lh-crc .crc-initial-nav {\n        color: #595959;\n        font-style: italic;\n      }\n      .lh-crc__summary-value {\n        margin-bottom: 10px;\n      }\n    '));
-  v1.append(v2);
-  const v3 = dom.createElement('div');
-  const v4 = dom.createElement('div', 'lh-crc__summary-value');
-  const v5 = dom.createElement('span', 'lh-crc__longest_duration_label');
-  v4.append(v5);
-  const v6 = dom.createElement('b', 'lh-crc__longest_duration');
-  v4.append(v6);
-  v3.append(v4);
-  v1.append(v3);
-  const v7 = dom.createElement('div', 'lh-crc');
-  const v8 = dom.createElement('div', 'crc-initial-nav');
-  v7.append(v8);
-  const v9 = dom.createElement('template');
-  v9.setAttribute('id', 'tmpl-lh-crc__chains');
-  v7.append(v9);
-  v1.append(v7);
-  v0.append(v1);
-  return v0;
-}
-
-/**
- * @param {DOM} dom
- */
-function createCrc__chainComponent(dom) {
-  const v0 = dom.document().createDocumentFragment();
-  const v1 = dom.createElement('div', 'crc-node');
-  const v2 = dom.createElement('span', 'crc-node__tree-marker');
-  v1.append(v2);
-  const v3 = dom.createElement('span', 'crc-node__tree-value');
-  v1.append(v3);
-  v0.append(v1);
-  return v0;
-}
-
-/**
- * @param {DOM} dom
- */
-function create3pfilterComponent(dom) {
-  const v0 = dom.document().createDocumentFragment();
-  const v1 = dom.createElement('style');
-  v1.append(dom.document().createTextNode('\n    .lh-3p-filter {\n      background-color: var(--table-higlight-background-color);\n      color: var(--color-gray-600);\n      float: right;\n      padding: 6px;\n    }\n    .lh-3p-filter-label, .lh-3p-filter-input {\n      vertical-align: middle;\n      user-select: none;\n    }\n    .lh-3p-filter-input:disabled + .lh-3p-ui-string {\n      text-decoration: line-through;\n    }\n  '));
-  v0.append(v1);
-  const v2 = dom.createElement('div', 'lh-3p-filter');
-  const v3 = dom.createElement('label', 'lh-3p-filter-label');
-  const v4 = dom.createElement('input', 'lh-3p-filter-input');
-  v4.setAttribute('type', 'checkbox');
-  v4.setAttribute('checked', '');
-  v3.append(v4);
-  const v5 = dom.createElement('span', 'lh-3p-ui-string');
-  v5.append(dom.document().createTextNode('Show 3rd party resources'));
-  v3.append(v5);
-  v3.append(dom.document().createTextNode(' ('));
-  const v6 = dom.createElement('span', 'lh-3p-filter-count');
-  v3.append(v6);
-  v3.append(dom.document().createTextNode(')\n    '));
-  v2.append(v3);
-  v0.append(v2);
-  return v0;
-}
-
-/**
- * @param {DOM} dom
- */
-function createSnippetComponent(dom) {
-  const v0 = dom.document().createDocumentFragment();
-  const v1 = dom.createElement('div', 'lh-snippet');
-  const v2 = dom.createElement('style');
-  v2.append(dom.document().createTextNode('\n          :root {\n            --snippet-highlight-light: #fbf1f2;\n            --snippet-highlight-dark: #ffd6d8;\n          }\n\n         .lh-snippet__header {\n          position: relative;\n          overflow: hidden;\n          padding: 10px;\n          border-bottom: none;\n          color: var(--snippet-color);\n          background-color: var(--snippet-background-color);\n          border: 1px solid var(--report-border-color-secondary);\n        }\n        .lh-snippet__title {\n          font-weight: bold;\n          float: left;\n        }\n        .lh-snippet__node {\n          float: left;\n          margin-left: 4px;\n        }\n        .lh-snippet__toggle-expand {\n          padding: 1px 7px;\n          margin-top: -1px;\n          margin-right: -7px;\n          float: right;\n          background: transparent;\n          border: none;\n          cursor: pointer;\n          font-size: 14px;\n          color: #0c50c7;\n        }\n\n        .lh-snippet__snippet {\n          overflow: auto;\n          border: 1px solid var(--report-border-color-secondary);\n        }\n        /* Container needed so that all children grow to the width of the scroll container */\n        .lh-snippet__snippet-inner {\n          display: inline-block;\n          min-width: 100%;\n        }\n\n        .lh-snippet:not(.lh-snippet--expanded) .lh-snippet__show-if-expanded {\n          display: none;\n        }\n        .lh-snippet.lh-snippet--expanded .lh-snippet__show-if-collapsed {\n          display: none;\n        }\n\n        .lh-snippet__line {\n          background: white;\n          white-space: pre;\n          display: flex;\n        }\n        .lh-snippet__line:not(.lh-snippet__line--message):first-child {\n          padding-top: 4px;\n        }\n        .lh-snippet__line:not(.lh-snippet__line--message):last-child {\n          padding-bottom: 4px;\n        }\n        .lh-snippet__line--content-highlighted {\n          background: var(--snippet-highlight-dark);\n        }\n        .lh-snippet__line--message {\n          background: var(--snippet-highlight-light);\n        }\n        .lh-snippet__line--message .lh-snippet__line-number {\n          padding-top: 10px;\n          padding-bottom: 10px;\n        }\n        .lh-snippet__line--message code {\n          padding: 10px;\n          padding-left: 5px;\n          color: var(--color-fail);\n          font-family: var(--report-font-family);\n        }\n        .lh-snippet__line--message code {\n          white-space: normal;\n        }\n        .lh-snippet__line-icon {\n          padding-top: 10px;\n          display: none;\n        }\n        .lh-snippet__line--message .lh-snippet__line-icon {\n          display: block;\n        }\n        .lh-snippet__line-icon:before {\n          content: "";\n          display: inline-block;\n          vertical-align: middle;\n          margin-right: 4px;\n          width: var(--score-icon-size);\n          height: var(--score-icon-size);\n          background-image: var(--fail-icon-url);\n        }\n        .lh-snippet__line-number {\n          flex-shrink: 0;\n          width: 40px;\n          text-align: right;\n          font-family: monospace;\n          padding-right: 5px;\n          margin-right: 5px;\n          color: var(--color-gray-600);\n          user-select: none;\n        }\n      '));
-  v1.append(v2);
-  const v3 = dom.createElement('template');
-  v3.setAttribute('id', 'tmpl-lh-snippet__header');
-  v1.append(v3);
-  const v4 = dom.createElement('template');
-  v4.setAttribute('id', 'tmpl-lh-snippet__content');
-  v1.append(v4);
-  const v5 = dom.createElement('template');
-  v5.setAttribute('id', 'tmpl-lh-snippet__line');
-  v1.append(v5);
-  v0.append(v1);
-  return v0;
-}
-
-/**
- * @param {DOM} dom
- */
-function createElementscreenshotComponent(dom) {
-  const v0 = dom.document().createDocumentFragment();
-  const v1 = dom.createElement('div', 'lh-element-screenshot');
-  const v2 = dom.createElement('div', 'lh-element-screenshot__content');
-  const v3 = dom.createElement('div', 'lh-element-screenshot__mask');
-  const v4 = dom.createElementNS('http://www.w3.org/2000/svg', 'svg');
-  v4.setAttribute('height', '0');
-  v4.setAttribute('width', '0');
-  const v5 = dom.createElementNS('http://www.w3.org/2000/svg', 'defs');
-  const v6 = dom.createElementNS('http://www.w3.org/2000/svg', 'clipPath');
-  v6.setAttribute('clipPathUnits', 'objectBoundingBox');
-  v5.append(v6);
-  v4.append(v5);
-  v3.append(v4);
-  v2.append(v3);
-  const v7 = dom.createElement('div', 'lh-element-screenshot__image');
-  v2.append(v7);
-  const v8 = dom.createElement('div', 'lh-element-screenshot__element-marker');
-  v2.append(v8);
-  v1.append(v2);
-  v0.append(v1);
-  return v0;
-}
-
-
-/**
- * @param {DOM} dom
- * @param {'warningstoplevel'|'scorescale'|'chevron'|'categoryheader'|'clump'|'metricstoggle'|'audit'|'metric'|'opportunity'|'opportunityheader'|'scoreswrapper'|'topbar'|'heading'|'footer'|'env__item'|'gauge'|'gaugepwa'|'crc'|'crc__chain'|'3pfilter'|'snippet'|'elementscreenshot'} componentName
+ * @param {'3pFilter'|'audit'|'categoryHeader'|'chevron'|'clump'|'crc'|'crcChain'|'elementScreenshot'|'envItem'|'footer'|'gauge'|'gaugePwa'|'heading'|'metric'|'metricsToggle'|'opportunity'|'opportunityHeader'|'scorescale'|'scoresWrapper'|'snippet'|'topbar'|'warningsToplevel'} componentName
  */
 export function createComponent(dom, componentName) {
   switch (componentName) {
-    case 'warningstoplevel': return createWarningstoplevelComponent(dom);
-    case 'scorescale': return createScorescaleComponent(dom);
-    case 'chevron': return createChevronComponent(dom);
-    case 'categoryheader': return createCategoryheaderComponent(dom);
-    case 'clump': return createClumpComponent(dom);
-    case 'metricstoggle': return createMetricstoggleComponent(dom);
+    case '3pFilter': return create3pFilterComponent(dom);
     case 'audit': return createAuditComponent(dom);
-    case 'metric': return createMetricComponent(dom);
-    case 'opportunity': return createOpportunityComponent(dom);
-    case 'opportunityheader': return createOpportunityheaderComponent(dom);
-    case 'scoreswrapper': return createScoreswrapperComponent(dom);
-    case 'topbar': return createTopbarComponent(dom);
-    case 'heading': return createHeadingComponent(dom);
-    case 'footer': return createFooterComponent(dom);
-    case 'env__item': return createEnv__itemComponent(dom);
-    case 'gauge': return createGaugeComponent(dom);
-    case 'gaugepwa': return createGaugepwaComponent(dom);
+    case 'categoryHeader': return createCategoryHeaderComponent(dom);
+    case 'chevron': return createChevronComponent(dom);
+    case 'clump': return createClumpComponent(dom);
     case 'crc': return createCrcComponent(dom);
-    case 'crc__chain': return createCrc__chainComponent(dom);
-    case '3pfilter': return create3pfilterComponent(dom);
+    case 'crcChain': return createCrcChainComponent(dom);
+    case 'elementScreenshot': return createElementScreenshotComponent(dom);
+    case 'envItem': return createEnvItemComponent(dom);
+    case 'footer': return createFooterComponent(dom);
+    case 'gauge': return createGaugeComponent(dom);
+    case 'gaugePwa': return createGaugePwaComponent(dom);
+    case 'heading': return createHeadingComponent(dom);
+    case 'metric': return createMetricComponent(dom);
+    case 'metricsToggle': return createMetricsToggleComponent(dom);
+    case 'opportunity': return createOpportunityComponent(dom);
+    case 'opportunityHeader': return createOpportunityHeaderComponent(dom);
+    case 'scorescale': return createScorescaleComponent(dom);
+    case 'scoresWrapper': return createScoresWrapperComponent(dom);
     case 'snippet': return createSnippetComponent(dom);
-    case 'elementscreenshot': return createElementscreenshotComponent(dom);
+    case 'topbar': return createTopbarComponent(dom);
+    case 'warningsToplevel': return createWarningsToplevelComponent(dom);
   }
   throw new Error('unexpected component: ' + componentName);
 }

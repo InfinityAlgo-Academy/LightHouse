@@ -104,16 +104,12 @@ export class DOM {
     return element;
   }
 
-  // Parameters<createComponent>[1]
-
   /**
-   * @param {string} selector
+   * @param {Parameters<createComponent>[1]} componentName
    * @return {!DocumentFragment} A clone of the template content.
    * @throws {Error}
    */
-  cloneTemplate(selector) {
-    // quick n dirty way to get correct component
-    const componentName = selector.replace('#tmpl-lh-', '').replace(/-/g, '');
+  cloneTemplate(componentName) {
     let component = this._componentCache.get(componentName);
     if (component) {
       const cloned = /** @type {DocumentFragment} */ (component.cloneNode(true));

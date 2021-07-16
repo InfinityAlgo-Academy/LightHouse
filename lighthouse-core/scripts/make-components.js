@@ -98,8 +98,7 @@ function compileTemplate(tmpEl) {
 
   lines.push(`return ${fragmentVarName};`);
 
-  // TODO: use more parseable names for template id
-  const componentName = tmpEl.id.replace('tmpl-lh-', '').replace(/-/g, '');
+  const componentName = tmpEl.id;
   const functionName = `create${upperFirst(componentName)}Component`;
   const jsdoc = `
 /**
@@ -205,6 +204,7 @@ async function assertDOMTreeMatches(tmplEl, functionCode) {
 
 async function main() {
   const processedTemplates = [...tmplEls].map(compileTemplate);
+  processedTemplates.sort((a, b) => a.componentName.localeCompare(b.componentName));
   const code = `
     'use strict';
 
