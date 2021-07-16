@@ -14,15 +14,15 @@ const {serializeArguments} = require('../gather/driver/execution-context.js');
 
 // TODO: should change templates.html to use `div` instead of `template`.
 // idea: have paremeters in template?
-const html = fs.readFileSync(LH_ROOT + '/report/assets/templates.html', 'utf-8')
-  .replace(/template/g, 'div');
+const html = fs.readFileSync(LH_ROOT + '/report/assets/templates.html', 'utf-8');
+  //.replace(/template/g, 'div');
 
 const {window} = new jsdom.JSDOM(html);
 
-const tmplEls = window.document.querySelectorAll('body > div');
+const tmplEls = window.document.querySelectorAll('template');
 
 /**
- * @param {HTMLElement} tmpEl
+ * @param {HTMLTemplateElement} tmpEl
  */
 function compileTemplate(tmpEl) {
   const map = new Map();
@@ -33,7 +33,7 @@ function compileTemplate(tmpEl) {
    * @return {string}
    */
   function makeOrGetVarName(el) {
-    const varName = map.get(el) || ('el' + map.size);
+    const varName = map.get(el) || ('v' + map.size);
     map.set(el, varName);
     return varName;
   }
@@ -84,8 +84,17 @@ function compileTemplate(tmpEl) {
     }
   }
 
-  process(tmpEl);
-  lines.push(`return ${makeOrGetVarName(tmpEl)};`);
+  const fragmentEl = new window.DocumentFragment();
+  fragmentEl.content = tmpEl.content;
+  const fragmentVarName = makeOrGetVarName(fragmentEl);
+  lines.push(`const ${fragmentVarName} = new DocumentFragment();`);
+
+  for (const topLevelEl of tmpEl.content.children) {
+    process(topLevelEl);
+    lines.push(`${fragmentVarName}.append(${makeOrGetVarName(topLevelEl)})`);
+  }
+
+  lines.push(`return ${fragmentVarName};`);
 
   // TODO: use more parseable names for template id
   const componentName = tmpEl.id.replace('tmpl-lh-', '').replace(/-/g, '_');
