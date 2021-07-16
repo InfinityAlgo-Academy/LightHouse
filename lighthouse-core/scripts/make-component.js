@@ -133,9 +133,14 @@ function upperFirst(str) {
  * @param {string} tmplId
  * @param {string} functionCode
  */
-function assertDOMTreeMatches(tmplId, functionCode) {
+async function assertDOMTreeMatches(tmplId, functionCode) {
   global.document = window.document;
   global.Node = window.Node;
+  global.DocumentFragment = window.DocumentFragment;
+
+  const DOM = (await import('../../report/renderer/dom.js')).DOM;
+  global.dom = new DOM(window.document);
+
 
   function cleanUselessNodes(parent) {
     for (const child of Array.from(parent.childNodes)) {
@@ -150,7 +155,11 @@ function assertDOMTreeMatches(tmplId, functionCode) {
     }
   }
 
-  const generatedElem = eval(`(${functionCode})()`);
+  let generatedElem;
+  expect(_ => {
+    generatedElem = eval(`(${functionCode})()`);
+  }).not.toThrow();
+
   const origTemplElem = window.document.querySelector(`#${tmplId}`).cloneNode(true);
   cleanUselessNodes(origTemplElem);
   expect(generatedElem.innerHTML).toEqual(origTemplElem.innerHTML);
