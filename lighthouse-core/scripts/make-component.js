@@ -15,7 +15,6 @@ const {serializeArguments} = require('../gather/driver/execution-context.js');
 // TODO: should change templates.html to use `div` instead of `template`.
 // idea: have paremeters in template?
 const html = fs.readFileSync(LH_ROOT + '/report/assets/templates.html', 'utf-8');
-  //.replace(/template/g, 'div');
 
 const {window} = new jsdom.JSDOM(html);
 
@@ -73,7 +72,13 @@ function compileTemplate(tmpEl) {
     if (el.getAttributeNames) {
       for (const attr of el.getAttributeNames() || []) {
         if (attr === 'class') continue;
-        lines.push(`${varName}.setAttribute('${attr}', '${el.getAttribute(attr)}');`);
+
+        if (namespaceURI) {
+          lines.push(
+            `${varName}.setAttributeNS('${namespaceURI}', '${attr}', '${el.getAttribute(attr)}');`);
+        } else {
+          lines.push(`${varName}.setAttribute('${attr}', '${el.getAttribute(attr)}');`);
+        }
       }
     }
 
