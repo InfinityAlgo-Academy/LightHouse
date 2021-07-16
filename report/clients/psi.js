@@ -43,10 +43,6 @@ export function prepareLabData(LHResult, document) {
     /** @type {LH.Result} */ (JSON.parse(LHResult)) : LHResult;
 
   const dom = new DOM(document);
-
-  // Assume fresh styles needed on every call, so mark all template styles as unused.
-  dom.resetTemplates();
-
   const reportLHR = Util.prepareReportResult(lhResult);
   const i18n = new I18n(reportLHR.configSettings.locale, {
     // Set missing renderer strings to default (english) values.

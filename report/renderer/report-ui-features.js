@@ -460,7 +460,6 @@ export class ReportUIFeatures {
    */
   _resetUIState() {
     this._dropDown.close();
-    this._dom.resetTemplates();
   }
 
   /**

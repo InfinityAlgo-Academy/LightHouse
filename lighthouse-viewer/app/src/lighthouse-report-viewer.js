@@ -220,7 +220,6 @@ class LighthouseReportViewer {
       features.initFeatures(json);
     } catch (e) {
       logger.error(`Error rendering report: ${e.message}`);
-      dom.resetTemplates(); // TODO(bckenny): hack
       container.textContent = '';
       throw e;
     } finally {

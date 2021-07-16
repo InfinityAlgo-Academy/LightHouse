@@ -104,58 +104,29 @@ export class DOM {
     return element;
   }
 
+  // Parameters<createComponent>[1]
+
   /**
    * @param {string} selector
-   * @param {ParentNode} context
    * @return {!DocumentFragment} A clone of the template content.
    * @throws {Error}
    */
-  cloneTemplate(selector, context) {
-    try {
-      // quick n dirty way to get correct component
-      const componentName = selector.replace('#tmpl-lh-', '').replace(/-/g, '');
-      let component = this._componentCache.get(componentName);
-      if (component) {
-        const cloned = /** @type {DocumentFragment} */ (component.cloneNode(true));
-        // Prevent duplicate styles in the DOM. After a template has been stamped
-        // for the first time, remove the clone's styles so they're not re-added.
-        this.findAll('style', cloned).forEach(style => style.remove());
-        return cloned;
-      }
-
-      component = createComponent(this, componentName);
-      this._componentCache.set(componentName, component);
-      return component.cloneNode(true);
-    } catch (e) {
-      // lol nested templates ouchie
-      console.log('missing component', e);
+  cloneTemplate(selector) {
+    // quick n dirty way to get correct component
+    const componentName = selector.replace('#tmpl-lh-', '').replace(/-/g, '');
+    let component = this._componentCache.get(componentName);
+    if (component) {
+      const cloned = /** @type {DocumentFragment} */ (component.cloneNode(true));
+      // Prevent duplicate styles in the DOM. After a template has been stamped
+      // for the first time, remove the clone's styles so they're not re-added.
+      this.findAll('style', cloned).forEach(style => style.remove());
+      return cloned;
     }
 
-    const template = /** @type {?HTMLTemplateElement} */ (context.querySelector(selector));
-    if (!template) {
-      throw new Error(`Template not found: template${selector}`);
-    }
-
-    const clone = this._document.importNode(template.content, true);
-
-    // Prevent duplicate styles in the DOM. After a template has been stamped
-    // for the first time, remove the clone's styles so they're not re-added.
-    if (template.hasAttribute('data-stamped')) {
-      this.findAll('style', clone).forEach(style => style.remove());
-    }
-    template.setAttribute('data-stamped', 'true');
-
-    return clone;
-  }
-
-  /**
-   * Resets the "stamped" state of the templates.
-   */
-  resetTemplates() {
-    // TODO delete me
-    this.findAll('template[data-stamped]', this._document).forEach(t => {
-      t.removeAttribute('data-stamped');
-    });
+    component = createComponent(this, componentName);
+    this._componentCache.set(componentName, component);
+    const cloned = /** @type {DocumentFragment} */ (component.cloneNode(true));
+    return cloned;
   }
 
   /**
