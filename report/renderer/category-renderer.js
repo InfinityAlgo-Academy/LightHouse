@@ -33,10 +33,6 @@ export class CategoryRenderer {
     this.dom = dom;
     /** @type {DetailsRenderer} */
     this.detailsRenderer = detailsRenderer;
-    /** @type {ParentNode} */
-    this.templateContext = this.dom.document();
-
-    this.detailsRenderer.setTemplateContext(this.templateContext);
   }
 
   /**
@@ -314,14 +310,6 @@ export class CategoryRenderer {
 
     clumpElement.classList.add(`lh-clump--${clumpId.toLowerCase()}`);
     return clumpElement;
-  }
-
-  /**
-   * @param {ParentNode} context
-   */
-  setTemplateContext(context) {
-    this.templateContext = context;
-    this.detailsRenderer.setTemplateContext(context);
   }
 
   /**

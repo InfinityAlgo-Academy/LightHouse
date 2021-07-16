@@ -20,7 +20,6 @@
  * @property {DOM} dom
  * @property {Element} reportEl
  * @property {Element} overlayContainerEl
- * @property {ParentNode} templateContext
  * @property {LH.Artifacts.FullPageScreenshot} fullPageScreenshot
  */
 
@@ -143,7 +142,7 @@ export class ElementScreenshotRenderer {
    * @param {InstallOverlayFeatureParams} opts
    */
   static installOverlayFeature(opts) {
-    const {dom, reportEl, overlayContainerEl, templateContext, fullPageScreenshot} = opts;
+    const {dom, reportEl, overlayContainerEl, fullPageScreenshot} = opts;
     const screenshotOverlayClass = 'lh-screenshot-overlay--enabled';
     // Don't install the feature more than once.
     if (reportEl.classList.contains(screenshotOverlayClass)) return;
@@ -176,7 +175,6 @@ export class ElementScreenshotRenderer {
       };
       const screenshotElement = ElementScreenshotRenderer.render(
         dom,
-        templateContext,
         fullPageScreenshot.screenshot,
         elementRectSC,
         maxLightboxSize

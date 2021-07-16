@@ -58,8 +58,6 @@ export class ReportUIFeatures {
     this._dom = dom;
     /** @type {Document} */
     this._document = this._dom.document();
-    /** @type {ParentNode} */
-    this._templateContext = this._dom.document();
     /** @type {DropDown} */
     this._dropDown = new DropDown(this._dom);
     /** @type {boolean} */
@@ -171,15 +169,6 @@ export class ReportUIFeatures {
       const i18nAttr = /** @type {keyof LH.I18NRendererStrings} */ (node.getAttribute('data-i18n'));
       node.textContent = Util.i18n.strings[i18nAttr];
     }
-  }
-
-  /**
-   * Define a custom element for <templates> to be extracted from. For example:
-   *     this.setTemplateContext(new DOMParser().parseFromString(htmlStr, 'text/html'))
-   * @param {ParentNode} context
-   */
-  setTemplateContext(context) {
-    this._templateContext = context;
   }
 
   /**
@@ -362,7 +351,6 @@ export class ReportUIFeatures {
       dom: this._dom,
       reportEl: el,
       overlayContainerEl: el,
-      templateContext: this._templateContext,
       fullPageScreenshot,
     });
   }

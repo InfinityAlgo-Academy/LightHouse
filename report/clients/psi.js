@@ -107,7 +107,6 @@ export function prepareLabData(LHResult, document) {
         dom,
         reportEl,
         overlayContainerEl: screenshotEl,
-        templateContext: document,
         fullPageScreenshot,
       });
       // Not part of the reportEl, so have to install the feature here too.

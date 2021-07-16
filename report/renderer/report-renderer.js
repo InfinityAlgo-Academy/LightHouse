@@ -36,8 +36,6 @@ export class ReportRenderer {
   constructor(dom) {
     /** @type {DOM} */
     this._dom = dom;
-    /** @type {ParentNode} */
-    this._templateContext = this._dom.document();
   }
 
   /**
@@ -54,15 +52,6 @@ export class ReportRenderer {
     container.appendChild(this._renderReport(report));
 
     return container;
-  }
-
-  /**
-   * Define a custom element for <templates> to be extracted from. For example:
-   *     this.setTemplateContext(new DOMParser().parseFromString(htmlStr, 'text/html'))
-   * @param {ParentNode} context
-   */
-  setTemplateContext(context) {
-    this._templateContext = context;
   }
 
   /**
@@ -143,7 +132,7 @@ export class ReportRenderer {
       return this._dom.createElement('div');
     }
 
-    const container = this._dom.createComponent('warningsToplevel', this._templateContext);
+    const container = this._dom.createComponent('warningsToplevel');
     const message = this._dom.find('.lh-warnings__msg', container);
     message.textContent = Util.i18n.strings.toplevelWarningsMessage;
 
@@ -211,16 +200,12 @@ export class ReportRenderer {
     });
 
     const categoryRenderer = new CategoryRenderer(this._dom, detailsRenderer);
-    categoryRenderer.setTemplateContext(this._templateContext);
 
     /** @type {Record<string, CategoryRenderer>} */
     const specificCategoryRenderers = {
       performance: new PerformanceCategoryRenderer(this._dom, detailsRenderer),
       pwa: new PwaCategoryRenderer(this._dom, detailsRenderer),
     };
-    Object.values(specificCategoryRenderers).forEach(renderer => {
-      renderer.setTemplateContext(this._templateContext);
-    });
 
     const headerContainer = this._dom.createElement('div');
     headerContainer.appendChild(this._renderReportHeader());
@@ -238,7 +223,7 @@ export class ReportRenderer {
     }
 
     if (scoreHeader) {
-      const scoreScale = this._dom.createComponent('scorescale', this._templateContext);
+      const scoreScale = this._dom.createComponent('scorescale');
       const scoresContainer = this._dom.find('.lh-scores-container', headerContainer);
       scoreHeader.append(
         ...this._renderScoreGauges(report, categoryRenderer, specificCategoryRenderers));

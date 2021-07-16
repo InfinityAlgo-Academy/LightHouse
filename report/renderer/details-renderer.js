@@ -40,16 +40,6 @@ export class DetailsRenderer {
   constructor(dom, options = {}) {
     this._dom = dom;
     this._fullPageScreenshot = options.fullPageScreenshot;
-
-    /** @type {ParentNode} */
-    this._templateContext; // eslint-disable-line no-unused-expressions
-  }
-
-  /**
-   * @param {ParentNode} context
-   */
-  setTemplateContext(context) {
-    this._templateContext = context;
   }
 
   /**
@@ -533,7 +523,6 @@ export class DetailsRenderer {
     const maxThumbnailSize = {width: 147, height: 100};
     const elementScreenshot = ElementScreenshotRenderer.render(
       this._dom,
-      this._templateContext,
       this._fullPageScreenshot.screenshot,
       rect,
       maxThumbnailSize
