@@ -21,6 +21,8 @@ const terser = require('terser');
 const {minifyFileTransform} = require('./build-utils.js');
 const {LH_ROOT} = require('../root.js');
 
+const pageFunctions = require('../lighthouse-core/lib/page-functions.js');
+
 const COMMIT_HASH = require('child_process')
   .execSync('git rev-parse HEAD')
   .toString().trim();
@@ -148,11 +150,12 @@ async function minifyScript(filePath) {
       comments: /^!/,
       max_line_len: 1000,
     },
-    // Class and function names are needed for things like loading gatherers by
-    // name and accessing functions by name in Runtime.evaluate. Instead, just
-    // rely on whitespace elimination for the large savings.
-    compress: false,
-    mangle: false,
+    // The config relies on class names for gatherers.
+    keep_classnames: true,
+    // Runtime.evaluate errors if function names are elided.
+    keep_fnames: true,
+    // Preserve page-function function names for references in Runtime.evaluate.
+    mangle: {reserved: Object.keys(pageFunctions)},
     sourceMap: DEBUG && {
       content: JSON.parse(fs.readFileSync(`${filePath}.map`, 'utf-8')),
       url: path.basename(`${filePath}.map`),
