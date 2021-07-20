@@ -56,6 +56,16 @@ declare global {
         groups: Record<string, Group> | null;
       }
 
+      /**
+       * Additional information about the context in which a Fraggle Rock config should be interpreted.
+       * This information is typically set by the CLI or other channel integrations.
+       */
+      export interface FRContext {
+        gatherMode?: LH.Gatherer.GatherMode;
+        configPath?: string;
+        settingsOverrides?: LH.SharedFlagsSettings;
+      }
+
       interface SharedPassNavigationJson {
         /**
          * Controls the behavior when the navigation fails to complete (due to server error, no FCP, etc).
