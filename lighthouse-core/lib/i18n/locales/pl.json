@@ -63,7 +63,7 @@
     "message": "Elementy ARIA `meter` mają nazwy na potrzeby ułatwień dostępu"
   },
   "lighthouse-core/audits/accessibility/aria-progressbar-name.js | description": {
-    "message": "Gdy element nie ma nazwy na potrzeby ułatwień dostępu, czytniki ekranu określają go nazwą ogólną, przez co jest on bezużyteczny dla ich użytkowników. [Więcej informacji](https://web.dev/aria-name/)"
+    "message": "Gdy element `progressbar` nie ma nazwy na potrzeby ułatwień dostępu, czytniki ekranu określają go nazwą ogólną, przez co jest on bezużyteczny dla ich użytkowników. [Więcej informacji](https://web.dev/aria-name/)"
   },
   "lighthouse-core/audits/accessibility/aria-progressbar-name.js | failureTitle": {
     "message": "Elementy ARIA `progressbar` nie mają nazw na potrzeby ułatwień dostępu."
@@ -903,10 +903,10 @@
     "message": "Plik manifestu nie zawiera pola „name” ani „short_name”"
   },
   "lighthouse-core/audits/installable-manifest.js | manifest-missing-suitable-icon": {
-    "message": "Manifest does not contain a suitable icon - PNG, SVG or WebP format of at least {value0} px is required, the sizes attribute must be set, and the purpose attribute, if set, must include \"any\"."
+    "message": "Plik manifestu nie zawiera odpowiedniej ikony. Ikona musi być w formacie PNG, SVG lub WebP, mieć co najmniej {value0} piks. i ustawiony atrybut rozmiarów. Jeśli jest ustawiony atrybut przeznaczenia, to musi zawierać wartość „any”."
   },
   "lighthouse-core/audits/installable-manifest.js | no-acceptable-icon": {
-    "message": "No supplied icon is at least {value0} px square in PNG, SVG or WebP format, with the purpose attribute unset or set to \"any\""
+    "message": "Żadna z podanych ikon nie jest kwadratem z bokiem o długości co najmniej {value0} piks. w formacie PNG, SVG lub WebP, z atrybutem przeznaczenia o nieustawionej wartości lub wartości „any”"
   },
   "lighthouse-core/audits/installable-manifest.js | no-icon-available": {
     "message": "Pobrana ikona była pusta lub uszkodzona"

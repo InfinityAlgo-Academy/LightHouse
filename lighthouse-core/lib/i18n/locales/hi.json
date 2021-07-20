@@ -63,7 +63,7 @@
     "message": "ARIA `meter` एलिमेंट के नाम ऐक्सेस किए जा सकते हैं"
   },
   "lighthouse-core/audits/accessibility/aria-progressbar-name.js | description": {
-    "message": "अगर किसी एलिमेंट का कोई ऐसा नाम नहीं है जिसे ऐक्सेस किया जा सकता हो, तो स्क्रीन रीडर उस एलिमेंट को किसी सामान्य नाम से बुलाते हैं. इस वजह से, एलिमेंट का मूल नाम उन लोगों के लिए किसी काम का नहीं रहता जो स्क्रीन रीडर की मदद से ही टेक्स्ट पढ़ या समझ सकते हैं. [ज़्यादा जानें](https://web.dev/aria-name/)."
+    "message": "अगर किसी `progressbar` एलिमेंट का नाम ऐसा है जिसे ऐक्सेस नहीं किया जा सकता, तो स्क्रीन रीडर उसे किसी सामान्य नाम से बुलाते हैं. इस वजह से, यह उन उपयोगकर्ताओं के लिए किसी काम का नहीं रहता जो स्क्रीन रीडर की मदद से ही टेक्स्ट पढ़ या समझ सकते हैं. [ज़्यादा जानें](https://web.dev/aria-name/)."
   },
   "lighthouse-core/audits/accessibility/aria-progressbar-name.js | failureTitle": {
     "message": "ARIA `progressbar` एलिमेंट के नाम ऐक्सेस नहीं किए जा सकते."
@@ -903,10 +903,10 @@
     "message": "मेनिफ़ेस्ट में 'name' या 'short_name' फ़ील्ड नहीं है"
   },
   "lighthouse-core/audits/installable-manifest.js | manifest-missing-suitable-icon": {
-    "message": "Manifest does not contain a suitable icon - PNG, SVG or WebP format of at least {value0} px is required, the sizes attribute must be set, and the purpose attribute, if set, must include \"any\"."
+    "message": "मेनिफ़ेस्ट में सही आइकॉन नहीं है. इसमें PNG, SVG या WebP फ़ॉर्मैट में ऐसा आइकॉन होना ज़रूरी है जो कम से कम {value0} पिक्सल का हो. साथ ही, sizes एट्रिब्यूट को सेट करना ज़रूरी है. अगर purpose एट्रिब्यूट को भी सेट किया जाता है, तो यह ज़रूरी है कि उसमें \"any\" शामिल हो."
   },
   "lighthouse-core/audits/installable-manifest.js | no-acceptable-icon": {
-    "message": "No supplied icon is at least {value0} px square in PNG, SVG or WebP format, with the purpose attribute unset or set to \"any\""
+    "message": "सेट न करें या \"any\" पर सेट करें वाले purpose एट्रिब्यूट के साथ दिया गया कोई भी आइकॉन, ऐसे PNG, SVG या WebP फ़ॉर्मैट में नहीं है जो कम से कम {value0} पिक्सल स्क्वेयर का हो"
   },
   "lighthouse-core/audits/installable-manifest.js | no-icon-available": {
     "message": "डाउनलोड किया गया आइकॉन खाली या खराब था"

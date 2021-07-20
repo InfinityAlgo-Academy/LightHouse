@@ -63,7 +63,7 @@
     "message": "Gli elementi ARIA `meter` hanno nomi accessibili"
   },
   "lighthouse-core/audits/accessibility/aria-progressbar-name.js | description": {
-    "message": "Quando un elemento non ha un nome accessibile, gli screen reader lo descrivono con un nome generico, rendendolo inutilizzabile per gli utenti che si affidano agli screen reader. [Scopri di più](https://web.dev/aria-name/)"
+    "message": "Quando un elemento `progressbar` non ha un nome accessibile, gli screen reader lo descrivono con un nome generico, rendendolo inutilizzabile per gli utenti che si affidano agli screen reader. [Scopri di più](https://web.dev/aria-name/)."
   },
   "lighthouse-core/audits/accessibility/aria-progressbar-name.js | failureTitle": {
     "message": "Gli elementi ARIA `progressbar` non hanno nomi accessibili"
@@ -903,10 +903,10 @@
     "message": "Il file manifest non contiene un campo \"name\" o \"short_name\""
   },
   "lighthouse-core/audits/installable-manifest.js | manifest-missing-suitable-icon": {
-    "message": "Manifest does not contain a suitable icon - PNG, SVG or WebP format of at least {value0} px is required, the sizes attribute must be set, and the purpose attribute, if set, must include \"any\"."
+    "message": "Il file manifest non contiene un'icona adatta, deve essere in formato PNG, SVG o WebP e avere una dimensione di almeno {value0} px. L'attributo sizes deve essere impostato e l'attributo purpose, se configurato, deve includere \"any\"."
   },
   "lighthouse-core/audits/installable-manifest.js | no-acceptable-icon": {
-    "message": "No supplied icon is at least {value0} px square in PNG, SVG or WebP format, with the purpose attribute unset or set to \"any\""
+    "message": "Nessuna delle icone fornite ha una dimensione minima di {value0} px quadrati in formato PNG, SVG o WebP, con l'attributo purpose non impostato o impostato su \"any\"."
   },
   "lighthouse-core/audits/installable-manifest.js | no-icon-available": {
     "message": "L'icona scaricata era vuota o danneggiata"

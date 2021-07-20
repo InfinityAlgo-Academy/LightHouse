@@ -209,6 +209,9 @@ async function runSmokeTest(testOptions) {
         networkRequests: takeNetworkRequestUrls ? takeNetworkRequestUrls() : undefined,
       };
     } catch (e) {
+      // Clear the network requests so that when we retry, we don't see duplicates.
+      if (takeNetworkRequestUrls) takeNetworkRequestUrls();
+
       logChildProcessError(localConsole, e);
       continue; // Retry, if possible.
     }

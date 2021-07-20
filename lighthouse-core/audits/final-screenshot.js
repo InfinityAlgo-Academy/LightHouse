@@ -20,7 +20,7 @@ class FinalScreenshot extends Audit {
       scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
       title: 'Final Screenshot',
       description: 'The last screenshot captured of the pageload.',
-      requiredArtifacts: ['traces'],
+      requiredArtifacts: ['traces', 'GatherContext'],
     };
   }
 
@@ -37,6 +37,10 @@ class FinalScreenshot extends Audit {
     const finalScreenshot = screenshots[screenshots.length - 1];
 
     if (!finalScreenshot) {
+      // If a timespan didn't happen to contain frames, that's fine. Just mark not applicable.
+      if (artifacts.GatherContext.gatherMode === 'timespan') return {notApplicable: true, score: 1};
+
+      // If it was another mode, that's a fatal error.
       throw new LHError(LHError.errors.NO_SCREENSHOTS);
     }
 

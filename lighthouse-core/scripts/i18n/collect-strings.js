@@ -14,7 +14,7 @@ const path = require('path');
 const expect = require('expect');
 const tsc = require('typescript');
 const MessageParser = require('intl-messageformat-parser').default;
-const Util = require('../../../report/renderer/util.js');
+const Util = require('../../../lighthouse-core/util-commonjs.js');
 const {collectAndBakeCtcStrings} = require('./bake-ctc-to-lhl.js');
 const {pruneObsoleteLhlMessages} = require('./prune-obsolete-lhl-messages.js');
 const {countTranslatedMessages} = require('./count-translated.js');
@@ -41,6 +41,7 @@ const ignoredPathComponents = [
   '**/test/**',
   '**/*-test.js',
   '**/*-renderer.js',
+  '**/util-commonjs.js',
   'lighthouse-treemap/app/src/main.js',
 ];
 

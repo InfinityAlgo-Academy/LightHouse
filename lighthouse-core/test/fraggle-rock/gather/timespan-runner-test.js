@@ -98,6 +98,24 @@ describe('Timespan Runner', () => {
     });
   });
 
+  it('should use configContext', async () => {
+    const settingsOverrides = {
+      formFactor: /** @type {'desktop'} */ ('desktop'),
+      maxWaitForLoad: 1234,
+      screenEmulation: {mobile: false},
+    };
+
+    const configContext = {settingsOverrides};
+    const timespan = await startTimespan({page, config, configContext});
+    await timespan.endTimespan();
+
+    expect(mockRunnerRun.mock.calls[0][1]).toMatchObject({
+      config: {
+        settings: settingsOverrides,
+      },
+    });
+  });
+
   it('should invoke stop instrumentation', async () => {
     const timespan = await startTimespan({page, config});
     await timespan.endTimespan();

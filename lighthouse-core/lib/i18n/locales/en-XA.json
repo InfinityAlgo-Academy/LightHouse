@@ -63,7 +63,7 @@
     "message": "[ÅŔÎÅ ᐅ`meter`ᐊ éļéméñţš ĥåvé åççéššîбļé ñåméš one two three four five six seven eight]"
   },
   "lighthouse-core/audits/accessibility/aria-progressbar-name.js | description": {
-    "message": "[Ŵĥéñ åñ éļéméñţ ðöéšñ'ţ ĥåvé åñ åççéššîбļé ñåmé, šçŕééñ ŕéåðéŕš åññöûñçé îţ ŵîţĥ å ĝéñéŕîç ñåmé, måķîñĝ îţ ûñûšåбļé ƒöŕ ûšéŕš ŵĥö ŕéļý öñ šçŕééñ ŕéåðéŕš. ᐅ[ᐊĻéåŕñ möŕéᐅ](https://web.dev/aria-name/)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone twentytwo twentythree twentyfour]"
+    "message": "[Ŵĥéñ å ᐅ`progressbar`ᐊ éļéméñţ ðöéšñ'ţ ĥåvé åñ åççéššîбļé ñåmé, šçŕééñ ŕéåðéŕš åññöûñçé îţ ŵîţĥ å ĝéñéŕîç ñåmé, måķîñĝ îţ ûñûšåбļé ƒöŕ ûšéŕš ŵĥö ŕéļý öñ šçŕééñ ŕéåðéŕš. ᐅ[ᐊĻéåŕñ möŕéᐅ](https://web.dev/aria-name/)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone twentytwo twentythree twentyfour]"
   },
   "lighthouse-core/audits/accessibility/aria-progressbar-name.js | failureTitle": {
     "message": "[ÅŔÎÅ ᐅ`progressbar`ᐊ éļéméñţš ðö ñöţ ĥåvé åççéššîбļé ñåméš. one two three four five six seven eight nine ten]"
@@ -903,10 +903,10 @@
     "message": "[Måñîƒéšţ ðöéš ñöţ çöñţåîñ å 'ñåmé' öŕ 'šĥöŕţ_ñåmé' ƒîéļð one two three four five six seven eight nine ten eleven]"
   },
   "lighthouse-core/audits/installable-manifest.js | manifest-missing-suitable-icon": {
-    "message": "Manifest does not contain a suitable icon - PNG, SVG or WebP format of at least {value0} px is required, the sizes attribute must be set, and the purpose attribute, if set, must include \"any\"."
+    "message": "[Måñîƒéšţ ðöéš ñöţ çöñţåîñ å šûîţåбļé îçöñ - ÞÑĜ, ŠVĜ öŕ ŴéбÞ ƒöŕmåţ öƒ åţ ļéåšţ ᐅ{value0}ᐊ þx îš ŕéqûîŕéð, ţĥé šîžéš åţţŕîбûţé mûšţ бé šéţ, åñð ţĥé þûŕþöšé åţţŕîбûţé, îƒ šéţ, mûšţ îñçļûðé \"åñý\". one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone twentytwo twentythree twentyfour twentyfive twentysix]"
   },
   "lighthouse-core/audits/installable-manifest.js | no-acceptable-icon": {
-    "message": "No supplied icon is at least {value0} px square in PNG, SVG or WebP format, with the purpose attribute unset or set to \"any\""
+    "message": "[Ñö šûþþļîéð îçöñ îš åţ ļéåšţ ᐅ{value0}ᐊ þx šqûåŕé îñ ÞÑĜ, ŠVĜ öŕ ŴéбÞ ƒöŕmåţ, ŵîţĥ ţĥé þûŕþöšé åţţŕîбûţé ûñšéţ öŕ šéţ ţö \"åñý\" one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen]"
   },
   "lighthouse-core/audits/installable-manifest.js | no-icon-available": {
     "message": "[Ðöŵñļöåðéð îçöñ ŵåš émþţý öŕ çöŕŕûþţéð one two three four five six seven eight]"

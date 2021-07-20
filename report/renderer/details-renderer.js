@@ -16,9 +16,7 @@
  */
 'use strict';
 
-/* globals self CriticalRequestChainRenderer SnippetRenderer ElementScreenshotRenderer Util */
-
-/** @typedef {import('./dom.js')} DOM */
+/** @typedef {import('./dom.js').DOM} DOM */
 
 // Convenience types for localized AuditDetails.
 /** @typedef {LH.FormattedIcu<LH.Audit.Details>} AuditDetails */
@@ -27,9 +25,14 @@
 /** @typedef {LH.FormattedIcu<LH.Audit.Details.TableItem>} TableItem */
 /** @typedef {LH.FormattedIcu<LH.Audit.Details.ItemValue>} TableItemValue */
 
+import {Util} from './util.js';
+import {CriticalRequestChainRenderer} from './crc-details-renderer.js';
+import {SnippetRenderer} from './snippet-renderer.js';
+import {ElementScreenshotRenderer} from './element-screenshot-renderer.js';
+
 const URL_PREFIXES = ['http://', 'https://', 'data:'];
 
-class DetailsRenderer {
+export class DetailsRenderer {
   /**
    * @param {DOM} dom
    * @param {{fullPageScreenshot?: LH.Artifacts.FullPageScreenshot}} [options]
@@ -613,10 +616,4 @@ class DetailsRenderer {
     pre.textContent = text;
     return pre;
   }
-}
-
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = DetailsRenderer;
-} else {
-  self.DetailsRenderer = DetailsRenderer;
 }

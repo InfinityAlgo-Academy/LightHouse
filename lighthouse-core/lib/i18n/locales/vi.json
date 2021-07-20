@@ -63,7 +63,7 @@
     "message": "Các phần tử `meter` của ARIA có tên dễ đọc"
   },
   "lighthouse-core/audits/accessibility/aria-progressbar-name.js | description": {
-    "message": "Khi một phần tử không có tên dễ đọc, trình đọc màn hình sẽ gọi phần tử đó bằng một tên gọi chung, khiến người dùng trình đọc màn hình không sử dụng được phần tử này. [Tìm hiểu thêm](https://web.dev/aria-name/)."
+    "message": "Khi một phần tử `progressbar` không có tên thành phần hỗ trợ tiếp cận, trình đọc màn hình sẽ gọi phần tử đó bằng một tên gọi chung, dẫn đến việc người dùng trình đọc màn hình không sử dụng được phần tử này. [Tìm hiểu thêm](https://web.dev/aria-name/)."
   },
   "lighthouse-core/audits/accessibility/aria-progressbar-name.js | failureTitle": {
     "message": "Các phần tử `progressbar` của ARIA không có tên dễ đọc."
@@ -903,10 +903,10 @@
     "message": "Tệp kê khai không chứa trường \"name\" hoặc \"short_name\""
   },
   "lighthouse-core/audits/installable-manifest.js | manifest-missing-suitable-icon": {
-    "message": "Manifest does not contain a suitable icon - PNG, SVG or WebP format of at least {value0} px is required, the sizes attribute must be set, and the purpose attribute, if set, must include \"any\"."
+    "message": "Tệp kê khai chứa biểu tượng không phù hợp. Yêu cầu tệp phải ở định dạng PNG, SVG hoặc WebP có kích thước tối thiểu là {value0} px, thuộc tính \"sizes\" phải được đặt, còn thuộc tính \"purpose\" (nếu được đặt) phải bao gồm \"any\"."
   },
   "lighthouse-core/audits/installable-manifest.js | no-acceptable-icon": {
-    "message": "No supplied icon is at least {value0} px square in PNG, SVG or WebP format, with the purpose attribute unset or set to \"any\""
+    "message": "Không có biểu tượng nào được cung cấp ở định dạng PNG, SVG hoặc WebP với kích thước tối thiểu là {value0} px vuông, còn thuộc tính \"purpose\" không được đặt hoặc được đặt thành \"any\""
   },
   "lighthouse-core/audits/installable-manifest.js | no-icon-available": {
     "message": "Biểu tượng đã tải xuống bị trống hoặc hỏng"

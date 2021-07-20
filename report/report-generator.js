@@ -34,16 +34,17 @@ class ReportGenerator {
    * @param {string=} reportJs
    * @return {string}
    */
-  static generateReportHtml(lhr, reportTemplate = htmlReportAssets.REPORT_TEMPLATE, reportJs = htmlReportAssets.REPORT_JAVASCRIPT) {
+  static generateReportHtml(lhr,
+      reportTemplate = htmlReportAssets.REPORT_TEMPLATE,
+      reportJs = htmlReportAssets.REPORT_JAVASCRIPT) {
     const sanitizedJson = JSON.stringify(lhr)
       .replace(/</g, '\\u003c') // replaces opening script tags
       .replace(/\u2028/g, '\\u2028') // replaces line separators ()
       .replace(/\u2029/g, '\\u2029'); // replaces paragraph separators
-    const sanitizedJavascript = reportJs.replace(/<\//g, '\\u003c/');
 
     return ReportGenerator.replaceStrings(reportTemplate, [
       {search: '%%LIGHTHOUSE_JSON%%', replacement: sanitizedJson},
-      {search: '%%LIGHTHOUSE_JAVASCRIPT%%', replacement: sanitizedJavascript},
+      {search: '%%LIGHTHOUSE_JAVASCRIPT%%', replacement: reportJs},
       {search: '/*%%LIGHTHOUSE_CSS%%*/', replacement: htmlReportAssets.REPORT_CSS},
       {search: '%%LIGHTHOUSE_TEMPLATES%%', replacement: htmlReportAssets.REPORT_TEMPLATES},
     ]);

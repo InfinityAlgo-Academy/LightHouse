@@ -89,6 +89,7 @@ it('audit basic header', async () => {
     },
   };
   const results = await CspXss.audit(artifacts, {computedCache: new Map()});
+  expect(results.notApplicable).toBeFalsy();
   expect(results.details.items).toMatchObject(
     [
       {
@@ -115,6 +116,28 @@ it('audit basic header', async () => {
       STATIC_RESULTS.unsafeInlineFallback,
     ]
   );
+});
+
+it('marked N/A if no warnings found', async () => {
+  const artifacts = {
+    URL: 'https://example.com',
+    MetaElements: [],
+    devtoolsLogs: {
+      defaultPass: networkRecordsToDevtoolsLog([
+        {
+          url: 'https://example.com',
+          responseHeaders: [
+            {
+              name: 'Content-Security-Policy',
+              value: `script-src 'none'; object-src 'none'; base-uri 'none'; report-uri https://csp.example.com`},
+          ],
+        },
+      ]),
+    },
+  };
+  const results = await CspXss.audit(artifacts, {computedCache: new Map()});
+  expect(results.details.items).toHaveLength(0);
+  expect(results.notApplicable).toBeTruthy();
 });
 
 describe('getRawCsps', () => {

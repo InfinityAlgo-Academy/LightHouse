@@ -63,7 +63,7 @@
     "message": "ARIA `meter` 요소에 접근성을 위한 이름이 있음"
   },
   "lighthouse-core/audits/accessibility/aria-progressbar-name.js | description": {
-    "message": "접근성을 위한 이름이 요소에 없는 경우 스크린 리더가 일반적인 이름으로 읽기 때문에 스크린 리더에 의존하는 사용자는 이용할 수 없게 됩니다. [자세히 알아보기](https://web.dev/aria-name/)"
+    "message": "`progressbar` 요소에 접근성을 위한 이름이 없는 경우 스크린 리더가 일반적인 이름으로 읽기 때문에 스크린 리더에 의존하는 사용자는 이용할 수 없게 됩니다. [자세히 알아보기](https://web.dev/aria-name/)"
   },
   "lighthouse-core/audits/accessibility/aria-progressbar-name.js | failureTitle": {
     "message": "ARIA `progressbar` 요소에 접근성을 위한 이름이 없음"
@@ -903,10 +903,10 @@
     "message": "매니페스트에 'name' 또는 'short_name' 필드가 포함되어 있지 않습니다."
   },
   "lighthouse-core/audits/installable-manifest.js | manifest-missing-suitable-icon": {
-    "message": "Manifest does not contain a suitable icon - PNG, SVG or WebP format of at least {value0} px is required, the sizes attribute must be set, and the purpose attribute, if set, must include \"any\"."
+    "message": "매니페스트에 적절한 아이콘이 포함되어 있지 않습니다. 아이콘은 최소 {value0}px 크기의 PNG, SVG 또는 WebP 형식으로 sizes 속성이 설정되어야 하며 purpose 속성이 설정된 경우 'any'를 포함해야 합니다."
   },
   "lighthouse-core/audits/installable-manifest.js | no-acceptable-icon": {
-    "message": "No supplied icon is at least {value0} px square in PNG, SVG or WebP format, with the purpose attribute unset or set to \"any\""
+    "message": "제공된 아이콘 중 최소 {value0}px인 PNG, SVG, WebP 형식의 정사각형이며, purpose 속성이 설정되어 있지 않거나 'any'로 설정되어 있는 아이콘이 없습니다."
   },
   "lighthouse-core/audits/installable-manifest.js | no-icon-available": {
     "message": "다운로드된 아이콘이 비어 있거나 손상됨"

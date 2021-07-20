@@ -285,6 +285,18 @@ function gatherTapTargets(tapTargetsSelector, className) {
 /* c8 ignore stop */
 
 class TapTargets extends FRGatherer {
+  constructor() {
+    super();
+    /**
+     * This needs to be in the constructor.
+     * https://github.com/GoogleChrome/lighthouse/issues/12134
+     * @type {LH.Gatherer.GathererMeta}
+     */
+    this.meta = {
+      supportedModes: ['snapshot', 'navigation'],
+    };
+  }
+
   /**
    * @param {LH.Gatherer.FRProtocolSession} session
    * @param {string} className

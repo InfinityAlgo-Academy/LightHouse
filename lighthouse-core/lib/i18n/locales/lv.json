@@ -63,7 +63,7 @@
     "message": "ARIA elementiem “`meter`” ir pieejami nosaukumi"
   },
   "lighthouse-core/audits/accessibility/aria-progressbar-name.js | description": {
-    "message": "Ja elementam nav pieejama nosaukuma, ekrāna lasītāji nolasa to ar vispārīgu nosaukumu, padarot to nelietojamu ekrāna lasītāju lietotājiem. [Uzziniet vairāk](https://web.dev/aria-name/)."
+    "message": "Ja `progressbar` elementam nav pieejama nosaukuma, ekrāna lasītāji nolasa to ar vispārīgu nosaukumu, līdz ar to elements kļūst nelietojams ekrāna lasītāju lietotājiem. [Uzziniet vairāk](https://web.dev/aria-name/)."
   },
   "lighthouse-core/audits/accessibility/aria-progressbar-name.js | failureTitle": {
     "message": "ARIA elementiem “`progressbar`” nav pieejamu nosaukumu"
@@ -903,10 +903,10 @@
     "message": "Manifestā nav lauka “name” vai “short_name”"
   },
   "lighthouse-core/audits/installable-manifest.js | manifest-missing-suitable-icon": {
-    "message": "Manifest does not contain a suitable icon - PNG, SVG or WebP format of at least {value0} px is required, the sizes attribute must be set, and the purpose attribute, if set, must include \"any\"."
+    "message": "Manifestā nav piemērotas ikonas. Nepieciešams PNG, SVG vai WebP formāta fails, kura izmēriem jābūt vismaz {value0} piks. un atribūtam “sizes” jābūt iestatītam. Ja ir iestatīts atribūts “purpose”, tā vērtībai jāietver “any”."
   },
   "lighthouse-core/audits/installable-manifest.js | no-acceptable-icon": {
-    "message": "No supplied icon is at least {value0} px square in PNG, SVG or WebP format, with the purpose attribute unset or set to \"any\""
+    "message": "Nav nodrošināta neviena PNG, SVG vai WebP formāta ikona, kura ir vismaz {value0} piks. liels kvadrāts un kuras atribūts “purpose” nav iestatīts vai tam iestatīta vērtība “any”."
   },
   "lighthouse-core/audits/installable-manifest.js | no-icon-available": {
     "message": "Lejupielādētā ikona bija tukša vai bojāta."
@@ -1779,7 +1779,7 @@
     "message": "Atrašanās vieta"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnName": {
-    "message": "Vārds"
+    "message": "Nosaukums"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnOverBudget": {
     "message": "Pārsniegts budžets"

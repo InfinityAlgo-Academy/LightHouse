@@ -63,7 +63,7 @@
     "message": "ARIA `meter`-Elemente haben zugängliche Namen"
   },
   "lighthouse-core/audits/accessibility/aria-progressbar-name.js | description": {
-    "message": "Wenn ein Element keinen zugänglichen Namen hat, wird es von Screenreadern mit einer allgemeinen Bezeichnung angesagt. Dadurch ist es für Nutzer, die auf Screenreader angewiesen sind, unbrauchbar. [Weitere Informationen](https://web.dev/aria-name/)"
+    "message": "Wenn ein `progressbar`-Element keinen barrierefreien Namen hat, wird es von Screenreadern mit einer allgemeinen Bezeichnung angesagt. Dadurch ist es für Nutzer, die auf Screenreader angewiesen sind, unbrauchbar. [Weitere Informationen](https://web.dev/aria-name/)"
   },
   "lighthouse-core/audits/accessibility/aria-progressbar-name.js | failureTitle": {
     "message": "ARIA `progressbar`-Elemente haben keine zugänglichen Namen."
@@ -903,10 +903,10 @@
     "message": "Manifest enthält kein Feld „name“ oder „short_name“"
   },
   "lighthouse-core/audits/installable-manifest.js | manifest-missing-suitable-icon": {
-    "message": "Manifest does not contain a suitable icon - PNG, SVG or WebP format of at least {value0} px is required, the sizes attribute must be set, and the purpose attribute, if set, must include \"any\"."
+    "message": "Das Manifest enthält kein passendes Symbol – das Format PNG, SVG oder WebP mit mindestens {value0} px ist erforderlich, das Attribut „sizes“ muss festgelegt werden und das Attribut „purpose“ muss „any“ enthalten."
   },
   "lighthouse-core/audits/installable-manifest.js | no-acceptable-icon": {
-    "message": "No supplied icon is at least {value0} px square in PNG, SVG or WebP format, with the purpose attribute unset or set to \"any\""
+    "message": "Keines der bereitgestellten Symbole weist das Format PNG, SVG oder WebP mit mindestens {value0} px Square und nicht festgelegtem oder auf „any“ gesetztem Attribut „purpose“ auf"
   },
   "lighthouse-core/audits/installable-manifest.js | no-icon-available": {
     "message": "Heruntergeladenes Symbol war leer oder fehlerhaft"

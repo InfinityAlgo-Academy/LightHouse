@@ -63,7 +63,7 @@
     "message": "ARIA елементи `meter` имају називе прилагођене функцијама приступачности"
   },
   "lighthouse-core/audits/accessibility/aria-progressbar-name.js | description": {
-    "message": "Када елемент нема назив прилагођен функцији приступачности, читачи екрана га најављују помоћу генеричког назива, па корисници који се ослањају на читаче екрана не могу да га користе. [Сазнајте више](https://web.dev/aria-name/)."
+    "message": "Када `progressbar` нема назив прилагођен функцији приступачности, читачи екрана га најављују помоћу генеричког назива, па корисници који се ослањају на читаче екрана не могу да га користе. [Сазнајте више](https://web.dev/aria-name/)."
   },
   "lighthouse-core/audits/accessibility/aria-progressbar-name.js | failureTitle": {
     "message": "ARIA елементи `progressbar` немају називе прилагођене функцијама приступачности."
@@ -903,10 +903,10 @@
     "message": "Манифест не садржи поље „name“ или „short_name“"
   },
   "lighthouse-core/audits/installable-manifest.js | manifest-missing-suitable-icon": {
-    "message": "Manifest does not contain a suitable icon - PNG, SVG or WebP format of at least {value0} px is required, the sizes attribute must be set, and the purpose attribute, if set, must include \"any\"."
+    "message": "Манифест не садржи одговарајућу икону – обавезан је PNG, SVG или WebP формат који има најмање {value0} пиксела, атрибут за величине мора да буде подешен, а атрибут за сврху, ако је подешен, мора да обухвата „Било који“."
   },
   "lighthouse-core/audits/installable-manifest.js | no-acceptable-icon": {
-    "message": "No supplied icon is at least {value0} px square in PNG, SVG or WebP format, with the purpose attribute unset or set to \"any\""
+    "message": "Ниједна од наведених икона није у облику квадрата од најмање {value0} пиксела у PNG, SVG или WebP формату, са атрибутом сврхе који није подешен или је подешен на „Било који“"
   },
   "lighthouse-core/audits/installable-manifest.js | no-icon-available": {
     "message": "Преузета икона је била празна или оштећена"

@@ -5,10 +5,18 @@
  */
 'use strict';
 
-const assert = require('assert').strict;
-const jsdom = require('jsdom');
-const DOM = require('../../../report/renderer/dom.js');
-const pageFunctions = require('../../lib/page-functions.js');
+// TODO(esmodules): Node 14, 16 crash with `--experimental-vm-modules` if require and import
+// are used in the same test file.
+// See https://github.com/GoogleChrome/lighthouse/pull/12702#issuecomment-876832620
+
+/** @type {import('assert').strict} */
+let assert;
+/** @type {import('jsdom').strict} */
+let jsdom;
+/** @type {import('../../lib/page-functions.js')} */
+let pageFunctions;
+/** @type {import('../../../report/renderer/dom.js').DOM} */
+let DOM;
 
 /* eslint-env jest */
 
@@ -16,7 +24,12 @@ describe('Page Functions', () => {
   const url = 'http://www.example.com';
   let dom;
 
-  beforeAll(() => {
+  beforeAll(async () => {
+    assert = (await import('assert')).strict;
+    jsdom = await import('jsdom');
+    pageFunctions = (await import('../../lib/page-functions.js')).default;
+    DOM = (await import('../../../report/renderer/dom.js')).DOM;
+
     const {document, ShadowRoot, Node, HTMLElement} = new jsdom.JSDOM('', {url}).window;
     global.ShadowRoot = ShadowRoot;
     global.Node = Node;

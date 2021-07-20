@@ -20,6 +20,11 @@ const debugOptions = require('../app/debug.json');
 // Make sure we get the more helpful test-specific timeout error instead of jest's generic one.
 jest.setTimeout(35_000);
 
+function getTextEncodingCode() {
+  const code = fs.readFileSync(require.resolve('../../report/renderer/text-encoding.js'), 'utf-8');
+  return code.replace('export ', '');
+}
+
 describe('Lighthouse Treemap', () => {
   // eslint-disable-next-line no-console
   console.log('\n✨ Be sure to have recently run this: yarn build-treemap');
@@ -110,8 +115,7 @@ describe('Lighthouse Treemap', () => {
       options.lhr.requestedUrl += '😃😃😃';
       const json = JSON.stringify(options);
       const encoded = await page.evaluate(`
-        ${fs.readFileSync(
-          require.resolve('../../report/renderer/text-encoding.js'), 'utf-8')}
+        ${getTextEncodingCode()}
         TextEncoding.toBase64(${JSON.stringify(json)}, {gzip: true});
       `);
 
@@ -128,8 +132,7 @@ describe('Lighthouse Treemap', () => {
       options.lhr.requestedUrl += '😃😃😃';
       const json = JSON.stringify(options);
       const encoded = await page.evaluate(`
-        ${fs.readFileSync(
-          require.resolve('../../report/renderer/text-encoding.js'), 'utf-8')}
+        ${getTextEncodingCode()}
         TextEncoding.toBase64(${JSON.stringify(json)}, {gzip: false});
       `);
 

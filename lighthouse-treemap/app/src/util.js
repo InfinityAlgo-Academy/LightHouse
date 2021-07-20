@@ -9,7 +9,7 @@
 
 /** @typedef {HTMLElementTagNameMap & {[id: string]: HTMLElement}} HTMLElementByTagName */
 /** @template {string} T @typedef {import('typed-query-selector/parser').ParseSelector<T, Element>} ParseSelector */
-/** @template T @typedef {import('../../../report/renderer/i18n')<T>} I18n */
+/** @template T @typedef {import('../../../report/renderer/i18n').I18n<T>} I18n */
 
 class TreemapUtil {
   /**

@@ -108,6 +108,11 @@ function getFlags(manualArgv, options = {}) {
           default: false,
           describe: 'Print the normalized config for the given config and options, then exit.',
         },
+        'fraggle-rock': {
+          type: 'boolean',
+          default: false,
+          describe: '[EXPERIMENTAL] Use the new Fraggle Rock navigation runner to gather results.',
+        },
         'additional-trace-categories': {
           type: 'string',
           describe: 'Additional categories to capture with the trace (comma-delimited).',

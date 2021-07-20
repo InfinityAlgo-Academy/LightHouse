@@ -63,7 +63,7 @@
     "message": "ARIA `meter` ఎలిమెంట్‌లు యాక్సెస్ చేయగల పేర్లను కలిగి ఉన్నాయి"
   },
   "lighthouse-core/audits/accessibility/aria-progressbar-name.js | description": {
-    "message": "ఒక ఎలిమెంట్‌కు యాక్సెస్ చేయగల పేరు లేనప్పుడు, స్క్రీన్ రీడర్‌లు దానిని సాధారణ పేరుతో ప్రకటిస్తాయి, తద్వారా వాటిని స్క్రీన్ రీడర్‌లపై ఆధారపడే యూజర్‌లకు నిరుపయోగమైనవిగా చేస్తాయి. [మరింత తెలుసుకోండి](https://web.dev/aria-name/)."
+    "message": "ఒక `progressbar` ఎలిమెంట్‌కు యాక్సెస్ చేయదగిన పేరు లేనప్పుడు, స్క్రీన్ రీడర్‌లు దానిని సాధారణ పేరుతో ప్రకటిస్తాయి, తద్వారా స్క్రీన్ రీడర్‌లపై ఆధారపడే యూజర్‌లకు దాన్ని నిరుపయోగమైనవిగా చేస్తాయి. [మరింత తెలుసుకోండి](https://web.dev/aria-name/)."
   },
   "lighthouse-core/audits/accessibility/aria-progressbar-name.js | failureTitle": {
     "message": "ARIA `progressbar` ఎలిమెంట్‌లు యాక్సెస్ చేయగల పేర్లను కలిగి లేవు."
@@ -903,10 +903,10 @@
     "message": "మ్యానిఫెస్ట్‌లో 'name' లేదా 'short_name' ఫీల్డ్‌ను అందించలేదు"
   },
   "lighthouse-core/audits/installable-manifest.js | manifest-missing-suitable-icon": {
-    "message": "Manifest does not contain a suitable icon - PNG, SVG or WebP format of at least {value0} px is required, the sizes attribute must be set, and the purpose attribute, if set, must include \"any\"."
+    "message": "మ్యానిఫెస్ట్‌లో తగిన చిహ్నం లేదు - కనీసం {value0} px ఉండే PNG, SVG లేదా WebP ఫార్మాట్ అవసరం, సైజ్‌ల లక్షణాన్ని తప్పనిసరిగా సెట్ చేయాలి, అలాగే ప్రయోజన లక్షణం, సెట్ చేసి ఉంటే, తప్పనిసరిగా \"ఏదైనా\" ఎంపికను కలిగి ఉండాలి."
   },
   "lighthouse-core/audits/installable-manifest.js | no-acceptable-icon": {
-    "message": "No supplied icon is at least {value0} px square in PNG, SVG or WebP format, with the purpose attribute unset or set to \"any\""
+    "message": "దాని ప్రయోజన లక్షణం అన్‌సెట్ చేయబడి గానీ లేదా \"ఏదైనా\"కు సెట్ చేయబడి గానీ ఉన్న, కనీసం {value0}px స్క్వేర్‌తో PNG, SVG లేదా WebP ఫార్మాట్‌లోని చిహ్నం ఏదీ అందించబడలేదు"
   },
   "lighthouse-core/audits/installable-manifest.js | no-icon-available": {
     "message": "డౌన్‌లోడ్ చేయబడిన చిహ్నం ఖాళీగా ఉంది లేదా పాడైంది"

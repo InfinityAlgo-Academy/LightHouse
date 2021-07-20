@@ -5,12 +5,12 @@
  */
 'use strict';
 
-const assert = require('assert').strict;
-const jsdom = require('jsdom');
-const reportAssets = require('../../report-assets.js');
-const DOM = require('../../renderer/dom.js');
-const Util = require('../../renderer/util.js');
-const I18n = require('../../renderer/i18n.js');
+import {strict as assert} from 'assert';
+import jsdom from 'jsdom';
+import reportAssets from '../../report-assets.js';
+import {DOM} from '../../renderer/dom.js';
+import {Util} from '../../renderer/util.js';
+import {I18n} from '../../renderer/i18n.js';
 
 /* eslint-env jest */
 
@@ -18,16 +18,15 @@ describe('DOM', () => {
   let dom;
 
   beforeAll(() => {
-    global.Util = Util;
-    global.Util.i18n = new I18n('en', {...Util.UIStrings});
+    Util.i18n = new I18n('en', {...Util.UIStrings});
+
     const {document} = new jsdom.JSDOM(reportAssets.REPORT_TEMPLATES).window;
     dom = new DOM(document);
     dom.setLighthouseChannel('someChannel');
   });
 
   afterAll(() => {
-    global.Util.i18n = undefined;
-    global.Util = undefined;
+    Util.i18n = undefined;
   });
 
   describe('createElement', () => {

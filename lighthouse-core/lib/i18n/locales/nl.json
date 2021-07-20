@@ -63,7 +63,7 @@
     "message": "ARIA `meter`-elementen hebben toegankelijke namen"
   },
   "lighthouse-core/audits/accessibility/aria-progressbar-name.js | description": {
-    "message": "Als een element geen toegankelijke naam heeft, kondigen schermlezers dit aan met een generieke naam, waardoor het veld onbruikbaar wordt voor gebruikers die afhankelijk zijn van schermlezers. [Meer informatie](https://web.dev/aria-name/)"
+    "message": "Als een `progressbar`-element geen toegankelijke naam heeft, kondigen schermlezers dit aan met een generieke naam, waardoor het veld onbruikbaar wordt voor gebruikers die afhankelijk zijn van schermlezers. [Meer informatie](https://web.dev/aria-name/)"
   },
   "lighthouse-core/audits/accessibility/aria-progressbar-name.js | failureTitle": {
     "message": "ARIA `progressbar`-elementen hebben geen toegankelijke namen."
@@ -903,10 +903,10 @@
     "message": "Het manifest bevat geen veld 'name' of 'short_name'"
   },
   "lighthouse-core/audits/installable-manifest.js | manifest-missing-suitable-icon": {
-    "message": "Manifest does not contain a suitable icon - PNG, SVG or WebP format of at least {value0} px is required, the sizes attribute must be set, and the purpose attribute, if set, must include \"any\"."
+    "message": "Het manifest bevat geen geschikt icoon. Een png-, svg- of webp-indeling van ten minste {value0} pixels is vereist, het formaatkenmerk moet zijn ingesteld en het doelkenmerk (indien ingesteld) moet 'any' bevatten."
   },
   "lighthouse-core/audits/installable-manifest.js | no-acceptable-icon": {
-    "message": "No supplied icon is at least {value0} px square in PNG, SVG or WebP format, with the purpose attribute unset or set to \"any\""
+    "message": "Geen enkel geleverd icoon is een vierkant van minstens {value0} pixels in png-, svg- of webp-indeling met het doelkenmerk niet ingesteld of ingesteld op 'any'."
   },
   "lighthouse-core/audits/installable-manifest.js | no-icon-available": {
     "message": "Het gedownloade icoon is leeg of beschadigd"

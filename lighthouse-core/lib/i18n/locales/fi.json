@@ -63,7 +63,7 @@
     "message": "ARIA-elementeillä (`meter`) on esteettömät nimet"
   },
   "lighthouse-core/audits/accessibility/aria-progressbar-name.js | description": {
-    "message": "Jos elementin nimi ei ole esteetön, näytönlukuohjelmat sanovat sen kohdalla geneerisen nimen, jolloin näytönlukuohjelmien käyttäjät eivät voi käyttää sitä. [Lue lisää](https://web.dev/aria-name/)."
+    "message": "Jos elementin (`progressbar`) nimi ei ole esteetön, näytönlukuohjelmat sanovat sen kohdalla geneerisen nimen, jolloin näytönlukuohjelmien käyttäjät eivät voi käyttää sitä. [Lue lisää](https://web.dev/aria-name/)."
   },
   "lighthouse-core/audits/accessibility/aria-progressbar-name.js | failureTitle": {
     "message": "ARIA-elementeillä (`progressbar`) ei ole esteettömiä nimiä"
@@ -903,10 +903,10 @@
     "message": "Manifestiin ei sisälly \"name\"- tai \"short_name\"-kenttää"
   },
   "lighthouse-core/audits/installable-manifest.js | manifest-missing-suitable-icon": {
-    "message": "Manifest does not contain a suitable icon - PNG, SVG or WebP format of at least {value0} px is required, the sizes attribute must be set, and the purpose attribute, if set, must include \"any\"."
+    "message": "Manifestissa ei ole sopivaa kuvaketta, siinä on oltava vähintään {value0} pikselin kokoinen PNG-, SVG- tai WebP-tiedosto, kokomäärite on lisättävä ja mahdollisen tarkoitusmääritteen on oltava \"any\"."
   },
   "lighthouse-core/audits/installable-manifest.js | no-acceptable-icon": {
-    "message": "No supplied icon is at least {value0} px square in PNG, SVG or WebP format, with the purpose attribute unset or set to \"any\""
+    "message": "Mikään kuvakkeista ei ole vähintään {value0} pikselin kokoinen PNG-, SVG- tai WebP-tiedosto, kun tarkoitusmääritettä ei ole lisätty tai se on \"any\"."
   },
   "lighthouse-core/audits/installable-manifest.js | no-icon-available": {
     "message": "Ladattu kuvake oli tyhjä tai vioittunut"

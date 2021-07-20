@@ -63,7 +63,7 @@
     "message": "\"ARIA `meter`\"-elementerne har tilgængelige navne"
   },
   "lighthouse-core/audits/accessibility/aria-progressbar-name.js | description": {
-    "message": "Hvis et element ikke har et tilgængeligt navn, giver skærmlæsere feltet et generisk navn, så det ikke kan anvendes af brugere, der får læst indhold op af skærmlæsere. [Få flere oplysninger](https://web.dev/aria-name/)."
+    "message": "Hvis et element med `progressbar` ikke har et tilgængeligt navn, giver skærmlæsere feltet et generisk navn, så det ikke kan anvendes af brugere, der får læst indhold op af skærmlæsere. [Få flere oplysninger](https://web.dev/aria-name/)."
   },
   "lighthouse-core/audits/accessibility/aria-progressbar-name.js | failureTitle": {
     "message": "\"ARIA `progressbar`\"-elementerne har ikke tilgængelige navne."
@@ -903,10 +903,10 @@
     "message": "Manifestet indeholder ikke feltet \"name\" eller \"short_name\""
   },
   "lighthouse-core/audits/installable-manifest.js | manifest-missing-suitable-icon": {
-    "message": "Manifest does not contain a suitable icon - PNG, SVG or WebP format of at least {value0} px is required, the sizes attribute must be set, and the purpose attribute, if set, must include \"any\"."
+    "message": "Manifestet indeholder ikke et passende ikon. Der kræves PNG-, SVG- eller WebP-format med mindst {value0} px, attributten for størrelser skal angives, og attributten for formål, hvis denne er angivet, skal indeholde \"any\"."
   },
   "lighthouse-core/audits/installable-manifest.js | no-acceptable-icon": {
-    "message": "No supplied icon is at least {value0} px square in PNG, SVG or WebP format, with the purpose attribute unset or set to \"any\""
+    "message": "Der er ikke angivet et kvadratisk ikon på mindst {value0} px i PNG-, SVG- eller WebP-format, hvor attributten for formål ikke er angivet eller er angivet som \"any\""
   },
   "lighthouse-core/audits/installable-manifest.js | no-icon-available": {
     "message": "Downloadikonet var tomt eller beskadiget"

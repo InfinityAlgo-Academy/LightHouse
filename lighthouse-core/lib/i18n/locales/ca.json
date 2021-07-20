@@ -63,7 +63,7 @@
     "message": "Els elements `meter` d'ARIA tenen noms accessibles"
   },
   "lighthouse-core/audits/accessibility/aria-progressbar-name.js | description": {
-    "message": "Si un element no té un nom accessible, els lectors de pantalla el llegeixen amb un nom genèric, de manera que resulta inservible per als usuaris que depenen d'aquesta tecnologia. [Obtén més informació](https://web.dev/aria-name/)."
+    "message": "Si un element del tipus `progressbar` no té un nom accessible, els lectors de pantalla el llegeixen amb un nom genèric, de manera que resulta inservible per als usuaris que depenen d'aquesta tecnologia. [Obtén més informació](https://web.dev/aria-name/)."
   },
   "lighthouse-core/audits/accessibility/aria-progressbar-name.js | failureTitle": {
     "message": "Els elements `progressbar` d'ARIA no tenen noms accessibles"
@@ -903,10 +903,10 @@
     "message": "El fitxer de manifest no conté cap camp \"name\" o \"short_name\""
   },
   "lighthouse-core/audits/installable-manifest.js | manifest-missing-suitable-icon": {
-    "message": "Manifest does not contain a suitable icon - PNG, SVG or WebP format of at least {value0} px is required, the sizes attribute must be set, and the purpose attribute, if set, must include \"any\"."
+    "message": "El manifest no conté cap icona adequada. Es requereix un format PNG, SVG o WebP de com a mínim {value0} píxels, l'atribut \"sizes\" ha d'estar establert i l'atribut \"purpose\", si s'estableix, ha d'incloure \"any\"."
   },
   "lighthouse-core/audits/installable-manifest.js | no-acceptable-icon": {
-    "message": "No supplied icon is at least {value0} px square in PNG, SVG or WebP format, with the purpose attribute unset or set to \"any\""
+    "message": "No s'ha proporcionat cap icona que tingui com a mínim {value0} píxels quadrats en format PNG, SVG o WebP i que tingui l'atribut \"purpose\" sense establir o definit en \"any\""
   },
   "lighthouse-core/audits/installable-manifest.js | no-icon-available": {
     "message": "La icona baixada era buida o estava malmesa"
