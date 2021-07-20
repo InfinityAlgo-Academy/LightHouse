@@ -5,6 +5,8 @@
  */
 'use strict';
 
+/** @fileoverview This file is a glorified call of prepareLabData. */
+
 /* global document window prepareLabData */
 
 (function __initLighthouseReport__() {

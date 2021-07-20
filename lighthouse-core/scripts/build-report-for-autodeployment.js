@@ -15,7 +15,7 @@ const swapLocale = require('../lib/i18n/swap-locale.js');
 // Must build before importing report-generator.
 const br = require('../../build/build-report.js');
 br.buildStandaloneReport();
-br.buildPSIReport();
+br.buildPsiReport();
 
 const ReportGenerator = require('../../report/report-generator.js');
 const {defaultSettings} = require('../config/constants.js');
@@ -42,12 +42,7 @@ const DIST = path.join(LH_ROOT, `dist/now`);
 
   // Generate and write reports
   Object.entries(filenameToLhr).forEach(([filename, lhr]) => {
-    let reportTemplate;
-    let reportJs;
-    if (filename === 'psi') {
-      reportTemplate = fs.readFileSync(__dirname + '/../../report/assets/psi-template.html', 'utf8');
-      reportJs = fs.readFileSync(__dirname + '/../../dist/report/psi-report.js', 'utf8');
-    }
+    const [reportTemplate, reportJs] = filename === 'psi' ? readPsiAssets() : [,];
     let html = ReportGenerator.generateReportHtml(lhr, reportTemplate, reportJs);
 
     for (const variant of ['', '⌣.cdt.']) {
@@ -87,6 +82,15 @@ function generatePsiLHR(lhr) {
     'performance': clone.categories.performance,
   };
   return clone;
+}
+
+function readPsiAssets() {
+  const reportTemplate = fs.readFileSync(__dirname + '/../../report/assets/psi-template.html', 'utf8');
+  const reportJs = `
+${fs.readFileSync(__dirname + '/../../dist/report/psi.js', 'utf8')};
+${fs.readFileSync(__dirname + '/../../report/clients/faux-psi.js', 'utf8')};
+  `;
+  return [reportTemplate, reportJs];
 }
 
 /**
