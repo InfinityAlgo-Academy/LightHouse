@@ -312,18 +312,18 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
       ...filterableMetrics,
     ]);
     for (const metric of filterChoices) {
-      const elemId = `metric-${metric.acronym}`;
-      const radioEl = this.dom.createChildOf(metricFilterEl, 'input', 'lh-metricfilter__radio');
-      radioEl.type = 'radio';
-      radioEl.name = 'metricsfilter';
-      radioEl.id = elemId;
+      const {acronym} = metric;
 
       const labelEl = this.dom.createChildOf(metricFilterEl, 'label', 'lh-metricfilter__label');
-      labelEl.htmlFor = elemId;
       labelEl.title = metric.result && metric.result.title;
-      labelEl.textContent = metric.acronym || metric.id;
+      labelEl.textContent = acronym || metric.id;
+      labelEl.dataset.acronym = acronym;
 
-      if (metric.acronym === 'All') {
+      const radioEl = this.dom.createChildOf(labelEl, 'input', 'lh-metricfilter__radio');
+      radioEl.type = 'radio';
+      radioEl.name = 'metricsfilter';
+
+      if (acronym === 'All') {
         radioEl.checked = true;
         labelEl.classList.add('lh-metricfilter__label--active');
       }
@@ -332,9 +332,9 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
       // Toggle class/hidden state based on filter choice.
       radioEl.addEventListener('input', _ => {
         for (const elem of categoryEl.querySelectorAll('label.lh-metricfilter__label')) {
-          elem.classList.toggle('lh-metricfilter__label--active', elem.htmlFor === elemId);
+          elem.classList.toggle('lh-metricfilter__label--active', elem.dataset.acronym === acronym);
         }
-        categoryEl.classList.toggle('lh-category--filtered', metric.acronym !== 'All');
+        categoryEl.classList.toggle('lh-category--filtered', acronym !== 'All');
 
         for (const perfAuditEl of categoryEl.querySelectorAll('div.lh-audit')) {
           if (metric.acronym === 'All') {
