@@ -702,17 +702,16 @@ export class ReportUIFeatures {
     });
 
     const ext = blob.type.match('json') ? '.json' : '.html';
-    const href = URL.createObjectURL(blob);
 
     const a = this._dom.createElement('a');
     a.download = `${filename}${ext}`;
-    a.href = href;
+    this._dom.safelySetBlobHref(a, blob);
     this._document.body.appendChild(a); // Firefox requires anchor to be in the DOM.
     a.click();
 
     // cleanup.
     this._document.body.removeChild(a);
-    setTimeout(_ => URL.revokeObjectURL(href), 500);
+    setTimeout(_ => URL.revokeObjectURL(a.href), 500);
   }
 
   /**

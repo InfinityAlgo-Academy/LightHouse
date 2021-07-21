@@ -60,7 +60,7 @@ export class PwaCategoryRenderer extends CategoryRenderer {
 
     const tmpl = this.dom.cloneTemplate('#tmpl-lh-gauge--pwa', this.templateContext);
     const wrapper = this.dom.find('a.lh-gauge--pwa__wrapper', tmpl);
-    wrapper.href = `#${category.id}`;
+    this.dom.safelySetHref(wrapper, `#${category.id}`);
 
     // Correct IDs in case multiple instances end up in the page.
     const svgRoot = tmpl.querySelector('svg');

@@ -82,9 +82,8 @@ export class CategoryRenderer {
     descEl.appendChild(this.dom.convertMarkdownLinkSnippets(audit.result.description));
 
     for (const relevantMetric of audit.relevantMetrics || []) {
-      const adornEl = this.dom.createChildOf(descEl, 'span', 'lh-audit__adorn', {
-        title: `Relevant to ${relevantMetric.result.title}`,
-      });
+      const adornEl = this.dom.createChildOf(descEl, 'span', 'lh-audit__adorn');
+      adornEl.title = `Relevant to ${relevantMetric.result.title}`;
       adornEl.textContent = relevantMetric.acronym || relevantMetric.id;
     }
 
@@ -332,7 +331,7 @@ export class CategoryRenderer {
   renderScoreGauge(category, groupDefinitions) { // eslint-disable-line no-unused-vars
     const tmpl = this.dom.cloneTemplate('#tmpl-lh-gauge', this.templateContext);
     const wrapper = this.dom.find('a.lh-gauge__wrapper', tmpl);
-    wrapper.href = `#${category.id}`;
+    this.dom.safelySetHref(wrapper, `#${category.id}`);
 
     if (Util.isPluginCategory(category.id)) {
       wrapper.classList.add('lh-gauge__wrapper--plugin');
