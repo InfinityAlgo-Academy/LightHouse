@@ -39,6 +39,8 @@ const Runner = require('../lighthouse-core/runner.js');
 const rollupBrfs = require('./rollup-brfs.js');
 const {LH_ROOT} = require('../root.js');
 
+const pageFunctions = require('../lighthouse-core/lib/page-functions.js');
+
 const COMMIT_HASH = require('child_process')
   .execSync('git rev-parse HEAD')
   .toString().trim();
@@ -193,13 +195,13 @@ async function build(entryPath, distPath, opts = {minify: true}) {
       // and treats them as globals. Because the names are "taken" by the global, Rollup renames
       // the actual functions (getNodeDetails$1). The page functions expect a certain name, so
       // here we undo what Rollup did.
-      postprocess([
-        [/getBoundingClientRect\$1/, 'getBoundingClientRect'],
-        [/getElementsInDocument\$1/, 'getElementsInDocument'],
-        [/getNodeDetails\$1/, 'getNodeDetails'],
-        [/getRectCenterPoint\$1/, 'getRectCenterPoint'],
-        [/isPositionFixed\$1/, 'isPositionFixed'],
-      ]),
+      // postprocess([
+      //   [/getBoundingClientRect\$1/, 'getBoundingClientRect'],
+      //   [/getElementsInDocument\$1/, 'getElementsInDocument'],
+      //   [/getNodeDetails\$1/, 'getNodeDetails'],
+      //   [/getRectCenterPoint\$1/, 'getRectCenterPoint'],
+      //   [/isPositionFixed\$1/, 'isPositionFixed'],
+      // ]),
       opts.minify && terser({
         ecma: 2019,
         output: {
@@ -214,6 +216,8 @@ async function build(entryPath, distPath, opts = {minify: true}) {
         keep_classnames: true,
         // Runtime.evaluate errors if function names are elided.
         keep_fnames: true,
+        // Preserve page-function function names for references in Runtime.evaluate.
+        mangle: {reserved: Object.keys(pageFunctions)},
       }),
     ],
   });
