@@ -36,22 +36,22 @@ const DIST = path.join(LH_ROOT, `dist/now`);
     'ɑrabic': swapLocale(lhr, 'ar').lhr,
     'xl-accented': swapLocale(lhr, 'en-XL').lhr,
     'error': errorLhr,
-    'psi': generatePsiLHR(lhr),
-    'soloperf': generatePsiLHR(lhr),
+    'soloperf': tweakLhrForPsi(lhr),
   };
 
   // Generate and write reports
   Object.entries(filenameToLhr).forEach(([filename, lhr]) => {
-    const [reportTemplate, reportJs] = filename === 'psi' ? readPsiAssets() : [,];
-    let html = ReportGenerator.generateReportHtml(lhr, reportTemplate, reportJs);
+    for (const variant of ['', '⌣.cdt.', '⌣.psi.']) {
+      const [reportTemplate, reportJs] = variant.includes('psi') ? readPsiAssets() : [,];
+      let html = ReportGenerator.generateReportHtml(lhr, reportTemplate, reportJs);
 
-    for (const variant of ['', '⌣.cdt.']) {
       if (variant.includes('cdt')) {
         // TODO: Make the DevTools Audits panel "emulation" more comprehensive
         // - the parent widget/vbox container with overflow
         // - a more constrained/realistic default size
         html = html.replace(`"lh-root lh-vars"`, `"lh-root lh-vars lh-devtools"`);
       }
+
       const filepath = `${DIST}/${variant}${filename}/index.html`;
       fs.mkdirSync(path.dirname(filepath), {recursive: true});
       fs.writeFileSync(filepath, html, {encoding: 'utf-8'});
@@ -76,7 +76,7 @@ function addPluginCategory(lhr) {
 /**
  * @param {LH.Result} lhr
  */
-function generatePsiLHR(lhr) {
+function tweakLhrForPsi(lhr) {
   const clone = JSON.parse(JSON.stringify(lhr));
   clone.categories = {
     'performance': clone.categories.performance,
