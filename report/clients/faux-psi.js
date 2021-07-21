@@ -12,20 +12,19 @@
 (async function __initLighthouseReport__() {
   const mobileLHR = window.__LIGHTHOUSE_JSON__;
   const desktopLHR = JSON.parse(JSON.stringify(mobileLHR));
-  desktopLHR.categories.performance.score = 0.81;
 
   const lhrs = {
     'mobile': mobileLHR,
     'desktop': desktopLHR,
   };
 
-  for (const [elId, lhr] of Object.entries(lhrs)) {
-    await distinguishLHR(lhr, elId);
+  for (const [tabId, lhr] of Object.entries(lhrs)) {
+    await distinguishLHR(lhr, tabId);
 
     const {scoreGaugeEl, perfCategoryEl,
       finalScreenshotDataUri, scoreScaleEl, installFeatures} = prepareLabData(lhr, document);
 
-    const container = document.querySelector(`#${elId}`).querySelector('main');
+    const container = document.querySelector(`#${tabId}`).querySelector('main');
     container.append(scoreGaugeEl);
     container.append(scoreScaleEl);
     const imgEl = document.createElement('img');
@@ -37,17 +36,31 @@
 })();
 
 
-async function distinguishLHR(lhr, elId) {
-  lhr.categories.performance.title += ` ${elId}`; // for easier identification
+/**
+ * Tweak the LHR to make the desktop and mobile reports easier to identify.
+ * Adjusted: Perf category name and score, and emoji placed on top of key screenshots.
+ * @param {LH.Report} lhr
+ * @param {string} tabId
+ */
+async function distinguishLHR(lhr, tabId) {
+  lhr.categories.performance.title += ` ${tabId}`; // for easier identification
+  if (tabId === 'desktop') {
+    lhr.categories.performance.score = 0.81;
+  }
 
   const finalSS = lhr.audits['final-screenshot'].details.data;
-  lhr.audits['final-screenshot'].details.data = await decorateScreenshot(finalSS, elId);
+  lhr.audits['final-screenshot'].details.data = await decorateScreenshot(finalSS, tabId);
 
   const fullPageScreenshot = lhr.audits['full-page-screenshot'].details.screenshot.data;
-  lhr.audits['full-page-screenshot'].details.screenshot.data = await decorateScreenshot(fullPageScreenshot, elId);
+  lhr.audits['full-page-screenshot'].details.screenshot.data = await decorateScreenshot(fullPageScreenshot, tabId); // eslint-disable-line max-len
 }
 
-async function decorateScreenshot(datauri, elId) {
+/**
+ * Add 📱 and 💻 emoji on top of screenshot
+ * @param {string} datauri
+ * @param {string} tabId
+ */
+async function decorateScreenshot(datauri, tabId) {
   const img = document.createElement('img');
 
   await new Promise((resolve, reject) => {
@@ -65,6 +78,6 @@ async function decorateScreenshot(datauri, elId) {
   ctx.font = `${img.width / 2}px serif`;
   ctx.textAlign = 'center';
   ctx.globalAlpha = 0.7;
-  ctx.fillText(elId === 'mobile' ? '📱' : '💻', img.width / 2, Math.min(img.height / 2, 700));
+  ctx.fillText(tabId === 'mobile' ? '📱' : '💻', img.width / 2, Math.min(img.height / 2, 700));
   return c.toDataURL();
 }

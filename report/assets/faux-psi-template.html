@@ -8,14 +8,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
-  <title>PageSpeed Faux Report</title>
+  <title>Faux PageSpeed Report</title>
   <style>/*%%LIGHTHOUSE_CSS%%*/</style>
 
   <style>
-
-    /* https://codepen.io/markcaron/pen/MvGRYV?editors=1100 */
+/* Inspired by https://codepen.io/markcaron/pen/MvGRYV?editors=1100 but improved. s*/
 /*
- CSS for the main interaction
+ The tab visibility basics
 */
 .tabset > input[type="radio"] {
   position: absolute;
@@ -26,47 +25,31 @@
   display: none;
 }
 
-.tabset > input:first-child:checked ~ .tab-panels > .tab-panel:first-child,
-.tabset > input:nth-child(3):checked ~ .tab-panels > .tab-panel:nth-child(2),
-.tabset > input:nth-child(5):checked ~ .tab-panels > .tab-panel:nth-child(3),
-.tabset > input:nth-child(7):checked ~ .tab-panels > .tab-panel:nth-child(4),
-.tabset > input:nth-child(9):checked ~ .tab-panels > .tab-panel:nth-child(5),
-.tabset > input:nth-child(11):checked ~ .tab-panels > .tab-panel:nth-child(6) {
+.tabset > input:nth-of-type(1):checked ~ .tab-panels > .tab-panel:nth-of-type(1),
+.tabset > input:nth-of-type(2):checked ~ .tab-panels > .tab-panel:nth-of-type(2) {
   display: block;
 }
 
 /*
- Styling
+ Purdy tabs
 */
 .tabset > label {
   position: relative;
   display: inline-block;
-  padding: 15px 55px 25px;
+  padding: 15px 55px 15px;
   border: 1px solid transparent;
   border-bottom: 0;
   cursor: pointer;
   font-weight: 600;
 }
 
-.tabset > label::after {
-  content: "";
-  position: absolute;
-  left: 55px;
-  bottom: 10px;
-  width: 22px;
-  height: 4px;
-  background: #8d8d8d;
+.tabset > label:hover {
+  background-color: hsl(0deg 0% 100% / 24%);
 }
 
 .tabset > label:hover,
 .tabset > input:focus + label {
   color: #06c;
-}
-
-.tabset > label:hover::after,
-.tabset > input:focus + label::after,
-.tabset > input:checked + label::after {
-  background: #06c;
 }
 
 .tabset > input:checked + label {
@@ -79,15 +62,6 @@
 .tab-panel {
   padding: 30px 0;
   border-top: 1px solid #ccc;
-}
-
-/*
- Demo purposes only
-*/
-*,
-*:before,
-*:after {
-  box-sizing: border-box;
 }
 
 body {
@@ -117,10 +91,10 @@ body {
 
 
   <div class="tabset lh-vars lh-root">
-    <!-- Tab 1 -->
+
     <input type="radio" name="tabset" id="tab1" aria-controls="mobile" checked>
     <label for="tab1">Mobile</label>
-    <!-- Tab 2 -->
+
     <input type="radio" name="tabset" id="tab2" aria-controls="desktop">
     <label for="tab2">Desktop</label>
 
@@ -128,14 +102,13 @@ body {
       <section id="mobile" class="tab-panel">
         <main></main>
       </section>
+
       <section id="desktop" class="tab-panel">
         <main></main>
       </section>
+
     </div>
-
   </div>
-
-
 
   <script>window.__LIGHTHOUSE_JSON__ = %%LIGHTHOUSE_JSON%%;</script>
   <script type="module">
