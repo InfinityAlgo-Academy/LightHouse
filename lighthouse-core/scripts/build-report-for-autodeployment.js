@@ -14,8 +14,6 @@ const swapLocale = require('../lib/i18n/swap-locale.js');
 
 // Must build before importing report-generator.
 const br = require('../../build/build-report.js');
-br.buildStandaloneReport();
-br.buildPsiReport();
 
 const ReportGenerator = require('../../report/report-generator.js');
 const {defaultSettings} = require('../config/constants.js');
@@ -27,6 +25,9 @@ const {LH_ROOT} = require('../../root.js');
 const DIST = path.join(LH_ROOT, `dist/now`);
 
 (async function() {
+  await br.buildStandaloneReport();
+  await br.buildPsiReport();
+
   addPluginCategory(lhr);
   const errorLhr = await generateErrorLHR();
 
