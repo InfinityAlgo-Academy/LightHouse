@@ -220,14 +220,12 @@ limitations under the License.
       contain: none;
     }
   </style>
-  <div class="lh-scores-wrapper">
     <div class="lh-scores-container">
       <div class="pyro">
         <div class="before"></div>
         <div class="after"></div>
       </div>
     </div>
-  </div>
 </template>
 
 <!-- Lighthouse topbar -->
@@ -475,7 +473,7 @@ limitations under the License.
     }
   </style>
 
-  <div class="lh-header-container">
+  <div class="lh-header-inner">
     <div class="lh-scores-wrapper-placeholder"></div>
   </div>
 </template>
@@ -483,6 +481,7 @@ limitations under the License.
 
 <!-- Lighthouse footer -->
 <template id="tmpl-lh-footer">
+  <footer class="lh-footer">
   <style>
     .lh-footer {
       padding: var(--footer-padding-vertical) calc(var(--default-padding) * 2);
@@ -525,7 +524,6 @@ limitations under the License.
       flex: 1;
     }
   </style>
-  <footer class="lh-footer">
     <!-- TODO(i18n): localize runtime settings -->
     <div class="lh-env">
       <div class="lh-env__title">Runtime Settings</div>

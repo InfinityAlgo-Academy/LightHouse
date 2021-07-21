@@ -40,7 +40,7 @@ const DIST = path.join(LH_ROOT, `dist/now`);
         // TODO: Make the DevTools Audits panel "emulation" more comprehensive
         // - the parent widget/vbox container with overflow
         // - a more constrained/realistic default size
-        html = html.replace(`"lh-root lh-vars"`, `"lh-root lh-vars lh-devtools"`);
+        html = html.replace(`"lh-vars"`, `"lh-vars lh-devtools"`);
       }
       const filepath = `${DIST}/${variant}${filename}/index.html`;
       fs.mkdirSync(path.dirname(filepath), {recursive: true});

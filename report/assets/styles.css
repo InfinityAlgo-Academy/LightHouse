@@ -271,24 +271,24 @@
   --section-padding-vertical: 8px;
 }
 
-.lh-devtools.lh-root {
+.lh-devtools {
   height: 100%;
 }
-.lh-devtools.lh-root img {
+.lh-devtools img {
   /* Override devtools default 'min-width: 0' so svg without size in a flexbox isn't collapsed. */
   min-width: auto;
 }
-.lh-devtools .lh-container {
+.lh-devtools .lh-main {
   overflow-y: scroll;
   height: calc(100% - var(--topbar-height));
 }
 @media print {
-  .lh-devtools .lh-container {
+  .lh-devtools .lh-main {
     overflow: unset;
   }
 }
 .lh-devtools .lh-sticky-header {
-  /* This is normally the height of the topbar, but we want it to stick to the top of our scroll container .lh-container` */
+  /* This is normally the height of the topbar, but we want it to stick to the top of our scroll container .lh-main` */
   top: 0;
 }
 
@@ -297,12 +297,12 @@
   100% { opacity: 0.6;}
 }
 
-.lh-root *, .lh-root *::before, .lh-root *::after {
+.lh-vars *, .lh-vars *::before, .lh-vars *::after {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
 }
 
-.lh-root {
+.lh-vars {
   font-family: var(--report-font-family);
   font-size: var(--report-font-size);
   margin: 0;
@@ -312,31 +312,31 @@
   color: var(--report-text-color);
 }
 
-.lh-root :focus {
+.lh-vars :focus {
     outline: -webkit-focus-ring-color auto 3px;
 }
-.lh-root summary:focus {
+.lh-vars summary:focus {
     outline: none;
     box-shadow: 0 0 0 1px hsl(217, 89%, 61%);
 }
 
-.lh-root [hidden] {
+.lh-vars [hidden] {
   display: none !important;
 }
 
-.lh-root pre {
+.lh-vars pre {
   margin: 0;
 }
 
-.lh-root details > summary {
+.lh-vars details > summary {
   cursor: pointer;
 }
 
-.lh-container {
+.lh-main, .lh-header, .lh-categories, .lh-footer {
   /*
   Text wrapping in the report is so much FUN!
-  We have a `word-break: break-word;` globally here to prevent a few common scenarios, namely
-  long non-breakable text (usually URLs) found in:
+  We have a `word-break: break-word;` applied to the key components to prevent a few common
+  scenarios, namely long non-breakable text (usually URLs) found in:
     1. The footer
     2. .lh-node (outerHTML)
     3. .lh-code
@@ -1064,14 +1064,14 @@
   padding-bottom: 20px;
 }
 
-.lh-header-container {
+.lh-header-inner {
   display: block;
   margin: 0 auto;
   position: relative;
   word-wrap: break-word;
 }
 
-.lh-report {
+.lh-categories {
   min-width: var(--report-min-width);
 }
 
@@ -1286,7 +1286,7 @@
 }
 
 /* Hide category score gauages if it's a single category report */
-.lh-header--solo-category .lh-scores-wrapper {
+.lh-header--solo-category .lh-header-inner {
   display: none;
 }
 
@@ -1366,7 +1366,7 @@
 
 /* 964 fits the min-width of the filmstrip */
 @media screen and (max-width: 964px) {
-  .lh-report {
+  .lh-categories {
     margin-left: 0;
     width: 100%;
   }
@@ -1376,10 +1376,10 @@
   body {
     -webkit-print-color-adjust: exact; /* print background colors */
   }
-  .lh-container {
+  .lh-main {
     display: block;
   }
-  .lh-report {
+  .lh-categories {
     margin-left: 0;
     padding-top: 0;
   }
@@ -1397,7 +1397,7 @@
 .lh-table thead th {
   font-weight: normal;
   color: var(--color-gray-600);
-  /* See text-wrapping comment on .lh-container. */
+  /* See text-wrapping comment on .lh-main. */
   word-break: normal;
 }
 

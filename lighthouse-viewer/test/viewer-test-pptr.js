@@ -90,7 +90,7 @@ describe('Lighthouse Viewer', () => {
       await viewerPage.goto(viewerUrl, {waitUntil: 'networkidle2', timeout: 30000});
       const fileInput = await viewerPage.$('#hidden-file-input');
       await fileInput.uploadFile(sampleLhr);
-      await viewerPage.waitForSelector('.lh-container', {timeout: 30000});
+      await viewerPage.waitForSelector('.lh-main', {timeout: 30000});
     });
 
     it('should load with no errors', async () => {

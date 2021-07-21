@@ -52,8 +52,8 @@ describe('ReportRenderer', () => {
     it('should render a report', () => {
       const container = renderer._dom._document.body;
       const output = renderer.renderReport(sampleResults, container);
-      assert.ok(output.querySelector('.lh-header-container'), 'has a header');
-      assert.ok(output.querySelector('.lh-report'), 'has report body');
+      assert.ok(output.querySelector('.lh-header-inner'), 'has a header');
+      assert.ok(output.querySelector('.lh-main'), 'has report body');
       // 3 sets of gauges - one in sticky header, one in scores header, and one in each section.
       assert.equal(output.querySelectorAll('.lh-gauge__wrapper, .lh-gauge--pwa__wrapper').length,
           Object.keys(sampleResults.categories).length * 3, 'renders category gauges');
@@ -74,7 +74,7 @@ describe('ReportRenderer', () => {
     });
 
     it('renders a header', () => {
-      const header = renderer._renderReportHeader();
+      const header = renderer._renderScoresWrapper();
       assert.ok(header.querySelector('.lh-scores-container'), 'contains score container');
     });
 

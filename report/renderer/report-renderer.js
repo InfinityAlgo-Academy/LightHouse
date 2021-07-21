@@ -80,7 +80,7 @@ export class ReportRenderer {
   /**
    * @return {DocumentFragment}
    */
-  _renderReportHeader() {
+  _renderScoresWrapper() {
     const el = this._dom.cloneTemplate('#tmpl-lh-heading', this._templateContext);
     const domFragment = this._dom.cloneTemplate('#tmpl-lh-scores-wrapper', this._templateContext);
     const placeholder = this._dom.find('.lh-scores-wrapper-placeholder', el);
@@ -222,24 +222,23 @@ export class ReportRenderer {
       renderer.setTemplateContext(this._templateContext);
     });
 
-    const headerContainer = this._dom.createElement('div');
-    headerContainer.appendChild(this._renderReportHeader());
-
-    const reportContainer = this._dom.createElement('div', 'lh-container');
-    const reportSection = this._dom.createElement('div', 'lh-report');
-    reportSection.appendChild(this._renderReportWarnings(report));
+    const mainEl = this._dom.createElement('div', 'lh-main');
+    const headerEl = this._dom.createElement('header', 'lh-header');
+    mainEl.appendChild(headerEl);
+    headerEl.appendChild(this._renderScoresWrapper());
+    headerEl.appendChild(this._renderReportWarnings(report));
 
     let scoreHeader;
     const isSoloCategory = Object.keys(report.categories).length === 1;
     if (!isSoloCategory) {
       scoreHeader = this._dom.createElement('div', 'lh-scores-header');
     } else {
-      headerContainer.classList.add('lh-header--solo-category');
+      headerEl.classList.add('lh-header--solo-category');
     }
 
     if (scoreHeader) {
       const scoreScale = this._dom.cloneTemplate('#tmpl-lh-scorescale', this._templateContext);
-      const scoresContainer = this._dom.find('.lh-scores-container', headerContainer);
+      const scoresContainer = this._dom.find('.lh-scores-container', headerEl);
       scoreHeader.append(
         ...this._renderScoreGauges(report, categoryRenderer, specificCategoryRenderers));
       scoresContainer.appendChild(scoreHeader);
@@ -248,10 +247,10 @@ export class ReportRenderer {
       const stickyHeader = this._dom.createElement('div', 'lh-sticky-header');
       stickyHeader.append(
         ...this._renderScoreGauges(report, categoryRenderer, specificCategoryRenderers));
-      reportContainer.appendChild(stickyHeader);
+      headerEl.prepend(stickyHeader);
     }
 
-    const categories = reportSection.appendChild(this._dom.createElement('div', 'lh-categories'));
+    const categories = mainEl.appendChild(this._dom.createElement('div', 'lh-categories'));
     for (const category of Object.values(report.categories)) {
       const renderer = specificCategoryRenderers[category.id] || categoryRenderer;
       // .lh-category-wrapper is full-width and provides horizontal rules between categories.
@@ -264,14 +263,12 @@ export class ReportRenderer {
     const topbarDocumentFragment = this._renderReportTopbar(report);
 
     reportFragment.appendChild(topbarDocumentFragment);
-    reportFragment.appendChild(reportContainer);
-    reportContainer.appendChild(headerContainer);
-    reportContainer.appendChild(reportSection);
-    reportSection.appendChild(this._renderReportFooter(report));
+    reportFragment.appendChild(mainEl);
+    mainEl.appendChild(this._renderReportFooter(report));
 
     if (fullPageScreenshot) {
       ElementScreenshotRenderer.installFullPageScreenshot(
-        reportContainer, fullPageScreenshot.screenshot);
+        mainEl, fullPageScreenshot.screenshot);
     }
 
     return reportFragment;

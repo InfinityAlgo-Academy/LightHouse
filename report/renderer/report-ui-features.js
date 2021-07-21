@@ -73,7 +73,6 @@ export class ReportUIFeatures {
     /** @type {HTMLElement} */
     this.highlightEl; // eslint-disable-line no-unused-expressions
 
-    this.onMediaQueryChange = this.onMediaQueryChange.bind(this);
     this.onCopy = this.onCopy.bind(this);
     this.onDropDownMenuClick = this.onDropDownMenuClick.bind(this);
     this.onKeyUp = this.onKeyUp.bind(this);
@@ -91,10 +90,9 @@ export class ReportUIFeatures {
   initFeatures(report) {
     this.json = report;
 
-    this._setupMediaQueryListeners();
     this._dropDown.setup(this.onDropDownMenuClick);
     this._setupThirdPartyFilter();
-    this._setupElementScreenshotOverlay(this._dom.find('.lh-container', this._document));
+    this._setupElementScreenshotOverlay(this._dom.find('.lh-main', this._document));
     this._setUpCollapseDetailsAfterPrinting();
     this._resetUIState();
     this._document.addEventListener('keyup', this.onKeyUp);
@@ -129,7 +127,7 @@ export class ReportUIFeatures {
     // There is only a sticky header when at least 2 categories are present.
     if (Object.keys(this.json.categories).length >= 2) {
       this._setupStickyHeaderElements();
-      const containerEl = this._dom.find('.lh-container', this._document);
+      const containerEl = this._dom.find('.lh-main', this._document);
       const elToAddScrollListener = this._getScrollParent(containerEl);
       elToAddScrollListener.addEventListener('scroll', this._updateStickyHeaderOnScroll);
 
@@ -246,22 +244,6 @@ export class ReportUIFeatures {
   _fireEventOn(name, target = this._document, detail) {
     const event = new CustomEvent(name, detail ? {detail} : undefined);
     target.dispatchEvent(event);
-  }
-
-  _setupMediaQueryListeners() {
-    const mediaQuery = self.matchMedia('(max-width: 500px)');
-    mediaQuery.addListener(this.onMediaQueryChange);
-    // Ensure the handler is called on init
-    this.onMediaQueryChange(mediaQuery);
-  }
-
-  /**
-   * Handle media query change events.
-   * @param {MediaQueryList|MediaQueryListEvent} mql
-   */
-  onMediaQueryChange(mql) {
-    const root = this._dom.find('.lh-root', this._document);
-    root.classList.toggle('lh-narrow', mql.matches);
   }
 
   _setupThirdPartyFilter() {
