@@ -45,8 +45,14 @@ const DIST = path.join(LH_ROOT, `dist/now`);
   // Generate and write reports
   Object.entries(filenameToLhr).forEach(([filename, lhr]) => {
     for (const variant of ['', '⌣.cdt.', '⌣.psi.']) {
-      const [reportTemplate, reportJs] = variant.includes('psi') ? readPsiAssets() : [,];
-      let html = ReportGenerator.generateReportHtml(lhr, reportTemplate, reportJs);
+      let html;
+      if (variant.includes('psi')) {
+        const [reportTemplate, reportJs] = readPsiAssets();
+        lhr = tweakLhrForPsi(lhr);
+        html = ReportGenerator.generateReportHtml(lhr, reportTemplate, reportJs);
+      } else {
+        html = ReportGenerator.generateReportHtml(lhr);
+      }
 
       if (variant.includes('cdt')) {
         // TODO: Make the DevTools Audits panel "emulation" more comprehensive
@@ -80,6 +86,7 @@ function addPluginCategory(lhr) {
  * @param {LH.Result} lhr
  */
 function tweakLhrForPsi(lhr) {
+  /** @type {LH.Result} */
   const clone = JSON.parse(JSON.stringify(lhr));
   clone.categories = {
     'performance': clone.categories.performance,
