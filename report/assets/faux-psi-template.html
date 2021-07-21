@@ -1,0 +1,147 @@
+<!--
+ * Copyright 2021 The Lighthouse Authors. All Rights Reserved.
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+  <title>PageSpeed Faux Report</title>
+  <style>/*%%LIGHTHOUSE_CSS%%*/</style>
+
+  <style>
+
+    /* https://codepen.io/markcaron/pen/MvGRYV?editors=1100 */
+/*
+ CSS for the main interaction
+*/
+.tabset > input[type="radio"] {
+  position: absolute;
+  left: -200vw;
+}
+
+.tabset .tab-panel {
+  display: none;
+}
+
+.tabset > input:first-child:checked ~ .tab-panels > .tab-panel:first-child,
+.tabset > input:nth-child(3):checked ~ .tab-panels > .tab-panel:nth-child(2),
+.tabset > input:nth-child(5):checked ~ .tab-panels > .tab-panel:nth-child(3),
+.tabset > input:nth-child(7):checked ~ .tab-panels > .tab-panel:nth-child(4),
+.tabset > input:nth-child(9):checked ~ .tab-panels > .tab-panel:nth-child(5),
+.tabset > input:nth-child(11):checked ~ .tab-panels > .tab-panel:nth-child(6) {
+  display: block;
+}
+
+/*
+ Styling
+*/
+.tabset > label {
+  position: relative;
+  display: inline-block;
+  padding: 15px 55px 25px;
+  border: 1px solid transparent;
+  border-bottom: 0;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.tabset > label::after {
+  content: "";
+  position: absolute;
+  left: 55px;
+  bottom: 10px;
+  width: 22px;
+  height: 4px;
+  background: #8d8d8d;
+}
+
+.tabset > label:hover,
+.tabset > input:focus + label {
+  color: #06c;
+}
+
+.tabset > label:hover::after,
+.tabset > input:focus + label::after,
+.tabset > input:checked + label::after {
+  background: #06c;
+}
+
+.tabset > input:checked + label {
+  border-color: #ccc;
+  border-bottom: 1px solid #fff;
+  margin-bottom: -1px;
+  background: white;
+}
+
+.tab-panel {
+  padding: 30px 0;
+  border-top: 1px solid #ccc;
+}
+
+/*
+ Demo purposes only
+*/
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+body {
+  padding: 30px;
+}
+
+.tabset {
+  max-width: 65em;
+  background: #eee;
+}
+
+.tab-panels {
+  background: white;
+}
+
+/* extra styles */
+body {
+  background: hsl(217deg 89% 61%);
+}
+  </style>
+</head>
+<body >
+  <noscript>PSI requires JavaScript. Please enable.</noscript>
+  <div hidden>%%LIGHTHOUSE_TEMPLATES%%</div>
+
+  <div class="element-screenshots-container"></div>
+
+
+  <div class="tabset lh-vars lh-root">
+    <!-- Tab 1 -->
+    <input type="radio" name="tabset" id="tab1" aria-controls="mobile" checked>
+    <label for="tab1">Mobile</label>
+    <!-- Tab 2 -->
+    <input type="radio" name="tabset" id="tab2" aria-controls="desktop">
+    <label for="tab2">Desktop</label>
+
+    <div class="tab-panels">
+      <section id="mobile" class="tab-panel">
+        <main></main>
+      </section>
+      <section id="desktop" class="tab-panel">
+        <main></main>
+      </section>
+    </div>
+
+  </div>
+
+
+
+  <script>window.__LIGHTHOUSE_JSON__ = %%LIGHTHOUSE_JSON%%;</script>
+  <script type="module">
+%%LIGHTHOUSE_JAVASCRIPT%%
+  //# sourceURL=psi-reportrenderer.js
+  </script>
+  <script>console.log('window.__LIGHTHOUSE_JSON__', __LIGHTHOUSE_JSON__);</script>
+</body>
+</html>

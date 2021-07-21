@@ -81,11 +81,16 @@ function generatePsiLHR(lhr) {
   clone.categories = {
     'performance': clone.categories.performance,
   };
+  // no budgets in PSI
+  delete clone.audits['performance-budget'];
+  clone.categories.performance.auditRefs = clone.categories.performance.auditRefs.filter(audit => {
+    return !audit.id.endsWith('-budget');
+  });
   return clone;
 }
 
 function readPsiAssets() {
-  const reportTemplate = fs.readFileSync(__dirname + '/../../report/assets/psi-template.html', 'utf8');
+  const reportTemplate = fs.readFileSync(__dirname + '/../../report/assets/faux-psi-template.html', 'utf8');
   const reportJs = `
 ${fs.readFileSync(__dirname + '/../../dist/report/psi.js', 'utf8')};
 ${fs.readFileSync(__dirname + '/../../report/clients/faux-psi.js', 'utf8')};
