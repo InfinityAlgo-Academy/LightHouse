@@ -1064,6 +1064,13 @@
   padding-bottom: 20px;
 }
 
+.lh-header-inner {
+  display: block;
+  margin: 0 auto;
+  position: relative;
+  word-wrap: break-word;
+}
+
 .lh-categories {
   min-width: var(--report-min-width);
 }
@@ -1118,6 +1125,10 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+}
+.lh-scores-header__solo {
+  padding: 0;
+  border: 0;
 }
 
 /* Gauge */
@@ -1275,7 +1286,7 @@
 }
 
 /* Hide category score gauages if it's a single category report */
-.lh-header--solo-category .lh-scores-container {
+.lh-header--solo-category .lh-header-inner {
   display: none;
 }
 
