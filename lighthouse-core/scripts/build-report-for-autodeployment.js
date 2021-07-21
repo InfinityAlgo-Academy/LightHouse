@@ -11,13 +11,11 @@
 const fs = require('fs');
 const path = require('path');
 const swapLocale = require('../lib/i18n/swap-locale.js');
-
-// Must build before importing report-generator.
-const br = require('../../build/build-report.js');
-
-const ReportGenerator = require('../../report/report-generator.js');
+const buildreport = require('../../build/build-report.js');
 const {defaultSettings} = require('../config/constants.js');
-const lighthouse = require('../index.js');
+
+/** @type {import('../index.js')} */
+let lighthouse;
 
 const lhr = /** @type {LH.Result} */ (require('../../lighthouse-core/test/results/sample_v2.json'));
 const {LH_ROOT} = require('../../root.js');
@@ -25,8 +23,12 @@ const {LH_ROOT} = require('../../root.js');
 const DIST = path.join(LH_ROOT, `dist/now`);
 
 (async function() {
-  await br.buildStandaloneReport();
-  await br.buildPsiReport();
+  // Must build before importing report-generator (or indirectly through lighthouse)
+  await buildreport.buildStandaloneReport();
+  await buildreport.buildPsiReport();
+  lighthouse = require('../index.js');
+  const ReportGenerator = require('../../report/report-generator.js');
+
 
   addPluginCategory(lhr);
   const errorLhr = await generateErrorLHR();
@@ -91,10 +93,11 @@ function tweakLhrForPsi(lhr) {
 }
 
 function readPsiAssets() {
-  const reportTemplate = fs.readFileSync(__dirname + '/../../report/assets/faux-psi-template.html', 'utf8');
+  const reportTemplate = fs.readFileSync(
+    __dirname + '/../../report/assets/faux-psi-template.html', 'utf8');
   const reportJs = `
 ${fs.readFileSync(__dirname + '/../../dist/report/psi.js', 'utf8')};
-${fs.readFileSync(__dirname + '/../../report/clients/faux-psi.js', 'utf8')};
+${fs.readFileSync(__dirname + '/../../report/assets/faux-psi.js', 'utf8')};
   `;
   return [reportTemplate, reportJs];
 }
