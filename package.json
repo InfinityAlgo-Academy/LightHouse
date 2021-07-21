@@ -62,7 +62,7 @@
     "fast": "node ./lighthouse-cli/index.js --preset=desktop --throttlingMethod=provided",
     "deploy-treemap": "yarn build-treemap --deploy",
     "deploy-viewer": "yarn build-viewer --deploy",
-    "now-build": "yarn build-report && node lighthouse-core/scripts/build-report-for-autodeployment.js && yarn build-viewer && yarn build-treemap && cp -r dist/gh-pages dist/now/gh-pages",
+    "now-build": "node lighthouse-core/scripts/build-report-for-autodeployment.js && yarn build-viewer && yarn build-treemap && cp -r dist/gh-pages dist/now/gh-pages",
     "dogfood-lhci": "./lighthouse-core/scripts/dogfood-lhci.sh",
     "timing-trace": "node lighthouse-core/scripts/generate-timing-trace.js",
     "changelog": "conventional-changelog --config ./build/changelog-generator/index.js --infile changelog.md --same-file",
