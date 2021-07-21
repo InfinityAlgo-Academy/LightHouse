@@ -16,9 +16,10 @@
  */
 'use strict';
 
-/* globals self, Util, CategoryRenderer */
+import {Util} from './util.js';
+import {CategoryRenderer} from './category-renderer.js';
 
-class PwaCategoryRenderer extends CategoryRenderer {
+export class PwaCategoryRenderer extends CategoryRenderer {
   /**
    * @param {LH.ReportResult.Category} category
    * @param {Object<string, LH.Result.ReportGroup>} [groupDefinitions]
@@ -59,7 +60,7 @@ class PwaCategoryRenderer extends CategoryRenderer {
 
     const tmpl = this.dom.cloneTemplate('#tmpl-lh-gauge--pwa', this.templateContext);
     const wrapper = this.dom.find('a.lh-gauge--pwa__wrapper', tmpl);
-    wrapper.href = `#${category.id}`;
+    this.dom.safelySetHref(wrapper, `#${category.id}`);
 
     // Correct IDs in case multiple instances end up in the page.
     const svgRoot = tmpl.querySelector('svg');
@@ -183,10 +184,4 @@ class PwaCategoryRenderer extends CategoryRenderer {
       }
     }
   }
-}
-
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = PwaCategoryRenderer;
-} else {
-  self.PwaCategoryRenderer = PwaCategoryRenderer;
 }

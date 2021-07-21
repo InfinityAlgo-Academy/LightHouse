@@ -29,6 +29,7 @@
     "lighthouse-cli/test/fixtures/**/*.js",
     "lighthouse-core/scripts/legacy-javascript/variants",
     "lighthouse-core/test/chromium-web-tests/webtests",
+    "report/generated",
     // These test files require further changes before they can be type checked.
     "lighthouse-core/test/config/budget-test.js",
     "lighthouse-core/test/config/config-helpers-test.js",

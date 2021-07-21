@@ -13,22 +13,23 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * Dummy text for ensuring report robustness: </script> pre$`post %%LIGHTHOUSE_JSON%%
+ * (this is handled by terser)
  */
 'use strict';
 
-/**
- * @fileoverview The entry point for rendering the Lighthouse report based on the JSON output.
- *    This file is injected into the report HTML along with the JSON report.
- *
- * Dummy text for ensuring report robustness: </script> pre$`post %%LIGHTHOUSE_JSON%%
- */
+/** @typedef {import('./dom.js').DOM} DOM */
 
-/** @typedef {import('./category-renderer')} CategoryRenderer */
-/** @typedef {import('./dom.js')} DOM */
+import {CategoryRenderer} from './category-renderer.js';
+import {DetailsRenderer} from './details-renderer.js';
+import {ElementScreenshotRenderer} from './element-screenshot-renderer.js';
+import {I18n} from './i18n.js';
+import {PerformanceCategoryRenderer} from './performance-category-renderer.js';
+import {PwaCategoryRenderer} from './pwa-category-renderer.js';
+import {Util} from './util.js';
 
-/* globals self, Util, DetailsRenderer, CategoryRenderer, I18n, PerformanceCategoryRenderer, PwaCategoryRenderer, ElementScreenshotRenderer */
-
-class ReportRenderer {
+export class ReportRenderer {
   /**
    * @param {DOM} dom
    */
@@ -71,8 +72,9 @@ class ReportRenderer {
   _renderReportTopbar(report) {
     const el = this._dom.cloneTemplate('#tmpl-lh-topbar', this._templateContext);
     const metadataUrl = this._dom.find('a.lh-topbar__url', el);
-    metadataUrl.href = metadataUrl.textContent = report.finalUrl;
+    metadataUrl.textContent = report.finalUrl;
     metadataUrl.title = report.finalUrl;
+    this._dom.safelySetHref(metadataUrl, report.finalUrl);
     return el;
   }
 
@@ -275,10 +277,4 @@ class ReportRenderer {
 
     return reportFragment;
   }
-}
-
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = ReportRenderer;
-} else {
-  self.ReportRenderer = ReportRenderer;
 }

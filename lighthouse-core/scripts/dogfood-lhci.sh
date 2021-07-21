@@ -36,6 +36,7 @@ if ! echo "$CHANGED_FILES" | grep -E 'report|lhci' > /dev/null; then
 fi
 
 # Generate HTML reports in ./dist/now/
+yarn build-report
 yarn now-build
 
 # Install LHCI

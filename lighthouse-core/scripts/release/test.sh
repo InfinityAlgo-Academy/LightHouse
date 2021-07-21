@@ -24,7 +24,7 @@ echo "Running the standard test suite..."
 yarn test
 
 echo "Testing the CLI..."
-yarn start "https://example.com" --view
+node ./lighthouse-cli/index.js "https://example.com" --view
 
 echo "Testing a fresh local install..."
 VERSION=$(node -e "console.log(require('./package.json').version)")

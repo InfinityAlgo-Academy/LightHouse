@@ -16,11 +16,12 @@
  */
 'use strict';
 
-/* globals self, Util, CategoryRenderer */
+/** @typedef {import('./dom.js').DOM} DOM */
 
-/** @typedef {import('./dom.js')} DOM */
+import {Util} from './util.js';
+import {CategoryRenderer} from './category-renderer.js';
 
-class PerformanceCategoryRenderer extends CategoryRenderer {
+export class PerformanceCategoryRenderer extends CategoryRenderer {
   /**
    * @param {LH.ReportResult.AuditRef} audit
    * @return {!Element}
@@ -193,7 +194,7 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
     const calculatorLink = this.dom.createChildOf(estValuesEl, 'a', 'lh-calclink');
     calculatorLink.target = '_blank';
     calculatorLink.textContent = strings.calculatorLink;
-    calculatorLink.href = this._getScoringCalculatorHref(category.auditRefs);
+    this.dom.safelySetHref(calculatorLink, this._getScoringCalculatorHref(category.auditRefs));
 
 
     metricAuditsEl.classList.add('lh-audit-group--metrics');
@@ -312,16 +313,14 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
     ]);
     for (const metric of filterChoices) {
       const elemId = `metric-${metric.acronym}`;
-      const radioEl = this.dom.createChildOf(metricFilterEl, 'input', 'lh-metricfilter__radio', {
-        type: 'radio',
-        name: 'metricsfilter',
-        id: elemId,
-      });
+      const radioEl = this.dom.createChildOf(metricFilterEl, 'input', 'lh-metricfilter__radio');
+      radioEl.type = 'radio';
+      radioEl.name = 'metricsfilter';
+      radioEl.id = elemId;
 
-      const labelEl = this.dom.createChildOf(metricFilterEl, 'label', 'lh-metricfilter__label', {
-        for: elemId,
-        title: metric.result && metric.result.title,
-      });
+      const labelEl = this.dom.createChildOf(metricFilterEl, 'label', 'lh-metricfilter__label');
+      labelEl.htmlFor = elemId;
+      labelEl.title = metric.result && metric.result.title;
       labelEl.textContent = metric.acronym || metric.id;
 
       if (metric.acronym === 'All') {
@@ -360,10 +359,4 @@ class PerformanceCategoryRenderer extends CategoryRenderer {
       });
     }
   }
-}
-
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = PerformanceCategoryRenderer;
-} else {
-  self.PerformanceCategoryRenderer = PerformanceCategoryRenderer;
 }

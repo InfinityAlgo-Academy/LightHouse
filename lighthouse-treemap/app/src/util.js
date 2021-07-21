@@ -9,7 +9,7 @@
 
 /** @typedef {HTMLElementTagNameMap & {[id: string]: HTMLElement}} HTMLElementByTagName */
 /** @template {string} T @typedef {import('typed-query-selector/parser').ParseSelector<T, Element>} ParseSelector */
-/** @template T @typedef {import('../../../report/renderer/i18n')<T>} I18n */
+/** @template T @typedef {import('../../../report/renderer/i18n').I18n<T>} I18n */
 
 class TreemapUtil {
   /**
@@ -75,22 +75,13 @@ class TreemapUtil {
    * @template {string} T
    * @param {T} name
    * @param {string=} className
-   * @param {Object<string, (string|undefined)>=} attrs Attribute key/val pairs.
-   *     Note: if an attribute key has an undefined value, this method does not
-   *     set the attribute on the node.
    * @return {HTMLElementByTagName[T]}
    */
-  static createElement(name, className, attrs = {}) {
+  static createElement(name, className) {
     const element = document.createElement(name);
     if (className) {
       element.className = className;
     }
-    Object.keys(attrs).forEach(key => {
-      const value = attrs[key];
-      if (typeof value !== 'undefined') {
-        element.setAttribute(key, value);
-      }
-    });
     return element;
   }
 
@@ -99,13 +90,10 @@ class TreemapUtil {
    * @param {Element} parentElem
    * @param {T} elementName
    * @param {string=} className
-   * @param {Object<string, (string|undefined)>=} attrs Attribute key/val pairs.
-   *     Note: if an attribute key has an undefined value, this method does not
-   *     set the attribute on the node.
    * @return {HTMLElementByTagName[T]}
    */
-  static createChildOf(parentElem, elementName, className, attrs) {
-    const element = this.createElement(elementName, className, attrs);
+  static createChildOf(parentElem, elementName, className) {
+    const element = this.createElement(elementName, className);
     parentElem.appendChild(element);
     return element;
   }

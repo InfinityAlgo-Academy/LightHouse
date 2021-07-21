@@ -16,9 +16,7 @@
  */
 'use strict';
 
-/* globals self */
-
-/** @template T @typedef {import('./i18n')<T>} I18n */
+/** @template T @typedef {import('./i18n').I18n<T>} I18n */
 
 const ELLIPSIS = '\u2026';
 const NBSP = '\xa0';
@@ -40,7 +38,7 @@ const listOfTlds = [
   'web', 'spb', 'blog', 'jus', 'kiev', 'mil', 'wi', 'qc', 'ca', 'bel', 'on',
 ];
 
-class Util {
+export class Util {
   static get PASS_THRESHOLD() {
     return PASS_THRESHOLD;
   }
@@ -640,11 +638,4 @@ Util.UIStrings = {
   throttlingProvided: 'Provided by environment',
 };
 
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = Util;
-} else {
-  self.Util = Util;
-}
-
-// TODO(esmodules): export these strings too, then collect-strings will work when this file is esm.
-// export const UIStrings = Util.UIStrings;
+export const UIStrings = Util.UIStrings;

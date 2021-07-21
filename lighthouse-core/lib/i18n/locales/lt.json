@@ -63,7 +63,7 @@
     "message": "Nurodyti neįgaliesiems pritaikyti ARIA elementų „`meter`“ pavadinimai"
   },
   "lighthouse-core/audits/accessibility/aria-progressbar-name.js | description": {
-    "message": "Kai nenurodytas neįgaliesiems pritaikytas elemento pavadinimas, ekrano skaitytuvai apie jį praneša naudodami bendrąjį pavadinimą, todėl jo negali naudoti ekrano skaitytuvo naudotojai. [Sužinokite daugiau](https://web.dev/aria-name/)"
+    "message": "Kai elementas „`progressbar`“ neturi pasiekiamojo pavadinimo, ekrano skaitytuvai apie jį praneša naudodami bendrąjį pavadinimą, todėl jo negali naudoti ekrano skaitytuvais pasikliaujantys naudotojai. [Sužinokite daugiau](https://web.dev/aria-name/)."
   },
   "lighthouse-core/audits/accessibility/aria-progressbar-name.js | failureTitle": {
     "message": "Nenurodyti neįgaliesiems pritaikyti ARIA elementų „`progressbar`“ pavadinimai."
@@ -903,10 +903,10 @@
     "message": "Apraše nėra lauko „name“ arba „short_name“"
   },
   "lighthouse-core/audits/installable-manifest.js | manifest-missing-suitable-icon": {
-    "message": "Manifest does not contain a suitable icon - PNG, SVG or WebP format of at least {value0} px is required, the sizes attribute must be set, and the purpose attribute, if set, must include \"any\"."
+    "message": "Apraše nėra tinkamos piktogramos – reikia PNG, SVG ar „WebP“ formato, ne mažiau kaip {value0} tšk., turi būti nustatytas atributas „sizes“, o jei nustatytas atributas „purpose“, jis turi apimti parinktį „any“."
   },
   "lighthouse-core/audits/installable-manifest.js | no-acceptable-icon": {
-    "message": "No supplied icon is at least {value0} px square in PNG, SVG or WebP format, with the purpose attribute unset or set to \"any\""
+    "message": "Neteikiama piktograma yra ne mažesnis nei {value0} tšk. PNG, SVG ar „WebP“ formato kvadratas, kurio paskirties atributas nenustatytas arba nustatytas kaip „any“."
   },
   "lighthouse-core/audits/installable-manifest.js | no-icon-available": {
     "message": "Atsisiųsta piktograma buvo tuščia arba sugadinta"

@@ -63,7 +63,7 @@
     "message": "ARIA elementi `meter` imaju nazive prilagođene funkcijama pristupačnosti"
   },
   "lighthouse-core/audits/accessibility/aria-progressbar-name.js | description": {
-    "message": "Kada element nema naziv prilagođen funkciji pristupačnosti, čitači ekrana ga najavljuju pomoću generičkog naziva, pa korisnici koji se oslanjaju na čitače ekrana ne mogu da ga koriste. [Saznajte više](https://web.dev/aria-name/)."
+    "message": "Kada `progressbar` nema naziv prilagođen funkciji pristupačnosti, čitači ekrana ga najavljuju pomoću generičkog naziva, pa korisnici koji se oslanjaju na čitače ekrana ne mogu da ga koriste. [Saznajte više](https://web.dev/aria-name/)."
   },
   "lighthouse-core/audits/accessibility/aria-progressbar-name.js | failureTitle": {
     "message": "ARIA elementi `progressbar` nemaju nazive prilagođene funkcijama pristupačnosti."
@@ -903,10 +903,10 @@
     "message": "Manifest ne sadrži polje „name“ ili „short_name“"
   },
   "lighthouse-core/audits/installable-manifest.js | manifest-missing-suitable-icon": {
-    "message": "Manifest does not contain a suitable icon - PNG, SVG or WebP format of at least {value0} px is required, the sizes attribute must be set, and the purpose attribute, if set, must include \"any\"."
+    "message": "Manifest ne sadrži odgovarajuću ikonu – obavezan je PNG, SVG ili WebP format koji ima najmanje {value0} piksela, atribut za veličine mora da bude podešen, a atribut za svrhu, ako je podešen, mora da obuhvata „Bilo koji“."
   },
   "lighthouse-core/audits/installable-manifest.js | no-acceptable-icon": {
-    "message": "No supplied icon is at least {value0} px square in PNG, SVG or WebP format, with the purpose attribute unset or set to \"any\""
+    "message": "Nijedna od navedenih ikona nije u obliku kvadrata od najmanje {value0} piksela u PNG, SVG ili WebP formatu, sa atributom svrhe koji nije podešen ili je podešen na „Bilo koji“"
   },
   "lighthouse-core/audits/installable-manifest.js | no-icon-available": {
     "message": "Preuzeta ikona je bila prazna ili oštećena"

@@ -23,9 +23,12 @@
  * the report.
  */
 
-/* globals getFilenamePrefix Util TextEncoding ElementScreenshotRenderer */
+/** @typedef {import('./dom').DOM} DOM */
 
-/** @typedef {import('./dom')} DOM */
+import {getFilenamePrefix} from './file-namer.js';
+import {ElementScreenshotRenderer} from './element-screenshot-renderer.js';
+import {TextEncoding} from './text-encoding.js';
+import {Util} from './util.js';
 
 /**
  * @param {HTMLTableElement} tableEl
@@ -44,7 +47,7 @@ function getAppsOrigin() {
   return 'https://googlechrome.github.io/lighthouse';
 }
 
-class ReportUIFeatures {
+export class ReportUIFeatures {
   /**
    * @param {DOM} dom
    */
@@ -699,17 +702,16 @@ class ReportUIFeatures {
     });
 
     const ext = blob.type.match('json') ? '.json' : '.html';
-    const href = URL.createObjectURL(blob);
 
     const a = this._dom.createElement('a');
     a.download = `${filename}${ext}`;
-    a.href = href;
+    this._dom.safelySetBlobHref(a, blob);
     this._document.body.appendChild(a); // Firefox requires anchor to be in the DOM.
     a.click();
 
     // cleanup.
     this._document.body.removeChild(a);
-    setTimeout(_ => URL.revokeObjectURL(href), 500);
+    setTimeout(_ => URL.revokeObjectURL(a.href), 500);
   }
 
   /**
@@ -957,10 +959,4 @@ class DropDown {
     const nodes = Array.from(this._menuEl.childNodes).reverse();
     return this._getNextSelectableNode(nodes, startEl);
   }
-}
-
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = ReportUIFeatures;
-} else {
-  self.ReportUIFeatures = ReportUIFeatures;
 }

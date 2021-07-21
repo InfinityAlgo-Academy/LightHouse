@@ -63,7 +63,7 @@
     "message": "Elementele ARIA `meter` au nume accesibile"
   },
   "lighthouse-core/audits/accessibility/aria-progressbar-name.js | description": {
-    "message": "Când un element nu are un nume accesibil, cititoarele de ecran îl anunță cu o denumire generică, făcându-l inutil pentru utilizatorii care se bazează pe cititoarele de ecran. [Află mai multe](https://web.dev/aria-name/)."
+    "message": "Când un element `progressbar` nu are un nume accesibil, cititoarele de ecran îl anunță cu o denumire generică, făcându-l inutil pentru utilizatorii care se bazează pe cititoarele de ecran. [Află mai multe](https://web.dev/aria-name/)."
   },
   "lighthouse-core/audits/accessibility/aria-progressbar-name.js | failureTitle": {
     "message": "Elementele ARIA `progressbar` nu au nume accesibile."
@@ -903,10 +903,10 @@
     "message": "Manifestul nu conține câmpul „name” sau „short_name”"
   },
   "lighthouse-core/audits/installable-manifest.js | manifest-missing-suitable-icon": {
-    "message": "Manifest does not contain a suitable icon - PNG, SVG or WebP format of at least {value0} px is required, the sizes attribute must be set, and the purpose attribute, if set, must include \"any\"."
+    "message": "Manifestul nu conține o pictogramă potrivită. Este necesară o pictogramă în format PNG, SVG sau WebP, de minimum {value0} px, care să aibă atributul „dimensiuni” setat și, dacă are atributul „scop” setat, acesta trebuie să includă „oricare”."
   },
   "lighthouse-core/audits/installable-manifest.js | no-acceptable-icon": {
-    "message": "No supplied icon is at least {value0} px square in PNG, SVG or WebP format, with the purpose attribute unset or set to \"any\""
+    "message": "Nicio pictogramă adăugată nu întrunește următoarele cerințe: minimum {value0} px, pătrată, în format PNG, SVG sau WebP, cu atributul scop nesetat sau setat la „oricare”."
   },
   "lighthouse-core/audits/installable-manifest.js | no-icon-available": {
     "message": "Pictograma descărcată este goală sau deteriorată"
@@ -1809,7 +1809,7 @@
     "message": "Dimensiunea transferului"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnURL": {
-    "message": "Adresa URL"
+    "message": "Adresă URL"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnWastedBytes": {
     "message": "Economii potențiale"

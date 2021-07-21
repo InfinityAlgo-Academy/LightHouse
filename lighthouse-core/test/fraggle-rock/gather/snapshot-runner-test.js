@@ -89,6 +89,24 @@ describe('Snapshot Runner', () => {
     expect(gathererB.getArtifact).toHaveBeenCalled();
   });
 
+
+  it('should use configContext', async () => {
+    const settingsOverrides = {
+      formFactor: /** @type {'desktop'} */ ('desktop'),
+      maxWaitForLoad: 1234,
+      screenEmulation: {mobile: false},
+    };
+
+    const configContext = {settingsOverrides};
+    await snapshot({page, config, configContext});
+
+    expect(mockRunnerRun.mock.calls[0][1]).toMatchObject({
+      config: {
+        settings: settingsOverrides,
+      },
+    });
+  });
+
   it('should not invoke instrumentation methods', async () => {
     await snapshot({page, config});
     await mockRunnerRun.mock.calls[0][0]();

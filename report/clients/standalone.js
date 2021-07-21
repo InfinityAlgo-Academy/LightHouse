@@ -5,9 +5,19 @@
  */
 'use strict';
 
-/* global document window ga DOM ReportRenderer ReportUIFeatures Logger */
+/**
+ * @fileoverview The entry point for rendering the Lighthouse report for the HTML
+ * file created by ReportGenerator.
+ * The renderer code is bundled and injected into the report HTML along with the JSON report.
+ */
 
-// eslint-disable-next-line no-unused-vars
+/* global document window ga */
+
+import {DOM} from '../renderer/dom.js';
+import {Logger} from '../renderer/logger.js';
+import {ReportRenderer} from '../renderer/report-renderer.js';
+import {ReportUIFeatures} from '../renderer/report-ui-features.js';
+
 function __initLighthouseReport__() {
   const dom = new DOM(document);
   const renderer = new ReportRenderer(dom);
@@ -51,3 +61,5 @@ function __initLighthouseReport__() {
     }
   });
 }
+
+window.__initLighthouseReport__ = __initLighthouseReport__;

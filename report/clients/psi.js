@@ -16,7 +16,13 @@
  */
 'use strict';
 
-/* globals self DOM PerformanceCategoryRenderer Util I18n DetailsRenderer ElementScreenshotRenderer ReportUIFeatures */
+import {DetailsRenderer} from '../renderer/details-renderer.js';
+import {DOM} from '../renderer/dom.js';
+import {ElementScreenshotRenderer} from '../renderer/element-screenshot-renderer.js';
+import {I18n} from '../renderer/i18n.js';
+import {PerformanceCategoryRenderer} from '../renderer/performance-category-renderer.js';
+import {ReportUIFeatures} from '../renderer/report-ui-features.js';
+import {Util} from '../renderer/util.js';
 
 /**
  * Returns all the elements that PSI needs to render the report
@@ -32,7 +38,7 @@
  * @param {Document} document The host page's window.document
  * @return {{scoreGaugeEl: Element, perfCategoryEl: Element, finalScreenshotDataUri: string|null, scoreScaleEl: Element, installFeatures: Function}}
  */
-function prepareLabData(LHResult, document) {
+export function prepareLabData(LHResult, document) {
   const lhResult = (typeof LHResult === 'string') ?
     /** @type {LH.Result} */ (JSON.parse(LHResult)) : LHResult;
 
@@ -48,6 +54,7 @@ function prepareLabData(LHResult, document) {
     ...reportLHR.i18n.rendererFormattedStrings,
   });
   Util.i18n = i18n;
+  Util.reportJson = reportLHR;
 
   const perfCategory = reportLHR.categories.performance;
   if (!perfCategory) throw new Error(`No performance category. Can't make lab data section`);
@@ -137,17 +144,4 @@ function _getFinalScreenshot(perfCategory) {
   const details = auditRef.result.details;
   if (!details || details.type !== 'screenshot') return null;
   return details.data;
-}
-
-// Defined by lib/file-namer.js, but that file does not exist in PSI. PSI doesn't use it, but
-// needs some basic definition so closure compiler accepts report-ui-features.js
-// @ts-expect-error - unused by typescript, used by closure compiler
-// eslint-disable-next-line no-unused-vars
-function getFilenamePrefix(lhr) {
-}
-
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = prepareLabData;
-} else {
-  self.prepareLabData = prepareLabData;
 }

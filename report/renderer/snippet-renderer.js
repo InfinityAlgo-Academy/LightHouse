@@ -5,10 +5,10 @@
  */
 'use strict';
 
-/* globals self, Util */
+/** @typedef {import('./details-renderer').DetailsRenderer} DetailsRenderer */
+/** @typedef {import('./dom').DOM} DOM */
 
-/** @typedef {import('./details-renderer')} DetailsRenderer */
-/** @typedef {import('./dom')} DOM */
+import {Util} from './util.js';
 
 /** @enum {number} */
 const LineVisibility = {
@@ -87,7 +87,7 @@ function getLinesWhenCollapsed(details) {
  * can click "Expand snippet" to show more.
  * Content lines with annotations are highlighted.
  */
-class SnippetRenderer {
+export class SnippetRenderer {
   /**
    * @param {DOM} dom
    * @param {DocumentFragment} tmpl
@@ -355,11 +355,4 @@ class SnippetRenderer {
 
     return snippetEl;
   }
-}
-
-// Allow Node require()'ing.
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = SnippetRenderer;
-} else {
-  self.SnippetRenderer = SnippetRenderer;
 }

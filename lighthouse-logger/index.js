@@ -62,6 +62,7 @@ class Log {
   }
 
   static loggerfn(title) {
+    title = `LH:${title}`;
     let log = loggersByTitle[title];
     if (!log) {
       log = debug(title);
@@ -83,16 +84,16 @@ class Log {
     level_ = level;
     switch (level) {
       case 'silent':
-        debug.enable('-*');
+        debug.enable('-LH:*');
         break;
       case 'verbose':
-        debug.enable('*');
+        debug.enable('LH:*');
         break;
       case 'error':
-        debug.enable('-*, *:error');
+        debug.enable('-LH:*, LH:*:error');
         break;
       default:
-        debug.enable('*, -*:verbose');
+        debug.enable('LH:*, -LH:*:verbose');
     }
   }
 

@@ -163,7 +163,7 @@ function resolveNavigationsToDefns(navigations, artifactDefns) {
 
 /**
  * @param {LH.Config.Json|undefined} configJSON
- * @param {{gatherMode: LH.Gatherer.GatherMode, configPath?: string, settingsOverrides?: LH.SharedFlagsSettings}} context
+ * @param {Omit<LH.Config.FRContext, 'gatherMode'> & {gatherMode: LH.Gatherer.GatherMode}} context
  * @return {{config: LH.Config.FRConfig, warnings: string[]}}
  */
 function initializeConfig(configJSON, context) {

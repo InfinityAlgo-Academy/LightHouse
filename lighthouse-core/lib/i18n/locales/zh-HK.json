@@ -63,7 +63,7 @@
     "message": "ARIA `meter` 元素具有無障礙名稱"
   },
   "lighthouse-core/audits/accessibility/aria-progressbar-name.js | description": {
-    "message": "如果元素沒有無障礙名稱，螢幕閱讀器只會讀出一般名稱，導致依賴螢幕閱讀器的使用者無法使用該欄位。[瞭解詳情](https://web.dev/aria-name/)。"
+    "message": "如果「`progressbar`」元素沒有無障礙名稱，螢幕閱讀器只會讀出一般名稱，導致依賴螢幕閱讀器的使用者無法使用該欄位。[瞭解詳情](https://web.dev/aria-name/)。"
   },
   "lighthouse-core/audits/accessibility/aria-progressbar-name.js | failureTitle": {
     "message": "ARIA `progressbar` 元素沒有無障礙名稱。"
@@ -903,10 +903,10 @@
     "message": "資訊清單未包含「name」或「short_name」欄位"
   },
   "lighthouse-core/audits/installable-manifest.js | manifest-missing-suitable-icon": {
-    "message": "Manifest does not contain a suitable icon - PNG, SVG or WebP format of at least {value0} px is required, the sizes attribute must be set, and the purpose attribute, if set, must include \"any\"."
+    "message": "資訊清單未包含合適的圖示 - 必須採用至少 {value0} 像素的 PNG、SVG 或 WebP 格式；必須設定大小屬性；如設定目的屬性，則必須包含「any」。"
   },
   "lighthouse-core/audits/installable-manifest.js | no-acceptable-icon": {
-    "message": "No supplied icon is at least {value0} px square in PNG, SVG or WebP format, with the purpose attribute unset or set to \"any\""
+    "message": "所有提供的圖示均並非至少為 {value0} 像素的 PNG、SVG 或 WebP 格式正方形圖像，而且沒有設定目的屬性或將目的屬性設定為「任何 (any)」"
   },
   "lighthouse-core/audits/installable-manifest.js | no-icon-available": {
     "message": "已下載的圖示空白或已損毀"
