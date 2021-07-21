@@ -205,8 +205,6 @@ async function potentiallyKillChrome(launchedChrome) {
 async function runLighthouseWithFraggleRock(url, flags, config, launchedChrome) {
   const fraggleRock = require('../lighthouse-core/fraggle-rock/api.js');
   const puppeteer = require('puppeteer');
-  // @ts-expect-error - FIXME: lighthouse-logger is greedy and takes over `debug` for all packages
-  require('debug').enable('-puppeteer:*');
   const browser = await puppeteer.connect({browserURL: `http://localhost:${launchedChrome.port}`});
   const page = await browser.newPage();
   flags.channel = 'fraggle-rock-cli';
