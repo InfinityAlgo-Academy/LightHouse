@@ -103,8 +103,8 @@ describe('Fraggle Rock Config', () => {
   it('should set default properties on navigations', () => {
     gatherMode = 'navigation';
     const configJson = {
-      artifacts: [],
-      navigations: [{id: 'default'}],
+      artifacts: [{id: 'Accessibility', gatherer: 'accessibility'}],
+      navigations: [{id: 'default', artifacts: ['Accessibility']}],
     };
     const {config} = initializeConfig(configJson, {gatherMode});
 
@@ -113,7 +113,7 @@ describe('Fraggle Rock Config', () => {
         {
           id: 'default',
           blankPage: 'about:blank',
-          artifacts: [],
+          artifacts: [{id: 'Accessibility', gatherer: {path: 'accessibility'}}],
           disableThrottling: false,
           networkQuietThresholdMs: 0,
           cpuQuietThresholdMs: 0,
@@ -137,6 +137,23 @@ describe('Fraggle Rock Config', () => {
     expect(config).toMatchObject({
       artifacts: [{id: 'Accessibility', gatherer: {path: 'accessibility'}}],
     });
+  });
+
+  it('should filter configuration by only/skip filters', () => {
+    const {config} = initializeConfig(undefined, {
+      gatherMode: 'navigation',
+      settingsOverrides: {
+        onlyAudits: ['color-contrast'],
+        onlyCategories: ['seo'],
+        skipAudits: ['structured-data', 'robots-txt', 'largest-contentful-paint'],
+      },
+    });
+
+    const auditIds = (config.audits || []).map(audit => audit.implementation.meta.id);
+    expect(auditIds).toContain('color-contrast'); // from onlyAudits
+    expect(auditIds).toContain('document-title'); // from onlyCategories
+    expect(auditIds).not.toContain('first-contentful-paint'); // from onlyCategories
+    expect(auditIds).not.toContain('robots-txt'); // from skipAudits
   });
 
   describe('resolveArtifactDependencies', () => {
@@ -248,8 +265,6 @@ describe('Fraggle Rock Config', () => {
   it.todo('should support extension');
   it.todo('should support plugins');
   it.todo('should adjust default pass options for throttling method');
-  it.todo('should filter configuration by inclusive settings');
-  it.todo('should filter configuration by exclusive settings');
   it.todo('should validate audit/gatherer interdependencies');
   it.todo('should validate gatherers do not support all 3 modes');
 });

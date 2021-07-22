@@ -17,7 +17,7 @@ const {
   throwInvalidArtifactDependency,
   assertArtifactTopologicalOrder,
 } = require('./validation.js');
-const {filterConfigByGatherMode} = require('./filters.js');
+const {filterConfigByGatherMode, filterConfigByExplicitFilters} = require('./filters.js');
 const {
   deepCloneConfigJson,
   resolveSettings,
@@ -192,10 +192,9 @@ function initializeConfig(configJSON, context) {
   // TODO(FR-COMPAT): validate navigations
   // TODO(FR-COMPAT): validate audits
   // TODO(FR-COMPAT): validate categories
-  // TODO(FR-COMPAT): filter config using onlyAudits/onlyCategories
-  // TODO(FR-COMPAT): always keep base/shared artifacts/audits (Stacks, FullPageScreenshot, etc)
 
   config = filterConfigByGatherMode(config, context.gatherMode);
+  config = filterConfigByExplicitFilters(config, settings);
 
   log.timeEnd(status);
   return {config, warnings: []};
