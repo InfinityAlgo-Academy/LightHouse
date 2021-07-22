@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/** @type {ReadonlyArray<Smokehouse.TestDfn>} */
+/** @type {ReadonlyArray<Smokehouse.BackCompatTestDefn>} */
 const smokeTests = [{
   id: 'a11y',
   expectations: require('./a11y/expectations.js'),
