@@ -42,23 +42,13 @@ function collectAllScriptElements() {
 class ScriptElementsSnapshot extends FRGatherer {
   /** @type {LH.Gatherer.GathererMeta} */
   meta = {
-    supportedModes: ['snapshot'],
-  }
-
-  /**
-   * @param {LH.Crdp.Debugger.ScriptParsedEvent} event
-   */
-  onScriptParsed(event) {
-    if (event.embedderName) {
-      this._scriptParsedEvents.push(event);
-    }
+    supportedModes: ['snapshot', 'timespan', 'navigation'],
   }
 
   constructor() {
     super();
-    /** @type {LH.Crdp.Debugger.ScriptParsedEvent[]} */
+    /** @type {Array<{url: string, content: string}>} */
     this._scriptParsedEvents = [];
-    this.onScriptParsed = this.onScriptParsed.bind(this);
   }
 
   /**
@@ -66,7 +56,23 @@ class ScriptElementsSnapshot extends FRGatherer {
    */
   async startSensitiveInstrumentation(context) {
     const session = context.driver.defaultSession;
-    await session.on('Debugger.scriptParsed', this.onScriptParsed);
+    /**
+     * @param {LH.Crdp.Debugger.ScriptParsedEvent} event
+     */
+    this.onScriptParsed = async event => {
+      // Inline scripts will have content set, we won't need to fetch it again.
+      // We can't match the script content if it doesn't have a valid embedder name.
+      if (!event.hasSourceURL || !event.embedderName) return;
+
+      const {scriptSource} = await session.sendCommand('Debugger.getScriptSource', {
+        scriptId: event.scriptId,
+      });
+      this._scriptParsedEvents.push({
+        url: event.embedderName,
+        content: scriptSource,
+      });
+    };
+    session.on('Debugger.scriptParsed', this.onScriptParsed);
     await session.sendCommand('Debugger.enable');
   }
 
@@ -76,7 +82,7 @@ class ScriptElementsSnapshot extends FRGatherer {
   async stopSensitiveInstrumentation(context) {
     const session = context.driver.defaultSession;
     await session.sendCommand('Debugger.disable');
-    await session.off('Debugger.scriptParsed', this.onScriptParsed);
+    if (this.onScriptParsed) session.off('Debugger.scriptParsed', this.onScriptParsed);
   }
 
   /**
@@ -84,7 +90,6 @@ class ScriptElementsSnapshot extends FRGatherer {
    * @return {Promise<LH.Artifacts['ScriptElements']>}
    */
   async _getArtifact(context) {
-    const session = context.driver.defaultSession;
     const executionContext = context.driver.executionContext;
 
     if (context.gatherMode === 'snapshot') {
@@ -101,31 +106,24 @@ class ScriptElementsSnapshot extends FRGatherer {
       ],
     });
 
-    await session.sendCommand('Debugger.enable');
-    await Promise.all(this._scriptParsedEvents.map(async event => {
-      const scriptId = event.scriptId;
-      const url = event.embedderName;
-      if (!url) return;
-
-      const {scriptSource} = await session.sendCommand('Debugger.getScriptSource', {scriptId});
-      const matchedScriptElement = scripts.find(script => script.src === url);
+    for (const event of this._scriptParsedEvents) {
+      const matchedScriptElement = scripts.find(script => script.src === event.url);
       if (matchedScriptElement) {
-        matchedScriptElement.content = scriptSource;
+        matchedScriptElement.content = event.content;
       } else {
         scripts.push({
           type: null,
-          src: url,
+          src: event.url,
           id: null,
           async: false,
           defer: false,
           source: 'network',
           requestId: null,
-          content: scriptSource,
+          content: event.content,
           node: null,
         });
       }
-    }));
-    await session.sendCommand('Debugger.disable');
+    }
     return scripts;
   }
 
