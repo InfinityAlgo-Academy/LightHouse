@@ -31,7 +31,7 @@ const DIST = path.join(LH_ROOT, `dist/now`);
     'ɑrabic': swapLocale(lhr, 'ar').lhr,
     'xl-accented': swapLocale(lhr, 'en-XL').lhr,
     'error': errorLhr,
-    'soloperf': tweakLhrForPsi(lhr),
+    'solocat': tweakLhrForPsi(lhr),
   };
 
   // Generate and write reports
@@ -91,6 +91,7 @@ function addPluginCategory(lhr) {
 }
 
 /**
+ * Drops the LHR to only one, solo category (performance), and removes budgets.
  * @param {LH.Result} lhr
  */
 function tweakLhrForPsi(lhr) {
