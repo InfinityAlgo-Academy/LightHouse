@@ -299,36 +299,33 @@
 
 .lh-vars *, .lh-vars *::before, .lh-vars *::after {
   box-sizing: border-box;
-  -webkit-font-smoothing: antialiased;
 }
 
-.lh-vars {
+.lh-topbar, .lh-header, .lh-categories, .lh-footer {
   font-family: var(--report-font-family);
   font-size: var(--report-font-size);
-  margin: 0;
   line-height: var(--report-line-height);
   background: var(--report-background-color);
-  scroll-behavior: smooth;
   color: var(--report-text-color);
 }
 
-.lh-vars :focus {
+.lh-topbar :focus, .lh-header :focus, .lh-categories :focus, .lh-footer :focus {
     outline: -webkit-focus-ring-color auto 3px;
 }
-.lh-vars summary:focus {
+.lh-categories summary:focus {
     outline: none;
     box-shadow: 0 0 0 1px hsl(217, 89%, 61%);
 }
 
-.lh-vars [hidden] {
+.lh-categories [hidden] {
   display: none !important;
 }
 
-.lh-vars pre {
+.lh-categories pre {
   margin: 0;
 }
 
-.lh-vars details > summary {
+.lh-categories details > summary {
   cursor: pointer;
 }
 
