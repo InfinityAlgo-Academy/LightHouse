@@ -73,7 +73,7 @@ describe('ReportRenderer', () => {
       assert.equal(topbar.querySelector('.lh-topbar__url').textContent, sampleResults.finalUrl);
     });
 
-    it('renders a header', () => {
+    it('renders scores', () => {
       const header = renderer._renderScoresWrapper();
       assert.ok(header.querySelector('.lh-scores-container'), 'contains score container');
     });
