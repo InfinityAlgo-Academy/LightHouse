@@ -297,7 +297,9 @@
   100% { opacity: 0.6;}
 }
 
-.lh-vars *, .lh-vars *::before, .lh-vars *::after {
+:is(.lh-topbar, .lh-header, .lh-categories, .lh-footer) *,
+:is(.lh-topbar, .lh-header, .lh-categories, .lh-footer) *::before,
+:is(.lh-topbar, .lh-header, .lh-categories, .lh-footer) *::after {
   box-sizing: border-box;
 }
 
@@ -309,7 +311,7 @@
   color: var(--report-text-color);
 }
 
-.lh-topbar :focus, .lh-header :focus, .lh-categories :focus, .lh-footer :focus {
+:is(.lh-topbar, .lh-header, .lh-categories, .lh-footer) :focus {
     outline: -webkit-focus-ring-color auto 3px;
 }
 .lh-categories summary:focus {
