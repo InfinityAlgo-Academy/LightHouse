@@ -63,10 +63,10 @@ const DIST = path.join(LH_ROOT, `dist/now`);
 function generatePsiReportHtml() {
   const sanitizedJson = ReportGenerator.sanitizeJson(tweakLhrForPsi(lhr));
   const PSI_TEMPLATE = fs.readFileSync(
-    __dirname + '/../../report/test-assets/faux-psi-template.html', 'utf8');
+    `${LH_ROOT}/report/test-assets/faux-psi-template.html`, 'utf8');
   const PSI_JAVASCRIPT = `
-${fs.readFileSync(__dirname + '/../../dist/report/psi.js', 'utf8')};
-${fs.readFileSync(__dirname + '/../../report/test-assets/faux-psi.js', 'utf8')};
+${fs.readFileSync(`${LH_ROOT}/dist/report/psi.js`, 'utf8')};
+${fs.readFileSync(`${LH_ROOT}/report/test-assets/faux-psi.js`, 'utf8')};
   `;
 
   const html = ReportGenerator.replaceStrings(PSI_TEMPLATE, [
