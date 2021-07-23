@@ -13,8 +13,10 @@ import {DOM} from '../renderer/dom.js';
 import {Logger} from '../renderer/logger.js';
 import {ReportRenderer} from '../renderer/report-renderer.js';
 import {ReportUIFeatures} from '../renderer/report-ui-features.js';
+import {TextEncoding} from '../renderer/text-encoding.js';
 
 window.DOM = DOM;
 window.Logger = Logger;
 window.ReportRenderer = ReportRenderer;
 window.ReportUIFeatures = ReportUIFeatures;
+window.TextEncoding = TextEncoding;

@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/* global DOM, ViewerUIFeatures, ReportRenderer, DragAndDrop, GithubApi, PSIApi, logger, idbKeyval */
+/* global DOM, ViewerUIFeatures, ReportRenderer, DragAndDrop, GithubApi, PSIApi, logger, idbKeyval, TextEncoding */
 
 /** @typedef {import('./psi-api').PSIParams} PSIParams */
 
@@ -103,6 +103,17 @@ class LighthouseReportViewer {
     const gistId = params.get('gist');
     const psiurl = params.get('psiurl');
     const jsonurl = params.get('jsonurl');
+    const gzip = params.get('gzip') === '1';
+
+    if (location.hash) {
+      const hashParams = JSON.parse(TextEncoding.fromBase64(location.hash.substr(1), {gzip}));
+      if (hashParams.lhr) {
+        this._replaceReportHtml(hashParams.lhr);
+        return Promise.resolve();
+      } else {
+        console.warn('URL hash is populated, but not decoded successfully', hashParams);
+      }
+    }
 
     if (!gistId && !psiurl && !jsonurl) return Promise.resolve();
 

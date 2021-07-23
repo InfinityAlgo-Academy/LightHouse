@@ -505,7 +505,15 @@ export class ReportUIFeatures {
         break;
       }
       case 'open-viewer': {
-        ReportUIFeatures.openTabAndSendJsonReportToViewer(this.json);
+        // DevTools cannot send data with postMessage, and we only want to use the URL fragment
+        // approach for viewer when needed, so check the environment and choose accordingly.
+        if (this._dom.isDevTools()) {
+          ReportUIFeatures.openViewer(this.json);
+        } else {
+          const windowName = 'viewer-' + ReportUIFeatures.computeWindowNameSuffix(this.json);
+          const url = getAppsOrigin() + '/viewer/';
+          ReportUIFeatures.openTabWithUrlData({lhr: this.json}, url, windowName);
+        }
         break;
       }
       case 'save-gist': {
@@ -550,14 +558,14 @@ export class ReportUIFeatures {
 
   /**
    * Opens a new tab to the online viewer and sends the local page's JSON results
-   * to the online viewer using postMessage.
+   * to the online viewer using URL.fragment
    * @param {LH.Result} json
    * @protected
    */
-  static openTabAndSendJsonReportToViewer(json) {
+  static openViewer(json) {
     const windowName = 'viewer-' + this.computeWindowNameSuffix(json);
     const url = getAppsOrigin() + '/viewer/';
-    ReportUIFeatures.openTabAndSendData({lhr: json}, url, windowName);
+    ReportUIFeatures.openTabWithUrlData({lhr: json}, url, windowName);
   }
 
   /**

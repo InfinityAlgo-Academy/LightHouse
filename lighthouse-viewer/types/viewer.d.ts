@@ -9,6 +9,7 @@ import {DOM as _DOM} from '../../report/renderer/dom.js';
 import {ReportRenderer as _ReportRenderer} from '../../report/renderer/report-renderer.js';
 import {ReportUIFeatures as _ReportUIFeatures} from '../../report/renderer/report-ui-features.js';
 import {Logger as _Logger} from '../../report/renderer/logger.js';
+import {TextEncoding as _TextEncoding} from '../../report/renderer/text-encoding.js';
 import {getFilenamePrefix as _getFilenamePrefix} from '../../report/renderer/file-namer.js';
 import _LighthouseReportViewer = require('../app/src/lighthouse-report-viewer.js');
 import _DragAndDrop = require('../app/src/drag-and-drop.js');
@@ -27,6 +28,7 @@ declare global {
   var ReportRenderer: typeof _ReportRenderer;
   var ReportUIFeatures: typeof _ReportUIFeatures;
   var Logger: typeof _Logger;
+  var TextEncoding: typeof _TextEncoding;
   var logger: _Logger;
   var getFilenamePrefix: typeof _getFilenamePrefix;
   var LighthouseReportViewer: typeof _LighthouseReportViewer;
