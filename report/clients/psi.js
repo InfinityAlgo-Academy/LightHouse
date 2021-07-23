@@ -93,10 +93,11 @@ export function prepareLabData(LHResult, document) {
   /** @param {HTMLElement} reportEl */
   const installFeatures = (reportEl) => {
     if (fullPageScreenshot) {
+      // 1) Add fpss css var to reportEl parent so any thumbnails will work
       ElementScreenshotRenderer.installFullPageScreenshot(
         reportEl, fullPageScreenshot.screenshot);
 
-      // Append the overlay element to a specific part of the DOM so that
+      // 2) Append the overlay element to a specific part of the DOM so that
       // the sticky tab group element renders correctly. If put in the reportEl
       // like normal, then the sticky header would bleed through the overlay
       // element.
