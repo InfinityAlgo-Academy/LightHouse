@@ -11,25 +11,17 @@
 const fs = require('fs');
 const path = require('path');
 const swapLocale = require('../lib/i18n/swap-locale.js');
-const buildreport = require('../../build/build-report.js');
+const ReportGenerator = require('../../report/report-generator.js');
 const {defaultSettings} = require('../config/constants.js');
-
-/** @type {import('../index.js')} */
-let lighthouse;
-
+const lighthouse = require('../index.js');
 const lhr = /** @type {LH.Result} */ (require('../../lighthouse-core/test/results/sample_v2.json'));
 const {LH_ROOT} = require('../../root.js');
+const htmlReportAssets = require('../../report/report-assets.js');
+
 
 const DIST = path.join(LH_ROOT, `dist/now`);
 
 (async function() {
-  // Must build before importing report-generator (or indirectly through lighthouse)
-  await buildreport.buildStandaloneReport();
-  await buildreport.buildPsiReport();
-  lighthouse = require('../index.js');
-  const ReportGenerator = require('../../report/report-generator.js');
-
-
   addPluginCategory(lhr);
   const errorLhr = await generateErrorLHR();
 
@@ -45,14 +37,9 @@ const DIST = path.join(LH_ROOT, `dist/now`);
   // Generate and write reports
   Object.entries(filenameToLhr).forEach(([filename, lhr]) => {
     for (const variant of ['', '⌣.cdt.', '⌣.psi.']) {
-      let html;
-      if (variant.includes('psi')) {
-        const [reportTemplate, reportJs] = readPsiAssets();
-        lhr = tweakLhrForPsi(lhr);
-        html = ReportGenerator.generateReportHtml(lhr, reportTemplate, reportJs);
-      } else {
-        html = ReportGenerator.generateReportHtml(lhr);
-      }
+      let html = variant.includes('psi') ?
+        generatePsiReportHtml() :
+        ReportGenerator.generateReportHtml(lhr);
 
       if (variant.includes('cdt')) {
         // TODO: Make the DevTools Audits panel "emulation" more comprehensive
@@ -69,6 +56,27 @@ const DIST = path.join(LH_ROOT, `dist/now`);
   });
 })();
 
+
+/**
+ * @return {string}
+ */
+function generatePsiReportHtml() {
+  const sanitizedJson = ReportGenerator.sanitizeJson(tweakLhrForPsi(lhr));
+  const PSI_TEMPLATE = fs.readFileSync(
+    __dirname + '/../../report/assets/faux-psi-template.html', 'utf8');
+  const PSI_JAVASCRIPT = `
+${fs.readFileSync(__dirname + '/../../dist/report/psi.js', 'utf8')};
+${fs.readFileSync(__dirname + '/../../report/assets/faux-psi.js', 'utf8')};
+  `;
+
+  const html = ReportGenerator.replaceStrings(PSI_TEMPLATE, [
+    {search: '%%LIGHTHOUSE_JSON%%', replacement: sanitizedJson},
+    {search: '%%LIGHTHOUSE_JAVASCRIPT%%', replacement: PSI_JAVASCRIPT},
+    {search: '/*%%LIGHTHOUSE_CSS%%*/', replacement: htmlReportAssets.REPORT_CSS},
+    {search: '%%LIGHTHOUSE_TEMPLATES%%', replacement: htmlReportAssets.REPORT_TEMPLATES},
+  ]);
+  return html;
+}
 /**
  * Add a plugin to demo plugin rendering.
  * @param {LH.Result} lhr
@@ -97,16 +105,6 @@ function tweakLhrForPsi(lhr) {
     return !audit.id.endsWith('-budget');
   });
   return clone;
-}
-
-function readPsiAssets() {
-  const reportTemplate = fs.readFileSync(
-    __dirname + '/../../report/assets/faux-psi-template.html', 'utf8');
-  const reportJs = `
-${fs.readFileSync(__dirname + '/../../dist/report/psi.js', 'utf8')};
-${fs.readFileSync(__dirname + '/../../report/assets/faux-psi.js', 'utf8')};
-  `;
-  return [reportTemplate, reportJs];
 }
 
 /**
