@@ -16,7 +16,6 @@
 const cloneDeep = require('lodash.clonedeep');
 const smokeTests = require('../test-definitions/core-tests.js');
 const {runSmokehouse} = require('../smokehouse.js');
-const {updateTestDefnFormat} = require('./back-compat-util.js');
 
 /**
  * @param {Smokehouse.SmokehouseLibOptions} options
@@ -24,8 +23,7 @@ const {updateTestDefnFormat} = require('./back-compat-util.js');
 async function smokehouse(options) {
   const {urlFilterRegex, skip, modify, ...smokehouseOptions} = options;
 
-  const updatedCoreTests = updateTestDefnFormat(smokeTests);
-  const clonedTests = cloneDeep(updatedCoreTests);
+  const clonedTests = cloneDeep(smokeTests);
   const modifiedTests = [];
   for (const test of clonedTests) {
     if (urlFilterRegex && !test.expectations.lhr.requestedUrl.match(urlFilterRegex)) {

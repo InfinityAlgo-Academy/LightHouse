@@ -74,7 +74,7 @@ async function runSmokehouse(smokeTestDefns, smokehouseOptions) {
   const failingDefns = testResults.filter(result => result.failed);
   if (failingDefns.length) {
     const testNames = failingDefns.map(d => d.id).join(', ');
-    console.error(log.redify(`We have ${failingDefns.length} failing smoketest(s): ${testNames}`));
+    console.log(log.redify(`We have ${failingDefns.length} failing smoketest(s): ${testNames}`));
     return {success: false, testResults};
   }
 
