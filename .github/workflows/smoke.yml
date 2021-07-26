@@ -47,7 +47,7 @@ jobs:
     - run: sudo apt-get install xvfb
     - name: Run smoke tests
       run: |
-        xvfb-run --auto-servernum yarn c8 yarn smoke --debug -j=1 --retries=0 perf-4
+        xvfb-run --auto-servernum yarn c8 yarn smoke --debug -j=1 --retries=0 perf-frame-metrics
         yarn c8 report --reporter text-lcov > smoke-coverage.lcov
 
     - name: Upload test coverage to Codecov
