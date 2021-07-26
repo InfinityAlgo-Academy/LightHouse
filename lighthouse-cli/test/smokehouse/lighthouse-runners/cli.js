@@ -56,7 +56,7 @@ async function internalRun(url, tmpPath, configJson, isDebug) {
   const args = [
     `${__dirname}/../../../index.js`, // 'lighthouse-cli/index.js'
     `${url}`,
-    `--chrome-flags=--disable-dev-shm-usage`,
+    `--chrome-flags=--disable-dev-shm-usage --enable-logging=stderr --v=2`,
     `--output-path=${outputPath}`,
     '--output=json',
     `-G=${artifactsDirectory}`,
@@ -79,7 +79,7 @@ async function internalRun(url, tmpPath, configJson, isDebug) {
   /** @type {{stdout: string, stderr: string, code?: number}} */
   let execResult;
   try {
-    execResult = await execFileAsync(command, args, {env});
+    execResult = await execFileAsync(command, args, {env, maxBuffer: 100 * 1024 * 1024});
   } catch (e) {
     // exec-thrown errors have stdout, stderr, and exit code from child process.
     execResult = e;

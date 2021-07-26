@@ -7,6 +7,7 @@
 
 /* eslint-disable no-console */
 
+const fs = require('fs');
 const path = require('path');
 const psList = require('ps-list');
 
@@ -72,10 +73,13 @@ function parseChromeFlags(flags = '') {
  * @return {Promise<ChromeLauncher.LaunchedChrome>}
  */
 function getDebuggableChrome(flags) {
+  if (!fs.existsSync(`/tmp/smoketest`)) fs.mkdirSync(`/tmp/smoketest`);
+
   return ChromeLauncher.launch({
     port: flags.port,
     ignoreDefaultFlags: flags.chromeIgnoreDefaultFlags,
     chromeFlags: parseChromeFlags(flags.chromeFlags),
+    userDataDir: `/tmp/smoketest`,
     logLevel: flags.logLevel,
   });
 }
@@ -244,6 +248,8 @@ async function runLighthouse(url, flags, config) {
        await runLighthouseWithFraggleRock(url, flags, config, launchedChrome) :
        await lighthouse(url, flags, config);
 
+    const chromeLog = fs.readFileSync('/tmp/smoketest/chrome-err.log');
+    process.stderr.write(chromeLog);
     // If in gatherMode only, there will be no runnerResult.
     if (runnerResult) {
       await saveResults(runnerResult, flags);
