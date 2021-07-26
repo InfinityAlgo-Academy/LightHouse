@@ -61,7 +61,7 @@ async function internalRun(url, tmpPath, configJson, isDebug) {
     '--output=json',
     `-G=${artifactsDirectory}`,
     `-A=${artifactsDirectory}`,
-    '--quiet',
+    '--verbose',
     '--port=0',
   ];
 
