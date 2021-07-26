@@ -248,8 +248,6 @@ async function runLighthouse(url, flags, config) {
        await runLighthouseWithFraggleRock(url, flags, config, launchedChrome) :
        await lighthouse(url, flags, config);
 
-    const chromeLog = fs.readFileSync('/tmp/smoketest/chrome-err.log');
-    process.stderr.write(chromeLog);
     // If in gatherMode only, there will be no runnerResult.
     if (runnerResult) {
       await saveResults(runnerResult, flags);
@@ -273,6 +271,8 @@ async function runLighthouse(url, flags, config) {
 
     return runnerResult;
   } catch (err) {
+    const chromeLog = fs.readFileSync('/tmp/smoketest/chrome-err.log');
+    process.stderr.write(chromeLog);
     await potentiallyKillChrome(launchedChrome).catch(() => {});
     return printErrorAndExit(err);
   }
