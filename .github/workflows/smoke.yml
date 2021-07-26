@@ -51,7 +51,7 @@ jobs:
     - run: sudo apt-get install xvfb
     - name: Run smoke tests
       run: |
-        xvfb-run --auto-servernum yarn c8 yarn smoke --debug -j=1 --retries=2 --invert-match ${{ matrix.smoke-test-invert }} $SMOKE_BATCH_1
+        xvfb-run --auto-servernum yarn c8 yarn smoke --debug -j=1 --retries=1 --invert-match ${{ matrix.smoke-test-invert }} $SMOKE_BATCH_1
         yarn c8 report --reporter text-lcov > smoke-coverage.lcov
 
     - name: Upload test coverage to Codecov
