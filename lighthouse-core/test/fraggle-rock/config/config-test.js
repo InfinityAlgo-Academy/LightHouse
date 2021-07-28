@@ -5,6 +5,7 @@
  */
 'use strict';
 
+const BaseAudit = require('../../../audits/audit.js');
 const BaseGatherer = require('../../../fraggle-rock/gather/base-gatherer.js');
 const {initializeConfig} = require('../../../fraggle-rock/config/config.js');
 
@@ -262,9 +263,131 @@ describe('Fraggle Rock Config', () => {
     });
   });
 
-  it.todo('should support extension');
+  describe('.resolveExtensions', () => {
+    /** @type {LH.Config.Json} */
+    let extensionConfig;
+
+    beforeEach(() => {
+      const gatherer = new BaseGatherer();
+      gatherer.meta = {supportedModes: ['navigation']};
+
+      class ExtraAudit extends BaseAudit {
+        static get meta() {
+          return {
+            id: 'extra-audit',
+            title: 'Extra',
+            description: 'Extra',
+            requiredArtifacts: /** @type {*} */ (['ExtraArtifact']),
+          };
+        }
+
+        /** @return {LH.Audit.Product} */
+        static audit() {
+          throw new Error('Unimplemented');
+        }
+      }
+
+      extensionConfig = {
+        extends: 'lighthouse:default',
+        artifacts: [
+          {id: 'ExtraArtifact', gatherer: {instance: gatherer}},
+        ],
+        navigations: [
+          {id: 'default', artifacts: ['ExtraArtifact']},
+        ],
+        audits: [
+          {implementation: ExtraAudit},
+        ],
+        categories: {
+          performance: {
+            title: 'Performance',
+            auditRefs: [
+              {id: 'extra-audit', weight: 0},
+            ],
+          },
+        },
+      };
+    });
+
+    it('should do nothing when not extending', () => {
+      const {config} = initializeConfig({
+        artifacts: [
+          {id: 'Accessibility', gatherer: 'accessibility'},
+        ],
+        navigations: [
+          {id: 'default', artifacts: ['Accessibility']},
+        ],
+      }, {gatherMode: 'navigation'});
+
+      expect(config).toMatchObject({
+        audits: null,
+        groups: null,
+        artifacts: [
+          {id: 'Accessibility'},
+        ],
+        navigations: [
+          {id: 'default', artifacts: [{id: 'Accessibility'}]},
+        ],
+      });
+    });
+
+    it('should extend the default config with filters', () => {
+      const gatherMode = 'navigation';
+      const {config} = initializeConfig({
+        extends: 'lighthouse:default',
+        settings: {onlyCategories: ['accessibility']},
+      }, {gatherMode});
+      if (!config.artifacts) throw new Error(`No artifacts created`);
+      if (!config.audits) throw new Error(`No audits created`);
+
+      const hasAccessibilityArtifact = config.artifacts.some(a => a.id === 'Accessibility');
+      if (!hasAccessibilityArtifact) expect(config.artifacts).toContain('Accessibility');
+
+      const hasAccessibilityAudit = config.audits.
+        some(a => a.implementation.meta.id === 'color-contrast');
+      if (!hasAccessibilityAudit) expect(config.audits).toContain('color-contrast');
+
+      expect(config.categories).toHaveProperty('accessibility');
+      expect(config.categories).not.toHaveProperty('performance');
+    });
+
+    it('should merge in artifacts', () => {
+      const {config} = initializeConfig(extensionConfig, {gatherMode: 'navigation'});
+      if (!config.artifacts) throw new Error(`No artifacts created`);
+
+      const hasExtraArtifact = config.artifacts.some(a => a.id === 'ExtraArtifact');
+      if (!hasExtraArtifact) expect(config.artifacts).toContain('ExtraArtifact');
+    });
+
+    it('should merge in navigations', () => {
+      const {config} = initializeConfig(extensionConfig, {gatherMode: 'navigation'});
+      if (!config.navigations) throw new Error(`No navigations created`);
+
+      expect(config.navigations).toHaveLength(1);
+      const hasNavigation = config.navigations[0].artifacts.
+        some(a => a.id === 'ExtraArtifact');
+      if (!hasNavigation) expect(config.navigations[0].artifacts).toContain('ExtraArtifact');
+    });
+
+    it('should merge in audits', () => {
+      const {config} = initializeConfig(extensionConfig, {gatherMode: 'navigation'});
+      if (!config.audits) throw new Error(`No audits created`);
+
+      const hasExtraAudit = config.audits.
+        some(a => a.implementation.meta.id === 'extra-audit');
+      if (!hasExtraAudit) expect(config.audits).toContain('extra-audit');
+    });
+
+    it('should merge in categories', () => {
+      const {config} = initializeConfig(extensionConfig, {gatherMode: 'navigation'});
+      if (!config.categories) throw new Error(`No categories created`);
+
+      const hasCategory = config.categories.performance.auditRefs.some(a => a.id === 'extra-audit');
+      if (!hasCategory) expect(config.categories.performance.auditRefs).toContain('extra-audit');
+    });
+  });
+
   it.todo('should support plugins');
   it.todo('should adjust default pass options for throttling method');
   it.todo('should validate audit/gatherer interdependencies');
-  it.todo('should validate gatherers do not support all 3 modes');
 });

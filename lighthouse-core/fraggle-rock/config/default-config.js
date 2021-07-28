@@ -191,7 +191,13 @@ const defaultConfig = {
     },
   ],
   settings: legacyDefaultConfig.settings,
-  audits: [...(legacyDefaultConfig.audits || []), ...frAudits],
+  audits: [
+    ...(legacyDefaultConfig.audits || []).map(audit => {
+      if (typeof audit === 'string') return {path: audit};
+      return audit;
+    }),
+    ...frAudits,
+  ],
   categories: mergeCategories(),
   groups: legacyDefaultConfig.groups,
 };

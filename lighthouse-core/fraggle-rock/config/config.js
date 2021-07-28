@@ -23,6 +23,8 @@ const {
   resolveSettings,
   resolveAuditsToDefns,
   resolveGathererToDefn,
+  mergeConfigFragment,
+  mergeConfigFragmentArrayByKey,
 } = require('../../config/config-helpers.js');
 const defaultConfigPath = path.join(__dirname, './default-config.js');
 
@@ -51,6 +53,35 @@ function resolveWorkingCopy(configJSON, context) {
     configPath,
     configDir,
   };
+}
+
+/**
+ * @param {LH.Config.Json} configJSON
+ * @return {LH.Config.Json}
+ */
+function resolveExtensions(configJSON) {
+  if (!configJSON.extends) return configJSON;
+
+  if (configJSON.extends !== 'lighthouse:default') {
+    throw new Error('`lighthouse:default` is the only valid extension method.');
+  }
+
+  const {artifacts, navigations, ...extensionJSON} = configJSON;
+  const defaultClone = deepCloneConfigJson(defaultConfig);
+  const mergedConfig = mergeConfigFragment(defaultClone, extensionJSON);
+
+  mergedConfig.artifacts = mergeConfigFragmentArrayByKey(
+    defaultClone.artifacts,
+    artifacts,
+    artifact => artifact.id
+  );
+  mergedConfig.navigations = mergeConfigFragmentArrayByKey(
+    defaultClone.navigations,
+    navigations,
+    navigation => navigation.id
+  );
+
+  return mergedConfig;
 }
 
 /**
@@ -170,9 +201,10 @@ function initializeConfig(configJSON, context) {
   const status = {msg: 'Initialize config', id: 'lh:config'};
   log.time(status, 'verbose');
 
-  const {configWorkingCopy, configDir} = resolveWorkingCopy(configJSON, context);
+  let {configWorkingCopy, configDir} = resolveWorkingCopy(configJSON, context); // eslint-disable-line prefer-const
 
-  // TODO(FR-COMPAT): handle config extension
+  configWorkingCopy = resolveExtensions(configWorkingCopy);
+
   // TODO(FR-COMPAT): handle config plugins
 
   const settings = resolveSettings(configWorkingCopy.settings || {}, context.settingsOverrides);
