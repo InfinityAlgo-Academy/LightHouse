@@ -56,6 +56,8 @@ declare global {
       i18n: {rendererFormattedStrings: I18NRendererStrings, icuMessagePaths?: IcuMessagePaths};
       /** An array containing the result of all stack packs. */
       stackPacks?: Result.StackPack[];
+      /** Gather mode used to collect artifacts. */
+      gatherMode?: Gatherer.GatherMode;
     }
 
     // Result namespace
@@ -87,6 +89,10 @@ declare global {
         weight: number;
         /** Optional grouping within the category. Matches the key of a Result.Group. */
         group?: string;
+        /** Optional grouping within the category for timespan mode. Matches the key of a Result.Group. */
+        timespanGroup?: string;
+        /** Optional grouping within the category for snapshot mode. Matches the key of a Result.Group. */
+        snapshotGroup?: string;
         /** The conventional acronym for the audit/metric. */
         acronym?: string;
         /** Any audit IDs closely relevant to this one. */

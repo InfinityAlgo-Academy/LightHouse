@@ -156,6 +156,8 @@ declare global {
         id: string;
         weight: number;
         group?: string;
+        timespanGroup?: string;
+        snapshotGroup?: string;
         acronym?: string;
         relevantAudits?: string[];
       }

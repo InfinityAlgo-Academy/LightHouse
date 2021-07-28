@@ -155,6 +155,7 @@ class Runner {
           icuMessagePaths: {},
         },
         stackPacks: stackPacks.getStackPacks(artifacts.Stacks),
+        gatherMode: artifacts.GatherContext.gatherMode,
       };
 
       // Replace ICU message references with localized strings; save replaced paths in lhr.

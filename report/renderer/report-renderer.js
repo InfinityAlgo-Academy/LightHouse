@@ -254,6 +254,15 @@ export class ReportRenderer {
 
     const categories = reportSection.appendChild(this._dom.createElement('div', 'lh-categories'));
     for (const category of Object.values(report.categories)) {
+      // Change audit group based on gather mode.
+      for (const audit of category.auditRefs) {
+        if (report.gatherMode === 'timespan' && audit.timespanGroup) {
+          audit.group = audit.timespanGroup;
+        }
+        if (report.gatherMode === 'snapshot' && audit.snapshotGroup) {
+          audit.group = audit.snapshotGroup;
+        }
+      }
       const renderer = specificCategoryRenderers[category.id] || categoryRenderer;
       // .lh-category-wrapper is full-width and provides horizontal rules between categories.
       // .lh-category within has the max-width: var(--report-width);
