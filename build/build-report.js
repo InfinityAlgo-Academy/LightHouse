@@ -6,6 +6,7 @@
 'use strict';
 
 const rollup = require('rollup');
+const {nodeResolve} = require('@rollup/plugin-node-resolve');
 const {terser} = require('rollup-plugin-terser');
 // Only needed b/c getFilenamePrefix loads a commonjs module.
 const commonjs =
@@ -23,6 +24,22 @@ async function buildStandaloneReport() {
 
   await bundle.write({
     file: 'dist/report/standalone.js',
+    format: 'iife',
+  });
+}
+
+async function buildStandaloneFlowReport() {
+  const bundle = await rollup.rollup({
+    input: 'report/clients/standalone-flow.js',
+    plugins: [
+      nodeResolve(),
+      commonjs(),
+      terser(),
+    ],
+  });
+
+  await bundle.write({
+    file: 'dist/report/standalone-flow.js',
     format: 'iife',
   });
 }
@@ -88,12 +105,14 @@ if (require.main === module) {
     buildStandaloneReport();
   } else {
     buildStandaloneReport();
+    buildStandaloneFlowReport();
     buildEsModulesBundle();
   }
 }
 
 module.exports = {
   buildStandaloneReport,
+  buildStandaloneFlowReport,
   buildPsiReport,
   buildViewerReport,
   buildTreemapReport,
