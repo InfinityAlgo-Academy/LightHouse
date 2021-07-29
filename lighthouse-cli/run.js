@@ -12,7 +12,7 @@ const path = require('path');
 const psList = require('ps-list');
 
 const Printer = require('./printer.js');
-const ChromeLauncher = require('./clauncher');
+const ChromeLauncher = require('chrome-launcher');
 
 const yargsParser = require('yargs-parser');
 const lighthouse = require('../lighthouse-core/index.js');
@@ -248,7 +248,6 @@ async function runLighthouse(url, flags, config) {
     const shouldUseLocalChrome = URL.isLikeLocalhost(flags.hostname);
     if (shouldGather && shouldUseLocalChrome) {
       launchedChrome = await getDebuggableChrome(flags);
-      debugger;
       flags.port = launchedChrome.port;
     }
 
