@@ -73,7 +73,7 @@ function parseChromeFlags(flags = '') {
  * @return {Promise<ChromeLauncher.LaunchedChrome>}
  */
 function getDebuggableChrome(flags) {
-  if (!fs.existsSync(`/tmp/smoketest`)) fs.mkdirSync(`/tmp/smoketest`);
+  if (!fs.existsSync(`/tmp/smoketest`)) fs.mkdirSync(`/tmp/smoketest`, {recursive: true});
 
   return ChromeLauncher.launch({
     port: flags.port,
