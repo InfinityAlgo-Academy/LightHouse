@@ -469,39 +469,47 @@ class GatherRunner {
 
       await GatherRunner.setupDriver(driver, options);
 
-      let isFirstPass = true;
-      for (const passConfig of passConfigs) {
-        /** @type {LH.Gatherer.PassContext} */
-        const passContext = {
-          gatherMode: 'navigation',
-          driver,
-          url: options.requestedUrl,
-          settings: options.settings,
-          passConfig,
-          baseArtifacts,
-          computedCache: options.computedCache,
-          LighthouseRunWarnings: baseArtifacts.LighthouseRunWarnings,
-        };
-        const passResults = await GatherRunner.runPass(passContext);
-        Object.assign(artifacts, passResults.artifacts);
+      const isFirstPass = true;
 
-        // If we encountered a pageLoadError, don't try to keep loading the page in future passes.
-        if (passResults.pageLoadError && passConfig.loadFailureMode === 'fatal') {
-          baseArtifacts.PageLoadError = passResults.pageLoadError;
-          break;
-        }
+      const passConfig = passConfigs[0];
+      /** @type {LH.Gatherer.PassContext} */
+      const passContext = {
+        gatherMode: 'navigation',
+        driver,
+        url: options.requestedUrl,
+        settings: options.settings,
+        passConfig,
+        baseArtifacts,
+        computedCache: options.computedCache,
+        LighthouseRunWarnings: baseArtifacts.LighthouseRunWarnings,
+      };
 
-        if (isFirstPass) {
-          await GatherRunner.populateBaseArtifacts(passContext);
-          isFirstPass = false;
-        }
 
-        // Disable fetcher for every pass, in case a gatherer enabled it.
-        // Noop if fetcher was never enabled.
-        // This cleanup should be removed once the only usage of
-        // fetcher (fetching arbitrary URLs) is replaced by new protocol support.
-        await driver.fetcher.disable();
-      }
+      passContext.url = 'chrome://gpu';
+      await GatherRunner.loadPage(driver, passContext);
+      const chromegpu = await driver.executionContext.evaluate(function() {
+        return document.body.innerText;
+      }, {
+        args: [],
+        useIsolation: true,
+        deps: [],
+      });
+
+      console.log('chromegpu', chromegpu);
+
+
+      passContext.url = 'chrome://crashes';
+      await GatherRunner.loadPage(driver, passContext);
+      const chromecrashes = await driver.executionContext.evaluate(function() {
+        return document.body.innerText;
+      }, {
+        args: [],
+        useIsolation: true,
+        deps: [],
+      });
+      console.log('chromecrashes', chromecrashes);
+
+
 
       await GatherRunner.disposeDriver(driver, options);
       return finalizeArtifacts(baseArtifacts, artifacts);
