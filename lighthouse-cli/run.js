@@ -73,13 +73,18 @@ function parseChromeFlags(flags = '') {
  * @return {Promise<ChromeLauncher.LaunchedChrome>}
  */
 function getDebuggableChrome(flags) {
-  if (!fs.existsSync(`/tmp/smoketest`)) fs.mkdirSync(`/tmp/smoketest`, {recursive: true});
+  const winTmpPath = process.env.TEMP || process.env.TMP ||
+      (process.env.SystemRoot || process.env.windir) + '\\temp';
+  const tmpdir = path.join(winTmpPath, 'lighthouse.smoketest');
+  global.tmpdir = tmpdir;
+
+  if (!fs.existsSync(tmpdir)) fs.mkdirSync(tmpdir, {recursive: true});
 
   return ChromeLauncher.launch({
     port: flags.port,
     ignoreDefaultFlags: flags.chromeIgnoreDefaultFlags,
     chromeFlags: parseChromeFlags(flags.chromeFlags),
-    userDataDir: `/tmp/smoketest`,
+    userDataDir: tmpdir,
     logLevel: flags.logLevel,
   });
 }
@@ -271,7 +276,7 @@ async function runLighthouse(url, flags, config) {
 
     return runnerResult;
   } catch (err) {
-    const chromeLog = fs.readFileSync('/tmp/smoketest/chrome-err.log');
+    const chromeLog = fs.readFileSync(path.join(global.tmpdir, 'chrome-err.log');
     process.stderr.write(chromeLog);
     await potentiallyKillChrome(launchedChrome).catch(() => {});
     return printErrorAndExit(err);
