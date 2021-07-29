@@ -32,27 +32,3 @@ jobs:
 
     # Fail if any changes were written to source files.
     - run: git diff --exit-code
-
-  smoke-bundle:
-    runs-on: ubuntu-latest
-    name: Bundled Lighthouse
-
-    steps:
-    - name: git clone
-      uses: actions/checkout@v2
-
-    - name: Use Node.js 12.x
-      uses: actions/setup-node@v1
-      with:
-        node-version: 12.x
-
-    - run: yarn install --frozen-lockfile --network-timeout 1000000
-    - run: yarn build-report
-    - run: yarn build-devtools
-
-    - run: sudo apt-get install xvfb
-    - name: yarn test-bundle
-      run: xvfb-run --auto-servernum yarn test-bundle
-
-    # Fail if any changes were written to source files.
-    - run: git diff --exit-code
