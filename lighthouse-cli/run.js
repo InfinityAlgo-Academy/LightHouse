@@ -278,7 +278,9 @@ async function runLighthouse(url, flags, config) {
 
     return runnerResult;
   } catch (err) {
-    const chromeLog = fs.readFileSync(path.join(global.tmpdir, 'chrome-err.log'));
+    const udd = launchedChrome.process.spawnargs.find(a => a.includes('user-data')).replace('--user-data-dir=','')
+
+    const chromeLog = fs.readFileSync(path.join(udd, 'chrome_debug.log'));
     process.stderr.write(chromeLog);
     await potentiallyKillChrome(launchedChrome).catch(() => {});
     return printErrorAndExit(err);

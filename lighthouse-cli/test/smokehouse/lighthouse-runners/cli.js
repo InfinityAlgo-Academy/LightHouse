@@ -56,7 +56,7 @@ async function internalRun(url, tmpPath, configJson, isDebug) {
   const args = [
     `${__dirname}/../../../index.js`, // 'lighthouse-cli/index.js'
     `${url}`,
-    `--chrome-flags=--disable-dev-shm-usage --enable-logging=stderr --v=2`,
+    `--chrome-flags=--enable-logging --v=1`,
     `--output-path=${outputPath}`,
     '--output=json',
     `-G=${artifactsDirectory}`,
