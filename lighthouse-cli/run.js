@@ -78,7 +78,9 @@ function getDebuggableChrome(flags) {
   const tmpdir = path.join(winTmpPath, 'lighthouse.smoketest');
   global.tmpdir = tmpdir;
 
-  if (!fs.existsSync(tmpdir)) fs.mkdirSync(tmpdir, {recursive: true});
+  if (fs.existsSync(tmpdir)) fs.rmdirSync(tmpdir, {recursive: true});
+  fs.mkdirSync(tmpdir, {recursive: true});
+
 
   return ChromeLauncher.launch({
     port: flags.port,
@@ -276,7 +278,7 @@ async function runLighthouse(url, flags, config) {
 
     return runnerResult;
   } catch (err) {
-    const chromeLog = fs.readFileSync(path.join(global.tmpdir, 'chrome-err.log');
+    const chromeLog = fs.readFileSync(path.join(global.tmpdir, 'chrome-err.log'));
     process.stderr.write(chromeLog);
     await potentiallyKillChrome(launchedChrome).catch(() => {});
     return printErrorAndExit(err);
