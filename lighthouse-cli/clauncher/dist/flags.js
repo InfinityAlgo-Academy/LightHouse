@@ -16,15 +16,15 @@ exports.DEFAULT_FLAGS = [
     '--disable-component-extensions-with-background-pages',
     // Disable various background network services, including extension updating,
     //   safe browsing service, upgrade detector, translate, UMA
-    '--disable-background-networking',
+    // '--disable-background-networking',
     // Don't update the browser 'components' listed at chrome://components/
     '--disable-component-update',
     // Disables client-side phishing detection.
     '--disable-client-side-phishing-detection',
     // Disable syncing to a Google account
-    '--disable-sync',
+    // '--disable-sync',
     // Disable reporting to UMA, but allows for collection
-    '--metrics-recording-only',
+    // '--metrics-recording-only',
     // Disable installation of default apps on first run
     '--disable-default-apps',
     // Mute any audio
