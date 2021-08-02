@@ -1,5 +1,6 @@
 'use strict';
-
+// xvfb-run --auto-servernum lighthouse https://www.webpagetest.org --chrome-flags="--user-data-dir=/tmp/protocol_timeout --enable-logging --v=1" --verbose --throttling-method=devtools
+// xvfb-run --auto-servernum lighthouse https://www.webpagetest.org --verbose --throttling-method=devtools --port=9222
 const puppeteer = require('puppeteer');
 
 async function run() {

@@ -41,6 +41,8 @@ jobs:
       working-directory: /home/runner
       run: bash $GITHUB_WORKSPACE/lighthouse-core/scripts/download-chrome.sh && mv chrome-linux chrome-linux-tot
 
+    - name: Run chrome --version
+      run: bash -c "\"${CHROME_PATH:-google-chrome}\" --version"
     - run: yarn install --frozen-lockfile --network-timeout 1000000
     - run: yarn build-report
 
