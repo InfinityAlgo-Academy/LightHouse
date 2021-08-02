@@ -70,6 +70,12 @@ class GatherRunner {
     };
     log.time(status);
     try {
+      const targetCreatedById = new Map();
+      driver.on('Target.targetCreated', event => targetCreatedById.set(event.targetInfo.targetId, event.targetInfo));
+      driver.on('Target.targetCrashed', event => {
+        console.error(`Target crashed!!!!`, event);
+        console.error(`Details:`, targetCreatedById.get(event.targetId));
+      });
       const requestedUrl = passContext.url;
       const {finalUrl, warnings} = await navigation.gotoURL(driver, requestedUrl, {
         waitUntil: passContext.passConfig.recordTrace ?
