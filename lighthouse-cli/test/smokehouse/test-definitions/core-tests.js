@@ -157,6 +157,17 @@ const smokeTests = [{
   config: require('./perf/perf-config.js'),
   runSerially: true,
 }, {
+  id: 'perf-wpt',
+  expectations: {
+    lhr: {
+      requestedUrl: 'https://www.webpagetest.org/',
+      finalUrl: 'https://www.webpagetest.org/',
+      audits: {},
+    },
+  },
+  config: require('./perf/perf-config.js'),
+  runSerially: true,
+}, {
   id: 'perf-frame-metrics',
   expectations: perf.frameMetrics,
   config: require('./perf/perf-config.js'),
