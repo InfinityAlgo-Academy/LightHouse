@@ -14,8 +14,8 @@ const {execFile} = require('child_process');
 const {promisify} = require('util');
 const execFileAsync = promisify(execFile);
 const common = require('./common.js');
+const {LH_ROOT} = require('../../../../root.js');
 
-const LH_ROOT = `${__dirname}/../../../..`;
 const SAMPLES = process.env.SAMPLES ? Number(process.env.SAMPLES) : 9;
 const TEST_URLS = process.env.TEST_URLS ? process.env.TEST_URLS.split(' ') : require('./urls.js');
 

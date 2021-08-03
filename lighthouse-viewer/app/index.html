@@ -35,6 +35,19 @@ Unless required by applicable law or agreed to in writing, software distributed 
       or <a href="https://web.dev/measure">web.dev/measure</a>.</div>
       <input type="url" class="viewer-placeholder__url js-gist-url"
              placeholder="Enter or paste Gist URL">
+
+      <p class="dt-disclaimer" style="display: none">
+        <b>DevTools users:</b> there is a <a href="https://github.com/GoogleChrome/lighthouse/issues/12841">known bug</a>
+        where "Open in Viewer" does not work<br>
+        from the DevTools Lighthouse panel. This will be fixed in<br>
+        Chrome 94 (around Sep 21). In the meantime, you can<br>
+        select "Copy JSON" from the Lighthouse report and paste the result on this page.
+      </p>
+      <script>
+        if (location.search === '' && document.referrer === '') {
+          document.querySelector('.dt-disclaimer').style.display = '';
+        }
+      </script>
     </div>
   </div>
 </div>

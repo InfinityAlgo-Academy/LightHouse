@@ -101,7 +101,7 @@ describe('SEO: Document has valid canonical link', () => {
     return CanonicalAudit.audit(artifacts, context).then(auditResult => {
       const {score, explanation} = auditResult;
       assert.equal(score, 0);
-      expect(explanation).toBeDisplayString('Relative URL (/)');
+      expect(explanation).toBeDisplayString('Is not an absolute URL (/)');
     });
   });
 

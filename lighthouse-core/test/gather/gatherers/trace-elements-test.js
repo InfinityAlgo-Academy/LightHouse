@@ -491,7 +491,7 @@ describe('Trace Elements gatherer - Animated Elements', () => {
     const gatherer = new TraceElementsGatherer();
     gatherer.animationIdToName.set('1', 'example');
 
-    const result = await gatherer._getArtifact({driver}, trace);
+    const result = await gatherer._getArtifact({driver, computedCache: new Map()}, trace);
 
     expect(result).toEqual([
       {
@@ -577,7 +577,7 @@ describe('Trace Elements gatherer - Animated Elements', () => {
     gatherer.animationIdToName.set('3', 'beta');
     gatherer.animationIdToName.set('4', 'gamma');
 
-    const result = await gatherer._getArtifact({driver}, animationTrace);
+    const result = await gatherer._getArtifact({driver, computedCache: new Map()}, animationTrace);
 
     expect(result).toEqual([
       {
@@ -664,7 +664,7 @@ describe('Trace Elements gatherer - Animated Elements', () => {
     gatherer.animationIdToName.set('1', 'notgunnamatter');
     gatherer.animationIdToName.set('2', 'example');
 
-    const result = await gatherer._getArtifact({driver}, trace);
+    const result = await gatherer._getArtifact({driver, computedCache: new Map()}, trace);
 
     expect(result).toEqual([
       {
@@ -677,6 +677,58 @@ describe('Trace Elements gatherer - Animated Elements', () => {
           {name: 'example', failureReasonsMask: 8192, unsupportedProperties: ['color']},
         ],
         nodeId: 6,
+      },
+    ]);
+  });
+
+
+  it('properly handles timespans without FCP', async () => {
+    const animationNodeData = {
+      traceEventType: 'animation',
+      devtoolsNodePath: '1,HTML,1,BODY,1,DIV',
+      selector: 'body > div#animated',
+      nodeLabel: 'div',
+      snippet: '<div id="animated">',
+      boundingRect: {
+        top: 60,
+        bottom: 200,
+        left: 60,
+        right: 100,
+        width: 40,
+        height: 140,
+      },
+    };
+    const connectionStub = new Connection();
+    connectionStub.sendCommand = createMockSendCommandFn()
+      // Animation 1
+      .mockResponse('DOM.resolveNode', {object: {objectId: 5}})
+      .mockResponse('Runtime.callFunctionOn', {result: {value: animationNodeData}});
+    const driver = new Driver(connectionStub);
+
+    const trace = createTestTrace({timeOrigin: 0, traceEnd: 2000});
+    trace.traceEvents = trace.traceEvents.filter(event => event.name !== 'firstContentfulPaint');
+    trace.traceEvents.push(makeAnimationTraceEvent('0x363db876c8', 'b', {id: '1', nodeId: 5}));
+    trace.traceEvents.push(makeAnimationTraceEvent('0x363db876c8', 'n', {
+      compositeFailed: 8192,
+      unsupportedProperties: ['height'],
+    }));
+
+    const gatherer = new TraceElementsGatherer();
+    gatherer.animationIdToName.set('1', 'example');
+
+    const result = await gatherer._getArtifact({
+      driver,
+      gatherMode: 'timespan',
+      computedCache: new Map(),
+    }, trace);
+
+    expect(result).toEqual([
+      {
+        ...animationNodeData,
+        animations: [
+          {name: 'example', failureReasonsMask: 8192, unsupportedProperties: ['height']},
+        ],
+        nodeId: 5,
       },
     ]);
   });
@@ -695,11 +747,11 @@ describe('instrumentation', () => {
       .mockResponse('Animation.disable');
     const driver = new Driver(connectionStub);
     const gatherer = new TraceElementsGatherer();
-    await gatherer.startInstrumentation({driver});
+    await gatherer.startInstrumentation({driver, computedCache: new Map()});
 
     await flushAllTimersAndMicrotasks();
 
-    await gatherer.stopInstrumentation({driver});
+    await gatherer.stopInstrumentation({driver, computedCache: new Map()});
 
     expect(gatherer.animationIdToName.size).toEqual(1);
     expect(gatherer.animationIdToName.get('1')).toEqual('example');
@@ -717,11 +769,11 @@ describe('instrumentation', () => {
       .mockResponse('Animation.disable');
     const driver = new Driver(connectionStub);
     const gatherer = new TraceElementsGatherer();
-    await gatherer.startInstrumentation({driver});
+    await gatherer.startInstrumentation({driver, computedCache: new Map()});
 
     await flushAllTimersAndMicrotasks();
 
-    await gatherer.stopInstrumentation({driver});
+    await gatherer.stopInstrumentation({driver, computedCache: new Map()});
 
     expect(gatherer.animationIdToName.size).toEqual(0);
   });

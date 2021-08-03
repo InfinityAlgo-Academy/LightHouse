@@ -14,10 +14,11 @@ const LanternLargestContentfulPaint = require('../../../computed/metrics/lantern
 /* eslint-env jest */
 describe('Metrics: Lantern LCP', () => {
   it('should compute predicted value', async () => {
+    const gatherContext = {gatherMode: 'navigation'};
     const settings = {};
     const computedCache = new Map();
     const result = await LanternLargestContentfulPaint.request(
-      {trace, devtoolsLog, settings},
+      {trace, devtoolsLog, gatherContext, settings},
       {computedCache}
     );
 

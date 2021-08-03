@@ -7,14 +7,20 @@
 
 /* eslint-env jest */
 
-const {createMockDriver, mockDriverSubmodules} = require('./mock-driver.js');
+const {createMockDriver, mockDriverSubmodules, mockRunnerModule} = require('./mock-driver.js');
 const mocks = mockDriverSubmodules();
-const runner = require('../../../fraggle-rock/gather/navigation-runner.js');
 const {initializeConfig} = require('../../../fraggle-rock/config/config.js');
 const {defaultNavigationConfig} = require('../../../config/constants.js');
 const LighthouseError = require('../../../lib/lh-error.js');
 const DevtoolsLogGatherer = require('../../../gather/gatherers/devtools-log.js');
 const toDevtoolsLog = require('../../network-records-to-devtools-log.js');
+
+// Establish the mocks before we require our file under test.
+let mockRunnerRun = jest.fn();
+
+jest.mock('../../../runner.js', () => mockRunnerModule(() => mockRunnerRun));
+
+const runner = require('../../../fraggle-rock/gather/navigation-runner.js');
 
 /** @typedef {{meta: LH.Gatherer.GathererMeta<'Accessibility'>, getArtifact: jest.Mock<any, any>, startInstrumentation:jest.Mock<any, any>, stopInstrumentation: jest.Mock<any, any>, startSensitiveInstrumentation:jest.Mock<any, any>, stopSensitiveInstrumentation: jest.Mock<any, any>}} MockGatherer */
 
@@ -31,7 +37,7 @@ describe('NavigationRunner', () => {
   /** @type {Map<string, LH.ArbitraryEqualityMap>} */
   let computedCache;
 
-  /** @return {LH.Config.FRGathererDefn} */
+  /** @return {LH.Config.AnyFRGathererDefn} */
   function createGathererDefn() {
     return {
       instance: {
@@ -79,6 +85,7 @@ describe('NavigationRunner', () => {
 
   beforeEach(() => {
     requestedUrl = 'http://example.com';
+    mockRunnerRun = jest.fn();
     config = initializeConfig(undefined, {gatherMode: 'navigation'}).config;
     navigation = createNavigation().navigation;
     computedCache = new Map();
@@ -114,7 +121,7 @@ describe('NavigationRunner', () => {
 
     it('should collect base artifacts', async () => {
       const {baseArtifacts} = await runner._setup({driver, config, requestedUrl});
-      expect(baseArtifacts).toMatchObject({HostUserAgent: 'Chrome', URL: {requestedUrl}});
+      expect(baseArtifacts).toMatchObject({URL: {requestedUrl}});
     });
 
     it('should prepare the target for navigation', async () => {
@@ -123,8 +130,8 @@ describe('NavigationRunner', () => {
     });
 
     it('should prepare the target for navigation *after* base artifact collection', async () => {
-      mockDriver._session.sendCommand.mockReset();
-      mockDriver._session.sendCommand.mockRejectedValue(new Error('Not available'));
+      mockDriver._executionContext.evaluate.mockReset();
+      mockDriver._executionContext.evaluate.mockRejectedValue(new Error('Not available'));
       const setupPromise = runner._setup({driver, config, requestedUrl});
       await expect(setupPromise).rejects.toThrowError(/Not available/);
       expect(mocks.prepareMock.prepareTargetForNavigationMode).not.toHaveBeenCalled();
@@ -143,7 +150,12 @@ describe('NavigationRunner', () => {
       config = initializeConfig(
         {
           ...config,
-          navigations: [{id: 'default'}, {id: 'second'}, {id: 'third'}, {id: 'fourth'}],
+          navigations: [
+            {id: 'default', artifacts: ['FontSize']},
+            {id: 'second', artifacts: ['ConsoleMessages']},
+            {id: 'third', artifacts: ['ViewportDimensions']},
+            {id: 'fourth', artifacts: ['AnchorElements']},
+          ],
         },
         {gatherMode: 'navigation'}
       ).config;
@@ -379,6 +391,29 @@ describe('NavigationRunner', () => {
       config.settings.disableStorageReset = true;
       await runner._cleanup({requestedUrl, driver, config});
       expect(mocks.storageMock.clearDataForOrigin).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('navigation', () => {
+    it('should initialize config', async () => {
+      const settingsOverrides = {
+        formFactor: /** @type {'desktop'} */ ('desktop'),
+        maxWaitForLoad: 1234,
+        screenEmulation: {mobile: false},
+      };
+
+      const configContext = {settingsOverrides};
+      await runner.navigation({
+        url: 'http://example.com',
+        page: mockDriver._page.asPage(),
+        configContext,
+      });
+
+      expect(mockRunnerRun.mock.calls[0][1]).toMatchObject({
+        config: {
+          settings: settingsOverrides,
+        },
+      });
     });
   });
 });

@@ -25,6 +25,7 @@ const ampDevtoolsLog = require('../../fixtures/traces/amp-m86.devtoolslog.json')
 describe('Render blocking resources audit', () => {
   it('evaluates http2 input correctly', async () => {
     const artifacts = {
+      GatherContext: {gatherMode: 'navigation'},
       traces: {defaultPass: trace},
       devtoolsLogs: {defaultPass: devtoolsLog},
       TagsBlockingFirstPaint: [
@@ -44,6 +45,7 @@ describe('Render blocking resources audit', () => {
 
   it('evaluates amp page correctly', async () => {
     const artifacts = {
+      GatherContext: {gatherMode: 'navigation'},
       traces: {defaultPass: ampTrace},
       devtoolsLogs: {defaultPass: ampDevtoolsLog},
       TagsBlockingFirstPaint: [

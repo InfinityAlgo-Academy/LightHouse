@@ -11,15 +11,15 @@
 const fs = require('fs');
 const glob = require('glob');
 const path = require('path');
-const assert = require('assert').strict;
+const expect = require('expect');
 const tsc = require('typescript');
 const MessageParser = require('intl-messageformat-parser').default;
-const Util = require('../../report/html/renderer/util.js');
+const Util = require('../../../lighthouse-core/util-commonjs.js');
 const {collectAndBakeCtcStrings} = require('./bake-ctc-to-lhl.js');
 const {pruneObsoleteLhlMessages} = require('./prune-obsolete-lhl-messages.js');
 const {countTranslatedMessages} = require('./count-translated.js');
+const {LH_ROOT} = require('../../../root.js');
 
-const LH_ROOT = path.join(__dirname, '../../../');
 const UISTRINGS_REGEX = /UIStrings = .*?\};\n/s;
 
 /** @typedef {import('./bake-ctc-to-lhl.js').CtcMessage} CtcMessage */
@@ -28,6 +28,7 @@ const UISTRINGS_REGEX = /UIStrings = .*?\};\n/s;
 
 const foldersWithStrings = [
   `${LH_ROOT}/lighthouse-core`,
+  `${LH_ROOT}/report/renderer`,
   `${LH_ROOT}/lighthouse-treemap`,
   path.dirname(require.resolve('lighthouse-stack-packs')) + '/packs',
 ];
@@ -40,6 +41,7 @@ const ignoredPathComponents = [
   '**/test/**',
   '**/*-test.js',
   '**/*-renderer.js',
+  '**/util-commonjs.js',
   'lighthouse-treemap/app/src/main.js',
 ];
 
@@ -516,22 +518,13 @@ function parseUIStrings(sourceStr, liveUIStrings) {
   return parsedMessages;
 }
 
-/** @type {Map<string, string>} */
-const seenStrings = new Map();
-
-/** @type {number} */
-let collisions = 0;
-
-/** @type {Array<string>} */
-const collisionStrings = [];
-
 /**
  * Collects all LHL messsages defined in UIString from Javascript files in dir,
  * and converts them into CTC.
  * @param {string} dir absolute path
- * @return {Record<string, CtcMessage>}
+ * @return {Promise<Record<string, CtcMessage>>}
  */
-function collectAllStringsInDir(dir) {
+async function collectAllStringsInDir(dir) {
   /** @type {Record<string, CtcMessage>} */
   const strings = {};
 
@@ -546,9 +539,9 @@ function collectAllStringsInDir(dir) {
     if (!process.env.CI) console.log('Collecting from', relativeToRootPath);
 
     const content = fs.readFileSync(absolutePath, 'utf8');
-    const exportVars = require(absolutePath);
+    const exportVars = await import(absolutePath);
     const regexMatch = content.match(UISTRINGS_REGEX);
-    const exportedUIStrings = exportVars.UIStrings;
+    const exportedUIStrings = exportVars.UIStrings || (exportVars.default && exportVars.default.UIStrings);
 
     if (!regexMatch) {
       // No UIStrings found in the file text or exports, so move to the next.
@@ -583,28 +576,6 @@ function collectAllStringsInDir(dir) {
 
       const messageKey = `${relativeToRootPath} | ${key}`;
       strings[messageKey] = ctc;
-
-      // check for duplicates, if duplicate, add @description as @meaning to both
-      if (seenStrings.has(ctc.message)) {
-        ctc.meaning = ctc.description;
-        const seenId = seenStrings.get(ctc.message);
-        // TODO: `strings[seenId]` check shouldn't be necessary here ...
-        // see https://github.com/GoogleChrome/lighthouse/pull/12441/files#r630521367
-        if (seenId && strings[seenId]) {
-          if (!strings[seenId].meaning) {
-            strings[seenId].meaning = strings[seenId].description;
-            collisions++;
-          }
-
-          if (ctc.meaning === strings[seenId].meaning) {
-            throw new Error(`'${messageKey}' is an exact duplicate of '${seenId}' when placeholders are removed. Each strings' \`message\` or \`description\` must be different for the translation pipeline`);
-          }
-
-          collisionStrings.push(ctc.message);
-          collisions++;
-        }
-      }
-      seenStrings.set(ctc.message, messageKey);
     }
   }
 
@@ -627,21 +598,94 @@ function writeStringsToCtcFiles(locale, strings) {
   fs.writeFileSync(fullPath, JSON.stringify(output, null, 2) + '\n');
 }
 
-// Test if called from the CLI or as a module.
-if (require.main === module) {
+/**
+ * This function does two things:
+ *
+ *    - Add `meaning` property to ctc messages that have the same message but different descriptions so TC can disambiguate.
+ *    - Throw if the known collisions has changed at all.
+ *
+ * @param {Record<string, CtcMessage>} strings
+ */
+function resolveMessageCollisions(strings) {
+  /** @type {Map<string, Array<CtcMessage>>} */
+  const stringsByMessage = new Map();
+
+  // Group all the strings by their message.
+  for (const ctc of Object.values(strings)) {
+    const collisions = stringsByMessage.get(ctc.message) || [];
+    collisions.push(ctc);
+    stringsByMessage.set(ctc.message, collisions);
+  }
+
+  /** @type {Array<CtcMessage>} */
+  const allCollisions = [];
+  for (const messageGroup of stringsByMessage.values()) {
+    // If this message didn't collide with anything else, skip it.
+    if (messageGroup.length <= 1) continue;
+
+    // If group shares both message and description, they can be translated as if a single string.
+    const descriptions = new Set(messageGroup.map(ctc => ctc.description));
+    if (descriptions.size <= 1) continue;
+
+    // We have duplicate messages with different descriptions. Disambiguate using `meaning` for TC.
+    for (const ctc of messageGroup) {
+      ctc.meaning = ctc.description;
+    }
+    allCollisions.push(...messageGroup);
+  }
+
+  // Check that the known collisions match our known list.
+  const collidingMessages = allCollisions.map(collision => collision.message).sort();
+
+  try {
+    expect(collidingMessages).toEqual([
+      '$MARKDOWN_SNIPPET_0$ elements do not have $MARKDOWN_SNIPPET_1$ text',
+      '$MARKDOWN_SNIPPET_0$ elements do not have $MARKDOWN_SNIPPET_1$ text',
+      '$MARKDOWN_SNIPPET_0$ elements have $MARKDOWN_SNIPPET_1$ text',
+      '$MARKDOWN_SNIPPET_0$ elements have $MARKDOWN_SNIPPET_1$ text',
+      'ARIA $MARKDOWN_SNIPPET_0$ elements do not have accessible names.',
+      'ARIA $MARKDOWN_SNIPPET_0$ elements do not have accessible names.',
+      'ARIA $MARKDOWN_SNIPPET_0$ elements do not have accessible names.',
+      'ARIA $MARKDOWN_SNIPPET_0$ elements do not have accessible names.',
+      'ARIA $MARKDOWN_SNIPPET_0$ elements have accessible names',
+      'ARIA $MARKDOWN_SNIPPET_0$ elements have accessible names',
+      'ARIA $MARKDOWN_SNIPPET_0$ elements have accessible names',
+      'ARIA $MARKDOWN_SNIPPET_0$ elements have accessible names',
+      'Consider uploading your GIF to a service which will make it available to embed as an HTML5 video.',
+      'Consider uploading your GIF to a service which will make it available to embed as an HTML5 video.',
+      'Consider uploading your GIF to a service which will make it available to embed as an HTML5 video.',
+      'Consider using a $LINK_START_0$plugin$LINK_END_0$ or service that will automatically convert your uploaded images to the optimal formats.',
+      'Consider using a $LINK_START_0$plugin$LINK_END_0$ or service that will automatically convert your uploaded images to the optimal formats.',
+      'Document has a valid $MARKDOWN_SNIPPET_0$',
+      'Document has a valid $MARKDOWN_SNIPPET_0$',
+      'Failing Elements',
+      'Failing Elements',
+      'Name',
+      'Name',
+      'Potential Savings',
+      'Potential Savings',
+      'URL',
+      'URL',
+    ]);
+  } catch (err) {
+    console.log('The number of duplicate strings has changed. Consider duplicating the `description` to match existing strings so they\'re translated together or update this assertion if they must absolutely be translated separately');
+    console.log('copy/paste this to pass check:');
+    console.log(collidingMessages);
+    throw new Error(err.message);
+  }
+}
+
+async function main() {
   /** @type {Record<string, CtcMessage>} */
   const strings = {};
 
   for (const folderWithStrings of foldersWithStrings) {
     console.log(`\n====\nCollecting strings from ${folderWithStrings}\n====`);
-    const moreStrings = collectAllStringsInDir(folderWithStrings);
+    const moreStrings = await collectAllStringsInDir(folderWithStrings);
     Object.assign(strings, moreStrings);
   }
 
-  if (collisions > 0) {
-    console.log(`MEANING COLLISION: ${collisions} string(s) have the same content.`);
-    assert.equal(collisions, 30, `The number of duplicate strings have changed, update this assertion if that is expected, or reword strings. Collisions: ${collisionStrings.join('\n')}`);
-  }
+  resolveMessageCollisions(strings);
 
   writeStringsToCtcFiles('en-US', strings);
   console.log('Written to disk!', 'en-US.ctc.json');
@@ -669,6 +713,11 @@ if (require.main === module) {
   console.log(`  ${progress.notTranslatedCount}/${progress.messageCount} untranslated messages`);
 
   console.log('✨ Complete!');
+}
+
+// Test if called from the CLI or as a module.
+if (require.main === module) {
+  main();
 }
 
 module.exports = {

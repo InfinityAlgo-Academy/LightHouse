@@ -18,6 +18,7 @@ const cloneDeep = require('lodash.clonedeep');
 const yargs = require('yargs');
 const log = require('lighthouse-logger');
 const {runSmokehouse} = require('../smokehouse.js');
+const {updateTestDefnFormat} = require('./back-compat-util.js');
 
 const coreTestDefnsPath = path.join(__dirname, '../test-definitions/core-tests.js');
 
@@ -46,12 +47,18 @@ function getDefinitionsToRun(allTestDefns, requestedIds, {invertMatch}) {
     console.log('Running ALL smoketests. Equivalent to:');
     console.log(usage);
   } else {
-    smokes = allTestDefns.filter(test => invertMatch !== requestedIds.includes(test.id));
+    smokes = allTestDefns.filter(test => {
+      // Include all tests that *include* requested id.
+      // e.g. a requested 'pwa' will match 'pwa-airhorner', 'pwa-caltrain', etc
+      let isRequested = requestedIds.some(requestedId => test.id.includes(requestedId));
+      if (invertMatch) isRequested = !isRequested;
+      return isRequested;
+    });
     console.log(`Running ONLY smoketests for: ${smokes.map(t => t.id).join(' ')}\n`);
   }
 
   const unmatchedIds = requestedIds.filter(requestedId => {
-    return !allTestDefns.map(t => t.id).includes(requestedId);
+    return !allTestDefns.map(t => t.id).some(id => id.includes(requestedId));
   });
   if (unmatchedIds.length) {
     console.log(log.redify(`Smoketests not found for: ${unmatchedIds.join(' ')}`));
@@ -80,23 +87,21 @@ function pruneExpectedNetworkRequests(testDefns, takeNetworkRequestUrls) {
 
   const clonedDefns = cloneDeep(testDefns);
   for (const {id, expectations, runSerially} of clonedDefns) {
-    for (const expectation of expectations) {
-      if (!runSerially && expectation.networkRequests) {
-        throw new Error(`'${id}' must be set to 'runSerially: true' to assert 'networkRequests'`);
+    if (!runSerially && expectations.networkRequests) {
+      throw new Error(`'${id}' must be set to 'runSerially: true' to assert 'networkRequests'`);
+    }
+
+    if (pruneNetworkRequests && expectations.networkRequests) {
+      // eslint-disable-next-line max-len
+      const msg = `'networkRequests' cannot be asserted in test '${id}'. They should only be asserted on tests from an in-process server`;
+      if (process.env.CI) {
+        // If we're in CI, we require any networkRequests expectations to be asserted.
+        throw new Error(msg);
       }
 
-      if (pruneNetworkRequests && expectation.networkRequests) {
-        // eslint-disable-next-line max-len
-        const msg = `'networkRequests' cannot be asserted in test '${id}'. They should only be asserted on tests from an in-process server`;
-        if (process.env.CI) {
-          // If we're in CI, we require any networkRequests expectations to be asserted.
-          throw new Error(msg);
-        }
-
-        console.warn(log.redify('Warning:'),
-            `${msg}. Pruning expectation: ${JSON.stringify(expectation.networkRequests)}`);
-        expectation.networkRequests = undefined;
-      }
+      console.warn(log.redify('Warning:'),
+          `${msg}. Pruning expectation: ${JSON.stringify(expectations.networkRequests)}`);
+      expectations.networkRequests = undefined;
     }
   }
 
@@ -121,6 +126,11 @@ async function begin() {
         type: 'boolean',
         default: false,
         describe: 'Save test artifacts and output verbose logs',
+      },
+      'fraggle-rock': {
+        type: 'boolean',
+        default: false,
+        describe: 'Use the new Fraggle Rock runner',
       },
       'jobs': {
         type: 'number',
@@ -166,7 +176,8 @@ async function begin() {
   let testDefnPath = argv.testsPath || coreTestDefnsPath;
   testDefnPath = path.resolve(process.cwd(), testDefnPath);
   const requestedTestIds = argv._;
-  const allTestDefns = require(testDefnPath);
+  const rawTestDefns = require(testDefnPath);
+  const allTestDefns = updateTestDefnFormat(rawTestDefns);
   const invertMatch = argv.invertMatch;
   const testDefns = getDefinitionsToRun(allTestDefns, requestedTestIds, {invertMatch});
 
@@ -185,7 +196,14 @@ async function begin() {
     }
 
     const prunedTestDefns = pruneExpectedNetworkRequests(testDefns, takeNetworkRequestUrls);
-    const options = {jobs, retries, isDebug: argv.debug, lighthouseRunner, takeNetworkRequestUrls};
+    const options = {
+      jobs,
+      retries,
+      isDebug: argv.debug,
+      useFraggleRock: argv.fraggleRock,
+      lighthouseRunner,
+      takeNetworkRequestUrls,
+    };
 
     isPassing = (await runSmokehouse(prunedTestDefns, options)).success;
   } finally {

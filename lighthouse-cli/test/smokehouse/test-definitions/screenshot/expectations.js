@@ -6,57 +6,55 @@
 'use strict';
 
 /**
- * @type {Array<Smokehouse.ExpectedRunnerResult>}
+ * @type {Smokehouse.ExpectedRunnerResult}
  */
-const expectations = [
-  {
-    artifacts: {
-      FullPageScreenshot: {
-        screenshot: {
-          width: '>1000',
-          height: '>1000',
-          data: /data:image\/jpeg;base64,.{10000,}$/,
+const expectations = {
+  artifacts: {
+    FullPageScreenshot: {
+      screenshot: {
+        width: '>1000',
+        height: '>1000',
+        data: /data:image\/jpeg;base64,.{10000,}$/,
+      },
+      nodes: {
+        'page-0-BODY': {
+          top: 8,
+          bottom: 1008,
+          left: 8,
+          right: 1008,
+          width: 1000,
+          height: 1000,
         },
-        nodes: {
-          'page-0-BODY': {
-            top: 8,
-            bottom: 1008,
-            left: 8,
-            right: 1008,
-            width: 1000,
-            height: 1000,
-          },
-          // The following 2 are the same element (from different JS contexts). This element
-          // starts with height ~18 and grows over time. See screenshot.html.
-          'page-1-P': {
-            top: 8,
-            left: 8,
-            height: '>40',
-          },
-          // Note: The first number (5) in these ids comes from an executionContextId, and has the potential to change
-          '5-1-P': {
-            top: 8,
-            left: 8,
-            height: '>40',
-          },
-          '5-2-BODY': {
-            top: 8,
-            bottom: 1008,
-            left: 8,
-            right: 1008,
-            width: 1000,
-            height: 1000,
-          },
-          '5-3-HTML': {},
+        // The following 2 are the same element (from different JS contexts). This element
+        // starts with height ~18 and grows over time. See screenshot.html.
+        'page-1-P': {
+          top: 8,
+          left: 8,
+          height: '>40',
         },
+        // Note: The first number (5) in these ids comes from an executionContextId, and has the potential to change
+        '5-1-P': {
+          top: 8,
+          left: 8,
+          height: '>40',
+        },
+        '5-2-BODY': {
+          top: 8,
+          bottom: 1008,
+          left: 8,
+          right: 1008,
+          width: 1000,
+          height: 1000,
+        },
+        '5-3-HTML': {},
       },
     },
-    lhr: {
-      requestedUrl: 'http://localhost:10200/screenshot.html?width=1000px&height=1000px',
-      finalUrl: 'http://localhost:10200/screenshot.html?width=1000px&height=1000px',
-      audits: {},
-    },
   },
-];
+  lhr: {
+    requestedUrl: 'http://localhost:10200/screenshot.html?width=1000px&height=1000px',
+    finalUrl: 'http://localhost:10200/screenshot.html?width=1000px&height=1000px',
+    audits: {},
+  },
+};
 
 module.exports = expectations;

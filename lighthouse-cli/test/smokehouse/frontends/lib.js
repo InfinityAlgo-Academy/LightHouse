@@ -24,28 +24,21 @@ async function smokehouse(options) {
   const {urlFilterRegex, skip, modify, ...smokehouseOptions} = options;
 
   const clonedTests = cloneDeep(smokeTests);
-  const modifiedTests = clonedTests.map(test => {
-    const modifiedExpectations = [];
-    for (const expected of test.expectations) {
-      if (urlFilterRegex && !expected.lhr.requestedUrl.match(urlFilterRegex)) {
-        continue;
-      }
-
-      const reasonToSkip = skip && skip(test, expected);
-      if (reasonToSkip) {
-        console.log(`skipping ${expected.lhr.requestedUrl}: ${reasonToSkip}`);
-        continue;
-      }
-
-      modify && modify(test, expected);
-      modifiedExpectations.push(expected);
+  const modifiedTests = [];
+  for (const test of clonedTests) {
+    if (urlFilterRegex && !test.expectations.lhr.requestedUrl.match(urlFilterRegex)) {
+      continue;
     }
 
-    return {
-      ...test,
-      expectations: modifiedExpectations,
-    };
-  }).filter(test => test.expectations.length > 0);
+    const reasonToSkip = skip && skip(test, test.expectations);
+    if (reasonToSkip) {
+      console.log(`skipping ${test.expectations.lhr.requestedUrl}: ${reasonToSkip}`);
+      continue;
+    }
+
+    modify && modify(test, test.expectations);
+    modifiedTests.push(test);
+  }
 
   return runSmokehouse(modifiedTests, smokehouseOptions);
 }

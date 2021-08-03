@@ -304,7 +304,7 @@ describe('URL Shim', () => {
     });
   });
 
-  describe('isLikeLocalhost', () => {
+  it('isLikeLocalhost', () => {
     assert.ok(URL.isLikeLocalhost(new URL('http://localhost/').hostname));
     assert.ok(URL.isLikeLocalhost(new URL('http://localhost:10200/').hostname));
     assert.ok(URL.isLikeLocalhost(new URL('http://127.0.0.1/page.html').hostname));
@@ -315,7 +315,7 @@ describe('URL Shim', () => {
     assert.ok(!URL.isLikeLocalhost(new URL('http://example.com/').hostname));
   });
 
-  describe('isSecureScheme', () => {
+  it('isSecureScheme', () => {
     assert.ok(URL.isSecureScheme('wss'));
     assert.ok(URL.isSecureScheme('about'));
     assert.ok(URL.isSecureScheme('data'));
@@ -325,7 +325,7 @@ describe('URL Shim', () => {
     assert.ok(!URL.isSecureScheme('ws'));
   });
 
-  describe('isNonNetworkProtocol', () => {
+  it('isNonNetworkProtocol', () => {
     assert.ok(URL.isNonNetworkProtocol('blob'));
     assert.ok(URL.isNonNetworkProtocol('data'));
     assert.ok(URL.isNonNetworkProtocol('data:'));
@@ -334,5 +334,31 @@ describe('URL Shim', () => {
     assert.ok(!URL.isNonNetworkProtocol('filesystem'));
     assert.ok(!URL.isNonNetworkProtocol('http'));
     assert.ok(!URL.isNonNetworkProtocol('ws'));
+  });
+
+  describe('guessMimeType', () => {
+    it('handles invalid url', () => {
+      expect(URL.guessMimeType('')).toEqual(undefined);
+      expect(URL.guessMimeType('I_AM_NO_URL')).toEqual(undefined);
+    });
+
+    it('uses mime type from data URI', () => {
+      expect(URL.guessMimeType('data:image/png;DATA')).toEqual('image/png');
+      expect(URL.guessMimeType('data:image/jpeg;DATA')).toEqual('image/jpeg');
+      expect(URL.guessMimeType('data:image/svg+xml;DATA')).toEqual('image/svg+xml');
+      expect(URL.guessMimeType('data:text/html;DATA')).toEqual(undefined);
+      expect(URL.guessMimeType('data:image/jpg;DATA')).toEqual(undefined);
+    });
+
+    it('uses path extension for normal files', () => {
+      expect(URL.guessMimeType('https://example.com/img.png')).toEqual('image/png');
+      expect(URL.guessMimeType('https://example.com/img.png?test')).toEqual('image/png');
+      expect(URL.guessMimeType('https://example.com/IMG.PNG')).toEqual('image/png');
+      expect(URL.guessMimeType('https://example.com/img.jpeg')).toEqual('image/jpeg');
+      expect(URL.guessMimeType('https://example.com/img.jpg')).toEqual('image/jpeg');
+      expect(URL.guessMimeType('https://example.com/img.svg')).toEqual('image/svg+xml');
+      expect(URL.guessMimeType('https://example.com/page.html')).toEqual(undefined);
+      expect(URL.guessMimeType('https://example.com/')).toEqual(undefined);
+    });
   });
 });

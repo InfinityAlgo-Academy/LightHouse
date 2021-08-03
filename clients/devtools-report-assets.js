@@ -8,12 +8,12 @@
 /**
  * @fileoverview Instead of loading report assets form the filesystem, in Devtools we must load
  * them via Runtime.cachedResources. We use this module to shim
- * lighthouse-core/report/html/html-report-assets.js in Devtools.
+ * report/report-assets.js in Devtools.
  */
 
 /* global globalThis */
 
-// @ts-expect-error: globalThis.EXPORTED_CACHED_RESOURCES_ONLY_FOR_LIGHTHOUSE exists in Devtools. https://source.chromium.org/chromium/chromium/src/+/master:third_party/devtools-frontend/src/front_end/root/Runtime.js;l=1247-1250;drc=c4e2fefe3327aa9fe5f4398a1baddb8726c230d5
+// @ts-expect-error: globalThis.EXPORTED_CACHED_RESOURCES_ONLY_FOR_LIGHTHOUSE exists in Devtools. https://source.chromium.org/chromium/chromium/src/+/main:third_party/devtools-frontend/src/front_end/root/Runtime.js;l=1247-1250;drc=c4e2fefe3327aa9fe5f4398a1baddb8726c230d5
 const cachedResources = globalThis.EXPORTED_CACHED_RESOURCES_ONLY_FOR_LIGHTHOUSE;
 
 // Getters are necessary because the DevTools bundling processes
@@ -28,7 +28,7 @@ module.exports = {
     return cachedResources.get('third_party/lighthouse/report-assets/report.js');
   },
   get REPORT_TEMPLATE() {
-    return cachedResources.get('third_party/lighthouse/report-assets/template.html');
+    return cachedResources.get('third_party/lighthouse/report-assets/standalone-template.html');
   },
   get REPORT_TEMPLATES() {
     return cachedResources.get('third_party/lighthouse/report-assets/templates.html');

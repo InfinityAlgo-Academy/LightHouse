@@ -146,6 +146,7 @@ const defaultConfig = {
       'iframe-elements',
       'form-elements',
       'main-document-content',
+      'gather-context',
       'global-listeners',
       'dobetterweb/appcache',
       'dobetterweb/doctype',

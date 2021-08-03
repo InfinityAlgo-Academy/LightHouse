@@ -8,7 +8,9 @@ build/
 coverage/
 dist/
 proto/
+docs/
 
+lighthouse-core/lib/sd-validation/
 lighthouse-core/scripts/*
 lighthouse-core/test/
 lighthouse-core/third_party/src/
@@ -39,7 +41,6 @@ chromium-webtests
 .tmp
 
 # generated files
-**/pages/scripts/lighthouse-report.js
 *.report.html
 *.dom.html
 *.devtoolslog.json
@@ -51,6 +52,12 @@ npm-debug.log
 yarn-error.log
 results.html
 *.lcov
+
+# generated files needed for publish
+!dist/report/standalone.js
+
+# large files
+changelog.md
 
 # dev files
 .DS_Store

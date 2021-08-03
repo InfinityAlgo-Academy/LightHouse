@@ -24,6 +24,10 @@ function getAuditsBreakdown(lhr) {
     audit => !irrelevantDisplayModes.has(audit.scoreDisplayMode)
   );
 
+  const notApplicableAudits = auditResults.filter(
+    audit => audit.scoreDisplayMode === 'notApplicable'
+  );
+
   const informativeAudits = applicableAudits.filter(
     audit => audit.scoreDisplayMode === 'informative'
   );
@@ -34,7 +38,7 @@ function getAuditsBreakdown(lhr) {
 
   const failedAudits = applicableAudits.filter(audit => audit.score !== null && audit.score < 1);
 
-  return {auditResults, erroredAudits, failedAudits, informativeAudits};
+  return {auditResults, erroredAudits, failedAudits, informativeAudits, notApplicableAudits};
 }
 
 describe('Fraggle Rock API', () => {
@@ -95,7 +99,7 @@ describe('Fraggle Rock API', () => {
 
       const {auditResults, erroredAudits, failedAudits} = getAuditsBreakdown(lhr);
       // TODO(FR-COMPAT): This assertion can be removed when full compatibility is reached.
-      expect(auditResults.length).toMatchInlineSnapshot(`74`);
+      expect(auditResults.length).toMatchInlineSnapshot(`80`);
 
       expect(erroredAudits).toHaveLength(0);
       expect(failedAudits.map(audit => audit.id)).toContain('label');
@@ -119,9 +123,17 @@ describe('Fraggle Rock API', () => {
       const bestPractices = lhr.categories['best-practices'];
       expect(bestPractices.score).toBeLessThan(1);
 
-      const {auditResults, erroredAudits, failedAudits} = getAuditsBreakdown(lhr);
+      const {
+        auditResults,
+        erroredAudits,
+        failedAudits,
+        notApplicableAudits,
+      } = getAuditsBreakdown(lhr);
       // TODO(FR-COMPAT): This assertion can be removed when full compatibility is reached.
-      expect(auditResults.length).toMatchInlineSnapshot(`28`);
+      expect(auditResults.length).toMatchInlineSnapshot(`50`);
+
+      expect(notApplicableAudits.length).toMatchInlineSnapshot(`7`);
+      expect(notApplicableAudits.map(audit => audit.id)).not.toContain('server-response-time');
 
       expect(erroredAudits).toHaveLength(0);
       expect(failedAudits.map(audit => audit.id)).toContain('errors-in-console');
@@ -145,6 +157,29 @@ describe('Fraggle Rock API', () => {
       if (!details || details.type !== 'table') throw new Error('Unexpected byte weight details');
       expect(details.items).toMatchObject([{url: `${serverBaseUrl}/onclick.html`}]);
     });
+
+    it('should compute results from timespan after page load', async () => {
+      await page.goto(`${serverBaseUrl}/onclick.html`);
+      await page.waitForSelector('button');
+
+      const run = await lighthouse.startTimespan({page});
+
+      await page.click('button');
+      await page.waitForSelector('input');
+
+      const result = await run.endTimespan();
+
+      if (!result) throw new Error('Lighthouse failed to produce a result');
+
+      const {auditResults, erroredAudits, notApplicableAudits} = getAuditsBreakdown(result.lhr);
+      expect(auditResults.length).toMatchInlineSnapshot(`50`);
+
+      expect(notApplicableAudits.length).toMatchInlineSnapshot(`22`);
+      expect(notApplicableAudits.map(audit => audit.id)).toContain('server-response-time');
+
+      // TODO(FR-COMPAT): Reduce this number by handling the error, making N/A, or removing timespan support.
+      expect(erroredAudits.length).toMatchInlineSnapshot(`1`);
+    });
   });
 
   describe('navigation', () => {
@@ -159,7 +194,7 @@ describe('Fraggle Rock API', () => {
       const {lhr} = result;
       const {auditResults, failedAudits, erroredAudits} = getAuditsBreakdown(lhr);
       // TODO(FR-COMPAT): This assertion can be removed when full compatibility is reached.
-      expect(auditResults.length).toMatchInlineSnapshot(`114`);
+      expect(auditResults.length).toMatchInlineSnapshot(`153`);
       expect(erroredAudits).toHaveLength(0);
 
       const failedAuditIds = failedAudits.map(audit => audit.id);

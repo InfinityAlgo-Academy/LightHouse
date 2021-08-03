@@ -48,7 +48,7 @@ function createConfig(categoryIDs, device) {
 
 /**
  * @param {RawProtocol.Port} port
- * @returns {RawProtocol}
+ * @return {RawProtocol}
  */
 function setUpWorkerConnection(port) {
   return new RawProtocol(port);

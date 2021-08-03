@@ -40,7 +40,7 @@ function createMockSession() {
 }
 
 /**
- * @param {LH.Gatherer.FRGathererInstance<LH.Gatherer.DependencyKey>['meta']} meta
+ * @param {LH.Gatherer.AnyFRGathererInstance['meta']} meta
  */
 function createMockGathererInstance(meta) {
   return {
@@ -51,7 +51,7 @@ function createMockGathererInstance(meta) {
     stopSensitiveInstrumentation: jest.fn(),
     getArtifact: jest.fn(),
 
-    /** @return {LH.Gatherer.FRGathererInstance} */
+    /** @return {LH.Gatherer.AnyFRGathererInstance} */
     asGatherer() {
       // @ts-expect-error - We'll rely on the tests passing to know this matches.
       return this;

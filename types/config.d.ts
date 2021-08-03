@@ -49,11 +49,21 @@ declare global {
        */
       export interface FRConfig {
         settings: Settings;
-        artifacts: ArtifactDefn[] | null;
+        artifacts: AnyArtifactDefn[] | null;
         navigations: NavigationDefn[] | null;
         audits: AuditDefn[] | null;
         categories: Record<string, Category> | null;
         groups: Record<string, Group> | null;
+      }
+
+      /**
+       * Additional information about the context in which a Fraggle Rock config should be interpreted.
+       * This information is typically set by the CLI or other channel integrations.
+       */
+      export interface FRContext {
+        gatherMode?: LH.Gatherer.GatherMode;
+        configPath?: string;
+        settingsOverrides?: LH.SharedFlagsSettings;
       }
 
       interface SharedPassNavigationJson {
@@ -160,7 +170,7 @@ declare global {
       }
 
       export interface NavigationDefn extends Omit<Required<NavigationJson>, 'artifacts'> {
-        artifacts: ArtifactDefn[];
+        artifacts: AnyArtifactDefn[];
       }
 
       export interface ArtifactDefn<TDependencies extends Gatherer.DependencyKey = Gatherer.DependencyKey> {
@@ -171,11 +181,25 @@ declare global {
           Record<Exclude<TDependencies, Gatherer.DefaultDependenciesKey>, {id: string}>;
       }
 
+      type ArtifactDefnExpander<TDependencies extends Gatherer.DependencyKey> =
+        // Lack of brackets intentional here to convert to the union of all individual dependencies.
+        TDependencies extends Gatherer.DefaultDependenciesKey ?
+          ArtifactDefn<Gatherer.DefaultDependenciesKey> :
+          ArtifactDefn<TDependencies>
+      export type AnyArtifactDefn = ArtifactDefnExpander<Gatherer.DefaultDependenciesKey>|ArtifactDefnExpander<Gatherer.DependencyKey>
+
       export interface FRGathererDefn<TDependencies extends Gatherer.DependencyKey = Gatherer.DependencyKey> {
         implementation?: ClassOf<Gatherer.FRGathererInstance<TDependencies>>;
         instance: Gatherer.FRGathererInstance<TDependencies>;
         path?: string;
       }
+
+      type FRGathererDefnExpander<TDependencies extends Gatherer.DependencyKey> =
+        // Lack of brackets intentional here to convert to the union of all individual dependencies.
+        TDependencies extends Gatherer.DefaultDependenciesKey ?
+          FRGathererDefn<Gatherer.DefaultDependenciesKey> :
+          FRGathererDefn<TDependencies>
+      export type AnyFRGathererDefn = FRGathererDefnExpander<Gatherer.DefaultDependenciesKey>|FRGathererDefnExpander<Gatherer.DependencyKey>
 
       export interface GathererDefn {
         implementation?: ClassOf<Gatherer.GathererInstance>;

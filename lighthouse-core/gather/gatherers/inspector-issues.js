@@ -112,7 +112,7 @@ class InspectorIssues extends FRGatherer {
 
   /**
    * @param {LH.Gatherer.FRTransitionalContext<'DevtoolsLog'>} context
-   * @returns {Promise<LH.Artifacts['InspectorIssues']>}
+   * @return {Promise<LH.Artifacts['InspectorIssues']>}
    */
   async getArtifact(context) {
     const devtoolsLog = context.dependencies.DevtoolsLog;
@@ -123,7 +123,7 @@ class InspectorIssues extends FRGatherer {
   /**
    * @param {LH.Gatherer.PassContext} passContext
    * @param {LH.Gatherer.LoadData} loadData
-   * @returns {Promise<LH.Artifacts['InspectorIssues']>}
+   * @return {Promise<LH.Artifacts['InspectorIssues']>}
    */
   async afterPass(passContext, loadData) {
     await this.stopInstrumentation({...passContext, dependencies: {}});

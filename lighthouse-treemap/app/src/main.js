@@ -15,6 +15,9 @@ const DUPLICATED_MODULES_IGNORE_THRESHOLD = 1024;
 const DUPLICATED_MODULES_IGNORE_ROOT_RATIO = 0.01;
 
 const logEl = document.querySelector('#lh-log');
+if (!logEl) {
+  throw new Error('logger element not found');
+}
 const logger = new Logger(logEl);
 
 /** @type {TreemapViewer} */
@@ -646,16 +649,14 @@ function renderViewModeButtons(viewModes) {
     if (!viewMode.enabled) viewModeEl.classList.add('view-mode--disabled');
     viewModeEl.id = `view-mode--${viewMode.id}`;
 
-    const inputEl = TreemapUtil.createChildOf(viewModeEl, 'input', 'view-mode__button', {
-      id: `view-mode--${viewMode.id}__label`,
-      type: 'radio',
-      name: 'view-mode',
-      disabled: viewMode.enabled ? undefined : '',
-    });
+    const inputEl = TreemapUtil.createChildOf(viewModeEl, 'input', 'view-mode__button');
+    inputEl.id = `view-mode--${viewMode.id}__label`;
+    inputEl.type = 'radio';
+    inputEl.name = 'view-mode';
+    inputEl.disabled = !viewMode.enabled;
 
-    const labelEl = TreemapUtil.createChildOf(viewModeEl, 'label', undefined, {
-      for: inputEl.id,
-    });
+    const labelEl = TreemapUtil.createChildOf(viewModeEl, 'label');
+    labelEl.htmlFor = inputEl.id;
     TreemapUtil.createChildOf(labelEl, 'span', 'view-mode__label').textContent = viewMode.label;
     TreemapUtil.createChildOf(labelEl, 'span', 'view-mode__sublabel lh-text-dim').textContent =
       ` (${viewMode.subLabel})`;

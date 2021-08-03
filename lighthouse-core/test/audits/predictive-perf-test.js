@@ -14,6 +14,7 @@ const acceptableDevToolsLog = require('../fixtures/traces/lcp-m78.devtools.log.j
 describe('Performance: predictive performance audit', () => {
   it('should compute the predicted values', async () => {
     const artifacts = {
+      GatherContext: {gatherMode: 'navigation'},
       traces: {
         [PredictivePerf.DEFAULT_PASS]: acceptableTrace,
       },

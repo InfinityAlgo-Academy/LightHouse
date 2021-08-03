@@ -26,7 +26,6 @@ describe('emulation', () => {
       driver = new Driver(connectionStub);
 
       connectionStub.sendCommand = createMockSendCommandFn()
-        .mockResponse('Network.enable')
         .mockResponse('Network.setUserAgentOverride')
         .mockResponse('Emulation.setDeviceMetricsOverride')
         .mockResponse('Emulation.setTouchEmulationEnabled');

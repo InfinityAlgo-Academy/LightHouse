@@ -17,12 +17,14 @@ const {
   throwInvalidArtifactDependency,
   assertArtifactTopologicalOrder,
 } = require('./validation.js');
-const {filterConfigByGatherMode} = require('./filters.js');
+const {filterConfigByGatherMode, filterConfigByExplicitFilters} = require('./filters.js');
 const {
   deepCloneConfigJson,
   resolveSettings,
   resolveAuditsToDefns,
   resolveGathererToDefn,
+  mergeConfigFragment,
+  mergeConfigFragmentArrayByKey,
 } = require('../../config/config-helpers.js');
 const defaultConfigPath = path.join(__dirname, './default-config.js');
 
@@ -54,12 +56,41 @@ function resolveWorkingCopy(configJSON, context) {
 }
 
 /**
+ * @param {LH.Config.Json} configJSON
+ * @return {LH.Config.Json}
+ */
+function resolveExtensions(configJSON) {
+  if (!configJSON.extends) return configJSON;
+
+  if (configJSON.extends !== 'lighthouse:default') {
+    throw new Error('`lighthouse:default` is the only valid extension method.');
+  }
+
+  const {artifacts, navigations, ...extensionJSON} = configJSON;
+  const defaultClone = deepCloneConfigJson(defaultConfig);
+  const mergedConfig = mergeConfigFragment(defaultClone, extensionJSON);
+
+  mergedConfig.artifacts = mergeConfigFragmentArrayByKey(
+    defaultClone.artifacts,
+    artifacts,
+    artifact => artifact.id
+  );
+  mergedConfig.navigations = mergeConfigFragmentArrayByKey(
+    defaultClone.navigations,
+    navigations,
+    navigation => navigation.id
+  );
+
+  return mergedConfig;
+}
+
+/**
  * Looks up the required artifact IDs for each dependency, throwing if no earlier artifact satisfies the dependency.
  *
  * @param {LH.Config.ArtifactJson} artifact
- * @param {LH.Config.FRGathererDefn} gatherer
- * @param {Map<Symbol, LH.Config.ArtifactDefn>} artifactDefnsBySymbol
- * @return {LH.Config.ArtifactDefn['dependencies']}
+ * @param {LH.Config.AnyFRGathererDefn} gatherer
+ * @param {Map<Symbol, LH.Config.AnyArtifactDefn>} artifactDefnsBySymbol
+ * @return {LH.Config.AnyArtifactDefn['dependencies']}
  */
 function resolveArtifactDependencies(artifact, gatherer, artifactDefnsBySymbol) {
   if (!('dependencies' in gatherer.instance.meta)) return undefined;
@@ -86,7 +117,7 @@ function resolveArtifactDependencies(artifact, gatherer, artifactDefnsBySymbol) 
  *
  * @param {LH.Config.ArtifactJson[]|null|undefined} artifacts
  * @param {string|undefined} configDir
- * @return {LH.Config.ArtifactDefn[] | null}
+ * @return {LH.Config.AnyArtifactDefn[] | null}
  */
 function resolveArtifactsToDefns(artifacts, configDir) {
   if (!artifacts) return null;
@@ -94,7 +125,7 @@ function resolveArtifactsToDefns(artifacts, configDir) {
   const status = {msg: 'Resolve artifact definitions', id: 'lh:config:resolveArtifactsToDefns'};
   log.time(status, 'verbose');
 
-  /** @type {Map<Symbol, LH.Config.ArtifactDefn>} */
+  /** @type {Map<Symbol, LH.Config.AnyArtifactDefn>} */
   const artifactDefnsBySymbol = new Map();
 
   const coreGathererList = Runner.getGathererList();
@@ -108,7 +139,9 @@ function resolveArtifactsToDefns(artifacts, configDir) {
       throw new Error(`${gatherer.instance.name} gatherer does not support Fraggle Rock`);
     }
 
-    /** @type {LH.Config.ArtifactDefn<LH.Gatherer.DependencyKey>} */
+    /** @type {LH.Config.AnyArtifactDefn} */
+    // @ts-expect-error - Typescript can't validate the gatherer and dependencies match
+    // even though it knows that they're each valid on their own.
     const artifact = {
       id: artifactJson.id,
       gatherer,
@@ -127,7 +160,7 @@ function resolveArtifactsToDefns(artifacts, configDir) {
 /**
  *
  * @param {LH.Config.NavigationJson[]|null|undefined} navigations
- * @param {LH.Config.ArtifactDefn[]|null|undefined} artifactDefns
+ * @param {LH.Config.AnyArtifactDefn[]|null|undefined} artifactDefns
  * @return {LH.Config.NavigationDefn[] | null}
  */
 function resolveNavigationsToDefns(navigations, artifactDefns) {
@@ -161,16 +194,17 @@ function resolveNavigationsToDefns(navigations, artifactDefns) {
 
 /**
  * @param {LH.Config.Json|undefined} configJSON
- * @param {{gatherMode: LH.Gatherer.GatherMode, configPath?: string, settingsOverrides?: LH.SharedFlagsSettings}} context
+ * @param {Omit<LH.Config.FRContext, 'gatherMode'> & {gatherMode: LH.Gatherer.GatherMode}} context
  * @return {{config: LH.Config.FRConfig, warnings: string[]}}
  */
 function initializeConfig(configJSON, context) {
   const status = {msg: 'Initialize config', id: 'lh:config'};
   log.time(status, 'verbose');
 
-  const {configWorkingCopy, configDir} = resolveWorkingCopy(configJSON, context);
+  let {configWorkingCopy, configDir} = resolveWorkingCopy(configJSON, context); // eslint-disable-line prefer-const
 
-  // TODO(FR-COMPAT): handle config extension
+  configWorkingCopy = resolveExtensions(configWorkingCopy);
+
   // TODO(FR-COMPAT): handle config plugins
 
   const settings = resolveSettings(configWorkingCopy.settings || {}, context.settingsOverrides);
@@ -190,10 +224,9 @@ function initializeConfig(configJSON, context) {
   // TODO(FR-COMPAT): validate navigations
   // TODO(FR-COMPAT): validate audits
   // TODO(FR-COMPAT): validate categories
-  // TODO(FR-COMPAT): filter config using onlyAudits/onlyCategories
-  // TODO(FR-COMPAT): always keep base/shared artifacts/audits (Stacks, FullPageScreenshot, etc)
 
   config = filterConfigByGatherMode(config, context.gatherMode);
+  config = filterConfigByExplicitFilters(config, settings);
 
   log.timeEnd(status);
   return {config, warnings: []};

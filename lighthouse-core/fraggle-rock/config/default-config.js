@@ -7,6 +7,29 @@
 
 const legacyDefaultConfig = require('../../config/default-config.js');
 
+/** @type {LH.Config.AuditJson[]} */
+const frAudits = [
+  'byte-efficiency/uses-responsive-images-snapshot',
+];
+
+/** @type {Record<string, LH.Config.AuditRefJson[]>} */
+const frCategoryAuditRefExtensions = {
+  'performance': [
+    {id: 'uses-responsive-images-snapshot', weight: 0, group: 'diagnostics'},
+  ],
+};
+
+/** @return {LH.Config.Json['categories']} */
+function mergeCategories() {
+  if (!legacyDefaultConfig.categories) return {};
+  const categories = legacyDefaultConfig.categories;
+  for (const key of Object.keys(frCategoryAuditRefExtensions)) {
+    if (!categories[key]) continue;
+    categories[key].auditRefs.push(...frCategoryAuditRefExtensions[key]);
+  }
+  return categories;
+}
+
 // Ensure all artifact IDs match the typedefs.
 /** @type {Record<keyof LH.FRArtifacts, string>} */
 const artifacts = {
@@ -24,7 +47,10 @@ const artifacts = {
   FontSize: '',
   FormElements: '',
   FullPageScreenshot: '',
+  GatherContext: '',
   GlobalListeners: '',
+  HostFormFactor: '',
+  HostUserAgent: '',
   IFrameElements: '',
   ImageElements: '',
   InstallabilityErrors: '',
@@ -38,6 +64,8 @@ const artifacts = {
   PasswordInputsWithPreventedPaste: '',
   ResponseCompression: '',
   RobotsTxt: '',
+  ServiceWorker: '',
+  ScriptElements: '',
   SourceMaps: '',
   Stacks: '',
   TagsBlockingFirstPaint: '',
@@ -57,6 +85,8 @@ for (const key of Object.keys(artifacts)) {
 const defaultConfig = {
   artifacts: [
     // Artifacts which can be depended on come first.
+    {id: artifacts.HostUserAgent, gatherer: 'host-user-agent'},
+    {id: artifacts.HostFormFactor, gatherer: 'host-form-factor'},
     {id: artifacts.DevtoolsLog, gatherer: 'devtools-log'},
     {id: artifacts.Trace, gatherer: 'trace'},
 
@@ -73,6 +103,7 @@ const defaultConfig = {
     {id: artifacts.FontSize, gatherer: 'seo/font-size'},
     {id: artifacts.FormElements, gatherer: 'form-elements'},
     {id: artifacts.FullPageScreenshot, gatherer: 'full-page-screenshot'},
+    {id: artifacts.GatherContext, gatherer: 'gather-context'},
     {id: artifacts.GlobalListeners, gatherer: 'global-listeners'},
     {id: artifacts.IFrameElements, gatherer: 'iframe-elements'},
     {id: artifacts.ImageElements, gatherer: 'image-elements'},
@@ -87,6 +118,8 @@ const defaultConfig = {
     {id: artifacts.PasswordInputsWithPreventedPaste, gatherer: 'dobetterweb/password-inputs-with-prevented-paste'},
     {id: artifacts.ResponseCompression, gatherer: 'dobetterweb/response-compression'},
     {id: artifacts.RobotsTxt, gatherer: 'seo/robots-txt'},
+    {id: artifacts.ServiceWorker, gatherer: 'service-worker'},
+    {id: artifacts.ScriptElements, gatherer: 'script-elements'},
     {id: artifacts.SourceMaps, gatherer: 'source-maps'},
     {id: artifacts.Stacks, gatherer: 'stacks'},
     {id: artifacts.TagsBlockingFirstPaint, gatherer: 'dobetterweb/tags-blocking-first-paint'},
@@ -109,6 +142,8 @@ const defaultConfig = {
       cpuQuietThresholdMs: 1000,
       artifacts: [
         // Artifacts which can be depended on come first.
+        artifacts.HostUserAgent,
+        artifacts.HostFormFactor,
         artifacts.DevtoolsLog,
         artifacts.Trace,
 
@@ -124,6 +159,7 @@ const defaultConfig = {
         artifacts.FontSize,
         artifacts.FormElements,
         artifacts.FullPageScreenshot,
+        artifacts.GatherContext,
         artifacts.GlobalListeners,
         artifacts.IFrameElements,
         artifacts.ImageElements,
@@ -138,6 +174,8 @@ const defaultConfig = {
         artifacts.PasswordInputsWithPreventedPaste,
         artifacts.ResponseCompression,
         artifacts.RobotsTxt,
+        artifacts.ServiceWorker,
+        artifacts.ScriptElements,
         artifacts.SourceMaps,
         artifacts.Stacks,
         artifacts.TagsBlockingFirstPaint,
@@ -153,8 +191,14 @@ const defaultConfig = {
     },
   ],
   settings: legacyDefaultConfig.settings,
-  audits: legacyDefaultConfig.audits,
-  categories: legacyDefaultConfig.categories,
+  audits: [
+    ...(legacyDefaultConfig.audits || []).map(audit => {
+      if (typeof audit === 'string') return {path: audit};
+      return audit;
+    }),
+    ...frAudits,
+  ],
+  categories: mergeCategories(),
   groups: legacyDefaultConfig.groups,
 };
 

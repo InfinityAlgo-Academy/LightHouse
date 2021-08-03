@@ -23,8 +23,6 @@ const NO_CPU_THROTTLE_METRICS = {
  */
 async function emulate(session, settings) {
   if (settings.emulatedUserAgent !== false) {
-    // Network.enable must be called for UA overriding to work
-    await session.sendCommand('Network.enable');
     await session.sendCommand('Network.setUserAgentOverride', {
       userAgent: /** @type {string} */ (settings.emulatedUserAgent),
     });

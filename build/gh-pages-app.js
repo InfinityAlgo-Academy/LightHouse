@@ -7,14 +7,14 @@
 
 const fs = require('fs');
 const path = require('path');
-
 const cpy = require('cpy');
 const ghPages = require('gh-pages');
 const glob = require('glob');
 const lighthousePackage = require('../package.json');
 const terser = require('terser');
+const {LH_ROOT} = require('../root.js');
 
-const ghPagesDistDir = `${__dirname}/../dist/gh-pages`;
+const ghPagesDistDir = `${LH_ROOT}/dist/gh-pages`;
 
 const license = `/*
 * @license Copyright 2020 The Lighthouse Authors. All Rights Reserved.
@@ -80,6 +80,7 @@ class GhPagesApp {
   }
 
   async build() {
+    fs.mkdirSync(this.distDir, {recursive: true}); // Ensure dist is present, else rmdir will throw. COMPAT: when dropping Node 12, replace with fs.rm(p, {force: true})
     fs.rmdirSync(this.distDir, {recursive: true});
 
     const html = this._compileHtml();

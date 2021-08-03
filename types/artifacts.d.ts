@@ -24,8 +24,6 @@ declare global {
       | 'HTTPRedirect'
       | 'Manifest'
       | 'MixedContent'
-      | 'ScriptElements'
-      | 'ServiceWorker'
       | keyof FRBaseArtifacts
     >;
 
@@ -46,10 +44,6 @@ declare global {
       fetchTime: string;
       /** A set of warnings about unexpected things encountered while loading and testing the page. */
       LighthouseRunWarnings: Array<string | IcuMessage>;
-      /** Device which Chrome is running on. */
-      HostFormFactor: 'desktop'|'mobile';
-      /** The user agent string of the version of Chrome used. */
-      HostUserAgent: string;
       /** The benchmark index that indicates rough device class. */
       BenchmarkIndex: number;
       /** An object containing information about the testing configuration used by Lighthouse. */
@@ -72,6 +66,10 @@ declare global {
      * The set of base artifacts that were replaced by standard gatherers in Fraggle Rock.
      */
     export interface LegacyBaseArtifacts {
+      /** Device which Chrome is running on. */
+      HostFormFactor: 'desktop'|'mobile';
+      /** The user agent string of the version of Chrome used. */
+      HostUserAgent: string;
       /** The user agent string that Lighthouse used to load the page. Set to the empty string if unknown. */
       NetworkUserAgent: string;
       /** Information on detected tech stacks (e.g. JS libraries) used by the page. */
@@ -114,7 +112,7 @@ declare global {
      * Artifacts provided by the default gatherers. Augment this interface when adding additional
      * gatherers. Changes to these artifacts are not considered a breaking Lighthouse change.
      */
-    export interface GathererArtifacts extends PublicGathererArtifacts {
+    export interface GathererArtifacts extends PublicGathererArtifacts,LegacyBaseArtifacts {
       /** The results of running the aXe accessibility tests on the page. */
       Accessibility: Artifacts.Accessibility;
       /** Array of all anchors on the page. */
@@ -142,6 +140,8 @@ declare global {
       FormElements: Artifacts.Form[];
       /** Screenshot of the entire page (rather than just the above the fold content). */
       FullPageScreenshot: Artifacts.FullPageScreenshot | null;
+      /** Information about how Lighthouse artifacts were gathered. */
+      GatherContext: {gatherMode: LH.Gatherer.GatherMode};
       /** Information about event listeners registered on the global object. */
       GlobalListeners: Array<Artifacts.GlobalListener>;
       /** Whether the page ended up on an HTTPS page after attempting to load the HTTP version. */
@@ -612,12 +612,18 @@ declare global {
         devtoolsLog: DevtoolsLog;
         trace: Trace;
         settings: Immutable<Config.Settings>;
+        gatherContext: Artifacts['GatherContext'];
         simulator?: LanternSimulator;
       }
 
       export interface MetricComputationData extends MetricComputationDataInput {
         networkRecords: Array<Artifacts.NetworkRequest>;
-        traceOfTab: TraceOfTab;
+        processedTrace: ProcessedTrace;
+        processedNavigation?: ProcessedNavigation;
+      }
+
+      export interface NavigationMetricComputationData extends MetricComputationData {
+        processedNavigation: ProcessedNavigation;
       }
 
       export interface Metric {
@@ -645,6 +651,11 @@ declare global {
 
       export interface TraceTimes {
         timeOrigin: number;
+        traceEnd: number;
+      }
+
+      export interface NavigationTraceTimes {
+        timeOrigin: number;
         firstPaint?: number;
         firstContentfulPaint: number;
         firstContentfulPaintAllFrames: number;
@@ -656,23 +667,32 @@ declare global {
         domContentLoaded?: number;
       }
 
-      export interface TraceOfTab {
-        /** The raw timestamps of key metric events, in microseconds. */
+      export interface ProcessedTrace {
+        /** The raw timestamps of key events, in microseconds. */
         timestamps: TraceTimes;
-        /** The relative times from navigationStart to key metric events, in milliseconds. */
+        /** The relative times from timeOrigin to key events, in milliseconds. */
         timings: TraceTimes;
         /** The subset of trace events from the page's process, sorted by timestamp. */
         processEvents: Array<TraceEvent>;
         /** The subset of trace events from the page's main thread, sorted by timestamp. */
         mainThreadEvents: Array<TraceEvent>;
+        /** The subset of trace events from the main frame, sorted by timestamp. */
+        frameEvents: Array<TraceEvent>;
         /** The subset of trace events from the main frame and any child frames, sorted by timestamp. */
         frameTreeEvents: Array<TraceEvent>;
         /** IDs for the trace's main frame, process, and thread. */
         mainFrameIds: {pid: number, tid: number, frameId: string};
         /** The list of frames committed in the trace. */
         frames: Array<{id: string, url: string}>;
-        /** The trace event marking the time at which the page load should consider to have begun. Typically the same as the navigationStart but might differ due to SPA navigations, client-side redirects, etc. */
+        /** The trace event marking the time at which the run should consider to have begun. Typically the same as the navigationStart but might differ due to SPA navigations, client-side redirects, etc. In the FR timespan case, this event is injected by Lighthouse itself. */
         timeOriginEvt: TraceEvent;
+      }
+
+      export interface ProcessedNavigation {
+        /** The raw timestamps of key metric events, in microseconds. */
+        timestamps: NavigationTraceTimes;
+        /** The relative times from navigationStart to key metric events, in milliseconds. */
+        timings: NavigationTraceTimes;
         /** The trace event marking firstPaint, if it was found. */
         firstPaintEvt?: TraceEvent;
         /** The trace event marking firstContentfulPaint, if it was found. */
@@ -723,11 +743,11 @@ declare global {
       }
 
       export interface TimingSummary {
-        firstContentfulPaint: number;
+        firstContentfulPaint: number | undefined;
         firstContentfulPaintTs: number | undefined;
         firstContentfulPaintAllFrames: number | undefined;
         firstContentfulPaintAllFramesTs: number | undefined;
-        firstMeaningfulPaint: number;
+        firstMeaningfulPaint: number | undefined;
         firstMeaningfulPaintTs: number | undefined;
         largestContentfulPaint: number | undefined;
         largestContentfulPaintTs: number | undefined;
@@ -741,20 +761,20 @@ declare global {
         cumulativeLayoutShift: number | undefined;
         cumulativeLayoutShiftMainFrame: number | undefined;
         totalCumulativeLayoutShift: number | undefined;
-        totalBlockingTime: number;
+        totalBlockingTime: number | undefined;
         observedTimeOrigin: number;
         observedTimeOriginTs: number;
-        observedNavigationStart: number;
-        observedNavigationStartTs: number;
+        observedNavigationStart: number | undefined;
+        observedNavigationStartTs: number | undefined;
         observedCumulativeLayoutShift: number | undefined;
         observedCumulativeLayoutShiftMainFrame: number | undefined;
         observedTotalCumulativeLayoutShift: number | undefined;
         observedFirstPaint: number | undefined;
         observedFirstPaintTs: number | undefined;
-        observedFirstContentfulPaint: number;
-        observedFirstContentfulPaintTs: number;
-        observedFirstContentfulPaintAllFrames: number;
-        observedFirstContentfulPaintAllFramesTs: number;
+        observedFirstContentfulPaint: number | undefined;
+        observedFirstContentfulPaintTs: number | undefined;
+        observedFirstContentfulPaintAllFrames: number | undefined;
+        observedFirstContentfulPaintAllFramesTs: number | undefined;
         observedFirstMeaningfulPaint: number | undefined;
         observedFirstMeaningfulPaintTs: number | undefined;
         observedLargestContentfulPaint: number | undefined;

@@ -111,17 +111,14 @@ any substantial improvement to your lab metrics should be observable in the
 field once it's been deployed. The higher the Lighthouse score, the less you're
 leaving up to chance in the field.
 
-### What blindspots from the field does lab tooling illuminate?
+### What blindspots from the field can lab tooling illuminate?
 
-Field data analyzes all successful page loads. Lab tooling analyzes the
-experience of a fixed configuration for a hypothetical user. If every potential
-user in the world successfully loaded an equal number of pages on your site, we
-might not need to focus on the experience of a hypothetical one, but in reality
-we know this isn't the case. Users who have better experiences use your site
-more; that's why we care about performance in the first place! Lab tooling shows
-you the quality of the experience for these hypothetical users that field data
-might be [missing
-entirely](https://blog.chriszacharias.com/page-weight-matters).
+Field data analyzes all successful page loads. But if failed and aborted loads
+are excluded, or reporting is blocked by extensions, the collected field data
+can suffer from survivorship bias. Users who have better experiences use your
+site more; that's why we care about performance in the first place! Lab tooling
+shows you the quality of the experience for these users that field data might be
+[missing entirely](https://blog.chriszacharias.com/page-weight-matters).
 
 Lighthouse mobile reports emulate a slow 4G connection on a mid-tier Android
 device. While field data might not indicate these conditions are especially
@@ -129,6 +126,9 @@ common for your site, analyzing how your site performs in these tougher
 conditions helps expand your site's audience. Lighthouse identifies the worst
 experiences, experiences you can't see in the field because they were so bad the
 user never came back (or waited around in the first place).
+
+As always, using both lab and field data to understand and optimize your user
+experience is best practice. [Read more about field & lab](https://developers.google.com/web/fundamentals/performance/speed-tools).
 
 ### How should I work to optimize CLS differently given that it has been updated?
 

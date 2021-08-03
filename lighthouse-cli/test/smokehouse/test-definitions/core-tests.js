@@ -5,14 +5,37 @@
  */
 'use strict';
 
+const errors = require('./errors/error-expectations.js');
+const pwa = require('./pwa/pwa-expectations.js');
+const pwa2 = require('./pwa/pwa2-expectations.js');
+const redirects = require('./redirects/expectations.js');
+const seo = require('./seo/expectations.js');
+const offline = require('./offline-local/offline-expectations.js');
+const byte = require('./byte-efficiency/expectations.js');
+const perf = require('./perf/expectations.js');
+const diagnostics = require('./perf-diagnostics/expectations.js');
+const lantern = require('./lantern/lantern-expectations.js');
+const metrics = require('./tricky-metrics/expectations.js');
+const csp = require('./csp/csp-expectations.js');
+
 /** @type {ReadonlyArray<Smokehouse.TestDfn>} */
 const smokeTests = [{
   id: 'a11y',
   expectations: require('./a11y/expectations.js'),
   config: require('./a11y/a11y-config.js'),
 }, {
-  id: 'errors',
-  expectations: require('./errors/error-expectations.js'),
+  id: 'errors-infinite-loop',
+  expectations: errors.infiniteLoop,
+  config: require('./errors/error-config.js'),
+  runSerially: true,
+}, {
+  id: 'errors-expired-ssl',
+  expectations: errors.expiredSsl,
+  config: require('./errors/error-config.js'),
+  runSerially: true,
+}, {
+  id: 'errors-iframe-expired-ssl',
+  expectations: errors.iframeBadSsl,
   config: require('./errors/error-config.js'),
   runSerially: true,
 }, {
@@ -20,16 +43,24 @@ const smokeTests = [{
   expectations: require('./oopif/oopif-expectations.js'),
   config: require('./oopif/oopif-config.js'),
 }, {
-  id: 'pwa',
-  expectations: require('./pwa/pwa-expectations.js'),
+  id: 'pwa-airhorner',
+  expectations: pwa.airhorner,
   config: require('./pwa/pwa-config.js'),
 }, {
-  id: 'pwa2',
-  expectations: require('./pwa/pwa2-expectations.js'),
+  id: 'pwa-chromestatus',
+  expectations: pwa.chromestatus,
   config: require('./pwa/pwa-config.js'),
 }, {
-  id: 'pwa3',
-  expectations: require('./pwa/pwa3-expectations.js'),
+  id: 'pwa-svgomg',
+  expectations: pwa2.svgomg,
+  config: require('./pwa/pwa-config.js'),
+}, {
+  id: 'pwa-caltrain',
+  expectations: pwa2.caltrain,
+  config: require('./pwa/pwa-config.js'),
+}, {
+  id: 'pwa-rocks',
+  expectations: require('./pwa/pwa3-expectations.js').pwarocks,
   config: require('./pwa/pwa-config.js'),
 }, {
   id: 'dbw',
@@ -37,39 +68,154 @@ const smokeTests = [{
   config: require('./dobetterweb/dbw-config.js'),
   runSerially: true, // Need access to network request assertions.
 }, {
-  id: 'redirects',
-  expectations: require('./redirects/expectations.js'),
+  id: 'issues-mixed-content',
+  expectations: require('./issues/mixed-content.js'),
+}, {
+  id: 'redirects-single-server',
+  expectations: redirects.singleServer,
   config: require('./redirects/redirects-config.js'),
 }, {
-  id: 'seo',
-  expectations: require('./seo/expectations.js'),
+  id: 'redirects-multiple-server',
+  expectations: redirects.multipleServer,
+  config: require('./redirects/redirects-config.js'),
+}, {
+  id: 'redirects-client-paint-server',
+  expectations: redirects.clientPaintServer,
+  config: require('./redirects/redirects-config.js'),
+}, {
+  id: 'redirects-single-client',
+  expectations: redirects.singleClient,
+  config: require('./redirects/redirects-config.js'),
+}, {
+  id: 'redirects-history-push-state',
+  expectations: redirects.historyPushState,
+  config: require('./redirects/redirects-config.js'),
+}, {
+  id: 'seo-passing',
+  expectations: seo.passing,
   config: require('./seo/seo-config.js'),
 }, {
-  id: 'offline',
-  expectations: require('./offline-local/offline-expectations.js'),
+  id: 'seo-failing',
+  expectations: seo.failing,
+  config: require('./seo/seo-config.js'),
+}, {
+  id: 'seo-status-403',
+  expectations: seo.status403,
+  config: require('./seo/seo-config.js'),
+}, {
+  id: 'seo-tap-targets',
+  expectations: seo.tapTargets,
+  config: require('./seo/seo-config.js'),
+}, {
+  id: 'offline-online-only',
+  expectations: offline.onlineOnly,
   config: require('./offline-local/offline-config.js'),
   runSerially: true,
 }, {
-  id: 'byte',
-  expectations: require('./byte-efficiency/expectations.js'),
+  id: 'offline-ready',
+  expectations: offline.ready,
+  config: require('./offline-local/offline-config.js'),
+  runSerially: true,
+}, {
+  id: 'offline-sw-broken',
+  expectations: offline.swBroken,
+  config: require('./offline-local/offline-config.js'),
+  runSerially: true,
+}, {
+  id: 'offline-sw-slow',
+  expectations: offline.swSlow,
+  config: require('./offline-local/offline-config.js'),
+  runSerially: true,
+}, {
+  id: 'byte-efficiency',
+  expectations: byte.efficiency,
   config: require('./byte-efficiency/byte-config.js'),
   runSerially: true,
 }, {
-  id: 'perf',
-  expectations: require('./perf/expectations.js'),
+  id: 'byte-gzip',
+  expectations: byte.gzip,
+  config: require('./byte-efficiency/byte-config.js'),
+  runSerially: true,
+}, {
+  id: 'perf-preload',
+  expectations: perf.preload,
   config: require('./perf/perf-config.js'),
   runSerially: true,
 }, {
-  id: 'perf-diagnostics',
-  expectations: require('./perf-diagnostics/expectations.js'),
+  id: 'perf-budgets',
+  expectations: perf.budgets,
+  config: require('./perf/perf-config.js'),
+  runSerially: true,
+}, {
+  id: 'perf-fonts',
+  expectations: perf.fonts,
+  config: require('./perf/perf-config.js'),
+  runSerially: true,
+}, {
+  id: 'perf-trace-elements',
+  expectations: perf.traceElements,
+  config: require('./perf/perf-config.js'),
+  runSerially: true,
+}, {
+  id: 'perf-frame-metrics',
+  expectations: perf.frameMetrics,
+  config: require('./perf/perf-config.js'),
+  runSerially: true,
+}, {
+  id: 'perf-diagnostics-animations',
+  expectations: diagnostics.animations,
   config: require('./perf-diagnostics/perf-diagnostics-config.js'),
 }, {
-  id: 'lantern',
-  expectations: require('./lantern/lantern-expectations.js'),
+  id: 'perf-diagnostics-third-party',
+  expectations: diagnostics.thirdParty,
+  config: require('./perf-diagnostics/perf-diagnostics-config.js'),
+}, {
+  id: 'perf-diagnostics-unsized-images',
+  expectations: diagnostics.unsizedImages,
+  config: require('./perf-diagnostics/perf-diagnostics-config.js'),
+}, {
+  id: 'lantern-online',
+  expectations: lantern.online,
   config: require('./lantern/lantern-config.js'),
 }, {
-  id: 'metrics',
-  expectations: require('./tricky-metrics/expectations.js'),
+  id: 'lantern-settimeout',
+  expectations: lantern.setTimeout,
+  config: require('./lantern/lantern-config.js'),
+}, {
+  id: 'lantern-fetch',
+  expectations: lantern.fetch,
+  config: require('./lantern/lantern-config.js'),
+}, {
+  id: 'lantern-xhr',
+  expectations: lantern.xhr,
+  config: require('./lantern/lantern-config.js'),
+}, {
+  id: 'lantern-idle-callback-short',
+  expectations: lantern.idleCallbackShort,
+  config: require('./lantern/lantern-config.js'),
+}, {
+  id: 'lantern-idle-callback-long',
+  expectations: lantern.idleCallbackLong,
+  config: require('./lantern/lantern-config.js'),
+}, {
+  id: 'metrics-tricky-tti',
+  expectations: metrics.trickyTti,
+  config: require('./tricky-metrics/no-throttling-config.js'),
+}, {
+  id: 'metrics-tricky-tti-late-fcp',
+  expectations: metrics.trickyTtiLateFcp,
+  config: require('./tricky-metrics/no-throttling-config.js'),
+}, {
+  id: 'metrics-delayed-lcp',
+  expectations: metrics.delayedLcp,
+  config: require('./tricky-metrics/no-throttling-config.js'),
+}, {
+  id: 'metrics-delayed-fcp',
+  expectations: metrics.delayedFcp,
+  config: require('./tricky-metrics/no-throttling-config.js'),
+}, {
+  id: 'metrics-debugger',
+  expectations: metrics.debuggerStatement,
   config: require('./tricky-metrics/no-throttling-config.js'),
 }, {
   id: 'legacy-javascript',
@@ -89,8 +235,16 @@ const smokeTests = [{
   expectations: require('./screenshot/expectations.js'),
   config: require('./screenshot/screenshot-config.js'),
 }, {
-  id: 'csp',
-  expectations: require('./csp/csp-expectations.js'),
+  id: 'csp-allow-all',
+  expectations: csp.allowAll,
+  config: require('./csp/csp-config.js'),
+}, {
+  id: 'csp-block-all-m91',
+  expectations: csp.blockAllM91,
+  config: require('./csp/csp-config.js'),
+}, {
+  id: 'csp-block-all',
+  expectations: csp.blockAll,
   config: require('./csp/csp-config.js'),
 }];
 

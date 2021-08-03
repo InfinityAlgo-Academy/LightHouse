@@ -334,15 +334,6 @@ function reportAssertion(localConsole, assertion) {
 }
 
 /**
- * @param {number} count
- * @return {string}
- */
-function assertLogString(count) {
-  const plural = count === 1 ? '' : 's';
-  return `${count} assertion${plural}`;
-}
-
-/**
  * Log all the comparisons between actual and expected test results, then print
  * summary. Returns count of passed and failed tests.
  * @param {{lhr: LH.Result, artifacts: LH.Artifacts, networkRequests?: string[]}} actual
@@ -370,17 +361,6 @@ function report(actual, expected, reportOptions = {}) {
       reportAssertion(localConsole, assertion);
     }
   });
-
-  const correctStr = assertLogString(correctCount);
-  const colorFn = correctCount === 0 ? log.redify : log.greenify;
-  localConsole.log(`  Correctly passed ${colorFn(correctStr)}`);
-
-  if (failedCount) {
-    const failedString = assertLogString(failedCount);
-    const failedColorFn = failedCount === 0 ? log.greenify : log.redify;
-    localConsole.log(`  Failed ${failedColorFn(failedString)}`);
-  }
-  localConsole.write('\n');
 
   return {
     passed: correctCount,

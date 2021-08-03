@@ -9,9 +9,8 @@ const makeComputedArtifact = require('./computed-artifact.js');
 const NetworkRecords = require('./network-records.js');
 const URL = require('../lib/url-shim.js');
 const NetworkRequest = require('../lib/network-request.js');
-const MainResource = require('./main-resource.js');
 const Budget = require('../config/budget.js');
-const Util = require('../report/html/renderer/util.js');
+const Util = require('../util-commonjs.js');
 
 /** @typedef {{count: number, resourceSize: number, transferSize: number}} ResourceEntry */
 
@@ -107,11 +106,8 @@ class ResourceSummary {
    * @return {Promise<Record<LH.Budget.ResourceType,ResourceEntry>>}
    */
   static async compute_(data, context) {
-    const [networkRecords, mainResource] = await Promise.all([
-      NetworkRecords.request(data.devtoolsLog, context),
-      MainResource.request({devtoolsLog: data.devtoolsLog, URL: data.URL}, context),
-    ]);
-    return ResourceSummary.summarize(networkRecords, mainResource.url, data.budgets);
+    const networkRecords = await NetworkRecords.request(data.devtoolsLog, context);
+    return ResourceSummary.summarize(networkRecords, data.URL.finalUrl, data.budgets);
   }
 }
 

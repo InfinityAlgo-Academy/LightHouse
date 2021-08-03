@@ -13,10 +13,12 @@ const devtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.
 
 /* eslint-env jest */
 describe('Metrics: Lantern Speed Index', () => {
+  const gatherContext = {gatherMode: 'navigation'};
   it('should compute predicted value', async () => {
     const settings = {throttlingMethod: 'simulate', throttling: defaultThrottling};
     const context = {settings, computedCache: new Map()};
-    const result = await LanternSpeedIndex.request({trace, devtoolsLog, settings}, context);
+    const result = await LanternSpeedIndex.request({trace, devtoolsLog, gatherContext, settings},
+      context);
 
     expect({
       timing: Math.round(result.timing),
@@ -34,7 +36,8 @@ describe('Metrics: Lantern Speed Index', () => {
   it('should compute predicted value for different settings', async () => {
     const settings = {throttlingMethod: 'simulate', throttling: {...defaultThrottling, rttMs: 300}};
     const context = {settings, computedCache: new Map()};
-    const result = await LanternSpeedIndex.request({trace, devtoolsLog, settings}, context);
+    const result = await LanternSpeedIndex.request({trace, devtoolsLog, gatherContext, settings},
+      context);
 
     expect({
       timing: Math.round(result.timing),

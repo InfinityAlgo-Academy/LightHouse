@@ -12,13 +12,18 @@
 const fs = require('fs');
 const puppeteer = require('puppeteer');
 const {server} = require('../../lighthouse-cli/test/fixtures/static-server.js');
-const portNumber = 10200;
+const portNumber = 20202;
 const treemapUrl = `http://localhost:${portNumber}/dist/gh-pages/treemap/index.html`;
 const debugOptions = require('../app/debug.json');
 
 // These tests run in Chromium and have their own timeouts.
 // Make sure we get the more helpful test-specific timeout error instead of jest's generic one.
 jest.setTimeout(35_000);
+
+function getTextEncodingCode() {
+  const code = fs.readFileSync(require.resolve('../../report/renderer/text-encoding.js'), 'utf-8');
+  return code.replace('export ', '');
+}
 
 describe('Lighthouse Treemap', () => {
   // eslint-disable-next-line no-console
@@ -37,7 +42,7 @@ describe('Lighthouse Treemap', () => {
 
   afterAll(async function() {
     await Promise.all([
-      new Promise(resolve => server.close(resolve)),
+      server.close(),
       browser && browser.close(),
     ]);
   });
@@ -110,8 +115,7 @@ describe('Lighthouse Treemap', () => {
       options.lhr.requestedUrl += '😃😃😃';
       const json = JSON.stringify(options);
       const encoded = await page.evaluate(`
-        ${fs.readFileSync(
-          require.resolve('../../lighthouse-core/report/html/renderer/text-encoding.js'), 'utf-8')}
+        ${getTextEncodingCode()}
         TextEncoding.toBase64(${JSON.stringify(json)}, {gzip: true});
       `);
 
@@ -128,8 +132,7 @@ describe('Lighthouse Treemap', () => {
       options.lhr.requestedUrl += '😃😃😃';
       const json = JSON.stringify(options);
       const encoded = await page.evaluate(`
-        ${fs.readFileSync(
-          require.resolve('../../lighthouse-core/report/html/renderer/text-encoding.js'), 'utf-8')}
+        ${getTextEncodingCode()}
         TextEncoding.toBase64(${JSON.stringify(json)}, {gzip: false});
       `);
 
@@ -139,6 +142,51 @@ describe('Lighthouse Treemap', () => {
 
       const optionsInPage = await page.evaluate(() => window.__treemapOptions);
       expect(optionsInPage.lhr.requestedUrl).toBe(options.lhr.requestedUrl);
+    });
+  });
+
+  describe('renders correctly', () => {
+    it('correctly shades coverage of gtm node', async () => {
+      await page.goto(`${treemapUrl}?debug`, {
+        waitUntil: 'networkidle0',
+        timeout: 30000,
+      });
+
+      await page.click('#view-mode--unused-bytes');
+      await page.waitForSelector('.lh-treemap--view-mode--unused-bytes');
+
+      // Identify the JS data.
+      const gtmNode = await page.evaluate(() => {
+        const d1Nodes = window.__treemapOptions.lhr.audits['script-treemap-data'].details.nodes;
+        const gtmNode = d1Nodes.find(n => n.name.includes('gtm.js'));
+        return gtmNode;
+      });
+
+      expect(gtmNode.unusedBytes).toBeGreaterThan(20_000);
+      expect(gtmNode.resourceBytes).toBeGreaterThan(20_000);
+
+      // Identify the DOM node.
+      const gtmElemHandle = await page.evaluateHandle(() => {
+        const captionEls = Array.from(document.querySelectorAll('.webtreemap-caption'));
+        return captionEls.find(el => el.textContent.includes('gtm.js')).parentElement;
+      });
+
+      expect(await gtmElemHandle.isIntersectingViewport()).toBeTruthy();
+
+      // Determine visual red shading percentage.
+      const percentRed = await gtmElemHandle.evaluate(node => {
+        const redWidthPx = parseInt(window.getComputedStyle(node, ':before').width);
+        const completeWidthPx = node.getBoundingClientRect().width;
+        return redWidthPx / completeWidthPx;
+      });
+
+      // Reminder! UNUSED == RED
+      const percentDataUnused = gtmNode.unusedBytes / gtmNode.resourceBytes;
+      expect(percentDataUnused).toBeGreaterThan(0);
+
+      // Assert 0.2520 ~= 0.2602 w/ 1 decimal place of precision.
+      // CSS pixels won't let us go to 2 decimal places.
+      expect(percentRed).toBeApproximately(percentDataUnused, 1);
     });
   });
 });

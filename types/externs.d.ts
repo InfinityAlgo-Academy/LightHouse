@@ -257,6 +257,8 @@ declare global {
       quiet: boolean;
       /** A flag to print the normalized config for the given config and options, then exit. */
       printConfig: boolean;
+      /** Use the new Fraggle Rock navigation runner to gather CLI results. */
+      fraggleRock: boolean;
       /** Path to the file where precomputed lantern data should be read from. */
       precomputedLanternDataPath?: string;
       /** Path to the file where precomputed lantern data should be written to. */
@@ -317,6 +319,7 @@ declare global {
       args: {
         fileName?: string;
         snapshot?: string;
+        sync_id?: string;
         beginData?: {
           frame?: string;
           startLine?: number;
@@ -414,7 +417,7 @@ declare global {
 
   // Stricter querySelector/querySelectorAll using typed-query-selector.
   interface ParentNode {
-    querySelector<S extends string>(selector: S): QuerySelectorParse<S>;
+    querySelector<S extends string>(selector: S): QuerySelectorParse<S> | null;
     querySelectorAll<S extends string>(selector: S): NodeListOf<QuerySelectorParse<S>>;
   }
 }

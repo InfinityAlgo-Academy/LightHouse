@@ -273,7 +273,6 @@ header {
   align-items: center;
   justify-content: center;
   color: #555;
-  font-weight: 300;
 }
 .treemap-placeholder-inner {
   display: flex;

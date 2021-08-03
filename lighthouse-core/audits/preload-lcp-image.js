@@ -32,7 +32,9 @@ class PreloadLCPImageAudit extends Audit {
       id: 'preload-lcp-image',
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['traces', 'devtoolsLogs', 'URL', 'TraceElements', 'ImageElements'],
+      supportedModes: ['navigation'],
+      requiredArtifacts: ['traces', 'devtoolsLogs', 'GatherContext', 'URL', 'TraceElements',
+        'ImageElements'],
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
     };
   }
@@ -194,18 +196,19 @@ class PreloadLCPImageAudit extends Audit {
    * @param {LH.Audit.Context} context
    * @return {Promise<LH.Audit.Product>}
    */
-  static async audit(artifacts, context) {
+  static async audit_(artifacts, context) {
+    const gatherContext = artifacts.GatherContext;
     const trace = artifacts.traces[PreloadLCPImageAudit.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[PreloadLCPImageAudit.DEFAULT_PASS];
     const URL = artifacts.URL;
-    const simulatorOptions = {trace, devtoolsLog, settings: context.settings};
+    const metricData = {trace, devtoolsLog, gatherContext, settings: context.settings};
     const lcpElement = artifacts.TraceElements
       .find(element => element.traceEventType === 'largest-contentful-paint');
 
     const [mainResource, lanternLCP, simulator] = await Promise.all([
       MainResource.request({devtoolsLog, URL}, context),
-      LanternLCP.request(simulatorOptions, context),
-      LoadSimulator.request(simulatorOptions, context),
+      LanternLCP.request(metricData, context),
+      LoadSimulator.request({devtoolsLog, settings: context.settings}, context),
     ]);
 
     const graph = lanternLCP.pessimisticGraph;
@@ -230,6 +233,16 @@ class PreloadLCPImageAudit extends Audit {
       displayValue: wastedMs ? str_(i18n.UIStrings.displayValueMsSavings, {wastedMs}) : '',
       details,
     };
+  }
+
+  /**
+   * @return {Promise<LH.Audit.Product>}
+   */
+  static async audit() {
+    // Preload advice is dangerous until https://bugs.chromium.org/p/chromium/issues/detail?id=788757
+    // has been fixed and validated. All preload audits are on hold until then.
+    // See https://github.com/GoogleChrome/lighthouse/issues/11960 for more discussion.
+    return {score: 1, notApplicable: true, details: Audit.makeOpportunityDetails([], [], 0)};
   }
 }
 

@@ -378,9 +378,9 @@ function isPositionFixed(element) {
 /**
  * Generate a human-readable label for the given element, based on end-user facing
  * strings like the innerText or alt attribute.
- * Falls back to the tagName if no useful label is found.
+ * Returns label string or null if no useful label is found.
  * @param {Element} element
- * @return {string}
+ * @return {string | null}
  */
 function getNodeLabel(element) {
   // Inline so that audits that import getNodeLabel don't
@@ -415,7 +415,7 @@ function getNodeLabel(element) {
       }
     }
   }
-  return tagName;
+  return null;
 }
 
 /**
@@ -482,6 +482,7 @@ function getNodeDetails(element) {
   }
 
   element = element instanceof ShadowRoot ? element.host : element;
+  const selector = getNodeSelector(element);
 
   // Create an id that will be unique across all execution contexts.
   // The id could be any arbitrary string, the exact value is not important.
@@ -505,10 +506,10 @@ function getNodeDetails(element) {
   const details = {
     lhId,
     devtoolsNodePath: getNodePath(element),
-    selector: getNodeSelector(element),
+    selector: selector,
     boundingRect: getBoundingClientRect(element),
     snippet: getOuterHTMLSnippet(element),
-    nodeLabel: getNodeLabel(element),
+    nodeLabel: getNodeLabel(element) || selector,
   };
 
   return details;

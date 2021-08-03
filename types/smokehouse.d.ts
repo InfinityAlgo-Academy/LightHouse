@@ -18,24 +18,38 @@
 
   export type ExpectedRunnerResult = {
     lhr: ExpectedLHR,
-    artifacts?: Partial<Record<keyof LH.Artifacts, any>>
+    artifacts?: Partial<Record<keyof LH.Artifacts|'_maxChromiumMilestone'|'_minChromiumMilestone', any>>
     networkRequests?: {length: number};
   }
 
   export interface TestDfn {
+    /** Identification of test. Can be used for group selection (e.g. `yarn smoke pwa` will run all tests with `id.includes('pwa')`). */
     id: string;
-    expectations: ExpectedRunnerResult[];
+    /** Expected test results. */
+    expectations: ExpectedRunnerResult;
+    /** An optional custom config. If none is present, uses the default Lighthouse config. */
     config?: LH.Config.Json;
     /** If test is performance sensitive, set to true so that it won't be run parallel to other tests. */
     runSerially?: boolean;
   }
 
+  /**
+   * A TestDefn type that's compatible with the old array of `expectations` type and the current TestDefn type.
+   * COMPAT: remove when no long needed.
+   * @deprecated
+   */
+  export type BackCompatTestDefn =
+    Omit<Smokehouse.TestDfn, 'expectations'> &
+    {expectations: Smokehouse.ExpectedRunnerResult | Array<Smokehouse.ExpectedRunnerResult>}
+
   export type LighthouseRunner =
-    (url: string, configJson?: LH.Config.Json, runnerOptions?: {isDebug?: boolean}) => Promise<{lhr: LH.Result, artifacts: LH.Artifacts, log: string}>;
+    (url: string, configJson?: LH.Config.Json, runnerOptions?: {isDebug?: boolean; useFraggleRock?: boolean}) => Promise<{lhr: LH.Result, artifacts: LH.Artifacts, log: string}>;
 
   export interface SmokehouseOptions {
     /** If true, performs extra logging from the test runs. */
     isDebug?: boolean;
+    /** If true, uses the new Fraggle Rock runner. */
+    useFraggleRock?: boolean;
     /** Manually set the number of jobs to run at once. `1` runs all tests serially. */
     jobs?: number;
     /** The number of times to retry failing tests before accepting. Defaults to 0. */

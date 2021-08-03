@@ -16,6 +16,7 @@ const pwaDevtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtoo
 describe('Performance: first-contentful-paint-3g audit', () => {
   it('evaluates valid input correctly', async () => {
     const artifacts = {
+      GatherContext: {gatherMode: 'navigation'},
       traces: {
         [FCP3G.DEFAULT_PASS]: pwaTrace,
       },

@@ -11,7 +11,7 @@ const CPUNode = require('../lib/dependency-graph/cpu-node.js');
 const NetworkAnalyzer = require('../lib/dependency-graph/simulator/network-analyzer.js');
 const TracingProcessor = require('../lib/tracehouse/trace-processor.js');
 const NetworkRequest = require('../lib/network-request.js');
-const TraceOfTab = require('./trace-of-tab.js');
+const ProcessedTrace = require('./processed-trace.js');
 const NetworkRecords = require('./network-records.js');
 
 /** @typedef {import('../lib/dependency-graph/base-node.js').Node} Node */
@@ -102,18 +102,18 @@ class PageDependencyGraph {
   }
 
   /**
-   * @param {LH.Artifacts.TraceOfTab} traceOfTab
+   * @param {LH.Artifacts.ProcessedTrace} processedTrace
    * @return {Array<CPUNode>}
    */
-  static getCPUNodes(traceOfTab) {
+  static getCPUNodes({mainThreadEvents}) {
     /** @type {Array<CPUNode>} */
     const nodes = [];
     let i = 0;
 
-    TracingProcessor.assertHasToplevelEvents(traceOfTab.mainThreadEvents);
+    TracingProcessor.assertHasToplevelEvents(mainThreadEvents);
 
-    while (i < traceOfTab.mainThreadEvents.length) {
-      const evt = traceOfTab.mainThreadEvents[i];
+    while (i < mainThreadEvents.length) {
+      const evt = mainThreadEvents[i];
       i++;
 
       // Skip all trace events that aren't schedulable tasks with sizable duration
@@ -126,10 +126,10 @@ class PageDependencyGraph {
       const children = [];
       for (
         const endTime = evt.ts + evt.dur;
-        i < traceOfTab.mainThreadEvents.length && traceOfTab.mainThreadEvents[i].ts < endTime;
+        i < mainThreadEvents.length && mainThreadEvents[i].ts < endTime;
         i++
       ) {
-        children.push(traceOfTab.mainThreadEvents[i]);
+        children.push(mainThreadEvents[i]);
       }
 
       nodes.push(new CPUNode(evt, children));
@@ -380,13 +380,13 @@ class PageDependencyGraph {
   }
 
   /**
-   * @param {LH.Artifacts.TraceOfTab} traceOfTab
+   * @param {LH.Artifacts.ProcessedTrace} processedTrace
    * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
    * @return {Node}
    */
-  static createGraph(traceOfTab, networkRecords) {
+  static createGraph(processedTrace, networkRecords) {
     const networkNodeOutput = PageDependencyGraph.getNetworkNodeOutput(networkRecords);
-    const cpuNodes = PageDependencyGraph.getCPUNodes(traceOfTab);
+    const cpuNodes = PageDependencyGraph.getCPUNodes(processedTrace);
 
     // The root request is the earliest network request, using position in networkRecords array to break ties.
     const rootRequest = networkRecords.reduce((min, r) => (r.startTime < min.startTime ? r : min));
@@ -458,12 +458,12 @@ class PageDependencyGraph {
   static async compute_(data, context) {
     const trace = data.trace;
     const devtoolsLog = data.devtoolsLog;
-    const [traceOfTab, networkRecords] = await Promise.all([
-      TraceOfTab.request(trace, context),
+    const [processedTrace, networkRecords] = await Promise.all([
+      ProcessedTrace.request(trace, context),
       NetworkRecords.request(devtoolsLog, context),
     ]);
 
-    return PageDependencyGraph.createGraph(traceOfTab, networkRecords);
+    return PageDependencyGraph.createGraph(processedTrace, networkRecords);
   }
 }
 

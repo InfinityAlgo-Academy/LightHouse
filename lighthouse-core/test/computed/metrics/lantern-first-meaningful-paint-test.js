@@ -15,8 +15,9 @@ const LanternFirstMeaningfulPaint =
 /* eslint-env jest */
 describe('Metrics: Lantern FMP', () => {
   it('should compute predicted value', async () => {
+    const gatherContext = {gatherMode: 'navigation'};
     const computedCache = new Map();
-    const result = await LanternFirstMeaningfulPaint.request({trace, devtoolsLog,
+    const result = await LanternFirstMeaningfulPaint.request({trace, devtoolsLog, gatherContext,
       settings: {}}, {computedCache});
 
     expect({

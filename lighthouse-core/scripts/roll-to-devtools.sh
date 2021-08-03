@@ -39,9 +39,20 @@ mkdir -p "$fe_lh_dir"
 
 lh_bg_js="dist/lighthouse-dt-bundle.js"
 
-# copy lighthouse-dt-bundle (potentially stale)
+yarn build-report
+yarn build-devtools
+
+# copy lighthouse-dt-bundle
 cp -pPR "$lh_bg_js" "$fe_lh_dir/lighthouse-dt-bundle.js"
-echo -e "$check (Potentially stale) lighthouse-dt-bundle copied."
+echo -e "$check lighthouse-dt-bundle copied."
+
+# generate bundle.d.ts
+npx tsc --allowJs --declaration --emitDeclarationOnly dist/report/bundle.js
+
+# copy report code $fe_lh_dir
+fe_lh_report_dir="$fe_lh_dir/report/"
+cp dist/report/bundle.js dist/report/bundle.d.ts "$fe_lh_report_dir"
+echo -e "$check Report code copied."
 
 # copy report generator + cached resources into $fe_lh_dir
 fe_lh_report_assets_dir="$fe_lh_dir/report-assets/"

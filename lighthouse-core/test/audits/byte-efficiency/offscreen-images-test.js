@@ -72,6 +72,7 @@ describe('OffscreenImages audit', () => {
     const topLevelTasks = [{ts: 1900, duration: 100}];
     const artifacts = {
       ViewportDimensions: DEFAULT_DIMENSIONS,
+      GatherContext: {gatherMode: 'navigation'},
       ImageElements: [
         generateImage({size: generateSize(100, 100), x: 0, y: 0}),
       ],
@@ -93,6 +94,7 @@ describe('OffscreenImages audit', () => {
     const topLevelTasks = [{ts: 1900, duration: 100}];
     const artifacts = {
       ViewportDimensions: DEFAULT_DIMENSIONS,
+      GatherContext: {gatherMode: 'navigation'},
       ImageElements: [
         generateImage({
           size: generateSize(200, 200),
@@ -137,6 +139,7 @@ describe('OffscreenImages audit', () => {
     ];
     const artifacts = {
       ViewportDimensions: DEFAULT_DIMENSIONS,
+      GatherContext: {gatherMode: 'navigation'},
       ImageElements: [
         // Offscreen to the right.
         generateImage({
@@ -218,6 +221,7 @@ describe('OffscreenImages audit', () => {
     ];
     const artifacts = {
       ViewportDimensions: DEFAULT_DIMENSIONS,
+      GatherContext: {gatherMode: 'navigation'},
       ImageElements: [
         // Offscreen to the right, but lazy loaded.
         generateImage({
@@ -256,6 +260,7 @@ describe('OffscreenImages audit', () => {
     ];
     const artifacts = {
       ViewportDimensions: DEFAULT_DIMENSIONS,
+      GatherContext: {gatherMode: 'navigation'},
       ImageElements: [
         // Offscreen to the right with auto loading (same as not specifying the attribute).
         generateImage({
@@ -290,6 +295,7 @@ describe('OffscreenImages audit', () => {
     const networkRecord = generateRecord({resourceSizeInKb: 100});
     const artifacts = {
       ViewportDimensions: DEFAULT_DIMENSIONS,
+      GatherContext: {gatherMode: 'navigation'},
       ImageElements: [
         generateImage({size: generateSize(0, 0), x: 0, y: 0, networkRecord}),
       ],
@@ -314,6 +320,7 @@ describe('OffscreenImages audit', () => {
     ];
     const artifacts = {
       ViewportDimensions: DEFAULT_DIMENSIONS,
+      GatherContext: {gatherMode: 'navigation'},
       ImageElements: [
         generateImage({
           size: generateSize(50, 50),
@@ -356,6 +363,7 @@ describe('OffscreenImages audit', () => {
     const networkRecord = generateRecord({resourceSizeInKb: 100, startTime: 3});
     const artifacts = {
       ViewportDimensions: DEFAULT_DIMENSIONS,
+      GatherContext: {gatherMode: 'navigation'},
       ImageElements: [
         // Offscreen to the right.
         generateImage({size: generateSize(200, 200), x: 3000, y: 0, networkRecord}),
@@ -373,6 +381,7 @@ describe('OffscreenImages audit', () => {
     const networkRecord = generateRecord({resourceSizeInKb: 100, startTime: 3});
     const artifacts = {
       ViewportDimensions: DEFAULT_DIMENSIONS,
+      GatherContext: {gatherMode: 'navigation'},
       ImageElements: [
         // Offscreen to the right.
         generateImage({size: generateSize(200, 200), x: 3000, y: 0, networkRecord}),
@@ -390,6 +399,7 @@ describe('OffscreenImages audit', () => {
     const networkRecord = generateRecord({resourceSizeInKb: 100});
     const artifacts = {
       ViewportDimensions: DEFAULT_DIMENSIONS,
+      GatherContext: {gatherMode: 'navigation'},
       ImageElements: [
         // Offscreen to the bottom.
         generateImage({size: generateSize(100, 100), x: 0, y: 5000, networkRecord}),
@@ -431,6 +441,7 @@ describe('OffscreenImages audit', () => {
     ];
     const artifacts = {
       ViewportDimensions: DEFAULT_DIMENSIONS,
+      GatherContext: {gatherMode: 'navigation'},
       ImageElements: [
         generateImage({
           size: generateSize(0, 0),
@@ -489,6 +500,7 @@ describe('OffscreenImages audit', () => {
     ];
     const artifacts = {
       ViewportDimensions: DEFAULT_DIMENSIONS,
+      GatherContext: {gatherMode: 'navigation'},
       ImageElements: [
         generateImage({
           size: generateSize(0, 0),
@@ -526,6 +538,7 @@ describe('OffscreenImages audit', () => {
     ];
     const artifacts = {
       ViewportDimensions: DEFAULT_DIMENSIONS,
+      GatherContext: {gatherMode: 'navigation'},
       ImageElements: [
         generateImage({
           size: generateSize(0, 0),

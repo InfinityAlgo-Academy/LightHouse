@@ -53,13 +53,13 @@ const UIStrings = {
   * @description Error message explaining that the manifest does not contain a suitable icon.
   * @example {192} value0
   */
-  'manifest-missing-suitable-icon': `Manifest does not contain a suitable icon - PNG, SVG or WebP format of at least {value0}\xa0px is required, the sizes attribute must be set, and the purpose attribute, if set, must include "any" or "maskable".`,
+  'manifest-missing-suitable-icon': `Manifest does not contain a suitable icon - PNG, SVG or WebP format of at least {value0}\xa0px is required, the sizes attribute must be set, and the purpose attribute, if set, must include "any".`,
 
   /**
   * @description Error message explaining that the manifest does not supply an icon of the correct format.
   * @example {192} value0
   */
-  'no-acceptable-icon': `No supplied icon is at least {value0}\xa0px square in PNG, SVG or WebP format`,
+  'no-acceptable-icon': `No supplied icon is at least {value0}\xa0px square in PNG, SVG or WebP format, with the purpose attribute unset or set to "any"`,
 
   /** Error message explaining that the icon could not be downloaded. */
   'cannot-download-icon': `Could not download a required icon from the manifest`,
@@ -105,7 +105,7 @@ const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
  *
  * Requirements based on Chrome Devtools' installability requirements.
  * Origin of logging:
- * https://source.chromium.org/chromium/chromium/src/+/master:chrome/browser/installable/installable_logging.cc
+ * https://source.chromium.org/chromium/chromium/src/+/main:chrome/browser/installable/installable_logging.cc
  * DevTools InstallabilityError implementation:
  * https://source.chromium.org/search?q=getInstallabilityErrorMessages&ss=chromium%2Fchromium%2Fsrc:third_party%2Fdevtools-frontend%2Fsrc%2Ffront_end%2Fresources%2F
  */
@@ -120,6 +120,7 @@ class InstallableManifest extends Audit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
+      supportedModes: ['navigation'],
       requiredArtifacts: ['URL', 'WebAppManifest', 'InstallabilityErrors'],
     };
   }

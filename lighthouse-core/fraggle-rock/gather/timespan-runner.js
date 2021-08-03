@@ -13,14 +13,15 @@ const {
   awaitArtifacts,
 } = require('./runner-helpers.js');
 const {initializeConfig} = require('../config/config.js');
-const {getBaseArtifacts} = require('./base-artifacts.js');
+const {getBaseArtifacts, finalizeArtifacts} = require('./base-artifacts.js');
 
 /**
- * @param {{page: import('puppeteer').Page, config?: LH.Config.Json}} options
+ * @param {{page: import('puppeteer').Page, config?: LH.Config.Json, configContext?: LH.Config.FRContext}} options
  * @return {Promise<{endTimespan(): Promise<LH.RunnerResult|undefined>}>}
  */
 async function startTimespan(options) {
-  const {config} = initializeConfig(options.config, {gatherMode: 'timespan'});
+  const {configContext = {}} = options;
+  const {config} = initializeConfig(options.config, {...configContext, gatherMode: 'timespan'});
   const driver = new Driver(options.page);
   await driver.connect();
 
@@ -56,7 +57,7 @@ async function startTimespan(options) {
           await collectPhaseArtifacts({phase: 'getArtifact', ...phaseOptions});
 
           const artifacts = await awaitArtifacts(artifactState);
-          return /** @type {LH.Artifacts} */ ({...baseArtifacts, ...artifacts}); // Cast to drop Partial<>
+          return finalizeArtifacts(baseArtifacts, artifacts);
         },
         {
           url: finalUrl,

@@ -69,14 +69,7 @@ declare global {
       trace?: Trace;
     }
 
-    export type PhaseArtifact = |
-        LH.GathererArtifacts[keyof LH.GathererArtifacts] |
-      LH.Artifacts['devtoolsLogs'] |
-      LH.Artifacts['traces'] |
-      LH.Artifacts['WebAppManifest'] |
-      LH.Artifacts['InstallabilityErrors'] |
-      LH.Artifacts['Stacks'];
-    export type PhaseResultNonPromise = void|PhaseArtifact
+    export type PhaseResultNonPromise = void | LH.GathererArtifacts[keyof LH.GathererArtifacts];
     export type PhaseResult = PhaseResultNonPromise | Promise<PhaseResultNonPromise>
 
     export type GatherMode = 'snapshot'|'timespan'|'navigation';
@@ -94,7 +87,7 @@ declare global {
     }
 
     interface GathererMetaWithDependencies<
-      TDependencies extends DependencyKey = DefaultDependenciesKey
+      TDependencies extends Exclude<DependencyKey, DefaultDependenciesKey>
     > extends GathererMetaNoDependencies {
       /**
        * The set of required dependencies that this gatherer needs before it can compute its results.
@@ -103,9 +96,9 @@ declare global {
     }
 
     export type GathererMeta<TDependencies extends DependencyKey = DefaultDependenciesKey> =
-      TDependencies extends DefaultDependenciesKey ?
+      [TDependencies] extends [DefaultDependenciesKey] ?
         GathererMetaNoDependencies :
-        GathererMetaWithDependencies<TDependencies>;
+        GathererMetaWithDependencies<Exclude<TDependencies, DefaultDependenciesKey>>;
 
     export interface GathererInstance {
       name: keyof LH.GathererArtifacts;
@@ -121,10 +114,17 @@ declare global {
       meta: GathererMeta<TDependencies>;
       startInstrumentation(context: FRTransitionalContext<DefaultDependenciesKey>): Promise<void>|void;
       startSensitiveInstrumentation(context: FRTransitionalContext<DefaultDependenciesKey>): Promise<void>|void;
-      stopSensitiveInstrumentation(context: FRTransitionalContext<TDependencies>): Promise<void>|void;
-      stopInstrumentation(context: FRTransitionalContext<TDependencies>): Promise<void>|void;
+      stopSensitiveInstrumentation(context: FRTransitionalContext<DefaultDependenciesKey>): Promise<void>|void;
+      stopInstrumentation(context: FRTransitionalContext<DefaultDependenciesKey>): Promise<void>|void;
       getArtifact(context: FRTransitionalContext<TDependencies>): PhaseResult;
     }
+
+    type FRGathererInstanceExpander<TDependencies extends Gatherer.DependencyKey> =
+      // Lack of brackets intentional here to convert to the union of all individual dependencies.
+      TDependencies extends Gatherer.DefaultDependenciesKey ?
+        FRGathererInstance<Gatherer.DefaultDependenciesKey> :
+        FRGathererInstance<Exclude<TDependencies, DefaultDependenciesKey>>
+    export type AnyFRGathererInstance = FRGathererInstanceExpander<Gatherer.DependencyKey>
 
     namespace Simulation {
       export type GraphNode = import('../lighthouse-core/lib/dependency-graph/base-node').Node;

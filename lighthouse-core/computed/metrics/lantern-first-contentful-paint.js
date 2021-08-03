@@ -168,13 +168,13 @@ class LanternFirstContentfulPaint extends LanternMetric {
 
   /**
    * @param {Node} dependencyGraph
-   * @param {LH.Artifacts.TraceOfTab} traceOfTab
+   * @param {LH.Artifacts.ProcessedNavigation} processedNavigation
    * @return {Node}
    */
-  static getOptimisticGraph(dependencyGraph, traceOfTab) {
+  static getOptimisticGraph(dependencyGraph, processedNavigation) {
     return this.getFirstPaintBasedGraph(
       dependencyGraph,
-      traceOfTab.timestamps.firstContentfulPaint,
+      processedNavigation.timestamps.firstContentfulPaint,
       // In the optimistic graph we exclude resources that appeared to be render blocking but were
       // initiated by a script. While they typically have a very high importance and tend to have a
       // significant impact on the page's content, these resources don't technically block rendering.
@@ -184,13 +184,13 @@ class LanternFirstContentfulPaint extends LanternMetric {
 
   /**
    * @param {Node} dependencyGraph
-   * @param {LH.Artifacts.TraceOfTab} traceOfTab
+   * @param {LH.Artifacts.ProcessedNavigation} processedNavigation
    * @return {Node}
    */
-  static getPessimisticGraph(dependencyGraph, traceOfTab) {
+  static getPessimisticGraph(dependencyGraph, processedNavigation) {
     return this.getFirstPaintBasedGraph(
       dependencyGraph,
-      traceOfTab.timestamps.firstContentfulPaint,
+      processedNavigation.timestamps.firstContentfulPaint,
       node => node.hasRenderBlockingPriority()
     );
   }

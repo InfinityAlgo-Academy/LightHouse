@@ -35,6 +35,7 @@ const getFakeContext = ({formFactor, throttlingMethod}) => ({
 describe('Performance: speed-index audit', () => {
   it('works on a real trace', () => {
     const artifacts = {
+      GatherContext: {gatherMode: 'navigation'},
       traces: {defaultPass: pwaTrace},
       devtoolsLogs: {defaultPass: pwaDevtoolsLog},
     };

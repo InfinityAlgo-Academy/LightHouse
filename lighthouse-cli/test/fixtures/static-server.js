@@ -17,9 +17,9 @@ const mime = require('mime-types');
 const parseQueryString = require('querystring').parse;
 const parseURL = require('url').parse;
 const URLSearchParams = require('url').URLSearchParams;
-const HEADER_SAFELIST = new Set(['x-robots-tag', 'link', 'content-security-policy']);
+const {LH_ROOT} = require('../../../root.js');
 
-const lhRootDirPath = path.join(__dirname, '../../../');
+const HEADER_SAFELIST = new Set(['x-robots-tag', 'link', 'content-security-policy']);
 
 class Server {
   baseDir = __dirname;
@@ -192,7 +192,7 @@ class Server {
 
     // Disallow file requests outside of LH folder
     const filePathDir = path.parse(absoluteFilePath).dir;
-    if (!filePathDir.startsWith(lhRootDirPath)) {
+    if (!filePathDir.startsWith(LH_ROOT)) {
       return readFileCallback(new Error('Disallowed path'));
     }
 
