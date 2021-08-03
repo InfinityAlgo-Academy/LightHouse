@@ -313,13 +313,13 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
     ]);
 
     // Form labels need to reference unique IDs, but multiple reports rendered in the same DOM (eg PSI)
-    // would mean ID conflict.  To address this, we 'scope' these radio inputs with a timestamp.
-    const nowTs = Date.now();
+    // would mean ID conflict.  To address this, we 'scope' these radio inputs with a unique suffix.
+    const uniqSuffix = Util.getUniqueSuffix();
     for (const metric of filterChoices) {
-      const elemId = `metric-${metric.acronym}-${nowTs}`;
+      const elemId = `metric-${metric.acronym}-${uniqSuffix}`;
       const radioEl = this.dom.createChildOf(metricFilterEl, 'input', 'lh-metricfilter__radio');
       radioEl.type = 'radio';
-      radioEl.name = `metricsfilter-${nowTs}`;
+      radioEl.name = `metricsfilter-${uniqSuffix}`;
       radioEl.id = elemId;
 
       const labelEl = this.dom.createChildOf(metricFilterEl, 'label', 'lh-metricfilter__label');
