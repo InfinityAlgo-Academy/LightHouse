@@ -121,9 +121,10 @@ export function prepareLabData(LHResult, document) {
 
     const showTreemapApp =
       lhResult.audits['script-treemap-data'] && lhResult.audits['script-treemap-data'].details;
-    if (showTreemapApp) {
+    const buttonContainer = reportEl.querySelector('.lh-audit-group--metrics');
+    if (showTreemapApp && buttonContainer) {
       reportUIFeatures.addButton({
-        container: reportEl.querySelector('.lh-audit-group--metrics'),
+        container: buttonContainer,
         text: Util.i18n.strings.viewTreemapLabel,
         icon: 'treemap',
         onClick: () => ReportUIFeatures.openTreemap(lhResult),

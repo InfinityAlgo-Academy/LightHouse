@@ -15,6 +15,9 @@ const DUPLICATED_MODULES_IGNORE_THRESHOLD = 1024;
 const DUPLICATED_MODULES_IGNORE_ROOT_RATIO = 0.01;
 
 const logEl = document.querySelector('#lh-log');
+if (!logEl) {
+  throw new Error('logger element not found');
+}
 const logger = new Logger(logEl);
 
 /** @type {TreemapViewer} */

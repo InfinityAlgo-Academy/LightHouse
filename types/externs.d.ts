@@ -417,7 +417,7 @@ declare global {
 
   // Stricter querySelector/querySelectorAll using typed-query-selector.
   interface ParentNode {
-    querySelector<S extends string>(selector: S): QuerySelectorParse<S>;
+    querySelector<S extends string>(selector: S): QuerySelectorParse<S> | null;
     querySelectorAll<S extends string>(selector: S): NodeListOf<QuerySelectorParse<S>>;
   }
 }
