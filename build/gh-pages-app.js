@@ -80,6 +80,7 @@ class GhPagesApp {
   }
 
   async build() {
+    fs.mkdirSync(this.distDir, {recursive: true}); // Ensure dist is present, else rmdir will throw. COMPAT: when dropping Node 12, replace with fs.rm(p, {force: true})
     fs.rmdirSync(this.distDir, {recursive: true});
 
     const html = this._compileHtml();
