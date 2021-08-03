@@ -316,7 +316,7 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
       const elemId = `metric-${metric.acronym}-${nowTs}`;
       const radioEl = this.dom.createChildOf(metricFilterEl, 'input', 'lh-metricfilter__radio');
       radioEl.type = 'radio';
-      radioEl.name = 'metricsfilter';
+      radioEl.name = `metricsfilter-${nowTs}`;
       radioEl.id = elemId;
 
       const labelEl = this.dom.createChildOf(metricFilterEl, 'label', 'lh-metricfilter__label');
