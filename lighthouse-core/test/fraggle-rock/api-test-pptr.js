@@ -174,11 +174,11 @@ describe('Fraggle Rock API', () => {
       const {auditResults, erroredAudits, notApplicableAudits} = getAuditsBreakdown(result.lhr);
       expect(auditResults.length).toMatchInlineSnapshot(`50`);
 
-      expect(notApplicableAudits.length).toMatchInlineSnapshot(`9`);
+      expect(notApplicableAudits.length).toMatchInlineSnapshot(`22`);
       expect(notApplicableAudits.map(audit => audit.id)).toContain('server-response-time');
 
       // TODO(FR-COMPAT): Reduce this number by handling the error, making N/A, or removing timespan support.
-      expect(erroredAudits.length).toMatchInlineSnapshot(`14`);
+      expect(erroredAudits.length).toMatchInlineSnapshot(`1`);
     });
   });
 

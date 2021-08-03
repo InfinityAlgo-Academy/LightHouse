@@ -32,4 +32,14 @@ describe('Network RTT audit', () => {
       },
     ]);
   });
+
+  it('should return n/a if no network records', async () => {
+    const artifacts = {devtoolsLogs: {defaultPass: []}};
+    const result = await NetworkRTT.audit(artifacts, {computedCache: new Map()});
+
+    expect(result).toEqual({
+      notApplicable: true,
+      score: 1,
+    });
+  });
 });
