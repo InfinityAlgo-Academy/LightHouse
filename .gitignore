@@ -26,8 +26,6 @@ last-run-results.html
 *.artifacts.log
 *.ctc.json
 
-report/generated
-
 !lighthouse-core/test/results/artifacts/*.trace.json
 !lighthouse-core/test/results/artifacts/*.devtoolslog.json
 !lighthouse-core/test/fixtures/artifacts/**/*.trace.json

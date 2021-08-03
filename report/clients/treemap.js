@@ -13,6 +13,9 @@ import {I18n} from '../renderer/i18n.js';
 import {Logger} from '../renderer/logger.js';
 import {TextEncoding} from '../renderer/text-encoding.js';
 
+// @ts-expect-error
 window.I18n = I18n;
+// @ts-expect-error
 window.Logger = Logger;
+// @ts-expect-error
 window.TextEncoding = TextEncoding;

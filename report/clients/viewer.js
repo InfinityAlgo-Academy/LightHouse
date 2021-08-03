@@ -15,8 +15,13 @@ import {ReportRenderer} from '../renderer/report-renderer.js';
 import {ReportUIFeatures} from '../renderer/report-ui-features.js';
 import {TextEncoding} from '../renderer/text-encoding.js';
 
+// @ts-expect-error
 window.DOM = DOM;
+// @ts-expect-error
 window.Logger = Logger;
+// @ts-expect-error
 window.ReportRenderer = ReportRenderer;
+// @ts-expect-error
 window.ReportUIFeatures = ReportUIFeatures;
+// @ts-expect-error
 window.TextEncoding = TextEncoding;
