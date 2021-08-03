@@ -41,6 +41,7 @@ const DEFAULT_RETRIES = 0;
 async function runSmokehouse(smokeTestDefns, smokehouseOptions) {
   const {
     isDebug,
+    useFraggleRock,
     jobs = DEFAULT_CONCURRENT_RUNS,
     retries = DEFAULT_RETRIES,
     lighthouseRunner = cliLighthouseRunner,
@@ -52,7 +53,7 @@ async function runSmokehouse(smokeTestDefns, smokehouseOptions) {
   // Run each testDefn in parallel based on the concurrencyLimit.
   const concurrentMapper = new ConcurrentMapper();
 
-  const testOptions = {isDebug, retries, lighthouseRunner, takeNetworkRequestUrls};
+  const testOptions = {isDebug, useFraggleRock, retries, lighthouseRunner, takeNetworkRequestUrls};
   const smokePromises = smokeTestDefns.map(testDefn => {
     // If defn is set to `runSerially`, we'll run it in succession with other tests, not parallel.
     const concurrency = testDefn.runSerially ? 1 : jobs;
@@ -108,12 +109,12 @@ function purpleify(str) {
 /**
  * Run Lighthouse in the selected runner.
  * @param {Smokehouse.TestDfn} smokeTestDefn
- * @param {{isDebug?: boolean, retries: number, lighthouseRunner: Smokehouse.LighthouseRunner, takeNetworkRequestUrls?: () => string[]}} testOptions
+ * @param {{isDebug?: boolean, useFraggleRock?: boolean, retries: number, lighthouseRunner: Smokehouse.LighthouseRunner, takeNetworkRequestUrls?: () => string[]}} testOptions
  * @return {Promise<SmokehouseResult>}
  */
 async function runSmokeTest(smokeTestDefn, testOptions) {
   const {id, config: configJson, expectations} = smokeTestDefn;
-  const {lighthouseRunner, retries, isDebug, takeNetworkRequestUrls} = testOptions;
+  const {lighthouseRunner, retries, isDebug, useFraggleRock, takeNetworkRequestUrls} = testOptions;
   const requestedUrl = expectations.lhr.requestedUrl;
 
   console.log(`${purpleify(id)} smoketest starting…`);
@@ -131,7 +132,7 @@ async function runSmokeTest(smokeTestDefn, testOptions) {
     // Run Lighthouse.
     try {
       result = {
-        ...await lighthouseRunner(requestedUrl, configJson, {isDebug}),
+        ...await lighthouseRunner(requestedUrl, configJson, {isDebug, useFraggleRock}),
         networkRequests: takeNetworkRequestUrls ? takeNetworkRequestUrls() : undefined,
       };
     } catch (e) {

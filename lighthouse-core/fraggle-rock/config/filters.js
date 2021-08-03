@@ -24,6 +24,10 @@ const baseArtifactKeys = Object.keys(baseArtifactKeySource);
 // Keep these audits unless they are *directly* skipped with `skipAudits`.
 const filterResistantAuditIds = ['full-page-screenshot'];
 
+// Some artifacts are used by the report for additional information.
+// Always run these artifacts even if audits do not request them.
+const filterResistantArtifactIds = ['HostUserAgent', 'HostFormFactor', 'Stacks', 'GatherContext'];
+
 /**
  * Returns the set of audit IDs used in the list of categories.
  * If `onlyCategories` is not set, this function returns the list of all audit IDs across all
@@ -56,9 +60,10 @@ function filterArtifactsByAvailableAudits(artifacts, audits) {
   const artifactsById = new Map(artifacts.map(artifact => [artifact.id, artifact]));
 
   /** @type {Set<string>} */
-  const artifactIdsToKeep = new Set(
-    audits.flatMap(audit => audit.implementation.meta.requiredArtifacts)
-  );
+  const artifactIdsToKeep = new Set([
+    ...filterResistantArtifactIds,
+    ...audits.flatMap(audit => audit.implementation.meta.requiredArtifacts),
+  ]);
 
   // Keep all artifacts in the dependency tree of required artifacts.
   // Iterate through all kept artifacts, adding their dependencies along the way, until the set does not change.

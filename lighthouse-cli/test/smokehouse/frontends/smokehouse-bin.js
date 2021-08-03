@@ -127,6 +127,11 @@ async function begin() {
         default: false,
         describe: 'Save test artifacts and output verbose logs',
       },
+      'fraggle-rock': {
+        type: 'boolean',
+        default: false,
+        describe: 'Use the new Fraggle Rock runner',
+      },
       'jobs': {
         type: 'number',
         alias: 'j',
@@ -191,7 +196,14 @@ async function begin() {
     }
 
     const prunedTestDefns = pruneExpectedNetworkRequests(testDefns, takeNetworkRequestUrls);
-    const options = {jobs, retries, isDebug: argv.debug, lighthouseRunner, takeNetworkRequestUrls};
+    const options = {
+      jobs,
+      retries,
+      isDebug: argv.debug,
+      useFraggleRock: argv.fraggleRock,
+      lighthouseRunner,
+      takeNetworkRequestUrls,
+    };
 
     isPassing = (await runSmokehouse(prunedTestDefns, options)).success;
   } finally {
