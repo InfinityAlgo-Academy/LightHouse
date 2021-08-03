@@ -311,6 +311,9 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
       ({acronym: 'All'}),
       ...filterableMetrics,
     ]);
+
+    // Form labels need to reference unique IDs, but multiple reports rendered in the same DOM (eg PSI)
+    // would mean ID conflict.  To address this, we 'scope' these radio inputs with a timestamp.
     const nowTs = Date.now();
     for (const metric of filterChoices) {
       const elemId = `metric-${metric.acronym}-${nowTs}`;
