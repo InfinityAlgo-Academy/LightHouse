@@ -12,11 +12,11 @@ The collection and translation pipeline:
 ```
  Source files:                                         Locale files:
 +---------------------------+                         +----------------------------------------------
-|                           ++                        | core/lib/i18n/locales/en-US.json |
-| const UIStrings = { ... };|-+                 +---> | core/lib/i18n/locales/en-XL.json |
+|                           ++                        | core/lib/i18n/locales/en-US.json             |
+| const UIStrings = { ... };|-+                 +---> | core/lib/i18n/locales/en-XL.json             |
 |                           |-|                 |     +----------------------------------------------+
 +-----------------------------|                 |     |                                             ||
- +----------------------------|                 |     | core/lib/i18n/locales/*.json     |-<+
+ +----------------------------|                 |     | core/lib/i18n/locales/*.json                |-<+
   +---------------------------+                 |     |                                             || |
                            |                    |     +----------------------------------------------| |
   $ yarn                   |                    |      +---------------------------------------------+ |
