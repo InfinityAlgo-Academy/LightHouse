@@ -2741,10 +2741,10 @@ crypto-random-string@^2.0.0:
   resolved "https://registry.yarnpkg.com/crypto-random-string/-/crypto-random-string-2.0.0.tgz#ef2a7a966ec11083388369baa02ebead229b30d5"
   integrity sha512-v1plID3y9r/lPhviJ1wrXpLeyUIGAZ2SHNYTEapm7/8A9nLPoyvVp3RK/EPFqn5kEznyWgYZNsRtYYIWbuG8KA==
 
-csp_evaluator@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/csp_evaluator/-/csp_evaluator-1.0.1.tgz#cef3b755b26cfff25701a2fdaeab27ddceb31b7c"
-  integrity sha512-9L57/vkuwH1tJv9Sw9t13xKGKyRR7OKn/pizcLCHK/83WH+sqRav0JCFBmBLmpurQAcz5usU3efS1rabOPV/qA==
+csp_evaluator@1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/csp_evaluator/-/csp_evaluator-1.0.4.tgz#152deb224683020d55a9dce853266ecab6c56129"
+  integrity sha512-hs1lAKCbx/SWXYwpUWu3bS/k1CS10HRLh/7Kjh+VMW2ZZ8GmzymMGlModz+IIgh4gpn+PGuSVoJFkBPU3wGR7Q==
 
 cssom@0.3.x, cssom@^0.3.4, cssom@~0.3.6:
   version "0.3.8"
