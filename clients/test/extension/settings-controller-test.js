@@ -8,8 +8,8 @@
 /* eslint-env jest */
 
 const SettingsController = require('../../extension/scripts/settings-controller.js');
-const defaultConfig = require('../../../lighthouse-core/config/default-config.js');
-const i18n = require('../../../lighthouse-core/lib/i18n/i18n.js');
+const defaultConfig = require('../../../core/config/default-config.js');
+const i18n = require('../../../core/lib/i18n/i18n.js');
 
 describe('Lighthouse chrome extension SettingsController', () => {
   it('default categories should be correct', () => {

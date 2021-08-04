@@ -8,7 +8,7 @@
 import {strict as assert} from 'assert';
 import fs from 'fs';
 import jsdom from 'jsdom';
-import testUtils from '../../../lighthouse-core/test/test-utils.js';
+import testUtils from '../../../core/test/test-utils.js';
 import reportAssets from '../../report-assets.js';
 import {prepareLabData} from '../../clients/psi.js';
 import {Util} from '../../renderer/util.js';
@@ -24,7 +24,7 @@ import {LH_ROOT} from '../../../root.js';
 
 const {itIfProtoExists, sampleResultsRoundtripStr} = testUtils.getProtoRoundTrip();
 const sampleResultsStr =
-  fs.readFileSync(LH_ROOT + '/lighthouse-core/test/results/sample_v2.json', 'utf-8');
+  fs.readFileSync(LH_ROOT + '/core/test/results/sample_v2.json', 'utf-8');
 
 /* eslint-env jest */
 

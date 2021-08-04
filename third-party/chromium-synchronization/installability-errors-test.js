@@ -7,7 +7,7 @@
 
 const fetch = require('node-fetch');
 
-const InstallableManifestAudit = require('../../lighthouse-core/audits/installable-manifest.js');
+const InstallableManifestAudit = require('../../core/audits/installable-manifest.js');
 
 /* eslint-env jest */
 

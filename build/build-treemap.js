@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/** @typedef {import('../lighthouse-core/lib/i18n/locales').LhlMessages} LhlMessages */
+/** @typedef {import('../core/lib/i18n/locales').LhlMessages} LhlMessages */
 
 const fs = require('fs');
 const {buildTreemapReport} = require('./build-report.js');
@@ -13,15 +13,15 @@ const GhPagesApp = require('./gh-pages-app.js');
 const {LH_ROOT} = require('../root.js');
 
 /**
- * Extract only the strings needed for lighthouse-treemap into
+ * Extract only the strings needed for treemap into
  * a script that sets a global variable `strings`, whose keys
  * are locale codes (en-US, es, etc.) and values are localized UIStrings.
  */
 function buildStrings() {
-  const locales = require('../lighthouse-core/lib/i18n/locales.js');
+  const locales = require('../core/lib/i18n/locales.js');
   const UIStrings = require(
-    // Prevent `tsc -p .` from evaluating util.js using core types, it is already typchecked by `tsc -p lighthouse-treemap`.
-    '' + '../lighthouse-treemap/app/src/util.js'
+    // Prevent `tsc -p .` from evaluating util.js using core types, it is already typchecked by `tsc -p treemap`.
+    '' + '../treemap/app/src/util.js'
   ).UIStrings;
   const strings = /** @type {Record<LH.Locale, LhlMessages>} */ ({});
 
@@ -50,7 +50,7 @@ async function run() {
 
   const app = new GhPagesApp({
     name: 'treemap',
-    appDir: `${LH_ROOT}/lighthouse-treemap/app`,
+    appDir: `${LH_ROOT}/treemap/app`,
     html: {path: 'index.html'},
     stylesheets: [
       fs.readFileSync(require.resolve('tabulator-tables/dist/css/tabulator.min.css'), 'utf8'),
@@ -69,9 +69,9 @@ async function run() {
       /* eslint-enable max-len */
       buildStrings(),
       {path: '../../dist/report/treemap.js'},
-      {path: '../../lighthouse-viewer/app/src/drag-and-drop.js'},
-      {path: '../../lighthouse-viewer/app/src/github-api.js'},
-      {path: '../../lighthouse-viewer/app/src/firebase-auth.js'},
+      {path: '../../viewer/app/src/drag-and-drop.js'},
+      {path: '../../viewer/app/src/github-api.js'},
+      {path: '../../viewer/app/src/firebase-auth.js'},
       {path: 'src/**/*'},
     ],
     assets: [

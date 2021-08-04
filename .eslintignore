@@ -2,7 +2,7 @@
 **/third_party/**
 **/source-maps/**
 
-lighthouse-cli/test/fixtures/byte-efficiency/bundle.js
+cli/test/fixtures/byte-efficiency/bundle.js
 
 /dist/**
 
@@ -10,8 +10,8 @@ coverage/**
 
 !.eslintrc.js
 
-lighthouse-core/lib/cdt/generated/SourceMap.js
-lighthouse-core/scripts/legacy-javascript/variants
+core/lib/cdt/generated/SourceMap.js
+core/scripts/legacy-javascript/variants
 
 third-party/**
 

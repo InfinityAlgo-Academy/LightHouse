@@ -14,7 +14,7 @@ const fs = require('fs');
 const path = require('path');
 const assert = require('assert').strict;
 const mkdir = fs.promises.mkdir;
-const LighthouseRunner = require('../lighthouse-core/runner.js');
+const LighthouseRunner = require('../core/runner.js');
 const exorcist = require('exorcist');
 const browserify = require('browserify');
 const terser = require('terser');
@@ -26,13 +26,13 @@ const COMMIT_HASH = require('child_process')
   .toString().trim();
 
 const audits = LighthouseRunner.getAuditList()
-    .map(f => './lighthouse-core/audits/' + f.replace(/\.js$/, ''));
+    .map(f => './core/audits/' + f.replace(/\.js$/, ''));
 
 const gatherers = LighthouseRunner.getGathererList()
-    .map(f => './lighthouse-core/gather/gatherers/' + f.replace(/\.js$/, ''));
+    .map(f => './core/gather/gatherers/' + f.replace(/\.js$/, ''));
 
-const locales = fs.readdirSync(LH_ROOT + '/lighthouse-core/lib/i18n/locales/')
-    .map(f => require.resolve(`../lighthouse-core/lib/i18n/locales/${f}`));
+const locales = fs.readdirSync(LH_ROOT + '/core/lib/i18n/locales/')
+    .map(f => require.resolve(`../core/lib/i18n/locales/${f}`));
 
 // HACK: manually include the lighthouse-plugin-publisher-ads audits.
 /** @type {Array<string>} */
@@ -82,7 +82,7 @@ async function browserifyFile(entryPath, distPath) {
     .ignore('pako/lib/zlib/inflate.js');
 
   // Don't include the desktop protocol connection.
-  bundle.ignore(require.resolve('../lighthouse-core/gather/connections/cri.js'));
+  bundle.ignore(require.resolve('../core/gather/connections/cri.js'));
 
   // Don't include the stringified report in DevTools - see devtools-report-assets.js
   // Don't include in Lightrider - HTML generation isn't supported, so report assets aren't needed.
@@ -97,8 +97,8 @@ async function browserifyFile(entryPath, distPath) {
   }
 
   // Expose the audits, gatherers, and computed artifacts so they can be dynamically loaded.
-  // Exposed path must be a relative path from lighthouse-core/config/config-helpers.js (where loading occurs).
-  const corePath = './lighthouse-core/';
+  // Exposed path must be a relative path from core/config/config-helpers.js (where loading occurs).
+  const corePath = './core/';
   const driverPath = `${corePath}gather/`;
   audits.forEach(audit => {
     bundle = bundle.require(audit, {expose: audit.replace(corePath, '../')});
@@ -118,7 +118,7 @@ async function browserifyFile(entryPath, distPath) {
   // browerify's url shim doesn't work with .URL in node_modules,
   // and within robots-parser, it does `var URL = require('url').URL`, so we expose our own.
   // @see https://github.com/GoogleChrome/lighthouse/issues/5273
-  const pathToURLShim = require.resolve('../lighthouse-core/lib/url-shim.js');
+  const pathToURLShim = require.resolve('../core/lib/url-shim.js');
   bundle = bundle.require(pathToURLShim, {expose: 'url'});
 
   let bundleStream = bundle.bundle();
@@ -161,7 +161,7 @@ async function minifyScript(filePath) {
   // Add the banner and modify globals for DevTools if necessary.
   if (isDevtools(filePath) && result.code) {
     // Add a comment for TypeScript, but not if in DEBUG mode so that source maps are not affected.
-    // See lighthouse-cli/test/smokehouse/lighthouse-runners/bundle.js
+    // See cli/test/smokehouse/lighthouse-runners/bundle.js
     if (!DEBUG) {
       result.code =
         '// @ts-nocheck - Prevent tsc stepping into any required bundles.\n' + result.code;

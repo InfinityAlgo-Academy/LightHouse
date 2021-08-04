@@ -7,8 +7,8 @@
 
 const assert = require('assert').strict;
 const lhBackground = require('../lightrider/lightrider-entry.js');
-const Runner = require('../../lighthouse-core/runner.js');
-const LHError = require('../../lighthouse-core/lib/lh-error.js');
+const Runner = require('../../core/runner.js');
+const LHError = require('../../core/lib/lh-error.js');
 
 /* eslint-env jest */
 

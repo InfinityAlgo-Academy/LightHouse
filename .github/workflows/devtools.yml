@@ -33,7 +33,7 @@ jobs:
           ${{ env.BLINK_TOOLS_PATH }}
           ${{ github.workspace }}/lighthouse/.tmp/chromium-web-tests/content-shells
         # The number is how many times this hash key was manually updated to break the cache.
-        key: ${{ runner.os }}-2-${{ hashFiles('lighthouse/third-party/chromium-webtests/webtests/http/tests/devtools/lighthouse/*.js', 'lighthouse/.github/workflows/devtools.yml', 'lighthouse/lighthouse-core/test/chromium-web-tests/*', 'lighthouse/clients/devtools-entry.js', 'lighthouse/clients/devtools-report-assets.js', 'lighthouse/build/build-bundle.js', 'lighthouse/build/build-dt-report-resources.js') }}
+        key: ${{ runner.os }}-2-${{ hashFiles('lighthouse/third-party/chromium-webtests/webtests/http/tests/devtools/lighthouse/*.js', 'lighthouse/.github/workflows/devtools.yml', 'lighthouse/core/test/chromium-web-tests/*', 'lighthouse/clients/devtools-entry.js', 'lighthouse/clients/devtools-report-assets.js', 'lighthouse/build/build-bundle.js', 'lighthouse/build/build-dt-report-resources.js') }}
 
     - name: Use Node.js 12.x
       uses: actions/setup-node@v1
@@ -48,19 +48,19 @@ jobs:
       working-directory: ${{ github.workspace }}/lighthouse
 
     - name: Download depot tools
-      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/chromium-web-tests/download-depot-tools.sh
+      run: bash $GITHUB_WORKSPACE/lighthouse/core/test/chromium-web-tests/download-depot-tools.sh
     - name: Download DevTools Frontend
-      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/chromium-web-tests/download-devtools.sh
+      run: bash $GITHUB_WORKSPACE/lighthouse/core/test/chromium-web-tests/download-devtools.sh
     - name: Download Blink Tools
-      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/chromium-web-tests/download-blink-tools.sh
+      run: bash $GITHUB_WORKSPACE/lighthouse/core/test/chromium-web-tests/download-blink-tools.sh
     - name: Download Content Shell
-      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/chromium-web-tests/download-content-shell.sh
+      run: bash $GITHUB_WORKSPACE/lighthouse/core/test/chromium-web-tests/download-content-shell.sh
 
     - name: Install python deps
       run: pip install six requests
 
     - name: Run Web Tests
-      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/chromium-web-tests/run-web-tests.sh
+      run: bash $GITHUB_WORKSPACE/lighthouse/core/test/chromium-web-tests/run-web-tests.sh
 
     - name: Print diff
       if: failure()

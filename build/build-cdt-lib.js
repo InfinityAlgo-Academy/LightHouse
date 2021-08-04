@@ -11,7 +11,7 @@ const fs = require('fs');
 const ts = require('typescript');
 const {LH_ROOT} = require('../root.js');
 
-const outDir = `${LH_ROOT}/lighthouse-core/lib/cdt/generated`;
+const outDir = `${LH_ROOT}/core/lib/cdt/generated`;
 const files = {
   'node_modules/chrome-devtools-frontend/front_end/sdk/SourceMap.js': 'SourceMap.js',
 };

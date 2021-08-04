@@ -5,13 +5,13 @@
  */
 'use strict';
 
-const lighthouse = require('../lighthouse-core/index.js');
-const RawProtocol = require('../lighthouse-core/gather/connections/raw.js');
+const lighthouse = require('../core/index.js');
+const RawProtocol = require('../core/gather/connections/raw.js');
 const log = require('lighthouse-logger');
-const {registerLocaleData, lookupLocale} = require('../lighthouse-core/lib/i18n/i18n.js');
-const constants = require('../lighthouse-core/config/constants.js');
+const {registerLocaleData, lookupLocale} = require('../core/lib/i18n/i18n.js');
+const constants = require('../core/config/constants.js');
 
-/** @typedef {import('../lighthouse-core/gather/connections/connection.js')} Connection */
+/** @typedef {import('../core/gather/connections/connection.js')} Connection */
 
 /**
  * Returns a config, which runs only certain categories.
