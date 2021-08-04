@@ -66,8 +66,13 @@ async function browserifyFile(entryPath, distPath) {
     })
     .plugin('pathmodify', {mods: [
       {
-        from: 'lighthouse/lighthouse-core',
-        to: 'lighthouse/core',
+        from: 'lighthouse-core',
+        to: 'core',
+        type: 'dir',
+      },
+      {
+        from: 'lighthouse-cli',
+        to: 'cli',
         type: 'dir',
       },
     ]})
