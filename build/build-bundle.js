@@ -18,7 +18,6 @@ const LighthouseRunner = require('../core/runner.js');
 const exorcist = require('exorcist');
 const browserify = require('browserify');
 const terser = require('terser');
-const pathmodify = require('pathmodify');
 const {minifyFileTransform} = require('./build-utils.js');
 const {LH_ROOT} = require('../root.js');
 
@@ -65,8 +64,12 @@ async function browserifyFile(entryPath, distPath) {
       pkg: Object.assign({COMMIT_HASH}, require('../package.json')),
       file: require.resolve('./banner.txt'),
     })
-    .plugin(pathmodify, {mods: [
-      pathmodify.mod.dir('lighthouse/lighthouse-core', 'lighthouse/core'),
+    .plugin('pathmodify', {mods: [
+      {
+        from: 'lighthouse/lighthouse-core',
+        to: 'lighthouse/core',
+        type: 'dir',
+      },
     ]})
     // Transform the fs.readFile etc into inline strings.
     .transform('@wardpeet/brfs', {
