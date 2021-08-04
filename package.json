@@ -153,6 +153,7 @@
     "npm-run-posix-or-windows": "^2.0.2",
     "package-json-versionify": "^1.0.4",
     "pako": "^2.0.3",
+    "pathmodify": "^0.5.0",
     "pretty-json-stringify": "^0.0.2",
     "puppeteer": "^9.1.1",
     "rollup": "^2.50.6",
