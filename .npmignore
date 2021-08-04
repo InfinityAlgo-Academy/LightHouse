@@ -6,7 +6,6 @@
 assets/
 build/
 coverage/
-dist/
 proto/
 docs/
 
@@ -54,6 +53,7 @@ results.html
 *.lcov
 
 # generated files needed for publish
+dist/**
 !dist/report/standalone.js
 
 # large files
