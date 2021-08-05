@@ -193,8 +193,13 @@ describe('DOM', () => {
         expect(a.getAttribute('href')).toEqual(null);
       });
     });
-  });
 
+    it('handles if url is undefined (because of proto roundtrip)', () => {
+      const a = dom.createElement('a');
+      dom.safelySetHref(a, undefined);
+      expect(a.href).toEqual('');
+    });
+  });
 
   describe('safelySetBlobHref', () => {
     it('sets href for safe blob types', () => {
