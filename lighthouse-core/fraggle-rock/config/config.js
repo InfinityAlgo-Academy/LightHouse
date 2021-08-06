@@ -9,7 +9,7 @@ const path = require('path');
 const log = require('lighthouse-logger');
 const Runner = require('../../runner.js');
 const defaultConfig = require('./default-config.js');
-const {defaultNavigationConfig} = require('../../config/constants.js');
+const {defaultNavigationConfig, nonSimulatedPassConfigOverrides} = require('../../config/constants.js'); // eslint-disable-line max-len
 const {
   isFRGathererDefn,
   throwInvalidDependencyOrder,
@@ -158,12 +158,41 @@ function resolveArtifactsToDefns(artifacts, configDir) {
 }
 
 /**
+ * Overrides the quiet windows when throttlingMethod requires observation.
+ *
+ * @param {LH.Config.NavigationDefn} navigation
+ * @param {LH.Config.Settings} settings
+ */
+function overrideNavigationThrottlingWindows(navigation, settings) {
+  if (navigation.disableThrottling) return;
+  if (settings.throttlingMethod === 'simulate') return;
+
+  navigation.cpuQuietThresholdMs = Math.max(
+    navigation.cpuQuietThresholdMs || 0,
+    nonSimulatedPassConfigOverrides.cpuQuietThresholdMs
+  );
+  navigation.networkQuietThresholdMs = Math.max(
+    navigation.networkQuietThresholdMs || 0,
+    nonSimulatedPassConfigOverrides.networkQuietThresholdMs
+  );
+  navigation.pauseAfterFcpMs = Math.max(
+    navigation.pauseAfterFcpMs || 0,
+    nonSimulatedPassConfigOverrides.pauseAfterFcpMs
+  );
+  navigation.pauseAfterLoadMs = Math.max(
+    navigation.pauseAfterLoadMs || 0,
+    nonSimulatedPassConfigOverrides.pauseAfterLoadMs
+  );
+}
+
+/**
  *
  * @param {LH.Config.NavigationJson[]|null|undefined} navigations
  * @param {LH.Config.AnyArtifactDefn[]|null|undefined} artifactDefns
+ * @param {LH.Config.Settings} settings
  * @return {LH.Config.NavigationDefn[] | null}
  */
-function resolveNavigationsToDefns(navigations, artifactDefns) {
+function resolveNavigationsToDefns(navigations, artifactDefns, settings) {
   if (!navigations) return null;
   if (!artifactDefns) throw new Error('Cannot use navigations without defining artifacts');
 
@@ -181,9 +210,9 @@ function resolveNavigationsToDefns(navigations, artifactDefns) {
       return artifact;
     });
 
-    // TODO(FR-COMPAT): enforce navigation throttling invariants
-
-    return {...navigationWithDefaults, artifacts};
+    const resolvedNavigation = {...navigationWithDefaults, artifacts};
+    overrideNavigationThrottlingWindows(resolvedNavigation, settings);
+    return resolvedNavigation;
   });
 
   assertArtifactTopologicalOrder(navigationDefns);
@@ -209,7 +238,7 @@ function initializeConfig(configJSON, context) {
 
   const settings = resolveSettings(configWorkingCopy.settings || {}, context.settingsOverrides);
   const artifacts = resolveArtifactsToDefns(configWorkingCopy.artifacts, configDir);
-  const navigations = resolveNavigationsToDefns(configWorkingCopy.navigations, artifacts);
+  const navigations = resolveNavigationsToDefns(configWorkingCopy.navigations, artifacts, settings);
 
   /** @type {LH.Config.FRConfig} */
   let config = {

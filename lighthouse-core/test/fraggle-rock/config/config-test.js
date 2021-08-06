@@ -6,6 +6,7 @@
 'use strict';
 
 const BaseAudit = require('../../../audits/audit.js');
+const {nonSimulatedPassConfigOverrides} = require('../../../config/constants.js');
 const BaseGatherer = require('../../../fraggle-rock/gather/base-gatherer.js');
 const {initializeConfig} = require('../../../fraggle-rock/config/config.js');
 
@@ -66,61 +67,6 @@ describe('Fraggle Rock Config', () => {
   it('should throw on invalid artifact definitions', () => {
     const configJson = {artifacts: [{id: 'HTTPRedirect', gatherer: 'http-redirect'}]};
     expect(() => initializeConfig(configJson, {gatherMode})).toThrow(/HTTPRedirect gatherer/);
-  });
-
-  it('should resolve navigation definitions', () => {
-    gatherMode = 'navigation';
-    const configJson = {
-      artifacts: [{id: 'Accessibility', gatherer: 'accessibility'}],
-      navigations: [{id: 'default', artifacts: ['Accessibility']}],
-    };
-    const {config} = initializeConfig(configJson, {gatherMode});
-
-    expect(config).toMatchObject({
-      artifacts: [{id: 'Accessibility', gatherer: {path: 'accessibility'}}],
-      navigations: [
-        {id: 'default', artifacts: [{id: 'Accessibility', gatherer: {path: 'accessibility'}}]},
-      ],
-    });
-  });
-
-  it('should throw when navigations are defined without artifacts', () => {
-    const configJson = {
-      navigations: [{id: 'default', artifacts: ['Accessibility']}],
-    };
-
-    expect(() => initializeConfig(configJson, {gatherMode})).toThrow(/Cannot use navigations/);
-  });
-
-  it('should throw when navigations use unrecognized artifacts', () => {
-    const configJson = {
-      artifacts: [],
-      navigations: [{id: 'default', artifacts: ['Accessibility']}],
-    };
-
-    expect(() => initializeConfig(configJson, {gatherMode})).toThrow(/Unrecognized artifact/);
-  });
-
-  it('should set default properties on navigations', () => {
-    gatherMode = 'navigation';
-    const configJson = {
-      artifacts: [{id: 'Accessibility', gatherer: 'accessibility'}],
-      navigations: [{id: 'default', artifacts: ['Accessibility']}],
-    };
-    const {config} = initializeConfig(configJson, {gatherMode});
-
-    expect(config).toMatchObject({
-      navigations: [
-        {
-          id: 'default',
-          blankPage: 'about:blank',
-          artifacts: [{id: 'Accessibility', gatherer: {path: 'accessibility'}}],
-          disableThrottling: false,
-          networkQuietThresholdMs: 0,
-          cpuQuietThresholdMs: 0,
-        },
-      ],
-    });
   });
 
   it('should filter configuration by gatherMode', () => {
@@ -260,6 +206,94 @@ describe('Fraggle Rock Config', () => {
       dependencyGatherer.meta.supportedModes = ['navigation'];
       expect(() => initializeConfig(configJson, {gatherMode: 'navigation'}))
         .toThrow(/Dependency.*is invalid/);
+    });
+  });
+
+  describe('.resolveNavigationsToDefns', () => {
+    it('should resolve navigation definitions', () => {
+      gatherMode = 'navigation';
+      const configJson = {
+        artifacts: [{id: 'Accessibility', gatherer: 'accessibility'}],
+        navigations: [{id: 'default', artifacts: ['Accessibility']}],
+      };
+      const {config} = initializeConfig(configJson, {gatherMode});
+
+      expect(config).toMatchObject({
+        artifacts: [{id: 'Accessibility', gatherer: {path: 'accessibility'}}],
+        navigations: [
+          {id: 'default', artifacts: [{id: 'Accessibility', gatherer: {path: 'accessibility'}}]},
+        ],
+      });
+    });
+
+    it('should throw when navigations are defined without artifacts', () => {
+      const configJson = {
+        navigations: [{id: 'default', artifacts: ['Accessibility']}],
+      };
+
+      expect(() => initializeConfig(configJson, {gatherMode})).toThrow(/Cannot use navigations/);
+    });
+
+    it('should throw when navigations use unrecognized artifacts', () => {
+      const configJson = {
+        artifacts: [],
+        navigations: [{id: 'default', artifacts: ['Accessibility']}],
+      };
+
+      expect(() => initializeConfig(configJson, {gatherMode})).toThrow(/Unrecognized artifact/);
+    });
+
+    it('should set default properties on navigations', () => {
+      gatherMode = 'navigation';
+      const configJson = {
+        artifacts: [{id: 'Accessibility', gatherer: 'accessibility'}],
+        navigations: [{id: 'default', artifacts: ['Accessibility']}],
+      };
+      const {config} = initializeConfig(configJson, {gatherMode});
+
+      expect(config).toMatchObject({
+        navigations: [
+          {
+            id: 'default',
+            blankPage: 'about:blank',
+            artifacts: [{id: 'Accessibility', gatherer: {path: 'accessibility'}}],
+            loadFailureMode: 'fatal',
+            disableThrottling: false,
+            networkQuietThresholdMs: 0,
+            cpuQuietThresholdMs: 0,
+          },
+        ],
+      });
+    });
+
+    it('should ensure minimum quiet thresholds when throttlingMethod is devtools', () => {
+      gatherMode = 'navigation';
+      const configJson = {
+        artifacts: [{id: 'Accessibility', gatherer: 'accessibility'}],
+        navigations: [
+          {id: 'default', artifacts: ['Accessibility']},
+          {id: 'noThrottling', artifacts: ['Accessibility'], disableThrottling: true},
+          {id: 'alreadyHigh', artifacts: ['Accessibility'], cpuQuietThresholdMs: 10_000},
+        ],
+      };
+
+      const {config} = initializeConfig(configJson, {
+        gatherMode,
+        settingsOverrides: {throttlingMethod: 'devtools'},
+      });
+
+      expect(config).toMatchObject({
+        navigations: [
+          {
+            pauseAfterFcpMs: nonSimulatedPassConfigOverrides.pauseAfterFcpMs,
+            pauseAfterLoadMs: nonSimulatedPassConfigOverrides.pauseAfterLoadMs,
+            networkQuietThresholdMs: nonSimulatedPassConfigOverrides.networkQuietThresholdMs,
+            cpuQuietThresholdMs: nonSimulatedPassConfigOverrides.cpuQuietThresholdMs,
+          },
+          {networkQuietThresholdMs: 0, cpuQuietThresholdMs: 0},
+          {cpuQuietThresholdMs: 10_000},
+        ],
+      });
     });
   });
 
