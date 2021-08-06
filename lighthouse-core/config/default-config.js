@@ -77,9 +77,9 @@ const UIStrings = {
   /** Title of the Search Engine Optimization (SEO) category of audits. This is displayed at the top of a list of audits focused on topics related to optimizing a website for indexing by search engines. Also used as a label of a score gauge; try to limit to 20 characters. */
   seoCategoryTitle: 'SEO',
   /** Description of the Search Engine Optimization (SEO) category. This is displayed at the top of a list of audits focused on optimizing a website for indexing by search engines. No character length limits. 'Learn More' becomes link text to additional documentation. */
-  seoCategoryDescription: 'These checks ensure that your page is optimized for search engine results ranking. ' +
-  'There are additional factors Lighthouse does not check that may affect your search ranking. ' +
-  '[Learn more](https://support.google.com/webmasters/answer/35769).',
+  seoCategoryDescription: 'These checks ensure that your page is following basic search engine optimization advice. ' +
+  'There are many additional factors Lighthouse does not score here that may affect your search ranking, ' +
+  'including performance on [Core Web Vitals](https://web.dev/learn-web-vitals/). [Learn more](https://support.google.com/webmasters/answer/35769).',
   /** Description of the Search Engine Optimization (SEO) manual checks category, the additional validators must be run by hand in order to check all SEO best practices. This is displayed at the top of a list of manually run audits focused on optimizing a website for indexing by search engines. No character length limits. */
   seoCategoryManualDescription: 'Run these additional validators on your site to check additional SEO best practices.',
   /** Title of the navigation section within the Search Engine Optimization (SEO) category. Within this section are audits with descriptive titles that highlight opportunities to make a page more usable on mobile devices. */
