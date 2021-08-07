@@ -5,7 +5,7 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import Audit = require('../lighthouse-core/audits/audit.js');
+import AuditClass = require('../lighthouse-core/audits/audit.js');
 
 interface ClassOf<T> {
   new (): T;
@@ -144,9 +144,9 @@ declare global {
         path: string,
         options?: {};
       } | {
-        implementation: typeof Audit;
+        implementation: typeof AuditClass;
         options?: {};
-      } | typeof Audit | string;
+      } | typeof AuditClass | string;
 
       /**
        * Reference to an audit member of a category and how its score should be
@@ -208,7 +208,7 @@ declare global {
       }
 
       export interface AuditDefn {
-        implementation: typeof Audit;
+        implementation: typeof AuditClass;
         path?: string;
         options: {};
       }
