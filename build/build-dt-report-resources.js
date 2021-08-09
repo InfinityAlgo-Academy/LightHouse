@@ -33,7 +33,7 @@ fs.mkdirSync(distDir, {recursive: true});
 writeFile('report.js', htmlReportAssets.REPORT_JAVASCRIPT);
 writeFile('report.css', htmlReportAssets.REPORT_CSS);
 writeFile('standalone-template.html', htmlReportAssets.REPORT_TEMPLATE);
-writeFile('templates.html', htmlReportAssets.REPORT_TEMPLATES);
+writeFile('templates.html', '<div>Empty file. Remove on next roll to CDT</div>');
 writeFile('report.d.ts', 'export {}');
 writeFile('report-generator.d.ts', 'export {}');
 

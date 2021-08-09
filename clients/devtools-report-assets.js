@@ -30,7 +30,4 @@ module.exports = {
   get REPORT_TEMPLATE() {
     return cachedResources.get('third_party/lighthouse/report-assets/standalone-template.html');
   },
-  get REPORT_TEMPLATES() {
-    return cachedResources.get('third_party/lighthouse/report-assets/templates.html');
-  },
 };

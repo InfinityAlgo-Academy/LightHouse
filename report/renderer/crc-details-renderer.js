@@ -83,18 +83,17 @@ export class CriticalRequestChainRenderer {
   /**
    * Creates the DOM for a tree segment.
    * @param {DOM} dom
-   * @param {DocumentFragment} tmpl
    * @param {CRCSegment} segment
    * @param {DetailsRenderer} detailsRenderer
    * @return {Node}
    */
-  static createChainNode(dom, tmpl, segment, detailsRenderer) {
-    const chainsEl = dom.cloneTemplate('#tmpl-lh-crc__chains', tmpl);
+  static createChainNode(dom, segment, detailsRenderer) {
+    const chainEl = dom.createComponent('crcChain');
 
     // Hovering over request shows full URL.
-    dom.find('.crc-node', chainsEl).setAttribute('title', segment.node.request.url);
+    dom.find('.crc-node', chainEl).setAttribute('title', segment.node.request.url);
 
-    const treeMarkeEl = dom.find('.crc-node__tree-marker', chainsEl);
+    const treeMarkeEl = dom.find('.crc-node__tree-marker', chainEl);
 
     // Construct lines and add spacers for sub requests.
     segment.treeMarkers.forEach(separator => {
@@ -124,7 +123,7 @@ export class CriticalRequestChainRenderer {
     // Fill in url, host, and request size information.
     const url = segment.node.request.url;
     const linkEl = detailsRenderer.renderTextURL(url);
-    const treevalEl = dom.find('.crc-node__tree-value', chainsEl);
+    const treevalEl = dom.find('.crc-node__tree-value', chainEl);
     treevalEl.appendChild(linkEl);
 
     if (!segment.hasChildren) {
@@ -138,7 +137,7 @@ export class CriticalRequestChainRenderer {
       treevalEl.appendChild(span2);
     }
 
-    return chainsEl;
+    return chainEl;
   }
 
   /**
@@ -151,7 +150,7 @@ export class CriticalRequestChainRenderer {
    * @param {DetailsRenderer} detailsRenderer
    */
   static buildTree(dom, tmpl, segment, elem, details, detailsRenderer) {
-    elem.appendChild(CRCRenderer.createChainNode(dom, tmpl, segment, detailsRenderer));
+    elem.appendChild(CRCRenderer.createChainNode(dom, segment, detailsRenderer));
     if (segment.node.children) {
       for (const key of Object.keys(segment.node.children)) {
         const childSegment = CRCRenderer.createSegment(segment.node.children, key,
@@ -163,13 +162,12 @@ export class CriticalRequestChainRenderer {
 
   /**
    * @param {DOM} dom
-   * @param {ParentNode} templateContext
    * @param {LH.Audit.Details.CriticalRequestChain} details
    * @param {DetailsRenderer} detailsRenderer
    * @return {Element}
    */
-  static render(dom, templateContext, details, detailsRenderer) {
-    const tmpl = dom.cloneTemplate('#tmpl-lh-crc', templateContext);
+  static render(dom, details, detailsRenderer) {
+    const tmpl = dom.createComponent('crc');
     const containerEl = dom.find('.lh-crc', tmpl);
 
     // Fill in top summary.

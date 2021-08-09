@@ -38,9 +38,6 @@ async function run() {
     name: 'viewer',
     appDir: `${LH_ROOT}/lighthouse-viewer/app`,
     html: {path: 'index.html'},
-    htmlReplacements: {
-      '%%LIGHTHOUSE_TEMPLATES%%': htmlReportAssets.REPORT_TEMPLATES,
-    },
     stylesheets: [
       htmlReportAssets.REPORT_CSS,
       {path: 'styles/*'},
