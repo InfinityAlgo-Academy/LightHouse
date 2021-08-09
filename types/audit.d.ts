@@ -4,7 +4,12 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
+import ArbitraryEqualityMap = require('../lighthouse-core/lib/arbitrary-equality-map.js');
+import {Artifacts} from './artifacts';
 import AuditDetails from './audit-details';
+import Config from './config';
+import Gatherer from './gatherer';
+import {FormattedIcu, IcuMessage} from './i18n';
 
 declare module Audit {
   export import Details = AuditDetails;
@@ -12,13 +17,13 @@ declare module Audit {
   type Context = Immutable<{
     /** audit options */
     options: Record<string, any>;
-    settings: LH.Config.Settings;
+    settings: Config.Settings;
     /**
      * Nested cache for already-computed computed artifacts. Keyed first on
      * the computed artifact's `name` property, then on input artifact(s).
      * Values are Promises resolving to the computedArtifact result.
      */
-    computedCache: Map<string, LH.ArbitraryEqualityMap>;
+    computedCache: Map<string, ArbitraryEqualityMap>;
   }>;
 
   interface ScoreOptions {
@@ -47,19 +52,19 @@ declare module Audit {
     /** The string identifier of the audit, in kebab case. */
     id: string;
     /** Short, user-visible title for the audit when successful. */
-    title: string | LH.IcuMessage;
+    title: string | IcuMessage;
     /** Short, user-visible title for the audit when failing. */
-    failureTitle?: string | LH.IcuMessage;
+    failureTitle?: string | IcuMessage;
     /** A more detailed description that describes why the audit is important and links to Lighthouse documentation on the audit; markdown links supported. */
-    description: string | LH.IcuMessage;
+    description: string | IcuMessage;
     /** A list of the members of LH.Artifacts that must be present for the audit to execute. */
-    requiredArtifacts: Array<keyof LH.Artifacts>;
+    requiredArtifacts: Array<keyof Artifacts>;
     /** A list of the members of LH.Artifacts that augment the audit, but aren't necessary. For internal use only with experimental-config. */
-    __internalOptionalArtifacts?: Array<keyof LH.Artifacts>;
+    __internalOptionalArtifacts?: Array<keyof Artifacts>;
     /** A string identifying how the score should be interpreted for display. */
     scoreDisplayMode?: Audit.ScoreDisplayMode;
     /** A list of gather modes that this audit is applicable to. */
-    supportedModes?: LH.Gatherer.GatherMode[],
+    supportedModes?: Gatherer.GatherMode[],
   }
 
   interface ByteEfficiencyItem extends AuditDetails.OpportunityItem {
@@ -76,18 +81,18 @@ declare module Audit {
     /** The scored value of the audit, provided in the range `0-1`, or null if `scoreDisplayMode` indicates not scored. */
     score: number | null;
     /** The i18n'd string value that the audit wishes to display for its results. This value is not necessarily the string version of the `numericValue`. */
-    displayValue?: string | LH.IcuMessage;
+    displayValue?: string | IcuMessage;
     /** An explanation of why the audit failed on the test page. */
-    explanation?: string | LH.IcuMessage;
+    explanation?: string | IcuMessage;
     /** Error message from any exception thrown while running this audit. */
-    errorMessage?: string | LH.IcuMessage;
-    warnings?: Array<string | LH.IcuMessage>;
+    errorMessage?: string | IcuMessage;
+    warnings?: Array<string | IcuMessage>;
     /** Overrides scoreDisplayMode with notApplicable if set to true */
     notApplicable?: boolean;
     /** Extra information about the page provided by some types of audits, in one of several possible forms that can be rendered in the HTML report. */
     details?: AuditDetails;
     /** If an audit encounters unusual execution circumstances, strings can be put in this optional array to add top-level warnings to the LHR. */
-    runWarnings?: Array<LH.IcuMessage>;
+    runWarnings?: Array<IcuMessage>;
   }
 
   /** The Audit.Product type for audits that do not return a `numericValue`. */
@@ -137,15 +142,15 @@ declare module Audit {
     /** The unit of `numericValue`, used when the consumer wishes to convert numericValue to a display string. */
     numericUnit?: string;
     /** Extra information about the page provided by some types of audits, in one of several possible forms that can be rendered in the HTML report. */
-    details?: LH.FormattedIcu<AuditDetails>;
+    details?: FormattedIcu<AuditDetails>;
   }
 
   interface Results {
     [metric: string]: Result;
   }
 
-  type MultiCheckAuditP1 = Partial<Record<LH.Artifacts.ManifestValueCheckID, boolean>>;
-  type MultiCheckAuditP2 = Partial<LH.Artifacts.ManifestValues>;
+  type MultiCheckAuditP1 = Partial<Record<Artifacts.ManifestValueCheckID, boolean>>;
+  type MultiCheckAuditP2 = Partial<Artifacts.ManifestValues>;
   interface MultiCheckAuditP3 {
     failures: Array<string>;
     manifestValues?: undefined;

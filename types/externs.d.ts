@@ -8,6 +8,11 @@ import _Crdp from 'devtools-protocol/types/protocol';
 import _CrdpMappings from 'devtools-protocol/types/protocol-mapping';
 import {ParseSelectorToTagNames} from 'typed-query-selector/parser';
 
+import {Artifacts} from './artifacts';
+import Budget from './budget';
+import LHResult from './lhr';
+import Protocol from './protocol';
+
 /** Merge properties of the types in union `T`. Where properties overlap, property types becomes the union of the two (or more) possible types. */
 type MergeTypes<T> = {
   [K in (T extends unknown ? keyof T : never)]: T extends Record<K, infer U> ? U : never;
@@ -273,7 +278,7 @@ declare global {
     }
 
     export interface RunnerResult {
-      lhr: Result;
+      lhr: LHResult;
       report: string|string[];
       artifacts: Artifacts;
     }

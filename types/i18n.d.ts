@@ -6,74 +6,67 @@
 
 import {Util} from '../report/renderer/util.js';
 
-declare global {
-  module LH {
-    export type IcuMessage = {
-      // NOTE: `i18nId` rather than just `id` to make tsc typing easier (vs type branding which won't survive JSON roundtrip).
-      /** The id locating this message in the locale message json files. */
-      i18nId: string;
-      /** The dynamic values, if any, to insert into the localized string. */
-      values?: Record<string, string | number>;
-      /**
-       * A formatted version of the string, usually as found in a file's `UIStrings`
-       * entry, and used as backup if the `i18nId` doesn't refer to an existing
-       * message in the requested locale. Used when serialized and a new version of
-       * Lighthouse no longer contains the needed message (or in development and
-       * the locale files don't yet contain it).
-       */
-      formattedDefault: string,
-    };
+export type IcuMessage = {
+  // NOTE: `i18nId` rather than just `id` to make tsc typing easier (vs type branding which won't survive JSON roundtrip).
+  /** The id locating this message in the locale message json files. */
+  i18nId: string;
+  /** The dynamic values, if any, to insert into the localized string. */
+  values?: Record<string, string | number>;
+  /**
+   * A formatted version of the string, usually as found in a file's `UIStrings`
+   * entry, and used as backup if the `i18nId` doesn't refer to an existing
+   * message in the requested locale. Used when serialized and a new version of
+   * Lighthouse no longer contains the needed message (or in development and
+   * the locale files don't yet contain it).
+   */
+  formattedDefault: string,
+};
 
-    /**
-     * A helper to represent the type of an object that hasn't be localized yet.
-     * Recursively finds all `string` properties in `T` and extends them to also
-     * accept an `LH.IcuMessage`.
-     *
-     * Heavy handed and requires more type checks, so prefer explicitly setting
-     * properties to include `LH.IcuMessage` over this helper if possible.
-     */
-    type RawIcu<T> = T extends IcuMessage ? T :
-      // Check `string extends T` so LH.IcuMessage isn't added to union of string literals.
-      string extends T ? (T|IcuMessage) :
-      // Otherwise recurse into any properties and repeat.
-      {[K in keyof T]: RawIcu<T[K]>};
+/**
+ * A helper to represent the type of an object that hasn't be localized yet.
+ * Recursively finds all `string` properties in `T` and extends them to also
+ * accept an `LH.IcuMessage`.
+ *
+ * Heavy handed and requires more type checks, so prefer explicitly setting
+ * properties to include `LH.IcuMessage` over this helper if possible.
+ */
+export type RawIcu<T> = T extends IcuMessage ? T :
+  // Check `string extends T` so LH.IcuMessage isn't added to union of string literals.
+  string extends T ? (T|IcuMessage) :
+  // Otherwise recurse into any properties and repeat.
+  {[K in keyof T]: RawIcu<T[K]>};
 
-    /**
-     * A helper to represent the localization process, recursively finding all
-     * `LH.IcuMessage` properties in `T` and replacing them with `string`.
-     *
-     * Essentially undoes `LH.RawIcu<T>`, but as with that type, prefer using types
-     * with explicit `string` properties over this helper if possible.
-     */
-    type FormattedIcu<T> = T extends IcuMessage ?
-      // All LH.IcuMessages replaced with strings.
-      Exclude<T, IcuMessage> | string :
-      // Otherwise recurse into any properties and repeat.
-      {[K in keyof T]: FormattedIcu<T[K]>};
+/**
+ * A helper to represent the localization process, recursively finding all
+ * `LH.IcuMessage` properties in `T` and replacing them with `string`.
+ *
+ * Essentially undoes `LH.RawIcu<T>`, but as with that type, prefer using types
+ * with explicit `string` properties over this helper if possible.
+ */
+export type FormattedIcu<T> = T extends IcuMessage ?
+  // All LH.IcuMessages replaced with strings.
+  Exclude<T, IcuMessage> | string :
+  // Otherwise recurse into any properties and repeat.
+  {[K in keyof T]: FormattedIcu<T[K]>};
 
-    /**
-     * Info about an `LH.IcuMessage` value that was localized to a string. Value
-     * is either a
-     *  - path (`_.set()` style) into the original object where the message was replaced
-     *  - those paths and a set of values that were inserted into the localized strings.
-     */
-    type IcuMessagePath = string | {path: string, values: Record<string, string | number>};
+/**
+ * Info about an `LH.IcuMessage` value that was localized to a string. Value
+ * is either a
+ *  - path (`_.set()` style) into the original object where the message was replaced
+ *  - those paths and a set of values that were inserted into the localized strings.
+ */
+type IcuMessagePath = string | {path: string, values: Record<string, string | number>};
 
-    /**
-     * A representation of `LH.IcuMessage`s that were in an object (e.g. `LH.Result`)
-     * and have been replaced by localized strings. `LH.IcuMessagePaths` provides a
-     * mapping that can be used to change the locale of the object again.
-     * Keyed by ids from the locale message json files, values are information on
-     * how to replace the string if needed.
-     */
-    export interface IcuMessagePaths {
-      [i18nId: string]: IcuMessagePath[];
-    }
-
-    /** Localized strings for the html report renderer. */
-    export type I18NRendererStrings = typeof Util['UIStrings'];
-  }
+/**
+ * A representation of `LH.IcuMessage`s that were in an object (e.g. `LH.Result`)
+ * and have been replaced by localized strings. `LH.IcuMessagePaths` provides a
+ * mapping that can be used to change the locale of the object again.
+ * Keyed by ids from the locale message json files, values are information on
+ * how to replace the string if needed.
+ */
+export interface IcuMessagePaths {
+  [i18nId: string]: IcuMessagePath[];
 }
 
-// empty export to keep file a module
-export {}
+/** Localized strings for the html report renderer. */
+export type I18NRendererStrings = typeof Util['UIStrings'];

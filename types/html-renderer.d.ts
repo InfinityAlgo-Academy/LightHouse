@@ -4,6 +4,10 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
+import Audit from './audit';
+import LHResult from './lhr';
+
+// Add needed DOM APIs not yet in tsc's lib dom.
 declare global {
   var CompressionStream: {
     prototype: CompressionStream,
@@ -13,35 +17,32 @@ declare global {
   interface CompressionStream extends GenericTransformStream {
     readonly format: string;
   }
+}
 
-  module LH {
-    // During report generation, the LHR object is transformed a bit for convenience
-    // Primarily, the auditResult is added as .result onto the auditRef. We're lazy sometimes. It'll be removed in due time.
-    export interface ReportResult extends Result {
-      categories: Record<string, ReportResult.Category>;
-    }
-    export module ReportResult {
-      export interface Category extends Result.Category {
-        auditRefs: Array<AuditRef>
-      }
+// During report generation, the LHR object is transformed a bit for convenience
+// Primarily, the auditResult is added as .result onto the auditRef. We're lazy sometimes. It'll be removed in due time.
+interface ReportResult extends LHResult {
+  categories: Record<string, ReportResult.Category>;
+}
+declare module ReportResult {
+  interface Category extends LHResult.Category {
+    auditRefs: Array<AuditRef>
+  }
 
-      export interface AuditRef extends Result.AuditRef {
-        result: Audit.Result;
-        stackPacks?: StackPackDescription[];
-        relevantMetrics?: LH.ReportResult.AuditRef[];
-      }
+  interface AuditRef extends LHResult.AuditRef {
+    result: Audit.Result;
+    stackPacks?: StackPackDescription[];
+    relevantMetrics?: ReportResult.AuditRef[];
+  }
 
-      export interface StackPackDescription {
-         /** The title of the stack pack. */
-        title: string;
-        /** A base64 data url to be used as the stack pack's icon. */
-        iconDataURL: string;
-        /** The stack-specific description for this audit. */
-        description: string;
-      }
-    }
+  interface StackPackDescription {
+      /** The title of the stack pack. */
+    title: string;
+    /** A base64 data url to be used as the stack pack's icon. */
+    iconDataURL: string;
+    /** The stack-specific description for this audit. */
+    description: string;
   }
 }
 
-// empty export to keep file a module
-export {}
+export default ReportResult;

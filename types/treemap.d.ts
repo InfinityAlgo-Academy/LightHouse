@@ -4,54 +4,53 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-declare global {
-  module LH.Treemap {
-    interface Options {
-      lhr: {
-        requestedUrl: string;
-        finalUrl: string;
-        audits: {
-          'script-treemap-data': LH.Audit.Result;
-        };
-        configSettings: {
-          locale: LH.Locale;
-        }
+import Audit from './audit';
+
+declare module Treemap {
+  interface Options {
+    lhr: {
+      requestedUrl: string;
+      finalUrl: string;
+      audits: {
+        'script-treemap-data': Audit.Result;
+      };
+      configSettings: {
+        locale: LH.Locale;
       }
     }
+  }
 
-    type NodePath = string[];
+  type NodePath = string[];
 
-    interface Selector {
-      type: 'depthOneNode' | 'group';
-      value: string;
-    }
+  interface Selector {
+    type: 'depthOneNode' | 'group';
+    value: string;
+  }
 
-    interface Highlight {
-      path: NodePath;
-      /** If not set, will use the color based on the d1Node. */
-      color?: string;
-    }
+  interface Highlight {
+    path: NodePath;
+    /** If not set, will use the color based on the d1Node. */
+    color?: string;
+  }
 
-    interface ViewMode {
-      id: 'all' | 'unused-bytes' | 'duplicate-modules';
-      label: string;
-      subLabel: string;
-      enabled: boolean;
-      partitionBy?: 'resourceBytes' | 'unusedBytes';
-      highlights?: Highlight[];
-    }
+  interface ViewMode {
+    id: 'all' | 'unused-bytes' | 'duplicate-modules';
+    label: string;
+    subLabel: string;
+    enabled: boolean;
+    partitionBy?: 'resourceBytes' | 'unusedBytes';
+    highlights?: Highlight[];
+  }
 
-    interface Node {
-      /** Could be a url, a path component from a source map, or an arbitrary string. */
-      name: string;
-      resourceBytes: number;
-      unusedBytes?: number;
-      /** If present, this module is a duplicate. String is normalized source path. See ModuleDuplication.normalizeSource */
-      duplicatedNormalizedModuleName?: string;
-      children?: Node[];
-    }
+  interface Node {
+    /** Could be a url, a path component from a source map, or an arbitrary string. */
+    name: string;
+    resourceBytes: number;
+    unusedBytes?: number;
+    /** If present, this module is a duplicate. String is normalized source path. See ModuleDuplication.normalizeSource */
+    duplicatedNormalizedModuleName?: string;
+    children?: Node[];
   }
 }
 
-// empty export to keep file a module
-export {}
+export default Treemap;
