@@ -9,6 +9,9 @@ import * as Artifacts_ from './artifacts';
 import Audit_ from './audit';
 import Budget_ from './budget';
 import Config_ from './config';
+import _Crdp from 'devtools-protocol/types/protocol';
+import _CrdpMappings from 'devtools-protocol/types/protocol-mapping';
+import * as Externs from './externs';
 import Gatherer_ from './gatherer';
 import * as I18n from './i18n';
 import LHError = require('../lighthouse-core/lib/lh-error.js');
@@ -29,15 +32,35 @@ declare global {
     export import FRArtifacts = Artifacts_.FRArtifacts;
     export import FRBaseArtifacts = Artifacts_.FRBaseArtifacts;
     export import GathererArtifacts = Artifacts_.GathererArtifacts;
+    export import DevtoolsLog = Artifacts_.DevtoolsLog;
+    export import Trace = Artifacts_.Trace;
+    export import TraceCpuProfile = Artifacts_.TraceCpuProfile;
+    export import TraceEvent = Artifacts_.TraceEvent;
 
     export import Audit = Audit_;
     export import Budget = Budget_;
     export import Config = Config_;
+    export import Crdp = _Crdp;
+    export import CrdpEvents = _CrdpMappings.Events;
+    export import CrdpCommands = _CrdpMappings.Commands;
+
+    // externs.d.ts
+    export import ThrottlingSettings = Externs.ThrottlingSettings;
+    export import ScreenEmulationSettings = Externs.ScreenEmulationSettings;
+    export import SharedFlagsSettings = Externs.SharedFlagsSettings;
+    export import OutputMode = Externs.OutputMode;
+    export import PrecomputedLanternData = Externs.PrecomputedLanternData;
+    export import Flags = Externs.Flags;
+    export import CliFlags = Externs.CliFlags;
+    export import RunnerResult = Externs.RunnerResult;
+    export import DevToolsJsonTarget = Externs.DevToolsJsonTarget;
+
     export import Gatherer = Gatherer_;
     export import LighthouseError = LHError;
     export import Result = LHResult;
 
     // i18n.d.ts.
+    export import Locale = I18n.Locale;
     export import IcuMessage = I18n.IcuMessage;
     export import RawIcu = I18n.RawIcu;
     export import FormattedIcu = I18n.FormattedIcu;

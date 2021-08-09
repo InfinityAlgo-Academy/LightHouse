@@ -16,6 +16,7 @@ import {Artifacts, BaseArtifacts, GathererArtifacts} from './artifacts';
 import Config from './config';
 import {IcuMessage} from './i18n';
 import Protocol from './protocol';
+import {Trace, DevtoolsLog} from './artifacts';
 
 declare module Gatherer {
   /** The Lighthouse wrapper around a raw CDP session. */
@@ -69,8 +70,8 @@ declare module Gatherer {
 
   interface LoadData {
     networkRecords: Array<Artifacts.NetworkRequest>;
-    devtoolsLog: LH.DevtoolsLog;
-    trace?: LH.Trace;
+    devtoolsLog: DevtoolsLog;
+    trace?: Trace;
   }
 
   type PhaseResultNonPromise = void | GathererArtifacts[keyof GathererArtifacts];

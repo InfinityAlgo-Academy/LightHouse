@@ -5,6 +5,7 @@
  */
 
 import Audit from './audit';
+import {Locale} from './i18n';
 
 declare module Treemap {
   interface Options {
@@ -15,7 +16,7 @@ declare module Treemap {
         'script-treemap-data': Audit.Result;
       };
       configSettings: {
-        locale: LH.Locale;
+        locale: Locale;
       }
     }
   }

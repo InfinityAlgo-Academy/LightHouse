@@ -17,6 +17,7 @@ type _TaskNode = import('../lighthouse-core/lib/tracehouse/main-thread-tasks.js'
 import Config from './config';
 import Gatherer from './gatherer';
 import {IcuMessage} from './i18n';
+import Protocol from './protocol';
 
 export interface Artifacts extends BaseArtifacts, GathererArtifacts {}
 
@@ -80,9 +81,9 @@ interface LegacyBaseArtifacts {
   /** Errors preventing page being installable as PWA. This moved to a regular artifact in Fraggle Rock. */
   InstallabilityErrors: Artifacts.InstallabilityErrors;
   /** A set of page-load traces, keyed by passName. */
-  traces: {[passName: string]: LH.Trace};
+  traces: {[passName: string]: Trace};
   /** A set of DevTools debugger protocol records, keyed by passName. */
-  devtoolsLogs: {[passName: string]: LH.DevtoolsLog};
+  devtoolsLogs: {[passName: string]: DevtoolsLog};
 }
 
 /**
@@ -125,7 +126,7 @@ export interface GathererArtifacts extends PublicGathererArtifacts,LegacyBaseArt
   /** CSS coverage information for styles used by page's final state. */
   CSSUsage: {rules: LH.Crdp.CSS.RuleUsage[], stylesheets: Artifacts.CSSStyleSheetInfo[]};
   /** The primary log of devtools protocol activity. Used in Fraggle Rock gathering. */
-  DevtoolsLog: LH.DevtoolsLog;
+  DevtoolsLog: DevtoolsLog;
   /** Information on the document's doctype(or null if not present), specifically the name, publicId, and systemId.
       All properties default to an empty string if not present */
   Doctype: Artifacts.Doctype | null;
@@ -172,7 +173,7 @@ export interface GathererArtifacts extends PublicGathererArtifacts,LegacyBaseArt
   /** Information about tap targets including their position and size. */
   TapTargets: Artifacts.TapTarget[];
   /** The primary log of devtools protocol activity. Used in Fraggle Rock gathering. */
-  Trace: LH.Trace;
+  Trace: Trace;
   /** Elements associated with metrics (ie: Largest Contentful Paint element). */
   TraceElements: Artifacts.TraceElement[];
 }
@@ -608,8 +609,8 @@ declare module Artifacts {
   }
 
   interface MetricComputationDataInput {
-    devtoolsLog: LH.DevtoolsLog;
-    trace: LH.Trace;
+    devtoolsLog: DevtoolsLog;
+    trace: Trace;
     settings: Immutable<Config.Settings>;
     gatherContext: Artifacts['GatherContext'];
     simulator?: InstanceType<typeof LanternSimulator>;
@@ -672,19 +673,19 @@ declare module Artifacts {
     /** The relative times from timeOrigin to key events, in milliseconds. */
     timings: TraceTimes;
     /** The subset of trace events from the page's process, sorted by timestamp. */
-    processEvents: Array<LH.TraceEvent>;
+    processEvents: Array<TraceEvent>;
     /** The subset of trace events from the page's main thread, sorted by timestamp. */
-    mainThreadEvents: Array<LH.TraceEvent>;
+    mainThreadEvents: Array<TraceEvent>;
     /** The subset of trace events from the main frame, sorted by timestamp. */
-    frameEvents: Array<LH.TraceEvent>;
+    frameEvents: Array<TraceEvent>;
     /** The subset of trace events from the main frame and any child frames, sorted by timestamp. */
-    frameTreeEvents: Array<LH.TraceEvent>;
+    frameTreeEvents: Array<TraceEvent>;
     /** IDs for the trace's main frame, process, and thread. */
     mainFrameIds: {pid: number, tid: number, frameId: string};
     /** The list of frames committed in the trace. */
     frames: Array<{id: string, url: string}>;
     /** The trace event marking the time at which the run should consider to have begun. Typically the same as the navigationStart but might differ due to SPA navigations, client-side redirects, etc. In the FR timespan case, this event is injected by Lighthouse itself. */
-    timeOriginEvt: LH.TraceEvent;
+    timeOriginEvt: TraceEvent;
   }
 
   interface ProcessedNavigation {
@@ -693,21 +694,21 @@ declare module Artifacts {
     /** The relative times from navigationStart to key metric events, in milliseconds. */
     timings: NavigationTraceTimes;
     /** The trace event marking firstPaint, if it was found. */
-    firstPaintEvt?: LH.TraceEvent;
+    firstPaintEvt?: TraceEvent;
     /** The trace event marking firstContentfulPaint, if it was found. */
-    firstContentfulPaintEvt: LH.TraceEvent;
+    firstContentfulPaintEvt: TraceEvent;
     /** The trace event marking firstContentfulPaint from all frames, if it was found. */
-    firstContentfulPaintAllFramesEvt: LH.TraceEvent;
+    firstContentfulPaintAllFramesEvt: TraceEvent;
     /** The trace event marking firstMeaningfulPaint, if it was found. */
-    firstMeaningfulPaintEvt?: LH.TraceEvent;
+    firstMeaningfulPaintEvt?: TraceEvent;
     /** The trace event marking largestContentfulPaint, if it was found. */
-    largestContentfulPaintEvt?: LH.TraceEvent;
+    largestContentfulPaintEvt?: TraceEvent;
     /** The trace event marking largestContentfulPaint from all frames, if it was found. */
-    largestContentfulPaintAllFramesEvt?: LH.TraceEvent;
+    largestContentfulPaintAllFramesEvt?: TraceEvent;
     /** The trace event marking loadEventEnd, if it was found. */
-    loadEvt?: LH.TraceEvent;
+    loadEvt?: TraceEvent;
     /** The trace event marking domContentLoadedEventEnd, if it was found. */
-    domContentLoadedEvt?: LH.TraceEvent;
+    domContentLoadedEvt?: TraceEvent;
     /**
      * Whether the firstMeaningfulPaintEvt was the definitive event or a fallback to
      * firstMeaningfulPaintCandidate events had to be attempted.
@@ -888,3 +889,98 @@ declare module Artifacts {
 
   type ConsoleMessage = ConsoleAPICall | ConsoleException | ConsoleProtocolLog;
 }
+
+export interface Trace {
+  traceEvents: TraceEvent[];
+  metadata?: {
+    'cpu-family'?: number;
+  };
+  [futureProps: string]: any;
+}
+
+/** The type of the Profile & ProfileChunk event in Chromium traces. Note that this is subtly different from Crdp.Profiler.Profile. */
+export interface TraceCpuProfile {
+  nodes?: Array<{id: number, callFrame: {functionName: string, url?: string}, parent?: number}>
+  samples?: Array<number>
+  timeDeltas?: Array<number>
+}
+
+/**
+ * @see https://docs.google.com/document/d/1CvAClvFfyA5R-PhYUmn5OOQtYMH4h6I0nSsKchNAySU/preview
+ */
+export interface TraceEvent {
+  name: string;
+  cat: string;
+  args: {
+    fileName?: string;
+    snapshot?: string;
+    sync_id?: string;
+    beginData?: {
+      frame?: string;
+      startLine?: number;
+      url?: string;
+    };
+    data?: {
+      frame?: string;
+      isLoadingMainFrame?: boolean;
+      documentLoaderURL?: string;
+      frames?: {
+        frame: string;
+        parent?: string;
+        processId?: number;
+      }[];
+      page?: string;
+      readyState?: number;
+      requestId?: string;
+      startTime?: number;
+      timeDeltas?: TraceCpuProfile['timeDeltas'];
+      cpuProfile?: TraceCpuProfile;
+      callFrame?: Required<TraceCpuProfile>['nodes'][0]['callFrame']
+      /** Marker for each synthetic CPU profiler event for the range of _potential_ ts values. */
+      _syntheticProfilerRange?: {
+        earliestPossibleTimestamp: number
+        latestPossibleTimestamp: number
+      }
+      stackTrace?: {
+        url: string
+      }[];
+      styleSheetUrl?: string;
+      timerId?: string;
+      url?: string;
+      is_main_frame?: boolean;
+      cumulative_score?: number;
+      id?: string;
+      nodeId?: number;
+      impacted_nodes?: Array<{
+        node_id: number,
+        old_rect?: Array<number>,
+        new_rect?: Array<number>,
+      }>;
+      score?: number;
+      weighted_score_delta?: number;
+      had_recent_input?: boolean;
+      compositeFailed?: number;
+      unsupportedProperties?: string[];
+      size?: number;
+    };
+    frame?: string;
+    name?: string;
+    labels?: string;
+  };
+  pid: number;
+  tid: number;
+  /** Timestamp of the event in microseconds. */
+  ts: number;
+  dur: number;
+  ph: 'B'|'b'|'D'|'E'|'e'|'F'|'I'|'M'|'N'|'n'|'O'|'R'|'S'|'T'|'X';
+  s?: 't';
+  id?: string;
+  id2?: {
+    local?: string;
+  };
+}
+
+/**
+ * A record of DevTools Debugging Protocol events.
+ */
+export type DevtoolsLog = Array<Protocol.RawEventMessage>;

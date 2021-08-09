@@ -6,6 +6,7 @@
  */
 
 import Audit = require('../lighthouse-core/audits/audit.js');
+import {ScreenEmulationSettings, SharedFlagsSettings, ThrottlingSettings} from './externs';
 import Gatherer from './gatherer';
 import {IcuMessage} from './i18n';
 
@@ -19,7 +20,7 @@ declare module Config {
    */
   interface Json {
     extends?: 'lighthouse:default' | string;
-    settings?: LH.SharedFlagsSettings;
+    settings?: SharedFlagsSettings;
     audits?: Config.AuditJson[] | null;
     categories?: Record<string, CategoryJson> | null;
     groups?: Record<string, Config.GroupJson> | null;
@@ -63,7 +64,7 @@ declare module Config {
   interface FRContext {
     gatherMode?: Gatherer.GatherMode;
     configPath?: string;
-    settingsOverrides?: LH.SharedFlagsSettings;
+    settingsOverrides?: SharedFlagsSettings;
   }
 
   interface SharedPassNavigationJson {
@@ -160,9 +161,9 @@ declare module Config {
     relevantAudits?: string[];
   }
 
-  interface Settings extends Required<LH.SharedFlagsSettings> {
-    throttling: Required<LH.ThrottlingSettings>;
-    screenEmulation: LH.ScreenEmulationSettings;
+  interface Settings extends Required<SharedFlagsSettings> {
+    throttling: Required<ThrottlingSettings>;
+    screenEmulation: ScreenEmulationSettings;
   }
 
   interface Pass extends Required<PassJson> {
