@@ -763,6 +763,13 @@
     "@nodelib/fs.scandir" "2.1.3"
     fastq "^1.6.0"
 
+"@rollup/plugin-alias@^3.1.5":
+  version "3.1.5"
+  resolved "https://registry.yarnpkg.com/@rollup/plugin-alias/-/plugin-alias-3.1.5.tgz#73356a3a1eab2e1e2fd952f9f53cd89fc740d952"
+  integrity sha512-yzUaSvCC/LJPbl9rnzX3HN7vy0tq7EzHoEiQl1ofh4n5r2Rd5bj/+zcJgaGA76xbw95/JjWQyvHg9rOJp2y0oQ==
+  dependencies:
+    slash "^3.0.0"
+
 "@sindresorhus/is@^0.14.0":
   version "0.14.0"
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-0.14.0.tgz#9fb3a3cf3132328151f353de4632e01e52102bea"
@@ -7224,6 +7231,11 @@ rollup-plugin-commonjs@^10.1.0:
     magic-string "^0.25.2"
     resolve "^1.11.0"
     rollup-pluginutils "^2.8.1"
+
+rollup-plugin-iife-namespace@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-iife-namespace/-/rollup-plugin-iife-namespace-0.0.2.tgz#3b6873ece5c0c4a1f043ce1ba43e651699f4654f"
+  integrity sha512-lc8GrDrYYuKpJExp0L4NENI8g8PzPMFrEd1wlxX28vgQf7jnYCrTtX0wCJaC7FtZcr8+Kt67dsYJ7/3F/EwooQ==
 
 rollup-plugin-terser@^7.0.2:
   version "7.0.2"

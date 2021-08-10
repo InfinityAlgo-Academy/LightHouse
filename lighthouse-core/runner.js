@@ -18,7 +18,6 @@ const fs = require('fs');
 const path = require('path');
 const URL = require('./lib/url-shim.js');
 const Sentry = require('./lib/sentry.js');
-const generateReport = require('../report/report-generator.js').generateReport;
 const LHError = require('./lib/lh-error.js');
 
 /** @typedef {import('./gather/connections/connection.js')} Connection */
@@ -170,7 +169,9 @@ class Runner {
       }
 
       // Create the HTML, JSON, and/or CSV string
-      const report = generateReport(lhr, settings.output);
+      // TODO(esmodules): static import when core/ is esm.
+      const {ReportGenerator} = await import('../report/report-generator.js');
+      const report = ReportGenerator.generateReport(lhr, settings.output);
 
       return {lhr, artifacts, report};
     } catch (err) {

@@ -5,9 +5,9 @@
  */
 'use strict';
 
-const htmlReportAssets = require('./report-assets.js');
+import * as htmlReportAssets from './report-assets.js';
 
-class ReportGenerator {
+export class ReportGenerator {
   /**
    * Replaces all the specified strings in source without serial replacements.
    * @param {string} source
@@ -122,5 +122,3 @@ class ReportGenerator {
     return outputAsArray ? output : output[0];
   }
 }
-
-module.exports = ReportGenerator;
