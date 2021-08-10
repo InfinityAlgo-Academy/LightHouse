@@ -1,7 +1,7 @@
 import _TreemapUtil = require('../app/src/util.js');
-import _DragAndDrop = require('../../lighthouse-viewer/app/src/drag-and-drop.js');
-import _FirebaseAuth = require('../../lighthouse-viewer/app/src/firebase-auth.js');
-import _GithubApi = require('../../lighthouse-viewer/app/src/github-api.js');
+import {DragAndDrop as _DragAndDrop} from '../../lighthouse-viewer/app/src/drag-and-drop.js';
+import {FirebaseAuth as _FirebaseAuth} from '../../lighthouse-viewer/app/src/firebase-auth.js';
+import {GithubApi as _GithubApi} from '../../lighthouse-viewer/app/src/github-api.js';
 import {TextEncoding as _TextEncoding} from '../../report/renderer/text-encoding.js';
 import {Logger as _Logger} from '../../report/renderer/logger.js';
 import {I18n as _I18n} from '../../report/renderer/i18n.js';

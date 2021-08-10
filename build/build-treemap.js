@@ -68,10 +68,8 @@ async function run() {
       fs.readFileSync(require.resolve('pako/dist/pako_inflate.js'), 'utf-8'),
       /* eslint-enable max-len */
       buildStrings(),
+      {path: '../../lighthouse-viewer/app/src/deps-for-treemap.js', rollup: true},
       {path: '../../dist/report/treemap.js'},
-      {path: '../../lighthouse-viewer/app/src/drag-and-drop.js'},
-      {path: '../../lighthouse-viewer/app/src/github-api.js'},
-      {path: '../../lighthouse-viewer/app/src/firebase-auth.js'},
       {path: 'src/**/*'},
     ],
     assets: [

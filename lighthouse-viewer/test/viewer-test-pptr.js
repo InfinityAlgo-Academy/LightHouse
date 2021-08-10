@@ -7,19 +7,18 @@
 
 /* eslint-env jest */
 
-const path = require('path');
-const fs = require('fs');
-const assert = require('assert').strict;
-const puppeteer = require('puppeteer');
-const {server} = require('../../lighthouse-cli/test/fixtures/static-server.js');
-const {LH_ROOT} = require('../../root.js');
+import {jest} from '@jest/globals';
+import * as fs from 'fs';
+import * as assert from 'assert';
+import puppeteer from 'puppeteer';
+import {server} from '../../lighthouse-cli/test/fixtures/static-server.js';
+import defaultConfig from '../../lighthouse-core/config/default-config.js';
+import {LH_ROOT} from '../../root.js';
 
 const portNumber = 10200;
 const viewerUrl = `http://localhost:${portNumber}/dist/gh-pages/viewer/index.html`;
 const sampleLhr = LH_ROOT + '/lighthouse-core/test/results/sample_v2.json';
 
-const defaultConfig =
-  require(path.resolve(LH_ROOT, './lighthouse-core/config/default-config.js'));
 const lighthouseCategories = Object.keys(defaultConfig.categories);
 const getAuditsOfCategory = category => defaultConfig.categories[category].auditRefs;
 

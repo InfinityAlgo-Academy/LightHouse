@@ -41,20 +41,6 @@ async function buildPsiReport() {
   });
 }
 
-async function buildViewerReport() {
-  const bundle = await rollup.rollup({
-    input: 'report/clients/viewer.js',
-    plugins: [
-      commonjs(),
-    ],
-  });
-
-  await bundle.write({
-    file: 'dist/report/viewer.js',
-    format: 'iife',
-  });
-}
-
 async function buildTreemapReport() {
   const bundle = await rollup.rollup({
     input: 'report/clients/treemap.js',
@@ -95,6 +81,5 @@ if (require.main === module) {
 module.exports = {
   buildStandaloneReport,
   buildPsiReport,
-  buildViewerReport,
   buildTreemapReport,
 };

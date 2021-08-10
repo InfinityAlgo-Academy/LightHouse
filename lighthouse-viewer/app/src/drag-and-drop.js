@@ -10,7 +10,7 @@
 /**
  * Manages drag and drop file input for the page.
  */
-class DragAndDrop {
+export class DragAndDrop {
   /**
    * @param {function(string): void} fileHandlerCallback Invoked when the user chooses a new file.
    */
@@ -90,8 +90,4 @@ class DragAndDrop {
     this._dropZone.classList.remove('dropping');
     this._dragging = false;
   }
-}
-
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = DragAndDrop;
 }
