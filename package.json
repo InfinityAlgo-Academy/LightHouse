@@ -209,21 +209,5 @@
   "bugs": {
     "url": "https://github.com/GoogleChrome/lighthouse/issues"
   },
-  "nyc": {
-    "reporter": [
-      "text-summary"
-    ],
-    "tempDirectory": "./coverage",
-    "include": [
-      "**/lighthouse-core/**/*.js",
-      "**/lighthouse-cli/**/*.js",
-      "**/lighthouse-viewer/**/*.js"
-    ],
-    "exclude": [
-      "**/third_party/**",
-      "**/test/",
-      "**/scripts/"
-    ]
-  },
   "homepage": "https://github.com/GoogleChrome/lighthouse#readme"
 }
