@@ -85,12 +85,24 @@ async function buildUmdBundle() {
 }
 
 if (require.main === module) {
-  if (process.argv[2] === '--only-standalone') {
+  if (process.argv.length <= 2) {
     buildStandaloneReport();
-  } else {
-    buildStandaloneReport();
-    buildUmdBundle();
     buildEsModulesBundle();
+    buildPsiReport();
+    buildUmdBundle();
+  }
+
+  if (process.argv.includes('--psi')) {
+    buildPsiReport();
+  }
+  if (process.argv.includes('--standalone')) {
+    buildStandaloneReport();
+  }
+  if (process.argv.includes('--esm')) {
+    buildEsModulesBundle();
+  }
+  if (process.argv.includes('--umd')) {
+    buildUmdBundle();
   }
 }
 

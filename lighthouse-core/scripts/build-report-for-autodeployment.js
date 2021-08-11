@@ -16,6 +16,8 @@ const {defaultSettings} = require('../config/constants.js');
 const lighthouse = require('../index.js');
 const lhr = /** @type {LH.Result} */ (require('../../lighthouse-core/test/results/sample_v2.json'));
 const {LH_ROOT} = require('../../root.js');
+const htmlReportAssets = require('../../report/report-assets.js');
+
 
 const DIST = path.join(LH_ROOT, `dist/now`);
 
@@ -29,19 +31,23 @@ const DIST = path.join(LH_ROOT, `dist/now`);
     'ɑrabic': swapLocale(lhr, 'ar').lhr,
     'xl-accented': swapLocale(lhr, 'en-XL').lhr,
     'error': errorLhr,
+    'single-category': tweakLhrForPsi(lhr),
   };
 
   // Generate and write reports
   Object.entries(filenameToLhr).forEach(([filename, lhr]) => {
-    let html = ReportGenerator.generateReportHtml(lhr);
-    // TODO: PSI is another variant to consider
-    for (const variant of ['', '⌣.cdt.']) {
+    for (const variant of ['', '⌣.cdt.', '⌣.psi.']) {
+      let html = variant.includes('psi') ?
+        generatePsiReportHtml() :
+        ReportGenerator.generateReportHtml(lhr);
+
       if (variant.includes('cdt')) {
         // TODO: Make the DevTools Audits panel "emulation" more comprehensive
         // - the parent widget/vbox container with overflow
         // - a more constrained/realistic default size
         html = html.replace(`"lh-root lh-vars"`, `"lh-root lh-vars lh-devtools"`);
       }
+
       const filepath = `${DIST}/${variant}${filename}/index.html`;
       fs.mkdirSync(path.dirname(filepath), {recursive: true});
       fs.writeFileSync(filepath, html, {encoding: 'utf-8'});
@@ -50,6 +56,26 @@ const DIST = path.join(LH_ROOT, `dist/now`);
   });
 })();
 
+
+/**
+ * @return {string}
+ */
+function generatePsiReportHtml() {
+  const sanitizedJson = ReportGenerator.sanitizeJson(tweakLhrForPsi(lhr));
+  const PSI_TEMPLATE = fs.readFileSync(
+    `${LH_ROOT}/report/test-assets/faux-psi-template.html`, 'utf8');
+  const PSI_JAVASCRIPT = `
+${fs.readFileSync(`${LH_ROOT}/dist/report/psi.js`, 'utf8')};
+${fs.readFileSync(`${LH_ROOT}/report/test-assets/faux-psi.js`, 'utf8')};
+  `;
+
+  const html = ReportGenerator.replaceStrings(PSI_TEMPLATE, [
+    {search: '%%LIGHTHOUSE_JSON%%', replacement: sanitizedJson},
+    {search: '%%LIGHTHOUSE_JAVASCRIPT%%', replacement: PSI_JAVASCRIPT},
+    {search: '/*%%LIGHTHOUSE_CSS%%*/', replacement: htmlReportAssets.REPORT_CSS},
+  ]);
+  return html;
+}
 /**
  * Add a plugin to demo plugin rendering.
  * @param {LH.Result} lhr
@@ -61,6 +87,24 @@ function addPluginCategory(lhr) {
     score: 0.5,
     auditRefs: [],
   };
+}
+
+/**
+ * Drops the LHR to only one, solo category (performance), and removes budgets.
+ * @param {LH.Result} lhr
+ */
+function tweakLhrForPsi(lhr) {
+  /** @type {LH.Result} */
+  const clone = JSON.parse(JSON.stringify(lhr));
+  clone.categories = {
+    'performance': clone.categories.performance,
+  };
+  // no budgets in PSI
+  delete clone.audits['performance-budget'];
+  clone.categories.performance.auditRefs = clone.categories.performance.auditRefs.filter(audit => {
+    return !audit.id.endsWith('-budget');
+  });
+  return clone;
 }
 
 /**

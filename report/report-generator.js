@@ -28,15 +28,23 @@ class ReportGenerator {
   }
 
   /**
-   * Returns the report HTML as a string with the report JSON and renderer JS inlined.
+   * @param {unknown} object
+   * @return {string}
+   */
+  static sanitizeJson(object) {
+    return JSON.stringify(object)
+    .replace(/</g, '\\u003c') // replaces opening script tags
+    .replace(/\u2028/g, '\\u2028') // replaces line separators ()
+    .replace(/\u2029/g, '\\u2029'); // replaces paragraph separators
+  }
+
+  /**
+   * Returns the standalone report HTML as a string with the report JSON and renderer JS inlined.
    * @param {LH.Result} lhr
    * @return {string}
    */
   static generateReportHtml(lhr) {
-    const sanitizedJson = JSON.stringify(lhr)
-      .replace(/</g, '\\u003c') // replaces opening script tags
-      .replace(/\u2028/g, '\\u2028') // replaces line separators ()
-      .replace(/\u2029/g, '\\u2029'); // replaces paragraph separators
+    const sanitizedJson = ReportGenerator.sanitizeJson(lhr);
     // terser does its own sanitization, but keep this basic replace for when
     // we want to generate a report without minification.
     const sanitizedJavascript = htmlReportAssets.REPORT_JAVASCRIPT.replace(/<\//g, '\\u003c/');
