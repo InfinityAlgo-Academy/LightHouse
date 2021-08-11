@@ -20,9 +20,12 @@ describe('CLI Tests', function() {
   });
 
   it('should list options via --help', () => {
-    const ret = spawnSync('node', [indexPath, '--help'], {encoding: 'utf8'});
-    assert.ok(ret.stdout.includes('lighthouse <url>'));
-    assert.ok(ret.stdout.includes('For more information on Lighthouse'));
+    const ret = spawnSync('node', [indexPath, '--help'], {encoding: 'utf8', maxBuffer: 10_000_000});
+    expect(ret.stdout).toContain('lighthouse <url>');
+    expect(ret.stdout).toContain('Examples:');
+    // FIXME: yargs does not wait to flush stdout before exiting the process,
+    // `--help` can flakily not contain the entire output when isTTY is false.
+    // expect(ret.stdout).toContain('For more information on Lighthouse');
   });
 
   it('should list all audits without a url and exit immediately after', () => {

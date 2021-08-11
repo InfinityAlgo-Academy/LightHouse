@@ -6,7 +6,7 @@
 'use strict';
 
 const NetworkMonitor = require('./network-monitor.js');
-const {waitForFullyLoaded, waitForFrameNavigated} = require('./wait-for-condition.js');
+const {waitForFullyLoaded, waitForFrameNavigated, waitForUserToContinue} = require('./wait-for-condition.js'); // eslint-disable-line max-len
 const constants = require('../../config/constants.js');
 const i18n = require('../../lib/i18n/i18n.js');
 const URL = require('../../lib/url-shim.js');
@@ -39,7 +39,7 @@ const DEFAULT_NETWORK_QUIET_THRESHOLD = 5000;
 // Controls how long to wait between longtasks before determining the CPU is idle, off by default
 const DEFAULT_CPU_QUIET_THRESHOLD = 0;
 
-/** @typedef {{waitUntil: Array<'fcp'|'load'|'navigated'>} & LH.Config.SharedPassNavigationJson & Partial<Pick<LH.Config.Settings, 'maxWaitForFcp'|'maxWaitForLoad'>>} NavigationOptions */
+/** @typedef {{waitUntil: Array<'fcp'|'load'|'navigated'>} & LH.Config.SharedPassNavigationJson & Partial<Pick<LH.Config.Settings, 'maxWaitForFcp'|'maxWaitForLoad'|'debugNavigation'>>} NavigationOptions */
 
 /** @param {NavigationOptions} options */
 function resolveWaitForFullyLoadedOptions(options) {
@@ -120,6 +120,10 @@ async function gotoURL(driver, url, options) {
   // Bring `Page.navigate` errors back into the promise chain. See https://github.com/GoogleChrome/lighthouse/pull/6739.
   await waitforPageNavigateCmd;
   await networkMonitor.disable();
+
+  if (options.debugNavigation) {
+    await waitForUserToContinue(driver);
+  }
 
   return {
     finalUrl,

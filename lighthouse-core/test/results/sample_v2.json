@@ -4819,6 +4819,7 @@
     "auditMode": true,
     "gatherMode": false,
     "disableStorageReset": false,
+    "debugNavigation": false,
     "channel": "cli",
     "budgets": [
       {

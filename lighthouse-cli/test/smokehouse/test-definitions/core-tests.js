@@ -162,6 +162,13 @@ const smokeTests = [{
   config: require('./perf/perf-config.js'),
   runSerially: true,
 }, {
+  id: 'perf-debug',
+  expectations: perf.debug,
+  config: {
+    extends: 'lighthouse:default',
+    settings: {debugNavigation: true, onlyAudits: ['metrics']},
+  },
+}, {
   id: 'perf-diagnostics-animations',
   expectations: diagnostics.animations,
   config: require('./perf-diagnostics/perf-diagnostics-config.js'),

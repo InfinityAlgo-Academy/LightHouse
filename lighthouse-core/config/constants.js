@@ -106,6 +106,7 @@ const defaultSettings = {
   auditMode: false,
   gatherMode: false,
   disableStorageReset: false,
+  debugNavigation: false,
   channel: 'node',
 
   // the following settings have no defaults but we still want ensure that `key in settings`

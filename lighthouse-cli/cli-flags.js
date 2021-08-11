@@ -108,6 +108,10 @@ function getFlags(manualArgv, options = {}) {
           default: false,
           describe: 'Print the normalized config for the given config and options, then exit.',
         },
+        'debug-navigation': {
+          type: 'boolean',
+          describe: 'Pause after page load to wait for permission to continue the run, evaluate `continueLighthouseRun` in the console to continue.',
+        },
         'fraggle-rock': {
           type: 'boolean',
           default: false,

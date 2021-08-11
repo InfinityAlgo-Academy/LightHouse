@@ -106,7 +106,7 @@ jobs:
 
     - run: sudo apt-get install xvfb
     - name: yarn smoke --fraggle-rock
-      run: xvfb-run --auto-servernum yarn smoke --debug --fraggle-rock -j=1 --retries=2 a11y lantern seo-passing seo-failing csp metrics
+      run: xvfb-run --auto-servernum yarn smoke --debug --fraggle-rock -j=1 --retries=2 a11y lantern seo-passing seo-failing csp metrics perf-debug
 
     # Fail if any changes were written to source files.
     - run: git diff --exit-code

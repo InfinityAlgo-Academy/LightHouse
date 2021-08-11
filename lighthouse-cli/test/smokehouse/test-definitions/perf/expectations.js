@@ -362,10 +362,19 @@ const frameMetrics = {
   },
 };
 
+const debug = {
+  lhr: {
+    requestedUrl: 'http://localhost:10200/perf/debug.html',
+    finalUrl: 'http://localhost:10200/perf/debug.html',
+    audits: {metrics: {details: {items: {0: {observedTraceEnd: '>30000'}}}}},
+  },
+};
+
 module.exports = {
   preload,
   budgets,
   fonts,
+  debug,
   traceElements,
   frameMetrics,
 };

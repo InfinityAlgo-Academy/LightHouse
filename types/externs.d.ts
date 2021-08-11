@@ -52,6 +52,9 @@ declare global {
     __lighthouseNodesDontTouchOrAllVarianceGoesAway: Map<Element, string>;
     __lighthouseExecutionContextId?: number;
 
+    /** Injected into the page when the `--debug` flag is used. */
+    continueLighthouseRun(): void;
+
     // Not defined in tsc yet: https://github.com/microsoft/TypeScript/issues/40807
     requestIdleCallback(callback: (deadline: {didTimeout: boolean, timeRemaining: () => DOMHighResTimeStamp}) => void, options?: {timeout: number}): number;
   }
@@ -206,6 +209,8 @@ export interface SharedFlagsSettings {
   gatherMode?: boolean | string;
   /** Flag indicating that the browser storage should not be reset for the audit. */
   disableStorageReset?: boolean;
+  /** Flag indicating that Lighthouse should pause after page load to wait for the user's permission to continue the audit. */
+  debugNavigation?: boolean;
 
   /** How Lighthouse should interpret this run in regards to scoring performance metrics and skipping mobile-only tests in desktop. Must be set even if throttling/emulation is being applied outside of Lighthouse. */
   formFactor?: 'mobile'|'desktop';
