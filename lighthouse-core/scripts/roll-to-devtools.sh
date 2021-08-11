@@ -47,11 +47,12 @@ cp -pPR "$lh_bg_js" "$fe_lh_dir/lighthouse-dt-bundle.js"
 echo -e "$check lighthouse-dt-bundle copied."
 
 # generate bundle.d.ts
-npx tsc --allowJs --declaration --emitDeclarationOnly dist/report/bundle.js
+npx tsc --allowJs --declaration --emitDeclarationOnly dist/report/bundle.esm.js
 
 # copy report code $fe_lh_dir
 fe_lh_report_dir="$fe_lh_dir/report/"
-cp dist/report/bundle.js dist/report/bundle.d.ts "$fe_lh_report_dir"
+cp dist/report/bundle.esm.js "$fe_lh_report_dir/bundle.js"
+cp dist/report/bundle.esm.d.ts "$fe_lh_report_dir/bundle.d.ts"
 echo -e "$check Report code copied."
 
 # copy report generator + cached resources into $fe_lh_dir
@@ -71,5 +72,5 @@ fe_webtests_dir="$dt_dir/test/webtests/http/tests/devtools/lighthouse"
 rsync -avh "$lh_webtests_dir" "$fe_webtests_dir" --exclude="OWNERS" --delete
 
 echo ""
-echo "Done. To run the webtests: " 
+echo "Done. To run the webtests: "
 echo "    DEVTOOLS_PATH=\"$dt_dir\" yarn test-devtools"
