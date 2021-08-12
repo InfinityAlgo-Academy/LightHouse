@@ -37,7 +37,7 @@ fi
 
 # Generate HTML reports in ./dist/now/
 yarn build-report
-yarn now-build
+yarn vercel-build
 
 # Install LHCI
 npm install -g @lhci/cli@next
