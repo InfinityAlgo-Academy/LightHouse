@@ -19,7 +19,7 @@ const {LH_ROOT} = require('../root.js');
 const htmlReportAssets = require('../lighthouse-core/../report/report-assets.js');
 
 
-const DIST = path.join(LH_ROOT, `dist/now`);
+const DIST = path.join(LH_ROOT, 'dist');
 
 (async function() {
   addPluginCategory(lhr);
@@ -47,8 +47,7 @@ const DIST = path.join(LH_ROOT, `dist/now`);
         // - a more constrained/realistic default size
         html = html.replace(`"lh-root lh-vars"`, `"lh-root lh-vars lh-devtools"`);
       }
-
-      const filepath = `${DIST}/${variant}${filename}/index.html`;
+      const filepath = `${DIST}/sample-reports/${variant}${filename}/index.html`;
       fs.mkdirSync(path.dirname(filepath), {recursive: true});
       fs.writeFileSync(filepath, html, {encoding: 'utf-8'});
       console.log('✅', filepath, 'written.');
