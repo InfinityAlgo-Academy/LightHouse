@@ -97,10 +97,9 @@
     "@rollup/plugin-node-resolve": "^13.0.4",
     "@types/archiver": "^2.1.2",
     "@types/browserify": "^12.0.36",
-    "@types/chrome": "^0.0.60",
+    "@types/chrome": "^0.0.154",
     "@types/configstore": "^4.0.0",
     "@types/cpy": "^5.1.0",
-    "@types/css-font-loading-module": "^0.0.2",
     "@types/eslint": "^4.16.6",
     "@types/exorcist": "^0.4.5",
     "@types/gh-pages": "^2.0.0",
@@ -164,7 +163,7 @@
     "tabulator-tables": "^4.9.3",
     "terser": "^5.3.8",
     "typed-query-selector": "^2.4.0",
-    "typescript": "4.2.3",
+    "typescript": "4.4.1-rc",
     "webtreemap-cdt": "^3.2.1"
   },
   "dependencies": {

@@ -197,11 +197,13 @@ export class LighthouseReportViewer {
   _replaceReportHtml(json) {
     // Allow users to view the runnerResult
     if ('lhr' in json) {
-      json = /** @type {LH.RunnerResult} */ (json).lhr;
+      const runnerResult = /** @type {LH.RunnerResult} */ (/** @type {unknown} */ (json));
+      json = runnerResult.lhr;
     }
     // Allow users to drop in PSI's json
     if ('lighthouseResult' in json) {
-      json = /** @type {{lighthouseResult: LH.Result}} */ (json).lighthouseResult;
+      const psiResp = /** @type {{lighthouseResult: LH.Result}} */ (/** @type {unknown} */ (json));
+      json = psiResp.lighthouseResult;
     }
 
     // Install as global for easier debugging

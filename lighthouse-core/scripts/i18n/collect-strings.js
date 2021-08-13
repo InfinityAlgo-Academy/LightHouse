@@ -90,10 +90,16 @@ function computeDescription(ast, message) {
 
 /**
  * Collapses a jsdoc comment into a single line and trims whitespace.
- * @param {string=} comment
+ * @param {import('typescript').JSDoc['comment']} comment
  * @return {string}
  */
 function coerceToSingleLineAndTrim(comment = '') {
+  // The non-string types were introduced in https://github.com/microsoft/TypeScript/pull/41877
+  // Not currently used, but utility `getTextOfJSDocComment` will convert if the types switch over.
+  if (typeof comment !== 'string') {
+    throw new Error(`unsupported JSDoc comment: ${JSON.stringify(comment)}`);
+  }
+
   // Line breaks within a jsdoc comment should always be replaceable with a space.
   return comment.replace(/\n+/g, ' ').trim();
 }

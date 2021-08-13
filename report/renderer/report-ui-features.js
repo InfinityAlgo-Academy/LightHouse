@@ -442,7 +442,7 @@ export class ReportUIFeatures {
           });
         }
       }
-    } catch (/** @type {Error} */ e) {
+    } catch (e) {
       this._copyAttempt = false;
       this._fireEventOn('lh-log', this._document, {cmd: 'log', msg: e.message});
     }
@@ -491,7 +491,7 @@ export class ReportUIFeatures {
         const htmlStr = this.getReportHtml();
         try {
           this._saveFile(new Blob([htmlStr], {type: 'text/html'}));
-        } catch (/** @type {Error} */ e) {
+        } catch (e) {
           this._fireEventOn('lh-log', this._document, {
             cmd: 'error', msg: 'Could not export as HTML. ' + e.message,
           });

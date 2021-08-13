@@ -20,12 +20,12 @@ const i18n = require('../lib/i18n/i18n.js');
  * If any items with identical `path` properties are found in the input array,
  * merge their `options` properties into the first instance and then discard any
  * other instances.
- * Until support of jsdoc templates with constraints, type in config.d.ts.
- * See https://github.com/Microsoft/TypeScript/issues/24283
- * @type {LH.Config.MergeOptionsOfItems}
+ * @template {{path?: string, options: Record<string, unknown>}} T
+ * @param {T[]} items
+ * @return T[]
  */
 const mergeOptionsOfItems = function(items) {
-  /** @type {Array<{id: string, path?: string, options?: Object<string, any>}>} */
+  /** @type {T[]} */
   const mergedItems = [];
 
   for (const item of items) {
