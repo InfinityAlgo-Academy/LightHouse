@@ -172,13 +172,6 @@ export class ReportUIFeatures {
   }
 
   /**
-   * @param {ParentNode} _
-   */
-  setTemplateContext(_) {
-    // Removed, exists until usage is removed from CDT.
-  }
-
-  /**
    * @param {{container?: Element, text: string, icon?: string, onClick: () => void}} opts
    */
   addButton(opts) {
