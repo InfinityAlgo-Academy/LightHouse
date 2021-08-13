@@ -6,7 +6,6 @@
 
 import {IcuMessage} from './i18n';
 import Treemap from './treemap';
-import {Artifacts} from './artifacts';
 
 type Details =
   Details.CriticalRequestChain |
@@ -83,8 +82,24 @@ declare module Details {
    * and the locations of interesting nodes.
    * Used by element screenshots renderer.
    */
-  interface FullPageScreenshot extends Artifacts.FullPageScreenshot {
+  interface FullPageScreenshot {
     type: 'full-page-screenshot';
+    screenshot: {
+      /** Base64 image data URL. */
+      data: string;
+      width: number;
+      height: number;
+    };
+    nodes: Record<string, Rect>;
+  }
+
+  interface Rect {
+    width: number;
+    height: number;
+    top: number;
+    right: number;
+    bottom: number;
+    left: number;
   }
 
   interface Table {
@@ -226,7 +241,7 @@ declare module Details {
     lhId?: string;
     path?: string;
     selector?: string;
-    boundingRect?: Artifacts.Rect;
+    boundingRect?: Rect;
     /** An HTML snippet used to identify the node. */
     snippet?: string;
     /** A human-friendly text descriptor that's used to identify the node more quickly. */

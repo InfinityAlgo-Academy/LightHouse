@@ -14,9 +14,11 @@ import ArbitraryEqualityMap = require('../lighthouse-core/lib/arbitrary-equality
 
 type _TaskNode = import('../lighthouse-core/lib/tracehouse/main-thread-tasks.js').TaskNode;
 
+import AuditDetails from './lhr/audit-details'
 import Config from './config';
 import Gatherer from './gatherer';
-import {IcuMessage} from './i18n';
+import {IcuMessage} from './lhr/i18n';
+import LHResult from './lhr/lhr'
 import Protocol from './protocol';
 
 export interface Artifacts extends BaseArtifacts, GathererArtifacts {}
@@ -532,14 +534,7 @@ declare module Artifacts {
     };
   }
 
-  interface Rect {
-    width: number;
-    height: number;
-    top: number;
-    right: number;
-    bottom: number;
-    left: number;
-  }
+  type Rect = AuditDetails.Rect;
 
   interface TapTarget {
     node: NodeDetails;
@@ -598,15 +593,7 @@ declare module Artifacts {
     }[];
   }
 
-  interface MeasureEntry {
-    // From PerformanceEntry
-    readonly duration: number;
-    readonly entryType: string;
-    readonly name: string;
-    readonly startTime: number;
-    /** Whether timing entry was collected during artifact gathering. */
-    gather?: boolean;
-  }
+  type MeasureEntry = LHResult.MeasureEntry;
 
   interface MetricComputationDataInput {
     devtoolsLog: DevtoolsLog;

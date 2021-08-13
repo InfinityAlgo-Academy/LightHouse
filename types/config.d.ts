@@ -6,9 +6,9 @@
  */
 
 import Audit = require('../lighthouse-core/audits/audit.js');
-import {ScreenEmulationSettings, SharedFlagsSettings, ThrottlingSettings} from './externs';
+import {SharedFlagsSettings, ConfigSettings} from './lhr/settings';
 import Gatherer from './gatherer';
-import {IcuMessage} from './i18n';
+import {IcuMessage} from './lhr/i18n';
 
 interface ClassOf<T> {
   new (): T;
@@ -161,10 +161,7 @@ declare module Config {
     relevantAudits?: string[];
   }
 
-  interface Settings extends Required<SharedFlagsSettings> {
-    throttling: Required<ThrottlingSettings>;
-    screenEmulation: ScreenEmulationSettings;
-  }
+  type Settings = ConfigSettings;
 
   interface Pass extends Required<PassJson> {
     gatherers: GathererDefn[];

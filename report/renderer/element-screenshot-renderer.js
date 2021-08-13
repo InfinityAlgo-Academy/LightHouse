@@ -27,7 +27,7 @@ import {Util} from './util.js';
 
 /**
  * @param {LH.Artifacts.FullPageScreenshot['screenshot']} screenshot
- * @param {LH.Artifacts.Rect} rect
+ * @param {LH.Audit.Details.Rect} rect
  * @return {boolean}
  */
 function screenshotOverlapsRect(screenshot, rect) {

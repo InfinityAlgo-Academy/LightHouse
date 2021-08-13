@@ -7,19 +7,20 @@
 import ArbitraryEqualityMap_ = require('../lighthouse-core/lib/arbitrary-equality-map.js');
 import * as Artifacts_ from './artifacts';
 import Audit_ from './audit';
-import Budget_ from './budget';
+import Budget_ from './lhr/budget';
 import Config_ from './config';
 import _Crdp from 'devtools-protocol/types/protocol';
 import _CrdpMappings from 'devtools-protocol/types/protocol-mapping';
 import * as Externs from './externs';
 import Gatherer_ from './gatherer';
-import * as I18n from './i18n';
+import * as I18n from './lhr/i18n';
 import LHError = require('../lighthouse-core/lib/lh-error.js');
-import LHResult from './lhr';
+import LHResult from './lhr/lhr';
 import Protocol_ from './protocol';
 import ReportResult_ from './html-renderer';
+import * as Settings from './lhr/settings';
 import StructuredData_ from './structured-data';
-import Treemap_ from './treemap';
+import Treemap_ from './lhr/treemap';
 
 // Construct hierarchy of global types under the LH namespace.
 declare global {
@@ -45,11 +46,6 @@ declare global {
     export import CrdpCommands = _CrdpMappings.Commands;
 
     // externs.d.ts
-    export import ThrottlingSettings = Externs.ThrottlingSettings;
-    export import ScreenEmulationSettings = Externs.ScreenEmulationSettings;
-    export import SharedFlagsSettings = Externs.SharedFlagsSettings;
-    export import OutputMode = Externs.OutputMode;
-    export import PrecomputedLanternData = Externs.PrecomputedLanternData;
     export import Flags = Externs.Flags;
     export import CliFlags = Externs.CliFlags;
     export import RunnerResult = Externs.RunnerResult;
@@ -60,15 +56,21 @@ declare global {
     export import Result = LHResult;
 
     // i18n.d.ts.
-    export import Locale = I18n.Locale;
     export import IcuMessage = I18n.IcuMessage;
     export import RawIcu = I18n.RawIcu;
     export import FormattedIcu = I18n.FormattedIcu;
-    export import IcuMessagePaths = I18n.IcuMessagePaths;
-    export import I18NRendererStrings = I18n.I18NRendererStrings;
 
     export import Protocol = Protocol_;
     export import ReportResult = ReportResult_;
+
+    // lhr/settings.d.ts
+    export import Locale = Settings.Locale;
+    export import ThrottlingSettings = Settings.ThrottlingSettings;
+    export import ScreenEmulationSettings = Settings.ScreenEmulationSettings;
+    export import SharedFlagsSettings = Settings.SharedFlagsSettings;
+    export import OutputMode = Settings.OutputMode;
+    export import PrecomputedLanternData = Settings.PrecomputedLanternData;
+
     export import StructuredData = StructuredData_;
     export import Treemap = Treemap_;
   }

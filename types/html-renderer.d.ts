@@ -5,7 +5,7 @@
  */
 
 import Audit from './audit';
-import LHResult from './lhr';
+import LHResult from './lhr/lhr';
 
 // Add needed DOM APIs not yet in tsc's lib dom.
 declare global {

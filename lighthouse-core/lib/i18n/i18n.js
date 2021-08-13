@@ -340,19 +340,19 @@ function _formatPathAsString(pathInLHR) {
 
 /**
  * @param {LH.Locale} locale
- * @return {LH.I18NRendererStrings}
+ * @return {Record<string, string>}
  */
 function getRendererFormattedStrings(locale) {
   const localeMessages = LOCALES[locale];
   if (!localeMessages) throw new Error(`Unsupported locale '${locale}'`);
 
   const icuMessageIds = Object.keys(localeMessages).filter(f => f.startsWith('report/'));
-  const strings = /** @type {LH.I18NRendererStrings} */ ({});
+  /** @type {Record<string, string>} */
+  const strings = {};
   for (const icuMessageId of icuMessageIds) {
-    const [filename, varName] = icuMessageId.split(' | ');
+    const [filename, key] = icuMessageId.split(' | ');
     if (!filename.endsWith('util.js')) throw new Error(`Unexpected message: ${icuMessageId}`);
 
-    const key = /** @type {keyof LH.I18NRendererStrings} */ (varName);
     strings[key] = localeMessages[icuMessageId].message;
   }
 
@@ -463,12 +463,12 @@ function getFormatted(icuMessageOrRawString, locale) {
  * that location.
  * @param {unknown} inputObject
  * @param {LH.Locale} locale
- * @return {LH.IcuMessagePaths}
+ * @return {LH.Result.IcuMessagePaths}
  */
 function replaceIcuMessages(inputObject, locale) {
   /**
    * @param {unknown} subObject
-   * @param {LH.IcuMessagePaths} icuMessagePaths
+   * @param {LH.Result.IcuMessagePaths} icuMessagePaths
    * @param {string[]} pathInLHR
    */
   function replaceInObject(subObject, icuMessagePaths, pathInLHR = []) {
@@ -498,7 +498,7 @@ function replaceIcuMessages(inputObject, locale) {
     }
   }
 
-  /** @type {LH.IcuMessagePaths} */
+  /** @type {LH.Result.IcuMessagePaths} */
   const icuMessagePaths = {};
   replaceInObject(inputObject, icuMessagePaths);
   return icuMessagePaths;

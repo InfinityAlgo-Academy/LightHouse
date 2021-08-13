@@ -14,7 +14,7 @@ import ArbitraryEqualityMap = require('../lighthouse-core/lib/arbitrary-equality
 
 import {Artifacts, BaseArtifacts, GathererArtifacts} from './artifacts';
 import Config from './config';
-import {IcuMessage} from './i18n';
+import {IcuMessage} from './lhr/i18n';
 import Protocol from './protocol';
 import {Trace, DevtoolsLog} from './artifacts';
 

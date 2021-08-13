@@ -166,7 +166,8 @@ export class ReportUIFeatures {
     for (const node of this._dom.findAll('[data-i18n]', this._dom.document())) {
       // These strings are guaranteed to (at least) have a default English string in Util.UIStrings,
       // so this cannot be undefined as long as `report-ui-features.data-i18n` test passes.
-      const i18nAttr = /** @type {keyof LH.I18NRendererStrings} */ (node.getAttribute('data-i18n'));
+      const i18nKey = node.getAttribute('data-i18n');
+      const i18nAttr = /** @type {keyof typeof Util.i18n.strings} */ (i18nKey);
       node.textContent = Util.i18n.strings[i18nAttr];
     }
   }

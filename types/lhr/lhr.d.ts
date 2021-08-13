@@ -4,10 +4,8 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import {Artifacts} from './artifacts';
-import Audit from './audit';
-import Config from './config';
-import {I18NRendererStrings, IcuMessagePaths} from './i18n';
+import {Result as AuditResult} from './audit-result';
+import {ConfigSettings} from './settings';
 
 /**
  * The full output of a Lighthouse run.
@@ -22,14 +20,14 @@ interface Result {
   /** The version of Lighthouse with which these results were generated. */
   lighthouseVersion: string;
   /** An object containing the results of the audits, keyed by the audits' `id` identifier. */
-  audits: Record<string, Audit.Result>;
+  audits: Record<string, AuditResult>;
   /** The top-level categories, their overall scores, and member audits. */
   categories: Record<string, Result.Category>;
   /** Descriptions of the groups referenced by CategoryMembers. */
   categoryGroups?: Record<string, Result.ReportGroup>;
 
   /** The config settings used for these results. */
-  configSettings: Config.Settings;
+  configSettings: ConfigSettings;
   /** List of top-level warnings for this Lighthouse run. */
   runWarnings: string[];
   /** A top-level error message that, if present, indicates a serious enough problem that this Lighthouse result may need to be discarded. */
@@ -40,8 +38,8 @@ interface Result {
   environment: Result.Environment;
   /** Execution timings for the Lighthouse run */
   timing: Result.Timing;
-  /** The record of all formatted string locations in the LHR and their corresponding source values. */
-  i18n: {rendererFormattedStrings: I18NRendererStrings, icuMessagePaths?: IcuMessagePaths};
+  /** Strings for the report and the record of all formatted string locations in the LHR and their corresponding source values. */
+  i18n: {rendererFormattedStrings: Record<string, string>, icuMessagePaths?: Result.IcuMessagePaths};
   /** An array containing the result of all stack packs. */
   stackPacks?: Result.StackPack[];
 }
@@ -60,8 +58,18 @@ declare module Result {
   }
 
   interface Timing {
-    entries: Artifacts.MeasureEntry[];
+    entries: MeasureEntry[];
     total: number;
+  }
+
+  interface MeasureEntry {
+    // From PerformanceEntry
+    readonly duration: number;
+    readonly entryType: string;
+    readonly name: string;
+    readonly startTime: number;
+    /** Whether timing entry was collected during artifact gathering. */
+    gather?: boolean;
   }
 
   interface Category {
@@ -113,6 +121,25 @@ declare module Result {
     iconDataURL: string;
     /** A set of descriptions for some of Lighthouse's audits, keyed by audit `id`. */
     descriptions: Record<string, string>;
+  }
+
+  /**
+   * Info about an `LH.IcuMessage` value that was localized to a string when
+   * included in the LHR. Value is either a
+   *  - path (`_.set()` style) into the original object where the message was replaced
+   *  - those paths and a set of values that were inserted into the localized strings.
+   */
+  type IcuMessagePath = string | {path: string, values: Record<string, string | number>};
+
+  /**
+   * A representation of `LH.IcuMessage`s that were in an object (e.g. `LH.Result`)
+   * and have been replaced by localized strings. `LH.Result.IcuMessagePaths` provides a
+   * mapping that can be used to change the locale of the object again.
+   * Keyed by ids from the locale message json files, values are information on
+   * how to replace the string if needed.
+   */
+  interface IcuMessagePaths {
+    [i18nId: string]: IcuMessagePath[];
   }
 }
 

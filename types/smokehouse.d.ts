@@ -6,7 +6,7 @@
 
 import {Artifacts} from './artifacts';
 import Config from './config';
-import LHResult from './lhr';
+import LHResult from './lhr/lhr';
 
 declare global {
   module Smokehouse {

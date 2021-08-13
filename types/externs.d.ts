@@ -5,12 +5,10 @@
  */
 
 import {ParseSelectorToTagNames} from 'typed-query-selector/parser';
-import Crdp from 'devtools-protocol/types/protocol';
 
 import {Artifacts} from './artifacts';
-import Budget from './budget';
-import {Locale} from './i18n';
-import LHResult from './lhr';
+import LHResult from './lhr/lhr';
+import {SharedFlagsSettings, OutputMode} from './lhr/settings';
 
 /** Merge properties of the types in union `T`. Where properties overlap, property types becomes the union of the two (or more) possible types. */
 type MergeTypes<T> = {
@@ -146,97 +144,6 @@ declare global {
   type CamelCasify<T> = {
     [K in keyof T as KebabToCamelCase<K>]: T[K];
   }
-}
-
-/** Simulation settings that control the amount of network & cpu throttling in the run. */
-export interface ThrottlingSettings {
-  /** The round trip time in milliseconds. */
-  rttMs?: number;
-  /** The network throughput in kilobits per second. */
-  throughputKbps?: number;
-  // devtools settings
-  /** The network request latency in milliseconds. */
-  requestLatencyMs?: number;
-  /** The network download throughput in kilobits per second. */
-  downloadThroughputKbps?: number;
-  /** The network upload throughput in kilobits per second. */
-  uploadThroughputKbps?: number;
-  // used by both
-  /** The amount of slowdown applied to the cpu (1/<cpuSlowdownMultiplier>). */
-  cpuSlowdownMultiplier?: number
-}
-
-export interface PrecomputedLanternData {
-  additionalRttByOrigin: {[origin: string]: number};
-  serverResponseTimeByOrigin: {[origin: string]: number};
-}
-
-export type OutputMode = 'json' | 'html' | 'csv';
-
-export type ScreenEmulationSettings = {
-  /** Overriding width value in pixels (minimum 0, maximum 10000000). 0 disables the override. */
-  width: number;
-  /** Overriding height value in pixels (minimum 0, maximum 10000000). 0 disables the override. */
-  height: number;
-  /** Overriding device scale factor value. 0 disables the override. */
-  deviceScaleFactor: number;
-  /** Whether to emulate mobile device. This includes viewport meta tag, overlay scrollbars, text autosizing and more. */
-  mobile: boolean;
-  /** Whether screen emulation is disabled. If true, the other emulation settings are ignored. */
-  disabled: boolean;
-};
-
-/**
- * Options that are found in both the flags used by the Lighthouse module
- * interface and the Config's `settings` object.
- */
-export interface SharedFlagsSettings {
-  /** The type(s) of report output to be produced. */
-  output?: OutputMode|OutputMode[];
-  /** The locale to use for the output. */
-  locale?: Locale;
-  /** The maximum amount of time to wait for a page content render, in ms. If no content is rendered within this limit, the run is aborted with an error. */
-  maxWaitForFcp?: number;
-  /** The maximum amount of time to wait for a page to load, in ms. */
-  maxWaitForLoad?: number;
-  /** List of URL patterns to block. */
-  blockedUrlPatterns?: string[] | null;
-  /** Comma-delimited list of trace categories to include. */
-  additionalTraceCategories?: string | null;
-  /** Flag indicating the run should only audit. */
-  auditMode?: boolean | string;
-  /** Flag indicating the run should only gather. */
-  gatherMode?: boolean | string;
-  /** Flag indicating that the browser storage should not be reset for the audit. */
-  disableStorageReset?: boolean;
-  /** Flag indicating that Lighthouse should pause after page load to wait for the user's permission to continue the audit. */
-  debugNavigation?: boolean;
-
-  /** How Lighthouse should interpret this run in regards to scoring performance metrics and skipping mobile-only tests in desktop. Must be set even if throttling/emulation is being applied outside of Lighthouse. */
-  formFactor?: 'mobile'|'desktop';
-  /** Screen emulation properties (width, height, dpr, mobile viewport) to apply or an object of `{disabled: true}` if Lighthouse should avoid applying screen emulation. If either emulation is applied outside of Lighthouse, or it's being run on a mobile device, it typically should be set to disabled. For desktop, we recommend applying consistent desktop screen emulation. */
-  screenEmulation?: Partial<ScreenEmulationSettings>;
-  /** User Agent string to apply, `false` to not change the host's UA string, or `true` to use Lighthouse's default UA string. */
-  emulatedUserAgent?: string | boolean;
-
-  /** The method used to throttle the network. */
-  throttlingMethod?: 'devtools'|'simulate'|'provided';
-  /** The throttling config settings. */
-  throttling?: ThrottlingSettings;
-  /** If present, the run should only conduct this list of audits. */
-  onlyAudits?: string[] | null;
-  /** If present, the run should only conduct this list of categories. */
-  onlyCategories?: string[] | null;
-  /** If present, the run should skip this list of audits. */
-  skipAudits?: string[] | null;
-  /** List of extra HTTP Headers to include. */
-  extraHeaders?: Crdp.Network.Headers | null; // See extraHeaders TODO in bin.js
-  /** How Lighthouse was run, e.g. from the Chrome extension or from the npm module */
-  channel?: string
-  /** Precomputed lantern estimates to use instead of observed analysis. */
-  precomputedLanternData?: PrecomputedLanternData | null;
-  /** The budget.json object for LightWallet. */
-  budgets?: Array<Budget> | null;
 }
 
 /**
