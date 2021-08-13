@@ -22,6 +22,8 @@
 
 /** @typedef {LH.Gatherer.FRTransitionalContext<LH.Gatherer.DependencyKey>['dependencies']} Dependencies */
 
+const log = require('lighthouse-logger');
+
 /**
  *
  * @param {{id: string}} dependency
@@ -75,6 +77,8 @@ async function collectPhaseArtifacts(options) {
   const priorPhaseArtifacts = (priorPhase && artifactState[priorPhase]) || {};
 
   for (const artifactDefn of artifactDefinitions) {
+    const logLevel = phase === 'getArtifact' ? 'log' : 'verbose';
+    log[logLevel](`artifacts:${phase}`, artifactDefn.id);
     const gatherer = artifactDefn.gatherer.instance;
 
     const priorArtifactPromise = priorPhaseArtifacts[artifactDefn.id] || Promise.resolve();

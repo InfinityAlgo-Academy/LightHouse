@@ -120,7 +120,7 @@ class Stacks extends FRGatherer {
    * @param {LH.Gatherer.FRTransitionalContext} context
    * @return {Promise<LH.Artifacts['Stacks']>}
    */
-  async snapshot(context) {
+  async getArtifact(context) {
     return Stacks.collectStacks(context.driver.executionContext);
   }
 }

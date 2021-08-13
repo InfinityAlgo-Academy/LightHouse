@@ -24,7 +24,7 @@ declare global {
     export type ExpectedRunnerResult = {
       lhr: ExpectedLHR,
       artifacts?: Partial<Record<keyof Artifacts|'_maxChromiumMilestone'|'_minChromiumMilestone', any>>
-      networkRequests?: {length: number};
+      networkRequests?: {length: number, _legacyOnly?: boolean, _fraggleRockOnly?: boolean};
     }
 
     export interface TestDfn {
