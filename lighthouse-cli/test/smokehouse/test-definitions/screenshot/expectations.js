@@ -5,6 +5,22 @@
  */
 'use strict';
 
+const elements = {
+  body: {
+    top: 8,
+    bottom: 1008,
+    left: 8,
+    right: 1008,
+    width: 1000,
+    height: 1000,
+  },
+  p: {
+    top: 8,
+    left: 8,
+    height: '>40',
+  },
+};
+
 /**
  * @type {Smokehouse.ExpectedRunnerResult}
  */
@@ -17,36 +33,22 @@ const expectations = {
         data: /data:image\/jpeg;base64,.{10000,}$/,
       },
       nodes: {
-        'page-0-BODY': {
-          top: 8,
-          bottom: 1008,
-          left: 8,
-          right: 1008,
-          width: 1000,
-          height: 1000,
-        },
-        // The following 2 are the same element (from different JS contexts). This element
+        // Gathered with no execution context isolation, shared between both FR and legacy.
+        'page-0-BODY': {...elements.body},
+        'page-1-P': {...elements.p},
+
+        // Legacy execution context IDs.
+        // Note: The first number (5) in these ids comes from an executionContextId, and has the potential to change.
+        // The following P is the same element as above but from a different JS context. This element
         // starts with height ~18 and grows over time. See screenshot.html.
-        'page-1-P': {
-          top: 8,
-          left: 8,
-          height: '>40',
-        },
-        // Note: The first number (5) in these ids comes from an executionContextId, and has the potential to change
-        '5-1-P': {
-          top: 8,
-          left: 8,
-          height: '>40',
-        },
-        '5-2-BODY': {
-          top: 8,
-          bottom: 1008,
-          left: 8,
-          right: 1008,
-          width: 1000,
-          height: 1000,
-        },
-        '5-3-HTML': {},
+        '5-1-P': {_legacyOnly: true, ...elements.p},
+        '5-2-BODY': {_legacyOnly: true, ...elements.body},
+        '5-3-HTML': {_legacyOnly: true},
+
+        // Fraggle rock should contain the same elements just with different ids.
+        '9-0-P': {_fraggleRockOnly: true, ...elements.p},
+        '9-2-BODY': {_fraggleRockOnly: true, ...elements.body},
+        '9-1-HTML': {_fraggleRockOnly: true},
       },
     },
   },
