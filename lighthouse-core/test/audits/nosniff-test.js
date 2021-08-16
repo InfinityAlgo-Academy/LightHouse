@@ -27,6 +27,7 @@ describe('Nosniff audit', () => {
         {name: 'Content-Type', value: 'text/plain'},
         {name: 'X-Content-Type-Options', value: 'nosniff'},
       ]},
+      {url: 'filesystem://url5-pass.txt', responseHeaders: []},
     ]);
     const artifacts = {devtoolsLogs: {defaultPass: devtoolsLog}};
     const result = await Nosniff.audit(artifacts, {computedCache: new Map()});

@@ -136,9 +136,9 @@ class GatherRunner {
               }
 
               // Throw if service worker for this origin has active controlledClients.
-              // if (ver.controlledClients && ver.controlledClients.length > 0) {
-              //   throw new Error('You probably have multiple tabs open to the same origin.');
-              // }
+              if (ver.controlledClients && ver.controlledClients.length > 0) {
+                throw new Error('You probably have multiple tabs open to the same origin.');
+              }
             });
           });
       });

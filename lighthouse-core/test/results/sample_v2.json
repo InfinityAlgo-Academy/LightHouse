@@ -1951,7 +1951,7 @@
         ],
         "items": [
           {
-            "url": "http://localhost:10200/dobetterweb/empty_module.js?delay=500",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.js?suppressNosniff",
             "duration": 983.081,
             "startTime": 2854.095
           },
@@ -3767,9 +3767,9 @@
       "id": "unminified-javascript",
       "title": "Minify JavaScript",
       "description": "Minifying JavaScript files can reduce payload sizes and script parse time. [Learn more](https://web.dev/unminified-javascript/).",
-      "score": 0.67,
+      "score": 0.88,
       "scoreDisplayMode": "numeric",
-      "numericValue": 450,
+      "numericValue": 150,
       "numericUnit": "millisecond",
       "displayValue": "Potential savings of 30 KiB",
       "warnings": [],
@@ -3800,7 +3800,7 @@
             "wastedPercent": 42.526292235399424
           }
         ],
-        "overallSavingsMs": 450,
+        "overallSavingsMs": 150,
         "overallSavingsBytes": 30472
       }
     },
@@ -4003,9 +4003,9 @@
       "id": "legacy-javascript",
       "title": "Avoid serving legacy JavaScript to modern browsers",
       "description": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. For your bundled JavaScript, adopt a modern script deployment strategy using module/nomodule feature detection to reduce the amount of code shipped to modern browsers, while retaining support for legacy browsers. [Learn More](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)",
-      "score": 0.75,
+      "score": 1,
       "scoreDisplayMode": "numeric",
-      "numericValue": 300,
+      "numericValue": 0,
       "numericUnit": "millisecond",
       "displayValue": "Potential savings of 21 KiB",
       "details": {
@@ -4066,7 +4066,7 @@
             "totalBytes": 0
           }
         ],
-        "overallSavingsMs": 300,
+        "overallSavingsMs": 0,
         "overallSavingsBytes": 21204
       }
     },
