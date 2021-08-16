@@ -382,7 +382,7 @@
     },
     {
       "type": null,
-      "src": "http://localhost:10200/dobetterweb/dbw_tester.js",
+      "src": "http://localhost:10200/dobetterweb/dbw_tester.js?suppressNosniff",
       "id": "dbw-tester-script",
       "async": false,
       "defer": false,
@@ -800,21 +800,21 @@
           {
             "functionName": "",
             "scriptId": "14",
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.js?suppressNosniff",
             "lineNumber": 13,
             "columnNumber": 9
           },
           {
             "functionName": "",
             "scriptId": "14",
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.js?suppressNosniff",
             "lineNumber": 16,
             "columnNumber": 2
           }
         ]
       },
       "timestamp": 1610571261691.184,
-      "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
+      "url": "http://localhost:10200/dobetterweb/dbw_tester.js?suppressNosniff",
       "lineNumber": 13,
       "columnNumber": 9
     },
@@ -2601,7 +2601,7 @@
     },
     {
       "requestId": "75994.10",
-      "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
+      "url": "http://localhost:10200/dobetterweb/dbw_tester.js?suppressNosniff",
       "mimeType": "text/javascript",
       "transferSize": 1703,
       "resourceSize": 1552,
@@ -2689,7 +2689,7 @@
     {
       "tag": {
         "tagName": "SCRIPT",
-        "url": "http://localhost:10200/dobetterweb/dbw_tester.js"
+        "url": "http://localhost:10200/dobetterweb/dbw_tester.js?suppressNosniff"
       },
       "transferSize": 1052,
       "startTime": 169919.064749,

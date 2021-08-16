@@ -773,7 +773,7 @@
             "value": "'window.webkitStorageInfo' is deprecated. Please use 'navigator.webkitTemporaryStorage' or 'navigator.webkitPersistentStorage' instead.",
             "source": {
               "type": "source-location",
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
+              "url": "http://localhost:10200/dobetterweb/dbw_tester.js?suppressNosniff",
               "urlProvider": "network",
               "line": 13,
               "column": 9
@@ -2567,8 +2567,8 @@
             "resourceBytes": 5806
           },
           {
-            "name": "http://localhost:10200/dobetterweb/dbw_tester.js",
-            "resourceBytes": 48
+            "name": "http://localhost:10200/dobetterweb/dbw_tester.js?suppressNosniff",
+            "resourceBytes": 64
           },
           {
             "name": "http://localhost:10200/dobetterweb/empty_module.js?delay=500",
@@ -3702,11 +3702,11 @@
       "id": "render-blocking-resources",
       "title": "Eliminate render-blocking resources",
       "description": "Resources are blocking the first paint of your page. Consider delivering critical JS/CSS inline and deferring all non-critical JS/styles. [Learn more](https://web.dev/render-blocking-resources/).",
-      "score": 1,
+      "score": 0.47,
       "scoreDisplayMode": "numeric",
-      "numericValue": 0,
+      "numericValue": 979,
       "numericUnit": "millisecond",
-      "displayValue": "Potential savings of 0 ms",
+      "displayValue": "Potential savings of 980 ms",
       "details": {
         "type": "opportunity",
         "headings": [
@@ -3741,9 +3741,14 @@
             "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2200",
             "totalBytes": 903,
             "wastedMs": 873
+          },
+          {
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.js?suppressNosniff",
+            "totalBytes": 1052,
+            "wastedMs": 723
           }
         ],
-        "overallSavingsMs": 0
+        "overallSavingsMs": 979
       }
     },
     "unminified-css": {
@@ -8185,7 +8190,7 @@
       "lighthouse-core/lib/i18n/i18n.js | displayValueMsSavings": [
         {
           "values": {
-            "wastedMs": 0
+            "wastedMs": 979
           },
           "path": "audits[render-blocking-resources].displayValue"
         }
