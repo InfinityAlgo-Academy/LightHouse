@@ -47,7 +47,8 @@
 <link rel="alternate stylesheet" href="./empty.css">
 
 <!-- FAIL: block rendering -->
-<script src="./dbw_tester.js" id="dbw-tester-script"></script>
+<!-- FAIL(nosniff) -->
+<script src="./dbw_tester.js?suppressNosniff" id="dbw-tester-script"></script>
 
 <!-- PASS: 'modules' are deferred by default and don't block rendering -->
 <script type="module" src="./empty_module.js?delay=500"></script>

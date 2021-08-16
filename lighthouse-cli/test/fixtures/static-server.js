@@ -93,7 +93,7 @@ class Server {
     const filePath = requestUrl.pathname;
     const queryString = requestUrl.search && parseQueryString(requestUrl.search.slice(1));
     let absoluteFilePath = path.join(this.baseDir, filePath);
-    const sendResponse = (statusCode, data) => {
+    const sendResponse = (statusCode, data, extraHeaders) => {
       // Used by Smokerider.
       if (this._dataTransformer) data = this._dataTransformer(data);
 
@@ -107,42 +107,44 @@ class Server {
       // see https://github.com/jshttp/mime-types/issues/66
       if (contentType) headers['Content-Type'] = mime.contentType(contentType);
 
+      const params = new URLSearchParams(queryString || '');
+
+      if (!params.has('suppressNosniff')) headers['X-Content-Type-Options'] = 'nosniff';
+      console.log(filePath, contentType);
+
+      // set document status-code
+      if (params.has('status_code')) {
+        statusCode = parseInt(params.get('status_code'), 10);
+      }
+
+      // set delay of request when present
       let delay = 0;
-      let useGzip = false;
-      if (queryString) {
-        const params = new URLSearchParams(queryString);
-        // set document status-code
-        if (params.has('status_code')) {
-          statusCode = parseInt(params.get('status_code'), 10);
-        }
+      if (params.has('delay')) {
+        delay = parseInt(params.get('delay'), 10) || 2000;
+      }
 
-        // set delay of request when present
-        if (params.has('delay')) {
-          delay = parseInt(params.get('delay'), 10) || 2000;
-        }
-
-        if (params.has('extra_header')) {
-          const extraHeaders = new URLSearchParams(params.get('extra_header'));
-          for (const [headerName, headerValue] of extraHeaders) {
-            if (HEADER_SAFELIST.has(headerName.toLowerCase())) {
-              headers[headerName] = headers[headerName] || [];
-              headers[headerName].push(headerValue);
-            }
+      if (params.has('extra_header')) {
+        const extraHeaders = new URLSearchParams(params.get('extra_header'));
+        for (const [headerName, headerValue] of extraHeaders) {
+          if (HEADER_SAFELIST.has(headerName.toLowerCase())) {
+            headers[headerName] = headers[headerName] || [];
+            headers[headerName].push(headerValue);
           }
         }
+      }
 
-        if (params.has('gzip')) {
-          useGzip = Boolean(params.get('gzip'));
-        }
+      let useGzip = false;
+      if (params.has('gzip')) {
+        useGzip = Boolean(params.get('gzip'));
+      }
 
-        // redirect url to new url if present
-        if (params.has('redirect')) {
-          const redirectsRemaining = Math.max(Number(params.get('redirect_count') || '') - 1, 0);
-          const newRedirectsParam = `redirect_count=${redirectsRemaining}`;
-          const recursiveRedirectUrl = request.url.replace(/redirect_count=\d+/, newRedirectsParam);
-          const redirectUrl = redirectsRemaining ? recursiveRedirectUrl : params.get('redirect');
-          return setTimeout(sendRedirect, delay, redirectUrl);
-        }
+      // redirect url to new url if present
+      if (params.has('redirect')) {
+        const redirectsRemaining = Math.max(Number(params.get('redirect_count') || '') - 1, 0);
+        const newRedirectsParam = `redirect_count=${redirectsRemaining}`;
+        const recursiveRedirectUrl = request.url.replace(/redirect_count=\d+/, newRedirectsParam);
+        const redirectUrl = redirectsRemaining ? recursiveRedirectUrl : params.get('redirect');
+        return setTimeout(sendRedirect, delay, redirectUrl);
       }
 
       if (useGzip) {
@@ -159,7 +161,7 @@ class Server {
         headers['X-TotalFetchedSize'] = Buffer.byteLength(data) + JSON.stringify(headers).length;
       }
 
-      response.writeHead(statusCode, headers);
+      response.writeHead(statusCode, {...headers, ...extraHeaders});
       const encoding = charset === 'UTF-8' ? 'utf-8' : 'binary';
 
       // Delay the response
@@ -178,10 +180,10 @@ class Server {
         <h1>Smoke test fixtures</h1>
         ${fixturePaths.map(p => `<a href=${encodeURI(p)}>${escape(p)}</a>`).join('<br>')}
       `;
-      response.writeHead(200, {
+      sendResponse(200, html, {
+        'Content-Type': 'text/html',
         'Content-Security-Policy': `default-src 'none';`,
       });
-      sendResponse(200, html);
       return;
     }
 
@@ -201,7 +203,9 @@ class Server {
 
     function fsExistsCallback(fileExists) {
       if (!fileExists) {
-        return sendResponse(404, `404 - File not found. ${filePath}`);
+        return sendResponse(404, `404 - File not found. ${filePath}`, {
+          'Content-Type': 'text/plain',
+        });
       }
       fs.readFile(absoluteFilePath, 'binary', readFileCallback);
     }

@@ -171,7 +171,7 @@ const expectations = {
       {
         tag: {
           tagName: 'SCRIPT',
-          url: 'http://localhost:10200/dobetterweb/dbw_tester.js',
+          url: 'http://localhost:10200/dobetterweb/dbw_tester.js?suppressNosniff',
         },
       },
       {
@@ -295,7 +295,7 @@ const expectations = {
               url: 'http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&capped',
             },
             {
-              url: 'http://localhost:10200/dobetterweb/dbw_tester.js',
+              url: 'http://localhost:10200/dobetterweb/dbw_tester.js?suppressNosniff',
             },
             {
               url: 'http://localhost:10200/dobetterweb/fcp-delayer.js?delay=5000',
@@ -441,6 +441,16 @@ const expectations = {
             },
             // And then many more nodes.
           },
+        },
+      },
+      'nosniff': {
+        score: 0,
+        details: {
+          items: [
+            {
+              url: 'http://localhost:10200/dobetterweb/dbw_tester.js?suppressNosniff',
+            },
+          ],
         },
       },
     },

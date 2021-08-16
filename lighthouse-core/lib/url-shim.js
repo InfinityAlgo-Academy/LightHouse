@@ -20,7 +20,7 @@ const allowedProtocols = [
 const SECURE_SCHEMES = ['data', 'https', 'wss', 'blob', 'chrome', 'chrome-extension', 'about',
   'filesystem'];
 const SECURE_LOCALHOST_DOMAINS = ['localhost', '127.0.0.1'];
-const NON_NETWORK_SCHEMES = ['blob', 'data', 'intent'];
+const NON_NETWORK_SCHEMES = ['blob', 'data', 'intent', 'filesystem'];
 
 /**
  * There is fancy URL rewriting logic for the chrome://settings page that we need to work around.

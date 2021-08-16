@@ -9,6 +9,8 @@
         "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
         "method": "GET",
         "headers": {
+          "Content-Type": "text/html",
+          "X-Content-Type-Options": "nosniff",
           "Upgrade-Insecure-Requests": "1",
           "User-Agent": "Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5 Build/MRA58N) AppleWebKit/537.36(KHTML, like Gecko) Chrome/61.0.3116.0 Mobile Safari/537.36",
           "X-DevTools-Emulate-Network-Conditions-Client-Id": "A36E31E517F452A18C51AA32F4163A8C"
@@ -38,6 +40,8 @@
         "status": 200,
         "statusText": "OK",
         "headers": {
+          "Content-Type": "text/html",
+          "X-Content-Type-Options": "nosniff",
           "Date": "Fri, 02 Mar 2018 07:13:02 GMT",
           "Connection": "keep-alive",
           "Transfer-Encoding": "chunked"
@@ -122,6 +126,7 @@
         "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2000&async=true",
         "method": "GET",
         "headers": {
+          "X-Content-Type-Options": "nosniff",
           "Referer": "http://localhost:10200/dobetterweb/dbw_tester.html",
           "User-Agent": "Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5 Build/MRA58N) AppleWebKit/537.36(KHTML, like Gecko) Chrome/61.0.3116.0 Mobile Safari/537.36"
         },
@@ -151,6 +156,7 @@
         "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=100",
         "method": "GET",
         "headers": {
+          "X-Content-Type-Options": "nosniff",
           "Referer": "http://localhost:10200/dobetterweb/dbw_tester.html",
           "User-Agent": "Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5 Build/MRA58N) AppleWebKit/537.36(KHTML, like Gecko) Chrome/61.0.3116.0 Mobile Safari/537.36"
         },
@@ -179,6 +185,8 @@
         "url": "http://localhost:10200/dobetterweb/unknown404.css?delay=200",
         "method": "GET",
         "headers": {
+          "Content-Type": "text/plain",
+          "X-Content-Type-Options": "nosniff",
           "Referer": "http://localhost:10200/dobetterweb/dbw_tester.html",
           "User-Agent": "Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5 Build/MRA58N) AppleWebKit/537.36(KHTML, like Gecko) Chrome/61.0.3116.0 Mobile Safari/537.36"
         },
@@ -207,6 +215,7 @@
         "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2200",
         "method": "GET",
         "headers": {
+          "X-Content-Type-Options": "nosniff",
           "Referer": "http://localhost:10200/dobetterweb/dbw_tester.html",
           "User-Agent": "Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5 Build/MRA58N) AppleWebKit/537.36(KHTML, like Gecko) Chrome/61.0.3116.0 Mobile Safari/537.36"
         },
@@ -235,6 +244,7 @@
         "url": "http://localhost:10200/dobetterweb/dbw_disabled.css?delay=200&isdisabled",
         "method": "GET",
         "headers": {
+          "X-Content-Type-Options": "nosniff",
           "Referer": "http://localhost:10200/dobetterweb/dbw_tester.html",
           "User-Agent": "Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5 Build/MRA58N) AppleWebKit/537.36(KHTML, like Gecko) Chrome/61.0.3116.0 Mobile Safari/537.36"
         },
@@ -263,6 +273,8 @@
         "url": "http://localhost:10200/dobetterweb/dbw_partial_a.html?delay=200",
         "method": "GET",
         "headers": {
+          "Content-Type": "text/html",
+          "X-Content-Type-Options": "nosniff",
           "User-Agent": "Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5 Build/MRA58N) AppleWebKit/537.36(KHTML, like Gecko) Chrome/61.0.3116.0 Mobile Safari/537.36",
           "Referer": "http://localhost:10200/dobetterweb/dbw_tester.html",
           "Origin": "http://localhost:10200"
@@ -292,6 +304,8 @@
         "url": "http://localhost:10200/dobetterweb/dbw_partial_b.html?delay=200&isasync",
         "method": "GET",
         "headers": {
+          "Content-Type": "text/html",
+          "X-Content-Type-Options": "nosniff",
           "User-Agent": "Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5 Build/MRA58N) AppleWebKit/537.36(KHTML, like Gecko) Chrome/61.0.3116.0 Mobile Safari/537.36",
           "Referer": "http://localhost:10200/dobetterweb/dbw_tester.html",
           "Origin": "http://localhost:10200"
@@ -321,6 +335,7 @@
         "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&async=true",
         "method": "GET",
         "headers": {
+          "X-Content-Type-Options": "nosniff",
           "Referer": "http://localhost:10200/dobetterweb/dbw_tester.html",
           "User-Agent": "Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5 Build/MRA58N) AppleWebKit/537.36(KHTML, like Gecko) Chrome/61.0.3116.0 Mobile Safari/537.36"
         },
@@ -346,7 +361,7 @@
       "loaderId": "F3B687683512E0F003DD41EB23E2091A",
       "documentURL": "http://localhost:10200/dobetterweb/dbw_tester.html",
       "request": {
-        "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
+        "url": "http://localhost:10200/dobetterweb/dbw_tester.js?suppressNosniff",
         "method": "GET",
         "headers": {
           "Referer": "http://localhost:10200/dobetterweb/dbw_tester.html",
@@ -377,6 +392,7 @@
         "url": "http://localhost:10200/dobetterweb/empty_module.js?delay=500",
         "method": "GET",
         "headers": {
+          "X-Content-Type-Options": "nosniff",
           "User-Agent": "Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5 Build/MRA58N) AppleWebKit/537.36(KHTML, like Gecko) Chrome/61.0.3116.0 Mobile Safari/537.36",
           "Referer": "http://localhost:10200/dobetterweb/dbw_tester.html",
           "Origin": "http://localhost:10200"
@@ -424,6 +440,8 @@
         "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg",
         "method": "GET",
         "headers": {
+          "Content-Type": "image/jpeg",
+          "X-Content-Type-Options": "nosniff",
           "Referer": "http://localhost:10200/dobetterweb/dbw_tester.html",
           "User-Agent": "Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5 Build/MRA58N) AppleWebKit/537.36(KHTML, like Gecko) Chrome/61.0.3116.0 Mobile Safari/537.36"
         },
@@ -452,6 +470,7 @@
         "url": "http://localhost:10200/zone.js",
         "method": "GET",
         "headers": {
+          "X-Content-Type-Options": "nosniff",
           "Referer": "http://localhost:10200/dobetterweb/dbw_tester.html",
           "User-Agent": "Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5 Build/MRA58N) AppleWebKit/537.36(KHTML, like Gecko) Chrome/61.0.3116.0 Mobile Safari/537.36"
         },
@@ -480,6 +499,7 @@
         "url": "http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js",
         "method": "GET",
         "headers": {
+          "X-Content-Type-Options": "nosniff",
           "Referer": "http://localhost:10200/dobetterweb/dbw_tester.html",
           "User-Agent": "Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5 Build/MRA58N) AppleWebKit/537.36(KHTML, like Gecko) Chrome/61.0.3116.0 Mobile Safari/537.36"
         },
@@ -510,6 +530,7 @@
         "status": 200,
         "statusText": "OK",
         "headers": {
+          "X-Content-Type-Options": "nosniff",
           "Date": "Fri, 02 Mar 2018 07:13:03 GMT",
           "Connection": "keep-alive",
           "Transfer-Encoding": "chunked",
@@ -588,10 +609,11 @@
         "status": 404,
         "statusText": "Not Found",
         "headers": {
+          "Content-Type": "text/plain",
+          "X-Content-Type-Options": "nosniff",
           "Date": "Fri, 02 Mar 2018 07:13:03 GMT",
           "Connection": "keep-alive",
-          "Transfer-Encoding": "chunked",
-          "Content-Type": "text/css"
+          "Transfer-Encoding": "chunked"
         },
         "headersText": "HTTP/1.1 404 Not Found\r\nContent-Type: text/css\r\nDate: Fri, 02 Mar 2018 07:13:03 GMT\r\nConnection: keep-alive\r\nTransfer-Encoding: chunked\r\n\r\n",
         "mimeType": "text/css",
@@ -658,6 +680,7 @@
         "status": 200,
         "statusText": "OK",
         "headers": {
+          "X-Content-Type-Options": "nosniff",
           "Date": "Fri, 02 Mar 2018 07:13:03 GMT",
           "Connection": "keep-alive",
           "Transfer-Encoding": "chunked",
@@ -736,6 +759,8 @@
         "status": 200,
         "statusText": "OK",
         "headers": {
+          "Content-Type": "text/html",
+          "X-Content-Type-Options": "nosniff",
           "Connection": "keep-alive",
           "Date": "Fri, 02 Mar 2018 07:13:03 GMT",
           "Transfer-Encoding": "chunked"
@@ -814,6 +839,7 @@
         "status": 200,
         "statusText": "OK",
         "headers": {
+          "X-Content-Type-Options": "nosniff",
           "Date": "Fri, 02 Mar 2018 07:13:03 GMT",
           "Connection": "keep-alive",
           "Transfer-Encoding": "chunked",
@@ -884,6 +910,8 @@
         "status": 200,
         "statusText": "OK",
         "headers": {
+          "Content-Type": "text/html",
+          "X-Content-Type-Options": "nosniff",
           "Connection": "keep-alive",
           "Date": "Fri, 02 Mar 2018 07:13:04 GMT",
           "Transfer-Encoding": "chunked"
@@ -958,7 +986,7 @@
       "timestamp": 185605.106333,
       "type": "Script",
       "response": {
-        "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
+        "url": "http://localhost:10200/dobetterweb/dbw_tester.js?suppressNosniff",
         "status": 200,
         "statusText": "OK",
         "headers": {
@@ -1040,6 +1068,7 @@
         "status": 200,
         "statusText": "OK",
         "headers": {
+          "X-Content-Type-Options": "nosniff",
           "Date": "Fri, 02 Mar 2018 07:13:03 GMT",
           "Connection": "keep-alive",
           "Transfer-Encoding": "chunked",
@@ -1118,6 +1147,7 @@
         "status": 200,
         "statusText": "OK",
         "headers": {
+          "X-Content-Type-Options": "nosniff",
           "Date": "Fri, 02 Mar 2018 07:13:03 GMT",
           "Connection": "keep-alive",
           "Transfer-Encoding": "chunked",
@@ -1194,6 +1224,7 @@
         "url": "http://localhost:10200/dobetterweb/dbw_tester.css?scriptActivated&delay=200",
         "method": "GET",
         "headers": {
+          "X-Content-Type-Options": "nosniff",
           "Referer": "http://localhost:10200/dobetterweb/dbw_tester.html",
           "User-Agent": "Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5 Build/MRA58N) AppleWebKit/537.36(KHTML, like Gecko) Chrome/61.0.3116.0 Mobile Safari/537.36"
         },
@@ -1245,6 +1276,8 @@
         "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
         "method": "GET",
         "headers": {
+          "Content-Type": "text/html",
+          "X-Content-Type-Options": "nosniff",
           "Referer": "http://localhost:10200/dobetterweb/dbw_tester.html",
           "User-Agent": "Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5 Build/MRA58N) AppleWebKit/537.36(KHTML, like Gecko) Chrome/61.0.3116.0 Mobile Safari/537.36"
         },
@@ -1291,6 +1324,8 @@
         "status": 200,
         "statusText": "OK",
         "headers": {
+          "X-Content-Type-Options": "nosniff",
+          "Content-Type": "text/html",
           "Connection": "keep-alive",
           "Date": "Fri, 02 Mar 2018 07:13:05 GMT",
           "Transfer-Encoding": "chunked"
@@ -1393,6 +1428,7 @@
         "url": "blob:http://localhost:10200/ae0eac03-ab9b-4a6a-b299-f5212153e277",
         "method": "GET",
         "headers": {
+          "X-Content-Type-Options": "nosniff",
           "User-Agent": "Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5 Build/MRA58N) AppleWebKit/537.36(KHTML, like Gecko) Chrome/61.0.3116.0 Mobile Safari/537.36"
         },
         "mixedContentType": "none",
@@ -1438,6 +1474,7 @@
         "status": 200,
         "statusText": "OK",
         "headers": {
+          "X-Content-Type-Options": "nosniff",
           "Date": "Fri, 02 Mar 2018 07:13:05 GMT",
           "Connection": "keep-alive",
           "Transfer-Encoding": "chunked",
@@ -1507,6 +1544,7 @@
         "status": 200,
         "statusText": "OK",
         "headers": {
+          "X-Content-Type-Options": "nosniff",
           "Date": "Fri, 02 Mar 2018 07:13:05 GMT",
           "Connection": "keep-alive",
           "Transfer-Encoding": "chunked",
@@ -1585,6 +1623,7 @@
         "status": 200,
         "statusText": "OK",
         "headers": {
+          "X-Content-Type-Options": "nosniff",
           "Content-Length": "4"
         },
         "headersText": "HTTP/1.1 200 OK\r\nContent-Length: 4\r\n\r\n",
@@ -1648,6 +1687,7 @@
         "status": 200,
         "statusText": "OK",
         "headers": {
+          "X-Content-Type-Options": "nosniff",
           "Date": "Fri, 02 Mar 2018 07:13:04 GMT",
           "Connection": "keep-alive",
           "Transfer-Encoding": "chunked",
@@ -1726,6 +1766,7 @@
         "status": 200,
         "statusText": "OK",
         "headers": {
+          "X-Content-Type-Options": "nosniff",
           "Date": "Mon, 12 Feb 2018 20:14:10 GMT",
           "Content-Encoding": "gzip",
           "X-Content-Type-Options": "nosniff",
@@ -1806,6 +1847,8 @@
         "status": 200,
         "statusText": "OK",
         "headers": {
+          "Content-Type": "image/jpeg",
+          "X-Content-Type-Options": "nosniff",
           "Connection": "keep-alive",
           "Date": "Fri, 02 Mar 2018 07:13:06 GMT",
           "Transfer-Encoding": "chunked"
@@ -1935,6 +1978,8 @@
         "url": "http://localhost:10200/favicon.ico",
         "method": "GET",
         "headers": {
+          "Content-Type": "text/plain",
+          "X-Content-Type-Options": "nosniff",
           "Referer": "http://localhost:10200/dobetterweb/dbw_tester.html",
           "User-Agent": "Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5 Build/MRA58N) AppleWebKit/537.36(KHTML, like Gecko) Chrome/61.0.3116.0 Mobile Safari/537.36"
         },
@@ -1963,6 +2008,8 @@
         "status": 404,
         "statusText": "Not Found",
         "headers": {
+          "Content-Type": "text/plain",
+          "X-Content-Type-Options": "nosniff",
           "Connection": "keep-alive",
           "Date": "Fri, 02 Mar 2018 07:13:07 GMT",
           "Transfer-Encoding": "chunked"

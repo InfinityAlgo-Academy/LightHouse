@@ -505,7 +505,7 @@
               },
               "75994.10": {
                 "request": {
-                  "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
+                  "url": "http://localhost:10200/dobetterweb/dbw_tester.js?suppressNosniff",
                   "startTime": 185603.965303,
                   "endTime": 185605.113307,
                   "responseReceivedTime": 185605.104776,
@@ -1167,7 +1167,7 @@
             "resourceType": "Stylesheet"
           },
           {
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.js?suppressNosniff",
             "protocol": "http/1.1",
             "startTime": 644.0820000134408,
             "endTime": 1792.0860000012908,
@@ -1951,7 +1951,7 @@
         ],
         "items": [
           {
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
+            "url": "http://localhost:10200/dobetterweb/empty_module.js?delay=500",
             "duration": 983.081,
             "startTime": 2854.095
           },
@@ -2189,6 +2189,29 @@
           {
             "severity": "High",
             "description": "No CSP found in enforcement mode"
+          }
+        ]
+      }
+    },
+    "nosniff": {
+      "id": "nosniff",
+      "title": "Does not set a `X-Content-Type-Options: nosniff` and `Content-Type` headers for every network resource",
+      "description": "Network resources that do not set a `nosniff` response header may result in security issues. [Learn more](https://web.dev/security-headers/#xcto)",
+      "score": 0,
+      "scoreDisplayMode": "binary",
+      "displayValue": "1 network resource found",
+      "details": {
+        "type": "table",
+        "headings": [
+          {
+            "key": "url",
+            "itemType": "url",
+            "text": "URL"
+          }
+        ],
+        "items": [
+          {
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.js?suppressNosniff"
           }
         ]
       }
@@ -3529,7 +3552,7 @@
             "wastedBytes": 24741
           },
           {
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.js?suppressNosniff",
             "cacheLifetimeMs": 0,
             "cacheHitProbability": 0,
             "totalBytes": 1703,
@@ -3635,7 +3658,7 @@
             "totalBytes": 12640
           },
           {
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.js?suppressNosniff",
             "totalBytes": 1703
           },
           {
@@ -3679,11 +3702,11 @@
       "id": "render-blocking-resources",
       "title": "Eliminate render-blocking resources",
       "description": "Resources are blocking the first paint of your page. Consider delivering critical JS/CSS inline and deferring all non-critical JS/styles. [Learn more](https://web.dev/render-blocking-resources/).",
-      "score": 0.47,
+      "score": 1,
       "scoreDisplayMode": "numeric",
-      "numericValue": 979,
+      "numericValue": 0,
       "numericUnit": "millisecond",
-      "displayValue": "Potential savings of 980 ms",
+      "displayValue": "Potential savings of 0 ms",
       "details": {
         "type": "opportunity",
         "headings": [
@@ -3718,14 +3741,9 @@
             "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2200",
             "totalBytes": 903,
             "wastedMs": 873
-          },
-          {
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
-            "totalBytes": 1052,
-            "wastedMs": 723
           }
         ],
-        "overallSavingsMs": 979
+        "overallSavingsMs": 0
       }
     },
     "unminified-css": {
@@ -3749,9 +3767,9 @@
       "id": "unminified-javascript",
       "title": "Minify JavaScript",
       "description": "Minifying JavaScript files can reduce payload sizes and script parse time. [Learn more](https://web.dev/unminified-javascript/).",
-      "score": 0.88,
+      "score": 0.67,
       "scoreDisplayMode": "numeric",
-      "numericValue": 150,
+      "numericValue": 450,
       "numericUnit": "millisecond",
       "displayValue": "Potential savings of 30 KiB",
       "warnings": [],
@@ -3782,7 +3800,7 @@
             "wastedPercent": 42.526292235399424
           }
         ],
-        "overallSavingsMs": 150,
+        "overallSavingsMs": 450,
         "overallSavingsBytes": 30472
       }
     },
@@ -3985,9 +4003,9 @@
       "id": "legacy-javascript",
       "title": "Avoid serving legacy JavaScript to modern browsers",
       "description": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. For your bundled JavaScript, adopt a modern script deployment strategy using module/nomodule feature detection to reduce the amount of code shipped to modern browsers, while retaining support for legacy browsers. [Learn More](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)",
-      "score": 1,
+      "score": 0.75,
       "scoreDisplayMode": "numeric",
-      "numericValue": 0,
+      "numericValue": 300,
       "numericUnit": "millisecond",
       "displayValue": "Potential savings of 21 KiB",
       "details": {
@@ -4048,7 +4066,7 @@
             "totalBytes": 0
           }
         ],
-        "overallSavingsMs": 0,
+        "overallSavingsMs": 300,
         "overallSavingsBytes": 21204
       }
     },
@@ -5562,6 +5580,11 @@
           "group": "best-practices-trust-safety"
         },
         {
+          "id": "nosniff",
+          "weight": 1,
+          "group": "best-practices-trust-safety"
+        },
+        {
           "id": "password-inputs-can-be-pasted-into",
           "weight": 1,
           "group": "best-practices-ux"
@@ -5628,7 +5651,7 @@
         }
       ],
       "id": "best-practices",
-      "score": 0.2
+      "score": 0.19
     },
     "seo": {
       "title": "SEO",
@@ -6398,6 +6421,12 @@
       {
         "startTime": 0,
         "name": "lh:audit:csp-xss",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:nosniff",
         "duration": 100,
         "entryType": "measure"
       },
@@ -7325,6 +7354,7 @@
         "audits[network-server-latency].details.headings[0].text",
         "audits[long-tasks].details.headings[0].text",
         "audits[unsized-images].details.headings[1].text",
+        "audits.nosniff.details.headings[0].text",
         "audits[uses-long-cache-ttl].details.headings[0].text",
         "audits[total-byte-weight].details.headings[0].text",
         "audits[render-blocking-resources].details.headings[0].label",
@@ -7813,6 +7843,20 @@
       "lighthouse-core/audits/csp-xss.js | noCsp": [
         "audits[csp-xss].details.items[0].description"
       ],
+      "lighthouse-core/audits/nosniff.js | failureTitle": [
+        "audits.nosniff.title"
+      ],
+      "lighthouse-core/audits/nosniff.js | description": [
+        "audits.nosniff.description"
+      ],
+      "lighthouse-core/audits/nosniff.js | displayValue": [
+        {
+          "values": {
+            "itemCount": 1
+          },
+          "path": "audits.nosniff.displayValue"
+        }
+      ],
       "lighthouse-core/audits/manual/pwa-cross-browser.js | title": [
         "audits[pwa-cross-browser].title"
       ],
@@ -8141,7 +8185,7 @@
       "lighthouse-core/lib/i18n/i18n.js | displayValueMsSavings": [
         {
           "values": {
-            "wastedMs": 979
+            "wastedMs": 0
           },
           "path": "audits[render-blocking-resources].displayValue"
         }
