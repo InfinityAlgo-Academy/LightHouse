@@ -4,6 +4,7 @@
 
 module.exports = {
   applicationUrl: 'https://lh-build-tracker.herokuapp.com',
+  // Budgets for these are expressed in https://github.com/paulirish/lh-build-tracker/blob/master/build-tracker.config.js
   artifacts: [
     'dist/lightrider/lighthouse-lr-bundle.js',
     'dist/extension/scripts/lighthouse-ext-bundle.js',
@@ -14,4 +15,9 @@ module.exports = {
     'dist/dt-report-resources/report.js',
     'dist/dt-report-resources/report-generator.js',
   ],
+  // onCompare: (data) => {
+  //   // send markdown response somewhere…
+  //   GithubApi.postComment(data.summary.join('\n'));
+  //   return Promise.resolve();
+  // },
 };
