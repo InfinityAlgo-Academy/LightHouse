@@ -47,6 +47,7 @@ const formatDelta = allArtifactDelta =>
   ).toFixed(1)}%)`;
 
 const getDescriptionStats = (parentBuild, build) => {
+  debugger;
   const parentBuildSum = parentBuild.getSum(parentBuild.artifactNames);
   const buildSum = build.getSum(build.artifactNames);
   const allArtifactDelta = new ArtifactDelta('All', [], buildSum, parentBuildSum, false);
@@ -121,3 +122,13 @@ module.exports = {
   ],
   onCompare,
 };
+
+const tdata = {
+  comparatorData:
+    '{"artifactBudgets":{"*":[{"level":"error","sizeKey":"stat","type":"percentDelta","maximum":0.05}],"dist/extension-chrome/scripts/popup-bundle.js":[{"level":"warn","sizeKey":"gzip","type":"size","maximum":15000}],"dist/lightrider/lighthouse-lr-bundle.js":[{"level":"warn","sizeKey":"gzip","type":"size","maximum":1500000}],"dist/viewer/src/viewer.js":[{"level":"warn","sizeKey":"gzip","type":"size","maximum":65000}],"dist/lighthouse-dt-bundle.js":[{"level":"warn","sizeKey":"gzip","type":"size","maximum":470000}],"dist/lightrider/report-generator-bundle.js":[{"level":"warn","sizeKey":"gzip","type":"size","maximum":50000}]},"artifactFilters":[],"builds":[{"meta":{"author":"Paul Irish","branch":"master","subject":"core(config): keep full-page-screenshot in skipAudits case (#12645)\\n","revision":"4aea3d7fff23da289f8f811612b3a57dc14287e0","timestamp":1629149330,"parentRevision":"98eebdaf6daa82957cadd057b16ce680af226bc3"},"artifacts":[{"hash":"5700d053974c0e02c6016115b7fd41ae","name":"dist/lightrider/lighthouse-lr-bundle.js","sizes":{"gzip":2013148,"stat":10815684,"brotli":1322694}},{"hash":"7adad8898c358656fa7274f670830458","name":"dist/lighthouse-dt-bundle.js","sizes":{"gzip":2012559,"stat":10813538,"brotli":1321628}},{"hash":"e9c17c6110abc4dcad1a3843da6d5c33","name":"dist/gh-pages/viewer/src/bundled.js","sizes":{"gzip":82306,"stat":323571,"brotli":48806}},{"hash":"dcf456b446b25f3307574f0d88bc4db4","name":"dist/gh-pages/treemap/src/bundled.js","sizes":{"gzip":67098,"stat":281817,"brotli":56362}},{"hash":"0912bc88c5c7619997b2baf521327b91","name":"dist/lightrider/report-generator-bundle.js","sizes":{"gzip":44678,"stat":180560,"brotli":37020}},{"hash":"6fd36003cbd1159419b64968b9fafab5","name":"dist/dt-report-resources/report.js","sizes":{"gzip":28299,"stat":115108,"brotli":23926}},{"hash":"34f28f962afe8aff5810d944bfccb029","name":"dist/dt-report-resources/report-generator.js","sizes":{"gzip":2935,"stat":8185,"brotli":2428}}]},{"meta":{"author":"Paul Irish","branch":"btudpates","parentRevision":"4aea3d7fff23da289f8f811612b3a57dc14287e0","revision":"b5b93148ec68a0b08d0f28983d4f425f253915aa","subject":"log desc\\n","timestamp":1629219820},"artifacts":[{"name":"dist/lighthouse-dt-bundle.js","hash":"55f524540b1e44195ce8b5e85cd5eee4","sizes":{"stat":10813537,"gzip":2012402,"brotli":1322677}},{"name":"dist/dt-report-resources/report.js","hash":"6fd36003cbd1159419b64968b9fafab5","sizes":{"stat":115108,"gzip":28299,"brotli":23926}},{"name":"dist/dt-report-resources/report-generator.js","hash":"34f28f962afe8aff5810d944bfccb029","sizes":{"stat":8185,"gzip":2935,"brotli":2428}}]}],"groups":[]}',
+  summary: [
+    '⚠️: *dist/lighthouse-dt-bundle.js* failed the gzip budget size limit of 458.98 KiB by 1,506.25 KiB',
+  ],
+};
+
+onCompare(tdata);
