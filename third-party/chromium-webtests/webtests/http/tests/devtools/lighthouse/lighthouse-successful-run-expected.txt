@@ -240,6 +240,7 @@ Auditing: Image elements have explicit `width` and `height`
 Auditing: Page has valid source maps
 Auditing: Preload Largest Contentful Paint image
 Auditing: Ensure CSP is effective against XSS attacks
+Auditing: Sets `X-Content-Type-Options: nosniff` and `Content-Type` headers for every network resource
 Auditing: Full-page screenshot
 Auditing: Script Treemap Data
 Computing artifact: JSBundles
@@ -512,6 +513,7 @@ no-document-write: pass
 no-unload-listeners: pass
 no-vulnerable-libraries: pass
 non-composited-animations: notApplicable
+nosniff: fail
 notification-on-start: pass
 object-alt: notApplicable
 offscreen-content-hidden: manual
@@ -571,7 +573,7 @@ viewport: fail
 viewport-ad-density: notApplicable
 visual-order-follows-dom: manual
 
-# of .lh-audit divs: 159
+# of .lh-audit divs: 160
 
 .lh-audit divs:
 accesskeys
@@ -680,6 +682,7 @@ no-document-write
 no-unload-listeners
 no-vulnerable-libraries
 non-composited-animations
+nosniff
 notification-on-start
 object-alt
 offscreen-content-hidden
