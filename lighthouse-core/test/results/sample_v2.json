@@ -2211,7 +2211,9 @@
         ],
         "items": [
           {
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.js?suppressNosniff"
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.js?suppressNosniff",
+            "hasNosniff": false,
+            "hasContentType": true
           }
         ]
       }
