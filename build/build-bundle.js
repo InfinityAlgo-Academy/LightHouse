@@ -13,6 +13,7 @@
 const fs = require('fs');
 const path = require('path');
 const assert = require('assert').strict;
+const stream = require('stream');
 const mkdir = fs.promises.mkdir;
 const LighthouseRunner = require('../lighthouse-core/runner.js');
 const exorcist = require('exorcist');
@@ -66,7 +67,23 @@ async function browserifyFile(entryPath, distPath) {
     })
     // Transform the fs.readFile etc into inline strings.
     .transform('@wardpeet/brfs', {
-      readFileSyncTransform: minifyFileTransform,
+      /** @param {string} file */
+      readFileTransform: (file) => {
+        // Don't include locales in DevTools.
+        if (isDevtools(entryPath) && locales.includes(file)) {
+          return new stream.Transform({
+            transform(chunk, enc, next) {
+              next();
+            },
+            final(next) {
+              this.push('{}');
+              next();
+            },
+          });
+        }
+
+        return minifyFileTransform(file);
+      },
       global: true,
       parserOpts: {ecmaVersion: 12},
     })
@@ -88,12 +105,6 @@ async function browserifyFile(entryPath, distPath) {
   // Don't include in Lightrider - HTML generation isn't supported, so report assets aren't needed.
   if (isDevtools(entryPath) || isLightrider(entryPath)) {
     bundle.ignore(require.resolve('../report/report-assets.js'));
-  }
-
-  // Don't include locales in DevTools.
-  if (isDevtools(entryPath)) {
-    // @ts-expect-error bundle.ignore does accept an array of strings.
-    bundle.ignore(locales);
   }
 
   // Expose the audits, gatherers, and computed artifacts so they can be dynamically loaded.

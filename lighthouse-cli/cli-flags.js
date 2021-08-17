@@ -108,6 +108,10 @@ function getFlags(manualArgv, options = {}) {
           default: false,
           describe: 'Print the normalized config for the given config and options, then exit.',
         },
+        'debug-navigation': {
+          type: 'boolean',
+          describe: 'Pause after page load to wait for permission to continue the run, evaluate `continueLighthouseRun` in the console to continue.',
+        },
         'fraggle-rock': {
           type: 'boolean',
           default: false,
@@ -362,16 +366,20 @@ function coerceOptionalStringBoolean(value) {
  */
 function coerceOutput(values) {
   const outputTypes = ['json', 'html', 'csv'];
-  const errorMsg = `Invalid values. Argument 'output' must be an array from choices "${outputTypes.join('", "')}"`;
+  const errorHint = `Argument 'output' must be an array from choices "${outputTypes.join('", "')}"`;
   if (!values.every(/** @return {item is string} */ item => typeof item === 'string')) {
-    throw new Error(errorMsg);
+    throw new Error('Invalid values. ' + errorHint);
   }
   // Allow parsing of comma-separated values.
   const strings = values.flatMap(value => value.split(','));
-  if (!strings.every(/** @return {str is LH.OutputMode} */ str => outputTypes.includes(str))) {
-    throw new Error(errorMsg);
-  }
-  return strings;
+  const validValues = strings.filter(/** @return {str is LH.OutputMode} */ str => {
+    if (!outputTypes.includes(str)) {
+      throw new Error(`"${str}" is not a valid 'output' value. ` + errorHint);
+    }
+    return true;
+  });
+
+  return validValues;
 }
 
 /**

@@ -114,11 +114,25 @@ class UnusedBytes extends Audit {
       devtoolsLog,
       settings,
     };
-
     const networkRecords = await NetworkRecords.request(devtoolsLog, context);
+
+    // Requesting load simulator requires non-empty network records.
+    // Timespans are not guaranteed to have any network activity.
+    // There are no bytes to be saved if no bytes were downloaded, so mark N/A if empty.
+    if (!networkRecords.length && gatherContext.gatherMode === 'timespan') {
+      return {
+        score: 1,
+        notApplicable: true,
+      };
+    }
+
     const [result, graph, simulator] = await Promise.all([
       this.audit_(artifacts, networkRecords, context),
-      PageDependencyGraph.request({trace, devtoolsLog}, context),
+      // Page dependency graph is only used in navigation mode.
+      // TODO(FR-COMPAT): Use dependency graph in timespan mode.
+      gatherContext.gatherMode === 'navigation' ?
+        PageDependencyGraph.request({trace, devtoolsLog}, context) :
+        null,
       LoadSimulator.request(simulatorOptions, context),
     ]);
 
@@ -200,7 +214,7 @@ class UnusedBytes extends Audit {
 
   /**
    * @param {ByteEfficiencyProduct} result
-   * @param {Node} graph
+   * @param {Node|null} graph
    * @param {Simulator} simulator
    * @param {LH.Artifacts['GatherContext']} gatherContext
    * @return {LH.Audit.Product}
@@ -209,11 +223,16 @@ class UnusedBytes extends Audit {
     const results = result.items.sort((itemA, itemB) => itemB.wastedBytes - itemA.wastedBytes);
 
     const wastedBytes = results.reduce((sum, item) => sum + item.wastedBytes, 0);
-    const wastedMs = gatherContext.gatherMode === 'navigation' ?
-      this.computeWasteWithTTIGraph(results, graph, simulator, {
+
+    let wastedMs;
+    if (gatherContext.gatherMode === 'navigation') {
+      if (!graph) throw Error('Page dependency graph should always be computed in navigation mode');
+      wastedMs = this.computeWasteWithTTIGraph(results, graph, simulator, {
         providedWastedBytesByUrl: result.wastedBytesByUrl,
-      }) :
-      this.computeWastedMsWithThroughput(wastedBytes, simulator);
+      });
+    } else {
+      wastedMs = this.computeWastedMsWithThroughput(wastedBytes, simulator);
+    }
 
     let displayValue = result.displayValue || '';
     if (typeof result.displayValue === 'undefined' && wastedBytes) {

@@ -74,6 +74,7 @@ class GatherRunner {
       const {finalUrl, warnings} = await navigation.gotoURL(driver, requestedUrl, {
         waitUntil: passContext.passConfig.recordTrace ?
           ['load', 'fcp'] : ['load'],
+        debugNavigation: passContext.settings.debugNavigation,
         maxWaitForFcp: passContext.settings.maxWaitForFcp,
         maxWaitForLoad: passContext.settings.maxWaitForLoad,
         ...passContext.passConfig,

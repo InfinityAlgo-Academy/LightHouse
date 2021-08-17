@@ -20,12 +20,12 @@ const i18n = require('../lib/i18n/i18n.js');
  * If any items with identical `path` properties are found in the input array,
  * merge their `options` properties into the first instance and then discard any
  * other instances.
- * Until support of jsdoc templates with constraints, type in config.d.ts.
- * See https://github.com/Microsoft/TypeScript/issues/24283
- * @type {LH.Config.MergeOptionsOfItems}
+ * @template {{path?: string, options: Record<string, unknown>}} T
+ * @param {T[]} items
+ * @return T[]
  */
 const mergeOptionsOfItems = function(items) {
-  /** @type {Array<{id: string, path?: string, options?: Object<string, any>}>} */
+  /** @type {T[]} */
   const mergedItems = [];
 
   for (const item of items) {
@@ -92,6 +92,41 @@ function _mergeConfigFragment(base, extension, overwriteArrays = false) {
  * @type {LH.Config.Merge}
  */
 const mergeConfigFragment = _mergeConfigFragment;
+
+/**
+ * Merge an array of items by a caller-defined key. `mergeConfigFragment` is used to merge any items
+ * with a matching key.
+ *
+ * @template T
+ * @param {Array<T>|null|undefined} baseArray
+ * @param {Array<T>|null|undefined} extensionArray
+ * @param {(item: T) => string} keyFn
+ * @return {Array<T>}
+ */
+function mergeConfigFragmentArrayByKey(baseArray, extensionArray, keyFn) {
+  /** @type {Map<string, {index: number, item: T}>} */
+  const itemsByKey = new Map();
+  const mergedArray = baseArray || [];
+  for (let i = 0; i < mergedArray.length; i++) {
+    const item = mergedArray[i];
+    itemsByKey.set(keyFn(item), {index: i, item});
+  }
+
+  for (const item of extensionArray || []) {
+    const baseItemEntry = itemsByKey.get(keyFn(item));
+    if (baseItemEntry) {
+      const baseItem = baseItemEntry.item;
+      const merged = typeof item === 'object' && typeof baseItem === 'object' ?
+        mergeConfigFragment(baseItem, item, true) :
+        item;
+      mergedArray[baseItemEntry.index] = merged;
+    } else {
+      mergedArray.push(item);
+    }
+  }
+
+  return mergedArray;
+}
 
 /**
  * Validate the settings after they've been built
@@ -558,6 +593,7 @@ module.exports = {
   deepCloneConfigJson,
   mergeOptionsOfItems,
   mergeConfigFragment,
+  mergeConfigFragmentArrayByKey,
   resolveSettings,
   resolveGathererToDefn,
   resolveAuditsToDefns,

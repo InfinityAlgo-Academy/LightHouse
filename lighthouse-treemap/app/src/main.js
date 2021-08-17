@@ -9,12 +9,22 @@
 
 /* eslint-env browser */
 
-/* globals I18n webtreemap strings TreemapUtil TextEncoding Tabulator Cell Row DragAndDrop Logger GithubApi */
+/* globals webtreemap strings Tabulator Cell Row */
+
+import {TreemapUtil} from './util.js';
+import {DragAndDrop} from '../../../lighthouse-viewer/app/src/drag-and-drop.js';
+import {GithubApi} from '../../../lighthouse-viewer/app/src/github-api.js';
+import {I18n} from '../../../report/renderer/i18n.js';
+import {TextEncoding} from '../../../report/renderer/text-encoding.js';
+import {Logger} from '../../../report/renderer/logger.js';
 
 const DUPLICATED_MODULES_IGNORE_THRESHOLD = 1024;
 const DUPLICATED_MODULES_IGNORE_ROOT_RATIO = 0.01;
 
 const logEl = document.querySelector('#lh-log');
+if (!logEl) {
+  throw new Error('logger element not found');
+}
 const logger = new Logger(logEl);
 
 /** @type {TreemapViewer} */
@@ -646,16 +656,14 @@ function renderViewModeButtons(viewModes) {
     if (!viewMode.enabled) viewModeEl.classList.add('view-mode--disabled');
     viewModeEl.id = `view-mode--${viewMode.id}`;
 
-    const inputEl = TreemapUtil.createChildOf(viewModeEl, 'input', 'view-mode__button', {
-      id: `view-mode--${viewMode.id}__label`,
-      type: 'radio',
-      name: 'view-mode',
-      disabled: viewMode.enabled ? undefined : '',
-    });
+    const inputEl = TreemapUtil.createChildOf(viewModeEl, 'input', 'view-mode__button');
+    inputEl.id = `view-mode--${viewMode.id}__label`;
+    inputEl.type = 'radio';
+    inputEl.name = 'view-mode';
+    inputEl.disabled = !viewMode.enabled;
 
-    const labelEl = TreemapUtil.createChildOf(viewModeEl, 'label', undefined, {
-      for: inputEl.id,
-    });
+    const labelEl = TreemapUtil.createChildOf(viewModeEl, 'label');
+    labelEl.htmlFor = inputEl.id;
     TreemapUtil.createChildOf(labelEl, 'span', 'view-mode__label').textContent = viewMode.label;
     TreemapUtil.createChildOf(labelEl, 'span', 'view-mode__sublabel lh-text-dim').textContent =
       ` (${viewMode.subLabel})`;
@@ -706,7 +714,7 @@ function injectOptions(options) {
  * @param {LhlMessages} localeMessages
  */
 function getStrings(localeMessages) {
-  const strings = /** @type {TreemapUtil['UIStrings']} */ ({});
+  const strings = /** @type {typeof TreemapUtil['UIStrings']} */ ({});
 
   for (const varName of Object.keys(localeMessages)) {
     const key = /** @type {keyof typeof TreemapUtil['UIStrings']} */ (varName);
@@ -776,7 +784,7 @@ class LighthouseTreemap {
     for (const node of document.querySelectorAll('[data-i18n]')) {
       // These strings are guaranteed to (at least) have a default English string in TreemapUtil.UIStrings,
       // so this cannot be undefined as long as `report-ui-features.data-i18n` test passes.
-      const i18nAttr = /** @type {keyof TreemapUtil['UIStrings']} */ (
+      const i18nAttr = /** @type {keyof typeof TreemapUtil['UIStrings']} */ (
         node.getAttribute('data-i18n'));
       node.textContent = TreemapUtil.i18n.strings[i18nAttr];
     }

@@ -16,6 +16,7 @@ const {
   resolveAuditsToDefns,
   resolveModulePath,
   mergeConfigFragment,
+  mergeConfigFragmentArrayByKey,
 } = require('../../config/config-helpers.js');
 const Runner = require('../../runner.js');
 const Gatherer = require('../../gather/gatherers/gatherer.js');
@@ -80,6 +81,44 @@ describe('.mergeConfigFragment', () => {
     expect(() => mergeConfigFragment('foo', [])).toThrow();
     expect(() => mergeConfigFragment({}, [])).toThrow();
     expect(() => mergeConfigFragment([], {})).toThrow();
+  });
+});
+
+describe('.mergeConfigFragmentArrayByKey', () => {
+  it('should use mergeConfigFragment to merge items', () => {
+    const base = [{a: 1, b: 'yes', c: true}];
+    const extension = [{a: 2, c: false, d: 123}];
+    const merged = mergeConfigFragmentArrayByKey(base, extension, () => 'key');
+    expect(merged).toBe(base);
+    expect(merged).toEqual([{a: 2, b: 'yes', c: false, d: 123}]);
+  });
+
+  it('should merge by the keyFn', () => {
+    const base = [{id: 'a', value: 1}, {id: 'b', value: 2}];
+    const extension = [{id: 'b', value: 1}, {id: 'a', value: 2}, {id: 'c'}];
+    const merged = mergeConfigFragmentArrayByKey(base, extension, item => item.id);
+    expect(merged).toEqual([{id: 'a', value: 2}, {id: 'b', value: 1}, {id: 'c'}]);
+  });
+
+  it('should merge recursively', () => {
+    const base = [{foo: {bar: 1}}];
+    const extension = [{foo: {baz: 2, bam: 3}}];
+    const merged = mergeConfigFragmentArrayByKey(base, extension, () => 'key');
+    expect(merged).toEqual([{foo: {bar: 1, baz: 2, bam: 3}}]);
+  });
+
+  it('should handle null items in base', () => {
+    const base = [null];
+    const extension = [{x: 1}];
+    const merged = mergeConfigFragmentArrayByKey(base, extension, () => '');
+    expect(merged).toEqual([{x: 1}]);
+  });
+
+  it('should handle undefined items in extension', () => {
+    const base = [{x: 1}];
+    const extension = [undefined];
+    const merged = mergeConfigFragmentArrayByKey(base, extension, () => '');
+    expect(merged).toEqual([undefined]);
   });
 });
 

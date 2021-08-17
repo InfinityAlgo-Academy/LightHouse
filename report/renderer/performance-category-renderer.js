@@ -27,7 +27,7 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
    * @return {!Element}
    */
   _renderMetric(audit) {
-    const tmpl = this.dom.cloneTemplate('#tmpl-lh-metric', this.templateContext);
+    const tmpl = this.dom.createComponent('metric');
     const element = this.dom.find('.lh-metric', tmpl);
     element.id = audit.result.id;
     const rating = Util.calculateRating(audit.result.score, audit.result.scoreDisplayMode);
@@ -58,7 +58,7 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
    * @return {!Element}
    */
   _renderOpportunity(audit, scale) {
-    const oppTmpl = this.dom.cloneTemplate('#tmpl-lh-opportunity', this.templateContext);
+    const oppTmpl = this.dom.createComponent('opportunity');
     const element = this.populateAuditValues(audit, oppTmpl);
     element.id = audit.result.id;
 
@@ -175,7 +175,7 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
     const metricAuditsEl = this.renderAuditGroup(groups.metrics);
 
     // Metric descriptions toggle.
-    const toggleTmpl = this.dom.cloneTemplate('#tmpl-lh-metrics-toggle', this.templateContext);
+    const toggleTmpl = this.dom.createComponent('metricsToggle');
     const _toggleEl = this.dom.find('.lh-metrics-toggle', toggleTmpl);
     metricAuditsEl.append(..._toggleEl.childNodes);
 
@@ -194,7 +194,7 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
     const calculatorLink = this.dom.createChildOf(estValuesEl, 'a', 'lh-calclink');
     calculatorLink.target = '_blank';
     calculatorLink.textContent = strings.calculatorLink;
-    calculatorLink.href = this._getScoringCalculatorHref(category.auditRefs);
+    this.dom.safelySetHref(calculatorLink, this._getScoringCalculatorHref(category.auditRefs));
 
 
     metricAuditsEl.classList.add('lh-audit-group--metrics');
@@ -229,7 +229,7 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
       const maxWaste = Math.max(...wastedMsValues);
       const scale = Math.max(Math.ceil(maxWaste / 1000) * 1000, minimumScale);
       const groupEl = this.renderAuditGroup(groups['load-opportunities']);
-      const tmpl = this.dom.cloneTemplate('#tmpl-lh-opportunity-header', this.templateContext);
+      const tmpl = this.dom.createComponent('opportunityHeader');
 
       this.dom.find('.lh-load-opportunity__col--one', tmpl).textContent =
         strings.opportunityResourceColumnLabel;
@@ -311,18 +311,20 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
       ({acronym: 'All'}),
       ...filterableMetrics,
     ]);
-    for (const metric of filterChoices) {
-      const elemId = `metric-${metric.acronym}`;
-      const radioEl = this.dom.createChildOf(metricFilterEl, 'input', 'lh-metricfilter__radio', {
-        type: 'radio',
-        name: 'metricsfilter',
-        id: elemId,
-      });
 
-      const labelEl = this.dom.createChildOf(metricFilterEl, 'label', 'lh-metricfilter__label', {
-        for: elemId,
-        title: metric.result && metric.result.title,
-      });
+    // Form labels need to reference unique IDs, but multiple reports rendered in the same DOM (eg PSI)
+    // would mean ID conflict.  To address this, we 'scope' these radio inputs with a unique suffix.
+    const uniqSuffix = Util.getUniqueSuffix();
+    for (const metric of filterChoices) {
+      const elemId = `metric-${metric.acronym}-${uniqSuffix}`;
+      const radioEl = this.dom.createChildOf(metricFilterEl, 'input', 'lh-metricfilter__radio');
+      radioEl.type = 'radio';
+      radioEl.name = `metricsfilter-${uniqSuffix}`;
+      radioEl.id = elemId;
+
+      const labelEl = this.dom.createChildOf(metricFilterEl, 'label', 'lh-metricfilter__label');
+      labelEl.htmlFor = elemId;
+      labelEl.title = metric.result && metric.result.title;
       labelEl.textContent = metric.acronym || metric.id;
 
       if (metric.acronym === 'All') {

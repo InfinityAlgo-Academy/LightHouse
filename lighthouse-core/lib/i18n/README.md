@@ -39,7 +39,7 @@ To a typical developer, the pipeline looks like this:
 $ yarn i18n:collect-strings
 
 # Test to see that the new translations are valid and apply to all strings
-$ node lighthouse-core/scripts/build-report-for-autodeployment.js && open dist/xl-accented/index.html
+$ yarn build-sample-reports && open dist/xl-accented/index.html
 ```
 
 Note: Why do `en-US` and `en-XL` get baked early?  We write all our strings in `en-US` by default, so they do not need to be translated, so it can be immediately baked without going to the translators.  Similarly, `en-XL` is a debugging language, it is an automated version of `en-US` that simply adds markers to `en` strings in order to make it obvious that something has or hasn't been translated.  So neither of these files need to go to translators to be used, and both can be used at develop-time to help developer i18n workflow.

@@ -150,7 +150,12 @@ describe('NavigationRunner', () => {
       config = initializeConfig(
         {
           ...config,
-          navigations: [{id: 'default'}, {id: 'second'}, {id: 'third'}, {id: 'fourth'}],
+          navigations: [
+            {id: 'default', artifacts: ['FontSize']},
+            {id: 'second', artifacts: ['ConsoleMessages']},
+            {id: 'third', artifacts: ['ViewportDimensions']},
+            {id: 'fourth', artifacts: ['AnchorElements']},
+          ],
         },
         {gatherMode: 'navigation'}
       ).config;

@@ -158,7 +158,6 @@ const defaultConfig = {
         artifacts.EmbeddedContent,
         artifacts.FontSize,
         artifacts.FormElements,
-        artifacts.FullPageScreenshot,
         artifacts.GatherContext,
         artifacts.GlobalListeners,
         artifacts.IFrameElements,
@@ -187,11 +186,20 @@ const defaultConfig = {
         // Compat artifacts come last.
         artifacts.devtoolsLogs,
         artifacts.traces,
+
+        // FullPageScreenshot comes at the very end so all other node analysis is captured.
+        artifacts.FullPageScreenshot,
       ],
     },
   ],
   settings: legacyDefaultConfig.settings,
-  audits: [...(legacyDefaultConfig.audits || []), ...frAudits],
+  audits: [
+    ...(legacyDefaultConfig.audits || []).map(audit => {
+      if (typeof audit === 'string') return {path: audit};
+      return audit;
+    }),
+    ...frAudits,
+  ],
   categories: mergeCategories(),
   groups: legacyDefaultConfig.groups,
 };

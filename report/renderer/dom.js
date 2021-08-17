@@ -20,6 +20,7 @@
 /** @template {string} T @typedef {import('typed-query-selector/parser').ParseSelector<T, Element>} ParseSelector */
 
 import {Util} from './util.js';
+import {createComponent} from './components.js';
 
 export class DOM {
   /**
@@ -30,28 +31,23 @@ export class DOM {
     this._document = document;
     /** @type {string} */
     this._lighthouseChannel = 'unknown';
+    /** @type {Map<string, DocumentFragment>} */
+    this._componentCache = new Map();
   }
 
   /**
    * @template {string} T
    * @param {T} name
    * @param {string=} className
-   * @param {Object<string, (string|undefined)>=} attrs Attribute key/val pairs.
-   *     Note: if an attribute key has an undefined value, this method does not
-   *     set the attribute on the node.
    * @return {HTMLElementByTagName[T]}
    */
-  createElement(name, className, attrs = {}) {
+  createElement(name, className) {
     const element = this._document.createElement(name);
     if (className) {
-      element.className = className;
-    }
-    Object.keys(attrs).forEach(key => {
-      const value = attrs[key];
-      if (typeof value !== 'undefined') {
-        element.setAttribute(key, value);
+      for (const token of className.split(/\s+/)) {
+        if (token) element.classList.add(token);
       }
-    });
+    }
     return element;
   }
 
@@ -59,22 +55,15 @@ export class DOM {
    * @param {string} namespaceURI
    * @param {string} name
    * @param {string=} className
-   * @param {Object<string, (string|undefined)>=} attrs Attribute key/val pairs.
-   *     Note: if an attribute key has an undefined value, this method does not
-   *     set the attribute on the node.
    * @return {Element}
    */
-  createElementNS(namespaceURI, name, className, attrs = {}) {
+  createElementNS(namespaceURI, name, className) {
     const element = this._document.createElementNS(namespaceURI, name);
     if (className) {
-      element.className = className;
-    }
-    Object.keys(attrs).forEach(key => {
-      const value = attrs[key];
-      if (typeof value !== 'undefined') {
-        element.setAttribute(key, value);
+      for (const token of className.split(/\s+/)) {
+        if (token) element.classList.add(token);
       }
-    });
+    }
     return element;
   }
 
@@ -90,48 +79,32 @@ export class DOM {
    * @param {Element} parentElem
    * @param {T} elementName
    * @param {string=} className
-   * @param {Object<string, (string|undefined)>=} attrs Attribute key/val pairs.
-   *     Note: if an attribute key has an undefined value, this method does not
-   *     set the attribute on the node.
    * @return {HTMLElementByTagName[T]}
    */
-  createChildOf(parentElem, elementName, className, attrs) {
-    const element = this.createElement(elementName, className, attrs);
+  createChildOf(parentElem, elementName, className) {
+    const element = this.createElement(elementName, className);
     parentElem.appendChild(element);
     return element;
   }
 
   /**
-   * @param {string} selector
-   * @param {ParentNode} context
-   * @return {!DocumentFragment} A clone of the template content.
-   * @throws {Error}
+   * @param {import('./components.js').ComponentName} componentName
+   * @return {!DocumentFragment} A clone of the cached component.
    */
-  cloneTemplate(selector, context) {
-    const template = /** @type {?HTMLTemplateElement} */ (context.querySelector(selector));
-    if (!template) {
-      throw new Error(`Template not found: template${selector}`);
+  createComponent(componentName) {
+    let component = this._componentCache.get(componentName);
+    if (component) {
+      const cloned = /** @type {DocumentFragment} */ (component.cloneNode(true));
+      // Prevent duplicate styles in the DOM. After a template has been stamped
+      // for the first time, remove the clone's styles so they're not re-added.
+      this.findAll('style', cloned).forEach(style => style.remove());
+      return cloned;
     }
 
-    const clone = this._document.importNode(template.content, true);
-
-    // Prevent duplicate styles in the DOM. After a template has been stamped
-    // for the first time, remove the clone's styles so they're not re-added.
-    if (template.hasAttribute('data-stamped')) {
-      this.findAll('style', clone).forEach(style => style.remove());
-    }
-    template.setAttribute('data-stamped', 'true');
-
-    return clone;
-  }
-
-  /**
-   * Resets the "stamped" state of the templates.
-   */
-  resetTemplates() {
-    this.findAll('template[data-stamped]', this._document).forEach(t => {
-      t.removeAttribute('data-stamped');
-    });
+    component = createComponent(this, componentName);
+    this._componentCache.set(componentName, component);
+    const cloned = /** @type {DocumentFragment} */ (component.cloneNode(true));
+    return cloned;
   }
 
   /**
@@ -161,11 +134,51 @@ export class DOM {
       a.rel = 'noopener';
       a.target = '_blank';
       a.textContent = segment.text;
-      a.href = url.href;
+      this.safelySetHref(a, url.href);
       element.appendChild(a);
     }
 
     return element;
+  }
+
+  /**
+   * Set link href, but safely, preventing `javascript:` protocol, etc.
+   * @see https://github.com/google/safevalues/
+   * @param {HTMLAnchorElement} elem
+   * @param {string} url
+   */
+  safelySetHref(elem, url) {
+    // Defaults to '' to fix proto roundtrip issue. See https://github.com/GoogleChrome/lighthouse/issues/12868
+    url = url || '';
+
+    // In-page anchor links are safe.
+    if (url.startsWith('#')) {
+      elem.href = url;
+      return;
+    }
+
+    const allowedProtocols = ['https:', 'http:'];
+    let parsed;
+    try {
+      parsed = new URL(url);
+    } catch (_) {}
+
+    if (parsed && allowedProtocols.includes(parsed.protocol)) {
+      elem.href = parsed.href;
+    }
+  }
+
+  /**
+   * Only create blob URLs for JSON & HTML
+   * @param {HTMLAnchorElement} elem
+   * @param {Blob} blob
+   */
+  safelySetBlobHref(elem, blob) {
+    if (blob.type !== 'text/html' && blob.type !== 'application/json') {
+      throw new Error('Unsupported blob type');
+    }
+    const href = URL.createObjectURL(blob);
+    elem.href = href;
   }
 
   /**

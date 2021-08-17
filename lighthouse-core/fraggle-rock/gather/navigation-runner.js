@@ -88,6 +88,7 @@ async function _navigate(navigationContext) {
   try {
     const {finalUrl, warnings} = await gotoURL(driver, requestedUrl, {
       ...navigationContext.navigation,
+      debugNavigation: config.settings.debugNavigation,
       maxWaitForFcp: config.settings.maxWaitForFcp,
       maxWaitForLoad: config.settings.maxWaitForLoad,
       waitUntil: navigationContext.navigation.pauseAfterFcpMs ? ['fcp', 'load'] : ['load'],

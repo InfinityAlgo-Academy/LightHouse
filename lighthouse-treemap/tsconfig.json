@@ -5,4 +5,8 @@
     "types",
     "../types",
   ],
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "composite": false,
+  },
 }

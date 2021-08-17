@@ -40,7 +40,7 @@ function buildReportGenerator() {
   browserify(generatorFilename, {standalone: 'ReportGenerator'})
     // Transform the fs.readFile etc into inline strings.
     .transform('@wardpeet/brfs', {
-      readFileSyncTransform: minifyFileTransform,
+      readFileTransform: minifyFileTransform,
       global: true,
       parserOpts: {ecmaVersion: 12},
     })
