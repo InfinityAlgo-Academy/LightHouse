@@ -214,14 +214,9 @@ const expectations = {
             3: {
               source: 'network',
               description: 'Failed to load resource: the server responded with a status of 404 (Not Found)',
-              url: 'http://localhost:10200/dobetterweb/unknown404.css?delay=200',
-            },
-            4: {
-              source: 'network',
-              description: 'Failed to load resource: the server responded with a status of 404 (Not Found)',
               url: 'http://localhost:10200/dobetterweb/fcp-delayer.js?delay=5000',
             },
-            5: {
+            4: {
               source: 'network',
               description: 'Failed to load resource: the server responded with a status of 404 (Not Found)',
               url: 'http://localhost:10200/favicon.ico',

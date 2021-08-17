@@ -203,6 +203,15 @@ class NetworkRequest {
   }
 
   /**
+   * @param {LH.Crdp.Network.ResponseReceivedExtraInfoEvent} data
+   */
+  onResponseReceivedExtraInfo(data) {
+    this.responseHeadersText = data.headersText || '';
+    this.responseHeaders = NetworkRequest._headersDictToHeadersArray(data.headers);
+    this._updateProtocolForLightrider();
+  }
+
+  /**
    * @param {LH.Crdp.Network.DataReceivedEvent} data
    */
   onDataReceived(data) {

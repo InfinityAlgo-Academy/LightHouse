@@ -110,7 +110,6 @@ class Server {
       const params = new URLSearchParams(queryString || '');
 
       if (!params.has('suppressNosniff')) headers['X-Content-Type-Options'] = 'nosniff';
-      console.log(filePath, contentType);
 
       // set document status-code
       if (params.has('status_code')) {

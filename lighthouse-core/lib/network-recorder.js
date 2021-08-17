@@ -138,6 +138,16 @@ class NetworkRecorder extends EventEmitter {
   }
 
   /**
+   * @param {{params: LH.Crdp.Network.ResponseReceivedExtraInfoEvent, sessionId?: string}} event
+   */
+  onResponseReceivedExtraInfo(event) {
+    const data = event.params;
+    const request = this._findRealRequestAndSetSession(data.requestId, event.sessionId);
+    if (!request) return;
+    request.onResponseReceivedExtraInfo(data);
+  }
+
+  /**
    * @param {{params: LH.Crdp.Network.DataReceivedEvent, sessionId?: string}} event
    */
   onDataReceived(event) {
@@ -188,6 +198,7 @@ class NetworkRecorder extends EventEmitter {
       case 'Network.requestWillBeSent': return this.onRequestWillBeSent(event);
       case 'Network.requestServedFromCache': return this.onRequestServedFromCache(event);
       case 'Network.responseReceived': return this.onResponseReceived(event);
+      case 'Network.responseReceivedExtraInfo': return this.onResponseReceivedExtraInfo(event);
       case 'Network.dataReceived': return this.onDataReceived(event);
       case 'Network.loadingFinished': return this.onLoadingFinished(event);
       case 'Network.loadingFailed': return this.onLoadingFailed(event);
