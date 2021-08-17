@@ -498,6 +498,28 @@
     "@types/yargs" "^15.0.0"
     yargs "^15.0.0"
 
+"@build-tracker/comparator@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@build-tracker/comparator/-/comparator-1.0.0.tgz#69f5b845fe268b8b2280feb8e8752ab99f327fb5"
+  integrity sha512-ga2R2LXKVUi5Yh+Eui8bT+kOtDe1vTbwB42sr1b+ZwAlpg0vGSuxxR6bK3IIlPCd+WVL3slZN4bRXbP1bba6Ug==
+  dependencies:
+    "@build-tracker/build" "^1.0.0"
+    "@build-tracker/formatting" "^1.0.0"
+    "@build-tracker/types" "^1.0.0"
+    markdown-table "^1.1.2"
+
+"@build-tracker/formatting@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@build-tracker/formatting/-/formatting-1.0.0.tgz#6076670c1d153b5687ed12d618fc80aef181f3e3"
+  integrity sha512-HXOZnU2ZLWI8lLJU15ZPJwPAfNFd1y676sPjPeHwl4kJ9q/QZJD9OY72+0qjhtMDLs0yNxmLdrG7hrdRCWhmtg==
+  dependencies:
+    "@build-tracker/types" "^1.0.0"
+
+"@build-tracker/types@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@build-tracker/types/-/types-1.0.0.tgz#89a44d60b51e0ca5b4cd907cd7284e84a5e0b2fa"
+  integrity sha512-rKr4WkCF/s84i2hrb9v7B15IxNrCcA9PXN3hm6Vq4PAFLn0Bl/RR01oVXQtsjxOED+cTxB4PqGBZueOV0WbxmQ==
+
 "@digitalbazaar/http-client@^1.1.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@digitalbazaar/http-client/-/http-client-1.1.0.tgz#cac383b24ace04b18b919deab773462b03d3d7b0"
@@ -5888,6 +5910,11 @@ map-visit@^1.0.0:
   integrity sha1-7Nyo8TFE5mDxtb1B8S80edmN+48=
   dependencies:
     object-visit "^1.0.0"
+
+markdown-table@^1.1.2:
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/markdown-table/-/markdown-table-1.1.3.tgz#9fcb69bcfdb8717bfd0398c6ec2d93036ef8de60"
+  integrity sha512-1RUZVgQlpJSPWYbFSpmudq5nHY1doEIv89gBtF0s4gW1GF2XorxcA/70M5vq7rLv0a6mhOUccRsqkwhwLCIQ2Q==
 
 marky@^1.2.2:
   version "1.2.2"

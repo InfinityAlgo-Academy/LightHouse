@@ -92,6 +92,7 @@
   "devDependencies": {
     "@build-tracker/build": "^1.0.0",
     "@build-tracker/cli": "^1.0.0",
+    "@build-tracker/comparator": "^1.0.0",
     "@firebase/app-types": "0.3.1",
     "@firebase/auth-types": "0.3.2",
     "@firebase/util": "0.2.1",
