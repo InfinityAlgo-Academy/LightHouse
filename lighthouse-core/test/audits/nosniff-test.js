@@ -33,9 +33,9 @@ describe('Nosniff audit', () => {
     const result = await Nosniff.audit(artifacts, {computedCache: new Map()});
 
     expect(result.details.items).toEqual([
-      {url: 'http://example.com/url1-fail.txt'},
-      {url: 'http://example.com/url2-fail.txt'},
-      {url: 'http://example.com/url3-fail.txt'},
+      {url: 'http://example.com/url1-fail.txt', hasContentType: true, hasNosniff: false},
+      {url: 'http://example.com/url2-fail.txt', hasContentType: false, hasNosniff: true},
+      {url: 'http://example.com/url3-fail.txt', hasContentType: false, hasNosniff: false},
     ]);
   });
 });
