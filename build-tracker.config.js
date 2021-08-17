@@ -87,7 +87,7 @@ const onCompare =
       const description = [hasWarnings ? '⚠️ See report.' : undefined, descriptionStats]
         .filter(s => s !== undefined)
         .join(' ');
-
+      console.log({description});
       return postStatus(
         {
           // Note: we don't use the `build` revision because—in a pull request build—this will
