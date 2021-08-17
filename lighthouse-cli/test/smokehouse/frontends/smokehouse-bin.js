@@ -181,7 +181,7 @@ async function begin() {
   const invertMatch = argv.invertMatch;
   const testDefns = getDefinitionsToRun(allTestDefns, requestedTestIds, {invertMatch});
 
-  let isPassing;
+  let smokehouseResult;
   let server;
   let serverForOffline;
   let takeNetworkRequestUrls = undefined;
@@ -205,13 +205,19 @@ async function begin() {
       takeNetworkRequestUrls,
     };
 
-    isPassing = (await runSmokehouse(prunedTestDefns, options)).success;
+    smokehouseResult = (await runSmokehouse(prunedTestDefns, options));
   } finally {
     if (server) await server.close();
     if (serverForOffline) await serverForOffline.close();
   }
 
-  const exitCode = isPassing ? 0 : 1;
+  if (!smokehouseResult.success) {
+    const failedTestResults = smokehouseResult.testResults.filter(r => r.failed);
+    const cmd = `yarn smoke ${failedTestResults.map(r => r.id).join(' ')}`;
+    console.log(`rerun failures: ${cmd}`);
+  }
+
+  const exitCode = smokehouseResult.success ? 0 : 1;
   process.exit(exitCode);
 }
 
