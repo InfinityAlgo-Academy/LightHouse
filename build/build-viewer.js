@@ -5,7 +5,6 @@
  */
 'use strict';
 
-const fs = require('fs');
 const browserify = require('browserify');
 const GhPagesApp = require('./gh-pages-app.js');
 const {minifyFileTransform} = require('./build-utils.js');
@@ -41,7 +40,7 @@ async function run() {
     ],
     javascripts: [
       await generatorJsPromise,
-      fs.readFileSync(require.resolve('pako/dist/pako_inflate.js'), 'utf-8'),
+      {path: require.resolve('pako/dist/pako_inflate.js')},
       {path: 'src/main.js', rollup: true},
     ],
     assets: [
