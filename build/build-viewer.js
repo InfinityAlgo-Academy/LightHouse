@@ -20,7 +20,7 @@ async function run() {
   const generatorFilename = `${LH_ROOT}/report/report-generator.js`;
   const generatorBrowserify = browserify(generatorFilename, {standalone: 'ReportGenerator'})
     .transform('@wardpeet/brfs', {
-      readFileSyncTransform: minifyFileTransform,
+      readFileTransform: minifyFileTransform,
     });
 
   /** @type {Promise<string>} */
