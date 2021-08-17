@@ -69,7 +69,7 @@ class Nosniff extends Audit {
         .some(h => h.name === 'X-Content-Type-Options' && h.value === 'nosniff');
       const hasContentType = networkRecord.responseHeaders.some(h => h.name === 'Content-Type');
       if (!hasContentType || !hasNosniff) {
-        results.push({url: networkRecord.url});
+        results.push({url: networkRecord.url, hasNosniff, hasContentType});
       }
     }
 
