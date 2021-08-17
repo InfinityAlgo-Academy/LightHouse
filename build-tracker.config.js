@@ -3,11 +3,13 @@
 'use strict';
 
 const Comparator = require('@build-tracker/comparator').default;
-const ArtifactDelta = require('@build-tracker/comparator/dist/ArtifactDelta');
+const ArtifactDelta = require('@build-tracker/comparator/dist/ArtifactDelta').default;
 const {formatBytes} = require('@build-tracker/formatting');
 const fetch = require('node-fetch');
 
 const applicationUrl = 'https://lh-build-tracker.herokuapp.com';
+const buildTrackerGithubToken = 'TODO SET THIS';
+
 
 const createBuildComparisonUrl = (a, b) => `${applicationUrl}/builds/${a}/${b}`;
 
@@ -35,7 +37,7 @@ const postStatus = ({sha, state, targetUrl, description}, {buildTrackerGithubTok
       : Promise.resolve()
   );
 
-const SIZE_KEY = 'gzip';
+const SIZE_KEY = 'stat';
 
 // Copied from
 // https://github.com/paularmstrong/build-tracker/blob/51b0a32d914c8c0cf11515eb2075923ffb42b399/src/comparator/src/index.ts#L136
@@ -56,55 +58,53 @@ const getDescriptionStats = (parentBuild, build) => {
 
 // Based off of example at
 // https://github.com/paularmstrong/build-tracker/blob/8f1df8ca248f5f96619c9b2ff14cd21c7f304522/docs/docs/guides/ci.md
-const onCompare =
-  ({buildTrackerGithubToken, sha}) =>
-  data => {
-    const {comparatorData} = data;
-    const comparator = Comparator.deserialize(comparatorData);
+const onCompare = data => {
+  const {comparatorData} = data;
+  const comparator = Comparator.deserialize(comparatorData);
 
-    if (comparator.builds.length === 1) {
-      // We need 2 builds to provide a useful comparison, so if there is only one build, we exit early.
-      return Promise.reject(
-        new Error(
-          `Expected comparator to have exactly 2 builds, but it only has 1. This most likely means the base branch hasn't finished building yet. Retry this build when the base branch has finished building. Note you will need to push a new commit.`
-        )
-      );
-    } else {
-      const parentBuild = comparator.builds[0];
-      const build = comparator.builds[1];
-      const url = createBuildComparisonUrl(
-        build.getMetaValue('parentRevision'),
-        build.getMetaValue('revision')
-      );
+  if (comparator.builds.length === 1) {
+    // We need 2 builds to provide a useful comparison, so if there is only one build, we exit early.
+    return Promise.reject(
+      new Error(
+        `Expected comparator to have exactly 2 builds, but it only has 1. This most likely means the base branch hasn't finished building yet. Retry this build when the base branch has finished building. Note you will need to push a new commit.`
+      )
+    );
+  } else {
+    const parentBuild = comparator.builds[0];
+    const build = comparator.builds[1];
+    const url = createBuildComparisonUrl(
+      build.getMetaValue('parentRevision'),
+      build.getMetaValue('revision')
+    );
 
-      const isSuccess = comparator.errors.length === 0;
+    const isSuccess = comparator.errors.length === 0;
 
-      const descriptionStats = getDescriptionStats(parentBuild, build);
+    const descriptionStats = getDescriptionStats(parentBuild, build);
 
-      const hasWarnings =
-        comparator.unexpectedHashChanges.length > 1 || comparator.warnings.length > 1;
+    const hasWarnings =
+      comparator.unexpectedHashChanges.length > 1 || comparator.warnings.length > 1;
 
-      const description = [hasWarnings ? '⚠️ See report.' : undefined, descriptionStats]
-        .filter(s => s !== undefined)
-        .join(' ');
-      console.log({description});
-      return postStatus(
-        {
-          // Note: we don't use the `build` revision because—in a pull request build—this will
-          // represent a merge commit "between the source branch and the upstream branch". This commit
-          // doesn't actually exist in the PR.
-          // https://docs.travis-ci.com/user/pull-requests/#how-pull-requests-are-built
-          sha,
-          state: isSuccess ? 'success' : 'failure',
-          targetUrl: url,
-          description,
-        },
-        {
-          buildTrackerGithubToken,
-        }
-      );
-    }
-  };
+    const description = [hasWarnings ? '⚠️ See report.' : undefined, descriptionStats]
+      .filter(s => s !== undefined)
+      .join(' ');
+    console.log({description});
+    return postStatus(
+      {
+        // Note: we don't use the `build` revision because—in a pull request build—this will
+        // represent a merge commit "between the source branch and the upstream branch". This commit
+        // doesn't actually exist in the PR.
+        // https://docs.travis-ci.com/user/pull-requests/#how-pull-requests-are-built
+        sha: build.meta.revision,
+        state: isSuccess ? 'success' : 'failure',
+        targetUrl: url,
+        description,
+      },
+      {
+        buildTrackerGithubToken,
+      }
+    );
+  }
+};
 
 module.exports = {
   applicationUrl,
