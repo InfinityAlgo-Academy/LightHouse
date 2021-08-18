@@ -15,6 +15,7 @@ import ArbitraryEqualityMap = require('../lighthouse-core/lib/arbitrary-equality
 import {Artifacts, BaseArtifacts, GathererArtifacts} from './artifacts';
 import Config from './config';
 import {IcuMessage} from './lhr/i18n';
+import Result from './lhr/lhr';
 import Protocol from './protocol';
 import {Trace, DevtoolsLog} from './artifacts';
 
@@ -77,7 +78,7 @@ declare module Gatherer {
   type PhaseResultNonPromise = void | GathererArtifacts[keyof GathererArtifacts];
   type PhaseResult = PhaseResultNonPromise | Promise<PhaseResultNonPromise>
 
-  type GatherMode = 'snapshot'|'timespan'|'navigation';
+  type GatherMode = Result.GatherMode;
 
   type DefaultDependenciesKey = '__none__'
   type DependencyKey = keyof GathererArtifacts | DefaultDependenciesKey

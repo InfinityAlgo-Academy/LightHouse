@@ -38,6 +38,8 @@ function buildEntryPoint() {
  */
 function buildReportGenerator() {
   browserify(generatorFilename, {standalone: 'ReportGenerator'})
+    // Flow report is not used in LR, so don't include flow assets.
+    .ignore(require.resolve('../report/flow-report-assets.js'))
     // Transform the fs.readFile etc into inline strings.
     .transform('@wardpeet/brfs', {
       readFileTransform: minifyFileTransform,

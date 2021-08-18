@@ -57,6 +57,22 @@ class ReportGenerator {
   }
 
   /**
+   * Returns the standalone flow report HTML as a string with the report JSON and renderer JS inlined.
+   * @param {LH.FlowResult} flow
+   * @return {string}
+   */
+  static generateFlowReportHtml(flow) {
+    const sanitizedJson = ReportGenerator.sanitizeJson(flow);
+    return ReportGenerator.replaceStrings(htmlReportAssets.FLOW_REPORT_TEMPLATE, [
+      /* eslint-disable max-len */
+      {search: '%%LIGHTHOUSE_FLOW_JSON%%', replacement: sanitizedJson},
+      {search: '%%LIGHTHOUSE_FLOW_JAVASCRIPT%%', replacement: htmlReportAssets.FLOW_REPORT_JAVASCRIPT},
+      {search: '/*%%LIGHTHOUSE_CSS%%*/', replacement: htmlReportAssets.REPORT_CSS},
+      /* eslint-enable max-len */
+    ]);
+  }
+
+  /**
    * Converts the results to a CSV formatted string
    * Each row describes the result of 1 audit with
    *  - the name of the category the audit belongs to

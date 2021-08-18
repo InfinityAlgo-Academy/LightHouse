@@ -11,6 +11,8 @@ import {ConfigSettings} from './settings';
  * The full output of a Lighthouse run.
  */
 interface Result {
+  /** Gather mode used to collect artifacts for this result. */
+  gatherMode: Result.GatherMode;
   /** The URL that was supplied to Lighthouse and initially navigated to. */
   requestedUrl: string;
   /** The post-redirects URL that Lighthouse loaded. */
@@ -141,6 +143,9 @@ declare module Result {
   interface IcuMessagePaths {
     [i18nId: string]: IcuMessagePath[];
   }
+
+  /** Gather mode used to collect artifacts. */
+  type GatherMode = 'navigation'|'timespan'|'snapshot';
 }
 
 export default Result;
