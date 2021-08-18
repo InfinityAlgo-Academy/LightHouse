@@ -500,7 +500,7 @@ export class ReportUIFeatures {
         } else {
           const windowName = 'viewer-' + ReportUIFeatures.computeWindowNameSuffix(this.json);
           const url = getAppsOrigin() + '/viewer/';
-          ReportUIFeatures.openTabWithUrlData({lhr: this.json}, url, windowName);
+          ReportUIFeatures.openTabAndSendData({lhr: this.json}, url, windowName);
         }
         break;
       }
