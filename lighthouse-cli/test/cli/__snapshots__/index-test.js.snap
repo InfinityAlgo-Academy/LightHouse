@@ -166,6 +166,9 @@ Object {
       "path": "csp-xss",
     },
     Object {
+      "path": "nosniff",
+    },
+    Object {
       "path": "full-page-screenshot",
     },
     Object {
@@ -765,6 +768,11 @@ Object {
           "group": "best-practices-trust-safety",
           "id": "csp-xss",
           "weight": 0,
+        },
+        Object {
+          "group": "best-practices-trust-safety",
+          "id": "nosniff",
+          "weight": 1,
         },
         Object {
           "group": "best-practices-ux",
