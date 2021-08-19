@@ -104,7 +104,7 @@ async function browserifyFile(entryPath, distPath) {
   // Don't include the stringified report in DevTools - see devtools-report-assets.js
   // Don't include in Lightrider - HTML generation isn't supported, so report assets aren't needed.
   if (isDevtools(entryPath) || isLightrider(entryPath)) {
-    bundle.ignore(require.resolve('../report/report-assets.js'));
+    bundle.ignore(require.resolve('../report/generator/report-assets.js'));
   }
 
   // Expose the audits, gatherers, and computed artifacts so they can be dynamically loaded.

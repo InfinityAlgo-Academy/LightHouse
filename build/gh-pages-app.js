@@ -131,9 +131,9 @@ class GhPagesApp {
       if (typeof source === 'string') {
         result.push(source);
       } else if (source.rollup) {
-        result.push(await this._rollupSource(`${this.opts.appDir}/${source.path}`));
+        result.push(await this._rollupSource(path.resolve(this.opts.appDir, source.path)));
       } else {
-        result.push(...loadFiles(`${this.opts.appDir}/${source.path}`));
+        result.push(...loadFiles(path.resolve(this.opts.appDir, source.path)));
       }
     }
 

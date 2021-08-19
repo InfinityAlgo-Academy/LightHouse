@@ -16,7 +16,7 @@
     // "noErrorTruncation": true,
 
     "composite": true,
-    "outDir": "../../.tmp/tsbuildinfo/lhr",
+    "outDir": "../../.tmp/tsbuildinfo/types/lhr",
   },
   "include": [
     "*.d.ts",

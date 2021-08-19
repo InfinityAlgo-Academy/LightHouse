@@ -5,13 +5,14 @@
  */
 'use strict';
 
-// This file is used to generate a bundle that can be imported
-// into an esmodules codebase to render the lighthouse report.
-// Currently, embedders must handle some boilerplate themselves (like standalone.js)
-// until we work out a common rendering interface.
-// See: https://github.com/GoogleChrome/lighthouse/pull/12623
+const fs = require('fs');
 
-// Modify lighthouse-core/scripts/roll-to-devtools.sh if exports change.
-export {DOM} from '../renderer/dom.js';
-export {ReportRenderer} from '../renderer/report-renderer.js';
-export {ReportUIFeatures} from '../renderer/report-ui-features.js';
+/* eslint-disable max-len */
+const FLOW_REPORT_TEMPLATE = fs.readFileSync(`${__dirname}/../../flow-report/assets/standalone-flow-template.html`, 'utf8');
+const FLOW_REPORT_JAVASCRIPT = fs.readFileSync(`${__dirname}/../../dist/report/flow.js`, 'utf8');
+/* eslint-enable max-len */
+
+module.exports = {
+  FLOW_REPORT_TEMPLATE,
+  FLOW_REPORT_JAVASCRIPT,
+};

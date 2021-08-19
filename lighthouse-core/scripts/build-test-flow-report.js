@@ -5,13 +5,19 @@
  */
 'use strict';
 
-// This file is used to generate a bundle that can be imported
-// into an esmodules codebase to render the lighthouse report.
-// Currently, embedders must handle some boilerplate themselves (like standalone.js)
-// until we work out a common rendering interface.
-// See: https://github.com/GoogleChrome/lighthouse/pull/12623
+const fs = require('fs');
+const open = require('open');
+const {execFileSync} = require('child_process');
 
-// Modify lighthouse-core/scripts/roll-to-devtools.sh if exports change.
-export {DOM} from '../renderer/dom.js';
-export {ReportRenderer} from '../renderer/report-renderer.js';
-export {ReportUIFeatures} from '../renderer/report-ui-features.js';
+execFileSync(`yarn`, ['build-report']);
+const reportGenerator = require('../../report/generator/report-generator.js');
+
+const flow = JSON.parse(fs.readFileSync(
+      `${__dirname}/../test/fixtures/fraggle-rock/reports/sample-lhrs.json`,
+      'utf-8')
+);
+
+const htmlReport = reportGenerator.generateFlowReportHtml(flow);
+
+fs.writeFileSync(`${__dirname}/../../flow.report.html`, htmlReport);
+open(`${__dirname}/../../flow.report.html`);
