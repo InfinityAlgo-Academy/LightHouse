@@ -16,6 +16,7 @@ import Gatherer_ from './gatherer';
 import * as I18n from './lhr/i18n';
 import LHError = require('../lighthouse-core/lib/lh-error.js');
 import LHResult from './lhr/lhr';
+import FlowResult_ from './lhr/flow';
 import Protocol_ from './protocol';
 import ReportResult_ from './html-renderer';
 import * as Settings from './lhr/settings';
@@ -26,6 +27,7 @@ import Treemap_ from './lhr/treemap';
 declare global {
   module LH {
     export type ArbitraryEqualityMap = ArbitraryEqualityMap_;
+    export type FlowResult = FlowResult_;
 
     // artifacts.d.ts
     export import Artifacts = Artifacts_.Artifacts;

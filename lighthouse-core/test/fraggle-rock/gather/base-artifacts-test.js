@@ -127,4 +127,12 @@ describe('finalizeArtifacts', () => {
     baseArtifacts.URL = {requestedUrl: 'https://example.com', finalUrl: ''};
     expect(run).toThrowError(/finalUrl/);
   });
+
+  it('should not throw if URL was not set for an error reason', () => {
+    const run = () => finalizeArtifacts(baseArtifacts, gathererArtifacts);
+
+    baseArtifacts.URL = {requestedUrl: 'http://example.com', finalUrl: ''};
+    baseArtifacts.PageLoadError = new LighthouseError(LighthouseError.errors.PAGE_HUNG);
+    expect(run).not.toThrowError(/requestedUrl/);
+  });
 });

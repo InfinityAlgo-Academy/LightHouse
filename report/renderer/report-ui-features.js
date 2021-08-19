@@ -25,7 +25,7 @@
 
 /** @typedef {import('./dom').DOM} DOM */
 
-import {getFilenamePrefix} from './file-namer.js';
+import {getFilenamePrefix} from '../../report/generator/file-namer.js';
 import {ElementScreenshotRenderer} from './element-screenshot-renderer.js';
 import {TextEncoding} from './text-encoding.js';
 import {Util} from './util.js';
@@ -500,7 +500,7 @@ export class ReportUIFeatures {
         } else {
           const windowName = 'viewer-' + ReportUIFeatures.computeWindowNameSuffix(this.json);
           const url = getAppsOrigin() + '/viewer/';
-          ReportUIFeatures.openTabWithUrlData({lhr: this.json}, url, windowName);
+          ReportUIFeatures.openTabAndSendData({lhr: this.json}, url, windowName);
         }
         break;
       }

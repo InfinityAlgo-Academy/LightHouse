@@ -6,7 +6,7 @@
 'use strict';
 
 const assert = require('assert').strict;
-const getFilenamePrefix = require('../../lib/file-namer.js').getFilenamePrefix;
+const getFilenamePrefix = require('../../generator/file-namer.js').getFilenamePrefix;
 
 /* eslint-env jest */
 describe('file-namer helper', () => {

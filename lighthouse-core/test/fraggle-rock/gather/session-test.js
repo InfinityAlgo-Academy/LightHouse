@@ -7,10 +7,19 @@
 
 const {EventEmitter} = require('events');
 const ProtocolSession = require('../../../fraggle-rock/gather/session.js');
+const {
+  flushAllTimersAndMicrotasks,
+  makePromiseInspectable,
+  createDecomposedPromise,
+} = require('../../test-utils.js');
 
 /* eslint-env jest */
 
+jest.useFakeTimers();
+
 describe('ProtocolSession', () => {
+  const DEFAULT_TIMEOUT = 30_000;
+
   /** @type {import('puppeteer').CDPSession} */
   let puppeteerSession;
   /** @type {ProtocolSession} */
@@ -18,7 +27,7 @@ describe('ProtocolSession', () => {
 
   beforeEach(() => {
     // @ts-expect-error - Individual mock functions are applied as necessary.
-    puppeteerSession = {emit: jest.fn()};
+    puppeteerSession = {emit: jest.fn(), send: jest.fn().mockResolvedValue()};
     session = new ProtocolSession(puppeteerSession);
   });
 
@@ -125,6 +134,93 @@ describe('ProtocolSession', () => {
       const result = await session.sendCommand('Page.navigate', {url: 'foo'});
       expect(result).toEqual(123);
       expect(send).toHaveBeenCalledWith('Page.navigate', {url: 'foo'});
+    });
+
+    it('times out a request by default', async () => {
+      const sendPromise = createDecomposedPromise();
+      puppeteerSession.send = jest.fn().mockReturnValue(sendPromise.promise);
+
+      const resultPromise = makePromiseInspectable(session.sendCommand('Page.navigate', {url: ''}));
+
+      await jest.advanceTimersByTime(DEFAULT_TIMEOUT + 1);
+      await flushAllTimersAndMicrotasks();
+
+      expect(resultPromise).toBeDone();
+      await expect(resultPromise).rejects.toMatchObject({
+        code: 'PROTOCOL_TIMEOUT',
+        protocolMethod: 'Page.navigate',
+      });
+    });
+
+    it('times out a request with explicit timeout', async () => {
+      const sendPromise = createDecomposedPromise();
+      puppeteerSession.send = jest.fn().mockReturnValue(sendPromise.promise);
+
+      session.setNextProtocolTimeout(60_000);
+      const resultPromise = makePromiseInspectable(session.sendCommand('Page.navigate', {url: ''}));
+
+      await jest.advanceTimersByTime(DEFAULT_TIMEOUT + 1);
+      await flushAllTimersAndMicrotasks();
+
+      expect(resultPromise).not.toBeDone();
+
+      await jest.advanceTimersByTime(DEFAULT_TIMEOUT + 1);
+      await flushAllTimersAndMicrotasks();
+
+      expect(resultPromise).toBeDone();
+      await expect(resultPromise).rejects.toMatchObject({
+        code: 'PROTOCOL_TIMEOUT',
+        protocolMethod: 'Page.navigate',
+      });
+    });
+
+    it('respects a timeout of infinity', async () => {
+      const sendPromise = createDecomposedPromise();
+      puppeteerSession.send = jest.fn().mockReturnValue(sendPromise.promise);
+
+      session.setNextProtocolTimeout(Infinity);
+      const resultPromise = makePromiseInspectable(session.sendCommand('Page.navigate', {url: ''}));
+
+      await jest.advanceTimersByTime(100_000);
+      await flushAllTimersAndMicrotasks();
+
+      expect(resultPromise).not.toBeDone();
+
+      sendPromise.resolve('result');
+      await flushAllTimersAndMicrotasks();
+
+      expect(resultPromise).toBeDone();
+      expect(await resultPromise).toBe('result');
+    });
+  });
+
+  describe('.has/get/setNextProtocolTimeout', () => {
+    it('should handle when none has been set', () => {
+      expect(session.hasNextProtocolTimeout()).toBe(false);
+      expect(session.getNextProtocolTimeout()).toBe(DEFAULT_TIMEOUT);
+    });
+
+    it('should handle when one has been set', () => {
+      session.setNextProtocolTimeout(5_000);
+      expect(session.hasNextProtocolTimeout()).toBe(true);
+      expect(session.getNextProtocolTimeout()).toBe(5_000);
+    });
+
+    it('should handle when default has been explicitly set', () => {
+      session.setNextProtocolTimeout(DEFAULT_TIMEOUT);
+      expect(session.hasNextProtocolTimeout()).toBe(true);
+      expect(session.getNextProtocolTimeout()).toBe(DEFAULT_TIMEOUT);
+    });
+
+    it('should handle result after a command', () => {
+      session.setNextProtocolTimeout(10_000);
+      expect(session.hasNextProtocolTimeout()).toBe(true);
+      expect(session.getNextProtocolTimeout()).toBe(10_000);
+
+      session.sendCommand('Page.navigate', {url: ''});
+
+      expect(session.hasNextProtocolTimeout()).toBe(false);
+      expect(session.getNextProtocolTimeout()).toBe(DEFAULT_TIMEOUT);
     });
   });
 });

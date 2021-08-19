@@ -11,6 +11,7 @@
 // until we work out a common rendering interface.
 // See: https://github.com/GoogleChrome/lighthouse/pull/12623
 
+// Modify lighthouse-core/scripts/roll-to-devtools.sh if exports change.
 export {DOM} from '../renderer/dom.js';
 export {ReportRenderer} from '../renderer/report-renderer.js';
 export {ReportUIFeatures} from '../renderer/report-ui-features.js';

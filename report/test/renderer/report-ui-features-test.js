@@ -9,7 +9,7 @@
 
 import {strict as assert} from 'assert';
 import jsdom from 'jsdom';
-import reportAssets from '../../report-assets.js';
+import reportAssets from '../../generator/report-assets.js';
 import {Util} from '../../renderer/util.js';
 import {DOM} from '../../renderer/dom.js';
 import {DetailsRenderer} from '../../renderer/details-renderer.js';

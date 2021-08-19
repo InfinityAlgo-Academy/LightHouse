@@ -5,7 +5,11 @@
  */
 'use strict';
 
+const LHError = require('../../lib/lh-error.js');
 const SessionEmitMonkeypatch = Symbol('monkeypatch');
+
+// Controls how long to wait for a response after sending a DevTools protocol command.
+const DEFAULT_PROTOCOL_TIMEOUT = 30000;
 
 /** @implements {LH.Gatherer.FRProtocolSession} */
 class ProtocolSession {
@@ -14,6 +18,8 @@ class ProtocolSession {
    */
   constructor(session) {
     this._session = session;
+    /** @type {number|undefined} */
+    this._nextProtocolTimeout = undefined;
 
     // FIXME: Monkeypatch puppeteer to be able to listen to *all* protocol events.
     // This patched method will now emit a copy of every event on `*`.
@@ -32,21 +38,21 @@ class ProtocolSession {
    * @return {boolean}
    */
   hasNextProtocolTimeout() {
-    return false;
+    return this._nextProtocolTimeout !== undefined;
   }
 
   /**
    * @return {number}
    */
   getNextProtocolTimeout() {
-    return Number.MAX_SAFE_INTEGER;
+    return this._nextProtocolTimeout || DEFAULT_PROTOCOL_TIMEOUT;
   }
 
   /**
    * @param {number} ms
    */
-  setNextProtocolTimeout(ms) { // eslint-disable-line no-unused-vars
-    // TODO(FR-COMPAT): support protocol timeout
+  setNextProtocolTimeout(ms) {
+    this._nextProtocolTimeout = ms;
   }
 
   /**
@@ -102,7 +108,26 @@ class ProtocolSession {
    * @return {Promise<LH.CrdpCommands[C]['returnType']>}
    */
   sendCommand(method, ...params) {
-    return this._session.send(method, ...params);
+    const timeoutMs = this.getNextProtocolTimeout();
+    this._nextProtocolTimeout = undefined;
+
+    /** @type {NodeJS.Timer|undefined} */
+    let timeout;
+    const timeoutPromise = new Promise((resolve, reject) => {
+      if (timeoutMs === Infinity) return;
+
+      timeout = setTimeout((() => {
+        const err = new LHError(LHError.errors.PROTOCOL_TIMEOUT, {protocolMethod: method});
+        reject(err);
+      }), timeoutMs);
+    });
+
+    const resultPromise = this._session.send(method, ...params);
+    const resultWithTimeoutPromise = Promise.race([resultPromise, timeoutPromise]);
+
+    return resultWithTimeoutPromise.finally(() => {
+      if (timeout) clearTimeout(timeout);
+    });
   }
 }
 

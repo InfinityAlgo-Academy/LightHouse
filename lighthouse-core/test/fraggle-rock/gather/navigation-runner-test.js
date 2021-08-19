@@ -185,6 +185,39 @@ describe('NavigationRunner', () => {
       expect(artifactIds).toContain('FontSize');
       expect(artifactIds).toContain('ConsoleMessages');
     });
+
+    it('should retain PageLoadError and associated warnings', async () => {
+      config = initializeConfig(
+        {
+          ...config,
+          navigations: [
+            {id: 'default', loadFailureMode: 'fatal', artifacts: ['FontSize']},
+            {id: 'second', artifacts: ['ConsoleMessages']},
+          ],
+        },
+        {gatherMode: 'navigation'}
+      ).config;
+
+      // Ensure the first real page load fails.
+      mocks.navigationMock.gotoURL.mockImplementation((driver, url) => {
+        if (url === 'about:blank') return {finalUrl: 'about:blank', warnings: []};
+        throw new LighthouseError(LighthouseError.errors.PAGE_HUNG);
+      });
+
+      const {artifacts} = await run();
+
+      // Validate that we stopped repeating navigations.
+      const urls = mocks.navigationMock.gotoURL.mock.calls.map(call => call[1]);
+      expect(urls).toEqual(['about:blank', 'http://example.com']);
+
+      // Validate that the toplevel warning is added, finalURL is set, and error is kept.
+      const artifactIds = Object.keys(artifacts).sort();
+      expect(artifactIds).toEqual(['LighthouseRunWarnings', 'PageLoadError', 'URL']);
+
+      if (!artifacts.URL) throw new Error(`URL should exist`);
+      expect(artifacts.URL.finalUrl).toEqual('http://example.com');
+      expect(artifacts.LighthouseRunWarnings).toHaveLength(1);
+    });
   });
 
   describe('_navigation', () => {

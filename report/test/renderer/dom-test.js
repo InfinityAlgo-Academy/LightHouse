@@ -19,16 +19,16 @@ describe('DOM', () => {
   /** @type {DOM} */
   let dom;
   let window;
+  let nativeCreateObjectURL;
 
   beforeAll(() => {
     Util.i18n = new I18n('en', {...Util.UIStrings});
     window = new jsdom.JSDOM().window;
 
-    // Make a lame "polyfill" since JSDOM doesn't have createObjectURL: https://github.com/jsdom/jsdom/issues/1721
-    const lameCOURL = jest.fn(_ => `https://fake-origin/blahblah-blobid`);
-    if (!URL.createObjectURL) {
-      URL.createObjectURL = lameCOURL;
-    }
+    // The Node version of URL.createObjectURL isn't compatible with the jsdom blob type,
+    // so we stub it.
+    nativeCreateObjectURL = URL.createObjectURL;
+    URL.createObjectURL = jest.fn(_ => `https://fake-origin/blahblah-blobid`);
 
     dom = new DOM(window.document);
     dom.setLighthouseChannel('someChannel');
@@ -36,6 +36,7 @@ describe('DOM', () => {
 
   afterAll(() => {
     Util.i18n = undefined;
+    URL.createObjectURL = nativeCreateObjectURL;
   });
 
   describe('createElement', () => {

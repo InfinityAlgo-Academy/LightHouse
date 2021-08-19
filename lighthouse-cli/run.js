@@ -16,7 +16,7 @@ const ChromeLauncher = require('chrome-launcher');
 const yargsParser = require('yargs-parser');
 const lighthouse = require('../lighthouse-core/index.js');
 const log = require('lighthouse-logger');
-const getFilenamePrefix = require('../lighthouse-core/lib/file-namer.js').getFilenamePrefix;
+const getFilenamePrefix = require('../report/generator/file-namer.js').getFilenamePrefix;
 const assetSaver = require('../lighthouse-core/lib/asset-saver.js');
 const URL = require('../lighthouse-core/lib/url-shim.js');
 
