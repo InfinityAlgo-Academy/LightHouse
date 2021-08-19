@@ -8,7 +8,7 @@
 const browserify = require('browserify');
 const GhPagesApp = require('./gh-pages-app.js');
 const {minifyFileTransform} = require('./build-utils.js');
-const htmlReportAssets = require('../report/report-assets.js');
+const htmlReportAssets = require('../report/generator/report-assets.js');
 const {LH_ROOT} = require('../root.js');
 
 /**
@@ -16,10 +16,10 @@ const {LH_ROOT} = require('../root.js');
  */
 async function run() {
   // JS bundle from browserified ReportGenerator.
-  const generatorFilename = `${LH_ROOT}/report/report-generator.js`;
+  const generatorFilename = `${LH_ROOT}/report/generator/report-generator.js`;
   const generatorBrowserify = browserify(generatorFilename, {standalone: 'ReportGenerator'})
     // Flow report is not used in report viewer, so don't include flow assets.
-    .ignore(require.resolve('../report/flow-report-assets.js'))
+    .ignore(require.resolve('../report/generator/flow-report-assets.js'))
     .transform('@wardpeet/brfs', {
       readFileTransform: minifyFileTransform,
     });

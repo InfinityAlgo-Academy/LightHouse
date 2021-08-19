@@ -38,7 +38,8 @@
     "lighthouse-core/lib/large-javascript-libraries/bundlephobia-database.json",
   ],
   "references": [
-    {"path": "./types/lhr/"}
+    {"path": "./types/lhr/"},
+    {"path": "./report/generator/"}
   ],
   "exclude": [
     "lighthouse-core/test/audits/**/*.js",

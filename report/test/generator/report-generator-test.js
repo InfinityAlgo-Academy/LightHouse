@@ -7,8 +7,8 @@
 
 const assert = require('assert').strict;
 const fs = require('fs');
-const ReportGenerator = require('../report-generator.js');
-const sampleResults = require('../../lighthouse-core/test/results/sample_v2.json');
+const ReportGenerator = require('../../generator/report-generator.js');
+const sampleResults = require('../../../lighthouse-core/test/results/sample_v2.json');
 const csvValidator = require('csv-validator');
 
 /* eslint-env jest */

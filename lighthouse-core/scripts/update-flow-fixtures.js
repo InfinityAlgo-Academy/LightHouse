@@ -9,7 +9,7 @@ const fs = require('fs');
 const open = require('open');
 const puppeteer = require('puppeteer');
 const lighthouse = require('../fraggle-rock/api.js');
-const reportGenerator = require('../../report/report-generator.js');
+const reportGenerator = require('../../report/generator/report-generator.js');
 
 (async () => {
   const browser = await puppeteer.launch({headless: false, slowMo: 50});

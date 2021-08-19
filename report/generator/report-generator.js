@@ -7,6 +7,9 @@
 
 const htmlReportAssets = require('./report-assets.js');
 
+/** @typedef {import('../../types/lhr/lhr').default} LHResult */
+/** @typedef {import('../../types/lhr/flow').default} FlowResult */
+
 class ReportGenerator {
   /**
    * Replaces all the specified strings in source without serial replacements.
@@ -40,7 +43,7 @@ class ReportGenerator {
 
   /**
    * Returns the standalone report HTML as a string with the report JSON and renderer JS inlined.
-   * @param {LH.Result} lhr
+   * @param {LHResult} lhr
    * @return {string}
    */
   static generateReportHtml(lhr) {
@@ -58,7 +61,7 @@ class ReportGenerator {
 
   /**
    * Returns the standalone flow report HTML as a string with the report JSON and renderer JS inlined.
-   * @param {LH.FlowResult} flow
+   * @param {FlowResult} flow
    * @return {string}
    */
   static generateFlowReportHtml(flow) {
@@ -81,7 +84,7 @@ class ReportGenerator {
    *  - the score type that is used for the audit
    *  - the score value of the audit
    *
-   * @param {LH.Result} lhr
+   * @param {LHResult} lhr
    * @return {string}
    */
   static generateReportCSV(lhr) {
@@ -118,8 +121,8 @@ class ReportGenerator {
 
   /**
    * Creates the results output in a format based on the `mode`.
-   * @param {LH.Result} lhr
-   * @param {LH.Config.Settings['output']} outputModes
+   * @param {LHResult} lhr
+   * @param {LHResult['configSettings']['output']} outputModes
    * @return {string|string[]}
    */
   static generateReport(lhr, outputModes) {

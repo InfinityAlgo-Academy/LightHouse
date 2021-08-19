@@ -17,7 +17,7 @@ const distDir = path.join(LH_ROOT, 'dist', 'lightrider');
 const sourceDir = path.join(LH_ROOT, 'clients', 'lightrider');
 
 const bundleOutFile = `${distDir}/report-generator-bundle.js`;
-const generatorFilename = `./report/report-generator.js`;
+const generatorFilename = `./report/generator/report-generator.js`;
 
 const entrySourceName = 'lightrider-entry.js';
 const entryDistName = 'lighthouse-lr-bundle.js';
@@ -39,7 +39,7 @@ function buildEntryPoint() {
 function buildReportGenerator() {
   browserify(generatorFilename, {standalone: 'ReportGenerator'})
     // Flow report is not used in LR, so don't include flow assets.
-    .ignore(require.resolve('../report/flow-report-assets.js'))
+    .ignore(require.resolve('../report/generator/flow-report-assets.js'))
     // Transform the fs.readFile etc into inline strings.
     .transform('@wardpeet/brfs', {
       readFileTransform: minifyFileTransform,

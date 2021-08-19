@@ -8,7 +8,7 @@
 /**
  * @fileoverview Instead of loading report assets form the filesystem, in Devtools we must load
  * them via Runtime.cachedResources. We use this module to shim
- * report/report-assets.js in Devtools.
+ * report/generator/report-assets.js in Devtools.
  */
 
 /* global globalThis */

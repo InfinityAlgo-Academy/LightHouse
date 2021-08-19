@@ -10,7 +10,7 @@ const open = require('open');
 const {execFileSync} = require('child_process');
 
 execFileSync(`yarn`, ['build-report']);
-const reportGenerator = require('../../report/report-generator.js');
+const reportGenerator = require('../../report/generator/report-generator.js');
 
 const flow = JSON.parse(fs.readFileSync(
       `${__dirname}/../test/fixtures/fraggle-rock/reports/sample-lhrs.json`,
