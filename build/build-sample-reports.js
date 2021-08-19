@@ -18,6 +18,13 @@ const lhr = /** @type {LH.Result} */ (require('../lighthouse-core/test/results/s
 const {LH_ROOT} = require('../root.js');
 const htmlReportAssets = require('../lighthouse-core/../report/report-assets.js');
 
+/** @type {LH.FlowResult} */
+const flowResult = JSON.parse(
+  fs.readFileSync(
+    `${LH_ROOT}/lighthouse-core/test/fixtures/fraggle-rock/reports/sample-lhrs.json`,
+    'utf-8'
+  )
+);
 
 const DIST = path.join(LH_ROOT, 'dist');
 
@@ -53,8 +60,17 @@ const DIST = path.join(LH_ROOT, 'dist');
       console.log('✅', filepath, 'written.');
     }
   });
+
+  generateFlowReport();
 })();
 
+function generateFlowReport() {
+  const html = ReportGenerator.generateFlowReportHtml(flowResult);
+  const filepath = `${DIST}/sample-reports/flow-report/index.html`;
+  fs.mkdirSync(path.dirname(filepath), {recursive: true});
+  fs.writeFileSync(filepath, html, {encoding: 'utf-8'});
+  console.log('✅', filepath, 'written.');
+}
 
 /**
  * @return {string}
