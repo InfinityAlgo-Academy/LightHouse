@@ -10,14 +10,10 @@
 
 set -euo pipefail
 
-# Hardcode 19 August 2021 URLs to download until
-# https://github.com/GoogleChrome/lighthouse/issues/12942 is resolved.
 if [ "$OSTYPE" == "msys" ]; then
-  # url="https://download-chromium.appspot.com/dl/Win?type=snapshots"
-  url="https://commondatastorage.googleapis.com/chromium-browser-snapshots/Win/refs_heads_main-913406/chrome-win.zip"
+  url="https://download-chromium.appspot.com/dl/Win?type=snapshots"
 else
-  # url="https://download-chromium.appspot.com/dl/Linux_x64?type=snapshots"
-  url="https://commondatastorage.googleapis.com/chromium-browser-snapshots/Linux_x64/refs_heads_main-913453/chrome-linux.zip"
+  url="https://download-chromium.appspot.com/dl/Linux_x64?type=snapshots"
 fi
 
 if [ -e "$CHROME_PATH" ]; then
