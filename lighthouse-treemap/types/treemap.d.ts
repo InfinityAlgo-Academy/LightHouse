@@ -1,6 +1,9 @@
 import {Logger as _Logger} from '../../report/renderer/logger.js';
 import {FirebaseNamespace} from '@firebase/app-types';
 
+// Import for needed DOM type augmentation.
+import '../../report/types/augment-dom';
+
 declare global {
   class WebTreeMap {
     constructor(data: any, options: WebTreeMapOptions);
@@ -45,5 +48,3 @@ declare global {
     signal?: AbortSignal;
   }
 }
-
-export {};

@@ -24,8 +24,6 @@ import {PerformanceCategoryRenderer} from '../renderer/performance-category-rend
 import {ReportUIFeatures} from '../renderer/report-ui-features.js';
 import {Util} from '../renderer/util.js';
 
-/* global window */
-
 /** @typedef {{scoreGaugeEl: Element, perfCategoryEl: Element, finalScreenshotDataUri: string|null, scoreScaleEl: Element, installFeatures: Function}} PrepareLabDataResult */
 
 /**

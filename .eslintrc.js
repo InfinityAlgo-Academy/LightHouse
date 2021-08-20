@@ -6,6 +6,8 @@
 'use strict';
 
 module.exports = {
+  // All subdirectory eslintrcs extend from this one.
+  root: true,
   // start with google standard style
   //     https://github.com/google/eslint-config-google/blob/master/index.js
   extends: ['eslint:recommended', 'google'],

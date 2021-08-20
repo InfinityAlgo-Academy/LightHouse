@@ -40,7 +40,7 @@ export class Logger {
     this.el.textContent = msg;
     this.el.classList.add('show');
     if (autoHide) {
-      this._id = setTimeout(_ => {
+      this._id = setTimeout(() => {
         this.el.classList.remove('show');
       }, 7000);
     }
@@ -61,7 +61,7 @@ export class Logger {
 
     // Rethrow to make sure it's auditable as an error, but in a setTimeout so page
     // recovers gracefully and user can try loading a report again.
-    setTimeout(_ => {
+    setTimeout(() => {
       throw new Error(msg);
     }, 0);
   }

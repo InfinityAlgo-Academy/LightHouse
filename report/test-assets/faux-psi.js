@@ -7,8 +7,6 @@
 
 /** @fileoverview This file is a glorified call of prepareLabData. */
 
-/* global document window */
-
 /** @typedef {import('../clients/psi.js').PrepareLabDataResult} PrepareLabDataResult */
 
 (async function __initPsiReports__() {

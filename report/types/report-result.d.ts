@@ -4,33 +4,24 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import Audit from './audit';
-import LHResult from './lhr/lhr';
+import {Result as AuditResult}  from '../../types/lhr/audit-result';
+import LHResult from '../../types/lhr/lhr';
 
-// Add needed DOM APIs not yet in tsc's lib dom.
-declare global {
-  var CompressionStream: {
-    prototype: CompressionStream,
-    new (format: string): CompressionStream,
-  };
-
-  interface CompressionStream extends GenericTransformStream {
-    readonly format: string;
-  }
-}
-
-// During report generation, the LHR object is transformed a bit for convenience
-// Primarily, the auditResult is added as .result onto the auditRef. We're lazy sometimes. It'll be removed in due time.
+/**
+ * During report generation, the LHR object is transformed a bit for convenience
+ * Primarily, the auditResult is added as .result onto the auditRef. We're lazy sometimes. It'll be removed in due time.
+ */
 interface ReportResult extends LHResult {
   categories: Record<string, ReportResult.Category>;
 }
+
 declare module ReportResult {
   interface Category extends LHResult.Category {
     auditRefs: Array<AuditRef>
   }
 
   interface AuditRef extends LHResult.AuditRef {
-    result: Audit.Result;
+    result: AuditResult;
     stackPacks?: StackPackDescription[];
     relevantMetrics?: ReportResult.AuditRef[];
   }
