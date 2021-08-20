@@ -68,7 +68,7 @@
     "dogfood-lhci": "./lighthouse-core/scripts/dogfood-lhci.sh",
     "timing-trace": "node lighthouse-core/scripts/generate-timing-trace.js",
     "changelog": "conventional-changelog --config ./build/changelog-generator/index.js --infile changelog.md --same-file",
-    "type-check": "tsc -b . && tsc -b report/ && tsc -p lighthouse-viewer/ && tsc -p lighthouse-treemap/ && tsc -p flow-report/",
+    "type-check": "tsc --build ./ report/ lighthouse-viewer/ && tsc -p lighthouse-treemap/ && tsc -p flow-report/",
     "i18n:checks": "./lighthouse-core/scripts/i18n/assert-strings-collected.sh",
     "i18n:collect-strings": "node lighthouse-core/scripts/i18n/collect-strings.js",
     "update:lantern-baseline": "node lighthouse-core/scripts/lantern/update-baseline-lantern-values.js",

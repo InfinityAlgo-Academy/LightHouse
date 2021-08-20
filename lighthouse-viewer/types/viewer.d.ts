@@ -7,11 +7,14 @@
 import _ReportGenerator = require('../../report/generator/report-generator.js');
 import {Logger as _Logger} from '../../report/renderer/logger.js';
 import {LighthouseReportViewer as _LighthouseReportViewer} from '../app/src/lighthouse-report-viewer.js';
+import 'google.analytics';
 import {FirebaseNamespace} from '@firebase/app-types';
-import _ReportResult from '../../report/types/report-result';
 
 // Import for needed DOM type augmentation.
 import '../../report/types/augment-dom';
+
+// Import for LH globals needed for report files.
+import '../../report/types/html-renderer';
 
 declare global {
   var ReportGenerator: typeof _ReportGenerator;
@@ -25,10 +28,5 @@ declare global {
 
     // Inserted by viewer build.
     LH_CURRENT_VERSION: string;
-  }
-  
-  // Expose global types in LH namespace.
-  module LH {
-    export import ReportResult = _ReportResult;
   }
 }

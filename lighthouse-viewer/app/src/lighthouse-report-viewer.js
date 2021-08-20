@@ -197,7 +197,7 @@ export class LighthouseReportViewer {
   _replaceReportHtml(json) {
     // Allow users to view the runnerResult
     if ('lhr' in json) {
-      const runnerResult = /** @type {LH.RunnerResult} */ (/** @type {unknown} */ (json));
+      const runnerResult = /** @type {{lhr: LH.Result}} */ (/** @type {unknown} */ (json));
       json = runnerResult.lhr;
     }
     // Allow users to drop in PSI's json
