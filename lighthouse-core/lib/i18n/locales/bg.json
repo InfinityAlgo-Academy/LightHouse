@@ -992,21 +992,6 @@
   "lighthouse-core/audits/is-on-https.js | warning": {
     "message": "Разрешено с предупреждение"
   },
-  "lighthouse-core/audits/large-javascript-libraries.js | columnLibraryName": {
-    "message": "Библиотека"
-  },
-  "lighthouse-core/audits/large-javascript-libraries.js | description": {
-    "message": "Големите библиотеки на JavaScript могат да доведат до слаба ефективност. Приоритизирайте по-малки и еквивалентно функционални библиотеки, за да намалите размера на пакета си. [Научете повече](https://developers.google.com/web/fundamentals/performance/webpack/decrease-frontend-size#optimize_dependencies)."
-  },
-  "lighthouse-core/audits/large-javascript-libraries.js | displayValue": {
-    "message": "{libraryCount,plural, =1{Бе открита 1 библиотека с голям размер}other{Бяха открити # библиотеки с голям размер}}"
-  },
-  "lighthouse-core/audits/large-javascript-libraries.js | failureTitle": {
-    "message": "Замяна на неоправдано големите библиотеки на JavaScript"
-  },
-  "lighthouse-core/audits/large-javascript-libraries.js | title": {
-    "message": "Избягва големи библиотеки на JavaScript чрез по-малки алтернативи"
-  },
   "lighthouse-core/audits/largest-contentful-paint-element.js | description": {
     "message": "Този елемент е най-голямото съдържание, изобразено в прозоречния изглед. [Научете повече](https://web.dev/lighthouse-largest-contentful-paint/)"
   },

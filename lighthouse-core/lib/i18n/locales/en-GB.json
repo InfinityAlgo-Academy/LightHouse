@@ -992,21 +992,6 @@
   "lighthouse-core/audits/is-on-https.js | warning": {
     "message": "Allowed with warning"
   },
-  "lighthouse-core/audits/large-javascript-libraries.js | columnLibraryName": {
-    "message": "Library"
-  },
-  "lighthouse-core/audits/large-javascript-libraries.js | description": {
-    "message": "Large JavaScript libraries can lead to poor performance. Prefer smaller, functionally equivalent libraries to reduce your bundle size. [Learn more](https://developers.google.com/web/fundamentals/performance/webpack/decrease-frontend-size#optimize_dependencies)."
-  },
-  "lighthouse-core/audits/large-javascript-libraries.js | displayValue": {
-    "message": "{libraryCount,plural, =1{1 large library found}other{# large libraries found}}"
-  },
-  "lighthouse-core/audits/large-javascript-libraries.js | failureTitle": {
-    "message": "Replace unnecessarily large JavaScript libraries"
-  },
-  "lighthouse-core/audits/large-javascript-libraries.js | title": {
-    "message": "Avoids large JavaScript libraries with smaller alternatives"
-  },
   "lighthouse-core/audits/largest-contentful-paint-element.js | description": {
     "message": "This is the largest contentful element painted within the viewport. [Learn more](https://web.dev/lighthouse-largest-contentful-paint/)"
   },

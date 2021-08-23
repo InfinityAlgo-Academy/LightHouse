@@ -18,7 +18,7 @@ function buildStrings() {
   const locales = require('../lighthouse-core/lib/i18n/locales.js');
   // TODO(esmodules): use dynamic import when build/ is esm.
   const utilCode = fs.readFileSync(LH_ROOT + '/lighthouse-treemap/app/src/util.js', 'utf-8');
-  const {UIStrings} = eval(utilCode.replace('export ', '') + '\nmodule.exports = TreemapUtil;');
+  const {UIStrings} = eval(utilCode.replace(/export /g, '') + '\nmodule.exports = TreemapUtil;');
   const strings = /** @type {Record<LH.Locale, string>} */ ({});
 
   for (const [locale, lhlMessages] of Object.entries(locales)) {
@@ -76,4 +76,7 @@ async function run() {
   }
 }
 
-run();
+run().catch(err => {
+  console.error(err);
+  process.exit(1);
+});

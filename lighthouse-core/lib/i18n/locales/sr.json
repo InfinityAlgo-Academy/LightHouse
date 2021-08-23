@@ -992,21 +992,6 @@
   "lighthouse-core/audits/is-on-https.js | warning": {
     "message": "Дозвољен уз упозорење"
   },
-  "lighthouse-core/audits/large-javascript-libraries.js | columnLibraryName": {
-    "message": "Библиотека"
-  },
-  "lighthouse-core/audits/large-javascript-libraries.js | description": {
-    "message": "Велике JavaScript библиотеке могу да доведу до лошег учинка. Користите мање, функционално еквивалентне библиотеке да бисте смањили величину пакета. [Сазнајте више](https://developers.google.com/web/fundamentals/performance/webpack/decrease-frontend-size#optimize_dependencies)."
-  },
-  "lighthouse-core/audits/large-javascript-libraries.js | displayValue": {
-    "message": "{libraryCount,plural, =1{Пронађена је 1 велика библиотека}one{Пронађена је # велика библиотека}few{Пронађене су # велике библиотеке}other{Пронађено је # великих библиотека}}"
-  },
-  "lighthouse-core/audits/large-javascript-libraries.js | failureTitle": {
-    "message": "Замените непотребно велике JavaScript библиотеке"
-  },
-  "lighthouse-core/audits/large-javascript-libraries.js | title": {
-    "message": "Избегава велике JavaScript библиотеке за које постоје мање алтернативе"
-  },
   "lighthouse-core/audits/largest-contentful-paint-element.js | description": {
     "message": "Ово је највећи елемент садржаја који је приказан у области приказа. [Сазнајте више](https://web.dev/lighthouse-largest-contentful-paint/)"
   },

@@ -992,21 +992,6 @@
   "lighthouse-core/audits/is-on-https.js | warning": {
     "message": "Pinapayagan nang may babala"
   },
-  "lighthouse-core/audits/large-javascript-libraries.js | columnLibraryName": {
-    "message": "Library"
-  },
-  "lighthouse-core/audits/large-javascript-libraries.js | description": {
-    "message": "Kapag malalaki ang JavaScript library, posibleng maging hindi maganda ang performance. Gumamit ng mas maliliit na library na ganoon din ang function para mabawasan ang laki ng iyong bundle. [Matuto pa](https://developers.google.com/web/fundamentals/performance/webpack/decrease-frontend-size#optimize_dependencies)."
-  },
-  "lighthouse-core/audits/large-javascript-libraries.js | displayValue": {
-    "message": "{libraryCount,plural, =1{1 malaking library ang nakita}one{# malaking library ang nakita}other{# na malaking library ang nakita}}"
-  },
-  "lighthouse-core/audits/large-javascript-libraries.js | failureTitle": {
-    "message": "Palitan ang mga napakalaking JavaScript library"
-  },
-  "lighthouse-core/audits/large-javascript-libraries.js | title": {
-    "message": "Umiiwas sa malalaking JavaScript library gamit ang mas maliliit na alternatibo"
-  },
   "lighthouse-core/audits/largest-contentful-paint-element.js | description": {
     "message": "Ito ang pinakamalaking contentful element na na-paint sa viewport. [Matuto Pa](https://web.dev/lighthouse-largest-contentful-paint/)"
   },

@@ -992,21 +992,6 @@
   "lighthouse-core/audits/is-on-https.js | warning": {
     "message": "Autorisée avec un avertissement"
   },
-  "lighthouse-core/audits/large-javascript-libraries.js | columnLibraryName": {
-    "message": "Bibliothèque"
-  },
-  "lighthouse-core/audits/large-javascript-libraries.js | description": {
-    "message": "Les bibliothèques JavaScript volumineuses peuvent être à l'origine de performances médiocres. Optez pour des bibliothèques plus petites aux fonctions équivalentes afin de réduire la taille du lot. [En savoir plus](https://developers.google.com/web/fundamentals/performance/webpack/decrease-frontend-size#optimize_dependencies)"
-  },
-  "lighthouse-core/audits/large-javascript-libraries.js | displayValue": {
-    "message": "{libraryCount,plural, =1{1 bibliothèque volumineuse trouvée}one{# bibliothèque volumineuse trouvée}other{# bibliothèques volumineuses trouvées}}"
-  },
-  "lighthouse-core/audits/large-javascript-libraries.js | failureTitle": {
-    "message": "Remplacer les bibliothèques JavaScript inutilement volumineuses"
-  },
-  "lighthouse-core/audits/large-javascript-libraries.js | title": {
-    "message": "Évite les bibliothèques JavaScript volumineuses à l'aide d'alternatives plus petites"
-  },
   "lighthouse-core/audits/largest-contentful-paint-element.js | description": {
     "message": "Il s'agit de l'élément identifié comme \"Largest Contentful Paint\" dans la fenêtre d'affichage. [En savoir plus](https://web.dev/lighthouse-largest-contentful-paint/)"
   },

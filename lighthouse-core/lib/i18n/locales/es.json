@@ -992,21 +992,6 @@
   "lighthouse-core/audits/is-on-https.js | warning": {
     "message": "Permitida con advertencia"
   },
-  "lighthouse-core/audits/large-javascript-libraries.js | columnLibraryName": {
-    "message": "Biblioteca"
-  },
-  "lighthouse-core/audits/large-javascript-libraries.js | description": {
-    "message": "Las bibliotecas de JavaScript de gran tamaño pueden reducir el rendimiento. Elige bibliotecas más pequeñas y funcionalmente equivalentes para reducir el tamaño del paquete. [Más información](https://developers.google.com/web/fundamentals/performance/webpack/decrease-frontend-size#optimize_dependencies)"
-  },
-  "lighthouse-core/audits/large-javascript-libraries.js | displayValue": {
-    "message": "{libraryCount,plural, =1{1 biblioteca de tamaño grande encontrada}other{# bibliotecas de tamaño grande encontradas}}"
-  },
-  "lighthouse-core/audits/large-javascript-libraries.js | failureTitle": {
-    "message": "Sustituye las bibliotecas de JavaScript innecesariamente grandes"
-  },
-  "lighthouse-core/audits/large-javascript-libraries.js | title": {
-    "message": "Evita las bibliotecas de JavaScript de gran tamaño con alternativas más pequeñas"
-  },
   "lighthouse-core/audits/largest-contentful-paint-element.js | description": {
     "message": "Este es el mayor elemento con contenido renderizado en el viewport. [Más información](https://web.dev/lighthouse-largest-contentful-paint/)"
   },
