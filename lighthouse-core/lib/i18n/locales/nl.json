@@ -992,21 +992,6 @@
   "lighthouse-core/audits/is-on-https.js | warning": {
     "message": "Toegestaan met waarschuwing"
   },
-  "lighthouse-core/audits/large-javascript-libraries.js | columnLibraryName": {
-    "message": "Bibliotheek"
-  },
-  "lighthouse-core/audits/large-javascript-libraries.js | description": {
-    "message": "Grote JavaScript-bibliotheken kunnen slechte prestaties tot gevolg hebben. Geef de voorkeur aan kleinere, functioneel gelijke bibliotheken om de bundelgrootte te beperken. [Meer informatie](https://developers.google.com/web/fundamentals/performance/webpack/decrease-frontend-size#optimize_dependencies)"
-  },
-  "lighthouse-core/audits/large-javascript-libraries.js | displayValue": {
-    "message": "{libraryCount,plural, =1{1 grote bibliotheek gevonden}other{# grote bibliotheken gevonden}}"
-  },
-  "lighthouse-core/audits/large-javascript-libraries.js | failureTitle": {
-    "message": "Onnodig grote JavaScript-bibliotheken vervangen"
-  },
-  "lighthouse-core/audits/large-javascript-libraries.js | title": {
-    "message": "Vermijdt grote JavaScript-bibliotheken door kleinere alternatieven te gebruiken"
-  },
   "lighthouse-core/audits/largest-contentful-paint-element.js | description": {
     "message": "Dit is het grootste element met content dat is weergegeven in het kijkvenster. [Meer informatie](https://web.dev/lighthouse-largest-contentful-paint/)"
   },

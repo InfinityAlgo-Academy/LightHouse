@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/* eslint-env jest, browser */
+/* eslint-env jest */
 
 import {strict as assert} from 'assert';
 

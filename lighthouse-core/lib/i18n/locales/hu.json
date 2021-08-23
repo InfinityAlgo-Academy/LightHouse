@@ -992,21 +992,6 @@
   "lighthouse-core/audits/is-on-https.js | warning": {
     "message": "Figyelmeztetéssel engedélyezve"
   },
-  "lighthouse-core/audits/large-javascript-libraries.js | columnLibraryName": {
-    "message": "Függvénytár"
-  },
-  "lighthouse-core/audits/large-javascript-libraries.js | description": {
-    "message": "A nagy JavaScript-függvénytárak gyenge teljesítményhez vezethetnek. Használjon inkább kisebb, funkcionálisan egyenértékű függvénytárakat a csomag méretének csökkentése érdekében. [További információ](https://developers.google.com/web/fundamentals/performance/webpack/decrease-frontend-size#optimize_dependencies)."
-  },
-  "lighthouse-core/audits/large-javascript-libraries.js | displayValue": {
-    "message": "{libraryCount,plural, =1{1 nagy függvénytár található}other{# nagy függvénytár található}}"
-  },
-  "lighthouse-core/audits/large-javascript-libraries.js | failureTitle": {
-    "message": "Cserélje le a szükségtelenül nagy JavaScript-függvénytárakat"
-  },
-  "lighthouse-core/audits/large-javascript-libraries.js | title": {
-    "message": "Kerülje a kisebb alternatívákkal rendelkező nagy JavaScript-függvénytárakat"
-  },
   "lighthouse-core/audits/largest-contentful-paint-element.js | description": {
     "message": "Ez a legnagyobb tartalommal rendelkező elem a megjelenítési területen. [További információ](https://web.dev/lighthouse-largest-contentful-paint/)."
   },

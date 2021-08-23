@@ -992,21 +992,6 @@
   "lighthouse-core/audits/is-on-https.js | warning": {
     "message": "อนุญาตแบบมีคำเตือน"
   },
-  "lighthouse-core/audits/large-javascript-libraries.js | columnLibraryName": {
-    "message": "ไลบรารี"
-  },
-  "lighthouse-core/audits/large-javascript-libraries.js | description": {
-    "message": "ไลบรารี JavaScript ขนาดใหญ่อาจทำให้ประสิทธิภาพต่ำ ขอแนะนำให้ใช้ไลบรารีขนาดเล็กที่มีฟังก์ชันการใช้งานเทียบเท่ากันเพื่อลดขนาด Bundle [ดูข้อมูลเพิ่มเติม](https://developers.google.com/web/fundamentals/performance/webpack/decrease-frontend-size#optimize_dependencies)"
-  },
-  "lighthouse-core/audits/large-javascript-libraries.js | displayValue": {
-    "message": "{libraryCount,plural, =1{พบไลบรารีขนาดใหญ่ 1 รายการ}other{พบไลบรารีขนาดใหญ่ # รายการ}}"
-  },
-  "lighthouse-core/audits/large-javascript-libraries.js | failureTitle": {
-    "message": "แทนที่ไลบรารี JavaScript ที่มีขนาดใหญ่เกินความจำเป็น"
-  },
-  "lighthouse-core/audits/large-javascript-libraries.js | title": {
-    "message": "หลีกเลี่ยงการใช้ไลบรารี JavaScript ขนาดใหญ่หากมีไลบรารีอื่นที่ขนาดเล็กกว่า"
-  },
   "lighthouse-core/audits/largest-contentful-paint-element.js | description": {
     "message": "นี่คือองค์ประกอบที่มีเนื้อหาเต็มขนาดใหญ่ที่สุดซึ่งแสดงผลภายในวิวพอร์ต [ดูข้อมูลเพิ่มเติม](https://web.dev/lighthouse-largest-contentful-paint/)"
   },

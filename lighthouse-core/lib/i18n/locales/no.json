@@ -992,21 +992,6 @@
   "lighthouse-core/audits/is-on-https.js | warning": {
     "message": "Tillatt med advarsel"
   },
-  "lighthouse-core/audits/large-javascript-libraries.js | columnLibraryName": {
-    "message": "Bibliotek"
-  },
-  "lighthouse-core/audits/large-javascript-libraries.js | description": {
-    "message": "Store JavaScript-bibliotek kan føre til lav ytelse. Du bør bruke mindre bibliotek med tilsvarende funksjonalitet for å redusere pakkestørrelsen. [Finn ut mer](https://developers.google.com/web/fundamentals/performance/webpack/decrease-frontend-size#optimize_dependencies)."
-  },
-  "lighthouse-core/audits/large-javascript-libraries.js | displayValue": {
-    "message": "{libraryCount,plural, =1{1 stort bibliotek funnet}other{# store bibliotek funnet}}"
-  },
-  "lighthouse-core/audits/large-javascript-libraries.js | failureTitle": {
-    "message": "Bytt ut unødvendig store JavaScript-bibliotek"
-  },
-  "lighthouse-core/audits/large-javascript-libraries.js | title": {
-    "message": "Unngår store JavaScript-bibliotek der det finnes mindre alternativer"
-  },
   "lighthouse-core/audits/largest-contentful-paint-element.js | description": {
     "message": "Dette er det største innholdsrike elementet som ble tegnet innenfor det synlige området. [Finn ut mer](https://web.dev/lighthouse-largest-contentful-paint/)"
   },

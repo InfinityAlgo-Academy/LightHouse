@@ -16,6 +16,7 @@ const {
   isValidArtifactDependency,
   throwInvalidArtifactDependency,
   assertArtifactTopologicalOrder,
+  assertValidConfig,
 } = require('./validation.js');
 const {filterConfigByGatherMode, filterConfigByExplicitFilters} = require('./filters.js');
 const {
@@ -250,15 +251,13 @@ function initializeConfig(configJSON, context) {
     settings,
   };
 
-  // TODO(FR-COMPAT): validate navigations
-  // TODO(FR-COMPAT): validate audits
-  // TODO(FR-COMPAT): validate categories
+  const {warnings} = assertValidConfig(config);
 
   config = filterConfigByGatherMode(config, context.gatherMode);
   config = filterConfigByExplicitFilters(config, settings);
 
   log.timeEnd(status);
-  return {config, warnings: []};
+  return {config, warnings};
 }
 
 module.exports = {resolveWorkingCopy, initializeConfig};

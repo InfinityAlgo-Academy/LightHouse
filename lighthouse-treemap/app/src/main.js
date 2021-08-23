@@ -5,8 +5,6 @@
  */
 'use strict';
 
-/** @typedef {import('../../../lighthouse-core/lib/i18n/locales').LhlMessages} LhlMessages */
-
 /* eslint-env browser */
 
 /* globals webtreemap strings Tabulator Cell Row */
@@ -710,20 +708,6 @@ function injectOptions(options) {
   `;
 }
 
-/**
- * @param {LhlMessages} localeMessages
- */
-function getStrings(localeMessages) {
-  const strings = /** @type {typeof TreemapUtil['UIStrings']} */ ({});
-
-  for (const varName of Object.keys(localeMessages)) {
-    const key = /** @type {keyof typeof TreemapUtil['UIStrings']} */ (varName);
-    strings[key] = localeMessages[varName].message;
-  }
-
-  return strings;
-}
-
 class LighthouseTreemap {
   static get APP_URL() {
     return `${location.origin}${location.pathname}`;
@@ -776,7 +760,7 @@ class LighthouseTreemap {
       // Set missing renderer strings to default (english) values.
       ...TreemapUtil.UIStrings,
       // `strings` is generated in build/build-treemap.js
-      ...getStrings(strings[options.lhr.configSettings.locale]),
+      ...strings[options.lhr.configSettings.locale],
     });
     TreemapUtil.i18n = i18n;
 

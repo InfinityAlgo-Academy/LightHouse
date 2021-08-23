@@ -71,6 +71,7 @@ describe('Fraggle Rock Config', () => {
 
   it('should filter configuration by gatherMode', () => {
     const timespanGatherer = new BaseGatherer();
+    timespanGatherer.getArtifact = jest.fn();
     timespanGatherer.meta = {supportedModes: ['timespan']};
 
     const configJson = {
@@ -114,9 +115,11 @@ describe('Fraggle Rock Config', () => {
     beforeEach(() => {
       const dependencySymbol = Symbol('dependency');
       dependencyGatherer = new BaseGatherer();
+      dependencyGatherer.getArtifact = jest.fn();
       dependencyGatherer.meta = {symbol: dependencySymbol, supportedModes: ['snapshot']};
       // @ts-expect-error - we satisfy the interface on the next line
       dependentGatherer = new BaseGatherer();
+      dependentGatherer.getArtifact = jest.fn();
       dependentGatherer.meta = {
         supportedModes: ['snapshot'],
         dependencies: {ImageElements: dependencySymbol},
@@ -303,6 +306,7 @@ describe('Fraggle Rock Config', () => {
 
     beforeEach(() => {
       const gatherer = new BaseGatherer();
+      gatherer.getArtifact = jest.fn();
       gatherer.meta = {supportedModes: ['navigation']};
 
       class ExtraAudit extends BaseAudit {
@@ -421,7 +425,31 @@ describe('Fraggle Rock Config', () => {
     });
   });
 
+  it('should validate the config with warnings', () => {
+    /** @type {LH.Config.Json} */
+    const extensionConfig = {
+      extends: 'lighthouse:default',
+      navigations: [{id: 'default', loadFailureMode: 'warn'}],
+    };
+
+    const {config, warnings} = initializeConfig(extensionConfig, {gatherMode: 'navigation'});
+    const navigations = config.navigations;
+    if (!navigations) throw new Error(`Failed to initialize navigations`);
+    expect(warnings).toHaveLength(1);
+    expect(navigations[0].loadFailureMode).toEqual('fatal');
+  });
+
+  it('should validate the config with fatal errors', () => {
+    /** @type {LH.Config.Json} */
+    const extensionConfig = {
+      extends: 'lighthouse:default',
+      artifacts: [{id: 'artifact', gatherer: {instance: new BaseGatherer()}}],
+    };
+
+    const invocation = () => initializeConfig(extensionConfig, {gatherMode: 'navigation'});
+    expect(invocation).toThrow(/did not support any gather modes/);
+  });
+
   it.todo('should support plugins');
   it.todo('should adjust default pass options for throttling method');
-  it.todo('should validate audit/gatherer interdependencies');
 });

@@ -10,7 +10,7 @@
  */
 
 import {render} from 'preact';
-import {App} from './App';
+import {App} from './src/app';
 
 // Used by standalone-flow.html
 function __initLighthouseFlowReport__() {

@@ -70,6 +70,7 @@ class ReportGenerator {
       /* eslint-disable max-len */
       {search: '%%LIGHTHOUSE_FLOW_JSON%%', replacement: sanitizedJson},
       {search: '%%LIGHTHOUSE_FLOW_JAVASCRIPT%%', replacement: htmlReportAssets.FLOW_REPORT_JAVASCRIPT},
+      {search: '/*%%LIGHTHOUSE_FLOW_CSS%%*/', replacement: htmlReportAssets.FLOW_REPORT_CSS},
       {search: '/*%%LIGHTHOUSE_CSS%%*/', replacement: htmlReportAssets.REPORT_CSS},
       /* eslint-enable max-len */
     ]);

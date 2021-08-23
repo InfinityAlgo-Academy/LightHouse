@@ -391,7 +391,7 @@ class Util {
   }
 
   /**
-   * @param {LH.Config.Settings} settings
+   * @param {LH.Result['configSettings']} settings
    * @return {!Array<{name: string, description: string}>}
    */
   static getEnvironmentDisplayValues(settings) {
@@ -414,7 +414,7 @@ class Util {
   }
 
   /**
-   * @param {LH.Config.Settings} settings
+   * @param {LH.Result['configSettings']} settings
    * @return {{deviceEmulation: string, networkThrottling: string, cpuThrottling: string}}
    */
   static getEmulationDescriptions(settings) {

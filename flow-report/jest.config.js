@@ -7,7 +7,9 @@
 module.exports = {
   testEnvironment: 'jsdom',
   preset: 'ts-jest',
+  globalSetup: './test/setup/global-setup.ts',
   testMatch: [
+    '**/test/**/*-test.ts',
     '**/test/**/*-test.tsx',
   ],
 };

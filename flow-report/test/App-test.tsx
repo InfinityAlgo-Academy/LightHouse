@@ -5,24 +5,84 @@
  */
 
 import fs from 'fs';
-import {App} from '../App';
+import {App} from '../src/app';
 import {render} from '@testing-library/preact';
-import {LH_ROOT} from '../../root';
 
 const flowResult = JSON.parse(
   fs.readFileSync(
-    `${LH_ROOT}/lighthouse-core/test/fixtures/fraggle-rock/reports/sample-lhrs.json`,
+    `${__dirname}/../../lighthouse-core/test/fixtures/fraggle-rock/reports/sample-lhrs.json`,
     'utf-8'
   )
 );
 
-it('Renders a standalone report', async () => {
-  const root = render(<App flowResult={flowResult}/>);
-  const navigation = await root.findByText(/navigation/);
-  const timespan = await root.findByText(/timespan/);
-  const snapshot = await root.findByText(/snapshot/);
+let mockLocation: URL;
 
-  expect(navigation.innerHTML).toEqual('[2021-08-03T18:28:13.296Z] [navigation] https://www.mikescerealshack.co/');
-  expect(timespan.innerHTML).toEqual('[2021-08-03T18:28:31.789Z] [timespan] https://www.mikescerealshack.co/search?q=call+of+duty');
-  expect(snapshot.innerHTML).toEqual('[2021-08-03T18:28:36.856Z] [snapshot] https://www.mikescerealshack.co/search?q=call+of+duty');
+beforeEach(() => {
+  mockLocation = new URL('file:///Users/example/report.html');
+  Object.defineProperty(window, 'location', {
+    get: () => mockLocation,
+  });
+});
+
+it('renders a standalone report with summary', async () => {
+  const root = render(<App flowResult={flowResult}/>);
+
+  const summary = await root.findByTestId('Summary');
+  expect(summary.textContent).toEqual('SUMMARY');
+});
+
+it('renders the navigation step', async () => {
+  mockLocation.hash = '#index=0';
+  const root = render(<App flowResult={flowResult}/>);
+
+  await expect(root.findByTestId('Report')).resolves.toBeTruthy();
+
+  const link = await root.findByText(/https:/);
+  expect(link.textContent).toEqual('https://www.mikescerealshack.co/');
+
+  const scores = await root.findAllByText(/^\S+: [0-9.]+/);
+  expect(scores.map(s => s.textContent)).toEqual([
+    'performance: 0.99',
+    'accessibility: 1',
+    'best-practices: 1',
+    'seo: 1',
+    'pwa: 0.3',
+  ]);
+});
+
+it('renders the timespan step', async () => {
+  mockLocation.hash = '#index=1';
+  const root = render(<App flowResult={flowResult}/>);
+
+  await expect(root.findByTestId('Report')).resolves.toBeTruthy();
+
+  const link = await root.findByText(/https:/);
+  expect(link.textContent).toEqual('https://www.mikescerealshack.co/search?q=call+of+duty');
+
+  const scores = await root.findAllByText(/^\S+: [0-9.]+/);
+  expect(scores.map(s => s.textContent)).toEqual([
+    'performance: 0.97',
+    'best-practices: 0.71',
+    'seo: 0',
+    'pwa: 1',
+  ]);
+});
+
+it('renders the snapshot step', async () => {
+  mockLocation.hash = '#index=2';
+  const root = render(<App flowResult={flowResult}/>);
+
+  await expect(root.findByTestId('Report')).resolves.toBeTruthy();
+
+  const link = await root.findByText(/https:/);
+  expect(link.textContent).toEqual('https://www.mikescerealshack.co/search?q=call+of+duty');
+
+  const scores = await root.findAllByText(/^\S+: [0-9.]+/);
+  expect(scores.map(s => s.textContent)).toEqual([
+    'performance: 0',
+    'accessibility: 0.9',
+    'best-practices: 0.88',
+    'seo: 0.85',
+    'pwa: 1',
+  ]);
 });

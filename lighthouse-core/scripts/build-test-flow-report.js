@@ -9,7 +9,7 @@ const fs = require('fs');
 const open = require('open');
 const {execFileSync} = require('child_process');
 
-execFileSync(`yarn`, ['build-report']);
+execFileSync(`yarn`, ['build-report', '--standalone']);
 const reportGenerator = require('../../report/generator/report-generator.js');
 
 const flow = JSON.parse(fs.readFileSync(

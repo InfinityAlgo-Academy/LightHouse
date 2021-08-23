@@ -9,10 +9,12 @@ const fs = require('fs');
 
 /* eslint-disable max-len */
 const FLOW_REPORT_TEMPLATE = fs.readFileSync(`${__dirname}/../../flow-report/assets/standalone-flow-template.html`, 'utf8');
+const FLOW_REPORT_CSS = fs.readFileSync(`${__dirname}/../../flow-report/assets/styles.css`, 'utf8');
 const FLOW_REPORT_JAVASCRIPT = fs.readFileSync(`${__dirname}/../../dist/report/flow.js`, 'utf8');
 /* eslint-enable max-len */
 
 module.exports = {
   FLOW_REPORT_TEMPLATE,
+  FLOW_REPORT_CSS,
   FLOW_REPORT_JAVASCRIPT,
 };

@@ -11,29 +11,31 @@
 /** @template {string} T @typedef {import('typed-query-selector/parser').ParseSelector<T, Element>} ParseSelector */
 /** @template T @typedef {import('../../../report/renderer/i18n').I18n<T>} I18n */
 
+export const UIStrings = {
+  /** Label for a button that alternates between showing or hiding a table. */
+  toggleTableButtonLabel: 'Toggle Table',
+  /** Text for an option in a dropdown menu. When selected, the app shows information for all scripts that were found in a web page. */
+  allScriptsDropdownLabel: 'All Scripts',
+  /** Label for a table column where the values are URLs, JS module names, or arbitrary identifiers. For simplicity, just 'name' is used. */
+  tableColumnName: 'Name',
+  /** Label for column giving the size of a file in bytes. */
+  resourceBytesLabel: 'Resource Bytes',
+  /** Label for a value associated with how many bytes of a script are not executed. */
+  unusedBytesLabel: 'Unused Bytes',
+  /** Label for a column where the values represent how much of a file is used bytes vs unused bytes (coverage). */
+  coverageColumnName: 'Coverage',
+  /** Label for a button that shows everything (or rather, does not highlight any specific mode such as: unused bytes, duplicate bytes, etc). */
+  allLabel: 'All',
+  /** Label for a button that highlights information about duplicate modules (aka: files, javascript resources that were included twice by a web page). */
+  duplicateModulesLabel: 'Duplicate Modules',
+};
+
 export class TreemapUtil {
   /** @type {I18n<typeof TreemapUtil['UIStrings']>} */
   // @ts-expect-error: Is set in main.
   static i18n = null;
 
-  static UIStrings = {
-    /** Label for a button that alternates between showing or hiding a table. */
-    toggleTableButtonLabel: 'Toggle Table',
-    /** Text for an option in a dropdown menu. When selected, the app shows information for all scripts that were found in a web page. */
-    allScriptsDropdownLabel: 'All Scripts',
-    /** Label for a table column where the values are URLs, JS module names, or arbitrary identifiers. For simplicity, just 'name' is used. */
-    tableColumnName: 'Name',
-    /** Label for column giving the size of a file in bytes. */
-    resourceBytesLabel: 'Resource Bytes',
-    /** Label for a value associated with how many bytes of a script are not executed. */
-    unusedBytesLabel: 'Unused Bytes',
-    /** Label for a column where the values represent how much of a file is used bytes vs unused bytes (coverage). */
-    coverageColumnName: 'Coverage',
-    /** Label for a button that shows everything (or rather, does not highlight any specific mode such as: unused bytes, duplicate bytes, etc). */
-    allLabel: 'All',
-    /** Label for a button that highlights information about duplicate modules (aka: files, javascript resources that were included twice by a web page). */
-    duplicateModulesLabel: 'Duplicate Modules',
-  };
+  static UIStrings = UIStrings;
 
   /**
    * @param {LH.Treemap.Node} node

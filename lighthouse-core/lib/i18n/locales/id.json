@@ -992,21 +992,6 @@
   "lighthouse-core/audits/is-on-https.js | warning": {
     "message": "Diizinkan dengan peringatan"
   },
-  "lighthouse-core/audits/large-javascript-libraries.js | columnLibraryName": {
-    "message": "Library"
-  },
-  "lighthouse-core/audits/large-javascript-libraries.js | description": {
-    "message": "Library JavaScript berukuran besar dapat menyebabkan performa yang buruk. Gunakan library lebih kecil dengan fungsi yang sama untuk mengurangi ukuran paket. [Pelajari lebih lanjut](https://developers.google.com/web/fundamentals/performance/webpack/decrease-frontend-size#optimize_dependencies)."
-  },
-  "lighthouse-core/audits/large-javascript-libraries.js | displayValue": {
-    "message": "{libraryCount,plural, =1{1 library berukuran besar ditemukan}other{# library berukuran besar ditemukan}}"
-  },
-  "lighthouse-core/audits/large-javascript-libraries.js | failureTitle": {
-    "message": "Ganti library JavaScript berukuran besar yang tidak diperlukan"
-  },
-  "lighthouse-core/audits/large-javascript-libraries.js | title": {
-    "message": "Menghindari library JavaScript berukuran besar dengan alternatif yang lebih kecil"
-  },
   "lighthouse-core/audits/largest-contentful-paint-element.js | description": {
     "message": "Ini adalah elemen contentful terbesar yang di-paint dalam area pandang. [Pelajari Lebih Lanjut](https://web.dev/lighthouse-largest-contentful-paint/)"
   },

@@ -1,12 +1,36 @@
 {
-  "extends": "../tsconfig",
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "../.tmp/tsbuildinfo/lighthouse-treemap",
+    "emitDeclarationOnly": true,
+    "declarationMap": true,
+
+    // Limit to base JS and DOM defs.
+    "lib": ["es2020", "dom", "dom.iterable"],
+    // Selectively include types from node_modules.
+    "types": ["tabulator-tables"],
+    "target": "es2020",
+    "module": "es2020",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+
+    "allowJs": true,
+    "checkJs": true,
+    "strict": true,
+    // TODO: remove the next line to be fully `strict`.
+    "useUnknownInCatchVariables": false,
+
+    // "listFiles": true,
+    // "noErrorTruncation": true,
+    "extendedDiagnostics": true,
+  },
   "include": [
     "app/src/**/*.js",
-    "types",
-    "../types",
+    "types/**/*.d.ts",
   ],
-  "compilerOptions": {
-    "esModuleInterop": true,
-    "composite": false,
-  },
+  "references": [
+    {"path": "../types/lhr/"},
+    {"path": "../report/"},
+    {"path": "../lighthouse-viewer/"},
+  ],
 }
