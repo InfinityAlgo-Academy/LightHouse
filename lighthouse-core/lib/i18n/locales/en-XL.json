@@ -1127,6 +1127,18 @@
   "lighthouse-core/audits/non-composited-animations.js | unsupportedTimingParameters": {
     "message": "Êf́f̂éĉt́ ĥáŝ ún̂śûṕp̂ór̂t́êd́ t̂ím̂ín̂ǵ p̂ár̂ám̂ét̂ér̂ś"
   },
+  "lighthouse-core/audits/nosniff.js | description": {
+    "message": "N̂ét̂ẃôŕk̂ ŕêśôúr̂ćêś t̂h́ât́ d̂ó n̂ót̂ śêt́ â `nosniff` ŕêśp̂ón̂śê h́êád̂ér̂ ḿâý r̂éŝúl̂t́ îń ŝéĉúr̂ít̂ý îśŝúêś. [L̂éâŕn̂ ḿôŕê](https://web.dev/security-headers/#xcto)"
+  },
+  "lighthouse-core/audits/nosniff.js | displayValue": {
+    "message": "{itemCount, plural,\n  =1 {# n̂ét̂ẃôŕk̂ ŕêśôúr̂ćê f́ôún̂d́}\n  other {# n̂ét̂ẃôŕk̂ ŕêśôúr̂ćêś f̂óûńd̂}\n  }"
+  },
+  "lighthouse-core/audits/nosniff.js | failureTitle": {
+    "message": "D̂óêś n̂ót̂ śêt́ â `X-Content-Type-Options: nosniff` án̂d́ `Content-Type` ĥéâd́êŕŝ f́ôŕ êv́êŕŷ ńêt́ŵór̂ḱ r̂éŝóûŕĉé"
+  },
+  "lighthouse-core/audits/nosniff.js | title": {
+    "message": "Ŝét̂ś `X-Content-Type-Options: nosniff` âńd̂ `Content-Type` h́êád̂ér̂ś f̂ór̂ év̂ér̂ý n̂ét̂ẃôŕk̂ ŕêśôúr̂ćê"
+  },
   "lighthouse-core/audits/performance-budget.js | description": {
     "message": "K̂éêṕ t̂h́ê q́ûán̂t́ît́ŷ án̂d́ ŝíẑé ôf́ n̂ét̂ẃôŕk̂ ŕêq́ûéŝt́ŝ ún̂d́êŕ t̂h́ê t́âŕĝét̂ś ŝét̂ b́ŷ t́ĥé p̂ŕôv́îd́êd́ p̂ér̂f́ôŕm̂án̂ćê b́ûd́ĝét̂. [Ĺêár̂ń m̂ór̂é](https://developers.google.com/web/tools/lighthouse/audits/budgets)."
   },

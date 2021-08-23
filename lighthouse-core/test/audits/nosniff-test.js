@@ -5,11 +5,10 @@
  */
 'use strict';
 
-const Nosniff = require('../../audits/nosniff.js');
-
-const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
-
 /* eslint-env jest */
+
+const Nosniff = require('../../audits/nosniff.js');
+const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
 
 describe('Nosniff audit', () => {
   it('should work', async () => {
