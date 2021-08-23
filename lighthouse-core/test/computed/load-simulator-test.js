@@ -16,7 +16,7 @@ function createNetworkNode() {
   return new NetworkNode({
     requestId: '1',
     protocol: 'http',
-    parsedURL: {securityOrigin: 'https://pwa.rocks'},
+    parsedURL: {scheme: 'http', securityOrigin: 'https://pwa.rocks'},
   });
 }
 
