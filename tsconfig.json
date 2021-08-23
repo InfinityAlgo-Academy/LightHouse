@@ -34,7 +34,6 @@
     "lighthouse-core/test/fixtures/traces/lcp-m78.devtools.log.json",
     "third-party/snyk/snapshot.json",
     "lighthouse-core/audits/byte-efficiency/polyfill-graph-data.json",
-    "lighthouse-core/lib/large-javascript-libraries/bundlephobia-database.json",
   ],
   "references": [
     {"path": "./types/lhr/"},
