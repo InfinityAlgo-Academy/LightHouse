@@ -41,13 +41,6 @@ async function buildFlowReport() {
       commonjs(),
       typescript({
         tsconfig: 'flow-report/tsconfig.json',
-        // rollup-plugin-commonjs 10.1.0 does not work here.
-        // https://github.com/ezolenko/rollup-plugin-typescript2#plugin-options
-        tsconfigOverride: {
-          compilerOptions: {
-            module: 'ES6',
-          },
-        },
       }),
       terser(),
     ],

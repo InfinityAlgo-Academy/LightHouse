@@ -5,38 +5,40 @@
  */
 
 import {FunctionComponent} from 'preact';
-import {useState} from 'preact/hooks';
+import {Sidebar} from './sidebar/sidebar';
+import {FlowResultContext, useCurrentLhr} from './util';
 
-export const Report: FunctionComponent<{lhr: LH.Result}> = ({lhr}) => {
+const Report: FunctionComponent<{lhr: LH.Result}> = ({lhr}) => {
   // TODO(FR-COMPAT): Render an actual report here.
   return (
-    <div>
+    <div data-testid="Report">
       <h1>{lhr.finalUrl}</h1>
       {
         Object.values(lhr.categories).map((category) =>
-          <h2>{category.id}: {category.score}</h2>
+          <h2 key={category.id}>{category.id}: {category.score}</h2>
         )
       }
     </div>
   );
 };
 
+const Summary: FunctionComponent = () => {
+  // TODO(FR-COMPAT): Design summary page.
+  return <h1 data-testid="Summary">SUMMARY</h1>;
+};
+
+const Content: FunctionComponent = () => {
+  const currentLhr = useCurrentLhr();
+  return currentLhr ? <Report lhr={currentLhr.value}/> : <Summary/>;
+};
+
 export const App: FunctionComponent<{flowResult: LH.FlowResult}> = ({flowResult}) => {
-  const [currentLhrIndex, setCurrentLhrIndex] = useState(0);
   return (
-    <>
-      <select onChange={e => setCurrentLhrIndex(Number(e.currentTarget.value))}>
-        {
-          flowResult.lhrs.map((lhr, i) =>
-            <option key={lhr.fetchTime} value={i}>
-              [{lhr.fetchTime}] [{lhr.gatherMode}] {lhr.finalUrl}
-            </option>
-          )
-        }
-      </select>
-      <div>
-        <Report lhr={flowResult.lhrs[currentLhrIndex]}/>
+    <FlowResultContext.Provider value={flowResult}>
+      <div className="App">
+        <Sidebar/>
+        <Content/>
       </div>
-    </>
+    </FlowResultContext.Provider>
   );
 };
