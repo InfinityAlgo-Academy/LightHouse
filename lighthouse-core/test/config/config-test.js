@@ -430,7 +430,7 @@ describe('Config', () => {
           }
         },
       ],
-    }), /no failureTitle and should/);
+    }), /no meta.failureTitle and should/);
 
     assert.throws(_ => new Config({
       audits: [basePath + '/missing-description'],
