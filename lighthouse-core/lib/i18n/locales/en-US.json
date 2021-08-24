@@ -1007,6 +1007,15 @@
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "Avoid large layout shifts"
   },
+  "lighthouse-core/audits/lcp-lazy-loaded.js | description": {
+    "message": "Above-the-fold images that are lazily loaded render later in the page lifecycle, which can delay the largest contentful paint. [Learn more](https://web.dev/lcp-lazy-loading/)."
+  },
+  "lighthouse-core/audits/lcp-lazy-loaded.js | failureTitle": {
+    "message": "Largest Contentful Paint image was lazily loaded"
+  },
+  "lighthouse-core/audits/lcp-lazy-loaded.js | title": {
+    "message": "Largest Contentful Paint image was not lazily loaded"
+  },
   "lighthouse-core/audits/long-tasks.js | description": {
     "message": "Lists the longest tasks on the main thread, useful for identifying worst contributors to input delay. [Learn more](https://web.dev/long-tasks-devtools/)"
   },

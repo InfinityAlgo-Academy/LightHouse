@@ -29,6 +29,7 @@ interactive
 largest-contentful-paint
 largest-contentful-paint-element
 layout-shift-elements
+lcp-lazy-loaded
 legacy-javascript
 long-tasks
 main-thread-tasks

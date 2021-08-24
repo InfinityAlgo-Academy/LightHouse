@@ -1007,6 +1007,15 @@
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "Âv́ôíd̂ ĺâŕĝé l̂áŷóût́ ŝh́îf́t̂ś"
   },
+  "lighthouse-core/audits/lcp-lazy-loaded.js | description": {
+    "message": "Âb́ôv́ê-t́ĥé-f̂ól̂d́ îḿâǵêś t̂h́ât́ âŕê ĺâźîĺŷ ĺôád̂éd̂ ŕêńd̂ér̂ ĺât́êŕ îń t̂h́ê ṕâǵê ĺîf́êćŷćl̂é, ŵh́îćĥ ćâń d̂él̂áŷ t́ĥé l̂ár̂ǵêśt̂ ćôńt̂én̂t́f̂úl̂ ṕâín̂t́. [L̂éâŕn̂ ḿôŕê](https://web.dev/lcp-lazy-loading/)."
+  },
+  "lighthouse-core/audits/lcp-lazy-loaded.js | failureTitle": {
+    "message": "L̂ár̂ǵêśt̂ Ćôńt̂én̂t́f̂úl̂ Ṕâín̂t́ îḿâǵê ẃâś l̂áẑíl̂ý l̂óâd́êd́"
+  },
+  "lighthouse-core/audits/lcp-lazy-loaded.js | title": {
+    "message": "L̂ár̂ǵêśt̂ Ćôńt̂én̂t́f̂úl̂ Ṕâín̂t́ îḿâǵê ẃâś n̂ót̂ ĺâźîĺŷ ĺôád̂éd̂"
+  },
   "lighthouse-core/audits/long-tasks.js | description": {
     "message": "L̂íŝt́ŝ t́ĥé l̂ón̂ǵêśt̂ t́âśk̂ś ôń t̂h́ê ḿâín̂ t́ĥŕêád̂, úŝéf̂úl̂ f́ôŕ îd́êńt̂íf̂ýîńĝ ẃôŕŝt́ ĉón̂t́r̂íb̂út̂ór̂ś t̂ó îńp̂út̂ d́êĺâý. [L̂éâŕn̂ ḿôŕê](https://web.dev/long-tasks-devtools/)"
   },

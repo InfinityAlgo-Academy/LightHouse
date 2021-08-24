@@ -17,6 +17,7 @@ function stall(ms) {
 setTimeout(() => {
   const imgEl = document.createElement('img');
   imgEl.src = '../dobetterweb/lighthouse-480x318.jpg';
+  imgEl.loading = 'lazy';
   const textEl = document.createElement('div');
   textEl.textContent = 'Sorry!';
   textEl.style.height = '18px' // this height can be flaky so we set it manually
