@@ -136,7 +136,7 @@ async function browserifyFile(entryPath, distPath) {
 
   // Make sure path exists.
   await mkdir(path.dirname(distPath), {recursive: true});
-  return new Promise((resolve, reject) => {
+  await new Promise((resolve, reject) => {
     const writeStream = fs.createWriteStream(distPath);
     writeStream.on('finish', resolve);
     writeStream.on('error', reject);
@@ -145,6 +145,22 @@ async function browserifyFile(entryPath, distPath) {
     if (DEBUG) bundleStream = bundleStream.pipe(exorcist(`${distPath}.map`));
     bundleStream.pipe(writeStream);
   });
+
+  if (isDevtools(distPath)) {
+    let code = fs.readFileSync(distPath, 'utf-8');
+    // Add a comment for TypeScript, but not if in DEBUG mode so that source maps are not affected.
+    // See lighthouse-cli/test/smokehouse/lighthouse-runners/bundle.js
+    if (!DEBUG) {
+      code = '// @ts-nocheck - Prevent tsc stepping into any required bundles.\n' + code;
+    }
+
+    // DevTools build system expects `globalThis` rather than setting global variables.
+    assert.ok(code.includes('\nrequire='), 'missing browserify require stub');
+    code = code.replace('\nrequire=', '\nglobalThis.require=');
+    assert.ok(!code.includes('\nrequire='), 'contained unexpected browserify require stub');
+
+    fs.writeFileSync(distPath, code);
+  }
 }
 
 /**
@@ -156,7 +172,7 @@ async function minifyScript(filePath) {
   const result = await terser.minify(code, {
     ecma: 2019,
     output: {
-      comments: /^!/,
+      comments: /^!|Prevent tsc/,
       max_line_len: 1000,
     },
     // The config relies on class names for gatherers.
@@ -168,20 +184,6 @@ async function minifyScript(filePath) {
       url: path.basename(`${filePath}.map`),
     },
   });
-
-  // Add the banner and modify globals for DevTools if necessary.
-  if (isDevtools(filePath) && result.code) {
-    // Add a comment for TypeScript, but not if in DEBUG mode so that source maps are not affected.
-    // See lighthouse-cli/test/smokehouse/lighthouse-runners/bundle.js
-    if (!DEBUG) {
-      result.code =
-        '// @ts-nocheck - Prevent tsc stepping into any required bundles.\n' + result.code;
-    }
-
-    assert.ok(result.code.includes('\nrequire='), 'missing browserify require stub');
-    result.code = result.code.replace('\nrequire=', '\nglobalThis.require=');
-    assert.ok(!result.code.includes('\nrequire='), 'contained unexpected browserify require stub');
-  }
 
   fs.writeFileSync(filePath, result.code);
   if (DEBUG) fs.writeFileSync(`${filePath}.map`, result.map);
