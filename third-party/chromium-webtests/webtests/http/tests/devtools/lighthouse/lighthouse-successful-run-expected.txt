@@ -573,7 +573,7 @@ viewport: fail
 viewport-ad-density: notApplicable
 visual-order-follows-dom: manual
 
-# of .lh-audit divs: 160
+# of .lh-audit divs: 161
 
 .lh-audit divs:
 accesskeys
@@ -732,6 +732,7 @@ uses-text-compression
 valid-lang
 valid-source-maps
 video-caption
+viewport
 viewport
 viewport
 viewport-ad-density

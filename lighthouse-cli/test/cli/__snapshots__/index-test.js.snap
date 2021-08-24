@@ -907,6 +907,7 @@ Object {
             "dom-size",
             "duplicated-javascript",
             "legacy-javascript",
+            "viewport",
           ],
           "weight": 30,
         },
@@ -1128,6 +1129,11 @@ Object {
         Object {
           "group": "diagnostics",
           "id": "unsized-images",
+          "weight": 0,
+        },
+        Object {
+          "group": "diagnostics",
+          "id": "viewport",
           "weight": 0,
         },
         Object {

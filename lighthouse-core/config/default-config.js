@@ -474,6 +474,7 @@ const defaultConfig = {
         {id: 'long-tasks', weight: 0, group: 'diagnostics'},
         {id: 'non-composited-animations', weight: 0, group: 'diagnostics'},
         {id: 'unsized-images', weight: 0, group: 'diagnostics'},
+        {id: 'viewport', weight: 0, group: 'diagnostics'},
         // Audits past this point don't belong to a group and will not be shown automatically
         {id: 'network-requests', weight: 0},
         {id: 'network-rtt', weight: 0},
