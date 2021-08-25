@@ -38,10 +38,10 @@ export class Logger {
     this._id && clearTimeout(this._id);
 
     this.el.textContent = msg;
-    this.el.classList.add('show');
+    this.el.classList.add('lh-show');
     if (autoHide) {
       this._id = setTimeout(() => {
-        this.el.classList.remove('show');
+        this.el.classList.remove('lh-show');
       }, 7000);
     }
   }

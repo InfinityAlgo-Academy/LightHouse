@@ -109,7 +109,7 @@ describe('DetailsRenderer', () => {
 
       const crcEl = renderer.render(details);
       assert.ok(crcEl.classList.contains('lh-crc-container'));
-      assert.strictEqual(crcEl.querySelectorAll('.crc-node').length, 1);
+      assert.strictEqual(crcEl.querySelectorAll('.lh-crc-node').length, 1);
     });
 
     it('renders opportunity details as a table', () => {

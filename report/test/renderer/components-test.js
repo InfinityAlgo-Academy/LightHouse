@@ -83,6 +83,39 @@ async function assertDOMTreeMatches(tmplEl) {
   }
 }
 
+const originalCreateElement = DOM.prototype.createElement;
+const originalCreateElementNS = DOM.prototype.createElementNS;
+beforeAll(() => {
+  /**
+   * @param {string} classNames
+   */
+  function checkPrefix(classNames) {
+    if (!classNames) return;
+
+    for (const className of classNames.split(' ')) {
+      if (!className.startsWith('lh-')) {
+        throw new Error(`expected classname to start with lh-, got: ${className}`);
+      }
+    }
+  }
+
+  DOM.prototype.createElement = function(...args) {
+    const classNames = args[1];
+    checkPrefix(classNames);
+    return originalCreateElement.call(this, ...args);
+  };
+  DOM.prototype.createElementNS = function(...args) {
+    const classNames = args[2];
+    checkPrefix(classNames);
+    return originalCreateElementNS.call(this, ...args);
+  };
+});
+
+afterAll(() => {
+  DOM.prototype.createElement = originalCreateElement;
+  DOM.prototype.createElementNS = originalCreateElementNS;
+});
+
 for (const tmpEl of tmplEls) {
   it(`${tmpEl.id} component matches HTML source`, async () => {
     await assertDOMTreeMatches(tmpEl);

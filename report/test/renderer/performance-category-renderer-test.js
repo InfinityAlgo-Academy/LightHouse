@@ -114,7 +114,7 @@ describe('PerfCategoryRenderer', () => {
 
     const fakeCategory = Object.assign({}, category, {auditRefs: [auditWithError]});
     const categoryDOM = renderer.render(fakeCategory, sampleResults.categoryGroups);
-    const tooltipEl = categoryDOM.querySelector('.lh-audit--load-opportunity .tooltip--error');
+    const tooltipEl = categoryDOM.querySelector('.lh-audit--load-opportunity .lh-tooltip--error');
     assert.ok(tooltipEl, 'did not render error message');
     assert.ok(/Yikes!!/.test(tooltipEl.textContent));
   });

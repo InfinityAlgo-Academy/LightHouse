@@ -188,8 +188,8 @@ export class ReportUIFeatures {
       'lh-button',
     ];
     if (opts.icon) {
-      classes.push('report-icon');
-      classes.push(`report-icon--${opts.icon}`);
+      classes.push('lh-report-icon');
+      classes.push(`lh-report-icon--${opts.icon}`);
     }
     const buttonEl = this._dom.createChildOf(buttonsEl, 'button', classes.join(' '));
     buttonEl.textContent = opts.text;
@@ -219,9 +219,9 @@ export class ReportUIFeatures {
 
   _enableFireworks() {
     const scoresContainer = this._dom.find('.lh-scores-container', this._document);
-    scoresContainer.classList.add('score100');
+    scoresContainer.classList.add('lh-score100');
     scoresContainer.addEventListener('click', _ => {
-      scoresContainer.classList.toggle('fireworks-paused');
+      scoresContainer.classList.toggle('lh-fireworks-paused');
     });
   }
 
@@ -718,9 +718,9 @@ export class ReportUIFeatures {
     // parameter acts like passing "false".
     // https://github.com/ChromeDevTools/devtools-frontend/blob/dd6a6d4153647c2a4203c327c595692c5e0a4256/front_end/dom_extension/DOMExtension.js#L809-L819
     if (typeof force === 'undefined') {
-      el.classList.toggle('dark');
+      el.classList.toggle('lh-dark');
     } else {
-      el.classList.toggle('dark', force);
+      el.classList.toggle('lh-dark', force);
     }
   }
 
@@ -787,7 +787,7 @@ class DropDown {
   }
 
   close() {
-    this._toggleEl.classList.remove('active');
+    this._toggleEl.classList.remove('lh-active');
     this._toggleEl.setAttribute('aria-expanded', 'false');
     if (this._menuEl.contains(this._dom.document().activeElement)) {
       // Refocus on the tools button if the drop down last had focus
@@ -801,7 +801,7 @@ class DropDown {
    * @param {HTMLElement} firstFocusElement
    */
   open(firstFocusElement) {
-    if (this._toggleEl.classList.contains('active')) {
+    if (this._toggleEl.classList.contains('lh-active')) {
       // If the drop down is already open focus on the element
       firstFocusElement.focus();
     } else {
@@ -811,7 +811,7 @@ class DropDown {
       }, {once: true});
     }
 
-    this._toggleEl.classList.add('active');
+    this._toggleEl.classList.add('lh-active');
     this._toggleEl.setAttribute('aria-expanded', 'true');
     this._menuEl.addEventListener('focusout', this.onMenuFocusOut);
     this._dom.document().addEventListener('keydown', this.onDocumentKeyDown);
@@ -825,7 +825,7 @@ class DropDown {
     e.preventDefault();
     e.stopImmediatePropagation();
 
-    if (this._toggleEl.classList.contains('active')) {
+    if (this._toggleEl.classList.contains('lh-active')) {
       this.close();
     } else {
       this.open(this._getNextMenuItem());
