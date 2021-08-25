@@ -234,9 +234,9 @@ describe('.getNavigationWarnings()', () => {
     expect(warnings).toHaveLength(0);
   });
 
-  it('does not add a url mismatch warning for failed navigations', () => {
+  it('adds a url mismatch warning for failed navigations', () => {
     const finalUrl = 'chrome-error://chromewebdata/';
     const warnings = getNavigationWarnings({...normalNavigation, finalUrl});
-    expect(warnings).toHaveLength(0);
+    expect(warnings).toHaveLength(1);
   });
 });

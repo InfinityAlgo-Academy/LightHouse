@@ -105,9 +105,9 @@ async function _navigate(navigationContext) {
 /**
  * @param {NavigationContext} navigationContext
  * @param {PhaseState} phaseState
- * @return {Promise<Array<LH.Artifacts.NetworkRequest> | undefined>}
+ * @return {Promise<{devtoolsLog: LH.DevtoolsLog, records: Array<LH.Artifacts.NetworkRequest>} | undefined>}
  */
-async function _collectNetworkRecords(navigationContext, phaseState) {
+async function _collectNetworkData(navigationContext, phaseState) {
   const devtoolsLogArtifactDefn = phaseState.artifactDefinitions.find(
     definition => definition.gatherer.instance.meta.symbol === DevtoolsLog.symbol
   );
@@ -119,7 +119,7 @@ async function _collectNetworkRecords(navigationContext, phaseState) {
 
   const devtoolsLog = await phaseState.artifactState.getArtifact[devtoolsLogArtifactId];
   const records = await NetworkRecords.request(devtoolsLog, navigationContext);
-  return records;
+  return {devtoolsLog, records};
 }
 
 /**
@@ -137,12 +137,12 @@ async function _computeNavigationResult(
 ) {
   const {navigationError, finalUrl} = navigateResult;
   const warnings = [...setupResult.warnings, ...navigateResult.warnings];
-  const networkRecords = await _collectNetworkRecords(navigationContext, phaseState);
-  const pageLoadError = networkRecords
+  const networkData = await _collectNetworkData(navigationContext, phaseState);
+  const pageLoadError = networkData
     ? getPageLoadError(navigationError, {
       url: finalUrl,
       loadFailureMode: navigationContext.navigation.loadFailureMode,
-      networkRecords,
+      networkRecords: networkData.records,
     })
     : navigationError;
 
@@ -151,10 +151,15 @@ async function _computeNavigationResult(
     const localizedMessage = i18n.getFormatted(pageLoadError.friendlyMessage, locale);
     log.error('NavigationRunner', localizedMessage, navigationContext.requestedUrl);
 
+    /** @type {Partial<LH.GathererArtifacts>} */
+    const artifacts = {};
+    const pageLoadErrorId = `pageLoadError-${navigationContext.navigation.id}`;
+    if (networkData) artifacts.devtoolsLogs = {[pageLoadErrorId]: networkData.devtoolsLog};
+
     return {
       finalUrl,
       pageLoadError,
-      artifacts: {},
+      artifacts,
       warnings: [...warnings, pageLoadError.friendlyMessage],
     };
   } else {

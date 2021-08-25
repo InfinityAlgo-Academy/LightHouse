@@ -290,12 +290,7 @@ function collateResults(localConsole, actual, expected) {
   }
 
   return [
-    {
-      name: 'final url',
-      actual: actual.lhr.finalUrl,
-      expected: expected.lhr.finalUrl,
-      equal: actual.lhr.finalUrl === expected.lhr.finalUrl,
-    },
+    makeComparison('final url', actual.lhr.finalUrl, expected.lhr.finalUrl),
     runtimeErrorAssertion,
     runWarningsAssertion,
     ...requestCountAssertion,

@@ -336,7 +336,7 @@ describe('NavigationRunner', () => {
 
       const {artifacts, pageLoadError} = await run(navigation);
       expect(pageLoadError).toBeInstanceOf(LighthouseError);
-      expect(artifacts).toEqual({});
+      expect(artifacts).toEqual({devtoolsLogs: {'pageLoadError-default': expect.any(Array)}});
     });
 
     it('cleans up throttling before getArtifact', async () => {
