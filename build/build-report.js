@@ -14,9 +14,10 @@ const commonjs =
   /** @type {import('rollup-plugin-commonjs').default} */ (require('rollup-plugin-commonjs'));
 
 /**
- * @type {import('rollup-plugin-typescript2').default}
+ * @type {import('@rollup/plugin-typescript').default}
  */
-const typescript = require('rollup-plugin-typescript2');
+// @ts-expect-error types are wrong.
+const typescript = require('@rollup/plugin-typescript');
 
 async function buildStandaloneReport() {
   const bundle = await rollup.rollup({

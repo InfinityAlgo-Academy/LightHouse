@@ -9,10 +9,13 @@ import {SidebarHeader, SidebarSummary} from '../../src/sidebar/sidebar';
 import {render} from '@testing-library/preact';
 import {FunctionComponent} from 'preact';
 import {FlowResultContext} from '../../src/util';
+import {dirname} from 'path';
+import {fileURLToPath} from 'url';
 
 const flowResult = JSON.parse(
   fs.readFileSync(
-    `${__dirname}/../../../lighthouse-core/test/fixtures/fraggle-rock/reports/sample-lhrs.json`,
+    // eslint-disable-next-line max-len
+    `${dirname(fileURLToPath(import.meta.url))}/../../../lighthouse-core/test/fixtures/fraggle-rock/reports/sample-lhrs.json`,
     'utf-8'
   )
 );

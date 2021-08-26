@@ -33,6 +33,21 @@ export function classNames(...args: Array<string|undefined|Record<string, boolea
   return classes.join(' ');
 }
 
+export function getScreenDimensions(reportResult: LH.ReportResult) {
+  const {width, height} = reportResult.configSettings.screenEmulation;
+  return {width, height};
+}
+
+export function getScreenshot(reportResult: LH.ReportResult) {
+  const fullPageScreenshotAudit = reportResult.audits['full-page-screenshot'];
+  const fullPageScreenshot =
+    fullPageScreenshotAudit.details &&
+    fullPageScreenshotAudit.details.type === 'full-page-screenshot' &&
+    fullPageScreenshotAudit.details.screenshot.data;
+
+  return fullPageScreenshot || null;
+}
+
 export function useFlowResult(): LH.FlowResult {
   const flowResult = useContext(FlowResultContext);
   if (!flowResult) throw Error('useFlowResult must be called in the FlowResultContext');
@@ -75,4 +90,25 @@ export function useCurrentLhr(): {value: LH.Result, index: number}|null {
   }
 
   return {value, index};
+}
+
+export function useDerivedStepNames() {
+  const flowResult = useFlowResult();
+
+  let numNavigation = 1;
+  let numTimespan = 1;
+  let numSnapshot = 1;
+
+  // TODO(FR-COMPAT): Override with a provided step name.
+  // TODO(FR-COMPAT): Add shortened URL and reset count for navigations.
+  return flowResult.lhrs.map((lhr) => {
+    switch (lhr.gatherMode) {
+      case 'navigation':
+        return `Navigation (${numNavigation++})`;
+      case 'timespan':
+        return `Timespan (${numTimespan++})`;
+      case 'snapshot':
+        return `Snapshot (${numSnapshot++})`;
+    }
+  });
 }

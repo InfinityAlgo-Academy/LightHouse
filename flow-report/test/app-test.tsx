@@ -7,10 +7,13 @@
 import fs from 'fs';
 import {App} from '../src/app';
 import {render} from '@testing-library/preact';
+import {dirname} from 'path';
+import {fileURLToPath} from 'url';
 
 const flowResult = JSON.parse(
   fs.readFileSync(
-    `${__dirname}/../../lighthouse-core/test/fixtures/fraggle-rock/reports/sample-lhrs.json`,
+    // eslint-disable-next-line max-len
+    `${dirname(fileURLToPath(import.meta.url))}/../../lighthouse-core/test/fixtures/fraggle-rock/reports/sample-lhrs.json`,
     'utf-8'
   )
 );
@@ -27,8 +30,7 @@ beforeEach(() => {
 it('renders a standalone report with summary', async () => {
   const root = render(<App flowResult={flowResult}/>);
 
-  const summary = await root.findByTestId('Summary');
-  expect(summary.textContent).toEqual('SUMMARY');
+  await expect(root.findByTestId('Summary')).resolves.toBeTruthy();
 });
 
 it('renders the navigation step', async () => {
@@ -42,7 +44,7 @@ it('renders the navigation step', async () => {
 
   const scores = await root.findAllByText(/^\S+: [0-9.]+/);
   expect(scores.map(s => s.textContent)).toEqual([
-    'performance: 0.99',
+    'performance: 0.98',
     'accessibility: 1',
     'best-practices: 1',
     'seo: 1',
@@ -61,7 +63,7 @@ it('renders the timespan step', async () => {
 
   const scores = await root.findAllByText(/^\S+: [0-9.]+/);
   expect(scores.map(s => s.textContent)).toEqual([
-    'performance: 0.97',
+    'performance: 1',
     'best-practices: 0.71',
     'seo: 0',
     'pwa: 1',
@@ -82,7 +84,7 @@ it('renders the snapshot step', async () => {
     'performance: 0',
     'accessibility: 0.9',
     'best-practices: 0.88',
-    'seo: 0.85',
+    'seo: 0.86',
     'pwa: 1',
   ]);
 });

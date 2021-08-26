@@ -16,7 +16,7 @@ const reportGenerator = require('../../report/generator/report-generator.js');
 
   try {
     const page = await browser.newPage();
-    const navigationResult = await lighthouse.navigation({
+    const navigationResult1 = await lighthouse.navigation({
       url: 'https://www.mikescerealshack.co',
       page,
     });
@@ -30,10 +30,20 @@ const reportGenerator = require('../../report/generator/report-generator.js');
 
     const snapshotResult = await lighthouse.snapshot({page});
 
-    if (!navigationResult || !timespanResult || !snapshotResult) throw new Error('No results');
+    const navigationResult2 = await lighthouse.navigation({
+      url: 'https://www.mikescerealshack.co/corrections',
+      page,
+    });
+
+    if (
+      !navigationResult1 ||
+      !navigationResult2 ||
+      !timespanResult ||
+      !snapshotResult
+    ) throw new Error('No results');
 
     const flow = {
-      lhrs: [navigationResult.lhr, timespanResult.lhr, snapshotResult.lhr],
+      lhrs: [navigationResult1.lhr, timespanResult.lhr, snapshotResult.lhr, navigationResult2.lhr],
     };
 
     fs.writeFileSync(

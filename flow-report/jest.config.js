@@ -12,4 +12,10 @@ module.exports = {
     '**/test/**/*-test.ts',
     '**/test/**/*-test.tsx',
   ],
+  extensionsToTreatAsEsm: ['.ts', '.tsx'],
+  globals: {
+    'ts-jest': {
+      useESM: true,
+    },
+  },
 };

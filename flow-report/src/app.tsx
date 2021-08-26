@@ -5,7 +5,9 @@
  */
 
 import {FunctionComponent} from 'preact';
+import {ReportRendererProvider} from './wrappers/report-renderer';
 import {Sidebar} from './sidebar/sidebar';
+import {Summary} from './summary/summary';
 import {FlowResultContext, useCurrentLhr} from './util';
 
 const Report: FunctionComponent<{lhr: LH.Result}> = ({lhr}) => {
@@ -22,11 +24,6 @@ const Report: FunctionComponent<{lhr: LH.Result}> = ({lhr}) => {
   );
 };
 
-const Summary: FunctionComponent = () => {
-  // TODO(FR-COMPAT): Design summary page.
-  return <h1 data-testid="Summary">SUMMARY</h1>;
-};
-
 const Content: FunctionComponent = () => {
   const currentLhr = useCurrentLhr();
   return currentLhr ? <Report lhr={currentLhr.value}/> : <Summary/>;
@@ -35,10 +32,12 @@ const Content: FunctionComponent = () => {
 export const App: FunctionComponent<{flowResult: LH.FlowResult}> = ({flowResult}) => {
   return (
     <FlowResultContext.Provider value={flowResult}>
-      <div className="App">
-        <Sidebar/>
-        <Content/>
-      </div>
+      <ReportRendererProvider>
+        <div className="App">
+          <Sidebar/>
+          <Content/>
+        </div>
+      </ReportRendererProvider>
     </FlowResultContext.Provider>
   );
 };

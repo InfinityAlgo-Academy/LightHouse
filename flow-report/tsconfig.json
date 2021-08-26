@@ -34,5 +34,6 @@
   ],
   "references": [
     {"path": "../types/lhr/"},
+    {"path": "../report"},
   ],
 }
