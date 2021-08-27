@@ -504,8 +504,9 @@
 }
 .lh-audit--manual .lh-audit__score-icon,
 .lh-audit--notapplicable .lh-audit__score-icon {
+  border: 2px solid var(--color-gray-400);
   border-radius: 100%;
-  background: var(--color-gray-400);
+  background: none;
 }
 
 .lh-audit--informative .lh-audit__display-text {
@@ -513,9 +514,8 @@
 }
 
 .lh-audit--informative .lh-audit__score-icon {
-  border: none;
+  border: 2px solid var(--color-gray-400);
   border-radius: 100%;
-  background: var(--color-gray-400);
 }
 
 .lh-audit__description,
