@@ -125,7 +125,7 @@
     "@types/ws": "^7.0.0",
     "@types/yargs": "^15.0.11",
     "@types/yargs-parser": "^15.0.0",
-    "@typescript-eslint/parser": "^4.21.0",
+    "@typescript-eslint/parser": "^4.30.0",
     "@wardpeet/brfs": "2.1.0",
     "angular": "^1.7.4",
     "archiver": "^3.0.0",
@@ -168,7 +168,7 @@
     "terser": "^5.3.8",
     "ts-jest": "^27.0.4",
     "typed-query-selector": "^2.4.0",
-    "typescript": "4.4.1-rc",
+    "typescript": "4.4.2",
     "webtreemap-cdt": "^3.2.1"
   },
   "dependencies": {
