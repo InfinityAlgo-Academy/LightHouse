@@ -161,7 +161,7 @@ export class DOM {
     let parsed;
     try {
       parsed = new URL(url);
-    } catch (_) {}
+    } catch {}
 
     if (parsed && allowedProtocols.includes(parsed.protocol)) {
       elem.href = parsed.href;

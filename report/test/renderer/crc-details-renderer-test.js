@@ -74,16 +74,18 @@ describe('DetailsRenderer', () => {
   let dom;
   let detailsRenderer;
 
-  beforeAll(() => {
+  beforeEach(() => {
     Util.i18n = new I18n('en', {...Util.UIStrings});
 
-    const {document} = new jsdom.JSDOM().window;
-    dom = new DOM(document);
+    const {window} = new jsdom.JSDOM();
+    dom = new DOM(window.document);
     detailsRenderer = new DetailsRenderer(dom);
+    global.window = window;
   });
 
-  afterAll(() => {
+  afterEach(() => {
     Util.i18n = undefined;
+    global.window = undefined;
   });
 
   it('renders tree structure', () => {

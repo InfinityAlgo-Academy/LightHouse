@@ -23,24 +23,26 @@ describe('PwaCategoryRenderer', () => {
   let sampleResults;
 
   beforeAll(() => {
-    Util.i18n = new I18n('en', {...Util.UIStrings});
-
-    const {document} = new jsdom.JSDOM().window;
-    const dom = new DOM(document);
-    const detailsRenderer = new DetailsRenderer(dom);
-    pwaRenderer = new PwaCategoryRenderer(dom, detailsRenderer);
-
     sampleResults = Util.prepareReportResult(sampleResultsOrig);
   });
 
   beforeEach(() => {
+    Util.i18n = new I18n('en', {...Util.UIStrings});
+
     // Clone category to allow modifications.
     const pwaCategory = sampleResults.categories.pwa;
     category = JSON.parse(JSON.stringify(pwaCategory));
+
+    const {window} = new jsdom.JSDOM();
+    const dom = new DOM(window.document);
+    const detailsRenderer = new DetailsRenderer(dom);
+    pwaRenderer = new PwaCategoryRenderer(dom, detailsRenderer);
+    global.window = window;
   });
 
-  afterAll(() => {
+  afterEach(() => {
     Util.i18n = undefined;
+    global.window = undefined;
   });
 
   it('renders the regular audits', () => {

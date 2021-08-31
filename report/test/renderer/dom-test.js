@@ -18,12 +18,11 @@ import {I18n} from '../../renderer/i18n.js';
 describe('DOM', () => {
   /** @type {DOM} */
   let dom;
-  let window;
   let nativeCreateObjectURL;
 
   beforeAll(() => {
     Util.i18n = new I18n('en', {...Util.UIStrings});
-    window = new jsdom.JSDOM().window;
+    const {window} = new jsdom.JSDOM();
 
     // The Node version of URL.createObjectURL isn't compatible with the jsdom blob type,
     // so we stub it.
@@ -32,11 +31,14 @@ describe('DOM', () => {
 
     dom = new DOM(window.document);
     dom.setLighthouseChannel('someChannel');
+
+    global.window = window;
   });
 
   afterAll(() => {
     Util.i18n = undefined;
     URL.createObjectURL = nativeCreateObjectURL;
+    global.window = undefined;
   });
 
   describe('createElement', () => {
@@ -186,7 +188,6 @@ describe('DOM', () => {
         'filesystem:http://localhost/img.png',
         'ws://evilchat.com/',
         'wss://evilchat.com/',
-        'about:about',
         'chrome://chrome-urls/',
       ].forEach(url => {
         const a = dom.createElement('a');

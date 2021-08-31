@@ -24,16 +24,18 @@ describe('CategoryRenderer', () => {
   beforeAll(() => {
     Util.i18n = new I18n('en', {...Util.UIStrings});
 
-    const {document} = new jsdom.JSDOM().window;
-    const dom = new DOM(document);
+    const {window} = new jsdom.JSDOM();
+    const dom = new DOM(window.document);
     const detailsRenderer = new DetailsRenderer(dom);
     renderer = new CategoryRenderer(dom, detailsRenderer);
+    global.window = window;
 
     sampleResults = Util.prepareReportResult(sampleResultsOrig);
   });
 
   afterAll(() => {
     Util.i18n = undefined;
+    global.window = undefined;
   });
 
   it('renders an audit', () => {

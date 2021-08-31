@@ -33,7 +33,7 @@ describe('ReportRenderer', () => {
     };
 
     const {window} = new jsdom.JSDOM();
-    global.self = window;
+    global.window = global.self = window;
 
     const dom = new DOM(window.document);
     const detailsRenderer = new DetailsRenderer(dom);
@@ -44,6 +44,7 @@ describe('ReportRenderer', () => {
 
   afterAll(() => {
     global.self = undefined;
+    global.window = undefined;
     global.matchMedia = undefined;
   });
 

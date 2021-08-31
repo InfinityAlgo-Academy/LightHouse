@@ -24,20 +24,24 @@ describe('PerfCategoryRenderer', () => {
   let sampleResults;
 
   beforeAll(() => {
-    Util.i18n = new I18n('en', {...Util.UIStrings});
-
-    const {document} = new jsdom.JSDOM().window;
-    const dom = new DOM(document);
-    const detailsRenderer = new DetailsRenderer(dom);
-    renderer = new PerformanceCategoryRenderer(dom, detailsRenderer);
-
     // TODO: don't call a LH.ReportResult `sampleResults`, which is typically always LH.Result
     sampleResults = Util.prepareReportResult(sampleResultsOrig);
     category = sampleResults.categories.performance;
   });
 
-  afterAll(() => {
+  beforeEach(() => {
+    Util.i18n = new I18n('en', {...Util.UIStrings});
+
+    const {window} = new jsdom.JSDOM();
+    const dom = new DOM(window.document);
+    const detailsRenderer = new DetailsRenderer(dom);
+    renderer = new PerformanceCategoryRenderer(dom, detailsRenderer);
+    global.window = window;
+  });
+
+  afterEach(() => {
     Util.i18n = undefined;
+    global.window = undefined;
   });
 
   it('renders the category header', () => {
@@ -298,7 +302,7 @@ describe('PerfCategoryRenderer', () => {
     let getDescriptionsAfterCheckedToggle;
 
     describe('works if there is a performance category', () => {
-      beforeAll(() => {
+      beforeEach(() => {
         container = renderer.render(category, sampleResults.categoryGroups);
         const metricsAuditGroup = container.querySelector(metricsSelector);
         toggle = metricsAuditGroup.querySelector(toggleSelector);

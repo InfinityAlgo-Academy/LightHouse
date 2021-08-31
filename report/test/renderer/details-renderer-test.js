@@ -18,9 +18,10 @@ describe('DetailsRenderer', () => {
   let renderer;
 
   function createRenderer(options) {
-    const {document} = new jsdom.JSDOM().window;
-    const dom = new DOM(document);
+    const {window} = new jsdom.JSDOM();
+    const dom = new DOM(window.document);
     renderer = new DetailsRenderer(dom, options);
+    global.window = window;
   }
 
   beforeAll(() => {
@@ -30,6 +31,7 @@ describe('DetailsRenderer', () => {
 
   afterAll(() => {
     Util.i18n = undefined;
+    global.window = undefined;
   });
 
   describe('render', () => {
