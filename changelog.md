@@ -4,7 +4,7 @@
 
 We expect this release to ship in the DevTools of [Chrome 94](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
 
-## New Contriubutors
+## New contributors
 
 Thanks to our new contributors 👽🐷🐰🐯🐻!
 
