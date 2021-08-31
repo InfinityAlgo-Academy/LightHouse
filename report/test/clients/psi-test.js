@@ -28,8 +28,11 @@ const sampleResultsStr =
 /* eslint-env jest */
 
 describe('PSI', () => {
-  let document;
-  beforeAll(() => {
+  let window;
+
+  beforeEach(() => {
+    window = new jsdom.JSDOM().window;
+    global.window = window;
     global.Util = Util;
     global.I18n = I18n;
     global.DOM = DOM;
@@ -39,12 +42,10 @@ describe('PSI', () => {
     global.CriticalRequestChainRenderer = CriticalRequestChainRenderer;
     global.ElementScreenshotRenderer = ElementScreenshotRenderer;
     global.ReportUIFeatures = ReportUIFeatures;
-
-    const {window} = new jsdom.JSDOM();
-    document = window.document;
   });
 
-  afterAll(() => {
+  afterEach(() => {
+    global.window = undefined;
     global.I18n = undefined;
     global.Util = undefined;
     global.DOM = undefined;
@@ -60,10 +61,10 @@ describe('PSI', () => {
     describe('prepareLabData', () => {
       itIfProtoExists('succeeds with LHResult object (roundtrip) input', () => {
         const roundTripLHResult = /** @type {LH.Result} */ JSON.parse(sampleResultsRoundtripStr);
-        const result = prepareLabData(roundTripLHResult, document);
+        const result = prepareLabData(roundTripLHResult, window.document);
 
         // Check that the report exists and has some content.
-        assert.ok(result.perfCategoryEl instanceof document.defaultView.Element);
+        assert.ok(result.perfCategoryEl instanceof window.document.defaultView.Element);
         assert.ok(result.perfCategoryEl.outerHTML.length > 50000, 'perfCategory HTML is populated');
         assert.ok(!result.perfCategoryEl.outerHTML.includes('lh-permalink'),
             'PSI\'s perfCategory HTML doesn\'t include a lh-permalink element');
@@ -74,12 +75,12 @@ describe('PSI', () => {
       });
 
       it('succeeds with stringified LHResult input', () => {
-        const result = prepareLabData(sampleResultsStr, document);
-        assert.ok(result.scoreGaugeEl instanceof document.defaultView.Element);
+        const result = prepareLabData(sampleResultsStr, window.document);
+        assert.ok(result.scoreGaugeEl instanceof window.document.defaultView.Element);
         assert.equal(result.scoreGaugeEl.querySelector('.lh-gauge__wrapper').href, '');
         assert.ok(result.scoreGaugeEl.outerHTML.includes('<svg'), 'score gauge comes with SVG');
 
-        assert.ok(result.perfCategoryEl instanceof document.defaultView.Element);
+        assert.ok(result.perfCategoryEl instanceof window.document.defaultView.Element);
         assert.ok(result.perfCategoryEl.outerHTML.length > 50000, 'perfCategory HTML is populated');
         assert.ok(!result.perfCategoryEl.outerHTML.includes('lh-permalink'),
             'PSI\'s perfCategory HTML doesn\'t include a lh-permalink element');
@@ -94,7 +95,7 @@ describe('PSI', () => {
         const lhrWithoutPerfStr = JSON.stringify(lhrWithoutPerf);
 
         assert.throws(() => {
-          prepareLabData(lhrWithoutPerfStr, document);
+          prepareLabData(lhrWithoutPerfStr, window.document);
         }, /no performance category/i);
       });
 
@@ -104,12 +105,12 @@ describe('PSI', () => {
         const lhrWithoutGroupsStr = JSON.stringify(lhrWithoutGroups);
 
         assert.throws(() => {
-          prepareLabData(lhrWithoutGroupsStr, document);
+          prepareLabData(lhrWithoutGroupsStr, window.document);
         }, /no category groups/i);
       });
 
       it('includes custom title and description', () => {
-        const {perfCategoryEl} = prepareLabData(sampleResultsStr, document);
+        const {perfCategoryEl} = prepareLabData(sampleResultsStr, window.document);
         const metricsGroupEl = perfCategoryEl.querySelector('.lh-audit-group--metrics');
 
         // Assume using default locale.
@@ -129,7 +130,7 @@ describe('PSI', () => {
 
   describe('_getFinalScreenshot', () => {
     it('gets a datauri as a string', () => {
-      const datauri = prepareLabData(sampleResultsStr, document).finalScreenshotDataUri;
+      const datauri = prepareLabData(sampleResultsStr, window.document).finalScreenshotDataUri;
       assert.equal(typeof datauri, 'string');
       assert.ok(datauri.startsWith('data:image/jpeg;base64,'));
     });
@@ -138,7 +139,7 @@ describe('PSI', () => {
       const clonedResults = JSON.parse(sampleResultsStr);
       delete clonedResults.audits['final-screenshot'];
       const LHResultJsonString = JSON.stringify(clonedResults);
-      const datauri = prepareLabData(LHResultJsonString, document).finalScreenshotDataUri;
+      const datauri = prepareLabData(LHResultJsonString, window.document).finalScreenshotDataUri;
       assert.equal(datauri, null);
     });
   });
