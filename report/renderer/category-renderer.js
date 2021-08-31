@@ -319,7 +319,11 @@ export class CategoryRenderer {
   renderScoreGauge(category, groupDefinitions) { // eslint-disable-line no-unused-vars
     const tmpl = this.dom.createComponent('gauge');
     const wrapper = this.dom.find('a.lh-gauge__wrapper', tmpl);
-    this.dom.safelySetHref(wrapper, `#${category.id}`);
+    const url = new URL(window.location.href);
+    url.hash = category.id;
+    this.dom.safelySetHref(wrapper, url.href);
+    // wrapper.href = url.href;
+    // wrapper.addEventListener('click', () => window.location.href = category.id);
 
     if (Util.isPluginCategory(category.id)) {
       wrapper.classList.add('lh-gauge__wrapper--plugin');

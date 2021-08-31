@@ -157,7 +157,7 @@ export class DOM {
       return;
     }
 
-    const allowedProtocols = ['https:', 'http:'];
+    const allowedProtocols = ['https:', 'http:', window.location.protocol];
     let parsed;
     try {
       parsed = new URL(url);
