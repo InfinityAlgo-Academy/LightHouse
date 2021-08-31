@@ -1742,9 +1742,6 @@
   "lighthouse-core/lib/csp-evaluator.js | unknownKeyword": {
     "message": "Το {keyword} φαίνεται ότι είναι μη έγκυρη λέξη-κλειδί."
   },
-  "lighthouse-core/lib/csp-evaluator.js | unsafeInline": {
-    "message": "Το unsafe-inline επιτρέπει την εκτέλεση μη ασφαλών σεναρίων στη σελίδα και δεικτών χειρισμού συμβάντων. Εξετάστε το ενδεχόμενο χρήσης αριθμών nonce ή κατακερματισμών CSP για να επιτρέπεται μεμονωμένα σενάρια."
-  },
   "lighthouse-core/lib/csp-evaluator.js | unsafeInlineFallback": {
     "message": "Εξετάστε το ενδεχόμενο να προσθέσετε το unsafe-inline (παραβλέπεται από προγράμματα περιήγησης που υποστηρίζουν αριθμούς nonce/κατακερματισμούς) για συμβατότητα με παλαιότερα προγράμματα περιήγησης."
   },

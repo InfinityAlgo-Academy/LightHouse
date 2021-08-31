@@ -1742,9 +1742,6 @@
   "lighthouse-core/lib/csp-evaluator.js | unknownKeyword": {
     "message": "Panašu, kad „{keyword}“ yra netinkamas raktinis žodis."
   },
-  "lighthouse-core/lib/csp-evaluator.js | unsafeInline": {
-    "message": "Raktinis žodis „unsafe-inline“ leidžia vykdyti nesaugius puslapio scenarijus ir įvykių dorokles. Apsvarstykite galimybę naudoti CSP vertes „nonce“ arba „hash“, kad scenarijų vykdymas būtų leidžiamas atskirai."
-  },
   "lighthouse-core/lib/csp-evaluator.js | unsafeInlineFallback": {
     "message": "Apsvarstykite galimybę pridėti raktinį žodį „unsafe-inline“ (nepaisoma naršyklėse, palaikančiose vertes „nonce“ / „hash“), kad būtų užtikrintas atgalinis suderinamumas su senesnėmis naršyklėmis."
   },

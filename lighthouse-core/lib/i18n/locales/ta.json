@@ -1742,9 +1742,6 @@
   "lighthouse-core/lib/csp-evaluator.js | unknownKeyword": {
     "message": "{keyword} தவறான தேடல் குறிப்பு போல் தெரிகிறது."
   },
-  "lighthouse-core/lib/csp-evaluator.js | unsafeInline": {
-    "message": "பக்கத்தில் உள்ள பாதுகாப்பற்ற ஸ்கிரிப்ட்டுகள் & ஈவண்ட் ஹேண்ட்லர்கள் இயக்கத்தை 'unsafe-inline' அனுமதிக்கிறது. ஸ்கிரிப்ட்டுகளைத் தனியாக அனுமதிக்க, CSP nonces/hashes என்பதைப் பயன்படுத்தவும்."
-  },
   "lighthouse-core/lib/csp-evaluator.js | unsafeInlineFallback": {
     "message": "பழைய உலாவிகளுடன் இணக்கமாக இருக்கும் வகையில் 'unsafe-inline' (nonces/hashes என்பதை ஆதரிக்கும் உலாவிகளால் புறக்கணிக்கப்பட்டது) என்பதைச் சேர்ப்பதைக் கருத்தில் கொள்ளவும்."
   },

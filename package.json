@@ -175,7 +175,7 @@
     "axe-core": "4.2.3",
     "chrome-launcher": "^0.14.0",
     "configstore": "^5.0.1",
-    "csp_evaluator": "1.0.4",
+    "csp_evaluator": "1.1.0",
     "cssstyle": "1.2.1",
     "enquirer": "^2.3.6",
     "http-link-header": "^0.8.0",

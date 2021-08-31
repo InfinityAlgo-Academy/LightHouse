@@ -1742,9 +1742,6 @@
   "lighthouse-core/lib/csp-evaluator.js | unknownKeyword": {
     "message": "{keyword} seems to be an invalid keyword."
   },
-  "lighthouse-core/lib/csp-evaluator.js | unsafeInline": {
-    "message": "'unsafe-inline' allows the execution of unsafe in-page scripts and event handlers. Consider using CSP nonces or hashes to allow scripts individually."
-  },
   "lighthouse-core/lib/csp-evaluator.js | unsafeInlineFallback": {
     "message": "Consider adding 'unsafe-inline' (ignored by browsers supporting nonces/hashes) to be backward compatible with older browsers."
   },

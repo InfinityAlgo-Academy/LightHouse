@@ -1722,7 +1722,7 @@
     "message": "Missing base-uri allows injected <base> tags to set the base URL for all relative URLs (e.g. scripts) to an attacker controlled domain. Consider setting base-uri to 'none' or 'self'."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingObjectSrc": {
-    "message": "Elements controlled by object-src are considered legacy features. Consider setting object-src to 'none' to prevent the injection of plugins that execute unsafe scripts."
+    "message": "Missing object-src allows the injection of plugins that execute unsafe scripts. Consider setting object-src to 'none' if you can."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingScriptSrc": {
     "message": "script-src directive is missing. This can allow the execution of unsafe scripts."
@@ -1736,6 +1736,12 @@
   "lighthouse-core/lib/csp-evaluator.js | nonceLength": {
     "message": "Nonces should be at least 8 characters long."
   },
+  "lighthouse-core/lib/csp-evaluator.js | plainUrlScheme": {
+    "message": "Avoid using plain URL schemes ({keyword}) in this directive. Plain URL schemes allow scripts to be sourced from an unsafe domain."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | plainWildcards": {
+    "message": "Avoid using plain wildcards ({keyword}) in this directive. Plain wildcards allow scripts to be sourced from an unsafe domain."
+  },
   "lighthouse-core/lib/csp-evaluator.js | reportingDestinationMissing": {
     "message": "No CSP configures a reporting destination. This makes it difficult to maintain the CSP over time and monitor for any breakages."
   },
@@ -1743,7 +1749,7 @@
     "message": "The reporting destination is only configured via the report-to directive. This directive is only supported in Chromium-based browsers so it is recommended to also use a report-uri directive."
   },
   "lighthouse-core/lib/csp-evaluator.js | strictDynamic": {
-    "message": "Host allowlists can frequently be bypassed. Consider using 'strict-dynamic' in combination with CSP nonces or hashes."
+    "message": "Host allowlists can frequently be bypassed. Consider using CSP nonces or hashes instead, along with 'strict-dynamic' if necessary."
   },
   "lighthouse-core/lib/csp-evaluator.js | unknownDirective": {
     "message": "Unknown CSP directive."

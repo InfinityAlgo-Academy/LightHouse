@@ -1742,9 +1742,6 @@
   "lighthouse-core/lib/csp-evaluator.js | unknownKeyword": {
     "message": "{keyword} చెల్లని కీవర్డ్‌లాగా అనిపిస్తుంది."
   },
-  "lighthouse-core/lib/csp-evaluator.js | unsafeInline": {
-    "message": "'unsafe-inline' సురక్షితంకాని unsafe in-page స్క్రిప్ట్‌లు, అలాగే ఈవెంట్ హ్యాండ్లర్‌ల అమలును అనుమతిస్తుంది. స్క్రిప్ట్‌లను వ్యక్తిగతంగా అనుమతించేందుకు CSP nonces లేదా hashesను ఉపయోగించడాన్ని పరిగణించండి."
-  },
   "lighthouse-core/lib/csp-evaluator.js | unsafeInlineFallback": {
     "message": "పాత బ్రౌజర్‌లతో అనుకూలంగా ఉండటానికి 'unsafe-inline' (nonces/hashes సపోర్ట్ చేసే బ్రౌజర్‌ల ద్వారా విస్మరించబడినవి) జోడించడాన్ని పరిగణించండి."
   },

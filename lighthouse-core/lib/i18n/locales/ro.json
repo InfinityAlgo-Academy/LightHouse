@@ -1742,9 +1742,6 @@
   "lighthouse-core/lib/csp-evaluator.js | unknownKeyword": {
     "message": "{keyword} pare un cuvânt cheie nevalid."
   },
-  "lighthouse-core/lib/csp-evaluator.js | unsafeInline": {
-    "message": "unsafe-inline permite executarea de scripturi în pagină și handlere pentru evenimente nesigure. Îți recomandăm să folosești valori nonce sau hash pentru CSP pentru a accepta scripturile individual."
-  },
   "lighthouse-core/lib/csp-evaluator.js | unsafeInlineFallback": {
     "message": "Îți recomandăm să adaugi opțiunea unsafe-inline (ignorată de browserele care acceptă valori nonce/hash) pentru retrocompatibilitatea cu browsere mai vechi."
   },

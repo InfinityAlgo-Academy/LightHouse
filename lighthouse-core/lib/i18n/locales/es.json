@@ -1742,9 +1742,6 @@
   "lighthouse-core/lib/csp-evaluator.js | unknownKeyword": {
     "message": "Parece que {keyword} no es una palabra clave válida."
   },
-  "lighthouse-core/lib/csp-evaluator.js | unsafeInline": {
-    "message": "La directiva unsafe-inline permite que se ejecuten secuencias de comandos in-page y gestores de eventos que no son seguros. Puedes usar nonces o hashes de CSP para permitir secuencias de comandos individualmente."
-  },
   "lighthouse-core/lib/csp-evaluator.js | unsafeInlineFallback": {
     "message": "Puedes añadir la directiva unsafe-inline (los navegadores que admiten nonces o hashes la ignoran) para que sea retrocompatible con navegadores anteriores."
   },

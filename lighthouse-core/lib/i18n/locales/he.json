@@ -1742,9 +1742,6 @@
   "lighthouse-core/lib/csp-evaluator.js | unknownKeyword": {
     "message": "נראה שמילת המפתח {keyword} אינה תקנית."
   },
-  "lighthouse-core/lib/csp-evaluator.js | unsafeInline": {
-    "message": "הרכיב unsafe-inline מאפשר להפעיל בדף סקריפטים וגורמים מטפלים באירועים שאינם בטוחים. רצוי להשתמש בגיבובים או בצפנים חד-פעמיים של CSP כדי להתיר הפעלה של כל סקריפט בנפרד."
-  },
   "lighthouse-core/lib/csp-evaluator.js | unsafeInlineFallback": {
     "message": "כדאי להוסיף רכיב 'unsafe-inline' (דפדפנים שתומכים בגיבובים/צפנים חד-פעמיים יתעלמו ממנו) לצורך תאימות לאחור עם דפדפנים ישנים."
   },

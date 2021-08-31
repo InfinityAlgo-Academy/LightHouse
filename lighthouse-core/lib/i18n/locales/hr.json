@@ -1742,9 +1742,6 @@
   "lighthouse-core/lib/csp-evaluator.js | unknownKeyword": {
     "message": "Čini se da {keyword} nije važeća ključna riječ."
   },
-  "lighthouse-core/lib/csp-evaluator.js | unsafeInline": {
-    "message": "Direktiva unsafe-inline omogućuje izvršavanje nesigurnih skripti i rukovatelja događajima unutar stranice. Savjetujemo vam da koristite CSP nonceove ili hasheve kako biste omogućavali skripte pojedinačno."
-  },
   "lighthouse-core/lib/csp-evaluator.js | unsafeInlineFallback": {
     "message": "Savjetujemo vam da koristite unsafe-inline (koji ignoriraju preglednici koji podržavaju nonceove/hasheve) radi kompatibilnosti s prijašnjim verzijama preglednika."
   },

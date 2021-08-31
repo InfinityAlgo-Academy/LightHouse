@@ -1742,9 +1742,6 @@
   "lighthouse-core/lib/csp-evaluator.js | unknownKeyword": {
     "message": "{keyword} — недопустимое ключевое слово."
   },
-  "lighthouse-core/lib/csp-evaluator.js | unsafeInline": {
-    "message": "Директива unsafe-inline позволяет выполнять небезопасные скрипты и обработчики событий на странице. Чтобы разрешать отдельные скрипты, используйте nonce или hash в политике CSP."
-  },
   "lighthouse-core/lib/csp-evaluator.js | unsafeInlineFallback": {
     "message": "Чтобы обеспечить обратную совместимость со старыми браузерами, добавьте директиву unsafe-inline (игнорируется браузерами, которые поддерживают nonce или hash)."
   },

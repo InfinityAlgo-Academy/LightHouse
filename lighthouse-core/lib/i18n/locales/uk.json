@@ -1742,9 +1742,6 @@
   "lighthouse-core/lib/csp-evaluator.js | unknownKeyword": {
     "message": "Схоже, {keyword} – це недійсне ключове слово."
   },
-  "lighthouse-core/lib/csp-evaluator.js | unsafeInline": {
-    "message": "unsafe-inline дозволяє виконувати ненадійні вбудовані скрипти та застосовувати обробники подій. Щоб дозволити окремі скрипти, скористатися nonces або hashes для CSP."
-  },
   "lighthouse-core/lib/csp-evaluator.js | unsafeInlineFallback": {
     "message": "Додайте команду unsafe-inline (ігнорується веб-переглядачами, що підтримують nonces/hashes) для зворотної сумісності зі старішими веб-переглядачами."
   },

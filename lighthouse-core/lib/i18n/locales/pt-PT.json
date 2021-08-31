@@ -1742,9 +1742,6 @@
   "lighthouse-core/lib/csp-evaluator.js | unknownKeyword": {
     "message": "{keyword} parece ser uma palavra-chave inválida."
   },
-  "lighthouse-core/lib/csp-evaluator.js | unsafeInline": {
-    "message": "A diretiva \"unsafe-inline\" permite a execução de scripts inseguros na página e de controladores de eventos. Considere utilizar nonces ou hashes CSP para permitir scripts individualmente."
-  },
   "lighthouse-core/lib/csp-evaluator.js | unsafeInlineFallback": {
     "message": "Considere adicionar \"unsafe-inline\" (ignorado por navegadores que suportam nonces/hashes) para ser retrocompatível com navegadores mais antigos."
   },

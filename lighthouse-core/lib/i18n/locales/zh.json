@@ -1742,9 +1742,6 @@
   "lighthouse-core/lib/csp-evaluator.js | unknownKeyword": {
     "message": "{keyword}似乎是无效关键字。"
   },
-  "lighthouse-core/lib/csp-evaluator.js | unsafeInline": {
-    "message": "“unsafe-inline”允许执行不安全的页内脚本和事件处理脚本。建议您使用 CSP nonces 或 hashes 来逐一允许各个脚本。"
-  },
   "lighthouse-core/lib/csp-evaluator.js | unsafeInlineFallback": {
     "message": "建议您添加“unsafe-inline”（会被支持 nonces/hashes 的浏览器忽略），以便向后兼容旧版浏览器。"
   },

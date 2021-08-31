@@ -1742,9 +1742,6 @@
   "lighthouse-core/lib/csp-evaluator.js | unknownKeyword": {
     "message": "Úgy tűnik, hogy a(z) {keyword} érvénytelen kulcsszó."
   },
-  "lighthouse-core/lib/csp-evaluator.js | unsafeInline": {
-    "message": "Az „unsafe-inline” lehetővé teszi nem biztonságos oldalon belüli szkriptek és eseménykezelők végrehajtását. A szkriptek egyenként történő engedélyezése érdekében fontolja meg CSP nonce-ok vagy hashek használatát."
-  },
   "lighthouse-core/lib/csp-evaluator.js | unsafeInlineFallback": {
     "message": "A régebbi böngészőkkel való kompatibilitás érdekében használhatja az „unsafe-inline” kulcsszót (a nonce-t/hasht támogató böngészők figyelmen kívül hagyják)."
   },

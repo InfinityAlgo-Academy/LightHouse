@@ -1742,9 +1742,6 @@
   "lighthouse-core/lib/csp-evaluator.js | unknownKeyword": {
     "message": "{keyword} jest prawdopodobnie nieprawidłowym słowem kluczowym."
   },
-  "lighthouse-core/lib/csp-evaluator.js | unsafeInline": {
-    "message": "Dyrektywa „unsafe-inline” zezwala na wykonywanie niebezpiecznych skryptów na stronie i uruchamianie modułów obsługi zdarzeń. Zastanów się, czy nie użyć liczb jednorazowych lub haszy CSP, aby zezwolić osobno na poszczególne skrypty."
-  },
   "lighthouse-core/lib/csp-evaluator.js | unsafeInlineFallback": {
     "message": "Zastanów się, czy nie dodać dyrektywy „unsafe-inline” (ignorowanej przez przeglądarki obsługujące liczby jednorazowe i hasze), aby uzyskać zgodność wsteczną ze starszymi przeglądarkami."
   },
