@@ -20,14 +20,9 @@ const flowResult = JSON.parse(
   )
 );
 
-let mockLocation: URL;
 let wrapper: FunctionComponent;
 
 beforeEach(() => {
-  mockLocation = new URL('file:///Users/example/report.html');
-  Object.defineProperty(window, 'location', {
-    get: () => mockLocation,
-  });
   wrapper = ({children}) => (
     <FlowResultContext.Provider value={flowResult}>{children}</FlowResultContext.Provider>
   );
@@ -39,17 +34,17 @@ describe('SidebarHeader', () => {
     const date = '2021-08-03T18:28:13.296Z';
     const root = render(<SidebarHeader title={title} date={date}/>, {wrapper});
 
-    await expect(root.findByText(title)).resolves.toBeTruthy();
-    await expect(root.findByText('Aug 3, 2021, 6:28 PM UTC')).resolves.toBeTruthy();
+    expect(root.getByText(title)).toBeTruthy();
+    expect(root.getByText('Aug 3, 2021, 6:28 PM UTC')).toBeTruthy();
   });
 });
 
 describe('SidebarSummary', () => {
   it('highlighted by default', async () => {
     const root = render(<SidebarSummary/>, {wrapper});
-    const link = await root.findByRole('link') as HTMLAnchorElement;
+    const link = root.getByRole('link') as HTMLAnchorElement;
 
-    expect(link.href).toEqual('file:///Users/example/report.html#');
+    expect(link.href).toEqual('file:///Users/example/report.html/#');
     expect(link.classList).toContain('Sidebar--current');
   });
 });

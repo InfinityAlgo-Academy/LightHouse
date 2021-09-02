@@ -21,15 +21,9 @@ const flowResult:LH.FlowResult = JSON.parse(
   )
 );
 
-let mockLocation: URL;
 let wrapper: FunctionComponent;
 
 beforeEach(() => {
-  mockLocation = new URL('file:///Users/example/report.html');
-  Object.defineProperty(window, 'location', {
-    get: () => mockLocation,
-  });
-
   wrapper = ({children}) => (
     <FlowResultContext.Provider value={flowResult}>
       <ReportRendererProvider>
@@ -43,8 +37,8 @@ describe('SummaryHeader', () => {
   it('renders header content', async () => {
     const root = render(<SummaryHeader/>, {wrapper});
 
-    const lhrCounts = await root.findByText(/·/);
-    await expect(root.findByText('Summary')).resolves.toBeTruthy();
+    const lhrCounts = root.getByText(/·/);
+    expect(root.getByText('Summary')).toBeTruthy();
     expect(lhrCounts.textContent).toEqual(
       '2 navigation reports · 1 timespan reports · 1 snapshot reports'
     );
@@ -59,23 +53,23 @@ describe('SummaryFlowStep', () => {
       hashIndex={0}
     />, {wrapper});
 
-    await expect(root.findByTestId('SummaryNavigationHeader')).resolves.toBeTruthy();
+    expect(root.getByTestId('SummaryNavigationHeader')).toBeTruthy();
 
-    await expect(root.findByText('Navigation (1)')).resolves.toBeTruthy();
+    expect(root.getByText('Navigation (1)')).toBeTruthy();
 
-    const screenshot = await root.findByTestId('SummaryFlowStep__screenshot') as HTMLImageElement;
+    const screenshot = root.getByTestId('SummaryFlowStep__screenshot') as HTMLImageElement;
     expect(screenshot.src).toMatch(/data:image\/jpeg;base64/);
 
-    const gauges = await root.findAllByTestId('Gauge');
+    const gauges = root.getAllByTestId('Gauge');
     expect(gauges).toHaveLength(4);
 
-    const links = await root.findAllByRole('link') as HTMLAnchorElement[];
+    const links = root.getAllByRole('link') as HTMLAnchorElement[];
     expect(links.map(a => a.href)).toEqual([
-      'http://localhost/#index=0',
-      'http://localhost/#index=0&anchor=performance',
-      'http://localhost/#index=0&anchor=accessibility',
-      'http://localhost/#index=0&anchor=best-practices',
-      'http://localhost/#index=0&anchor=seo',
+      'file:///Users/example/report.html/#index=0',
+      'file:///Users/example/report.html/#index=0&anchor=performance',
+      'file:///Users/example/report.html/#index=0&anchor=accessibility',
+      'file:///Users/example/report.html/#index=0&anchor=best-practices',
+      'file:///Users/example/report.html/#index=0&anchor=seo',
     ]);
   });
 
@@ -86,24 +80,24 @@ describe('SummaryFlowStep', () => {
       hashIndex={1}
     />, {wrapper});
 
-    await expect(root.findByTestId('SummaryNavigationHeader')).rejects.toBeTruthy();
+    expect(() => root.getByTestId('SummaryNavigationHeader')).toThrow();
 
-    await expect(root.findByText('Timespan (1)')).resolves.toBeTruthy();
+    expect(root.getByText('Timespan (1)')).toBeTruthy();
 
-    const screenshot = await root.findByTestId('SummaryFlowStep__screenshot') as HTMLImageElement;
+    const screenshot = root.getByTestId('SummaryFlowStep__screenshot') as HTMLImageElement;
     expect(screenshot.src).toBeFalsy();
 
-    await expect(root.findByTestId('SummaryCategory__null'));
-    const gauges = await root.findAllByTestId('CategoryRatio');
+    expect(root.getByTestId('SummaryCategory__null'));
+    const gauges = root.getAllByTestId('CategoryRatio');
     expect(gauges).toHaveLength(3);
 
-    const links = await root.findAllByRole('link') as HTMLAnchorElement[];
+    const links = root.getAllByRole('link') as HTMLAnchorElement[];
     expect(links.map(a => a.href)).toEqual([
-      'http://localhost/#index=1',
-      'http://localhost/#index=1&anchor=performance',
+      'file:///Users/example/report.html/#index=1',
+      'file:///Users/example/report.html/#index=1&anchor=performance',
       // Accessibility is missing in timespan.
-      'http://localhost/#index=1&anchor=best-practices',
-      'http://localhost/#index=1&anchor=seo',
+      'file:///Users/example/report.html/#index=1&anchor=best-practices',
+      'file:///Users/example/report.html/#index=1&anchor=seo',
     ]);
   });
 
@@ -114,23 +108,23 @@ describe('SummaryFlowStep', () => {
       hashIndex={2}
     />, {wrapper});
 
-    await expect(root.findByTestId('SummaryNavigationHeader')).rejects.toBeTruthy();
+    expect(() => root.getByTestId('SummaryNavigationHeader')).toThrow();
 
-    await expect(root.findByText('Snapshot (1)')).resolves.toBeTruthy();
+    expect(root.getByText('Snapshot (1)')).toBeTruthy();
 
-    const screenshot = await root.findByTestId('SummaryFlowStep__screenshot') as HTMLImageElement;
+    const screenshot = root.getByTestId('SummaryFlowStep__screenshot') as HTMLImageElement;
     expect(screenshot.src).toMatch(/data:image\/jpeg;base64/);
 
-    const gauges = await root.findAllByTestId('CategoryRatio');
+    const gauges = root.getAllByTestId('CategoryRatio');
     expect(gauges).toHaveLength(4);
 
-    const links = await root.findAllByRole('link') as HTMLAnchorElement[];
+    const links = root.getAllByRole('link') as HTMLAnchorElement[];
     expect(links.map(a => a.href)).toEqual([
-      'http://localhost/#index=2',
-      'http://localhost/#index=2&anchor=performance',
-      'http://localhost/#index=2&anchor=accessibility',
-      'http://localhost/#index=2&anchor=best-practices',
-      'http://localhost/#index=2&anchor=seo',
+      'file:///Users/example/report.html/#index=2',
+      'file:///Users/example/report.html/#index=2&anchor=performance',
+      'file:///Users/example/report.html/#index=2&anchor=accessibility',
+      'file:///Users/example/report.html/#index=2&anchor=best-practices',
+      'file:///Users/example/report.html/#index=2&anchor=seo',
     ]);
   });
 });

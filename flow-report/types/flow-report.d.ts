@@ -7,6 +7,8 @@
 import FlowResult_ from '../../types/lhr/flow';
 import * as Settings from '../../types/lhr/settings';
 
+// Import to augment querySelector/querySelectorAll with stricter type checking.
+import '../../types/query-selector';
 import '../../report/types/html-renderer';
 
 declare global {

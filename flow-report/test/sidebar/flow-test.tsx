@@ -14,14 +14,9 @@ const flowResult = JSON.parse(
   )
 );
 
-let mockLocation: URL;
 let wrapper: FunctionComponent;
 
 beforeEach(() => {
-  mockLocation = new URL('file:///Users/example/report.html');
-  Object.defineProperty(window, 'location', {
-    get: () => mockLocation,
-  });
   wrapper = ({children}) => (
     <FlowResultContext.Provider value={flowResult}>{children}</FlowResultContext.Provider>
   );
@@ -31,12 +26,12 @@ describe('SidebarFlow', () => {
   it('renders flow steps', async () => {
     const root = render(<SidebarFlow/>, {wrapper});
 
-    const navigation = await root.findByText('Navigation (1)');
-    const timespan = await root.findByText('Timespan (1)');
-    const snapshot = await root.findByText('Snapshot (1)');
-    const navigation2 = await root.findByText('Navigation (2)');
+    const navigation = root.getByText('Navigation (1)');
+    const timespan = root.getByText('Timespan (1)');
+    const snapshot = root.getByText('Snapshot (1)');
+    const navigation2 = root.getByText('Navigation (2)');
 
-    const links = await root.findAllByRole('link') as HTMLAnchorElement[];
+    const links = root.getAllByRole('link') as HTMLAnchorElement[];
     expect(links.map(a => a.textContent)).toEqual([
       navigation.textContent,
       timespan.textContent,
@@ -44,27 +39,27 @@ describe('SidebarFlow', () => {
       navigation2.textContent,
     ]);
     expect(links.map(a => a.href)).toEqual([
-      'file:///Users/example/report.html#index=0',
-      'file:///Users/example/report.html#index=1',
-      'file:///Users/example/report.html#index=2',
-      'file:///Users/example/report.html#index=3',
+      'file:///Users/example/report.html/#index=0',
+      'file:///Users/example/report.html/#index=1',
+      'file:///Users/example/report.html/#index=2',
+      'file:///Users/example/report.html/#index=3',
     ]);
   });
 
   it('no steps highlighted on summary page', async () => {
     const root = render(<SidebarFlow/>, {wrapper});
 
-    const links = await root.findAllByRole('link');
+    const links = root.getAllByRole('link');
     const highlighted = links.filter(h => h.classList.contains('Sidebar--current'));
 
     expect(highlighted).toHaveLength(0);
   });
 
   it('highlight current step', async () => {
-    mockLocation.hash = '#index=1';
+    global.location.hash = '#index=1';
     const root = render(<SidebarFlow/>, {wrapper});
 
-    const links = await root.findAllByRole('link');
+    const links = root.getAllByRole('link');
     const highlighted = links.filter(h => h.classList.contains('Sidebar--current'));
 
     expect(highlighted).toHaveLength(1);

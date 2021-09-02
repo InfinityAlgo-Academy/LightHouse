@@ -9,24 +9,20 @@ import {ReportRendererProvider} from './wrappers/report-renderer';
 import {Sidebar} from './sidebar/sidebar';
 import {Summary} from './summary/summary';
 import {FlowResultContext, useCurrentLhr} from './util';
-
-const Report: FunctionComponent<{lhr: LH.Result}> = ({lhr}) => {
-  // TODO(FR-COMPAT): Render an actual report here.
-  return (
-    <div data-testid="Report">
-      <h1>{lhr.finalUrl}</h1>
-      {
-        Object.values(lhr.categories).map((category) =>
-          <h2 key={category.id}>{category.id}: {category.score}</h2>
-        )
-      }
-    </div>
-  );
-};
+import {Report} from './wrappers/report';
 
 const Content: FunctionComponent = () => {
   const currentLhr = useCurrentLhr();
-  return currentLhr ? <Report lhr={currentLhr.value}/> : <Summary/>;
+
+  return (
+    <div className="Content">
+      {
+        currentLhr ?
+          <Report/> :
+          <Summary/>
+      }
+    </div>
+  );
 };
 
 export const App: FunctionComponent<{flowResult: LH.FlowResult}> = ({flowResult}) => {

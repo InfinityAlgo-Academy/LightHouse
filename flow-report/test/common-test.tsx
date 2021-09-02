@@ -27,7 +27,7 @@ describe('CategoryRatio', () => {
       category={category}
       href="index=0&achor=seo"
     />);
-    const link = await root.findByRole('link');
+    const link = root.getByRole('link');
 
     expect(link.className).toEqual('CategoryRatio CategoryRatio--average');
     expect(link.textContent).toEqual('2/3');
@@ -52,7 +52,7 @@ describe('CategoryRatio', () => {
       category={category}
       href="index=0&achor=seo"
     />);
-    const link = await root.findByRole('link');
+    const link = root.getByRole('link');
 
     expect(link.className).toEqual('CategoryRatio CategoryRatio--fail');
     expect(link.textContent).toEqual('0/3');
@@ -77,7 +77,7 @@ describe('CategoryRatio', () => {
       category={category}
       href="index=0&achor=seo"
     />);
-    const link = await root.findByRole('link');
+    const link = root.getByRole('link');
 
     expect(link.className).toEqual('CategoryRatio CategoryRatio--pass');
     expect(link.textContent).toEqual('3/3');
@@ -100,7 +100,7 @@ describe('CategoryRatio', () => {
       category={category}
       href="index=0&achor=seo"
     />);
-    const link = await root.findByRole('link');
+    const link = root.getByRole('link');
 
     expect(link.className).toEqual('CategoryRatio CategoryRatio--null');
     expect(link.textContent).toEqual('1/2');
@@ -122,7 +122,7 @@ describe('CategoryRatio', () => {
       category={category}
       href="index=0&achor=seo"
     />);
-    const link = await root.findByRole('link');
+    const link = root.getByRole('link');
 
     expect(link.className).toEqual('CategoryRatio CategoryRatio--average');
     expect(link.textContent).toEqual('1/2');

@@ -5,7 +5,7 @@
  */
 
 import {createContext} from 'preact';
-import {useContext, useEffect, useState} from 'preact/hooks';
+import {useContext, useEffect, useMemo, useState} from 'preact/hooks';
 
 export const FlowResultContext = createContext<LH.FlowResult|undefined>(undefined);
 
@@ -59,37 +59,46 @@ export function useLocale(): LH.Locale {
   return flowResult.lhrs[0].configSettings.locale;
 }
 
-export function useCurrentLhr(): {value: LH.Result, index: number}|null {
-  const flowResult = useFlowResult();
-  const [indexString, setIndexString] = useState(getHashParam('index'));
+export function useHashParam(param: string) {
+  const [paramValue, setParamValue] = useState(getHashParam(param));
 
   // Use two-way-binding on the URL hash.
-  // Triggers a re-render if the LHR index changes.
+  // Triggers a re-render if the param changes.
   useEffect(() => {
     function hashListener() {
-      const newIndexString = getHashParam('index');
-      if (newIndexString === indexString) return;
-      setIndexString(newIndexString);
+      const newIndexString = getHashParam(param);
+      if (newIndexString === paramValue) return;
+      setParamValue(newIndexString);
     }
     window.addEventListener('hashchange', hashListener);
     return () => window.removeEventListener('hashchange', hashListener);
-  }, [indexString]);
+  }, [paramValue]);
 
-  if (!indexString) return null;
+  return paramValue;
+}
 
-  const index = Number(indexString);
-  if (!Number.isFinite(index)) {
-    console.warn(`Invalid hash index: ${indexString}`);
-    return null;
-  }
+export function useCurrentLhr(): {value: LH.Result, index: number}|null {
+  const flowResult = useFlowResult();
+  const indexString = useHashParam('index');
 
-  const value = flowResult.lhrs[index];
-  if (!value) {
-    console.warn(`No LHR at index ${index}`);
-    return null;
-  }
+  // Memoize result so a new object is not created on every call.
+  return useMemo(() => {
+    if (!indexString) return null;
 
-  return {value, index};
+    const index = Number(indexString);
+    if (!Number.isFinite(index)) {
+      console.warn(`Invalid hash index: ${indexString}`);
+      return null;
+    }
+
+    const value = flowResult.lhrs[index];
+    if (!value) {
+      console.warn(`No LHR at index ${index}`);
+      return null;
+    }
+
+    return {value, index};
+  }, [indexString, flowResult]);
 }
 
 export function useDerivedStepNames() {

@@ -26,6 +26,10 @@
   font-size: var(--app-font-size);
 }
 
+.Content {
+  overflow-y: auto;
+}
+
 .FlowStepIcon {
   height: 100%;
   display: flex;

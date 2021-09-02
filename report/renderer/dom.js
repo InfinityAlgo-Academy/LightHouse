@@ -109,6 +109,10 @@ export class DOM {
     return cloned;
   }
 
+  clearComponentCache() {
+    this._componentCache.clear();
+  }
+
   /**
    * @param {string} text
    * @return {Element}
