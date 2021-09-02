@@ -93,6 +93,19 @@ class Fetcher {
   }
 
   /**
+   * `Network.loadNetworkResource` was introduced in M88.
+   * The long timeout bug with `IO.read` was fixed in M92:
+   * https://bugs.chromium.org/p/chromium/issues/detail?id=1191757
+   * Lightrider has a bug forcing us to use the old version for now:
+   * https://docs.google.com/document/d/1V-DxgsOFMPxUuFrdGPQpyiCqSljvgNlOqXCtqDtd0b8/edit?usp=sharing&resourcekey=0-aIaIqcHFKG-0dX4MAudBEw
+   * @return {Promise<boolean>}
+   */
+  async shouldUseLegacyFetcher() {
+    const {milestone} = await getBrowserVersion(this.session);
+    return milestone < 92 || Boolean(global.isLightrider);
+  }
+
+  /**
    * Requires that `fetcher.enable` has been called.
    *
    * Fetches any resource in a way that circumvents CORS.
@@ -106,14 +119,11 @@ class Fetcher {
       throw new Error('Must call `enable` before using fetchResource');
     }
 
-    // `Network.loadNetworkResource` was introduced in M88.
-    // The long timeout bug with `IO.read` was fixed in M92:
-    // https://bugs.chromium.org/p/chromium/issues/detail?id=1191757
-    const {milestone} = await getBrowserVersion(this.session);
-    if (milestone >= 92) {
-      return await this._fetchResourceOverProtocol(url, options);
+    if (await this.shouldUseLegacyFetcher()) {
+      return this._fetchResourceIframe(url, options);
     }
-    return await this._fetchResourceIframe(url, options);
+
+    return this._fetchResourceOverProtocol(url, options);
   }
 
   /**

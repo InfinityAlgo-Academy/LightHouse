@@ -6,7 +6,6 @@
 'use strict';
 
 const FRGatherer = require('../../../fraggle-rock/gather/base-gatherer.js');
-const {getBrowserVersion} = require('../../driver/environment.js');
 
 /* global fetch, location */
 
@@ -38,12 +37,9 @@ class RobotsTxt extends FRGatherer {
    * @return {Promise<LH.Artifacts['RobotsTxt']>}
    */
   async getArtifact(passContext) {
-    const {milestone} = await getBrowserVersion(passContext.driver.defaultSession);
-
-    // TODO: Remove when 92 hits stable.
     // Iframe fetcher still has issues with CSPs.
-    // Only use the fetcher if we are fetching over the CDP.
-    if (milestone < 92) {
+    // Only use the fetcher if we are fetching over the protocol.
+    if (await passContext.driver.fetcher.shouldUseLegacyFetcher()) {
       return passContext.driver.executionContext.evaluate(getRobotsTxtContent, {
         args: [],
         useIsolation: true,
