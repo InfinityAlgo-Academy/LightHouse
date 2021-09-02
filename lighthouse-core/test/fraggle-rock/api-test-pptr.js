@@ -130,7 +130,7 @@ describe('Fraggle Rock API', () => {
         notApplicableAudits,
       } = getAuditsBreakdown(lhr);
       // TODO(FR-COMPAT): This assertion can be removed when full compatibility is reached.
-      expect(auditResults.length).toMatchInlineSnapshot(`50`);
+      expect(auditResults.length).toMatchInlineSnapshot(`48`);
 
       expect(notApplicableAudits.length).toMatchInlineSnapshot(`7`);
       expect(notApplicableAudits.map(audit => audit.id)).not.toContain('server-response-time');
@@ -172,9 +172,9 @@ describe('Fraggle Rock API', () => {
       if (!result) throw new Error('Lighthouse failed to produce a result');
 
       const {auditResults, erroredAudits, notApplicableAudits} = getAuditsBreakdown(result.lhr);
-      expect(auditResults.length).toMatchInlineSnapshot(`50`);
+      expect(auditResults.length).toMatchInlineSnapshot(`48`);
 
-      expect(notApplicableAudits.length).toMatchInlineSnapshot(`22`);
+      expect(notApplicableAudits.length).toMatchInlineSnapshot(`21`);
       expect(notApplicableAudits.map(audit => audit.id)).toContain('server-response-time');
 
       // TODO(FR-COMPAT): Reduce this number by handling the error, making N/A, or removing timespan support.
