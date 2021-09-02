@@ -5,6 +5,7 @@
  */
 
 import {FunctionComponent} from 'preact';
+
 import {ReportRendererProvider} from './wrappers/report-renderer';
 import {Sidebar} from './sidebar/sidebar';
 import {Summary} from './summary/summary';

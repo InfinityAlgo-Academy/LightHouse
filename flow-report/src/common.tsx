@@ -5,6 +5,7 @@
  */
 
 import {FunctionComponent} from 'preact';
+
 import {Util} from '../../report/renderer/util';
 
 const GatherModeIcon: FunctionComponent<{mode: LH.Result.GatherMode}> = ({mode}) => {

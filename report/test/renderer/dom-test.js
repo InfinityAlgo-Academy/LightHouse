@@ -6,9 +6,10 @@
 'use strict';
 
 import {strict as assert} from 'assert';
-import {jest} from '@jest/globals';
 
+import {jest} from '@jest/globals';
 import jsdom from 'jsdom';
+
 import {DOM} from '../../renderer/dom.js';
 import {Util} from '../../renderer/util.js';
 import {I18n} from '../../renderer/i18n.js';

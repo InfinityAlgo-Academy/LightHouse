@@ -6,6 +6,7 @@
 'use strict';
 
 import idbKeyval from 'idb-keyval';
+
 import {DragAndDrop} from './drag-and-drop.js';
 import {GithubApi} from './github-api.js';
 import {PSIApi} from './psi-api';

@@ -10,6 +10,21 @@ module.exports = {
     node: true,
     browser: true,
   },
+  rules: {
+    // TODO(esmodules): move to root eslint when all code is ESM
+    // or when this is resolved: https://github.com/import-js/eslint-plugin-import/issues/2214
+    'import/order': [2, {
+      'groups': [
+        'builtin',
+        'external',
+        ['sibling', 'parent'],
+        'index',
+        'object',
+        'type',
+      ],
+      'newlines-between': 'always',
+    }],
+  },
   overrides: [
     // TS already handles this issue.
     // https://github.com/typescript-eslint/typescript-eslint/blob/master/docs/getting-started/linting/FAQ.md#i-get-errors-from-the-no-undef-rule-about-global-variables-not-being-defined-even-though-there-are-no-typescript-errors

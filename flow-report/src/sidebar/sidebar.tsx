@@ -6,6 +6,7 @@
 
 import {FunctionComponent} from 'preact';
 import {useMemo} from 'preact/hooks';
+
 import {classNames, useCurrentLhr, useFlowResult, useLocale} from '../util';
 import {SidebarFlow} from './flow';
 

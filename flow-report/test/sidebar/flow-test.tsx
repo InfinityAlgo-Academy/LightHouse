@@ -1,10 +1,13 @@
 import fs from 'fs';
-import {SidebarFlow} from '../../src/sidebar/flow';
-import {render} from '@testing-library/preact';
-import {FunctionComponent} from 'preact';
-import {FlowResultContext} from '../../src/util';
 import {dirname} from 'path';
 import {fileURLToPath} from 'url';
+
+import {render} from '@testing-library/preact';
+import {FunctionComponent} from 'preact';
+
+import {SidebarFlow} from '../../src/sidebar/flow';
+import {FlowResultContext} from '../../src/util';
+
 
 const flowResult = JSON.parse(
   fs.readFileSync(

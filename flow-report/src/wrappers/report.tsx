@@ -6,6 +6,7 @@
 
 import {FunctionComponent} from 'preact';
 import {useEffect, useLayoutEffect, useRef} from 'preact/hooks';
+
 import {useCurrentLhr, useHashParam} from '../util';
 import {useReportRenderer} from './report-renderer';
 

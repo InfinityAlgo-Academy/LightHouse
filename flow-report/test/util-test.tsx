@@ -5,12 +5,14 @@
  */
 
 import fs from 'fs';
-import {FlowResultContext, useCurrentLhr, useDerivedStepNames} from '../src/util';
+import {dirname} from 'path';
+import {fileURLToPath} from 'url';
+
 import {renderHook} from '@testing-library/preact-hooks';
 import {FunctionComponent} from 'preact';
 import {act} from 'preact/test-utils';
-import {dirname} from 'path';
-import {fileURLToPath} from 'url';
+
+import {FlowResultContext, useCurrentLhr, useDerivedStepNames} from '../src/util';
 
 const flowResult: LH.FlowResult = JSON.parse(
   fs.readFileSync(

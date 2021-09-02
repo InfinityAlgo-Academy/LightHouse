@@ -9,7 +9,9 @@
 
 import assert from 'assert';
 import fs from 'fs';
+
 import jsdom from 'jsdom';
+
 import {TreemapUtil} from '../app/src/util.js';
 import {LH_ROOT} from '../../root.js';
 

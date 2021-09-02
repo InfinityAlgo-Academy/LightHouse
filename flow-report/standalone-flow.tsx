@@ -10,6 +10,7 @@
  */
 
 import {render} from 'preact';
+
 import {App} from './src/app';
 
 // Used by standalone-flow.html
