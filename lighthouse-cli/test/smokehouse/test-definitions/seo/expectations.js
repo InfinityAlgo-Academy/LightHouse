@@ -253,8 +253,7 @@ const passing = {
         score: 1,
       },
       'robots-txt': {
-        score: null,
-        scoreDisplayMode: 'notApplicable',
+        score: 1,
       },
     },
   },

@@ -24,13 +24,12 @@ const blockAllExceptInlineScriptCsp = headersParam([[
 
 /**
  * @type {Smokehouse.ExpectedRunnerResult}
- * Expectations of CSP results with a defalt Lighthouse run.
+ * Expectations of CSP results with a default Lighthouse run.
  */
 const allowAll = {
   artifacts: {
     RobotsTxt: {
-      status: 404,
-      content: null,
+      status: 200,
     },
     InspectorIssues: {contentSecurityPolicy: []},
     SourceMaps: [{
@@ -94,12 +93,10 @@ const blockAll = {
   artifacts: {
     _minChromiumMilestone: 92,
     RobotsTxt: {
-      status: 404,
-      content: null,
+      status: 200,
     },
     InspectorIssues: {
-      contentSecurityPolicy: [
-      ],
+      contentSecurityPolicy: [],
     },
     SourceMaps: [{
       sourceMapUrl: 'http://localhost:10200/source-map/script.js.map',
