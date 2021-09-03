@@ -7,12 +7,10 @@
 import {FunctionComponent} from 'preact';
 import {useMemo} from 'preact/hooks';
 
+import {Separator} from '../common';
+import {CpuIcon, EnvIcon, SummaryIcon} from '../icons';
 import {classNames, useCurrentLhr, useFlowResult, useLocale} from '../util';
 import {SidebarFlow} from './flow';
-
-const Separator: FunctionComponent = () => {
-  return <div className="Separator" role="separator"></div>;
-};
 
 export const SidebarSummary: FunctionComponent = () => {
   const currentLhr = useCurrentLhr();
@@ -24,7 +22,9 @@ export const SidebarSummary: FunctionComponent = () => {
       className={classNames('SidebarSummary', {'Sidebar--current': currentLhr === null})}
       data-testid="SidebarSummary"
     >
-      <div className="SidebarSummary__icon"></div>
+      <div className="SidebarSummary__icon">
+        <SummaryIcon/>
+      </div>
       <div className="SidebarSummary__label">Summary</div>
     </a>
   );
@@ -32,23 +32,32 @@ export const SidebarSummary: FunctionComponent = () => {
 
 const SidebarRuntimeSettings: FunctionComponent<{settings: LH.ConfigSettings}> = ({settings}) => {
   return (
-    <details className="SidebarRuntimeSettings">
-      <summary>
+    <div className="SidebarRuntimeSettings">
+      <div className="SidebarRuntimeSettings__item">
+        <div className="SidebarRuntimeSettings__item--icon">
+          <EnvIcon/>
+        </div>
         {
-          `${settings.screenEmulation.height}x${settings.screenEmulation.width}px | ` +
-          `${settings.formFactor}`
+          `${settings.formFactor === 'desktop' ? 'Desktop' : 'Mobile'} | ` +
+          `${settings.screenEmulation.height}x${settings.screenEmulation.width}px`
         }
-      </summary>
-      <div>Emulated user agent: {settings.emulatedUserAgent}</div>
-      <div>Channel: {settings.channel}</div>
-    </details>
+      </div>
+      <div className="SidebarRuntimeSettings__item">
+        <div className="SidebarRuntimeSettings__item--icon">
+          <CpuIcon/>
+        </div>
+        {
+          `${settings.throttling.cpuSlowdownMultiplier}x slowdown`
+        }
+      </div>
+    </div>
   );
 };
 
 export const SidebarHeader: FunctionComponent<{title: string, date: string}> = ({title, date}) => {
   const locale = useLocale();
   const formatter = useMemo(() => {
-    const options:Intl.DateTimeFormatOptions = {
+    const options: Intl.DateTimeFormatOptions = {
       month: 'short', day: 'numeric', year: 'numeric',
       hour: 'numeric', minute: 'numeric', timeZoneName: 'short',
     };
@@ -63,25 +72,18 @@ export const SidebarHeader: FunctionComponent<{title: string, date: string}> = (
   );
 };
 
-const SidebarSectionTitle: FunctionComponent = ({children}) => {
-  return <div className="SidebarSectionTitle">{children}</div>;
-};
-
 export const Sidebar: FunctionComponent = () => {
   const flowResult = useFlowResult();
   const firstLhr = flowResult.lhrs[0];
   return (
     <div className="Sidebar">
       <SidebarHeader title="Lighthouse User Flow Report" date={firstLhr.fetchTime}/>
-      <SidebarSectionTitle>RUNTIME SETTINGS</SidebarSectionTitle>
-      <Separator/>
-      <SidebarRuntimeSettings settings={firstLhr.configSettings}/>
-      <Separator/>
-      <SidebarSectionTitle>USER FLOW</SidebarSectionTitle>
       <Separator/>
       <SidebarSummary/>
       <Separator/>
       <SidebarFlow/>
+      <Separator/>
+      <SidebarRuntimeSettings settings={firstLhr.configSettings}/>
     </div>
   );
 };

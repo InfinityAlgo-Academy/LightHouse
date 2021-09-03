@@ -7,28 +7,7 @@
 import {FunctionComponent} from 'preact';
 
 import {Util} from '../../report/renderer/util';
-
-const GatherModeIcon: FunctionComponent<{mode: LH.Result.GatherMode}> = ({mode}) => {
-  return (
-    <div
-      className={`GatherModeIcon GatherModeIcon--${mode}`}
-      role="img"
-      aria-label={`Icon representing a ${mode} report`}
-    />
-  );
-};
-
-export const FlowStepIcon: FunctionComponent<{mode?: LH.Result.GatherMode}> = ({mode}) => {
-  return (
-    <div className="FlowStepIcon">
-      <div className="FlowStepIcon__top-line"/>
-      {
-        mode && <GatherModeIcon mode={mode}/>
-      }
-      <div className="FlowStepIcon__bottom-line"/>
-    </div>
-  );
-};
+import {NavigationIcon, SnapshotIcon, TimespanIcon} from './icons';
 
 /**
  * Summarizes the category as a ratio of passed audits to total audits.
@@ -67,5 +46,27 @@ export const CategoryRatio: FunctionComponent<{
     <a href={href} className={`CategoryRatio CategoryRatio--${rating}`} data-testid="CategoryRatio">
       {`${numPassed}/${numAudits}`}
     </a>
+  );
+};
+
+export const Separator: FunctionComponent = () => {
+  return <div className="Separator" role="separator"></div>;
+};
+
+export const FlowSegment: FunctionComponent<{mode?: LH.Result.GatherMode}> = ({mode}) => {
+  return (
+    <div className="FlowSegment">
+      <div className="FlowSegment__top-line"/>
+      {
+        mode === 'navigation' && <NavigationIcon/>
+      }
+      {
+        mode === 'timespan' && <TimespanIcon/>
+      }
+      {
+        mode === 'snapshot' && <SnapshotIcon/>
+      }
+      <div className="FlowSegment__bottom-line"/>
+    </div>
   );
 };

@@ -8,7 +8,8 @@ import {FunctionComponent} from 'preact';
 import {useMemo} from 'preact/hooks';
 
 import {Gauge} from '../wrappers/gauge';
-import {CategoryRatio, FlowStepIcon} from '../common';
+import {FlowSegment} from '../common';
+import {CategoryRatio} from '../common';
 import {getScreenDimensions, getScreenshot, useDerivedStepNames, useFlowResult} from '../util';
 import {Util} from '../../../report/renderer/util';
 
@@ -18,7 +19,7 @@ const THUMBNAIL_WIDTH = 50;
 const SummaryNavigationHeader: FunctionComponent<{url: string}> = ({url}) => {
   return (
     <div className="SummaryNavigationHeader" data-testid="SummaryNavigationHeader">
-      <FlowStepIcon/>
+      <FlowSegment/>
       <div className="SummaryNavigationHeader__url">{url}</div>
       <div className="SummaryNavigationHeader__category">Performance</div>
       <div className="SummaryNavigationHeader__category">Accessibility</div>
@@ -82,7 +83,7 @@ export const SummaryFlowStep: FunctionComponent<{
         lhr.gatherMode === 'navigation' || hashIndex === 0 ?
           <SummaryNavigationHeader url={lhr.finalUrl}/> :
           <div className="SummaryFlowStep__divider">
-            <FlowStepIcon/>
+            <FlowSegment/>
             <div className="SummaryFlowStep__divider--line"/>
           </div>
       }
@@ -92,7 +93,7 @@ export const SummaryFlowStep: FunctionComponent<{
         src={screenshot || undefined}
         style={{width: THUMBNAIL_WIDTH, maxHeight: thumbnailHeight}}
       />
-      <FlowStepIcon mode={lhr.gatherMode}/>
+      <FlowSegment mode={lhr.gatherMode}/>
       <a className="SummaryFlowStep__label" href={`#index=${hashIndex}`}>{label}</a>
       {
         DISPLAYED_CATEGORIES.map(c => (

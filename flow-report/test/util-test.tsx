@@ -82,10 +82,28 @@ describe('useDerivedStepNames', () => {
   it('counts up for each mode', () => {
     const {result} = renderHook(() => useDerivedStepNames(), {wrapper});
     expect(result.current).toEqual([
-      'Navigation (1)',
-      'Timespan (1)',
-      'Snapshot (1)',
-      'Navigation (2)',
+      'Navigation report (www.mikescerealshack.co/)',
+      'Timespan report (www.mikescerealshack.co/search)',
+      'Snapshot report (www.mikescerealshack.co/search)',
+      'Navigation report (www.mikescerealshack.co/corrections)',
+    ]);
+  });
+
+  it('enumerates if multiple in same group', () => {
+    const lhrs = flowResult.lhrs;
+    lhrs[3] = lhrs[2];
+    const newFlowResult = {lhrs};
+    const wrapper: FunctionComponent = ({children}) => (
+      <FlowResultContext.Provider value={newFlowResult}>{children}</FlowResultContext.Provider>
+    );
+
+    const {result} = renderHook(() => useDerivedStepNames(), {wrapper});
+
+    expect(result.current).toEqual([
+      'Navigation report (www.mikescerealshack.co/)',
+      'Timespan report (www.mikescerealshack.co/search)',
+      'Snapshot report 1 (www.mikescerealshack.co/search)',
+      'Snapshot report 2 (www.mikescerealshack.co/search)',
     ]);
   });
 });

@@ -15,7 +15,7 @@ import {SummaryHeader, SummaryFlowStep} from '../../src/summary/summary';
 import {FlowResultContext} from '../../src/util';
 import {ReportRendererProvider} from '../../src/wrappers/report-renderer';
 
-const flowResult:LH.FlowResult = JSON.parse(
+const flowResult: LH.FlowResult = JSON.parse(
   fs.readFileSync(
     // eslint-disable-next-line max-len
     `${dirname(fileURLToPath(import.meta.url))}/../../../lighthouse-core/test/fixtures/fraggle-rock/reports/sample-lhrs.json`,

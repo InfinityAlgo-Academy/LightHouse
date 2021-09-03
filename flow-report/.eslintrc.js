@@ -10,6 +10,9 @@ module.exports = {
     node: true,
     browser: true,
   },
+  plugins: [
+    '@typescript-eslint',
+  ],
   rules: {
     // TODO(esmodules): move to root eslint when all code is ESM
     // or when this is resolved: https://github.com/import-js/eslint-plugin-import/issues/2214
@@ -24,6 +27,7 @@ module.exports = {
       ],
       'newlines-between': 'always',
     }],
+    '@typescript-eslint/type-annotation-spacing': 2,
   },
   overrides: [
     // TS already handles this issue.
