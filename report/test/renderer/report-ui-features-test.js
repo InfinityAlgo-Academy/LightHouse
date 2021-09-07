@@ -57,6 +57,7 @@ describe('ReportUIFeatures', () => {
 
     global.HTMLElement = document.window.HTMLElement;
     global.HTMLInputElement = document.window.HTMLInputElement;
+    global.SVGAElement = document.window.SVGElement;
 
     global.window = document.window;
     global.window.getComputedStyle = function() {
@@ -75,6 +76,7 @@ describe('ReportUIFeatures', () => {
     global.window = undefined;
     global.HTMLElement = undefined;
     global.HTMLInputElement = undefined;
+    global.SVGAElement = undefined;
   });
 
   describe('initFeatures', () => {
