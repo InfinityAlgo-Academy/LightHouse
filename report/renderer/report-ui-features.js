@@ -49,6 +49,8 @@ export class ReportUIFeatures {
     /** @type {Document} */
     this._document = this._dom.document();
     this._topbar = new TopbarFeatures(this, dom);
+    /** @type {Set<string>} */
+    this._fixedFragmentLinks = new Set();
 
     this.onMediaQueryChange = this.onMediaQueryChange.bind(this);
   }
@@ -108,6 +110,8 @@ export class ReportUIFeatures {
       });
     }
 
+    this._fixFragmentLinks();
+
     // Fill in all i18n data.
     for (const node of this._dom.findAll('[data-i18n]', this._dom.document())) {
       // These strings are guaranteed to (at least) have a default English string in Util.UIStrings,
@@ -151,7 +155,12 @@ export class ReportUIFeatures {
    */
   getReportHtml() {
     this._topbar.resetUIState();
-    return this._document.documentElement.outerHTML;
+
+    this._undoFixedFragmentLinks();
+    const result = this._document.documentElement.outerHTML;
+    this._fixFragmentLinks();
+
+    return result;
   }
 
   /**
@@ -347,5 +356,38 @@ export class ReportUIFeatures {
     // cleanup.
     this._document.body.removeChild(a);
     setTimeout(() => URL.revokeObjectURL(a.href), 500);
+  }
+
+  /**
+   * Reports renderered in some google3 contexts require fragment links be
+   * absolute. See http://go/yaqs/4521810236538880
+   * As a workaround, we replace (relative) fragment links with absolute URLs:
+   *    #performance -> https://www.example.com/report/123123#performance
+   * To preserve the Save-As-HTML feature, we convert back to relative links
+   * in `getReportHtml`.
+   */
+  _fixFragmentLinks() {
+    const rootEl = this._dom.find('.lh-root', this._document);
+    for (const el of this._dom.findAll('a[href^="#"]', rootEl)) {
+      if (el instanceof SVGAElement) continue; // Not applicable.
+      const href = el.getAttribute('href');
+      if (!href) continue;
+
+      const url = new URL(this._document.location.href);
+      url.hash = href;
+      el.href = url.toString();
+      this._fixedFragmentLinks.add(el.href);
+    }
+  }
+
+  _undoFixedFragmentLinks() {
+    const rootEl = this._dom.find('.lh-root', this._document);
+    for (const el of this._dom.findAll('a[href*="#"]', rootEl)) {
+      if (el instanceof SVGAElement) continue; // Not applicable.
+      if (!this._fixedFragmentLinks.has(el.href)) continue;
+
+      const url = new URL(el.href);
+      el.href = url.hash || '#';
+    }
   }
 }
