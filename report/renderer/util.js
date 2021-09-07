@@ -637,9 +637,9 @@ Util.UIStrings = {
   /** Descriptive explanation for environment throttling that was provided by the runtime environment instead of provided by Lighthouse throttling. */
   throttlingProvided: 'Provided by environment',
 
-  /** Descriptive explanation uses when an audit is not part of the calculated score. */
+  /** Descriptive explanation used when an audit is not part of the calculated score. */
   unscoredLabel: 'Unscored',
-  /** Descriptive explanation uses when an audit is not part of the calculated score. */
+  /** Descriptive explanation used when an audit is not part of the calculated score. */
   unscoredTitle: 'This audit is not part of the category score.',
 };
 

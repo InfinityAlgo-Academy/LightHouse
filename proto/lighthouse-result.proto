@@ -503,6 +503,12 @@ message I18n {
     // chosen, the audits in the report are hidden if they are not relevant to
     // the selected metric.
     string show_relevant_audits = 48;
+
+    // Descriptive explanation used when an audit is not part of the calculated score.
+    string unscored_label = 49;
+
+    // Descriptive explanation used when an audit is not part of the calculated score.
+    string unscored_title = 50;
   }
 
   // The message holding all formatted strings
