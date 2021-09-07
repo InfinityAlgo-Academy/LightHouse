@@ -159,16 +159,6 @@ describe('ReportUIFeatures', () => {
             },
           },
         ];
-        // Sample json currently doesn't have any results for `unused-javascript`, so
-        // headings is empty. Can delete this block of code if that changes.
-        expect(lhr.audits['unused-javascript'].details.headings).toHaveLength(0);
-        lhr.audits['unused-javascript'].details.headings = [
-          /* t-disable max-len */
-          {key: 'url', valueType: 'url', subItemsHeading: {key: 'source', valueType: 'code'}},
-          {key: 'totalBytes', valueType: 'bytes', subItemsHeading: {key: 'sourceBytes'}},
-          {key: 'wastedBytes', valueType: 'bytes', subItemsHeading: {key: 'sourceWastedBytes'}},
-          /* eslint-enable max-len */
-        ];
 
         // Only third party URLs to test that checkbox is hidden
         lhr.audits['render-blocking-resources'].details.items = [

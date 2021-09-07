@@ -256,7 +256,9 @@ describe('CategoryRenderer', () => {
       const categoryDOM = renderer.render(a11yCategory, sampleResults.categoryGroups);
       const percentageEl = categoryDOM.querySelectorAll('.lh-gauge__percentage');
 
-      assert.equal(percentageEl[0].textContent, '81', 'score shows a non-dash value');
+      const scoreText = percentageEl[0].textContent;
+      assert(!scoreText.includes('.'), 'score is integer');
+      assert(Number(scoreText) >= 0 && Number(scoreText) <= 100, 'score is 0-100');
     });
   });
 
@@ -271,7 +273,9 @@ describe('CategoryRenderer', () => {
       const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
 
       const gauge = categoryDOM.querySelector('.lh-gauge__percentage');
-      assert.equal(gauge.textContent.trim(), '81', 'score is 0-100');
+      const scoreText = gauge.textContent.trim();
+      assert(!scoreText.includes('.'), 'score is integer');
+      assert(Number(scoreText) >= 0 && Number(scoreText) <= 100, 'score is 0-100');
 
       const score = categoryDOM.querySelector('.lh-category-header');
       const value = categoryDOM.querySelector('.lh-gauge__percentage');

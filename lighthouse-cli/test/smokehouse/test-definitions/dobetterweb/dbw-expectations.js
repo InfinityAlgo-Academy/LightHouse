@@ -377,10 +377,10 @@ const expectations = {
       },
       'dom-size': {
         score: 1,
-        numericValue: 149,
+        numericValue: 153,
         details: {
           items: [
-            {statistic: 'Total DOM Elements', value: 149},
+            {statistic: 'Total DOM Elements', value: 153},
             {statistic: 'Maximum DOM Depth', value: 4},
             {
               statistic: 'Maximum Child Elements',
@@ -411,7 +411,7 @@ const expectations = {
           screenshot: {
             width: 360,
             // Allow for differences in platforms.
-            height: '1350±20',
+            height: '1350±100',
             data: /^data:image\/jpeg;.{500,}/,
           },
           nodes: {

@@ -95,11 +95,11 @@ describe('ReportGenerator', () => {
       const lines = csvOutput.split('\n');
       expect(lines.length).toBeGreaterThan(100);
       expect(lines.slice(0, 3).join('\n')).toMatchInlineSnapshot(`
-        "requestedUrl,finalUrl,category,name,title,type,score
-        \\"http://localhost:10200/dobetterweb/dbw_tester.html\\",\\"http://localhost:10200/dobetterweb/dbw_tester.html\\",\\"Performance\\",\\"performance-score\\",\\"Overall Performance Category Score\\",\\"numeric\\",\\"0.57\\"
-        \\"http://localhost:10200/dobetterweb/dbw_tester.html\\",\\"http://localhost:10200/dobetterweb/dbw_tester.html\\",\\"Performance\\",\\"first-contentful-paint\\",\\"First Contentful Paint\\",\\"numeric\\",\\"0.24\\"
-        "
-      `);
+"requestedUrl,finalUrl,category,name,title,type,score
+\\"http://localhost:10200/dobetterweb/dbw_tester.html\\",\\"http://localhost:10200/dobetterweb/dbw_tester.html\\",\\"Performance\\",\\"performance-score\\",\\"Overall Performance Category Score\\",\\"numeric\\",\\"0.26\\"
+\\"http://localhost:10200/dobetterweb/dbw_tester.html\\",\\"http://localhost:10200/dobetterweb/dbw_tester.html\\",\\"Performance\\",\\"first-contentful-paint\\",\\"First Contentful Paint\\",\\"numeric\\",\\"0.02\\"
+"
+`);
 
       try {
         await csvValidator(path, headers);
