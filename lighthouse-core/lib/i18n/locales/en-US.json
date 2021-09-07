@@ -2375,6 +2375,12 @@
   "report/renderer/util.js | toplevelWarningsMessage": {
     "message": "There were issues affecting this run of Lighthouse:"
   },
+  "report/renderer/util.js | unscoredLabel": {
+    "message": "Unscored"
+  },
+  "report/renderer/util.js | unscoredTitle": {
+    "message": "This audit is not part of the category score."
+  },
   "report/renderer/util.js | varianceDisclaimer": {
     "message": "Values are estimated and may vary. The [performance score is calculated](https://web.dev/performance-scoring/) directly from these metrics."
   },

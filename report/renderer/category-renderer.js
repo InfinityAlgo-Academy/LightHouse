@@ -83,6 +83,12 @@ export class CategoryRenderer {
       adornEl.textContent = relevantMetric.acronym || relevantMetric.id;
     }
 
+    if (audit.weight === 0) {
+      const adornEl = this.dom.createChildOf(descEl, 'span', 'lh-audit__adorn');
+      adornEl.title = Util.i18n.strings.unscoredTitle;
+      adornEl.textContent = Util.i18n.strings.unscoredLabel;
+    }
+
     if (audit.stackPacks) {
       audit.stackPacks.forEach(pack => {
         const packElm = this.dom.createElement('div');
