@@ -10,11 +10,11 @@ jobs:
   unit:
     strategy:
       matrix:
-        node: ['12', '14', '16']
+        node: ['12', '14', '16.8']
     runs-on: ubuntu-latest
     name: node ${{ matrix.node }}
     env:
-      LATEST_NODE: '16'
+      LATEST_NODE: '16.8'
 
     steps:
     - name: git clone
@@ -66,7 +66,7 @@ jobs:
       with:
         flags: unit
         file: ./unit-coverage.lcov
-  
+
   # For windows, just test the potentially platform-specific code.
   unit-windows:
     runs-on: windows-latest
