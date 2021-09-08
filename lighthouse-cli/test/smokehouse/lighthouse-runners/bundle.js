@@ -43,18 +43,21 @@ async function runLighthouse(url, configJson, testRunnerOptions = {}) {
   const port = launchedChrome.port;
   const connection = new ChromeProtocol(port);
 
-  // Run Lighthouse.
-  const logLevel = testRunnerOptions.isDebug ? 'info' : undefined;
-  const runnerResult = await lighthouse(url, {port, logLevel}, configJson, connection);
-  if (!runnerResult) throw new Error('No runnerResult');
+  try {
+    // Run Lighthouse.
+    const logLevel = testRunnerOptions.isDebug ? 'info' : undefined;
+    const runnerResult = await lighthouse(url, {port, logLevel}, configJson, connection);
+    if (!runnerResult) throw new Error('No runnerResult');
 
-  // Clean up and return results.
-  await launchedChrome.kill();
-  return {
-    lhr: runnerResult.lhr,
-    artifacts: runnerResult.artifacts,
-    log: '', // TODO: if want to run in parallel, need to capture lighthouse-logger output.
-  };
+    return {
+      lhr: runnerResult.lhr,
+      artifacts: runnerResult.artifacts,
+      log: '', // TODO: if want to run in parallel, need to capture lighthouse-logger output.
+    };
+  } finally {
+    // Clean up and return results.
+    await launchedChrome.kill();
+  }
 }
 
 module.exports = {

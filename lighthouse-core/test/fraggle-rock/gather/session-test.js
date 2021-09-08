@@ -68,6 +68,25 @@ describe('ProtocolSession', () => {
       expect(regularListener).toHaveBeenCalledTimes(1);
       expect(allListener).toHaveBeenCalledTimes(2);
     });
+
+    it('should include sessionId for iframes', () => {
+      // @ts-expect-error - we want to use a more limited test of a real event emitter.
+      puppeteerSession = new EventEmitter();
+      session = new ProtocolSession(puppeteerSession);
+
+      const listener = jest.fn();
+      const targetInfo = {title: '', url: '', attached: true, canAccessOpener: false};
+
+      puppeteerSession.on('*', listener);
+      session.setTargetInfo({targetId: 'page', type: 'page', ...targetInfo});
+      puppeteerSession.emit('Foo', 1);
+      session.setTargetInfo({targetId: 'iframe', type: 'iframe', ...targetInfo});
+      puppeteerSession.emit('Bar', 1);
+
+      expect(listener).toHaveBeenCalledTimes(2);
+      expect(listener).toHaveBeenCalledWith({method: 'Foo', params: 1});
+      expect(listener).toHaveBeenCalledWith({method: 'Bar', params: 1, sessionId: 'iframe'});
+    });
   });
 
   /** @type {Array<'on'|'off'|'once'>} */
@@ -124,6 +143,44 @@ describe('ProtocolSession', () => {
       session.removeProtocolMessageListener(allListener);
       puppeteerSession.emit('Page.frameNavigated');
       expect(allListener).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('.addSessionAttachedListener', () => {
+    it('should listen for new sessions', () => {
+      const mockOn = jest.fn();
+      // @ts-expect-error - we want to use a more limited, controllable test
+      puppeteerSession = {connection: () => ({on: mockOn}), emit: jest.fn()};
+      session = new ProtocolSession(puppeteerSession);
+
+      // Make sure we listen for the event.
+      const listener = jest.fn();
+      session.addSessionAttachedListener(listener);
+      expect(mockOn).toHaveBeenCalledWith('sessionattached', expect.any(Function));
+
+      // Make sure we wrap the return in a ProtocolSession.
+      mockOn.mock.calls[0][1]({emit: jest.fn()});
+      expect(listener).toHaveBeenCalledWith(expect.any(ProtocolSession));
+    });
+  });
+
+  describe('.removeSessionAttachedListener', () => {
+    it('should stop listening for new sessions', () => {
+      const mockOn = jest.fn();
+      const mockOff = jest.fn();
+      // @ts-expect-error - we want to use a more limited, controllable test
+      puppeteerSession = {connection: () => ({on: mockOn, off: mockOff}), emit: jest.fn()};
+      session = new ProtocolSession(puppeteerSession);
+
+      // Make sure we listen for the event.
+      const userListener = jest.fn();
+      session.addSessionAttachedListener(userListener);
+      expect(mockOn).toHaveBeenCalledWith('sessionattached', expect.any(Function));
+
+      // Make sure we unlisten the mapped function, not just the user's listener.
+      const installedListener = mockOn.mock.calls[0][1];
+      session.removeSessionAttachedListener(userListener);
+      expect(mockOff).toHaveBeenCalledWith('sessionattached', installedListener);
     });
   });
 

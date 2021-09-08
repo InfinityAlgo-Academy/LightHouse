@@ -5,8 +5,10 @@
  */
 'use strict';
 
+const {createMockDriver, mockTargetManagerModule} = require('../../fraggle-rock/gather/mock-driver.js'); // eslint-disable-line max-len
+const targetManagerMock = mockTargetManagerModule();
+
 const {gotoURL, getNavigationWarnings} = require('../../../gather/driver/navigation.js');
-const {createMockDriver} = require('../../fraggle-rock/gather/mock-driver.js');
 const {
   createMockOnceFn,
   makePromiseInspectable,
@@ -26,6 +28,7 @@ describe('.gotoURL', () => {
   beforeEach(() => {
     mockDriver = createMockDriver();
     driver = mockDriver.asDriver();
+    targetManagerMock.mockEnable(driver.defaultSession);
 
     mockDriver.defaultSession.sendCommand
       .mockResponse('Page.enable') // network monitor's Page.enable
@@ -35,6 +38,10 @@ describe('.gotoURL', () => {
       .mockResponse('Page.navigate')
       .mockResponse('Runtime.evaluate')
       .mockResponse('Page.getResourceTree', {frameTree: {frame: {id: 'ABC'}}});
+  });
+
+  afterEach(() => {
+    targetManagerMock.reset();
   });
 
   it('will track redirects through gotoURL load with warning', async () => {

@@ -42,6 +42,16 @@ describe('DevtoolsLog', () => {
     assert.equal(messageLog.messages[0].method, pageMsg.method);
   });
 
+  it('ignores messages with Symbols', () => {
+    messageLog.beginRecording();
+    messageLog.record(pageMsg); // will record
+    messageLog.record(networkMsg); // will record
+    messageLog.record({method: Symbol('Network.requestWillBeSent')}); // won't record
+    messageLog.endRecording();
+    assert.equal(messageLog.messages.length, 2);
+    assert.equal(messageLog.messages[0].method, pageMsg.method);
+  });
+
   it('records everything when no filter provided', () => {
     messageLog = new DevtoolsLog();
     messageLog.beginRecording();
