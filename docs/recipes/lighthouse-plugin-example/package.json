@@ -3,9 +3,9 @@
   "private": true,
   "main": "./plugin.js",
   "peerDependencies": {
-    "lighthouse": "^8.3.0"
+    "lighthouse": "^8.4.0"
   },
   "devDependencies": {
-    "lighthouse": "^8.3.0"
+    "lighthouse": "^8.4.0"
   }
 }
