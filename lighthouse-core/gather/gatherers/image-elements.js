@@ -15,12 +15,7 @@ const pageFunctions = require('../../lib/page-functions.js');
 const URL = require('../../lib/url-shim.js');
 const FontSize = require('./seo/font-size.js');
 
-<<<<<<< HEAD
-/* global window, getElementsInDocument, Image, getNodePath, getNodeSelector, getNodeLabel, getOuterHTMLSnippet, ShadowRoot, __nativeError:readonly, __nativePromise:readonly */
-
-=======
 /* global window, getElementsInDocument, Image, getNodeDetails, ShadowRoot */
->>>>>>> origin/master
 
 /** @param {Element} element */
 /* c8 ignore start */
@@ -161,10 +156,10 @@ function collectImageElementInfo() {
  */
 /* c8 ignore start */
 function determineNaturalSize(url) {
-  return new window.__nativePromise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     const img = new Image();
     img.addEventListener('error', _ =>
-        reject(new window.__nativeError('determineNaturalSize failed img load')));
+        reject(new Error('determineNaturalSize failed img load')));
     img.addEventListener('load', () => {
       resolve({
         naturalWidth: img.naturalWidth,

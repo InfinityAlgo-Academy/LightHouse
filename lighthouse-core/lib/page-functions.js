@@ -5,9 +5,6 @@
  */
 'use strict';
 
-<<<<<<< HEAD
-/* global window document Node ShadowRoot __nativeError:readonly */
-=======
 /**
  * @fileoverview
  * Helper functions that are passed by `toString()` by Driver to be evaluated in target page.
@@ -21,7 +18,6 @@
  *     const {justWhatINeed} = require('...');
  * Otherwise, minification will mangle the variable names and break usage.
  */
->>>>>>> origin/master
 
 /**
  * `typed-query-selector`'s CSS selector parser.
@@ -39,25 +35,15 @@
  * @return {{__failedInBrowser: boolean, name: string, message: string, stack: string|undefined}}
  */
 function wrapRuntimeEvalErrorInBrowser(err) {
-<<<<<<< HEAD
-  err = err || new __nativeError();
-  const fallbackMessage = typeof err === 'string' ? err : 'unknown error';
-=======
   if (!err || typeof err === 'string') {
     err = new Error(err);
   }
->>>>>>> origin/master
 
   return {
     __failedInBrowser: true,
     name: err.name || 'Error',
-<<<<<<< HEAD
-    message: err.message || fallbackMessage,
-    stack: err.stack || (new __nativeError()).stack,
-=======
     message: err.message || 'unknown error',
     stack: err.stack,
->>>>>>> origin/master
   };
 }
 

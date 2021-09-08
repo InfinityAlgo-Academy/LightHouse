@@ -9,163 +9,11 @@
  * @type {Smokehouse.ExpectedRunnerResult}
  * Expected Lighthouse audit values for Do Better Web tests.
  */
-<<<<<<< HEAD
-const expectations = [
-  {
-    artifacts: {
-      HostFormFactor: 'desktop',
-      TestedAsMobileDevice: true,
-      Stacks: [{
-        id: 'jquery',
-      }, {
-        id: 'jquery-fast',
-        name: 'jQuery (Fast path)',
-      }, {
-        id: 'wordpress',
-      }],
-      MainDocumentContent: /^<!doctype html>.*DoBetterWeb Mega Tester.*bad-promise-polyfill.*<\/html>[\r\n]*$/s,
-      LinkElements: [
-        {
-          rel: 'stylesheet',
-          href: 'http://localhost:10200/dobetterweb/dbw_tester.css?delay=100',
-          hrefRaw: './dbw_tester.css?delay=100',
-          hreflang: '',
-          as: '',
-          crossOrigin: null,
-          source: 'head',
-        },
-        {
-          rel: 'stylesheet',
-          href: 'http://localhost:10200/dobetterweb/unknown404.css?delay=200',
-          hrefRaw: './unknown404.css?delay=200',
-          hreflang: '',
-          as: '',
-          crossOrigin: null,
-          source: 'head',
-        },
-        {
-          rel: 'stylesheet',
-          href: 'http://localhost:10200/dobetterweb/dbw_tester.css?delay=2200',
-          hrefRaw: './dbw_tester.css?delay=2200',
-          hreflang: '',
-          as: '',
-          crossOrigin: null,
-          source: 'head',
-        },
-        {
-          rel: 'stylesheet',
-          href: 'http://localhost:10200/dobetterweb/dbw_disabled.css?delay=200&isdisabled',
-          hrefRaw: './dbw_disabled.css?delay=200&isdisabled',
-          hreflang: '',
-          as: '',
-          crossOrigin: null,
-          source: 'head',
-        },
-        {
-          rel: 'import',
-          href: 'http://localhost:10200/dobetterweb/dbw_partial_a.html?delay=200',
-          hrefRaw: './dbw_partial_a.html?delay=200',
-          hreflang: '',
-          as: '',
-          crossOrigin: null,
-          source: 'head',
-        },
-        {
-          rel: 'import',
-          href: 'http://localhost:10200/dobetterweb/dbw_partial_b.html?delay=200&isasync',
-          hrefRaw: './dbw_partial_b.html?delay=200&isasync',
-          hreflang: '',
-          as: '',
-          crossOrigin: null,
-          source: 'head',
-        },
-        {
-          rel: 'stylesheet',
-          href: 'http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&capped',
-          hrefRaw: './dbw_tester.css?delay=3000&capped',
-          hreflang: '',
-          as: '',
-          crossOrigin: null,
-          source: 'head',
-        },
-        {
-          rel: 'stylesheet',
-          href: 'http://localhost:10200/dobetterweb/dbw_tester.css?delay=2000&async=true',
-          hrefRaw: './dbw_tester.css?delay=2000&async=true',
-          hreflang: '',
-          as: 'style',
-          crossOrigin: null,
-          source: 'head',
-        },
-        {
-          rel: 'stylesheet',
-          href: 'http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&async=true',
-          hrefRaw: './dbw_tester.css?delay=3000&async=true',
-          hreflang: '',
-          as: '',
-          crossOrigin: null,
-          source: 'head',
-        },
-        {
-          rel: 'alternate stylesheet',
-          href: 'http://localhost:10200/dobetterweb/empty.css',
-          hrefRaw: './empty.css',
-          hreflang: '',
-          as: '',
-          crossOrigin: null,
-          source: 'head',
-        },
-        {
-          rel: 'stylesheet',
-          href: 'http://localhost:10200/dobetterweb/dbw_tester.css?scriptActivated&delay=200',
-          hrefRaw: './dbw_tester.css?scriptActivated&delay=200',
-          hreflang: '',
-          as: '',
-          crossOrigin: null,
-          source: 'head',
-        },
-      ],
-      MetaElements: [
-        {
-          name: '',
-          content: '',
-          charset: 'utf-8',
-        },
-        {
-          name: 'viewport',
-          content: 'width=device-width, initial-scale=1, minimum-scale=1',
-        },
-        {
-          name: '',
-          content: 'Open Graph smoke test description',
-          property: 'og:description',
-        },
-      ],
-      TagsBlockingFirstPaint: [
-        {
-          tag: {
-            tagName: 'LINK',
-            url: 'http://localhost:10200/dobetterweb/dbw_tester.css?delay=100',
-          },
-        },
-        {
-          tag: {
-            tagName: 'LINK',
-            url: 'http://localhost:10200/dobetterweb/unknown404.css?delay=200',
-          },
-        },
-        {
-          tag: {
-            tagName: 'LINK',
-            url: 'http://localhost:10200/dobetterweb/dbw_tester.css?delay=2200',
-          },
-=======
 const expectations = {
   networkRequests: {
     // Number of network requests differs between Fraggle Rock and legacy modes because
     // FR has fewer passes, preserve this check moving forward.
     _fraggleRockOnly: true,
->>>>>>> origin/master
 
     // 22 requests made for a single navigation.
     // 6 extra requests made because stylesheets are evicted from the cache by the time DT opens.
@@ -182,7 +30,7 @@ const expectations = {
     }, {
       id: 'wordpress',
     }],
-    MainDocumentContent: /^<!doctype html>.*DoBetterWeb Mega Tester.*aggressive-promise-polyfill.*<\/html>[\r\n]*$/s,
+    MainDocumentContent: /^<!doctype html>.*DoBetterWeb Mega Tester.*bad-promise-polyfill.*<\/html>[\r\n]*$/s,
     LinkElements: [
       {
         rel: 'stylesheet',
