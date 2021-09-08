@@ -132,8 +132,9 @@ describe('Fraggle Rock API', () => {
       // TODO(FR-COMPAT): This assertion can be removed when full compatibility is reached.
       expect(auditResults.length).toMatchInlineSnapshot(`48`);
 
-      expect(notApplicableAudits.length).toMatchInlineSnapshot(`7`);
+      expect(notApplicableAudits.length).toMatchInlineSnapshot(`6`);
       expect(notApplicableAudits.map(audit => audit.id)).not.toContain('server-response-time');
+      expect(notApplicableAudits.map(audit => audit.id)).not.toContain('total-blocking-time');
 
       expect(erroredAudits).toHaveLength(0);
       expect(failedAudits.map(audit => audit.id)).toContain('errors-in-console');
@@ -174,11 +175,11 @@ describe('Fraggle Rock API', () => {
       const {auditResults, erroredAudits, notApplicableAudits} = getAuditsBreakdown(result.lhr);
       expect(auditResults.length).toMatchInlineSnapshot(`48`);
 
-      expect(notApplicableAudits.length).toMatchInlineSnapshot(`21`);
+      expect(notApplicableAudits.length).toMatchInlineSnapshot(`20`);
       expect(notApplicableAudits.map(audit => audit.id)).toContain('server-response-time');
+      expect(notApplicableAudits.map(audit => audit.id)).not.toContain('total-blocking-time');
 
-      // TODO(FR-COMPAT): Reduce this number by handling the error, making N/A, or removing timespan support.
-      expect(erroredAudits.length).toMatchInlineSnapshot(`1`);
+      expect(erroredAudits).toHaveLength(0);
     });
   });
 

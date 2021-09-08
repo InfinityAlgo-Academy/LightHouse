@@ -55,6 +55,17 @@ describe('Fraggle Rock Config', () => {
     });
   });
 
+  it('should override throttlingMethod in timespan mode', () => {
+    const {config} = initializeConfig(
+      undefined,
+      {settingsOverrides: {throttlingMethod: 'simulate'}, gatherMode: 'timespan'}
+    );
+
+    expect(config.settings).toMatchObject({
+      throttlingMethod: 'devtools',
+    });
+  });
+
   it('should resolve artifact definitions', () => {
     const configJson = {artifacts: [{id: 'Accessibility', gatherer: 'accessibility'}]};
     const {config} = initializeConfig(configJson, {gatherMode});
@@ -451,5 +462,4 @@ describe('Fraggle Rock Config', () => {
   });
 
   it.todo('should support plugins');
-  it.todo('should adjust default pass options for throttling method');
 });

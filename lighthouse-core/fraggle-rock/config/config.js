@@ -29,6 +29,8 @@ const {
 } = require('../../config/config-helpers.js');
 const defaultConfigPath = path.join(__dirname, './default-config.js');
 
+/** @typedef {Omit<LH.Config.FRContext, 'gatherMode'> & {gatherMode: LH.Gatherer.GatherMode}} ConfigContext */
+
 /**
  * @param {LH.Config.Json|undefined} configJSON
  * @param {{configPath?: string}} context
@@ -159,6 +161,20 @@ function resolveArtifactsToDefns(artifacts, configDir) {
 }
 
 /**
+ * Overrides the settings that may not apply to the chosen gather mode.
+ *
+ * @param {LH.Config.Settings} settings
+ * @param {ConfigContext} context
+ */
+function overrideSettingsForGatherMode(settings, context) {
+  if (context.gatherMode === 'timespan') {
+    if (settings.throttlingMethod === 'simulate') {
+      settings.throttlingMethod = 'devtools';
+    }
+  }
+}
+
+/**
  * Overrides the quiet windows when throttlingMethod requires observation.
  *
  * @param {LH.Config.NavigationDefn} navigation
@@ -224,7 +240,7 @@ function resolveNavigationsToDefns(navigations, artifactDefns, settings) {
 
 /**
  * @param {LH.Config.Json|undefined} configJSON
- * @param {Omit<LH.Config.FRContext, 'gatherMode'> & {gatherMode: LH.Gatherer.GatherMode}} context
+ * @param {ConfigContext} context
  * @return {{config: LH.Config.FRConfig, warnings: string[]}}
  */
 function initializeConfig(configJSON, context) {
@@ -238,6 +254,8 @@ function initializeConfig(configJSON, context) {
   // TODO(FR-COMPAT): handle config plugins
 
   const settings = resolveSettings(configWorkingCopy.settings || {}, context.settingsOverrides);
+  overrideSettingsForGatherMode(settings, context);
+
   const artifacts = resolveArtifactsToDefns(configWorkingCopy.artifacts, configDir);
   const navigations = resolveNavigationsToDefns(configWorkingCopy.navigations, artifacts, settings);
 
