@@ -27,6 +27,8 @@
 
 'use strict';
 
+/* global globalThis */
+
 (function() {
   // Terribly unruly promise polyfill. All methods throw. Oof.
   class BadPromise {
