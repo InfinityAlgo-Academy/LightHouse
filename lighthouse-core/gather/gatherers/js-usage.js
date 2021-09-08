@@ -134,7 +134,6 @@ class JsUsage extends FRGatherer {
       usageByUrl[url] = scripts;
     }
 
-    // TODO(FR-COMPAT): Enable this logic for legacy and navigation or make a separate artifact for url/scriptId mappings.
     if (context.gatherMode !== 'navigation') {
       this._addMissingScriptIds(usageByUrl);
     }

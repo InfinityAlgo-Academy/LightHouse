@@ -20,7 +20,6 @@ class CSSUsage extends FRGatherer {
     /** @param {LH.Crdp.CSS.StyleSheetRemovedEvent} sheet */
     this._onStylesheetRemoved = sheet => {
       // We can't fetch the content of removed stylesheets, so we ignore them completely.
-      // TODO(FR-COMPAT): Refactor use of CSSUsage artifact to not *always* rely on the content of stylesheets.
       const styleSheetId = sheet.styleSheetId;
       this._stylesheets = this._stylesheets.filter(s => s.header.styleSheetId !== styleSheetId);
     };
@@ -84,7 +83,6 @@ class CSSUsage extends FRGatherer {
     const session = context.driver.defaultSession;
     const executionContext = context.driver.executionContext;
 
-    // TODO(FR-COMPAT): Do this only for snapshot once legacy runner is deprecated.
     if (context.gatherMode !== 'timespan') {
       await this.startCSSUsageTracking(context);
 

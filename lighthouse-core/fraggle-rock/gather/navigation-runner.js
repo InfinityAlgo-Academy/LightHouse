@@ -242,8 +242,6 @@ async function _navigations({driver, config, requestedUrl, computedCache}) {
 async function _cleanup({requestedUrl, driver, config}) {
   const didResetStorage = !config.settings.disableStorageReset;
   if (didResetStorage) await storage.clearDataForOrigin(driver.defaultSession, requestedUrl);
-
-  // TODO(FR-COMPAT): add driver.disconnect session tracking
 }
 
 /**

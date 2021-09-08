@@ -134,7 +134,7 @@ function resolveArtifactsToDefns(artifacts, configDir) {
   const coreGathererList = Runner.getGathererList();
   const artifactDefns = artifacts.map(artifactJson => {
     /** @type {LH.Config.GathererJson} */
-    // @ts-expect-error FR-COMPAT - eventually move the config-helpers to support new types
+    // @ts-expect-error - remove when legacy runner path is removed.
     const gathererJson = artifactJson.gatherer;
 
     const gatherer = resolveGathererToDefn(gathererJson, coreGathererList, configDir);
@@ -251,7 +251,6 @@ function initializeConfig(configJSON, context) {
 
   configWorkingCopy = resolveExtensions(configWorkingCopy);
 
-  // TODO(FR-COMPAT): handle config plugins
 
   const settings = resolveSettings(configWorkingCopy.settings || {}, context.settingsOverrides);
   overrideSettingsForGatherMode(settings, context);

@@ -68,7 +68,6 @@ export const SummaryFlowStep: FunctionComponent<{
   label: string,
   hashIndex: number,
 }> = ({lhr, label, hashIndex}) => {
-  // TODO(FR-COMPAT): Store report results globally.
   const reportResult = useMemo(() => Util.prepareReportResult(lhr), [lhr]);
 
   const screenshot = reportResult.gatherMode !== 'timespan' ? getScreenshot(reportResult) : null;
@@ -153,7 +152,6 @@ export const SummaryHeader: FunctionComponent = () => {
     }
   }
 
-  // TODO(FR-COMPAT): Pluralize UI strings.
   const subtitleCounts = [];
   if (numNavigation) subtitleCounts.push(`${numNavigation} navigation reports`);
   if (numTimespan) subtitleCounts.push(`${numTimespan} timespan reports`);

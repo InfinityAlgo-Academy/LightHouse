@@ -135,7 +135,6 @@ export function useDerivedStepNames() {
     let numTimespan = 1;
     let numSnapshot = 1;
 
-    // TODO(FR-COMPAT): Override with a provided step name.
     return flowResult.lhrs.map((lhr, index) => {
       const shortUrl = shortenUrl(lhr.finalUrl);
 
