@@ -18,6 +18,10 @@ const LighthouseError = require('../../../lib/lh-error.js');
 function getMockDriverForArtifacts() {
   const driverMock = createMockDriver();
   driverMock._executionContext.evaluate.mockResolvedValue(500);
+  driverMock._session.sendCommand.mockResponse('Browser.getVersion', {
+    userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.159 Safari/537.36', // eslint-disable-line max-len
+    product: 'Chrome/92.0.4515.159',
+  });
   return driverMock;
 }
 
@@ -32,6 +36,13 @@ describe('getBaseArtifacts', () => {
     const {config} = initializeConfig(undefined, {gatherMode: 'navigation'});
     const artifacts = await getBaseArtifacts(config, driverMock.asDriver());
     expect(artifacts.BenchmarkIndex).toEqual(500);
+  });
+
+  it('should fetch host user agent', async () => {
+    const {config} = initializeConfig(undefined, {gatherMode: 'navigation'});
+    const artifacts = await getBaseArtifacts(config, driverMock.asDriver());
+    expect(artifacts.HostUserAgent).toContain('Macintosh');
+    expect(artifacts.HostFormFactor).toEqual('desktop');
   });
 
   it('should return settings', async () => {

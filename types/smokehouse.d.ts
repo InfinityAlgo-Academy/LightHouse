@@ -14,6 +14,7 @@ declare global {
       audits: Record<string, any>;
       requestedUrl: string;
       finalUrl: string | RegExp;
+      userAgent?: string | RegExp;
       runWarnings?: Array<string|RegExp>;
       runtimeError?: {
         code?: any;

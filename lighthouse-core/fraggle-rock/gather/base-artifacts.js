@@ -8,6 +8,7 @@
 const log = require('lighthouse-logger');
 const isEqual = require('lodash.isequal');
 const {
+  getBrowserVersion,
   getBenchmarkIndex,
   getEnvironmentWarnings,
 } = require('../../gather/driver/environment.js');
@@ -19,6 +20,7 @@ const {
  */
 async function getBaseArtifacts(config, driver) {
   const BenchmarkIndex = await getBenchmarkIndex(driver.executionContext);
+  const {userAgent} = await getBrowserVersion(driver.defaultSession);
 
   return {
     // Meta artifacts.
@@ -28,12 +30,13 @@ async function getBaseArtifacts(config, driver) {
     settings: config.settings,
     // Environment artifacts that can always be computed.
     BenchmarkIndex,
+    HostUserAgent: userAgent,
+    HostFormFactor: userAgent.includes('Android') || userAgent.includes('Mobile') ?
+      'mobile' : 'desktop',
     // Contextual artifacts whose collection changes based on gather mode.
     URL: {requestedUrl: '', finalUrl: ''},
     PageLoadError: null,
     // Artifacts that have been replaced by regular gatherers in Fraggle Rock.
-    HostFormFactor: 'mobile',
-    HostUserAgent: '',
     Stacks: [],
     NetworkUserAgent: '',
     WebAppManifest: null,

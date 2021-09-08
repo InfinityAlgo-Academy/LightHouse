@@ -54,6 +54,10 @@ interface UniversalBaseArtifacts {
   settings: Config.Settings;
   /** The timing instrumentation of the gather portion of a run. */
   Timing: Artifacts.MeasureEntry[];
+  /** Device which Chrome is running on. */
+  HostFormFactor: 'desktop'|'mobile';
+  /** The user agent string of the version of Chrome used. */
+  HostUserAgent: string;
 }
 
 /**
@@ -70,10 +74,6 @@ interface ContextualBaseArtifacts {
  * The set of base artifacts that were replaced by standard gatherers in Fraggle Rock.
  */
 interface LegacyBaseArtifacts {
-  /** Device which Chrome is running on. */
-  HostFormFactor: 'desktop'|'mobile';
-  /** The user agent string of the version of Chrome used. */
-  HostUserAgent: string;
   /** The user agent string that Lighthouse used to load the page. Set to the empty string if unknown. */
   NetworkUserAgent: string;
   /** Information on detected tech stacks (e.g. JS libraries) used by the page. */

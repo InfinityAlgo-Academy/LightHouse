@@ -7,7 +7,12 @@
 
 /* eslint-env jest */
 
-const {createMockDriver, mockDriverSubmodules, mockRunnerModule} = require('./mock-driver.js');
+const {
+  createMockDriver,
+  createMockBaseArtifacts,
+  mockDriverSubmodules,
+  mockRunnerModule,
+} = require('./mock-driver.js');
 const mocks = mockDriverSubmodules();
 const {initializeConfig} = require('../../../fraggle-rock/config/config.js');
 const {defaultNavigationConfig} = require('../../../config/constants.js');
@@ -36,6 +41,8 @@ describe('NavigationRunner', () => {
   let navigation;
   /** @type {Map<string, LH.ArbitraryEqualityMap>} */
   let computedCache;
+  /** @type {LH.FRBaseArtifacts} */
+  let baseArtifacts;
 
   /** @return {LH.Config.AnyFRGathererDefn} */
   function createGathererDefn() {
@@ -89,6 +96,7 @@ describe('NavigationRunner', () => {
     config = initializeConfig(undefined, {gatherMode: 'navigation'}).config;
     navigation = createNavigation().navigation;
     computedCache = new Map();
+    baseArtifacts = createMockBaseArtifacts();
 
     mockDriver = createMockDriver();
     driver = mockDriver.asDriver();
@@ -139,7 +147,8 @@ describe('NavigationRunner', () => {
   });
 
   describe('_navigations', () => {
-    const run = () => runner._navigations({driver, config, requestedUrl, computedCache});
+    const run = () =>
+      runner._navigations({driver, config, requestedUrl, computedCache, baseArtifacts});
 
     it('should throw if no navigations available', async () => {
       config = {...config, navigations: null};
@@ -223,7 +232,7 @@ describe('NavigationRunner', () => {
   describe('_navigation', () => {
     /** @param {LH.Config.NavigationDefn} navigation */
     const run = navigation =>
-      runner._navigation({driver, config, navigation, requestedUrl, computedCache});
+      runner._navigation({driver, config, navigation, requestedUrl, computedCache, baseArtifacts});
 
     it('completes an end-to-end navigation', async () => {
       const {artifacts} = await run(navigation);
@@ -353,7 +362,14 @@ describe('NavigationRunner', () => {
   describe('_setupNavigation', () => {
     it('should setup the page on the blankPage', async () => {
       navigation.blankPage = 'data:text/html;...';
-      await runner._setupNavigation({driver, navigation, requestedUrl, config, computedCache});
+      await runner._setupNavigation({
+        driver,
+        navigation,
+        requestedUrl,
+        config,
+        computedCache,
+        baseArtifacts,
+      });
       expect(mocks.navigationMock.gotoURL).toHaveBeenCalledWith(
         expect.anything(),
         'data:text/html;...',
@@ -362,7 +378,14 @@ describe('NavigationRunner', () => {
     });
 
     it('should prepare target for navigation', async () => {
-      await runner._setupNavigation({driver, navigation, requestedUrl, config, computedCache});
+      await runner._setupNavigation({
+        driver,
+        navigation,
+        requestedUrl,
+        config,
+        computedCache,
+        baseArtifacts,
+      });
       expect(mocks.prepareMock.prepareTargetForIndividualNavigation).toHaveBeenCalled();
     });
 
@@ -375,13 +398,15 @@ describe('NavigationRunner', () => {
         requestedUrl,
         config,
         computedCache,
+        baseArtifacts,
       });
       expect(result).toEqual({warnings});
     });
   });
 
   describe('_navigate', () => {
-    const run = () => runner._navigate({driver, navigation, requestedUrl, config, computedCache});
+    const run = () =>
+      runner._navigate({driver, navigation, requestedUrl, config, computedCache, baseArtifacts});
 
     it('should navigate the page', async () => {
       await run();
