@@ -10,7 +10,7 @@
  * Zone aggressively polyfills promises including rewriting Promise.prototype.then which caused
  * problems for our evaluateAsync code where we rely on a `Promise` to work.
  * We serve this file in dbw_tester.html to make sure evaluateAsync, etc all works great
- * Serving this file via node_modules was a pain so we've vendored it here.
+ * Serving this file via node_modules was a pain so we've replaced it with our own.
  * @see https://github.com/GoogleChrome/lighthouse/issues/1173
  * @see https://github.com/GoogleChrome/lighthouse/pull/1178
  * We were serving zone.js@0.7.3 from node_modules but that introduced complexity, so it was
