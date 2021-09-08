@@ -13,14 +13,17 @@
 
 /* eslint-disable no-console */
 
+const fs = require('fs');
 const path = require('path');
 const cloneDeep = require('lodash.clonedeep');
 const yargs = require('yargs');
 const log = require('lighthouse-logger');
 const {runSmokehouse} = require('../smokehouse.js');
 const {updateTestDefnFormat} = require('./back-compat-util.js');
+const {LH_ROOT} = require('../../../../root.js');
 
-const coreTestDefnsPath = path.join(__dirname, '../test-definitions/core-tests.js');
+const coreTestDefnsPath =
+  path.join(LH_ROOT, 'lighthouse-cli/test/smokehouse/test-definitions/core-tests.js');
 
 /**
  * Possible Lighthouse runners. Loaded dynamically so e.g. a CLI run isn't
@@ -213,6 +216,24 @@ async function begin() {
 
   if (!smokehouseResult.success) {
     const failedTestResults = smokehouseResult.testResults.filter(r => r.failed);
+
+    // For CI, save failed runs to directory to be uploaded.
+    if (process.env.CI) {
+      const failuresDir = `${LH_ROOT}/.tmp/smokehouse-ci-failures`;
+      fs.mkdirSync(failuresDir, {recursive: true});
+
+      for (const testResult of failedTestResults) {
+        for (let i = 0; i < testResult.runs.length; i++) {
+          const run = testResult.runs[i];
+          fs.writeFileSync(`${failuresDir}/${testResult.id}-${i}.json`, JSON.stringify({
+            ...run,
+            lighthouseLog: run.lighthouseLog.split('\n'),
+            assertionLog: run.assertionLog.split('\n'),
+          }, null, 2));
+        }
+      }
+    }
+
     const cmd = `yarn smoke ${failedTestResults.map(r => r.id).join(' ')}`;
     console.log(`rerun failures: ${cmd}`);
   }
