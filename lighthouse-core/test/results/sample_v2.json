@@ -2379,11 +2379,8 @@
         "items": [
           {
             "source": {
-              "type": "source-location",
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-              "urlProvider": "network",
-              "line": 395,
-              "column": 36
+              "type": "url",
+              "value": "(unknown)"
             }
           }
         ]
@@ -3227,7 +3224,7 @@
         "nodes": [
           {
             "name": "http://localhost:10200/dobetterweb/dbw_tester.html",
-            "resourceBytes": 7197
+            "resourceBytes": 7135
           },
           {
             "name": "http://localhost:10200/dobetterweb/dbw_tester.js",
@@ -3247,9 +3244,9 @@
             "resourceBytes": 60
           },
           {
-            "name": "http://localhost:10200/dobetterweb/third_party/aggressive-promise-polyfill.js",
-            "resourceBytes": 166320,
-            "unusedBytes": 43507
+            "name": "http://localhost:10200/dobetterweb/bad-promise-polyfill.js",
+            "resourceBytes": 2254,
+            "unusedBytes": 318
           },
           {
             "name": "http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js",
@@ -4498,41 +4495,18 @@
       "id": "unminified-javascript",
       "title": "Minify JavaScript",
       "description": "Minifying JavaScript files can reduce payload sizes and script parse time. [Learn more](https://web.dev/unminified-javascript/).",
-      "score": 0.48,
+      "score": 1,
       "scoreDisplayMode": "numeric",
-      "numericValue": 900,
+      "numericValue": 0,
       "numericUnit": "millisecond",
-      "displayValue": "Potential savings of 82 KiB",
+      "displayValue": "",
       "warnings": [],
       "details": {
         "type": "opportunity",
-        "headings": [
-          {
-            "key": "url",
-            "valueType": "url",
-            "label": "URL"
-          },
-          {
-            "key": "totalBytes",
-            "valueType": "bytes",
-            "label": "Transfer Size"
-          },
-          {
-            "key": "wastedBytes",
-            "valueType": "bytes",
-            "label": "Potential Savings"
-          }
-        ],
-        "items": [
-          {
-            "url": "http://localhost:10200/dobetterweb/third_party/aggressive-promise-polyfill.js",
-            "totalBytes": 166550,
-            "wastedBytes": 83568,
-            "wastedPercent": 50.176166426166425
-          }
-        ],
-        "overallSavingsMs": 900,
-        "overallSavingsBytes": 83568
+        "headings": [],
+        "items": [],
+        "overallSavingsMs": 0,
+        "overallSavingsBytes": 0
       }
     },
     "unused-css-rules": {
@@ -4556,11 +4530,11 @@
       "id": "unused-javascript",
       "title": "Reduce unused JavaScript",
       "description": "Reduce unused JavaScript and defer loading scripts until they are required to decrease bytes consumed by network activity. [Learn more](https://web.dev/unused-javascript/).",
-      "score": 0.58,
+      "score": 0.88,
       "scoreDisplayMode": "numeric",
-      "numericValue": 600,
+      "numericValue": 150,
       "numericUnit": "millisecond",
-      "displayValue": "Potential savings of 64 KiB",
+      "displayValue": "Potential savings of 21 KiB",
       "details": {
         "type": "opportunity",
         "headings": [
@@ -4592,20 +4566,14 @@
         ],
         "items": [
           {
-            "url": "http://localhost:10200/dobetterweb/third_party/aggressive-promise-polyfill.js",
-            "totalBytes": 166550,
-            "wastedBytes": 43567,
-            "wastedPercent": 26.158609908609908
-          },
-          {
             "url": "http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js",
             "totalBytes": 30346,
             "wastedBytes": 21544,
             "wastedPercent": 70.99531129443884
           }
         ],
-        "overallSavingsMs": 600,
-        "overallSavingsBytes": 65111
+        "overallSavingsMs": 150,
+        "overallSavingsBytes": 21544
       }
     },
     "modern-image-formats": {
@@ -4718,11 +4686,11 @@
       "id": "uses-text-compression",
       "title": "Enable text compression",
       "description": "Text-based resources should be served with compression (gzip, deflate or brotli) to minimize total network bytes. [Learn more](https://web.dev/uses-text-compression/).",
-      "score": 0.38,
+      "score": 0.75,
       "scoreDisplayMode": "numeric",
-      "numericValue": 1800,
+      "numericValue": 300,
       "numericUnit": "millisecond",
-      "displayValue": "Potential savings of 143 KiB",
+      "displayValue": "Potential savings of 11 KiB",
       "details": {
         "type": "opportunity",
         "headings": [
@@ -4744,18 +4712,13 @@
         ],
         "items": [
           {
-            "url": "http://localhost:10200/dobetterweb/third_party/aggressive-promise-polyfill.js",
-            "totalBytes": 166320,
-            "wastedBytes": 134831
-          },
-          {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-            "totalBytes": 17393,
-            "wastedBytes": 11647
+            "totalBytes": 17466,
+            "wastedBytes": 11676
           }
         ],
-        "overallSavingsMs": 1800,
-        "overallSavingsBytes": 146478
+        "overallSavingsMs": 300,
+        "overallSavingsBytes": 11676
       }
     },
     "uses-responsive-images": {
@@ -4875,71 +4838,17 @@
       "id": "legacy-javascript",
       "title": "Avoid serving legacy JavaScript to modern browsers",
       "description": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. For your bundled JavaScript, adopt a modern script deployment strategy using module/nomodule feature detection to reduce the amount of code shipped to modern browsers, while retaining support for legacy browsers. [Learn More](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)",
-      "score": 0.88,
+      "score": 1,
       "scoreDisplayMode": "numeric",
-      "numericValue": 150,
+      "numericValue": 0,
       "numericUnit": "millisecond",
-      "displayValue": "Potential savings of 21 KiB",
+      "displayValue": "",
       "details": {
         "type": "opportunity",
-        "headings": [
-          {
-            "key": "url",
-            "valueType": "url",
-            "subItemsHeading": {
-              "key": "location",
-              "valueType": "source-location"
-            },
-            "label": "URL"
-          },
-          {
-            "key": null,
-            "valueType": "code",
-            "subItemsHeading": {
-              "key": "signal"
-            },
-            "label": ""
-          },
-          {
-            "key": "wastedBytes",
-            "valueType": "bytes",
-            "label": "Potential Savings"
-          }
-        ],
-        "items": [
-          {
-            "url": "http://localhost:10200/dobetterweb/third_party/aggressive-promise-polyfill.js",
-            "wastedBytes": 21189,
-            "subItems": {
-              "type": "subitems",
-              "items": [
-                {
-                  "signal": "Object.defineProperty",
-                  "location": {
-                    "type": "source-location",
-                    "url": "http://localhost:10200/dobetterweb/third_party/aggressive-promise-polyfill.js",
-                    "line": 2613,
-                    "column": 8,
-                    "urlProvider": "network"
-                  }
-                },
-                {
-                  "signal": "Object.defineProperties",
-                  "location": {
-                    "type": "source-location",
-                    "url": "http://localhost:10200/dobetterweb/third_party/aggressive-promise-polyfill.js",
-                    "line": 2623,
-                    "column": 8,
-                    "urlProvider": "network"
-                  }
-                }
-              ]
-            },
-            "totalBytes": 0
-          }
-        ],
-        "overallSavingsMs": 150,
-        "overallSavingsBytes": 21189
+        "headings": [],
+        "items": [],
+        "overallSavingsMs": 0,
+        "overallSavingsBytes": 0
       }
     },
     "appcache-manifest": {
@@ -8268,13 +8177,11 @@
         "audits[uses-long-cache-ttl].details.headings[0].text",
         "audits[total-byte-weight].details.headings[0].text",
         "audits[render-blocking-resources].details.headings[0].label",
-        "audits[unminified-javascript].details.headings[0].label",
         "audits[unused-javascript].details.headings[0].label",
         "audits[modern-image-formats].details.headings[1].label",
         "audits[uses-text-compression].details.headings[0].label",
         "audits[uses-responsive-images].details.headings[1].label",
-        "audits[efficient-animated-content].details.headings[0].label",
-        "audits[legacy-javascript].details.headings[0].label"
+        "audits[efficient-animated-content].details.headings[0].label"
       ],
       "lighthouse-core/lib/i18n/i18n.js | columnTimeSpent": [
         "audits[server-response-time].details.headings[1].label",
@@ -8511,7 +8418,6 @@
         "audits[uses-long-cache-ttl].details.headings[2].text",
         "audits[total-byte-weight].details.headings[1].text",
         "audits[render-blocking-resources].details.headings[1].label",
-        "audits[unminified-javascript].details.headings[1].label",
         "audits[unused-javascript].details.headings[1].label",
         "audits[uses-text-compression].details.headings[1].label"
       ],
@@ -9098,13 +9004,11 @@
       ],
       "lighthouse-core/lib/i18n/i18n.js | columnWastedBytes": [
         "audits[render-blocking-resources].details.headings[2].label",
-        "audits[unminified-javascript].details.headings[2].label",
         "audits[unused-javascript].details.headings[2].label",
         "audits[modern-image-formats].details.headings[3].label",
         "audits[uses-text-compression].details.headings[2].label",
         "audits[uses-responsive-images].details.headings[3].label",
-        "audits[efficient-animated-content].details.headings[2].label",
-        "audits[legacy-javascript].details.headings[2].label"
+        "audits[efficient-animated-content].details.headings[2].label"
       ],
       "lighthouse-core/audits/byte-efficiency/unminified-css.js | title": [
         "audits[unminified-css].title"
@@ -9118,16 +9022,22 @@
       "lighthouse-core/audits/byte-efficiency/unminified-javascript.js | description": [
         "audits[unminified-javascript].description"
       ],
+      "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | title": [
+        "audits[unused-css-rules].title"
+      ],
+      "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | description": [
+        "audits[unused-css-rules].description"
+      ],
+      "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": [
+        "audits[unused-javascript].title"
+      ],
+      "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": [
+        "audits[unused-javascript].description"
+      ],
       "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": [
         {
           "values": {
-            "wastedBytes": 83568
-          },
-          "path": "audits[unminified-javascript].displayValue"
-        },
-        {
-          "values": {
-            "wastedBytes": 65111
+            "wastedBytes": 21544
           },
           "path": "audits[unused-javascript].displayValue"
         },
@@ -9139,7 +9049,7 @@
         },
         {
           "values": {
-            "wastedBytes": 146478
+            "wastedBytes": 11676
           },
           "path": "audits[uses-text-compression].displayValue"
         },
@@ -9154,25 +9064,7 @@
             "wastedBytes": 682028
           },
           "path": "audits[efficient-animated-content].displayValue"
-        },
-        {
-          "values": {
-            "wastedBytes": 21189
-          },
-          "path": "audits[legacy-javascript].displayValue"
         }
-      ],
-      "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | title": [
-        "audits[unused-css-rules].title"
-      ],
-      "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | description": [
-        "audits[unused-css-rules].description"
-      ],
-      "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": [
-        "audits[unused-javascript].title"
-      ],
-      "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": [
-        "audits[unused-javascript].description"
       ],
       "lighthouse-core/audits/byte-efficiency/modern-image-formats.js | title": [
         "audits[modern-image-formats].title"

@@ -91,8 +91,15 @@ describe('PerfCategoryRenderer', () => {
         !Util.showAsPassed(audit.result));
     const oppElements = [...categoryDOM.querySelectorAll('.lh-audit--load-opportunity')];
     expect(oppElements.map(e => e.id).sort()).toEqual(oppAudits.map(a => a.id).sort());
-    expect(oppElements.length).toBeGreaterThan(0);
-    expect(oppElements.length).toMatchInlineSnapshot('7');
+    expect(oppElements.map((e) => e.id).sort()).toMatchInlineSnapshot(`
+Array [
+  "efficient-animated-content",
+  "modern-image-formats",
+  "unused-javascript",
+  "uses-responsive-images",
+  "uses-text-compression",
+]
+`);
 
     const oppElement = oppElements[0];
     const oppSparklineBarElement = oppElement.querySelector('.lh-sparkline__bar');
