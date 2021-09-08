@@ -16,8 +16,8 @@ describe('DOMSize audit', () => {
   const artifact = {
     DOMStats: {
       totalBodyElements: numElements,
-      depth: {max: 1, pathToElement: ['html', 'body', 'div', 'span']},
-      width: {max: 2, pathToElement: ['html', 'body']},
+      depth: {max: 1},
+      width: {max: 2},
     },
   };
   const context = {options, settings: {locale: 'en'}};
@@ -27,9 +27,9 @@ describe('DOMSize audit', () => {
     assert.equal(auditResult.score, 0.43);
     assert.equal(auditResult.numericValue, numElements);
     expect(auditResult.displayValue).toBeDisplayString('1,500 elements');
-    assert.equal(auditResult.details.items[0].value, numElements.toLocaleString());
-    assert.equal(auditResult.details.items[1].value, '1');
-    assert.equal(auditResult.details.items[2].value, '2');
+    assert.equal(auditResult.details.items[0].value, numElements);
+    assert.equal(auditResult.details.items[1].value, 1);
+    assert.equal(auditResult.details.items[2].value, 2);
   });
 
   it('calculates score hitting top distribution', () => {

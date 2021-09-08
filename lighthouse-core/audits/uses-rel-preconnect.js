@@ -13,7 +13,8 @@ const i18n = require('../lib/i18n/i18n.js');
 const NetworkRecords = require('../computed/network-records.js');
 const MainResource = require('../computed/main-resource.js');
 const LoadSimulator = require('../computed/load-simulator.js');
-const TraceOfTab = require('../computed/trace-of-tab.js');
+const ProcessedTrace = require('../computed/processed-trace.js');
+const ProcessedNavigation = require('../computed/processed-navigation.js');
 const PageDependencyGraph = require('../computed/page-dependency-graph.js');
 const LanternLCP = require('../computed/metrics/lantern-largest-contentful-paint.js');
 
@@ -31,22 +32,24 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user how to connect early to third-party domains that will be used to load page resources. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description:
     'Consider adding `preconnect` or `dns-prefetch` resource hints to establish early ' +
-    `connections to important third-party origins. [Learn more](https://web.dev/uses-rel-preconnect/).`,
+    'connections to important third-party origins. ' +
+    '[Learn more](https://web.dev/uses-rel-preconnect/).',
   /**
    * @description A warning message that is shown when the user tried to follow the advice of the audit, but it's not working as expected.
    * @example {https://example.com} securityOrigin
    * */
-  unusedWarning: 'A preconnect `<link>` was found for "{securityOrigin}" but was not used ' +
-    'by the browser. Only preconnect to important origins that the page will certainly request.',
+  unusedWarning: 'A `<link rel=preconnect>` was found for "{securityOrigin}" but was not used ' +
+    'by the browser. Only use `preconnect` for important origins ' +
+    'that the page will certainly request.',
   /**
    * @description A warning message that is shown when the user tried to follow the advice of the audit, but it's not working as expected. Forgetting to set the `crossorigin` HTML attribute, or setting it to an incorrect value, on the link is a common mistake when adding preconnect links.
    * @example {https://example.com} securityOrigin
    * */
-  crossoriginWarning: 'A preconnect `<link>` was found for "{securityOrigin}" but was not used ' +
-    'by the browser. Check that you are using the `crossorigin` attribute properly.',
+  crossoriginWarning: 'A `<link rel=preconnect>` was found for "{securityOrigin}" but was not ' +
+    'used by the browser. Check that you are using the `crossorigin` attribute properly.',
   /** A warning message that is shown when found more than 2 preconnected links */
-  tooManyPreconnectLinksWarning: 'More than 2 preconnect links were found. ' +
-   'Preconnect links should be used sparingly and only to the most important origins.',
+  tooManyPreconnectLinksWarning: 'More than 2 `<link rel=preconnect>` connections were found. ' +
+   'These should be used sparingly and only to the most important origins.',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
@@ -60,6 +63,7 @@ class UsesRelPreconnectAudit extends Audit {
       id: 'uses-rel-preconnect',
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
+      supportedModes: ['navigation'],
       requiredArtifacts: ['traces', 'devtoolsLogs', 'URL', 'LinkElements'],
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
     };
@@ -108,19 +112,22 @@ class UsesRelPreconnectAudit extends Audit {
     const settings = context.settings;
 
     let maxWasted = 0;
-    /** @type {string[]} */
+    /** @type {Array<LH.IcuMessage>} */
     const warnings = [];
 
-    const [networkRecords, mainResource, loadSimulator, traceOfTab, pageGraph] = await Promise.all([
-      NetworkRecords.request(devtoolsLog, context),
-      MainResource.request({devtoolsLog, URL: artifacts.URL}, context),
-      LoadSimulator.request({devtoolsLog, settings}, context),
-      TraceOfTab.request(trace, context),
-      PageDependencyGraph.request({trace, devtoolsLog}, context),
-    ]);
+    const processedTrace = await ProcessedTrace.request(trace, context);
+
+    const [networkRecords, mainResource, loadSimulator, processedNavigation, pageGraph] =
+      await Promise.all([
+        NetworkRecords.request(devtoolsLog, context),
+        MainResource.request({devtoolsLog, URL: artifacts.URL}, context),
+        LoadSimulator.request({devtoolsLog, settings}, context),
+        ProcessedNavigation.request(processedTrace, context),
+        PageDependencyGraph.request({trace, devtoolsLog}, context),
+      ]);
 
     const {rtt, additionalRttByOrigin} = loadSimulator.getOptions();
-    const lcpGraph = await LanternLCP.getPessimisticGraph(pageGraph, traceOfTab);
+    const lcpGraph = await LanternLCP.getPessimisticGraph(pageGraph, processedNavigation);
     /** @type {Set<string>} */
     const lcpGraphURLs = new Set();
     lcpGraph.traverse(node => {

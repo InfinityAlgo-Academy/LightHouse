@@ -17,38 +17,14 @@ describe('Accessibility gatherer', () => {
     accessibilityGather = new AccessibilityGather();
   });
 
-  it('fails if nothing is returned', () => {
-    return accessibilityGather.afterPass({
-      driver: {
-        evaluateAsync() {
-          return Promise.resolve();
-        },
-      },
-    }).then(
-      _ => assert.ok(false),
-      _ => assert.ok(true));
-  });
-
-  it('fails if result has no violations array', () => {
-    return accessibilityGather.afterPass({
-      driver: {
-        evaluateAsync() {
-          return Promise.resolve({
-            url: 'https://example.com',
-          });
-        },
-      },
-    }).then(
-      _ => assert.ok(false),
-      _ => assert.ok(true));
-  });
-
   it('propagates error retrieving the results', () => {
     const error = 'There was an error.';
     return accessibilityGather.afterPass({
       driver: {
-        evaluateAsync() {
-          return Promise.reject(new Error(error));
+        executionContext: {
+          async evaluate() {
+            throw new Error(error);
+          },
         },
       },
     }).then(

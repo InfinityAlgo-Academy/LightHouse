@@ -32,8 +32,7 @@ function generateArtifacts(images) {
 
     imageElements.push({
       src: url,
-      naturalWidth: image.width,
-      naturalHeight: image.height,
+      naturalDimensions: image,
     });
   }
 

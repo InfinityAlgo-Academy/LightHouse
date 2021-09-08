@@ -107,9 +107,9 @@ describe('Snyk database', () => {
 
     // For every subset ...
     for (const subset of range.set) {
-    // Upperbound exists if...
+      // Upperbound exists if...
 
-    // < or <= is in one of the subset's clauses (= gets normalized to >= and <).
+      // < or <= is in one of the subset's clauses (= gets normalized to >= and <).
       if (subset.some(comparator => comparator.operator && comparator.operator.match(/^</))) {
         continue;
       }

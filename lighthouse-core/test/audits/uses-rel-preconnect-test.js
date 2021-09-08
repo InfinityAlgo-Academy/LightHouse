@@ -22,7 +22,7 @@ const mainResource = {
 function buildArtifacts(networkRecords) {
   const trace = createTestTrace({
     timeOrigin: 0,
-    largestContentfulPaint: 5000e3,
+    largestContentfulPaint: 5000,
     topLevelTasks: [{ts: 1000, duration: 50}],
   });
   const devtoolsLog = networkRecordsToDevtoolsLog(networkRecords);

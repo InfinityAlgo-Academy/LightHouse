@@ -92,8 +92,7 @@ describe('Module Tests', function() {
     try {
       await lighthouse('i-am-not-valid', {}, {});
     } catch (err) {
-      expect(err.friendlyMessage)
-          .toBeDisplayString('The URL you have provided appears to be invalid.');
+      expect(err.friendlyMessage).toBe('The URL you have provided appears to be invalid.');
       expect(err.code).toEqual('INVALID_URL');
     }
   });
@@ -103,8 +102,7 @@ describe('Module Tests', function() {
     try {
       await lighthouse('file:///a/fake/index.html', {}, {});
     } catch (err) {
-      expect(err.friendlyMessage)
-          .toBeDisplayString('The URL you have provided appears to be invalid.');
+      expect(err.friendlyMessage).toBe('The URL you have provided appears to be invalid.');
       expect(err.code).toEqual('INVALID_URL');
     }
   });
@@ -116,6 +114,7 @@ describe('Module Tests', function() {
     }, {
       settings: {
         auditMode: __dirname + '/fixtures/artifacts/perflog/',
+        formFactor: 'mobile',
       },
       audits: [
         'viewport',
@@ -141,6 +140,7 @@ describe('Module Tests', function() {
     const results = await lighthouse(exampleUrl, {}, {
       settings: {
         auditMode: __dirname + '/fixtures/artifacts/perflog/',
+        formFactor: 'mobile',
       },
       audits: [],
     });
@@ -152,6 +152,7 @@ describe('Module Tests', function() {
     const results = await lighthouse(exampleUrl, {}, {
       settings: {
         auditMode: __dirname + '/fixtures/artifacts/perflog/',
+        formFactor: 'mobile',
         channel: 'custom',
       },
       audits: [],

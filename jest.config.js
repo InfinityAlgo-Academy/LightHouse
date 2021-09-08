@@ -11,6 +11,7 @@ module.exports = {
   collectCoverageFrom: [
     '**/lighthouse-core/**/*.js',
     '**/lighthouse-cli/**/*.js',
+    '**/report/**/*.js',
     '**/lighthouse-viewer/**/*.js',
   ],
   coveragePathIgnorePatterns: [
@@ -22,9 +23,20 @@ module.exports = {
   testMatch: [
     '**/lighthouse-core/**/*-test.js',
     '**/lighthouse-cli/**/*-test.js',
+    '**/report/**/*-test.js',
+    '**/lighthouse-core/test/fraggle-rock/**/*-test-pptr.js',
+    '**/lighthouse-treemap/**/*-test.js',
+    '**/lighthouse-treemap/**/*-test-pptr.js',
     '**/lighthouse-viewer/**/*-test.js',
     '**/lighthouse-viewer/**/*-test-pptr.js',
+    '**/third-party/**/*-test.js',
     '**/clients/test/**/*-test.js',
     '**/docs/**/*.test.js',
+  ],
+  transform: {},
+  prettierPath: null,
+  projects: [
+    '<rootDir>',
+    '<rootDir>/flow-report',
   ],
 };

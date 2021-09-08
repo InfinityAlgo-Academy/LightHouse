@@ -16,7 +16,7 @@
  * This gatherer collects stylesheet metadata by itself, instead of relying on the styles gatherer which is slow (because it parses the stylesheet content).
  */
 
-const Gatherer = require('../gatherer.js');
+const FRGatherer = require('../../../fraggle-rock/gather/base-gatherer.js');
 const FONT_SIZE_PROPERTY_NAME = 'font-size';
 const MINIMAL_LEGIBLE_FONT_SIZE_PX = 12;
 // limit number of protocol calls to make sure that gatherer doesn't take more than 1-2s
@@ -66,9 +66,9 @@ function computeSelectorSpecificity(selector) {
 /**
  * Finds the most specific directly matched CSS font-size rule from the list.
  *
- * @param {Array<LH.Crdp.CSS.RuleMatch>} [matchedCSSRules]
+ * @param {Array<LH.Crdp.CSS.RuleMatch>} matchedCSSRules
  * @param {function(LH.Crdp.CSS.CSSStyle):boolean|string|undefined} isDeclarationOfInterest
- * @returns {NodeFontData['cssRule']|undefined}
+ * @return {NodeFontData['cssRule']|undefined}
  */
 function findMostSpecificMatchedCSSRule(matchedCSSRules = [], isDeclarationOfInterest) {
   let maxSpecificity = -Infinity;
@@ -105,7 +105,7 @@ function findMostSpecificMatchedCSSRule(matchedCSSRules = [], isDeclarationOfInt
  * Finds the most specific directly matched CSS font-size rule from the list.
  *
  * @param {Array<LH.Crdp.CSS.InheritedStyleEntry>} [inheritedEntries]
- * @returns {NodeFontData['cssRule']|undefined}
+ * @return {NodeFontData['cssRule']|undefined}
  */
 function findInheritedCSSRule(inheritedEntries = []) {
   // The inherited array contains the array of matched rules for all parents in ascending tree order.
@@ -126,7 +126,7 @@ function findInheritedCSSRule(inheritedEntries = []) {
  *
  * @see https://cs.chromium.org/chromium/src/third_party/blink/renderer/devtools/front_end/sdk/CSSMatchedStyles.js?q=CSSMatchedStyles+f:devtools+-f:out&sq=package:chromium&dr=C&l=59-134
  * @param {LH.Crdp.CSS.GetMatchedStylesForNodeResponse} matched CSS rules
- * @returns {NodeFontData['cssRule']|undefined}
+ * @return {NodeFontData['cssRule']|undefined}
  */
 function getEffectiveFontRule({attributesStyle, inlineStyle, matchedCSSRules, inherited}) {
   // Inline styles have highest priority
@@ -148,7 +148,7 @@ function getEffectiveFontRule({attributesStyle, inlineStyle, matchedCSSRules, in
 
 /**
  * @param {string} text
- * @returns {number}
+ * @return {number}
  */
 function getTextLength(text) {
   // Array.from to count symbols not unicode code points. See: #6973
@@ -156,12 +156,12 @@ function getTextLength(text) {
 }
 
 /**
- * @param {Driver} driver
+ * @param {LH.Gatherer.FRProtocolSession} session
  * @param {number} nodeId text node
- * @returns {Promise<NodeFontData['cssRule']|undefined>}
+ * @return {Promise<NodeFontData['cssRule']|undefined>}
  */
-async function fetchSourceRule(driver, nodeId) {
-  const matchedRules = await driver.sendCommand('CSS.getMatchedStylesForNode', {
+async function fetchSourceRule(session, nodeId) {
+  const matchedRules = await session.sendCommand('CSS.getMatchedStylesForNode', {
     nodeId,
   });
   const sourceRule = getEffectiveFontRule(matchedRules);
@@ -178,20 +178,25 @@ async function fetchSourceRule(driver, nodeId) {
   };
 }
 
-class FontSize extends Gatherer {
+class FontSize extends FRGatherer {
+  /** @type {LH.Gatherer.GathererMeta} */
+  meta = {
+    supportedModes: ['snapshot', 'navigation'],
+  }
+
   /**
-   * @param {LH.Gatherer.PassContext['driver']} driver
+   * @param {LH.Gatherer.FRProtocolSession} session
    * @param {Array<NodeFontData>} failingNodes
    */
-  static async fetchFailingNodeSourceRules(driver, failingNodes) {
+  static async fetchFailingNodeSourceRules(session, failingNodes) {
     const nodesToAnalyze = failingNodes
       .sort((a, b) => b.textLength - a.textLength)
       .slice(0, MAX_NODES_SOURCE_RULE_FETCHED);
 
     // DOM.getDocument is necessary for pushNodesByBackendIdsToFrontend to properly retrieve nodeIds if the `DOM` domain was enabled before this gatherer, invoke it to be safe.
-    await driver.sendCommand('DOM.getDocument', {depth: -1, pierce: true});
+    await session.sendCommand('DOM.getDocument', {depth: -1, pierce: true});
 
-    const {nodeIds} = await driver.sendCommand('DOM.pushNodesByBackendIdsToFrontend', {
+    const {nodeIds} = await session.sendCommand('DOM.pushNodesByBackendIdsToFrontend', {
       backendNodeIds: nodesToAnalyze.map(node => node.parentNode.backendNodeId),
     });
 
@@ -199,7 +204,7 @@ class FontSize extends Gatherer {
       .map(async (failingNode, i) => {
         failingNode.nodeId = nodeIds[i];
         try {
-          const cssRule = await fetchSourceRule(driver, nodeIds[i]);
+          const cssRule = await fetchSourceRule(session, nodeIds[i]);
           failingNode.cssRule = cssRule;
         } catch (err) {
           // The node was deleted. We don't need to distinguish between lack-of-rule
@@ -309,24 +314,26 @@ class FontSize extends Gatherer {
   }
 
   /**
-   * @param {LH.Gatherer.PassContext} passContext
+   * @param {LH.Gatherer.FRTransitionalContext} passContext
    * @return {Promise<LH.Artifacts.FontSize>} font-size analysis
    */
-  async afterPass(passContext) {
+  async getArtifact(passContext) {
+    const session = passContext.driver.defaultSession;
+
     /** @type {Map<string, LH.Crdp.CSS.CSSStyleSheetHeader>} */
     const stylesheets = new Map();
     /** @param {LH.Crdp.CSS.StyleSheetAddedEvent} sheet */
     const onStylesheetAdded = sheet => stylesheets.set(sheet.header.styleSheetId, sheet.header);
-    passContext.driver.on('CSS.styleSheetAdded', onStylesheetAdded);
+    session.on('CSS.styleSheetAdded', onStylesheetAdded);
 
     await Promise.all([
-      passContext.driver.sendCommand('DOMSnapshot.enable'),
-      passContext.driver.sendCommand('DOM.enable'),
-      passContext.driver.sendCommand('CSS.enable'),
+      session.sendCommand('DOMSnapshot.enable'),
+      session.sendCommand('DOM.enable'),
+      session.sendCommand('CSS.enable'),
     ]);
 
     // Get the computed font-size style of every node.
-    const snapshot = await passContext.driver.sendCommand('DOMSnapshot.captureSnapshot', {
+    const snapshot = await session.sendCommand('DOMSnapshot.captureSnapshot', {
       computedStyles: ['font-size'],
     });
 
@@ -338,9 +345,9 @@ class FontSize extends Gatherer {
     const {
       analyzedFailingNodesData,
       analyzedFailingTextLength,
-    } = await FontSize.fetchFailingNodeSourceRules(passContext.driver, failingNodes);
+    } = await FontSize.fetchFailingNodeSourceRules(session, failingNodes);
 
-    passContext.driver.off('CSS.styleSheetAdded', onStylesheetAdded);
+    session.off('CSS.styleSheetAdded', onStylesheetAdded);
 
     // For the nodes whose computed style we could attribute to a stylesheet, assign
     // the stylsheet to the data.
@@ -350,9 +357,9 @@ class FontSize extends Gatherer {
       .forEach(data => (data.cssRule.stylesheet = stylesheets.get(data.cssRule.styleSheetId)));
 
     await Promise.all([
-      passContext.driver.sendCommand('DOMSnapshot.disable'),
-      passContext.driver.sendCommand('DOM.disable'),
-      passContext.driver.sendCommand('CSS.disable'),
+      session.sendCommand('DOMSnapshot.disable'),
+      session.sendCommand('DOM.disable'),
+      session.sendCommand('CSS.disable'),
     ]);
 
     return {

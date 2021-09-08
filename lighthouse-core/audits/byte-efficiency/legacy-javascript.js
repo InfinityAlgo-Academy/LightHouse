@@ -109,7 +109,8 @@ class LegacyJavascript extends ByteEfficiencyAudit {
       scoreDisplayMode: ByteEfficiencyAudit.SCORING_MODES.NUMERIC,
       description: str_(UIStrings.description),
       title: str_(UIStrings.title),
-      requiredArtifacts: ['devtoolsLogs', 'traces', 'ScriptElements', 'SourceMaps', 'URL'],
+      requiredArtifacts: ['devtoolsLogs', 'traces', 'ScriptElements', 'SourceMaps',
+        'GatherContext', 'URL'],
     };
   }
 
@@ -376,7 +377,7 @@ class LegacyJavascript extends ByteEfficiencyAudit {
     let transferRatio = transferRatioByUrl.get(url);
     if (transferRatio !== undefined) return transferRatio;
 
-    const mainDocumentRecord = await NetworkAnalyzer.findMainDocument(networkRecords);
+    const mainDocumentRecord = NetworkAnalyzer.findOptionalMainDocument(networkRecords);
     const networkRecord = url === artifacts.URL.finalUrl ?
       mainDocumentRecord :
       networkRecords.find(n => n.url === url);
@@ -394,6 +395,23 @@ class LegacyJavascript extends ByteEfficiencyAudit {
 
     transferRatioByUrl.set(url, transferRatio);
     return transferRatio;
+  }
+
+  /**
+   * @param {LH.Artifacts.Bundle} bundle
+   * @param {number} generatedLine
+   * @param {number} generatedColumn
+   * @return {LH.Audit.Details.SourceLocationValue['original']}
+   */
+  static _findOriginalLocation(bundle, generatedLine, generatedColumn) {
+    const entry = bundle && bundle.map.findEntry(generatedLine, generatedColumn);
+    if (!entry) return;
+
+    return {
+      file: entry.sourceURL || '',
+      line: entry.sourceLineNumber || 0,
+      column: entry.sourceColumnNumber || 0,
+    };
   }
 
   /**
@@ -434,8 +452,11 @@ class LegacyJavascript extends ByteEfficiencyAudit {
         // Not needed, but keeps typescript happy.
         totalBytes: 0,
       };
+
+      const bundle = bundles.find(bundle => bundle.script.src === url);
       for (const match of matches) {
         const {name, line, column} = match;
+
         /** @type {SubItem} */
         const subItem = {
           signal: name,
@@ -444,6 +465,7 @@ class LegacyJavascript extends ByteEfficiencyAudit {
             url,
             line,
             column,
+            original: bundle && this._findOriginalLocation(bundle, line, column),
             urlProvider: 'network',
           },
         };

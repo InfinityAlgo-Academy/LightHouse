@@ -10,12 +10,16 @@ const UsesResponsiveImagesAudit =
 const assert = require('assert').strict;
 
 /* eslint-env jest */
-function generateRecord(resourceSizeInKb, durationInMs, mimeType = 'image/png') {
+function generateRecord(resourceSizeInKb, durationInMs, url = 'https://google.com/logo.png', mimeType = 'image/png') {
   return {
     mimeType,
     resourceSize: resourceSizeInKb * 1024,
+    transferSize: resourceSizeInKb * 1024,
     endTime: durationInMs / 1000,
     responseReceivedTime: 0,
+    statusCode: 200,
+    finished: true,
+    url,
   };
 }
 
@@ -26,33 +30,34 @@ function generateSize(width, height, prefix = 'displayed') {
   return size;
 }
 
-function generateImage(clientSize, naturalSize, networkRecord, src = 'https://google.com/logo.png') {
-  Object.assign(networkRecord || {}, {url: src});
-  const image = {src, ...networkRecord};
-  Object.assign(image, clientSize, naturalSize);
-  return image;
+function generateImage(clientSize, naturalDimensions, src = 'https://google.com/logo.png') {
+  return {src, ...clientSize, naturalDimensions};
 }
 
 describe('Page uses responsive images', () => {
   function testImage(condition, data) {
     const description = `identifies when an image is ${condition}`;
-    it(description, () => {
-      const result = UsesResponsiveImagesAudit.audit_({
-        ViewportDimensions: {
-          innerWidth: 1000,
-          innerHeight: 1000,
-          devicePixelRatio: data.devicePixelRatio || 1,
-        },
-        ImageElements: [
-          generateImage(
-            generateSize(...data.clientSize),
-            generateSize(...data.naturalSize, 'natural'),
-            generateRecord(data.sizeInKb, data.durationInMs || 200)
-          ),
-        ],
-      });
-
-      assert.equal(result.items.length, data.listed ? 1 : 0);
+    const artifacts = {
+      ViewportDimensions: {
+        innerWidth: 1000,
+        innerHeight: 1000,
+        devicePixelRatio: data.devicePixelRatio || 1,
+      },
+      ImageElements: [
+        generateImage(
+          generateSize(...data.clientSize),
+          {width: data.naturalSize[0], height: data.naturalSize[1]}
+        ),
+      ],
+    };
+    it(description, async () => {
+      // eslint-disable-next-line max-len
+      const result = await UsesResponsiveImagesAudit.audit_(
+        artifacts,
+        [generateRecord(data.sizeInKb, data.durationInMs || 200)],
+        {computedCache: new Map()}
+      );
+      expect(result.items).toHaveLength(data.listed ? 1 : 0);
       if (data.listed) {
         assert.equal(Math.round(result.items[0].wastedBytes / 1024), data.expectedWaste);
       }
@@ -110,115 +115,152 @@ describe('Page uses responsive images', () => {
     expectedWaste: 840, // 1000 * 21/25
   });
 
-  it('handles images without network record', () => {
-    const auditResult = UsesResponsiveImagesAudit.audit_({
+  it('handles images without network record', async () => {
+    const auditResult = await UsesResponsiveImagesAudit.audit_({
       ViewportDimensions: {innerWidth: 1000, innerHeight: 1000, devicePixelRatio: 2},
       ImageElements: [
         generateImage(
           generateSize(100, 100),
-          generateSize(300, 300, 'natural'),
+          {width: 300, height: 300},
           null
         ),
       ],
-    });
+    },
+      [],
+      {computedCache: new Map()}
+    );
 
     assert.equal(auditResult.items.length, 0);
   });
 
-  it('identifies when images are not wasteful', () => {
-    const auditResult = UsesResponsiveImagesAudit.audit_({
+  it('identifies when images are not wasteful', async () => {
+    const networkRecords = [generateRecord(100, 300, 'https://google.com/logo.png'), generateRecord(90, 500, 'https://google.com/logo2.png'), generateRecord(20, 100, 'data:image/jpeg;base64,foobar')];
+    const auditResult = await UsesResponsiveImagesAudit.audit_({
       ViewportDimensions: {innerWidth: 1000, innerHeight: 1000, devicePixelRatio: 2},
       ImageElements: [
         generateImage(
           generateSize(200, 200),
-          generateSize(450, 450, 'natural'),
-          generateRecord(100, 300),
+          {width: 450, height: 450},
           'https://google.com/logo.png'
         ),
         generateImage(
           generateSize(100, 100),
-          generateSize(210, 210, 'natural'),
-          generateRecord(90, 500),
+          {width: 210, height: 210},
           'https://google.com/logo2.png'
         ),
         generateImage(
           generateSize(100, 100),
-          generateSize(80, 80, 'natural'),
-          generateRecord(20, 100),
+          {width: 80, height: 80},
           'data:image/jpeg;base64,foobar'
         ),
       ],
-    });
+    },
+      networkRecords,
+      {computedCache: new Map()}
+    );
 
     assert.equal(auditResult.items.length, 2);
   });
 
-  it('ignores vectors', () => {
+  it('ignores vectors', async () => {
     const urlA = 'https://google.com/logo.svg';
-    const naturalSizeA = generateSize(450, 450, 'natural');
-    const recordA = generateRecord(100, 300, 'image/svg+xml');
-
-    const auditResult = UsesResponsiveImagesAudit.audit_({
+    const naturalSizeA = {width: 450, height: 450};
+    const image =
+      {...generateImage(generateSize(10, 10), naturalSizeA, urlA)};
+    const auditResult = await UsesResponsiveImagesAudit.audit_({
       ViewportDimensions: {innerWidth: 1000, innerHeight: 1000, devicePixelRatio: 1},
       ImageElements: [
-        generateImage(generateSize(10, 10), naturalSizeA, recordA, urlA),
+        image,
       ],
-    });
+    },
+      [generateRecord(100, 300, urlA, 'image/svg+xml')],
+      {computedCache: new Map()}
+    );
+    assert.equal(auditResult.items.length, 0);
+  });
+
+  it('ignores CSS', async () => {
+    const urlA = 'https://google.com/logo.png';
+    const naturalSizeA = {width: 450, height: 450};
+
+    const auditResult = await UsesResponsiveImagesAudit.audit_({
+      ViewportDimensions: {innerWidth: 1000, innerHeight: 1000, devicePixelRatio: 1},
+      ImageElements: [
+        {...generateImage(generateSize(10, 10), naturalSizeA, urlA), isCss: true},
+      ],
+    },
+      [generateRecord(100, 300, urlA)],
+      {computedCache: new Map()}
+    );
 
     assert.equal(auditResult.items.length, 0);
   });
 
-  it('ignores CSS', () => {
+  it('handles failure', async () => {
     const urlA = 'https://google.com/logo.png';
-    const naturalSizeA = generateSize(450, 450, 'natural');
-    const recordA = generateRecord(100, 300);
-
-    const auditResult = UsesResponsiveImagesAudit.audit_({
+    const naturalSizeA = {width: NaN, height: 450};
+    const auditResult = await UsesResponsiveImagesAudit.audit_({
       ViewportDimensions: {innerWidth: 1000, innerHeight: 1000, devicePixelRatio: 1},
       ImageElements: [
-        {...generateImage(generateSize(10, 10), naturalSizeA, recordA, urlA), isCss: true},
+        generateImage(generateSize(10, 10), naturalSizeA, urlA),
       ],
-    });
+    },
+      [generateRecord(100, 300, urlA)],
+      {computedCache: new Map()}
+    );
 
     assert.equal(auditResult.items.length, 0);
   });
 
-  it('handles failure', () => {
+  it('de-dupes images', async () => {
     const urlA = 'https://google.com/logo.png';
-    const naturalSizeA = generateSize(NaN, 450, 'natural');
-    const recordA = generateRecord(100, 300);
-
-    const auditResult = UsesResponsiveImagesAudit.audit_({
-      ViewportDimensions: {innerWidth: 1000, innerHeight: 1000, devicePixelRatio: 1},
-      ImageElements: [
-        generateImage(generateSize(10, 10), naturalSizeA, recordA, urlA),
-      ],
-    });
-
-    assert.equal(auditResult.items.length, 0);
-    assert.equal(auditResult.warnings.length, 1);
-  });
-
-  it('de-dupes images', () => {
-    const urlA = 'https://google.com/logo.png';
-    const naturalSizeA = generateSize(450, 450, 'natural');
-    const recordA = generateRecord(100, 300);
+    const naturalSizeA = {width: 450, height: 450};
+    const recordA = generateRecord(100, 300, urlA);
     const urlB = 'https://google.com/logoB.png';
-    const naturalSizeB = generateSize(1000, 1000, 'natural');
-    const recordB = generateRecord(10, 20); // make it small to still test passing
+    const naturalSizeB = {width: 1000, height: 1000};
+    const recordB = generateRecord(10, 20, urlB); // make it small to keep test passing
+    const networkRecords = [recordA, recordB];
 
-    const auditResult = UsesResponsiveImagesAudit.audit_({
+    const auditResult = await UsesResponsiveImagesAudit.audit_({
       ViewportDimensions: {innerWidth: 1000, innerHeight: 1000, devicePixelRatio: 1},
       ImageElements: [
-        generateImage(generateSize(10, 10), naturalSizeA, recordA, urlA),
-        generateImage(generateSize(450, 450), naturalSizeA, recordA, urlA),
-        generateImage(generateSize(30, 30), naturalSizeA, recordA, urlA),
-        generateImage(generateSize(500, 500), naturalSizeB, recordB, urlB),
-        generateImage(generateSize(100, 100), naturalSizeB, recordB, urlB),
+        generateImage(generateSize(10, 10), naturalSizeA, urlA),
+        generateImage(generateSize(450, 450), naturalSizeA, urlA),
+        generateImage(generateSize(30, 30), naturalSizeA, urlA),
+        generateImage(generateSize(500, 500), naturalSizeB, urlB),
+        generateImage(generateSize(100, 100), naturalSizeB, urlB),
       ],
-    });
+    },
+      networkRecords,
+      {computedCache: new Map()}
+    );
 
     assert.equal(auditResult.items.length, 1);
     assert.equal(auditResult.items[0].wastedPercent, 75, 'correctly computes wastedPercent');
+  });
+
+  it('handles cached images', async () => {
+    const networkRecord = {
+      mimeType: 'image/png',
+      resourceSize: 1024 * 100,
+      transferSize: 0,
+      url: 'https://google.com/logo.png',
+    };
+    const auditResult = await UsesResponsiveImagesAudit.audit_({
+      ViewportDimensions: {innerWidth: 1000, innerHeight: 1000, devicePixelRatio: 1},
+      ImageElements: [
+        generateImage(
+          generateSize(500, 500),
+          {width: 1000, height: 1000},
+          'https://google.com/logo.png'
+        ),
+      ],
+    },
+      [networkRecord],
+      {computedCache: new Map()}
+    );
+
+    assert.equal(auditResult.items.length, 1);
+    assert.equal(auditResult.items[0].wastedBytes / 1024, 75, 'correctly computes wastedBytes');
   });
 });

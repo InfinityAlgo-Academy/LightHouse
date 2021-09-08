@@ -10,9 +10,17 @@
 
 'use strict';
 
-const Gatherer = require('./gatherer.js');
+const FRGatherer = require('../../fraggle-rock/gather/base-gatherer.js');
+const NetworkRecords = require('../../computed/network-records.js');
+const DevtoolsLog = require('./devtools-log.js');
 
-class InspectorIssues extends Gatherer {
+class InspectorIssues extends FRGatherer {
+  /** @type {LH.Gatherer.GathererMeta<'DevtoolsLog'>} */
+  meta = {
+    supportedModes: ['timespan', 'navigation'],
+    dependencies: {DevtoolsLog: DevtoolsLog.symbol},
+  }
+
   constructor() {
     super();
     /** @type {Array<LH.Crdp.Audits.InspectorIssue>} */
@@ -28,12 +36,88 @@ class InspectorIssues extends Gatherer {
   }
 
   /**
-   * @param {LH.Gatherer.PassContext} passContext
+   * @param {LH.Gatherer.FRTransitionalContext} context
    */
-  async beforePass(passContext) {
-    const driver = passContext.driver;
-    driver.on('Audits.issueAdded', this._onIssueAdded);
-    await driver.sendCommand('Audits.enable');
+  async startInstrumentation(context) {
+    const session = context.driver.defaultSession;
+    session.on('Audits.issueAdded', this._onIssueAdded);
+    await session.sendCommand('Audits.enable');
+  }
+
+  /**
+   * @param {LH.Gatherer.FRTransitionalContext} context
+   */
+  async stopInstrumentation(context) {
+    const session = context.driver.defaultSession;
+    session.off('Audits.issueAdded', this._onIssueAdded);
+    await session.sendCommand('Audits.disable');
+  }
+
+  /**
+   * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
+   * @return {Promise<LH.Artifacts['InspectorIssues']>}
+   */
+  async _getArtifact(networkRecords) {
+    const artifact = {
+      /** @type {Array<LH.Crdp.Audits.MixedContentIssueDetails>} */
+      mixedContent: [],
+      /** @type {Array<LH.Crdp.Audits.SameSiteCookieIssueDetails>} */
+      sameSiteCookies: [],
+      /** @type {Array<LH.Crdp.Audits.BlockedByResponseIssueDetails>} */
+      blockedByResponse: [],
+      /** @type {Array<LH.Crdp.Audits.HeavyAdIssueDetails>} */
+      heavyAds: [],
+      /** @type {Array<LH.Crdp.Audits.ContentSecurityPolicyIssueDetails>} */
+      contentSecurityPolicy: [],
+    };
+
+    for (const issue of this._issues) {
+      if (issue.details.mixedContentIssueDetails) {
+        const issueDetails = issue.details.mixedContentIssueDetails;
+        const issueReqId = issueDetails.request && issueDetails.request.requestId;
+        // Duplicate issues can occur for the same request; only use the one with a matching networkRequest.
+        if (issueReqId &&
+          networkRecords.find(req => req.requestId === issueReqId)) {
+          artifact.mixedContent.push(issueDetails);
+        }
+      }
+      if (issue.details.sameSiteCookieIssueDetails) {
+        const issueDetails = issue.details.sameSiteCookieIssueDetails;
+        const issueReqId = issueDetails.request && issueDetails.request.requestId;
+        // Duplicate issues can occur for the same request; only use the one with a matching networkRequest.
+        if (issueReqId &&
+          networkRecords.find(req => req.requestId === issueReqId)) {
+          artifact.sameSiteCookies.push(issueDetails);
+        }
+      }
+      if (issue.details.blockedByResponseIssueDetails) {
+        const issueDetails = issue.details.blockedByResponseIssueDetails;
+        const issueReqId = issueDetails.request && issueDetails.request.requestId;
+        // Duplicate issues can occur for the same request; only use the one with a matching networkRequest.
+        if (issueReqId &&
+          networkRecords.find(req => req.requestId === issueReqId)) {
+          artifact.blockedByResponse.push(issueDetails);
+        }
+      }
+      if (issue.details.heavyAdIssueDetails) {
+        artifact.heavyAds.push(issue.details.heavyAdIssueDetails);
+      }
+      if (issue.details.contentSecurityPolicyIssueDetails) {
+        artifact.contentSecurityPolicy.push(issue.details.contentSecurityPolicyIssueDetails);
+      }
+    }
+
+    return artifact;
+  }
+
+  /**
+   * @param {LH.Gatherer.FRTransitionalContext<'DevtoolsLog'>} context
+   * @return {Promise<LH.Artifacts['InspectorIssues']>}
+   */
+  async getArtifact(context) {
+    const devtoolsLog = context.dependencies.DevtoolsLog;
+    const networkRecords = await NetworkRecords.request(devtoolsLog, context);
+    return this._getArtifact(networkRecords);
   }
 
   /**
@@ -42,28 +126,8 @@ class InspectorIssues extends Gatherer {
    * @return {Promise<LH.Artifacts['InspectorIssues']>}
    */
   async afterPass(passContext, loadData) {
-    const driver = passContext.driver;
-    const networkRecords = loadData.networkRecords;
-
-    driver.off('Audits.issueAdded', this._onIssueAdded);
-    await driver.sendCommand('Audits.disable');
-    const artifact = {
-      /** @type {Array<LH.Crdp.Audits.MixedContentIssueDetails>} */
-      mixedContent: [],
-    };
-
-    for (const issue of this._issues) {
-      if (issue.details.mixedContentIssueDetails) {
-        const issueDetails = issue.details.mixedContentIssueDetails;
-        const issueReqId = issueDetails.request && issueDetails.request.requestId;
-        if (issueReqId &&
-          networkRecords.find(req => req.requestId === issueReqId)) {
-          artifact.mixedContent.push(issue.details.mixedContentIssueDetails);
-        }
-      }
-    }
-
-    return artifact;
+    await this.stopInstrumentation({...passContext, dependencies: {}});
+    return this._getArtifact(loadData.networkRecords);
   }
 }
 

@@ -9,7 +9,8 @@ set -e
 # Testing lantern can be expensive, we'll only run the tests if we touched files that affect the simulations.
 CHANGED_FILES=""
 if [[ "$CI" ]]; then
-  CHANGED_FILES=$(git --no-pager diff --name-only $TRAVIS_COMMIT_RANGE)
+  if [[ -z "$GITHUB_ACTIONS_COMMIT_RANGE" ]]; then echo "No commit range available!" && exit 1 ; fi
+  CHANGED_FILES=$(git --no-pager diff --name-only "$GITHUB_ACTIONS_COMMIT_RANGE")
 else
   CHANGED_FILES=$(git --no-pager diff --name-only master)
 fi
@@ -34,5 +35,5 @@ printf "\n\nRunning lantern on all sites...\n"
 printf "\n\n"
 "$LH_ROOT/lighthouse-core/scripts/lantern/print-correlations.js"
 
-printf "\n\nComparing to master computed values...\n"
-"$LH_ROOT/lighthouse-core/scripts/lantern/assert-master-lantern-values-unchanged.js"
+printf "\n\nComparing to baseline computed values...\n"
+"$LH_ROOT/lighthouse-core/scripts/lantern/assert-baseline-lantern-values-unchanged.js"

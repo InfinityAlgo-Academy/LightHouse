@@ -17,6 +17,15 @@
   "lighthouse-core/audits/accessibility/aria-allowed-attr.js | title": {
     "message": "Attributen av typen `[aria-*]` stämmer med elementets roll"
   },
+  "lighthouse-core/audits/accessibility/aria-command-name.js | description": {
+    "message": "Utan ett igenkännligt namn läses element upp med ett generellt namn av skärmläsarna. Det gör dem oanvändbara för personer som behöver använda en skärmläsare. [Läs mer](https://web.dev/aria-name/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-command-name.js | failureTitle": {
+    "message": "Namnen för `button`-, `link`- och `menuitem`-elementen är inte igenkännliga."
+  },
+  "lighthouse-core/audits/accessibility/aria-command-name.js | title": {
+    "message": "Namnen för `button`-, `link`- och `menuitem`-elementen är igenkännliga"
+  },
   "lighthouse-core/audits/accessibility/aria-hidden-body.js | description": {
     "message": "Hjälpmedelstekniker som skärmläsare fungerar inte ordentligt när `aria-hidden=\"true\"` har angetts för dokumentet `<body>`. [Läs mer](https://web.dev/aria-hidden-body/)."
   },
@@ -36,13 +45,31 @@
     "message": "Alla `[aria-hidden=\"true\"]`-element har inte fokuserbara underordnade element"
   },
   "lighthouse-core/audits/accessibility/aria-input-field-name.js | description": {
-    "message": "Utan ett igenkännligt namn läses inmatningsfält upp med ett generellt namn av skärmläsarna. Det gör dem oanvändbara för personer som behöver använda en skärmläsare. [Läs mer](https://web.dev/aria-input-field-name/)."
+    "message": "Utan ett igenkännligt namn läses inmatningsfält upp med ett generellt namn av skärmläsarna. Det gör dem oanvändbara för personer som behöver använda en skärmläsare. [Läs mer](https://web.dev/aria-name/)."
   },
   "lighthouse-core/audits/accessibility/aria-input-field-name.js | failureTitle": {
     "message": "Namnen för inmatningsfälten för ARIA är inte tillgängliga"
   },
   "lighthouse-core/audits/accessibility/aria-input-field-name.js | title": {
     "message": "Namnen för inmatningsfälten för ARIA är tillgängliga"
+  },
+  "lighthouse-core/audits/accessibility/aria-meter-name.js | description": {
+    "message": "Utan ett igenkännligt namn läses element upp med ett generellt namn av skärmläsarna. Det gör dem oanvändbara för personer som behöver använda en skärmläsare. [Läs mer](https://web.dev/aria-name/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-meter-name.js | failureTitle": {
+    "message": "Namnen för `meter`-elementen för ARIA är inte igenkännliga."
+  },
+  "lighthouse-core/audits/accessibility/aria-meter-name.js | title": {
+    "message": "Namnen för `meter`-elementen för ARIA är igenkännliga"
+  },
+  "lighthouse-core/audits/accessibility/aria-progressbar-name.js | description": {
+    "message": "Utan ett igenkännligt namn läses `progressbar`-element upp med ett generellt namn av skärmläsarna. Det gör dem oanvändbara för personer som behöver använda en skärmläsare. [Läs mer](https://web.dev/aria-name/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-progressbar-name.js | failureTitle": {
+    "message": "Namnen för `progressbar`-elementen för ARIA är inte igenkännliga."
+  },
+  "lighthouse-core/audits/accessibility/aria-progressbar-name.js | title": {
+    "message": "Namnen för `progressbar`-elementen för ARIA är igenkännliga"
   },
   "lighthouse-core/audits/accessibility/aria-required-attr.js | description": {
     "message": "Vissa ARIA-roller har obligatoriska attribut som beskriver elementets tillstånd för skärmläsare. [Läs mer](https://web.dev/aria-required-attr/)."
@@ -81,13 +108,31 @@
     "message": "Alla `[role]`-värden är giltiga"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
-    "message": "Utan ett igenkännligt namn läses av/på-fält upp med ett generellt namn av skärmläsarna. Det gör dem oanvändbara för personer som behöver använda en skärmläsare. [Läs mer](https://web.dev/aria-toggle-field-name/)."
+    "message": "Utan ett igenkännligt namn läses av/på-fält upp med ett generellt namn av skärmläsarna. Det gör dem oanvändbara för personer som behöver använda en skärmläsare. [Läs mer](https://web.dev/aria-name/)."
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
     "message": "Namnen för på/av-fälten för ARIA är inte tillgängliga"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | title": {
     "message": "Namnen för på/av-fälten för ARIA är tillgängliga"
+  },
+  "lighthouse-core/audits/accessibility/aria-tooltip-name.js | description": {
+    "message": "Utan ett igenkännligt namn läses element upp med ett generellt namn av skärmläsarna. Det gör dem oanvändbara för personer som behöver använda en skärmläsare. [Läs mer](https://web.dev/aria-name/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-tooltip-name.js | failureTitle": {
+    "message": "Namnen för `tooltip`-elementen för ARIA är inte igenkännliga."
+  },
+  "lighthouse-core/audits/accessibility/aria-tooltip-name.js | title": {
+    "message": "Namnen för `tooltip`-elementen för ARIA är igenkännliga"
+  },
+  "lighthouse-core/audits/accessibility/aria-treeitem-name.js | description": {
+    "message": "Utan ett igenkännligt namn läses element upp med ett generellt namn av skärmläsarna. Det gör dem oanvändbara för personer som behöver använda en skärmläsare. [Läs mer](https://web.dev/aria-name/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-treeitem-name.js | failureTitle": {
+    "message": "Namnen för `treeitem`-elementen för ARIA är inte igenkännliga."
+  },
+  "lighthouse-core/audits/accessibility/aria-treeitem-name.js | title": {
+    "message": "Namnen för `treeitem`-elementen för ARIA är igenkännliga"
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr-value.js | description": {
     "message": "Skärmläsare och andra hjälpmedel kan inte tolka ARIA-attribut med ogiltiga värden. [Läs mer](https://web.dev/aria-valid-attr-value/)."
@@ -254,15 +299,6 @@
   "lighthouse-core/audits/accessibility/label.js | title": {
     "message": "Alla formulärelement har etiketter"
   },
-  "lighthouse-core/audits/accessibility/layout-table.js | description": {
-    "message": "I en tabell som används i layoutsyfte ska det inte finnas dataelement som th eller caption eller attributet summary, eftersom det kan bli missvisande för den som använder skärmläsare. [Läs mer](https://web.dev/layout-table/)."
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | failureTitle": {
-    "message": "Det finns `<table>`-element som används i layoutsyfte men som ändå har `<th>`- eller `<caption>`-element eller `[summary]`-attribut, vilket bör undvikas."
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | title": {
-    "message": "Inga `<th>`- eller `<caption>`-element eller `[summary]`-attribut förekommer i `<table>`-element som används i layoutsyfte."
-  },
   "lighthouse-core/audits/accessibility/link-name.js | description": {
     "message": "Det blir enklare att navigera för den som använder en skärmläsare om alla länktexter (och alternativtexter för alla bilder som används som länkar) är igenkännliga, unika och möjliga att flytta fokus till. [Läs mer](https://web.dev/link-name/)."
   },
@@ -362,15 +398,6 @@
   "lighthouse-core/audits/accessibility/video-caption.js | title": {
     "message": "Alla `<video>`-element innehåller ett `<track>`-element med `[kind=\"captions\"]`"
   },
-  "lighthouse-core/audits/accessibility/video-description.js | description": {
-    "message": "Upplästa beskrivningar ger viktig information om videon som inte framgår av dialogen, t.ex. ansiktsuttryck och naturvyer. [Läs mer](https://web.dev/video-description/)."
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | failureTitle": {
-    "message": "Alla `<video>`-element har inte ett underordnat `<track>`-element med `[kind=\"description\"]`."
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | title": {
-    "message": "Alla `<video>`-element innehåller ett `<track>`-element med `[kind=\"description\"]`"
-  },
   "lighthouse-core/audits/apple-touch-icon.js | description": {
     "message": "Definiera en `apple-touch-icon` för att få bästa möjliga utseende i iOS när användare lägger till en progressiv webbapp på startskärmen. Den måste peka på en icke-transparent, kvadratisk PNG med sidan 192 pixlar (eller 180 pixlar). [Läs mer](https://web.dev/apple-touch-icon/)."
   },
@@ -384,31 +411,31 @@
     "message": "Anger en giltig `apple-touch-icon`"
   },
   "lighthouse-core/audits/autocomplete.js | columnCurrent": {
-    "message": "Autocomplete Current Value"
+    "message": "Aktuellt värde"
   },
   "lighthouse-core/audits/autocomplete.js | columnSuggestions": {
-    "message": "Autocomplete Suggested Token"
+    "message": "Föreslagen token"
   },
   "lighthouse-core/audits/autocomplete.js | description": {
-    "message": "Med autoslutför går det fortare för användare att skicka in formulär. Du kan underlätta för användarna genom att aktivera autoslutför. För att göra det ställer du in ett giltigt värde för attributet `autocomplete`. [Läs mer](https://developers.google.com/web/fundamentals/design-and-ux/input/forms#use_metadata_to_enable_auto-complete)"
+    "message": "Med hjälp av `autocomplete` kan användare fylla i formulär snabbare och enklare. Vi rekommenderar att du aktiverar detta genom att ställa in ett giltigt värde för attributet `autocomplete`. [Läs mer](https://developers.google.com/web/fundamentals/design-and-ux/input/forms#use_metadata_to_enable_auto-complete)"
   },
   "lighthouse-core/audits/autocomplete.js | failureTitle": {
-    "message": "Det finns indataelement som saknar rätt attribut för autoslutför"
+    "message": "`<input>`-element har inte rätt `autocomplete`-attribut"
   },
   "lighthouse-core/audits/autocomplete.js | manualReview": {
-    "message": "Requires manual review"
+    "message": "Kräver manuell granskning"
   },
   "lighthouse-core/audits/autocomplete.js | reviewOrder": {
-    "message": "Review order of tokens"
+    "message": "Granska ordningen på token"
   },
   "lighthouse-core/audits/autocomplete.js | title": {
-    "message": "Indataelement använder autoslutför"
+    "message": "`autocomplete` används korrekt för `<input>`-element"
   },
   "lighthouse-core/audits/autocomplete.js | warningInvalid": {
-    "message": "Autocomplete token(s): \"{token}\" is invalid in {snippet}"
+    "message": "Token för `autocomplete`: {token} är ogiltig i {snippet}"
   },
   "lighthouse-core/audits/autocomplete.js | warningOrder": {
-    "message": "Review order of tokens: \"{tokens}\" in {snippet}"
+    "message": "Granska ordningen på token: {tokens} i {snippet}"
   },
   "lighthouse-core/audits/bootup-time.js | chromeExtensionsWarning": {
     "message": "Inläsningen av den här sidan påverkas negativt av tillägg i Chrome. Testa att granska sidan i inkognitoläge eller med en Chrome-profil utan tillägg."
@@ -449,6 +476,12 @@
   "lighthouse-core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "Undvik att skicka äldre JavaScript till moderna webbläsare"
   },
+  "lighthouse-core/audits/byte-efficiency/modern-image-formats.js | description": {
+    "message": "Bildformat som WebP och AVIF ger ofta bättre komprimering än PNG eller JPEG. Det gör att nedladdningen går snabbare och ger minskad dataförbrukning. [Läs mer](https://web.dev/uses-webp-images/)."
+  },
+  "lighthouse-core/audits/byte-efficiency/modern-image-formats.js | title": {
+    "message": "Skicka bilder i modernare bildformat"
+  },
   "lighthouse-core/audits/byte-efficiency/offscreen-images.js | description": {
     "message": "Låt bilder utanför skärmen och dolda bilder läsas in med lat inläsning efter att alla viktiga resurser är inlästa så att tiden till interaktivt tillstånd minskar. [Läs mer](https://web.dev/offscreen-images/)."
   },
@@ -486,16 +519,16 @@
     "message": "Minifiera JavaScript"
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | description": {
-    "message": "Ta bort regler som inte används från formatmallar och skjut upp inläsning av CSS som inte används för innehåll ovanför mitten för att minska onödig nätverksaktivitet. [Läs mer](https://web.dev/unused-css-rules/)."
+    "message": "Reducera regler som inte används från formatmallar och skjut upp CSS som inte används för innehåll ovanför mitten så att färre byte skickas via nätverket. [Läs mer](https://web.dev/unused-css-rules/)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | title": {
-    "message": "Ta bort oanvänd CSS"
+    "message": "Reducera CSS som inte används"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "Ta bort JavaScript som inte används så att färre byte skickas via nätverket. [Läs mer](https://web.dev/unused-javascript/)."
+    "message": "Reducera JavaScript som inte används och skjut upp inläsningen av skript tills de krävs så att färre byte skickas via nätverket. [Läs mer](https://web.dev/unused-javascript/)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
-    "message": "Ta bort JavaScript som inte används"
+    "message": "Reducera JavaScript som inte används"
   },
   "lighthouse-core/audits/byte-efficiency/uses-long-cache-ttl.js | description": {
     "message": "Om filerna cachelagras under längre tid kan upprepade besök på sidan gå snabbare. [Läs mer](https://web.dev/uses-long-cache-ttl/)."
@@ -515,6 +548,12 @@
   "lighthouse-core/audits/byte-efficiency/uses-optimized-images.js | title": {
     "message": "Koda bilder effektivt"
   },
+  "lighthouse-core/audits/byte-efficiency/uses-responsive-images-snapshot.js | columnActualDimensions": {
+    "message": "Faktiska mått"
+  },
+  "lighthouse-core/audits/byte-efficiency/uses-responsive-images-snapshot.js | columnDisplayedDimensions": {
+    "message": "Visade mått"
+  },
   "lighthouse-core/audits/byte-efficiency/uses-responsive-images.js | description": {
     "message": "Minska mobildataförbrukningen och förbättra inläsningstiden genom att skicka bilder i rätt storlek. [Läs mer](https://web.dev/uses-responsive-images/)."
   },
@@ -526,12 +565,6 @@
   },
   "lighthouse-core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "Aktivera textkomprimering"
-  },
-  "lighthouse-core/audits/byte-efficiency/uses-webp-images.js | description": {
-    "message": "Bildformat som JPEG 2000, JPEG XR och WebP ger ofta bättre komprimering än PNG eller JPEG. Det gör att nedladdningen går snabbare och ger minskad dataförbrukning. [Läs mer](https://web.dev/uses-webp-images/)."
-  },
-  "lighthouse-core/audits/byte-efficiency/uses-webp-images.js | title": {
-    "message": "Skicka bilder i modernare bildformat"
   },
   "lighthouse-core/audits/content-width.js | description": {
     "message": "Om bredden på appens innehåll inte stämmer överens med bredden på visningsområdet kanske inte appen är optimerad för mobilskärmar. [Läs mer](https://web.dev/content-width/)."
@@ -553,6 +586,27 @@
   },
   "lighthouse-core/audits/critical-request-chains.js | title": {
     "message": "Undvik att kedjekoppla kritiska förfrågningar"
+  },
+  "lighthouse-core/audits/csp-xss.js | columnDirective": {
+    "message": "Direktiv"
+  },
+  "lighthouse-core/audits/csp-xss.js | columnSeverity": {
+    "message": "Allvarlighetsgrad"
+  },
+  "lighthouse-core/audits/csp-xss.js | description": {
+    "message": "En stark säkerhetspolicy för innehåll (CSP) minskar avsevärt risken för attacker med webbkodinjektion (XSS). [Läs mer](https://web.dev/csp-xss/)"
+  },
+  "lighthouse-core/audits/csp-xss.js | itemSeveritySyntax": {
+    "message": "Syntax"
+  },
+  "lighthouse-core/audits/csp-xss.js | metaTagMessage": {
+    "message": "Sidan har en CSP som definieras i en <meta>-tagg. Om du har möjlighet kan du definiera CSP i ett HTTP-huvud."
+  },
+  "lighthouse-core/audits/csp-xss.js | noCsp": {
+    "message": "CPS hittades inte i åtgärdsläget"
+  },
+  "lighthouse-core/audits/csp-xss.js | title": {
+    "message": "Kontrollera att CPS är effektiv mot XSS-attacker"
   },
   "lighthouse-core/audits/deprecations.js | columnDeprecate": {
     "message": "Utfasning/varning"
@@ -585,7 +639,7 @@
     "message": "Undviker programcache"
   },
   "lighthouse-core/audits/dobetterweb/charset.js | description": {
-    "message": "En deklaration av teckenkodning krävs. Den kan lämnas med en <meta>-tagg i HTML-kodens första 1024 byte eller i HTTP-svarshuvudet för Content-Type. [Läs mer](https://web.dev/charset/)."
+    "message": "En deklaration av teckenkodning krävs. Den kan lämnas med en `<meta>`-tagg i HTML-kodens första 1 024 byte eller i HTTP-svarshuvudet för Content-Type. [Läs mer](https://web.dev/charset/)."
   },
   "lighthouse-core/audits/dobetterweb/charset.js | failureTitle": {
     "message": "Deklaration av teckenuppsättning saknas eller förekommer för sent i HTML-koden"
@@ -665,6 +719,24 @@
   "lighthouse-core/audits/dobetterweb/geolocation-on-start.js | title": {
     "message": "Undviker att begära åtkomst till geografisk plats vid sidinläsning"
   },
+  "lighthouse-core/audits/dobetterweb/inspector-issues.js | columnIssueType": {
+    "message": "Typ av fel"
+  },
+  "lighthouse-core/audits/dobetterweb/inspector-issues.js | description": {
+    "message": "Fel som loggas i `Issues`-panelen i Chromes verktyg för programmerare indikerar olösta problem. De kan bero på fel i nätverksförfrågningar, otillräckliga säkerhetskontroller och andra webbläsarproblem. Öppna felpanelen i Chromes verktyg för programmerare för detaljerad information om varje fel."
+  },
+  "lighthouse-core/audits/dobetterweb/inspector-issues.js | failureTitle": {
+    "message": "Felen loggades i `Issues`-panelen i Chromes verktyg för programmerare"
+  },
+  "lighthouse-core/audits/dobetterweb/inspector-issues.js | issueTypeBlockedByResponse": {
+    "message": "Blockerades av principen mot korsursprung"
+  },
+  "lighthouse-core/audits/dobetterweb/inspector-issues.js | issueTypeHeavyAds": {
+    "message": "Hög resursanvändning av annonser"
+  },
+  "lighthouse-core/audits/dobetterweb/inspector-issues.js | title": {
+    "message": "Det finns inga fel i `Issues`-panelen i Chromes verktyg för programmerare"
+  },
   "lighthouse-core/audits/dobetterweb/js-libraries.js | columnVersion": {
     "message": "Version"
   },
@@ -701,15 +773,6 @@
   "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | failureTitle": {
     "message": "Innehåller JavaScript-bibliotek på klientsidan med kända säkerhetsbrister"
   },
-  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | rowSeverityHigh": {
-    "message": "Hög"
-  },
-  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | rowSeverityLow": {
-    "message": "Låg"
-  },
-  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | rowSeverityMedium": {
-    "message": "Medelstor"
-  },
   "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | title": {
     "message": "Undviker JavaScript-bibliotek med kända säkerhetsproblem på klientsidan"
   },
@@ -735,7 +798,7 @@
     "message": "Protokoll"
   },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | description": {
-    "message": "HTTP/2 ger många fördelar jämfört med HTTP/1.1, inklusive binära rubriker, multiplexning och server push. [Läs mer](https://web.dev/uses-http2/)."
+    "message": "HTTP/2 ger många fördelar jämfört med HTTP/1.1, inklusive binära fält och multiplexning. [Läs mer](https://web.dev/uses-http2/)."
   },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | displayValue": {
     "message": "{itemCount,plural, =1{1 begäran visades inte via HTTP/2}other{# begäranden visades inte via HTTP/2}}"
@@ -751,9 +814,6 @@
   },
   "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | title": {
     "message": "Passiva lyssnare används för att förbättra rullningsprestanda"
-  },
-  "lighthouse-core/audits/errors-in-console.js | columnDesc": {
-    "message": "Beskrivning"
   },
   "lighthouse-core/audits/errors-in-console.js | description": {
     "message": "Fel som loggats i konsolen indikerar olösta problem. De kan bero på fel i nätverksförfrågningar och andra webbläsarproblem. [Läs mer](https://web.dev/errors-in-console/)"
@@ -791,9 +851,6 @@
   "lighthouse-core/audits/image-aspect-ratio.js | title": {
     "message": "Bilder visas med korrekta bildproportioner"
   },
-  "lighthouse-core/audits/image-aspect-ratio.js | warningCompute": {
-    "message": "Ogiltig information om bildstorlek {url}"
-  },
   "lighthouse-core/audits/image-size-responsive.js | columnActual": {
     "message": "Faktisk storlek"
   },
@@ -812,14 +869,98 @@
   "lighthouse-core/audits/image-size-responsive.js | title": {
     "message": "Bilder visas med lämplig upplösning"
   },
+  "lighthouse-core/audits/installable-manifest.js | already-installed": {
+    "message": "Appen har redan installerats"
+  },
+  "lighthouse-core/audits/installable-manifest.js | cannot-download-icon": {
+    "message": "Det gick inte att ladda ned en obligatorisk ikon från manifestet"
+  },
+  "lighthouse-core/audits/installable-manifest.js | columnValue": {
+    "message": "Felorsak"
+  },
   "lighthouse-core/audits/installable-manifest.js | description": {
-    "message": "Webbläsare kan i förväg uppmana användare att lägga till appen på startskärmen, vilket leder till att de använder den mer. [Läs mer](https://web.dev/installable-manifest/)."
+    "message": "Tjänstefunktioner är en teknik som gör det möjligt att använda flera progressiva webbappsfunktioner i appen, till exempel offlineanvändning, pushmeddelanden och att lägga till den på startskärmen. Med rätt tjänstefunktion och manifestimplementeringar kan webbläsare i förväg uppmana användare att lägga till appen på startskärmen, vilket kan leda till större engagemang. [Läs mer](https://web.dev/installable-manifest/)."
+  },
+  "lighthouse-core/audits/installable-manifest.js | displayValue": {
+    "message": "{itemCount,plural, =1{1 anledning}other{# anledningar}}"
   },
   "lighthouse-core/audits/installable-manifest.js | failureTitle": {
-    "message": "Webbappens manifest uppfyller inte kraven för installation"
+    "message": "Webbappens manifest eller tjänstefunktion uppfyller inte kraven för installation"
+  },
+  "lighthouse-core/audits/installable-manifest.js | ids-do-not-match": {
+    "message": "Appadressen för Play Butik matchar inte id för Play Butik"
+  },
+  "lighthouse-core/audits/installable-manifest.js | in-incognito": {
+    "message": "Sidan läses in i ett inkognitofönster"
+  },
+  "lighthouse-core/audits/installable-manifest.js | manifest-display-not-supported": {
+    "message": "Egenskapen display i manifestet måste ha värdet standalone, fullscreen eller minimal-ui"
+  },
+  "lighthouse-core/audits/installable-manifest.js | manifest-display-override-not-supported": {
+    "message": "Manifestet innehåller fältet display_override och det första visningsläget som stöds måste vara antingen standalone, fullscreen eller minimal-ui."
+  },
+  "lighthouse-core/audits/installable-manifest.js | manifest-empty": {
+    "message": "Manifestet kunde inte hämtas, är tomt eller kunde inte analyseras"
+  },
+  "lighthouse-core/audits/installable-manifest.js | manifest-location-changed": {
+    "message": "Manifestets webbadress ändrades under tiden som manifestet hämtades."
+  },
+  "lighthouse-core/audits/installable-manifest.js | manifest-missing-name-or-short-name": {
+    "message": "Manifestet innehåller inte fältet name eller short_name"
+  },
+  "lighthouse-core/audits/installable-manifest.js | manifest-missing-suitable-icon": {
+    "message": "Manifestet innehåller ingen lämplig ikon – PNG-, SVG- eller WebP-format på minst {value0} px krävs, sizes-attributet måste anges och purpose-attributet, om det anges, måste innehålla any."
+  },
+  "lighthouse-core/audits/installable-manifest.js | no-acceptable-icon": {
+    "message": "Ingen av de ikoner som tillhandahålls är minst {value0} px och i PNG-, SVG- eller WebP-format med purpose-attributet utan inställning eller inställt på any"
+  },
+  "lighthouse-core/audits/installable-manifest.js | no-icon-available": {
+    "message": "Ikonen som laddades ned var tom eller skadad"
+  },
+  "lighthouse-core/audits/installable-manifest.js | no-id-specified": {
+    "message": "Inget Play Butik-id har tillhandahållits"
+  },
+  "lighthouse-core/audits/installable-manifest.js | no-manifest": {
+    "message": "Sidan har ingen webbadress för <link> i manifestet"
+  },
+  "lighthouse-core/audits/installable-manifest.js | no-matching-service-worker": {
+    "message": "Ingen matchande tjänstefunktion hittades. Du kanske måste läsa in sidan igen eller kontrollera att tjänstefunktionens omfattning för den aktuella sidan inbegriper omfattningen och startwebbadressen i manifestet."
+  },
+  "lighthouse-core/audits/installable-manifest.js | no-url-for-service-worker": {
+    "message": "Det går inte att kontrollera tjänstefunktionen utan fältet start_url i manifestet."
+  },
+  "lighthouse-core/audits/installable-manifest.js | noErrorId": {
+    "message": "Installationens fel-id {errorId} känns inte igen"
+  },
+  "lighthouse-core/audits/installable-manifest.js | not-from-secure-origin": {
+    "message": "Sidan visas inte från en säker källa"
+  },
+  "lighthouse-core/audits/installable-manifest.js | not-in-main-frame": {
+    "message": "Sidan läses inte in i huvudramen"
+  },
+  "lighthouse-core/audits/installable-manifest.js | not-offline-capable": {
+    "message": "Sidan fungerar inte offline"
+  },
+  "lighthouse-core/audits/installable-manifest.js | platform-not-supported-on-android": {
+    "message": "Applattformen som anges stöds inte på Android"
+  },
+  "lighthouse-core/audits/installable-manifest.js | prefer-related-applications": {
+    "message": "Manifestet anger prefer_related_applications: true"
+  },
+  "lighthouse-core/audits/installable-manifest.js | prefer-related-applications-only-beta-stable": {
+    "message": "prefer_related_applications stöds bara i Chrome Beta och Chrome Stable på Android."
+  },
+  "lighthouse-core/audits/installable-manifest.js | start-url-not-valid": {
+    "message": "Startwebbadressen i manifestet är ogiltig"
   },
   "lighthouse-core/audits/installable-manifest.js | title": {
-    "message": "Webbappens manifest uppfyller kraven för installation"
+    "message": "Webbappens manifest och tjänstefunktion uppfyller kraven för installation"
+  },
+  "lighthouse-core/audits/installable-manifest.js | url-not-supported-for-webapk": {
+    "message": "En webbadress i manifestet innehåller ett användarnamn, ett lösenord eller en port"
+  },
+  "lighthouse-core/audits/installable-manifest.js | warn-not-offline-capable": {
+    "message": "Sidan fungerar inte offline. Sidan kommer inte att anses vara installerbar efter Chrome 93, den stabila version som lanseras i augusti 2021."
   },
   "lighthouse-core/audits/is-on-https.js | allowed": {
     "message": "Tillåts"
@@ -851,21 +992,6 @@
   "lighthouse-core/audits/is-on-https.js | warning": {
     "message": "Tillåts med varning"
   },
-  "lighthouse-core/audits/large-javascript-libraries.js | columnLibraryName": {
-    "message": "Bibliotek"
-  },
-  "lighthouse-core/audits/large-javascript-libraries.js | description": {
-    "message": "Stora JavaScript-bibliotek kan leda till dåliga resultat. Använd i stället mindre bibliotek med motsvarande funktionalitet för att minska paketens storlek. [Läs mer](https://developers.google.com/web/fundamentals/performance/webpack/decrease-frontend-size#optimize_dependencies)."
-  },
-  "lighthouse-core/audits/large-javascript-libraries.js | displayValue": {
-    "message": "{libraryCount,plural, =1{1 stort bibliotek hittades}other{# stora bibliotek hittades}}"
-  },
-  "lighthouse-core/audits/large-javascript-libraries.js | failureTitle": {
-    "message": "Ersätt onödigt stora JavaScript-bibliotek"
-  },
-  "lighthouse-core/audits/large-javascript-libraries.js | title": {
-    "message": "Undviker stora JavaScript-bibliotek när det finns mindre alternativ"
-  },
   "lighthouse-core/audits/largest-contentful-paint-element.js | description": {
     "message": "Detta är det största innehållselementet som ritades upp i visningsområdet. [Läs mer](https://web.dev/lighthouse-largest-contentful-paint/)"
   },
@@ -880,24 +1006,6 @@
   },
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "Undvik större layoutförskjutningar"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
-    "message": "Snabb sidinläsning i mobila nätverk ger en bra upplevelse för mobila användare. [Läs mer](https://web.dev/load-fast-enough-for-pwa/)."
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueText": {
-    "message": "Interaktiv vid {timeInMs, number, seconds} s"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueTextWithOverride": {
-    "message": "Interaktiv i simulerade mobilnätverk på {timeInMs, number, seconds} s"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | explanationLoadSlow": {
-    "message": "Sidan läses in för långsamt och är inte interaktiv inom tio sekunder. Ta en titt på möjligheter och diagnostik i avsnittet Prestanda för att se hur du kan förbättra sidan."
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | failureTitle": {
-    "message": "Sidor läses inte in tillräckligt snabbt i mobila nätverk"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | title": {
-    "message": "Sidan läses in tillräckligt snabbt i mobila nätverk"
   },
   "lighthouse-core/audits/long-tasks.js | description": {
     "message": "Visar de uppgifter i huvudtråden som har körts under längst tid, vilket kan ringa in de viktigaste flaskhalsarna som fördröjer inmatningen. [Läs mer](https://web.dev/long-tasks-devtools/)"
@@ -950,14 +1058,8 @@
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
     "message": "Kumulativ layoutförskjutning mäter rörelsen hos synliga element inom visningsområdet. [Läs mer](https://web.dev/cls/)."
   },
-  "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
-    "message": "Uppskattad inmatningslatens är en uppskattning av hur lång tid (i millisekunder) det tar innan appen svarar på användarens inmatning under den mest aktiva femsekundersperioden av sidinläsningen. Om latensen är högre än 50 ms kan användarna uppfatta appen som seg. [Läs mer](https://web.dev/estimated-input-latency/)."
-  },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
     "message": "Första innehållsrenderingen anger när den första texten eller bilden ritades upp. [Läs mer](https://web.dev/first-contentful-paint/)."
-  },
-  "lighthouse-core/audits/metrics/first-cpu-idle.js | description": {
-    "message": "Första CPU-avbrottet anger när sidans modertråd först blev inaktiv nog att hantera indata.  [Läs mer](https://web.dev/first-cpu-idle/)."
   },
   "lighthouse-core/audits/metrics/first-meaningful-paint.js | description": {
     "message": "Första användbara renderingen anger när sidans primära innehåll blev synligt. [Läs mer](https://web.dev/first-meaningful-paint/)."
@@ -990,7 +1092,7 @@
     "message": "Serverlatens"
   },
   "lighthouse-core/audits/no-unload-listeners.js | description": {
-    "message": "Händelsen `unload` aktiveras inte på ett tillförlitligt sätt och att lyssna efter den kan förhindra webbläsaroptimeringar, t.ex. cachelagring för bakåt- och framåtknapparna. Vi rekommenderar att du använder händelserna `pagehide` eller `visibilitychange` i stället. [Läs mer](https://developers.google.com/web/updates/2018/07/page-lifecycle-api#the-unload-event)"
+    "message": "Händelsen `unload` aktiveras inte på ett tillförlitligt sätt och att lyssna efter den kan förhindra webbläsaroptimeringar, t.ex. vilocacheminne. Vi rekommenderar att du använder händelserna `pagehide` eller `visibilitychange` i stället. [Läs mer](https://developers.google.com/web/updates/2018/07/page-lifecycle-api#the-unload-event)"
   },
   "lighthouse-core/audits/no-unload-listeners.js | failureTitle": {
     "message": "Registrerar en lyssnare för `unload`"
@@ -1025,21 +1127,6 @@
   "lighthouse-core/audits/non-composited-animations.js | unsupportedTimingParameters": {
     "message": "Effekten har tidsparametrar som inte stöds"
   },
-  "lighthouse-core/audits/offline-start-url.js | description": {
-    "message": "Med en tjänstefunktion kan appen användas under oförutsägbara nätverksförhållanden. [Läs mer](https://web.dev/offline-start-url/)."
-  },
-  "lighthouse-core/audits/offline-start-url.js | errorLoading": {
-    "message": "Ett fel uppstod när {url} skulle läsas in i Service Worker. Statuskoden {statusCode} returnerades"
-  },
-  "lighthouse-core/audits/offline-start-url.js | failureTitle": {
-    "message": "HTTP-statuskoden 200 visas inte när `start_url` är offline"
-  },
-  "lighthouse-core/audits/offline-start-url.js | title": {
-    "message": "HTTP-statuskoden 200 visas när `start_url` är offline."
-  },
-  "lighthouse-core/audits/offline-start-url.js | warningCantStart": {
-    "message": "Lighthouse kunde inte läsa `start_url` i manifestet. Därför antogs det att `start_url` var dokumentets webbadress. Felmeddelande: {manifestWarning}."
-  },
   "lighthouse-core/audits/performance-budget.js | description": {
     "message": "Håll antal och storlek för nätverksbegäranden under de mål som anges i den angivna prestandabudgeten. [Läs mer](https://developers.google.com/web/tools/lighthouse/audits/budgets)."
   },
@@ -1057,6 +1144,12 @@
   },
   "lighthouse-core/audits/preload-fonts.js | title": {
     "message": "Teckensnitt med `font-display: optional` läses in i förväg"
+  },
+  "lighthouse-core/audits/preload-lcp-image.js | description": {
+    "message": "Gör så att den största uppritningen av innehåll går snabbare genom att läsa in bilden i det berörda elementet i förväg. [Läs mer](https://web.dev/optimize-lcp/#preload-important-resources)."
+  },
+  "lighthouse-core/audits/preload-lcp-image.js | title": {
+    "message": "Läs in bilden i förväg för största uppritningen av innehåll"
   },
   "lighthouse-core/audits/redirects-http.js | description": {
     "message": "Om du redan har konfigurerat HTTPS ska du omdirigera all HTTP-trafik till HTTPS för att se till att webbfunktionerna är säkra för alla användare. [Läs mer](https://web.dev/redirects-http/)."
@@ -1098,7 +1191,7 @@
     "message": "Pekar på en annan `hreflang`-plats ({url})"
   },
   "lighthouse-core/audits/seo/canonical.js | explanationRelative": {
-    "message": "Relativ webbadress ({url})"
+    "message": "Är inte en absolut webbadress ({url})"
   },
   "lighthouse-core/audits/seo/canonical.js | explanationRoot": {
     "message": "Pekar på domänens rotadress (startsidan) i stället för motsvarande sida med innehåll"
@@ -1122,16 +1215,16 @@
     "message": "Länkarna är genomsökningsbara"
   },
   "lighthouse-core/audits/seo/font-size.js | additionalIllegibleText": {
-    "message": "Add'l illegible text"
+    "message": "Ytterligare oläslig text"
   },
   "lighthouse-core/audits/seo/font-size.js | columnFontSize": {
-    "message": "Font Size"
+    "message": "Teckensnittsstorlek"
   },
   "lighthouse-core/audits/seo/font-size.js | columnPercentPageText": {
-    "message": "% of Page Text"
+    "message": "Andel text på sidan"
   },
   "lighthouse-core/audits/seo/font-size.js | columnSelector": {
-    "message": "Selector"
+    "message": "Väljare"
   },
   "lighthouse-core/audits/seo/font-size.js | description": {
     "message": "Teckenstorlekar under 12 pixlar är för små för att kunna läsas och kräver att mobila användare zoomar genom att nypa för att kunna läsa. Försök ha minst 60 % av texten i 12 pixlar eller mer. [Läs mer](https://web.dev/font-size/)."
@@ -1146,7 +1239,7 @@
     "message": "Dokumentet har inga läsliga teckenstorlekar"
   },
   "lighthouse-core/audits/seo/font-size.js | legibleText": {
-    "message": "Legible text"
+    "message": "Läslig text"
   },
   "lighthouse-core/audits/seo/font-size.js | title": {
     "message": "Dokumentet har läsliga teckenstorlekar"
@@ -1313,8 +1406,32 @@
   "lighthouse-core/audits/themed-omnibox.js | title": {
     "message": "Anger ett färgtema för adressfältet."
   },
-  "lighthouse-core/audits/third-party-summary.js | columnBlockingTime": {
-    "message": "Tidsåtgång för blockering av huvudtråd"
+  "lighthouse-core/audits/third-party-facades.js | categoryCustomerSuccess": {
+    "message": "{productName} (framgångshistorier)"
+  },
+  "lighthouse-core/audits/third-party-facades.js | categoryMarketing": {
+    "message": "{productName} (marknadsföring)"
+  },
+  "lighthouse-core/audits/third-party-facades.js | categorySocial": {
+    "message": "{productName} (socialt)"
+  },
+  "lighthouse-core/audits/third-party-facades.js | categoryVideo": {
+    "message": "{productName} (video)"
+  },
+  "lighthouse-core/audits/third-party-facades.js | columnProduct": {
+    "message": "Produkt"
+  },
+  "lighthouse-core/audits/third-party-facades.js | description": {
+    "message": "Vissa inbäddningar från tredje part har stöd för lat inläsning. Du kan ersätta dem med en fasad tills de behövs. [Läs mer](https://web.dev/third-party-facades/)."
+  },
+  "lighthouse-core/audits/third-party-facades.js | displayValue": {
+    "message": "{itemCount,plural, =1{# fasadalternativ är tillgängligt}other{# fasadalternativ är tillgängliga}}"
+  },
+  "lighthouse-core/audits/third-party-facades.js | failureTitle": {
+    "message": "En del resurser från tredje part kan läsas in med lat inläsning med hjälp av en fasad"
+  },
+  "lighthouse-core/audits/third-party-facades.js | title": {
+    "message": "Läs in resurser från tredje part med lat inläsning och fasader"
   },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "Tredje part"
@@ -1327,9 +1444,6 @@
   },
   "lighthouse-core/audits/third-party-summary.js | failureTitle": {
     "message": "Minska påverkan från tredjepartskod"
-  },
-  "lighthouse-core/audits/third-party-summary.js | otherValue": {
-    "message": "Övriga resurser"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Minimera användning av tredjepartskod"
@@ -1347,7 +1461,7 @@
     "message": "Tidsbudget"
   },
   "lighthouse-core/audits/unsized-images.js | description": {
-    "message": "Set an explicit width and height on image elements to reduce layout shifts and improve CLS. [Learn more](https://web.dev/optimize-cls/#images-without-dimensions)"
+    "message": "Reducera layoutförskjutningarna och förbättra CLS genom att ange explicit bredd och höjd i bildelement. [Läs mer](https://web.dev/optimize-cls/#images-without-dimensions)"
   },
   "lighthouse-core/audits/unsized-images.js | failureTitle": {
     "message": "Alla bildelement har inte `width` och `height`"
@@ -1368,7 +1482,7 @@
     "message": "User Timing API – tidsstämplar och mått"
   },
   "lighthouse-core/audits/uses-rel-preconnect.js | crossoriginWarning": {
-    "message": "Ett <link>-element för föranslutning till {securityOrigin} hittades men ignorerades av webbläsaren. Kontrollera att attributet `crossorigin` används korrekt."
+    "message": "En `<link rel=preconnect>` hittades för {securityOrigin} men ignorerades av webbläsaren. Kontrollera att attributet `crossorigin` används korrekt."
   },
   "lighthouse-core/audits/uses-rel-preconnect.js | description": {
     "message": "Lägg till signaler för `preconnect` eller `dns-prefetch` så att viktiga anslutningar till tredje part upprättas tidigt. [Läs mer](https://web.dev/uses-rel-preconnect/)."
@@ -1377,13 +1491,13 @@
     "message": "Föranslut till obligatoriska källor"
   },
   "lighthouse-core/audits/uses-rel-preconnect.js | tooManyPreconnectLinksWarning": {
-    "message": "Mer än 2 föranslutna länkar hittades. Föranslutna länkar ska användas sparsamt och bara med de viktigaste källorna."
+    "message": "Fler än 2 `<link rel=preconnect>`-anslutningar hittades. Dessa ska användas sparsamt och bara med de viktigaste källorna."
   },
   "lighthouse-core/audits/uses-rel-preconnect.js | unusedWarning": {
-    "message": "A preconnect <link> was found for \"{securityOrigin}\" but was not used by the browser. Only preconnect to important origins that the page will certainly request."
+    "message": "En `<link rel=preconnect>` hittades för {securityOrigin} men ignorerades av webbläsaren. Använd endast `preconnect` för viktiga ursprung som sidan säkerligen kommer att begära."
   },
   "lighthouse-core/audits/uses-rel-preload.js | crossoriginWarning": {
-    "message": "En <link> för förinläsning hittades för {preloadURL} men den användes inte av webbläsaren. Kontrollera att attributet `crossorigin` används korrekt."
+    "message": "En `<link>` som läses in i förväg hittades för {preloadURL} men ignorerades av webbläsaren. Kontrollera att attributet `crossorigin` används korrekt."
   },
   "lighthouse-core/audits/uses-rel-preload.js | description": {
     "message": "Det kan vara bra att använda `<link rel=preload>` för att prioritera hämtning av resurser som kommer att begäras senare i sidinläsningen. [Läs mer](https://web.dev/uses-rel-preload/)."
@@ -1420,30 +1534,6 @@
   },
   "lighthouse-core/audits/viewport.js | title": {
     "message": "Har en `<meta name=\"viewport\">`-tagg med `width` eller `initial-scale`"
-  },
-  "lighthouse-core/audits/without-javascript.js | description": {
-    "message": "Appen ska visa innehåll när JavaScript är inaktiverat, även om det bara är en varning till användaren om att JavaScript krävs för att använda appen. [Läs mer](https://web.dev/without-javascript/)."
-  },
-  "lighthouse-core/audits/without-javascript.js | explanation": {
-    "message": "Någon form av innehåll ska renderas för sidans brödtext om dess skript inte är tillgängliga."
-  },
-  "lighthouse-core/audits/without-javascript.js | failureTitle": {
-    "message": "Visar inte reservinnehåll när JavaScript inte är tillgängligt"
-  },
-  "lighthouse-core/audits/without-javascript.js | title": {
-    "message": "Visar innehåll när JavaScript inte är tillgängligt"
-  },
-  "lighthouse-core/audits/works-offline.js | description": {
-    "message": "Om du skapar en progressiv webbapp rekommenderar vi att du använder en tjänstefunktion så att appen kan användas offline. [Läs mer](https://web.dev/works-offline/)."
-  },
-  "lighthouse-core/audits/works-offline.js | failureTitle": {
-    "message": "HTTP-statuskoden 200 visas inte för den aktuella sidan när den är offline"
-  },
-  "lighthouse-core/audits/works-offline.js | title": {
-    "message": "HTTP-statuskoden 200 visas för den aktuella sidan när den är offline"
-  },
-  "lighthouse-core/audits/works-offline.js | warningNoLoad": {
-    "message": "Sidan kanske inte läses in offline eftersom testwebbadressen ({requested}) omdirigerades till {final}. Testa den andra webbadressen direkt i stället."
   },
   "lighthouse-core/config/default-config.js | a11yAriaGroupDescription": {
     "message": "Det här är förslag på hur ARIA kan förbättras i appen så att den fungerar bättre för den som använder skärmläsare eller andra hjälpmedel."
@@ -1562,9 +1652,6 @@
   "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
     "message": "Progressiv webbapp"
   },
-  "lighthouse-core/config/default-config.js | pwaFastReliableGroupTitle": {
-    "message": "Snabb och pålitlig"
-  },
   "lighthouse-core/config/default-config.js | pwaInstallableGroupTitle": {
     "message": "Kan installeras"
   },
@@ -1598,14 +1685,74 @@
   "lighthouse-core/config/default-config.js | seoMobileGroupTitle": {
     "message": "Mobilanpassad"
   },
-  "lighthouse-core/gather/gather-runner.js | warningRedirected": {
+  "lighthouse-core/gather/driver/environment.js | warningSlowHostCpu": {
+    "message": "Enheten som testas verkar ha en lägre CPU-hastighet än vad som förväntas i Lighthouse. Det här kan påverka prestandavärdet negativt. Läs mer om att [kalibrera en lämplig CPU-multiplicerare](https://github.com/GoogleChrome/lighthouse/blob/master/docs/throttling.md#cpu-throttling)."
+  },
+  "lighthouse-core/gather/driver/navigation.js | warningRedirected": {
     "message": "Sidan kanske inte läses in eftersom testwebbadressen ({requested}) omdirigerades till {final}. Testa den andra webbadressen direkt i stället."
   },
-  "lighthouse-core/gather/gather-runner.js | warningTimeout": {
+  "lighthouse-core/gather/driver/navigation.js | warningTimeout": {
     "message": "Sidan lästes in för långsamt för att slutföra sidhämtningen inom tidsgränsen. Resultatet kan vara ofullständigt."
+  },
+  "lighthouse-core/gather/driver/storage.js | warningData": {
+    "message": "{locationCount,plural, =1{På följande plats kan det finnas lagrad data som påverkar inläsningen: {locations}. Granska sidan i ett inkognitofönster för att förhindra att resurserna påverkar dina resultat.}other{På följande platser kan det finnas lagrad data som påverkar inläsningen: {locations}. Granska sidan i ett inkognitofönster för att förhindra att resurserna påverkar dina resultat.}}"
+  },
+  "lighthouse-core/lib/csp-evaluator.js | allowlistFallback": {
+    "message": "Du kan lägga till webbadressscheman https: och http: (ignoreras av webbläsare med stöd för strict-dynamic) för bakåtkompatibilitet med äldre webbläsare."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | deprecatedDisownOpener": {
+    "message": "disown-opener har utfasats sedan CSP3. Använd huvudet Cross-Origin-Opener-Policy i stället."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | deprecatedReferrer": {
+    "message": "referrer har utfasats sedan CSP2. Använd huvudet Referrer-Policy i stället."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | deprecatedReflectedXSS": {
+    "message": "reflected-xss har utfasats sedan CSP2. Använd huvudet X-XSS-Protection i stället."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | missingBaseUri": {
+    "message": "Om base-uri saknas går det att använda <base>-taggar för att ställa in baswebbadressen för alla relativa webbadresser (t.ex. skript) till en domän som styrs av en angripare. Du kan ställa in base-uri på none eller self."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | missingObjectSrc": {
+    "message": "Element som styrs av object-src anses vara äldre funktioner. Du kan ställa in object-src på none för att förhindra användningen av pluginprogram som kör osäkra skript."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | missingScriptSrc": {
+    "message": "Direktivet script-src saknas. Detta kan möjliggöra att osäkra skript körs."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | missingSemicolon": {
+    "message": "Glömde du semikolon? {keyword} verkar vara ett direktiv, inte ett sökord."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | nonceCharset": {
+    "message": "Noncevärden bör använda teckenuppsättningen base64."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | nonceLength": {
+    "message": "Noncevärden måste bestå av minst åtta tecken."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | reportToOnly": {
+    "message": "Rapporteringsdestinationen konfigureras enbart via direktivet report-to. Direktivet stöds endast i Chromium-baserade webbläsare och vi rekommenderar därför att du även använder direktivet report-uri."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | reportingDestinationMissing": {
+    "message": "Det finns ingen CPS som konfigurerar en rapporteringsdestination. Detta gör det svårt att bevara CSP med tiden och övervaka eventuella intrång."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | strictDynamic": {
+    "message": "Värdens godkännandelistor kan ofta passeras. Du kan använda strict-dynamic i kombination med CSP-noncevärden eller -hashvärden."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | unknownDirective": {
+    "message": "Okänt CSP-direktiv."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | unknownKeyword": {
+    "message": "{keyword} verkar vara ett ogiltigt sökord."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | unsafeInlineFallback": {
+    "message": "Du kan lägga till unsafe-inline (ignoreras av webbläsare med stöd för noncevärden/hashvärden) för bakåtkompatibilitet med äldre webbläsare."
+  },
+  "lighthouse-core/lib/i18n/i18n.js | columnBlockingTime": {
+    "message": "Tidsåtgång för blockering av huvudtråd"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "Lagringstid i cacheminnet"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | columnDescription": {
+    "message": "Beskrivning"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnDuration": {
     "message": "Varaktighet"
@@ -1673,12 +1820,6 @@
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Dokument"
   },
-  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
-    "message": "Beräknad inmatningslatens"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
-    "message": "Första CPU-inaktivitet"
-  },
   "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
     "message": "First Contentful Paint"
   },
@@ -1694,6 +1835,15 @@
   "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
     "message": "Time to Interactive"
   },
+  "lighthouse-core/lib/i18n/i18n.js | itemSeverityHigh": {
+    "message": "Hög"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | itemSeverityLow": {
+    "message": "Låg"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | itemSeverityMedium": {
+    "message": "Medelstor"
+  },
   "lighthouse-core/lib/i18n/i18n.js | largestContentfulPaintMetric": {
     "message": "Largest Contentful Paint"
   },
@@ -1708,6 +1858,9 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | otherResourceType": {
     "message": "Annat"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | otherResourcesLabel": {
+    "message": "Övriga resurser"
   },
   "lighthouse-core/lib/i18n/i18n.js | scriptResourceType": {
     "message": "Skript"
@@ -1737,7 +1890,7 @@
     "message": "Tidsgränsen överskreds under väntan på den första anslutningen till felsökningsprotokollet."
   },
   "lighthouse-core/lib/lh-error.js | didntCollectScreenshots": {
-    "message": "Inga skärmdumpar togs i Chrome medan sidan lästes in. Kontrollera att det finns synligt innehåll på sidan och kör Lighthouse igen. ({errorCode})"
+    "message": "Inga skärmbilder togs i Chrome medan sidan lästes in. Kontrollera att det finns synligt innehåll på sidan och kör Lighthouse igen. ({errorCode})"
   },
   "lighthouse-core/lib/lh-error.js | dnsFailure": {
     "message": "Uppslagningen av den angivna domänen misslyckades på DNS-servern."
@@ -1750,6 +1903,9 @@
   },
   "lighthouse-core/lib/lh-error.js | missingRequiredArtifact": {
     "message": "En {artifactName}-samlare som krävs kördes inte."
+  },
+  "lighthouse-core/lib/lh-error.js | noFcp": {
+    "message": "Sidan renderade inget innehåll. Se till att du håller webbläsarfönstret öppet i förgrunden under inläsningen och försök igen. ({errorCode})"
   },
   "lighthouse-core/lib/lh-error.js | notHtml": {
     "message": "Den tillhandahållna sidan är inte HTML (visas som MIME-typen {mimeType})."
@@ -1787,146 +1943,38 @@
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "Den angivna webbadressen verkar vara ogiltig."
   },
-  "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
-    "message": "Visa granskningar"
+  "lighthouse-treemap/app/src/util.js | allLabel": {
+    "message": "Alla"
   },
-  "lighthouse-core/report/html/renderer/util.js | calculatorLink": {
-    "message": "Visa kalkylator."
+  "lighthouse-treemap/app/src/util.js | allScriptsDropdownLabel": {
+    "message": "Alla skript"
   },
-  "lighthouse-core/report/html/renderer/util.js | crcInitialNavigation": {
-    "message": "Första navigering"
+  "lighthouse-treemap/app/src/util.js | coverageColumnName": {
+    "message": "Täckning"
   },
-  "lighthouse-core/report/html/renderer/util.js | crcLongestDurationLabel": {
-    "message": "Högsta latens för kritisk kedja:"
+  "lighthouse-treemap/app/src/util.js | duplicateModulesLabel": {
+    "message": "Moduldubbletter"
   },
-  "lighthouse-core/report/html/renderer/util.js | dropdownCopyJSON": {
-    "message": "Kopiera JSON"
+  "lighthouse-treemap/app/src/util.js | resourceBytesLabel": {
+    "message": "Resursstorlek i byte"
   },
-  "lighthouse-core/report/html/renderer/util.js | dropdownDarkTheme": {
-    "message": "Aktivera och inaktivera mörkt tema"
+  "lighthouse-treemap/app/src/util.js | tableColumnName": {
+    "message": "Namn"
   },
-  "lighthouse-core/report/html/renderer/util.js | dropdownPrintExpanded": {
-    "message": "Skriv ut utökad"
+  "lighthouse-treemap/app/src/util.js | toggleTableButtonLabel": {
+    "message": "Aktivera och inaktivera tabell"
   },
-  "lighthouse-core/report/html/renderer/util.js | dropdownPrintSummary": {
-    "message": "Skriv ut sammanfattning"
-  },
-  "lighthouse-core/report/html/renderer/util.js | dropdownSaveGist": {
-    "message": "Spara som Gist"
-  },
-  "lighthouse-core/report/html/renderer/util.js | dropdownSaveHTML": {
-    "message": "Spara som HTML"
-  },
-  "lighthouse-core/report/html/renderer/util.js | dropdownSaveJSON": {
-    "message": "Spara som JSON"
-  },
-  "lighthouse-core/report/html/renderer/util.js | dropdownViewer": {
-    "message": "Öppna i visningsprogram"
-  },
-  "lighthouse-core/report/html/renderer/util.js | errorLabel": {
-    "message": "Fel."
-  },
-  "lighthouse-core/report/html/renderer/util.js | errorMissingAuditInfo": {
-    "message": "Rapportfel: ingen granskningsinformation"
-  },
-  "lighthouse-core/report/html/renderer/util.js | footerIssue": {
-    "message": "Rapportera ett problem"
-  },
-  "lighthouse-core/report/html/renderer/util.js | labDataTitle": {
-    "message": "Labbdata"
-  },
-  "lighthouse-core/report/html/renderer/util.js | lsPerformanceCategoryDescription": {
-    "message": "Analys med [Lighthouse](https://developers.google.com/web/tools/lighthouse/) av den aktuella sidan i ett emulerat mobilnätverk. Värdena är uppskattningar och kan variera."
-  },
-  "lighthouse-core/report/html/renderer/util.js | manualAuditsGroupTitle": {
-    "message": "Fler saker att kolla manuellt"
-  },
-  "lighthouse-core/report/html/renderer/util.js | notApplicableAuditsGroupTitle": {
-    "message": "Ej tillämpligt"
-  },
-  "lighthouse-core/report/html/renderer/util.js | opportunityResourceColumnLabel": {
-    "message": "Möjlighet"
-  },
-  "lighthouse-core/report/html/renderer/util.js | opportunitySavingsColumnLabel": {
-    "message": "Uppskattad tidsbesparing"
-  },
-  "lighthouse-core/report/html/renderer/util.js | passedAuditsGroupTitle": {
-    "message": "Godkända granskningar"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeDesktopEmulation": {
-    "message": "Emulerat skrivbord"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeMobileEmulation": {
-    "message": "Emulerad Moto G4"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeNoEmulation": {
-    "message": "Ingen emulering"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsAxeVersion": {
-    "message": "Axe version"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsBenchmark": {
-    "message": "CPU/minne"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsCPUThrottling": {
-    "message": "CPU-begränsning"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsChannel": {
-    "message": "Kanal"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsDevice": {
-    "message": "Enhet"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsFetchTime": {
-    "message": "Tidpunkt för hämtning"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsNetworkThrottling": {
-    "message": "Nätverksbegränsning"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsTitle": {
-    "message": "Körtidsinställningar"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsUA": {
-    "message": "Användaragent (värd)"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsUANetwork": {
-    "message": "Användaragent (nätverk)"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsUrl": {
-    "message": "Webbadress"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeUnknown": {
-    "message": "Okänd"
-  },
-  "lighthouse-core/report/html/renderer/util.js | snippetCollapseButtonLabel": {
-    "message": "Komprimera utdrag"
-  },
-  "lighthouse-core/report/html/renderer/util.js | snippetExpandButtonLabel": {
-    "message": "Utöka utdrag"
-  },
-  "lighthouse-core/report/html/renderer/util.js | thirdPartyResourcesLabel": {
-    "message": "Visa resurser från tredje part"
-  },
-  "lighthouse-core/report/html/renderer/util.js | throttlingProvided": {
-    "message": "Tillhandahålls av miljön"
-  },
-  "lighthouse-core/report/html/renderer/util.js | toplevelWarningsMessage": {
-    "message": "Problem uppstod med den här körningen av Lighthouse."
-  },
-  "lighthouse-core/report/html/renderer/util.js | varianceDisclaimer": {
-    "message": "Värdena är uppskattningar och kan variera. [Prestandapoängen beräknas](https://web.dev/performance-scoring/) direkt utifrån dessa mätvärden."
-  },
-  "lighthouse-core/report/html/renderer/util.js | warningAuditsGroupTitle": {
-    "message": "Godkänd i granskningarna men med varningar"
-  },
-  "lighthouse-core/report/html/renderer/util.js | warningHeader": {
-    "message": "Varningar: "
+  "lighthouse-treemap/app/src/util.js | unusedBytesLabel": {
+    "message": "Byte som inte används"
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
-    "message": "För animerat innehåll använder du [amp-anim](https://amp.dev/documentation/components/amp-anim/) till att minimera CPU-användningen när innehållet inte visas på skärmen."
+    "message": "För animerat innehåll använder du [`amp-anim`](https://amp.dev/documentation/components/amp-anim/) till att minimera CPU-användningen när innehållet inte visas på skärmen."
+  },
+  "node_modules/lighthouse-stack-packs/packs/amp.js | modern-image-formats": {
+    "message": "Vi rekommenderar att du visar alla [`amp-img`](https://amp.dev/documentation/components/amp-img/?format=websites)-komponenter i WebP-format och anger ett lämpligt alternativ för andra. [Läs mer](https://amp.dev/documentation/components/amp-img/#example:-specifying-a-fallback-image)."
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | offscreen-images": {
-    "message": "Kontrollera att du använder giltiga `amp-img`-taggar för bilderna så att uppskjuten inläsning tillämpas automatiskt utanför första visningsområdet. [Läs mer](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)."
+    "message": "Kontrollera att du använder [`amp-img`](https://amp.dev/documentation/components/amp-img/?format=websites) så att uppskjuten inläsning tillämpas automatiskt för bilder. [Läs mer](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)."
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | render-blocking-resources": {
     "message": "[Rendera AMP-layouter på serversidan](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/) med hjälp av verktyg som [AMP Optimizer](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer)."
@@ -1935,10 +1983,7 @@
     "message": "Läs [AMP-dokumentationen](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/) och kontrollera att alla format stöds."
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | uses-responsive-images": {
-    "message": "Elementet `amp-img` har stöd för attributet `srcset` så att du kan ange vilka bildtillgångar som ska användas utifrån skärmstorlek.  [Läs mer](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/art_direction/)."
-  },
-  "node_modules/lighthouse-stack-packs/packs/amp.js | uses-webp-images": {
-    "message": "Vi rekommenderar att du visar alla dina `amp-img`-komponenter i WebP-format och anger ett lämpligt alternativ för andra webbläsare. [Läs mer](https://amp.dev/documentation/components/amp-img/#example:-specifying-a-fallback-image)."
+    "message": "Komponenten [`amp-img`](https://amp.dev/documentation/components/amp-img/?format=websites) har stöd för attributet [`srcset`](https://web.dev/use-srcset-to-automatically-choose-the-right-image/) så att du kan ange vilka bildtillgångar som ska användas utifrån skärmstorlek. [Läs mer](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/art_direction/)."
   },
   "node_modules/lighthouse-stack-packs/packs/angular.js | dom-size": {
     "message": "Vi rekommenderar virtuell skrollning med Component Dev Kit (CDK) om mycket stora listor renderas. [Läs mer](https://web.dev/virtualize-lists-with-angular-cdk/)."
@@ -1959,91 +2004,91 @@
     "message": "Vi rekommenderar att du hanterar bildernas brytpunkter med hjälp av verktyget `BreakpointObserver` i Component Dev Kit (CDK). [Läs mer](https://material.angular.io/cdk/layout/overview)."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | efficient-animated-content": {
-    "message": "Consider uploading your GIF to a service which will make it available to embed as an HTML5 video."
+    "message": "Ladda upp GIF-filen till en tjänst som kan göra den tillgänglig för inbäddning som HTML5-video."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | font-display": {
-    "message": "Specify `@font-display` when defining custom fonts in your theme."
+    "message": "Ange `@font-display` när du definierar anpassade teckensnitt i temat."
+  },
+  "node_modules/lighthouse-stack-packs/packs/drupal.js | modern-image-formats": {
+    "message": "Du kan installera och konfigurera [en modul så att du kan använda WebP-bildformat](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=webp&solrsort=iss_project_release_usage+desc&op=Search) på webbplatsen. Med sådana moduler genereras en WebP-version automatiskt av de uppladdade bilderna i syfte att optimera hämtningstiderna."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | offscreen-images": {
-    "message": "Install [a Drupal module](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=im_vid_3%3A67&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=%22lazy+load%22&solrsort=iss_project_release_usage+desc&op=Search) that can leverage JavaScript or [Intersection Observer API](https://developers.google.com/web/updates/2016/04/intersectionobserver) lazy loading of images. Such modules provide the ability to defer any offscreen images to improve performance."
+    "message": "Installera [en Drupal-modul](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=im_vid_3%3A67&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=%22lazy+load%22&solrsort=iss_project_release_usage+desc&op=Search) som kan utnyttja uppskjuten inläsning av bilder. Med sådana moduler går det att skjuta upp inläsningen av bilder som inte visas på skärmen i syfte att förbättra prestandan."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | render-blocking-resources": {
-    "message": "Consider using a module to inline critical CSS and JavaScipt, or potentially load assets asynchronously via JavaScript such as the [Advanced CSS/JS Aggregation](https://www.drupal.org/project/advagg) module. Beware that optimizations provided by this module may break your site, so you will likely need to make code changes."
+    "message": "Du kan använda en modul för att lägga till kritiska CSS- och JavaScript-tillgångar eller läsa in tillgångar asynkront via JavaScript, t.ex. modulen [Advanced CSS/JS Aggregation](https://www.drupal.org/project/advagg). Tänk på att optimeringarna som denna modul gör kan leda till att webbplatsen slutar att fungera, så du kan behöva ändra i koden."
   },
-  "node_modules/lighthouse-stack-packs/packs/drupal.js | time-to-first-byte": {
-    "message": "Themes, modules, and server specifications all contribute to server response time. Consider finding a more optimized theme, carefully selecting an optimization module, and/or upgrading your server. Your hosting servers should make use of PHP opcode caching, memory-caching to reduce database query times such as Redis or Memcached, as well as optimized application logic to prepare pages faster."
+  "node_modules/lighthouse-stack-packs/packs/drupal.js | server-response-time": {
+    "message": "Serverns svarstider påverkas av teman, moduler och serverns prestanda. Du kan använda ett mer optimerat tema, välja en optimeringsmodul och/eller uppgradera servern. Värdservrarna ska använda cachelagring av OP-kod för PHP och minnescachelagring för att minska sökfrågetiderna för databasen, t.ex. Redis eller Memcached, samt en optimerad applogik för att förbereda sidor snabbare."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | total-byte-weight": {
-    "message": "Consider using [Responsive Image Styles](https://www.drupal.org/docs/8/mobile-guide/responsive-images-in-drupal-8) to reduce the size of images loaded on your page. If you are using Views to show multiple content items on a page, consider implementing pagination to limit the number of content items shown on a given page."
+    "message": "Du kan använda [responsiva bildformat](https://www.drupal.org/docs/8/mobile-guide/responsive-images-in-drupal-8) för att minska storleken på bilderna som läses in på sidan. Om du använder Views för att visa flera innehållsobjekt på en sida kan du implementera sidnumrering om du vill begränsa antalet innehållsobjekt som visas på en viss sida."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | unminified-css": {
-    "message": "Ensure you have enabled \"Aggregate CSS files\" in the \"Administration » Configuration » Development\" page. You can also configure more advanced aggregation options through [additional modules](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=im_vid_3%3A123&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=css+aggregation&solrsort=iss_project_release_usage+desc&op=Search) to speed up your site by concatenating, minifying, and compressing your CSS styles."
+    "message": "Kontrollera att du har aktiverat Aggregate CSS files under Administration » Configuration » Development. Du kan även konfigurera mer avancerade sammanställningsalternativ via [ytterligare moduler](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=im_vid_3%3A123&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=css+aggregation&solrsort=iss_project_release_usage+desc&op=Search) och göra webbplatsen snabbare genom att sammanfoga, minifiera och komprimera CSS-format."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | unminified-javascript": {
-    "message": "Ensure you have enabled \"Aggregate JavaScript files\" in the \"Administration » Configuration » Development\" page. You can also configure more advanced aggregation options through [additional modules](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=im_vid_3%3A123&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=javascript+aggregation&solrsort=iss_project_release_usage+desc&op=Search) to speed up your site by concatenating, minifying, and compressing your JavaScript assets."
+    "message": "Kontrollera att du har aktiverat Aggregate JavaScript files under Administration » Configuration » Development. Du kan även konfigurera mer avancerade sammanställningsalternativ via [ytterligare moduler](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=im_vid_3%3A123&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=javascript+aggregation&solrsort=iss_project_release_usage+desc&op=Search) och göra webbplatsen snabbare genom att sammanfoga, minifiera och komprimera JavaScript-tillgångar."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | unused-css-rules": {
-    "message": "Consider removing unused CSS rules and only attach the needed Drupal libraries to the relevant page or component in a page. See the [Drupal documentation link](https://www.drupal.org/docs/8/creating-custom-modules/adding-stylesheets-css-and-javascript-js-to-a-drupal-8-module#library) for details. To identify attached libraries that are adding extraneous CSS, try running [code coverage](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) in Chrome DevTools. You can identify the theme/module responsible from the URL of the stylesheet when CSS aggregation is disabled in your Drupal site. Look out for themes/modules that have many stylesheets in the list which have a lot of red in code coverage. A theme/module should only enqueue a stylesheet if it is actually used on the page."
+    "message": "Vi rekommenderar att du tar bort CSS-regler som inte används och endast bifogar nödvändiga Drupal-bibliotek till den relevanta sidan eller komponenten på en sida. Du hittar mer information i [dokumentationen om Drupal](https://www.drupal.org/docs/8/creating-custom-modules/adding-stylesheets-css-and-javascript-js-to-a-drupal-8-module#library). Testa fliken för [kodtäckning](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) i Chromes utvecklarverktyg om du vill se vilka bibliotek som lägger till överflödig CSS. Du ser på formatmallens webbadress vilket tema eller vilken modul som koden kommer från när CSS-sammanställning är inaktiverat för Drupal-webbplatsen. Titta efter teman eller moduler med många CSS-formatmallar på listan där en stor del av stapeln är röd. Ett tema eller en modul ska bara ställa en formatmall i kö för inläsning om det faktiskt används på sidan."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | unused-javascript": {
-    "message": "Consider removing unused JavaScipt assets and only attach the needed Drupal libraries to the relevant page or component in a page. See the [Drupal documentation link](https://www.drupal.org/docs/8/creating-custom-modules/adding-stylesheets-css-and-javascript-js-to-a-drupal-8-module#library) for details. To identify attached libraries that are adding extraneous JavaScript, try running [code coverage](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) in Chrome DevTools. You can identify the theme/module responsible from the URL of the script when JavaScript aggregation is disabled in your Drupal site. Look out for themes/modules that have many scripts in the list which have a lot of red in code coverage. A theme/module should only enqueue a script if it is actually used on the page."
+    "message": "Vi rekommenderar att du tar bort JavaScript-tillgångar som inte används och endast bifogar nödvändiga Drupal-bibliotek till den relevanta sidan eller komponenten på en sida. Du hittar mer information i [dokumentationen om Drupal](https://www.drupal.org/docs/8/creating-custom-modules/adding-stylesheets-css-and-javascript-js-to-a-drupal-8-module#library). Testa fliken för [kodtäckning](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) i Chromes utvecklarverktyg om du vill se vilka bibliotek som lägger till överflödig JavaScript. Du ser på skriptets webbadress vilket tema eller vilken modul som koden kommer ifrån när JavaScript-sammanställning är inaktiverat på Drupal-webbplatsen. Titta efter teman/moduler med många skript på listan där en stor del av stapeln är röd. Ett tema eller en modul ska bara ställa ett skript i kö för inläsning om det faktiskt används på sidan."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | uses-long-cache-ttl": {
-    "message": "Set the \"Browser and proxy cache maximum age\" in the \"Administration » Configuration » Development\" page. Read about [Drupal cache and optimizing for performance](https://www.drupal.org/docs/7/managing-site-performance-and-scalability/caching-to-improve-performance/caching-overview#s-drupal-performance-resources)."
+    "message": "Ange Browser and proxy cache maximum age under Administration » Configuration » Development. Läs mer om [cachelagring i Drupal och optimering för prestanda.](https://www.drupal.org/docs/7/managing-site-performance-and-scalability/caching-to-improve-performance/caching-overview#s-drupal-performance-resources)"
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | uses-optimized-images": {
-    "message": "Consider using [a module](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=im_vid_3%3A123&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=optimize+images&solrsort=iss_project_release_usage+desc&op=Search) that automatically optimizes and reduces the size of images uploaded through the site while retaining quality. Also, ensure you are using the native [Responsive Image Styles](https://www.drupal.org/docs/8/mobile-guide/responsive-images-in-drupal-8) provided from Drupal (available in Drupal 8 and above) for all images rendered on the site."
+    "message": "Du kan använda en [modul](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=im_vid_3%3A123&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=optimize+images&solrsort=iss_project_release_usage+desc&op=Search) som automatiskt optimerar och minskar storleken på bilderna som laddas upp via webbplatsen utan att göra avkall på kvaliteten. Kontrollera även att du använder de integrerade [responsiva bildformaten](https://www.drupal.org/docs/8/mobile-guide/responsive-images-in-drupal-8) från Drupal (tillgängliga i Drupal 8 och senare) för alla bilder som renderas på webbplatsen."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | uses-rel-preconnect": {
-    "message": "Preconnect or dns-prefetch resource hints can be added by installing and configuring [a module](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=dns-prefetch&solrsort=iss_project_release_usage+desc&op=Search) that provides facilities for user agent resource hints."
+    "message": "Signaler för förhandsanslutning eller DNS-förhandshämtning kan läggas till genom att installera och konfigurera [en modul](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=dns-prefetch&solrsort=iss_project_release_usage+desc&op=Search) med funktioner för signaler för användaragenter."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | uses-responsive-images": {
-    "message": "Ensure that you are using the native [Responsive Image Styles](https://www.drupal.org/docs/8/mobile-guide/responsive-images-in-drupal-8) provided from Drupal (available in Drupal 8 and above). Use the Responsive Image Styles when rendering image fields through view modes, views, or images uploaded through the WYSIWYG editor."
-  },
-  "node_modules/lighthouse-stack-packs/packs/drupal.js | uses-webp-images": {
-    "message": "Consider installing and configuring [a module to leverage WebP image formats](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=webp&solrsort=iss_project_release_usage+desc&op=Search) in your site. Such modules would automatically generate a WebP version of your uploaded images to optimize loading times."
+    "message": "Kontrollera att du använder de integrerade [responsiva bildformaten](https://www.drupal.org/docs/8/mobile-guide/responsive-images-in-drupal-8) från Drupal (tillgängliga i Drupal 8 och senare). Använd de responsiva bildformaten när du renderar bildfält via visningslägen, vyer eller bilder som laddats upp via WYSIWYG-redigeraren."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | efficient-animated-content": {
-    "message": "Consider uploading your GIF to a service which will make it available to embed as an HTML5 video."
+    "message": "Ladda upp GIF-filen till en tjänst som kan göra den tillgänglig för inbäddning som HTML5-video."
+  },
+  "node_modules/lighthouse-stack-packs/packs/joomla.js | modern-image-formats": {
+    "message": "Det kan vara bra att använda en [plugin](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=webp) eller tjänst som automatiskt konverterar uppladdade bilder till optimalt format."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | offscreen-images": {
-    "message": "Install a [lazy-load Joomla plugin](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=lazy%20loading) that provides the ability to defer any offscreen images, or switch to a template that provides that functionality. Starting with Joomla 4.0 the core is shipping an dedicated lazyloading plugin please enable the \"Content - Lazy Loading Images\" plugin. Also consider using [an AMP plugin](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=amp)."
+    "message": "Installera en [Joomla-plugin för lat inläsning](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=lazy%20loading) som ger möjlighet att skjuta upp inläsningen av bilder som inte visas på skärmen, eller byt till en mall som har den funktionen. Från och med Joomla 4.0 får alla nya bilder [automatiskt](https://github.com/joomla/joomla-cms/pull/30748) attributet `loading` från början."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | render-blocking-resources": {
-    "message": "There are a number of Joomla plugins that can help you [inline critical assets](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance) or [defer less important resources](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance). Beware that optimizations provided by these plugins may break features of your templates or plugins, so you will need to test these thoroughly."
+    "message": "Det finns ett antal pluginmoduler för Joomla som kan hjälpa dig att [lägga till kritiska tillgångar direkt på sidan](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance) eller [skjuta upp inläsningen av mindre viktiga resurser](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance). Tänk på att optimeringarna som dessa pluginmoduler gör kan leda till att funktioner i mallarna eller andra pluginmoduler slutar fungera, så du kan behöva köra noggranna tester."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | server-response-time": {
-    "message": "Templates, extensions, and server specifications all contribute to server response time. Consider finding a more optimized template, carefully selecting an optimization extension, and/or upgrading your server."
+    "message": "Serverns svarstider påverkas av mallar, tillägg och serverns prestanda. Du kan använda en mer optimerad mall, välja ett optimeringstillägg och/eller uppgradera servern."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | total-byte-weight": {
-    "message": "Consider showing excerpts in your article categories (e.g. via the read more link), reducing the number of articles shown on a given page, breaking your long posts into multiple pages, or using a plugin to lazy-load comments."
+    "message": "Du kan visa utdrag i artikelkategorierna (t.ex. via en läs mer-länk), minska antalet artiklar på sidan, dela upp långa inlägg på flera sidor eller använda en plugin som läser in kommentarer med uppskjuten inläsning."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | unminified-css": {
-    "message": "A number of [Joomla extensions](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance) can speed up your site by concatenating, minifying, and compressing your css styles. There are also templates that provide this functionality."
+    "message": "Det finns ett antal [Joomla-tillägg](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance) som kan göra webbplatsen snabbare genom att sammanfoga, minifiera och komprimera CSS-format. Det finns även mallar som gör samma sak."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | unminified-javascript": {
-    "message": "A number of [Joomla extensions](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance) can speed up your site by concatenating, minifying, and compressing your scripts. There are also templates that provide this functionality."
+    "message": "Det finns ett antal [Joomla-tillägg](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance) som kan göra webbplatsen snabbare genom att sammanfoga, minifiera och komprimera skript. Det finns även mallar som gör samma sak."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | unused-css-rules": {
-    "message": "Consider reducing, or switching, the number of [Joomla extensions](https://extensions.joomla.org/) loading unused CSS in your page. To identify extensions that are adding extraneous CSS, try running [code coverage](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) in Chrome DevTools. You can identify the theme/plugin responsible from the URL of the stylesheet. Look out for plugins that have many stylesheets in the list which have a lot of red in code coverage. A plugin should only enqueue a stylesheet if it is actually used on the page."
+    "message": "Du kan minska antalet [Joomla-tillägg](https://extensions.joomla.org/) som läser in CSS som inte används på sidan, eller byta ut dem. Testa fliken för [kodtäckning](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) i Chromes utvecklarverktyg om du vill se vilka tillägg som lägger till överflödig CSS. Du ser på CSS-formatmallens webbadress vilket tema eller vilken plugin som koden kommer från. Titta efter pluginmoduler med många CSS-formatmallar på listan där en stor del av stapeln är röd. En plugin ska bara ställa en formatmall i kö för inläsning om den faktiskt används på sidan."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | unused-javascript": {
-    "message": "Consider reducing, or switching, the number of [Joomla extensions](https://extensions.joomla.org/) loading unused JavaScript in your page. To identify plugins that are adding extraneous JS, try running [code coverage](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) in Chrome DevTools. You can identify the extension responsible from the URL of the script. Look out for extensions that have many scripts in the list which have a lot of red in code coverage. An extension should only enqueue a script if it is actually used on the page."
+    "message": "Du kan minska antalet [Joomla-tillägg](https://extensions.joomla.org/) som läser in JavaScript som inte används på sidan, eller byta ut dem. Testa fliken för [kodtäckning](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) i Chromes utvecklarverktyg om du vill se vilka pluginmoduler som lägger till överflödig JS. Du ser på formatmallens webbadress vilket tillägg som koden kommer från. Titta efter tillägg med många skript på listan där en stor del av stapeln är röd. Ett tillägg ska bara ställa ett skript i kö för inläsning om det faktiskt används på sidan."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | uses-long-cache-ttl": {
-    "message": "Read about [Browser Caching in Joomla](https://docs.joomla.org/Cache)."
+    "message": "Läs mer om [webbläsarens cachelagring och Joomla](https://docs.joomla.org/Cache)."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | uses-optimized-images": {
-    "message": "Consider using an [image optimization plugin](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance) that compresses your images while retaining quality."
+    "message": "Du kan använda en [WordPress-plugin för bildoptimering](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance) som komprimerar dina bilder utan att göra avkall på kvaliteten."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | uses-responsive-images": {
-    "message": "Consider using a [responsive images plugin](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=responsive%20images) to use responsive images in your content."
+    "message": "Vi rekommenderar att du använder en [pluginmodul för responsiva bilder](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=responsive%20images) så att du kan använda responsiva bilder i innehållet."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | uses-text-compression": {
-    "message": "You can enable text compression by enabling Gzip Page Compression in Joomla (System > Global configuration > Server)."
-  },
-  "node_modules/lighthouse-stack-packs/packs/joomla.js | uses-webp-images": {
-    "message": "Consider using a [plugin](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=webp) or service that will automatically convert your uploaded images to the optimal formats."
+    "message": "Du kan aktivera textkomprimering genom att aktivera Gzip Page Compression i Joomla (System > Global configuration > Server)."
   },
   "node_modules/lighthouse-stack-packs/packs/magento.js | critical-request-chains": {
     "message": "Om du paketerar JavaScript-tillgångarna rekommenderar vi att du använder [baler](https://github.com/magento/baler)."
@@ -2054,17 +2099,20 @@
   "node_modules/lighthouse-stack-packs/packs/magento.js | font-display": {
     "message": "Ange `@font-display` när du [definierar anpassade teckensnitt](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/css-topics/using-fonts.html)."
   },
+  "node_modules/lighthouse-stack-packs/packs/magento.js | modern-image-formats": {
+    "message": "Vi rekommenderar att du söker på [Magento Marketplace](https://marketplace.magento.com/catalogsearch/result/?q=webp) efter olika tillägg från tredje part så att du kan använda nyare bildformat."
+  },
   "node_modules/lighthouse-stack-packs/packs/magento.js | offscreen-images": {
     "message": "Vi rekommenderar att du ändrar dina produkt- och katalogmallar för att dra nytta av webbplattformens funktion för [uppskjuten inläsning](https://web.dev/native-lazy-loading)."
   },
-  "node_modules/lighthouse-stack-packs/packs/magento.js | time-to-first-byte": {
+  "node_modules/lighthouse-stack-packs/packs/magento.js | server-response-time": {
     "message": "Använd Magentos [Varnish-integrering](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html)."
   },
   "node_modules/lighthouse-stack-packs/packs/magento.js | unminified-css": {
     "message": "Aktivera alternativet Minify CSS Files (minifiera CSS-filer) i butikens utvecklarinställningar. [Läs mer](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)."
   },
   "node_modules/lighthouse-stack-packs/packs/magento.js | unminified-javascript": {
-    "message": "Use [Terser](https://www.npmjs.com/package/terser) to minify all JavaScript assets from static content deployment, and disable the built-in minification feature."
+    "message": "Använd [Terser](https://www.npmjs.com/package/terser) till att minifiera alla JavaScript-tillgångar från statisk innehållsimplementering och inaktivera den inbyggda minifieringsfunktionen."
   },
   "node_modules/lighthouse-stack-packs/packs/magento.js | unused-javascript": {
     "message": "Inaktivera Magentos inbyggda [JavaScript-paketering](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html)."
@@ -2078,16 +2126,55 @@
   "node_modules/lighthouse-stack-packs/packs/magento.js | uses-rel-preload": {
     "message": "`<link rel=preload>`-taggar kan läggas till genom att [ändra ett temas layout](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
   },
-  "node_modules/lighthouse-stack-packs/packs/magento.js | uses-webp-images": {
-    "message": "Vi rekommenderar att du söker på [Magento Marketplace](https://marketplace.magento.com/catalogsearch/result/?q=webp) efter olika tillägg från tredje part så att du kan använda nyare bildformat."
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | efficient-animated-content": {
+    "message": "[Ersätt animerade GIF-bilder med videor](https://web.dev/replace-gifs-with-videos/) så att webbsidan läses in snabbare. Du kan även använda moderna filformat som [WebM](https://web.dev/replace-gifs-with-videos/#create-webm-videos) eller [AV1](https://developers.google.com/web/updates/2018/09/chrome-70-media-updates#av1-decoder) för att förbättra komprimeringens effektivitet med mer än 30 % jämfört med den nuvarande toppmoderna videokodeken VP9."
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | modern-image-formats": {
+    "message": "Det kan vara bra att använda en [plugin](https://octobercms.com/plugins?search=image) eller tjänst som automatiskt konverterar uppladdade bilder till optimalt format. [Förlustfria WebP-bilder](https://developers.google.com/speed/webp) är 26 % mindre än PNG-bilder och 25–34 % mindre än jämförbara JPEG-bilder med samma upplösning enligt SSIM-kvalitetsindex. Ett annat modernare bildformat är [AVIF](https://jakearchibald.com/2020/avif-has-landed/)."
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | offscreen-images": {
+    "message": "Du kan installera [en plugin för lat inläsning av bilder](https://octobercms.com/plugins?search=lazy) som gör det möjligt att skjuta upp inläsningen av bilder som inte visas på skärmen eller byta till ett tema som erbjuder den funktionen. Du kan även använda [plugin-programmet AMP](https://octobercms.com/plugins?search=Accelerated+Mobile+Pages)."
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | render-blocking-resources": {
+    "message": "Det finns många plugins som kan hjälpa dig att [lägga till kritiska tillgångar direkt på sidan](https://octobercms.com/plugins?search=css). Dessa plugins kan få andra plugins att sluta fungera, så du bör testa noga."
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | server-response-time": {
+    "message": "Serverns svarstider påverkas av teman, plugins och serverns prestanda. Du kan använda ett mer optimerat tema, välja en optimeringsplugin och/eller uppgradera servern. Med October CMS kan utvecklare även använda [`Queues`](https://octobercms.com/docs/services/queues) för att skjuta upp bearbetningen av en tidskrävande uppgift, till exempel att skicka ett e-postmeddelande. Detta gör webbförfrågningarna mycket snabbare."
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | total-byte-weight": {
+    "message": "Du kan visa utdrag i inläggslistan (t.ex. med en `show more`-knapp), minska antalet inlägg på webbsidan, dela upp långa inlägg på flera webbsidor eller använda en plugin som läser in kommentarer med lat inläsning."
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | unminified-css": {
+    "message": "Det finns många [plugins](https://octobercms.com/plugins?search=css) som kan göra webbplatsen snabbare genom att sammanfoga, minifiera och komprimera formatmallarna. Du kan också göra minifieringen direkt i konstruktionsfasen för att snabba på utvecklingsarbetet."
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | unminified-javascript": {
+    "message": "Det finns många [plugins](https://octobercms.com/plugins?search=javascript) som kan göra webbplatsen snabbare genom att sammanfoga, minifiera och komprimera skripten. Du kan också göra minifieringen direkt i konstruktionsfasen för att snabba på utvecklingsarbetet."
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | unused-css-rules": {
+    "message": "Du kan se över [de plugins](https://octobercms.com/plugins) som läser in CSS som inte används på webbplatsen. Du kan identifiera vilka plugins som lägger till onödig CSS genom att köra [kodanvändning](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) i Chromes verktyg för programmerare. Du ser på formatmallens webbadress vilket tema eller vilken plugin som koden kommer från. Titta efter plugins med många formatmallar där en stor del av stapeln är röd i kodanvändningen. En plugin ska endast lägga till en formatmall om den faktiskt används på webbsidan."
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | unused-javascript": {
+    "message": "Du kan se över [plugin-programmen](https://octobercms.com/plugins?search=javascript) som läser in JavaScript som inte används på webbsidan. Du kan identifiera vilka plugins som lägger till onödig JavaScript genom att köra [kodanvändning](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) i Chromes verktyg för programmerare. Du ser på skriptets webbadress vilket tema eller vilken plugin som koden kommer från. Titta efter plugins med många skript där en stor del av stapeln är röd i kodanvändningen. En plugin ska endast lägga till ett skript om det faktiskt används på webbsidan."
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | uses-long-cache-ttl": {
+    "message": "Läs om att [förhindra onödiga nätverksförfrågningar med HTTP-cacheminnet](https://web.dev/http-cache/#caching-checklist). Det finns många [plugins](https://octobercms.com/plugins?search=Caching) som kan användas för att snabba på cachelagringen."
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | uses-optimized-images": {
+    "message": "Du kan använda en [plugin för bildoptimering](https://octobercms.com/plugins?search=image) som komprimerar dina bilder utan att göra avkall på kvaliteten."
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | uses-responsive-images": {
+    "message": "Säkerställ att de bildstorlekar som krävs finns tillgängliga genom att ladda upp bilderna direkt via mediahanteraren. Du kan använda [filtret för att ändra storlek](https://octobercms.com/docs/markup/filter-resize) eller en [plugin som ändrar storleken](https://octobercms.com/plugins?search=image) så att optimala bildstorlekar används."
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | uses-text-compression": {
+    "message": "Aktivera textkomprimering i webbserverns konfiguration."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | dom-size": {
-    "message": "Consider using a “windowing” library like `react-window` to minimize the number of DOM nodes created if you are rendering many repeated elements on the page. [Learn more](https://web.dev/virtualize-long-lists-react-window/). Also, minimize unnecessary re-renders using [shouldComponentUpdate](https://reactjs.org/docs/optimizing-performance.html#shouldcomponentupdate-in-action), [PureComponent](https://reactjs.org/docs/react-api.html#reactpurecomponent), or [React.memo](https://reactjs.org/docs/react-api.html#reactmemo) and [skip effects](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects) only until certain dependencies have changed if you are using the Effect hook to improve runtime performance."
+    "message": "Du kan använda ett bibliotek för fönstersystem som `react-window` för att minimera antalet DOM-noder som skapas om du renderar många upprepade element på sidan. [Läs mer](https://web.dev/virtualize-long-lists-react-window/). Minimera även onödiga omrenderingar med [`shouldComponentUpdate`](https://reactjs.org/docs/optimizing-performance.html#shouldcomponentupdate-in-action), [`PureComponent`](https://reactjs.org/docs/react-api.html#reactpurecomponent) eller [`React.memo`](https://reactjs.org/docs/react-api.html#reactmemo) och [hoppa endast över effekter](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects) tills vissa beroenden har ändrats om du använder hooken `Effect` till att förbättra körningsresultatet."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | redirects": {
     "message": "Om du använder React Router minimerar du användningen av komponenten `<Redirect>` för [navigering av dirigeringar](https://reacttraining.com/react-router/web/api/Redirect)."
   },
-  "node_modules/lighthouse-stack-packs/packs/react.js | time-to-first-byte": {
+  "node_modules/lighthouse-stack-packs/packs/react.js | server-response-time": {
     "message": "Om du renderar React-komponenter på serversidan rekommenderar vi att du använder `renderToNodeStream()` eller `renderToStaticNodeStream()` till att tillåta att klienten tar emot och hydrerar olika delar av uppmärkningen i stället för alla på en gång. [Läs mer](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | unminified-css": {
@@ -2103,7 +2190,10 @@
     "message": "Mät renderingens resultat för dina komponenter med hjälp av React DevTools Profiler, som drar nytta av Profiler API. [Läs mer.](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)"
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | efficient-animated-content": {
-    "message": "Consider uploading your GIF to a service which will make it available to embed as an HTML5 video."
+    "message": "Ladda upp GIF-filen till en tjänst som kan göra den tillgänglig för inbäddning som HTML5-video."
+  },
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | modern-image-formats": {
+    "message": "Det kan vara bra att använda en [plugin](https://wordpress.org/plugins/search/convert+webp/) eller tjänst som automatiskt konverterar uppladdade bilder till optimalt format."
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | offscreen-images": {
     "message": "Installera en [WordPress-plugin för lat inläsning](https://wordpress.org/plugins/search/lazy+load/) som ger möjlighet att skjuta upp inläsningen av bilder som inte visas på skärmen, eller byt till ett tema som har den funktionen. Du kan även använda [AMP-pluginmodulen](https://wordpress.org/plugins/amp/)."
@@ -2111,7 +2201,7 @@
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | render-blocking-resources": {
     "message": "Det finns ett antal pluginmoduler för WordPress som kan hjälpa dig att [lägga till kritiska tillgångar direkt på sidan](https://wordpress.org/plugins/search/critical+css/) eller [skjuta upp inläsningen av mindre viktiga resurser](https://wordpress.org/plugins/search/defer+css+javascript/). Tänk på att optimeringarna som dessa pluginmoduler gör kan leda till att funktioner i teman eller andra pluginmoduler slutar fungera, så du kan behöva ändra i koden."
   },
-  "node_modules/lighthouse-stack-packs/packs/wordpress.js | time-to-first-byte": {
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | server-response-time": {
     "message": "Serverns svarstider påverkas av teman, pluginmoduler och serverns prestanda. Du kan använda ett mer optimerat tema, välja en optimeringsplugin och/eller uppgradera servern."
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | total-byte-weight": {
@@ -2141,7 +2231,142 @@
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | uses-text-compression": {
     "message": "Du kan aktivera textkomprimering i webbserverns konfiguration."
   },
-  "node_modules/lighthouse-stack-packs/packs/wordpress.js | uses-webp-images": {
-    "message": "Consider using a [plugin](https://wordpress.org/plugins/search/convert+webp/) or service that will automatically convert your uploaded images to the optimal formats."
+  "report/renderer/util.js | calculatorLink": {
+    "message": "Visa kalkylator."
+  },
+  "report/renderer/util.js | crcInitialNavigation": {
+    "message": "Första navigering"
+  },
+  "report/renderer/util.js | crcLongestDurationLabel": {
+    "message": "Högsta latens för kritisk kedja:"
+  },
+  "report/renderer/util.js | dropdownCopyJSON": {
+    "message": "Kopiera JSON"
+  },
+  "report/renderer/util.js | dropdownDarkTheme": {
+    "message": "Aktivera och inaktivera mörkt tema"
+  },
+  "report/renderer/util.js | dropdownPrintExpanded": {
+    "message": "Skriv ut utökad"
+  },
+  "report/renderer/util.js | dropdownPrintSummary": {
+    "message": "Skriv ut sammanfattning"
+  },
+  "report/renderer/util.js | dropdownSaveGist": {
+    "message": "Spara som Gist"
+  },
+  "report/renderer/util.js | dropdownSaveHTML": {
+    "message": "Spara som HTML"
+  },
+  "report/renderer/util.js | dropdownSaveJSON": {
+    "message": "Spara som JSON"
+  },
+  "report/renderer/util.js | dropdownViewer": {
+    "message": "Öppna i visningsprogram"
+  },
+  "report/renderer/util.js | errorLabel": {
+    "message": "Fel."
+  },
+  "report/renderer/util.js | errorMissingAuditInfo": {
+    "message": "Rapportfel: ingen granskningsinformation"
+  },
+  "report/renderer/util.js | footerIssue": {
+    "message": "Rapportera ett problem"
+  },
+  "report/renderer/util.js | labDataTitle": {
+    "message": "Labbdata"
+  },
+  "report/renderer/util.js | lsPerformanceCategoryDescription": {
+    "message": "Analys med [Lighthouse](https://developers.google.com/web/tools/lighthouse/) av den aktuella sidan i ett emulerat mobilnätverk. Värdena är uppskattningar och kan variera."
+  },
+  "report/renderer/util.js | manualAuditsGroupTitle": {
+    "message": "Fler saker att kolla manuellt"
+  },
+  "report/renderer/util.js | notApplicableAuditsGroupTitle": {
+    "message": "Ej tillämpligt"
+  },
+  "report/renderer/util.js | opportunityResourceColumnLabel": {
+    "message": "Möjlighet"
+  },
+  "report/renderer/util.js | opportunitySavingsColumnLabel": {
+    "message": "Uppskattad tidsbesparing"
+  },
+  "report/renderer/util.js | passedAuditsGroupTitle": {
+    "message": "Godkända granskningar"
+  },
+  "report/renderer/util.js | runtimeDesktopEmulation": {
+    "message": "Emulerat skrivbord"
+  },
+  "report/renderer/util.js | runtimeMobileEmulation": {
+    "message": "Emulerad Moto G4"
+  },
+  "report/renderer/util.js | runtimeNoEmulation": {
+    "message": "Ingen emulering"
+  },
+  "report/renderer/util.js | runtimeSettingsAxeVersion": {
+    "message": "Axe-version"
+  },
+  "report/renderer/util.js | runtimeSettingsBenchmark": {
+    "message": "CPU/minne"
+  },
+  "report/renderer/util.js | runtimeSettingsCPUThrottling": {
+    "message": "CPU-begränsning"
+  },
+  "report/renderer/util.js | runtimeSettingsChannel": {
+    "message": "Kanal"
+  },
+  "report/renderer/util.js | runtimeSettingsDevice": {
+    "message": "Enhet"
+  },
+  "report/renderer/util.js | runtimeSettingsFetchTime": {
+    "message": "Tidpunkt för hämtning"
+  },
+  "report/renderer/util.js | runtimeSettingsNetworkThrottling": {
+    "message": "Nätverksbegränsning"
+  },
+  "report/renderer/util.js | runtimeSettingsTitle": {
+    "message": "Körtidsinställningar"
+  },
+  "report/renderer/util.js | runtimeSettingsUA": {
+    "message": "Användaragent (värd)"
+  },
+  "report/renderer/util.js | runtimeSettingsUANetwork": {
+    "message": "Användaragent (nätverk)"
+  },
+  "report/renderer/util.js | runtimeSettingsUrl": {
+    "message": "Webbadress"
+  },
+  "report/renderer/util.js | runtimeUnknown": {
+    "message": "Okänd"
+  },
+  "report/renderer/util.js | showRelevantAudits": {
+    "message": "Visa granskningar som är relevanta för:"
+  },
+  "report/renderer/util.js | snippetCollapseButtonLabel": {
+    "message": "Komprimera utdrag"
+  },
+  "report/renderer/util.js | snippetExpandButtonLabel": {
+    "message": "Utöka utdrag"
+  },
+  "report/renderer/util.js | thirdPartyResourcesLabel": {
+    "message": "Visa resurser från tredje part"
+  },
+  "report/renderer/util.js | throttlingProvided": {
+    "message": "Tillhandahålls av miljön"
+  },
+  "report/renderer/util.js | toplevelWarningsMessage": {
+    "message": "Problem uppstod med den här körningen av Lighthouse."
+  },
+  "report/renderer/util.js | varianceDisclaimer": {
+    "message": "Värdena är uppskattningar och kan variera. [Prestandapoängen beräknas](https://web.dev/performance-scoring/) direkt utifrån dessa mätvärden."
+  },
+  "report/renderer/util.js | viewTreemapLabel": {
+    "message": "Visa Treemap"
+  },
+  "report/renderer/util.js | warningAuditsGroupTitle": {
+    "message": "Godkänd i granskningarna men med varningar"
+  },
+  "report/renderer/util.js | warningHeader": {
+    "message": "Varningar: "
   }
 }

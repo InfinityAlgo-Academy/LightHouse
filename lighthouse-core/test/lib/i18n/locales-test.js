@@ -19,6 +19,7 @@ describe('locales', () => {
       in: 'id',
       iw: 'he',
       mo: 'ro',
+      tl: 'fil',
     };
 
     for (const locale of Object.keys(locales)) {

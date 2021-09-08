@@ -21,7 +21,8 @@ The server responds with different HTML for each of these pages and session stat
 ```sh
 # be in root lighthouse directory
 yarn # install global project deps
-cd docs/auth
+yarn build-report
+cd docs/recipes/auth
 yarn # install deps related to just this recipe
 yarn start # start the server on http://localhost:10632
 ```
@@ -110,4 +111,20 @@ All of the above is done in the example script. To run:
 ```sh
 # make sure server is running (see beginning of recipe) ...
 node example-lh-auth.js # login via puppeteer and run lighthouse
+```
+
+## Alternatives
+
+### [`page.setCookie`](https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#pagesetcookiecookies)
+
+**NOTE:** We strongly recommend your tests use the form-based login flow above instead. Only directly set the token like this as a last resort.
+
+If you don't have user credentials to login but you do have direct access to a token for authentication, you can instead directly set a cookie.
+
+```js
+await page.setCookie({
+  name: 'myAuthCookie',
+  value: '<auth token goes here>',
+  url: 'http://localhost:10632/dashboard',
+});
 ```

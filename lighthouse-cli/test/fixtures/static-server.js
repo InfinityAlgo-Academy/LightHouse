@@ -17,15 +17,19 @@ const mime = require('mime-types');
 const parseQueryString = require('querystring').parse;
 const parseURL = require('url').parse;
 const URLSearchParams = require('url').URLSearchParams;
-const HEADER_SAFELIST = new Set(['x-robots-tag', 'link']);
+const {LH_ROOT} = require('../../../root.js');
 
-const lhRootDirPath = path.join(__dirname, '../../../');
+const HEADER_SAFELIST = new Set(['x-robots-tag', 'link', 'content-security-policy']);
 
 class Server {
+  baseDir = __dirname;
+
   constructor() {
     this._server = http.createServer(this._requestHandler.bind(this));
     /** @type {(data: string) => string=} */
     this._dataTransformer = undefined;
+    /** @type {string[]} */
+    this._requestUrls = [];
   }
 
   getPort() {
@@ -60,12 +64,35 @@ class Server {
     this._dataTransformer = fn;
   }
 
+  /**
+   * @return {string[]}
+   */
+  takeRequestUrls() {
+    const requestUrls = this._requestUrls;
+    this._requestUrls = [];
+    return requestUrls;
+  }
+
+  /**
+   * @param {http.IncomingMessage} request
+   */
+  _updateRequestUrls(request) {
+    // Favicon is not fetched in headless mode and robots is not fetched by every test.
+    // Ignoring these makes the assertion much simpler.
+    if (['/favicon.ico', '/robots.txt'].includes(request.url)) return;
+    this._requestUrls.push(request.url);
+  }
+
+  /**
+   * @param {http.IncomingMessage} request
+   * @param {http.ServerResponse} response
+   */
   _requestHandler(request, response) {
     const requestUrl = parseURL(request.url);
+    this._updateRequestUrls(request);
     const filePath = requestUrl.pathname;
     const queryString = requestUrl.search && parseQueryString(requestUrl.search.slice(1));
-    let absoluteFilePath = path.join(__dirname, filePath);
-
+    let absoluteFilePath = path.join(this.baseDir, filePath);
     const sendResponse = (statusCode, data) => {
       // Used by Smokerider.
       if (this._dataTransformer) data = this._dataTransformer(data);
@@ -133,13 +160,13 @@ class Server {
       }
 
       response.writeHead(statusCode, headers);
+      const encoding = charset === 'UTF-8' ? 'utf-8' : 'binary';
 
       // Delay the response
       if (delay > 0) {
-        return setTimeout(finishResponse, delay, data);
+        return setTimeout(finishResponse, delay, data, encoding);
       }
 
-      const encoding = charset === 'UTF-8' ? 'utf-8' : 'binary';
       finishResponse(data, encoding);
     };
 
@@ -158,14 +185,14 @@ class Server {
       return;
     }
 
-    if (filePath.startsWith('/dist/viewer')) {
+    if (filePath.startsWith('/dist/gh-pages')) {
       // Rewrite lighthouse-viewer paths to point to that location.
       absoluteFilePath = path.join(__dirname, '/../../../', filePath);
     }
 
     // Disallow file requests outside of LH folder
     const filePathDir = path.parse(absoluteFilePath).dir;
-    if (!filePathDir.startsWith(lhRootDirPath)) {
+    if (!filePathDir.startsWith(LH_ROOT)) {
       return readFileCallback(new Error('Disallowed path'));
     }
 
@@ -188,6 +215,14 @@ class Server {
     }
 
     function sendRedirect(url) {
+      // Redirects can only contain ASCII characters.
+      if (url.split('').some(char => char.charCodeAt(0) > 256)) {
+        response.writeHead(500);
+        response.write(`Invalid redirect URL: ${url}`);
+        response.end();
+        return;
+      }
+
       const headers = {
         Location: url,
       };
@@ -219,6 +254,7 @@ if (require.main === module) {
   console.log(`offline: listening on http://localhost:${offlinePort}`);
 } else {
   module.exports = {
+    Server,
     server: serverForOnline,
     serverForOffline,
   };

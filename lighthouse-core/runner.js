@@ -18,19 +18,21 @@ const fs = require('fs');
 const path = require('path');
 const URL = require('./lib/url-shim.js');
 const Sentry = require('./lib/sentry.js');
-const generateReport = require('./report/report-generator.js').generateReport;
+const generateReport = require('../report/generator/report-generator.js').generateReport;
 const LHError = require('./lib/lh-error.js');
 
 /** @typedef {import('./gather/connections/connection.js')} Connection */
-/** @typedef {import('./config/config.js')} Config */
+/** @typedef {import('./lib/arbitrary-equality-map.js')} ArbitraryEqualityMap */
+/** @typedef {LH.Config.Config} Config */
 
 class Runner {
   /**
-   * @param {Connection} connection
-   * @param {{config: Config, url?: string, driverMock?: Driver}} runOpts
+   * @template {LH.Config.Config | LH.Config.FRConfig} TConfig
+   * @param {(runnerData: {requestedUrl: string, config: TConfig, driverMock?: Driver}) => Promise<LH.Artifacts>} gatherFn
+   * @param {{config: TConfig, computedCache: Map<string, ArbitraryEqualityMap>, url?: string, driverMock?: Driver}} runOpts
    * @return {Promise<LH.RunnerResult|undefined>}
    */
-  static async run(connection, runOpts) {
+  static async run(gatherFn, runOpts) {
     const settings = runOpts.config.settings;
     try {
       const runnerStatus = {msg: 'Runner setup', id: 'lh:runner:run'};
@@ -38,7 +40,7 @@ class Runner {
 
       /**
        * List of top-level warnings for this Lighthouse run.
-       * @type {Array<string>}
+       * @type {Array<string | LH.IcuMessage>}
        */
       const lighthouseRunWarnings = [];
 
@@ -51,7 +53,7 @@ class Runner {
 
       // User can run -G solo, -A solo, or -GA together
       // -G and -A will run partial lighthouse pipelines,
-      // and -GA will run everything plus save artifacts to disk
+      // and -GA will run everything plus save artifacts and lhr to disk.
 
       // Gather phase
       // Either load saved artifacts off disk or from the browser
@@ -59,7 +61,7 @@ class Runner {
       let requestedUrl;
       if (settings.auditMode && !settings.gatherMode) {
         // No browser required, just load the artifacts from disk.
-        const path = Runner._getArtifactsPath(settings);
+        const path = Runner._getDataSavePath(settings);
         artifacts = assetSaver.loadArtifacts(path);
         requestedUrl = artifacts.URL.requestedUrl;
 
@@ -78,10 +80,15 @@ class Runner {
           throw new LHError(LHError.errors.INVALID_URL);
         }
 
-        artifacts = await Runner._gatherArtifactsFromBrowser(requestedUrl, runOpts, connection);
+        artifacts = await gatherFn({
+          requestedUrl,
+          config: runOpts.config,
+          driverMock: runOpts.driverMock,
+        });
+
         // -G means save these to ./latest-run, etc.
         if (settings.gatherMode) {
-          const path = Runner._getArtifactsPath(settings);
+          const path = Runner._getDataSavePath(settings);
           await assetSaver.saveArtifacts(artifacts, path);
         }
       }
@@ -93,8 +100,8 @@ class Runner {
       if (!runOpts.config.audits) {
         throw new Error('No audits to evaluate.');
       }
-      const auditResults = await Runner._runAudits(settings, runOpts.config.audits, artifacts,
-          lighthouseRunWarnings);
+      const auditResultsById = await Runner._runAudits(settings, runOpts.config.audits, artifacts,
+          lighthouseRunWarnings, runOpts.computedCache);
 
       // LHR construction phase
       const resultsStatus = {msg: 'Generating results...', id: 'lh:runner:generate'};
@@ -114,23 +121,20 @@ class Runner {
         'axe-core': axeVersion,
       };
 
-      /** @type {Object<string, LH.Audit.Result>} */
-      const resultsById = {};
-      for (const audit of auditResults) {
-        resultsById[audit.id] = audit;
-      }
-
-      /** @type {Object<string, LH.Result.Category>} */
+      /** @type {Record<string, LH.RawIcu<LH.Result.Category>>} */
       let categories = {};
       if (runOpts.config.categories) {
-        categories = ReportScoring.scoreAllCategories(runOpts.config.categories, resultsById);
+        categories = ReportScoring.scoreAllCategories(runOpts.config.categories, auditResultsById);
       }
 
       log.timeEnd(resultsStatus);
       log.timeEnd(runnerStatus);
 
-      /** @type {LH.Result} */
-      const lhr = {
+      /** @type {LH.RawIcu<LH.Result>} */
+      const i18nLhr = {
+        // TODO(FR-COMPAT): Make GatherContext a true base artifact.
+        // If GatherContext is not collected, then we are in a non-default pass of the legacy runner.
+        gatherMode: artifacts.GatherContext ? artifacts.GatherContext.gatherMode : 'navigation',
         userAgent: artifacts.HostUserAgent,
         environment: {
           networkUserAgent: artifacts.NetworkUserAgent,
@@ -144,7 +148,7 @@ class Runner {
         finalUrl: artifacts.URL.finalUrl,
         runWarnings: lighthouseRunWarnings,
         runtimeError: Runner.getArtifactRuntimeError(artifacts),
-        audits: resultsById,
+        audits: auditResultsById,
         configSettings: settings,
         categories,
         categoryGroups: runOpts.config.groups || undefined,
@@ -157,15 +161,26 @@ class Runner {
       };
 
       // Replace ICU message references with localized strings; save replaced paths in lhr.
-      lhr.i18n.icuMessagePaths = i18n.replaceIcuMessageInstanceIds(lhr, settings.locale);
+      i18nLhr.i18n.icuMessagePaths = i18n.replaceIcuMessages(i18nLhr, settings.locale);
+
+      // LHR has now been localized.
+      const lhr = /** @type {LH.Result} */ (i18nLhr);
+
+      // Save lhr to ./latest-run, but only if -GA is used.
+      if (settings.gatherMode && settings.auditMode) {
+        const path = Runner._getDataSavePath(settings);
+        assetSaver.saveLhr(lhr, path);
+      }
 
       // Create the HTML, JSON, and/or CSV string
       const report = generateReport(lhr, settings.output);
 
       return {lhr, artifacts, report};
     } catch (err) {
-      // i18n error strings
-      err.friendlyMessage = i18n.getFormatted(err.friendlyMessage, settings.locale);
+      // i18n LighthouseError strings.
+      if (err.friendlyMessage) {
+        err.friendlyMessage = i18n.getFormatted(err.friendlyMessage, settings.locale);
+      }
       await Sentry.captureException(err, {level: 'fatal'});
       throw err;
     }
@@ -190,14 +205,14 @@ class Runner {
     // Truncate timestamps to hundredths of a millisecond saves ~4KB. No need for microsecond
     // resolution.
     .map(entry => {
-      return /** @type {PerformanceEntry} */ ({
+      return {
         // Don't spread entry because browser PerformanceEntries can't be spread.
         // https://github.com/GoogleChrome/lighthouse/issues/8638
         startTime: parseFloat(entry.startTime.toFixed(2)),
         name: entry.name,
         duration: parseFloat(entry.duration.toFixed(2)),
         entryType: entry.entryType,
-      });
+      };
     });
     const runnerEntry = timingEntries.find(e => e.name === 'lh:runner:run');
     return {entries: timingEntries, total: runnerEntry && runnerEntry.duration || 0};
@@ -206,7 +221,7 @@ class Runner {
   /**
    * Establish connection, load page and collect all required artifacts
    * @param {string} requestedUrl
-   * @param {{config: Config, driverMock?: Driver}} runnerOpts
+   * @param {{config: Config, computedCache: Map<string, ArbitraryEqualityMap>, driverMock?: Driver}} runnerOpts
    * @param {Connection} connection
    * @return {Promise<LH.Artifacts>}
    */
@@ -219,6 +234,7 @@ class Runner {
       driver,
       requestedUrl,
       settings: runnerOpts.config.settings,
+      computedCache: runnerOpts.computedCache,
     };
     const artifacts = await GatherRunner.run(runnerOpts.config.passes, gatherOpts);
     return artifacts;
@@ -229,10 +245,11 @@ class Runner {
    * @param {LH.Config.Settings} settings
    * @param {Array<LH.Config.AuditDefn>} audits
    * @param {LH.Artifacts} artifacts
-   * @param {Array<string>} runWarnings
-   * @return {Promise<Array<LH.Audit.Result>>}
+   * @param {Array<string | LH.IcuMessage>} runWarnings
+   * @param {Map<string, ArbitraryEqualityMap>} computedCache
+   * @return {Promise<Record<string, LH.RawIcu<LH.Audit.Result>>>}
    */
-  static async _runAudits(settings, audits, artifacts, runWarnings) {
+  static async _runAudits(settings, audits, artifacts, runWarnings, computedCache) {
     const status = {msg: 'Analyzing and running audits...', id: 'lh:runner:auditing'};
     log.time(status);
 
@@ -256,19 +273,21 @@ class Runner {
     // Members of LH.Audit.Context that are shared across all audits.
     const sharedAuditContext = {
       settings,
-      computedCache: new Map(),
+      computedCache,
     };
 
     // Run each audit sequentially
-    const auditResults = [];
+    /** @type {Record<string, LH.RawIcu<LH.Audit.Result>>} */
+    const auditResultsById = {};
     for (const auditDefn of audits) {
+      const auditId = auditDefn.implementation.meta.id;
       const auditResult = await Runner._runAudit(auditDefn, artifacts, sharedAuditContext,
           runWarnings);
-      auditResults.push(auditResult);
+      auditResultsById[auditId] = auditResult;
     }
 
     log.timeEnd(status);
-    return auditResults;
+    return auditResultsById;
   }
 
   /**
@@ -277,8 +296,8 @@ class Runner {
    * @param {LH.Config.AuditDefn} auditDefn
    * @param {LH.Artifacts} artifacts
    * @param {Pick<LH.Audit.Context, 'settings'|'computedCache'>} sharedAuditContext
-   * @param {Array<string>} runWarnings
-   * @return {Promise<LH.Audit.Result>}
+   * @param {Array<string | LH.IcuMessage>} runWarnings
+   * @return {Promise<LH.RawIcu<LH.Audit.Result>>}
    * @private
    */
   static async _runAudit(auditDefn, artifacts, sharedAuditContext, runWarnings) {
@@ -373,7 +392,7 @@ class Runner {
    * Searches a pass's artifacts for any `lhrRuntimeError` error artifacts.
    * Returns the first one found or `null` if none found.
    * @param {LH.Artifacts} artifacts
-   * @return {LH.Result['runtimeError']|undefined}
+   * @return {LH.RawIcu<LH.Result['runtimeError']>|undefined}
    */
   static getArtifactRuntimeError(artifacts) {
     const possibleErrorArtifacts = [
@@ -447,7 +466,7 @@ class Runner {
    * @param {LH.Config.Settings} settings
    * @return {string}
    */
-  static _getArtifactsPath(settings) {
+  static _getDataSavePath(settings) {
     const {auditMode, gatherMode} = settings;
 
     // This enables usage like: -GA=./custom-folder

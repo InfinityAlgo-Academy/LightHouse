@@ -7,6 +7,7 @@
 
 const Audit = require('./audit.js');
 const URL = require('../lib/url-shim.js');
+const NetworkRequest = require('../lib/network-request.js');
 const NetworkRecords = require('../computed/network-records.js');
 const i18n = require('../lib/i18n/i18n.js');
 
@@ -18,7 +19,7 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user *why* HTTPS use *for all resources* is important. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'All sites should be protected with HTTPS, even ones that don\'t handle ' +
       'sensitive data. This includes avoiding [mixed content](https://developers.google.com/web/fundamentals/security/prevent-mixed-content/what-is-mixed-content), ' +
-      'where some resources are loaded over HTTP despite the initial request being served' +
+      'where some resources are loaded over HTTP despite the initial request being served ' +
       'over HTTPS. HTTPS prevents intruders from tampering with or passively listening ' +
       'in on the communications between your app and your users, and is a prerequisite for ' +
       'HTTP/2 and many new web platform APIs. ' +
@@ -50,9 +51,6 @@ const resolutionToString = {
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
-const SECURE_SCHEMES = ['data', 'https', 'wss', 'blob', 'chrome', 'chrome-extension', 'about',
-  'filesystem'];
-const SECURE_DOMAINS = ['localhost', '127.0.0.1'];
 
 class HTTPS extends Audit {
   /**
@@ -69,16 +67,6 @@ class HTTPS extends Audit {
   }
 
   /**
-   * @param {{parsedURL: {scheme: string, host: string}, protocol: string}} record
-   * @return {boolean}
-   */
-  static isSecureRecord(record) {
-    return SECURE_SCHEMES.includes(record.parsedURL.scheme) ||
-           SECURE_SCHEMES.includes(record.protocol) ||
-           SECURE_DOMAINS.includes(record.parsedURL.host);
-  }
-
-  /**
    * @param {LH.Artifacts} artifacts
    * @param {LH.Audit.Context} context
    * @return {Promise<LH.Audit.Product>}
@@ -87,10 +75,10 @@ class HTTPS extends Audit {
     const devtoolsLogs = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     return NetworkRecords.request(devtoolsLogs, context).then(networkRecords => {
       const insecureURLs = networkRecords
-          .filter(record => !HTTPS.isSecureRecord(record))
+          .filter(record => !NetworkRequest.isSecureRequest(record))
           .map(record => URL.elideDataURI(record.url));
 
-      /** @type {Array<{url: string, resolution?: string}>}  */
+      /** @type {Array<{url: string, resolution?: LH.IcuMessage|string}>}  */
       const items = Array.from(new Set(insecureURLs)).map(url => ({url, resolution: undefined}));
 
       /** @type {LH.Audit.Details.Table['headings']} */
@@ -119,7 +107,7 @@ class HTTPS extends Audit {
         if (!item.resolution) item.resolution = str_(UIStrings.allowed);
       }
 
-      let displayValue = '';
+      let displayValue;
       if (items.length > 0) {
         displayValue = str_(UIStrings.displayValue, {itemCount: items.length});
       }

@@ -18,24 +18,24 @@ const log = require('lighthouse-logger');
 
 const UIStrings = {
   /** Title of a Lighthouse audit that lets the user know if there are any missing or invalid autocomplete attributes on page inputs. This descriptive title is shown to users when all input attributes have a valid autocomplete attribute. */
-  title: 'Input elements use autocomplete',
+  title: '`<input>` elements correctly use `autocomplete`',
   /** Title of a Lighthouse audit that lets the user know if there are any missing or invalid autocomplete attributes on page inputs. This descriptive title is shown to users when one or more inputs do not have autocomplete set or has an invalid autocomplete set. */
-  failureTitle: 'Input elements do not have correct attributes for autocomplete',
+  failureTitle: '`<input>` elements do not have correct `autocomplete` attributes',
   /** Description of a Lighthouse audit that lets the user know if there are any missing or invalid autocomplete attributes on page inputs. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
-  description: 'Autocomplete helps users submit forms quicker. To reduce user ' +
-   'effort, consider enabling autocomplete by setting the `autocomplete` ' +
+  description: '`autocomplete` helps users submit forms quicker. To reduce user ' +
+   'effort, consider enabling by setting the `autocomplete` ' +
    'attribute to a valid value.' +
   ' [Learn more](https://developers.google.com/web/fundamentals/design-and-ux/input/forms#use_metadata_to_enable_auto-complete)',
   /** Label for a column in a data table; entries will be the autocomplete token suggestions based on heuristics. */
-  columnSuggestions: 'Autocomplete Suggested Token',
+  columnSuggestions: 'Suggested Token',
   /** Label for a column in a data table; entries will be the incorrect optional autocomplete tokens or prompting user to review them. */
-  columnCurrent: 'Autocomplete Current Value',
+  columnCurrent: 'Current Value',
   /**
    * @description Warning that autocomplete token is invalid.
    * @example {invalid-token name} token
    * @example {<autocomplete="invalid-token name">} snippet
    */
-  warningInvalid: 'Autocomplete token(s): "{token}" is invalid in {snippet}',
+  warningInvalid: '`autocomplete` token(s): "{token}" is invalid in {snippet}',
   /**
    * @description Warning that autocomplete token order is invalid.
    * @example {mobile section-red cc-name} tokens
@@ -63,11 +63,11 @@ const validAutocompleteTokens = ['name', 'honorific-prefix', 'given-name',
   'tel-local', 'tel-local-prefix', 'tel-local-suffix', 'tel-extension', 'email', 'impp', 'off',
   'additional-name-initial', 'home', 'work', 'mobile', 'fax', 'pager', 'shipping', 'billing'];
 
-/** @type {string[]} This array contains all autofull suggestions that have no prediction tied to it. Autofill predictions found at https://source.chromium.org/chromium/chromium/src/+/master:components/autofill/core/browser/field_types.h;l=26 */
+/** @type {string[]} This array contains all autofull suggestions that have no prediction tied to it. Autofill predictions found at https://source.chromium.org/chromium/chromium/src/+/main:components/autofill/core/browser/field_types.h;l=26 */
 const noPrediction = ['NO_SERVER_DATA', 'UNKNOWN_TYPE', 'EMPTY_TYPE', 'HTML_TYPE_UNSPECIFIED',
   'HTML_TYPE_UNRECOGNIZED'];
 
-/** This mapping contains all autofill predictions to corresponding autocomplete attributes. Autofill predictions are found at https://source.chromium.org/chromium/chromium/src/+/master:components/autofill/core/browser/field_types.h;l=34*/
+/** This mapping contains all autofill predictions to corresponding autocomplete attributes. Autofill predictions are found at https://source.chromium.org/chromium/chromium/src/+/main:components/autofill/core/browser/field_types.h;l=34*/
 const predictionTypesToTokens = {
   'NO_SERVER_DATA': str_(UIStrings.manualReview),
   'UNKNOWN_TYPE': str_(UIStrings.manualReview),
@@ -245,11 +245,11 @@ class AutocompleteAudit extends Audit {
         // Warning is created because while there is an autocomplete attribute, the autocomplete property does not exsist, thus the attribute's value is invalid.
         if (input.autocomplete.attribute) {
           warnings.push(str_(UIStrings.warningInvalid, {token: input.autocomplete.attribute,
-            snippet: input.snippet}));
+            snippet: input.node.snippet}));
         }
         if (validity.isValidOrder === false) {
           warnings.push(str_(UIStrings.warningOrder, {tokens: input.autocomplete.attribute,
-            snippet: input.snippet}));
+            snippet: input.node.snippet}));
           suggestion = UIStrings.reviewOrder;
         }
         // If the autofill prediction is not in our autofill suggestion mapping, then we warn
@@ -260,11 +260,7 @@ class AutocompleteAudit extends Audit {
           continue;
         }
         failingFormsData.push({
-          node: /** @type {LH.Audit.Details.NodeValue} */ ({
-            type: 'node',
-            snippet: input.snippet,
-            nodeLabel: input.nodeLabel,
-          }),
+          node: Audit.makeNodeItem(input.node),
           suggestion: suggestion,
           current: input.autocomplete.attribute,
         });

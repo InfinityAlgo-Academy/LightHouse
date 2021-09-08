@@ -12,10 +12,25 @@ set -euo pipefail
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-commit_chromium="41f18f569f022d78337f586dacc6eff0e0477e46"
-commit_catapult="95c1f426155576790a73778571c34a0f3cd6d608"
+# https://chromium.googlesource.com/chromium/src/
+commit_chromium="4ffbceb9e46813c0041c27d52fbcd180348ae073"
+# https://chromium.googlesource.com/catapult/
+commit_catapult="370c3d98a6db53222e9f36a4491a3757bb93e61a"
 
 VERSIONED_DIR="$BLINK_TOOLS_PATH/$commit_chromium$commit_catapult"
+
+if ! type -P wget; then
+  echo "wget could not be found"
+  exit 1
+fi
+if ! type -P tar; then
+  echo "tar could not be found"
+  exit 1
+fi
+if ! type -P git; then
+  echo "git could not be found"
+  exit 1
+fi
 
 if [ -e "$VERSIONED_DIR" ]; then
   echo "cached blink tools found"

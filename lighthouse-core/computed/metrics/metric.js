@@ -6,7 +6,8 @@
 'use strict';
 
 const TracingProcessor = require('../../lib/tracehouse/trace-processor.js');
-const TraceOfTab = require('../trace-of-tab.js');
+const ProcessedTrace = require('../processed-trace.js');
+const ProcessedNavigation = require('../processed-navigation.js');
 const NetworkRecords = require('../network-records.js');
 
 /**
@@ -18,12 +19,27 @@ const NetworkRecords = require('../network-records.js');
  *     - Override the computeSimulatedMetric method with the simulated-mode implementation (which
  *       may call another computed artifact with the name LanternMyMetricName).
  */
-class ComputedMetric {
+class Metric {
   constructor() {}
 
   /**
+   * Narrows the metric computation data to the input so child metric requests can be cached.
+   *
    * @param {LH.Artifacts.MetricComputationData} data
-   * @param {LH.Audit.Context} context
+   * @return {LH.Artifacts.MetricComputationDataInput}
+   */
+  static getMetricComputationInput(data) {
+    return {
+      trace: data.trace,
+      devtoolsLog: data.devtoolsLog,
+      gatherContext: data.gatherContext,
+      settings: data.settings,
+    };
+  }
+
+  /**
+   * @param {LH.Artifacts.MetricComputationData} data
+   * @param {LH.Artifacts.ComputedContext} context
    * @return {Promise<LH.Artifacts.LanternMetric>}
    */
   static computeSimulatedMetric(data, context) { // eslint-disable-line no-unused-vars
@@ -32,7 +48,7 @@ class ComputedMetric {
 
   /**
    * @param {LH.Artifacts.MetricComputationData} data
-   * @param {LH.Audit.Context} context
+   * @param {LH.Artifacts.ComputedContext} context
    * @return {Promise<LH.Artifacts.Metric>}
    */
   static computeObservedMetric(data, context) { // eslint-disable-line no-unused-vars
@@ -41,24 +57,35 @@ class ComputedMetric {
 
   /**
    * @param {LH.Artifacts.MetricComputationDataInput} data
-   * @param {LH.Audit.Context} context
+   * @param {LH.Artifacts.ComputedContext} context
    * @return {Promise<LH.Artifacts.LanternMetric|LH.Artifacts.Metric>}
    */
   static async compute_(data, context) {
+    // TODO: remove this fallback when lighthouse-pub-ads plugin can update.
+    const gatherContext = data.gatherContext || {gatherMode: 'navigation'};
     const {trace, devtoolsLog, settings} = data;
     if (!trace || !devtoolsLog || !settings) {
       throw new Error('Did not provide necessary metric computation data');
     }
 
+    const processedTrace = await ProcessedTrace.request(trace, context);
+    const processedNavigation = await ProcessedNavigation.request(processedTrace, context);
+
     const augmentedData = Object.assign({
       networkRecords: await NetworkRecords.request(devtoolsLog, context),
-      traceOfTab: await TraceOfTab.request(trace, context),
+      gatherContext,
+      processedTrace,
+      processedNavigation,
     }, data);
 
-    TracingProcessor.assertHasToplevelEvents(augmentedData.traceOfTab.mainThreadEvents);
+    TracingProcessor.assertHasToplevelEvents(augmentedData.processedTrace.mainThreadEvents);
 
     switch (settings.throttlingMethod) {
       case 'simulate':
+        if (gatherContext.gatherMode !== 'navigation') {
+          throw new Error(`${gatherContext.gatherMode} does not support throttlingMethod simulate`);
+        }
+
         return this.computeSimulatedMetric(augmentedData, context);
       case 'provided':
       case 'devtools':
@@ -69,4 +96,4 @@ class ComputedMetric {
   }
 }
 
-module.exports = ComputedMetric;
+module.exports = Metric;

@@ -7,13 +7,10 @@
 
 /* eslint-env jest */
 
-const testHelpers = require('./test-helpers.js');
+import {jest} from '@jest/globals';
 
-// Called before other src import so code that relies on `document` and
-// `window` have them defined.
-testHelpers.setupJsDomGlobals();
-
-const DragAndDrop = require('../app/src/drag-and-drop.js');
+import {DragAndDrop} from '../app/src/drag-and-drop.js';
+import * as testHelpers from './test-helpers.js';
 
 describe('DragAndDrop', () => {
   beforeEach(function() {
@@ -23,9 +20,11 @@ describe('DragAndDrop', () => {
 
   afterEach(testHelpers.cleanupJsDomGlobals);
 
-  it('document responds to drop event with file', () => {
-    const mockCallback = jest.fn();
-    new DragAndDrop(mockCallback);
+  it('document responds to drop event with file', async () => {
+    let resolve;
+    const promise = new Promise(r => resolve = r);
+    const dragAndDrop = new DragAndDrop(resolve);
+    dragAndDrop.readFile = async (file) => file;
 
     // create custom drop event with mock files in dataTransfer
     const event = new window.CustomEvent('drop');
@@ -33,7 +32,8 @@ describe('DragAndDrop', () => {
       files: ['mock file'],
     };
     document.dispatchEvent(event);
-    expect(mockCallback).toBeCalledWith('mock file');
+
+    expect(await promise).toBe('mock file');
   });
 
   it('document ignores drop event without file', () => {

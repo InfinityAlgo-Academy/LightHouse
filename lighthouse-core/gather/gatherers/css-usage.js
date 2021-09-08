@@ -5,35 +5,100 @@
  */
 'use strict';
 
-const Gatherer = require('./gatherer.js');
+const FRGatherer = require('../../fraggle-rock/gather/base-gatherer.js');
 
 /**
  * @fileoverview Tracks unused CSS rules.
  */
-class CSSUsage extends Gatherer {
+class CSSUsage extends FRGatherer {
+  constructor() {
+    super();
+    /** @type {Array<LH.Crdp.CSS.StyleSheetAddedEvent>} */
+    this._stylesheets = [];
+    /** @param {LH.Crdp.CSS.StyleSheetAddedEvent} sheet */
+    this._onStylesheetAdded = sheet => this._stylesheets.push(sheet);
+    /** @param {LH.Crdp.CSS.StyleSheetRemovedEvent} sheet */
+    this._onStylesheetRemoved = sheet => {
+      // We can't fetch the content of removed stylesheets, so we ignore them completely.
+      // TODO(FR-COMPAT): Refactor use of CSSUsage artifact to not *always* rely on the content of stylesheets.
+      const styleSheetId = sheet.styleSheetId;
+      this._stylesheets = this._stylesheets.filter(s => s.header.styleSheetId !== styleSheetId);
+    };
+    /**
+     * Initialize as undefined so we can assert results are fetched.
+     * @type {LH.Crdp.CSS.RuleUsage[]|undefined}
+     */
+    this._ruleUsage = undefined;
+  }
+
+  /** @type {LH.Gatherer.GathererMeta} */
+  meta = {
+    supportedModes: ['snapshot', 'timespan', 'navigation'],
+  };
+
   /**
-   * @param {LH.Gatherer.PassContext} passContext
+   * @param {LH.Gatherer.FRTransitionalContext} context
+   */
+  async startCSSUsageTracking(context) {
+    const session = context.driver.defaultSession;
+    session.on('CSS.styleSheetAdded', this._onStylesheetAdded);
+    session.on('CSS.styleSheetRemoved', this._onStylesheetRemoved);
+
+    await session.sendCommand('DOM.enable');
+    await session.sendCommand('CSS.enable');
+    await session.sendCommand('CSS.startRuleUsageTracking');
+  }
+
+  /**
+   * @param {LH.Gatherer.FRTransitionalContext} context
+   */
+  async startInstrumentation(context) {
+    if (context.gatherMode !== 'timespan') return;
+    await this.startCSSUsageTracking(context);
+  }
+
+  /**
+   * @param {LH.Gatherer.FRTransitionalContext} context
+   */
+  async stopCSSUsageTracking(context) {
+    const session = context.driver.defaultSession;
+    const coverageResponse = await session.sendCommand('CSS.stopRuleUsageTracking');
+    this._ruleUsage = coverageResponse.ruleUsage;
+    session.off('CSS.styleSheetAdded', this._onStylesheetAdded);
+    session.off('CSS.styleSheetRemoved', this._onStylesheetRemoved);
+  }
+
+  /**
+   * @param {LH.Gatherer.FRTransitionalContext} context
+   */
+  async stopInstrumentation(context) {
+    if (context.gatherMode !== 'timespan') return;
+    await this.stopCSSUsageTracking(context);
+  }
+
+  /**
+   * @param {LH.Gatherer.FRTransitionalContext} context
    * @return {Promise<LH.Artifacts['CSSUsage']>}
    */
-  async afterPass(passContext) {
-    const driver = passContext.driver;
+  async getArtifact(context) {
+    const session = context.driver.defaultSession;
+    const executionContext = context.driver.executionContext;
 
-    /** @type {Array<LH.Crdp.CSS.StyleSheetAddedEvent>} */
-    const stylesheets = [];
-    /** @param {LH.Crdp.CSS.StyleSheetAddedEvent} sheet */
-    const onStylesheetAdded = sheet => stylesheets.push(sheet);
-    driver.on('CSS.styleSheetAdded', onStylesheetAdded);
+    // TODO(FR-COMPAT): Do this only for snapshot once legacy runner is deprecated.
+    if (context.gatherMode !== 'timespan') {
+      await this.startCSSUsageTracking(context);
 
-    await driver.sendCommand('DOM.enable');
-    await driver.sendCommand('CSS.enable');
-    await driver.sendCommand('CSS.startRuleUsageTracking');
-    await driver.evaluateAsync('getComputedStyle(document.body)');
-    driver.off('CSS.styleSheetAdded', onStylesheetAdded);
+      // Force style to recompute.
+      // Doesn't appear to be necessary in newer versions of Chrome.
+      await executionContext.evaluateAsync('getComputedStyle(document.body)');
+
+      await this.stopCSSUsageTracking(context);
+    }
 
     // Fetch style sheet content in parallel.
-    const promises = stylesheets.map(sheet => {
+    const promises = this._stylesheets.map(sheet => {
       const styleSheetId = sheet.header.styleSheetId;
-      return driver.sendCommand('CSS.getStyleSheetText', {styleSheetId}).then(content => {
+      return session.sendCommand('CSS.getStyleSheetText', {styleSheetId}).then(content => {
         return {
           header: sheet.header,
           content: content.text,
@@ -42,15 +107,17 @@ class CSSUsage extends Gatherer {
     });
     const styleSheetInfo = await Promise.all(promises);
 
-    const ruleUsageResponse = await driver.sendCommand('CSS.stopRuleUsageTracking');
-    await driver.sendCommand('CSS.disable');
-    await driver.sendCommand('DOM.disable');
+    await session.sendCommand('CSS.disable');
+    await session.sendCommand('DOM.disable');
 
     const dedupedStylesheets = new Map(styleSheetInfo.map(sheet => {
-      return /** @type {[string, LH.Artifacts.CSSStyleSheetInfo]} */ ([sheet.content, sheet]);
+      return [sheet.content, sheet];
     }));
+
+    if (!this._ruleUsage) throw new Error('Issue collecting rule usages');
+
     return {
-      rules: ruleUsageResponse.ruleUsage,
+      rules: this._ruleUsage,
       stylesheets: Array.from(dedupedStylesheets.values()),
     };
   }

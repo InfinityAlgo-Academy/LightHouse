@@ -48,7 +48,6 @@
   align-items: center;
   justify-content: center;
   color: #555;
-  font-weight: 300;
 }
 .viewer-placeholder-inner {
   display: flex;
@@ -90,10 +89,6 @@
   margin-top: 16px;
   display: none;
 }
-.share:disabled {
-  opacity: 0.2;
-  cursor: default;
-}
 
 @media screen and (max-width: 635px) {
   .viewer-placeholder-inner {
@@ -123,12 +118,12 @@
   z-index: 3;
 }
 
-/* open-in-viewer option hidden in Viewer */
-.lh-tools__dropdown .lh-tools--viewer {
+/* open-viewer option hidden in Viewer */
+.lh-tools__dropdown a[data-action="open-viewer"] {
   display: none;
 }
 
-/* open-in-gist option visible in Viewer */
-.lh-tools__dropdown .lh-tools--gist {
-  display: block !important;
+/* save-gist option visible in Viewer */
+.lh-tools__dropdown a[data-action="save-gist"] {
+  display: flex !important;
 }

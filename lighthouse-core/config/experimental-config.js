@@ -15,14 +15,7 @@ const config = {
   extends: 'lighthouse:default',
   audits: [
     'autocomplete',
-    'full-page-screenshot',
   ],
-  passes: [{
-    passName: 'defaultPass',
-    gatherers: [
-      'full-page-screenshot',
-    ],
-  }],
   categories: {
     // @ts-ignore: `title` is required in CategoryJson. setting to the same value as the default
     // config is awkward - easier to omit the property here. Will defer to default config.

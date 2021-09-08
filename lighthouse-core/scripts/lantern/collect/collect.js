@@ -9,13 +9,13 @@
 /** @typedef {import('./common.js').Summary} Summary */
 
 const fs = require('fs');
-const fetch = require('isomorphic-fetch');
+const fetch = require('node-fetch');
 const {execFile} = require('child_process');
 const {promisify} = require('util');
 const execFileAsync = promisify(execFile);
 const common = require('./common.js');
+const {LH_ROOT} = require('../../../../root.js');
 
-const LH_ROOT = `${__dirname}/../../../..`;
 const SAMPLES = process.env.SAMPLES ? Number(process.env.SAMPLES) : 9;
 const TEST_URLS = process.env.TEST_URLS ? process.env.TEST_URLS.split(' ') : require('./urls.js');
 
@@ -192,9 +192,7 @@ function assertLhr(lhr) {
   if (lhr.runtimeError) throw new Error(`runtime error: ${lhr.runtimeError}`);
   const metrics = common.getMetrics(lhr);
   if (metrics &&
-      metrics.estimatedInputLatency &&
       metrics.firstContentfulPaint &&
-      metrics.firstCPUIdle &&
       metrics.firstMeaningfulPaint &&
       metrics.interactive &&
       // WPT won't have this, we'll just get from the trace.

@@ -5,15 +5,15 @@
  */
 'use strict';
 
-const Gatherer = require('./gatherer.js');
+/* globals window document getBoundingClientRect */
+
+const FRGatherer = require('../../fraggle-rock/gather/base-gatherer.js');
+const emulation = require('../../lib/emulation.js');
+const pageFunctions = require('../../lib/page-functions.js');
 
 // JPEG quality setting
 // Exploration and examples of reports using different quality settings: https://docs.google.com/document/d/1ZSffucIca9XDW2eEwfoevrk-OTl7WQFeMf0CgeJAA8M/edit#
 const FULL_PAGE_SCREENSHOT_QUALITY = 30;
-// Maximum screenshot height in Chrome https://bugs.chromium.org/p/chromium/issues/detail?id=770769
-const MAX_SCREENSHOT_HEIGHT = 16384;
-// Maximum data URL size in Chrome https://bugs.chromium.org/p/chromium/issues/detail?id=69227
-const MAX_DATA_URL_SIZE = 2 * 1024 * 1024 - 1;
 
 /**
  * @param {string} str
@@ -22,29 +22,50 @@ function snakeCaseToCamelCase(str) {
   return str.replace(/(-\w)/g, m => m[1].toUpperCase());
 }
 
-class FullPageScreenshot extends Gatherer {
+class FullPageScreenshot extends FRGatherer {
+  /** @type {LH.Gatherer.GathererMeta} */
+  meta = {
+    supportedModes: ['snapshot', 'timespan', 'navigation'],
+  }
+
   /**
-   * @param {LH.Gatherer.PassContext} passContext
-   * @param {number} maxScreenshotHeight
-   * @return {Promise<LH.Artifacts.FullPageScreenshot>}
+   * @param {LH.Gatherer.FRTransitionalContext} context
+   * @return {Promise<number>}
+   * @see https://bugs.chromium.org/p/chromium/issues/detail?id=770769
    */
-  async _takeScreenshot(passContext, maxScreenshotHeight) {
-    const driver = passContext.driver;
-    const metrics = await driver.sendCommand('Page.getLayoutMetrics');
-    const deviceScaleFactor = await driver.evaluateAsync('window.devicePixelRatio');
-    const width = Math.min(metrics.contentSize.width, maxScreenshotHeight);
+  async getMaxScreenshotHeight(context) {
+    return await context.driver.executionContext.evaluate(pageFunctions.getMaxTextureSize, {
+      args: [],
+      useIsolation: true,
+      deps: [],
+    });
+  }
+
+  /**
+   * @param {LH.Gatherer.FRTransitionalContext} context
+   * @return {Promise<LH.Artifacts.FullPageScreenshot['screenshot']>}
+   */
+  async _takeScreenshot(context) {
+    const session = context.driver.defaultSession;
+    const maxScreenshotHeight = await this.getMaxScreenshotHeight(context);
+    const metrics = await session.sendCommand('Page.getLayoutMetrics');
+
+    // Width should match emulated width, without considering content overhang.
+    // Both layoutViewport and visualViewport capture this. visualViewport accounts
+    // for page zoom/scale, which we currently don't account for (or expect). So we use layoutViewport.width.
+    // Note: If the page is zoomed, many assumptions fail.
+    //
+    // Height should be as tall as the content. So we use contentSize.height
+    const width = Math.min(metrics.layoutViewport.clientWidth, maxScreenshotHeight);
     const height = Math.min(metrics.contentSize.height, maxScreenshotHeight);
 
-    await driver.sendCommand('Emulation.setDeviceMetricsOverride', {
-      mobile: passContext.baseArtifacts.TestedAsMobileDevice,
+    await session.sendCommand('Emulation.setDeviceMetricsOverride', {
+      // If we're gathering with mobile screenEmulation on (overlay scrollbars, etc), continue to use that for this screenshot.
+      mobile: context.settings.screenEmulation.mobile,
       height,
-      screenHeight: height,
       width,
-      screenWidth: width,
-      deviceScaleFactor,
+      deviceScaleFactor: 1,
       scale: 1,
-      positionX: 0,
-      positionY: 0,
       screenOrientation: {angle: 0, type: 'portraitPrimary'},
     });
 
@@ -52,61 +73,86 @@ class FullPageScreenshot extends Gatherer {
     // The lower in the page, the more likely (footer elements especially).
     // https://github.com/GoogleChrome/lighthouse/issues/11118
 
-    const result = await driver.sendCommand('Page.captureScreenshot', {
+    const result = await session.sendCommand('Page.captureScreenshot', {
       format: 'jpeg',
       quality: FULL_PAGE_SCREENSHOT_QUALITY,
     });
     const data = 'data:image/jpeg;base64,' + result.data;
 
     return {
+      data,
       width,
       height,
-      data,
     };
   }
 
   /**
-   * @param {LH.Gatherer.PassContext} passContext
-   * @return {Promise<LH.Artifacts.FullPageScreenshot | null>}
+   * Gatherers can collect details about DOM nodes, including their position on the page.
+   * Layout shifts occuring after a gatherer runs can cause these positions to be incorrect,
+   * resulting in a poor experience for element screenshots.
+   * `getNodeDetails` maintains a collection of DOM objects in the page, which we can iterate
+   * to re-collect the bounding client rectangle.
+   * @see pageFunctions.getNodeDetails
+   * @param {LH.Gatherer.FRTransitionalContext} context
+   * @return {Promise<LH.Artifacts.FullPageScreenshot['nodes']>}
    */
-  async afterPass_(passContext) {
-    const deviceScaleFactor = await passContext.driver.evaluateAsync('window.devicePixelRatio');
-    const maxScreenshotHeight = Math.floor(MAX_SCREENSHOT_HEIGHT / deviceScaleFactor);
-    let screenshot = await this._takeScreenshot(passContext, maxScreenshotHeight);
+  async _resolveNodes(context) {
+    function resolveNodes() {
+      /** @type {LH.Artifacts.FullPageScreenshot['nodes']} */
+      const nodes = {};
+      if (!window.__lighthouseNodesDontTouchOrAllVarianceGoesAway) return nodes;
 
-    if (screenshot.data.length > MAX_DATA_URL_SIZE) {
-      // Hitting the data URL size limit is rare, it only happens for pages on tall
-      // desktop sites with lots of images.
-      // So just cutting down the height a bit usually fixes the issue.
-      screenshot = await this._takeScreenshot(passContext, 5000);
-      if (screenshot.data.length > MAX_DATA_URL_SIZE) {
-        passContext.LighthouseRunWarnings.push(
-          'Full page screenshot is too big–report won\'t show element screenshots.');
-        return null;
+      const lhIdToElements = window.__lighthouseNodesDontTouchOrAllVarianceGoesAway;
+      for (const [node, id] of lhIdToElements.entries()) {
+        // @ts-expect-error - getBoundingClientRect put into scope via stringification
+        const rect = getBoundingClientRect(node);
+        nodes[id] = rect;
       }
+
+      return nodes;
     }
 
-    return screenshot;
+    /**
+     * @param {{useIsolation: boolean}} _
+     */
+    function resolveNodesInPage({useIsolation}) {
+      return context.driver.executionContext.evaluate(resolveNodes, {
+        args: [],
+        useIsolation,
+        deps: [pageFunctions.getBoundingClientRectString],
+      });
+    }
+
+    // Collect nodes with the page context (`useIsolation: false`) and with our own, reused
+    // context (`useIsolation: true`). Gatherers use both modes when collecting node details,
+    // so we must do the same here too.
+    const pageContextResult = await resolveNodesInPage({useIsolation: false});
+    const isolatedContextResult = await resolveNodesInPage({useIsolation: true});
+    return {...pageContextResult, ...isolatedContextResult};
   }
 
   /**
-   * @param {LH.Gatherer.PassContext} passContext
+   * @param {LH.Gatherer.FRTransitionalContext} context
    * @return {Promise<LH.Artifacts['FullPageScreenshot']>}
    */
-  async afterPass(passContext) {
-    const {driver} = passContext;
+  async getArtifact(context) {
+    const session = context.driver.defaultSession;
+    const executionContext = context.driver.executionContext;
+    const settings = context.settings;
 
     // In case some other program is controlling emulation, try to remember what the device looks
     // like now and reset after gatherer is done.
-    const lighthouseControlsEmulation = passContext.settings.emulatedFormFactor !== 'none' &&
-      !passContext.settings.internalDisableDeviceScreenEmulation;
+    const lighthouseControlsEmulation = !settings.screenEmulation.disabled;
 
     try {
-      return await this.afterPass_(passContext);
+      return {
+        screenshot: await this._takeScreenshot(context),
+        nodes: await this._resolveNodes(context),
+      };
     } finally {
       // Revert resized page.
       if (lighthouseControlsEmulation) {
-        await driver.beginEmulation(passContext.settings);
+        await emulation.emulate(session, settings);
       } else {
         // Best effort to reset emulation to what it was.
         // https://github.com/GoogleChrome/lighthouse/pull/10716#discussion_r428970681
@@ -115,24 +161,30 @@ class FullPageScreenshot extends Gatherer {
         // in the LH runner api, which for ex. puppeteer consumers would setup puppeteer emulation,
         // and then just call that to reset?
         // https://github.com/GoogleChrome/lighthouse/issues/11122
-        const observedDeviceMetrics = await driver.evaluateAsync(`(function() {
+
+        // eslint-disable-next-line no-inner-declarations
+        function getObservedDeviceMetrics() {
+          // Convert the Web API's snake case (landscape-primary) to camel case (landscapePrimary).
+          const screenOrientationType = /** @type {LH.Crdp.Emulation.ScreenOrientationType} */ (
+            snakeCaseToCamelCase(window.screen.orientation.type));
           return {
             width: document.documentElement.clientWidth,
             height: document.documentElement.clientHeight,
-            screenWidth: window.screen.width,
-            screenHeight: window.screen.height,
             screenOrientation: {
-              type: window.screen.orientation.type,
+              type: screenOrientationType,
               angle: window.screen.orientation.angle,
             },
             deviceScaleFactor: window.devicePixelRatio,
           };
-        })()`, {useIsolation: true});
-        // Convert the Web API's snake case (landscape-primary) to camel case (landscapePrimary).
-        observedDeviceMetrics.screenOrientation.type =
-          snakeCaseToCamelCase(observedDeviceMetrics.screenOrientation.type);
-        await driver.sendCommand('Emulation.setDeviceMetricsOverride', {
-          mobile: passContext.baseArtifacts.TestedAsMobileDevice, // could easily be wrong
+        }
+
+        const observedDeviceMetrics = await executionContext.evaluate(getObservedDeviceMetrics, {
+          args: [],
+          useIsolation: true,
+          deps: [snakeCaseToCamelCase],
+        });
+        await session.sendCommand('Emulation.setDeviceMetricsOverride', {
+          mobile: settings.formFactor === 'mobile',
           ...observedDeviceMetrics,
         });
       }
@@ -141,4 +193,3 @@ class FullPageScreenshot extends Gatherer {
 }
 
 module.exports = FullPageScreenshot;
-module.exports.MAX_SCREENSHOT_HEIGHT = MAX_SCREENSHOT_HEIGHT;

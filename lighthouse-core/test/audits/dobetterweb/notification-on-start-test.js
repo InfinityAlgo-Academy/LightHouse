@@ -15,10 +15,10 @@ describe('UX: notification audit', () => {
     const text = 'Do not request notification permission without a user action.';
     const auditResult = NotificationOnStart.audit({
       ConsoleMessages: [
-        {entry: {source: 'violation', url: 'https://example.com/', text}},
-        {entry: {source: 'violation', url: 'https://example2.com/two', text}},
-        {entry: {source: 'violation', url: 'http://abc.com/', text: 'No document.write'}},
-        {entry: {source: 'deprecation', url: 'https://example.com/two'}},
+        {source: 'violation', url: 'https://example.com/', text},
+        {source: 'violation', url: 'https://example2.com/two', text},
+        {source: 'violation', url: 'http://abc.com/', text: 'No document.write'},
+        {source: 'deprecation', url: 'https://example.com/two'},
       ],
     });
     assert.equal(auditResult.score, 0);

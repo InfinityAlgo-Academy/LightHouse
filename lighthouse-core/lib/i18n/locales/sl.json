@@ -17,6 +17,15 @@
   "lighthouse-core/audits/accessibility/aria-allowed-attr.js | title": {
     "message": "Atributi `[aria-*]` se ujemajo s svojimi vlogami"
   },
+  "lighthouse-core/audits/accessibility/aria-command-name.js | description": {
+    "message": "Če element nima dostopnega imena, ga bralniki zaslona predstavijo z generičnim imenom, s čimer je neuporaben za uporabnike, ki se zanašajo na bralnike zaslona. [Več o tem](https://web.dev/aria-name/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-command-name.js | failureTitle": {
+    "message": "Elementi `button`, `link` in `menuitem` nimajo dostopnih imen."
+  },
+  "lighthouse-core/audits/accessibility/aria-command-name.js | title": {
+    "message": "Elementi `button`, `link` in `menuitem` imajo dostopna imena."
+  },
   "lighthouse-core/audits/accessibility/aria-hidden-body.js | description": {
     "message": "Podporne tehnologije, kot so bralniki zaslona, delujejo nedosledno, če je atribut `aria-hidden=\"true\"` nastavljen na dokument `<body>`. [Več o tem](https://web.dev/aria-hidden-body/)."
   },
@@ -36,13 +45,31 @@
     "message": "Toliko elementov ne vsebuje podrejenih elementov, ki jih je mogoče izbrati: `[aria-hidden=\"true\"]`"
   },
   "lighthouse-core/audits/accessibility/aria-input-field-name.js | description": {
-    "message": "Če vnosno polje nima dostopnega imena, ga bralniki zaslona predstavijo z generičnim imenom, s čimer je neuporaben za uporabnike, ki se zanašajo na bralnike zaslona. [Več o tem](https://web.dev/aria-input-field-name/)."
+    "message": "Če vnosno polje nima dostopnega imena, ga bralniki zaslona predstavijo z generičnim imenom, s čimer je neuporaben za uporabnike, ki se zanašajo na bralnike zaslona. [Več o tem](https://web.dev/aria-name/)."
   },
   "lighthouse-core/audits/accessibility/aria-input-field-name.js | failureTitle": {
     "message": "Vnosna polja ARIA nimajo dostopnih imen"
   },
   "lighthouse-core/audits/accessibility/aria-input-field-name.js | title": {
     "message": "Vnosna polja ARIA imajo dostopna imena"
+  },
+  "lighthouse-core/audits/accessibility/aria-meter-name.js | description": {
+    "message": "Če element nima dostopnega imena, ga bralniki zaslona predstavijo z generičnim imenom, s čimer je neuporaben za uporabnike, ki se zanašajo na bralnike zaslona. [Več o tem](https://web.dev/aria-name/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-meter-name.js | failureTitle": {
+    "message": "Elementi ARIA `meter` nimajo dostopnih imen."
+  },
+  "lighthouse-core/audits/accessibility/aria-meter-name.js | title": {
+    "message": "Elementi ARIA `meter` imajo dostopna imena."
+  },
+  "lighthouse-core/audits/accessibility/aria-progressbar-name.js | description": {
+    "message": "Če element `progressbar` nima dostopnega imena, ga bralniki zaslona predstavijo z generičnim imenom, s čimer je neuporaben za uporabnike, ki se zanašajo na bralnike zaslona. [Več o tem](https://web.dev/aria-name/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-progressbar-name.js | failureTitle": {
+    "message": "Elementi ARIA `progressbar` nimajo dostopnih imen."
+  },
+  "lighthouse-core/audits/accessibility/aria-progressbar-name.js | title": {
+    "message": "Elementi ARIA `progressbar` imajo dostopna imena."
   },
   "lighthouse-core/audits/accessibility/aria-required-attr.js | description": {
     "message": "Nekatere vloge ARIA imajo zahtevane atribute, ki opišejo stanje elementa bralnikom zaslona. [Več o tem](https://web.dev/aria-required-attr/)."
@@ -81,13 +108,31 @@
     "message": "Vrednosti `[role]` so veljavne"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
-    "message": "Če preklopno polje nima dostopnega imena, ga bralniki zaslona predstavijo z generičnim imenom, s čimer je neuporaben za uporabnike, ki se zanašajo na bralnike zaslona. [Več o tem](https://web.dev/aria-toggle-field-name/)."
+    "message": "Če preklopno polje nima dostopnega imena, ga bralniki zaslona predstavijo z generičnim imenom, s čimer je neuporaben za uporabnike, ki se zanašajo na bralnike zaslona. [Več o tem](https://web.dev/aria-name/)."
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
     "message": "Preklopna polja ARIA nimajo dostopnih imen"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | title": {
     "message": "Preklopna polja ARIA imajo dostopna imena"
+  },
+  "lighthouse-core/audits/accessibility/aria-tooltip-name.js | description": {
+    "message": "Če element nima dostopnega imena, ga bralniki zaslona predstavijo z generičnim imenom, s čimer je neuporaben za uporabnike, ki se zanašajo na bralnike zaslona. [Več o tem](https://web.dev/aria-name/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-tooltip-name.js | failureTitle": {
+    "message": "Elementi ARIA `tooltip` nimajo dostopnih imen."
+  },
+  "lighthouse-core/audits/accessibility/aria-tooltip-name.js | title": {
+    "message": "Elementi ARIA `tooltip` imajo dostopna imena."
+  },
+  "lighthouse-core/audits/accessibility/aria-treeitem-name.js | description": {
+    "message": "Če element nima dostopnega imena, ga bralniki zaslona predstavijo z generičnim imenom, s čimer je neuporaben za uporabnike, ki se zanašajo na bralnike zaslona. [Več o tem](https://web.dev/aria-name/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-treeitem-name.js | failureTitle": {
+    "message": "Elementi ARIA `treeitem` nimajo dostopnih imen."
+  },
+  "lighthouse-core/audits/accessibility/aria-treeitem-name.js | title": {
+    "message": "Elementi ARIA `treeitem` imajo dostopna imena."
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr-value.js | description": {
     "message": "Pomožne tehnologije, kot so bralniki zaslona, ne morejo tolmačiti atributov ARIA z neveljavnimi vrednostmi. [Več o tem](https://web.dev/aria-valid-attr-value/)."
@@ -254,15 +299,6 @@
   "lighthouse-core/audits/accessibility/label.js | title": {
     "message": "Elementi obrazcev imajo povezane oznake"
   },
-  "lighthouse-core/audits/accessibility/layout-table.js | description": {
-    "message": "Tabela, ki se uporablja za namene postavitve, ne sme vsebovati podatkovnih elementov, na primer elementov »th« oziroma podnapisov ali atributa povzetka, ker lahko to privede do zavajajoče izkušnje za uporabnike bralnikov zaslona. [Več o tem](https://web.dev/layout-table/)."
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | failureTitle": {
-    "message": "Elementi predstavitvene razpredelnice `<table>` se ne izogibajo uporabi atributa `<th>`, `<caption>` ali `[summary]`."
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | title": {
-    "message": "Elementi predstavitvene razpredelnice `<table>` se izogibajo uporabi atributa `<th>`, `<caption>` ali `[summary]`."
-  },
   "lighthouse-core/audits/accessibility/link-name.js | description": {
     "message": "Besedilo za povezavo (in nadomestno besedilo za slike, kadar so uporabljene kot povezave), ki je prepoznavno in edinstveno ter ga je mogoče izbrati, uporabnikom bralnikov zaslona zagotavlja boljšo izkušnjo pomikanja. [Več o tem](https://web.dev/link-name/)."
   },
@@ -360,16 +396,7 @@
     "message": "Elementi `<video>` ne vsebujejo elementa `<track>` z opisom `[kind=\"captions\"]`."
   },
   "lighthouse-core/audits/accessibility/video-caption.js | title": {
-    "message": "Elementi `<video>` vsebujejo element `<track>` s podnapisi `[kind=\"captions\"]`"
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | description": {
-    "message": "Zvočni opisi zagotavljajo pomembne informacije glede videoposnetkov, ki jih sam dialog ne more, na primer opisujejo obrazne izraze in prizore. [Več o tem](https://web.dev/video-description/)."
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | failureTitle": {
-    "message": "Elementi `<video>` ne vsebujejo elementa `<track>` z opisom `[kind=\"description\"]`."
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | title": {
-    "message": "Elementi `<video>` vsebujejo element `<track>` s podnapisi `[kind=\"description\"]`"
+    "message": "Elementi `<video>` vsebujejo element `<track>` s podnapisi `[kind=\"captions\"]`."
   },
   "lighthouse-core/audits/apple-touch-icon.js | description": {
     "message": "Za idealen prikaz v iOSu, ko uporabniki dodajo moderno spletno aplikacijo na začetni zaslon, določite to: `apple-touch-icon`. Kazati mora na neprosojno kvadratno datoteko PNG velikosti 192 (ali 180) slikovnih pik. [Več o tem](https://web.dev/apple-touch-icon/)."
@@ -384,34 +411,34 @@
     "message": "Vsebuje veljavno vrednost `apple-touch-icon`"
   },
   "lighthouse-core/audits/autocomplete.js | columnCurrent": {
-    "message": "Autocomplete Current Value"
+    "message": "Trenutna vrednost"
   },
   "lighthouse-core/audits/autocomplete.js | columnSuggestions": {
-    "message": "Autocomplete Suggested Token"
+    "message": "Predlagani žeton"
   },
   "lighthouse-core/audits/autocomplete.js | description": {
-    "message": "Samodokončanje uporabnikom pomaga pri hitrejšem pošiljanju obrazcev. Če želite zmanjšati prizadevanje uporabnikov, razmislite o omogočanju samodokončanja, tako da atribut `autocomplete` nastavite na veljavno vrednost. [Več o tem](https://developers.google.com/web/fundamentals/design-and-ux/input/forms#use_metadata_to_enable_auto-complete)"
+    "message": "`autocomplete` uporabnikom pomaga hitreje poslati obrazce. Če želite zmanjšati prizadevanje uporabnikov, razmislite o omogočanju, tako da atribut `autocomplete` nastavite na veljavno vrednost. [Več o tem](https://developers.google.com/web/fundamentals/design-and-ux/input/forms#use_metadata_to_enable_auto-complete)"
   },
   "lighthouse-core/audits/autocomplete.js | failureTitle": {
-    "message": "Elementi za vnos nimajo ustreznih atributov za samodokončanje"
+    "message": "Toliko elementov nima pravilnih atributov `autocomplete`: `<input>`."
   },
   "lighthouse-core/audits/autocomplete.js | manualReview": {
-    "message": "Requires manual review"
+    "message": "Zahteva ročni pregled"
   },
   "lighthouse-core/audits/autocomplete.js | reviewOrder": {
-    "message": "Review order of tokens"
+    "message": "Preglejte vrstni red žetonov"
   },
   "lighthouse-core/audits/autocomplete.js | title": {
-    "message": "Elementi za vnos uporabljajo samodokončanje"
+    "message": "Elementi `<input>` pravilno uporabljajo atribut `autocomplete`."
   },
   "lighthouse-core/audits/autocomplete.js | warningInvalid": {
-    "message": "Autocomplete token(s): \"{token}\" is invalid in {snippet}"
+    "message": "Žetoni za `autocomplete`: »{token}« ni veljavno v {snippet}"
   },
   "lighthouse-core/audits/autocomplete.js | warningOrder": {
-    "message": "Review order of tokens: \"{tokens}\" in {snippet}"
+    "message": "Preglejte vrstni red žetonov: »{tokens}« v {snippet}"
   },
   "lighthouse-core/audits/bootup-time.js | chromeExtensionsWarning": {
-    "message": "Razširitve za Chrome so negativno vplivale na nalaganje te strani. Poskusite pregledati to stran v načinu brez beleženja zgodovine ali v profilu za Chrome brez razširitev."
+    "message": "Razširitve za Chrome so negativno vplivale na nalaganje te strani. Poskusite pregledati to stran v anonimnem načinu ali v profilu za Chrome brez razširitev."
   },
   "lighthouse-core/audits/bootup-time.js | columnScriptEval": {
     "message": "Ocenjevanje skripta"
@@ -448,6 +475,12 @@
   },
   "lighthouse-core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "Izogibajte se prikazovanju starejšega JavaScripta v sodobnih brskalnikih"
+  },
+  "lighthouse-core/audits/byte-efficiency/modern-image-formats.js | description": {
+    "message": "Oblike zapisa slike, kot sta WebP in AVIF, pogosto omogočajo učinkovitejše stiskanje kot PNG ali JPEG, kar pomeni hitrejše prenose in manjšo porabo podatkov. [Več o tem](https://web.dev/uses-webp-images/)."
+  },
+  "lighthouse-core/audits/byte-efficiency/modern-image-formats.js | title": {
+    "message": "Dostavljajte slike v sodobnih oblikah zapisa"
   },
   "lighthouse-core/audits/byte-efficiency/offscreen-images.js | description": {
     "message": "Razmislite o odloženem nalaganju slik zunaj zaslona in skritih slik po dokončanem nalaganju kritičnih sredstev zaradi skrajšanja časa do interaktivnosti strani. [Več o tem](https://web.dev/offscreen-images/)."
@@ -486,16 +519,16 @@
     "message": "Pomanjšajte JavaScript"
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | description": {
-    "message": "Iz slogovnih datotek odstranite nedejavna pravila in odložite nalaganje CSS-ja, ki se ne uporablja za vsebino na vrhu strani, ter tako zmanjšajte nepotrebno porabo bajtov v omrežni dejavnosti. [Več o tem](https://web.dev/unused-css-rules/)."
+    "message": "V slogovnih datotekah zmanjšajte število nedejavnih pravil in odložite nalaganje CSS-ja, ki se ne uporablja za vsebino na vrhu strani, ter tako zmanjšajte nepotrebno porabo bajtov v omrežni dejavnosti. [Več o tem](https://web.dev/unused-css-rules/)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | title": {
-    "message": "Odstranitev neuporabljenega CSS-ja"
+    "message": "Zmanjšajte količino neuporabljenega CSS-ja"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "Odstranite neuporabljeni JavaScript, če želite zmanjšati število bajtov, uporabljenih v omrežni dejavnosti. [Več o tem](https://web.dev/unused-javascript/)."
+    "message": "Zmanjšajte količino neuporabljenega JavaScripta in odložite nalaganje skriptov, dokler niso potrebni, ter tako zmanjšajte nepotrebno porabo bajtov v omrežni dejavnosti. [Več o tem](https://web.dev/unused-javascript/)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
-    "message": "Odstranite neuporabljeni JavaScript"
+    "message": "Zmanjšajte količino neuporabljenega JavaScripta"
   },
   "lighthouse-core/audits/byte-efficiency/uses-long-cache-ttl.js | description": {
     "message": "Dolgotrajno predpomnjenje lahko pospeši vnovične obiske strani. [Več o tem](https://web.dev/uses-long-cache-ttl/)."
@@ -515,6 +548,12 @@
   "lighthouse-core/audits/byte-efficiency/uses-optimized-images.js | title": {
     "message": "Učinkovito kodirajte slike"
   },
+  "lighthouse-core/audits/byte-efficiency/uses-responsive-images-snapshot.js | columnActualDimensions": {
+    "message": "Dejanske mere"
+  },
+  "lighthouse-core/audits/byte-efficiency/uses-responsive-images-snapshot.js | columnDisplayedDimensions": {
+    "message": "Prikazane mere"
+  },
   "lighthouse-core/audits/byte-efficiency/uses-responsive-images.js | description": {
     "message": "Prikazujte slike primerne velikosti, s čimer poskrbite za prihranek prenesenih podatkov v mobilnih omrežjih in izboljšate čas nalaganja. [Več o tem](https://web.dev/uses-responsive-images/)."
   },
@@ -526,12 +565,6 @@
   },
   "lighthouse-core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "Omogočite stiskanje besedila"
-  },
-  "lighthouse-core/audits/byte-efficiency/uses-webp-images.js | description": {
-    "message": "Oblike zapisa slik, kot so JPEG 2000, JPEG XR in WebP, pogosto omogočajo učinkovitejše stiskanje kot oblika zapisa PNG ali JPEG, kar pomeni hitrejše prenose in manjšo porabo podatkov. [Več o tem](https://web.dev/uses-webp-images/)."
-  },
-  "lighthouse-core/audits/byte-efficiency/uses-webp-images.js | title": {
-    "message": "Dostavljajte slike v sodobnih oblikah zapisa"
   },
   "lighthouse-core/audits/content-width.js | description": {
     "message": "Če se širina vsebine aplikacije ne ujema s širino vidnega polja, aplikacija morda ni optimizirana za zaslone mobilnih naprav. [Več o tem](https://web.dev/content-width/)."
@@ -553,6 +586,27 @@
   },
   "lighthouse-core/audits/critical-request-chains.js | title": {
     "message": "Ne uporabljajte veriženja nujnih zahtev"
+  },
+  "lighthouse-core/audits/csp-xss.js | columnDirective": {
+    "message": "Direktiva"
+  },
+  "lighthouse-core/audits/csp-xss.js | columnSeverity": {
+    "message": "Resnost"
+  },
+  "lighthouse-core/audits/csp-xss.js | description": {
+    "message": "Močan pravilnik o varnosti vsebine (CSP) znatno zmanjša tveganje za napade s skriptnim izvajanjem na več mestih (XSS). [Več o tem](https://web.dev/csp-xss/)"
+  },
+  "lighthouse-core/audits/csp-xss.js | itemSeveritySyntax": {
+    "message": "Sintaksa"
+  },
+  "lighthouse-core/audits/csp-xss.js | metaTagMessage": {
+    "message": "Stran vsebuje pravilnik CSP, določen z oznako <meta>. Razmislite o določanju pravilnika CSP v glavi HTTP-ja, če je to mogoče."
+  },
+  "lighthouse-core/audits/csp-xss.js | noCsp": {
+    "message": "V načinu uveljavljanja ni pravilnikov CSP."
+  },
+  "lighthouse-core/audits/csp-xss.js | title": {
+    "message": "Zagotavljanje, da je pravilnik CSP učinkovit proti napadom XSS"
   },
   "lighthouse-core/audits/deprecations.js | columnDeprecate": {
     "message": "Zastaranje/opozorilo"
@@ -585,7 +639,7 @@
     "message": "Izogiba se predpomnilniku aplikacij"
   },
   "lighthouse-core/audits/dobetterweb/charset.js | description": {
-    "message": "Izjava glede kodiranja znakov je obvezna. Izvedete jo lahko z oznako <meta> v prvih 1024 B HTML-ha ali v glavi odziva HTTP-ja glede vrste vsebine. [Več o tem](https://web.dev/charset/)."
+    "message": "Izjava glede kodiranja znakov je obvezna. Izvedete jo lahko z oznako `<meta>` v prvih 1024 B HTML-ja ali v glavi odziva HTTP-ja glede vrste vsebine. [Več o tem](https://web.dev/charset/)."
   },
   "lighthouse-core/audits/dobetterweb/charset.js | failureTitle": {
     "message": "Izjava glede nabora znakov »charset« manjka ali se v HTML-ju pojavi prepozno"
@@ -665,6 +719,24 @@
   "lighthouse-core/audits/dobetterweb/geolocation-on-start.js | title": {
     "message": "Ne zahteva dovoljenja za geolokacijo pri nalaganju strani"
   },
+  "lighthouse-core/audits/dobetterweb/inspector-issues.js | columnIssueType": {
+    "message": "Vrsta težave"
+  },
+  "lighthouse-core/audits/dobetterweb/inspector-issues.js | description": {
+    "message": "Težave, zabeležene v podoknu `Issues` v orodjih za razvijalce v Chromu, označujejo nerazrešene težave. Te so lahko posledica neuspešnih omrežnih zahtev, nezadostnih varnostnih nadzorov in drugih težav z brskalnikom. Če si želite ogledati več podrobnosti o posamezni težavi, v orodjih za razvijalce v Chromu odprite podokno s težavami (Issues)."
+  },
+  "lighthouse-core/audits/dobetterweb/inspector-issues.js | failureTitle": {
+    "message": "Težave so bile zapisane v podokno `Issues` v orodju za razvijalce v Chromu"
+  },
+  "lighthouse-core/audits/dobetterweb/inspector-issues.js | issueTypeBlockedByResponse": {
+    "message": "Blokiral pravilnik iz več izvorov"
+  },
+  "lighthouse-core/audits/dobetterweb/inspector-issues.js | issueTypeHeavyAds": {
+    "message": "Oglasi uporabljajo veliko sredstev"
+  },
+  "lighthouse-core/audits/dobetterweb/inspector-issues.js | title": {
+    "message": "Ni težav v podoknu `Issues` v orodjih za razvijalce v Chromu"
+  },
   "lighthouse-core/audits/dobetterweb/js-libraries.js | columnVersion": {
     "message": "Različica"
   },
@@ -701,15 +773,6 @@
   "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | failureTitle": {
     "message": "Vključuje knjižniceJavaScript vmesnikov z znanimi varnostnimi ranljivostmi"
   },
-  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | rowSeverityHigh": {
-    "message": "Visoka"
-  },
-  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | rowSeverityLow": {
-    "message": "Nizka"
-  },
-  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | rowSeverityMedium": {
-    "message": "Srednja"
-  },
   "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | title": {
     "message": "Izogiba se knjižnicam JavaScript vmesnikov z znanimi varnostnimi ranljivostmi"
   },
@@ -735,7 +798,7 @@
     "message": "Protokol"
   },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | description": {
-    "message": "HTTP/2 ima več prednosti pred HTTP/1.1, vključno z binarnimi glavami, multipleksiranjem in potisnimi sredstvi iz strežnika. [Več o tem](https://web.dev/uses-http2/)."
+    "message": "HTTP/2 ima več prednosti pred HTTP/1.1, vključno z binarnimi glavami in multipleksiranjem. [Več o tem](https://web.dev/uses-http2/)."
   },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | displayValue": {
     "message": "{itemCount,plural, =1{1 zahteva ni bila poslana prek HTTP/2}one{# zahteva ni bila poslana prek HTTP/2}two{# zahtevi nista bili poslani prek HTTP/2}few{# zahteve niso bile poslane prek HTTP/2}other{# zahtev ni bilo poslanih prek HTTP/2}}"
@@ -751,9 +814,6 @@
   },
   "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | title": {
     "message": "Uporablja pasivne poslušalce za izboljšanje delovanja pomikanja"
-  },
-  "lighthouse-core/audits/errors-in-console.js | columnDesc": {
-    "message": "Opis"
   },
   "lighthouse-core/audits/errors-in-console.js | description": {
     "message": "Napake, zabeležene v konzoli, označujejo nerazrešene težave. Te so lahko posledica neuspešnih omrežnih zahtev in drugih težav z brskalnikom. [Več o tem](https://web.dev/errors-in-console/)"
@@ -791,9 +851,6 @@
   "lighthouse-core/audits/image-aspect-ratio.js | title": {
     "message": "Prikazuje slike s pravilnim razmerjem stranic"
   },
-  "lighthouse-core/audits/image-aspect-ratio.js | warningCompute": {
-    "message": "Neveljavni podatki o velikosti slike {url}"
-  },
   "lighthouse-core/audits/image-size-responsive.js | columnActual": {
     "message": "Dejanska velikost"
   },
@@ -812,14 +869,98 @@
   "lighthouse-core/audits/image-size-responsive.js | title": {
     "message": "Prikaže slike z ustrezno ločljivostjo"
   },
+  "lighthouse-core/audits/installable-manifest.js | already-installed": {
+    "message": "Aplikacija je že nameščena"
+  },
+  "lighthouse-core/audits/installable-manifest.js | cannot-download-icon": {
+    "message": "Zahtevane ikone iz manifesta ni bilo mogoče prenesti."
+  },
+  "lighthouse-core/audits/installable-manifest.js | columnValue": {
+    "message": "Vzrok napake"
+  },
   "lighthouse-core/audits/installable-manifest.js | description": {
-    "message": "Brskalniki lahko proaktivno pozovejo uporabnike, da dodajo vašo aplikacijo na začetni zaslon, kar lahko privede do več dejavnosti. [Več o tem](https://web.dev/installable-manifest/)."
+    "message": "Proces storitve je tehnologija, ki aplikaciji omogoča uporabo številnih funkcij moderne spletne aplikacije, na primer delovanje brez povezave, dodajanje na začetni zaslon in potisna obvestila. Z uporabo ustreznega procesa storitve in manifesta lahko brskalniki proaktivno pozovejo uporabnike, da dodajo vašo aplikacijo na začetni zaslon, kar lahko privede do več dejavnosti. [Več o tem](https://web.dev/installable-manifest/)."
+  },
+  "lighthouse-core/audits/installable-manifest.js | displayValue": {
+    "message": "{itemCount,plural, =1{1 razlog}one{# razlog}two{# razloga}few{# razlogi}other{# razlogov}}"
   },
   "lighthouse-core/audits/installable-manifest.js | failureTitle": {
-    "message": "Manifest spletne aplikacije ne izpolnjuje zahtev za izvedljivost namestitve"
+    "message": "Manifest spletne aplikacije in proces storitve ne izpolnjujeta zahtev za izvedljivost namestitve"
+  },
+  "lighthouse-core/audits/installable-manifest.js | ids-do-not-match": {
+    "message": "URL aplikacije Trgovina Play in ID Trgovine Play se ne ujemata"
+  },
+  "lighthouse-core/audits/installable-manifest.js | in-incognito": {
+    "message": "Stran je naložena v anonimnem oknu"
+  },
+  "lighthouse-core/audits/installable-manifest.js | manifest-display-not-supported": {
+    "message": "Lastnost manifesta »display« mora biti »standalone«, »fullscreen« ali »minimal-ui«"
+  },
+  "lighthouse-core/audits/installable-manifest.js | manifest-display-override-not-supported": {
+    "message": "Manifest vsebuje polje »display_override« in prvi podprti način prikaza mora biti ena od možnosti »standalone«, »fullscreen« ali »minimal-ui«"
+  },
+  "lighthouse-core/audits/installable-manifest.js | manifest-empty": {
+    "message": "Manifesta ni bilo mogoče pridobiti ali razčleniti oziroma je morda prazen"
+  },
+  "lighthouse-core/audits/installable-manifest.js | manifest-location-changed": {
+    "message": "URL manifesta je bil spremenjen med pridobivanjem manifesta."
+  },
+  "lighthouse-core/audits/installable-manifest.js | manifest-missing-name-or-short-name": {
+    "message": "Manifest ne vsebuje polja »name« ali »short_name«"
+  },
+  "lighthouse-core/audits/installable-manifest.js | manifest-missing-suitable-icon": {
+    "message": "Manifest ne vsebuje ustrezne ikone – zahtevana je oblika PNG, SVG ali WebP z najmanj toliko slikovnimi pikami: {value0}. Nastaviti je treba tudi atribut velikosti (»sizes«), če je nastavljen atribut namena (»purpose«), pa mora vključevati »any«."
+  },
+  "lighthouse-core/audits/installable-manifest.js | no-acceptable-icon": {
+    "message": "Nobena priložena ikona ni v obliki PNG, SVG ali WebP in ni kvadrat najmanj toliko slikovnih pik: {value0}, pri čemer atribut namena ni nastavljen oziroma je nastavljen na »poljubno«."
+  },
+  "lighthouse-core/audits/installable-manifest.js | no-icon-available": {
+    "message": "Prenesena ikona je bila prazna ali poškodovana."
+  },
+  "lighthouse-core/audits/installable-manifest.js | no-id-specified": {
+    "message": "ID Trgovine Play ni naveden"
+  },
+  "lighthouse-core/audits/installable-manifest.js | no-manifest": {
+    "message": "Stran nima URL-ja manifesta <link>"
+  },
+  "lighthouse-core/audits/installable-manifest.js | no-matching-service-worker": {
+    "message": "Noben ujemajoči proces storitve ni zaznan. Morda boste morali znova naložiti stran oziroma preveriti, ali obseg procesa storitve za trenutno stran zajema obseg in začetni URL manifesta."
+  },
+  "lighthouse-core/audits/installable-manifest.js | no-url-for-service-worker": {
+    "message": "Procesa storitve ni mogoče preveriti brez polja »start_url« v manifestu"
+  },
+  "lighthouse-core/audits/installable-manifest.js | noErrorId": {
+    "message": "ID napake o izvedljivosti namestitve »{errorId}« ni prepoznan"
+  },
+  "lighthouse-core/audits/installable-manifest.js | not-from-secure-origin": {
+    "message": "Stran ni bila poslana iz varnega izvora"
+  },
+  "lighthouse-core/audits/installable-manifest.js | not-in-main-frame": {
+    "message": "Stran ni naložena v glavnem okviru"
+  },
+  "lighthouse-core/audits/installable-manifest.js | not-offline-capable": {
+    "message": "Stran ne deluje brez povezave"
+  },
+  "lighthouse-core/audits/installable-manifest.js | platform-not-supported-on-android": {
+    "message": "Navedeno okolje aplikacije ni podprto v sistemu Android"
+  },
+  "lighthouse-core/audits/installable-manifest.js | prefer-related-applications": {
+    "message": "Manifest določa »prefer_related_applications: true«"
+  },
+  "lighthouse-core/audits/installable-manifest.js | prefer-related-applications-only-beta-stable": {
+    "message": "Vrednost »prefer_related_applications« je podprta samo v Chromu Beta in stabilnih različicah Chroma v sistemu Android."
+  },
+  "lighthouse-core/audits/installable-manifest.js | start-url-not-valid": {
+    "message": "Začetni URL manifesta ni veljaven"
   },
   "lighthouse-core/audits/installable-manifest.js | title": {
-    "message": "Manifest spletne aplikacije izpolnjuje zahteve za izvedljivost namestitve"
+    "message": "Manifest spletne aplikacije in proces storitve izpolnjujeta zahteve za izvedljivost namestitve"
+  },
+  "lighthouse-core/audits/installable-manifest.js | url-not-supported-for-webapk": {
+    "message": "URL v manifestu vsebuje uporabniško ime, geslo ali vrata"
+  },
+  "lighthouse-core/audits/installable-manifest.js | warn-not-offline-capable": {
+    "message": "Stran ne deluje brez povezave. Stran ne bo obravnavana kot namestljiva po avgustu 2021, ko bo izdana stabilna različica Chroma 93."
   },
   "lighthouse-core/audits/is-on-https.js | allowed": {
     "message": "Dovoljeno"
@@ -834,7 +975,7 @@
     "message": "Razrešitev zahtev"
   },
   "lighthouse-core/audits/is-on-https.js | description": {
-    "message": "Vsa spletna mesta morajo biti zaščitena s HTTPS, tudi tista, ki nimajo opravka z občutljivimi podatki. To vključuje izogibanje [mešani vsebini](https://developers.google.com/web/fundamentals/security/prevent-mixed-content/what-is-mixed-content), pri čemer so nekatera sredstva naložena prek protokola HTTP, čeprav je začetna zahteva prikazana prek protokola HTTPS. HTTPS vsiljivcem preprečuje manipuliranje s komunikacijami ali pasivno poslušanje komunikacij med aplikacijo in uporabniki ter je pogoj za HTTP/2 in veliko novih API-jev za spletna okolja. [Več o tem](https://web.dev/is-on-https/)"
+    "message": "Vsa spletna mesta morajo biti zaščitena s HTTPS, tudi tista, ki nimajo opravka z občutljivimi podatki. To vključuje izogibanje [mešani vsebini](https://developers.google.com/web/fundamentals/security/prevent-mixed-content/what-is-mixed-content), pri čemer so nekatera sredstva naložena prek protokola HTTP, čeprav je začetna zahteva prikazana prek protokola HTTPS. HTTPS vsiljivcem preprečuje manipuliranje s komunikacijami ali pasivno poslušanje komunikacij med aplikacijo in uporabniki ter je pogoj za HTTP/2 in veliko novih API-jev za spletna okolja. [Več o tem](https://web.dev/is-on-https/)."
   },
   "lighthouse-core/audits/is-on-https.js | displayValue": {
     "message": "{itemCount,plural, =1{Najdena je bila 1 zahteva, ki ni varna}one{Najdena je bila # zahteva, ki ni varna}two{Najdeni sta bili # zahtevi, ki nista varni}few{Najdene so bile # zahteve, ki niso varne}other{Najdenih je bilo # zahtev, ki niso varne}}"
@@ -851,21 +992,6 @@
   "lighthouse-core/audits/is-on-https.js | warning": {
     "message": "Dovoljeno z opozorilom"
   },
-  "lighthouse-core/audits/large-javascript-libraries.js | columnLibraryName": {
-    "message": "Knjižnica"
-  },
-  "lighthouse-core/audits/large-javascript-libraries.js | description": {
-    "message": "Velike knjižnice JavaScript lahko povzročijo slabo učinkovitost delovanja. Če želite zmanjšati velikost svežnja, namesto tega uporabite manjše, funkcionalno enakovredne knjižnice. [Več o tem](https://developers.google.com/web/fundamentals/performance/webpack/decrease-frontend-size#optimize_dependencies)."
-  },
-  "lighthouse-core/audits/large-javascript-libraries.js | displayValue": {
-    "message": "{libraryCount,plural, =1{Najdena je bila 1 velika knjižnica}one{Najdena je bila # velika knjižnica}two{Najdeni sta bili # veliki knjižnici}few{Najdene so bile # velike knjižnice}other{Najdenih je bilo # velikih knjižnic}}"
-  },
-  "lighthouse-core/audits/large-javascript-libraries.js | failureTitle": {
-    "message": "Zamenjava nepotrebno velikih knjižnic JavaScript"
-  },
-  "lighthouse-core/audits/large-javascript-libraries.js | title": {
-    "message": "Izogiba se velikim knjižnicam JavaScript z manjšimi nadomestnimi knjižnicami"
-  },
   "lighthouse-core/audits/largest-contentful-paint-element.js | description": {
     "message": "To je največji vsebinski element, izrisan znotraj vidnega območja. [Več o tem](https://web.dev/lighthouse-largest-contentful-paint/)"
   },
@@ -880,24 +1006,6 @@
   },
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "Izogibajte se velikim pomikom postavitve"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
-    "message": "Hitro nalaganje strani prek mobilnega omrežja zagotavlja dobro uporabniško izkušnjo pri uporabi mobilnih naprav. [Več o tem](https://web.dev/load-fast-enough-for-pwa/)."
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueText": {
-    "message": "Interaktivno ob {timeInMs, number, seconds} s"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueTextWithOverride": {
-    "message": "Interaktivno v simuliranem mobilnem omrežju ob {timeInMs, number, seconds} s"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | explanationLoadSlow": {
-    "message": "Stran se nalaga prepočasi in ni interaktivna v 10 sekundah. Oglejte si priložnosti in diagnostiko v razdelku »Delovanje«, če želite izvedeti, kako do izboljšanja."
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | failureTitle": {
-    "message": "Nalaganje strani ni dovolj hitro v mobilnih omrežjih"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | title": {
-    "message": "Nalaganje strani je dovolj hitro v mobilnih omrežjih"
   },
   "lighthouse-core/audits/long-tasks.js | description": {
     "message": "Navede najdaljša opravila v glavni niti, kar je koristno za prepoznavanje elementov, ki največ prispevajo k zakasnitvi vnosa. [Več o tem](https://web.dev/long-tasks-devtools/)"
@@ -950,14 +1058,8 @@
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
     "message": "Kumulativna sprememba postavitve meri premikanje vidnih elementov znotraj vidnega območja. [Več o tem](https://web.dev/cls/)."
   },
-  "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
-    "message": "Predvidena vhodna zakasnitev je ocena, koliko milisekund potrebuje vaša aplikacija za odziv na uporabnikovo dejavnost med najaktivnejšimi 5 sekundami pri nalaganju strani. Če je zakasnitev večja od 50 ms, se lahko uporabnikom zdi, da se aplikacija zatika. [Več o tem](https://web.dev/estimated-input-latency/)."
-  },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
     "message": "Prvi vsebinski izris označuje čas, ko je izrisano prvo besedilo oziroma je izrisana prva slika. [Več o tem](https://web.dev/first-contentful-paint/)."
-  },
-  "lighthouse-core/audits/metrics/first-cpu-idle.js | description": {
-    "message": "Prva nedejavnost CPE-ja označuje čas, po katerem je glavna nit strani dovolj neobremenjena, da lahko obravnava vnos.  [Več o tem](https://web.dev/first-cpu-idle/)."
   },
   "lighthouse-core/audits/metrics/first-meaningful-paint.js | description": {
     "message": "Prvo smiselno barvanje meri, kdaj je vidna glavna vsebina strani. [Več o tem](https://web.dev/first-meaningful-paint/)."
@@ -966,7 +1068,7 @@
     "message": "Čas do interaktivnosti je čas, potreben, da stran postane povsem interaktivna. [Več o tem](https://web.dev/interactive/)."
   },
   "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
-    "message": "Največji vsebinski izris označuje čas, ko je izrisano največje besedilo oziroma je izrisana največja slika. [Več o tem](https://web.dev/lighthouse-largest-contentful-paint/)."
+    "message": "Največji vsebinski izris označuje čas, ko je izrisano največje besedilo oziroma je izrisana največja slika. [Več o tem](https://web.dev/lighthouse-largest-contentful-paint/)"
   },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
     "message": "Največja potencialna zakasnitev od prvega vnosa, na katero lahko uporabniki naletijo, je trajanje najdaljšega opravila. [Več o tem](https://web.dev/lighthouse-max-potential-fid/)."
@@ -1025,21 +1127,6 @@
   "lighthouse-core/audits/non-composited-animations.js | unsupportedTimingParameters": {
     "message": "Učinek ima nepodprte časovne parametre"
   },
-  "lighthouse-core/audits/offline-start-url.js | description": {
-    "message": "Proces storitve spletni aplikaciji omogoča zanesljivost v nepredvidljivih omrežnih okoliščinah. [Več o tem](https://web.dev/offline-start-url/)."
-  },
-  "lighthouse-core/audits/offline-start-url.js | errorLoading": {
-    "message": "Napaka pri nalaganju {url} v procesu storitve, prejeta je bila koda stanja {statusCode}"
-  },
-  "lighthouse-core/audits/offline-start-url.js | failureTitle": {
-    "message": "`start_url` se ne odzove s kodo stanja HTTP 200, ko nima povezave"
-  },
-  "lighthouse-core/audits/offline-start-url.js | title": {
-    "message": "`start_url` se odzove s kodo stanja HTTP 200, ko nima povezave"
-  },
-  "lighthouse-core/audits/offline-start-url.js | warningCantStart": {
-    "message": "Lighthouse ni mogel prebrati URL-ja `start_url` v manifestu. Za URL dokumenta se je posledično imelo ta URL: `start_url`. Sporočilo o napaki: »{manifestWarning}«."
-  },
   "lighthouse-core/audits/performance-budget.js | description": {
     "message": "Količino in velikosti omrežnih zahtev imejte pod cilji, ki so nastavljeni z navedenim proračunom za uspešnost. [Več o tem](https://developers.google.com/web/tools/lighthouse/audits/budgets)."
   },
@@ -1057,6 +1144,12 @@
   },
   "lighthouse-core/audits/preload-fonts.js | title": {
     "message": "Pisave z vrednostjo `font-display: optional` so vnaprej naložene"
+  },
+  "lighthouse-core/audits/preload-lcp-image.js | description": {
+    "message": "Vnaprej naložite sliko, ki jo uporablja element LCP, če želite izboljšati čas za LCP. [Več o tem](https://web.dev/optimize-lcp/#preload-important-resources)."
+  },
+  "lighthouse-core/audits/preload-lcp-image.js | title": {
+    "message": "Vnaprejšnje nalaganje slike največjega vsebinskega izrisa"
   },
   "lighthouse-core/audits/redirects-http.js | description": {
     "message": "Če ste že nastavili protokol HTTPS, poskrbite za preusmeritev vsega prometa prek protokola HTTP na protokol HTTPS, da zagotovite varne spletne funkcije vsem uporabnikom. [Več o tem](https://web.dev/redirects-http/)."
@@ -1098,7 +1191,7 @@
     "message": "Kaže na drugo lokacijo `hreflang` ({url})"
   },
   "lighthouse-core/audits/seo/canonical.js | explanationRelative": {
-    "message": "Relativni URL ({url})"
+    "message": "Ni absolutni URL ({url})"
   },
   "lighthouse-core/audits/seo/canonical.js | explanationRoot": {
     "message": "Kaže na korenski URL domene (domačo stran), namesto na enakovredno stran z vsebino"
@@ -1122,16 +1215,16 @@
     "message": "Povezave omogočajo iskanje po vsebini"
   },
   "lighthouse-core/audits/seo/font-size.js | additionalIllegibleText": {
-    "message": "Add'l illegible text"
+    "message": "Dodatno neberljivo besedilo"
   },
   "lighthouse-core/audits/seo/font-size.js | columnFontSize": {
-    "message": "Font Size"
+    "message": "Velikost pisave"
   },
   "lighthouse-core/audits/seo/font-size.js | columnPercentPageText": {
-    "message": "% of Page Text"
+    "message": "% besedila na strani"
   },
   "lighthouse-core/audits/seo/font-size.js | columnSelector": {
-    "message": "Selector"
+    "message": "Izbirnik"
   },
   "lighthouse-core/audits/seo/font-size.js | description": {
     "message": "Velikosti pisave, manjše od 12 slikovnih pik, so premajhne, da bi bile berljive, zato morajo obiskovalci z mobilnimi napravami s potezo razširjanja prstov na zaslonu povečati strani, da bi jih lahko prebrali. Poskušajte zagotoviti, da bo več kot 60 % besedila na strani velikosti, ki ni manjša od 12 slikovnih pik. [Več o tem](https://web.dev/font-size/)."
@@ -1146,7 +1239,7 @@
     "message": "Dokument ne uporablja berljivih velikosti pisav"
   },
   "lighthouse-core/audits/seo/font-size.js | legibleText": {
-    "message": "Legible text"
+    "message": "Berljivo besedilo"
   },
   "lighthouse-core/audits/seo/font-size.js | title": {
     "message": "Dokument uporablja berljive velikosti pisav"
@@ -1313,8 +1406,32 @@
   "lighthouse-core/audits/themed-omnibox.js | title": {
     "message": "Nastavi barvo teme za naslovno vrstico."
   },
-  "lighthouse-core/audits/third-party-summary.js | columnBlockingTime": {
-    "message": "Čas blokiranja glavne niti"
+  "lighthouse-core/audits/third-party-facades.js | categoryCustomerSuccess": {
+    "message": "{productName} (podpora strankam)"
+  },
+  "lighthouse-core/audits/third-party-facades.js | categoryMarketing": {
+    "message": "{productName} (trženje)"
+  },
+  "lighthouse-core/audits/third-party-facades.js | categorySocial": {
+    "message": "{productName} (družabno)"
+  },
+  "lighthouse-core/audits/third-party-facades.js | categoryVideo": {
+    "message": "{productName} (video)"
+  },
+  "lighthouse-core/audits/third-party-facades.js | columnProduct": {
+    "message": "Izdelek"
+  },
+  "lighthouse-core/audits/third-party-facades.js | description": {
+    "message": "Nekatere vdelave drugih ponudnikov je mogoče odloženo naložiti. Razmislite o tem, da bi jih nadomestili s preprosto komponento, dokler jih ne boste potrebovali. [Več o tem](https://web.dev/third-party-facades/)."
+  },
+  "lighthouse-core/audits/third-party-facades.js | displayValue": {
+    "message": "{itemCount,plural, =1{Na voljo je # nadomestna preprosta komponenta}one{Na voljo je # nadomestna preprosta komponenta}two{Na voljo sta # nadomestni preprosti komponenti}few{Na voljo so # nadomestne preproste komponente}other{Na voljo je # nadomestnih preprostih komponent}}"
+  },
+  "lighthouse-core/audits/third-party-facades.js | failureTitle": {
+    "message": "Nekatera sredstva drugih ponudnikov je mogoče odloženo naložiti s preprosto komponento"
+  },
+  "lighthouse-core/audits/third-party-facades.js | title": {
+    "message": "Odloženo nalaganje sredstev drugih ponudnikov s preprostimi komponentami"
   },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "Drugi ponudniki"
@@ -1327,9 +1444,6 @@
   },
   "lighthouse-core/audits/third-party-summary.js | failureTitle": {
     "message": "Zmanjšanje vpliva kode drugega ponudnika"
-  },
-  "lighthouse-core/audits/third-party-summary.js | otherValue": {
-    "message": "Drugi viri"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Zmanjšajte uporabo komponent drugih ponudnikov"
@@ -1347,7 +1461,7 @@
     "message": "Časovni proračun"
   },
   "lighthouse-core/audits/unsized-images.js | description": {
-    "message": "Set an explicit width and height on image elements to reduce layout shifts and improve CLS. [Learn more](https://web.dev/optimize-cls/#images-without-dimensions)"
+    "message": "Če želite zmanjšati pomike postavitve in izboljšati CLS, za elemente slik nastavite eksplicitno širino in višino. [Več o tem](https://web.dev/optimize-cls/#images-without-dimensions)"
   },
   "lighthouse-core/audits/unsized-images.js | failureTitle": {
     "message": "Elementi slik nimajo izrecnih atributov `width` in `height`"
@@ -1368,7 +1482,7 @@
     "message": "Oznake in merjenja trajanj izvedbe uporabniških dogodkov"
   },
   "lighthouse-core/audits/uses-rel-preconnect.js | crossoriginWarning": {
-    "message": "Povezava <link> za vnaprejšnje povezovanje je bila najdena za »{securityOrigin}«, vendar je brskalnik ni uporabil. Preverite, ali pravilno uporabljate atribut `crossorigin`."
+    "message": "Povezava `<link rel=preconnect>` je bila najdena za »{securityOrigin}«, vendar je brskalnik ni uporabil. Preverite, ali pravilno uporabljate atribut `crossorigin`."
   },
   "lighthouse-core/audits/uses-rel-preconnect.js | description": {
     "message": "Razmislite o dodajanju namigov za sredstva (`preconnect` ali `dns-prefetch`) zaradi vzpostavljanja zgodnjih povezav s pomembnimi izvori drugih ponudnikov. [Več o tem](https://web.dev/uses-rel-preconnect/)."
@@ -1377,13 +1491,13 @@
     "message": "Vnaprej se povežite z zahtevanimi izvori"
   },
   "lighthouse-core/audits/uses-rel-preconnect.js | tooManyPreconnectLinksWarning": {
-    "message": "Našli smo več kot dve povezavi za vnaprejšnje povezovanje. Povezave za vnaprejšnje povezovanje je treba uporabljati gospodarno in samo za najpomembnejše izvore."
+    "message": "Našli smo več kot dve povezavi `<link rel=preconnect>`. Te je treba uporabljati gospodarno in samo za najpomembnejše izvore."
   },
   "lighthouse-core/audits/uses-rel-preconnect.js | unusedWarning": {
-    "message": "A preconnect <link> was found for \"{securityOrigin}\" but was not used by the browser. Only preconnect to important origins that the page will certainly request."
+    "message": "Povezava `<link rel=preconnect>` je bila najdena za »{securityOrigin}«, vendar je brskalnik ni uporabil. Atribute `preconnect` uporabljajte samo za pomembne izvore, ki jih bo stran gotovo zahtevala."
   },
   "lighthouse-core/audits/uses-rel-preload.js | crossoriginWarning": {
-    "message": "Najden je bil element <link> za »{preloadURL}«, vendar ga brskalnik ni uporabil. Preverite, ali pravilno uporabljate atribut `crossorigin`."
+    "message": "Povezava za vnaprejšnje nalaganje `<link>` je bila najdena za »{preloadURL}«, vendar je brskalnik ni uporabil. Preverite, ali pravilno uporabljate atribut `crossorigin`."
   },
   "lighthouse-core/audits/uses-rel-preload.js | description": {
     "message": "Razmislite o uporabi oznake `<link rel=preload>` za dodeljevanje višje stopnje prednosti pri pridobivanju sredstev, ki so trenutno zahtevana pri nadaljnjem nalaganju strani. [Več o tem](https://web.dev/uses-rel-preload/)."
@@ -1420,30 +1534,6 @@
   },
   "lighthouse-core/audits/viewport.js | title": {
     "message": "Ima oznako `<meta name=\"viewport\">` s tem: `width` ali `initial-scale`"
-  },
-  "lighthouse-core/audits/without-javascript.js | description": {
-    "message": "Aplikacija bi morala prikazati nekaj vsebine, če je JavaScript onemogočen, četudi zgolj opozorilo uporabniku, da uporaba aplikacije terja JavaScript. [Več o tem](https://web.dev/without-javascript/)."
-  },
-  "lighthouse-core/audits/without-javascript.js | explanation": {
-    "message": "Telo strani bi moralo upodobiti nekaj vsebine, če njeni skripti niso na voljo."
-  },
-  "lighthouse-core/audits/without-javascript.js | failureTitle": {
-    "message": "Ne zagotavlja nadomestne vsebine, ko JavaScript ni na voljo"
-  },
-  "lighthouse-core/audits/without-javascript.js | title": {
-    "message": "Vsebuje nekaj vsebine, ko JavaScript ni na voljo"
-  },
-  "lighthouse-core/audits/works-offline.js | description": {
-    "message": "Če ustvarjate moderno spletno aplikacijo, razmislite o uporabi procesa storitve, da lahko aplikacija deluje brez povezave. [Več o tem](https://web.dev/works-offline/)."
-  },
-  "lighthouse-core/audits/works-offline.js | failureTitle": {
-    "message": "Trenutna stran se ne odzove s kodo stanja HTTP 200, ko nima povezave"
-  },
-  "lighthouse-core/audits/works-offline.js | title": {
-    "message": "Trenutna stran se odzove s kodo stanja HTTP 200, ko nima povezave"
-  },
-  "lighthouse-core/audits/works-offline.js | warningNoLoad": {
-    "message": "Stran se morda ne naloži brez povezave, ker je bil preizkusni URL ({requested}) preusmerjen na »{final}«. Poskusite neposredno preizkusiti drugi URL."
   },
   "lighthouse-core/config/default-config.js | a11yAriaGroupDescription": {
     "message": "Tu imate na voljo priložnosti, da izboljšate uporabo atributov ARIA v aplikaciji, s čimer lahko izboljšate izkušnjo za uporabnike pomožnih tehnologij, kot je bralnik zaslona."
@@ -1562,9 +1652,6 @@
   "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
     "message": "Moderna spletna aplikacija"
   },
-  "lighthouse-core/config/default-config.js | pwaFastReliableGroupTitle": {
-    "message": "Hitro in zanesljivo"
-  },
   "lighthouse-core/config/default-config.js | pwaInstallableGroupTitle": {
     "message": "Namestljivo"
   },
@@ -1598,14 +1685,74 @@
   "lighthouse-core/config/default-config.js | seoMobileGroupTitle": {
     "message": "Prilagojeno za mobilne naprave"
   },
-  "lighthouse-core/gather/gather-runner.js | warningRedirected": {
+  "lighthouse-core/gather/driver/environment.js | warningSlowHostCpu": {
+    "message": "Videti je, da ima preizkušena naprava počasnejši CPE kot ga pričakuje Lighthouse. To lahko negativno vpliva na rezultat uspešnosti. Preberite več o [umerjanju ustreznega množitelja za upočasnitev CPE-ja](https://github.com/GoogleChrome/lighthouse/blob/master/docs/throttling.md#cpu-throttling)."
+  },
+  "lighthouse-core/gather/driver/navigation.js | warningRedirected": {
     "message": "Stran se morda ne naloži po pričakovanjih, ker je bil preizkusni URL ({requested}) preusmerjen na {final}. Poskusite neposredno preizkusiti drugi URL."
   },
-  "lighthouse-core/gather/gather-runner.js | warningTimeout": {
+  "lighthouse-core/gather/driver/navigation.js | warningTimeout": {
     "message": "Stran se je naložila prepočasi, da bi se nalaganje dokončalo znotraj časovne omejitve. Rezultati so morda nepopolni."
+  },
+  "lighthouse-core/gather/driver/storage.js | warningData": {
+    "message": "{locationCount,plural, =1{Na tej lokaciji so morda shranjeni podatki, ki vplivajo na uspešnost nalaganja: {locations}. Preglejte to stran v anonimnem oknu, da preprečite, da bi ti viri vplivali na vaše rezultate.}one{Na teh lokacijah so morda shranjeni podatki, ki vplivajo na uspešnost nalaganja: {locations}. Preglejte to stran v anonimnem oknu, da preprečite, da bi ti viri vplivali na vaše rezultate.}two{Na teh lokacijah so morda shranjeni podatki, ki vplivajo na uspešnost nalaganja: {locations}. Preglejte to stran v anonimnem oknu, da preprečite, da bi ti viri vplivali na vaše rezultate.}few{Na teh lokacijah so morda shranjeni podatki, ki vplivajo na uspešnost nalaganja: {locations}. Preglejte to stran v anonimnem oknu, da preprečite, da bi ti viri vplivali na vaše rezultate.}other{Na teh lokacijah so morda shranjeni podatki, ki vplivajo na uspešnost nalaganja: {locations}. Preglejte to stran v anonimnem oknu, da preprečite, da bi ti viri vplivali na vaše rezultate.}}"
+  },
+  "lighthouse-core/lib/csp-evaluator.js | allowlistFallback": {
+    "message": "Razmislite o dodajanju shem URL-jev https: in http: (brskalniki, ki podpirajo element »strict-dynamic«, jih prezrejo) zaradi povratne združljivosti s starejšimi brskalniki."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | deprecatedDisownOpener": {
+    "message": "Direktiva disown-opener je zastarela od pravilnika CSP3. Uporabite glavo pravilnika Cross-Origin-Opener-Policy."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | deprecatedReferrer": {
+    "message": "Direktiva referrer je zastarela od pravilnika CSP2. Uporabite glavno pravilnika Referrer-Policy."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | deprecatedReflectedXSS": {
+    "message": "Direktiva reflected-xss je zastarela od pravilnika CSP2. Uporabite glavo za X-XSS-Protection."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | missingBaseUri": {
+    "message": "Manjkajoči element base-uri omogoča, da vstavljene oznake <base> nastavijo temeljni URL za vse relativne URL-je (npr. skripte) do domene, ki jo nadzira napadalec. Razmislite o nastavitvi elementa base-uri na »none« ali »self«."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | missingObjectSrc": {
+    "message": "Elementi, ki jih nadzira object-src, se obravnavajo kot starejše funkcije. Razmislite o nastavitvi elementa object-src na »none«, da preprečite vstavitev vtičnikov, ki izvajajo skripte, ki niso varni."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | missingScriptSrc": {
+    "message": "Ni direktive script-src. Zaradi tega je lahko dovoljeno izvajanje skriptov, ki niso varni."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | missingSemicolon": {
+    "message": "Ste pozabili podpičje? Videti je, da je {keyword} direktiva, ne pa ključna beseda."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | nonceCharset": {
+    "message": "Žetoni morajo uporabljati nabor znakov base64."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | nonceLength": {
+    "message": "Žetoni morajo biti dolgi najmanj 8 znakov."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | reportToOnly": {
+    "message": "Cilj za poročanje je konfiguriran samo prek direktive »report-to«. Direktivo podpirajo samo brskalniki na podlagi Chromiuma, zato priporočamo, da uporabite tudi direktivo »report-uri«."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | reportingDestinationMissing": {
+    "message": "V nobenem pravilniku CSP ni konfiguriran cilj za poročanje. Zato je težko dolgoročno ohranjati pravilnik CSP in ga nadzirati zaradi morebitnih težav z delovanjem."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | strictDynamic": {
+    "message": "Sezname dovoljenih pri gostiteljih je pogosto mogoče zaobiti. Razmislite o uporabi elementa »strict-dynamic« v kombinaciji z žetoni ali zgoščenimi vrednostmi pravilnika CSP."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | unknownDirective": {
+    "message": "Neznana direktiva pravilnika CSP."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | unknownKeyword": {
+    "message": "Videti je, da je {keyword} neveljavna ključna beseda."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | unsafeInlineFallback": {
+    "message": "Razmislite o dodajanju elementa »unsafe-inline« (brskalniki, ki podpirajo žetone/zgoščene vrednosti, ga prezrejo) zaradi povratne združljivosti s starejšimi brskalniki."
+  },
+  "lighthouse-core/lib/i18n/i18n.js | columnBlockingTime": {
+    "message": "Čas blokiranja glavne niti"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "TTL predpomnjenja"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | columnDescription": {
+    "message": "Opis"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnDuration": {
     "message": "Trajanje"
@@ -1673,12 +1820,6 @@
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Dokument"
   },
-  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
-    "message": "Ocenjena zakasnitev vnosa"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
-    "message": "Prva nedejavnost CPE-ja"
-  },
   "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
     "message": "First Contentful Paint"
   },
@@ -1694,6 +1835,15 @@
   "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
     "message": "Time to Interactive"
   },
+  "lighthouse-core/lib/i18n/i18n.js | itemSeverityHigh": {
+    "message": "Visoka"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | itemSeverityLow": {
+    "message": "Nizka"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | itemSeverityMedium": {
+    "message": "Srednja"
+  },
   "lighthouse-core/lib/i18n/i18n.js | largestContentfulPaintMetric": {
     "message": "Largest Contentful Paint"
   },
@@ -1708,6 +1858,9 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | otherResourceType": {
     "message": "Drugo"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | otherResourcesLabel": {
+    "message": "Drugi viri"
   },
   "lighthouse-core/lib/i18n/i18n.js | scriptResourceType": {
     "message": "Skript"
@@ -1751,6 +1904,9 @@
   "lighthouse-core/lib/lh-error.js | missingRequiredArtifact": {
     "message": "Zahtevani zbiralnik {artifactName} se ni izvedel."
   },
+  "lighthouse-core/lib/lh-error.js | noFcp": {
+    "message": "Na strani ni bila prikazana nobena vsebina. Poskrbite, da bo okno brskalnika med nalaganjem v ospredju, in poskusite znova. ({errorCode})"
+  },
   "lighthouse-core/lib/lh-error.js | notHtml": {
     "message": "Prikazana stran ni v obliki HTML (prikazana je kot vrsta razširitve MIME {mimeType})."
   },
@@ -1787,158 +1943,47 @@
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "Videti je, da ste navedli neveljaven URL."
   },
-  "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
-    "message": "Pokaži preglede"
+  "lighthouse-treemap/app/src/util.js | allLabel": {
+    "message": "Vse"
   },
-  "lighthouse-core/report/html/renderer/util.js | calculatorLink": {
-    "message": "Oglejte si kalkulator."
+  "lighthouse-treemap/app/src/util.js | allScriptsDropdownLabel": {
+    "message": "Vsi skripti"
   },
-  "lighthouse-core/report/html/renderer/util.js | crcInitialNavigation": {
-    "message": "Začetno krmarjenje"
+  "lighthouse-treemap/app/src/util.js | coverageColumnName": {
+    "message": "Pokritost"
   },
-  "lighthouse-core/report/html/renderer/util.js | crcLongestDurationLabel": {
-    "message": "Največja zakasnitev kritične poti:"
+  "lighthouse-treemap/app/src/util.js | duplicateModulesLabel": {
+    "message": "Podvojeni moduli"
   },
-  "lighthouse-core/report/html/renderer/util.js | dropdownCopyJSON": {
-    "message": "Kopiraj JSON"
+  "lighthouse-treemap/app/src/util.js | resourceBytesLabel": {
+    "message": "Bajti sredstva"
   },
-  "lighthouse-core/report/html/renderer/util.js | dropdownDarkTheme": {
-    "message": "Preklop temne teme"
+  "lighthouse-treemap/app/src/util.js | tableColumnName": {
+    "message": "Ime"
   },
-  "lighthouse-core/report/html/renderer/util.js | dropdownPrintExpanded": {
-    "message": "Tiskanje razširjenega poročila"
+  "lighthouse-treemap/app/src/util.js | toggleTableButtonLabel": {
+    "message": "Preklop tabele"
   },
-  "lighthouse-core/report/html/renderer/util.js | dropdownPrintSummary": {
-    "message": "Tiskanje povzetka"
-  },
-  "lighthouse-core/report/html/renderer/util.js | dropdownSaveGist": {
-    "message": "Shrani kot Gist"
-  },
-  "lighthouse-core/report/html/renderer/util.js | dropdownSaveHTML": {
-    "message": "Shrani kot HTML"
-  },
-  "lighthouse-core/report/html/renderer/util.js | dropdownSaveJSON": {
-    "message": "Shrani kot JSON"
-  },
-  "lighthouse-core/report/html/renderer/util.js | dropdownViewer": {
-    "message": "Odpri v pregledovalniku"
-  },
-  "lighthouse-core/report/html/renderer/util.js | errorLabel": {
-    "message": "Napaka"
-  },
-  "lighthouse-core/report/html/renderer/util.js | errorMissingAuditInfo": {
-    "message": "Napaka sporočila: ni podatkov o pregledu"
-  },
-  "lighthouse-core/report/html/renderer/util.js | footerIssue": {
-    "message": "Prijavi težavo"
-  },
-  "lighthouse-core/report/html/renderer/util.js | labDataTitle": {
-    "message": "Laboratorijski podatki"
-  },
-  "lighthouse-core/report/html/renderer/util.js | lsPerformanceCategoryDescription": {
-    "message": "Analiza orodja [Lighthouse](https://developers.google.com/web/tools/lighthouse/) trenutne strani v emuliranem mobilnem omrežju. Vrednosti so ocenjene in lahko odstopajo."
-  },
-  "lighthouse-core/report/html/renderer/util.js | manualAuditsGroupTitle": {
-    "message": "Dodatni elementi za ročno preverjanje"
-  },
-  "lighthouse-core/report/html/renderer/util.js | notApplicableAuditsGroupTitle": {
-    "message": "Se ne uporablja"
-  },
-  "lighthouse-core/report/html/renderer/util.js | opportunityResourceColumnLabel": {
-    "message": "Priložnost"
-  },
-  "lighthouse-core/report/html/renderer/util.js | opportunitySavingsColumnLabel": {
-    "message": "Ocenjeni prihranek"
-  },
-  "lighthouse-core/report/html/renderer/util.js | passedAuditsGroupTitle": {
-    "message": "Uspešni pregledi"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeDesktopEmulation": {
-    "message": "Emulirano namizje"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeMobileEmulation": {
-    "message": "Emulirana naprava Moto G4"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeNoEmulation": {
-    "message": "Brez emulacije"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsAxeVersion": {
-    "message": "Axe version"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsBenchmark": {
-    "message": "Zmogljivost CPE-ja/pomnilnika"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsCPUThrottling": {
-    "message": "Zaviranje CPE-ja"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsChannel": {
-    "message": "Kanal"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsDevice": {
-    "message": "Naprava"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsFetchTime": {
-    "message": "Čas pridobitve"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsNetworkThrottling": {
-    "message": "Omejevanje omrežja"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsTitle": {
-    "message": "Nastavitve časa izvajanja"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsUA": {
-    "message": "Uporabnikov posrednik (gostitelj)"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsUANetwork": {
-    "message": "Uporabnikov posrednik (omrežje)"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsUrl": {
-    "message": "URL"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeUnknown": {
-    "message": "Neznano"
-  },
-  "lighthouse-core/report/html/renderer/util.js | snippetCollapseButtonLabel": {
-    "message": "Strni delček"
-  },
-  "lighthouse-core/report/html/renderer/util.js | snippetExpandButtonLabel": {
-    "message": "Razširi delček"
-  },
-  "lighthouse-core/report/html/renderer/util.js | thirdPartyResourcesLabel": {
-    "message": "Prikaži sredstva drugih ponudnikov"
-  },
-  "lighthouse-core/report/html/renderer/util.js | throttlingProvided": {
-    "message": "Zagotavlja okolje"
-  },
-  "lighthouse-core/report/html/renderer/util.js | toplevelWarningsMessage": {
-    "message": "Na to izvedbo storitve Lighthouse so vplivale težave:"
-  },
-  "lighthouse-core/report/html/renderer/util.js | varianceDisclaimer": {
-    "message": "Vrednosti so ocenjene in lahko odstopajo. [Rezultat uspešnosti se izračuna](https://web.dev/performance-scoring/) neposredno iz teh meritev."
-  },
-  "lighthouse-core/report/html/renderer/util.js | warningAuditsGroupTitle": {
-    "message": "Pregledi so bili uspešno opravljeni, vendar z opozorili"
-  },
-  "lighthouse-core/report/html/renderer/util.js | warningHeader": {
-    "message": "Opozorila: "
+  "lighthouse-treemap/app/src/util.js | unusedBytesLabel": {
+    "message": "Neuporabljeni bajti"
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
-    "message": "Za animirano vsebino uporabite [amp-anim](https://amp.dev/documentation/components/amp-anim/), da zmanjšate uporabo CPE, medtem ko vsebina ni na zaslonu."
+    "message": "Za animirano vsebino uporabite [`amp-anim`](https://amp.dev/documentation/components/amp-anim/), da zmanjšate uporabo CPE-ja, ko vsebina ni na zaslonu."
+  },
+  "node_modules/lighthouse-stack-packs/packs/amp.js | modern-image-formats": {
+    "message": "Razmislite o tem, da bi vse komponente za [`amp-img`](https://amp.dev/documentation/components/amp-img/?format=websites) prikazali v oblikah zapisa WebP, pri tem pa določili ustrezno rezervno možnost za druge brskalnike. [Več o tem](https://amp.dev/documentation/components/amp-img/#example:-specifying-a-fallback-image)."
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | offscreen-images": {
-    "message": "Prepričajte se, da uporabljate veljavne oznake`amp-img` za slike, ki se samodejno »leno« naložijo zunaj prvega vidnega območja. [Preberite več o tem](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)."
+    "message": "Poskrbite, da uporabljate oznake [`amp-img`](https://amp.dev/documentation/components/amp-img/?format=websites) za slike, ki se samodejno odloženo nalagajo. [Več o tem](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)."
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | render-blocking-resources": {
     "message": "Za [postavitve upodabljanj AMP na strani strežnika](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/) uporabite orodja, kot je [AMP Optimizer](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer)."
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | unminified-css": {
-    "message": "Preberite [dokumentacijo za AMP](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/) in se prepričajte, da so podprti vsi vaši slogi."
+    "message": "Preberite [dokumentacijo za AMP](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/) in se prepričajte, da so podprti vsi slogi."
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | uses-responsive-images": {
-    "message": "Element `amp-img` podpira atribut `srcset` za določanje, katera slikovna sredstva naj bodo uporabljena na podlagi velikosti zaslona.  [Preberite več o tem](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/art_direction/)."
-  },
-  "node_modules/lighthouse-stack-packs/packs/amp.js | uses-webp-images": {
-    "message": "Razmislite o tem, da bi vse komponente za `amp-img` prikazali v oblikah zapisa WebP, pri tem pa določili ustrezno rezervno možnost za druge brskalnike. [Preberite več o tem](https://amp.dev/documentation/components/amp-img/#example:-specifying-a-fallback-image)."
+    "message": "Komponenta [`amp-img`](https://amp.dev/documentation/components/amp-img/?format=websites) podpira atribut [`srcset`](https://web.dev/use-srcset-to-automatically-choose-the-right-image/) za določanje, katera slikovna sredstva naj bodo uporabljena na podlagi velikosti zaslona. [Več o tem](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/art_direction/)."
   },
   "node_modules/lighthouse-stack-packs/packs/angular.js | dom-size": {
     "message": "Če upodabljate zelo velike sezname, razmislite o uporabi navideznega drsenja s kompletom Component Dev Kit (CDK). [Preberite več o tem](https://web.dev/virtualize-lists-with-angular-cdk/)."
@@ -1950,7 +1995,7 @@
     "message": "Če uporabljate Angular CLI, poskrbite, da bodo delovne različice generirane v načinu za splošno razpoložljivost. [Preberite več o tem](https://angular.io/guide/deployment#enable-runtime-production-mode)."
   },
   "node_modules/lighthouse-stack-packs/packs/angular.js | unused-javascript": {
-    "message": "Če uporabljate Angular CLI, v gradnjo za splošno razpoložljivost vključite zemljevide izvorne kode za pregled svežnjev. [Preberite več o tem](https://angular.io/guide/deployment#inspect-the-bundles)."
+    "message": "Če uporabljate Angular CLI, v gradnjo za splošno razpoložljivost vključite zemljevide izvorne kode za pregled svežnjev. [Več o tem](https://angular.io/guide/deployment#inspect-the-bundles)."
   },
   "node_modules/lighthouse-stack-packs/packs/angular.js | uses-rel-preload": {
     "message": "Poti naložite vnaprej, da pospešite krmarjenje. [Preberite več o tem](https://web.dev/route-preloading-in-angular/)."
@@ -1959,91 +2004,91 @@
     "message": "Razmislite o uporabi orodja `BreakpointObserver` v kompletu Component Dev Kit (CDK) za upravljanje prekinitvenih točk posnetka. [Preberite več o tem](https://material.angular.io/cdk/layout/overview)."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | efficient-animated-content": {
-    "message": "Consider uploading your GIF to a service which will make it available to embed as an HTML5 video."
+    "message": "Razmislite o tem, da bi GIF naložili v storitev, prek katere bo na voljo za vdelavo kot videoposnetek v obliki HTML5."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | font-display": {
-    "message": "Specify `@font-display` when defining custom fonts in your theme."
+    "message": "Pri definiranju pisav po meri v temi določite `@font-display`."
+  },
+  "node_modules/lighthouse-stack-packs/packs/drupal.js | modern-image-formats": {
+    "message": "Razmislite o tem, da bi namestili in konfigurirali [modul za uporabo oblik zapisov slik WebP](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=webp&solrsort=iss_project_release_usage+desc&op=Search) na svojem spletnem mestu. Tovrstni moduli samodejno ustvarijo različico WebP naloženih slik in tako optimizirajo čase nalaganja."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | offscreen-images": {
-    "message": "Install [a Drupal module](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=im_vid_3%3A67&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=%22lazy+load%22&solrsort=iss_project_release_usage+desc&op=Search) that can leverage JavaScript or [Intersection Observer API](https://developers.google.com/web/updates/2016/04/intersectionobserver) lazy loading of images. Such modules provide the ability to defer any offscreen images to improve performance."
+    "message": "Namestite [modul sistema Drupal](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=im_vid_3%3A67&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=%22lazy+load%22&solrsort=iss_project_release_usage+desc&op=Search), ki lahko uporablja odloženo nalaganje slik. Taki moduli omogočajo odlog nalaganja slik, ki niso na zaslonu, za večjo učinkovitost delovanja."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | render-blocking-resources": {
-    "message": "Consider using a module to inline critical CSS and JavaScipt, or potentially load assets asynchronously via JavaScript such as the [Advanced CSS/JS Aggregation](https://www.drupal.org/project/advagg) module. Beware that optimizations provided by this module may break your site, so you will likely need to make code changes."
+    "message": "Razmislite o uporabi modula za vstavljanje kritičnega CSS-ja in JavaScripta ali potencialno asinhrono nalaganje elementov prek JavaScripta, kot je modul [Napredno združevanje za CSS/JS](https://www.drupal.org/project/advagg). Upoštevajte, da lahko optimizacije, ki jih ponuja ta modul, pokvarijo delovanje vašega spletnega mesta, zato boste verjetno morali spremeniti kodo."
   },
-  "node_modules/lighthouse-stack-packs/packs/drupal.js | time-to-first-byte": {
-    "message": "Themes, modules, and server specifications all contribute to server response time. Consider finding a more optimized theme, carefully selecting an optimization module, and/or upgrading your server. Your hosting servers should make use of PHP opcode caching, memory-caching to reduce database query times such as Redis or Memcached, as well as optimized application logic to prepare pages faster."
+  "node_modules/lighthouse-stack-packs/packs/drupal.js | server-response-time": {
+    "message": "Teme, moduli in strežniške specifikacije prispevajo k odzivnemu času strežnika. Razmislite o tem, da bi poiskali bolj optimizirano temo, skrbno izbrali optimizacijski modul in/ali nadgradili strežnik. Vaši gostiteljski strežniki bi morali izkoriščati predpomnjenje operativne kode, predpomnjenje pomnilnika za skrajšanje časa poizvedbe v zbirki podatkov (denimo programsko opremo Redis ali Memcached) ter tudi optimizirano logiko aplikacij za hitrejšo pripravo strani."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | total-byte-weight": {
-    "message": "Consider using [Responsive Image Styles](https://www.drupal.org/docs/8/mobile-guide/responsive-images-in-drupal-8) to reduce the size of images loaded on your page. If you are using Views to show multiple content items on a page, consider implementing pagination to limit the number of content items shown on a given page."
+    "message": "Razmislite o uporabi [slogov odzivnih slik](https://www.drupal.org/docs/8/mobile-guide/responsive-images-in-drupal-8) za zmanjšanje velikosti slik, naloženih na strani. Če za prikaz več vsebinskih elementov na strani uporabljate funkcijo Pogledi, razmislite o razdelitvi na več strani, da omejite število vsebinskih elementov, prikazanih na določeni strani."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | unminified-css": {
-    "message": "Ensure you have enabled \"Aggregate CSS files\" in the \"Administration » Configuration » Development\" page. You can also configure more advanced aggregation options through [additional modules](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=im_vid_3%3A123&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=css+aggregation&solrsort=iss_project_release_usage+desc&op=Search) to speed up your site by concatenating, minifying, and compressing your CSS styles."
+    "message": "Preverite, ali ste omogočili možnost »Združevanje datotek CSS« na strani »Skrbništvo » Konfiguracija » Razvoj«. V [dodatnih modulih](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=im_vid_3%3A123&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=css+aggregation&solrsort=iss_project_release_usage+desc&op=Search) lahko konfigurirate tudi naprednejše možnosti združevanja ter tako s sestavljanjem, pomanjševanjem in stiskanjem slogov za CSS pospešite svoje spletno mesto."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | unminified-javascript": {
-    "message": "Ensure you have enabled \"Aggregate JavaScript files\" in the \"Administration » Configuration » Development\" page. You can also configure more advanced aggregation options through [additional modules](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=im_vid_3%3A123&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=javascript+aggregation&solrsort=iss_project_release_usage+desc&op=Search) to speed up your site by concatenating, minifying, and compressing your JavaScript assets."
+    "message": "Preverite, ali ste omogočili možnost »Združevanje datotek JavaScript« na strani »Skrbništvo » Konfiguracija » Razvoj«. V [dodatnih modulih](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=im_vid_3%3A123&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=javascript+aggregation&solrsort=iss_project_release_usage+desc&op=Search) lahko konfigurirate tudi naprednejše možnosti združevanja ter tako s sestavljanjem, pomanjševanjem in stiskanjem elementov JavaScript pospešite svoje spletno mesto."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | unused-css-rules": {
-    "message": "Consider removing unused CSS rules and only attach the needed Drupal libraries to the relevant page or component in a page. See the [Drupal documentation link](https://www.drupal.org/docs/8/creating-custom-modules/adding-stylesheets-css-and-javascript-js-to-a-drupal-8-module#library) for details. To identify attached libraries that are adding extraneous CSS, try running [code coverage](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) in Chrome DevTools. You can identify the theme/module responsible from the URL of the stylesheet when CSS aggregation is disabled in your Drupal site. Look out for themes/modules that have many stylesheets in the list which have a lot of red in code coverage. A theme/module should only enqueue a stylesheet if it is actually used on the page."
+    "message": "Razmislite o tem, da bi odstranili neuporabljena pravila za CSS in potrebne knjižnice sistema Drupal priložili samo ustrezni strani ali komponenti na strani. Za podrobnosti si oglejte [povezavo do dokumentacije za Drupal](https://www.drupal.org/docs/8/creating-custom-modules/adding-stylesheets-css-and-javascript-js-to-a-drupal-8-module#library). Če želite ugotoviti, katere priložene knjižnice dodajo zunanji CSS, poskušajte z orodji Chrome DevTools izvesti [preizkus pokritosti kode](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage). Ustrezno temo/modul lahko ugotovite na podlagi URL-ja datoteke s slogi, ko je združevanje za CSS onemogočeno na vašem spletnem mestu sistema Drupal. Bodite pozorni na teme/module, ki imajo na seznamu mnogo datotek s slogi, ki imajo v pokritosti kode veliko rdeče obarvanega območja. Datoteka s slogi naj bo v čakalni vrsti teme/modula samo, če je dejansko uporabljena na strani."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | unused-javascript": {
-    "message": "Consider removing unused JavaScipt assets and only attach the needed Drupal libraries to the relevant page or component in a page. See the [Drupal documentation link](https://www.drupal.org/docs/8/creating-custom-modules/adding-stylesheets-css-and-javascript-js-to-a-drupal-8-module#library) for details. To identify attached libraries that are adding extraneous JavaScript, try running [code coverage](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) in Chrome DevTools. You can identify the theme/module responsible from the URL of the script when JavaScript aggregation is disabled in your Drupal site. Look out for themes/modules that have many scripts in the list which have a lot of red in code coverage. A theme/module should only enqueue a script if it is actually used on the page."
+    "message": "Razmislite o tem, da bi odstranili neuporabljene elemente JavaScipt in potrebne knjižnice sistema Drupal priložili samo ustrezni strani ali komponenti na strani. Za podrobnosti si oglejte [povezavo do dokumentacije za Drupal](https://www.drupal.org/docs/8/creating-custom-modules/adding-stylesheets-css-and-javascript-js-to-a-drupal-8-module#library). Če želite ugotoviti, katere priložene knjižnice dodajo zunanji JavaScript, poskušajte z orodji Chrome DevTools izvesti [preizkus pokritosti kode](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage). Ustrezno temo/modul lahko ugotovite na podlagi URL-ja skripta, ko je združevanje za JavaScript onemogočeno na vašem spletnem mestu sistema Drupal. Bodite pozorni na teme/module, ki imajo na seznamu mnogo skriptov, ki imajo v pokritosti kode veliko rdeče obarvanega območja. Skript naj bo v čakalni vrsti teme/modula samo, če je dejansko uporabljen na strani."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | uses-long-cache-ttl": {
-    "message": "Set the \"Browser and proxy cache maximum age\" in the \"Administration » Configuration » Development\" page. Read about [Drupal cache and optimizing for performance](https://www.drupal.org/docs/7/managing-site-performance-and-scalability/caching-to-improve-performance/caching-overview#s-drupal-performance-resources)."
+    "message": "Nastavite možnost »Najvišja starost predpomnilnika strežnika proxy in brskalnika« na strani »Skrbništvo » Konfiguracija » Razvoj«. Preberite več o [predpomnilniku sistema Drupal in optimiziranju za učinkovito delovanje](https://www.drupal.org/docs/7/managing-site-performance-and-scalability/caching-to-improve-performance/caching-overview#s-drupal-performance-resources)."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | uses-optimized-images": {
-    "message": "Consider using [a module](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=im_vid_3%3A123&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=optimize+images&solrsort=iss_project_release_usage+desc&op=Search) that automatically optimizes and reduces the size of images uploaded through the site while retaining quality. Also, ensure you are using the native [Responsive Image Styles](https://www.drupal.org/docs/8/mobile-guide/responsive-images-in-drupal-8) provided from Drupal (available in Drupal 8 and above) for all images rendered on the site."
+    "message": "Razmislite o uporabi [modula](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=im_vid_3%3A123&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=optimize+images&solrsort=iss_project_release_usage+desc&op=Search), ki samodejno optimizira in zmanjša velikost slik, naloženih prek spletnega mesta, hkrati pa ohrani kakovost. Preverite tudi, ali uporabljate izvorne [sloge odzivnih slik](https://www.drupal.org/docs/8/mobile-guide/responsive-images-in-drupal-8), ki jih zagotavlja sistem Drupal (na voljo v sistemu Drupal 8 in novejšem) za vse slike, upodobljene na spletnem mestu."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | uses-rel-preconnect": {
-    "message": "Preconnect or dns-prefetch resource hints can be added by installing and configuring [a module](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=dns-prefetch&solrsort=iss_project_release_usage+desc&op=Search) that provides facilities for user agent resource hints."
+    "message": "Dodate lahko namige za vnaprejšnje vzpostavljanje povezave in za vire za vnaprejšnje nalaganje DNS, in sicer tako, da namestite in konfigurirate [modul](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=dns-prefetch&solrsort=iss_project_release_usage+desc&op=Search), ki zagotavljajo sredstva za namige za vire uporabnikovega posrednika."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | uses-responsive-images": {
-    "message": "Ensure that you are using the native [Responsive Image Styles](https://www.drupal.org/docs/8/mobile-guide/responsive-images-in-drupal-8) provided from Drupal (available in Drupal 8 and above). Use the Responsive Image Styles when rendering image fields through view modes, views, or images uploaded through the WYSIWYG editor."
-  },
-  "node_modules/lighthouse-stack-packs/packs/drupal.js | uses-webp-images": {
-    "message": "Consider installing and configuring [a module to leverage WebP image formats](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=webp&solrsort=iss_project_release_usage+desc&op=Search) in your site. Such modules would automatically generate a WebP version of your uploaded images to optimize loading times."
+    "message": "Preverite, ali uporabljate izvorne [sloge odzivnih slik](https://www.drupal.org/docs/8/mobile-guide/responsive-images-in-drupal-8), ki jih zagotavlja sistem Drupal (na voljo v sistemu Drupal 8 in novejšem). Sloge odzivnih slik uporabite pri upodabljanju slikovnih polj v načinih ogleda, ogledih ali slikah, naloženih prek urejevalnika WYSIWYG."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | efficient-animated-content": {
-    "message": "Consider uploading your GIF to a service which will make it available to embed as an HTML5 video."
+    "message": "Razmislite o tem, da bi GIF naložili v storitev, prek katere bo na voljo za vdelavo kot videoposnetek v obliki HTML5."
+  },
+  "node_modules/lighthouse-stack-packs/packs/joomla.js | modern-image-formats": {
+    "message": "Razmislite o tem, da bi uporabili [vtičnik](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=webp) ali storitev, ki naložene slike samodejno pretvori v optimalne oblike."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | offscreen-images": {
-    "message": "Install a [lazy-load Joomla plugin](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=lazy%20loading) that provides the ability to defer any offscreen images, or switch to a template that provides that functionality. Starting with Joomla 4.0 the core is shipping an dedicated lazyloading plugin please enable the \"Content - Lazy Loading Images\" plugin. Also consider using [an AMP plugin](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=amp)."
+    "message": "Namestite [vtičnik za odloženo nalaganje za sistem Joomla](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=lazy%20loading), ki omogoča odlog nalaganja slik, ki niso na zaslonu, ali preidite na predlogo, ki ponuja to funkcijo. Od različice sistema Joomla 4.0 naprej bodo vse nove slike [samodejno](https://github.com/joomla/joomla-cms/pull/30748) dobile atribut `loading` iz jedra."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | render-blocking-resources": {
-    "message": "There are a number of Joomla plugins that can help you [inline critical assets](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance) or [defer less important resources](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance). Beware that optimizations provided by these plugins may break features of your templates or plugins, so you will need to test these thoroughly."
+    "message": "Na voljo je več vtičnikov za program Joomla, ki vam lahko pomagajo [uvrstiti nujna sredstva](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance) ali [odložiti manj pomembna sredstva](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance). Upoštevajte, da lahko optimizacije, ki jih ponujajo ti vtičniki, pokvarijo delovanje funkcij vaših predlog ali vtičnikov, zato jih boste verjetno morali temeljito preizkusiti."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | server-response-time": {
-    "message": "Templates, extensions, and server specifications all contribute to server response time. Consider finding a more optimized template, carefully selecting an optimization extension, and/or upgrading your server."
+    "message": "Predloge, razširitve in strežniške specifikacije prispevajo k odzivnemu času strežnika. Razmislite o tem, da bi poiskali bolj optimizirano predlogo, skrbno izbrali optimizacijsko razširitev in/ali nadgradili strežnik."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | total-byte-weight": {
-    "message": "Consider showing excerpts in your article categories (e.g. via the read more link), reducing the number of articles shown on a given page, breaking your long posts into multiple pages, or using a plugin to lazy-load comments."
+    "message": "Razmislite o tem, da bi v kategorijah člankov prikazali izvlečke (npr. s povezavo »več o tem«), zmanjšali število člankov, prikazanih na posamezni strani, daljše objave razdelili na več strani ali uporabili vtičnik za odloženo nalaganje komentarjev."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | unminified-css": {
-    "message": "A number of [Joomla extensions](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance) can speed up your site by concatenating, minifying, and compressing your css styles. There are also templates that provide this functionality."
+    "message": "Na voljo je več [razširitev za program Joomla](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance), ki lahko s sestavljanjem, pomanjševanjem in stiskanjem slogov za CSS pospešijo vaše spletno mesto. Prav tako so na voljo predloge, ki zagotavljajo to funkcijo."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | unminified-javascript": {
-    "message": "A number of [Joomla extensions](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance) can speed up your site by concatenating, minifying, and compressing your scripts. There are also templates that provide this functionality."
+    "message": "Na voljo je več [razširitev za program Joomla](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance), ki lahko s sestavljanjem, pomanjševanjem in stiskanjem skriptov pospešijo vaše spletno mesto. Prav tako so na voljo predloge, ki zagotavljajo to funkcijo."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | unused-css-rules": {
-    "message": "Consider reducing, or switching, the number of [Joomla extensions](https://extensions.joomla.org/) loading unused CSS in your page. To identify extensions that are adding extraneous CSS, try running [code coverage](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) in Chrome DevTools. You can identify the theme/plugin responsible from the URL of the stylesheet. Look out for plugins that have many stylesheets in the list which have a lot of red in code coverage. A plugin should only enqueue a stylesheet if it is actually used on the page."
+    "message": "Razmislite o tem, da bi zmanjšali ali spremenili število [razširitev za program Joomla](https://extensions.joomla.org/), ki na vaši strani nalagajo neuporabljen CSS. Če želite ugotoviti, katere razširitve dodajo zunanji CSS, poskušajte z orodji Chrome DevTools izvesti [preizkus pokritosti kode](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage). Ustrezen vtičnik/temo lahko ugotovite na podlagi URL-ja datoteke s slogi. Bodite pozorni na vtičnike, ki imajo na seznamu mnogo datotek s slogi, ki imajo v pokritosti kode veliko rdeče obarvanega območja. Datoteka s slogi naj bo v čakalni vrsti vtičnika samo, če je dejansko uporabljena na strani."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | unused-javascript": {
-    "message": "Consider reducing, or switching, the number of [Joomla extensions](https://extensions.joomla.org/) loading unused JavaScript in your page. To identify plugins that are adding extraneous JS, try running [code coverage](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) in Chrome DevTools. You can identify the extension responsible from the URL of the script. Look out for extensions that have many scripts in the list which have a lot of red in code coverage. An extension should only enqueue a script if it is actually used on the page."
+    "message": "Razmislite o tem, da bi zmanjšali ali spremenili število [razširitev za program Joomla](https://extensions.joomla.org/), ki na vaši strani nalagajo neuporabljen JavaScript. Če želite ugotoviti, kateri vtičniki dodajo zunanji JS, poskušajte z orodji Chrome DevTools izvesti [preizkus pokritosti kode](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage). Ustrezno razširitev lahko ugotovite na podlagi URL-ja skripta. Bodite pozorni na razširitve, ki imajo na seznamu mnogo skriptov, ki imajo v pokritosti kode veliko rdeče obarvanega območja. Skript naj bo v čakalni vrsti razširitve samo, če je dejansko uporabljen na strani."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | uses-long-cache-ttl": {
-    "message": "Read about [Browser Caching in Joomla](https://docs.joomla.org/Cache)."
+    "message": "Preberite o [predpomnjenju brskalnika v programu Joomla](https://docs.joomla.org/Cache)."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | uses-optimized-images": {
-    "message": "Consider using an [image optimization plugin](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance) that compresses your images while retaining quality."
+    "message": "Razmislite o tem, da bi uporabili [vtičnik za optimizacijo slik](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance), ki slike stisne, a ohrani kakovost."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | uses-responsive-images": {
-    "message": "Consider using a [responsive images plugin](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=responsive%20images) to use responsive images in your content."
+    "message": "Razmislite o tem, da bi uporabili [vtičnik za odzivne slike](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=responsive%20images), ki omogoča uporabo odzivnih slik v vsebini."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | uses-text-compression": {
-    "message": "You can enable text compression by enabling Gzip Page Compression in Joomla (System > Global configuration > Server)."
-  },
-  "node_modules/lighthouse-stack-packs/packs/joomla.js | uses-webp-images": {
-    "message": "Consider using a [plugin](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=webp) or service that will automatically convert your uploaded images to the optimal formats."
+    "message": "Stiskanje besedila lahko omogočite tako, da omogočite stiskanje strani Gzip v programu Joomla (Sistem > Globalna konfiguracija > Strežnik)."
   },
   "node_modules/lighthouse-stack-packs/packs/magento.js | critical-request-chains": {
     "message": "Če JavaScriptnih sredstev ne boste združili v sveženj, razmislite o uporabi orodja [baler](https://github.com/magento/baler)."
@@ -2054,17 +2099,20 @@
   "node_modules/lighthouse-stack-packs/packs/magento.js | font-display": {
     "message": "Pri [definiranju pisav po meri](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/css-topics/using-fonts.html) določite `@font-display`."
   },
+  "node_modules/lighthouse-stack-packs/packs/magento.js | modern-image-formats": {
+    "message": "Razmislite o tem, da na tržnici [Magento Marketplace](https://marketplace.magento.com/catalogsearch/result/?q=webp) poiščete različne razširitve drugih ponudnikov, s katerimi lahko izkoristite novejše oblike zapisa slik."
+  },
   "node_modules/lighthouse-stack-packs/packs/magento.js | offscreen-images": {
     "message": "Razmislite o tem, da bi svoje predloge izdelkov in kataloga spremenili tako, da uporabljajo funkcijo spletne platforme za [»leno« nalaganje](https://web.dev/native-lazy-loading)."
   },
-  "node_modules/lighthouse-stack-packs/packs/magento.js | time-to-first-byte": {
+  "node_modules/lighthouse-stack-packs/packs/magento.js | server-response-time": {
     "message": "Uporabite Magentovo [integracijo za Varnish](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html)."
   },
   "node_modules/lighthouse-stack-packs/packs/magento.js | unminified-css": {
     "message": "V nastavitvah za razvijalce v svoji trgovini omogočite možnost »Pomanjšaj datoteke CSS«. [Preberite več o tem](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)."
   },
   "node_modules/lighthouse-stack-packs/packs/magento.js | unminified-javascript": {
-    "message": "Use [Terser](https://www.npmjs.com/package/terser) to minify all JavaScript assets from static content deployment, and disable the built-in minification feature."
+    "message": "Uporabite [Terser](https://www.npmjs.com/package/terser) za pomanjšanje vseh JavaScriptnih sredstev iz statičnega uvajanja vsebine ter onemogočite vgrajeno funkcijo za pomanjšanje."
   },
   "node_modules/lighthouse-stack-packs/packs/magento.js | unused-javascript": {
     "message": "Onemogočite Magentovo vgrajeno [združevanje JavaScripta v svežnje](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html)."
@@ -2078,23 +2126,62 @@
   "node_modules/lighthouse-stack-packs/packs/magento.js | uses-rel-preload": {
     "message": "Oznake `<link rel=preload>` lahko dodate tako, da [spremenite postavitev teme](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
   },
-  "node_modules/lighthouse-stack-packs/packs/magento.js | uses-webp-images": {
-    "message": "Razmislite o tem, da na tržnici [Magento Marketplace](https://marketplace.magento.com/catalogsearch/result/?q=webp) poiščete različne razširitve drugih ponudnikov, s katerimi lahko izkoristite novejše oblike zapisa slik."
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | efficient-animated-content": {
+    "message": "Za hitrejše nalaganje spletnih strani lahko [animirane slike GIF nadomestite z videoposnetki](https://web.dev/replace-gifs-with-videos/), razmislite pa tudi o uporabi sodobnih oblik datotek, kot je [WebM](https://web.dev/replace-gifs-with-videos/#create-webm-videos) ali [AV1](https://developers.google.com/web/updates/2018/09/chrome-70-media-updates#av1-decoder), da učinkovitost stiskanja izboljšate za več kot 30 % v primerjavi s trenutno najboljšim videokodekom VP9."
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | modern-image-formats": {
+    "message": "Razmislite o uporabi [vtičnika](https://octobercms.com/plugins?search=image) ali storitve, ki naložene slike samodejno pretvori v optimalne oblike. [Slike WebP brez izgub](https://developers.google.com/speed/webp) so 26 % manjše od slik PNG in 25–34 % manjše od primerljivih slik JPEG pri enakovrednem indeksu kakovosti SSIM. Še ena sodobna oblika zapisa slike, o kateri je vredno razmisliti, je [AVIF](https://jakearchibald.com/2020/avif-has-landed/)."
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | offscreen-images": {
+    "message": "Razmislite o namestitvi [vtičnika za odloženo nalaganje](https://octobercms.com/plugins?search=lazy), ki omogoča odlog nalaganja slik, ki niso na zaslonu, ali preidite na temo, ki ponuja to funkcijo. Razmislite tudi o uporabi [vtičnika AMP](https://octobercms.com/plugins?search=Accelerated+Mobile+Pages)."
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | render-blocking-resources": {
+    "message": "Na voljo so številni vtičniki, ki pomagajo [uvrstiti nujna sredstva](https://octobercms.com/plugins?search=css). Ti vtičniki lahko pokvarijo delovanje drugih vtičnikov, zato jih morate temeljito preizkusiti."
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | server-response-time": {
+    "message": "Teme, vtičniki in strežniške specifikacije prispevajo k odzivnemu času strežnika. Razmislite o tem, da bi poiskali bolj optimizirano temo, skrbno izbrali optimizacijski vtičnik in/ali nadgradili strežnik. Sistem za upravljanje vsebine October razvijalcem omogoča tudi uporabo elementa [`Queues`](https://octobercms.com/docs/services/queues), ki omogoča odlog obdelave zamudnega opravila, kot je pošiljanje e-pošte. To znatno pospeši spletne zahteve."
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | total-byte-weight": {
+    "message": "Razmislite o tem, da bi na seznamih objav prikazali izvlečke (npr. z gumbom `show more`), zmanjšali število objav, prikazanih na posamezni spletni strani, daljše objave razdelili na več spletnih strani ali uporabili vtičnik za odloženo nalaganje komentarjev."
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | unminified-css": {
+    "message": "Na voljo je več [vtičnikov](https://octobercms.com/plugins?search=css), ki lahko s spojitvijo, pomanjševanjem in stiskanjem slogov pospešijo spletno mesto. Razvoj je mogoče pospešiti z uporabo postopka gradnje, ki to pomanjševanje izvede vnaprej."
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | unminified-javascript": {
+    "message": "Na voljo je več [vtičnikov](https://octobercms.com/plugins?search=javascript), ki lahko s spojitvijo, pomanjševanjem in stiskanjem skriptov pospešijo spletno mesto. Razvoj je mogoče pospešiti z uporabo postopka gradnje, ki to pomanjševanje izvede vnaprej."
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | unused-css-rules": {
+    "message": "Razmislite o pregledu [vtičnikov](https://octobercms.com/plugins), ki na spletnem mestu nalagajo neuporabljen CSS. Če želite ugotoviti, kateri vtičniki dodajo nepotrebni CSS, z orodji za razvijalce v Chromu izvedite [preizkus pokritosti kode](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage). Ustrezno temo/vtičnik lahko ugotovite na podlagi URL-ja datoteke s slogi. Bodite pozorni na vtičnike z več datotekami s slogi, ki imajo v pokritosti kode veliko rdeče obarvanega območja. Vtičnik naj doda datoteko s slogi samo, če je dejansko uporabljena na spletni strani."
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | unused-javascript": {
+    "message": "Razmislite o pregledu [vtičnikov](https://octobercms.com/plugins?search=javascript), ki na spletni strani nalagajo neuporabljen JavaScript. Če želite ugotoviti, kateri vtičniki dodajo nepotrebni JavaScript, z orodji za razvijalce v Chromu izvedite [preizkus pokritosti kode](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage). Ustrezno temo/vtičnik lahko ugotovite na podlagi URL-ja skripta. Bodite pozorni na vtičnike z več skripti, ki imajo v pokritosti kode veliko rdeče obarvanega območja. Vtičnik naj doda skript samo, če je dejansko uporabljen na spletni strani."
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | uses-long-cache-ttl": {
+    "message": "Preberite več o [preprečevanju nepotrebnih omrežnih zahtev s predpomnilnikom HTTP](https://web.dev/http-cache/#caching-checklist). Na voljo je več [vtičnikov](https://octobercms.com/plugins?search=Caching), s katerimi je mogoče pospešiti predpomnjenje."
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | uses-optimized-images": {
+    "message": "Razmislite o uporabi [vtičnika za optimizacijo slik](https://octobercms.com/plugins?search=image), ki slike stisne, a ohrani kakovost."
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | uses-responsive-images": {
+    "message": "Slike naložite neposredno v program za upravljanje predstavnosti in tako zagotovite, da so na voljo potrebne velikosti slik. Razmislite o uporabi [filtra za spreminjanje velikosti](https://octobercms.com/docs/markup/filter-resize) ali [vtičnika za spreminjanje velikosti slik](https://octobercms.com/plugins?search=image), da zagotovite uporabo optimalnih velikosti slik."
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | uses-text-compression": {
+    "message": "Omogočite stiskanje besedila v konfiguraciji spletnega strežnika."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | dom-size": {
-    "message": "Consider using a “windowing” library like `react-window` to minimize the number of DOM nodes created if you are rendering many repeated elements on the page. [Learn more](https://web.dev/virtualize-long-lists-react-window/). Also, minimize unnecessary re-renders using [shouldComponentUpdate](https://reactjs.org/docs/optimizing-performance.html#shouldcomponentupdate-in-action), [PureComponent](https://reactjs.org/docs/react-api.html#reactpurecomponent), or [React.memo](https://reactjs.org/docs/react-api.html#reactmemo) and [skip effects](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects) only until certain dependencies have changed if you are using the Effect hook to improve runtime performance."
+    "message": "Razmislite o uporabi knjižnice prikaza v oknu, kot je `react-window`, da zmanjšate število ustvarjenih vozlišč DOM, če na strani upodabljate več ponovljenih elementov. [Več o tem](https://web.dev/virtualize-long-lists-react-window/). Poleg tega zmanjšajte število nepotrebnih vnovičnih upodobitev z možnostmi [`shouldComponentUpdate`](https://reactjs.org/docs/optimizing-performance.html#shouldcomponentupdate-in-action), [`PureComponent`](https://reactjs.org/docs/react-api.html#reactpurecomponent) ali [`React.memo`](https://reactjs.org/docs/react-api.html#reactmemo) in [preskočite učinke](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects), dokler se ne spremenijo samo določene odvisnosti, če uporabljate rutino `Effect` za izboljšanje učinkovitosti delovanja."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | redirects": {
     "message": "Če uporabljate React Router, karseda omejite uporabo komponente `<Redirect>` za[krmarjenje po poteh](https://reacttraining.com/react-router/web/api/Redirect)."
   },
-  "node_modules/lighthouse-stack-packs/packs/react.js | time-to-first-byte": {
+  "node_modules/lighthouse-stack-packs/packs/react.js | server-response-time": {
     "message": "Če na strežniški strani upodabljate morebitne komponente React, razmislite o uporabi elementa `renderToNodeStream()` ali `renderToStaticNodeStream()`, da bi odjemalcu dovolili prejemanje in hidriranje različnih delov oznak, namesto vseh hkrati. [Preberite več o tem](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | unminified-css": {
-    "message": "Če vaš sistem gradnje samodejno pomanjša datoteke CSS, se prepričajte, da uvajate gradnjo aplikacije za splošno razpoložljivost. To lahko preverite z razširitvijo React Developer Tools. [Preberite več o tem](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
+    "message": "Če vaš sistem gradnje samodejno pomanjša datoteke CSS, se prepričajte, da uvajate gradnjo aplikacije za splošno razpoložljivost. To lahko preverite z razširitvijo React Developer Tools. [Več o tem](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | unminified-javascript": {
-    "message": "Če vaš sistem gradnje samodejno pomanjša datoteke JS, se prepričajte, da uvajate gradnjo aplikacije za splošno razpoložljivost. To lahko preverite z razširitvijo React Developer Tools. [Preberite več o tem](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
+    "message": "Če vaš sistem gradnje samodejno pomanjša datoteke JS, se prepričajte, da uvajate gradnjo aplikacije za splošno razpoložljivost. To lahko preverite z razširitvijo React Developer Tools. [Več o tem](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | unused-javascript": {
     "message": "Če ne upodabljate na strani strežnika, [razdelite JavaScriptne svežnje](https://web.dev/code-splitting-suspense/) z elementom `React.lazy()`. Kodo sicer razdelite s knjižnico drugega ponudnika, kot je [loadable-components](https://www.smooth-code.com/open-source/loadable-components/docs/getting-started/)."
@@ -2103,7 +2190,10 @@
     "message": "Uporabite React DevTools Profiler, ki uporablja API za Profiler API, za merjenje učinkovitosti delovanja upodabljanja komponent. [Več o tem](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)"
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | efficient-animated-content": {
-    "message": "Consider uploading your GIF to a service which will make it available to embed as an HTML5 video."
+    "message": "Razmislite o tem, da bi GIF naložili v storitev, prek katere bo na voljo za vdelavo kot videoposnetek v obliki HTML5."
+  },
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | modern-image-formats": {
+    "message": "Razmislite o tem, da bi uporabili [vtičnik](https://wordpress.org/plugins/search/convert+webp/) ali storitev, ki naložene slike samodejno pretvori v optimalne oblike."
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | offscreen-images": {
     "message": "Namestite [vtičnik za postopno nalaganje za WordPress](https://wordpress.org/plugins/search/lazy+load/) ki omogoča odlog nalaganja slik, ki niso na zaslonu, ali preidite na temo, ki ponuja to funkcijo. Razmislite tudi o uporabi [vtičnika AMP](https://wordpress.org/plugins/amp/)."
@@ -2111,7 +2201,7 @@
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | render-blocking-resources": {
     "message": "Na voljo je več vtičnikov za WordPress, ki vam lahko pomagajo [uvrstiti nujna sredstva](https://wordpress.org/plugins/search/critical+css/) ali [odložiti manj pomembna sredstva](https://wordpress.org/plugins/search/defer+css+javascript/). Upoštevajte, da lahko optimizacije, ki jih ponujajo ti vtičniki, pokvarijo delovanje funkcij vaših tem ali vtičnikov, zato boste verjetno morali spremeniti kodo."
   },
-  "node_modules/lighthouse-stack-packs/packs/wordpress.js | time-to-first-byte": {
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | server-response-time": {
     "message": "Teme, vtičniki in strežniške specifikacije prispevajo k odzivnemu času strežnika. Razmislite o tem, da bi poiskali bolj optimizirano temo, skrbno izbrali optimizacijski vtičnik in/ali nadgradili strežnik."
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | total-byte-weight": {
@@ -2141,7 +2231,142 @@
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | uses-text-compression": {
     "message": "Stiskanje besedila lahko omogočite v konfiguraciji spletnega strežnika."
   },
-  "node_modules/lighthouse-stack-packs/packs/wordpress.js | uses-webp-images": {
-    "message": "Consider using a [plugin](https://wordpress.org/plugins/search/convert+webp/) or service that will automatically convert your uploaded images to the optimal formats."
+  "report/renderer/util.js | calculatorLink": {
+    "message": "Oglejte si kalkulator."
+  },
+  "report/renderer/util.js | crcInitialNavigation": {
+    "message": "Začetno krmarjenje"
+  },
+  "report/renderer/util.js | crcLongestDurationLabel": {
+    "message": "Največja zakasnitev kritične poti:"
+  },
+  "report/renderer/util.js | dropdownCopyJSON": {
+    "message": "Kopiraj JSON"
+  },
+  "report/renderer/util.js | dropdownDarkTheme": {
+    "message": "Preklop temne teme"
+  },
+  "report/renderer/util.js | dropdownPrintExpanded": {
+    "message": "Tiskanje razširjenega poročila"
+  },
+  "report/renderer/util.js | dropdownPrintSummary": {
+    "message": "Tiskanje povzetka"
+  },
+  "report/renderer/util.js | dropdownSaveGist": {
+    "message": "Shrani kot Gist"
+  },
+  "report/renderer/util.js | dropdownSaveHTML": {
+    "message": "Shrani kot HTML"
+  },
+  "report/renderer/util.js | dropdownSaveJSON": {
+    "message": "Shrani kot JSON"
+  },
+  "report/renderer/util.js | dropdownViewer": {
+    "message": "Odpri v pregledovalniku"
+  },
+  "report/renderer/util.js | errorLabel": {
+    "message": "Napaka"
+  },
+  "report/renderer/util.js | errorMissingAuditInfo": {
+    "message": "Napaka sporočila: ni podatkov o pregledu"
+  },
+  "report/renderer/util.js | footerIssue": {
+    "message": "Prijavi težavo"
+  },
+  "report/renderer/util.js | labDataTitle": {
+    "message": "Laboratorijski podatki"
+  },
+  "report/renderer/util.js | lsPerformanceCategoryDescription": {
+    "message": "Analiza orodja [Lighthouse](https://developers.google.com/web/tools/lighthouse/) trenutne strani v emuliranem mobilnem omrežju. Vrednosti so ocenjene in lahko odstopajo."
+  },
+  "report/renderer/util.js | manualAuditsGroupTitle": {
+    "message": "Dodatni elementi za ročno preverjanje"
+  },
+  "report/renderer/util.js | notApplicableAuditsGroupTitle": {
+    "message": "Se ne uporablja"
+  },
+  "report/renderer/util.js | opportunityResourceColumnLabel": {
+    "message": "Priložnost"
+  },
+  "report/renderer/util.js | opportunitySavingsColumnLabel": {
+    "message": "Ocenjeni prihranek"
+  },
+  "report/renderer/util.js | passedAuditsGroupTitle": {
+    "message": "Uspešni pregledi"
+  },
+  "report/renderer/util.js | runtimeDesktopEmulation": {
+    "message": "Emulirano namizje"
+  },
+  "report/renderer/util.js | runtimeMobileEmulation": {
+    "message": "Emulirana naprava Moto G4"
+  },
+  "report/renderer/util.js | runtimeNoEmulation": {
+    "message": "Brez emulacije"
+  },
+  "report/renderer/util.js | runtimeSettingsAxeVersion": {
+    "message": "Različica knjižnice Axe"
+  },
+  "report/renderer/util.js | runtimeSettingsBenchmark": {
+    "message": "Zmogljivost CPE-ja/pomnilnika"
+  },
+  "report/renderer/util.js | runtimeSettingsCPUThrottling": {
+    "message": "Zaviranje CPE-ja"
+  },
+  "report/renderer/util.js | runtimeSettingsChannel": {
+    "message": "Kanal"
+  },
+  "report/renderer/util.js | runtimeSettingsDevice": {
+    "message": "Naprava"
+  },
+  "report/renderer/util.js | runtimeSettingsFetchTime": {
+    "message": "Čas pridobitve"
+  },
+  "report/renderer/util.js | runtimeSettingsNetworkThrottling": {
+    "message": "Omejevanje omrežja"
+  },
+  "report/renderer/util.js | runtimeSettingsTitle": {
+    "message": "Nastavitve časa izvajanja"
+  },
+  "report/renderer/util.js | runtimeSettingsUA": {
+    "message": "Uporabnikov posrednik (gostitelj)"
+  },
+  "report/renderer/util.js | runtimeSettingsUANetwork": {
+    "message": "Uporabnikov posrednik (omrežje)"
+  },
+  "report/renderer/util.js | runtimeSettingsUrl": {
+    "message": "URL"
+  },
+  "report/renderer/util.js | runtimeUnknown": {
+    "message": "Neznano"
+  },
+  "report/renderer/util.js | showRelevantAudits": {
+    "message": "Prikaz revizij, pomembnih za to:"
+  },
+  "report/renderer/util.js | snippetCollapseButtonLabel": {
+    "message": "Strni delček"
+  },
+  "report/renderer/util.js | snippetExpandButtonLabel": {
+    "message": "Razširi delček"
+  },
+  "report/renderer/util.js | thirdPartyResourcesLabel": {
+    "message": "Prikaži sredstva drugih ponudnikov"
+  },
+  "report/renderer/util.js | throttlingProvided": {
+    "message": "Zagotavlja okolje"
+  },
+  "report/renderer/util.js | toplevelWarningsMessage": {
+    "message": "Na to izvedbo storitve Lighthouse so vplivale težave:"
+  },
+  "report/renderer/util.js | varianceDisclaimer": {
+    "message": "Vrednosti so ocenjene in lahko odstopajo. [Rezultat uspešnosti se izračuna](https://web.dev/performance-scoring/) neposredno iz teh meritev."
+  },
+  "report/renderer/util.js | viewTreemapLabel": {
+    "message": "Ogled drevesnega zemljevida"
+  },
+  "report/renderer/util.js | warningAuditsGroupTitle": {
+    "message": "Pregledi so bili uspešno opravljeni, vendar z opozorili"
+  },
+  "report/renderer/util.js | warningHeader": {
+    "message": "Opozorila: "
   }
 }

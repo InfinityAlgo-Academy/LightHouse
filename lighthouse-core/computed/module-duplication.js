@@ -15,7 +15,7 @@ class ModuleDuplication {
   /**
    * @param {string} source
    */
-  static _normalizeSource(source) {
+  static normalizeSource(source) {
     // Trim trailing question mark - b/c webpack.
     source = source.replace(/\?$/, '');
 
@@ -75,7 +75,7 @@ class ModuleDuplication {
 
   /**
    * @param {LH.Artifacts} artifacts
-   * @param {LH.Audit.Context} context
+   * @param {LH.Artifacts.ComputedContext} context
    */
   static async compute_(artifacts, context) {
     const bundles = await JsBundles.request(artifacts, context);
@@ -91,6 +91,8 @@ class ModuleDuplication {
 
     // Determine size of each `sources` entry.
     for (const {rawMap, sizes} of bundles) {
+      if ('errorMessage' in sizes) continue;
+
       /** @type {SourceData[]} */
       const sourceDataArray = [];
       sourceDatasMap.set(rawMap, sourceDataArray);
@@ -101,7 +103,7 @@ class ModuleDuplication {
         const sourceKey = (rawMap.sourceRoot || '') + rawMap.sources[i];
         const sourceSize = sizes.files[sourceKey];
         sourceDataArray.push({
-          source: ModuleDuplication._normalizeSource(rawMap.sources[i]),
+          source: ModuleDuplication.normalizeSource(rawMap.sources[i]),
           resourceSize: sourceSize,
         });
       }

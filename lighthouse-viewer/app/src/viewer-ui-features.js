@@ -1,19 +1,21 @@
 /**
- * Copyright 2017 The Lighthouse Authors. All Rights Reserved.
+ * @license Copyright 2017 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
 
-/* global ReportUIFeatures, ReportGenerator */
+/* global ReportGenerator */
 
-/** @typedef {import('../../../lighthouse-core/report/html/renderer/dom')} DOM */
+/** @typedef {import('../../../report/renderer/dom').DOM} DOM */
+
+import {ReportUIFeatures} from '../../../report/renderer/report-ui-features.js';
 
 /**
  * Extends ReportUIFeatures to add an (optional) ability to save to a gist and
  * generates the saved report from a browserified ReportGenerator.
  */
-class ViewerUIFeatures extends ReportUIFeatures {
+export class ViewerUIFeatures extends ReportUIFeatures {
   /**
    * @param {DOM} dom
    * @param {?function(LH.Result): void} saveGistCallback
@@ -33,7 +35,8 @@ class ViewerUIFeatures extends ReportUIFeatures {
 
     // Disable option to save as gist if no callback for saving.
     if (!this._saveGistCallback) {
-      const saveGistItem = this._dom.find('.lh-tools--gist', this._document);
+      const saveGistItem =
+        this._dom.find('.lh-tools__dropdown a[data-action="save-gist"]', this._document);
       saveGistItem.setAttribute('disabled', 'true');
     }
   }
@@ -58,13 +61,9 @@ class ViewerUIFeatures extends ReportUIFeatures {
       throw new Error('Cannot save this report as a gist');
     }
 
-    // Disable save-as-gist option after saving.
-    const saveGistItem = this._dom.find('.lh-tools--gist', this._document);
+    // Disable save-gist option after saving.
+    const saveGistItem =
+      this._dom.find('.lh-tools__dropdown a[data-action="save-gist"]', this._document);
     saveGistItem.setAttribute('disabled', 'true');
   }
-}
-
-// node export for testing.
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = ViewerUIFeatures;
 }

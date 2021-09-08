@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 /**
  * @license Copyright 2019 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -13,13 +14,13 @@
 /* eslint-disable no-console */
 
 const path = require('path');
+const cloneDeep = require('lodash.clonedeep');
 const yargs = require('yargs');
 const log = require('lighthouse-logger');
-
 const {runSmokehouse} = require('../smokehouse.js');
-const {server, serverForOffline} = require('../../fixtures/static-server.js');
+const {updateTestDefnFormat} = require('./back-compat-util.js');
 
-const coreTestDefnsPath = require.resolve('../test-definitions/core-tests.js');
+const coreTestDefnsPath = path.join(__dirname, '../test-definitions/core-tests.js');
 
 /**
  * Possible Lighthouse runners. Loaded dynamically so e.g. a CLI run isn't
@@ -46,12 +47,18 @@ function getDefinitionsToRun(allTestDefns, requestedIds, {invertMatch}) {
     console.log('Running ALL smoketests. Equivalent to:');
     console.log(usage);
   } else {
-    smokes = allTestDefns.filter(test => invertMatch !== requestedIds.includes(test.id));
+    smokes = allTestDefns.filter(test => {
+      // Include all tests that *include* requested id.
+      // e.g. a requested 'pwa' will match 'pwa-airhorner', 'pwa-caltrain', etc
+      let isRequested = requestedIds.some(requestedId => test.id.includes(requestedId));
+      if (invertMatch) isRequested = !isRequested;
+      return isRequested;
+    });
     console.log(`Running ONLY smoketests for: ${smokes.map(t => t.id).join(' ')}\n`);
   }
 
   const unmatchedIds = requestedIds.filter(requestedId => {
-    return !allTestDefns.map(t => t.id).includes(requestedId);
+    return !allTestDefns.map(t => t.id).some(id => id.includes(requestedId));
   });
   if (unmatchedIds.length) {
     console.log(log.redify(`Smoketests not found for: ${unmatchedIds.join(' ')}`));
@@ -66,34 +73,98 @@ function getDefinitionsToRun(allTestDefns, requestedIds, {invertMatch}) {
 }
 
 /**
+ * Prune the `networkRequests` from the test expectations when `takeNetworkRequestUrls`
+ * is not defined. Custom servers may not have this method available in-process.
+ * Also asserts that any expectation with `networkRequests` is run serially. For core
+ * tests, we don't currently have a good way to map requests to test definitions if
+ * the tests are run in parallel.
+ * @param {Array<Smokehouse.TestDfn>} testDefns
+ * @param {Function|undefined} takeNetworkRequestUrls
+ * @return {Array<Smokehouse.TestDfn>}
+ */
+function pruneExpectedNetworkRequests(testDefns, takeNetworkRequestUrls) {
+  const pruneNetworkRequests = !takeNetworkRequestUrls;
+
+  const clonedDefns = cloneDeep(testDefns);
+  for (const {id, expectations, runSerially} of clonedDefns) {
+    if (!runSerially && expectations.networkRequests) {
+      throw new Error(`'${id}' must be set to 'runSerially: true' to assert 'networkRequests'`);
+    }
+
+    if (pruneNetworkRequests && expectations.networkRequests) {
+      // eslint-disable-next-line max-len
+      const msg = `'networkRequests' cannot be asserted in test '${id}'. They should only be asserted on tests from an in-process server`;
+      if (process.env.CI) {
+        // If we're in CI, we require any networkRequests expectations to be asserted.
+        throw new Error(msg);
+      }
+
+      console.warn(log.redify('Warning:'),
+          `${msg}. Pruning expectation: ${JSON.stringify(expectations.networkRequests)}`);
+      expectations.networkRequests = undefined;
+    }
+  }
+
+  return clonedDefns;
+}
+
+/**
  * CLI entry point.
  */
 async function begin() {
-  const argv = yargs
+  const rawArgv = yargs
     .help('help')
     .usage('node $0 [<options>] <test-ids>')
     .example('node $0 -j=1 pwa seo', 'run pwa and seo tests serially')
     .example('node $0 --invert-match byte', 'run all smoke tests but `byte`')
-    .describe({
-      'debug': 'Save test artifacts and output verbose logs',
-      'jobs': 'Manually set the number of jobs to run at once. `1` runs all tests serially',
-      'retries': 'The number of times to retry failing tests before accepting. Defaults to 0',
-      'runner': 'The method of running Lighthouse',
-      'tests-path': 'The path to a set of test definitions to run. Defaults to core smoke tests.',
-      'invert-match': 'Run all available tests except the ones provided',
+    .option('_', {
+      array: true,
+      type: 'string',
     })
-    .boolean(['debug', 'invert-match'])
-    .alias({
-      'jobs': 'j',
+    .options({
+      'debug': {
+        type: 'boolean',
+        default: false,
+        describe: 'Save test artifacts and output verbose logs',
+      },
+      'fraggle-rock': {
+        type: 'boolean',
+        default: false,
+        describe: 'Use the new Fraggle Rock runner',
+      },
+      'jobs': {
+        type: 'number',
+        alias: 'j',
+        describe: 'Manually set the number of jobs to run at once. `1` runs all tests serially',
+      },
+      'retries': {
+        type: 'number',
+        describe: 'The number of times to retry failing tests before accepting. Defaults to 0',
+      },
+      'runner': {
+        default: 'cli',
+        choices: ['cli', 'bundle'],
+        describe: 'The method of running Lighthouse',
+      },
+      'tests-path': {
+        type: 'string',
+        describe: 'The path to a set of test definitions to run. Defaults to core smoke tests.',
+      },
+      'invert-match': {
+        type: 'boolean',
+        default: false,
+        describe: 'Run all available tests except the ones provided',
+      },
     })
-    .choices('runner', ['cli', 'bundle'])
-    .default('runner', 'cli')
     .wrap(yargs.terminalWidth())
     .argv;
 
-  // TODO: use .number() when yargs is updated
-  const jobs = argv.jobs !== undefined ? Number(argv.jobs) : undefined;
-  const retries = argv.retries !== undefined ? Number(argv.retries) : undefined;
+  // Augmenting yargs type with auto-camelCasing breaks in tsc@4.1.2 and @types/yargs@15.0.11,
+  // so for now cast to add yarg's camelCase properties to type.
+  const argv = /** @type {typeof rawArgv & CamelCasify<typeof rawArgv>} */ (rawArgv);
+
+  const jobs = Number.isFinite(argv.jobs) ? argv.jobs : undefined;
+  const retries = Number.isFinite(argv.retries) ? argv.retries : undefined;
 
   const runnerPath = runnerPaths[/** @type {keyof typeof runnerPaths} */ (argv.runner)];
   if (argv.runner === 'bundle') {
@@ -105,23 +176,48 @@ async function begin() {
   let testDefnPath = argv.testsPath || coreTestDefnsPath;
   testDefnPath = path.resolve(process.cwd(), testDefnPath);
   const requestedTestIds = argv._;
-  const allTestDefns = require(testDefnPath);
+  const rawTestDefns = require(testDefnPath);
+  const allTestDefns = updateTestDefnFormat(rawTestDefns);
   const invertMatch = argv.invertMatch;
   const testDefns = getDefinitionsToRun(allTestDefns, requestedTestIds, {invertMatch});
 
-  const options = {jobs, retries, isDebug: argv.debug, lighthouseRunner};
+  let smokehouseResult;
+  let server;
+  let serverForOffline;
+  let takeNetworkRequestUrls = undefined;
 
-  let isPassing;
   try {
-    server.listen(10200, 'localhost');
-    serverForOffline.listen(10503, 'localhost');
-    isPassing = (await runSmokehouse(testDefns, options)).success;
+    // If running the core tests, spin up the test server.
+    if (testDefnPath === coreTestDefnsPath) {
+      ({server, serverForOffline} = require('../../fixtures/static-server.js'));
+      server.listen(10200, 'localhost');
+      serverForOffline.listen(10503, 'localhost');
+      takeNetworkRequestUrls = server.takeRequestUrls.bind(server);
+    }
+
+    const prunedTestDefns = pruneExpectedNetworkRequests(testDefns, takeNetworkRequestUrls);
+    const options = {
+      jobs,
+      retries,
+      isDebug: argv.debug,
+      useFraggleRock: argv.fraggleRock,
+      lighthouseRunner,
+      takeNetworkRequestUrls,
+    };
+
+    smokehouseResult = (await runSmokehouse(prunedTestDefns, options));
   } finally {
-    await server.close();
-    await serverForOffline.close();
+    if (server) await server.close();
+    if (serverForOffline) await serverForOffline.close();
   }
 
-  const exitCode = isPassing ? 0 : 1;
+  if (!smokehouseResult.success) {
+    const failedTestResults = smokehouseResult.testResults.filter(r => r.failed);
+    const cmd = `yarn smoke ${failedTestResults.map(r => r.id).join(' ')}`;
+    console.log(`rerun failures: ${cmd}`);
+  }
+
+  const exitCode = smokehouseResult.success ? 0 : 1;
   process.exit(exitCode);
 }
 

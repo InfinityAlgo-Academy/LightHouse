@@ -7,6 +7,8 @@
 
 const path = require('path');
 const i18n = require('../../../lib/i18n/i18n.js');
+const log = require('lighthouse-logger');
+const {isNode12SmallIcu} = require('../../test-utils.js');
 
 /* eslint-env jest */
 
@@ -32,17 +34,20 @@ describe('i18n', () => {
   });
 
   describe('#createMessageInstanceIdFn', () => {
-    it('returns a string reference', () => {
+    it('returns an IcuMessage reference', () => {
       const fakeFile = path.join(__dirname, 'fake-file.js');
-      const templates = {daString: 'use me!'};
+      const templates = {daString: 'use {x} me!'};
       const formatter = i18n.createMessageInstanceIdFn(fakeFile, templates);
 
-      const expected = 'lighthouse-core/test/lib/i18n/fake-file.js | daString # 0';
-      expect(formatter(templates.daString, {x: 1})).toBe(expected);
+      expect(formatter(templates.daString, {x: 1})).toStrictEqual({
+        i18nId: 'lighthouse-core/test/lib/i18n/fake-file.js | daString',
+        values: {x: 1},
+        formattedDefault: 'use 1 me!',
+      });
     });
   });
 
-  describe('#replaceIcuMessageInstanceIds', () => {
+  describe('#replaceIcuMessages', () => {
     it('replaces the references in the LHR', () => {
       const fakeFile = path.join(__dirname, 'fake-file-number-2.js');
       const UIStrings = {aString: 'different {x}!'};
@@ -51,7 +56,7 @@ describe('i18n', () => {
       const title = formatter(UIStrings.aString, {x: 1});
       const lhr = {audits: {'fake-audit': {title}}};
 
-      const icuMessagePaths = i18n.replaceIcuMessageInstanceIds(lhr, 'en-US');
+      const icuMessagePaths = i18n.replaceIcuMessages(lhr, 'en-US');
       expect(lhr.audits['fake-audit'].title).toBe('different 1!');
 
       const expectedPathId = 'lighthouse-core/test/lib/i18n/fake-file-number-2.js | aString';
@@ -115,6 +120,19 @@ describe('i18n', () => {
 
       expect(replacements).toEqual(replacementsClone);
     });
+
+    it('returns a message that is already a string unchanged', () => {
+      const testString = 'kind of looks like it needs ({formatting})';
+      const formattedStr = i18n.getFormatted(testString, 'pl');
+      expect(formattedStr).toBe(testString);
+    });
+
+    it('throws an error if formatting something other than IcuMessages or strings', () => {
+      expect(_ => i18n.getFormatted(15, 'lt'))
+        .toThrow(`Attempted to format invalid icuMessage type`);
+      expect(_ => i18n.getFormatted(new Date(), 'sr-Latn'))
+        .toThrow(`Attempted to format invalid icuMessage type`);
+    });
   });
 
   describe('#lookupLocale', () => {
@@ -124,7 +142,7 @@ describe('i18n', () => {
       expect(i18n.lookupLocale('en-xa')).toEqual('en-XA');
     });
 
-    it('canonicalizes the locales', () => {
+    it('takes multiple locale strings and returns a canonical one', () => {
       expect(i18n.lookupLocale([invalidLocale, 'en-xa'])).toEqual('en-XA');
     });
 
@@ -134,7 +152,36 @@ describe('i18n', () => {
       expect(i18n.lookupLocale([invalidLocale, invalidLocale])).toEqual('en');
     });
 
+    it('logs a warning if locale is not available and the default is used', () => {
+      const logListener = jest.fn();
+      log.events.on('warning', logListener);
+
+      expect(i18n.lookupLocale(invalidLocale)).toEqual('en');
+
+      // COMPAT: Node 12 logs an extra warning that full-icu is not available.
+      if (isNode12SmallIcu()) {
+        expect(logListener).toBeCalledTimes(2);
+        expect(logListener).toHaveBeenNthCalledWith(1, ['i18n',
+          expect.stringMatching(/Requested locale not available in this version of node/)]);
+        expect(logListener).toHaveBeenNthCalledWith(2, ['i18n',
+          `locale(s) '${invalidLocale}' not available. Falling back to default 'en'`]);
+        return;
+      }
+
+      expect(logListener).toBeCalledTimes(1);
+      expect(logListener).toBeCalledWith(['i18n',
+        `locale(s) '${invalidLocale}' not available. Falling back to default 'en'`]);
+
+      log.events.off('warning', logListener);
+    });
+
     it('falls back to root tag prefix if specific locale not available', () => {
+      // COMPAT: Node 12 only has 'en' by default.
+      if (isNode12SmallIcu()) {
+        expect(i18n.lookupLocale('es-JKJK')).toEqual('en');
+        return;
+      }
+
       expect(i18n.lookupLocale('es-JKJK')).toEqual('es');
     });
 
@@ -193,6 +240,68 @@ describe('i18n', () => {
       moduleLocales['es-419'] = clonedLocales['es-419'];
       const title = i18n.getFormatted(str_(UIStrings.title), 'es-419');
       expect(title).toEqual('Usa HTTPS');
+    });
+  });
+
+  describe('#isIcuMessage', () => {
+    const icuMessage = {
+      i18nId: 'lighthouse-core/test/lib/i18n/fake-file.js | title',
+      values: {x: 1},
+      formattedDefault: 'a default',
+    };
+
+    it('passes a valid LH.IcuMessage', () => {
+      expect(i18n.isIcuMessage(icuMessage)).toBe(true);
+    });
+
+    it('fails non-objects', () => {
+      expect(i18n.isIcuMessage(undefined)).toBe(false);
+      expect(i18n.isIcuMessage(null)).toBe(false);
+      expect(i18n.isIcuMessage('ICU!')).toBe(false);
+      expect(i18n.isIcuMessage(55)).toBe(false);
+      expect(i18n.isIcuMessage([
+        icuMessage,
+        icuMessage,
+      ])).toBe(false);
+    });
+
+    it('fails invalid or missing i18nIds', () => {
+      const badIdMessage = {...icuMessage, i18nId: 0};
+      expect(i18n.isIcuMessage(badIdMessage)).toBe(false);
+
+      const noIdMessage = {...icuMessage};
+      delete noIdMessage.i18nId;
+      expect(i18n.isIcuMessage(noIdMessage)).toBe(false);
+    });
+
+    it('fails invalid or missing formattedDefault', () => {
+      const badDefaultMessage = {...icuMessage, formattedDefault: -0};
+      expect(i18n.isIcuMessage(badDefaultMessage)).toBe(false);
+
+      const noDefaultMessage = {...icuMessage};
+      delete noDefaultMessage.formattedDefault;
+      expect(i18n.isIcuMessage(noDefaultMessage)).toBe(false);
+    });
+
+    it('passes missing values', () => {
+      const emptyValuesMessage = {...icuMessage, values: {}};
+      expect(i18n.isIcuMessage(emptyValuesMessage)).toBe(true);
+
+      const noValuesMessage = {...icuMessage};
+      delete noValuesMessage.values;
+      expect(i18n.isIcuMessage(noValuesMessage)).toBe(true);
+    });
+
+    it('fails invalid values types', () => {
+      const badValuesMessage = {...icuMessage, values: NaN};
+      expect(i18n.isIcuMessage(badValuesMessage)).toBe(false);
+      const nullValuesMessage = {...icuMessage, values: null};
+      expect(i18n.isIcuMessage(nullValuesMessage)).toBe(false);
+    });
+
+    it(`fails invalid values' values types`, () => {
+      const badValuesValuesMessage = {...icuMessage, values: {a: false}};
+      expect(i18n.isIcuMessage(badValuesValuesMessage)).toBe(false);
     });
   });
 
@@ -287,20 +396,18 @@ describe('i18n', () => {
     });
 
     it('throws an error if a string value is used for a numeric placeholder', () => {
-      const helloStr = str_(UIStrings.helloTimeInMsWorld, {
+      expect(_ => str_(UIStrings.helloTimeInMsWorld, {
         timeInMs: 'string not a number',
-      });
-      expect(_ => i18n.getFormatted(helloStr, 'en-US'))
+      }))
         // eslint-disable-next-line max-len
         .toThrow(`ICU Message "Hello {timeInMs, number, seconds} World" contains a numeric reference ("timeInMs") but provided value was not a number`);
     });
 
     it('throws an error if a value is provided that has no placeholder in the message', () => {
-      const helloStr = str_(UIStrings.helloTimeInMsWorld, {
+      expect(_ => str_(UIStrings.helloTimeInMsWorld, {
         timeInMs: 55,
         sirNotAppearingInThisString: 66,
-      });
-      expect(_ => i18n.getFormatted(helloStr, 'en-US'))
+      }))
         // eslint-disable-next-line max-len
         .toThrow(`Provided value "sirNotAppearingInThisString" does not match any placeholder in ICU message "Hello {timeInMs, number, seconds} World"`);
     });

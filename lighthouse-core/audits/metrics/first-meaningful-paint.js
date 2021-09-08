@@ -27,7 +27,8 @@ class FirstMeaningfulPaint extends Audit {
       title: str_(i18n.UIStrings.firstMeaningfulPaintMetric),
       description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
-      requiredArtifacts: ['traces', 'devtoolsLogs', 'TestedAsMobileDevice'],
+      supportedModes: ['navigation'],
+      requiredArtifacts: ['traces', 'devtoolsLogs', 'GatherContext'],
     };
   }
 
@@ -66,10 +67,11 @@ class FirstMeaningfulPaint extends Audit {
   static async audit(artifacts, context) {
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
-    const metricComputationData = {trace, devtoolsLog, settings: context.settings};
+    const gatherContext = artifacts.GatherContext;
+    const metricComputationData = {trace, devtoolsLog, gatherContext, settings: context.settings};
     const metricResult = await ComputedFmp.request(metricComputationData, context);
-    const isDesktop = artifacts.TestedAsMobileDevice === false;
-    const options = isDesktop ? context.options.desktop : context.options.mobile;
+    const options = context.options[context.settings.formFactor];
+
 
     return {
       score: Audit.computeLogNormalScore(

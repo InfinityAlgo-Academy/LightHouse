@@ -22,7 +22,7 @@ You'll need to have v3.7.1 of the protocol-buffer/protobuf compiler installed. (
 1. Run `yarn test-proto`
 
 ## Proto Resources
-- [Protobuf Github Repo](https://github.com/protocolbuffers/protobuf) 
+- [Protobuf GitHub Repo](https://github.com/protocolbuffers/protobuf)
 - [Protobuf Docs](https://developers.google.com/protocol-buffers/docs/overview)
 
 ## LHR Round Trip Flow

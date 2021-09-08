@@ -7,14 +7,15 @@
 
 const browserify = require('browserify');
 const fs = require('fs');
+const {LH_ROOT} = require('../root.js');
 
-const distDir = `${__dirname}/../dist`;
+const distDir = `${LH_ROOT}/dist`;
 const bundleOutFile = `${distDir}/smokehouse-bundle.js`;
 const smokehouseLibFilename = './lighthouse-cli/test/smokehouse/frontends/lib.js';
 
 browserify(smokehouseLibFilename, {standalone: 'Lighthouse.Smokehouse'})
   .ignore('./lighthouse-cli/test/smokehouse/lighthouse-runners/cli.js')
-  .transform('@wardpeet/brfs', {global: true, parserOpts: {ecmaVersion: 10}})
+  .transform('@wardpeet/brfs', {global: true, parserOpts: {ecmaVersion: 12}})
   .bundle((err, src) => {
     if (err) throw err;
     fs.writeFileSync(bundleOutFile, src.toString());

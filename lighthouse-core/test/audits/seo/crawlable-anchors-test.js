@@ -16,6 +16,13 @@ function runAudit({
   onclick = '',
   name = '',
   listeners = onclick.trim().length ? [{type: 'click'}] : [],
+  node = {
+    snippet: '',
+    devtoolsNodePath: '',
+    nodeSelector: '',
+    boundingRect: null,
+    selector: '',
+  },
 }) {
   const {score} = CrawlableAnchorsAudit.audit({
     AnchorElements: [{
@@ -24,6 +31,7 @@ function runAudit({
       listeners,
       onclick,
       role,
+      node,
     }],
   });
 
@@ -151,5 +159,13 @@ describe('SEO: Crawlable anchors audit', () => {
       const auditResult = runAudit({onclick: onclickVariation});
       assert.equal(auditResult, 1, `'${onclickVariation}' should pass the audit`);
     }
+  });
+
+  it('handles window.open in an onclick attribute and mailto: in a href attribute', () => {
+    assert.equal(
+        runAudit({rawHref: 'mailto:name@example.com', onclick: 'window.open()'}),
+        1,
+        'window.open in an onclick and mailto: in a href is a pass'
+    );
   });
 });

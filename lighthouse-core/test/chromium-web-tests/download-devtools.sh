@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
+set -euxo pipefail
 
 ##
 # @license Copyright 2020 The Lighthouse Authors. All Rights Reserved.
@@ -12,6 +12,19 @@ if [ -d "$DEVTOOLS_PATH" ]
 then
   echo "Directory $DEVTOOLS_PATH already exists."
   cd "$DEVTOOLS_PATH"
+
+  git status
+  git --no-pager log -1
+
+  # Update to keep current.
+  # Don't update in CI-defer to the weekly cache invalidation.
+  if [ -z "${CI:-}" ]; then
+    git reset --hard
+    git clean -fd
+    git pull --ff-only -f origin master
+    gclient sync --delete_unversioned_trees --reset
+  fi
+
   exit 0
 fi
 

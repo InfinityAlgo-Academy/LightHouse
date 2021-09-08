@@ -69,7 +69,7 @@ describe('Third party summary', () => {
             {
               blockingTime: 0,
               transferSize: 8007,
-              url: expect.any(String),
+              url: expect.toBeDisplayString('Other resources'),
             },
           ],
           type: 'subitems',

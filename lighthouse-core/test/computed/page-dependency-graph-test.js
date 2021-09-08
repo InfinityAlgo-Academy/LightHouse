@@ -30,7 +30,7 @@ const TOPLEVEL_TASK_NAME = 'TaskQueueManager::ProcessTaskFromWorkQueue';
 
 /* eslint-env jest */
 describe('PageDependencyGraph computed artifact:', () => {
-  let traceOfTab;
+  let processedTrace;
 
   function addTaskEvents(startTs, duration, evts) {
     const mainEvent = {
@@ -41,12 +41,12 @@ describe('PageDependencyGraph computed artifact:', () => {
       args: {},
     };
 
-    traceOfTab.mainThreadEvents.push(mainEvent);
+    processedTrace.mainThreadEvents.push(mainEvent);
 
     let i = 0;
     for (const evt of evts) {
       i++;
-      traceOfTab.mainThreadEvents.push({
+      processedTrace.mainThreadEvents.push({
         name: evt.name,
         ts: (evt.ts * 1000) || (startTs * 1000 + i),
         args: {data: evt.data},
@@ -55,7 +55,7 @@ describe('PageDependencyGraph computed artifact:', () => {
   }
 
   beforeEach(() => {
-    traceOfTab = {mainThreadEvents: []};
+    processedTrace = {mainThreadEvents: []};
   });
 
   describe('#compute_', () => {
@@ -142,21 +142,21 @@ describe('PageDependencyGraph computed artifact:', () => {
         {name: 'LaterEvent'},
       ]);
 
-      assert.equal(traceOfTab.mainThreadEvents.length, 7);
-      const nodes = PageDependencyGraph.getCPUNodes(traceOfTab);
+      assert.equal(processedTrace.mainThreadEvents.length, 7);
+      const nodes = PageDependencyGraph.getCPUNodes(processedTrace);
       assert.equal(nodes.length, 2);
 
       const node1 = nodes[0];
       assert.equal(node1.id, '1.0');
       assert.equal(node1.type, 'cpu');
-      assert.equal(node1.event, traceOfTab.mainThreadEvents[0]);
+      assert.equal(node1.event, processedTrace.mainThreadEvents[0]);
       assert.equal(node1.childEvents.length, 2);
       assert.equal(node1.childEvents[1].name, 'OtherEvent');
 
       const node2 = nodes[1];
       assert.equal(node2.id, '1.250000');
       assert.equal(node2.type, 'cpu');
-      assert.equal(node2.event, traceOfTab.mainThreadEvents[5]);
+      assert.equal(node2.event, processedTrace.mainThreadEvents[5]);
       assert.equal(node2.childEvents.length, 1);
       assert.equal(node2.childEvents[0].name, 'LaterEvent');
     });
@@ -172,7 +172,7 @@ describe('PageDependencyGraph computed artifact:', () => {
 
       addTaskEvents(0, 0, []);
 
-      const graph = PageDependencyGraph.createGraph(traceOfTab, networkRecords);
+      const graph = PageDependencyGraph.createGraph(processedTrace, networkRecords);
       const nodes = [];
       graph.traverse(node => nodes.push(node));
 
@@ -201,7 +201,7 @@ describe('PageDependencyGraph computed artifact:', () => {
         {name: 'XHRReadyStateChange', data: {readyState: 4, url: '4'}},
       ]);
 
-      const graph = PageDependencyGraph.createGraph(traceOfTab, networkRecords);
+      const graph = PageDependencyGraph.createGraph(processedTrace, networkRecords);
       const nodes = [];
       graph.traverse(node => nodes.push(node));
 
@@ -227,7 +227,7 @@ describe('PageDependencyGraph computed artifact:', () => {
 
       addTaskEvents(0, 0, []);
 
-      const graph = PageDependencyGraph.createGraph(traceOfTab, networkRecords);
+      const graph = PageDependencyGraph.createGraph(processedTrace, networkRecords);
       const nodes = [];
       graph.traverse(node => nodes.push(node));
 
@@ -266,7 +266,7 @@ describe('PageDependencyGraph computed artifact:', () => {
         {name: 'ResourceSendRequest', data: {requestId: 5}},
       ]);
 
-      const graph = PageDependencyGraph.createGraph(traceOfTab, networkRecords);
+      const graph = PageDependencyGraph.createGraph(processedTrace, networkRecords);
       const nodes = [];
       graph.traverse(node => nodes.push(node));
 
@@ -294,7 +294,7 @@ describe('PageDependencyGraph computed artifact:', () => {
         {name: 'TimerFire', data: {timerId: 'timer1'}},
       ]);
 
-      const graph = PageDependencyGraph.createGraph(traceOfTab, networkRecords);
+      const graph = PageDependencyGraph.createGraph(processedTrace, networkRecords);
       const nodes = [];
       graph.traverse(node => nodes.push(node));
 
@@ -327,7 +327,7 @@ describe('PageDependencyGraph computed artifact:', () => {
         {name: 'XHRReadyStateChange', data: {readyState: 4, url: '4'}},
       ]);
 
-      const graph = PageDependencyGraph.createGraph(traceOfTab, networkRecords);
+      const graph = PageDependencyGraph.createGraph(processedTrace, networkRecords);
       const nodes = [];
       graph.traverse(node => nodes.push(node));
 
@@ -372,7 +372,7 @@ describe('PageDependencyGraph computed artifact:', () => {
         {name: 'XHRReadyStateChange', data: {readyState: 4, url: '4'}},
       ]);
 
-      const graph = PageDependencyGraph.createGraph(traceOfTab, networkRecords);
+      const graph = PageDependencyGraph.createGraph(processedTrace, networkRecords);
       const nodes = [];
       graph.traverse(node => nodes.push(node));
 
@@ -395,7 +395,7 @@ describe('PageDependencyGraph computed artifact:', () => {
       const networkRecords = [request0];
 
       const makeShortEvent = firstEventName => {
-        const startTs = traceOfTab.mainThreadEvents.length * 100;
+        const startTs = processedTrace.mainThreadEvents.length * 100;
         addTaskEvents(startTs, 5, [
           {name: firstEventName, data: {url: '0'}},
         ]);
@@ -411,7 +411,7 @@ describe('PageDependencyGraph computed artifact:', () => {
         makeShortEvent(eventName);
       }
 
-      const graph = PageDependencyGraph.createGraph(traceOfTab, networkRecords);
+      const graph = PageDependencyGraph.createGraph(processedTrace, networkRecords);
       const cpuNodes = [];
       graph.traverse(node => node.type === 'cpu' && cpuNodes.push(node));
 
@@ -447,7 +447,7 @@ describe('PageDependencyGraph computed artifact:', () => {
 
       addTaskEvents(0, 0, []);
 
-      const graph = PageDependencyGraph.createGraph(traceOfTab, networkRecords);
+      const graph = PageDependencyGraph.createGraph(processedTrace, networkRecords);
       const nodes = [];
       graph.traverse(node => nodes.push(node));
 
@@ -475,7 +475,7 @@ describe('PageDependencyGraph computed artifact:', () => {
 
       addTaskEvents(0, 0, []);
 
-      const graph = PageDependencyGraph.createGraph(traceOfTab, networkRecords);
+      const graph = PageDependencyGraph.createGraph(processedTrace, networkRecords);
       const nodes = [];
       graph.traverse(node => nodes.push(node));
 
@@ -500,7 +500,7 @@ describe('PageDependencyGraph computed artifact:', () => {
 
       addTaskEvents(0, 0, []);
 
-      const graph = PageDependencyGraph.createGraph(traceOfTab, networkRecords);
+      const graph = PageDependencyGraph.createGraph(processedTrace, networkRecords);
       const nodes = [];
       graph.traverse(node => nodes.push(node));
 
@@ -528,7 +528,7 @@ describe('PageDependencyGraph computed artifact:', () => {
 
       addTaskEvents(0, 0, []);
 
-      const graph = PageDependencyGraph.createGraph(traceOfTab, networkRecords);
+      const graph = PageDependencyGraph.createGraph(processedTrace, networkRecords);
       const nodes = [];
       graph.traverse(node => nodes.push(node));
 
@@ -551,7 +551,7 @@ describe('PageDependencyGraph computed artifact:', () => {
 
       addTaskEvents(0, 0, []);
 
-      const graph = PageDependencyGraph.createGraph(traceOfTab, networkRecords);
+      const graph = PageDependencyGraph.createGraph(processedTrace, networkRecords);
       const nodes = [];
       graph.traverse(node => nodes.push(node));
       nodes.sort((a, b) => a.id - b.id);
@@ -580,7 +580,7 @@ describe('PageDependencyGraph computed artifact:', () => {
 
       addTaskEvents(0, 0, []);
 
-      const graph = PageDependencyGraph.createGraph(traceOfTab, networkRecords);
+      const graph = PageDependencyGraph.createGraph(processedTrace, networkRecords);
       const nodes = [];
       graph.traverse(node => nodes.push(node));
       nodes.sort((a, b) => a.id - b.id);
@@ -600,7 +600,7 @@ describe('PageDependencyGraph computed artifact:', () => {
 
       addTaskEvents(0, 0, []);
 
-      const fn = () => PageDependencyGraph.createGraph(traceOfTab, networkRecords);
+      const fn = () => PageDependencyGraph.createGraph(processedTrace, networkRecords);
       expect(fn).toThrow(/root node.*document/i);
     });
   });

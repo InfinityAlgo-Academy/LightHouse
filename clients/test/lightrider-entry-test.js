@@ -80,7 +80,7 @@ describe('lightrider-entry', () => {
       const lrDevice = 'desktop';
       await lhBackground.runLighthouseInLR(mockConnection, url, {}, {lrDevice});
       const config = runStub.mock.calls[0][1].config;
-      assert.equal(config.settings.emulatedFormFactor, 'desktop');
+      assert.equal(config.settings.formFactor, 'desktop');
 
       runStub.mockRestore();
     });
@@ -94,7 +94,7 @@ describe('lightrider-entry', () => {
       const lrDevice = 'mobile';
       await lhBackground.runLighthouseInLR(mockConnection, url, {}, {lrDevice});
       const config = runStub.mock.calls[0][1].config;
-      assert.equal(config.settings.emulatedFormFactor, 'mobile');
+      assert.equal(config.settings.formFactor, 'mobile');
 
       runStub.mockRestore();
     });
@@ -119,17 +119,21 @@ describe('lightrider-entry', () => {
       runStub.mockRestore();
     });
 
+    let originalRun;
+    beforeEach(() => {
+      originalRun = Runner.run;
+    });
+    afterEach(() => {
+      Runner.run = originalRun;
+    });
+
     it('exposes artifacts when logAssets is true', async () => {
-      const originalRun = Runner.run;
-      Runner.run = jest.fn().mockReturnValue(Promise.resolve({
+      Runner.run = jest.fn(Runner.run).mockReturnValue(Promise.resolve({
         lhr: {},
         artifacts: {
           Artifact: new Error('some error'),
         },
       }));
-      afterEach(() => {
-        Runner.run = originalRun;
-      });
 
       const mockConnection = {};
       const url = 'https://example.com';

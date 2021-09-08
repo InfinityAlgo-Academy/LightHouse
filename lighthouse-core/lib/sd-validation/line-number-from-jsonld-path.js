@@ -8,7 +8,7 @@
 /**
  * @param {*} obj - JSON-LD object
  * @param {string} path - slash-separated path in the JSON-LD object (uses relative URIs)
- * @returns {null | number} - line number of the path value in the prettified JSON
+ * @return {null | number} - line number of the path value in the prettified JSON
  */
 function getLineNumberFromJsonLDPath(obj, path) {
   // To avoid having an extra dependency on a JSON parser we set a unique key in the

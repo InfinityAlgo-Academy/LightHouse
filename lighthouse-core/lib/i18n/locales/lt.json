@@ -17,6 +17,15 @@
   "lighthouse-core/audits/accessibility/aria-allowed-attr.js | title": {
     "message": "Atributai „`[aria-*]`“ atitinka savo vaidmenis"
   },
+  "lighthouse-core/audits/accessibility/aria-command-name.js | description": {
+    "message": "Kai nenurodytas neįgaliesiems pritaikytas elemento pavadinimas, ekrano skaitytuvai apie jį praneša naudodami bendrąjį pavadinimą, todėl jo negali naudoti ekrano skaitytuvo naudotojai. [Sužinokite daugiau](https://web.dev/aria-name/)"
+  },
+  "lighthouse-core/audits/accessibility/aria-command-name.js | failureTitle": {
+    "message": "Nenurodyti neįgaliesiems pritaikyti elementų „`button`“, „`link`“ ir „`menuitem`“ pavadinimai."
+  },
+  "lighthouse-core/audits/accessibility/aria-command-name.js | title": {
+    "message": "Nurodyti neįgaliesiems pritaikyti elementų „`button`“, „`link`“ ir „`menuitem`“ pavadinimai"
+  },
   "lighthouse-core/audits/accessibility/aria-hidden-body.js | description": {
     "message": "Pagalbinės technologijos, pvz., ekrano skaitytuvai, veikia nepastoviai, kai dokumente „`<body>`“ nustatytas elementas „`aria-hidden=\"true\"`“. [Sužinokite daugiau](https://web.dev/aria-hidden-body/)."
   },
@@ -36,13 +45,31 @@
     "message": "Elementuose „`[aria-hidden=\"true\"]`“ nėra išryškinamų mažėjančia tvarka pateiktų elementų"
   },
   "lighthouse-core/audits/accessibility/aria-input-field-name.js | description": {
-    "message": "Kai nenurodytas neįgaliesiems pritaikytas įvesties lauko pavadinimas, ekrano skaitytuvai apie jį praneša naudodami bendrąjį pavadinimą, todėl jo negali naudoti ekrano skaitytuvo naudotojai. [Sužinokite daugiau](https://web.dev/aria-input-field-name/)."
+    "message": "Kai nenurodytas neįgaliesiems pritaikytas įvesties lauko pavadinimas, ekrano skaitytuvai apie jį praneša naudodami bendrąjį pavadinimą, todėl jo negali naudoti ekrano skaitytuvo naudotojai. [Sužinokite daugiau](https://web.dev/aria-name/)."
   },
   "lighthouse-core/audits/accessibility/aria-input-field-name.js | failureTitle": {
     "message": "Nenurodyti neįgaliesiems pritaikyti ARIA įvesties laukų pavadinimai"
   },
   "lighthouse-core/audits/accessibility/aria-input-field-name.js | title": {
     "message": "Nurodyti neįgaliesiems pritaikyti ARIA įvesties laukų pavadinimai"
+  },
+  "lighthouse-core/audits/accessibility/aria-meter-name.js | description": {
+    "message": "Kai nenurodytas neįgaliesiems pritaikytas elemento pavadinimas, ekrano skaitytuvai apie jį praneša naudodami bendrąjį pavadinimą, todėl jo negali naudoti ekrano skaitytuvo naudotojai. [Sužinokite daugiau](https://web.dev/aria-name/)"
+  },
+  "lighthouse-core/audits/accessibility/aria-meter-name.js | failureTitle": {
+    "message": "Nenurodyti neįgaliesiems pritaikyti ARIA elementų „`meter`“ pavadinimai."
+  },
+  "lighthouse-core/audits/accessibility/aria-meter-name.js | title": {
+    "message": "Nurodyti neįgaliesiems pritaikyti ARIA elementų „`meter`“ pavadinimai"
+  },
+  "lighthouse-core/audits/accessibility/aria-progressbar-name.js | description": {
+    "message": "Kai elementas „`progressbar`“ neturi pasiekiamojo pavadinimo, ekrano skaitytuvai apie jį praneša naudodami bendrąjį pavadinimą, todėl jo negali naudoti ekrano skaitytuvais pasikliaujantys naudotojai. [Sužinokite daugiau](https://web.dev/aria-name/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-progressbar-name.js | failureTitle": {
+    "message": "Nenurodyti neįgaliesiems pritaikyti ARIA elementų „`progressbar`“ pavadinimai."
+  },
+  "lighthouse-core/audits/accessibility/aria-progressbar-name.js | title": {
+    "message": "Nurodyti neįgaliesiems pritaikyti ARIA elementų „`progressbar`“ pavadinimai"
   },
   "lighthouse-core/audits/accessibility/aria-required-attr.js | description": {
     "message": "Kai kuriems ARIA vaidmenims reikia atributų, aprašančių elementų būseną ekrano skaitytuvams. [Sužinokite daugiau](https://web.dev/aria-required-attr/)."
@@ -81,13 +108,31 @@
     "message": "Elemento „`[role]`“ vertės yra tinkamos"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
-    "message": "Kai nenurodytas neįgaliesiems pritaikytas perjungimo lauko pavadinimas, ekrano skaitytuvai apie jį praneša naudodami bendrąjį pavadinimą, todėl jo negali naudoti ekrano skaitytuvo naudotojai. [Sužinokite daugiau](https://web.dev/aria-toggle-field-name/)."
+    "message": "Kai nenurodytas neįgaliesiems pritaikytas perjungimo lauko pavadinimas, ekrano skaitytuvai apie jį praneša naudodami bendrąjį pavadinimą, todėl jo negali naudoti ekrano skaitytuvo naudotojai. [Sužinokite daugiau](https://web.dev/aria-name/)."
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
     "message": "Nenurodyti neįgaliesiems pritaikyti ARIA perjungimo laukų pavadinimai"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | title": {
     "message": "Nurodyti neįgaliesiems pritaikyti ARIA perjungimo laukų pavadinimai"
+  },
+  "lighthouse-core/audits/accessibility/aria-tooltip-name.js | description": {
+    "message": "Kai nenurodytas neįgaliesiems pritaikytas elemento pavadinimas, ekrano skaitytuvai apie jį praneša naudodami bendrąjį pavadinimą, todėl jo negali naudoti ekrano skaitytuvo naudotojai. [Sužinokite daugiau](https://web.dev/aria-name/)"
+  },
+  "lighthouse-core/audits/accessibility/aria-tooltip-name.js | failureTitle": {
+    "message": "Nenurodyti neįgaliesiems pritaikyti ARIA elementų „`tooltip`“ pavadinimai."
+  },
+  "lighthouse-core/audits/accessibility/aria-tooltip-name.js | title": {
+    "message": "Nurodyti neįgaliesiems pritaikyti ARIA elementų „`tooltip`“ pavadinimai"
+  },
+  "lighthouse-core/audits/accessibility/aria-treeitem-name.js | description": {
+    "message": "Kai nenurodytas neįgaliesiems pritaikytas elemento pavadinimas, ekrano skaitytuvai apie jį praneša naudodami bendrąjį pavadinimą, todėl jo negali naudoti ekrano skaitytuvo naudotojai. [Sužinokite daugiau](https://web.dev/aria-name/)"
+  },
+  "lighthouse-core/audits/accessibility/aria-treeitem-name.js | failureTitle": {
+    "message": "Nenurodyti neįgaliesiems pritaikyti ARIA elementų „`treeitem`“ pavadinimai."
+  },
+  "lighthouse-core/audits/accessibility/aria-treeitem-name.js | title": {
+    "message": "Nurodyti neįgaliesiems pritaikyti ARIA elementų „`treeitem`“ pavadinimai"
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr-value.js | description": {
     "message": "Pagalbinės technologijos, pvz., ekrano skaitytuvai, negali interpretuoti ARIA atributų su netinkamomis vertėmis. [Sužinokite daugiau](https://web.dev/aria-valid-attr-value/)."
@@ -254,15 +299,6 @@
   "lighthouse-core/audits/accessibility/label.js | title": {
     "message": "Formos elementuose yra atitinkamų etikečių"
   },
-  "lighthouse-core/audits/accessibility/layout-table.js | description": {
-    "message": "Lentelėje, kuri naudojama išdėstymo tikslais, neturėtų būti duomenų elementų, pvz., elementų „th“ ar „caption“ arba atributo „summary“, nes taip ekrano skaitytuvų naudotojams gali būti teikiama trikdanti patirtis. [Sužinokite daugiau](https://web.dev/layout-table/)."
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | failureTitle": {
-    "message": "Pristatomuose elementuose „`<table>`“ nevengiama naudoti atributų „`<th>`“, „`<caption>`“ arba „`[summary]`“."
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | title": {
-    "message": "Pristatomuose elementuose „`<table>`“ vengiama naudoti atributus „`<th>`“, „`<caption>`“ ar „`[summary]`“."
-  },
   "lighthouse-core/audits/accessibility/link-name.js | description": {
     "message": "Aiškus ir unikalus nuorodos tekstas (ir alternatyvusis vaizdų tekstas, kai jie naudojami kaip nuorodos), į kurį lengva sutelkti dėmesį, pagerina naršymo patirtį ekrano skaitytuvų naudotojams. [Sužinokite daugiau](https://web.dev/link-name/)."
   },
@@ -362,15 +398,6 @@
   "lighthouse-core/audits/accessibility/video-caption.js | title": {
     "message": "Elementuose „`<video>`“ yra elementas „`<track>`“ su atributu „`[kind=\"captions\"]`“"
   },
-  "lighthouse-core/audits/accessibility/video-description.js | description": {
-    "message": "Garso įrašų aprašai teikia reikiamą informaciją apie vaizdo įrašus, kurios negalima pateikti dialoge, pvz., susijusios su veido išraiškomis ir scenomis. [Sužinokite daugiau](https://web.dev/video-description/)."
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | failureTitle": {
-    "message": "Elementuose „`<video>`“ nėra elemento „`<track>`“ su atributu „`[kind=\"description\"]`“."
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | title": {
-    "message": "Elementuose „`<video>`“ yra elementas „`<track>`“ su atributu „`[kind=\"description\"]`“"
-  },
   "lighthouse-core/audits/apple-touch-icon.js | description": {
     "message": "Kad būtų tinkamai rodoma sistemoje „iOS“, kai naudotojai prideda laipsniškąją žiniatinklio programą prie pagrindinio ekrano, nurodykite `apple-touch-icon`. Ji turi nukreipti į neskaidrų 192 tšk. (arba 180 tšk.) kvadratinį PNG failą. [Sužinokite daugiau](https://web.dev/apple-touch-icon/)"
   },
@@ -384,31 +411,31 @@
     "message": "Pateikiama tinkama piktograma „`apple-touch-icon`“"
   },
   "lighthouse-core/audits/autocomplete.js | columnCurrent": {
-    "message": "Autocomplete Current Value"
+    "message": "Dabartinė vertė"
   },
   "lighthouse-core/audits/autocomplete.js | columnSuggestions": {
-    "message": "Autocomplete Suggested Token"
+    "message": "Siūlomas prieigos raktas"
   },
   "lighthouse-core/audits/autocomplete.js | description": {
-    "message": "Automatinio užbaigimo funkcija naudotojams padeda greičiau pateikti formas. Kad naudotojams būtų paprasčiau, apsvarstykite galimybę įgalinti automatinio užbaigimo funkciją nustatydami tinkamą atributo „`autocomplete`“ vertę. [Sužinokite daugiau](https://developers.google.com/web/fundamentals/design-and-ux/input/forms#use_metadata_to_enable_auto-complete)"
+    "message": "Funkcija „`autocomplete`“ padeda naudotojams greičiau pateikti formas. Kad naudotojams būtų paprasčiau, apsvarstykite galimybę įgalinti šią funkciją nustatydami tinkamą atributo „`autocomplete`“ vertę. [Sužinokite daugiau](https://developers.google.com/web/fundamentals/design-and-ux/input/forms#use_metadata_to_enable_auto-complete)"
   },
   "lighthouse-core/audits/autocomplete.js | failureTitle": {
-    "message": "Įvesties elementuose nėra tinkamų automatinio užbaigimo funkcijos atributų"
+    "message": "Kai kuriuose elementuose (`<input>`) nėra tinkamų atributų „`autocomplete`“"
   },
   "lighthouse-core/audits/autocomplete.js | manualReview": {
-    "message": "Requires manual review"
+    "message": "Reikalinga neautomatinė peržiūra"
   },
   "lighthouse-core/audits/autocomplete.js | reviewOrder": {
-    "message": "Review order of tokens"
+    "message": "Prieigos raktų išdėstymo tvarkos peržiūra"
   },
   "lighthouse-core/audits/autocomplete.js | title": {
-    "message": "Įvesties elementai naudoja automatinio užbaigimo funkciją"
+    "message": "Elementuose „`<input>`“ atributas „`autocomplete`“ naudojamas tinkamai"
   },
   "lighthouse-core/audits/autocomplete.js | warningInvalid": {
-    "message": "Autocomplete token(s): \"{token}\" is invalid in {snippet}"
+    "message": "Prieigos raktas (-ai) „`autocomplete`“: „{token}“ yra netinkamas sistemoje {snippet}"
   },
   "lighthouse-core/audits/autocomplete.js | warningOrder": {
-    "message": "Review order of tokens: \"{tokens}\" in {snippet}"
+    "message": "Peržiūrėkite prieigos raktų išdėstymo tvarką: „{tokens}“ sistemoje {snippet}"
   },
   "lighthouse-core/audits/bootup-time.js | chromeExtensionsWarning": {
     "message": "„Chrome“ plėtiniai neigiamai paveikė šio puslapio įkėlimo našumą. Pabandykite patikrinti puslapį inkognito režimu arba naudodami „Chrome“ profilį be plėtinių."
@@ -449,6 +476,12 @@
   "lighthouse-core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "Neteikite pasenusios „JavaScript“ modernioms naršyklėms"
   },
+  "lighthouse-core/audits/byte-efficiency/modern-image-formats.js | description": {
+    "message": "Tokių formatų kaip „WebP“ ir AVIF vaizdai dažniausiai glaudinami geriau nei PNG ar JPEG vaizdai, todėl yra atsisiunčiami greičiau ir sunaudoja mažiau duomenų. [Sužinokite daugiau](https://web.dev/uses-webp-images/)"
+  },
+  "lighthouse-core/audits/byte-efficiency/modern-image-formats.js | title": {
+    "message": "Pateikite naujos kartos formatų vaizdus"
+  },
   "lighthouse-core/audits/byte-efficiency/offscreen-images.js | description": {
     "message": "Apsvarstykite galimybę įkelti ne ekraninius ir paslėptus vaizdus tik tada, kai bus įkelti visi svarbiausi ištekliai, kad sutrumpėtų laikas iki sąveikos. [Sužinokite daugiau](https://web.dev/offscreen-images/)."
   },
@@ -486,16 +519,16 @@
     "message": "Sumažinkite „JavaScript“"
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | description": {
-    "message": "Pašalinkite neveikiančias taisykles iš stiliaus failų ir atidėkite CSS kalbos, nenaudojamos turiniui virš matomos ribos, įkėlimą, kad tinklo veikla sunaudotų mažiau baitų. [Sužinokite daugiau](https://web.dev/unused-css-rules/)."
+    "message": "Sumažinkite nenaudojamas taisykles iš stiliaus failų ir atidėkite CSS scenarijų, nenaudojamų turiniui virš matomos ribos, įkėlimą, kad tinklo veikla sunaudotų mažiau baitų. [Sužinokite daugiau](https://web.dev/unused-css-rules/)"
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | title": {
-    "message": "Pašalinkite nevartojamą CSS kalbą"
+    "message": "Sumažinkite nenaudojamą CSS turinį"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "Pašalinkite nenaudojamą „JavaScript“, kad tinklo veikla sunaudotų mažiau baitų. [Sužinokite daugiau](https://web.dev/unused-javascript/)."
+    "message": "Sumažinkite nenaudojamą „JavaScript“ turinį ir atidėkite scenarijų įkėlimą, kol jų prireiks, kad tinklo veikla sunaudotų mažiau baitų. [Sužinokite daugiau](https://web.dev/unused-javascript/)"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
-    "message": "Pašalinkite nenaudojamą „JavaScript“"
+    "message": "Sumažinkite nenaudojamą „JavaScript“ turinį"
   },
   "lighthouse-core/audits/byte-efficiency/uses-long-cache-ttl.js | description": {
     "message": "Jei talpykla galios ilgiau, greičiau sulauksite pakartotinių apsilankymų puslapyje. [Sužinokite daugiau](https://web.dev/uses-long-cache-ttl/)."
@@ -515,6 +548,12 @@
   "lighthouse-core/audits/byte-efficiency/uses-optimized-images.js | title": {
     "message": "Efektyviai koduokite vaizdus"
   },
+  "lighthouse-core/audits/byte-efficiency/uses-responsive-images-snapshot.js | columnActualDimensions": {
+    "message": "Tikrieji matmenys"
+  },
+  "lighthouse-core/audits/byte-efficiency/uses-responsive-images-snapshot.js | columnDisplayedDimensions": {
+    "message": "Rodomi matmenys"
+  },
   "lighthouse-core/audits/byte-efficiency/uses-responsive-images.js | description": {
     "message": "Teikite tinkamo dydžio vaizdus, kad būtų taupomi mobiliojo ryšio duomenys ir puslapis būtų įkeliamas greičiau. [Sužinokite daugiau](https://web.dev/uses-responsive-images/)."
   },
@@ -526,12 +565,6 @@
   },
   "lighthouse-core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "Įgalinkite teksto glaudinimą"
-  },
-  "lighthouse-core/audits/byte-efficiency/uses-webp-images.js | description": {
-    "message": "Tokių formatų kaip JPEG 2000, JPEG XR ir „WebP“ vaizdai dažniausiai glaudinami geriau nei PNG ar JPEG vaizdai, todėl yra atsisiunčiami greičiau ir sunaudoja mažiau duomenų. [Sužinokite daugiau](https://web.dev/uses-webp-images/)."
-  },
-  "lighthouse-core/audits/byte-efficiency/uses-webp-images.js | title": {
-    "message": "Pateikite naujos kartos formatų vaizdus"
   },
   "lighthouse-core/audits/content-width.js | description": {
     "message": "Jei programos turinio plotis nesutampa su peržiūros srities pločiu, jūsų programa gali būti neoptimizuota mobiliųjų įrenginių ekranams. [Sužinokite daugiau](https://web.dev/content-width/)"
@@ -553,6 +586,27 @@
   },
   "lighthouse-core/audits/critical-request-chains.js | title": {
     "message": "Nekurkite svarbių užklausų grandinių"
+  },
+  "lighthouse-core/audits/csp-xss.js | columnDirective": {
+    "message": "Direktyva"
+  },
+  "lighthouse-core/audits/csp-xss.js | columnSeverity": {
+    "message": "Svarba"
+  },
+  "lighthouse-core/audits/csp-xss.js | description": {
+    "message": "Griežta turinio apsaugos politika (CSP) gerokai sumažina svetainių scenarijų (XSS) atakų riziką. [Sužinokite daugiau](https://web.dev/csp-xss/)"
+  },
+  "lighthouse-core/audits/csp-xss.js | itemSeveritySyntax": {
+    "message": "Sintaksė"
+  },
+  "lighthouse-core/audits/csp-xss.js | metaTagMessage": {
+    "message": "Puslapyje yra CSP, apibrėžta žymoje <meta>. Jei galite, apsvarstykite galimybę apibrėžti CSP HTTP antraštėje."
+  },
+  "lighthouse-core/audits/csp-xss.js | noCsp": {
+    "message": "Nerasta jokios vykdomos CSP"
+  },
+  "lighthouse-core/audits/csp-xss.js | title": {
+    "message": "Įsitikinkite, kad CSP efektyviai saugo nuo XSS atakų"
   },
   "lighthouse-core/audits/deprecations.js | columnDeprecate": {
     "message": "Naudojimo nutraukimas / įspėjimas"
@@ -585,7 +639,7 @@
     "message": "Vengiama naudoti programos talpyklą"
   },
   "lighthouse-core/audits/dobetterweb/charset.js | description": {
-    "message": "Reikalinga ženklų koduotės deklaracija. Tai galima atlikti naudojant žymą <meta> pirmuose 1 024 HTML baituose arba turinio tipo HTTP atsako antraštėje. [Sužinokite daugiau](https://web.dev/charset/)."
+    "message": "Reikalinga ženklų koduotės deklaracija. Tai galima atlikti naudojant žymą „`<meta>`“ pirmuose 1 024 HTML baituose arba turinio tipo HTTP atsako antraštėje. [Sužinokite daugiau](https://web.dev/charset/)."
   },
   "lighthouse-core/audits/dobetterweb/charset.js | failureTitle": {
     "message": "Nėra simbolių rinkinio deklaracijos arba HTML ji pateikiama per vėlai"
@@ -665,6 +719,24 @@
   "lighthouse-core/audits/dobetterweb/geolocation-on-start.js | title": {
     "message": "Įkeliant puslapį vengiama pateikti užklausą dėl leidimo nustatyti geografinę vietovę"
   },
+  "lighthouse-core/audits/dobetterweb/inspector-issues.js | columnIssueType": {
+    "message": "Problemos tipas"
+  },
+  "lighthouse-core/audits/dobetterweb/inspector-issues.js | description": {
+    "message": "Problemos, užregistruotos skydelyje „`Issues`“ naudojant „Chrome“ kūrėjo įrankius, parodo, kad yra neišspręstų problemų. Jos galėjo kilti nepavykus pateikti tinklo užklausų, dėl nepakankamų saugos valdiklių arba dėl kitų naršyklės problemų. Jei reikia daugiau informacijos apie kiekvieną problemą, atidarykite problemų skydelį naudodami „Chrome“ kūrėjo įrankius."
+  },
+  "lighthouse-core/audits/dobetterweb/inspector-issues.js | failureTitle": {
+    "message": "Problemos užregistruotos skydelyje „`Issues`“ naudojant „Chrome“ kūrėjo įrankius"
+  },
+  "lighthouse-core/audits/dobetterweb/inspector-issues.js | issueTypeBlockedByResponse": {
+    "message": "Užblokuota pagal kelių šaltinių politiką"
+  },
+  "lighthouse-core/audits/dobetterweb/inspector-issues.js | issueTypeHeavyAds": {
+    "message": "Skelbimai naudoja daug išteklių"
+  },
+  "lighthouse-core/audits/dobetterweb/inspector-issues.js | title": {
+    "message": "Skydelyje „`Issues`“ naudojant „Chrome“ kūrėjo įrankius problemų nėra"
+  },
   "lighthouse-core/audits/dobetterweb/js-libraries.js | columnVersion": {
     "message": "Versija"
   },
@@ -701,15 +773,6 @@
   "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | failureTitle": {
     "message": "Puslapyje yra „JavaScript“ sąsajos bibliotekų, kuriose yra žinomų saugos pažeidimų"
   },
-  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | rowSeverityHigh": {
-    "message": "Didelis"
-  },
-  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | rowSeverityLow": {
-    "message": "Mažas"
-  },
-  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | rowSeverityMedium": {
-    "message": "Vidutinis"
-  },
   "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | title": {
     "message": "Vengiama „JavaScript“ sąsajos bibliotekų, kuriose yra žinomų saugos pažeidimų"
   },
@@ -735,7 +798,7 @@
     "message": "Protokolas"
   },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | description": {
-    "message": "Naudodami HTTP/2 gaunate daugiau privalumų, nei naudodami HTTP/1.1, pvz., dvigubas antraštes, tankinimą ir serverio įkėlimo funkciją. [Sužinokite daugiau](https://web.dev/uses-http2/)."
+    "message": "Naudodami HTTP/2 gaunate daugiau privalumų nei naudodami HTTP/1.1, įskaitant dvigubas antraštes ir tankinimą. [Sužinokite daugiau](https://web.dev/uses-http2/)."
   },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | displayValue": {
     "message": "{itemCount,plural, =1{1 užklausa nepateikta naudojant HTTP/2}one{# užklausa nepateikta naudojant HTTP/2}few{# užklausos nepateiktos naudojant HTTP/2}many{# užklausos nepateikta naudojant HTTP/2}other{# užklausų nepateikta naudojant HTTP/2}}"
@@ -751,9 +814,6 @@
   },
   "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | title": {
     "message": "Naudojamos pasyvios apdorojimo priemonės siekiant pagerinti slinkimo našumą"
-  },
-  "lighthouse-core/audits/errors-in-console.js | columnDesc": {
-    "message": "Aprašas"
   },
   "lighthouse-core/audits/errors-in-console.js | description": {
     "message": "Pulte užregistruotos klaidos nurodo, kad esama neišspręstų problemų. Jos galėjo kilti nepavykus pateikti tinklo užklausų arba dėl kitų naršyklės problemų. [Sužinokite daugiau](https://web.dev/errors-in-console/)"
@@ -791,9 +851,6 @@
   "lighthouse-core/audits/image-aspect-ratio.js | title": {
     "message": "Rodomi vaizdai su tinkamu formato koeficientu"
   },
-  "lighthouse-core/audits/image-aspect-ratio.js | warningCompute": {
-    "message": "Netinkama vaizdo dydžio informacija: {url}"
-  },
   "lighthouse-core/audits/image-size-responsive.js | columnActual": {
     "message": "Tikrasis dydis"
   },
@@ -812,14 +869,98 @@
   "lighthouse-core/audits/image-size-responsive.js | title": {
     "message": "Teikiami tinkamos raiškos vaizdai"
   },
+  "lighthouse-core/audits/installable-manifest.js | already-installed": {
+    "message": "Programa jau įdiegta"
+  },
+  "lighthouse-core/audits/installable-manifest.js | cannot-download-icon": {
+    "message": "Nepavyko atsisiųsti būtinos piktogramos iš aprašo"
+  },
+  "lighthouse-core/audits/installable-manifest.js | columnValue": {
+    "message": "Trikties priežastis"
+  },
   "lighthouse-core/audits/installable-manifest.js | description": {
-    "message": "Naršyklės gali aktyviai raginti naudotojus pridėti jūsų programą prie pagrindinio ekrano, tai paskatintų geresnį įtraukimą. [Sužinokite daugiau](https://web.dev/installable-manifest/)"
+    "message": "Pagalbinis „JavaScript“ failas – tai technologija, įgalinanti jūsų programą naudoti daug laipsniškosios žiniatinklio programos funkcijų, pvz., naudoti neprisijungus, pridėti prie pagrindinio ekrano ar naudoti iš karto gaunamus pranešimus. Pasirinkus tinkamą pagalbinį „JavaScript“ failą ir aprašą, naršyklės gali aktyviai raginti naudotojus pridėti jūsų programą prie pagrindinio ekrano, tai paskatintų geresnį įtraukimą. [Sužinokite daugiau](https://web.dev/installable-manifest/)."
+  },
+  "lighthouse-core/audits/installable-manifest.js | displayValue": {
+    "message": "{itemCount,plural, =1{Viena priežastis}one{# priežastis}few{# priežastys}many{# priežasties}other{# priežasčių}}"
   },
   "lighthouse-core/audits/installable-manifest.js | failureTitle": {
-    "message": "Žiniatinklio programos aprašas neatitinka diegiamumo reikalavimų."
+    "message": "Žiniatinklio programos aprašas arba pagalbinis „JavaScript“ failas neatitinka diegiamumo reikalavimų."
+  },
+  "lighthouse-core/audits/installable-manifest.js | ids-do-not-match": {
+    "message": "Neatitinka „Play“ parduotuvės programos URL ir „Play“ parduotuvės ID"
+  },
+  "lighthouse-core/audits/installable-manifest.js | in-incognito": {
+    "message": "Puslapis įkeliamas inkognito lange"
+  },
+  "lighthouse-core/audits/installable-manifest.js | manifest-display-not-supported": {
+    "message": "Aprašo nuosavybėje „display“ turi būti viena iš šių parinkčių: „standalone“, „fullscreen“ arba „minimal-ui“"
+  },
+  "lighthouse-core/audits/installable-manifest.js | manifest-display-override-not-supported": {
+    "message": "Apraše yra laukas „display_override“ ir pirmas palaikomas rodymo režimas turi būti „standalone“, „fullscreen“ arba „minimal-ui“"
+  },
+  "lighthouse-core/audits/installable-manifest.js | manifest-empty": {
+    "message": "Aprašas negautas, yra tuščias arba nepavyko jo išanalizuoti"
+  },
+  "lighthouse-core/audits/installable-manifest.js | manifest-location-changed": {
+    "message": "Gaunant aprašą pasikeitė jo URL."
+  },
+  "lighthouse-core/audits/installable-manifest.js | manifest-missing-name-or-short-name": {
+    "message": "Apraše nėra lauko „name“ arba „short_name“"
+  },
+  "lighthouse-core/audits/installable-manifest.js | manifest-missing-suitable-icon": {
+    "message": "Apraše nėra tinkamos piktogramos – reikia PNG, SVG ar „WebP“ formato, ne mažiau kaip {value0} tšk., turi būti nustatytas atributas „sizes“, o jei nustatytas atributas „purpose“, jis turi apimti parinktį „any“."
+  },
+  "lighthouse-core/audits/installable-manifest.js | no-acceptable-icon": {
+    "message": "Neteikiama piktograma yra ne mažesnis nei {value0} tšk. PNG, SVG ar „WebP“ formato kvadratas, kurio paskirties atributas nenustatytas arba nustatytas kaip „any“."
+  },
+  "lighthouse-core/audits/installable-manifest.js | no-icon-available": {
+    "message": "Atsisiųsta piktograma buvo tuščia arba sugadinta"
+  },
+  "lighthouse-core/audits/installable-manifest.js | no-id-specified": {
+    "message": "Nepateiktas „Play“ parduotuvės ID"
+  },
+  "lighthouse-core/audits/installable-manifest.js | no-manifest": {
+    "message": "Puslapyje nėra aprašo <link> URL"
+  },
+  "lighthouse-core/audits/installable-manifest.js | no-matching-service-worker": {
+    "message": "Neaptikta atitinkančio pagalbinio „JavaScript“ failo. Gali reikėti iš naujo įkelti puslapį arba patikrinti, ar dabartinis pagalbinis „JavaScript“ failas apima aprašo apimtį ir pradžios URL."
+  },
+  "lighthouse-core/audits/installable-manifest.js | no-url-for-service-worker": {
+    "message": "Nepavyko patikrinti pagalbinio „JavaScript“ failo, nes apraše nėra lauko „start_url“"
+  },
+  "lighthouse-core/audits/installable-manifest.js | noErrorId": {
+    "message": "Diegiamumo klaidos ID „{errorId}“ neatpažintas"
+  },
+  "lighthouse-core/audits/installable-manifest.js | not-from-secure-origin": {
+    "message": "Puslapis teikiamas iš nesaugaus šaltinio"
+  },
+  "lighthouse-core/audits/installable-manifest.js | not-in-main-frame": {
+    "message": "Puslapis neįkeliamas pagrindiniame kadre"
+  },
+  "lighthouse-core/audits/installable-manifest.js | not-offline-capable": {
+    "message": "Puslapis neveikia neprisijungus"
+  },
+  "lighthouse-core/audits/installable-manifest.js | platform-not-supported-on-android": {
+    "message": "Nurodyta programų platforma nepalaikoma sistemoje „Android“"
+  },
+  "lighthouse-core/audits/installable-manifest.js | prefer-related-applications": {
+    "message": "Apraše nurodoma „prefer_related_applications: true“"
+  },
+  "lighthouse-core/audits/installable-manifest.js | prefer-related-applications-only-beta-stable": {
+    "message": "„prefer_related_applications“ palaikoma tik beta versijos „Chrome“ ir pastoviuose kanaluose sistemoje „Android“."
+  },
+  "lighthouse-core/audits/installable-manifest.js | start-url-not-valid": {
+    "message": "Aprašo pradžios URL netinkamas"
   },
   "lighthouse-core/audits/installable-manifest.js | title": {
-    "message": "Žiniatinklio programos aprašas atitinka diegiamumo reikalavimus"
+    "message": "Žiniatinklio programos aprašas ir pagalbinis „JavaScript“ failas atitinka diegiamumo reikalavimus"
+  },
+  "lighthouse-core/audits/installable-manifest.js | url-not-supported-for-webapk": {
+    "message": "Aprašo URL yra naudotojo vardas, slaptažodis arba prievadas"
+  },
+  "lighthouse-core/audits/installable-manifest.js | warn-not-offline-capable": {
+    "message": "Puslapis neveikia neprisijungus. 2021 m. rugpjūtį išleidus stabilią „Chrome“ 93 versiją puslapis nebus laikomas tinkamu diegti."
   },
   "lighthouse-core/audits/is-on-https.js | allowed": {
     "message": "Leidžiama"
@@ -834,7 +975,7 @@
     "message": "Užklausos sprendimas"
   },
   "lighthouse-core/audits/is-on-https.js | description": {
-    "message": "Visos svetainės turėtų būti apsaugotos naudojant HTTPS, net ir tos, kuriose nėra neskelbtinų duomenų. Reikėtų vengti [įvairaus turinio](https://developers.google.com/web/fundamentals/security/prevent-mixed-content/what-is-mixed-content), kai tam tikri šaltiniai įkeliami naudojant HTTP, nors pradinė užklausa pateikiama naudojant HTTPS. Naudojant HTTPS įsibrovėliams neleidžiama gadinti ar pasyviai klausytis jūsų programos ir jos naudotojų komunikacijos, be to, jį privaloma naudoti HTTP/2 ir daugelyje naujų žiniatinklio platformų API. [Sužinokite daugiau](https://web.dev/is-on-https/)"
+    "message": "Visos svetainės turėtų būti apsaugotos naudojant HTTPS, net ir tos, kuriose nėra neskelbtinų duomenų. Reikėtų vengti [įvairaus turinio](https://developers.google.com/web/fundamentals/security/prevent-mixed-content/what-is-mixed-content), kai tam tikri šaltiniai įkeliami naudojant HTTP, nors pradinė užklausa pateikiama naudojant HTTPS. Naudojant HTTPS įsibrovėliams neleidžiama gadinti ar pasyviai klausytis jūsų programos ir jos naudotojų komunikacijos, be to, jį privaloma naudoti HTTP/2 ir daugelyje naujų žiniatinklio platformų API. [Sužinokite daugiau](https://web.dev/is-on-https/)."
   },
   "lighthouse-core/audits/is-on-https.js | displayValue": {
     "message": "{itemCount,plural, =1{Rasta 1 nesaugi užklausa}one{Rasta # nesaugi užklausa}few{Rastos # nesaugios užklausos}many{Rasta # nesaugos užklausos}other{Rasta # nesaugių užklausų}}"
@@ -851,21 +992,6 @@
   "lighthouse-core/audits/is-on-https.js | warning": {
     "message": "Leidžiama su įspėjimu"
   },
-  "lighthouse-core/audits/large-javascript-libraries.js | columnLibraryName": {
-    "message": "Biblioteka"
-  },
-  "lighthouse-core/audits/large-javascript-libraries.js | description": {
-    "message": "Dėl didelių „JavaScript“ bibliotekų našumas gali būti prastas. Pirmenybę teikite mažesnėms atitinkamoms bibliotekoms, kad sumažintumėte rinkinio dydį. [Sužinokite daugiau](https://developers.google.com/web/fundamentals/performance/webpack/decrease-frontend-size#optimize_dependencies)"
-  },
-  "lighthouse-core/audits/large-javascript-libraries.js | displayValue": {
-    "message": "{libraryCount,plural, =1{Rasta 1 didelė biblioteka}one{Rasta # didelė biblioteka}few{Rastos # didelės bibliotekos}many{Rasta # didelės bibliotekos}other{Rasta # didelių bibliotekų}}"
-  },
-  "lighthouse-core/audits/large-javascript-libraries.js | failureTitle": {
-    "message": "Pakeiskite nepagrįstai dideles „JavaScript“ bibliotekas"
-  },
-  "lighthouse-core/audits/large-javascript-libraries.js | title": {
-    "message": "Vengiama didelių „JavaScript“ bibliotekų – naudojamos mažesnės alternatyvos"
-  },
   "lighthouse-core/audits/largest-contentful-paint-element.js | description": {
     "message": "Tai didžiausias turiningas elementas, pažymėtas peržiūros srityje. [Sužinokite daugiau](https://web.dev/lighthouse-largest-contentful-paint/)"
   },
@@ -880,24 +1006,6 @@
   },
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "Venkite didelių išdėstymo poslinkių"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
-    "message": "Spartus puslapių įkėlimas mobiliojo ryšio tinkle užtikrina gerą mobiliųjų įrenginių naudotojų patirtį. [Sužinokite daugiau](https://web.dev/load-fast-enough-for-pwa/)."
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueText": {
-    "message": "Laikas iki sąveikos – {timeInMs, number, seconds} sek."
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueTextWithOverride": {
-    "message": "Laikas iki sąveikos imituojamame mobiliojo ryšio tinkle – {timeInMs, number, seconds} sek."
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | explanationLoadSlow": {
-    "message": "Puslapis įkeliamas per lėtai ir nėra interaktyvus 10 sekundžių. Peržiūrėkite galimybes ir diagnostiką skiltyje „Našumas“, kad sužinotumėte, kaip pagerinti situaciją."
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | failureTitle": {
-    "message": "Puslapis įkeliamas nepakankamai sparčiai mobiliojo ryšio tinkluose"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | title": {
-    "message": "Puslapis įkeliamas pakankamai sparčiai mobiliojo ryšio tinkluose"
   },
   "lighthouse-core/audits/long-tasks.js | description": {
     "message": "Sudaromas ilgiausių pagrindinės grupės užduočių sąrašas, naudingas siekiant nustatyti, kas labiausiai prisideda prie įvesties delsos. [Sužinokite daugiau](https://web.dev/long-tasks-devtools/)"
@@ -950,14 +1058,8 @@
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
     "message": "Nustatant kaupiamąjį išdėstymo poslinkį įvertinamas peržiūros srityje matomų elementų judėjimas. [Sužinokite daugiau](https://web.dev/cls/)"
   },
-  "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
-    "message": "Įvertinta įvesties delsa yra įvertintas laikas milisekundėmis, per kurį programa atsako į naudotojo įvestį per labiausiai užimtas puslapio įkėlimo 5 sekundes. Jei delsa ilgesnė nei 50 ms, naudotojams gali atrodyti, kad programa veikia lėtai. [Sužinokite daugiau](https://web.dev/estimated-input-latency/)."
-  },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
     "message": "Pirmas turiningas žymėjimas nurodo laiką, kada pažymimas pirmasis tekstas ar vaizdas. [Sužinokite daugiau](https://web.dev/first-contentful-paint/)."
-  },
-  "lighthouse-core/audits/metrics/first-cpu-idle.js | description": {
-    "message": "Pirmas centrinio procesoriaus neaktyvumo laikas nurodo pirmą kartą, kai pagrindinė puslapio grupė yra pakankamai neaktyvi, kad galėtų apdoroti įvestį.  [Sužinokite daugiau](https://web.dev/first-cpu-idle/)"
   },
   "lighthouse-core/audits/metrics/first-meaningful-paint.js | description": {
     "message": "Pirmasis reikšmingas parodymas nurodo, kada parodomas pagrindinis puslapio turinys. [Sužinokite daugiau](https://web.dev/first-meaningful-paint/)."
@@ -966,7 +1068,7 @@
     "message": "Laikas iki sąveikos yra vertė, nurodanti, kiek laiko reikia, kol puslapis tampa visiškai interaktyvus. [Sužinokite daugiau](https://web.dev/interactive/)."
   },
   "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
-    "message": "Didžiausias turiningas žymėjimas nurodo laiką, kada pažymimas didžiausias tekstas ar vaizdas. [Sužinokite daugiau](https://web.dev/lighthouse-largest-contentful-paint/)."
+    "message": "Didžiausias turiningas žymėjimas nurodo laiką, kada pažymimas didžiausias tekstas ar vaizdas. [Sužinokite daugiau](https://web.dev/lighthouse-largest-contentful-paint/)"
   },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
     "message": "Didžiausia potenciali naudotojų patiriama pirmosios įvesties delsa yra ilgiausios užduoties trukmė. [Sužinokite daugiau](https://web.dev/lighthouse-max-potential-fid/)."
@@ -1025,21 +1127,6 @@
   "lighthouse-core/audits/non-composited-animations.js | unsupportedTimingParameters": {
     "message": "Efekto laiko parametrai nepalaikomi"
   },
-  "lighthouse-core/audits/offline-start-url.js | description": {
-    "message": "Pagalbinis „JavaScript“ failas įgalina žiniatinklio programą veikti patikimai nenuspėjamomis tinklo sąlygomis. [Sužinokite daugiau](https://web.dev/offline-start-url/)"
-  },
-  "lighthouse-core/audits/offline-start-url.js | errorLoading": {
-    "message": "Įkeliant {url} įvyko klaida pagalbiniame „JavaScript“ faile, (gautas būsenos kodas: {statusCode})"
-  },
-  "lighthouse-core/audits/offline-start-url.js | failureTitle": {
-    "message": "Kai neprisijungta prie interneto, `start_url` neatsako rodydamas klaidos kodą 200."
-  },
-  "lighthouse-core/audits/offline-start-url.js | title": {
-    "message": "Kai neprisijungta prie interneto, `start_url` atsako rodydamas klaidos kodą 200."
-  },
-  "lighthouse-core/audits/offline-start-url.js | warningCantStart": {
-    "message": "„Lighthouse“ nepavyko nuskaityti `start_url` iš aprašo. Dėl to `start_url` buvo laikomas dokumento URL. Klaidos pranešimas: „{manifestWarning}“."
-  },
   "lighthouse-core/audits/performance-budget.js | description": {
     "message": "Tinklo užklausų kiekis ir dydis neturi viršyti tikslinių verčių, nustatytų našumo biudžete. [Sužinokite daugiau](https://developers.google.com/web/tools/lighthouse/audits/budgets)."
   },
@@ -1050,13 +1137,19 @@
     "message": "Našumo biudžetas"
   },
   "lighthouse-core/audits/preload-fonts.js | description": {
-    "message": "Iš anksto įkelkite „`optional`“ šriftus, kad pirmą kartą apsilankantieji galėtų juos naudoti. [Sužinokite daugiau](https://web.dev/preload-optional-fonts/)"
+    "message": "Iš anksto įkelkite šriftus su atributu „`optional`“, kad pirmą kartą apsilankantieji galėtų juos naudoti. [Sužinokite daugiau](https://web.dev/preload-optional-fonts/)"
   },
   "lighthouse-core/audits/preload-fonts.js | failureTitle": {
     "message": "Šriftai su „`font-display: optional`“ nebuvo iš anksto įkelti"
   },
   "lighthouse-core/audits/preload-fonts.js | title": {
     "message": "Šriftai su „`font-display: optional`“ buvo iš anksto įkelti"
+  },
+  "lighthouse-core/audits/preload-lcp-image.js | description": {
+    "message": "Iš anksto įkelkite vaizdą, kurį naudoja DTŽ elementas, kad pagerintumėte DTŽ laiką. [Sužinokite daugiau](https://web.dev/optimize-lcp/#preload-important-resources)"
+  },
+  "lighthouse-core/audits/preload-lcp-image.js | title": {
+    "message": "Iš anksto įkelkite didžiausio turiningo žymėjimo vaizdą"
   },
   "lighthouse-core/audits/redirects-http.js | description": {
     "message": "Jei jau nustatėte HTTPS, būtinai peradresuokite visą HTTP srautą į HTTPS, kad visi naudotojai galėtų naudotis saugiomis žiniatinklio funkcijomis. [Sužinokite daugiau](https://web.dev/redirects-http/)"
@@ -1098,7 +1191,7 @@
     "message": "Nukreipia į kitą „`hreflang`“ vietą ({url})"
   },
   "lighthouse-core/audits/seo/canonical.js | explanationRelative": {
-    "message": "Susijęs URL ({url})"
+    "message": "Tai nėra absoliutusis URL ({url})"
   },
   "lighthouse-core/audits/seo/canonical.js | explanationRoot": {
     "message": "Nukreipiama į domeno šakninį URL (pagrindinį puslapį) vietoje atitinkamo turinio puslapio"
@@ -1122,16 +1215,16 @@
     "message": "Nuorodos tikrinamos"
   },
   "lighthouse-core/audits/seo/font-size.js | additionalIllegibleText": {
-    "message": "Add'l illegible text"
+    "message": "Papildomas neįskaitomas tekstas"
   },
   "lighthouse-core/audits/seo/font-size.js | columnFontSize": {
-    "message": "Font Size"
+    "message": "Šrifto dydis"
   },
   "lighthouse-core/audits/seo/font-size.js | columnPercentPageText": {
-    "message": "% of Page Text"
+    "message": "Puslapio tekstas, %"
   },
   "lighthouse-core/audits/seo/font-size.js | columnSelector": {
-    "message": "Selector"
+    "message": "Parinkiklis"
   },
   "lighthouse-core/audits/seo/font-size.js | description": {
     "message": "Mažesnis nei 12 piks. šriftas yra per mažas, kad būtų įskaitomas, todėl mobiliuosius įrenginius naudojantys lankytojai turi keisti mastelį suėmę pirštais, kad galėtų perskaityti. Pasistenkite, kad daugiau nei 60 proc. puslapio teksto šrifto dydis būtų 12 piks. arba didesnis. [Sužinokite daugiau](https://web.dev/font-size/)."
@@ -1146,7 +1239,7 @@
     "message": "Dokumente naudojami neįskaitomo dydžio šriftai"
   },
   "lighthouse-core/audits/seo/font-size.js | legibleText": {
-    "message": "Legible text"
+    "message": "Įskaitomas tekstas"
   },
   "lighthouse-core/audits/seo/font-size.js | title": {
     "message": "Dokumente naudojami aiškaus dydžio šriftai"
@@ -1313,8 +1406,32 @@
   "lighthouse-core/audits/themed-omnibox.js | title": {
     "message": "Nustatoma adreso juostos temos spalva."
   },
-  "lighthouse-core/audits/third-party-summary.js | columnBlockingTime": {
-    "message": "Pagrindinės grupės blokavimo laikas"
+  "lighthouse-core/audits/third-party-facades.js | categoryCustomerSuccess": {
+    "message": "{productName} (klientų sėkmės istorijos)"
+  },
+  "lighthouse-core/audits/third-party-facades.js | categoryMarketing": {
+    "message": "{productName} (Rinkodara)"
+  },
+  "lighthouse-core/audits/third-party-facades.js | categorySocial": {
+    "message": "{productName} (socialiniai tinklai)"
+  },
+  "lighthouse-core/audits/third-party-facades.js | categoryVideo": {
+    "message": "{productName} (vaizdo įrašas)"
+  },
+  "lighthouse-core/audits/third-party-facades.js | columnProduct": {
+    "message": "Produktas"
+  },
+  "lighthouse-core/audits/third-party-facades.js | description": {
+    "message": "Kai kurių trečiųjų šalių įterptų elementų įkėlimas gali būti atidėtas. Apsvarstykite galimybę pakeisti juos fasadu, kol nėra būtini. [Sužinokite daugiau](https://web.dev/third-party-facades/)."
+  },
+  "lighthouse-core/audits/third-party-facades.js | displayValue": {
+    "message": "{itemCount,plural, =1{Pasiekiamas # alternatyvus fasadas}one{Pasiekiamas # alternatyvus fasadas}few{Pasiekiami # alternatyvūs fasadai}many{Pasiekiama # alternatyvaus fasado}other{Pasiekiama # alternatyvių fasadų}}"
+  },
+  "lighthouse-core/audits/third-party-facades.js | failureTitle": {
+    "message": "Kai kurių trečiųjų šalių išteklių įkėlimas gali būti atidėtas naudojant fasadą"
+  },
+  "lighthouse-core/audits/third-party-facades.js | title": {
+    "message": "Atidėtojo įkėlimo trečiųjų šalių ištekliai su fasadais"
   },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "Trečioji šalis"
@@ -1327,9 +1444,6 @@
   },
   "lighthouse-core/audits/third-party-summary.js | failureTitle": {
     "message": "Sumažina trečiosios šalies kodo poveikį"
-  },
-  "lighthouse-core/audits/third-party-summary.js | otherValue": {
-    "message": "Kiti ištekliai"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Trečiųjų šalių kodo naudojimo sumažinimas"
@@ -1347,7 +1461,7 @@
     "message": "Laiko biudžetas"
   },
   "lighthouse-core/audits/unsized-images.js | description": {
-    "message": "Set an explicit width and height on image elements to reduce layout shifts and improve CLS. [Learn more](https://web.dev/optimize-cls/#images-without-dimensions)"
+    "message": "Nustatykite tikslų vaizdo elementų plotį ir aukštį, kad būtų mažiau išdėstymo poslinkių ir pagerinamas KIP. [Sužinokite daugiau](https://web.dev/optimize-cls/#images-without-dimensions)"
   },
   "lighthouse-core/audits/unsized-images.js | failureTitle": {
     "message": "Vaizdo elementų matmenys nėra tikslūs: `width` ir `height`"
@@ -1368,7 +1482,7 @@
     "message": "Naudotojo laiko žymės ir matavimas"
   },
   "lighthouse-core/audits/uses-rel-preconnect.js | crossoriginWarning": {
-    "message": "Rasta atributo „{securityOrigin}“ išankstinio sujungimo nuoroda „<link>“, bet naršyklė jos nenaudojo. Patikrinkite, ar atributas „`crossorigin`“ naudojamas tinkamai."
+    "message": "Rastas „{securityOrigin}“ atributas „`<link rel=preconnect>`“, tačiau jis nebuvo naudojamas naršyklėje. Patikrinkite, ar atributas „`crossorigin`“ naudojamas tinkamai."
   },
   "lighthouse-core/audits/uses-rel-preconnect.js | description": {
     "message": "Apsvarstykite galimybę pridėti `preconnect` arba `dns-prefetch` ištekliaus nurodymus, kad ryšys su svarbiais trečiųjų šalių šaltiniais būtų užmezgamas iš anksto. [Sužinokite daugiau](https://web.dev/uses-rel-preconnect/)"
@@ -1377,13 +1491,13 @@
     "message": "Iš anksto prisijunkite prie reikiamų šaltinių"
   },
   "lighthouse-core/audits/uses-rel-preconnect.js | tooManyPreconnectLinksWarning": {
-    "message": "Rastos daugiau nei dvi išankstinio susiejimo nuorodos. Išankstinio susiejimo nuorodos turi būti naudojamos taupiai ir susiejant tik su svarbiausiais šaltiniais."
+    "message": "Rastos daugiau nei dvi „`<link rel=preconnect>`“ sąsajos. Jos turi būti naudojamos taupiai ir susiejant tik su svarbiausiais šaltiniais."
   },
   "lighthouse-core/audits/uses-rel-preconnect.js | unusedWarning": {
-    "message": "A preconnect <link> was found for \"{securityOrigin}\" but was not used by the browser. Only preconnect to important origins that the page will certainly request."
+    "message": "Rastas „{securityOrigin}“ atributas „`<link rel=preconnect>`“, tačiau jis nebuvo naudojamas naršyklėje. Svarbiuose šaltiniuose naudokite tik atributą „`preconnect`“, kurio užklausą puslapis tikrai pateiks."
   },
   "lighthouse-core/audits/uses-rel-preload.js | crossoriginWarning": {
-    "message": "Rasta atributo „{preloadURL}“ išankstinio įkėlimo nuoroda „<link>“, bet naršyklė jos nenaudojo. Patikrinkite, ar atributas „`crossorigin`“ naudojamas tinkamai."
+    "message": "Rastas „{preloadURL}“ iš anksto įkeliamas atributas „`<link>`“, tačiau jis nebuvo naudojamas naršyklėje. Patikrinkite, ar atributas „`crossorigin`“ naudojamas tinkamai."
   },
   "lighthouse-core/audits/uses-rel-preload.js | description": {
     "message": "Apsvarstykite galimybę naudoti „`<link rel=preload>`“ ir suteikti pirmenybę gaunamiems ištekliams, kurių užklausos šiuo metu teikiamos vėliau įkeliant puslapį. [Sužinokite daugiau](https://web.dev/uses-rel-preload/)."
@@ -1420,30 +1534,6 @@
   },
   "lighthouse-core/audits/viewport.js | title": {
     "message": "Yra žyma `<meta name=\"viewport\">` su `width` arba `initial-scale`"
-  },
-  "lighthouse-core/audits/without-javascript.js | description": {
-    "message": "Kai „JavaScript“ išjungta, jūsų programoje turėtų būti rodoma turinio, net jei tai tik įspėjimas naudotojui, kad „JavaScript“ būtina norint naudoti programą. [Sužinokite daugiau](https://web.dev/without-javascript/)"
-  },
-  "lighthouse-core/audits/without-javascript.js | explanation": {
-    "message": "Puslapio pagrindinėje dalyje turi būti pateikta turinio, jei scenarijus nepasiekiamas."
-  },
-  "lighthouse-core/audits/without-javascript.js | failureTitle": {
-    "message": "Atsarginis turinys neteikiamas, kai „JavaScript“ nepasiekiama"
-  },
-  "lighthouse-core/audits/without-javascript.js | title": {
-    "message": "Yra turinio, kai „JavaScript“ nepasiekiama"
-  },
-  "lighthouse-core/audits/works-offline.js | description": {
-    "message": "Jei kuriate laipsniškąją žiniatinklio programą, apsvarstykite galimybę naudoti pagalbinį „JavaScript“ failą, kad programa veiktų neprisijungus. [Sužinokite daugiau](https://web.dev/works-offline/)"
-  },
-  "lighthouse-core/audits/works-offline.js | failureTitle": {
-    "message": "Kai neprisijungta prie interneto, dabartinis puslapis neatsako rodydamas klaidos kodą 200."
-  },
-  "lighthouse-core/audits/works-offline.js | title": {
-    "message": "Kai neprisijungta prie interneto, dabartinis puslapis atsako rodydamas klaidos kodą 200."
-  },
-  "lighthouse-core/audits/works-offline.js | warningNoLoad": {
-    "message": "Puslapis gali būti neįkeliamas neprisijungus, nes bandomasis URL ({requested}) peradresavo į {final}. Išbandykite antrąjį URL tiesiogiai."
   },
   "lighthouse-core/config/default-config.js | a11yAriaGroupDescription": {
     "message": "Tai yra galimybės, skirtos pagerinti ARIA naudojimą programoje. Jos gali pagerinti pagalbinių technologijų, pvz., ekrano skaitytuvų, naudotojų patirtį."
@@ -1562,9 +1652,6 @@
   "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
     "message": "Laipsniškoji žiniatinklio programa"
   },
-  "lighthouse-core/config/default-config.js | pwaFastReliableGroupTitle": {
-    "message": "Sparčios ir patikimos"
-  },
   "lighthouse-core/config/default-config.js | pwaInstallableGroupTitle": {
     "message": "Galima įdiegti"
   },
@@ -1598,14 +1685,74 @@
   "lighthouse-core/config/default-config.js | seoMobileGroupTitle": {
     "message": "Pritaikyta mobiliesiems"
   },
-  "lighthouse-core/gather/gather-runner.js | warningRedirected": {
+  "lighthouse-core/gather/driver/environment.js | warningSlowHostCpu": {
+    "message": "Išbandyto įrenginio centrinis procesorius pasirodė lėtesnis, nei tikėjosi „Lighthouse“. Tai gali neigiamai paveikti našumo įvertinimą. Sužinokite daugiau apie [atitinkamo centrinio procesoriaus sulėtėjimo koeficiento kalibravimą](https://github.com/GoogleChrome/lighthouse/blob/master/docs/throttling.md#cpu-throttling)."
+  },
+  "lighthouse-core/gather/driver/navigation.js | warningRedirected": {
     "message": "Puslapis gali būti neįkeliamas, kaip numatyta, nes bandomasis URL ({requested}) peradresavo į {final}. Išbandykite antrąjį URL tiesiogiai."
   },
-  "lighthouse-core/gather/gather-runner.js | warningTimeout": {
+  "lighthouse-core/gather/driver/navigation.js | warningTimeout": {
     "message": "Puslapis įkeliamas per lėtai, kad įkėlimas būtų baigtas atitinkant laiko apribojimą. Rezultatai gali būti neišsamūs."
+  },
+  "lighthouse-core/gather/driver/storage.js | warningData": {
+    "message": "{locationCount,plural, =1{Šioje vietoje gali būti išsaugotų duomenų, turinčių poveikio įkėlimo našumui: {locations}. Patikrinkite šį puslapį inkognito lange, kad šie šaltiniai nepaveiktų rezultatų.}one{Šiose vietose gali būti išsaugotų duomenų, turinčių poveikio įkėlimo našumui: {locations}. Patikrinkite šį puslapį inkognito lange, kad šie šaltiniai nepaveiktų rezultatų.}few{Šiose vietose gali būti išsaugotų duomenų, turinčių poveikio įkėlimo našumui: {locations}. Patikrinkite šį puslapį inkognito lange, kad šie šaltiniai nepaveiktų rezultatų.}many{Šiose vietose gali būti išsaugotų duomenų, turinčių poveikio įkėlimo našumui: {locations}. Patikrinkite šį puslapį inkognito lange, kad šie šaltiniai nepaveiktų rezultatų.}other{Šiose vietose gali būti išsaugotų duomenų, turinčių poveikio įkėlimo našumui: {locations}. Patikrinkite šį puslapį inkognito lange, kad šie šaltiniai nepaveiktų rezultatų.}}"
+  },
+  "lighthouse-core/lib/csp-evaluator.js | allowlistFallback": {
+    "message": "Apsvarstykite galimybę pridėti https: ir http: URL schemas (nepaisoma naršyklėse, palaikančiose raktinį žodį „strict-dynamic“), kad būtų užtikrintas atgalinis suderinamumas su senesnėmis naršyklėmis."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | deprecatedDisownOpener": {
+    "message": "Direktyva „disown-opener“ nebenaudojama nuo CSP3. Vietoj jos naudokite antraštę „Cross-Origin-Opener-Policy“."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | deprecatedReferrer": {
+    "message": "Direktyva „referrer“ nebenaudojama nuo CSP2. Vietoj jos naudokite antraštę „Referrer-Policy“."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | deprecatedReflectedXSS": {
+    "message": "Direktyva „reflected-xss“ nebenaudojama nuo CSP2. Vietoj jos naudokite antraštę „X-XSS-Protection“."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | missingBaseUri": {
+    "message": "Jei nėra direktyvos „base-uri“, galima įterpti žymas <base>. Jas naudojant galima nustatyti visų susijusių URL (pvz., scenarijų) pagrindinį URL kaip atakos vykdytojo kontroliuojamą domeną. Apsvarstykite galimybę nustatyti direktyvos „base-uri“ vertę „none“ arba „self“."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | missingObjectSrc": {
+    "message": "Elementai, kuriuos kontroliuoja direktyva „object-src“, laikomi pasenusiomis funkcijomis. Apsvarstykite galimybę nustatyti direktyvos „object-src“ vertę „none“, kad nebūtų leidžiama įterpti papildinių, vykdančių nesaugius scenarijus."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | missingScriptSrc": {
+    "message": "Nėra direktyvos „script-src“. Gali būti leidžiama vykdyti nesaugius scenarijus."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | missingSemicolon": {
+    "message": "Gal pamiršote įvesti kabliataškį? Panašu, kad „{keyword}“ yra direktyva, o ne raktinis žodis."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | nonceCharset": {
+    "message": "Vertėse „nonce“ reikia naudoti „base64“ simbolių rinkinį."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | nonceLength": {
+    "message": "Vertės „nonce“ turi būti bent 8 simbolių ilgio."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | reportToOnly": {
+    "message": "Ataskaitų teikimo paskirties vietą galima sukonfigūruoti tik naudojant direktyvą „report-to“. Ši direktyva palaikoma tik „Chromium“ pagrindo naršyklėse, todėl taip pat rekomenduojama naudoti direktyvą „report-uri“."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | reportingDestinationMissing": {
+    "message": "Jokioje CSP nesukonfigūruota ataskaitų teikimo paskirties vieta. Tai apsunkins tolesnę CSP priežiūrą ir problemų stebėjimo procesą."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | strictDynamic": {
+    "message": "Prieglobos leidžiamųjų sąrašus neretai galima apeiti. Apsvarstykite galimybę naudoti raktinį žodį „strict-dynamic“ kartu su CSP vertėmis „nonce“ ar „hash“."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | unknownDirective": {
+    "message": "Nežinoma CSP direktyva."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | unknownKeyword": {
+    "message": "Panašu, kad „{keyword}“ yra netinkamas raktinis žodis."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | unsafeInlineFallback": {
+    "message": "Apsvarstykite galimybę pridėti raktinį žodį „unsafe-inline“ (nepaisoma naršyklėse, palaikančiose vertes „nonce“ / „hash“), kad būtų užtikrintas atgalinis suderinamumas su senesnėmis naršyklėmis."
+  },
+  "lighthouse-core/lib/i18n/i18n.js | columnBlockingTime": {
+    "message": "Pagrindinės grupės blokavimo laikas"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "Talpyklos TTL"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | columnDescription": {
+    "message": "Aprašas"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnDuration": {
     "message": "Trukmė"
@@ -1673,12 +1820,6 @@
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Dokumentas"
   },
-  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
-    "message": "Įvertinta įvesties delsa"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
-    "message": "Pirmas cent. procesoriaus laisvas laikas"
-  },
   "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
     "message": "First Contentful Paint"
   },
@@ -1694,6 +1835,15 @@
   "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
     "message": "Time to Interactive"
   },
+  "lighthouse-core/lib/i18n/i18n.js | itemSeverityHigh": {
+    "message": "Didelis"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | itemSeverityLow": {
+    "message": "Mažas"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | itemSeverityMedium": {
+    "message": "Vidutinis"
+  },
   "lighthouse-core/lib/i18n/i18n.js | largestContentfulPaintMetric": {
     "message": "Largest Contentful Paint"
   },
@@ -1708,6 +1858,9 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | otherResourceType": {
     "message": "Kita"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | otherResourcesLabel": {
+    "message": "Kiti ištekliai"
   },
   "lighthouse-core/lib/i18n/i18n.js | scriptResourceType": {
     "message": "Scenarijus"
@@ -1751,6 +1904,9 @@
   "lighthouse-core/lib/lh-error.js | missingRequiredArtifact": {
     "message": "Reikiamo ištekliaus „{artifactName}“ rinkimo priemonė nebuvo paleista."
   },
+  "lighthouse-core/lib/lh-error.js | noFcp": {
+    "message": "Puslapyje nėra jokio turinio. Įsitikinkite, kad įkeliant naršyklės langas veikia priekiniame plane, ir bandykite dar kartą. ({errorCode})"
+  },
   "lighthouse-core/lib/lh-error.js | notHtml": {
     "message": "Pateiktas puslapis nėra HTML (pateiktas kaip MIME tipas {mimeType})."
   },
@@ -1787,158 +1943,47 @@
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "Panašu, kad pateiktas URL netinkamas."
   },
-  "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
-    "message": "Rodyti patikras"
+  "lighthouse-treemap/app/src/util.js | allLabel": {
+    "message": "Viskas"
   },
-  "lighthouse-core/report/html/renderer/util.js | calculatorLink": {
-    "message": "Žr. skaičiuotuvą."
+  "lighthouse-treemap/app/src/util.js | allScriptsDropdownLabel": {
+    "message": "Visi scenarijai"
   },
-  "lighthouse-core/report/html/renderer/util.js | crcInitialNavigation": {
-    "message": "Pradinis naršymas"
+  "lighthouse-treemap/app/src/util.js | coverageColumnName": {
+    "message": "Aprėptis"
   },
-  "lighthouse-core/report/html/renderer/util.js | crcLongestDurationLabel": {
-    "message": "Didžiausia svarbiausio kelio delsa:"
+  "lighthouse-treemap/app/src/util.js | duplicateModulesLabel": {
+    "message": "Tikslios modulių kopijos"
   },
-  "lighthouse-core/report/html/renderer/util.js | dropdownCopyJSON": {
-    "message": "Kopijuoti JSON"
+  "lighthouse-treemap/app/src/util.js | resourceBytesLabel": {
+    "message": "Šaltinių baitai"
   },
-  "lighthouse-core/report/html/renderer/util.js | dropdownDarkTheme": {
-    "message": "Perjungti Tamsiąją temą"
+  "lighthouse-treemap/app/src/util.js | tableColumnName": {
+    "message": "Pavadinimas"
   },
-  "lighthouse-core/report/html/renderer/util.js | dropdownPrintExpanded": {
-    "message": "Išskleista spausdintinė kopija"
+  "lighthouse-treemap/app/src/util.js | toggleTableButtonLabel": {
+    "message": "Perjungti lentelę"
   },
-  "lighthouse-core/report/html/renderer/util.js | dropdownPrintSummary": {
-    "message": "Spausdintinė suvestinė"
-  },
-  "lighthouse-core/report/html/renderer/util.js | dropdownSaveGist": {
-    "message": "Išsaugoti kaip „Gist“"
-  },
-  "lighthouse-core/report/html/renderer/util.js | dropdownSaveHTML": {
-    "message": "Išsaugoti kaip HTML"
-  },
-  "lighthouse-core/report/html/renderer/util.js | dropdownSaveJSON": {
-    "message": "Išsaugoti kaip JSON"
-  },
-  "lighthouse-core/report/html/renderer/util.js | dropdownViewer": {
-    "message": "Atidaryti naudojant žiūriklį"
-  },
-  "lighthouse-core/report/html/renderer/util.js | errorLabel": {
-    "message": "Klaida!"
-  },
-  "lighthouse-core/report/html/renderer/util.js | errorMissingAuditInfo": {
-    "message": "Ataskaitos klaida: nėra patikros informacijos"
-  },
-  "lighthouse-core/report/html/renderer/util.js | footerIssue": {
-    "message": "Pateikti problemą"
-  },
-  "lighthouse-core/report/html/renderer/util.js | labDataTitle": {
-    "message": "Laboratorijos duomenys"
-  },
-  "lighthouse-core/report/html/renderer/util.js | lsPerformanceCategoryDescription": {
-    "message": "[„Lighthouse“](https://developers.google.com/web/tools/lighthouse/) dabartinio puslapio analizė emuliuotame mobiliojo ryšio tinkle. Vertės yra apytikslės ir gali skirtis."
-  },
-  "lighthouse-core/report/html/renderer/util.js | manualAuditsGroupTitle": {
-    "message": "Papildomi elementai, kuriuos reikia patikrinti neautomatiškai"
-  },
-  "lighthouse-core/report/html/renderer/util.js | notApplicableAuditsGroupTitle": {
-    "message": "Netaikoma"
-  },
-  "lighthouse-core/report/html/renderer/util.js | opportunityResourceColumnLabel": {
-    "message": "Galimybė"
-  },
-  "lighthouse-core/report/html/renderer/util.js | opportunitySavingsColumnLabel": {
-    "message": "Numatomos santaupos"
-  },
-  "lighthouse-core/report/html/renderer/util.js | passedAuditsGroupTitle": {
-    "message": "Sėkmingos patikros"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeDesktopEmulation": {
-    "message": "Emuliuotas stalinis kompiuteris"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeMobileEmulation": {
-    "message": "Emuliuotas „Moto G4“"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeNoEmulation": {
-    "message": "Nėra emuliacijos"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsAxeVersion": {
-    "message": "Axe version"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsBenchmark": {
-    "message": "Centrinio procesoriaus ir (arba) atminties galia"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsCPUThrottling": {
-    "message": "Centrinio procesoriaus pralaidumo ribojimas"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsChannel": {
-    "message": "Kanalas"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsDevice": {
-    "message": "Įrenginys"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsFetchTime": {
-    "message": "Gavimo laikas"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsNetworkThrottling": {
-    "message": "Tinklo pralaidumo ribojimas"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsTitle": {
-    "message": "Vykdymo laiko nustatymai"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsUA": {
-    "message": "Naudotojo priemonė (priegloba)"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsUANetwork": {
-    "message": "Naudotojo priemonė (tinklas)"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsUrl": {
-    "message": "URL"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeUnknown": {
-    "message": "Nežinoma"
-  },
-  "lighthouse-core/report/html/renderer/util.js | snippetCollapseButtonLabel": {
-    "message": "Sutraukti fragmentą"
-  },
-  "lighthouse-core/report/html/renderer/util.js | snippetExpandButtonLabel": {
-    "message": "Išplėsti fragmentą"
-  },
-  "lighthouse-core/report/html/renderer/util.js | thirdPartyResourcesLabel": {
-    "message": "Rodyti trečiųjų šalių išteklius"
-  },
-  "lighthouse-core/report/html/renderer/util.js | throttlingProvided": {
-    "message": "Pateikta pagal aplinką"
-  },
-  "lighthouse-core/report/html/renderer/util.js | toplevelWarningsMessage": {
-    "message": "Paleidžiant „Lighthouse“ kilo problemų."
-  },
-  "lighthouse-core/report/html/renderer/util.js | varianceDisclaimer": {
-    "message": "Vertės yra apytikslės ir gali skirtis. [Našumo įvertinimas apskaičiuojamas](https://web.dev/performance-scoring/) tiesiogiai pagal šias metrikas."
-  },
-  "lighthouse-core/report/html/renderer/util.js | warningAuditsGroupTitle": {
-    "message": "Sėkmingos patikros, bet pateikta įspėjimų"
-  },
-  "lighthouse-core/report/html/renderer/util.js | warningHeader": {
-    "message": "Įspėjimai: "
+  "lighthouse-treemap/app/src/util.js | unusedBytesLabel": {
+    "message": "Nenaudojami baitai"
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
-    "message": "Jei teikiate animuotą turinį, naudokite [„amp-anim“](https://amp.dev/documentation/components/amp-anim/), kad sumažintumėte centrinio procesoriaus naudojimą, kol turinys nerodomas ekrane."
+    "message": "Jei teikiate animuotą turinį, naudokite [„`amp-anim`“](https://amp.dev/documentation/components/amp-anim/), kad būtų naudojama mažiau centrinio procesoriaus galios, kai turinys nerodomas ekrane."
+  },
+  "node_modules/lighthouse-stack-packs/packs/amp.js | modern-image-formats": {
+    "message": "Apsvarstykite galimybę pateikti visus [„`amp-img`“](https://amp.dev/documentation/components/amp-img/?format=websites) komponentus „WebP“ formatais ir nurodyti atitinkamus kitų naršyklių atsarginius elementus. [Sužinokite daugiau](https://amp.dev/documentation/components/amp-img/#example:-specifying-a-fallback-image)."
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | offscreen-images": {
-    "message": "Įsitikinkite, kad naudojate tinkamas vaizdų žymas „`amp-img`“, kurios, naudojant atidėtąjį įkėlimą, automatiškai įkeliamos už peržiūros srities. [Sužinokite daugiau](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)"
+    "message": "Įsitikinkite, kad naudojate [„`amp-img`“](https://amp.dev/documentation/components/amp-img/?format=websites), kad vaizdai būtų įkeliami automatiškai naudojant atidėtąjį įkėlimą. [Sužinokite daugiau](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)."
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | render-blocking-resources": {
     "message": "[Serveryje pateikdami AMP išdėstymus](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/) naudokite tokius įrankius kaip [AMP optimizavimo priemonė](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer)."
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | unminified-css": {
-    "message": "Peržiūrėkite [AMP dokumentus](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/) ir isitikinkite, kad visi jūsų naudojami stiliai yra palaikomi."
+    "message": "Peržiūrėkite [AMP dokumentus](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/) ir isitikinkite, kad visi stiliai yra palaikomi."
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | uses-responsive-images": {
-    "message": "Elementas „`amp-img`“ palaiko atributą „`srcset`“, kad būtų galima nurodyti, kuriuos vaizdo išteklius naudoti pagal ekrano dydį.  [Sužinokite daugiau](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/art_direction/)"
-  },
-  "node_modules/lighthouse-stack-packs/packs/amp.js | uses-webp-images": {
-    "message": "Apsvarstykite galimybę pateikti visus „`amp-img`“ komponentus „WebP“ formatais ir nurodyti atitinkamus kitų naršyklių atsarginius elementus. [Sužinokite daugiau](https://amp.dev/documentation/components/amp-img/#example:-specifying-a-fallback-image)"
+    "message": "Komponentas [„`amp-img`“](https://amp.dev/documentation/components/amp-img/?format=websites) palaiko atributą [„`srcset`“](https://web.dev/use-srcset-to-automatically-choose-the-right-image/), kad būtų galima nurodyti, kuriuos vaizdo išteklius naudoti pagal ekrano dydį. [Sužinokite daugiau](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/art_direction/)."
   },
   "node_modules/lighthouse-stack-packs/packs/angular.js | dom-size": {
     "message": "Jei pateikiami labai dideli sąrašai, apsvarstykite galimybę naudoti virtualų slinkimą naudojant komponentų kūrimo rinkinį (CDK). [Sužinokite daugiau](https://web.dev/virtualize-lists-with-angular-cdk/)"
@@ -1950,7 +1995,7 @@
     "message": "Jei naudojate „Angular CLI“, įsitikinkite, kad versijos generuojamos gamybos režimu. [Sužinokite daugiau](https://angular.io/guide/deployment#enable-runtime-production-mode)"
   },
   "node_modules/lighthouse-stack-packs/packs/angular.js | unused-javascript": {
-    "message": "Jei naudojate „Angular CLI“, į gamybinę versiją įtraukite šaltinio žemėlapių, kad būtų tikrinamos jūsų grupės. [Sužinokite daugiau](https://angular.io/guide/deployment#inspect-the-bundles)"
+    "message": "Jei naudojate „Angular CLI“, į gamybinę versiją įtraukite šaltinio žemėlapių, kad būtų tikrinamos jūsų grupės. [Sužinokite daugiau](https://angular.io/guide/deployment#inspect-the-bundles)."
   },
   "node_modules/lighthouse-stack-packs/packs/angular.js | uses-rel-preload": {
     "message": "Iš anksto įkelkite maršrutus, kad būtų galima greičiau naršyti. [Sužinokite daugiau](https://web.dev/route-preloading-in-angular/)"
@@ -1959,91 +2004,91 @@
     "message": "Apsvarstykite galimybę naudoti komponentų kūrimo rinkinyje (CDK) esančią paslaugų priemonę „`BreakpointObserver`“ vaizdų atskaitos taškams tvarkyti. [Sužinokite daugiau](https://material.angular.io/cdk/layout/overview)"
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | efficient-animated-content": {
-    "message": "Consider uploading your GIF to a service which will make it available to embed as an HTML5 video."
+    "message": "Apsvarstykite galimybę įkelti savo GIF į paslaugą, kuri leis jį įterpti kaip HTML5 vaizdo įrašą."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | font-display": {
-    "message": "Specify `@font-display` when defining custom fonts in your theme."
+    "message": "Nurodykite „`@font-display`“ apibrėždami tinkintus temos šriftus."
+  },
+  "node_modules/lighthouse-stack-packs/packs/drupal.js | modern-image-formats": {
+    "message": "Apsvarstykite galimybę įdiegti ir konfigūruoti [modulį, kad galėtumėte naudoti „WebP“ vaizdo formatus](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=webp&solrsort=iss_project_release_usage+desc&op=Search) svetainėje. Tokie moduliai automatiškai generuoja įkeltų vaizdų „WebP“ versiją, kad būtų optimizuotas įkėlimo laikas."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | offscreen-images": {
-    "message": "Install [a Drupal module](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=im_vid_3%3A67&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=%22lazy+load%22&solrsort=iss_project_release_usage+desc&op=Search) that can leverage JavaScript or [Intersection Observer API](https://developers.google.com/web/updates/2016/04/intersectionobserver) lazy loading of images. Such modules provide the ability to defer any offscreen images to improve performance."
+    "message": "Įdiekite [„Drupal“ modulį](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=im_vid_3%3A67&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=%22lazy+load%22&solrsort=iss_project_release_usage+desc&op=Search), kuris galėtų įkelti vaizdus naudojant atidėtąjį įkėlimą. Naudojant tokius modulius galima atidėti bet kokius ne ekraninius vaizdus, kad būtų padidintas našumas."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | render-blocking-resources": {
-    "message": "Consider using a module to inline critical CSS and JavaScipt, or potentially load assets asynchronously via JavaScript such as the [Advanced CSS/JS Aggregation](https://www.drupal.org/project/advagg) module. Beware that optimizations provided by this module may break your site, so you will likely need to make code changes."
+    "message": "Apsvarstykite galimybę naudoti modulį, kad galėtumėte įterpti svarbią CSS kalbą ir „JavaScript“ arba galimai nesinchronizuotai įkelti išteklius naudodami „JavaScript“, pvz., [išplėstinio CSS kalbos ir (arba) JS apibendrinimo](https://www.drupal.org/project/advagg) modulį. Atminkite, kad dėl šio modulio teikiamo optimizavimo gali būti pažeistos jūsų svetainės funkcijos, todėl tikriausiai turėsite atlikti kodo pakeitimų."
   },
-  "node_modules/lighthouse-stack-packs/packs/drupal.js | time-to-first-byte": {
-    "message": "Themes, modules, and server specifications all contribute to server response time. Consider finding a more optimized theme, carefully selecting an optimization module, and/or upgrading your server. Your hosting servers should make use of PHP opcode caching, memory-caching to reduce database query times such as Redis or Memcached, as well as optimized application logic to prepare pages faster."
+  "node_modules/lighthouse-stack-packs/packs/drupal.js | server-response-time": {
+    "message": "Temos, moduliai ir serverio specifikacijos – visa tai turi įtakos serverio atsako laikui. Galbūt vertėtų surasti geriau optimizuotą temą, atidžiai pasirinkti optimizavimo modulį ir (arba) naujovinti serverį. Prieglobos serveriai turėtų naudoti PHP operacijos kodų talpyklą, atminties talpyklą, kad sumažintų duomenų bazės užklausų skaičių, pvz., „Redis“ ar „Memcached“, bei optimizuotą programos logiką, kad puslapiai būtų sparčiau parengti."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | total-byte-weight": {
-    "message": "Consider using [Responsive Image Styles](https://www.drupal.org/docs/8/mobile-guide/responsive-images-in-drupal-8) to reduce the size of images loaded on your page. If you are using Views to show multiple content items on a page, consider implementing pagination to limit the number of content items shown on a given page."
+    "message": "Apsvarstykite galimybę naudoti [interaktyvių vaizdų stilius](https://www.drupal.org/docs/8/mobile-guide/responsive-images-in-drupal-8), kad sumažintumėte puslapyje įkeliamus vaizdus. Jei naudojate rodinius keliems turinio elementams rodyti puslapyje, apsvarstykite galimybę įdiegti puslapių numeravimą, kad apribotumėte nurodytame puslapyje rodomų turinio elementų skaičių."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | unminified-css": {
-    "message": "Ensure you have enabled \"Aggregate CSS files\" in the \"Administration » Configuration » Development\" page. You can also configure more advanced aggregation options through [additional modules](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=im_vid_3%3A123&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=css+aggregation&solrsort=iss_project_release_usage+desc&op=Search) to speed up your site by concatenating, minifying, and compressing your CSS styles."
+    "message": "Būtinai įgalinkite funkciją „Apibendrinti CSS kalbos failus“ puslapyje „Administravimas“ » „Konfigūravimas“ » „Diegimas“. Be to, galite konfigūruoti išplėstines apibendrinimo parinktis naudodami [papildomus modulius](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=im_vid_3%3A123&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=css+aggregation&solrsort=iss_project_release_usage+desc&op=Search), kad svetainė sparčiau veiktų, sujungiant, suglaudinant CSS kalbos stilius ir pašalinant jų nereikalingus duomenis."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | unminified-javascript": {
-    "message": "Ensure you have enabled \"Aggregate JavaScript files\" in the \"Administration » Configuration » Development\" page. You can also configure more advanced aggregation options through [additional modules](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=im_vid_3%3A123&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=javascript+aggregation&solrsort=iss_project_release_usage+desc&op=Search) to speed up your site by concatenating, minifying, and compressing your JavaScript assets."
+    "message": "Būtinai įgalinkite funkciją „Apibendrinti „JavaScript“ failus“ puslapyje „Administravimas“ » „Konfigūravimas“ » „Diegimas“. Be to, galite konfigūruoti išplėstines apibendrinimo parinktis naudodami [papildomus modulius](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=im_vid_3%3A123&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=javascript+aggregation&solrsort=iss_project_release_usage+desc&op=Search), kad svetainė sparčiau veiktų, sujungiant, suglaudinant „JavaScript“ išteklius ir pašalinant jų nereikalingus duomenis."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | unused-css-rules": {
-    "message": "Consider removing unused CSS rules and only attach the needed Drupal libraries to the relevant page or component in a page. See the [Drupal documentation link](https://www.drupal.org/docs/8/creating-custom-modules/adding-stylesheets-css-and-javascript-js-to-a-drupal-8-module#library) for details. To identify attached libraries that are adding extraneous CSS, try running [code coverage](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) in Chrome DevTools. You can identify the theme/module responsible from the URL of the stylesheet when CSS aggregation is disabled in your Drupal site. Look out for themes/modules that have many stylesheets in the list which have a lot of red in code coverage. A theme/module should only enqueue a stylesheet if it is actually used on the page."
+    "message": "Apsvarstykite galimybę pašalinti nenaudojamas CSS kalbos taisykles ir pridėti tik reikalingas „Drupal“ bibliotekas prie atitinkamo puslapio ar komponento puslapyje. Jei reikia išsamios informacijos, žr. [„Drupal“ dokumentų nuorodą](https://www.drupal.org/docs/8/creating-custom-modules/adding-stylesheets-css-and-javascript-js-to-a-drupal-8-module#library). Kad nustatytumėte pridėtas bibliotekas, pridedančias nesusijusios CSS kalbos, pabandykite vykdyti [kodo aprėpties procesą](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) naudodami „Chrome DevTools“. Susijusią temą ir (arba) modulį galite nustatyti pagal stiliaus aprašo URL, kai CSS kalbos apibendrinimas išjungtas „Drupal“ svetainėje. Ieškokite temų ir (arba) modulių, kurių sąraše pateikta daug stiliaus aprašų, kurių kodo aprėptyje yra daug raudonos spalvos. Tema ir (arba) modulis įtraukti stiliaus aprašą į eilę turėtų tik tokiu atveju, jei jis tikrai naudojamas puslapyje."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | unused-javascript": {
-    "message": "Consider removing unused JavaScipt assets and only attach the needed Drupal libraries to the relevant page or component in a page. See the [Drupal documentation link](https://www.drupal.org/docs/8/creating-custom-modules/adding-stylesheets-css-and-javascript-js-to-a-drupal-8-module#library) for details. To identify attached libraries that are adding extraneous JavaScript, try running [code coverage](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) in Chrome DevTools. You can identify the theme/module responsible from the URL of the script when JavaScript aggregation is disabled in your Drupal site. Look out for themes/modules that have many scripts in the list which have a lot of red in code coverage. A theme/module should only enqueue a script if it is actually used on the page."
+    "message": "Apsvarstykite galimybę pašalinti nenaudojamus „JavaScript“ išteklius ir pridėti tik reikalingas „Drupal“ bibliotekas prie atitinkamo puslapio ar komponento puslapyje. Jei reikia išsamios informacijos, žr. [„Drupal“ dokumentų nuorodą](https://www.drupal.org/docs/8/creating-custom-modules/adding-stylesheets-css-and-javascript-js-to-a-drupal-8-module#library). Kad nustatytumėte pridėtas bibliotekas, pridedančias nesusijusios „JavaScript“ kalbos, pabandykite vykdyti [kodo aprėpties procesą](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) naudodami „Chrome DevTools“. Susijusią temą ir (arba) modulį galite nustatyti pagal scenarijaus URL, kai „JavaScript“ apibendrinimas išjungtas „Drupal“ svetainėje. Ieškokite temų ir (arba) modulių, kurių sąraše pateikta daug scenarijų, kurių kodo aprėptyje yra daug raudonos spalvos. Tema ir (arba) modulis įtraukti scenarijų į eilę turėtų tik tokiu atveju, jei jis tikrai naudojamas puslapyje."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | uses-long-cache-ttl": {
-    "message": "Set the \"Browser and proxy cache maximum age\" in the \"Administration » Configuration » Development\" page. Read about [Drupal cache and optimizing for performance](https://www.drupal.org/docs/7/managing-site-performance-and-scalability/caching-to-improve-performance/caching-overview#s-drupal-performance-resources)."
+    "message": "Nustatykite parinktį „Naršyklės ir tarpinio serverio talpyklos maksimalus amžius“ puslapyje „Administravimas“ » „Konfigūravimas“ » „Diegimas“. Skaitykite apie [„Drupal“ talpyklą ir našumo optimizavimą](https://www.drupal.org/docs/7/managing-site-performance-and-scalability/caching-to-improve-performance/caching-overview#s-drupal-performance-resources)."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | uses-optimized-images": {
-    "message": "Consider using [a module](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=im_vid_3%3A123&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=optimize+images&solrsort=iss_project_release_usage+desc&op=Search) that automatically optimizes and reduces the size of images uploaded through the site while retaining quality. Also, ensure you are using the native [Responsive Image Styles](https://www.drupal.org/docs/8/mobile-guide/responsive-images-in-drupal-8) provided from Drupal (available in Drupal 8 and above) for all images rendered on the site."
+    "message": "Apsvarstykite galimybę naudoti [modulį](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=im_vid_3%3A123&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=optimize+images&solrsort=iss_project_release_usage+desc&op=Search), kuris automatiškai optimizuoja ir sumažina svetainėje įkeltus vaizdus, išlaikydamas jų kokybę. Be to, įsitikinkite, kad naudojate „Drupal“ teikiamus savuosius [interaktyvių vaizdų stilius](https://www.drupal.org/docs/8/mobile-guide/responsive-images-in-drupal-8) visiems svetainėje pateikiamiems vaizdams (pasiekiama naudojant 8 ar naujesnės versijos „Drupal“)."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | uses-rel-preconnect": {
-    "message": "Preconnect or dns-prefetch resource hints can be added by installing and configuring [a module](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=dns-prefetch&solrsort=iss_project_release_usage+desc&op=Search) that provides facilities for user agent resource hints."
+    "message": "Įdiegiant ir konfigūruojant [modulį](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=dns-prefetch&solrsort=iss_project_release_usage+desc&op=Search), kurį naudojant galima teikti naudotojo priemonės šaltinio nurodymus, galima pridėti išankstinio prijungimo arba DNS išankstinės iškvietos ištekliaus nurodymų."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | uses-responsive-images": {
-    "message": "Ensure that you are using the native [Responsive Image Styles](https://www.drupal.org/docs/8/mobile-guide/responsive-images-in-drupal-8) provided from Drupal (available in Drupal 8 and above). Use the Responsive Image Styles when rendering image fields through view modes, views, or images uploaded through the WYSIWYG editor."
-  },
-  "node_modules/lighthouse-stack-packs/packs/drupal.js | uses-webp-images": {
-    "message": "Consider installing and configuring [a module to leverage WebP image formats](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=webp&solrsort=iss_project_release_usage+desc&op=Search) in your site. Such modules would automatically generate a WebP version of your uploaded images to optimize loading times."
+    "message": "Įsitikinkite, kad naudojate „Drupal“ teikiamus savuosius [interaktyvių vaizdų stilius](https://www.drupal.org/docs/8/mobile-guide/responsive-images-in-drupal-8) (pasiekiama naudojant 8 ar naujesnės versijos „Drupal“). Naudokite interaktyvių vaizdų stilius pateikdami vaizdų failus peržiūros režimais, per rodinius ar vaizdus, įkeltus naudojant WYSIWYG redagavimo priemonę."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | efficient-animated-content": {
-    "message": "Consider uploading your GIF to a service which will make it available to embed as an HTML5 video."
+    "message": "Apsvarstykite galimybę įkelti savo GIF į paslaugą, kuri leis jį įterpti kaip HTML5 vaizdo įrašą."
+  },
+  "node_modules/lighthouse-stack-packs/packs/joomla.js | modern-image-formats": {
+    "message": "Apsvarstykite galimybę naudoti [papildinį](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=webp) arba paslaugą, kuri automatiškai konvertuotų įkeltus vaizdus į optimalius formatus."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | offscreen-images": {
-    "message": "Install a [lazy-load Joomla plugin](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=lazy%20loading) that provides the ability to defer any offscreen images, or switch to a template that provides that functionality. Starting with Joomla 4.0 the core is shipping an dedicated lazyloading plugin please enable the \"Content - Lazy Loading Images\" plugin. Also consider using [an AMP plugin](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=amp)."
+    "message": "Įdiekite [atidėtojo įkėlimo „Joomla“ papildinį](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=lazy%20loading), leidžiantį atidėti bet kokius ne ekraninius vaizdus, arba perjunkite į šią funkciją teikiantį šabloną. Nuo „Joomla“ 4.0 versijos visi nauji vaizdai [automatiškai](https://github.com/joomla/joomla-cms/pull/30748) gaus svarbų atributą „`loading`“."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | render-blocking-resources": {
-    "message": "There are a number of Joomla plugins that can help you [inline critical assets](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance) or [defer less important resources](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance). Beware that optimizations provided by these plugins may break features of your templates or plugins, so you will need to test these thoroughly."
+    "message": "Yra įvairių „Joomla“ papildinių, kuriuos naudodami galite [įterpti svarbių išteklių](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance) arba [atidėti mažiau svarbius šaltinius](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance). Atminkite, kad dėl šių papildinių teikiamo optimizavimo gali būti pažeistos jūsų šablonų ar papildinių funkcijos, todėl reikės juos nuodugniai patikrinti."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | server-response-time": {
-    "message": "Templates, extensions, and server specifications all contribute to server response time. Consider finding a more optimized template, carefully selecting an optimization extension, and/or upgrading your server."
+    "message": "Šablonai, plėtiniai ir serverio specifikacijos – visa tai turi įtakos serverio atsako laikui. Galbūt vertėtų surasti geriau optimizuotą šabloną, atidžiai pasirinkti optimizavimo plėtinį ir (arba) naujovinti serverį."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | total-byte-weight": {
-    "message": "Consider showing excerpts in your article categories (e.g. via the read more link), reducing the number of articles shown on a given page, breaking your long posts into multiple pages, or using a plugin to lazy-load comments."
+    "message": "Apsvarstykite galimybę rodyti ištraukas straipsnių kategorijose (pvz., naudodami daugiau informacijos skaitymo nuorodą), sumažinti nurodytame puslapyje rodomų straipsnių skaičių, suskaidyti ilgus įrašus į kelis puslapius arba naudoti komentarų atidėtojo įkėlimo papildinį."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | unminified-css": {
-    "message": "A number of [Joomla extensions](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance) can speed up your site by concatenating, minifying, and compressing your css styles. There are also templates that provide this functionality."
+    "message": "Įvairūs [„Joomla“ plėtiniai](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance) gali padėti svetainei sparčiau veikti sujungdami, suglaudindami CSS kalbos stilius ar pašalindami jų nereikalingus duomenis. Be to, yra šias funkcijas teikiančių šablonų."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | unminified-javascript": {
-    "message": "A number of [Joomla extensions](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance) can speed up your site by concatenating, minifying, and compressing your scripts. There are also templates that provide this functionality."
+    "message": "Įvairūs [„Joomla“ plėtiniai](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance) gali padėti svetainei sparčiau veikti sujungdami, suglaudindami scenarijus ar pašalindami jų nereikalingus duomenis. Be to, yra šias funkcijas teikiančių šablonų."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | unused-css-rules": {
-    "message": "Consider reducing, or switching, the number of [Joomla extensions](https://extensions.joomla.org/) loading unused CSS in your page. To identify extensions that are adding extraneous CSS, try running [code coverage](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) in Chrome DevTools. You can identify the theme/plugin responsible from the URL of the stylesheet. Look out for plugins that have many stylesheets in the list which have a lot of red in code coverage. A plugin should only enqueue a stylesheet if it is actually used on the page."
+    "message": "Apsvarstykite galimybę sumažinti [„Joomla“ plėtinių](https://extensions.joomla.org/), įkeliančių nenaudojamą CSS kalbą jūsų puslapyje, skaičių arba juos pakeisti. Kad nustatytumėte plėtinius, pridedančius nesusijusios CSS kalbos, pabandykite vykdyti [kodo aprėpties procesą](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) naudodami „Chrome DevTools“. Susijusią temą ir (arba) papildinį galite nustatyti pagal stiliaus aprašo URL. Ieškokite papildinių, kurių sąraše pateikta daug stiliaus aprašų, kurių kodo aprėptyje yra daug raudonos spalvos. Papildinys turėtų įtraukti į eilę stiliaus aprašą, tik jei jis tikrai naudojamas puslapyje."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | unused-javascript": {
-    "message": "Consider reducing, or switching, the number of [Joomla extensions](https://extensions.joomla.org/) loading unused JavaScript in your page. To identify plugins that are adding extraneous JS, try running [code coverage](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) in Chrome DevTools. You can identify the extension responsible from the URL of the script. Look out for extensions that have many scripts in the list which have a lot of red in code coverage. An extension should only enqueue a script if it is actually used on the page."
+    "message": "Apsvarstykite galimybę sumažinti [„Joomla“ plėtinių](https://extensions.joomla.org/), įkeliančių nenaudojamą „JavaScript“ jūsų puslapyje, skaičių arba juos pakeisti. Kad nustatytumėte papildinius, pridedančius nesusijusios JS, pabandykite vykdyti [kodo aprėpties procesą](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) naudodami „Chrome DevTools“. Susijusį plėtinį galite nustatyti pagal scenarijaus URL. Ieškokite plėtinių, kurių sąraše pateikta daug scenarijų, kurių kodo aprėptyje yra daug raudonos spalvos. Plėtinys įtraukti scenarijų į eilę turėtų tik tokiu atveju, jei jis tikrai naudojamas puslapyje."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | uses-long-cache-ttl": {
-    "message": "Read about [Browser Caching in Joomla](https://docs.joomla.org/Cache)."
+    "message": "Skaitykite apie [naršyklės saugojimo talpykloje funkciją sistemoje „Joomla“](https://docs.joomla.org/Cache)."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | uses-optimized-images": {
-    "message": "Consider using an [image optimization plugin](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance) that compresses your images while retaining quality."
+    "message": "Apsvarstykite galimybę naudoti [vaizdų optimizavimo papildinį](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance), leidžiantį suglaudinti vaizdus išlaikant kokybę."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | uses-responsive-images": {
-    "message": "Consider using a [responsive images plugin](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=responsive%20images) to use responsive images in your content."
+    "message": "Apsvarstykite galimybę naudoti [interaktyvių vaizdų papildinį](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=responsive%20images), kad galėtumėte naudoti interaktyvius vaizdus turinyje."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | uses-text-compression": {
-    "message": "You can enable text compression by enabling Gzip Page Compression in Joomla (System > Global configuration > Server)."
-  },
-  "node_modules/lighthouse-stack-packs/packs/joomla.js | uses-webp-images": {
-    "message": "Consider using a [plugin](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=webp) or service that will automatically convert your uploaded images to the optimal formats."
+    "message": "Teksto glaudinimą galite įgalinti įgalinę „Gzip“ puslapių glaudinimą sistemoje „Joomla“ („Sistema“ > „Visuotinė konfigūracija“ > „Serveris“)."
   },
   "node_modules/lighthouse-stack-packs/packs/magento.js | critical-request-chains": {
     "message": "Jei negrupuojate „JavaScript“ išteklių, apsvarstykite galimybę naudoti [presavimo įrankį](https://github.com/magento/baler)."
@@ -2054,17 +2099,20 @@
   "node_modules/lighthouse-stack-packs/packs/magento.js | font-display": {
     "message": "[Apibrėždami tinkintus šriftus](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/css-topics/using-fonts.html) nurodykite „`@font-display`“."
   },
+  "node_modules/lighthouse-stack-packs/packs/magento.js | modern-image-formats": {
+    "message": "Apsvarstykite galimybę [„Magento Marketplace“](https://marketplace.magento.com/catalogsearch/result/?q=webp) ieškoti įvairių trečiųjų šalių plėtinių, kad galėtumėte pasinaudoti naujesniais vaizdo formatais."
+  },
   "node_modules/lighthouse-stack-packs/packs/magento.js | offscreen-images": {
     "message": "Apsvarstykite galimybę keisti produkto ir katalogo šablonus, kad galėtumėte išnaudoti žiniatinklio platformos [atidėtojo įkėlimo](https://web.dev/native-lazy-loading) funkciją."
   },
-  "node_modules/lighthouse-stack-packs/packs/magento.js | time-to-first-byte": {
+  "node_modules/lighthouse-stack-packs/packs/magento.js | server-response-time": {
     "message": "Naudokite platformos „Magento“ [„Varnish“ integravimą](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html)."
   },
   "node_modules/lighthouse-stack-packs/packs/magento.js | unminified-css": {
     "message": "Parduotuvės skiltyje „Kūrėjų nustatymai“ įgalinkite parinktį „Pašalinti nereikalingus CSS failų duomenis“. [Sužinokite daugiau](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)"
   },
   "node_modules/lighthouse-stack-packs/packs/magento.js | unminified-javascript": {
-    "message": "Use [Terser](https://www.npmjs.com/package/terser) to minify all JavaScript assets from static content deployment, and disable the built-in minification feature."
+    "message": "Naudodami [„Terser“](https://www.npmjs.com/package/terser) pašalinkite visų „JavaScript“ išteklių nereikalingus duomenis iš statinio turinio diegimo ir išjunkite įtaisytą nereikalingų duomenų pašalinimo funkciją."
   },
   "node_modules/lighthouse-stack-packs/packs/magento.js | unused-javascript": {
     "message": "Išjunkite platformos „Magento“ įtaisytą [„JavaScript“ grupavimą](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html)."
@@ -2078,23 +2126,62 @@
   "node_modules/lighthouse-stack-packs/packs/magento.js | uses-rel-preload": {
     "message": "Žymas „`<link rel=preload>`“ galima pridėti [keičiant temos išdėstymą](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
   },
-  "node_modules/lighthouse-stack-packs/packs/magento.js | uses-webp-images": {
-    "message": "Apsvarstykite galimybę [„Magento Marketplace“](https://marketplace.magento.com/catalogsearch/result/?q=webp) ieškoti įvairių trečiųjų šalių plėtinių, kad galėtumėte pasinaudoti naujesniais vaizdo formatais."
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | efficient-animated-content": {
+    "message": "[Pakeiskite animuotus GIF failus vaizdo įrašu](https://web.dev/replace-gifs-with-videos/), taip tinklalapis bus įkeliamas greičiau. Taip pat apsvarstykite galimybę naudoti modernius failų formatus, pvz., [„WebM“](https://web.dev/replace-gifs-with-videos/#create-webm-videos) arba [AV1](https://developers.google.com/web/updates/2018/09/chrome-70-media-updates#av1-decoder), taip pagerinsite glaudinimo efektyvumą daugiau nei 30 proc., palyginti su dabartiniu naujausiu vaizdo kodeku – VP9."
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | modern-image-formats": {
+    "message": "Apsvarstykite galimybę naudoti [papildinį](https://octobercms.com/plugins?search=image) arba paslaugą, kuri automatiškai konvertuotų įkeltus vaizdus į optimalius formatus. [„WebP“ nenuostolingai suglaudinti vaizdai](https://developers.google.com/speed/webp) yra 26 proc. mažesni, palyginti su PNG, ir 25–34 proc. mažesni, palyginti su JPEG formato tapataus SSIM kokybės indekso vaizdais. Apsvarstykite galimybę naudoti ir kitą naujos kartos vaizdo formatą – [AVIF](https://jakearchibald.com/2020/avif-has-landed/)."
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | offscreen-images": {
+    "message": "Apsvarstykite galimybę įdiegti [atidėtojo vaizdų įkėlimo papildinį](https://octobercms.com/plugins?search=lazy), kuriuo galima atidėti bet kokius ne ekraninius vaizdus, arba perjunkite į šią funkciją teikiantį šabloną. Be to, apsvarstykite galimybę naudoti [AMP papildinį](https://octobercms.com/plugins?search=Accelerated+Mobile+Pages)."
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | render-blocking-resources": {
+    "message": "Yra daugybė papildinių, kuriuos naudodami galite [įterpti svarbių išteklių](https://octobercms.com/plugins?search=css). Šie papildiniai gali sugadinti kitus papildinius, todėl reikia bandyti atidžiai."
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | server-response-time": {
+    "message": "Temos, papildiniai ir serverio specifikacijos – visa tai turi įtakos serverio atsako laikui. Apsvarstykite galimybę paieškoti geriau optimizuotos temos, atidžiau pasirinkti optimizavimo papildinį ir (arba) naujovinti serverį. Platfomoje „October CMS“ kūrėjams taip pat leidžiama naudoti atributą[„`Queues`“](https://octobercms.com/docs/services/queues), kad galėtų atidėti daug laiko reikalaujančių užduočių, pvz., el. laiško siuntimo, apdorojimą. Tai žymiai paspartina žiniatinklio užklausas."
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | total-byte-weight": {
+    "message": "Apsvarstykite galimybę rodyti ištraukas įrašų sąrašuose (pvz., naudodami mygtuką „`show more`“), sumažinti nurodytame tinklalapyje rodomų įrašų skaičių, suskaidyti ilgus įrašus į kelis tinklalapius arba naudoti komentarų atidėtojo įkėlimo papildinį."
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | unminified-css": {
+    "message": "Yra daugybė [papildinių](https://octobercms.com/plugins?search=css), kuriuos naudodami galite paspartinti svetainę, sujungę ir suglaudinę stilius bei pašalinę nereikalingus duomenis. Pasinaudoję kompiliavimo procesu nereikalingiems duomenims iš anksto pašalinti, galite paspartinti kūrimą."
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | unminified-javascript": {
+    "message": "Yra daugybė [papildinių](https://octobercms.com/plugins?search=javascript), kuriuos naudodami galite paspartinti svetainę, sujungę ir suglaudinę scenarijus bei pašalinę nereikalingus duomenis. Pasinaudoję kompiliavimo procesu nereikalingiems duomenims iš anksto pašalinti, galite paspartinti kūrimą."
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | unused-css-rules": {
+    "message": "Apsvarstykite galimybę peržiūrėti [papildinius](https://octobercms.com/plugins) svetainėje įkeldami nenaudojamą CSS. Norėdami nustatyti, kurie plėtiniai prideda nenaudojamą CSS, vykdykite [kodo aprėpties procesą](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) naudodami „Chrome“ kūrėjo įrankius. Susijusią temą ir (arba) papildinį nustatykite pagal stiliaus aprašo URL. Ieškokite papildinių su daug stiliaus aprašų, kuriuose naudojamoje kodo dalyje yra daug raudonų sričių. Papildinys turėtų pridėti stiliaus aprašą tik jei jis tikrai naudojamas tinklalapyje."
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | unused-javascript": {
+    "message": "Apsvarstykite galimybę peržiūrėti [papildinius](https://octobercms.com/plugins?search=javascript), įkeliančius nenaudojamą „JavaScript“ tinklalapyje. Norėdami nustatyti, kurie plėtiniai prideda nenaudojamą „JavaScript“, vykdykite [kodo aprėpties procesą](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) naudodami „Chrome“ kūrėjo įrankius. Susijusią temą ir (arba) papildinį nustatykite pagal scenarijaus URL. Ieškokite papildinių su daug scenarijų, kuriuose naudojamoje kodo dalyje yra daug raudonų sričių. Papildinys turėtų pridėti scenarijų tik jei jis tikrai naudojamas tinklalapyje."
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | uses-long-cache-ttl": {
+    "message": "Skaitykite apie tai, [kaip išvengti nereikalingų tinklo užklausų naudojant HTTP talpyklą](https://web.dev/http-cache/#caching-checklist). Yra daugybė [papildinių](https://octobercms.com/plugins?search=Caching), kuriuos naudodami galite paspartinti išsaugojimą talpykloje."
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | uses-optimized-images": {
+    "message": "Apsvarstykite galimybę naudoti [vaizdų optimizavimo papildinį](https://octobercms.com/plugins?search=image), kuriuo galima suglaudinti vaizdus išlaikant kokybę."
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | uses-responsive-images": {
+    "message": "Įkelkite vaizdus tiesiai į medijos biblioteką, kad būtų pasiekiami reikiami vaizdų dydžiai. Apsvarstykite galimybę naudoti [dydžio keitimo filtrą](https://octobercms.com/docs/markup/filter-resize) arba [vaizdo dydžio keitimo papildinį](https://octobercms.com/plugins?search=image), kad būtų naudojami optimalaus dydžio vaizdai."
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | uses-text-compression": {
+    "message": "Įgalinkite teksto glaudinimą žiniatinklio serverio konfigūracijoje."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | dom-size": {
-    "message": "Consider using a “windowing” library like `react-window` to minimize the number of DOM nodes created if you are rendering many repeated elements on the page. [Learn more](https://web.dev/virtualize-long-lists-react-window/). Also, minimize unnecessary re-renders using [shouldComponentUpdate](https://reactjs.org/docs/optimizing-performance.html#shouldcomponentupdate-in-action), [PureComponent](https://reactjs.org/docs/react-api.html#reactpurecomponent), or [React.memo](https://reactjs.org/docs/react-api.html#reactmemo) and [skip effects](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects) only until certain dependencies have changed if you are using the Effect hook to improve runtime performance."
+    "message": "Jei puslapyje pateikiate daug pasikartojančių elementų, apsvarstykite galimybę naudoti langų pateikimo biblioteką, pvz., „`react-window`“, kad sumažintumėte sukurtų DOM mazgų skaičių. [Sužinokite daugiau](https://web.dev/virtualize-long-lists-react-window/). Be to, sumažinkite nebūtinus pakartotinius pateikimus naudodami elementą [„`shouldComponentUpdate`“](https://reactjs.org/docs/optimizing-performance.html#shouldcomponentupdate-in-action), [„`PureComponent`“](https://reactjs.org/docs/react-api.html#reactpurecomponent) arba [„`React.memo`“](https://reactjs.org/docs/react-api.html#reactmemo) ir [praleiskite efektus](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects) tik iki to laiko, kai bus pakeistos tam tikros priklausomybės, jei naudojate „`Effect` Hook“ siekdami pagerinti vykdymo laiko našumą."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | redirects": {
     "message": "Jei naudojate „React“ maršruto parinktuvą, sumažinkite komponento „`<Redirect>`“ naudojimą [parenkant maršrutą](https://reacttraining.com/react-router/web/api/Redirect)."
   },
-  "node_modules/lighthouse-stack-packs/packs/react.js | time-to-first-byte": {
+  "node_modules/lighthouse-stack-packs/packs/react.js | server-response-time": {
     "message": "Jei serveryje pateikiate „React“ komponentų, apsvarstykite galimybę naudoti „`renderToNodeStream()`“ arba „`renderToStaticNodeStream()`“, kad klientas galėtų gauti ir užpildyti skirtingas žymėjimo dalis, o ne viską iš karto. [Sužinokite daugiau](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)"
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | unminified-css": {
-    "message": "Jei versijų sistemoje iš CSS failų nereikalingi duomenys pašalinami automatiškai, įsitikinkite, kad pritaikote gamybinę programos versiją. Galite tai patikrinti naudodami „React“ kūrėjo įrankių plėtinį. [Sužinokite daugiau](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)"
+    "message": "Jei versijų sistemoje iš CSS failų nereikalingi duomenys pašalinami automatiškai, įsitikinkite, kad pritaikote gamybinę programos versiją. Galite tai patikrinti naudodami „React“ kūrėjo įrankių plėtinį. [Sužinokite daugiau](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | unminified-javascript": {
-    "message": "Jei versijų sistemoje iš JS failų nereikalingi duomenys pašalinami automatiškai, įsitikinkite, kad pritaikote gamybinę programos versiją. Galite tai patikrinti naudodami „React“ kūrėjo įrankių plėtinį. [Sužinokite daugiau](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)"
+    "message": "Jei versijų sistemoje iš JS failų nereikalingi duomenys pašalinami automatiškai, įsitikinkite, kad pritaikote gamybinę programos versiją. Galite tai patikrinti naudodami „React“ kūrėjo įrankių plėtinį. [Sužinokite daugiau](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build)."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | unused-javascript": {
     "message": "Jei nepateikiate serveryje, [išskaidykite „JavaScript“ grupes](https://web.dev/code-splitting-suspense/) naudodami „`React.lazy()`“. Kitu atveju išskaidykite kodą naudodami trečiosios šalies biblioteką, pvz., [„loadable-components“](https://www.smooth-code.com/open-source/loadable-components/docs/getting-started/)."
@@ -2103,7 +2190,10 @@
     "message": "Naudokite „React“ kūrimo įrankių analizės įrankį (kurį naudojant pasitelkiama analizės įrankio API) komponentų pateikimo našumui įvertinti. [Sužinokite daugiau.](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)"
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | efficient-animated-content": {
-    "message": "Consider uploading your GIF to a service which will make it available to embed as an HTML5 video."
+    "message": "Apsvarstykite galimybę įkelti savo GIF į paslaugą, kuri leis jį įterpti kaip HTML5 vaizdo įrašą."
+  },
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | modern-image-formats": {
+    "message": "Apsvarstykite galimybę naudoti [papildinį](https://wordpress.org/plugins/search/convert+webp/) arba paslaugą, kuri automatiškai konvertuotų įkeltus vaizdus į optimalius formatus."
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | offscreen-images": {
     "message": "Įdiekite [atidėtojo įkėlimo „WordPress“ papildinį](https://wordpress.org/plugins/search/lazy+load/), leidžiantį atidėti bet kokius ne ekraninius vaizdus, arba perjunkite į šią funkciją teikiančią temą. Be to, apsvarstykite galimybę naudoti [AMP papildinį](https://wordpress.org/plugins/amp/)."
@@ -2111,7 +2201,7 @@
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | render-blocking-resources": {
     "message": "Yra įvairių „WordPress“ papildinių, kuriuos naudodami galite [įterpti svarbių išteklių](https://wordpress.org/plugins/search/critical+css/) arba [atidėti mažiau svarbius šaltinius](https://wordpress.org/plugins/search/defer+css+javascript/). Atminkite, kad dėl šių papildinių teikiamo optimizavimo gali būti pažeistos jūsų temos ar papildinių funkcijos, todėl tikriausiai turėsite atlikti kodo pakeitimų."
   },
-  "node_modules/lighthouse-stack-packs/packs/wordpress.js | time-to-first-byte": {
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | server-response-time": {
     "message": "Temos, papildiniai ir serverio specifikacijos – visa tai turi įtakos serverio atsako laikui. Galbūt vertėtų surasti geriau optimizuotą temą, atidžiai pasirinkti optimizavimo papildinį ir (arba) naujovinti serverį."
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | total-byte-weight": {
@@ -2141,7 +2231,142 @@
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | uses-text-compression": {
     "message": "Galite įgalinti teksto glaudinimą žiniatinklio serverio konfigūracijoje."
   },
-  "node_modules/lighthouse-stack-packs/packs/wordpress.js | uses-webp-images": {
-    "message": "Consider using a [plugin](https://wordpress.org/plugins/search/convert+webp/) or service that will automatically convert your uploaded images to the optimal formats."
+  "report/renderer/util.js | calculatorLink": {
+    "message": "Žr. skaičiuotuvą."
+  },
+  "report/renderer/util.js | crcInitialNavigation": {
+    "message": "Pradinis naršymas"
+  },
+  "report/renderer/util.js | crcLongestDurationLabel": {
+    "message": "Didžiausia svarbiausio kelio delsa:"
+  },
+  "report/renderer/util.js | dropdownCopyJSON": {
+    "message": "Kopijuoti JSON"
+  },
+  "report/renderer/util.js | dropdownDarkTheme": {
+    "message": "Perjungti Tamsiąją temą"
+  },
+  "report/renderer/util.js | dropdownPrintExpanded": {
+    "message": "Išskleista spausdintinė kopija"
+  },
+  "report/renderer/util.js | dropdownPrintSummary": {
+    "message": "Spausdintinė suvestinė"
+  },
+  "report/renderer/util.js | dropdownSaveGist": {
+    "message": "Išsaugoti kaip „Gist“"
+  },
+  "report/renderer/util.js | dropdownSaveHTML": {
+    "message": "Išsaugoti kaip HTML"
+  },
+  "report/renderer/util.js | dropdownSaveJSON": {
+    "message": "Išsaugoti kaip JSON"
+  },
+  "report/renderer/util.js | dropdownViewer": {
+    "message": "Atidaryti naudojant žiūriklį"
+  },
+  "report/renderer/util.js | errorLabel": {
+    "message": "Klaida!"
+  },
+  "report/renderer/util.js | errorMissingAuditInfo": {
+    "message": "Ataskaitos klaida: nėra patikros informacijos"
+  },
+  "report/renderer/util.js | footerIssue": {
+    "message": "Pateikti problemą"
+  },
+  "report/renderer/util.js | labDataTitle": {
+    "message": "Laboratorijos duomenys"
+  },
+  "report/renderer/util.js | lsPerformanceCategoryDescription": {
+    "message": "[„Lighthouse“](https://developers.google.com/web/tools/lighthouse/) dabartinio puslapio analizė emuliuotame mobiliojo ryšio tinkle. Vertės yra apytikslės ir gali skirtis."
+  },
+  "report/renderer/util.js | manualAuditsGroupTitle": {
+    "message": "Papildomi elementai, kuriuos reikia patikrinti neautomatiškai"
+  },
+  "report/renderer/util.js | notApplicableAuditsGroupTitle": {
+    "message": "Netaikoma"
+  },
+  "report/renderer/util.js | opportunityResourceColumnLabel": {
+    "message": "Galimybė"
+  },
+  "report/renderer/util.js | opportunitySavingsColumnLabel": {
+    "message": "Numatomos santaupos"
+  },
+  "report/renderer/util.js | passedAuditsGroupTitle": {
+    "message": "Sėkmingos patikros"
+  },
+  "report/renderer/util.js | runtimeDesktopEmulation": {
+    "message": "Emuliuotas stalinis kompiuteris"
+  },
+  "report/renderer/util.js | runtimeMobileEmulation": {
+    "message": "Emuliuotas „Moto G4“"
+  },
+  "report/renderer/util.js | runtimeNoEmulation": {
+    "message": "Nėra emuliacijos"
+  },
+  "report/renderer/util.js | runtimeSettingsAxeVersion": {
+    "message": "„Axe“ versija"
+  },
+  "report/renderer/util.js | runtimeSettingsBenchmark": {
+    "message": "Centrinio procesoriaus ir (arba) atminties galia"
+  },
+  "report/renderer/util.js | runtimeSettingsCPUThrottling": {
+    "message": "Centrinio procesoriaus pralaidumo ribojimas"
+  },
+  "report/renderer/util.js | runtimeSettingsChannel": {
+    "message": "Kanalas"
+  },
+  "report/renderer/util.js | runtimeSettingsDevice": {
+    "message": "Įrenginys"
+  },
+  "report/renderer/util.js | runtimeSettingsFetchTime": {
+    "message": "Gavimo laikas"
+  },
+  "report/renderer/util.js | runtimeSettingsNetworkThrottling": {
+    "message": "Tinklo pralaidumo ribojimas"
+  },
+  "report/renderer/util.js | runtimeSettingsTitle": {
+    "message": "Vykdymo laiko nustatymai"
+  },
+  "report/renderer/util.js | runtimeSettingsUA": {
+    "message": "Naudotojo priemonė (priegloba)"
+  },
+  "report/renderer/util.js | runtimeSettingsUANetwork": {
+    "message": "Naudotojo priemonė (tinklas)"
+  },
+  "report/renderer/util.js | runtimeSettingsUrl": {
+    "message": "URL"
+  },
+  "report/renderer/util.js | runtimeUnknown": {
+    "message": "Nežinoma"
+  },
+  "report/renderer/util.js | showRelevantAudits": {
+    "message": "Rodyti patikras, aktualias:"
+  },
+  "report/renderer/util.js | snippetCollapseButtonLabel": {
+    "message": "Sutraukti fragmentą"
+  },
+  "report/renderer/util.js | snippetExpandButtonLabel": {
+    "message": "Išplėsti fragmentą"
+  },
+  "report/renderer/util.js | thirdPartyResourcesLabel": {
+    "message": "Rodyti trečiųjų šalių išteklius"
+  },
+  "report/renderer/util.js | throttlingProvided": {
+    "message": "Pateikta pagal aplinką"
+  },
+  "report/renderer/util.js | toplevelWarningsMessage": {
+    "message": "Paleidžiant „Lighthouse“ kilo problemų."
+  },
+  "report/renderer/util.js | varianceDisclaimer": {
+    "message": "Vertės yra apytikslės ir gali skirtis. [Našumo įvertinimas apskaičiuojamas](https://web.dev/performance-scoring/) tiesiogiai pagal šias metrikas."
+  },
+  "report/renderer/util.js | viewTreemapLabel": {
+    "message": "Žr. medžio žemėlapį"
+  },
+  "report/renderer/util.js | warningAuditsGroupTitle": {
+    "message": "Sėkmingos patikros, bet pateikta įspėjimų"
+  },
+  "report/renderer/util.js | warningHeader": {
+    "message": "Įspėjimai: "
   }
 }

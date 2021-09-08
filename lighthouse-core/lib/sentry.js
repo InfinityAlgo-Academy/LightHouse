@@ -96,11 +96,15 @@ function init(opts) {
       const sampledErrorMatch = SAMPLED_ERRORS.find(sample => sample.pattern.test(err.message));
       if (sampledErrorMatch && sampledErrorMatch.rate <= Math.random()) return;
 
-      // Protocol errors all share same stack trace, so add more to fingerprint
       // @ts-expect-error - properties added to protocol method LHErrors.
       if (err.protocolMethod) {
+        // Protocol errors all share same stack trace, so add more to fingerprint
         // @ts-expect-error - properties added to protocol method LHErrors.
         opts.fingerprint = ['{{ default }}', err.protocolMethod, err.protocolError];
+
+        opts.tags = opts.tags || {};
+        // @ts-expect-error - properties added to protocol method LHErrors.
+        opts.tags.protocolMethod = err.protocolMethod;
       }
 
       return new Promise(resolve => {
@@ -110,7 +114,7 @@ function init(opts) {
 
     const context = Object.assign({
       url: opts.url,
-      emulatedFormFactor: opts.flags.emulatedFormFactor,
+      formFactor: opts.flags.formFactor,
       throttlingMethod: opts.flags.throttlingMethod,
     }, opts.flags.throttling);
     Sentry.mergeContext({extra: Object.assign({}, opts.environmentData.extra, context)});

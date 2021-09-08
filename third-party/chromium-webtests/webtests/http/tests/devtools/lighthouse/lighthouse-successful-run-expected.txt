@@ -25,13 +25,12 @@ Benchmarking machine
 Initializing…
 Running defaultPass pass
 Resetting state with about:blank
-Setting up network for the pass trace
 Cleaning browser cache
+Preparing network conditions
 Running beforePass methods
 Gathering setup: CSSUsage
 Gathering setup: JsUsage
 Gathering setup: ViewportDimensions
-Gathering setup: RuntimeExceptions
 Gathering setup: ConsoleMessages
 Gathering setup: AnchorElements
 Gathering setup: ImageElements
@@ -40,6 +39,7 @@ Gathering setup: MetaElements
 Gathering setup: ScriptElements
 Gathering setup: IFrameElements
 Gathering setup: MainDocumentContent
+Gathering setup: GatherContext
 Gathering setup: GlobalListeners
 Gathering setup: AppCacheManifest
 Gathering setup: Doctype
@@ -56,14 +56,13 @@ Gathering setup: Accessibility
 Gathering setup: TraceElements
 Gathering setup: InspectorIssues
 Gathering setup: SourceMaps
+Gathering setup: FullPageScreenshot
 Beginning devtoolsLog and trace
-Getting browser version
 Loading page & waiting for onload
 Running pass methods
 Gathering in-page: CSSUsage
 Gathering in-page: JsUsage
 Gathering in-page: ViewportDimensions
-Gathering in-page: RuntimeExceptions
 Gathering in-page: ConsoleMessages
 Gathering in-page: AnchorElements
 Gathering in-page: ImageElements
@@ -72,6 +71,7 @@ Gathering in-page: MetaElements
 Gathering in-page: ScriptElements
 Gathering in-page: IFrameElements
 Gathering in-page: MainDocumentContent
+Gathering in-page: GatherContext
 Gathering in-page: GlobalListeners
 Gathering in-page: AppCacheManifest
 Gathering in-page: Doctype
@@ -88,13 +88,14 @@ Gathering in-page: Accessibility
 Gathering in-page: TraceElements
 Gathering in-page: InspectorIssues
 Gathering in-page: SourceMaps
+Gathering in-page: FullPageScreenshot
 Gathering trace
 Gathering devtoolsLog & network records
+Computing artifact: NetworkRecords
 Running afterPass methods
 Gathering: CSSUsage
 Gathering: JsUsage
 Gathering: ViewportDimensions
-Gathering: RuntimeExceptions
 Gathering: ConsoleMessages
 Gathering: AnchorElements
 Gathering: ImageElements
@@ -103,6 +104,7 @@ Gathering: MetaElements
 Gathering: ScriptElements
 Gathering: IFrameElements
 Gathering: MainDocumentContent
+Gathering: GatherContext
 Gathering: GlobalListeners
 Gathering: AppCacheManifest
 Gathering: Doctype
@@ -114,57 +116,53 @@ Gathering: TagsBlockingFirstPaint
 Gathering: FontSize
 Gathering: EmbeddedContent
 Gathering: RobotsTxt
+Getting browser version
 Gathering: TapTargets
 Gathering: Accessibility
 Gathering: TraceElements
+Computing artifact: ProcessedTrace
+Computing artifact: ProcessedNavigation
 Gathering: InspectorIssues
 Gathering: SourceMaps
+Gathering: FullPageScreenshot
+Populate base artifacts
+Get webapp manifest
+Collect stacks
 Running offlinePass pass
 Resetting state with about:blank
-Setting up network for the pass trace
+Preparing network conditions
 Running beforePass methods
 Gathering setup: ServiceWorker
-Gathering setup: Offline
-Gathering setup: StartUrl
 Beginning devtoolsLog and trace
 Loading page & waiting for onload
 Running pass methods
 Gathering in-page: ServiceWorker
-Gathering in-page: Offline
-Gathering in-page: StartUrl
 Gathering devtoolsLog & network records
+Computing artifact: NetworkRecords
 Running afterPass methods
 Gathering: ServiceWorker
-Gathering: Offline
-Gathering: StartUrl
 Running redirectPass pass
 Resetting state with about:blank
-Setting up network for the pass trace
+Preparing network conditions
 Running beforePass methods
 Gathering setup: HTTPRedirect
-Gathering setup: HTMLWithoutJavaScript
 Beginning devtoolsLog and trace
 Loading page & waiting for onload
 Running pass methods
 Gathering in-page: HTTPRedirect
-Gathering in-page: HTMLWithoutJavaScript
 Gathering devtoolsLog & network records
+Computing artifact: NetworkRecords
 Running afterPass methods
 Gathering: HTTPRedirect
-Gathering: HTMLWithoutJavaScript
 Disconnecting from browser...
 Analyzing and running audits...
 Auditing: Uses HTTPS
-Computing artifact: NetworkRecords
 Auditing: Redirects HTTP traffic to HTTPS
 Auditing: Registers a service worker that controls page and `start_url`
-Auditing: Current page responds with a 200 when offline
 Auditing: Has a `<meta name="viewport">` tag with `width` or `initial-scale`
 Computing artifact: ViewportMeta
-Auditing: Contains some content when JavaScript is not available
 Auditing: First Contentful Paint
 Computing artifact: FirstContentfulPaint
-Computing artifact: TraceOfTab
 Computing artifact: LanternFirstContentfulPaint
 Computing artifact: PageDependencyGraph
 Computing artifact: LoadSimulator
@@ -175,9 +173,6 @@ Computing artifact: LanternLargestContentfulPaint
 Auditing: First Meaningful Paint
 Computing artifact: FirstMeaningfulPaint
 Computing artifact: LanternFirstMeaningfulPaint
-Auditing: Page load is fast enough on mobile networks
-Computing artifact: Interactive
-Computing artifact: LanternInteractive
 Auditing: Speed Index
 Computing artifact: SpeedIndex
 Computing artifact: LanternSpeedIndex
@@ -185,12 +180,10 @@ Computing artifact: Speedline
 Auditing: Screenshot Thumbnails
 Auditing: Final Screenshot
 Computing artifact: Screenshots
-Auditing: Estimated Input Latency
-Computing artifact: EstimatedInputLatency
-Computing artifact: LanternEstimatedInputLatency
 Auditing: Total Blocking Time
 Computing artifact: TotalBlockingTime
 Computing artifact: LanternTotalBlockingTime
+Computing artifact: LanternInteractive
 Auditing: Max Potential First Input Delay
 Computing artifact: MaxPotentialFID
 Computing artifact: LanternMaxPotentialFID
@@ -199,16 +192,14 @@ Computing artifact: CumulativeLayoutShift
 Auditing: No browser errors logged to the console
 Auditing: Initial server response time was short
 Computing artifact: MainResource
-Auditing: First CPU Idle
-Computing artifact: FirstCPUIdle
-Computing artifact: LanternFirstCPUIdle
 Auditing: Time to Interactive
+Computing artifact: Interactive
 Auditing: User Timing marks and measures
 Computing artifact: UserTimings
 Auditing: Avoid chaining critical requests
 Computing artifact: CriticalRequestChains
 Auditing: Avoid multiple page redirects
-Auditing: Web app manifest meets the installability requirements
+Auditing: Web app manifest and service worker meet the installability requirements
 Computing artifact: ManifestValues
 Auditing: Provides a valid `apple-touch-icon`
 Auditing: Configured for a custom splash screen
@@ -225,7 +216,6 @@ Auditing: Minimizes main-thread work
 Computing artifact: MainThreadTasks
 Auditing: JavaScript execution time
 Auditing: Preload key requests
-Computing artifact: LoadSimulator
 Auditing: Preconnect to required origins
 Auditing: All text remains visible during webfont loads
 Auditing: Diagnostics
@@ -235,33 +225,44 @@ Auditing: Server Backend Latencies
 Auditing: Tasks
 Auditing: Metrics
 Computing artifact: TimingSummary
-Auditing: `start_url` responds with a 200 when offline
 Auditing: Performance budget
 Computing artifact: ResourceSummary
 Auditing: Timing budget
 Auditing: Keep request counts low and transfer sizes small
 Auditing: Minimize third-party usage
+Auditing: Lazy load third-party resources with facades
 Auditing: Largest Contentful Paint element
+Auditing: Largest Contentful Paint image was not lazily loaded
 Auditing: Avoid large layout shifts
 Auditing: Avoid long main-thread tasks
 Auditing: Avoids `unload` event listeners
 Auditing: Avoid non-composited animations
 Auditing: Image elements have explicit `width` and `height`
-Auditing: Avoids large JavaScript libraries with smaller alternatives
 Auditing: Page has valid source maps
+Auditing: Preload Largest Contentful Paint image
+Auditing: Ensure CSP is effective against XSS attacks
+Auditing: Full-page screenshot
+Auditing: Script Treemap Data
+Computing artifact: JSBundles
+Computing artifact: ModuleDuplication
 Auditing: Site works cross-browser
 Auditing: Page transitions don't feel like they block on the network
 Auditing: Each page has a URL
 Auditing: `[accesskey]` values are unique
 Auditing: `[aria-*]` attributes match their roles
+Auditing: `button`, `link`, and `menuitem` elements have accessible names
 Auditing: `[aria-hidden="true"]` is not present on the document `<body>`
 Auditing: `[aria-hidden="true"]` elements do not contain focusable descendents
 Auditing: ARIA input fields have accessible names
+Auditing: ARIA `meter` elements have accessible names
+Auditing: ARIA `progressbar` elements have accessible names
 Auditing: `[role]`s have all required `[aria-*]` attributes
 Auditing: Elements with an ARIA `[role]` that require children to contain a specific `[role]` have all required children.
 Auditing: `[role]`s are contained by their required parent element
 Auditing: `[role]` values are valid
 Auditing: ARIA toggle fields have accessible names
+Auditing: ARIA `tooltip` elements have accessible names
+Auditing: ARIA `treeitem` elements have accessible names
 Auditing: `[aria-*]` attributes have valid values
 Auditing: `[aria-*]` attributes are valid and not misspelled
 Auditing: Buttons have an accessible name
@@ -280,7 +281,6 @@ Auditing: `<html>` element has a valid value for its `[lang]` attribute
 Auditing: Image elements have `[alt]` attributes
 Auditing: `<input type="image">` elements have `[alt]` text
 Auditing: Form elements have associated labels
-Auditing: Presentational `<table>` elements avoid using `<th>`, `<caption>` or the `[summary]` attribute.
 Auditing: Links have a discernible name
 Auditing: Lists contain only `<li>` elements and script supporting elements (`<script>` and `<template>`).
 Auditing: List items (`<li>`) are contained within `<ul>` or `<ol>` parent elements
@@ -292,7 +292,6 @@ Auditing: Cells in a `<table>` element that use the `[headers]` attribute refer 
 Auditing: `<th>` elements and elements with `[role="columnheader"/"rowheader"]` have data cells they describe.
 Auditing: `[lang]` attributes have a valid value
 Auditing: `<video>` elements contain a `<track>` element with `[kind="captions"]`
-Auditing: `<video>` elements contain a `<track>` element with `[kind="description"]`
 Auditing: Custom controls have associated labels
 Auditing: Custom controls have ARIA roles
 Auditing: User focus is not accidentally trapped in a region
@@ -309,16 +308,16 @@ Auditing: Defer offscreen images
 Auditing: Eliminate render-blocking resources
 Computing artifact: UnusedCSS
 Computing artifact: FirstContentfulPaint
-Computing artifact: LanternFirstContentfulPaint
 Auditing: Minify CSS
 Auditing: Minify JavaScript
-Auditing: Remove unused CSS
-Auditing: Remove unused JavaScript
+Auditing: Reduce unused CSS
+Auditing: Reduce unused JavaScript
 Computing artifact: JSBundles
 Auditing: Serve images in next-gen formats
 Auditing: Efficiently encode images
 Auditing: Enable text compression
 Auditing: Properly size images
+Computing artifact: ImageRecords
 Auditing: Use video formats for animated content
 Auditing: Remove duplicate modules in JavaScript bundles
 Computing artifact: ModuleDuplication
@@ -330,6 +329,7 @@ Auditing: Properly defines charset
 Auditing: Avoids an excessive DOM size
 Auditing: Links to cross-origin destinations are safe
 Auditing: Avoids requesting the geolocation permission on page load
+Auditing: No issues in the `Issues` panel in Chrome Devtools
 Auditing: Avoids `document.write()`
 Auditing: Avoids front-end JavaScript libraries with known security vulnerabilities
 Auditing: Detected JavaScript libraries
@@ -363,27 +363,29 @@ Auditing: No ad found at the very top of the viewport
 Auditing: Few or no ads loaded outside viewport
 Auditing: Ad tag is loaded asynchronously
 Auditing: Ads not blocked by load events
+Computing artifact: TraceOfTab
 Auditing: No bottleneck requests found
 Auditing: No duplicate tags found
 Auditing: Latency of first ad render
 Computing artifact: AdRenderTime
 Computing artifact: LanternAdRenderTime
 Auditing: GPT and bids loaded in parallel
-Auditing: GPT tag is loaded from recommended host
+Auditing: GPT tag is loaded from an official source
 Auditing: Ad tag is loaded over HTTPS
 Auditing: Ad scripts are loaded statically
 Auditing: Header bidding is parallelized
 Auditing: Tag load time
 Computing artifact: TagLoadTime
 Computing artifact: LanternTagLoadTime
-Auditing: Ad density in initial viewport is within recommended range
+Auditing: Ad density is within recommended range
 Auditing: Cumulative ad shift
+Auditing: Deprecated GPT API Usage
+Auditing: GPT Errors
 Generating results...
 
 =============== Lighthouse Results ===============
 URL: http://127.0.0.1:8000/devtools/lighthouse/resources/lighthouse-basic.html
-Version: 6.3.0
-TestedAsMobileDevice: true
+Version: 8.4.0
 ViewportDimensions: {
   "innerWidth": 980,
   "innerHeight": 1743,
@@ -403,14 +405,19 @@ ads-in-viewport: notApplicable
 appcache-manifest: pass
 apple-touch-icon: fail
 aria-allowed-attr: notApplicable
+aria-command-name: notApplicable
 aria-hidden-body: pass
 aria-hidden-focus: notApplicable
 aria-input-field-name: notApplicable
+aria-meter-name: notApplicable
+aria-progressbar-name: notApplicable
 aria-required-attr: notApplicable
 aria-required-children: notApplicable
 aria-required-parent: notApplicable
 aria-roles: notApplicable
 aria-toggle-field-name: notApplicable
+aria-tooltip-name: notApplicable
+aria-treeitem-name: notApplicable
 aria-valid-attr: notApplicable
 aria-valid-attr-value: notApplicable
 async-ad-tags: notApplicable
@@ -425,12 +432,14 @@ charset: pass
 color-contrast: pass
 content-width: fail
 crawlable-anchors: pass
-critical-request-chains: notApplicable
+critical-request-chains: informative
+csp-xss: informative
 cumulative-ad-shift: notApplicable
 cumulative-layout-shift: numeric
 custom-controls-labels: manual
 custom-controls-roles: manual
 definition-list: notApplicable
+deprecated-gpt-api-usage: informative
 deprecations: pass
 diagnostics: informative
 dlitem: notApplicable
@@ -443,12 +452,10 @@ duplicate-tags: notApplicable
 duplicated-javascript: numeric
 efficient-animated-content: flaky
 errors-in-console: pass
-estimated-input-latency: flaky
 external-anchors-use-rel-noopener: pass
 final-screenshot: ERROR Chrome didn't collect any screenshots during the page load. Please make sure there is content visible on the page, and then try re-running Lighthouse. (NO_SCREENSHOTS)
 first-ad-render: notApplicable
 first-contentful-paint: flaky
-first-cpu-idle: flaky
 first-meaningful-paint: flaky
 focus-traps: manual
 focusable-controls: manual
@@ -456,8 +463,10 @@ font-display: pass
 font-size: fail
 form-field-multiple-labels: notApplicable
 frame-title: notApplicable
+full-page-screenshot: informative
 geolocation-on-start: pass
 gpt-bids-parallel: notApplicable
+gpt-errors-overall: informative
 heading-order: notApplicable
 hreflang: pass
 html-has-lang: fail
@@ -467,6 +476,7 @@ image-alt: notApplicable
 image-aspect-ratio: pass
 image-size-responsive: pass
 input-image-alt: notApplicable
+inspector-issues: pass
 installable-manifest: fail
 interactive: flaky
 interactive-element-affordance: manual
@@ -474,19 +484,17 @@ is-crawlable: pass
 is-on-https: pass
 js-libraries: pass
 label: notApplicable
-large-javascript-libraries: pass
 largest-contentful-paint: numeric
 largest-contentful-paint-element: informative
 layout-shift-elements: notApplicable
-layout-table: notApplicable
+lcp-lazy-loaded: notApplicable
 legacy-javascript: numeric
 link-name: notApplicable
 link-text: pass
 list: notApplicable
 listitem: notApplicable
-load-fast-enough-for-pwa: flaky
 loads-ad-tag-over-https: notApplicable
-loads-gpt-from-sgdn: notApplicable
+loads-gpt-from-official-source: notApplicable
 logical-tab-order: manual
 long-tasks: flaky
 main-thread-tasks: informative
@@ -498,6 +506,7 @@ meta-description: fail
 meta-refresh: notApplicable
 meta-viewport: notApplicable
 metrics: flaky
+modern-image-formats: flaky
 network-requests: informative
 network-rtt: informative
 network-server-latency: informative
@@ -507,23 +516,24 @@ no-vulnerable-libraries: pass
 non-composited-animations: notApplicable
 notification-on-start: pass
 object-alt: notApplicable
-offline-start-url: fail
 offscreen-content-hidden: manual
 offscreen-images: flaky
 password-inputs-can-be-pasted-into: pass
 performance-budget: notApplicable
 plugins: pass
 preload-fonts: notApplicable
+preload-lcp-image: notApplicable
 pwa-cross-browser: manual
 pwa-each-page-has-url: manual
 pwa-page-transitions: manual
 redirects: flaky
-redirects-http: fail
+redirects-http: notApplicable
 render-blocking-resources: flaky
 resource-summary: informative
 robots-txt: notApplicable
 screenshot-thumbnails: flaky
 script-injected-tags: notApplicable
+script-treemap-data: informative
 serial-header-bidding: notApplicable
 server-response-time: pass
 service-worker: fail
@@ -536,6 +546,7 @@ tap-targets: fail
 td-headers-attr: notApplicable
 th-has-data-cells: notApplicable
 themed-omnibox: fail
+third-party-facades: notApplicable
 third-party-summary: notApplicable
 timing-budget: ERROR Chrome didn't collect any screenshots during the page load. Please make sure there is content visible on the page, and then try re-running Lighthouse. (NO_SCREENSHOTS)
 total-blocking-time: numeric
@@ -555,16 +566,175 @@ uses-rel-preconnect: numeric
 uses-rel-preload: flaky
 uses-responsive-images: flaky
 uses-text-compression: flaky
-uses-webp-images: flaky
 valid-lang: notApplicable
 valid-source-maps: pass
 video-caption: notApplicable
-video-description: notApplicable
 viewport: fail
 viewport-ad-density: notApplicable
 visual-order-follows-dom: manual
-without-javascript: pass
-works-offline: fail
 
-# of .lh-audit divs: 156
+# of .lh-audit divs: 161
+
+.lh-audit divs:
+accesskeys
+ad-blocking-tasks
+ad-render-blocking-resources
+ad-request-critical-path
+ad-request-from-page-start
+ad-top-of-viewport
+ads-in-viewport
+appcache-manifest
+apple-touch-icon
+aria-allowed-attr
+aria-command-name
+aria-hidden-body
+aria-hidden-focus
+aria-input-field-name
+aria-meter-name
+aria-progressbar-name
+aria-required-attr
+aria-required-children
+aria-required-parent
+aria-roles
+aria-toggle-field-name
+aria-tooltip-name
+aria-treeitem-name
+aria-valid-attr
+aria-valid-attr-value
+async-ad-tags
+bid-request-from-page-start
+blocking-load-events
+bootup-time
+bottleneck-requests
+button-name
+bypass
+canonical
+charset
+color-contrast
+content-width
+crawlable-anchors
+critical-request-chains
+csp-xss
+cumulative-ad-shift
+custom-controls-labels
+custom-controls-roles
+definition-list
+deprecated-gpt-api-usage
+deprecations
+dlitem
+doctype
+document-title
+document-title
+dom-size
+duplicate-id-active
+duplicate-id-aria
+duplicate-tags
+duplicated-javascript
+efficient-animated-content
+errors-in-console
+external-anchors-use-rel-noopener
+first-ad-render
+focus-traps
+focusable-controls
+font-display
+font-size
+form-field-multiple-labels
+frame-title
+geolocation-on-start
+gpt-bids-parallel
+gpt-errors-overall
+heading-order
+hreflang
+html-has-lang
+html-lang-valid
+http-status-code
+image-alt
+image-alt
+image-aspect-ratio
+image-size-responsive
+input-image-alt
+inspector-issues
+installable-manifest
+interactive-element-affordance
+is-crawlable
+is-on-https
+js-libraries
+label
+largest-contentful-paint-element
+layout-shift-elements
+lcp-lazy-loaded
+legacy-javascript
+link-name
+link-text
+list
+listitem
+loads-ad-tag-over-https
+loads-gpt-from-official-source
+logical-tab-order
+long-tasks
+mainthread-work-breakdown
+managed-focus
+maskable-icon
+meta-description
+meta-refresh
+meta-viewport
+modern-image-formats
+no-document-write
+no-unload-listeners
+no-vulnerable-libraries
+non-composited-animations
+notification-on-start
+object-alt
+offscreen-content-hidden
+offscreen-images
+password-inputs-can-be-pasted-into
+plugins
+preload-fonts
+preload-lcp-image
+pwa-cross-browser
+pwa-each-page-has-url
+pwa-page-transitions
+redirects
+redirects-http
+render-blocking-resources
+resource-summary
+robots-txt
+script-injected-tags
+serial-header-bidding
+server-response-time
+service-worker
+splash-screen
+structured-data
+tabindex
+tag-load-time
+tap-targets
+td-headers-attr
+th-has-data-cells
+themed-omnibox
+third-party-facades
+third-party-summary
+total-byte-weight
+unminified-css
+unminified-javascript
+unsized-images
+unused-css-rules
+unused-javascript
+use-landmarks
+user-timings
+uses-http2
+uses-long-cache-ttl
+uses-optimized-images
+uses-passive-event-listeners
+uses-rel-preconnect
+uses-rel-preload
+uses-responsive-images
+uses-text-compression
+valid-lang
+valid-source-maps
+video-caption
+viewport
+viewport
+viewport
+viewport-ad-density
+visual-order-follows-dom
 

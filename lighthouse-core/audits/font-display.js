@@ -48,6 +48,7 @@ class FontDisplay extends Audit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
+      supportedModes: ['navigation'],
       requiredArtifacts: ['devtoolsLogs', 'CSSUsage', 'URL'],
     };
   }
@@ -115,7 +116,7 @@ class FontDisplay extends Audit {
   /**
    * Some pages load many fonts we can't check, so dedupe on origin.
    * @param {Array<string>} warningUrls
-   * @return {Array<string>}
+   * @return {Array<LH.IcuMessage>}
    */
   static getWarningsForFontUrls(warningUrls) {
     /** @type {Map<string, number>} */

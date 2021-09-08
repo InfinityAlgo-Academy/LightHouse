@@ -16,10 +16,12 @@ const iframeDevtoolsLog = require('../../fixtures/traces/iframe-m79.devtoolslog.
 /* eslint-env jest */
 
 describe('Metrics: Lantern TTI', () => {
+  const gatherContext = {gatherMode: 'navigation'};
+
   it('should compute predicted value', async () => {
     const settings = {};
     const context = {settings, computedCache: new Map()};
-    const result = await LanternInteractive.request({trace, devtoolsLog,
+    const result = await LanternInteractive.request({trace, devtoolsLog, gatherContext,
       settings}, context);
 
     expect({
@@ -27,7 +29,7 @@ describe('Metrics: Lantern TTI', () => {
       optimistic: Math.round(result.optimisticEstimate.timeInMs),
       pessimistic: Math.round(result.pessimisticEstimate.timeInMs),
     }).toMatchSnapshot();
-    assert.equal(result.optimisticEstimate.nodeTimings.size, 19);
+    assert.equal(result.optimisticEstimate.nodeTimings.size, 20);
     assert.equal(result.pessimisticEstimate.nodeTimings.size, 80);
     assert.ok(result.optimisticGraph, 'should have created optimistic graph');
     assert.ok(result.pessimisticGraph, 'should have created pessimistic graph');
@@ -39,6 +41,7 @@ describe('Metrics: Lantern TTI', () => {
     const result = await LanternInteractive.request({
       trace: iframeTrace,
       devtoolsLog: iframeDevtoolsLog,
+      gatherContext,
       settings,
     }, context);
 

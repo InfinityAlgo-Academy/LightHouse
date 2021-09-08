@@ -14,20 +14,40 @@ const terser = require('terser');
  * @param {string} file
  */
 function minifyFileTransform(file) {
+  // Don't transform files that aren't javascript.
+  if (!file.endsWith('.js')) {
+    return new stream.Transform({
+      transform(chunk, enc, next) {
+        this.push(chunk);
+        next();
+      },
+    });
+  }
+
+  // Collect all the javascript and minify *at the end* once we have the complete file.
+  let code = '';
   return new stream.Transform({
     transform(chunk, enc, next) {
-      if (file.endsWith('.js')) {
-        const result = terser.minify(chunk.toString());
-        if (result.error) {
-          throw result.error;
+      code += chunk.toString();
+      next();
+    },
+    async final(next) {
+      try {
+        const result = await terser.minify(code, {ecma: 2019});
+
+        if (result.code) {
+          const saved = code.length - result.code.length;
+          // eslint-disable-next-line no-console
+          console.log(`minifying ${file} saved ${saved / 1000} KB`);
+          this.push(result.code);
         }
 
-        this.push(result.code);
-      } else {
-        this.push(chunk);
+        next();
+      } catch (err) {
+        // eslint-disable-next-line no-console
+        console.error(err);
+        process.exit(1);
       }
-
-      next();
     },
   });
 }

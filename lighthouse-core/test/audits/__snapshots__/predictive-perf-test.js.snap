@@ -2,26 +2,20 @@
 
 exports[`Performance: predictive performance audit should compute the predicted values 1`] = `
 Object {
-  "optimisticEIL": 455,
   "optimisticFCP": 2289,
   "optimisticFMP": 2289,
   "optimisticLCP": 2289,
   "optimisticSI": 1393,
-  "optimisticTTFCPUI": 3677,
-  "optimisticTTI": 3677,
-  "pessimisticEIL": 904,
+  "optimisticTTI": 3790,
   "pessimisticFCP": 2289,
   "pessimisticFMP": 3228,
   "pessimisticLCP": 3228,
   "pessimisticSI": 3047,
-  "pessimisticTTFCPUI": 5248,
-  "pessimisticTTI": 5248,
-  "roughEstimateOfEIL": 543,
+  "pessimisticTTI": 5551,
   "roughEstimateOfFCP": 2289,
   "roughEstimateOfFMP": 2758,
   "roughEstimateOfLCP": 2758,
   "roughEstimateOfSI": 3681,
-  "roughEstimateOfTTFCPUI": 3677,
-  "roughEstimateOfTTI": 4462,
+  "roughEstimateOfTTI": 4671,
 }
 `;

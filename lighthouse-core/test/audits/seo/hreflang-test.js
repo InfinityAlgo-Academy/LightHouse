@@ -8,17 +8,19 @@
 const assert = require('assert').strict;
 const HreflangAudit = require('../../../audits/seo/hreflang.js');
 
+const node = {};
+
 /* eslint-env jest */
 
 describe('SEO: Document has valid hreflang code', () => {
   it('fails when the language code provided in hreflang via link element is invalid', () => {
     const artifacts = {
       LinkElements: [
-        {rel: 'alternate', hreflang: 'xx1', hrefRaw: 'http://example.com/', source: 'headers'},
-        {rel: 'alternate', hreflang: 'XX-be', hrefRaw: 'http://example.com/', source: 'headers'},
-        {rel: 'alternate', hreflang: 'XX-be-Hans', hrefRaw: 'http://example.com/', source: 'head'},
-        {rel: 'alternate', hreflang: '  es', hrefRaw: 'http://example.com/', source: 'head'},
-        {rel: 'alternate', hreflang: '  es', hrefRaw: 'http://example.com/', source: 'headers'},
+        {rel: 'alternate', hreflang: 'xx1', hrefRaw: 'http://example.com/', source: 'headers', node},
+        {rel: 'alternate', hreflang: 'XX-be', hrefRaw: 'http://example.com/', source: 'headers', node},
+        {rel: 'alternate', hreflang: 'XX-be-Hans', hrefRaw: 'http://example.com/', source: 'head', node},
+        {rel: 'alternate', hreflang: '  es', hrefRaw: 'http://example.com/', source: 'head', node},
+        {rel: 'alternate', hreflang: '  es', hrefRaw: 'http://example.com/', source: 'headers', node},
       ],
     };
 
@@ -59,6 +61,7 @@ describe('SEO: Document has valid hreflang code', () => {
             rel: 'alternate',
             hreflang: hreflangValue,
             hrefRaw: 'https://example.com',
+            node,
           },
         ],
       };
@@ -76,10 +79,10 @@ describe('SEO: Document has valid hreflang code', () => {
   it('returns all failing items', () => {
     const artifacts = {
       LinkElements: [
-        {rel: 'alternate', hreflang: 'xx1', hrefRaw: 'http://xx1.example.com/', source: 'headers'},
-        {rel: 'alternate', hreflang: 'xx2', hrefRaw: 'http://xx2.example.com/', source: 'headers'},
-        {rel: 'alternate', hreflang: 'xx3', hrefRaw: 'http://xx3.example.com/', source: 'head'},
-        {rel: 'alternate', hreflang: 'xx4', hrefRaw: 'http://xx4.example.com/', source: 'head'},
+        {rel: 'alternate', hreflang: 'xx1', hrefRaw: 'http://xx1.example.com/', source: 'headers', node},
+        {rel: 'alternate', hreflang: 'xx2', hrefRaw: 'http://xx2.example.com/', source: 'headers', node},
+        {rel: 'alternate', hreflang: 'xx3', hrefRaw: 'http://xx3.example.com/', source: 'head', node},
+        {rel: 'alternate', hreflang: 'xx4', hrefRaw: 'http://xx4.example.com/', source: 'head', node},
       ],
     };
 
@@ -91,8 +94,8 @@ describe('SEO: Document has valid hreflang code', () => {
   it('fails when the hreflang url is not fully-qualified', () => {
     const artifacts = {
       LinkElements: [
-        {rel: 'alternate', hreflang: 'es', hrefRaw: 'example.com', source: 'head'},
-        {rel: 'alternate', hreflang: 'es', hrefRaw: '//example.com', source: 'headers'},
+        {rel: 'alternate', hreflang: 'es', hrefRaw: 'example.com', source: 'head', node},
+        {rel: 'alternate', hreflang: 'es', hrefRaw: '//example.com', source: 'headers', node},
       ],
     };
 
@@ -104,8 +107,8 @@ describe('SEO: Document has valid hreflang code', () => {
   it('fails with an invalid language code and a href which is not fully-qualified', () => {
     const artifacts = {
       LinkElements: [
-        {rel: 'alternate', hreflang: ' es', hrefRaw: 'example.com', source: 'head'},
-        {rel: 'alternate', hreflang: 'xx1', hrefRaw: '//example.com', source: 'headers'},
+        {rel: 'alternate', hreflang: ' es', hrefRaw: 'example.com', source: 'head', node},
+        {rel: 'alternate', hreflang: 'xx1', hrefRaw: '//example.com', source: 'headers', node},
       ],
     };
 
@@ -116,10 +119,10 @@ describe('SEO: Document has valid hreflang code', () => {
   it('outputs the reasons for which a hreflang failed', () => {
     const artifacts = {
       LinkElements: [
-        {rel: 'alternate', hreflang: '@@', hrefRaw: 'example.com', source: 'head'},
-        {rel: 'alternate', hreflang: 'fr', hrefRaw: 'example.com', source: 'head'},
-        {rel: 'alternate', hreflang: '@@', hrefRaw: 'https://example.com', source: 'head'},
-        {rel: 'alternate', hreflang: 'fr', hrefRaw: 'https://example.com', source: 'head'},
+        {rel: 'alternate', hreflang: '@@', hrefRaw: 'example.com', source: 'head', node},
+        {rel: 'alternate', hreflang: 'fr', hrefRaw: 'example.com', source: 'head', node},
+        {rel: 'alternate', hreflang: '@@', hrefRaw: 'https://example.com', source: 'head', node},
+        {rel: 'alternate', hreflang: 'fr', hrefRaw: 'https://example.com', source: 'head', node},
       ],
     };
 

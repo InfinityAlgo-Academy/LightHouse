@@ -20,9 +20,12 @@ describe('CLI Tests', function() {
   });
 
   it('should list options via --help', () => {
-    const ret = spawnSync('node', [indexPath, '--help'], {encoding: 'utf8'});
-    assert.ok(ret.stdout.includes('lighthouse <url>'));
-    assert.ok(ret.stdout.includes('For more information on Lighthouse'));
+    const ret = spawnSync('node', [indexPath, '--help'], {encoding: 'utf8', maxBuffer: 10_000_000});
+    expect(ret.stdout).toContain('lighthouse <url>');
+    expect(ret.stdout).toContain('Examples:');
+    // FIXME: yargs does not wait to flush stdout before exiting the process,
+    // `--help` can flakily not contain the entire output when isTTY is false.
+    // expect(ret.stdout).toContain('For more information on Lighthouse');
   });
 
   it('should list all audits without a url and exit immediately after', () => {
@@ -93,6 +96,45 @@ describe('CLI Tests', function() {
       assert.strictEqual(config.audits.length, 1);
 
       expect(config).toMatchSnapshot();
+    });
+  });
+
+  describe('preset', () => {
+    it('desktop should set appropriate config', () => {
+      const ret = spawnSync('node', [indexPath, '--print-config', '--preset=desktop'], {
+        encoding: 'utf8',
+      });
+
+      const config = JSON.parse(ret.stdout);
+      const {emulatedUserAgent, formFactor, screenEmulation, throttling, throttlingMethod} =
+        config.settings;
+      const emulationSettings =
+            {emulatedUserAgent, formFactor, screenEmulation, throttling, throttlingMethod};
+
+      /* eslint-disable max-len */
+      expect(emulationSettings).toMatchInlineSnapshot(`
+        Object {
+          "emulatedUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4590.2 Safari/537.36 Chrome-Lighthouse",
+          "formFactor": "desktop",
+          "screenEmulation": Object {
+            "deviceScaleFactor": 1,
+            "disabled": false,
+            "height": 940,
+            "mobile": false,
+            "width": 1350,
+          },
+          "throttling": Object {
+            "cpuSlowdownMultiplier": 1,
+            "downloadThroughputKbps": 0,
+            "requestLatencyMs": 0,
+            "rttMs": 40,
+            "throughputKbps": 10240,
+            "uploadThroughputKbps": 0,
+          },
+          "throttlingMethod": "simulate",
+        }
+      `);
+      /* eslint-enable max-len */
     });
   });
 });

@@ -17,6 +17,15 @@
   "lighthouse-core/audits/accessibility/aria-allowed-attr.js | title": {
     "message": "Atributele `[aria-*]` se potrivesc cu rolurile"
   },
+  "lighthouse-core/audits/accessibility/aria-command-name.js | description": {
+    "message": "Când un element nu are un nume accesibil, cititoarele de ecran îl anunță cu o denumire generică, făcându-l inutil pentru utilizatorii care se bazează pe cititoarele de ecran. [Află mai multe](https://web.dev/aria-name/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-command-name.js | failureTitle": {
+    "message": "Elementele `button`, `link` și `menuitem` nu au nume accesibile."
+  },
+  "lighthouse-core/audits/accessibility/aria-command-name.js | title": {
+    "message": "Elementele `button`, `link` și `menuitem` au nume accesibile"
+  },
   "lighthouse-core/audits/accessibility/aria-hidden-body.js | description": {
     "message": "Tehnologiile de asistare, precum cititoarele de ecran, funcționează inconsecvent atunci când `aria-hidden=\"true\"` este setat pentru documentul `<body>`. [Află mai multe](https://web.dev/aria-hidden-body/)."
   },
@@ -36,13 +45,31 @@
     "message": "Elementele `[aria-hidden=\"true\"]` nu conțin descendenți focalizabili"
   },
   "lighthouse-core/audits/accessibility/aria-input-field-name.js | description": {
-    "message": "Când un câmp de introducere nu are un nume accesibil, cititoarele de ecran îl anunță cu o denumire generică, făcându-l inutil pentru utilizatorii care se bazează pe cititoarele de ecran. [Află mai multe](https://web.dev/aria-input-field-name/)."
+    "message": "Când un câmp de introducere nu are un nume accesibil, cititoarele de ecran îl anunță cu o denumire generică, făcându-l inutil pentru utilizatorii care se bazează pe cititoarele de ecran. [Află mai multe](https://web.dev/aria-name/)."
   },
   "lighthouse-core/audits/accessibility/aria-input-field-name.js | failureTitle": {
     "message": "Câmpurile de introducere pentru ARIA nu au nume accesibile"
   },
   "lighthouse-core/audits/accessibility/aria-input-field-name.js | title": {
     "message": "Câmpurile de introducere pentru ARIA au nume accesibile"
+  },
+  "lighthouse-core/audits/accessibility/aria-meter-name.js | description": {
+    "message": "Când un element nu are un nume accesibil, cititoarele de ecran îl anunță cu o denumire generică, făcându-l inutil pentru utilizatorii care se bazează pe cititoarele de ecran. [Află mai multe](https://web.dev/aria-name/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-meter-name.js | failureTitle": {
+    "message": "Elementele ARIA `meter` nu au nume accesibile."
+  },
+  "lighthouse-core/audits/accessibility/aria-meter-name.js | title": {
+    "message": "Elementele ARIA `meter` au nume accesibile"
+  },
+  "lighthouse-core/audits/accessibility/aria-progressbar-name.js | description": {
+    "message": "Când un element `progressbar` nu are un nume accesibil, cititoarele de ecran îl anunță cu o denumire generică, făcându-l inutil pentru utilizatorii care se bazează pe cititoarele de ecran. [Află mai multe](https://web.dev/aria-name/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-progressbar-name.js | failureTitle": {
+    "message": "Elementele ARIA `progressbar` nu au nume accesibile."
+  },
+  "lighthouse-core/audits/accessibility/aria-progressbar-name.js | title": {
+    "message": "Elementele ARIA `progressbar` au nume accesibile"
   },
   "lighthouse-core/audits/accessibility/aria-required-attr.js | description": {
     "message": "Unele roluri ARIA au atribute obligatorii care descriu starea elementului cititoarelor de ecrane. [Află mai multe](https://web.dev/aria-required-attr/)."
@@ -81,13 +108,31 @@
     "message": "Valorile `[role]` sunt valide"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
-    "message": "Când un câmp de comutare nu are un nume accesibil, cititoarele de ecran îl anunță cu o denumire generică, făcându-l inutil pentru utilizatorii care se bazează pe cititoarele de ecran. [Află mai multe](https://web.dev/aria-toggle-field-name/)."
+    "message": "Când un câmp de comutare nu are un nume accesibil, cititoarele de ecran îl anunță cu o denumire generică, făcându-l inutil pentru utilizatorii care se bazează pe cititoarele de ecran. [Află mai multe](https://web.dev/aria-name/)."
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
     "message": "Câmpurile de comutare pentru ARIA nu au nume accesibile"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | title": {
     "message": "Câmpurile de comutare pentru ARIA au nume accesibile"
+  },
+  "lighthouse-core/audits/accessibility/aria-tooltip-name.js | description": {
+    "message": "Când un element nu are un nume accesibil, cititoarele de ecran îl anunță cu o denumire generică, făcându-l inutil pentru utilizatorii care se bazează pe cititoarele de ecran. [Află mai multe](https://web.dev/aria-name/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-tooltip-name.js | failureTitle": {
+    "message": "Elementele ARIA `tooltip` nu au nume accesibile."
+  },
+  "lighthouse-core/audits/accessibility/aria-tooltip-name.js | title": {
+    "message": "Elementele ARIA `tooltip` au nume accesibile"
+  },
+  "lighthouse-core/audits/accessibility/aria-treeitem-name.js | description": {
+    "message": "Când un element nu are un nume accesibil, cititoarele de ecran îl anunță cu o denumire generică, făcându-l inutil pentru utilizatorii care se bazează pe cititoarele de ecran. [Află mai multe](https://web.dev/aria-name/)."
+  },
+  "lighthouse-core/audits/accessibility/aria-treeitem-name.js | failureTitle": {
+    "message": "Elementele ARIA `treeitem` nu au nume accesibile."
+  },
+  "lighthouse-core/audits/accessibility/aria-treeitem-name.js | title": {
+    "message": "Elementele ARIA `treeitem` au nume accesibile"
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr-value.js | description": {
     "message": "Tehnologiile care asigură asistență, precum cititoarele de ecran, nu pot interpreta atributele ARIA cu valori nevalide. [Află mai multe](https://web.dev/aria-valid-attr-value/)."
@@ -254,15 +299,6 @@
   "lighthouse-core/audits/accessibility/label.js | title": {
     "message": "Elementele formularului au etichete asociate"
   },
-  "lighthouse-core/audits/accessibility/layout-table.js | description": {
-    "message": "Un tabel care este folosit pentru aspect nu ar trebui să includă elemente de date, precum elementele th sau de subtitrare sau atributul rezumat, deoarece poate crea confuzie pentru utilizatorii cititoarelor de ecran. [Află mai multe](https://web.dev/layout-table/)."
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | failureTitle": {
-    "message": "Elementele `<table>` de prezentare nu evită folosirea `<th>`, `<caption>` sau a atributului `[summary]`."
-  },
-  "lighthouse-core/audits/accessibility/layout-table.js | title": {
-    "message": "Elementele `<table>` de prezentare evită să folosească `<th>`, `<caption>` sau atributul `[summary]`."
-  },
   "lighthouse-core/audits/accessibility/link-name.js | description": {
     "message": "Textul linkurilor (și textul alternativ pentru imagini, când sunt folosite ca linkuri) care se poate distinge, unic și pe care se poate focaliza, îmbunătățește navigarea pentru utilizatorii de cititoare de ecran. [Află mai multe](https://web.dev/link-name/)."
   },
@@ -362,15 +398,6 @@
   "lighthouse-core/audits/accessibility/video-caption.js | title": {
     "message": "Elementele `<video>` conțin un element `<track>` cu `[kind=\"captions\"]`"
   },
-  "lighthouse-core/audits/accessibility/video-description.js | description": {
-    "message": "Descrierile audio oferă informații relevante pentru videoclipuri pe care dialogul nu le poate oferi, precum scene și expresii faciale. [Află mai multe](https://web.dev/video-description/)."
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | failureTitle": {
-    "message": "Elementele `<video>` nu conțin un element `<track>` cu `[kind=\"description\"]`."
-  },
-  "lighthouse-core/audits/accessibility/video-description.js | title": {
-    "message": "Elementele `<video>` conțin un element `<track>` cu `[kind=\"description\"]`"
-  },
   "lighthouse-core/audits/apple-touch-icon.js | description": {
     "message": "Pentru un aspect ideal în iOS atunci când utilizatorii adaugă o aplicație web progresivă în ecranul de pornire, definește o `apple-touch-icon`. Aceasta trebuie să indice spre un PNG pătrat netransparent, de 192 px (sau 180 px). [Află mai multe](https://web.dev/apple-touch-icon/)."
   },
@@ -384,31 +411,31 @@
     "message": "Oferă o `apple-touch-icon` validă"
   },
   "lighthouse-core/audits/autocomplete.js | columnCurrent": {
-    "message": "Autocomplete Current Value"
+    "message": "Valoare actuală"
   },
   "lighthouse-core/audits/autocomplete.js | columnSuggestions": {
-    "message": "Autocomplete Suggested Token"
+    "message": "Indicativ sugerat"
   },
   "lighthouse-core/audits/autocomplete.js | description": {
-    "message": "Completarea automată ajută utilizatorii să trimită mai repede formularele. Ca să reduci efortul utilizatorilor, setează atributul `autocomplete` la o valoare validă și activează completarea automată. [Află mai multe](https://developers.google.com/web/fundamentals/design-and-ux/input/forms#use_metadata_to_enable_auto-complete)"
+    "message": "`autocomplete` ajută utilizatorii să trimită mai repede formulare. Ca să reduci efortul utilizatorilor, setează atributul `autocomplete` la o valoare validă și activează funcția. [Află mai multe](https://developers.google.com/web/fundamentals/design-and-ux/input/forms#use_metadata_to_enable_auto-complete)"
   },
   "lighthouse-core/audits/autocomplete.js | failureTitle": {
-    "message": "Elementele de intrare nu au atributele corecte pentru completare automată"
+    "message": "`<input>` elemente nu au atributele`autocomplete` corecte"
   },
   "lighthouse-core/audits/autocomplete.js | manualReview": {
-    "message": "Requires manual review"
+    "message": "Necesită examinare manuală"
   },
   "lighthouse-core/audits/autocomplete.js | reviewOrder": {
-    "message": "Review order of tokens"
+    "message": "Verifică ordinea indicativelor"
   },
   "lighthouse-core/audits/autocomplete.js | title": {
-    "message": "Elementele de intrare folosesc completarea automată"
+    "message": "`<input>` elemente folosesc corect `autocomplete`"
   },
   "lighthouse-core/audits/autocomplete.js | warningInvalid": {
-    "message": "Autocomplete token(s): \"{token}\" is invalid in {snippet}"
+    "message": "Indicative de `autocomplete`: „{token}” nu este valid în {snippet}"
   },
   "lighthouse-core/audits/autocomplete.js | warningOrder": {
-    "message": "Review order of tokens: \"{tokens}\" in {snippet}"
+    "message": "Verifică ordinea indicativelor: „{tokens}” în {snippet}"
   },
   "lighthouse-core/audits/bootup-time.js | chromeExtensionsWarning": {
     "message": "Extensiile Chrome au afectat performanța de încărcare a acestei pagini. Încearcă să auditezi pagina în modul incognito sau dintr-un profil Chrome fără extensii."
@@ -449,6 +476,12 @@
   "lighthouse-core/audits/byte-efficiency/legacy-javascript.js | title": {
     "message": "Nu folosi o versiune veche de JavaScript în browsere moderne"
   },
+  "lighthouse-core/audits/byte-efficiency/modern-image-formats.js | description": {
+    "message": "Formatele de imagine ca WebP și AVIF oferă adesea o comprimare mai bună decât PNG sau JPEG, ceea ce înseamnă descărcări mai rapide și mai puțin consum de date. [Află mai multe](https://web.dev/uses-webp-images/)."
+  },
+  "lighthouse-core/audits/byte-efficiency/modern-image-formats.js | title": {
+    "message": "Difuzează imagini în formate moderne"
+  },
   "lighthouse-core/audits/byte-efficiency/offscreen-images.js | description": {
     "message": "Poți încărca lent imaginile ascunse sau pe cele din afara ecranului după ce toate resursele esențiale s-au încărcat, pentru a micșora timpul până la interactivitate. [Află mai multe](https://web.dev/offscreen-images/)."
   },
@@ -486,16 +519,16 @@
     "message": "Comprimă codul JavaScript"
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | description": {
-    "message": "Elimină regulile nefolosite din foile de stil și amână încărcarea conținutului CSS nefolosit pentru conținutul din partea superioară a paginii ca să reduci numărul de byți consumați de activitatea în rețea. [Află mai multe](https://web.dev/unused-css-rules/)."
+    "message": "Redu regulile nefolosite din foile de stil și amână codul CSS nefolosit pentru conținutul din partea superioară a paginii ca să reduci numărul de byți consumați de activitatea în rețea. [Află mai multe](https://web.dev/unused-css-rules/)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | title": {
-    "message": "Elimină conținutul CSS nefolosit"
+    "message": "Redu conținutul CSS nefolosit"
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": {
-    "message": "Elimină codul JavaScript nefolosit pentru a reduce byții consumați de activitatea rețelei. [Află mai multe](https://web.dev/unused-javascript/)."
+    "message": "Redu codul JavaScript nefolosit și amână încărcarea scripturilor până când sunt necesare ca să reduci numărul de byți consumați de activitatea în rețea. [Află mai multe](https://web.dev/unused-javascript/)."
   },
   "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": {
-    "message": "Elimină codul JavaScript nefolosit"
+    "message": "Redu codul JavaScript nefolosit"
   },
   "lighthouse-core/audits/byte-efficiency/uses-long-cache-ttl.js | description": {
     "message": "O durată lungă a memoriei cache poate grăbi accesările repetate ale paginii. [Află mai multe](https://web.dev/uses-long-cache-ttl/)."
@@ -515,6 +548,12 @@
   "lighthouse-core/audits/byte-efficiency/uses-optimized-images.js | title": {
     "message": "Codifică eficient imaginile"
   },
+  "lighthouse-core/audits/byte-efficiency/uses-responsive-images-snapshot.js | columnActualDimensions": {
+    "message": "Dimensiunile reale"
+  },
+  "lighthouse-core/audits/byte-efficiency/uses-responsive-images-snapshot.js | columnDisplayedDimensions": {
+    "message": "Dimensiunile afișate"
+  },
   "lighthouse-core/audits/byte-efficiency/uses-responsive-images.js | description": {
     "message": "Difuzează imagini de dimensiuni corespunzătoare ca să economisești date mobile și să obții o încărcare mai rapidă. [Află mai multe](https://web.dev/uses-responsive-images/)."
   },
@@ -526,12 +565,6 @@
   },
   "lighthouse-core/audits/byte-efficiency/uses-text-compression.js | title": {
     "message": "Activează comprimarea textului"
-  },
-  "lighthouse-core/audits/byte-efficiency/uses-webp-images.js | description": {
-    "message": "Formatele de imagine ca JPEG 2000, JPEG XR și WebP oferă adesea o comprimare mai bună decât PNG sau JPEG, ceea ce înseamnă descărcări mai rapide și mai puțin consum de date. [Află mai multe](https://web.dev/uses-webp-images/)."
-  },
-  "lighthouse-core/audits/byte-efficiency/uses-webp-images.js | title": {
-    "message": "Difuzează imagini în formate moderne"
   },
   "lighthouse-core/audits/content-width.js | description": {
     "message": "Dacă lățimea conținutului aplicației nu se potrivește cu lățimea ariei vizibile, este posibil ca aplicația să nu fie optimizată pentru ecrane mobile. [Află mai multe](https://web.dev/content-width/)."
@@ -553,6 +586,27 @@
   },
   "lighthouse-core/audits/critical-request-chains.js | title": {
     "message": "Evită legarea solicitărilor critice"
+  },
+  "lighthouse-core/audits/csp-xss.js | columnDirective": {
+    "message": "Directivă"
+  },
+  "lighthouse-core/audits/csp-xss.js | columnSeverity": {
+    "message": "Severitate"
+  },
+  "lighthouse-core/audits/csp-xss.js | description": {
+    "message": "O politică eficientă privind securitatea conținutului (CSP) reduce semnificativ riscul de atacuri de tip cross-site scripting (XSS). [Află mai multe](https://web.dev/csp-xss/)"
+  },
+  "lighthouse-core/audits/csp-xss.js | itemSeveritySyntax": {
+    "message": "Sintaxă"
+  },
+  "lighthouse-core/audits/csp-xss.js | metaTagMessage": {
+    "message": "Pagina conține o politică CSP definită într-o etichetă <meta>. Îți recomandăm să definești CSP într-un antet HTTP, dacă este posibil."
+  },
+  "lighthouse-core/audits/csp-xss.js | noCsp": {
+    "message": "Nu s-a găsit nicio politică CSP în modul de aplicare"
+  },
+  "lighthouse-core/audits/csp-xss.js | title": {
+    "message": "Asigură-te că politica CSP este eficientă împotriva atacurilor de tip XSS"
   },
   "lighthouse-core/audits/deprecations.js | columnDeprecate": {
     "message": "Renunțare la dezvoltare/Avertisment"
@@ -585,7 +639,7 @@
     "message": "Evită memoria cache a aplicației"
   },
   "lighthouse-core/audits/dobetterweb/charset.js | description": {
-    "message": "Este necesară o declarație privind codificarea caracterelor. Aceasta poate fi obținută folosind o etichetă <meta> în primii 1.024 de byți din HTML sau în antetul de răspuns Content-Type din HTTP. [Află mai multe](https://web.dev/charset/)."
+    "message": "Este necesară o declarație privind codificarea caracterelor. Aceasta se poate face folosind o etichetă `<meta>` în primii 1.024 de byți din HTML sau în antetul de răspuns Content-Type din HTTP. [Află mai multe](https://web.dev/charset/)."
   },
   "lighthouse-core/audits/dobetterweb/charset.js | failureTitle": {
     "message": "Declarația privind setul de caractere lipsește sau apare prea târziu în HTML"
@@ -665,6 +719,24 @@
   "lighthouse-core/audits/dobetterweb/geolocation-on-start.js | title": {
     "message": "Evită solicitarea permisiunii de localizare geografică la încărcarea paginii"
   },
+  "lighthouse-core/audits/dobetterweb/inspector-issues.js | columnIssueType": {
+    "message": "Tipul problemei"
+  },
+  "lighthouse-core/audits/dobetterweb/inspector-issues.js | description": {
+    "message": "Problemele înregistrate în panoul `Issues` din Chrome DevTools indică probleme nerezolvate. Acestea pot fi provocate de erorile de solicitare din rețea, măsurile de securitate insuficiente și de alte probleme ale browserului. Deschide panoul Probleme în Chrome DevTools pentru mai multe detalii despre fiecare problemă."
+  },
+  "lighthouse-core/audits/dobetterweb/inspector-issues.js | failureTitle": {
+    "message": "Problemele au fost înregistrate în panoul `Issues` din Chrome DevTools"
+  },
+  "lighthouse-core/audits/dobetterweb/inspector-issues.js | issueTypeBlockedByResponse": {
+    "message": "Blocată de politica privind sursele multiple"
+  },
+  "lighthouse-core/audits/dobetterweb/inspector-issues.js | issueTypeHeavyAds": {
+    "message": "Anunțurile folosesc intensiv resursele"
+  },
+  "lighthouse-core/audits/dobetterweb/inspector-issues.js | title": {
+    "message": "Nu există probleme în panoul `Issues` din Chrome DevTools"
+  },
   "lighthouse-core/audits/dobetterweb/js-libraries.js | columnVersion": {
     "message": "Versiune"
   },
@@ -701,15 +773,6 @@
   "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | failureTitle": {
     "message": "Include bibliotecile JavaScript front-end cu vulnerabilități de securitate cunoscute"
   },
-  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | rowSeverityHigh": {
-    "message": "Înaltă"
-  },
-  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | rowSeverityLow": {
-    "message": "Redusă"
-  },
-  "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | rowSeverityMedium": {
-    "message": "Medie"
-  },
   "lighthouse-core/audits/dobetterweb/no-vulnerable-libraries.js | title": {
     "message": "Evită bibliotecile JavaScript front-end cu vulnerabilități de securitate cunoscute"
   },
@@ -735,7 +798,7 @@
     "message": "Protocol"
   },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | description": {
-    "message": "HTTP/2 oferă multe beneficii față de HTTP/1.1, inclusiv antete binare, anunțuri multiplex și tehnologie push pentru server. [Află mai multe](https://web.dev/uses-http2/)."
+    "message": "HTTP/2 oferă multe beneficii față de HTTP/1.1, inclusiv antete binare și anunțuri multiplex. [Află mai multe](https://web.dev/uses-http2/)."
   },
   "lighthouse-core/audits/dobetterweb/uses-http2.js | displayValue": {
     "message": "{itemCount,plural, =1{O solicitare nu a fost difuzată prin HTTP/2}few{# solicitări nu au fost difuzate prin HTTP/2}other{# de solicitări nu au fost difuzate prin HTTP/2}}"
@@ -751,9 +814,6 @@
   },
   "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | title": {
     "message": "Folosește ascultători pasivi pentru a îmbunătăți performanța la derulare"
-  },
-  "lighthouse-core/audits/errors-in-console.js | columnDesc": {
-    "message": "Descriere"
   },
   "lighthouse-core/audits/errors-in-console.js | description": {
     "message": "Erorile înregistrate pe consolă indică probleme nerezolvate Acestea pot fi provocate de erorile de solicitare din rețea și de alte probleme ale browserului. [Află mai multe](https://web.dev/errors-in-console/)"
@@ -791,9 +851,6 @@
   "lighthouse-core/audits/image-aspect-ratio.js | title": {
     "message": "Afișează imaginile cu rapoarte de dimensiuni corecte"
   },
-  "lighthouse-core/audits/image-aspect-ratio.js | warningCompute": {
-    "message": "Informații nevalide privind dimensiunea imaginilor {url}"
-  },
   "lighthouse-core/audits/image-size-responsive.js | columnActual": {
     "message": "Dimensiunea reală"
   },
@@ -812,14 +869,98 @@
   "lighthouse-core/audits/image-size-responsive.js | title": {
     "message": "Difuzează imagini cu rezoluția corectă"
   },
+  "lighthouse-core/audits/installable-manifest.js | already-installed": {
+    "message": "Aplicația este deja instalată"
+  },
+  "lighthouse-core/audits/installable-manifest.js | cannot-download-icon": {
+    "message": "Nu s-a putut descărca o pictogramă necesară din manifest"
+  },
+  "lighthouse-core/audits/installable-manifest.js | columnValue": {
+    "message": "Motivul erorii"
+  },
   "lighthouse-core/audits/installable-manifest.js | description": {
-    "message": "Browserele le pot solicita utilizatorilor să adauge aplicația pe ecranele de pornire, lucru care poate duce la o implicare mai mare. [Află mai multe](https://web.dev/installable-manifest/)."
+    "message": "Service worker este tehnologia care îi dă aplicației posibilitatea să folosească mai multe funcții de aplicații web progresive, cum ar fi cele offline, adăugarea în ecranul de pornire și notificările push. În urma implementării corecte a service workerului și a manifestului, browserele le pot solicita proactiv utilizatorilor să adauge aplicația pe ecranele de pornire, lucru care poate duce la o implicare mai mare. [Află mai multe](https://web.dev/installable-manifest/)."
+  },
+  "lighthouse-core/audits/installable-manifest.js | displayValue": {
+    "message": "{itemCount,plural, =1{Un motiv}few{# motive}other{# de motive}}"
   },
   "lighthouse-core/audits/installable-manifest.js | failureTitle": {
-    "message": "Manifestul aplicației web nu îndeplinește cerințele de instalare"
+    "message": "Manifestul aplicației web sau service workerul nu îndeplinesc cerințele de instalare"
+  },
+  "lighthouse-core/audits/installable-manifest.js | ids-do-not-match": {
+    "message": "Adresa URL a aplicației din Magazinul Play și codul din Magazinul Play nu corespund"
+  },
+  "lighthouse-core/audits/installable-manifest.js | in-incognito": {
+    "message": "Pagina este încărcată într-o fereastră incognito"
+  },
+  "lighthouse-core/audits/installable-manifest.js | manifest-display-not-supported": {
+    "message": "Proprietatea „display” din manifest trebuie să fie „standalone”, „fullscreen” sau „minimal-ui”"
+  },
+  "lighthouse-core/audits/installable-manifest.js | manifest-display-override-not-supported": {
+    "message": "Manifestul conține câmpul „display_override” și primul mod de afișare acceptat trebuie să fie „standalone”, „fullscreen” sau „minimal-ui”"
+  },
+  "lighthouse-core/audits/installable-manifest.js | manifest-empty": {
+    "message": "Manifestul nu a putut fi preluat, este gol sau nu a putut fi analizat"
+  },
+  "lighthouse-core/audits/installable-manifest.js | manifest-location-changed": {
+    "message": "Adresa URL a manifestului s-a schimbat în timpul preluării manifestului."
+  },
+  "lighthouse-core/audits/installable-manifest.js | manifest-missing-name-or-short-name": {
+    "message": "Manifestul nu conține câmpul „name” sau „short_name”"
+  },
+  "lighthouse-core/audits/installable-manifest.js | manifest-missing-suitable-icon": {
+    "message": "Manifestul nu conține o pictogramă potrivită. Este necesară o pictogramă în format PNG, SVG sau WebP, de minimum {value0} px, care să aibă atributul „dimensiuni” setat și, dacă are atributul „scop” setat, acesta trebuie să includă „oricare”."
+  },
+  "lighthouse-core/audits/installable-manifest.js | no-acceptable-icon": {
+    "message": "Nicio pictogramă adăugată nu întrunește următoarele cerințe: minimum {value0} px, pătrată, în format PNG, SVG sau WebP, cu atributul scop nesetat sau setat la „oricare”."
+  },
+  "lighthouse-core/audits/installable-manifest.js | no-icon-available": {
+    "message": "Pictograma descărcată este goală sau deteriorată"
+  },
+  "lighthouse-core/audits/installable-manifest.js | no-id-specified": {
+    "message": "Nu s-a indicat niciun cod din Magazinul Play"
+  },
+  "lighthouse-core/audits/installable-manifest.js | no-manifest": {
+    "message": "Pagina nu include adresa URL <link> a manifestului"
+  },
+  "lighthouse-core/audits/installable-manifest.js | no-matching-service-worker": {
+    "message": "Nu s-a detectat niciun service worker care corespunde. Poate fi necesar să reîncarci pagina sau să verifici dacă aria de acoperire a service workerului pentru pagina actuală include aria de acoperire și adresa URL inițială din manifest."
+  },
+  "lighthouse-core/audits/installable-manifest.js | no-url-for-service-worker": {
+    "message": "Nu s-a putut verifica service workerul fără câmpul „start_url” în manifest"
+  },
+  "lighthouse-core/audits/installable-manifest.js | noErrorId": {
+    "message": "Codul „{errorId}” al erorii legate de instalare nu este recunoscut"
+  },
+  "lighthouse-core/audits/installable-manifest.js | not-from-secure-origin": {
+    "message": "Pagina nu este difuzată dintr-o sursă sigură"
+  },
+  "lighthouse-core/audits/installable-manifest.js | not-in-main-frame": {
+    "message": "Pagina nu este încărcată în cadrul principal"
+  },
+  "lighthouse-core/audits/installable-manifest.js | not-offline-capable": {
+    "message": "Pagina nu funcționează offline"
+  },
+  "lighthouse-core/audits/installable-manifest.js | platform-not-supported-on-android": {
+    "message": "Platforma aplicației indicată nu este acceptată pe Android"
+  },
+  "lighthouse-core/audits/installable-manifest.js | prefer-related-applications": {
+    "message": "Manifestul are proprietatea prefer_related_applications activată"
+  },
+  "lighthouse-core/audits/installable-manifest.js | prefer-related-applications-only-beta-stable": {
+    "message": "Proprietatea prefer_related_applications este acceptată numai în Chrome Beta și pe canale stabile de pe Android."
+  },
+  "lighthouse-core/audits/installable-manifest.js | start-url-not-valid": {
+    "message": "Adresa URL inițială a manifestului nu este validă"
   },
   "lighthouse-core/audits/installable-manifest.js | title": {
-    "message": "Manifestul aplicației web îndeplinește cerințele de instalare"
+    "message": "Manifestul aplicației web și service workerul nu îndeplinesc cerințele de instalare"
+  },
+  "lighthouse-core/audits/installable-manifest.js | url-not-supported-for-webapk": {
+    "message": "O adresă URL din manifest conține un nume de utilizator, o parolă sau un port"
+  },
+  "lighthouse-core/audits/installable-manifest.js | warn-not-offline-capable": {
+    "message": "Pagina nu funcționează offline. Pagina nu va fi considerată instalabilă după lansarea versiunii stabile Chrome 93, în august 2021."
   },
   "lighthouse-core/audits/is-on-https.js | allowed": {
     "message": "Permisă"
@@ -851,21 +992,6 @@
   "lighthouse-core/audits/is-on-https.js | warning": {
     "message": "Permisă cu avertisment"
   },
-  "lighthouse-core/audits/large-javascript-libraries.js | columnLibraryName": {
-    "message": "Bibliotecă"
-  },
-  "lighthouse-core/audits/large-javascript-libraries.js | description": {
-    "message": "Bibliotecile JavaScript mari pot duce la performanțe slabe. Alege biblioteci mai mici, echivalente funcțional, pentru a reduce dimensiunea grupului. [Află mai multe](https://developers.google.com/web/fundamentals/performance/webpack/decrease-frontend-size#optimize_dependencies)."
-  },
-  "lighthouse-core/audits/large-javascript-libraries.js | displayValue": {
-    "message": "{libraryCount,plural, =1{A fost găsită o bibliotecă mare}few{Au fost găsite # biblioteci mari}other{Au fost găsite # de biblioteci mari}}"
-  },
-  "lighthouse-core/audits/large-javascript-libraries.js | failureTitle": {
-    "message": "Înlocuiește bibliotecile JavaScript inutil de mari"
-  },
-  "lighthouse-core/audits/large-javascript-libraries.js | title": {
-    "message": "Evită bibliotecile JavaScript mari cu alternative mai mici"
-  },
   "lighthouse-core/audits/largest-contentful-paint-element.js | description": {
     "message": "Acesta este cel mai mare element de conținut redat în aria vizibilă. [Află mai multe](https://web.dev/lighthouse-largest-contentful-paint/)"
   },
@@ -880,24 +1006,6 @@
   },
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "Evită schimbările majore ale aspectului"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | description": {
-    "message": "O încărcare rapidă a paginii într-o rețea celulară asigură o experiență bună a utilizatorului pe mobil. [Află mai multe](https://web.dev/load-fast-enough-for-pwa/)."
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueText": {
-    "message": "Interactiv la {timeInMs, number, seconds} s"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | displayValueTextWithOverride": {
-    "message": "Interactivă pe rețeaua mobilă simulată la {timeInMs, number, seconds} s"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | explanationLoadSlow": {
-    "message": "Pagina se încarcă prea lent și nu este interactivă în 10 secunde. Analizează oportunitățile și diagnosticele din secțiunea „Performanță” ca să afli cum s-o îmbunătățești."
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | failureTitle": {
-    "message": "Încărcarea paginii nu este suficient de rapidă în rețele mobile"
-  },
-  "lighthouse-core/audits/load-fast-enough-for-pwa.js | title": {
-    "message": "Încărcarea paginii este suficient de rapidă în rețele mobile"
   },
   "lighthouse-core/audits/long-tasks.js | description": {
     "message": "Afișează cele mai îndelungate activități din firul principal, ceea ce este util pentru identificarea elementelor care contribuie cel mai mult la întârziere. [Află mai multe](https://web.dev/long-tasks-devtools/)"
@@ -950,14 +1058,8 @@
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
     "message": "Schimbarea cumulată a aspectului măsoară deplasarea elementelor vizibile în aria vizibilă. [Află mai multe](https://web.dev/cls/)."
   },
-  "lighthouse-core/audits/metrics/estimated-input-latency.js | description": {
-    "message": "Latența estimată a comenzilor reprezintă o estimare a duratei necesare pentru ca aplicația să răspundă la comanda utilizatorului, în milisecunde, în cea mai aglomerată fereastră de cinci secunde de încărcare a paginii. Dacă latența este mai mare de 50 ms, utilizatorii îți pot percepe aplicația ca fiind lentă. [Află mai multe](https://web.dev/estimated-input-latency/)."
-  },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
     "message": "Prima redare de conținut arată momentul când se redă primul text sau prima imagine. [Află mai multe](https://web.dev/first-contentful-paint/)."
-  },
-  "lighthouse-core/audits/metrics/first-cpu-idle.js | description": {
-    "message": "Primul „CPU inactiv” semnalează primul moment în care firul principal al paginii este suficient de liber pentru a accepta comenzi.  [Află mai multe](https://web.dev/first-cpu-idle/)."
   },
   "lighthouse-core/audits/metrics/first-meaningful-paint.js | description": {
     "message": "Prima redare semnificativă arată momentul când este vizibil conținutul principal al unei pagini. [Află mai multe](https://web.dev/first-meaningful-paint/)."
@@ -1025,21 +1127,6 @@
   "lighthouse-core/audits/non-composited-animations.js | unsupportedTimingParameters": {
     "message": "Efectul are parametri de temporizare neacceptați"
   },
-  "lighthouse-core/audits/offline-start-url.js | description": {
-    "message": "Un service worker permite ca aplicația să fie fiabilă în condiții de rețea imprevizibile. [Află mai multe](https://web.dev/offline-start-url/)."
-  },
-  "lighthouse-core/audits/offline-start-url.js | errorLoading": {
-    "message": "Eroare la încărcarea {url} în Service Worker. S-a generat codul de stare {statusCode}"
-  },
-  "lighthouse-core/audits/offline-start-url.js | failureTitle": {
-    "message": "`start_url` nu răspunde cu codul de stare 200 când este offline"
-  },
-  "lighthouse-core/audits/offline-start-url.js | title": {
-    "message": "`start_url` răspunde cu codul de stare 200 când este offline"
-  },
-  "lighthouse-core/audits/offline-start-url.js | warningCantStart": {
-    "message": "Lighthouse nu a putut citi `start_url` din manifest. Prin urmare, s-a presupus că `start_url` este adresa URL a documentului. Mesaj de eroare: „{manifestWarning}”."
-  },
   "lighthouse-core/audits/performance-budget.js | description": {
     "message": "Păstrează cantitatea și dimensiunea solicitărilor din rețea sub obiectivele stabilite de bugetul de performanță solicitat. [Află mai multe](https://developers.google.com/web/tools/lighthouse/audits/budgets)."
   },
@@ -1057,6 +1144,12 @@
   },
   "lighthouse-core/audits/preload-fonts.js | title": {
     "message": "Fonturile cu `font-display: optional` sunt preîncărcate"
+  },
+  "lighthouse-core/audits/preload-lcp-image.js | description": {
+    "message": "Preîncarcă imaginea folosită de elementul LCP pentru a-ți îmbunătăți timpul LCP. [Află mai multe](https://web.dev/optimize-lcp/#preload-important-resources)."
+  },
+  "lighthouse-core/audits/preload-lcp-image.js | title": {
+    "message": "Preîncarcă imaginea Largest Contentful Paint"
   },
   "lighthouse-core/audits/redirects-http.js | description": {
     "message": "Dacă ai configurat deja HTTPS, redirecționează tot traficul HTTP spre HTTPS, ca să activezi funcțiile web sigure pentru toți utilizatorii. [Află mai multe](https://web.dev/redirects-http/)."
@@ -1098,7 +1191,7 @@
     "message": "Indică spre altă locație `hreflang` ({url})"
   },
   "lighthouse-core/audits/seo/canonical.js | explanationRelative": {
-    "message": "Adresa URL relativă ({url})"
+    "message": "Nu este o adresă URL absolută ({url})"
   },
   "lighthouse-core/audits/seo/canonical.js | explanationRoot": {
     "message": "Direcționează către adresa URL a rădăcinii domeniului (pagina principală), nu către o pagină de conținut echivalentă"
@@ -1122,13 +1215,13 @@
     "message": "Linkurile pot fi accesate cu crawlere"
   },
   "lighthouse-core/audits/seo/font-size.js | additionalIllegibleText": {
-    "message": "Add'l illegible text"
+    "message": "Text suplimentar ilizibil"
   },
   "lighthouse-core/audits/seo/font-size.js | columnFontSize": {
-    "message": "Font Size"
+    "message": "Dimensiunea fontului"
   },
   "lighthouse-core/audits/seo/font-size.js | columnPercentPageText": {
-    "message": "% of Page Text"
+    "message": "% din textul paginii"
   },
   "lighthouse-core/audits/seo/font-size.js | columnSelector": {
     "message": "Selector"
@@ -1146,7 +1239,7 @@
     "message": "Documentul nu folosește dimensiuni de fonturi lizibile"
   },
   "lighthouse-core/audits/seo/font-size.js | legibleText": {
-    "message": "Legible text"
+    "message": "Text lizibil"
   },
   "lighthouse-core/audits/seo/font-size.js | title": {
     "message": "Documentul folosește dimensiuni de font lizibile"
@@ -1313,8 +1406,32 @@
   "lighthouse-core/audits/themed-omnibox.js | title": {
     "message": "Setează o culoare tematică pentru bara de adrese."
   },
-  "lighthouse-core/audits/third-party-summary.js | columnBlockingTime": {
-    "message": "Timpul de blocare a firului principal"
+  "lighthouse-core/audits/third-party-facades.js | categoryCustomerSuccess": {
+    "message": "{productName} (Asistență pentru clienți)"
+  },
+  "lighthouse-core/audits/third-party-facades.js | categoryMarketing": {
+    "message": "{productName} (Marketing)"
+  },
+  "lighthouse-core/audits/third-party-facades.js | categorySocial": {
+    "message": "{productName} (Rețele sociale)"
+  },
+  "lighthouse-core/audits/third-party-facades.js | categoryVideo": {
+    "message": "{productName} (Video)"
+  },
+  "lighthouse-core/audits/third-party-facades.js | columnProduct": {
+    "message": "Produs"
+  },
+  "lighthouse-core/audits/third-party-facades.js | description": {
+    "message": "Unele încorporări terță parte se pot încărca lent. Îți recomandăm să le înlocuiești cu o fațadă până când devin necesare. [Află mai multe](https://web.dev/third-party-facades/)."
+  },
+  "lighthouse-core/audits/third-party-facades.js | displayValue": {
+    "message": "{itemCount,plural, =1{# alternativă de fațadă disponibilă}few{# alternative de fațadă disponibile}other{# de alternative de fațadă disponibile}}"
+  },
+  "lighthouse-core/audits/third-party-facades.js | failureTitle": {
+    "message": "Unele resurse terță parte se pot încărca lent cu ajutorul unei fațade"
+  },
+  "lighthouse-core/audits/third-party-facades.js | title": {
+    "message": "Încarcă lent resursele terță parte folosind fațade"
   },
   "lighthouse-core/audits/third-party-summary.js | columnThirdParty": {
     "message": "Terță parte"
@@ -1327,9 +1444,6 @@
   },
   "lighthouse-core/audits/third-party-summary.js | failureTitle": {
     "message": "Redu impactul codului de la terți"
-  },
-  "lighthouse-core/audits/third-party-summary.js | otherValue": {
-    "message": "Alte resurse"
   },
   "lighthouse-core/audits/third-party-summary.js | title": {
     "message": "Minimalizează folosirea terțelor părți"
@@ -1347,7 +1461,7 @@
     "message": "Buget pentru durată"
   },
   "lighthouse-core/audits/unsized-images.js | description": {
-    "message": "Set an explicit width and height on image elements to reduce layout shifts and improve CLS. [Learn more](https://web.dev/optimize-cls/#images-without-dimensions)"
+    "message": "Setează lățimea și înălțimea explicite pentru elementele imagine, ca să reduci modificările de aspect și să îmbunătățești CLS. [Află mai multe](https://web.dev/optimize-cls/#images-without-dimensions)"
   },
   "lighthouse-core/audits/unsized-images.js | failureTitle": {
     "message": "Elementele imagine nu au `width` și `height` explicite"
@@ -1368,7 +1482,7 @@
     "message": "Mărci și dimensiuni pentru Duratele utilizărilor"
   },
   "lighthouse-core/audits/uses-rel-preconnect.js | crossoriginWarning": {
-    "message": "Un <link> preconectat a fost găsit pentru „{securityOrigin}”, dar nu a fost folosit de browser. Verifică dacă folosești corect atributul `crossorigin`."
+    "message": "S-a găsit un `<link rel=preconnect>` pentru „{securityOrigin}” dar browserul nu l-a folosit. Verifică dacă folosești corect atributul `crossorigin`."
   },
   "lighthouse-core/audits/uses-rel-preconnect.js | description": {
     "message": "Adaugă indicii de resurse `preconnect` sau `dns-prefetch` pentru a crea conexiunile inițiale la originile terță parte importante. [Află mai multe](https://web.dev/uses-rel-preconnect/)."
@@ -1377,13 +1491,13 @@
     "message": "Preconectează la originile necesare"
   },
   "lighthouse-core/audits/uses-rel-preconnect.js | tooManyPreconnectLinksWarning": {
-    "message": "S-au găsit mai mult de două linkuri de preconectare. Linkurile de preconectare trebuie folosite cu măsură și numai pentru cele mai importante origini."
+    "message": "S-au găsit mai mult de două conexiuni `<link rel=preconnect>`. Acestea trebuie folosite cu măsură și numai pentru cele mai importante origini."
   },
   "lighthouse-core/audits/uses-rel-preconnect.js | unusedWarning": {
-    "message": "A preconnect <link> was found for \"{securityOrigin}\" but was not used by the browser. Only preconnect to important origins that the page will certainly request."
+    "message": "S-a găsit un `<link rel=preconnect>` pentru „{securityOrigin}” dar browserul nu l-a folosit. Folosește `preconnect` doar pentru originile importante, pe care pagina le va solicita cu siguranță."
   },
   "lighthouse-core/audits/uses-rel-preload.js | crossoriginWarning": {
-    "message": "Un <link> preîncărcat a fost găsit pentru „{preloadURL}”, dar nu a fost folosit de browser. Verifică dacă folosești corect atributul `crossorigin`."
+    "message": "S-a găsit un `<link>` preîncărcat pentru „{preloadURL}” dar browserul nu l-a folosit. Verifică dacă folosești corect atributul `crossorigin`."
   },
   "lighthouse-core/audits/uses-rel-preload.js | description": {
     "message": "Poți folosi `<link rel=preload>` ca să acorzi prioritate preluării resurselor care sunt momentan solicitate mai târziu la încărcarea paginii. [Află mai multe](https://web.dev/uses-rel-preload/)."
@@ -1420,30 +1534,6 @@
   },
   "lighthouse-core/audits/viewport.js | title": {
     "message": "Are o etichetă `<meta name=\"viewport\">` cu `width` sau `initial-scale`"
-  },
-  "lighthouse-core/audits/without-javascript.js | description": {
-    "message": "Aplicația ta trebuie să afișeze o parte de conținut când JavaScript este dezactivat, chiar dacă este doar o atenționare pentru utilizator că JavaScript este obligatoriu pentru a folosi aplicația. [Află mai multe](https://web.dev/without-javascript/)."
-  },
-  "lighthouse-core/audits/without-javascript.js | explanation": {
-    "message": "Corpul paginii trebuie să redea o parte de conținut dacă scripturile sale nu sunt disponibile."
-  },
-  "lighthouse-core/audits/without-javascript.js | failureTitle": {
-    "message": "Nu oferă conținut alternativ când JavaScript nu este disponibil"
-  },
-  "lighthouse-core/audits/without-javascript.js | title": {
-    "message": "Include o parte de conținut când JavaScript nu este disponibil"
-  },
-  "lighthouse-core/audits/works-offline.js | description": {
-    "message": "Dacă creezi o aplicație web progresivă, poți folosi un service worker pentru ca aplicația să poată funcționa offline. [Află mai multe](https://web.dev/works-offline/)."
-  },
-  "lighthouse-core/audits/works-offline.js | failureTitle": {
-    "message": "Pagina curentă nu răspunde cu codul de stare 200 când este offline"
-  },
-  "lighthouse-core/audits/works-offline.js | title": {
-    "message": "Pagina curentă răspunde cu codul de stare 200 când este offline"
-  },
-  "lighthouse-core/audits/works-offline.js | warningNoLoad": {
-    "message": "Este posibil ca pagina să nu se încarce offline, deoarece adresa URL de testare ({requested}) a fost redirecționată spre „{final}”. Încearcă să testezi direct a doua adresă URL."
   },
   "lighthouse-core/config/default-config.js | a11yAriaGroupDescription": {
     "message": "Acestea sunt oportunități de a îmbunătăți utilizarea ARIA în aplicație, lucru care poate îmbunătăți experiența pentru utilizatorii tehnologiei care asigură asistență, precum un cititor de ecran."
@@ -1562,9 +1652,6 @@
   "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
     "message": "Aplicație web progresivă"
   },
-  "lighthouse-core/config/default-config.js | pwaFastReliableGroupTitle": {
-    "message": "Rapid și sigur"
-  },
   "lighthouse-core/config/default-config.js | pwaInstallableGroupTitle": {
     "message": "Poate fi instalat"
   },
@@ -1598,14 +1685,74 @@
   "lighthouse-core/config/default-config.js | seoMobileGroupTitle": {
     "message": "Pentru dispozitivele mobile"
   },
-  "lighthouse-core/gather/gather-runner.js | warningRedirected": {
+  "lighthouse-core/gather/driver/environment.js | warningSlowHostCpu": {
+    "message": "Se pare că dispozitivul testat are un CPU mai lent decât prevede Lighthouse. Aceasta poate afecta negativ scorul de performanță. Află mai multe despre [calibrarea unui multiplicator corespunzător pentru încetinirea CPU-ului](https://github.com/GoogleChrome/lighthouse/blob/master/docs/throttling.md#cpu-throttling)."
+  },
+  "lighthouse-core/gather/driver/navigation.js | warningRedirected": {
     "message": "Este posibil ca pagina să nu se încarce conform așteptărilor, deoarece adresa URL de testare ({requested}) a fost redirecționată spre {final}. Încearcă să testezi direct a doua adresă URL."
   },
-  "lighthouse-core/gather/gather-runner.js | warningTimeout": {
+  "lighthouse-core/gather/driver/navigation.js | warningTimeout": {
     "message": "Pagina s-a încărcat prea lent pentru a respecta limita de timp. Rezultatele pot fi incomplete."
+  },
+  "lighthouse-core/gather/driver/storage.js | warningData": {
+    "message": "{locationCount,plural, =1{Este posibil să existe date stocate care afectează performanța de încărcare în următoarea locație: {locations}. Verifică pagina într-o fereastră incognito pentru a împiedica resursele să îți afecteze scorurile.}few{Este posibil să existe date stocate care afectează performanța de încărcare în următoarele locații: {locations}. Verifică pagina într-o fereastră incognito pentru a împiedica resursele să îți afecteze scorurile.}other{Este posibil să existe date stocate care afectează performanța de încărcare în următoarele locații: {locations}. Verifică pagina într-o fereastră incognito pentru a împiedica resursele să îți afecteze scorurile.}}"
+  },
+  "lighthouse-core/lib/csp-evaluator.js | allowlistFallback": {
+    "message": "Îți recomandăm să adaugi scheme de adrese URL https: și http: (ignorate de browserele care acceptă strict-dynamic) pentru retrocompatibilitatea cu browsere mai vechi."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | deprecatedDisownOpener": {
+    "message": "Directiva disown-opener este învechită începând cu versiunea CSP3. Folosește antetul Cross-Origin-Opener-Policy în locul acesteia."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | deprecatedReferrer": {
+    "message": "Directiva referrer este învechită începând cu versiunea CSP2. Folosește antetul Referrer-Policy în locul acesteia."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | deprecatedReflectedXSS": {
+    "message": "Directiva reflected-xss este învechită începând cu versiunea CSP2. Folosește antetul X-XSS-Protection în locul acesteia."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | missingBaseUri": {
+    "message": "Lipsa directivei base-uri permite etichetelor <base> injectate să seteze adresa URL de bază pentru toate adresele URL relative (de ex., cu scripturi) ale unui domeniu controlat de atacatori. Îți recomandăm să setezi base-uri la none sau self."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | missingObjectSrc": {
+    "message": "Elementele controlate prin object-src sunt considerate funcții moștenite. Îți recomandăm să setezi object-src la none pentru a preveni injectarea de pluginuri care execută scripturi nesigure."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | missingScriptSrc": {
+    "message": "Directiva script-src lipsește. Astfel, se pot executa scripturi nesigure."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | missingSemicolon": {
+    "message": "Ai uitat să folosești punct și virgulă? {keyword} pare a fi o directivă, nu un cuvânt cheie."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | nonceCharset": {
+    "message": "Valorile nonce trebuie să folosească setul de caractere base64."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | nonceLength": {
+    "message": "Valorile nonce trebuie să aibă minimum 8 caractere."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | reportToOnly": {
+    "message": "Destinația de raportare se configurează numai prin directiva report-to. Această directivă este acceptată doar în browserele bazate pe Chromium, prin urmare îți recomandăm să folosești și o directivă report-uri."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | reportingDestinationMissing": {
+    "message": "Nicio politică CSP nu configurează o destinație de raportare. De aceea, este dificilă menținerea CSP de-a lungul timpului și monitorizarea eventualelor încălcări."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | strictDynamic": {
+    "message": "Listele gazdă cu acces permis pot fi ocolite frecvent. Îți recomandăm să folosești strict-dynamic în combinație cu valori nonce sau hash pentru CSP."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | unknownDirective": {
+    "message": "Directivă CSP necunoscută."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | unknownKeyword": {
+    "message": "{keyword} pare un cuvânt cheie nevalid."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | unsafeInlineFallback": {
+    "message": "Îți recomandăm să adaugi opțiunea unsafe-inline (ignorată de browserele care acceptă valori nonce/hash) pentru retrocompatibilitatea cu browsere mai vechi."
+  },
+  "lighthouse-core/lib/i18n/i18n.js | columnBlockingTime": {
+    "message": "Timpul de blocare a firului principal"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnCacheTTL": {
     "message": "TTL cache"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | columnDescription": {
+    "message": "Descriere"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnDuration": {
     "message": "Durată"
@@ -1673,12 +1820,6 @@
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
     "message": "Document"
   },
-  "lighthouse-core/lib/i18n/i18n.js | estimatedInputLatencyMetric": {
-    "message": "Latența estimată a comenzilor"
-  },
-  "lighthouse-core/lib/i18n/i18n.js | firstCPUIdleMetric": {
-    "message": "Primul „CPU inactiv”"
-  },
   "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
     "message": "First Contentful Paint"
   },
@@ -1694,6 +1835,15 @@
   "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
     "message": "Time to Interactive"
   },
+  "lighthouse-core/lib/i18n/i18n.js | itemSeverityHigh": {
+    "message": "Înaltă"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | itemSeverityLow": {
+    "message": "Redusă"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | itemSeverityMedium": {
+    "message": "Medie"
+  },
   "lighthouse-core/lib/i18n/i18n.js | largestContentfulPaintMetric": {
     "message": "Largest Contentful Paint"
   },
@@ -1708,6 +1858,9 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | otherResourceType": {
     "message": "Altele"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | otherResourcesLabel": {
+    "message": "Alte resurse"
   },
   "lighthouse-core/lib/i18n/i18n.js | scriptResourceType": {
     "message": "Script"
@@ -1751,6 +1904,9 @@
   "lighthouse-core/lib/lh-error.js | missingRequiredArtifact": {
     "message": "Colectorul {artifactName} obligatoriu nu a rulat."
   },
+  "lighthouse-core/lib/lh-error.js | noFcp": {
+    "message": "Pagina nu redă conținut. Lasă fereastra de browser deschisă în prim-plan în timpul încărcării și încearcă din nou. ({errorCode})"
+  },
   "lighthouse-core/lib/lh-error.js | notHtml": {
     "message": "Pagina introdusă nu este HTML (difuzată în format de tip MIME {mimeType})."
   },
@@ -1787,146 +1943,38 @@
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "Adresa URL furnizată pare să fie nevalidă."
   },
-  "lighthouse-core/report/html/renderer/util.js | auditGroupExpandTooltip": {
-    "message": "Afișează audituri"
+  "lighthouse-treemap/app/src/util.js | allLabel": {
+    "message": "Toate"
   },
-  "lighthouse-core/report/html/renderer/util.js | calculatorLink": {
-    "message": "Accesează calculatorul."
+  "lighthouse-treemap/app/src/util.js | allScriptsDropdownLabel": {
+    "message": "Toate scripturile"
   },
-  "lighthouse-core/report/html/renderer/util.js | crcInitialNavigation": {
-    "message": "Navigare inițială"
+  "lighthouse-treemap/app/src/util.js | coverageColumnName": {
+    "message": "Acoperire"
   },
-  "lighthouse-core/report/html/renderer/util.js | crcLongestDurationLabel": {
-    "message": "Latența maximă a căii critice:"
+  "lighthouse-treemap/app/src/util.js | duplicateModulesLabel": {
+    "message": "Module dublate"
   },
-  "lighthouse-core/report/html/renderer/util.js | dropdownCopyJSON": {
-    "message": "Copiază JSON"
+  "lighthouse-treemap/app/src/util.js | resourceBytesLabel": {
+    "message": "Byți resursă"
   },
-  "lighthouse-core/report/html/renderer/util.js | dropdownDarkTheme": {
-    "message": "Activează/dezactivează Tema întunecată"
+  "lighthouse-treemap/app/src/util.js | tableColumnName": {
+    "message": "Nume"
   },
-  "lighthouse-core/report/html/renderer/util.js | dropdownPrintExpanded": {
-    "message": "Printează în formă extinsă"
+  "lighthouse-treemap/app/src/util.js | toggleTableButtonLabel": {
+    "message": "Activează / dezactivează tabelul"
   },
-  "lighthouse-core/report/html/renderer/util.js | dropdownPrintSummary": {
-    "message": "Rezumatul printării"
-  },
-  "lighthouse-core/report/html/renderer/util.js | dropdownSaveGist": {
-    "message": "Salvează ca Gist"
-  },
-  "lighthouse-core/report/html/renderer/util.js | dropdownSaveHTML": {
-    "message": "Salvează ca HTML"
-  },
-  "lighthouse-core/report/html/renderer/util.js | dropdownSaveJSON": {
-    "message": "Salvează ca JSON"
-  },
-  "lighthouse-core/report/html/renderer/util.js | dropdownViewer": {
-    "message": "Deschide în vizualizator"
-  },
-  "lighthouse-core/report/html/renderer/util.js | errorLabel": {
-    "message": "Eroare!"
-  },
-  "lighthouse-core/report/html/renderer/util.js | errorMissingAuditInfo": {
-    "message": "Eroare de raport: nu există informații de auditare"
-  },
-  "lighthouse-core/report/html/renderer/util.js | footerIssue": {
-    "message": "Raportează o problemă"
-  },
-  "lighthouse-core/report/html/renderer/util.js | labDataTitle": {
-    "message": "Datele testului"
-  },
-  "lighthouse-core/report/html/renderer/util.js | lsPerformanceCategoryDescription": {
-    "message": "Analiza în [Lighthouse](https://developers.google.com/web/tools/lighthouse/) a paginii actuale cu o rețea mobilă simulată. Valorile sunt estimate și pot varia."
-  },
-  "lighthouse-core/report/html/renderer/util.js | manualAuditsGroupTitle": {
-    "message": "Elemente suplimentare de verificat manual"
-  },
-  "lighthouse-core/report/html/renderer/util.js | notApplicableAuditsGroupTitle": {
-    "message": "Nu se aplică"
-  },
-  "lighthouse-core/report/html/renderer/util.js | opportunityResourceColumnLabel": {
-    "message": "Oportunitate"
-  },
-  "lighthouse-core/report/html/renderer/util.js | opportunitySavingsColumnLabel": {
-    "message": "Economii estimate"
-  },
-  "lighthouse-core/report/html/renderer/util.js | passedAuditsGroupTitle": {
-    "message": "Auditări trecute"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeDesktopEmulation": {
-    "message": "Computer simulat"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeMobileEmulation": {
-    "message": "Moto G4 simulat"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeNoEmulation": {
-    "message": "Fără simulare"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsAxeVersion": {
-    "message": "Axe version"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsBenchmark": {
-    "message": "Puterea CPU/memoriei"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsCPUThrottling": {
-    "message": "Limitarea CPU"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsChannel": {
-    "message": "Canal"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsDevice": {
-    "message": "Dispozitiv"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsFetchTime": {
-    "message": "Momentul preluării"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsNetworkThrottling": {
-    "message": "Limitarea rețelei"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsTitle": {
-    "message": "Setări pentru execuție"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsUA": {
-    "message": "User Agent (gazdă)"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsUANetwork": {
-    "message": "User Agent (rețea)"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsUrl": {
-    "message": "Adresă URL"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeUnknown": {
-    "message": "Necunoscută"
-  },
-  "lighthouse-core/report/html/renderer/util.js | snippetCollapseButtonLabel": {
-    "message": "Restrânge fragmentul"
-  },
-  "lighthouse-core/report/html/renderer/util.js | snippetExpandButtonLabel": {
-    "message": "Extinde fragmentul"
-  },
-  "lighthouse-core/report/html/renderer/util.js | thirdPartyResourcesLabel": {
-    "message": "Afișează resursele terță parte"
-  },
-  "lighthouse-core/report/html/renderer/util.js | throttlingProvided": {
-    "message": "Oferită de mediu"
-  },
-  "lighthouse-core/report/html/renderer/util.js | toplevelWarningsMessage": {
-    "message": "Au apărut probleme care au afectat această rulare Lighthouse:"
-  },
-  "lighthouse-core/report/html/renderer/util.js | varianceDisclaimer": {
-    "message": "Valorile sunt estimate și pot varia. [Scorul de performanță este calculat](https://web.dev/performance-scoring/) direct folosind aceste valori."
-  },
-  "lighthouse-core/report/html/renderer/util.js | warningAuditsGroupTitle": {
-    "message": "Auditări trecute, dar cu avertismente"
-  },
-  "lighthouse-core/report/html/renderer/util.js | warningHeader": {
-    "message": "Avertismente: "
+  "lighthouse-treemap/app/src/util.js | unusedBytesLabel": {
+    "message": "Byți nefolosiți"
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
-    "message": "Pentru conținut animat, folosește [amp-anim](https://amp.dev/documentation/components/amp-anim/) pentru a minimiza utilizarea CPU în timp ce conținutul rămâne în afara ecranului."
+    "message": "Pentru conținut animat, folosește [`amp-anim`](https://amp.dev/documentation/components/amp-anim/) ca să minimizezi utilizarea CPU în timp ce conținutul rămâne în afara ecranului."
+  },
+  "node_modules/lighthouse-stack-packs/packs/amp.js | modern-image-formats": {
+    "message": "Afișează toate componentele [`amp-img`](https://amp.dev/documentation/components/amp-img/?format=websites) în formate WebP și specifică o alternativă adecvată pentru alte browsere. [Află mai multe](https://amp.dev/documentation/components/amp-img/#example:-specifying-a-fallback-image)."
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | offscreen-images": {
-    "message": "Verifică dacă folosești etichete `amp-img` valide pentru imaginile tale, care se încarcă lent automat în afara primei arii vizibile. [Află mai multe](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)."
+    "message": "Verifică dacă folosești [`amp-img`](https://amp.dev/documentation/components/amp-img/?format=websites) pentru ca imaginile să se încarce lent automat. [Află mai multe](https://amp.dev/documentation/guides-and-tutorials/develop/media_iframes_3p/?format=websites#images)."
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | render-blocking-resources": {
     "message": "Folosește instrumente precum [AMP Optimizer](https://github.com/ampproject/amp-toolbox/tree/master/packages/optimizer) pentru a [reda aspectele AMP pe server](https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/server-side-rendering/)."
@@ -1935,10 +1983,7 @@
     "message": "Consultă [documentația AMP](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/style_pages/) ca să te asiguri că se acceptă toate stilurile."
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | uses-responsive-images": {
-    "message": "Elementul `amp-img` acceptă ca atributul `srcset` să specifice elementele de imagine care se vor folosi în funcție de dimensiunea ecranului.  [Află mai multe](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/art_direction/)."
-  },
-  "node_modules/lighthouse-stack-packs/packs/amp.js | uses-webp-images": {
-    "message": "Afișează toate componentele `amp-img` în formate WebP și specifică o alternativă adecvată pentru alte browsere. [Află mai multe](https://amp.dev/documentation/components/amp-img/#example:-specifying-a-fallback-image)."
+    "message": "Componenta [`amp-img`](https://amp.dev/documentation/components/amp-img/?format=websites) acceptă ca atributul [`srcset`](https://web.dev/use-srcset-to-automatically-choose-the-right-image/) să specifice elementele imagine care se vor folosi în funcție de dimensiunea ecranului. [Află mai multe](https://amp.dev/documentation/guides-and-tutorials/develop/style_and_layout/art_direction/)."
   },
   "node_modules/lighthouse-stack-packs/packs/angular.js | dom-size": {
     "message": "Poți derula virtual cu Kitul pentru dezvoltatori de componente (CDK) dacă se redau liste foarte mari. [Află mai multe](https://web.dev/virtualize-lists-with-angular-cdk/)."
@@ -1959,91 +2004,91 @@
     "message": "Poți folosi utilitarul `BreakpointObserver` din Kitul pentru dezvoltatori de componente (CDK) pentru a gestiona punctele de întrerupere ale imaginilor. [Află mai multe](https://material.angular.io/cdk/layout/overview)."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | efficient-animated-content": {
-    "message": "Consider uploading your GIF to a service which will make it available to embed as an HTML5 video."
+    "message": "Îți recomandăm să încarci GIF-ul într-un serviciu care îl va pune la dispoziție pentru încorporare ca videoclip HTML5."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | font-display": {
-    "message": "Specify `@font-display` when defining custom fonts in your theme."
+    "message": "Specifică `@font-display` atunci când definești fonturile personalizate pentru temă."
+  },
+  "node_modules/lighthouse-stack-packs/packs/drupal.js | modern-image-formats": {
+    "message": "Îți recomandăm să instalezi și să configurezi [un modul pentru folosirea formatelor de imagine WebP](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=webp&solrsort=iss_project_release_usage+desc&op=Search) în site. Aceste module vor genera automat o versiune WebP a imaginilor încărcate pentru a optimiza durata de încărcare."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | offscreen-images": {
-    "message": "Install [a Drupal module](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=im_vid_3%3A67&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=%22lazy+load%22&solrsort=iss_project_release_usage+desc&op=Search) that can leverage JavaScript or [Intersection Observer API](https://developers.google.com/web/updates/2016/04/intersectionobserver) lazy loading of images. Such modules provide the ability to defer any offscreen images to improve performance."
+    "message": "Instalează [un modul Drupal](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=im_vid_3%3A67&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=%22lazy+load%22&solrsort=iss_project_release_usage+desc&op=Search) care poate încărca lent imagini. Aceste module oferă opțiunea de a amâna imaginile din afara ecranului pentru a îmbunătăți performanța."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | render-blocking-resources": {
-    "message": "Consider using a module to inline critical CSS and JavaScipt, or potentially load assets asynchronously via JavaScript such as the [Advanced CSS/JS Aggregation](https://www.drupal.org/project/advagg) module. Beware that optimizations provided by this module may break your site, so you will likely need to make code changes."
+    "message": "Îți recomandăm să folosești un modul pentru a activa inline elementele CSS și JavaScript critice sau să încarci în mod asincron elemente prin JavaScript, de exemplu, modulul [Advanced CSS/JS Aggregation](https://www.drupal.org/project/advagg). Atenție, optimizările oferite de acest modul pot să întrerupă site-ul, astfel că probabil va trebui să modifici codul."
   },
-  "node_modules/lighthouse-stack-packs/packs/drupal.js | time-to-first-byte": {
-    "message": "Themes, modules, and server specifications all contribute to server response time. Consider finding a more optimized theme, carefully selecting an optimization module, and/or upgrading your server. Your hosting servers should make use of PHP opcode caching, memory-caching to reduce database query times such as Redis or Memcached, as well as optimized application logic to prepare pages faster."
+  "node_modules/lighthouse-stack-packs/packs/drupal.js | server-response-time": {
+    "message": "Temele, modulele și specificațiile serverului contribuie toate la timpul de răspuns al serverului. Îți recomandăm să găsești o temă mai optimizată, selectând cu atenție un modul de optimizare și/sau făcând upgrade la server. Serverele de găzduire ar trebui să folosească stocarea în memoria cache opcode a codului PHP pentru a reduce duratele de interogare a bazei de date, de exemplu, Redis sau Memcached, precum și logica optimizată a aplicației pentru a pregăti paginile mai rapid."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | total-byte-weight": {
-    "message": "Consider using [Responsive Image Styles](https://www.drupal.org/docs/8/mobile-guide/responsive-images-in-drupal-8) to reduce the size of images loaded on your page. If you are using Views to show multiple content items on a page, consider implementing pagination to limit the number of content items shown on a given page."
+    "message": "Îți recomandăm să folosești [Stilurile de imagini adaptabile](https://www.drupal.org/docs/8/mobile-guide/responsive-images-in-drupal-8) pentru a reduce dimensiunea imaginilor încărcate în pagină. Dacă folosești Views pentru a afișa mai multe elemente de conținut într-o pagină, îți recomandăm să implementezi paginarea pentru a limita numărul elementelor de conținut afișate într-o anumită pagină."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | unminified-css": {
-    "message": "Ensure you have enabled \"Aggregate CSS files\" in the \"Administration » Configuration » Development\" page. You can also configure more advanced aggregation options through [additional modules](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=im_vid_3%3A123&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=css+aggregation&solrsort=iss_project_release_usage+desc&op=Search) to speed up your site by concatenating, minifying, and compressing your CSS styles."
+    "message": "Activează opțiunea „Aggregate CSS files” (Agregă fișierele CSS) în pagina „Administration » Configuration » Development” (Administrare » Configurare » Dezvoltare). Poți să configurezi și opțiuni de agregare mai avansate folosind [module suplimentare](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=im_vid_3%3A123&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=css+aggregation&solrsort=iss_project_release_usage+desc&op=Search), ca să accelerezi site-ul prin concatenarea, minimizarea și comprimarea stilurilor CSS."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | unminified-javascript": {
-    "message": "Ensure you have enabled \"Aggregate JavaScript files\" in the \"Administration » Configuration » Development\" page. You can also configure more advanced aggregation options through [additional modules](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=im_vid_3%3A123&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=javascript+aggregation&solrsort=iss_project_release_usage+desc&op=Search) to speed up your site by concatenating, minifying, and compressing your JavaScript assets."
+    "message": "Activează opțiunea „Aggregate JavaScript files” (Agregă fișierele JavaScript) în pagina „Administration » Configuration » Development” (Administrare » Configurare » Dezvoltare). Poți să configurezi și opțiuni de agregare mai avansate folosind [module suplimentare](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=im_vid_3%3A123&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=javascript+aggregation&solrsort=iss_project_release_usage+desc&op=Search), ca să accelerezi site-ul prin concatenarea, minimizarea și comprimarea elementelor JavaScript."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | unused-css-rules": {
-    "message": "Consider removing unused CSS rules and only attach the needed Drupal libraries to the relevant page or component in a page. See the [Drupal documentation link](https://www.drupal.org/docs/8/creating-custom-modules/adding-stylesheets-css-and-javascript-js-to-a-drupal-8-module#library) for details. To identify attached libraries that are adding extraneous CSS, try running [code coverage](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) in Chrome DevTools. You can identify the theme/module responsible from the URL of the stylesheet when CSS aggregation is disabled in your Drupal site. Look out for themes/modules that have many stylesheets in the list which have a lot of red in code coverage. A theme/module should only enqueue a stylesheet if it is actually used on the page."
+    "message": "Îți recomandăm să elimini regulile CSS nefolosite și să atașezi numai bibliotecile Drupal necesare la pagina sau componenta relevantă dintr-o pagină. Accesează [linkul spre documentația Drupal](https://www.drupal.org/docs/8/creating-custom-modules/adding-stylesheets-css-and-javascript-js-to-a-drupal-8-module#library) pentru detalii. Ca să identifici bibliotecile atașate care adaugă conținut CSS neesențial, rulează [acoperirea codului](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) în Chrome DevTools. Poți identifica tema/modulul responsabil din adresa URL a foii de stil dacă dezactivezi agregarea CSS pe site-ul Drupal. Caută teme/module care au multe foi de stil în listă cu mult roșu în bara acoperirii codului. O temă/un modul ar trebui să pună în coadă o foaie de stil numai dacă este într-adevăr folosită în pagină."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | unused-javascript": {
-    "message": "Consider removing unused JavaScipt assets and only attach the needed Drupal libraries to the relevant page or component in a page. See the [Drupal documentation link](https://www.drupal.org/docs/8/creating-custom-modules/adding-stylesheets-css-and-javascript-js-to-a-drupal-8-module#library) for details. To identify attached libraries that are adding extraneous JavaScript, try running [code coverage](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) in Chrome DevTools. You can identify the theme/module responsible from the URL of the script when JavaScript aggregation is disabled in your Drupal site. Look out for themes/modules that have many scripts in the list which have a lot of red in code coverage. A theme/module should only enqueue a script if it is actually used on the page."
+    "message": "Îți recomandăm să elimini elementele JavaScript nefolosite și să atașezi numai bibliotecile Drupal necesare la pagina sau componenta relevantă dintr-o pagină. Accesează [linkul spre documentația Drupal](https://www.drupal.org/docs/8/creating-custom-modules/adding-stylesheets-css-and-javascript-js-to-a-drupal-8-module#library) pentru detalii. Ca să identifici bibliotecile atașate care adaugă conținut JavaScript neesențial, rulează [acoperirea codului](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) în Chrome DevTools. Poți identifica tema/modulul responsabil din adresa URL a scriptului dacă dezactivezi agregarea JavaScript pe site-ul Drupal. Caută teme/module care au multe scripturi în listă cu mult roșu în acoperirea codului. O temă/un modul ar trebui să pună în coadă un script numai dacă este într-adevăr folosit în pagină."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | uses-long-cache-ttl": {
-    "message": "Set the \"Browser and proxy cache maximum age\" in the \"Administration » Configuration » Development\" page. Read about [Drupal cache and optimizing for performance](https://www.drupal.org/docs/7/managing-site-performance-and-scalability/caching-to-improve-performance/caching-overview#s-drupal-performance-resources)."
+    "message": "Setează „Browser and proxy cache maximum age” (Vechimea maximă a browserului și a memoriei cache de proxy) în pagina „Administration » Configuration » Development” (Administrare » Configurare » Dezvoltare). Citește despre [memoria cache Drupal și optimizarea pentru performanță](https://www.drupal.org/docs/7/managing-site-performance-and-scalability/caching-to-improve-performance/caching-overview#s-drupal-performance-resources)."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | uses-optimized-images": {
-    "message": "Consider using [a module](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=im_vid_3%3A123&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=optimize+images&solrsort=iss_project_release_usage+desc&op=Search) that automatically optimizes and reduces the size of images uploaded through the site while retaining quality. Also, ensure you are using the native [Responsive Image Styles](https://www.drupal.org/docs/8/mobile-guide/responsive-images-in-drupal-8) provided from Drupal (available in Drupal 8 and above) for all images rendered on the site."
+    "message": "Îți recomandăm să folosești [un modul](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=im_vid_3%3A123&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=optimize+images&solrsort=iss_project_release_usage+desc&op=Search) care optimizează și reduce automat dimensiunea imaginilor încărcate pe site, păstrând calitatea. În plus, folosește [Stilurile de imagini adaptabile](https://www.drupal.org/docs/8/mobile-guide/responsive-images-in-drupal-8) native oferite în Drupal (disponibile în Drupal versiunea 8 și versiunile ulterioare) pentru toate imaginile redate pe site."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | uses-rel-preconnect": {
-    "message": "Preconnect or dns-prefetch resource hints can be added by installing and configuring [a module](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=dns-prefetch&solrsort=iss_project_release_usage+desc&op=Search) that provides facilities for user agent resource hints."
+    "message": "Indiciile de resurse „preconnect” sau „dns-prefetch” pot fi adăugate prin instalarea și configurarea [unui modul](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=dns-prefetch&solrsort=iss_project_release_usage+desc&op=Search) care oferă facilități pentru indicii de resurse user agent."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | uses-responsive-images": {
-    "message": "Ensure that you are using the native [Responsive Image Styles](https://www.drupal.org/docs/8/mobile-guide/responsive-images-in-drupal-8) provided from Drupal (available in Drupal 8 and above). Use the Responsive Image Styles when rendering image fields through view modes, views, or images uploaded through the WYSIWYG editor."
-  },
-  "node_modules/lighthouse-stack-packs/packs/drupal.js | uses-webp-images": {
-    "message": "Consider installing and configuring [a module to leverage WebP image formats](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=webp&solrsort=iss_project_release_usage+desc&op=Search) in your site. Such modules would automatically generate a WebP version of your uploaded images to optimize loading times."
+    "message": "Folosește [Stilurile de imagini adaptabile](https://www.drupal.org/docs/8/mobile-guide/responsive-images-in-drupal-8) native oferite în Drupal (disponibile în Drupal versiunea 8 și versiunile ulterioare). Folosește Stilurile de imagini adaptabile când redai câmpuri de imagine în moduri de afișare, afișări sau imagini încărcate în editorul WYSIWYG."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | efficient-animated-content": {
-    "message": "Consider uploading your GIF to a service which will make it available to embed as an HTML5 video."
+    "message": "Îți recomandăm să încarci GIF-ul într-un serviciu care îl va pune la dispoziție pentru încorporare ca videoclip HTML5."
+  },
+  "node_modules/lighthouse-stack-packs/packs/joomla.js | modern-image-formats": {
+    "message": "Îți recomandăm să folosești un [plugin](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=webp) sau un serviciu care convertește automat imaginile încărcate în formatele optime."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | offscreen-images": {
-    "message": "Install a [lazy-load Joomla plugin](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=lazy%20loading) that provides the ability to defer any offscreen images, or switch to a template that provides that functionality. Starting with Joomla 4.0 the core is shipping an dedicated lazyloading plugin please enable the \"Content - Lazy Loading Images\" plugin. Also consider using [an AMP plugin](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=amp)."
+    "message": "Instalează un [plugin Joomla de încărcare lentă](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=lazy%20loading) care oferă capacitatea de a amâna imaginile din afara ecranului sau schimbă-ți șablonul cu unul care oferă acea funcție. Începând cu versiunea Joomla 4.0, toate imaginile noi vor prelua [automat](https://github.com/joomla/joomla-cms/pull/30748) atributul `loading` de la nucleu."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | render-blocking-resources": {
-    "message": "There are a number of Joomla plugins that can help you [inline critical assets](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance) or [defer less important resources](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance). Beware that optimizations provided by these plugins may break features of your templates or plugins, so you will need to test these thoroughly."
+    "message": "Există o serie de pluginuri Joomla care te pot ajuta să [activezi inline elementele critice](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance) sau să [amâni resurse mai puțin importante](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance). Atenție, optimizările oferite de aceste pluginuri pot să întrerupă funcțiile șabloanelor sau pluginurilor tale, astfel încât va trebui să le testezi în detaliu."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | server-response-time": {
-    "message": "Templates, extensions, and server specifications all contribute to server response time. Consider finding a more optimized template, carefully selecting an optimization extension, and/or upgrading your server."
+    "message": "Șabloanele, extensiile și specificațiile serverului contribuie toate la timpul de răspuns al serverului. Îți recomandăm să găsești un șablon mai optimizat, selectând cu atenție o extensie de optimizare și/sau făcând upgrade la server."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | total-byte-weight": {
-    "message": "Consider showing excerpts in your article categories (e.g. via the read more link), reducing the number of articles shown on a given page, breaking your long posts into multiple pages, or using a plugin to lazy-load comments."
+    "message": "Îți recomandăm să afișezi extrase în categoriile de articole (de exemplu, în linkul Citește mai mult), reducând numărul de articole afișate pe o anumită pagină, împărțind postările lungi pe mai multe pagini sau folosind un plugin pentru a încărca lent comentariile."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | unminified-css": {
-    "message": "A number of [Joomla extensions](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance) can speed up your site by concatenating, minifying, and compressing your css styles. There are also templates that provide this functionality."
+    "message": "Mai multe [extensii Joomla](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance) îți pot accelera site-ul prin concatenarea, minimizarea și comprimarea stilurilor CSS. Există și șabloane care oferă această funcție."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | unminified-javascript": {
-    "message": "A number of [Joomla extensions](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance) can speed up your site by concatenating, minifying, and compressing your scripts. There are also templates that provide this functionality."
+    "message": "Mai multe [extensii Joomla](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance) îți pot accelera site-ul prin concatenarea, minimizarea și comprimarea scripturilor. Există și șabloane care oferă această funcție."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | unused-css-rules": {
-    "message": "Consider reducing, or switching, the number of [Joomla extensions](https://extensions.joomla.org/) loading unused CSS in your page. To identify extensions that are adding extraneous CSS, try running [code coverage](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) in Chrome DevTools. You can identify the theme/plugin responsible from the URL of the stylesheet. Look out for plugins that have many stylesheets in the list which have a lot of red in code coverage. A plugin should only enqueue a stylesheet if it is actually used on the page."
+    "message": "Îți recomandăm să reduci sau să schimbi numărul de [extensii Joomla](https://extensions.joomla.org/) care încarcă CSS nefolosit în pagină. Ca să identifici extensiile care adaugă conținut CSS neesențial, rulează [acoperirea codului](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) în Chrome DevTools. Poți identifica tema/pluginul responsabil din adresa URL a foii de stil. Caută pluginuri care au multe foi de stil în listă cu mult roșu în bara acoperirii codului. Un plugin ar trebui să pună în coadă o foaie de stil numai dacă este într-adevăr folosită în pagină."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | unused-javascript": {
-    "message": "Consider reducing, or switching, the number of [Joomla extensions](https://extensions.joomla.org/) loading unused JavaScript in your page. To identify plugins that are adding extraneous JS, try running [code coverage](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) in Chrome DevTools. You can identify the extension responsible from the URL of the script. Look out for extensions that have many scripts in the list which have a lot of red in code coverage. An extension should only enqueue a script if it is actually used on the page."
+    "message": "Îți recomandăm să reduci sau să schimbi numărul de [extensii Joomla](https://extensions.joomla.org/) care încarcă JavaScript nefolosit în pagină. Ca să identifici pluginurile care adaugă conținut JS neesențial, rulează [acoperirea codului](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) în Chrome DevTools. Poți identifica extensia responsabilă din adresa URL a scriptului. Caută extensii care au multe scripturi în listă cu mult roșu în bara acoperirii codului. O extensie ar trebui să pună în coadă un script numai dacă este într-adevăr folosit în pagină."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | uses-long-cache-ttl": {
-    "message": "Read about [Browser Caching in Joomla](https://docs.joomla.org/Cache)."
+    "message": "Citește despre [stocarea în memoria cache a browserului în Joomla](https://docs.joomla.org/Cache)."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | uses-optimized-images": {
-    "message": "Consider using an [image optimization plugin](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance) that compresses your images while retaining quality."
+    "message": "Îți recomandăm să folosești un [plugin de optimizare a imaginii](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=performance) care comprimă imaginile, păstrând calitatea."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | uses-responsive-images": {
-    "message": "Consider using a [responsive images plugin](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=responsive%20images) to use responsive images in your content."
+    "message": "Îți recomandăm să folosești un [plugin pentru imagini adaptabile](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=responsive%20images) pentru a utiliza imagini adaptabile în conținut."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | uses-text-compression": {
-    "message": "You can enable text compression by enabling Gzip Page Compression in Joomla (System > Global configuration > Server)."
-  },
-  "node_modules/lighthouse-stack-packs/packs/joomla.js | uses-webp-images": {
-    "message": "Consider using a [plugin](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=webp) or service that will automatically convert your uploaded images to the optimal formats."
+    "message": "Poți activa comprimarea textului activând Comprimarea paginilor Gzip în Joomla: System > Global configuration > Server (Sistem > Configurație globală > Server)."
   },
   "node_modules/lighthouse-stack-packs/packs/magento.js | critical-request-chains": {
     "message": "Dacă nu grupezi elementele JavaScript, poți folosi [baler](https://github.com/magento/baler)."
@@ -2054,17 +2099,20 @@
   "node_modules/lighthouse-stack-packs/packs/magento.js | font-display": {
     "message": "Specifică `@font-display` atunci când [definești fonturile personalizate](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/css-topics/using-fonts.html)."
   },
+  "node_modules/lighthouse-stack-packs/packs/magento.js | modern-image-formats": {
+    "message": "Caută în [Piața Magento](https://marketplace.magento.com/catalogsearch/result/?q=webp) o varietate de extensii terță parte pentru a obține formate de imagine mai noi."
+  },
   "node_modules/lighthouse-stack-packs/packs/magento.js | offscreen-images": {
     "message": "Modifică șabloanele de produse și de cataloage ca să folosești funcția de [încărcare lentă](https://web.dev/native-lazy-loading) a platformei web."
   },
-  "node_modules/lighthouse-stack-packs/packs/magento.js | time-to-first-byte": {
+  "node_modules/lighthouse-stack-packs/packs/magento.js | server-response-time": {
     "message": "Folosește [integrarea Varnish](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html) din Magento."
   },
   "node_modules/lighthouse-stack-packs/packs/magento.js | unminified-css": {
     "message": "Activează opțiunea „Minimalizează fișierele CSS” din setările pentru dezvoltatori ale magazinului. [Află mai multe](https://devdocs.magento.com/guides/v2.3/performance-best-practices/configuration.html?itm_source=devdocs&itm_medium=search_page&itm_campaign=federated_search&itm_term=minify%20css%20files)."
   },
   "node_modules/lighthouse-stack-packs/packs/magento.js | unminified-javascript": {
-    "message": "Use [Terser](https://www.npmjs.com/package/terser) to minify all JavaScript assets from static content deployment, and disable the built-in minification feature."
+    "message": "Folosește [Terser](https://www.npmjs.com/package/terser) ca să minimizezi toate elementele JavaScript din implementările de conținut static și să dezactivezi funcția de minimizate încorporată."
   },
   "node_modules/lighthouse-stack-packs/packs/magento.js | unused-javascript": {
     "message": "Dezactivează [gruparea JavaScript](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html) încorporată în Magento."
@@ -2078,16 +2126,55 @@
   "node_modules/lighthouse-stack-packs/packs/magento.js | uses-rel-preload": {
     "message": "Etichetele `<link rel=preload>` se pot adăuga prin [modificarea aspectului unei teme](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
   },
-  "node_modules/lighthouse-stack-packs/packs/magento.js | uses-webp-images": {
-    "message": "Caută în [Piața Magento](https://marketplace.magento.com/catalogsearch/result/?q=webp) o varietate de extensii terță parte pentru a obține formate de imagine mai noi."
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | efficient-animated-content": {
+    "message": "[Înlocuiește GIF-urile animate cu videoclipuri](https://web.dev/replace-gifs-with-videos/) pentru încărcarea mai rapidă a paginilor web și folosește formate de fișiere moderne, cum ar fi [WebM](https://web.dev/replace-gifs-with-videos/#create-webm-videos) sau [AV1](https://developers.google.com/web/updates/2018/09/chrome-70-media-updates#av1-decoder), pentru a îmbunătăți eficiența comprimării cu până la 30 % față de cea a codecului video actual de ultimă generație, VP9."
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | modern-image-formats": {
+    "message": "Îți recomandăm să folosești un [plugin](https://octobercms.com/plugins?search=image) sau un serviciu care convertește automat imaginile încărcate în formatele optime. [Imaginile WebP fără pierderi](https://developers.google.com/speed/webp) sunt cu 26 % mai mici decât PNG-urile și cu 25 – 34 % mai mici decât imaginile JPEG comparabile la indicele de calitate SSIM echivalent. Un alt format de imagine de ultimă generație recomandat este [AVIF](https://jakearchibald.com/2020/avif-has-landed/)."
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | offscreen-images": {
+    "message": "Îți recomandăm să instalezi un [plugin de încărcare lentă a imaginilor](https://octobercms.com/plugins?search=lazy) care oferă capacitatea de a amâna imaginile din afara ecranului sau schimbă-ți tema cu una care oferă această funcție. Îți recomandăm [pluginul AMP](https://octobercms.com/plugins?search=Accelerated+Mobile+Pages)."
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | render-blocking-resources": {
+    "message": "Există multe pluginuri care ajută la [activarea inline a elementelor critice](https://octobercms.com/plugins?search=css). Acestea pot să întrerupă alte pluginuri, astfel încât trebuie să le testezi în detaliu."
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | server-response-time": {
+    "message": "Temele, pluginurile și specificațiile serverului contribuie toate la timpul de răspuns al serverului. Îți recomandăm să găsești o temă mai optimizată, selectând cu atenție un plugin de optimizare și / sau făcând upgrade la server. CMS-ul October le dă dezvoltatorilor posibilitatea de a folosi [`Queues`](https://octobercms.com/docs/services/queues) pentru a amâna procesarea unei activități care durează mult timp, cum ar fi trimiterea unui e-mail. Astfel, solicitările web sunt accelerate semnificativ."
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | total-byte-weight": {
+    "message": "Îți recomandăm să afișezi extrase în listele postărilor (de exemplu, folosind un buton `show more`), să reduci numărul de postări afișate pe o anumită pagină web, să împarți postările lungi pe mai multe pagini web sau să folosești un plugin pentru a încărca lent comentariile."
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | unminified-css": {
+    "message": "Există multe [pluginuri](https://octobercms.com/plugins?search=css) care pot accelera un site prin concatenarea, minimizarea și comprimarea stilurilor. Folosirea unui proces de versiune pentru a face minimizarea în avans poate accelera dezvoltarea."
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | unminified-javascript": {
+    "message": "Există multe [pluginuri](https://octobercms.com/plugins?search=javascript) care pot accelera un site prin concatenarea, minimizarea și comprimarea scripturilor. Folosirea unui proces de versiune pentru a face minimizarea în avans poate accelera dezvoltarea."
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | unused-css-rules": {
+    "message": "Îți recomandăm să consulți [pluginurile](https://octobercms.com/plugins) care încarcă CSS nefolosit pe site. Ca să identifici pluginurile care adaugă CSS inutil, rulează [acoperirea codului](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) în Chrome DevTools. Identifică tema / pluginul responsabil din adresa URL a foii de stil. Caută pluginuri care au multe foi de stil cu mult roșu în bara acoperirii codului. Un plugin ar trebui să adauge o foaie de stil numai dacă este într-adevăr folosită în pagina web."
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | unused-javascript": {
+    "message": "Îți recomandăm să consulți [pluginurile](https://octobercms.com/plugins?search=javascript) care încarcă JavaScript nefolosit în pagina web. Ca să identifici pluginurile care adaugă JavaScript inutil, rulează [acoperirea codului](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) în Chrome DevTools. Identifică tema / pluginul responsabil din adresa URL a scriptului. Caută pluginuri care au multe scripturi cu mult roșu în bara acoperirii codului. Un plugin ar trebui să adauge un script numai dacă este într-adevăr folosit în pagina web."
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | uses-long-cache-ttl": {
+    "message": "Citește despre [împiedicarea solicitărilor de rețea inutile cu ajutorul memoriei cache HTTP](https://web.dev/http-cache/#caching-checklist). Există multe [pluginuri](https://octobercms.com/plugins?search=Caching) care pot fi folosite pentru a accelera stocarea în memoria cache."
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | uses-optimized-images": {
+    "message": "Îți recomandăm să folosești un [plugin de optimizare a imaginii](https://octobercms.com/plugins?search=image) pentru a comprima imaginile, păstrând calitatea."
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | uses-responsive-images": {
+    "message": "Încarcă imaginile direct în managerul de conținut media pentru a te asigura că sunt disponibile dimensiunile de imagine necesare. Îți recomandăm să folosești [filtrul de redimensionare](https://octobercms.com/docs/markup/filter-resize) sau un [plugin de redimensionare a imaginilor](https://octobercms.com/plugins?search=image) pentru a te asigura că se folosesc dimensiunile de imagine optime."
+  },
+  "node_modules/lighthouse-stack-packs/packs/octobercms.js | uses-text-compression": {
+    "message": "Activează comprimarea textului în configurația serverului web."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | dom-size": {
-    "message": "Consider using a “windowing” library like `react-window` to minimize the number of DOM nodes created if you are rendering many repeated elements on the page. [Learn more](https://web.dev/virtualize-long-lists-react-window/). Also, minimize unnecessary re-renders using [shouldComponentUpdate](https://reactjs.org/docs/optimizing-performance.html#shouldcomponentupdate-in-action), [PureComponent](https://reactjs.org/docs/react-api.html#reactpurecomponent), or [React.memo](https://reactjs.org/docs/react-api.html#reactmemo) and [skip effects](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects) only until certain dependencies have changed if you are using the Effect hook to improve runtime performance."
+    "message": "Folosește o bibliotecă „windowing”, ca `react-window`, pentru a minimaliza numărul de noduri DOM create dacă redai multe elemente repetate pe pagină. [Află mai multe](https://web.dev/virtualize-long-lists-react-window/). În plus, redu redările suplimentare inutile folosind [`shouldComponentUpdate`](https://reactjs.org/docs/optimizing-performance.html#shouldcomponentupdate-in-action), [`PureComponent`](https://reactjs.org/docs/react-api.html#reactpurecomponent) sau [`React.memo`](https://reactjs.org/docs/react-api.html#reactmemo) și [omite efectele](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects) doar până când anumite dependențe s-au schimbat dacă folosești hookul `Effect` ca să îmbunătățești performanța la redare."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | redirects": {
     "message": "Dacă folosești React Router, minimalizează folosirea componentei `<Redirect>` pentru [navigările pe traseu](https://reacttraining.com/react-router/web/api/Redirect)."
   },
-  "node_modules/lighthouse-stack-packs/packs/react.js | time-to-first-byte": {
+  "node_modules/lighthouse-stack-packs/packs/react.js | server-response-time": {
     "message": "Dacă redai componente React pe server, poți folosi `renderToNodeStream()` sau `renderToStaticNodeStream()` ca să-i permiți clientului să primească și să completeze diferite părți ale codului de markup, nu pe tot deodată. [Află mai multe](https://reactjs.org/docs/react-dom-server.html#rendertonodestream)."
   },
   "node_modules/lighthouse-stack-packs/packs/react.js | unminified-css": {
@@ -2103,7 +2190,10 @@
     "message": "Folosește React DevTools Profiler, care beneficiază de API-ul Profiler pentru a măsura performanța de redare a componentelor. [Află mai multe.](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)"
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | efficient-animated-content": {
-    "message": "Consider uploading your GIF to a service which will make it available to embed as an HTML5 video."
+    "message": "Îți recomandăm să încarci GIF-ul într-un serviciu care îl va pune la dispoziție pentru încorporare ca videoclip HTML5."
+  },
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | modern-image-formats": {
+    "message": "Îți recomandăm să folosești un [plugin](https://wordpress.org/plugins/search/convert+webp/) sau un serviciu care convertește automat imaginile încărcate în formatele optime."
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | offscreen-images": {
     "message": "Instalează un [plugin WordPress de încărcare lentă](https://wordpress.org/plugins/search/lazy+load/) care oferă capacitatea de a amâna imaginile din afara ecranului sau schimbă-ți tema cu una care oferă acea funcție. Îți recomandăm [pluginul AMP](https://wordpress.org/plugins/amp/)."
@@ -2111,7 +2201,7 @@
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | render-blocking-resources": {
     "message": "Există o serie de pluginuri Wordpress care te pot ajuta să [activezi inline elementele critice](https://wordpress.org/plugins/search/critical+css/) sau să [amâni resurse mai puțin importante](https://wordpress.org/plugins/search/defer+css+javascript/). Atenție, optimizările oferite de aceste pluginuri pot să întrerupă funcțiile temei sau pluginurilor tale, astfel încât este posibil să trebuiască să modifici codul."
   },
-  "node_modules/lighthouse-stack-packs/packs/wordpress.js | time-to-first-byte": {
+  "node_modules/lighthouse-stack-packs/packs/wordpress.js | server-response-time": {
     "message": "Temele, pluginurile și specificațiile serverului contribuie toate la timpul de răspuns al serverului. Îți recomandăm să găsești o temă mai optimizată, selectând cu atenție un plugin de optimizare și/sau făcând upgrade la server."
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | total-byte-weight": {
@@ -2141,7 +2231,142 @@
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | uses-text-compression": {
     "message": "Poți activa comprimarea textului în configurarea serverului web."
   },
-  "node_modules/lighthouse-stack-packs/packs/wordpress.js | uses-webp-images": {
-    "message": "Consider using a [plugin](https://wordpress.org/plugins/search/convert+webp/) or service that will automatically convert your uploaded images to the optimal formats."
+  "report/renderer/util.js | calculatorLink": {
+    "message": "Accesează calculatorul."
+  },
+  "report/renderer/util.js | crcInitialNavigation": {
+    "message": "Navigare inițială"
+  },
+  "report/renderer/util.js | crcLongestDurationLabel": {
+    "message": "Latența maximă a căii critice:"
+  },
+  "report/renderer/util.js | dropdownCopyJSON": {
+    "message": "Copiază JSON"
+  },
+  "report/renderer/util.js | dropdownDarkTheme": {
+    "message": "Activează/dezactivează Tema întunecată"
+  },
+  "report/renderer/util.js | dropdownPrintExpanded": {
+    "message": "Printează în formă extinsă"
+  },
+  "report/renderer/util.js | dropdownPrintSummary": {
+    "message": "Rezumatul printării"
+  },
+  "report/renderer/util.js | dropdownSaveGist": {
+    "message": "Salvează ca Gist"
+  },
+  "report/renderer/util.js | dropdownSaveHTML": {
+    "message": "Salvează ca HTML"
+  },
+  "report/renderer/util.js | dropdownSaveJSON": {
+    "message": "Salvează ca JSON"
+  },
+  "report/renderer/util.js | dropdownViewer": {
+    "message": "Deschide în vizualizator"
+  },
+  "report/renderer/util.js | errorLabel": {
+    "message": "Eroare!"
+  },
+  "report/renderer/util.js | errorMissingAuditInfo": {
+    "message": "Eroare de raport: nu există informații de auditare"
+  },
+  "report/renderer/util.js | footerIssue": {
+    "message": "Raportează o problemă"
+  },
+  "report/renderer/util.js | labDataTitle": {
+    "message": "Datele testului"
+  },
+  "report/renderer/util.js | lsPerformanceCategoryDescription": {
+    "message": "Analiza în [Lighthouse](https://developers.google.com/web/tools/lighthouse/) a paginii actuale cu o rețea mobilă simulată. Valorile sunt estimate și pot varia."
+  },
+  "report/renderer/util.js | manualAuditsGroupTitle": {
+    "message": "Elemente suplimentare de verificat manual"
+  },
+  "report/renderer/util.js | notApplicableAuditsGroupTitle": {
+    "message": "Nu se aplică"
+  },
+  "report/renderer/util.js | opportunityResourceColumnLabel": {
+    "message": "Oportunitate"
+  },
+  "report/renderer/util.js | opportunitySavingsColumnLabel": {
+    "message": "Economii estimate"
+  },
+  "report/renderer/util.js | passedAuditsGroupTitle": {
+    "message": "Auditări trecute"
+  },
+  "report/renderer/util.js | runtimeDesktopEmulation": {
+    "message": "Computer simulat"
+  },
+  "report/renderer/util.js | runtimeMobileEmulation": {
+    "message": "Moto G4 simulat"
+  },
+  "report/renderer/util.js | runtimeNoEmulation": {
+    "message": "Fără simulare"
+  },
+  "report/renderer/util.js | runtimeSettingsAxeVersion": {
+    "message": "Versiunea Axe"
+  },
+  "report/renderer/util.js | runtimeSettingsBenchmark": {
+    "message": "Puterea CPU/memoriei"
+  },
+  "report/renderer/util.js | runtimeSettingsCPUThrottling": {
+    "message": "Limitarea CPU"
+  },
+  "report/renderer/util.js | runtimeSettingsChannel": {
+    "message": "Canal"
+  },
+  "report/renderer/util.js | runtimeSettingsDevice": {
+    "message": "Dispozitiv"
+  },
+  "report/renderer/util.js | runtimeSettingsFetchTime": {
+    "message": "Momentul preluării"
+  },
+  "report/renderer/util.js | runtimeSettingsNetworkThrottling": {
+    "message": "Limitarea rețelei"
+  },
+  "report/renderer/util.js | runtimeSettingsTitle": {
+    "message": "Setări pentru execuție"
+  },
+  "report/renderer/util.js | runtimeSettingsUA": {
+    "message": "User Agent (gazdă)"
+  },
+  "report/renderer/util.js | runtimeSettingsUANetwork": {
+    "message": "User Agent (rețea)"
+  },
+  "report/renderer/util.js | runtimeSettingsUrl": {
+    "message": "Adresă URL"
+  },
+  "report/renderer/util.js | runtimeUnknown": {
+    "message": "Necunoscută"
+  },
+  "report/renderer/util.js | showRelevantAudits": {
+    "message": "Vezi audituri relevante pentru:"
+  },
+  "report/renderer/util.js | snippetCollapseButtonLabel": {
+    "message": "Restrânge fragmentul"
+  },
+  "report/renderer/util.js | snippetExpandButtonLabel": {
+    "message": "Extinde fragmentul"
+  },
+  "report/renderer/util.js | thirdPartyResourcesLabel": {
+    "message": "Afișează resursele terță parte"
+  },
+  "report/renderer/util.js | throttlingProvided": {
+    "message": "Oferită de mediu"
+  },
+  "report/renderer/util.js | toplevelWarningsMessage": {
+    "message": "Au apărut probleme care au afectat această rulare Lighthouse:"
+  },
+  "report/renderer/util.js | varianceDisclaimer": {
+    "message": "Valorile sunt estimate și pot varia. [Scorul de performanță este calculat](https://web.dev/performance-scoring/) direct folosind aceste valori."
+  },
+  "report/renderer/util.js | viewTreemapLabel": {
+    "message": "Afișează Treemap"
+  },
+  "report/renderer/util.js | warningAuditsGroupTitle": {
+    "message": "Auditări trecute, dar cu avertismente"
+  },
+  "report/renderer/util.js | warningHeader": {
+    "message": "Avertismente: "
   }
 }

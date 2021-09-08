@@ -42,6 +42,8 @@ const traceEventsToAlwaysKeep = new Set([
   'ResourceFinish',
   'ResourceReceivedData',
   'EventDispatch',
+  'LayoutShift',
+  'FrameCommittedInBrowser',
   // Not currently used by Lighthouse but might be used in the future for cross-frame LCP
   'NavStartToLargestContentfulPaint::Invalidate::AllFrames::UKM',
   'NavStartToLargestContentfulPaint::Candidate::AllFrames::UKM',
@@ -72,7 +74,7 @@ const traceEventsToKeepInProcess = new Set([
   ...traceEventsToKeepInToplevelTask,
 
   // See the DevTools marker events
-  // https://source.chromium.org/chromium/chromium/src/+/master:third_party/devtools-frontend/src/front_end/timeline_model/TimelineModel.js?q=-f:out%20f:TimelineModel%20%22MarkLoad:%20%27%22&ss=chromium
+  // https://source.chromium.org/chromium/chromium/src/+/main:third_party/devtools-frontend/src/front_end/timeline_model/TimelineModel.js?q=-f:out%20f:TimelineModel%20%22MarkLoad:%20%27%22&ss=chromium
   'firstPaint',
   'firstContentfulPaint',
   'firstMeaningfulPaint',

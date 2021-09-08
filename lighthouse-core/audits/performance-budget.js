@@ -27,7 +27,7 @@ const UIStrings = {
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
 /** @typedef {import('../computed/resource-summary.js').ResourceEntry} ResourceEntry */
-/** @typedef {{resourceType: LH.Budget.ResourceType, label: string, requestCount: number, transferSize: number, sizeOverBudget: number | undefined, countOverBudget: string | undefined}} BudgetItem */
+/** @typedef {{resourceType: LH.Budget.ResourceType, label: LH.IcuMessage, requestCount: number, transferSize: number, sizeOverBudget: number | undefined, countOverBudget: LH.IcuMessage | undefined}} BudgetItem */
 
 class ResourceBudget extends Audit {
   /**
@@ -39,6 +39,7 @@ class ResourceBudget extends Audit {
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
+      supportedModes: ['navigation'],
       requiredArtifacts: ['devtoolsLogs', 'URL'],
     };
   }
@@ -120,7 +121,8 @@ class ResourceBudget extends Audit {
    */
   static async audit(artifacts, context) {
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
-    const summary = await ResourceSummary.request({devtoolsLog, URL: artifacts.URL}, context);
+    const data = {devtoolsLog, URL: artifacts.URL, budgets: context.settings.budgets};
+    const summary = await ResourceSummary.request(data, context);
     const mainResource = await MainResource.request({URL: artifacts.URL, devtoolsLog}, context);
     const budget = Budget.getMatchingBudget(context.settings.budgets, mainResource.url);
 

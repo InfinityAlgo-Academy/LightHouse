@@ -28,6 +28,7 @@ class LargestContentfulPaintElement extends Audit {
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
+      supportedModes: ['navigation'],
       requiredArtifacts: ['traces', 'TraceElements'],
     };
   }
@@ -42,14 +43,7 @@ class LargestContentfulPaintElement extends Audit {
     const lcpElementDetails = [];
     if (lcpElement) {
       lcpElementDetails.push({
-        node: /** @type {LH.Audit.Details.NodeValue} */ ({
-          type: 'node',
-          path: lcpElement.devtoolsNodePath,
-          selector: lcpElement.selector,
-          nodeLabel: lcpElement.nodeLabel,
-          snippet: lcpElement.snippet,
-          boundingRect: lcpElement.boundingRect,
-        }),
+        node: Audit.makeNodeItem(lcpElement.node),
       });
     }
 

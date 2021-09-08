@@ -33,7 +33,7 @@ const path = require('path');
 
 /**
  * @typedef EstimateEvaluationSummary
- * @property {LanternEvaluation[]} evaluations
+ * @property {LanternEvaluation[]} [evaluations]
  * @property {number} p50
  * @property {number} p90
  * @property {number} p95
@@ -54,19 +54,16 @@ const path = require('path');
  * @property {number} optimisticFCP
  * @property {number} optimisticFMP
  * @property {number} optimisticSI
- * @property {number} optimisticTTFCPUI
  * @property {number} optimisticTTI
  * @property {number} optimisticLCP
  * @property {number} pessimisticFCP
  * @property {number} pessimisticFMP
  * @property {number} pessimisticSI
- * @property {number} pessimisticTTFCPUI
  * @property {number} pessimisticTTI
  * @property {number} pessimisticLCP
  * @property {number} roughEstimateOfFCP
  * @property {number} roughEstimateOfFMP
  * @property {number} roughEstimateOfSI
- * @property {number} roughEstimateOfTTFCPUI
  * @property {number} roughEstimateOfTTI
  * @property {number} roughEstimateOfLCP
  */
@@ -81,9 +78,9 @@ module.exports = {
   // prettier-ignore
   SITE_INDEX_WITH_GOLDEN_WITH_COMPUTED_PATH: path.join(__dirname, '../../../.tmp/site-index-plus-golden-expectations-plus-computed.json'),
   // prettier-ignore
-  MASTER_COMPUTED_PATH: path.join(__dirname, '../../test/fixtures/lantern-master-computed-values.json'),
+  BASELINE_COMPUTED_PATH: path.join(__dirname, '../../test/fixtures/lantern-baseline-computed-values.json'),
   // prettier-ignore
-  MASTER_ACCURACY_PATH: path.join(__dirname, '../../test/fixtures/lantern-master-accuracy.json'),
+  BASELINE_ACCURACY_PATH: path.join(__dirname, '../../test/fixtures/lantern-baseline-accuracy.json'),
   /**
    * @param {{sites: Array<LanternSiteDefinition>}} siteIndexWithComputed
    * @param {{sites: Array<LanternMetrics & {url: string}>}} baselineLanternData
@@ -113,7 +110,10 @@ module.exports = {
    * @return {(LanternEvaluation & LanternSiteDefinition)|null}
    */
   evaluateSite(site, expectedMetrics, actualMetrics, metric, lanternMetric) {
-    const expected = Math.round(expectedMetrics[metric]);
+    const expectedRaw = expectedMetrics[metric];
+    if (expectedRaw === undefined) return null;
+
+    const expected = Math.round(expectedRaw);
     if (expected === 0) return null;
 
     const actual = Math.round(actualMetrics[lanternMetric]);
@@ -135,7 +135,7 @@ module.exports = {
    * @param {LanternSiteDefinition[]} entries
    * @param {keyof TargetMetrics} metric
    * @param {keyof LanternMetrics} lanternMetric
-   * @param {'lantern'|'baseline'} [lanternOrBaseline]
+   * @param {'lantern'|'baseline'} lanternOrBaseline
    * @return {EstimateEvaluationSummary}
    */
   evaluateAccuracy(entries, metric, lanternMetric, lanternOrBaseline = 'lantern') {
@@ -143,10 +143,13 @@ module.exports = {
 
     const percentErrors = [];
     for (const entry of entries) {
+      const actualMetrics = entry[lanternOrBaseline];
+      if (!actualMetrics) throw new Error(`No metrics for ${metric} ${lanternMetric} ${lanternOrBaseline}`);
+
       const evaluation = this.evaluateSite(
         entry,
         entry.wpt3g,
-        entry[lanternOrBaseline],
+        actualMetrics,
         metric,
         lanternMetric
       );
@@ -190,7 +193,6 @@ module.exports = {
       roughEstimateOfFCP: evaluate('firstContentfulPaint', 'roughEstimateOfFCP'),
       roughEstimateOfFMP: evaluate('firstMeaningfulPaint', 'roughEstimateOfFMP'),
       roughEstimateOfSI: evaluate('speedIndex', 'roughEstimateOfSI'),
-      roughEstimateOfTTFCPUI: evaluate('timeToFirstInteractive', 'roughEstimateOfTTFCPUI'),
       roughEstimateOfTTI: evaluate('timeToConsistentlyInteractive', 'roughEstimateOfTTI'),
       roughEstimateOfLCP: evaluate('largestContentfulPaint', 'roughEstimateOfLCP'),
     };

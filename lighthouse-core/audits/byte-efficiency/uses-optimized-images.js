@@ -35,7 +35,8 @@ class UsesOptimizedImages extends ByteEfficiencyAudit {
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
       scoreDisplayMode: ByteEfficiencyAudit.SCORING_MODES.NUMERIC,
-      requiredArtifacts: ['OptimizedImages', 'ImageElements', 'devtoolsLogs', 'traces', 'URL'],
+      requiredArtifacts: ['OptimizedImages', 'ImageElements', 'GatherContext', 'devtoolsLogs',
+        'traces', 'URL'],
     };
   }
 
@@ -50,7 +51,7 @@ class UsesOptimizedImages extends ByteEfficiencyAudit {
   }
 
   /**
-   * @param {LH.Artifacts.ImageElement} imageElement
+   * @param {{naturalWidth: number, naturalHeight: number}} imageElement
    * @return {number}
    */
   static estimateJPEGSizeFromDimensions(imageElement) {
@@ -96,7 +97,14 @@ class UsesOptimizedImages extends ByteEfficiencyAudit {
           continue;
         }
 
-        jpegSize = UsesOptimizedImages.estimateJPEGSizeFromDimensions(imageElement);
+        // Skip if we couldn't collect natural image size information.
+        if (!imageElement.naturalDimensions) continue;
+        const naturalHeight = imageElement.naturalDimensions.height;
+        const naturalWidth = imageElement.naturalDimensions.width;
+        // If naturalHeight or naturalWidth are falsy, information is not valid, skip.
+        if (!naturalHeight || !naturalWidth) continue;
+        jpegSize =
+          UsesOptimizedImages.estimateJPEGSizeFromDimensions({naturalHeight, naturalWidth});
         fromProtocol = false;
       }
 

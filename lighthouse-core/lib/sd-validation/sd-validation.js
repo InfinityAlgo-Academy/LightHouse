@@ -15,7 +15,7 @@ const getLineNumberFromJsonLDPath = require('./line-number-from-jsonld-path.js')
  * Validates JSON-LD input. Returns array of error objects.
  *
  * @param {string} textInput
- * @returns {Promise<Array<LH.StructuredData.ValidationError>>}
+ * @return {Promise<Array<LH.StructuredData.ValidationError>>}
  */
 module.exports = async function validate(textInput) {
   // STEP 1: VALIDATE JSON
@@ -23,7 +23,7 @@ module.exports = async function validate(textInput) {
 
   if (parseError) {
     return [{
-      validator: /** @type {LH.StructuredData.ValidatorType} */ ('json'),
+      validator: 'json',
       lineNumber: parseError.lineNumber,
       message: parseError.message,
     }];
@@ -37,7 +37,7 @@ module.exports = async function validate(textInput) {
   if (jsonLdErrors.length) {
     return jsonLdErrors.map(error => {
       return {
-        validator: /** @type {LH.StructuredData.ValidatorType} */ ('json-ld'),
+        validator: 'json-ld',
         path: error.path,
         message: error.message,
         lineNumber: getLineNumberFromJsonLDPath(inputObject, error.path),
@@ -52,7 +52,7 @@ module.exports = async function validate(textInput) {
     expandedObj = await expandAsync(inputObject);
   } catch (error) {
     return [{
-      validator: /** @type {LH.StructuredData.ValidatorType} */ ('json-ld-expand'),
+      validator: 'json-ld-expand',
       message: error.message,
     }];
   }
@@ -63,7 +63,7 @@ module.exports = async function validate(textInput) {
   if (schemaOrgErrors.length) {
     return schemaOrgErrors.map(error => {
       return {
-        validator: /** @type {LH.StructuredData.ValidatorType} */ ('schema-org'),
+        validator: 'schema-org',
         path: error.path,
         message: error.message,
         lineNumber: error.path ? getLineNumberFromJsonLDPath(inputObject, error.path) : null,

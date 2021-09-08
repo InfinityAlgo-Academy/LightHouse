@@ -13,6 +13,8 @@ const Driver = require('../../../gather/driver.js');
 const Connection = require('../../../gather/connections/connection.js');
 const JsUsage = require('../../../gather/gatherers/js-usage.js');
 const {createMockSendCommandFn, createMockOnFn} = require('../mock-commands.js');
+const {createMockContext} = require('../../fraggle-rock/gather/mock-driver.js');
+const {flushAllTimersAndMicrotasks} = require('../../test-utils.js');
 
 describe('JsUsage gatherer', () => {
   /**
@@ -45,10 +47,20 @@ describe('JsUsage gatherer', () => {
     const driver = new Driver(connectionStub);
 
     const gatherer = new JsUsage();
-    await gatherer.beforePass({driver});
+    await gatherer.startInstrumentation({driver});
+    await gatherer.startSensitiveInstrumentation({driver});
+
     // Needed for protocol events to emit.
-    jest.advanceTimersByTime(1);
-    return gatherer.afterPass({driver});
+    await flushAllTimersAndMicrotasks(1);
+
+    expect(gatherer._scriptParsedEvents).toEqual(scriptParsedEvents);
+
+    await gatherer.stopSensitiveInstrumentation({driver});
+    await gatherer.stopInstrumentation({driver});
+
+    expect(gatherer._scriptUsages).toEqual(coverage);
+
+    return gatherer.getArtifact({gatherMode: 'navigation'});
   }
 
   it('combines coverage data by url', async () => {
@@ -93,5 +105,88 @@ describe('JsUsage gatherer', () => {
         ],
       }
     `);
+  });
+
+  it('just establishes url to script id mappings in snapshot mode', async () => {
+    const context = createMockContext();
+    context.gatherMode = 'snapshot';
+    context.driver._session.on
+      .mockEvent('Debugger.scriptParsed', {
+        scriptId: '1',
+        embedderName: 'https://www.example.com',
+      });
+    context.driver._session.sendCommand
+      // Events are flushed on domain enable.
+      .mockResponse('Debugger.enable', flushAllTimersAndMicrotasks)
+      .mockResponse('Debugger.disable', {});
+
+    const artifact = await new JsUsage().getArtifact(context.asContext());
+
+    expect(artifact).toEqual({
+      'https://www.example.com': [
+        {
+          scriptId: '1',
+          url: 'https://www.example.com',
+          functions: [],
+        },
+      ],
+    });
+  });
+
+  it('adds script coverages without coverage in timespan', async () => {
+    const context = createMockContext();
+    context.gatherMode = 'timespan';
+    context.driver._session.on
+      .mockEvent('Debugger.scriptParsed', {
+        scriptId: '1',
+        embedderName: 'https://www.example.com',
+      })
+      .mockEvent('Debugger.scriptParsed', {
+        scriptId: '2',
+        embedderName: 'https://www.example.com/script.js',
+      });
+    context.driver._session.sendCommand
+      .mockResponse('Profiler.enable', {})
+      .mockResponse('Profiler.disable', {})
+      .mockResponse('Debugger.enable', {})
+      .mockResponse('Debugger.disable', {})
+      .mockResponse('Profiler.startPreciseCoverage', {})
+      .mockResponse('Profiler.takePreciseCoverage', {
+        result: [{
+          scriptId: '1',
+          url: 'https://www.example.com',
+          functions: [],
+        }],
+      })
+      .mockResponse('Profiler.stopPreciseCoverage', {});
+
+    const gatherer = new JsUsage();
+    await gatherer.startInstrumentation(context);
+    await gatherer.startSensitiveInstrumentation(context);
+
+    // Needed for protocol events to emit.
+    await flushAllTimersAndMicrotasks(1);
+
+    await gatherer.stopSensitiveInstrumentation(context);
+    await gatherer.stopInstrumentation(context);
+
+    const artifact = await gatherer.getArtifact(context);
+
+    expect(artifact).toEqual({
+      'https://www.example.com': [
+        {
+          scriptId: '1',
+          url: 'https://www.example.com',
+          functions: [],
+        },
+      ],
+      'https://www.example.com/script.js': [
+        {
+          scriptId: '2',
+          url: 'https://www.example.com/script.js',
+          functions: [],
+        },
+      ],
+    });
   });
 });

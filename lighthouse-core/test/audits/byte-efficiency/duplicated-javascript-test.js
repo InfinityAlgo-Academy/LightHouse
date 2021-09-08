@@ -7,25 +7,17 @@
 
 /* eslint-env jest */
 
-const fs = require('fs');
 const DuplicatedJavascript = require('../../../audits/byte-efficiency/duplicated-javascript.js');
 const trace = require('../../fixtures/traces/lcp-m78.json');
 const devtoolsLog = require('../../fixtures/traces/lcp-m78.devtools.log.json');
-
-function load(name) {
-  const mapJson = fs.readFileSync(
-    `${__dirname}/../../fixtures/source-maps/${name}.js.map`,
-    'utf-8'
-  );
-  const content = fs.readFileSync(`${__dirname}/../../fixtures/source-maps/${name}.js`, 'utf-8');
-  return {map: JSON.parse(mapJson), content};
-}
+const {loadSourceMapFixture} = require('../../test-utils.js');
 
 describe('DuplicatedJavascript computed artifact', () => {
   it('works (simple)', async () => {
     const context = {computedCache: new Map(), options: {ignoreThresholdInBytes: 200}};
-    const {map, content} = load('foo.min');
+    const {map, content} = loadSourceMapFixture('foo.min');
     const artifacts = {
+      GatherContext: {gatherMode: 'navigation'},
       URL: {finalUrl: 'https://example.com'},
       SourceMaps: [
         {scriptUrl: 'https://example.com/foo1.min.js', map},
@@ -49,9 +41,10 @@ describe('DuplicatedJavascript computed artifact', () => {
 
   it('works (complex)', async () => {
     const context = {computedCache: new Map(), options: {ignoreThresholdInBytes: 200}};
-    const bundleData1 = load('coursehero-bundle-1');
-    const bundleData2 = load('coursehero-bundle-2');
+    const bundleData1 = loadSourceMapFixture('coursehero-bundle-1');
+    const bundleData2 = loadSourceMapFixture('coursehero-bundle-2');
     const artifacts = {
+      GatherContext: {gatherMode: 'navigation'},
       URL: {finalUrl: 'https://example.com'},
       SourceMaps: [
         {scriptUrl: 'https://example.com/coursehero-bundle-1.js', map: bundleData1.map},
@@ -324,10 +317,11 @@ describe('DuplicatedJavascript computed artifact', () => {
 
   it('.audit', async () => {
     // Use a real trace fixture, but the bundle stuff.
-    const bundleData1 = load('coursehero-bundle-1');
-    const bundleData2 = load('coursehero-bundle-2');
+    const bundleData1 = loadSourceMapFixture('coursehero-bundle-1');
+    const bundleData2 = loadSourceMapFixture('coursehero-bundle-2');
     const artifacts = {
       URL: {finalUrl: 'https://www.paulirish.com'},
+      GatherContext: {gatherMode: 'navigation'},
       devtoolsLogs: {
         [DuplicatedJavascript.DEFAULT_PASS]: devtoolsLog,
       },

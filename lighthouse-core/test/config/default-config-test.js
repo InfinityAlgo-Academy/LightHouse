@@ -15,6 +15,7 @@ describe('Default Config', () => {
   it('only has opportunity audits that return opportunities details', async () => {
     const flags = {
       auditMode: __dirname + '/../results/artifacts/',
+      formFactor: 'mobile',
 
       // sample_v2 was run with these settings, so need to match them.
       throttlingMethod: 'devtools',
@@ -39,5 +40,20 @@ describe('Default Config', () => {
       assert.ok(auditResult.details.overallSavingsMs !== undefined,
           `${auditResult.id} has an undefined overallSavingsMs`);
     });
+  });
+
+  it('relevantAudits map to existing perf audit', () => {
+    const metricsWithRelevantAudits = defaultConfig.categories.performance.auditRefs.filter(a =>
+        a.relevantAudits);
+    const allPerfAuditIds = defaultConfig.categories.performance.auditRefs.map(a => a.id);
+
+    for (const metric of metricsWithRelevantAudits) {
+      assert.ok(Array.isArray(metric.relevantAudits) && metric.relevantAudits.length);
+
+      for (const auditid of metric.relevantAudits) {
+        const errMsg = `(${auditid}) is relevant audit for (${metric.id}), but no audit found.`;
+        assert.ok(allPerfAuditIds.includes(auditid), errMsg);
+      }
+    }
   });
 });

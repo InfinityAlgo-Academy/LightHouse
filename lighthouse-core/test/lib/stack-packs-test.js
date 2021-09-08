@@ -18,11 +18,11 @@ function getAuditIds() {
 }
 
 describe('stack-packs lib', () => {
-  it('packs without detectors', () => {
+  it('there are no packs without detectors', () => {
     const result = lighthouseStackPacksDep
       .filter(p => !stackPacksLib.stackPacksToInclude.find(p2 => p2.packId === p.id))
       .map(p => p.id);
-    expect(result).toMatchInlineSnapshot(`Array []`);
+    expect(result).toEqual([]);
   });
 });
 
@@ -37,6 +37,8 @@ describe('lighthouse-stack-packs dep', () => {
         "angular",
         "amp",
         "magento",
+        "joomla",
+        "octobercms",
       ]
     `);
   });
@@ -52,7 +54,7 @@ describe('lighthouse-stack-packs dep', () => {
           "id": "wordpress",
           "keys": Array [
             "unused-css-rules",
-            "uses-webp-images",
+            "modern-image-formats",
             "offscreen-images",
             "total-byte-weight",
             "render-blocking-resources",
@@ -64,7 +66,7 @@ describe('lighthouse-stack-packs dep', () => {
             "uses-optimized-images",
             "uses-text-compression",
             "uses-responsive-images",
-            "time-to-first-byte",
+            "server-response-time",
           ],
         },
         Object {
@@ -72,7 +74,7 @@ describe('lighthouse-stack-packs dep', () => {
           "keys": Array [
             "unused-css-rules",
             "unused-javascript",
-            "uses-webp-images",
+            "modern-image-formats",
             "offscreen-images",
             "total-byte-weight",
             "render-blocking-resources",
@@ -82,7 +84,7 @@ describe('lighthouse-stack-packs dep', () => {
             "uses-long-cache-ttl",
             "uses-optimized-images",
             "uses-responsive-images",
-            "time-to-first-byte",
+            "server-response-time",
             "uses-rel-preconnect",
             "font-display",
           ],
@@ -93,7 +95,7 @@ describe('lighthouse-stack-packs dep', () => {
             "unminified-css",
             "unminified-javascript",
             "unused-javascript",
-            "time-to-first-byte",
+            "server-response-time",
             "redirects",
             "user-timings",
             "dom-size",
@@ -113,7 +115,7 @@ describe('lighthouse-stack-packs dep', () => {
         Object {
           "id": "amp",
           "keys": Array [
-            "uses-webp-images",
+            "modern-image-formats",
             "offscreen-images",
             "render-blocking-resources",
             "unminified-css",
@@ -124,18 +126,56 @@ describe('lighthouse-stack-packs dep', () => {
         Object {
           "id": "magento",
           "keys": Array [
-            "uses-webp-images",
+            "modern-image-formats",
             "offscreen-images",
             "disable-bundling",
             "unminified-css",
             "unminified-javascript",
             "unused-javascript",
             "uses-optimized-images",
-            "time-to-first-byte",
+            "server-response-time",
             "uses-rel-preconnect",
             "uses-rel-preload",
             "critical-request-chains",
             "font-display",
+          ],
+        },
+        Object {
+          "id": "joomla",
+          "keys": Array [
+            "unused-css-rules",
+            "modern-image-formats",
+            "offscreen-images",
+            "total-byte-weight",
+            "render-blocking-resources",
+            "unminified-css",
+            "unminified-javascript",
+            "efficient-animated-content",
+            "unused-javascript",
+            "uses-long-cache-ttl",
+            "uses-optimized-images",
+            "uses-text-compression",
+            "uses-responsive-images",
+            "server-response-time",
+          ],
+        },
+        Object {
+          "id": "octobercms",
+          "keys": Array [
+            "unused-css-rules",
+            "modern-image-formats",
+            "offscreen-images",
+            "total-byte-weight",
+            "render-blocking-resources",
+            "unminified-css",
+            "unminified-javascript",
+            "efficient-animated-content",
+            "unused-javascript",
+            "uses-long-cache-ttl",
+            "uses-optimized-images",
+            "uses-text-compression",
+            "uses-responsive-images",
+            "server-response-time",
           ],
         },
       ]
@@ -156,7 +196,6 @@ describe('lighthouse-stack-packs dep', () => {
 
     expect([...unrecognizedKeys]).toMatchInlineSnapshot(`
       Array [
-        "time-to-first-byte",
         "unminified-warning",
         "disable-bundling",
       ]

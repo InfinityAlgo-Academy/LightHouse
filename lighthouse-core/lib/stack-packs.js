@@ -51,15 +51,23 @@ const stackPacksToInclude = [
     packId: 'magento',
     requiredStacks: ['js:magento'],
   },
+  {
+    packId: 'octobercms',
+    requiredStacks: ['js:octobercms'],
+  },
+  {
+    packId: 'joomla',
+    requiredStacks: ['js:joomla'],
+  },
 ];
 
 /**
  * Returns all packs that match the stacks found in the page.
  * @param {LH.Artifacts['Stacks']} pageStacks
- * @return {Array<LH.Result.StackPack>}
+ * @return {LH.RawIcu<Array<LH.Result.StackPack>>}
  */
 function getStackPacks(pageStacks) {
-  /** @type {Array<LH.Result.StackPack>} */
+  /** @type {LH.RawIcu<Array<LH.Result.StackPack>>} */
   const packs = [];
 
   for (const pageStack of pageStacks) {
@@ -83,7 +91,7 @@ function getStackPacks(pageStacks) {
       matchedPack.UIStrings
     );
 
-    /** @type {Record<string, string>} */
+    /** @type {Record<string, LH.IcuMessage>} */
     const descriptions = {};
     /** @type {Record<string, string>} */
     const UIStrings = matchedPack.UIStrings;

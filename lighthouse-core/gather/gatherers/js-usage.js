@@ -5,16 +5,23 @@
  */
 'use strict';
 
-const Gatherer = require('./gatherer.js');
+const FRGatherer = require('../../fraggle-rock/gather/base-gatherer.js');
 
 /**
  * @fileoverview Tracks unused JavaScript
  */
-class JsUsage extends Gatherer {
+class JsUsage extends FRGatherer {
+  /** @type {LH.Gatherer.GathererMeta} */
+  meta = {
+    supportedModes: ['snapshot', 'timespan', 'navigation'],
+  }
+
   constructor() {
     super();
     /** @type {LH.Crdp.Debugger.ScriptParsedEvent[]} */
     this._scriptParsedEvents = [];
+    /** @type {LH.Crdp.Profiler.ScriptCoverage[]} */
+    this._scriptUsages = [];
     this.onScriptParsed = this.onScriptParsed.bind(this);
   }
 
@@ -28,33 +35,81 @@ class JsUsage extends Gatherer {
   }
 
   /**
-   * @param {LH.Gatherer.PassContext} passContext
+   * @param {LH.Gatherer.FRTransitionalContext} context
    */
-  async beforePass(passContext) {
-    await passContext.driver.sendCommand('Profiler.enable');
-    await passContext.driver.sendCommand('Profiler.startPreciseCoverage', {detailed: false});
-
-    await passContext.driver.sendCommand('Debugger.enable');
-    await passContext.driver.on('Debugger.scriptParsed', this.onScriptParsed);
+  async startInstrumentation(context) {
+    const session = context.driver.defaultSession;
+    await session.sendCommand('Profiler.enable');
+    await session.sendCommand('Profiler.startPreciseCoverage', {detailed: false});
   }
 
   /**
-   * @param {LH.Gatherer.PassContext} passContext
+   * @param {LH.Gatherer.FRTransitionalContext} context
+   */
+  async stopInstrumentation(context) {
+    const session = context.driver.defaultSession;
+    const coverageResponse = await session.sendCommand('Profiler.takePreciseCoverage');
+    this._scriptUsages = coverageResponse.result;
+    await session.sendCommand('Profiler.stopPreciseCoverage');
+    await session.sendCommand('Profiler.disable');
+  }
+
+  /**
+   * @param {LH.Gatherer.FRTransitionalContext} context
+   */
+  async startSensitiveInstrumentation(context) {
+    const session = context.driver.defaultSession;
+    session.on('Debugger.scriptParsed', this.onScriptParsed);
+    await session.sendCommand('Debugger.enable');
+  }
+
+  /**
+   * @param {LH.Gatherer.FRTransitionalContext} context
+   */
+  async stopSensitiveInstrumentation(context) {
+    const session = context.driver.defaultSession;
+    await session.sendCommand('Debugger.disable');
+    session.off('Debugger.scriptParsed', this.onScriptParsed);
+  }
+
+  /**
+   * Usages alone do not always generate an exhaustive list of scripts in timespan and snapshot.
+   * For audits which use this for url/scriptId mappings, we can include an empty usage object.
+   *
+   * @param {Record<string, Array<LH.Crdp.Profiler.ScriptCoverage>>} usageByUrl
+   */
+  _addMissingScriptIds(usageByUrl) {
+    for (const scriptParsedEvent of this._scriptParsedEvents) {
+      const url = scriptParsedEvent.embedderName;
+      if (!url) continue;
+
+      const scripts = usageByUrl[url] || [];
+      if (!scripts.find(s => s.scriptId === scriptParsedEvent.scriptId)) {
+        scripts.push({
+          url,
+          scriptId: scriptParsedEvent.scriptId,
+          functions: [],
+        });
+      }
+      usageByUrl[url] = scripts;
+    }
+  }
+
+  /**
+   * @param {LH.Gatherer.FRTransitionalContext} context
    * @return {Promise<LH.Artifacts['JsUsage']>}
    */
-  async afterPass(passContext) {
-    const driver = passContext.driver;
-
-    const coverageResponse = await driver.sendCommand('Profiler.takePreciseCoverage');
-    const scriptUsages = coverageResponse.result;
-    await driver.sendCommand('Profiler.stopPreciseCoverage');
-    await driver.sendCommand('Profiler.disable');
-
-    await passContext.driver.sendCommand('Debugger.disable');
-
+  async getArtifact(context) {
     /** @type {Record<string, Array<LH.Crdp.Profiler.ScriptCoverage>>} */
     const usageByUrl = {};
-    for (const scriptUsage of scriptUsages) {
+
+    // Force `Debugger.scriptParsed` events for url to scriptId mappings in snapshot mode.
+    if (context.gatherMode === 'snapshot') {
+      await this.startSensitiveInstrumentation(context);
+      await this.stopSensitiveInstrumentation(context);
+    }
+
+    for (const scriptUsage of this._scriptUsages) {
       // `ScriptCoverage.url` can be overridden by a magic sourceURL comment.
       // Get the associated ScriptParsedEvent and use embedderName, which is the original url.
       // See https://chromium-review.googlesource.com/c/v8/v8/+/2317310
@@ -67,7 +122,7 @@ class JsUsage extends Gatherer {
 
       // If `url` is blank, that means the script was anonymous (eval, new Function, onload, ...).
       // Or, it's because it was code Lighthouse over the protocol via `Runtime.evaluate`.
-      // We currently don't consider coverage of anonymous scripts, and we defintelty don't want
+      // We currently don't consider coverage of anonymous scripts, and we definitely don't want
       // coverage of code Lighthouse ran to inspect the page, so we ignore this ScriptCoverage if
       // url is blank.
       if (scriptUsage.url === '' || (scriptParsedEvent && scriptParsedEvent.embedderName === '')) {
@@ -77,6 +132,11 @@ class JsUsage extends Gatherer {
       const scripts = usageByUrl[url] || [];
       scripts.push(scriptUsage);
       usageByUrl[url] = scripts;
+    }
+
+    // TODO(FR-COMPAT): Enable this logic for legacy and navigation or make a separate artifact for url/scriptId mappings.
+    if (context.gatherMode !== 'navigation') {
+      this._addMissingScriptIds(usageByUrl);
     }
 
     return usageByUrl;

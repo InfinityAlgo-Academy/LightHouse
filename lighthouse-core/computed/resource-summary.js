@@ -8,9 +8,9 @@
 const makeComputedArtifact = require('./computed-artifact.js');
 const NetworkRecords = require('./network-records.js');
 const URL = require('../lib/url-shim.js');
-const MainResource = require('./main-resource.js');
+const NetworkRequest = require('../lib/network-request.js');
 const Budget = require('../config/budget.js');
-const Util = require('../report/html/renderer/util.js');
+const Util = require('../util-commonjs.js');
 
 /** @typedef {{count: number, resourceSize: number, transferSize: number}} ResourceEntry */
 
@@ -36,10 +36,11 @@ class ResourceSummary {
   /**
    * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
    * @param {string} mainResourceURL
-   * @param {LH.Audit.Context} context
+   * @param {ImmutableObject<LH.Budget[]|null>} budgets
    * @return {Record<LH.Budget.ResourceType, ResourceEntry>}
    */
-  static summarize(networkRecords, mainResourceURL, context) {
+  static summarize(networkRecords, mainResourceURL, budgets) {
+    /** @type {Record<LH.Budget.ResourceType, ResourceEntry>} */
     const resourceSummary = {
       'stylesheet': {count: 0, resourceSize: 0, transferSize: 0},
       'image': {count: 0, resourceSize: 0, transferSize: 0},
@@ -51,7 +52,7 @@ class ResourceSummary {
       'total': {count: 0, resourceSize: 0, transferSize: 0},
       'third-party': {count: 0, resourceSize: 0, transferSize: 0},
     };
-    const budget = Budget.getMatchingBudget(context.settings.budgets, mainResourceURL);
+    const budget = Budget.getMatchingBudget(budgets, mainResourceURL);
     /** @type {ReadonlyArray<string>} */
     let firstPartyHosts = [];
     if (budget && budget.options && budget.options.firstPartyHostnames) {
@@ -70,11 +71,7 @@ class ResourceSummary {
         return false;
       }
       // Ignore non-network protocols
-      const url = new URL(record.url);
-      const protocol = url.protocol.slice(0, -1); // Removes trailing ":" from protocol
-      if (URL.NON_NETWORK_PROTOCOLS.includes(protocol)) {
-        return false;
-      }
+      if (NetworkRequest.isNonNetworkRequest(record)) return false;
       return true;
     }).forEach((record) => {
       const type = this.determineResourceType(record);
@@ -104,16 +101,13 @@ class ResourceSummary {
   }
 
   /**
-   * @param {{URL: LH.Artifacts['URL'], devtoolsLog: LH.DevtoolsLog}} data
-   * @param {LH.Audit.Context} context
+   * @param {{URL: LH.Artifacts['URL'], devtoolsLog: LH.DevtoolsLog, budgets: ImmutableObject<LH.Budget[]|null>}} data
+   * @param {LH.Artifacts.ComputedContext} context
    * @return {Promise<Record<LH.Budget.ResourceType,ResourceEntry>>}
    */
   static async compute_(data, context) {
-    const [networkRecords, mainResource] = await Promise.all([
-      NetworkRecords.request(data.devtoolsLog, context),
-      MainResource.request(data, context),
-    ]);
-    return ResourceSummary.summarize(networkRecords, mainResource.url, context);
+    const networkRecords = await NetworkRecords.request(data.devtoolsLog, context);
+    return ResourceSummary.summarize(networkRecords, data.URL.finalUrl, data.budgets);
   }
 }
 

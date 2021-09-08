@@ -5,140 +5,117 @@
  */
 'use strict';
 
+/** @fileoverview Expected Lighthouse audit values for various sites with stable(ish) PWA results. */
+
 const pwaDetailsExpectations = require('./pwa-expectations-details.js');
 
 /**
- * @type {Array<Smokehouse.ExpectedRunnerResult>}
- * Expected Lighthouse audit values for various sites with stable(ish) PWA
- * results.
+ * @type {Smokehouse.ExpectedRunnerResult}
+ * Expected Lighthouse results for airhorner.com.
  */
-const expectations = [
-  {
-    lhr: {
-      requestedUrl: 'https://airhorner.com',
-      finalUrl: 'https://airhorner.com/',
-      audits: {
-        'is-on-https': {
-          score: 1,
-        },
-        'redirects-http': {
-          score: 1,
-        },
-        'service-worker': {
-          score: 1,
-        },
-        'works-offline': {
-          score: 1,
-        },
-        'offline-start-url': {
-          score: 1,
-        },
-        'viewport': {
-          score: 1,
-        },
-        'without-javascript': {
-          score: 1,
-        },
-        'load-fast-enough-for-pwa': {
-        // Ignore speed test; just verify that it ran.
-        },
-        'installable-manifest': {
-          score: 1,
-          details: {items: [pwaDetailsExpectations]},
-        },
-        'splash-screen': {
-          score: 1,
-          details: {items: [pwaDetailsExpectations]},
-        },
-        'themed-omnibox': {
-          score: 1,
-          details: {items: [{...pwaDetailsExpectations, themeColor: '#2196F3'}]},
-        },
-        'content-width': {
-          score: 1,
-        },
-        'apple-touch-icon': {
-          score: 1,
-        },
+const airhorner = {
+  lhr: {
+    requestedUrl: 'https://airhorner.com',
+    finalUrl: 'https://airhorner.com/',
+    audits: {
+      'redirects-http': {
+        score: 1,
+      },
+      'service-worker': {
+        score: 1,
+      },
+      'viewport': {
+        score: 1,
+      },
+      'installable-manifest': {
+        score: 1,
+        details: {items: [], debugData: {manifestUrl: 'https://airhorner.com/manifest.json'}},
+      },
+      'splash-screen': {
+        score: 1,
+        details: {items: [pwaDetailsExpectations]},
+      },
+      'themed-omnibox': {
+        score: 1,
+        details: {items: [{...pwaDetailsExpectations, themeColor: '#2196F3'}]},
+      },
+      'content-width': {
+        score: 1,
+      },
+      'apple-touch-icon': {
+        score: 1,
+      },
 
-        // "manual" audits. Just verify in the results.
-        'pwa-cross-browser': {
-          score: null,
-          scoreDisplayMode: 'manual',
-        },
-        'pwa-page-transitions': {
-          score: null,
-          scoreDisplayMode: 'manual',
-        },
-        'pwa-each-page-has-url': {
-          score: null,
-          scoreDisplayMode: 'manual',
-        },
+      // "manual" audits. Just verify in the results.
+      'pwa-cross-browser': {
+        score: null,
+        scoreDisplayMode: 'manual',
+      },
+      'pwa-page-transitions': {
+        score: null,
+        scoreDisplayMode: 'manual',
+      },
+      'pwa-each-page-has-url': {
+        score: null,
+        scoreDisplayMode: 'manual',
       },
     },
   },
+};
 
-  {
-    lhr: {
-      requestedUrl: 'https://www.chromestatus.com/features',
-      finalUrl: 'https://www.chromestatus.com/features',
-      audits: {
-        'is-on-https': {
-          score: 1,
-        },
-        'redirects-http': {
-          score: 1,
-        },
-        'service-worker': {
-          score: 0,
-        },
-        'works-offline': {
-          score: 0,
-        },
-        'offline-start-url': {
-          score: 0,
-        },
-        'viewport': {
-          score: 1,
-        },
-        'without-javascript': {
-          score: 1,
-        },
-        'load-fast-enough-for-pwa': {
-        // Ignore speed test; just verify that it ran.
-        },
-        'installable-manifest': {
-          score: 0,
-        },
-        'splash-screen': {
-          score: 0,
-        },
-        'themed-omnibox': {
-          score: 0,
-        },
-        'content-width': {
-          score: 1,
-        },
-        'apple-touch-icon': {
-          score: 1,
-        },
+/**
+ * @type {Smokehouse.ExpectedRunnerResult}
+ * Expected Lighthouse results for chromestatus.com.
+ */
+const chromestatus = {
+  lhr: {
+    requestedUrl: 'https://www.chromestatus.com/features',
+    finalUrl: 'https://www.chromestatus.com/features',
+    audits: {
+      'redirects-http': {
+        score: 1,
+      },
+      'service-worker': {
+        score: 0,
+      },
+      'viewport': {
+        score: 1,
+      },
+      'installable-manifest': {
+        score: 0,
+        details: {items: [{reason: 'No manifest was fetched'}]},
+      },
+      'splash-screen': {
+        score: 0,
+      },
+      'themed-omnibox': {
+        score: 0,
+      },
+      'content-width': {
+        score: 1,
+      },
+      'apple-touch-icon': {
+        score: 1,
+      },
 
-        // "manual" audits. Just verify in the results.
-        'pwa-cross-browser': {
-          score: null,
-          scoreDisplayMode: 'manual',
-        },
-        'pwa-page-transitions': {
-          score: null,
-          scoreDisplayMode: 'manual',
-        },
-        'pwa-each-page-has-url': {
-          score: null,
-          scoreDisplayMode: 'manual',
-        },
+      // "manual" audits. Just verify in the results.
+      'pwa-cross-browser': {
+        score: null,
+        scoreDisplayMode: 'manual',
+      },
+      'pwa-page-transitions': {
+        score: null,
+        scoreDisplayMode: 'manual',
+      },
+      'pwa-each-page-has-url': {
+        score: null,
+        scoreDisplayMode: 'manual',
       },
     },
   },
-];
+};
 
-module.exports = expectations;
+module.exports = {
+  airhorner,
+  chromestatus,
+};

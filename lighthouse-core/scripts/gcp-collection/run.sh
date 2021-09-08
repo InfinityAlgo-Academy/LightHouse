@@ -18,6 +18,7 @@ INSTANCE_NAME="lighthouse-collection-$GCLOUD_USER-$INSTANCE_SUFFIX"
 CLOUDSDK_CORE_PROJECT=${LIGHTHOUSE_COLLECTION_GCLOUD_PROJECT:-lighthouse-lantern-collect}
 LIGHTHOUSE_GIT_REF=${TARGET_GIT_REF:-master}
 NUMBER_OF_RUNS=${TARGET_RUNS:-1}
+BASE_LIGHTHOUSE_FLAGS="--max-wait-for-load=90000 $LIGHTHOUSE_FLAGS"
 ZONE=us-central1-a
 
 gcloud --project="$CLOUDSDK_CORE_PROJECT" compute instances create $INSTANCE_NAME \
@@ -29,7 +30,7 @@ gcloud --project="$CLOUDSDK_CORE_PROJECT" compute instances create $INSTANCE_NAM
 cat > .tmp_env <<EOF
 export NUMBER_OF_RUNS=$NUMBER_OF_RUNS
 export LIGHTHOUSE_GIT_REF=$LIGHTHOUSE_GIT_REF
-export BASE_LIGHTHOUSE_FLAGS="--max-wait-for-load=90000"
+export BASE_LIGHTHOUSE_FLAGS="$BASE_LIGHTHOUSE_FLAGS"
 EOF
 
 # Instance needs time to start up.
@@ -56,6 +57,7 @@ echo "  $ gcloud --project="$CLOUDSDK_CORE_PROJECT" compute ssh lighthouse@$INST
 
 TRACE_COPY_COMMAND="gcloud --project="$CLOUDSDK_CORE_PROJECT" compute scp $INSTANCE_NAME:/home/lighthouse/trace-data.tar.gz ./trace-data.tar.gz --zone=$ZONE"
 LHR_COPY_COMMAND="gcloud --project="$CLOUDSDK_CORE_PROJECT" compute scp $INSTANCE_NAME:/home/lighthouse/lhr-data.tar.gz ./lhr-data.tar.gz --zone=$ZONE"
+LOGS_COPY_COMMAND="gcloud --project="$CLOUDSDK_CORE_PROJECT" compute scp $INSTANCE_NAME:/home/lighthouse/collect.log ./collect.log --zone=$ZONE"
 DELETE_INSTANCE_COMMAND="gcloud --project="$CLOUDSDK_CORE_PROJECT" compute instances delete $INSTANCE_NAME --zone=$ZONE"
 echo "When complete run..."
 echo "  For LHR + trace data for -A replication"
@@ -67,6 +69,7 @@ echo "  $ bash .tmp/gcp/$INSTANCE_NAME-delete-instance.sh"
 
 cd $LH_ROOT
 mkdir -p .tmp/gcp/
+echo "$LOGS_COPY_COMMAND" > ".tmp/gcp/$INSTANCE_NAME-copy-logs.sh"
 echo "$TRACE_COPY_COMMAND" > ".tmp/gcp/$INSTANCE_NAME-copy-traces.sh"
 echo "$LHR_COPY_COMMAND" > ".tmp/gcp/$INSTANCE_NAME-copy-lhrs.sh"
 echo "$DELETE_INSTANCE_COMMAND" > ".tmp/gcp/$INSTANCE_NAME-delete.sh"
