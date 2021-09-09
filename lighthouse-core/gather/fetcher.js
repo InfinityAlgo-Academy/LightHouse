@@ -114,7 +114,7 @@ class Fetcher {
    * @param {{timeout: number}=} options timeout is in ms
    * @return {Promise<FetchResponse>}
    */
-  async fetchResource(url, options = {timeout: 500}) {
+  async fetchResource(url, options = {timeout: 2_000}) {
     if (!this._enabled) {
       throw new Error('Must call `enable` before using fetchResource');
     }
@@ -131,7 +131,7 @@ class Fetcher {
    * @param {{timeout: number}=} options,
    * @return {Promise<string>}
    */
-  async _readIOStream(handle, options = {timeout: 500}) {
+  async _readIOStream(handle, options = {timeout: 2_000}) {
     const startTime = Date.now();
 
     let ioResponse;
