@@ -290,8 +290,11 @@ describe('CategoryRenderer', () => {
     });
 
     it('renders the category header with fraction', () => {
-      category.displayMode = 'fraction';
-      const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
+      const categoryDOM = renderer.render(
+        category,
+        sampleResults.categoryGroups,
+        {gatherMode: 'snapshot'}
+      );
 
       const gauge = categoryDOM.querySelector('.lh-fraction__content');
       assert.equal(gauge.textContent.trim(), '49/54', 'fraction is included');

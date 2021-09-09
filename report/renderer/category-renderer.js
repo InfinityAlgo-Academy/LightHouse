@@ -171,13 +171,14 @@ export class CategoryRenderer {
   /**
    * @param {LH.ReportResult.Category} category
    * @param {Record<string, LH.Result.ReportGroup>} groupDefinitions
+   * @param {{gatherMode: LH.Result.GatherMode}=} options
    * @return {DocumentFragment}
    */
-  renderCategoryHeader(category, groupDefinitions) {
+  renderCategoryHeader(category, groupDefinitions, options) {
     const component = this.dom.createComponent('categoryHeader');
 
     const gaugeContainerEl = this.dom.find('.lh-score__gauge', component);
-    const gaugeEl = this.renderCategoryScore(category, groupDefinitions);
+    const gaugeEl = this.renderCategoryScore(category, groupDefinitions, options);
     gaugeContainerEl.appendChild(gaugeEl);
 
     if (category.description) {
@@ -314,10 +315,11 @@ export class CategoryRenderer {
   /**
    * @param {LH.ReportResult.Category} category
    * @param {Record<string, LH.Result.ReportGroup>} groupDefinitions
+   * @param {{gatherMode: LH.Result.GatherMode}=} options
    * @return {DocumentFragment}
    */
-  renderCategoryScore(category, groupDefinitions) {
-    if (category.displayMode === 'fraction') {
+  renderCategoryScore(category, groupDefinitions, options) {
+    if (options && (options.gatherMode === 'snapshot' || options.gatherMode === 'timespan')) {
       return this.renderCategoryFraction(category);
     }
     return this.renderScoreGauge(category, groupDefinitions);
@@ -484,13 +486,14 @@ export class CategoryRenderer {
    *   ├── …
    *   ⋮
    * @param {LH.ReportResult.Category} category
-   * @param {Object<string, LH.Result.ReportGroup>} [groupDefinitions]
+   * @param {Object<string, LH.Result.ReportGroup>=} groupDefinitions
+   * @param {{environment?: 'PSI', gatherMode: LH.Result.GatherMode}=} options
    * @return {Element}
    */
-  render(category, groupDefinitions = {}) {
+  render(category, groupDefinitions = {}, options) {
     const element = this.dom.createElement('div', 'lh-category');
     this.createPermalinkSpan(element, category.id);
-    element.appendChild(this.renderCategoryHeader(category, groupDefinitions));
+    element.appendChild(this.renderCategoryHeader(category, groupDefinitions, options));
 
     // Top level clumps for audits, in order they will appear in the report.
     /** @type {Map<TopLevelClumpId, Array<LH.ReportResult.AuditRef>>} */

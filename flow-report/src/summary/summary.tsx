@@ -31,7 +31,8 @@ const SummaryNavigationHeader: FunctionComponent<{url: string}> = ({url}) => {
 const SummaryCategory: FunctionComponent<{
   category: LH.ReportResult.Category|undefined,
   href: string,
-}> = ({category, href}) => {
+  gatherMode: LH.Result.GatherMode,
+}> = ({category, href, gatherMode}) => {
   return (
     <div className="SummaryCategory">
       {
@@ -39,6 +40,7 @@ const SummaryCategory: FunctionComponent<{
           <CategoryScore
             category={category}
             href={href}
+            gatherMode={gatherMode}
           /> :
           <div
             className="SummaryCategory__null"
@@ -89,6 +91,7 @@ export const SummaryFlowStep: FunctionComponent<{
             key={c}
             category={reportResult.categories[c]}
             href={`#index=${hashIndex}&anchor=${c}`}
+            gatherMode={lhr.gatherMode}
           />
         ))
       }

@@ -12,12 +12,13 @@ import {useReportRenderer} from './report-renderer';
 export const CategoryScore: FunctionComponent<{
   category: LH.ReportResult.Category,
   href: string,
-}> = ({category, href}) => {
+  gatherMode: LH.Result.GatherMode,
+}> = ({category, href, gatherMode}) => {
   const {categoryRenderer} = useReportRenderer();
   const ref = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
-    const el = categoryRenderer.renderCategoryScore(category, {});
+    const el = categoryRenderer.renderCategoryScore(category, {}, {gatherMode});
 
     // Category label is displayed in the navigation header.
     const label = el.querySelector('.lh-gauge__label,.lh-fraction__label');

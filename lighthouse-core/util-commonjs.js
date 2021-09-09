@@ -108,9 +108,6 @@ class Util {
     const relevantAuditToMetricsMap = new Map();
 
     for (const category of Object.values(clone.categories)) {
-      category.displayMode =
-        clone.gatherMode === 'timespan' || clone.gatherMode === 'snapshot' ? 'fraction' : 'gauge';
-
       // Make basic lookup table for relevantAudits
       category.auditRefs.forEach(metricRef => {
         if (!metricRef.relevantAudits) return;

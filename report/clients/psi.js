@@ -72,7 +72,11 @@ export function prepareLabData(LHResult, document) {
   const detailsRenderer = new DetailsRenderer(dom, {fullPageScreenshot});
   const perfRenderer = new PerformanceCategoryRenderer(dom, detailsRenderer);
   // PSI environment string will ensure the categoryHeader and permalink elements are excluded
-  const perfCategoryEl = perfRenderer.render(perfCategory, reportLHR.categoryGroups, 'PSI');
+  const perfCategoryEl = perfRenderer.render(
+    perfCategory,
+    reportLHR.categoryGroups,
+    {environment: 'PSI', gatherMode: lhResult.gatherMode}
+  );
 
   const scoreGaugeEl = dom.find('.lh-score__gauge', perfCategoryEl);
   scoreGaugeEl.remove();
