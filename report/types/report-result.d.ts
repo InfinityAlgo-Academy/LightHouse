@@ -17,7 +17,8 @@ interface ReportResult extends LHResult {
 
 declare module ReportResult {
   interface Category extends LHResult.Category {
-    auditRefs: Array<AuditRef>
+    auditRefs: Array<AuditRef>;
+    displayMode: 'gauge'|'fraction';
   }
 
   interface AuditRef extends LHResult.AuditRef {

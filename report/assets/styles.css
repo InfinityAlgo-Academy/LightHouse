@@ -130,6 +130,7 @@
   --score-icon-margin-right: 12px;
   --score-icon-margin: 0 var(--score-icon-margin-right) 0 var(--score-icon-margin-left);
   --score-icon-size: 12px;
+  --score-icon-size-big: 16px;
   --scores-container-padding: 20px 0 20px 0;
   --scorescale-height: 6px;
   --scorescale-width: 18px;
@@ -1153,6 +1154,80 @@
   stroke: var(--color-not-applicable);
 }
 
+.lh-fraction__wrapper .lh-fraction__content::before {
+  content: '';
+  height: var(--score-icon-size);
+  width: var(--score-icon-size);
+  margin: var(--score-icon-margin);
+  display: inline-block;
+}
+.lh-fraction__wrapper--pass .lh-fraction__content {
+  color: var(--color-pass);
+}
+.lh-fraction__wrapper--pass .lh-fraction__background {
+  background-color: var(--color-pass);
+}
+.lh-fraction__wrapper--pass .lh-fraction__content::before {
+  background-color: var(--color-pass);
+  border-radius: 50%;
+}
+.lh-fraction__wrapper--average .lh-fraction__content {
+  color: var(--color-average);
+}
+.lh-fraction__wrapper--average .lh-fraction__background {
+  background-color: var(--color-average);
+}
+.lh-fraction__wrapper--average .lh-fraction__content::before {
+  background-color: var(--color-average);
+}
+.lh-fraction__wrapper--fail .lh-fraction__content {
+  color: var(--color-fail);
+}
+.lh-fraction__wrapper--fail .lh-fraction__background {
+  background-color: var(--color-fail);
+}
+.lh-fraction__wrapper--fail .lh-fraction__content::before {
+  border-left: calc(var(--score-icon-size) / 2) solid transparent;
+  border-right: calc(var(--score-icon-size) / 2) solid transparent;
+  border-bottom: var(--score-icon-size) solid var(--color-fail);
+}
+.lh-fraction__wrapper--null .lh-fraction__content {
+  color: var(--color-gray-700);
+}
+.lh-fraction__wrapper--null .lh-fraction__background {
+  background-color: var(--color-gray-700);
+}
+.lh-fraction__wrapper--null .lh-fraction__content::before {
+  border-radius: 50%;
+  border: 2px solid var(--color-gray-700);
+}
+
+.lh-fraction__background {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  border-radius: calc(var(--gauge-circle-size) / 2);
+  opacity: 0.1;
+  z-index: -1;
+}
+
+.lh-fraction__content-wrapper {
+  height: var(--gauge-circle-size);
+  display: flex;
+  align-items: center;
+}
+
+.lh-fraction__content {
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--gauge-label-font-size);
+  width: max-content;
+  padding: 1em;
+  min-width: 6em;
+}
+
 .lh-gauge {
   stroke-linecap: round;
   width: var(--gauge-circle-size);
@@ -1180,6 +1255,10 @@
 }
 .lh-category .lh-gauge__svg-wrapper {
   --gauge-circle-size: var(--gauge-circle-size-big);
+}
+.lh-category .lh-fraction__wrapper {
+  --gauge-circle-size: var(--gauge-circle-size-big);
+  --score-icon-size: var(--score-icon-size-big)
 }
 
 /* The plugin badge overlay */
@@ -1225,7 +1304,8 @@
   --gauge-percentage-font-size: var(--gauge-percentage-font-size-big);
 }
 
-.lh-gauge__wrapper {
+.lh-gauge__wrapper,
+.lh-fraction__wrapper {
   position: relative;
   display: flex;
   align-items: center;
@@ -1240,7 +1320,8 @@
   will-change: opacity; /* Only using for layer promotion */
 }
 
-.lh-gauge__label {
+.lh-gauge__label,
+.lh-fraction__label {
   font-size: var(--gauge-label-font-size);
   line-height: var(--gauge-label-line-height);
   margin-top: 10px;
@@ -1249,16 +1330,22 @@
 }
 
 /* TODO(#8185) use more BEM (.lh-gauge__label--big) instead of relying on descendant selector */
-.lh-category .lh-gauge__label {
+.lh-category .lh-gauge__label,
+.lh-category .lh-fraction__label {
   --gauge-label-font-size: var(--gauge-label-font-size-big);
   --gauge-label-line-height: var(--gauge-label-line-height-big);
   margin-top: 14px;
 }
+.lh-category .lh-fraction__content {
+  --gauge-label-font-size: var(--gauge-label-font-size-big);
+}
 
 
 .lh-scores-header .lh-gauge__wrapper,
+.lh-scores-header .lh-fraction__wrapper,
 .lh-scores-header .lh-gauge--pwa__wrapper,
 .lh-sticky-header .lh-gauge__wrapper,
+.lh-sticky-header .lh-fraction__wrapper,
 .lh-sticky-header .lh-gauge--pwa__wrapper {
   width: var(--gauge-wrapper-width);
 }

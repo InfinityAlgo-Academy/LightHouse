@@ -177,7 +177,7 @@ export class CategoryRenderer {
     const component = this.dom.createComponent('categoryHeader');
 
     const gaugeContainerEl = this.dom.find('.lh-score__gauge', component);
-    const gaugeEl = this.renderScoreGauge(category, groupDefinitions);
+    const gaugeEl = this.renderCategoryScore(category, groupDefinitions);
     gaugeContainerEl.appendChild(gaugeEl);
 
     if (category.description) {
@@ -316,6 +316,18 @@ export class CategoryRenderer {
    * @param {Record<string, LH.Result.ReportGroup>} groupDefinitions
    * @return {DocumentFragment}
    */
+  renderCategoryScore(category, groupDefinitions) {
+    if (category.displayMode === 'fraction') {
+      return this.renderCategoryFraction(category);
+    }
+    return this.renderScoreGauge(category, groupDefinitions);
+  }
+
+  /**
+   * @param {LH.ReportResult.Category} category
+   * @param {Record<string, LH.Result.ReportGroup>} groupDefinitions
+   * @return {DocumentFragment}
+   */
   renderScoreGauge(category, groupDefinitions) { // eslint-disable-line no-unused-vars
     const tmpl = this.dom.createComponent('gauge');
     const wrapper = this.dom.find('a.lh-gauge__wrapper', tmpl);
@@ -350,6 +362,44 @@ export class CategoryRenderer {
     }
 
     this.dom.find('.lh-gauge__label', tmpl).textContent = category.title;
+    return tmpl;
+  }
+
+  /**
+   * @param {LH.ReportResult.Category} category
+   * @return {DocumentFragment}
+   */
+  renderCategoryFraction(category) {
+    const tmpl = this.dom.createComponent('fraction');
+    const wrapper = this.dom.find('a.lh-fraction__wrapper', tmpl);
+    this.dom.safelySetHref(wrapper, `#${category.id}`);
+
+    const numAudits = category.auditRefs.length;
+
+    let numPassed = 0;
+    let totalWeight = 0;
+    for (const auditRef of category.auditRefs) {
+      totalWeight += auditRef.weight;
+      if (Util.showAsPassed(auditRef.result)) numPassed++;
+    }
+
+    const fraction = numPassed / numAudits;
+    const content = this.dom.find('.lh-fraction__content', tmpl);
+    const text = this.dom.createElement('span');
+    text.textContent = `${numPassed}/${numAudits}`;
+    content.appendChild(text);
+
+    let rating = Util.calculateRating(fraction);
+
+    // If none of the available audits can affect the score, a rating isn't useful.
+    // The flow report should display the fraction with neutral icon and coloring in this case.
+    if (totalWeight === 0) {
+      rating = 'null';
+    }
+
+    wrapper.classList.add(`lh-fraction__wrapper--${rating}`);
+
+    this.dom.find('.lh-fraction__label', tmpl).textContent = category.title;
     return tmpl;
   }
 

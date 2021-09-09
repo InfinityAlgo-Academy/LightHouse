@@ -160,11 +160,11 @@ export class ReportRenderer {
 
     for (const category of Object.values(report.categories)) {
       const renderer = specificCategoryRenderers[category.id] || categoryRenderer;
-      const categoryGauge = renderer.renderScoreGauge(category, report.categoryGroups || {});
+      const categoryGauge = renderer.renderCategoryScore(category, report.categoryGroups || {});
 
       if (Util.isPluginCategory(category.id)) {
         pluginGauges.push(categoryGauge);
-      } else if (renderer.renderScoreGauge === categoryRenderer.renderScoreGauge) {
+      } else if (renderer.renderCategoryScore === categoryRenderer.renderCategoryScore) {
         // The renderer for default categories is just the default CategoryRenderer.
         // If the functions are equal, then renderer is an instance of CategoryRenderer.
         // For example, the PWA category uses PwaCategoryRenderer, which overrides

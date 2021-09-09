@@ -164,7 +164,7 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
     const element = this.dom.createElement('div', 'lh-category');
     if (environment === 'PSI') {
       const gaugeEl = this.dom.createElement('div', 'lh-score__gauge');
-      gaugeEl.appendChild(this.renderScoreGauge(category, groups));
+      gaugeEl.appendChild(this.renderCategoryScore(category, groups));
       element.appendChild(gaugeEl);
     } else {
       this.createPermalinkSpan(element, category.id);
