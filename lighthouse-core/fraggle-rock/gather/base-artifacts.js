@@ -16,9 +16,10 @@ const {
 /**
  * @param {LH.Config.FRConfig} config
  * @param {LH.Gatherer.FRTransitionalDriver} driver
+ * @param {{gatherMode: LH.Gatherer.GatherMode}} context
  * @return {Promise<LH.BaseArtifacts>}
  */
-async function getBaseArtifacts(config, driver) {
+async function getBaseArtifacts(config, driver, context) {
   const BenchmarkIndex = await getBenchmarkIndex(driver.executionContext);
   const {userAgent} = await getBrowserVersion(driver.defaultSession);
 
@@ -36,6 +37,7 @@ async function getBaseArtifacts(config, driver) {
     // Contextual artifacts whose collection changes based on gather mode.
     URL: {requestedUrl: '', finalUrl: ''},
     PageLoadError: null,
+    GatherContext: context,
     // Artifacts that have been replaced by regular gatherers in Fraggle Rock.
     Stacks: [],
     NetworkUserAgent: '',

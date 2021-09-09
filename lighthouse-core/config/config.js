@@ -40,6 +40,7 @@ const BASE_ARTIFACT_BLANKS = {
   NetworkUserAgent: '',
   BenchmarkIndex: '',
   WebAppManifest: '',
+  GatherContext: '',
   InstallabilityErrors: '',
   Stacks: '',
   traces: '',

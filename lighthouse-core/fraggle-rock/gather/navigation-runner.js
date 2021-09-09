@@ -47,7 +47,7 @@ async function _setup({driver, config, requestedUrl}) {
   await driver.connect();
   await gotoURL(driver, defaultNavigationConfig.blankPage, {waitUntil: ['navigated']});
 
-  const baseArtifacts = await getBaseArtifacts(config, driver);
+  const baseArtifacts = await getBaseArtifacts(config, driver, {gatherMode: 'navigation'});
   baseArtifacts.URL.requestedUrl = requestedUrl;
 
   await prepare.prepareTargetForNavigationMode(driver, config.settings);

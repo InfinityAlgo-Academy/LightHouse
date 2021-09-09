@@ -39,7 +39,6 @@ Gathering setup: MetaElements
 Gathering setup: ScriptElements
 Gathering setup: IFrameElements
 Gathering setup: MainDocumentContent
-Gathering setup: GatherContext
 Gathering setup: GlobalListeners
 Gathering setup: AppCacheManifest
 Gathering setup: Doctype
@@ -71,7 +70,6 @@ Gathering in-page: MetaElements
 Gathering in-page: ScriptElements
 Gathering in-page: IFrameElements
 Gathering in-page: MainDocumentContent
-Gathering in-page: GatherContext
 Gathering in-page: GlobalListeners
 Gathering in-page: AppCacheManifest
 Gathering in-page: Doctype
@@ -104,7 +102,6 @@ Gathering: MetaElements
 Gathering: ScriptElements
 Gathering: IFrameElements
 Gathering: MainDocumentContent
-Gathering: GatherContext
 Gathering: GlobalListeners
 Gathering: AppCacheManifest
 Gathering: Doctype

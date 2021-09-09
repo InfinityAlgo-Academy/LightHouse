@@ -406,6 +406,7 @@ class GatherRunner {
       traces: {},
       devtoolsLogs: {},
       settings: options.settings,
+      GatherContext: {gatherMode: 'navigation'},
       URL: {requestedUrl: options.requestedUrl, finalUrl: options.requestedUrl},
       Timing: [],
       PageLoadError: null,

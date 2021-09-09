@@ -58,6 +58,8 @@ interface UniversalBaseArtifacts {
   HostFormFactor: 'desktop'|'mobile';
   /** The user agent string of the version of Chrome used. */
   HostUserAgent: string;
+  /** Information about how Lighthouse artifacts were gathered. */
+  GatherContext: {gatherMode: Gatherer.GatherMode};
 }
 
 /**
@@ -144,8 +146,6 @@ export interface GathererArtifacts extends PublicGathererArtifacts,LegacyBaseArt
   FormElements: Artifacts.Form[];
   /** Screenshot of the entire page (rather than just the above the fold content). */
   FullPageScreenshot: Artifacts.FullPageScreenshot | null;
-  /** Information about how Lighthouse artifacts were gathered. */
-  GatherContext: {gatherMode: Gatherer.GatherMode};
   /** Information about event listeners registered on the global object. */
   GlobalListeners: Array<Artifacts.GlobalListener>;
   /** Whether the page ended up on an HTTPS page after attempting to load the HTTP version. */

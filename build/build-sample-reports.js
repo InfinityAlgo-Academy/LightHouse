@@ -146,6 +146,7 @@ async function generateErrorLHR() {
       requestedUrl: 'http://fakeurl.com',
       finalUrl: 'http://fakeurl.com',
     },
+    GatherContext: {gatherMode: 'navigation'},
     Timing: [],
     PageLoadError: null,
     devtoolsLogs: {},
