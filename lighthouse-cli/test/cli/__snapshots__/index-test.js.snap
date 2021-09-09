@@ -142,6 +142,9 @@ Object {
       "path": "largest-contentful-paint-element",
     },
     Object {
+      "path": "lcp-lazy-loaded",
+    },
+    Object {
       "path": "layout-shift-elements",
     },
     Object {
@@ -904,6 +907,7 @@ Object {
             "dom-size",
             "duplicated-javascript",
             "legacy-javascript",
+            "viewport",
           ],
           "weight": 30,
         },
@@ -1094,6 +1098,11 @@ Object {
         },
         Object {
           "group": "diagnostics",
+          "id": "lcp-lazy-loaded",
+          "weight": 0,
+        },
+        Object {
+          "group": "diagnostics",
           "id": "layout-shift-elements",
           "weight": 0,
         },
@@ -1120,6 +1129,11 @@ Object {
         Object {
           "group": "diagnostics",
           "id": "unsized-images",
+          "weight": 0,
+        },
+        Object {
+          "group": "diagnostics",
+          "id": "viewport",
           "weight": 0,
         },
         Object {

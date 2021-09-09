@@ -7,11 +7,11 @@
 
 /* eslint-env jest */
 
-/* global document, window */
+import fs from 'fs';
 
 import {jest} from '@jest/globals';
-import fs from 'fs';
 import puppeteer from 'puppeteer';
+
 import {server} from '../../lighthouse-cli/test/fixtures/static-server.js';
 import {LH_ROOT} from '../../root.js';
 

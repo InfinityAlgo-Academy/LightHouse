@@ -38,6 +38,7 @@ async function snapshot(options) {
         phase: 'getArtifact',
         gatherMode: 'snapshot',
         driver,
+        baseArtifacts,
         artifactDefinitions,
         artifactState,
         computedCache,

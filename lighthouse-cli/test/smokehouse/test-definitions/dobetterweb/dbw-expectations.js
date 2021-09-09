@@ -193,35 +193,31 @@ const expectations = {
     finalUrl: 'http://localhost:10200/dobetterweb/dbw_tester.html',
     audits: {
       'errors-in-console': {
+        _minChromiumMilestone: 95,
         score: 0,
         details: {
           items: {
             0: {
-              source: 'other',
-              description: 'Application Cache Error event: Manifest fetch failed (404) http://localhost:10200/dobetterweb/clock.appcache',
-              url: 'http://localhost:10200/dobetterweb/dbw_tester.html',
-            },
-            1: {
               source: 'exception',
               description: /^Error: A distinctive error\s+at http:\/\/localhost:10200\/dobetterweb\/dbw_tester.html:\d+:\d+$/,
               url: 'http://localhost:10200/dobetterweb/dbw_tester.html',
             },
-            2: {
+            1: {
               source: 'console.error',
               description: 'Error! Error!',
               url: 'http://localhost:10200/dobetterweb/dbw_tester.html',
             },
-            3: {
+            2: {
               source: 'network',
               description: 'Failed to load resource: the server responded with a status of 404 (Not Found)',
               url: 'http://localhost:10200/dobetterweb/unknown404.css?delay=200',
             },
-            4: {
+            3: {
               source: 'network',
               description: 'Failed to load resource: the server responded with a status of 404 (Not Found)',
               url: 'http://localhost:10200/dobetterweb/fcp-delayer.js?delay=5000',
             },
-            5: {
+            4: {
               source: 'network',
               description: 'Failed to load resource: the server responded with a status of 404 (Not Found)',
               url: 'http://localhost:10200/favicon.ico',
@@ -381,10 +377,10 @@ const expectations = {
       },
       'dom-size': {
         score: 1,
-        numericValue: 149,
+        numericValue: 153,
         details: {
           items: [
-            {statistic: 'Total DOM Elements', value: 149},
+            {statistic: 'Total DOM Elements', value: 153},
             {statistic: 'Maximum DOM Depth', value: 4},
             {
               statistic: 'Maximum Child Elements',
@@ -415,7 +411,7 @@ const expectations = {
           screenshot: {
             width: 360,
             // Allow for differences in platforms.
-            height: '1350±20',
+            height: '1350±100',
             data: /^data:image\/jpeg;.{500,}/,
           },
           nodes: {

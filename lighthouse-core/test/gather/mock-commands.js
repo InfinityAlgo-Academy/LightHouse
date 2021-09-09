@@ -54,7 +54,7 @@ function createMockSendCommandFn(options) {
      * @param {string|undefined=} sessionId
      * @param {LH.CrdpCommands[C]['paramsType']} args
      */
-    (command, sessionId, ...args) => {
+    async (command, sessionId, ...args) => {
       if (!useSessionId) {
         // @ts-expect-error - If sessionId isn't used, it *is* args.
         args = [sessionId, ...args];
@@ -68,8 +68,7 @@ function createMockSendCommandFn(options) {
       mockResponses.splice(indexOfResponse, 1);
       const returnValue = typeof response === 'function' ? response(...args) : response;
       if (delay) return new Promise(resolve => setTimeout(() => resolve(returnValue), delay));
-      // @ts-expect-error: Some covariant type stuff doesn't work here. idk, I'm not a type scientist.
-      return Promise.resolve(returnValue);
+      return returnValue;
     });
 
   const mockFn = Object.assign(mockFnImpl, {
@@ -106,6 +105,15 @@ function createMockSendCommandFn(options) {
       return mockFn.mock.calls.find(
         call => call[0] === command && (!useSessionId || call[1] === sessionId)
       )[useSessionId ? 2 : 1];
+    },
+    /**
+     * @param {keyof LH.CrdpCommands} command
+     * @param {string=} sessionId
+     */
+    findAllInvocations(command, sessionId) {
+      return mockFn.mock.calls.filter(
+        call => call[0] === command && (!useSessionId || call[1] === sessionId)
+      ).map(invocation => useSessionId ? invocation[2] : invocation[1]);
     },
   });
 

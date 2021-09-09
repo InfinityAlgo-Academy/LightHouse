@@ -346,4 +346,23 @@ describe('NetworkRequest', () => {
       })).toBe(true);
     });
   });
+
+  describe('#isNonNetworkRequest', () => {
+    const isNonNetworkRequest = NetworkRequest.isNonNetworkRequest;
+
+    it('correctly identifies non-network records', () => {
+      // data protocol
+      expect(isNonNetworkRequest({protocol: 'data'})).toBe(true);
+
+      // filesystem scheme
+      expect(isNonNetworkRequest({protocol: '', parsedURL: {scheme: 'file'}})).toBe(true);
+    });
+
+    it('correctly identifies network records', () => {
+      expect(isNonNetworkRequest({
+        protocol: 'h2',
+        parsedURL: {scheme: 'http', host: 'google.com'},
+      })).toBe(false);
+    });
+  });
 });

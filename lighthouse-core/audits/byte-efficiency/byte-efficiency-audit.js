@@ -129,7 +129,6 @@ class UnusedBytes extends Audit {
     const [result, graph, simulator] = await Promise.all([
       this.audit_(artifacts, networkRecords, context),
       // Page dependency graph is only used in navigation mode.
-      // TODO(FR-COMPAT): Use dependency graph in timespan mode.
       gatherContext.gatherMode === 'navigation' ?
         PageDependencyGraph.request({trace, devtoolsLog}, context) :
         null,
@@ -201,7 +200,6 @@ class UnusedBytes extends Audit {
   }
 
   /**
-   * TODO(FR-COMPAT): Rework opportunities to remove emphasis on `wastedMs`
    * @param {number} wastedBytes
    * @param {Simulator} simulator
    */

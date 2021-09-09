@@ -155,7 +155,6 @@ class GatherRunner {
     const session = driver.defaultSession;
 
     // Assert no service workers are still installed, so we test that they would actually be installed for a new user.
-    // TODO(FR-COMPAT): re-evaluate the necessity of this check
     await GatherRunner.assertNoSameOriginServiceWorkerClients(session, options.requestedUrl);
 
     await prepare.prepareTargetForNavigationMode(driver, options.settings);

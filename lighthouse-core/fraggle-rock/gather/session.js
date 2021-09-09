@@ -18,8 +18,12 @@ class ProtocolSession {
    */
   constructor(session) {
     this._session = session;
+    /** @type {LH.Crdp.Target.TargetInfo|undefined} */
+    this._targetInfo = undefined;
     /** @type {number|undefined} */
     this._nextProtocolTimeout = undefined;
+    /** @type {WeakMap<any, any>} */
+    this._callbackMap = new WeakMap();
 
     // FIXME: Monkeypatch puppeteer to be able to listen to *all* protocol events.
     // This patched method will now emit a copy of every event on `*`.
@@ -27,11 +31,20 @@ class ProtocolSession {
     // @ts-expect-error - Test for the monkeypatch.
     if (originalEmit[SessionEmitMonkeypatch]) return;
     session.emit = (method, ...args) => {
-      originalEmit.call(session, '*', {method, params: args[0]});
+      // OOPIF sessions need to emit their sessionId so downstream processors can recognize
+      // the target the event came from.
+      const sessionId = this._targetInfo && this._targetInfo.type === 'iframe' ?
+        this._targetInfo.targetId : undefined;
+      originalEmit.call(session, '*', {method, params: args[0], sessionId});
       return originalEmit.call(session, method, ...args);
     };
     // @ts-expect-error - It's monkeypatching 🤷‍♂️.
     session.emit[SessionEmitMonkeypatch] = true;
+  }
+
+  /** @param {LH.Crdp.Target.TargetInfo} targetInfo */
+  setTargetInfo(targetInfo) {
+    this._targetInfo = targetInfo;
   }
 
   /**
@@ -73,6 +86,27 @@ class ProtocolSession {
    */
   once(eventName, callback) {
     this._session.once(eventName, /** @type {*} */ (callback));
+  }
+
+  /**
+   * Bind to the puppeteer `sessionattached` listener and return an LH ProtocolSession.
+   * @param {(session: ProtocolSession) => void} callback
+   */
+  addSessionAttachedListener(callback) {
+    /** @param {import('puppeteer').CDPSession} session */
+    const listener = session => callback(new ProtocolSession(session));
+    this._callbackMap.set(callback, listener);
+    this._session.connection().on('sessionattached', listener);
+  }
+
+  /**
+   * Unbind to the puppeteer `sessionattached` listener.
+   * @param {(session: ProtocolSession) => void} callback
+   */
+  removeSessionAttachedListener(callback) {
+    const listener = this._callbackMap.get(callback);
+    if (!listener) return;
+    this._session.connection().off('sessionattached', listener);
   }
 
   /**

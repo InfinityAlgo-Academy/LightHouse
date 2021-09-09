@@ -6,11 +6,18 @@
 'use strict';
 
 const rollup = require('rollup');
+const {nodeResolve} = require('@rollup/plugin-node-resolve');
 const {terser} = require('rollup-plugin-terser');
 // Only needed b/c getFilenamePrefix loads a commonjs module.
 const commonjs =
   // @ts-expect-error types are wrong.
   /** @type {import('rollup-plugin-commonjs').default} */ (require('rollup-plugin-commonjs'));
+
+/**
+ * @type {import('@rollup/plugin-typescript').default}
+ */
+// @ts-expect-error types are wrong.
+const typescript = require('@rollup/plugin-typescript');
 
 async function buildStandaloneReport() {
   const bundle = await rollup.rollup({
@@ -23,6 +30,25 @@ async function buildStandaloneReport() {
 
   await bundle.write({
     file: 'dist/report/standalone.js',
+    format: 'iife',
+  });
+}
+
+async function buildFlowReport() {
+  const bundle = await rollup.rollup({
+    input: 'flow-report/standalone-flow.tsx',
+    plugins: [
+      nodeResolve(),
+      commonjs(),
+      typescript({
+        tsconfig: 'flow-report/tsconfig.json',
+      }),
+      terser(),
+    ],
+  });
+
+  await bundle.write({
+    file: 'dist/report/flow.js',
     format: 'iife',
   });
 }
@@ -73,6 +99,7 @@ async function buildUmdBundle() {
 if (require.main === module) {
   if (process.argv.length <= 2) {
     buildStandaloneReport();
+    buildFlowReport();
     buildEsModulesBundle();
     buildPsiReport();
     buildUmdBundle();
@@ -83,6 +110,7 @@ if (require.main === module) {
   }
   if (process.argv.includes('--standalone')) {
     buildStandaloneReport();
+    buildFlowReport();
   }
   if (process.argv.includes('--esm')) {
     buildEsModulesBundle();
@@ -94,6 +122,7 @@ if (require.main === module) {
 
 module.exports = {
   buildStandaloneReport,
+  buildFlowReport,
   buildPsiReport,
   buildUmdBundle,
 };

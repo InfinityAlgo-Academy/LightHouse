@@ -31,9 +31,12 @@ const infiniteLoop = {
   artifacts: {
     PageLoadError: {code: 'PAGE_HUNG'},
     devtoolsLogs: {
-      'pageLoadError-defaultPass': NONEMPTY_ARRAY,
+      'pageLoadError-defaultPass': {...NONEMPTY_ARRAY, _legacyOnly: true},
+      'pageLoadError-default': {...NONEMPTY_ARRAY, _fraggleRockOnly: true},
     },
     traces: {
+      // Fraggle Rock treats traces as regular artifacts which are not collected on error.
+      '_legacyOnly': true,
       'pageLoadError-defaultPass': {traceEvents: NONEMPTY_ARRAY},
     },
   },
@@ -46,9 +49,12 @@ const infiniteLoop = {
 const expiredSsl = {
   lhr: {
     requestedUrl: 'https://expired.badssl.com',
-    finalUrl: 'https://expired.badssl.com/',
+    finalUrl: /(expired.badssl.com|chrome-error)/,
     runtimeError: {code: 'INSECURE_DOCUMENT_REQUEST'},
-    runWarnings: ['The URL you have provided does not have a valid security certificate. net::ERR_CERT_DATE_INVALID'],
+    runWarnings: Object.defineProperty([
+      /expired.badssl.*redirected to chrome-error:/, // This warning was not provided in legacy reports.
+      'The URL you have provided does not have a valid security certificate. net::ERR_CERT_DATE_INVALID',
+    ], '_fraggleRockOnly', {value: true, enumerable: true}),
     audits: {
       'first-contentful-paint': {
         scoreDisplayMode: 'error',
@@ -59,9 +65,12 @@ const expiredSsl = {
   artifacts: {
     PageLoadError: {code: 'INSECURE_DOCUMENT_REQUEST'},
     devtoolsLogs: {
-      'pageLoadError-defaultPass': NONEMPTY_ARRAY,
+      'pageLoadError-defaultPass': {...NONEMPTY_ARRAY, _legacyOnly: true},
+      'pageLoadError-default': {...NONEMPTY_ARRAY, _fraggleRockOnly: true},
     },
     traces: {
+      // Fraggle Rock treats traces as regular artifacts which are not collected on error.
+      '_legacyOnly': true,
       'pageLoadError-defaultPass': {traceEvents: NONEMPTY_ARRAY},
     },
   },

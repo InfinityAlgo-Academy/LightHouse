@@ -55,6 +55,7 @@ results.html
 # generated files needed for publish
 dist/**
 !dist/report/standalone.js
+!dist/report/flow.js
 
 # large files
 changelog.md

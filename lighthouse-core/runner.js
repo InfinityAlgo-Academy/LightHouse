@@ -18,7 +18,7 @@ const fs = require('fs');
 const path = require('path');
 const URL = require('./lib/url-shim.js');
 const Sentry = require('./lib/sentry.js');
-const generateReport = require('../report/report-generator.js').generateReport;
+const generateReport = require('../report/generator/report-generator.js').generateReport;
 const LHError = require('./lib/lh-error.js');
 
 /** @typedef {import('./gather/connections/connection.js')} Connection */
@@ -132,6 +132,8 @@ class Runner {
 
       /** @type {LH.RawIcu<LH.Result>} */
       const i18nLhr = {
+        // If GatherContext is not collected, then we are in a non-default pass of the legacy runner.
+        gatherMode: artifacts.GatherContext ? artifacts.GatherContext.gatherMode : 'navigation',
         userAgent: artifacts.HostUserAgent,
         environment: {
           networkUserAgent: artifacts.NetworkUserAgent,

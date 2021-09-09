@@ -5,8 +5,6 @@
  */
 'use strict';
 
-/** @typedef {import('../lighthouse-core/lib/i18n/locales').LhlMessages} LhlMessages */
-
 const fs = require('fs');
 const GhPagesApp = require('./gh-pages-app.js');
 const {LH_ROOT} = require('../root.js');
@@ -20,8 +18,8 @@ function buildStrings() {
   const locales = require('../lighthouse-core/lib/i18n/locales.js');
   // TODO(esmodules): use dynamic import when build/ is esm.
   const utilCode = fs.readFileSync(LH_ROOT + '/lighthouse-treemap/app/src/util.js', 'utf-8');
-  const {UIStrings} = eval(utilCode.replace('export ', '') + '\nmodule.exports = TreemapUtil;');
-  const strings = /** @type {Record<LH.Locale, LhlMessages>} */ ({});
+  const {UIStrings} = eval(utilCode.replace(/export /g, '') + '\nmodule.exports = TreemapUtil;');
+  const strings = /** @type {Record<LH.Locale, string>} */ ({});
 
   for (const [locale, lhlMessages] of Object.entries(locales)) {
     const localizedStrings = Object.fromEntries(
@@ -31,7 +29,7 @@ function buildStrings() {
           return [];
         }
 
-        return [varName, v];
+        return [varName, v.message];
       })
     );
     strings[/** @type {LH.Locale} */ (locale)] = localizedStrings;
@@ -49,21 +47,19 @@ async function run() {
     appDir: `${LH_ROOT}/lighthouse-treemap/app`,
     html: {path: 'index.html'},
     stylesheets: [
-      fs.readFileSync(require.resolve('tabulator-tables/dist/css/tabulator.min.css'), 'utf8'),
+      {path: require.resolve('tabulator-tables/dist/css/tabulator.min.css')},
       {path: 'styles/*'},
     ],
     javascripts: [
-      /* eslint-disable max-len */
-      fs.readFileSync(require.resolve('idb-keyval/dist/idb-keyval-min.js'), 'utf8'),
-      fs.readFileSync(require.resolve('event-target-shim/umd'), 'utf8'),
-      fs.readFileSync(require.resolve('webtreemap-cdt'), 'utf8'),
-      fs.readFileSync(require.resolve('tabulator-tables/dist/js/tabulator_core.js'), 'utf8'),
-      fs.readFileSync(require.resolve('tabulator-tables/dist/js/modules/sort.js'), 'utf8'),
-      fs.readFileSync(require.resolve('tabulator-tables/dist/js/modules/format.js'), 'utf8'),
-      fs.readFileSync(require.resolve('tabulator-tables/dist/js/modules/resize_columns.js'), 'utf8'),
-      fs.readFileSync(require.resolve('pako/dist/pako_inflate.js'), 'utf-8'),
-      /* eslint-enable max-len */
       buildStrings(),
+      {path: require.resolve('idb-keyval/dist/idb-keyval-min.js')},
+      {path: require.resolve('event-target-shim/umd')},
+      {path: require.resolve('webtreemap-cdt')},
+      {path: require.resolve('tabulator-tables/dist/js/tabulator_core.js')},
+      {path: require.resolve('tabulator-tables/dist/js/modules/sort.js')},
+      {path: require.resolve('tabulator-tables/dist/js/modules/format.js')},
+      {path: require.resolve('tabulator-tables/dist/js/modules/resize_columns.js')},
+      {path: require.resolve('pako/dist/pako_inflate.js')},
       {path: 'src/main.js', rollup: true},
     ],
     assets: [
@@ -80,4 +76,7 @@ async function run() {
   }
 }
 
-run();
+run().catch(err => {
+  console.error(err);
+  process.exit(1);
+});

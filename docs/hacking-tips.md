@@ -48,7 +48,7 @@ node generate_report.js > temp.report.html; open temp.report.html
 // generate_report.js
 'use strict';
 
-const ReportGenerator = require('./report/report-generator.js');
+const ReportGenerator = require('./report/generator/report-generator.js');
 const results = require('./temp.report.json');
 const html = ReportGenerator.generateReportHtml(results);
 

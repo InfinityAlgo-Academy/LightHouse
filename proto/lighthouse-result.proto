@@ -193,6 +193,9 @@ message LighthouseResult {
 
   // The Stack Pack data used by audits in this run.
   repeated StackPack stack_packs = 15;
+
+  // Gather mode used to collect artifacts.
+  string gather_mode = 16;
 }
 
 // Message containing a category

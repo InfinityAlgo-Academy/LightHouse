@@ -16,6 +16,7 @@ const throwNotConnectedFn = () => {
 
 /** @type {LH.Gatherer.FRProtocolSession} */
 const defaultSession = {
+  setTargetInfo: throwNotConnectedFn,
   hasNextProtocolTimeout: throwNotConnectedFn,
   getNextProtocolTimeout: throwNotConnectedFn,
   setNextProtocolTimeout: throwNotConnectedFn,
@@ -24,6 +25,8 @@ const defaultSession = {
   off: throwNotConnectedFn,
   addProtocolMessageListener: throwNotConnectedFn,
   removeProtocolMessageListener: throwNotConnectedFn,
+  addSessionAttachedListener: throwNotConnectedFn,
+  removeSessionAttachedListener: throwNotConnectedFn,
   sendCommand: throwNotConnectedFn,
 };
 

@@ -118,8 +118,8 @@ export class CategoryRenderer {
       auditEl.classList.add(`lh-audit--error`);
       const textEl = this.dom.find('.lh-audit__display-text', auditEl);
       textEl.textContent = strings.errorLabel;
-      textEl.classList.add('tooltip-boundary');
-      const tooltip = this.dom.createChildOf(textEl, 'div', 'tooltip tooltip--error');
+      textEl.classList.add('lh-tooltip-boundary');
+      const tooltip = this.dom.createChildOf(textEl, 'div', 'lh-tooltip lh-tooltip--error');
       tooltip.textContent = audit.result.errorMessage || strings.errorMissingAuditInfo;
     } else if (audit.result.explanation) {
       const explEl = this.dom.createChildOf(titleEl, 'div', 'lh-audit-explanation');

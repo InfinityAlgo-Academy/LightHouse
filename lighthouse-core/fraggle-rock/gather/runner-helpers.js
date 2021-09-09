@@ -10,6 +10,7 @@
  * @property {import('./driver.js')} driver
  * @property {Array<LH.Config.AnyArtifactDefn>} artifactDefinitions
  * @property {ArtifactState} artifactState
+ * @property {LH.FRBaseArtifacts} baseArtifacts
  * @property {LH.Gatherer.FRGatherPhase} phase
  * @property {LH.Gatherer.GatherMode} gatherMode
  * @property {Map<string, LH.ArbitraryEqualityMap>} computedCache
@@ -68,6 +69,7 @@ async function collectPhaseArtifacts(options) {
     driver,
     artifactDefinitions,
     artifactState,
+    baseArtifacts,
     phase,
     gatherMode,
     computedCache,
@@ -91,6 +93,7 @@ async function collectPhaseArtifacts(options) {
         url: await driver.url(),
         gatherMode,
         driver,
+        baseArtifacts,
         dependencies,
         computedCache,
         settings,

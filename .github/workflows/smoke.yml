@@ -64,6 +64,13 @@ jobs:
     # Fail if any changes were written to source files.
     - run: git diff --exit-code
 
+    - name: Upload dist
+      if: failure()
+      uses: actions/upload-artifact@v1
+      with:
+        name: Smokehouse (ubuntu; chrome ${{ matrix.chrome-channel }})
+        path: .tmp/smokehouse-ci-failures/
+
   # Only run smoke tests for windows against stable chrome.
   smoke-windows:
     runs-on: windows-latest
@@ -88,6 +95,13 @@ jobs:
     # Fail if any changes were written to source files.
     - run: git diff --exit-code
 
+    - name: Upload dist
+      if: failure()
+      uses: actions/upload-artifact@v1
+      with:
+        name: Smokehouse (windows)
+        path: .tmp/smokehouse-ci-failures/
+
   smoke-fr:
     runs-on: ubuntu-latest
     name: Fraggle Rock
@@ -106,10 +120,17 @@ jobs:
 
     - run: sudo apt-get install xvfb
     - name: yarn smoke --fraggle-rock
-      run: xvfb-run --auto-servernum yarn smoke --debug --fraggle-rock -j=1 --retries=2 a11y lantern seo-passing seo-failing csp metrics perf-debug dbw screenshot
+      run: xvfb-run --auto-servernum yarn smoke --debug --fraggle-rock -j=1 --retries=2 --invert-match pwa offline
 
     # Fail if any changes were written to source files.
     - run: git diff --exit-code
+
+    - name: Upload dist
+      if: failure()
+      uses: actions/upload-artifact@v1
+      with:
+        name: Smokehouse (fr)
+        path: .tmp/smokehouse-ci-failures/
 
   smoke-bundle:
     runs-on: ubuntu-latest
@@ -134,3 +155,10 @@ jobs:
 
     # Fail if any changes were written to source files.
     - run: git diff --exit-code
+
+    - name: Upload dist
+      if: failure()
+      uses: actions/upload-artifact@v1
+      with:
+        name: Smokehouse (bundled)
+        path: .tmp/smokehouse-ci-failures/

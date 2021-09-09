@@ -330,8 +330,11 @@ describe('URL Shim', () => {
     assert.ok(URL.isNonNetworkProtocol('data'));
     assert.ok(URL.isNonNetworkProtocol('data:'));
     assert.ok(URL.isNonNetworkProtocol('intent:'));
+    assert.ok(URL.isNonNetworkProtocol('file:'));
+    assert.ok(URL.isNonNetworkProtocol('filesystem:'));
+    assert.ok(URL.isNonNetworkProtocol('filesystem'));
 
-    assert.ok(!URL.isNonNetworkProtocol('filesystem'));
+    assert.ok(!URL.isNonNetworkProtocol('https:'));
     assert.ok(!URL.isNonNetworkProtocol('http'));
     assert.ok(!URL.isNonNetworkProtocol('ws'));
   });

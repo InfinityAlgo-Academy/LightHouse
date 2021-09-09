@@ -20,11 +20,10 @@ import {DetailsRenderer} from '../renderer/details-renderer.js';
 import {DOM} from '../renderer/dom.js';
 import {ElementScreenshotRenderer} from '../renderer/element-screenshot-renderer.js';
 import {I18n} from '../renderer/i18n.js';
+import {openTreemap} from '../renderer/open-tab.js';
 import {PerformanceCategoryRenderer} from '../renderer/performance-category-renderer.js';
 import {ReportUIFeatures} from '../renderer/report-ui-features.js';
 import {Util} from '../renderer/util.js';
-
-/* global window */
 
 /** @typedef {{scoreGaugeEl: Element, perfCategoryEl: Element, finalScreenshotDataUri: string|null, scoreScaleEl: Element, installFeatures: Function}} PrepareLabDataResult */
 
@@ -127,7 +126,7 @@ export function prepareLabData(LHResult, document) {
         container: buttonContainer,
         text: Util.i18n.strings.viewTreemapLabel,
         icon: 'treemap',
-        onClick: () => ReportUIFeatures.openTreemap(lhResult),
+        onClick: () => openTreemap(lhResult),
       });
     }
   };

@@ -39,6 +39,8 @@ declare module Protocol {
   type StrictEventEmitter<TEventRecord extends Record<keyof TEventRecord, any[]>> = {
     on<E extends keyof TEventRecord>(event: E, listener: (...args: TEventRecord[E]) => void): void;
 
+    off<E extends keyof TEventRecord>(event: E, listener: Function): void;
+
     addListener<E extends keyof TEventRecord>(event: E, listener: (...args: TEventRecord[E]) => void): void;
 
     removeListener<E extends keyof TEventRecord>(event: E, listener: Function): void;

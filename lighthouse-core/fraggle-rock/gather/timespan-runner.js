@@ -29,12 +29,14 @@ async function startTimespan(options) {
   const computedCache = new Map();
   const artifactDefinitions = config.artifacts || [];
   const requestedUrl = await options.page.url();
+  const baseArtifacts = await getBaseArtifacts(config, driver);
   const artifactState = getEmptyArtifactState();
   /** @type {Omit<import('./runner-helpers.js').CollectPhaseArtifactOptions, 'phase'>} */
   const phaseOptions = {
     driver,
     artifactDefinitions,
     artifactState,
+    baseArtifacts,
     computedCache,
     gatherMode: 'timespan',
     settings: config.settings,
@@ -48,7 +50,6 @@ async function startTimespan(options) {
       const finalUrl = await options.page.url();
       return Runner.run(
         async () => {
-          const baseArtifacts = await getBaseArtifacts(config, driver);
           baseArtifacts.URL.requestedUrl = requestedUrl;
           baseArtifacts.URL.finalUrl = finalUrl;
 

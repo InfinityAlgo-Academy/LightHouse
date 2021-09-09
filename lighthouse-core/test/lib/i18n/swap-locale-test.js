@@ -50,18 +50,20 @@ describe('swap-locale', () => {
     expect(lhrDe.audits.plugins.title).toEqual('Dokument verwendet keine Plug-ins');
 
     // With ICU string argument values
-    expect(lhrEn.audits['dom-size'].displayValue).toEqual('148 elements');
-    expect(lhrDe.audits['dom-size'].displayValue).toEqual('148 Elemente');
+    expect(lhrEn.audits['dom-size'].displayValue).toMatchInlineSnapshot(`"153 elements"`);
+    /* eslint-disable no-irregular-whitespace */
+    expect(lhrDe.audits['dom-size'].displayValue).toMatchInlineSnapshot(`"153 Elemente"`);
 
     // Renderer formatted strings
     expect(lhrEn.i18n.rendererFormattedStrings.labDataTitle).toEqual('Lab Data');
     expect(lhrDe.i18n.rendererFormattedStrings.labDataTitle).toEqual('Labdaten');
 
     // Formatted numbers in placeholders.
-    expect(lhrEn.audits['mainthread-work-breakdown'].displayValue)
-      .toEqual('1.5 s');
-    expect(lhrDe.audits['mainthread-work-breakdown'].displayValue)
-      .toEqual('1,5 s');
+    expect(lhrEn.audits['mainthread-work-breakdown'].displayValue).
+toMatchInlineSnapshot(`"2.2 s"`);
+    expect(lhrDe.audits['mainthread-work-breakdown'].displayValue).
+toMatchInlineSnapshot(`"2,2 s"`);
+    /* eslint-enable no-irregular-whitespace */
   });
 
   it('can roundtrip back to english correctly', () => {

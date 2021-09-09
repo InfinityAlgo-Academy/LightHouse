@@ -9,7 +9,10 @@
 
 const CSSUsage = require('../../../gather/gatherers/css-usage.js');
 const {defaultSettings} = require('../../../config/constants.js');
-const {createMockDriver} = require('../../fraggle-rock/gather/mock-driver.js');
+const {
+  createMockDriver,
+  createMockBaseArtifacts,
+} = require('../../fraggle-rock/gather/mock-driver.js');
 const {flushAllTimersAndMicrotasks} = require('../../test-utils.js');
 
 jest.useFakeTimers();
@@ -42,6 +45,7 @@ describe('.getArtifact', () => {
       url: 'https://example.com',
       gatherMode: 'snapshot',
       computedCache: new Map(),
+      baseArtifacts: createMockBaseArtifacts(),
       dependencies: {},
       settings: defaultSettings,
     };
@@ -97,6 +101,7 @@ describe('.getArtifact', () => {
       url: 'https://example.com',
       gatherMode: 'timespan',
       computedCache: new Map(),
+      baseArtifacts: createMockBaseArtifacts(),
       dependencies: {},
       settings: defaultSettings,
     };
@@ -152,6 +157,7 @@ describe('.getArtifact', () => {
       url: 'https://example.com',
       gatherMode: 'snapshot',
       computedCache: new Map(),
+      baseArtifacts: createMockBaseArtifacts(),
       dependencies: {},
       settings: defaultSettings,
     };

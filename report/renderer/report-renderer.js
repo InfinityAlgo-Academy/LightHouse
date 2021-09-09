@@ -39,14 +39,14 @@ export class ReportRenderer {
   }
 
   /**
-   * @param {LH.Result} result
+   * @param {LH.Result} lhr
    * @param {Element} container Parent element to render the report into.
    * @return {!Element}
    */
-  renderReport(result, container) {
-    this._dom.setLighthouseChannel(result.configSettings.channel || 'unknown');
+  renderReport(lhr, container) {
+    this._dom.setLighthouseChannel(lhr.configSettings.channel || 'unknown');
 
-    const report = Util.prepareReportResult(result);
+    const report = Util.prepareReportResult(lhr);
 
     container.textContent = ''; // Remove previous report.
     container.appendChild(this._renderReport(report));

@@ -13,8 +13,8 @@ const {LH_ROOT} = require('../root.js');
 
 const distDir = path.join(LH_ROOT, 'dist', 'dt-report-resources');
 const bundleOutFile = `${distDir}/report-generator.js`;
-const generatorFilename = `./report/report-generator.js`;
-const htmlReportAssets = require('../report/report-assets.js');
+const generatorFilename = `./report/generator/report-generator.js`;
+const htmlReportAssets = require('../report/generator/report-assets.js');
 
 /**
  * Used to save cached resources (Runtime.cachedResources).
@@ -38,7 +38,7 @@ writeFile('report-generator.d.ts', 'export {}');
 
 const pathToReportAssets = require.resolve('../clients/devtools-report-assets.js');
 browserify(generatorFilename, {standalone: 'Lighthouse.ReportGenerator'})
-  // Shims './report/report-assets.js' to resolve to devtools-report-assets.js
+  // Shims './report/generator/report-assets.js' to resolve to devtools-report-assets.js
   .require(pathToReportAssets, {expose: './report-assets.js'})
   .bundle((err, src) => {
     if (err) throw err;

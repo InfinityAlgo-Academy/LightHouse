@@ -7,10 +7,12 @@
 
 /* eslint-env jest */
 
-import {jest} from '@jest/globals';
 import * as fs from 'fs';
 import * as assert from 'assert';
+
+import {jest} from '@jest/globals';
 import puppeteer from 'puppeteer';
+
 import {server} from '../../lighthouse-cli/test/fixtures/static-server.js';
 import defaultConfig from '../../lighthouse-core/config/default-config.js';
 import {LH_ROOT} from '../../root.js';
@@ -140,7 +142,7 @@ describe('Lighthouse Viewer', () => {
         });
       }
 
-      const errorSelectors = '.lh-audit-explanation, .tooltip--error';
+      const errorSelectors = '.lh-audit-explanation, .lh-tooltip--error';
       const auditErrors = await viewerPage.$$eval(errorSelectors, getErrors, selectors);
       const errors = auditErrors.filter(item => item.explanation.includes('Audit error:'));
       assert.deepStrictEqual(errors, [], 'Audit errors found within the report');
@@ -301,7 +303,7 @@ describe('Lighthouse Viewer', () => {
       await viewerPage.goto(url);
 
       // Wait for error.
-      const errorEl = await viewerPage.waitForSelector('#lh-log.show');
+      const errorEl = await viewerPage.waitForSelector('#lh-log.lh-show');
       const errorMessage = await viewerPage.evaluate(errorEl => errorEl.textContent, errorEl);
       expect(errorMessage).toBe('Test error');
 

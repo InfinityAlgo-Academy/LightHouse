@@ -723,7 +723,10 @@ async function main() {
 
 // Test if called from the CLI or as a module.
 if (require.main === module) {
-  main();
+  main().catch(err => {
+    console.error(err.stack);
+    process.exit(1);
+  });
 }
 
 module.exports = {

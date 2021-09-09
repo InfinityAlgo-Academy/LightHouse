@@ -7,7 +7,9 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
+
 import * as jsdom from 'jsdom';
+
 import {LH_ROOT} from '../../root.js';
 
 /* eslint-env jest */

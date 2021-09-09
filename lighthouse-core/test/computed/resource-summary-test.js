@@ -12,10 +12,6 @@ const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.
 /* eslint-env jest */
 
 function mockArtifacts(networkRecords) {
-  for (const record of networkRecords) {
-    record.protocol = record.url.slice(0, record.url.indexOf(':'));
-  }
-
   return {
     devtoolsLog: networkRecordsToDevtoolsLog(networkRecords),
     URL: {requestedUrl: networkRecords[0].url, finalUrl: networkRecords[0].url},
@@ -54,18 +50,12 @@ describe('Resource summary computed', () => {
   });
 
   it('sets "other" resource metrics correctly', async () => {
-    // networkRecordsToDevToolsLog errors with an 'other' resource type, so this test does not use it
-    const networkRecords = [
+    artifacts = mockArtifacts([
       {url: 'http://example.com/file.html', resourceType: 'Document', transferSize: 30},
-      {url: 'http://third-party.com/another-file.html', resourceType: 'manifest', transferSize: 50},
-    ];
+      {url: 'http://third-party.com/another-file.html', resourceType: 'Manifest', transferSize: 50},
+    ]);
+    const result = await ComputedResourceSummary.request(artifacts, context);
 
-    for (const record of networkRecords) {
-      record.protocol = record.url.slice(0, record.url.indexOf(':'));
-    }
-
-    const result = ComputedResourceSummary.summarize(
-      networkRecords, networkRecords[0].url, artifacts.budgets);
     assert.equal(result.other.count, 1);
     assert.equal(result.other.transferSize, 50);
   });

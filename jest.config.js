@@ -35,4 +35,8 @@ module.exports = {
   ],
   transform: {},
   prettierPath: null,
+  projects: [
+    '<rootDir>',
+    '<rootDir>/flow-report',
+  ],
 };

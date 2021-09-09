@@ -16,6 +16,8 @@ const baseArtifactKeySource = {
   Timing: '',
   URL: '',
   PageLoadError: '',
+  HostFormFactor: '',
+  HostUserAgent: '',
 };
 
 const baseArtifactKeys = Object.keys(baseArtifactKeySource);
