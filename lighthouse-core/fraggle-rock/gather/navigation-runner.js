@@ -23,6 +23,7 @@ const {getBaseArtifacts, finalizeArtifacts} = require('./base-artifacts.js');
 const i18n = require('../../lib/i18n/i18n.js');
 const LighthouseError = require('../../lib/lh-error.js');
 const {getPageLoadError} = require('../../lib/navigation-error.js');
+const Trace = require('../../gather/gatherers/trace.js');
 const DevtoolsLog = require('../../gather/gatherers/devtools-log.js');
 const NetworkRecords = require('../../computed/network-records.js');
 
@@ -106,21 +107,36 @@ async function _navigate(navigationContext) {
 /**
  * @param {NavigationContext} navigationContext
  * @param {PhaseState} phaseState
- * @return {Promise<{devtoolsLog: LH.DevtoolsLog, records: Array<LH.Artifacts.NetworkRequest>} | undefined>}
+ * @return {Promise<{devtoolsLog?: LH.DevtoolsLog, records?: Array<LH.Artifacts.NetworkRequest>, trace?: LH.Trace}>}
  */
-async function _collectNetworkData(navigationContext, phaseState) {
+async function _collectDebugData(navigationContext, phaseState) {
   const devtoolsLogArtifactDefn = phaseState.artifactDefinitions.find(
     definition => definition.gatherer.instance.meta.symbol === DevtoolsLog.symbol
   );
-  if (!devtoolsLogArtifactDefn) return undefined;
+  const traceArtifactDefn = phaseState.artifactDefinitions.find(
+    definition => definition.gatherer.instance.meta.symbol === Trace.symbol
+  );
 
-  const devtoolsLogArtifactId = devtoolsLogArtifactDefn.id;
-  const artifactDefinitions = [devtoolsLogArtifactDefn];
+  const artifactDefinitions = [devtoolsLogArtifactDefn, traceArtifactDefn].filter(
+    /**
+     * @param {LH.Config.AnyArtifactDefn | undefined} defn
+     * @return {defn is LH.Config.AnyArtifactDefn}
+     */
+    defn => Boolean(defn)
+  );
+  if (!artifactDefinitions.length) return {};
+
   await collectPhaseArtifacts({...phaseState, phase: 'getArtifact', artifactDefinitions});
+  const getArtifactState = phaseState.artifactState.getArtifact;
 
-  const devtoolsLog = await phaseState.artifactState.getArtifact[devtoolsLogArtifactId];
-  const records = await NetworkRecords.request(devtoolsLog, navigationContext);
-  return {devtoolsLog, records};
+  const devtoolsLogArtifactId = devtoolsLogArtifactDefn && devtoolsLogArtifactDefn.id;
+  const devtoolsLog = devtoolsLogArtifactId && await getArtifactState[devtoolsLogArtifactId];
+  const records = devtoolsLog && await NetworkRecords.request(devtoolsLog, navigationContext);
+
+  const traceArtifactId = traceArtifactDefn && traceArtifactDefn.id;
+  const trace = traceArtifactId && await getArtifactState[traceArtifactId];
+
+  return {devtoolsLog, records, trace};
 }
 
 /**
@@ -138,12 +154,12 @@ async function _computeNavigationResult(
 ) {
   const {navigationError, finalUrl} = navigateResult;
   const warnings = [...setupResult.warnings, ...navigateResult.warnings];
-  const networkData = await _collectNetworkData(navigationContext, phaseState);
-  const pageLoadError = networkData
+  const debugData = await _collectDebugData(navigationContext, phaseState);
+  const pageLoadError = debugData.records
     ? getPageLoadError(navigationError, {
       url: finalUrl,
       loadFailureMode: navigationContext.navigation.loadFailureMode,
-      networkRecords: networkData.records,
+      networkRecords: debugData.records,
     })
     : navigationError;
 
@@ -155,7 +171,8 @@ async function _computeNavigationResult(
     /** @type {Partial<LH.GathererArtifacts>} */
     const artifacts = {};
     const pageLoadErrorId = `pageLoadError-${navigationContext.navigation.id}`;
-    if (networkData) artifacts.devtoolsLogs = {[pageLoadErrorId]: networkData.devtoolsLog};
+    if (debugData.devtoolsLog) artifacts.devtoolsLogs = {[pageLoadErrorId]: debugData.devtoolsLog};
+    if (debugData.trace) artifacts.traces = {[pageLoadErrorId]: debugData.trace};
 
     return {
       finalUrl,

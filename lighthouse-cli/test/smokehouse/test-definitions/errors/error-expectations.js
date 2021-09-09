@@ -35,9 +35,8 @@ const infiniteLoop = {
       'pageLoadError-default': {...NONEMPTY_ARRAY, _fraggleRockOnly: true},
     },
     traces: {
-      // Fraggle Rock treats traces as regular artifacts which are not collected on error.
-      '_legacyOnly': true,
-      'pageLoadError-defaultPass': {traceEvents: NONEMPTY_ARRAY},
+      'pageLoadError-defaultPass': {traceEvents: NONEMPTY_ARRAY, _legacyOnly: true},
+      'pageLoadError-default': {traceEvents: NONEMPTY_ARRAY, _fraggleRockOnly: true},
     },
   },
 };
@@ -69,9 +68,8 @@ const expiredSsl = {
       'pageLoadError-default': {...NONEMPTY_ARRAY, _fraggleRockOnly: true},
     },
     traces: {
-      // Fraggle Rock treats traces as regular artifacts which are not collected on error.
-      '_legacyOnly': true,
-      'pageLoadError-defaultPass': {traceEvents: NONEMPTY_ARRAY},
+      'pageLoadError-defaultPass': {traceEvents: NONEMPTY_ARRAY, _legacyOnly: true},
+      'pageLoadError-default': {traceEvents: NONEMPTY_ARRAY, _fraggleRockOnly: true},
     },
   },
 };
