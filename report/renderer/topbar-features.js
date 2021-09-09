@@ -59,7 +59,7 @@ export class TopbarFeatures {
     // There is only a sticky header when at least 2 categories are present.
     if (Object.keys(this.lhr.categories).length >= 2) {
       this._setupStickyHeaderElements();
-      const containerEl = this._dom.find('.lh-container', this._document);
+      const containerEl = this._dom.find('.lh-main', this._document);
       const elToAddScrollListener = this._getScrollParent(containerEl);
       elToAddScrollListener.addEventListener('scroll', this._updateStickyHeaderOnScroll);
 

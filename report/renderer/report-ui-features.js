@@ -49,8 +49,6 @@ export class ReportUIFeatures {
     /** @type {Document} */
     this._document = this._dom.document();
     this._topbar = new TopbarFeatures(this, dom);
-
-    this.onMediaQueryChange = this.onMediaQueryChange.bind(this);
   }
 
   /**
@@ -63,7 +61,6 @@ export class ReportUIFeatures {
 
     this._topbar.enable(lhr);
     this._topbar.resetUIState();
-    this._setupMediaQueryListeners();
     this._setupThirdPartyFilter();
     this._setupElementScreenshotOverlay(this._dom.find('.lh-main', this._document));
 
@@ -170,13 +167,6 @@ export class ReportUIFeatures {
     });
   }
 
-  _setupMediaQueryListeners() {
-    const mediaQuery = self.matchMedia('(max-width: 500px)');
-    mediaQuery.addListener(this.onMediaQueryChange);
-    // Ensure the handler is called on init
-    this.onMediaQueryChange(mediaQuery);
-  }
-
   /**
    * Resets the state of page before capturing the page for export.
    * When the user opens the exported HTML page, certain UI elements should
@@ -184,15 +174,6 @@ export class ReportUIFeatures {
    */
   _resetUIState() {
     this._topbar.resetUIState();
-  }
-
-  /**
-   * Handle media query change events.
-   * @param {MediaQueryList|MediaQueryListEvent} mql
-   */
-  onMediaQueryChange(mql) {
-    const root = this._dom.find('.lh-root', this._document);
-    root.classList.toggle('lh-narrow', mql.matches);
   }
 
   _setupThirdPartyFilter() {
