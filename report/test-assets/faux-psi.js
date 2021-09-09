@@ -36,6 +36,7 @@
       imgEl.src = finalScreenshotDataUri;
       container.append(imgEl);
     }
+    perfCategoryEl.classList.add('lh-categories'); // needed for 'root' styles
     container.append(perfCategoryEl);
     installFeatures(container);
   }
