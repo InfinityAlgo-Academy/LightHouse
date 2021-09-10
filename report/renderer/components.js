@@ -379,10 +379,11 @@ function createMetricComponent(dom) {
   const el0 = dom.document().createDocumentFragment();
   const el1 = dom.createElement('div', 'lh-metric');
   const el2 = dom.createElement('div', 'lh-metric__innerwrap');
-  const el3 = dom.createElement('span', 'lh-metric__title');
-  const el4 = dom.createElement('div', 'lh-metric__value');
-  const el5 = dom.createElement('div', 'lh-metric__description');
-  el2.append(' ', el3, ' ', el4, ' ', el5, ' ');
+  const el3 = dom.createElement('div', 'lh-metric__icon');
+  const el4 = dom.createElement('span', 'lh-metric__title');
+  const el5 = dom.createElement('div', 'lh-metric__value');
+  const el6 = dom.createElement('div', 'lh-metric__description');
+  el2.append(' ', el3, ' ', el4, ' ', el5, ' ', el6, ' ');
   el1.append(' ', el2, ' ');
   el0.append(el1);
   return el0;

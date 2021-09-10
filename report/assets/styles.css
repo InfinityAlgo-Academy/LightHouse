@@ -104,8 +104,8 @@
   --icon-square-size: calc(var(--score-icon-size) * 0.88);
   --image-preview-size: 48px;
   --metric-toggle-lines-fill: #7F7F7F;
+  --metric-value-font-size: 28px;
   --metrics-toggle-background-color: var(--color-gray-200);
-  --screenshot-overlay-background: rgba(0, 0, 0, 0.3);
   --plugin-badge-background-color: var(--color-white);
   --plugin-badge-size-big: calc(var(--gauge-circle-size-big) / 2.7);
   --plugin-badge-size: calc(var(--gauge-circle-size) / 2.7);
@@ -134,6 +134,7 @@
   --scores-container-padding: 20px 0 20px 0;
   --scorescale-height: 6px;
   --scorescale-width: 18px;
+  --screenshot-overlay-background: rgba(0, 0, 0, 0.3);
   --section-padding-vertical: 12px;
   --snippet-background-color: var(--color-gray-50);
   --snippet-color: #0938C2;
@@ -678,7 +679,11 @@
 
 .lh-metric__innerwrap {
   display: grid;
-  grid-template-columns: var(--audit-description-padding-left) 10fr 3fr;
+  /** 
+   * Icon -- Metric Name 
+   *      -- Metric Value
+   */
+  grid-template-columns: calc(var(--score-icon-size) + var(--score-icon-margin-left) + var(--score-icon-margin-right)) 1fr;
   align-items: center;
   padding: 10px 0;
 }
@@ -704,14 +709,30 @@
 .lh-metric__description {
   display: none;
   grid-column-start: 2;
-  grid-column-end: 3;
+  grid-column-end: 4;
   color: var(--report-text-color-secondary);
 }
 
 .lh-metric__value {
+  font-size: var(--metric-value-font-size);
+  margin: calc(var(--default-padding) / 2) 0;
   white-space: nowrap; /* No wrapping between metric value and the icon */
   font-weight: 500;
-  justify-self: end;
+  grid-column-start: 2;
+}
+
+/* Change the grid to 3 columns for narrow viewport. */
+@media screen and (max-width: 535px) {
+  .lh-metric__innerwrap {
+  /** 
+   * Icon -- Metric Name -- Metric Value
+   */
+    grid-template-columns: calc(var(--score-icon-size) + var(--score-icon-margin-left) + var(--score-icon-margin-right)) 2fr 1fr;
+  }
+  .lh-metric__value {
+    justify-self: end;
+    grid-column-start: unset;
+  }
 }
 
 /* No-JS toggle switch */
@@ -778,7 +799,7 @@
   flex: 1;
 }
 
-.lh-metric .lh-metric__innerwrap::before,
+.lh-metric__icon,
 .lh-scorescale-range::before {
   content: '';
   width: var(--score-icon-size);
@@ -790,7 +811,7 @@
 .lh-metric--pass .lh-metric__value {
   color: var(--color-pass-secondary);
 }
-.lh-metric--pass .lh-metric__innerwrap::before {
+.lh-metric--pass .lh-metric__icon {
   border-radius: 100%;
   background: var(--color-pass);
 }
@@ -798,7 +819,7 @@
 .lh-metric--average .lh-metric__value {
   color: var(--color-average-secondary);
 }
-.lh-metric--average .lh-metric__innerwrap::before {
+.lh-metric--average .lh-metric__icon {
   background: var(--color-average);
   width: var(--icon-square-size);
   height: var(--icon-square-size);
@@ -807,8 +828,8 @@
 .lh-metric--fail .lh-metric__value {
   color: var(--color-fail-secondary);
 }
-.lh-metric--fail .lh-metric__innerwrap::before,
-.lh-metric--error .lh-metric__innerwrap::before {
+.lh-metric--fail .lh-metric__icon,
+.lh-metric--error .lh-metric__icon {
   border-left: calc(var(--score-icon-size) / 2) solid transparent;
   border-right: calc(var(--score-icon-size) / 2) solid transparent;
   border-bottom: var(--score-icon-size) solid var(--color-fail);
