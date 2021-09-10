@@ -9,17 +9,23 @@ import {useEffect, useLayoutEffect, useRef} from 'preact/hooks';
 
 import {useReportRenderer} from './report-renderer';
 
-export const Gauge: FunctionComponent<{category: LH.ReportResult.Category, href: string}> =
-({category, href}) => {
+export const CategoryScore: FunctionComponent<{
+  category: LH.ReportResult.Category,
+  href: string,
+  gatherMode: LH.Result.GatherMode,
+}> = ({category, href, gatherMode}) => {
   const {categoryRenderer} = useReportRenderer();
   const ref = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
-    const el = categoryRenderer.renderScoreGauge(category, {});
+    const el = categoryRenderer.renderCategoryScore(category, {}, {gatherMode});
 
     // Category label is displayed in the navigation header.
-    const label = el.querySelector('.lh-gauge__label');
+    const label = el.querySelector('.lh-gauge__label,.lh-fraction__label');
     if (label) label.remove();
+    // Background is displayed in individual reports, but not on the summary page.
+    const bg = el.querySelector('.lh-fraction__background');
+    if (bg) bg.remove();
 
     if (ref.current) ref.current.append(el);
     return () => {
@@ -35,6 +41,6 @@ export const Gauge: FunctionComponent<{category: LH.ReportResult.Category, href:
   }, [href]);
 
   return (
-    <div ref={ref} data-testid="Gauge"/>
+    <div ref={ref} data-testid="CategoryScore"/>
   );
 };

@@ -211,6 +211,24 @@ function createFooterComponent(dom) {
 /**
  * @param {DOM} dom
  */
+function createFractionComponent(dom) {
+  const el0 = dom.document().createDocumentFragment();
+  const el1 = dom.createElement('a', 'lh-fraction__wrapper');
+  el1.setAttribute('href', '#');
+  const el2 = dom.createElement('div', 'lh-fraction__content-wrapper');
+  const el3 = dom.createElement('div', 'lh-fraction__content');
+  const el4 = dom.createElement('div', 'lh-fraction__background');
+  el3.append(' ', el4, ' ');
+  el2.append(' ', el3, ' ');
+  const el5 = dom.createElement('div', 'lh-fraction__label');
+  el1.append(' ', el2, ' ', el5, ' ');
+  el0.append(el1);
+  return el0;
+}
+
+/**
+ * @param {DOM} dom
+ */
 function createGaugeComponent(dom) {
   const el0 = dom.document().createDocumentFragment();
   const el1 = dom.createElement('a', 'lh-gauge__wrapper');
@@ -360,10 +378,11 @@ function createMetricComponent(dom) {
   const el0 = dom.document().createDocumentFragment();
   const el1 = dom.createElement('div', 'lh-metric');
   const el2 = dom.createElement('div', 'lh-metric__innerwrap');
-  const el3 = dom.createElement('span', 'lh-metric__title');
-  const el4 = dom.createElement('div', 'lh-metric__value');
-  const el5 = dom.createElement('div', 'lh-metric__description');
-  el2.append(' ', el3, ' ', el4, ' ', el5, ' ');
+  const el3 = dom.createElement('div', 'lh-metric__icon');
+  const el4 = dom.createElement('span', 'lh-metric__title');
+  const el5 = dom.createElement('div', 'lh-metric__value');
+  const el6 = dom.createElement('div', 'lh-metric__description');
+  el2.append(' ', el3, ' ', el4, ' ', el5, ' ', el6, ' ');
   el1.append(' ', el2, ' ');
   el0.append(el1);
   return el0;
@@ -749,7 +768,7 @@ function createWarningsToplevelComponent(dom) {
 }
 
 
-/** @typedef {'3pFilter'|'audit'|'categoryHeader'|'chevron'|'clump'|'crc'|'crcChain'|'elementScreenshot'|'envItem'|'footer'|'gauge'|'gaugePwa'|'heading'|'metric'|'metricsToggle'|'opportunity'|'opportunityHeader'|'scorescale'|'scoresWrapper'|'snippet'|'snippetContent'|'snippetHeader'|'snippetLine'|'topbar'|'warningsToplevel'} ComponentName */
+/** @typedef {'3pFilter'|'audit'|'categoryHeader'|'chevron'|'clump'|'crc'|'crcChain'|'elementScreenshot'|'envItem'|'footer'|'fraction'|'gauge'|'gaugePwa'|'heading'|'metric'|'metricsToggle'|'opportunity'|'opportunityHeader'|'scorescale'|'scoresWrapper'|'snippet'|'snippetContent'|'snippetHeader'|'snippetLine'|'topbar'|'warningsToplevel'} ComponentName */
 /**
  * @param {DOM} dom
  * @param {ComponentName} componentName
@@ -767,6 +786,7 @@ export function createComponent(dom, componentName) {
     case 'elementScreenshot': return createElementScreenshotComponent(dom);
     case 'envItem': return createEnvItemComponent(dom);
     case 'footer': return createFooterComponent(dom);
+    case 'fraction': return createFractionComponent(dom);
     case 'gauge': return createGaugeComponent(dom);
     case 'gaugePwa': return createGaugePwaComponent(dom);
     case 'heading': return createHeadingComponent(dom);

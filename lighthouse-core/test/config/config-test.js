@@ -539,7 +539,7 @@ describe('Config', () => {
         onlyAudits: ['color-contrast'],
       },
       passes: [
-        {recordTrace: true, gatherers: ['gather-context']},
+        {recordTrace: true, gatherers: []},
         {passName: 'a11y', gatherers: ['accessibility']},
       ],
       audits: [
@@ -583,7 +583,7 @@ describe('Config', () => {
         skipAudits: ['first-meaningful-paint'],
       },
       passes: [
-        {recordTrace: true, gatherers: ['gather-context']},
+        {recordTrace: true, gatherers: []},
         {passName: 'a11y', gatherers: ['accessibility']},
       ],
       audits: [

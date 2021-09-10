@@ -173,6 +173,7 @@ function createMockBaseArtifacts() {
     Timing: [],
     HostFormFactor: 'desktop',
     HostUserAgent: 'Chrome/93.0.1449.0',
+    GatherContext: {gatherMode: 'navigation'},
   };
 }
 

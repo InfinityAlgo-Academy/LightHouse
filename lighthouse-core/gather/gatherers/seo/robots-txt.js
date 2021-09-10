@@ -20,8 +20,8 @@ async function getRobotsTxtContent() {
 
     const content = await response.text();
     return {status: response.status, content};
-  } catch (_) {
-    return {status: null, content: null};
+  } catch (err) {
+    return {status: null, content: null, errorMessage: err.message};
   }
 }
 /* c8 ignore stop */
@@ -49,7 +49,7 @@ class RobotsTxt extends FRGatherer {
     const robotsUrl = new URL('/robots.txt', passContext.url).href;
     await passContext.driver.fetcher.enable();
     return passContext.driver.fetcher.fetchResource(robotsUrl)
-      .catch(() => ({status: null, content: null}));
+      .catch(err => ({status: null, content: null, errorMessage: err.message}));
   }
 }
 

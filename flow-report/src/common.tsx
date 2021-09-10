@@ -6,48 +6,7 @@
 
 import {FunctionComponent} from 'preact';
 
-import {Util} from '../../report/renderer/util';
 import {NavigationIcon, SnapshotIcon, TimespanIcon} from './icons';
-
-/**
- * Summarizes the category as a ratio of passed audits to total audits.
- * The rating color and icon are calculated from the passed/total ratio, not the category score.
- * A category will be given a null rating and color if none of its audits are weighted.
- */
-export const CategoryRatio: FunctionComponent<{
-  category: LH.ReportResult.Category,
-  audits: LH.Result['audits'],
-  href: string,
-}> = ({category, audits, href}) => {
-  const numAudits = category.auditRefs.length;
-
-  let numPassed = 0;
-  let totalWeight = 0;
-  for (const auditRef of category.auditRefs) {
-    totalWeight += auditRef.weight;
-    const audit = audits[auditRef.id];
-    if (!audit) {
-      console.warn(`Could not find score for audit '${auditRef.id}', treating as failed.`);
-      continue;
-    }
-    if (Util.showAsPassed(audit)) numPassed++;
-  }
-
-  const ratio = numPassed / numAudits;
-  let rating = Util.calculateRating(ratio);
-
-  // If none of the available audits can affect the score, a rating isn't useful.
-  // The flow report should display the ratio with neutral icon and coloring in this case.
-  if (totalWeight === 0) {
-    rating = 'null';
-  }
-
-  return (
-    <a href={href} className={`CategoryRatio CategoryRatio--${rating}`} data-testid="CategoryRatio">
-      {`${numPassed}/${numAudits}`}
-    </a>
-  );
-};
 
 export const Separator: FunctionComponent = () => {
   return <div className="Separator" role="separator"></div>;

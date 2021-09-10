@@ -18,6 +18,7 @@ const baseArtifactKeySource = {
   PageLoadError: '',
   HostFormFactor: '',
   HostUserAgent: '',
+  GatherContext: '',
 };
 
 const baseArtifactKeys = Object.keys(baseArtifactKeySource);

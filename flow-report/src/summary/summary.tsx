@@ -7,11 +7,10 @@
 import {FunctionComponent} from 'preact';
 import {useMemo} from 'preact/hooks';
 
-import {Gauge} from '../wrappers/gauge';
 import {FlowSegment} from '../common';
-import {CategoryRatio} from '../common';
 import {getScreenDimensions, getScreenshot, useDerivedStepNames, useFlowResult} from '../util';
 import {Util} from '../../../report/renderer/util';
+import {CategoryScore} from '../wrappers/category-score';
 
 const DISPLAYED_CATEGORIES = ['performance', 'accessibility', 'best-practices', 'seo'];
 const THUMBNAIL_WIDTH = 50;
@@ -30,27 +29,19 @@ const SummaryNavigationHeader: FunctionComponent<{url: string}> = ({url}) => {
 };
 
 const SummaryCategory: FunctionComponent<{
-  gatherMode: LH.Result.GatherMode,
-  audits: LH.ReportResult['audits'],
   category: LH.ReportResult.Category|undefined,
   href: string,
-}> = ({gatherMode, audits, category, href}) => {
+  gatherMode: LH.Result.GatherMode,
+}> = ({category, href, gatherMode}) => {
   return (
     <div className="SummaryCategory">
       {
         category ?
-          (
-            gatherMode === 'navigation' ?
-            <Gauge
-              category={category}
-              href={href}
-            /> :
-            <CategoryRatio
-              category={category}
-              audits={audits}
-              href={href}
-            />
-          ) :
+          <CategoryScore
+            category={category}
+            href={href}
+            gatherMode={gatherMode}
+          /> :
           <div
             className="SummaryCategory__null"
             data-testid="SummaryCategory__null"
@@ -98,10 +89,9 @@ export const SummaryFlowStep: FunctionComponent<{
         DISPLAYED_CATEGORIES.map(c => (
           <SummaryCategory
             key={c}
-            gatherMode={reportResult.gatherMode}
             category={reportResult.categories[c]}
-            audits={reportResult.audits}
             href={`#index=${hashIndex}&anchor=${c}`}
+            gatherMode={lhr.gatherMode}
           />
         ))
       }

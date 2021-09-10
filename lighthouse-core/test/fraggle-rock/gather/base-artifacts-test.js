@@ -25,6 +25,9 @@ function getMockDriverForArtifacts() {
   return driverMock;
 }
 
+/** @type {LH.Gatherer.GatherMode} */
+const gatherMode = 'navigation';
+
 describe('getBaseArtifacts', () => {
   let driverMock = getMockDriverForArtifacts();
 
@@ -34,20 +37,20 @@ describe('getBaseArtifacts', () => {
 
   it('should fetch benchmark index', async () => {
     const {config} = initializeConfig(undefined, {gatherMode: 'navigation'});
-    const artifacts = await getBaseArtifacts(config, driverMock.asDriver());
+    const artifacts = await getBaseArtifacts(config, driverMock.asDriver(), {gatherMode});
     expect(artifacts.BenchmarkIndex).toEqual(500);
   });
 
   it('should fetch host user agent', async () => {
     const {config} = initializeConfig(undefined, {gatherMode: 'navigation'});
-    const artifacts = await getBaseArtifacts(config, driverMock.asDriver());
+    const artifacts = await getBaseArtifacts(config, driverMock.asDriver(), {gatherMode});
     expect(artifacts.HostUserAgent).toContain('Macintosh');
     expect(artifacts.HostFormFactor).toEqual('desktop');
   });
 
   it('should return settings', async () => {
     const {config} = initializeConfig(undefined, {gatherMode: 'navigation'});
-    const artifacts = await getBaseArtifacts(config, driverMock.asDriver());
+    const artifacts = await getBaseArtifacts(config, driverMock.asDriver(), {gatherMode});
     expect(artifacts.settings).toEqual(config.settings);
   });
 });
@@ -59,9 +62,9 @@ describe('finalizeArtifacts', () => {
   let gathererArtifacts = {};
 
   beforeEach(async () => {
-    const {config} = initializeConfig(undefined, {gatherMode: 'navigation'});
+    const {config} = initializeConfig(undefined, {gatherMode});
     const driver = getMockDriverForArtifacts().asDriver();
-    baseArtifacts = await getBaseArtifacts(config, driver);
+    baseArtifacts = await getBaseArtifacts(config, driver, {gatherMode});
     baseArtifacts.URL = {requestedUrl: 'http://example.com', finalUrl: 'https://example.com'};
     gathererArtifacts = {};
   });
@@ -80,6 +83,7 @@ describe('finalizeArtifacts', () => {
 
     const artifacts = finalizeArtifacts(baseArtifacts, gathererArtifacts);
     expect(artifacts).toMatchObject({
+      GatherContext: {gatherMode: 'navigation'},
       PageLoadError: winningError,
       HostUserAgent: 'Desktop Chrome',
       BenchmarkIndex: 500,

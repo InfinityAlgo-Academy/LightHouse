@@ -18,6 +18,7 @@ const {initializeConfig} = require('../../../fraggle-rock/config/config.js');
 const {defaultNavigationConfig} = require('../../../config/constants.js');
 const LighthouseError = require('../../../lib/lh-error.js');
 const DevtoolsLogGatherer = require('../../../gather/gatherers/devtools-log.js');
+const TraceGatherer = require('../../../gather/gatherers/trace.js');
 const toDevtoolsLog = require('../../network-records-to-devtools-log.js');
 
 // Establish the mocks before we require our file under test.
@@ -342,10 +343,15 @@ describe('NavigationRunner', () => {
       const devtoolsLog = toDevtoolsLog([{url: requestedUrl, failed: true}]);
       gatherers.timespan.meta.symbol = DevtoolsLogGatherer.symbol;
       gatherers.timespan.getArtifact = jest.fn().mockResolvedValue(devtoolsLog);
+      gatherers.navigation.meta.symbol = TraceGatherer.symbol;
+      gatherers.navigation.getArtifact = jest.fn().mockResolvedValue({traceEvents: []});
 
       const {artifacts, pageLoadError} = await run(navigation);
       expect(pageLoadError).toBeInstanceOf(LighthouseError);
-      expect(artifacts).toEqual({devtoolsLogs: {'pageLoadError-default': expect.any(Array)}});
+      expect(artifacts).toEqual({
+        devtoolsLogs: {'pageLoadError-default': expect.any(Array)},
+        traces: {'pageLoadError-default': {traceEvents: []}},
+      });
     });
 
     it('cleans up throttling before getArtifact', async () => {
