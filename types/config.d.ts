@@ -64,7 +64,7 @@ declare module Config {
   interface FRContext {
     gatherMode?: Gatherer.GatherMode;
     configPath?: string;
-    settingsOverrides?: SharedFlagsSettings;
+    settingsOverrides?: SharedFlagsSettings & Pick<LH.Flags, 'plugins'>;
   }
 
   interface SharedPassNavigationJson {

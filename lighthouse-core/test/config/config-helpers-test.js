@@ -15,6 +15,7 @@ const {
   resolveGathererToDefn,
   resolveAuditsToDefns,
   resolveModulePath,
+  mergePlugins,
   mergeConfigFragment,
   mergeConfigFragmentArrayByKey,
 } = require('../../config/config-helpers.js');
@@ -23,6 +24,7 @@ const Gatherer = require('../../gather/gatherers/gatherer.js');
 const ImageElementsGatherer = require('../../gather/gatherers/image-elements.js');
 const UserTimingsAudit = require('../../audits/user-timings.js');
 const {isNode12SmallIcu} = require('../test-utils.js');
+const {LH_ROOT} = require('../../../root.js');
 
 jest.mock('process', () => ({
   cwd: () => jest.fn(),
@@ -183,6 +185,64 @@ describe('.deepCloneConfigJson', () => {
 
     const output = deepCloneConfigJson(input);
     expect(output.audits[0].implementation).toEqual(UserTimingsAudit);
+  });
+});
+
+describe('.mergePlugins', () => {
+  // Include a configPath flag so that config.js looks for the plugins in the fixtures dir.
+  const configDir = `${LH_ROOT}/lighthouse-core/test/fixtures/config-plugins/`;
+
+  it('merge plugins from the config', () => {
+    const configJson = {
+      audits: ['installable-manifest', 'metrics'],
+      plugins: ['lighthouse-plugin-simple'],
+    };
+
+    const config = mergePlugins(configJson, configDir, {});
+    expect(config).toMatchObject({
+      audits: [
+        'installable-manifest',
+        'metrics',
+        {path: 'redirects'},
+        {path: 'user-timings'},
+      ],
+      categories: {
+        'lighthouse-plugin-simple': {title: 'Simple'},
+      },
+      groups: {
+        'lighthouse-plugin-simple-new-group': {title: 'New Group'},
+      },
+    });
+  });
+
+  it('merge plugins from flags', () => {
+    const configJson = {
+      audits: ['installable-manifest', 'metrics'],
+      plugins: ['lighthouse-plugin-simple'],
+    };
+    const flags = {plugins: ['lighthouse-plugin-no-groups']};
+    const config = mergePlugins(configJson, configDir, flags);
+
+    expect(config.categories).toHaveProperty('lighthouse-plugin-simple');
+    expect(config.categories).toHaveProperty('lighthouse-plugin-no-groups');
+  });
+
+  it('validate plugin name', () => {
+    const configJson = {audits: ['installable-manifest', 'metrics']};
+    const flags = {plugins: ['not-a-plugin']};
+    expect(() => mergePlugins(configJson, configDir, flags)).toThrow(/does not start/);
+  });
+
+  it('validate plugin existence', () => {
+    const configJson = {audits: ['installable-manifest', 'metrics']};
+    const flags = {plugins: ['lighthouse-plugin-missing']};
+    expect(() => mergePlugins(configJson, configDir, flags)).toThrow(/Unable to locate plugin/);
+  });
+
+  it('validate plugin structure', () => {
+    const configJson = {audits: ['installable-manifest', 'metrics']};
+    const flags = {plugins: ['lighthouse-plugin-no-category']};
+    expect(() => mergePlugins(configJson, configDir, flags)).toThrow(/no valid category/);
   });
 });
 

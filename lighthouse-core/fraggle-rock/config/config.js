@@ -24,6 +24,7 @@ const {
   resolveSettings,
   resolveAuditsToDefns,
   resolveGathererToDefn,
+  mergePlugins,
   mergeConfigFragment,
   mergeConfigFragmentArrayByKey,
 } = require('../../config/config-helpers.js');
@@ -250,7 +251,7 @@ function initializeConfig(configJSON, context) {
   let {configWorkingCopy, configDir} = resolveWorkingCopy(configJSON, context); // eslint-disable-line prefer-const
 
   configWorkingCopy = resolveExtensions(configWorkingCopy);
-
+  configWorkingCopy = mergePlugins(configWorkingCopy, configDir, context.settingsOverrides);
 
   const settings = resolveSettings(configWorkingCopy.settings || {}, context.settingsOverrides);
   overrideSettingsForGatherMode(settings, context);

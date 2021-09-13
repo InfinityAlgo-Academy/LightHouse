@@ -242,6 +242,10 @@ const smokeTests = [{
   expectations: require('./screenshot/expectations.js'),
   config: require('./screenshot/screenshot-config.js'),
 }, {
+  id: 'pubads',
+  expectations: require('./pubads/expectations.js'),
+  config: require('./pubads/pubads-config.js'),
+}, {
   id: 'csp-allow-all',
   expectations: csp.allowAll,
   config: require('./csp/csp-config.js'),

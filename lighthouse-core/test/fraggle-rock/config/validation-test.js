@@ -62,6 +62,21 @@ describe('Fraggle Rock Config Validation', () => {
     }
   });
 
+  describe('.assertValidPluginName', () => {
+    it('should throw if plugin does not start with lighthouse-plugin', () => {
+      const invocation = () => validation.assertValidPluginName(defaultConfig, 'example');
+      expect(invocation).toThrow(/does not start with.*lighthouse-plugin/);
+    });
+
+    it('should throw if category already exists in config', () => {
+      const config = {...defaultConfig};
+      const category = {title: 'Test Plugin', auditRefs: [{id: 'viewport', weight: 1}]};
+      config.categories = {...defaultConfig.categories, 'lighthouse-plugin-test': category};
+      const invocation = () => validation.assertValidPluginName(config, 'lighthouse-plugin-test');
+      expect(invocation).toThrow(/not allowed because.*already found/);
+    });
+  });
+
   describe('.assertValidFRGatherer', () => {
     it('should throw if gatherer does not have a meta object', () => {
       const gatherer = new BaseFRGatherer();
