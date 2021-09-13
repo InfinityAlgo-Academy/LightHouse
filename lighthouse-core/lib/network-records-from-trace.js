@@ -60,16 +60,16 @@ class NetworkRecordsMaker {
 
       // console.log(reqEvts.sendRequest.args.data.url, reqEvts.receiveResponse.args.data.timing);
 
-      if (evtBag.sendRequest.args.data.url?.startsWith('data:')) {
-        // TODO: handle the fact that data uris dont ahve a timing block at all :/
-        console.log('data uri!! skipping. :(');
+      // If we have an incomplete set of events here, we choose to drop the network
+      // request rather than attempt to synthesize the missing data.
+      if (!evtBag.sendRequest || !evtBag.receiveResponse || !evtBag.resourceFinish) {
+        console.log('missing some trace events.... skipping :(');
         continue;
       }
 
-      // If we have an incomplete set of events here, we choose to drop the network
-      // request rather than attempt to synthesize the missing data.
-      if (!evtBag.sendRequest || !evtBag.receiveResponse) {
-        console.log('missing some trace events.... skipping :(')
+      if (evtBag.sendRequest.args.data.url?.startsWith('data:')) {
+        // TODO: handle the fact that data uris don't have a timing block at all :/
+        console.log('data uri!! skipping. :(');
         continue;
       }
 
@@ -89,7 +89,7 @@ class NetworkRecordsMaker {
         },
         initiator: {type: 'other'}, // No preload signals in trace…
         requestId,
-        timestamp: evtBag.receiveResponse.args.data.timing.requestTime,
+        timestamp: evtBag.receiveResponse.args.data.timing?.requestTime ?? evtBag.receiveResponse.ts / 1_000_000,
         type: evtBag.receiveResponse.args.data.mimeType === 'text/html' ? 'Document' : undefined, // This is imperfect.
       };
       request.onRequestWillBeSent(requestWillBeSentEventData);
