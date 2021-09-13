@@ -138,8 +138,8 @@ const unsizedImages = {
   },
 };
 
-module.exports = {
+export {
   animations,
   thirdParty,
-  unsizedImages,
+  unsizedImages
 };

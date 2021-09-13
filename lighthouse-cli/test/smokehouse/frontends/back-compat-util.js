@@ -37,6 +37,6 @@ function updateTestDefnFormat(allTestDefns) {
   return expandedTestDefns.flat();
 }
 
-module.exports = {
-  updateTestDefnFormat,
+export {
+  updateTestDefnFormat
 };

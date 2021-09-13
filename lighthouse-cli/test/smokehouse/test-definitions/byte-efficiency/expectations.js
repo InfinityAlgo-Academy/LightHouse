@@ -322,7 +322,7 @@ const gzip = {
   },
 };
 
-module.exports = {
+export {
   efficiency,
-  gzip,
+  gzip
 };

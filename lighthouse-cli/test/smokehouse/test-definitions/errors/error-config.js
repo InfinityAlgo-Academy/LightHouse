@@ -8,7 +8,9 @@
 /**
  * Config file for sites with various errors, just fail out quickly.
  */
-module.exports = {
+
+/** @type {LH.Config.Json} */
+const config = {
   extends: 'lighthouse:default',
   settings: {
     maxWaitForLoad: 5000,
@@ -17,3 +19,5 @@ module.exports = {
     ],
   },
 };
+
+export default config;

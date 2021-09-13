@@ -6,6 +6,8 @@
 'use strict';
 
 /** @type {LH.Config.Json} */
-module.exports = {
+const config = {
   extends: 'lighthouse:default',
 };
+
+export default config;

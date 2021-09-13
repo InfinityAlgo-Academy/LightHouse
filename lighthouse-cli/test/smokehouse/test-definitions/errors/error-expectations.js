@@ -102,8 +102,8 @@ const iframeBadSsl = {
   },
 };
 
-module.exports = {
+export {
   infiniteLoop,
   expiredSsl,
-  iframeBadSsl,
+  iframeBadSsl
 };

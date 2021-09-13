@@ -6,7 +6,7 @@
 'use strict';
 
 /** @type {LH.Config.Json} */
-const perfConfig = {
+const config = {
   extends: 'lighthouse:default',
   settings: {
     throttlingMethod: 'devtools',
@@ -49,4 +49,4 @@ const perfConfig = {
   },
 };
 
-module.exports = perfConfig;
+export default config;

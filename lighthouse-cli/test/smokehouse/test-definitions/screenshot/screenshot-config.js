@@ -6,7 +6,7 @@
 'use strict';
 
 /** @type {LH.Config.Json} */
-module.exports = {
+const config = {
   extends: 'lighthouse:default',
   settings: {
     formFactor: 'desktop',
@@ -19,3 +19,5 @@ module.exports = {
     },
   },
 };
+
+export default config;

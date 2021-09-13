@@ -7,7 +7,8 @@
 
 /** @fileoverview Expected Lighthouse audit values for various sites with stable(ish) PWA results. */
 
-const pwaDetailsExpectations = require('./pwa-expectations-details.js');
+import pwaDetailsExpectations from './pwa-expectations-details.js';
+
 const pwaRocksExpectations = {...pwaDetailsExpectations, hasIconsAtLeast512px: false};
 
 /**
@@ -66,6 +67,6 @@ const pwarocks = {
   },
 };
 
-module.exports = {
-  pwarocks,
+export {
+  pwarocks
 };

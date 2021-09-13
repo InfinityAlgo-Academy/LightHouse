@@ -6,7 +6,9 @@
 'use strict';
 
 /** @type {LH.Config.Json} */
-module.exports = {
+const config = {
   extends: 'lighthouse:default',
   plugins: ['lighthouse-plugin-publisher-ads'],
 };
+
+export default config;

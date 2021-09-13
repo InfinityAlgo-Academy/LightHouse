@@ -21,4 +21,4 @@ const expectations = {
   },
 };
 
-module.exports = expectations;
+export {expectations};

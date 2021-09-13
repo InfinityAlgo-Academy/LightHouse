@@ -11,19 +11,9 @@
  * smoke tests passed.
  */
 
-const log = require('lighthouse-logger');
-const cliLighthouseRunner = require('./lighthouse-runners/cli.js').runLighthouse;
-const getAssertionReport = require('./report-assert.js');
-const LocalConsole = require('./lib/local-console.js');
-const ConcurrentMapper = require('./lib/concurrent-mapper.js');
-
 /* eslint-disable no-console */
 
-/** @typedef {import('./lib/child-process-error.js')} ChildProcessError */
-
-// The number of concurrent (`!runSerially`) tests to run if `jobs` isn't set.
-const DEFAULT_CONCURRENT_RUNS = 5;
-const DEFAULT_RETRIES = 0;
+/** @typedef {import('./lib/child-process-error.js').ChildProcessError} ChildProcessError */
 
 /**
  * @typedef Run
@@ -41,6 +31,17 @@ const DEFAULT_RETRIES = 0;
  * @property {number} failed
  * @property {Run[]} runs
  */
+
+import log from 'lighthouse-logger';
+
+import {runLighthouse as cliLighthouseRunner} from './lighthouse-runners/cli.js';
+import {getAssertionReport} from './report-assert.js';
+import {LocalConsole} from './lib/local-console.js';
+import {ConcurrentMapper} from './lib/concurrent-mapper.js';
+
+// The number of concurrent (`!runSerially`) tests to run if `jobs` isn't set.
+const DEFAULT_CONCURRENT_RUNS = 5;
+const DEFAULT_RETRIES = 0;
 
 /**
  * Runs the selected smoke tests. Returns whether all assertions pass.
@@ -226,6 +227,6 @@ function getAssertionLog(count) {
   return `${count} assertion${plural}`;
 }
 
-module.exports = {
-  runSmokehouse,
+export {
+  runSmokehouse
 };

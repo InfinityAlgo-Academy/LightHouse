@@ -5,11 +5,8 @@
  */
 'use strict';
 
-/**
- * @type {LH.Config.Json}
- * Config file for running the OOPIF tests
- */
-module.exports = {
+/** @type {LH.Config.Json} */
+const config = {
   extends: 'lighthouse:default',
   categories: {
     performance: {
@@ -36,3 +33,5 @@ module.exports = {
     },
   ],
 };
+
+export default config;

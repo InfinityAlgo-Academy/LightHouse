@@ -11,8 +11,9 @@
  * Currently uses `lighthouse-dt-bundle.js`.
  */
 
-const ChromeLauncher = require('chrome-launcher');
-const ChromeProtocol = require('../../../../lighthouse-core/gather/connections/cri.js');
+import ChromeLauncher from 'chrome-launcher';
+
+import ChromeProtocol from '../../../../lighthouse-core/gather/connections/cri.js';
 
 const originalRequire = global.require;
 if (typeof globalThis === 'undefined') {
@@ -22,7 +23,7 @@ if (typeof globalThis === 'undefined') {
 
 // Load bundle, which creates a `global.runBundledLighthouse`.
 // @ts-ignore - file exists if `yarn build-all` is run, but not used for types anyways.
-require('../../../../dist/lighthouse-dt-bundle.js'); // eslint-disable-line
+import '../../../../dist/lighthouse-dt-bundle.js'; // eslint-disable-line
 
 global.require = originalRequire;
 
@@ -60,6 +61,6 @@ async function runLighthouse(url, configJson, testRunnerOptions = {}) {
   }
 }
 
-module.exports = {
-  runLighthouse,
+export {
+  runLighthouse
 };

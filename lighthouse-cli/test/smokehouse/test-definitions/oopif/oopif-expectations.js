@@ -9,7 +9,7 @@
  * @type {Smokehouse.ExpectedRunnerResult}
  * Expected Lighthouse audit values for sites with OOPIFS.
  */
-module.exports = {
+const expectations = {
   lhr: {
     requestedUrl: 'http://localhost:10200/oopif.html',
     finalUrl: 'http://localhost:10200/oopif.html',
@@ -50,3 +50,5 @@ module.exports = {
     ],
   },
 };
+
+export {expectations};

@@ -145,11 +145,11 @@ const idleCallbackLong = {
   },
 };
 
-module.exports = {
+export {
   online,
   setTimeout,
   fetch,
   xhr,
   idleCallbackShort,
-  idleCallbackLong,
+  idleCallbackLong
 };

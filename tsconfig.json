@@ -15,6 +15,7 @@
     "diagnostics": true,
     "composite": true,
     "outDir": ".tmp/tsbuildinfo/",
+    "esModuleInterop": true,
   },
   "include": [
     "root.js",

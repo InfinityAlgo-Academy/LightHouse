@@ -13,14 +13,18 @@
 
 /* eslint-disable no-console */
 
-const fs = require('fs');
-const path = require('path');
-const cloneDeep = require('lodash.clonedeep');
-const yargs = require('yargs');
-const log = require('lighthouse-logger');
-const {runSmokehouse} = require('../smokehouse.js');
-const {updateTestDefnFormat} = require('./back-compat-util.js');
-const {LH_ROOT} = require('../../../../root.js');
+import path from 'path';
+import fs from 'fs';
+import url from 'url';
+
+import cloneDeep from 'lodash.clonedeep';
+import yargs from 'yargs';
+import * as yargsHelpers from 'yargs/helpers';
+import log from 'lighthouse-logger';
+
+import {runSmokehouse} from '../smokehouse.js';
+import {updateTestDefnFormat} from './back-compat-util.js';
+import {LH_ROOT} from '../../../../root.js';
 
 const coreTestDefnsPath =
   path.join(LH_ROOT, 'lighthouse-cli/test/smokehouse/test-definitions/core-tests.js');
@@ -115,7 +119,8 @@ function pruneExpectedNetworkRequests(testDefns, takeNetworkRequestUrls) {
  * CLI entry point.
  */
 async function begin() {
-  const rawArgv = yargs
+  const y = yargs(yargsHelpers.hideBin(process.argv));
+  const rawArgv = y
     .help('help')
     .usage('node $0 [<options>] <test-ids>')
     .example('node $0 -j=1 pwa seo', 'run pwa and seo tests serially')
@@ -159,7 +164,7 @@ async function begin() {
         describe: 'Run all available tests except the ones provided',
       },
     })
-    .wrap(yargs.terminalWidth())
+    .wrap(y.terminalWidth())
     .argv;
 
   // Augmenting yargs type with auto-camelCasing breaks in tsc@4.1.2 and @types/yargs@15.0.11,
@@ -173,13 +178,13 @@ async function begin() {
   if (argv.runner === 'bundle') {
     console.log('\n✨ Be sure to have recently run this: yarn build-all');
   }
-  const lighthouseRunner = require(runnerPath).runLighthouse;
+  const {runLighthouse} = await import(runnerPath);
 
   // Find test definition file and filter by requestedTestIds.
   let testDefnPath = argv.testsPath || coreTestDefnsPath;
   testDefnPath = path.resolve(process.cwd(), testDefnPath);
   const requestedTestIds = argv._;
-  const rawTestDefns = require(testDefnPath);
+  const {default: rawTestDefns} = await import(url.pathToFileURL(testDefnPath).href);
   const allTestDefns = updateTestDefnFormat(rawTestDefns);
   const invertMatch = argv.invertMatch;
   const testDefns = getDefinitionsToRun(allTestDefns, requestedTestIds, {invertMatch});
@@ -192,7 +197,7 @@ async function begin() {
   try {
     // If running the core tests, spin up the test server.
     if (testDefnPath === coreTestDefnsPath) {
-      ({server, serverForOffline} = require('../../fixtures/static-server.js'));
+      ({server, serverForOffline} = await import('../../fixtures/static-server.js'));
       server.listen(10200, 'localhost');
       serverForOffline.listen(10503, 'localhost');
       takeNetworkRequestUrls = server.takeRequestUrls.bind(server);
@@ -204,7 +209,7 @@ async function begin() {
       retries,
       isDebug: argv.debug,
       useFraggleRock: argv.fraggleRock,
-      lighthouseRunner,
+      lighthouseRunner: runLighthouse,
       takeNetworkRequestUrls,
     };
 

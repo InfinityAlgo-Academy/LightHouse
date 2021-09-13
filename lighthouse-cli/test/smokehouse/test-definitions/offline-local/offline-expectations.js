@@ -232,9 +232,9 @@ const swSlow = {
   },
 };
 
-module.exports = {
+export {
   onlineOnly,
   ready,
   swBroken,
-  swSlow,
+  swSlow
 };

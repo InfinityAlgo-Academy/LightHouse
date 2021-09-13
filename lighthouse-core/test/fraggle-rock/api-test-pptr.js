@@ -7,10 +7,17 @@
 
 /* eslint-env jest */
 
-const path = require('path');
-const lighthouse = require('../../fraggle-rock/api.js');
-const puppeteer = require('puppeteer');
-const StaticServer = require('../../../lighthouse-cli/test/fixtures/static-server.js').Server;
+// TODO(esmodules): Node 14, 16 crash with `--experimental-vm-modules` if require and import
+// are used in the same test file.
+// See https://github.com/GoogleChrome/lighthouse/pull/12702#issuecomment-876832620
+// Use normal import when present file is esm.
+
+/** @type {import('path')} */
+let path;
+/** @type {import('../../fraggle-rock/api.js')} */
+let lighthouse;
+/** @type {import('puppeteer')} */
+let puppeteer;
 
 jest.setTimeout(90_000);
 
@@ -53,7 +60,7 @@ function getAuditsBreakdown(lhr) {
 }
 
 describe('Fraggle Rock API', () => {
-  /** @type {InstanceType<StaticServer>} */
+  /** @type {InstanceType<typeof import('../../../lighthouse-cli/test/fixtures/static-server.js').Server>} */
   let server;
   /** @type {import('puppeteer').Browser} */
   let browser;
@@ -63,7 +70,13 @@ describe('Fraggle Rock API', () => {
   let serverBaseUrl;
 
   beforeAll(async () => {
-    server = new StaticServer();
+    // TODO(esmodules): use normal import when present file is esm.
+    const {Server} = await import('../../../lighthouse-cli/test/fixtures/static-server.js');
+    path = await import('path');
+    lighthouse = await import('../../fraggle-rock/api.js');
+    puppeteer = (await import('puppeteer')).default;
+
+    server = new Server();
     await server.listen(0, '127.0.0.1');
     serverBaseUrl = `http://localhost:${server.getPort()}`;
     browser = await puppeteer.launch({

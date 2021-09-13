@@ -146,10 +146,10 @@ const historyPushState = {
   },
 };
 
-module.exports = {
+export {
   singleServer,
   multipleServer,
   clientPaintServer,
   singleClient,
-  historyPushState,
+  historyPushState
 };

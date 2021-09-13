@@ -7,7 +7,7 @@
 
 /** @fileoverview Expected Lighthouse audit values for various sites with stable(ish) PWA results. */
 
-const pwaDetailsExpectations = require('./pwa-expectations-details.js');
+import pwaDetailsExpectations from './pwa-expectations-details.js';
 
 /**
  * @type {Smokehouse.ExpectedRunnerResult}
@@ -115,7 +115,7 @@ const chromestatus = {
   },
 };
 
-module.exports = {
+export {
   airhorner,
-  chromestatus,
+  chromestatus
 };

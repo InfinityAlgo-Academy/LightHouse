@@ -10,15 +10,10 @@
  * against the results actually collected from Lighthouse.
  */
 
-const cloneDeep = require('lodash.clonedeep');
-const log = require('lighthouse-logger');
-const LocalConsole = require('./lib/local-console.js');
+import cloneDeep from 'lodash.clonedeep';
+import log from 'lighthouse-logger';
 
-const NUMBER_REGEXP = /(?:\d|\.)+/.source;
-const OPS_REGEXP = /<=?|>=?|\+\/-|±/.source;
-// An optional number, optional whitespace, an operator, optional whitespace, a number.
-const NUMERICAL_EXPECTATION_REGEXP =
-  new RegExp(`^(${NUMBER_REGEXP})?\\s*(${OPS_REGEXP})\\s*(${NUMBER_REGEXP})$`);
+import {LocalConsole} from './lib/local-console.js';
 
 /**
  * @typedef Difference
@@ -35,6 +30,12 @@ const NUMERICAL_EXPECTATION_REGEXP =
  * @property {boolean} equal
  * @property {Difference|null} [diff]
  */
+
+const NUMBER_REGEXP = /(?:\d|\.)+/.source;
+const OPS_REGEXP = /<=?|>=?|\+\/-|±/.source;
+// An optional number, optional whitespace, an operator, optional whitespace, a number.
+const NUMERICAL_EXPECTATION_REGEXP =
+  new RegExp(`^(${NUMBER_REGEXP})?\\s*(${OPS_REGEXP})\\s*(${NUMBER_REGEXP})$`);
 
 /**
  * Checks if the actual value matches the expectation. Does not recursively search. This supports
@@ -370,7 +371,7 @@ function reportAssertion(localConsole, assertion) {
  * @param {{isDebug?: boolean, isBundled?: boolean}=} reportOptions
  * @return {{passed: number, failed: number, log: string}}
  */
-function report(actual, expected, reportOptions = {}) {
+function getAssertionReport(actual, expected, reportOptions = {}) {
   const localConsole = new LocalConsole();
 
   expected = pruneExpectations(localConsole, actual.lhr, expected, reportOptions);
@@ -398,4 +399,4 @@ function report(actual, expected, reportOptions = {}) {
   };
 }
 
-module.exports = report;
+export {getAssertionReport};

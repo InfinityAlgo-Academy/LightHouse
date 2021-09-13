@@ -383,11 +383,11 @@ const debug = {
   },
 };
 
-module.exports = {
+export {
   preload,
   budgets,
   fonts,
   debug,
   traceElements,
-  frameMetrics,
+  frameMetrics
 };
