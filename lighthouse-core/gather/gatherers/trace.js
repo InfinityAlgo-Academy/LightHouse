@@ -102,10 +102,12 @@ class Trace extends FRGatherer {
   /**
    * @param {LH.Gatherer.FRTransitionalContext} passContext
    */
-  async startSensitiveInstrumentation({driver, gatherMode}) {
+  async startSensitiveInstrumentation({driver, gatherMode, settings}) {
+    const traceCategories = Trace.getDefaultTraceCategories()
+      .concat(settings.additionalTraceCategories || []);
     await driver.defaultSession.sendCommand('Page.enable');
     await driver.defaultSession.sendCommand('Tracing.start', {
-      categories: Trace.getDefaultTraceCategories().join(','),
+      categories: traceCategories.join(','),
       options: 'sampling-frequency=10000', // 1000 is default and too slow.
     });
 
