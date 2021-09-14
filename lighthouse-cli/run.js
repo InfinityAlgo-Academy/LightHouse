@@ -7,20 +7,19 @@
 
 /* eslint-disable no-console */
 
-const path = require('path');
-const psList = require('ps-list');
+import path from 'path';
 
-const Printer = require('./printer.js');
-const ChromeLauncher = require('chrome-launcher');
+import psList from 'ps-list';
+import * as ChromeLauncher from 'chrome-launcher';
+import yargsParser from 'yargs-parser';
+import log from 'lighthouse-logger';
+import open from 'open';
 
-const yargsParser = require('yargs-parser');
-const lighthouse = require('../lighthouse-core/index.js');
-const log = require('lighthouse-logger');
-const getFilenamePrefix = require('../report/generator/file-namer.js').getFilenamePrefix;
-const assetSaver = require('../lighthouse-core/lib/asset-saver.js');
-const URL = require('../lighthouse-core/lib/url-shim.js');
-
-const open = require('open');
+import * as Printer from './printer.js';
+import lighthouse from '../lighthouse-core/index.js';
+import {getFilenamePrefix} from '../report/generator/file-namer.js';
+import * as assetSaver from '../lighthouse-core/lib/asset-saver.js';
+import URL from '../lighthouse-core/lib/url-shim.js';
 
 /** @typedef {Error & {code: string, friendlyMessage?: string}} ExitError */
 
@@ -203,8 +202,8 @@ async function potentiallyKillChrome(launchedChrome) {
  * @return {Promise<LH.RunnerResult|undefined>}
  */
 async function runLighthouseWithFraggleRock(url, flags, config, launchedChrome) {
-  const fraggleRock = require('../lighthouse-core/fraggle-rock/api.js');
-  const puppeteer = require('puppeteer');
+  const fraggleRock = (await import('../lighthouse-core/fraggle-rock/api.js')).default;
+  const puppeteer = (await import('puppeteer')).default;
   const browser = await puppeteer.connect({browserURL: `http://localhost:${launchedChrome.port}`});
   const page = await browser.newPage();
   flags.channel = 'fraggle-rock-cli';
@@ -272,7 +271,7 @@ async function runLighthouse(url, flags, config) {
   }
 }
 
-module.exports = {
+export {
   parseChromeFlags,
   saveResults,
   runLighthouse,

@@ -6,10 +6,12 @@
 'use strict';
 
 /* eslint-env jest */
-const Printer = require('../../printer.js');
-const assert = require('assert').strict;
-const fs = require('fs');
-const sampleResults = require('../../../lighthouse-core/test/results/sample_v2.json');
+
+import {strict as assert} from 'assert';
+import fs from 'fs';
+
+import * as Printer from '../../printer.js';
+import sampleResults from '../../../lighthouse-core/test/results/sample_v2.json';
 
 describe('Printer', () => {
   it('accepts valid output paths', () => {
