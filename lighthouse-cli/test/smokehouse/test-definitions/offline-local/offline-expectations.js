@@ -236,5 +236,5 @@ export {
   onlineOnly,
   ready,
   swBroken,
-  swSlow
+  swSlow,
 };

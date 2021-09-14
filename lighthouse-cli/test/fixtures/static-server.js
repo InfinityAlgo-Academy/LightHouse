@@ -260,5 +260,5 @@ if (esMain(import.meta)) {
 export {
   Server,
   serverForOnline as server,
-  serverForOffline
+  serverForOffline,
 };

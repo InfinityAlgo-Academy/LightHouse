@@ -324,5 +324,5 @@ const gzip = {
 
 export {
   efficiency,
-  gzip
+  gzip,
 };

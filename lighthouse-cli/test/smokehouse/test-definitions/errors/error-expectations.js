@@ -105,5 +105,5 @@ const iframeBadSsl = {
 export {
   infiniteLoop,
   expiredSsl,
-  iframeBadSsl
+  iframeBadSsl,
 };

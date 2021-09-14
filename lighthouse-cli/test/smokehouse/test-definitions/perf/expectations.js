@@ -389,5 +389,5 @@ export {
   fonts,
   debug,
   traceElements,
-  frameMetrics
+  frameMetrics,
 };

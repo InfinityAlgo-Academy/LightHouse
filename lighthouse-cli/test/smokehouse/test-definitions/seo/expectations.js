@@ -483,5 +483,5 @@ export {
   passing,
   failing,
   status403,
-  tapTargets
+  tapTargets,
 };
