@@ -25,8 +25,9 @@ jest.setTimeout(90_000);
  * Some audits can be notApplicable based on machine timing information.
  * Exclude these audits from applicability comparisons. */
 const FLAKY_AUDIT_IDS_APPLICABILITY = new Set([
-  'long-tasks',
-  'screenshot-thumbnails',
+  'long-tasks', // Depends on whether the longest task takes <50ms.
+  'screenshot-thumbnails', // Depends on OS whether frames happen to be generated on non-visual timespan changes.
+  'layout-shift-elements', // Depends on if the JS takes too long after input to be ignored for layout shift.
 ]);
 
 /**
@@ -156,7 +157,7 @@ describe('Fraggle Rock API', () => {
       // TODO(FR-COMPAT): This assertion can be removed when full compatibility is reached.
       expect(auditResults.length).toMatchInlineSnapshot(`48`);
 
-      expect(notApplicableAudits.length).toMatchInlineSnapshot(`6`);
+      expect(notApplicableAudits.length).toMatchInlineSnapshot(`5`);
       expect(notApplicableAudits.map(audit => audit.id)).not.toContain('server-response-time');
       expect(notApplicableAudits.map(audit => audit.id)).not.toContain('total-blocking-time');
 
@@ -199,7 +200,7 @@ describe('Fraggle Rock API', () => {
       const {auditResults, erroredAudits, notApplicableAudits} = getAuditsBreakdown(result.lhr);
       expect(auditResults.length).toMatchInlineSnapshot(`48`);
 
-      expect(notApplicableAudits.length).toMatchInlineSnapshot(`20`);
+      expect(notApplicableAudits.length).toMatchInlineSnapshot(`19`);
       expect(notApplicableAudits.map(audit => audit.id)).toContain('server-response-time');
       expect(notApplicableAudits.map(audit => audit.id)).not.toContain('total-blocking-time');
 

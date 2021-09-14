@@ -12,6 +12,7 @@ const {
   collectPhaseArtifacts,
   awaitArtifacts,
 } = require('./runner-helpers.js');
+const {prepareTargetForTimespanMode} = require('../../gather/driver/prepare.js');
 const {initializeConfig} = require('../config/config.js');
 const {getBaseArtifacts, finalizeArtifacts} = require('./base-artifacts.js');
 
@@ -42,6 +43,7 @@ async function startTimespan(options) {
     settings: config.settings,
   };
 
+  await prepareTargetForTimespanMode(driver, config.settings);
   await collectPhaseArtifacts({phase: 'startInstrumentation', ...phaseOptions});
   await collectPhaseArtifacts({phase: 'startSensitiveInstrumentation', ...phaseOptions});
 

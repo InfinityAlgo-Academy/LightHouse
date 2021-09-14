@@ -218,6 +218,8 @@ function createMockContext() {
 function mockDriverSubmodules() {
   const navigationMock = {gotoURL: jest.fn()};
   const prepareMock = {
+    prepareThrottlingAndNetwork: jest.fn(),
+    prepareTargetForTimespanMode: jest.fn(),
     prepareTargetForNavigationMode: jest.fn(),
     prepareTargetForIndividualNavigation: jest.fn(),
   };
@@ -233,6 +235,8 @@ function mockDriverSubmodules() {
 
   function reset() {
     navigationMock.gotoURL = jest.fn().mockResolvedValue({finalUrl: 'https://example.com', warnings: [], timedOut: false});
+    prepareMock.prepareThrottlingAndNetwork = jest.fn().mockResolvedValue(undefined);
+    prepareMock.prepareTargetForTimespanMode = jest.fn().mockResolvedValue(undefined);
     prepareMock.prepareTargetForNavigationMode = jest.fn().mockResolvedValue({warnings: []});
     prepareMock.prepareTargetForIndividualNavigation = jest.fn().mockResolvedValue({warnings: []});
     storageMock.clearDataForOrigin = jest.fn();
@@ -248,6 +252,7 @@ function mockDriverSubmodules() {
    * @return {(...args: any[]) => void}
    */
   const get = (target, name) => {
+    if (!target[name]) throw new Error(`Target does not have property "${name}"`);
     return (...args) => target[name](...args);
   };
 
