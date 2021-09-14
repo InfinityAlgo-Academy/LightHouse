@@ -133,6 +133,7 @@ describe('Config', () => {
         return {
           id: 'missing-artifact-audit',
           title: 'none',
+          failureTitle: 'none',
           description: 'none',
           requiredArtifacts: [
             // Require fake artifact amidst base artifact and default artifacts.
@@ -161,6 +162,7 @@ describe('Config', () => {
         return {
           id: 'optional-artifact-audit',
           title: 'none',
+          failureTitle: 'none',
           description: 'none',
           requiredArtifacts: [
             'URL', // base artifact
@@ -192,6 +194,7 @@ describe('Config', () => {
         return {
           id: 'optional-artifact-audit',
           title: 'none',
+          failureTitle: 'none',
           description: 'none',
           requiredArtifacts: [
             'URL', // base artifact
@@ -223,6 +226,7 @@ describe('Config', () => {
         return {
           id: 'optional-artifact-audit',
           title: 'none',
+          failureTitle: 'none',
           description: 'none',
           requiredArtifacts: [
             'URL', // base artifact
@@ -254,6 +258,7 @@ describe('Config', () => {
         return {
           id: 'optional-artifact-audit',
           title: 'none',
+          failureTitle: 'none',
           description: 'none',
           requiredArtifacts: [
             'URL', // base artifact
@@ -285,6 +290,7 @@ describe('Config', () => {
         return {
           id: 'base-artifacts-audit',
           title: 'base',
+          failureTitle: 'base',
           description: 'base',
           requiredArtifacts: ['HostUserAgent', 'URL', 'Stacks', 'WebAppManifest'],
         };
@@ -443,6 +449,7 @@ describe('Config', () => {
             return {
               id: 'empty-string-description',
               title: 'title',
+              failureTitle: 'none',
               description: '',
               requiredArtifacts: [],
             };

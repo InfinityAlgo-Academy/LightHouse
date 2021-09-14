@@ -479,7 +479,7 @@ interactive: flaky
 interactive-element-affordance: manual
 is-crawlable: pass
 is-on-https: pass
-js-libraries: pass
+js-libraries: notApplicable
 label: notApplicable
 largest-contentful-paint: numeric
 largest-contentful-paint-element: informative
@@ -555,7 +555,7 @@ unused-css-rules: flaky
 unused-javascript: numeric
 use-landmarks: manual
 user-timings: flaky
-uses-http2: pass
+uses-http2: numeric
 uses-long-cache-ttl: numeric
 uses-optimized-images: flaky
 uses-passive-event-listeners: pass

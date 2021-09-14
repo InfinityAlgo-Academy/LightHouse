@@ -139,9 +139,10 @@ function assertValidAudit(auditDefinition) {
   }
 
   // If it'll have a ✔ or ✖ displayed alongside the result, it should have failureTitle
+  const scoreDisplayMode = implementation.meta.scoreDisplayMode || Audit.SCORING_MODES.BINARY;
   if (
     !i18n.isStringOrIcuMessage(implementation.meta.failureTitle) &&
-    implementation.meta.scoreDisplayMode === Audit.SCORING_MODES.BINARY
+    scoreDisplayMode === Audit.SCORING_MODES.BINARY
   ) {
     throw new Error(`${auditName} has no meta.failureTitle and should.`);
   }

@@ -343,6 +343,7 @@ describe('Fraggle Rock Config', () => {
           return {
             id: 'extra-audit',
             title: 'Extra',
+            failureTitle: 'Extra',
             description: 'Extra',
             requiredArtifacts: /** @type {*} */ (['ExtraArtifact']),
           };

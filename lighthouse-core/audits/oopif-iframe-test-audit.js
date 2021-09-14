@@ -22,6 +22,7 @@ module.exports = {
   meta: {
     id: 'oopif-iframe-test-audit',
     title: 'IFrame Elements',
+    failureTitle: 'IFrame Elements',
     description: 'Audit to force the inclusion of IFrameElements artifact',
     requiredArtifacts: ['IFrameElements'],
   },

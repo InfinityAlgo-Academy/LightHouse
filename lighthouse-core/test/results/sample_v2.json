@@ -5267,8 +5267,8 @@
       "id": "js-libraries",
       "title": "Detected JavaScript libraries",
       "description": "All front-end JavaScript libraries detected on the page. [Learn more](https://web.dev/js-libraries/).",
-      "score": 1,
-      "scoreDisplayMode": "binary",
+      "score": null,
+      "scoreDisplayMode": "informative",
       "details": {
         "type": "table",
         "headings": [
@@ -5399,7 +5399,7 @@
       "title": "Use HTTP/2",
       "description": "HTTP/2 offers many benefits over HTTP/1.1, including binary headers and multiplexing. [Learn more](https://web.dev/uses-http2/).",
       "score": 1,
-      "scoreDisplayMode": "binary",
+      "scoreDisplayMode": "numeric",
       "numericValue": 0,
       "numericUnit": "millisecond",
       "details": {

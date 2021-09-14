@@ -64,6 +64,7 @@ describe('Runner', () => {
   const basicAuditMeta = {
     id: 'test-audit',
     title: 'A test audit',
+    failureTitle: 'A test audit',
     description: 'An audit for testing',
     requiredArtifacts: [],
   };
@@ -212,6 +213,7 @@ describe('Runner', () => {
           return {
             id: 'dummy-audit',
             title: 'Dummy',
+            failureTitle: 'Dummy',
             description: 'Will fail because required artifact is an error',
             requiredArtifacts: ['WarningAndErrorGatherer'],
           };
@@ -763,6 +765,7 @@ describe('Runner', () => {
         return {
           id: 'test-audit',
           title: 'A test audit',
+          failureTitle: 'A test audit',
           description: 'An audit for testing',
           requiredArtifacts: ['RuntimeErrorGatherer'],
         };

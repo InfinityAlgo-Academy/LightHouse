@@ -10,13 +10,15 @@ const assert = require('assert').strict;
 
 /* eslint-env jest */
 describe('Returns detected front-end JavaScript libraries', () => {
-  it('always passes', () => {
+  it('not applicable when there are no stacks', () => {
     // no libraries
     const auditResult1 = JsLibrariesAudit.audit({
       Stacks: [],
     });
-    assert.equal(auditResult1.score, 1);
+    assert.equal(auditResult1.notApplicable, true);
+  });
 
+  it('always passes', () => {
     // duplicates. TODO: consider failing in this case
     const auditResult2 = JsLibrariesAudit.audit({
       Stacks: [
