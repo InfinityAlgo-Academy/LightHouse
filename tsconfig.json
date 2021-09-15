@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "noEmit": true,
+    "emitDeclarationOnly": true,
     "module": "commonjs",
     "target": "ES2020",
     "allowJs": true,
