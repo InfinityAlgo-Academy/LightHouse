@@ -261,7 +261,6 @@
 .SummaryFlowStep__separator {
   display: contents;
 }
-
 .SummaryFlowStep__separator > .Separator {
   grid-column-end: span 5;
 }
