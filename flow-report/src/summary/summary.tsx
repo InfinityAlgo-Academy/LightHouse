@@ -11,6 +11,7 @@ import {FlowSegment, Separator} from '../common';
 import {getScreenDimensions, getScreenshot, useDerivedStepNames, useFlowResult} from '../util';
 import {Util} from '../../../report/renderer/util';
 import {CategoryScore} from '../wrappers/category-score';
+import {Audit} from '../wrappers/audit';
 
 const DISPLAYED_CATEGORIES = ['performance', 'accessibility', 'best-practices', 'seo'];
 const THUMBNAIL_WIDTH = 50;
@@ -165,10 +166,18 @@ export const SummaryHeader: FunctionComponent = () => {
 };
 
 export const Summary: FunctionComponent = () => {
+  const flowResult = useFlowResult();
+  const lhr = flowResult.lhrs[0];
+  const reportResult = useMemo(() => Util.prepareReportResult(lhr), [lhr]);
+  const audit =
+    reportResult.categories['performance'].auditRefs.find(a => a.id === 'unsized-images');
   return (
     <div className="Summary" data-testid="Summary">
       <SummaryHeader/>
       <Separator/>
+      {
+        audit && <Audit audit={audit}/>
+      }
       <SummaryFlow/>
     </div>
   );
