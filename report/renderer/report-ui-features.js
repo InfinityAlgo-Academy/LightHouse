@@ -219,16 +219,14 @@ export class ReportUIFeatures {
         return !thirdPartyFilterAuditExclusions.includes(containingAudit.id);
       });
 
-    tablesWithUrls.forEach((tableEl, index) => {
+    tablesWithUrls.forEach((tableEl) => {
       const rowEls = getTableRows(tableEl);
       const thirdPartyRows = this._getThirdPartyRows(rowEls, this.json.finalUrl);
 
       // create input box
       const filterTemplate = this._dom.createComponent('3pFilter');
       const filterInput = this._dom.find('input', filterTemplate);
-      const id = `lh-3p-filter-label--${index}`;
 
-      filterInput.id = id;
       filterInput.addEventListener('change', e => {
         const shouldHideThirdParty = e.target instanceof HTMLInputElement && !e.target.checked;
         let even = true;
@@ -250,7 +248,6 @@ export class ReportUIFeatures {
         }
       });
 
-      this._dom.find('label', filterTemplate).setAttribute('for', id);
       this._dom.find('.lh-3p-filter-count', filterTemplate).textContent =
           `${thirdPartyRows.length}`;
       this._dom.find('.lh-3p-ui-string', filterTemplate).textContent =
