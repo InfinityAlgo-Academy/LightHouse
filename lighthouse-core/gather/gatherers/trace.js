@@ -60,7 +60,6 @@ class Trace extends FRGatherer {
       // A bug introduced in M92 causes these categories to crash targets on Linux.
       // See https://github.com/GoogleChrome/lighthouse/issues/12835 for full investigation.
       // 'disabled-by-default-v8.cpu_profiler',
-      // 'disabled-by-default-v8.cpu_profiler.hires',
     ];
   }
 
