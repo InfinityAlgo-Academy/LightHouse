@@ -94,3 +94,14 @@ export const CpuIcon: FunctionComponent = () => {
     </svg>
   );
 };
+
+export const HamburgerIcon: FunctionComponent = () => {
+  return (
+    <svg viewBox="0 0 18 12" width="18" height="12" role="img">
+      <rect width="18" height="2"></rect>
+      <rect y="5" width="18" height="2"></rect>
+      <rect y="10" width="18" height="2"></rect>
+    </svg>
+  );
+};
+
