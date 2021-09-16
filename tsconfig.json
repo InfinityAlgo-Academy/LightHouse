@@ -1,22 +1,16 @@
 {
+  "extends": "./tsconfig-base.json",
   "compilerOptions": {
-    "emitDeclarationOnly": true,
-    "module": "commonjs",
-    "target": "ES2020",
-    "allowJs": true,
-    "checkJs": true,
-    "strict": true,
-    // TODO: remove the next line to be fully `strict`.
-    "useUnknownInCatchVariables": false,
-    // "listFiles": true,
-    // "noErrorTruncation": true,
-
-    "resolveJsonModule": true,
-    "diagnostics": true,
-    "composite": true,
     "outDir": ".tmp/tsbuildinfo/",
-    "esModuleInterop": true,
+
+    // TODO(esmodules): included to support require('file.json'). Remove on the switch to ES Modules.
+    "resolveJsonModule": true,
   },
+  "references": [
+    {"path": "./types/lhr/"},
+    {"path": "./report/"},
+    {"path": "./report/generator/"},
+  ],
   "include": [
     "root.js",
     "lighthouse-cli/**/*.js",
@@ -35,11 +29,6 @@
     "lighthouse-core/test/fixtures/traces/lcp-m78.devtools.log.json",
     "third-party/snyk/snapshot.json",
     "lighthouse-core/audits/byte-efficiency/polyfill-graph-data.json",
-  ],
-  "references": [
-    {"path": "./types/lhr/"},
-    {"path": "./report/"},
-    {"path": "./report/generator/"},
   ],
   "exclude": [
     "lighthouse-core/test/audits/**/*.js",
