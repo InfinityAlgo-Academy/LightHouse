@@ -45,6 +45,7 @@ async function build() {
 
   await bundle.write({
     file: bundleOutFile,
+    format: 'commonjs',
   });
 }
 

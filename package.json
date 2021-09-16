@@ -21,7 +21,7 @@
     "build-extension-firefox": "node ./build/build-extension.js firefox",
     "build-devtools": "yarn reset-link && node ./build/build-bundle.js clients/devtools-entry.js dist/lighthouse-dt-bundle.js && node ./build/build-dt-report-resources.js",
     "build-smokehouse-bundle": "node ./build/build-smokehouse-bundle.js",
-    "build-lr": "yarn reset-link && node ./build/build-lightrider-bundles.js && rollup lighthouse-cli/test/fixtures/static-server.js -o dist/lightrider/static-server.js -p commonjs -p node-resolve -e mime-types,glob",
+    "build-lr": "yarn reset-link && node ./build/build-lightrider-bundles.js && rollup lighthouse-cli/test/fixtures/static-server.js -o dist/lightrider/static-server.js -f commonjs -p commonjs -p node-resolve -e mime-types,glob",
     "build-pack": "bash build/build-pack.sh",
     "build-report": "node build/build-report-components.js && yarn eslint --fix report/renderer/components.js && node build/build-report.js",
     "build-sample-reports": "yarn build-report && node build/build-sample-reports.js",
