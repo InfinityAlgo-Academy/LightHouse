@@ -42,6 +42,12 @@ async function buildFlowReport() {
       commonjs(),
       typescript({
         tsconfig: 'flow-report/tsconfig.json',
+        // Plugin struggles with custom outDir, so revert it from tsconfig value
+        // as well as any options that require an outDir is set.
+        outDir: null,
+        composite: false,
+        emitDeclarationOnly: false,
+        declarationMap: false,
       }),
       terser(),
     ],
