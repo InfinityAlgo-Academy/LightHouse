@@ -801,7 +801,7 @@ class LighthouseTreemap {
 
   /**
    * Loads report json from gist URL, if valid. Updates page URL with gist id
-   * and loads from github.
+   * and loads from GitHub.
    * @param {string} urlStr gist URL
    */
   async loadFromGistUrl(urlStr) {
