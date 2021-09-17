@@ -1,39 +1,23 @@
 {
+  "extends": "../tsconfig-base.json",
   "compilerOptions": {
-    "composite": true,
     "outDir": "../.tmp/tsbuildinfo/flow-report",
-    "emitDeclarationOnly": false,
-    "declarationMap": true,
 
     // Limit to base JS and DOM defs.
     "lib": ["es2020", "dom", "dom.iterable"],
-    // Selectively include types from node_modules.
+    // Selectively include types from node_modules/.
     "types": ["node", "jest"],
-    "target": "es2020",
-    "module": "es2020",
-    "moduleResolution": "node",
-    "esModuleInterop": true,
-
-    "allowJs": true,
-    "checkJs": true,
-    "strict": true,
-    // TODO: remove the next line to be fully `strict`.
-    "useUnknownInCatchVariables": false,
-
-    // "listFiles": true,
-    // "noErrorTruncation": true,
-    "extendedDiagnostics": true,
 
     "jsx": "react-jsx",
     "jsxImportSource": "preact",
   },
+  "references": [
+    {"path": "../types/lhr/"},
+    {"path": "../report"},
+  ],
   "include": [
     "**/*.ts",
     "**/*.tsx",
     "./types",
-  ],
-  "references": [
-    {"path": "../types/lhr/"},
-    {"path": "../report"},
   ],
 }

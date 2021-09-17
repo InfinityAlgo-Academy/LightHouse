@@ -228,5 +228,5 @@ function getAssertionLog(count) {
 }
 
 export {
-  runSmokehouse
+  runSmokehouse,
 };

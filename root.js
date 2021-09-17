@@ -5,4 +5,6 @@
  */
 'use strict';
 
-module.exports.LH_ROOT = __dirname;
+module.exports = {
+  LH_ROOT: __dirname,
+};

@@ -31,10 +31,9 @@ function minifyFileTransform(file) {
       code += chunk.toString();
       next();
     },
-    async final(next) {
-      try {
-        const result = await terser.minify(code, {ecma: 2019});
-
+    // TODO: when min is Node 16, can just make this function async.
+    final(next) {
+      terser.minify(code, {ecma: 2019}).then(result => {
         if (result.code) {
           const saved = code.length - result.code.length;
           // eslint-disable-next-line no-console
@@ -43,11 +42,11 @@ function minifyFileTransform(file) {
         }
 
         next();
-      } catch (err) {
+      }).catch(err => {
         // eslint-disable-next-line no-console
         console.error(err);
         process.exit(1);
-      }
+      });
     },
   });
 }

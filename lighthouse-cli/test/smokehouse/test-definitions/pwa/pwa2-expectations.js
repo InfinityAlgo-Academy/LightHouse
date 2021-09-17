@@ -123,5 +123,5 @@ const caltrain = {
 
 export {
   svgomg,
-  caltrain
+  caltrain,
 };

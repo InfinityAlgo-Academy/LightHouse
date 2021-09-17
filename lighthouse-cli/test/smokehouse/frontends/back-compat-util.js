@@ -38,5 +38,5 @@ function updateTestDefnFormat(allTestDefns) {
 }
 
 export {
-  updateTestDefnFormat
+  updateTestDefnFormat,
 };

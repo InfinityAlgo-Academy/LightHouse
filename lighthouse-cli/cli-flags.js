@@ -7,9 +7,12 @@
 
 /* eslint-disable max-len */
 
-const yargs = require('yargs');
-const fs = require('fs');
-const {isObjectOfUnknownValues} = require('../lighthouse-core/lib/type-verifiers.js');
+import fs from 'fs';
+
+import yargs from 'yargs';
+import * as yargsHelpers from 'yargs/helpers';
+
+import {isObjectOfUnknownValues} from '../lighthouse-core/lib/type-verifiers.js';
 
 /**
  * @param {string=} manualArgv
@@ -17,8 +20,10 @@ const {isObjectOfUnknownValues} = require('../lighthouse-core/lib/type-verifiers
  * @return {LH.CliFlags}
  */
 function getFlags(manualArgv, options = {}) {
-  // @ts-expect-error - undocumented, but yargs() supports parsing a single `string`.
-  const y = manualArgv ? yargs(manualArgv) : yargs;
+  const y = manualArgv ?
+    // @ts-expect-error - undocumented, but yargs() supports parsing a single `string`.
+    yargs(manualArgv) :
+    yargs(yargsHelpers.hideBin(process.argv));
 
   let parser = y.help('help')
       .showHelpOnFail(false, 'Specify --help for available options')
@@ -318,7 +323,7 @@ function getFlags(manualArgv, options = {}) {
         throw new Error('Please provide a url');
       })
       .epilogue('For more information on Lighthouse, see https://developers.google.com/web/tools/lighthouse/.')
-      .wrap(yargs.terminalWidth());
+      .wrap(y.terminalWidth());
 
   if (options.noExitOnFailure) {
     // Silence console.error() logging and don't process.exit().
@@ -499,6 +504,6 @@ function coerceScreenEmulation(value) {
   return screenEmulationSettings;
 }
 
-module.exports = {
+export {
   getFlags,
 };

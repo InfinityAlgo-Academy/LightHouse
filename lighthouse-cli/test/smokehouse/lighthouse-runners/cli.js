@@ -146,5 +146,5 @@ async function internalRun(url, tmpPath, configJson, options) {
 }
 
 export {
-  runLighthouse
+  runLighthouse,
 };

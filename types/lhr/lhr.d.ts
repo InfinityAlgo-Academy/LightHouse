@@ -41,7 +41,11 @@ interface Result {
   /** Execution timings for the Lighthouse run */
   timing: Result.Timing;
   /** Strings for the report and the record of all formatted string locations in the LHR and their corresponding source values. */
-  i18n: {rendererFormattedStrings: Record<string, string>, icuMessagePaths?: Result.IcuMessagePaths};
+  i18n: {
+    rendererFormattedStrings: Record<string, string>;
+    /** Optional because LR has many old LHRs that return nothing for this property. */
+    icuMessagePaths?: Result.IcuMessagePaths;
+  };
   /** An array containing the result of all stack packs. */
   stackPacks?: Result.StackPack[];
 }

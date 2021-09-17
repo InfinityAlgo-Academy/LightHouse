@@ -114,5 +114,5 @@ const blockAll = {
 export {
   allowAll,
   blockAllM91,
-  blockAll
+  blockAll,
 };

@@ -68,5 +68,5 @@ const pwarocks = {
 };
 
 export {
-  pwarocks
+  pwarocks,
 };

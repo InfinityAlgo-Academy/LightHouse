@@ -5,12 +5,14 @@
  */
 
 import {FunctionComponent} from 'preact';
+import {useState} from 'preact/hooks';
 
 import {ReportRendererProvider} from './wrappers/report-renderer';
 import {Sidebar} from './sidebar/sidebar';
 import {Summary} from './summary/summary';
-import {FlowResultContext, useCurrentLhr} from './util';
+import {classNames, FlowResultContext, useCurrentLhr} from './util';
 import {Report} from './wrappers/report';
+import {Topbar} from './topbar';
 
 const Content: FunctionComponent = () => {
   const currentLhr = useCurrentLhr();
@@ -27,10 +29,12 @@ const Content: FunctionComponent = () => {
 };
 
 export const App: FunctionComponent<{flowResult: LH.FlowResult}> = ({flowResult}) => {
+  const [collapsed, setCollapsed] = useState(false);
   return (
     <FlowResultContext.Provider value={flowResult}>
       <ReportRendererProvider>
-        <div className="App">
+        <div className={classNames('App', {'App--collapsed': collapsed})}>
+          <Topbar onMenuClick={() => setCollapsed(c => !c)} />
           <Sidebar/>
           <Content/>
         </div>

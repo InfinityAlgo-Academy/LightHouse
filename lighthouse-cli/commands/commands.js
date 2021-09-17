@@ -5,10 +5,5 @@
  */
 'use strict';
 
-const listAudits = require('./list-audits.js');
-const listTraceCategories = require('./list-trace-categories.js');
-
-module.exports = {
-  listAudits,
-  listTraceCategories,
-};
+export {listAudits} from './list-audits.js';
+export {listTraceCategories} from './list-trace-categories.js';

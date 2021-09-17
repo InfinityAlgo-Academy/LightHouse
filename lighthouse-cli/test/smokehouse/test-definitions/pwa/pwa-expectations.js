@@ -117,5 +117,5 @@ const chromestatus = {
 
 export {
   airhorner,
-  chromestatus
+  chromestatus,
 };

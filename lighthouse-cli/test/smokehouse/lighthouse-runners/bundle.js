@@ -62,5 +62,5 @@ async function runLighthouse(url, configJson, testRunnerOptions = {}) {
 }
 
 export {
-  runLighthouse
+  runLighthouse,
 };

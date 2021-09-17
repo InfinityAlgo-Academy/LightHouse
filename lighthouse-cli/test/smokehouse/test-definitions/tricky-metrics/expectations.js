@@ -97,5 +97,5 @@ export {
   trickyTtiLateFcp,
   delayedLcp,
   delayedFcp,
-  debuggerStatement
+  debuggerStatement,
 };

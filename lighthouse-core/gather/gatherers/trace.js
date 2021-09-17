@@ -60,7 +60,6 @@ class Trace extends FRGatherer {
       // A bug introduced in M92 causes these categories to crash targets on Linux.
       // See https://github.com/GoogleChrome/lighthouse/issues/12835 for full investigation.
       // 'disabled-by-default-v8.cpu_profiler',
-      // 'disabled-by-default-v8.cpu_profiler.hires',
     ];
   }
 
@@ -102,10 +101,12 @@ class Trace extends FRGatherer {
   /**
    * @param {LH.Gatherer.FRTransitionalContext} passContext
    */
-  async startSensitiveInstrumentation({driver, gatherMode}) {
+  async startSensitiveInstrumentation({driver, gatherMode, settings}) {
+    const traceCategories = Trace.getDefaultTraceCategories()
+      .concat(settings.additionalTraceCategories || []);
     await driver.defaultSession.sendCommand('Page.enable');
     await driver.defaultSession.sendCommand('Tracing.start', {
-      categories: Trace.getDefaultTraceCategories().join(','),
+      categories: traceCategories.join(','),
       options: 'sampling-frequency=10000', // 1000 is default and too slow.
     });
 

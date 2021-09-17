@@ -151,5 +151,5 @@ export {
   fetch,
   xhr,
   idleCallbackShort,
-  idleCallbackLong
+  idleCallbackLong,
 };

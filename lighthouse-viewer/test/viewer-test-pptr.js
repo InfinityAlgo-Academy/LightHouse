@@ -7,8 +7,8 @@
 
 /* eslint-env jest */
 
-import * as fs from 'fs';
-import * as assert from 'assert';
+import fs from 'fs';
+import assert from 'assert';
 
 import {jest} from '@jest/globals';
 import puppeteer from 'puppeteer';

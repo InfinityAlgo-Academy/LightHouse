@@ -7,41 +7,60 @@
 
 /* eslint-env jest */
 
-jest.mock('../../run.js', () => ({runLighthouse: jest.fn()}));
-jest.mock('../../cli-flags.js', () => ({getFlags: jest.fn()}));
-jest.mock('../../sentry-prompt.js', () => ({askPermission: jest.fn()}));
-jest.mock('../../../lighthouse-core/lib/sentry.js', () => ({init: jest.fn()}));
-jest.mock('lighthouse-logger', () => ({setLevel: jest.fn()}));
-jest.mock('update-notifier', () => () => ({notify: () => {}}));
+import fs from 'fs';
 
-const bin = require('../../bin.js');
+import {jest} from '@jest/globals';
 
-/** @type {jest.Mock} */
-let getCLIFlagsFn;
-/** @type {jest.Mock} */
-let runLighthouseFn;
-/** @type {jest.Mock} */
-let setLogLevelFn;
-/** @type {jest.Mock} */
-let askSentryPermissionFn;
-/** @type {jest.Mock} */
-let initSentryFn;
+import {LH_ROOT} from '../../../root.js';
+
+const mockRunLighthouse = jest.fn();
+
+jest.unstable_mockModule('../../run.js', () => {
+  return {runLighthouse: mockRunLighthouse};
+});
+
+const mockGetFlags = jest.fn();
+jest.unstable_mockModule('../../cli-flags.js', () => {
+  return {getFlags: mockGetFlags};
+});
+
+const mockAskPermission = jest.fn();
+jest.unstable_mockModule('../../sentry-prompt.js', () => {
+  return {askPermission: mockAskPermission};
+});
+
+const mockSentryInit = jest.fn();
+jest.unstable_mockModule('../../../lighthouse-core/lib/sentry.js', () => {
+  return {init: mockSentryInit};
+});
+
+const mockLoggerSetLevel = jest.fn();
+jest.unstable_mockModule('lighthouse-logger', () => {
+  return {default: {setLevel: mockLoggerSetLevel}};
+});
+
+const mockNotify = jest.fn();
+jest.unstable_mockModule('update-notifier', () => {
+  return {default: () => ({notify: mockNotify})};
+});
+
+/** @type {import('../../bin.js')} */
+let bin;
+beforeAll(async () => {
+  bin = await import('../../bin.js');
+});
+
 /** @type {LH.CliFlags} */
 let cliFlags;
 
-beforeEach(() => {
-  getCLIFlagsFn = /** @type {*} */ (require('../../cli-flags.js').getFlags);
-  runLighthouseFn = /** @type {*} */ (require('../../run.js').runLighthouse);
-  setLogLevelFn = /** @type {*} */ (require('lighthouse-logger').setLevel);
-  askSentryPermissionFn = /** @type {*} */ (require('../../sentry-prompt.js').askPermission);
-  initSentryFn = /** @type {*} */ (require('../../../lighthouse-core/lib/sentry.js').init);
-
-  runLighthouseFn.mockReset();
-  askSentryPermissionFn.mockReset();
-  initSentryFn.mockReset();
-
-  runLighthouseFn.mockResolvedValue({});
-
+beforeEach(async () => {
+  mockAskPermission.mockReset();
+  mockGetFlags.mockReset();
+  mockLoggerSetLevel.mockReset();
+  mockNotify.mockReset();
+  mockRunLighthouse.mockReset();
+  mockSentryInit.mockReset();
+  mockRunLighthouse.mockResolvedValue({});
   cliFlags = {
     _: ['http://example.com'],
     output: ['html'],
@@ -60,15 +79,16 @@ beforeEach(() => {
     listTraceCategories: false,
     printConfig: false,
   };
-
-  getCLIFlagsFn.mockReset();
-  getCLIFlagsFn.mockImplementation(() => cliFlags);
+  mockGetFlags.mockImplementation(() => cliFlags);
 });
 
 describe('CLI bin', function() {
+  /**
+   * @return {any}
+   */
   function getRunLighthouseArgs() {
-    expect(runLighthouseFn).toHaveBeenCalled();
-    return runLighthouseFn.mock.calls[0];
+    expect(mockRunLighthouse).toHaveBeenCalled();
+    return mockRunLighthouse.mock.calls[0];
   }
 
   it('should run without failure', async () => {
@@ -76,10 +96,21 @@ describe('CLI bin', function() {
   });
 
   describe('config', () => {
-    it('should load the config from the path', async () => {
-      const configPath = require.resolve('../../../lighthouse-core/config/lr-desktop-config.js');
+    it('should load the config from the path (common js)', async () => {
+      // TODO(esmodules): change this test when config file is esm.
+      const configPath = `${LH_ROOT}/lighthouse-core/config/lr-desktop-config.js`;
       cliFlags = {...cliFlags, configPath: configPath};
-      const actualConfig = require(configPath);
+      const actualConfig = (await import(configPath)).default;
+      await bin.begin();
+
+      expect(getRunLighthouseArgs()[2]).toEqual(actualConfig);
+    });
+
+    it('should load the config from the path (es modules)', async () => {
+      const configPath =
+        `${LH_ROOT}/lighthouse-cli/test/smokehouse/test-definitions/a11y/a11y-config.js`;
+      cliFlags = {...cliFlags, configPath: configPath};
+      const actualConfig = (await import(configPath)).default;
       await bin.begin();
 
       expect(getRunLighthouseArgs()[2]).toEqual(actualConfig);
@@ -87,7 +118,8 @@ describe('CLI bin', function() {
 
     it('should load the config from the preset', async () => {
       cliFlags = {...cliFlags, preset: 'experimental'};
-      const actualConfig = require('../../../lighthouse-core/config/experimental-config.js');
+      const actualConfig =
+        (await import('../../../lighthouse-core/config/experimental-config.js')).default;
       await bin.begin();
 
       expect(getRunLighthouseArgs()[2]).toEqual(actualConfig);
@@ -96,9 +128,9 @@ describe('CLI bin', function() {
 
   describe('budget', () => {
     it('should load the config from the path', async () => {
-      const budgetPath = '../../../lighthouse-core/test/fixtures/simple-budget.json';
-      cliFlags = {...cliFlags, budgetPath: require.resolve(budgetPath)};
-      const budgetFile = require(budgetPath);
+      const budgetPath = `${LH_ROOT}/lighthouse-core/test/fixtures/simple-budget.json`;
+      cliFlags = {...cliFlags, budgetPath};
+      const budgetFile = JSON.parse(fs.readFileSync(budgetPath, 'utf-8'));
       await bin.begin();
 
       expect(getRunLighthouseArgs()[1].budgets).toEqual(budgetFile);
@@ -108,19 +140,19 @@ describe('CLI bin', function() {
   describe('logging', () => {
     it('should have info by default', async () => {
       await bin.begin();
-      expect(setLogLevelFn).toHaveBeenCalledWith('info');
+      expect(mockLoggerSetLevel).toHaveBeenCalledWith('info');
     });
 
     it('should respect verbose', async () => {
       cliFlags = {...cliFlags, verbose: true};
       await bin.begin();
-      expect(setLogLevelFn).toHaveBeenCalledWith('verbose');
+      expect(mockLoggerSetLevel).toHaveBeenCalledWith('verbose');
     });
 
     it('should respect quiet', async () => {
       cliFlags = {...cliFlags, quiet: true};
       await bin.begin();
-      expect(setLogLevelFn).toHaveBeenCalledWith('silent');
+      expect(mockLoggerSetLevel).toHaveBeenCalledWith('silent');
     });
   });
 
@@ -148,18 +180,18 @@ describe('CLI bin', function() {
 
   describe('precomputedLanternData', () => {
     it('should read lantern data from file', async () => {
-      const lanternDataFile = require.resolve('../fixtures/lantern-data.json');
+      const lanternDataFile = `${LH_ROOT}/lighthouse-cli/test/fixtures/lantern-data.json`;
       cliFlags = {...cliFlags, precomputedLanternDataPath: lanternDataFile};
       await bin.begin();
 
       expect(getRunLighthouseArgs()[1]).toMatchObject({
-        precomputedLanternData: require(lanternDataFile),
+        precomputedLanternData: (await import(lanternDataFile)).default,
         precomputedLanternDataPath: lanternDataFile,
       });
     });
 
     it('should throw when invalid lantern data used', async () => {
-      const headersFile = require.resolve('../fixtures/extra-headers/valid.json');
+      const headersFile = `${LH_ROOT}/lighthouse-cli/test/fixtures/extra-headers/valid.json`;
       cliFlags = {...cliFlags, precomputedLanternDataPath: headersFile};
       await expect(bin.begin()).rejects.toBeTruthy();
     });
@@ -169,28 +201,28 @@ describe('CLI bin', function() {
     it('should request permission when no preference set', async () => {
       await bin.begin();
 
-      expect(askSentryPermissionFn).toHaveBeenCalled();
+      expect(mockAskPermission).toHaveBeenCalled();
     });
 
     it('should not request permission when preference set', async () => {
       cliFlags = {...cliFlags, enableErrorReporting: false};
       await bin.begin();
 
-      expect(askSentryPermissionFn).not.toHaveBeenCalled();
+      expect(mockAskPermission).not.toHaveBeenCalled();
     });
 
     it('should initialize sentry when enabled', async () => {
       cliFlags = {...cliFlags, enableErrorReporting: true};
       await bin.begin();
 
-      expect(initSentryFn).toHaveBeenCalled();
+      expect(mockSentryInit).toHaveBeenCalled();
     });
 
     it('should not initialize sentry when disabled', async () => {
       cliFlags = {...cliFlags, enableErrorReporting: false};
       await bin.begin();
 
-      expect(initSentryFn).not.toHaveBeenCalled();
+      expect(mockSentryInit).not.toHaveBeenCalled();
     });
   });
 });

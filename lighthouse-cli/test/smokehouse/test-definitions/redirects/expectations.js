@@ -151,5 +151,5 @@ export {
   multipleServer,
   clientPaintServer,
   singleClient,
-  historyPushState
+  historyPushState,
 };

@@ -141,5 +141,5 @@ const unsizedImages = {
 export {
   animations,
   thirdParty,
-  unsizedImages
+  unsizedImages,
 };
