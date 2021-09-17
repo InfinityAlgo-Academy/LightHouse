@@ -189,13 +189,21 @@
 }
 
 .Summary {
-  min-width: var(--report-width);
+  display: grid;
+  grid-template-columns: minmax(5%, 1fr) auto minmax(5%, 1fr);
+  justify-content: start;
   width: 100%;
+}
+.Summary > * {
+  grid-column: 2;
+}
+.Summary > .Separator {
+  grid-column: 1 / span 3;
 }
 
 .SummaryHeader {
-  width: 90%;
   margin: 50px auto;
+  width: 100%;
 }
 
 .SummaryHeader__title {
@@ -208,8 +216,8 @@
 }
 
 .SummaryFlow {
-  width: fit-content;
-  max-width: 90%;
+  width: 100%;
+  max-width: max-content;
   display: grid;
   grid-auto-rows: min-content;
   grid-template-columns: min-content min-content 4fr 1fr 1fr 1fr 1fr;
