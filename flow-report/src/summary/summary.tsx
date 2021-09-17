@@ -164,11 +164,21 @@ export const SummaryHeader: FunctionComponent = () => {
   );
 };
 
+const SummarySectionHeader: FunctionComponent = ({children}) => {
+  return (
+    <div className="SummarySectionHeader">
+      <div className="SummarySectionHeader__content">{children}</div>
+      <Separator/>
+    </div>
+  );
+};
+
 export const Summary: FunctionComponent = () => {
   return (
     <div className="Summary" data-testid="Summary">
       <SummaryHeader/>
       <Separator/>
+      <SummarySectionHeader>ALL REPORTS</SummarySectionHeader>
       <SummaryFlow/>
     </div>
   );

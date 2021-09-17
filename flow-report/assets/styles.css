@@ -215,6 +215,14 @@
   font-size: var(--summary-subtitle-font-size);
 }
 
+.SummarySectionHeader {
+  margin-top: 32px;
+}
+
+.SummarySectionHeader__content {
+  margin: var(--base-spacing) 0px;
+}
+
 .SummaryFlow {
   width: 100%;
   max-width: max-content;
@@ -222,7 +230,7 @@
   grid-auto-rows: min-content;
   grid-template-columns: min-content min-content 4fr 1fr 1fr 1fr 1fr;
   align-items: center;
-  margin: 50px auto;
+  margin: var(--base-spacing) 0px;
 }
 .SummaryFlow .lh-fraction__content {
   padding: 0px;
