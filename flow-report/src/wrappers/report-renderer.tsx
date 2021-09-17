@@ -10,9 +10,7 @@ import {useContext, useMemo} from 'preact/hooks';
 import {CategoryRenderer} from '../../../report/renderer/category-renderer';
 import {DetailsRenderer} from '../../../report/renderer/details-renderer';
 import {DOM} from '../../../report/renderer/dom';
-import {I18n} from '../../../report/renderer/i18n';
 import {ReportRenderer} from '../../../report/renderer/report-renderer';
-import {Util} from '../../../report/renderer/util';
 
 interface ReportRendererGlobals {
    dom: DOM,
@@ -35,8 +33,6 @@ export const ReportRendererProvider: FunctionComponent = ({children}) => {
     const detailsRenderer = new DetailsRenderer(dom);
     const categoryRenderer = new CategoryRenderer(dom, detailsRenderer);
     const reportRenderer = new ReportRenderer(dom);
-    const i18n = new I18n('en-US', Util.UIStrings);
-    Util.i18n = i18n;
     return {
       dom,
       detailsRenderer,
