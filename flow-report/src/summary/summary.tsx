@@ -91,8 +91,8 @@ export const SummaryFlowStep: FunctionComponent<{
       />
       <FlowSegment mode={lhr.gatherMode}/>
       <div className="SummaryFlowStep__label">
-        <div className="SummaryFlowStep__label--mode">{MODE_DESCRIPTIONS[lhr.gatherMode]}</div>
-        <a className="SummaryFlowStep__label--link" href={`#index=${hashIndex}`}>{label}</a>
+        <div className="SummaryFlowStep__mode">{MODE_DESCRIPTIONS[lhr.gatherMode]}</div>
+        <a className="SummaryFlowStep__link" href={`#index=${hashIndex}`}>{label}</a>
       </div>
       {
         DISPLAYED_CATEGORIES.map(c => (

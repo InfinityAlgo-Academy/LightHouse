@@ -8,6 +8,7 @@
   --app-font-size: 12px;
   --base-spacing: 16px;
   --category-summary-font-size: 18px;
+  --double-base-spacing: calc(var(--base-spacing) * 2);
   --gather-mode-icon-size: 16px;
   --half-base-spacing: calc(var(--base-spacing) / 2);
   --separator-color: var(--color-gray-300);
@@ -202,7 +203,7 @@
 }
 
 .SummaryHeader {
-  margin: 50px auto;
+  margin: calc(var(--base-spacing) * 3) 0px;
   width: 100%;
 }
 
@@ -216,7 +217,7 @@
 }
 
 .SummarySectionHeader {
-  margin-top: 32px;
+  margin-top: var(--double-base-spacing);
 }
 
 .SummarySectionHeader__content {
@@ -281,11 +282,11 @@
   margin: var(--half-base-spacing);
 }
 
-.SummaryFlowStep__label--mode {
+.SummaryFlowStep__mode {
   color: var(--color-gray-700);
 }
 
-.SummaryFlowStep__label--link {
+.SummaryFlowStep__link {
   font-size: var(--summary-flow-step-label-font-size);
   color: var(--color-gray-800);
   text-decoration: underline;
