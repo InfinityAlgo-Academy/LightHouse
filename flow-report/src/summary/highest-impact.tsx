@@ -10,9 +10,9 @@ import {useMemo} from 'preact/hooks';
 import {Util} from '../../../report/renderer/util';
 import {useFlowResult} from '../util';
 
-const MAX_TOP_OPPORTUNITIES = 5;
+const MAX_HIGH_IMPACT = 5;
 
-function computeTopOpportunities(reportResults: LH.ReportResult[], categoryId: string) {
+function computeHighestImpactAudits(reportResults: LH.ReportResult[], categoryId: string) {
   const reportListMap: Map<string, {
     ref: LH.ReportResult.AuditRef,
     reports: number[],
@@ -26,7 +26,11 @@ function computeTopOpportunities(reportResults: LH.ReportResult[], categoryId: s
     if (!category) continue;
 
     for (const auditRef of category.auditRefs) {
-      const reportListForAudit = reportListMap.get(auditRef.id) || {ref: auditRef, reports: [], remainingScore: 0};
+      const reportListForAudit = reportListMap.get(auditRef.id) || {
+        ref: auditRef,
+        reports: [],
+        remainingScore: 0,
+      };
       if (!Util.showAsPassed(auditRef.result)) {
         reportListForAudit.reports.push(i);
         reportListForAudit.remainingScore += (1 - Number(auditRef.result.score)) * auditRef.weight;
@@ -48,10 +52,10 @@ function computeTopOpportunities(reportResults: LH.ReportResult[], categoryId: s
       }
       return b.remainingScore - a.remainingScore;
     })
-    .splice(0, MAX_TOP_OPPORTUNITIES);
+    .splice(0, MAX_HIGH_IMPACT);
 }
 
-export const SummaryOpportunities: FunctionComponent<{categoryIds: string[]}> =
+export const SummaryHighestImpact: FunctionComponent<{categoryIds: string[]}> =
 ({categoryIds}) => {
   const flowResult = useFlowResult();
   const reportResults = useMemo(() => flowResult.lhrs.map(Util.prepareReportResult), [flowResult]);
@@ -59,12 +63,12 @@ export const SummaryOpportunities: FunctionComponent<{categoryIds: string[]}> =
     <div>
       {
         categoryIds.map(c => {
-          const topOpportunities = computeTopOpportunities(reportResults, c);
+          const highImpactAudits = computeHighestImpactAudits(reportResults, c);
           return (
             <div key={c}>
               <h2>{c}</h2>
               {
-                topOpportunities.map(o =>
+                highImpactAudits.map(o =>
                   <div key={o.ref.id}>{o.ref.id}: [{o.reports.join(',')}]</div>
                 )
               }

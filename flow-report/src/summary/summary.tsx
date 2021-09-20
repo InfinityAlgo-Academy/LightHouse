@@ -11,7 +11,7 @@ import {FlowSegment, Separator} from '../common';
 import {getScreenDimensions, getScreenshot, useDerivedStepNames, useFlowResult} from '../util';
 import {Util} from '../../../report/renderer/util';
 import {CategoryScore} from '../wrappers/category-score';
-import {SummaryOpportunities} from './opportunities';
+import {SummaryHighestImpact} from './highest-impact';
 
 const DISPLAYED_CATEGORIES = ['performance', 'accessibility', 'best-practices', 'seo'];
 const THUMBNAIL_WIDTH = 50;
@@ -179,8 +179,8 @@ export const Summary: FunctionComponent = () => {
     <div className="Summary" data-testid="Summary">
       <SummaryHeader/>
       <Separator/>
-      <SummarySectionHeader>TOP OPPORTUNITIES</SummarySectionHeader>
-      <SummaryOpportunities categoryIds={DISPLAYED_CATEGORIES}/>
+      <SummarySectionHeader>HIGHEST IMPACT AUDITS</SummarySectionHeader>
+      <SummaryHighestImpact categoryIds={DISPLAYED_CATEGORIES}/>
       <SummarySectionHeader>ALL REPORTS</SummarySectionHeader>
       <SummaryFlow/>
     </div>
