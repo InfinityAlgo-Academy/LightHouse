@@ -262,6 +262,8 @@ async function _navigations({driver, config, requestedUrl, baseArtifacts, comput
 async function _cleanup({requestedUrl, driver, config}) {
   const didResetStorage = !config.settings.disableStorageReset;
   if (didResetStorage) await storage.clearDataForOrigin(driver.defaultSession, requestedUrl);
+
+  await driver.disconnect();
 }
 
 /**

@@ -163,6 +163,15 @@ class ProtocolSession {
       if (timeout) clearTimeout(timeout);
     });
   }
+
+  /**
+   * Disposes of a session so that it can no longer talk to Chrome.
+   * @return {Promise<void>}
+   */
+  async dispose() {
+    this._session.removeAllListeners();
+    await this._session.detach();
+  }
 }
 
 module.exports = ProtocolSession;

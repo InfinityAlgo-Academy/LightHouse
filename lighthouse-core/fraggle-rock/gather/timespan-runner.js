@@ -58,6 +58,7 @@ async function startTimespan(options) {
           await collectPhaseArtifacts({phase: 'stopSensitiveInstrumentation', ...phaseOptions});
           await collectPhaseArtifacts({phase: 'stopInstrumentation', ...phaseOptions});
           await collectPhaseArtifacts({phase: 'getArtifact', ...phaseOptions});
+          await driver.disconnect();
 
           const artifacts = await awaitArtifacts(artifactState);
           return finalizeArtifacts(baseArtifacts, artifacts);

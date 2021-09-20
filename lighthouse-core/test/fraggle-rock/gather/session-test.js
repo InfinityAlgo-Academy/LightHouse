@@ -103,6 +103,20 @@ describe('ProtocolSession', () => {
     });
   }
 
+  describe('.dispose', () => {
+    it('should detach from the session', async () => {
+      const detach = jest.fn();
+      const removeAllListeners = jest.fn();
+      // @ts-expect-error - we want to use a more limited test.
+      puppeteerSession = {detach, emit: jest.fn(), removeAllListeners};
+      session = new ProtocolSession(puppeteerSession);
+
+      await session.dispose();
+      expect(detach).toHaveBeenCalled();
+      expect(removeAllListeners).toHaveBeenCalled();
+    });
+  });
+
   describe('.addProtocolMessageListener', () => {
     it('should listen for any event', () => {
       // @ts-expect-error - we want to use a more limited test of a real event emitter.
