@@ -7,13 +7,18 @@
 import {FunctionComponent} from 'preact';
 import {useMemo} from 'preact/hooks';
 
-import {FlowSegment} from '../common';
+import {FlowSegment, Separator} from '../common';
 import {getScreenDimensions, getScreenshot, useDerivedStepNames, useFlowResult} from '../util';
 import {Util} from '../../../report/renderer/util';
 import {CategoryScore} from '../wrappers/category-score';
 
 const DISPLAYED_CATEGORIES = ['performance', 'accessibility', 'best-practices', 'seo'];
 const THUMBNAIL_WIDTH = 50;
+const MODE_DESCRIPTIONS: Record<LH.Result.GatherMode, string> = {
+  'navigation': 'Page load',
+  'timespan': 'User interactions',
+  'snapshot': 'Captured state of page',
+};
 
 const SummaryNavigationHeader: FunctionComponent<{url: string}> = ({url}) => {
   return (
@@ -72,9 +77,9 @@ export const SummaryFlowStep: FunctionComponent<{
       {
         lhr.gatherMode === 'navigation' || hashIndex === 0 ?
           <SummaryNavigationHeader url={lhr.finalUrl}/> :
-          <div className="SummaryFlowStep__divider">
+          <div className="SummaryFlowStep__separator">
             <FlowSegment/>
-            <div className="SummaryFlowStep__divider--line"/>
+            <Separator/>
           </div>
       }
       <img
@@ -84,7 +89,10 @@ export const SummaryFlowStep: FunctionComponent<{
         style={{width: THUMBNAIL_WIDTH, maxHeight: thumbnailHeight}}
       />
       <FlowSegment mode={lhr.gatherMode}/>
-      <a className="SummaryFlowStep__label" href={`#index=${hashIndex}`}>{label}</a>
+      <div className="SummaryFlowStep__label">
+        <div className="SummaryFlowStep__mode">{MODE_DESCRIPTIONS[lhr.gatherMode]}</div>
+        <a className="SummaryFlowStep__link" href={`#index=${hashIndex}`}>{label}</a>
+      </div>
       {
         DISPLAYED_CATEGORIES.map(c => (
           <SummaryCategory
@@ -156,10 +164,21 @@ export const SummaryHeader: FunctionComponent = () => {
   );
 };
 
+const SummarySectionHeader: FunctionComponent = ({children}) => {
+  return (
+    <div className="SummarySectionHeader">
+      <div className="SummarySectionHeader__content">{children}</div>
+      <Separator/>
+    </div>
+  );
+};
+
 export const Summary: FunctionComponent = () => {
   return (
     <div className="Summary" data-testid="Summary">
       <SummaryHeader/>
+      <Separator/>
+      <SummarySectionHeader>ALL REPORTS</SummarySectionHeader>
       <SummaryFlow/>
     </div>
   );

@@ -8,6 +8,7 @@
   --app-font-size: 12px;
   --base-spacing: 16px;
   --category-summary-font-size: 18px;
+  --double-base-spacing: calc(var(--base-spacing) * 2);
   --gather-mode-icon-size: 16px;
   --half-base-spacing: calc(var(--base-spacing) / 2);
   --separator-color: var(--color-gray-300);
@@ -189,14 +190,21 @@
 }
 
 .Summary {
-  margin: 0 auto;
-  min-width: var(--report-width);
-  width: max-content;
-  max-width: 90%;
+  display: grid;
+  grid-template-columns: minmax(5%, 1fr) auto minmax(5%, 1fr);
+  justify-content: start;
+  width: 100%;
+}
+.Summary > * {
+  grid-column: 2;
+}
+.Summary > .Separator {
+  grid-column: 1 / span 3;
 }
 
 .SummaryHeader {
-  margin: var(--base-spacing) 0;
+  margin: calc(var(--base-spacing) * 3) 0px;
+  width: 100%;
 }
 
 .SummaryHeader__title {
@@ -208,12 +216,22 @@
   font-size: var(--summary-subtitle-font-size);
 }
 
+.SummarySectionHeader {
+  margin-top: var(--double-base-spacing);
+}
+
+.SummarySectionHeader__content {
+  margin: var(--base-spacing) 0px;
+}
+
 .SummaryFlow {
   width: 100%;
+  max-width: max-content;
   display: grid;
   grid-auto-rows: min-content;
   grid-template-columns: min-content min-content 4fr 1fr 1fr 1fr 1fr;
   align-items: center;
+  margin: var(--base-spacing) 0px;
 }
 .SummaryFlow .lh-fraction__content {
   padding: 0px;
@@ -260,11 +278,18 @@
 }
 
 .SummaryFlowStep__label {
+  grid-column: 3;
+  margin: var(--half-base-spacing);
+}
+
+.SummaryFlowStep__mode {
+  color: var(--color-gray-700);
+}
+
+.SummaryFlowStep__link {
   font-size: var(--summary-flow-step-label-font-size);
   color: var(--color-gray-800);
   text-decoration: underline;
-  grid-column: 3;
-  margin: var(--half-base-spacing);
 }
 
 .SummaryCategory {
@@ -283,7 +308,8 @@
   align-items: center;
   justify-content: center;
   padding: var(--half-base-spacing);
-  background-color: var(--color-gray-200);
+  background-color: var(--color-gray-100);
+  border-top: 1px solid var(--color-gray-300);
   text-align: center;
 }
 .SummaryNavigationHeader__url {
@@ -291,14 +317,11 @@
   text-align: left;
 }
 
-.SummaryFlowStep__divider {
+.SummaryFlowStep__separator {
   display: contents;
 }
-
-.SummaryFlowStep__divider--line {
+.SummaryFlowStep__separator > .Separator {
   grid-column-end: span 5;
-  height: 1px;
-  background-color: var(--separator-color);
 }
 
 .SummaryCategory__null {
