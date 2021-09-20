@@ -35,6 +35,7 @@ function computeTopOpportunities(reportResults: LH.ReportResult[], categoryId: s
   return Array.from(reportListMap.values())
     .filter(audit =>
       audit.reports.length &&
+      audit.ref.group !== 'metrics' &&
       audit.ref.result.scoreDisplayMode !== 'informative' &&
       audit.ref.result.scoreDisplayMode !== 'error'
     )
