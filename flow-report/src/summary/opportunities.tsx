@@ -15,7 +15,9 @@ const MAX_TOP_OPPORTUNITIES = 5;
 function computeTopOpportunities(reportResults: LH.ReportResult[], categoryId: string) {
   const reportListMap: Map<string, {
     ref: LH.ReportResult.AuditRef,
-    reports: number[]
+    reports: number[],
+    /** Total extra score that would be gained if this audit passed in every report. */
+    remainingScore: number,
   }> = new Map();
 
   for (let i = 0; i < reportResults.length; ++i) {
@@ -24,9 +26,10 @@ function computeTopOpportunities(reportResults: LH.ReportResult[], categoryId: s
     if (!category) continue;
 
     for (const auditRef of category.auditRefs) {
-      const reportListForAudit = reportListMap.get(auditRef.id) || {ref: auditRef, reports: []};
+      const reportListForAudit = reportListMap.get(auditRef.id) || {ref: auditRef, reports: [], remainingScore: 0};
       if (!Util.showAsPassed(auditRef.result)) {
         reportListForAudit.reports.push(i);
+        reportListForAudit.remainingScore += (1 - Number(auditRef.result.score)) * auditRef.weight;
       }
       reportListMap.set(auditRef.id, reportListForAudit);
     }
@@ -40,10 +43,10 @@ function computeTopOpportunities(reportResults: LH.ReportResult[], categoryId: s
       audit.ref.result.scoreDisplayMode !== 'error'
     )
     .sort((a, b) => {
-      if (a.reports.length === b.reports.length) {
-        return b.ref.weight - a.ref.weight;
+      if (a.remainingScore === b.remainingScore) {
+        return b.reports.length - a.reports.length;
       }
-      return b.reports.length - a.reports.length;
+      return b.remainingScore - a.remainingScore;
     })
     .splice(0, MAX_TOP_OPPORTUNITIES);
 }
