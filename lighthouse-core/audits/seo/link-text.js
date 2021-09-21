@@ -124,7 +124,17 @@ class LinkText extends Audit {
           return false;
         }
 
-        return BLOCKLIST.has(link.text.trim().toLowerCase());
+        const normalized = link.text.trim().toLowerCase();
+        const isJustOneCodePoint = [...normalized].length === 1;
+        const codePoint = isJustOneCodePoint && normalized.charCodeAt(0);
+        // https://www.w3schools.com/charsets/ref_utf_symbols.asp
+        const isUnicodeSymbol =
+          codePoint >= parseInt('2600', 16) && codePoint <= parseInt('26FF', 16);
+        const isFontAwesome =
+          codePoint >= parseInt('f000', 16) && codePoint <= parseInt('f2e0', 16);
+        const isMeaningfulIcon = isUnicodeSymbol || isFontAwesome;
+
+        return BLOCKLIST.has(normalized) || (isJustOneCodePoint && !isMeaningfulIcon);
       })
       .map(link => {
         return {

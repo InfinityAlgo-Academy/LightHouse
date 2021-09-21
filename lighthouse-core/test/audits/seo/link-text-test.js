@@ -10,7 +10,32 @@ const assert = require('assert').strict;
 
 /* eslint-env jest */
 
+function expectFailure(invalidLink) {
+  const artifacts = {
+    URL: {
+      finalUrl: 'https://example.com/page.html',
+    },
+    AnchorElements: [
+      {href: 'https://example.com/otherpage.html', text: 'legit link text', rel: ''},
+      invalidLink,
+      {href: 'https://example.com/otherpage.html', text: 'legit link text', rel: ''},
+    ],
+  };
+
+  const auditResult = LinkTextAudit.audit(artifacts);
+  assert.equal(auditResult.score, 0);
+  assert.equal(auditResult.details.items.length, 1);
+  assert.equal(auditResult.details.items[0].href, invalidLink.href);
+  assert.equal(auditResult.details.items[0].text, invalidLink.text);
+}
+
 describe('SEO: link text audit', () => {
+  it('fails when link with non descriptive text is found', () => {
+    expectFailure({href: 'https://example.com/otherpage.html', text: 'click here', rel: ''});
+    expectFailure({href: 'https://example.com/otherpage.html', text: '!', rel: ''});
+    expectFailure({href: 'https://example.com/otherpage.html', text: 'i', rel: ''});
+  });
+
   it('fails when link with non descriptive text is found', () => {
     const invalidLink = {href: 'https://example.com/otherpage.html', text: 'click here', rel: ''};
     const artifacts = {
@@ -116,6 +141,9 @@ describe('SEO: link text audit', () => {
         {href: 'https://example.com/otherpage.html', text: 'legit link text', rel: ''},
         {href: 'http://example.com/page.html?test=test', text: 'legit link text', rel: ''},
         {href: 'file://Users/user/Desktop/file.png', text: 'legit link text', rel: ''},
+        {href: 'file://Users/user/Desktop/file.png', text: '⛴', rel: ''},
+        {href: 'file://Users/user/Desktop/file.png', text: '⛴⛏', rel: ''},
+        {href: 'file://Users/user/Desktop/file.png', text: String.fromCodePoint(62062), rel: ''},
       ],
     };
 
