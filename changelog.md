@@ -1,3 +1,26 @@
+<a name="8.5.1"></a>
+# 8.5.1 (2021-09-22)
+[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v8.5.0...v8.5.1)
+
+This is a patch release to fix an issue in the CLI when [error reporting](./docs/error-reporting.md) has been enabled.
+
+## New Contributors
+
+Thanks to our new contributor 👽🐷🐰🐯🐻!
+
+- Yorkie Liu @yorkie
+
+## CLI
+
+* fix crash with Sentry init ([#13104](https://github.com/GoogleChrome/lighthouse/pull/13104))
+
+## ⛏️👷 Fraggle Rock
+
+  Support for auditing user flows ([#11313](https://github.com/GoogleChrome/lighthouse/issues/11313))
+
+* add API for constructing flow result ([#13034](https://github.com/GoogleChrome/lighthouse/pull/13034))
+* add category tooltips to flow report ([#13043](https://github.com/GoogleChrome/lighthouse/pull/13043))
+
 <a name="8.5.0"></a>
 # 8.5.0 (2021-09-21)
 [Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v8.4.0...v8.5.0)
@@ -8,8 +31,8 @@ We expect this release to ship in the DevTools of [Chrome 96](https://chromiumda
 
 Thanks to our new contributors 👽🐷🐰🐯🐻!
 
-Konstantin Popov @KonstHardy
-Can Umay @canumay
+- Konstantin Popov @KonstHardy
+- Can Umay @canumay
 
 ## Core
 
@@ -87,11 +110,11 @@ We expect this release to ship in the DevTools of [Chrome 95](https://chromiumda
 
 Thanks to our new contributors 👽🐷🐰🐯🐻!
 
-Emmanouil Zoumpoulakis @emzoumpo
-Milutin Kristofic @milutin
-Bjørn Erik Pedersen @bep
-Jerome Cukier @jckr
-Saurav Kumar @svkrclg
+- Emmanouil Zoumpoulakis @emzoumpo
+- Milutin Kristofic @milutin
+- Bjørn Erik Pedersen @bep
+- Jerome Cukier @jckr
+- Saurav Kumar @svkrclg
 
 ## New Audits
 
