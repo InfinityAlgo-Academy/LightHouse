@@ -115,27 +115,27 @@ describe('CLI Tests', function() {
 
       /* eslint-disable max-len */
       expect(emulationSettings).toMatchInlineSnapshot(`
-        Object {
-          "emulatedUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4590.2 Safari/537.36 Chrome-Lighthouse",
-          "formFactor": "desktop",
-          "screenEmulation": Object {
-            "deviceScaleFactor": 1,
-            "disabled": false,
-            "height": 940,
-            "mobile": false,
-            "width": 1350,
-          },
-          "throttling": Object {
-            "cpuSlowdownMultiplier": 1,
-            "downloadThroughputKbps": 0,
-            "requestLatencyMs": 0,
-            "rttMs": 40,
-            "throughputKbps": 10240,
-            "uploadThroughputKbps": 0,
-          },
-          "throttlingMethod": "simulate",
-        }
-      `);
+Object {
+  "emulatedUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4590.2 Safari/537.36 Chrome-Lighthouse",
+  "formFactor": "desktop",
+  "screenEmulation": Object {
+    "deviceScaleFactor": 1,
+    "disabled": false,
+    "height": 940,
+    "mobile": false,
+    "width": 1350,
+  },
+  "throttling": Object {
+    "cpuSlowdownMultiplier": 1,
+    "downloadThroughputKbps": 0,
+    "requestLatencyMs": 0,
+    "rttMs": 40,
+    "throughputKbps": 10240,
+    "uploadThroughputKbps": 0,
+  },
+  "throttlingMethod": "simulate",
+}
+`);
       /* eslint-enable max-len */
     });
   });
