@@ -50,7 +50,7 @@ describe('SummaryHeader', () => {
 describe('SummaryFlowStep', () => {
   it('renders navigation step', async () => {
     const root = render(<SummaryFlowStep
-      lhr={flowResult.lhrs[0]}
+      lhr={flowResult.steps[0].lhr}
       label="Navigation (1)"
       hashIndex={0}
     />, {wrapper});
@@ -77,7 +77,7 @@ describe('SummaryFlowStep', () => {
 
   it('renders timespan step', async () => {
     const root = render(<SummaryFlowStep
-      lhr={flowResult.lhrs[1]}
+      lhr={flowResult.steps[1].lhr}
       label="Timespan (1)"
       hashIndex={1}
     />, {wrapper});
@@ -89,23 +89,24 @@ describe('SummaryFlowStep', () => {
     const screenshot = root.getByTestId('SummaryFlowStep__screenshot') as HTMLImageElement;
     expect(screenshot.src).toBeFalsy();
 
-    expect(root.getByTestId('SummaryCategory__null'));
+    // Accessibility and SEO are missing in timespan.
+    const nullCategories = root.getAllByTestId('SummaryCategory__null');
+    expect(nullCategories).toHaveLength(2);
+
     const gauges = root.getAllByTestId('CategoryScore');
-    expect(gauges).toHaveLength(3);
+    expect(gauges).toHaveLength(2);
 
     const links = root.getAllByRole('link') as HTMLAnchorElement[];
     expect(links.map(a => a.href)).toEqual([
       'file:///Users/example/report.html/#index=1',
       'file:///Users/example/report.html/#index=1&anchor=performance',
-      // Accessibility is missing in timespan.
       'file:///Users/example/report.html/#index=1&anchor=best-practices',
-      'file:///Users/example/report.html/#index=1&anchor=seo',
     ]);
   });
 
   it('renders snapshot step', async () => {
     const root = render(<SummaryFlowStep
-      lhr={flowResult.lhrs[2]}
+      lhr={flowResult.steps[2].lhr}
       label="Snapshot (1)"
       hashIndex={2}
     />, {wrapper});

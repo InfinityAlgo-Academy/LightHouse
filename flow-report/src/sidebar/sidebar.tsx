@@ -74,7 +74,7 @@ export const SidebarHeader: FunctionComponent<{title: string, date: string}> = (
 
 export const Sidebar: FunctionComponent = () => {
   const flowResult = useFlowResult();
-  const firstLhr = flowResult.lhrs[0];
+  const firstLhr = flowResult.steps[0].lhr;
   return (
     <div className="Sidebar">
       <SidebarHeader title="Lighthouse User Flow Report" date={firstLhr.fetchTime}/>

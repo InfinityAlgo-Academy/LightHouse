@@ -6,10 +6,19 @@
 
 import Result from './lhr';
 
+declare module FlowResult {
+  interface Step {
+    lhr: Result;
+    name: string;
+  }
+}
+
 /**
  * The full output of a Lighthouse flow. Includes a series of Lighthouse runs.
  */
-export default interface FlowResult {
-  /** Ordered list of lighthouse results corresponding to a navigation, timespan, or snapshot. */
-  lhrs: Result[];
+interface FlowResult {
+  /** Ordered list of flow steps, each corresponding to a navigation, timespan, or snapshot. */
+  steps: FlowResult.Step[];
 }
+
+export default FlowResult;

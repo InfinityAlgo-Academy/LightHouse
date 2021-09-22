@@ -26,7 +26,6 @@ import Treemap_ from './lhr/treemap';
 declare global {
   module LH {
     export type ArbitraryEqualityMap = ArbitraryEqualityMap_;
-    export type FlowResult = FlowResult_;
 
     // artifacts.d.ts
     export import Artifacts = Artifacts_.Artifacts;
@@ -55,6 +54,7 @@ declare global {
     export import Gatherer = Gatherer_;
     export import LighthouseError = LHError;
     export import Result = LHResult;
+    export import FlowResult = FlowResult_;
 
     // i18n.d.ts.
     export import IcuMessage = I18n.IcuMessage;

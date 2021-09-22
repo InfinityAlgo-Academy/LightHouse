@@ -8,7 +8,7 @@ import {FunctionComponent} from 'preact';
 import {useMemo} from 'preact/hooks';
 
 import {FlowSegment, Separator} from '../common';
-import {getScreenDimensions, getScreenshot, useDerivedStepNames, useFlowResult} from '../util';
+import {getScreenDimensions, getScreenshot, useFlowResult} from '../util';
 import {Util} from '../../../report/renderer/util';
 import {CategoryScore} from '../wrappers/category-score';
 
@@ -113,15 +113,14 @@ export const SummaryFlowStep: FunctionComponent<{
  */
 const SummaryFlow: FunctionComponent = () => {
   const flowResult = useFlowResult();
-  const stepNames = useDerivedStepNames();
   return (
     <div className="SummaryFlow">
       {
-        flowResult.lhrs.map((lhr, index) =>
+        flowResult.steps.map((step, index) =>
           <SummaryFlowStep
-            key={lhr.fetchTime}
-            lhr={lhr}
-            label={stepNames[index]}
+            key={step.lhr.fetchTime}
+            lhr={step.lhr}
+            label={step.name}
             hashIndex={index}
           />
         )
@@ -136,8 +135,8 @@ export const SummaryHeader: FunctionComponent = () => {
   let numNavigation = 0;
   let numTimespan = 0;
   let numSnapshot = 0;
-  for (const lhr of flowResult.lhrs) {
-    switch (lhr.gatherMode) {
+  for (const step of flowResult.steps) {
+    switch (step.lhr.gatherMode) {
       case 'navigation':
         numNavigation++;
         break;

@@ -8,52 +8,37 @@
 const fs = require('fs');
 const open = require('open');
 const puppeteer = require('puppeteer');
-const lighthouse = require('../fraggle-rock/api.js');
-const reportGenerator = require('../../report/generator/report-generator.js');
+const UserFlow = require('../fraggle-rock/user-flow.js');
 
 (async () => {
-  const browser = await puppeteer.launch({headless: false, slowMo: 50});
+  const browser = await puppeteer.launch({headless: false});
 
   try {
     const page = await browser.newPage();
-    const navigationResult1 = await lighthouse.navigation({
-      url: 'https://www.mikescerealshack.co',
-      page,
-    });
+    const flow = new UserFlow(page);
 
-    const timespan = await lighthouse.startTimespan({page});
+    await flow.navigate('https://www.mikescerealshack.co');
+
+    await flow.startTimespan({stepName: 'Search input'});
     await page.type('input', 'call of duty');
     const networkQuietPromise = page.waitForNavigation({waitUntil: ['networkidle0']});
     await page.click('button[type=submit]');
     await networkQuietPromise;
-    const timespanResult = await timespan.endTimespan();
+    await flow.endTimespan();
 
-    const snapshotResult = await lighthouse.snapshot({page});
+    await flow.snapshot({stepName: 'Search results'});
 
-    const navigationResult2 = await lighthouse.navigation({
-      url: 'https://www.mikescerealshack.co/corrections',
-      page,
-    });
+    await flow.navigate('https://www.mikescerealshack.co/corrections');
 
-    if (
-      !navigationResult1 ||
-      !navigationResult2 ||
-      !timespanResult ||
-      !snapshotResult
-    ) throw new Error('No results');
-
-    const flow = {
-      lhrs: [navigationResult1.lhr, timespanResult.lhr, snapshotResult.lhr, navigationResult2.lhr],
-    };
+    const flowResult = flow.getFlowResult();
+    const report = flow.generateReport();
 
     fs.writeFileSync(
       `${__dirname}/../test/fixtures/fraggle-rock/reports/sample-lhrs.json`,
-      JSON.stringify(flow, null, 2)
+      JSON.stringify(flowResult, null, 2)
     );
 
-    const htmlReport = reportGenerator.generateFlowReportHtml(flow);
-
-    fs.writeFileSync(`${__dirname}/../../flow.report.html`, htmlReport);
+    fs.writeFileSync(`${__dirname}/../../flow.report.html`, report);
     open(`${__dirname}/../../flow.report.html`);
 
     process.exit(0);

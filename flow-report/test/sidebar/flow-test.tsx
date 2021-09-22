@@ -30,8 +30,8 @@ describe('SidebarFlow', () => {
     const root = render(<SidebarFlow/>, {wrapper});
 
     const navigation = root.getByText('Navigation report (www.mikescerealshack.co/)');
-    const timespan = root.getByText('Timespan report (www.mikescerealshack.co/search)');
-    const snapshot = root.getByText('Snapshot report (www.mikescerealshack.co/search)');
+    const timespan = root.getByText('Search input');
+    const snapshot = root.getByText('Search results');
     const navigation2 = root.getByText('Navigation report (www.mikescerealshack.co/corrections)');
 
     const links = root.getAllByRole('link') as HTMLAnchorElement[];
