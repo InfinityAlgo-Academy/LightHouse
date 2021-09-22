@@ -21,6 +21,7 @@
 import fs from 'fs';
 import path from 'path';
 import url from 'url';
+import module from 'module';
 
 import log from 'lighthouse-logger';
 import updateNotifier from 'update-notifier';
@@ -30,11 +31,14 @@ import * as Printer from './printer.js';
 import {getFlags} from './cli-flags.js';
 import {runLighthouse} from './run.js';
 import lighthouse from '../lighthouse-core/index.js';
-import * as Sentry from '../lighthouse-core/lib/sentry.js';
 import {askPermission} from './sentry-prompt.js';
 import {LH_ROOT} from '../root.js';
 
 const pkg = JSON.parse(fs.readFileSync(LH_ROOT + '/package.json', 'utf-8'));
+
+// TODO(esmodules): use regular import when this file is esm.
+const require = module.createRequire(import.meta.url);
+const Sentry = require('../lighthouse-core/lib/sentry.js');
 
 /**
  * @return {boolean}

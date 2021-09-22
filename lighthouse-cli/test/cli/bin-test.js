@@ -30,7 +30,7 @@ jest.unstable_mockModule('../../sentry-prompt.js', () => {
 });
 
 const mockSentryInit = jest.fn();
-jest.unstable_mockModule('../../../lighthouse-core/lib/sentry.js', () => {
+jest.mock('../../../lighthouse-core/lib/sentry.js', () => {
   return {init: mockSentryInit};
 });
 
