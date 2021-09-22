@@ -506,6 +506,28 @@ export class Util {
   static isPluginCategory(categoryId) {
     return categoryId.startsWith('lighthouse-plugin-');
   }
+
+  /**
+   * @param {LH.Result.GatherMode} gatherMode
+   */
+  static shouldDisplayAsFraction(gatherMode) {
+    return gatherMode === 'timespan' || gatherMode === 'snapshot';
+  }
+
+  /**
+   * @param {LH.ReportResult.Category} category
+   */
+  static calculateCategoryFraction(category) {
+    const numAudits = category.auditRefs.length;
+
+    let numPassed = 0;
+    let totalWeight = 0;
+    for (const auditRef of category.auditRefs) {
+      totalWeight += auditRef.weight;
+      if (Util.showAsPassed(auditRef.result)) numPassed++;
+    }
+    return {numPassed, numAudits, totalWeight};
+  }
 }
 
 /**

@@ -386,4 +386,30 @@ describe('util helpers', () => {
       ]);
     });
   });
+
+  describe('#shouldDisplayAsFraction', () => {
+    it('returns true for timespan and snapshot', () => {
+      expect(Util.shouldDisplayAsFraction('navigation')).toEqual(false);
+      expect(Util.shouldDisplayAsFraction('timespan')).toEqual(true);
+      expect(Util.shouldDisplayAsFraction('snapshot')).toEqual(true);
+      expect(Util.shouldDisplayAsFraction(undefined)).toEqual(false);
+    });
+  });
+
+  describe('#calculateCategoryFraction', () => {
+    it('returns passed audits and total audits', () => {
+      const category = {
+        auditRefs: [
+          {weight: 3, result: {score: 1, scoreDisplayMode: 'binary'}},
+          {weight: 2, result: {score: 1, scoreDisplayMode: 'binary'}},
+          {weight: 0, result: {score: 1, scoreDisplayMode: 'binary'}},
+          {weight: 1, result: {score: 0, scoreDisplayMode: 'binary'}},
+        ],
+      };
+      const {numPassed, numAudits, totalWeight} = Util.calculateCategoryFraction(category);
+      expect(numPassed).toEqual(3);
+      expect(numAudits).toEqual(4);
+      expect(totalWeight).toEqual(6);
+    });
+  });
 });

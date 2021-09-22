@@ -319,7 +319,7 @@ export class CategoryRenderer {
    * @return {DocumentFragment}
    */
   renderCategoryScore(category, groupDefinitions, options) {
-    if (options && (options.gatherMode === 'snapshot' || options.gatherMode === 'timespan')) {
+    if (options && Util.shouldDisplayAsFraction(options.gatherMode)) {
       return this.renderCategoryFraction(category);
     }
     return this.renderScoreGauge(category, groupDefinitions);
@@ -376,14 +376,7 @@ export class CategoryRenderer {
     const wrapper = this.dom.find('a.lh-fraction__wrapper', tmpl);
     this.dom.safelySetHref(wrapper, `#${category.id}`);
 
-    const numAudits = category.auditRefs.length;
-
-    let numPassed = 0;
-    let totalWeight = 0;
-    for (const auditRef of category.auditRefs) {
-      totalWeight += auditRef.weight;
-      if (Util.showAsPassed(auditRef.result)) numPassed++;
-    }
+    const {numPassed, numAudits, totalWeight} = Util.calculateCategoryFraction(category);
 
     const fraction = numPassed / numAudits;
     const content = this.dom.find('.lh-fraction__content', tmpl);
