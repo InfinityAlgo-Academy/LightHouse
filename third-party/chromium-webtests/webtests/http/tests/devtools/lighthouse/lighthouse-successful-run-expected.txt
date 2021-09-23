@@ -20,11 +20,16 @@ Requiring audits
 Runner setup
 Connecting to browser
 Resetting state with about:blank
+Navigating to about:blank
 Getting browser version
 Benchmarking machine
 Initializing…
+Preparing target for navigation mode
 Running defaultPass pass
 Resetting state with about:blank
+Navigating to about:blank
+Preparing target for navigation
+Cleaning origin data
 Cleaning browser cache
 Preparing network conditions
 Running beforePass methods
@@ -58,6 +63,7 @@ Gathering setup: SourceMaps
 Gathering setup: FullPageScreenshot
 Beginning devtoolsLog and trace
 Loading page & waiting for onload
+Navigating to http://127.0.0.1:8000/devtools/lighthouse/resources/lighthouse-basic.html
 Running pass methods
 Gathering in-page: CSSUsage
 Gathering in-page: JsUsage
@@ -127,11 +133,14 @@ Get webapp manifest
 Collect stacks
 Running offlinePass pass
 Resetting state with about:blank
+Navigating to about:blank
+Preparing target for navigation
 Preparing network conditions
 Running beforePass methods
 Gathering setup: ServiceWorker
 Beginning devtoolsLog and trace
 Loading page & waiting for onload
+Navigating to http://127.0.0.1:8000/devtools/lighthouse/resources/lighthouse-basic.html
 Running pass methods
 Gathering in-page: ServiceWorker
 Gathering devtoolsLog & network records
@@ -140,11 +149,14 @@ Running afterPass methods
 Gathering: ServiceWorker
 Running redirectPass pass
 Resetting state with about:blank
+Navigating to about:blank
+Preparing target for navigation
 Preparing network conditions
 Running beforePass methods
 Gathering setup: HTTPRedirect
 Beginning devtoolsLog and trace
 Loading page & waiting for onload
+Navigating to http://127.0.0.1:8000/devtools/lighthouse/resources/lighthouse-basic.html
 Running pass methods
 Gathering in-page: HTTPRedirect
 Gathering devtoolsLog & network records
@@ -152,6 +164,7 @@ Computing artifact: NetworkRecords
 Running afterPass methods
 Gathering: HTTPRedirect
 Disconnecting from browser...
+Cleaning origin data
 Analyzing and running audits...
 Auditing: Uses HTTPS
 Auditing: Redirects HTTP traffic to HTTPS
