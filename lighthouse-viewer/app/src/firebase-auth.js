@@ -16,8 +16,6 @@ export class FirebaseAuth {
   constructor() {
     /** @type {?string} */
     this._accessToken = null;
-    /** @type {?import('@firebase/auth-types').User} */
-    this._firebaseUser = null;
 
     /** @type {import('@firebase/auth-types').GithubAuthProvider} */
     this._provider = new firebase.auth.GithubAuthProvider();
@@ -34,19 +32,16 @@ export class FirebaseAuth {
     });
 
     /**
-     * Promise which resolves after the first check of auth state. After this,
-     * _accessToken will be set if user is logged in and has access token.
+     * Promise which resolves after the first check of an existing access token.
      * @type {Promise<void>}
      */
-    this._ready = Promise.all([
-      new Promise(resolve => firebase.auth().onAuthStateChanged(resolve)),
-      idbKeyval.get('accessToken'),
-    ]).then(([user, token]) => {
-      if (user && token) {
-        this._accessToken = token;
-        this._firebaseUser = user;
-      }
-    });
+    this._ready = Promise.resolve(
+      idbKeyval.get('accessToken').then((token) => {
+        if (token) {
+          this._accessToken = token;
+        }
+      })
+    );
   }
 
   /**
@@ -75,7 +70,6 @@ export class FirebaseAuth {
       /** @type {string} */
       const accessToken = result.credential.accessToken;
       this._accessToken = accessToken;
-      this._firebaseUser = result.user;
       // A limitation of firebase auth is that it doesn't return an oauth token
       // after a page refresh. We'll get a firebase token, but not an oauth token
       // for GitHub. Since GitHub's tokens never expire, stash the access token in IDB.
