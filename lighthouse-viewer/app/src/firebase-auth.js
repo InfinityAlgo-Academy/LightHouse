@@ -24,11 +24,13 @@ export class FirebaseAuth {
     this._provider.addScope('gist');
 
     firebase.initializeApp({
-      apiKey: 'AIzaSyApMz8FHTyJNqqUtA51tik5Mro8j-2qMcM',
-      authDomain: 'lighthouse-viewer.firebaseapp.com',
-      databaseURL: 'https://lighthouse-viewer.firebaseio.com',
-      storageBucket: 'lighthouse-viewer.appspot.com',
-      messagingSenderId: '962507201498',
+      apiKey: 'AIzaSyBQEZMlX6A9B0jJ6PFGcBADbXZG9ogyCmQ',
+      authDomain: 'lighthouse-chrom-1560304954232.firebaseapp.com',
+      projectId: 'lighthouse-chrom-1560304954232',
+      storageBucket: 'lighthouse-chrom-1560304954232.appspot.com',
+      messagingSenderId: '89319782509',
+      appId: '1:89319782509:web:9ea5d8e149048c7836e764',
+      measurementId: 'G-7FMYHPW5YC',
     });
 
     /**
