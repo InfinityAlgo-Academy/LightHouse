@@ -678,8 +678,8 @@
 
 .lh-metric__innerwrap {
   display: grid;
-  /** 
-   * Icon -- Metric Name 
+  /**
+   * Icon -- Metric Name
    *      -- Metric Value
    */
   grid-template-columns: calc(var(--score-icon-size) + var(--score-icon-margin-left) + var(--score-icon-margin-right)) 1fr;
@@ -723,7 +723,7 @@
 /* Change the grid to 3 columns for narrow viewport. */
 @media screen and (max-width: 535px) {
   .lh-metric__innerwrap {
-  /** 
+  /**
    * Icon -- Metric Name -- Metric Value
    */
     grid-template-columns: calc(var(--score-icon-size) + var(--score-icon-margin-left) + var(--score-icon-margin-right)) 2fr 1fr;
@@ -1438,6 +1438,25 @@
 .lh-category-header .lh-audit__title {
   font-size: var(--category-header-font-size);
   line-height: var(--header-line-height);
+}
+
+.lh-category-header__finalss {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.lh-final-ss {
+  max-height: 316px;
+  border: 1px solid var(--color-gray-200);
+  padding: 4px;
+  border-radius: 3px;
+}
+
+.lh-category-headercol--seperator {
+  background: var(--color-gray-200);
+  width: 1px;
+  height: var(--gauge-circle-size-big);
 }
 
 #lh-log {

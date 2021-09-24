@@ -145,6 +145,37 @@ export class CategoryRenderer {
   }
 
   /**
+   *
+   * @param {HTMLElement} categoriesEl
+   * @param {LH.ReportResult.Category?} perfCategory
+   * @returns
+   */
+  injectFinalScreenshot(categoriesEl, perfCategory) {
+    // TODO: eitehr pass TOP cateogyr and perf cat or pass ALL cats?
+    if (!perfCategory) return null;
+    const auditRef = perfCategory.auditRefs.find(audit => audit.id === 'final-screenshot');
+    if (!auditRef || !auditRef.result || auditRef.result.scoreDisplayMode === 'error') return null;
+    const details = auditRef.result.details;
+    if (!details || details.type !== 'screenshot') return null;
+    const finalScreenshotDataUri = details.data;
+    const finalSSimg = this.dom.createElement('img', 'lh-final-ss');
+    finalSSimg.src = finalScreenshotDataUri;
+
+    // todo. scorescale from rep-ren
+
+    const firstCatHeaderEl = this.dom.find('.lh-category .lh-category-header', categoriesEl);
+    const leftColEl = this.dom.createElement('div', 'lh-category-headercol');
+    const seperatorEl = this.dom.createElement('div',
+        'lh-category-headercol lh-category-headercol--seperator');
+    const rightColEl = this.dom.createElement('div', 'lh-category-headercol');
+
+    leftColEl.append(...firstCatHeaderEl.childNodes);
+    rightColEl.append(finalSSimg);
+    firstCatHeaderEl.append(leftColEl, seperatorEl, rightColEl);
+    firstCatHeaderEl.classList.add('lh-category-header__finalss');
+  }
+
+  /**
    * @return {Element}
    */
   _createChevron() {

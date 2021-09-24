@@ -255,6 +255,8 @@ export class ReportRenderer {
       ));
     }
 
+    categoryRenderer.injectFinalScreenshot(categories, report.categories.performance);
+
     const reportFragment = this._dom.createFragment();
     reportFragment.append(this._dom.createComponent('styles'));
     const topbarDocumentFragment = this._renderReportTopbar(report);
