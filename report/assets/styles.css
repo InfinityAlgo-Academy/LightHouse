@@ -1442,7 +1442,8 @@
   grid-template-columns: 1fr 1px 1fr;
   justify-items: center;
   align-items: center;
-  gap: var(--report-line-height)
+  gap: var(--report-line-height);
+  margin-bottom: var(--default-padding);
 }
 
 .lh-category-header__finalss .lh-scorescale {

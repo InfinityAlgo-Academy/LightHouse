@@ -149,7 +149,6 @@ export class CategoryRenderer {
    * @param {HTMLElement} categoriesEl
    * @param {LH.ReportResult['audits']} audits
    * @param {Element?} scoreScaleEl
-   * @returns
    */
   injectFinalScreenshot(categoriesEl, audits, scoreScaleEl) {
     // TODO: Use full-page-screenshot instead as that's always gathered, regardless of category filter
