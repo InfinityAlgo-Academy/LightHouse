@@ -227,10 +227,9 @@ export class ReportRenderer {
       headerContainer.classList.add('lh-header--solo-category');
     }
 
-    let scoreScale = null;
+    // Can't work with the fragment as we may move the element later
+    const scoreScale = this._dom.createComponent('scorescale').firstElementChild;
     if (scoreHeader) {
-      scoreScale = this._dom.createComponent('scorescale');
-      scoreScale = scoreScale.firstElementChild; // Can't work with the fragment as we may move the element later
       const scoresContainer = this._dom.find('.lh-scores-container', headerContainer);
       scoreHeader.append(
         ...this._renderScoreGauges(report, categoryRenderer, specificCategoryRenderers));
@@ -257,7 +256,7 @@ export class ReportRenderer {
       ));
     }
 
-    categoryRenderer.injectFinalScreenshot(categories, report.categories.performance, scoreScale);
+    categoryRenderer.injectFinalScreenshot(categories, report.audits, scoreScale);
 
     const reportFragment = this._dom.createFragment();
     reportFragment.append(this._dom.createComponent('styles'));

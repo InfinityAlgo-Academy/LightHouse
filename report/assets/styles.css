@@ -1066,7 +1066,7 @@
 }
 
 .lh-audit-group--metrics > .lh-audit-group__header {
-  display: none; /* Superfluous, because obviously perf metrics */
+  visibility: hidden; /* Superfluous, because obviously perf metrics */
 }
 
 .lh-audit-explanation {

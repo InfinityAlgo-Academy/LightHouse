@@ -147,21 +147,19 @@ export class CategoryRenderer {
   /**
    * Inject the final screenshot next to the score gauce of the first category (likely Performance)
    * @param {HTMLElement} categoriesEl
-   * @param {LH.ReportResult.Category?} perfCategory
+   * @param {LH.ReportResult['audits']} audits
    * @param {Element?} scoreScaleEl
    * @returns
    */
-  injectFinalScreenshot(categoriesEl, perfCategory, scoreScaleEl) {
-    if (!perfCategory) return null;
-    const auditRef = perfCategory.auditRefs.find(audit => audit.id === 'final-screenshot');
-    if (!auditRef || !auditRef.result || auditRef.result.scoreDisplayMode === 'error') return null;
-    const details = auditRef.result.details;
+  injectFinalScreenshot(categoriesEl, audits, scoreScaleEl) {
+    // TODO: Use full-page-screenshot instead as that's always gathered, regardless of category filter
+    const audit = audits['final-screenshot'];
+    if (!audit || audit.scoreDisplayMode === 'error') return null;
+    const details = audit.details;
     if (!details || details.type !== 'screenshot') return null;
     const finalScreenshotDataUri = details.data;
     const finalSSimg = this.dom.createElement('img', 'lh-final-ss-image');
     finalSSimg.src = finalScreenshotDataUri;
-
-    // todo. scorescale from rep-ren
 
     const firstCatHeaderEl = this.dom.find('.lh-category .lh-category-header', categoriesEl);
     const leftColEl = this.dom.createElement('div', 'lh-category-headercol');
