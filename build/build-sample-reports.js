@@ -16,7 +16,6 @@ const {defaultSettings} = require('../lighthouse-core/config/constants.js');
 const lighthouse = require('../lighthouse-core/index.js');
 const lhr = /** @type {LH.Result} */ (require('../lighthouse-core/test/results/sample_v2.json'));
 const {LH_ROOT} = require('../root.js');
-const htmlReportAssets = require('../report/generator/report-assets.js');
 
 /** @type {LH.FlowResult} */
 const flowResult = JSON.parse(
@@ -87,7 +86,6 @@ ${fs.readFileSync(`${LH_ROOT}/report/test-assets/faux-psi.js`, 'utf8')};
   const html = ReportGenerator.replaceStrings(PSI_TEMPLATE, [
     {search: '%%LIGHTHOUSE_JSON%%', replacement: sanitizedJson},
     {search: '%%LIGHTHOUSE_JAVASCRIPT%%', replacement: PSI_JAVASCRIPT},
-    {search: '/*%%LIGHTHOUSE_CSS%%*/', replacement: htmlReportAssets.REPORT_CSS},
   ]);
   return html;
 }

@@ -256,6 +256,7 @@ export class ReportRenderer {
     }
 
     const reportFragment = this._dom.createFragment();
+    reportFragment.append(this._dom.createComponent('styles'));
     const topbarDocumentFragment = this._renderReportTopbar(report);
 
     reportFragment.appendChild(topbarDocumentFragment);

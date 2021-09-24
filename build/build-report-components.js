@@ -19,7 +19,8 @@ const {LH_ROOT} = require('../root.js');
 
 const html = fs.readFileSync(LH_ROOT + '/report/assets/templates.html', 'utf-8');
 const {window} = new jsdom.JSDOM(html);
-const tmplEls = window.document.querySelectorAll('template');
+const tmplEls = [...window.document.querySelectorAll('template')];
+tmplEls.push(createReportStylesTemplateEl());
 
 /**
  * @param {string} str
@@ -54,6 +55,9 @@ function normalizeTextNodeText(childNode) {
   if (!['PRE', 'STYLE'].includes(childNode.parentElement.tagName)) {
     textContent = textContent.replace(/\s+/g, ' ');
   }
+
+  // Somehow evil newlines get into the text on Windows. Maybe somewhere in jsdom?
+  textContent = textContent.replace(/\r\n/g, '\n');
 
   return textContent;
 }
@@ -184,8 +188,17 @@ function makeGenericCreateComponentFunctionCode(compiledTemplates) {
     createFunctionCode('createComponent', lines, ['dom', 'componentName']);
 }
 
+function createReportStylesTemplateEl() {
+  const reportStylesTmplEl = window.document.createElement('template');
+  reportStylesTmplEl.id = 'styles';
+  const reportStyleslEl = window.document.createElement('style');
+  reportStyleslEl.textContent = fs.readFileSync(`${LH_ROOT}/report/assets/styles.css`, 'utf-8');
+  reportStylesTmplEl.content.append(reportStyleslEl);
+  return reportStylesTmplEl;
+}
+
 async function main() {
-  const compiledTemplates = [...tmplEls].map(compileTemplate);
+  const compiledTemplates = tmplEls.map(compileTemplate);
   compiledTemplates.sort((a, b) => a.componentName.localeCompare(b.componentName));
   const code = `
     'use strict';
