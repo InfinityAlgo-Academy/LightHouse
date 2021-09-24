@@ -145,20 +145,20 @@ export class CategoryRenderer {
   }
 
   /**
-   *
+   * Inject the final screenshot next to the score gauce of the first category (likely Performance)
    * @param {HTMLElement} categoriesEl
    * @param {LH.ReportResult.Category?} perfCategory
+   * @param {Element?} scoreScaleEl
    * @returns
    */
-  injectFinalScreenshot(categoriesEl, perfCategory) {
-    // TODO: eitehr pass TOP cateogyr and perf cat or pass ALL cats?
+  injectFinalScreenshot(categoriesEl, perfCategory, scoreScaleEl) {
     if (!perfCategory) return null;
     const auditRef = perfCategory.auditRefs.find(audit => audit.id === 'final-screenshot');
     if (!auditRef || !auditRef.result || auditRef.result.scoreDisplayMode === 'error') return null;
     const details = auditRef.result.details;
     if (!details || details.type !== 'screenshot') return null;
     const finalScreenshotDataUri = details.data;
-    const finalSSimg = this.dom.createElement('img', 'lh-final-ss');
+    const finalSSimg = this.dom.createElement('img', 'lh-final-ss-image');
     finalSSimg.src = finalScreenshotDataUri;
 
     // todo. scorescale from rep-ren
@@ -170,6 +170,7 @@ export class CategoryRenderer {
     const rightColEl = this.dom.createElement('div', 'lh-category-headercol');
 
     leftColEl.append(...firstCatHeaderEl.childNodes);
+    if (scoreScaleEl) leftColEl.append(scoreScaleEl);
     rightColEl.append(finalSSimg);
     firstCatHeaderEl.append(leftColEl, seperatorEl, rightColEl);
     firstCatHeaderEl.classList.add('lh-category-header__finalss');
