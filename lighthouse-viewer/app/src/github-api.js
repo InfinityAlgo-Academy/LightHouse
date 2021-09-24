@@ -36,47 +36,46 @@ export class GithubApi {
    * @param {LH.Result} jsonFile The gist file body.
    * @return {Promise<string>} id of the created gist.
    */
-  createGist(jsonFile) {
+  async createGist(jsonFile) {
     if (this._saving) {
-      return Promise.reject(new Error('Save already in progress'));
+      throw new Error('Save already in progress');
     }
 
     logger.log('Saving report to GitHub...', false);
     this._saving = true;
 
-    return this._auth.getAccessToken()
-      .then(accessToken => {
-        const filename = getFilenamePrefix({
-          finalUrl: jsonFile.finalUrl,
-          fetchTime: jsonFile.fetchTime,
-        });
-        const body = {
-          description: 'Lighthouse json report',
-          public: false,
-          files: {
-            [`${filename}${GithubApi.LH_JSON_EXT}`]: {
-              content: JSON.stringify(jsonFile),
-            },
-          },
-        };
-
-        const request = new Request('https://api.github.com/gists', {
-          method: 'POST',
-          headers: new Headers({Authorization: `token ${accessToken}`}),
-          // Stringify twice so quotes are escaped for POST request to succeed.
-          body: JSON.stringify(body),
-        });
-        return fetch(request);
-      })
-      .then(resp => resp.json())
-      .then(json => {
-        logger.log('Saved!');
-        this._saving = false;
-        return json.id;
-      }).catch(err => {
-        this._saving = false;
-        throw err;
+    try {
+      const accessToken = await this._auth.getAccessToken();
+      const filename = getFilenamePrefix({
+        finalUrl: jsonFile.finalUrl,
+        fetchTime: jsonFile.fetchTime,
       });
+      const body = {
+        description: 'Lighthouse json report',
+        public: false,
+        files: {
+          [`${filename}${GithubApi.LH_JSON_EXT}`]: {
+            content: JSON.stringify(jsonFile),
+          },
+        },
+      };
+      const request = new Request('https://api.github.com/gists', {
+        method: 'POST',
+        headers: new Headers({Authorization: `token ${accessToken}`}),
+        // Stringify twice so quotes are escaped for POST request to succeed.
+        body: JSON.stringify(body),
+      });
+      const response = await fetch(request);
+      const json = await response.json();
+      if (json.id) {
+        logger.log('Saved!');
+        return json.id;
+      } else {
+        throw new Error('Error: ' + JSON.stringify(json));
+      }
+    } finally {
+      this._saving = false;
+    }
   }
 
   /**

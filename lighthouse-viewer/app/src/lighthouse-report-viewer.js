@@ -305,21 +305,22 @@ export class LighthouseReportViewer {
    * @return {Promise<string|void>} id of the created gist.
    * @private
    */
-  _onSaveJson(reportJson) {
+  async _onSaveJson(reportJson) {
     if (window.ga) {
       window.ga('send', 'event', 'report', 'share');
     }
 
     // TODO: find and reuse existing json gist if one exists.
-    return this._github.createGist(reportJson).then(id => {
+    try {
+      const id = await this._github.createGist(reportJson);
       if (window.ga) {
         window.ga('send', 'event', 'report', 'created');
       }
-
       history.pushState({}, '', `${LighthouseReportViewer.APP_URL}?gist=${id}`);
-
       return id;
-    }).catch(err => logger.log(err.message));
+    } catch (err) {
+      logger.log(err.message);
+    }
   }
 
   /**
