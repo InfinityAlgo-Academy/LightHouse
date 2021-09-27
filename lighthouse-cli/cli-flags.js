@@ -12,6 +12,7 @@ import fs from 'fs';
 import yargs from 'yargs';
 import * as yargsHelpers from 'yargs/helpers';
 
+import {LH_ROOT} from '../root.js';
 import {isObjectOfUnknownValues} from '../lighthouse-core/lib/type-verifiers.js';
 
 /**
@@ -26,6 +27,7 @@ function getFlags(manualArgv, options = {}) {
     yargs(yargsHelpers.hideBin(process.argv));
 
   let parser = y.help('help')
+      .version(JSON.parse(fs.readFileSync(`${LH_ROOT}/package.json`, 'utf-8')).version)
       .showHelpOnFail(false, 'Specify --help for available options')
 
       .usage('lighthouse <url> <options>')
