@@ -105,6 +105,8 @@ if (require.main === module) {
   }
   if (process.argv.includes('--standalone')) {
     buildStandaloneReport();
+  }
+  if (process.argv.includes('--flow')) {
     buildFlowReport();
   }
   if (process.argv.includes('--esm')) {
