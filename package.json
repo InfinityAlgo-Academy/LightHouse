@@ -92,6 +92,7 @@
   },
   "devDependencies": {
     "@build-tracker/cli": "^1.0.0-beta.15",
+    "@rollup/plugin-commonjs": "^20.0.0",
     "@rollup/plugin-node-resolve": "^13.0.4",
     "@rollup/plugin-typescript": "^8.2.5",
     "@testing-library/preact": "^2.0.1",
@@ -163,7 +164,6 @@
     "pretty-json-stringify": "^0.0.2",
     "puppeteer": "^10.2.0",
     "rollup": "^2.50.6",
-    "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-shim": "^1.0.0",
     "rollup-plugin-terser": "^7.0.2",
