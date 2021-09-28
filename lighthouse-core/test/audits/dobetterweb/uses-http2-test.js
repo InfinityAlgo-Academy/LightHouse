@@ -8,7 +8,7 @@
 const UsesHTTP2Audit = require('../../../audits/dobetterweb/uses-http2.js');
 const trace = require('../../fixtures/traces/progressive-app-m60.json');
 const devtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
-const TraceNetworkRecords = require('../../../computed/trace-network-records.js');
+const NetworkRecords = require('../../../computed/network-records.js');
 const networkRecordsToDevtoolsLog = require('../../network-records-to-devtools-log.js');
 
 /* eslint-env jest */
@@ -33,7 +33,7 @@ describe('Resources are fetched over http/2', () => {
   });
 
   it('should fail when resources are requested via http/1.x', async () => {
-    const records = await NetworkRecords.compute_(artifacts.devtoolsLogs.defaultPass);
+    const records = await NetworkRecords.compute_(artifacts.traces.defaultPass);
     records.forEach(record => (record.protocol = 'HTTP/1.1'));
     artifacts.devtoolsLogs.defaultPass = networkRecordsToDevtoolsLog(records);
     const result = await UsesHTTP2Audit.audit(artifacts, context);
@@ -51,7 +51,7 @@ describe('Resources are fetched over http/2', () => {
   });
 
   it('should ignore service worker requests', async () => {
-    const records = await NetworkRecords.compute_(artifacts.devtoolsLogs.defaultPass);
+    const records = await NetworkRecords.compute_(artifacts.traces.defaultPass);
     records.forEach(record => (record.protocol = 'HTTP/1.1'));
     records.slice(30).forEach(record => {
       // Force the records we're making service worker to another origin.

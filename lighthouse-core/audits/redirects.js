@@ -9,7 +9,7 @@ const Audit = require('./audit.js');
 const UnusedBytes = require('./byte-efficiency/byte-efficiency-audit.js');
 const i18n = require('../lib/i18n/i18n.js');
 const TraceOfTab = require('../computed/trace-of-tab.js');
-const TraceNetworkRecords = require('../computed/trace-network-records.js');
+const NetworkRecords = require('../computed/network-records.js');
 const MainResource = require('../computed/main-resource.js');
 const LanternInteractive = require('../computed/metrics/lantern-interactive.js');
 
@@ -32,7 +32,7 @@ class Redirects extends Audit {
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
-      requiredArtifacts: ['URL', 'devtoolsLogs', 'traces', 'traces'],
+      requiredArtifacts: ['URL', 'devtoolsLogs', 'traces'],
     };
   }
 
@@ -88,7 +88,7 @@ class Redirects extends Audit {
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
 
     const traceOfTab = await TraceOfTab.request(trace, context);
-    const networkRecords = await TraceNetworkRecords.request(trace, context);
+    const networkRecords = await NetworkRecords.request(trace, context);
     const mainResource = await MainResource.request({URL: artifacts.URL, trace}, context);
 
     const metricComputationData = {trace, devtoolsLog, traceOfTab, networkRecords, settings};

@@ -7,7 +7,7 @@
 
 const makeComputedArtifact = require('./computed-artifact.js');
 const ByteEfficiencyAudit = require('../audits/byte-efficiency/byte-efficiency-audit.js');
-const TraceNetworkRecords = require('./trace-network-records.js');
+const NetworkRecords = require('./network-records.js');
 
 const PREVIEW_LENGTH = 100;
 
@@ -141,7 +141,7 @@ class UnusedCSS {
   */
   static async compute_(data, context) {
     const {CSSUsage, URL, trace} = data;
-    const networkRecords = await TraceNetworkRecords.request(trace, context);
+    const networkRecords = await NetworkRecords.request(trace, context);
     const indexedSheets = UnusedCSS.indexStylesheetsById(CSSUsage.stylesheets, networkRecords);
     UnusedCSS.indexUsedRules(CSSUsage.rules, indexedSheets);
 

@@ -6,7 +6,7 @@
 'use strict';
 
 const Audit = require('./audit.js');
-const TraceNetworkRecords = require('../computed/trace-network-records.js');
+const NetworkRecords = require('../computed/network-records.js');
 const i18n = require('../lib/i18n/i18n.js');
 const MainThreadTasks = require('../computed/main-thread-tasks.js');
 const BootupTime = require('./bootup-time.js');
@@ -56,7 +56,7 @@ class LongTasks extends Audit {
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
     const tasks = await MainThreadTasks.request(trace, context);
     const devtoolsLog = artifacts.devtoolsLogs[LongTasks.DEFAULT_PASS];
-    const networkRecords = await TraceNetworkRecords.request(trace, context);
+    const networkRecords = await NetworkRecords.request(trace, context);
 
     /** @type {Map<LH.TraceEvent, LH.Gatherer.Simulation.NodeTiming>} */
     const taskTimingsByEvent = new Map();

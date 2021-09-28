@@ -8,7 +8,7 @@
 const Audit = require('./audit.js');
 const URL = require('../lib/url-shim.js');
 const NetworkRequest = require('../lib/network-request.js');
-const TraceNetworkRecords = require('../computed/trace-network-records.js');
+const NetworkRecords = require('../computed/network-records.js');
 const i18n = require('../lib/i18n/i18n.js');
 
 const UIStrings = {
@@ -73,7 +73,7 @@ class HTTPS extends Audit {
    */
   static audit(artifacts, context) {
     const devtoolsLogs = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
-    return TraceNetworkRecords.request(trace, context).then(networkRecords => {
+    return NetworkRecords.request(trace, context).then(networkRecords => {
       const insecureURLs = networkRecords
           .filter(record => !NetworkRequest.isSecureRequest(record))
           .map(record => URL.elideDataURI(record.url));

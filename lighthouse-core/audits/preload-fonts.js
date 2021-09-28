@@ -14,7 +14,7 @@ const Audit = require('./audit.js');
 const i18n = require('./../lib/i18n/i18n.js');
 const FontDisplay = require('./../audits/font-display.js');
 const PASSING_FONT_DISPLAY_REGEX = /^(optional)$/;
-const TraceNetworkRecords = require('../computed/trace-network-records.js');
+const NetworkRecords = require('../computed/network-records.js');
 
 const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on whether fonts that used `font-display: optional` were preloaded. This descriptive title is shown to users when all fonts that used `font-display: optional` were preloaded. */
@@ -65,7 +65,7 @@ class PreloadFontsAudit extends Audit {
    */
   static async audit(artifacts, context) {
     const devtoolsLog = artifacts.devtoolsLogs[this.DEFAULT_PASS];
-    const networkRecords = await TraceNetworkRecords.request(trace, context);
+    const networkRecords = await NetworkRecords.request(trace, context);
 
     // Gets the URLs of fonts where font-display: optional.
     const optionalFontURLs =

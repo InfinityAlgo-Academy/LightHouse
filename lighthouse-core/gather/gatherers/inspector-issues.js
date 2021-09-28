@@ -11,7 +11,7 @@
 'use strict';
 
 const FRGatherer = require('../../fraggle-rock/gather/base-gatherer.js');
-const TraceNetworkRecords = require('../../computed/trace-network-records.js');
+const NetworkRecords = require('../../computed/network-records.js');
 const DevtoolsLog = require('./devtools-log.js');
 
 class InspectorIssues extends FRGatherer {
@@ -116,7 +116,7 @@ class InspectorIssues extends FRGatherer {
    */
   async getArtifact(context) {
     const devtoolsLog = context.dependencies.DevtoolsLog;
-    const networkRecords = await TraceNetworkRecords.request(trace, context);
+    const networkRecords = await NetworkRecords.request(trace, context);
     return this._getArtifact(networkRecords);
   }
 

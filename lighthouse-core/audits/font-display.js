@@ -12,7 +12,7 @@ const CSS_URL_REGEX = /url\((.*?)\)/;
 const CSS_URL_GLOBAL_REGEX = new RegExp(CSS_URL_REGEX, 'g');
 const i18n = require('../lib/i18n/i18n.js');
 const Sentry = require('../lib/sentry.js');
-const TraceNetworkRecords = require('../computed/trace-network-records.js');
+const NetworkRecords = require('../computed/network-records.js');
 
 const UIStrings = {
   /** Title of a diagnostic audit that provides detail on if all the text on a webpage was visible while the page was loading its webfonts. This descriptive title is shown to users when the amount is acceptable and no user action is required. */
@@ -142,7 +142,7 @@ class FontDisplay extends Audit {
   static async audit(artifacts, context) {
     const devtoolsLogs = artifacts.devtoolsLogs[this.DEFAULT_PASS];
     const trace = artifacts.traces[this.DEFAULT_PASS];
-    const networkRecords = await TraceNetworkRecords.request(trace, context);
+    const networkRecords = await NetworkRecords.request(trace, context);
     const {passingURLs, failingURLs} =
       FontDisplay.findFontDisplayDeclarations(artifacts, PASSING_FONT_DISPLAY_REGEX);
     /** @type {Array<string>} */

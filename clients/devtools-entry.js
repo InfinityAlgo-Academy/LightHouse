@@ -202,4 +202,9 @@ if (require.main === module) {
    * which compares the network requests we constructed from trace compared to the dtlog ones.
    * it currently only tests 1 netreq at a time.
    */
+
+  /**
+   * todo:
+   * - occurences of dependencies: {DevtoolsLog: DevtoolsLog.symbol},
+   */
 }

@@ -6,7 +6,7 @@
 'use strict';
 
 const log = require('lighthouse-logger');
-const TraceNetworkRecords = require('../computed/trace-network-records.js');
+const NetworkRecords = require('../computed/network-records.js');
 const {getPageLoadError} = require('../lib/navigation-error.js');
 const emulation = require('../lib/emulation.js');
 const constants = require('../config/constants.js');
@@ -238,7 +238,7 @@ class GatherRunner {
     };
     log.time(status);
     const devtoolsLog = driver.endDevtoolsLog();
-    const networkRecords = await TraceNetworkRecords.request(trace, passContext);
+    const networkRecords = await NetworkRecords.request(trace, passContext);
     log.timeEnd(status);
 
     return {

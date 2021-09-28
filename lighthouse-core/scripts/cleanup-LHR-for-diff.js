@@ -27,6 +27,8 @@ function cleanAndFormatLHR(lhrString) {
   const lhr = JSON.parse(lhrString);
 
   lhr.fetchTime = new Date(2021, 6, 23).toISOString();
+  lhr.i18n = undefined;
+
   // TODO: Resolve the below so we don't need to force it to a boolean value:
   // 1) The string|boolean story for proto
   // 2) CI gets a absolute path during yarn diff:sample-json
@@ -40,6 +42,8 @@ function cleanAndFormatLHR(lhrString) {
     // @ts-expect-error - write to readonly property
     entry.startTime = 0; // Not realsitic, but avoids a lot of diff churn
   });
+
+  lhr.timing.entries = [];
 
   if (extraFlag !== '--only-remove-timing') {
     for (const auditResult of Object.values(lhr.audits)) {

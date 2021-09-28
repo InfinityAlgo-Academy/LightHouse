@@ -17,7 +17,7 @@ const NetworkRequest = require('../../../lib/network-request.js');
 const gzip = require('zlib').gzip;
 const DevtoolsLog = require('../devtools-log.js');
 const {fetchResponseBodyFromCache} = require('../../driver/network.js');
-const TraceNetworkRecords = require('../../../computed/trace-network-records.js');
+const NetworkRecords = require('../../../computed/network-records.js');
 
 const CHROME_EXTENSION_PROTOCOL = 'chrome-extension:';
 const compressionHeaders = ['content-encoding', 'x-original-content-encoding'];
@@ -132,7 +132,7 @@ class ResponseCompression extends FRGatherer {
    */
   async getArtifact(context) {
     const devtoolsLog = context.dependencies.DevtoolsLog;
-    const networkRecords = await TraceNetworkRecords.request(trace, context);
+    const networkRecords = await NetworkRecords.request(trace, context);
     return this._getArtifact(context, networkRecords);
   }
 

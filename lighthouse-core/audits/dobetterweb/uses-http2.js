@@ -19,7 +19,7 @@ const URL = require('../../lib/url-shim.js');
 const ByteEfficiencyAudit = require('../byte-efficiency/byte-efficiency-audit.js');
 const Interactive = require('../../computed/metrics/lantern-interactive.js');
 const NetworkRequest = require('../../lib/network-request.js');
-const TraceNetworkRecords = require('../../computed/trace-network-records.js');
+const NetworkRecords = require('../../computed/network-records.js');
 const LoadSimulator = require('../../computed/load-simulator.js');
 const PageDependencyGraph = require('../../computed/page-dependency-graph.js');
 const i18n = require('../../lib/i18n/i18n.js');
@@ -60,7 +60,7 @@ class UsesHTTP2Audit extends Audit {
       id: 'uses-http2',
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['URL', 'devtoolsLogs', 'traces', 'traces'],
+      requiredArtifacts: ['URL', 'devtoolsLogs', 'traces'],
     };
   }
 
@@ -206,7 +206,7 @@ class UsesHTTP2Audit extends Audit {
       settings,
     };
 
-    const networkRecords = await TraceNetworkRecords.request(trace, context);
+    const networkRecords = await NetworkRecords.request(trace, context);
     const graph = await PageDependencyGraph.request({trace, devtoolsLog}, context);
     const simulator = await LoadSimulator.request(simulatorOptions, context);
 

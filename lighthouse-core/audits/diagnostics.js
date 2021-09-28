@@ -8,7 +8,7 @@
 
 const Audit = require('./audit.js');
 const MainThreadTasksComputed = require('../computed/main-thread-tasks.js');
-const TraceNetworkRecordsComputed = require('../computed/trace-network-records.js');
+const TraceNetworkRecordsComputed = require('../computed/network-records.js');
 const NetworkAnalysisComputed = require('../computed/network-analysis.js');
 const NetworkAnalyzer = require('../lib/dependency-graph/simulator/network-analyzer.js');
 

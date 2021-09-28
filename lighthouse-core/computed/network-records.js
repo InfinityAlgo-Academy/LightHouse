@@ -8,6 +8,9 @@
 const makeComputedArtifact = require('./computed-artifact.js');
 const NetworkRecorder = require('../lib/network-recorder.js');
 
+
+const TraceNetworkRecordsComputed = require('./trace-network-records.js');
+
 class NetworkRecords {
   /**
    * @param {LH.DevtoolsLog} devtoolsLog
@@ -18,4 +21,6 @@ class NetworkRecords {
   }
 }
 
-module.exports = makeComputedArtifact(NetworkRecords);
+// HIJACKeD!
+// module.exports = makeComputedArtifact(NetworkRecords);
+module.exports = TraceNetworkRecordsComputed;

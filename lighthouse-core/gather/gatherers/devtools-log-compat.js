@@ -24,7 +24,7 @@ class DevtoolsLogCompat extends FRGatherer {
 
   /**
    * @param {LH.Gatherer.FRTransitionalContext<'DevtoolsLog'>} passContext
-   * @return {Promise<LH.Artifacts['devtoolsLogs', 'traces']>}
+   * @return {Promise<LH.Artifacts['devtoolsLogs']>}
    */
   async getArtifact(passContext) {
     return {

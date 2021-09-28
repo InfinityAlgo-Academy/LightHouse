@@ -15,7 +15,7 @@ const FRGatherer = require('../../../fraggle-rock/gather/base-gatherer.js');
 const URL = require('../../../lib/url-shim.js');
 const NetworkRequest = require('../../../lib/network-request.js');
 const Sentry = require('../../../lib/sentry.js');
-const TraceNetworkRecords = require('../../../computed/trace-network-records.js');
+const NetworkRecords = require('../../../computed/network-records.js');
 const DevtoolsLog = require('../devtools-log.js');
 
 // Image encoding can be slow and we don't want to spend forever on it.
@@ -175,7 +175,7 @@ class OptimizedImages extends FRGatherer {
    */
   async getArtifact(context) {
     const devtoolsLog = context.dependencies.DevtoolsLog;
-    const networkRecords = await TraceNetworkRecords.request(trace, context);
+    const networkRecords = await NetworkRecords.request(trace, context);
     return this._getArtifact(context, networkRecords);
   }
 

@@ -374,6 +374,7 @@ class Runner {
       // Log error if it hasn't already been logged above.
       if (err.code !== 'MISSING_REQUIRED_ARTIFACT' && err.code !== 'ERRORED_REQUIRED_ARTIFACT') {
         log.warn(audit.meta.id, `Caught exception: ${err.message}`);
+        throw err;
       }
 
       Sentry.captureException(err, {tags: {audit: audit.meta.id}, level: 'error'});

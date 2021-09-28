@@ -6,7 +6,7 @@
 'use strict';
 
 const makeComputedArtifact = require('./computed-artifact.js');
-const TraceNetworkRecords = require('./trace-network-records.js');
+const NetworkRecords = require('./network-records.js');
 const URL = require('../lib/url-shim.js');
 const NetworkRequest = require('../lib/network-request.js');
 const MainResource = require('./main-resource.js');
@@ -108,7 +108,7 @@ class ResourceSummary {
    */
   static async compute_(data, context) {
     const [networkRecords, mainResource] = await Promise.all([
-      TraceNetworkRecords.request(data.trace, context),
+      NetworkRecords.request(data.trace, context),
       MainResource.request({trace: data.trace, URL: data.URL}, context),
     ]);
     return ResourceSummary.summarize(networkRecords, mainResource.url, data.budgets);

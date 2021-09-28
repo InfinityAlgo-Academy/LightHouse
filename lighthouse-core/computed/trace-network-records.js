@@ -8,7 +8,7 @@
 const makeComputedArtifact = require('./computed-artifact.js');
 const constructRecordsFromTrace = require('../lib/network-records-from-trace.js');
 
-class NetworkRecords {
+class TraceNetworkRecords {
   /**
    * @param {LH.Trace} trace
    * @return {Promise<Array<LH.Artifacts.NetworkRequest>>} networkRecords
@@ -18,4 +18,4 @@ class NetworkRecords {
   }
 }
 
-module.exports = makeComputedArtifact(NetworkRecords);
+module.exports = makeComputedArtifact(TraceNetworkRecords);

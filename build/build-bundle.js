@@ -142,7 +142,6 @@ async function browserifyFile(entryPath, distPath) {
  */
 async function minifyScript(filePath) {
   const code = fs.readFileSync(filePath, 'utf-8');
-
   const result = await terser.minify(code, {
     ecma: 2019,
     output: {
