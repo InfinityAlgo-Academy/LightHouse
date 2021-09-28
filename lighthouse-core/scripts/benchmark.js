@@ -9,13 +9,15 @@
 
 /* eslint-disable no-console */
 
-const computeBenchmarkIndex = require('../lib/page-functions.js').computeBenchmarkIndex;
+// node lighthouse-core/scripts/benchmark.js
+
+import pageFunctions from '../lib/page-functions.js';
 
 console.log('Computing BenchmarkIndex 10 times...');
 
 let total = 0;
 for (let i = 0; i < 10; i++) {
-  const result = computeBenchmarkIndex();
+  const result = pageFunctions.computeBenchmarkIndex();
   console.log(`Result ${i + 1}: ${result.toFixed(0)}`);
   total += result;
 }

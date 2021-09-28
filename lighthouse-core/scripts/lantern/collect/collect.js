@@ -8,16 +8,20 @@
 /** @typedef {import('./common.js').Result} Result */
 /** @typedef {import('./common.js').Summary} Summary */
 
-const fs = require('fs');
-const fetch = require('node-fetch');
-const {execFile} = require('child_process');
-const {promisify} = require('util');
+import fs from 'fs';
+import {execFile} from 'child_process';
+import {promisify} from 'util';
+
+import fetch from 'node-fetch';
+
+import defaultTestUrls from './urls.js';
+import * as common from './common.js';
+import {LH_ROOT} from '../../../../root.js';
+
 const execFileAsync = promisify(execFile);
-const common = require('./common.js');
-const {LH_ROOT} = require('../../../../root.js');
 
 const SAMPLES = process.env.SAMPLES ? Number(process.env.SAMPLES) : 9;
-const TEST_URLS = process.env.TEST_URLS ? process.env.TEST_URLS.split(' ') : require('./urls.js');
+const TEST_URLS = process.env.TEST_URLS ? process.env.TEST_URLS.split(' ') : defaultTestUrls;
 
 if (!process.env.WPT_KEY) throw new Error('missing WPT_KEY');
 const WPT_KEY = process.env.WPT_KEY;

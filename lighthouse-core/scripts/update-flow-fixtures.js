@@ -5,10 +5,13 @@
  */
 'use strict';
 
-const fs = require('fs');
-const open = require('open');
-const puppeteer = require('puppeteer');
-const UserFlow = require('../fraggle-rock/user-flow.js');
+import fs from 'fs';
+
+import open from 'open';
+import puppeteer from 'puppeteer';
+
+import {LH_ROOT} from '../../root.js';
+import UserFlow from '../fraggle-rock/user-flow.js';
 
 (async () => {
   const browser = await puppeteer.launch({headless: false});
@@ -34,12 +37,12 @@ const UserFlow = require('../fraggle-rock/user-flow.js');
     const report = flow.generateReport();
 
     fs.writeFileSync(
-      `${__dirname}/../test/fixtures/fraggle-rock/reports/sample-lhrs.json`,
+      `${LH_ROOT}/lighthouse-core/test/fixtures/fraggle-rock/reports/sample-lhrs.json`,
       JSON.stringify(flowResult, null, 2)
     );
 
-    fs.writeFileSync(`${__dirname}/../../flow.report.html`, report);
-    open(`${__dirname}/../../flow.report.html`);
+    fs.writeFileSync(`${LH_ROOT}/flow.report.html`, report);
+    open(`${LH_ROOT}/flow.report.html`);
 
     process.exit(0);
   } catch (err) {
