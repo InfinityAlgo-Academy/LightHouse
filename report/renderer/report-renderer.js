@@ -47,10 +47,7 @@ export class ReportRenderer {
   renderReport(lhr, container, reportResultCache) {
     this._dom.setLighthouseChannel(lhr.configSettings.channel || 'unknown');
 
-    let report;
-    if (reportResultCache) {
-      report = reportResultCache.get(lhr);
-    }
+    let report = reportResultCache && reportResultCache.get(lhr);
     if (!report) report = Util.prepareReportResult(lhr);
 
     container.textContent = ''; // Remove previous report.
