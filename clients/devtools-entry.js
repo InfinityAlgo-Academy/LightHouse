@@ -61,6 +61,8 @@ function listenForStatus(listenCallback) {
   log.events.addListener('status', listenCallback);
 }
 
+let localDev = false;
+
 /**
  * With just a trace, provide Lighthouse performance report
  * From DevTools it'll look something like this
@@ -84,7 +86,7 @@ function analyzeTrace(trace, opts) {
     extends: 'lighthouse:default',
     settings: {
       onlyAudits: metricIds,
-      output: ['json'],
+      output: [localDev ? 'html' : 'json'],
       formFactor: opts.device,
       throttlingMethod: 'devtools', // can't do lantern right now, so need real throttling applied.
       // In DevTools, emulation is applied _before_ Lighthouse starts (to deal with viewport emulation bugs). go/xcnjf
@@ -156,14 +158,32 @@ if (typeof self !== 'undefined') {
 
 // If invoked as CLI, we're gonna read latest-run's trace and analyze that (as desktop)
 if (require.main === module) {
+  localDev = true;
+
+  /** @type {LH.Trace} */
   const trace = JSON.parse(
     require('fs').readFileSync(__dirname + '/../latest-run/defaultPass.trace.json', 'utf8')
-    // require('fs').readFileSync(__dirname + '/../latest-run/tevents.json', 'utf8')
   );
+
+  /**
+   * @param {LH.Trace} trace
+   */
+  const getInitialUrl = trace => {
+    const urls = trace.traceEvents
+    .filter(e =>
+        (e.name === 'navigationStart' && e?.args?.data?.isLoadingMainFrame === true) ||
+        e.name === 'NavigationBodyLoader::StartLoadingBody'
+    )
+    .map(e => e?.args?.data?.documentLoaderURL || e?.args?.url);
+    // find most common item: https://stackoverflow.com/a/20762713/89484
+    return urls.sort(
+      (a, b) => urls.filter(v => v === a).length - urls.filter(v => v === b).length).pop();
+  };
+
 
   analyzeTrace(trace, {
     device: 'desktop',
-    url: 'https://devtools/inspected-page',
+    url: getInitialUrl(trace),
   }).then(res => {
     require('fs').writeFileSync('./tracereport.html', res?.report[0], 'utf8');
     console.log('done. written to ./tracereport.html');
