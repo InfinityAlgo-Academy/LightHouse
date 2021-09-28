@@ -11,14 +11,14 @@
 'use strict';
 
 const FRGatherer = require('../../fraggle-rock/gather/base-gatherer.js');
-const TraceNetworkRecords = require('../../computed/trace-network-records.js');
-const DevtoolsLog = require('./devtools-log.js');
+const NetworkRecords = require('../../computed/network-records.js');
+const Trace = require('./trace.js');
 
 class InspectorIssues extends FRGatherer {
-  /** @type {LH.Gatherer.GathererMeta<'DevtoolsLog'>} */
+  /** @type {LH.Gatherer.GathererMeta<'Trace'>} */
   meta = {
     supportedModes: ['timespan', 'navigation'],
-    dependencies: {DevtoolsLog: DevtoolsLog.symbol},
+    dependencies: {Trace: Trace.symbol},
   }
 
   constructor() {
@@ -111,19 +111,19 @@ class InspectorIssues extends FRGatherer {
   }
 
   /**
-   * @param {LH.Gatherer.FRTransitionalContext<'DevtoolsLog'>} context
-   * @returns {Promise<LH.Artifacts['InspectorIssues']>}
+   * @param {LH.Gatherer.FRTransitionalContext<'Trace'>} context
+   * @return {Promise<LH.Artifacts['InspectorIssues']>}
    */
   async getArtifact(context) {
-    const devtoolsLog = context.dependencies.DevtoolsLog;
-    const networkRecords = await TraceNetworkRecords.request(trace, context);
+    const trace = context.dependencies.Trace;
+    const networkRecords = await NetworkRecords.request(trace, context);
     return this._getArtifact(networkRecords);
   }
 
   /**
    * @param {LH.Gatherer.PassContext} passContext
    * @param {LH.Gatherer.LoadData} loadData
-   * @returns {Promise<LH.Artifacts['InspectorIssues']>}
+   * @return {Promise<LH.Artifacts['InspectorIssues']>}
    */
   async afterPass(passContext, loadData) {
     await this.stopInstrumentation({...passContext, dependencies: {}});

@@ -206,10 +206,6 @@ if (require.main === module) {
 
   /**
    * todo:
-   * - occurences of dependencies: {DevtoolsLog: DevtoolsLog.symbol},
    * - removal of devtoolsLog from requiredArtifacts when its unused now
-   * ProcessedNavigation
-   * NetworkRecords.request(devtoolsLog
-   * lighthouse-core/computed/image-records.js
    */
 }

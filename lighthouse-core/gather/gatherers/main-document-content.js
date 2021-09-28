@@ -8,7 +8,6 @@
 const FRGatherer = require('../../fraggle-rock/gather/base-gatherer.js');
 const NetworkAnalyzer = require('../../lib/dependency-graph/simulator/network-analyzer.js');
 const NetworkRecords = require('../../computed/network-records.js');
-const DevtoolsLog = require('./devtools-log.js');
 const Trace = require('./trace.js');
 const {fetchResponseBodyFromCache} = require('../driver/network.js');
 
@@ -16,11 +15,10 @@ const {fetchResponseBodyFromCache} = require('../driver/network.js');
  * Collects the content of the main html document.
  */
 class MainDocumentContent extends FRGatherer {
-  /** @type {LH.Gatherer.GathererMeta<'DevtoolsLog'>} */
+  /** @type {LH.Gatherer.GathererMeta<'Trace'>} */
   meta = {
     supportedModes: ['navigation'],
     dependencies: {
-      DevtoolsLog: DevtoolsLog.symbol,
       Trace: Trace.symbol,
     },
   }
@@ -38,13 +36,11 @@ class MainDocumentContent extends FRGatherer {
   }
   /**
    *
-   * @param {LH.Gatherer.FRTransitionalContext<'DevtoolsLog'>} context
+   * @param {LH.Gatherer.FRTransitionalContext<'Trace'>} context
    * @return {Promise<LH.Artifacts['MainDocumentContent']>}
    */
   async getArtifact(context) {
-    const devtoolsLog = context.dependencies.DevtoolsLog;
     const trace = context.dependencies.Trace;
-    // TODO(paul-tracenetreq). figure out this one…
     const networkRecords = await NetworkRecords.request(trace, context);
     return this._getArtifact(context, networkRecords);
   }

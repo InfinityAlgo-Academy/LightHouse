@@ -16,7 +16,7 @@ const URL = require('../../../lib/url-shim.js');
 const NetworkRequest = require('../../../lib/network-request.js');
 const Sentry = require('../../../lib/sentry.js');
 const NetworkRecords = require('../../../computed/network-records.js');
-const DevtoolsLog = require('../devtools-log.js');
+const Trace = require('../trace.js');
 
 // Image encoding can be slow and we don't want to spend forever on it.
 // Cap our encoding to 5 seconds, anything after that will be estimated.
@@ -34,10 +34,10 @@ const IMAGE_REGEX = /^image\/((x|ms|x-ms)-)?(png|bmp|jpeg)$/;
 /** @typedef {{requestId: string, url: string, mimeType: string, resourceSize: number}} SimplifiedNetworkRecord */
 
 class OptimizedImages extends FRGatherer {
-  /** @type {LH.Gatherer.GathererMeta<'DevtoolsLog'>} */
+  /** @type {LH.Gatherer.GathererMeta<'Trace'>} */
   meta = {
     supportedModes: ['timespan', 'navigation'],
-    dependencies: {DevtoolsLog: DevtoolsLog.symbol},
+    dependencies: {Trace: Trace.symbol},
   }
 
   constructor() {
@@ -170,11 +170,11 @@ class OptimizedImages extends FRGatherer {
   }
 
   /**
-   * @param {LH.Gatherer.FRTransitionalContext<'DevtoolsLog'>} context
+   * @param {LH.Gatherer.FRTransitionalContext<'Trace'>} context
    * @return {Promise<LH.Artifacts['OptimizedImages']>}
    */
   async getArtifact(context) {
-    const devtoolsLog = context.dependencies.DevtoolsLog;
+    const trace = context.dependencies.Trace;
     const networkRecords = await NetworkRecords.request(trace, context);
     return this._getArtifact(context, networkRecords);
   }

@@ -11,7 +11,7 @@ const {URL} = require('../../lib/url-shim.js');
 const NetworkRecords = require('../../computed/network-records.js');
 const NetworkAnalyzer = require('../../lib/dependency-graph/simulator/network-analyzer.js');
 const pageFunctions = require('../../lib/page-functions.js');
-const DevtoolsLog = require('./devtools-log.js');
+const Trace = require('./trace.js');
 
 /* globals HTMLLinkElement getNodeDetails */
 
@@ -87,11 +87,11 @@ class LinkElements extends FRGatherer {
     /**
      * This needs to be in the constructor.
      * https://github.com/GoogleChrome/lighthouse/issues/12134
-     * @type {LH.Gatherer.GathererMeta<'DevtoolsLog'>}
+     * @type {LH.Gatherer.GathererMeta<'Trace'>}
      */
     this.meta = {
       supportedModes: ['timespan', 'navigation'],
-      dependencies: {DevtoolsLog: DevtoolsLog.symbol},
+      dependencies: {Trace: Trace.symbol},
     };
   }
 
@@ -172,11 +172,11 @@ class LinkElements extends FRGatherer {
   }
 
   /**
-   * @param {LH.Gatherer.FRTransitionalContext<'DevtoolsLog'>} context
+   * @param {LH.Gatherer.FRTransitionalContext<'Trace'>} context
    * @return {Promise<LH.Artifacts['LinkElements']>}
    */
   async getArtifact(context) {
-    const records = await TraceNetworkRecords.request(context.dependencies.DevtoolsLog, context);
+    const records = await NetworkRecords.request(context.dependencies.Trace, context);
     return this._getArtifact(context, records);
   }
 }
