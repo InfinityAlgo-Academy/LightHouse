@@ -62,7 +62,7 @@ class NetworkRecordsMaker {
 
       // If we have an incomplete set of events here, we choose to drop the network
       // request rather than attempt to synthesize the missing data.
-      if (!evtBag.sendRequest || !evtBag.receiveResponse || !evtBag.resourceFinish) {
+      if (!evtBag || !evtBag.sendRequest || !evtBag.receiveResponse || !evtBag.resourceFinish) {
         console.log('missing some trace events.... skipping :(');
         continue;
       }
