@@ -7,18 +7,28 @@
 
 /* eslint-env jest */
 
-/* global document, window */
+import fs from 'fs';
 
-const fs = require('fs');
-const puppeteer = require('puppeteer');
-const {server} = require('../../lighthouse-cli/test/fixtures/static-server.js');
+import {jest} from '@jest/globals';
+import puppeteer from 'puppeteer';
+
+import {server} from '../../lighthouse-cli/test/fixtures/static-server.js';
+import {LH_ROOT} from '../../root.js';
+
+const debugOptions = JSON.parse(
+  fs.readFileSync(LH_ROOT + '/lighthouse-treemap/app/debug.json', 'utf-8')
+);
 const portNumber = 20202;
 const treemapUrl = `http://localhost:${portNumber}/dist/gh-pages/treemap/index.html`;
-const debugOptions = require('../app/debug.json');
 
 // These tests run in Chromium and have their own timeouts.
 // Make sure we get the more helpful test-specific timeout error instead of jest's generic one.
 jest.setTimeout(35_000);
+
+function getTextEncodingCode() {
+  const code = fs.readFileSync(LH_ROOT + '/report/renderer/text-encoding.js', 'utf-8');
+  return code.replace('export ', '');
+}
 
 describe('Lighthouse Treemap', () => {
   // eslint-disable-next-line no-console
@@ -110,8 +120,7 @@ describe('Lighthouse Treemap', () => {
       options.lhr.requestedUrl += '😃😃😃';
       const json = JSON.stringify(options);
       const encoded = await page.evaluate(`
-        ${fs.readFileSync(
-          require.resolve('../../lighthouse-core/report/html/renderer/text-encoding.js'), 'utf-8')}
+        ${getTextEncodingCode()}
         TextEncoding.toBase64(${JSON.stringify(json)}, {gzip: true});
       `);
 
@@ -128,8 +137,7 @@ describe('Lighthouse Treemap', () => {
       options.lhr.requestedUrl += '😃😃😃';
       const json = JSON.stringify(options);
       const encoded = await page.evaluate(`
-        ${fs.readFileSync(
-          require.resolve('../../lighthouse-core/report/html/renderer/text-encoding.js'), 'utf-8')}
+        ${getTextEncodingCode()}
         TextEncoding.toBase64(${JSON.stringify(json)}, {gzip: false});
       `);
 

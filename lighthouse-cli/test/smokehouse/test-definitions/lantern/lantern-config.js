@@ -8,7 +8,9 @@
 /**
  * Config file for running byte efficiency smokehouse audits.
  */
-module.exports = {
+
+/** @type {LH.Config.Json} */
+const config = {
   extends: 'lighthouse:default',
   settings: {
     onlyCategories: ['performance'],
@@ -22,3 +24,5 @@ module.exports = {
     },
   },
 };
+
+export default config;

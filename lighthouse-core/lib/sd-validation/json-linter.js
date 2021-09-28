@@ -9,7 +9,7 @@ const jsonlint = require('jsonlint-mod');
 
 /**
  * @param {string} input
- * @returns {{message: string, lineNumber: number|null}|null}
+ * @return {{message: string, lineNumber: number|null}|null}
  */
 module.exports = function parseJSON(input) {
   try {

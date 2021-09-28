@@ -23,6 +23,7 @@
 const fs = require('fs');
 const path = require('path');
 const fetch = require('node-fetch');
+const {LH_ROOT} = require('../../../root.js');
 
 const DAY_FILTER = 90;
 const HOUR_IN_MS = 60 * 60 * 1000;
@@ -132,7 +133,7 @@ async function downloadIssues(urlToStartAt) {
 async function go() {
   const issues = await downloadIssues();
   fs.writeFileSync(
-    path.join(__dirname, '../../../.tmp', '_issues.json'),
+    path.join(LH_ROOT, '.tmp/_issues.json'),
     JSON.stringify(issues, null, 2)
   );
 }

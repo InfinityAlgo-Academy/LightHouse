@@ -33,6 +33,7 @@ const getFakeContext = ({formFactor, throttlingMethod}) => ({
 describe('Performance: first-meaningful-paint audit', () => {
   it('computes FMP correctly for valid trace', async () => {
     const artifacts = {
+      GatherContext: {gatherMode: 'navigation'},
       traces: {[Audit.DEFAULT_PASS]: trace},
       devtoolsLogs: {[Audit.DEFAULT_PASS]: devtoolsLogs},
     };
@@ -46,6 +47,7 @@ describe('Performance: first-meaningful-paint audit', () => {
 
   it('computes FMP correctly for simulated', async () => {
     const artifacts = {
+      GatherContext: {gatherMode: 'navigation'},
       traces: {[Audit.DEFAULT_PASS]: trace},
       devtoolsLogs: {[Audit.DEFAULT_PASS]: devtoolsLogs},
     };

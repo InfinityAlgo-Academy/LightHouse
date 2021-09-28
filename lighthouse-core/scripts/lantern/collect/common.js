@@ -15,8 +15,8 @@ const readline = require('readline');
 const {promisify} = require('util');
 const archiver = require('archiver');
 const streamFinished = promisify(require('stream').finished);
+const {LH_ROOT} = require('../../../../root.js');
 
-const LH_ROOT = `${__dirname}/../../../..`;
 const collectFolder = `${LH_ROOT}/dist/collect-lantern-traces`;
 const summaryPath = `${collectFolder}/summary.json`;
 const goldenFolder = `${LH_ROOT}/dist/golden-lantern-traces`;

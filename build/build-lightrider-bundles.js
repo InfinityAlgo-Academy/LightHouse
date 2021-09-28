@@ -10,12 +10,14 @@ const fs = require('fs');
 const path = require('path');
 const bundleBuilder = require('./build-bundle.js');
 const {minifyFileTransform} = require('./build-utils.js');
+const {buildPsiReport} = require('./build-report.js');
+const {LH_ROOT} = require('../root.js');
 
-const distDir = path.join(__dirname, '..', 'dist', 'lightrider');
-const sourceDir = __dirname + '/../clients/lightrider';
+const distDir = path.join(LH_ROOT, 'dist', 'lightrider');
+const sourceDir = path.join(LH_ROOT, 'clients', 'lightrider');
 
 const bundleOutFile = `${distDir}/report-generator-bundle.js`;
-const generatorFilename = `./lighthouse-core/report/report-generator.js`;
+const generatorFilename = `./report/generator/report-generator.js`;
 
 const entrySourceName = 'lightrider-entry.js';
 const entryDistName = 'lighthouse-lr-bundle.js';
@@ -36,9 +38,11 @@ function buildEntryPoint() {
  */
 function buildReportGenerator() {
   browserify(generatorFilename, {standalone: 'ReportGenerator'})
+    // Flow report is not used in LR, so don't include flow assets.
+    .ignore(require.resolve('../report/generator/flow-report-assets.js'))
     // Transform the fs.readFile etc into inline strings.
     .transform('@wardpeet/brfs', {
-      readFileSyncTransform: minifyFileTransform,
+      readFileTransform: minifyFileTransform,
       global: true,
       parserOpts: {ecmaVersion: 12},
     })
@@ -52,6 +56,7 @@ async function run() {
   await Promise.all([
     buildEntryPoint(),
     buildReportGenerator(),
+    buildPsiReport(),
   ]);
 }
 

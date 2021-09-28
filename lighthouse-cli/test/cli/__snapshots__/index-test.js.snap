@@ -142,6 +142,9 @@ Object {
       "path": "largest-contentful-paint-element",
     },
     Object {
+      "path": "lcp-lazy-loaded",
+    },
+    Object {
       "path": "layout-shift-elements",
     },
     Object {
@@ -904,6 +907,7 @@ Object {
             "dom-size",
             "duplicated-javascript",
             "legacy-javascript",
+            "viewport",
           ],
           "weight": 30,
         },
@@ -1094,6 +1098,11 @@ Object {
         },
         Object {
           "group": "diagnostics",
+          "id": "lcp-lazy-loaded",
+          "weight": 0,
+        },
+        Object {
+          "group": "diagnostics",
           "id": "layout-shift-elements",
           "weight": 0,
         },
@@ -1120,6 +1129,11 @@ Object {
         Object {
           "group": "diagnostics",
           "id": "unsized-images",
+          "weight": 0,
+        },
+        Object {
+          "group": "diagnostics",
+          "id": "viewport",
           "weight": 0,
         },
         Object {
@@ -1302,7 +1316,7 @@ Object {
           "weight": 0,
         },
       ],
-      "description": "These checks ensure that your page is optimized for search engine results ranking. There are additional factors Lighthouse does not check that may affect your search ranking. [Learn more](https://support.google.com/webmasters/answer/35769).",
+      "description": "These checks ensure that your page is following basic search engine optimization advice. There are many additional factors Lighthouse does not score here that may affect your search ranking, including performance on [Core Web Vitals](https://web.dev/learn-web-vitals/). [Learn more](https://support.google.com/webmasters/answer/35769).",
       "manualDescription": "Run these additional validators on your site to check additional SEO best practices.",
       "title": "SEO",
     },
@@ -1539,8 +1553,9 @@ Object {
     "blockedUrlPatterns": null,
     "budgets": null,
     "channel": "cli",
+    "debugNavigation": false,
     "disableStorageReset": false,
-    "emulatedUserAgent": "Mozilla/5.0 (Linux; Android 7.0; Moto G (4)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4420.0 Mobile Safari/537.36 Chrome-Lighthouse",
+    "emulatedUserAgent": "Mozilla/5.0 (Linux; Android 7.0; Moto G (4)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4590.2 Mobile Safari/537.36 Chrome-Lighthouse",
     "extraHeaders": null,
     "formFactor": "mobile",
     "gatherMode": false,
@@ -1692,8 +1707,9 @@ Object {
     "blockedUrlPatterns": null,
     "budgets": null,
     "channel": "cli",
+    "debugNavigation": false,
     "disableStorageReset": false,
-    "emulatedUserAgent": "Mozilla/5.0 (Linux; Android 7.0; Moto G (4)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4420.0 Mobile Safari/537.36 Chrome-Lighthouse",
+    "emulatedUserAgent": "Mozilla/5.0 (Linux; Android 7.0; Moto G (4)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4590.2 Mobile Safari/537.36 Chrome-Lighthouse",
     "extraHeaders": null,
     "formFactor": "mobile",
     "gatherMode": false,

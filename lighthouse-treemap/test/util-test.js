@@ -7,10 +7,13 @@
 
 /* eslint-env jest */
 
-const assert = require('assert');
-const fs = require('fs');
-const jsdom = require('jsdom');
-const TreemapUtil = require('../app/src/util.js');
+import assert from 'assert';
+import fs from 'fs';
+
+import jsdom from 'jsdom';
+
+import {TreemapUtil} from '../app/src/util.js';
+import {LH_ROOT} from '../../root.js';
 
 describe('TreemapUtil', () => {
   it('pathsAreEqual works', () => {
@@ -75,7 +78,7 @@ describe('TreemapUtil', () => {
 
   describe('data-i18n', () => {
     it('should have only valid data-i18n values in treemap html', () => {
-      const TREEMAP_INDEX = fs.readFileSync(__dirname + '/../app/index.html', 'utf8');
+      const TREEMAP_INDEX = fs.readFileSync(LH_ROOT + '/lighthouse-treemap/app/index.html', 'utf8');
       const dom = new jsdom.JSDOM(TREEMAP_INDEX);
       for (const node of dom.window.document.querySelectorAll('[data-i18n]')) {
         const val = node.getAttribute('data-i18n');

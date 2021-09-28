@@ -5,21 +5,22 @@
  */
 'use strict';
 
-const fs = require('fs');
 const browserify = require('browserify');
 const GhPagesApp = require('./gh-pages-app.js');
 const {minifyFileTransform} = require('./build-utils.js');
-const htmlReportAssets = require('../lighthouse-core/report/html/html-report-assets.js');
+const {LH_ROOT} = require('../root.js');
 
 /**
  * Build viewer, optionally deploying to gh-pages if `--deploy` flag was set.
  */
 async function run() {
   // JS bundle from browserified ReportGenerator.
-  const generatorFilename = `${__dirname}/../lighthouse-core/report/report-generator.js`;
+  const generatorFilename = `${LH_ROOT}/report/generator/report-generator.js`;
   const generatorBrowserify = browserify(generatorFilename, {standalone: 'ReportGenerator'})
+    // Flow report is not used in report viewer, so don't include flow assets.
+    .ignore(require.resolve('../report/generator/flow-report-assets.js'))
     .transform('@wardpeet/brfs', {
-      readFileSyncTransform: minifyFileTransform,
+      readFileTransform: minifyFileTransform,
     });
 
   /** @type {Promise<string>} */
@@ -32,20 +33,15 @@ async function run() {
 
   const app = new GhPagesApp({
     name: 'viewer',
-    appDir: `${__dirname}/../lighthouse-viewer/app`,
+    appDir: `${LH_ROOT}/lighthouse-viewer/app`,
     html: {path: 'index.html'},
-    htmlReplacements: {
-      '%%LIGHTHOUSE_TEMPLATES%%': htmlReportAssets.REPORT_TEMPLATES,
-    },
     stylesheets: [
-      htmlReportAssets.REPORT_CSS,
       {path: 'styles/*'},
     ],
     javascripts: [
       await generatorJsPromise,
-      htmlReportAssets.REPORT_JAVASCRIPT,
-      fs.readFileSync(require.resolve('idb-keyval/dist/idb-keyval-min.js'), 'utf8'),
-      {path: 'src/*'},
+      {path: require.resolve('pako/dist/pako_inflate.js')},
+      {path: 'src/main.js', rollup: true},
     ],
     assets: [
       {path: 'images/**/*'},

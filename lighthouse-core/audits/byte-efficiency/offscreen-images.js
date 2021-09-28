@@ -10,11 +10,12 @@
 'use strict';
 
 const ByteEfficiencyAudit = require('./byte-efficiency-audit.js');
+const NetworkRequest = require('../../lib/network-request.js');
 const Sentry = require('../../lib/sentry.js');
 const URL = require('../../lib/url-shim.js');
 const i18n = require('../../lib/i18n/i18n.js');
 const Interactive = require('../../computed/metrics/interactive.js');
-const TraceOfTab = require('../../computed/trace-of-tab.js');
+const ProcessedTrace = require('../../computed/processed-trace.js');
 
 const UIStrings = {
   /** Imperative title of a Lighthouse audit that tells the user to defer loading offscreen images. Offscreen images are images located outside of the visible browser viewport. As they are unseen by the user and slow down page load, they should be loaded later, closer to when the user is going to see them. This is displayed in a list of audit titles that Lighthouse generates. */
@@ -48,7 +49,9 @@ class OffscreenImages extends ByteEfficiencyAudit {
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
       scoreDisplayMode: ByteEfficiencyAudit.SCORING_MODES.NUMERIC,
-      requiredArtifacts: ['ImageElements', 'ViewportDimensions', 'devtoolsLogs', 'traces'],
+      supportedModes: ['navigation'],
+      requiredArtifacts: ['ImageElements', 'ViewportDimensions', 'GatherContext', 'devtoolsLogs',
+        'traces'],
     };
   }
 
@@ -89,13 +92,7 @@ class OffscreenImages extends ByteEfficiencyAudit {
     const visiblePixels = this.computeVisiblePixels(image.clientRect, viewportDimensions);
     // Treat images with 0 area as if they're offscreen. See https://github.com/GoogleChrome/lighthouse/issues/1914
     const wastedRatio = totalPixels === 0 ? 1 : 1 - visiblePixels / totalPixels;
-    // Resource size is almost always the right one to be using because of the below:
-    //     transferSize = resourceSize + headers.length
-    // HOWEVER, there are some cases where an image is compressed again over the network and transfer size
-    // is smaller (see https://github.com/GoogleChrome/lighthouse/pull/4968).
-    // Use the min of the two numbers to be safe.
-    const {resourceSize = 0, transferSize = 0} = networkRecord;
-    const totalBytes = Math.min(resourceSize, transferSize);
+    const totalBytes = NetworkRequest.getResourceSizeOnNetwork(networkRecord);
     const wastedBytes = Math.round(totalBytes * wastedRatio);
 
     if (!Number.isFinite(wastedRatio)) {
@@ -181,6 +178,7 @@ class OffscreenImages extends ByteEfficiencyAudit {
   static async audit_(artifacts, networkRecords, context) {
     const images = artifacts.ImageElements;
     const viewportDimensions = artifacts.ViewportDimensions;
+    const gatherContext = artifacts.GatherContext;
     const trace = artifacts.traces[ByteEfficiencyAudit.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[ByteEfficiencyAudit.DEFAULT_PASS];
 
@@ -213,7 +211,8 @@ class OffscreenImages extends ByteEfficiencyAudit {
     const unfilteredResults = Array.from(resultsMap.values());
     // get the interactive time or fallback to getting the end of trace time
     try {
-      const interactive = await Interactive.request({trace, devtoolsLog, settings}, context);
+      const metricComputationData = {trace, devtoolsLog, gatherContext, settings};
+      const interactive = await Interactive.request(metricComputationData, context);
 
       // use interactive to generate items
       const lanternInteractive = /** @type {LH.Artifacts.LanternMetric} */ (interactive);
@@ -229,7 +228,7 @@ class OffscreenImages extends ByteEfficiencyAudit {
       }
       // use end of trace as a substitute for finding interactive time
       items = OffscreenImages.filterObservedResults(unfilteredResults,
-        await TraceOfTab.request(trace, context).then(tot => tot.timestamps.traceEnd));
+        await ProcessedTrace.request(trace, context).then(tot => tot.timestamps.traceEnd));
     }
 
     /** @type {LH.Audit.Details.Opportunity['headings']} */

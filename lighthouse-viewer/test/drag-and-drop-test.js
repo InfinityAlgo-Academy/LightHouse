@@ -7,13 +7,10 @@
 
 /* eslint-env jest */
 
-const testHelpers = require('./test-helpers.js');
+import {jest} from '@jest/globals';
 
-// Called before other src import so code that relies on `document` and
-// `window` have them defined.
-testHelpers.setupJsDomGlobals();
-
-const DragAndDrop = require('../app/src/drag-and-drop.js');
+import {DragAndDrop} from '../app/src/drag-and-drop.js';
+import * as testHelpers from './test-helpers.js';
 
 describe('DragAndDrop', () => {
   beforeEach(function() {

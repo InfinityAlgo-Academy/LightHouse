@@ -17,7 +17,7 @@ jest.useFakeTimers();
 
 /**
  * @param {Partial<LH.Artifacts.NetworkRequest>=} partial
- * @returns {LH.Artifacts.NetworkRequest}
+ * @return {LH.Artifacts.NetworkRequest}
  */
 function mockRequest(partial) {
   return Object.assign(new NetworkRequest(), {

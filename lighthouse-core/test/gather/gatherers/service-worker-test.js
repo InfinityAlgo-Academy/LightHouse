@@ -34,7 +34,7 @@ describe('service worker gatherer', () => {
     getServiceWorkerRegistrations.mockResolvedValue({registrations});
 
     const serviceWorkerGatherer = new ServiceWorkerGather();
-    const artifact = await serviceWorkerGatherer.beforePass({
+    const artifact = await serviceWorkerGatherer.getArtifact({
       driver: {},
       url,
     });

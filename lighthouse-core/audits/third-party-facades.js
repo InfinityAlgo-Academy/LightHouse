@@ -85,7 +85,8 @@ class ThirdPartyFacades extends Audit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['traces', 'devtoolsLogs', 'traces', 'URL'],
+      supportedModes: ['navigation'],
+      requiredArtifacts: ['traces', 'URL'],
     };
   }
 
@@ -148,7 +149,6 @@ class ThirdPartyFacades extends Audit {
   static async audit(artifacts, context) {
     const settings = context.settings;
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
-    const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     const networkRecords = await NetworkRecords.request(trace, context);
     const mainResource = await MainResource.request({trace, URL: artifacts.URL}, context);
     const mainEntity = thirdPartyWeb.getEntity(mainResource.url);

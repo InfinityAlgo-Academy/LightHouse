@@ -1,15 +1,19 @@
 {
-  "extends": "../tsconfig",
+  "extends": "../tsconfig-base.json",
   "compilerOptions": {
-    "typeRoots": [
-      "../node_modules/@types",
-      "../types",
-      "./types",
-    ],
+    "outDir": "../.tmp/tsbuildinfo/lighthouse-viewer",
+
+    // Limit to base JS and DOM defs.
+    "lib": ["es2020", "dom", "dom.iterable"],
+    // Don't include any types from node_modules/.
+    "types": [],
   },
+  "references": [
+    {"path": "../types/lhr/"},
+    {"path": "../report/"}
+  ],
   "include": [
     "app/src/**/*.js",
-    "../types/*.d.ts",
     "./types/*.d.ts",
   ],
 }

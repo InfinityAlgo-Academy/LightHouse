@@ -8,6 +8,7 @@
 const path = require('path');
 const i18n = require('../../../lib/i18n/i18n.js');
 const log = require('lighthouse-logger');
+const {isNode12SmallIcu} = require('../../test-utils.js');
 
 /* eslint-env jest */
 
@@ -158,7 +159,7 @@ describe('i18n', () => {
       expect(i18n.lookupLocale(invalidLocale)).toEqual('en');
 
       // COMPAT: Node 12 logs an extra warning that full-icu is not available.
-      if (process.versions.node.startsWith('12')) {
+      if (isNode12SmallIcu()) {
         expect(logListener).toBeCalledTimes(2);
         expect(logListener).toHaveBeenNthCalledWith(1, ['i18n',
           expect.stringMatching(/Requested locale not available in this version of node/)]);
@@ -176,7 +177,7 @@ describe('i18n', () => {
 
     it('falls back to root tag prefix if specific locale not available', () => {
       // COMPAT: Node 12 only has 'en' by default.
-      if (process.versions.node.startsWith('12')) {
+      if (isNode12SmallIcu()) {
         expect(i18n.lookupLocale('es-JKJK')).toEqual('en');
         return;
       }

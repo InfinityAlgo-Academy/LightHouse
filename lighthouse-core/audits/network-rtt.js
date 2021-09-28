@@ -7,6 +7,7 @@
 
 const Audit = require('./audit.js');
 const i18n = require('../lib/i18n/i18n.js');
+const NetworkRecords = require('../computed/network-records.js');
 const NetworkAnalysisComputed = require('../computed/network-analysis.js');
 
 const UIStrings = {
@@ -30,7 +31,7 @@ class NetworkRTT extends Audit {
       scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['devtoolsLogs', 'traces'],
+      requiredArtifacts: ['traces'],
     };
   }
 
@@ -40,8 +41,15 @@ class NetworkRTT extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
-    const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
+    const records = await NetworkRecords.request(trace, context);
+    if (!records.length) {
+      return {
+        score: 1,
+        notApplicable: true,
+      };
+    }
+
     const analysis = await NetworkAnalysisComputed.request(trace, context);
 
     /** @type {number} */

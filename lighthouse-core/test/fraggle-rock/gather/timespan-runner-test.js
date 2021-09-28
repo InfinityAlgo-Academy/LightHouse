@@ -11,6 +11,7 @@ const {
   createMockDriver,
   createMockPage,
   createMockGathererInstance,
+  mockDriverSubmodules,
   mockDriverModule,
   mockRunnerModule,
 } = require('./mock-driver.js');
@@ -19,6 +20,7 @@ const {
 let mockRunnerRun = jest.fn();
 /** @type {ReturnType<typeof createMockDriver>} */
 let mockDriver;
+const mockSubmodules = mockDriverSubmodules();
 
 jest.mock('../../../runner.js', () => mockRunnerModule(() => mockRunnerRun));
 jest.mock('../../../fraggle-rock/gather/driver.js', () =>
@@ -40,6 +42,7 @@ describe('Timespan Runner', () => {
   let config;
 
   beforeEach(() => {
+    mockSubmodules.reset();
     mockPage = createMockPage();
     mockDriver = createMockDriver();
     mockRunnerRun = jest.fn();
@@ -71,6 +74,12 @@ describe('Timespan Runner', () => {
     expect(mockRunnerRun).toHaveBeenCalled();
   });
 
+  it('should prepare the target', async () => {
+    const timespan = await startTimespan({page, config});
+    expect(mockSubmodules.prepareMock.prepareTargetForTimespanMode).toHaveBeenCalled();
+    await timespan.endTimespan();
+  });
+
   it('should invoke startInstrumentation', async () => {
     const timespan = await startTimespan({page, config});
     expect(gathererA.startInstrumentation).toHaveBeenCalled();
@@ -94,6 +103,24 @@ describe('Timespan Runner', () => {
       URL: {
         requestedUrl: 'https://start.example.com/',
         finalUrl: 'https://end.example.com/',
+      },
+    });
+  });
+
+  it('should use configContext', async () => {
+    const settingsOverrides = {
+      formFactor: /** @type {'desktop'} */ ('desktop'),
+      maxWaitForLoad: 1234,
+      screenEmulation: {mobile: false},
+    };
+
+    const configContext = {settingsOverrides};
+    const timespan = await startTimespan({page, config, configContext});
+    await timespan.endTimespan();
+
+    expect(mockRunnerRun.mock.calls[0][1]).toMatchObject({
+      config: {
+        settings: settingsOverrides,
       },
     });
   });

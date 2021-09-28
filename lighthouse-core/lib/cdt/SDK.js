@@ -46,6 +46,7 @@ SDK.TextSourceMap.prototype.mappings = function() {
 };
 
 const originalReversedMappings = SDK.TextSourceMap.prototype._reversedMappings;
+/** @param {string} sourceURL */
 SDK.TextSourceMap.prototype._reversedMappings = function(sourceURL) {
   const mappings = originalReversedMappings.call(this, sourceURL);
   extendArray(mappings);

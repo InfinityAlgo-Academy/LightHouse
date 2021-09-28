@@ -4,42 +4,27 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import _ReportGenerator = require('../../lighthouse-core/report/report-generator.js');
-import _Logger = require('../../lighthouse-core/report/html/renderer/logger.js');
-import _LighthouseReportViewer = require('../app/src/lighthouse-report-viewer.js');
-import _DragAndDrop = require('../app/src/drag-and-drop.js');
-import _GithubApi = require('../app/src/github-api.js');
-import _PSIApi = require('../app/src/psi-api.js');
-import _FirebaseAuth = require('../app/src/firebase-auth.js');
-import _ViewerUIFeatures = require('../app/src/viewer-ui-features.js');
+import _ReportGenerator = require('../../report/generator/report-generator.js');
+import {Logger as _Logger} from '../../report/renderer/logger.js';
+import {LighthouseReportViewer as _LighthouseReportViewer} from '../app/src/lighthouse-report-viewer.js';
 import 'google.analytics';
-import {FirebaseNamespace} from '@firebase/app-types';
-import '@firebase/auth-types';
 
+// Import for needed DOM type augmentation.
+import '../../report/types/augment-dom';
+
+// Import for LH globals needed for report files.
+import '../../report/types/html-renderer';
 
 declare global {
   var ReportGenerator: typeof _ReportGenerator;
-  var Logger: typeof _Logger;
   var logger: _Logger;
-  var LighthouseReportViewer: typeof _LighthouseReportViewer;
-  var DragAndDrop: typeof _DragAndDrop;
-  var GithubApi: typeof _GithubApi;
-  var PSIApi: typeof _PSIApi;
-  var FirebaseAuth: typeof _FirebaseAuth;
-  var ViewerUIFeatures: typeof _ViewerUIFeatures;
-
   var idbKeyval: typeof import('idb-keyval');
-  var firebase: Required<FirebaseNamespace>;
 
   interface Window {
-    logger: _Logger;
     viewer: _LighthouseReportViewer;
     ga: UniversalAnalytics.ga;
 
-    // Inserted by viewer gulpfile build.
+    // Inserted by viewer build.
     LH_CURRENT_VERSION: string;
   }
 }
-
-// empty export to keep file a module
-export {}

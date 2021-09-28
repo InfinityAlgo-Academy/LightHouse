@@ -11,6 +11,7 @@ const fs = require('fs');
 const i18n = require('../lib/i18n/i18n.js');
 const mockCommands = require('./gather/mock-commands.js');
 const {default: {toBeCloseTo}} = require('expect/build/matchers.js');
+const {LH_ROOT} = require('../../root.js');
 
 expect.extend({
   toBeDisplayString(received, expected) {
@@ -89,7 +90,7 @@ function getProtoRoundTrip() {
   let itIfProtoExists;
   try {
     sampleResultsRoundtripStr =
-      fs.readFileSync(__dirname + '/../../.tmp/sample_v2_round_trip.json', 'utf-8');
+      fs.readFileSync(LH_ROOT + '/.tmp/sample_v2_round_trip.json', 'utf-8');
     describeIfProtoExists = describe;
     itIfProtoExists = it;
   } catch (err) {
@@ -271,6 +272,18 @@ function makeMocksForGatherRunner() {
   }));
 }
 
+/**
+ * Returns whether this is running in Node 12 with what we suspect is the default
+ * `small-icu` build. Limited to Node 12 so it's not accidentally hitting this
+ * path in Node 13+ in CI and we can be certain the `full-icu` path is being exercised.
+ * @return {boolean}
+ */
+function isNode12SmallIcu() {
+  // COMPAT: Remove when Node 12 is retired and `full-icu` is the default everywhere.
+  return process.versions.node.startsWith('12') &&
+    Intl.NumberFormat.supportedLocalesOf('es').length === 0;
+}
+
 module.exports = {
   getProtoRoundTrip,
   loadSourceMapFixture,
@@ -280,5 +293,6 @@ module.exports = {
   createDecomposedPromise,
   flushAllTimersAndMicrotasks,
   makeMocksForGatherRunner,
+  isNode12SmallIcu,
   ...mockCommands,
 };

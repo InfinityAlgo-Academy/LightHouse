@@ -15,7 +15,7 @@ Additionally, there are build processes for:
 To build the devtools files and roll them into a local checkout of Chromium:
 
 ```sh
-yarn build-devtools && yarn devtools
+yarn devtools
 ```
 
 

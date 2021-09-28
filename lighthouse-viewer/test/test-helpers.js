@@ -5,15 +5,18 @@
  */
 'use strict';
 
-const fs = require('fs');
-const path = require('path');
-const jsdom = require('jsdom');
+import fs from 'fs';
+import path from 'path';
+
+import * as jsdom from 'jsdom';
+
+import {LH_ROOT} from '../../root.js';
 
 /* eslint-env jest */
 
-const PAGE = fs.readFileSync(path.join(__dirname, '../app/index.html'), 'utf8');
+const PAGE = fs.readFileSync(path.join(LH_ROOT, 'lighthouse-viewer/app/index.html'), 'utf8');
 
-function setupJsDomGlobals() {
+export function setupJsDomGlobals() {
   const {window} = new jsdom.JSDOM(PAGE);
   global.document = window.document;
   global.window = window;
@@ -21,13 +24,8 @@ function setupJsDomGlobals() {
   global.logger.hide = () => {/* noop */};
 }
 
-function cleanupJsDomGlobals() {
+export function cleanupJsDomGlobals() {
   global.document = undefined;
   global.window = undefined;
   global.logger = undefined;
 }
-
-module.exports = {
-  setupJsDomGlobals,
-  cleanupJsDomGlobals,
-};

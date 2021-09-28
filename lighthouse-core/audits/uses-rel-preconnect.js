@@ -13,7 +13,8 @@ const i18n = require('../lib/i18n/i18n.js');
 const NetworkRecords = require('../computed/network-records.js');
 const MainResource = require('../computed/main-resource.js');
 const LoadSimulator = require('../computed/load-simulator.js');
-const TraceOfTab = require('../computed/trace-of-tab.js');
+const ProcessedTrace = require('../computed/processed-trace.js');
+const ProcessedNavigation = require('../computed/processed-navigation.js');
 const PageDependencyGraph = require('../computed/page-dependency-graph.js');
 const LanternLCP = require('../computed/metrics/lantern-largest-contentful-paint.js');
 
@@ -62,7 +63,8 @@ class UsesRelPreconnectAudit extends Audit {
       id: 'uses-rel-preconnect',
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['traces', 'devtoolsLogs', 'traces', 'URL', 'LinkElements'],
+      supportedModes: ['navigation'],
+      requiredArtifacts: ['traces', 'devtoolsLogs', 'URL', 'LinkElements'],
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
     };
   }
@@ -113,16 +115,19 @@ class UsesRelPreconnectAudit extends Audit {
     /** @type {Array<LH.IcuMessage>} */
     const warnings = [];
 
-    const [networkRecords, mainResource, loadSimulator, traceOfTab, pageGraph] = await Promise.all([
-      NetworkRecords.request(trace, context),
-      MainResource.request({trace, URL: artifacts.URL}, context),
-      LoadSimulator.request({trace, settings}, context),
-      TraceOfTab.request(trace, context),
-      PageDependencyGraph.request({trace, devtoolsLog}, context),
-    ]);
+    const processedTrace = await ProcessedTrace.request(trace, context);
+
+    const [networkRecords, mainResource, loadSimulator, processedNavigation, pageGraph] =
+      await Promise.all([
+        NetworkRecords.request(trace, context),
+        MainResource.request({trace, URL: artifacts.URL}, context),
+        LoadSimulator.request({trace, settings}, context),
+        ProcessedNavigation.request(processedTrace, context),
+        PageDependencyGraph.request({trace, devtoolsLog}, context),
+      ]);
 
     const {rtt, additionalRttByOrigin} = loadSimulator.getOptions();
-    const lcpGraph = await LanternLCP.getPessimisticGraph(pageGraph, traceOfTab);
+    const lcpGraph = await LanternLCP.getPessimisticGraph(pageGraph, processedNavigation);
     /** @type {Set<string>} */
     const lcpGraphURLs = new Set();
     lcpGraph.traverse(node => {

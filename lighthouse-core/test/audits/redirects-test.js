@@ -109,6 +109,7 @@ describe('Performance: Redirects audit', () => {
     const devtoolsLog = networkRecordsToDevtoolsLog(networkRecords);
 
     return {
+      GatherContext: {gatherMode: 'navigation'},
       traces: {defaultPass: createTestTrace({traceEnd: 5000})},
       devtoolsLogs: {defaultPass: devtoolsLog},
       URL: {finalUrl},

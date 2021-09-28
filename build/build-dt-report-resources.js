@@ -9,11 +9,12 @@ const browserify = require('browserify');
 const fs = require('fs');
 const path = require('path');
 const assert = require('assert').strict;
+const {LH_ROOT} = require('../root.js');
 
-const distDir = path.join(__dirname, '..', 'dist', 'dt-report-resources');
+const distDir = path.join(LH_ROOT, 'dist', 'dt-report-resources');
 const bundleOutFile = `${distDir}/report-generator.js`;
-const generatorFilename = `./lighthouse-core/report/report-generator.js`;
-const htmlReportAssets = require('../lighthouse-core/report/html/html-report-assets.js');
+const generatorFilename = `./report/generator/report-generator.js`;
+const htmlReportAssets = require('../report/generator/report-assets.js');
 
 /**
  * Used to save cached resources (Runtime.cachedResources).
@@ -25,20 +26,20 @@ function writeFile(name, content) {
   fs.writeFileSync(`${distDir}/${name}`, content);
 }
 
+fs.mkdirSync(distDir, {recursive: true}); // Ensure dist is present, else rmdir will throw. COMPAT: when dropping Node 12, replace with fs.rm(p, {force: true})
 fs.rmdirSync(distDir, {recursive: true});
-fs.mkdirSync(distDir);
+fs.mkdirSync(distDir, {recursive: true});
 
 writeFile('report.js', htmlReportAssets.REPORT_JAVASCRIPT);
-writeFile('report.css', htmlReportAssets.REPORT_CSS);
-writeFile('template.html', htmlReportAssets.REPORT_TEMPLATE);
-writeFile('templates.html', htmlReportAssets.REPORT_TEMPLATES);
+writeFile('report.css', '/* TODO: remove after devtools roll deletes file. */');
+writeFile('standalone-template.html', htmlReportAssets.REPORT_TEMPLATE);
 writeFile('report.d.ts', 'export {}');
 writeFile('report-generator.d.ts', 'export {}');
 
 const pathToReportAssets = require.resolve('../clients/devtools-report-assets.js');
 browserify(generatorFilename, {standalone: 'Lighthouse.ReportGenerator'})
-  // Shims './html/html-report-assets.js' to resolve to devtools-report-assets.js
-  .require(pathToReportAssets, {expose: './html/html-report-assets.js'})
+  // Shims './report/generator/report-assets.js' to resolve to devtools-report-assets.js
+  .require(pathToReportAssets, {expose: './report-assets.js'})
   .bundle((err, src) => {
     if (err) throw err;
     fs.writeFileSync(bundleOutFile, src.toString());

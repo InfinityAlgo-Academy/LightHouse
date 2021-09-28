@@ -8,21 +8,24 @@
 
 /* eslint-disable no-console */
 
-const http = require('http');
-const zlib = require('zlib');
-const path = require('path');
-const fs = require('fs');
-const glob = require('glob');
-const mime = require('mime-types');
-const parseQueryString = require('querystring').parse;
-const parseURL = require('url').parse;
-const URLSearchParams = require('url').URLSearchParams;
+import http from 'http';
+import zlib from 'zlib';
+import path from 'path';
+import fs from 'fs';
+import {parse as parseQueryString} from 'querystring';
+import {parse as parseURL} from 'url';
+import {URLSearchParams} from 'url';
+
+import mime from 'mime-types';
+import glob from 'glob';
+import esMain from 'es-main';
+
+import {LH_ROOT} from '../../../root.js';
+
 const HEADER_SAFELIST = new Set(['x-robots-tag', 'link', 'content-security-policy']);
 
-const lhRootDirPath = path.join(__dirname, '../../../');
-
 class Server {
-  baseDir = __dirname;
+  baseDir = `${LH_ROOT}/lighthouse-cli/test/fixtures`;
 
   constructor() {
     this._server = http.createServer(this._requestHandler.bind(this));
@@ -172,7 +175,7 @@ class Server {
 
     // Create an index page that lists the available test pages.
     if (filePath === '/') {
-      const fixturePaths = glob.sync('**/*.html', {cwd: __dirname});
+      const fixturePaths = glob.sync('**/*.html', {cwd: this.baseDir});
       const html = `
         <html>
         <h1>Smoke test fixtures</h1>
@@ -187,12 +190,12 @@ class Server {
 
     if (filePath.startsWith('/dist/gh-pages')) {
       // Rewrite lighthouse-viewer paths to point to that location.
-      absoluteFilePath = path.join(__dirname, '/../../../', filePath);
+      absoluteFilePath = path.join(this.baseDir, '/../../../', filePath);
     }
 
     // Disallow file requests outside of LH folder
     const filePathDir = path.parse(absoluteFilePath).dir;
-    if (!filePathDir.startsWith(lhRootDirPath)) {
+    if (!filePathDir.startsWith(LH_ROOT)) {
       return readFileCallback(new Error('Disallowed path'));
     }
 
@@ -244,7 +247,7 @@ serverForOnline._server.on('error', e => console.error(e.code, e));
 serverForOffline._server.on('error', e => console.error(e.code, e));
 
 // If called via `node static-server.js` then start listening, otherwise, just expose the servers
-if (require.main === module) {
+if (esMain(import.meta)) {
   // Start listening
   const onlinePort = 10200;
   const offlinePort = 10503;
@@ -252,10 +255,10 @@ if (require.main === module) {
   serverForOffline.listen(offlinePort, 'localhost');
   console.log(`online:  listening on http://localhost:${onlinePort}`);
   console.log(`offline: listening on http://localhost:${offlinePort}`);
-} else {
-  module.exports = {
-    Server,
-    server: serverForOnline,
-    serverForOffline,
-  };
 }
+
+export {
+  Server,
+  serverForOnline as server,
+  serverForOffline,
+};

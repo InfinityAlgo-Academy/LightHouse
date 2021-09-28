@@ -1,30 +1,38 @@
 {
+  "extends": "./tsconfig-base.json",
   "compilerOptions": {
-    "noEmit": true,
-    "module": "commonjs",
-    "target": "ES2020",
-    "allowJs": true,
-    "checkJs": true,
-    "strict": true,
-    // "listFiles": true,
-    // "noErrorTruncation": true,
+    "outDir": ".tmp/tsbuildinfo/",
 
+    // TODO(esmodules): included to support require('file.json'). Remove on the switch to ES Modules.
     "resolveJsonModule": true,
-    "diagnostics": true
   },
+  "references": [
+    {"path": "./types/lhr/"},
+    {"path": "./report/"},
+    {"path": "./report/generator/"},
+  ],
   "include": [
+    "root.js",
     "lighthouse-cli/**/*.js",
     "lighthouse-core/**/*.js",
     "clients/**/*.js",
     "build/**/*.js",
     "./types/**/*.d.ts",
     "eslint-local-rules.js",
+
+    // TODO(esmodules): JSON files included via resolveJsonModule. Removable on the switch to ES Modules.
+    "package.json",
+    "lighthouse-core/lib/i18n/locales/en-US.json",
+    "lighthouse-core/test/results/sample_v2.json",
+    "lighthouse-core/lib/sd-validation/assets/*.json",
+    "lighthouse-core/test/fixtures/unresolved-perflog.json",
+    "lighthouse-core/test/fixtures/traces/lcp-m78.devtools.log.json",
+    "third-party/snyk/snapshot.json",
+    "lighthouse-core/audits/byte-efficiency/polyfill-graph-data.json",
   ],
   "exclude": [
-    "lighthouse-core/lib/cdt",
     "lighthouse-core/test/audits/**/*.js",
     "lighthouse-core/test/fixtures/**/*.js",
-    "lighthouse-core/test/report/**/*.js",
     "lighthouse-core/test/computed/**/*.js",
     "clients/test/**/*.js",
     "lighthouse-cli/test/fixtures/**/*.js",
@@ -102,7 +110,9 @@
     "lighthouse-core/test/scripts/i18n/collect-strings-test.js",
   ],
   "files": [
-    // Opt-in to typechecking for some core tests.
+    // Opt-in to typechecking for some core tests and test-support files.
     "lighthouse-core/test/audits/script-treemap-data-test.js",
+    "lighthouse-cli/test/fixtures/static-server.js",
+    "lighthouse-core/test/fixtures/config-plugins/lighthouse-plugin-simple/plugin-simple.js",
   ],
 }

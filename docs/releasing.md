@@ -154,7 +154,6 @@ echo "Complete the _Release publicity_ tasks documented above"
 
 ```sh
 git checkout vx.x.x # Checkout the specific version.
-yarn build-devtools
 yarn devtools ~/src/devtools/devtools-frontend
 
 cd ~/src/devtools/devtools-frontend

@@ -5,7 +5,17 @@
  */
 'use strict';
 
-/* global DOM, ViewerUIFeatures, ReportRenderer, DragAndDrop, GithubApi, PSIApi, logger, idbKeyval */
+import idbKeyval from 'idb-keyval';
+
+import {DragAndDrop} from './drag-and-drop.js';
+import {GithubApi} from './github-api.js';
+import {PSIApi} from './psi-api';
+import {ViewerUIFeatures} from './viewer-ui-features.js';
+import {DOM} from '../../../report/renderer/dom.js';
+import {ReportRenderer} from '../../../report/renderer/report-renderer.js';
+import {TextEncoding} from '../../../report/renderer/text-encoding.js';
+
+/* global logger */
 
 /** @typedef {import('./psi-api').PSIParams} PSIParams */
 
@@ -27,7 +37,7 @@ function find(query, context) {
 /**
  * Class that manages viewing Lighthouse reports.
  */
-class LighthouseReportViewer {
+export class LighthouseReportViewer {
   constructor() {
     this._onPaste = this._onPaste.bind(this);
     this._onSaveJson = this._onSaveJson.bind(this);
@@ -103,6 +113,17 @@ class LighthouseReportViewer {
     const gistId = params.get('gist');
     const psiurl = params.get('psiurl');
     const jsonurl = params.get('jsonurl');
+    const gzip = params.get('gzip') === '1';
+
+    if (location.hash) {
+      const hashParams = JSON.parse(TextEncoding.fromBase64(location.hash.substr(1), {gzip}));
+      if (hashParams.lhr) {
+        this._replaceReportHtml(hashParams.lhr);
+        return Promise.resolve();
+      } else {
+        console.warn('URL hash is populated, but not decoded successfully', hashParams);
+      }
+    }
 
     if (!gistId && !psiurl && !jsonurl) return Promise.resolve();
 
@@ -177,11 +198,13 @@ class LighthouseReportViewer {
   _replaceReportHtml(json) {
     // Allow users to view the runnerResult
     if ('lhr' in json) {
-      json = /** @type {LH.RunnerResult} */ (json).lhr;
+      const runnerResult = /** @type {{lhr: LH.Result}} */ (/** @type {unknown} */ (json));
+      json = runnerResult.lhr;
     }
     // Allow users to drop in PSI's json
     if ('lighthouseResult' in json) {
-      json = /** @type {{lighthouseResult: LH.Result}} */ (json).lighthouseResult;
+      const psiResp = /** @type {{lighthouseResult: LH.Result}} */ (/** @type {unknown} */ (json));
+      json = psiResp.lighthouseResult;
     }
 
     // Install as global for easier debugging
@@ -220,7 +243,6 @@ class LighthouseReportViewer {
       features.initFeatures(json);
     } catch (e) {
       logger.error(`Error rendering report: ${e.message}`);
-      dom.resetTemplates(); // TODO(bckenny): hack
       container.textContent = '';
       throw e;
     } finally {
@@ -283,21 +305,22 @@ class LighthouseReportViewer {
    * @return {Promise<string|void>} id of the created gist.
    * @private
    */
-  _onSaveJson(reportJson) {
+  async _onSaveJson(reportJson) {
     if (window.ga) {
       window.ga('send', 'event', 'report', 'share');
     }
 
     // TODO: find and reuse existing json gist if one exists.
-    return this._github.createGist(reportJson).then(id => {
+    try {
+      const id = await this._github.createGist(reportJson);
       if (window.ga) {
         window.ga('send', 'event', 'report', 'created');
       }
-
       history.pushState({}, '', `${LighthouseReportViewer.APP_URL}?gist=${id}`);
-
       return id;
-    }).catch(err => logger.log(err.message));
+    } catch (err) {
+      logger.log(err.message);
+    }
   }
 
   /**
@@ -434,9 +457,4 @@ class LighthouseReportViewer {
     const placeholder = document.querySelector('.viewer-placeholder-inner');
     if (placeholder) placeholder.classList.toggle('lh-loading', force);
   }
-}
-
-// node export for testing.
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = LighthouseReportViewer;
 }

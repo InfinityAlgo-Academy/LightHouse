@@ -9,10 +9,8 @@
 
 const TraceOfTab = require('../../computed/trace-of-tab.js');
 const pwaTrace = require('../fixtures/traces/progressive-app-m60.json');
-const noFCPtrace = require('../fixtures/traces/airhorner_no_fcp.json');
-const noNavStartTrace = require('../fixtures/traces/no_navstart_event.json');
 
-describe('TraceOfTabComputed', () => {
+describe('TraceOfTab', () => {
   it('computes the artifact', async () => {
     const context = {computedCache: new Map()};
     const traceOfTab = await TraceOfTab.request(pwaTrace, context);
@@ -23,8 +21,27 @@ describe('TraceOfTabComputed', () => {
     delete traceOfTab.processEvents;
     delete traceOfTab.mainThreadEvents;
     delete traceOfTab.frameTreeEvents;
+    delete traceOfTab.frameEvents;
 
     expect(traceOfTab).toEqual({
+      mainFrameIds: {
+        frameId: '0x25a638821e30',
+        pid: 44277,
+        tid: 775,
+      },
+      timeOriginEvt: {
+        args: {
+          frame: '0x25a638821e30',
+        },
+        cat: 'blink.user_timing',
+        name: 'navigationStart',
+        ph: 'R',
+        pid: 44277,
+        tid: 775,
+        ts: 225414172015,
+        tts: 455539,
+      },
+      frames: [],
       domContentLoadedEvt: {
         args: {
           frame: '0x25a638821e30',
@@ -102,24 +119,6 @@ describe('TraceOfTabComputed', () => {
         ts: 225416370913,
         tts: 2369379,
       },
-      mainFrameIds: {
-        frameId: '0x25a638821e30',
-        pid: 44277,
-        tid: 775,
-      },
-      timeOriginEvt: {
-        args: {
-          frame: '0x25a638821e30',
-        },
-        cat: 'blink.user_timing',
-        name: 'navigationStart',
-        ph: 'R',
-        pid: 44277,
-        tid: 775,
-        ts: 225414172015,
-        tts: 455539,
-      },
-      frames: [],
       timestamps: {
         domContentLoaded: 225414732309,
         firstContentfulPaint: 225414670885,
@@ -141,35 +140,5 @@ describe('TraceOfTabComputed', () => {
         traceEnd: 12539.872,
       },
     });
-  });
-
-  it('fails with NO_NAVSTART', async () => {
-    const context = {computedCache: new Map()};
-    await expect(TraceOfTab.request(noNavStartTrace, context))
-      .rejects.toMatchObject({code: 'NO_NAVSTART'});
-  });
-
-  it('fails with NO_FCP', async () => {
-    const context = {computedCache: new Map()};
-    await expect(TraceOfTab.request(noFCPtrace, context))
-      .rejects.toMatchObject({code: 'NO_FCP'});
-  });
-
-  it('fails with NO_TRACING_STARTED', async () => {
-    const context = {computedCache: new Map()};
-    const noTracingStartedTrace = {
-      traceEvents: pwaTrace.traceEvents.filter(event => {
-        if (event.name === 'TracingStartedInBrowser' ||
-            event.name === 'TracingStartedInPage' ||
-            event.name === 'ResourceSendRequest') {
-          return false;
-        }
-
-        return true;
-      }),
-    };
-
-    await expect(TraceOfTab.request(noTracingStartedTrace, context))
-      .rejects.toMatchObject({code: 'NO_TRACING_STARTED'});
   });
 });

@@ -17,6 +17,7 @@ describe('DuplicatedJavascript computed artifact', () => {
     const context = {computedCache: new Map(), options: {ignoreThresholdInBytes: 200}};
     const {map, content} = loadSourceMapFixture('foo.min');
     const artifacts = {
+      GatherContext: {gatherMode: 'navigation'},
       URL: {finalUrl: 'https://example.com'},
       SourceMaps: [
         {scriptUrl: 'https://example.com/foo1.min.js', map},
@@ -43,6 +44,7 @@ describe('DuplicatedJavascript computed artifact', () => {
     const bundleData1 = loadSourceMapFixture('coursehero-bundle-1');
     const bundleData2 = loadSourceMapFixture('coursehero-bundle-2');
     const artifacts = {
+      GatherContext: {gatherMode: 'navigation'},
       URL: {finalUrl: 'https://example.com'},
       SourceMaps: [
         {scriptUrl: 'https://example.com/coursehero-bundle-1.js', map: bundleData1.map},
@@ -319,6 +321,7 @@ describe('DuplicatedJavascript computed artifact', () => {
     const bundleData2 = loadSourceMapFixture('coursehero-bundle-2');
     const artifacts = {
       URL: {finalUrl: 'https://www.paulirish.com'},
+      GatherContext: {gatherMode: 'navigation'},
       devtoolsLogs: {
         [DuplicatedJavascript.DEFAULT_PASS]: devtoolsLog,
       },

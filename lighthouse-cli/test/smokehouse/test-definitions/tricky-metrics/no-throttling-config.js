@@ -20,4 +20,4 @@ const noThrottlingConfig = {
   },
 };
 
-module.exports = noThrottlingConfig;
+export default noThrottlingConfig;

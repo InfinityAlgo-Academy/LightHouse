@@ -14,6 +14,7 @@ const log = require('lighthouse-logger');
 const Gatherer = require('../../gather/gatherers/gatherer.js');
 const Audit = require('../../audits/audit.js');
 const i18n = require('../../lib/i18n/i18n.js');
+const {isNode12SmallIcu} = require('../test-utils.js');
 
 /* eslint-env jest */
 
@@ -132,6 +133,7 @@ describe('Config', () => {
         return {
           id: 'missing-artifact-audit',
           title: 'none',
+          failureTitle: 'none',
           description: 'none',
           requiredArtifacts: [
             // Require fake artifact amidst base artifact and default artifacts.
@@ -160,6 +162,7 @@ describe('Config', () => {
         return {
           id: 'optional-artifact-audit',
           title: 'none',
+          failureTitle: 'none',
           description: 'none',
           requiredArtifacts: [
             'URL', // base artifact
@@ -191,6 +194,7 @@ describe('Config', () => {
         return {
           id: 'optional-artifact-audit',
           title: 'none',
+          failureTitle: 'none',
           description: 'none',
           requiredArtifacts: [
             'URL', // base artifact
@@ -222,6 +226,7 @@ describe('Config', () => {
         return {
           id: 'optional-artifact-audit',
           title: 'none',
+          failureTitle: 'none',
           description: 'none',
           requiredArtifacts: [
             'URL', // base artifact
@@ -253,6 +258,7 @@ describe('Config', () => {
         return {
           id: 'optional-artifact-audit',
           title: 'none',
+          failureTitle: 'none',
           description: 'none',
           requiredArtifacts: [
             'URL', // base artifact
@@ -284,6 +290,7 @@ describe('Config', () => {
         return {
           id: 'base-artifacts-audit',
           title: 'base',
+          failureTitle: 'base',
           description: 'base',
           requiredArtifacts: ['HostUserAgent', 'URL', 'Stacks', 'WebAppManifest'],
         };
@@ -429,7 +436,7 @@ describe('Config', () => {
           }
         },
       ],
-    }), /no failureTitle and should/);
+    }), /no meta.failureTitle and should/);
 
     assert.throws(_ => new Config({
       audits: [basePath + '/missing-description'],
@@ -442,6 +449,7 @@ describe('Config', () => {
             return {
               id: 'empty-string-description',
               title: 'title',
+              failureTitle: 'none',
               description: '',
               requiredArtifacts: [],
             };
@@ -829,7 +837,7 @@ describe('Config', () => {
       const locale = 'ar-XB';
       const config = new Config({settings: {locale}});
       // COMPAT: Node 12 only has 'en' by default.
-      if (process.versions.node.startsWith('12')) return;
+      if (isNode12SmallIcu()) return;
       assert.strictEqual(config.settings.locale, locale);
     });
 
@@ -838,7 +846,7 @@ describe('Config', () => {
       const flagsLocale = 'ar-XB';
       const config = new Config({settings: {locale: settingsLocale}}, {locale: flagsLocale});
       // COMPAT: Node 12 only has 'en' by default.
-      if (process.versions.node.startsWith('12')) return;
+      if (isNode12SmallIcu()) return;
       assert.strictEqual(config.settings.locale, flagsLocale);
     });
   });
@@ -1241,7 +1249,7 @@ describe('Config', () => {
       assert.ok(config.audits.find(a => a.implementation.meta.id === 'full-page-screenshot'));
     });
 
-    it('should keep uncategorized audits even if onlyCategories is set', () => {
+    it('should keep full-page-screenshot even if onlyCategories is set', () => {
       assert.ok(origConfig.audits.includes('full-page-screenshot'));
       // full-page-screenshot does not belong to a category.
       const matchCategories = Object.values(origConfig.categories).filter(cat =>
@@ -1256,6 +1264,17 @@ describe('Config', () => {
       };
       const config = new Config(extended);
 
+      assert.ok(config.audits.find(a => a.implementation.meta.id === 'full-page-screenshot'));
+    });
+
+    it('should keep full-page-screenshot even if skipAudits is set', () => {
+      const extended = {
+        extends: 'lighthouse:default',
+        settings: {
+          skipAudits: ['font-size'],
+        },
+      };
+      const config = new Config(extended);
       assert.ok(config.audits.find(a => a.implementation.meta.id === 'full-page-screenshot'));
     });
   });
@@ -1297,7 +1316,7 @@ describe('Config', () => {
 
       const expectedInstance = {
         meta: {
-          supportedModes: ['snapshot', 'navigation'],
+          supportedModes: ['snapshot', 'timespan', 'navigation'],
         },
       };
       assert.deepEqual(mergedJson[0].gatherers,

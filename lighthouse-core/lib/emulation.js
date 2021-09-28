@@ -23,8 +23,6 @@ const NO_CPU_THROTTLE_METRICS = {
  */
 async function emulate(session, settings) {
   if (settings.emulatedUserAgent !== false) {
-    // Network.enable must be called for UA overriding to work
-    await session.sendCommand('Network.enable');
     await session.sendCommand('Network.setUserAgentOverride', {
       userAgent: /** @type {string} */ (settings.emulatedUserAgent),
     });
@@ -49,7 +47,6 @@ async function emulate(session, settings) {
  * @return {Promise<void>}
  */
 async function throttle(session, settings) {
-  // TODO(FR-COMPAT): reconsider if this should be resetting anything
   if (settings.throttlingMethod !== 'devtools') return clearNetworkThrottling(session);
 
   await Promise.all([

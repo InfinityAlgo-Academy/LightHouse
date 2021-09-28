@@ -15,7 +15,7 @@ const getLineNumberFromJsonLDPath = require('./line-number-from-jsonld-path.js')
  * Validates JSON-LD input. Returns array of error objects.
  *
  * @param {string} textInput
- * @returns {Promise<Array<LH.StructuredData.ValidationError>>}
+ * @return {Promise<Array<LH.StructuredData.ValidationError>>}
  */
 module.exports = async function validate(textInput) {
   // STEP 1: VALIDATE JSON

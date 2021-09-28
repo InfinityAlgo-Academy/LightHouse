@@ -13,15 +13,16 @@ jobs:
     strategy:
       matrix:
         chrome-channel: ['stable', 'ToT']
-        smoke-test-invert: [false, true]
+        smoke-test-shard: [1, 2]
       # e.g. if set 1 fails, continue with set 2 anyway
       fail-fast: false
     runs-on: ubuntu-latest
     env:
-      # The smokehouse tests run by job `test set 1`. `test set 2` will run the rest.
-      SMOKE_BATCH_1: a11y oopif pwa pwa2 pwa3 dbw redirects errors offline
-    # Job named e.g. "Chrome stable, test set 1".
-    name: Chrome ${{ matrix.chrome-channel }}, batch ${{ matrix.smoke-test-invert == false && '1' || '2' }}
+      # The total number of shards. Set dynamically when length of single matrix variable is
+      # computable. See https://github.community/t/get-length-of-strategy-matrix-or-get-all-matrix-options/18342
+      SHARD_TOTAL: 2
+    # Job named e.g. "Chrome stable, batch 1".
+    name: Chrome ${{ matrix.chrome-channel }}, batch ${{ matrix.smoke-test-shard }}
 
     steps:
     - name: git clone
@@ -46,11 +47,13 @@ jobs:
       run: bash $GITHUB_WORKSPACE/lighthouse-core/scripts/download-chrome.sh && mv chrome-linux chrome-linux-tot
 
     - run: yarn install --frozen-lockfile --network-timeout 1000000
+    - run: yarn build-report
+    - run: yarn reset-link
 
     - run: sudo apt-get install xvfb
     - name: Run smoke tests
       run: |
-        xvfb-run --auto-servernum yarn c8 yarn smoke --debug -j=1 --retries=2 --invert-match ${{ matrix.smoke-test-invert }} $SMOKE_BATCH_1
+        xvfb-run --auto-servernum yarn c8 yarn smoke --debug -j=1 --retries=2 --shard=${{ matrix.smoke-test-shard }}/$SHARD_TOTAL
         yarn c8 report --reporter text-lcov > smoke-coverage.lcov
 
     - name: Upload test coverage to Codecov
@@ -62,6 +65,13 @@ jobs:
 
     # Fail if any changes were written to source files.
     - run: git diff --exit-code
+
+    - name: Upload dist
+      if: failure()
+      uses: actions/upload-artifact@v1
+      with:
+        name: Smokehouse (ubuntu; chrome ${{ matrix.chrome-channel }})
+        path: .tmp/smokehouse-ci-failures/
 
   # Only run smoke tests for windows against stable chrome.
   smoke-windows:
@@ -78,6 +88,7 @@ jobs:
         node-version: 12.x
 
     - run: yarn install --frozen-lockfile --network-timeout 1000000
+    - run: yarn build-report
 
     - name: Run smoke tests
       # Windows bots are slow, so only run enough tests to verify matching behavior.
@@ -85,6 +96,44 @@ jobs:
 
     # Fail if any changes were written to source files.
     - run: git diff --exit-code
+
+    - name: Upload dist
+      if: failure()
+      uses: actions/upload-artifact@v1
+      with:
+        name: Smokehouse (windows)
+        path: .tmp/smokehouse-ci-failures/
+
+  smoke-fr:
+    runs-on: ubuntu-latest
+    name: Fraggle Rock
+
+    steps:
+    - name: git clone
+      uses: actions/checkout@v2
+
+    - name: Use Node.js 12.x
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12.x
+
+    - run: yarn install --frozen-lockfile --network-timeout 1000000
+    - run: yarn build-report
+    - run: yarn reset-link
+
+    - run: sudo apt-get install xvfb
+    - name: yarn smoke --fraggle-rock
+      run: xvfb-run --auto-servernum yarn smoke --debug --fraggle-rock -j=1 --retries=2 --invert-match pwa offline
+
+    # Fail if any changes were written to source files.
+    - run: git diff --exit-code
+
+    - name: Upload dist
+      if: failure()
+      uses: actions/upload-artifact@v1
+      with:
+        name: Smokehouse (fr)
+        path: .tmp/smokehouse-ci-failures/
 
   smoke-bundle:
     runs-on: ubuntu-latest
@@ -100,6 +149,7 @@ jobs:
         node-version: 12.x
 
     - run: yarn install --frozen-lockfile --network-timeout 1000000
+    - run: yarn build-report
     - run: yarn build-devtools
 
     - run: sudo apt-get install xvfb
@@ -108,3 +158,10 @@ jobs:
 
     # Fail if any changes were written to source files.
     - run: git diff --exit-code
+
+    - name: Upload dist
+      if: failure()
+      uses: actions/upload-artifact@v1
+      with:
+        name: Smokehouse (bundled)
+        path: .tmp/smokehouse-ci-failures/

@@ -28,9 +28,8 @@ const STATIC_RESULTS = {
     severity: SEVERITY.high,
     description: {
       formattedDefault:
-        'Elements controlled by object-src are considered legacy features. ' +
-        'Consider setting object-src to \'none\' to prevent the injection of ' +
-        'plugins that execute unsafe scripts.',
+        'Missing object-src allows the injection of plugins that execute unsafe scripts. ' +
+        'Consider setting object-src to \'none\' if you can.',
     },
     directive: 'object-src',
   },
@@ -43,15 +42,6 @@ const STATIC_RESULTS = {
         'Consider setting base-uri to \'none\' or \'self\'.',
     },
     directive: 'base-uri',
-  },
-  noReportingDestination: {
-    severity: SEVERITY.medium,
-    description: {
-      formattedDefault:
-        'No CSP configures a reporting destination. ' +
-        'This makes it difficult to maintain the CSP over time and monitor for any breakages.',
-    },
-    directive: 'report-uri',
   },
   metaTag: {
     severity: SEVERITY.medium,
@@ -89,6 +79,7 @@ it('audit basic header', async () => {
     },
   };
   const results = await CspXss.audit(artifacts, {computedCache: new Map()});
+  expect(results.notApplicable).toBeFalsy();
   expect(results.details.items).toMatchObject(
     [
       {
@@ -111,10 +102,31 @@ it('audit basic header', async () => {
       },
       STATIC_RESULTS.noObjectSrc,
       STATIC_RESULTS.noBaseUri,
-      STATIC_RESULTS.noReportingDestination,
       STATIC_RESULTS.unsafeInlineFallback,
     ]
   );
+});
+
+it('marked N/A if no warnings found', async () => {
+  const artifacts = {
+    URL: 'https://example.com',
+    MetaElements: [],
+    devtoolsLogs: {
+      defaultPass: networkRecordsToDevtoolsLog([
+        {
+          url: 'https://example.com',
+          responseHeaders: [
+            {
+              name: 'Content-Security-Policy',
+              value: `script-src 'none'; object-src 'none'; base-uri 'none'; report-uri https://csp.example.com`},
+          ],
+        },
+      ]),
+    },
+  };
+  const results = await CspXss.audit(artifacts, {computedCache: new Map()});
+  expect(results.details.items).toHaveLength(0);
+  expect(results.notApplicable).toBeTruthy();
 });
 
 describe('getRawCsps', () => {
@@ -272,7 +284,6 @@ describe('constructResults', () => {
         },
       },
       STATIC_RESULTS.noObjectSrc,
-      STATIC_RESULTS.noReportingDestination,
     ]);
   });
 

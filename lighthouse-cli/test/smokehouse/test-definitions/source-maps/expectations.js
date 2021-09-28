@@ -5,41 +5,40 @@
  */
 'use strict';
 
-const fs = require('fs');
+import fs from 'fs';
+import {LH_ROOT} from '../../../../../root.js';
 
 const mapJson =
-  fs.readFileSync(`${__dirname}/../../../fixtures/source-map/script.js.map`, 'utf-8');
+  fs.readFileSync(`${LH_ROOT}/lighthouse-cli/test/fixtures/source-map/script.js.map`, 'utf-8');
 const map = JSON.parse(mapJson);
 
 /**
- * @type {Array<Smokehouse.ExpectedRunnerResult>}
- * Expected Lighthouse audit values for seo tests
+ * @type {Smokehouse.ExpectedRunnerResult}
+ * Expected Lighthouse values for source map artifacts.
  *
  * We have experienced timeouts in the past when fetching source maps.
  * We should verify the timing issue in Chromium if this gets flaky.
  */
-const expectations = [
-  {
-    artifacts: {
-      SourceMaps: [
-        {
-          scriptUrl: 'http://localhost:10200/source-map/source-map-tester.html',
-          sourceMapUrl: 'http://localhost:10200/source-map/script.js.map',
-          map,
-        },
-        {
-          scriptUrl: 'http://localhost:10200/source-map/source-map-tester.html',
-          sourceMapUrl: 'http://localhost:10503/source-map/script.js.map',
-          map,
-        },
-      ],
-    },
-    lhr: {
-      requestedUrl: 'http://localhost:10200/source-map/source-map-tester.html',
-      finalUrl: 'http://localhost:10200/source-map/source-map-tester.html',
-      audits: {},
-    },
+const expectations = {
+  artifacts: {
+    SourceMaps: [
+      {
+        scriptUrl: 'http://localhost:10200/source-map/source-map-tester.html',
+        sourceMapUrl: 'http://localhost:10200/source-map/script.js.map',
+        map,
+      },
+      {
+        scriptUrl: 'http://localhost:10200/source-map/source-map-tester.html',
+        sourceMapUrl: 'http://localhost:10503/source-map/script.js.map',
+        map,
+      },
+    ],
   },
-];
+  lhr: {
+    requestedUrl: 'http://localhost:10200/source-map/source-map-tester.html',
+    finalUrl: 'http://localhost:10200/source-map/source-map-tester.html',
+    audits: {},
+  },
+};
 
-module.exports = expectations;
+export {expectations};

@@ -18,7 +18,7 @@
     "message": "Атрибути `[aria-*]` відповідають своїм ролям"
   },
   "lighthouse-core/audits/accessibility/aria-command-name.js | description": {
-    "message": "Без такої назви програма зачитує тільки загальну назву (тобто роль або тип) елемента, що незручно для користувачів спеціальних можливостей. [Докладніше.](https://web.dev/aria-name/)"
+    "message": "Без доступної назви програма зачитує тільки загальну назву (тобто роль або тип) елемента, що незручно для користувачів спеціальних можливостей. [Докладніше.](https://web.dev/aria-name/)"
   },
   "lighthouse-core/audits/accessibility/aria-command-name.js | failureTitle": {
     "message": "Елементи з ролями `button`, `link` і `menuitem` не мають зрозумілих назв для зчитування з екрана."
@@ -54,7 +54,7 @@
     "message": "Поля введення ARIA мають доступні для зчитування назви"
   },
   "lighthouse-core/audits/accessibility/aria-meter-name.js | description": {
-    "message": "Без такої назви програма зачитує тільки загальну назву (тобто роль або тип) елемента, що незручно для користувачів спеціальних можливостей. [Докладніше.](https://web.dev/aria-name/)"
+    "message": "Без доступної назви програма зачитує тільки загальну назву (тобто роль або тип) елемента, що незручно для користувачів спеціальних можливостей. [Докладніше.](https://web.dev/aria-name/)"
   },
   "lighthouse-core/audits/accessibility/aria-meter-name.js | failureTitle": {
     "message": "Елементи ARIA з роллю `meter` не мають зрозумілих назв для зчитування з екрана."
@@ -63,7 +63,7 @@
     "message": "Елементи ARIA з роллю `meter` мають зрозумілі назви для зчитування з екрана"
   },
   "lighthouse-core/audits/accessibility/aria-progressbar-name.js | description": {
-    "message": "Без такої назви програма зачитує тільки загальну назву (тобто роль або тип) елемента, що незручно для користувачів спеціальних можливостей. [Докладніше.](https://web.dev/aria-name/)"
+    "message": "Коли елемент \"`progressbar`\" не має доступної назви, програма зачитує тільки його загальну назву (тобто роль або тип), що незручно для користувачів спеціальних можливостей. [Докладніше.](https://web.dev/aria-name/)"
   },
   "lighthouse-core/audits/accessibility/aria-progressbar-name.js | failureTitle": {
     "message": "Елементи ARIA з роллю `progressbar` не мають зрозумілих назв для зчитування з екрана."
@@ -117,7 +117,7 @@
     "message": "Поля перемикача ARIA мають доступні для зчитування назви"
   },
   "lighthouse-core/audits/accessibility/aria-tooltip-name.js | description": {
-    "message": "Без такої назви програма зачитує тільки загальну назву (тобто роль або тип) елемента, що незручно для користувачів спеціальних можливостей. [Докладніше.](https://web.dev/aria-name/)"
+    "message": "Без доступної назви програма зачитує тільки загальну назву (тобто роль або тип) елемента, що незручно для користувачів спеціальних можливостей. [Докладніше.](https://web.dev/aria-name/)"
   },
   "lighthouse-core/audits/accessibility/aria-tooltip-name.js | failureTitle": {
     "message": "Елементи ARIA з роллю `tooltip` не мають зрозумілих назв для зчитування з екрана."
@@ -126,7 +126,7 @@
     "message": "Елементи ARIA з роллю `tooltip` мають зрозумілі назви для зчитування з екрана"
   },
   "lighthouse-core/audits/accessibility/aria-treeitem-name.js | description": {
-    "message": "Без такої назви програма зачитує тільки загальну назву (тобто роль або тип) елемента, що незручно для користувачів спеціальних можливостей. [Докладніше.](https://web.dev/aria-name/)"
+    "message": "Без доступної назви програма зачитує тільки загальну назву (тобто роль або тип) елемента, що незручно для користувачів спеціальних можливостей. [Докладніше.](https://web.dev/aria-name/)"
   },
   "lighthouse-core/audits/accessibility/aria-treeitem-name.js | failureTitle": {
     "message": "Елементи ARIA з роллю `treeitem` не мають зрозумілих назв для зчитування з екрана."
@@ -477,7 +477,7 @@
     "message": "Не показуйте застарілі елементи JavaScript у сучасних веб-переглядачах"
   },
   "lighthouse-core/audits/byte-efficiency/modern-image-formats.js | description": {
-    "message": "Формати зображень JPEG 2000, JPEG XR і WebP часто стискаються краще, ніж PNG чи JPEG. Тому вони швидше завантажуються й використовують менше даних. [Докладніше](https://web.dev/uses-webp-images/)."
+    "message": "Формати зображень WebP і AVIF часто стискаються краще, ніж PNG чи JPEG. Тому вони швидше завантажуються й використовують менше даних. [Докладніше.](https://web.dev/uses-webp-images/)"
   },
   "lighthouse-core/audits/byte-efficiency/modern-image-formats.js | title": {
     "message": "Показуйте зображення в нових форматах"
@@ -548,6 +548,12 @@
   "lighthouse-core/audits/byte-efficiency/uses-optimized-images.js | title": {
     "message": "Ефективно кодуйте зображення"
   },
+  "lighthouse-core/audits/byte-efficiency/uses-responsive-images-snapshot.js | columnActualDimensions": {
+    "message": "Фактичні розміри"
+  },
+  "lighthouse-core/audits/byte-efficiency/uses-responsive-images-snapshot.js | columnDisplayedDimensions": {
+    "message": "Відображені розміри"
+  },
   "lighthouse-core/audits/byte-efficiency/uses-responsive-images.js | description": {
     "message": "Показуйте зображення правильного розміру, щоб заощадити мобільний трафік і покращити час завантаження. [Докладніше](https://web.dev/uses-responsive-images/)."
   },
@@ -588,7 +594,7 @@
     "message": "Рівень серйозності"
   },
   "lighthouse-core/audits/csp-xss.js | description": {
-    "message": "Надійні Правила щодо безпеки контенту (CSP) значно зменшують ризик міжсайтного скриптингу (XSS). [Докладніше](https://web.dev/strict-csp/)"
+    "message": "Надійні Правила щодо безпеки контенту (CSP) значно зменшують ризик міжсайтного скриптингу (XSS). [Докладніше](https://web.dev/csp-xss/)"
   },
   "lighthouse-core/audits/csp-xss.js | itemSeveritySyntax": {
     "message": "Синтаксис"
@@ -903,10 +909,10 @@
     "message": "Маніфест не містить полів name або short_name"
   },
   "lighthouse-core/audits/installable-manifest.js | manifest-missing-suitable-icon": {
-    "message": "У маніфесті немає відповідного значка. Потрібен значок у форматі PNG, SVG або WebP з роздільною здатністю принаймні {value0} пікс. і визначеним атрибутом sizes. Якщо задається атрибут purpose, для нього слід указати значення \"any\" або \"maskable\"."
+    "message": "У маніфесті немає відповідного значка. Потрібен значок у форматі PNG, SVG або WebP із роздільною здатністю принаймні {value0} пікс. і визначеним атрибутом purpose. Якщо він задається, слід указати значення \"any\"."
   },
   "lighthouse-core/audits/installable-manifest.js | no-acceptable-icon": {
-    "message": "Немає значка розміром принаймні {value0} пікс. (квадрат) у форматі PNG, SVG або WebP"
+    "message": "Немає значка розміром принаймні {value0} пікс. (квадрат) у форматі PNG, SVG або WebP, у якого атрибут purpose не заданий або заданий зі значенням \"any\""
   },
   "lighthouse-core/audits/installable-manifest.js | no-icon-available": {
     "message": "Завантажений значок порожній або пошкоджений"
@@ -985,21 +991,6 @@
   },
   "lighthouse-core/audits/is-on-https.js | warning": {
     "message": "Дозволено із застереженням"
-  },
-  "lighthouse-core/audits/large-javascript-libraries.js | columnLibraryName": {
-    "message": "Бібліотека"
-  },
-  "lighthouse-core/audits/large-javascript-libraries.js | description": {
-    "message": "Великі бібліотеки JavaScript можуть призвести до низької продуктивності. Щоб зменшити розмір пакета, використовуйте менші бібліотеки з такими ж функціями. [Докладніше](https://developers.google.com/web/fundamentals/performance/webpack/decrease-frontend-size#optimize_dependencies)."
-  },
-  "lighthouse-core/audits/large-javascript-libraries.js | displayValue": {
-    "message": "{libraryCount,plural, =1{Знайдено 1 велику бібліотеку}one{Знайдено # велику бібліотеку}few{Знайдено # великі бібліотеки}many{Знайдено # великих бібліотек}other{Знайдено # великої бібліотеки}}"
-  },
-  "lighthouse-core/audits/large-javascript-libraries.js | failureTitle": {
-    "message": "Замініть великі бібліотеки JavaScript, які мають менші альтернативи"
-  },
-  "lighthouse-core/audits/large-javascript-libraries.js | title": {
-    "message": "Уникає великих бібліотек JavaScript, для яких є менші альтернативи"
   },
   "lighthouse-core/audits/largest-contentful-paint-element.js | description": {
     "message": "Це найбільший елемент контенту, який видно в області перегляду. [Докладніше](https://web.dev/lighthouse-largest-contentful-paint/)"
@@ -1200,7 +1191,7 @@
     "message": "Указує на інше місце `hreflang` ({url})"
   },
   "lighthouse-core/audits/seo/canonical.js | explanationRelative": {
-    "message": "Відносна URL-адреса ({url})"
+    "message": "Це не абсолютна URL-адреса ({url})"
   },
   "lighthouse-core/audits/seo/canonical.js | explanationRoot": {
     "message": "Указує на основну URL-адресу домену (домашню сторінку), а не на еквівалентну сторінку вмісту"
@@ -1751,9 +1742,6 @@
   "lighthouse-core/lib/csp-evaluator.js | unknownKeyword": {
     "message": "Схоже, {keyword} – це недійсне ключове слово."
   },
-  "lighthouse-core/lib/csp-evaluator.js | unsafeInline": {
-    "message": "unsafe-inline дозволяє виконувати ненадійні вбудовані скрипти та застосовувати обробники подій. Щоб дозволити окремі скрипти, скористатися nonces або hashes для CSP."
-  },
   "lighthouse-core/lib/csp-evaluator.js | unsafeInlineFallback": {
     "message": "Додайте команду unsafe-inline (ігнорується веб-переглядачами, що підтримують nonces/hashes) для зворотної сумісності зі старішими веб-переглядачами."
   },
@@ -1954,144 +1942,6 @@
   },
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "Схоже, указана вами URL-адреса недійсна."
-  },
-  "lighthouse-core/report/html/renderer/util.js | calculatorLink": {
-    "message": "Показати калькулятор."
-  },
-  "lighthouse-core/report/html/renderer/util.js | crcInitialNavigation": {
-    "message": "Початкова навігація"
-  },
-  "lighthouse-core/report/html/renderer/util.js | crcLongestDurationLabel": {
-    "message": "Максимальна критична затримка шляху:"
-  },
-  "lighthouse-core/report/html/renderer/util.js | dropdownCopyJSON": {
-    "message": "Копіювати JSON"
-  },
-  "lighthouse-core/report/html/renderer/util.js | dropdownDarkTheme": {
-    "message": "Увімкнути або вимкнути темну тему"
-  },
-  "lighthouse-core/report/html/renderer/util.js | dropdownPrintExpanded": {
-    "message": "Розгорнути вікно друку"
-  },
-  "lighthouse-core/report/html/renderer/util.js | dropdownPrintSummary": {
-    "message": "Друкувати підсумок"
-  },
-  "lighthouse-core/report/html/renderer/util.js | dropdownSaveGist": {
-    "message": "Зберегти як Gist"
-  },
-  "lighthouse-core/report/html/renderer/util.js | dropdownSaveHTML": {
-    "message": "Зберегти як HTML"
-  },
-  "lighthouse-core/report/html/renderer/util.js | dropdownSaveJSON": {
-    "message": "Зберегти як JSON"
-  },
-  "lighthouse-core/report/html/renderer/util.js | dropdownViewer": {
-    "message": "Відкрити в засобі перегляду"
-  },
-  "lighthouse-core/report/html/renderer/util.js | errorLabel": {
-    "message": "Помилка."
-  },
-  "lighthouse-core/report/html/renderer/util.js | errorMissingAuditInfo": {
-    "message": "Повідомлення про помилку: немає інформації про перевірку"
-  },
-  "lighthouse-core/report/html/renderer/util.js | footerIssue": {
-    "message": "Повідомити про проблему"
-  },
-  "lighthouse-core/report/html/renderer/util.js | labDataTitle": {
-    "message": "Дані тестів"
-  },
-  "lighthouse-core/report/html/renderer/util.js | lsPerformanceCategoryDescription": {
-    "message": "Аналіз [Lighthouse](https://developers.google.com/web/tools/lighthouse/) поточної сторінки в емульованій мобільній мережі. Значення приблизні й можуть відрізнятися."
-  },
-  "lighthouse-core/report/html/renderer/util.js | manualAuditsGroupTitle": {
-    "message": "Додаткові елементи, які потрібно перевірити вручну"
-  },
-  "lighthouse-core/report/html/renderer/util.js | notApplicableAuditsGroupTitle": {
-    "message": "Не застосовуються"
-  },
-  "lighthouse-core/report/html/renderer/util.js | opportunityResourceColumnLabel": {
-    "message": "Можливість"
-  },
-  "lighthouse-core/report/html/renderer/util.js | opportunitySavingsColumnLabel": {
-    "message": "Приблизне заощадження"
-  },
-  "lighthouse-core/report/html/renderer/util.js | passedAuditsGroupTitle": {
-    "message": "Виконані перевірки"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeDesktopEmulation": {
-    "message": "Емульований комп'ютер"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeMobileEmulation": {
-    "message": "Емульований пристрій Moto G4"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeNoEmulation": {
-    "message": "Без емуляції"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsAxeVersion": {
-    "message": "Версія Axe"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsBenchmark": {
-    "message": "Споживання ЦП/пам'яті"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsCPUThrottling": {
-    "message": "Обмеження пропускної спроможності ЦП"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsChannel": {
-    "message": "Канал"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsDevice": {
-    "message": "Пристрій"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsFetchTime": {
-    "message": "Час отримання"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsNetworkThrottling": {
-    "message": "Зменшення пропускної спроможності мережі"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsTitle": {
-    "message": "Налаштування часу виконання"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsUA": {
-    "message": "Агент користувача (хост)"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsUANetwork": {
-    "message": "Агент користувача (мережа)"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeSettingsUrl": {
-    "message": "URL-адреса"
-  },
-  "lighthouse-core/report/html/renderer/util.js | runtimeUnknown": {
-    "message": "Невідомо"
-  },
-  "lighthouse-core/report/html/renderer/util.js | showRelevantAudits": {
-    "message": "Показано аудити, релевантні для:"
-  },
-  "lighthouse-core/report/html/renderer/util.js | snippetCollapseButtonLabel": {
-    "message": "Згорнути фрагмент"
-  },
-  "lighthouse-core/report/html/renderer/util.js | snippetExpandButtonLabel": {
-    "message": "Розгорнути фрагмент"
-  },
-  "lighthouse-core/report/html/renderer/util.js | thirdPartyResourcesLabel": {
-    "message": "Показати сторонні ресурси"
-  },
-  "lighthouse-core/report/html/renderer/util.js | throttlingProvided": {
-    "message": "Надано середовищем"
-  },
-  "lighthouse-core/report/html/renderer/util.js | toplevelWarningsMessage": {
-    "message": "Під час запуску Lighthouse виникли перелічені нижче проблеми."
-  },
-  "lighthouse-core/report/html/renderer/util.js | varianceDisclaimer": {
-    "message": "Значення приблизні й можуть відрізнятися. [Значення ефективності визначено](https://web.dev/performance-scoring/) на основі цих показників."
-  },
-  "lighthouse-core/report/html/renderer/util.js | viewTreemapLabel": {
-    "message": "Переглянути веб-додаток Treemap"
-  },
-  "lighthouse-core/report/html/renderer/util.js | warningAuditsGroupTitle": {
-    "message": "Перевірки зі статусом \"Пройдено\", що містять застереження"
-  },
-  "lighthouse-core/report/html/renderer/util.js | warningHeader": {
-    "message": "Застереження. "
   },
   "lighthouse-treemap/app/src/util.js | allLabel": {
     "message": "Усе"
@@ -2380,5 +2230,143 @@
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | uses-text-compression": {
     "message": "Ви можете ввімкнути стиснення тексту в конфігурації веб-сервера."
+  },
+  "report/renderer/util.js | calculatorLink": {
+    "message": "Показати калькулятор."
+  },
+  "report/renderer/util.js | crcInitialNavigation": {
+    "message": "Початкова навігація"
+  },
+  "report/renderer/util.js | crcLongestDurationLabel": {
+    "message": "Максимальна критична затримка шляху:"
+  },
+  "report/renderer/util.js | dropdownCopyJSON": {
+    "message": "Копіювати JSON"
+  },
+  "report/renderer/util.js | dropdownDarkTheme": {
+    "message": "Увімкнути або вимкнути темну тему"
+  },
+  "report/renderer/util.js | dropdownPrintExpanded": {
+    "message": "Розгорнути вікно друку"
+  },
+  "report/renderer/util.js | dropdownPrintSummary": {
+    "message": "Друкувати підсумок"
+  },
+  "report/renderer/util.js | dropdownSaveGist": {
+    "message": "Зберегти як Gist"
+  },
+  "report/renderer/util.js | dropdownSaveHTML": {
+    "message": "Зберегти як HTML"
+  },
+  "report/renderer/util.js | dropdownSaveJSON": {
+    "message": "Зберегти як JSON"
+  },
+  "report/renderer/util.js | dropdownViewer": {
+    "message": "Відкрити в засобі перегляду"
+  },
+  "report/renderer/util.js | errorLabel": {
+    "message": "Помилка."
+  },
+  "report/renderer/util.js | errorMissingAuditInfo": {
+    "message": "Повідомлення про помилку: немає інформації про перевірку"
+  },
+  "report/renderer/util.js | footerIssue": {
+    "message": "Повідомити про проблему"
+  },
+  "report/renderer/util.js | labDataTitle": {
+    "message": "Дані тестів"
+  },
+  "report/renderer/util.js | lsPerformanceCategoryDescription": {
+    "message": "Аналіз [Lighthouse](https://developers.google.com/web/tools/lighthouse/) поточної сторінки в емульованій мобільній мережі. Значення приблизні й можуть відрізнятися."
+  },
+  "report/renderer/util.js | manualAuditsGroupTitle": {
+    "message": "Додаткові елементи, які потрібно перевірити вручну"
+  },
+  "report/renderer/util.js | notApplicableAuditsGroupTitle": {
+    "message": "Не застосовуються"
+  },
+  "report/renderer/util.js | opportunityResourceColumnLabel": {
+    "message": "Можливість"
+  },
+  "report/renderer/util.js | opportunitySavingsColumnLabel": {
+    "message": "Приблизне заощадження"
+  },
+  "report/renderer/util.js | passedAuditsGroupTitle": {
+    "message": "Виконані перевірки"
+  },
+  "report/renderer/util.js | runtimeDesktopEmulation": {
+    "message": "Емульований комп'ютер"
+  },
+  "report/renderer/util.js | runtimeMobileEmulation": {
+    "message": "Емульований пристрій Moto G4"
+  },
+  "report/renderer/util.js | runtimeNoEmulation": {
+    "message": "Без емуляції"
+  },
+  "report/renderer/util.js | runtimeSettingsAxeVersion": {
+    "message": "Версія Axe"
+  },
+  "report/renderer/util.js | runtimeSettingsBenchmark": {
+    "message": "Споживання ЦП/пам'яті"
+  },
+  "report/renderer/util.js | runtimeSettingsCPUThrottling": {
+    "message": "Обмеження пропускної спроможності ЦП"
+  },
+  "report/renderer/util.js | runtimeSettingsChannel": {
+    "message": "Канал"
+  },
+  "report/renderer/util.js | runtimeSettingsDevice": {
+    "message": "Пристрій"
+  },
+  "report/renderer/util.js | runtimeSettingsFetchTime": {
+    "message": "Час отримання"
+  },
+  "report/renderer/util.js | runtimeSettingsNetworkThrottling": {
+    "message": "Зменшення пропускної спроможності мережі"
+  },
+  "report/renderer/util.js | runtimeSettingsTitle": {
+    "message": "Налаштування часу виконання"
+  },
+  "report/renderer/util.js | runtimeSettingsUA": {
+    "message": "Агент користувача (хост)"
+  },
+  "report/renderer/util.js | runtimeSettingsUANetwork": {
+    "message": "Агент користувача (мережа)"
+  },
+  "report/renderer/util.js | runtimeSettingsUrl": {
+    "message": "URL-адреса"
+  },
+  "report/renderer/util.js | runtimeUnknown": {
+    "message": "Невідомо"
+  },
+  "report/renderer/util.js | showRelevantAudits": {
+    "message": "Показано аудити, релевантні для:"
+  },
+  "report/renderer/util.js | snippetCollapseButtonLabel": {
+    "message": "Згорнути фрагмент"
+  },
+  "report/renderer/util.js | snippetExpandButtonLabel": {
+    "message": "Розгорнути фрагмент"
+  },
+  "report/renderer/util.js | thirdPartyResourcesLabel": {
+    "message": "Показати сторонні ресурси"
+  },
+  "report/renderer/util.js | throttlingProvided": {
+    "message": "Надано середовищем"
+  },
+  "report/renderer/util.js | toplevelWarningsMessage": {
+    "message": "Під час запуску Lighthouse виникли перелічені нижче проблеми."
+  },
+  "report/renderer/util.js | varianceDisclaimer": {
+    "message": "Значення приблизні й можуть відрізнятися. [Значення ефективності визначено](https://web.dev/performance-scoring/) на основі цих показників."
+  },
+  "report/renderer/util.js | viewTreemapLabel": {
+    "message": "Переглянути веб-додаток Treemap"
+  },
+  "report/renderer/util.js | warningAuditsGroupTitle": {
+    "message": "Перевірки зі статусом \"Пройдено\", що містять застереження"
+  },
+  "report/renderer/util.js | warningHeader": {
+    "message": "Застереження. "
   }
 }

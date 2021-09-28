@@ -32,6 +32,7 @@ class JsLibrariesAudit extends Audit {
     return {
       id: 'js-libraries',
       title: str_(UIStrings.title),
+      scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
       description: str_(UIStrings.description),
       requiredArtifacts: ['Stacks'],
     };
@@ -68,6 +69,10 @@ class JsLibrariesAudit extends Audit {
         };
       }),
     };
+
+    if (!libDetails.length) {
+      return {score: null, notApplicable: true};
+    }
 
     return {
       score: 1, // Always pass for now.

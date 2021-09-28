@@ -7,14 +7,16 @@
 
 const fs = require('fs');
 const path = require('path');
-
+const rollup = require('rollup');
+const rollupPlugins = require('./rollup-plugins.js');
 const cpy = require('cpy');
 const ghPages = require('gh-pages');
 const glob = require('glob');
 const lighthousePackage = require('../package.json');
 const terser = require('terser');
+const {LH_ROOT} = require('../root.js');
 
-const ghPagesDistDir = `${__dirname}/../dist/gh-pages`;
+const ghPagesDistDir = `${LH_ROOT}/dist/gh-pages`;
 
 const license = `/*
 * @license Copyright 2020 The Lighthouse Authors. All Rights Reserved.
@@ -35,7 +37,7 @@ const license = `/*
 /**
  * Literal string (representing JS, CSS, etc...), or an object with a path, which would
  * be interpreted relative to opts.appDir and be glob-able.
- * @typedef {{path: string} | string} Source
+ * @typedef {{path: string, rollup?: boolean} | string} Source
  */
 
 /**
@@ -80,12 +82,13 @@ class GhPagesApp {
   }
 
   async build() {
+    fs.mkdirSync(this.distDir, {recursive: true}); // Ensure dist is present, else rmdir will throw. COMPAT: when dropping Node 12, replace with fs.rm(p, {force: true})
     fs.rmdirSync(this.distDir, {recursive: true});
 
-    const html = this._compileHtml();
+    const html = await this._compileHtml();
     safeWriteFile(`${this.distDir}/index.html`, html);
 
-    const css = this._compileCss();
+    const css = await this._compileCss();
     safeWriteFile(`${this.distDir}/styles/bundled.css`, css);
 
     const bundledJs = await this._compileJs();
@@ -115,23 +118,45 @@ class GhPagesApp {
 
   /**
    * @param {Source[]} sources
+   * @return {Promise<string[]>}
    */
-  _resolveSourcesList(sources) {
+  async _resolveSourcesList(sources) {
     const result = [];
 
     for (const source of sources) {
       if (typeof source === 'string') {
         result.push(source);
+      } else if (source.rollup) {
+        result.push(await this._rollupSource(path.resolve(this.opts.appDir, source.path)));
       } else {
-        result.push(...loadFiles(`${this.opts.appDir}/${source.path}`));
+        result.push(...loadFiles(path.resolve(this.opts.appDir, source.path)));
       }
     }
 
     return result;
   }
 
-  _compileHtml() {
-    let htmlSrc = this._resolveSourcesList([this.opts.html])[0];
+  /**
+   * @param {string} input
+   * @return {Promise<string>}
+   */
+  async _rollupSource(input) {
+    const plugins = [
+      rollupPlugins.nodeResolve(),
+      rollupPlugins.commonjs(),
+    ];
+    if (!process.env.DEBUG) plugins.push(rollupPlugins.terser());
+    const bundle = await rollup.rollup({
+      input,
+      plugins,
+    });
+    const {output} = await bundle.generate({format: 'iife'});
+    return output[0].code;
+  }
+
+  async _compileHtml() {
+    const resolvedSources = await this._resolveSourcesList([this.opts.html]);
+    let htmlSrc = resolvedSources[0];
 
     if (this.opts.htmlReplacements) {
       for (const [key, value] of Object.entries(this.opts.htmlReplacements)) {
@@ -142,8 +167,9 @@ class GhPagesApp {
     return htmlSrc;
   }
 
-  _compileCss() {
-    return this._resolveSourcesList(this.opts.stylesheets).join('\n');
+  async _compileCss() {
+    const resolvedSources = await this._resolveSourcesList(this.opts.stylesheets);
+    return resolvedSources.join('\n');
   }
 
   async _compileJs() {
@@ -153,7 +179,7 @@ class GhPagesApp {
     const contents = [
       `"use strict";`,
       versionJs,
-      ...this._resolveSourcesList(this.opts.javascripts),
+      ...await this._resolveSourcesList(this.opts.javascripts),
     ];
     if (process.env.DEBUG) return contents.join('\n');
 

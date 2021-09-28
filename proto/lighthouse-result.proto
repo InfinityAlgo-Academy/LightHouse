@@ -193,6 +193,9 @@ message LighthouseResult {
 
   // The Stack Pack data used by audits in this run.
   repeated StackPack stack_packs = 15;
+
+  // Gather mode used to collect artifacts.
+  string gather_mode = 16;
 }
 
 // Message containing a category
@@ -502,8 +505,13 @@ message I18n {
     string show_relevant_audits = 48;
   }
 
-  // The message holding all formatted strings
+  // The message holding all formatted strings used in the renderer.
   RendererFormattedStrings renderer_formatted_strings = 1;
+
+  // Holds all message paths used. The locale of the report has already be used to translated
+  // the strings in this LighthouseResult, but this field can be used to translate into another
+  // language.
+  map<string, google.protobuf.ListValue> icu_message_paths = 2;
 }
 
 // Message containing Stack Pack information.

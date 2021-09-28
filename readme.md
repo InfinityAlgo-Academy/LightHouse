@@ -349,6 +349,10 @@ This section details services that have integrated Lighthouse data. If you're wo
 
 * **[Websu](https://websu.io)** - Websu is an open source project to provide Lighthouse-as-a-Service through a simple HTTP REST API. The main features are ability to host and deploy in your own environment and historical Lighthouse report summaries.
 
+* **[DTEKT.IO](https://dtekt.io)** - DTEKT is a website performance and uptime monitoring service. It uses lighthouse to provide visibility into the performance of websites from multiple locations on multiple devices. It offers three months free trial and paid plans.
+
+* **[SpeedVitals](https://speedvitals.com)** - SpeedVitals is a Lighthouse powered tool to measure web performance across multiple devices and locations. It has various features like Layout Shift Visualization, Waterfall Chart, Field Data and Resource Graphs. SpeedVitals offers both free and paid plans.
+
 ## Lighthouse Integrations in non-Web Perf services
 
 * **[PageWatch](https://pagewatch.dev/)** — PageWatch is a tool to find problem pages on your website.  It provides insights into spelling errors, layout issues, slow pages (powered by Lighthouse) and more.  PageWatch is offered via free and paid plans.
@@ -358,6 +362,8 @@ This section details services that have integrated Lighthouse data. If you're wo
 * **[Fluxguard](https://fluxguard.com/)** - Fluxguard provides website DOM change monitoring orchestrated with Google Puppeteer, and audited by Lighthouse. Fluxguard is a freemium product, with monthly monitoring of up to 75 pages for free.
 
 * **[Microlink](https://microlink.io)** — Microlink is a cloud browser as API. It offers Lighthouse reports on demand, making it easy to build any service on top. Similar functionality is available via the underlying open-source project named browserless.
+
+* **[Peyk](https://peyk.com)** - Peyk is a website change detection & monitoring service. Peyk can detect changes in cookies, network requests, technologies, local & session storage, lighthouse audits, screenshots and so much more. Peyk is offered via free and paid plans.
 
 * **[Wattspeed](https://wattspeed.com/)** — Wattspeed is a free tool that generates snapshots - historical captures of your web pages that include Lighthouse scores, a list of technologies, W3C HTML validator results, DOM size, mixed content info, and more.
 

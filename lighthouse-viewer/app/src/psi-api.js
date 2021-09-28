@@ -9,7 +9,7 @@
 
 const PSI_URL = 'https://www.googleapis.com/pagespeedonline/v5/runPagespeed';
 const PSI_KEY = 'AIzaSyAjcDRNN9CX9dCazhqI4lGR7yyQbkd_oYE';
-const PSI_DEFAULT_CATEGORIES = [
+export const PSI_DEFAULT_CATEGORIES = [
   'performance',
   'accessibility',
   'seo',
@@ -29,7 +29,7 @@ const PSI_DEFAULT_CATEGORIES = [
 /**
  * Wrapper around the PSI API for fetching LHR.
  */
-class PSIApi {
+export class PSIApi {
   /**
    * @param {PSIParams} params
    * @return {Promise<PSIResponse>}
@@ -48,10 +48,4 @@ class PSIApi {
     apiUrl.searchParams.append('key', PSI_KEY);
     return fetch(apiUrl.href).then(res => res.json());
   }
-}
-
-// node export for testing.
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = PSIApi;
-  module.exports.PSI_DEFAULT_CATEGORIES = PSI_DEFAULT_CATEGORIES;
 }

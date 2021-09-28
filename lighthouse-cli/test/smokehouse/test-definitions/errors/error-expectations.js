@@ -12,78 +12,98 @@ const NONEMPTY_ARRAY = {
 };
 
 /**
- * @type {Array<Smokehouse.ExpectedRunnerResult>}
- * Expected Lighthouse audit values for sites with various errors.
+ * @type {Smokehouse.ExpectedRunnerResult}
+ * Expected Lighthouse results for a site with a JS infinite loop.
  */
-const expectations = [
-  {
-    lhr: {
-      requestedUrl: 'http://localhost:10200/infinite-loop.html',
-      finalUrl: 'http://localhost:10200/infinite-loop.html',
-      runtimeError: {code: 'PAGE_HUNG'},
-      runWarnings: ['Lighthouse was unable to reliably load the URL you requested because the page stopped responding.'],
-      audits: {
-        'first-contentful-paint': {
-          scoreDisplayMode: 'error',
-          errorMessage: 'Required traces gatherer did not run.',
-        },
-      },
-    },
-    artifacts: {
-      PageLoadError: {code: 'PAGE_HUNG'},
-      devtoolsLogs: {
-        'pageLoadError-defaultPass': NONEMPTY_ARRAY,
-      },
-      traces: {
-        'pageLoadError-defaultPass': {traceEvents: NONEMPTY_ARRAY},
+const infiniteLoop = {
+  lhr: {
+    requestedUrl: 'http://localhost:10200/infinite-loop.html',
+    finalUrl: 'http://localhost:10200/infinite-loop.html',
+    runtimeError: {code: 'PAGE_HUNG'},
+    runWarnings: ['Lighthouse was unable to reliably load the URL you requested because the page stopped responding.'],
+    audits: {
+      'first-contentful-paint': {
+        scoreDisplayMode: 'error',
+        errorMessage: 'Required traces gatherer did not run.',
       },
     },
   },
-  {
-    lhr: {
-      requestedUrl: 'https://expired.badssl.com',
-      finalUrl: 'https://expired.badssl.com/',
-      runtimeError: {code: 'INSECURE_DOCUMENT_REQUEST'},
-      runWarnings: ['The URL you have provided does not have a valid security certificate. net::ERR_CERT_DATE_INVALID'],
-      audits: {
-        'first-contentful-paint': {
-          scoreDisplayMode: 'error',
-          errorMessage: 'Required traces gatherer did not run.',
-        },
-      },
+  artifacts: {
+    PageLoadError: {code: 'PAGE_HUNG'},
+    devtoolsLogs: {
+      'pageLoadError-defaultPass': {...NONEMPTY_ARRAY, _legacyOnly: true},
+      'pageLoadError-default': {...NONEMPTY_ARRAY, _fraggleRockOnly: true},
     },
-    artifacts: {
-      PageLoadError: {code: 'INSECURE_DOCUMENT_REQUEST'},
-      devtoolsLogs: {
-        'pageLoadError-defaultPass': NONEMPTY_ARRAY,
-      },
-      traces: {
-        'pageLoadError-defaultPass': {traceEvents: NONEMPTY_ARRAY},
-      },
+    traces: {
+      'pageLoadError-defaultPass': {traceEvents: NONEMPTY_ARRAY, _legacyOnly: true},
+      'pageLoadError-default': {traceEvents: NONEMPTY_ARRAY, _fraggleRockOnly: true},
     },
   },
-  {
-    lhr: {
-      // Our interstitial error handling used to be quite aggressive, so we'll test a page
-      // that has a bad iframe to make sure LH audits successfully.
-      // https://github.com/GoogleChrome/lighthouse/issues/9562
-      requestedUrl: 'http://localhost:10200/badssl-iframe.html',
-      finalUrl: 'http://localhost:10200/badssl-iframe.html',
-      audits: {
-        'first-contentful-paint': {
-          scoreDisplayMode: 'numeric',
-        },
-      },
-    },
-    artifacts: {
-      devtoolsLogs: {
-        defaultPass: NONEMPTY_ARRAY,
-      },
-      traces: {
-        defaultPass: {traceEvents: NONEMPTY_ARRAY},
-      },
-    },
-  },
-];
+};
 
-module.exports = expectations;
+/**
+ * @type {Smokehouse.ExpectedRunnerResult}
+ * Expected Lighthouse results for a site with an expired certificate.
+ */
+const expiredSsl = {
+  lhr: {
+    requestedUrl: 'https://expired.badssl.com',
+    finalUrl: /(expired.badssl.com|chrome-error)/,
+    runtimeError: {code: 'INSECURE_DOCUMENT_REQUEST'},
+    runWarnings: Object.defineProperty([
+      /expired.badssl.*redirected to chrome-error:/, // This warning was not provided in legacy reports.
+      'The URL you have provided does not have a valid security certificate. net::ERR_CERT_DATE_INVALID',
+    ], '_fraggleRockOnly', {value: true, enumerable: true}),
+    audits: {
+      'first-contentful-paint': {
+        scoreDisplayMode: 'error',
+        errorMessage: 'Required traces gatherer did not run.',
+      },
+    },
+  },
+  artifacts: {
+    PageLoadError: {code: 'INSECURE_DOCUMENT_REQUEST'},
+    devtoolsLogs: {
+      'pageLoadError-defaultPass': {...NONEMPTY_ARRAY, _legacyOnly: true},
+      'pageLoadError-default': {...NONEMPTY_ARRAY, _fraggleRockOnly: true},
+    },
+    traces: {
+      'pageLoadError-defaultPass': {traceEvents: NONEMPTY_ARRAY, _legacyOnly: true},
+      'pageLoadError-default': {traceEvents: NONEMPTY_ARRAY, _fraggleRockOnly: true},
+    },
+  },
+};
+
+/**
+ * @type {Smokehouse.ExpectedRunnerResult}
+ * Expected Lighthouse results for a site with an iframe containing a site with
+ * an expired certificate.
+ */
+const iframeBadSsl = {
+  lhr: {
+    // Our interstitial error handling used to be quite aggressive, so we'll test a page
+    // that has a bad iframe to make sure LH audits successfully.
+    // https://github.com/GoogleChrome/lighthouse/issues/9562
+    requestedUrl: 'http://localhost:10200/badssl-iframe.html',
+    finalUrl: 'http://localhost:10200/badssl-iframe.html',
+    audits: {
+      'first-contentful-paint': {
+        scoreDisplayMode: 'numeric',
+      },
+    },
+  },
+  artifacts: {
+    devtoolsLogs: {
+      defaultPass: NONEMPTY_ARRAY,
+    },
+    traces: {
+      defaultPass: {traceEvents: NONEMPTY_ARRAY},
+    },
+  },
+};
+
+export {
+  infiniteLoop,
+  expiredSsl,
+  iframeBadSsl,
+};

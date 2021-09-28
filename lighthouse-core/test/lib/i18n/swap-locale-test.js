@@ -6,13 +6,14 @@
 'use strict';
 
 const swapLocale = require('../../../lib/i18n/swap-locale.js');
+const {isNode12SmallIcu} = require('../../test-utils.js');
 
 const lhr = require('../../results/sample_v2.json');
 
 /* eslint-env jest */
 describe('swap-locale', () => {
   // COMPAT: Node 12 only has 'en' by default. Skip these tests since they're all about swapping locales.
-  if (process.versions.node.startsWith('12')) {
+  if (isNode12SmallIcu()) {
     // Jest requires at least one test per suite.
     it('runs even if other locales are not supported', () => {
       /** @type {LH.Result} */
@@ -49,18 +50,20 @@ describe('swap-locale', () => {
     expect(lhrDe.audits.plugins.title).toEqual('Dokument verwendet keine Plug-ins');
 
     // With ICU string argument values
-    expect(lhrEn.audits['dom-size'].displayValue).toEqual('148 elements');
-    expect(lhrDe.audits['dom-size'].displayValue).toEqual('148 Elemente');
+    expect(lhrEn.audits['dom-size'].displayValue).toMatchInlineSnapshot(`"153 elements"`);
+    /* eslint-disable no-irregular-whitespace */
+    expect(lhrDe.audits['dom-size'].displayValue).toMatchInlineSnapshot(`"153 Elemente"`);
 
     // Renderer formatted strings
     expect(lhrEn.i18n.rendererFormattedStrings.labDataTitle).toEqual('Lab Data');
     expect(lhrDe.i18n.rendererFormattedStrings.labDataTitle).toEqual('Labdaten');
 
     // Formatted numbers in placeholders.
-    expect(lhrEn.audits['mainthread-work-breakdown'].displayValue)
-      .toEqual('1.5 s');
-    expect(lhrDe.audits['mainthread-work-breakdown'].displayValue)
-      .toEqual('1,5 s');
+    expect(lhrEn.audits['mainthread-work-breakdown'].displayValue).
+toMatchInlineSnapshot(`"2.2 s"`);
+    expect(lhrDe.audits['mainthread-work-breakdown'].displayValue).
+toMatchInlineSnapshot(`"2,2 s"`);
+    /* eslint-enable no-irregular-whitespace */
   });
 
   it('can roundtrip back to english correctly', () => {
