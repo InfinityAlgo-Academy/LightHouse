@@ -7,6 +7,7 @@
 import {FunctionComponent} from 'preact';
 import {useEffect, useLayoutEffect, useRef} from 'preact/hooks';
 
+import {useReportResultCache} from '../report-result-cache';
 import {useCurrentLhr, useHashParam} from '../util';
 import {useReportRenderer} from './report-renderer';
 
@@ -37,20 +38,21 @@ export const Report: FunctionComponent = () => {
   const ref = useRef<HTMLDivElement>(null);
   const anchor = useHashParam('anchor');
   const currentLhr = useCurrentLhr();
+  const reportResultCache = useReportResultCache();
 
   useLayoutEffect(() => {
     if (!currentLhr) return;
 
     if (ref.current) {
       dom.clearComponentCache();
-      reportRenderer.renderReport(currentLhr.value, ref.current);
+      reportRenderer.renderReport(currentLhr.value, ref.current, reportResultCache);
       convertChildAnchors(ref.current, currentLhr.index);
     }
 
     return () => {
       if (ref.current) ref.current.textContent = '';
     };
-  }, [reportRenderer, currentLhr]);
+  }, [reportRenderer, currentLhr, reportResultCache]);
 
   useEffect(() => {
     if (anchor) {

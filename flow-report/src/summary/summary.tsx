@@ -5,12 +5,11 @@
  */
 
 import {FunctionComponent} from 'preact';
-import {useMemo} from 'preact/hooks';
 
 import {FlowSegment, Separator} from '../common';
 import {getScreenDimensions, getScreenshot, useFlowResult} from '../util';
-import {Util} from '../../../report/renderer/util';
 import {SummaryCategory} from './category';
+import {useReportResult} from '../report-result-cache';
 
 const DISPLAYED_CATEGORIES = ['performance', 'accessibility', 'best-practices', 'seo'];
 const THUMBNAIL_WIDTH = 50;
@@ -41,7 +40,7 @@ export const SummaryFlowStep: FunctionComponent<{
   label: string,
   hashIndex: number,
 }> = ({lhr, label, hashIndex}) => {
-  const reportResult = useMemo(() => Util.prepareReportResult(lhr), [lhr]);
+  const reportResult = useReportResult(lhr);
 
   const screenshot = reportResult.gatherMode !== 'timespan' ? getScreenshot(reportResult) : null;
 

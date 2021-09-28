@@ -13,6 +13,7 @@ import {Summary} from './summary/summary';
 import {classNames, FlowResultContext, useCurrentLhr} from './util';
 import {Report} from './wrappers/report';
 import {Topbar} from './topbar';
+import {ReportResultCache} from './report-result-cache';
 
 const Content: FunctionComponent = () => {
   const currentLhr = useCurrentLhr();
@@ -33,11 +34,13 @@ export const App: FunctionComponent<{flowResult: LH.FlowResult}> = ({flowResult}
   return (
     <FlowResultContext.Provider value={flowResult}>
       <ReportRendererProvider>
-        <div className={classNames('App', {'App--collapsed': collapsed})}>
-          <Topbar onMenuClick={() => setCollapsed(c => !c)} />
-          <Sidebar/>
-          <Content/>
-        </div>
+        <ReportResultCache>
+          <div className={classNames('App', {'App--collapsed': collapsed})}>
+            <Topbar onMenuClick={() => setCollapsed(c => !c)} />
+            <Sidebar/>
+            <Content/>
+          </div>
+        </ReportResultCache>
       </ReportRendererProvider>
     </FlowResultContext.Provider>
   );
