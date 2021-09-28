@@ -154,18 +154,18 @@ if (typeof self !== 'undefined') {
 }
 
 
-// // If invoked as CLI, we're gonna read latest-run's trace and analyze that (as desktop)
-// if (require.main === module) {
-//   const trace = JSON.parse(
-//     // require('fs').readFileSync(__dirname + '/../latest-run/defaultPass.trace.json', 'utf8')
-//     require('fs').readFileSync(__dirname + '/../latest-run/tevents.json', 'utf8')
-//   );
+// If invoked as CLI, we're gonna read latest-run's trace and analyze that (as desktop)
+if (require.main === module) {
+  const trace = JSON.parse(
+    require('fs').readFileSync(__dirname + '/../latest-run/defaultPass.trace.json', 'utf8')
+    // require('fs').readFileSync(__dirname + '/../latest-run/tevents.json', 'utf8')
+  );
 
-//   analyzeTrace(trace, {
-//     device: 'desktop',
-//     url: 'https://devtools/inspected-page',
-//   }).then(res => {
-//     require('fs').writeFileSync('./tracereport.html', res?.report[0], 'utf8');
-//     console.log('done. written to ./tracereport.html');
-//   });
-// }
+  analyzeTrace(trace, {
+    device: 'desktop',
+    url: 'https://devtools/inspected-page',
+  }).then(res => {
+    require('fs').writeFileSync('./tracereport.html', res?.report[0], 'utf8');
+    console.log('done. written to ./tracereport.html');
+  });
+}
