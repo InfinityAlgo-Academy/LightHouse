@@ -12,9 +12,10 @@
  * @fileoverview Minifies a devtools log by removing noisy header values, eliminating data URIs, etc.
  */
 
-const fs = require('fs');
-const path = require('path');
-const {minifyDevtoolsLog} = require('../../lib/minify-devtoolslog.js');
+import fs from 'fs';
+import path from 'path';
+
+import {minifyDevtoolsLog} from '../../lib/minify-devtoolslog.js';
 
 if (process.argv.length !== 4) {
   console.error('Usage $0: <input file> <output file>');

@@ -5,17 +5,21 @@
  */
 'use strict';
 
-const fs = require('fs');
-const crypto = require('crypto');
+import fs from 'fs';
+import crypto from 'crypto';
 
-module.exports = function makeHash() {
+import {LH_ROOT} from '../../../root.js';
+
+const scriptDir = `${LH_ROOT}/lighthouse-core/scripts/legacy-javascript`;
+
+export function makeHash() {
   return crypto
     .createHash('sha256')
-    .update(fs.readFileSync(`${__dirname}/yarn.lock`, 'utf8'))
-    .update(fs.readFileSync(`${__dirname}/run.js`, 'utf8'))
-    .update(fs.readFileSync(`${__dirname}/main.js`, 'utf8'))
+    .update(fs.readFileSync(`${scriptDir}/yarn.lock`, 'utf8'))
+    .update(fs.readFileSync(`${scriptDir}/run.js`, 'utf8'))
+    .update(fs.readFileSync(`${scriptDir}/main.js`, 'utf8'))
     /* eslint-disable max-len */
-    .update(fs.readFileSync(require.resolve('../../audits/byte-efficiency/legacy-javascript.js'), 'utf8'))
+    .update(fs.readFileSync(`${LH_ROOT}/lighthouse-core/audits/byte-efficiency/legacy-javascript.js`, 'utf8'))
     /* eslint-enable max-len */
     .digest('hex');
-};
+}

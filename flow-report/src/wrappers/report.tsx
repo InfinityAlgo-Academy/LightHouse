@@ -5,10 +5,9 @@
  */
 
 import {FunctionComponent} from 'preact';
-import {useEffect, useLayoutEffect, useRef} from 'preact/hooks';
+import {useLayoutEffect, useRef} from 'preact/hooks';
 
 import {useReportResultCache} from '../report-result-cache';
-import {useCurrentLhr, useHashParam} from '../util';
 import {useReportRenderer} from './report-renderer';
 
 /**
@@ -33,39 +32,25 @@ export function convertChildAnchors(element: HTMLElement, index: number) {
   }
 }
 
-export const Report: FunctionComponent = () => {
+export const Report: FunctionComponent<{currentLhr: LH.FlowResult.LhrRef}> =
+({currentLhr}) => {
   const {dom, reportRenderer} = useReportRenderer();
-  const ref = useRef<HTMLDivElement>(null);
-  const anchor = useHashParam('anchor');
-  const currentLhr = useCurrentLhr();
   const reportResultCache = useReportResultCache();
+  const ref = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
-    if (!currentLhr) return;
-
     if (ref.current) {
       dom.clearComponentCache();
       reportRenderer.renderReport(currentLhr.value, ref.current, reportResultCache);
       convertChildAnchors(ref.current, currentLhr.index);
+      const topbar = ref.current.querySelector('.lh-topbar');
+      if (topbar) topbar.remove();
     }
 
     return () => {
       if (ref.current) ref.current.textContent = '';
     };
   }, [reportRenderer, currentLhr, reportResultCache]);
-
-  useEffect(() => {
-    if (anchor) {
-      const el = document.getElementById(anchor);
-      if (el) {
-        el.scrollIntoView({behavior: 'smooth'});
-        return;
-      }
-    }
-
-    // Scroll to top no anchor is found.
-    if (ref.current) ref.current.scrollIntoView();
-  }, [anchor, currentLhr]);
 
   return (
     <div ref={ref} className="lh-root" data-testid="Report"/>

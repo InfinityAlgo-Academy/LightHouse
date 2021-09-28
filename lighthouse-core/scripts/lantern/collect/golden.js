@@ -9,8 +9,9 @@
 /** @typedef {import('./common.js').Summary} Summary */
 /** @typedef {import('../run-on-all-assets.js').Golden} Golden */
 
-const fs = require('fs');
-const common = require('./common.js');
+import fs from 'fs';
+
+import * as common from './common.js';
 
 /**
  * @template T

@@ -6,19 +6,20 @@
  */
 'use strict';
 
-const fs = require('fs');
-const path = require('path');
-const PredictivePerf = require('../../audits/predictive-perf.js');
-const Simulator = require('../../lib/dependency-graph/simulator/simulator.js');
-const traceSaver = require('../../lib/lantern-trace-saver.js');
-const {LH_ROOT} = require('../../../root.js');
+import fs from 'fs';
+import path from 'path';
+
+import PredictivePerf from '../../audits/predictive-perf.js';
+import Simulator from '../../lib/dependency-graph/simulator/simulator.js';
+import traceSaver from '../../lib/lantern-trace-saver.js';
+import {LH_ROOT, readJson} from '../../../root.js';
 
 if (process.argv.length !== 4) throw new Error('Usage $0 <trace file> <devtools file>');
 
 async function run() {
   const tracePath = path.resolve(process.cwd(), process.argv[2]);
-  const traces = {defaultPass: require(tracePath)};
-  const devtoolsLogs = {defaultPass: require(path.resolve(process.cwd(), process.argv[3]))};
+  const traces = {defaultPass: readJson(tracePath)};
+  const devtoolsLogs = {defaultPass: readJson(path.resolve(process.cwd(), process.argv[3]))};
   const artifacts = {traces, devtoolsLogs, GatherContext: {gatherMode: 'navigation'}};
   const context = {computedCache: new Map(), settings: {locale: 'en-us'}};
 

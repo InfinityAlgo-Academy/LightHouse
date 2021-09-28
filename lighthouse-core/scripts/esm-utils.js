@@ -5,21 +5,14 @@
  */
 'use strict';
 
-// node lighthouse-core/scripts/build-test-flow-report.js
+import module from 'module';
 
-import fs from 'fs';
-import {execFileSync} from 'child_process';
+const require = module.createRequire(import.meta.url);
 
-import open from 'open';
-
-import reportGenerator from '../../report/generator/report-generator.js';
-import {LH_ROOT, readJson} from '../../root.js';
-
-execFileSync(`yarn`, ['build-report', '--flow']);
-
-const flow = readJson('lighthouse-core/test/fixtures/fraggle-rock/reports/sample-lhrs.json');
-
-const htmlReport = reportGenerator.generateFlowReportHtml(flow);
-
-fs.writeFileSync(`${LH_ROOT}/flow.report.html`, htmlReport);
-open(`${LH_ROOT}/flow.report.html`);
+/**
+ * Commonjs equivalent of `require.resolve`.
+ * @param {string} packageName
+ */
+export function resolveModulePath(packageName) {
+  return require.resolve(packageName);
+}

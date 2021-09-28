@@ -7,6 +7,12 @@
 import {createContext} from 'preact';
 import {useContext, useEffect, useMemo, useState} from 'preact/hooks';
 
+const MODE_DESCRIPTIONS: Record<LH.Result.GatherMode, string> = {
+  'navigation': 'Page load',
+  'timespan': 'User interactions',
+  'snapshot': 'Captured state of page',
+};
+
 export const FlowResultContext = createContext<LH.FlowResult|undefined>(undefined);
 
 function getHashParam(param: string): string|null {
@@ -48,6 +54,10 @@ export function getScreenshot(reportResult: LH.ReportResult) {
   return fullPageScreenshot || null;
 }
 
+export function getModeDescription(mode: LH.Result.GatherMode) {
+  return MODE_DESCRIPTIONS[mode];
+}
+
 export function useFlowResult(): LH.FlowResult {
   const flowResult = useContext(FlowResultContext);
   if (!flowResult) throw Error('useFlowResult must be called in the FlowResultContext');
@@ -77,7 +87,7 @@ export function useHashParam(param: string) {
   return paramValue;
 }
 
-export function useCurrentLhr(): {value: LH.Result, index: number}|null {
+export function useCurrentLhr(): LH.FlowResult.LhrRef|null {
   const flowResult = useFlowResult();
   const indexString = useHashParam('index');
 
