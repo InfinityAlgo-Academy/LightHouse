@@ -83,7 +83,7 @@ function analyzeTrace(trace, opts) {
     extends: 'lighthouse:default',
     settings: {
       onlyCategories: ['performance'],
-      output: [localDev ? 'html' : 'json'],
+      output: ['json'],
       formFactor: opts.device,
       throttlingMethod: 'devtools', // can't do lantern right now, so need real throttling applied.
       // In DevTools, emulation is applied _before_ Lighthouse starts (to deal with viewport emulation bugs). go/xcnjf
@@ -91,6 +91,10 @@ function analyzeTrace(trace, opts) {
       screenEmulation: {disabled: true},
     },
   };
+
+  if (localDev) {
+    configJSON.settings.output.push('html');
+  }
 
   // TODO: use FR's initializeConfig. it'll filter for navigation-y things.
   const config = lighthouse.generateConfig(configJSON, {});
@@ -153,38 +157,49 @@ if (typeof self !== 'undefined') {
 }
 
 
-// // If invoked as CLI, we're gonna read latest-run's trace and analyze that (as desktop)
-// if (require.main === module) {
-//   localDev = true;
+// If invoked as CLI, we're gonna read latest-run's trace and analyze that (as desktop)
+if (require.main === module) {
+  localDev = true;
 
-//   /** @type {LH.Trace} */
-//   const trace = JSON.parse(
-//     // Gather with:
-//     //     lighthouse https://paulirish.com --preset=desktop --only-categories=performance -GA --throttling-method=devtools
-//     require('fs').readFileSync(__dirname + '/../latest-run/defaultPass.trace.json', 'utf8')
-//   );
+  /** @type {LH.Trace} */
+  const trace = JSON.parse(
+    // Gather with:
+    //     lighthouse https://paulirish.com --preset=desktop --only-categories=performance -GA --throttling-method=devtools
+    require('fs').readFileSync(__dirname + '/../latest-run/defaultPass.trace.json', 'utf8')
+  );
 
-//   /**
-//    * @param {LH.Trace} trace
-//    */
-//   const getInitialUrl = trace => {
-//     const urls = trace.traceEvents
-//     .filter(e =>
-//         (e.name === 'navigationStart' && e?.args?.data?.isLoadingMainFrame === true) ||
-//         e.name === 'NavigationBodyLoader::StartLoadingBody'
-//     )
-//     .map(e => e.args.data?.documentLoaderURL || e.args.url);
-//     // find most common item: https://stackoverflow.com/a/20762713/89484
-//     return urls.sort(
-//       (a, b) => urls.filter(v => v === a).length - urls.filter(v => v === b).length).pop();
-//   };
+  /**
+   * @param {LH.Trace} trace
+   */
+  const getInitialUrl = trace => {
+    const urls = trace.traceEvents
+    .filter(e =>
+        (e.name === 'navigationStart' && e?.args?.data?.isLoadingMainFrame === true) ||
+        e.name === 'NavigationBodyLoader::StartLoadingBody'
+    )
+    .map(e => e.args.data?.documentLoaderURL || e.args.url);
+    // find most common item: https://stackoverflow.com/a/20762713/89484
+    return urls.sort(
+      (a, b) => urls.filter(v => v === a).length - urls.filter(v => v === b).length).pop();
+  };
 
 
-//   analyzeTrace(trace, {
-//     device: 'desktop',
-//     url: getInitialUrl(trace),
-//   }).then(res => {
-//     require('fs').writeFileSync('./tracereport.html', res?.report[0], 'utf8');
-//     console.log('done. written to ./tracereport.html');
-//   });
-// }
+  analyzeTrace(trace, {
+    device: 'desktop',
+    url: getInitialUrl(trace),
+  }).then(res => {
+    require('fs').writeFileSync('./tracereport.json', res?.report[0], 'utf8');
+    require('fs').writeFileSync('./tracereport.html', res?.report[1], 'utf8');
+    console.log('done. written to ./tracereport.html');
+  });
+
+
+  // find clients/ lighthouse-core/ lighthouse-core/audits/metrics/ -iname "*.js" | grep -v test | entr bash -c "node clients/devtools-entry.js && node lighthouse-core/scripts/cleanup-LHR-for-diff.js ./tracereport.json && git --no-pager diff --no-index --color=always ./tracereport-base.json ./tracereport.json; echo 'done' "
+
+  /**
+   * See also:
+   *     node lighthouse-core/test/lib/network-records-from-trace-test.js
+   * which compares the network requests we constructed from trace compared to the dtlog ones.
+   * it currently only tests 1 netreq at a time.
+   */
+}

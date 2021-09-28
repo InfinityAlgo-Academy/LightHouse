@@ -13,6 +13,7 @@ const trace = require('../../../latest-run/defaultPass.trace.json');
 const NetworkRecords = require('../../computed/network-records.js');
 const NetworkRecordsFomTrace = require('../../lib/network-records-from-trace.js');
 
+
 /* eslint-env jest */
 describe('NetworkRecordsFromTrace', () => {
   it('works', async () => {
@@ -23,7 +24,8 @@ describe('NetworkRecordsFromTrace', () => {
 
     console.log('Try replacing with another req Id!', allReqIds);
 
-    const pred = (nr) => nr.requestId === '27104.14';
+    // TODO this is currently testing just 1 request. ideally this "test" tries ALL requests that DTlog finds.
+    const pred = (nr) => nr.requestId === '37148.3';
 
     const dtlNR = netReqsDTL.find(pred);
     const myTraceNR = netReqsTrace.find(pred);

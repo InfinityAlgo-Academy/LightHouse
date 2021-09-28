@@ -26,6 +26,7 @@ function cleanAndFormatLHR(lhrString) {
   /** @type {LH.Result} */
   const lhr = JSON.parse(lhrString);
 
+  lhr.fetchTime = new Date(2021, 6, 23).toISOString();
   // TODO: Resolve the below so we don't need to force it to a boolean value:
   // 1) The string|boolean story for proto
   // 2) CI gets a absolute path during yarn diff:sample-json
