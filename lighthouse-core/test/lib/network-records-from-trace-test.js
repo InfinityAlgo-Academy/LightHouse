@@ -11,14 +11,16 @@ const devtoolsLog = require('../../../latest-run/defaultPass.devtoolslog.json');
 const trace = require('../../../latest-run/defaultPass.trace.json');
 
 const NetworkRecords = require('../../computed/network-records.js');
-const NetworkRecordsFomTrace = require('../../lib/network-records-from-trace.js');
+const constructRecordsFromTrace = require('../../lib/network-records-from-trace.js');
+
+const NetworkRecorder = require('../../lib/network-recorder.js');
 
 
 /* eslint-env jest */
 describe('NetworkRecordsFromTrace', () => {
   it('works', async () => {
-    const netReqsDTL = await NetworkRecords.request(devtoolsLog, {computedCache: new Map()});
-    const netReqsTrace = NetworkRecordsFomTrace(trace);
+    const netReqsDTL = NetworkRecorder.recordsFromLogs(devtoolsLog);
+    const netReqsTrace = constructRecordsFromTrace(trace);
 
     const allReqIds = netReqsDTL.map((req) => req.requestId);
 

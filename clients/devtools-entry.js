@@ -106,6 +106,7 @@ function analyzeTrace(trace, opts) {
       traces: {defaultPass: trace},
       devtoolsLogs: {defaultPass: []},
 
+      GatherContext: {gatherMode: 'navigation'}, // todo: timespan???
       settings: config.settings,
       URL: {requestedUrl: url, finalUrl: url},
       HostFormFactor: opts.device,
@@ -206,5 +207,9 @@ if (require.main === module) {
   /**
    * todo:
    * - occurences of dependencies: {DevtoolsLog: DevtoolsLog.symbol},
+   * - removal of devtoolsLog from requiredArtifacts when its unused now
+   * ProcessedNavigation
+   * NetworkRecords.request(devtoolsLog
+   * lighthouse-core/computed/image-records.js
    */
 }

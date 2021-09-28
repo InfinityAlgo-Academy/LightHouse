@@ -248,17 +248,17 @@ class HeaderPoliceAudit {
       title: 'All headers stripped of debug data',
       failureTitle: 'Headers contained debug data',
       description: 'Pages should mask debug data in production.',
-      requiredArtifacts: ['devtoolsLogs', 'traces'],
+      requiredArtifacts: ['traces'],
     };
   }
 
   static async audit(artifacts, context) {
     // Lighthouse loads the page multiple times: while offline, without javascript, etc.
-    // Use the devtools log from the default pass of the page.
-    const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
-    // Request the network records from the devtools log.
+    // Use the trace from the default pass of the page.
+    const trace = artifacts.traces[Audit.DEFAULT_PASS];
+    // Request the network records.
     // The `context` argument is passed in to allow Lighthouse to cache the result and not re-compute the network requests for every audit that needs them.
-    const requests = await NetworkRecords.request(devtoolsLog, context);
+    const requests = await NetworkRecords.request(trace, context);
 
     // Do whatever you need to with the network requests.
     const badRequests = requests.filter(request =>
