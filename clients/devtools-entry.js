@@ -77,15 +77,12 @@ let localDev = false;
  */
 function analyzeTrace(trace, opts) {
   const url = opts.url;
-  const metricIds = defaultConfig.categories.performance.auditRefs
-    .filter(ref => ref.group === 'metrics')
-    .map(ref => ref.id);
 
   /** @type {LH.Config.Json} */
   const configJSON = {
     extends: 'lighthouse:default',
     settings: {
-      onlyAudits: metricIds,
+      onlyCategories: ['performance'],
       output: [localDev ? 'html' : 'json'],
       formFactor: opts.device,
       throttlingMethod: 'devtools', // can't do lantern right now, so need real throttling applied.
@@ -162,6 +159,8 @@ if (require.main === module) {
 
   /** @type {LH.Trace} */
   const trace = JSON.parse(
+    // Gather with:
+    //     lighthouse https://paulirish.com --preset=desktop --only-categories=performance -GA --throttling-method=devtools
     require('fs').readFileSync(__dirname + '/../latest-run/defaultPass.trace.json', 'utf8')
   );
 
@@ -174,7 +173,7 @@ if (require.main === module) {
         (e.name === 'navigationStart' && e?.args?.data?.isLoadingMainFrame === true) ||
         e.name === 'NavigationBodyLoader::StartLoadingBody'
     )
-    .map(e => e?.args?.data?.documentLoaderURL || e?.args?.url);
+    .map(e => e.args.data?.documentLoaderURL || e.args.url);
     // find most common item: https://stackoverflow.com/a/20762713/89484
     return urls.sort(
       (a, b) => urls.filter(v => v === a).length - urls.filter(v => v === b).length).pop();
