@@ -39,13 +39,13 @@ export function classNames(...args: Array<string|undefined|Record<string, boolea
   return classes.join(' ');
 }
 
-export function getScreenDimensions(reportResult: LH.ReportResult) {
-  const {width, height} = reportResult.configSettings.screenEmulation;
+export function getScreenDimensions(lhr: LH.Result) {
+  const {width, height} = lhr.configSettings.screenEmulation;
   return {width, height};
 }
 
-export function getScreenshot(reportResult: LH.ReportResult) {
-  const fullPageScreenshotAudit = reportResult.audits['full-page-screenshot'];
+export function getScreenshot(lhr: LH.Result) {
+  const fullPageScreenshotAudit = lhr.audits['full-page-screenshot'];
   const fullPageScreenshot =
     fullPageScreenshotAudit.details &&
     fullPageScreenshotAudit.details.type === 'full-page-screenshot' &&

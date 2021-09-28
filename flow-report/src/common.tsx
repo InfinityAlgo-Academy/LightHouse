@@ -40,14 +40,14 @@ export const FlowSegment: FunctionComponent<{mode?: LH.Result.GatherMode}> = ({m
 };
 
 export const FlowStepThumbnail: FunctionComponent<{
-  reportResult: LH.ReportResult,
+  lhr: LH.Result,
   width?: number,
   height?: number,
-}> = ({reportResult, width, height}) => {
-  const screenshot = getScreenshot(reportResult);
+}> = ({lhr, width, height}) => {
+  const screenshot = getScreenshot(lhr);
 
   // Resize the image to fit the viewport aspect ratio.
-  const dimensions = getScreenDimensions(reportResult);
+  const dimensions = getScreenDimensions(lhr);
   if (width && height === undefined) {
     height = dimensions.height * width / dimensions.width;
   } else if (height && width === undefined) {

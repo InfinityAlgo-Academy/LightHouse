@@ -49,7 +49,7 @@ export const SummaryFlowStep: FunctionComponent<{
       }
       {
         lhr.gatherMode !== 'timespan' &&
-          <FlowStepThumbnail reportResult={reportResult} width={THUMBNAIL_WIDTH}/>
+          <FlowStepThumbnail lhr={lhr} width={THUMBNAIL_WIDTH}/>
       }
       <FlowSegment mode={lhr.gatherMode}/>
       <div className="SummaryFlowStep__label">
