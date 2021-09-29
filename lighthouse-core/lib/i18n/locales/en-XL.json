@@ -1629,7 +1629,7 @@
     "message": "B̂úd̂ǵêt́ŝ"
   },
   "lighthouse-core/config/default-config.js | diagnosticsGroupDescription": {
-    "message": "M̂ór̂é îńf̂ór̂ḿât́îón̂ áb̂óût́ t̂h́ê ṕêŕf̂ór̂ḿâńĉé ôf́ ŷóûŕ âṕp̂ĺîćât́îón̂. T́ĥéŝé n̂úm̂b́êŕŝ d́ôń't̂ [d́îŕêćt̂ĺŷ áf̂f́êćt̂](https://web.dev/performance-scoring/) t́ĥé P̂ér̂f́ôŕm̂án̂ćê śĉór̂é."
+    "message": "M̂ór̂é îńf̂ór̂ḿât́îón̂ áb̂óût́ t̂h́ê ṕêŕf̂ór̂ḿâńĉé ôf́ ŷóûŕ âṕp̂ĺîćât́îón̂."
   },
   "lighthouse-core/config/default-config.js | diagnosticsGroupTitle": {
     "message": "D̂íâǵn̂óŝt́îćŝ"
@@ -1641,7 +1641,7 @@
     "message": "F̂ír̂śt̂ Ṕâín̂t́ Îḿp̂ŕôv́êḿêńt̂ś"
   },
   "lighthouse-core/config/default-config.js | loadOpportunitiesGroupDescription": {
-    "message": "T̂h́êśê śûǵĝéŝt́îón̂ś ĉán̂ h́êĺp̂ ýôúr̂ ṕâǵê ĺôád̂ f́âśt̂ér̂. T́ĥéŷ d́ôń't̂ [d́îŕêćt̂ĺŷ áf̂f́êćt̂](https://web.dev/performance-scoring/) t́ĥé P̂ér̂f́ôŕm̂án̂ćê śĉór̂é."
+    "message": "T̂h́êśê śûǵĝéŝt́îón̂ś ĉán̂ h́êĺp̂ ýôúr̂ ṕâǵê ĺôád̂ f́âśt̂ér̂."
   },
   "lighthouse-core/config/default-config.js | loadOpportunitiesGroupTitle": {
     "message": "Ôṕp̂ór̂t́ûńît́îéŝ"

@@ -186,7 +186,8 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
       metricsBoxesEl.appendChild(this._renderMetric(item));
     });
 
-    const estValuesEl = this.dom.createChildOf(metricAuditsEl, 'div', 'lh-metrics__disclaimer');
+    const descriptionEl = this.dom.find('.lh-category-header__description', element);
+    const estValuesEl = this.dom.createChildOf(descriptionEl, 'div', 'lh-metrics__disclaimer');
     const disclaimerEl = this.dom.convertMarkdownLinkSnippets(strings.varianceDisclaimer);
     estValuesEl.appendChild(disclaimerEl);
 

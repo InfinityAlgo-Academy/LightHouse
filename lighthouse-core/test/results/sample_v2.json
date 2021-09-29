@@ -6696,7 +6696,7 @@
     },
     "load-opportunities": {
       "title": "Opportunities",
-      "description": "These suggestions can help your page load faster. They don't [directly affect](https://web.dev/performance-scoring/) the Performance score."
+      "description": "These suggestions can help your page load faster."
     },
     "budgets": {
       "title": "Budgets",
@@ -6704,7 +6704,7 @@
     },
     "diagnostics": {
       "title": "Diagnostics",
-      "description": "More information about the performance of your application. These numbers don't [directly affect](https://web.dev/performance-scoring/) the Performance score."
+      "description": "More information about the performance of your application."
     },
     "pwa-installable": {
       "title": "Installable"
@@ -6779,12 +6779,6 @@
       },
       {
         "startTime": 0,
-        "name": "lh:init:config",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
         "name": "lh:config:requireGatherers",
         "duration": 100,
         "entryType": "measure"
@@ -6797,25 +6791,19 @@
       },
       {
         "startTime": 0,
-        "name": "lh:runner:run",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:runner:auditing",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:audit:is-on-https",
+        "name": "lh:init:config",
         "duration": 100,
         "entryType": "measure"
       },
       {
         "startTime": 0,
         "name": "lh:computed:NetworkRecords",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:is-on-https",
         "duration": 100,
         "entryType": "measure"
       },
@@ -6833,25 +6821,13 @@
       },
       {
         "startTime": 0,
-        "name": "lh:audit:viewport",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
         "name": "lh:computed:ViewportMeta",
         "duration": 100,
         "entryType": "measure"
       },
       {
         "startTime": 0,
-        "name": "lh:audit:first-contentful-paint",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:computed:FirstContentfulPaint",
+        "name": "lh:audit:viewport",
         "duration": 100,
         "entryType": "measure"
       },
@@ -6869,7 +6845,13 @@
       },
       {
         "startTime": 0,
-        "name": "lh:audit:largest-contentful-paint",
+        "name": "lh:computed:FirstContentfulPaint",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:first-contentful-paint",
         "duration": 100,
         "entryType": "measure"
       },
@@ -6881,7 +6863,7 @@
       },
       {
         "startTime": 0,
-        "name": "lh:audit:first-meaningful-paint",
+        "name": "lh:audit:largest-contentful-paint",
         "duration": 100,
         "entryType": "measure"
       },
@@ -6893,13 +6875,7 @@
       },
       {
         "startTime": 0,
-        "name": "lh:audit:speed-index",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:computed:SpeedIndex",
+        "name": "lh:audit:first-meaningful-paint",
         "duration": 100,
         "entryType": "measure"
       },
@@ -6911,13 +6887,19 @@
       },
       {
         "startTime": 0,
-        "name": "lh:audit:screenshot-thumbnails",
+        "name": "lh:computed:SpeedIndex",
         "duration": 100,
         "entryType": "measure"
       },
       {
         "startTime": 0,
-        "name": "lh:audit:final-screenshot",
+        "name": "lh:audit:speed-index",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:screenshot-thumbnails",
         "duration": 100,
         "entryType": "measure"
       },
@@ -6929,13 +6911,7 @@
       },
       {
         "startTime": 0,
-        "name": "lh:audit:total-blocking-time",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:computed:TotalBlockingTime",
+        "name": "lh:audit:final-screenshot",
         "duration": 100,
         "entryType": "measure"
       },
@@ -6947,7 +6923,13 @@
       },
       {
         "startTime": 0,
-        "name": "lh:audit:max-potential-fid",
+        "name": "lh:computed:TotalBlockingTime",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:total-blocking-time",
         "duration": 100,
         "entryType": "measure"
       },
@@ -6959,7 +6941,7 @@
       },
       {
         "startTime": 0,
-        "name": "lh:audit:cumulative-layout-shift",
+        "name": "lh:audit:max-potential-fid",
         "duration": 100,
         "entryType": "measure"
       },
@@ -6971,13 +6953,13 @@
       },
       {
         "startTime": 0,
-        "name": "lh:audit:errors-in-console",
+        "name": "lh:audit:cumulative-layout-shift",
         "duration": 100,
         "entryType": "measure"
       },
       {
         "startTime": 0,
-        "name": "lh:audit:server-response-time",
+        "name": "lh:audit:errors-in-console",
         "duration": 100,
         "entryType": "measure"
       },
@@ -6989,13 +6971,13 @@
       },
       {
         "startTime": 0,
-        "name": "lh:audit:interactive",
+        "name": "lh:audit:server-response-time",
         "duration": 100,
         "entryType": "measure"
       },
       {
         "startTime": 0,
-        "name": "lh:audit:user-timings",
+        "name": "lh:audit:interactive",
         "duration": 100,
         "entryType": "measure"
       },
@@ -7007,13 +6989,7 @@
       },
       {
         "startTime": 0,
-        "name": "lh:audit:critical-request-chains",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:computed:CriticalRequestChains",
+        "name": "lh:audit:user-timings",
         "duration": 100,
         "entryType": "measure"
       },
@@ -7025,31 +7001,13 @@
       },
       {
         "startTime": 0,
-        "name": "lh:audit:redirects",
+        "name": "lh:computed:CriticalRequestChains",
         "duration": 100,
         "entryType": "measure"
       },
       {
         "startTime": 0,
-        "name": "lh:computed:LanternInteractive",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:computed:LanternFirstMeaningfulPaint",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:computed:LanternFirstContentfulPaint",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:computed:LoadSimulator",
+        "name": "lh:audit:critical-request-chains",
         "duration": 100,
         "entryType": "measure"
       },
@@ -7061,7 +7019,31 @@
       },
       {
         "startTime": 0,
-        "name": "lh:audit:installable-manifest",
+        "name": "lh:computed:LoadSimulator",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:LanternFirstContentfulPaint",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:LanternFirstMeaningfulPaint",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:LanternInteractive",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:redirects",
         "duration": 100,
         "entryType": "measure"
       },
@@ -7073,7 +7055,19 @@
       },
       {
         "startTime": 0,
+        "name": "lh:audit:installable-manifest",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:audit:apple-touch-icon",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:ManifestValues",
         "duration": 100,
         "entryType": "measure"
       },
@@ -7092,12 +7086,6 @@
       {
         "startTime": 0,
         "name": "lh:audit:themed-omnibox",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:computed:ManifestValues",
         "duration": 100,
         "entryType": "measure"
       },
@@ -7139,13 +7127,13 @@
       },
       {
         "startTime": 0,
-        "name": "lh:audit:mainthread-work-breakdown",
+        "name": "lh:computed:MainThreadTasks",
         "duration": 100,
         "entryType": "measure"
       },
       {
         "startTime": 0,
-        "name": "lh:computed:MainThreadTasks",
+        "name": "lh:audit:mainthread-work-breakdown",
         "duration": 100,
         "entryType": "measure"
       },
@@ -7205,18 +7193,6 @@
       },
       {
         "startTime": 0,
-        "name": "lh:audit:metrics",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:computed:TimingSummary",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
         "name": "lh:computed:FirstContentfulPaintAllFrames",
         "duration": 100,
         "entryType": "measure"
@@ -7229,13 +7205,25 @@
       },
       {
         "startTime": 0,
-        "name": "lh:audit:performance-budget",
+        "name": "lh:computed:TimingSummary",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:metrics",
         "duration": 100,
         "entryType": "measure"
       },
       {
         "startTime": 0,
         "name": "lh:computed:ResourceSummary",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:performance-budget",
         "duration": 100,
         "entryType": "measure"
       },
@@ -7331,12 +7319,6 @@
       },
       {
         "startTime": 0,
-        "name": "lh:audit:script-treemap-data",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
         "name": "lh:computed:JSBundles",
         "duration": 100,
         "entryType": "measure"
@@ -7362,6 +7344,12 @@
       {
         "startTime": 0,
         "name": "lh:computed:UnusedJavascriptSummary",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:script-treemap-data",
         "duration": 100,
         "entryType": "measure"
       },
@@ -7727,19 +7715,13 @@
       },
       {
         "startTime": 0,
-        "name": "lh:audit:render-blocking-resources",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
         "name": "lh:computed:UnusedCSS",
         "duration": 100,
         "entryType": "measure"
       },
       {
         "startTime": 0,
-        "name": "lh:computed:FirstContentfulPaint",
+        "name": "lh:computed:LoadSimulator",
         "duration": 100,
         "entryType": "measure"
       },
@@ -7751,7 +7733,13 @@
       },
       {
         "startTime": 0,
-        "name": "lh:computed:LoadSimulator",
+        "name": "lh:computed:FirstContentfulPaint",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:render-blocking-resources",
         "duration": 100,
         "entryType": "measure"
       },
@@ -7775,12 +7763,6 @@
       },
       {
         "startTime": 0,
-        "name": "lh:audit:unused-javascript",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
         "name": "lh:computed:JSBundles",
         "duration": 100,
         "entryType": "measure"
@@ -7788,6 +7770,12 @@
       {
         "startTime": 0,
         "name": "lh:computed:UnusedJavascriptSummary",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:unused-javascript",
         "duration": 100,
         "entryType": "measure"
       },
@@ -7811,13 +7799,13 @@
       },
       {
         "startTime": 0,
-        "name": "lh:audit:uses-responsive-images",
+        "name": "lh:computed:ImageRecords",
         "duration": 100,
         "entryType": "measure"
       },
       {
         "startTime": 0,
-        "name": "lh:computed:ImageRecords",
+        "name": "lh:audit:uses-responsive-images",
         "duration": 100,
         "entryType": "measure"
       },
@@ -7829,7 +7817,7 @@
       },
       {
         "startTime": 0,
-        "name": "lh:audit:duplicated-javascript",
+        "name": "lh:computed:JSBundles",
         "duration": 100,
         "entryType": "measure"
       },
@@ -7841,7 +7829,7 @@
       },
       {
         "startTime": 0,
-        "name": "lh:computed:JSBundles",
+        "name": "lh:audit:duplicated-javascript",
         "duration": 100,
         "entryType": "measure"
       },
@@ -8009,7 +7997,19 @@
       },
       {
         "startTime": 0,
+        "name": "lh:runner:auditing",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:runner:generate",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:runner:run",
         "duration": 100,
         "entryType": "measure"
       }
