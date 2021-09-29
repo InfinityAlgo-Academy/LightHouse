@@ -145,7 +145,7 @@ export class CategoryRenderer {
   }
 
   /**
-   * Inject the final screenshot next to the score gauce of the first category (likely Performance)
+   * Inject the final screenshot next to the score gauge of the first category (likely Performance)
    * @param {HTMLElement} categoriesEl
    * @param {LH.ReportResult['audits']} audits
    * @param {Element?} scoreScaleEl
@@ -154,9 +154,9 @@ export class CategoryRenderer {
     // TODO: Use full-page-screenshot instead as that's always gathered, regardless of category filter
     const audit = audits['final-screenshot'];
     if (!audit || audit.scoreDisplayMode === 'error') return null;
-    const details = audit.details;
-    if (!details || details.type !== 'screenshot') return null;
-    const finalScreenshotDataUri = details.data;
+    if (!audit.details || audit.details.type !== 'screenshot') return null;
+
+    const finalScreenshotDataUri = audit.details.data;
     const finalSSimg = this.dom.createElement('img', 'lh-final-ss-image');
     finalSSimg.src = finalScreenshotDataUri;
 

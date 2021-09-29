@@ -234,7 +234,7 @@ export class ReportRenderer {
       scoreHeader.append(
         ...this._renderScoreGauges(report, categoryRenderer, specificCategoryRenderers));
       scoresContainer.appendChild(scoreHeader);
-      scoreScale && scoresContainer.appendChild(scoreScale);
+      if (scoreScale) scoresContainer.appendChild(scoreScale);
 
       const stickyHeader = this._dom.createElement('div', 'lh-sticky-header');
       stickyHeader.append(
