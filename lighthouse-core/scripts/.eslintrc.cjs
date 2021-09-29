@@ -5,21 +5,23 @@
  */
 'use strict';
 
-// node lighthouse-core/scripts/build-test-flow-report.js
-
-import fs from 'fs';
-import {execFileSync} from 'child_process';
-
-import open from 'open';
-
-import reportGenerator from '../../report/generator/report-generator.js';
-import {LH_ROOT, readJson} from '../../root.js';
-
-execFileSync(`yarn`, ['build-report', '--flow']);
-
-const flow = readJson('lighthouse-core/test/fixtures/fraggle-rock/reports/sample-lhrs.json');
-
-const htmlReport = reportGenerator.generateFlowReportHtml(flow);
-
-fs.writeFileSync(`${LH_ROOT}/flow.report.html`, htmlReport);
-open(`${LH_ROOT}/flow.report.html`);
+module.exports = {
+  env: {
+    browser: true,
+  },
+  rules: {
+    // TODO(esmodules): move to root eslint when all code is ESM
+    // or when this is resolved: https://github.com/import-js/eslint-plugin-import/issues/2214
+    'import/order': [2, {
+      'groups': [
+        'builtin',
+        'external',
+        ['sibling', 'parent'],
+        'index',
+        'object',
+        'type',
+      ],
+      'newlines-between': 'always',
+    }],
+  },
+};

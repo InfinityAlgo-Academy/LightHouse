@@ -20,10 +20,12 @@
  * node ./lighthouse-core/scripts/internal-analysis/analyze-issues.js
  */
 
-const fs = require('fs');
-const path = require('path');
-const fetch = require('node-fetch');
-const {LH_ROOT} = require('../../../root.js');
+import fs from 'fs';
+import path from 'path';
+
+import fetch from 'node-fetch';
+
+import {LH_ROOT} from '../../../root.js';
 
 const DAY_FILTER = 90;
 const HOUR_IN_MS = 60 * 60 * 1000;

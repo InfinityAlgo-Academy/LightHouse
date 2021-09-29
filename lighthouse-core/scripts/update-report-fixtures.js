@@ -5,13 +5,14 @@
  */
 'use strict';
 
-const fs = require('fs');
-const cli = require('../../lighthouse-cli/run.js');
-const cliFlags = require('../../lighthouse-cli/cli-flags.js');
-const assetSaver = require('../lib/asset-saver.js');
-const {server} = require('../../lighthouse-cli/test/fixtures/static-server.js');
-const budgetedConfig = require('../test/results/sample-config.js');
-const {LH_ROOT} = require('../../root.js');
+import fs from 'fs';
+
+import * as cli from '../../lighthouse-cli/run.js';
+import * as cliFlags from '../../lighthouse-cli/cli-flags.js';
+import assetSaver from '../lib/asset-saver.js';
+import {server} from '../../lighthouse-cli/test/fixtures/static-server.js';
+import budgetedConfig from '../test/results/sample-config.js';
+import {LH_ROOT} from '../../root.js';
 
 const artifactPath = 'lighthouse-core/test/results/artifacts';
 // All artifacts must have resources from a consistent port, to ensure reproducibility.

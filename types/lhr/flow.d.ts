@@ -11,6 +11,11 @@ declare module FlowResult {
     lhr: Result;
     name: string;
   }
+
+  interface LhrRef {
+    value: Result;
+    index: number;
+  }
 }
 
 /**

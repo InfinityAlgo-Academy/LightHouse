@@ -6,22 +6,7 @@
 'use strict';
 
 const rollup = require('rollup');
-
-/**
- * Rollup plugins don't export types that work with commonjs.
- * @template T
- * @param {T} module
- * @return {T['default']}
- */
-function rollupPluginTypeCoerce(module) {
-  // @ts-expect-error
-  return module;
-}
-
-const nodeResolve = rollupPluginTypeCoerce(require('rollup-plugin-node-resolve'));
-const commonjs = rollupPluginTypeCoerce(require('rollup-plugin-commonjs'));
-// @ts-expect-error: no types
-const shim = require('rollup-plugin-shim');
+const rollupPlugins = require('./rollup-plugins.js');
 const {LH_ROOT} = require('../root.js');
 
 const distDir = `${LH_ROOT}/dist`;
@@ -35,9 +20,9 @@ async function build() {
     input: smokehouseLibFilename,
     context: 'globalThis',
     plugins: [
-      nodeResolve(),
-      commonjs(),
-      shim({
+      rollupPlugins.nodeResolve(),
+      rollupPlugins.commonjs(),
+      rollupPlugins.shim({
         [smokehouseCliFilename]: 'export default {}',
       }),
     ],

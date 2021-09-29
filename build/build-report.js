@@ -6,25 +6,14 @@
 'use strict';
 
 const rollup = require('rollup');
-const {nodeResolve} = require('@rollup/plugin-node-resolve');
-const {terser} = require('rollup-plugin-terser');
-// Only needed b/c getFilenamePrefix loads a commonjs module.
-const commonjs =
-  // @ts-expect-error types are wrong.
-  /** @type {import('rollup-plugin-commonjs').default} */ (require('rollup-plugin-commonjs'));
-
-/**
- * @type {import('@rollup/plugin-typescript').default}
- */
-// @ts-expect-error types are wrong.
-const typescript = require('@rollup/plugin-typescript');
+const rollupPlugins = require('./rollup-plugins.js');
 
 async function buildStandaloneReport() {
   const bundle = await rollup.rollup({
     input: 'report/clients/standalone.js',
     plugins: [
-      commonjs(),
-      terser(),
+      rollupPlugins.commonjs(),
+      rollupPlugins.terser(),
     ],
   });
 
@@ -38,9 +27,9 @@ async function buildFlowReport() {
   const bundle = await rollup.rollup({
     input: 'flow-report/standalone-flow.tsx',
     plugins: [
-      nodeResolve(),
-      commonjs(),
-      typescript({
+      rollupPlugins.nodeResolve(),
+      rollupPlugins.commonjs(),
+      rollupPlugins.typescript({
         tsconfig: 'flow-report/tsconfig.json',
         // Plugin struggles with custom outDir, so revert it from tsconfig value
         // as well as any options that require an outDir is set.
@@ -49,7 +38,7 @@ async function buildFlowReport() {
         emitDeclarationOnly: false,
         declarationMap: false,
       }),
-      terser(),
+      rollupPlugins.terser(),
     ],
   });
 
@@ -63,7 +52,7 @@ async function buildPsiReport() {
   const bundle = await rollup.rollup({
     input: 'report/clients/psi.js',
     plugins: [
-      commonjs(),
+      rollupPlugins.commonjs(),
     ],
   });
 
@@ -77,7 +66,7 @@ async function buildEsModulesBundle() {
   const bundle = await rollup.rollup({
     input: 'report/clients/bundle.js',
     plugins: [
-      commonjs(),
+      rollupPlugins.commonjs(),
     ],
   });
 
@@ -91,7 +80,7 @@ async function buildUmdBundle() {
   const bundle = await rollup.rollup({
     input: 'report/clients/bundle.js',
     plugins: [
-      commonjs(),
+      rollupPlugins.commonjs(),
     ],
   });
 
@@ -116,6 +105,8 @@ if (require.main === module) {
   }
   if (process.argv.includes('--standalone')) {
     buildStandaloneReport();
+  }
+  if (process.argv.includes('--flow')) {
     buildFlowReport();
   }
   if (process.argv.includes('--esm')) {

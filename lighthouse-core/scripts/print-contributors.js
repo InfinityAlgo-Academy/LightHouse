@@ -12,8 +12,9 @@
 
 /* eslint-disable no-console */
 
-const {execFileSync} = require('child_process');
-const fetch = require('node-fetch');
+import {execFileSync} from 'child_process';
+
+import fetch from 'node-fetch';
 
 const startingHash = process.argv[2];
 const endingHash = process.argv[3];

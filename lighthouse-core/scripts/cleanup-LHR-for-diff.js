@@ -9,7 +9,7 @@
 
 /** @fileoverview Read in a LHR JSON file, remove whatever shouldn't be compared, write it back. */
 
-const {readFileSync, writeFileSync} = require('fs');
+import {readFileSync, writeFileSync} from 'fs';
 
 const filename = process.argv[2];
 const extraFlag = process.argv[3];

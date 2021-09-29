@@ -1,4 +1,5 @@
 {
+  "type": "module",
   "name": "legacy-javascript",
   "license": "Apache-2.0",
   "dependencies": {
