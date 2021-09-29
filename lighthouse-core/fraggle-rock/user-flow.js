@@ -6,7 +6,9 @@
 'use strict';
 
 const {generateFlowReportHtml} = require('../../report/generator/report-generator.js');
-const {navigation, startTimespan, snapshot} = require('./api.js');
+const {snapshot} = require('./gather/snapshot-runner.js');
+const {startTimespan} = require('./gather/timespan-runner.js');
+const {navigation} = require('./gather/navigation-runner.js');
 
 /** @typedef {Parameters<snapshot>[0]} FrOptions */
 /** @typedef {Omit<FrOptions, 'page'>} UserFlowOptions */
@@ -53,11 +55,33 @@ class UserFlow {
    * @param {string} url
    * @param {StepOptions=} stepOptions
    */
+  _getNextNavigationOptions(url, stepOptions) {
+    const options = {url, ...this.options, ...stepOptions};
+
+    // On repeat navigations, we want to disable storage reset by default (i.e. it's not a cold load).
+    const isSubsequentNavigation = this.steps.some(step => step.lhr.gatherMode === 'navigation');
+    if (isSubsequentNavigation) {
+      const configContext = {...options.configContext};
+      const settingsOverrides = {...configContext.settingsOverrides};
+      if (settingsOverrides.disableStorageReset === undefined) {
+        settingsOverrides.disableStorageReset = true;
+      }
+
+      configContext.settingsOverrides = settingsOverrides;
+      options.configContext = configContext;
+    }
+
+    return options;
+  }
+
+  /**
+   * @param {string} url
+   * @param {StepOptions=} stepOptions
+   */
   async navigate(url, stepOptions) {
     if (this.currentTimespan) throw Error('Timespan already in progress');
 
-    const options = {url, ...this.options, ...stepOptions};
-    const result = await navigation(options);
+    const result = await navigation(this._getNextNavigationOptions(url, stepOptions));
     if (!result) throw Error('Navigation returned undefined');
 
     const providedName = stepOptions && stepOptions.stepName;
