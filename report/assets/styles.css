@@ -447,6 +447,9 @@
   color: rgb(26, 115, 232);
   background-color: var(--report-background-color);
 }
+.lh-button:first-of-type {
+  margin-left: 0;
+}
 .lh-dark .lh-button {
   color: var(--color-blue-200);
 }
@@ -964,6 +967,9 @@
   margin-bottom: var(--audit-group-margin-bottom);
   position: relative;
 }
+.lh-audit-group--metrics {
+  margin-bottom: calc(var(--audit-group-margin-bottom) / 2);
+}
 
 .lh-audit-group__header::before {
   /* By default, groups don't get an icon */
@@ -1439,11 +1445,10 @@
 
 .lh-category-header__finalscreenshot {
   display: grid;
-  grid-template-columns: 1fr 1px 1fr;
+  grid-template: none / 1fr 1px 1fr;
   justify-items: center;
   align-items: center;
   gap: var(--report-line-height);
-  margin-bottom: var(--default-padding);
 }
 
 .lh-category-header__finalscreenshot .lh-scorescale {
@@ -1472,6 +1477,17 @@
   width: 1px;
   height: var(--gauge-circle-size-big);
 }
+
+@media screen and (max-width: 535px) {
+  .lh-category-header__finalscreenshot {
+    grid-template: 1fr 1fr / none
+  }
+  .lh-category-headercol--separator {
+    display: none;
+  }
+}
+
+
 
 #lh-log {
   position: fixed;
