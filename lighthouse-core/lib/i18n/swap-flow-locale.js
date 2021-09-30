@@ -5,16 +5,16 @@
  */
 'use strict';
 
-// node lighthouse-core/scripts/build-test-flow-report.js
+const swapLocale = require('./swap-locale.js');
 
-import fs from 'fs';
-
-import open from 'open';
-
-import reportGenerator from '../../report/generator/report-generator.js';
-import {LH_ROOT, readJson} from '../../root.js';
-
-const flow = readJson('lighthouse-core/test/fixtures/fraggle-rock/reports/sample-flow-result.json');
-const htmlReport = reportGenerator.generateFlowReportHtml(flow);
-fs.writeFileSync(`${LH_ROOT}/flow.report.html`, htmlReport);
-open(`${LH_ROOT}/flow.report.html`);
+/**
+ * @param {LH.FlowResult} flowResult
+ * @param {LH.Locale} locale
+ */
+module.exports = function swapFlowLocale(flowResult, locale) {
+  const localizedFlowResult = JSON.parse(JSON.stringify(flowResult));
+  localizedFlowResult.steps = flowResult.steps.map(step => {
+    return {...step, lhr: swapLocale(step.lhr, locale).lhr};
+  });
+  return localizedFlowResult;
+};

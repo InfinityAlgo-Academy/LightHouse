@@ -74,6 +74,7 @@
     "update:lantern-baseline": "node lighthouse-core/scripts/lantern/update-baseline-lantern-values.js",
     "update:sample-artifacts": "node lighthouse-core/scripts/update-report-fixtures.js",
     "update:sample-json": "yarn i18n:collect-strings && node ./lighthouse-cli -A=./lighthouse-core/test/results/artifacts --config-path=./lighthouse-core/test/results/sample-config.js --output=json --output-path=./lighthouse-core/test/results/sample_v2.json && node lighthouse-core/scripts/cleanup-LHR-for-diff.js ./lighthouse-core/test/results/sample_v2.json --only-remove-timing",
+    "update:flow-sample-json": "node ./lighthouse-core/scripts/update-flow-fixtures.js",
     "update:test-devtools": "bash lighthouse-core/test/chromium-web-tests/test-locally.sh --reset-results",
     "test-devtools": "bash lighthouse-core/test/chromium-web-tests/test-locally.sh",
     "open-devtools": "bash lighthouse-core/scripts/open-devtools.sh",
@@ -88,7 +89,8 @@
     "serve-dist": "cd dist && python -m SimpleHTTPServer",
     "serve-gh-pages": "cd dist/gh-pages && python -m SimpleHTTPServer",
     "serve-treemap": "yarn serve-gh-pages",
-    "serve-viewer": "yarn serve-gh-pages"
+    "serve-viewer": "yarn serve-gh-pages",
+    "flow-report": "yarn build-report --flow && node ./lighthouse-core/scripts/build-test-flow-report.js"
   },
   "devDependencies": {
     "@build-tracker/cli": "^1.0.0-beta.15",

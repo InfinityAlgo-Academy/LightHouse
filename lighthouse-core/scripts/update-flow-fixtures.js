@@ -7,7 +7,6 @@
 
 import fs from 'fs';
 
-import open from 'open';
 import puppeteer from 'puppeteer';
 
 import {LH_ROOT} from '../../root.js';
@@ -34,15 +33,11 @@ import UserFlow from '../fraggle-rock/user-flow.js';
     await flow.navigate('https://www.mikescerealshack.co/corrections');
 
     const flowResult = flow.getFlowResult();
-    const report = flow.generateReport();
 
     fs.writeFileSync(
-      `${LH_ROOT}/lighthouse-core/test/fixtures/fraggle-rock/reports/sample-lhrs.json`,
+      `${LH_ROOT}/lighthouse-core/test/fixtures/fraggle-rock/reports/sample-flow-result.json`,
       JSON.stringify(flowResult, null, 2)
     );
-
-    fs.writeFileSync(`${LH_ROOT}/flow.report.html`, report);
-    open(`${LH_ROOT}/flow.report.html`);
 
     process.exit(0);
   } catch (err) {

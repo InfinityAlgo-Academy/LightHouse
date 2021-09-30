@@ -11,18 +11,16 @@
 const fs = require('fs');
 const path = require('path');
 const swapLocale = require('../lighthouse-core/lib/i18n/swap-locale.js');
+const swapFlowLocale = require('../lighthouse-core/lib/i18n/swap-flow-locale.js');
 const ReportGenerator = require('../report/generator/report-generator.js');
 const {defaultSettings} = require('../lighthouse-core/config/constants.js');
 const lighthouse = require('../lighthouse-core/index.js');
 const lhr = /** @type {LH.Result} */ (require('../lighthouse-core/test/results/sample_v2.json'));
-const {LH_ROOT} = require('../root.js');
+const {LH_ROOT, readJson} = require('../root.js');
 
 /** @type {LH.FlowResult} */
-const flowResult = JSON.parse(
-  fs.readFileSync(
-    `${LH_ROOT}/lighthouse-core/test/fixtures/fraggle-rock/reports/sample-lhrs.json`,
-    'utf-8'
-  )
+const flowResult = readJson(
+  `${LH_ROOT}/lighthouse-core/test/fixtures/fraggle-rock/reports/sample-flow-result.json`
 );
 
 const DIST = path.join(LH_ROOT, 'dist');
@@ -60,15 +58,22 @@ const DIST = path.join(LH_ROOT, 'dist');
     }
   });
 
-  generateFlowReport();
+  generateFlowReports();
 })();
 
-function generateFlowReport() {
-  const html = ReportGenerator.generateFlowReportHtml(flowResult);
-  const filepath = `${DIST}/sample-reports/flow-report/index.html`;
-  fs.mkdirSync(path.dirname(filepath), {recursive: true});
-  fs.writeFileSync(filepath, html, {encoding: 'utf-8'});
-  console.log('✅', filepath, 'written.');
+function generateFlowReports() {
+  const filenameToFlowResult = {
+    'flow-report': flowResult,
+    'xl.flow-report': swapFlowLocale(flowResult, 'en-XL'),
+  };
+
+  for (const [filename, fr] of Object.entries(filenameToFlowResult)) {
+    const html = ReportGenerator.generateFlowReportHtml(fr);
+    const filepath = `${DIST}/sample-reports/${filename}/index.html`;
+    fs.mkdirSync(path.dirname(filepath), {recursive: true});
+    fs.writeFileSync(filepath, html, {encoding: 'utf-8'});
+    console.log('✅', filepath, 'written.');
+  }
 }
 
 /**

@@ -4,24 +4,13 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import fs from 'fs';
-import {dirname} from 'path';
-import {fileURLToPath} from 'url';
-
 import {jest} from '@jest/globals';
 import {renderHook} from '@testing-library/preact-hooks';
 import {FunctionComponent} from 'preact';
 import {act} from 'preact/test-utils';
 
 import {FlowResultContext, useCurrentLhr} from '../src/util';
-
-const flowResult: LH.FlowResult = JSON.parse(
-  fs.readFileSync(
-    // eslint-disable-next-line max-len
-    `${dirname(fileURLToPath(import.meta.url))}/../../lighthouse-core/test/fixtures/fraggle-rock/reports/sample-lhrs.json`,
-    'utf-8'
-  )
-);
+import {flowResult} from './sample-flow';
 
 let wrapper: FunctionComponent;
 
