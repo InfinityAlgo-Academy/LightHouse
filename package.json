@@ -42,7 +42,7 @@
     "test-treemap": "yarn unit-treemap && yarn jest lighthouse-treemap/test/treemap-test-pptr.js",
     "test-lantern": "bash lighthouse-core/scripts/test-lantern.sh",
     "test-legacy-javascript": "bash lighthouse-core/scripts/test-legacy-javascript.sh",
-    "test-docs": "yarn --cwd docs/recipes/auth && yarn jest docs/recipes/integration-test && yarn --cwd docs/recipes/custom-gatherer-puppeteer test",
+    "test-docs": "yarn --cwd docs/recipes/ test",
     "test-proto": "yarn compile-proto && yarn build-proto-roundtrip",
     "unit-core": "yarn jest \"lighthouse-core\"",
     "unit-cli": "yarn jest \"lighthouse-cli/\"",
