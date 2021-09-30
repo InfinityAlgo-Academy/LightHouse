@@ -148,7 +148,7 @@ export class CategoryRenderer {
    * Inject the final screenshot next to the score gauge of the first category (likely Performance)
    * @param {HTMLElement} categoriesEl
    * @param {LH.ReportResult['audits']} audits
-   * @param {Element?} scoreScaleEl
+   * @param {Element} scoreScaleEl
    */
   injectFinalScreenshot(categoriesEl, audits, scoreScaleEl) {
     // TODO: Use full-page-screenshot instead as that's always gathered, regardless of category filter
@@ -156,21 +156,21 @@ export class CategoryRenderer {
     if (!audit || audit.scoreDisplayMode === 'error') return null;
     if (!audit.details || audit.details.type !== 'screenshot') return null;
 
+    const imgEl = this.dom.createElement('img', 'lh-final-ss-image');
     const finalScreenshotDataUri = audit.details.data;
-    const finalSSimg = this.dom.createElement('img', 'lh-final-ss-image');
-    finalSSimg.src = finalScreenshotDataUri;
+    imgEl.src = finalScreenshotDataUri;
 
     const firstCatHeaderEl = this.dom.find('.lh-category .lh-category-header', categoriesEl);
     const leftColEl = this.dom.createElement('div', 'lh-category-headercol');
-    const seperatorEl = this.dom.createElement('div',
-        'lh-category-headercol lh-category-headercol--seperator');
+    const separatorEl = this.dom.createElement('div',
+        'lh-category-headercol lh-category-headercol--separator');
     const rightColEl = this.dom.createElement('div', 'lh-category-headercol');
 
     leftColEl.append(...firstCatHeaderEl.childNodes);
-    if (scoreScaleEl) leftColEl.append(scoreScaleEl);
-    rightColEl.append(finalSSimg);
-    firstCatHeaderEl.append(leftColEl, seperatorEl, rightColEl);
-    firstCatHeaderEl.classList.add('lh-category-header__finalss');
+    leftColEl.append(scoreScaleEl);
+    rightColEl.append(imgEl);
+    firstCatHeaderEl.append(leftColEl, separatorEl, rightColEl);
+    firstCatHeaderEl.classList.add('lh-category-header__finalscreenshot');
   }
 
   /**

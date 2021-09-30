@@ -227,14 +227,14 @@ export class ReportRenderer {
       headerContainer.classList.add('lh-header--solo-category');
     }
 
-    // Can't work with the fragment as we may move the element later
-    const scoreScale = this._dom.createComponent('scorescale').firstElementChild;
+    const scoreScale = this._dom.createElement('div');
+    scoreScale.append(this._dom.createComponent('scorescale'));
     if (scoreHeader) {
       const scoresContainer = this._dom.find('.lh-scores-container', headerContainer);
       scoreHeader.append(
         ...this._renderScoreGauges(report, categoryRenderer, specificCategoryRenderers));
       scoresContainer.appendChild(scoreHeader);
-      if (scoreScale) scoresContainer.appendChild(scoreScale);
+      scoresContainer.appendChild(scoreScale);
 
       const stickyHeader = this._dom.createElement('div', 'lh-sticky-header');
       stickyHeader.append(
