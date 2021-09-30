@@ -9,24 +9,32 @@ import {FunctionComponent} from 'preact';
 import {Util} from '../../../report/renderer/util';
 import {Separator} from '../common';
 import {CategoryScore} from '../wrappers/category-score';
+import {useUIStrings} from '../i18n/i18n';
 
-const GATHER_MODE_LABELS: Record<LH.Result.GatherMode, string> = {
-  'navigation': 'Navigation report',
-  'timespan': 'Timespan report',
-  'snapshot': 'Snapshot report',
-};
+import type {UIStringsType} from '../i18n/ui-strings';
 
-const RATING_LABELS: Record<string, string> = {
-  'pass': 'Good',
-  'fail': 'Poor',
-  'average': 'Average',
-  'error': 'Error',
-};
+function getGatherModeLabel(gatherMode: LH.Result.GatherMode, strings: UIStringsType) {
+  switch (gatherMode) {
+    case 'navigation': return strings.navigationReport;
+    case 'timespan': return strings.timespanReport;
+    case 'snapshot': return strings.snapshotReport;
+  }
+}
+
+function getCategoryRating(rating: string, strings: UIStringsType) {
+  switch (rating) {
+    case 'pass': return strings.ratingPass;
+    case 'average': return strings.ratingAverage;
+    case 'fail': return strings.ratingFail;
+    case 'error': return strings.ratingError;
+  }
+}
 
 export const SummaryTooltip: FunctionComponent<{
   category: LH.ReportResult.Category,
   gatherMode: LH.Result.GatherMode
 }> = ({category, gatherMode}) => {
+  const strings = useUIStrings();
   const {numPassed, numAudits, totalWeight} = Util.calculateCategoryFraction(category);
 
   const displayAsFraction = Util.shouldDisplayAsFraction(gatherMode);
@@ -36,7 +44,7 @@ export const SummaryTooltip: FunctionComponent<{
 
   return (
     <div className="SummaryTooltip">
-      <div className="SummaryTooltip__title">{GATHER_MODE_LABELS[gatherMode]}</div>
+      <div className="SummaryTooltip__title">{getGatherModeLabel(gatherMode, strings)}</div>
       <Separator/>
       <div className="SummaryTooltip__category">
         <div className="SummaryTooltip__category-title">
@@ -48,7 +56,7 @@ export const SummaryTooltip: FunctionComponent<{
               className={`SummaryTooltip__rating SummaryTooltip__rating--${rating}`}
               data-testid="SummaryTooltip__rating"
             >
-              <span>{RATING_LABELS[rating]}</span>
+              <span>{getCategoryRating(rating, strings)}</span>
               {
                 !displayAsFraction && category.score && <>
                   <span> · </span>

@@ -7,6 +7,38 @@
 
 const rollup = require('rollup');
 const rollupPlugins = require('./rollup-plugins.js');
+const fs = require('fs');
+const {LH_ROOT} = require('../root.js');
+const {getIcuMessageIdParts} = require('../lighthouse-core/lib/i18n/i18n.js');
+
+/**
+ * Extract only the strings needed for the flow report into
+ * a script that sets a global variable `strings`, whose keys
+ * are locale codes (en-US, es, etc.) and values are localized UIStrings.
+ */
+function buildFlowStrings() {
+  const locales = require('../lighthouse-core/lib/i18n/locales.js');
+  // TODO(esmodules): use dynamic import when build/ is esm.
+  const i18nCode = fs.readFileSync(`${LH_ROOT}/flow-report/src/i18n/ui-strings.js`, 'utf-8');
+  const UIStrings = eval(i18nCode.replace(/export /g, '') + '\nmodule.exports = UIStrings;');
+  const strings = /** @type {Record<LH.Locale, string>} */ ({});
+
+  for (const [locale, lhlMessages] of Object.entries(locales)) {
+    const localizedStrings = Object.fromEntries(
+      Object.entries(lhlMessages).map(([icuMessageId, v]) => {
+        const {filename, key} = getIcuMessageIdParts(icuMessageId);
+        if (!filename.endsWith('ui-strings.js') || !(key in UIStrings)) {
+          return [];
+        }
+
+        return [key, v.message];
+      })
+    );
+    strings[/** @type {LH.Locale} */ (locale)] = localizedStrings;
+  }
+
+  return 'export default ' + JSON.stringify(strings, null, 2) + ';';
+}
 
 async function buildStandaloneReport() {
   const bundle = await rollup.rollup({
@@ -27,6 +59,9 @@ async function buildFlowReport() {
   const bundle = await rollup.rollup({
     input: 'flow-report/standalone-flow.tsx',
     plugins: [
+      rollupPlugins.shim({
+        [`${LH_ROOT}/flow-report/src/i18n/localized-strings`]: buildFlowStrings(),
+      }),
       rollupPlugins.nodeResolve(),
       rollupPlugins.commonjs(),
       rollupPlugins.typescript({

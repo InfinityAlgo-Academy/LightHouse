@@ -4,11 +4,26 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
+import {FunctionComponent} from 'preact';
 import {render} from '@testing-library/preact';
 
 import {SummaryTooltip} from '../../src/summary/category';
 import {Util} from '../../../report/renderer/util';
 import {flowResult} from '../sample-flow';
+import {I18nProvider} from '../../src/i18n/i18n';
+import {FlowResultContext} from '../../src/util';
+
+let wrapper: FunctionComponent;
+
+beforeEach(() => {
+  wrapper = ({children}) => (
+    <FlowResultContext.Provider value={flowResult}>
+      <I18nProvider>
+        {children}
+      </I18nProvider>
+    </FlowResultContext.Provider>
+  );
+});
 
 describe('SummaryTooltip', () => {
   it('renders tooltip with rating', async () => {
@@ -17,7 +32,8 @@ describe('SummaryTooltip', () => {
     const category = reportResult.categories['seo'];
 
     const root = render(
-      <SummaryTooltip category={category} gatherMode={reportResult.gatherMode}/>
+      <SummaryTooltip category={category} gatherMode={reportResult.gatherMode}/>,
+      {wrapper}
     );
 
     const rating = root.getByTestId('SummaryTooltip__rating');
@@ -32,7 +48,8 @@ describe('SummaryTooltip', () => {
     const category = reportResult.categories['performance'];
 
     const root = render(
-      <SummaryTooltip category={category} gatherMode={reportResult.gatherMode}/>
+      <SummaryTooltip category={category} gatherMode={reportResult.gatherMode}/>,
+      {wrapper}
     );
 
     expect(() => root.getByTestId('SummaryTooltip__rating')).toThrow();
@@ -45,7 +62,9 @@ describe('SummaryTooltip', () => {
     const category = reportResult.categories['performance'];
 
     const root = render(
-      <SummaryTooltip category={category} gatherMode={reportResult.gatherMode}/>
+      <SummaryTooltip category={category} gatherMode={reportResult.gatherMode}/>,
+      {wrapper}
+
     );
 
     const rating = root.getByTestId('SummaryTooltip__rating');

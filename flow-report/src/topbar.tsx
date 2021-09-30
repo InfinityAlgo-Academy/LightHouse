@@ -6,6 +6,7 @@
 
 import {FunctionComponent, JSX} from 'preact';
 
+import {useUIStrings} from './i18n/i18n';
 import {HamburgerIcon} from './icons';
 
 /* eslint-disable max-len */
@@ -46,6 +47,8 @@ const Logo: FunctionComponent = () => {
 
 export const Topbar: FunctionComponent<{onMenuClick: JSX.MouseEventHandler<HTMLDivElement>}> =
 ({onMenuClick}) => {
+  const strings = useUIStrings();
+
   return (
     <div className="Topbar">
       <div className="Topbar__menu" onClick={onMenuClick} role="button">
@@ -54,7 +57,7 @@ export const Topbar: FunctionComponent<{onMenuClick: JSX.MouseEventHandler<HTMLD
       <div className="Topbar__logo">
         <Logo/>
       </div>
-      <div className="Topbar__title">Lighthouse User Flow Report</div>
+      <div className="Topbar__title">{strings.title}</div>
     </div>
   );
 };

@@ -16,6 +16,7 @@
     {"path": "../report"},
   ],
   "include": [
+    "**/*.js",
     "**/*.ts",
     "**/*.tsx",
     "./types",

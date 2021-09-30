@@ -14,6 +14,7 @@ import {classNames, FlowResultContext, useCurrentLhr, useHashParam} from './util
 import {Report} from './wrappers/report';
 import {Topbar} from './topbar';
 import {Header} from './header';
+import {I18nProvider} from './i18n/i18n';
 
 const Content: FunctionComponent = () => {
   const currentLhr = useCurrentLhr();
@@ -52,11 +53,13 @@ export const App: FunctionComponent<{flowResult: LH.FlowResult}> = ({flowResult}
   return (
     <FlowResultContext.Provider value={flowResult}>
       <ReportRendererProvider>
-        <div className={classNames('App', {'App--collapsed': collapsed})}>
-          <Topbar onMenuClick={() => setCollapsed(c => !c)} />
-          <Sidebar/>
-          <Content/>
-        </div>
+        <I18nProvider>
+          <div className={classNames('App', {'App--collapsed': collapsed})}>
+            <Topbar onMenuClick={() => setCollapsed(c => !c)} />
+            <Sidebar/>
+            <Content/>
+          </div>
+        </I18nProvider>
       </ReportRendererProvider>
     </FlowResultContext.Provider>
   );

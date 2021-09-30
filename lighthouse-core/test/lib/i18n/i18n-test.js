@@ -305,6 +305,20 @@ describe('i18n', () => {
     });
   });
 
+  describe('#getIcuMessageIdParts', () => {
+    it('returns valid ICU message id parts', () => {
+      const {filename, key} = i18n.getIcuMessageIdParts('path/to/file.js | modeName');
+      expect(filename).toEqual('path/to/file.js');
+      expect(key).toEqual('modeName');
+    });
+
+    it('throws on invalid ICU message id', () => {
+      expect(() => {
+        i18n.getIcuMessageIdParts('path/to/file.js');
+      }).toThrow();
+    });
+  });
+
   describe('Message values are properly formatted', () => {
     // Message strings won't be in locale files, so will fall back to values given here.
     const UIStrings = {

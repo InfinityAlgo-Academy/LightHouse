@@ -4,21 +4,8 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-export default {
-  testEnvironment: 'node',
-  preset: 'ts-jest',
-  globalSetup: './test/setup/global-setup.ts',
-  setupFilesAfterEnv: [
-    './test/setup/env-setup.ts',
-  ],
-  testMatch: [
-    '**/test/**/*-test.ts',
-    '**/test/**/*-test.tsx',
-  ],
-  extensionsToTreatAsEsm: ['.ts', '.tsx'],
-  globals: {
-    'ts-jest': {
-      useESM: true,
-    },
-  },
-};
+/** @type {Record<LH.Locale, import('./ui-strings.js').UIStringsType>} */
+// @ts-expect-error This will be replaced with the localized strings at build time.
+const strings = {};
+
+export default strings;

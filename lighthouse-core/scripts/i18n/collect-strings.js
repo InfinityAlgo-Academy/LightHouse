@@ -34,6 +34,7 @@ const foldersWithStrings = [
   `${LH_ROOT}/lighthouse-core`,
   `${LH_ROOT}/report/renderer`,
   `${LH_ROOT}/lighthouse-treemap`,
+  `${LH_ROOT}/flow-report`,
   path.dirname(resolveModulePath('lighthouse-stack-packs')) + '/packs',
 ];
 

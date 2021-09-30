@@ -7,11 +7,7 @@
 import {createContext} from 'preact';
 import {useContext, useEffect, useMemo, useState} from 'preact/hooks';
 
-const MODE_DESCRIPTIONS: Record<LH.Result.GatherMode, string> = {
-  'navigation': 'Page load',
-  'timespan': 'User interactions',
-  'snapshot': 'Captured state of page',
-};
+import type {UIStringsType} from './i18n/ui-strings';
 
 export const FlowResultContext = createContext<LH.FlowResult|undefined>(undefined);
 
@@ -54,8 +50,12 @@ export function getScreenshot(reportResult: LH.ReportResult) {
   return fullPageScreenshot || null;
 }
 
-export function getModeDescription(mode: LH.Result.GatherMode) {
-  return MODE_DESCRIPTIONS[mode];
+export function getModeDescription(mode: LH.Result.GatherMode, strings: UIStringsType) {
+  switch (mode) {
+    case 'navigation': return strings.navigationDescription;
+    case 'timespan': return strings.timespanDescription;
+    case 'snapshot': return strings.snapshotDescription;
+  }
 }
 
 export function useFlowResult(): LH.FlowResult {

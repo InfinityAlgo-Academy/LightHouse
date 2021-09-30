@@ -10,12 +10,17 @@ import {render} from '@testing-library/preact';
 import {Header} from '../src/header';
 import {FlowResultContext} from '../src/util';
 import {flowResult} from './sample-flow';
+import {I18nProvider} from '../src/i18n/i18n';
 
 let wrapper: FunctionComponent;
 
 beforeEach(() => {
   wrapper = ({children}) => (
-    <FlowResultContext.Provider value={flowResult}>{children}</FlowResultContext.Provider>
+    <FlowResultContext.Provider value={flowResult}>
+      <I18nProvider>
+        {children}
+      </I18nProvider>
+    </FlowResultContext.Provider>
   );
 });
 

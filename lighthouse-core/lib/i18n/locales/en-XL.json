@@ -1,4 +1,49 @@
 {
+  "flow-report/src/i18n/ui-strings.js | allReports": {
+    "message": "Âĺl̂ Ŕêṕôŕt̂ś"
+  },
+  "flow-report/src/i18n/ui-strings.js | desktop": {
+    "message": "D̂éŝḱt̂óp̂"
+  },
+  "flow-report/src/i18n/ui-strings.js | mobile": {
+    "message": "M̂ób̂íl̂é"
+  },
+  "flow-report/src/i18n/ui-strings.js | navigationDescription": {
+    "message": "P̂áĝé l̂óâd́"
+  },
+  "flow-report/src/i18n/ui-strings.js | navigationReport": {
+    "message": "N̂áv̂íĝát̂íôń r̂ép̂ór̂t́"
+  },
+  "flow-report/src/i18n/ui-strings.js | ratingAverage": {
+    "message": "Âv́êŕâǵê"
+  },
+  "flow-report/src/i18n/ui-strings.js | ratingError": {
+    "message": "Êŕr̂ór̂"
+  },
+  "flow-report/src/i18n/ui-strings.js | ratingFail": {
+    "message": "P̂óôŕ"
+  },
+  "flow-report/src/i18n/ui-strings.js | ratingPass": {
+    "message": "Ĝóôd́"
+  },
+  "flow-report/src/i18n/ui-strings.js | snapshotDescription": {
+    "message": "Ĉáp̂t́ûŕêd́ ŝt́ât́ê óf̂ ṕâǵê"
+  },
+  "flow-report/src/i18n/ui-strings.js | snapshotReport": {
+    "message": "Ŝńâṕŝh́ôt́ r̂ép̂ór̂t́"
+  },
+  "flow-report/src/i18n/ui-strings.js | summary": {
+    "message": "Ŝúm̂ḿâŕŷ"
+  },
+  "flow-report/src/i18n/ui-strings.js | timespanDescription": {
+    "message": "Ûśêŕ îńt̂ér̂áĉt́îón̂ś"
+  },
+  "flow-report/src/i18n/ui-strings.js | timespanReport": {
+    "message": "T̂ím̂éŝṕâń r̂ép̂ór̂t́"
+  },
+  "flow-report/src/i18n/ui-strings.js | title": {
+    "message": "L̂íĝh́t̂h́ôúŝé Ûśêŕ F̂ĺôẃ R̂ép̂ór̂t́"
+  },
   "lighthouse-core/audits/accessibility/accesskeys.js | description": {
     "message": "Âćĉéŝś k̂éŷś l̂ét̂ úŝér̂ś q̂úîćk̂ĺŷ f́ôćûś â ṕâŕt̂ óf̂ t́ĥé p̂áĝé. F̂ór̂ ṕr̂óp̂ér̂ ńâv́îǵât́îón̂, éâćĥ áĉćêśŝ ḱêý m̂úŝt́ b̂é ûńîq́ûé. [L̂éâŕn̂ ḿôŕê](https://web.dev/accesskeys/)."
   },

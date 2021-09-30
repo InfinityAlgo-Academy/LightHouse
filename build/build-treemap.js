@@ -8,6 +8,7 @@
 const fs = require('fs');
 const GhPagesApp = require('./gh-pages-app.js');
 const {LH_ROOT} = require('../root.js');
+const {getIcuMessageIdParts} = require('../lighthouse-core/lib/i18n/i18n.js');
 
 /**
  * Extract only the strings needed for lighthouse-treemap into
@@ -24,12 +25,12 @@ function buildStrings() {
   for (const [locale, lhlMessages] of Object.entries(locales)) {
     const localizedStrings = Object.fromEntries(
       Object.entries(lhlMessages).map(([icuMessageId, v]) => {
-        const [filename, varName] = icuMessageId.split(' | ');
-        if (!filename.endsWith('util.js') || !(varName in UIStrings)) {
+        const {filename, key} = getIcuMessageIdParts(icuMessageId);
+        if (!filename.endsWith('util.js') || !(key in UIStrings)) {
           return [];
         }
 
-        return [varName, v.message];
+        return [key, v.message];
       })
     );
     strings[/** @type {LH.Locale} */ (locale)] = localizedStrings;

@@ -350,7 +350,7 @@ function getRendererFormattedStrings(locale) {
   /** @type {Record<string, string>} */
   const strings = {};
   for (const icuMessageId of icuMessageIds) {
-    const [filename, key] = icuMessageId.split(' | ');
+    const {filename, key} = getIcuMessageIdParts(icuMessageId);
     if (!filename.endsWith('util.js')) throw new Error(`Unexpected message: ${icuMessageId}`);
 
     strings[key] = localeMessages[icuMessageId].message;
@@ -524,6 +524,17 @@ function isStringOrIcuMessage(value) {
   return typeof value === 'string' || isIcuMessage(value);
 }
 
+/**
+ * @param {string} i18nMessageId
+ */
+function getIcuMessageIdParts(i18nMessageId) {
+  if (!MESSAGE_I18N_ID_REGEX.test(i18nMessageId)) {
+    throw Error(`"${i18nMessageId}" does not appear to be a valid ICU message id`);
+  }
+  const [filename, key] = i18nMessageId.split(' | ');
+  return {filename, key};
+}
+
 module.exports = {
   _formatPathAsString,
   UIStrings,
@@ -538,4 +549,5 @@ module.exports = {
   isStringOrIcuMessage,
   // TODO: exported for backwards compatibility. Consider removing on future breaking change.
   createMessageInstanceIdFn: createIcuMessageFn,
+  getIcuMessageIdParts,
 };

@@ -227,6 +227,7 @@
 
 .SummarySectionHeader__content {
   margin: var(--base-spacing) 0px;
+  text-transform: uppercase;
 }
 
 .SummaryFlow {

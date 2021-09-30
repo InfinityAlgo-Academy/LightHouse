@@ -7,6 +7,7 @@
 import {render} from '@testing-library/preact';
 import {FunctionComponent} from 'preact';
 
+import {I18nProvider} from '../../src/i18n/i18n';
 import {SidebarHeader, SidebarSummary} from '../../src/sidebar/sidebar';
 import {FlowResultContext} from '../../src/util';
 import {flowResult} from '../sample-flow';
@@ -16,7 +17,11 @@ let wrapper: FunctionComponent;
 
 beforeEach(() => {
   wrapper = ({children}) => (
-    <FlowResultContext.Provider value={flowResult}>{children}</FlowResultContext.Provider>
+    <FlowResultContext.Provider value={flowResult}>
+      <I18nProvider>
+        {children}
+      </I18nProvider>
+    </FlowResultContext.Provider>
   );
 });
 

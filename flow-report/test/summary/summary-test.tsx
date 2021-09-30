@@ -7,6 +7,7 @@
 import {render} from '@testing-library/preact';
 import {FunctionComponent} from 'preact';
 
+import {I18nProvider} from '../../src/i18n/i18n';
 import {SummaryHeader, SummaryFlowStep} from '../../src/summary/summary';
 import {FlowResultContext} from '../../src/util';
 import {ReportRendererProvider} from '../../src/wrappers/report-renderer';
@@ -18,7 +19,9 @@ beforeEach(() => {
   wrapper = ({children}) => (
     <FlowResultContext.Provider value={flowResult}>
       <ReportRendererProvider>
-        {children}
+        <I18nProvider>
+          {children}
+        </I18nProvider>
       </ReportRendererProvider>
     </FlowResultContext.Provider>
   );
