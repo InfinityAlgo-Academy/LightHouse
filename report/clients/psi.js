@@ -79,6 +79,11 @@ export function prepareLabData(LHResult, document) {
   );
   perfCategoryEl.append(dom.createComponent('styles'));
 
+  // Move disclaimer back to under metrics in legacy PSI
+  const disclaimerEl = dom.find('.lh-metrics__disclaimer', perfCategoryEl);
+  const metricsEl = dom.find('.lh-metrics-container', perfCategoryEl);
+  metricsEl.parentNode?.insertBefore(disclaimerEl, metricsEl.nextElementSibling);
+
   const scoreGaugeEl = dom.find('.lh-score__gauge', perfCategoryEl);
   scoreGaugeEl.remove();
   const scoreGaugeWrapperEl = dom.find('.lh-gauge__wrapper', scoreGaugeEl);

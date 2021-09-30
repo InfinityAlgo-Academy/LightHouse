@@ -162,14 +162,11 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
   render(category, groups, options) {
     const strings = Util.i18n.strings;
     const element = this.dom.createElement('div', 'lh-category');
-    if (options && options.environment === 'PSI') {
-      const gaugeEl = this.dom.createElement('div', 'lh-score__gauge');
-      gaugeEl.appendChild(this.renderCategoryScore(category, groups, options));
-      element.appendChild(gaugeEl);
-    } else {
+    // TODO: remove along with prepareLabData and/or with https://github.com/GoogleChrome/lighthouse/pull/13016
+    if (options && options.environment !== 'PSI') {
       this.createPermalinkSpan(element, category.id);
-      element.appendChild(this.renderCategoryHeader(category, groups, options));
     }
+    element.appendChild(this.renderCategoryHeader(category, groups, options));
 
     // Metrics.
     const metricAuditsEl = this.renderAuditGroup(groups.metrics);

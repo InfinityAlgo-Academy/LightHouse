@@ -1433,7 +1433,6 @@
 }
 
 .lh-category-header {
-  min-height: var(--gauge-circle-size);
   margin-bottom: var(--section-padding-vertical);
 }
 
