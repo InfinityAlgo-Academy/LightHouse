@@ -4,22 +4,11 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import fs from 'fs';
-import {dirname} from 'path';
-import {fileURLToPath} from 'url';
-
 import {render} from '@testing-library/preact';
 
 import {SummaryTooltip} from '../../src/summary/category';
 import {Util} from '../../../report/renderer/util';
-
-const flowResult: LH.FlowResult = JSON.parse(
-  fs.readFileSync(
-    // eslint-disable-next-line max-len
-    `${dirname(fileURLToPath(import.meta.url))}/../../../lighthouse-core/test/fixtures/fraggle-rock/reports/sample-lhrs.json`,
-    'utf-8'
-  )
-);
+import {flowResult} from '../sample-flow';
 
 describe('SummaryTooltip', () => {
   it('renders tooltip with rating', async () => {
