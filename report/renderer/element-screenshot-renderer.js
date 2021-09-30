@@ -153,9 +153,15 @@ export class ElementScreenshotRenderer {
     reportEl.addEventListener('click', e => {
       const target = /** @type {?HTMLElement} */ (e.target);
       if (!target) return;
+      const options = {};
+
       // Only activate the overlay for clicks on the screenshot *preview* of an element, not the full-size too.
-      const el = /** @type {?HTMLElement} */ (target.closest('.lh-node > .lh-element-screenshot'));
-      if (!el) return;
+      let el = /** @type {?HTMLElement} */ (target.closest('.lh-node > .lh-element-screenshot'));
+      // Also hook up the large final screenshot
+      if (target.classList.contains('lh-final-ss-image')) {
+        el = target;
+        options.skipMask = true;
+      } else if (!el) return;
 
       const overlay = dom.createElement('div', 'lh-element-screenshot__overlay');
       overlayContainerEl.append(overlay);
@@ -178,7 +184,8 @@ export class ElementScreenshotRenderer {
         dom,
         fullPageScreenshot.screenshot,
         elementRectSC,
-        maxLightboxSize
+        maxLightboxSize,
+        options
       );
 
       // This would be unexpected here.
@@ -217,15 +224,23 @@ export class ElementScreenshotRenderer {
    * @param {LH.Audit.Details.FullPageScreenshot['screenshot']} screenshot
    * @param {Rect} elementRectSC Region of screenshot to highlight.
    * @param {Size} maxRenderSizeDC e.g. maxThumbnailSize or maxLightboxSize.
+   * @param {{skipMask?: Boolean}} options
    * @return {Element|null}
    */
-  static render(dom, screenshot, elementRectSC, maxRenderSizeDC) {
-    if (!screenshotOverlapsRect(screenshot, elementRectSC)) {
+  static render(dom, screenshot, elementRectSC, maxRenderSizeDC, options = {}) {
+    if (!screenshotOverlapsRect(screenshot, elementRectSC) && !options.skipMask) {
       return null;
     }
 
     const tmpl = dom.createComponent('elementScreenshot');
     const containerEl = dom.find('div.lh-element-screenshot', tmpl);
+    if (options.skipMask) {
+      containerEl.classList.add('lh-element-screenshot--skipmask');
+      for (const key of Object.keys(elementRectSC)) {
+        // @ts-expect-error
+        elementRectSC[key] = 0; // to avoid some NaNs below
+      }
+    }
 
     containerEl.dataset['rectWidth'] = elementRectSC.width.toString();
     containerEl.dataset['rectHeight'] = elementRectSC.height.toString();

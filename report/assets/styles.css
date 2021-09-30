@@ -1814,8 +1814,15 @@
 .lh-screenshot-overlay--enabled .lh-element-screenshot {
   cursor: zoom-out;
 }
-.lh-screenshot-overlay--enabled .lh-node .lh-element-screenshot {
+.lh-screenshot-overlay--enabled .lh-node .lh-element-screenshot,
+.lh-screenshot-overlay--enabled .lh-final-ss-image {
   cursor: zoom-in;
 }
+
+.lh-element-screenshot--skipmask .lh-element-screenshot__mask,
+.lh-element-screenshot--skipmask .lh-element-screenshot__element-marker {
+  display: none;
+}
+
 
 /*# sourceURL=report-styles.css */
