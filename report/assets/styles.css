@@ -75,7 +75,7 @@
   /* Component variables */
   --audit-description-padding-left: calc(var(--score-icon-size) + var(--score-icon-margin-left) + var(--score-icon-margin-right));
   --audit-explanation-line-height: 16px;
-  --audit-group-margin-bottom: 40px;
+  --audit-group-margin-bottom: 30px;
   --audit-group-padding-vertical: 8px;
   --audit-margin-horizontal: 5px;
   --audit-padding-vertical: 8px;
@@ -645,14 +645,12 @@
 }
 
 /* We want to hide the browser's default arrow marker on summary elements. Admittedly, it's complicated. */
-.lh-audit-group > summary,
-.lh-expandable-details > summary {
+:is(.lh-audit-group, .lh-clump, .lh-expandable-details) > summary {
   /* Blink 89+ and Firefox will hide the arrow when display is changed from (new) default of `list-item` to block.  https://chromestatus.com/feature/6730096436051968*/
   display: block;
 }
 /* Safari and Blink <=88 require using the -webkit-details-marker selector */
-.lh-audit-group > summary::-webkit-details-marker,
-.lh-expandable-details > summary::-webkit-details-marker {
+:is(.lh-audit-group, .lh-clump, .lh-expandable-details) > summary::-webkit-details-marker {
   display: none;
 }
 
@@ -1025,8 +1023,6 @@
 .lh-audit-group__summary {
   display: flex;
   justify-content: space-between;
-  margin-top: calc(var(--category-padding) * 1.5);
-  margin-bottom: var(--category-padding);
 }
 
 .lh-audit-group__itemcount {
@@ -1057,13 +1053,12 @@
   color: var(--color-gray-600);
 }
 
-.lh-audit-group__header span.lh-audit-group__description {
-  font-weight: 500;
+.lh-audit-group__footer {
   color: var(--color-gray-600);
-}
-.lh-audit-group__header span.lh-audit-group__description::before {
-  content: '—';
-  margin: 0px var(--audit-margin-horizontal);
+  display: block;
+  --rhythm: calc(var(--audit-group-margin-bottom) / 8);
+  margin: var(--rhythm) 0 calc(-1 * var(--rhythm));
+  font-size: 90%;
 }
 
 .lh-clump > .lh-audit-group__header,
@@ -1611,6 +1606,7 @@
  transition: transform 300ms, stroke 300ms;
 }
 
+/* TODO: also deal with clump stuff here too */
 .lh-audit-group > summary > .lh-audit-group__summary > .lh-chevron .lh-chevron__line-right,
 .lh-audit-group[open] > summary > .lh-audit-group__summary > .lh-chevron .lh-chevron__line-left,
 .lh-audit > .lh-expandable-details .lh-chevron__line-right,
