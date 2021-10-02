@@ -39,11 +39,11 @@ const DIST = path.join(LH_ROOT, 'dist');
   };
 
   // Generate and write reports
-  Object.entries(filenameToLhr).forEach(([filename, lhr]) => {
+  Object.entries(filenameToLhr).forEach(([filename, sampleLhr]) => {
     for (const variant of ['', '⌣.cdt.', '⌣.psi.']) {
       let html = variant.includes('psi') ?
-        generatePsiReportHtml() :
-        ReportGenerator.generateReportHtml(lhr);
+        generatePsiReportHtml(sampleLhr) :
+        ReportGenerator.generateReportHtml(sampleLhr);
 
       if (variant.includes('cdt')) {
         // TODO: Make the DevTools Audits panel "emulation" more comprehensive
@@ -77,10 +77,11 @@ function generateFlowReports() {
 }
 
 /**
+ * @param {LH.Result} sampleLhr
  * @return {string}
  */
-function generatePsiReportHtml() {
-  const sanitizedJson = ReportGenerator.sanitizeJson(tweakLhrForPsi(lhr));
+function generatePsiReportHtml(sampleLhr) {
+  const sanitizedJson = ReportGenerator.sanitizeJson(tweakLhrForPsi(sampleLhr));
   const PSI_TEMPLATE = fs.readFileSync(
     `${LH_ROOT}/report/test-assets/faux-psi-template.html`, 'utf8');
   const PSI_JAVASCRIPT = `
@@ -96,10 +97,10 @@ ${fs.readFileSync(`${LH_ROOT}/report/test-assets/faux-psi.js`, 'utf8')};
 }
 /**
  * Add a plugin to demo plugin rendering.
- * @param {LH.Result} lhr
+ * @param {LH.Result} sampleLhr
  */
-function addPluginCategory(lhr) {
-  lhr.categories['lighthouse-plugin-someplugin'] = {
+function addPluginCategory(sampleLhr) {
+  sampleLhr.categories['lighthouse-plugin-someplugin'] = {
     id: 'lighthouse-plugin-someplugin',
     title: 'Plugin',
     score: 0.5,
@@ -109,11 +110,11 @@ function addPluginCategory(lhr) {
 
 /**
  * Drops the LHR to only one, solo category (performance), and removes budgets.
- * @param {LH.Result} lhr
+ * @param {LH.Result} sampleLhr
  */
-function tweakLhrForPsi(lhr) {
+function tweakLhrForPsi(sampleLhr) {
   /** @type {LH.Result} */
-  const clone = JSON.parse(JSON.stringify(lhr));
+  const clone = JSON.parse(JSON.stringify(sampleLhr));
   clone.categories = {
     'performance': clone.categories.performance,
   };
