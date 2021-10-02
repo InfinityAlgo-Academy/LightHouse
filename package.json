@@ -9,7 +9,7 @@
     "smokehouse": "./lighthouse-cli/test/smokehouse/frontends/smokehouse-bin.js"
   },
   "engines": {
-    "node": ">=12.13.0"
+    "node": ">=12.20.0 && 12.* || >=14.13 && 14.* || >=15"
   },
   "scripts": {
     "build-all": "npm-run-posix-or-windows build-all:task",

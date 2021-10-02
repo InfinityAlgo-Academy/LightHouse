@@ -52,7 +52,7 @@ The Chrome extension was available prior to Lighthouse being available in Chrome
 
 The Node CLI provides the most flexibility in how Lighthouse runs can be configured and reported. Users who want more advanced usage, or want to run Lighthouse in an automated fashion should use the Node CLI.
 
-_Lighthouse requires Node 12 LTS (12.x) or later._
+_Lighthouse requires Node 12 LTS (12.20) or later._
 
 **Installation**:
 
