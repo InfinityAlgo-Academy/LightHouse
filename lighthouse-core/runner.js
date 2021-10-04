@@ -211,7 +211,7 @@ class Runner {
         duration: parseFloat(entry.duration.toFixed(2)),
         entryType: entry.entryType,
       };
-    });
+    }).sort((a, b) => a.startTime - b.startTime);
     const runnerEntry = timingEntries.find(e => e.name === 'lh:runner:run');
     return {entries: timingEntries, total: runnerEntry && runnerEntry.duration || 0};
   }
