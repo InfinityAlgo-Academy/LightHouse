@@ -52,10 +52,7 @@ export const SummaryTooltip: FunctionComponent<{
         </div>
         {
           totalWeight !== 0 &&
-            <div
-              className={`SummaryTooltip__rating SummaryTooltip__rating--${rating}`}
-              data-testid="SummaryTooltip__rating"
-            >
+            <div className={`SummaryTooltip__rating SummaryTooltip__rating--${rating}`}>
               <span>{getCategoryRating(rating, strings)}</span>
               {
                 !displayAsFraction && category.score && <>
@@ -90,10 +87,7 @@ export const SummaryCategory: FunctionComponent<{
             />
             <SummaryTooltip category={category} gatherMode={gatherMode}/>
           </div> :
-          <div
-            className="SummaryCategory__null"
-            data-testid="SummaryCategory__null"
-          />
+          <div className="SummaryCategory__null" data-testid="SummaryCategory__null"/>
       }
     </div>
   );

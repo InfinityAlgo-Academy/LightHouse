@@ -13,7 +13,10 @@ import {LH_ROOT} from '../../root.js';
 import UserFlow from '../fraggle-rock/user-flow.js';
 
 (async () => {
-  const browser = await puppeteer.launch({headless: false});
+  const browser = await puppeteer.launch({
+    executablePath: process.env.CHROME_PATH,
+    headless: false,
+  });
 
   try {
     const page = await browser.newPage();

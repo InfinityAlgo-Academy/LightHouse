@@ -8,7 +8,6 @@ import {FunctionComponent} from 'preact';
 import {render} from '@testing-library/preact';
 
 import {SummaryTooltip} from '../../src/summary/category';
-import {Util} from '../../../report/renderer/util';
 import {flowResult} from '../sample-flow';
 import {I18nProvider} from '../../src/i18n/i18n';
 import {FlowResultContext} from '../../src/util';
@@ -16,6 +15,7 @@ import {FlowResultContext} from '../../src/util';
 let wrapper: FunctionComponent;
 
 beforeEach(() => {
+  // Include sample flowResult for locale in I18nProvider.
   wrapper = ({children}) => (
     <FlowResultContext.Provider value={flowResult}>
       <I18nProvider>
@@ -27,50 +27,62 @@ beforeEach(() => {
 
 describe('SummaryTooltip', () => {
   it('renders tooltip with rating', async () => {
-    // Snapshot SEO
-    const reportResult = Util.prepareReportResult(flowResult.steps[2].lhr);
-    const category = reportResult.categories['seo'];
+    const category: any = {
+      score: 1,
+      auditRefs: [
+        {result: {score: 1, scoreDisplayMode: 'binary'}, weight: 1},
+        {result: {score: 1, scoreDisplayMode: 'binary'}, weight: 1},
+        {result: {score: 0, scoreDisplayMode: 'binary'}, weight: 1},
+      ],
+    };
 
     const root = render(
-      <SummaryTooltip category={category} gatherMode={reportResult.gatherMode}/>,
+      <SummaryTooltip category={category} gatherMode="snapshot"/>,
       {wrapper}
     );
 
-    const rating = root.getByTestId('SummaryTooltip__rating');
-    expect(rating.classList).toContain('SummaryTooltip__rating--average');
-
-    expect(root.getByText('9 audits passed / 11 audits run')).toBeTruthy();
+    expect(root.getByText('Average')).toBeTruthy();
+    expect(() => root.getByText(/^[0-9]+$/)).toThrow();
+    expect(root.getByText('2 audits passed / 3 audits run')).toBeTruthy();
   });
 
   it('renders tooltip without rating', async () => {
-    // Snapshot performance
-    const reportResult = Util.prepareReportResult(flowResult.steps[2].lhr);
-    const category = reportResult.categories['performance'];
+    const category: any = {
+      score: 1,
+      auditRefs: [
+        {result: {score: 1, scoreDisplayMode: 'binary'}, weight: 0},
+        {result: {score: 1, scoreDisplayMode: 'binary'}, weight: 0},
+        {result: {score: 0, scoreDisplayMode: 'binary'}, weight: 0},
+      ],
+    };
 
     const root = render(
-      <SummaryTooltip category={category} gatherMode={reportResult.gatherMode}/>,
+      <SummaryTooltip category={category} gatherMode="snapshot"/>,
       {wrapper}
     );
 
-    expect(() => root.getByTestId('SummaryTooltip__rating')).toThrow();
-    expect(root.getByText('2 audits passed / 4 audits run')).toBeTruthy();
+    expect(() => root.getByText(/^(Average|Good|Poor)$/)).toThrow();
+    expect(() => root.getByText(/^[0-9]+$/)).toThrow();
+    expect(root.getByText('2 audits passed / 3 audits run')).toBeTruthy();
   });
 
   it('renders scored category tooltip with score', async () => {
-    // Navigation performance
-    const reportResult = Util.prepareReportResult(flowResult.steps[0].lhr);
-    const category = reportResult.categories['performance'];
+    const category: any = {
+      score: 1,
+      auditRefs: [
+        {result: {score: 1, scoreDisplayMode: 'binary'}, weight: 1},
+        {result: {score: 1, scoreDisplayMode: 'binary'}, weight: 1},
+        {result: {score: 0, scoreDisplayMode: 'binary'}, weight: 1},
+      ],
+    };
 
     const root = render(
-      <SummaryTooltip category={category} gatherMode={reportResult.gatherMode}/>,
+      <SummaryTooltip category={category} gatherMode="navigation"/>,
       {wrapper}
-
     );
 
-    const rating = root.getByTestId('SummaryTooltip__rating');
-    expect(rating.classList).toContain('SummaryTooltip__rating--pass');
-    expect(rating.textContent).toEqual('Good · 94');
-
-    expect(root.getByText('41 audits passed / 58 audits run')).toBeTruthy();
+    expect(root.getByText('Good')).toBeTruthy();
+    expect(root.getByText('100')).toBeTruthy();
+    expect(root.getByText('2 audits passed / 3 audits run')).toBeTruthy();
   });
 });

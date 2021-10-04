@@ -248,6 +248,9 @@ message LhrCategory {
 
   // References to all the audit members and their weight in this category.
   repeated AuditRef audit_refs = 6;
+
+  // List of gather modes this category is available in.
+  repeated string supported_modes = 7;
 }
 
 // Message containing the result of an individual Lighthouse audit.
