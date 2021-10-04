@@ -58,18 +58,14 @@ class NetworkRecordsMaker {
         request = new NetworkRequest();
       }
 
-      // console.log(reqEvts.sendRequest.args.data.url, reqEvts.receiveResponse.args.data.timing);
-
       // If we have an incomplete set of events here, we choose to drop the network
       // request rather than attempt to synthesize the missing data.
       if (!evtBag || !evtBag.sendRequest || !evtBag.receiveResponse || !evtBag.resourceFinish) {
-        console.log('missing some trace events.... skipping :(');
         continue;
       }
 
       if (evtBag.sendRequest.args.data.url?.startsWith('data:')) {
         // TODO: handle the fact that data uris don't have a timing block at all :/
-        console.log('data uri!! skipping. :(');
         continue;
       }
 
