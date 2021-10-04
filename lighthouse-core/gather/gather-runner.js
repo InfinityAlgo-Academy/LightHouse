@@ -10,7 +10,7 @@ const NetworkRecords = require('../computed/network-records.js');
 const {getPageLoadError} = require('../lib/navigation-error.js');
 const emulation = require('../lib/emulation.js');
 const constants = require('../config/constants.js');
-const i18n = require('../lib/i18n/i18n.js');
+const format = require('../../shared/localization/format.js');
 const {getBenchmarkIndex, getEnvironmentWarnings} = require('./driver/environment.js');
 const prepare = require('./driver/prepare.js');
 const storage = require('./driver/storage.js');
@@ -574,7 +574,7 @@ class GatherRunner {
       networkRecords: loadData.networkRecords,
     });
     if (pageLoadError) {
-      const localizedMessage = i18n.getFormatted(pageLoadError.friendlyMessage,
+      const localizedMessage = format.getFormatted(pageLoadError.friendlyMessage,
           passContext.settings.locale);
       log.error('GatherRunner', localizedMessage, passContext.url);
 

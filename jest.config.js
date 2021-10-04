@@ -17,6 +17,7 @@ module.exports = {
     '**/lighthouse-viewer/**/*-test.js',
     '**/third-party/**/*-test.js',
     '**/clients/test/**/*-test.js',
+    '**/shared/**/*-test.js',
   ],
   transform: {},
   prettierPath: null,

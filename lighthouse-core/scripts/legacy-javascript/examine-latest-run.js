@@ -22,7 +22,7 @@ import path from 'path';
 import colors from 'colors';
 
 import LegacyJavascript from '../../audits/byte-efficiency/legacy-javascript.js';
-import i18n from '../../lib/i18n/i18n.js';
+import format from '../../../shared/localization/format.js';
 import {LH_ROOT, readJson} from '../../../root.js';
 
 const LATEST_RUN_DIR = path.join(LH_ROOT, 'latest-run');
@@ -86,7 +86,7 @@ async function main() {
     for (let i = 0; i < signals.length; i++) {
       const signal = signals[i];
       const location = locations[i];
-      if (typeof location !== 'object' || i18n.isIcuMessage(location) ||
+      if (typeof location !== 'object' || format.isIcuMessage(location) ||
           location.type !== 'source-location') {
         continue;
       }

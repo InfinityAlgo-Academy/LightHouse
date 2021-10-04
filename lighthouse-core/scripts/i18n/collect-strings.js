@@ -598,7 +598,7 @@ async function collectAllStringsInDir(dir) {
  * @param {Record<string, CtcMessage>} strings
  */
 function writeStringsToCtcFiles(locale, strings) {
-  const fullPath = path.join(LH_ROOT, `lighthouse-core/lib/i18n/locales/${locale}.ctc.json`);
+  const fullPath = path.join(LH_ROOT, `shared/localization/locales/${locale}.ctc.json`);
   /** @type {Record<string, CtcMessage>} */
   const output = {};
   const sortedEntries = Object.entries(strings).sort(([keyA], [keyB]) => keyA.localeCompare(keyB));
@@ -705,7 +705,7 @@ async function main() {
   console.log('Written to disk!', 'en-XL.ctc.json');
 
   // Bake the ctc en-US and en-XL files into en-US and en-XL LHL format
-  const lhl = collectAndBakeCtcStrings(path.join(LH_ROOT, 'lighthouse-core/lib/i18n/locales/'));
+  const lhl = collectAndBakeCtcStrings(path.join(LH_ROOT, 'shared/localization/locales/'));
   lhl.forEach(function(locale) {
     console.log(`Baked ${locale} into LHL format.`);
   });

@@ -8,7 +8,7 @@
 const fs = require('fs');
 const GhPagesApp = require('./gh-pages-app.js');
 const {LH_ROOT} = require('../root.js');
-const {getIcuMessageIdParts} = require('../lighthouse-core/lib/i18n/i18n.js');
+const {getIcuMessageIdParts} = require('../shared/localization/format.js');
 
 /**
  * Extract only the strings needed for lighthouse-treemap into
@@ -16,7 +16,7 @@ const {getIcuMessageIdParts} = require('../lighthouse-core/lib/i18n/i18n.js');
  * are locale codes (en-US, es, etc.) and values are localized UIStrings.
  */
 function buildStrings() {
-  const locales = require('../lighthouse-core/lib/i18n/locales.js');
+  const locales = require('../shared/localization/locales.js');
   // TODO(esmodules): use dynamic import when build/ is esm.
   const utilCode = fs.readFileSync(LH_ROOT + '/lighthouse-treemap/app/src/util.js', 'utf-8');
   const {UIStrings} = eval(utilCode.replace(/export /g, '') + '\nmodule.exports = TreemapUtil;');

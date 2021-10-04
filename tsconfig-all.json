@@ -9,6 +9,7 @@
     {"path": "./lighthouse-viewer/"},
     {"path": "./lighthouse-treemap/"},
     {"path": "./flow-report/"},
+    {"path": "./shared/"},
   ],
   "files": [],
   "include": [],

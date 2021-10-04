@@ -14,6 +14,7 @@ const log = require('lighthouse-logger');
 const Gatherer = require('../../gather/gatherers/gatherer.js');
 const Audit = require('../../audits/audit.js');
 const i18n = require('../../lib/i18n/i18n.js');
+const format = require('../../../shared/localization/format.js');
 const {isNode12SmallIcu} = require('../test-utils.js');
 
 /* eslint-env jest */
@@ -1464,8 +1465,8 @@ describe('Config', () => {
 
       Object.entries(printedConfig.categories).forEach(([printedCategoryId, printedCategory]) => {
         const origTitle = origConfig.categories[printedCategoryId].title;
-        if (i18n.isIcuMessage(origTitle)) localizableCount++;
-        const i18nOrigTitle = i18n.getFormatted(origTitle, origConfig.settings.locale);
+        if (format.isIcuMessage(origTitle)) localizableCount++;
+        const i18nOrigTitle = format.getFormatted(origTitle, origConfig.settings.locale);
 
         assert.strictEqual(printedCategory.title, i18nOrigTitle);
       });

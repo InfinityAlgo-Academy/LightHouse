@@ -13,7 +13,7 @@ import yargs from 'yargs';
 import * as yargsHelpers from 'yargs/helpers';
 
 import {LH_ROOT} from '../root.js';
-import {isObjectOfUnknownValues} from '../lighthouse-core/lib/type-verifiers.js';
+import {isObjectOfUnknownValues} from '../shared/type-verifiers.js';
 
 /**
  * @param {string=} manualArgv

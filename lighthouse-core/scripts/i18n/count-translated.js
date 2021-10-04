@@ -5,14 +5,14 @@
  */
 'use strict';
 
-/** @typedef {import('../../lib/i18n/locales').LhlMessages} LhlMessages */
+/** @typedef {import('../../../shared/localization/locales').LhlMessages} LhlMessages */
 
 import glob from 'glob';
 
 import {LH_ROOT, readJson} from '../../../root.js';
 
 /** @type {LhlMessages} */
-const enUsLhl = readJson('lighthouse-core/lib/i18n/locales/en-US.json');
+const enUsLhl = readJson('shared/localization/locales/en-US.json');
 
 /**
  * Count how many locale files have a translated version of each string found in
@@ -26,7 +26,7 @@ function countTranslatedMessages() {
     '**/en-US.json',
     '**/en-XL.json',
   ];
-  const globPattern = 'lighthouse-core/lib/i18n/locales/**/+([-a-zA-Z0-9]).json';
+  const globPattern = 'shared/localization/locales/**/+([-a-zA-Z0-9]).json';
   const localeFilenames = glob.sync(globPattern, {
     ignore,
     cwd: LH_ROOT,

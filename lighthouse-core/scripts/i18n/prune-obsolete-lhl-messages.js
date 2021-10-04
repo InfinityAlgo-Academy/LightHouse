@@ -11,7 +11,7 @@ import path from 'path';
 import glob from 'glob';
 import MessageParser from 'intl-messageformat-parser';
 
-import {collectAllCustomElementsFromICU} from '../../lib/i18n/i18n.js';
+import {collectAllCustomElementsFromICU} from '../../../shared/localization/format.js';
 import {LH_ROOT, readJson} from '../../../root.js';
 
 /** @typedef {Record<string, {message: string}>} LhlMessages */
@@ -117,7 +117,7 @@ function getGoldenLocaleArgumentIds(goldenLhl) {
  * (e.g. by picking a new message id).
  */
 function pruneObsoleteLhlMessages() {
-  const goldenLhl = readJson('lighthouse-core/lib/i18n/locales/en-US.json');
+  const goldenLhl = readJson('shared/localization/locales/en-US.json');
   const goldenLocaleArgumentIds = getGoldenLocaleArgumentIds(goldenLhl);
 
   // Find all locale files, ignoring self-generated en-US, en-XL, and ctc files.
@@ -126,7 +126,7 @@ function pruneObsoleteLhlMessages() {
     '**/en-US.json',
     '**/en-XL.json',
   ];
-  const globPattern = 'lighthouse-core/lib/i18n/locales/**/+([-a-zA-Z0-9]).json';
+  const globPattern = 'shared/localization/locales/**/+([-a-zA-Z0-9]).json';
   const localePaths = glob.sync(globPattern, {
     ignore,
     cwd: LH_ROOT,
