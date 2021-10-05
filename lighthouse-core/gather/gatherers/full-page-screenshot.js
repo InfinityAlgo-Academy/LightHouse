@@ -131,6 +131,21 @@ class FullPageScreenshot extends FRGatherer {
     return {...pageContextResult, ...isolatedContextResult};
   }
 
+  getObservedDeviceMetrics() {
+    // Convert the Web API's snake case (landscape-primary) to camel case (landscapePrimary).
+    const screenOrientationType = /** @type {LH.Crdp.Emulation.ScreenOrientationType} */ (
+      snakeCaseToCamelCase(window.screen.orientation.type));
+    return {
+      width: document.documentElement.clientWidth,
+      height: document.documentElement.clientHeight,
+      screenOrientation: {
+        type: screenOrientationType,
+        angle: window.screen.orientation.angle,
+      },
+      deviceScaleFactor: window.devicePixelRatio,
+    };
+  }
+
   /**
    * @param {LH.Gatherer.FRTransitionalContext} context
    * @return {Promise<LH.Artifacts['FullPageScreenshot']>}
@@ -140,9 +155,17 @@ class FullPageScreenshot extends FRGatherer {
     const executionContext = context.driver.executionContext;
     const settings = context.settings;
 
-    // In case some other program is controlling emulation, try to remember what the device looks
+    // In case some other program is controlling emulation, remember what the device looks
     // like now and reset after gatherer is done.
+    let observedDeviceMetrics;
     const lighthouseControlsEmulation = !settings.screenEmulation.disabled;
+    if (!lighthouseControlsEmulation) {
+      observedDeviceMetrics = await executionContext.evaluate(this.getObservedDeviceMetrics, {
+        args: [],
+        useIsolation: true,
+        deps: [snakeCaseToCamelCase],
+      });
+    }
 
     try {
       return {
@@ -153,7 +176,7 @@ class FullPageScreenshot extends FRGatherer {
       // Revert resized page.
       if (lighthouseControlsEmulation) {
         await emulation.emulate(session, settings);
-      } else {
+      } else if (observedDeviceMetrics) {
         // Best effort to reset emulation to what it was.
         // https://github.com/GoogleChrome/lighthouse/pull/10716#discussion_r428970681
         // TODO: seems like this would be brittle. Should at least work for devtools, but what
@@ -161,28 +184,6 @@ class FullPageScreenshot extends FRGatherer {
         // in the LH runner api, which for ex. puppeteer consumers would setup puppeteer emulation,
         // and then just call that to reset?
         // https://github.com/GoogleChrome/lighthouse/issues/11122
-
-        // eslint-disable-next-line no-inner-declarations
-        function getObservedDeviceMetrics() {
-          // Convert the Web API's snake case (landscape-primary) to camel case (landscapePrimary).
-          const screenOrientationType = /** @type {LH.Crdp.Emulation.ScreenOrientationType} */ (
-            snakeCaseToCamelCase(window.screen.orientation.type));
-          return {
-            width: document.documentElement.clientWidth,
-            height: document.documentElement.clientHeight,
-            screenOrientation: {
-              type: screenOrientationType,
-              angle: window.screen.orientation.angle,
-            },
-            deviceScaleFactor: window.devicePixelRatio,
-          };
-        }
-
-        const observedDeviceMetrics = await executionContext.evaluate(getObservedDeviceMetrics, {
-          args: [],
-          useIsolation: true,
-          deps: [snakeCaseToCamelCase],
-        });
         await session.sendCommand('Emulation.setDeviceMetricsOverride', {
           mobile: settings.formFactor === 'mobile',
           ...observedDeviceMetrics,
