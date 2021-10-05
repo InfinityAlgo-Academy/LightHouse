@@ -11,15 +11,18 @@
   --double-base-spacing: calc(var(--base-spacing) * 2);
   --gather-mode-icon-size: 16px;
   --header-adjacent-title-font-size: 14px;
+  --header-adjacent-title-width: minmax(var(--min-text-width), 1fr);
   --header-current-description-font-size: 12px;
   --header-current-title-font-size: 20px;
   --header-margin: minmax(0px, calc(var(--base-spacing) * 4));
   --half-base-spacing: calc(var(--base-spacing) / 2);
+  --min-text-width: 20ch;
   --separator-color: var(--color-gray-300);
   --sidebar-flow-step-navigation-font-size: 14px;
   --sidebar-selected-bg-color: #DDEEFF;
   --sidebar-summary-font-size: 14px;
   --sidebar-title-font-size: 16px;
+  --sidebar-max-width: 400px;
   --summary-flow-step-label-font-size: 16px;
   --summary-subtitle-font-size: 16px;
   --summary-title-font-size: 32px;
@@ -104,6 +107,10 @@
 .Sidebar {
   grid-area: sidebar;
   border-right: 1px solid var(--separator-color);
+  width: min-content;
+  max-width: var(--sidebar-max-width);
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 .Sidebar a {
   color: var(--color-gray-800);
@@ -185,6 +192,8 @@
   grid-column: 2;
   margin: var(--half-base-spacing) 0px;
   justify-self: left;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
 }
 .SidebarFlowStep__label--navigation {
   font-size: var(--sidebar-flow-step-navigation-font-size);
@@ -232,10 +241,9 @@
 
 .SummaryFlow {
   width: 100%;
-  max-width: max-content;
   display: grid;
   grid-auto-rows: min-content;
-  grid-template-columns: min-content min-content 4fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: min-content min-content minmax(var(--min-text-width), 4fr) 1fr 1fr 1fr 1fr;
   align-items: center;
   margin: var(--base-spacing) 0px;
 }
@@ -286,6 +294,9 @@
 .SummaryFlowStep__label {
   grid-column: 3;
   margin: var(--half-base-spacing);
+  width: 100%;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
 }
 
 .SummaryFlowStep__mode {
@@ -296,6 +307,8 @@
   font-size: var(--summary-flow-step-label-font-size);
   color: var(--color-gray-800);
   text-decoration: underline;
+  width: 100%;
+  overflow-x: hidden;
 }
 
 .SummaryCategory__content {
@@ -365,12 +378,18 @@
   justify-content: center;
   padding: var(--half-base-spacing);
   background-color: var(--color-gray-100);
+  color: var(--color-gray-700);
   border-top: 1px solid var(--color-gray-300);
   text-align: center;
 }
 .SummaryNavigationHeader__url {
   justify-content: start;
   text-align: left;
+}
+.SummaryNavigationHeader__url > a {
+  color: inherit;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
 }
 
 .SummaryFlowStep__separator {
@@ -397,7 +416,7 @@
     ".        prev-title .             current-tn    .             next-title ."
     ".        prev-title current-title current-title current-title next-title .";
   grid-template-rows: 1fr auto 1fr auto;
-  grid-template-columns: var(--header-margin) 1fr auto auto auto 1fr var(--header-margin);
+  grid-template-columns: var(--header-margin) var(--header-adjacent-title-width) auto auto auto var(--header-adjacent-title-width) var(--header-margin);
   align-items: center;
   margin: var(--double-base-spacing) 0px;
 }
@@ -482,7 +501,9 @@
 .Header__next-title {
   font-size: var(--header-adjacent-title-font-size);
   align-self: start;
-  width: fit-content;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
 }
 
 .Header__current-title {
@@ -490,6 +511,8 @@
   text-align: center;
   font-size: var(--header-current-title-font-size);
   font-weight: bold;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
 }
 
 .Header__current-description {
