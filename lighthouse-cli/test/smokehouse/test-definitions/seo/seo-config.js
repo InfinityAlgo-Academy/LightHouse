@@ -8,9 +8,13 @@
 /**
  * Config file for running SEO smokehouse audits.
  */
-module.exports = {
+
+/** @type {LH.Config.Json} */
+const config = {
   extends: 'lighthouse:default',
   settings: {
     onlyCategories: ['seo'],
   },
 };
+
+export default config;

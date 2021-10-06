@@ -5,10 +5,11 @@
  */
 'use strict';
 
-const fs = require('fs');
+import fs from 'fs';
+import {LH_ROOT} from '../../../../../root.js';
 
 const mapJson =
-  fs.readFileSync(`${__dirname}/../../../fixtures/source-map/script.js.map`, 'utf-8');
+  fs.readFileSync(`${LH_ROOT}/lighthouse-cli/test/fixtures/source-map/script.js.map`, 'utf-8');
 const map = JSON.parse(mapJson);
 
 /**
@@ -40,4 +41,4 @@ const expectations = {
   },
 };
 
-module.exports = expectations;
+export {expectations};

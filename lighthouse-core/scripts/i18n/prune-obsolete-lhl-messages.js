@@ -5,12 +5,14 @@
  */
 'use strict';
 
-const fs = require('fs');
-const path = require('path');
-const glob = require('glob');
-const MessageParser = require('intl-messageformat-parser').default;
-const {collectAllCustomElementsFromICU} = require('../../lib/i18n/i18n.js');
-const {LH_ROOT} = require('../../../root.js');
+import fs from 'fs';
+import path from 'path';
+
+import glob from 'glob';
+import MessageParser from 'intl-messageformat-parser';
+
+import {collectAllCustomElementsFromICU} from '../../../shared/localization/format.js';
+import {LH_ROOT, readJson} from '../../../root.js';
 
 /** @typedef {Record<string, {message: string}>} LhlMessages */
 
@@ -115,7 +117,7 @@ function getGoldenLocaleArgumentIds(goldenLhl) {
  * (e.g. by picking a new message id).
  */
 function pruneObsoleteLhlMessages() {
-  const goldenLhl = require('../../lib/i18n/locales/en-US.json');
+  const goldenLhl = readJson('shared/localization/locales/en-US.json');
   const goldenLocaleArgumentIds = getGoldenLocaleArgumentIds(goldenLhl);
 
   // Find all locale files, ignoring self-generated en-US, en-XL, and ctc files.
@@ -124,7 +126,7 @@ function pruneObsoleteLhlMessages() {
     '**/en-US.json',
     '**/en-XL.json',
   ];
-  const globPattern = 'lighthouse-core/lib/i18n/locales/**/+([-a-zA-Z0-9]).json';
+  const globPattern = 'shared/localization/locales/**/+([-a-zA-Z0-9]).json';
   const localePaths = glob.sync(globPattern, {
     ignore,
     cwd: LH_ROOT,
@@ -134,8 +136,8 @@ function pruneObsoleteLhlMessages() {
   const alreadyLoggedPrunes = new Set();
   for (const localePath of localePaths) {
     const absoluteLocalePath = path.join(LH_ROOT, localePath);
-    // readFileSync so that the file is pulled again once updated by a collect-strings run
-    const localeLhl = JSON.parse(fs.readFileSync(absoluteLocalePath, 'utf-8'));
+    // Re-read data so that the file is pulled again once updated by a collect-strings run.
+    const localeLhl = readJson(absoluteLocalePath);
     const prunedLocale = pruneLocale(goldenLocaleArgumentIds, localeLhl, alreadyLoggedPrunes);
 
     const stringified = JSON.stringify(prunedLocale, null, 2) + '\n';
@@ -143,7 +145,7 @@ function pruneObsoleteLhlMessages() {
   }
 }
 
-module.exports = {
+export {
   pruneObsoleteLhlMessages,
 
   // Exported for testing.

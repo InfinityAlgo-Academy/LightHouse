@@ -5,103 +5,40 @@
  */
 'use strict';
 
-/* eslint-env jest */
+import {jest} from '@jest/globals';
 
-const path = require('path');
-const lighthouse = require('../../fraggle-rock/api.js');
-const puppeteer = require('puppeteer');
-const StaticServer = require('../../../lighthouse-cli/test/fixtures/static-server.js').Server;
+import * as lighthouse from '../../../fraggle-rock/api.js';
+import {createTestState, getAuditsBreakdown} from './pptr-test-utils.js';
+import {LH_ROOT} from '../../../../root.js';
+
+/* eslint-env jest */
 
 jest.setTimeout(90_000);
 
-/**
- * Some audits can be notApplicable based on machine timing information.
- * Exclude these audits from applicability comparisons. */
-const FLAKY_AUDIT_IDS_APPLICABILITY = new Set([
-  'long-tasks',
-  'screenshot-thumbnails',
-]);
-
-/**
- * @param {LH.Result} lhr
- */
-function getAuditsBreakdown(lhr) {
-  const auditResults = Object.values(lhr.audits);
-  const irrelevantDisplayModes = new Set(['notApplicable', 'manual']);
-  const applicableAudits = auditResults.filter(
-    audit => !irrelevantDisplayModes.has(audit.scoreDisplayMode)
-  );
-
-  const notApplicableAudits = auditResults.filter(
-    audit => (
-      audit.scoreDisplayMode === 'notApplicable' &&
-      !FLAKY_AUDIT_IDS_APPLICABILITY.has(audit.id)
-    )
-  );
-
-  const informativeAudits = applicableAudits.filter(
-    audit => audit.scoreDisplayMode === 'informative'
-  );
-
-  const erroredAudits = applicableAudits.filter(
-    audit => audit.score === null && audit && !informativeAudits.includes(audit)
-  );
-
-  const failedAudits = applicableAudits.filter(audit => audit.score !== null && audit.score < 1);
-
-  return {auditResults, erroredAudits, failedAudits, notApplicableAudits};
-}
-
 describe('Fraggle Rock API', () => {
-  /** @type {InstanceType<StaticServer>} */
-  let server;
-  /** @type {import('puppeteer').Browser} */
-  let browser;
-  /** @type {import('puppeteer').Page} */
-  let page;
-  /** @type {string} */
-  let serverBaseUrl;
+  const state = createTestState();
 
-  beforeAll(async () => {
-    server = new StaticServer();
-    await server.listen(0, '127.0.0.1');
-    serverBaseUrl = `http://localhost:${server.getPort()}`;
-    browser = await puppeteer.launch({
-      headless: true,
-    });
-  });
-
-  beforeEach(async () => {
-    page = await browser.newPage();
-  });
-
-  afterEach(async () => {
-    await page.close();
-  });
-
-  afterAll(async () => {
-    await browser.close();
-    await server.close();
-  });
+  state.installSetupAndTeardownHooks();
 
   async function setupTestPage() {
-    await page.goto(`${serverBaseUrl}/onclick.html`);
+    await state.page.goto(`${state.serverBaseUrl}/onclick.html`);
     // Wait for the javascript to run.
-    await page.waitForSelector('button');
-    await page.click('button');
+    await state.page.waitForSelector('button');
+    await state.page.click('button');
     // Wait for the violations to appear (and console to be populated).
-    await page.waitForSelector('input');
+    await state.page.waitForSelector('input');
   }
 
   describe('snapshot', () => {
     beforeEach(() => {
-      server.baseDir = path.join(__dirname, '../fixtures/fraggle-rock/snapshot-basic');
+      const {server} = state;
+      server.baseDir = `${LH_ROOT}/lighthouse-core/test/fixtures/fraggle-rock/snapshot-basic`;
     });
 
     it('should compute accessibility results on the page as-is', async () => {
       await setupTestPage();
 
-      const result = await lighthouse.snapshot({page});
+      const result = await lighthouse.snapshot({page: state.page});
       if (!result) throw new Error('Lighthouse failed to produce a result');
 
       const {lhr} = result;
@@ -110,7 +47,7 @@ describe('Fraggle Rock API', () => {
 
       const {auditResults, erroredAudits, failedAudits} = getAuditsBreakdown(lhr);
       // TODO(FR-COMPAT): This assertion can be removed when full compatibility is reached.
-      expect(auditResults.length).toMatchInlineSnapshot(`80`);
+      expect(auditResults.length).toMatchInlineSnapshot(`76`);
 
       expect(erroredAudits).toHaveLength(0);
       expect(failedAudits.map(audit => audit.id)).toContain('label');
@@ -119,11 +56,12 @@ describe('Fraggle Rock API', () => {
 
   describe('startTimespan', () => {
     beforeEach(() => {
-      server.baseDir = path.join(__dirname, '../fixtures/fraggle-rock/snapshot-basic');
+      const {server} = state;
+      server.baseDir = `${LH_ROOT}/lighthouse-core/test/fixtures/fraggle-rock/snapshot-basic`;
     });
 
     it('should compute ConsoleMessage results across a span of time', async () => {
-      const run = await lighthouse.startTimespan({page});
+      const run = await lighthouse.startTimespan({page: state.page});
 
       await setupTestPage();
 
@@ -141,9 +79,9 @@ describe('Fraggle Rock API', () => {
         notApplicableAudits,
       } = getAuditsBreakdown(lhr);
       // TODO(FR-COMPAT): This assertion can be removed when full compatibility is reached.
-      expect(auditResults.length).toMatchInlineSnapshot(`48`);
+      expect(auditResults.length).toMatchInlineSnapshot(`44`);
 
-      expect(notApplicableAudits.length).toMatchInlineSnapshot(`6`);
+      expect(notApplicableAudits.length).toMatchInlineSnapshot(`5`);
       expect(notApplicableAudits.map(audit => audit.id)).not.toContain('server-response-time');
       expect(notApplicableAudits.map(audit => audit.id)).not.toContain('total-blocking-time');
 
@@ -167,10 +105,11 @@ describe('Fraggle Rock API', () => {
       expect(lhr.audits).toHaveProperty('total-byte-weight');
       const details = lhr.audits['total-byte-weight'].details;
       if (!details || details.type !== 'table') throw new Error('Unexpected byte weight details');
-      expect(details.items).toMatchObject([{url: `${serverBaseUrl}/onclick.html`}]);
+      expect(details.items).toMatchObject([{url: `${state.serverBaseUrl}/onclick.html`}]);
     });
 
     it('should compute results from timespan after page load', async () => {
+      const {page, serverBaseUrl} = state;
       await page.goto(`${serverBaseUrl}/onclick.html`);
       await page.waitForSelector('button');
 
@@ -184,9 +123,9 @@ describe('Fraggle Rock API', () => {
       if (!result) throw new Error('Lighthouse failed to produce a result');
 
       const {auditResults, erroredAudits, notApplicableAudits} = getAuditsBreakdown(result.lhr);
-      expect(auditResults.length).toMatchInlineSnapshot(`48`);
+      expect(auditResults.length).toMatchInlineSnapshot(`44`);
 
-      expect(notApplicableAudits.length).toMatchInlineSnapshot(`20`);
+      expect(notApplicableAudits.length).toMatchInlineSnapshot(`19`);
       expect(notApplicableAudits.map(audit => audit.id)).toContain('server-response-time');
       expect(notApplicableAudits.map(audit => audit.id)).not.toContain('total-blocking-time');
 
@@ -196,10 +135,12 @@ describe('Fraggle Rock API', () => {
 
   describe('navigation', () => {
     beforeEach(() => {
-      server.baseDir = path.join(__dirname, '../fixtures/fraggle-rock/navigation-basic');
+      const {server} = state;
+      server.baseDir = `${LH_ROOT}/lighthouse-core/test/fixtures/fraggle-rock/navigation-basic`;
     });
 
     it('should compute both snapshot & timespan results', async () => {
+      const {page, serverBaseUrl} = state;
       const result = await lighthouse.navigation({page, url: `${serverBaseUrl}/index.html`});
       if (!result) throw new Error('Lighthouse failed to produce a result');
 

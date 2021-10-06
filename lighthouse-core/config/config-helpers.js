@@ -9,6 +9,7 @@ const path = require('path');
 const isDeepEqual = require('lodash.isequal');
 const constants = require('./constants.js');
 const Budget = require('./budget.js');
+const ConfigPlugin = require('./config-plugin.js');
 const Runner = require('../runner.js');
 const i18n = require('../lib/i18n/i18n.js');
 const validation = require('../fraggle-rock/config/validation.js');
@@ -16,6 +17,21 @@ const validation = require('../fraggle-rock/config/validation.js');
 /** @typedef {typeof import('../gather/gatherers/gatherer.js')} GathererConstructor */
 /** @typedef {typeof import('../audits/audit.js')} Audit */
 /** @typedef {InstanceType<GathererConstructor>} Gatherer */
+
+function isBundledEnvironment() {
+  // If we're in DevTools or LightRider, we are definitely bundled.
+  // TODO: refactor and delete `global.isDevtools`.
+  if (global.isDevtools || global.isLightrider) return true;
+
+  try {
+    // Not foolproof, but `lighthouse-logger` is a dependency of lighthouse that should always be resolvable.
+    // `require.resolve` will only throw in atypical/bundled environments.
+    require.resolve('lighthouse-logger');
+    return false;
+  } catch (err) {
+    return true;
+  }
+}
 
 /**
  * If any items with identical `path` properties are found in the input array,
@@ -224,9 +240,8 @@ function requireAudit(auditPath, coreAuditList, configDir) {
   const coreAudit = coreAuditList.find(a => a === auditPathJs);
   let requirePath = `../audits/${auditPath}`;
   if (!coreAudit) {
-  // TODO: refactor and delete `global.isDevtools`.
-    if (global.isDevtools || global.isLightrider) {
-    // This is for pubads bundling.
+    if (isBundledEnvironment()) {
+      // This is for pubads bundling.
       requirePath = auditPath;
     } else {
     // Otherwise, attempt to find it elsewhere. This throws if not found.
@@ -295,6 +310,34 @@ function resolveSettings(settingsJson = {}, overrides = undefined) {
 
   validation.assertValidSettings(settingsWithFlags);
   return settingsWithFlags;
+}
+
+
+/**
+ * @param {LH.Config.Json} configJSON
+ * @param {string | undefined} configDir
+ * @param {{plugins?: string[]} | undefined} flags
+ * @return {LH.Config.Json}
+ */
+function mergePlugins(configJSON, configDir, flags) {
+  const configPlugins = configJSON.plugins || [];
+  const flagPlugins = (flags && flags.plugins) || [];
+  const pluginNames = new Set([...configPlugins, ...flagPlugins]);
+
+  for (const pluginName of pluginNames) {
+    validation.assertValidPluginName(configJSON, pluginName);
+
+    // In bundled contexts, `resolveModulePath` will fail, so use the raw pluginName directly.
+    const pluginPath = isBundledEnvironment() ?
+        pluginName :
+        resolveModulePath(pluginName, configDir, 'plugin');
+    const rawPluginJson = require(pluginPath);
+    const pluginJson = ConfigPlugin.parsePlugin(rawPluginJson, pluginName);
+
+    configJSON = mergeConfigFragment(configJSON, pluginJson);
+  }
+
+  return configJSON;
 }
 
 
@@ -528,6 +571,7 @@ module.exports = {
   mergeOptionsOfItems,
   mergeConfigFragment,
   mergeConfigFragmentArrayByKey,
+  mergePlugins,
   resolveSettings,
   resolveGathererToDefn,
   resolveAuditsToDefns,

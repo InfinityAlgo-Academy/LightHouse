@@ -88,3 +88,16 @@ describe('.fetcher', () => {
     expect(driver.fetcher).toBeTruthy();
   });
 });
+
+describe('.disconnect', () => {
+  it('should do nothing if called before connect', async () => {
+    await driver.disconnect();
+  });
+
+  it('should invoke session dispose', async () => {
+    await driver.connect();
+    const dispose = driver.defaultSession.dispose = jest.fn();
+    await driver.disconnect();
+    expect(dispose).toHaveBeenCalled();
+  });
+});

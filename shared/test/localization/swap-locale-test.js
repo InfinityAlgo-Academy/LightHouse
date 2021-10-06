@@ -5,27 +5,19 @@
  */
 'use strict';
 
-const swapLocale = require('../../../lib/i18n/swap-locale.js');
-const {isNode12SmallIcu} = require('../../test-utils.js');
+const swapLocale = require('../../localization/swap-locale.js');
+const {isNode12SmallIcu} = require('../../../lighthouse-core/test/test-utils.js');
 
-const lhr = require('../../results/sample_v2.json');
+const lhr = require('../../../lighthouse-core/test/results/sample_v2.json');
 
 /* eslint-env jest */
 describe('swap-locale', () => {
   // COMPAT: Node 12 only has 'en' by default. Skip these tests since they're all about swapping locales.
   if (isNode12SmallIcu()) {
     // Jest requires at least one test per suite.
-    it('runs even if other locales are not supported', () => {
-      /** @type {LH.Result} */
-      const lhrClone = JSON.parse(JSON.stringify(lhr));
-
+    it('throws if locale is not supported', () => {
       // Even though 'pt' is requested, 'en' is all that's available.
-      const lhrEn = swapLocale(lhr, 'pt').lhr;
-      expect(lhrEn.configSettings.locale).toBe('en');
-
-      // Set locale back to full 'en-US' do do the comparison.
-      lhrEn.configSettings.locale = 'en-US';
-      expect(lhrEn).toStrictEqual(lhrClone);
+      expect(() => swapLocale(lhr, 'pt')).toThrow('Unsupported locale \'pt\'');
     });
 
     return;

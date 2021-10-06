@@ -735,6 +735,10 @@ Object {
       ],
       "description": "These checks highlight opportunities to [improve the accessibility of your web app](https://developers.google.com/web/fundamentals/accessibility). Only a subset of accessibility issues can be automatically detected so manual testing is also encouraged.",
       "manualDescription": "These items address areas which an automated testing tool cannot cover. Learn more in our guide on [conducting an accessibility review](https://developers.google.com/web/fundamentals/accessibility/how-to-review).",
+      "supportedModes": Array [
+        "navigation",
+        "snapshot",
+      ],
       "title": "Accessibility",
     },
     "best-practices": Object {
@@ -834,6 +838,11 @@ Object {
           "id": "inspector-issues",
           "weight": 1,
         },
+      ],
+      "supportedModes": Array [
+        "navigation",
+        "timespan",
+        "snapshot",
       ],
       "title": "Best Practices",
     },
@@ -1173,6 +1182,11 @@ Object {
           "weight": 0,
         },
       ],
+      "supportedModes": Array [
+        "navigation",
+        "timespan",
+        "snapshot",
+      ],
       "title": "Performance",
     },
     "pwa": Object {
@@ -1237,6 +1251,9 @@ Object {
       ],
       "description": "These checks validate the aspects of a Progressive Web App. [Learn more](https://developers.google.com/web/progressive-web-apps/checklist).",
       "manualDescription": "These checks are required by the baseline [PWA Checklist](https://developers.google.com/web/progressive-web-apps/checklist) but are not automatically checked by Lighthouse. They do not affect your score but it's important that you verify them manually.",
+      "supportedModes": Array [
+        "navigation",
+      ],
       "title": "Progressive Web App",
     },
     "seo": Object {
@@ -1318,6 +1335,10 @@ Object {
       ],
       "description": "These checks ensure that your page is following basic search engine optimization advice. There are many additional factors Lighthouse does not score here that may affect your search ranking, including performance on [Core Web Vitals](https://web.dev/learn-web-vitals/). [Learn more](https://support.google.com/webmasters/answer/35769).",
       "manualDescription": "Run these additional validators on your site to check additional SEO best practices.",
+      "supportedModes": Array [
+        "navigation",
+        "snapshot",
+      ],
       "title": "SEO",
     },
   },
@@ -1603,6 +1624,11 @@ Object {
           "id": "metrics",
           "weight": 0,
         },
+      ],
+      "supportedModes": Array [
+        "navigation",
+        "timespan",
+        "snapshot",
       ],
       "title": "Performance",
     },

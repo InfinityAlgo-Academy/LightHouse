@@ -45,6 +45,8 @@ async function snapshot(options) {
         settings: config.settings,
       });
 
+      await driver.disconnect();
+
       const artifacts = await awaitArtifacts(artifactState);
       return finalizeArtifacts(baseArtifacts, artifacts);
     },

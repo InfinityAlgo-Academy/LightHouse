@@ -5,9 +5,11 @@
  */
 'use strict';
 
-const fs = require('fs');
-const path = require('path');
-const glob = require('glob');
+import fs from 'fs';
+
+import glob from 'glob';
+
+import {readJson} from '../../../root.js';
 
 const NEW_VERSION = process.argv[2];
 if (!/^\d+\.\d+\.\d+(-dev\.\d{8})?$/.test(NEW_VERSION)) {
@@ -25,7 +27,7 @@ const ignore = [
 for (const file of glob.sync('**/{package.json,*.md}', {ignore})) {
   let text;
   if (file === 'package.json') {
-    const pkg = require(path.resolve(file));
+    const pkg = readJson(file);
     if (pkg.version.startsWith('file')) continue;
     pkg.version = NEW_VERSION;
     text = JSON.stringify(pkg, null, 2) + '\n';

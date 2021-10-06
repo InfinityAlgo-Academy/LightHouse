@@ -383,7 +383,7 @@ const debug = {
   },
 };
 
-module.exports = {
+export {
   preload,
   budgets,
   fonts,

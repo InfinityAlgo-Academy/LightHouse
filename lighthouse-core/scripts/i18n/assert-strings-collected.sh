@@ -26,7 +26,7 @@ node "$lhroot_path/lighthouse-core/scripts/i18n/collect-strings.js" || exit 1
 set +x
 
 colorText "Diff'ing committed strings against the fresh strings" "$purple"
-git --no-pager diff --color=always --exit-code "$lhroot_path/lighthouse-core/lib/i18n/locales/"
+git --no-pager diff --color=always --exit-code "$lhroot_path/shared/localization/locales/"
 
 # Use the return value from last command
 retVal=$?
@@ -35,6 +35,6 @@ if [ $retVal -eq 0 ]; then
   colorText "✅  PASS. All strings have been collected." "$green"
 else
   colorText "❌  FAIL. Strings have changed." "$red"
-  echo "Check lighthouse-core/lib/i18n/locales/ for unexpected string changes."
+  echo "Check shared/localization/locales/ for unexpected string changes."
 fi
 exit $retVal

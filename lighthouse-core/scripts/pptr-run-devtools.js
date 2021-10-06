@@ -14,12 +14,16 @@
  * Single URL: yarn run-devtools "https://example.com"
  */
 
-const puppeteer = require('puppeteer');
-const fs = require('fs');
-const readline = require('readline');
-const yargs = require('yargs/yargs');
 
-const argv = yargs(process.argv.slice(2))
+import fs from 'fs';
+import readline from 'readline';
+
+import puppeteer from 'puppeteer';
+import yargs from 'yargs';
+import * as yargsHelpers from 'yargs/helpers';
+
+const y = yargs(yargsHelpers.hideBin(process.argv));
+const argv = y
   .usage('$0 [url]')
   .help('help').alias('help', 'h')
   .option('_', {type: 'string'})
@@ -71,8 +75,18 @@ const sniffLhr = `
 new Promise(resolve => {
   (${addSniffer.toString()})(
     UI.panels.lighthouse.__proto__,
-    '_buildReportUI',
+    'buildReportUI',
     (lhr, artifacts) => resolve(lhr)
+  );
+});
+`;
+
+const sniffLighthouseStarted = `
+new Promise(resolve => {
+  (${addSniffer.toString()})(
+    UI.panels.lighthouse.protocolService.__proto__,
+    'startLighthouse',
+    (inspectedURL) => resolve(inspectedURL)
   );
 });
 `;
@@ -88,13 +102,24 @@ const startLighthouse = `
 `;
 
 /**
+ * @param {string} url
+ */
+function isValidUrl(url) {
+  try {
+    new URL(url);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * @param {import('puppeteer').Page} page
  * @param {import('puppeteer').Browser} browser
  * @param {string} url
  * @return {Promise<string>}
  */
-async function testPage(browser, url) {
-  const page = await browser.newPage();
-
+async function testPage(page, browser, url) {
   const targets = await browser.targets();
   const inspectorTarget = targets.filter(t => t.url().includes('devtools'))[1];
   if (!inspectorTarget) throw new Error('No inspector found.');
@@ -124,6 +149,20 @@ async function testPage(browser, url) {
   }
 
   /** @type {puppeteer.Protocol.Runtime.EvaluateResponse} */
+  const lhStartedResponse = await session.send('Runtime.evaluate', {
+    expression: sniffLighthouseStarted,
+    awaitPromise: true,
+    returnByValue: true,
+  }).catch(err => err);
+  // Verify the first parameter to `startLighthouse`, which should be a url.
+  // Don't try to check the exact value (because of redirects and such), just
+  // make sure it exists.
+  if (!isValidUrl(lhStartedResponse.result.value)) {
+    throw new Error(`Lighthouse did not start correctly. Got unexpected value for url: ${
+      lhStartedResponse.result.value}`);
+  }
+
+  /** @type {puppeteer.Protocol.Runtime.EvaluateResponse} */
   const remoteLhrResponse = await session.send('Runtime.evaluate', {
     expression: sniffLhr,
     awaitPromise: true,
@@ -133,8 +172,6 @@ async function testPage(browser, url) {
   if (!remoteLhrResponse.result || !remoteLhrResponse.result.value) {
     throw new Error('Problem sniffing LHR.');
   }
-
-  await page.close();
 
   return JSON.stringify(remoteLhrResponse.result.value, null, 2);
 }
@@ -178,15 +215,22 @@ async function run() {
     devtools: true,
   });
 
+  let errorCount = 0;
   const urlList = await readUrlList();
   for (let i = 0; i < urlList.length; ++i) {
+    const page = await browser.newPage();
     try {
-      const lhr = await testPage(browser, urlList[i]);
+      const lhr = await testPage(page, browser, urlList[i]);
       fs.writeFileSync(`${argv.o}/lhr-${i}.json`, lhr);
     } catch (error) {
+      errorCount += 1;
+      console.error(error.message);
       fs.writeFileSync(`${argv.o}/lhr-${i}.json`, JSON.stringify({error: error.message}, null, 2));
+    } finally {
+      await page.close();
     }
   }
+  console.log(`${urlList.length - errorCount} / ${urlList.length} urls run successfully.`);
 
   await browser.close();
 }

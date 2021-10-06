@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const {isIcuMessage} = require('../../lib/i18n/i18n.js');
+const {isIcuMessage} = require('../../../shared/localization/format.js');
 const {getTranslatedDescription, parseCsp} = require('../../lib/csp-evaluator.js');
 
 const {

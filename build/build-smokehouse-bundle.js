@@ -5,18 +5,33 @@
  */
 'use strict';
 
-const browserify = require('browserify');
-const fs = require('fs');
+const rollup = require('rollup');
+const rollupPlugins = require('./rollup-plugins.js');
 const {LH_ROOT} = require('../root.js');
 
 const distDir = `${LH_ROOT}/dist`;
 const bundleOutFile = `${distDir}/smokehouse-bundle.js`;
 const smokehouseLibFilename = './lighthouse-cli/test/smokehouse/frontends/lib.js';
+const smokehouseCliFilename =
+  require.resolve('../lighthouse-cli/test/smokehouse/lighthouse-runners/cli.js');
 
-browserify(smokehouseLibFilename, {standalone: 'Lighthouse.Smokehouse'})
-  .ignore('./lighthouse-cli/test/smokehouse/lighthouse-runners/cli.js')
-  .transform('@wardpeet/brfs', {global: true, parserOpts: {ecmaVersion: 12}})
-  .bundle((err, src) => {
-    if (err) throw err;
-    fs.writeFileSync(bundleOutFile, src.toString());
+async function build() {
+  const bundle = await rollup.rollup({
+    input: smokehouseLibFilename,
+    context: 'globalThis',
+    plugins: [
+      rollupPlugins.nodeResolve(),
+      rollupPlugins.commonjs(),
+      rollupPlugins.shim({
+        [smokehouseCliFilename]: 'export default {}',
+      }),
+    ],
   });
+
+  await bundle.write({
+    file: bundleOutFile,
+    format: 'commonjs',
+  });
+}
+
+build();

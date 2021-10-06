@@ -7,9 +7,24 @@
 import {FunctionComponent} from 'preact';
 
 import {NavigationIcon, SnapshotIcon, TimespanIcon} from './icons';
+import {getScreenDimensions, getScreenshot} from './util';
 
 export const Separator: FunctionComponent = () => {
   return <div className="Separator" role="separator"></div>;
+};
+
+export const FlowStepIcon: FunctionComponent<{mode: LH.Result.GatherMode}> = ({mode}) => {
+  return <>
+    {
+      mode === 'navigation' && <NavigationIcon/>
+    }
+    {
+      mode === 'timespan' && <TimespanIcon/>
+    }
+    {
+      mode === 'snapshot' && <SnapshotIcon/>
+    }
+  </>;
 };
 
 export const FlowSegment: FunctionComponent<{mode?: LH.Result.GatherMode}> = ({mode}) => {
@@ -17,15 +32,37 @@ export const FlowSegment: FunctionComponent<{mode?: LH.Result.GatherMode}> = ({m
     <div className="FlowSegment">
       <div className="FlowSegment__top-line"/>
       {
-        mode === 'navigation' && <NavigationIcon/>
-      }
-      {
-        mode === 'timespan' && <TimespanIcon/>
-      }
-      {
-        mode === 'snapshot' && <SnapshotIcon/>
+        mode && <FlowStepIcon mode={mode}/>
       }
       <div className="FlowSegment__bottom-line"/>
     </div>
   );
+};
+
+export const FlowStepThumbnail: FunctionComponent<{
+  reportResult: LH.ReportResult,
+  width?: number,
+  height?: number,
+}> = ({reportResult, width, height}) => {
+  const screenshot = getScreenshot(reportResult);
+
+  // Resize the image to fit the viewport aspect ratio.
+  const dimensions = getScreenDimensions(reportResult);
+  if (width && height === undefined) {
+    height = dimensions.height * width / dimensions.width;
+  } else if (height && width === undefined) {
+    width = dimensions.width * height / dimensions.height;
+  }
+
+  return <>
+    {
+      screenshot &&
+        <img
+          className="FlowStepThumbnail"
+          src={screenshot}
+          style={{width, height}}
+          alt="Screenshot of a page tested by Lighthouse"
+        />
+    }
+  </>;
 };

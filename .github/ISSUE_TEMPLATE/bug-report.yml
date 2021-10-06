@@ -66,21 +66,24 @@ body:
     id: version
     attributes:
       label: Lighthouse Version
-      description: What version of Lighthouse were you using? The version of Lighthouse can be found at the bottom of every report.
+      description: >
+        What version of Lighthouse were you using? The version of Lighthouse can be found at the bottom of every report. (Note: if using the CLI, you should be using the latest version, see https://github.com/GoogleChrome/lighthouse/releases)
     validations:
       required: true
   - type: input
     id: chromeversion
     attributes:
       label: Chrome Version
-      description: What version of Chrome were you using? (Only applicable if you ran locally)
+      description: >
+        What version of Chrome were you using? (Only applicable if you ran locally using Node, the CLI or DevTools) (Note: you should be using at least the Stable version of Chrome, see https://chromiumdash.appspot.com/releases. If you are not on a recent version, first try upgrading Chrome.)
     validations:
       required: false
   - type: input
     id: nodeversion
     attributes:
       label: Node Version
-      description: What version of node.js were you using? (Only applicable to CLI and node)
+      description: >
+        What version of node.js were you using? (Only applicable to CLI and node) (Note: the minimum Node version we support is 12.13.0)
     validations:
       required: false
   - type: textarea

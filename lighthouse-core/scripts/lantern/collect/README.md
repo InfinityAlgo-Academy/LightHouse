@@ -26,7 +26,7 @@ Check what version of Lighthouse WPT is using. You should use the same version o
 ## Verify URLs
 
 ```sh
-node -e "console.log(require('./urls.js').join('\n'))" |\
+node --input-type=module -e "import urls from './urls.js'; console.log(urls.join('\n'))" |\
   xargs -P 10 -I{} curl -A 'Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3694.0 Mobile Safari/537.36 Chrome-Lighthouse' -o /dev/null -s --write-out '%{http_code} {} (if redirect: %{redirect_url})\n' {} |\
   sort
 ```

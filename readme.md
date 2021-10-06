@@ -52,7 +52,7 @@ The Chrome extension was available prior to Lighthouse being available in Chrome
 
 The Node CLI provides the most flexibility in how Lighthouse runs can be configured and reported. Users who want more advanced usage, or want to run Lighthouse in an automated fashion should use the Node CLI.
 
-_Lighthouse requires Node 12 LTS (12.x) or later._
+_Lighthouse requires Node 12 LTS (12.20) or later._
 
 **Installation**:
 
@@ -362,6 +362,8 @@ This section details services that have integrated Lighthouse data. If you're wo
 * **[Fluxguard](https://fluxguard.com/)** - Fluxguard provides website DOM change monitoring orchestrated with Google Puppeteer, and audited by Lighthouse. Fluxguard is a freemium product, with monthly monitoring of up to 75 pages for free.
 
 * **[Microlink](https://microlink.io)** — Microlink is a cloud browser as API. It offers Lighthouse reports on demand, making it easy to build any service on top. Similar functionality is available via the underlying open-source project named browserless.
+
+* **[Peyk](https://peyk.com)** - Peyk is a website change detection & monitoring service. Peyk can detect changes in cookies, network requests, technologies, local & session storage, lighthouse audits, screenshots and so much more. Peyk is offered via free and paid plans.
 
 * **[Wattspeed](https://wattspeed.com/)** — Wattspeed is a free tool that generates snapshots - historical captures of your web pages that include Lighthouse scores, a list of technologies, W3C HTML validator results, DOM size, mixed content info, and more.
 

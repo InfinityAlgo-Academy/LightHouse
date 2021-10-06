@@ -5,19 +5,16 @@
  */
 'use strict';
 
-const fs = require('fs');
-const open = require('open');
-const {execFileSync} = require('child_process');
+// node lighthouse-core/scripts/build-test-flow-report.js
 
-execFileSync(`yarn`, ['build-report', '--standalone']);
-const reportGenerator = require('../../report/generator/report-generator.js');
+import fs from 'fs';
 
-const flow = JSON.parse(fs.readFileSync(
-      `${__dirname}/../test/fixtures/fraggle-rock/reports/sample-lhrs.json`,
-      'utf-8')
-);
+import open from 'open';
 
+import reportGenerator from '../../report/generator/report-generator.js';
+import {LH_ROOT, readJson} from '../../root.js';
+
+const flow = readJson('lighthouse-core/test/fixtures/fraggle-rock/reports/sample-flow-result.json');
 const htmlReport = reportGenerator.generateFlowReportHtml(flow);
-
-fs.writeFileSync(`${__dirname}/../../flow.report.html`, htmlReport);
-open(`${__dirname}/../../flow.report.html`);
+fs.writeFileSync(`${LH_ROOT}/flow.report.html`, htmlReport);
+open(`${LH_ROOT}/flow.report.html`);

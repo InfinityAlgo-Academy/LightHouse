@@ -145,7 +145,7 @@ const idleCallbackLong = {
   },
 };
 
-module.exports = {
+export {
   online,
   setTimeout,
   fetch,

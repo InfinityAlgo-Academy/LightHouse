@@ -479,7 +479,7 @@ const tapTargets = {
   },
 };
 
-module.exports = {
+export {
   passing,
   failing,
   status403,

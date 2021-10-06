@@ -92,7 +92,7 @@ const debuggerStatement = {
   },
 };
 
-module.exports = {
+export {
   trickyTti,
   trickyTtiLateFcp,
   delayedLcp,

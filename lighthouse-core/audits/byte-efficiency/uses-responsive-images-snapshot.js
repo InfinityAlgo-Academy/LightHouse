@@ -17,6 +17,10 @@ const URL = require('../../lib/url-shim.js');
 const i18n = require('../../lib/i18n/i18n.js');
 
 const UIStrings = {
+  /** Descriptive title of a Lighthouse audit that checks if images match their displayed dimensions. This is displayed when the audit is passing. */
+  title: 'Images were appropriate for their displayed size',
+  /** Descriptive title of a Lighthouse audit that checks if images match their displayed dimensions. This is displayed when the audit is failing. */
+  failureTitle: 'Images were larger than their displayed size',
   /** Label for a column in a data table; entries will be the dimensions of an image as it appears on the page. */
   columnDisplayedDimensions: 'Displayed dimensions',
   /** Label for a column in a data table; entries will be the dimensions of an image from it's source file. */
@@ -35,7 +39,8 @@ class UsesResponsiveImagesSnapshot extends Audit {
   static get meta() {
     return {
       id: 'uses-responsive-images-snapshot',
-      title: UsesResponsiveImages.str_(UsesResponsiveImages.UIStrings.title),
+      title: str_(UIStrings.title),
+      failureTitle: str_(UIStrings.failureTitle),
       description: UsesResponsiveImages.str_(UsesResponsiveImages.UIStrings.description),
       supportedModes: ['snapshot'],
       requiredArtifacts: ['ImageElements', 'ViewportDimensions'],

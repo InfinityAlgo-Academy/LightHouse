@@ -8,7 +8,7 @@
 const _set = require('lodash.set');
 const _get = require('lodash.get');
 
-const i18n = require('./i18n.js');
+const format = require('./format.js');
 
 /**
  * @fileoverview Use the lhr.i18n.icuMessagePaths object to change locales.
@@ -16,7 +16,7 @@ const i18n = require('./i18n.js');
  * `icuMessagePaths` is an object keyed by `LH.IcuMessage['i18nId']`s. Within each is either
  * 1) an array of strings, which are just object paths to where that message is used in the LHR
  * 2) an array of `LH.IcuMessagePath`s which include both a `path` and a `values` object
- *    which will be used in the replacement within `i18n.getFormatted()`
+ *    which will be used in the replacement within `format.getFormatted()`
  *
  * An example:
     "icuMessagePaths": {
@@ -49,7 +49,9 @@ function swapLocale(lhr, requestedLocale) {
   // Copy LHR to avoid mutating provided LHR.
   lhr = JSON.parse(JSON.stringify(lhr));
 
-  const locale = i18n.lookupLocale(requestedLocale);
+  if (!format.hasLocale(requestedLocale)) {
+    throw new Error(`Unsupported locale '${requestedLocale}'`);
+  }
   const originalLocale = lhr.configSettings.locale;
   const {icuMessagePaths} = lhr.i18n;
   const missingIcuMessageIds = [];
@@ -83,11 +85,11 @@ function swapLocale(lhr, requestedLocale) {
         formattedDefault: originalString,
       };
       // Get new formatted strings in revised locale.
-      const relocalizedString = i18n.getFormatted(icuMessage, locale);
+      const relocalizedString = format.getFormatted(icuMessage, requestedLocale);
 
       // If we couldn't find a new replacement message, keep things as is.
       if (relocalizedString === originalString) {
-        if (locale !== originalLocale) {
+        if (requestedLocale !== originalLocale) {
           // If the string remained the same while the locale changed, there may have been an issue.
           missingIcuMessageIds.push(i18nId);
         }
@@ -99,9 +101,9 @@ function swapLocale(lhr, requestedLocale) {
     }
   }
 
-  lhr.i18n.rendererFormattedStrings = i18n.getRendererFormattedStrings(locale);
+  lhr.i18n.rendererFormattedStrings = format.getRendererFormattedStrings(requestedLocale);
   // Tweak the config locale
-  lhr.configSettings.locale = locale;
+  lhr.configSettings.locale = requestedLocale;
   return {
     lhr,
     missingIcuMessageIds,

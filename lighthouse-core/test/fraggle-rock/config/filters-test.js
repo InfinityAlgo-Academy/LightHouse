@@ -312,6 +312,35 @@ describe('Fraggle Rock Config Filtering', () => {
     });
   });
 
+  describe('filterCategoriesByGatherMode', () => {
+    it('should handle null', () => {
+      expect(filters.filterCategoriesByGatherMode(null, 'timespan')).toBeNull();
+    });
+
+    it('should be noop when filter is not applied', () => {
+      expect(filters.filterCategoriesByGatherMode(categories, 'timespan')).toEqual(categories);
+    });
+
+    it('should remove categories that do not support the provided mode', () => {
+      /** @type {Record<string, LH.Config.Category>} */
+      const categories = {
+        timespan: {
+          title: 'Timespan',
+          auditRefs: [{id: 'timespan', weight: 0}],
+          supportedModes: ['timespan'],
+        },
+        snapshot: {
+          title: 'Snapshot',
+          auditRefs: [{id: 'snapshot', weight: 0}],
+          supportedModes: ['snapshot'],
+        },
+      };
+      expect(filters.filterCategoriesByGatherMode(categories, 'timespan')).toEqual({
+        timespan: categories.timespan,
+      });
+    });
+  });
+
   describe('filterAuditsByGatherMode', () => {
     it('should handle null', () => {
       expect(filters.filterAuditsByGatherMode(null, 'timespan')).toBeNull();

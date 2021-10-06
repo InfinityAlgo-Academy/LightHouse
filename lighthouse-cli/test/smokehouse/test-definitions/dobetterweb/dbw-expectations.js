@@ -315,8 +315,10 @@ const expectations = {
         score: 0,
         details: {
           items: {
-          // Note: HTML Imports added to deprecations in m70, so 3 before, 4 after.
-            length: '>=3',
+            // <M96 - Application Cache API manifest
+            // * - window.webkitStorageInfo
+            // * - Synchronous XMLHttpRequest
+            length: '>=2',
           },
         },
       },
@@ -365,7 +367,7 @@ const expectations = {
         },
       },
       'js-libraries': {
-        score: 1,
+        scoreDisplayMode: 'informative',
         details: {
           items: [{
             name: 'jQuery',
@@ -443,4 +445,4 @@ const expectations = {
   },
 };
 
-module.exports = expectations;
+export {expectations};

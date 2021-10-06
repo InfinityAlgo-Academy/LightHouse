@@ -5,9 +5,11 @@
  */
 'use strict';
 
-const fs = require('fs');
-const fetch = require('node-fetch');
-const {server} = require('./fixtures/static-server.js');
+import fs from 'fs';
+
+import fetch from 'node-fetch';
+
+import {server} from './static-server.js';
 
 /* eslint-env jest */
 
@@ -27,7 +29,7 @@ describe('Server', () => {
   it('fetches fixture', async () => {
     const res = await fetch(`http://localhost:${server.getPort()}/dobetterweb/dbw_tester.html`);
     const data = await res.text();
-    const expected = fs.readFileSync(`${__dirname}/fixtures/dobetterweb/dbw_tester.html`, 'utf-8');
+    const expected = fs.readFileSync(`${server.baseDir}/dobetterweb/dbw_tester.html`, 'utf-8');
     expect(data).toEqual(expected);
   });
 

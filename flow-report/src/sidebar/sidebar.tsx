@@ -5,15 +5,17 @@
  */
 
 import {FunctionComponent} from 'preact';
-import {useMemo} from 'preact/hooks';
 
 import {Separator} from '../common';
+import {useI18n, useUIStrings} from '../i18n/i18n';
 import {CpuIcon, EnvIcon, SummaryIcon} from '../icons';
-import {classNames, useCurrentLhr, useFlowResult, useLocale} from '../util';
+import {classNames, useCurrentLhr, useFlowResult} from '../util';
 import {SidebarFlow} from './flow';
 
 export const SidebarSummary: FunctionComponent = () => {
   const currentLhr = useCurrentLhr();
+  const strings = useUIStrings();
+
   const url = new URL(location.href);
   url.hash = '#';
   return (
@@ -25,12 +27,14 @@ export const SidebarSummary: FunctionComponent = () => {
       <div className="SidebarSummary__icon">
         <SummaryIcon/>
       </div>
-      <div className="SidebarSummary__label">Summary</div>
+      <div className="SidebarSummary__label">{strings.summary}</div>
     </a>
   );
 };
 
 const SidebarRuntimeSettings: FunctionComponent<{settings: LH.ConfigSettings}> = ({settings}) => {
+  const strings = useUIStrings();
+
   return (
     <div className="SidebarRuntimeSettings">
       <div className="SidebarRuntimeSettings__item">
@@ -38,8 +42,7 @@ const SidebarRuntimeSettings: FunctionComponent<{settings: LH.ConfigSettings}> =
           <EnvIcon/>
         </div>
         {
-          `${settings.formFactor === 'desktop' ? 'Desktop' : 'Mobile'} | ` +
-          `${settings.screenEmulation.height}x${settings.screenEmulation.width}px`
+          settings.formFactor === 'desktop' ? strings.desktop : strings.mobile
         }
       </div>
       <div className="SidebarRuntimeSettings__item">
@@ -55,29 +58,21 @@ const SidebarRuntimeSettings: FunctionComponent<{settings: LH.ConfigSettings}> =
 };
 
 export const SidebarHeader: FunctionComponent<{title: string, date: string}> = ({title, date}) => {
-  const locale = useLocale();
-  const formatter = useMemo(() => {
-    const options: Intl.DateTimeFormatOptions = {
-      month: 'short', day: 'numeric', year: 'numeric',
-      hour: 'numeric', minute: 'numeric', timeZoneName: 'short',
-    };
-    return new Intl.DateTimeFormat(locale, options);
-  }, [locale]);
-  const dateString = useMemo(() => formatter.format(new Date(date)), [date, formatter]);
+  const i18n = useI18n();
   return (
     <div className="SidebarHeader">
       <div className="SidebarHeader__title">{title}</div>
-      <div className="SidebarHeader__date">{dateString}</div>
+      <div className="SidebarHeader__date">{i18n.formatDateTime(date)}</div>
     </div>
   );
 };
 
 export const Sidebar: FunctionComponent = () => {
   const flowResult = useFlowResult();
-  const firstLhr = flowResult.lhrs[0];
+  const firstLhr = flowResult.steps[0].lhr;
   return (
     <div className="Sidebar">
-      <SidebarHeader title="Lighthouse User Flow Report" date={firstLhr.fetchTime}/>
+      <SidebarHeader title={flowResult.name} date={firstLhr.fetchTime}/>
       <Separator/>
       <SidebarSummary/>
       <Separator/>

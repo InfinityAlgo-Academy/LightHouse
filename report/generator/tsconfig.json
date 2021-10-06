@@ -1,23 +1,12 @@
 {
+  "extends": "../../tsconfig-base.json",
   "compilerOptions": {
-    "composite": true,
     "outDir": "../../.tmp/tsbuildinfo/report/generator",
-    "emitDeclarationOnly": true,
-    "declarationMap": true,
 
-    "target": "ES2020",
-    "module": "commonjs",
-    "moduleResolution": "node",
-
-    "allowJs": true,
-    "checkJs": true,
-    "strict": true,
-    // TODO: remove the next line to be fully `strict`.
-    "useUnknownInCatchVariables": false,
-
-    // "listFiles": true,
-    // "noErrorTruncation": true,
-    "extendedDiagnostics": true,
+    // Limit defs to base JS and DOM (for URL: https://github.com/DefinitelyTyped/DefinitelyTyped/issues/34960).
+    "lib": ["es2020", "dom"],
+    // Only include `@types/node` from node_modules/.
+    "types": ["node"],
   },
   "references": [
     {"path": "../../types/lhr/"},

@@ -123,4 +123,4 @@ class ConcurrentMapper {
   }
 }
 
-module.exports = ConcurrentMapper;
+export {ConcurrentMapper};

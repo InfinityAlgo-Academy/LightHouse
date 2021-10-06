@@ -8,7 +8,6 @@ import _ReportGenerator = require('../../report/generator/report-generator.js');
 import {Logger as _Logger} from '../../report/renderer/logger.js';
 import {LighthouseReportViewer as _LighthouseReportViewer} from '../app/src/lighthouse-report-viewer.js';
 import 'google.analytics';
-import {FirebaseNamespace} from '@firebase/app-types';
 
 // Import for needed DOM type augmentation.
 import '../../report/types/augment-dom';
@@ -20,7 +19,6 @@ declare global {
   var ReportGenerator: typeof _ReportGenerator;
   var logger: _Logger;
   var idbKeyval: typeof import('idb-keyval');
-  var firebase: Required<FirebaseNamespace>;
 
   interface Window {
     viewer: _LighthouseReportViewer;

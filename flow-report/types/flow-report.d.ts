@@ -19,8 +19,9 @@ declare global {
 
   // Expose global types in LH namespace.
   module LH {
-    export type FlowResult = FlowResult_;
     export type ConfigSettings = Settings.ConfigSettings;
+
+    export import FlowResult = FlowResult_;
   }
 }
 

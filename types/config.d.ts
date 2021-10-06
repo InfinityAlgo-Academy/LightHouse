@@ -64,7 +64,7 @@ declare module Config {
   interface FRContext {
     gatherMode?: Gatherer.GatherMode;
     configPath?: string;
-    settingsOverrides?: SharedFlagsSettings;
+    settingsOverrides?: SharedFlagsSettings & Pick<LH.Flags, 'plugins'>;
   }
 
   interface SharedPassNavigationJson {
@@ -134,6 +134,7 @@ declare module Config {
     auditRefs: AuditRefJson[];
     description?: string | IcuMessage;
     manualDescription?: string | IcuMessage;
+    supportedModes?:  Gatherer.GatherMode[];
   }
 
   interface GroupJson {

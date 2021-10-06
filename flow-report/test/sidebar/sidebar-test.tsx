@@ -4,30 +4,24 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import fs from 'fs';
-import {dirname} from 'path';
-import {fileURLToPath} from 'url';
-
 import {render} from '@testing-library/preact';
 import {FunctionComponent} from 'preact';
 
+import {I18nProvider} from '../../src/i18n/i18n';
 import {SidebarHeader, SidebarSummary} from '../../src/sidebar/sidebar';
 import {FlowResultContext} from '../../src/util';
+import {flowResult} from '../sample-flow';
 
-
-const flowResult = JSON.parse(
-  fs.readFileSync(
-    // eslint-disable-next-line max-len
-    `${dirname(fileURLToPath(import.meta.url))}/../../../lighthouse-core/test/fixtures/fraggle-rock/reports/sample-lhrs.json`,
-    'utf-8'
-  )
-);
 
 let wrapper: FunctionComponent;
 
 beforeEach(() => {
   wrapper = ({children}) => (
-    <FlowResultContext.Provider value={flowResult}>{children}</FlowResultContext.Provider>
+    <FlowResultContext.Provider value={flowResult}>
+      <I18nProvider>
+        {children}
+      </I18nProvider>
+    </FlowResultContext.Provider>
   );
 });
 

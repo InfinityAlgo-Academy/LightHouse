@@ -32,8 +32,8 @@ const audits = LighthouseRunner.getAuditList()
 const gatherers = LighthouseRunner.getGathererList()
     .map(f => './lighthouse-core/gather/gatherers/' + f.replace(/\.js$/, ''));
 
-const locales = fs.readdirSync(LH_ROOT + '/lighthouse-core/lib/i18n/locales/')
-    .map(f => require.resolve(`../lighthouse-core/lib/i18n/locales/${f}`));
+const locales = fs.readdirSync(LH_ROOT + '/shared/localization/locales/')
+    .map(f => require.resolve(`../shared/localization/locales/${f}`));
 
 // HACK: manually include the lighthouse-plugin-publisher-ads audits.
 /** @type {Array<string>} */

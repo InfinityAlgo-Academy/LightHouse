@@ -39,6 +39,22 @@ function isValidArtifactDependency(dependent, dependency) {
 }
 
 /**
+ * Throws if pluginName is invalid or (somehow) collides with a category in the
+ * configJSON being added to.
+ * @param {LH.Config.Json} configJSON
+ * @param {string} pluginName
+ */
+function assertValidPluginName(configJSON, pluginName) {
+  if (!pluginName.startsWith('lighthouse-plugin-')) {
+    throw new Error(`plugin name '${pluginName}' does not start with 'lighthouse-plugin-'`);
+  }
+
+  if (configJSON.categories && configJSON.categories[pluginName]) {
+    throw new Error(`plugin name '${pluginName}' not allowed because it is the id of a category already found in config`); // eslint-disable-line max-len
+  }
+}
+
+/**
  * Throws an error if the provided object does not implement the required Fraggle Rock gatherer interface.
  * @param {LH.Config.AnyFRGathererDefn} gathererDefn
  */
@@ -123,9 +139,10 @@ function assertValidAudit(auditDefinition) {
   }
 
   // If it'll have a ✔ or ✖ displayed alongside the result, it should have failureTitle
+  const scoreDisplayMode = implementation.meta.scoreDisplayMode || Audit.SCORING_MODES.BINARY;
   if (
     !i18n.isStringOrIcuMessage(implementation.meta.failureTitle) &&
-    implementation.meta.scoreDisplayMode === Audit.SCORING_MODES.BINARY
+    scoreDisplayMode === Audit.SCORING_MODES.BINARY
   ) {
     throw new Error(`${auditName} has no meta.failureTitle and should.`);
   }
@@ -283,6 +300,7 @@ function throwInvalidArtifactDependency(artifactId, dependencyKey) {
 module.exports = {
   isFRGathererDefn,
   isValidArtifactDependency,
+  assertValidPluginName,
   assertValidFRGatherer,
   assertValidFRNavigations,
   assertValidAudit,

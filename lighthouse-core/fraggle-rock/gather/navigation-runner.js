@@ -20,7 +20,7 @@ const emulation = require('../../lib/emulation.js');
 const {defaultNavigationConfig} = require('../../config/constants.js');
 const {initializeConfig} = require('../config/config.js');
 const {getBaseArtifacts, finalizeArtifacts} = require('./base-artifacts.js');
-const i18n = require('../../lib/i18n/i18n.js');
+const format = require('../../../shared/localization/format.js');
 const LighthouseError = require('../../lib/lh-error.js');
 const {getPageLoadError} = require('../../lib/navigation-error.js');
 const Trace = require('../../gather/gatherers/trace.js');
@@ -165,7 +165,7 @@ async function _computeNavigationResult(
 
   if (pageLoadError) {
     const locale = navigationContext.config.settings.locale;
-    const localizedMessage = i18n.getFormatted(pageLoadError.friendlyMessage, locale);
+    const localizedMessage = format.getFormatted(pageLoadError.friendlyMessage, locale);
     log.error('NavigationRunner', localizedMessage, navigationContext.requestedUrl);
 
     /** @type {Partial<LH.GathererArtifacts>} */
@@ -262,6 +262,8 @@ async function _navigations({driver, config, requestedUrl, baseArtifacts, comput
 async function _cleanup({requestedUrl, driver, config}) {
   const didResetStorage = !config.settings.disableStorageReset;
   if (didResetStorage) await storage.clearDataForOrigin(driver.defaultSession, requestedUrl);
+
+  await driver.disconnect();
 }
 
 /**

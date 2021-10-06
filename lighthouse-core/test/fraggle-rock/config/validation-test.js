@@ -20,7 +20,13 @@ let ExampleAudit = class extends BaseAudit {};
 
 beforeEach(() => {
   class ExampleAudit_ extends BaseAudit {
-    static meta = {id: 'audit', title: 'Title', description: 'Audit', requiredArtifacts: []};
+    static meta = {
+      id: 'audit',
+      title: 'Title',
+      failureTitle: 'Title',
+      description: 'Audit',
+      requiredArtifacts: [],
+    };
     static audit = BaseAudit.audit.bind(ExampleAudit_);
   }
   ExampleAudit = ExampleAudit_;
@@ -60,6 +66,21 @@ describe('Fraggle Rock Config Validation', () => {
         expect(validation.isValidArtifactDependency(dependentDefn, dependencyDefn)).toBe(isValid);
       });
     }
+  });
+
+  describe('.assertValidPluginName', () => {
+    it('should throw if plugin does not start with lighthouse-plugin', () => {
+      const invocation = () => validation.assertValidPluginName(defaultConfig, 'example');
+      expect(invocation).toThrow(/does not start with.*lighthouse-plugin/);
+    });
+
+    it('should throw if category already exists in config', () => {
+      const config = {...defaultConfig};
+      const category = {title: 'Test Plugin', auditRefs: [{id: 'viewport', weight: 1}]};
+      config.categories = {...defaultConfig.categories, 'lighthouse-plugin-test': category};
+      const invocation = () => validation.assertValidPluginName(config, 'lighthouse-plugin-test');
+      expect(invocation).toThrow(/not allowed because.*already found/);
+    });
   });
 
   describe('.assertValidFRGatherer', () => {
@@ -136,7 +157,16 @@ describe('Fraggle Rock Config Validation', () => {
     });
 
     it('should throw if failureTitle is missing', () => {
+      ExampleAudit.meta.failureTitle = undefined;
       ExampleAudit.meta.scoreDisplayMode = BaseAudit.SCORING_MODES.BINARY;
+      const audit = {implementation: ExampleAudit, options: {}};
+      const invocation = () => validation.assertValidAudit(audit);
+      expect(invocation).toThrow(/has no meta.failureTitle/);
+    });
+
+    it('should throw if failureTitle is missing and scoreDisplayMode is not defined', () => {
+      ExampleAudit.meta.failureTitle = undefined;
+      ExampleAudit.meta.scoreDisplayMode = undefined;
       const audit = {implementation: ExampleAudit, options: {}};
       const invocation = () => validation.assertValidAudit(audit);
       expect(invocation).toThrow(/has no meta.failureTitle/);

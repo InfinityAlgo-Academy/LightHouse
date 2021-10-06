@@ -15,7 +15,7 @@ declare global {
       requestedUrl: string;
       finalUrl: string | RegExp;
       userAgent?: string | RegExp;
-      runWarnings?: Array<string|RegExp>;
+      runWarnings?: Array<string|RegExp> | {length: string | number};
       runtimeError?: {
         code?: any;
         message?: any;

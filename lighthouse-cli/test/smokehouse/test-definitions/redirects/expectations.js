@@ -146,7 +146,7 @@ const historyPushState = {
   },
 };
 
-module.exports = {
+export {
   singleServer,
   multipleServer,
   clientPaintServer,

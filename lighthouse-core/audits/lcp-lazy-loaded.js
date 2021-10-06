@@ -27,6 +27,7 @@ class LargestContentfulPaintLazyLoaded extends Audit {
     return {
       id: 'lcp-lazy-loaded',
       title: str_(UIStrings.title),
+      failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
       supportedModes: ['navigation'],
       requiredArtifacts: ['TraceElements', 'ViewportDimensions', 'ImageElements'],

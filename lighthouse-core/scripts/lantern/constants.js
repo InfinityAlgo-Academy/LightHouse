@@ -5,7 +5,9 @@
  */
 'use strict';
 
-const path = require('path');
+import path from 'path';
+
+import {LH_ROOT} from '../../../root.js';
 
 /* eslint-disable max-len */
 
@@ -71,16 +73,16 @@ const path = require('path');
 /** @type {Array<string>} */
 const WARNINGS = [];
 
-module.exports = {
+export default {
   WARNINGS,
   // prettier-ignore
   SITE_INDEX_WITH_GOLDEN_PATH: './lantern-data/site-index-plus-golden-expectations.json',
   // prettier-ignore
-  SITE_INDEX_WITH_GOLDEN_WITH_COMPUTED_PATH: path.join(__dirname, '../../../.tmp/site-index-plus-golden-expectations-plus-computed.json'),
+  SITE_INDEX_WITH_GOLDEN_WITH_COMPUTED_PATH: path.join(LH_ROOT, '.tmp/site-index-plus-golden-expectations-plus-computed.json'),
   // prettier-ignore
-  BASELINE_COMPUTED_PATH: path.join(__dirname, '../../test/fixtures/lantern-baseline-computed-values.json'),
+  BASELINE_COMPUTED_PATH: path.join(LH_ROOT, 'lighthouse-core/test/fixtures/lantern-baseline-computed-values.json'),
   // prettier-ignore
-  BASELINE_ACCURACY_PATH: path.join(__dirname, '../../test/fixtures/lantern-baseline-accuracy.json'),
+  BASELINE_ACCURACY_PATH: path.join(LH_ROOT, 'lighthouse-core/test/fixtures/lantern-baseline-accuracy.json'),
   /**
    * @param {{sites: Array<LanternSiteDefinition>}} siteIndexWithComputed
    * @param {{sites: Array<LanternMetrics & {url: string}>}} baselineLanternData

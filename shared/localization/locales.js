@@ -16,6 +16,7 @@
 
 // TODO(paulirish): Centralize locale inheritance (combining this & i18n.lookupLocale()), adopt cldr parentLocale rules.
 
+/** @typedef {import('../../types/lhr/settings').Locale} Locale */
 /** @typedef {Record<string, {message: string}>} LhlMessages */
 
 const fs = require('fs');
@@ -73,7 +74,7 @@ const files = {
 };
 
 // The keys within this const must exactly match the LH.Locale type in externs.d.ts
-/** @type {Record<LH.Locale, LhlMessages>} */
+/** @type {Record<Locale, LhlMessages>} */
 const locales = {
   'en-US': files['en-US'], // The 'source' strings, with descriptions
   'en': files['en-US'], // According to CLDR/ICU, 'en' == 'en-US' dates/numbers (Why?!)

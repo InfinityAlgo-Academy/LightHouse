@@ -421,6 +421,7 @@ const defaultConfig = {
   categories: {
     'performance': {
       title: str_(UIStrings.performanceCategoryTitle),
+      supportedModes: ['navigation', 'timespan', 'snapshot'],
       auditRefs: [
         {id: 'first-contentful-paint', weight: 10, group: 'metrics', acronym: 'FCP', relevantAudits: m2a.fcpRelevantAudits},
         {id: 'speed-index', weight: 10, group: 'metrics', acronym: 'SI'},
@@ -490,6 +491,7 @@ const defaultConfig = {
       title: str_(UIStrings.a11yCategoryTitle),
       description: str_(UIStrings.a11yCategoryDescription),
       manualDescription: str_(UIStrings.a11yCategoryManualDescription),
+      supportedModes: ['navigation', 'snapshot'],
       // Audit weights are meant to match the aXe scoring system of
       // minor, moderate, serious, and critical.
       // See the audits listed at dequeuniversity.com/rules/axe/4.1.
@@ -554,6 +556,7 @@ const defaultConfig = {
     },
     'best-practices': {
       title: str_(UIStrings.bestPracticesCategoryTitle),
+      supportedModes: ['navigation', 'timespan', 'snapshot'],
       auditRefs: [
         // Trust & Safety
         {id: 'is-on-https', weight: 1, group: 'best-practices-trust-safety'},
@@ -584,6 +587,7 @@ const defaultConfig = {
       title: str_(UIStrings.seoCategoryTitle),
       description: str_(UIStrings.seoCategoryDescription),
       manualDescription: str_(UIStrings.seoCategoryManualDescription),
+      supportedModes: ['navigation', 'snapshot'],
       auditRefs: [
         {id: 'viewport', weight: 1, group: 'seo-mobile'},
         {id: 'document-title', weight: 1, group: 'seo-content'},
@@ -607,6 +611,7 @@ const defaultConfig = {
       title: str_(UIStrings.pwaCategoryTitle),
       description: str_(UIStrings.pwaCategoryDescription),
       manualDescription: str_(UIStrings.pwaCategoryManualDescription),
+      supportedModes: ['navigation'],
       auditRefs: [
         // Installable
         {id: 'installable-manifest', weight: 2, group: 'pwa-installable'},

@@ -8,11 +8,7 @@
 const fs = require('fs');
 const path = require('path');
 const rollup = require('rollup');
-const commonjs =
-  // @ts-expect-error types are wrong.
-  /** @type {import('rollup-plugin-commonjs').default} */ (require('rollup-plugin-commonjs'));
-const {terser: rollupTerser} = require('rollup-plugin-terser');
-const {nodeResolve} = require('@rollup/plugin-node-resolve');
+const rollupPlugins = require('./rollup-plugins.js');
 const cpy = require('cpy');
 const ghPages = require('gh-pages');
 const glob = require('glob');
@@ -146,10 +142,10 @@ class GhPagesApp {
    */
   async _rollupSource(input) {
     const plugins = [
-      nodeResolve(),
-      commonjs(),
+      rollupPlugins.nodeResolve(),
+      rollupPlugins.commonjs(),
     ];
-    if (!process.env.DEBUG) plugins.push(rollupTerser());
+    if (!process.env.DEBUG) plugins.push(rollupPlugins.terser());
     const bundle = await rollup.rollup({
       input,
       plugins,

@@ -5,13 +5,11 @@
  */
 'use strict';
 
-/** @fileoverview Expected Lighthouse audit values for various sites with stable(ish) PWA results. */
-
 /**
  * @type {Smokehouse.ExpectedRunnerResult}
  * Expected Lighthouse results a site with mixed-content issues.
  */
-const mixedContent = {
+const expectations = {
   artifacts: {
     InspectorIssues: {
       mixedContent: [
@@ -39,4 +37,4 @@ const mixedContent = {
   },
 };
 
-module.exports = mixedContent;
+export {expectations};

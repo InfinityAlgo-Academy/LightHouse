@@ -7,39 +7,14 @@
 import {createContext} from 'preact';
 import {useContext, useEffect, useMemo, useState} from 'preact/hooks';
 
+import type {UIStringsType} from './i18n/ui-strings';
+
 export const FlowResultContext = createContext<LH.FlowResult|undefined>(undefined);
 
 function getHashParam(param: string): string|null {
   const params = new URLSearchParams(location.hash.replace('#', '?'));
   return params.get(param);
 }
-
-function shortenUrl(longUrl: string) {
-  const url = new URL(longUrl);
-  return `${url.hostname}${url.pathname}`;
-}
-
-/**
- * The step label should be enumerated if there is another report of the same gather mode in the same section.
- * Navigation reports will never be enumerated.
- */
-function shouldEnumerate(flowResult: LH.FlowResult, index: number) {
-  const {lhrs} = flowResult;
-  if (lhrs[index].gatherMode === 'navigation') return false;
-
-  for (let i = index + 1; lhrs[i] && lhrs[i].gatherMode !== 'navigation'; ++i) {
-    if (lhrs[i].gatherMode === lhrs[index].gatherMode) {
-      return true;
-    }
-  }
-  for (let i = index - 1; lhrs[i] && lhrs[i].gatherMode !== 'navigation'; --i) {
-    if (lhrs[i].gatherMode === lhrs[index].gatherMode) {
-      return true;
-    }
-  }
-  return false;
-}
-
 
 export function classNames(...args: Array<string|undefined|Record<string, boolean>>): string {
   const classes = [];
@@ -75,6 +50,14 @@ export function getScreenshot(reportResult: LH.ReportResult) {
   return fullPageScreenshot || null;
 }
 
+export function getModeDescription(mode: LH.Result.GatherMode, strings: UIStringsType) {
+  switch (mode) {
+    case 'navigation': return strings.navigationDescription;
+    case 'timespan': return strings.timespanDescription;
+    case 'snapshot': return strings.snapshotDescription;
+  }
+}
+
 export function useFlowResult(): LH.FlowResult {
   const flowResult = useContext(FlowResultContext);
   if (!flowResult) throw Error('useFlowResult must be called in the FlowResultContext');
@@ -83,7 +66,7 @@ export function useFlowResult(): LH.FlowResult {
 
 export function useLocale(): LH.Locale {
   const flowResult = useFlowResult();
-  return flowResult.lhrs[0].configSettings.locale;
+  return flowResult.steps[0].lhr.configSettings.locale;
 }
 
 export function useHashParam(param: string) {
@@ -104,7 +87,7 @@ export function useHashParam(param: string) {
   return paramValue;
 }
 
-export function useCurrentLhr(): {value: LH.Result, index: number}|null {
+export function useCurrentLhr(): LH.FlowResult.LhrRef|null {
   const flowResult = useFlowResult();
   const indexString = useHashParam('index');
 
@@ -118,42 +101,12 @@ export function useCurrentLhr(): {value: LH.Result, index: number}|null {
       return null;
     }
 
-    const value = flowResult.lhrs[index];
-    if (!value) {
-      console.warn(`No LHR at index ${index}`);
+    const step = flowResult.steps[index];
+    if (!step) {
+      console.warn(`No flow step at index ${index}`);
       return null;
     }
 
-    return {value, index};
+    return {value: step.lhr, index};
   }, [indexString, flowResult]);
-}
-
-export function useDerivedStepNames() {
-  const flowResult = useFlowResult();
-
-  return useMemo(() => {
-    let numTimespan = 1;
-    let numSnapshot = 1;
-
-    return flowResult.lhrs.map((lhr, index) => {
-      const shortUrl = shortenUrl(lhr.finalUrl);
-
-      switch (lhr.gatherMode) {
-        case 'navigation':
-          numTimespan = 1;
-          numSnapshot = 1;
-          return `Navigation report (${shortUrl})`;
-        case 'timespan':
-          if (shouldEnumerate(flowResult, index)) {
-            return `Timespan report ${numTimespan++} (${shortUrl})`;
-          }
-          return `Timespan report (${shortUrl})`;
-        case 'snapshot':
-          if (shouldEnumerate(flowResult, index)) {
-            return `Snapshot report ${numSnapshot++} (${shortUrl})`;
-          }
-          return `Snapshot report (${shortUrl})`;
-      }
-    });
-  }, [flowResult]);
 }

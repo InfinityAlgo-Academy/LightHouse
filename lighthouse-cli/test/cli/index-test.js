@@ -6,11 +6,13 @@
 'use strict';
 
 /* eslint-env jest */
-const assert = require('assert').strict;
-const childProcess = require('child_process');
-const path = require('path');
-const indexPath = path.resolve(__dirname, '../../index.js');
-const spawnSync = childProcess.spawnSync;
+
+import {strict as assert} from 'assert';
+import {spawnSync} from 'child_process';
+
+import {LH_ROOT} from '../../../root.js';
+
+const indexPath = `${LH_ROOT}/lighthouse-cli/index.js`;
 
 describe('CLI Tests', function() {
   it('fails if a url is not provided', () => {
@@ -56,7 +58,7 @@ describe('CLI Tests', function() {
     it('should exit with a error if the file does not contain valid JSON', () => {
       const ret = spawnSync('node', [indexPath, 'https://www.google.com',
         '--extra-headers',
-        path.resolve(__dirname, '../fixtures/extra-headers/invalid.txt')], {encoding: 'utf8'});
+        `${LH_ROOT}/lighthouse-cli/test/fixtures/extra-headers/invalid.txt`], {encoding: 'utf8'});
 
       assert.ok(ret.stderr.includes('Unexpected token'));
       assert.equal(ret.status, 1);

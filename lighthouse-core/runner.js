@@ -11,7 +11,7 @@ const GatherRunner = require('./gather/gather-runner.js');
 const ReportScoring = require('./scoring.js');
 const Audit = require('./audits/audit.js');
 const log = require('lighthouse-logger');
-const i18n = require('./lib/i18n/i18n.js');
+const format = require('../shared/localization/format.js');
 const stackPacks = require('./lib/stack-packs.js');
 const assetSaver = require('./lib/asset-saver.js');
 const fs = require('fs');
@@ -152,14 +152,14 @@ class Runner {
         categoryGroups: runOpts.config.groups || undefined,
         timing: this._getTiming(artifacts),
         i18n: {
-          rendererFormattedStrings: i18n.getRendererFormattedStrings(settings.locale),
+          rendererFormattedStrings: format.getRendererFormattedStrings(settings.locale),
           icuMessagePaths: {},
         },
         stackPacks: stackPacks.getStackPacks(artifacts.Stacks),
       };
 
       // Replace ICU message references with localized strings; save replaced paths in lhr.
-      i18nLhr.i18n.icuMessagePaths = i18n.replaceIcuMessages(i18nLhr, settings.locale);
+      i18nLhr.i18n.icuMessagePaths = format.replaceIcuMessages(i18nLhr, settings.locale);
 
       // LHR has now been localized.
       const lhr = /** @type {LH.Result} */ (i18nLhr);
@@ -177,7 +177,7 @@ class Runner {
     } catch (err) {
       // i18n LighthouseError strings.
       if (err.friendlyMessage) {
-        err.friendlyMessage = i18n.getFormatted(err.friendlyMessage, settings.locale);
+        err.friendlyMessage = format.getFormatted(err.friendlyMessage, settings.locale);
       }
       await Sentry.captureException(err, {level: 'fatal'});
       throw err;
@@ -211,7 +211,7 @@ class Runner {
         duration: parseFloat(entry.duration.toFixed(2)),
         entryType: entry.entryType,
       };
-    });
+    }).sort((a, b) => a.startTime - b.startTime);
     const runnerEntry = timingEntries.find(e => e.name === 'lh:runner:run');
     return {entries: timingEntries, total: runnerEntry && runnerEntry.duration || 0};
   }
@@ -301,7 +301,7 @@ class Runner {
   static async _runAudit(auditDefn, artifacts, sharedAuditContext, runWarnings) {
     const audit = auditDefn.implementation;
     const status = {
-      msg: `Auditing: ${i18n.getFormatted(audit.meta.title, 'en-US')}`,
+      msg: `Auditing: ${format.getFormatted(audit.meta.title, 'en-US')}`,
       id: `lh:audit:${audit.meta.id}`,
     };
     log.time(status);

@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const experimentalConfig = require('../../../../../lighthouse-core/config/experimental-config.js');
+import experimentalConfig from '../../../../../lighthouse-core/config/experimental-config.js';
 
 /**
  * @type {LH.Config.Json}
@@ -20,4 +20,4 @@ const config = {
   },
 };
 
-module.exports = config;
+export default config;
