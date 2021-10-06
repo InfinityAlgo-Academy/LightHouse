@@ -102,14 +102,6 @@
 </style>
 </template>
 
-<template id="deprecations-tmpl">
-  <style>
-    body /deep/ div {
-      color: pink; /* FAIL - deprecation warning */
-    }
-  </style>
-</template>
-
 <!-- Force FCP to be ~5s out, necessary to make sure our render-blocking audits still work -->
 <!-- even when other forces were responsible for delaying the render. -->
 <script src="./fcp-delayer.js?delay=5000"></script>
@@ -371,8 +363,6 @@ function passwordInputsCanBePastedIntoTest() {
 
 
 function deprecationsTest() {
-  stampTemplate('deprecations-tmpl', document.head);
-
   // TODO: some deprecated API messages are not currently being logged correctly.
   // See: https://crbug.com/680832
 
