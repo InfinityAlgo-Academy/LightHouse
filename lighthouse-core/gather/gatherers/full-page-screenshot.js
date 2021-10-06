@@ -22,6 +22,26 @@ function snakeCaseToCamelCase(str) {
   return str.replace(/(-\w)/g, m => m[1].toUpperCase());
 }
 
+/* c8 ignore start */
+
+// eslint-disable-next-line no-inner-declarations
+function getObservedDeviceMetrics() {
+  // Convert the Web API's snake case (landscape-primary) to camel case (landscapePrimary).
+  const screenOrientationType = /** @type {LH.Crdp.Emulation.ScreenOrientationType} */ (
+    snakeCaseToCamelCase(window.screen.orientation.type));
+  return {
+    width: document.documentElement.clientWidth,
+    height: document.documentElement.clientHeight,
+    screenOrientation: {
+      type: screenOrientationType,
+      angle: window.screen.orientation.angle,
+    },
+    deviceScaleFactor: window.devicePixelRatio,
+  };
+}
+
+/* c8 ignore stop */
+
 class FullPageScreenshot extends FRGatherer {
   /** @type {LH.Gatherer.GathererMeta} */
   meta = {
@@ -131,21 +151,6 @@ class FullPageScreenshot extends FRGatherer {
     return {...pageContextResult, ...isolatedContextResult};
   }
 
-  getObservedDeviceMetrics() {
-    // Convert the Web API's snake case (landscape-primary) to camel case (landscapePrimary).
-    const screenOrientationType = /** @type {LH.Crdp.Emulation.ScreenOrientationType} */ (
-      snakeCaseToCamelCase(window.screen.orientation.type));
-    return {
-      width: document.documentElement.clientWidth,
-      height: document.documentElement.clientHeight,
-      screenOrientation: {
-        type: screenOrientationType,
-        angle: window.screen.orientation.angle,
-      },
-      deviceScaleFactor: window.devicePixelRatio,
-    };
-  }
-
   /**
    * @param {LH.Gatherer.FRTransitionalContext} context
    * @return {Promise<LH.Artifacts['FullPageScreenshot']>}
@@ -160,7 +165,7 @@ class FullPageScreenshot extends FRGatherer {
     let observedDeviceMetrics;
     const lighthouseControlsEmulation = !settings.screenEmulation.disabled;
     if (!lighthouseControlsEmulation) {
-      observedDeviceMetrics = await executionContext.evaluate(this.getObservedDeviceMetrics, {
+      observedDeviceMetrics = await executionContext.evaluate(getObservedDeviceMetrics, {
         args: [],
         useIsolation: true,
         deps: [snakeCaseToCamelCase],
