@@ -166,6 +166,12 @@ export class ReportRenderer {
         {gatherMode: report.gatherMode}
       );
 
+      // For normal score gauges (not the fraction gauge), set the gauge href
+      // to link to the category.
+      const gaugeWrapperEl = /** @type {HTMLAnchorElement} */ (
+        categoryGauge.querySelector('a.lh-gauge__wrapper'));
+      if (gaugeWrapperEl) this._dom.safelySetHref(gaugeWrapperEl, `#${category.id}`);
+
       if (Util.isPluginCategory(category.id)) {
         pluginGauges.push(categoryGauge);
       } else if (renderer.renderCategoryScore === categoryRenderer.renderCategoryScore) {

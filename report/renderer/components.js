@@ -215,7 +215,6 @@ function createFooterComponent(dom) {
 function createFractionComponent(dom) {
   const el0 = dom.document().createDocumentFragment();
   const el1 = dom.createElement('a', 'lh-fraction__wrapper');
-  el1.setAttribute('href', '#');
   const el2 = dom.createElement('div', 'lh-fraction__content-wrapper');
   const el3 = dom.createElement('div', 'lh-fraction__content');
   const el4 = dom.createElement('div', 'lh-fraction__background');
@@ -233,7 +232,6 @@ function createFractionComponent(dom) {
 function createGaugeComponent(dom) {
   const el0 = dom.document().createDocumentFragment();
   const el1 = dom.createElement('a', 'lh-gauge__wrapper');
-  el1.setAttribute('href', '#');
   const el2 = dom.createElement('div', 'lh-gauge__svg-wrapper');
   const el3 = dom.createElementNS('http://www.w3.org/2000/svg', 'svg', 'lh-gauge');
   el3.setAttribute('viewBox', '0 0 120 120');
