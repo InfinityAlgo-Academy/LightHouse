@@ -26,6 +26,9 @@
   "flow-report/src/i18n/ui-strings.js | ratingPass": {
     "message": "Good"
   },
+  "flow-report/src/i18n/ui-strings.js | save": {
+    "message": "Save"
+  },
   "flow-report/src/i18n/ui-strings.js | snapshotDescription": {
     "message": "Captured state of page"
   },

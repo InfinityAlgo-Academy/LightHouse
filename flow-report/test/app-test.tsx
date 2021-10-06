@@ -4,7 +4,7 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import {render} from '@testing-library/preact';
+import {act, render} from '@testing-library/preact';
 
 import {App} from '../src/app';
 import {flowResult} from './sample-flow';
@@ -34,4 +34,19 @@ it('renders the snapshot step', async () => {
   const root = render(<App flowResult={flowResult}/>);
 
   expect(root.getByTestId('Report')).toBeTruthy();
+});
+
+it('toggles collapsed mode when hamburger button clicked', async () => {
+  const root = render(<App flowResult={flowResult}/>);
+
+  const app = root.getByTestId('App');
+  const hamburgerButton = root.getByLabelText('Button that opens and closes the sidebar');
+
+  expect(app.classList).not.toContain('App--collapsed');
+
+  await act(() => {
+    hamburgerButton.click();
+  });
+
+  expect(app.classList).toContain('App--collapsed');
 });

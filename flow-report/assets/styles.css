@@ -27,6 +27,8 @@
   --summary-subtitle-font-size: 16px;
   --summary-title-font-size: 32px;
   --summary-tooltip-box-shadow-color: rgba(0, 0, 0, 0.25);
+  --topbar-button-font-size: 14px;
+  --topbar-button-size: 45px;
   --topbar-title-font-size: 14px;
 }
 
@@ -48,6 +50,29 @@
   display: none;
 }
 
+@media print {
+  .App {
+    grid-template-rows: 0px auto !important;
+    grid-template-columns: 0px auto !important;
+  }
+
+  .Topbar {
+    display: none !important;
+  }
+
+  .Sidebar {
+    display: none !important;
+  }
+
+  .Content {
+    overflow-y: visible !important;
+  }
+
+  .SummaryFlow {
+    grid-template-columns: repeat(7, min-content) !important;
+  }
+}
+
 .Topbar {
   grid-area: topbar;
   display: flex;
@@ -55,16 +80,27 @@
   border-bottom: 1px solid var(--separator-color);
 }
 
-.Topbar__menu {
-  padding: var(--base-spacing);
+.TopbarButton {
+  height: var(--topbar-button-size);
+  min-width: var(--topbar-button-size);
   cursor: pointer;
   display: flex;
+  align-items: center;
+  justify-content: center;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  cursor: pointer;
+  background: none;
+  color: inherit;
+  border: none;
+  font: inherit;
+  outline: inherit;
+  font-size: var(--topbar-button-font-size);
+  margin-right: var(--base-spacing);
 }
 
 .Topbar__logo {
@@ -75,6 +111,7 @@
 .Topbar__title {
   font-size: var(--topbar-title-font-size);
   font-weight: bold;
+  margin-right: var(--double-base-spacing);
 }
 
 .Content {

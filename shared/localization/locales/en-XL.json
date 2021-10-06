@@ -26,6 +26,9 @@
   "flow-report/src/i18n/ui-strings.js | ratingPass": {
     "message": "Ĝóôd́"
   },
+  "flow-report/src/i18n/ui-strings.js | save": {
+    "message": "Ŝáv̂é"
+  },
   "flow-report/src/i18n/ui-strings.js | snapshotDescription": {
     "message": "Ĉáp̂t́ûŕêd́ ŝt́ât́ê óf̂ ṕâǵê"
   },

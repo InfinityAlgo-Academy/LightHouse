@@ -12,7 +12,7 @@
 import idbKeyval from 'idb-keyval';
 
 import {FirebaseAuth} from './firebase-auth.js';
-import {getFilenamePrefix} from '../../../report/generator/file-namer.js';
+import {getLhrFilenamePrefix} from '../../../report/generator/file-namer.js';
 
 /**
  * Wrapper around the GitHub API for reading/writing gists.
@@ -46,7 +46,7 @@ export class GithubApi {
 
     try {
       const accessToken = await this._auth.getAccessToken();
-      const filename = getFilenamePrefix({
+      const filename = getLhrFilenamePrefix({
         finalUrl: jsonFile.finalUrl,
         fetchTime: jsonFile.fetchTime,
       });
