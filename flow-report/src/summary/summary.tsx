@@ -17,6 +17,8 @@ const DISPLAYED_CATEGORIES = ['performance', 'accessibility', 'best-practices', 
 const THUMBNAIL_WIDTH = 50;
 
 const SummaryNavigationHeader: FunctionComponent<{lhr: LH.Result}> = ({lhr}) => {
+  const strings = useUIStrings();
+
   return (
     <div className="SummaryNavigationHeader" data-testid="SummaryNavigationHeader">
       <FlowSegment/>
@@ -24,16 +26,16 @@ const SummaryNavigationHeader: FunctionComponent<{lhr: LH.Result}> = ({lhr}) => 
         <a rel="noopener" target="_blank" href={lhr.finalUrl}>{lhr.finalUrl}</a>
       </div>
       <div className="SummaryNavigationHeader__category">
-        {lhr.categories['performance'].title}
+        {strings.categoryPerformance}
       </div>
       <div className="SummaryNavigationHeader__category">
-        {lhr.categories['accessibility'].title}
+        {strings.categoryAccessibility}
       </div>
       <div className="SummaryNavigationHeader__category">
-        {lhr.categories['best-practices'].title}
+        {strings.categoryBestPractices}
       </div>
       <div className="SummaryNavigationHeader__category">
-        {lhr.categories['seo'].title}
+        {strings.categorySeo}
       </div>
     </div>
   );

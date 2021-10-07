@@ -17,6 +17,7 @@
   --header-margin: minmax(0px, calc(var(--base-spacing) * 4));
   --half-base-spacing: calc(var(--base-spacing) / 2);
   --min-text-width: 20ch;
+  --dialog-border-color: var(--color-gray-700);
   --separator-color: var(--color-gray-300);
   --sidebar-flow-step-navigation-font-size: 14px;
   --sidebar-selected-bg-color: #DDEEFF;
@@ -30,6 +31,7 @@
   --topbar-button-font-size: 14px;
   --topbar-button-size: 45px;
   --topbar-title-font-size: 14px;
+  --dialog-title-font-size: 20px;
 }
 
 .App {
@@ -74,6 +76,8 @@
 }
 
 .Topbar {
+  position: relative;
+  padding-right: var(--base-spacing);
   grid-area: topbar;
   display: flex;
   align-items: center;
@@ -556,4 +560,89 @@
   text-align: center;
   font-size: var(--header-current-description-font-size);
   font-weight: normal;
+}
+
+.HelpDialog {
+  position: absolute;
+  top: 100%;
+  right: var(--base-spacing);
+  z-index: 100;
+  max-width: 720px;
+
+  background: var(--color-white);
+  color: var(--color-gray-800);
+  border-radius: 3px;
+  border: 1px solid var(--dialog-border-color);
+  box-shadow: 0px 4px 12px var(--summary-tooltip-box-shadow-color);
+
+  padding: var(--base-spacing) calc(var(--base-spacing) * 1.5);
+}
+
+.HelpDialog__title {
+  display: flex;
+  align-items: center;
+
+  font-size: var(--dialog-title-font-size);
+  font-weight: bold;
+
+  margin-bottom: calc(var(--base-spacing) * 2);
+}
+
+.HelpDialog__close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  line-height: 0;
+}
+
+.HelpDialog__columns {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: repeat(4, auto);
+  grid-template-columns: repeat(3, 1fr);
+  grid-column-gap: var(--base-spacing);
+}
+
+.HelpDialogColumn {
+  display: contents;
+}
+
+.HelpDialogColumn__header-title {
+  font-size: var(--category-summary-font-size);
+  font-weight: bold;
+}
+
+.HelpDialogColumn__legend-label {
+  color: var(--color-blue-A700);
+  font-weight: bold;
+}
+
+.HelpDialogColumn ul {
+  padding-left: var(--base-spacing);
+}
+
+.HelpDialogColumn__use-cases p,
+.HelpDialogColumn__categories p {
+  font-weight: bold;
+  color: var(--color-gray-700);
+}
+
+.HelpDialogColumnTimeline {
+  display: flex;
+  align-items: center;
+
+  height: var(--double-base-spacing);
+  color: var(--color-blue-A700);
+  margin-right: calc(var(--base-spacing) * -1);
+}
+
+.HelpDialogColumn:last-child .HelpDialogColumnTimeline {
+  margin-right: 0;
+}
+
+.HelpDialogColumnTimeline__line {
+  height: 2px;
+  flex-grow: 1;
+
+  background: var(--color-blue-A700);
 }

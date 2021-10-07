@@ -6,7 +6,7 @@
 
 import {jest} from '@jest/globals';
 import {FunctionComponent} from 'preact';
-import {render} from '@testing-library/preact';
+import {act, render} from '@testing-library/preact';
 
 import {Topbar} from '../src/topbar';
 import {FlowResultContext} from '../src/util';
@@ -52,4 +52,17 @@ it('save button opens save dialog for HTML file', async () => {
     expect.any(Blob),
     'User-flow_2021-09-14_22-24-22'
   );
+});
+
+it('toggles help dialog', async () => {
+  const root = render(<Topbar onMenuClick={() => {}}/>, {wrapper});
+
+  expect(root.queryByText(/Use Navigation reports to/)).toBeFalsy();
+  const helpButton = root.getByText('Understanding Flows');
+
+  await act(() => helpButton.click());
+  expect(root.getByText(/Use Navigation reports to/)).toBeTruthy();
+
+  await act(() => helpButton.click());
+  expect(root.queryByText(/Use Navigation reports to/)).toBeFalsy();
 });

@@ -2,14 +2,71 @@
   "flow-report/src/i18n/ui-strings.js | allReports": {
     "message": "Âĺl̂ Ŕêṕôŕt̂ś"
   },
+  "flow-report/src/i18n/ui-strings.js | categories": {
+    "message": "Ĉát̂éĝór̂íêś"
+  },
+  "flow-report/src/i18n/ui-strings.js | categoryAccessibility": {
+    "message": "Âćĉéŝśîb́îĺît́ŷ"
+  },
+  "flow-report/src/i18n/ui-strings.js | categoryBestPractices": {
+    "message": "B̂éŝt́ P̂ŕâćt̂íĉéŝ"
+  },
+  "flow-report/src/i18n/ui-strings.js | categoryPerformance": {
+    "message": "P̂ér̂f́ôŕm̂án̂ćê"
+  },
+  "flow-report/src/i18n/ui-strings.js | categoryProgressiveWebApp": {
+    "message": "P̂ŕôǵr̂éŝśîv́ê Ẃêb́ Âṕp̂"
+  },
+  "flow-report/src/i18n/ui-strings.js | categorySeo": {
+    "message": "ŜÉÔ"
+  },
   "flow-report/src/i18n/ui-strings.js | desktop": {
     "message": "D̂éŝḱt̂óp̂"
+  },
+  "flow-report/src/i18n/ui-strings.js | helpDialogTitle": {
+    "message": "Ûńd̂ér̂śt̂án̂d́îńĝ t́ĥé L̂íĝh́t̂h́ôúŝé F̂ĺôẃ R̂ép̂ór̂t́"
+  },
+  "flow-report/src/i18n/ui-strings.js | helpLabel": {
+    "message": "Ûńd̂ér̂śt̂án̂d́îńĝ F́l̂óŵś"
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionNavigation": {
+    "message": "Ûśê Ńâv́îǵât́îón̂ ŕêṕôŕt̂ś t̂ó..."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionSnapshot": {
+    "message": "Ûśê Śn̂áp̂śĥót̂ ŕêṕôŕt̂ś t̂ó..."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionTimespan": {
+    "message": "Ûśê T́îḿêśp̂án̂ ŕêṕôŕt̂ś t̂ó..."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation1": {
+    "message": "Ôb́t̂áîń â Ĺîǵĥt́ĥóûśê Ṕêŕf̂ór̂ḿâńĉé ŝćôŕê."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation2": {
+    "message": "M̂éâśûŕê ṕâǵê ĺôád̂ Ṕêŕf̂ór̂ḿâńĉé m̂ét̂ŕîćŝ śûćĥ áŝ Ĺâŕĝéŝt́ Ĉón̂t́êńt̂f́ûĺ P̂áîńt̂ án̂d́ Ŝṕêéd̂ Ín̂d́êx́."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation3": {
+    "message": "Âśŝéŝś P̂ŕôǵr̂éŝśîv́ê Ẃêb́ Âṕp̂ ćâṕâb́îĺît́îéŝ."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseSnapshot1": {
+    "message": "F̂ín̂d́ âćĉéŝśîb́îĺît́ŷ íŝśûéŝ ín̂ śîńĝĺê ṕâǵê áp̂ṕl̂íĉát̂íôńŝ ór̂ ćôḿp̂ĺêx́ f̂ór̂ḿŝ."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseSnapshot2": {
+    "message": "Êv́âĺûát̂é b̂éŝt́ p̂ŕâćt̂íĉéŝ óf̂ ḿêńûś âńd̂ ÚÎ él̂ém̂én̂t́ŝ h́îd́d̂én̂ b́êh́îńd̂ ín̂t́êŕâćt̂íôń."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan1": {
+    "message": "M̂éâśûŕê ĺâýôút̂ śĥíf̂t́ŝ án̂d́ Ĵáv̂áŜćr̂íp̂t́ êx́êćût́îón̂ t́îḿê ón̂ á ŝér̂íêś ôf́ îńt̂ér̂áĉt́îón̂ś."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan2": {
+    "message": "D̂íŝćôv́êŕ p̂ér̂f́ôŕm̂án̂ćê óp̂ṕôŕt̂ún̂ít̂íêś t̂ó îḿp̂ŕôv́ê t́ĥé êx́p̂ér̂íêńĉé f̂ór̂ ĺôńĝ-ĺîv́êd́ p̂áĝéŝ án̂d́ ŝín̂ǵl̂é-p̂áĝé âṕp̂ĺîćât́îón̂ś."
   },
   "flow-report/src/i18n/ui-strings.js | mobile": {
     "message": "M̂ób̂íl̂é"
   },
   "flow-report/src/i18n/ui-strings.js | navigationDescription": {
     "message": "P̂áĝé l̂óâd́"
+  },
+  "flow-report/src/i18n/ui-strings.js | navigationLongDescription": {
+    "message": "N̂áv̂íĝát̂íôń r̂ép̂ór̂t́ŝ án̂ál̂ýẑé â śîńĝĺê ṕâǵê ĺôád̂, éx̂áĉt́l̂ý l̂ík̂é t̂h́ê ór̂íĝín̂ál̂ Ĺîǵĥt́ĥóûśê ŕêṕôŕt̂ś."
   },
   "flow-report/src/i18n/ui-strings.js | navigationReport": {
     "message": "N̂áv̂íĝát̂íôń r̂ép̂ór̂t́"
@@ -32,6 +89,9 @@
   "flow-report/src/i18n/ui-strings.js | snapshotDescription": {
     "message": "Ĉáp̂t́ûŕêd́ ŝt́ât́ê óf̂ ṕâǵê"
   },
+  "flow-report/src/i18n/ui-strings.js | snapshotLongDescription": {
+    "message": "Ŝńâṕŝh́ôt́ r̂ép̂ór̂t́ŝ án̂ál̂ýẑé t̂h́ê ṕâǵê ín̂ á p̂ár̂t́îćûĺâŕ ŝt́ât́ê, t́ŷṕîćâĺl̂ý âf́t̂ér̂ úŝér̂ ín̂t́êŕâćt̂íôńŝ."
+  },
   "flow-report/src/i18n/ui-strings.js | snapshotReport": {
     "message": "Ŝńâṕŝh́ôt́ r̂ép̂ór̂t́"
   },
@@ -40,6 +100,9 @@
   },
   "flow-report/src/i18n/ui-strings.js | timespanDescription": {
     "message": "Ûśêŕ îńt̂ér̂áĉt́îón̂ś"
+  },
+  "flow-report/src/i18n/ui-strings.js | timespanLongDescription": {
+    "message": "T̂ím̂éŝṕâń r̂ép̂ór̂t́ŝ án̂ál̂ýẑé âń âŕb̂ít̂ŕâŕŷ ṕêŕîód̂ óf̂ t́îḿê, t́ŷṕîćâĺl̂ý ĉón̂t́âín̂ín̂ǵ ûśêŕ îńt̂ér̂áĉt́îón̂ś."
   },
   "flow-report/src/i18n/ui-strings.js | timespanReport": {
     "message": "T̂ím̂éŝṕâń r̂ép̂ór̂t́"
