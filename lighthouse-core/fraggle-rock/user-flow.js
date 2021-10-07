@@ -11,8 +11,8 @@ const {startTimespan} = require('./gather/timespan-runner.js');
 const {navigation} = require('./gather/navigation-runner.js');
 
 /** @typedef {Parameters<snapshot>[0]} FrOptions */
-/** @typedef {Omit<FrOptions, 'page'>} UserFlowOptions */
-/** @typedef {UserFlowOptions & {stepName?: string}} StepOptions */
+/** @typedef {Omit<FrOptions, 'page'> & {name?: string}} UserFlowOptions */
+/** @typedef {Omit<FrOptions, 'page'> & {stepName?: string}} StepOptions */
 
 class UserFlow {
   /**
@@ -22,6 +22,8 @@ class UserFlow {
   constructor(page, options) {
     /** @type {FrOptions} */
     this.options = {page, ...options};
+    /** @type {string|undefined} */
+    this.name = options && options.name;
     /** @type {LH.FlowResult.Step[]} */
     this.steps = [];
   }
@@ -144,7 +146,10 @@ class UserFlow {
    * @return {LH.FlowResult}
    */
   getFlowResult() {
-    return {steps: this.steps};
+    if (!this.steps.length) throw Error('Need at least one step before getting the flow result');
+    const url = new URL(this.steps[0].lhr.finalUrl);
+    const name = this.name || `User flow (${url.hostname})`;
+    return {steps: this.steps, name};
   }
 
   /**

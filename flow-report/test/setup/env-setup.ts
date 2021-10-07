@@ -17,6 +17,7 @@ export function setupJsDom() {
   global.window = window as any;
   global.document = window.document;
   global.location = window.location;
+  global.Blob = window.Blob;
 
   // Function not implemented in JSDOM.
   window.Element.prototype.scrollIntoView = jest.fn();

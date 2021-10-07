@@ -60,6 +60,7 @@ describe('SummaryFlowStep', () => {
 
     const links = root.getAllByRole('link') as HTMLAnchorElement[];
     expect(links.map(a => a.href)).toEqual([
+      'https://www.mikescerealshack.co/',
       'file:///Users/example/report.html/#index=0',
       'file:///Users/example/report.html/#index=0&anchor=performance',
       'file:///Users/example/report.html/#index=0&anchor=accessibility',

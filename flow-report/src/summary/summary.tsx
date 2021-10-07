@@ -20,7 +20,9 @@ const SummaryNavigationHeader: FunctionComponent<{lhr: LH.Result}> = ({lhr}) => 
   return (
     <div className="SummaryNavigationHeader" data-testid="SummaryNavigationHeader">
       <FlowSegment/>
-      <div className="SummaryNavigationHeader__url">{lhr.finalUrl}</div>
+      <div className="SummaryNavigationHeader__url">
+        <a rel="noopener" target="_blank" href={lhr.finalUrl}>{lhr.finalUrl}</a>
+      </div>
       <div className="SummaryNavigationHeader__category">
         {lhr.categories['performance'].title}
       </div>

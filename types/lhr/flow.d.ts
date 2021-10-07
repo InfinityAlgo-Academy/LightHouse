@@ -24,6 +24,8 @@ declare module FlowResult {
 interface FlowResult {
   /** Ordered list of flow steps, each corresponding to a navigation, timespan, or snapshot. */
   steps: FlowResult.Step[];
+  /** Name given to this user flow. */
+  name: string;
 }
 
 export default FlowResult;

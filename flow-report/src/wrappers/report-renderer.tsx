@@ -19,7 +19,7 @@ interface ReportRendererGlobals {
    reportRenderer: ReportRenderer,
 }
 
-const ReportRendererContext = createContext<ReportRendererGlobals|undefined>(undefined);
+export const ReportRendererContext = createContext<ReportRendererGlobals|undefined>(undefined);
 
 export function useReportRenderer() {
   const globals = useContext(ReportRendererContext);
