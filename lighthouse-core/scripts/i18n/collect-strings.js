@@ -558,7 +558,7 @@ async function collectAllStringsInDir(dir) {
       // No UIStrings found in the file text or exports, so move to the next.
       if (!exportedUIStrings) continue;
 
-      throw new Error('UIStrings exported but no definition found');
+      throw new Error('UIStrings exported but no definition found: ' + relativeToRootPath);
     }
 
     if (!exportedUIStrings) {

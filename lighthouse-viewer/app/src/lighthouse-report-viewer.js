@@ -229,9 +229,9 @@ export class LighthouseReportViewer {
       renderer.renderReport(json, container);
 
       // Only give gist-saving callback if current report isn't from a gist.
-      let saveCallback = null;
+      let saveGistCallback;
       if (!this._reportIsFromGist) {
-        saveCallback = this._onSaveJson;
+        saveGistCallback = this._onSaveJson;
       }
 
       // Only clear query string if current report isn't from a gist or PSI.
@@ -239,7 +239,13 @@ export class LighthouseReportViewer {
         history.pushState({}, '', LighthouseReportViewer.APP_URL);
       }
 
-      const features = new ViewerUIFeatures(dom, saveCallback);
+      const features = new ViewerUIFeatures(dom, {
+        saveGist: saveGistCallback,
+        /** @param {LH.Result} newLhr */
+        refresh: newLhr => {
+          this._replaceReportHtml(newLhr);
+        },
+      });
       features.initFeatures(json);
     } catch (e) {
       logger.error(`Error rendering report: ${e.message}`);

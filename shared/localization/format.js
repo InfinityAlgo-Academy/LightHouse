@@ -16,10 +16,17 @@ const LOCALE_MESSAGES = require('./locales.js');
 /**
  * The locale tags for the localized messages available to Lighthouse on disk.
  * When bundled, these will be inlined by brfs.
+ * These locales are considered the "canonical" locales. We support other locales which
+ * are simply aliases to one of these. ex: es-AR (alias) -> es-419 (canonical)
  */
-const DEFAULT_LOCALES = fs.readdirSync(__dirname + '/locales/')
-  .filter(basename => basename.endsWith('.json') && !basename.endsWith('.ctc.json'))
-  .map(locale => locale.replace('.json', ''));
+let CANONICAL_LOCALES = ['__availableLocales__'];
+// TODO: need brfs in gh-pages-app. For now, above is replaced, see build-i18n.module.js
+if (fs.readdirSync) {
+  CANONICAL_LOCALES = fs.readdirSync(__dirname + '/locales/')
+    .filter(basename => basename.endsWith('.json') && !basename.endsWith('.ctc.json'))
+    .map(locale => locale.replace('.json', ''))
+    .sort();
+}
 
 /** @typedef {import('intl-messageformat-parser').Element} MessageElement */
 /** @typedef {import('intl-messageformat-parser').ArgumentElement} ArgumentElement */
@@ -355,20 +362,26 @@ function hasLocale(requestedLocale) {
 }
 
 /**
+ * Returns a list of canonical locales (each of which may have aliases, but those would
+ * only show in getAvailableLocales)
+ * TODO: create a CanonicalLocale type
+ * @return {Array<string>}
+ */
+function getCanonicalLocales() {
+  return CANONICAL_LOCALES;
+}
+
+/**
  * Returns a list of available locales.
- *  - if full build, this includes all default locales, aliases, and any locale added
+ *  - if full build, this includes all canonical locales, aliases, and any locale added
  *      via `registerLocaleData`.
- *  - if bundled and locale messages have been stripped, this includes default locales
- *      (perhaps available in a separate bundle) and any locales from `registerLocaleData`.
+ *  - if bundled and locale messages have been stripped (locales.js shimmed), this includes no
+ *      locales (perhaps available in a separate bundle), and perhaps any locales
+ *      from `registerLocaleData`.
  * @return {Array<LH.Locale>}
  */
 function getAvailableLocales() {
-  // Take union of DEFAULT_LOCALES and keys of LOCALE_MESSAGES. This means that
-  // the default locales will always be included (even if trimmed by a bundler)
-  // as well as those added by `registerLocaleData`.
-  const allLocales = new Set([...DEFAULT_LOCALES, ...Object.keys(LOCALE_MESSAGES)]);
-  // Note: cast because this is in theory correct, but not tested at runtime.
-  return /** @type {Array<LH.Locale>} */ ([...allLocales].sort());
+  return /** @type {Array<LH.Locale>} */ (Object.keys(LOCALE_MESSAGES).sort());
 }
 
 /**
@@ -405,4 +418,5 @@ module.exports = {
   _formatMessage,
   getIcuMessageIdParts,
   getAvailableLocales,
+  getCanonicalLocales,
 };

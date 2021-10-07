@@ -64,7 +64,7 @@ async function run() {
       {path: 'src/main.js', rollup: true},
     ],
     assets: [
-      {path: 'images/**/*'},
+      {path: 'images/**/*', destDir: 'images'},
       {path: 'debug.json'},
     ],
   });

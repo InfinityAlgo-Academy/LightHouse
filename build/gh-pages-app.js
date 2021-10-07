@@ -37,7 +37,7 @@ const license = `/*
 /**
  * Literal string (representing JS, CSS, etc...), or an object with a path, which would
  * be interpreted relative to opts.appDir and be glob-able.
- * @typedef {{path: string, rollup?: boolean} | string} Source
+ * @typedef {{path: string, rollup?: boolean, rollupPlugins?: rollup.Plugin[]} | string} Source
  */
 
 /**
@@ -48,7 +48,7 @@ const license = `/*
  * @property {Record<string, string>=} htmlReplacements Needle -> Replacement mapping, used on html source.
  * @property {Source[]} stylesheets
  * @property {Source[]} javascripts
- * @property {Array<{path: string}>} assets List of paths to copy. Glob-able, maintains directory structure.
+ * @property {Array<{path: string, destDir?: string, rename?: string}>} assets List of paths to copy. Glob-able, maintains directory structure and copies into appDir. Provide a `destDir` and `rename` to state explicitly how to save in the app dir folder.
  */
 
 /**
@@ -94,10 +94,13 @@ class GhPagesApp {
     const bundledJs = await this._compileJs();
     safeWriteFile(`${this.distDir}/src/bundled.js`, bundledJs);
 
-    await cpy(this.opts.assets.map(asset => asset.path), this.distDir, {
-      cwd: this.opts.appDir,
-      parents: true,
-    });
+    for (const {path, destDir, rename} of this.opts.assets) {
+      const dir = destDir ? `${this.distDir}/${destDir}` : this.distDir;
+      await cpy(path, dir, {
+        cwd: this.opts.appDir,
+        rename,
+      });
+    }
   }
 
   /**
@@ -127,7 +130,10 @@ class GhPagesApp {
       if (typeof source === 'string') {
         result.push(source);
       } else if (source.rollup) {
-        result.push(await this._rollupSource(path.resolve(this.opts.appDir, source.path)));
+        result.push(await this._rollupSource(
+          path.resolve(this.opts.appDir, source.path),
+          source.rollupPlugins)
+        );
       } else {
         result.push(...loadFiles(path.resolve(this.opts.appDir, source.path)));
       }
@@ -138,10 +144,11 @@ class GhPagesApp {
 
   /**
    * @param {string} input
+   * @param {rollup.Plugin[]=} plugins
    * @return {Promise<string>}
    */
-  async _rollupSource(input) {
-    const plugins = [
+  async _rollupSource(input, plugins) {
+    plugins = plugins || [
       rollupPlugins.nodeResolve(),
       rollupPlugins.commonjs(),
     ];
@@ -150,7 +157,16 @@ class GhPagesApp {
       input,
       plugins,
     });
-    const {output} = await bundle.generate({format: 'iife'});
+    const {output} = await bundle.generate({format: 'esm'});
+
+    // Return the code from the main chunk, and save the rest to the src directory.
+    for (let i = 1; i < output.length; i++) {
+      if (output[i].type === 'chunk') {
+        // @ts-expect-error This is a chunk, not an asset.
+        const code = output[i].code;
+        safeWriteFile(`${this.distDir}/src/${output[i].fileName}`, code);
+      }
+    }
     return output[0].code;
   }
 

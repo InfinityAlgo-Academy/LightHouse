@@ -16,6 +16,7 @@ import puppeteer from 'puppeteer';
 import {server} from '../../lighthouse-cli/test/fixtures/static-server.js';
 import defaultConfig from '../../lighthouse-core/config/default-config.js';
 import {LH_ROOT} from '../../root.js';
+import {getCanonicalLocales} from '../../shared/localization/format.js';
 
 const portNumber = 10200;
 const viewerUrl = `http://localhost:${portNumber}/dist/gh-pages/viewer/index.html`;
@@ -146,6 +147,36 @@ describe('Lighthouse Viewer', () => {
       const auditErrors = await viewerPage.$$eval(errorSelectors, getErrors, selectors);
       const errors = auditErrors.filter(item => item.explanation.includes('Audit error:'));
       assert.deepStrictEqual(errors, [], 'Audit errors found within the report');
+    });
+
+    it('should support swapping locales', async () => {
+      function queryLocaleState() {
+        return viewerPage.$$eval('.lh-locale-selector', (elems) => {
+          const selectEl = elems[0];
+          const optionEls = [...selectEl.querySelectorAll('option')];
+          return {
+            selectedValue: selectEl.value,
+            options: optionEls.map(el => {
+              return el.value;
+            }),
+            sampleString: document.querySelector('.lh-report-icon--copy').textContent,
+          };
+        });
+      }
+
+      const resultBeforeSwap = await queryLocaleState();
+      expect(resultBeforeSwap.selectedValue).toBe('en-US');
+      expect(resultBeforeSwap.options).toEqual(getCanonicalLocales());
+      expect(resultBeforeSwap.sampleString).toBe('Copy JSON');
+
+      await viewerPage.select('.lh-locale-selector', 'es');
+      await viewerPage.waitForFunction(() => {
+        return document.querySelector('.lh-report-icon--copy').textContent === 'Copiar JSON';
+      });
+
+      const resultAfterSwap = await queryLocaleState();
+      expect(resultAfterSwap.selectedValue).toBe('es');
+      expect(resultAfterSwap.sampleString).toBe('Copiar JSON');
     });
   });
 
