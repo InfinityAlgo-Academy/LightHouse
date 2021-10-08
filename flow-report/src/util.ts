@@ -43,11 +43,26 @@ export function getScreenDimensions(reportResult: LH.ReportResult) {
 export function getScreenshot(reportResult: LH.ReportResult) {
   const fullPageScreenshotAudit = reportResult.audits['full-page-screenshot'];
   const fullPageScreenshot =
+    fullPageScreenshotAudit &&
     fullPageScreenshotAudit.details &&
     fullPageScreenshotAudit.details.type === 'full-page-screenshot' &&
     fullPageScreenshotAudit.details.screenshot.data;
 
   return fullPageScreenshot || null;
+}
+
+export function getFilmstripFrames(
+  reportResult: LH.ReportResult
+): Array<{data: string}> | undefined {
+  const filmstripAudit = reportResult.audits['screenshot-thumbnails'];
+  if (!filmstripAudit) return undefined;
+
+  const frameItems =
+    filmstripAudit.details &&
+    filmstripAudit.details.type === 'filmstrip' &&
+    filmstripAudit.details.items;
+
+  return frameItems || undefined;
 }
 
 export function getModeDescription(mode: LH.Result.GatherMode, strings: UIStringsType) {
