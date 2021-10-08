@@ -33,6 +33,8 @@ export class SwapLocaleFeature {
       throw new Error('missing icuMessagePaths');
     }
 
+    this._dom.find('.lh-tools-locale', this._dom.document()).classList.remove('lh-hidden');
+
     const currentLocale = this._reportUIFeatures.json.configSettings.locale;
 
     const containerEl = this._dom.find('.lh-tools-locale__selector-wrapper', this._dom.document());

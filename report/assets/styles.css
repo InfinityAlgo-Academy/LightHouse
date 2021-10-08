@@ -337,6 +337,10 @@
   cursor: pointer;
 }
 
+.lh-hidden {
+  display: none !important;
+}
+
 .lh-container {
   /*
   Text wrapping in the report is so much FUN!
