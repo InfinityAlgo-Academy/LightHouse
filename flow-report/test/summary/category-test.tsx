@@ -28,11 +28,12 @@ beforeEach(() => {
 describe('SummaryTooltip', () => {
   it('renders tooltip with rating', async () => {
     const category: any = {
+      id: 'performance',
       score: 1,
       auditRefs: [
-        {result: {score: 1, scoreDisplayMode: 'binary'}, weight: 1},
-        {result: {score: 1, scoreDisplayMode: 'binary'}, weight: 1},
-        {result: {score: 0, scoreDisplayMode: 'binary'}, weight: 1},
+        {result: {score: 1, scoreDisplayMode: 'binary'}, weight: 1, group: 'diagnostics'},
+        {result: {score: 1, scoreDisplayMode: 'binary'}, weight: 1, group: 'diagnostics'},
+        {result: {score: 0, scoreDisplayMode: 'binary'}, weight: 1, group: 'diagnostics'},
       ],
     };
 
@@ -43,16 +44,17 @@ describe('SummaryTooltip', () => {
 
     expect(root.getByText('Average')).toBeTruthy();
     expect(() => root.getByText(/^[0-9]+$/)).toThrow();
-    expect(root.getByText('2 audits passed / 3 audits run')).toBeTruthy();
+    expect(root.getByText('2 audits passed / 3 passable audits')).toBeTruthy();
   });
 
   it('renders tooltip without rating', async () => {
     const category: any = {
+      id: 'performance',
       score: 1,
       auditRefs: [
-        {result: {score: 1, scoreDisplayMode: 'binary'}, weight: 0},
-        {result: {score: 1, scoreDisplayMode: 'binary'}, weight: 0},
-        {result: {score: 0, scoreDisplayMode: 'binary'}, weight: 0},
+        {result: {score: 1, scoreDisplayMode: 'binary'}, weight: 0, group: 'diagnostics'},
+        {result: {score: 1, scoreDisplayMode: 'binary'}, weight: 0, group: 'diagnostics'},
+        {result: {score: 0, scoreDisplayMode: 'binary'}, weight: 0, group: 'diagnostics'},
       ],
     };
 
@@ -63,16 +65,17 @@ describe('SummaryTooltip', () => {
 
     expect(() => root.getByText(/^(Average|Good|Poor)$/)).toThrow();
     expect(() => root.getByText(/^[0-9]+$/)).toThrow();
-    expect(root.getByText('2 audits passed / 3 audits run')).toBeTruthy();
+    expect(root.getByText('2 audits passed / 3 passable audits')).toBeTruthy();
   });
 
   it('renders scored category tooltip with score', async () => {
     const category: any = {
+      id: 'performance',
       score: 1,
       auditRefs: [
-        {result: {score: 1, scoreDisplayMode: 'binary'}, weight: 1},
-        {result: {score: 1, scoreDisplayMode: 'binary'}, weight: 1},
-        {result: {score: 0, scoreDisplayMode: 'binary'}, weight: 1},
+        {result: {score: 1, scoreDisplayMode: 'binary'}, weight: 1, group: 'diagnostics'},
+        {result: {score: 1, scoreDisplayMode: 'binary'}, weight: 1, group: 'diagnostics'},
+        {result: {score: 0, scoreDisplayMode: 'binary'}, weight: 1, group: 'diagnostics'},
       ],
     };
 
@@ -83,6 +86,28 @@ describe('SummaryTooltip', () => {
 
     expect(root.getByText('Good')).toBeTruthy();
     expect(root.getByText('100')).toBeTruthy();
-    expect(root.getByText('2 audits passed / 3 audits run')).toBeTruthy();
+    expect(root.getByText('2 audits passed / 3 passable audits')).toBeTruthy();
+  });
+
+  it('renders informative audit count if any', async () => {
+    const category: any = {
+      id: 'performance',
+      score: 1,
+      auditRefs: [
+        {result: {score: 1, scoreDisplayMode: 'binary'}, weight: 1, group: 'diagnostics'},
+        {result: {score: 1, scoreDisplayMode: 'binary'}, weight: 1, group: 'diagnostics'},
+        {result: {score: 0, scoreDisplayMode: 'informative'}, weight: 1, group: 'diagnostics'},
+      ],
+    };
+
+    const root = render(
+      <SummaryTooltip category={category} gatherMode="navigation"/>,
+      {wrapper}
+    );
+
+    expect(root.getByText('Good')).toBeTruthy();
+    expect(root.getByText('100')).toBeTruthy();
+    expect(root.getByText('2 audits passed / 2 passable audits')).toBeTruthy();
+    expect(root.getByText('1 informative audits')).toBeTruthy();
   });
 });

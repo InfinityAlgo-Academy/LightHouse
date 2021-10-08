@@ -35,11 +35,16 @@ export const SummaryTooltip: FunctionComponent<{
   gatherMode: LH.Result.GatherMode
 }> = ({category, gatherMode}) => {
   const strings = useUIStrings();
-  const {numPassed, numAudits, totalWeight} = Util.calculateCategoryFraction(category);
+  const {
+    numPassed,
+    numPassableAudits,
+    numInformative,
+    totalWeight,
+  } = Util.calculateCategoryFraction(category);
 
   const displayAsFraction = Util.shouldDisplayAsFraction(gatherMode);
   const rating = displayAsFraction ?
-    Util.calculateRating(numPassed / numAudits) :
+    Util.calculateRating(numPassed / numPassableAudits) :
     Util.calculateRating(category.score);
 
   return (
@@ -64,8 +69,19 @@ export const SummaryTooltip: FunctionComponent<{
         }
       </div>
       <div className="SummaryTooltip__fraction">
-        {`${numPassed} audits passed / ${numAudits} audits run`}
+        {
+          // TODO(FLOW-I18N): Placeholder format.
+          `${numPassed} audits passed / ${numPassableAudits} passable audits`
+        }
       </div>
+      {
+        // TODO(FLOW-I18N): Placeholder format.
+        numInformative ?
+          <div className="SummaryTooltip__informative">
+            {`${numInformative} informative audits`}
+          </div> :
+          null
+      }
     </div>
   );
 };

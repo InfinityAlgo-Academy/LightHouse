@@ -129,6 +129,7 @@ export const SummaryHeader: FunctionComponent = () => {
     }
   }
 
+  // TODO(FLOW-I18N): Placeholder format.
   const subtitleCounts = [];
   if (numNavigation) subtitleCounts.push(`${numNavigation} navigation reports`);
   if (numTimespan) subtitleCounts.push(`${numTimespan} timespan reports`);
