@@ -314,12 +314,18 @@ const expectations = {
       'deprecations': {
         score: 0,
         details: {
-          items: {
-            // <M96 - Application Cache API manifest
-            // * - window.webkitStorageInfo
-            // * - Synchronous XMLHttpRequest
-            length: '>=2',
-          },
+          items: [
+            {
+              value: /Application Cache API manifest/,
+              _maxChromiumMilestone: 94,
+            },
+            {
+              value: /'window.webkitStorageInfo' is deprecated/,
+            },
+            {
+              value: /Synchronous XMLHttpRequest on the main thread is deprecated/,
+            },
+          ],
         },
       },
       'password-inputs-can-be-pasted-into': {
