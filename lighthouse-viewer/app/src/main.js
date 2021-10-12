@@ -10,7 +10,7 @@ import {LighthouseReportViewer} from './lighthouse-report-viewer.js';
 
 // eslint-disable-next-line no-unused-vars
 function main() {
-  const logEl = document.querySelector('#lh-log');
+  const logEl = document.querySelector('div#lh-log');
   if (!logEl) {
     throw new Error('logger element not found');
   }

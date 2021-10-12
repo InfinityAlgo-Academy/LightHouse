@@ -19,7 +19,7 @@ import {Logger} from '../../../report/renderer/logger.js';
 const DUPLICATED_MODULES_IGNORE_THRESHOLD = 1024;
 const DUPLICATED_MODULES_IGNORE_ROOT_RATIO = 0.01;
 
-const logEl = document.querySelector('#lh-log');
+const logEl = document.querySelector('div#lh-log');
 if (!logEl) {
   throw new Error('logger element not found');
 }
