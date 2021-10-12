@@ -71,6 +71,6 @@ export class Logger {
    */
   hide() {
     this._id && clearTimeout(this._id);
-    this.el.classList.remove('show');
+    this.el.classList.remove('lh-show');
   }
 }
