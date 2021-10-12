@@ -166,11 +166,25 @@ export class ReportRenderer {
         {gatherMode: report.gatherMode}
       );
 
-      // For normal score gauges (not the fraction gauge), set the gauge href
-      // to link to the category.
-      const gaugeWrapperEl = /** @type {HTMLAnchorElement} */ (
-        categoryGauge.querySelector('a.lh-gauge__wrapper'));
-      if (gaugeWrapperEl) this._dom.safelySetHref(gaugeWrapperEl, `#${category.id}`);
+      const gaugeWrapperEl = this._dom.find('a.lh-gauge__wrapper, a.lh-fraction__wrapper',
+        categoryGauge);
+      if (gaugeWrapperEl) {
+        this._dom.safelySetHref(gaugeWrapperEl, `#${category.id}`);
+        // Handle navigation clicks by scrolling to target without changing the page's URL.
+        // Why? Some report embedding clients have their own routing and updating the location.hash
+        // can introduce problems. Others may have an unpredictable `<base>` URL which ensures
+        // navigation to `${baseURL}#categoryid` will be unintended.
+        gaugeWrapperEl.addEventListener('click', e => {
+          if (!gaugeWrapperEl.matches('[href^="#"]')) return;
+          const selector = gaugeWrapperEl.getAttribute('href');
+          const reportRoot = gaugeWrapperEl.closest('.lh-vars');
+          if (!selector || !reportRoot) return;
+          const destEl = this._dom.find(selector, reportRoot);
+          e.preventDefault();
+          destEl.scrollIntoView();
+        });
+      }
+
 
       if (Util.isPluginCategory(category.id)) {
         pluginGauges.push(categoryGauge);

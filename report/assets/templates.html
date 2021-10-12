@@ -165,7 +165,7 @@ limitations under the License.
     }
 
     .lh-sticky-header {
-      --gauge-circle-size: 36px;
+      --gauge-circle-size: var(--gauge-circle-size-sm);
       --plugin-badge-size: 18px;
       --plugin-icon-size: 75%;
       --gauge-wrapper-width: 60px;
@@ -660,7 +660,7 @@ limitations under the License.
     }
   </style>
 
-  <a href="#" class="lh-gauge__wrapper lh-gauge--pwa__wrapper">
+  <a class="lh-gauge__wrapper lh-gauge--pwa__wrapper">
     <svg viewBox="0 0 60 60" class="lh-gauge lh-gauge--pwa">
       <defs>
         <linearGradient id="lh-gauge--pwa__check-circle__gradient" x1="50%" y1="0%" x2="50%" y2="100%">

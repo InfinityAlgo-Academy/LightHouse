@@ -15,10 +15,8 @@ import {useReportRenderer} from './report-renderer';
  * e.g. <a href="#link"> -> <a href="#index=0&anchor=link">
  */
 export function convertChildAnchors(element: HTMLElement, index: number) {
-  const links = element.querySelectorAll('a') as NodeListOf<HTMLAnchorElement>;
+  const links = element.querySelectorAll('a[href]') as NodeListOf<HTMLAnchorElement>;
   for (const link of links) {
-    if (!link.href) continue;
-
     // Check if the link destination is in the report.
     const currentUrl = new URL(location.href);
     currentUrl.hash = '';

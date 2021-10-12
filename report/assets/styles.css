@@ -92,6 +92,7 @@
   --footer-padding-vertical: 16px;
   --gauge-circle-size-big: 112px;
   --gauge-circle-size: 80px;
+  --gauge-circle-size-sm: 36px;
   --gauge-label-font-size-big: 28px;
   --gauge-label-font-size: 20px;
   --gauge-label-line-height-big: 36px;
@@ -686,8 +687,8 @@
 
 .lh-metric__innerwrap {
   display: grid;
-  /** 
-   * Icon -- Metric Name 
+  /**
+   * Icon -- Metric Name
    *      -- Metric Value
    */
   grid-template-columns: calc(var(--score-icon-size) + var(--score-icon-margin-left) + var(--score-icon-margin-right)) 1fr;
@@ -731,7 +732,7 @@
 /* Change the grid to 3 columns for narrow viewport. */
 @media screen and (max-width: 535px) {
   .lh-metric__innerwrap {
-  /** 
+  /**
    * Icon -- Metric Name -- Metric Value
    */
     grid-template-columns: calc(var(--score-icon-size) + var(--score-icon-margin-left) + var(--score-icon-margin-right)) 2fr 1fr;
@@ -1409,6 +1410,10 @@
   padding: var(--category-padding);
   max-width: var(--report-width);
   margin: 0 auto;
+
+  --sticky-header-height: calc(var(--gauge-circle-size-sm) + var(--score-container-padding) * 2);
+  --topbar-plus-sticky-header: calc(var(--topbar-height) + var(--sticky-header-height));
+  scroll-margin-top: var(--topbar-plus-sticky-header);
 }
 
 .lh-category-wrapper {
@@ -1417,18 +1422,6 @@
 
 .lh-category-wrapper:first-of-type {
   border-top: 1px solid var(--color-gray-200);
-}
-
-/* section hash link jump should preserve fixed header
-   https://css-tricks.com/hash-tag-links-padding/
-*/
-.lh-category > .lh-permalink {
-  --sticky-header-height: calc(var(--gauge-circle-size) + var(--score-container-padding) * 2);
-  --topbar-plus-header: calc(var(--topbar-height) + var(--sticky-header-height));
-  margin-top: calc(var(--topbar-plus-header) * -1);
-  padding-bottom: var(--topbar-plus-header);
-  display: block;
-  visibility: hidden;
 }
 
 .lh-category-header {

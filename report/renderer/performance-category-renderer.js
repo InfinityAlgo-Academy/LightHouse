@@ -167,7 +167,7 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
       gaugeEl.appendChild(this.renderCategoryScore(category, groups, options));
       element.appendChild(gaugeEl);
     } else {
-      this.createPermalinkSpan(element, category.id);
+      element.id = category.id;
       element.appendChild(this.renderCategoryHeader(category, groups, options));
     }
 

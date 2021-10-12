@@ -57,11 +57,7 @@ describe('Lighthouse Viewer', () => {
   function getCategoryElementsIds() {
     return viewerPage.evaluate(
       () => {
-        const elems = Array.from(document.querySelectorAll(`.lh-category`));
-        return elems.map(el => {
-          const permalink = el.querySelector('.lh-permalink');
-          return permalink && permalink.id;
-        });
+        return Array.from(document.querySelectorAll(`.lh-category`)).map(el => el.id);
       });
   }
 
