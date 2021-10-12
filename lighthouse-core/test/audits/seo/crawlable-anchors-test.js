@@ -33,6 +33,9 @@ function runAudit({
       role,
       node,
     }],
+    URL: {
+      finalUrl: 'http://example.com',
+    },
   });
 
   return score;
@@ -54,6 +57,8 @@ describe('SEO: Crawlable anchors audit', () => {
     assert.equal(runAudit({
       rawHref: '?query=string',
     }), 1, 'relative link which specifies a query string');
+
+    assert.equal(runAudit({rawHref: 'ftp://'}), 0, 'invalid FTP links fails');
   });
 
   it('allows anchors which use a name attribute', () => {
@@ -71,27 +76,22 @@ describe('SEO: Crawlable anchors audit', () => {
   });
 
   it('handles anchor elements which use event listeners', () => {
-    const auditResultClickPresent = runAudit({
-      listeners: [{type: 'click'}],
-    });
-    assert.equal(auditResultClickPresent, 1, 'presence of a click handler is a pass');
-
-    const auditResultJavaScriptURI = runAudit({
-      rawHref: 'javascript:void(0)',
-      listeners: [{type: 'click'}],
-    });
-    const assertionMessage = 'hyperlink with a `javascript:` URI and a click handler';
-    assert.equal(auditResultJavaScriptURI, 1, assertionMessage);
-
-    const auditResultNonClickListener = runAudit({
-      listeners: [{type: 'nope'}],
-    });
-    assert.equal(auditResultNonClickListener, 0, 'no click event is a fail');
-
     const auditResultMixtureOfListeners = runAudit({
+      rawHref: '/validPath',
       listeners: [{type: 'nope'}, {type: 'another'}, {type: 'click'}],
     });
-    assert.equal(auditResultMixtureOfListeners, 1, 'at least one click listener is a pass');
+    assert.equal(auditResultMixtureOfListeners, 1, 'valid href with any event listener is a pass');
+
+    const auditResultWithInvalidHref = runAudit({
+      rawHref: 'javascript:void(0)',
+      listeners: [{type: 'nope'}, {type: 'another'}, {type: 'click'}],
+    });
+    assert.equal(auditResultWithInvalidHref, 0, 'invalid href with any event listener is a faile');
+
+    const auditResultNoListener = runAudit({
+      rawHref: '/validPath',
+    });
+    assert.equal(auditResultNoListener, 1, 'valid href with no event listener is a pass');
   });
 
   it('disallows uncrawlable anchors', () => {
@@ -119,21 +119,10 @@ describe('SEO: Crawlable anchors audit', () => {
       const auditResult = runAudit({rawHref: javaScriptVoidVariation});
       assert.equal(auditResult, 0, `'${javaScriptVoidVariation}' should fail the audit`);
     }
-
-    const expectedAuditPasses = [
-      'javascript:void',
-      'javascript:void()',
-      'javascript:0',
-    ];
-
-    for (const javaScriptVoidVariation of expectedAuditPasses) {
-      const auditResult = runAudit({rawHref: javaScriptVoidVariation});
-      assert.equal(auditResult, 1, `'${javaScriptVoidVariation}' should pass the audit`);
-    }
   });
 
   it('handles window.location and window.open assignments in an onclick attribute', () => {
-    const expectedAuditFailures = [
+    const expectedAuditPasses = [
       'window.location=',
       'window.location =',
       'window.open()',
@@ -141,14 +130,6 @@ describe('SEO: Crawlable anchors audit', () => {
       'window.open(`http://example.com`)',
       'window.open ( )',
       `window.open('foo', 'name', 'resizable)`,
-    ];
-
-    for (const onclickVariation of expectedAuditFailures) {
-      const auditResult = runAudit({onclick: onclickVariation});
-      assert.equal(auditResult, 0, `'${onclickVariation}' should fail the audit`);
-    }
-
-    const expectedAuditPasses = [
       'windowAlocation',
       'window.location.href',
       'window.Location =',
@@ -156,7 +137,7 @@ describe('SEO: Crawlable anchors audit', () => {
     ];
 
     for (const onclickVariation of expectedAuditPasses) {
-      const auditResult = runAudit({onclick: onclickVariation});
+      const auditResult = runAudit({rawHref: '/validPath', onclick: onclickVariation});
       assert.equal(auditResult, 1, `'${onclickVariation}' should pass the audit`);
     }
   });
