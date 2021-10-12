@@ -155,6 +155,8 @@ export interface CliFlags extends Flags {
   enableErrorReporting?: boolean;
   /** Flag to print a list of all audits + categories. */
   listAllAudits: boolean;
+  /** Flag to print a list of all supported locales. */
+  listLocales: boolean;
   /** Flag to print a list of all required trace categories. */
   listTraceCategories: boolean;
   /** A preset audit of selected audit categories to run. */
