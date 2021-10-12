@@ -5,11 +5,12 @@
  */
 'use strict';
 
-import fs from 'fs';
-import {LH_ROOT} from '../../../../../root.js';
+const fs = require('fs');
 
+// TODO(esmodules): brfs does not support es modules, and this file needs to be bundlded,
+// so it is commonjs for now.
 const mapJson =
-  fs.readFileSync(`${LH_ROOT}/lighthouse-cli/test/fixtures/source-map/script.js.map`, 'utf-8');
+  fs.readFileSync(`${__dirname}/../../../fixtures/source-map/script.js.map`, 'utf-8');
 const map = JSON.parse(mapJson);
 
 /**
@@ -41,4 +42,4 @@ const expectations = {
   },
 };
 
-export {expectations};
+module.exports = {expectations};

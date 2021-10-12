@@ -6,6 +6,8 @@
 'use strict';
 
 const browserify = require('browserify');
+const rollup = require('rollup');
+const rollupPlugins = require('./rollup-plugins.js');
 const fs = require('fs');
 const path = require('path');
 const bundleBuilder = require('./build-bundle.js');
@@ -52,11 +54,31 @@ function buildReportGenerator() {
     });
 }
 
+async function buildStaticServerBundle() {
+  const bundle = await rollup.rollup({
+    input: 'lighthouse-cli/test/fixtures/static-server.js',
+    plugins: [
+      rollupPlugins.shim({
+        'es-main': 'export default function() { return false; }',
+      }),
+      rollupPlugins.commonjs(),
+      rollupPlugins.nodeResolve(),
+    ],
+    external: ['mime-types', 'glob'],
+  });
+
+  await bundle.write({
+    file: 'dist/lightrider/static-server.js',
+    format: 'commonjs',
+  });
+}
+
 async function run() {
   await Promise.all([
     buildEntryPoint(),
     buildReportGenerator(),
     buildPsiReport(),
+    buildStaticServerBundle(),
   ]);
 }
 

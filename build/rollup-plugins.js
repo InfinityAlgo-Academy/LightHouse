@@ -16,6 +16,7 @@ function rollupPluginTypeCoerce(module) {
   return module;
 }
 
+const brfs = require('./rollup-brfs.js');
 const commonjs = rollupPluginTypeCoerce(require('@rollup/plugin-commonjs'));
 const nodePolyfills = rollupPluginTypeCoerce(require('rollup-plugin-polyfill-node'));
 const {nodeResolve} = require('@rollup/plugin-node-resolve');
@@ -26,6 +27,7 @@ const {terser} = require('rollup-plugin-terser');
 const typescript = rollupPluginTypeCoerce(require('@rollup/plugin-typescript'));
 
 module.exports = {
+  brfs,
   commonjs,
   nodePolyfills,
   nodeResolve,
