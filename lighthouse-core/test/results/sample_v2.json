@@ -9,7 +9,7 @@
       "axe-core": "4.2.3"
     }
   },
-  "lighthouseVersion": "8.5.1",
+  "lighthouseVersion": "8.6.0",
   "fetchTime": "2021-09-07T20:11:11.853Z",
   "requestedUrl": "http://localhost:10200/dobetterweb/dbw_tester.html",
   "finalUrl": "http://localhost:10200/dobetterweb/dbw_tester.html",
