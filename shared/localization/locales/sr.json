@@ -1,4 +1,115 @@
 {
+  "flow-report/src/i18n/ui-strings.js | allReports": {
+    "message": "Сви извештаји"
+  },
+  "flow-report/src/i18n/ui-strings.js | categories": {
+    "message": "Categories"
+  },
+  "flow-report/src/i18n/ui-strings.js | categoryAccessibility": {
+    "message": "Приступачност"
+  },
+  "flow-report/src/i18n/ui-strings.js | categoryBestPractices": {
+    "message": "Најбоље праксе"
+  },
+  "flow-report/src/i18n/ui-strings.js | categoryPerformance": {
+    "message": "Учинак"
+  },
+  "flow-report/src/i18n/ui-strings.js | categoryProgressiveWebApp": {
+    "message": "Прогресивна веб-апликација"
+  },
+  "flow-report/src/i18n/ui-strings.js | categorySeo": {
+    "message": "Оптимизација за претраживаче"
+  },
+  "flow-report/src/i18n/ui-strings.js | desktop": {
+    "message": "Рачунар"
+  },
+  "flow-report/src/i18n/ui-strings.js | helpDialogTitle": {
+    "message": "Understanding the Lighthouse Flow Report"
+  },
+  "flow-report/src/i18n/ui-strings.js | helpLabel": {
+    "message": "Understanding Flows"
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionNavigation": {
+    "message": "Use Navigation reports to..."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionSnapshot": {
+    "message": "Use Snapshot reports to..."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionTimespan": {
+    "message": "Use Timespan reports to..."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation1": {
+    "message": "Obtain a Lighthouse Performance score."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation2": {
+    "message": "Measure page load Performance metrics such as Largest Contentful Paint and Speed Index."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation3": {
+    "message": "Assess Progressive Web App capabilities."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseSnapshot1": {
+    "message": "Find accessibility issues in single page applications or complex forms."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseSnapshot2": {
+    "message": "Evaluate best practices of menus and UI elements hidden behind interaction."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan1": {
+    "message": "Measure layout shifts and JavaScript execution time on a series of interactions."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan2": {
+    "message": "Discover performance opportunities to improve the experience for long-lived pages and single-page applications."
+  },
+  "flow-report/src/i18n/ui-strings.js | mobile": {
+    "message": "Мобилни уређај"
+  },
+  "flow-report/src/i18n/ui-strings.js | navigationDescription": {
+    "message": "Учитавање странице"
+  },
+  "flow-report/src/i18n/ui-strings.js | navigationLongDescription": {
+    "message": "Navigation reports analyze a single page load, exactly like the original Lighthouse reports."
+  },
+  "flow-report/src/i18n/ui-strings.js | navigationReport": {
+    "message": "Извештај о навигацији"
+  },
+  "flow-report/src/i18n/ui-strings.js | ratingAverage": {
+    "message": "Просек"
+  },
+  "flow-report/src/i18n/ui-strings.js | ratingError": {
+    "message": "Грешка"
+  },
+  "flow-report/src/i18n/ui-strings.js | ratingFail": {
+    "message": "Слабо"
+  },
+  "flow-report/src/i18n/ui-strings.js | ratingPass": {
+    "message": "Добро"
+  },
+  "flow-report/src/i18n/ui-strings.js | save": {
+    "message": "Save"
+  },
+  "flow-report/src/i18n/ui-strings.js | snapshotDescription": {
+    "message": "Снимљено стање странице"
+  },
+  "flow-report/src/i18n/ui-strings.js | snapshotLongDescription": {
+    "message": "Snapshot reports analyze the page in a particular state, typically after user interactions."
+  },
+  "flow-report/src/i18n/ui-strings.js | snapshotReport": {
+    "message": "Извештај са прегледом"
+  },
+  "flow-report/src/i18n/ui-strings.js | summary": {
+    "message": "Резиме"
+  },
+  "flow-report/src/i18n/ui-strings.js | timespanDescription": {
+    "message": "Корисничке интеракције"
+  },
+  "flow-report/src/i18n/ui-strings.js | timespanLongDescription": {
+    "message": "Timespan reports analyze an arbitrary period of time, typically containing user interactions."
+  },
+  "flow-report/src/i18n/ui-strings.js | timespanReport": {
+    "message": "Извештај за период"
+  },
+  "flow-report/src/i18n/ui-strings.js | title": {
+    "message": "Извештај о корисничком току за Lighthouse"
+  },
   "lighthouse-core/audits/accessibility/accesskeys.js | description": {
     "message": "Тастери за приступ омогућавају корисницима да брзо фокусирају део странице. Да би навигација радила исправно, сваки тастер за приступ мора да буде јединствен. [Сазнајте више](https://web.dev/accesskeys/)."
   },
@@ -554,6 +665,12 @@
   "lighthouse-core/audits/byte-efficiency/uses-responsive-images-snapshot.js | columnDisplayedDimensions": {
     "message": "Приказане димензије"
   },
+  "lighthouse-core/audits/byte-efficiency/uses-responsive-images-snapshot.js | failureTitle": {
+    "message": "Слике су веће од приказане величине"
+  },
+  "lighthouse-core/audits/byte-efficiency/uses-responsive-images-snapshot.js | title": {
+    "message": "Слике су одговарајуће за приказану величину"
+  },
   "lighthouse-core/audits/byte-efficiency/uses-responsive-images.js | description": {
     "message": "Приказујте слике одговарајуће величине да бисте уштедели мобилне податке и побољшали време учитавања. [Сазнајте више](https://web.dev/uses-responsive-images/)."
   },
@@ -1006,6 +1123,15 @@
   },
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "Избегавајте велике промене распореда"
+  },
+  "lighthouse-core/audits/lcp-lazy-loaded.js | description": {
+    "message": "Слике изнад прелома које се споро учитавају приказују се касније у циклусу странице, што може да изазове кашњење највећег приказивања садржаја. [Сазнајте више](https://web.dev/lcp-lazy-loading/)."
+  },
+  "lighthouse-core/audits/lcp-lazy-loaded.js | failureTitle": {
+    "message": "Слика највећег приказивања садржаја је споро учитана"
+  },
+  "lighthouse-core/audits/lcp-lazy-loaded.js | title": {
+    "message": "Слика највећег приказивања садржаја није споро учитана"
   },
   "lighthouse-core/audits/long-tasks.js | description": {
     "message": "Наводи најдуже задатке у главној нити, што је корисно за идентификовање оних који највише доприносе кашњењу приказа. [Сазнајте више](https://web.dev/long-tasks-devtools/)"
@@ -1524,7 +1650,7 @@
     "message": "Страница има важеће изворне мапе"
   },
   "lighthouse-core/audits/viewport.js | description": {
-    "message": "Додајте ознаку `<meta name=\"viewport\">` да бисте оптимизовали апликацију за екране на мобилним уређајима. [Сазнајте више](https://web.dev/viewport/)."
+    "message": "`<meta name=\"viewport\">` оптимизује апликацију за величине екрана мобилних телефона, али и спречава [кашњење од 300 милисекунди при уносу корисника](https://developers.google.com/web/updates/2013/12/300ms-tap-delay-gone-away). [Сазнајте више](https://web.dev/viewport/)."
   },
   "lighthouse-core/audits/viewport.js | explanationNoTag": {
     "message": "Није пронађена ознака `<meta name=\"viewport\">`"
@@ -1659,7 +1785,7 @@
     "message": "Оптимизовано за PWA"
   },
   "lighthouse-core/config/default-config.js | seoCategoryDescription": {
-    "message": "Захваљујући овим проверама страница ће сигурно бити оптимизована за рангирање резултата претраживача. Има још неких фактора које Lighthouse не проверава, а који могу да утичу на рангирање у претрази. [Сазнајте више](https://support.google.com/webmasters/answer/35769)."
+    "message": "Захваљујући овим проверама страница ће сигурно бити у складу са основним саветима за оптимизацију за претраживаче. Има много додатних фактора које Lighthouse овде не узима у обзир, а који могу да утичу на рангирање у претрази, укључујући учинак у [Основним показатељима за веб](https://web.dev/learn-web-vitals/). [Сазнајте више](https://support.google.com/webmasters/answer/35769)."
   },
   "lighthouse-core/config/default-config.js | seoCategoryManualDescription": {
     "message": "Покрећите ове додатне валидаторе на сајту да бисте проверили додатне најбоље праксе оптимизације за претраживаче."
@@ -1713,7 +1839,7 @@
     "message": "Base-uri који недостаје омогућава уметнутим ознакама <base> да подесе основни URL за све релативне URL-ове (нпр. скрипте) до домена који контролише нападач. Саветујемо вам да подесите base-uri на „none“ или „self“."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingObjectSrc": {
-    "message": "Елементи које контролише object-src сматрају се застарелим функцијама. Саветујемо вам да подесите директиву object-src на „none“ да бисте спречили уметање додатних компоненти које извршавају небезбедне скрипте."
+    "message": "Ако директива object-src недостаје, дозвољено је уметање додатних компоненти које извршавају небезбедне скрипте. Саветујемо вам да подесите директиву object-src на „none“ ако можете."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingScriptSrc": {
     "message": "Директива script-src недостаје. То може да омогући извршавање небезбедних скрипти."
@@ -1727,6 +1853,12 @@
   "lighthouse-core/lib/csp-evaluator.js | nonceLength": {
     "message": "Једнократни кључеви морају да имају бар 8 знакова."
   },
+  "lighthouse-core/lib/csp-evaluator.js | plainUrlScheme": {
+    "message": "Избегавајте да користите обичне URL шеме ({keyword}) у овој директиви. Обичне URL шеме дозвољавају да извор скрипти буде небезбедан домен."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | plainWildcards": {
+    "message": "Избегавајте да користите обичне џокерске знаке ({keyword}) у овој директиви. Обични џокерски знаци омогућавају да извор скрипти буде небезбедан домен."
+  },
   "lighthouse-core/lib/csp-evaluator.js | reportToOnly": {
     "message": "Одредиште за извештаје се конфигурише само преко директиве report-to. Ова директива је подржана само у прегледачима заснованим на Chromium-у, па се препоручује да користите директиву report-uri."
   },
@@ -1734,13 +1866,16 @@
     "message": "Ниједан CSP не конфигурише одредиште за извештаје. Тиме се отежава одржавање CSP-а током времена и праћење отказивања."
   },
   "lighthouse-core/lib/csp-evaluator.js | strictDynamic": {
-    "message": "Листе дозвољених хостова често могу да се заобиђу. Саветујемо вам да користите директиву strict-dynamic у комбинацији са CSP једнократним кључевима и хешовима."
+    "message": "Листе дозвољених хостова често могу да се заобиђу. Саветујемо вам да користите CSP једнократне кључеве или хешеве, уз „strict-dynamic“ ако је потребно."
   },
   "lighthouse-core/lib/csp-evaluator.js | unknownDirective": {
     "message": "Непозната CSP директива."
   },
   "lighthouse-core/lib/csp-evaluator.js | unknownKeyword": {
     "message": "Изгледа да је {keyword} неважећа кључна реч."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | unsafeInline": {
+    "message": "Директива unsafe-inline омогућава извршавање небезбедних скрипти и обрађивача догађаја на страници. Саветујемо вам да користите CSP једнократне кључеве или хешеве да бисте појединачно дозвољавали скрипте."
   },
   "lighthouse-core/lib/csp-evaluator.js | unsafeInlineFallback": {
     "message": "Саветујемо вам да додате директиву unsafe-inline (коју игноришу прегледачи који подржавају једнократне кључеве/хешове) ради компатибилности уназад са старијим прегледачима."

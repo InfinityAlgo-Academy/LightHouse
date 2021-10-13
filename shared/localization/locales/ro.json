@@ -1,4 +1,115 @@
 {
+  "flow-report/src/i18n/ui-strings.js | allReports": {
+    "message": "Toate rapoartele"
+  },
+  "flow-report/src/i18n/ui-strings.js | categories": {
+    "message": "Categories"
+  },
+  "flow-report/src/i18n/ui-strings.js | categoryAccessibility": {
+    "message": "Accesibilitate"
+  },
+  "flow-report/src/i18n/ui-strings.js | categoryBestPractices": {
+    "message": "Cele mai bune practici"
+  },
+  "flow-report/src/i18n/ui-strings.js | categoryPerformance": {
+    "message": "Performanță"
+  },
+  "flow-report/src/i18n/ui-strings.js | categoryProgressiveWebApp": {
+    "message": "Aplicație web progresivă"
+  },
+  "flow-report/src/i18n/ui-strings.js | categorySeo": {
+    "message": "SEO"
+  },
+  "flow-report/src/i18n/ui-strings.js | desktop": {
+    "message": "Computer"
+  },
+  "flow-report/src/i18n/ui-strings.js | helpDialogTitle": {
+    "message": "Understanding the Lighthouse Flow Report"
+  },
+  "flow-report/src/i18n/ui-strings.js | helpLabel": {
+    "message": "Understanding Flows"
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionNavigation": {
+    "message": "Use Navigation reports to..."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionSnapshot": {
+    "message": "Use Snapshot reports to..."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionTimespan": {
+    "message": "Use Timespan reports to..."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation1": {
+    "message": "Obtain a Lighthouse Performance score."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation2": {
+    "message": "Measure page load Performance metrics such as Largest Contentful Paint and Speed Index."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation3": {
+    "message": "Assess Progressive Web App capabilities."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseSnapshot1": {
+    "message": "Find accessibility issues in single page applications or complex forms."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseSnapshot2": {
+    "message": "Evaluate best practices of menus and UI elements hidden behind interaction."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan1": {
+    "message": "Measure layout shifts and JavaScript execution time on a series of interactions."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan2": {
+    "message": "Discover performance opportunities to improve the experience for long-lived pages and single-page applications."
+  },
+  "flow-report/src/i18n/ui-strings.js | mobile": {
+    "message": "Mobil"
+  },
+  "flow-report/src/i18n/ui-strings.js | navigationDescription": {
+    "message": "Încărcarea paginii"
+  },
+  "flow-report/src/i18n/ui-strings.js | navigationLongDescription": {
+    "message": "Navigation reports analyze a single page load, exactly like the original Lighthouse reports."
+  },
+  "flow-report/src/i18n/ui-strings.js | navigationReport": {
+    "message": "Raport privind navigarea"
+  },
+  "flow-report/src/i18n/ui-strings.js | ratingAverage": {
+    "message": "Medie"
+  },
+  "flow-report/src/i18n/ui-strings.js | ratingError": {
+    "message": "Eroare"
+  },
+  "flow-report/src/i18n/ui-strings.js | ratingFail": {
+    "message": "Slabă"
+  },
+  "flow-report/src/i18n/ui-strings.js | ratingPass": {
+    "message": "Bună"
+  },
+  "flow-report/src/i18n/ui-strings.js | save": {
+    "message": "Save"
+  },
+  "flow-report/src/i18n/ui-strings.js | snapshotDescription": {
+    "message": "Starea înregistrată a paginii"
+  },
+  "flow-report/src/i18n/ui-strings.js | snapshotLongDescription": {
+    "message": "Snapshot reports analyze the page in a particular state, typically after user interactions."
+  },
+  "flow-report/src/i18n/ui-strings.js | snapshotReport": {
+    "message": "Raport instantaneu"
+  },
+  "flow-report/src/i18n/ui-strings.js | summary": {
+    "message": "Rezumat"
+  },
+  "flow-report/src/i18n/ui-strings.js | timespanDescription": {
+    "message": "Interacțiunile utilizatorilor"
+  },
+  "flow-report/src/i18n/ui-strings.js | timespanLongDescription": {
+    "message": "Timespan reports analyze an arbitrary period of time, typically containing user interactions."
+  },
+  "flow-report/src/i18n/ui-strings.js | timespanReport": {
+    "message": "Raport privind perioada de timp"
+  },
+  "flow-report/src/i18n/ui-strings.js | title": {
+    "message": "Raport privind fluxul pentru utilizatori Lighthouse"
+  },
   "lighthouse-core/audits/accessibility/accesskeys.js | description": {
     "message": "Tastele de acces permit utilizatorilor să focalizeze rapid o parte a paginii. Pentru o navigare corectă, fiecare tastă de acces trebuie să fie unică. [Află mai multe](https://web.dev/accesskeys/)."
   },
@@ -554,6 +665,12 @@
   "lighthouse-core/audits/byte-efficiency/uses-responsive-images-snapshot.js | columnDisplayedDimensions": {
     "message": "Dimensiunile afișate"
   },
+  "lighthouse-core/audits/byte-efficiency/uses-responsive-images-snapshot.js | failureTitle": {
+    "message": "Imaginile erau mai mari decât dimensiunea afișată"
+  },
+  "lighthouse-core/audits/byte-efficiency/uses-responsive-images-snapshot.js | title": {
+    "message": "Imaginile erau potrivite pentru dimensiunea afișată"
+  },
   "lighthouse-core/audits/byte-efficiency/uses-responsive-images.js | description": {
     "message": "Difuzează imagini de dimensiuni corespunzătoare ca să economisești date mobile și să obții o încărcare mai rapidă. [Află mai multe](https://web.dev/uses-responsive-images/)."
   },
@@ -1006,6 +1123,15 @@
   },
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "Evită schimbările majore ale aspectului"
+  },
+  "lighthouse-core/audits/lcp-lazy-loaded.js | description": {
+    "message": "Imaginile din partea superioară a paginii care se încarcă asincron sunt redate mai târziu în ciclul de viață al paginii, ceea ce poate întârzia redarea Largest Contentful Paint. [Află mai multe](https://web.dev/lcp-lazy-loading/)."
+  },
+  "lighthouse-core/audits/lcp-lazy-loaded.js | failureTitle": {
+    "message": "Imaginea Largest Contentful Paint s-a încărcat asincron"
+  },
+  "lighthouse-core/audits/lcp-lazy-loaded.js | title": {
+    "message": "Imaginea Largest Contentful Paint nu s-a încărcat asincron"
   },
   "lighthouse-core/audits/long-tasks.js | description": {
     "message": "Afișează cele mai îndelungate activități din firul principal, ceea ce este util pentru identificarea elementelor care contribuie cel mai mult la întârziere. [Află mai multe](https://web.dev/long-tasks-devtools/)"
@@ -1524,7 +1650,7 @@
     "message": "Pagina are hărți sursă valide"
   },
   "lighthouse-core/audits/viewport.js | description": {
-    "message": "Adaugă o etichetă `<meta name=\"viewport\">` ca să-ți optimizezi aplicația pentru ecranele mobile. [Află mai multe](https://web.dev/viewport/)."
+    "message": "Pe lângă faptul că `<meta name=\"viewport\">` optimizează aplicația pentru dimensiunile ecranelor de dispozitive mobile, împiedică [o întârziere de 300 milisecunde a intrării de la utilizator](https://developers.google.com/web/updates/2013/12/300ms-tap-delay-gone-away). [Află mai multe](https://web.dev/viewport/)."
   },
   "lighthouse-core/audits/viewport.js | explanationNoTag": {
     "message": "Nu s-a găsit nicio etichetă `<meta name=\"viewport\">`"
@@ -1659,7 +1785,7 @@
     "message": "Optimizat pentru PWA"
   },
   "lighthouse-core/config/default-config.js | seoCategoryDescription": {
-    "message": "Aceste verificări asigură că pagina este optimizată pentru poziționarea în rezultatele motorului de căutare. Există alți factori pe care Lighthouse nu îi verifică și care pot afecta poziția în rezultatele căutării. [Află mai multe](https://support.google.com/webmasters/answer/35769)."
+    "message": "Aceste verificări asigură faptul că pagina urmează recomandările de bază privind optimizarea pentru motoarele de căutare. Există mulți alți factori de care Lighthouse nu ține cont care îți pot afecta poziționarea în rețeaua de căutare, inclusiv performanța în [Detaliile de funcționare de bază pentru web](https://web.dev/learn-web-vitals/). [Află mai multe](https://support.google.com/webmasters/answer/35769)."
   },
   "lighthouse-core/config/default-config.js | seoCategoryManualDescription": {
     "message": "Rulează acești validatori suplimentari pe site pentru a căuta alte recomandări SEO."
@@ -1713,7 +1839,7 @@
     "message": "Lipsa directivei base-uri permite etichetelor <base> injectate să seteze adresa URL de bază pentru toate adresele URL relative (de ex., cu scripturi) ale unui domeniu controlat de atacatori. Îți recomandăm să setezi base-uri la none sau self."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingObjectSrc": {
-    "message": "Elementele controlate prin object-src sunt considerate funcții moștenite. Îți recomandăm să setezi object-src la none pentru a preveni injectarea de pluginuri care execută scripturi nesigure."
+    "message": "Întrucât object-src lipsește, se permite injectarea de pluginuri care execută scripturi nesigure. Îți recomandăm să setezi object-src la „none”, dacă poți."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingScriptSrc": {
     "message": "Directiva script-src lipsește. Astfel, se pot executa scripturi nesigure."
@@ -1727,6 +1853,12 @@
   "lighthouse-core/lib/csp-evaluator.js | nonceLength": {
     "message": "Valorile nonce trebuie să aibă minimum 8 caractere."
   },
+  "lighthouse-core/lib/csp-evaluator.js | plainUrlScheme": {
+    "message": "Evită să folosești scheme simple pentru adresa URL ({keyword}) în această directivă. Schemele simple pentru adresa URL permit ca scripturile să provină dintr-un domeniu nesigur."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | plainWildcards": {
+    "message": "Evită să folosești metacaractere ({keyword}) în această directivă. Metacaracterele simple pentru adresa URL permit ca scripturile să provină dintr-un domeniu nesigur."
+  },
   "lighthouse-core/lib/csp-evaluator.js | reportToOnly": {
     "message": "Destinația de raportare se configurează numai prin directiva report-to. Această directivă este acceptată doar în browserele bazate pe Chromium, prin urmare îți recomandăm să folosești și o directivă report-uri."
   },
@@ -1734,13 +1866,16 @@
     "message": "Nicio politică CSP nu configurează o destinație de raportare. De aceea, este dificilă menținerea CSP de-a lungul timpului și monitorizarea eventualelor încălcări."
   },
   "lighthouse-core/lib/csp-evaluator.js | strictDynamic": {
-    "message": "Listele gazdă cu acces permis pot fi ocolite frecvent. Îți recomandăm să folosești strict-dynamic în combinație cu valori nonce sau hash pentru CSP."
+    "message": "Listele gazdă cu acces permis pot fi ocolite frecvent. Îți recomandăm să folosești codurile hash sau valorile nonce CSP, împreună cu „strict-dynamic”, dacă este necesar."
   },
   "lighthouse-core/lib/csp-evaluator.js | unknownDirective": {
     "message": "Directivă CSP necunoscută."
   },
   "lighthouse-core/lib/csp-evaluator.js | unknownKeyword": {
     "message": "{keyword} pare un cuvânt cheie nevalid."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | unsafeInline": {
+    "message": "unsafe-inline permite executarea de scripturi în pagină și handlere pentru evenimente nesigure. Îți recomandăm să folosești valori nonce sau hash pentru CSP pentru a accepta scripturile individual."
   },
   "lighthouse-core/lib/csp-evaluator.js | unsafeInlineFallback": {
     "message": "Îți recomandăm să adaugi opțiunea unsafe-inline (ignorată de browserele care acceptă valori nonce/hash) pentru retrocompatibilitatea cu browsere mai vechi."

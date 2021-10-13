@@ -1,4 +1,115 @@
 {
+  "flow-report/src/i18n/ui-strings.js | allReports": {
+    "message": "Tots els informes"
+  },
+  "flow-report/src/i18n/ui-strings.js | categories": {
+    "message": "Categories"
+  },
+  "flow-report/src/i18n/ui-strings.js | categoryAccessibility": {
+    "message": "Accessibilitat"
+  },
+  "flow-report/src/i18n/ui-strings.js | categoryBestPractices": {
+    "message": "Pràctiques recomanades"
+  },
+  "flow-report/src/i18n/ui-strings.js | categoryPerformance": {
+    "message": "Rendiment"
+  },
+  "flow-report/src/i18n/ui-strings.js | categoryProgressiveWebApp": {
+    "message": "Aplicació web progressiva"
+  },
+  "flow-report/src/i18n/ui-strings.js | categorySeo": {
+    "message": "SEO"
+  },
+  "flow-report/src/i18n/ui-strings.js | desktop": {
+    "message": "Escriptori"
+  },
+  "flow-report/src/i18n/ui-strings.js | helpDialogTitle": {
+    "message": "Understanding the Lighthouse Flow Report"
+  },
+  "flow-report/src/i18n/ui-strings.js | helpLabel": {
+    "message": "Understanding Flows"
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionNavigation": {
+    "message": "Use Navigation reports to..."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionSnapshot": {
+    "message": "Use Snapshot reports to..."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionTimespan": {
+    "message": "Use Timespan reports to..."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation1": {
+    "message": "Obtain a Lighthouse Performance score."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation2": {
+    "message": "Measure page load Performance metrics such as Largest Contentful Paint and Speed Index."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation3": {
+    "message": "Assess Progressive Web App capabilities."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseSnapshot1": {
+    "message": "Find accessibility issues in single page applications or complex forms."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseSnapshot2": {
+    "message": "Evaluate best practices of menus and UI elements hidden behind interaction."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan1": {
+    "message": "Measure layout shifts and JavaScript execution time on a series of interactions."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan2": {
+    "message": "Discover performance opportunities to improve the experience for long-lived pages and single-page applications."
+  },
+  "flow-report/src/i18n/ui-strings.js | mobile": {
+    "message": "Mòbil"
+  },
+  "flow-report/src/i18n/ui-strings.js | navigationDescription": {
+    "message": "Càrrega de la pàgina"
+  },
+  "flow-report/src/i18n/ui-strings.js | navigationLongDescription": {
+    "message": "Navigation reports analyze a single page load, exactly like the original Lighthouse reports."
+  },
+  "flow-report/src/i18n/ui-strings.js | navigationReport": {
+    "message": "Informe de navegació"
+  },
+  "flow-report/src/i18n/ui-strings.js | ratingAverage": {
+    "message": "Normal"
+  },
+  "flow-report/src/i18n/ui-strings.js | ratingError": {
+    "message": "Error"
+  },
+  "flow-report/src/i18n/ui-strings.js | ratingFail": {
+    "message": "Deficient"
+  },
+  "flow-report/src/i18n/ui-strings.js | ratingPass": {
+    "message": "Bo"
+  },
+  "flow-report/src/i18n/ui-strings.js | save": {
+    "message": "Save"
+  },
+  "flow-report/src/i18n/ui-strings.js | snapshotDescription": {
+    "message": "Estat capturat de la pàgina"
+  },
+  "flow-report/src/i18n/ui-strings.js | snapshotLongDescription": {
+    "message": "Snapshot reports analyze the page in a particular state, typically after user interactions."
+  },
+  "flow-report/src/i18n/ui-strings.js | snapshotReport": {
+    "message": "Informe d'una instantània"
+  },
+  "flow-report/src/i18n/ui-strings.js | summary": {
+    "message": "Resum"
+  },
+  "flow-report/src/i18n/ui-strings.js | timespanDescription": {
+    "message": "Interaccions dels usuaris"
+  },
+  "flow-report/src/i18n/ui-strings.js | timespanLongDescription": {
+    "message": "Timespan reports analyze an arbitrary period of time, typically containing user interactions."
+  },
+  "flow-report/src/i18n/ui-strings.js | timespanReport": {
+    "message": "Informe d'un període de temps"
+  },
+  "flow-report/src/i18n/ui-strings.js | title": {
+    "message": "Informe del flux d'usuaris de Lighthouse"
+  },
   "lighthouse-core/audits/accessibility/accesskeys.js | description": {
     "message": "Les tecles d'accés permeten als usuaris posar el focus ràpidament en una part de la pàgina. Perquè es puguin desplaçar correctament, cada tecla d'accés ha de ser única. [Obtén més informació](https://web.dev/accesskeys/)."
   },
@@ -554,6 +665,12 @@
   "lighthouse-core/audits/byte-efficiency/uses-responsive-images-snapshot.js | columnDisplayedDimensions": {
     "message": "Dimensions mostrades"
   },
+  "lighthouse-core/audits/byte-efficiency/uses-responsive-images-snapshot.js | failureTitle": {
+    "message": "Les imatges eren més grans que la mida mostrada"
+  },
+  "lighthouse-core/audits/byte-efficiency/uses-responsive-images-snapshot.js | title": {
+    "message": "Les imatges eren adequades per a la mida mostrada"
+  },
   "lighthouse-core/audits/byte-efficiency/uses-responsive-images.js | description": {
     "message": "Publica imatges amb la mida correcta per estalviar dades mòbils i millorar el temps de càrrega. [Obtén més informació](https://web.dev/uses-responsive-images/)."
   },
@@ -1007,6 +1124,15 @@
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "Evita els canvis de disseny importants"
   },
+  "lighthouse-core/audits/lcp-lazy-loaded.js | description": {
+    "message": "Les imatges de la meitat superior de la pàgina que es carreguen lentament es renderitzen més tard al cicle de vida de la pàgina, cosa que pot retardar la renderització de l'element més gran amb contingut. [Obtén més informació](https://web.dev/lcp-lazy-loading/)."
+  },
+  "lighthouse-core/audits/lcp-lazy-loaded.js | failureTitle": {
+    "message": "La imatge de renderització de l'element més gran amb contingut s'ha carregat lentament"
+  },
+  "lighthouse-core/audits/lcp-lazy-loaded.js | title": {
+    "message": "La imatge de renderització de l'element més gran amb contingut no s'ha carregat lentament"
+  },
   "lighthouse-core/audits/long-tasks.js | description": {
     "message": "Enumera les tasques més llargues del fil principal, cosa que resulta útil per identificar què contribueix més al retard de les interaccions. [Més informació](https://web.dev/long-tasks-devtools/)"
   },
@@ -1407,7 +1533,7 @@
     "message": "Estableix un color temàtic per a la barra d'adreces."
   },
   "lighthouse-core/audits/third-party-facades.js | categoryCustomerSuccess": {
-    "message": "{productName} (històries d'èxit)"
+    "message": "{productName} (èxit del client)"
   },
   "lighthouse-core/audits/third-party-facades.js | categoryMarketing": {
     "message": "{productName} (màrqueting)"
@@ -1524,7 +1650,7 @@
     "message": "La pàgina té mapes d'origen vàlids"
   },
   "lighthouse-core/audits/viewport.js | description": {
-    "message": "Afegeix una etiqueta `<meta name=\"viewport\">` a fi d'optimitzar l'aplicació per a pantalles de dispositius mòbils. [Obtén més informació](https://web.dev/viewport/)."
+    "message": "Una `<meta name=\"viewport\">` no només optimitza la teva aplicació per a mides de pantalla de mòbil, sinó que també evita [que l'entrada d'usuari es retardi 300 mil·lisegons](https://developers.google.com/web/updates/2013/12/300ms-tap-delay-gone-away). [Obtén més informació](https://web.dev/viewport/)."
   },
   "lighthouse-core/audits/viewport.js | explanationNoTag": {
     "message": "No s'ha trobat cap etiqueta `<meta name=\"viewport\">`"
@@ -1659,7 +1785,7 @@
     "message": "Optimitzat per a PWA"
   },
   "lighthouse-core/config/default-config.js | seoCategoryDescription": {
-    "message": "Aquestes comprovacions garanteixen que la pàgina estigui optimitzada per classificar els resultats del motor de cerca. Hi ha factors addicionals que Lighthouse no comprova i que és possible que afectin la teva classificació a les cerques. [Obtén més informació](https://support.google.com/webmasters/answer/35769)."
+    "message": "Aquestes comprovacions garanteixen que la pàgina segueixi les recomanacions d'optimització bàsica en cercadors. Hi ha molts factors addicionals que Lighthouse no puntua aquí i que poden afectar la classificació a les cerques, inclòs el rendiment a [Dades vitals web principals](https://web.dev/learn-web-vitals/). [Obtén més informació](https://support.google.com/webmasters/answer/35769)."
   },
   "lighthouse-core/config/default-config.js | seoCategoryManualDescription": {
     "message": "Executa aquestes validacions addicionals al lloc web per comprovar les pràctiques addicionals recomanades per a SEO."
@@ -1713,7 +1839,7 @@
     "message": "Si no hi ha una directiva \"base-uri\", es poden injectar etiquetes <base> per establir l'URL de base de tots els URL relatius (per exemple, scripts) en un domini controlat per un atacant. Pots optar per establir \"base-uri\" en \"none\" o \"self\"."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingObjectSrc": {
-    "message": "Els elements controlats per \"object-src\" es consideren funcions heretades. Pots optar per establir \"object-src\" en \"none\" per prevenir la injecció de connectors que executin scripts no segurs."
+    "message": "Si falta \"object-src\", es podran injectar connectors que executin scripts no segurs. Mira si pots establir \"object-src\" en \"none\"."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingScriptSrc": {
     "message": "Falta la directiva \"script-src\". Això pot permetre l'execució de scripts no segurs."
@@ -1727,6 +1853,12 @@
   "lighthouse-core/lib/csp-evaluator.js | nonceLength": {
     "message": "Els nonces han de tenir 8 caràcters com a mínim."
   },
+  "lighthouse-core/lib/csp-evaluator.js | plainUrlScheme": {
+    "message": "Evita utilitzar esquemes d'URL senzills ({keyword}) en aquesta directiva. Els esquemes d'URL senzills permeten obtenir scripts d'un domini no segur."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | plainWildcards": {
+    "message": "Evita utilitzar comodins senzills ({keyword}) en aquesta directiva. Els comodins senzills permeten obtenir scripts d'un domini no seguir."
+  },
   "lighthouse-core/lib/csp-evaluator.js | reportToOnly": {
     "message": "La destinació d'informes només es pot configurar mitjançant la directiva \"report-to\". Aquesta directiva només s'admet en navegadors basats en Chromium i, per tant, també es recomana utilitzar una directiva \"report-uri\"."
   },
@@ -1734,13 +1866,16 @@
     "message": "No hi ha cap CSP que ofereixi una destinació d'informes. Això fa que sigui més difícil mantenir la CSP al llarg del temps i monitorar les vulnerabilitats."
   },
   "lighthouse-core/lib/csp-evaluator.js | strictDynamic": {
-    "message": "Les llistes d'amfitrions permesos sovint es poden ometre. Pots optar per utilitzar \"strict-dynamic\" juntament amb nonces o valors resum de la CSP."
+    "message": "Les llistes d'amfitrions permesos sovint es poden ometre. Pots utilitzar nonces o valors resum de la CSP en el seu lloc, a més de \"strict-dynamic\", si cal."
   },
   "lighthouse-core/lib/csp-evaluator.js | unknownDirective": {
     "message": "Directiva CSP desconeguda."
   },
   "lighthouse-core/lib/csp-evaluator.js | unknownKeyword": {
     "message": "\"{keyword}\" sembla una paraula clau no vàlida."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | unsafeInline": {
+    "message": "La directiva \"unsafe-inline\" permet l'execució de scripts in-page i gestors d'esdeveniments no segurs. Pots utilitzar nonces o valors resum de la CSP per permetre els scripts individualment."
   },
   "lighthouse-core/lib/csp-evaluator.js | unsafeInlineFallback": {
     "message": "Pots optar per afegir \"unsafe-inline\" (els navegadors que admeten nonces o valors resum l'ignoren) perquè sigui retrocompatible amb navegadors més antics."

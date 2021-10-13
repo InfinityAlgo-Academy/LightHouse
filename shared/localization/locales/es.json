@@ -1,4 +1,115 @@
 {
+  "flow-report/src/i18n/ui-strings.js | allReports": {
+    "message": "Todos los informes"
+  },
+  "flow-report/src/i18n/ui-strings.js | categories": {
+    "message": "Categories"
+  },
+  "flow-report/src/i18n/ui-strings.js | categoryAccessibility": {
+    "message": "Accesibilidad"
+  },
+  "flow-report/src/i18n/ui-strings.js | categoryBestPractices": {
+    "message": "Prácticas recomendadas"
+  },
+  "flow-report/src/i18n/ui-strings.js | categoryPerformance": {
+    "message": "Rendimiento"
+  },
+  "flow-report/src/i18n/ui-strings.js | categoryProgressiveWebApp": {
+    "message": "Aplicación web progresiva"
+  },
+  "flow-report/src/i18n/ui-strings.js | categorySeo": {
+    "message": "SEO"
+  },
+  "flow-report/src/i18n/ui-strings.js | desktop": {
+    "message": "Ordenador"
+  },
+  "flow-report/src/i18n/ui-strings.js | helpDialogTitle": {
+    "message": "Understanding the Lighthouse Flow Report"
+  },
+  "flow-report/src/i18n/ui-strings.js | helpLabel": {
+    "message": "Understanding Flows"
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionNavigation": {
+    "message": "Use Navigation reports to..."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionSnapshot": {
+    "message": "Use Snapshot reports to..."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionTimespan": {
+    "message": "Use Timespan reports to..."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation1": {
+    "message": "Obtain a Lighthouse Performance score."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation2": {
+    "message": "Measure page load Performance metrics such as Largest Contentful Paint and Speed Index."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation3": {
+    "message": "Assess Progressive Web App capabilities."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseSnapshot1": {
+    "message": "Find accessibility issues in single page applications or complex forms."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseSnapshot2": {
+    "message": "Evaluate best practices of menus and UI elements hidden behind interaction."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan1": {
+    "message": "Measure layout shifts and JavaScript execution time on a series of interactions."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan2": {
+    "message": "Discover performance opportunities to improve the experience for long-lived pages and single-page applications."
+  },
+  "flow-report/src/i18n/ui-strings.js | mobile": {
+    "message": "Móvil"
+  },
+  "flow-report/src/i18n/ui-strings.js | navigationDescription": {
+    "message": "Carga de la página"
+  },
+  "flow-report/src/i18n/ui-strings.js | navigationLongDescription": {
+    "message": "Navigation reports analyze a single page load, exactly like the original Lighthouse reports."
+  },
+  "flow-report/src/i18n/ui-strings.js | navigationReport": {
+    "message": "Informe de navegación"
+  },
+  "flow-report/src/i18n/ui-strings.js | ratingAverage": {
+    "message": "Ni buena ni mala"
+  },
+  "flow-report/src/i18n/ui-strings.js | ratingError": {
+    "message": "Error"
+  },
+  "flow-report/src/i18n/ui-strings.js | ratingFail": {
+    "message": "Mala"
+  },
+  "flow-report/src/i18n/ui-strings.js | ratingPass": {
+    "message": "Buena"
+  },
+  "flow-report/src/i18n/ui-strings.js | save": {
+    "message": "Save"
+  },
+  "flow-report/src/i18n/ui-strings.js | snapshotDescription": {
+    "message": "Captura del estado de la página"
+  },
+  "flow-report/src/i18n/ui-strings.js | snapshotLongDescription": {
+    "message": "Snapshot reports analyze the page in a particular state, typically after user interactions."
+  },
+  "flow-report/src/i18n/ui-strings.js | snapshotReport": {
+    "message": "Informe de un instante"
+  },
+  "flow-report/src/i18n/ui-strings.js | summary": {
+    "message": "Resumen"
+  },
+  "flow-report/src/i18n/ui-strings.js | timespanDescription": {
+    "message": "Interacciones del usuario"
+  },
+  "flow-report/src/i18n/ui-strings.js | timespanLongDescription": {
+    "message": "Timespan reports analyze an arbitrary period of time, typically containing user interactions."
+  },
+  "flow-report/src/i18n/ui-strings.js | timespanReport": {
+    "message": "Informe de tiempo"
+  },
+  "flow-report/src/i18n/ui-strings.js | title": {
+    "message": "Informe de flujo de usuarios de Lighthouse"
+  },
   "lighthouse-core/audits/accessibility/accesskeys.js | description": {
     "message": "Las claves de acceso permiten a los usuarios dirigirse rápidamente a una parte concreta de la página. Para facilitar una navegación correcta, las claves de acceso deben ser únicas. [Más información](https://web.dev/accesskeys/)"
   },
@@ -554,6 +665,12 @@
   "lighthouse-core/audits/byte-efficiency/uses-responsive-images-snapshot.js | columnDisplayedDimensions": {
     "message": "Dimensiones mostradas"
   },
+  "lighthouse-core/audits/byte-efficiency/uses-responsive-images-snapshot.js | failureTitle": {
+    "message": "Las imágenes eran más grandes que el tamaño mostrado"
+  },
+  "lighthouse-core/audits/byte-efficiency/uses-responsive-images-snapshot.js | title": {
+    "message": "Las imágenes eran adecuadas para el tamaño mostrado"
+  },
   "lighthouse-core/audits/byte-efficiency/uses-responsive-images.js | description": {
     "message": "Muestra imágenes con un tamaño adecuado para ahorrar datos móviles y mejorar el tiempo de carga. [Más información](https://web.dev/uses-responsive-images/)"
   },
@@ -1006,6 +1123,15 @@
   },
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "Evitar cambios de diseño importantes"
+  },
+  "lighthouse-core/audits/lcp-lazy-loaded.js | description": {
+    "message": "Las imágenes de la parte visible a primera vista que se cargan en diferido se renderizan más tarde en el ciclo de vida de la página, lo que puede retrasar el renderizado del mayor elemento con contenido. [Más información](https://web.dev/lcp-lazy-loading/)"
+  },
+  "lighthouse-core/audits/lcp-lazy-loaded.js | failureTitle": {
+    "message": "La imagen del renderizado del mayor elemento con contenido se ha cargado en diferido"
+  },
+  "lighthouse-core/audits/lcp-lazy-loaded.js | title": {
+    "message": "La imagen del renderizado del mayor elemento con contenido no se ha cargado en diferido"
   },
   "lighthouse-core/audits/long-tasks.js | description": {
     "message": "Enumera las tareas más largas del hilo principal, lo cual es útil para identificar las que más contribuyen a la latencia. [Más información](https://web.dev/long-tasks-devtools/)"
@@ -1524,7 +1650,7 @@
     "message": "La página tiene mapas de origen válidos"
   },
   "lighthouse-core/audits/viewport.js | description": {
-    "message": "Añade una etiqueta `<meta name=\"viewport\">` para que tu aplicación se vea mejor en las pantallas de los dispositivos móviles. [Más información](https://web.dev/viewport/)"
+    "message": "Una metaetiqueta `<meta name=\"viewport\">` no solo optimiza tu aplicación para los tamaños de pantalla de los dispositivos móviles, sino que también evita [el retraso de 300 milisegundos de las entradas del usuario](https://developers.google.com/web/updates/2013/12/300ms-tap-delay-gone-away). [Más información](https://web.dev/viewport/)"
   },
   "lighthouse-core/audits/viewport.js | explanationNoTag": {
     "message": "No se ha encontrado ninguna etiqueta `<meta name=\"viewport\">`"
@@ -1659,7 +1785,7 @@
     "message": "Optimizado para PWA"
   },
   "lighthouse-core/config/default-config.js | seoCategoryDescription": {
-    "message": "Estas comprobaciones aseguran que tu página esté optimizada para posicionarse en los resultados de los buscadores. Hay otros factores que Lighthouse no comprueba y que pueden afectar a tu posicionamiento en los buscadores. [Más información](https://support.google.com/webmasters/answer/35769)"
+    "message": "Estas comprobaciones aseguran que tu página sigue los consejos básicos sobre optimización en buscadores. Hay muchos otros factores adicionales que Lighthouse no valora aquí y que pueden afectar a tu posicionamiento en las búsquedas, como el rendimiento en las [Métricas web principales](https://web.dev/learn-web-vitals/). [Más información](https://support.google.com/webmasters/answer/35769)"
   },
   "lighthouse-core/config/default-config.js | seoCategoryManualDescription": {
     "message": "Ejecuta estos validadores adicionales en tu sitio web para comprobar más prácticas recomendadas de SEO."
@@ -1713,7 +1839,7 @@
     "message": "La falta de base-uri permite que las etiquetas <base> insertadas establezcan la URL base para todas las URLs relativas (por ejemplo, secuencias de comandos) en un dominio controlado por un atacante. Puedes asignar el valor 'none' o 'self' a base-uri."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingObjectSrc": {
-    "message": "Los elementos que controla la directiva object-src se consideran características antiguas. Puedes asignar el valor none a object-src para evitar la inserción de complementos que ejecuten secuencias de comandos que no son seguras."
+    "message": "La falta de object-src permite que se inserten complementos que ejecutan secuencias de comandos no seguras. Si puedes, considera asignar el valor none a object-src."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingScriptSrc": {
     "message": "Falta la directiva script-src. Esta directiva permite que se ejecuten secuencias de comandos que no son seguras."
@@ -1727,6 +1853,12 @@
   "lighthouse-core/lib/csp-evaluator.js | nonceLength": {
     "message": "Los nonces deben tener un mínimo de 8 caracteres."
   },
+  "lighthouse-core/lib/csp-evaluator.js | plainUrlScheme": {
+    "message": "Evita usar esquemas de URL simples ({keyword}) en esta directiva. Los esquemas de URL simples permiten obtener secuencias de comandos de dominios no seguros."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | plainWildcards": {
+    "message": "Evita usar comodines simples ({keyword}) en esta directiva. Los comodines simples permiten obtener secuencias de comandos de dominios no seguros."
+  },
   "lighthouse-core/lib/csp-evaluator.js | reportToOnly": {
     "message": "El destino de los informes solo se configura con la directiva report-to. Esta directiva solo la admiten los navegadores Chromium, así que se recomienda usar también una directiva report-uri."
   },
@@ -1734,13 +1866,16 @@
     "message": "Ninguna CSP proporciona un destino de informes. Por ello, es más difícil mantener la CSP a lo largo del tiempo y monitorizar las vulnerabilidades."
   },
   "lighthouse-core/lib/csp-evaluator.js | strictDynamic": {
-    "message": "La lista de hosts permitidos se puede sortear con frecuencia. Puedes usar la directiva strict-dynamic combinada con nonces o hashes de la CSP."
+    "message": "Habitualmente, las listas de hosts permitidos se pueden sortear. Considera usar nonces o hashes de la CSP junto con strict-dynamic si es necesario."
   },
   "lighthouse-core/lib/csp-evaluator.js | unknownDirective": {
     "message": "Directiva CSP desconocida."
   },
   "lighthouse-core/lib/csp-evaluator.js | unknownKeyword": {
     "message": "Parece que {keyword} no es una palabra clave válida."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | unsafeInline": {
+    "message": "La directiva unsafe-inline permite que se ejecuten secuencias de comandos in-page y gestores de eventos que no son seguros. Puedes usar nonces o hashes de CSP para permitir secuencias de comandos individualmente."
   },
   "lighthouse-core/lib/csp-evaluator.js | unsafeInlineFallback": {
     "message": "Puedes añadir la directiva unsafe-inline (los navegadores que admiten nonces o hashes la ignoran) para que sea retrocompatible con navegadores anteriores."

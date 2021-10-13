@@ -1,4 +1,115 @@
 {
+  "flow-report/src/i18n/ui-strings.js | allReports": {
+    "message": "所有报告"
+  },
+  "flow-report/src/i18n/ui-strings.js | categories": {
+    "message": "Categories"
+  },
+  "flow-report/src/i18n/ui-strings.js | categoryAccessibility": {
+    "message": "无障碍"
+  },
+  "flow-report/src/i18n/ui-strings.js | categoryBestPractices": {
+    "message": "最佳做法"
+  },
+  "flow-report/src/i18n/ui-strings.js | categoryPerformance": {
+    "message": "性能"
+  },
+  "flow-report/src/i18n/ui-strings.js | categoryProgressiveWebApp": {
+    "message": "渐进式 Web 应用"
+  },
+  "flow-report/src/i18n/ui-strings.js | categorySeo": {
+    "message": "SEO"
+  },
+  "flow-report/src/i18n/ui-strings.js | desktop": {
+    "message": "桌面版"
+  },
+  "flow-report/src/i18n/ui-strings.js | helpDialogTitle": {
+    "message": "Understanding the Lighthouse Flow Report"
+  },
+  "flow-report/src/i18n/ui-strings.js | helpLabel": {
+    "message": "Understanding Flows"
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionNavigation": {
+    "message": "Use Navigation reports to..."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionSnapshot": {
+    "message": "Use Snapshot reports to..."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionTimespan": {
+    "message": "Use Timespan reports to..."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation1": {
+    "message": "Obtain a Lighthouse Performance score."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation2": {
+    "message": "Measure page load Performance metrics such as Largest Contentful Paint and Speed Index."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation3": {
+    "message": "Assess Progressive Web App capabilities."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseSnapshot1": {
+    "message": "Find accessibility issues in single page applications or complex forms."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseSnapshot2": {
+    "message": "Evaluate best practices of menus and UI elements hidden behind interaction."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan1": {
+    "message": "Measure layout shifts and JavaScript execution time on a series of interactions."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan2": {
+    "message": "Discover performance opportunities to improve the experience for long-lived pages and single-page applications."
+  },
+  "flow-report/src/i18n/ui-strings.js | mobile": {
+    "message": "移动版"
+  },
+  "flow-report/src/i18n/ui-strings.js | navigationDescription": {
+    "message": "网页加载"
+  },
+  "flow-report/src/i18n/ui-strings.js | navigationLongDescription": {
+    "message": "Navigation reports analyze a single page load, exactly like the original Lighthouse reports."
+  },
+  "flow-report/src/i18n/ui-strings.js | navigationReport": {
+    "message": "导航报告"
+  },
+  "flow-report/src/i18n/ui-strings.js | ratingAverage": {
+    "message": "一般"
+  },
+  "flow-report/src/i18n/ui-strings.js | ratingError": {
+    "message": "出错了"
+  },
+  "flow-report/src/i18n/ui-strings.js | ratingFail": {
+    "message": "较差"
+  },
+  "flow-report/src/i18n/ui-strings.js | ratingPass": {
+    "message": "良好"
+  },
+  "flow-report/src/i18n/ui-strings.js | save": {
+    "message": "Save"
+  },
+  "flow-report/src/i18n/ui-strings.js | snapshotDescription": {
+    "message": "捕获到的网页状态"
+  },
+  "flow-report/src/i18n/ui-strings.js | snapshotLongDescription": {
+    "message": "Snapshot reports analyze the page in a particular state, typically after user interactions."
+  },
+  "flow-report/src/i18n/ui-strings.js | snapshotReport": {
+    "message": "快照报告"
+  },
+  "flow-report/src/i18n/ui-strings.js | summary": {
+    "message": "摘要"
+  },
+  "flow-report/src/i18n/ui-strings.js | timespanDescription": {
+    "message": "用户互动"
+  },
+  "flow-report/src/i18n/ui-strings.js | timespanLongDescription": {
+    "message": "Timespan reports analyze an arbitrary period of time, typically containing user interactions."
+  },
+  "flow-report/src/i18n/ui-strings.js | timespanReport": {
+    "message": "时间跨度报告"
+  },
+  "flow-report/src/i18n/ui-strings.js | title": {
+    "message": "Lighthouse 用户流报告"
+  },
   "lighthouse-core/audits/accessibility/accesskeys.js | description": {
     "message": "快捷键可让用户快速转到页面的某个部分。为确保正确进行导航，每个快捷键都必须是独一无二的。[了解详情](https://web.dev/accesskeys/)。"
   },
@@ -554,6 +665,12 @@
   "lighthouse-core/audits/byte-efficiency/uses-responsive-images-snapshot.js | columnDisplayedDimensions": {
     "message": "显示时的尺寸"
   },
+  "lighthouse-core/audits/byte-efficiency/uses-responsive-images-snapshot.js | failureTitle": {
+    "message": "图片大于其显示时的尺寸"
+  },
+  "lighthouse-core/audits/byte-efficiency/uses-responsive-images-snapshot.js | title": {
+    "message": "图片适合其显示时的尺寸"
+  },
   "lighthouse-core/audits/byte-efficiency/uses-responsive-images.js | description": {
     "message": "提供大小合适的图片可节省移动数据网络流量并缩短加载用时。[了解详情](https://web.dev/uses-responsive-images/)。"
   },
@@ -1006,6 +1123,15 @@
   },
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "请避免出现大幅度的布局偏移"
+  },
+  "lighthouse-core/audits/lcp-lazy-loaded.js | description": {
+    "message": "被延迟加载的首屏图片会在页面生命周期内的较晚时间呈现，这可能会致使系统延迟渲染最大内容元素。[了解详情](https://web.dev/lcp-lazy-loading/)。"
+  },
+  "lighthouse-core/audits/lcp-lazy-loaded.js | failureTitle": {
+    "message": "Largest Contentful Paint 所对应的图片被延迟加载了"
+  },
+  "lighthouse-core/audits/lcp-lazy-loaded.js | title": {
+    "message": "Largest Contentful Paint 所对应的图片未被延迟加载"
   },
   "lighthouse-core/audits/long-tasks.js | description": {
     "message": "列出了主线程中运行时间最长的任务，有助于识别出导致输入延迟的最主要原因。[了解详情](https://web.dev/long-tasks-devtools/)"
@@ -1524,7 +1650,7 @@
     "message": "页面包含有效的源代码映射"
   },
   "lighthouse-core/audits/viewport.js | description": {
-    "message": "添加 `<meta name=\"viewport\">` 标记以针对移动设备屏幕优化您的应用。[了解详情](https://web.dev/viewport/)。"
+    "message": "`<meta name=\"viewport\">` 不仅会针对移动设备屏幕尺寸优化您的应用，还会阻止[系统在响应用户输入前出现 300 毫秒的延迟](https://developers.google.com/web/updates/2013/12/300ms-tap-delay-gone-away)。[了解详情](https://web.dev/viewport/)。"
   },
   "lighthouse-core/audits/viewport.js | explanationNoTag": {
     "message": "未找到任何 `<meta name=\"viewport\">` 标记"
@@ -1659,7 +1785,7 @@
     "message": "优化 PWA"
   },
   "lighthouse-core/config/default-config.js | seoCategoryDescription": {
-    "message": "这些检查可确保您的页面已经过优化，有利于其在搜索引擎结果中的排名。不在 Lighthouse 检查范围内的其他因素可能会影响您的搜索排名。[了解详情](https://support.google.com/webmasters/answer/35769)。"
+    "message": "这些检查可确保您的网页遵循了基本的搜索引擎优化建议。还有很多其他因素可能会影响您的网页在搜索引擎结果中的排名，但未被 Lighthouse 纳入此处的评估范围，其中包括[核心网页指标](https://web.dev/learn-web-vitals/)衡量结果。[了解详情](https://support.google.com/webmasters/answer/35769)。"
   },
   "lighthouse-core/config/default-config.js | seoCategoryManualDescription": {
     "message": "请在您的网站上运行这些额外的验证程序，以检查其他 SEO 最佳做法。"
@@ -1713,7 +1839,7 @@
     "message": "缺少 base-uri 意味着允许使用注入的 <base> 标记将所有相对网址（例如脚本）的基准网址设为一个受攻击者控制的网域。建议您将 base-uri 设为“none”或“self”。"
   },
   "lighthouse-core/lib/csp-evaluator.js | missingObjectSrc": {
-    "message": "由 object-src 控制的元素会被视为旧版功能。建议您将 object-src 设为“none”，以防止不良之徒注入会执行不安全脚本的插件。"
+    "message": "如果缺少 object-src，便无法防止不良之徒注入会执行不安全脚本的插件。建议您将 object-src 设为“none”（如果可以的话）。"
   },
   "lighthouse-core/lib/csp-evaluator.js | missingScriptSrc": {
     "message": "缺少 script-src 指令。这意味着允许执行不安全的脚本。"
@@ -1727,6 +1853,12 @@
   "lighthouse-core/lib/csp-evaluator.js | nonceLength": {
     "message": "Nonces 应包含至少 8 个字符。"
   },
+  "lighthouse-core/lib/csp-evaluator.js | plainUrlScheme": {
+    "message": "请避免在这条指令中仅仅使用网址架构 ({keyword})。如果仅仅使用网址架构，便无法防止脚本来自不安全的网域。"
+  },
+  "lighthouse-core/lib/csp-evaluator.js | plainWildcards": {
+    "message": "请避免在这条指令中仅仅使用通配符 ({keyword})。如果仅仅使用通配符，便无法防止脚本来自不安全的网域。"
+  },
   "lighthouse-core/lib/csp-evaluator.js | reportToOnly": {
     "message": "报告目的地只能通过 report-to 指令进行配置。此指令仅适用于基于 Chromium 的浏览器，因此我们建议您同时也使用 report-uri 指令。"
   },
@@ -1734,13 +1866,16 @@
     "message": "任何 CSP 都未配置报告目的地。这会导致系统很难持续维护 CSP 以及监控故障。"
   },
   "lighthouse-core/lib/csp-evaluator.js | strictDynamic": {
-    "message": "主机许可名单经常会被绕过。建议您将“strict-dynamic”与 CSP nonces 或 hashes 结合使用。"
+    "message": "主机许可名单经常会被绕过。建议您改用 CSP nonces 或 hashes（以及“strict-dynamic”，若有必要）。"
   },
   "lighthouse-core/lib/csp-evaluator.js | unknownDirective": {
     "message": "CSP 指令不明。"
   },
   "lighthouse-core/lib/csp-evaluator.js | unknownKeyword": {
     "message": "{keyword}似乎是无效关键字。"
+  },
+  "lighthouse-core/lib/csp-evaluator.js | unsafeInline": {
+    "message": "“unsafe-inline”允许执行不安全的页内脚本和事件处理脚本。建议您使用 CSP nonces 或 hashes 来逐一允许各个脚本。"
   },
   "lighthouse-core/lib/csp-evaluator.js | unsafeInlineFallback": {
     "message": "建议您添加“unsafe-inline”（会被支持 nonces/hashes 的浏览器忽略），以便向后兼容旧版浏览器。"

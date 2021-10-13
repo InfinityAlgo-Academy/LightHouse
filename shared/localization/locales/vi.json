@@ -1,4 +1,115 @@
 {
+  "flow-report/src/i18n/ui-strings.js | allReports": {
+    "message": "Tất cả báo cáo"
+  },
+  "flow-report/src/i18n/ui-strings.js | categories": {
+    "message": "Categories"
+  },
+  "flow-report/src/i18n/ui-strings.js | categoryAccessibility": {
+    "message": "Hỗ trợ tiếp cận"
+  },
+  "flow-report/src/i18n/ui-strings.js | categoryBestPractices": {
+    "message": "Phương pháp hay nhất"
+  },
+  "flow-report/src/i18n/ui-strings.js | categoryPerformance": {
+    "message": "Hiệu suất"
+  },
+  "flow-report/src/i18n/ui-strings.js | categoryProgressiveWebApp": {
+    "message": "Ứng dụng web tiến bộ"
+  },
+  "flow-report/src/i18n/ui-strings.js | categorySeo": {
+    "message": "SEO"
+  },
+  "flow-report/src/i18n/ui-strings.js | desktop": {
+    "message": "Máy tính"
+  },
+  "flow-report/src/i18n/ui-strings.js | helpDialogTitle": {
+    "message": "Understanding the Lighthouse Flow Report"
+  },
+  "flow-report/src/i18n/ui-strings.js | helpLabel": {
+    "message": "Understanding Flows"
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionNavigation": {
+    "message": "Use Navigation reports to..."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionSnapshot": {
+    "message": "Use Snapshot reports to..."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionTimespan": {
+    "message": "Use Timespan reports to..."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation1": {
+    "message": "Obtain a Lighthouse Performance score."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation2": {
+    "message": "Measure page load Performance metrics such as Largest Contentful Paint and Speed Index."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation3": {
+    "message": "Assess Progressive Web App capabilities."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseSnapshot1": {
+    "message": "Find accessibility issues in single page applications or complex forms."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseSnapshot2": {
+    "message": "Evaluate best practices of menus and UI elements hidden behind interaction."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan1": {
+    "message": "Measure layout shifts and JavaScript execution time on a series of interactions."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan2": {
+    "message": "Discover performance opportunities to improve the experience for long-lived pages and single-page applications."
+  },
+  "flow-report/src/i18n/ui-strings.js | mobile": {
+    "message": "Di động"
+  },
+  "flow-report/src/i18n/ui-strings.js | navigationDescription": {
+    "message": "Tải trang"
+  },
+  "flow-report/src/i18n/ui-strings.js | navigationLongDescription": {
+    "message": "Navigation reports analyze a single page load, exactly like the original Lighthouse reports."
+  },
+  "flow-report/src/i18n/ui-strings.js | navigationReport": {
+    "message": "Báo cáo di chuyển trên trang"
+  },
+  "flow-report/src/i18n/ui-strings.js | ratingAverage": {
+    "message": "Trung bình"
+  },
+  "flow-report/src/i18n/ui-strings.js | ratingError": {
+    "message": "Lỗi"
+  },
+  "flow-report/src/i18n/ui-strings.js | ratingFail": {
+    "message": "Kém"
+  },
+  "flow-report/src/i18n/ui-strings.js | ratingPass": {
+    "message": "Tốt"
+  },
+  "flow-report/src/i18n/ui-strings.js | save": {
+    "message": "Save"
+  },
+  "flow-report/src/i18n/ui-strings.js | snapshotDescription": {
+    "message": "Trạng thái đã chụp của trang"
+  },
+  "flow-report/src/i18n/ui-strings.js | snapshotLongDescription": {
+    "message": "Snapshot reports analyze the page in a particular state, typically after user interactions."
+  },
+  "flow-report/src/i18n/ui-strings.js | snapshotReport": {
+    "message": "Báo cáo tổng quan"
+  },
+  "flow-report/src/i18n/ui-strings.js | summary": {
+    "message": "Tóm tắt"
+  },
+  "flow-report/src/i18n/ui-strings.js | timespanDescription": {
+    "message": "Sự tương tác của người dùng"
+  },
+  "flow-report/src/i18n/ui-strings.js | timespanLongDescription": {
+    "message": "Timespan reports analyze an arbitrary period of time, typically containing user interactions."
+  },
+  "flow-report/src/i18n/ui-strings.js | timespanReport": {
+    "message": "Báo cáo khoảng thời gian"
+  },
+  "flow-report/src/i18n/ui-strings.js | title": {
+    "message": "Báo cáo luồng người dùng Lighthouse"
+  },
   "lighthouse-core/audits/accessibility/accesskeys.js | description": {
     "message": "Các phím truy cập cho phép người dùng chuyển nhanh đến một phần của trang. Để di chuyển đúng cách, mỗi phím truy cập phải là duy nhất. [Tìm hiểu thêm](https://web.dev/accesskeys/)."
   },
@@ -554,6 +665,12 @@
   "lighthouse-core/audits/byte-efficiency/uses-responsive-images-snapshot.js | columnDisplayedDimensions": {
     "message": "Kích thước hiển thị"
   },
+  "lighthouse-core/audits/byte-efficiency/uses-responsive-images-snapshot.js | failureTitle": {
+    "message": "Hình ảnh có kích thước lớn hơn kích thước hiển thị"
+  },
+  "lighthouse-core/audits/byte-efficiency/uses-responsive-images-snapshot.js | title": {
+    "message": "Hình ảnh có kích thước hiển thị phù hợp"
+  },
   "lighthouse-core/audits/byte-efficiency/uses-responsive-images.js | description": {
     "message": "Phân phát hình ảnh có kích thước phù hợp để tiết kiệm dữ liệu di động và cải thiện thời gian tải. [Tìm hiểu thêm](https://web.dev/uses-responsive-images/)."
   },
@@ -1006,6 +1123,15 @@
   },
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "Tránh các thay đổi lớn về bố cục"
+  },
+  "lighthouse-core/audits/lcp-lazy-loaded.js | description": {
+    "message": "Hình ảnh trong màn hình đầu tiên được tải từng phần sẽ hiển thị sau trong vòng đời của trang, điều này có thể làm chậm thời gian hiển thị nội dung lớn nhất. [Tìm hiểu thêm](https://web.dev/lcp-lazy-loading/)."
+  },
+  "lighthouse-core/audits/lcp-lazy-loaded.js | failureTitle": {
+    "message": "Hình ảnh Thời gian hiển thị nội dung lớn nhất đã được tải từng phần"
+  },
+  "lighthouse-core/audits/lcp-lazy-loaded.js | title": {
+    "message": "Hình ảnh Thời gian hiển thị nội dung lớn nhất không được tải từng phần"
   },
   "lighthouse-core/audits/long-tasks.js | description": {
     "message": "Liệt kê những việc cần nhiều thời gian thực hiện nhất trong chuỗi chính. Thông tin này khá hữu ích trong việc xác định những thành phần có thời gian phản hồi tương tác chậm nhất. [Tìm hiểu thêm](https://web.dev/long-tasks-devtools/)"
@@ -1524,7 +1650,7 @@
     "message": "Trang có bản đồ nguồn hợp lệ"
   },
   "lighthouse-core/audits/viewport.js | description": {
-    "message": "Thêm thẻ `<meta name=\"viewport\">` để tối ưu hóa ứng dụng của bạn cho màn hình thiết bị di động. [Tìm hiểu thêm](https://web.dev/viewport/)"
+    "message": "`<meta name=\"viewport\">` không chỉ tối ưu hóa ứng dụng của bạn cho các kích thước màn hình trên thiết bị di động mà còn ngăn [ độ trễ 300 mili giây xảy ra đối với hoạt động đầu vào của người dùng](https://developers.google.com/web/updates/2013/12/300ms-tap-delay-gone-away). [Tìm hiểu thêm](https://web.dev/viewport/)."
   },
   "lighthouse-core/audits/viewport.js | explanationNoTag": {
     "message": "Không tìm thấy thẻ `<meta name=\"viewport\">`"
@@ -1659,7 +1785,7 @@
     "message": "PWA đã tối ưu hóa"
   },
   "lighthouse-core/config/default-config.js | seoCategoryDescription": {
-    "message": "Các hoạt động kiểm tra này đảm bảo rằng trang của bạn được tối ưu hóa cho thứ hạng trong kết quả của công cụ tìm kiếm. Những yếu tố bổ sung mà Lighthouse không kiểm tra có thể ảnh hưởng đến thứ hạng của bạn trong kết quả tìm kiếm. [Tìm hiểu thêm](https://support.google.com/webmasters/answer/35769)."
+    "message": "Các hoạt động kiểm tra này đảm bảo rằng trang của bạn đang tuân theo lời khuyên về tối ưu hóa cho công cụ tìm kiếm cơ bản. Có nhiều yếu tố bổ sung mà Lighthouse không hiển thị ở đây có thể ảnh hưởng đến thứ hạng của bạn trong kết quả tìm kiếm, kể cả hiệu suất của [Các chỉ số quan trọng về trang web](https://web.dev/learn-web-vitals/). [Tìm hiểu thêm](https://support.google.com/webmasters/answer/35769)."
   },
   "lighthouse-core/config/default-config.js | seoCategoryManualDescription": {
     "message": "Chạy những trình xác thực bổ sung này trên trang web của bạn để xem thêm các phương pháp hay nhất dành cho quy trình Tối ưu hóa cho công cụ tìm kiếm (SEO)."
@@ -1713,7 +1839,7 @@
     "message": "Nếu thiếu base-uri, các thẻ <base> có thể được chèn vào để đặt URL cơ sở cho mọi URL tương đối (ví dụ: tập lệnh) đến miền do kẻ tấn công kiểm soát. Hãy cân nhắc đặt base-uri thành \"none\" hoặc \"self\"."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingObjectSrc": {
-    "message": "Các phần tử do object-src kiểm soát được xem là tính năng cũ. Hãy cân nhắc đặt object-src thành \"none\" để ngăn chặn hành vi chèn các trình bổ trợ thực thi tập lệnh không an toàn."
+    "message": "Khi thiếu object-src, hệ thống sẽ cho phép hành vi chèn các trình bổ trợ thực thi tập lệnh không an toàn. Hãy cân nhắc đặt object-src thành \"none\" nếu bạn có thể."
   },
   "lighthouse-core/lib/csp-evaluator.js | missingScriptSrc": {
     "message": "Thiếu lệnh script-src. Khi không có lệnh này, các tập lệnh không an toàn có thể được thực thi."
@@ -1727,6 +1853,12 @@
   "lighthouse-core/lib/csp-evaluator.js | nonceLength": {
     "message": "Nonces phải có độ dài tối thiểu là 8 ký tự."
   },
+  "lighthouse-core/lib/csp-evaluator.js | plainUrlScheme": {
+    "message": "Tránh dùng các giao thức URL thuần túy ({keyword}) trong lệnh này. Giao thức URL thuần túy cho phép thực thi các tập lệnh từ miền không an toàn."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | plainWildcards": {
+    "message": "Tránh dùng các ký tự đại diện thuần túy ({keyword}) trong lệnh này. Các ký tự đại diện thuần túy cho phép thực thi các tập lệnh từ miền không an toàn."
+  },
   "lighthouse-core/lib/csp-evaluator.js | reportToOnly": {
     "message": "Đích báo cáo này chỉ được định cấu hình thông qua lệnh report-to. Chỉ các trình duyệt dựa trên Chromium mới hỗ trợ lệnh này. Do đó, bạn nên dùng cả lệnh report-uri."
   },
@@ -1734,13 +1866,16 @@
     "message": "Không có CSP nào định cấu hình đích báo cáo. Điều này sẽ gây khó khăn cho việc duy trì CSP theo thời gian và giám sát mọi sự cố."
   },
   "lighthouse-core/lib/csp-evaluator.js | strictDynamic": {
-    "message": "Danh sách máy chủ cho phép có thể thường xuyên bị bỏ qua. Hãy cân nhắc dùng \"strict-dynamic\" cùng với nonces hoặc hashes của CSP."
+    "message": "Danh sách máy chủ cho phép có thể thường xuyên bị bỏ qua. Thay vào đó, hãy cân nhắc dùng nonces hoặc hashes của CSP, cùng với \"strict-dynamic\" nếu cần."
   },
   "lighthouse-core/lib/csp-evaluator.js | unknownDirective": {
     "message": "Lệnh CSP không xác định."
   },
   "lighthouse-core/lib/csp-evaluator.js | unknownKeyword": {
     "message": "Có vẻ như {keyword} là một từ khóa không hợp lệ."
+  },
+  "lighthouse-core/lib/csp-evaluator.js | unsafeInline": {
+    "message": "\"unsafe-inline\" cho phép thực thi nhiều trình xử lý sự kiện và tập lệnh không an toàn trong trang. Hãy cân nhắc dùng nonces hoặc hashes của CSP để cho phép thực thi từng tập lệnh."
   },
   "lighthouse-core/lib/csp-evaluator.js | unsafeInlineFallback": {
     "message": "Hãy cân nhắc thêm \"unsafe-inline\" (bị các trình duyệt hỗ trợ nonces/hashes bỏ qua) để tương thích ngược với những trình duyệt cũ."

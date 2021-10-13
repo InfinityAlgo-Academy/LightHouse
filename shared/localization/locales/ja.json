@@ -1,4 +1,115 @@
 {
+  "flow-report/src/i18n/ui-strings.js | allReports": {
+    "message": "すべてのレポート"
+  },
+  "flow-report/src/i18n/ui-strings.js | categories": {
+    "message": "Categories"
+  },
+  "flow-report/src/i18n/ui-strings.js | categoryAccessibility": {
+    "message": "ユーザー補助"
+  },
+  "flow-report/src/i18n/ui-strings.js | categoryBestPractices": {
+    "message": "おすすめの方法"
+  },
+  "flow-report/src/i18n/ui-strings.js | categoryPerformance": {
+    "message": "パフォーマンス"
+  },
+  "flow-report/src/i18n/ui-strings.js | categoryProgressiveWebApp": {
+    "message": "プログレッシブ ウェブアプリ"
+  },
+  "flow-report/src/i18n/ui-strings.js | categorySeo": {
+    "message": "SEO"
+  },
+  "flow-report/src/i18n/ui-strings.js | desktop": {
+    "message": "パソコン"
+  },
+  "flow-report/src/i18n/ui-strings.js | helpDialogTitle": {
+    "message": "Understanding the Lighthouse Flow Report"
+  },
+  "flow-report/src/i18n/ui-strings.js | helpLabel": {
+    "message": "Understanding Flows"
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionNavigation": {
+    "message": "Use Navigation reports to..."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionSnapshot": {
+    "message": "Use Snapshot reports to..."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionTimespan": {
+    "message": "Use Timespan reports to..."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation1": {
+    "message": "Obtain a Lighthouse Performance score."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation2": {
+    "message": "Measure page load Performance metrics such as Largest Contentful Paint and Speed Index."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation3": {
+    "message": "Assess Progressive Web App capabilities."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseSnapshot1": {
+    "message": "Find accessibility issues in single page applications or complex forms."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseSnapshot2": {
+    "message": "Evaluate best practices of menus and UI elements hidden behind interaction."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan1": {
+    "message": "Measure layout shifts and JavaScript execution time on a series of interactions."
+  },
+  "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan2": {
+    "message": "Discover performance opportunities to improve the experience for long-lived pages and single-page applications."
+  },
+  "flow-report/src/i18n/ui-strings.js | mobile": {
+    "message": "モバイル"
+  },
+  "flow-report/src/i18n/ui-strings.js | navigationDescription": {
+    "message": "ページの読み込み"
+  },
+  "flow-report/src/i18n/ui-strings.js | navigationLongDescription": {
+    "message": "Navigation reports analyze a single page load, exactly like the original Lighthouse reports."
+  },
+  "flow-report/src/i18n/ui-strings.js | navigationReport": {
+    "message": "ナビゲーション レポート"
+  },
+  "flow-report/src/i18n/ui-strings.js | ratingAverage": {
+    "message": "普通"
+  },
+  "flow-report/src/i18n/ui-strings.js | ratingError": {
+    "message": "エラー"
+  },
+  "flow-report/src/i18n/ui-strings.js | ratingFail": {
+    "message": "低"
+  },
+  "flow-report/src/i18n/ui-strings.js | ratingPass": {
+    "message": "高"
+  },
+  "flow-report/src/i18n/ui-strings.js | save": {
+    "message": "Save"
+  },
+  "flow-report/src/i18n/ui-strings.js | snapshotDescription": {
+    "message": "取得したページの状態"
+  },
+  "flow-report/src/i18n/ui-strings.js | snapshotLongDescription": {
+    "message": "Snapshot reports analyze the page in a particular state, typically after user interactions."
+  },
+  "flow-report/src/i18n/ui-strings.js | snapshotReport": {
+    "message": "スナップショット レポート"
+  },
+  "flow-report/src/i18n/ui-strings.js | summary": {
+    "message": "概要"
+  },
+  "flow-report/src/i18n/ui-strings.js | timespanDescription": {
+    "message": "ユーザー操作"
+  },
+  "flow-report/src/i18n/ui-strings.js | timespanLongDescription": {
+    "message": "Timespan reports analyze an arbitrary period of time, typically containing user interactions."
+  },
+  "flow-report/src/i18n/ui-strings.js | timespanReport": {
+    "message": "期間レポート"
+  },
+  "flow-report/src/i18n/ui-strings.js | title": {
+    "message": "Lighthouse ユーザーフロー レポート"
+  },
   "lighthouse-core/audits/accessibility/accesskeys.js | description": {
     "message": "アクセスキーは、ユーザーがページの特定の部分にすばやくフォーカスを移動するときに使います。正しく操作できるよう、各アクセスキーは一意にする必要があります。[詳細](https://web.dev/accesskeys/)"
   },
@@ -554,6 +665,12 @@
   "lighthouse-core/audits/byte-efficiency/uses-responsive-images-snapshot.js | columnDisplayedDimensions": {
     "message": "表示サイズ"
   },
+  "lighthouse-core/audits/byte-efficiency/uses-responsive-images-snapshot.js | failureTitle": {
+    "message": "画像は表示サイズより大きいサイズとなっています"
+  },
+  "lighthouse-core/audits/byte-efficiency/uses-responsive-images-snapshot.js | title": {
+    "message": "画像は表示サイズに合ったサイズとなっています"
+  },
   "lighthouse-core/audits/byte-efficiency/uses-responsive-images.js | description": {
     "message": "適切なサイズの画像を配信して、モバイルデータ量を節約し読み込み時間を短縮してください。[詳細](https://web.dev/uses-responsive-images/)"
   },
@@ -1006,6 +1123,15 @@
   },
   "lighthouse-core/audits/layout-shift-elements.js | title": {
     "message": "レイアウトが大きく変わらないようにする"
+  },
+  "lighthouse-core/audits/lcp-lazy-loaded.js | description": {
+    "message": "スクロールせずに見える範囲にある画像が遅延読み込みによってページのライフサイクルの後半にレンダリングされると、Largest Contentful Paint の遅延につながります。[詳細](https://web.dev/lcp-lazy-loading/)"
+  },
+  "lighthouse-core/audits/lcp-lazy-loaded.js | failureTitle": {
+    "message": "Largest Contentful Paint の画像が遅延読み込みされています"
+  },
+  "lighthouse-core/audits/lcp-lazy-loaded.js | title": {
+    "message": "Largest Contentful Paint の画像は遅延読み込みされていません"
   },
   "lighthouse-core/audits/long-tasks.js | description": {
     "message": "メインスレッドで長時間実行されているタスクを表示します。入力の遅延に最も影響しているタスクを特定する際に役立ちます。[詳細](https://web.dev/long-tasks-devtools/)"
@@ -1524,7 +1650,7 @@
     "message": "ページで有効なソースマップが使用されています"
   },
   "lighthouse-core/audits/viewport.js | description": {
-    "message": "モバイル画面用にアプリを最適化するには、`<meta name=\"viewport\">` タグを追加してください。[詳細](https://web.dev/viewport/)"
+    "message": "`<meta name=\"viewport\">` を使用すると、モバイル画面サイズ向けにアプリを最適化できるほか、[ユーザー入力の遅延を 300 ミリ秒](https://developers.google.com/web/updates/2013/12/300ms-tap-delay-gone-away)短縮できます。[詳細](https://web.dev/viewport/)"
   },
   "lighthouse-core/audits/viewport.js | explanationNoTag": {
     "message": "`<meta name=\"viewport\">` タグが見つかりません"
@@ -1659,7 +1785,7 @@
     "message": "PWA の最適化"
   },
   "lighthouse-core/config/default-config.js | seoCategoryDescription": {
-    "message": "これらのチェックを実行することで、ページが検索エンジンの検索結果ランキングに対し最適化されていることを確認できます。Lighthouse ではチェックされない、検索結果ランキングに影響する可能性がある他の要因もあります。[詳細](https://support.google.com/webmasters/answer/35769)"
+    "message": "これらのチェックを行うことで、ページが検索エンジン最適化の基本的な推奨事項に沿っていることを確認できます。検索ランキングに影響する可能性のある要素には、Lighthouse で考慮されている要素以外に、[ウェブに関する主な指標](https://web.dev/learn-web-vitals/)のスコアなどもあります。[詳細](https://support.google.com/webmasters/answer/35769)"
   },
   "lighthouse-core/config/default-config.js | seoCategoryManualDescription": {
     "message": "サイトでこれらの他の検証ツールを実行し、SEO のその他のおすすめの方法をご確認ください。"
@@ -1713,7 +1839,7 @@
     "message": "base-uri を指定しないと、挿入された <base> タグによって、すべての相対 URL（スクリプトなど）のベース URL が攻撃者の管理ドメインに設定される可能性があります。base-uri を 'none' か 'self' に設定することをご検討ください。"
   },
   "lighthouse-core/lib/csp-evaluator.js | missingObjectSrc": {
-    "message": "object-src で制御される要素は、古い機能とみなされます。安全でないスクリプトを実行するプラグインが挿入されないよう、object-src を 'none' に設定することを検討してください。"
+    "message": "object-src が設定されていない場合、安全でないスクリプトを実行するプラグインが挿入される恐れがあります。可能な場合は、object-src を 'none' に設定することを検討してください。"
   },
   "lighthouse-core/lib/csp-evaluator.js | missingScriptSrc": {
     "message": "script-src ディレクティブが指定されていません。このため、安全でないスクリプトを実行できる状態になっています。"
@@ -1727,6 +1853,12 @@
   "lighthouse-core/lib/csp-evaluator.js | nonceLength": {
     "message": "nonce は 8 文字以上である必要があります。"
   },
+  "lighthouse-core/lib/csp-evaluator.js | plainUrlScheme": {
+    "message": "このディレクティブでは、プレーンな URL スキーム（{keyword}）を使用しないでください。プレーンな URL スキームを使用すると、安全でないドメインからスクリプトが挿入される恐れがあります。"
+  },
+  "lighthouse-core/lib/csp-evaluator.js | plainWildcards": {
+    "message": "このディレクティブでは、プレーンなワイルドカード（{keyword}）を使用しないでください。プレーンなワイルドカードを使用すると、安全でないドメインからスクリプトが挿入される恐れがあります。"
+  },
   "lighthouse-core/lib/csp-evaluator.js | reportToOnly": {
     "message": "報告先が report-to ディレクティブ経由でのみ設定されています。このディレクティブは、Chromium ベースのブラウザでしかサポートされていないため、report-uri ディレクティブも使用することをおすすめします。"
   },
@@ -1734,13 +1866,16 @@
     "message": "CSP で報告先が設定されていません。CSP の動作状況や問題が発生した場合の確認が難しくなります。"
   },
   "lighthouse-core/lib/csp-evaluator.js | strictDynamic": {
-    "message": "ホストの許可リストが頻繁に回避されています。'strict-dynamic' と CSP nonce または hash を組み合わせて使用することを検討してください。"
+    "message": "ホストの許可リストが頻繁に回避されています。必要な場合は、代わりに CSP nonce または hash と 'strict-dynamic' を使用することを検討してください。"
   },
   "lighthouse-core/lib/csp-evaluator.js | unknownDirective": {
     "message": "不明な CSP ディレクティブです。"
   },
   "lighthouse-core/lib/csp-evaluator.js | unknownKeyword": {
     "message": "{keyword} は無効なキーワードのようです。"
+  },
+  "lighthouse-core/lib/csp-evaluator.js | unsafeInline": {
+    "message": "'unsafe-inline' が指定されているため、安全でないページ内スクリプトやイベント ハンドラを実行できる状態になっています。CSP nonce または hash を使用して、スクリプトを個別に許可することを検討してください。"
   },
   "lighthouse-core/lib/csp-evaluator.js | unsafeInlineFallback": {
     "message": "古いブラウザとの下位互換性を保つため、'unsafe-inline' を追加することを検討してください（nonce / hash をサポートしているブラウザでは無視されます）。"
