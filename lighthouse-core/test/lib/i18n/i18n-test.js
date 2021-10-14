@@ -39,16 +39,16 @@ describe('i18n', () => {
     });
 
     it('falls back to default if locale not provided or cant be found', () => {
-      expect(i18n.lookupLocale(undefined)).toEqual('en');
-      expect(i18n.lookupLocale(invalidLocale)).toEqual('en');
-      expect(i18n.lookupLocale([invalidLocale, invalidLocale])).toEqual('en');
+      expect(i18n.lookupLocale(undefined)).toEqual('en-US');
+      expect(i18n.lookupLocale(invalidLocale)).toEqual('en-US');
+      expect(i18n.lookupLocale([invalidLocale, invalidLocale])).toEqual('en-US');
     });
 
     it('logs a warning if locale is not available and the default is used', () => {
       const logListener = jest.fn();
       log.events.on('warning', logListener);
 
-      expect(i18n.lookupLocale(invalidLocale)).toEqual('en');
+      expect(i18n.lookupLocale(invalidLocale)).toEqual('en-US');
 
       // COMPAT: Node 12 logs an extra warning that full-icu is not available.
       if (isNode12SmallIcu()) {
@@ -56,29 +56,29 @@ describe('i18n', () => {
         expect(logListener).toHaveBeenNthCalledWith(1, ['i18n',
           expect.stringMatching(/Requested locale not available in this version of node/)]);
         expect(logListener).toHaveBeenNthCalledWith(2, ['i18n',
-          `locale(s) '${invalidLocale}' not available. Falling back to default 'en'`]);
+          `locale(s) '${invalidLocale}' not available. Falling back to default 'en-US'`]);
         return;
       }
 
       expect(logListener).toBeCalledTimes(1);
       expect(logListener).toBeCalledWith(['i18n',
-        `locale(s) '${invalidLocale}' not available. Falling back to default 'en'`]);
+        `locale(s) '${invalidLocale}' not available. Falling back to default 'en-US'`]);
 
       log.events.off('warning', logListener);
     });
 
     it('falls back to root tag prefix if specific locale not available', () => {
-      // COMPAT: Node 12 only has 'en' by default.
+      // COMPAT: Node 12 only has 'en-US' by default.
       if (isNode12SmallIcu()) {
-        expect(i18n.lookupLocale('es-JKJK')).toEqual('en');
+        expect(i18n.lookupLocale('es-JKJK')).toEqual('en-US');
         return;
       }
 
       expect(i18n.lookupLocale('es-JKJK')).toEqual('es');
     });
 
-    it('falls back to en if no match is available', () => {
-      expect(i18n.lookupLocale(invalidLocale)).toEqual('en');
+    it('falls back to en-US if no match is available', () => {
+      expect(i18n.lookupLocale(invalidLocale)).toEqual('en-US');
     });
   });
 });

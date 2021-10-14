@@ -249,9 +249,9 @@ describe('.mergePlugins', () => {
 describe('.resolveSettings', () => {
   it('resolves the locale', () => {
     const settings = resolveSettings({locale: 'zh-CN'});
-    // COMPAT: Node 12 only has 'en' by default.
+    // COMPAT: Node 12 only has 'en-US' by default.
     if (isNode12SmallIcu()) {
-      expect(settings.locale).toEqual('en');
+      expect(settings.locale).toEqual('en-US');
       return;
     }
     expect(settings.locale).toEqual('zh');

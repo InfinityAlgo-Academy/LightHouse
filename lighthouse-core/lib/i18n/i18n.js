@@ -12,9 +12,11 @@ const lookupClosestLocale = require('lookup-closest-locale');
 const {getAvailableLocales} = require('../../../shared/localization/format.js');
 const log = require('lighthouse-logger');
 const {LH_ROOT} = require('../../../root.js');
-const {isIcuMessage, _formatMessage} = require('../../../shared/localization/format.js');
-
-const DEFAULT_LOCALE = 'en';
+const {
+  isIcuMessage,
+  _formatMessage,
+  DEFAULT_LOCALE,
+} = require('../../../shared/localization/format.js');
 
 const UIStrings = {
   /** Used to show the duration in milliseconds that something lasted. The `{timeInMs}` placeholder will be replaced with the time duration, shown in milliseconds (e.g. 63 ms) */
@@ -127,7 +129,6 @@ function lookupLocale(locales) {
     throw new Error('Lighthouse must be run in Node with `Intl` support. See https://nodejs.org/api/intl.html for help');
   }
 
-  // TODO: could do more work to sniff out the user's locale
   const canonicalLocales = Intl.getCanonicalLocales(locales);
 
   // Filter by what's available in this runtime.

@@ -283,6 +283,7 @@ function resolveSettings(settingsJson = {}, overrides = undefined) {
   // If a locale is requested in flags or settings, use it. A typical CLI run will not have one,
   // however `lookupLocale` will always determine which of our supported locales to use (falling
   // back if necessary).
+  // TODO: could do more work to sniff out the user's locale
   const locale = i18n.lookupLocale((overrides && overrides.locale) || settingsJson.locale);
 
   // Fill in missing settings with defaults

@@ -12,6 +12,12 @@
  * Google locale inheritance rules: https://goto.google.com/ccssm
  * CLDR language aliases: https://www.unicode.org/cldr/charts/latest/supplemental/aliases.html
  * CLDR locale inheritance: https://github.com/unicode-cldr/cldr-core/blob/master/supplemental/parentLocales.json
+ *
+ * For Lighthouse bundles that shouldn't include locale data, the recommended pattern
+ * is to replace the default export of this file with `{}` so that no locale messages
+ * are included. Strings will work normally through the IcuMessage.formattedDefault
+ * fallback, and locale messages can be added on demand (e.g. dynamically fetched)
+ * through `format.registerLocaleData()`.
  */
 
 // TODO(paulirish): Centralize locale inheritance (combining this & i18n.lookupLocale()), adopt cldr parentLocale rules.
