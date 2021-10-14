@@ -57,6 +57,30 @@ export const UIStrings = {
   ratingFail: 'Poor',
   /** Rating indicating that a report category rating could not be calculated because of an error. */
   ratingError: 'Error',
+  /**
+   * @description Label indicating the number of Lighthouse reports that evaluate a web page as it loads.
+   * @example {2} numNavigation
+   */
+  navigationReportCount: `{numNavigation, plural,
+    =1 {{numNavigation} navigation report}
+    other {{numNavigation} navigation reports}
+  }`,
+  /**
+   * @description Label indicating the number of Lighthouse reports that evaluate a web page over a period of time.
+   * @example {2} numTimespan
+   */
+  timespanReportCount: `{numTimespan, plural,
+    =1 {{numTimespan} timespan report}
+    other {{numTimespan} timespan reports}
+  }`,
+  /**
+   * @description Label indicating the number of Lighthouse reports that evaluate a web page at a single point in time.
+   * @example {2} numSnapshot
+   */
+  snapshotReportCount: `{numSnapshot, plural,
+    =1 {{numSnapshot} snapshot report}
+    other {{numSnapshot} snapshot reports}
+  }`,
   /** Label for a button that saves a Lighthouse report to disk. */
   save: 'Save',
   /** Label for a button that toggles the help modal with explanations on how to interpret the Lighthouse flow report. */
@@ -83,4 +107,28 @@ export const UIStrings = {
   helpUseCaseSnapshot1: 'Find accessibility issues in single page applications or complex forms.',
   /** Example use case for how Lighthouse can be applied in practice. Appears in a list with other examples. */
   helpUseCaseSnapshot2: 'Evaluate best practices of menus and UI elements hidden behind interaction.',
+  /**
+   * @description Label indicating the number of Lighthouse audits that passed.
+   * @example {2} numPassed
+   */
+  passedAuditCount: `{numPassed, plural,
+    =1 {{numPassed} audit passed}
+    other {{numPassed} audits passed}
+  }`,
+  /**
+   * @description Label indicating the number of Lighthouse audits that are possible to pass for a page.
+   * @example {2} numPassableAudits
+   */
+  passableAuditCount: `{numPassableAudits, plural,
+    =1 {{numPassableAudits} passable audit}
+    other {{numPassableAudits} passable audits}
+  }`,
+  /**
+   * @description Label indicating the number of Lighthouse audits that are informative.
+   * @example {2} numInformative
+   */
+  informativeAuditCount: `{numInformative, plural,
+    =1 {{numInformative} informative audit}
+    other {{numInformative} informative audits}
+  }`,
 };

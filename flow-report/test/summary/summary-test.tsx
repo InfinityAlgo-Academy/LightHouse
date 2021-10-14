@@ -34,7 +34,7 @@ describe('SummaryHeader', () => {
     const lhrCounts = root.getByText(/·/);
     expect(root.getByText('Summary')).toBeTruthy();
     expect(lhrCounts.textContent).toEqual(
-      '2 navigation reports · 1 timespan reports · 1 snapshot reports'
+      '2 navigation reports · 1 timespan report · 1 snapshot report'
     );
   });
 });

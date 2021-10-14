@@ -171,7 +171,7 @@ function _preformatValues(messageFormatter, values, lhlMessage) {
  * @param {LH.Locale} locale
  * @return {string}
  */
-function _formatMessage(message, values = {}, locale) {
+function formatMessage(message, values = {}, locale) {
   // When using accented english, force the use of a different locale for number formatting.
   const localeForMessageFormat = (locale === 'en-XA' || locale === 'en-XL') ? 'de-DE' : locale;
 
@@ -205,7 +205,7 @@ function _localizeIcuMessage(icuMessage, locale) {
     return icuMessage.formattedDefault;
   }
 
-  return _formatMessage(localeMessage.message, icuMessage.values, locale);
+  return formatMessage(localeMessage.message, icuMessage.values, locale);
 }
 
 /**
@@ -448,7 +448,7 @@ module.exports = {
   replaceIcuMessages,
   hasLocale,
   registerLocaleData,
-  _formatMessage,
+  formatMessage,
   getIcuMessageIdParts,
   getAvailableLocales,
   getCanonicalLocales,

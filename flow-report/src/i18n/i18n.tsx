@@ -7,6 +7,7 @@
 import {createContext, FunctionComponent} from 'preact';
 import {useContext, useMemo} from 'preact/hooks';
 
+import {formatMessage} from '../../../shared/localization/format';
 import {I18n} from '../../../report/renderer/i18n';
 import {UIStrings} from './ui-strings';
 import {useLocale} from '../util';
@@ -23,6 +24,13 @@ export function useI18n() {
 export function useUIStrings() {
   const i18n = useI18n();
   return i18n.strings;
+}
+
+export function useStringFormatter() {
+  const locale = useLocale();
+  return (str: string, values?: Record<string, string|number>) => {
+    return formatMessage(str, values, locale);
+  };
 }
 
 export const I18nProvider: FunctionComponent = ({children}) => {

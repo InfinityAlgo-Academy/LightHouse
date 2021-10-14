@@ -9,7 +9,7 @@ import {FunctionComponent} from 'preact';
 import {Util} from '../../../report/renderer/util';
 import {Separator} from '../common';
 import {CategoryScore} from '../wrappers/category-score';
-import {useUIStrings} from '../i18n/i18n';
+import {useStringFormatter, useUIStrings} from '../i18n/i18n';
 
 import type {UIStringsType} from '../i18n/ui-strings';
 
@@ -35,6 +35,7 @@ export const SummaryTooltip: FunctionComponent<{
   gatherMode: LH.Result.GatherMode
 }> = ({category, gatherMode}) => {
   const strings = useUIStrings();
+  const str_ = useStringFormatter();
   const {
     numPassed,
     numPassableAudits,
@@ -69,18 +70,14 @@ export const SummaryTooltip: FunctionComponent<{
         }
       </div>
       <div className="SummaryTooltip__fraction">
-        {
-          // TODO(FLOW-I18N): Placeholder format.
-          `${numPassed} audits passed / ${numPassableAudits} passable audits`
-        }
+        <span>{str_(strings.passedAuditCount, {numPassed})}</span>
+        <span> / </span>
+        <span>{str_(strings.passableAuditCount, {numPassableAudits})}</span>
       </div>
-      {
-        // TODO(FLOW-I18N): Placeholder format.
-        numInformative ?
-          <div className="SummaryTooltip__informative">
-            {`${numInformative} informative audits`}
-          </div> :
-          null
+      {numInformative !== 0 &&
+        <div className="SummaryTooltip__informative">
+          {str_(strings.informativeAuditCount, {numInformative})}
+        </div>
       }
     </div>
   );

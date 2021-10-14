@@ -44,7 +44,8 @@ describe('SummaryTooltip', () => {
 
     expect(root.getByText('Average')).toBeTruthy();
     expect(() => root.getByText(/^[0-9]+$/)).toThrow();
-    expect(root.getByText('2 audits passed / 3 passable audits')).toBeTruthy();
+    expect(root.getByText('2 audits passed')).toBeTruthy();
+    expect(root.getByText('3 passable audits')).toBeTruthy();
   });
 
   it('renders tooltip without rating', async () => {
@@ -65,7 +66,8 @@ describe('SummaryTooltip', () => {
 
     expect(() => root.getByText(/^(Average|Good|Poor)$/)).toThrow();
     expect(() => root.getByText(/^[0-9]+$/)).toThrow();
-    expect(root.getByText('2 audits passed / 3 passable audits')).toBeTruthy();
+    expect(root.getByText('2 audits passed')).toBeTruthy();
+    expect(root.getByText('3 passable audits')).toBeTruthy();
   });
 
   it('renders scored category tooltip with score', async () => {
@@ -86,7 +88,8 @@ describe('SummaryTooltip', () => {
 
     expect(root.getByText('Good')).toBeTruthy();
     expect(root.getByText('100')).toBeTruthy();
-    expect(root.getByText('2 audits passed / 3 passable audits')).toBeTruthy();
+    expect(root.getByText('2 audits passed')).toBeTruthy();
+    expect(root.getByText('3 passable audits')).toBeTruthy();
   });
 
   it('renders informative audit count if any', async () => {
@@ -107,7 +110,8 @@ describe('SummaryTooltip', () => {
 
     expect(root.getByText('Good')).toBeTruthy();
     expect(root.getByText('100')).toBeTruthy();
-    expect(root.getByText('2 audits passed / 2 passable audits')).toBeTruthy();
-    expect(root.getByText('1 informative audits')).toBeTruthy();
+    expect(root.getByText('2 audits passed')).toBeTruthy();
+    expect(root.getByText('2 passable audits')).toBeTruthy();
+    expect(root.getByText('1 informative audit')).toBeTruthy();
   });
 });

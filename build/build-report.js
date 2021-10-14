@@ -59,8 +59,13 @@ async function buildFlowReport() {
   const bundle = await rollup.rollup({
     input: 'flow-report/standalone-flow.tsx',
     plugins: [
+      rollupPlugins.replace({
+        '__dirname': '""',
+      }),
       rollupPlugins.shim({
         [`${LH_ROOT}/flow-report/src/i18n/localized-strings`]: buildFlowStrings(),
+        [`${LH_ROOT}/shared/localization/locales.js`]: 'export default {}',
+        'fs': 'export default {}',
       }),
       rollupPlugins.nodeResolve(),
       rollupPlugins.commonjs(),

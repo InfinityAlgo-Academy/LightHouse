@@ -59,6 +59,9 @@
   "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan2": {
     "message": "D̂íŝćôv́êŕ p̂ér̂f́ôŕm̂án̂ćê óp̂ṕôŕt̂ún̂ít̂íêś t̂ó îḿp̂ŕôv́ê t́ĥé êx́p̂ér̂íêńĉé f̂ór̂ ĺôńĝ-ĺîv́êd́ p̂áĝéŝ án̂d́ ŝín̂ǵl̂é-p̂áĝé âṕp̂ĺîćât́îón̂ś."
   },
+  "flow-report/src/i18n/ui-strings.js | informativeAuditCount": {
+    "message": "{numInformative, plural,\n    =1 {{numInformative} îńf̂ór̂ḿât́îv́ê áûd́ît́}\n    other {{numInformative} îńf̂ór̂ḿât́îv́ê áûd́ît́ŝ}\n  }"
+  },
   "flow-report/src/i18n/ui-strings.js | mobile": {
     "message": "M̂ób̂íl̂é"
   },
@@ -70,6 +73,15 @@
   },
   "flow-report/src/i18n/ui-strings.js | navigationReport": {
     "message": "N̂áv̂íĝát̂íôń r̂ép̂ór̂t́"
+  },
+  "flow-report/src/i18n/ui-strings.js | navigationReportCount": {
+    "message": "{numNavigation, plural,\n    =1 {{numNavigation} n̂áv̂íĝát̂íôń r̂ép̂ór̂t́}\n    other {{numNavigation} n̂áv̂íĝát̂íôń r̂ép̂ór̂t́ŝ}\n  }"
+  },
+  "flow-report/src/i18n/ui-strings.js | passableAuditCount": {
+    "message": "{numPassableAudits, plural,\n    =1 {{numPassableAudits} p̂áŝśâb́l̂é âúd̂ít̂}\n    other {{numPassableAudits} ṕâśŝáb̂ĺê áûd́ît́ŝ}\n  }"
+  },
+  "flow-report/src/i18n/ui-strings.js | passedAuditCount": {
+    "message": "{numPassed, plural,\n    =1 {{numPassed} âúd̂ít̂ ṕâśŝéd̂}\n    other {{numPassed} áûd́ît́ŝ ṕâśŝéd̂}\n  }"
   },
   "flow-report/src/i18n/ui-strings.js | ratingAverage": {
     "message": "Âv́êŕâǵê"
@@ -95,6 +107,9 @@
   "flow-report/src/i18n/ui-strings.js | snapshotReport": {
     "message": "Ŝńâṕŝh́ôt́ r̂ép̂ór̂t́"
   },
+  "flow-report/src/i18n/ui-strings.js | snapshotReportCount": {
+    "message": "{numSnapshot, plural,\n    =1 {{numSnapshot} ŝńâṕŝh́ôt́ r̂ép̂ór̂t́}\n    other {{numSnapshot} ŝńâṕŝh́ôt́ r̂ép̂ór̂t́ŝ}\n  }"
+  },
   "flow-report/src/i18n/ui-strings.js | summary": {
     "message": "Ŝúm̂ḿâŕŷ"
   },
@@ -106,6 +121,9 @@
   },
   "flow-report/src/i18n/ui-strings.js | timespanReport": {
     "message": "T̂ím̂éŝṕâń r̂ép̂ór̂t́"
+  },
+  "flow-report/src/i18n/ui-strings.js | timespanReportCount": {
+    "message": "{numTimespan, plural,\n    =1 {{numTimespan} t̂ím̂éŝṕâń r̂ép̂ór̂t́}\n    other {{numTimespan} t̂ím̂éŝṕâń r̂ép̂ór̂t́ŝ}\n  }"
   },
   "flow-report/src/i18n/ui-strings.js | title": {
     "message": "L̂íĝh́t̂h́ôúŝé Ûśêŕ F̂ĺôẃ R̂ép̂ór̂t́"

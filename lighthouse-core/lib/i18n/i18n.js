@@ -14,7 +14,7 @@ const log = require('lighthouse-logger');
 const {LH_ROOT} = require('../../../root.js');
 const {
   isIcuMessage,
-  _formatMessage,
+  formatMessage,
   DEFAULT_LOCALE,
 } = require('../../../shared/localization/format.js');
 
@@ -183,7 +183,7 @@ function createIcuMessageFn(filename, fileStrings) {
     return {
       i18nId,
       values,
-      formattedDefault: _formatMessage(message, values, DEFAULT_LOCALE),
+      formattedDefault: formatMessage(message, values, DEFAULT_LOCALE),
     };
   };
 
