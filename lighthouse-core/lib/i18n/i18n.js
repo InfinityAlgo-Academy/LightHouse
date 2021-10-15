@@ -120,12 +120,22 @@ const UIStrings = {
  * - supported locales in Intl formatters
  *
  * If `locale` isn't provided or one could not be found, DEFAULT_LOCALE is returned.
+ *
+ * By default any of the locales Lighthouse has strings for can be returned, but this
+ * can be overriden with `possibleLocales`, useful e.g. when Lighthouse is bundled and
+ * only DEFAULT_LOCALE is available, but `possibleLocales` can be used to select a
+ * locale available to be downloaded on demand.
  * @param {string|string[]=} locales
+ * @param {Array<string>=} possibleLocales
  * @return {LH.Locale}
  */
-function lookupLocale(locales) {
-  // If Node was built with `--with-intl=none`, `Intl` won't exist.
+function lookupLocale(locales, possibleLocales) {
+  // TODO: lookupLocale may need to be split into two functions, one that canonicalizes
+  // locales and one that looks up the best locale filename for a given locale.
+  // e.g. `en-IE` is canonical, but uses `en-GB.json`. See TODO in locales.js
+
   if (typeof Intl !== 'object') {
+    // If Node was built with `--with-intl=none`, `Intl` won't exist.
     throw new Error('Lighthouse must be run in Node with `Intl` support. See https://nodejs.org/api/intl.html for help');
   }
 
@@ -135,7 +145,7 @@ function lookupLocale(locales) {
   const availableLocales = Intl.NumberFormat.supportedLocalesOf(canonicalLocales);
 
   // Get available locales and transform into object to match `lookupClosestLocale`'s API.
-  const localesWithMessages = getAvailableLocales();
+  const localesWithMessages = possibleLocales || getAvailableLocales();
   const localesWithmessagesObj = /** @type {Record<LH.Locale, LhlMessages>} */ (
     Object.fromEntries(localesWithMessages.map(l => [l, {}])));
 

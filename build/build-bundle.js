@@ -13,14 +13,12 @@
 const fs = require('fs');
 const path = require('path');
 const assert = require('assert').strict;
-const stream = require('stream');
 const mkdir = fs.promises.mkdir;
 const LighthouseRunner = require('../lighthouse-core/runner.js');
 const exorcist = require('exorcist');
 const browserify = require('browserify');
 const terser = require('terser');
 const {minifyFileTransform} = require('./build-utils.js');
-const {LH_ROOT} = require('../root.js');
 
 const COMMIT_HASH = require('child_process')
   .execSync('git rev-parse HEAD')
@@ -31,9 +29,6 @@ const audits = LighthouseRunner.getAuditList()
 
 const gatherers = LighthouseRunner.getGathererList()
     .map(f => './lighthouse-core/gather/gatherers/' + f.replace(/\.js$/, ''));
-
-const locales = fs.readdirSync(LH_ROOT + '/shared/localization/locales/')
-    .map(f => require.resolve(`../shared/localization/locales/${f}`));
 
 // HACK: manually include the lighthouse-plugin-publisher-ads audits.
 /** @type {Array<string>} */
@@ -67,23 +62,7 @@ async function browserifyFile(entryPath, distPath) {
     })
     // Transform the fs.readFile etc into inline strings.
     .transform('@wardpeet/brfs', {
-      /** @param {string} file */
-      readFileTransform: (file) => {
-        // Don't include locales in DevTools.
-        if (isDevtools(entryPath) && locales.includes(file)) {
-          return new stream.Transform({
-            transform(chunk, enc, next) {
-              next();
-            },
-            final(next) {
-              this.push('{}');
-              next();
-            },
-          });
-        }
-
-        return minifyFileTransform(file);
-      },
+      readFileTransform: minifyFileTransform,
       global: true,
       parserOpts: {ecmaVersion: 12},
     })
@@ -105,6 +84,11 @@ async function browserifyFile(entryPath, distPath) {
   // Don't include in Lightrider - HTML generation isn't supported, so report assets aren't needed.
   if (isDevtools(entryPath) || isLightrider(entryPath)) {
     bundle.ignore(require.resolve('../report/generator/report-assets.js'));
+  }
+
+  // Don't include locales in DevTools.
+  if (isDevtools(entryPath)) {
+    bundle.ignore(require.resolve('../shared/localization/locales.js'));
   }
 
   // Expose the audits, gatherers, and computed artifacts so they can be dynamically loaded.
