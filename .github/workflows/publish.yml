@@ -15,6 +15,9 @@ jobs:
           registry-url: https://registry.npmjs.org/
       - run: yarn --frozen-lockfile
 
+      # Build report bundles needed for publishing.
+      - run: yarn build-report
+
       - name: Publish to npm
         run: |
           npm whoami
