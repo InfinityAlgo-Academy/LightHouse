@@ -82,7 +82,7 @@ describe('FlowStepThumbnail', () => {
 
     expect(thumbnail.src).toContain('frame1');
     await act(() => {
-      jest.advanceTimersByTime(251);
+      jest.advanceTimersByTime(501);
     });
     expect(thumbnail.src).toContain('frame2');
   });

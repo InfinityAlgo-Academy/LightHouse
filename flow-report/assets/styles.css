@@ -7,6 +7,7 @@
 .flow-vars {
   --app-font-size: 12px;
   --base-spacing: 16px;
+  --bold-weight: 500;
   --category-summary-font-size: 18px;
   --double-base-spacing: calc(var(--base-spacing) * 2);
   --gather-mode-icon-size: 16px;
@@ -23,10 +24,12 @@
   --sidebar-selected-bg-color: #DDEEFF;
   --sidebar-summary-font-size: 14px;
   --sidebar-title-font-size: 16px;
-  --sidebar-max-width: 400px;
-  --summary-flow-step-label-font-size: 16px;
-  --summary-subtitle-font-size: 16px;
-  --summary-title-font-size: 32px;
+  --sidebar-width: 320px;
+  --summary-flow-step-link-font-size: 14px;
+  --summary-navigation-header-font-size: 12px;
+  --summary-header-margin: 52px;
+  --summary-subtitle-font-size: 12px;
+  --summary-title-font-size: 20px;
   --summary-tooltip-box-shadow-color: rgba(0, 0, 0, 0.25);
   --topbar-button-font-size: 14px;
   --topbar-button-size: 45px;
@@ -114,8 +117,16 @@
 
 .Topbar__title {
   font-size: var(--topbar-title-font-size);
-  font-weight: bold;
+  font-weight: var(--bold-weight);
   margin-right: var(--double-base-spacing);
+}
+
+.Topbar__help-label {
+  display: flex;
+  align-items: center;
+}
+.Topbar__help-label > :first-child {
+  margin-right: var(--half-base-spacing);
 }
 
 .Content {
@@ -148,19 +159,19 @@
 .Sidebar {
   grid-area: sidebar;
   border-right: 1px solid var(--separator-color);
-  width: min-content;
-  max-width: var(--sidebar-max-width);
+  width: var(--sidebar-width);
   overflow-x: hidden;
   overflow-y: auto;
 }
 .Sidebar a {
-  color: var(--color-gray-800);
+  color: var(--color-gray-700);
   text-decoration: none;
 }
 
 .Sidebar--current {
   background-color: var(--sidebar-selected-bg-color);
   color: var(--color-blue-A700) !important;
+  font-weight: var(--bold-weight);
 }
 
 .SidebarHeader {
@@ -168,7 +179,7 @@
 }
 .SidebarHeader__title {
   font-size: var(--sidebar-title-font-size);
-  font-weight: bold;
+  font-weight: var(--bold-weight);
   width: max-content;
 }
 .SidebarHeader__date {
@@ -180,6 +191,7 @@
   margin: var(--base-spacing);
   padding: var(--half-base-spacing);
   background-color: var(--color-gray-50);
+  color: var(--color-gray-700);
   border-radius: 3px;
 }
 
@@ -258,21 +270,23 @@
 }
 
 .SummaryHeader {
-  margin: calc(var(--base-spacing) * 3) 0px;
-  width: 100%;
+  margin: var(--summary-header-margin) 0px;
 }
 
 .SummaryHeader__title {
-  margin: var(--base-spacing) 0;
   font-size: var(--summary-title-font-size);
+  font-weight: var(--bold-weight);
+  line-height: 28px;
+  margin: 0 0 calc(0.25 * var(--base-spacing));
 }
 
 .SummaryHeader__subtitle {
   font-size: var(--summary-subtitle-font-size);
+  line-height: 16px;
 }
 
 .SummarySectionHeader {
-  margin-top: var(--double-base-spacing);
+  margin-top: var(--base-spacing);
 }
 
 .SummarySectionHeader__content {
@@ -281,15 +295,15 @@
 }
 
 .SummaryFlow {
-  width: 100%;
   display: grid;
+  max-width: var(--report-width);
   grid-auto-rows: min-content;
-  grid-template-columns: min-content min-content minmax(var(--min-text-width), 4fr) 1fr 1fr 1fr 1fr;
+  grid-template-columns: min-content min-content minmax(var(--min-text-width), max-content) 1fr 1fr 1fr 1fr;
   align-items: center;
   margin: var(--base-spacing) 0px;
+  --gauge-circle-size: 48px;
 }
 .SummaryFlow .lh-fraction__content {
-  padding: 0px;
   min-width: unset;
 }
 
@@ -321,7 +335,7 @@
   grid-column: 2;
 }
 .SummaryFlowStep .FlowStepThumbnail {
-  margin: var(--base-spacing) var(--half-base-spacing);
+  margin: var(--half-base-spacing);
 }
 
 .FlowStepThumbnail {
@@ -329,7 +343,10 @@
   justify-self: center;
   object-fit: cover;
   object-position: top left;
-  border: 1px solid var(--color-gray);
+  border: 1px solid var(--color-gray-700);
+  border-radius: 3px;
+  padding: 2px;
+  box-sizing: content-box !important;
 }
 
 .SummaryFlowStep__label {
@@ -341,11 +358,13 @@
 }
 
 .SummaryFlowStep__mode {
-  color: var(--color-gray-700);
+  color: var(--color-blue-A700);
+  font-weight: var(--bold-weight);
 }
 
 .SummaryFlowStep__link {
-  font-size: var(--summary-flow-step-label-font-size);
+  font-size: var(--summary-flow-step-link-font-size);
+  line-height: 20px;
   color: var(--color-gray-800);
   text-decoration: underline;
   width: 100%;
@@ -354,7 +373,6 @@
 
 .SummaryCategory__content {
   position: relative;
-  margin: var(--half-base-spacing);
 }
 .SummaryCategory__content:hover,
 .SummaryCategory__content:focus-within {
@@ -381,12 +399,12 @@
 }
 
 .SummaryTooltip__title {
-  font-weight: bold;
+  font-weight: var(--bold-weight);
   margin-bottom: var(--half-base-spacing);
 }
 
 .SummaryTooltip__category {
-  font-weight: bold;
+  font-weight: var(--bold-weight);
   display: flex;
   margin-top: var(--half-base-spacing);
 }
@@ -407,7 +425,8 @@
 }
 
 .SummaryNavigationHeader {
-  font-size: var(--summary-flow-step-label-font-size);
+  font-size: var(--summary-navigation-header-font-size);
+  line-height: 16px;
   display: contents;
 }
 
@@ -530,6 +549,7 @@
 .Header__prev-title {
   grid-area: prev-title;
   text-align: left;
+  justify-self: start;
 }
 
 .Header__next-title {
@@ -544,16 +564,17 @@
   align-self: start;
   overflow-x: hidden;
   text-overflow: ellipsis;
-  width: 100%;
+  max-width: 100%;
 }
 
 .Header__current-title {
   grid-area: current-title;
   text-align: center;
   font-size: var(--header-current-title-font-size);
-  font-weight: bold;
+  font-weight: var(--bold-weight);
   overflow-x: hidden;
   text-overflow: ellipsis;
+  margin: 0px var(--half-base-spacing);
 }
 
 .Header__current-description {
@@ -583,7 +604,7 @@
   align-items: center;
 
   font-size: var(--dialog-title-font-size);
-  font-weight: bold;
+  font-weight: var(--bold-weight);
 
   margin-bottom: calc(var(--base-spacing) * 2);
 }
@@ -609,12 +630,12 @@
 
 .HelpDialogColumn__header-title {
   font-size: var(--category-summary-font-size);
-  font-weight: bold;
+  font-weight: var(--bold-weight);
 }
 
 .HelpDialogColumn__legend-label {
   color: var(--color-blue-A700);
-  font-weight: bold;
+  font-weight: var(--bold-weight);
 }
 
 .HelpDialogColumn ul {
@@ -623,7 +644,7 @@
 
 .HelpDialogColumn__use-cases p,
 .HelpDialogColumn__categories p {
-  font-weight: bold;
+  font-weight: var(--bold-weight);
   color: var(--color-gray-700);
 }
 

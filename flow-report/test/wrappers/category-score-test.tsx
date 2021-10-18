@@ -83,6 +83,5 @@ describe('CategoryScore', () => {
     expect(link.href).toEqual('file:///Users/example/report.html/#seo');
     expect(root.getByText('2/4')).toBeTruthy();
     expect(root.baseElement.querySelector('.lh-fraction__label')).toBeFalsy();
-    expect(root.baseElement.querySelector('.lh-fraction__background')).toBeFalsy();
   });
 });

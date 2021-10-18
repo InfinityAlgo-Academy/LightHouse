@@ -10,7 +10,7 @@ import {useEffect, useState} from 'preact/hooks';
 import {NavigationIcon, SnapshotIcon, TimespanIcon} from './icons';
 import {getFilmstripFrames, getScreenDimensions, getScreenshot} from './util';
 
-const ANIMATION_FRAME_DURATION_MS = 250;
+const ANIMATION_FRAME_DURATION_MS = 500;
 
 export const Separator: FunctionComponent = () => {
   return <div className="Separator" role="separator"></div>;

@@ -14,7 +14,7 @@ import {SummaryCategory} from './category';
 import {useStringFormatter, useLocalizedStrings} from '../i18n/i18n';
 
 const DISPLAYED_CATEGORIES = ['performance', 'accessibility', 'best-practices', 'seo'];
-const THUMBNAIL_WIDTH = 50;
+const THUMBNAIL_WIDTH = 40;
 
 const SummaryNavigationHeader: FunctionComponent<{lhr: LH.Result}> = ({lhr}) => {
   const strings = useLocalizedStrings();

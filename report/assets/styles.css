@@ -514,7 +514,7 @@
 }
 .lh-audit--manual .lh-audit__score-icon,
 .lh-audit--notapplicable .lh-audit__score-icon {
-  border: 2px solid var(--color-gray-400);
+  border: calc(0.2 * var(--score-icon-size)) solid var(--color-gray-400);
   border-radius: 100%;
   background: none;
 }
@@ -524,7 +524,7 @@
 }
 
 .lh-audit--informative .lh-audit__score-icon {
-  border: 2px solid var(--color-gray-400);
+  border: calc(0.2 * var(--score-icon-size)) solid var(--color-gray-400);
   border-radius: 100%;
 }
 
@@ -1228,7 +1228,7 @@
 }
 .lh-fraction__wrapper--null .lh-fraction__content::before {
   border-radius: 50%;
-  border: 2px solid var(--color-gray-700);
+  border: calc(0.2 * var(--score-icon-size)) solid var(--color-gray-700);
 }
 
 .lh-fraction__background {
@@ -1251,10 +1251,13 @@
   position: relative;
   align-items: center;
   justify-content: center;
-  font-size: var(--gauge-label-font-size);
+  font-size: calc(0.3 * var(--gauge-circle-size));
+  line-height: calc(0.4 * var(--gauge-circle-size));
   width: max-content;
-  padding: 1em;
-  min-width: 6em;
+  min-width: calc(1.5 * var(--gauge-circle-size));
+  padding: calc(0.1 * var(--gauge-circle-size)) calc(0.2 * var(--gauge-circle-size));
+  --score-icon-size: calc(0.21 * var(--gauge-circle-size));
+  --score-icon-margin: 0 calc(0.15 * var(--gauge-circle-size)) 0 0;
 }
 
 .lh-gauge {
@@ -1282,12 +1285,9 @@
   position: relative;
   height: var(--gauge-circle-size);
 }
-.lh-category .lh-gauge__svg-wrapper {
-  --gauge-circle-size: var(--gauge-circle-size-big);
-}
+.lh-category .lh-gauge__svg-wrapper,
 .lh-category .lh-fraction__wrapper {
   --gauge-circle-size: var(--gauge-circle-size-big);
-  --score-icon-size: var(--score-icon-size-big)
 }
 
 /* The plugin badge overlay */
@@ -1365,10 +1365,6 @@
   --gauge-label-line-height: var(--gauge-label-line-height-big);
   margin-top: 14px;
 }
-.lh-category .lh-fraction__content {
-  --gauge-label-font-size: var(--gauge-label-font-size-big);
-}
-
 
 .lh-scores-header .lh-gauge__wrapper,
 .lh-scores-header .lh-fraction__wrapper,
