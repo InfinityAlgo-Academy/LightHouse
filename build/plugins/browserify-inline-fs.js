@@ -7,7 +7,7 @@
 
 const {Transform} = require('stream');
 
-const {replaceFsMethods} = require('./inline-fs.js');
+const {inlineFs} = require('./inline-fs.js');
 
 const {performance} = require('perf_hooks');
 
@@ -35,8 +35,8 @@ module.exports = (filepath) => {
     },
     flush(callback) {
       const code = Buffer.concat(chunks).toString('utf8');
-      replaceFsMethods(code, filepath).then(replaced => {
-        // Fall back to original if replaceFsMethods did nothing and returned `null`.
+      inlineFs(code, filepath).then(replaced => {
+        // Fall back to original if inlineFs did nothing and returned `null`.
         replaced = replaced || code;
         callback(null, replaced);
       }).catch(() => {

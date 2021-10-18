@@ -5,12 +5,12 @@
  */
 'use strict';
 
-const {replaceFsMethods} = require('./inline-fs.js');
+const {inlineFs} = require('./inline-fs.js');
 
 /** @typedef {import('rollup').Plugin} RollupPlugin */
 
 /** @type {RollupPlugin} */
-const inlineFs = {
+const inlineFsPlugin = {
   name: 'inline-fs',
 
   /**
@@ -21,7 +21,7 @@ const inlineFs = {
   async transform(code, id) {
     try {
       // TODO(bckenny): add source maps, expand verbose logging support.
-      return await replaceFsMethods(code, id);
+      return await inlineFs(code, id);
     } catch (err) {
       // If some construct can't be replaced by inline-fs, just skip this file.
       return null;
@@ -29,4 +29,4 @@ const inlineFs = {
   },
 };
 
-module.exports = inlineFs;
+module.exports = inlineFsPlugin;
