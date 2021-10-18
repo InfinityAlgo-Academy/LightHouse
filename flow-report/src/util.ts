@@ -79,11 +79,6 @@ export function useFlowResult(): LH.FlowResult {
   return flowResult;
 }
 
-export function useLocale(): LH.Locale {
-  const flowResult = useFlowResult();
-  return flowResult.steps[0].lhr.configSettings.locale;
-}
-
 export function useHashParam(param: string) {
   const [paramValue, setParamValue] = useState(getHashParam(param));
 

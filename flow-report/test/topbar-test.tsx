@@ -18,6 +18,7 @@ const flowResult = {
   steps: [{lhr: {
     fetchTime: '2021-09-14T22:24:22.462Z',
     configSettings: {locale: 'en-US'},
+    i18n: {rendererFormattedStrings: {}},
   }}],
 } as any;
 

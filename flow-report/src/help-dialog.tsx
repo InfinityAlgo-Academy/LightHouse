@@ -6,7 +6,7 @@
 
 import {FunctionComponent, JSX} from 'preact';
 
-import {useUIStrings} from './i18n/i18n';
+import {useLocalizedStrings} from './i18n/i18n';
 import {CloseIcon, NavigationIcon, SnapshotIcon, TimespanIcon} from './icons';
 
 const HelpDialogColumn: FunctionComponent<{
@@ -18,7 +18,7 @@ const HelpDialogColumn: FunctionComponent<{
   useCases: string[];
   availableCategories: string[];
 }> = (props) => {
-  const strings = useUIStrings();
+  const strings = useLocalizedStrings();
 
   return (
     <div className="HelpDialogColumn">
@@ -56,7 +56,7 @@ const HelpDialogColumn: FunctionComponent<{
 export const HelpDialog: FunctionComponent<{onClose: () => void}> = ({
   onClose,
 }) => {
-  const strings = useUIStrings();
+  const strings = useLocalizedStrings();
 
   return (
     <div className="HelpDialog">

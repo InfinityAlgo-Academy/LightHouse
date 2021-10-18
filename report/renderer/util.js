@@ -167,6 +167,8 @@ export class Util {
 
   /**
    * Convert a score to a rating label.
+   * TODO: Return `'error'` for `score === null && !scoreDisplayMode`.
+   *
    * @param {number|null} score
    * @param {string=} scoreDisplayMode
    * @return {string}

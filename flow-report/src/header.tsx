@@ -8,7 +8,7 @@ import {FunctionComponent} from 'preact';
 
 import {Util} from '../../report/renderer/util';
 import {FlowStepIcon, FlowStepThumbnail} from './common';
-import {useUIStrings} from './i18n/i18n';
+import {useLocalizedStrings} from './i18n/i18n';
 import {getModeDescription, useFlowResult} from './util';
 
 const SIDE_THUMBNAIL_HEIGHT = 80;
@@ -39,7 +39,7 @@ export const Header: FunctionComponent<{currentLhr: LH.FlowResult.LhrRef}> =
   const prevStep = flowResult.steps[index - 1];
   const nextStep = flowResult.steps[index + 1];
 
-  const strings = useUIStrings();
+  const strings = useLocalizedStrings();
   const modeDescription = getModeDescription(step.lhr.gatherMode, strings);
 
   return (
