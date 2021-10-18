@@ -292,7 +292,8 @@ export class CategoryRenderer {
     }
 
     const summaryInnerEl = this.dom.find('div.lh-audit-group__summary', clumpElement);
-    summaryInnerEl.appendChild(this._createChevron());
+    const chevContainer = this.dom.createChildOf(summaryInnerEl, 'div', 'lh-chevron-container');
+    chevContainer.appendChild(this._createChevron());
 
     const headerEl = this.dom.find('.lh-audit-group__header', clumpElement);
     const title = this._clumpTitles[clumpId];
