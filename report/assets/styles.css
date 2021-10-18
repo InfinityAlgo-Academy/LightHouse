@@ -645,12 +645,12 @@
 }
 
 /* We want to hide the browser's default arrow marker on summary elements. Admittedly, it's complicated. */
-.lh-expandable-details > summary {
+.lh-root details > summary {
   /* Blink 89+ and Firefox will hide the arrow when display is changed from (new) default of `list-item` to block.  https://chromestatus.com/feature/6730096436051968*/
   display: block;
 }
 /* Safari and Blink <=88 require using the -webkit-details-marker selector */
-.lh-expandable-details > summary::-webkit-details-marker {
+.lh-root details > summary::-webkit-details-marker {
   display: none;
 }
 
@@ -1606,20 +1606,23 @@
  transition: transform 300ms, stroke 300ms;
 }
 
-.lh-expandable-details > summary > div > .lh-chevron-container > .lh-chevron .lh-chevron__line-right,
-.lh-expandable-details[open] > summary > div > .lh-chevron-container > .lh-chevron .lh-chevron__line-left {
+.lh-expandable-details .lh-chevron__line-right,
+.lh-expandable-details[open] .lh-chevron__line-left {
  transform: rotate(var(--chevron-angle-right));
 }
 
-.lh-expandable-details[open] > summary > div > .lh-chevron-container > .lh-chevron .lh-chevron__line-right {
+.lh-expandable-details[open] .lh-chevron__line-right {
   transform: rotate(var(--chevron-angle));
 }
 
 
-.lh-expandable-details[open]  > summary > div > .lh-chevron-container > .lh-chevron .lh-chevron__lines {
+.lh-expandable-details[open]  .lh-chevron__lines {
  transform: translateY(calc(var(--chevron-size) * -1));
 }
 
+
+details .lh-clump-toggle::before {content: 'Show';}
+details[open] .lh-clump-toggle::before {content: 'Hide';}
 
 
 /* Tooltip */

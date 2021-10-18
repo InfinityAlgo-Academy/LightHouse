@@ -54,7 +54,7 @@ limitations under the License.
 <template id="clump">
   <div class="lh-audit-group">
   <!-- TODO: group classes shouldn't be reused for clumps. -->
-  <details class="lh-clump lh-expandable-details">
+  <details class="lh-clump">
     <summary>
       <div class="lh-audit-group__summary">
         <div class="lh-audit-group__header">
@@ -63,6 +63,7 @@ limitations under the License.
           <!-- .lh-audit-group__description will be added here -->
           <!-- .lh-metrics-toggle will be added here -->
         </div>
+        <div class="lh-clump-toggle"></div>
       </div>
     </summary>
   </details>
@@ -125,7 +126,7 @@ limitations under the License.
   <div class="lh-audit lh-audit--load-opportunity">
     <details class="lh-expandable-details">
         <summary>
-          <div class="lh-audit__header lh-expandable-details__summary">
+          <div class="lh-audit__header">
             <div class="lh-load-opportunity__cols">
               <div class="lh-load-opportunity__col lh-load-opportunity__col--one">
                 <span class="lh-audit__score-icon"></span>
