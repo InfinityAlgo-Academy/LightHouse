@@ -23,12 +23,15 @@ declare module 'acorn' {
   }
 
   class Parser {
-    constructor(options: Options, input: string, startPos?: number)
+    constructor(options: Options, input: string, offset?: number)
 
-    /**  Read a single token, updating the parser object's token-related properties. */
+    /** Read a single token, updating the parser object's token-related properties. */
     nextToken(): void;
 
     /** Parse an assignment expression. */
     parseMaybeAssign(): import('estree').Node;
   }
+
+  /** Returns a `{line, column}` object for a given code string and offset. */
+  function getLineInfo(input: string, offset: number): {line: number; column: number};
 }

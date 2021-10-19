@@ -6,8 +6,10 @@
 'use strict';
 
 const {Transform} = require('stream');
+const path = require('path');
 
 const {inlineFs} = require('./inline-fs.js');
+const {LH_ROOT} = require('../../root.js');
 
 const {performance} = require('perf_hooks');
 
@@ -33,14 +35,19 @@ module.exports = (filepath) => {
       chunks.push(Buffer.from(chunk));
       callback();
     },
+
     flush(callback) {
-      const code = Buffer.concat(chunks).toString('utf8');
-      inlineFs(code, filepath).then(replaced => {
-        // Fall back to original if inlineFs did nothing and returned `null`.
-        replaced = replaced || code;
-        callback(null, replaced);
-      }).catch(() => {
-        // If some construct can't be replaced by inline-fs, just skip this file.
+      const originalCode = Buffer.concat(chunks).toString('utf8');
+      inlineFs(originalCode, filepath).then(({code, warnings}) => {
+        if (warnings?.length) {
+          console.log(`warnings for ${path.relative(LH_ROOT, filepath)}`);
+          for (const warning of warnings) {
+            console.log(`  ${warning.text}`);
+          }
+        }
+
+        // Fall back to original if inlineFs did nothing.
+        code = code || originalCode;
         callback(null, code);
       }).finally(() => {
         const endTime = performance.now();

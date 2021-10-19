@@ -13,20 +13,20 @@ const resolve = require('resolve');
 const MagicString = require('magic-string').default;
 const terser = require('terser');
 
-const {LH_ROOT} = require('../../root.js');
-
 // ESTree provides much better types for AST nodes. See https://github.com/acornjs/acorn/issues/946
 /** @typedef {import('estree').Node} Node */
 /** @typedef {import('estree').SimpleCallExpression} SimpleCallExpression */
+
+/** @typedef {{text: string, location: {file: string, line: number, column: number, lineText: string}}} Warning */
 
 /**
  * Inlines the values of selected `fs` methods if their targets can be
  * statically determined. Currently `readFileSync` and `readdirSync` are
  * supported.
- * Returns `null` if no changes were made.
+ * Returns `null` as code if no changes were made.
  * @param {string} code
  * @param {string} contextPath
- * @return {Promise<string|null>}
+ * @return {Promise<{code: string|null, warnings?: Array<Warning>}>}
  */
 async function inlineFs(code, contextPath) {
   // Basic approach:
@@ -38,13 +38,16 @@ async function inlineFs(code, contextPath) {
   // - if an expression cannot be parsed or statically evaluated, skip
   // - if no expressions found or all are skipped, return null
 
-  const fsSearch = /fs\.(?:readFileSync|readdirSync)/g;
+  const fsSearch = /fs\.(?:readFileSync|readdirSync)\(/g;
   const foundIndices = [...code.matchAll(fsSearch)].map(e => e.index);
 
   // Return null for not-applicable files with as little work as possible.
-  if (foundIndices.length === 0) return null;
+  if (foundIndices.length === 0) return {code: null};
 
   const output = new MagicString(code);
+  let madeChange = false;
+  /** @type {Array<Warning>} */
+  const warnings = [];
 
   // Can iterate forwards in string because MagicString always uses original indices.
   for (const foundIndex of foundIndices) {
@@ -54,9 +57,18 @@ async function inlineFs(code, contextPath) {
     try {
       parsed = parseExpressionAt(code, foundIndex, {ecmaVersion: 'latest'});
     } catch (err) {
-      // TODO(bckenny): can use err.pos. Move this into parseExpressionAt.
-      // eslint-disable-next-line max-len
-      throw new Error(`${err.message} - ${path.relative(LH_ROOT, contextPath)}:${foundIndex} '${code.substr(foundIndex, 50)}'`);
+      warnings.push({
+        text: err.message,
+        location: {
+          file: contextPath,
+          // `loc` added by acorn.
+          line: err.loc.line,
+          column: err.loc.column,
+          // We don't know how long the line would be, so take the first 100 characters.
+          lineText: code.substr(foundIndex, 100),
+        },
+      });
+      continue;
     }
 
     // If root of expression isn't the fs call, descend down chained methods on
@@ -74,21 +86,45 @@ async function inlineFs(code, contextPath) {
     assertEqualString(parsed.callee.property.type, 'Identifier');
 
     let content;
-    if (parsed.callee.property.name === 'readFileSync') {
-      content = await getReadFileReplacement(parsed, contextPath);
-    } else if (parsed.callee.property.name === 'readdirSync') {
-      content = await getReaddirReplacement(parsed, contextPath);
-    } else {
-      throw new Error(`unexpected fs call 'fs.${parsed.callee.property.name}'`);
+    try {
+      if (parsed.callee.property.name === 'readFileSync') {
+        content = await getReadFileReplacement(parsed, contextPath);
+      } else if (parsed.callee.property.name === 'readdirSync') {
+        content = await getReaddirReplacement(parsed, contextPath);
+      } else {
+        throw new Error(`unexpected fs call 'fs.${parsed.callee.property.name}'`);
+      }
+    } catch (err) {
+      // @ts-expect-error - `start` and `end` provided by acorn on top of ESTree types.
+      const {start, end} = parsed;
+      const {line, column} = acorn.getLineInfo(code, start);
+
+      warnings.push({
+        text: err.message,
+        location: {
+          file: contextPath,
+          line,
+          column,
+          lineText: code.substring(start, end),
+        },
+      });
+      continue;
     }
 
     // @ts-expect-error - `start` and `end` provided by acorn on top of ESTree types.
     const {start, end} = parsed;
     // TODO(bckenny): use options to customize `storeName` for source maps.
     output.overwrite(start, end, content);
+    madeChange = true;
   }
 
-  return output.toString();
+  // Be explicit if no change has been made.
+  const outputCode = madeChange ? output.toString() : null;
+
+  return {
+    code: outputCode,
+    warnings,
+  };
 }
 
 /**

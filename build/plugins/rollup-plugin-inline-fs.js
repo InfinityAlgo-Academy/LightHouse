@@ -5,7 +5,9 @@
  */
 'use strict';
 
+const path = require('path');
 const {inlineFs} = require('./inline-fs.js');
+const {LH_ROOT} = require('../../root.js');
 
 /** @typedef {import('rollup').Plugin} RollupPlugin */
 
@@ -15,17 +17,22 @@ const inlineFsPlugin = {
 
   /**
    * @param {string} code
-   * @param {string} id
+   * @param {string} filepath
    * @return {Promise<string|null>}
    */
-  async transform(code, id) {
-    try {
-      // TODO(bckenny): add source maps, expand verbose logging support.
-      return await inlineFs(code, id);
-    } catch (err) {
-      // If some construct can't be replaced by inline-fs, just skip this file.
-      return null;
+  async transform(originalCode, filepath) {
+    // TODO(bckenny): add source maps.
+    const {code, warnings} = await inlineFs(originalCode, filepath);
+
+    // TODO(bckenny): only log warnings on verbose.
+    if (warnings?.length) {
+      console.log(`warnings for ${path.relative(LH_ROOT, filepath)}`);
+      for (const warning of warnings) {
+        console.log(`  ${warning.text}`);
+      }
     }
+
+    return code;
   },
 };
 
