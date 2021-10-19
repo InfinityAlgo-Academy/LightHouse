@@ -1045,11 +1045,13 @@
   max-width: unset;
 }
 
-.lh-audit-group__header {
-  font-weight: 500;
+.lh-audit-group__header, .lh-audit-group__summary {
   font-size: var(--report-font-size-secondary);
   line-height: var(--report-line-height-secondary);
   color: var(--color-gray-700);
+}
+
+.lh-audit-group__header {
   letter-spacing: 0.8px;
   padding: var(--default-padding);
   padding-left: 0;
