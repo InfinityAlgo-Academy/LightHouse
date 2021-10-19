@@ -75,7 +75,7 @@
   --color-not-applicable: var(--color-gray-600);
 
   /* Component variables */
-  --audit-description-padding-left: calc(var(--score-icon-size) + var(--score-icon-margin-left) + var(--score-icon-margin-right) + var(--audit-padding-vertical)); /* pad-vert seeems offf? */
+  --audit-description-padding-left: calc(var(--score-icon-size) + var(--score-icon-margin-left) + var(--score-icon-margin-right));
   --audit-explanation-line-height: 16px;
   --audit-group-margin-bottom: calc(var(--default-padding) * 6);
   --audit-group-padding-vertical: 8px;
@@ -124,7 +124,7 @@
   --report-font-size-secondary: 12px;
   --report-icon-size: var(--score-icon-background-size);
   --report-line-height: 24px;
-  --report-line-height-secondary: 20px; /* todo: go unitless? */
+  --report-line-height-secondary: 20px;
   --report-min-width: 400px;
   --report-monospace-font-size: calc(var(--report-font-size) * 0.85);
   --report-text-color-secondary: var(--color-gray-800);
@@ -154,7 +154,7 @@
   --topbar-logo-size: 24px;
   --topbar-padding: 0 8px;
   --toplevel-warning-background-color: hsla(30, 100%, 75%, 10%);
-  --toplevel-warning-message-text-color: #BD4200;
+  --toplevel-warning-message-text-color: var(--color-average-text);
   --toplevel-warning-padding: 18px;
   --toplevel-warning-text-color: var(--report-text-color);
 
@@ -320,7 +320,6 @@
   line-height: var(--report-line-height);
   background: var(--report-background-color);
   color: var(--report-text-color);
-  /* line-height: 1.7; */
 }
 
 .lh-root :focus {
@@ -454,7 +453,6 @@
   flex-wrap: wrap;
 }
 .lh-button {
-  margin: 16px;
   height: 32px;
   border: 1px solid var(--report-border-color-secondary);
   border-radius: 3px;
@@ -588,7 +586,7 @@
 .lh-audit__header {
   display: flex;
   align-items: center;
-  padding: var(–default-padding);
+  padding: var(--default-padding);
 }
 
 .lh-audit--load-opportunity .lh-audit__header {
@@ -697,7 +695,7 @@
    */
   grid-template-columns: calc(var(--score-icon-size) + var(--score-icon-margin-left) + var(--score-icon-margin-right)) 1fr;
   align-items: center;
-  padding: var(–default-padding);
+  padding: var(--default-padding);
 }
 
 .lh-metric__details {
@@ -962,6 +960,7 @@
   border-top: 1px solid var(--report-border-color-secondary);
 }
 .lh-audit ~ .lh-audit {
+  border-top: none;
 }
 
 
@@ -1115,10 +1114,10 @@
   color: var(--color-average-text);
   margin: var(--audit-padding-vertical) 0;
   padding: var(--default-padding)
-	var(--default-padding)
-	var(--default-padding)
-	calc(var(--audit-description-padding-left));
-  background-color: rgba(255, 238, 221, 0.38);
+    var(--default-padding)
+    var(--default-padding)
+    calc(var(--audit-description-padding-left));
+  background-color: var(--toplevel-warning-background-color);
 }
 .lh-warnings span {
   font-weight: bold;
@@ -1130,7 +1129,6 @@
   margin-left: auto;
   margin-right: auto;
   max-width: calc(var(--report-width) - var(--category-padding) * 2);
-  background-color: var(--toplevel-warning-background-color);
   padding: var(--toplevel-warning-padding);
   border-radius: 8px;
 }
@@ -1488,7 +1486,7 @@
 
 .lh-table th,
 .lh-table td {
-  padding: var(–default-padding);
+  padding: var(--default-padding);
 }
 
 .lh-table tr {
