@@ -258,8 +258,7 @@ export class ReportUIFeatures {
 
       // If all or none of the rows are 3rd party, disable the checkbox.
       if (allThirdParty || allFirstParty) {
-        filterInput.disabled = true;
-        filterInput.checked = allThirdParty;
+        this._dom.find('div.lh-3p-filter', filterTemplate).hidden = true;
       }
 
       // Add checkbox to the DOM.

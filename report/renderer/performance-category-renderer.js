@@ -286,7 +286,7 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
         const table = this.detailsRenderer.render(audit.result.details);
         if (table) {
           table.id = id;
-          table.classList.add('lh-audit');
+          table.classList.add('lh-details');
           budgetTableEls.push(table);
         }
       }

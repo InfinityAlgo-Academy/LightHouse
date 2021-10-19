@@ -38,6 +38,7 @@
   --color-blue-200: #90CAF9;
   --color-blue-900: #0D47A1;
   --color-blue-A700: #2962FF;
+  --color-blue-primary: #06f;
   --color-cyan-500: #00BCD4;
   --color-gray-100: #F5F5F5;
   --color-gray-300: #CFCFCF;
@@ -55,7 +56,7 @@
   --color-lime-400: #D3E156;
   --color-orange-50: #FFF3E0;
   --color-orange-700: #D04900;
-  --color-orange: #FFA400;
+  --color-orange: #fa3;
   --color-red-700: #EB0F00;
   --color-red: #FF4E42;
   --color-teal-600: #00897B;
@@ -64,6 +65,7 @@
   /* Context-specific colors */
   --color-average-secondary: var(--color-orange-700);
   --color-average: var(--color-orange);
+  --color-average-text: #bb4400;
   --color-fail-secondary: var(--color-red-700);
   --color-fail: var(--color-red);
   --color-hover: var(--color-gray-50);
@@ -73,9 +75,9 @@
   --color-not-applicable: var(--color-gray-600);
 
   /* Component variables */
-  --audit-description-padding-left: calc(var(--score-icon-size) + var(--score-icon-margin-left) + var(--score-icon-margin-right));
+  --audit-description-padding-left: calc(var(--score-icon-size) + var(--score-icon-margin-left) + var(--score-icon-margin-right) + var(--audit-padding-vertical)); /* pad-vert seeems offf? */
   --audit-explanation-line-height: 16px;
-  --audit-group-margin-bottom: 30px;
+  --audit-group-margin-bottom: calc(var(--default-padding) * 6);
   --audit-group-padding-vertical: 8px;
   --audit-margin-horizontal: 5px;
   --audit-padding-vertical: 8px;
@@ -83,7 +85,7 @@
   --category-padding: 40px;
   --chevron-line-stroke: var(--color-gray-600);
   --chevron-size: 12px;
-  --default-padding: 12px;
+  --default-padding: 8px;
   --env-item-background-color: var(--color-gray-100);
   --env-item-font-size: 28px;
   --env-item-line-height: 36px;
@@ -118,9 +120,11 @@
   --report-border-color-secondary: #ebebeb;
   --report-font-family-monospace: 'Roboto Mono', 'Menlo', 'dejavu sans mono', 'Consolas', 'Lucida Console', monospace;
   --report-font-family: Roboto, Helvetica, Arial, sans-serif;
-  --report-font-size: 16px;
+  --report-font-size: 14px;
+  --report-font-size-secondary: 12px;
   --report-icon-size: var(--score-icon-background-size);
   --report-line-height: 24px;
+  --report-line-height-secondary: 20px; /* todo: go unitless? */
   --report-min-width: 400px;
   --report-monospace-font-size: calc(var(--report-font-size) * 0.85);
   --report-text-color-secondary: var(--color-gray-800);
@@ -128,8 +132,8 @@
   --report-width: calc(60 * var(--report-font-size));
   --score-container-padding: 8px;
   --score-icon-background-size: 24px;
-  --score-icon-margin-left: 4px;
-  --score-icon-margin-right: 12px;
+  --score-icon-margin-left: 6px;
+  --score-icon-margin-right: 14px;
   --score-icon-margin: 0 var(--score-icon-margin-right) 0 var(--score-icon-margin-left);
   --score-icon-size: 12px;
   --score-icon-size-big: 16px;
@@ -143,13 +147,13 @@
   --sparkline-height: 5px;
   --stackpack-padding-horizontal: 10px;
   --sticky-header-background-color: var(--report-background-color);
-  --table-higlight-background-color: hsla(0, 0%, 75%, 0.1);
+  --table-higlight-background-color: hsla(210, 17%, 77%, 0.1);
   --tools-icon-color: var(--color-gray-600);
   --topbar-background-color: var(--color-gray-100);
   --topbar-height: 32px;
   --topbar-logo-size: 24px;
   --topbar-padding: 0 8px;
-  --toplevel-warning-background-color: var(--color-orange-50);
+  --toplevel-warning-background-color: hsla(30, 100%, 75%, 10%);
   --toplevel-warning-message-text-color: #BD4200;
   --toplevel-warning-padding: 18px;
   --toplevel-warning-text-color: var(--report-text-color);
@@ -316,6 +320,7 @@
   line-height: var(--report-line-height);
   background: var(--report-background-color);
   color: var(--report-text-color);
+  /* line-height: 1.7; */
 }
 
 .lh-root :focus {
@@ -381,7 +386,6 @@
 }
 
 .lh-details {
-  font-size: var(--report-font-size);
   margin-top: var(--default-padding);
   margin-bottom: var(--default-padding);
   margin-left: var(--audit-description-padding-left);
@@ -450,14 +454,17 @@
   flex-wrap: wrap;
 }
 .lh-button {
-  margin: 10px;
-  height: 30px;
-  border: 1px solid var(--color-gray-600);
-  border-radius: 4px;
-  font-weight: bold;
-  color: rgb(26, 115, 232);
+  margin: 16px;
+  height: 32px;
+  border: 1px solid var(--report-border-color-secondary);
+  border-radius: 3px;
+  color: var(--color-blue-primary);
   background-color: var(--report-background-color);
+  padding: var(--default-padding);
+  font-size: var(--report-font-size-secondary);
+  line-height: var(--report-line-height-secondary);
 }
+
 .lh-dark .lh-button {
   color: var(--color-blue-200);
 }
@@ -543,8 +550,8 @@
 }
 
 .lh-category-header__description  {
-  font-size: var(--report-font-size);
   text-align: center;
+  color: var(--color-gray-700);
   margin: 0px auto;
   max-width: 400px;
 }
@@ -581,8 +588,7 @@
 .lh-audit__header {
   display: flex;
   align-items: center;
-  font-weight: 500;
-  padding: var(--audit-padding-vertical) 0;
+  padding: var(–default-padding);
 }
 
 .lh-audit--load-opportunity .lh-audit__header {
@@ -691,7 +697,7 @@
    */
   grid-template-columns: calc(var(--score-icon-size) + var(--score-icon-margin-left) + var(--score-icon-margin-right)) 1fr;
   align-items: center;
-  padding: 10px 0;
+  padding: var(–default-padding);
 }
 
 .lh-metric__details {
@@ -700,7 +706,6 @@
 
 .lh-metric__title {
   flex: 1;
-  font-weight: 500;
 }
 
 .lh-metrics__disclaimer {
@@ -723,7 +728,6 @@
   font-size: var(--metric-value-font-size);
   margin: calc(var(--default-padding) / 2) 0;
   white-space: nowrap; /* No wrapping between metric value and the icon */
-  font-weight: 500;
   grid-column-start: 2;
 }
 
@@ -958,7 +962,6 @@
   border-top: 1px solid var(--report-border-color-secondary);
 }
 .lh-audit ~ .lh-audit {
-  border-top: none;
 }
 
 
@@ -990,6 +993,11 @@
   color: var(--color-red-700);
 }
 
+#performance-budget {
+  margin-bottom: var(--default-padding);
+}
+
+
 /* Align the "over budget request count" text to be close to the "over budget bytes" column. */
 .lh-audit-group--budgets .lh-table tbody tr td:nth-child(4){
   text-align: right;
@@ -997,7 +1005,6 @@
 
 .lh-audit-group--budgets .lh-table {
   width: 100%;
-  margin: 16px 0px 16px 0px;
 }
 
 .lh-audit-group--pwa-installable .lh-audit-group__header::before {
@@ -1025,16 +1032,11 @@
   justify-content: space-between;
 }
 
-.lh-audit-group__itemcount {
-  color: var(--color-gray-600);
-  font-weight: bold;
-}
 .lh-audit-group__header .lh-chevron {
   margin-top: calc((var(--report-line-height) - 5px) / 2);
 }
 
 .lh-audit-group__header {
-  font-size: var(--report-font-size);
   margin: 0 0 var(--audit-group-padding-vertical);
   /* When the header takes 100% width, the chevron becomes small. */
   max-width: calc(100% - var(--chevron-size));
@@ -1044,30 +1046,32 @@
   max-width: unset;
 }
 
-.lh-audit-group__header span.lh-audit-group__title {
-  font-weight: bold;
+.lh-audit-group__header {
+  font-weight: 500;
+  font-size: var(--report-font-size-secondary);
+  line-height: var(--report-line-height-secondary);
+  color: var(--color-gray-700);
+  letter-spacing: 0.8px;
+  padding: var(--default-padding);
+  padding-left: 0;
 }
 
-.lh-audit-group__header span.lh-audit-group__itemcount {
-  font-weight: bold;
+.lh-audit-group__itemcount {
   color: var(--color-gray-600);
 }
 
 .lh-audit-group__footer {
   color: var(--color-gray-600);
   display: block;
-  --rhythm: calc(var(--audit-group-margin-bottom) / 8);
-  margin: var(--rhythm) 0 calc(-1 * var(--rhythm));
-  font-size: 90%;
+  margin-top: var(--default-padding);
 }
 
-.lh-clump > .lh-audit-group__header,
-.lh-audit-group--diagnostics .lh-audit-group__header,
-.lh-audit-group--load-opportunities .lh-audit-group__header,
-.lh-audit-group--metrics .lh-audit-group__header,
-.lh-audit-group--pwa-installable .lh-audit-group__header,
-.lh-audit-group--pwa-optimized .lh-audit-group__header {
-  margin-top: var(--audit-group-padding-vertical);
+.lh-details,
+.lh-category-header__description,
+.lh-load-opportunity__header,
+.lh-audit-group__footer {
+	font-size: var(--report-font-size-secondary);
+	line-height: var(--report-line-height-secondary);
 }
 
 .lh-audit-explanation {
@@ -1108,9 +1112,13 @@
 
 .lh-warnings {
   --item-margin: calc(var(--report-line-height) / 6);
-  color: var(--color-average);
+  color: var(--color-average-text);
   margin: var(--audit-padding-vertical) 0;
-  padding: calc(var(--audit-padding-vertical) / 2) calc(var(--audit-description-padding-left));
+  padding: var(--default-padding)
+	var(--default-padding)
+	var(--default-padding)
+	calc(var(--audit-description-padding-left));
+  background-color: rgba(255, 238, 221, 0.38);
 }
 .lh-warnings span {
   font-weight: bold;
@@ -1459,7 +1467,9 @@
 .lh-table {
   border-collapse: collapse;
   /* Can't assign padding to table, so shorten the width instead. */
-  width: calc(100% - var(--audit-description-padding-left));
+  width: calc(100% - var(--audit-description-padding-left) - var(--stackpack-padding-horizontal));
+  border: 1px solid var(--report-border-color-secondary);
+
 }
 
 .lh-table thead th {
@@ -1469,7 +1479,7 @@
   word-break: normal;
 }
 
-.lh-row--odd {
+.lh-row--even {
   background-color: var(--table-higlight-background-color);
 }
 .lh-row--hidden {
@@ -1478,13 +1488,7 @@
 
 .lh-table th,
 .lh-table td {
-  padding: 8px 6px;
-}
-.lh-table th:first-child {
-  padding-left: 0;
-}
-.lh-table th:last-child {
-  padding-right: 0;
+  padding: var(–default-padding);
 }
 
 .lh-table tr {
@@ -1619,6 +1623,29 @@
 .lh-expandable-details[open]  .lh-chevron__lines {
  transform: translateY(calc(var(--chevron-size) * -1));
 }
+
+.lh-expandable-details[open] {
+  animation: 300ms openDetails forwards;
+  padding-bottom: var(--default-padding);
+}
+
+@keyframes openDetails {
+  from {
+    outline: 1px solid var(--report-background-color);
+  }
+  to {
+   outline: 1px solid;
+   box-shadow: 0 2px 4px rgba(0, 0, 0, .24);
+  }
+}
+
+.lh-expandable-details[open] summary, details.lh-clump > summary {
+  border-bottom: 1px solid var(--report-border-color-secondary);
+}
+details.lh-clump[open] > summary {
+  border-bottom-width: 0;
+}
+
 
 
 details .lh-clump-toggle::before {content: 'Show';}
