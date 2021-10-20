@@ -6,7 +6,7 @@
 'use strict';
 
 /**
- * @fileoverview Print names and github usernames of new contributors in specified range.
+ * @fileoverview Print names and GitHub usernames of new contributors in specified range.
  * Ex: node lighthouse-core/scripts/print-contributors.js v6.4.0 HEAD
  */
 
