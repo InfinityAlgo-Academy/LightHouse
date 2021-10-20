@@ -46,7 +46,7 @@ describe('ReportRendererAxe', () => {
       global.Element = undefined;
     });
 
-    it('renders without axe violations', () => {
+    it('renders without axe violations', async () => {
       const container = renderer._dom._document.createElement('main');
       const output = renderer.renderReport(sampleResults, container);
 
@@ -70,16 +70,11 @@ describe('ReportRendererAxe', () => {
         },
       };
 
-      return new Promise(resolve => {
-        axe.run(output, config, (error, {violations}) => {
-          expect(error).toBeNull();
-          expect(violations).toEqual([]);
-          resolve();
-        });
-      });
-      // This test takes 40s on fast hardware, and 50-60s on GHA.
-      // https://github.com/dequelabs/axe-core/tree/b573b1c1/doc/examples/jest_react#timeout-issues
+      const axeResults = await axe.run(output, config);
+      expect(axeResults.violations).toEqual([]);
     },
+    // This test takes 40s on fast hardware, and 50-60s on GHA.
+    // https://github.com/dequelabs/axe-core/tree/b573b1c1/doc/examples/jest_react#timeout-issues
     /* timeout= */ 100 * 1000
     );
   });
