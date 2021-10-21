@@ -3541,6 +3541,10 @@
           {
             "key": "node",
             "itemType": "node",
+            "subItemsHeading": {
+              "key": "relatedNode",
+              "itemType": "node"
+            },
             "text": "Failing Elements"
           }
         ],
@@ -3596,6 +3600,10 @@
           {
             "key": "node",
             "itemType": "node",
+            "subItemsHeading": {
+              "key": "relatedNode",
+              "itemType": "node"
+            },
             "text": "Failing Elements"
           }
         ],
@@ -3747,7 +3755,7 @@
                 "width": 16,
                 "height": 16
               },
-              "snippet": "<img src=\"blob:http://localhost:10200/3f2bc9df-684b-4541-837c-1590152ef65d\">",
+              "snippet": "<img src=\"blob:http://localhost:10200/84c78bd5-a720-43b4-93e0-26591a9ff8ee\">",
               "nodeLabel": "body > img",
               "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute\n  Element's default semantics were not overridden with role=\"none\" or role=\"presentation\""
             }
@@ -3766,7 +3774,7 @@
                 "width": 16,
                 "height": 16
               },
-              "snippet": "<img src=\"filesystem:http://localhost:10200/temporary/empty-0.43448333410631723.png\">",
+              "snippet": "<img src=\"filesystem:http://localhost:10200/temporary/empty-0.48387978403091236.png\">",
               "nodeLabel": "body > img",
               "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute\n  Element's default semantics were not overridden with role=\"none\" or role=\"presentation\""
             }
@@ -3805,6 +3813,10 @@
           {
             "key": "node",
             "itemType": "node",
+            "subItemsHeading": {
+              "key": "relatedNode",
+              "itemType": "node"
+            },
             "text": "Failing Elements"
           }
         ],
@@ -3894,6 +3906,10 @@
           {
             "key": "node",
             "itemType": "node",
+            "subItemsHeading": {
+              "key": "relatedNode",
+              "itemType": "node"
+            },
             "text": "Failing Elements"
           }
         ],
@@ -3997,6 +4013,10 @@
           {
             "key": "node",
             "itemType": "node",
+            "subItemsHeading": {
+              "key": "relatedNode",
+              "itemType": "node"
+            },
             "text": "Failing Elements"
           }
         ],

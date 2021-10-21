@@ -36,6 +36,70 @@ describe('Accessibility: axe-audit', () => {
       assert.equal(output.score, 0);
     });
 
+    it('generates node details', () => {
+      class FakeA11yAudit extends AxeAudit {
+        static get meta() {
+          return {
+            id: 'fake-axe-failure-case',
+            title: 'Example title',
+            scoreDisplayMode: 'informative',
+            requiredArtifacts: ['Accessibility'],
+          };
+        }
+      }
+      const artifacts = {
+        Accessibility: {
+          incomplete: [{
+            id: 'fake-axe-failure-case',
+            nodes: [{
+              html: '<input id="multi-label-form-element" />',
+              node: {
+                snippet: '<input id="snippet"/>',
+              },
+              relatedNodes: [
+                {snippet: '<input id="snippet1"/>'},
+                {snippet: '<input id="snippet2"/>'},
+                {snippet: '<input id="snippet3"/>'},
+              ],
+            }],
+            help: 'http://example.com/',
+          }],
+          violations: [],
+        },
+      };
+
+      const output = FakeA11yAudit.audit(artifacts);
+      expect(output.details.items[0]).toMatchObject({
+        node: {
+          type: 'node',
+          snippet: '<input id="snippet"/>',
+        },
+        subItems: {
+          type: 'subitems',
+          items: [
+            {
+              relatedNode: {
+                type: 'node',
+                snippet: '<input id="snippet1"/>',
+              },
+            },
+            {
+              relatedNode: {
+                type: 'node',
+                snippet: '<input id="snippet2"/>',
+              },
+            },
+            {
+              relatedNode: {
+                type: 'node',
+                snippet: '<input id="snippet3"/>',
+              },
+            },
+          ],
+        },
+      });
+    });
+
     it('returns axe error message to the caller when present', () => {
       class FakeA11yAudit extends AxeAudit {
         static get meta() {
@@ -130,6 +194,7 @@ describe('Accessibility: axe-audit', () => {
             nodes: [{
               html: '<input id="multi-label-form-element" />',
               node: {},
+              relatedNodes: [],
             }],
             help: 'http://example.com/',
           }],
@@ -188,6 +253,7 @@ describe('Accessibility: axe-audit', () => {
               node: {
                 snippet: '<input id="snippet"/>',
               },
+              relatedNodes: [],
             }],
             help: 'http://example.com/',
           },

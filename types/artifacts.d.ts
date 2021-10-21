@@ -208,6 +208,7 @@ declare module Artifacts {
       target: Array<string>;
       failureSummary?: string;
       node: NodeDetails;
+      relatedNodes: NodeDetails[];
     }>;
     error?: RuleExecutionError;
   }
