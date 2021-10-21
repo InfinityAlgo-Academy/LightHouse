@@ -268,6 +268,7 @@ export class ReportRenderer {
     }
 
     const scoreScale = this._dom.createElement('div');
+    scoreScale.classList.add('lh-scorescale-wrap');
     scoreScale.append(this._dom.createComponent('scorescale'));
     if (scoreHeader) {
       const scoresContainer = this._dom.find('.lh-scores-container', headerContainer);

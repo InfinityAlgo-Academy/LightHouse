@@ -94,8 +94,8 @@
   --gauge-circle-size-big: 96px;
   --gauge-circle-size: 48px;
   --gauge-circle-size-sm: 32px;
-  --gauge-label-font-size-big: 28px;
-  --gauge-label-font-size: 20px;
+  --gauge-label-font-size-big: 18px;
+  --gauge-label-font-size: var(--report-font-size-secondary);
   --gauge-label-line-height-big: 24px;
   --gauge-label-line-height: var(--report-line-height-secondary);
   --gauge-percentage-font-size-big: 38px;
@@ -654,16 +654,6 @@
   font-size: 90%;
 }
 
-.lh-metricfilter__label:first-of-type {
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
-  margin-left: 5px;
-}
-.lh-metricfilter__label:last-of-type {
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
-}
-
 .lh-metricfilter__label--active {
   background: var(--color-blue-primary);
   color: var(--color-white);
@@ -1078,6 +1068,7 @@
 .lh-audit-group__summary {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .lh-audit-group__header .lh-chevron {
@@ -1220,19 +1211,19 @@
 /* Gauge */
 
 .lh-gauge__wrapper--pass {
-  color: var(--color-pass);
+  color: var(--color-pass-secondary);
   fill: var(--color-pass);
   stroke: var(--color-pass);
 }
 
 .lh-gauge__wrapper--average {
-  color: var(--color-average);
+  color: var(--color-average-text);
   fill: var(--color-average);
   stroke: var(--color-average);
 }
 
 .lh-gauge__wrapper--fail {
-  color: var(--color-fail);
+  color: var(--color-fail-secondary);
   fill: var(--color-fail);
   stroke: var(--color-fail);
 }
@@ -1251,7 +1242,7 @@
   display: inline-block;
 }
 .lh-fraction__wrapper--pass .lh-fraction__content {
-  color: var(--color-pass);
+  color: var(--color-pass-secondary);
 }
 .lh-fraction__wrapper--pass .lh-fraction__background {
   background-color: var(--color-pass);
@@ -1261,11 +1252,9 @@
   border-radius: 50%;
 }
 .lh-fraction__wrapper--average .lh-fraction__content {
-  color: var(--color-average);
+  color: var(--color-average-text);
 }
-.lh-fraction__wrapper--average .lh-fraction__background {
-  background-color: var(--color-average);
-}
+.lh-fraction__wrapper--average .lh-fraction__background
 .lh-fraction__wrapper--average .lh-fraction__content::before {
   background-color: var(--color-average);
 }
@@ -1438,10 +1427,13 @@
 
 .lh-scorescale {
   display: inline-flex;
-  margin: 12px auto 0 auto;
-  border: 1px solid var(--color-gray-200);
-  border-radius: 20px;
-  padding: 8px 8px;
+
+  gap: calc(var(--default-padding) * 4);
+  margin: 16px auto 0 auto;
+  padding: 2px var(--default-padding);
+  font-size: var(--report-font-size-secondary);
+  color: var(--color-gray-700);
+
 }
 
 .lh-scorescale-range {
@@ -1450,6 +1442,22 @@
   margin: 0 12px;
   font-family: var(--report-font-family-monospace);
   white-space: nowrap;
+}
+
+.lh-category-header__finalscreenshot .lh-scorescale {
+  border: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.lh-category-header__finalscreenshot .lh-scorescale-range {
+  font-family: unset;
+  font-size: 12px;
+}
+
+.lh-scorescale-wrap {
+  display: contents;
 }
 
 /* Hide category score gauages if it's a single category report */
@@ -1497,18 +1505,6 @@
   justify-items: center;
   align-items: center;
   gap: var(--report-line-height);
-}
-
-.lh-category-header__finalscreenshot .lh-scorescale {
-  border: 0;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-}
-
-.lh-category-header__finalscreenshot .lh-scorescale-range {
-  font-family: unset;
-  font-size: 12px;
 }
 
 .lh-final-ss-image {
