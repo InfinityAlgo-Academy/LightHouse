@@ -267,8 +267,9 @@ export class ReportRenderer {
       headerContainer.classList.add('lh-header--solo-category');
     }
 
+    const scoreScale = this._dom.createElement('div');
+    scoreScale.append(this._dom.createComponent('scorescale'));
     if (scoreHeader) {
-      const scoreScale = this._dom.createComponent('scorescale');
       const scoresContainer = this._dom.find('.lh-scores-container', headerContainer);
       scoreHeader.append(
         ...this._renderScoreGauges(report, categoryRenderer, specificCategoryRenderers));
@@ -294,6 +295,8 @@ export class ReportRenderer {
         categoryOptions
       ));
     }
+
+    categoryRenderer.injectFinalScreenshot(categories, report.audits, scoreScale);
 
     const reportFragment = this._dom.createFragment();
     reportFragment.append(this._dom.createComponent('styles'));
