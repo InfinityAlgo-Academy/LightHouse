@@ -216,6 +216,7 @@
   }
 }
 
+/* todo, merge this with lh-vars dense beloe */
 @media only screen and (max-width: 480px) {
   .lh-vars {
     --audit-group-margin-bottom: 20px;
@@ -248,7 +249,7 @@
   }
 }
 
-.lh-vars.lh-devtools {
+.lh-vars.lh-vars--dense {
   --audit-explanation-line-height: 14px;
   --audit-group-margin-bottom: 20px;
   --audit-group-padding-vertical: 12px;
@@ -268,11 +269,8 @@
   --gauge-wrapper-width: 97px;
   --header-line-height: 20px;
   --header-padding: 16px 0 16px 0;
-  --screenshot-overlay-background: transparent;
   --plugin-icon-size: 75%;
   --pwa-icon-margin: 0 7px 0 -3px;
-  --report-font-family-monospace: 'Menlo', 'dejavu sans mono', 'Consolas', 'Lucida Console', monospace;
-  --report-font-family: '.SFNSDisplay-Regular', 'Helvetica Neue', 'Lucida Grande', sans-serif;
   --report-font-size: 12px;
   --report-line-height: 20px;
   --score-icon-margin-left: 2px;
@@ -281,6 +279,9 @@
 }
 
 .lh-devtools.lh-root {
+  --screenshot-overlay-background: transparent;
+  --report-font-family-monospace: 'Menlo', 'dejavu sans mono', 'Consolas', 'Lucida Console', monospace;
+  --report-font-family: '.SFNSDisplay-Regular', 'Helvetica Neue', 'Lucida Grande', sans-serif;
   height: 100%;
 }
 .lh-devtools.lh-root img {

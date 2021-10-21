@@ -171,7 +171,7 @@ export class ReportUIFeatures {
   }
 
   _setupMediaQueryListeners() {
-    const mediaQuery = self.matchMedia('(max-width: 500px)');
+    const mediaQuery = self.matchMedia('(max-width: 480px)');
     mediaQuery.addListener(this.onMediaQueryChange);
     // Ensure the handler is called on init
     this.onMediaQueryChange(mediaQuery);
@@ -191,8 +191,8 @@ export class ReportUIFeatures {
    * @param {MediaQueryList|MediaQueryListEvent} mql
    */
   onMediaQueryChange(mql) {
-    const root = this._dom.find('.lh-root', this._document);
-    root.classList.toggle('lh-narrow', mql.matches);
+    const root = this._dom.find('.lh-vars', this._document);
+    root.classList.toggle('lh-vars--dense', mql.matches);
   }
 
   _setupThirdPartyFilter() {
