@@ -51,7 +51,7 @@
     "unit-viewer": "yarn jest \"lighthouse-viewer/.*-test.js\"",
     "unit-flow": "yarn jest \"flow-report/.*-test.[tj]s[x]?\"",
     "unit": "yarn jest",
-    "unit:ci": "NODE_OPTIONS=--max-old-space-size=8192 npm run jest -- --ci",
+    "unit:ci": "NODE_OPTIONS=--max-old-space-size=8192 npm run jest --ci .",
     "core-unit": "yarn unit-core",
     "cli-unit": "yarn unit-cli",
     "viewer-unit": "yarn unit-viewer",
