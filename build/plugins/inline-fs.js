@@ -14,15 +14,27 @@ const MagicString = require('magic-string').default;
 /** @typedef {import('estree').Node} Node */
 /** @typedef {import('estree').SimpleCallExpression} SimpleCallExpression */
 
+/** @typedef {{text: string, location: {file: string, line: number, column: number}}} Warning */
+
+/** An error associated with a particular AST node. */
+class AstError extends Error {
+  /** @param {string} message @param {Node} node */
+  constructor(message, node) {
+    super(message);
+    this.node = node;
+  }
+}
+
 /**
  * Inlines the values of selected `fs` methods if their targets can be
  * statically determined. Currently `readFileSync` and `readdirSync` are
  * supported.
  * Returns `null` as code if no changes were made.
  * @param {string} code
- * @return {Promise<string|null>}
+ * @param {string} filepath
+ * @return {Promise<{code: string|null, warnings: Array<Warning>}>}
  */
-async function inlineFs(code) {
+async function inlineFs(code, filepath) {
   // Approach:
   // - scan `code` for fs methods
   // - parse only the expression at each found index
@@ -36,10 +48,12 @@ async function inlineFs(code) {
   const foundIndices = [...code.matchAll(fsSearch)].map(e => e.index);
 
   // Return null for not-applicable files with as little work as possible.
-  if (foundIndices.length === 0) return null;
+  if (foundIndices.length === 0) return {code: null, warnings: []};
 
   const output = new MagicString(code);
   let madeChange = false;
+  /** @type {Array<Warning>} */
+  const warnings = [];
 
   // Can iterate forwards in string because MagicString always uses original indices.
   for (const foundIndex of foundIndices) {
@@ -49,7 +63,8 @@ async function inlineFs(code) {
     try {
       parsed = parseExpressionAt(code, foundIndex, {ecmaVersion: 'latest'});
     } catch (err) {
-      console.warn(err.message);
+      // `err.loc` added by acorn.
+      warnings.push(createWarning(err, filepath, err.loc));
       continue;
     }
 
@@ -74,24 +89,31 @@ async function inlineFs(code) {
       } else if (parsed.callee.property.name === 'readdirSync') {
         content = await getReaddirReplacement(parsed);
       } else {
-        throw new Error(`unexpected fs call 'fs.${parsed.callee.property.name}'`);
+        throw new AstError(`unexpected fs call 'fs.${parsed.callee.property.name}'`,
+            parsed.callee.property);
       }
     } catch (err) {
-      console.warn(err.message);
+      // Use the specific node with the error if available; fallback to fs.method location.
+      const offsets = getNodeOffsets(err.node || parsed);
+      const location = acorn.getLineInfo(code, offsets.start);
+
+      warnings.push(createWarning(err, filepath, location));
       continue;
     }
 
-    // @ts-expect-error - `start` and `end` provided by acorn on top of ESTree types.
-    const {start, end} = parsed;
+    const offsets = getNodeOffsets(parsed);
     // TODO(bckenny): use options to customize `storeName` for source maps.
-    output.overwrite(start, end, content);
+    output.overwrite(offsets.start, offsets.end, content);
     madeChange = true;
   }
 
   // Be explicit if no change has been made.
   const outputCode = madeChange ? output.toString() : null;
 
-  return outputCode;
+  return {
+    code: outputCode,
+    warnings,
+  };
 }
 
 /**
@@ -124,6 +146,34 @@ function assertEqualString(actual, expected, errorMessage) {
 }
 
 /**
+ * Convenience method to get the `start` and `end` offsets for `node` provided
+ * by acorn on top of ESTree types (keeping the type errors encapsulated).
+ * @param {Node} node
+ * @return {{start: number, end: number}}
+ */
+function getNodeOffsets(node) {
+  // @ts-expect-error - see https://github.com/acornjs/acorn/issues/946
+  return node;
+}
+
+/**
+ * @param {Error} error
+ * @param {string} filepath
+ * @param {{line: number, column: number}} location
+ * @return {Warning}
+ */
+function createWarning(error, filepath, location) {
+  return {
+    text: error.message,
+    location: {
+      file: filepath,
+      line: location.line,
+      column: location.column,
+    },
+  };
+}
+
+/**
  * Attempts to statically determine the target of a `fs.readFileSync()` call and
  * returns the already-quoted contents of the file to be loaded.
  * If it's a JS file, it's minified before inlining.
@@ -137,7 +187,9 @@ async function getReadFileReplacement(node) {
 
   assert.equal(node.arguments.length, 2, 'fs.readFileSync() must have two arguments');
   const constructedPath = collapseToStringLiteral(node.arguments[0]);
-  assert.equal(isUtf8Options(node.arguments[1]), true, 'only utf8 readFileSync is supported');
+  if (!isUtf8Options(node.arguments[1])) {
+    throw new AstError('only utf8 readFileSync is supported', node.arguments[1]);
+  }
 
   const readContent = await fs.promises.readFile(constructedPath, 'utf8');
 
@@ -160,7 +212,9 @@ async function getReaddirReplacement(node) {
 
   // If there's no second argument, fs.readdirSync defaults to 'utf8'.
   if (node.arguments.length === 2) {
-    assert.equal(isUtf8Options(node.arguments[1]), true, 'only utf8 readdirSync is supported');
+    if (!isUtf8Options(node.arguments[1])) {
+      throw new AstError('only utf8 readdirSync is supported', node.arguments[1]);
+    }
   }
 
   const constructedPath = collapseToStringLiteral(node.arguments[0]);
@@ -169,7 +223,7 @@ async function getReaddirReplacement(node) {
     const contents = await fs.promises.readdir(constructedPath, 'utf8');
     return JSON.stringify(contents);
   } catch (err) {
-    throw new Error(`could not inline fs.readdirSync call: ${err.message}`);
+    throw new Error(`could not inline fs.readdirSync contents: ${err.message}`);
   }
 }
 
@@ -210,7 +264,7 @@ function collapseToStringLiteral(node) {
     }
   }
 
-  throw new Error(`unsupported node: ${node.type}`);
+  throw new AstError(`unsupported node: ${node.type}`, node);
 }
 
 module.exports = {
