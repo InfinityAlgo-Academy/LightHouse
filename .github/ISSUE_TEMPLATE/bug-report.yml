@@ -86,6 +86,14 @@ body:
         What version of node.js were you using? (Only applicable to CLI and node) (Note: the minimum Node version we support is 14.15.0)
     validations:
       required: false
+  - type: input
+    id: os
+    attributes:
+      label: OS
+      description: >
+        What OS are you using? (Note: specific granularity not necessary, enough to say Windows / Mac / Linux, etc.)
+    validations:
+      required: false
   - type: textarea
     id: logs
     attributes:
