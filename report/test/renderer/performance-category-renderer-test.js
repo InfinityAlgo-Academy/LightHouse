@@ -84,7 +84,7 @@ describe('PerfCategoryRenderer', () => {
   it('renders the metrics variance disclaimer as markdown', () => {
     const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
     const disclaimerEl =
-        categoryDOM.querySelector('.lh-audit-group--metrics > .lh-metrics__disclaimer');
+        categoryDOM.querySelector('.lh-category-header__description > .lh-metrics__disclaimer');
 
     assert.ok(disclaimerEl.textContent.includes('Values are estimated'));
     const disclamerLink = disclaimerEl.querySelector('a');
