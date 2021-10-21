@@ -1277,15 +1277,6 @@
   "lighthouse-core/audits/preload-lcp-image.js | title": {
     "message": "Wstępnie wczytuj obraz największego wyrenderowania treści"
   },
-  "lighthouse-core/audits/redirects-http.js | description": {
-    "message": "Jeśli HTTPS jest już skonfigurowany, upewnij się, że cały ruch HTTP jest przekierowywany do HTTPS, by wszyscy użytkownicy mogli korzystać z bezpiecznych funkcji. [Więcej informacji](https://web.dev/redirects-http/)"
-  },
-  "lighthouse-core/audits/redirects-http.js | failureTitle": {
-    "message": "Nie przekierowuje ruchu HTTP do HTTPS"
-  },
-  "lighthouse-core/audits/redirects-http.js | title": {
-    "message": "Przekierowuje ruch HTTP do HTTPS"
-  },
   "lighthouse-core/audits/redirects.js | description": {
     "message": "Przekierowania wprowadzają dodatkowe opóźnienia przed rozpoczęciem ładowania strony. [Więcej informacji](https://web.dev/redirects/)"
   },
@@ -2447,29 +2438,14 @@
   "report/renderer/util.js | runtimeSettingsCPUThrottling": {
     "message": "Ograniczanie wykorzystania procesora"
   },
-  "report/renderer/util.js | runtimeSettingsChannel": {
-    "message": "Kanał"
-  },
   "report/renderer/util.js | runtimeSettingsDevice": {
     "message": "Urządzenie"
-  },
-  "report/renderer/util.js | runtimeSettingsFetchTime": {
-    "message": "Czas pobrania"
   },
   "report/renderer/util.js | runtimeSettingsNetworkThrottling": {
     "message": "Ograniczanie wykorzystania sieci"
   },
-  "report/renderer/util.js | runtimeSettingsTitle": {
-    "message": "Ustawienia czasu działania"
-  },
-  "report/renderer/util.js | runtimeSettingsUA": {
-    "message": "Klient użytkownika (host)"
-  },
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "Klient użytkownika (sieć)"
-  },
-  "report/renderer/util.js | runtimeSettingsUrl": {
-    "message": "URL"
   },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "Nieznane"

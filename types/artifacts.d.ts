@@ -25,7 +25,6 @@ export interface Artifacts extends BaseArtifacts, GathererArtifacts {}
 
 export type FRArtifacts = StrictOmit<Artifacts,
   | 'Fonts'
-  | 'HTTPRedirect'
   | 'Manifest'
   | 'MixedContent'
   | keyof FRBaseArtifacts
@@ -148,8 +147,6 @@ export interface GathererArtifacts extends PublicGathererArtifacts,LegacyBaseArt
   FullPageScreenshot: Artifacts.FullPageScreenshot | null;
   /** Information about event listeners registered on the global object. */
   GlobalListeners: Array<Artifacts.GlobalListener>;
-  /** Whether the page ended up on an HTTPS page after attempting to load the HTTP version. */
-  HTTPRedirect: {value: boolean};
   /** The issues surfaced in the devtools Issues panel */
   InspectorIssues: Artifacts.InspectorIssues;
   /** JS coverage information for code used during page load. Keyed by network URL. */
@@ -211,6 +208,7 @@ declare module Artifacts {
       target: Array<string>;
       failureSummary?: string;
       node: NodeDetails;
+      relatedNodes: NodeDetails[];
     }>;
     error?: RuleExecutionError;
   }

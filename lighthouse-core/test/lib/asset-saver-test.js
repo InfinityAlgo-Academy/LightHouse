@@ -221,7 +221,7 @@ describe('asset-saver helper', () => {
     const outputPath = __dirname + '/json-serialization-test-data/';
 
     afterEach(() => {
-      fs.rmdirSync(outputPath, {recursive: true});
+      fs.rmSync(outputPath, {recursive: true, force: true});
     });
 
     it('round trips saved artifacts', async () => {

@@ -9,7 +9,7 @@
     "smokehouse": "./lighthouse-cli/test/smokehouse/frontends/smokehouse-bin.js"
   },
   "engines": {
-    "node": ">=12.20.0 12 || >=14.13 14  || >=15"
+    "node": ">=14.15"
   },
   "scripts": {
     "build-all": "npm-run-posix-or-windows build-all:task",
@@ -23,7 +23,7 @@
     "build-smokehouse-bundle": "node ./build/build-smokehouse-bundle.js",
     "build-lr": "yarn reset-link && node ./build/build-lightrider-bundles.js",
     "build-pack": "bash build/build-pack.sh",
-    "build-report": "node build/build-report-components.js && yarn eslint --fix report/renderer/components.js && node build/build-report.js",
+    "build-report": "node build/build-report-components.js && yarn eslint --fix report/renderer/components.js && node build/build-report.js && bash lighthouse-core/scripts/copy-util-commonjs.sh",
     "build-sample-reports": "yarn build-report && node build/build-sample-reports.js",
     "build-treemap": "node ./build/build-treemap.js",
     "build-viewer": "node ./build/build-viewer.js",
@@ -51,7 +51,7 @@
     "unit-viewer": "yarn jest \"lighthouse-viewer/.*-test.js\"",
     "unit-flow": "yarn jest \"flow-report/.*-test.[tj]s[x]?\"",
     "unit": "yarn jest",
-    "unit:ci": "NODE_OPTIONS=--max-old-space-size=8192 npm run jest -- --ci",
+    "unit:ci": "NODE_OPTIONS=--max-old-space-size=8192 npm run jest --ci .",
     "core-unit": "yarn unit-core",
     "cli-unit": "yarn unit-cli",
     "viewer-unit": "yarn unit-viewer",
@@ -105,6 +105,7 @@
     "@types/configstore": "^4.0.0",
     "@types/cpy": "^5.1.0",
     "@types/eslint": "^4.16.6",
+    "@types/estree": "^0.0.50",
     "@types/exorcist": "^0.4.5",
     "@types/gh-pages": "^2.0.0",
     "@types/google.analytics": "0.0.39",
@@ -128,6 +129,7 @@
     "@typescript-eslint/eslint-plugin": "^4.30.0",
     "@typescript-eslint/parser": "^4.30.0",
     "@wardpeet/brfs": "2.1.0",
+    "acorn": "^8.5.0",
     "angular": "^1.7.4",
     "archiver": "^3.0.0",
     "browserify": "^17.0.0",
@@ -157,6 +159,7 @@
     "jsonld": "^5.2.0",
     "jsonlint-mod": "^1.7.6",
     "lighthouse-plugin-publisher-ads": "^1.4.1",
+    "magic-string": "^0.25.7",
     "mime-types": "^2.1.30",
     "node-fetch": "^2.6.1",
     "npm-run-posix-or-windows": "^2.0.2",
@@ -165,6 +168,7 @@
     "preact": "^10.5.14",
     "pretty-json-stringify": "^0.0.2",
     "puppeteer": "^10.2.0",
+    "resolve": "^1.20.0",
     "rollup": "^2.50.6",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-polyfill-node": "^0.7.0",

@@ -1277,15 +1277,6 @@
   "lighthouse-core/audits/preload-lcp-image.js | title": {
     "message": "โหลดรูปภาพ Largest Contentful Paint ล่วงหน้า"
   },
-  "lighthouse-core/audits/redirects-http.js | description": {
-    "message": "หากคุณตั้งค่า HTTPS ไว้แล้ว ให้ตรวจสอบว่าได้เปลี่ยนเส้นทางการเข้าชมผ่าน HTTP ทั้งหมดไปยัง HTTPS เพื่อให้ผู้ใช้ทุกคนใช้ฟีเจอร์เว็บที่ปลอดภัยได้ [ดูข้อมูลเพิ่มเติม](https://web.dev/redirects-http/)"
-  },
-  "lighthouse-core/audits/redirects-http.js | failureTitle": {
-    "message": "ไม่ได้เปลี่ยนเส้นทางการเข้าชมผ่าน HTTP ไปยัง HTTPS"
-  },
-  "lighthouse-core/audits/redirects-http.js | title": {
-    "message": "เปลี่ยนเส้นทางการเข้าชมผ่าน HTTP ไปยัง HTTPS"
-  },
   "lighthouse-core/audits/redirects.js | description": {
     "message": "การเปลี่ยนเส้นทางทำให้เกิดความล่าช้ามากขึ้นก่อนที่หน้าเว็บจะโหลดได้ [ดูข้อมูลเพิ่มเติม](https://web.dev/redirects/)"
   },
@@ -2447,29 +2438,14 @@
   "report/renderer/util.js | runtimeSettingsCPUThrottling": {
     "message": "การควบคุม CPU"
   },
-  "report/renderer/util.js | runtimeSettingsChannel": {
-    "message": "ช่อง"
-  },
   "report/renderer/util.js | runtimeSettingsDevice": {
     "message": "อุปกรณ์"
-  },
-  "report/renderer/util.js | runtimeSettingsFetchTime": {
-    "message": "เวลาในการดึงข้อมูล"
   },
   "report/renderer/util.js | runtimeSettingsNetworkThrottling": {
     "message": "การควบคุมเครือข่าย"
   },
-  "report/renderer/util.js | runtimeSettingsTitle": {
-    "message": "การตั้งค่ารันไทม์"
-  },
-  "report/renderer/util.js | runtimeSettingsUA": {
-    "message": "User Agent (โฮสต์)"
-  },
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "User Agent (เครือข่าย)"
-  },
-  "report/renderer/util.js | runtimeSettingsUrl": {
-    "message": "URL"
   },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "ไม่ทราบ"

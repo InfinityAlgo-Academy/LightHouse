@@ -1277,15 +1277,6 @@
   "lighthouse-core/audits/preload-lcp-image.js | title": {
     "message": "Предучитајте слику са највећим приказивањем садржаја"
   },
-  "lighthouse-core/audits/redirects-http.js | description": {
-    "message": "Ако сте већ подесили HTTPS, уверите се да преусмеравате сав HTTP саобраћај на HTTPS да бисте омогућили безбедне веб-функције за све кориснике. [Сазнајте више](https://web.dev/redirects-http/)."
-  },
-  "lighthouse-core/audits/redirects-http.js | failureTitle": {
-    "message": "Не преусмерава HTTP саобраћај на HTTPS"
-  },
-  "lighthouse-core/audits/redirects-http.js | title": {
-    "message": "Преусмерава HTTP саобраћај на HTTPS"
-  },
   "lighthouse-core/audits/redirects.js | description": {
     "message": "Преусмеравања доводе до додатних кашњења пре учитавања странице. [Сазнајте више](https://web.dev/redirects/)."
   },
@@ -2447,29 +2438,14 @@
   "report/renderer/util.js | runtimeSettingsCPUThrottling": {
     "message": "Ограничавање процесора"
   },
-  "report/renderer/util.js | runtimeSettingsChannel": {
-    "message": "Канал"
-  },
   "report/renderer/util.js | runtimeSettingsDevice": {
     "message": "Уређај"
-  },
-  "report/renderer/util.js | runtimeSettingsFetchTime": {
-    "message": "Време преузимања"
   },
   "report/renderer/util.js | runtimeSettingsNetworkThrottling": {
     "message": "Ограничавање мреже"
   },
-  "report/renderer/util.js | runtimeSettingsTitle": {
-    "message": "Подешавања времена извршавања"
-  },
-  "report/renderer/util.js | runtimeSettingsUA": {
-    "message": "Кориснички агент (хост)"
-  },
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "Кориснички агент (мрежа)"
-  },
-  "report/renderer/util.js | runtimeSettingsUrl": {
-    "message": "URL"
   },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "Непознато"

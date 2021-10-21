@@ -1277,15 +1277,6 @@
   "lighthouse-core/audits/preload-lcp-image.js | title": {
     "message": "Largest Contentful Paint の画像のプリロード"
   },
-  "lighthouse-core/audits/redirects-http.js | description": {
-    "message": "HTTPS を設定済みの場合は、すべてのユーザーに安全なウェブ機能を提供できるように、すべての HTTP トラフィックが HTTPS にリダイレクトされることを確認してください。[詳細](https://web.dev/redirects-http/)"
-  },
-  "lighthouse-core/audits/redirects-http.js | failureTitle": {
-    "message": "HTTP トラフィックは HTTPS にリダイレクトされません"
-  },
-  "lighthouse-core/audits/redirects-http.js | title": {
-    "message": "HTTP トラフィックは HTTPS にリダイレクトされます"
-  },
   "lighthouse-core/audits/redirects.js | description": {
     "message": "リダイレクトを行うと、ページの読み込みにさらに時間がかかる可能性があります。[詳細](https://web.dev/redirects/)"
   },
@@ -2447,29 +2438,14 @@
   "report/renderer/util.js | runtimeSettingsCPUThrottling": {
     "message": "CPU スロットリング"
   },
-  "report/renderer/util.js | runtimeSettingsChannel": {
-    "message": "チャネル"
-  },
   "report/renderer/util.js | runtimeSettingsDevice": {
     "message": "デバイス"
-  },
-  "report/renderer/util.js | runtimeSettingsFetchTime": {
-    "message": "取得日時"
   },
   "report/renderer/util.js | runtimeSettingsNetworkThrottling": {
     "message": "ネットワーク スロットリング"
   },
-  "report/renderer/util.js | runtimeSettingsTitle": {
-    "message": "ランタイム設定"
-  },
-  "report/renderer/util.js | runtimeSettingsUA": {
-    "message": "ユーザー エージェント（ホスト）"
-  },
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "ユーザー エージェント（ネットワーク）"
-  },
-  "report/renderer/util.js | runtimeSettingsUrl": {
-    "message": "URL"
   },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "不明"

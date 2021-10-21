@@ -1277,15 +1277,6 @@
   "lighthouse-core/audits/preload-lcp-image.js | title": {
     "message": "Предварително зареждане на изображението, рендерирано при изобразяване на най-голямото съдържание (LPC)"
   },
-  "lighthouse-core/audits/redirects-http.js | description": {
-    "message": "Ако вече сте настроили HTTPS, целият HTTP трафик трябва да се пренасочва към HTTPS, така че функциите за сигурност в мрежата да са активирани за всичките ви потребители. [Научете повече](https://web.dev/redirects-http/)."
-  },
-  "lighthouse-core/audits/redirects-http.js | failureTitle": {
-    "message": "HTTP трафикът не се пренасочва към HTTPS"
-  },
-  "lighthouse-core/audits/redirects-http.js | title": {
-    "message": "HTTP трафикът се пренасочва към HTTPS"
-  },
   "lighthouse-core/audits/redirects.js | description": {
     "message": "Пренасочванията водят до допълнително забавяне на зареждането на страницата. [Научете повече](https://web.dev/redirects/)."
   },
@@ -2447,29 +2438,14 @@
   "report/renderer/util.js | runtimeSettingsCPUThrottling": {
     "message": "Ограничаване на процесора"
   },
-  "report/renderer/util.js | runtimeSettingsChannel": {
-    "message": "Канал"
-  },
   "report/renderer/util.js | runtimeSettingsDevice": {
     "message": "Устройство"
-  },
-  "report/renderer/util.js | runtimeSettingsFetchTime": {
-    "message": "Час на извличането"
   },
   "report/renderer/util.js | runtimeSettingsNetworkThrottling": {
     "message": "Ограничаване на мрежата"
   },
-  "report/renderer/util.js | runtimeSettingsTitle": {
-    "message": "Настройки за времето на изпълнение"
-  },
-  "report/renderer/util.js | runtimeSettingsUA": {
-    "message": "Потребителски агент (хост)"
-  },
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "Потребителски агент (мрежа)"
-  },
-  "report/renderer/util.js | runtimeSettingsUrl": {
-    "message": "URL адрес"
   },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "Неизвестно"

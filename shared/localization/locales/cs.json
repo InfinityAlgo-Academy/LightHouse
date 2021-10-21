@@ -1277,15 +1277,6 @@
   "lighthouse-core/audits/preload-lcp-image.js | title": {
     "message": "Předběžné načtení obrázku s vykreslením největšího obsahu"
   },
-  "lighthouse-core/audits/redirects-http.js | description": {
-    "message": "Pokud jste protokol HTTPS už nastavili, nezapomeňte veškerý provoz přes protokol HTTP přesměrovat na HTTPS, aby všichni vaši uživatelé měli k dispozici funkce zabezpečeného webu. [Další informace](https://web.dev/redirects-http/)"
-  },
-  "lighthouse-core/audits/redirects-http.js | failureTitle": {
-    "message": "Nepřesměrovává provoz přes protokol HTTP na HTTPS"
-  },
-  "lighthouse-core/audits/redirects-http.js | title": {
-    "message": "Přesměrovává provoz přes protokol HTTP na HTTPS"
-  },
   "lighthouse-core/audits/redirects.js | description": {
     "message": "Přesměrování způsobují další prodlevy před načtením stránky. [Další informace](https://web.dev/redirects/)"
   },
@@ -2447,29 +2438,14 @@
   "report/renderer/util.js | runtimeSettingsCPUThrottling": {
     "message": "Omezení procesoru"
   },
-  "report/renderer/util.js | runtimeSettingsChannel": {
-    "message": "Kanál"
-  },
   "report/renderer/util.js | runtimeSettingsDevice": {
     "message": "Zařízení"
-  },
-  "report/renderer/util.js | runtimeSettingsFetchTime": {
-    "message": "Čas načtení"
   },
   "report/renderer/util.js | runtimeSettingsNetworkThrottling": {
     "message": "Omezení sítě"
   },
-  "report/renderer/util.js | runtimeSettingsTitle": {
-    "message": "Nastavení za běhu"
-  },
-  "report/renderer/util.js | runtimeSettingsUA": {
-    "message": "User agent (hostitel)"
-  },
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "User agent (síť)"
-  },
-  "report/renderer/util.js | runtimeSettingsUrl": {
-    "message": "URL"
   },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "Není známo"

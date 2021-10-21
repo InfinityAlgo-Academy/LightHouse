@@ -1277,15 +1277,6 @@
   "lighthouse-core/audits/preload-lcp-image.js | title": {
     "message": "Vnaprejšnje nalaganje slike največjega vsebinskega izrisa"
   },
-  "lighthouse-core/audits/redirects-http.js | description": {
-    "message": "Če ste že nastavili protokol HTTPS, poskrbite za preusmeritev vsega prometa prek protokola HTTP na protokol HTTPS, da zagotovite varne spletne funkcije vsem uporabnikom. [Več o tem](https://web.dev/redirects-http/)."
-  },
-  "lighthouse-core/audits/redirects-http.js | failureTitle": {
-    "message": "Ne preusmeri prometa prek protokola HTTP na protokol HTTPS"
-  },
-  "lighthouse-core/audits/redirects-http.js | title": {
-    "message": "Preusmeri promet prek protokola HTTP na protokol HTTPS"
-  },
   "lighthouse-core/audits/redirects.js | description": {
     "message": "Preusmeritve vnašajo dodatne zakasnitve nalaganja strani. [Več o tem](https://web.dev/redirects/)."
   },
@@ -2447,29 +2438,14 @@
   "report/renderer/util.js | runtimeSettingsCPUThrottling": {
     "message": "Zaviranje CPE-ja"
   },
-  "report/renderer/util.js | runtimeSettingsChannel": {
-    "message": "Kanal"
-  },
   "report/renderer/util.js | runtimeSettingsDevice": {
     "message": "Naprava"
-  },
-  "report/renderer/util.js | runtimeSettingsFetchTime": {
-    "message": "Čas pridobitve"
   },
   "report/renderer/util.js | runtimeSettingsNetworkThrottling": {
     "message": "Omejevanje omrežja"
   },
-  "report/renderer/util.js | runtimeSettingsTitle": {
-    "message": "Nastavitve časa izvajanja"
-  },
-  "report/renderer/util.js | runtimeSettingsUA": {
-    "message": "Uporabnikov posrednik (gostitelj)"
-  },
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "Uporabnikov posrednik (omrežje)"
-  },
-  "report/renderer/util.js | runtimeSettingsUrl": {
-    "message": "URL"
   },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "Neznano"

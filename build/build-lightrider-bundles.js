@@ -12,7 +12,6 @@ const fs = require('fs');
 const path = require('path');
 const bundleBuilder = require('./build-bundle.js');
 const {minifyFileTransform} = require('./build-utils.js');
-const {buildPsiReport} = require('./build-report.js');
 const {LH_ROOT} = require('../root.js');
 
 const distDir = path.join(LH_ROOT, 'dist', 'lightrider');
@@ -77,7 +76,6 @@ async function run() {
   await Promise.all([
     buildEntryPoint(),
     buildReportGenerator(),
-    buildPsiReport(),
     buildStaticServerBundle(),
   ]);
 }

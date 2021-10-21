@@ -407,6 +407,20 @@ const expectations = {
                 'explanation': 'Fix any of the following:\n  Document has active elements with the same id attribute: duplicate-id-active',
                 'nodeLabel': 'text1',
               },
+              subItems: {
+                type: 'subitems',
+                items: [
+                  {
+                    relatedNode: {
+                      'type': 'node',
+                      'path': '2,HTML,1,BODY,39,SECTION,1,TEXTAREA',
+                      'selector': 'body > section > textarea#duplicate-id-active',
+                      'snippet': '<textarea id="duplicate-id-active" aria-label="text2">',
+                      'nodeLabel': 'text2',
+                    },
+                  },
+                ],
+              },
             },
           ],
         },
@@ -423,6 +437,20 @@ const expectations = {
                 'snippet': '<div id="duplicate-id-aria" class="duplicate-id-aria">',
                 'explanation': 'Fix any of the following:\n  Document has multiple elements referenced with ARIA with the same id attribute: duplicate-id-aria',
                 'nodeLabel': 'body > section > div#duplicate-id-aria',
+              },
+              subItems: {
+                type: 'subitems',
+                items: [
+                  {
+                    relatedNode: {
+                      'type': 'node',
+                      'path': '2,HTML,1,BODY,41,SECTION,0,DIV,0,DIV',
+                      'selector': 'body > section > div#duplicate-id-aria > div#duplicate-id-aria',
+                      'snippet': '<div id="duplicate-id-aria">',
+                      'nodeLabel': 'body > section > div#duplicate-id-aria > div#duplicate-id-aria',
+                    },
+                  },
+                ],
               },
             },
           ],
@@ -441,6 +469,29 @@ const expectations = {
                 'snippet': '<input type="checkbox" id="form-field-multiple-labels">',
                 'explanation': 'Fix all of the following:\n  Multiple label elements is not widely supported in assistive technologies. Ensure the first label contains all necessary information.',
                 'nodeLabel': 'body > section > input#form-field-multiple-labels',
+              },
+              subItems: {
+                type: 'subitems',
+                items: [
+                  {
+                    relatedNode: {
+                      'type': 'node',
+                      'path': '2,HTML,1,BODY,43,SECTION,0,LABEL',
+                      'selector': 'body > section > label#label1',
+                      'snippet': '<label for="form-field-multiple-labels" id="label1">',
+                      'nodeLabel': 'label1',
+                    },
+                  },
+                  {
+                    relatedNode: {
+                      'type': 'node',
+                      'path': '2,HTML,1,BODY,43,SECTION,1,LABEL',
+                      'selector': 'body > section > label',
+                      'snippet': '<label for="form-field-multiple-labels">',
+                      'nodeLabel': 'label2',
+                    },
+                  },
+                ],
               },
             },
           ],

@@ -1277,15 +1277,6 @@
   "lighthouse-core/audits/preload-lcp-image.js | title": {
     "message": "I-preload ang larawan ng Largest Contentful Paint"
   },
-  "lighthouse-core/audits/redirects-http.js | description": {
-    "message": "Kung na-set up mo na ang HTTPS, tiyaking ire-redirect mo sa HTTPS ang lahat ng trapiko sa HTTP para ma-enable ang mga ligtas na feature sa web para sa lahat ng iyong user. [Matuto pa](https://web.dev/redirects-http/)."
-  },
-  "lighthouse-core/audits/redirects-http.js | failureTitle": {
-    "message": "Hindi nire-redirect sa HTTPS ang trapiko sa HTTP"
-  },
-  "lighthouse-core/audits/redirects-http.js | title": {
-    "message": "Nire-redirect sa HTTPS ang trapiko sa HTTP"
-  },
   "lighthouse-core/audits/redirects.js | description": {
     "message": "Nagpapasimula ang mga pag-redirect ng mga karagdagang pagkaantala bago ma-load ang page. [Matuto pa](https://web.dev/redirects/)."
   },
@@ -2447,29 +2438,14 @@
   "report/renderer/util.js | runtimeSettingsCPUThrottling": {
     "message": "Pag-throttle ng CPU"
   },
-  "report/renderer/util.js | runtimeSettingsChannel": {
-    "message": "Channel"
-  },
   "report/renderer/util.js | runtimeSettingsDevice": {
     "message": "Device"
-  },
-  "report/renderer/util.js | runtimeSettingsFetchTime": {
-    "message": "Oras ng Pagkuha"
   },
   "report/renderer/util.js | runtimeSettingsNetworkThrottling": {
     "message": "Pag-throttle ng network"
   },
-  "report/renderer/util.js | runtimeSettingsTitle": {
-    "message": "Mga Setting ng Runtime"
-  },
-  "report/renderer/util.js | runtimeSettingsUA": {
-    "message": "User agent (host)"
-  },
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "User agent (network)"
-  },
-  "report/renderer/util.js | runtimeSettingsUrl": {
-    "message": "URL"
   },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "Hindi alam"

@@ -5,9 +5,13 @@
  */
 'use strict';
 
-/** @fileoverview This file is a glorified call of prepareLabData. */
+/** @fileoverview This file exercises two LH reports within the same DOM. */
 
-/** @typedef {import('../clients/psi.js').PrepareLabDataResult} PrepareLabDataResult */
+/** @typedef {import('../clients/bundle.js')} lighthouseRenderer */
+
+/** @type {lighthouseRenderer} */
+// @ts-expect-error
+const lighthouseRenderer = window['report'];
 
 (async function __initPsiReports__() {
   // @ts-expect-error
@@ -22,24 +26,43 @@
   for (const [tabId, lhr] of Object.entries(lhrs)) {
     await distinguishLHR(lhr, tabId);
 
-    // @ts-expect-error
-    const pldd = /** @type {PrepareLabDataResult} */ (window.prepareLabData(lhr, document));
-    const {scoreGaugeEl, perfCategoryEl,
-      finalScreenshotDataUri, scoreScaleEl, installFeatures} = pldd;
-
     const container = document.querySelector(`#${tabId} main`);
     if (!container) throw new Error('Unexpected DOM. Bailing.');
-    container.append(scoreGaugeEl);
-    container.append(scoreScaleEl);
-    if (finalScreenshotDataUri) {
-      const imgEl = document.createElement('img');
-      imgEl.src = finalScreenshotDataUri;
-      container.append(imgEl);
-    }
-    container.append(perfCategoryEl);
-    installFeatures(container);
+
+    renderLHReport(lhr, container);
   }
 })();
+
+/**
+ * @param {LH.Result} lhrData
+ * @param {HTMLElement} reportContainer
+ */
+function renderLHReport(lhrData, reportContainer) {
+  /**
+   * @param {Document} doc
+   */
+  function getRenderer(doc) {
+    const dom = new lighthouseRenderer.DOM(doc);
+    return new lighthouseRenderer.ReportRenderer(dom);
+  }
+
+  const renderer = getRenderer(reportContainer.ownerDocument);
+  reportContainer.classList.add('lh-root', 'lh-vars');
+
+  try {
+    renderer.renderReport(lhrData, reportContainer);
+    // TODO: handle topbar removal better
+    // TODO: display warnings if appropriate.
+    for (const el of reportContainer.querySelectorAll('.lh-topbar, .lh-warnings')) {
+      el.setAttribute('hidden', 'true');
+    }
+    const features = new lighthouseRenderer.ReportUIFeatures(renderer._dom);
+    features.initFeatures(lhrData);
+  } catch (e) {
+    console.error(e);
+    reportContainer.textContent = 'Error: LHR failed to render.';
+  }
+}
 
 
 /**

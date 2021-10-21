@@ -1277,15 +1277,6 @@
   "lighthouse-core/audits/preload-lcp-image.js | title": {
     "message": "Carrega prèviament la imatge de renderització de l'element més gran amb contingut"
   },
-  "lighthouse-core/audits/redirects-http.js | description": {
-    "message": "Si ja has configurat el format HTTPS, assegura't de redirigir tot el trànsit HTTP cap a HTTPS per activar funcions web segures per a tots els usuaris. [Obtén més informació](https://web.dev/redirects-http/)."
-  },
-  "lighthouse-core/audits/redirects-http.js | failureTitle": {
-    "message": "No redirigeix el trànsit HTTP cap a HTTPS"
-  },
-  "lighthouse-core/audits/redirects-http.js | title": {
-    "message": "Redirigeix el trànsit HTTP cap a HTTPS"
-  },
   "lighthouse-core/audits/redirects.js | description": {
     "message": "La mètrica Redireccions introdueix retards addicionals abans de poder carregar la pàgina. [Obtén més informació](https://web.dev/redirects/)."
   },
@@ -2447,29 +2438,14 @@
   "report/renderer/util.js | runtimeSettingsCPUThrottling": {
     "message": "Limitació de CPU"
   },
-  "report/renderer/util.js | runtimeSettingsChannel": {
-    "message": "Canal"
-  },
   "report/renderer/util.js | runtimeSettingsDevice": {
     "message": "Dispositiu"
-  },
-  "report/renderer/util.js | runtimeSettingsFetchTime": {
-    "message": "Data i hora d'obtenció"
   },
   "report/renderer/util.js | runtimeSettingsNetworkThrottling": {
     "message": "Limitació de xarxa"
   },
-  "report/renderer/util.js | runtimeSettingsTitle": {
-    "message": "Configuració del temps d'execució"
-  },
-  "report/renderer/util.js | runtimeSettingsUA": {
-    "message": "Agent d'usuari (amfitrió)"
-  },
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "Agent d'usuari (xarxa)"
-  },
-  "report/renderer/util.js | runtimeSettingsUrl": {
-    "message": "URL"
   },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "Desconegut"

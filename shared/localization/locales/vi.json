@@ -1277,15 +1277,6 @@
   "lighthouse-core/audits/preload-lcp-image.js | title": {
     "message": "Tải trước hình ảnh có Thời gian hiển thị nội dung lớn nhất"
   },
-  "lighthouse-core/audits/redirects-http.js | description": {
-    "message": "Nếu bạn thiết lập HTTPS từ trước, hãy nhớ chuyển hướng toàn bộ lưu lượng truy cập HTTP tới HTTPS để bật các tính năng web an toàn cho tất cả người dùng. [Tìm hiểu thêm](https://web.dev/redirects-http/)"
-  },
-  "lighthouse-core/audits/redirects-http.js | failureTitle": {
-    "message": "Không chuyển hướng lưu lượng truy cập HTTP tới HTTPS"
-  },
-  "lighthouse-core/audits/redirects-http.js | title": {
-    "message": "Chuyển hướng lưu lượng truy cập HTTP tới HTTPS"
-  },
   "lighthouse-core/audits/redirects.js | description": {
     "message": "Các lần chuyển hướng sẽ làm giảm tốc độ tải trang. [Tìm hiểu thêm](https://web.dev/redirects/)."
   },
@@ -2447,29 +2438,14 @@
   "report/renderer/util.js | runtimeSettingsCPUThrottling": {
     "message": "Điều tiết CPU"
   },
-  "report/renderer/util.js | runtimeSettingsChannel": {
-    "message": "Kênh"
-  },
   "report/renderer/util.js | runtimeSettingsDevice": {
     "message": "Thiết bị"
-  },
-  "report/renderer/util.js | runtimeSettingsFetchTime": {
-    "message": "Thời gian tìm nạp"
   },
   "report/renderer/util.js | runtimeSettingsNetworkThrottling": {
     "message": "Hạn chế băng thông mạng"
   },
-  "report/renderer/util.js | runtimeSettingsTitle": {
-    "message": "Các tùy chọn cài đặt thời gian chạy"
-  },
-  "report/renderer/util.js | runtimeSettingsUA": {
-    "message": "Tác nhân người dùng (máy chủ)"
-  },
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "Tác nhân người dùng (mạng)"
-  },
-  "report/renderer/util.js | runtimeSettingsUrl": {
-    "message": "URL"
   },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "Không xác định"

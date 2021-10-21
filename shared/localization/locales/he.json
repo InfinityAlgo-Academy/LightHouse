@@ -1277,15 +1277,6 @@
   "lighthouse-core/audits/preload-lcp-image.js | title": {
     "message": "טעינה מראש של תמונת ה-Largest Contentful Paint (‏LCP)"
   },
-  "lighthouse-core/audits/redirects-http.js | description": {
-    "message": "אם כבר הגדרת HTTPS, יש לוודא שכל תנועת ה-HTTP מופנית אוטומטית ל-HTTPS כדי להפעיל תכונות רשת מאובטחות לכל המשתמשים שלך. [מידע נוסף](https://web.dev/redirects-http/)."
-  },
-  "lighthouse-core/audits/redirects-http.js | failureTitle": {
-    "message": "לא מפנה תנועת HTTP באופן אוטומטי אל HTTPS"
-  },
-  "lighthouse-core/audits/redirects-http.js | title": {
-    "message": "מפנה תנועת HTTP באופן אוטומטי אל HTTPS"
-  },
   "lighthouse-core/audits/redirects.js | description": {
     "message": "הפניות אוטומטיות מעכבות את טעינת הדף. [מידע נוסף](https://web.dev/redirects/)."
   },
@@ -2447,29 +2438,14 @@
   "report/renderer/util.js | runtimeSettingsCPUThrottling": {
     "message": "ויסות נתונים (throttle) של יחידת עיבוד מרכזית (CPU)"
   },
-  "report/renderer/util.js | runtimeSettingsChannel": {
-    "message": "ערוץ"
-  },
   "report/renderer/util.js | runtimeSettingsDevice": {
     "message": "מכשיר"
-  },
-  "report/renderer/util.js | runtimeSettingsFetchTime": {
-    "message": "מועד האחזור"
   },
   "report/renderer/util.js | runtimeSettingsNetworkThrottling": {
     "message": "הגבלת רוחב פס"
   },
-  "report/renderer/util.js | runtimeSettingsTitle": {
-    "message": "הגדרות זמן ריצה"
-  },
-  "report/renderer/util.js | runtimeSettingsUA": {
-    "message": "סוכן משתמש (מארח)"
-  },
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "סוכן משתמש (רשת)"
-  },
-  "report/renderer/util.js | runtimeSettingsUrl": {
-    "message": "כתובת ה-URL"
   },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "ערך לא ידוע"

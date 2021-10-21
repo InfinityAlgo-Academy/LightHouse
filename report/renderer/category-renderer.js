@@ -483,7 +483,7 @@ export class CategoryRenderer {
    *   ⋮
    * @param {LH.ReportResult.Category} category
    * @param {Object<string, LH.Result.ReportGroup>=} groupDefinitions
-   * @param {{environment?: 'PSI', gatherMode: LH.Result.GatherMode}=} options
+   * @param {{gatherMode: LH.Result.GatherMode}=} options
    * @return {Element}
    */
   render(category, groupDefinitions = {}, options) {

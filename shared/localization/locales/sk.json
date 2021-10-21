@@ -1277,15 +1277,6 @@
   "lighthouse-core/audits/preload-lcp-image.js | title": {
     "message": "Prednačítajte obrázok vykreslenia najväčšieho obsahu"
   },
-  "lighthouse-core/audits/redirects-http.js | description": {
-    "message": "Ak ste už nastavili HTTPS, zaistite presmerovanie všetkej návštevnosti cez HTTP na HTTPS a poskytnite tak funkcie zabezpečeného webu všetkým používateľom. [Ďalšie informácie](https://web.dev/redirects-http/)"
-  },
-  "lighthouse-core/audits/redirects-http.js | failureTitle": {
-    "message": "Nepresmerúva návštevnosť cez HTTP na HTTPS"
-  },
-  "lighthouse-core/audits/redirects-http.js | title": {
-    "message": "Presmerúva návštevnosť cez HTTP na HTTPS"
-  },
   "lighthouse-core/audits/redirects.js | description": {
     "message": "Presmerovania spôsobujú ďalšie oneskorenia pri načítavaní stránky. [Ďalšie informácie](https://web.dev/redirects/)"
   },
@@ -2447,29 +2438,14 @@
   "report/renderer/util.js | runtimeSettingsCPUThrottling": {
     "message": "Obmedzenie rýchlosti procesora"
   },
-  "report/renderer/util.js | runtimeSettingsChannel": {
-    "message": "Kanál"
-  },
   "report/renderer/util.js | runtimeSettingsDevice": {
     "message": "Zariadenie"
-  },
-  "report/renderer/util.js | runtimeSettingsFetchTime": {
-    "message": "Čas načítania"
   },
   "report/renderer/util.js | runtimeSettingsNetworkThrottling": {
     "message": "Obmedzovanie rýchlosti"
   },
-  "report/renderer/util.js | runtimeSettingsTitle": {
-    "message": "Nastavenia spustenia"
-  },
-  "report/renderer/util.js | runtimeSettingsUA": {
-    "message": "Používateľský agent (hostiteľ)"
-  },
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "Používateľský agent (sieť)"
-  },
-  "report/renderer/util.js | runtimeSettingsUrl": {
-    "message": "Webová adresa"
   },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "Neznáme"

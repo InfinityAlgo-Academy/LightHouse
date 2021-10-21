@@ -1295,15 +1295,6 @@
   "lighthouse-core/audits/preload-lcp-image.js | title": {
     "message": "Preload Largest Contentful Paint image"
   },
-  "lighthouse-core/audits/redirects-http.js | description": {
-    "message": "If you've already set up HTTPS, make sure that you redirect all HTTP traffic to HTTPS in order to enable secure web features for all your users. [Learn more](https://web.dev/redirects-http/)."
-  },
-  "lighthouse-core/audits/redirects-http.js | failureTitle": {
-    "message": "Does not redirect HTTP traffic to HTTPS"
-  },
-  "lighthouse-core/audits/redirects-http.js | title": {
-    "message": "Redirects HTTP traffic to HTTPS"
-  },
   "lighthouse-core/audits/redirects.js | description": {
     "message": "Redirects introduce additional delays before the page can be loaded. [Learn more](https://web.dev/redirects/)."
   },
@@ -2447,6 +2438,9 @@
   "report/renderer/util.js | passedAuditsGroupTitle": {
     "message": "Passed audits"
   },
+  "report/renderer/util.js | runtimeAnalysisWindow": {
+    "message": "Initial page load"
+  },
   "report/renderer/util.js | runtimeDesktopEmulation": {
     "message": "Emulated Desktop"
   },
@@ -2462,32 +2456,23 @@
   "report/renderer/util.js | runtimeSettingsBenchmark": {
     "message": "CPU/Memory Power"
   },
-  "report/renderer/util.js | runtimeSettingsChannel": {
-    "message": "Channel"
-  },
   "report/renderer/util.js | runtimeSettingsCPUThrottling": {
     "message": "CPU throttling"
   },
   "report/renderer/util.js | runtimeSettingsDevice": {
     "message": "Device"
   },
-  "report/renderer/util.js | runtimeSettingsFetchTime": {
-    "message": "Fetch Time"
-  },
   "report/renderer/util.js | runtimeSettingsNetworkThrottling": {
     "message": "Network throttling"
-  },
-  "report/renderer/util.js | runtimeSettingsTitle": {
-    "message": "Runtime Settings"
-  },
-  "report/renderer/util.js | runtimeSettingsUA": {
-    "message": "User agent (host)"
   },
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "User agent (network)"
   },
-  "report/renderer/util.js | runtimeSettingsUrl": {
-    "message": "URL"
+  "report/renderer/util.js | runtimeSingleLoad": {
+    "message": "Single page load"
+  },
+  "report/renderer/util.js | runtimeSingleLoadTooltip": {
+    "message": "This data is taken from a single page load, as opposed to field data summarizing many sessions."
   },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "Unknown"

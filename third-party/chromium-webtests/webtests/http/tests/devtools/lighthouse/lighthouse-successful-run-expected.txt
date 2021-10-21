@@ -147,27 +147,10 @@ Gathering devtoolsLog & network records
 Computing artifact: NetworkRecords
 Running afterPass methods
 Gathering: ServiceWorker
-Running redirectPass pass
-Resetting state with about:blank
-Navigating to about:blank
-Preparing target for navigation
-Preparing network conditions
-Running beforePass methods
-Gathering setup: HTTPRedirect
-Beginning devtoolsLog and trace
-Loading page & waiting for onload
-Navigating to http://127.0.0.1:8000/devtools/lighthouse/resources/lighthouse-basic.html
-Running pass methods
-Gathering in-page: HTTPRedirect
-Gathering devtoolsLog & network records
-Computing artifact: NetworkRecords
-Running afterPass methods
-Gathering: HTTPRedirect
 Disconnecting from browser...
 Cleaning origin data
 Analyzing and running audits...
 Auditing: Uses HTTPS
-Auditing: Redirects HTTP traffic to HTTPS
 Auditing: Registers a service worker that controls page and `start_url`
 Auditing: Has a `<meta name="viewport">` tag with `width` or `initial-scale`
 Computing artifact: ViewportMeta
@@ -537,7 +520,6 @@ pwa-cross-browser: manual
 pwa-each-page-has-url: manual
 pwa-page-transitions: manual
 redirects: flaky
-redirects-http: notApplicable
 render-blocking-resources: flaky
 resource-summary: informative
 robots-txt: notApplicable
@@ -583,7 +565,7 @@ viewport: fail
 viewport-ad-density: notApplicable
 visual-order-follows-dom: manual
 
-# of .lh-audit divs: 161
+# of .lh-audit divs: 160
 
 .lh-audit divs:
 accesskeys
@@ -705,7 +687,6 @@ pwa-cross-browser
 pwa-each-page-has-url
 pwa-page-transitions
 redirects
-redirects-http
 render-blocking-resources
 resource-summary
 robots-txt

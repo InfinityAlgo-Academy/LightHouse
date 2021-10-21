@@ -1277,15 +1277,6 @@
   "lighthouse-core/audits/preload-lcp-image.js | title": {
     "message": "Afbeelding voor Grootste weergave met content (LCP) vooraf laden"
   },
-  "lighthouse-core/audits/redirects-http.js | description": {
-    "message": "Als je HTTPS al hebt ingesteld, zorg je ervoor dat je al het HTTP-verkeer omleidt naar HTTPS om beveiligde webfuncties voor alle gebruikers te activeren. [Meer informatie](https://web.dev/redirects-http/)"
-  },
-  "lighthouse-core/audits/redirects-http.js | failureTitle": {
-    "message": "Hiermee wordt HTTP-verkeer niet omgeleid naar HTTPS"
-  },
-  "lighthouse-core/audits/redirects-http.js | title": {
-    "message": "Hiermee wordt HTTP-verkeer omgeleid naar HTTPS"
-  },
   "lighthouse-core/audits/redirects.js | description": {
     "message": "Omleidingen zorgen voor extra vertraging voordat de pagina kan worden geladen. [Meer informatie](https://web.dev/redirects/)"
   },
@@ -2447,29 +2438,14 @@
   "report/renderer/util.js | runtimeSettingsCPUThrottling": {
     "message": "CPU-throttling"
   },
-  "report/renderer/util.js | runtimeSettingsChannel": {
-    "message": "Kanaal"
-  },
   "report/renderer/util.js | runtimeSettingsDevice": {
     "message": "Apparaat"
-  },
-  "report/renderer/util.js | runtimeSettingsFetchTime": {
-    "message": "Ophaaltijd"
   },
   "report/renderer/util.js | runtimeSettingsNetworkThrottling": {
     "message": "Netwerkbeperking"
   },
-  "report/renderer/util.js | runtimeSettingsTitle": {
-    "message": "Runtime-instellingen"
-  },
-  "report/renderer/util.js | runtimeSettingsUA": {
-    "message": "User-agent (host)"
-  },
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "User-agent (netwerk)"
-  },
-  "report/renderer/util.js | runtimeSettingsUrl": {
-    "message": "URL"
   },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "Onbekend"

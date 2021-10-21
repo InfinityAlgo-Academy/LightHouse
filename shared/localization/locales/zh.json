@@ -1277,15 +1277,6 @@
   "lighthouse-core/audits/preload-lcp-image.js | title": {
     "message": "预加载 LCP 元素所用图片"
   },
-  "lighthouse-core/audits/redirects-http.js | description": {
-    "message": "如果您已设置 HTTPS，请确保将所有 HTTP 流量重定向到 HTTPS，以便让所有用户都能使用安全的网络功能。[了解详情](https://web.dev/redirects-http/)。"
-  },
-  "lighthouse-core/audits/redirects-http.js | failureTitle": {
-    "message": "未将 HTTP 流量重定向到 HTTPS"
-  },
-  "lighthouse-core/audits/redirects-http.js | title": {
-    "message": "将 HTTP 流量重定向到 HTTPS"
-  },
   "lighthouse-core/audits/redirects.js | description": {
     "message": "重定向会在网页可加载前引入更多延迟。[了解详情](https://web.dev/redirects/)。"
   },
@@ -2447,29 +2438,14 @@
   "report/renderer/util.js | runtimeSettingsCPUThrottling": {
     "message": "CPU 节流"
   },
-  "report/renderer/util.js | runtimeSettingsChannel": {
-    "message": "所用工具"
-  },
   "report/renderer/util.js | runtimeSettingsDevice": {
     "message": "设备"
-  },
-  "report/renderer/util.js | runtimeSettingsFetchTime": {
-    "message": "提取时间"
   },
   "report/renderer/util.js | runtimeSettingsNetworkThrottling": {
     "message": "网络节流"
   },
-  "report/renderer/util.js | runtimeSettingsTitle": {
-    "message": "运行时设置"
-  },
-  "report/renderer/util.js | runtimeSettingsUA": {
-    "message": "用户代理（主机）"
-  },
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "用户代理（网络）"
-  },
-  "report/renderer/util.js | runtimeSettingsUrl": {
-    "message": "网址"
   },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "不明"

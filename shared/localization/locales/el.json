@@ -1277,15 +1277,6 @@
   "lighthouse-core/audits/preload-lcp-image.js | title": {
     "message": "Προφόρτωση εικόνας Μεγαλύτερης σχεδίασης με περιεχόμενο"
   },
-  "lighthouse-core/audits/redirects-http.js | description": {
-    "message": "Αν έχετε ήδη ρυθμίσει το HTTPS, βεβαιωθείτε ότι ανακατευθύνετε όλη την επισκεψιμότητα HTTP σε HTTPS, προκειμένου να ενεργοποιήσετε ασφαλείς λειτουργίες ιστού για όλους τους χρήστες σας. [Μάθετε περισσότερα](https://web.dev/redirects-http/)."
-  },
-  "lighthouse-core/audits/redirects-http.js | failureTitle": {
-    "message": "Δεν ανακατευθύνσει την επισκεψιμότητα HTTP σε HTTPS"
-  },
-  "lighthouse-core/audits/redirects-http.js | title": {
-    "message": "Ανακατευθύνει την επισκεψιμότητα HTTP σε HTTPS"
-  },
   "lighthouse-core/audits/redirects.js | description": {
     "message": "Οι ανακατευθύνσεις προκαλούν πρόσθετες καθυστερήσεις στη φόρτωση της σελίδας. [Μάθετε περισσότερα](https://web.dev/redirects/)."
   },
@@ -2447,29 +2438,14 @@
   "report/renderer/util.js | runtimeSettingsCPUThrottling": {
     "message": "Περιορισμός CPU"
   },
-  "report/renderer/util.js | runtimeSettingsChannel": {
-    "message": "Κανάλι"
-  },
   "report/renderer/util.js | runtimeSettingsDevice": {
     "message": "Συσκευή"
-  },
-  "report/renderer/util.js | runtimeSettingsFetchTime": {
-    "message": "Ώρα ανάκτησης"
   },
   "report/renderer/util.js | runtimeSettingsNetworkThrottling": {
     "message": "Περιορισμός δικτύου"
   },
-  "report/renderer/util.js | runtimeSettingsTitle": {
-    "message": "Ρυθμίσεις χρόνου εκτέλεσης (runtime)"
-  },
-  "report/renderer/util.js | runtimeSettingsUA": {
-    "message": "Παράγοντας χρήστη (κεντρικός υπολογιστής)"
-  },
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "Παράγοντας χρήστη (δίκτυο)"
-  },
-  "report/renderer/util.js | runtimeSettingsUrl": {
-    "message": "URL"
   },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "Άγνωστη"

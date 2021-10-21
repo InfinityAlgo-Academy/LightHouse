@@ -1277,15 +1277,6 @@
   "lighthouse-core/audits/preload-lcp-image.js | title": {
     "message": "Esilataa sivun latautumisajan kuva"
   },
-  "lighthouse-core/audits/redirects-http.js | description": {
-    "message": "Jos määritit jo HTTPS:n, varmista että ohjaat kaiken HTTP-liikenteen HTTPS:ään, jotta kaikki käyttäjät saavat turvalliset verkko-ominaisuudet. [Lue lisää](https://web.dev/redirects-http/)."
-  },
-  "lighthouse-core/audits/redirects-http.js | failureTitle": {
-    "message": "Ei uudelleenohjaa HTTP-liikennettä HTTPS:ään"
-  },
-  "lighthouse-core/audits/redirects-http.js | title": {
-    "message": "Uudelleenohjaa HTTP-liikennettä HTTPS:ään"
-  },
   "lighthouse-core/audits/redirects.js | description": {
     "message": "Uudelleenohjaukset viivästyttävät sivun lataamista. [Lue lisää](https://web.dev/redirects/)."
   },
@@ -2447,29 +2438,14 @@
   "report/renderer/util.js | runtimeSettingsCPUThrottling": {
     "message": "Suorittimen rajoittaminen"
   },
-  "report/renderer/util.js | runtimeSettingsChannel": {
-    "message": "Kanava"
-  },
   "report/renderer/util.js | runtimeSettingsDevice": {
     "message": "Laite"
-  },
-  "report/renderer/util.js | runtimeSettingsFetchTime": {
-    "message": "Noutoaika"
   },
   "report/renderer/util.js | runtimeSettingsNetworkThrottling": {
     "message": "Verkon hidastaminen"
   },
-  "report/renderer/util.js | runtimeSettingsTitle": {
-    "message": "Suoritusajan asetukset"
-  },
-  "report/renderer/util.js | runtimeSettingsUA": {
-    "message": "Käyttäjäagentti (isäntä)"
-  },
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "Käyttäjäagentti (verkko)"
-  },
-  "report/renderer/util.js | runtimeSettingsUrl": {
-    "message": "URL-osoite"
   },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "Ei tietoa"

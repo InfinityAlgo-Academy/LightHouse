@@ -1277,15 +1277,6 @@
   "lighthouse-core/audits/preload-lcp-image.js | title": {
     "message": "Lielākā satura marķējuma attēla iepriekšēja ielāde"
   },
-  "lighthouse-core/audits/redirects-http.js | description": {
-    "message": "Ja HTTPS protokols jau ir iestatīts, noteikti novirziet visu HTTP datplūsmu uz HTTPS, lai visiem lietotājiem iespējotu droša tīmekļa funkcijas. [Uzziniet vairāk](https://web.dev/redirects-http/)."
-  },
-  "lighthouse-core/audits/redirects-http.js | failureTitle": {
-    "message": "HTTP datplūsma netiek novirzīta uz HTTPS lapām"
-  },
-  "lighthouse-core/audits/redirects-http.js | title": {
-    "message": "HTTP datplūsma tiek novirzīta uz HTTPS lapām"
-  },
   "lighthouse-core/audits/redirects.js | description": {
     "message": "Novirzīšana rada papildu aizkaves pirms lapas ielādes. [Uzziniet vairāk](https://web.dev/redirects/)."
   },
@@ -2447,29 +2438,14 @@
   "report/renderer/util.js | runtimeSettingsCPUThrottling": {
     "message": "Centrālā procesora ierobežošana"
   },
-  "report/renderer/util.js | runtimeSettingsChannel": {
-    "message": "Kanāls"
-  },
   "report/renderer/util.js | runtimeSettingsDevice": {
     "message": "Ierīce"
-  },
-  "report/renderer/util.js | runtimeSettingsFetchTime": {
-    "message": "Izgūšanas laiks"
   },
   "report/renderer/util.js | runtimeSettingsNetworkThrottling": {
     "message": "Tīkla ierobežošana"
   },
-  "report/renderer/util.js | runtimeSettingsTitle": {
-    "message": "Izpildlaika iestatījumi"
-  },
-  "report/renderer/util.js | runtimeSettingsUA": {
-    "message": "Lietotāja aģents (saimniekdators)"
-  },
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "Lietotāja aģents (tīkls)"
-  },
-  "report/renderer/util.js | runtimeSettingsUrl": {
-    "message": "URL"
   },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "Nezināms"

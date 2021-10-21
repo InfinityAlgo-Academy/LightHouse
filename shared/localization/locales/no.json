@@ -1277,15 +1277,6 @@
   "lighthouse-core/audits/preload-lcp-image.js | title": {
     "message": "Forhåndslast bildet med største innholdsrike opptegning"
   },
-  "lighthouse-core/audits/redirects-http.js | description": {
-    "message": "Hvis du allerede har satt opp HTTPS, må du sørge for at du viderekobler all HTTP-trafikk til HTTPS, slik at du gir alle brukerne dine tilgang til sikker nettfunksjonalitet. [Finn ut mer](https://web.dev/redirects-http/)."
-  },
-  "lighthouse-core/audits/redirects-http.js | failureTitle": {
-    "message": "Viderekobler ikke HTTP-trafikk til HTTPS"
-  },
-  "lighthouse-core/audits/redirects-http.js | title": {
-    "message": "Viderekobler HTTP-trafikk til HTTPS"
-  },
   "lighthouse-core/audits/redirects.js | description": {
     "message": "Viderekoblinger fører til flere forsinkelser før siden kan lastes inn. [Finn ut mer](https://web.dev/redirects/)."
   },
@@ -2447,29 +2438,14 @@
   "report/renderer/util.js | runtimeSettingsCPUThrottling": {
     "message": "Prosessorstruping"
   },
-  "report/renderer/util.js | runtimeSettingsChannel": {
-    "message": "Kanal"
-  },
   "report/renderer/util.js | runtimeSettingsDevice": {
     "message": "Enhet"
-  },
-  "report/renderer/util.js | runtimeSettingsFetchTime": {
-    "message": "Tidspunkt for henting"
   },
   "report/renderer/util.js | runtimeSettingsNetworkThrottling": {
     "message": "Struping av nettverkshastighet"
   },
-  "report/renderer/util.js | runtimeSettingsTitle": {
-    "message": "Kjøringsinnstillinger"
-  },
-  "report/renderer/util.js | runtimeSettingsUA": {
-    "message": "Brukeragent (vert)"
-  },
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "Brukeragent (nettverk)"
-  },
-  "report/renderer/util.js | runtimeSettingsUrl": {
-    "message": "Nettadresse"
   },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "Ukjent"

@@ -1277,15 +1277,6 @@
   "lighthouse-core/audits/preload-lcp-image.js | title": {
     "message": "Iš anksto įkelkite didžiausio turiningo žymėjimo vaizdą"
   },
-  "lighthouse-core/audits/redirects-http.js | description": {
-    "message": "Jei jau nustatėte HTTPS, būtinai peradresuokite visą HTTP srautą į HTTPS, kad visi naudotojai galėtų naudotis saugiomis žiniatinklio funkcijomis. [Sužinokite daugiau](https://web.dev/redirects-http/)"
-  },
-  "lighthouse-core/audits/redirects-http.js | failureTitle": {
-    "message": "Nenukreipia HTTP srauto į HTTPS"
-  },
-  "lighthouse-core/audits/redirects-http.js | title": {
-    "message": "Nukreipia HTTP srautą į HTTPS"
-  },
   "lighthouse-core/audits/redirects.js | description": {
     "message": "Peradresuojant puslapio įkėlimo delsos laikas dar labiau pailgėja. [Sužinokite daugiau](https://web.dev/redirects/)."
   },
@@ -2447,29 +2438,14 @@
   "report/renderer/util.js | runtimeSettingsCPUThrottling": {
     "message": "Centrinio procesoriaus pralaidumo ribojimas"
   },
-  "report/renderer/util.js | runtimeSettingsChannel": {
-    "message": "Kanalas"
-  },
   "report/renderer/util.js | runtimeSettingsDevice": {
     "message": "Įrenginys"
-  },
-  "report/renderer/util.js | runtimeSettingsFetchTime": {
-    "message": "Gavimo laikas"
   },
   "report/renderer/util.js | runtimeSettingsNetworkThrottling": {
     "message": "Tinklo pralaidumo ribojimas"
   },
-  "report/renderer/util.js | runtimeSettingsTitle": {
-    "message": "Vykdymo laiko nustatymai"
-  },
-  "report/renderer/util.js | runtimeSettingsUA": {
-    "message": "Naudotojo priemonė (priegloba)"
-  },
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "Naudotojo priemonė (tinklas)"
-  },
-  "report/renderer/util.js | runtimeSettingsUrl": {
-    "message": "URL"
   },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "Nežinoma"

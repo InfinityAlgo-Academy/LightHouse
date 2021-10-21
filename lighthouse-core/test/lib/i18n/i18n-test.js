@@ -8,7 +8,6 @@
 const path = require('path');
 const i18n = require('../../../lib/i18n/i18n.js');
 const log = require('lighthouse-logger');
-const {isNode12SmallIcu} = require('../../test-utils.js');
 
 /* eslint-env jest */
 
@@ -50,16 +49,6 @@ describe('i18n', () => {
 
       expect(i18n.lookupLocale(invalidLocale)).toEqual('en-US');
 
-      // COMPAT: Node 12 logs an extra warning that full-icu is not available.
-      if (isNode12SmallIcu()) {
-        expect(logListener).toBeCalledTimes(2);
-        expect(logListener).toHaveBeenNthCalledWith(1, ['i18n',
-          expect.stringMatching(/Requested locale not available in this version of node/)]);
-        expect(logListener).toHaveBeenNthCalledWith(2, ['i18n',
-          `locale(s) '${invalidLocale}' not available. Falling back to default 'en-US'`]);
-        return;
-      }
-
       expect(logListener).toBeCalledTimes(1);
       expect(logListener).toBeCalledWith(['i18n',
         `locale(s) '${invalidLocale}' not available. Falling back to default 'en-US'`]);
@@ -68,12 +57,6 @@ describe('i18n', () => {
     });
 
     it('falls back to root tag prefix if specific locale not available', () => {
-      // COMPAT: Node 12 only has 'en-US' by default.
-      if (isNode12SmallIcu()) {
-        expect(i18n.lookupLocale('es-JKJK')).toEqual('en-US');
-        return;
-      }
-
       expect(i18n.lookupLocale('es-JKJK')).toEqual('es');
     });
 
@@ -87,13 +70,6 @@ describe('i18n', () => {
       });
 
       it('takes multiple locale strings and returns a possible, canonicalized one', () => {
-        // COMPAT: Node 12 only has 'en-US' by default.
-        if (isNode12SmallIcu()) {
-          expect(i18n.lookupLocale([invalidLocale, 'eN-uS', 'en-xa'], ['ar', 'es', 'en-US']))
-            .toEqual('en-US');
-          return;
-        }
-
         expect(i18n.lookupLocale([invalidLocale, 'eS', 'en-xa'], ['ar', 'es']))
             .toEqual('es');
       });

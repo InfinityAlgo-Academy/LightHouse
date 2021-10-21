@@ -1277,15 +1277,6 @@
   "lighthouse-core/audits/preload-lcp-image.js | title": {
     "message": "A legnagyobb vizuális tartalomválasz képének előtöltése"
   },
-  "lighthouse-core/audits/redirects-http.js | description": {
-    "message": "Ha már beállította a HTTPS protokollt, gondoskodjon a teljes HTTP-forgalom HTTPS-re történő átirányításáról, hogy a biztonságos webes funkciók az összes felhasználó számára rendelkezésre álljanak. [További információ](https://web.dev/redirects-http/)."
-  },
-  "lighthouse-core/audits/redirects-http.js | failureTitle": {
-    "message": "Nem irányítja át a HTTP-forgalmat HTTPS-re"
-  },
-  "lighthouse-core/audits/redirects-http.js | title": {
-    "message": "Átirányítja a HTTP-forgalmat HTTPS-re"
-  },
   "lighthouse-core/audits/redirects.js | description": {
     "message": "Az átirányítások további késlekedéssel hosszabbítják meg az oldalbetöltéshez szükséges időt. [További információ](https://web.dev/redirects/)."
   },
@@ -2447,29 +2438,14 @@
   "report/renderer/util.js | runtimeSettingsCPUThrottling": {
     "message": "CPU-korlátozás"
   },
-  "report/renderer/util.js | runtimeSettingsChannel": {
-    "message": "Csatorna"
-  },
   "report/renderer/util.js | runtimeSettingsDevice": {
     "message": "Eszköz"
-  },
-  "report/renderer/util.js | runtimeSettingsFetchTime": {
-    "message": "Lekérdezési idő"
   },
   "report/renderer/util.js | runtimeSettingsNetworkThrottling": {
     "message": "Hálózatkorlátozás"
   },
-  "report/renderer/util.js | runtimeSettingsTitle": {
-    "message": "Futási időre vonatkozó beállítások"
-  },
-  "report/renderer/util.js | runtimeSettingsUA": {
-    "message": "Felhasználói ügynök (gazdagép)"
-  },
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "Felhasználói ügynök (hálózat)"
-  },
-  "report/renderer/util.js | runtimeSettingsUrl": {
-    "message": "URL"
   },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "Ismeretlen"

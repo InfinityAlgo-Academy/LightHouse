@@ -235,9 +235,9 @@ async function saveTrace(traceData, traceFilename) {
   const traceIter = traceJsonGenerator(traceData);
   const writeStream = fs.createWriteStream(traceFilename);
 
-  // TODO: Can remove Readable.from() in Node 13, promisify(pipeline) in Node 15.
+  // TODO: Can remove promisify(pipeline) in Node 15.
   // https://nodejs.org/api/stream.html#stream_stream_pipeline_streams_callback
-  return pipeline(stream.Readable.from(traceIter), writeStream);
+  return pipeline(traceIter, writeStream);
 }
 
 /**
@@ -250,7 +250,7 @@ function saveDevtoolsLog(devtoolsLog, devtoolLogFilename) {
   const logIter = arrayOfObjectsJsonGenerator(devtoolsLog);
   const writeStream = fs.createWriteStream(devtoolLogFilename);
 
-  return pipeline(stream.Readable.from(logIter), writeStream);
+  return pipeline(logIter, writeStream);
 }
 
 /**
