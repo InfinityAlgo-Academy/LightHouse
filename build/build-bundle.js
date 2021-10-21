@@ -169,8 +169,12 @@ async function minifyScript(filePath) {
     },
   });
 
-  fs.writeFileSync(filePath, result.code);
-  if (DEBUG) fs.writeFileSync(`${filePath}.map`, result.map);
+  if (result.code) {
+    fs.writeFileSync(filePath, result.code);
+  }
+  if (DEBUG && typeof result.map === 'string') {
+    fs.writeFileSync(`${filePath}.map`, result.map);
+  }
 }
 
 /**

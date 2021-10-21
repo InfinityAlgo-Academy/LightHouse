@@ -82,7 +82,7 @@ describe('Runner', () => {
     const resolvedPath = path.resolve(process.cwd(), artifactsPath);
 
     afterAll(() => {
-      fs.rmdirSync(resolvedPath, {recursive: true});
+      fs.rmSync(resolvedPath, {recursive: true, force: true});
     });
 
     it('-G gathers, quits, and doesn\'t run audits', () => {
@@ -441,7 +441,7 @@ describe('Runner', () => {
       assert.strictEqual(auditResult.scoreDisplayMode, 'error');
       assert.ok(auditResult.errorMessage.includes(errorMessage));
 
-      fs.rmdirSync(resolvedPath, {recursive: true});
+      fs.rmSync(resolvedPath, {recursive: true, force: true});
     });
 
     it('only passes the requested artifacts to the audit (no optional artifacts)', async () => {

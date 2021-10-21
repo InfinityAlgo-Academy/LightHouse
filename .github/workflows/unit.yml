@@ -10,11 +10,11 @@ jobs:
   unit:
     strategy:
       matrix:
-        node: ['12', '14', '16']
+        node: ['14', '16', '17']
     runs-on: ubuntu-latest
     name: node ${{ matrix.node }}
     env:
-      LATEST_NODE: '16'
+      LATEST_NODE: '17'
 
     steps:
     - name: git clone
@@ -76,10 +76,10 @@ jobs:
     - name: git clone
       uses: actions/checkout@v2
 
-    - name: Use Node.js 12.x
+    - name: Use Node.js 14.x
       uses: actions/setup-node@v1
       with:
-        node-version: 12.x
+        node-version: 14.x
 
     - run: yarn install --frozen-lockfile --network-timeout 1000000
     - run: yarn build-report

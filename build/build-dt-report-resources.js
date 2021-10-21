@@ -26,8 +26,7 @@ function writeFile(name, content) {
   fs.writeFileSync(`${distDir}/${name}`, content);
 }
 
-fs.mkdirSync(distDir, {recursive: true}); // Ensure dist is present, else rmdir will throw. COMPAT: when dropping Node 12, replace with fs.rm(p, {force: true})
-fs.rmdirSync(distDir, {recursive: true});
+fs.rmSync(distDir, {recursive: true, force: true});
 fs.mkdirSync(distDir, {recursive: true});
 
 writeFile('report.js', htmlReportAssets.REPORT_JAVASCRIPT);

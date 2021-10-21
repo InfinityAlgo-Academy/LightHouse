@@ -188,6 +188,6 @@ async function generateErrorLHR() {
   appleTouchIconAudit.scoreDisplayMode = 'binary';
   appleTouchIconAudit.score = 1;
 
-  fs.rmdirSync(TMP, {recursive: true});
+  fs.rmSync(TMP, {recursive: true, force: true});
   return errorLhr;
 }

@@ -15,7 +15,6 @@ const Gatherer = require('../../gather/gatherers/gatherer.js');
 const Audit = require('../../audits/audit.js');
 const i18n = require('../../lib/i18n/i18n.js');
 const format = require('../../../shared/localization/format.js');
-const {isNode12SmallIcu} = require('../test-utils.js');
 
 /* eslint-env jest */
 
@@ -837,8 +836,6 @@ describe('Config', () => {
     it('uses config setting for locale if set', () => {
       const locale = 'ar-XB';
       const config = new Config({settings: {locale}});
-      // COMPAT: Node 12 only has 'en' by default.
-      if (isNode12SmallIcu()) return;
       assert.strictEqual(config.settings.locale, locale);
     });
 
@@ -846,8 +843,6 @@ describe('Config', () => {
       const settingsLocale = 'en-XA';
       const flagsLocale = 'ar-XB';
       const config = new Config({settings: {locale: settingsLocale}}, {locale: flagsLocale});
-      // COMPAT: Node 12 only has 'en' by default.
-      if (isNode12SmallIcu()) return;
       assert.strictEqual(config.settings.locale, flagsLocale);
     });
   });
