@@ -2438,29 +2438,14 @@
   "report/renderer/util.js | runtimeSettingsCPUThrottling": {
     "message": "सीपीयू थ्रॉटलिंग"
   },
-  "report/renderer/util.js | runtimeSettingsChannel": {
-    "message": "चैनल"
-  },
   "report/renderer/util.js | runtimeSettingsDevice": {
     "message": "डिवाइस"
-  },
-  "report/renderer/util.js | runtimeSettingsFetchTime": {
-    "message": "Lighthouse के चलाए जाने का समय"
   },
   "report/renderer/util.js | runtimeSettingsNetworkThrottling": {
     "message": "नेटवर्क थ्रॉटलिंग"
   },
-  "report/renderer/util.js | runtimeSettingsTitle": {
-    "message": "रनटाइम सेटिंग"
-  },
-  "report/renderer/util.js | runtimeSettingsUA": {
-    "message": "उपयोगकर्ता एजेंट (होस्ट)"
-  },
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "उपयोगकर्ता एजेंट (नेटवर्क)"
-  },
-  "report/renderer/util.js | runtimeSettingsUrl": {
-    "message": "यूआरएल"
   },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "अज्ञात"

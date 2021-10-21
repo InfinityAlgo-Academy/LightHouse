@@ -2438,29 +2438,14 @@
   "report/renderer/util.js | runtimeSettingsCPUThrottling": {
     "message": "Обмеження пропускної спроможності ЦП"
   },
-  "report/renderer/util.js | runtimeSettingsChannel": {
-    "message": "Канал"
-  },
   "report/renderer/util.js | runtimeSettingsDevice": {
     "message": "Пристрій"
-  },
-  "report/renderer/util.js | runtimeSettingsFetchTime": {
-    "message": "Час отримання"
   },
   "report/renderer/util.js | runtimeSettingsNetworkThrottling": {
     "message": "Зменшення пропускної спроможності мережі"
   },
-  "report/renderer/util.js | runtimeSettingsTitle": {
-    "message": "Налаштування часу виконання"
-  },
-  "report/renderer/util.js | runtimeSettingsUA": {
-    "message": "Агент користувача (хост)"
-  },
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "Агент користувача (мережа)"
-  },
-  "report/renderer/util.js | runtimeSettingsUrl": {
-    "message": "URL-адреса"
   },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "Невідомо"

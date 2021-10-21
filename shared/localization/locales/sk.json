@@ -2438,29 +2438,14 @@
   "report/renderer/util.js | runtimeSettingsCPUThrottling": {
     "message": "Obmedzenie rýchlosti procesora"
   },
-  "report/renderer/util.js | runtimeSettingsChannel": {
-    "message": "Kanál"
-  },
   "report/renderer/util.js | runtimeSettingsDevice": {
     "message": "Zariadenie"
-  },
-  "report/renderer/util.js | runtimeSettingsFetchTime": {
-    "message": "Čas načítania"
   },
   "report/renderer/util.js | runtimeSettingsNetworkThrottling": {
     "message": "Obmedzovanie rýchlosti"
   },
-  "report/renderer/util.js | runtimeSettingsTitle": {
-    "message": "Nastavenia spustenia"
-  },
-  "report/renderer/util.js | runtimeSettingsUA": {
-    "message": "Používateľský agent (hostiteľ)"
-  },
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "Používateľský agent (sieť)"
-  },
-  "report/renderer/util.js | runtimeSettingsUrl": {
-    "message": "Webová adresa"
   },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "Neznáme"

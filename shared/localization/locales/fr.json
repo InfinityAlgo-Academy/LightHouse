@@ -2438,29 +2438,14 @@
   "report/renderer/util.js | runtimeSettingsCPUThrottling": {
     "message": "Limitation du processeur"
   },
-  "report/renderer/util.js | runtimeSettingsChannel": {
-    "message": "Version"
-  },
   "report/renderer/util.js | runtimeSettingsDevice": {
     "message": "Appareil"
-  },
-  "report/renderer/util.js | runtimeSettingsFetchTime": {
-    "message": "Heure d'exécution"
   },
   "report/renderer/util.js | runtimeSettingsNetworkThrottling": {
     "message": "Limitation de bande passante réseau"
   },
-  "report/renderer/util.js | runtimeSettingsTitle": {
-    "message": "Paramètres d'exécution"
-  },
-  "report/renderer/util.js | runtimeSettingsUA": {
-    "message": "User-agent (hôte)"
-  },
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "User-agent (réseau)"
-  },
-  "report/renderer/util.js | runtimeSettingsUrl": {
-    "message": "URL"
   },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "Inconnu"

@@ -2438,29 +2438,14 @@
   "report/renderer/util.js | runtimeSettingsCPUThrottling": {
     "message": "CPU 제한"
   },
-  "report/renderer/util.js | runtimeSettingsChannel": {
-    "message": "채널"
-  },
   "report/renderer/util.js | runtimeSettingsDevice": {
     "message": "기기"
-  },
-  "report/renderer/util.js | runtimeSettingsFetchTime": {
-    "message": "가져온 시간"
   },
   "report/renderer/util.js | runtimeSettingsNetworkThrottling": {
     "message": "네트워크 제한"
   },
-  "report/renderer/util.js | runtimeSettingsTitle": {
-    "message": "런타임 설정"
-  },
-  "report/renderer/util.js | runtimeSettingsUA": {
-    "message": "사용자 에이전트(호스트)"
-  },
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "사용자 에이전트(네트워크)"
-  },
-  "report/renderer/util.js | runtimeSettingsUrl": {
-    "message": "URL"
   },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "알 수 없음"

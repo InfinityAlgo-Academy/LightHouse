@@ -2438,29 +2438,14 @@
   "report/renderer/util.js | runtimeSettingsCPUThrottling": {
     "message": "[ÇÞÛ ţĥŕöţţļîñĝ one two]"
   },
-  "report/renderer/util.js | runtimeSettingsChannel": {
-    "message": "[Çĥåññéļ one]"
-  },
   "report/renderer/util.js | runtimeSettingsDevice": {
     "message": "[Ðévîçé one]"
-  },
-  "report/renderer/util.js | runtimeSettingsFetchTime": {
-    "message": "[Féţçĥ Ţîmé one two]"
   },
   "report/renderer/util.js | runtimeSettingsNetworkThrottling": {
     "message": "[Ñéţŵöŕķ ţĥŕöţţļîñĝ one two three]"
   },
-  "report/renderer/util.js | runtimeSettingsTitle": {
-    "message": "[Ŕûñţîmé Šéţţîñĝš one two]"
-  },
-  "report/renderer/util.js | runtimeSettingsUA": {
-    "message": "[Ûšéŕ åĝéñţ (ĥöšţ) one two three]"
-  },
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "[Ûšéŕ åĝéñţ (ñéţŵöŕķ) one two three]"
-  },
-  "report/renderer/util.js | runtimeSettingsUrl": {
-    "message": "[ÛŔĻ one]"
   },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "[Ûñķñöŵñ one]"

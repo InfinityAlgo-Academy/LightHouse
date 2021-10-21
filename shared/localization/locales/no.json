@@ -2438,29 +2438,14 @@
   "report/renderer/util.js | runtimeSettingsCPUThrottling": {
     "message": "Prosessorstruping"
   },
-  "report/renderer/util.js | runtimeSettingsChannel": {
-    "message": "Kanal"
-  },
   "report/renderer/util.js | runtimeSettingsDevice": {
     "message": "Enhet"
-  },
-  "report/renderer/util.js | runtimeSettingsFetchTime": {
-    "message": "Tidspunkt for henting"
   },
   "report/renderer/util.js | runtimeSettingsNetworkThrottling": {
     "message": "Struping av nettverkshastighet"
   },
-  "report/renderer/util.js | runtimeSettingsTitle": {
-    "message": "Kjøringsinnstillinger"
-  },
-  "report/renderer/util.js | runtimeSettingsUA": {
-    "message": "Brukeragent (vert)"
-  },
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "Brukeragent (nettverk)"
-  },
-  "report/renderer/util.js | runtimeSettingsUrl": {
-    "message": "Nettadresse"
   },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "Ukjent"

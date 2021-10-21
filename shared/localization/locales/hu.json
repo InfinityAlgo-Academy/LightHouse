@@ -2438,29 +2438,14 @@
   "report/renderer/util.js | runtimeSettingsCPUThrottling": {
     "message": "CPU-korlátozás"
   },
-  "report/renderer/util.js | runtimeSettingsChannel": {
-    "message": "Csatorna"
-  },
   "report/renderer/util.js | runtimeSettingsDevice": {
     "message": "Eszköz"
-  },
-  "report/renderer/util.js | runtimeSettingsFetchTime": {
-    "message": "Lekérdezési idő"
   },
   "report/renderer/util.js | runtimeSettingsNetworkThrottling": {
     "message": "Hálózatkorlátozás"
   },
-  "report/renderer/util.js | runtimeSettingsTitle": {
-    "message": "Futási időre vonatkozó beállítások"
-  },
-  "report/renderer/util.js | runtimeSettingsUA": {
-    "message": "Felhasználói ügynök (gazdagép)"
-  },
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "Felhasználói ügynök (hálózat)"
-  },
-  "report/renderer/util.js | runtimeSettingsUrl": {
-    "message": "URL"
   },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "Ismeretlen"

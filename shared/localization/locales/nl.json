@@ -2438,29 +2438,14 @@
   "report/renderer/util.js | runtimeSettingsCPUThrottling": {
     "message": "CPU-throttling"
   },
-  "report/renderer/util.js | runtimeSettingsChannel": {
-    "message": "Kanaal"
-  },
   "report/renderer/util.js | runtimeSettingsDevice": {
     "message": "Apparaat"
-  },
-  "report/renderer/util.js | runtimeSettingsFetchTime": {
-    "message": "Ophaaltijd"
   },
   "report/renderer/util.js | runtimeSettingsNetworkThrottling": {
     "message": "Netwerkbeperking"
   },
-  "report/renderer/util.js | runtimeSettingsTitle": {
-    "message": "Runtime-instellingen"
-  },
-  "report/renderer/util.js | runtimeSettingsUA": {
-    "message": "User-agent (host)"
-  },
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "User-agent (netwerk)"
-  },
-  "report/renderer/util.js | runtimeSettingsUrl": {
-    "message": "URL"
   },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "Onbekend"

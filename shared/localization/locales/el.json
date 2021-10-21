@@ -2438,29 +2438,14 @@
   "report/renderer/util.js | runtimeSettingsCPUThrottling": {
     "message": "Περιορισμός CPU"
   },
-  "report/renderer/util.js | runtimeSettingsChannel": {
-    "message": "Κανάλι"
-  },
   "report/renderer/util.js | runtimeSettingsDevice": {
     "message": "Συσκευή"
-  },
-  "report/renderer/util.js | runtimeSettingsFetchTime": {
-    "message": "Ώρα ανάκτησης"
   },
   "report/renderer/util.js | runtimeSettingsNetworkThrottling": {
     "message": "Περιορισμός δικτύου"
   },
-  "report/renderer/util.js | runtimeSettingsTitle": {
-    "message": "Ρυθμίσεις χρόνου εκτέλεσης (runtime)"
-  },
-  "report/renderer/util.js | runtimeSettingsUA": {
-    "message": "Παράγοντας χρήστη (κεντρικός υπολογιστής)"
-  },
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "Παράγοντας χρήστη (δίκτυο)"
-  },
-  "report/renderer/util.js | runtimeSettingsUrl": {
-    "message": "URL"
   },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "Άγνωστη"

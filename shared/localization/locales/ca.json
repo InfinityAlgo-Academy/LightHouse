@@ -2438,29 +2438,14 @@
   "report/renderer/util.js | runtimeSettingsCPUThrottling": {
     "message": "Limitació de CPU"
   },
-  "report/renderer/util.js | runtimeSettingsChannel": {
-    "message": "Canal"
-  },
   "report/renderer/util.js | runtimeSettingsDevice": {
     "message": "Dispositiu"
-  },
-  "report/renderer/util.js | runtimeSettingsFetchTime": {
-    "message": "Data i hora d'obtenció"
   },
   "report/renderer/util.js | runtimeSettingsNetworkThrottling": {
     "message": "Limitació de xarxa"
   },
-  "report/renderer/util.js | runtimeSettingsTitle": {
-    "message": "Configuració del temps d'execució"
-  },
-  "report/renderer/util.js | runtimeSettingsUA": {
-    "message": "Agent d'usuari (amfitrió)"
-  },
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "Agent d'usuari (xarxa)"
-  },
-  "report/renderer/util.js | runtimeSettingsUrl": {
-    "message": "URL"
   },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "Desconegut"

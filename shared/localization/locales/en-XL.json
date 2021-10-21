@@ -2438,6 +2438,9 @@
   "report/renderer/util.js | passedAuditsGroupTitle": {
     "message": "P̂áŝśêd́ âúd̂ít̂ś"
   },
+  "report/renderer/util.js | runtimeAnalysisWindow": {
+    "message": "Îńît́îál̂ ṕâǵê ĺôád̂"
+  },
   "report/renderer/util.js | runtimeDesktopEmulation": {
     "message": "Êḿûĺât́êd́ D̂éŝḱt̂óp̂"
   },
@@ -2453,32 +2456,23 @@
   "report/renderer/util.js | runtimeSettingsBenchmark": {
     "message": "ĈṔÛ/Ḿêḿôŕŷ Ṕôẃêŕ"
   },
-  "report/renderer/util.js | runtimeSettingsChannel": {
-    "message": "Ĉh́âńn̂él̂"
-  },
   "report/renderer/util.js | runtimeSettingsCPUThrottling": {
     "message": "ĈṔÛ t́ĥŕôt́t̂ĺîńĝ"
   },
   "report/renderer/util.js | runtimeSettingsDevice": {
     "message": "D̂év̂íĉé"
   },
-  "report/renderer/util.js | runtimeSettingsFetchTime": {
-    "message": "F̂ét̂ćĥ T́îḿê"
-  },
   "report/renderer/util.js | runtimeSettingsNetworkThrottling": {
     "message": "N̂ét̂ẃôŕk̂ t́ĥŕôt́t̂ĺîńĝ"
-  },
-  "report/renderer/util.js | runtimeSettingsTitle": {
-    "message": "R̂ún̂t́îḿê Śêt́t̂ín̂ǵŝ"
-  },
-  "report/renderer/util.js | runtimeSettingsUA": {
-    "message": "Ûśêŕ âǵêńt̂ (h́ôśt̂)"
   },
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "Ûśêŕ âǵêńt̂ (ńêt́ŵór̂ḱ)"
   },
-  "report/renderer/util.js | runtimeSettingsUrl": {
-    "message": "ÛŔL̂"
+  "report/renderer/util.js | runtimeSingleLoad": {
+    "message": "Ŝín̂ǵl̂é p̂áĝé l̂óâd́"
+  },
+  "report/renderer/util.js | runtimeSingleLoadTooltip": {
+    "message": "T̂h́îś d̂át̂á îś t̂ák̂én̂ f́r̂óm̂ á ŝín̂ǵl̂é p̂áĝé l̂óâd́, âś ôṕp̂óŝéd̂ t́ô f́îél̂d́ d̂át̂á ŝúm̂ḿâŕîźîńĝ ḿâńŷ śêśŝíôńŝ."
   },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "Ûńk̂ńôẃn̂"

@@ -2438,29 +2438,14 @@
   "report/renderer/util.js | runtimeSettingsCPUThrottling": {
     "message": "ויסות נתונים (throttle) של יחידת עיבוד מרכזית (CPU)"
   },
-  "report/renderer/util.js | runtimeSettingsChannel": {
-    "message": "ערוץ"
-  },
   "report/renderer/util.js | runtimeSettingsDevice": {
     "message": "מכשיר"
-  },
-  "report/renderer/util.js | runtimeSettingsFetchTime": {
-    "message": "מועד האחזור"
   },
   "report/renderer/util.js | runtimeSettingsNetworkThrottling": {
     "message": "הגבלת רוחב פס"
   },
-  "report/renderer/util.js | runtimeSettingsTitle": {
-    "message": "הגדרות זמן ריצה"
-  },
-  "report/renderer/util.js | runtimeSettingsUA": {
-    "message": "סוכן משתמש (מארח)"
-  },
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "סוכן משתמש (רשת)"
-  },
-  "report/renderer/util.js | runtimeSettingsUrl": {
-    "message": "כתובת ה-URL"
   },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "ערך לא ידוע"

@@ -2438,29 +2438,14 @@
   "report/renderer/util.js | runtimeSettingsCPUThrottling": {
     "message": "Throttling CPU"
   },
-  "report/renderer/util.js | runtimeSettingsChannel": {
-    "message": "Saluran"
-  },
   "report/renderer/util.js | runtimeSettingsDevice": {
     "message": "Perangkat"
-  },
-  "report/renderer/util.js | runtimeSettingsFetchTime": {
-    "message": "Waktu Pengambilan"
   },
   "report/renderer/util.js | runtimeSettingsNetworkThrottling": {
     "message": "Throttling jaringan"
   },
-  "report/renderer/util.js | runtimeSettingsTitle": {
-    "message": "Setelan Runtime"
-  },
-  "report/renderer/util.js | runtimeSettingsUA": {
-    "message": "Agen pengguna (host)"
-  },
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "Agen pengguna (jaringan)"
-  },
-  "report/renderer/util.js | runtimeSettingsUrl": {
-    "message": "URL"
   },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "Tidak dikenal"

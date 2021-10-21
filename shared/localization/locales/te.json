@@ -2438,29 +2438,14 @@
   "report/renderer/util.js | runtimeSettingsCPUThrottling": {
     "message": "CPU త్రోట్లింగ్"
   },
-  "report/renderer/util.js | runtimeSettingsChannel": {
-    "message": "ఛానెల్"
-  },
   "report/renderer/util.js | runtimeSettingsDevice": {
     "message": "పరికరం"
-  },
-  "report/renderer/util.js | runtimeSettingsFetchTime": {
-    "message": "పొందే సమయం"
   },
   "report/renderer/util.js | runtimeSettingsNetworkThrottling": {
     "message": "నెట్‌వర్క్ త్రోట్లింగ్"
   },
-  "report/renderer/util.js | runtimeSettingsTitle": {
-    "message": "రన్‌టైమ్ సెట్టింగ్‌లు"
-  },
-  "report/renderer/util.js | runtimeSettingsUA": {
-    "message": "వెబ్‌సైట్ యాక్సెస్ సాధనం (హోస్ట్)"
-  },
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "వెబ్‌సైట్ యాక్సెస్ సాధనం (నెట్‌వర్క్)"
-  },
-  "report/renderer/util.js | runtimeSettingsUrl": {
-    "message": "URL"
   },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "తెలియదు"

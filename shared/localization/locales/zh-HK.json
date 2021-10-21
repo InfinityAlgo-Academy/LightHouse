@@ -2438,29 +2438,14 @@
   "report/renderer/util.js | runtimeSettingsCPUThrottling": {
     "message": "CPU 節流"
   },
-  "report/renderer/util.js | runtimeSettingsChannel": {
-    "message": "渠道"
-  },
   "report/renderer/util.js | runtimeSettingsDevice": {
     "message": "裝置"
-  },
-  "report/renderer/util.js | runtimeSettingsFetchTime": {
-    "message": "擷取時間"
   },
   "report/renderer/util.js | runtimeSettingsNetworkThrottling": {
     "message": "網絡節流"
   },
-  "report/renderer/util.js | runtimeSettingsTitle": {
-    "message": "執行階段設定"
-  },
-  "report/renderer/util.js | runtimeSettingsUA": {
-    "message": "用戶代理程式 (主機)"
-  },
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "用戶代理程式 (網絡)"
-  },
-  "report/renderer/util.js | runtimeSettingsUrl": {
-    "message": "網址"
   },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "不明"

@@ -2438,29 +2438,14 @@
   "report/renderer/util.js | runtimeSettingsCPUThrottling": {
     "message": "CPU 溫控降頻"
   },
-  "report/renderer/util.js | runtimeSettingsChannel": {
-    "message": "管道"
-  },
   "report/renderer/util.js | runtimeSettingsDevice": {
     "message": "裝置"
-  },
-  "report/renderer/util.js | runtimeSettingsFetchTime": {
-    "message": "擷取時間"
   },
   "report/renderer/util.js | runtimeSettingsNetworkThrottling": {
     "message": "網路節流"
   },
-  "report/renderer/util.js | runtimeSettingsTitle": {
-    "message": "執行階段設定"
-  },
-  "report/renderer/util.js | runtimeSettingsUA": {
-    "message": "使用者代理程式 (主機)"
-  },
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "使用者代理程式 (網路)"
-  },
-  "report/renderer/util.js | runtimeSettingsUrl": {
-    "message": "網址"
   },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "不明"

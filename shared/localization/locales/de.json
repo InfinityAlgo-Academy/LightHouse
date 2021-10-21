@@ -2438,29 +2438,14 @@
   "report/renderer/util.js | runtimeSettingsCPUThrottling": {
     "message": "CPU-Drosselung"
   },
-  "report/renderer/util.js | runtimeSettingsChannel": {
-    "message": "Kanal"
-  },
   "report/renderer/util.js | runtimeSettingsDevice": {
     "message": "Gerät"
-  },
-  "report/renderer/util.js | runtimeSettingsFetchTime": {
-    "message": "Abrufzeit"
   },
   "report/renderer/util.js | runtimeSettingsNetworkThrottling": {
     "message": "Netzwerkdrosselung"
   },
-  "report/renderer/util.js | runtimeSettingsTitle": {
-    "message": "Laufzeiteinstellungen"
-  },
-  "report/renderer/util.js | runtimeSettingsUA": {
-    "message": "User-Agent (Host)"
-  },
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "User-Agent (Netzwerk)"
-  },
-  "report/renderer/util.js | runtimeSettingsUrl": {
-    "message": "URL"
   },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "Unbekannt"

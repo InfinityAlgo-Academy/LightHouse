@@ -2438,29 +2438,14 @@
   "report/renderer/util.js | runtimeSettingsCPUThrottling": {
     "message": "تقييد وحدة المعالجة المركزية (CPU)"
   },
-  "report/renderer/util.js | runtimeSettingsChannel": {
-    "message": "قناة"
-  },
   "report/renderer/util.js | runtimeSettingsDevice": {
     "message": "جهاز"
-  },
-  "report/renderer/util.js | runtimeSettingsFetchTime": {
-    "message": "وقت الإجراء"
   },
   "report/renderer/util.js | runtimeSettingsNetworkThrottling": {
     "message": "ضبط الحد الأقصى المسموح لعرض نطاق الشبكة"
   },
-  "report/renderer/util.js | runtimeSettingsTitle": {
-    "message": "إعدادات وقت التشغيل"
-  },
-  "report/renderer/util.js | runtimeSettingsUA": {
-    "message": "وكيل المستخدم (مضيف)"
-  },
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "وكيل المستخدم (شبكة)"
-  },
-  "report/renderer/util.js | runtimeSettingsUrl": {
-    "message": "عنوان URL"
   },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "غير معروف"

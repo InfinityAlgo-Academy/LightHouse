@@ -2438,29 +2438,14 @@
   "report/renderer/util.js | runtimeSettingsCPUThrottling": {
     "message": "CPU スロットリング"
   },
-  "report/renderer/util.js | runtimeSettingsChannel": {
-    "message": "チャネル"
-  },
   "report/renderer/util.js | runtimeSettingsDevice": {
     "message": "デバイス"
-  },
-  "report/renderer/util.js | runtimeSettingsFetchTime": {
-    "message": "取得日時"
   },
   "report/renderer/util.js | runtimeSettingsNetworkThrottling": {
     "message": "ネットワーク スロットリング"
   },
-  "report/renderer/util.js | runtimeSettingsTitle": {
-    "message": "ランタイム設定"
-  },
-  "report/renderer/util.js | runtimeSettingsUA": {
-    "message": "ユーザー エージェント（ホスト）"
-  },
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "ユーザー エージェント（ネットワーク）"
-  },
-  "report/renderer/util.js | runtimeSettingsUrl": {
-    "message": "URL"
   },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "不明"

@@ -2438,29 +2438,14 @@
   "report/renderer/util.js | runtimeSettingsCPUThrottling": {
     "message": "Limitación de la CPU"
   },
-  "report/renderer/util.js | runtimeSettingsChannel": {
-    "message": "Canal"
-  },
   "report/renderer/util.js | runtimeSettingsDevice": {
     "message": "Dispositivo"
-  },
-  "report/renderer/util.js | runtimeSettingsFetchTime": {
-    "message": "Fecha de recuperación"
   },
   "report/renderer/util.js | runtimeSettingsNetworkThrottling": {
     "message": "Limitación de la red"
   },
-  "report/renderer/util.js | runtimeSettingsTitle": {
-    "message": "Configuración del tiempo de ejecución"
-  },
-  "report/renderer/util.js | runtimeSettingsUA": {
-    "message": "Usuario-agente (host)"
-  },
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "Usuario-agente (red)"
-  },
-  "report/renderer/util.js | runtimeSettingsUrl": {
-    "message": "URL"
   },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "Desconocido"

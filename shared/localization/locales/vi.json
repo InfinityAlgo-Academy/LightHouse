@@ -2438,29 +2438,14 @@
   "report/renderer/util.js | runtimeSettingsCPUThrottling": {
     "message": "Điều tiết CPU"
   },
-  "report/renderer/util.js | runtimeSettingsChannel": {
-    "message": "Kênh"
-  },
   "report/renderer/util.js | runtimeSettingsDevice": {
     "message": "Thiết bị"
-  },
-  "report/renderer/util.js | runtimeSettingsFetchTime": {
-    "message": "Thời gian tìm nạp"
   },
   "report/renderer/util.js | runtimeSettingsNetworkThrottling": {
     "message": "Hạn chế băng thông mạng"
   },
-  "report/renderer/util.js | runtimeSettingsTitle": {
-    "message": "Các tùy chọn cài đặt thời gian chạy"
-  },
-  "report/renderer/util.js | runtimeSettingsUA": {
-    "message": "Tác nhân người dùng (máy chủ)"
-  },
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "Tác nhân người dùng (mạng)"
-  },
-  "report/renderer/util.js | runtimeSettingsUrl": {
-    "message": "URL"
   },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "Không xác định"

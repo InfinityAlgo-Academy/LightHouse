@@ -2438,29 +2438,14 @@
   "report/renderer/util.js | runtimeSettingsCPUThrottling": {
     "message": "CPU 节流"
   },
-  "report/renderer/util.js | runtimeSettingsChannel": {
-    "message": "所用工具"
-  },
   "report/renderer/util.js | runtimeSettingsDevice": {
     "message": "设备"
-  },
-  "report/renderer/util.js | runtimeSettingsFetchTime": {
-    "message": "提取时间"
   },
   "report/renderer/util.js | runtimeSettingsNetworkThrottling": {
     "message": "网络节流"
   },
-  "report/renderer/util.js | runtimeSettingsTitle": {
-    "message": "运行时设置"
-  },
-  "report/renderer/util.js | runtimeSettingsUA": {
-    "message": "用户代理（主机）"
-  },
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "用户代理（网络）"
-  },
-  "report/renderer/util.js | runtimeSettingsUrl": {
-    "message": "网址"
   },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "不明"

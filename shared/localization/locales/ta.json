@@ -2438,29 +2438,14 @@
   "report/renderer/util.js | runtimeSettingsCPUThrottling": {
     "message": "CPU த்ராட்லிங்"
   },
-  "report/renderer/util.js | runtimeSettingsChannel": {
-    "message": "இயங்கும் கருவி"
-  },
   "report/renderer/util.js | runtimeSettingsDevice": {
     "message": "சாதனம்"
-  },
-  "report/renderer/util.js | runtimeSettingsFetchTime": {
-    "message": "எடுக்கப்பட்ட நேரம்"
   },
   "report/renderer/util.js | runtimeSettingsNetworkThrottling": {
     "message": "நெட்வொர்க் த்ராட்லிங்"
   },
-  "report/renderer/util.js | runtimeSettingsTitle": {
-    "message": "இயக்க நேர அமைப்புகள்"
-  },
-  "report/renderer/util.js | runtimeSettingsUA": {
-    "message": "பயனர் ஏஜெண்ட் (ஹோஸ்ட்)"
-  },
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "பயனர் ஏஜெண்ட் (நெட்வொர்க்)"
-  },
-  "report/renderer/util.js | runtimeSettingsUrl": {
-    "message": "URL"
   },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "தெரியவில்லை"

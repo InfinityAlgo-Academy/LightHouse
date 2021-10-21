@@ -2438,29 +2438,14 @@
   "report/renderer/util.js | runtimeSettingsCPUThrottling": {
     "message": "CPU-begränsning"
   },
-  "report/renderer/util.js | runtimeSettingsChannel": {
-    "message": "Kanal"
-  },
   "report/renderer/util.js | runtimeSettingsDevice": {
     "message": "Enhet"
-  },
-  "report/renderer/util.js | runtimeSettingsFetchTime": {
-    "message": "Tidpunkt för hämtning"
   },
   "report/renderer/util.js | runtimeSettingsNetworkThrottling": {
     "message": "Nätverksbegränsning"
   },
-  "report/renderer/util.js | runtimeSettingsTitle": {
-    "message": "Körtidsinställningar"
-  },
-  "report/renderer/util.js | runtimeSettingsUA": {
-    "message": "Användaragent (värd)"
-  },
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "Användaragent (nätverk)"
-  },
-  "report/renderer/util.js | runtimeSettingsUrl": {
-    "message": "Webbadress"
   },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "Okänd"

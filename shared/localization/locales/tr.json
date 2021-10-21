@@ -2438,29 +2438,14 @@
   "report/renderer/util.js | runtimeSettingsCPUThrottling": {
     "message": "CPU kısıtlaması"
   },
-  "report/renderer/util.js | runtimeSettingsChannel": {
-    "message": "Kanal"
-  },
   "report/renderer/util.js | runtimeSettingsDevice": {
     "message": "Cihaz"
-  },
-  "report/renderer/util.js | runtimeSettingsFetchTime": {
-    "message": "Alınma Zamanı"
   },
   "report/renderer/util.js | runtimeSettingsNetworkThrottling": {
     "message": "Ağ sınırlama"
   },
-  "report/renderer/util.js | runtimeSettingsTitle": {
-    "message": "Çalışma Zamanı Ayarları"
-  },
-  "report/renderer/util.js | runtimeSettingsUA": {
-    "message": "Kullanıcı aracısı (ana makine)"
-  },
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "Kullanıcı aracısı (ağ)"
-  },
-  "report/renderer/util.js | runtimeSettingsUrl": {
-    "message": "URL"
   },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "Bilinmiyor"

@@ -2438,29 +2438,14 @@
   "report/renderer/util.js | runtimeSettingsCPUThrottling": {
     "message": "Ограничавање процесора"
   },
-  "report/renderer/util.js | runtimeSettingsChannel": {
-    "message": "Канал"
-  },
   "report/renderer/util.js | runtimeSettingsDevice": {
     "message": "Уређај"
-  },
-  "report/renderer/util.js | runtimeSettingsFetchTime": {
-    "message": "Време преузимања"
   },
   "report/renderer/util.js | runtimeSettingsNetworkThrottling": {
     "message": "Ограничавање мреже"
   },
-  "report/renderer/util.js | runtimeSettingsTitle": {
-    "message": "Подешавања времена извршавања"
-  },
-  "report/renderer/util.js | runtimeSettingsUA": {
-    "message": "Кориснички агент (хост)"
-  },
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "Кориснички агент (мрежа)"
-  },
-  "report/renderer/util.js | runtimeSettingsUrl": {
-    "message": "URL"
   },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "Непознато"

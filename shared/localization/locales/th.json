@@ -2438,29 +2438,14 @@
   "report/renderer/util.js | runtimeSettingsCPUThrottling": {
     "message": "การควบคุม CPU"
   },
-  "report/renderer/util.js | runtimeSettingsChannel": {
-    "message": "ช่อง"
-  },
   "report/renderer/util.js | runtimeSettingsDevice": {
     "message": "อุปกรณ์"
-  },
-  "report/renderer/util.js | runtimeSettingsFetchTime": {
-    "message": "เวลาในการดึงข้อมูล"
   },
   "report/renderer/util.js | runtimeSettingsNetworkThrottling": {
     "message": "การควบคุมเครือข่าย"
   },
-  "report/renderer/util.js | runtimeSettingsTitle": {
-    "message": "การตั้งค่ารันไทม์"
-  },
-  "report/renderer/util.js | runtimeSettingsUA": {
-    "message": "User Agent (โฮสต์)"
-  },
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "User Agent (เครือข่าย)"
-  },
-  "report/renderer/util.js | runtimeSettingsUrl": {
-    "message": "URL"
   },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "ไม่ทราบ"

@@ -2438,29 +2438,14 @@
   "report/renderer/util.js | runtimeSettingsCPUThrottling": {
     "message": "‏‮CPU‬‏ ‏‮throttling‬‏"
   },
-  "report/renderer/util.js | runtimeSettingsChannel": {
-    "message": "‏‮Channel‬‏"
-  },
   "report/renderer/util.js | runtimeSettingsDevice": {
     "message": "‏‮Device‬‏"
-  },
-  "report/renderer/util.js | runtimeSettingsFetchTime": {
-    "message": "‏‮Fetch‬‏ ‏‮Time‬‏"
   },
   "report/renderer/util.js | runtimeSettingsNetworkThrottling": {
     "message": "‏‮Network‬‏ ‏‮throttling‬‏"
   },
-  "report/renderer/util.js | runtimeSettingsTitle": {
-    "message": "‏‮Runtime‬‏ ‏‮Settings‬‏"
-  },
-  "report/renderer/util.js | runtimeSettingsUA": {
-    "message": "‏‮User‬‏ ‏‮agent‬‏ (‏‮host‬‏)"
-  },
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "‏‮User‬‏ ‏‮agent‬‏ (‏‮network‬‏)"
-  },
-  "report/renderer/util.js | runtimeSettingsUrl": {
-    "message": "‏‮URL‬‏"
   },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "‏‮Unknown‬‏"

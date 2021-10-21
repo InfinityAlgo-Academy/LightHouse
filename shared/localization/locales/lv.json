@@ -2438,29 +2438,14 @@
   "report/renderer/util.js | runtimeSettingsCPUThrottling": {
     "message": "Centrālā procesora ierobežošana"
   },
-  "report/renderer/util.js | runtimeSettingsChannel": {
-    "message": "Kanāls"
-  },
   "report/renderer/util.js | runtimeSettingsDevice": {
     "message": "Ierīce"
-  },
-  "report/renderer/util.js | runtimeSettingsFetchTime": {
-    "message": "Izgūšanas laiks"
   },
   "report/renderer/util.js | runtimeSettingsNetworkThrottling": {
     "message": "Tīkla ierobežošana"
   },
-  "report/renderer/util.js | runtimeSettingsTitle": {
-    "message": "Izpildlaika iestatījumi"
-  },
-  "report/renderer/util.js | runtimeSettingsUA": {
-    "message": "Lietotāja aģents (saimniekdators)"
-  },
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "Lietotāja aģents (tīkls)"
-  },
-  "report/renderer/util.js | runtimeSettingsUrl": {
-    "message": "URL"
   },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "Nezināms"
