@@ -121,7 +121,7 @@
   --report-font-size: 16px;
   --report-icon-size: var(--score-icon-background-size);
   --report-line-height: 24px;
-  --report-min-width: 400px;
+  --report-min-width: 360px;
   --report-monospace-font-size: calc(var(--report-font-size) * 0.85);
   --report-text-color-secondary: var(--color-gray-800);
   --report-text-color: var(--color-gray-900);
