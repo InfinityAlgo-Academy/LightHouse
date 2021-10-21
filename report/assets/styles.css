@@ -51,21 +51,21 @@
   --color-gray-800: #424242;
   --color-gray-900: #212121;
   --color-gray: #000000;
-  --color-green-700: #018642;
-  --color-green: #0CCE6B;
+  --color-green-700: #080;
+  --color-green: #0c6;
   --color-lime-400: #D3E156;
   --color-orange-50: #FFF3E0;
   --color-orange-700: #D04900;
   --color-orange: #fa3;
-  --color-red-700: #EB0F00;
-  --color-red: #FF4E42;
+  --color-red-700: #c00;
+  --color-red: #f33;
   --color-teal-600: #00897B;
   --color-white: #FFFFFF;
 
   /* Context-specific colors */
   --color-average-secondary: var(--color-orange-700);
   --color-average: var(--color-orange);
-  --color-average-text: #bb4400;
+  --color-average-text: #C33300;
   --color-fail-secondary: var(--color-red-700);
   --color-fail: var(--color-red);
   --color-hover: var(--color-gray-50);
@@ -92,16 +92,16 @@
   --env-item-padding: 10px 0px;
   --env-name-min-width: 220px;
   --footer-padding-vertical: 16px;
-  --gauge-circle-size-big: 112px;
-  --gauge-circle-size: 80px;
-  --gauge-circle-size-sm: 36px;
+  --gauge-circle-size-big: 96px;
+  --gauge-circle-size: 48px;
+  --gauge-circle-size-sm: 32px;
   --gauge-label-font-size-big: 28px;
   --gauge-label-font-size: 20px;
-  --gauge-label-line-height-big: 36px;
-  --gauge-label-line-height: 26px;
+  --gauge-label-line-height-big: 24px;
+  --gauge-label-line-height: var(--report-line-height-secondary);
   --gauge-percentage-font-size-big: 38px;
-  --gauge-percentage-font-size: 28px;
-  --gauge-wrapper-width: 148px;
+  --gauge-percentage-font-size: var(--report-font-size-secondary);
+  --gauge-wrapper-width: 120px;
   --header-line-height: 24px;
   --highlighter-background-color: var(--report-text-color);
   --icon-square-size: calc(var(--score-icon-size) * 0.88);
@@ -376,6 +376,10 @@
   color: var(--color-informative);
 }
 
+.lh-audit-group a {
+  color: var(--color-blue-primary);
+}
+
 .lh-audit__description, .lh-audit__stackpack {
   --inner-audit-padding-right: var(--stackpack-padding-horizontal);
   padding-left: var(--audit-description-padding-left);
@@ -623,8 +627,12 @@
 
 
 .lh-metricfilter {
-  text-align: right;
-  margin-top: var(--default-padding);
+  display: grid;
+  justify-content: end;
+  align-items: center;
+  grid-auto-flow: column;
+  gap: 4px;
+  color: var(--color-gray-700);
 }
 
 .lh-metricfilter__radio {
@@ -636,12 +644,11 @@
 }
 
 .lh-metricfilter__label {
-  border: solid 1px var(--color-gray-400);
+  display: inline-flex;
+  padding: 0 4px;
+  height: 16px;
+  text-decoration: underline;
   align-items: center;
-  justify-content: center;
-  padding: 2px 5px;
-  width: 50%;
-  height: 28px;
   cursor: pointer;
   font-size: 90%;
 }
@@ -657,13 +664,19 @@
 }
 
 .lh-metricfilter__label--active {
-  background: var(--color-blue-A700);
+  background: var(--color-blue-primary);
   color: var(--color-white);
+  border-radius: 3px;
+  text-decoration: none;
 }
 /* Give the 'All' choice a more muted display */
 .lh-metricfilter__label--active[for="metric-All"] {
   background-color: var(--color-blue-200) !important;
   color: black !important;
+}
+
+.lh-metricfilter__text {
+  margin-right: 8px;
 }
 
 /* If audits are filtered, hide the itemcount for Passed Audits… */
@@ -1021,9 +1034,12 @@
 }
 
 #performance-budget {
-  margin-bottom: var(--default-padding);
+  margin-bottom: 0 0 var(--default-padding);
 }
 
+#performance-budget {
+  margin: 0;
+}
 
 /* Align the "over budget request count" text to be close to the "over budget bytes" column. */
 .lh-audit-group--budgets .lh-table tbody tr td:nth-child(4){
@@ -1064,9 +1080,11 @@
 }
 
 .lh-audit-group__header {
-  margin: 0 0 var(--audit-group-padding-vertical);
   /* When the header takes 100% width, the chevron becomes small. */
   max-width: calc(100% - var(--chevron-size));
+  letter-spacing: 0.8px;
+  padding: var(--default-padding);
+  padding-left: 0;
 }
 /* max-width makes the metric toggle not flush. metrics doesn't have a chevron so unset. */
 .lh-audit-group--metrics .lh-audit-group__header {
@@ -1079,10 +1097,9 @@
   color: var(--color-gray-700);
 }
 
-.lh-audit-group__header {
-  letter-spacing: 0.8px;
-  padding: var(--default-padding);
-  padding-left: 0;
+.lh-audit-group__title {
+  text-transform: uppercase;
+	font-weight: 500;
 }
 
 .lh-audit-group__itemcount {
@@ -1383,6 +1400,7 @@
 .lh-gauge__label,
 .lh-fraction__label {
   font-size: var(--gauge-label-font-size);
+  font-weight: 500;
   line-height: var(--gauge-label-line-height);
   margin-top: 10px;
   text-align: center;
