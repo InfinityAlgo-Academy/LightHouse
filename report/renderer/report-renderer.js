@@ -47,7 +47,11 @@ export class ReportRenderer {
   renderReport(lhr, rootEl, opts) {
     if (!opts) {
       console.warn('Please adopt the new report API in renderer/api.js.');
-      this._dom.rootEl = rootEl;
+      const closestRoot = rootEl.closest('.lh-vars');
+      if (!closestRoot || !(closestRoot instanceof HTMLElement)) {
+        throw new Error('Invalid DOM. Please adopt the new report API');
+      }
+      this._dom.rootEl = closestRoot;
       opts = {};
     }
     this._opts = opts;

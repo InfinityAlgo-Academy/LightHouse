@@ -174,7 +174,7 @@
 }
 
 @media not print {
-  .lh-vars.lh-dark {
+  .lh-dark {
     /* Pallete */
     --color-gray-200: var(--color-gray-800);
     --color-gray-300: #616161;
