@@ -40,15 +40,16 @@ function getTableRows(tableEl) {
 export class ReportUIFeatures {
   /**
    * @param {DOM} dom
+   * @param {{omitTopbar?: Boolean}} opts
    */
-  constructor(dom) {
+  constructor(dom, opts = {}) {
     /** @type {LH.Result} */
     this.json; // eslint-disable-line no-unused-expressions
     /** @type {DOM} */
     this._dom = dom;
     /** @type {Document} */
     this._document = this._dom.document();
-    this._topbar = new TopbarFeatures(this, dom);
+    this._topbar = opts.omitTopbar ? null : new TopbarFeatures(this, dom);
 
     this.onMediaQueryChange = this.onMediaQueryChange.bind(this);
   }
@@ -61,8 +62,10 @@ export class ReportUIFeatures {
   initFeatures(lhr) {
     this.json = lhr;
 
-    this._topbar.enable(lhr);
-    this._topbar.resetUIState();
+    if (this._topbar) {
+      this._topbar.enable(lhr);
+      this._topbar.resetUIState();
+    }
     this._setupMediaQueryListeners();
     this._setupThirdPartyFilter();
     this._setupElementScreenshotOverlay(this._dom.find('.lh-container', this._document));
@@ -150,7 +153,9 @@ export class ReportUIFeatures {
    * @return {string}
    */
   getReportHtml() {
-    this._topbar.resetUIState();
+    if (this._topbar) {
+      this._topbar.resetUIState();
+    }
     return this._document.documentElement.outerHTML;
   }
 
@@ -183,7 +188,9 @@ export class ReportUIFeatures {
    * be in their closed state (not opened) and the templates should be unstamped.
    */
   _resetUIState() {
-    this._topbar.resetUIState();
+    if (this._topbar) {
+      this._topbar.resetUIState();
+    }
   }
 
   /**

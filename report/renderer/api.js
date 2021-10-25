@@ -10,6 +10,10 @@ import {DOM} from '../renderer/dom.js';
 import {ReportRenderer} from '../renderer/report-renderer.js';
 import {ReportUIFeatures} from '../renderer/report-ui-features.js';
 
+/**
+ * @param {LH.Result} lhr
+ * @param {LH.ReportRendererOptions} opts
+ */
 export function renderReport(lhr, opts) {
   const rootEl = document.createElement('main');
 
