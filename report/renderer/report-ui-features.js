@@ -47,10 +47,8 @@ export class ReportUIFeatures {
     this.json; // eslint-disable-line no-unused-expressions
     /** @type {DOM} */
     this._dom = dom;
-    /** @type {Document} */
-    this._document = this._dom.document();
-    this._topbar = opts.omitTopbar ? null : new TopbarFeatures(this, dom);
 
+    this._topbar = opts.omitTopbar ? null : new TopbarFeatures(this, dom);
     this.onMediaQueryChange = this.onMediaQueryChange.bind(this);
   }
 
@@ -97,7 +95,7 @@ export class ReportUIFeatures {
     const hasMetricError = lhr.categories.performance && lhr.categories.performance.auditRefs
       .some(audit => Boolean(audit.group === 'metrics' && lhr.audits[audit.id].errorMessage));
     if (hasMetricError) {
-      const toggleInputEl = this._dom.find('input.lh-metrics-toggle__input', this._document);
+      const toggleInputEl = this._dom.find('input.lh-metrics-toggle__input', this._dom.rootEl);
       toggleInputEl.checked = true;
     }
 
@@ -112,7 +110,7 @@ export class ReportUIFeatures {
     }
 
     // Fill in all i18n data.
-    for (const node of this._dom.findAll('[data-i18n]', this._dom.document())) {
+    for (const node of this._dom.findAll('[data-i18n]', this._dom.rootEl)) {
       // These strings are guaranteed to (at least) have a default English string in Util.UIStrings,
       // so this cannot be undefined as long as `report-ui-features.data-i18n` test passes.
       const i18nKey = node.getAttribute('data-i18n');
@@ -122,18 +120,16 @@ export class ReportUIFeatures {
   }
 
   /**
-   * @param {{container?: Element, text: string, icon?: string, onClick: () => void}} opts
+   * @param {{text: string, icon?: string, onClick: () => void}} opts
    */
   addButton(opts) {
     // report-ui-features doesn't have a reference to the root report el, and PSI has
     // 2 reports on the page (and not even attached to DOM when installFeatures is called..)
     // so we need a container option to specify where the element should go.
-    const metricsEl = this._document.querySelector('.lh-audit-group--metrics');
-    const containerEl = opts.container || metricsEl;
-    if (!containerEl) return;
+    const metricsEl = this._dom.find('.lh-audit-group--metrics', this._dom.rootEl);
 
-    let buttonsEl = containerEl.querySelector('.lh-buttons');
-    if (!buttonsEl) buttonsEl = this._dom.createChildOf(containerEl, 'div', 'lh-buttons');
+    let buttonsEl = metricsEl.querySelector('.lh-buttons');
+    if (!buttonsEl) buttonsEl = this._dom.createChildOf(metricsEl, 'div', 'lh-buttons');
 
     const classes = [
       'lh-button',
@@ -168,7 +164,7 @@ export class ReportUIFeatures {
   }
 
   _enableFireworks() {
-    const scoresContainer = this._dom.find('.lh-scores-container', this._document);
+    const scoresContainer = this._dom.find('.lh-scores-container', this._dom.rootEl);
     scoresContainer.classList.add('lh-score100');
     scoresContainer.addEventListener('click', _ => {
       scoresContainer.classList.toggle('lh-fireworks-paused');
@@ -215,7 +211,7 @@ export class ReportUIFeatures {
     ];
 
     // Get all tables with a text url column.
-    const tables = Array.from(this._document.querySelectorAll('table.lh-table'));
+    const tables = Array.from(this._dom.rootEl.querySelectorAll('table.lh-table'));
     const tablesWithUrls = tables
       .filter(el =>
         el.querySelector('td.lh-table-column--url, td.lh-table-column--source-location'))

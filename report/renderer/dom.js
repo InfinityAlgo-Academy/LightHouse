@@ -27,7 +27,7 @@ import {createComponent} from './components.js';
 export class DOM {
   /**
    * @param {Document} document
-   * @param {HTMLElement} rootEl
+   * @param {HTMLElement=} rootEl
    */
   constructor(document, rootEl) {
     /** @type {Document} */
@@ -37,6 +37,7 @@ export class DOM {
     /** @type {Map<string, DocumentFragment>} */
     this._componentCache = new Map();
     /** @type {HTMLElement} */
+    // @ts-expect-error For legacy Report API users, this'll be undefined, but set in renderReport
     this.rootEl = rootEl;
   }
 
@@ -78,6 +79,15 @@ export class DOM {
   createFragment() {
     return this._document.createDocumentFragment();
   }
+
+  /**
+   * @param {string} data
+   * @return {!Node}
+   */
+  createTextNode(data) {
+    return this._document.createTextNode(data);
+  }
+
 
   /**
    * @template {string} T
@@ -216,13 +226,6 @@ export class DOM {
    */
   setLighthouseChannel(lighthouseChannel) {
     this._lighthouseChannel = lighthouseChannel;
-  }
-
-  /**
-   * @return {Document}
-   */
-  document() {
-    return this._document;
   }
 
   /**

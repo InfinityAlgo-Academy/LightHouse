@@ -41,7 +41,7 @@ export class ReportRenderer {
   /**
    * @param {LH.Result} lhr
    * @param {HTMLElement} rootEl Report root element containing the report
-   * @param {{omitTopbar?: Boolean}?} opts
+   * @param {{omitTopbar?: Boolean}=} opts
    * @return {!Element}
    */
   renderReport(lhr, rootEl, opts) {

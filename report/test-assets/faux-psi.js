@@ -51,7 +51,6 @@ const lighthouseRenderer = window['report'];
  * @param {string} tabId
  */
 async function distinguishLHR(lhr, tabId) {
-  lhr.categories.performance.title += ` ${tabId}`; // for easier identification
   if (tabId === 'desktop') {
     lhr.categories.performance.score = 0.81;
   }

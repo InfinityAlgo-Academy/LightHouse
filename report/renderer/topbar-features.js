@@ -24,8 +24,6 @@ export class TopbarFeatures {
     this.lhr; // eslint-disable-line no-unused-expressions
     this._reportUIFeatures = reportUIFeatures;
     this._dom = dom;
-    /** @type {Document} */
-    this._document = this._dom.document();
     this._dropDownMenu = new DropDownMenu(this._dom);
     this._copyAttempt = false;
     /** @type {HTMLElement} */
@@ -48,12 +46,12 @@ export class TopbarFeatures {
    */
   enable(lhr) {
     this.lhr = lhr;
-    this._document.addEventListener('keyup', this.onKeyUp);
-    this._document.addEventListener('copy', this.onCopy);
+    this._dom.rootEl.addEventListener('keyup', this.onKeyUp);
+    this._dom.rootEl.addEventListener('copy', this.onCopy);
     this._dropDownMenu.setup(this.onDropDownMenuClick);
     this._setUpCollapseDetailsAfterPrinting();
 
-    const topbarLogo = this._dom.find('.lh-topbar__logo', this._document);
+    const topbarLogo = this._dom.find('.lh-topbar__logo', this._dom.rootEl);
     topbarLogo.addEventListener('click', () => toggleDarkTheme(this._dom));
 
     // There is only a sticky header when at least 2 categories are present.
@@ -112,7 +110,7 @@ export class TopbarFeatures {
         try {
           this._reportUIFeatures._saveFile(new Blob([htmlStr], {type: 'text/html'}));
         } catch (e) {
-          this._dom.fireEventOn('lh-log', this._document, {
+          this._dom.fireEventOn('lh-log', this._dom.rootEl.ownerDocument, {
             cmd: 'error', msg: 'Could not export as HTML. ' + e.message,
           });
         }
@@ -152,7 +150,7 @@ export class TopbarFeatures {
       e.preventDefault();
       e.clipboardData.setData('text/plain', JSON.stringify(this.lhr, null, 2));
 
-      this._dom.fireEventOn('lh-log', this._document, {
+      this._dom.fireEventOn('lh-log', this._dom.rootEl.ownerDocument, {
         cmd: 'log', msg: 'Report JSON copied to clipboard',
       });
     }
@@ -164,28 +162,28 @@ export class TopbarFeatures {
    * Copies the report JSON to the clipboard (if supported by the browser).
    */
   onCopyButtonClick() {
-    this._dom.fireEventOn('lh-analytics', this._document, {
+    this._dom.fireEventOn('lh-analytics', this._dom.rootEl.ownerDocument, {
       cmd: 'send',
       fields: {hitType: 'event', eventCategory: 'report', eventAction: 'copy'},
     });
 
     try {
-      if (this._document.queryCommandSupported('copy')) {
+      if (this._dom.rootEl.ownerDocument.queryCommandSupported('copy')) {
         this._copyAttempt = true;
 
         // Note: In Safari 10.0.1, execCommand('copy') returns true if there's
         // a valid text selection on the page. See http://caniuse.com/#feat=clipboard.
-        if (!this._document.execCommand('copy')) {
+        if (!this._dom.rootEl.ownerDocument.execCommand('copy')) {
           this._copyAttempt = false; // Prevent event handler from seeing this as a copy attempt.
 
-          this._dom.fireEventOn('lh-log', this._document, {
+          this._dom.fireEventOn('lh-log', this._dom.rootEl.ownerDocument, {
             cmd: 'warn', msg: 'Your browser does not support copy to clipboard.',
           });
         }
       }
     } catch (e) {
       this._copyAttempt = false;
-      this._dom.fireEventOn('lh-log', this._document, {cmd: 'log', msg: e.message});
+      this._dom.fireEventOn('lh-log', this._dom.rootEl.ownerDocument, {cmd: 'log', msg: e.message});
     }
   }
 
@@ -206,7 +204,7 @@ export class TopbarFeatures {
    * open a `<details>` element.
    */
   expandAllDetails() {
-    const details = this._dom.findAll('.lh-categories details', this._document);
+    const details = this._dom.findAll('.lh-categories details', this._dom.rootEl);
     details.map(detail => detail.open = true);
   }
 
@@ -215,7 +213,7 @@ export class TopbarFeatures {
    * open a `<details>` element.
    */
   collapseAllDetails() {
-    const details = this._dom.findAll('.lh-categories details', this._document);
+    const details = this._dom.findAll('.lh-categories details', this._dom.rootEl);
     details.map(detail => detail.open = false);
   }
 
@@ -274,9 +272,9 @@ export class TopbarFeatures {
   }
 
   _setupStickyHeaderElements() {
-    this.topbarEl = this._dom.find('div.lh-topbar', this._document);
-    this.scoreScaleEl = this._dom.find('div.lh-scorescale', this._document);
-    this.stickyHeaderEl = this._dom.find('div.lh-sticky-header', this._document);
+    this.topbarEl = this._dom.find('div.lh-topbar', this._dom.rootEl);
+    this.scoreScaleEl = this._dom.find('div.lh-scorescale', this._dom.rootEl);
+    this.stickyHeaderEl = this._dom.find('div.lh-sticky-header', this._dom.rootEl);
 
     // Highlighter will be absolutely positioned at first gauge, then transformed on scroll.
     this.highlightEl = this._dom.createChildOf(this.stickyHeaderEl, 'div', 'lh-highlighter');
@@ -290,7 +288,7 @@ export class TopbarFeatures {
 
     // Highlight mini gauge when section is in view.
     // In view = the last category that starts above the middle of the window.
-    const categoryEls = Array.from(this._document.querySelectorAll('.lh-category'));
+    const categoryEls = Array.from(this._dom.rootEl.querySelectorAll('.lh-category'));
     const categoriesAboveTheMiddle =
       categoryEls.filter(el => el.getBoundingClientRect().top - window.innerHeight / 2 < 0);
     const highlightIndex =

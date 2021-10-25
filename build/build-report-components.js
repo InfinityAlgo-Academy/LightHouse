@@ -143,7 +143,7 @@ function compileTemplate(tmpEl) {
   }
 
   const fragmentVarName = makeOrGetVarName(tmpEl);
-  lines.push(`const ${fragmentVarName} = dom.document().createDocumentFragment();`);
+  lines.push(`const ${fragmentVarName} = dom.createFragment();`);
 
   for (const topLevelEl of tmpEl.content.children) {
     process(topLevelEl);

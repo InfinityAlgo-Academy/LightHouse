@@ -36,11 +36,11 @@ export class DropDownMenu {
    * @param {function(MouseEvent): any} menuClickHandler
    */
   setup(menuClickHandler) {
-    this._toggleEl = this._dom.find('button.lh-tools__button', this._dom.document());
+    this._toggleEl = this._dom.find('button.lh-tools__button', this._dom.rootEl);
     this._toggleEl.addEventListener('click', this.onToggleClick);
     this._toggleEl.addEventListener('keydown', this.onToggleKeydown);
 
-    this._menuEl = this._dom.find('div.lh-tools__dropdown', this._dom.document());
+    this._menuEl = this._dom.find('div.lh-tools__dropdown', this._dom.rootEl);
     this._menuEl.addEventListener('keydown', this.onMenuKeydown);
     this._menuEl.addEventListener('click', menuClickHandler);
   }
@@ -48,12 +48,12 @@ export class DropDownMenu {
   close() {
     this._toggleEl.classList.remove('lh-active');
     this._toggleEl.setAttribute('aria-expanded', 'false');
-    if (this._menuEl.contains(this._dom.document().activeElement)) {
+    if (this._menuEl.contains(this._dom._document.activeElement)) {
       // Refocus on the tools button if the drop down last had focus
       this._toggleEl.focus();
     }
     this._menuEl.removeEventListener('focusout', this.onMenuFocusOut);
-    this._dom.document().removeEventListener('keydown', this.onDocumentKeyDown);
+    this._dom.rootEl.removeEventListener('keydown', this.onDocumentKeyDown);
   }
 
   /**
@@ -73,7 +73,7 @@ export class DropDownMenu {
     this._toggleEl.classList.add('lh-active');
     this._toggleEl.setAttribute('aria-expanded', 'true');
     this._menuEl.addEventListener('focusout', this.onMenuFocusOut);
-    this._dom.document().addEventListener('keydown', this.onDocumentKeyDown);
+    this._dom.rootEl.addEventListener('keydown', this.onDocumentKeyDown);
   }
 
   /**
