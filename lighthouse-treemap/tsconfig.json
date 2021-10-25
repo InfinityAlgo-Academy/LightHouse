@@ -11,7 +11,7 @@
   "references": [
     {"path": "../types/lhr/"},
     {"path": "../report/"},
-    {"path": "../lighthouse-viewer/"},
+    {"path": "../viewer/"},
   ],
   "include": [
     "app/src/**/*.js",

@@ -41,7 +41,7 @@ async function run() {
 
   const app = new GhPagesApp({
     name: 'viewer',
-    appDir: `${LH_ROOT}/lighthouse-viewer/app`,
+    appDir: `${LH_ROOT}/viewer/app`,
     html: {path: 'index.html'},
     stylesheets: [
       {path: 'styles/*'},

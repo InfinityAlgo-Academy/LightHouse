@@ -6,7 +6,7 @@
     {"path": "./types/lhr/"},
     {"path": "./report/"},
     {"path": "./report/generator/"},
-    {"path": "./lighthouse-viewer/"},
+    {"path": "./viewer/"},
     {"path": "./lighthouse-treemap/"},
     {"path": "./flow-report/"},
     {"path": "./shared/"},

@@ -10,8 +10,8 @@
 /* globals webtreemap strings Tabulator Cell Row */
 
 import {TreemapUtil} from './util.js';
-import {DragAndDrop} from '../../../lighthouse-viewer/app/src/drag-and-drop.js';
-import {GithubApi} from '../../../lighthouse-viewer/app/src/github-api.js';
+import {DragAndDrop} from '../../../viewer/app/src/drag-and-drop.js';
+import {GithubApi} from '../../../viewer/app/src/github-api.js';
 import {I18n} from '../../../report/renderer/i18n.js';
 import {TextEncoding} from '../../../report/renderer/text-encoding.js';
 import {Logger} from '../../../report/renderer/logger.js';

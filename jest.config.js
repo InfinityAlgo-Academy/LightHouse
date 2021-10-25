@@ -14,7 +14,7 @@ module.exports = {
     '**/report/**/*-test.js',
     '**/lighthouse-core/test/fraggle-rock/**/*-test-pptr.js',
     '**/lighthouse-treemap/**/*-test.js',
-    '**/lighthouse-viewer/**/*-test.js',
+    '**/viewer/**/*-test.js',
     '**/third-party/**/*-test.js',
     '**/clients/test/**/*-test.js',
     '**/shared/**/*-test.js',
