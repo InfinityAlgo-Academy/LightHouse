@@ -27,14 +27,17 @@ import {createComponent} from './components.js';
 export class DOM {
   /**
    * @param {Document} document
+   * @param {HTMLElement} rootEl
    */
-  constructor(document) {
+  constructor(document, rootEl) {
     /** @type {Document} */
     this._document = document;
     /** @type {string} */
     this._lighthouseChannel = 'unknown';
     /** @type {Map<string, DocumentFragment>} */
     this._componentCache = new Map();
+    /** @type {HTMLElement} */
+    this.rootEl = rootEl;
   }
 
   /**

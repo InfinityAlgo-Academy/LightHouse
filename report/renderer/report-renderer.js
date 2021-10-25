@@ -40,18 +40,26 @@ export class ReportRenderer {
 
   /**
    * @param {LH.Result} lhr
-   * @param {Element} container Parent element to render the report into.
+   * @param {HTMLElement} rootEl Report root element containing the report
+   * @param {{omitTopbar?: Boolean}?} opts
    * @return {!Element}
    */
-  renderReport(lhr, container) {
+  renderReport(lhr, rootEl, opts) {
+    if (!opts) {
+      console.warn('Please adopt the new report API in renderer/api.js.');
+      this._dom.rootEl = rootEl;
+      opts = {};
+    }
+    this._opts = opts;
+
     this._dom.setLighthouseChannel(lhr.configSettings.channel || 'unknown');
 
     const report = Util.prepareReportResult(lhr);
 
-    container.textContent = ''; // Remove previous report.
-    container.appendChild(this._renderReport(report));
+    rootEl.textContent = ''; // Remove previous report.
+    rootEl.appendChild(this._renderReport(report));
 
-    return container;
+    return rootEl;
   }
 
   /**
@@ -197,7 +205,7 @@ export class ReportRenderer {
         gaugeWrapperEl.addEventListener('click', e => {
           if (!gaugeWrapperEl.matches('[href^="#"]')) return;
           const selector = gaugeWrapperEl.getAttribute('href');
-          const reportRoot = gaugeWrapperEl.closest('.lh-vars');
+          const reportRoot = this._dom.rootEl;
           if (!selector || !reportRoot) return;
           const destEl = this._dom.find(selector, reportRoot);
           e.preventDefault();
@@ -300,9 +308,11 @@ export class ReportRenderer {
 
     const reportFragment = this._dom.createFragment();
     reportFragment.append(this._dom.createComponent('styles'));
-    const topbarDocumentFragment = this._renderReportTopbar(report);
 
-    reportFragment.appendChild(topbarDocumentFragment);
+    if (!this._opts.omitTopbar) {
+      reportFragment.appendChild(this._renderReportTopbar(report));
+    }
+
     reportFragment.appendChild(reportContainer);
     reportContainer.appendChild(headerContainer);
     reportContainer.appendChild(reportSection);

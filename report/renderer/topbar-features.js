@@ -59,8 +59,8 @@ export class TopbarFeatures {
     // There is only a sticky header when at least 2 categories are present.
     if (Object.keys(this.lhr.categories).length >= 2) {
       this._setupStickyHeaderElements();
-      const containerEl = this._dom.find('.lh-container', this._document);
-      const elToAddScrollListener = this._getScrollParent(containerEl);
+      const reportRootEl = this._dom.rootEl;
+      const elToAddScrollListener = this._getScrollParent(reportRootEl);
       elToAddScrollListener.addEventListener('scroll', this._updateStickyHeaderOnScroll);
 
       // Use ResizeObserver where available.
@@ -70,7 +70,7 @@ export class TopbarFeatures {
       // For now, limit to DevTools.
       if (this._dom.isDevTools()) {
         const resizeObserver = new window.ResizeObserver(this._updateStickyHeaderOnScroll);
-        resizeObserver.observe(containerEl);
+        resizeObserver.observe(reportRootEl);
       } else {
         window.addEventListener('resize', this._updateStickyHeaderOnScroll);
       }

@@ -68,7 +68,7 @@ export class ReportUIFeatures {
     }
     this._setupMediaQueryListeners();
     this._setupThirdPartyFilter();
-    this._setupElementScreenshotOverlay(this._dom.find('.lh-container', this._document));
+    this._setupElementScreenshotOverlay(this._dom.rootEl);
 
     let turnOffTheLights = false;
     // Do not query the system preferences for DevTools - DevTools should only apply dark theme
@@ -198,8 +198,7 @@ export class ReportUIFeatures {
    * @param {MediaQueryList|MediaQueryListEvent} mql
    */
   onMediaQueryChange(mql) {
-    const root = this._dom.find('.lh-root', this._document);
-    root.classList.toggle('lh-narrow', mql.matches);
+    this._dom.rootEl.classList.toggle('lh-narrow', mql.matches);
   }
 
   _setupThirdPartyFilter() {

@@ -19,10 +19,10 @@ export function renderReport(lhr, opts) {
   const rootEl = document.createElement('main');
   rootEl.classList.add('lh-root', 'lh-vars');
 
-  const dom = new DOM(rootEl.ownerDocument);
+  const dom = new DOM(rootEl.ownerDocument, rootEl);
   const renderer = new ReportRenderer(dom);
 
-  renderer.renderReport(lhr, rootEl);
+  renderer.renderReport(lhr, rootEl, {omitTopbar: true});
 
   // Hook in JS features and page-level event listeners after the report
   // is in the document.
