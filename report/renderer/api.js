@@ -13,9 +13,11 @@ import {ReportUIFeatures} from '../renderer/report-ui-features.js';
 /**
  * @param {LH.Result} lhr
  * @param {LH.ReportRendererOptions} opts
+ * @return {HTMLElement}
  */
 export function renderReport(lhr, opts) {
   const rootEl = document.createElement('main');
+  rootEl.classList.add('lh-root', 'lh-vars');
 
   const dom = new DOM(rootEl.ownerDocument);
   const renderer = new ReportRenderer(dom);
@@ -24,6 +26,7 @@ export function renderReport(lhr, opts) {
 
   // Hook in JS features and page-level event listeners after the report
   // is in the document.
-  const features = new ReportUIFeatures(dom);
+  const features = new ReportUIFeatures(dom, opts);
   features.initFeatures(lhr);
+  return rootEl;
 }

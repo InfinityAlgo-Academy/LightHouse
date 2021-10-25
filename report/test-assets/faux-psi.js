@@ -26,43 +26,22 @@ const lighthouseRenderer = window['report'];
   for (const [tabId, lhr] of Object.entries(lhrs)) {
     await distinguishLHR(lhr, tabId);
 
-    const container = document.querySelector(`#${tabId} main`);
+    const container = document.querySelector(`section#${tabId}`);
     if (!container) throw new Error('Unexpected DOM. Bailing.');
 
-    renderLHReport(lhr, container);
+    try {
+      const reportRootEl = lighthouseRenderer.renderReport(lhr, {omitTopbar: true});
+      // TODO: display warnings if appropriate.
+      for (const el of reportRootEl.querySelectorAll('.lh-warnings')) {
+        el.setAttribute('hidden', 'true');
+      }
+      container.append(reportRootEl);
+    } catch (e) {
+      console.error(e);
+      container.textContent = 'Error: LHR failed to render.';
+    }
   }
 })();
-
-/**
- * @param {LH.Result} lhrData
- * @param {HTMLElement} reportContainer
- */
-function renderLHReport(lhrData, reportContainer) {
-  /**
-   * @param {Document} doc
-   */
-  function getRenderer(doc) {
-    const dom = new lighthouseRenderer.DOM(doc);
-    return new lighthouseRenderer.ReportRenderer(dom);
-  }
-
-  const renderer = getRenderer(reportContainer.ownerDocument);
-  reportContainer.classList.add('lh-root', 'lh-vars');
-
-  try {
-    renderer.renderReport(lhrData, reportContainer);
-    // TODO: handle topbar removal better
-    // TODO: display warnings if appropriate.
-    for (const el of reportContainer.querySelectorAll('.lh-topbar, .lh-warnings')) {
-      el.setAttribute('hidden', 'true');
-    }
-    const features = new lighthouseRenderer.ReportUIFeatures(renderer._dom);
-    features.initFeatures(lhrData);
-  } catch (e) {
-    console.error(e);
-    reportContainer.textContent = 'Error: LHR failed to render.';
-  }
-}
 
 
 /**

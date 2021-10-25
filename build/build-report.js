@@ -125,7 +125,7 @@ async function buildUmdBundle() {
 if (require.main === module) {
   if (process.argv.length <= 2) {
     buildStandaloneReport();
-    buildFlowReport();
+    // buildFlowReport();
     buildEsModulesBundle();
     buildUmdBundle();
   }
