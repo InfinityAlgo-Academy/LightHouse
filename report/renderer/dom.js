@@ -229,6 +229,15 @@ export class DOM {
   }
 
   /**
+   * ONLY use if `dom.rootEl` isn't sufficient for your needs. It is preferred for all scoping,
+   * as a document can have multiple reports within it.
+   * @return {Document}
+   */
+  document() {
+    return this._document;
+  }
+
+  /**
    * TODO(paulirish): import and conditionally apply the DevTools frontend subclasses instead of this
    * @return {boolean}
    */

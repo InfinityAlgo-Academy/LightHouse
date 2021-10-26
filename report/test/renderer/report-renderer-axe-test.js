@@ -47,10 +47,10 @@ describe('ReportRendererAxe', () => {
     });
 
     it('renders without axe violations', async () => {
-      const container = renderer._dom._document.createElement('main');
+      const container = renderer._dom.document().createElement('main');
       const output = renderer.renderReport(sampleResults, container);
 
-      renderer._dom._document.body.appendChild(container);
+      renderer._dom.document().body.appendChild(container);
 
       const config = {
         rules: {

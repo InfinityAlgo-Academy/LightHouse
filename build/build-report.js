@@ -45,7 +45,7 @@ async function buildStandaloneReport() {
     input: 'report/clients/standalone.js',
     plugins: [
       rollupPlugins.commonjs(),
-      // rollupPlugins.terser(),
+      rollupPlugins.terser(),
     ],
   });
 

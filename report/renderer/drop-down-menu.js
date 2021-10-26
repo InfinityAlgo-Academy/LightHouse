@@ -48,12 +48,12 @@ export class DropDownMenu {
   close() {
     this._toggleEl.classList.remove('lh-active');
     this._toggleEl.setAttribute('aria-expanded', 'false');
-    if (this._menuEl.contains(this._dom._document.activeElement)) {
+    if (this._menuEl.contains(this._dom.document().activeElement)) {
       // Refocus on the tools button if the drop down last had focus
       this._toggleEl.focus();
     }
     this._menuEl.removeEventListener('focusout', this.onMenuFocusOut);
-    this._dom.rootEl.removeEventListener('keydown', this.onDocumentKeyDown);
+    this._dom.document().removeEventListener('keydown', this.onDocumentKeyDown);
   }
 
   /**
@@ -73,7 +73,7 @@ export class DropDownMenu {
     this._toggleEl.classList.add('lh-active');
     this._toggleEl.setAttribute('aria-expanded', 'true');
     this._menuEl.addEventListener('focusout', this.onMenuFocusOut);
-    this._dom.rootEl.addEventListener('keydown', this.onDocumentKeyDown);
+    this._dom.document().addEventListener('keydown', this.onDocumentKeyDown);
   }
 
   /**

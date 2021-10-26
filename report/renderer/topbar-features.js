@@ -47,7 +47,7 @@ export class TopbarFeatures {
   enable(lhr) {
     this.lhr = lhr;
     this._dom.rootEl.addEventListener('keyup', this.onKeyUp);
-    this._dom.rootEl.addEventListener('copy', this.onCopy);
+    this._dom.document().addEventListener('copy', this.onCopy);
     this._dropDownMenu.setup(this.onDropDownMenuClick);
     this._setUpCollapseDetailsAfterPrinting();
 
@@ -110,7 +110,7 @@ export class TopbarFeatures {
         try {
           this._reportUIFeatures._saveFile(new Blob([htmlStr], {type: 'text/html'}));
         } catch (e) {
-          this._dom.fireEventOn('lh-log', this._dom.rootEl.ownerDocument, {
+          this._dom.fireEventOn('lh-log', this._dom.document(), {
             cmd: 'error', msg: 'Could not export as HTML. ' + e.message,
           });
         }
@@ -150,7 +150,7 @@ export class TopbarFeatures {
       e.preventDefault();
       e.clipboardData.setData('text/plain', JSON.stringify(this.lhr, null, 2));
 
-      this._dom.fireEventOn('lh-log', this._dom.rootEl.ownerDocument, {
+      this._dom.fireEventOn('lh-log', this._dom.document(), {
         cmd: 'log', msg: 'Report JSON copied to clipboard',
       });
     }
@@ -162,28 +162,28 @@ export class TopbarFeatures {
    * Copies the report JSON to the clipboard (if supported by the browser).
    */
   onCopyButtonClick() {
-    this._dom.fireEventOn('lh-analytics', this._dom.rootEl.ownerDocument, {
+    this._dom.fireEventOn('lh-analytics', this._dom.document(), {
       cmd: 'send',
       fields: {hitType: 'event', eventCategory: 'report', eventAction: 'copy'},
     });
 
     try {
-      if (this._dom.rootEl.ownerDocument.queryCommandSupported('copy')) {
+      if (this._dom.document().queryCommandSupported('copy')) {
         this._copyAttempt = true;
 
         // Note: In Safari 10.0.1, execCommand('copy') returns true if there's
         // a valid text selection on the page. See http://caniuse.com/#feat=clipboard.
-        if (!this._dom.rootEl.ownerDocument.execCommand('copy')) {
+        if (!this._dom.document().execCommand('copy')) {
           this._copyAttempt = false; // Prevent event handler from seeing this as a copy attempt.
 
-          this._dom.fireEventOn('lh-log', this._dom.rootEl.ownerDocument, {
+          this._dom.fireEventOn('lh-log', this._dom.document(), {
             cmd: 'warn', msg: 'Your browser does not support copy to clipboard.',
           });
         }
       }
     } catch (e) {
       this._copyAttempt = false;
-      this._dom.fireEventOn('lh-log', this._dom.rootEl.ownerDocument, {cmd: 'log', msg: e.message});
+      this._dom.fireEventOn('lh-log', this._dom.document(), {cmd: 'log', msg: e.message});
     }
   }
 

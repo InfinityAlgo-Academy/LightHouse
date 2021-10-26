@@ -60,6 +60,7 @@ describe('ReportGenerator', () => {
 
     it('should inject the report renderer javascript', () => {
       const result = ReportGenerator.generateReportHtml({});
+      require('fs').writeFileSync('omg.txt', result, 'utf-8');
       assert.ok(result.includes('configSettings.channel||"unknown"'), 'injects the script');
       assert.ok(result.includes('robustness: <\\/script'), 'escapes HTML tags in javascript');
       assert.ok(result.includes('pre$`post'), 'does not break from String.replace');

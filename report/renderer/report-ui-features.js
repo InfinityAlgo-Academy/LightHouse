@@ -123,10 +123,9 @@ export class ReportUIFeatures {
    * @param {{text: string, icon?: string, onClick: () => void}} opts
    */
   addButton(opts) {
-    // report-ui-features doesn't have a reference to the root report el, and PSI has
-    // 2 reports on the page (and not even attached to DOM when installFeatures is called..)
-    // so we need a container option to specify where the element should go.
-    const metricsEl = this._dom.find('.lh-audit-group--metrics', this._dom.rootEl);
+    // Use qSA directly to as we don't want to throw (if this element is missing).
+    const metricsEl = this._dom.rootEl.querySelector('.lh-audit-group--metrics');
+    if (!metricsEl) return;
 
     let buttonsEl = metricsEl.querySelector('.lh-buttons');
     if (!buttonsEl) buttonsEl = this._dom.createChildOf(metricsEl, 'div', 'lh-buttons');
@@ -152,7 +151,7 @@ export class ReportUIFeatures {
     if (this._topbar) {
       this._topbar.resetUIState();
     }
-    return this._document.documentElement.outerHTML;
+    return `<!doctype html><body>${this._dom.rootEl.outerHTML}`;
   }
 
   /**

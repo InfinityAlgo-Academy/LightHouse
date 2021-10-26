@@ -36,6 +36,8 @@ export class ReportRenderer {
   constructor(dom) {
     /** @type {DOM} */
     this._dom = dom;
+    /** @type {{omitTopbar?: Boolean}} */
+    this._opts = {};
   }
 
   /**
@@ -45,16 +47,23 @@ export class ReportRenderer {
    * @return {!Element}
    */
   renderReport(lhr, rootEl, opts) {
-    if (!opts) {
-      console.warn('Please adopt the new report API in renderer/api.js.');
-      const closestRoot = rootEl.closest('.lh-vars');
-      if (!closestRoot || !(closestRoot instanceof HTMLElement)) {
-        throw new Error('Invalid DOM. Please adopt the new report API');
+    // Allow old report rendering API
+    if (!this._dom.rootEl) {
+      // @ts-expect-error
+      const isUnderTest = () => !!process.env.CI || process.env.NODE_ENV === 'test';
+
+      if (!isUnderTest()) {
+        console.warn('Please adopt the new report API in renderer/api.js.');
       }
-      this._dom.rootEl = closestRoot;
-      opts = {};
+      const closestRoot = rootEl.closest('.lh-vars');
+      if (!closestRoot) {
+        rootEl.classList.add('lh-root', 'lh-vars');
+      }
+      this._dom.rootEl = /** @type {HTMLElement} */ (closestRoot);
     }
-    this._opts = opts;
+    if (opts) {
+      this._opts = opts;
+    }
 
     this._dom.setLighthouseChannel(lhr.configSettings.channel || 'unknown');
 

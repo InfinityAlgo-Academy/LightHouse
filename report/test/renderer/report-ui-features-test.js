@@ -33,7 +33,7 @@ describe('ReportUIFeatures', () => {
     const categoryRenderer = new CategoryRenderer(dom, detailsRenderer);
     const renderer = new ReportRenderer(dom, categoryRenderer);
     const reportUIFeatures = new ReportUIFeatures(dom);
-    const container = dom.find('main', dom.rootEl);
+    const container = dom.find('main', dom._document);
     renderer.renderReport(lhr, container);
     reportUIFeatures.initFeatures(lhr);
     return container;
@@ -351,7 +351,7 @@ describe('ReportUIFeatures', () => {
       assert.ok(dropDown._toggleEl.classList.contains('lh-active'));
 
       const escape = new window.KeyboardEvent('keydown', {keyCode: /* ESC */ 27});
-      dropDown._toggleEl.dispatchEvent(escape);
+      dom.document().dispatchEvent(escape);
       assert.ok(!dropDown._toggleEl.classList.contains('lh-active'));
     });
 

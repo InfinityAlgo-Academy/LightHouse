@@ -27,11 +27,13 @@ function __initLighthouseReport__() {
   /** @type {LH.ReportResult} */
   // @ts-expect-error
   const lhr = window.__LIGHTHOUSE_JSON__;
-  renderer.renderReport(lhr, container);
+
+  const opts = {omitTopbar: false};
+  renderer.renderReport(lhr, container, opts);
 
   // Hook in JS features and page-level event listeners after the report
   // is in the document.
-  const features = new ReportUIFeatures(dom);
+  const features = new ReportUIFeatures(dom, opts);
   features.initFeatures(lhr);
 
   document.addEventListener('lh-analytics', /** @param {Event} e */ e => {
