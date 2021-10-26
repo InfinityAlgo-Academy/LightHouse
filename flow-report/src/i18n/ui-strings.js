@@ -131,4 +131,6 @@ export const UIStrings = {
     =1 {{numInformative} informative audit}
     other {{numInformative} informative audits}
   }`,
+  /** Label for a list of Lighthouse audits that are the most impactful. */
+  highestImpact: 'Highest impact',
 };

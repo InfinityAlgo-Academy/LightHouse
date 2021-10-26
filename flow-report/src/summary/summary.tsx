@@ -76,6 +76,7 @@ export const SummaryFlowStep: FunctionComponent<{
             category={reportResult.categories[c]}
             href={`#index=${hashIndex}&anchor=${c}`}
             gatherMode={lhr.gatherMode}
+            finalUrl={lhr.finalUrl}
           />
         ))
       }

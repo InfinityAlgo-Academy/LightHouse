@@ -31,6 +31,7 @@
   --summary-subtitle-font-size: 12px;
   --summary-title-font-size: 20px;
   --summary-tooltip-box-shadow-color: rgba(0, 0, 0, 0.25);
+  --summary-tooltip-line-height: 16px;
   --topbar-button-font-size: 14px;
   --topbar-button-size: 45px;
   --topbar-title-font-size: 14px;
@@ -394,22 +395,33 @@
   border-radius: 3px;
   padding: var(--base-spacing);
   right: 0;
+  line-height: var(--summary-tooltip-line-height);
   box-shadow: 0px 4px 4px var(--summary-tooltip-box-shadow-color);
   z-index: 1;
 }
 
 .SummaryTooltip__title {
   font-weight: var(--bold-weight);
-  margin-bottom: var(--half-base-spacing);
+}
+
+.SummaryTooltip__url {
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-top: calc(0.25 * var(--base-spacing));
+  margin-bottom: calc(0.75 * var(--base-spacing));
+  color: var(--color-gray-700);
 }
 
 .SummaryTooltip__category {
   font-weight: var(--bold-weight);
   display: flex;
+  align-items: center;
   margin-top: var(--half-base-spacing);
 }
 
 .SummaryTooltip__category-title {
+  line-height: 24px;
   flex-grow: 1;
 }
 
@@ -422,6 +434,50 @@
 .SummaryTooltip__rating--fail,
 .SummaryTooltip__rating--error {
   color: var(--color-fail);
+}
+
+.SummaryTooltip__fraction {
+  color: var(--color-gray-700);
+}
+
+.SummaryTooltip__informative {
+  margin-top: calc(0.25 * var(--base-spacing));
+  color: var(--color-gray-700);
+}
+
+.SummaryTooltipAudits__title {
+  line-height: 24px;
+  margin-top: calc(0.75 * var(--base-spacing));
+  font-weight: var(--bold-weight);
+}
+
+.SummaryTooltipAudit {
+  display: flex;
+  margin: calc(0.25 * var(--base-spacing)) 0px;
+  color: var(--color-gray-700);
+  --score-icon-size: 10px;
+}
+.SummaryTooltipAudit code {
+  color: var(--snippet-color);
+}
+.SummaryTooltipAudit::before {
+  content: '';
+  height: var(--score-icon-size);
+  width: var(--score-icon-size);
+  margin-top: calc((var(--summary-tooltip-line-height) - var(--score-icon-size)) / 2);
+  margin-right: var(--half-base-spacing);
+}
+.SummaryTooltipAudit--pass::before {
+  background-color: var(--color-pass);
+  border-radius: 50%;
+}
+.SummaryTooltipAudit--average::before {
+  background-color: var(--color-average);
+}
+.SummaryTooltipAudit--fail::before {
+  border-left: calc(var(--score-icon-size) / 2) solid transparent;
+  border-right: calc(var(--score-icon-size) / 2) solid transparent;
+  border-bottom: var(--score-icon-size) solid var(--color-fail);
 }
 
 .SummaryNavigationHeader {
