@@ -212,7 +212,7 @@ export class ReportRenderer {
         // The renderer for default categories is just the default CategoryRenderer.
         // If the functions are equal, then renderer is an instance of CategoryRenderer.
         // For example, the PWA category uses PwaCategoryRenderer, which overrides
-        // CategoryRenderer.renderScoreGauge, so it would fail this check and be placed
+        // CategoryRenderer.renderCategoryScore, so it would fail this check and be placed
         // in the customGauges bucket.
         defaultGauges.push(categoryGauge);
       } else {
