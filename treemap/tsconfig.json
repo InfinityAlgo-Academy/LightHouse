@@ -1,7 +1,7 @@
 {
   "extends": "../tsconfig-base.json",
   "compilerOptions": {
-    "outDir": "../.tmp/tsbuildinfo/lighthouse-treemap",
+    "outDir": "../.tmp/tsbuildinfo/treemap",
 
     // Limit to base JS and DOM defs.
     "lib": ["es2020", "dom", "dom.iterable"],

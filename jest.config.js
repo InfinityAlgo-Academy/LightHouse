@@ -13,7 +13,7 @@ module.exports = {
     '**/lighthouse-cli/**/*-test.js',
     '**/report/**/*-test.js',
     '**/lighthouse-core/test/fraggle-rock/**/*-test-pptr.js',
-    '**/lighthouse-treemap/**/*-test.js',
+    '**/treemap/**/*-test.js',
     '**/viewer/**/*-test.js',
     '**/third-party/**/*-test.js',
     '**/clients/test/**/*-test.js',

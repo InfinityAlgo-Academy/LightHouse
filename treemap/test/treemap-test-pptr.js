@@ -16,7 +16,7 @@ import {server} from '../../lighthouse-cli/test/fixtures/static-server.js';
 import {LH_ROOT} from '../../root.js';
 
 const debugOptions = JSON.parse(
-  fs.readFileSync(LH_ROOT + '/lighthouse-treemap/app/debug.json', 'utf-8')
+  fs.readFileSync(LH_ROOT + '/treemap/app/debug.json', 'utf-8')
 );
 const portNumber = 20202;
 const treemapUrl = `http://localhost:${portNumber}/dist/gh-pages/treemap/index.html`;

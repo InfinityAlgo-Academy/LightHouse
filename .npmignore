@@ -14,7 +14,7 @@ lighthouse-core/scripts/*
 lighthouse-core/test/
 lighthouse-core/third_party/src/
 viewer/
-lighthouse-treemap/
+treemap/
 clients/
 lighthouse-cli/results/
 lighthouse-logger/

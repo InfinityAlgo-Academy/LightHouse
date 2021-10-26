@@ -11,14 +11,14 @@ const {LH_ROOT} = require('../root.js');
 const {getIcuMessageIdParts} = require('../shared/localization/format.js');
 
 /**
- * Extract only the strings needed for lighthouse-treemap into
+ * Extract only the strings needed for treemap into
  * a script that sets a global variable `strings`, whose keys
  * are locale codes (en-US, es, etc.) and values are localized UIStrings.
  */
 function buildStrings() {
   const locales = require('../shared/localization/locales.js');
   // TODO(esmodules): use dynamic import when build/ is esm.
-  const utilCode = fs.readFileSync(LH_ROOT + '/lighthouse-treemap/app/src/util.js', 'utf-8');
+  const utilCode = fs.readFileSync(LH_ROOT + '/treemap/app/src/util.js', 'utf-8');
   const {UIStrings} = eval(utilCode.replace(/export /g, '') + '\nmodule.exports = TreemapUtil;');
   const strings = /** @type {Record<LH.Locale, string>} */ ({});
 
@@ -45,7 +45,7 @@ function buildStrings() {
 async function run() {
   const app = new GhPagesApp({
     name: 'treemap',
-    appDir: `${LH_ROOT}/lighthouse-treemap/app`,
+    appDir: `${LH_ROOT}/treemap/app`,
     html: {path: 'index.html'},
     stylesheets: [
       {path: require.resolve('tabulator-tables/dist/css/tabulator.min.css')},

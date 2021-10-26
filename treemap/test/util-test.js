@@ -78,7 +78,7 @@ describe('TreemapUtil', () => {
 
   describe('data-i18n', () => {
     it('should have only valid data-i18n values in treemap html', () => {
-      const TREEMAP_INDEX = fs.readFileSync(LH_ROOT + '/lighthouse-treemap/app/index.html', 'utf8');
+      const TREEMAP_INDEX = fs.readFileSync(LH_ROOT + '/treemap/app/index.html', 'utf8');
       const dom = new jsdom.JSDOM(TREEMAP_INDEX);
       for (const node of dom.window.document.querySelectorAll('[data-i18n]')) {
         const val = node.getAttribute('data-i18n');

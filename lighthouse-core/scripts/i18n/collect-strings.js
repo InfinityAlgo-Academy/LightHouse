@@ -33,7 +33,7 @@ const UISTRINGS_REGEX = /UIStrings = .*?\};\n/s;
 const foldersWithStrings = [
   `${LH_ROOT}/lighthouse-core`,
   `${LH_ROOT}/report/renderer`,
-  `${LH_ROOT}/lighthouse-treemap`,
+  `${LH_ROOT}/treemap`,
   `${LH_ROOT}/flow-report`,
   path.dirname(resolveModulePath('lighthouse-stack-packs')) + '/packs',
 ];
@@ -47,7 +47,7 @@ const ignoredPathComponents = [
   '**/*-test.js',
   '**/*-renderer.js',
   '**/util-commonjs.js',
-  'lighthouse-treemap/app/src/main.js',
+  'treemap/app/src/main.js',
 ];
 
 /**

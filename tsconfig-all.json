@@ -7,7 +7,7 @@
     {"path": "./report/"},
     {"path": "./report/generator/"},
     {"path": "./viewer/"},
-    {"path": "./lighthouse-treemap/"},
+    {"path": "./treemap/"},
     {"path": "./flow-report/"},
     {"path": "./shared/"},
   ],

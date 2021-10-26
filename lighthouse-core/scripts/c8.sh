@@ -11,7 +11,7 @@ set -euxo pipefail
 echo $*
 
 node node_modules/.bin/c8 \
-  --include '{lighthouse-core,lighthouse-cli,viewer,lighthouse-treemap,build/plugins,report,flow-report}' \
+  --include '{lighthouse-core,lighthouse-cli,viewer,treemap,build/plugins,report,flow-report}' \
   --exclude third_party \
   --exclude '**/test/' \
   --exclude '**/scripts/' \

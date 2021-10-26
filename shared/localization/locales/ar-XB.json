@@ -2069,28 +2069,28 @@
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "‏‮The‬‏ ‏‮URL‬‏ ‏‮you‬‏ ‏‮have‬‏ ‏‮provided‬‏ ‏‮appears‬‏ ‏‮to‬‏ ‏‮be‬‏ ‏‮invalid‬‏."
   },
-  "lighthouse-treemap/app/src/util.js | allLabel": {
+  "treemap/app/src/util.js | allLabel": {
     "message": "‏‮All‬‏"
   },
-  "lighthouse-treemap/app/src/util.js | allScriptsDropdownLabel": {
+  "treemap/app/src/util.js | allScriptsDropdownLabel": {
     "message": "‏‮All‬‏ ‏‮Scripts‬‏"
   },
-  "lighthouse-treemap/app/src/util.js | coverageColumnName": {
+  "treemap/app/src/util.js | coverageColumnName": {
     "message": "‏‮Coverage‬‏"
   },
-  "lighthouse-treemap/app/src/util.js | duplicateModulesLabel": {
+  "treemap/app/src/util.js | duplicateModulesLabel": {
     "message": "‏‮Duplicate‬‏ ‏‮Modules‬‏"
   },
-  "lighthouse-treemap/app/src/util.js | resourceBytesLabel": {
+  "treemap/app/src/util.js | resourceBytesLabel": {
     "message": "‏‮Resource‬‏ ‏‮Bytes‬‏"
   },
-  "lighthouse-treemap/app/src/util.js | tableColumnName": {
+  "treemap/app/src/util.js | tableColumnName": {
     "message": "‏‮Name‬‏"
   },
-  "lighthouse-treemap/app/src/util.js | toggleTableButtonLabel": {
+  "treemap/app/src/util.js | toggleTableButtonLabel": {
     "message": "‏‮Toggle‬‏ ‏‮Table‬‏"
   },
-  "lighthouse-treemap/app/src/util.js | unusedBytesLabel": {
+  "treemap/app/src/util.js | unusedBytesLabel": {
     "message": "‏‮Unused‬‏ ‏‮Bytes‬‏"
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
