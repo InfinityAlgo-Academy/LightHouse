@@ -499,4 +499,45 @@ describe('CategoryRenderer', () => {
       assert.ok(shouldBeWarning[0].textContent.includes(passingWarning));
     });
   });
+
+  it('renders audits by weight', () => {
+    const defaultAuditRef = {
+      title: '',
+      description: '',
+      scoreDisplayMode: 'numeric',
+      score: 0,
+      warnings: [],
+    };
+    const category = {
+      id: 'test',
+      title: 'Test',
+      score: 0,
+      auditRefs: [{
+        id: 'audit-1',
+        weight: 0,
+        result: {
+          id: 'audit-1',
+          ...defaultAuditRef,
+        },
+      }, {
+        id: 'audit-2',
+        weight: 1,
+        result: {
+          id: 'audit-2',
+          ...defaultAuditRef,
+        },
+      }, {
+        id: 'audit-3',
+        weight: 0.5,
+        result: {
+          id: 'audit-3',
+          ...defaultAuditRef,
+        },
+      }],
+    };
+    const categoryDOM = renderer.render(category);
+
+    const auditEls = [...categoryDOM.querySelectorAll('.lh-audit')];
+    expect(auditEls.map(el => el.id)).toEqual(['audit-2', 'audit-3', 'audit-1']);
+  });
 });

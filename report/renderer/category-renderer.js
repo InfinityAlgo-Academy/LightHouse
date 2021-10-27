@@ -532,6 +532,13 @@ export class CategoryRenderer {
       clumps.set(clumpId, clump);
     }
 
+    // Sort audits by weight.
+    for (const auditRefs of clumps.values()) {
+      auditRefs.sort((a, b) => {
+        return b.weight - a.weight;
+      });
+    }
+
     // Render each clump.
     for (const [clumpId, auditRefs] of clumps) {
       if (auditRefs.length === 0) continue;
