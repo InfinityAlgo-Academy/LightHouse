@@ -23,7 +23,7 @@ describe('inline-fs', () => {
   });
 
   afterAll(() => {
-    fs.unlinkSync(tmpPath);
+    fs.rmSync(tmpDir, {recursive: true, force: true});
   });
 
   describe('supported syntax', () => {
@@ -46,27 +46,41 @@ describe('inline-fs', () => {
     });
 
     it('evaluates an fs.readFileSync call and inlines the contents', async () => {
-      fs.writeFileSync(tmpPath, 'template literal text content');
+      fs.writeFileSync(tmpPath, 'some text content');
 
       const content = `const myTextContent = fs.readFileSync('${tmpPath}', 'utf8');`;
       const result = await inlineFs(content, filepath);
       expect(result).toEqual({
-        code: `const myTextContent = "template literal text content";`,
+        code: `const myTextContent = "some text content";`,
         warnings: [],
       });
     });
 
-    it('warns and skips unsupported construct but inlines subsequent fs method calls', async () => {
-      fs.writeFileSync(tmpPath, 'template literal text content');
-
+    it('gives a warning and skips invalid syntax in fs call', async () => {
+      // Use `\\` as syntax that will never be valid.
       // eslint-disable-next-line max-len
-      const content = `const myContent = fs.readFileSync(filePathVar, 'utf8');\nconst replacedContent = fs.readFileSync('${tmpPath}', 'utf8');`;
+      const content = `const firstThing = 5;\nconst myContent = fs.readFileSync(\\filePathVar, 'utf8');`;
       const result = await inlineFs(content, filepath);
       expect(result).toEqual({
-        // eslint-disable-next-line max-len
-        code: `const myContent = fs.readFileSync(filePathVar, 'utf8');\nconst replacedContent = "template literal text content";`,
+        code: null,
         warnings: [{
-          text: `unsupported node: Identifier`,
+          text: 'Expecting Unicode escape sequence \\uXXXX (2:35)',
+          location: {
+            file: filepath,
+            line: 2,
+            column: 35,
+          },
+        }],
+      });
+    });
+
+    it('gives a warning and skips unrecognized identifiers', async () => {
+      const content = `const myContent = fs.readFileSync(filePathVar, 'utf8');`;
+      const result = await inlineFs(content, filepath);
+      expect(result).toEqual({
+        code: null,
+        warnings: [{
+          text: `unsupported identifier 'filePathVar'`,
           location: {
             file: filepath,
             line: 1,
@@ -76,17 +90,148 @@ describe('inline-fs', () => {
       });
     });
 
-    // TODO: this will work
-    it('skips `__dirname`', async () => {
-      fs.writeFileSync(tmpPath, '__dirname text content');
+    it('gives a warning and skips unsupported expressions inside arguments', async () => {
+      const content = `const myContent = fs.readFileSync(function() {return 'path/'}, 'utf8');`;
+      const result = await inlineFs(content, filepath);
+      expect(result).toEqual({
+        code: null,
+        warnings: [{
+          text: `unsupported node: FunctionExpression`,
+          location: {
+            file: filepath,
+            line: 1,
+            column: 34,
+          },
+        }],
+      });
+    });
+
+    it('warns and skips unsupported constructs but inlines subsequent fs methods', async () => {
+      fs.writeFileSync(tmpPath, 'secondary text content');
+
+      // eslint-disable-next-line max-len
+      const content = `const myContent = fs.readFileSync(filePathVar, 'utf8');\nconst replacedContent = fs.readFileSync('${tmpPath}', 'utf8');`;
+      const result = await inlineFs(content, filepath);
+      expect(result).toEqual({
+        // eslint-disable-next-line max-len
+        code: `const myContent = fs.readFileSync(filePathVar, 'utf8');\nconst replacedContent = "secondary text content";`,
+        warnings: [{
+          text: `unsupported identifier 'filePathVar'`,
+          location: {
+            file: filepath,
+            line: 1,
+            column: 34,
+          },
+        }],
+      });
+    });
+
+    it('substitutes `__dirname`', async () => {
+      fs.writeFileSync(tmpPath, 'dirname text content');
 
       const dirnamePath = `__dirname + '/../.tmp/inline-fs/test.txt'`;
       const content = `const myTextContent = fs.readFileSync(${dirnamePath}, 'utf8');`;
       const result = await inlineFs(content, filepath);
       expect(result).toEqual({
+        code: `const myTextContent = "dirname text content";`,
+        warnings: [],
+      });
+    });
+
+    it('runs `require.resolve`', async () => {
+      // eslint-disable-next-line max-len
+      const content = `const myTextContent = fs.readFileSync(require.resolve('axe-core/README.md'), 'utf8');`;
+      const result = await inlineFs(content, filepath);
+
+      const axeReadme = fs.readFileSync(require.resolve('axe-core/README.md'), 'utf8');
+      expect(axeReadme.length).toBeGreaterThan(500);
+      expect(result).toEqual({
+        code: `const myTextContent = ${JSON.stringify(axeReadme)};`,
+        warnings: [],
+      });
+    });
+
+    it('concats strings', async () => {
+      fs.writeFileSync(tmpPath, 'concat text content');
+
+      const concatPath = `__dirname + '/../' + '.tmp/inline-fs/test.txt'`;
+      const content = `const myTextContent = fs.readFileSync(${concatPath}, 'utf8');`;
+      const result = await inlineFs(content, filepath);
+      expect(result).toEqual({
+        code: `const myTextContent = "concat text content";`,
+        warnings: [],
+      });
+    });
+
+    it('evaluates template literals', async () => {
+      fs.writeFileSync(tmpPath, 'template literal text content');
+
+      const templatePath = '`${__dirname}/../.tmp/${"inline-fs"}/test.txt`';
+      const content = `const myTextContent = fs.readFileSync(${templatePath}, 'utf8');`;
+      const result = await inlineFs(content, filepath);
+      expect(result).toEqual({
+        code: `const myTextContent = "template literal text content";`,
+        warnings: [],
+      });
+    });
+
+    it('evaluates expressions in template literals', async () => {
+      fs.writeFileSync(tmpPath, 'more template literal text content');
+
+      const templatePath = `\`\${__dirname}/\${path.relative(__dirname, '${tmpPath}')}\``;
+      const content = `const myTextContent = fs.readFileSync(${templatePath}, 'utf8');`;
+      const result = await inlineFs(content, filepath);
+      expect(result).toEqual({
+        code: `const myTextContent = "more template literal text content";`,
+        warnings: [],
+      });
+    });
+
+    it('evaluates expressions in `require.resolve` calls', async () => {
+      // eslint-disable-next-line max-len
+      const content = `const myTextContent = fs.readFileSync(require.resolve('axe-core' + \`/READ${'ME'}.md\`), 'utf8');`;
+      const result = await inlineFs(content, filepath);
+
+      const axeReadme = fs.readFileSync(require.resolve('axe-core/README.md'), 'utf8');
+      expect(axeReadme.length).toBeGreaterThan(500);
+      expect(result).toEqual({
+        code: `const myTextContent = ${JSON.stringify(axeReadme)};`,
+        warnings: [],
+      });
+    });
+
+    it('evaluates path methods', async () => {
+      fs.writeFileSync(tmpPath, 'path method text content');
+
+      const pathExpr = `path.dirname('${tmpPath}') + '/' + path.basename('${tmpPath}')`;
+      const content = `const myTextContent = fs.readFileSync(${pathExpr}, 'utf8');`;
+      const result = await inlineFs(content, filepath);
+      expect(result).toEqual({
+        code: `const myTextContent = "path method text content";`,
+        warnings: [],
+      });
+    });
+
+    it('substitutes `__filename`', async () => {
+      fs.writeFileSync(tmpPath, 'filename text content');
+
+      const constructedPath = `path.dirname(__filename) + '/../.tmp/inline-fs/test.txt'`;
+      const content = `const myTextContent = fs.readFileSync(${constructedPath}, 'utf8');`;
+      const result = await inlineFs(content, filepath);
+      expect(result).toEqual({
+        code: `const myTextContent = "filename text content";`,
+        warnings: [],
+      });
+    });
+
+    it('warns and skips on unsupported path methods', async () => {
+      // eslint-disable-next-line max-len
+      const content = `const myTextContent = fs.readFileSync(path.isAbsolute('${tmpPath}'), 'utf8');`;
+      const result = await inlineFs(content, filepath);
+      expect(result).toEqual({
         code: null,
         warnings: [{
-          text: `unsupported node: BinaryExpression`,
+          text: `'path.isAbsolute' is not supported with 'fs' function calls`,
           location: {
             file: filepath,
             line: 1,
@@ -109,12 +254,43 @@ describe('inline-fs', () => {
 
       it('inlines multiple fs.readFileSync calls', async () => {
         fs.writeFileSync(tmpPath, 'some text content');
-        // const content = `fs.readFileSync('${tmpPath}', 'utf8')fs.readFileSync(require.resolve('${tmpPath}'), 'utf8')`;
         // eslint-disable-next-line max-len
-        const content = `fs.readFileSync('${tmpPath}', 'utf8')fs.readFileSync('${tmpPath}', 'utf8')`;
+        const content = `fs.readFileSync('${tmpPath}', 'utf8')fs.readFileSync(require.resolve('${tmpPath}'), 'utf8')`;
         const result = await inlineFs(content, filepath);
         expect(result).toEqual({
           code: `"some text content""some text content"`,
+          warnings: [],
+        });
+      });
+
+      it('warns and skips on nested fs.readFileSync calls', async () => {
+        fs.writeFileSync(tmpPath, filepath);
+        // eslint-disable-next-line max-len
+        const content = `const myTextContent = fs.readFileSync(fs.readFileSync('${tmpPath}', 'utf8'), 'utf8');`;
+        const result = await inlineFs(content, filepath);
+        expect(result).toEqual({
+          code: `const myTextContent = fs.readFileSync("${filepath}", 'utf8');`,
+          warnings: [{
+            // eslint-disable-next-line max-len
+            text: 'only `require.resolve()` and `path` methods are supported as arguments to `fs` function calls',
+            location: {
+              file: filepath,
+              line: 1,
+              column: 38,
+            },
+          }],
+        });
+      });
+
+      it('executes nested path methods to determine the file to read', async () => {
+        const fileContents = 'some tricky-to-get text content';
+        fs.writeFileSync(tmpPath, fileContents);
+
+        // eslint-disable-next-line max-len
+        const content = `const myTextContent = fs.readFileSync(path.join(path.dirname('${tmpPath}'), path.basename('${tmpPath}')), 'utf8');`;
+        const result = await inlineFs(content, filepath);
+        expect(result).toEqual({
+          code: `const myTextContent = "${fileContents}";`,
           warnings: [],
         });
       });
@@ -186,6 +362,18 @@ describe('inline-fs', () => {
       });
 
       it('handles methods chained on fs.readdirSync result', async () => {
+        fs.writeFileSync(tmpPath, 'text');
+        // eslint-disable-next-line max-len
+        const content = `const files = fs.readdirSync('${tmpDir}').map(f => \`metrics/\${f}\`)`;
+        const result = await inlineFs(content, filepath);
+        // eslint-disable-next-line max-len
+        expect(result).toEqual({
+          code: 'const files = ["test.txt"].map(f => `metrics/${f}`)',
+          warnings: [],
+        });
+      });
+
+      it('handles mapped and spread fs.readdirSync results', async () => {
         fs.writeFileSync(tmpPath, 'text');
         // eslint-disable-next-line max-len
         const content = `const files = [...fs.readdirSync('${tmpDir}'), ...fs.readdirSync('${tmpDir}').map(f => \`metrics/\${f}\`)]`;
