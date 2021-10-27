@@ -55,6 +55,7 @@ function generateImage({
     src,
     clientRect,
     loading,
+    node: {devtoolsNodePath: '1,HTML,1,IMG'},
     ...networkRecord,
     ...size,
   };

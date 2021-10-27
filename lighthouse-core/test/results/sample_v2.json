@@ -890,8 +890,8 @@
         "type": "table",
         "headings": [
           {
-            "key": "url",
-            "itemType": "thumbnail",
+            "key": "node",
+            "itemType": "node",
             "text": ""
           },
           {
@@ -913,6 +913,22 @@
         "items": [
           {
             "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg?iar1",
+            "node": {
+              "type": "node",
+              "lhId": "page-0-IMG",
+              "path": "3,HTML,1,BODY,14,IMG",
+              "selector": "body > img",
+              "boundingRect": {
+                "top": 639,
+                "bottom": 654,
+                "left": 8,
+                "right": 128,
+                "width": 120,
+                "height": 15
+              },
+              "snippet": "<img src=\"lighthouse-480x318.jpg?iar1\" width=\"120\" height=\"15\">",
+              "nodeLabel": "body > img"
+            },
             "displayedAspectRatio": "120 x 15\n        (8.00)",
             "actualAspectRatio": "480 x 318\n        (1.51)",
             "doRatiosMatch": false
@@ -930,8 +946,8 @@
         "type": "table",
         "headings": [
           {
-            "key": "url",
-            "itemType": "thumbnail",
+            "key": "node",
+            "itemType": "node",
             "text": ""
           },
           {
@@ -958,6 +974,22 @@
         "items": [
           {
             "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg?isr1",
+            "node": {
+              "type": "node",
+              "lhId": "page-2-IMG",
+              "path": "3,HTML,1,BODY,19,IMG",
+              "selector": "body > img",
+              "boundingRect": {
+                "top": 574,
+                "bottom": 814,
+                "left": 252,
+                "right": 612,
+                "width": 360,
+                "height": 240
+              },
+              "snippet": "<img src=\"lighthouse-480x318.jpg?isr1\" width=\"360\" height=\"240\" style=\"position: absolute;\">",
+              "nodeLabel": "body > img"
+            },
             "elidedUrl": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg?isr1",
             "displayedSize": "360 x 240",
             "actualSize": "480 x 318",
@@ -2452,19 +2484,14 @@
         "type": "table",
         "headings": [
           {
-            "key": "url",
-            "itemType": "thumbnail",
+            "key": "node",
+            "itemType": "node",
             "text": ""
           },
           {
             "key": "url",
             "itemType": "url",
             "text": "URL"
-          },
-          {
-            "key": "node",
-            "itemType": "node",
-            "text": "Failing Elements"
           }
         ],
         "items": [
@@ -4635,8 +4662,8 @@
         "type": "opportunity",
         "headings": [
           {
-            "key": "url",
-            "valueType": "thumbnail",
+            "key": "node",
+            "valueType": "node",
             "label": ""
           },
           {
@@ -4657,6 +4684,22 @@
         ],
         "items": [
           {
+            "node": {
+              "type": "node",
+              "lhId": "page-0-IMG",
+              "path": "3,HTML,1,BODY,14,IMG",
+              "selector": "body > img",
+              "boundingRect": {
+                "top": 639,
+                "bottom": 654,
+                "left": 8,
+                "right": 128,
+                "width": 120,
+                "height": 15
+              },
+              "snippet": "<img src=\"lighthouse-480x318.jpg?iar1\" width=\"120\" height=\"15\">",
+              "nodeLabel": "body > img"
+            },
             "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg?iar1",
             "fromProtocol": true,
             "isCrossOrigin": false,
@@ -4665,6 +4708,22 @@
             "wastedWebpBytes": 9002
           },
           {
+            "node": {
+              "type": "node",
+              "lhId": "page-2-IMG",
+              "path": "3,HTML,1,BODY,19,IMG",
+              "selector": "body > img",
+              "boundingRect": {
+                "top": 574,
+                "bottom": 814,
+                "left": 252,
+                "right": 612,
+                "width": 360,
+                "height": 240
+              },
+              "snippet": "<img src=\"lighthouse-480x318.jpg?isr1\" width=\"360\" height=\"240\" style=\"position: absolute;\">",
+              "nodeLabel": "body > img"
+            },
             "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg?isr1",
             "fromProtocol": true,
             "isCrossOrigin": false,
@@ -4673,6 +4732,22 @@
             "wastedWebpBytes": 9002
           },
           {
+            "node": {
+              "type": "node",
+              "lhId": "page-3-IMG",
+              "path": "3,HTML,1,BODY,21,IMG",
+              "selector": "body > img",
+              "boundingRect": {
+                "top": 574,
+                "bottom": 654,
+                "left": 252,
+                "right": 372,
+                "width": 120,
+                "height": 80
+              },
+              "snippet": "<img src=\"lighthouse-480x318.jpg?isr2\" width=\"120\" height=\"80\" style=\"position: absolute;\">",
+              "nodeLabel": "body > img"
+            },
             "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg?isr2",
             "fromProtocol": true,
             "isCrossOrigin": false,
@@ -4681,6 +4756,22 @@
             "wastedWebpBytes": 9002
           },
           {
+            "node": {
+              "type": "node",
+              "lhId": "page-4-IMG",
+              "path": "3,HTML,1,BODY,23,IMG",
+              "selector": "body > img",
+              "boundingRect": {
+                "top": 574,
+                "bottom": 814,
+                "left": 252,
+                "right": 612,
+                "width": 360,
+                "height": 240
+              },
+              "snippet": "<img src=\"lighthouse-480x318.jpg?isr3\" width=\"360\" height=\"240\" style=\"image-rendering: pixelated; position: absolute;\">",
+              "nodeLabel": "body > img"
+            },
             "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg?isr3",
             "fromProtocol": true,
             "isCrossOrigin": false,
@@ -4689,6 +4780,22 @@
             "wastedWebpBytes": 9002
           },
           {
+            "node": {
+              "type": "node",
+              "lhId": "page-5-IMG",
+              "path": "3,HTML,1,BODY,25,IMG",
+              "selector": "body > img",
+              "boundingRect": {
+                "top": 574,
+                "bottom": 814,
+                "left": 252,
+                "right": 612,
+                "width": 360,
+                "height": 240
+              },
+              "snippet": "<img src=\"http://localhost:10200/dobetterweb/lighthouse-480x318.jpg\" srcset=\"lighthouse-480x318.jpg 2x\" width=\"360\" height=\"240\" style=\"position: absolute;\">",
+              "nodeLabel": "body > img"
+            },
             "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg",
             "fromProtocol": true,
             "isCrossOrigin": false,
@@ -4697,6 +4804,22 @@
             "wastedWebpBytes": 9002
           },
           {
+            "node": {
+              "type": "node",
+              "lhId": "page-1-IMG",
+              "path": "3,HTML,1,BODY,17,IMG",
+              "selector": "body > img",
+              "boundingRect": {
+                "top": 574,
+                "bottom": 654,
+                "left": 132,
+                "right": 252,
+                "width": 120,
+                "height": 80
+              },
+              "snippet": "<img loading=\"lazy\" src=\"lighthouse-480x318.jpg?iar2\" width=\"120\" height=\"80\">",
+              "nodeLabel": "body > img"
+            },
             "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg?iar2",
             "fromProtocol": true,
             "isCrossOrigin": false,
@@ -4784,8 +4907,8 @@
         "type": "opportunity",
         "headings": [
           {
-            "key": "url",
-            "valueType": "thumbnail",
+            "key": "node",
+            "valueType": "node",
             "label": ""
           },
           {
@@ -4806,18 +4929,66 @@
         ],
         "items": [
           {
+            "node": {
+              "type": "node",
+              "lhId": "page-0-IMG",
+              "path": "3,HTML,1,BODY,14,IMG",
+              "selector": "body > img",
+              "boundingRect": {
+                "top": 639,
+                "bottom": 654,
+                "left": 8,
+                "right": 128,
+                "width": 120,
+                "height": 15
+              },
+              "snippet": "<img src=\"lighthouse-480x318.jpg?iar1\" width=\"120\" height=\"15\">",
+              "nodeLabel": "body > img"
+            },
             "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg?iar1",
             "totalBytes": 24620,
             "wastedBytes": 22619,
             "wastedPercent": 91.87426297169812
           },
           {
+            "node": {
+              "type": "node",
+              "lhId": "page-1-IMG",
+              "path": "3,HTML,1,BODY,17,IMG",
+              "selector": "body > img",
+              "boundingRect": {
+                "top": 574,
+                "bottom": 654,
+                "left": 132,
+                "right": 252,
+                "width": 120,
+                "height": 80
+              },
+              "snippet": "<img loading=\"lazy\" src=\"lighthouse-480x318.jpg?iar2\" width=\"120\" height=\"80\">",
+              "nodeLabel": "body > img"
+            },
             "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg?iar2",
             "totalBytes": 24620,
             "wastedBytes": 13950,
             "wastedPercent": 56.66273584905661
           },
           {
+            "node": {
+              "type": "node",
+              "lhId": "page-3-IMG",
+              "path": "3,HTML,1,BODY,21,IMG",
+              "selector": "body > img",
+              "boundingRect": {
+                "top": 574,
+                "bottom": 654,
+                "left": 252,
+                "right": 372,
+                "width": 120,
+                "height": 80
+              },
+              "snippet": "<img src=\"lighthouse-480x318.jpg?isr2\" width=\"120\" height=\"80\" style=\"position: absolute;\">",
+              "nodeLabel": "body > img"
+            },
             "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg?isr2",
             "totalBytes": 24620,
             "wastedBytes": 13950,
@@ -8739,15 +8910,6 @@
       "lighthouse-core/audits/unsized-images.js | description": [
         "audits[unsized-images].description"
       ],
-      "lighthouse-core/lib/i18n/i18n.js | columnFailingElem": [
-        "audits[unsized-images].details.headings[2].text",
-        "audits[html-has-lang].details.headings[0].text",
-        "audits[image-alt].details.headings[0].text",
-        "audits.label.details.headings[0].text",
-        "audits[link-name].details.headings[0].text",
-        "audits[object-alt].details.headings[0].text",
-        "audits[password-inputs-can-be-pasted-into].details.headings[0].text"
-      ],
       "lighthouse-core/audits/valid-source-maps.js | title": [
         "audits[valid-source-maps].title"
       ],
@@ -8969,6 +9131,14 @@
       ],
       "lighthouse-core/audits/accessibility/html-has-lang.js | description": [
         "audits[html-has-lang].description"
+      ],
+      "lighthouse-core/lib/i18n/i18n.js | columnFailingElem": [
+        "audits[html-has-lang].details.headings[0].text",
+        "audits[image-alt].details.headings[0].text",
+        "audits.label.details.headings[0].text",
+        "audits[link-name].details.headings[0].text",
+        "audits[object-alt].details.headings[0].text",
+        "audits[password-inputs-can-be-pasted-into].details.headings[0].text"
       ],
       "lighthouse-core/audits/accessibility/html-lang-valid.js | title": [
         "audits[html-lang-valid].title"

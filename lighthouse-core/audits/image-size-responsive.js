@@ -45,7 +45,7 @@ const LARGE_IMAGE_FACTOR = 0.75;
 // considered SMALL.
 const SMALL_IMAGE_THRESHOLD = 64;
 
-/** @typedef {{url: string, elidedUrl: string, displayedSize: string, actualSize: string, actualPixels: number, expectedSize: string, expectedPixels: number}} Result */
+/** @typedef {{url: string, node: LH.Audit.Details.NodeValue, elidedUrl: string, displayedSize: string, actualSize: string, actualPixels: number, expectedSize: string, expectedPixels: number}} Result */
 
 /**
  * @param {{top: number, bottom: number, left: number, right: number}} imageRect
@@ -147,6 +147,7 @@ function getResult(image, DPR) {
       expectedImageSize(image.displayedWidth, image.displayedHeight, DPR);
   return {
     url: image.src,
+    node: Audit.makeNodeItem(image.node),
     elidedUrl: URL.elideDataURI(image.src),
     displayedSize: `${image.displayedWidth} x ${image.displayedHeight}`,
     actualSize: `${image.naturalDimensions.width} x ${image.naturalDimensions.height}`,
@@ -263,7 +264,7 @@ class ImageSizeResponsive extends Audit {
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
-      {key: 'url', itemType: 'thumbnail', text: ''},
+      {key: 'node', itemType: 'node', text: ''},
       {key: 'elidedUrl', itemType: 'url', text: str_(i18n.UIStrings.columnURL)},
       {key: 'displayedSize', itemType: 'text', text: str_(UIStrings.columnDisplayed)},
       {key: 'actualSize', itemType: 'text', text: str_(UIStrings.columnActual)},
