@@ -18,11 +18,11 @@ describe('inline-fs', () => {
   const tmpPath = `${LH_ROOT}/.tmp/inline-fs/test.txt`;
   const tmpDir = path.dirname(tmpPath);
 
-  beforeAll(() => {
+  beforeEach(() => {
     fs.mkdirSync(tmpDir, {recursive: true});
   });
 
-  afterAll(() => {
+  afterEach(() => {
     fs.rmSync(tmpDir, {recursive: true, force: true});
   });
 
@@ -346,6 +346,31 @@ describe('inline-fs', () => {
             },
           }],
         });
+      });
+
+      it('minifies inlined javascript files', async () => {
+        const jsPath = `${tmpDir}/test.js`;
+        // Completion value of `3` when evaluated.
+        const jsContent = 'function add(a, b) {\nconst unused = a * b;return a + b;\n}\nadd(1, 2);';
+        fs.writeFileSync(jsPath, jsContent);
+
+        // When evaluated, `content` sets `sum` to 3 and returns it, also completing with `3`.
+        const content = `const sum = eval(fs.readFileSync('${jsPath}', 'utf8')); sum;`;
+        const unminifiedResult = `const sum = eval("${jsContent}"); sum;`;
+
+        // Verify that it's inlined and result is smaller than `unminifiedResult`.
+        const {code, warnings} = await inlineFs(content, filepath);
+        if (code === null) {
+          throw new Error('js was not inlined by readFileSync');
+        }
+        expect(code.length).toBeGreaterThan(40);
+        expect(code.length).toBeLessThan(unminifiedResult.length - 20);
+        expect(warnings).toEqual([]);
+
+        // Verify that minification was valid. End result should be something like:
+        // `const sum = eval('function add(a,b){return a+b}add(1,2);')sum;`
+        const evaledResult = eval(code);
+        expect(evaledResult).toEqual(3);
       });
     });
 

@@ -12,6 +12,7 @@ const path = require('path');
 const acorn = require('acorn');
 const MagicString = require('magic-string').default;
 const resolve = require('resolve');
+const terser = require('terser');
 
 // ESTree provides much better types for AST nodes. See https://github.com/acornjs/acorn/issues/946
 /** @typedef {import('estree').Node} Node */
@@ -195,9 +196,15 @@ async function getReadFileReplacement(node, filepath) {
     throw new AstError('only utf8 readFileSync is supported', node.arguments[1]);
   }
 
-  const readContent = await fs.promises.readFile(constructedPath, 'utf8');
+  let readContent = await fs.promises.readFile(constructedPath, 'utf8');
 
-  // TODO(bckenny): minify inlined javascript.
+  // Minify inlined javascript.
+  if (constructedPath.endsWith('.js')) {
+    const result = await terser.minify({[constructedPath]: readContent}, {ecma: 2019});
+    if (result.code) {
+      readContent = result.code;
+    }
+  }
 
   // Escape quotes, new lines, etc so inlined string doesn't break host file.
   return JSON.stringify(readContent);
