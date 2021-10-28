@@ -9,7 +9,7 @@ import {act, render} from '@testing-library/preact';
 
 import {FlowStepThumbnail} from '../src/common';
 
-let lhr: LH.ReportResult;
+let lhr: LH.Result;
 
 jest.useFakeTimers();
 
@@ -33,7 +33,7 @@ describe('FlowStepThumbnail', () => {
   });
 
   it('renders a thumbnail', () => {
-    const root = render(<FlowStepThumbnail reportResult={lhr} width={200} height={200} />);
+    const root = render(<FlowStepThumbnail lhr={lhr} width={200} height={200} />);
 
     const thumbnail = root.getByAltText(/Screenshot/);
     expect(thumbnail.style.width).toEqual('200px');
@@ -41,14 +41,14 @@ describe('FlowStepThumbnail', () => {
   });
 
   it('renders nothing without dimensions', () => {
-    const root = render(<FlowStepThumbnail reportResult={lhr} />);
+    const root = render(<FlowStepThumbnail lhr={lhr} />);
 
     expect(() => root.getByAltText(/Screenshot/)).toThrow();
     expect(global.console.warn).toHaveBeenCalled();
   });
 
   it('interpolates height', () => {
-    const root = render(<FlowStepThumbnail reportResult={lhr} width={200} />);
+    const root = render(<FlowStepThumbnail lhr={lhr} width={200} />);
 
     const thumbnail = root.getByAltText(/Screenshot/);
     expect(thumbnail.style.width).toEqual('200px');
@@ -56,7 +56,7 @@ describe('FlowStepThumbnail', () => {
   });
 
   it('interpolates width', () => {
-    const root = render(<FlowStepThumbnail reportResult={lhr} height={150} />);
+    const root = render(<FlowStepThumbnail lhr={lhr} height={150} />);
 
     const thumbnail = root.getByAltText(/Screenshot/);
     expect(thumbnail.style.width).toEqual('100px');
@@ -74,7 +74,7 @@ describe('FlowStepThumbnail', () => {
         ],
       },
     } as any;
-    const root = render(<FlowStepThumbnail reportResult={lhr} height={150} />);
+    const root = render(<FlowStepThumbnail lhr={lhr} height={150} />);
 
     const thumbnail = root.getByAltText(/Animated/) as HTMLImageElement;
     expect(thumbnail.style.width).toEqual('100px');
