@@ -104,7 +104,7 @@
     "@types/chrome": "^0.0.154",
     "@types/configstore": "^4.0.0",
     "@types/cpy": "^5.1.0",
-    "@types/eslint": "^4.16.6",
+    "@types/eslint": "^7.23.0",
     "@types/estree": "^0.0.50",
     "@types/exorcist": "^0.4.5",
     "@types/gh-pages": "^2.0.0",
