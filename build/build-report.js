@@ -59,6 +59,7 @@ async function buildFlowReport() {
   const bundle = await rollup.rollup({
     input: 'flow-report/standalone-flow.tsx',
     plugins: [
+      rollupPlugins.inlineFs({verbose: true}),
       rollupPlugins.replace({
         '__dirname': '""',
       }),
