@@ -5,18 +5,11 @@
  */
 'use strict';
 
-const fs = require('fs');
 const browserify = require('browserify');
 const rollupPlugins = require('./rollup-plugins.js');
 const GhPagesApp = require('./gh-pages-app.js');
-const {minifyFileTransform} = require('./build-utils.js');
 const {LH_ROOT} = require('../root.js');
-
-const localeBasenames = fs.readdirSync(LH_ROOT + '/shared/localization/locales/');
-const actualLocales = localeBasenames
-  .filter(basename => basename.endsWith('.json') && !basename.endsWith('.ctc.json'))
-  .map(locale => locale.replace('.json', ''))
-  .sort();
+const inlineFs = require('./plugins/browserify-inline-fs.js');
 
 /**
  * Build viewer, optionally deploying to gh-pages if `--deploy` flag was set.
@@ -27,9 +20,8 @@ async function run() {
   const generatorBrowserify = browserify(generatorFilename, {standalone: 'ReportGenerator'})
     // Flow report is not used in report viewer, so don't include flow assets.
     .ignore(require.resolve('../report/generator/flow-report-assets.js'))
-    .transform('@wardpeet/brfs', {
-      readFileTransform: minifyFileTransform,
-    });
+    // Transform `fs.readFileSync`, etc into inline strings.
+    .transform(inlineFs({verbose: Boolean(process.env.DEBUG)}));
 
   /** @type {Promise<string>} */
   const generatorJsPromise = new Promise((resolve, reject) => {
@@ -50,21 +42,14 @@ async function run() {
       await generatorJsPromise,
       {path: require.resolve('pako/dist/pako_inflate.js')},
       {path: 'src/main.js', rollup: true, rollupPlugins: [
-        rollupPlugins.replace({
-          // Default delimiters are word boundraries. Setting them to nothing (empty strings)
-          // makes this plugin replace any subtring found.
-          delimiters: ['', ''],
-          values: {
-            '[\'__availableLocales__\']': JSON.stringify(actualLocales),
-          },
+        rollupPlugins.shim({
+          './locales.js': 'export default {}',
         }),
+        rollupPlugins.inlineFs({verbose: Boolean(process.env.DEBUG)}),
         rollupPlugins.replace({
           values: {
             '__dirname': '""',
           },
-        }),
-        rollupPlugins.shim({
-          './locales.js': 'export default {}',
         }),
         rollupPlugins.commonjs(),
         rollupPlugins.nodePolyfills(),
