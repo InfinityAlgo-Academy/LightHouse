@@ -12,6 +12,7 @@ coverage/**
 
 lighthouse-core/lib/cdt/generated/SourceMap.js
 lighthouse-core/scripts/legacy-javascript/variants
+report/renderer/components.js
 
 third-party/**
 

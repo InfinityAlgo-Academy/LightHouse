@@ -15,8 +15,6 @@
 
 const fs = require('fs');
 const jsdom = require('jsdom');
-const shell = require('child_process').execSync;
-
 const {LH_ROOT} = require('../root.js');
 
 const html = fs.readFileSync(LH_ROOT + '/report/assets/templates.html', 'utf-8');
@@ -215,31 +213,7 @@ ${compiledTemplates.map(t => t.functionCode).join('\n')}
 ${makeGenericCreateComponentFunctionCode(compiledTemplates)}
 `;
 
-  fs.writeFileSync(LH_ROOT + '/../.tmp/components.js', code);
-
-  // Reformat it.
-  const eslintCmd = `./node_modules/.bin/eslint
-  --no-eslintrc
-  --parser='@typescript-eslint/parser'
-  --parser-options=ecmaVersion:2019
-  --rule 'quotes: [2, single]'
-  --rule 'comma-spacing: 2'
-  --no-ignore
-  --fix
-  ${LH_ROOT + '/../.tmp/components.js'}`.replace(/\n/g, ' ');
-
-  shellOutput(eslintCmd);
-  const cpCmd =
-    `cp ${LH_ROOT + '/../.tmp/components.js'} ${LH_ROOT + '/report/renderer/components.js'}`;
-  shellOutput(cpCmd);
-}
-
-/**
- * @param {string} command
- */
-function shellOutput(command) {
-  console.log('cmd', command);
-  console.log(shell(command).toString().trim());
+  fs.writeFileSync(LH_ROOT + '/report/renderer/components.js', code);
 }
 
 if (require.main === module) {
