@@ -62,7 +62,7 @@ async function browserifyFile(entryPath, distPath) {
       file: require.resolve('./banner.txt'),
     })
     // Transform `fs.readFileSync`, etc into inline strings.
-    .transform(inlineFs({verbose: Boolean(process.env.DEBUG)}))
+    .transform(inlineFs({verbose: DEBUG}))
     // Strip everything out of package.json includes except for the version.
     .transform('package-json-versionify');
 

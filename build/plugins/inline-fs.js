@@ -14,6 +14,8 @@ const MagicString = require('magic-string').default;
 const resolve = require('resolve');
 const terser = require('terser');
 
+const {LH_ROOT} = require('../../root.js');
+
 // ESTree provides much better types for AST nodes. See https://github.com/acornjs/acorn/issues/946
 /** @typedef {import('estree').Node} Node */
 /** @typedef {import('estree').SimpleCallExpression} SimpleCallExpression */
@@ -280,6 +282,9 @@ function collapseToStringLiteral(node, filepath) {
         return path.dirname(filepath);
       } else if (node.name === '__filename') {
         return filepath;
+      } else if (node.name === 'LH_ROOT') {
+        // Note: hardcoded for LH. Could be be set via inline-fs options instead.
+        return LH_ROOT;
       }
       throw new AstError(`unsupported identifier '${node.name}'`, node);
     }

@@ -17,7 +17,7 @@ const DEFAULT_LOCALE = 'en-US';
 
 /**
  * The locale tags for the localized messages available to Lighthouse on disk.
- * When bundled, these will be inlined by brfs.
+ * When bundled, these will be inlined by `inline-fs`.
  * These locales are considered the "canonical" locales. We support other locales which
  * are simply aliases to one of these. ex: es-AR (alias) -> es-419 (canonical)
  */

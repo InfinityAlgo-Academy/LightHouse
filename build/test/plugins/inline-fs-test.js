@@ -241,6 +241,18 @@ describe('inline-fs', () => {
       });
     });
 
+    it('substitutes Lighthouse-specific LH_ROOT', async () => {
+      fs.writeFileSync(tmpPath, 'lh_root text content');
+
+      const constructedPath = '`${LH_ROOT}/.tmp/inline-fs/test.txt`';
+      const content = `const myRootRelativeContent = fs.readFileSync(${constructedPath}, 'utf8');`;
+      const result = await inlineFs(content, filepath);
+      expect(result).toEqual({
+        code: `const myRootRelativeContent = "lh_root text content";`,
+        warnings: [],
+      });
+    });
+
     describe('fs.readFileSync', () => {
       it('inlines content with quotes', async () => {
         fs.writeFileSync(tmpPath, `"quoted", and an unbalanced quote: "`);
