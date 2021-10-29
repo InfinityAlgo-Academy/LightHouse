@@ -951,7 +951,7 @@
             "text": ""
           },
           {
-            "key": "elidedUrl",
+            "key": "url",
             "itemType": "url",
             "text": "URL"
           },
@@ -990,7 +990,6 @@
               "snippet": "<img src=\"lighthouse-480x318.jpg?isr1\" width=\"360\" height=\"240\" style=\"position: absolute;\">",
               "nodeLabel": "body > img"
             },
-            "elidedUrl": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg?isr1",
             "displayedSize": "360 x 240",
             "actualSize": "480 x 318",
             "actualPixels": 152640,
