@@ -23,86 +23,96 @@ const blockAllExceptInlineScriptCsp = headersParam([[
 ]]);
 
 /**
- * @type {Array<Smokehouse.ExpectedRunnerResult>}
+ * @type {Smokehouse.ExpectedRunnerResult}
+ * Expectations of CSP results with a default Lighthouse run.
  */
-module.exports = [
-  {
-    artifacts: {
-      RobotsTxt: {
-        status: 404,
-        content: null,
-      },
-      InspectorIssues: {contentSecurityPolicy: []},
-      SourceMaps: [{
-        sourceMapUrl: 'http://localhost:10200/source-map/script.js.map',
-        map: {},
-        errorMessage: undefined,
-      }],
+const allowAll = {
+  artifacts: {
+    RobotsTxt: {
+      status: 200,
     },
-    lhr: {
-      requestedUrl: 'http://localhost:10200/csp.html',
-      finalUrl: 'http://localhost:10200/csp.html',
-      audits: {},
-    },
+    InspectorIssues: {contentSecurityPolicy: []},
+    SourceMaps: [{
+      sourceMapUrl: 'http://localhost:10200/source-map/script.js.map',
+      map: {},
+      errorMessage: undefined,
+    }],
   },
-  {
-    artifacts: {
-      _maxChromiumMilestone: 91,
-      RobotsTxt: {
-        status: null,
-        content: null,
-      },
-      InspectorIssues: {
-        contentSecurityPolicy: [
-          {
-            // https://github.com/GoogleChrome/lighthouse/issues/10225
-            //
-            // Fixed with new fetcher using M92.
-            blockedURL: 'http://localhost:10200/robots.txt',
-            violatedDirective: 'connect-src',
-            isReportOnly: false,
-            contentSecurityPolicyViolationType: 'kURLViolation',
-          },
-        ],
-      },
-      SourceMaps: [{
-        // Doesn't trigger a CSP violation because iframe is injected after InspectorIssues gatherer finishes.
-        // https://github.com/GoogleChrome/lighthouse/pull/12044#issuecomment-788274938
-        //
-        // Fixed with new fetcher using M92.
-        sourceMapUrl: 'http://localhost:10200/source-map/script.js.map',
-        errorMessage: 'Error: Timed out fetching resource.',
-        map: undefined,
-      }],
-    },
-    lhr: {
-      requestedUrl: 'http://localhost:10200/csp.html?' + blockAllExceptInlineScriptCsp,
-      finalUrl: 'http://localhost:10200/csp.html?' + blockAllExceptInlineScriptCsp,
-      audits: {},
-    },
+  lhr: {
+    requestedUrl: 'http://localhost:10200/csp.html',
+    finalUrl: 'http://localhost:10200/csp.html',
+    audits: {},
   },
-  {
-    // Same CSP as above, but verifies correct behavior for M92.
-    artifacts: {
-      _minChromiumMilestone: 92,
-      RobotsTxt: {
-        status: 404,
-        content: null,
-      },
-      InspectorIssues: {
-        contentSecurityPolicy: [
-        ],
-      },
-      SourceMaps: [{
-        sourceMapUrl: 'http://localhost:10200/source-map/script.js.map',
-        map: {},
-        errorMessage: undefined,
-      }],
+};
+
+/**
+ * @type {Smokehouse.ExpectedRunnerResult}
+ */
+const blockAllM91 = {
+  artifacts: {
+    _maxChromiumMilestone: 91,
+    RobotsTxt: {
+      status: null,
+      content: null,
     },
-    lhr: {
-      requestedUrl: 'http://localhost:10200/csp.html?' + blockAllExceptInlineScriptCsp,
-      finalUrl: 'http://localhost:10200/csp.html?' + blockAllExceptInlineScriptCsp,
-      audits: {},
+    InspectorIssues: {
+      contentSecurityPolicy: [
+        {
+          // https://github.com/GoogleChrome/lighthouse/issues/10225
+          //
+          // Fixed with new fetcher using M92.
+          blockedURL: 'http://localhost:10200/robots.txt',
+          violatedDirective: 'connect-src',
+          isReportOnly: false,
+          contentSecurityPolicyViolationType: 'kURLViolation',
+        },
+      ],
     },
+    SourceMaps: [{
+      // Doesn't trigger a CSP violation because iframe is injected after InspectorIssues gatherer finishes.
+      // https://github.com/GoogleChrome/lighthouse/pull/12044#issuecomment-788274938
+      //
+      // Fixed with new fetcher using M92.
+      sourceMapUrl: 'http://localhost:10200/source-map/script.js.map',
+      errorMessage: 'Error: Timed out fetching resource.',
+      map: undefined,
+    }],
   },
-];
+  lhr: {
+    requestedUrl: 'http://localhost:10200/csp.html?' + blockAllExceptInlineScriptCsp,
+    finalUrl: 'http://localhost:10200/csp.html?' + blockAllExceptInlineScriptCsp,
+    audits: {},
+  },
+};
+
+/**
+ * @type {Smokehouse.ExpectedRunnerResult}
+ */
+const blockAll = {
+  // Same CSP as above, but verifies correct behavior for M92.
+  artifacts: {
+    _minChromiumMilestone: 92,
+    RobotsTxt: {
+      status: 200,
+    },
+    InspectorIssues: {
+      contentSecurityPolicy: [],
+    },
+    SourceMaps: [{
+      sourceMapUrl: 'http://localhost:10200/source-map/script.js.map',
+      map: {},
+      errorMessage: undefined,
+    }],
+  },
+  lhr: {
+    requestedUrl: 'http://localhost:10200/csp.html?' + blockAllExceptInlineScriptCsp,
+    finalUrl: 'http://localhost:10200/csp.html?' + blockAllExceptInlineScriptCsp,
+    audits: {},
+  },
+};
+
+export {
+  allowAll,
+  blockAllM91,
+  blockAll,
+};

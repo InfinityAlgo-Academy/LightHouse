@@ -5,16 +5,20 @@
  */
 'use strict';
 
-const cli = require('../../lighthouse-cli/run.js');
-const cliFlags = require('../../lighthouse-cli/cli-flags.js');
-const assetSaver = require('../lib/asset-saver.js');
+import fs from 'fs';
+
+import * as cli from '../../lighthouse-cli/run.js';
+import * as cliFlags from '../../lighthouse-cli/cli-flags.js';
+import assetSaver from '../lib/asset-saver.js';
+import {server} from '../../lighthouse-cli/test/fixtures/static-server.js';
+import budgetedConfig from '../test/results/sample-config.js';
+import {LH_ROOT} from '../../root.js';
+
 const artifactPath = 'lighthouse-core/test/results/artifacts';
-
-const {server} = require('../../lighthouse-cli/test/fixtures/static-server.js');
-const budgetedConfig = require('../test/results/sample-config.js');
-
-// All artifacts must have resources from a consistent port, to ensure reproducibility. https://github.com/GoogleChrome/lighthouse/issues/11776
+// All artifacts must have resources from a consistent port, to ensure reproducibility.
+// https://github.com/GoogleChrome/lighthouse/issues/11776
 const MAGIC_SERVER_PORT = 10200;
+
 /**
  * Update the report artifacts. If artifactName is set only that artifact will be updated.
  * @param {keyof LH.Artifacts=} artifactName
@@ -45,6 +49,20 @@ async function update(artifactName) {
     finalArtifacts[artifactName] = newArtifact;
     await assetSaver.saveArtifacts(finalArtifacts, artifactPath);
   }
+
+  // Normalize some data.
+  const artifactsFile = `${LH_ROOT}/${artifactPath}/artifacts.json`;
+  /** @type {LH.Artifacts} */
+  const artifacts = JSON.parse(fs.readFileSync(artifactsFile, 'utf-8'));
+
+  for (const timing of artifacts.Timing) {
+    // @ts-expect-error: Value actually is writeable at this point.
+    timing.startTime = 0;
+    // @ts-expect-error: Value actually is writeable at this point.
+    timing.duration = 1;
+  }
+
+  fs.writeFileSync(artifactsFile, JSON.stringify(artifacts, null, 2));
 }
 
 update(/** @type {keyof LH.Artifacts | undefined} */ (process.argv[2]));

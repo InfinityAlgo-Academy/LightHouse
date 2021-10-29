@@ -8,7 +8,7 @@
 const helpers = require('../../../fraggle-rock/gather/runner-helpers.js');
 const Gatherer = require('../../../fraggle-rock/gather/base-gatherer.js');
 const {defaultSettings} = require('../../../config/constants.js');
-const {createMockDriver, createMockGathererInstance} = require('./mock-driver.js');
+const {createMockDriver, createMockGathererInstance, createMockBaseArtifacts} = require('./mock-driver.js'); // eslint-disable-line max-len
 
 /* eslint-env jest */
 
@@ -92,6 +92,8 @@ describe('collectPhaseArtifacts', () => {
   let driver;
   /** @type {ReturnType<typeof createMockDriver>} */
   let mockDriver;
+  /** @type {LH.FRBaseArtifacts} */
+  let baseArtifacts;
 
   function createGathererSet() {
     const timespan = createMockGathererInstance({supportedModes: ['timespan', 'navigation']});
@@ -121,6 +123,7 @@ describe('collectPhaseArtifacts', () => {
       stopInstrumentation: {},
       getArtifact: {},
     };
+    baseArtifacts = createMockBaseArtifacts();
   });
 
   for (const phase_ of Object.keys(artifactState)) {
@@ -133,6 +136,7 @@ describe('collectPhaseArtifacts', () => {
           artifactDefinitions,
           artifactState,
           phase,
+          baseArtifacts,
           gatherMode: /** @type {any} */ (gatherMode),
           computedCache: new Map(),
           settings: defaultSettings,
@@ -157,6 +161,7 @@ describe('collectPhaseArtifacts', () => {
       artifactState,
       gatherMode: 'navigation',
       phase: 'getArtifact',
+      baseArtifacts,
       computedCache: new Map(),
       settings: defaultSettings,
     });
@@ -188,6 +193,7 @@ describe('collectPhaseArtifacts', () => {
       artifactState,
       gatherMode: 'navigation',
       phase: 'getArtifact',
+      baseArtifacts,
       computedCache: new Map(),
       settings: defaultSettings,
     });
@@ -220,6 +226,7 @@ describe('collectPhaseArtifacts', () => {
       artifactState,
       gatherMode: 'navigation',
       phase: 'getArtifact',
+      baseArtifacts,
       computedCache: new Map(),
       settings: defaultSettings,
     });

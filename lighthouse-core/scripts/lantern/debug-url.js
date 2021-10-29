@@ -8,18 +8,20 @@
 
 /* eslint-disable no-console */
 
-const path = require('path');
-const execFileSync = require('child_process').execFileSync;
-const constants = require('./constants.js');
+import path from 'path';
+import {execFileSync} from 'child_process';
+
+import constants from './constants.js';
+import {LH_ROOT, readJson} from '../../../root.js';
 
 const INPUT_URL = process.argv[2];
 if (!INPUT_URL) throw new Error('Usage $0: <url>');
 
 const SITE_INDEX_PATH = path.resolve(process.cwd(), constants.SITE_INDEX_WITH_GOLDEN_PATH);
 const SITE_INDEX_DIR = path.dirname(SITE_INDEX_PATH);
-const RUN_ONCE_PATH = path.join(__dirname, 'run-once.js');
+const RUN_ONCE_PATH = path.join(LH_ROOT, 'lighthouse-core/scripts/lantern/run-once.js');
 
-const siteIndex = require(SITE_INDEX_PATH);
+const siteIndex = readJson(SITE_INDEX_PATH);
 // @ts-expect-error - over-aggressive implicit any on site
 const site = siteIndex.sites.find(site => site.url === INPUT_URL);
 if (!site) throw new Error(`Could not find with site URL ${INPUT_URL}`);

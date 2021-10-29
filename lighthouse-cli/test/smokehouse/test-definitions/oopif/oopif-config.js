@@ -5,12 +5,19 @@
  */
 'use strict';
 
-/**
- * @type {LH.Config.Json}
- * Config file for running the OOPIF tests
- */
-module.exports = {
+/** @type {LH.Config.Json} */
+const config = {
   extends: 'lighthouse:default',
+  categories: {
+    performance: {
+      title: 'Performance',
+      auditRefs: [{id: 'oopif-iframe-test-audit', weight: 0}],
+    },
+  },
+  audits: [
+    // Include an audit that *forces* the IFrameElements artifact to be used for our test.
+    {path: 'oopif-iframe-test-audit'},
+  ],
   settings: {
     // This test runs in CI and hits the outside network of a live site.
     // Be a little more forgiving on how long it takes all network requests of several nested iframes
@@ -26,3 +33,5 @@ module.exports = {
     },
   ],
 };
+
+export default config;

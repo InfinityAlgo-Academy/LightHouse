@@ -114,11 +114,25 @@ class UnusedBytes extends Audit {
       devtoolsLog,
       settings,
     };
-
     const networkRecords = await NetworkRecords.request(devtoolsLog, context);
+    const hasContentfulRecords = networkRecords.some(record => record.transferSize);
+
+    // Requesting load simulator requires non-empty network records.
+    // Timespans are not guaranteed to have any network activity.
+    // There are no bytes to be saved if no bytes were downloaded, so mark N/A if empty.
+    if (!hasContentfulRecords && gatherContext.gatherMode === 'timespan') {
+      return {
+        score: 1,
+        notApplicable: true,
+      };
+    }
+
     const [result, graph, simulator] = await Promise.all([
       this.audit_(artifacts, networkRecords, context),
-      PageDependencyGraph.request({trace, devtoolsLog}, context),
+      // Page dependency graph is only used in navigation mode.
+      gatherContext.gatherMode === 'navigation' ?
+        PageDependencyGraph.request({trace, devtoolsLog}, context) :
+        null,
       LoadSimulator.request(simulatorOptions, context),
     ]);
 
@@ -187,7 +201,6 @@ class UnusedBytes extends Audit {
   }
 
   /**
-   * TODO(FR-COMPAT): Rework opportunities to remove emphasis on `wastedMs`
    * @param {number} wastedBytes
    * @param {Simulator} simulator
    */
@@ -200,7 +213,7 @@ class UnusedBytes extends Audit {
 
   /**
    * @param {ByteEfficiencyProduct} result
-   * @param {Node} graph
+   * @param {Node|null} graph
    * @param {Simulator} simulator
    * @param {LH.Artifacts['GatherContext']} gatherContext
    * @return {LH.Audit.Product}
@@ -209,11 +222,16 @@ class UnusedBytes extends Audit {
     const results = result.items.sort((itemA, itemB) => itemB.wastedBytes - itemA.wastedBytes);
 
     const wastedBytes = results.reduce((sum, item) => sum + item.wastedBytes, 0);
-    const wastedMs = gatherContext.gatherMode === 'navigation' ?
-      this.computeWasteWithTTIGraph(results, graph, simulator, {
+
+    let wastedMs;
+    if (gatherContext.gatherMode === 'navigation') {
+      if (!graph) throw Error('Page dependency graph should always be computed in navigation mode');
+      wastedMs = this.computeWasteWithTTIGraph(results, graph, simulator, {
         providedWastedBytesByUrl: result.wastedBytesByUrl,
-      }) :
-      this.computeWastedMsWithThroughput(wastedBytes, simulator);
+      });
+    } else {
+      wastedMs = this.computeWastedMsWithThroughput(wastedBytes, simulator);
+    }
 
     let displayValue = result.displayValue || '';
     if (typeof result.displayValue === 'undefined' && wastedBytes) {

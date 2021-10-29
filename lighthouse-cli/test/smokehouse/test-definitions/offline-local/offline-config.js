@@ -8,7 +8,9 @@
 /**
  * Config file for running PWA smokehouse audits.
  */
-module.exports = {
+
+/** @type {LH.Config.Json} */
+const config = {
   extends: 'lighthouse:default',
   settings: {
     onlyCategories: [
@@ -16,7 +18,6 @@ module.exports = {
     ],
     onlyAudits: [
       'is-on-https',
-      'redirects-http',
       'service-worker',
       'viewport',
       'user-timings',
@@ -35,3 +36,5 @@ module.exports = {
     ],
   },
 };
+
+export default config;

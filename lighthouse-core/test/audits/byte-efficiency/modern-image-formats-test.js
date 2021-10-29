@@ -19,10 +19,15 @@ function generateArtifacts(images) {
     }
 
     const mimeType = image.mimeType || `image/${type}`;
-    const url = isData
-      ? `data:${mimeType};base64,reaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaly ` +
-        'reaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaly long'
-      : `http://google.com/image.${type}`;
+    let url;
+    if (image.url) {
+      url = image.url;
+    } else if (isData) {
+      url = `data:${mimeType};base64,reaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaly ` +
+        'reaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaly long';
+    } else {
+      url = `http://google.com/image.${type}`;
+    }
 
     optimizedImages.push({
       url,
@@ -33,6 +38,7 @@ function generateArtifacts(images) {
     imageElements.push({
       src: url,
       naturalDimensions: image,
+      node: {devtoolsNodePath: '1,HTML,1,IMG'},
     });
   }
 
@@ -58,7 +64,7 @@ describe('Page uses optimized images', () => {
     const artifacts = generateArtifacts([{originalSize: 15000, jpegSize: 8000, webpSize: 5000}]);
     const auditResult = ModernImageFormats.audit_(artifacts);
 
-    expect(auditResult.items).toEqual([
+    expect(auditResult.items).toMatchObject([
       {
         fromProtocol: true,
         isCrossOrigin: false,
@@ -66,6 +72,7 @@ describe('Page uses optimized images', () => {
         wastedBytes: 15000 - (5000 * 0.8),
         wastedWebpBytes: 15000 - 5000,
         url: 'http://google.com/image.jpeg',
+        node: {path: '1,HTML,1,IMG'},
       },
     ]);
   });
@@ -74,7 +81,7 @@ describe('Page uses optimized images', () => {
     const artifacts = generateArtifacts([{originalSize: 1e6, width: 1000, height: 1000}]);
     const auditResult = ModernImageFormats.audit_(artifacts);
 
-    expect(auditResult.items).toEqual([
+    expect(auditResult.items).toMatchObject([
       {
         fromProtocol: false,
         isCrossOrigin: false,
@@ -82,6 +89,7 @@ describe('Page uses optimized images', () => {
         wastedBytes: Math.round(1e6 - 1000 * 1000 * 2 / 12),
         wastedWebpBytes: Math.round(1e6 - 1000 * 1000 * 2 / 10),
         url: 'http://google.com/image.jpeg',
+        node: {path: '1,HTML,1,IMG'},
       },
     ]);
   });
@@ -97,6 +105,7 @@ describe('Page uses optimized images', () => {
         fromProtocol: true,
         isCrossOrigin: true,
         url: 'http://localhost:1234/image.jpg',
+        node: {path: '1,HTML,1,IMG'},
       },
     ]);
   });

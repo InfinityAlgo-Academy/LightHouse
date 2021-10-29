@@ -25,7 +25,7 @@ class ScreenshotThumbnails extends Audit {
       scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
       title: 'Screenshot Thumbnails',
       description: 'This is what the load of your site looked like.',
-      requiredArtifacts: ['traces'],
+      requiredArtifacts: ['traces', 'GatherContext'],
     };
   }
 
@@ -70,7 +70,7 @@ class ScreenshotThumbnails extends Audit {
    * @param {LH.Audit.Context} context
    * @return {Promise<LH.Audit.Product>}
    */
-  static async audit(artifacts, context) {
+  static async _audit(artifacts, context) {
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
     /** @type {Map<SpeedlineFrame, string>} */
     const cachedThumbnails = new Map();
@@ -132,6 +132,31 @@ class ScreenshotThumbnails extends Audit {
         items: thumbnails,
       },
     };
+  }
+
+  /**
+   * @param {LH.Artifacts} artifacts
+   * @param {LH.Audit.Context} context
+   * @return {Promise<LH.Audit.Product>}
+   */
+  static async audit(artifacts, context) {
+    try {
+      return await this._audit(artifacts, context);
+    } catch (err) {
+      const noFramesErrors = new Set([
+        LHError.errors.NO_SCREENSHOTS.code,
+        LHError.errors.SPEEDINDEX_OF_ZERO.code,
+        LHError.errors.NO_SPEEDLINE_FRAMES.code,
+        LHError.errors.INVALID_SPEEDLINE.code,
+      ]);
+
+      // If a timespan didn't happen to contain frames, that's fine. Just mark not applicable.
+      if (noFramesErrors.has(err.code) && artifacts.GatherContext.gatherMode === 'timespan') {
+        return {notApplicable: true, score: 1};
+      }
+
+      throw err;
+    }
   }
 }
 

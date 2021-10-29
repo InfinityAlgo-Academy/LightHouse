@@ -64,6 +64,7 @@ describe('Runner', () => {
   const basicAuditMeta = {
     id: 'test-audit',
     title: 'A test audit',
+    failureTitle: 'A test audit',
     description: 'An audit for testing',
     requiredArtifacts: [],
   };
@@ -81,7 +82,7 @@ describe('Runner', () => {
     const resolvedPath = path.resolve(process.cwd(), artifactsPath);
 
     afterAll(() => {
-      fs.rmdirSync(resolvedPath, {recursive: true});
+      fs.rmSync(resolvedPath, {recursive: true, force: true});
     });
 
     it('-G gathers, quits, and doesn\'t run audits', () => {
@@ -212,6 +213,7 @@ describe('Runner', () => {
           return {
             id: 'dummy-audit',
             title: 'Dummy',
+            failureTitle: 'Dummy',
             description: 'Will fail because required artifact is an error',
             requiredArtifacts: ['WarningAndErrorGatherer'],
           };
@@ -439,7 +441,7 @@ describe('Runner', () => {
       assert.strictEqual(auditResult.scoreDisplayMode, 'error');
       assert.ok(auditResult.errorMessage.includes(errorMessage));
 
-      fs.rmdirSync(resolvedPath, {recursive: true});
+      fs.rmSync(resolvedPath, {recursive: true, force: true});
     });
 
     it('only passes the requested artifacts to the audit (no optional artifacts)', async () => {
@@ -763,6 +765,7 @@ describe('Runner', () => {
         return {
           id: 'test-audit',
           title: 'A test audit',
+          failureTitle: 'A test audit',
           description: 'An audit for testing',
           requiredArtifacts: ['RuntimeErrorGatherer'],
         };

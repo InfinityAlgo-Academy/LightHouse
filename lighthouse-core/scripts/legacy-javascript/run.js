@@ -7,13 +7,18 @@
 
 /* eslint-disable no-console */
 
-const fs = require('fs');
-const path = require('path');
-const glob = require('glob');
-const {execFileSync} = require('child_process');
-const makeHash = require('./hash.js');
-const LegacyJavascript = require('../../audits/byte-efficiency/legacy-javascript.js');
-const networkRecordsToDevtoolsLog = require('../../test/network-records-to-devtools-log.js');
+import fs from 'fs';
+import path from 'path';
+import {execFileSync} from 'child_process';
+
+import glob from 'glob';
+
+import {makeHash} from './hash.js';
+import LegacyJavascript from '../../audits/byte-efficiency/legacy-javascript.js';
+import networkRecordsToDevtoolsLog from '../../test/network-records-to-devtools-log.js';
+import {LH_ROOT, readJson} from '../../../root.js';
+
+const scriptDir = `${LH_ROOT}/lighthouse-core/scripts/legacy-javascript`;
 
 // Create variants in a directory named-cached by contents of this script and the lockfile.
 // This folder is in the CI cache, so that the time consuming part of this test only runs if
@@ -21,12 +26,12 @@ const networkRecordsToDevtoolsLog = require('../../test/network-records-to-devto
 removeCoreJs(); // (in case the script was canceled halfway - there shouldn't be a core-js dep checked in.)
 
 const hash = makeHash();
-const VARIANT_DIR = `${__dirname}/variants/${hash}`;
+const VARIANT_DIR = `${scriptDir}/variants/${hash}`;
 
 // build, audit, all.
 const STAGE = process.env.STAGE || 'all';
 
-const mainCode = fs.readFileSync(`${__dirname}/main.js`, 'utf-8');
+const mainCode = fs.readFileSync(`${scriptDir}/main.js`, 'utf-8');
 
 const plugins = LegacyJavascript.getTransformPatterns().map(pattern => pattern.name);
 const polyfills = LegacyJavascript.getPolyfillData();
@@ -36,7 +41,7 @@ const polyfills = LegacyJavascript.getPolyfillData();
  * @param {string[]} args
  */
 function runCommand(command, args) {
-  execFileSync(command, args, {cwd: __dirname});
+  execFileSync(command, args, {cwd: scriptDir});
 }
 
 /**
@@ -67,6 +72,7 @@ async function createVariant(options) {
 
   if (!fs.existsSync(`${dir}/main.bundle.js`) && (STAGE === 'build' || STAGE === 'all')) {
     fs.mkdirSync(dir, {recursive: true});
+    fs.writeFileSync(`${dir}/package.json`, JSON.stringify({type: 'commonjs'}));
     fs.writeFileSync(`${dir}/main.js`, code);
     fs.writeFileSync(`${dir}/.babelrc`, JSON.stringify(babelrc || {}, null, 2));
     // Not used in this script, but useful for running Lighthouse manually.
@@ -162,7 +168,7 @@ function makeSummary(legacyJavascriptFilename) {
   const variants = [];
   for (const dir of glob.sync('*/*', {cwd: VARIANT_DIR})) {
     /** @type {import('../../audits/byte-efficiency/legacy-javascript.js').Item[]} */
-    const legacyJavascriptItems = require(`${VARIANT_DIR}/${dir}/${legacyJavascriptFilename}`);
+    const legacyJavascriptItems = readJson(`${VARIANT_DIR}/${dir}/${legacyJavascriptFilename}`);
 
     const signals = [];
     for (const item of legacyJavascriptItems) {
@@ -207,7 +213,7 @@ function createSummarySizes() {
     lines.push('');
   }
 
-  fs.writeFileSync(`${__dirname}/summary-sizes.txt`, lines.join('\n'));
+  fs.writeFileSync(`${scriptDir}/summary-sizes.txt`, lines.join('\n'));
 }
 
 /**
@@ -291,11 +297,11 @@ async function main() {
 
   // Summary of using source maps and pattern matching.
   summary = makeSummary('legacy-javascript.json');
-  fs.writeFileSync(`${__dirname}/summary-signals.json`, JSON.stringify(summary, null, 2));
+  fs.writeFileSync(`${scriptDir}/summary-signals.json`, JSON.stringify(summary, null, 2));
 
   // Summary of using only pattern matching.
   summary = makeSummary('legacy-javascript-nomaps.json');
-  fs.writeFileSync(`${__dirname}/summary-signals-nomaps.json`, JSON.stringify(summary, null, 2));
+  fs.writeFileSync(`${scriptDir}/summary-signals-nomaps.json`, JSON.stringify(summary, null, 2));
   console.log({
     totalSignals: summary.totalSignals,
     variantsMissingSignals: summary.variantsMissingSignals,

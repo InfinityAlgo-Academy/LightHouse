@@ -10,9 +10,11 @@
  */
 
 /** @type {LH.Config.Json} */
-module.exports = {
+const config = {
   extends: 'lighthouse:default',
   settings: {
     onlyAudits: ['unused-javascript'],
   },
 };
+
+export default config;

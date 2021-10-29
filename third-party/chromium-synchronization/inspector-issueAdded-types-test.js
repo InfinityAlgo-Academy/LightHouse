@@ -7,7 +7,7 @@
 
 const fs = require('fs');
 const fetch = require('node-fetch');
-const {LH_ROOT} = require('../../../root.js');
+const {LH_ROOT} = require('../../root.js');
 
 const inspectorIssuesGathererPath = LH_ROOT +
   '/lighthouse-core/gather/gatherers/inspector-issues.js';
@@ -31,7 +31,8 @@ describe('issueAdded types', () => {
       .sort();
   });
 
-  it('should notify us if something changed', () => {
+  // TODO: https://github.com/GoogleChrome/lighthouse/issues/13147
+  it.skip('should notify us if something changed', () => {
     expect(inspectorIssueDetailsTypes).toMatchInlineSnapshot(`
       Array [
         "blockedByResponseIssueDetails",
@@ -44,7 +45,8 @@ describe('issueAdded types', () => {
     `);
   });
 
-  it('are each handled explicitly in the gatherer', () => {
+  // TODO: https://github.com/GoogleChrome/lighthouse/issues/13147
+  it.skip('are each handled explicitly in the gatherer', () => {
     // Regex relies on the typecasts
     const sourceTypeMatches = inspectorIssuesGathererSource.matchAll(
       /LH\.Crdp\.Audits\.(.*?Details)>/g

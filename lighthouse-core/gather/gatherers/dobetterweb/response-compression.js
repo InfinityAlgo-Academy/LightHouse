@@ -20,7 +20,11 @@ const {fetchResponseBodyFromCache} = require('../../driver/network.js');
 const NetworkRecords = require('../../../computed/network-records.js');
 
 const CHROME_EXTENSION_PROTOCOL = 'chrome-extension:';
-const compressionHeaders = ['content-encoding', 'x-original-content-encoding'];
+const compressionHeaders = [
+  'content-encoding',
+  'x-original-content-encoding',
+  'x-content-encoding-over-network',
+];
 const compressionTypes = ['gzip', 'br', 'deflate'];
 const binaryMimeTypes = ['image', 'audio', 'video'];
 /** @type {LH.Crdp.Network.ResourceType[]} */

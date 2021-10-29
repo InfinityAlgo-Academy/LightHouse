@@ -5,42 +5,152 @@
  */
 'use strict';
 
+const rollup = require('rollup');
+const rollupPlugins = require('./rollup-plugins.js');
 const fs = require('fs');
+const {LH_ROOT} = require('../root.js');
+const {getIcuMessageIdParts} = require('../shared/localization/format.js');
 
-function concatRendererCode() {
-  return [
-    fs.readFileSync(__dirname + '/../report/renderer/util.js', 'utf8'),
-    fs.readFileSync(__dirname + '/../report/renderer/dom.js', 'utf8'),
-    fs.readFileSync(__dirname + '/../report/renderer/details-renderer.js', 'utf8'),
-    fs.readFileSync(__dirname + '/../report/renderer/crc-details-renderer.js', 'utf8'),
-    fs.readFileSync(__dirname + '/../report/renderer/snippet-renderer.js', 'utf8'),
-    fs.readFileSync(__dirname + '/../report/renderer/element-screenshot-renderer.js', 'utf8'),
-    fs.readFileSync(__dirname + '/../lighthouse-core/lib/file-namer.js', 'utf8'),
-    fs.readFileSync(__dirname + '/../report/renderer/logger.js', 'utf8'),
-    fs.readFileSync(__dirname + '/../report/renderer/report-ui-features.js', 'utf8'),
-    fs.readFileSync(__dirname + '/../report/renderer/category-renderer.js', 'utf8'),
-    fs.readFileSync(__dirname + '/../report/renderer/performance-category-renderer.js', 'utf8'),
-    fs.readFileSync(__dirname + '/../report/renderer/pwa-category-renderer.js', 'utf8'),
-    fs.readFileSync(__dirname + '/../report/renderer/report-renderer.js', 'utf8'),
-    fs.readFileSync(__dirname + '/../report/renderer/i18n.js', 'utf8'),
-    fs.readFileSync(__dirname + '/../report/renderer/text-encoding.js', 'utf8'),
-  ].join(';\n');
+/**
+ * Extract only the strings needed for the flow report into
+ * a script that sets a global variable `strings`, whose keys
+ * are locale codes (en-US, es, etc.) and values are localized UIStrings.
+ */
+function buildFlowStrings() {
+  const locales = require('../shared/localization/locales.js');
+  // TODO(esmodules): use dynamic import when build/ is esm.
+  const i18nCode = fs.readFileSync(`${LH_ROOT}/flow-report/src/i18n/ui-strings.js`, 'utf-8');
+  const UIStrings = eval(i18nCode.replace(/export /g, '') + '\nmodule.exports = UIStrings;');
+  const strings = /** @type {Record<LH.Locale, string>} */ ({});
+
+  for (const [locale, lhlMessages] of Object.entries(locales)) {
+    const localizedStrings = Object.fromEntries(
+      Object.entries(lhlMessages).map(([icuMessageId, v]) => {
+        const {filename, key} = getIcuMessageIdParts(icuMessageId);
+        if (!filename.endsWith('ui-strings.js') || !(key in UIStrings)) {
+          return [];
+        }
+
+        return [key, v.message];
+      })
+    );
+    strings[/** @type {LH.Locale} */ (locale)] = localizedStrings;
+  }
+
+  return 'export default ' + JSON.stringify(strings, null, 2) + ';';
 }
 
 async function buildStandaloneReport() {
-  const REPORT_JAVASCRIPT = [
-    concatRendererCode(),
-    fs.readFileSync(__dirname + '/../report/clients/standalone.js', 'utf8'),
-  ].join(';\n');
-  fs.mkdirSync(__dirname + '/../dist/report', {recursive: true});
-  fs.writeFileSync(__dirname + '/../dist/report/standalone.js', REPORT_JAVASCRIPT);
+  const bundle = await rollup.rollup({
+    input: 'report/clients/standalone.js',
+    plugins: [
+      rollupPlugins.commonjs(),
+      rollupPlugins.terser(),
+    ],
+  });
+
+  await bundle.write({
+    file: 'dist/report/standalone.js',
+    format: 'iife',
+  });
+}
+
+async function buildFlowReport() {
+  const bundle = await rollup.rollup({
+    input: 'flow-report/standalone-flow.tsx',
+    plugins: [
+      rollupPlugins.inlineFs({verbose: true}),
+      rollupPlugins.replace({
+        '__dirname': '""',
+      }),
+      rollupPlugins.shim({
+        [`${LH_ROOT}/flow-report/src/i18n/localized-strings`]: buildFlowStrings(),
+        [`${LH_ROOT}/shared/localization/locales.js`]: 'export default {}',
+        'fs': 'export default {}',
+      }),
+      rollupPlugins.nodeResolve(),
+      rollupPlugins.commonjs(),
+      rollupPlugins.typescript({
+        tsconfig: 'flow-report/tsconfig.json',
+        // Plugin struggles with custom outDir, so revert it from tsconfig value
+        // as well as any options that require an outDir is set.
+        outDir: null,
+        composite: false,
+        emitDeclarationOnly: false,
+        declarationMap: false,
+      }),
+      rollupPlugins.terser(),
+    ],
+  });
+
+  await bundle.write({
+    file: 'dist/report/flow.js',
+    format: 'iife',
+  });
+}
+
+async function buildEsModulesBundle() {
+  const bundle = await rollup.rollup({
+    input: 'report/clients/bundle.js',
+    plugins: [
+      rollupPlugins.commonjs(),
+    ],
+  });
+
+  await bundle.write({
+    file: 'dist/report/bundle.esm.js',
+    format: 'esm',
+  });
+}
+
+async function buildUmdBundle() {
+  const bundle = await rollup.rollup({
+    input: 'report/clients/bundle.js',
+    plugins: [
+      rollupPlugins.commonjs(),
+      rollupPlugins.terser({
+        format: {
+          beautify: true,
+        },
+      }),
+    ],
+  });
+
+  await bundle.write({
+    file: 'dist/report/bundle.umd.js',
+    format: 'umd',
+    name: 'report',
+  });
 }
 
 if (require.main === module) {
-  buildStandaloneReport();
+  if (process.argv.length <= 2) {
+    buildStandaloneReport();
+    buildFlowReport();
+    buildEsModulesBundle();
+    buildUmdBundle();
+  }
+
+  if (process.argv.includes('--psi')) {
+    console.error('--psi build removed. use --umd instead.');
+    process.exit(1);
+  }
+  if (process.argv.includes('--standalone')) {
+    buildStandaloneReport();
+  }
+  if (process.argv.includes('--flow')) {
+    buildFlowReport();
+  }
+  if (process.argv.includes('--esm')) {
+    buildEsModulesBundle();
+  }
+  if (process.argv.includes('--umd')) {
+    buildUmdBundle();
+  }
 }
 
 module.exports = {
   buildStandaloneReport,
-  concatRendererCode,
+  buildFlowReport,
+  buildUmdBundle,
 };

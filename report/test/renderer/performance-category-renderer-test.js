@@ -5,19 +5,19 @@
  */
 'use strict';
 
-/* eslint-env jest, browser */
+/* eslint-env jest */
 
-const assert = require('assert').strict;
-const jsdom = require('jsdom');
-const Util = require('../../renderer/util.js');
-const I18n = require('../../renderer/i18n.js');
-const URL = require('../../../lighthouse-core/lib/url-shim.js');
-const DOM = require('../../renderer/dom.js');
-const DetailsRenderer = require('../../renderer/details-renderer.js');
-const CriticalRequestChainRenderer = require('../../renderer/crc-details-renderer.js');
-const CategoryRenderer = require('../../renderer/category-renderer.js');
-const sampleResultsOrig = require('../../../lighthouse-core/test/results/sample_v2.json');
-const reportAssets = require('../../report-assets.js');
+import {strict as assert} from 'assert';
+
+import jsdom from 'jsdom';
+
+import {Util} from '../../renderer/util.js';
+import {I18n} from '../../renderer/i18n.js';
+import URL from '../../../lighthouse-core/lib/url-shim.js';
+import {DOM} from '../../renderer/dom.js';
+import {DetailsRenderer} from '../../renderer/details-renderer.js';
+import {PerformanceCategoryRenderer} from '../../renderer/performance-category-renderer.js';
+import sampleResultsOrig from '../../../lighthouse-core/test/results/sample_v2.json';
 
 describe('PerfCategoryRenderer', () => {
   let category;
@@ -25,15 +25,9 @@ describe('PerfCategoryRenderer', () => {
   let sampleResults;
 
   beforeAll(() => {
-    global.Util = Util;
-    global.Util.i18n = new I18n('en', {...Util.UIStrings});
-    global.CriticalRequestChainRenderer = CriticalRequestChainRenderer;
-    global.CategoryRenderer = CategoryRenderer;
+    Util.i18n = new I18n('en', {...Util.UIStrings});
 
-    // Delayed so that CategoryRenderer is in global scope
-    const PerformanceCategoryRenderer = require('../../renderer/performance-category-renderer.js');
-
-    const {document} = new jsdom.JSDOM(reportAssets.REPORT_TEMPLATES).window;
+    const {document} = new jsdom.JSDOM().window;
     const dom = new DOM(document);
     const detailsRenderer = new DetailsRenderer(dom);
     renderer = new PerformanceCategoryRenderer(dom, detailsRenderer);
@@ -44,10 +38,7 @@ describe('PerfCategoryRenderer', () => {
   });
 
   afterAll(() => {
-    global.Util.i18n = undefined;
-    global.Util = undefined;
-    global.CriticalRequestChainRenderer = undefined;
-    global.CategoryRenderer = undefined;
+    Util.i18n = undefined;
   });
 
   it('renders the category header', () => {
@@ -78,10 +69,22 @@ describe('PerfCategoryRenderer', () => {
     assert.equal(timelineElements.length + nontimelineElements.length, metricAudits.length);
   });
 
+  it('does not render metrics section if no metric group audits', () => {
+    // Remove metrics from category
+    const newCategory = JSON.parse(JSON.stringify(category));
+    newCategory.auditRefs = category.auditRefs.filter(audit => audit.group !== 'metrics');
+
+    const categoryDOM = renderer.render(newCategory, sampleResults.categoryGroups);
+    const sections = categoryDOM.querySelectorAll('.lh-category > .lh-audit-group');
+    const metricSection = categoryDOM.querySelector('.lh-audit-group--metrics');
+    assert.ok(!metricSection);
+    assert.equal(sections.length, 4);
+  });
+
   it('renders the metrics variance disclaimer as markdown', () => {
     const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
     const disclaimerEl =
-        categoryDOM.querySelector('.lh-audit-group--metrics > .lh-metrics__disclaimer');
+        categoryDOM.querySelector('.lh-category-header__description > .lh-metrics__disclaimer');
 
     assert.ok(disclaimerEl.textContent.includes('Values are estimated'));
     const disclamerLink = disclaimerEl.querySelector('a');
@@ -97,9 +100,11 @@ describe('PerfCategoryRenderer', () => {
     const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
 
     const oppAudits = category.auditRefs.filter(audit => audit.group === 'load-opportunities' &&
-        audit.result.score !== 1 && audit.result.scoreDisplayMode !== 'notApplicable');
-    const oppElements = categoryDOM.querySelectorAll('.lh-audit--load-opportunity');
-    assert.equal(oppElements.length, oppAudits.length);
+        !Util.showAsPassed(audit.result));
+    const oppElements = [...categoryDOM.querySelectorAll('.lh-audit--load-opportunity')];
+    expect(oppElements.map(e => e.id).sort()).toEqual(oppAudits.map(a => a.id).sort());
+    expect(oppElements.length).toBeGreaterThan(0);
+    expect(oppElements.length).toMatchInlineSnapshot('7');
 
     const oppElement = oppElements[0];
     const oppSparklineBarElement = oppElement.querySelector('.lh-sparkline__bar');
@@ -124,7 +129,7 @@ describe('PerfCategoryRenderer', () => {
 
     const fakeCategory = Object.assign({}, category, {auditRefs: [auditWithError]});
     const categoryDOM = renderer.render(fakeCategory, sampleResults.categoryGroups);
-    const tooltipEl = categoryDOM.querySelector('.lh-audit--load-opportunity .tooltip--error');
+    const tooltipEl = categoryDOM.querySelector('.lh-audit--load-opportunity .lh-tooltip--error');
     assert.ok(tooltipEl, 'did not render error message');
     assert.ok(/Yikes!!/.test(tooltipEl.textContent));
   });
@@ -249,16 +254,16 @@ describe('PerfCategoryRenderer', () => {
       const href = renderer._getScoringCalculatorHref(categoryClone.auditRefs);
       const url = new URL(href);
       expect(url.hash.split('&')).toMatchInlineSnapshot(`
-        Array [
-          "#FCP=3969",
-          "SI=4417",
-          "LCP=4927",
-          "TTI=4927",
-          "TBT=117",
-          "CLS=0",
-          "FMP=3969",
-        ]
-      `);
+Array [
+  "#FCP=6844",
+  "SI=8114",
+  "LCP=6844",
+  "TTI=8191",
+  "TBT=1221",
+  "CLS=0",
+  "FMP=6844",
+]
+`);
     });
 
     it('also appends device and version number', () => {
@@ -270,18 +275,18 @@ describe('PerfCategoryRenderer', () => {
       const url = new URL(href);
       try {
         expect(url.hash.split('&')).toMatchInlineSnapshot(`
-          Array [
-            "#FCP=3969",
-            "SI=4417",
-            "LCP=4927",
-            "TTI=4927",
-            "TBT=117",
-            "CLS=0.42",
-            "FMP=3969",
-            "device=mobile",
-            "version=6.0.0",
-          ]
-        `);
+Array [
+  "#FCP=6844",
+  "SI=8114",
+  "LCP=6844",
+  "TTI=8191",
+  "TBT=1221",
+  "CLS=0.14",
+  "FMP=6844",
+  "device=mobile",
+  "version=6.0.0",
+]
+`);
       } finally {
         Util.reportJson = null;
       }

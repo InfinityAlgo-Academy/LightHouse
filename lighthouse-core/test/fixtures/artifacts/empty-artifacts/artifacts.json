@@ -3,5 +3,6 @@
     "requestedUrl": "https://example.com/",
     "finalUrl": "https://example.com/"
   },
+  "GatherContext": {"gatherMode": "navigation"},
   "Stacks": []
 }

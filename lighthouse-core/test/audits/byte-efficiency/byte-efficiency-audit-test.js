@@ -148,6 +148,15 @@ describe('Byte efficiency base audit', () => {
     });
   });
 
+  it('should not throw on invalid graph in timespan mode', () => {
+    assert.doesNotThrow(() => {
+      ByteEfficiencyAudit.createAuditProduct({
+        headings: baseHeadings,
+        items: [{wastedBytes: 350, totalBytes: 700, wastedPercent: 50}],
+      }, null, simulator, {gatherMode: 'timespan'});
+    });
+  });
+
   it('should populate KiB', () => {
     const result = ByteEfficiencyAudit.createAuditProduct({
       headings: baseHeadings,
@@ -328,5 +337,31 @@ describe('Byte efficiency base audit', () => {
     const settings = {throttlingMethod: 'simulate', throttling: modestThrottling};
     const result = await MockAudit.audit(artifacts, {settings, computedCache});
     expect(result.details.overallSavingsMs).toBeCloseTo(914.2695);
+  });
+
+  it('should return n/a if no network records in timespan mode', async () => {
+    class MockAudit extends ByteEfficiencyAudit {
+      static audit_(artifacts, records) {
+        return {
+          items: records,
+          headings: [],
+        };
+      }
+    }
+
+    const artifacts = {
+      GatherContext: {gatherMode: 'timespan'},
+      traces: {defaultPass: trace},
+      devtoolsLogs: {defaultPass: []},
+    };
+    const computedCache = new Map();
+
+    const modestThrottling = {rttMs: 150, throughputKbps: 1000, cpuSlowdownMultiplier: 2};
+    const settings = {throttlingMethod: 'simulate', throttling: modestThrottling};
+    const result = await MockAudit.audit(artifacts, {settings, computedCache});
+    expect(result).toEqual({
+      notApplicable: true,
+      score: 1,
+    });
   });
 });

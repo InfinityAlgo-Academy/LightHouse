@@ -10,8 +10,8 @@ if [[ -z "$LHCI_CANARY_SERVER_TOKEN" ]]; then
 fi
 
 NODE_VERSION=$(node --version)
-if [[ "$NODE_VERSION" != "v12"* ]]; then
-  echo "Not running dogfood script on node versions other than 12";
+if [[ "$NODE_VERSION" != "v14"* ]]; then
+  echo "Not running dogfood script on node versions other than 14";
   exit 0;
 fi
 
@@ -35,13 +35,13 @@ if ! echo "$CHANGED_FILES" | grep -E 'report|lhci' > /dev/null; then
   exit 0
 fi
 
-# Generate HTML reports in ./dist/now/
-yarn now-build
+# Generate HTML reports in ./dist/sample-reports
+yarn vercel-build
 
 # Install LHCI
 npm install -g @lhci/cli@next
 # Collect our LHCI results.
-lhci collect --staticDistDir=./dist/now/english/
+lhci collect --staticDistDir=./dist/sample-reports/english
 # Upload the results to our canary server.
 lhci upload \
   --serverBaseUrl="$LHCI_CANARY_SERVER_URL" \

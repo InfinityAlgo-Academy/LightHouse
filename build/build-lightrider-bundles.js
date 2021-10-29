@@ -6,17 +6,19 @@
 'use strict';
 
 const browserify = require('browserify');
+const rollup = require('rollup');
+const rollupPlugins = require('./rollup-plugins.js');
 const fs = require('fs');
 const path = require('path');
 const bundleBuilder = require('./build-bundle.js');
-const {minifyFileTransform} = require('./build-utils.js');
 const {LH_ROOT} = require('../root.js');
+const inlineFs = require('./plugins/browserify-inline-fs.js');
 
 const distDir = path.join(LH_ROOT, 'dist', 'lightrider');
 const sourceDir = path.join(LH_ROOT, 'clients', 'lightrider');
 
 const bundleOutFile = `${distDir}/report-generator-bundle.js`;
-const generatorFilename = `./report/report-generator.js`;
+const generatorFilename = `./report/generator/report-generator.js`;
 
 const entrySourceName = 'lightrider-entry.js';
 const entryDistName = 'lighthouse-lr-bundle.js';
@@ -37,22 +39,40 @@ function buildEntryPoint() {
  */
 function buildReportGenerator() {
   browserify(generatorFilename, {standalone: 'ReportGenerator'})
-    // Transform the fs.readFile etc into inline strings.
-    .transform('@wardpeet/brfs', {
-      readFileSyncTransform: minifyFileTransform,
-      global: true,
-      parserOpts: {ecmaVersion: 12},
-    })
+    // Flow report is not used in LR, so don't include flow assets.
+    .ignore(require.resolve('../report/generator/flow-report-assets.js'))
+    // Transform `fs.readFileSync`, etc into inline strings.
+    .transform(inlineFs({verbose: Boolean(process.env.DEBUG)}))
     .bundle((err, src) => {
       if (err) throw err;
       fs.writeFileSync(bundleOutFile, src.toString());
     });
 }
 
+async function buildStaticServerBundle() {
+  const bundle = await rollup.rollup({
+    input: 'lighthouse-cli/test/fixtures/static-server.js',
+    plugins: [
+      rollupPlugins.shim({
+        'es-main': 'export default function() { return false; }',
+      }),
+      rollupPlugins.commonjs(),
+      rollupPlugins.nodeResolve(),
+    ],
+    external: ['mime-types', 'glob'],
+  });
+
+  await bundle.write({
+    file: 'dist/lightrider/static-server.js',
+    format: 'commonjs',
+  });
+}
+
 async function run() {
   await Promise.all([
     buildEntryPoint(),
     buildReportGenerator(),
+    buildStaticServerBundle(),
   ]);
 }
 

@@ -8,9 +8,13 @@
 /**
  * Config file for running PWA smokehouse audits.
  */
-module.exports = {
+
+/** @type {LH.Config.Json} */
+const config = {
   extends: 'lighthouse:default',
   settings: {
     onlyCategories: ['pwa'],
   },
 };
+
+export default config;

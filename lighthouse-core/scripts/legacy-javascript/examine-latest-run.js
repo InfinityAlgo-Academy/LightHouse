@@ -16,12 +16,14 @@
  *   3. Inspect output for fishy looking polyfills.
  */
 
-const path = require('path');
+import path from 'path';
+
 // @ts-expect-error - We don't really need types for this
-const colors = require('colors');
-const LegacyJavascript = require('../../audits/byte-efficiency/legacy-javascript.js');
-const i18n = require('../../lib/i18n/i18n.js');
-const {LH_ROOT} = require('../../../root.js');
+import colors from 'colors';
+
+import LegacyJavascript from '../../audits/byte-efficiency/legacy-javascript.js';
+import format from '../../../shared/localization/format.js';
+import {LH_ROOT, readJson} from '../../../root.js';
 
 const LATEST_RUN_DIR = path.join(LH_ROOT, 'latest-run');
 
@@ -40,8 +42,8 @@ function requestUrlToId(log) {
 
 async function main() {
   /** @type {LH.Artifacts} */
-  const artifacts = require(`${LATEST_RUN_DIR}/artifacts.json`);
-  const devtoolsLog = require(`${LATEST_RUN_DIR}/defaultPass.devtoolslog.json`);
+  const artifacts = readJson(`${LATEST_RUN_DIR}/artifacts.json`);
+  const devtoolsLog = readJson(`${LATEST_RUN_DIR}/defaultPass.devtoolslog.json`);
   const scripts = artifacts.ScriptElements;
   const requestUrlMap = requestUrlToId(devtoolsLog);
   artifacts.devtoolsLogs = {defaultPass: devtoolsLog};
@@ -84,7 +86,7 @@ async function main() {
     for (let i = 0; i < signals.length; i++) {
       const signal = signals[i];
       const location = locations[i];
-      if (typeof location !== 'object' || i18n.isIcuMessage(location) ||
+      if (typeof location !== 'object' || format.isIcuMessage(location) ||
           location.type !== 'source-location') {
         continue;
       }

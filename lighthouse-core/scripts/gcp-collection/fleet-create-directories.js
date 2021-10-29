@@ -12,16 +12,17 @@
  * USAGE: node lighthouse-core/scripts/gcp-collection/fleet-create-directories.js [<url list file>]
  */
 
-const fs = require('fs');
-const path = require('path');
-const {LH_ROOT} = require('../../../root.js');
+import fs from 'fs';
+import path from 'path';
+
+import {LH_ROOT} from '../../../root.js';
 
 const TMP_DIR = path.join(LH_ROOT, '.tmp/gcp-instances');
 const URLS_LIST = process.argv[2]
   ? path.resolve(process.cwd(), process.argv[2])
-  : path.join(__dirname, 'urls.txt');
+  : path.join(LH_ROOT, 'lighthouse-core/scripts/gcp-collection/urls.txt');
 
-fs.rmdirSync(TMP_DIR, {recursive: true});
+fs.rmSync(TMP_DIR, {recursive: true, force: true});
 fs.mkdirSync(TMP_DIR);
 
 const MACHINE_BASE_INDEX = 0;
@@ -44,9 +45,10 @@ instanceUrls.forEach((urls, i) => {
 
   const dir = path.join(TMP_DIR, `instance${MACHINE_BASE_INDEX + i}`);
   fs.mkdirSync(dir);
-  const files = fs.readdirSync(__dirname).filter(f => f.endsWith('.sh'));
+  const scriptDir = `${LH_ROOT}/lighthouse-core/scripts/gcp-collection`;
+  const files = fs.readdirSync(scriptDir).filter(f => f.endsWith('.sh'));
   files.forEach(f =>
-    fs.copyFileSync(path.join(__dirname, f), path.join(dir, f))
+    fs.copyFileSync(path.join(scriptDir, f), path.join(dir, f))
   );
   fs.writeFileSync(path.join(dir, 'urls.txt'), urls.join('\n'));
 });

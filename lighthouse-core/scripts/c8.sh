@@ -11,9 +11,15 @@ set -euxo pipefail
 echo $*
 
 node node_modules/.bin/c8 \
-  --include '{lighthouse-core,lighthouse-cli,lighthouse-viewer,lighthouse-treemap}' \
+  --include '{lighthouse-core,lighthouse-cli,viewer,treemap,build/plugins,report,flow-report}' \
   --exclude third_party \
   --exclude '**/test/' \
   --exclude '**/scripts/' \
   --exclude 'lighthouse-core/lib/page-functions.js' \
+  --exclude 'lighthouse-core/util-commonjs.js' \
   $*
+
+# util-commonjs is a copy of renderer/util, which has its own test coverage.
+# Admittedly, util-commonjs is used in different ways, but we don't expect it to also have complete
+# coverage as some methods are renderer-specific.  Ideally, we'd combine the coverage, but in the
+# meantime we'll ignore coverage requirements for this file.

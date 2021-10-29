@@ -7,8 +7,9 @@
 
 const BaseAudit = require('../../../audits/audit.js');
 const BaseGatherer = require('../../../fraggle-rock/gather/base-gatherer.js');
-const {defaultSettings} = require('../../../config/constants.js');
+const {defaultSettings, defaultNavigationConfig} = require('../../../config/constants.js');
 const filters = require('../../../fraggle-rock/config/filters.js');
+const {initializeConfig} = require('../../../fraggle-rock/config/config.js');
 
 /* eslint-env jest */
 
@@ -23,21 +24,10 @@ describe('Fraggle Rock Config Filtering', () => {
     {id: 'Timespan', gatherer: {instance: timespanGatherer}},
   ];
 
-  describe('filterArtifactsByGatherMode', () => {
-    it('should handle null', () => {
-      expect(filters.filterArtifactsByGatherMode(null, 'snapshot')).toBe(null);
-    });
-
-    it('should filter to the correct mode', () => {
-      expect(filters.filterArtifactsByGatherMode(artifacts, 'snapshot')).toEqual([
-        {id: 'Snapshot', gatherer: {instance: snapshotGatherer}},
-      ]);
-
-      expect(filters.filterArtifactsByGatherMode(artifacts, 'timespan')).toEqual([
-        {id: 'Timespan', gatherer: {instance: timespanGatherer}},
-      ]);
-    });
-  });
+  const navigationArtifacts = [
+    ...artifacts,
+    {id: 'Snapshot2', gatherer: {instance: snapshotGatherer}},
+  ];
 
   const auditMeta = {title: '', description: ''};
   class SnapshotAudit extends BaseAudit {
@@ -82,6 +72,140 @@ describe('Fraggle Rock Config Filtering', () => {
     implementation: audit,
     options: {},
   }));
+
+  /** @type {Array<LH.Config.NavigationDefn>} */
+  const navigations = [
+    {
+      ...defaultNavigationConfig,
+      id: 'firstPass',
+      artifacts: [
+        {id: 'Snapshot', gatherer: {instance: snapshotGatherer}},
+        {id: 'Timespan', gatherer: {instance: timespanGatherer}},
+      ],
+    },
+    {
+      ...defaultNavigationConfig,
+      id: 'secondPass',
+      artifacts: [
+        {id: 'Snapshot2', gatherer: {instance: snapshotGatherer}},
+      ],
+    },
+  ];
+
+  describe('filterArtifactsByGatherMode', () => {
+    it('should handle null', () => {
+      expect(filters.filterArtifactsByGatherMode(null, 'snapshot')).toBe(null);
+    });
+
+    it('should filter to the correct mode', () => {
+      expect(filters.filterArtifactsByGatherMode(artifacts, 'snapshot')).toEqual([
+        {id: 'Snapshot', gatherer: {instance: snapshotGatherer}},
+      ]);
+
+      expect(filters.filterArtifactsByGatherMode(artifacts, 'timespan')).toEqual([
+        {id: 'Timespan', gatherer: {instance: timespanGatherer}},
+      ]);
+    });
+  });
+
+  describe('filterArtifactsByAvailableAudits', () => {
+    it('should handle null artifacts', () => {
+      expect(filters.filterArtifactsByAvailableAudits(null, audits)).toBe(null);
+    });
+
+    it('should handle null audits', () => {
+      expect(filters.filterArtifactsByAvailableAudits(artifacts, null)).toBe(artifacts);
+    });
+
+    it('should filter to used artifacts', () => {
+      expect(filters.filterArtifactsByAvailableAudits(artifacts, [
+        {implementation: SnapshotAudit, options: {}},
+      ])).toEqual([
+        {id: 'Snapshot', gatherer: {instance: snapshotGatherer}},
+      ]);
+
+      expect(filters.filterArtifactsByAvailableAudits(artifacts, [
+        {implementation: NavigationAudit, options: {}},
+      ])).toEqual([
+        {id: 'Snapshot', gatherer: {instance: snapshotGatherer}},
+        {id: 'Timespan', gatherer: {instance: timespanGatherer}},
+      ]);
+    });
+
+    it('should handle transitive dependencies', () => {
+      const baseSymbol = Symbol('baseGatherer');
+      const base = new BaseGatherer();
+      base.meta = {supportedModes: ['snapshot'], symbol: baseSymbol};
+
+      const dependentSymbol = Symbol('dependentGatherer');
+      /** @type {LH.Gatherer.FRGathererInstance<'Accessibility'>} */
+      const dependent = Object.assign(new BaseGatherer(), {
+        meta: {
+          supportedModes: ['snapshot'],
+          dependencies: {Accessibility: baseSymbol},
+          symbol: dependentSymbol,
+        },
+      });
+
+      /** @type {LH.Gatherer.FRGathererInstance<'Accessibility'>} */
+      const dependentsDependent = Object.assign(new BaseGatherer(), {
+        meta: {
+          supportedModes: ['snapshot'],
+          dependencies: {Accessibility: dependentSymbol},
+        },
+      });
+
+
+      /** @type {LH.Config.AnyArtifactDefn[]} */
+      const transitiveArtifacts = [
+        {id: 'DependencysDependency', gatherer: {instance: base}},
+        {
+          id: 'SnapshotDependency',
+          gatherer: {instance: dependent},
+          dependencies: {Accessibility: {id: 'DependencysDependency'}},
+        },
+        {
+          id: 'Snapshot',
+          gatherer: {instance: dependentsDependent},
+          dependencies: {Accessibility: {id: 'SnapshotDependency'}},
+        },
+      ];
+
+      expect(filters.filterArtifactsByAvailableAudits(transitiveArtifacts, [
+        {implementation: SnapshotAudit, options: {}},
+      ])).toMatchObject([
+        {id: 'DependencysDependency', gatherer: {instance: base}},
+        {id: 'SnapshotDependency', gatherer: {instance: dependent}},
+        {id: 'Snapshot', gatherer: {instance: dependentsDependent}},
+      ]);
+    });
+  });
+
+  describe('filterNavigationsByAvailableArtifacts', () => {
+    it('should handle null', () => {
+      expect(filters.filterNavigationsByAvailableArtifacts(null, [])).toBe(null);
+    });
+
+    it('should filter out entire navigations', () => {
+      const partialArtifacts = [{id: 'Timespan', gatherer: {instance: snapshotGatherer}}];
+      const filtered = filters.filterNavigationsByAvailableArtifacts(navigations, partialArtifacts);
+      expect(filtered).toMatchObject([
+        {id: 'firstPass', artifacts: [{id: 'Timespan'}]},
+      ]);
+    });
+
+    it('should filter within navigation', () => {
+      const partialArtifacts = [
+        {id: 'Snapshot', gatherer: {instance: snapshotGatherer}},
+        {id: 'Snapshot2', gatherer: {instance: snapshotGatherer}},
+      ];
+      const filtered = filters.filterNavigationsByAvailableArtifacts(navigations, partialArtifacts);
+      expect(filtered).toMatchObject([
+        {id: 'firstPass', artifacts: [{id: 'Snapshot'}]},
+        {id: 'secondPass', artifacts: [{id: 'Snapshot2'}]},
+      ]);
+    });
+  });
 
   describe('filterAuditsByAvailableArtifacts', () => {
     it('should handle null', () => {
@@ -188,6 +312,35 @@ describe('Fraggle Rock Config Filtering', () => {
     });
   });
 
+  describe('filterCategoriesByGatherMode', () => {
+    it('should handle null', () => {
+      expect(filters.filterCategoriesByGatherMode(null, 'timespan')).toBeNull();
+    });
+
+    it('should be noop when filter is not applied', () => {
+      expect(filters.filterCategoriesByGatherMode(categories, 'timespan')).toEqual(categories);
+    });
+
+    it('should remove categories that do not support the provided mode', () => {
+      /** @type {Record<string, LH.Config.Category>} */
+      const categories = {
+        timespan: {
+          title: 'Timespan',
+          auditRefs: [{id: 'timespan', weight: 0}],
+          supportedModes: ['timespan'],
+        },
+        snapshot: {
+          title: 'Snapshot',
+          auditRefs: [{id: 'snapshot', weight: 0}],
+          supportedModes: ['snapshot'],
+        },
+      };
+      expect(filters.filterCategoriesByGatherMode(categories, 'timespan')).toEqual({
+        timespan: categories.timespan,
+      });
+    });
+  });
+
   describe('filterAuditsByGatherMode', () => {
     it('should handle null', () => {
       expect(filters.filterAuditsByGatherMode(null, 'timespan')).toBeNull();
@@ -219,13 +372,15 @@ describe('Fraggle Rock Config Filtering', () => {
     it('should filter the entire config', () => {
       const config = {
         artifacts,
-        navigations: null,
+        navigations,
         audits,
         categories,
         groups: null,
         settings: defaultSettings,
       };
+
       expect(filters.filterConfigByGatherMode(config, 'snapshot')).toMatchObject({
+        navigations,
         artifacts: [{id: 'Snapshot'}],
         audits: [{implementation: SnapshotAudit}, {implementation: ManualAudit}],
         categories: {
@@ -234,6 +389,127 @@ describe('Fraggle Rock Config Filtering', () => {
           mixed: {auditRefs: [{id: 'snapshot'}]},
         },
       });
+    });
+  });
+
+  describe('filterConfigByExplicitFilters', () => {
+    /** @type {LH.Config.FRConfig} */
+    let config;
+
+    beforeEach(() => {
+      config = {
+        artifacts: navigationArtifacts,
+        navigations,
+        audits,
+        categories,
+        groups: null,
+        settings: defaultSettings,
+      };
+    });
+
+    it('should filter via onlyAudits', () => {
+      const filtered = filters.filterConfigByExplicitFilters(config, {
+        onlyAudits: ['snapshot'],
+        onlyCategories: null,
+        skipAudits: null,
+      });
+
+      expect(filtered).toMatchObject({
+        artifacts: [{id: 'Snapshot'}],
+        audits: [{implementation: SnapshotAudit}],
+        categories: {
+          snapshot: {},
+          mixed: {auditRefs: [{id: 'snapshot'}]},
+        },
+      });
+    });
+
+    it('should filter via skipAudits', () => {
+      const filtered = filters.filterConfigByExplicitFilters(config, {
+        onlyAudits: null,
+        onlyCategories: null,
+        skipAudits: ['snapshot', 'navigation'],
+      });
+      expect(filtered).toMatchObject({
+        artifacts: [{id: 'Timespan'}],
+        audits: [{implementation: TimespanAudit}, {implementation: ManualAudit}],
+        categories: {
+          timespan: {},
+          mixed: {auditRefs: [{id: 'timespan'}]},
+        },
+      });
+    });
+
+    it('should filter via onlyCategories', () => {
+      const filtered = filters.filterConfigByExplicitFilters(config, {
+        onlyAudits: null,
+        onlyCategories: ['timespan'],
+        skipAudits: null,
+      });
+      if (!filtered.categories) throw new Error('Failed to keep any categories');
+      expect(Object.keys(filtered.categories)).toEqual(['timespan']);
+      expect(filtered).toMatchObject({
+        artifacts: [{id: 'Timespan'}],
+        audits: [{implementation: TimespanAudit}],
+        categories: {
+          timespan: {},
+        },
+      });
+    });
+
+    it('should filter via a combination of filters', () => {
+      const filtered = filters.filterConfigByExplicitFilters(config, {
+        onlyCategories: ['mixed'],
+        onlyAudits: ['snapshot', 'timespan'],
+        skipAudits: ['timespan', 'navigation'],
+      });
+      expect(filtered).toMatchObject({
+        artifacts: [{id: 'Snapshot'}],
+        audits: [{implementation: SnapshotAudit}],
+        categories: {
+          mixed: {},
+        },
+      });
+    });
+
+    it('should filter out audits and artifacts not in the categories by default', () => {
+      config = {
+        ...config,
+        audits: [
+          ...audits,
+          {implementation: NavigationOnlyAudit, options: {}},
+        ],
+      };
+
+      const filtered = filters.filterConfigByExplicitFilters(config, {
+        onlyAudits: null,
+        onlyCategories: null,
+        skipAudits: null,
+      });
+      expect(filtered).toMatchObject({
+        navigations: [{id: 'firstPass'}],
+        artifacts: [{id: 'Snapshot'}, {id: 'Timespan'}],
+        audits: [
+          {implementation: SnapshotAudit},
+          {implementation: TimespanAudit},
+          {implementation: NavigationAudit},
+          {implementation: ManualAudit},
+        ],
+      });
+    });
+
+    it('should preserve full-page-screenshot', () => {
+      config = initializeConfig(undefined, {gatherMode: 'navigation'}).config;
+
+      const filtered = filters.filterConfigByExplicitFilters(config, {
+        onlyAudits: ['color-contrast'],
+        onlyCategories: null,
+        skipAudits: null,
+      });
+
+      if (!filtered.audits) throw new Error('No audits produced');
+      const auditIds = filtered.audits.map(audit => audit.implementation.meta.id);
+      expect(auditIds).toEqual(['full-page-screenshot', 'color-contrast']);
     });
   });
 });

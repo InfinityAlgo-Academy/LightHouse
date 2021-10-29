@@ -5,7 +5,7 @@
  */
 'use strict';
 
-module.exports = {
+export default {
   isParseFailure: false,
   hasStartUrl: true,
   hasIconsAtLeast144px: true,

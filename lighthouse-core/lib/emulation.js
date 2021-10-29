@@ -47,7 +47,6 @@ async function emulate(session, settings) {
  * @return {Promise<void>}
  */
 async function throttle(session, settings) {
-  // TODO(FR-COMPAT): reconsider if this should be resetting anything
   if (settings.throttlingMethod !== 'devtools') return clearNetworkThrottling(session);
 
   await Promise.all([

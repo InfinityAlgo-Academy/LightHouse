@@ -77,9 +77,9 @@ const UIStrings = {
   /** Title of the Search Engine Optimization (SEO) category of audits. This is displayed at the top of a list of audits focused on topics related to optimizing a website for indexing by search engines. Also used as a label of a score gauge; try to limit to 20 characters. */
   seoCategoryTitle: 'SEO',
   /** Description of the Search Engine Optimization (SEO) category. This is displayed at the top of a list of audits focused on optimizing a website for indexing by search engines. No character length limits. 'Learn More' becomes link text to additional documentation. */
-  seoCategoryDescription: 'These checks ensure that your page is optimized for search engine results ranking. ' +
-  'There are additional factors Lighthouse does not check that may affect your search ranking. ' +
-  '[Learn more](https://support.google.com/webmasters/answer/35769).',
+  seoCategoryDescription: 'These checks ensure that your page is following basic search engine optimization advice. ' +
+  'There are many additional factors Lighthouse does not score here that may affect your search ranking, ' +
+  'including performance on [Core Web Vitals](https://web.dev/learn-web-vitals/). [Learn more](https://support.google.com/webmasters/answer/35769).',
   /** Description of the Search Engine Optimization (SEO) manual checks category, the additional validators must be run by hand in order to check all SEO best practices. This is displayed at the top of a list of manually run audits focused on optimizing a website for indexing by search engines. No character length limits. */
   seoCategoryManualDescription: 'Run these additional validators on your site to check additional SEO best practices.',
   /** Title of the navigation section within the Search Engine Optimization (SEO) category. Within this section are audits with descriptive titles that highlight opportunities to make a page more usable on mobile devices. */
@@ -146,7 +146,6 @@ const defaultConfig = {
       'iframe-elements',
       'form-elements',
       'main-document-content',
-      'gather-context',
       'global-listeners',
       'dobetterweb/appcache',
       'dobetterweb/doctype',
@@ -172,19 +171,9 @@ const defaultConfig = {
     gatherers: [
       'service-worker',
     ],
-  },
-  {
-    passName: 'redirectPass',
-    loadFailureMode: 'warn',
-    // Speed up the redirect pass by blocking stylesheets, fonts, and images
-    blockedUrlPatterns: ['*.css', '*.jpg', '*.jpeg', '*.png', '*.gif', '*.svg', '*.ttf', '*.woff', '*.woff2'],
-    gatherers: [
-      'http-redirect',
-    ],
   }],
   audits: [
     'is-on-https',
-    'redirects-http',
     'service-worker',
     'viewport',
     'metrics/first-contentful-paint',
@@ -229,6 +218,7 @@ const defaultConfig = {
     'third-party-summary',
     'third-party-facades',
     'largest-contentful-paint-element',
+    'lcp-lazy-loaded',
     'layout-shift-elements',
     'long-tasks',
     'no-unload-listeners',
@@ -421,6 +411,7 @@ const defaultConfig = {
   categories: {
     'performance': {
       title: str_(UIStrings.performanceCategoryTitle),
+      supportedModes: ['navigation', 'timespan', 'snapshot'],
       auditRefs: [
         {id: 'first-contentful-paint', weight: 10, group: 'metrics', acronym: 'FCP', relevantAudits: m2a.fcpRelevantAudits},
         {id: 'speed-index', weight: 10, group: 'metrics', acronym: 'SI'},
@@ -466,12 +457,14 @@ const defaultConfig = {
         {id: 'third-party-summary', weight: 0, group: 'diagnostics'},
         {id: 'third-party-facades', weight: 0, group: 'diagnostics'},
         {id: 'largest-contentful-paint-element', weight: 0, group: 'diagnostics'},
+        {id: 'lcp-lazy-loaded', weight: 0, group: 'diagnostics'},
         {id: 'layout-shift-elements', weight: 0, group: 'diagnostics'},
         {id: 'uses-passive-event-listeners', weight: 0, group: 'diagnostics'},
         {id: 'no-document-write', weight: 0, group: 'diagnostics'},
         {id: 'long-tasks', weight: 0, group: 'diagnostics'},
         {id: 'non-composited-animations', weight: 0, group: 'diagnostics'},
         {id: 'unsized-images', weight: 0, group: 'diagnostics'},
+        {id: 'viewport', weight: 0, group: 'diagnostics'},
         // Audits past this point don't belong to a group and will not be shown automatically
         {id: 'network-requests', weight: 0},
         {id: 'network-rtt', weight: 0},
@@ -488,6 +481,7 @@ const defaultConfig = {
       title: str_(UIStrings.a11yCategoryTitle),
       description: str_(UIStrings.a11yCategoryDescription),
       manualDescription: str_(UIStrings.a11yCategoryManualDescription),
+      supportedModes: ['navigation', 'snapshot'],
       // Audit weights are meant to match the aXe scoring system of
       // minor, moderate, serious, and critical.
       // See the audits listed at dequeuniversity.com/rules/axe/4.1.
@@ -552,6 +546,7 @@ const defaultConfig = {
     },
     'best-practices': {
       title: str_(UIStrings.bestPracticesCategoryTitle),
+      supportedModes: ['navigation', 'timespan', 'snapshot'],
       auditRefs: [
         // Trust & Safety
         {id: 'is-on-https', weight: 1, group: 'best-practices-trust-safety'},
@@ -582,6 +577,7 @@ const defaultConfig = {
       title: str_(UIStrings.seoCategoryTitle),
       description: str_(UIStrings.seoCategoryDescription),
       manualDescription: str_(UIStrings.seoCategoryManualDescription),
+      supportedModes: ['navigation', 'snapshot'],
       auditRefs: [
         {id: 'viewport', weight: 1, group: 'seo-mobile'},
         {id: 'document-title', weight: 1, group: 'seo-content'},
@@ -605,12 +601,12 @@ const defaultConfig = {
       title: str_(UIStrings.pwaCategoryTitle),
       description: str_(UIStrings.pwaCategoryDescription),
       manualDescription: str_(UIStrings.pwaCategoryManualDescription),
+      supportedModes: ['navigation'],
       auditRefs: [
         // Installable
         {id: 'installable-manifest', weight: 2, group: 'pwa-installable'},
         // PWA Optimized
         {id: 'service-worker', weight: 1, group: 'pwa-optimized'},
-        {id: 'redirects-http', weight: 2, group: 'pwa-optimized'},
         {id: 'splash-screen', weight: 1, group: 'pwa-optimized'},
         {id: 'themed-omnibox', weight: 1, group: 'pwa-optimized'},
         {id: 'content-width', weight: 1, group: 'pwa-optimized'},

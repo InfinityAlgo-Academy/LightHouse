@@ -5,6 +5,7 @@ npm-debug.log
 .tmp
 .idea
 .tmp_env
+.tgz
 
 /dist
 coverage
@@ -25,8 +26,6 @@ last-run-results.html
 *.report.pretty
 *.artifacts.log
 *.ctc.json
-
-report/generated
 
 !lighthouse-core/test/results/artifacts/*.trace.json
 !lighthouse-core/test/results/artifacts/*.devtoolslog.json

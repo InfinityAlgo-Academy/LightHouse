@@ -5,93 +5,287 @@
  */
 'use strict';
 
+import * as a11y from './a11y/expectations.js';
+import * as byte from './byte-efficiency/expectations.js';
+import * as csp from './csp/csp-expectations.js';
+import * as dbw from './dobetterweb/dbw-expectations.js';
+import * as diagnostics from './perf-diagnostics/expectations.js';
+import * as errors from './errors/error-expectations.js';
+// import * as forms from './forms/form-expectations.js';
+import * as lantern from './lantern/lantern-expectations.js';
+import * as legacyJavascript from './legacy-javascript/expectations.js';
+import * as metrics from './tricky-metrics/expectations.js';
+import * as mixedContent from './issues/mixed-content-expectations.js';
+import * as offline from './offline-local/offline-expectations.js';
+import * as oopifg from './oopif/oopif-expectations.js';
+import * as perf from './perf/expectations.js';
+import * as pubads from './pubads/expectations.js';
+import * as pwa from './pwa/pwa-expectations.js';
+import * as pwa2 from './pwa/pwa2-expectations.js';
+import * as pwa3 from './pwa/pwa3-expectations.js';
+import * as redirects from './redirects/expectations.js';
+import * as screenshots from './screenshot/expectations.js';
+import * as seo from './seo/expectations.js';
+import * as sourcemaps from './source-maps/expectations.js';
+import a11yConfig from './a11y/a11y-config.js';
+import byteConfig from './byte-efficiency/byte-config.js';
+import cspConfig from './csp/csp-config.js';
+import dbwConfig from './dobetterweb/dbw-config.js';
+import errorConfig from './errors/error-config.js';
+// import formConfig from './forms/form-config.js';
+import lanternConfig from './lantern/lantern-config.js';
+import legacyJavascriptConfig from './legacy-javascript/legacy-javascript-config.js';
+import noThrottlingConfig from './tricky-metrics/no-throttling-config.js';
+import offlineConfig from './offline-local/offline-config.js';
+import oopifConfig from './oopif/oopif-config.js';
+import perfConfig from './perf/perf-config.js';
+import perfDiagnosticsConfig from './perf-diagnostics/perf-diagnostics-config.js';
+import pubadsConfig from './pubads/pubads-config.js';
+import pwaConfig from './pwa/pwa-config.js';
+import redirectsConfig from './redirects/redirects-config.js';
+import screenshotConfig from './screenshot/screenshot-config.js';
+import seoConfig from './seo/seo-config.js';
+import sourcemapsConfig from './source-maps/source-maps-config.js';
+
 /** @type {ReadonlyArray<Smokehouse.TestDfn>} */
 const smokeTests = [{
   id: 'a11y',
-  expectations: require('./a11y/expectations.js'),
-  config: require('./a11y/a11y-config.js'),
+  expectations: a11y.expectations,
+  config: a11yConfig,
 }, {
-  id: 'errors',
-  expectations: require('./errors/error-expectations.js'),
-  config: require('./errors/error-config.js'),
+  id: 'errors-infinite-loop',
+  expectations: errors.infiniteLoop,
+  config: errorConfig,
+  runSerially: true,
+}, {
+  id: 'errors-expired-ssl',
+  expectations: errors.expiredSsl,
+  config: errorConfig,
+  runSerially: true,
+}, {
+  id: 'errors-iframe-expired-ssl',
+  expectations: errors.iframeBadSsl,
+  config: errorConfig,
   runSerially: true,
 }, {
   id: 'oopif',
-  expectations: require('./oopif/oopif-expectations.js'),
-  config: require('./oopif/oopif-config.js'),
+  expectations: oopifg.expectations,
+  config: oopifConfig,
 }, {
-  id: 'pwa',
-  expectations: require('./pwa/pwa-expectations.js'),
-  config: require('./pwa/pwa-config.js'),
+  id: 'pwa-airhorner',
+  expectations: pwa.airhorner,
+  config: pwaConfig,
 }, {
-  id: 'pwa2',
-  expectations: require('./pwa/pwa2-expectations.js'),
-  config: require('./pwa/pwa-config.js'),
+  id: 'pwa-chromestatus',
+  expectations: pwa.chromestatus,
+  config: pwaConfig,
 }, {
-  id: 'pwa3',
-  expectations: require('./pwa/pwa3-expectations.js'),
-  config: require('./pwa/pwa-config.js'),
+  id: 'pwa-svgomg',
+  expectations: pwa2.svgomg,
+  config: pwaConfig,
+}, {
+  id: 'pwa-caltrain',
+  expectations: pwa2.caltrain,
+  config: pwaConfig,
+}, {
+  id: 'pwa-rocks',
+  expectations: pwa3.pwarocks,
+  config: pwaConfig,
 }, {
   id: 'dbw',
-  expectations: require('./dobetterweb/dbw-expectations.js'),
-  config: require('./dobetterweb/dbw-config.js'),
+  expectations: dbw.expectations,
+  config: dbwConfig,
   runSerially: true, // Need access to network request assertions.
 }, {
-  id: 'redirects',
-  expectations: require('./redirects/expectations.js'),
-  config: require('./redirects/redirects-config.js'),
+  id: 'issues-mixed-content',
+  expectations: mixedContent.expectations,
 }, {
-  id: 'seo',
-  expectations: require('./seo/expectations.js'),
-  config: require('./seo/seo-config.js'),
+  id: 'redirects-single-server',
+  expectations: redirects.singleServer,
+  config: redirectsConfig,
 }, {
-  id: 'offline',
-  expectations: require('./offline-local/offline-expectations.js'),
-  config: require('./offline-local/offline-config.js'),
+  id: 'redirects-multiple-server',
+  expectations: redirects.multipleServer,
+  config: redirectsConfig,
+}, {
+  id: 'redirects-client-paint-server',
+  expectations: redirects.clientPaintServer,
+  config: redirectsConfig,
+}, {
+  id: 'redirects-single-client',
+  expectations: redirects.singleClient,
+  config: redirectsConfig,
+}, {
+  id: 'redirects-history-push-state',
+  expectations: redirects.historyPushState,
+  config: redirectsConfig,
+}, {
+  id: 'seo-passing',
+  expectations: seo.passing,
+  config: seoConfig,
+}, {
+  id: 'seo-failing',
+  expectations: seo.failing,
+  config: seoConfig,
+}, {
+  id: 'seo-status-403',
+  expectations: seo.status403,
+  config: seoConfig,
+}, {
+  id: 'seo-tap-targets',
+  expectations: seo.tapTargets,
+  config: seoConfig,
+}, {
+  id: 'offline-online-only',
+  expectations: offline.onlineOnly,
+  config: offlineConfig,
   runSerially: true,
 }, {
-  id: 'byte',
-  expectations: require('./byte-efficiency/expectations.js'),
-  config: require('./byte-efficiency/byte-config.js'),
+  id: 'offline-ready',
+  expectations: offline.ready,
+  config: offlineConfig,
   runSerially: true,
 }, {
-  id: 'perf',
-  expectations: require('./perf/expectations.js'),
-  config: require('./perf/perf-config.js'),
+  id: 'offline-sw-broken',
+  expectations: offline.swBroken,
+  config: offlineConfig,
   runSerially: true,
 }, {
-  id: 'perf-diagnostics',
-  expectations: require('./perf-diagnostics/expectations.js'),
-  config: require('./perf-diagnostics/perf-diagnostics-config.js'),
+  id: 'offline-sw-slow',
+  expectations: offline.swSlow,
+  config: offlineConfig,
+  runSerially: true,
 }, {
-  id: 'lantern',
-  expectations: require('./lantern/lantern-expectations.js'),
-  config: require('./lantern/lantern-config.js'),
+  id: 'byte-efficiency',
+  expectations: byte.efficiency,
+  config: byteConfig,
+  runSerially: true,
 }, {
-  id: 'metrics',
-  expectations: require('./tricky-metrics/expectations.js'),
-  config: require('./tricky-metrics/no-throttling-config.js'),
+  id: 'byte-gzip',
+  expectations: byte.gzip,
+  config: byteConfig,
+  runSerially: true,
+}, {
+  id: 'perf-preload',
+  expectations: perf.preload,
+  config: perfConfig,
+  runSerially: true,
+}, {
+  id: 'perf-budgets',
+  expectations: perf.budgets,
+  config: perfConfig,
+  runSerially: true,
+}, {
+  id: 'perf-fonts',
+  expectations: perf.fonts,
+  config: perfConfig,
+  runSerially: true,
+}, {
+  id: 'perf-trace-elements',
+  expectations: perf.traceElements,
+  config: perfConfig,
+  runSerially: true,
+}, {
+  id: 'perf-frame-metrics',
+  expectations: perf.frameMetrics,
+  config: perfConfig,
+  runSerially: true,
+}, {
+  id: 'perf-debug',
+  expectations: perf.debug,
+  config: {
+    extends: 'lighthouse:default',
+    settings: {debugNavigation: true, onlyAudits: ['metrics']},
+  },
+}, {
+  id: 'perf-diagnostics-animations',
+  expectations: diagnostics.animations,
+  config: perfDiagnosticsConfig,
+}, {
+  id: 'perf-diagnostics-third-party',
+  expectations: diagnostics.thirdParty,
+  config: perfDiagnosticsConfig,
+}, {
+  id: 'perf-diagnostics-unsized-images',
+  expectations: diagnostics.unsizedImages,
+  config: perfDiagnosticsConfig,
+}, {
+  id: 'lantern-online',
+  expectations: lantern.online,
+  config: lanternConfig,
+}, {
+  id: 'lantern-settimeout',
+  expectations: lantern.setTimeout,
+  config: lanternConfig,
+}, {
+  id: 'lantern-fetch',
+  expectations: lantern.fetch,
+  config: lanternConfig,
+}, {
+  id: 'lantern-xhr',
+  expectations: lantern.xhr,
+  config: lanternConfig,
+}, {
+  id: 'lantern-idle-callback-short',
+  expectations: lantern.idleCallbackShort,
+  config: lanternConfig,
+}, {
+  id: 'lantern-idle-callback-long',
+  expectations: lantern.idleCallbackLong,
+  config: lanternConfig,
+}, {
+  id: 'metrics-tricky-tti',
+  expectations: metrics.trickyTti,
+  config: noThrottlingConfig,
+}, {
+  id: 'metrics-tricky-tti-late-fcp',
+  expectations: metrics.trickyTtiLateFcp,
+  config: noThrottlingConfig,
+}, {
+  id: 'metrics-delayed-lcp',
+  expectations: metrics.delayedLcp,
+  config: noThrottlingConfig,
+}, {
+  id: 'metrics-delayed-fcp',
+  expectations: metrics.delayedFcp,
+  config: noThrottlingConfig,
+}, {
+  id: 'metrics-debugger',
+  expectations: metrics.debuggerStatement,
+  config: noThrottlingConfig,
 }, {
   id: 'legacy-javascript',
-  expectations: require('./legacy-javascript/expectations.js'),
-  config: require('./legacy-javascript/legacy-javascript-config.js'),
+  expectations: legacyJavascript.expectations,
+  config: legacyJavascriptConfig,
 }, {
   id: 'source-maps',
-  expectations: require('./source-maps/expectations.js'),
-  config: require('./source-maps/source-maps-config.js'),
+  expectations: sourcemaps.expectations,
+  config: sourcemapsConfig,
 }, {
 // TODO: restore when --enable-features=AutofillShowTypePredictions is not needed.
 //   id: 'forms',
-//   expectations: require('./forms/form-expectations.js'),
-//   config: require('./forms/form-config.js'),
+//   expectations: forms.expectations,
+//   config: formConfig,
 // }, {
   id: 'screenshot',
-  expectations: require('./screenshot/expectations.js'),
-  config: require('./screenshot/screenshot-config.js'),
+  expectations: screenshots.expectations,
+  config: screenshotConfig,
 }, {
-  id: 'csp',
-  expectations: require('./csp/csp-expectations.js'),
-  config: require('./csp/csp-config.js'),
+  id: 'pubads',
+  expectations: pubads.expectations,
+  config: pubadsConfig,
+}, {
+  id: 'csp-allow-all',
+  expectations: csp.allowAll,
+  config: cspConfig,
+}, {
+  id: 'csp-block-all-m91',
+  expectations: csp.blockAllM91,
+  config: cspConfig,
+}, {
+  id: 'csp-block-all',
+  expectations: csp.blockAll,
+  config: cspConfig,
 }];
 
-module.exports = smokeTests;
+export default smokeTests;

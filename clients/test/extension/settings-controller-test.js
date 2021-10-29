@@ -9,7 +9,7 @@
 
 const SettingsController = require('../../extension/scripts/settings-controller.js');
 const defaultConfig = require('../../../lighthouse-core/config/default-config.js');
-const i18n = require('../../../lighthouse-core/lib/i18n/i18n.js');
+const format = require('../../../shared/localization/format.js');
 
 describe('Lighthouse chrome extension SettingsController', () => {
   it('default categories should be correct', () => {
@@ -17,7 +17,7 @@ describe('Lighthouse chrome extension SettingsController', () => {
       .map(([id, category]) => {
         return {
           id,
-          title: i18n.getFormatted(category.title, 'en-US'),
+          title: format.getFormatted(category.title, 'en-US'),
         };
       });
     expect(SettingsController.DEFAULT_CATEGORIES).toEqual(categories);

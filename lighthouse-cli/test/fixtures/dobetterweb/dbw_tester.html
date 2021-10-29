@@ -102,19 +102,21 @@
 </style>
 </template>
 
-<template id="deprecations-tmpl">
-  <style>
-    body /deep/ div {
-      color: pink; /* FAIL - deprecation warning */
-    }
-  </style>
-</template>
-
 <!-- Force FCP to be ~5s out, necessary to make sure our render-blocking audits still work -->
 <!-- even when other forces were responsible for delaying the render. -->
 <script src="./fcp-delayer.js?delay=5000"></script>
 </head>
 <body>
+
+<div class="shifter">Shifter</div>
+<script>
+  setTimeout(() => {
+    document.querySelector('.shifter').style.fontSize = '50px';
+  }, 1000);
+  setTimeout(() => {
+    document.querySelector('.shifter').style.display = 'none';
+  }, 2000);
+</script>
 
 <!-- Various sites like to assign HTMLElements a custom `matches` property. See issue #5934 -->
 
@@ -201,7 +203,8 @@
 <!-- FAIL(image-aspect-ratio): image is naturally 480x318 -->
 <img src="lighthouse-480x318.jpg?iar1" width="120" height="15">
 <!-- PASS(image-aspect-ratio) -->
-<img src="lighthouse-480x318.jpg?iar2" width="120" height="80">
+<!-- FAIL(lcp-lazy-loaded) -->
+<img loading="lazy" src="lighthouse-480x318.jpg?iar2" width="120" height="80">
 
 <!-- FAIL(image-size-responsive): image is naturally 480x318 -->
 <img src="lighthouse-480x318.jpg?isr1" width="360" height="240" style="position: absolute;">
@@ -360,8 +363,6 @@ function passwordInputsCanBePastedIntoTest() {
 
 
 function deprecationsTest() {
-  stampTemplate('deprecations-tmpl', document.head);
-
   // TODO: some deprecated API messages are not currently being logged correctly.
   // See: https://crbug.com/680832
 
@@ -472,6 +473,26 @@ if (location.search === '') {
   // Log console.error calls in the console.
   console.error('Error! Error!');
 </script>
+
+<style>
+  #animated-boi {
+    animation: 3s badanim;
+    border: 1px solid black;
+  }
+
+  @keyframes badanim {
+    from {
+      margin-left: 100%;
+      height: 50px;
+    }
+
+    to {
+      margin-left: 0%;
+      height: 200px;
+    }
+  }
+</style>
+<div id="animated-boi">hi</div>
 
 </body>
 </html>

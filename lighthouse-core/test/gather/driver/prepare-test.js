@@ -38,9 +38,9 @@ afterEach(() => {
   jest.useRealTimers();
 });
 
-describe('.prepareNetworkForNavigation()', () => {
+describe('.prepareThrottlingAndNetwork()', () => {
   it('sets throttling appropriately', async () => {
-    await prepare.prepareNetworkForNavigation(
+    await prepare.prepareThrottlingAndNetwork(
       sessionMock.asSession(),
       {
         ...constants.defaultSettings,
@@ -53,10 +53,7 @@ describe('.prepareNetworkForNavigation()', () => {
           cpuSlowdownMultiplier: 2,
         },
       },
-      {
-        ...constants.defaultNavigationConfig,
-        url,
-      }
+      constants.defaultNavigationConfig
     );
 
     expect(sessionMock.sendCommand.findInvocation('Network.emulateNetworkConditions')).toEqual({
@@ -71,7 +68,7 @@ describe('.prepareNetworkForNavigation()', () => {
   });
 
   it('disables throttling', async () => {
-    await prepare.prepareNetworkForNavigation(
+    await prepare.prepareThrottlingAndNetwork(
       sessionMock.asSession(),
       {
         ...constants.defaultSettings,
@@ -86,7 +83,6 @@ describe('.prepareNetworkForNavigation()', () => {
       },
       {
         ...constants.defaultNavigationConfig,
-        url,
         disableThrottling: true,
       }
     );
@@ -103,7 +99,7 @@ describe('.prepareNetworkForNavigation()', () => {
   });
 
   it('unsets url patterns when empty', async () => {
-    await prepare.prepareNetworkForNavigation(
+    await prepare.prepareThrottlingAndNetwork(
       sessionMock.asSession(),
       {
         ...constants.defaultSettings,
@@ -112,7 +108,6 @@ describe('.prepareNetworkForNavigation()', () => {
       {
         ...constants.defaultNavigationConfig,
         blockedUrlPatterns: [],
-        url,
       }
     );
 
@@ -122,7 +117,7 @@ describe('.prepareNetworkForNavigation()', () => {
   });
 
   it('blocks url patterns', async () => {
-    await prepare.prepareNetworkForNavigation(
+    await prepare.prepareThrottlingAndNetwork(
       sessionMock.asSession(),
       {
         ...constants.defaultSettings,
@@ -131,7 +126,6 @@ describe('.prepareNetworkForNavigation()', () => {
       {
         ...constants.defaultNavigationConfig,
         blockedUrlPatterns: ['https://b.example.com'],
-        url,
       }
     );
 
@@ -141,10 +135,10 @@ describe('.prepareNetworkForNavigation()', () => {
   });
 
   it('sets extraHeaders', async () => {
-    await prepare.prepareNetworkForNavigation(
+    await prepare.prepareThrottlingAndNetwork(
       sessionMock.asSession(),
       {...constants.defaultSettings, extraHeaders: {'Cookie': 'monster', 'x-men': 'wolverine'}},
-      {...constants.defaultNavigationConfig, url}
+      {...constants.defaultNavigationConfig}
     );
 
     expect(sessionMock.sendCommand.findInvocation('Network.setExtraHTTPHeaders')).toEqual({
@@ -336,5 +330,85 @@ describe('.prepareTargetForNavigationMode()', () => {
       accept: true,
       promptText: 'Lighthouse prompt response',
     });
+  });
+});
+
+describe('.prepareTargetForTimespanMode()', () => {
+  let driverMock = createMockDriver();
+
+  beforeEach(() => {
+    driverMock = createMockDriver();
+    sessionMock = driverMock._session;
+
+    sessionMock.sendCommand
+      .mockResponse('Network.enable')
+      .mockResponse('Network.setUserAgentOverride')
+      .mockResponse('Emulation.setDeviceMetricsOverride')
+      .mockResponse('Emulation.setTouchEmulationEnabled')
+      .mockResponse('Debugger.enable')
+      .mockResponse('Debugger.setSkipAllPauses')
+      .mockResponse('Debugger.setAsyncCallStackDepth')
+      .mockResponse('Network.emulateNetworkConditions')
+      .mockResponse('Emulation.setCPUThrottlingRate')
+      .mockResponse('Network.setBlockedURLs')
+      .mockResponse('Network.setExtraHTTPHeaders');
+  });
+
+  it('emulates the target device', async () => {
+    await prepare.prepareTargetForTimespanMode(driverMock.asDriver(), {
+      ...constants.defaultSettings,
+      screenEmulation: {
+        disabled: false,
+        mobile: true,
+        deviceScaleFactor: 2,
+        width: 200,
+        height: 300,
+      },
+    });
+
+    expect(sessionMock.sendCommand.findInvocation('Emulation.setDeviceMetricsOverride')).toEqual({
+      mobile: true,
+      deviceScaleFactor: 2,
+      width: 200,
+      height: 300,
+    });
+  });
+
+  it('enables async stacks', async () => {
+    await prepare.prepareTargetForTimespanMode(driverMock.asDriver(), {
+      ...constants.defaultSettings,
+    });
+
+    const invocations = sessionMock.sendCommand.mock.calls;
+    const debuggerInvocations = invocations.filter(call => call[0].startsWith('Debugger.'));
+    expect(debuggerInvocations.map(argList => argList[0])).toEqual([
+      'Debugger.enable',
+      'Debugger.setSkipAllPauses',
+      'Debugger.setAsyncCallStackDepth',
+    ]);
+  });
+
+  it('sets throttling', async () => {
+    await prepare.prepareTargetForTimespanMode(driverMock.asDriver(), {
+      ...constants.defaultSettings,
+      throttlingMethod: 'devtools',
+    });
+
+    sessionMock.sendCommand.findInvocation('Network.emulateNetworkConditions');
+    sessionMock.sendCommand.findInvocation('Emulation.setCPUThrottlingRate');
+  });
+
+  it('sets network environment', async () => {
+    await prepare.prepareTargetForTimespanMode(driverMock.asDriver(), {
+      ...constants.defaultSettings,
+      blockedUrlPatterns: ['.jpg'],
+      extraHeaders: {Cookie: 'name=wolverine'},
+    });
+
+    const blockedInvocation = sessionMock.sendCommand.findInvocation('Network.setBlockedURLs');
+    expect(blockedInvocation).toEqual({urls: ['.jpg']});
+
+    const headersInvocation = sessionMock.sendCommand.findInvocation('Network.setExtraHTTPHeaders');
+    expect(headersInvocation).toEqual({headers: {Cookie: 'name=wolverine'}});
   });
 });

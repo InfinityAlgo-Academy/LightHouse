@@ -16,15 +16,14 @@
  */
 'use strict';
 
-/* globals self, Util */
-
-/** @typedef {import('./dom.js')} DOM */
-/** @typedef {import('./report-renderer.js')} ReportRenderer */
-/** @typedef {import('./details-renderer.js')} DetailsRenderer */
-/** @typedef {import('./util.js')} Util */
+/** @typedef {import('./dom.js').DOM} DOM */
+/** @typedef {import('./report-renderer.js').ReportRenderer} ReportRenderer */
+/** @typedef {import('./details-renderer.js').DetailsRenderer} DetailsRenderer */
 /** @typedef {'failed'|'warning'|'manual'|'passed'|'notApplicable'} TopLevelClumpId */
 
-class CategoryRenderer {
+import {Util} from './util.js';
+
+export class CategoryRenderer {
   /**
    * @param {DOM} dom
    * @param {DetailsRenderer} detailsRenderer
@@ -34,10 +33,6 @@ class CategoryRenderer {
     this.dom = dom;
     /** @type {DetailsRenderer} */
     this.detailsRenderer = detailsRenderer;
-    /** @type {ParentNode} */
-    this.templateContext = this.dom.document();
-
-    this.detailsRenderer.setTemplateContext(this.templateContext);
   }
 
   /**
@@ -57,19 +52,19 @@ class CategoryRenderer {
    * @return {Element}
    */
   renderAudit(audit) {
-    const tmpl = this.dom.cloneTemplate('#tmpl-lh-audit', this.templateContext);
-    return this.populateAuditValues(audit, tmpl);
+    const component = this.dom.createComponent('audit');
+    return this.populateAuditValues(audit, component);
   }
 
   /**
    * Populate an DOM tree with audit details. Used by renderAudit and renderOpportunity
    * @param {LH.ReportResult.AuditRef} audit
-   * @param {DocumentFragment} tmpl
+   * @param {DocumentFragment} component
    * @return {!Element}
    */
-  populateAuditValues(audit, tmpl) {
+  populateAuditValues(audit, component) {
     const strings = Util.i18n.strings;
-    const auditEl = this.dom.find('.lh-audit', tmpl);
+    const auditEl = this.dom.find('.lh-audit', component);
     auditEl.id = audit.result.id;
     const scoreDisplayMode = audit.result.scoreDisplayMode;
 
@@ -83,9 +78,8 @@ class CategoryRenderer {
     descEl.appendChild(this.dom.convertMarkdownLinkSnippets(audit.result.description));
 
     for (const relevantMetric of audit.relevantMetrics || []) {
-      const adornEl = this.dom.createChildOf(descEl, 'span', 'lh-audit__adorn', {
-        title: `Relevant to ${relevantMetric.result.title}`,
-      });
+      const adornEl = this.dom.createChildOf(descEl, 'span', 'lh-audit__adorn');
+      adornEl.title = `Relevant to ${relevantMetric.result.title}`;
       adornEl.textContent = relevantMetric.acronym || relevantMetric.id;
     }
 
@@ -124,8 +118,8 @@ class CategoryRenderer {
       auditEl.classList.add(`lh-audit--error`);
       const textEl = this.dom.find('.lh-audit__display-text', auditEl);
       textEl.textContent = strings.errorLabel;
-      textEl.classList.add('tooltip-boundary');
-      const tooltip = this.dom.createChildOf(textEl, 'div', 'tooltip tooltip--error');
+      textEl.classList.add('lh-tooltip-boundary');
+      const tooltip = this.dom.createChildOf(textEl, 'div', 'lh-tooltip lh-tooltip--error');
       tooltip.textContent = audit.result.errorMessage || strings.errorMissingAuditInfo;
     } else if (audit.result.explanation) {
       const explEl = this.dom.createChildOf(titleEl, 'div', 'lh-audit-explanation');
@@ -151,11 +145,40 @@ class CategoryRenderer {
   }
 
   /**
+   * Inject the final screenshot next to the score gauge of the first category (likely Performance)
+   * @param {HTMLElement} categoriesEl
+   * @param {LH.ReportResult['audits']} audits
+   * @param {Element} scoreScaleEl
+   */
+  injectFinalScreenshot(categoriesEl, audits, scoreScaleEl) {
+    const audit = audits['final-screenshot'];
+    if (!audit || audit.scoreDisplayMode === 'error') return null;
+    if (!audit.details || audit.details.type !== 'screenshot') return null;
+
+    const imgEl = this.dom.createElement('img', 'lh-final-ss-image');
+    const finalScreenshotDataUri = audit.details.data;
+    imgEl.src = finalScreenshotDataUri;
+    imgEl.alt = audit.title;
+
+    const firstCatHeaderEl = this.dom.find('.lh-category .lh-category-header', categoriesEl);
+    const leftColEl = this.dom.createElement('div', 'lh-category-headercol');
+    const separatorEl = this.dom.createElement('div',
+        'lh-category-headercol lh-category-headercol--separator');
+    const rightColEl = this.dom.createElement('div', 'lh-category-headercol');
+
+    leftColEl.append(...firstCatHeaderEl.childNodes);
+    leftColEl.append(scoreScaleEl);
+    rightColEl.append(imgEl);
+    firstCatHeaderEl.append(leftColEl, separatorEl, rightColEl);
+    firstCatHeaderEl.classList.add('lh-category-header__finalscreenshot');
+  }
+
+  /**
    * @return {Element}
    */
   _createChevron() {
-    const chevronTmpl = this.dom.cloneTemplate('#tmpl-lh-chevron', this.templateContext);
-    const chevronEl = this.dom.find('svg.lh-chevron', chevronTmpl);
+    const component = this.dom.createComponent('chevron');
+    const chevronEl = this.dom.find('svg.lh-chevron', component);
     return chevronEl;
   }
 
@@ -177,21 +200,22 @@ class CategoryRenderer {
   /**
    * @param {LH.ReportResult.Category} category
    * @param {Record<string, LH.Result.ReportGroup>} groupDefinitions
+   * @param {{gatherMode: LH.Result.GatherMode}=} options
    * @return {DocumentFragment}
    */
-  renderCategoryHeader(category, groupDefinitions) {
-    const tmpl = this.dom.cloneTemplate('#tmpl-lh-category-header', this.templateContext);
+  renderCategoryHeader(category, groupDefinitions, options) {
+    const component = this.dom.createComponent('categoryHeader');
 
-    const gaugeContainerEl = this.dom.find('.lh-score__gauge', tmpl);
-    const gaugeEl = this.renderScoreGauge(category, groupDefinitions);
+    const gaugeContainerEl = this.dom.find('.lh-score__gauge', component);
+    const gaugeEl = this.renderCategoryScore(category, groupDefinitions, options);
     gaugeContainerEl.appendChild(gaugeEl);
 
     if (category.description) {
       const descEl = this.dom.convertMarkdownLinkSnippets(category.description);
-      this.dom.find('.lh-category-header__description', tmpl).appendChild(descEl);
+      this.dom.find('.lh-category-header__description', component).appendChild(descEl);
     }
 
-    return tmpl;
+    return component;
   }
 
   /**
@@ -287,8 +311,8 @@ class CategoryRenderer {
    * @return {!Element}
    */
   renderClump(clumpId, {auditRefs, description}) {
-    const clumpTmpl = this.dom.cloneTemplate('#tmpl-lh-clump', this.templateContext);
-    const clumpElement = this.dom.find('.lh-clump', clumpTmpl);
+    const clumpComponent = this.dom.createComponent('clump');
+    const clumpElement = this.dom.find('.lh-clump', clumpComponent);
 
     if (clumpId === 'warning') {
       clumpElement.setAttribute('open', '');
@@ -318,11 +342,16 @@ class CategoryRenderer {
   }
 
   /**
-   * @param {ParentNode} context
+   * @param {LH.ReportResult.Category} category
+   * @param {Record<string, LH.Result.ReportGroup>} groupDefinitions
+   * @param {{gatherMode: LH.Result.GatherMode}=} options
+   * @return {DocumentFragment}
    */
-  setTemplateContext(context) {
-    this.templateContext = context;
-    this.detailsRenderer.setTemplateContext(context);
+  renderCategoryScore(category, groupDefinitions, options) {
+    if (options && Util.shouldDisplayAsFraction(options.gatherMode)) {
+      return this.renderCategoryFraction(category);
+    }
+    return this.renderScoreGauge(category, groupDefinitions);
   }
 
   /**
@@ -331,9 +360,8 @@ class CategoryRenderer {
    * @return {DocumentFragment}
    */
   renderScoreGauge(category, groupDefinitions) { // eslint-disable-line no-unused-vars
-    const tmpl = this.dom.cloneTemplate('#tmpl-lh-gauge', this.templateContext);
+    const tmpl = this.dom.createComponent('gauge');
     const wrapper = this.dom.find('a.lh-gauge__wrapper', tmpl);
-    wrapper.href = `#${category.id}`;
 
     if (Util.isPluginCategory(category.id)) {
       wrapper.classList.add('lh-gauge__wrapper--plugin');
@@ -364,6 +392,36 @@ class CategoryRenderer {
     }
 
     this.dom.find('.lh-gauge__label', tmpl).textContent = category.title;
+    return tmpl;
+  }
+
+  /**
+   * @param {LH.ReportResult.Category} category
+   * @return {DocumentFragment}
+   */
+  renderCategoryFraction(category) {
+    const tmpl = this.dom.createComponent('fraction');
+    const wrapper = this.dom.find('a.lh-fraction__wrapper', tmpl);
+
+    const {numPassed, numPassableAudits, totalWeight} = Util.calculateCategoryFraction(category);
+
+    const fraction = numPassed / numPassableAudits;
+    const content = this.dom.find('.lh-fraction__content', tmpl);
+    const text = this.dom.createElement('span');
+    text.textContent = `${numPassed}/${numPassableAudits}`;
+    content.appendChild(text);
+
+    let rating = Util.calculateRating(fraction);
+
+    // If none of the available audits can affect the score, a rating isn't useful.
+    // The flow report should display the fraction with neutral icon and coloring in this case.
+    if (totalWeight === 0) {
+      rating = 'null';
+    }
+
+    wrapper.classList.add(`lh-fraction__wrapper--${rating}`);
+
+    this.dom.find('.lh-fraction__label', tmpl).textContent = category.title;
     return tmpl;
   }
 
@@ -448,13 +506,14 @@ class CategoryRenderer {
    *   ├── …
    *   ⋮
    * @param {LH.ReportResult.Category} category
-   * @param {Object<string, LH.Result.ReportGroup>} [groupDefinitions]
+   * @param {Object<string, LH.Result.ReportGroup>=} groupDefinitions
+   * @param {{gatherMode: LH.Result.GatherMode}=} options
    * @return {Element}
    */
-  render(category, groupDefinitions = {}) {
+  render(category, groupDefinitions = {}, options) {
     const element = this.dom.createElement('div', 'lh-category');
-    this.createPermalinkSpan(element, category.id);
-    element.appendChild(this.renderCategoryHeader(category, groupDefinitions));
+    element.id = category.id;
+    element.appendChild(this.renderCategoryHeader(category, groupDefinitions, options));
 
     // Top level clumps for audits, in order they will appear in the report.
     /** @type {Map<TopLevelClumpId, Array<LH.ReportResult.AuditRef>>} */
@@ -471,6 +530,13 @@ class CategoryRenderer {
       const clump = /** @type {Array<LH.ReportResult.AuditRef>} */ (clumps.get(clumpId)); // already defined
       clump.push(auditRef);
       clumps.set(clumpId, clump);
+    }
+
+    // Sort audits by weight.
+    for (const auditRefs of clumps.values()) {
+      auditRefs.sort((a, b) => {
+        return b.weight - a.weight;
+      });
     }
 
     // Render each clump.
@@ -491,20 +557,4 @@ class CategoryRenderer {
 
     return element;
   }
-
-  /**
-   * Create a non-semantic span used for hash navigation of categories
-   * @param {Element} element
-   * @param {string} id
-   */
-  createPermalinkSpan(element, id) {
-    const permalinkEl = this.dom.createChildOf(element, 'span', 'lh-permalink');
-    permalinkEl.id = id;
-  }
-}
-
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = CategoryRenderer;
-} else {
-  self.CategoryRenderer = CategoryRenderer;
 }

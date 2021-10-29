@@ -11,10 +11,8 @@
  *   2. Display coords (DC suffix): that match the CSS pixel coordinate space of the LH report's page.
  */
 
-/* globals self Util */
-
-/** @typedef {import('./dom.js')} DOM */
-/** @typedef {LH.Artifacts.Rect} Rect */
+/** @typedef {import('./dom.js').DOM} DOM */
+/** @typedef {LH.Audit.Details.Rect} Rect */
 /** @typedef {{width: number, height: number}} Size */
 
 /**
@@ -22,13 +20,14 @@
  * @property {DOM} dom
  * @property {Element} reportEl
  * @property {Element} overlayContainerEl
- * @property {ParentNode} templateContext
- * @property {LH.Artifacts.FullPageScreenshot} fullPageScreenshot
+ * @property {LH.Audit.Details.FullPageScreenshot} fullPageScreenshot
  */
 
+import {Util} from './util.js';
+
 /**
- * @param {LH.Artifacts.FullPageScreenshot['screenshot']} screenshot
- * @param {LH.Artifacts.Rect} rect
+ * @param {LH.Audit.Details.FullPageScreenshot['screenshot']} screenshot
+ * @param {LH.Audit.Details.Rect} rect
  * @return {boolean}
  */
 function screenshotOverlapsRect(screenshot, rect) {
@@ -59,7 +58,7 @@ function getRectCenterPoint(rect) {
   };
 }
 
-class ElementScreenshotRenderer {
+export class ElementScreenshotRenderer {
   /**
    * Given the location of an element and the sizes of the preview and screenshot,
    * compute the absolute positions (in screenshot coordinate scale) of the screenshot content
@@ -99,7 +98,7 @@ class ElementScreenshotRenderer {
    * @param {DOM} dom
    * @param {HTMLElement} maskEl
    * @param {{left: number, top: number}} positionClip
-   * @param {LH.Artifacts.Rect} elementRect
+   * @param {Rect} elementRect
    * @param {Size} elementPreviewSize
    */
   static renderClipPathInScreenshot(dom, maskEl, positionClip, elementRect, elementPreviewSize) {
@@ -121,8 +120,9 @@ class ElementScreenshotRenderer {
       `${right},${top} 1,${top}       1,${bottom}       ${right},${bottom}`,
     ];
     for (const points of polygonsPoints) {
-      clipPathEl.append(dom.createElementNS(
-        'http://www.w3.org/2000/svg', 'polygon', undefined, {points}));
+      const pointEl = dom.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+      pointEl.setAttribute('points', points);
+      clipPathEl.append(pointEl);
     }
   }
 
@@ -132,7 +132,7 @@ class ElementScreenshotRenderer {
    * Allows for multiple Lighthouse reports to be rendered on the page, each with their
    * own full page screenshot.
    * @param {HTMLElement} el
-   * @param {LH.Artifacts.FullPageScreenshot['screenshot']} screenshot
+   * @param {LH.Audit.Details.FullPageScreenshot['screenshot']} screenshot
    */
   static installFullPageScreenshot(el, screenshot) {
     el.style.setProperty('--element-screenshot-url', `url(${screenshot.data})`);
@@ -143,7 +143,7 @@ class ElementScreenshotRenderer {
    * @param {InstallOverlayFeatureParams} opts
    */
   static installOverlayFeature(opts) {
-    const {dom, reportEl, overlayContainerEl, templateContext, fullPageScreenshot} = opts;
+    const {dom, reportEl, overlayContainerEl, fullPageScreenshot} = opts;
     const screenshotOverlayClass = 'lh-screenshot-overlay--enabled';
     // Don't install the feature more than once.
     if (reportEl.classList.contains(screenshotOverlayClass)) return;
@@ -176,7 +176,6 @@ class ElementScreenshotRenderer {
       };
       const screenshotElement = ElementScreenshotRenderer.render(
         dom,
-        templateContext,
         fullPageScreenshot.screenshot,
         elementRectSC,
         maxLightboxSize
@@ -196,7 +195,7 @@ class ElementScreenshotRenderer {
   /**
    * Given the size of the element in the screenshot and the total available size of our preview container,
    * compute the factor by which we need to zoom out to view the entire element with context.
-   * @param {LH.Artifacts.Rect} elementRectSC
+   * @param {Rect} elementRectSC
    * @param {Size} renderContainerSizeDC
    * @return {number}
    */
@@ -215,18 +214,17 @@ class ElementScreenshotRenderer {
    * Used to render both the thumbnail preview in details tables and the full-page screenshot in the lightbox.
    * Returns null if element rect is outside screenshot bounds.
    * @param {DOM} dom
-   * @param {ParentNode} templateContext
-   * @param {LH.Artifacts.FullPageScreenshot['screenshot']} screenshot
-   * @param {LH.Artifacts.Rect} elementRectSC Region of screenshot to highlight.
+   * @param {LH.Audit.Details.FullPageScreenshot['screenshot']} screenshot
+   * @param {Rect} elementRectSC Region of screenshot to highlight.
    * @param {Size} maxRenderSizeDC e.g. maxThumbnailSize or maxLightboxSize.
    * @return {Element|null}
    */
-  static render(dom, templateContext, screenshot, elementRectSC, maxRenderSizeDC) {
+  static render(dom, screenshot, elementRectSC, maxRenderSizeDC) {
     if (!screenshotOverlapsRect(screenshot, elementRectSC)) {
       return null;
     }
 
-    const tmpl = dom.cloneTemplate('#tmpl-lh-element-screenshot', templateContext);
+    const tmpl = dom.createComponent('elementScreenshot');
     const containerEl = dom.find('div.lh-element-screenshot', tmpl);
 
     containerEl.dataset['rectWidth'] = elementRectSC.width.toString();
@@ -287,10 +285,4 @@ class ElementScreenshotRenderer {
 
     return containerEl;
   }
-}
-
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = ElementScreenshotRenderer;
-} else {
-  self.ElementScreenshotRenderer = ElementScreenshotRenderer;
 }

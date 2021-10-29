@@ -20,11 +20,16 @@ Requiring audits
 Runner setup
 Connecting to browser
 Resetting state with about:blank
+Navigating to about:blank
 Getting browser version
 Benchmarking machine
 Initializing…
+Preparing target for navigation mode
 Running defaultPass pass
 Resetting state with about:blank
+Navigating to about:blank
+Preparing target for navigation
+Cleaning origin data
 Cleaning browser cache
 Preparing network conditions
 Running beforePass methods
@@ -39,7 +44,6 @@ Gathering setup: MetaElements
 Gathering setup: ScriptElements
 Gathering setup: IFrameElements
 Gathering setup: MainDocumentContent
-Gathering setup: GatherContext
 Gathering setup: GlobalListeners
 Gathering setup: AppCacheManifest
 Gathering setup: Doctype
@@ -59,6 +63,7 @@ Gathering setup: SourceMaps
 Gathering setup: FullPageScreenshot
 Beginning devtoolsLog and trace
 Loading page & waiting for onload
+Navigating to http://127.0.0.1:8000/devtools/lighthouse/resources/lighthouse-basic.html
 Running pass methods
 Gathering in-page: CSSUsage
 Gathering in-page: JsUsage
@@ -71,7 +76,6 @@ Gathering in-page: MetaElements
 Gathering in-page: ScriptElements
 Gathering in-page: IFrameElements
 Gathering in-page: MainDocumentContent
-Gathering in-page: GatherContext
 Gathering in-page: GlobalListeners
 Gathering in-page: AppCacheManifest
 Gathering in-page: Doctype
@@ -104,7 +108,6 @@ Gathering: MetaElements
 Gathering: ScriptElements
 Gathering: IFrameElements
 Gathering: MainDocumentContent
-Gathering: GatherContext
 Gathering: GlobalListeners
 Gathering: AppCacheManifest
 Gathering: Doctype
@@ -130,34 +133,24 @@ Get webapp manifest
 Collect stacks
 Running offlinePass pass
 Resetting state with about:blank
+Navigating to about:blank
+Preparing target for navigation
 Preparing network conditions
 Running beforePass methods
 Gathering setup: ServiceWorker
 Beginning devtoolsLog and trace
 Loading page & waiting for onload
+Navigating to http://127.0.0.1:8000/devtools/lighthouse/resources/lighthouse-basic.html
 Running pass methods
 Gathering in-page: ServiceWorker
 Gathering devtoolsLog & network records
 Computing artifact: NetworkRecords
 Running afterPass methods
 Gathering: ServiceWorker
-Running redirectPass pass
-Resetting state with about:blank
-Preparing network conditions
-Running beforePass methods
-Gathering setup: HTTPRedirect
-Beginning devtoolsLog and trace
-Loading page & waiting for onload
-Running pass methods
-Gathering in-page: HTTPRedirect
-Gathering devtoolsLog & network records
-Computing artifact: NetworkRecords
-Running afterPass methods
-Gathering: HTTPRedirect
 Disconnecting from browser...
+Cleaning origin data
 Analyzing and running audits...
 Auditing: Uses HTTPS
-Auditing: Redirects HTTP traffic to HTTPS
 Auditing: Registers a service worker that controls page and `start_url`
 Auditing: Has a `<meta name="viewport">` tag with `width` or `initial-scale`
 Computing artifact: ViewportMeta
@@ -232,6 +225,7 @@ Auditing: Keep request counts low and transfer sizes small
 Auditing: Minimize third-party usage
 Auditing: Lazy load third-party resources with facades
 Auditing: Largest Contentful Paint element
+Auditing: Largest Contentful Paint image was not lazily loaded
 Auditing: Avoid large layout shifts
 Auditing: Avoid long main-thread tasks
 Auditing: Avoids `unload` event listeners
@@ -384,7 +378,7 @@ Generating results...
 
 =============== Lighthouse Results ===============
 URL: http://127.0.0.1:8000/devtools/lighthouse/resources/lighthouse-basic.html
-Version: 8.0.0
+Version: 8.6.0
 ViewportDimensions: {
   "innerWidth": 980,
   "innerHeight": 1743,
@@ -481,11 +475,12 @@ interactive: flaky
 interactive-element-affordance: manual
 is-crawlable: pass
 is-on-https: pass
-js-libraries: pass
+js-libraries: notApplicable
 label: notApplicable
 largest-contentful-paint: numeric
 largest-contentful-paint-element: informative
 layout-shift-elements: notApplicable
+lcp-lazy-loaded: notApplicable
 legacy-javascript: numeric
 link-name: notApplicable
 link-text: pass
@@ -525,7 +520,6 @@ pwa-cross-browser: manual
 pwa-each-page-has-url: manual
 pwa-page-transitions: manual
 redirects: flaky
-redirects-http: notApplicable
 render-blocking-resources: flaky
 resource-summary: informative
 robots-txt: notApplicable
@@ -556,7 +550,7 @@ unused-css-rules: flaky
 unused-javascript: numeric
 use-landmarks: manual
 user-timings: flaky
-uses-http2: pass
+uses-http2: numeric
 uses-long-cache-ttl: numeric
 uses-optimized-images: flaky
 uses-passive-event-listeners: pass
@@ -571,7 +565,7 @@ viewport: fail
 viewport-ad-density: notApplicable
 visual-order-follows-dom: manual
 
-# of .lh-audit divs: 159
+# of .lh-audit divs: 160
 
 .lh-audit divs:
 accesskeys
@@ -660,6 +654,7 @@ js-libraries
 label
 largest-contentful-paint-element
 layout-shift-elements
+lcp-lazy-loaded
 legacy-javascript
 link-name
 link-text
@@ -692,7 +687,6 @@ pwa-cross-browser
 pwa-each-page-has-url
 pwa-page-transitions
 redirects
-redirects-http
 render-blocking-resources
 resource-summary
 robots-txt
@@ -729,6 +723,7 @@ uses-text-compression
 valid-lang
 valid-source-maps
 video-caption
+viewport
 viewport
 viewport
 viewport-ad-density

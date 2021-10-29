@@ -7,7 +7,7 @@
 
 /* eslint-env jest */
 
-const bakery = require('../../../scripts/i18n/bake-ctc-to-lhl.js');
+import * as bakery from '../../../scripts/i18n/bake-ctc-to-lhl.js';
 
 describe('Baking Placeholders', () => {
   it('passthroughs a basic message unchanged', () => {

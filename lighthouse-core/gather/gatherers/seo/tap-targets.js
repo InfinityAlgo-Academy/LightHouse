@@ -205,7 +205,7 @@ function gatherTapTargets(tapTargetsSelector, className) {
 
   /** @type {{
     tapTargetElement: Element,
-    clientRects: ClientRect[]
+    clientRects: LH.Artifacts.Rect[]
   }[]} */
   const tapTargetsWithClientRects = [];
   tapTargetElements.forEach(tapTargetElement => {
@@ -238,7 +238,7 @@ function gatherTapTargets(tapTargetsSelector, className) {
 
   /** @type {{
     tapTargetElement: Element,
-    visibleClientRects: ClientRect[]
+    visibleClientRects: LH.Artifacts.Rect[]
   }[]} */
   const tapTargetsWithVisibleClientRects = [];
   // We use separate loop here to get visible client rects because that involves
@@ -285,6 +285,18 @@ function gatherTapTargets(tapTargetsSelector, className) {
 /* c8 ignore stop */
 
 class TapTargets extends FRGatherer {
+  constructor() {
+    super();
+    /**
+     * This needs to be in the constructor.
+     * https://github.com/GoogleChrome/lighthouse/issues/12134
+     * @type {LH.Gatherer.GathererMeta}
+     */
+    this.meta = {
+      supportedModes: ['snapshot', 'navigation'],
+    };
+  }
+
   /**
    * @param {LH.Gatherer.FRProtocolSession} session
    * @param {string} className

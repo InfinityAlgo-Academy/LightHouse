@@ -18,8 +18,8 @@ const LighthouseRunner = require('../lighthouse-core/runner.js');
 const exorcist = require('exorcist');
 const browserify = require('browserify');
 const terser = require('terser');
-const {minifyFileTransform} = require('./build-utils.js');
-const {LH_ROOT} = require('../root.js');
+
+const inlineFs = require('./plugins/browserify-inline-fs.js');
 
 const COMMIT_HASH = require('child_process')
   .execSync('git rev-parse HEAD')
@@ -30,9 +30,6 @@ const audits = LighthouseRunner.getAuditList()
 
 const gatherers = LighthouseRunner.getGathererList()
     .map(f => './lighthouse-core/gather/gatherers/' + f.replace(/\.js$/, ''));
-
-const locales = fs.readdirSync(LH_ROOT + '/lighthouse-core/lib/i18n/locales/')
-    .map(f => require.resolve(`../lighthouse-core/lib/i18n/locales/${f}`));
 
 // HACK: manually include the lighthouse-plugin-publisher-ads audits.
 /** @type {Array<string>} */
@@ -64,12 +61,8 @@ async function browserifyFile(entryPath, distPath) {
       pkg: Object.assign({COMMIT_HASH}, require('../package.json')),
       file: require.resolve('./banner.txt'),
     })
-    // Transform the fs.readFile etc into inline strings.
-    .transform('@wardpeet/brfs', {
-      readFileSyncTransform: minifyFileTransform,
-      global: true,
-      parserOpts: {ecmaVersion: 12},
-    })
+    // Transform `fs.readFileSync`, etc into inline strings.
+    .transform(inlineFs({verbose: DEBUG}))
     // Strip everything out of package.json includes except for the version.
     .transform('package-json-versionify');
 
@@ -87,13 +80,12 @@ async function browserifyFile(entryPath, distPath) {
   // Don't include the stringified report in DevTools - see devtools-report-assets.js
   // Don't include in Lightrider - HTML generation isn't supported, so report assets aren't needed.
   if (isDevtools(entryPath) || isLightrider(entryPath)) {
-    bundle.ignore(require.resolve('../report/report-assets.js'));
+    bundle.ignore(require.resolve('../report/generator/report-assets.js'));
   }
 
   // Don't include locales in DevTools.
   if (isDevtools(entryPath)) {
-    // @ts-expect-error bundle.ignore does accept an array of strings.
-    bundle.ignore(locales);
+    bundle.ignore(require.resolve('../shared/localization/locales.js'));
   }
 
   // Expose the audits, gatherers, and computed artifacts so they can be dynamically loaded.
@@ -125,7 +117,7 @@ async function browserifyFile(entryPath, distPath) {
 
   // Make sure path exists.
   await mkdir(path.dirname(distPath), {recursive: true});
-  return new Promise((resolve, reject) => {
+  await new Promise((resolve, reject) => {
     const writeStream = fs.createWriteStream(distPath);
     writeStream.on('finish', resolve);
     writeStream.on('error', reject);
@@ -134,6 +126,22 @@ async function browserifyFile(entryPath, distPath) {
     if (DEBUG) bundleStream = bundleStream.pipe(exorcist(`${distPath}.map`));
     bundleStream.pipe(writeStream);
   });
+
+  if (isDevtools(distPath)) {
+    let code = fs.readFileSync(distPath, 'utf-8');
+    // Add a comment for TypeScript, but not if in DEBUG mode so that source maps are not affected.
+    // See lighthouse-cli/test/smokehouse/lighthouse-runners/bundle.js
+    if (!DEBUG) {
+      code = '// @ts-nocheck - Prevent tsc stepping into any required bundles.\n' + code;
+    }
+
+    // DevTools build system expects `globalThis` rather than setting global variables.
+    assert.ok(code.includes('\nrequire='), 'missing browserify require stub');
+    code = code.replace('\nrequire=', '\nglobalThis.require=');
+    assert.ok(!code.includes('\nrequire='), 'contained unexpected browserify require stub');
+
+    fs.writeFileSync(distPath, code);
+  }
 }
 
 /**
@@ -145,7 +153,7 @@ async function minifyScript(filePath) {
   const result = await terser.minify(code, {
     ecma: 2019,
     output: {
-      comments: /^!/,
+      comments: /^!|Prevent tsc/,
       max_line_len: 1000,
     },
     // The config relies on class names for gatherers.
@@ -158,22 +166,12 @@ async function minifyScript(filePath) {
     },
   });
 
-  // Add the banner and modify globals for DevTools if necessary.
-  if (isDevtools(filePath) && result.code) {
-    // Add a comment for TypeScript, but not if in DEBUG mode so that source maps are not affected.
-    // See lighthouse-cli/test/smokehouse/lighthouse-runners/bundle.js
-    if (!DEBUG) {
-      result.code =
-        '// @ts-nocheck - Prevent tsc stepping into any required bundles.\n' + result.code;
-    }
-
-    assert.ok(result.code.includes('\nrequire='), 'missing browserify require stub');
-    result.code = result.code.replace('\nrequire=', '\nglobalThis.require=');
-    assert.ok(!result.code.includes('\nrequire='), 'contained unexpected browserify require stub');
+  if (result.code) {
+    fs.writeFileSync(filePath, result.code);
   }
-
-  fs.writeFileSync(filePath, result.code);
-  if (DEBUG) fs.writeFileSync(`${filePath}.map`, result.map);
+  if (DEBUG && typeof result.map === 'string') {
+    fs.writeFileSync(`${filePath}.map`, result.map);
+  }
 }
 
 /**
