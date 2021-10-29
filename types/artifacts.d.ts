@@ -489,8 +489,6 @@ declare module Artifacts {
     isPicture: boolean;
     /** Flags whether this element was contained within a ShadowRoot */
     isInShadowDOM: boolean;
-    /** The MIME type of the underlying image file. */
-    mimeType?: string;
     /** Details for node in DOM for the image element */
     node: NodeDetails;
     /** The loading attribute of the image. */
@@ -873,6 +871,11 @@ declare module Artifacts {
   }
 
   type ConsoleMessage = ConsoleAPICall | ConsoleException | ConsoleProtocolLog;
+
+  interface ImageElementRecord extends ImageElement {
+    /** The MIME type of the underlying image file. */
+    mimeType?: string;
+  }
 }
 
 export interface Trace {

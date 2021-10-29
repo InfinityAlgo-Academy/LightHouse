@@ -89,8 +89,7 @@ class ImageAspectRatio extends Audit {
       // - filter all svgs as they have no natural dimensions to audit
       // - filter out images that have falsy naturalWidth or naturalHeight
       return !image.isCss &&
-        image.mimeType &&
-        image.mimeType !== 'image/svg+xml' &&
+        URL.guessMimeType(image.src) !== 'image/svg+xml' &&
         image.naturalDimensions &&
         image.naturalDimensions.height > 5 &&
         image.naturalDimensions.width > 5 &&
