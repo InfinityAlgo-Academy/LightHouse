@@ -5,7 +5,17 @@
  */
 'use strict';
 
+/* global document */
+
 const FRGatherer = require('../../fraggle-rock/gather/base-gatherer.js');
+
+/* c8 ignore start */
+function getStylesheetMedias() {
+  return [...document.styleSheets].map(sheet => {
+    return {href: sheet.href, mediaText: sheet.media.mediaText};
+  });
+}
+/* c8 ignore end */
 
 /**
  * @fileoverview Tracks unused CSS rules.
@@ -93,6 +103,24 @@ class CSSUsage extends FRGatherer {
       await this.stopCSSUsageTracking(context);
     }
 
+    const medias = await context.driver.executionContext.evaluate(getStylesheetMedias, {
+      args: [],
+      useIsolation: true,
+    });
+    this._stylesheets = this._stylesheets.filter(sheet => {
+      const media = medias.find(m => m.href && m.href === sheet.header.sourceURL);
+      // Couldn't find a media from the page. Allow the stylesheet anyhow.
+      if (!media) return true;
+      console.log(media);
+
+      // Ignore any sheets which are 100% not render-blocking.
+      if (media.mediaText.includes('print') || media.mediaText.includes('speech')) return false;
+
+      // We could do more.
+      // https://github.com/GoogleChrome/lighthouse/issues/13264#issuecomment-955084229
+      return true;
+    });
+
     // Fetch style sheet content in parallel.
     const promises = this._stylesheets.map(sheet => {
       const styleSheetId = sheet.header.styleSheetId;
@@ -114,9 +142,15 @@ class CSSUsage extends FRGatherer {
 
     if (!this._ruleUsage) throw new Error('Issue collecting rule usages');
 
+    const stylesheets = Array.from(dedupedStylesheets.values())
+      // Ignore 404'd stylesheets.
+      .filter(sheet => sheet.content)
+      // Sort, for easier comparison in smoke test.
+      .sort((a, b) => a.header.sourceURL.localeCompare(b.header.sourceURL));
+
     return {
       rules: this._ruleUsage,
-      stylesheets: Array.from(dedupedStylesheets.values()),
+      stylesheets,
     };
   }
 }

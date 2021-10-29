@@ -43,6 +43,9 @@
 <!-- PASS: async stylesheet -->
 <link rel="stylesheet" href="./dbw_tester.css?delay=3000&async=true" disabled onload="this.disabled = false">
 
+<!-- Should be ignored by CSSUsage -->
+<link rel="stylesheet" href="./dbw_tester.css?print" media="print">
+
 <!-- Alternate stylesheets should not show in TagsBlockingFirstPaint artifact -->
 <link rel="alternate stylesheet" href="./empty.css">
 

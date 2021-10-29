@@ -31,6 +31,14 @@ const expectations = {
       id: 'wordpress',
     }],
     MainDocumentContent: /^<!doctype html>.*DoBetterWeb Mega Tester.*aggressive-promise-polyfill.*<\/html>[\r\n]*$/s,
+    CSSUsage: {
+      stylesheets: [
+        {'header': {'sourceURL': 'http://localhost:10200/dobetterweb/dbw_tester.css?delay=2000&async=true'}},
+        {'header': {'sourceURL': 'http://localhost:10200/dobetterweb/dbw_tester.html'}},
+        {'header': {'sourceURL': 'http://localhost:10200/dobetterweb/dbw_tester.html'}},
+        {'header': {'sourceURL': 'http://localhost:10200/dobetterweb/dbw_tester.html'}},
+      ],
+    },
     LinkElements: [
       {
         rel: 'stylesheet',
@@ -90,6 +98,15 @@ const expectations = {
         rel: 'stylesheet',
         href: 'http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&async=true',
         hrefRaw: './dbw_tester.css?delay=3000&async=true',
+        hreflang: '',
+        as: '',
+        crossOrigin: null,
+        source: 'head',
+      },
+      {
+        rel: 'stylesheet',
+        href: 'http://localhost:10200/dobetterweb/dbw_tester.css?print',
+        hrefRaw: './dbw_tester.css?print',
         hreflang: '',
         as: '',
         crossOrigin: null,
