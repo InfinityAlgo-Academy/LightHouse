@@ -20,6 +20,7 @@ module.exports = {
     '**/shared/**/*-test.js',
     '**/build/**/*-test.js',
   ],
+  modulePathIgnorePatterns: ['<rootDir>/.tmp'],
   transform: {},
   prettierPath: null,
   projects: [
