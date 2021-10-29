@@ -200,27 +200,27 @@ const expectations = {
             0: {
               source: 'exception',
               description: /^Error: A distinctive error\s+at http:\/\/localhost:10200\/dobetterweb\/dbw_tester.html:\d+:\d+$/,
-              url: 'http://localhost:10200/dobetterweb/dbw_tester.html',
+              sourceLocation: {url: 'http://localhost:10200/dobetterweb/dbw_tester.html'},
             },
             1: {
               source: 'console.error',
               description: 'Error! Error!',
-              url: 'http://localhost:10200/dobetterweb/dbw_tester.html',
+              sourceLocation: {url: 'http://localhost:10200/dobetterweb/dbw_tester.html'},
             },
             2: {
               source: 'network',
               description: 'Failed to load resource: the server responded with a status of 404 (Not Found)',
-              url: 'http://localhost:10200/dobetterweb/unknown404.css?delay=200',
+              sourceLocation: {url: 'http://localhost:10200/dobetterweb/unknown404.css?delay=200'},
             },
             3: {
               source: 'network',
               description: 'Failed to load resource: the server responded with a status of 404 (Not Found)',
-              url: 'http://localhost:10200/dobetterweb/fcp-delayer.js?delay=5000',
+              sourceLocation: {url: 'http://localhost:10200/dobetterweb/fcp-delayer.js?delay=5000'},
             },
             4: {
               source: 'network',
               description: 'Failed to load resource: the server responded with a status of 404 (Not Found)',
-              url: 'http://localhost:10200/favicon.ico',
+              sourceLocation: {url: 'http://localhost:10200/favicon.ico'},
             },
             // In legacy Lighthouse this audit will have additional duplicate failures which are a mistake.
             // Fraggle Rock ordering of gatherer `stopInstrumentation` and `getArtifact` fixes the re-request issue.

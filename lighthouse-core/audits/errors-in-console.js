@@ -88,8 +88,6 @@ class ErrorLogs extends Audit {
         return {
           source: item.source,
           description: item.text,
-          // TODO: remove for v8 (url is covered in sourceLocation)
-          url: item.url,
           sourceLocation: Audit.makeSourceLocationFromConsoleMessage(item),
         };
       });
