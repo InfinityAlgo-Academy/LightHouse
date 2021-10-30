@@ -6,6 +6,8 @@
 'use strict';
 
 import module from 'module';
+import url from 'url';
+import path from 'path';
 
 const require = module.createRequire(import.meta.url);
 
@@ -15,4 +17,15 @@ const require = module.createRequire(import.meta.url);
  */
 export function resolveModulePath(packageName) {
   return require.resolve(packageName);
+}
+
+/**
+ * Commonjs equivalent of `require.resolve`.
+ * @param {ImportMeta} importMeta
+ */
+export function createCommonjsRefs(importMeta) {
+  const require = module.createRequire(importMeta.url);
+  const filename = url.fileURLToPath(importMeta.url);
+  const dirname = path.dirname(filename);
+  return {require, __filename: filename, __dirname: dirname};
 }

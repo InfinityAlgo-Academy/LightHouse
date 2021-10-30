@@ -5,16 +5,17 @@
  */
 'use strict';
 
-const assert = require('assert').strict;
-const lighthouse = require('../../index.js');
-const defaultConfig = require('../../config/default-config.js');
-
 /* eslint-env jest */
+
+import {strict as assert} from 'assert';
+import lighthouse from '../../index.js';
+import defaultConfig from '../../config/default-config.js';
+import {LH_ROOT} from '../../../root.js';
 
 describe('Default Config', () => {
   it('only has opportunity audits that return opportunities details', async () => {
     const flags = {
-      auditMode: __dirname + '/../results/artifacts/',
+      auditMode: `${LH_ROOT}/lighthouse-core/test/results/artifacts/`,
       formFactor: 'mobile',
 
       // sample_v2 was run with these settings, so need to match them.
