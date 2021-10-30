@@ -1005,7 +1005,7 @@
       "description": "Deprecated APIs will eventually be removed from the browser. [Learn more](https://web.dev/deprecations/).",
       "score": 0,
       "scoreDisplayMode": "binary",
-      "displayValue": "3 warnings found",
+      "displayValue": "2 warnings found",
       "details": {
         "type": "table",
         "headings": [
@@ -1021,16 +1021,6 @@
           }
         ],
         "items": [
-          {
-            "value": "Application Cache API manifest selection is deprecated and will be removed in M85, around August 2020. See https://www.chromestatus.com/features/6192449487634432 for more details.",
-            "source": {
-              "type": "source-location",
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-              "urlProvider": "network",
-              "line": 8,
-              "column": 0
-            }
-          },
           {
             "value": "'window.webkitStorageInfo' is deprecated. Please use 'navigator.webkitTemporaryStorage' or 'navigator.webkitPersistentStorage' instead.",
             "source": {
@@ -3582,7 +3572,7 @@
                 "width": 360,
                 "height": 1365
               },
-              "snippet": "<html manifest=\"clock.appcache\">",
+              "snippet": "<html>",
               "nodeLabel": "html",
               "explanation": "Fix any of the following:\n  The <html> element does not have a lang attribute"
             }
@@ -5117,14 +5107,6 @@
         "overallSavingsMs": 150,
         "overallSavingsBytes": 21189
       }
-    },
-    "appcache-manifest": {
-      "id": "appcache-manifest",
-      "title": "Uses Application Cache",
-      "description": "Application Cache is deprecated. [Learn more](https://web.dev/appcache-manifest/).",
-      "score": 0,
-      "scoreDisplayMode": "binary",
-      "displayValue": "Found \"clock.appcache\""
     },
     "doctype": {
       "id": "doctype",
@@ -6697,11 +6679,6 @@
           "group": "best-practices-general"
         },
         {
-          "id": "appcache-manifest",
-          "weight": 1,
-          "group": "best-practices-general"
-        },
-        {
           "id": "js-libraries",
           "weight": 0,
           "group": "best-practices-general"
@@ -6728,7 +6705,7 @@
         }
       ],
       "id": "best-practices",
-      "score": 0.2
+      "score": 0.21
     },
     "seo": {
       "title": "SEO",
@@ -8039,12 +8016,6 @@
       },
       {
         "startTime": 0,
-        "name": "lh:audit:appcache-manifest",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
         "name": "lh:audit:doctype",
         "duration": 100,
         "entryType": "measure"
@@ -8606,7 +8577,7 @@
       "lighthouse-core/audits/deprecations.js | displayValue": [
         {
           "values": {
-            "itemCount": 3
+            "itemCount": 2
           },
           "path": "audits.deprecations.displayValue"
         }
@@ -9397,20 +9368,6 @@
       ],
       "lighthouse-core/audits/byte-efficiency/legacy-javascript.js | description": [
         "audits[legacy-javascript].description"
-      ],
-      "lighthouse-core/audits/dobetterweb/appcache-manifest.js | failureTitle": [
-        "audits[appcache-manifest].title"
-      ],
-      "lighthouse-core/audits/dobetterweb/appcache-manifest.js | description": [
-        "audits[appcache-manifest].description"
-      ],
-      "lighthouse-core/audits/dobetterweb/appcache-manifest.js | displayValue": [
-        {
-          "values": {
-            "AppCacheManifest": "clock.appcache"
-          },
-          "path": "audits[appcache-manifest].displayValue"
-        }
       ],
       "lighthouse-core/audits/dobetterweb/doctype.js | title": [
         "audits.doctype.title"

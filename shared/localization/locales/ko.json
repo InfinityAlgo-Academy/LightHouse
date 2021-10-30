@@ -743,18 +743,6 @@
   "lighthouse-core/audits/deprecations.js | title": {
     "message": "지원 중단 API 사용하지 않기"
   },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | description": {
-    "message": "애플리케이션 캐시는 지원이 중단되었습니다. [자세히 알아보기](https://web.dev/appcache-manifest/)"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | displayValue": {
-    "message": "검색된 ‘{AppCacheManifest}’"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | failureTitle": {
-    "message": "애플리케이션 캐시 사용"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | title": {
-    "message": "애플리케이션 캐시 사용하지 않기"
-  },
   "lighthouse-core/audits/dobetterweb/charset.js | description": {
     "message": "문자 인코딩 선언이 필요합니다. HTML의 첫 1,024바이트 또는 Content-Type HTTP 응답 헤더에서 `<meta>` 태그를 사용하여 선언할 수 있습니다. [자세히 알아보기](https://web.dev/charset/)"
   },

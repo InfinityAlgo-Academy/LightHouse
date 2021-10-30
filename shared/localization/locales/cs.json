@@ -743,18 +743,6 @@
   "lighthouse-core/audits/deprecations.js | title": {
     "message": "Nepoužívá zastaralá rozhraní API"
   },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | description": {
-    "message": "Mezipaměť aplikace je zastaralá technologie. [Další informace](https://web.dev/appcache-manifest/)"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | displayValue": {
-    "message": "Nalezeno „{AppCacheManifest}“"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | failureTitle": {
-    "message": "Používá mezipaměť aplikace"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | title": {
-    "message": "Nepoužívá mezipaměť aplikace"
-  },
   "lighthouse-core/audits/dobetterweb/charset.js | description": {
     "message": "Je požadována deklarace kódování znaků. Lze ho deklarovat pomocí značky `<meta>` v prvních 1024 bajtech kódu HTML nebo pomocí záhlaví Content-Type odpovědi HTTP. [Další informace](https://web.dev/charset/)"
   },

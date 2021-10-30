@@ -743,18 +743,6 @@
   "lighthouse-core/audits/deprecations.js | title": {
     "message": "Vermijdt beëindigde API's"
   },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | description": {
-    "message": "Application Cache is beëindigd. [Meer informatie](https://web.dev/appcache-manifest/)"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | displayValue": {
-    "message": "'{AppCacheManifest}' gevonden"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | failureTitle": {
-    "message": "Gebruikt Application Cache"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | title": {
-    "message": "Vermijdt Application Cache"
-  },
   "lighthouse-core/audits/dobetterweb/charset.js | description": {
     "message": "Een declaratie voor tekencodering is vereist. Dit kan worden gedaan met een `<meta>`-tag in de eerste 1024 bytes van de HTML of in de HTTP-reactiekop voor het contenttype. [Meer informatie](https://web.dev/charset/)"
   },

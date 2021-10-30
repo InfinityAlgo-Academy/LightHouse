@@ -743,18 +743,6 @@
   "lighthouse-core/audits/deprecations.js | title": {
     "message": "Tránh các API không dùng nữa"
   },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | description": {
-    "message": "Bộ nhớ đệm của ứng dụng không còn dùng nữa. [Tìm hiểu thêm](https://web.dev/appcache-manifest/)."
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | displayValue": {
-    "message": "Tìm thấy \"{AppCacheManifest}\""
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | failureTitle": {
-    "message": "Dùng bộ nhớ đệm của ứng dụng"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | title": {
-    "message": "Tránh sử dụng bộ nhớ đệm của ứng dụng"
-  },
   "lighthouse-core/audits/dobetterweb/charset.js | description": {
     "message": "Cần khai báo hệ thống mã hóa ký tự. Bạn có thể thực hiện việc này bằng thẻ `<meta>` trong 1024 byte đầu tiên của HTML hoặc trong tiêu đề phản hồi HTTP Loại–Nội dung. [Tìm hiểu thêm](https://web.dev/charset/)."
   },

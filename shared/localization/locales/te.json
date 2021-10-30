@@ -743,18 +743,6 @@
   "lighthouse-core/audits/deprecations.js | title": {
     "message": "విస్మరించబడిన APIలను నివారిస్తుంది"
   },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | description": {
-    "message": "అప్లికేషన్ కాష్ విస్మరించబడింది. [మరింత తెలుసుకోండి](https://web.dev/appcache-manifest/)."
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | displayValue": {
-    "message": "\"{AppCacheManifest}\" కనుగొనబడింది"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | failureTitle": {
-    "message": "అప్లికేషన్ కాష్‌ను వినియోగిస్తున్నారు"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | title": {
-    "message": "అప్లికేషన్ కాష్‌ను నివారిస్తోంది"
-  },
   "lighthouse-core/audits/dobetterweb/charset.js | description": {
     "message": "అక్షర ఎన్‌కోడింగ్ డిక్లేరేషన్ అవసరం. HTMLలోని మొదటి 1024 బైట్‌లలో లేదా కంటెంట్-రకం HTTP ప్రతిస్పందన హెడర్‌లో `<meta>` ట్యాగ్‌తో దీనిని పూర్తి చేయవచ్చు. [మరింత తెలుసుకోండి](https://web.dev/charset/)."
   },

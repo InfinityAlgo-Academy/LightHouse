@@ -743,18 +743,6 @@
   "lighthouse-core/audits/deprecations.js | title": {
     "message": "Evita les API obsoletes"
   },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | description": {
-    "message": "La memòria cau de l'aplicació està obsoleta. [Obtén més informació](https://web.dev/appcache-manifest/)."
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | displayValue": {
-    "message": "S'ha trobat \"{AppCacheManifest}\""
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | failureTitle": {
-    "message": "Utilitza la memòria cau de l'aplicació"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | title": {
-    "message": "Evita la memòria cau de l'aplicació"
-  },
   "lighthouse-core/audits/dobetterweb/charset.js | description": {
     "message": "Cal una declaració de codificació de caràcters. Es pot fer amb una etiqueta `<meta>` als primers 1.024 bytes de l'HTML o a la capçalera de resposta HTTP de tipus contingut. [Obtén més informació](https://web.dev/charset/)."
   },

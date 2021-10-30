@@ -743,18 +743,6 @@
   "lighthouse-core/audits/deprecations.js | title": {
     "message": "Evita APIs descontinuadas"
   },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | description": {
-    "message": "A cache da aplicação foi descontinuada. [Saiba mais](https://web.dev/appcache-manifest/)."
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | displayValue": {
-    "message": "\"{AppCacheManifest}\" encontrado"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | failureTitle": {
-    "message": "Utiliza a cache da aplicação"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | title": {
-    "message": "Evita a cache da aplicação"
-  },
   "lighthouse-core/audits/dobetterweb/charset.js | description": {
     "message": "É obrigatória uma declaração de codificação de carateres. Pode ser realizada com uma tag `<meta>` nos primeiros 1024 bytes do HTML ou no cabeçalho da resposta do HTTP de tipo de conteúdo. [Saiba mais](https://web.dev/charset/)."
   },

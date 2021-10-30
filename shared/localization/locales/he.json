@@ -743,18 +743,6 @@
   "lighthouse-core/audits/deprecations.js | title": {
     "message": "אין רכיבי API שהוצאו משימוש"
   },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | description": {
-    "message": "Application Cache הוצא משימוש. [מידע נוסף](https://web.dev/appcache-manifest/)."
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | displayValue": {
-    "message": "בשימוש: \"{AppCacheManifest}\""
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | failureTitle": {
-    "message": "נעשה שימוש ב-Application Cache"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | title": {
-    "message": "לא נעשה שימוש ב-Application Cache"
-  },
   "lighthouse-core/audits/dobetterweb/charset.js | description": {
     "message": "נדרשת הצהרה של קידוד תווים. ניתן להגדיר אותה באמצעות תג `<meta>` שממוקם ב-1,024 הבייטים הראשונים של ה-HTML או ברכיב ה-Content-Type בכותרת התגובה של ה-HTTP. [מידע נוסף](https://web.dev/charset/)."
   },

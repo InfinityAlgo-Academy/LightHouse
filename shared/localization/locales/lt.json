@@ -743,18 +743,6 @@
   "lighthouse-core/audits/deprecations.js | title": {
     "message": "Vengiama nebenaudojamų API"
   },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | description": {
-    "message": "Programos talpykla nebenaudojama. [Sužinokite daugiau](https://web.dev/appcache-manifest/)."
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | displayValue": {
-    "message": "Rastas elementas „{AppCacheManifest}“"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | failureTitle": {
-    "message": "Naudojama programos talpykla"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | title": {
-    "message": "Vengiama naudoti programos talpyklą"
-  },
   "lighthouse-core/audits/dobetterweb/charset.js | description": {
     "message": "Reikalinga ženklų koduotės deklaracija. Tai galima atlikti naudojant žymą „`<meta>`“ pirmuose 1 024 HTML baituose arba turinio tipo HTTP atsako antraštėje. [Sužinokite daugiau](https://web.dev/charset/)."
   },

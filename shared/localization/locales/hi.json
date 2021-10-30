@@ -743,18 +743,6 @@
   "lighthouse-core/audits/deprecations.js | title": {
     "message": "रुके हुई एपीआई का इस्तेमाल नहीं किया जाता"
   },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | description": {
-    "message": "ऐप्लिकेशन की कैश मेमोरी अब काम नहीं करती. [ज़्यादा जानें](https://web.dev/appcache-manifest/)."
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | displayValue": {
-    "message": "\"{AppCacheManifest}\" मिल गया"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | failureTitle": {
-    "message": "ऐप्लिकेशन की कैश मेमोरी का इस्तेमाल किया जाता है"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | title": {
-    "message": "ऐप्लिकेशन की कैश मेमोरी का इस्तेमाल नहीं किया जाता"
-  },
   "lighthouse-core/audits/dobetterweb/charset.js | description": {
     "message": "कैरेक्टर एन्कोडिंग को सेट करना ज़रूरी है. एचटीएमएल की पहली 1024 बाइट या कॉन्टेंट-टाइप एचटीटीपी रिस्पॉन्स हेडर में `<meta>` टैग की मदद से ऐसा किया जा सकता है. [ज़्यादा जानें](https://web.dev/charset/)."
   },

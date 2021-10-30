@@ -362,13 +362,6 @@
     },
     {
       "startTime": 0,
-      "name": "lh:gather:beforePass:AppCacheManifest",
-      "duration": 1,
-      "entryType": "measure",
-      "gather": true
-    },
-    {
-      "startTime": 0,
       "name": "lh:gather:beforePass:Doctype",
       "duration": 1,
       "entryType": "measure",
@@ -615,13 +608,6 @@
     {
       "startTime": 0,
       "name": "lh:gather:afterPass:GlobalListeners",
-      "duration": 1,
-      "entryType": "measure",
-      "gather": true
-    },
-    {
-      "startTime": 0,
-      "name": "lh:gather:afterPass:AppCacheManifest",
       "duration": 1,
       "entryType": "measure",
       "gather": true
@@ -9336,15 +9322,6 @@
   "ConsoleMessages": [
     {
       "eventType": "protocolLog",
-      "source": "deprecation",
-      "level": "warning",
-      "text": "Application Cache API manifest selection is deprecated and will be removed in M85, around August 2020. See https://www.chromestatus.com/features/6192449487634432 for more details.",
-      "timestamp": 1631045473643.141,
-      "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-      "lineNumber": 8
-    },
-    {
-      "eventType": "protocolLog",
       "source": "network",
       "level": "error",
       "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
@@ -11291,7 +11268,6 @@
       "columnNumber": 36
     }
   ],
-  "AppCacheManifest": "clock.appcache",
   "Doctype": {
     "name": "html",
     "publicId": "",
@@ -11738,7 +11714,7 @@
                 "width": 360,
                 "height": 1365
               },
-              "snippet": "<html manifest=\"clock.appcache\">",
+              "snippet": "<html>",
               "nodeLabel": "html"
             },
             "relatedNodes": []

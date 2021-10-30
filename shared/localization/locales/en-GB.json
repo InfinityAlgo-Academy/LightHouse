@@ -743,18 +743,6 @@
   "lighthouse-core/audits/deprecations.js | title": {
     "message": "Avoids deprecated APIs"
   },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | description": {
-    "message": "Application cache is deprecated. [Learn more](https://web.dev/appcache-manifest/)."
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | displayValue": {
-    "message": "Found '{AppCacheManifest}'"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | failureTitle": {
-    "message": "Uses application cache"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | title": {
-    "message": "Avoids application cache"
-  },
   "lighthouse-core/audits/dobetterweb/charset.js | description": {
     "message": "A character encoding declaration is required. It can be done with a `<meta>` tag in the first 1,024 bytes of the HTML or in the Content-Type HTTP response header. [Learn more](https://web.dev/charset/)."
   },

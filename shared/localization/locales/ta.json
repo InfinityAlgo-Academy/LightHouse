@@ -743,18 +743,6 @@
   "lighthouse-core/audits/deprecations.js | title": {
     "message": "நிறுத்தப்பட்டுள்ள APIகளைத் தவிர்க்கும்"
   },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | description": {
-    "message": "ஆப்ஸின் தற்காலிக சேமிப்பு நிறுத்தப்பட்டுள்ளது. [மேலும் அறிக](https://web.dev/appcache-manifest/)."
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | displayValue": {
-    "message": "\"{AppCacheManifest}\" கண்டறியப்பட்டது"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | failureTitle": {
-    "message": "ஆப்ஸின் தற்காலிக சேமிப்பைப் பயன்படுத்துகிறது"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | title": {
-    "message": "ஆப்ஸின் தற்காலிக சேமிப்பைத் தவிர்க்கும்"
-  },
   "lighthouse-core/audits/dobetterweb/charset.js | description": {
     "message": "எழுத்துக்குறிக் குறியாக்கத்தை வரையறுக்க வேண்டும். HTMLலின் முதல் 1024 பைட்டுகளிலோ Content-Type HTTP பதில் தலைப்பிலோ `<meta>` குறிச்சொல்லைக் குறிப்பிட்டு இதைச் செய்யலாம். [மேலும் அறிக](https://web.dev/charset/)."
   },

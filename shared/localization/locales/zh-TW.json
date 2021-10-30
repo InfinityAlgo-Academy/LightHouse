@@ -743,18 +743,6 @@
   "lighthouse-core/audits/deprecations.js | title": {
     "message": "避免使用已淘汰的 API"
   },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | description": {
-    "message": "應用程式快取已遭到淘汰。[瞭解詳情](https://web.dev/appcache-manifest/)。"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | displayValue": {
-    "message": "已找到「{AppCacheManifest}」"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | failureTitle": {
-    "message": "使用應用程式快取"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | title": {
-    "message": "避免使用應用程式快取"
-  },
   "lighthouse-core/audits/dobetterweb/charset.js | description": {
     "message": "必須定義字元編碼宣告。你可以在 HTML 的前 1024 個位元組中使用 `<meta>` 標記定義，或在 Content-Type HTTP 回應標頭中定義。[瞭解詳情](https://web.dev/charset/)。"
   },

@@ -743,18 +743,6 @@
   "lighthouse-core/audits/deprecations.js | title": {
     "message": "Nepoužíva rozhrania API s ukončenou podporou"
   },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | description": {
-    "message": "Podpora vyrovnávacej pamäte aplikácie je ukončená. [Ďalšie informácie](https://web.dev/appcache-manifest/)"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | displayValue": {
-    "message": "Našiel sa prvok {AppCacheManifest}"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | failureTitle": {
-    "message": "Používa vyrovnávaciu pamäť aplikácie"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | title": {
-    "message": "Nepoužíva vyrovnávaciu pamäť aplikácie"
-  },
   "lighthouse-core/audits/dobetterweb/charset.js | description": {
     "message": "Vyžaduje sa deklarácia kódovania znakov. Môžete to vykonať pomocou značky `<meta>` v prvých 1 024 bajtoch kódu HTML alebo hlavičke odpovede HTTP Content-Type. [Ďalšie informácie](https://web.dev/charset/)"
   },

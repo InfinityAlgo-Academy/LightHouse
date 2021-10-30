@@ -743,18 +743,6 @@
   "lighthouse-core/audits/deprecations.js | title": {
     "message": "Уникає інтерфейсів API, які більше не підтримуються"
   },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | description": {
-    "message": "Application Cache API більше не підтримується. [Докладніше](https://web.dev/appcache-manifest/)."
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | displayValue": {
-    "message": "Знайдено кеш \"{AppCacheManifest}\""
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | failureTitle": {
-    "message": "Використовує кеш додатка"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | title": {
-    "message": "Уникає кешу додатка"
-  },
   "lighthouse-core/audits/dobetterweb/charset.js | description": {
     "message": "Декларація кодування символів обов'язкова. Це можна зробити за допомогою тегу `<meta>` в перших 1024 байтах HTML або в заголовку відповіді HTTP \"Content-Type\". [Докладніше](https://web.dev/charset/)."
   },

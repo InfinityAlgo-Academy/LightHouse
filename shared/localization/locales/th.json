@@ -743,18 +743,6 @@
   "lighthouse-core/audits/deprecations.js | title": {
     "message": "หลีกเลี่ยงการใช้ API ที่เลิกใช้งานแล้ว"
   },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | description": {
-    "message": "แคชของแอปพลิเคชันเลิกใช้งานแล้ว [ดูข้อมูลเพิ่มเติม](https://web.dev/appcache-manifest/)"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | displayValue": {
-    "message": "พบ \"{AppCacheManifest}\""
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | failureTitle": {
-    "message": "ใช้แคชของแอปพลิเคชัน"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | title": {
-    "message": "หลีกเลี่ยงการใช้แคชของแอปพลิเคชัน"
-  },
   "lighthouse-core/audits/dobetterweb/charset.js | description": {
     "message": "จำเป็นต้องประกาศการเข้ารหัสอักขระ ซึ่งทำได้โดยใช้แท็ก `<meta>` ใน 1024 ไบต์แรกของ HTML หรือในส่วนหัวการตอบกลับ HTTP ประเภทเนื้อหา [ดูข้อมูลเพิ่มเติม](https://web.dev/charset/)"
   },

@@ -743,18 +743,6 @@
   "lighthouse-core/audits/deprecations.js | title": {
     "message": "Izbegava zastarele API-je"
   },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | description": {
-    "message": "Keš aplikacije je zastareo. [Saznajte više](https://web.dev/appcache-manifest/)."
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | displayValue": {
-    "message": "Pronađeno je „{AppCacheManifest}“"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | failureTitle": {
-    "message": "Koristi keš aplikacije"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | title": {
-    "message": "Izbegava keš aplikacije"
-  },
   "lighthouse-core/audits/dobetterweb/charset.js | description": {
     "message": "Utvrđivanje kodiranja znakova je obavezno. To može da se uradi pomoću oznake `<meta>` u prva 1024 bajta HTML-a ili u HTTP zaglavlju odgovora Content-Type. [Saznajte više](https://web.dev/charset/)."
   },

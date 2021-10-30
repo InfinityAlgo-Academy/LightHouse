@@ -743,18 +743,6 @@
   "lighthouse-core/audits/deprecations.js | title": {
     "message": "Utfasade API:er undviks"
   },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | description": {
-    "message": "Programmets cacheminne är utfasat. [Läs mer](https://web.dev/appcache-manifest/)."
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | displayValue": {
-    "message": "{AppCacheManifest} hittades"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | failureTitle": {
-    "message": "Använder programmets cacheminne"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | title": {
-    "message": "Undviker programcache"
-  },
   "lighthouse-core/audits/dobetterweb/charset.js | description": {
     "message": "En deklaration av teckenkodning krävs. Den kan lämnas med en `<meta>`-tagg i HTML-kodens första 1 024 byte eller i HTTP-svarshuvudet för Content-Type. [Läs mer](https://web.dev/charset/)."
   },

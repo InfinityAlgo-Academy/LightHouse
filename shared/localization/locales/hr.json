@@ -743,18 +743,6 @@
   "lighthouse-core/audits/deprecations.js | title": {
     "message": "Izbjegava ukinute API-je"
   },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | description": {
-    "message": "Ukinuta je predmemorija aplikacije. [Saznajte više](https://web.dev/appcache-manifest/)."
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | displayValue": {
-    "message": "„{AppCacheManifest}” je pronađen"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | failureTitle": {
-    "message": "Upotrebljava predmemoriju aplikacije"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | title": {
-    "message": "Izbjegava predmemoriju aplikacije"
-  },
   "lighthouse-core/audits/dobetterweb/charset.js | description": {
     "message": "Potrebna je izjava o kodiranju znakova. To je moguće napraviti uz oznaku `<meta>` u prva 1024 bajta HTML-a ili u HTTP zaglavlju odgovora vrste sadržaja. [Saznajte više](https://web.dev/charset/)."
   },

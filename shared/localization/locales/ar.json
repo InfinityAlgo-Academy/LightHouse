@@ -743,18 +743,6 @@
   "lighthouse-core/audits/deprecations.js | title": {
     "message": "يتم تجنّب واجهات برمجة التطبيقات المتوقفة"
   },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | description": {
-    "message": "تم إيقاف ذاكرة التخزين المؤقت للتطبيق. [مزيد من المعلومات](https://web.dev/appcache-manifest/)"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | displayValue": {
-    "message": "تم العثور على \"{AppCacheManifest}\""
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | failureTitle": {
-    "message": "يتم استخدام ذاكرة التخزين المؤقت للتطبيق"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | title": {
-    "message": "يتم تجنُب ذاكرة التخزين المؤقت للتطبيق"
-  },
   "lighthouse-core/audits/dobetterweb/charset.js | description": {
     "message": "تعريف ترميز الأحرف مطلوب. ويمكن إجراء ذلك باستخدام علامة `<meta>` في أول 1024 وحدة بايت من عنوان HTML أو في عنوان الاستجابة Content-Type في HTTP. [مزيد من المعلومات](https://web.dev/charset/)"
   },

@@ -743,18 +743,6 @@
   "lighthouse-core/audits/deprecations.js | title": {
     "message": "Evita las API obsoletas"
   },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | description": {
-    "message": "La caché de aplicaciones es obsoleta. [Obtén más información](https://web.dev/appcache-manifest/)."
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | displayValue": {
-    "message": "Se encontró \"{AppCacheManifest}\""
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | failureTitle": {
-    "message": "Usa la caché de aplicaciones"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | title": {
-    "message": "Evita la caché de aplicaciones"
-  },
   "lighthouse-core/audits/dobetterweb/charset.js | description": {
     "message": "Se debe declarar la codificación de caracteres. Para eso, puede agregarse una etiqueta `<meta>` en los primeros 1024 bytes del HTML o en el encabezado de respuesta HTTP Content Type. [Obtén más información](https://web.dev/charset/)."
   },

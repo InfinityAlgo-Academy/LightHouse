@@ -17,8 +17,7 @@ const expectations = {
 
     // 22 requests made for a single navigation.
     // 6 extra requests made because stylesheets are evicted from the cache by the time DT opens.
-    // 1 request made to /dobetterweb/clock.appcache
-    length: 29,
+    length: 28,
   },
   artifacts: {
     HostFormFactor: 'desktop',
@@ -247,10 +246,6 @@ const expectations = {
           },
         },
       },
-      'appcache-manifest': {
-        score: 0,
-        displayValue: 'Found "clock.appcache"',
-      },
       'geolocation-on-start': {
         score: 0,
       },
@@ -315,10 +310,6 @@ const expectations = {
         score: 0,
         details: {
           items: [
-            {
-              value: /Application Cache API manifest/,
-              _maxChromiumMilestone: 94,
-            },
             {
               value: /'window.webkitStorageInfo' is deprecated/,
             },

@@ -743,18 +743,6 @@
   "lighthouse-core/audits/deprecations.js | title": {
     "message": "サポートを終了した API は使用されていません"
   },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | description": {
-    "message": "アプリケーション キャッシュはサポートを終了しました。[詳細](https://web.dev/appcache-manifest/)"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | displayValue": {
-    "message": "「{AppCacheManifest}」が見つかりました"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | failureTitle": {
-    "message": "アプリケーション キャッシュを使用しています"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | title": {
-    "message": "アプリケーション キャッシュは使用していません"
-  },
   "lighthouse-core/audits/dobetterweb/charset.js | description": {
     "message": "文字エンコードの宣言が必要です。これには、HTML の最初の 1,024 バイトか Content-Type HTTP レスポンス ヘッダーの中で `<meta>` タグを使用します。[詳細](https://web.dev/charset/)"
   },

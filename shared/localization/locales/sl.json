@@ -743,18 +743,6 @@
   "lighthouse-core/audits/deprecations.js | title": {
     "message": "Izogiba se zastarelim API-jem"
   },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | description": {
-    "message": "Predpomnilnik aplikacij je zastarel. [Več o tem](https://web.dev/appcache-manifest/)."
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | displayValue": {
-    "message": "Najdeno – »{AppCacheManifest}«"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | failureTitle": {
-    "message": "Uporablja predpomnilnik aplikacij"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | title": {
-    "message": "Izogiba se predpomnilniku aplikacij"
-  },
   "lighthouse-core/audits/dobetterweb/charset.js | description": {
     "message": "Izjava glede kodiranja znakov je obvezna. Izvedete jo lahko z oznako `<meta>` v prvih 1024 B HTML-ja ali v glavi odziva HTTP-ja glede vrste vsebine. [Več o tem](https://web.dev/charset/)."
   },

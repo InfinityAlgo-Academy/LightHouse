@@ -743,18 +743,6 @@
   "lighthouse-core/audits/deprecations.js | title": {
     "message": "Αποφυγή καταργημένων API"
   },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | description": {
-    "message": "Η κρυφή μνήμη εφαρμογής έχει καταργηθεί. [Μάθετε περισσότερα](https://web.dev/appcache-manifest/)."
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | displayValue": {
-    "message": "Βρέθηκε \"{AppCacheManifest}\""
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | failureTitle": {
-    "message": "Χρησιμοποιεί προσωρινή μνήμη εφαρμογής"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | title": {
-    "message": "Αποφυγή προσωρινής μνήμης εφαρμογής"
-  },
   "lighthouse-core/audits/dobetterweb/charset.js | description": {
     "message": "Απαιτείται δήλωση κωδικοποίησης χαρακτήρων. Μπορεί να πραγματοποιηθεί με μια ετικέτα `<meta>` στα πρώτα 1024 byte του κώδικα HTML ή στην κεφαλίδα απόκρισης HTTP τύπου περιεχομένου. [Μάθετε περισσότερα](https://web.dev/charset/)."
   },

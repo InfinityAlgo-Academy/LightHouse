@@ -122,8 +122,6 @@ export interface GathererArtifacts extends PublicGathererArtifacts,LegacyBaseArt
   Accessibility: Artifacts.Accessibility;
   /** Array of all anchors on the page. */
   AnchorElements: Artifacts.AnchorElement[];
-  /** The value of the page's <html> manifest attribute, or null if not defined */
-  AppCacheManifest: string | null;
   /** Array of all URLs cached in CacheStorage. */
   CacheContents: string[];
   /** CSS coverage information for styles used by page's final state. */

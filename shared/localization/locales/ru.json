@@ -743,18 +743,6 @@
   "lighthouse-core/audits/deprecations.js | title": {
     "message": "Устаревшие API не используются"
   },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | description": {
-    "message": "Application Cache больше не поддерживается. [Подробнее…](https://web.dev/appcache-manifest/)"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | displayValue": {
-    "message": "Обнаружен манифест {AppCacheManifest}"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | failureTitle": {
-    "message": "Используется Application Cache"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | title": {
-    "message": "Application Cache не используется"
-  },
   "lighthouse-core/audits/dobetterweb/charset.js | description": {
     "message": "Требуется задать кодировку символов. Это можно сделать с помощью тега `<meta>` в первых 1024 байтах HTML-страницы или в заголовке ответа HTTP Content-Type. [Подробнее…](https://web.dev/charset/)"
   },

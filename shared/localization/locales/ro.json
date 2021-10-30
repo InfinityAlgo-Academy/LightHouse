@@ -743,18 +743,6 @@
   "lighthouse-core/audits/deprecations.js | title": {
     "message": "Evită API-urile învechite"
   },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | description": {
-    "message": "Memoria cache a aplicației este învechită. [Află mai multe](https://web.dev/appcache-manifest/)."
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | displayValue": {
-    "message": "Am găsit „{AppCacheManifest}”"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | failureTitle": {
-    "message": "Folosește memoria cache de aplicație"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | title": {
-    "message": "Evită memoria cache a aplicației"
-  },
   "lighthouse-core/audits/dobetterweb/charset.js | description": {
     "message": "Este necesară o declarație privind codificarea caracterelor. Aceasta se poate face folosind o etichetă `<meta>` în primii 1.024 de byți din HTML sau în antetul de răspuns Content-Type din HTTP. [Află mai multe](https://web.dev/charset/)."
   },

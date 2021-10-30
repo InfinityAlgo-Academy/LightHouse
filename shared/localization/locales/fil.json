@@ -743,18 +743,6 @@
   "lighthouse-core/audits/deprecations.js | title": {
     "message": "Iniiwasan ang mga hindi na ginagamit na API"
   },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | description": {
-    "message": "Hindi na ginagamit ang Cache ng Application. [Matuto pa](https://web.dev/appcache-manifest/)."
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | displayValue": {
-    "message": "Nakita ang \"{AppCacheManifest}\""
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | failureTitle": {
-    "message": "Gumagamit ng Cache ng Application"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | title": {
-    "message": "Iniiwasan ang Application Cache"
-  },
   "lighthouse-core/audits/dobetterweb/charset.js | description": {
     "message": "Kailangang mag-declare ng pag-encode ng character. Magagawa ito gamit ang isang `<meta>` tag sa unang 1024 na byte ng HTML o sa header ng sagot ng HTTP na Uri ng Content. [Matuto pa](https://web.dev/charset/)."
   },

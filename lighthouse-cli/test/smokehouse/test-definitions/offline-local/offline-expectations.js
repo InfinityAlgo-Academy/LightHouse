@@ -20,9 +20,6 @@ const onlineOnly = {
       'external-anchors-use-rel-noopener': {
         score: 1,
       },
-      'appcache-manifest': {
-        score: 1,
-      },
       'geolocation-on-start': {
         score: 1,
       },

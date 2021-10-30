@@ -743,18 +743,6 @@
   "lighthouse-core/audits/deprecations.js | title": {
     "message": "Kerüli az elavult API-kat"
   },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | description": {
-    "message": "Az alkalmazás-gyorsítótár elavult. [További információ](https://web.dev/appcache-manifest/)."
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | displayValue": {
-    "message": "A(z) „{AppCacheManifest}” van használatban"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | failureTitle": {
-    "message": "Alkalmazás-gyorsítótárat használ"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | title": {
-    "message": "Kerüli az alkalmazás-gyorsítótárat"
-  },
   "lighthouse-core/audits/dobetterweb/charset.js | description": {
     "message": "Kötelező deklarálnia a karakterkódolást. Megteheti a `<meta>` címkében, ha a HTML első 1024 bájtjába kerül, vagy a HTTP-válasz Content-Type fejlécében. [További információ](https://web.dev/charset/)."
   },

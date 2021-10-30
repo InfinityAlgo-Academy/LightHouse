@@ -743,18 +743,6 @@
   "lighthouse-core/audits/deprecations.js | title": {
     "message": "Menghindari API yang tidak digunakan lagi"
   },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | description": {
-    "message": "Cache Aplikasi tidak digunakan lagi. [Pelajari lebih lanjut](https://web.dev/appcache-manifest/)."
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | displayValue": {
-    "message": "Menemukan \"{AppCacheManifest}\""
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | failureTitle": {
-    "message": "Menggunakan Cache Aplikasi"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | title": {
-    "message": "Menghindari Cache Aplikasi"
-  },
   "lighthouse-core/audits/dobetterweb/charset.js | description": {
     "message": "Diperlukan deklarasi encoding karakter. Tindakan ini dapat dilakukan dengan tag `<meta>` pada 1024 byte pertama HTML atau di header respons HTTP Jenis Konten. [Pelajari lebih lanjut](https://web.dev/charset/)."
   },

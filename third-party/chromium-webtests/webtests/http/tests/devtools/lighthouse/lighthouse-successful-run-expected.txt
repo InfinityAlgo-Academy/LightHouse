@@ -45,7 +45,6 @@ Gathering setup: ScriptElements
 Gathering setup: IFrameElements
 Gathering setup: MainDocumentContent
 Gathering setup: GlobalListeners
-Gathering setup: AppCacheManifest
 Gathering setup: Doctype
 Gathering setup: DOMStats
 Gathering setup: OptimizedImages
@@ -77,7 +76,6 @@ Gathering in-page: ScriptElements
 Gathering in-page: IFrameElements
 Gathering in-page: MainDocumentContent
 Gathering in-page: GlobalListeners
-Gathering in-page: AppCacheManifest
 Gathering in-page: Doctype
 Gathering in-page: DOMStats
 Gathering in-page: OptimizedImages
@@ -109,7 +107,6 @@ Gathering: ScriptElements
 Gathering: IFrameElements
 Gathering: MainDocumentContent
 Gathering: GlobalListeners
-Gathering: AppCacheManifest
 Gathering: Doctype
 Gathering: DOMStats
 Gathering: OptimizedImages
@@ -316,7 +313,6 @@ Auditing: Remove duplicate modules in JavaScript bundles
 Computing artifact: ModuleDuplication
 Computing artifact: JSBundles
 Auditing: Avoid serving legacy JavaScript to modern browsers
-Auditing: Avoids Application Cache
 Auditing: Page has the HTML doctype
 Auditing: Properly defines charset
 Auditing: Avoids an excessive DOM size
@@ -395,7 +391,6 @@ ad-request-critical-path: notApplicable
 ad-request-from-page-start: notApplicable
 ad-top-of-viewport: notApplicable
 ads-in-viewport: notApplicable
-appcache-manifest: pass
 apple-touch-icon: fail
 aria-allowed-attr: notApplicable
 aria-command-name: notApplicable
@@ -565,7 +560,7 @@ viewport: fail
 viewport-ad-density: notApplicable
 visual-order-follows-dom: manual
 
-# of .lh-audit divs: 160
+# of .lh-audit divs: 159
 
 .lh-audit divs:
 accesskeys
@@ -575,7 +570,6 @@ ad-request-critical-path
 ad-request-from-page-start
 ad-top-of-viewport
 ads-in-viewport
-appcache-manifest
 apple-touch-icon
 aria-allowed-attr
 aria-command-name

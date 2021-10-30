@@ -743,18 +743,6 @@
   "lighthouse-core/audits/deprecations.js | title": {
     "message": "Nie używa wycofanych interfejsów API"
   },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | description": {
-    "message": "Pamięć podręczna aplikacji została wycofana. [Więcej informacji](https://web.dev/appcache-manifest/)"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | displayValue": {
-    "message": "Znaleziono „{AppCacheManifest}”"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | failureTitle": {
-    "message": "Używa pamięci podręcznej aplikacji"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | title": {
-    "message": "Nie używa pamięci podręcznej aplikacji"
-  },
   "lighthouse-core/audits/dobetterweb/charset.js | description": {
     "message": "Wymagana jest deklaracja kodowania znaków. Możesz ją dodać za pomocą tagu `<meta>` w pierwszych 1024 bajtach kodu HTML lub w nagłówku odpowiedzi HTTP Content-Type. [Więcej informacji](https://web.dev/charset/)"
   },

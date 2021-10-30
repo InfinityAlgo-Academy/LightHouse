@@ -743,18 +743,6 @@
   "lighthouse-core/audits/deprecations.js | title": {
     "message": "Unngår å bruke avviklede API-er"
   },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | description": {
-    "message": "Programbufferen er avviklet. [Finn ut mer](https://web.dev/appcache-manifest/)."
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | displayValue": {
-    "message": "Fant «{AppCacheManifest}»"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | failureTitle": {
-    "message": "Bruker programbufferen"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | title": {
-    "message": "Unngår å bruke programbufferen"
-  },
   "lighthouse-core/audits/dobetterweb/charset.js | description": {
     "message": "En tegnkodingsdeklarasjon kreves. Dette kan gjøres med en `<meta>`-tagg i de første 1024 bytene av HTML-koden eller i HTTP-svarhodet «Content-Type». [Finn ut mer](https://web.dev/charset/)."
   },

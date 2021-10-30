@@ -743,18 +743,6 @@
   "lighthouse-core/audits/deprecations.js | title": {
     "message": "[Åvöîðš ðéþŕéçåţéð ÅÞÎš one two three]"
   },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | description": {
-    "message": "[Åþþļîçåţîöñ Çåçĥé îš ðéþŕéçåţéð. ᐅ[ᐊĻéåŕñ möŕéᐅ](https://web.dev/appcache-manifest/)ᐊ. one two three four five six seven eight nine ten eleven]"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | displayValue": {
-    "message": "[Föûñð \"ᐅ{AppCacheManifest}ᐊ\" one two three]"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | failureTitle": {
-    "message": "[Ûšéš Åþþļîçåţîöñ Çåçĥé one two three]"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | title": {
-    "message": "[Åvöîðš Åþþļîçåţîöñ Çåçĥé one two three]"
-  },
   "lighthouse-core/audits/dobetterweb/charset.js | description": {
     "message": "[Å çĥåŕåçţéŕ éñçöðîñĝ ðéçļåŕåţîöñ îš ŕéqûîŕéð. Îţ çåñ бé ðöñé ŵîţĥ å ᐅ`<meta>`ᐊ ţåĝ îñ ţĥé ƒîŕšţ 1024 бýţéš öƒ ţĥé ĤŢMĻ öŕ îñ ţĥé Çöñţéñţ-Ţýþé ĤŢŢÞ ŕéšþöñšé ĥéåðéŕ. ᐅ[ᐊĻéåŕñ möŕéᐅ](https://web.dev/charset/)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone twentytwo twentythree twentyfour]"
   },

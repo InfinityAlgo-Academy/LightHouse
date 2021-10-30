@@ -743,18 +743,6 @@
   "lighthouse-core/audits/deprecations.js | title": {
     "message": "Undgår udfasede API'er"
   },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | description": {
-    "message": "Application Cache er udfaset. [Få flere oplysninger](https://web.dev/appcache-manifest/)."
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | displayValue": {
-    "message": "\"{AppCacheManifest}\" blev fundet"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | failureTitle": {
-    "message": "Bruger Application Cache"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | title": {
-    "message": "Undgår Application Cache"
-  },
   "lighthouse-core/audits/dobetterweb/charset.js | description": {
     "message": "Der skal angives en erklæring om tegnkodning. Det kan gøres med et `<meta>`-tag i de første 1024 bytes i HTML-koden eller i HTTP-svarheaderen for Content-Type. [Få flere oplysninger](https://web.dev/charset/)."
   },

@@ -743,18 +743,6 @@
   "lighthouse-core/audits/deprecations.js | title": {
     "message": "La page n'utilise pas d'API obsolètes"
   },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | description": {
-    "message": "L'API Application Cache est obsolète. [En savoir plus](https://web.dev/appcache-manifest/)"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | displayValue": {
-    "message": "\"{AppCacheManifest}\" trouvé"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | failureTitle": {
-    "message": "API Application Cache utilisée"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | title": {
-    "message": "API Application Cache non utilisée"
-  },
   "lighthouse-core/audits/dobetterweb/charset.js | description": {
     "message": "La déclaration d'encodage des caractères est obligatoire. Elle peut être effectuée avec une balise `<meta>` dans les 1 024 premiers octets du code HTML, ou dans l'en-tête de réponse HTTP Content-Type. [En savoir plus](https://web.dev/charset/)"
   },

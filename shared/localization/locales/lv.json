@@ -743,18 +743,6 @@
   "lighthouse-core/audits/deprecations.js | title": {
     "message": "Nav atļautas novecojušas saskarnes API"
   },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | description": {
-    "message": "Lietojumprogrammas kešatmiņa ir novecojusi. [Uzziniet vairāk](https://web.dev/appcache-manifest/)."
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | displayValue": {
-    "message": "Atrasts parametrs “{AppCacheManifest}”"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | failureTitle": {
-    "message": "Tiek izmantota lietojumprogrammas kešatmiņa"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | title": {
-    "message": "Netiek izmantota lietojumprogrammas kešatmiņa"
-  },
   "lighthouse-core/audits/dobetterweb/charset.js | description": {
     "message": "Ir nepieciešama rakstzīmju kodējuma deklarācija. To var ietvert tagā `<meta>` HTML koda pirmajos 1024 baitos vai satura veida HTTP atbildes galvenē. [Uzziniet vairāk](https://web.dev/charset/)."
   },

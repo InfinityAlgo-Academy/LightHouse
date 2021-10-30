@@ -743,18 +743,6 @@
   "lighthouse-core/audits/deprecations.js | title": {
     "message": "Kullanımdan kaldırılan API'leri içermiyor"
   },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | description": {
-    "message": "Application Cache API'si kullanımdan kaldırılmıştır. [Daha fazla bilgi](https://web.dev/appcache-manifest/)."
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | displayValue": {
-    "message": "\"{AppCacheManifest}\" bulundu"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | failureTitle": {
-    "message": "Uygulama Önbelleği Kullanma"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | title": {
-    "message": "Uygulama Önbelleği Kullanılmıyor"
-  },
   "lighthouse-core/audits/dobetterweb/charset.js | description": {
     "message": "Karakter kodlama tanımlaması gerekiyor. Bu, HTML'nin ilk 1.024 baytı içinde veya İçerik Türü HTTP yanıt başlığında bir `<meta>` etiketi ile yapılabilir. [Daha fazla bilgi edinin](https://web.dev/charset/)."
   },

@@ -743,18 +743,6 @@
   "lighthouse-core/audits/deprecations.js | title": {
     "message": "Evita le API obsolete"
   },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | description": {
-    "message": "L'API Cache applicazione è obsoleta. [Ulteriori informazioni](https://web.dev/appcache-manifest/)."
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | displayValue": {
-    "message": "\"{AppCacheManifest}\" trovato"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | failureTitle": {
-    "message": "Usa l'API Cache applicazione"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | title": {
-    "message": "Evita l'API Cache applicazione"
-  },
   "lighthouse-core/audits/dobetterweb/charset.js | description": {
     "message": "Dichiarazione della codifica dei caratteri obbligatoria. Può essere inserita con un tag `<meta>` nei primi 1024 byte del codice HTML oppure nell'intestazione della risposta HTTP Content-Type. [Ulteriori informazioni](https://web.dev/charset/)"
   },
