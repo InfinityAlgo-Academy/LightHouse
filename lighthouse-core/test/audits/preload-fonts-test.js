@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const PreloadFontsAudit = require('../../audits/preload-fonts.js');
-const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
+import PreloadFontsAudit from '../../audits/preload-fonts.js';
+import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
 
 /* eslint-env jest */
 

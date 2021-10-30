@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const PassiveEventsAudit = require('../../../audits/dobetterweb/uses-passive-event-listeners.js');
-const assert = require('assert').strict;
+import PassiveEventsAudit from '../../../audits/dobetterweb/uses-passive-event-listeners.js';
+import {strict as assert} from 'assert';
 
 /* eslint-env jest */
 

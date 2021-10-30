@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const Audit = require('../../audits/viewport.js');
-const assert = require('assert').strict;
+import Audit from '../../audits/viewport.js';
+import {strict as assert} from 'assert';
 
 /* eslint-env jest */
 

@@ -6,14 +6,15 @@
 'use strict';
 
 /* eslint-env jest */
-const PageExecutionTimings = require('../../audits/mainthread-work-breakdown.js');
-const assert = require('assert').strict;
+import PageExecutionTimings from '../../audits/mainthread-work-breakdown.js';
+
+import {strict as assert} from 'assert';
 const options = PageExecutionTimings.defaultOptions;
 
-const acceptableTrace = require('../fixtures/traces/progressive-app-m60.json');
-const siteWithRedirectTrace = require('../fixtures/traces/site-with-redirect.json');
-const loadTrace = require('../fixtures/traces/load.json');
-const errorTrace = require('../fixtures/traces/no_fmp_event.json');
+import acceptableTrace from '../fixtures/traces/progressive-app-m60.json';
+import siteWithRedirectTrace from '../fixtures/traces/site-with-redirect.json';
+import loadTrace from '../fixtures/traces/load.json';
+import errorTrace from '../fixtures/traces/no_fmp_event.json';
 
 const acceptableTraceExpectations = {
   parseHTML: 14,

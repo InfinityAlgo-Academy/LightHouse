@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const CumulativeLayoutShift = require('../../../audits/metrics/cumulative-layout-shift.js');
-const jumpyClsTrace = require('../../fixtures/traces/jumpy-cls-m90.json');
+import CumulativeLayoutShift from '../../../audits/metrics/cumulative-layout-shift.js';
+import jumpyClsTrace from '../../fixtures/traces/jumpy-cls-m90.json';
 
 /* eslint-env jest */
 

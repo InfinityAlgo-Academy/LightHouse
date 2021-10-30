@@ -8,9 +8,10 @@
 
 /* eslint-env jest */
 
-const PreloadLCPImage = require('../../audits/preload-lcp-image.js');
-const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
-const createTestTrace = require('../create-test-trace.js');
+import PreloadLCPImage from '../../audits/preload-lcp-image.js';
+
+import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
+import createTestTrace from '../create-test-trace.js';
 
 const rootNodeUrl = 'http://example.com:3000';
 const mainDocumentNodeUrl = 'http://www.example.com:3000';

@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const FontDisplayAudit = require('../../audits/font-display.js');
-const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
+import FontDisplayAudit from '../../audits/font-display.js';
+import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
 
 /* eslint-env jest */
 

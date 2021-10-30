@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const OptimizedImagesAudit = require('../../../audits/byte-efficiency/uses-optimized-images.js');
+import OptimizedImagesAudit from '../../../audits/byte-efficiency/uses-optimized-images.js';
 
 function generateArtifacts(images) {
   const optimizedImages = [];

@@ -6,9 +6,8 @@
 'use strict';
 
 const KB = 1024;
-const ResponsesAreCompressedAudit =
-  require('../../../audits/byte-efficiency/uses-text-compression.js');
-const assert = require('assert').strict;
+import ResponsesAreCompressedAudit from '../../../audits/byte-efficiency/uses-text-compression.js';
+import {strict as assert} from 'assert';
 
 function generateResponse(options) {
   return Object.assign({

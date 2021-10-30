@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const DeprecationsAudit = require('../../audits/deprecations.js');
-const assert = require('assert').strict;
+import DeprecationsAudit from '../../audits/deprecations.js';
+import {strict as assert} from 'assert';
 
 /* eslint-env jest */
 

@@ -5,9 +5,8 @@
  */
 'use strict';
 
-const MainThreadTasks = require('../../audits/main-thread-tasks.js');
-
-const acceptableTrace = require('../fixtures/traces/progressive-app-m60.json');
+import MainThreadTasks from '../../audits/main-thread-tasks.js';
+import acceptableTrace from '../fixtures/traces/progressive-app-m60.json';
 
 /* eslint-env jest */
 

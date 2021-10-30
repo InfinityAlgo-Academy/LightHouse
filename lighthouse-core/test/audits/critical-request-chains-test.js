@@ -7,11 +7,12 @@
 
 /* eslint-env jest */
 
-const CriticalRequestChains = require('../../audits/critical-request-chains.js');
-const redditDevtoolsLog = require('../fixtures/artifacts/perflog/defaultPass.devtoolslog.json');
-const assert = require('assert').strict;
-const createTestTrace = require('../create-test-trace.js');
-const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
+import CriticalRequestChains from '../../audits/critical-request-chains.js';
+
+import redditDevtoolsLog from '../fixtures/artifacts/perflog/defaultPass.devtoolslog.json';
+import {strict as assert} from 'assert';
+import createTestTrace from '../create-test-trace.js';
+import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
 
 const FAILING_CHAIN_RECORDS = [
   {

@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const RobotsTxtAudit = require('../../../audits/seo/robots-txt.js');
-const assert = require('assert').strict;
+import RobotsTxtAudit from '../../../audits/seo/robots-txt.js';
+import {strict as assert} from 'assert';
 
 /* eslint-env jest */
 

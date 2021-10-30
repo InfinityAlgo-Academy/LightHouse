@@ -5,11 +5,11 @@
  */
 'use strict';
 
-const UsesHTTP2Audit = require('../../../audits/dobetterweb/uses-http2.js');
-const trace = require('../../fixtures/traces/progressive-app-m60.json');
-const devtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
-const NetworkRecords = require('../../../computed/network-records.js');
-const networkRecordsToDevtoolsLog = require('../../network-records-to-devtools-log.js');
+import UsesHTTP2Audit from '../../../audits/dobetterweb/uses-http2.js';
+import trace from '../../fixtures/traces/progressive-app-m60.json';
+import devtoolsLog from '../../fixtures/traces/progressive-app-m60.devtools.log.json';
+import NetworkRecords from '../../../computed/network-records.js';
+import networkRecordsToDevtoolsLog from '../../network-records-to-devtools-log.js';
 
 /* eslint-env jest */
 

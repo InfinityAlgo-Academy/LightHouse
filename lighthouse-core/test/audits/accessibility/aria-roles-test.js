@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const Audit = require('../../../audits/accessibility/aria-roles.js');
-const assert = require('assert').strict;
+import Audit from '../../../audits/accessibility/aria-roles.js';
+import {strict as assert} from 'assert';
 
 /* eslint-env jest */
 

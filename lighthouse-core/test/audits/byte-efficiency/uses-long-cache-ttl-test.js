@@ -5,11 +5,11 @@
  */
 'use strict';
 
-const CacheHeadersAudit = require('../../../audits/byte-efficiency/uses-long-cache-ttl.js');
-const assert = require('assert').strict;
-const NetworkRequest = require('../../../lib/network-request.js');
+import CacheHeadersAudit from '../../../audits/byte-efficiency/uses-long-cache-ttl.js';
+import {strict as assert} from 'assert';
+import NetworkRequest from '../../../lib/network-request.js';
 const options = CacheHeadersAudit.defaultOptions;
-const networkRecordsToDevtoolsLog = require('../../network-records-to-devtools-log.js');
+import networkRecordsToDevtoolsLog from '../../network-records-to-devtools-log.js';
 
 /* eslint-env jest */
 

@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const GeolocationOnStartAudit = require('../../../audits/dobetterweb/geolocation-on-start.js');
-const assert = require('assert').strict;
+import GeolocationOnStartAudit from '../../../audits/dobetterweb/geolocation-on-start.js';
+import {strict as assert} from 'assert';
 
 /* eslint-env jest */
 

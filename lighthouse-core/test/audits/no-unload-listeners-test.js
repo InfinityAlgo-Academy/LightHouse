@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const NoUnloadListeners = require('../../audits/no-unload-listeners.js');
+import NoUnloadListeners from '../../audits/no-unload-listeners.js';
 
 /* eslint-env jest */
 

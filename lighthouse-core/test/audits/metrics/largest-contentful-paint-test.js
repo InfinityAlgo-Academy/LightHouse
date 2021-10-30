@@ -5,15 +5,13 @@
  */
 'use strict';
 
-const LCPAudit = require('../../../audits/metrics/largest-contentful-paint.js');
+import LCPAudit from '../../../audits/metrics/largest-contentful-paint.js';
 const defaultOptions = LCPAudit.defaultOptions;
-const constants = require('../../../config/constants.js');
-
-const trace = require('../../fixtures/traces/lcp-m78.json');
-const devtoolsLog = require('../../fixtures/traces/lcp-m78.devtools.log.json');
-
-const preLcpTrace = require('../../fixtures/traces/progressive-app-m60.json');
-const preLcpDevtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
+import constants from '../../../config/constants.js';
+import trace from '../../fixtures/traces/lcp-m78.json';
+import devtoolsLog from '../../fixtures/traces/lcp-m78.devtools.log.json';
+import preLcpTrace from '../../fixtures/traces/progressive-app-m60.json';
+import preLcpDevtoolsLog from '../../fixtures/traces/progressive-app-m60.devtools.log.json';
 
 function generateArtifacts({trace, devtoolsLog, HostUserAgent}) {
   return {

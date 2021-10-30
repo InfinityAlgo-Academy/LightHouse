@@ -5,10 +5,9 @@
  */
 'use strict';
 
-const Diagnostics = require('../../audits/diagnostics.js');
-
-const acceptableTrace = require('../fixtures/traces/progressive-app-m60.json');
-const acceptableDevToolsLog = require('../fixtures/traces/progressive-app-m60.devtools.log.json');
+import Diagnostics from '../../audits/diagnostics.js';
+import acceptableTrace from '../fixtures/traces/progressive-app-m60.json';
+import acceptableDevToolsLog from '../fixtures/traces/progressive-app-m60.devtools.log.json';
 
 /* eslint-env jest */
 

@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const DocWriteUseAudit = require('../../../audits/dobetterweb/no-document-write.js');
-const assert = require('assert').strict;
+import DocWriteUseAudit from '../../../audits/dobetterweb/no-document-write.js';
+import {strict as assert} from 'assert';
 
 const URL = 'https://example.com';
 

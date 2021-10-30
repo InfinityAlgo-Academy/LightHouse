@@ -5,9 +5,8 @@
  */
 'use strict';
 
-const ExternalAnchorsAudit =
-  require('../../../audits/dobetterweb/external-anchors-use-rel-noopener.js');
-const assert = require('assert').strict;
+import ExternalAnchorsAudit from '../../../audits/dobetterweb/external-anchors-use-rel-noopener.js';
+import {strict as assert} from 'assert';
 
 const URL = 'https://google.com/test';
 

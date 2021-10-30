@@ -4,16 +4,14 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
-const FcpAudit = require('../../../audits/metrics/first-contentful-paint.js');
-const assert = require('assert').strict;
+import FcpAudit from '../../../audits/metrics/first-contentful-paint.js';
+import {strict as assert} from 'assert';
 const options = FcpAudit.defaultOptions;
-const constants = require('../../../config/constants.js');
-
-const pwaTrace = require('../../fixtures/traces/progressive-app-m60.json');
-const pwaDevtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
-
-const frameTrace = require('../../fixtures/traces/frame-metrics-m90.json');
-const frameDevtoolsLog = require('../../fixtures/traces/frame-metrics-m90.devtools.log.json');
+import constants from '../../../config/constants.js';
+import pwaTrace from '../../fixtures/traces/progressive-app-m60.json';
+import pwaDevtoolsLog from '../../fixtures/traces/progressive-app-m60.devtools.log.json';
+import frameTrace from '../../fixtures/traces/frame-metrics-m90.json';
+import frameDevtoolsLog from '../../fixtures/traces/frame-metrics-m90.devtools.log.json';
 
 /**
  * @param {{

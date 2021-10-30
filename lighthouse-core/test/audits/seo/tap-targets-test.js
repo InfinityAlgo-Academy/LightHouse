@@ -7,9 +7,10 @@
 
 /* eslint-env jest */
 
-const TapTargetsAudit = require('../../../audits/seo/tap-targets.js');
-const constants = require('../../../config/constants.js');
-const assert = require('assert').strict;
+import TapTargetsAudit from '../../../audits/seo/tap-targets.js';
+
+import constants from '../../../config/constants.js';
+import {strict as assert} from 'assert';
 
 /** @param {LH.SharedFlagsSettings['formFactor']} formFactor */
 const getFakeContext = (formFactor = 'mobile') => ({

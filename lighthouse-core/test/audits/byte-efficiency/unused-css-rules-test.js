@@ -5,9 +5,9 @@
  */
 'use strict';
 
-const UnusedCSSAudit = require('../../../audits/byte-efficiency/unused-css-rules.js');
-const assert = require('assert').strict;
-const networkRecordsToDevtoolsLog = require('../../network-records-to-devtools-log.js');
+import UnusedCSSAudit from '../../../audits/byte-efficiency/unused-css-rules.js';
+import {strict as assert} from 'assert';
+import networkRecordsToDevtoolsLog from '../../network-records-to-devtools-log.js';
 
 /* eslint-env jest */
 

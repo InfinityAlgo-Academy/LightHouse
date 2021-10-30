@@ -5,8 +5,7 @@
  */
 'use strict';
 
-const InspectorIssuesAudit =
-  require('../../../audits/dobetterweb/inspector-issues.js');
+import InspectorIssuesAudit from '../../../audits/dobetterweb/inspector-issues.js';
 
 /* eslint-env jest */
 

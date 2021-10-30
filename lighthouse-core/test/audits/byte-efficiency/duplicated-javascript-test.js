@@ -7,10 +7,11 @@
 
 /* eslint-env jest */
 
-const DuplicatedJavascript = require('../../../audits/byte-efficiency/duplicated-javascript.js');
-const trace = require('../../fixtures/traces/lcp-m78.json');
-const devtoolsLog = require('../../fixtures/traces/lcp-m78.devtools.log.json');
-const {loadSourceMapFixture} = require('../../test-utils.js');
+import DuplicatedJavascript from '../../../audits/byte-efficiency/duplicated-javascript.js';
+
+import trace from '../../fixtures/traces/lcp-m78.json';
+import devtoolsLog from '../../fixtures/traces/lcp-m78.devtools.log.json';
+import {loadSourceMapFixture} from '../../test-utils.js';
 
 describe('DuplicatedJavascript computed artifact', () => {
   it('works (simple)', async () => {

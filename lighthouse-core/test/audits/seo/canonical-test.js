@@ -5,9 +5,9 @@
  */
 'use strict';
 
-const CanonicalAudit = require('../../../audits/seo/canonical.js');
-const assert = require('assert').strict;
-const networkRecordsToDevtoolsLog = require('../../network-records-to-devtools-log.js');
+import CanonicalAudit from '../../../audits/seo/canonical.js';
+import {strict as assert} from 'assert';
+import networkRecordsToDevtoolsLog from '../../network-records-to-devtools-log.js';
 
 /* eslint-env jest */
 

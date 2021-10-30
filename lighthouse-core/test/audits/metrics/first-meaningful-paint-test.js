@@ -5,13 +5,13 @@
  */
 'use strict';
 
-const FMPAudit = require('../../../audits/metrics/first-meaningful-paint.js');
-const Audit = require('../../../audits/audit.js');
-const constants = require('../../../config/constants.js');
-const assert = require('assert').strict;
+import FMPAudit from '../../../audits/metrics/first-meaningful-paint.js';
+import Audit from '../../../audits/audit.js';
+import constants from '../../../config/constants.js';
+import {strict as assert} from 'assert';
 const options = FMPAudit.defaultOptions;
-const trace = require('../../fixtures/traces/progressive-app-m60.json');
-const devtoolsLogs = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
+import trace from '../../fixtures/traces/progressive-app-m60.json';
+import devtoolsLogs from '../../fixtures/traces/progressive-app-m60.devtools.log.json';
 
 /**
  * @param {{

@@ -6,8 +6,8 @@
 'use strict';
 
 const KB = 1024;
-const UnminifiedCssAudit = require('../../../audits/byte-efficiency/unminified-css.js');
-const assert = require('assert').strict;
+import UnminifiedCssAudit from '../../../audits/byte-efficiency/unminified-css.js';
+import {strict as assert} from 'assert';
 
 /* eslint-env jest */
 

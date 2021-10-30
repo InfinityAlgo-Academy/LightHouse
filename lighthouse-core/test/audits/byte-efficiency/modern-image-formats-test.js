@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const ModernImageFormats = require('../../../audits/byte-efficiency/modern-image-formats.js');
+import ModernImageFormats from '../../../audits/byte-efficiency/modern-image-formats.js';
 
 function generateArtifacts(images) {
   const optimizedImages = [];

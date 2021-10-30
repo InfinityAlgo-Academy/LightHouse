@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const Audit = require('../../../audits/dobetterweb/doctype.js');
-const assert = require('assert').strict;
+import Audit from '../../../audits/dobetterweb/doctype.js';
+import {strict as assert} from 'assert';
 
 /* eslint-env jest */
 

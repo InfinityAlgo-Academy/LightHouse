@@ -5,8 +5,7 @@
  */
 'use strict';
 
-const LargestContentfulPaintLazyLoaded =
-  require('../../audits/lcp-lazy-loaded.js');
+import LargestContentfulPaintLazyLoaded from '../../audits/lcp-lazy-loaded.js';
 
 /* eslint-env jest */
 const SAMPLE_NODE = {

@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const AppleTouchIcon = require('../../audits/apple-touch-icon.js');
+import AppleTouchIcon from '../../audits/apple-touch-icon.js';
 
 /* eslint-env jest */
 

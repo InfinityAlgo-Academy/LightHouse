@@ -8,10 +8,11 @@
 
 /* eslint-env jest */
 
-const UsesRelPreconnect = require('../../audits/uses-rel-preconnect.js');
-const assert = require('assert').strict;
-const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
-const createTestTrace = require('../create-test-trace.js');
+import UsesRelPreconnect from '../../audits/uses-rel-preconnect.js';
+
+import {strict as assert} from 'assert';
+import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
+import createTestTrace from '../create-test-trace.js';
 
 const mainResource = {
   url: 'https://www.example.com/',

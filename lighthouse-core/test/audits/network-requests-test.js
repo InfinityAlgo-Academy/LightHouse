@@ -5,10 +5,9 @@
  */
 'use strict';
 
-const NetworkRequests = require('../../audits/network-requests.js');
-const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
-
-const cutoffLoadDevtoolsLog = require('../fixtures/traces/cutoff-load-m83.devtoolslog.json');
+import NetworkRequests from '../../audits/network-requests.js';
+import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
+import cutoffLoadDevtoolsLog from '../fixtures/traces/cutoff-load-m83.devtoolslog.json';
 
 /* eslint-env jest */
 describe('Network requests audit', () => {

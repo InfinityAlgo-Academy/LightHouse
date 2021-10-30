@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const ResourceSummaryAudit = require('../../audits/resource-summary.js');
-const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
+import ResourceSummaryAudit from '../../audits/resource-summary.js';
+import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
 
 /* eslint-env jest */
 

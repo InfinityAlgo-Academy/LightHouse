@@ -5,9 +5,9 @@
  */
 'use strict';
 
-const FontSizeAudit = require('../../../audits/seo/font-size.js');
-const constants = require('../../../config/constants.js');
-const assert = require('assert').strict;
+import FontSizeAudit from '../../../audits/seo/font-size.js';
+import constants from '../../../config/constants.js';
+import {strict as assert} from 'assert';
 
 const URL = {
   requestedUrl: 'https://example.com',

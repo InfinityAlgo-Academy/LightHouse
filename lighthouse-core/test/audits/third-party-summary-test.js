@@ -5,12 +5,11 @@
  */
 'use strict';
 
-const ThirdPartySummary = require('../../audits/third-party-summary.js');
-const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
-
-const pwaTrace = require('../fixtures/traces/progressive-app-m60.json');
-const pwaDevtoolsLog = require('../fixtures/traces/progressive-app-m60.devtools.log.json');
-const noThirdPartyTrace = require('../fixtures/traces/no-tracingstarted-m74.json');
+import ThirdPartySummary from '../../audits/third-party-summary.js';
+import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
+import pwaTrace from '../fixtures/traces/progressive-app-m60.json';
+import pwaDevtoolsLog from '../fixtures/traces/progressive-app-m60.devtools.log.json';
+import noThirdPartyTrace from '../fixtures/traces/no-tracingstarted-m74.json';
 
 /* eslint-env jest */
 describe('Third party summary', () => {

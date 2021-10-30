@@ -5,13 +5,14 @@
  */
 'use strict';
 
-const TotalByteWeight = require('../../../audits/byte-efficiency/total-byte-weight.js');
-const assert = require('assert').strict;
-const URL = require('url').URL;
-const options = TotalByteWeight.defaultOptions;
-const networkRecordsToDevtoolsLog = require('../../network-records-to-devtools-log.js');
-
 /* eslint-env jest */
+
+import {strict as assert} from 'assert';
+import {URL} from 'url';
+import TotalByteWeight from '../../../audits/byte-efficiency/total-byte-weight.js';
+import networkRecordsToDevtoolsLog from '../../network-records-to-devtools-log.js';
+
+const options = TotalByteWeight.defaultOptions;
 
 function generateRequest(url, size, baseUrl = 'http://google.com/') {
   const parsedUrl = new URL(url, baseUrl);

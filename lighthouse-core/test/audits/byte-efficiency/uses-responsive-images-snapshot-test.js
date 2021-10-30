@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const UsesResponsiveImagesSnapshot =
-    require('../../../audits/byte-efficiency/uses-responsive-images-snapshot.js');
+import UsesResponsiveImagesSnapshot from
+  '../../../audits/byte-efficiency/uses-responsive-images-snapshot.js';
 
 /* eslint-env jest */
 

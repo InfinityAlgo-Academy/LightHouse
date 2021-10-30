@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const Audit = require('../../../audits/seo/meta-description.js');
-const assert = require('assert').strict;
+import Audit from '../../../audits/seo/meta-description.js';
+import {strict as assert} from 'assert';
 
 /* eslint-env jest */
 

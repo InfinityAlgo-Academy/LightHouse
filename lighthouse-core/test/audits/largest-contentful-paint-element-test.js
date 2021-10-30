@@ -5,8 +5,7 @@
  */
 'use strict';
 
-const LargestContentfulPaintElementAudit =
-  require('../../audits/largest-contentful-paint-element.js');
+import LargestContentfulPaintElementAudit from '../../audits/largest-contentful-paint-element.js';
 
 /* eslint-env jest */
 describe('Performance: largest-contentful-paint-element audit', () => {

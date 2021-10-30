@@ -5,8 +5,7 @@
  */
 'use strict';
 
-const LayoutShiftElementsAudit =
-  require('../../audits/layout-shift-elements.js');
+import LayoutShiftElementsAudit from '../../audits/layout-shift-elements.js';
 
 /* eslint-env jest */
 

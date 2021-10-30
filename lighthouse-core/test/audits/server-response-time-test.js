@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const ServerResponseTime = require('../../audits/server-response-time.js');
-const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
+import ServerResponseTime from '../../audits/server-response-time.js';
+import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
 
 /* eslint-env jest */
 describe('Performance: server-response-time audit', () => {

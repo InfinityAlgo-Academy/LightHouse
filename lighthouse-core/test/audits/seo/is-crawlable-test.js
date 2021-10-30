@@ -5,9 +5,9 @@
  */
 'use strict';
 
-const IsCrawlableAudit = require('../../../audits/seo/is-crawlable.js');
-const assert = require('assert').strict;
-const networkRecordsToDevtoolsLog = require('../../network-records-to-devtools-log.js');
+import IsCrawlableAudit from '../../../audits/seo/is-crawlable.js';
+import {strict as assert} from 'assert';
+import networkRecordsToDevtoolsLog from '../../network-records-to-devtools-log.js';
 
 /* eslint-env jest */
 

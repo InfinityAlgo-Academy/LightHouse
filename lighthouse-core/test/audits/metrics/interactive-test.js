@@ -5,17 +5,14 @@
  */
 'use strict';
 
-const Interactive = require('../../../audits/metrics/interactive.js');
-const assert = require('assert').strict;
+import Interactive from '../../../audits/metrics/interactive.js';
+import {strict as assert} from 'assert';
 const options = Interactive.defaultOptions;
-const constants = require('../../../config/constants.js');
-
-const acceptableTrace = require('../../fixtures/traces/progressive-app-m60.json');
-const acceptableDevToolsLog =
-    require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
-
-const redirectTrace = require('../../fixtures/traces/site-with-redirect.json');
-const redirectDevToolsLog = require('../../fixtures/traces/site-with-redirect.devtools.log.json');
+import constants from '../../../config/constants.js';
+import acceptableTrace from '../../fixtures/traces/progressive-app-m60.json';
+import acceptableDevToolsLog from '../../fixtures/traces/progressive-app-m60.devtools.log.json';
+import redirectTrace from '../../fixtures/traces/site-with-redirect.json';
+import redirectDevToolsLog from '../../fixtures/traces/site-with-redirect.devtools.log.json';
 
 /**
  * @param {{

@@ -5,9 +5,9 @@
  */
 'use strict';
 
-const Audit = require('../../audits/is-on-https.js');
-const assert = require('assert').strict;
-const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
+import Audit from '../../audits/is-on-https.js';
+import {strict as assert} from 'assert';
+import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
 
 /* eslint-env jest */
 

@@ -5,15 +5,13 @@
  */
 'use strict';
 
-const TBTAudit = require('../../../audits/metrics/total-blocking-time.js');
+import TBTAudit from '../../../audits/metrics/total-blocking-time.js';
 const defaultOptions = TBTAudit.defaultOptions;
-const constants = require('../../../config/constants.js');
-
-const trace = require('../../fixtures/traces/progressive-app-m60.json');
-const devtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
-
-const lcpTrace = require('../../fixtures/traces/lcp-m78.json');
-const lcpDevtoolsLog = require('../../fixtures/traces/lcp-m78.devtools.log.json');
+import constants from '../../../config/constants.js';
+import trace from '../../fixtures/traces/progressive-app-m60.json';
+import devtoolsLog from '../../fixtures/traces/progressive-app-m60.devtools.log.json';
+import lcpTrace from '../../fixtures/traces/lcp-m78.json';
+import lcpDevtoolsLog from '../../fixtures/traces/lcp-m78.devtools.log.json';
 
 function generateArtifacts({gatherMode = 'navigation', trace, devtoolsLog}) {
   return {
