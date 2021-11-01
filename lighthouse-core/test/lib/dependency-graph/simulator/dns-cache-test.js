@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const DNSCache = require('../../../../lib/dependency-graph/simulator/dns-cache.js');
+import DNSCache from '../../../../lib/dependency-graph/simulator/dns-cache.js';
 const MULTIPLIER = DNSCache.RTT_MULTIPLIER;
 
 /* eslint-env jest */

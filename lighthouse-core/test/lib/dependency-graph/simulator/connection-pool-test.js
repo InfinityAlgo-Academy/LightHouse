@@ -5,10 +5,9 @@
  */
 'use strict';
 
-const ConnectionPool = require('../../../../lib/dependency-graph/simulator/connection-pool.js');
-
-const assert = require('assert').strict;
-const URL = require('url').URL;
+import ConnectionPool from '../../../../lib/dependency-graph/simulator/connection-pool.js';
+import {strict as assert} from 'assert';
+import {URL} from 'url';
 
 /* eslint-env jest */
 describe('DependencyGraph/Simulator/ConnectionPool', () => {

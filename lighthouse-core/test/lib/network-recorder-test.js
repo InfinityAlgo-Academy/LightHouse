@@ -5,14 +5,14 @@
  */
 'use strict';
 
-const NetworkRecorder = require('../../lib/network-recorder.js');
-const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
-const assert = require('assert').strict;
-const devtoolsLogItems = require('../fixtures/artifacts/perflog/defaultPass.devtoolslog.json');
-const prefetchedScriptDevtoolsLog = require('../fixtures/prefetched-script.devtoolslog.json');
-const redirectsDevtoolsLog = require('../fixtures/wikipedia-redirect.devtoolslog.json');
-const redirectsScriptDevtoolsLog = require('../fixtures/redirects-from-script.devtoolslog.json');
-const lrRequestDevtoolsLog = require('../fixtures/lr.devtoolslog.json');
+import NetworkRecorder from '../../lib/network-recorder.js';
+import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
+import {strict as assert} from 'assert';
+import devtoolsLogItems from '../fixtures/artifacts/perflog/defaultPass.devtoolslog.json';
+import prefetchedScriptDevtoolsLog from '../fixtures/prefetched-script.devtoolslog.json';
+import redirectsDevtoolsLog from '../fixtures/wikipedia-redirect.devtoolslog.json';
+import redirectsScriptDevtoolsLog from '../fixtures/redirects-from-script.devtoolslog.json';
+import lrRequestDevtoolsLog from '../fixtures/lr.devtoolslog.json';
 
 /* eslint-env jest */
 describe('network recorder', function() {

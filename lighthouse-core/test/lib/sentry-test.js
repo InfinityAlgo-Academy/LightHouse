@@ -5,12 +5,18 @@
  */
 'use strict';
 
+/* eslint-env jest */
+
+import {jest} from '@jest/globals';
+// import raven from 'raven';
+import Sentry from '../../lib/sentry.js';
+
 jest.mock('raven');
 
-const raven = require('raven');
-const Sentry = require('../../lib/sentry.js');
-
-/* eslint-env jest */
+let raven;
+beforeAll(async () => {
+  raven = (await import('raven')).default;
+});
 
 describe('Sentry', () => {
   let configPayload;

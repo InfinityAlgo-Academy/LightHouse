@@ -5,10 +5,10 @@
  */
 'use strict';
 
-const {minifyDevtoolsLog} = require('../../lib/minify-devtoolslog.js');
-const trace = require('../fixtures/traces/progressive-app-m60.json');
-const devtoolsLog = require('../fixtures/traces/progressive-app-m60.devtools.log.json');
-const MetricsAudit = require('../../audits/metrics.js');
+import {minifyDevtoolsLog} from '../../lib/minify-devtoolslog.js';
+import trace from '../fixtures/traces/progressive-app-m60.json';
+import devtoolsLog from '../fixtures/traces/progressive-app-m60.devtools.log.json';
+import MetricsAudit from '../../audits/metrics.js';
 
 /* eslint-env jest */
 

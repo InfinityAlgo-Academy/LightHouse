@@ -5,13 +5,14 @@
  */
 'use strict';
 
-const NetworkNode = require('../../../../lib/dependency-graph/network-node.js');
-const CpuNode = require('../../../../lib/dependency-graph/cpu-node.js');
-const Simulator = require('../../../../lib/dependency-graph/simulator/simulator.js');
-const DNSCache = require('../../../../lib/dependency-graph/simulator/dns-cache.js');
-const PageDependencyGraph = require('../../../../computed/page-dependency-graph.js');
+import NetworkNode from '../../../../lib/dependency-graph/network-node.js';
+import CpuNode from '../../../../lib/dependency-graph/cpu-node.js';
+import Simulator from '../../../../lib/dependency-graph/simulator/simulator.js';
+import DNSCache from '../../../../lib/dependency-graph/simulator/dns-cache.js';
+import PageDependencyGraph from '../../../../computed/page-dependency-graph.js';
+import {readJson} from '../../../../../root.js';
+import {strict as assert} from 'assert';
 
-const assert = require('assert').strict;
 let nextRequestId = 1;
 let nextTid = 1;
 
@@ -358,8 +359,9 @@ describe('DependencyGraph/Simulator', () => {
     });
 
     describe('on a real trace', () => {
-      const trace = require('../../../fixtures/traces/progressive-app-m60.json');
-      const devtoolsLog = require('../../../fixtures/traces/progressive-app-m60.devtools.log.json');
+      const trace = readJson('../../../fixtures/traces/progressive-app-m60.json', import.meta);
+      const devtoolsLog =
+        readJson('../../../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
 
       it('should compute a timeInMs', async () => {
         const computedCache = new Map();

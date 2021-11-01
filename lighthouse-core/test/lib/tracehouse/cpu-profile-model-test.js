@@ -7,11 +7,12 @@
 
 /* eslint-env jest */
 
-const CpuProfileModel = require('../../../lib/tracehouse/cpu-profile-model.js');
-const TraceProcessor = require('../../../lib/tracehouse/trace-processor.js');
-const MainThreadTasks = require('../../../lib/tracehouse/main-thread-tasks.js');
-const profilerTrace = require('../../fixtures/traces/cpu-profiler-m86.trace.json');
-const CpuProfilerModel = require('../../../lib/tracehouse/cpu-profile-model.js');
+import CpuProfileModel from '../../../lib/tracehouse/cpu-profile-model.js';
+
+import TraceProcessor from '../../../lib/tracehouse/trace-processor.js';
+import MainThreadTasks from '../../../lib/tracehouse/main-thread-tasks.js';
+import profilerTrace from '../../fixtures/traces/cpu-profiler-m86.trace.json';
+import CpuProfilerModel from '../../../lib/tracehouse/cpu-profile-model.js';
 
 describe('CPU Profiler Model', () => {
   /** @type {LH.TraceCpuProfile} */

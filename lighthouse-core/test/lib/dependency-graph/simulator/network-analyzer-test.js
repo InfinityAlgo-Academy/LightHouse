@@ -5,14 +5,11 @@
  */
 'use strict';
 
-const assert = require('assert').strict;
-
-const NetworkAnalyzer = require('../../../../lib/dependency-graph/simulator/network-analyzer.js');
-const NetworkRecords = require('../../../../computed/network-records.js');
-const devtoolsLog = require('../../../fixtures/traces/progressive-app-m60.devtools.log.json');
-const devtoolsLogWithRedirect = require(
-  '../../../fixtures/traces/site-with-redirect.devtools.log.json'
-);
+import {strict as assert} from 'assert';
+import NetworkAnalyzer from '../../../../lib/dependency-graph/simulator/network-analyzer.js';
+import NetworkRecords from '../../../../computed/network-records.js';
+import devtoolsLog from '../../../fixtures/traces/progressive-app-m60.devtools.log.json';
+import devtoolsLogWithRedirect from '../../../fixtures/traces/site-with-redirect.devtools.log.json';
 
 /* eslint-env jest */
 describe('DependencyGraph/Simulator/NetworkAnalyzer', () => {

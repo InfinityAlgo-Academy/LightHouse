@@ -7,9 +7,10 @@
 
 /* eslint-env jest */
 
-const {addRectTopAndBottom} = require('../../lib/rect-helpers.js');
-const {getTappableRectsFromClientRects} = require('../../lib/tappable-rects.js');
-const assert = require('assert').strict;
+import {addRectTopAndBottom} from '../../lib/rect-helpers.js';
+
+import {getTappableRectsFromClientRects} from '../../lib/tappable-rects.js';
+import {strict as assert} from 'assert';
 
 describe('getTappableRectsFromClientRects', () => {
   it('Merges rects if a smaller rect is inside a larger one', () => {

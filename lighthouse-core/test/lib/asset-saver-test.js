@@ -5,18 +5,20 @@
  */
 'use strict';
 
-const assetSaver = require('../../lib/asset-saver.js');
-const Metrics = require('../../lib/traces/pwmetrics-events.js');
-const assert = require('assert').strict;
-const fs = require('fs');
-const LHError = require('../../lib/lh-error.js');
+import assetSaver from '../../lib/asset-saver.js';
+import Metrics from '../../lib/traces/pwmetrics-events.js';
+import {strict as assert} from 'assert';
+import fs from 'fs';
+import LHError from '../../lib/lh-error.js';
+import traceEvents from '../fixtures/traces/progressive-app.json';
+import dbwTrace from '../results/artifacts/defaultPass.trace.json';
+import dbwResults from '../results/sample_v2.json';
+import Audit from '../../audits/audit.js';
+import {createCommonjsRefs} from '../../scripts/esm-utils.js';
+import fullTraceObj from '../fixtures/traces/progressive-app-m60.json';
+import devtoolsLog from '../fixtures/traces/progressive-app-m60.devtools.log.json';
 
-const traceEvents = require('../fixtures/traces/progressive-app.json');
-const dbwTrace = require('../results/artifacts/defaultPass.trace.json');
-const dbwResults = require('../results/sample_v2.json');
-const Audit = require('../../audits/audit.js');
-const fullTraceObj = require('../fixtures/traces/progressive-app-m60.json');
-const devtoolsLog = require('../fixtures/traces/progressive-app-m60.devtools.log.json');
+const {__dirname} = createCommonjsRefs(import.meta);
 
 // deepStrictEqual can hang on a full trace, we assert trace same-ness like so
 function assertTraceEventsEqual(traceEventsA, traceEventsB) {

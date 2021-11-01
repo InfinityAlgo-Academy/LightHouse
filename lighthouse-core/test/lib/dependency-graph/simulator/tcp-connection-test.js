@@ -5,9 +5,8 @@
  */
 'use strict';
 
-const TcpConnection = require('../../../../lib/dependency-graph/simulator/tcp-connection.js');
-
-const assert = require('assert').strict;
+import TcpConnection from '../../../../lib/dependency-graph/simulator/tcp-connection.js';
+import {strict as assert} from 'assert';
 
 /* eslint-env jest */
 describe('DependencyGraph/Simulator/TcpConnection', () => {

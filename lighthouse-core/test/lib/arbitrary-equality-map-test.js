@@ -7,9 +7,10 @@
 
 /* eslint-env jest */
 
-const assert = require('assert').strict;
-const ArbitraryEqualityMap = require('../../lib/arbitrary-equality-map.js');
-const trace = require('../fixtures/traces/progressive-app-m60.json');
+import {strict as assert} from 'assert';
+
+import ArbitraryEqualityMap from '../../lib/arbitrary-equality-map.js';
+import trace from '../fixtures/traces/progressive-app-m60.json';
 
 describe('ArbitraryEqualityMap', () => {
   it('creates a map', () => {
