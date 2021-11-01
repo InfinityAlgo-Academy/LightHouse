@@ -29,10 +29,10 @@ const HeaderThumbnail: FunctionComponent<{
   );
 };
 
-export const Header: FunctionComponent<{currentLhr: LH.FlowResult.LhrRef}> =
-({currentLhr}) => {
+export const Header: FunctionComponent<{hashState: LH.FlowResult.HashState}> =
+({hashState}) => {
   const flowResult = useFlowResult();
-  const {index} = currentLhr;
+  const {index} = hashState;
 
   const step = flowResult.steps[index];
   const prevStep = flowResult.steps[index - 1];

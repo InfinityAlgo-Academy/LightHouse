@@ -9,11 +9,11 @@ import {FunctionComponent} from 'preact';
 import {Separator} from '../common';
 import {useI18n, useLocalizedStrings} from '../i18n/i18n';
 import {CpuIcon, EnvIcon, SummaryIcon} from '../icons';
-import {classNames, useCurrentLhr, useFlowResult} from '../util';
+import {classNames, useHashState, useFlowResult} from '../util';
 import {SidebarFlow} from './flow';
 
 export const SidebarSummary: FunctionComponent = () => {
-  const currentLhr = useCurrentLhr();
+  const hashState = useHashState();
   const strings = useLocalizedStrings();
 
   const url = new URL(location.href);
@@ -21,7 +21,7 @@ export const SidebarSummary: FunctionComponent = () => {
   return (
     <a
       href={url.href}
-      className={classNames('SidebarSummary', {'Sidebar--current': currentLhr === null})}
+      className={classNames('SidebarSummary', {'Sidebar--current': hashState === null})}
       data-testid="SidebarSummary"
     >
       <div className="SidebarSummary__icon">

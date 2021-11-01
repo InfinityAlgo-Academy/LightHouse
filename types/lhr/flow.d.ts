@@ -12,9 +12,10 @@ declare module FlowResult {
     name: string;
   }
 
-  interface LhrRef {
-    value: Result;
+  interface HashState {
+    currentLhr: Result;
     index: number;
+    anchor: string|null;
   }
 }
 

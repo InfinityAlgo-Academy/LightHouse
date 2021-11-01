@@ -5,25 +5,24 @@
  */
 
 import {FunctionComponent} from 'preact';
-import {useEffect, useRef, useState} from 'preact/hooks';
+import {useLayoutEffect, useRef, useState} from 'preact/hooks';
 
 import {ReportRendererProvider} from './wrappers/report-renderer';
 import {Sidebar} from './sidebar/sidebar';
 import {Summary} from './summary/summary';
-import {classNames, FlowResultContext, useCurrentLhr, useHashParam} from './util';
+import {classNames, FlowResultContext, useHashState} from './util';
 import {Report} from './wrappers/report';
 import {Topbar} from './topbar';
 import {Header} from './header';
 import {I18nProvider} from './i18n/i18n';
 
 const Content: FunctionComponent = () => {
-  const currentLhr = useCurrentLhr();
-  const anchor = useHashParam('anchor');
+  const hashState = useHashState();
   const ref = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (anchor) {
-      const el = document.getElementById(anchor);
+  useLayoutEffect(() => {
+    if (hashState && hashState.anchor) {
+      const el = document.getElementById(hashState.anchor);
       if (el) {
         el.scrollIntoView({behavior: 'smooth'});
         return;
@@ -32,15 +31,15 @@ const Content: FunctionComponent = () => {
 
     // Scroll to top no anchor is found.
     if (ref.current) ref.current.scrollTop = 0;
-  }, [anchor, currentLhr]);
+  }, [hashState]);
 
   return (
     <div ref={ref} className="Content">
       {
-        currentLhr ?
+        hashState ?
           <>
-            <Header currentLhr={currentLhr}/>
-            <Report currentLhr={currentLhr}/>
+            <Header hashState={hashState}/>
+            <Report hashState={hashState}/>
           </> :
           <Summary/>
       }
