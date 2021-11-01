@@ -5,11 +5,14 @@
  */
 'use strict';
 
-const BaseAudit = require('../../../audits/audit.js');
-const {nonSimulatedPassConfigOverrides} = require('../../../config/constants.js');
-const BaseGatherer = require('../../../fraggle-rock/gather/base-gatherer.js');
-const {initializeConfig} = require('../../../fraggle-rock/config/config.js');
-const {LH_ROOT} = require('../../../../root.js');
+import {jest} from '@jest/globals';
+import BaseAudit from '../../../audits/audit.js';
+import constants from '../../../config/constants.js';
+import BaseGatherer from '../../../fraggle-rock/gather/base-gatherer.js';
+import {initializeConfig} from '../../../fraggle-rock/config/config.js';
+import {LH_ROOT} from '../../../../root.js';
+
+const {nonSimulatedPassConfigOverrides} = constants;
 
 /* eslint-env jest */
 

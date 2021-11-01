@@ -7,15 +7,26 @@
 
 /* eslint-env jest */
 
+import {jest} from '@jest/globals';
+import {createMockPage} from './gather/mock-driver.js';
+// import UserFlow from '../../fraggle-rock/user-flow.js';
+
+// Some imports needs to be done dynamically, so that their dependencies will be mocked.
+// See: https://jestjs.io/docs/ecmascript-modules#differences-between-esm-and-commonjs
+//      https://github.com/facebook/jest/issues/10025
+/** @type {typeof import('../../fraggle-rock/user-flow.js')} */
+let UserFlow;
+
+beforeAll(async () => {
+  UserFlow = (await import('../../fraggle-rock/user-flow.js')).default;
+});
+
 const snapshotModule = {snapshot: jest.fn()};
 jest.mock('../../fraggle-rock/gather/snapshot-runner.js', () => snapshotModule);
 const navigationModule = {navigation: jest.fn()};
 jest.mock('../../fraggle-rock/gather/navigation-runner.js', () => navigationModule);
 const timespanModule = {startTimespan: jest.fn()};
 jest.mock('../../fraggle-rock/gather/timespan-runner.js', () => timespanModule);
-
-const {createMockPage} = require('./gather/mock-driver.js');
-const UserFlow = require('../../fraggle-rock/user-flow.js');
 
 describe('UserFlow', () => {
   let mockPage = createMockPage();
@@ -78,6 +89,7 @@ describe('UserFlow', () => {
 
       // Check that we have the property set.
       expect(navigationModule.navigation).toHaveBeenCalledTimes(4);
+      /** @type {any[][]} */
       const [[call1], [call2], [call3], [call4]] = navigationModule.navigation.mock.calls;
       expect(call1).not.toHaveProperty('configContext.settingsOverrides.disableStorageReset');
       expect(call2).toHaveProperty('configContext.settingsOverrides.disableStorageReset');
