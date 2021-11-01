@@ -15,7 +15,7 @@ import Driver from '../../../gather/driver.js';
 import Connection from '../../../gather/connections/connection.js';
 import SourceMaps from '../../../gather/gatherers/source-maps.js';
 import {createMockSendCommandFn, createMockOnFn} from '../mock-commands.js';
-import {flushAllTimersAndMicrotasks} from '../../test-utils.js';
+import {flushAllTimersAndMicrotasks, fnAny} from '../../test-utils.js';
 
 const mapJson = JSON.stringify({
   version: 3,
@@ -51,7 +51,7 @@ describe('SourceMaps gatherer', () => {
       .mockResponse('Network.enable', {})
       .mockResponse('Fetch.enable', {})
       .mockResponse('Fetch.disable', {});
-    const fetchMock = jest.fn();
+    const fetchMock = fnAny();
 
     for (const mapAndEvents of mapsAndEvents) {
       const {

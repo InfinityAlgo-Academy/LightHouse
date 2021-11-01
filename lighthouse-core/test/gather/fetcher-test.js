@@ -9,7 +9,7 @@
 
 import {jest} from '@jest/globals';
 import Connection from '../../gather/connections/connection.js';
-import {mockCommands} from '../test-utils.js';
+import {fnAny, mockCommands} from '../test-utils.js';
 
 const {createMockSendCommandFn} = mockCommands;
 
@@ -31,7 +31,7 @@ beforeAll(async () => {
 /** @type {number} */
 let browserMilestone;
 jest.mock('../../gather/driver/environment.js', () => ({
-  getBrowserVersion: jest.fn().mockImplementation(() => {
+  getBrowserVersion: fnAny().mockImplementation(() => {
     return Promise.resolve({milestone: browserMilestone});
   }),
 }));
@@ -53,8 +53,8 @@ beforeEach(() => {
 describe('.fetchResource', () => {
   beforeEach(() => {
     fetcher._enabled = true;
-    fetcher._fetchResourceOverProtocol = jest.fn().mockReturnValue(Promise.resolve('PROTOCOL'));
-    fetcher._fetchResourceIframe = jest.fn().mockReturnValue(Promise.resolve('IFRAME'));
+    fetcher._fetchResourceOverProtocol = fnAny().mockReturnValue(Promise.resolve('PROTOCOL'));
+    fetcher._fetchResourceIframe = fnAny().mockReturnValue(Promise.resolve('IFRAME'));
   });
 
   it('throws if fetcher not enabled', async () => {
@@ -119,7 +119,7 @@ describe('._readIOStream', () => {
   });
 
   it('throws on timeout', async () => {
-    connectionStub.sendCommand = jest.fn()
+    connectionStub.sendCommand = fnAny()
       .mockReturnValue(Promise.resolve({data: 'No stop', eof: false, base64Encoded: false}));
 
     const dataPromise = fetcher._readIOStream('1', {timeout: 50});
@@ -133,7 +133,7 @@ describe('._fetchResourceOverProtocol', () => {
 
   beforeEach(() => {
     streamContents = 'STREAM CONTENTS';
-    fetcher._readIOStream = jest.fn().mockImplementation(() => {
+    fetcher._readIOStream = fnAny().mockImplementation(() => {
       return Promise.resolve(streamContents);
     });
   });
@@ -179,7 +179,7 @@ describe('._fetchResourceOverProtocol', () => {
       }, 500);
 
     let timeout;
-    fetcher._readIOStream = jest.fn().mockImplementation((_, options) => {
+    fetcher._readIOStream = fnAny().mockImplementation((_, options) => {
       timeout = options.timeout;
     });
 

@@ -9,7 +9,7 @@
 
 import {jest} from '@jest/globals';
 import {createMockSession, createMockDriver} from '../../fraggle-rock/gather/mock-driver.js';
-import {flushAllTimersAndMicrotasks} from '../../test-utils.js';
+import {flushAllTimersAndMicrotasks, fnAny} from '../../test-utils.js';
 // import prepare from '../../../gather/driver/prepare.js';
 import constants from '../../../config/constants.js';
 
@@ -24,9 +24,9 @@ beforeAll(async () => {
 });
 
 const storageMock = {
-  clearDataForOrigin: jest.fn(),
-  clearBrowserCaches: jest.fn(),
-  getImportantStorageWarning: jest.fn(),
+  clearDataForOrigin: fnAny(),
+  clearBrowserCaches: fnAny(),
+  getImportantStorageWarning: fnAny(),
 };
 jest.mock('../../../gather/driver/storage.js', () => storageMock);
 
@@ -40,9 +40,9 @@ beforeEach(() => {
     .mockResponse('Emulation.setCPUThrottlingRate')
     .mockResponse('Network.setBlockedURLs')
     .mockResponse('Network.setExtraHTTPHeaders');
-  storageMock.clearBrowserCaches = jest.fn();
-  storageMock.clearDataForOrigin = jest.fn();
-  storageMock.getImportantStorageWarning = jest.fn();
+  storageMock.clearBrowserCaches = fnAny();
+  storageMock.clearDataForOrigin = fnAny();
+  storageMock.getImportantStorageWarning = fnAny();
 });
 
 afterEach(() => {

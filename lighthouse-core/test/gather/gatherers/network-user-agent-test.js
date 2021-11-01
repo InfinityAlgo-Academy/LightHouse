@@ -8,9 +8,9 @@
 /* eslint-env jest */
 
 import NetworkUserAgent from '../../../gather/gatherers/network-user-agent.js';
+import {readJson} from '../../../../root.js';
 
-/** @type {*} */
-import devtoolsLog from '../../fixtures/traces/lcp-m78.devtools.log.json';
+const devtoolsLog = readJson('lighthouse-core/test/fixtures/traces/lcp-m78.devtools.log.json');
 
 describe('.getNetworkUserAgent', () => {
   it('should return empty string when no network events available', async () => {

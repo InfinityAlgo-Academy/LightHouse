@@ -12,6 +12,7 @@ import {jest} from '@jest/globals';
 import LinkElements from '../../../gather/gatherers/link-elements.js';
 
 import NetworkRecords from '../../../computed/network-records.js';
+import {fnAny} from '../../test-utils.js';
 
 jest.mock('../../../computed/network-records.js');
 
@@ -110,8 +111,8 @@ describe('FR compat', () => {
     networkRecords = ['1', '2'];
     devtoolsLog = ['3', '4'];
     gatherer = new LinkElements();
-    gatherer._getArtifact = jest.fn();
-    NetworkRecords.request = jest.fn().mockReturnValue(Promise.resolve(networkRecords));
+    gatherer._getArtifact = fnAny();
+    NetworkRecords.request = fnAny().mockReturnValue(Promise.resolve(networkRecords));
   });
 
   it('uses loadData in legacy mode', async () => {

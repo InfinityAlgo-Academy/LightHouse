@@ -20,6 +20,7 @@ import LighthouseError from '../../../lib/lh-error.js';
 import DevtoolsLogGatherer from '../../../gather/gatherers/devtools-log.js';
 import TraceGatherer from '../../../gather/gatherers/trace.js';
 import toDevtoolsLog from '../../network-records-to-devtools-log.js';
+import {fnAny} from '../../test-utils.js';
 // import runner from '../../../fraggle-rock/gather/navigation-runner.js';
 
 // Some imports needs to be done dynamically, so that their dependencies will be mocked.
@@ -35,7 +36,7 @@ beforeAll(async () => {
 const mocks = mockDriverSubmodules();
 
 // Establish the mocks before we require our file under test.
-let mockRunnerRun = jest.fn();
+let mockRunnerRun = fnAny();
 jest.mock('../../../runner.js', () => mockRunnerModule(() => mockRunnerRun));
 
 /** @typedef {{meta: LH.Gatherer.GathererMeta<'Accessibility'>, getArtifact: jest.Mock<any, any>, startInstrumentation:jest.Mock<any, any>, stopInstrumentation: jest.Mock<any, any>, startSensitiveInstrumentation:jest.Mock<any, any>, stopSensitiveInstrumentation: jest.Mock<any, any>}} MockGatherer */
@@ -61,11 +62,11 @@ describe('NavigationRunner', () => {
       instance: {
         name: 'Accessibility',
         meta: {supportedModes: []},
-        startInstrumentation: jest.fn(),
-        stopInstrumentation: jest.fn(),
-        startSensitiveInstrumentation: jest.fn(),
-        stopSensitiveInstrumentation: jest.fn(),
-        getArtifact: jest.fn(),
+        startInstrumentation: fnAny(),
+        stopInstrumentation: fnAny(),
+        startSensitiveInstrumentation: fnAny(),
+        stopSensitiveInstrumentation: fnAny(),
+        getArtifact: fnAny(),
       },
     };
   }
@@ -74,13 +75,13 @@ describe('NavigationRunner', () => {
   function createNavigation() {
     const timespanGatherer = createGathererDefn();
     timespanGatherer.instance.meta.supportedModes = ['timespan', 'navigation'];
-    timespanGatherer.instance.getArtifact = jest.fn().mockResolvedValue({type: 'timespan'});
+    timespanGatherer.instance.getArtifact = fnAny().mockResolvedValue({type: 'timespan'});
     const snapshotGatherer = createGathererDefn();
     snapshotGatherer.instance.meta.supportedModes = ['snapshot', 'navigation'];
-    snapshotGatherer.instance.getArtifact = jest.fn().mockResolvedValue({type: 'snapshot'});
+    snapshotGatherer.instance.getArtifact = fnAny().mockResolvedValue({type: 'snapshot'});
     const navigationGatherer = createGathererDefn();
     navigationGatherer.instance.meta.supportedModes = ['navigation'];
-    navigationGatherer.instance.getArtifact = jest.fn().mockResolvedValue({type: 'navigation'});
+    navigationGatherer.instance.getArtifact = fnAny().mockResolvedValue({type: 'navigation'});
 
     const navigation = {
       ...defaultNavigationConfig,
@@ -103,7 +104,7 @@ describe('NavigationRunner', () => {
 
   beforeEach(() => {
     requestedUrl = 'http://example.com';
-    mockRunnerRun = jest.fn();
+    mockRunnerRun = fnAny();
     config = initializeConfig(undefined, {gatherMode: 'navigation'}).config;
     navigation = createNavigation().navigation;
     computedCache = new Map();
@@ -352,9 +353,9 @@ describe('NavigationRunner', () => {
       mocks.navigationMock.gotoURL.mockResolvedValue({finalUrl: requestedUrl, warnings: []});
       const devtoolsLog = toDevtoolsLog([{url: requestedUrl, failed: true}]);
       gatherers.timespan.meta.symbol = DevtoolsLogGatherer.symbol;
-      gatherers.timespan.getArtifact = jest.fn().mockResolvedValue(devtoolsLog);
+      gatherers.timespan.getArtifact = fnAny().mockResolvedValue(devtoolsLog);
       gatherers.navigation.meta.symbol = TraceGatherer.symbol;
-      gatherers.navigation.getArtifact = jest.fn().mockResolvedValue({traceEvents: []});
+      gatherers.navigation.getArtifact = fnAny().mockResolvedValue({traceEvents: []});
 
       const {artifacts, pageLoadError} = await run(navigation);
       expect(pageLoadError).toBeInstanceOf(LighthouseError);
@@ -366,7 +367,7 @@ describe('NavigationRunner', () => {
 
     it('cleans up throttling before getArtifact', async () => {
       const {navigation, gatherers} = createNavigation();
-      gatherers.navigation.getArtifact = jest.fn().mockImplementation(() => {
+      gatherers.navigation.getArtifact = fnAny().mockImplementation(() => {
         expect(mocks.emulationMock.clearThrottling).toHaveBeenCalled();
       });
 

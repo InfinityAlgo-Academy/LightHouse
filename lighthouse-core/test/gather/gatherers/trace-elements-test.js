@@ -15,7 +15,7 @@ import Driver from '../../../gather/driver.js';
 import Connection from '../../../gather/connections/connection.js';
 import createTestTrace from '../../create-test-trace.js';
 import {createMockSendCommandFn, createMockOnFn} from '../mock-commands.js';
-import {flushAllTimersAndMicrotasks} from '../../test-utils.js';
+import {flushAllTimersAndMicrotasks, fnAny} from '../../test-utils.js';
 import animationTrace from '../../fixtures/traces/animation.json';
 
 jest.useFakeTimers();
@@ -785,8 +785,8 @@ describe('FR compat', () => {
   it('uses loadData in legacy mode', async () => {
     const trace = ['1', '2'];
     const gatherer = new TraceElementsGatherer();
-    gatherer._getArtifact = jest.fn();
-    gatherer.stopInstrumentation = jest.fn();
+    gatherer._getArtifact = fnAny();
+    gatherer.stopInstrumentation = fnAny();
 
     await gatherer.afterPass({}, {trace});
 
@@ -797,8 +797,8 @@ describe('FR compat', () => {
   it('uses dependency in legacy mode', async () => {
     const trace = ['1', '2'];
     const gatherer = new TraceElementsGatherer();
-    gatherer._getArtifact = jest.fn();
-    gatherer.stopInstrumentation = jest.fn();
+    gatherer._getArtifact = fnAny();
+    gatherer.stopInstrumentation = fnAny();
 
     const context = {dependencies: {Trace: trace}};
     await gatherer.getArtifact(context);

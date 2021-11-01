@@ -9,6 +9,7 @@
 
 import {jest} from '@jest/globals';
 import {strict as assert} from 'assert';
+import {fnAny} from '../../test-utils.js';
 
 // import ServiceWorkerGather from '../../../gather/gatherers/service-worker.js';
 
@@ -22,8 +23,8 @@ beforeAll(async () => {
   ServiceWorkerGather = (await import('../../../gather/gatherers/service-worker.js')).default;
 });
 
-const getServiceWorkerVersions = jest.fn();
-const getServiceWorkerRegistrations = jest.fn();
+const getServiceWorkerVersions = fnAny();
+const getServiceWorkerRegistrations = fnAny();
 jest.mock('../../../gather/driver/service-workers.js', () => ({
   getServiceWorkerVersions,
   getServiceWorkerRegistrations,

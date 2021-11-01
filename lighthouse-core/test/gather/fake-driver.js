@@ -7,8 +7,8 @@
 
 /* eslint-env jest */
 
-import {jest} from '@jest/globals';
 import {readJson} from '../../../root.js';
+import {fnAny} from '../test-utils.js';
 
 /**
  * @param {{protocolGetVersionResponse: LH.CrdpCommands['Browser.getVersion']['returnType']}} param0
@@ -25,8 +25,8 @@ function makeFakeDriver({protocolGetVersionResponse}) {
     get defaultSession() {
       return this;
     },
-    on: jest.fn(),
-    sendCommand: jest.fn().mockResolvedValue(undefined),
+    on: fnAny(),
+    sendCommand: fnAny().mockResolvedValue(undefined),
     getBrowserVersion() {
       return Promise.resolve(Object.assign({}, protocolGetVersionResponse, {milestone: 71}));
     },

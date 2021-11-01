@@ -8,6 +8,7 @@
 /* eslint-env jest */
 
 import {jest} from '@jest/globals';
+import {fnAny} from '../../test-utils.js';
 import {
   createMockDriver,
   createMockPage,
@@ -28,7 +29,7 @@ beforeAll(async () => {
 });
 
 // Establish the mocks before we require our file under test.
-let mockRunnerRun = jest.fn();
+let mockRunnerRun = fnAny();
 /** @type {ReturnType<typeof createMockDriver>} */
 let mockDriver;
 
@@ -52,7 +53,7 @@ describe('Snapshot Runner', () => {
   beforeEach(() => {
     mockPage = createMockPage();
     mockDriver = createMockDriver();
-    mockRunnerRun = jest.fn();
+    mockRunnerRun = fnAny();
     page = mockPage.asPage();
 
     mockDriver._session.sendCommand.mockResponse('Browser.getVersion', {

@@ -11,7 +11,9 @@ import MainDocumentContent from '../../../gather/gatherers/main-document-content
 
 import NetworkRecorder from '../../../lib/network-recorder.js';
 import {createMockContext} from '../../fraggle-rock/gather/mock-driver.js';
-import devtoolsLog from '../../fixtures/traces/lcp-m78.devtools.log.json';
+import {readJson} from '../../../../root.js';
+
+const devtoolsLog = readJson('lighthouse-core/test/fixtures/traces/lcp-m78.devtools.log.json');
 
 describe('FR compat', () => {
   it('uses loadData in legacy mode', async () => {

@@ -272,6 +272,13 @@ function makeMocksForGatherRunner() {
   }));
 }
 
+/**
+ * Same as jest.fn(), but uses `any` instead of `unknown`.
+ */
+const fnAny = () => {
+  return /** @type {jest.Mock<any, any>} */ (jest.fn());
+};
+
 module.exports = {
   getProtoRoundTrip,
   loadSourceMapFixture,
@@ -281,5 +288,6 @@ module.exports = {
   createDecomposedPromise,
   flushAllTimersAndMicrotasks,
   makeMocksForGatherRunner,
+  fnAny,
   mockCommands,
 };

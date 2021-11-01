@@ -12,7 +12,7 @@ import {mockDriverSubmodules} from '../../fraggle-rock/gather/mock-driver.js';
 // import NetworkMonitor from '../../../gather/driver/network-monitor.js';
 import NetworkRequest from '../../../lib/network-request.js';
 import networkRecordsToDevtoolsLog from '../../network-records-to-devtools-log.js';
-import {mockCommands} from '../../test-utils.js';
+import {fnAny, mockCommands} from '../../test-utils.js';
 
 const mocks = mockDriverSubmodules();
 
@@ -50,11 +50,11 @@ describe('NetworkMonitor', () => {
   function createMockSession() {
     /** @type {any} */
     const session = {};
-    session.off = jest.fn();
-    session.removeProtocolMessageListener = jest.fn();
+    session.off = fnAny();
+    session.removeProtocolMessageListener = fnAny();
 
-    const on = (session.on = jest.fn());
-    const addProtocolMessageListener = (session.addProtocolMessageListener = jest.fn());
+    const on = (session.on = fnAny());
+    const addProtocolMessageListener = (session.addProtocolMessageListener = fnAny());
     sendCommandMock = session.sendCommand = createMockSendCommandFn()
       .mockResponse('Page.enable')
       .mockResponse('Network.enable');

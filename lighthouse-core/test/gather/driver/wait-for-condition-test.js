@@ -14,6 +14,7 @@ import {
   makePromiseInspectable,
   flushAllTimersAndMicrotasks,
   createDecomposedPromise,
+  fnAny,
 } from '../../test-utils.js';
 
 const {createMockOnceFn} = mockCommands;
@@ -23,8 +24,8 @@ jest.useFakeTimers();
 function createMockWaitForFn() {
   const {promise, resolve, reject} = createDecomposedPromise();
 
-  const mockCancelFn = jest.fn();
-  const mockFn = jest.fn().mockReturnValue({promise, cancel: mockCancelFn});
+  const mockCancelFn = fnAny();
+  const mockFn = fnAny().mockReturnValue({promise, cancel: mockCancelFn});
 
   return Object.assign(mockFn, {
     mockResolve: resolve,
@@ -41,8 +42,8 @@ function createMockWaitForFn() {
 function createMockMultipleInvocationWaitForFn() {
   /** @type {Array<{arguments: Array<*>, mockResolve(): void, mockReject(): void}>} */
   const calls = [];
-  const mockCancelFn = jest.fn();
-  const mockFn = jest.fn().mockImplementation((...args) => {
+  const mockCancelFn = fnAny();
+  const mockFn = fnAny().mockImplementation((...args) => {
     const {promise, resolve, reject} = createDecomposedPromise();
     calls.push({
       arguments: args,
@@ -62,7 +63,7 @@ describe('waitForFullyLoaded()', () => {
   let options;
 
   beforeEach(() => {
-    session = {sendCommand: jest.fn().mockResolvedValue(), setNextProtocolTimeout: jest.fn()};
+    session = {sendCommand: fnAny().mockResolvedValue(), setNextProtocolTimeout: fnAny()};
     networkMonitor = {};
 
     const overrides = {
@@ -229,10 +230,10 @@ describe('waitForFcp()', () => {
 
   beforeEach(() => {
     session = {
-      on: jest.fn(),
-      once: jest.fn(),
-      off: jest.fn(),
-      sendCommand: jest.fn(),
+      on: fnAny(),
+      once: fnAny(),
+      off: fnAny(),
+      sendCommand: fnAny(),
     };
   });
 
@@ -292,7 +293,7 @@ describe('waitForFcp()', () => {
 
   it('should be cancellable', async () => {
     session.on = session.once = createMockOnceFn();
-    session.off = jest.fn();
+    session.off = fnAny();
 
     const {promise: rawPromise, cancel} = wait.waitForFcp(session, 0, 5000);
     const waitPromise = makePromiseInspectable(rawPromise);

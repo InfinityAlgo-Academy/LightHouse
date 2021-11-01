@@ -13,7 +13,10 @@ import ImageElements from '../../../gather/gatherers/image-elements.js';
 import NetworkRecorder from '../../../lib/network-recorder.js';
 import {createMockContext, createMockDriver, createMockSession} from
   '../../fraggle-rock/gather/mock-driver.js';
-import devtoolsLog from '../../fixtures/traces/lcp-m78.devtools.log.json'; // eslint-disable-line max-len
+import {fnAny} from '../../test-utils.js';
+import {readJson} from '../../../../root.js';
+
+const devtoolsLog = readJson('lighthouse-core/test/fixtures/traces/lcp-m78.devtools.log.json');
 
 const networkRecords = NetworkRecorder.recordsFromLogs(devtoolsLog);
 
@@ -236,8 +239,8 @@ describe('.collectExtraDetails', () => {
   beforeEach(() => {
     driver = createMockDriver().asDriver();
     gatherer = makeImageElements();
-    gatherer.fetchSourceRules = jest.fn();
-    gatherer.fetchElementWithSizeInformation = jest.fn();
+    gatherer.fetchSourceRules = fnAny();
+    gatherer.fetchElementWithSizeInformation = fnAny();
   });
 
   it('respects the overall time budget for source rules', async () => {
@@ -246,7 +249,7 @@ describe('.collectExtraDetails', () => {
       mockElement({isInShadowDOM: false, isCss: false}),
       mockElement({isInShadowDOM: false, isCss: false}),
     ];
-    gatherer.fetchSourceRules = jest.fn().mockImplementation(async () => {
+    gatherer.fetchSourceRules = fnAny().mockImplementation(async () => {
       jest.advanceTimersByTime(6000);
     });
 

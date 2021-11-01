@@ -7,16 +7,15 @@
 
 /* eslint-env jest */
 
-import {jest} from '@jest/globals';
-
 import StacksGatherer from '../../../gather/gatherers/stacks.js';
+import {fnAny} from '../../test-utils.js';
 
 describe('StacksGatherer', () => {
   /** @type {{executionContext: {evaluate: jest.Mock}}} */
   let driver;
 
   beforeEach(() => {
-    driver = {executionContext: {evaluate: jest.fn()}};
+    driver = {executionContext: {evaluate: fnAny()}};
   });
 
   it('returns the detected stacks', async () => {

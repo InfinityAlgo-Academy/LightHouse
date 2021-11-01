@@ -23,9 +23,18 @@ import {
   makeParamsOptional,
   makePromiseInspectable,
   flushAllTimersAndMicrotasks,
+  fnAny,
 } from '../test-utils.js';
 import fakeDriver from './fake-driver.js';
 import {createCommonjsRefs} from '../../scripts/esm-utils.js';
+
+/**
+ * Same as jest.requireMock(), but uses `any` instead of `unknown`.
+ * @param {string} moduleName
+ */
+const requireMockAny = (moduleName) => {
+  return /** @type {any} */ (jest.requireMock(moduleName));
+};
 
 const {require} = createCommonjsRefs(import.meta);
 
@@ -150,16 +159,16 @@ beforeEach(async () => {
   await resetDefaultMockResponses();
 
   const emulation = require('../../lib/emulation.js');
-  emulation.emulate = jest.fn();
-  emulation.throttle = jest.fn();
-  emulation.clearThrottling = jest.fn();
+  emulation.emulate = fnAny();
+  emulation.throttle = fnAny();
+  emulation.clearThrottling = fnAny();
 
   const prepare = require('../../gather/driver/prepare.js');
-  prepare.prepareTargetForNavigationMode = jest.fn();
-  prepare.prepareTargetForIndividualNavigation = jest.fn().mockResolvedValue({warnings: []});
+  prepare.prepareTargetForNavigationMode = fnAny();
+  prepare.prepareTargetForIndividualNavigation = fnAny().mockResolvedValue({warnings: []});
 
-  const navigation = jest.requireMock('../../gather/driver/navigation.js');
-  navigation.gotoURL = jest.fn().mockResolvedValue({
+  const navigation = requireMockAny('../../gather/driver/navigation.js');
+  navigation.gotoURL = fnAny().mockResolvedValue({
     finalUrl: 'https://example.com',
     timedOut: false,
     warnings: [],
@@ -176,7 +185,7 @@ describe('GatherRunner', function() {
     const url1 = 'https://example.com';
     const url2 = 'https://example.com/interstitial';
     const driver = {};
-    const gotoURL = jest.requireMock('../../gather/driver/navigation.js').gotoURL;
+    const gotoURL = requireMockAny('../../gather/driver/navigation.js').gotoURL;
     gotoURL.mockResolvedValue({finalUrl: url2, warnings: []});
 
     const passContext = {
@@ -197,7 +206,9 @@ describe('GatherRunner', function() {
     const url = 'https://example.com';
     const error = new LHError(LHError.errors.NO_FCP);
     const driver = {};
-    const gotoURL = jest.requireMock('../../gather/driver/navigation.js').gotoURL;
+    const {gotoURL} = /** @type {any} */ (
+      requireMockAny('../../gather/driver/navigation.js')
+    );
     gotoURL.mockRejectedValue(error);
 
     const passContext = {
@@ -245,7 +256,7 @@ describe('GatherRunner', function() {
   it('collects requested and final URLs as an artifact', () => {
     const requestedUrl = 'https://example.com';
     const finalUrl = 'https://example.com/interstitial';
-    const gotoURL = jest.requireMock('../../gather/driver/navigation.js').gotoURL;
+    const gotoURL = requireMockAny('../../gather/driver/navigation.js').gotoURL;
     gotoURL.mockResolvedValue({finalUrl, timedOut: false, warnings: []});
     const config = makeConfig({passes: [{passName: 'defaultPass'}]});
     const options = {
@@ -457,7 +468,7 @@ describe('GatherRunner', function() {
       LighthouseRunWarnings: [],
     };
 
-    const prepare = jest.requireMock('../../gather/driver/prepare.js');
+    const prepare = requireMockAny('../../gather/driver/prepare.js');
     await GatherRunner.runPass(passContext);
     expect(prepare.prepareTargetForIndividualNavigation).toHaveBeenCalled();
   });
@@ -509,7 +520,7 @@ describe('GatherRunner', function() {
       },
     });
 
-    const gotoURL = jest.requireMock('../../gather/driver/navigation.js').gotoURL;
+    const gotoURL = requireMockAny('../../gather/driver/navigation.js').gotoURL;
     gotoURL.mockImplementation(
       /** @param {any} _ @param {string} url */
       (_, url) => url.includes('blank') ? null : Promise.reject(navigationError)
@@ -542,8 +553,8 @@ describe('GatherRunner', function() {
     // NO_FCP should be ignored because it's a warn pass.
     const navigationError = new LHError(LHError.errors.NO_FCP);
 
-    const gotoUrlForAboutBlank = jest.fn().mockResolvedValue({});
-    const gotoUrlForRealUrl = jest.fn()
+    const gotoUrlForAboutBlank = fnAny().mockResolvedValue({});
+    const gotoUrlForRealUrl = fnAny()
       .mockResolvedValueOnce({finalUrl: requestedUrl, timedOut: false, warnings: []})
       .mockRejectedValueOnce(navigationError);
     const driver = Object.assign({}, fakeDriver, {
@@ -553,7 +564,7 @@ describe('GatherRunner', function() {
       },
     });
 
-    const gotoURL = jest.requireMock('../../gather/driver/navigation.js').gotoURL;
+    const gotoURL = requireMockAny('../../gather/driver/navigation.js').gotoURL;
     gotoURL.mockImplementation(
       /** @param {any} _ @param {string} url */
       (_, url) => url.includes('blank') ? gotoUrlForAboutBlank() : gotoUrlForRealUrl()
@@ -826,7 +837,7 @@ describe('GatherRunner', function() {
     let firstLoad = true;
     const driver = Object.assign({}, fakeDriver, {online: true});
 
-    const gotoURL = jest.requireMock('../../gather/driver/navigation.js').gotoURL;
+    const gotoURL = requireMockAny('../../gather/driver/navigation.js').gotoURL;
 
     gotoURL.mockImplementation(
       /**
@@ -1239,7 +1250,7 @@ describe('GatherRunner', function() {
         online: true,
       });
 
-      const gotoURL = jest.requireMock('../../gather/driver/navigation.js').gotoURL;
+      const gotoURL = requireMockAny('../../gather/driver/navigation.js').gotoURL;
       gotoURL.mockResolvedValue({finalUrl: requestedUrl, warnings: ['It is too slow']});
 
       return GatherRunner.run(config.passes, {
@@ -1271,7 +1282,7 @@ describe('GatherRunner', function() {
         online: true,
       });
 
-      const gotoURL = jest.requireMock('../../gather/driver/navigation.js').gotoURL;
+      const gotoURL = requireMockAny('../../gather/driver/navigation.js').gotoURL;
       gotoURL
         .mockResolvedValueOnce({finalUrl: requestedUrl, warnings: []})
         .mockResolvedValueOnce({finalUrl: requestedUrl, warnings: ['It is too slow']});
