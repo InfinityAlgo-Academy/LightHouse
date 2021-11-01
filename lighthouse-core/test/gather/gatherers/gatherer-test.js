@@ -7,8 +7,9 @@
 
 /* eslint-env jest */
 
-const Gatherer = require('../../../gather/gatherers/gatherer.js');
-const assert = require('assert').strict;
+import Gatherer from '../../../gather/gatherers/gatherer.js';
+
+import {strict as assert} from 'assert';
 
 describe('Gatherer', () => {
   it('returns its name', () => {

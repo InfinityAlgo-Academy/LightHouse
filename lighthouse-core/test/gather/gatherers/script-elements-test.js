@@ -7,13 +7,22 @@
 
 /* eslint-env jest */
 
-const {
-  createMockContext,
-  mockDriverSubmodules,
-} = require('../../fraggle-rock/gather/mock-driver.js');
+import {createMockContext, mockDriverSubmodules} from '../../fraggle-rock/gather/mock-driver.js';
+// import ScriptElements from '../../../gather/gatherers/script-elements.js';
+import NetworkRequest from '../../../lib/network-request.js';
+
+// Some imports needs to be done dynamically, so that their dependencies will be mocked.
+// See: https://jestjs.io/docs/ecmascript-modules#differences-between-esm-and-commonjs
+//      https://github.com/facebook/jest/issues/10025
+/** @typedef {import('../../../gather/gatherers/script-elements.js')} ScriptElements */
+/** @type {typeof import('../../../gather/gatherers/script-elements.js')} */
+let ScriptElements;
+
+beforeAll(async () => {
+  ScriptElements = (await import('../../../gather/gatherers/script-elements.js')).default;
+});
+
 const mocks = mockDriverSubmodules();
-const ScriptElements = require('../../../gather/gatherers/script-elements.js');
-const NetworkRequest = require('../../../lib/network-request.js');
 
 /**
  * @param {Partial<LH.Artifacts.NetworkRequest>=} partial

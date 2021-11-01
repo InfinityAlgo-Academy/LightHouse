@@ -11,8 +11,6 @@
 
 /* eslint-env jest */
 
-import {jest} from '@jest/globals';
-
 /**
  * @template {keyof LH.CrdpCommands} C
  * @typedef {((...args: LH.CrdpCommands[C]['paramsType']) => MockResponse<C>) | RecursivePartial<LH.CrdpCommands[C]['returnType']> | Promise<Error>} MockResponse
@@ -227,7 +225,7 @@ function createMockOnFn() {
   return mockFn;
 }
 
-export {
+module.exports = {
   createMockSendCommandFn,
   createMockOnceFn,
   createMockOnFn,

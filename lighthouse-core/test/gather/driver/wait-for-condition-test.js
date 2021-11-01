@@ -5,15 +5,18 @@
  */
 'use strict';
 
-const wait = require('../../../gather/driver/wait-for-condition.js');
-const {
-  createMockOnceFn,
+/* eslint-env jest */
+
+import {jest} from '@jest/globals';
+import wait from '../../../gather/driver/wait-for-condition.js';
+import {
+  mockCommands,
   makePromiseInspectable,
   flushAllTimersAndMicrotasks,
   createDecomposedPromise,
-} = require('../../test-utils.js');
+} from '../../test-utils.js';
 
-/* eslint-env jest */
+const {createMockOnceFn} = mockCommands;
 
 jest.useFakeTimers();
 

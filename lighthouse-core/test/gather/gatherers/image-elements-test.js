@@ -7,15 +7,14 @@
 
 /* eslint-env jest */
 
-const ImageElements = require('../../../gather/gatherers/image-elements.js');
-const NetworkRecorder = require('../../../lib/network-recorder.js');
-const {
-  createMockContext,
-  createMockDriver,
-  createMockSession,
-} = require('../../fraggle-rock/gather/mock-driver.js');
+import {jest} from '@jest/globals';
 
-const devtoolsLog = /** @type {LH.DevtoolsLog} */ (require('../../fixtures/traces/lcp-m78.devtools.log.json')); // eslint-disable-line max-len
+import ImageElements from '../../../gather/gatherers/image-elements.js';
+import NetworkRecorder from '../../../lib/network-recorder.js';
+import {createMockContext, createMockDriver, createMockSession} from
+  '../../fraggle-rock/gather/mock-driver.js';
+import devtoolsLog from '../../fixtures/traces/lcp-m78.devtools.log.json'; // eslint-disable-line max-len
+
 const networkRecords = NetworkRecorder.recordsFromLogs(devtoolsLog);
 
 jest.useFakeTimers();

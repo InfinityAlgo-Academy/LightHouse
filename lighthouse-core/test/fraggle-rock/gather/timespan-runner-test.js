@@ -7,14 +7,26 @@
 
 /* eslint-env jest */
 
-const {
+import {jest} from '@jest/globals';
+import {
   createMockDriver,
   createMockPage,
   createMockGathererInstance,
   mockDriverSubmodules,
   mockDriverModule,
   mockRunnerModule,
-} = require('./mock-driver.js');
+} from './mock-driver.js';
+// import { startTimespan } from '../../../fraggle-rock/gather/timespan-runner.js';
+
+// Some imports needs to be done dynamically, so that their dependencies will be mocked.
+// See: https://jestjs.io/docs/ecmascript-modules#differences-between-esm-and-commonjs
+//      https://github.com/facebook/jest/issues/10025
+/** @type {import('../../../fraggle-rock/gather/timespan-runner.js')['startTimespan']} */
+let startTimespan;
+
+beforeAll(async () => {
+  startTimespan = (await import('../../../fraggle-rock/gather/timespan-runner.js')).startTimespan;
+});
 
 // Establish the mocks before we require our file under test.
 let mockRunnerRun = jest.fn();
@@ -26,8 +38,6 @@ jest.mock('../../../runner.js', () => mockRunnerModule(() => mockRunnerRun));
 jest.mock('../../../fraggle-rock/gather/driver.js', () =>
   mockDriverModule(() => mockDriver.asDriver())
 );
-
-const {startTimespan} = require('../../../fraggle-rock/gather/timespan-runner.js');
 
 describe('Timespan Runner', () => {
   /** @type {ReturnType<typeof createMockPage>} */

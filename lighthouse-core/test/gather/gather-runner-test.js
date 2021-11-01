@@ -7,38 +7,67 @@
 
 /* eslint-env jest */
 
-require('../test-utils.js').makeMocksForGatherRunner();
-
-const Gatherer = require('../../gather/gatherers/gatherer.js');
-const GatherRunner_ = require('../../gather/gather-runner.js');
-const assert = require('assert').strict;
-const Config = require('../../config/config.js');
-const unresolvedPerfLog = require('./../fixtures/unresolved-perflog.json');
-const LHError = require('../../lib/lh-error.js');
-const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
-const Driver = require('../../gather/driver.js');
-const Connection = require('../../gather/connections/connection.js');
-const {createMockSendCommandFn, createMockOnceFn} = require('./mock-commands.js');
-const {
+import {jest} from '@jest/globals';
+import Gatherer from '../../gather/gatherers/gatherer.js';
+// import GathererRunner_ from '../../gather/gather-runner.js';
+import {strict as assert} from 'assert';
+// import Config from '../../config/config.js';
+import unresolvedPerfLog from './../fixtures/unresolved-perflog.json';
+import LHError from '../../lib/lh-error.js';
+import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
+// import Driver from '../../gather/driver.js';
+import Connection from '../../gather/connections/connection.js';
+import {createMockSendCommandFn, createMockOnceFn} from './mock-commands.js';
+import {
+  makeMocksForGatherRunner,
   makeParamsOptional,
   makePromiseInspectable,
   flushAllTimersAndMicrotasks,
-} = require('../test-utils.js');
+} from '../test-utils.js';
+import fakeDriver from './fake-driver.js';
+import {createCommonjsRefs} from '../../scripts/esm-utils.js';
 
-const GatherRunner = {
-  afterPass: makeParamsOptional(GatherRunner_.afterPass),
-  beginRecording: makeParamsOptional(GatherRunner_.beginRecording),
-  collectArtifacts: makeParamsOptional(GatherRunner_.collectArtifacts),
-  endRecording: makeParamsOptional(GatherRunner_.endRecording),
-  initializeBaseArtifacts: makeParamsOptional(GatherRunner_.initializeBaseArtifacts),
-  loadPage: makeParamsOptional(GatherRunner_.loadPage),
-  run: makeParamsOptional(GatherRunner_.run),
-  runPass: makeParamsOptional(GatherRunner_.runPass),
-  setupDriver: makeParamsOptional(GatherRunner_.setupDriver),
-  // Spies that should have mock implemenations most of the time.
-  assertNoSameOriginServiceWorkerClients: jest.spyOn(GatherRunner_,
-    'assertNoSameOriginServiceWorkerClients'),
-};
+const {require} = createCommonjsRefs(import.meta);
+
+makeMocksForGatherRunner();
+
+function createTypeHackedGatherRunner() {
+  return {
+    afterPass: makeParamsOptional(GatherRunner_.afterPass),
+    beginRecording: makeParamsOptional(GatherRunner_.beginRecording),
+    collectArtifacts: makeParamsOptional(GatherRunner_.collectArtifacts),
+    endRecording: makeParamsOptional(GatherRunner_.endRecording),
+    initializeBaseArtifacts: makeParamsOptional(GatherRunner_.initializeBaseArtifacts),
+    loadPage: makeParamsOptional(GatherRunner_.loadPage),
+    run: makeParamsOptional(GatherRunner_.run),
+    runPass: makeParamsOptional(GatherRunner_.runPass),
+    setupDriver: makeParamsOptional(GatherRunner_.setupDriver),
+    // Spies that should have mock implemenations most of the time.
+    assertNoSameOriginServiceWorkerClients: jest.spyOn(GatherRunner_,
+      'assertNoSameOriginServiceWorkerClients'),
+  };
+}
+
+// Some imports needs to be done dynamically, so that their dependencies will be mocked.
+// See: https://jestjs.io/docs/ecmascript-modules#differences-between-esm-and-commonjs
+//      https://github.com/facebook/jest/issues/10025
+/** @typedef {import('../../gather/driver.js')} Driver */
+/** @type {typeof import('../../gather/driver.js')} */
+let Driver;
+/** @type {typeof import('../../gather/gather-runner.js')} */
+let GatherRunner_;
+/** @typedef {import('../../config/config.js')} Config */
+/** @type {typeof import('../../config/config.js')} */
+let Config;
+
+/** @type {ReturnType<createTypeHackedGatherRunner>} */
+let GatherRunner;
+beforeAll(async () => {
+  Driver = (await import('../../gather/driver.js')).default;
+  GatherRunner_ = (await import('../../gather/gather-runner.js')).default;
+  Config = (await import('../../config/config.js')).default;
+  GatherRunner = createTypeHackedGatherRunner();
+});
 
 /**
  * @param {LH.Config.Json} json
@@ -71,23 +100,13 @@ class TestGathererNoArtifact extends Gatherer {
   afterPass() {}
 }
 
-class EmulationDriver extends Driver {
-  registerRequestIdleCallbackWrap() {
-    return Promise.resolve();
-  }
-  getImportantStorageWarning() {
-    return Promise.resolve(undefined);
-  }
-}
-
-const fakeDriver = require('./fake-driver.js');
-
-/** @type {EmulationDriver} */
+/** @type {import('../../gather/driver.js')} */
 let driver;
 /** @type {Connection & {sendCommand: ReturnType<typeof createMockSendCommandFn>}} */
 let connectionStub;
 
-function resetDefaultMockResponses() {
+async function resetDefaultMockResponses() {
+  const GatherRunner_ = (await import('../../gather/gather-runner.js')).default;
   GatherRunner.assertNoSameOriginServiceWorkerClients = jest.spyOn(GatherRunner_,
     'assertNoSameOriginServiceWorkerClients');
   GatherRunner.assertNoSameOriginServiceWorkerClients.mockReset();
@@ -110,7 +129,16 @@ function resetDefaultMockResponses() {
     .mockResponse('ServiceWorker.enable');
 }
 
-beforeEach(() => {
+beforeEach(async () => {
+  class EmulationDriver extends Driver {
+    registerRequestIdleCallbackWrap() {
+      return Promise.resolve();
+    }
+    getImportantStorageWarning() {
+      return Promise.resolve(undefined);
+    }
+  }
+
   jest.useFakeTimers();
   // @ts-expect-error - connectionStub has a mocked version of sendCommand implemented in each test
   connectionStub = new Connection();
@@ -119,7 +147,7 @@ beforeEach(() => {
     throw new Error(`${cmd} not implemented`);
   };
   driver = new EmulationDriver(connectionStub);
-  resetDefaultMockResponses();
+  await resetDefaultMockResponses();
 
   const emulation = require('../../lib/emulation.js');
   emulation.emulate = jest.fn();
@@ -959,21 +987,21 @@ describe('GatherRunner', function() {
         }(),
 
         // async
-        new class BeforePromise extends Gatherer {
+        new (class BeforePromise extends Gatherer {
           beforePass() {
             return Promise.resolve(this.name);
           }
-        }(),
-        new class PassPromise extends Gatherer {
+        })(),
+        new (class PassPromise extends Gatherer {
           pass() {
             return Promise.resolve(this.name);
           }
-        }(),
-        new class AfterPromise extends Gatherer {
+        })(),
+        new (class AfterPromise extends Gatherer {
           afterPass() {
             return Promise.resolve(this.name);
           }
-        }(),
+        })(),
       ].map(instance => ({instance}));
       const gathererNames = gatherers.map(gatherer => gatherer.instance.name);
       const config = makeConfig({
@@ -1104,24 +1132,24 @@ describe('GatherRunner', function() {
         }(),
 
         // async
-        new class BeforePromise extends Gatherer {
+        new (class BeforePromise extends Gatherer {
           beforePass() {
             const err = new Error(this.name);
             return Promise.reject(err);
           }
-        }(),
-        new class PassPromise extends Gatherer {
+        })(),
+        new (class PassPromise extends Gatherer {
           pass() {
             const err = new Error(this.name);
             return Promise.reject(err);
           }
-        }(),
-        new class AfterPromise extends Gatherer {
+        })(),
+        new (class AfterPromise extends Gatherer {
           afterPass() {
             const err = new Error(this.name);
             return Promise.reject(err);
           }
-        }(),
+        })(),
       ].map(instance => ({instance}));
       const gathererNames = gatherers.map(gatherer => gatherer.instance.name);
       const config = makeConfig({

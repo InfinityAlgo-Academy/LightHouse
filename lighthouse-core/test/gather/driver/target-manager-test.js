@@ -5,8 +5,9 @@
  */
 'use strict';
 
-const TargetManager = require('../../../gather/driver/target-manager.js');
-const {createMockSession} = require('../../fraggle-rock/gather/mock-driver.js');
+import {jest} from '@jest/globals';
+import TargetManager from '../../../gather/driver/target-manager.js';
+import {createMockSession} from '../../fraggle-rock/gather/mock-driver.js';
 
 /* eslint-env jest */
 

@@ -7,12 +7,11 @@
 
 /* eslint-env jest */
 
-const MainDocumentContent = require('../../../gather/gatherers/main-document-content.js');
-const NetworkRecorder = require('../../../lib/network-recorder.js');
-const {createMockContext} = require('../../fraggle-rock/gather/mock-driver.js');
+import MainDocumentContent from '../../../gather/gatherers/main-document-content.js';
 
-const devtoolsLog
-  = /** @type {LH.DevtoolsLog} */ (require('../../fixtures/traces/lcp-m78.devtools.log.json'));
+import NetworkRecorder from '../../../lib/network-recorder.js';
+import {createMockContext} from '../../fraggle-rock/gather/mock-driver.js';
+import devtoolsLog from '../../fixtures/traces/lcp-m78.devtools.log.json';
 
 describe('FR compat', () => {
   it('uses loadData in legacy mode', async () => {

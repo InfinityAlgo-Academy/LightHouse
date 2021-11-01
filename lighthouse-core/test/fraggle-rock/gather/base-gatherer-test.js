@@ -5,7 +5,8 @@
  */
 'use strict';
 
-const Gatherer = require('../../../fraggle-rock/gather/base-gatherer.js');
+import {jest} from '@jest/globals';
+import Gatherer from '../../../fraggle-rock/gather/base-gatherer.js';
 
 /* eslint-env jest */
 

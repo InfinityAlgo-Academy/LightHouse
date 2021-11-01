@@ -7,9 +7,10 @@
 
 /* eslint-env jest */
 
-const NetworkUserAgent = require('../../../gather/gatherers/network-user-agent.js');
+import NetworkUserAgent from '../../../gather/gatherers/network-user-agent.js';
+
 /** @type {*} */
-const devtoolsLog = require('../../fixtures/traces/lcp-m78.devtools.log.json');
+import devtoolsLog from '../../fixtures/traces/lcp-m78.devtools.log.json';
 
 describe('.getNetworkUserAgent', () => {
   it('should return empty string when no network events available', async () => {

@@ -7,13 +7,13 @@
 
 /* eslint-env jest */
 
-const CSSUsage = require('../../../gather/gatherers/css-usage.js');
-const {defaultSettings} = require('../../../config/constants.js');
-const {
-  createMockDriver,
-  createMockBaseArtifacts,
-} = require('../../fraggle-rock/gather/mock-driver.js');
-const {flushAllTimersAndMicrotasks} = require('../../test-utils.js');
+import {jest} from '@jest/globals';
+
+import CSSUsage from '../../../gather/gatherers/css-usage.js';
+
+import {defaultSettings} from '../../../config/constants.js';
+import {createMockDriver, createMockBaseArtifacts} from '../../fraggle-rock/gather/mock-driver.js';
+import {flushAllTimersAndMicrotasks} from '../../test-utils.js';
 
 jest.useFakeTimers();
 

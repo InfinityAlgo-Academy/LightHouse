@@ -7,8 +7,9 @@
 
 /* eslint-env jest */
 
-const {createMockSession} = require('../../fraggle-rock/gather/mock-driver.js');
-const storage = require('../../../gather/driver/storage.js');
+import {createMockSession} from '../../fraggle-rock/gather/mock-driver.js';
+
+import storage from '../../../gather/driver/storage.js';
 
 let sessionMock = createMockSession();
 

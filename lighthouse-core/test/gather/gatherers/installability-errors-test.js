@@ -7,8 +7,9 @@
 
 /* eslint-env jest */
 
-const InstallabilityErrors = require('../../../gather/gatherers/installability-errors.js');
-const {createMockSession} = require('../../fraggle-rock/gather/mock-driver.js');
+import InstallabilityErrors from '../../../gather/gatherers/installability-errors.js';
+
+import {createMockSession} from '../../fraggle-rock/gather/mock-driver.js';
 
 
 describe('.getInstallabilityErrors', () => {

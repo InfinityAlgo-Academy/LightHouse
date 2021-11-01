@@ -7,9 +7,11 @@
 
 /* eslint-env jest */
 
-const {createMockSession} = require('../../fraggle-rock/gather/mock-driver.js');
-const {makePromiseInspectable, flushAllTimersAndMicrotasks} = require('../../test-utils.js');
-const serviceWorkers = require('../../../gather/driver/service-workers.js');
+import {jest} from '@jest/globals';
+import {createMockSession} from '../../fraggle-rock/gather/mock-driver.js';
+
+import {makePromiseInspectable, flushAllTimersAndMicrotasks} from '../../test-utils.js';
+import serviceWorkers from '../../../gather/driver/service-workers.js';
 
 let sessionMock = createMockSession();
 

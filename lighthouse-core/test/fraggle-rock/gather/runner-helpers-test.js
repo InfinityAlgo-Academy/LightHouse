@@ -5,10 +5,10 @@
  */
 'use strict';
 
-const helpers = require('../../../fraggle-rock/gather/runner-helpers.js');
-const Gatherer = require('../../../fraggle-rock/gather/base-gatherer.js');
-const {defaultSettings} = require('../../../config/constants.js');
-const {createMockDriver, createMockGathererInstance, createMockBaseArtifacts} = require('./mock-driver.js'); // eslint-disable-line max-len
+import helpers from '../../../fraggle-rock/gather/runner-helpers.js';
+import Gatherer from '../../../fraggle-rock/gather/base-gatherer.js';
+import {defaultSettings} from '../../../config/constants.js';
+import {createMockDriver, createMockGathererInstance, createMockBaseArtifacts} from './mock-driver.js'; // eslint-disable-line max-len
 
 /* eslint-env jest */
 

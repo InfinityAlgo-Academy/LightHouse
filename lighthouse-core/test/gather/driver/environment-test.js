@@ -5,11 +5,13 @@
  */
 'use strict';
 
-const {defaultSettings} = require('../../../config/constants.js');
 /* eslint-env jest */
 
-const environment = require('../../../gather/driver/environment.js');
-const {createMockSession} = require('../../fraggle-rock/gather/mock-driver.js');
+import {defaultSettings} from '../../../config/constants.js';
+
+import environment from '../../../gather/driver/environment.js';
+
+import {createMockSession} from '../../fraggle-rock/gather/mock-driver.js';
 
 describe('.getBrowserVersion', () => {
   let sessionMock = createMockSession();

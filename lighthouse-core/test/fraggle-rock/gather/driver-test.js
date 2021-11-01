@@ -5,7 +5,8 @@
  */
 'use strict';
 
-const Driver = require('../../../fraggle-rock/gather/driver.js');
+import {jest} from '@jest/globals';
+import Driver from '../../../fraggle-rock/gather/driver.js';
 
 /* eslint-env jest */
 

@@ -7,8 +7,9 @@
 
 /* eslint-env jest */
 
-const CacheContentGather = require('../../../gather/gatherers/cache-contents.js');
-const assert = require('assert').strict;
+import CacheContentGather from '../../../gather/gatherers/cache-contents.js';
+
+import {strict as assert} from 'assert';
 let cacheContentGather;
 
 describe('Cache Contents gatherer', () => {

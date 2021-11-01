@@ -7,10 +7,11 @@
 
 /* eslint-env jest */
 
-const GlobalListenerGatherer = require('../../../gather/gatherers/global-listeners.js');
-const {createMockSendCommandFn} = require('../mock-commands.js');
-const Connection = require('../../../gather/connections/connection.js');
-const Driver = require('../../../gather/driver.js');
+import GlobalListenerGatherer from '../../../gather/gatherers/global-listeners.js';
+
+import {createMockSendCommandFn} from '../mock-commands.js';
+import Connection from '../../../gather/connections/connection.js';
+import Driver from '../../../gather/driver.js';
 
 describe('Global Listener Gatherer', () => {
   it('remove duplicate listeners from artifacts', async () => {

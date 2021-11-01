@@ -7,8 +7,9 @@
 
 /* eslint-env jest */
 
-const assert = require('assert').strict;
-const DevtoolsLog = require('../../gather/devtools-log.js');
+import {strict as assert} from 'assert';
+
+import DevtoolsLog from '../../gather/devtools-log.js';
 
 describe('DevtoolsLog', () => {
   let messageLog;

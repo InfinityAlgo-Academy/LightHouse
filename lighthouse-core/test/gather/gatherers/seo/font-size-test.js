@@ -7,8 +7,9 @@
 
 /* eslint-env jest */
 
-const assert = require('assert');
-const FontSizeGather = require('../../../../gather/gatherers/seo/font-size.js');
+import assert from 'assert';
+
+import FontSizeGather from '../../../../gather/gatherers/seo/font-size.js';
 let fontSizeGather;
 
 const TEXT_NODE_TYPE = 3;

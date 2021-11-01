@@ -7,15 +7,27 @@
 
 /* eslint-env jest */
 
+import {jest} from '@jest/globals';
+import {strict as assert} from 'assert';
+
+// import ServiceWorkerGather from '../../../gather/gatherers/service-worker.js';
+
+// Some imports needs to be done dynamically, so that their dependencies will be mocked.
+// See: https://jestjs.io/docs/ecmascript-modules#differences-between-esm-and-commonjs
+//      https://github.com/facebook/jest/issues/10025
+/** @type {typeof import('../../../gather/gatherers/service-worker.js')} */
+let ServiceWorkerGather;
+
+beforeAll(async () => {
+  ServiceWorkerGather = (await import('../../../gather/gatherers/service-worker.js')).default;
+});
+
 const getServiceWorkerVersions = jest.fn();
 const getServiceWorkerRegistrations = jest.fn();
 jest.mock('../../../gather/driver/service-workers.js', () => ({
   getServiceWorkerVersions,
   getServiceWorkerRegistrations,
 }));
-
-const ServiceWorkerGather = require('../../../gather/gatherers/service-worker.js');
-const assert = require('assert').strict;
 
 describe('service worker gatherer', () => {
   it('obtains the active service worker registration', async () => {

@@ -7,9 +7,10 @@
 
 /* eslint-env jest */
 
-const TagsBlockingFirstPaint =
-    require('../../../../gather/gatherers/dobetterweb/tags-blocking-first-paint.js');
-const {createMockContext} = require('../../../fraggle-rock/gather/mock-driver.js');
+import TagsBlockingFirstPaint from
+  '../../../../gather/gatherers/dobetterweb/tags-blocking-first-paint.js';
+
+import {createMockContext} from '../../../fraggle-rock/gather/mock-driver.js';
 
 let tagsBlockingFirstPaint;
 const traceData = {

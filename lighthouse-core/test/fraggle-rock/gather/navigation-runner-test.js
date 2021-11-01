@@ -7,26 +7,36 @@
 
 /* eslint-env jest */
 
-const {
+import {jest} from '@jest/globals';
+import {
   createMockDriver,
   createMockBaseArtifacts,
   mockDriverSubmodules,
   mockRunnerModule,
-} = require('./mock-driver.js');
+} from './mock-driver.js';
+import {initializeConfig} from '../../../fraggle-rock/config/config.js';
+import {defaultNavigationConfig} from '../../../config/constants.js';
+import LighthouseError from '../../../lib/lh-error.js';
+import DevtoolsLogGatherer from '../../../gather/gatherers/devtools-log.js';
+import TraceGatherer from '../../../gather/gatherers/trace.js';
+import toDevtoolsLog from '../../network-records-to-devtools-log.js';
+// import runner from '../../../fraggle-rock/gather/navigation-runner.js';
+
+// Some imports needs to be done dynamically, so that their dependencies will be mocked.
+// See: https://jestjs.io/docs/ecmascript-modules#differences-between-esm-and-commonjs
+//      https://github.com/facebook/jest/issues/10025
+/** @type {import('../../../fraggle-rock/gather/navigation-runner.js')} */
+let runner;
+
+beforeAll(async () => {
+  runner = (await import('../../../fraggle-rock/gather/navigation-runner.js'));
+});
+
 const mocks = mockDriverSubmodules();
-const {initializeConfig} = require('../../../fraggle-rock/config/config.js');
-const {defaultNavigationConfig} = require('../../../config/constants.js');
-const LighthouseError = require('../../../lib/lh-error.js');
-const DevtoolsLogGatherer = require('../../../gather/gatherers/devtools-log.js');
-const TraceGatherer = require('../../../gather/gatherers/trace.js');
-const toDevtoolsLog = require('../../network-records-to-devtools-log.js');
 
 // Establish the mocks before we require our file under test.
 let mockRunnerRun = jest.fn();
-
 jest.mock('../../../runner.js', () => mockRunnerModule(() => mockRunnerRun));
-
-const runner = require('../../../fraggle-rock/gather/navigation-runner.js');
 
 /** @typedef {{meta: LH.Gatherer.GathererMeta<'Accessibility'>, getArtifact: jest.Mock<any, any>, startInstrumentation:jest.Mock<any, any>, stopInstrumentation: jest.Mock<any, any>, startSensitiveInstrumentation:jest.Mock<any, any>, stopSensitiveInstrumentation: jest.Mock<any, any>}} MockGatherer */
 

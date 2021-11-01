@@ -7,8 +7,9 @@
 
 /* eslint-env jest */
 
-const AccessibilityGather = require('../../../gather/gatherers/accessibility.js');
-const assert = require('assert').strict;
+import AccessibilityGather from '../../../gather/gatherers/accessibility.js';
+
+import {strict as assert} from 'assert';
 let accessibilityGather;
 
 describe('Accessibility gatherer', () => {

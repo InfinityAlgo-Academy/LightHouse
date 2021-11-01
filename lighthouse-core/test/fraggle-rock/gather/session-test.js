@@ -5,15 +5,16 @@
  */
 'use strict';
 
-const {EventEmitter} = require('events');
-const ProtocolSession = require('../../../fraggle-rock/gather/session.js');
-const {
+/* eslint-env jest */
+
+import {jest} from '@jest/globals';
+import {EventEmitter} from 'events';
+import ProtocolSession from '../../../fraggle-rock/gather/session.js';
+import {
   flushAllTimersAndMicrotasks,
   makePromiseInspectable,
   createDecomposedPromise,
-} = require('../../test-utils.js');
-
-/* eslint-env jest */
+} from '../../test-utils.js';
 
 jest.useFakeTimers();
 

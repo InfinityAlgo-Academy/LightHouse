@@ -7,11 +7,14 @@
 
 /* eslint-env jest */
 
-const InspectorIssues = require('../../../gather/gatherers/inspector-issues.js');
-const NetworkRequest = require('../../../lib/network-request.js');
-const {createMockContext} = require('../../fraggle-rock/gather/mock-driver.js');
-const {flushAllTimersAndMicrotasks} = require('../../test-utils.js');
-const networkRecordsToDevtoolsLog = require('../../network-records-to-devtools-log.js');
+import {jest} from '@jest/globals';
+
+import InspectorIssues from '../../../gather/gatherers/inspector-issues.js';
+
+import NetworkRequest from '../../../lib/network-request.js';
+import {createMockContext} from '../../fraggle-rock/gather/mock-driver.js';
+import {flushAllTimersAndMicrotasks} from '../../test-utils.js';
+import networkRecordsToDevtoolsLog from '../../network-records-to-devtools-log.js';
 
 jest.useFakeTimers();
 

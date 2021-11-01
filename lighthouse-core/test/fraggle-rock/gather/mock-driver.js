@@ -5,18 +5,19 @@
  */
 'use strict';
 
-/* eslint-env jest */
-
-const {
-  createMockOnFn,
-  createMockOnceFn,
-  createMockSendCommandFn,
-} = require('../../gather/mock-commands.js');
-const {defaultSettings} = require('../../../config/constants.js');
-
 /**
  * @fileoverview Mock fraggle rock driver for testing.
  */
+
+/* eslint-env jest */
+
+import {jest} from '@jest/globals';
+import {
+  createMockOnFn,
+  createMockOnceFn,
+  createMockSendCommandFn,
+} from '../../gather/mock-commands.js';
+import constants from '../../../config/constants.js';
 
 /** @typedef {import('../../../fraggle-rock/gather/driver.js')} Driver */
 /** @typedef {import('../../../gather/driver/execution-context.js')} ExecutionContext */
@@ -169,7 +170,7 @@ function createMockBaseArtifacts() {
     fetchTime: new Date().toISOString(),
     URL: {finalUrl: 'https://example.com', requestedUrl: 'https://example.com'},
     PageLoadError: null,
-    settings: defaultSettings,
+    settings: constants.defaultSettings,
     BenchmarkIndex: 500,
     LighthouseRunWarnings: [],
     Timing: [],
@@ -201,7 +202,7 @@ function createMockContext() {
     computedCache: new Map(),
     dependencies: {},
     baseArtifacts: createMockBaseArtifacts(),
-    settings: defaultSettings,
+    settings: constants.defaultSettings,
 
     /** @return {LH.Gatherer.FRTransitionalContext} */
     asContext() {
@@ -277,7 +278,7 @@ function mockDriverSubmodules() {
   };
 }
 
-module.exports = {
+export {
   mockRunnerModule,
   mockTargetManagerModule,
   mockDriverModule,

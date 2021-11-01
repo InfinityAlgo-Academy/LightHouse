@@ -7,7 +7,9 @@
 
 /* eslint-env jest */
 
-const StacksGatherer = require('../../../gather/gatherers/stacks.js');
+import {jest} from '@jest/globals';
+
+import StacksGatherer from '../../../gather/gatherers/stacks.js';
 
 describe('StacksGatherer', () => {
   /** @type {{executionContext: {evaluate: jest.Mock}}} */

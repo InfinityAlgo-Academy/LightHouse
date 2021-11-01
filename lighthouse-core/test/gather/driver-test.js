@@ -5,19 +5,18 @@
  */
 'use strict';
 
-const Driver = require('../../gather/driver.js');
-const Connection = require('../../gather/connections/connection.js');
-const {protocolGetVersionResponse} = require('./fake-driver.js');
-const {
-  createMockSendCommandFn,
-  makePromiseInspectable,
-  flushAllTimersAndMicrotasks,
-} = require('../test-utils.js');
-
 /* eslint-env jest */
 
-jest.useFakeTimers();
+import {jest} from '@jest/globals';
+import Driver from '../../gather/driver.js';
+import Connection from '../../gather/connections/connection.js';
+import FakeDriver from './fake-driver.js';
+import {mockCommands, makePromiseInspectable, flushAllTimersAndMicrotasks} from '../test-utils.js';
 
+const {protocolGetVersionResponse} = FakeDriver;
+const {createMockSendCommandFn} = mockCommands;
+
+jest.useFakeTimers();
 
 /**
  * @typedef DriverMockMethods

@@ -7,8 +7,11 @@
 
 /* eslint-env jest */
 
-const LinkElements = require('../../../gather/gatherers/link-elements.js');
-const NetworkRecords = require('../../../computed/network-records.js');
+import {jest} from '@jest/globals';
+
+import LinkElements from '../../../gather/gatherers/link-elements.js';
+
+import NetworkRecords from '../../../computed/network-records.js';
 
 jest.mock('../../../computed/network-records.js');
 

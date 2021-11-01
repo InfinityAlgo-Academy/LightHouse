@@ -9,7 +9,7 @@
 
 const fs = require('fs');
 const format = require('../../shared/localization/format.js');
-const mockCommands = require('./gather/mock-commands.js');
+const mockCommands = require('./mock-commands-commonjs.js');
 const {default: {toBeCloseTo}} = require('expect/build/matchers.js');
 const {LH_ROOT} = require('../../root.js');
 
@@ -281,5 +281,5 @@ module.exports = {
   createDecomposedPromise,
   flushAllTimersAndMicrotasks,
   makeMocksForGatherRunner,
-  ...mockCommands,
+  mockCommands,
 };

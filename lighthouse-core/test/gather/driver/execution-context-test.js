@@ -5,19 +5,21 @@
  */
 'use strict';
 
-const ExecutionContext = require('../../../gather/driver/execution-context.js');
-const {
-  createMockSendCommandFn: createMockSendCommandFn_,
+/* eslint-env jest */
+
+import {jest} from '@jest/globals';
+import ExecutionContext from '../../../gather/driver/execution-context.js';
+import {
+  mockCommands,
   makePromiseInspectable,
   flushAllTimersAndMicrotasks,
-} = require('../../test-utils.js');
-
-/* eslint-env jest */
+} from '../../test-utils.js';
 
 jest.useFakeTimers();
 
 // This can be removed when FR becomes the default.
-const createMockSendCommandFn = createMockSendCommandFn_.bind(null, {useSessionId: false});
+const createMockSendCommandFn =
+  mockCommands.createMockSendCommandFn.bind(null, {useSessionId: false});
 
 /** @return {LH.Gatherer.FRProtocolSession} */
 function createMockSession() {

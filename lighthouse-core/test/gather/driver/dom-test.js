@@ -7,8 +7,11 @@
 
 /* eslint-env jest */
 
-const {createMockSession} = require('../../fraggle-rock/gather/mock-driver.js');
-const dom = require('../../../gather/driver/dom.js');
+import {createMockSession} from '../../fraggle-rock/gather/mock-driver.js';
+import dom from '../../../gather/driver/dom.js';
+
+/** @typedef {import('../../../fraggle-rock/gather/driver.js')} Driver */
+/** @typedef {import('../../../gather/driver/execution-context.js')} ExecutionContext */
 
 let sessionMock = createMockSession();
 

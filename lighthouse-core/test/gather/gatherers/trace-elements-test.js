@@ -7,14 +7,16 @@
 
 /* eslint-env jest */
 
-const TraceElementsGatherer = require('../../../gather/gatherers/trace-elements.js');
-const Driver = require('../../../gather/driver.js');
-const Connection = require('../../../gather/connections/connection.js');
-const createTestTrace = require('../../create-test-trace.js');
-const {createMockSendCommandFn, createMockOnFn} = require('../mock-commands.js');
-const {flushAllTimersAndMicrotasks} = require('../../test-utils.js');
+import {jest} from '@jest/globals';
 
-const animationTrace = require('../../fixtures/traces/animation.json');
+import TraceElementsGatherer from '../../../gather/gatherers/trace-elements.js';
+
+import Driver from '../../../gather/driver.js';
+import Connection from '../../../gather/connections/connection.js';
+import createTestTrace from '../../create-test-trace.js';
+import {createMockSendCommandFn, createMockOnFn} from '../mock-commands.js';
+import {flushAllTimersAndMicrotasks} from '../../test-utils.js';
+import animationTrace from '../../fixtures/traces/animation.json';
 
 jest.useFakeTimers();
 
