@@ -7,9 +7,10 @@
 
 /* eslint-env jest */
 
-const NetworkRecorder = require('../../lighthouse-core/lib/network-recorder.js');
-const networkRecordsToDevtoolsLog = require('./network-records-to-devtools-log.js');
-const lcpDevtoolsLog = require('./fixtures/traces/lcp-m78.devtools.log.json');
+import NetworkRecorder from '../../lighthouse-core/lib/network-recorder.js';
+
+import networkRecordsToDevtoolsLog from './network-records-to-devtools-log.js';
+import lcpDevtoolsLog from './fixtures/traces/lcp-m78.devtools.log.json';
 
 describe('networkRecordsToDevtoolsLog', () => {
   it('should generate the four messages per request', () => {

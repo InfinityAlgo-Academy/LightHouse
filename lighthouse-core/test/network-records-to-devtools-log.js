@@ -6,7 +6,7 @@
  */
 'use strict';
 
-const NetworkRecorder = require('../../lighthouse-core/lib/network-recorder.js');
+import NetworkRecorder from '../../lighthouse-core/lib/network-recorder.js';
 /** @typedef {import('../../lighthouse-core/lib/network-request.js')} NetworkRequest */
 
 const idBase = '127122';
@@ -259,4 +259,4 @@ function networkRecordsToDevtoolsLog(networkRecords, options = {}) {
   return devtoolsLog;
 }
 
-module.exports = networkRecordsToDevtoolsLog;
+export default networkRecordsToDevtoolsLog;

@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const assert = require('assert').strict;
-const ReportScoring = require('../scoring.js');
+import {strict as assert} from 'assert';
+import ReportScoring from '../scoring.js';
 
 /* eslint-env jest */
 describe('ReportScoring', () => {

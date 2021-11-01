@@ -5,11 +5,11 @@
  */
 'use strict';
 
-import testUtils from '../test-utils.js';
+import {getProtoRoundTrip} from '../test-utils.js';
 import {processForProto} from '../../lib/proto-preprocessor.js';
 import sampleJson from '../results/sample_v2.json';
 
-const {describeIfProtoExists, sampleResultsRoundtripStr} = testUtils.getProtoRoundTrip();
+const {describeIfProtoExists, sampleResultsRoundtripStr} = getProtoRoundTrip();
 const roundTripJson = sampleResultsRoundtripStr && JSON.parse(sampleResultsRoundtripStr);
 
 /* eslint-env jest */

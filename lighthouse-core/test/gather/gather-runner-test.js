@@ -28,15 +28,16 @@ import {
 import fakeDriver from './fake-driver.js';
 import {createCommonjsRefs} from '../../scripts/esm-utils.js';
 
+const {require} = createCommonjsRefs(import.meta);
+
 /**
  * Same as jest.requireMock(), but uses `any` instead of `unknown`.
  * @param {string} moduleName
+ * @return {any}
  */
 const requireMockAny = (moduleName) => {
-  return /** @type {any} */ (jest.requireMock(moduleName));
+  return jest.requireMock(moduleName);
 };
-
-const {require} = createCommonjsRefs(import.meta);
 
 makeMocksForGatherRunner();
 
