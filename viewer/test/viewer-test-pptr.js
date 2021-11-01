@@ -108,7 +108,7 @@ describe('Lighthouse Viewer', () => {
       for (const category of lighthouseCategories) {
         let expected = getAuditsOfCategory(category);
         if (category === 'performance') {
-          expected = getAuditsOfCategory(category).filter(a => !!a.group);
+          expected = getAuditsOfCategory(category).filter(a => a.group !== 'hidden');
         }
         expected = expected.map(audit => audit.id);
         const elementIds = await getAuditElementsIds({category, selector: selectors.audits});

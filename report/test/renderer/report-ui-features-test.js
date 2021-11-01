@@ -515,6 +515,9 @@ describe('ReportUIFeatures', () => {
       expect(render(lhr).querySelector('.lh-button.lh-report-icon--treemap')).toBeTruthy();
 
       delete lhr.audits['script-treemap-data'];
+      const newAuditRefs = lhr.categories['performance'].auditRefs
+        .filter(a => a.id !== 'script-treemap-data');
+      lhr.categories['performance'].auditRefs = newAuditRefs;
       expect(render(lhr).querySelector('.lh-button.lh-report-icon--treemap')).toBeNull();
     });
   });

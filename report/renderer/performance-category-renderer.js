@@ -153,6 +153,21 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
   }
 
   /**
+   * For performance, audits with no group should be a diagnostic or opportunity.
+   * The audit details type will determine which of the two groups an audit is in.
+   *
+   * @param {LH.ReportResult.AuditRef} audit
+   * @return {'load-opportunity'|'diagnostic'|null}
+   */
+  _classifyPerformanceAudit(audit) {
+    if (audit.group) return null;
+    if (audit.result.details && audit.result.details.type === 'opportunity') {
+      return 'load-opportunity';
+    }
+    return 'diagnostic';
+  }
+
+  /**
    * @param {LH.ReportResult.Category} category
    * @param {Object<string, LH.Result.ReportGroup>} groups
    * @param {{gatherMode: LH.Result.GatherMode}=} options
@@ -209,9 +224,9 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
 
     // Opportunities
     const opportunityAudits = category.auditRefs
-        .filter(audit => audit.group === 'load-opportunities' && !Util.showAsPassed(audit.result))
+        .filter(audit => this._classifyPerformanceAudit(audit) === 'load-opportunity')
+        .filter(audit => !Util.showAsPassed(audit.result))
         .sort((auditA, auditB) => this._getWastedMs(auditB) - this._getWastedMs(auditA));
-
 
     const filterableMetrics = metricAudits.filter(a => !!a.relevantAudits);
     // TODO: only add if there are opportunities & diagnostics rendered.
@@ -242,7 +257,8 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
 
     // Diagnostics
     const diagnosticAudits = category.auditRefs
-        .filter(audit => audit.group === 'diagnostics' && !Util.showAsPassed(audit.result))
+        .filter(audit => this._classifyPerformanceAudit(audit) === 'diagnostic')
+        .filter(audit => !Util.showAsPassed(audit.result))
         .sort((a, b) => {
           const scoreA = a.result.scoreDisplayMode === 'informative' ? 100 : Number(a.result.score);
           const scoreB = b.result.scoreDisplayMode === 'informative' ? 100 : Number(b.result.score);
@@ -258,8 +274,7 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
 
     // Passed audits
     const passedAudits = category.auditRefs
-        .filter(audit => (audit.group === 'load-opportunities' || audit.group === 'diagnostics') &&
-            Util.showAsPassed(audit.result));
+        .filter(audit => this._classifyPerformanceAudit(audit) && Util.showAsPassed(audit.result));
 
     if (!passedAudits.length) return element;
 

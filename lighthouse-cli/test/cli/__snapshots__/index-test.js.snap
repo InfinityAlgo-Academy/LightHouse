@@ -921,147 +921,170 @@ Object {
           "weight": 15,
         },
         Object {
+          "group": "hidden",
           "id": "max-potential-fid",
           "weight": 0,
         },
         Object {
           "acronym": "FMP",
+          "group": "hidden",
           "id": "first-meaningful-paint",
           "weight": 0,
         },
         Object {
-          "group": "load-opportunities",
           "id": "render-blocking-resources",
           "weight": 0,
         },
         Object {
-          "group": "load-opportunities",
           "id": "uses-responsive-images",
           "weight": 0,
         },
         Object {
-          "group": "load-opportunities",
           "id": "offscreen-images",
           "weight": 0,
         },
         Object {
-          "group": "load-opportunities",
           "id": "unminified-css",
           "weight": 0,
         },
         Object {
-          "group": "load-opportunities",
           "id": "unminified-javascript",
           "weight": 0,
         },
         Object {
-          "group": "load-opportunities",
           "id": "unused-css-rules",
           "weight": 0,
         },
         Object {
-          "group": "load-opportunities",
           "id": "unused-javascript",
           "weight": 0,
         },
         Object {
-          "group": "load-opportunities",
           "id": "uses-optimized-images",
           "weight": 0,
         },
         Object {
-          "group": "load-opportunities",
           "id": "modern-image-formats",
           "weight": 0,
         },
         Object {
-          "group": "load-opportunities",
           "id": "uses-text-compression",
           "weight": 0,
         },
         Object {
-          "group": "load-opportunities",
           "id": "uses-rel-preconnect",
           "weight": 0,
         },
         Object {
-          "group": "load-opportunities",
           "id": "server-response-time",
           "weight": 0,
         },
         Object {
-          "group": "load-opportunities",
           "id": "redirects",
           "weight": 0,
         },
         Object {
-          "group": "load-opportunities",
           "id": "uses-rel-preload",
           "weight": 0,
         },
         Object {
-          "group": "load-opportunities",
           "id": "uses-http2",
           "weight": 0,
         },
         Object {
-          "group": "load-opportunities",
           "id": "efficient-animated-content",
           "weight": 0,
         },
         Object {
-          "group": "load-opportunities",
           "id": "duplicated-javascript",
           "weight": 0,
         },
         Object {
-          "group": "load-opportunities",
           "id": "legacy-javascript",
           "weight": 0,
         },
         Object {
-          "group": "load-opportunities",
           "id": "preload-lcp-image",
           "weight": 0,
         },
         Object {
-          "group": "diagnostics",
           "id": "total-byte-weight",
           "weight": 0,
         },
         Object {
-          "group": "diagnostics",
           "id": "uses-long-cache-ttl",
           "weight": 0,
         },
         Object {
-          "group": "diagnostics",
           "id": "dom-size",
           "weight": 0,
         },
         Object {
-          "group": "diagnostics",
           "id": "critical-request-chains",
           "weight": 0,
         },
         Object {
-          "group": "diagnostics",
           "id": "user-timings",
           "weight": 0,
         },
         Object {
-          "group": "diagnostics",
           "id": "bootup-time",
           "weight": 0,
         },
         Object {
-          "group": "diagnostics",
           "id": "mainthread-work-breakdown",
           "weight": 0,
         },
         Object {
-          "group": "diagnostics",
           "id": "font-display",
+          "weight": 0,
+        },
+        Object {
+          "id": "resource-summary",
+          "weight": 0,
+        },
+        Object {
+          "id": "third-party-summary",
+          "weight": 0,
+        },
+        Object {
+          "id": "third-party-facades",
+          "weight": 0,
+        },
+        Object {
+          "id": "largest-contentful-paint-element",
+          "weight": 0,
+        },
+        Object {
+          "id": "lcp-lazy-loaded",
+          "weight": 0,
+        },
+        Object {
+          "id": "layout-shift-elements",
+          "weight": 0,
+        },
+        Object {
+          "id": "uses-passive-event-listeners",
+          "weight": 0,
+        },
+        Object {
+          "id": "no-document-write",
+          "weight": 0,
+        },
+        Object {
+          "id": "long-tasks",
+          "weight": 0,
+        },
+        Object {
+          "id": "non-composited-animations",
+          "weight": 0,
+        },
+        Object {
+          "id": "unsized-images",
+          "weight": 0,
+        },
+        Object {
+          "id": "viewport",
           "weight": 0,
         },
         Object {
@@ -1075,98 +1098,47 @@ Object {
           "weight": 0,
         },
         Object {
-          "group": "diagnostics",
-          "id": "resource-summary",
-          "weight": 0,
-        },
-        Object {
-          "group": "diagnostics",
-          "id": "third-party-summary",
-          "weight": 0,
-        },
-        Object {
-          "group": "diagnostics",
-          "id": "third-party-facades",
-          "weight": 0,
-        },
-        Object {
-          "group": "diagnostics",
-          "id": "largest-contentful-paint-element",
-          "weight": 0,
-        },
-        Object {
-          "group": "diagnostics",
-          "id": "lcp-lazy-loaded",
-          "weight": 0,
-        },
-        Object {
-          "group": "diagnostics",
-          "id": "layout-shift-elements",
-          "weight": 0,
-        },
-        Object {
-          "group": "diagnostics",
-          "id": "uses-passive-event-listeners",
-          "weight": 0,
-        },
-        Object {
-          "group": "diagnostics",
-          "id": "no-document-write",
-          "weight": 0,
-        },
-        Object {
-          "group": "diagnostics",
-          "id": "long-tasks",
-          "weight": 0,
-        },
-        Object {
-          "group": "diagnostics",
-          "id": "non-composited-animations",
-          "weight": 0,
-        },
-        Object {
-          "group": "diagnostics",
-          "id": "unsized-images",
-          "weight": 0,
-        },
-        Object {
-          "group": "diagnostics",
-          "id": "viewport",
-          "weight": 0,
-        },
-        Object {
+          "group": "hidden",
           "id": "network-requests",
           "weight": 0,
         },
         Object {
+          "group": "hidden",
           "id": "network-rtt",
           "weight": 0,
         },
         Object {
+          "group": "hidden",
           "id": "network-server-latency",
           "weight": 0,
         },
         Object {
+          "group": "hidden",
           "id": "main-thread-tasks",
           "weight": 0,
         },
         Object {
+          "group": "hidden",
           "id": "diagnostics",
           "weight": 0,
         },
         Object {
+          "group": "hidden",
           "id": "metrics",
           "weight": 0,
         },
         Object {
+          "group": "hidden",
           "id": "screenshot-thumbnails",
           "weight": 0,
         },
         Object {
+          "group": "hidden",
           "id": "final-screenshot",
           "weight": 0,
         },
         Object {
+          "group": "hidden",
           "id": "script-treemap-data",
           "weight": 0,
         },
@@ -1379,6 +1351,9 @@ Object {
       "description": "More information about the performance of your application. These numbers don't [directly affect](https://web.dev/performance-scoring/) the Performance score.",
       "title": "Diagnostics",
     },
+    "hidden": Object {
+      "title": "",
+    },
     "load-opportunities": Object {
       "description": "These suggestions can help your page load faster. They don't [directly affect](https://web.dev/performance-scoring/) the Performance score.",
       "title": "Opportunities",
@@ -1575,6 +1550,7 @@ Object {
     "performance": Object {
       "auditRefs": Array [
         Object {
+          "group": "hidden",
           "id": "metrics",
           "weight": 0,
         },
@@ -1639,6 +1615,9 @@ Object {
     "diagnostics": Object {
       "description": "More information about the performance of your application. These numbers don't [directly affect](https://web.dev/performance-scoring/) the Performance score.",
       "title": "Diagnostics",
+    },
+    "hidden": Object {
+      "title": "",
     },
     "load-opportunities": Object {
       "description": "These suggestions can help your page load faster. They don't [directly affect](https://web.dev/performance-scoring/) the Performance score.",
