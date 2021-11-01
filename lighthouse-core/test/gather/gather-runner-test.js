@@ -115,8 +115,7 @@ let driver;
 /** @type {Connection & {sendCommand: ReturnType<typeof createMockSendCommandFn>}} */
 let connectionStub;
 
-async function resetDefaultMockResponses() {
-  const GatherRunner_ = (await import('../../gather/gather-runner.js')).default;
+function resetDefaultMockResponses() {
   GatherRunner.assertNoSameOriginServiceWorkerClients = jest.spyOn(GatherRunner_,
     'assertNoSameOriginServiceWorkerClients');
   GatherRunner.assertNoSameOriginServiceWorkerClients.mockReset();
@@ -139,7 +138,7 @@ async function resetDefaultMockResponses() {
     .mockResponse('ServiceWorker.enable');
 }
 
-beforeEach(async () => {
+beforeEach(() => {
   class EmulationDriver extends Driver {
     registerRequestIdleCallbackWrap() {
       return Promise.resolve();
@@ -157,7 +156,7 @@ beforeEach(async () => {
     throw new Error(`${cmd} not implemented`);
   };
   driver = new EmulationDriver(connectionStub);
-  await resetDefaultMockResponses();
+  resetDefaultMockResponses();
 
   const emulation = require('../../lib/emulation.js');
   emulation.emulate = fnAny();
