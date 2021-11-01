@@ -6080,147 +6080,170 @@
         },
         {
           "id": "max-potential-fid",
-          "weight": 0
+          "weight": 0,
+          "group": "hidden"
         },
         {
           "id": "first-meaningful-paint",
           "weight": 0,
-          "acronym": "FMP"
+          "acronym": "FMP",
+          "group": "hidden"
         },
         {
           "id": "render-blocking-resources",
-          "weight": 0,
-          "group": "load-opportunities"
+          "weight": 0
         },
         {
           "id": "uses-responsive-images",
-          "weight": 0,
-          "group": "load-opportunities"
+          "weight": 0
         },
         {
           "id": "offscreen-images",
-          "weight": 0,
-          "group": "load-opportunities"
+          "weight": 0
         },
         {
           "id": "unminified-css",
-          "weight": 0,
-          "group": "load-opportunities"
+          "weight": 0
         },
         {
           "id": "unminified-javascript",
-          "weight": 0,
-          "group": "load-opportunities"
+          "weight": 0
         },
         {
           "id": "unused-css-rules",
-          "weight": 0,
-          "group": "load-opportunities"
+          "weight": 0
         },
         {
           "id": "unused-javascript",
-          "weight": 0,
-          "group": "load-opportunities"
+          "weight": 0
         },
         {
           "id": "uses-optimized-images",
-          "weight": 0,
-          "group": "load-opportunities"
+          "weight": 0
         },
         {
           "id": "modern-image-formats",
-          "weight": 0,
-          "group": "load-opportunities"
+          "weight": 0
         },
         {
           "id": "uses-text-compression",
-          "weight": 0,
-          "group": "load-opportunities"
+          "weight": 0
         },
         {
           "id": "uses-rel-preconnect",
-          "weight": 0,
-          "group": "load-opportunities"
+          "weight": 0
         },
         {
           "id": "server-response-time",
-          "weight": 0,
-          "group": "load-opportunities"
+          "weight": 0
         },
         {
           "id": "redirects",
-          "weight": 0,
-          "group": "load-opportunities"
+          "weight": 0
         },
         {
           "id": "uses-rel-preload",
-          "weight": 0,
-          "group": "load-opportunities"
+          "weight": 0
         },
         {
           "id": "uses-http2",
-          "weight": 0,
-          "group": "load-opportunities"
+          "weight": 0
         },
         {
           "id": "efficient-animated-content",
-          "weight": 0,
-          "group": "load-opportunities"
+          "weight": 0
         },
         {
           "id": "duplicated-javascript",
-          "weight": 0,
-          "group": "load-opportunities"
+          "weight": 0
         },
         {
           "id": "legacy-javascript",
-          "weight": 0,
-          "group": "load-opportunities"
+          "weight": 0
         },
         {
           "id": "preload-lcp-image",
-          "weight": 0,
-          "group": "load-opportunities"
+          "weight": 0
         },
         {
           "id": "total-byte-weight",
-          "weight": 0,
-          "group": "diagnostics"
+          "weight": 0
         },
         {
           "id": "uses-long-cache-ttl",
-          "weight": 0,
-          "group": "diagnostics"
+          "weight": 0
         },
         {
           "id": "dom-size",
-          "weight": 0,
-          "group": "diagnostics"
+          "weight": 0
         },
         {
           "id": "critical-request-chains",
-          "weight": 0,
-          "group": "diagnostics"
+          "weight": 0
         },
         {
           "id": "user-timings",
-          "weight": 0,
-          "group": "diagnostics"
+          "weight": 0
         },
         {
           "id": "bootup-time",
-          "weight": 0,
-          "group": "diagnostics"
+          "weight": 0
         },
         {
           "id": "mainthread-work-breakdown",
-          "weight": 0,
-          "group": "diagnostics"
+          "weight": 0
         },
         {
           "id": "font-display",
-          "weight": 0,
-          "group": "diagnostics"
+          "weight": 0
+        },
+        {
+          "id": "resource-summary",
+          "weight": 0
+        },
+        {
+          "id": "third-party-summary",
+          "weight": 0
+        },
+        {
+          "id": "third-party-facades",
+          "weight": 0
+        },
+        {
+          "id": "largest-contentful-paint-element",
+          "weight": 0
+        },
+        {
+          "id": "lcp-lazy-loaded",
+          "weight": 0
+        },
+        {
+          "id": "layout-shift-elements",
+          "weight": 0
+        },
+        {
+          "id": "uses-passive-event-listeners",
+          "weight": 0
+        },
+        {
+          "id": "no-document-write",
+          "weight": 0
+        },
+        {
+          "id": "long-tasks",
+          "weight": 0
+        },
+        {
+          "id": "non-composited-animations",
+          "weight": 0
+        },
+        {
+          "id": "unsized-images",
+          "weight": 0
+        },
+        {
+          "id": "viewport",
+          "weight": 0
         },
         {
           "id": "performance-budget",
@@ -6233,100 +6256,49 @@
           "group": "budgets"
         },
         {
-          "id": "resource-summary",
-          "weight": 0,
-          "group": "diagnostics"
-        },
-        {
-          "id": "third-party-summary",
-          "weight": 0,
-          "group": "diagnostics"
-        },
-        {
-          "id": "third-party-facades",
-          "weight": 0,
-          "group": "diagnostics"
-        },
-        {
-          "id": "largest-contentful-paint-element",
-          "weight": 0,
-          "group": "diagnostics"
-        },
-        {
-          "id": "lcp-lazy-loaded",
-          "weight": 0,
-          "group": "diagnostics"
-        },
-        {
-          "id": "layout-shift-elements",
-          "weight": 0,
-          "group": "diagnostics"
-        },
-        {
-          "id": "uses-passive-event-listeners",
-          "weight": 0,
-          "group": "diagnostics"
-        },
-        {
-          "id": "no-document-write",
-          "weight": 0,
-          "group": "diagnostics"
-        },
-        {
-          "id": "long-tasks",
-          "weight": 0,
-          "group": "diagnostics"
-        },
-        {
-          "id": "non-composited-animations",
-          "weight": 0,
-          "group": "diagnostics"
-        },
-        {
-          "id": "unsized-images",
-          "weight": 0,
-          "group": "diagnostics"
-        },
-        {
-          "id": "viewport",
-          "weight": 0,
-          "group": "diagnostics"
-        },
-        {
           "id": "network-requests",
-          "weight": 0
+          "weight": 0,
+          "group": "hidden"
         },
         {
           "id": "network-rtt",
-          "weight": 0
+          "weight": 0,
+          "group": "hidden"
         },
         {
           "id": "network-server-latency",
-          "weight": 0
+          "weight": 0,
+          "group": "hidden"
         },
         {
           "id": "main-thread-tasks",
-          "weight": 0
+          "weight": 0,
+          "group": "hidden"
         },
         {
           "id": "diagnostics",
-          "weight": 0
+          "weight": 0,
+          "group": "hidden"
         },
         {
           "id": "metrics",
-          "weight": 0
+          "weight": 0,
+          "group": "hidden"
         },
         {
           "id": "screenshot-thumbnails",
-          "weight": 0
+          "weight": 0,
+          "group": "hidden"
         },
         {
           "id": "final-screenshot",
-          "weight": 0
+          "weight": 0,
+          "group": "hidden"
         },
         {
           "id": "script-treemap-data",
-          "weight": 0
+          "weight": 0,
+          "group": "hidden"
         }
       ],
       "id": "performance",
@@ -6936,6 +6908,9 @@
     },
     "best-practices-general": {
       "title": "General"
+    },
+    "hidden": {
+      "title": ""
     }
   },
   "timing": {

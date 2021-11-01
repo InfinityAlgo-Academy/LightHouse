@@ -519,10 +519,9 @@ class Util {
     let totalWeight = 0;
     for (const auditRef of category.auditRefs) {
       const auditPassed = Util.showAsPassed(auditRef.result);
-      const notDisplayed = !auditRef.group && category.id === 'performance';
 
       // Don't count the audit if it's manual, N/A, or isn't displayed.
-      if (notDisplayed ||
+      if (auditRef.group === 'hidden' ||
           auditRef.result.scoreDisplayMode === 'manual' ||
           auditRef.result.scoreDisplayMode === 'notApplicable') {
         continue;
