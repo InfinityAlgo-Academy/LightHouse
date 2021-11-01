@@ -90,7 +90,7 @@ describe('ReportRenderer', () => {
       const output = renderer.renderReport(sampleResultsCopy, container);
 
       function isPWAGauge(el) {
-        return el.querySelector('.lh-gauge__label').textContent === 'Progressive Web App';
+        return el.querySelector('.lh-gauge__label').textContent === 'PWA';
       }
       function isPluginGauge(el) {
         return el.querySelector('.lh-gauge__label').textContent === 'Some Plugin';

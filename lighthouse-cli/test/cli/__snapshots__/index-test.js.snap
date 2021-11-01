@@ -1210,7 +1210,7 @@ Object {
       "supportedModes": Array [
         "navigation",
       ],
-      "title": "Progressive Web App",
+      "title": "PWA",
     },
     "seo": Object {
       "auditRefs": Array [
