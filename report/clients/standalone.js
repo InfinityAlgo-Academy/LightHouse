@@ -18,8 +18,6 @@ import {Logger} from '../renderer/logger.js';
 import {ReportRenderer} from '../renderer/report-renderer.js';
 import {ReportUIFeatures} from '../renderer/report-ui-features.js';
 
-// Used by standalone.html
-// eslint-disable-next-line no-unused-vars
 function __initLighthouseReport__() {
   const dom = new DOM(document);
   const renderer = new ReportRenderer(dom);

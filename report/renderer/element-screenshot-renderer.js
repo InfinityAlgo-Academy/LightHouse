@@ -51,7 +51,7 @@ function clamp(value, min, max) {
 /**
  * @param {Rect} rect
  */
-function getRectCenterPoint(rect) {
+function getElementRectCenterPoint(rect) {
   return {
     x: rect.left + rect.width / 2,
     y: rect.top + rect.height / 2,
@@ -68,7 +68,7 @@ export class ElementScreenshotRenderer {
    * @param {Size} screenshotSize
    */
   static getScreenshotPositions(elementRectSC, elementPreviewSizeSC, screenshotSize) {
-    const elementRectCenter = getRectCenterPoint(elementRectSC);
+    const elementRectCenter = getElementRectCenterPoint(elementRectSC);
 
     // Try to center clipped region.
     const screenshotLeftVisibleEdge = clamp(

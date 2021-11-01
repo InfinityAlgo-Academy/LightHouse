@@ -16,9 +16,12 @@ function rollupPluginTypeCoerce(module) {
   return module;
 }
 
+const alias = rollupPluginTypeCoerce(require('@rollup/plugin-alias'));
 const commonjs = rollupPluginTypeCoerce(require('@rollup/plugin-commonjs'));
+const json = rollupPluginTypeCoerce(require('@rollup/plugin-json'));
 const nodePolyfills = rollupPluginTypeCoerce(require('rollup-plugin-polyfill-node'));
 const {nodeResolve} = require('@rollup/plugin-node-resolve');
+const postprocess = require('@stadtlandnetz/rollup-plugin-postprocess');
 const replace = rollupPluginTypeCoerce(require('rollup-plugin-replace'));
 // @ts-expect-error: no published types.
 const shim = require('rollup-plugin-shim');
@@ -28,10 +31,13 @@ const typescript = rollupPluginTypeCoerce(require('@rollup/plugin-typescript'));
 const inlineFs = require('./plugins/rollup-plugin-inline-fs.js');
 
 module.exports = {
+  alias,
   commonjs,
   inlineFs,
+  json,
   nodePolyfills,
   nodeResolve,
+  postprocess,
   replace,
   shim,
   terser,

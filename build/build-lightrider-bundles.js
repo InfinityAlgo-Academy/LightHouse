@@ -23,15 +23,12 @@ const generatorFilename = `./report/generator/report-generator.js`;
 const entrySourceName = 'lightrider-entry.js';
 const entryDistName = 'lighthouse-lr-bundle.js';
 
-fs.mkdirSync(path.dirname(distDir), {recursive: true});
+fs.mkdirSync(distDir, {recursive: true});
 
-/**
- * Browserify and minify entry point.
- */
 function buildEntryPoint() {
   const inFile = `${sourceDir}/${entrySourceName}`;
   const outFile = `${distDir}/${entryDistName}`;
-  return bundleBuilder.build(inFile, outFile);
+  return bundleBuilder.build(inFile, outFile, {minify: false});
 }
 
 /**
