@@ -5,13 +5,12 @@
  */
 'use strict';
 
-const LanternInteractive = require('../../../computed/metrics/lantern-interactive.js');
-const assert = require('assert').strict;
-
-const trace = require('../../fixtures/traces/progressive-app-m60.json');
-const devtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
-const iframeTrace = require('../../fixtures/traces/iframe-m79.trace.json');
-const iframeDevtoolsLog = require('../../fixtures/traces/iframe-m79.devtoolslog.json');
+import LanternInteractive from '../../../computed/metrics/lantern-interactive.js';
+import {strict as assert} from 'assert';
+import trace from '../../fixtures/traces/progressive-app-m60.json';
+import devtoolsLog from '../../fixtures/traces/progressive-app-m60.devtools.log.json';
+import iframeTrace from '../../fixtures/traces/iframe-m79.trace.json';
+import iframeDevtoolsLog from '../../fixtures/traces/iframe-m79.devtoolslog.json';
 
 /* eslint-env jest */
 

@@ -5,10 +5,10 @@
  */
 'use strict';
 
-const TotalBlockingTime = require('../../../computed/metrics/total-blocking-time.js');
-const trace = require('../../fixtures/traces/progressive-app-m60.json');
-const devtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
-const {calculateSumOfBlockingTime} = require('../../../computed/metrics/tbt-utils.js');
+import TotalBlockingTime from '../../../computed/metrics/total-blocking-time.js';
+import trace from '../../fixtures/traces/progressive-app-m60.json';
+import devtoolsLog from '../../fixtures/traces/progressive-app-m60.devtools.log.json';
+import {calculateSumOfBlockingTime} from '../../../computed/metrics/tbt-utils.js';
 
 /* eslint-env jest */
 

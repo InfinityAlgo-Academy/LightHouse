@@ -7,11 +7,13 @@
 
 /* eslint-env jest */
 
-const ManifestValues = require('../../computed/manifest-values.js');
-const assert = require('assert').strict;
+import {strict as assert} from 'assert';
+import {readJson} from '../../../root.js';
 
-const manifestSrc = JSON.stringify(require('../fixtures/manifest.json'));
-const manifestParser = require('../../lib/manifest-parser.js');
+import ManifestValues from '../../computed/manifest-values.js';
+import manifestParser from '../../lib/manifest-parser.js';
+
+const manifestSrc = JSON.stringify(readJson('lighthouse-core/test/fixtures/manifest.json'));
 
 function getMockContext() {
   return {

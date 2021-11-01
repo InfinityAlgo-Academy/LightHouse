@@ -5,10 +5,10 @@
  */
 'use strict';
 
-const FirstContentfulPaintAllFrames = require('../../../computed/metrics/first-contentful-paint-all-frames.js'); // eslint-disable-line max-len
-const FirstContentfulPaint = require('../../../computed/metrics/first-contentful-paint.js'); // eslint-disable-line max-len
-const trace = require('../../fixtures/traces/frame-metrics-m89.json');
-const devtoolsLog = require('../../fixtures/traces/frame-metrics-m89.devtools.log.json');
+import FirstContentfulPaintAllFrames from '../../../computed/metrics/first-contentful-paint-all-frames.js'; // eslint-disable-line max-len
+import FirstContentfulPaint from '../../../computed/metrics/first-contentful-paint.js'; // eslint-disable-line max-len
+import trace from '../../fixtures/traces/frame-metrics-m89.json';
+import devtoolsLog from '../../fixtures/traces/frame-metrics-m89.devtools.log.json';
 
 /* eslint-env jest */
 

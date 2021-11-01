@@ -6,9 +6,10 @@
 'use strict';
 
 /* eslint-env jest */
-const Screenshots = require('../../computed/screenshots.js');
-const assert = require('assert').strict;
-const pwaTrace = require('../fixtures/traces/progressive-app.json');
+import Screenshots from '../../computed/screenshots.js';
+
+import {strict as assert} from 'assert';
+import pwaTrace from '../fixtures/traces/progressive-app.json';
 
 describe('Screenshot computed artifact', () => {
   it('returns an artifact for a real trace', () => {

@@ -5,11 +5,10 @@
  */
 'use strict';
 
-const assert = require('assert').strict;
-
-const FirstContentfulPaint = require('../../../computed/metrics/first-contentful-paint.js'); // eslint-disable-line max-len
-const trace = require('../../fixtures/traces/progressive-app-m60.json');
-const devtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
+import {strict as assert} from 'assert';
+import FirstContentfulPaint from '../../../computed/metrics/first-contentful-paint.js'; // eslint-disable-line max-len
+import trace from '../../fixtures/traces/progressive-app-m60.json';
+import devtoolsLog from '../../fixtures/traces/progressive-app-m60.devtools.log.json';
 
 /* eslint-env jest */
 

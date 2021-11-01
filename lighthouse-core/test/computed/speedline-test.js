@@ -7,11 +7,12 @@
 
 /* eslint-env jest */
 
-const assert = require('assert').strict;
-const fs = require('fs');
-const pwaTrace = require('../fixtures/traces/progressive-app.json');
-const threeFrameTrace = require('../fixtures/traces/threeframes-blank_content_more.json');
-const Speedline = require('../../computed/speedline.js');
+import {strict as assert} from 'assert';
+
+import pwaTrace from '../fixtures/traces/progressive-app.json';
+import threeFrameTrace from '../fixtures/traces/threeframes-blank_content_more.json';
+import Speedline from '../../computed/speedline.js';
+import {readJson} from '../../../root.js';
 
 describe('Speedline gatherer', () => {
   it('returns an error message on faulty trace data', () => {
@@ -52,14 +53,12 @@ describe('Speedline gatherer', () => {
 
   it('does not change order of events in traces', () => {
     // Use fresh trace in case it has been altered by other require()s.
-    const pwaJson = fs.readFileSync(__dirname +
-        '/../fixtures/traces/progressive-app.json', 'utf8');
-    const pwaTrace = JSON.parse(pwaJson);
+    const pwaTrace = readJson('lighthouse-core/test/fixtures/traces/progressive-app.json');
     const context = {computedCache: new Map()};
     return Speedline.request({traceEvents: pwaTrace}, context)
       .then(_ => {
         // assert.deepEqual has issue with diffing large array, so manually loop.
-        const freshTrace = JSON.parse(pwaJson);
+        const freshTrace = readJson('lighthouse-core/test/fixtures/traces/progressive-app.json');
         assert.strictEqual(pwaTrace.length, freshTrace.length);
         for (let i = 0; i < pwaTrace.length; i++) {
           assert.deepStrictEqual(pwaTrace[i], freshTrace[i]);

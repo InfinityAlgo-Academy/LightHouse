@@ -7,10 +7,11 @@
 
 /* eslint-env jest */
 
-const assert = require('assert').strict;
-const devtoolsLog = require('../fixtures/traces/progressive-app-m60.devtools.log.json');
-const LoadSimulator = require('../../computed/load-simulator.js');
-const NetworkNode = require('../../lib/dependency-graph/network-node.js');
+import {strict as assert} from 'assert';
+
+import devtoolsLog from '../fixtures/traces/progressive-app-m60.devtools.log.json';
+import LoadSimulator from '../../computed/load-simulator.js';
+import NetworkNode from '../../lib/dependency-graph/network-node.js';
 
 function createNetworkNode() {
   return new NetworkNode({

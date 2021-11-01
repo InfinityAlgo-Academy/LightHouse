@@ -5,14 +5,12 @@
  */
 'use strict';
 
-const PageDependencyGraph = require('../../computed/page-dependency-graph.js');
-const BaseNode = require('../../lib/dependency-graph/base-node.js');
-const NetworkRequest = require('../../lib/network-request.js');
-
-const sampleTrace = require('../fixtures/traces/progressive-app-m60.json');
-const sampleDevtoolsLog = require('../fixtures/traces/progressive-app-m60.devtools.log.json');
-
-const assert = require('assert').strict;
+import PageDependencyGraph from '../../computed/page-dependency-graph.js';
+import BaseNode from '../../lib/dependency-graph/base-node.js';
+import NetworkRequest from '../../lib/network-request.js';
+import sampleTrace from '../fixtures/traces/progressive-app-m60.json';
+import sampleDevtoolsLog from '../fixtures/traces/progressive-app-m60.devtools.log.json';
+import {strict as assert} from 'assert';
 
 function createRequest(
   requestId,

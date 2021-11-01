@@ -5,11 +5,10 @@
  */
 'use strict';
 
-const assert = require('assert').strict;
-
-const MaxPotentialFID = require('../../../computed/metrics/max-potential-fid.js');
-const trace = require('../../fixtures/traces/progressive-app-m60.json');
-const devtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
+import {strict as assert} from 'assert';
+import MaxPotentialFID from '../../../computed/metrics/max-potential-fid.js';
+import trace from '../../fixtures/traces/progressive-app-m60.json';
+import devtoolsLog from '../../fixtures/traces/progressive-app-m60.devtools.log.json';
 
 /* eslint-env jest */
 

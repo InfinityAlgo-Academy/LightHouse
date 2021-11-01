@@ -5,19 +5,21 @@
  */
 'use strict';
 
-const FirstMeaningfulPaint = require('../../../computed/metrics/first-meaningful-paint.js');
-const assert = require('assert').strict;
-
-const TRACE_FIXTURES = '../../fixtures/traces';
-const pwaTrace = require(`${TRACE_FIXTURES}/progressive-app-m60.json`);
-const pwaDevtoolsLog = require(`${TRACE_FIXTURES}/progressive-app-m60.devtools.log.json`);
-
-const badNavStartTrace = require(`${TRACE_FIXTURES}/bad-nav-start-ts.json`);
-const lateTracingStartedTrace = require(`${TRACE_FIXTURES}/tracingstarted-after-navstart.json`);
-const preactTrace = require(`${TRACE_FIXTURES}/preactjs.com_ts_of_undefined.json`);
-const noFMPtrace = require(`${TRACE_FIXTURES}/no_fmp_event.json`);
-
 /* eslint-env jest */
+
+import FirstMeaningfulPaint from '../../../computed/metrics/first-meaningful-paint.js';
+import {strict as assert} from 'assert';
+import {readJson} from '../../../../root.js';
+
+/* eslint-disable max-len */
+const TRACE_FIXTURES = '../../fixtures/traces';
+const pwaTrace = readJson(`${TRACE_FIXTURES}/progressive-app-m60.json`, import.meta);
+const pwaDevtoolsLog = readJson(`${TRACE_FIXTURES}/progressive-app-m60.devtools.log.json`, import.meta);
+const badNavStartTrace = readJson(`${TRACE_FIXTURES}/bad-nav-start-ts.json`, import.meta);
+const lateTracingStartedTrace = readJson(`${TRACE_FIXTURES}/tracingstarted-after-navstart.json`, import.meta);
+const preactTrace = readJson(`${TRACE_FIXTURES}/preactjs.com_ts_of_undefined.json`, import.meta);
+const noFMPtrace = readJson(`${TRACE_FIXTURES}/no_fmp_event.json`, import.meta);
+/* eslint-enable max-len */
 
 describe('Metrics: FMP', () => {
   const gatherContext = {gatherMode: 'navigation'};

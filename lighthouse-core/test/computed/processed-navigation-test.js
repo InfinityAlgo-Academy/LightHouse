@@ -7,11 +7,12 @@
 
 /* eslint-env jest */
 
-const ProcessedTrace = require('../../computed/processed-trace.js');
-const ProcessedNavigation = require('../../computed/processed-navigation.js');
-const pwaTrace = require('../fixtures/traces/progressive-app-m60.json');
-const noFCPtrace = require('../fixtures/traces/airhorner_no_fcp.json');
-const noNavStartTrace = require('../fixtures/traces/no_navstart_event.json');
+import ProcessedTrace from '../../computed/processed-trace.js';
+
+import ProcessedNavigation from '../../computed/processed-navigation.js';
+import pwaTrace from '../fixtures/traces/progressive-app-m60.json';
+import noFCPtrace from '../fixtures/traces/airhorner_no_fcp.json';
+import noNavStartTrace from '../fixtures/traces/no_navstart_event.json';
 
 describe('ProcessedTrace', () => {
   it('computes the artifact', async () => {

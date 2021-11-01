@@ -7,9 +7,9 @@
 
 /* eslint-env jest */
 
-const assert = require('assert').strict;
+import {strict as assert} from 'assert';
 
-const makeComputedArtifact = require('../../computed/computed-artifact.js');
+import makeComputedArtifact from '../../computed/computed-artifact.js';
 
 describe('ComputedArtifact base class', () => {
   it('caches computed artifacts by strict equality', async () => {

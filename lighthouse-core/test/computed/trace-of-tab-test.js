@@ -7,8 +7,9 @@
 
 /* eslint-env jest */
 
-const TraceOfTab = require('../../computed/trace-of-tab.js');
-const pwaTrace = require('../fixtures/traces/progressive-app-m60.json');
+import TraceOfTab from '../../computed/trace-of-tab.js';
+
+import pwaTrace from '../fixtures/traces/progressive-app-m60.json';
 
 describe('TraceOfTab', () => {
   it('computes the artifact', async () => {

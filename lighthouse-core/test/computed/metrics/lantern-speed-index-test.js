@@ -5,11 +5,17 @@
  */
 'use strict';
 
-const defaultThrottling = require('../../../config/constants.js').throttling.mobileSlow4G;
-const LanternSpeedIndex = require('../../../computed/metrics/lantern-speed-index.js');
+import constants from '../../../config/constants.js';
+import LanternSpeedIndex from '../../../computed/metrics/lantern-speed-index.js';
+import {readJson} from '../../../../root.js';
 
-const trace = require('../../fixtures/traces/progressive-app-m60.json');
-const devtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
+const defaultThrottling = constants.throttling.mobileSlow4G;
+
+/* eslint-disable max-len */
+const TRACE_FIXTURES = '../../fixtures/traces';
+const trace = readJson(`${TRACE_FIXTURES}/progressive-app-m60.json`, import.meta);
+const devtoolsLog = readJson(`${TRACE_FIXTURES}/progressive-app-m60.devtools.log.json`, import.meta);
+/* eslint-enable max-len */
 
 /* eslint-env jest */
 describe('Metrics: Lantern Speed Index', () => {

@@ -7,8 +7,9 @@
 
 /* eslint-env jest */
 
-const assert = require('assert').strict;
-const ViewportMeta = require('../../computed/viewport-meta.js');
+import {strict as assert} from 'assert';
+
+import ViewportMeta from '../../computed/viewport-meta.js';
 
 describe('ViewportMeta computed artifact', () => {
   const makeMetaElements = viewport => [{name: 'viewport', content: viewport}];

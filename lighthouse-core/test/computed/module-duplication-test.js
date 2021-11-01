@@ -7,8 +7,9 @@
 
 /* eslint-env jest */
 
-const ModuleDuplication = require('../../computed/module-duplication.js');
-const {loadSourceMapFixture} = require('../test-utils.js');
+import ModuleDuplication from '../../computed/module-duplication.js';
+
+import {loadSourceMapFixture} from '../test-utils.js';
 
 describe('ModuleDuplication computed artifact', () => {
   it('works (simple)', async () => {

@@ -5,15 +5,14 @@
  */
 'use strict';
 
-const assert = require('assert').strict;
-
-const LargestContentfulPaintAllFrames = require('../../../computed/metrics/largest-contentful-paint-all-frames.js'); // eslint-disable-line max-len
-const traceAllFrames = require('../../fixtures/traces/frame-metrics-m89.json');
-const devtoolsLogAllFrames = require('../../fixtures/traces/frame-metrics-m89.devtools.log.json');
-const traceMainFrame = require('../../fixtures/traces/lcp-m78.json');
-const devtoolsLogMainFrame = require('../../fixtures/traces/lcp-m78.devtools.log.json');
-const invalidTrace = require('../../fixtures/traces/progressive-app-m60.json');
-const invalidDevtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
+import {strict as assert} from 'assert';
+import LargestContentfulPaintAllFrames from '../../../computed/metrics/largest-contentful-paint-all-frames.js'; // eslint-disable-line max-len
+import traceAllFrames from '../../fixtures/traces/frame-metrics-m89.json';
+import devtoolsLogAllFrames from '../../fixtures/traces/frame-metrics-m89.devtools.log.json';
+import traceMainFrame from '../../fixtures/traces/lcp-m78.json';
+import devtoolsLogMainFrame from '../../fixtures/traces/lcp-m78.devtools.log.json';
+import invalidTrace from '../../fixtures/traces/progressive-app-m60.json';
+import invalidDevtoolsLog from '../../fixtures/traces/progressive-app-m60.devtools.log.json';
 
 /* eslint-env jest */
 

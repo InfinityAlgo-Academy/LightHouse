@@ -5,11 +5,10 @@
  */
 'use strict';
 
-const LanternFirstContentfulPaint = require('../../../computed/metrics/lantern-first-contentful-paint.js'); // eslint-disable-line max-len
-const assert = require('assert').strict;
-
-const trace = require('../../fixtures/traces/progressive-app-m60.json');
-const devtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
+import LanternFirstContentfulPaint from '../../../computed/metrics/lantern-first-contentful-paint.js'; // eslint-disable-line max-len
+import {strict as assert} from 'assert';
+import trace from '../../fixtures/traces/progressive-app-m60.json';
+import devtoolsLog from '../../fixtures/traces/progressive-app-m60.devtools.log.json';
 
 /* eslint-env jest */
 describe('Metrics: Lantern FCP', () => {
