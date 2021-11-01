@@ -24,8 +24,17 @@ describe('FlowStepThumbnail', () => {
         'full-page-screenshot': {
           details: {
             type: 'full-page-screenshot',
-            screenshot: {data: 'baef01', width: 400, height: 600},
+            screenshot: {data: 'FPS', width: 400, height: 600},
             nodes: {},
+          },
+        },
+        'screenshot-thumbnails': {
+          details: {
+            type: 'filmstrip',
+            items: [
+              {data: 'frame1'},
+              {data: 'frame2'},
+            ],
           },
         },
       },
@@ -63,17 +72,23 @@ describe('FlowStepThumbnail', () => {
     expect(thumbnail.style.height).toEqual('150px');
   });
 
+  it('uses last filmstrip thumbnail', () => {
+    const root = render(<FlowStepThumbnail lhr={lhr} height={150} />);
+
+    const thumbnail = root.getByAltText(/Screenshot/) as HTMLImageElement;
+    expect(thumbnail.src).toContain('frame2');
+  });
+
+  it('uses full page screenshot if filmstrip unavailable', () => {
+    delete lhr.audits['screenshot-thumbnails'];
+    const root = render(<FlowStepThumbnail lhr={lhr} height={150} />);
+
+    const thumbnail = root.getByAltText(/Screenshot/) as HTMLImageElement;
+    expect(thumbnail.src).toContain('FPS');
+  });
+
   it('renders animated thumbnail for timespan', async () => {
     lhr.gatherMode = 'timespan';
-    lhr.audits['screenshot-thumbnails'] = {
-      details: {
-        type: 'filmstrip',
-        items: [
-          {data: 'frame1'},
-          {data: 'frame2'},
-        ],
-      },
-    } as any;
     const root = render(<FlowStepThumbnail lhr={lhr} height={150} />);
 
     const thumbnail = root.getByAltText(/Animated/) as HTMLImageElement;

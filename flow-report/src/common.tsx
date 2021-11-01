@@ -76,7 +76,7 @@ export const FlowStepThumbnail: FunctionComponent<{
   width?: number,
   height?: number,
 }> = ({lhr, width, height}) => {
-  const screenshot = getFullPageScreenshot(lhr);
+  const fullPageScreenshot = getFullPageScreenshot(lhr);
   const frames = getFilmstripFrames(lhr);
 
   // Resize the image to fit the viewport aspect ratio.
@@ -92,16 +92,22 @@ export const FlowStepThumbnail: FunctionComponent<{
     return <></>;
   }
 
-  if (lhr.gatherMode === 'timespan' && frames && frames.length) {
-    return <FlowStepAnimatedThumbnail frames={frames} width={width} height={height} />;
+  let thumbnail;
+  if (frames && frames.length) {
+    thumbnail = frames[frames.length - 1].data;
+    if (lhr.gatherMode === 'timespan') {
+      return <FlowStepAnimatedThumbnail frames={frames} width={width} height={height} />;
+    }
+  } else {
+    thumbnail = fullPageScreenshot?.screenshot.data;
   }
 
   return <>
     {
-      screenshot &&
+      thumbnail &&
         <img
           className="FlowStepThumbnail"
-          src={screenshot.screenshot.data}
+          src={thumbnail}
           style={{width, height}}
           alt="Screenshot of a page tested by Lighthouse"
         />
