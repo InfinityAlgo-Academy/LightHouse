@@ -24,7 +24,7 @@
     "build-smokehouse-bundle": "node ./build/build-smokehouse-bundle.js",
     "build-lr": "yarn reset-link && node ./build/build-lightrider-bundles.js",
     "build-pack": "bash build/build-pack.sh",
-    "build-report": "node build/build-report-components.js && yarn eslint --fix report/renderer/components.js && node build/build-report.js && bash lighthouse-core/scripts/copy-util-commonjs.sh",
+    "build-report": "node build/build-report-components.js && yarn eslint --fix report/renderer/components.js && bash lighthouse-core/scripts/copy-util-commonjs.sh && node build/build-report.js",
     "build-sample-reports": "yarn build-report && node build/build-sample-reports.js",
     "build-treemap": "node ./build/build-treemap.js",
     "build-viewer": "node ./build/build-viewer.js",

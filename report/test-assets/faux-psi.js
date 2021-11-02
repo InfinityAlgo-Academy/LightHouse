@@ -101,15 +101,15 @@ async function decorateScreenshot(datauri, tabId) {
     img.src = datauri;
   });
   const c = document.createElement('canvas');
-  c.width = img.width;
-  c.height = img.height;
+  c.width = tabId === 'desktop' ? 280 : img.width;
+  c.height = tabId === 'desktop' ? 194 : img.height;
 
   const ctx = c.getContext('2d');
   if (!ctx) throw new Error();
-  ctx.drawImage(img, 0, 0);
-  ctx.font = `${img.width / 2}px serif`;
+  ctx.drawImage(img, 0, 0, c.width, c.height);
+  ctx.font = `${c.width / 2}px serif`;
   ctx.textAlign = 'center';
   ctx.globalAlpha = 0.7;
-  ctx.fillText(tabId === 'mobile' ? '📱' : '💻', img.width / 2, Math.min(img.height / 2, 700));
+  ctx.fillText(tabId === 'mobile' ? '📱' : '💻', c.width / 2, Math.min(c.height / 2, 700));
   return c.toDataURL();
 }

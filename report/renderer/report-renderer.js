@@ -268,6 +268,7 @@ export class ReportRenderer {
     }
 
     const scoreScale = this._dom.createElement('div');
+    scoreScale.classList.add('lh-scorescale-wrap');
     scoreScale.append(this._dom.createComponent('scorescale'));
     if (scoreHeader) {
       const scoresContainer = this._dom.find('.lh-scores-container', headerContainer);
@@ -287,7 +288,7 @@ export class ReportRenderer {
     for (const category of Object.values(report.categories)) {
       const renderer = specificCategoryRenderers[category.id] || categoryRenderer;
       // .lh-category-wrapper is full-width and provides horizontal rules between categories.
-      // .lh-category within has the max-width: var(--report-width);
+      // .lh-category within has the max-width: var(--report-content-width);
       const wrapper = renderer.dom.createChildOf(categories, 'div', 'lh-category-wrapper');
       wrapper.appendChild(renderer.render(
         category,
