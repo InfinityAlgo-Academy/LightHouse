@@ -37,7 +37,7 @@ describe('CLI flags', function() {
   it('settings are accepted from a file path', () => {
     const flags = getFlags([
       'http://www.example.com',
-      `--cli-flags-path="${LH_ROOT}/lighthouse-cli/test/fixtures/cli-flags-path.json"`,
+      `--cli-flags-path="${LH_ROOT}/cli/test/fixtures/cli-flags-path.json"`,
       '--budgets-path=path/to/my/budget-from-command-line.json', // this should override the config value
     ].join(' '));
 
@@ -90,7 +90,7 @@ describe('CLI flags', function() {
     });
 
     it('should read extra headers from file', () => {
-      const headersFile = `${LH_ROOT}/lighthouse-cli/test/fixtures/extra-headers/valid.json`;
+      const headersFile = `${LH_ROOT}/cli/test/fixtures/extra-headers/valid.json`;
       const headers = JSON.parse(fs.readFileSync(headersFile, 'utf-8'));
       const flags = getFlags([
         'http://www.example.com',

@@ -14,7 +14,7 @@
   ],
   "include": [
     "root.js",
-    "lighthouse-cli/**/*.js",
+    "cli/**/*.js",
     "lighthouse-core/**/*.js",
     "clients/**/*.js",
     "build/**/*.js",
@@ -36,7 +36,7 @@
     "lighthouse-core/test/fixtures/**/*.js",
     "lighthouse-core/test/computed/**/*.js",
     "clients/test/**/*.js",
-    "lighthouse-cli/test/fixtures/**/*.js",
+    "cli/test/fixtures/**/*.js",
     "lighthouse-core/scripts/legacy-javascript/variants",
     "lighthouse-core/test/chromium-web-tests/webtests",
     // These test files require further changes before they can be type checked.
@@ -110,7 +110,7 @@
   "files": [
     // Opt-in to typechecking for some core tests and test-support files.
     "lighthouse-core/test/audits/script-treemap-data-test.js",
-    "lighthouse-cli/test/fixtures/static-server.js",
+    "cli/test/fixtures/static-server.js",
     "lighthouse-core/test/fixtures/config-plugins/lighthouse-plugin-simple/plugin-simple.js",
   ],
 }

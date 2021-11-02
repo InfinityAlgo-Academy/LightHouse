@@ -20,7 +20,7 @@ const Config = require('./config/config.js');
  *   runner.js - marshalls the actions that must be taken (Gather / Audit)
  *               config file is used to determine which of these actions are needed
  *
- *         lighthouse-cli \
+ *         cli \
  *                         -- core/index.js ----> runner.js ----> [Gather / Audit]
  *                clients /
  */

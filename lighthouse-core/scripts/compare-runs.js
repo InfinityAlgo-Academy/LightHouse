@@ -164,7 +164,7 @@ async function gather() {
       if (fs.existsSync(gatherDir)) continue;
 
       await execFile('node', [
-        `${LH_ROOT}/lighthouse-cli`,
+        `${LH_ROOT}/cli`,
         url,
         `--gather-mode=${gatherDir}`,
         argv.lhFlags,
@@ -197,7 +197,7 @@ async function audit() {
 
       try {
         const args = [
-          `${LH_ROOT}/lighthouse-cli`,
+          `${LH_ROOT}/cli`,
           url,
           `--audit-mode=${gatherDir}`,
           `--output-path=${outputPath}`,

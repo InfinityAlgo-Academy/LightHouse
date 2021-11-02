@@ -37,7 +37,7 @@ A PR for a new audit or changing an existing audit almost always needs the follo
 
 1. **Unit tests**: in the matching test file (e.g. tests for `lighthouse-core/audits/my-swell-audit.js` go in `lighthouse-core/test/audits/my-swell-audit-test.js`).
 
-1. **Smoke (end-to-end) tests**: search through the [existing test expectations](lighthouse-cli/test/smokehouse/test-definitions/) to see if there's a logical place to add a check for your change, or (as a last resort) add a new smoke test.
+1. **Smoke (end-to-end) tests**: search through the [existing test expectations](cli/test/smokehouse/test-definitions/) to see if there's a logical place to add a check for your change, or (as a last resort) add a new smoke test.
 
 1. Run `yarn update:sample-json` to update the [sample Lighthouse result JSON](lighthouse-core/test/results/sample_v2.json) kept in the repo for testing. This will also pull any strings needed for localization into the correct files.
 
@@ -74,7 +74,7 @@ A PR adding or changing a gatherer almost always needs to include the following:
 
    As a result, we mostly rely on smoke testing for gatherers. However, if there are parts of a gatherer that naturally lend themselves to unit testing, the new tests would go in the matching test file (e.g. tests for `lighthouse-core/gather/gatherers/reap.js` go in `lighthouse-core/test/gather/gatherers/reap-test.js`).
 
-1. **Smoke (end-to-end) tests**: search through the [existing test expectations](lighthouse-cli/test/smokehouse/test-definitions/) to see if there's a logical place to add a check for your change, or (as a last resort) add a new smoke test if one is required.
+1. **Smoke (end-to-end) tests**: search through the [existing test expectations](cli/test/smokehouse/test-definitions/) to see if there's a logical place to add a check for your change, or (as a last resort) add a new smoke test if one is required.
 
    It's most important to get true end-to-end coverage, so be sure that audits that consume the new gatherer output are in the expectations. Artifacts can also have expectations for those intermediate results.
 

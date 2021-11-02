@@ -98,7 +98,7 @@ async function startWptTest(url) {
 async function runUnthrottledLocally(url) {
   const artifactsFolder = `${LH_ROOT}/.tmp/collect-traces-artifacts`;
   const {stdout} = await execFileAsync('node', [
-    `${LH_ROOT}/lighthouse-cli`,
+    `${LH_ROOT}/cli`,
     url,
     '--throttling-method=provided',
     '--output=json',

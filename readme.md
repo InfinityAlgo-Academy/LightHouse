@@ -69,7 +69,7 @@ By default, Lighthouse writes the report to an HTML file. You can control the ou
 ### CLI options
 
 <!-- To update the help output:
-  node lighthouse-cli --help | pbcopy
+  node cli --help | pbcopy
 -->
 
 ```
@@ -283,11 +283,11 @@ yarn build-all
 ### Run
 
 ```sh
-node lighthouse-cli http://example.com
+yarn start http://example.com
 # append --chrome-flags="--no-sandbox --headless --disable-gpu" if you run into problems connecting to Chrome
 ```
 
-> **Getting started tip**: `node --inspect-brk lighthouse-cli http://example.com` to open up Chrome DevTools and step
+> **Getting started tip**: `node --inspect-brk cli http://example.com` to open up Chrome DevTools and step
 through the entire app. See [Debugging Node.js with Chrome
 DevTools](https://medium.com/@paul_irish/debugging-node-js-nightlies-with-chrome-devtools-7c4a1b95ae27#.59rma3ukm)
 for more info.

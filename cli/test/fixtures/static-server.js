@@ -25,7 +25,7 @@ import {LH_ROOT} from '../../../root.js';
 const HEADER_SAFELIST = new Set(['x-robots-tag', 'link', 'content-security-policy']);
 
 class Server {
-  baseDir = `${LH_ROOT}/lighthouse-cli/test/fixtures`;
+  baseDir = `${LH_ROOT}/cli/test/fixtures`;
 
   constructor() {
     this._server = http.createServer(this._requestHandler.bind(this));

@@ -9,7 +9,7 @@ import fs from 'fs';
 import {LH_ROOT} from '../../../../../root.js';
 
 const mapJson =
-  fs.readFileSync(`${LH_ROOT}/lighthouse-cli/test/fixtures/source-map/script.js.map`, 'utf-8');
+  fs.readFileSync(`${LH_ROOT}/cli/test/fixtures/source-map/script.js.map`, 'utf-8');
 const map = JSON.parse(mapJson);
 
 /**

@@ -12,7 +12,7 @@ import fs from 'fs';
 import {jest} from '@jest/globals';
 import puppeteer from 'puppeteer';
 
-import {server} from '../../lighthouse-cli/test/fixtures/static-server.js';
+import {server} from '../../cli/test/fixtures/static-server.js';
 import {LH_ROOT} from '../../root.js';
 
 const debugOptions = JSON.parse(

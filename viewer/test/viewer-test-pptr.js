@@ -13,7 +13,7 @@ import assert from 'assert';
 import {jest} from '@jest/globals';
 import puppeteer from 'puppeteer';
 
-import {server} from '../../lighthouse-cli/test/fixtures/static-server.js';
+import {server} from '../../cli/test/fixtures/static-server.js';
 import defaultConfig from '../../lighthouse-core/config/default-config.js';
 import {LH_ROOT} from '../../root.js';
 import {getCanonicalLocales} from '../../shared/localization/format.js';

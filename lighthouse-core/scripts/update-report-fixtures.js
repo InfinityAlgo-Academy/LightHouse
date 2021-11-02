@@ -7,10 +7,10 @@
 
 import fs from 'fs';
 
-import * as cli from '../../lighthouse-cli/run.js';
-import * as cliFlags from '../../lighthouse-cli/cli-flags.js';
+import * as cli from '../../cli/run.js';
+import * as cliFlags from '../../cli/cli-flags.js';
 import assetSaver from '../lib/asset-saver.js';
-import {server} from '../../lighthouse-cli/test/fixtures/static-server.js';
+import {server} from '../../cli/test/fixtures/static-server.js';
 import budgetedConfig from '../test/results/sample-config.js';
 import {LH_ROOT} from '../../root.js';
 

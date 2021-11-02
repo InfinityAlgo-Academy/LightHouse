@@ -7,9 +7,9 @@
 
 import {beforeAll, beforeEach, afterAll, afterEach} from '@jest/globals';
 import puppeteer from 'puppeteer';
-import {Server} from '../../../../lighthouse-cli/test/fixtures/static-server.js';
+import {Server} from '../../../../cli/test/fixtures/static-server.js';
 
-/** @typedef {InstanceType<typeof import('../../../../lighthouse-cli/test/fixtures/static-server.js').Server>} StaticServer */
+/** @typedef {InstanceType<typeof import('../../../../cli/test/fixtures/static-server.js').Server>} StaticServer */
 
 /**
  * Some audits can be notApplicable based on machine timing information.

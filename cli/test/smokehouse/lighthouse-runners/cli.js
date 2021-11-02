@@ -72,7 +72,7 @@ async function internalRun(url, tmpPath, configJson, options) {
   const artifactsDirectory = `${tmpPath}/artifacts/`;
 
   const args = [
-    `${LH_ROOT}/lighthouse-cli/index.js`,
+    `${LH_ROOT}/cli/index.js`,
     `${url}`,
     `--output-path=${outputPath}`,
     '--output=json',

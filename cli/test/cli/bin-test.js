@@ -109,7 +109,7 @@ describe('CLI bin', function() {
 
     it('should load the config from the path (es modules)', async () => {
       const configPath =
-        `${LH_ROOT}/lighthouse-cli/test/smokehouse/test-definitions/a11y/a11y-config.js`;
+        `${LH_ROOT}/cli/test/smokehouse/test-definitions/a11y/a11y-config.js`;
       cliFlags = {...cliFlags, configPath: configPath};
       const actualConfig = (await import(configPath)).default;
       await bin.begin();
@@ -181,7 +181,7 @@ describe('CLI bin', function() {
 
   describe('precomputedLanternData', () => {
     it('should read lantern data from file', async () => {
-      const lanternDataFile = `${LH_ROOT}/lighthouse-cli/test/fixtures/lantern-data.json`;
+      const lanternDataFile = `${LH_ROOT}/cli/test/fixtures/lantern-data.json`;
       cliFlags = {...cliFlags, precomputedLanternDataPath: lanternDataFile};
       await bin.begin();
 
@@ -192,7 +192,7 @@ describe('CLI bin', function() {
     });
 
     it('should throw when invalid lantern data used', async () => {
-      const headersFile = `${LH_ROOT}/lighthouse-cli/test/fixtures/extra-headers/valid.json`;
+      const headersFile = `${LH_ROOT}/cli/test/fixtures/extra-headers/valid.json`;
       cliFlags = {...cliFlags, precomputedLanternDataPath: headersFile};
       await expect(bin.begin()).rejects.toBeTruthy();
     });

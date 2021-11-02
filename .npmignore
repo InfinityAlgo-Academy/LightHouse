@@ -16,7 +16,7 @@ lighthouse-core/third_party/src/
 viewer/
 treemap/
 clients/
-lighthouse-cli/results/
+cli/results/
 lighthouse-logger/
 
 # keep a few scripts useful for CI
@@ -25,9 +25,9 @@ lighthouse-logger/
 
 # Exclude the CLI smoketests but keep the smoketest runner that is used
 # by downstream projects (e.g. publisher ads).
-lighthouse-cli/test/*
-!lighthouse-cli/test/smokehouse/
-lighthouse-cli/test/smokehouse/test-definitions/
+cli/test/*
+!cli/test/smokehouse/
+cli/test/smokehouse/test-definitions/
 
 results/
 lantern-data/

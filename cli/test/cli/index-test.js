@@ -12,7 +12,7 @@ import {spawnSync} from 'child_process';
 
 import {LH_ROOT} from '../../../root.js';
 
-const indexPath = `${LH_ROOT}/lighthouse-cli/index.js`;
+const indexPath = `${LH_ROOT}/cli/index.js`;
 
 describe('CLI Tests', function() {
   it('fails if a url is not provided', () => {
@@ -69,7 +69,7 @@ describe('CLI Tests', function() {
     it('should exit with a error if the file does not contain valid JSON', () => {
       const ret = spawnSync('node', [indexPath, 'https://www.google.com',
         '--extra-headers',
-        `${LH_ROOT}/lighthouse-cli/test/fixtures/extra-headers/invalid.txt`], {encoding: 'utf8'});
+        `${LH_ROOT}/cli/test/fixtures/extra-headers/invalid.txt`], {encoding: 'utf8'});
 
       assert.ok(ret.stderr.includes('Unexpected token'));
       assert.equal(ret.status, 1);

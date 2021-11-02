@@ -13,7 +13,7 @@ lcov.info
 .nyc_output
 *.lcov
 
-lighthouse-cli/results
+cli/results
 results.html
 last-run-results.html
 
