@@ -8,6 +8,10 @@
     "chrome-debug": "./lighthouse-core/scripts/manual-chrome-launcher.js",
     "smokehouse": "./cli/test/smokehouse/frontends/smokehouse-bin.js"
   },
+  "exports": {
+    ".": "./lighthouse-core/index.js",
+    "./lighthouse-cli/*": "./cli/*"
+  },
   "engines": {
     "node": ">=14.15"
   },
