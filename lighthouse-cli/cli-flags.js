@@ -156,7 +156,7 @@ function getFlags(manualArgv, options = {}) {
         },
         'hostname': {
           type: 'string',
-          default: 'localhost',
+          default: '127.0.0.1',
           describe: 'The hostname to use for the debugging protocol.',
         },
         'form-factor': {
