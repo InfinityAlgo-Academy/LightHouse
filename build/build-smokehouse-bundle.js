@@ -34,6 +34,7 @@ async function build() {
     file: bundleOutFile,
     format: 'commonjs',
   });
+  await bundle.close();
 }
 
 build();

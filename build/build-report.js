@@ -53,6 +53,7 @@ async function buildStandaloneReport() {
     file: 'dist/report/standalone.js',
     format: 'iife',
   });
+  await bundle.close();
 }
 
 async function buildFlowReport() {
@@ -87,6 +88,7 @@ async function buildFlowReport() {
     file: 'dist/report/flow.js',
     format: 'iife',
   });
+  await bundle.close();
 }
 
 async function buildEsModulesBundle() {
@@ -101,6 +103,7 @@ async function buildEsModulesBundle() {
     file: 'dist/report/bundle.esm.js',
     format: 'esm',
   });
+  await bundle.close();
 }
 
 async function buildUmdBundle() {
@@ -121,14 +124,17 @@ async function buildUmdBundle() {
     format: 'umd',
     name: 'report',
   });
+  await bundle.close();
 }
 
-if (require.main === module) {
+async function main() {
   if (process.argv.length <= 2) {
-    buildStandaloneReport();
-    buildFlowReport();
-    buildEsModulesBundle();
-    buildUmdBundle();
+    await Promise.all([
+      buildStandaloneReport(),
+      buildFlowReport(),
+      buildEsModulesBundle(),
+      buildUmdBundle(),
+    ]);
   }
 
   if (process.argv.includes('--psi')) {
@@ -136,17 +142,21 @@ if (require.main === module) {
     process.exit(1);
   }
   if (process.argv.includes('--standalone')) {
-    buildStandaloneReport();
+    await buildStandaloneReport();
   }
   if (process.argv.includes('--flow')) {
-    buildFlowReport();
+    await buildFlowReport();
   }
   if (process.argv.includes('--esm')) {
-    buildEsModulesBundle();
+    await buildEsModulesBundle();
   }
   if (process.argv.includes('--umd')) {
-    buildUmdBundle();
+    await buildUmdBundle();
   }
+}
+
+if (require.main === module) {
+  main();
 }
 
 module.exports = {
