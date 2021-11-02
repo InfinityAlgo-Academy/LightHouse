@@ -800,21 +800,6 @@
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "అధిక DOM పరిమాణాన్ని నివారిస్తుంది"
   },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnFailingAnchors": {
-    "message": "విఫలం అవుతున్న యాంకర్‌లు"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | description": {
-    "message": "పనితీరును మెరుగుపరచడానికి, అలాగే భద్రతా ప్రమాదాలను నిరోధించడానికి ఏవైనా బయటి లింక్‌లకు '`rel=\"noopener\"`' లేదా '`rel=\"noreferrer\"`'లను జోడించండి. [మరింత తెలుసుకోండి](https://web.dev/external-anchors-use-rel-noopener/)."
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | failureTitle": {
-    "message": "క్రాస్-ఆరిజిన్ గమ్యస్థానాలకు తీసుకెళ్లే లింక్‌లు అసురక్షితమైనవి"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | title": {
-    "message": "క్రాస్-ఆరిజిన్ గమ్యస్థానాలకు తీసుకెళ్లే లింక్‌లు సురక్షితమైనవి"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | warning": {
-    "message": "యాంకర్ ({anchorHTML}) కోసం గమ్యస్థానాన్ని కనుగొనడం సాధ్యపడలేదు. ఒకవేళ హైపర్‌లింక్ లాగా ఉపయోగించకుంటే, 'target=_blank'ను తీసివేయడం గురించి పరిశీలించండి."
-  },
   "lighthouse-core/audits/dobetterweb/geolocation-on-start.js | description": {
     "message": "సందర్భం ఏమీ లేకుండా స్థానాన్ని అభ్యర్థించే సైట్‌లను వినియోగదారులు నమ్మరు లేదా గందరగోళానికి గురి అవుతారు. దానికి బదులుగా, వినియోగదారు చర్యతో రిక్వెస్ట్‌ను ప్రయత్నించడం పరిశీలించండి. [మరింత తెలుసుకోండి](https://web.dev/geolocation-on-start/)."
   },

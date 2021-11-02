@@ -800,21 +800,6 @@
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "避免 DOM 规模过大"
   },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnFailingAnchors": {
-    "message": "未通过审核的锚点"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | description": {
-    "message": "向任何外部链接添加 `rel=\"noopener\"` 或 `rel=\"noreferrer\"`，可提高性能并减少安全漏洞。[了解详情](https://web.dev/external-anchors-use-rel-noopener/)。"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | failureTitle": {
-    "message": "指向跨域目的地的链接不安全"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | title": {
-    "message": "指向跨域目的地的链接安全"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | warning": {
-    "message": "无法确定锚点 ({anchorHTML}) 的目的地。如果不用作超链接，建议移除 target=_blank。"
-  },
   "lighthouse-core/audits/dobetterweb/geolocation-on-start.js | description": {
     "message": "如果网站在缺少上下文的情况下请求位置，会导致用户不信任网站或感到困惑。建议将请求与用户操作进行绑定。[了解详情](https://web.dev/geolocation-on-start/)。"
   },

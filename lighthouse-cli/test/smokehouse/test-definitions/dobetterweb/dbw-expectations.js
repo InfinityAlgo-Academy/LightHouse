@@ -237,15 +237,6 @@ const expectations = {
           ],
         },
       },
-      'external-anchors-use-rel-noopener': {
-        score: 0,
-        warnings: [/Unable to determine.*<a target="_blank">/],
-        details: {
-          items: {
-            length: 3,
-          },
-        },
-      },
       'geolocation-on-start': {
         score: 0,
       },

@@ -800,21 +800,6 @@
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "過大な DOM サイズの回避"
   },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnFailingAnchors": {
-    "message": "問題のあるアンカー"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | description": {
-    "message": "パフォーマンスを向上し、セキュリティの脆弱性が生じないようにするには、`rel=\"noopener\"` または `rel=\"noreferrer\"` を外部リンクに追加します。[詳細](https://web.dev/external-anchors-use-rel-noopener/)"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | failureTitle": {
-    "message": "クロスオリジンへのリンクは安全ではありません"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | title": {
-    "message": "クロスオリジンへのリンクは安全です"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | warning": {
-    "message": "アンカー（{anchorHTML}）のリンク先を特定できません。ハイパーリンクとして使用していない場合は、target=_blank を削除することをご検討ください。"
-  },
   "lighthouse-core/audits/dobetterweb/geolocation-on-start.js | description": {
     "message": "サイトから脈絡なしに位置情報の許可を求められると、ユーザーは不信感を抱き、困惑します。リクエストはユーザーの操作と関連付けて行うようにしてください。[詳細](https://web.dev/geolocation-on-start/)"
   },

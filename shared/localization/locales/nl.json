@@ -800,21 +800,6 @@
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Vermijdt een overmatige grote DOM"
   },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnFailingAnchors": {
-    "message": "Mislukte ankers"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | description": {
-    "message": "Voeg `rel=\"noopener\"` of `rel=\"noreferrer\"` toe aan eventuele externe links om de prestaties te verbeteren en kwetsbaarheden in de beveiliging te voorkomen. [Meer informatie](https://web.dev/external-anchors-use-rel-noopener/)"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | failureTitle": {
-    "message": "Links naar cross-originbestemmingen zijn onveilig"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | title": {
-    "message": "Links naar cross-origin-bestemmingen zijn veilig"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | warning": {
-    "message": "Kan geen bestemming bepalen voor ankeradvertentie ({anchorHTML}). Als deze niet wordt gebruikt als hyperlink, overweeg dan om target=_blank te verwijderen."
-  },
   "lighthouse-core/audits/dobetterweb/geolocation-on-start.js | description": {
     "message": "Gebruikers wantrouwen of raken in de war van sites die vragen om hun locatie zonder context. Overweeg het verzoek in plaats daarvan te koppelen aan gebruikershandelingen. [Meer informatie](https://web.dev/geolocation-on-start/)"
   },

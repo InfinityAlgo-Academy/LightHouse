@@ -800,21 +800,6 @@
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Umiiwas sa masyadong malaking DOM"
   },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnFailingAnchors": {
-    "message": "Mga Hindi Nakapasang Anchor"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | description": {
-    "message": "Idagdag ang `rel=\"noopener\"` o `rel=\"noreferrer\"` sa anumang external na link para pahusayin ang performance at pigilan ang mga kahinaan sa seguridad. [Matuto pa](https://web.dev/external-anchors-use-rel-noopener/)."
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | failureTitle": {
-    "message": "Hindi ligtas ang mga link sa mga cross-origin na destinasyon"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | title": {
-    "message": "Ligtas ang mga link sa mga cross-origin na destinasyon"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | warning": {
-    "message": "Hindi matukoy ang destinasyon para sa anchor na ({anchorHTML}). Kung hindi ginagamit bilang hyperlink, pag-isipang alisin ang target=_blank."
-  },
   "lighthouse-core/audits/dobetterweb/geolocation-on-start.js | description": {
     "message": "Walang tiwala o nalilito ang mga user sa mga site na humihiling ng kanilang lokasyon nang walang konteksto. Sa halip ay pag-isipang iugnay ang kahilingan sa pagkilos ng user. [Matuto pa](https://web.dev/geolocation-on-start/)."
   },

@@ -800,21 +800,6 @@
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "[Åvöîðš åñ éxçéššîvé ÐÖM šîžé one two three four five six]"
   },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnFailingAnchors": {
-    "message": "[Fåîļîñĝ Åñçĥöŕš one two]"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | description": {
-    "message": "[Åðð ᐅ`rel=\"noopener\"`ᐊ öŕ ᐅ`rel=\"noreferrer\"`ᐊ ţö åñý éxţéŕñåļ ļîñķš ţö îmþŕövé þéŕƒöŕmåñçé åñð þŕévéñţ šéçûŕîţý vûļñéŕåбîļîţîéš. ᐅ[ᐊĻéåŕñ möŕéᐅ](https://web.dev/external-anchors-use-rel-noopener/)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen]"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | failureTitle": {
-    "message": "[Ļîñķš ţö çŕöšš-öŕîĝîñ ðéšţîñåţîöñš åŕé ûñšåƒé one two three four five six seven eight nine]"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | title": {
-    "message": "[Ļîñķš ţö çŕöšš-öŕîĝîñ ðéšţîñåţîöñš åŕé šåƒé one two three four five six seven eight nine]"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | warning": {
-    "message": "[Ûñåбļé ţö ðéţéŕmîñé ţĥé ðéšţîñåţîöñ ƒöŕ åñçĥöŕ (ᐅ{anchorHTML}ᐊ). Îƒ ñöţ ûšéð åš å ĥýþéŕļîñķ, çöñšîðéŕ ŕémövîñĝ ţåŕĝéţ=_бļåñķ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen]"
-  },
   "lighthouse-core/audits/dobetterweb/geolocation-on-start.js | description": {
     "message": "[Ûšéŕš åŕé mîšţŕûšţƒûļ öƒ öŕ çöñƒûšéð бý šîţéš ţĥåţ ŕéqûéšţ ţĥéîŕ ļöçåţîöñ ŵîţĥöûţ çöñţéxţ. Çöñšîðéŕ ţýîñĝ ţĥé ŕéqûéšţ ţö å ûšéŕ åçţîöñ îñšţéåð. ᐅ[ᐊĻéåŕñ möŕéᐅ](https://web.dev/geolocation-on-start/)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone twentytwo twentythree]"
   },

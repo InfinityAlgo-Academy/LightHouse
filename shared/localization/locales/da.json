@@ -800,21 +800,6 @@
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Undgår en overdreven DOM-størrelse"
   },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnFailingAnchors": {
-    "message": "Ankere, der ikke bestod gennemgangen"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | description": {
-    "message": "Føj `rel=\"noopener\"` eller `rel=\"noreferrer\"` til alle eksterne links for at forbedre ydeevnen og forhindre sikkerhedssårbarheder. [Få flere oplysninger](https://web.dev/external-anchors-use-rel-noopener/)."
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | failureTitle": {
-    "message": "Links til destinationer af anden oprindelse er ikke sikre"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | title": {
-    "message": "Links til destinationer af anden oprindelse er sikre"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | warning": {
-    "message": "Destinationen for ankeret ({anchorHTML}) kunne ikke identificeres. Hvis det ikke bruges som hyperlink, bør du overveje at fjerne target=_blank."
-  },
   "lighthouse-core/audits/dobetterweb/geolocation-on-start.js | description": {
     "message": "Brugere er mistænksomme over for eller forvirres af websites, der anmoder om deres placering uden sammenhæng. Overvej at knytte anmodningen til en brugerhandling i stedet for. [Få flere oplysninger](https://web.dev/geolocation-on-start/)."
   },

@@ -397,9 +397,6 @@ Object {
       "path": "dobetterweb/dom-size",
     },
     Object {
-      "path": "dobetterweb/external-anchors-use-rel-noopener",
-    },
-    Object {
       "path": "dobetterweb/geolocation-on-start",
     },
     Object {
@@ -740,11 +737,6 @@ Object {
         Object {
           "group": "best-practices-trust-safety",
           "id": "is-on-https",
-          "weight": 1,
-        },
-        Object {
-          "group": "best-practices-trust-safety",
-          "id": "external-anchors-use-rel-noopener",
           "weight": 1,
         },
         Object {

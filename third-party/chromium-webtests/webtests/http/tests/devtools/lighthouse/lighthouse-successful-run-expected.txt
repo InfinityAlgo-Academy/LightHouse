@@ -316,7 +316,6 @@ Auditing: Avoid serving legacy JavaScript to modern browsers
 Auditing: Page has the HTML doctype
 Auditing: Properly defines charset
 Auditing: Avoids an excessive DOM size
-Auditing: Links to cross-origin destinations are safe
 Auditing: Avoids requesting the geolocation permission on page load
 Auditing: No issues in the `Issues` panel in Chrome Devtools
 Auditing: Avoids `document.write()`
@@ -440,7 +439,6 @@ duplicate-tags: notApplicable
 duplicated-javascript: numeric
 efficient-animated-content: flaky
 errors-in-console: pass
-external-anchors-use-rel-noopener: pass
 final-screenshot: ERROR Chrome didn't collect any screenshots during the page load. Please make sure there is content visible on the page, and then try re-running Lighthouse. (NO_SCREENSHOTS)
 first-ad-render: notApplicable
 first-contentful-paint: flaky
@@ -560,7 +558,7 @@ viewport: fail
 viewport-ad-density: notApplicable
 visual-order-follows-dom: manual
 
-# of .lh-audit divs: 159
+# of .lh-audit divs: 158
 
 .lh-audit divs:
 accesskeys
@@ -618,7 +616,6 @@ duplicate-tags
 duplicated-javascript
 efficient-animated-content
 errors-in-console
-external-anchors-use-rel-noopener
 first-ad-render
 focus-traps
 focusable-controls

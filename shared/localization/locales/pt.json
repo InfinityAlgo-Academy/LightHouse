@@ -800,21 +800,6 @@
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Evita DOM de tamanho excessivo"
   },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnFailingAnchors": {
-    "message": "Âncoras com falha"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | description": {
-    "message": "Adicione `rel=\"noopener\"` ou `rel=\"noreferrer\"` a qualquer link externo para melhorar o desempenho e evitar vulnerabilidades de segurança. [Saiba mais](https://web.dev/external-anchors-use-rel-noopener/)."
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | failureTitle": {
-    "message": "Links para destinos de origem cruzada não são seguros"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | title": {
-    "message": "Links para destinos de origem cruzada são seguros"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | warning": {
-    "message": "Não é possível determinar o destino do item fixo ({anchorHTML}). Se não for usado como um hiperlink, remova target=_blank."
-  },
   "lighthouse-core/audits/dobetterweb/geolocation-on-start.js | description": {
     "message": "Os usuários não confiam ou ficam confusos com sites que solicitam a localização sem contexto. Vincule a solicitação a uma ação do usuário. [Saiba mais](https://web.dev/geolocation-on-start/)."
   },

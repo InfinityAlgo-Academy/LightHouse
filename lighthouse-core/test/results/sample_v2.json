@@ -5198,94 +5198,6 @@
         ]
       }
     },
-    "external-anchors-use-rel-noopener": {
-      "id": "external-anchors-use-rel-noopener",
-      "title": "Links to cross-origin destinations are unsafe",
-      "description": "Add `rel=\"noopener\"` or `rel=\"noreferrer\"` to any external links to improve performance and prevent security vulnerabilities. [Learn more](https://web.dev/external-anchors-use-rel-noopener/).",
-      "score": 0,
-      "scoreDisplayMode": "binary",
-      "warnings": [
-        "Unable to determine the destination for anchor (<a target=\"_blank\">). If not used as a hyperlink, consider removing target=_blank."
-      ],
-      "details": {
-        "type": "table",
-        "headings": [
-          {
-            "key": "node",
-            "itemType": "node",
-            "text": "Failing Anchors"
-          }
-        ],
-        "items": [
-          {
-            "node": {
-              "type": "node",
-              "lhId": "5-0-A",
-              "path": "3,HTML,1,BODY,39,A",
-              "selector": "body > a",
-              "boundingRect": {
-                "top": 1166,
-                "bottom": 1184,
-                "left": 91,
-                "right": 171,
-                "width": 80,
-                "height": 18
-              },
-              "snippet": "<a href=\"https://www.google.com/\" target=\"_blank\">",
-              "nodeLabel": "external link"
-            },
-            "href": "https://www.google.com/",
-            "target": "_blank",
-            "rel": "",
-            "outerHTML": "<a href=\"https://www.google.com/\" target=\"_blank\">"
-          },
-          {
-            "node": {
-              "type": "node",
-              "lhId": "5-1-A",
-              "path": "3,HTML,1,BODY,41,A",
-              "selector": "body > a",
-              "boundingRect": {
-                "top": 1166,
-                "bottom": 1184,
-                "left": 175,
-                "right": 255,
-                "width": 80,
-                "height": 18
-              },
-              "snippet": "<a target=\"_blank\">",
-              "nodeLabel": "external link"
-            },
-            "href": "Unknown",
-            "target": "_blank",
-            "rel": "",
-            "outerHTML": "<a target=\"_blank\">"
-          },
-          {
-            "node": {
-              "type": "node",
-              "lhId": "5-2-A",
-              "path": "3,HTML,1,BODY,43,A",
-              "selector": "body > a",
-              "boundingRect": {
-                "top": 1166,
-                "bottom": 1184,
-                "left": 259,
-                "right": 340,
-                "width": 80,
-                "height": 18
-              },
-              "snippet": "<a href=\"https://www.google.com/\" target=\"_blank\" rel=\"nofollow\">",
-              "nodeLabel": "external link"
-            },
-            "href": "https://www.google.com/",
-            "target": "_blank",
-            "rel": "nofollow",
-            "outerHTML": "<a href=\"https://www.google.com/\" target=\"_blank\" rel=\"nofollow\">"
-          }
-        ]
-      }
-    },
     "geolocation-on-start": {
       "id": "geolocation-on-start",
       "title": "Requests the geolocation permission on page load",
@@ -6591,11 +6503,6 @@
           "group": "best-practices-trust-safety"
         },
         {
-          "id": "external-anchors-use-rel-noopener",
-          "weight": 1,
-          "group": "best-practices-trust-safety"
-        },
-        {
           "id": "geolocation-on-start",
           "weight": 1,
           "group": "best-practices-trust-safety"
@@ -6677,7 +6584,7 @@
         }
       ],
       "id": "best-practices",
-      "score": 0.21
+      "score": 0.23
     },
     "seo": {
       "title": "SEO",
@@ -8004,12 +7911,6 @@
       {
         "startTime": 0,
         "name": "lh:audit:dom-size",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:audit:external-anchors-use-rel-noopener",
         "duration": 100,
         "entryType": "measure"
       },
@@ -9384,23 +9285,6 @@
       ],
       "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": [
         "audits[dom-size].details.items[2].statistic"
-      ],
-      "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | failureTitle": [
-        "audits[external-anchors-use-rel-noopener].title"
-      ],
-      "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | description": [
-        "audits[external-anchors-use-rel-noopener].description"
-      ],
-      "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | warning": [
-        {
-          "values": {
-            "anchorHTML": "<a target=\"_blank\">"
-          },
-          "path": "audits[external-anchors-use-rel-noopener].warnings[0]"
-        }
-      ],
-      "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnFailingAnchors": [
-        "audits[external-anchors-use-rel-noopener].details.headings[0].text"
       ],
       "lighthouse-core/audits/dobetterweb/geolocation-on-start.js | failureTitle": [
         "audits[geolocation-on-start].title"

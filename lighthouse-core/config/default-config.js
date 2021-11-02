@@ -303,7 +303,6 @@ const defaultConfig = {
     'dobetterweb/doctype',
     'dobetterweb/charset',
     'dobetterweb/dom-size',
-    'dobetterweb/external-anchors-use-rel-noopener',
     'dobetterweb/geolocation-on-start',
     'dobetterweb/inspector-issues',
     'dobetterweb/no-document-write',
@@ -554,7 +553,6 @@ const defaultConfig = {
       auditRefs: [
         // Trust & Safety
         {id: 'is-on-https', weight: 1, group: 'best-practices-trust-safety'},
-        {id: 'external-anchors-use-rel-noopener', weight: 1, group: 'best-practices-trust-safety'},
         {id: 'geolocation-on-start', weight: 1, group: 'best-practices-trust-safety'},
         {id: 'notification-on-start', weight: 1, group: 'best-practices-trust-safety'},
         {id: 'no-vulnerable-libraries', weight: 1, group: 'best-practices-trust-safety'},

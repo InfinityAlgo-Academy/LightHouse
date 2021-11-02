@@ -800,21 +800,6 @@
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Αποφεύγει τα υπερβολικά μεγάλα μεγέθη DOM"
   },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnFailingAnchors": {
-    "message": "Αγκυρώσεις που αποτυγχάνουν"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | description": {
-    "message": "Προσθέστε ένα στοιχείο `rel=\"noopener\"` ή `rel=\"noreferrer\"` στους εξωτερικούς συνδέσμους για να βελτιώσετε την απόδοση και να αποφύγετε τις ευπάθειες ασφάλειας. [Μάθετε περισσότερα](https://web.dev/external-anchors-use-rel-noopener/)."
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | failureTitle": {
-    "message": "Οι σύνδεσμοι με προορισμούς διασταυρούμενων προελεύσεων δεν είναι ασφαλείς"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | title": {
-    "message": "Οι σύνδεσμοι με προορισμούς διασταυρούμενων προελεύσεων είναι ασφαλείς"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | warning": {
-    "message": "Δεν ήταν δυνατός ο προσδιορισμός του προορισμού για την αγκύρωση ({anchorHTML}). Εάν δεν χρησιμοποιείται ως υπερσύνδεσμος, εξετάστε το ενδεχόμενο να καταργήσετε το χαρακτηριστικό target=_blank."
-  },
   "lighthouse-core/audits/dobetterweb/geolocation-on-start.js | description": {
     "message": "Οι ιστότοποι που απαιτούν τη γνωστοποίηση τοποθεσίας χωρίς προφανή αιτία προκαλούν σύγχυση ή φαίνονται ύποπτοι στους χρήστες. Συνιστάται τα αιτήματα να συνδέονται με τις ενέργειες των χρηστών. [Μάθετε περισσότερα](https://web.dev/geolocation-on-start/)."
   },

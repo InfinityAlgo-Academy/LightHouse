@@ -800,21 +800,6 @@
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "बहुत ज़्यादा बड़े DOM आकार से बचता है"
   },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnFailingAnchors": {
-    "message": "फ़ेल होने वाले एंकर"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | description": {
-    "message": "किसी बाहरी लिंक में `rel=\"noopener\"` या `rel=\"noreferrer\"` जोड़कर परफ़ॉर्मेंस बेहतर करें और सुरक्षा जोखिमों से बचें. [ज़्यादा जानें](https://web.dev/external-anchors-use-rel-noopener/)."
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | failureTitle": {
-    "message": "जिन जगहों पर दो डोमेन से होकर जाना होता है वे सुरक्षित नहीं हैं"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | title": {
-    "message": "जिन जगहों पर दो डोमेन से होकर जाना होता है वे सुरक्षित हैं"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | warning": {
-    "message": "एंकर ({anchorHTML}) के भेजे जाने की जगह नहीं पता की जा सकी. अगर target=_blank का इस्तेमाल हाइपरलिंक की तरह नहीं हो रहा, तो इसे हटा दें."
-  },
   "lighthouse-core/audits/dobetterweb/geolocation-on-start.js | description": {
     "message": "उपयोगकर्ता ऐसी साइटों पर भरोसा नहीं करते या उनकी वजह से उलझन में रहते हैं जो बिना किसी संदर्भ के उनकी जगह की जानकारी पता करने का अनुरोध करती हैं. इसके बजाय, उपयोगकर्ता के जेस्चर के हिसाब से अनुरोध करें. [ज़्यादा जानें](https://web.dev/geolocation-on-start/)."
   },

@@ -800,21 +800,6 @@
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Undviker ett onödigt stort DOM-träd"
   },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnFailingAnchors": {
-    "message": "Ankare med fel"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | description": {
-    "message": "Lägg till `rel=\"noopener\"` eller `rel=\"noreferrer\"` i alla externa länkar för att förbättra prestanda och säkerhet. [Läs mer](https://web.dev/external-anchors-use-rel-noopener/)."
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | failureTitle": {
-    "message": "Länkar till mål med korsursprung är osäkra"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | title": {
-    "message": "Länkar till mål med korsursprung är säkra"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | warning": {
-    "message": "Det går inte att fastställa målet för ankaret ({anchorHTML}). Det kan vara bra att ta bort target=_blank om det inte används som hyperlänk."
-  },
   "lighthouse-core/audits/dobetterweb/geolocation-on-start.js | description": {
     "message": "Användare blir misstänksamma eller förvirrade av webbplatser som ber om åtkomst till deras plats utan sammanhang. Det kan vara bättre att koppla förfrågan till något användaren gör. [Läs mer](https://web.dev/geolocation-on-start/)."
   },
