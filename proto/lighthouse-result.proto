@@ -545,6 +545,28 @@ message I18n {
     // Descriptive label that this analysis only considers the initial load of the page,
     // and no interaction beyond when the page had "fully loaded"
     string runtime_analysis_window = 51;
+
+    // Label for an interactive control that will reveal or hide a group of content.
+    // This control toggles between the text 'Show' and 'Hide'.
+    string show = 52;
+
+    // Label for an interactive control that will reveal or hide a group of content.
+    // This control toggles between the text 'Show' and 'Hide'.
+    string hide = 53;
+
+    // Label for an interactive control that will reveal or hide a group of content.
+    // This control toggles between the text 'Expand view' and 'Collapse view'.
+    string expand_view = 54;
+
+    // Label for an interactive control that will reveal or hide a group of content.
+    // This control toggles between the text 'Expand view' and 'Collapse view'.
+    string collapse_view = 55;
+
+    // Label indicating that Lighthouse throttled the page to emulate a slow 4G network connection.
+    string runtime_slow_4g = 56;
+
+    // Label indicating that Lighthouse throttled the page using custom throttling settings.
+    string runtime_custom = 57;
   }
 
   // The message holding all formatted strings used in the renderer.

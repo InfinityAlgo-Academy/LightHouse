@@ -774,8 +774,13 @@
   top: 0px;
 }
 
-.lh-metrics-toggle__input + div > label::before {content: 'Expand view';}
-.lh-metrics-toggle__input:checked + div > label::before {content: 'Collapse view';}
+.lh-metrics-toggle__input + div > label > .lh-metrics-toggle__labeltext--hide,
+.lh-metrics-toggle__input:checked + div > label > .lh-metrics-toggle__labeltext--show {
+  display: none;
+}
+.lh-metrics-toggle__input:checked + div > label > .lh-metrics-toggle__labeltext--hide {
+  display: inline;
+}
 .lh-metrics-toggle__input:focus + div > label {
   outline: -webkit-focus-ring-color auto 3px;
 }
@@ -1671,8 +1676,9 @@ details.lh-clump[open] > summary {
 
 
 
-details .lh-clump-toggle::before {content: 'Show';}
-details[open] .lh-clump-toggle::before {content: 'Hide';}
+details .lh-clump-toggletext--hide,
+details[open] .lh-clump-toggletext--show { display: none; }
+details[open] .lh-clump-toggletext--hide { display: block;}
 
 
 /* Tooltip */

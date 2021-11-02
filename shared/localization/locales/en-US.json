@@ -2330,6 +2330,9 @@
   "report/renderer/util.js | calculatorLink": {
     "message": "See calculator."
   },
+  "report/renderer/util.js | collapseView": {
+    "message": "Collapse view"
+  },
   "report/renderer/util.js | crcInitialNavigation": {
     "message": "Initial Navigation"
   },
@@ -2366,8 +2369,14 @@
   "report/renderer/util.js | errorMissingAuditInfo": {
     "message": "Report error: no audit information"
   },
+  "report/renderer/util.js | expandView": {
+    "message": "Expand view"
+  },
   "report/renderer/util.js | footerIssue": {
     "message": "File an issue"
+  },
+  "report/renderer/util.js | hide": {
+    "message": "Hide"
   },
   "report/renderer/util.js | labDataTitle": {
     "message": "Lab Data"
@@ -2392,6 +2401,9 @@
   },
   "report/renderer/util.js | runtimeAnalysisWindow": {
     "message": "Initial page load"
+  },
+  "report/renderer/util.js | runtimeCustom": {
+    "message": "Custom throttling"
   },
   "report/renderer/util.js | runtimeDesktopEmulation": {
     "message": "Emulated Desktop"
@@ -2426,8 +2438,14 @@
   "report/renderer/util.js | runtimeSingleLoadTooltip": {
     "message": "This data is taken from a single page load, as opposed to field data summarizing many sessions."
   },
+  "report/renderer/util.js | runtimeSlow4g": {
+    "message": "Slow 4G throttling"
+  },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "Unknown"
+  },
+  "report/renderer/util.js | show": {
+    "message": "Show"
   },
   "report/renderer/util.js | showRelevantAudits": {
     "message": "Show audits relevant to:"

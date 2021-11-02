@@ -195,6 +195,10 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
       const metricHeaderEl = this.dom.find('.lh-audit-group__header', metricsGroupEl);
       const labelEl = this.dom.createChildOf(metricHeaderEl, 'label', 'lh-metrics-toggle__label');
       labelEl.htmlFor = checkboxId;
+      const showEl = this.dom.createChildOf(labelEl, 'span', 'lh-metrics-toggle__labeltext--show');
+      const hideEl = this.dom.createChildOf(labelEl, 'span', 'lh-metrics-toggle__labeltext--hide');
+      showEl.textContent = Util.i18n.strings.expandView;
+      hideEl.textContent = Util.i18n.strings.collapseView;
 
       const metricAudits = category.auditRefs.filter(audit => audit.group === 'metrics');
       const metricsBoxesEl = this.dom.createElement('div', 'lh-metrics-container');

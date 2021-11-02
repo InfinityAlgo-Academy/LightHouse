@@ -417,7 +417,7 @@ export class Util {
             throttling.downloadThroughputKbps === 1.6 * 1024 * 0.9 &&
             throttling.uploadThroughputKbps === 750 * 0.9;
         };
-        summary = `${isSlow4G() ? 'Slow 4G' : 'Custom'} throttling by DevTools`;
+        summary = isSlow4G() ? Util.i18n.strings.runtimeSlow4g : Util.i18n.strings.runtimeCustom;
         break;
       }
       case 'simulate': {
@@ -429,7 +429,7 @@ export class Util {
         const isSlow4G = () => {
           return rttMs === 150 && throughputKbps === 1.6 * 1024;
         };
-        summary = isSlow4G() ? 'Simulated slow 4G' : 'Custom simulated throttling';
+        summary = isSlow4G() ? Util.i18n.strings.runtimeSlow4g : Util.i18n.strings.runtimeCustom;
         break;
       }
       default:
@@ -661,6 +661,18 @@ Util.UIStrings = {
 
   /** Descriptive explanation for environment throttling that was provided by the runtime environment instead of provided by Lighthouse throttling. */
   throttlingProvided: 'Provided by environment',
+  /** Label for an interactive control that will reveal or hide a group of content. This control toggles between the text 'Show' and 'Hide'. */
+  show: 'Show',
+  /** Label for an interactive control that will reveal or hide a group of content. This control toggles between the text 'Show' and 'Hide'. */
+  hide: 'Hide',
+  /** Label for an interactive control that will reveal or hide a group of content. This control toggles between the text 'Expand view' and 'Collapse view'. */
+  expandView: 'Expand view',
+  /** Label for an interactive control that will reveal or hide a group of content. This control toggles between the text 'Expand view' and 'Collapse view'. */
+  collapseView: 'Collapse view',
+  /** Label indicating that Lighthouse throttled the page to emulate a slow 4G network connection. */
+  runtimeSlow4g: 'Slow 4G throttling',
+  /** Label indicating that Lighthouse throttled the page using custom throttling settings. */
+  runtimeCustom: 'Custom throttling',
 };
 
 export const UIStrings = Util.UIStrings;

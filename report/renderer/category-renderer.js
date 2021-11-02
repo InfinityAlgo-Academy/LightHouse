@@ -338,6 +338,9 @@ export class CategoryRenderer {
       el.appendChild(descriptionEl);
     }
 
+    this.dom.find('.lh-clump-toggletext--show', el).textContent = Util.i18n.strings.show;
+    this.dom.find('.lh-clump-toggletext--hide', el).textContent = Util.i18n.strings.hide;
+
     clumpElement.classList.add(`lh-clump--${clumpId.toLowerCase()}`);
     return el;
   }
