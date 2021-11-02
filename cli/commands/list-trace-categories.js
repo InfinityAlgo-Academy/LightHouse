@@ -5,7 +5,7 @@
  */
 'use strict';
 
-import lighthouse from '../../lighthouse-core/index.js';
+import lighthouse from '../../core/index.js';
 
 function listTraceCategories() {
   const traceCategories = lighthouse.traceCategories;

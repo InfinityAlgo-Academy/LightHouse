@@ -8,8 +8,8 @@
 const path = require('path');
 
 const format = require('../../localization/format.js');
-const i18n = require('../../../lighthouse-core/lib/i18n/i18n.js');
-const constants = require('../../../lighthouse-core/config/constants.js');
+const i18n = require('../../../core/lib/i18n/i18n.js');
+const constants = require('../../../core/config/constants.js');
 const locales = require('../../localization/locales.js');
 
 /* eslint-env jest */
@@ -186,8 +186,8 @@ describe('format', () => {
     });
 
     it('overwrites existing locale strings', () => {
-      const filename = 'lighthouse-core/audits/is-on-https.js';
-      const UIStrings = require('../../../lighthouse-core/audits/is-on-https.js').UIStrings;
+      const filename = 'core/audits/is-on-https.js';
+      const UIStrings = require('../../../core/audits/is-on-https.js').UIStrings;
       const str_ = i18n.createMessageInstanceIdFn(filename, UIStrings);
 
       // To start with, we get back the intended string..
@@ -198,7 +198,7 @@ describe('format', () => {
 
       // Now we declare and register the new string...
       const localeData = {
-        'lighthouse-core/audits/is-on-https.js | title': {
+        'core/audits/is-on-https.js | title': {
           'message': 'new string for es-419 uses https!',
         },
       };

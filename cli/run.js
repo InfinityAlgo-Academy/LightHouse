@@ -16,10 +16,10 @@ import log from 'lighthouse-logger';
 import open from 'open';
 
 import * as Printer from './printer.js';
-import lighthouse from '../lighthouse-core/index.js';
+import lighthouse from '../core/index.js';
 import {getLhrFilenamePrefix} from '../report/generator/file-namer.js';
-import * as assetSaver from '../lighthouse-core/lib/asset-saver.js';
-import URL from '../lighthouse-core/lib/url-shim.js';
+import * as assetSaver from '../core/lib/asset-saver.js';
+import URL from '../core/lib/url-shim.js';
 
 /** @typedef {Error & {code: string, friendlyMessage?: string}} ExitError */
 
@@ -202,7 +202,7 @@ async function potentiallyKillChrome(launchedChrome) {
  * @return {Promise<LH.RunnerResult|undefined>}
  */
 async function runLighthouseWithFraggleRock(url, flags, config, launchedChrome) {
-  const fraggleRock = (await import('../lighthouse-core/fraggle-rock/api.js')).default;
+  const fraggleRock = (await import('../core/fraggle-rock/api.js')).default;
   const puppeteer = (await import('puppeteer')).default;
   const browser = await puppeteer.connect({browserURL: `http://localhost:${launchedChrome.port}`});
   const page = await browser.newPage();

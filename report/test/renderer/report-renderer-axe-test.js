@@ -14,7 +14,7 @@ import {DOM} from '../../renderer/dom.js';
 import {DetailsRenderer} from '../../renderer/details-renderer.js';
 import {CategoryRenderer} from '../../renderer/category-renderer.js';
 import {ReportRenderer} from '../../renderer/report-renderer.js';
-import sampleResultsOrig from '../../../lighthouse-core/test/results/sample_v2.json';
+import sampleResultsOrig from '../../../core/test/results/sample_v2.json';
 
 describe('ReportRendererAxe', () => {
   describe('with aXe', () => {

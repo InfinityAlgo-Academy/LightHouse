@@ -13,11 +13,11 @@ import jsdom from 'jsdom';
 
 import {Util} from '../../renderer/util.js';
 import {I18n} from '../../renderer/i18n.js';
-import URL from '../../../lighthouse-core/lib/url-shim.js';
+import URL from '../../../core/lib/url-shim.js';
 import {DOM} from '../../renderer/dom.js';
 import {DetailsRenderer} from '../../renderer/details-renderer.js';
 import {PerformanceCategoryRenderer} from '../../renderer/performance-category-renderer.js';
-import sampleResultsOrig from '../../../lighthouse-core/test/results/sample_v2.json';
+import sampleResultsOrig from '../../../core/test/results/sample_v2.json';
 
 describe('PerfCategoryRenderer', () => {
   let category;

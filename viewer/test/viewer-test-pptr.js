@@ -14,13 +14,13 @@ import {jest} from '@jest/globals';
 import puppeteer from 'puppeteer';
 
 import {server} from '../../cli/test/fixtures/static-server.js';
-import defaultConfig from '../../lighthouse-core/config/default-config.js';
+import defaultConfig from '../../core/config/default-config.js';
 import {LH_ROOT} from '../../root.js';
 import {getCanonicalLocales} from '../../shared/localization/format.js';
 
 const portNumber = 10200;
 const viewerUrl = `http://localhost:${portNumber}/dist/gh-pages/viewer/index.html`;
-const sampleLhr = LH_ROOT + '/lighthouse-core/test/results/sample_v2.json';
+const sampleLhr = LH_ROOT + '/core/test/results/sample_v2.json';
 
 const lighthouseCategories = Object.keys(defaultConfig.categories);
 const getAuditsOfCategory = category => defaultConfig.categories[category].auditRefs;

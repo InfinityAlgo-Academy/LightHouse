@@ -11,7 +11,7 @@ const fs = require('fs');
 const csvValidator = require('csv-validator');
 
 const ReportGenerator = require('../../generator/report-generator.js');
-const sampleResults = require('../../../lighthouse-core/test/results/sample_v2.json');
+const sampleResults = require('../../../core/test/results/sample_v2.json');
 
 /* eslint-env jest */
 

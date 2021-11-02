@@ -14,7 +14,7 @@ const fs = require('fs');
 const path = require('path');
 const rollup = require('rollup');
 const rollupPlugins = require('./rollup-plugins.js');
-const Runner = require('../lighthouse-core/runner.js');
+const Runner = require('../core/runner.js');
 const {LH_ROOT} = require('../root.js');
 
 const COMMIT_HASH = require('child_process')
@@ -97,7 +97,7 @@ async function build(entryPath, distPath, opts = {minify: true}) {
     'raven',
     'source-map',
     'ws',
-    require.resolve('../lighthouse-core/gather/connections/cri.js'),
+    require.resolve('../core/gather/connections/cri.js'),
   ];
 
   // Don't include the stringified report in DevTools - see devtools-report-assets.js
@@ -142,14 +142,14 @@ async function build(entryPath, distPath, opts = {minify: true}) {
         entries: {
           'debug': require.resolve('debug/src/browser.js'),
           'lighthouse-logger': require.resolve('../lighthouse-logger/index.js'),
-          'url': require.resolve('../lighthouse-core/lib/url-shim.js'),
+          'url': require.resolve('../core/lib/url-shim.js'),
         },
       }),
       rollupPlugins.shim({
         ...shimsObj,
         // Allows for plugins to import lighthouse.
         'lighthouse': `
-          import Audit from '${require.resolve('../lighthouse-core/audits/audit.js')}';
+          import Audit from '${require.resolve('../core/audits/audit.js')}';
           export {Audit};
         `,
       }),

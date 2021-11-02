@@ -30,7 +30,7 @@ jest.unstable_mockModule('../../sentry-prompt.js', () => {
 });
 
 const mockSentryInit = jest.fn();
-jest.mock('../../../lighthouse-core/lib/sentry.js', () => {
+jest.mock('../../../core/lib/sentry.js', () => {
   return {init: mockSentryInit};
 });
 
@@ -99,7 +99,7 @@ describe('CLI bin', function() {
   describe('config', () => {
     it('should load the config from the path (common js)', async () => {
       // TODO(esmodules): change this test when config file is esm.
-      const configPath = `${LH_ROOT}/lighthouse-core/config/lr-desktop-config.js`;
+      const configPath = `${LH_ROOT}/core/config/lr-desktop-config.js`;
       cliFlags = {...cliFlags, configPath: configPath};
       const actualConfig = (await import(configPath)).default;
       await bin.begin();
@@ -120,7 +120,7 @@ describe('CLI bin', function() {
     it('should load the config from the preset', async () => {
       cliFlags = {...cliFlags, preset: 'experimental'};
       const actualConfig =
-        (await import('../../../lighthouse-core/config/experimental-config.js')).default;
+        (await import('../../../core/config/experimental-config.js')).default;
       await bin.begin();
 
       expect(getRunLighthouseArgs()[2]).toEqual(actualConfig);
@@ -129,7 +129,7 @@ describe('CLI bin', function() {
 
   describe('budget', () => {
     it('should load the config from the path', async () => {
-      const budgetPath = `${LH_ROOT}/lighthouse-core/test/fixtures/simple-budget.json`;
+      const budgetPath = `${LH_ROOT}/core/test/fixtures/simple-budget.json`;
       cliFlags = {...cliFlags, budgetPath};
       const budgetFile = JSON.parse(fs.readFileSync(budgetPath, 'utf-8'));
       await bin.begin();

@@ -10,7 +10,7 @@ const fetch = require('node-fetch');
 const {LH_ROOT} = require('../../root.js');
 
 const inspectorIssuesGathererPath = LH_ROOT +
-  '/lighthouse-core/gather/gatherers/inspector-issues.js';
+  '/core/gather/gatherers/inspector-issues.js';
 const inspectorIssuesGathererSource = fs.readFileSync(inspectorIssuesGathererPath, 'utf-8');
 
 /* eslint-env jest */

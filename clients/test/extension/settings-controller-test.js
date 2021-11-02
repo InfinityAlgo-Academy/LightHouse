@@ -8,7 +8,7 @@
 /* eslint-env jest */
 
 const SettingsController = require('../../extension/scripts/settings-controller.js');
-const defaultConfig = require('../../../lighthouse-core/config/default-config.js');
+const defaultConfig = require('../../../core/config/default-config.js');
 const format = require('../../../shared/localization/format.js');
 
 describe('Lighthouse chrome extension SettingsController', () => {

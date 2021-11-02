@@ -4,15 +4,15 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import parseManifest = require('../lighthouse-core/lib/manifest-parser.js');
-import LanternSimulator = require('../lighthouse-core/lib/dependency-graph/simulator/simulator.js');
-import LighthouseError = require('../lighthouse-core/lib/lh-error.js');
-import _NetworkRequest = require('../lighthouse-core/lib/network-request.js');
+import parseManifest = require('../core/lib/manifest-parser.js');
+import LanternSimulator = require('../core/lib/dependency-graph/simulator/simulator.js');
+import LighthouseError = require('../core/lib/lh-error.js');
+import _NetworkRequest = require('../core/lib/network-request.js');
 import speedline = require('speedline-core');
-import TextSourceMap = require('../lighthouse-core/lib/cdt/generated/SourceMap.js');
-import ArbitraryEqualityMap = require('../lighthouse-core/lib/arbitrary-equality-map.js');
+import TextSourceMap = require('../core/lib/cdt/generated/SourceMap.js');
+import ArbitraryEqualityMap = require('../core/lib/arbitrary-equality-map.js');
 
-type _TaskNode = import('../lighthouse-core/lib/tracehouse/main-thread-tasks.js').TaskNode;
+type _TaskNode = import('../core/lib/tracehouse/main-thread-tasks.js').TaskNode;
 
 import AuditDetails from './lhr/audit-details'
 import Config from './config';

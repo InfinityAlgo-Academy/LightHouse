@@ -136,7 +136,7 @@ function getFlags(manualArgv, options = {}) {
         'config-path': {
           type: 'string',
           describe: `The path to the config JSON.
-            An example config file: lighthouse-core/config/lr-desktop-config.js`,
+            An example config file: core/config/lr-desktop-config.js`,
         },
         'preset': {
           type: 'string',

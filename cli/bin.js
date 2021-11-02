@@ -11,7 +11,7 @@
  *   index.js     : only calls bin.js's begin()
  *   cli-flags.js : leverages yargs to read argv, outputs LH.CliFlags
  *   bin.js       : CLI args processing. cwd, list/print commands
- *   run.js       : chrome-launcher bits, calling lighthouse-core, output to Printer
+ *   run.js       : chrome-launcher bits, calling core, output to Printer
  *
  *   index ---->    bin    ---->      run      ----> printer
  *                  ⭏  ⭎               ⭏  ⭎
@@ -30,7 +30,7 @@ import * as commands from './commands/commands.js';
 import * as Printer from './printer.js';
 import {getFlags} from './cli-flags.js';
 import {runLighthouse} from './run.js';
-import lighthouse from '../lighthouse-core/index.js';
+import lighthouse from '../core/index.js';
 import {askPermission} from './sentry-prompt.js';
 import {LH_ROOT} from '../root.js';
 
@@ -38,7 +38,7 @@ const pkg = JSON.parse(fs.readFileSync(LH_ROOT + '/package.json', 'utf-8'));
 
 // TODO(esmodules): use regular import when this file is esm.
 const require = module.createRequire(import.meta.url);
-const Sentry = require('../lighthouse-core/lib/sentry.js');
+const Sentry = require('../core/lib/sentry.js');
 
 /**
  * @return {boolean}
@@ -86,7 +86,7 @@ async function begin() {
       configJson = (await import(configModuleUrl)).default;
     }
   } else if (cliFlags.preset) {
-    configJson = (await import(`../lighthouse-core/config/${cliFlags.preset}-config.js`)).default;
+    configJson = (await import(`../core/config/${cliFlags.preset}-config.js`)).default;
   }
 
   if (cliFlags.budgetPath) {

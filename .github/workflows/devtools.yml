@@ -50,19 +50,19 @@ jobs:
       working-directory: ${{ github.workspace }}/lighthouse
 
     - name: Download depot tools
-      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/chromium-web-tests/download-depot-tools.sh
+      run: bash $GITHUB_WORKSPACE/lighthouse/core/test/chromium-web-tests/download-depot-tools.sh
     - name: Download DevTools Frontend
-      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/chromium-web-tests/download-devtools.sh
+      run: bash $GITHUB_WORKSPACE/lighthouse/core/test/chromium-web-tests/download-devtools.sh
     - name: Download Blink Tools
-      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/chromium-web-tests/download-blink-tools.sh
+      run: bash $GITHUB_WORKSPACE/lighthouse/core/test/chromium-web-tests/download-blink-tools.sh
     - name: Download Content Shell
-      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/chromium-web-tests/download-content-shell.sh
+      run: bash $GITHUB_WORKSPACE/lighthouse/core/test/chromium-web-tests/download-content-shell.sh
 
     - name: Install python deps
       run: pip install six requests
 
     - name: Run Web Tests
-      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/chromium-web-tests/run-web-tests.sh
+      run: bash $GITHUB_WORKSPACE/lighthouse/core/test/chromium-web-tests/run-web-tests.sh
 
     - name: Print diff
       if: failure()

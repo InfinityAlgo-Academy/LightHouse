@@ -16,7 +16,7 @@ import {I18n} from '../../renderer/i18n.js';
 import {DOM} from '../../renderer/dom.js';
 import {DetailsRenderer} from '../../renderer/details-renderer.js';
 import {CategoryRenderer} from '../../renderer/category-renderer.js';
-import sampleResultsOrig from '../../../lighthouse-core/test/results/sample_v2.json';
+import sampleResultsOrig from '../../../core/test/results/sample_v2.json';
 
 describe('CategoryRenderer', () => {
   let renderer;

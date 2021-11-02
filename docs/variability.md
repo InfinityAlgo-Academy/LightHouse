@@ -122,7 +122,7 @@ If you're running Lighthouse directly via node, you can use the `computeMedianRu
 ```js
 const spawnSync = require('child_process').spawnSync;
 const lighthouseCli = require.resolve('lighthouse/cli');
-const {computeMedianRun} = require('lighthouse/lighthouse-core/lib/median-run.js');
+const {computeMedianRun} = require('lighthouse/core/lib/median-run.js');
 
 const results = [];
 for (let i = 0; i < 5; i++) {

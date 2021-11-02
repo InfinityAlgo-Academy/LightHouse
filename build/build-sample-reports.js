@@ -13,14 +13,14 @@ const path = require('path');
 const swapLocale = require('../shared/localization/swap-locale.js');
 const swapFlowLocale = require('../shared/localization/swap-flow-locale.js');
 const ReportGenerator = require('../report/generator/report-generator.js');
-const {defaultSettings} = require('../lighthouse-core/config/constants.js');
-const lighthouse = require('../lighthouse-core/index.js');
-const lhr = /** @type {LH.Result} */ (require('../lighthouse-core/test/results/sample_v2.json'));
+const {defaultSettings} = require('../core/config/constants.js');
+const lighthouse = require('../core/index.js');
+const lhr = /** @type {LH.Result} */ (require('../core/test/results/sample_v2.json'));
 const {LH_ROOT, readJson} = require('../root.js');
 
 /** @type {LH.FlowResult} */
 const flowResult = readJson(
-  `${LH_ROOT}/lighthouse-core/test/fixtures/fraggle-rock/reports/sample-flow-result.json`
+  `${LH_ROOT}/core/test/fixtures/fraggle-rock/reports/sample-flow-result.json`
 );
 
 const DIST = path.join(LH_ROOT, 'dist');

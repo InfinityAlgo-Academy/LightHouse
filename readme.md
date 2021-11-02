@@ -88,7 +88,7 @@ Configuration:
   --print-config                 Print the normalized config for the given config and options, then exit.  [boolean] [default: false]
   --additional-trace-categories  Additional categories to capture with the trace (comma-delimited).  [string]
   --config-path                  The path to the config JSON.
-                                 An example config file: lighthouse-core/config/lr-desktop-config.js  [string]
+                                 An example config file: core/config/lr-desktop-config.js  [string]
   --preset                       Use a built-in configuration.
                                  WARNING: If the --config-path flag is provided, this preset will be ignored.  [string] [choices: "perf", "experimental", "desktop"]
   --chrome-flags                 Custom flags to pass to Chrome (space-delimited). For a full list of flags, see https://bit.ly/chrome-flags

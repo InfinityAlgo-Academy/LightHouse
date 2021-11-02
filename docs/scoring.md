@@ -23,7 +23,7 @@ All audits in the SEO category are [equally weighted](https://github.com/GoogleC
 
 ## How is the accessibility score calculated?
 
-<!-- To regnerate score weights, run `node lighthouse-core/scripts/print-a11y-scoring.js`-->
+<!-- To regnerate score weights, run `node core/scripts/print-a11y-scoring.js`-->
 
 The accessibility score is a weighted average. The specific weights for v7 are as follows:
 

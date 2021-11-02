@@ -7,14 +7,14 @@
 
 /* global globalThis */
 
-const lighthouse = require('../lighthouse-core/index.js');
-const RawProtocol = require('../lighthouse-core/gather/connections/raw.js');
+const lighthouse = require('../core/index.js');
+const RawProtocol = require('../core/gather/connections/raw.js');
 const log = require('lighthouse-logger');
-const {lookupLocale} = require('../lighthouse-core/lib/i18n/i18n.js');
+const {lookupLocale} = require('../core/lib/i18n/i18n.js');
 const {registerLocaleData, getCanonicalLocales} = require('../shared/localization/format.js');
-const constants = require('../lighthouse-core/config/constants.js');
+const constants = require('../core/config/constants.js');
 
-/** @typedef {import('../lighthouse-core/gather/connections/connection.js')} Connection */
+/** @typedef {import('../core/gather/connections/connection.js')} Connection */
 
 // Rollup seems to overlook some references to `Buffer`, so it must be made explicit.
 // (`parseSourceMapFromDataUrl` breaks without this)

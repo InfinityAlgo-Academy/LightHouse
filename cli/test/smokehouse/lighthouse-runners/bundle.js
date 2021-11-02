@@ -15,7 +15,7 @@ import fs from 'fs';
 
 import ChromeLauncher from 'chrome-launcher';
 
-import ChromeProtocol from '../../../../lighthouse-core/gather/connections/cri.js';
+import ChromeProtocol from '../../../../core/gather/connections/cri.js';
 import {LH_ROOT} from '../../../../root.js';
 
 const originalRequire = global.require;
@@ -29,7 +29,7 @@ eval(fs.readFileSync(LH_ROOT + '/dist/lighthouse-dt-bundle.js', 'utf-8'));
 
 global.require = originalRequire;
 
-/** @type {import('../../../../lighthouse-core/index.js')} */
+/** @type {import('../../../../core/index.js')} */
 // @ts-expect-error - not worth giving test global an actual type.
 const lighthouse = global.runBundledLighthouse;
 

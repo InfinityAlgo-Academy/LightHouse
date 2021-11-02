@@ -12,7 +12,7 @@ const path = require('path');
 const {inlineFs} = require('../../plugins/inline-fs.js');
 
 const {LH_ROOT} = require('../../../root.js');
-const filepath = `${LH_ROOT}/lighthouse-core/index.js`;
+const filepath = `${LH_ROOT}/core/index.js`;
 
 describe('inline-fs', () => {
   const tmpPath = `${LH_ROOT}/.tmp/inline-fs/test.txt`;

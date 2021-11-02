@@ -6,13 +6,13 @@
 'use strict';
 
 module.exports = {
-  setupFilesAfterEnv: ['./lighthouse-core/test/test-utils.js'],
+  setupFilesAfterEnv: ['./core/test/test-utils.js'],
   testEnvironment: 'node',
   testMatch: [
-    '**/lighthouse-core/**/*-test.js',
+    '**/core/**/*-test.js',
     '**/cli/**/*-test.js',
     '**/report/**/*-test.js',
-    '**/lighthouse-core/test/fraggle-rock/**/*-test-pptr.js',
+    '**/core/test/fraggle-rock/**/*-test-pptr.js',
     '**/treemap/**/*-test.js',
     '**/viewer/**/*-test.js',
     '**/third-party/**/*-test.js',

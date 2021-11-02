@@ -11,7 +11,7 @@ import {strict as assert} from 'assert';
 import fs from 'fs';
 
 import * as Printer from '../../printer.js';
-import sampleResults from '../../../lighthouse-core/test/results/sample_v2.json';
+import sampleResults from '../../../core/test/results/sample_v2.json';
 
 describe('Printer', () => {
   it('accepts valid output paths', () => {
