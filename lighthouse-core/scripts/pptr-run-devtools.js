@@ -8,12 +8,11 @@
 /**
  * USAGE:
  * Make sure CHROME_PATH is set to a modern version of Chrome.
- * This script won't work on older versions that use the "Audits" panel.
+ * May work on older versions of Chrome.
  *
  * URL list file: yarn run-devtools < path/to/urls.txt
  * Single URL: yarn run-devtools "https://example.com"
  */
-
 
 import fs from 'fs';
 import readline from 'readline';
@@ -73,9 +72,12 @@ function addSniffer(receiver, methodName, override) {
 
 const sniffLhr = `
 new Promise(resolve => {
+  const panel = UI.panels.lighthouse || UI.panels.audits;
+  const methodName = panel.__proto__.buildReportUI ?
+    'buildReportUI' : '_buildReportUI';
   (${addSniffer.toString()})(
-    UI.panels.lighthouse.__proto__,
-    'buildReportUI',
+    panel.__proto__,
+    methodName,
     (lhr, artifacts) => resolve(lhr)
   );
 });
@@ -83,8 +85,10 @@ new Promise(resolve => {
 
 const sniffLighthouseStarted = `
 new Promise(resolve => {
+  const panel = UI.panels.lighthouse || UI.panels.audits;
+  const protocolService = panel.protocolService || panel._protocolService;
   (${addSniffer.toString()})(
-    UI.panels.lighthouse.protocolService.__proto__,
+    protocolService.__proto__,
     'startLighthouse',
     (inspectedURL) => resolve(inspectedURL)
   );
@@ -93,9 +97,13 @@ new Promise(resolve => {
 
 const startLighthouse = `
 (async () => {
-  const ViewManager = UI.ViewManager.ViewManager || UI.ViewManager;
-  await ViewManager.instance().showView('lighthouse');
-  const button = UI.panels.lighthouse.contentElement.querySelector('button');
+  const viewManager = UI.viewManager || (UI.ViewManager.ViewManager || UI.ViewManager).instance();
+  const views = viewManager.views || viewManager._views;
+  const panelName = views.has('lighthouse') ? 'lighthouse' : 'audits';
+  await viewManager.showView(panelName);
+
+  const panel = UI.panels.lighthouse || UI.panels.audits;
+  const button = panel.contentElement.querySelector('button');
   if (button.disabled) throw new Error('Start button disabled');
   button.click();
 })()
@@ -142,6 +150,7 @@ async function testPage(page, browser, url) {
   /** @type {Omit<puppeteer.Protocol.Runtime.EvaluateResponse, 'result'>|undefined} */
   let startLHResponse;
   while (!startLHResponse || startLHResponse.exceptionDetails) {
+    if (startLHResponse) await new Promise(resolve => setTimeout(resolve, 1000));
     startLHResponse = await session.send('Runtime.evaluate', {
       expression: startLighthouse,
       awaitPromise: true,
@@ -159,7 +168,7 @@ async function testPage(page, browser, url) {
   // make sure it exists.
   if (!isValidUrl(lhStartedResponse.result.value)) {
     throw new Error(`Lighthouse did not start correctly. Got unexpected value for url: ${
-      lhStartedResponse.result.value}`);
+      JSON.stringify(lhStartedResponse.result.value)}`);
   }
 
   /** @type {puppeteer.Protocol.Runtime.EvaluateResponse} */
@@ -227,11 +236,15 @@ async function run() {
       console.error(error.message);
       fs.writeFileSync(`${argv.o}/lhr-${i}.json`, JSON.stringify({error: error.message}, null, 2));
     } finally {
-      await page.close();
+      try {
+        await page.close();
+      } catch {}
     }
   }
   console.log(`${urlList.length - errorCount} / ${urlList.length} urls run successfully.`);
 
   await browser.close();
+
+  if (errorCount) process.exit(1);
 }
 run();
