@@ -84,6 +84,9 @@ function swapLocale(lhr, requestedLocale) {
         // The default value is the string already in place.
         formattedDefault: originalString,
       };
+      if (icuMessage.i18nId.startsWith('lighthouse-core')) {
+        icuMessage.i18nId = icuMessage.i18nId.replace('lighthouse-core', 'core');
+      }
       // Get new formatted strings in revised locale.
       const relocalizedString = format.getFormatted(icuMessage, requestedLocale);
 

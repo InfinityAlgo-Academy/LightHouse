@@ -11,6 +11,11 @@
   "engines": {
     "node": ">=14.15"
   },
+  "exports": {
+    ".": "./core/index.js",
+    "./lighthouse-core/*": "./core/*",
+    "./lighthouse-cli/*": "./cli/*"
+  },
   "scripts": {
     "prepack": "yarn build-report --standalone --flow",
     "build-all": "npm-run-posix-or-windows build-all:task",
