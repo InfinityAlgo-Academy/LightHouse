@@ -14,7 +14,7 @@ TEST_DIR="$LH_ROOT/.tmp/chromium-web-tests"
 DEFAULT_DEVTOOLS_PATH="$TEST_DIR/devtools/devtools-frontend"
 DEVTOOLS_PATH=${DEVTOOLS_PATH:-"$DEFAULT_DEVTOOLS_PATH"}
 
-if [[ -z $CHROME_PATH ]]; then
+if [ -z "${CHROME_PATH:-}" ]; then
   echo 'Must set $CHROME_PATH'
   exit 1
 fi
@@ -22,7 +22,7 @@ fi
 echo "CHROME_PATH: $CHROME_PATH"
 echo "DEVTOOLS_PATH: $DEVTOOLS_PATH"
 
-if [ ! -d $DEVTOOLS_PATH ]; then
+if [ ! -d "$DEVTOOLS_PATH" ]; then
   echo "No devtools found at $DEVTOOLS_PATH. Have you run 'yarn test-devtools' yet?"
   exit 1
 fi
@@ -36,11 +36,11 @@ if ! which gn ; then
   export PYTHONPATH="${PYTHONPATH:-}:$BLINK_TOOLS_PATH/latest/third_party/typ"
 fi
 
-yarn build-devtools
 yarn devtools "$DEVTOOLS_PATH"
 
 cd "$DEVTOOLS_PATH"
 gn gen out/Default
 gclient sync
 autoninja -C out/Default
-"$CHROME_PATH" --custom-devtools-frontend=file://$DEVTOOLS_PATH/out/Default/resources/inspector
+
+"$CHROME_PATH" --custom-devtools-frontend=file://"$DEVTOOLS_PATH"/out/Default/gen/front_end $*

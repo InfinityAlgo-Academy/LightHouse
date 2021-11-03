@@ -20,7 +20,8 @@ class FirstContentfulPaint3G extends Audit {
       description: 'First Contentful Paint 3G marks the time at which the first text or image is ' +
         `painted while on a 3G network. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint).`,
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
-      requiredArtifacts: ['traces', 'devtoolsLogs'],
+      supportedModes: ['navigation'],
+      requiredArtifacts: ['traces', 'devtoolsLogs', 'GatherContext'],
     };
   }
 
@@ -29,12 +30,11 @@ class FirstContentfulPaint3G extends Audit {
    */
   static get defaultOptions() {
     return {
-      // 25th and 5th percentiles HTTPArchive on Fast 3G -> multiply by 1.5 for RTT differential -> median and PODR
-      // p10 is then derived from them.
-      // https://bigquery.cloud.google.com/table/httparchive:lighthouse.2018_04_01_mobile?pli=1
-      // https://www.desmos.com/calculator/fflcrsn9sj
-      p10: 3504,
-      median: 6000,
+      // 25th and 8th percentiles HTTPArchive on Slow 4G -> multiply by 1.5 for RTT differential -> median and p10.
+      // https://bigquery.cloud.google.com/table/httparchive:lighthouse.2021_05_01_mobile
+      // https://www.desmos.com/calculator/xi5oympawp
+      p10: 2700,
+      median: 4500,
     };
   }
 
@@ -44,11 +44,12 @@ class FirstContentfulPaint3G extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
+    const gatherContext = artifacts.GatherContext;
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     /** @type {Immutable<LH.Config.Settings>} */
     const settings = {...context.settings, throttlingMethod: 'simulate', throttling: regular3G};
-    const metricComputationData = {trace, devtoolsLog, settings};
+    const metricComputationData = {trace, devtoolsLog, gatherContext, settings};
     const metricResult = await ComputedFcp.request(metricComputationData, context);
 
     return {

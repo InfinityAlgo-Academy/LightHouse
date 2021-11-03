@@ -90,4 +90,25 @@ describe('Total byte weight audit', () => {
       assert.strictEqual(result.score, 0);
     });
   });
+
+  it('ignores non-network requests', async () => {
+    const artifacts = generateArtifacts([
+      {url: 'https://example.com/file.js', transferSize: 10_000},
+      {url: 'data:image/jpeg;base64,', protocol: 'data', transferSize: 100_000},
+      {url: 'blob:1234', protocol: 'blob', transferSize: 100_000},
+    ]);
+
+    const result = await TotalByteWeight.audit(artifacts, {options, computedCache: new Map()});
+    expect(result.numericValue).toEqual(10_000);
+  });
+
+  it('ignores requests with falsy transfer size', async () => {
+    const artifacts = generateArtifacts([
+      {url: 'https://example.com/file.html', transferSize: 5_000},
+      {url: 'https://example.com/file.js', transferSize: NaN},
+    ]);
+
+    const result = await TotalByteWeight.audit(artifacts, {options, computedCache: new Map()});
+    expect(result.numericValue).toEqual(5_000);
+  });
 });

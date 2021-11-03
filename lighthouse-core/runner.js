@@ -11,23 +11,26 @@ const GatherRunner = require('./gather/gather-runner.js');
 const ReportScoring = require('./scoring.js');
 const Audit = require('./audits/audit.js');
 const log = require('lighthouse-logger');
-const i18n = require('./lib/i18n/i18n.js');
+const format = require('../shared/localization/format.js');
 const stackPacks = require('./lib/stack-packs.js');
 const assetSaver = require('./lib/asset-saver.js');
 const fs = require('fs');
 const path = require('path');
 const URL = require('./lib/url-shim.js');
 const Sentry = require('./lib/sentry.js');
-const generateReport = require('./report/report-generator.js').generateReport;
+const generateReport = require('../report/generator/report-generator.js').generateReport;
 const LHError = require('./lib/lh-error.js');
+const {version: lighthouseVersion} = require('../package.json');
 
 /** @typedef {import('./gather/connections/connection.js')} Connection */
-/** @typedef {import('./config/config.js')} Config */
+/** @typedef {import('./lib/arbitrary-equality-map.js')} ArbitraryEqualityMap */
+/** @typedef {LH.Config.Config} Config */
 
 class Runner {
   /**
-   * @param {(runnerData: {requestedUrl: string, config: Config, driverMock?: Driver}) => Promise<LH.Artifacts>} gatherFn
-   * @param {{config: Config, url?: string, driverMock?: Driver}} runOpts
+   * @template {LH.Config.Config | LH.Config.FRConfig} TConfig
+   * @param {(runnerData: {requestedUrl: string, config: TConfig, driverMock?: Driver}) => Promise<LH.Artifacts>} gatherFn
+   * @param {{config: TConfig, computedCache: Map<string, ArbitraryEqualityMap>, url?: string, driverMock?: Driver}} runOpts
    * @return {Promise<LH.RunnerResult|undefined>}
    */
   static async run(gatherFn, runOpts) {
@@ -99,7 +102,7 @@ class Runner {
         throw new Error('No audits to evaluate.');
       }
       const auditResultsById = await Runner._runAudits(settings, runOpts.config.audits, artifacts,
-          lighthouseRunWarnings);
+          lighthouseRunWarnings, runOpts.computedCache);
 
       // LHR construction phase
       const resultsStatus = {msg: 'Generating results...', id: 'lh:runner:generate'};
@@ -110,7 +113,6 @@ class Runner {
       }
 
       // Entering: conclusion of the lighthouse result object
-      const lighthouseVersion = require('../package.json').version;
 
       // Use version from gathering stage.
       // If accessibility gatherer didn't run or errored, it won't be in credits.
@@ -130,6 +132,7 @@ class Runner {
 
       /** @type {LH.RawIcu<LH.Result>} */
       const i18nLhr = {
+        gatherMode: artifacts.GatherContext.gatherMode,
         userAgent: artifacts.HostUserAgent,
         environment: {
           networkUserAgent: artifacts.NetworkUserAgent,
@@ -149,14 +152,14 @@ class Runner {
         categoryGroups: runOpts.config.groups || undefined,
         timing: this._getTiming(artifacts),
         i18n: {
-          rendererFormattedStrings: i18n.getRendererFormattedStrings(settings.locale),
+          rendererFormattedStrings: format.getRendererFormattedStrings(settings.locale),
           icuMessagePaths: {},
         },
         stackPacks: stackPacks.getStackPacks(artifacts.Stacks),
       };
 
       // Replace ICU message references with localized strings; save replaced paths in lhr.
-      i18nLhr.i18n.icuMessagePaths = i18n.replaceIcuMessages(i18nLhr, settings.locale);
+      i18nLhr.i18n.icuMessagePaths = format.replaceIcuMessages(i18nLhr, settings.locale);
 
       // LHR has now been localized.
       const lhr = /** @type {LH.Result} */ (i18nLhr);
@@ -174,7 +177,7 @@ class Runner {
     } catch (err) {
       // i18n LighthouseError strings.
       if (err.friendlyMessage) {
-        err.friendlyMessage = i18n.getFormatted(err.friendlyMessage, settings.locale);
+        err.friendlyMessage = format.getFormatted(err.friendlyMessage, settings.locale);
       }
       await Sentry.captureException(err, {level: 'fatal'});
       throw err;
@@ -208,7 +211,7 @@ class Runner {
         duration: parseFloat(entry.duration.toFixed(2)),
         entryType: entry.entryType,
       };
-    });
+    }).sort((a, b) => a.startTime - b.startTime);
     const runnerEntry = timingEntries.find(e => e.name === 'lh:runner:run');
     return {entries: timingEntries, total: runnerEntry && runnerEntry.duration || 0};
   }
@@ -216,7 +219,7 @@ class Runner {
   /**
    * Establish connection, load page and collect all required artifacts
    * @param {string} requestedUrl
-   * @param {{config: Config, driverMock?: Driver}} runnerOpts
+   * @param {{config: Config, computedCache: Map<string, ArbitraryEqualityMap>, driverMock?: Driver}} runnerOpts
    * @param {Connection} connection
    * @return {Promise<LH.Artifacts>}
    */
@@ -229,6 +232,7 @@ class Runner {
       driver,
       requestedUrl,
       settings: runnerOpts.config.settings,
+      computedCache: runnerOpts.computedCache,
     };
     const gatherPromise = GatherRunner.run(runnerOpts.config.passes, gatherOpts);
     await Promise.race([
@@ -245,9 +249,10 @@ class Runner {
    * @param {Array<LH.Config.AuditDefn>} audits
    * @param {LH.Artifacts} artifacts
    * @param {Array<string | LH.IcuMessage>} runWarnings
+   * @param {Map<string, ArbitraryEqualityMap>} computedCache
    * @return {Promise<Record<string, LH.RawIcu<LH.Audit.Result>>>}
    */
-  static async _runAudits(settings, audits, artifacts, runWarnings) {
+  static async _runAudits(settings, audits, artifacts, runWarnings, computedCache) {
     const status = {msg: 'Analyzing and running audits...', id: 'lh:runner:auditing'};
     log.time(status);
 
@@ -271,7 +276,7 @@ class Runner {
     // Members of LH.Audit.Context that are shared across all audits.
     const sharedAuditContext = {
       settings,
-      computedCache: new Map(),
+      computedCache,
     };
 
     // Run each audit sequentially
@@ -301,7 +306,7 @@ class Runner {
   static async _runAudit(auditDefn, artifacts, sharedAuditContext, runWarnings) {
     const audit = auditDefn.implementation;
     const status = {
-      msg: `Auditing: ${i18n.getFormatted(audit.meta.title, 'en-US')}`,
+      msg: `Auditing: ${format.getFormatted(audit.meta.title, 'en-US')}`,
       id: `lh:audit:${audit.meta.id}`,
     };
     log.time(status);

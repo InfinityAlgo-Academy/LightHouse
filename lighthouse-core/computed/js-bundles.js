@@ -29,8 +29,7 @@ function computeGeneratedFileSizes(map, content) {
     const source = mapping.sourceURL;
     const lineNum = mapping.lineNumber;
     const colNum = mapping.columnNumber;
-    // @ts-expect-error: `lastColumnNumber` is not on types yet. This will eventually be added to CDT.
-    const lastColNum = /** @type {number=} */ (mapping.lastColumnNumber);
+    const lastColNum = mapping.lastColumnNumber;
 
     // Webpack sometimes emits null mappings.
     // https://github.com/mozilla/source-map/pull/303

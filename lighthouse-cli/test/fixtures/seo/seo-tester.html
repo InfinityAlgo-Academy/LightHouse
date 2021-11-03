@@ -58,7 +58,9 @@
   <p class='small-4'> 4. </p>
   <h6>2</h6>
   <font size="1">3<b>4</b></font>
-  <p style='font-size:10px'> 5 </p>
+  <div style=''>
+    <p style='font-size:10px'> 5 </p>
+  </div>
   <script class='small'>
     // text from SCRIPT tags should be ignored by the font-size audit
   </script>
@@ -70,13 +72,13 @@
   <!-- PASS(crawlable-anchors): Link with a relative path -->
   <a href="/pass">Some link</a>
 
-  <!-- PASS(crawlable-anchors): Link with a click event listener -->
+  <!-- FAIL(crawlable-anchors): Link with a click event listener -->
   <a class="some-link">Some link</a>
   <script>
     document.querySelector('.some-link').addEventListener('click', () => {});
   </script>
 
-  <!-- PASS(crawlable-anchors): Link with an onclick which won't match the audit regex -->
+  <!-- FAIL(crawlable-anchors): Link with an onclick which won't match the audit regex -->
   <a onclick="window.Location = '';">Some link</a>
 </body>
 </html>

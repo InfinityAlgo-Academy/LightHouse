@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const constants = require('../../../scripts/lantern/constants.js');
+import constants from '../../../scripts/lantern/constants.js';
 
 /* eslint-env jest */
 

@@ -18,7 +18,6 @@ const {
   allRectsContainedWithinEachOther,
   getLargestRect,
   getBoundingRectWithPadding,
-  getBoundingRect,
 } = require('../../lib/rect-helpers.js');
 const {getTappableRectsFromClientRects} = require('../../lib/tappable-rects.js');
 const i18n = require('../../lib/i18n/i18n.js');
@@ -73,7 +72,7 @@ function clientRectBelowMinimumSize(cr) {
 /**
  * A target is "too small" if none of its clientRects are at least the size of a finger.
  * @param {BoundedTapTarget[]} targets
- * @returns {BoundedTapTarget[]}
+ * @return {BoundedTapTarget[]}
  */
 function getTooSmallTargets(targets) {
   return targets.filter(target => {
@@ -84,7 +83,7 @@ function getTooSmallTargets(targets) {
 /**
  * @param {BoundedTapTarget[]} tooSmallTargets
  * @param {BoundedTapTarget[]} allTargets
- * @returns {TapTargetOverlapFailure[]}
+ * @return {TapTargetOverlapFailure[]}
  */
 function getAllOverlapFailures(tooSmallTargets, allTargets) {
   /** @type {TapTargetOverlapFailure[]} */
@@ -139,7 +138,7 @@ function getAllOverlapFailures(tooSmallTargets, allTargets) {
 /**
  * @param {LH.Artifacts.Rect[]} tappableRects
  * @param {LH.Artifacts.Rect[]} maybeOverlappingRects
- * @returns {ClientRectOverlapFailure | null}
+ * @return {ClientRectOverlapFailure | null}
  */
 function getOverlapFailureForTargetPair(tappableRects, maybeOverlappingRects) {
   /** @type ClientRectOverlapFailure | null */
@@ -177,7 +176,7 @@ function getOverlapFailureForTargetPair(tappableRects, maybeOverlappingRects) {
 /**
  * Only report one failure if two targets overlap each other
  * @param {TapTargetOverlapFailure[]} overlapFailures
- * @returns {TapTargetOverlapFailure[]}
+ * @return {TapTargetOverlapFailure[]}
  */
 function mergeSymmetricFailures(overlapFailures) {
   /** @type TapTargetOverlapFailure[] */
@@ -213,7 +212,7 @@ function mergeSymmetricFailures(overlapFailures) {
 
 /**
  * @param {TapTargetOverlapFailure[]} overlapFailures
- * @returns {TapTargetTableItem[]}
+ * @return {TapTargetTableItem[]}
  */
 function getTableItems(overlapFailures) {
   const tableItems = overlapFailures.map(failure => {
@@ -222,8 +221,8 @@ function getTableItems(overlapFailures) {
     const height = Math.floor(largestCR.height);
     const size = width + 'x' + height;
     return {
-      tapTarget: targetToTableNode(failure.tapTarget),
-      overlappingTarget: targetToTableNode(failure.overlappingTarget),
+      tapTarget: Audit.makeNodeItem(failure.tapTarget.node),
+      overlappingTarget: Audit.makeNodeItem(failure.overlappingTarget.node),
       tapTargetScore: failure.tapTargetScore,
       overlappingTargetScore: failure.overlappingTargetScore,
       overlapScoreRatio: failure.overlapScoreRatio,
@@ -238,24 +237,6 @@ function getTableItems(overlapFailures) {
   });
 
   return tableItems;
-}
-
-/**
- * @param {LH.Artifacts.TapTarget} target
- * @returns {LH.Audit.Details.NodeValue}
- */
-function targetToTableNode(target) {
-  const boundingRect = getBoundingRect(target.clientRects);
-
-  return {
-    type: 'node',
-    lhId: target.node.lhId,
-    snippet: target.node.snippet,
-    path: target.node.devtoolsNodePath,
-    selector: target.node.selector,
-    boundingRect,
-    nodeLabel: target.node.nodeLabel,
-  };
 }
 
 class TapTargets extends Audit {

@@ -5,22 +5,23 @@
  */
 'use strict';
 
-const fs = require('fs');
 const browserify = require('browserify');
+const rollupPlugins = require('./rollup-plugins.js');
 const GhPagesApp = require('./gh-pages-app.js');
-const {minifyFileTransform} = require('./build-utils.js');
-const htmlReportAssets = require('../lighthouse-core/report/html/html-report-assets.js');
+const {LH_ROOT} = require('../root.js');
+const inlineFs = require('./plugins/browserify-inline-fs.js');
 
 /**
  * Build viewer, optionally deploying to gh-pages if `--deploy` flag was set.
  */
 async function run() {
   // JS bundle from browserified ReportGenerator.
-  const generatorFilename = `${__dirname}/../lighthouse-core/report/report-generator.js`;
+  const generatorFilename = `${LH_ROOT}/report/generator/report-generator.js`;
   const generatorBrowserify = browserify(generatorFilename, {standalone: 'ReportGenerator'})
-    .transform('@wardpeet/brfs', {
-      readFileSyncTransform: minifyFileTransform,
-    });
+    // Flow report is not used in report viewer, so don't include flow assets.
+    .ignore(require.resolve('../report/generator/flow-report-assets.js'))
+    // Transform `fs.readFileSync`, etc into inline strings.
+    .transform(inlineFs({verbose: Boolean(process.env.DEBUG)}));
 
   /** @type {Promise<string>} */
   const generatorJsPromise = new Promise((resolve, reject) => {
@@ -32,24 +33,33 @@ async function run() {
 
   const app = new GhPagesApp({
     name: 'viewer',
-    appDir: `${__dirname}/../lighthouse-viewer/app`,
+    appDir: `${LH_ROOT}/viewer/app`,
     html: {path: 'index.html'},
-    htmlReplacements: {
-      '%%LIGHTHOUSE_TEMPLATES%%': htmlReportAssets.REPORT_TEMPLATES,
-    },
     stylesheets: [
-      htmlReportAssets.REPORT_CSS,
       {path: 'styles/*'},
     ],
     javascripts: [
       await generatorJsPromise,
-      htmlReportAssets.REPORT_JAVASCRIPT,
-      fs.readFileSync(require.resolve('idb-keyval/dist/idb-keyval-min.js'), 'utf8'),
-      {path: 'src/*'},
+      {path: require.resolve('pako/dist/pako_inflate.js')},
+      {path: 'src/main.js', rollup: true, rollupPlugins: [
+        rollupPlugins.shim({
+          './locales.js': 'export default {}',
+        }),
+        rollupPlugins.inlineFs({verbose: Boolean(process.env.DEBUG)}),
+        rollupPlugins.replace({
+          values: {
+            '__dirname': '""',
+          },
+        }),
+        rollupPlugins.commonjs(),
+        rollupPlugins.nodePolyfills(),
+        rollupPlugins.nodeResolve({preferBuiltins: true}),
+      ]},
     ],
     assets: [
-      {path: 'images/**/*'},
+      {path: 'images/**/*', destDir: 'images'},
       {path: 'manifest.json'},
+      {path: '../../shared/localization/locales/*.json', destDir: 'locales'},
     ],
   });
 

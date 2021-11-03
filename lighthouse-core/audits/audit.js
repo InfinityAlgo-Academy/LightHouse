@@ -7,7 +7,7 @@
 
 const {isUnderTest} = require('../lib/lh-env.js');
 const statistics = require('../lib/statistics.js');
-const Util = require('../report/html/renderer/util.js');
+const Util = require('../util-commonjs.js');
 
 const DEFAULT_PASS = 'defaultPass';
 
@@ -133,7 +133,7 @@ class Audit {
 
   /**
    * @param {LH.Audit.Details.List['items']} items
-   * @returns {LH.Audit.Details.List}
+   * @return {LH.Audit.Details.List}
    */
   static makeListDetails(items) {
     return {
@@ -180,7 +180,7 @@ class Audit {
   /**
    * @param {string} content
    * @param {number} maxLineLength
-   * @returns {LH.Audit.Details.SnippetValue['lines']}
+   * @return {LH.Audit.Details.SnippetValue['lines']}
    */
   static _makeSnippetLinesArray(content, maxLineLength) {
     return content.split('\n').map((line, lineIndex) => {
@@ -213,6 +213,38 @@ class Audit {
       items,
       overallSavingsMs,
       overallSavingsBytes,
+    };
+  }
+
+  /**
+   * @param {LH.Artifacts.NodeDetails} node
+   * @return {LH.Audit.Details.NodeValue}
+   */
+  static makeNodeItem(node) {
+    return {
+      type: 'node',
+      lhId: node.lhId,
+      path: node.devtoolsNodePath,
+      selector: node.selector,
+      boundingRect: node.boundingRect,
+      snippet: node.snippet,
+      nodeLabel: node.nodeLabel,
+    };
+  }
+
+  /**
+   * @param {LH.Artifacts.ConsoleMessage} entry
+   * @return {LH.Audit.Details.SourceLocationValue | undefined}
+   */
+  static makeSourceLocationFromConsoleMessage(entry) {
+    if (!entry.url) return;
+
+    return {
+      type: 'source-location',
+      url: entry.url,
+      urlProvider: 'network',
+      line: entry.lineNumber || 0,
+      column: entry.columnNumber || 0,
     };
   }
 

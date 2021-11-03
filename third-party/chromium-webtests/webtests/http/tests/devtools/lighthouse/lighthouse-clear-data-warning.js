@@ -6,7 +6,7 @@
   TestRunner.addResult('Tests that Lighthouse panel displays a warning when important data may affect performance.\n');
   await TestRunner.navigatePromise('resources/lighthouse-storage.html');
 
-  await TestRunner.loadModule('lighthouse_test_runner');
+  await TestRunner.loadTestModule('lighthouse_test_runner');
   await TestRunner.showPanel('lighthouse');
 
   const containerElement = LighthouseTestRunner.getContainerElement();
@@ -27,7 +27,7 @@
   const warningText = containerElement.querySelector('.lighthouse-warning-text');
 
   // Wait for warning event to be handled
-  LighthouseTestRunner._panel()._controller.addEventListener(Events.PageWarningsChanged, () => {
+  LighthouseTestRunner._panel().controller.addEventListener(Events.PageWarningsChanged, () => {
     TestRunner.addResult(`Warning Text: ${warningText.textContent}`);
     TestRunner.completeTest();
   });

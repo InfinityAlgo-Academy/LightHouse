@@ -10,13 +10,13 @@ const assert = require('assert').strict;
 
 /* eslint-env jest */
 
-function generateImage(clientSize, naturalSize, props, src = 'https://google.com/logo.png') {
+function generateImage(clientSize, naturalDimensions, props, src = 'https://google.com/logo.png') {
   return {
     src,
-    mimeType: 'image/png',
-    cssComputedObjectFit: 'fill',
+    computedStyles: {objectFit: 'fill'},
+    naturalDimensions,
+    node: {devtoolsNodePath: '1,HTML,1,IMG'},
     ...clientSize,
-    ...naturalSize,
     ...props,
   };
 }
@@ -29,7 +29,7 @@ describe('Images: aspect-ratio audit', () => {
         ImageElements: [
           generateImage(
             {displayedWidth: data.clientSize[0], displayedHeight: data.clientSize[1]},
-            {naturalWidth: data.naturalSize[0], naturalHeight: data.naturalSize[1]},
+            {width: data.naturalSize[0], height: data.naturalSize[1]},
             data.props
           ),
         ],
@@ -81,7 +81,7 @@ describe('Images: aspect-ratio audit', () => {
     naturalSize: [800, 500],
     props: {
       isCss: false,
-      cssComputedObjectFit: 'cover',
+      computedStyles: {objectFit: 'cover'},
     },
   });
 
@@ -143,11 +143,13 @@ describe('Images: aspect-ratio audit', () => {
       ImageElements: [
         generateImage(
           {width: 150, height: 150},
-          {},
+          {width: 100, height: 200},
           {
-            mimeType: 'image/svg+xml',
             isCss: false,
-          }
+            displayedWidth: 150,
+            displayedHeight: 150,
+          },
+          'https://google.com/logo.svg'
         ),
       ],
     });

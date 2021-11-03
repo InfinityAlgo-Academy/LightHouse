@@ -82,9 +82,9 @@ const screenEmulationMetrics = {
 };
 
 // eslint-disable-next-line max-len
-const MOTOG4_USERAGENT = 'Mozilla/5.0 (Linux; Android 7.0; Moto G (4)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4143.7 Mobile Safari/537.36 Chrome-Lighthouse';
+const MOTOG4_USERAGENT = 'Mozilla/5.0 (Linux; Android 7.0; Moto G (4)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4590.2 Mobile Safari/537.36 Chrome-Lighthouse';
 // eslint-disable-next-line max-len
-const DESKTOP_USERAGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4143.7 Safari/537.36 Chrome-Lighthouse';
+const DESKTOP_USERAGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4590.2 Safari/537.36 Chrome-Lighthouse';
 
 const userAgents = {
   mobile: MOTOG4_USERAGENT,
@@ -106,6 +106,7 @@ const defaultSettings = {
   auditMode: false,
   gatherMode: false,
   disableStorageReset: false,
+  debugNavigation: false,
   channel: 'node',
 
   // the following settings have no defaults but we still want ensure that `key in settings`
@@ -136,6 +137,21 @@ const defaultPassConfig = {
   gatherers: [],
 };
 
+/** @type {Required<LH.Config.NavigationJson>} */
+const defaultNavigationConfig = {
+  id: 'default',
+  loadFailureMode: 'fatal',
+  disableThrottling: false,
+  disableStorageReset: false,
+  pauseAfterFcpMs: 0,
+  pauseAfterLoadMs: 0,
+  networkQuietThresholdMs: 0,
+  cpuQuietThresholdMs: 0,
+  blockedUrlPatterns: [],
+  blankPage: 'about:blank',
+  artifacts: [],
+};
+
 const nonSimulatedPassConfigOverrides = {
   pauseAfterFcpMs: 5250,
   pauseAfterLoadMs: 5250,
@@ -149,5 +165,6 @@ module.exports = {
   userAgents,
   defaultSettings,
   defaultPassConfig,
+  defaultNavigationConfig,
   nonSimulatedPassConfigOverrides,
 };

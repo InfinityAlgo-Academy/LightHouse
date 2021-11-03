@@ -7,10 +7,6 @@
 
 /* eslint-disable no-console */
 
-const fs = require('fs');
-const path = require('path');
-const log = require('lighthouse-logger');
-
 /**
  * @fileoverview Used in conjunction with `./download-issues.js` to analyze our Issue and PR response times as a team.
  *
@@ -19,6 +15,10 @@ const log = require('lighthouse-logger');
  *
  * See the download script for usage information.
  */
+
+import log from 'lighthouse-logger';
+
+import {readJson} from '../../../root.js';
 
 /** @typedef {import('./download-issues.js').AugmentedGitHubIssue} AugmentedGitHubIssue */
 
@@ -62,9 +62,8 @@ function normalizeIssue(issue) {
   return issue;
 }
 
-const ISSUES_PATH = path.join(__dirname, '../../../.tmp', '_issues.json');
 /** @type {Array<AugmentedGitHubIssue>} */
-const _ISSUES = JSON.parse(fs.readFileSync(ISSUES_PATH, 'utf8')).map(normalizeIssue);
+const _ISSUES = readJson('.tmp/_issues.json').map(normalizeIssue);
 const _ISSUES_SINCE = _ISSUES.filter(issue => new Date(issue.created_at).getTime() > START_AT);
 const ISSUES = _ISSUES_SINCE.filter(issue => !issue.pull_request);
 

@@ -23,6 +23,7 @@ function request(opts) {
     requestId: opts.requestId || nextRequestId++,
     url,
     transferSize: opts.transferSize || 1000,
+    protocol: scheme,
     parsedURL: {scheme, host: 'example.com', securityOrigin: url},
     timing: opts.timing,
   }, opts);

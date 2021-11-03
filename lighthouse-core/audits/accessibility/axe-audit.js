@@ -37,7 +37,7 @@ class AxeAudit extends Audit {
     const isNotApplicable = notApplicables.find(result => result.id === this.meta.id);
     if (isNotApplicable) {
       return {
-        score: 1,
+        score: null,
         notApplicable: true,
       };
     }
@@ -66,7 +66,7 @@ class AxeAudit extends Audit {
     // Since there is no score impact from informative rules, display the rule as not applicable
     if (isInformative && !rule) {
       return {
-        score: 1,
+        score: null,
         notApplicable: true,
       };
     }
@@ -76,21 +76,21 @@ class AxeAudit extends Audit {
     if (rule && rule.nodes) {
       items = rule.nodes.map(axeNode => ({
         node: {
-          type: /** @type {'node'} */ ('node'),
-          lhId: axeNode.node.lhId,
-          selector: axeNode.node.selector,
-          path: axeNode.node.devtoolsNodePath,
-          snippet: axeNode.node.snippet,
-          boundingRect: axeNode.node.boundingRect,
+          ...Audit.makeNodeItem(axeNode.node),
           explanation: axeNode.failureSummary,
-          nodeLabel: axeNode.node.nodeLabel,
         },
+        subItems: axeNode.relatedNodes.length ? {
+          type: 'subitems',
+          items: axeNode.relatedNodes.map(node => ({relatedNode: Audit.makeNodeItem(node)})),
+        } : undefined,
       }));
     }
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
-      {key: 'node', itemType: 'node', text: str_(UIStrings.failingElementsHeader)},
+      /* eslint-disable max-len */
+      {key: 'node', itemType: 'node', subItemsHeading: {key: 'relatedNode', itemType: 'node'}, text: str_(UIStrings.failingElementsHeader)},
+      /* eslint-enable max-len */
     ];
 
     /** @type {LH.Audit.Details.DebugData|undefined} */

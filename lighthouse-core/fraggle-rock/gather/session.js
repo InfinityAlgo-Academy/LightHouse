@@ -5,6 +5,12 @@
  */
 'use strict';
 
+const LHError = require('../../lib/lh-error.js');
+const SessionEmitMonkeypatch = Symbol('monkeypatch');
+
+// Controls how long to wait for a response after sending a DevTools protocol command.
+const DEFAULT_PROTOCOL_TIMEOUT = 30000;
+
 /** @implements {LH.Gatherer.FRProtocolSession} */
 class ProtocolSession {
   /**
@@ -12,27 +18,54 @@ class ProtocolSession {
    */
   constructor(session) {
     this._session = session;
+    /** @type {LH.Crdp.Target.TargetInfo|undefined} */
+    this._targetInfo = undefined;
+    /** @type {number|undefined} */
+    this._nextProtocolTimeout = undefined;
+    /** @type {WeakMap<any, any>} */
+    this._callbackMap = new WeakMap();
+
+    // FIXME: Monkeypatch puppeteer to be able to listen to *all* protocol events.
+    // This patched method will now emit a copy of every event on `*`.
+    const originalEmit = session.emit;
+    // @ts-expect-error - Test for the monkeypatch.
+    if (originalEmit[SessionEmitMonkeypatch]) return;
+    session.emit = (method, ...args) => {
+      // OOPIF sessions need to emit their sessionId so downstream processors can recognize
+      // the target the event came from.
+      const sessionId = this._targetInfo && this._targetInfo.type === 'iframe' ?
+        this._targetInfo.targetId : undefined;
+      originalEmit.call(session, '*', {method, params: args[0], sessionId});
+      return originalEmit.call(session, method, ...args);
+    };
+    // @ts-expect-error - It's monkeypatching 🤷‍♂️.
+    session.emit[SessionEmitMonkeypatch] = true;
+  }
+
+  /** @param {LH.Crdp.Target.TargetInfo} targetInfo */
+  setTargetInfo(targetInfo) {
+    this._targetInfo = targetInfo;
   }
 
   /**
    * @return {boolean}
    */
   hasNextProtocolTimeout() {
-    return false;
+    return this._nextProtocolTimeout !== undefined;
   }
 
   /**
    * @return {number}
    */
   getNextProtocolTimeout() {
-    return Number.MAX_SAFE_INTEGER;
+    return this._nextProtocolTimeout || DEFAULT_PROTOCOL_TIMEOUT;
   }
 
   /**
    * @param {number} ms
    */
-  setNextProtocolTimeout(ms) { // eslint-disable-line no-unused-vars
-    // TODO(FR-COMPAT): support protocol timeout
+  setNextProtocolTimeout(ms) {
+    this._nextProtocolTimeout = ms;
   }
 
   /**
@@ -56,6 +89,43 @@ class ProtocolSession {
   }
 
   /**
+   * Bind to the puppeteer `sessionattached` listener and return an LH ProtocolSession.
+   * @param {(session: ProtocolSession) => void} callback
+   */
+  addSessionAttachedListener(callback) {
+    /** @param {import('puppeteer').CDPSession} session */
+    const listener = session => callback(new ProtocolSession(session));
+    this._callbackMap.set(callback, listener);
+    this._session.connection().on('sessionattached', listener);
+  }
+
+  /**
+   * Unbind to the puppeteer `sessionattached` listener.
+   * @param {(session: ProtocolSession) => void} callback
+   */
+  removeSessionAttachedListener(callback) {
+    const listener = this._callbackMap.get(callback);
+    if (!listener) return;
+    this._session.connection().off('sessionattached', listener);
+  }
+
+  /**
+   * Bind to our custom event that fires for *any* protocol event.
+   * @param {(payload: LH.Protocol.RawEventMessage) => void} callback
+   */
+  addProtocolMessageListener(callback) {
+    this._session.on('*', /** @type {*} */ (callback));
+  }
+
+  /**
+   * Unbind to our custom event that fires for *any* protocol event.
+   * @param {(payload: LH.Protocol.RawEventMessage) => void} callback
+   */
+  removeProtocolMessageListener(callback) {
+    this._session.off('*', /** @type {*} */ (callback));
+  }
+
+  /**
    * Bind listeners for protocol events.
    * @template {keyof LH.CrdpEvents} E
    * @param {E} eventName
@@ -72,9 +142,36 @@ class ProtocolSession {
    * @return {Promise<LH.CrdpCommands[C]['returnType']>}
    */
   sendCommand(method, ...params) {
-    return this._session.send(method, ...params);
+    const timeoutMs = this.getNextProtocolTimeout();
+    this._nextProtocolTimeout = undefined;
+
+    /** @type {NodeJS.Timer|undefined} */
+    let timeout;
+    const timeoutPromise = new Promise((resolve, reject) => {
+      if (timeoutMs === Infinity) return;
+
+      timeout = setTimeout((() => {
+        const err = new LHError(LHError.errors.PROTOCOL_TIMEOUT, {protocolMethod: method});
+        reject(err);
+      }), timeoutMs);
+    });
+
+    const resultPromise = this._session.send(method, ...params);
+    const resultWithTimeoutPromise = Promise.race([resultPromise, timeoutPromise]);
+
+    return resultWithTimeoutPromise.finally(() => {
+      if (timeout) clearTimeout(timeout);
+    });
+  }
+
+  /**
+   * Disposes of a session so that it can no longer talk to Chrome.
+   * @return {Promise<void>}
+   */
+  async dispose() {
+    this._session.removeAllListeners();
+    await this._session.detach();
   }
 }
 
 module.exports = ProtocolSession;
-

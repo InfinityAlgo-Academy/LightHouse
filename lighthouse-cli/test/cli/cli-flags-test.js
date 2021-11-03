@@ -6,13 +6,18 @@
 'use strict';
 
 /* eslint-env jest */
-const assert = require('assert').strict;
-const getFlags = require('../../cli-flags.js').getFlags;
 
-describe('CLI bin', function() {
+import {strict as assert} from 'assert';
+import fs from 'fs';
+
+import yargs from 'yargs';
+
+import {getFlags} from '../../cli-flags.js';
+import {LH_ROOT} from '../../../root.js';
+
+describe('CLI flags', function() {
   it('all options should have descriptions', () => {
     getFlags('chrome://version');
-    const yargs = require('yargs');
 
     // @ts-expect-error - getGroups is private
     const optionGroups = yargs.getGroups();
@@ -32,7 +37,7 @@ describe('CLI bin', function() {
   it('settings are accepted from a file path', () => {
     const flags = getFlags([
       'http://www.example.com',
-      `--cli-flags-path="${__dirname}/../fixtures/cli-flags-path.json"`,
+      `--cli-flags-path="${LH_ROOT}/lighthouse-cli/test/fixtures/cli-flags-path.json"`,
       '--budgets-path=path/to/my/budget-from-command-line.json', // this should override the config value
     ].join(' '));
 
@@ -84,14 +89,124 @@ describe('CLI bin', function() {
       expect(flags).toHaveProperty('extraHeaders', {foo: 'bar'});
     });
 
-    it('should read extra headers from file', async () => {
-      const headersFile = require.resolve('../fixtures/extra-headers/valid.json');
+    it('should read extra headers from file', () => {
+      const headersFile = `${LH_ROOT}/lighthouse-cli/test/fixtures/extra-headers/valid.json`;
+      const headers = JSON.parse(fs.readFileSync(headersFile, 'utf-8'));
       const flags = getFlags([
         'http://www.example.com',
         `--extra-headers=${headersFile}`,
       ].join(' '));
 
-      expect(flags).toHaveProperty('extraHeaders', require(headersFile));
+      expect(flags).toHaveProperty('extraHeaders', headers);
+    });
+  });
+
+  describe('screenEmulation', () => {
+    const url = 'http://www.example.com';
+
+    describe('width', () => {
+      it('parses a number value', () => {
+        const flags = getFlags(`${url} --screenEmulation.width=500`, {noExitOnFailure: true});
+        expect(flags.screenEmulation).toEqual({width: 500});
+      });
+
+      it('throws on a non-number', () => {
+        expect(() => getFlags(`${url} --screenEmulation.width=yah`, {noExitOnFailure: true}))
+          .toThrow(`Invalid value: 'screenEmulation.width' must be a number`);
+      });
+
+      it('throws with no flag value', () => {
+        expect(() => getFlags(`${url} --screenEmulation.width`, {noExitOnFailure: true}))
+          .toThrow(`Invalid value: 'screenEmulation.width' must be a number`);
+      });
+    });
+
+    describe('height', () => {
+      it('parses a number value', () => {
+        const flags = getFlags(`${url} --screenEmulation.height=123`, {noExitOnFailure: true});
+        expect(flags.screenEmulation).toEqual({height: 123});
+      });
+
+      it('throws on a non-number', () => {
+        expect(() => getFlags(`${url} --screenEmulation.height=false`, {noExitOnFailure: true}))
+          .toThrow(`Invalid value: 'screenEmulation.height' must be a number`);
+      });
+
+      it('throws with no flag value', () => {
+        expect(() => getFlags(`${url} --screenEmulation.height`, {noExitOnFailure: true}))
+          .toThrow(`Invalid value: 'screenEmulation.height' must be a number`);
+      });
+    });
+
+    describe('deviceScaleFactor', () => {
+      it('parses a non-integer numeric value', () => {
+        const flags = getFlags(`${url} --screenEmulation.deviceScaleFactor=1.325`,
+            {noExitOnFailure: true});
+        expect(flags.screenEmulation).toEqual({deviceScaleFactor: 1.325});
+      });
+
+      it('throws on a non-number', () => {
+        expect(() => getFlags(`${url} --screenEmulation.deviceScaleFactor=12px`,
+            {noExitOnFailure: true}))
+          .toThrow(`Invalid value: 'screenEmulation.deviceScaleFactor' must be a number`);
+      });
+
+      it('throws with no flag value', () => {
+        expect(() => getFlags(`${url} --screenEmulation.deviceScaleFactor`,
+            {noExitOnFailure: true}))
+          .toThrow(`Invalid value: 'screenEmulation.deviceScaleFactor' must be a number`);
+      });
+    });
+
+    describe('mobile', () => {
+      it('parses the flag with no value as true', () => {
+        const flags = getFlags(`${url} --screenEmulation.mobile`, {noExitOnFailure: true});
+        expect(flags.screenEmulation).toEqual({mobile: true});
+      });
+
+      it('parses the --no-mobile flag as false', () => {
+        const flags = getFlags(`${url} --no-screenEmulation.mobile`, {noExitOnFailure: true});
+        expect(flags.screenEmulation).toEqual({mobile: false});
+      });
+
+      it('parses the flag with a boolean value', () => {
+        const flagsTrue = getFlags(`${url} --screenEmulation.mobile=true`, {noExitOnFailure: true});
+        expect(flagsTrue.screenEmulation).toEqual({mobile: true});
+        const flagsFalse = getFlags(`${url} --screenEmulation.mobile=false`,
+            {noExitOnFailure: true});
+        expect(flagsFalse.screenEmulation).toEqual({mobile: false});
+      });
+
+      it('throws on a non-boolean value', () => {
+        expect(() => getFlags(`${url} --screenEmulation.mobile=2`, {noExitOnFailure: true}))
+          .toThrow(`Invalid value: 'screenEmulation.mobile' must be a boolean`);
+      });
+    });
+
+    describe('disabled', () => {
+      it('parses the flag with no value as true', () => {
+        const flags = getFlags(`${url} --screenEmulation.disabled`, {noExitOnFailure: true});
+        expect(flags.screenEmulation).toEqual({disabled: true});
+      });
+
+      it('parses the --no-disabled flag as false', () => {
+        const flags = getFlags(`${url} --no-screenEmulation.disabled`, {noExitOnFailure: true});
+        expect(flags.screenEmulation).toEqual({disabled: false});
+      });
+
+      it('parses the flag with a boolean value', () => {
+        const flagsTrue = getFlags(`${url} --screenEmulation.disabled=true`,
+            {noExitOnFailure: true});
+        expect(flagsTrue.screenEmulation).toEqual({disabled: true});
+        const flagsFalse = getFlags(`${url} --screenEmulation.disabled=false`,
+            {noExitOnFailure: true});
+        expect(flagsFalse.screenEmulation).toEqual({disabled: false});
+      });
+
+      it('throws on a non-boolean value', () => {
+        expect(() => getFlags(`${url} --screenEmulation.disabled=str`, {noExitOnFailure: true}))
+          .toThrow(`Invalid value: 'screenEmulation.disabled' must be a boolean`);
+      });
     });
   });
 });

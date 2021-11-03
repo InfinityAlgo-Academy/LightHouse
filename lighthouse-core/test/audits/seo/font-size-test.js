@@ -227,6 +227,35 @@ describe('SEO: Font size audit', () => {
     expect(auditResult.notApplicable).toBe(true);
   });
 
+  it('handles valueless attributes on grandparent nodes', async () => {
+    const artifacts = {
+      URL,
+      MetaElements: makeMetaElements(validViewport),
+      FontSize: {
+        totalTextLength: 13,
+        failingTextLength: 13,
+        analyzedFailingTextLength: 13,
+        analyzedFailingNodesData: [
+          {
+            nodeId: 1,
+            textLength: 13,
+            fontSize: 10,
+            cssRule: {type: 'Inline'},
+            parentNode: {
+              nodeName: 'p',
+              attributes: ['style', 'font-size: 10px;'],
+              parentNode: {nodeName: 'div', attributes: ['style', undefined]},
+            },
+          },
+        ],
+      },
+    };
+
+    const auditResult = await FontSizeAudit.audit(artifacts, getFakeContext());
+    assert.equal(auditResult.score, 0);
+    expect(auditResult.displayValue).toBeDisplayString('0% legible text');
+  });
+
   describe('attributes source of style', () => {
     async function runFontSizeAuditWithSingleFailingStyle(style, nodeProperties) {
       const artifacts = {

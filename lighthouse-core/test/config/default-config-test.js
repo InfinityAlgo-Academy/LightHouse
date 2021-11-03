@@ -6,39 +6,23 @@
 'use strict';
 
 const assert = require('assert').strict;
-const lighthouse = require('../../index.js');
 const defaultConfig = require('../../config/default-config.js');
 
 /* eslint-env jest */
 
 describe('Default Config', () => {
-  it('only has opportunity audits that return opportunities details', async () => {
-    const flags = {
-      auditMode: __dirname + '/../results/artifacts/',
-      formFactor: 'mobile',
+  it('relevantAudits map to existing perf audit', () => {
+    const metricsWithRelevantAudits = defaultConfig.categories.performance.auditRefs.filter(a =>
+        a.relevantAudits);
+    const allPerfAuditIds = defaultConfig.categories.performance.auditRefs.map(a => a.id);
 
-      // sample_v2 was run with these settings, so need to match them.
-      throttlingMethod: 'devtools',
-      channel: 'cli',
-    };
-    const {lhr} = await lighthouse('', flags);
+    for (const metric of metricsWithRelevantAudits) {
+      assert.ok(Array.isArray(metric.relevantAudits) && metric.relevantAudits.length);
 
-    const opportunityResults = lhr.categories.performance.auditRefs
-      .filter(ref => ref.group === 'load-opportunities')
-      .map(ref => lhr.audits[ref.id]);
-
-    // Check all expected opportunities were found.
-    assert.strictEqual(opportunityResults.indexOf(undefined), -1);
-    const defaultCount = defaultConfig.categories.performance.auditRefs
-      .filter(ref => ref.group === 'load-opportunities').length;
-    assert.strictEqual(opportunityResults.length, defaultCount);
-
-    // And that they have the correct shape.
-    opportunityResults.forEach(auditResult => {
-      expect(auditResult).toMatchObject({details: {type: 'opportunity'}});
-      assert.ok(!auditResult.errorMessage, `${auditResult.id}: ${auditResult.errorMessage}`);
-      assert.ok(auditResult.details.overallSavingsMs !== undefined,
-          `${auditResult.id} has an undefined overallSavingsMs`);
-    });
+      for (const auditid of metric.relevantAudits) {
+        const errMsg = `(${auditid}) is relevant audit for (${metric.id}), but no audit found.`;
+        assert.ok(allPerfAuditIds.includes(auditid), errMsg);
+      }
+    }
   });
 });

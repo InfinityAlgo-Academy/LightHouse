@@ -22,6 +22,7 @@ const getResult = scripts => {
     })),
   ];
   const artifacts = {
+    GatherContext: {gatherMode: 'navigation'},
     URL: {finalUrl: mainDocumentUrl, requestedUrl: mainDocumentUrl},
     devtoolsLogs: {defaultPass: networkRecordsToDevtoolsLog(networkRecords)},
     ScriptElements: scripts.map(({url, code}, index) => {
@@ -102,6 +103,7 @@ describe('LegacyJavaScript audit', () => {
               "location": Object {
                 "column": 0,
                 "line": 0,
+                "original": undefined,
                 "type": "source-location",
                 "url": "https://www.googletagmanager.com/a.js",
                 "urlProvider": "network",

@@ -21,7 +21,7 @@ then
   if [ -z "${CI:-}" ]; then
     git reset --hard
     git clean -fd
-    git pull --ff-only -f origin master
+    git pull --ff-only -f origin main
     gclient sync --delete_unversioned_trees --reset
   fi
 

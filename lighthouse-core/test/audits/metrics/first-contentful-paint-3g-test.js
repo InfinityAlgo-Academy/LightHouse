@@ -16,6 +16,7 @@ const pwaDevtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtoo
 describe('Performance: first-contentful-paint-3g audit', () => {
   it('evaluates valid input correctly', async () => {
     const artifacts = {
+      GatherContext: {gatherMode: 'navigation'},
       traces: {
         [FCP3G.DEFAULT_PASS]: pwaTrace,
       },
@@ -28,7 +29,7 @@ describe('Performance: first-contentful-paint-3g audit', () => {
     // Use InlineSnapshot here so changes to Lantern coefficients can be easily updated en masse
     expect({score: result.score, value: Math.round(result.numericValue)}).toMatchInlineSnapshot(`
 Object {
-  "score": 0.99,
+  "score": 0.97,
   "value": 2087,
 }
 `);

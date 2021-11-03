@@ -20,14 +20,16 @@ describe('ViewportDimensions gatherer', () => {
   it('returns an artifact', () => {
     return gatherer.afterPass({
       driver: {
-        evaluateAsync() {
-          return Promise.resolve({
-            innerWidth: 400,
-            outerWidth: 400,
-            innerHeight: 600,
-            outerHeight: 600,
-            devicePixelRatio: 2,
-          });
+        executionContext: {
+          async evaluate() {
+            return {
+              innerWidth: 400,
+              outerWidth: 400,
+              innerHeight: 600,
+              outerHeight: 600,
+              devicePixelRatio: 2,
+            };
+          },
         },
       },
     }).then(artifact => {

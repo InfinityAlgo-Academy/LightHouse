@@ -6,20 +6,20 @@
 'use strict';
 
 const Audit = require('./audit.js');
-const I18n = require('../report/html/renderer/i18n.js');
+const i18n = require('../lib/i18n/i18n.js');
 
 const LanternFcp = require('../computed/metrics/lantern-first-contentful-paint.js');
 const LanternFmp = require('../computed/metrics/lantern-first-meaningful-paint.js');
 const LanternInteractive = require('../computed/metrics/lantern-interactive.js');
-const LanternFirstCPUIdle = require('../computed/metrics/lantern-first-cpu-idle.js');
 const LanternSpeedIndex = require('../computed/metrics/lantern-speed-index.js');
-const LanternEil = require('../computed/metrics/lantern-estimated-input-latency.js');
 const LanternLcp = require('../computed/metrics/lantern-largest-contentful-paint.js');
 
 // Parameters (in ms) for log-normal CDF scoring. To see the curve:
 //   https://www.desmos.com/calculator/bksgkihhj8
 const SCORING_P10 = 3651;
 const SCORING_MEDIAN = 10000;
+
+const str_ = i18n.createMessageInstanceIdFn(__filename, {});
 
 class PredictivePerf extends Audit {
   /**
@@ -33,7 +33,8 @@ class PredictivePerf extends Audit {
         'Predicted performance evaluates how your site will perform under ' +
         'a cellular connection on a mobile device.',
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
-      requiredArtifacts: ['traces', 'devtoolsLogs'],
+      supportedModes: ['navigation'],
+      requiredArtifacts: ['traces', 'devtoolsLogs', 'GatherContext'],
     };
   }
 
@@ -43,18 +44,18 @@ class PredictivePerf extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
+    const gatherContext = artifacts.GatherContext;
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     /** @type {LH.Config.Settings} */
     // @ts-expect-error - TODO(bckenny): allow optional `throttling` settings
     const settings = {}; // Use default settings.
-    const fcp = await LanternFcp.request({trace, devtoolsLog, settings}, context);
-    const fmp = await LanternFmp.request({trace, devtoolsLog, settings}, context);
-    const tti = await LanternInteractive.request({trace, devtoolsLog, settings}, context);
-    const ttfcpui = await LanternFirstCPUIdle.request({trace, devtoolsLog, settings}, context);
-    const si = await LanternSpeedIndex.request({trace, devtoolsLog, settings}, context);
-    const eil = await LanternEil.request({trace, devtoolsLog, settings}, context);
-    const lcp = await LanternLcp.request({trace, devtoolsLog, settings}, context);
+    const computationData = {trace, devtoolsLog, gatherContext, settings};
+    const fcp = await LanternFcp.request(computationData, context);
+    const fmp = await LanternFmp.request(computationData, context);
+    const tti = await LanternInteractive.request(computationData, context);
+    const si = await LanternSpeedIndex.request(computationData, context);
+    const lcp = await LanternLcp.request(computationData, context);
 
     const values = {
       roughEstimateOfFCP: fcp.timing,
@@ -69,17 +70,9 @@ class PredictivePerf extends Audit {
       optimisticTTI: tti.optimisticEstimate.timeInMs,
       pessimisticTTI: tti.pessimisticEstimate.timeInMs,
 
-      roughEstimateOfTTFCPUI: ttfcpui.timing,
-      optimisticTTFCPUI: ttfcpui.optimisticEstimate.timeInMs,
-      pessimisticTTFCPUI: ttfcpui.pessimisticEstimate.timeInMs,
-
       roughEstimateOfSI: si.timing,
       optimisticSI: si.optimisticEstimate.timeInMs,
       pessimisticSI: si.pessimisticEstimate.timeInMs,
-
-      roughEstimateOfEIL: eil.timing,
-      optimisticEIL: eil.optimisticEstimate.timeInMs,
-      pessimisticEIL: eil.pessimisticEstimate.timeInMs,
 
       roughEstimateOfLCP: lcp.timing,
       optimisticLCP: lcp.optimisticEstimate.timeInMs,
@@ -91,13 +84,11 @@ class PredictivePerf extends Audit {
       values.roughEstimateOfTTI
     );
 
-    const i18n = new I18n(context.settings.locale);
-
     return {
       score,
       numericValue: values.roughEstimateOfTTI,
       numericUnit: 'millisecond',
-      displayValue: i18n.formatMilliseconds(values.roughEstimateOfTTI),
+      displayValue: str_(i18n.UIStrings.ms, {timeInMs: values.roughEstimateOfTTI}),
       details: {
         type: 'debugdata',
         // TODO: Consider not nesting values under `items`.

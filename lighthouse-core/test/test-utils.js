@@ -8,13 +8,26 @@
 /* eslint-env jest */
 
 const fs = require('fs');
-const i18n = require('../lib/i18n/i18n.js');
+const format = require('../../shared/localization/format.js');
 const mockCommands = require('./gather/mock-commands.js');
 const {default: {toBeCloseTo}} = require('expect/build/matchers.js');
+const {LH_ROOT} = require('../../root.js');
 
 expect.extend({
   toBeDisplayString(received, expected) {
-    const actual = i18n.getFormatted(received, 'en-US');
+    if (!format.isIcuMessage(received)) {
+      const message = () =>
+      [
+        `${this.utils.matcherHint('.toBeDisplayString')}\n`,
+        `Expected object to be an ${this.utils.printExpected('LH.IcuMessage')}`,
+        `Received ${typeof received}`,
+        `  ${this.utils.printReceived(received)}`,
+      ].join('\n');
+
+      return {message, pass: false};
+    }
+
+    const actual = format.getFormatted(received, 'en-US');
     const pass = expected instanceof RegExp ?
       expected.test(actual) :
       actual === expected;
@@ -28,7 +41,7 @@ expect.extend({
         `  ${this.utils.printReceived(actual)}`,
       ].join('\n');
 
-    return {actual, message, pass};
+    return {message, pass};
   },
 
   // Expose toBeCloseTo() so it can be used as an asymmetric matcher.
@@ -77,7 +90,7 @@ function getProtoRoundTrip() {
   let itIfProtoExists;
   try {
     sampleResultsRoundtripStr =
-      fs.readFileSync(__dirname + '/../../.tmp/sample_v2_round_trip.json', 'utf-8');
+      fs.readFileSync(LH_ROOT + '/.tmp/sample_v2_round_trip.json', 'utf-8');
     describeIfProtoExists = describe;
     itIfProtoExists = it;
   } catch (err) {
@@ -225,7 +238,38 @@ async function flushAllTimersAndMicrotasks(ms = 1000) {
  * shouldn't concern themselves about.
  */
 function makeMocksForGatherRunner() {
-  jest.mock('../lib/stack-collector.js', () => () => Promise.resolve([]));
+  jest.mock('../gather/driver/environment.js', () => ({
+    getBenchmarkIndex: () => Promise.resolve(150),
+    getBrowserVersion: async () => ({userAgent: 'Chrome', milestone: 80}),
+    getEnvironmentWarnings: () => [],
+  }));
+  jest.mock('../gather/gatherers/stacks.js', () => ({collectStacks: () => Promise.resolve([])}));
+  jest.mock('../gather/gatherers/installability-errors.js', () => ({
+    getInstallabilityErrors: async () => ({errors: []}),
+  }));
+  jest.mock('../gather/gatherers/web-app-manifest.js', () => ({
+    getWebAppManifest: async () => null,
+  }));
+  jest.mock('../lib/emulation.js', () => ({
+    emulate: jest.fn(),
+    throttle: jest.fn(),
+    clearThrottling: jest.fn(),
+  }));
+  jest.mock('../gather/driver/prepare.js', () => ({
+    prepareTargetForNavigationMode: jest.fn(),
+    prepareTargetForIndividualNavigation: jest.fn().mockResolvedValue({warnings: []}),
+  }));
+  jest.mock('../gather/driver/storage.js', () => ({
+    clearDataForOrigin: jest.fn(),
+    cleanBrowserCaches: jest.fn(),
+    getImportantStorageWarning: jest.fn(),
+  }));
+  jest.mock('../gather/driver/navigation.js', () => ({
+    gotoURL: jest.fn().mockResolvedValue({
+      finalUrl: 'http://example.com',
+      warnings: [],
+    }),
+  }));
 }
 
 module.exports = {

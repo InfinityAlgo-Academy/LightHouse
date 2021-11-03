@@ -278,4 +278,91 @@ describe('NetworkRequest', () => {
       });
     });
   });
+
+  describe('#isSecureRequest', () => {
+    const isSecureRequest = NetworkRequest.isSecureRequest;
+
+    it('correctly identifies insecure records', () => {
+      expect(isSecureRequest({parsedURL: {scheme: 'http', host: 'google.com'}})).toBe(false);
+      expect(isSecureRequest({parsedURL: {scheme: 'http', host: '54.33.21.23'}})).toBe(false);
+      expect(isSecureRequest({parsedURL: {scheme: 'ws', host: 'my-service.com'}})).toBe(false);
+      expect(isSecureRequest({parsedURL: {scheme: '', host: 'google.com'}})).toBe(false);
+      expect(isSecureRequest({
+        parsedURL: {scheme: 'http', host: 'google.com'},
+        redirectDestination: {parsedURL: {scheme: 'https', host: 'google.com'}},
+        responseHeaders: [],
+      })).toBe(false);
+    });
+
+    it('correctly identifies secure records', () => {
+      expect(isSecureRequest({parsedURL: {scheme: 'http', host: 'localhost'}})).toBe(true);
+      expect(isSecureRequest({parsedURL: {scheme: 'https', host: 'google.com'}})).toBe(true);
+      expect(isSecureRequest({parsedURL: {scheme: 'wss', host: 'my-service.com'}})).toBe(true);
+      expect(isSecureRequest({parsedURL: {scheme: 'data', host: ''}})).toBe(true);
+      expect(isSecureRequest({parsedURL: {scheme: 'blob', host: ''}})).toBe(true);
+      expect(isSecureRequest({parsedURL: {scheme: 'filesystem', host: ''}})).toBe(true);
+      expect(isSecureRequest({parsedURL: {scheme: 'about', host: ''}})).toBe(true);
+      expect(isSecureRequest({parsedURL: {scheme: '', host: ''}, protocol: 'blob'})).toBe(true);
+      expect(isSecureRequest({parsedURL: {scheme: 'chrome', host: ''}})).toBe(true);
+      expect(isSecureRequest({parsedURL: {scheme: 'chrome-extension', host: ''}})).toBe(true);
+      expect(isSecureRequest({
+        parsedURL: {scheme: 'http', host: 'google.com'},
+        redirectDestination: {parsedURL: {scheme: 'https', host: 'google.com'}},
+        responseHeaders: [{name: 'Non-Authoritative-Reason', value: 'HSTS'}],
+      })).toBe(true);
+    });
+  });
+
+  describe('#isHstsRequest', () => {
+    const isHstsRequest = NetworkRequest.isHstsRequest;
+
+    it('correctly identifies non-HSTS records', () => {
+      // missing a redirect destination
+      expect(isHstsRequest({
+        parsedURL: {scheme: 'http', host: 'google.com'},
+        responseHeaders: [{name: 'Non-Authoritative-Reason', value: 'HSTS'}],
+      })).toBe(false);
+
+      // no HSTS reason
+      expect(isHstsRequest({
+        parsedURL: {scheme: 'http', host: 'google.com'},
+        redirectDestination: {parsedURL: {scheme: 'https', host: 'google.com'}},
+        responseHeaders: [],
+      })).toBe(false);
+
+      // redirects to insecure
+      expect(isHstsRequest({
+        parsedURL: {scheme: 'http', host: 'google.com'},
+        redirectDestination: {parsedURL: {scheme: 'http', host: 'google.com'}},
+        responseHeaders: [{name: 'Non-Authoritative-Reason', value: 'HSTS'}],
+      })).toBe(false);
+    });
+
+    it('correctly identifies HSTS requests', () => {
+      expect(isHstsRequest({
+        parsedURL: {scheme: 'http', host: 'google.com'},
+        redirectDestination: {parsedURL: {scheme: 'https', host: 'google.com'}},
+        responseHeaders: [{name: 'Non-Authoritative-Reason', value: 'HSTS'}],
+      })).toBe(true);
+    });
+  });
+
+  describe('#isNonNetworkRequest', () => {
+    const isNonNetworkRequest = NetworkRequest.isNonNetworkRequest;
+
+    it('correctly identifies non-network records', () => {
+      // data protocol
+      expect(isNonNetworkRequest({protocol: 'data'})).toBe(true);
+
+      // filesystem scheme
+      expect(isNonNetworkRequest({protocol: '', parsedURL: {scheme: 'file'}})).toBe(true);
+    });
+
+    it('correctly identifies network records', () => {
+      expect(isNonNetworkRequest({
+        protocol: 'h2',
+        parsedURL: {scheme: 'http', host: 'google.com'},
+      })).toBe(false);
+    });
+  });
 });

@@ -55,6 +55,7 @@ function generateImage({
     src,
     clientRect,
     loading,
+    node: {devtoolsNodePath: '1,HTML,1,IMG'},
     ...networkRecord,
     ...size,
   };
@@ -72,6 +73,7 @@ describe('OffscreenImages audit', () => {
     const topLevelTasks = [{ts: 1900, duration: 100}];
     const artifacts = {
       ViewportDimensions: DEFAULT_DIMENSIONS,
+      GatherContext: {gatherMode: 'navigation'},
       ImageElements: [
         generateImage({size: generateSize(100, 100), x: 0, y: 0}),
       ],
@@ -93,6 +95,7 @@ describe('OffscreenImages audit', () => {
     const topLevelTasks = [{ts: 1900, duration: 100}];
     const artifacts = {
       ViewportDimensions: DEFAULT_DIMENSIONS,
+      GatherContext: {gatherMode: 'navigation'},
       ImageElements: [
         generateImage({
           size: generateSize(200, 200),
@@ -137,6 +140,7 @@ describe('OffscreenImages audit', () => {
     ];
     const artifacts = {
       ViewportDimensions: DEFAULT_DIMENSIONS,
+      GatherContext: {gatherMode: 'navigation'},
       ImageElements: [
         // Offscreen to the right.
         generateImage({
@@ -218,6 +222,7 @@ describe('OffscreenImages audit', () => {
     ];
     const artifacts = {
       ViewportDimensions: DEFAULT_DIMENSIONS,
+      GatherContext: {gatherMode: 'navigation'},
       ImageElements: [
         // Offscreen to the right, but lazy loaded.
         generateImage({
@@ -256,6 +261,7 @@ describe('OffscreenImages audit', () => {
     ];
     const artifacts = {
       ViewportDimensions: DEFAULT_DIMENSIONS,
+      GatherContext: {gatherMode: 'navigation'},
       ImageElements: [
         // Offscreen to the right with auto loading (same as not specifying the attribute).
         generateImage({
@@ -290,6 +296,7 @@ describe('OffscreenImages audit', () => {
     const networkRecord = generateRecord({resourceSizeInKb: 100});
     const artifacts = {
       ViewportDimensions: DEFAULT_DIMENSIONS,
+      GatherContext: {gatherMode: 'navigation'},
       ImageElements: [
         generateImage({size: generateSize(0, 0), x: 0, y: 0, networkRecord}),
       ],
@@ -314,6 +321,7 @@ describe('OffscreenImages audit', () => {
     ];
     const artifacts = {
       ViewportDimensions: DEFAULT_DIMENSIONS,
+      GatherContext: {gatherMode: 'navigation'},
       ImageElements: [
         generateImage({
           size: generateSize(50, 50),
@@ -356,6 +364,7 @@ describe('OffscreenImages audit', () => {
     const networkRecord = generateRecord({resourceSizeInKb: 100, startTime: 3});
     const artifacts = {
       ViewportDimensions: DEFAULT_DIMENSIONS,
+      GatherContext: {gatherMode: 'navigation'},
       ImageElements: [
         // Offscreen to the right.
         generateImage({size: generateSize(200, 200), x: 3000, y: 0, networkRecord}),
@@ -373,6 +382,7 @@ describe('OffscreenImages audit', () => {
     const networkRecord = generateRecord({resourceSizeInKb: 100, startTime: 3});
     const artifacts = {
       ViewportDimensions: DEFAULT_DIMENSIONS,
+      GatherContext: {gatherMode: 'navigation'},
       ImageElements: [
         // Offscreen to the right.
         generateImage({size: generateSize(200, 200), x: 3000, y: 0, networkRecord}),
@@ -390,6 +400,7 @@ describe('OffscreenImages audit', () => {
     const networkRecord = generateRecord({resourceSizeInKb: 100});
     const artifacts = {
       ViewportDimensions: DEFAULT_DIMENSIONS,
+      GatherContext: {gatherMode: 'navigation'},
       ImageElements: [
         // Offscreen to the bottom.
         generateImage({size: generateSize(100, 100), x: 0, y: 5000, networkRecord}),
@@ -431,6 +442,7 @@ describe('OffscreenImages audit', () => {
     ];
     const artifacts = {
       ViewportDimensions: DEFAULT_DIMENSIONS,
+      GatherContext: {gatherMode: 'navigation'},
       ImageElements: [
         generateImage({
           size: generateSize(0, 0),
@@ -489,6 +501,7 @@ describe('OffscreenImages audit', () => {
     ];
     const artifacts = {
       ViewportDimensions: DEFAULT_DIMENSIONS,
+      GatherContext: {gatherMode: 'navigation'},
       ImageElements: [
         generateImage({
           size: generateSize(0, 0),
@@ -526,6 +539,7 @@ describe('OffscreenImages audit', () => {
     ];
     const artifacts = {
       ViewportDimensions: DEFAULT_DIMENSIONS,
+      GatherContext: {gatherMode: 'navigation'},
       ImageElements: [
         generateImage({
           size: generateSize(0, 0),
@@ -553,5 +567,36 @@ describe('OffscreenImages audit', () => {
       return;
     }
     assert.ok(false);
+  });
+
+  it('handles cached images', async () => {
+    const wastedSize = 100 * 1024;
+    const networkRecord = {
+      resourceSize: wastedSize,
+      transferSize: 0,
+      requestId: 'a',
+      startTime: 1,
+      priority: 'High',
+      timing: {receiveHeadersEnd: 1.25},
+    };
+
+    const artifacts = {
+      ViewportDimensions: DEFAULT_DIMENSIONS,
+      ImageElements: [
+        generateImage({
+          size: generateSize(0, 0),
+          x: 0,
+          y: 0,
+          networkRecord,
+        }),
+      ],
+      traces: {defaultPass: createTestTrace({traceEnd: 2000})},
+      devtoolsLogs: {},
+    };
+
+    return UnusedImages.audit_(artifacts, [networkRecord], context).then(auditResult => {
+      assert.equal(auditResult.items.length, 1);
+      assert.equal(auditResult.items[0].wastedBytes, wastedSize, 'correctly computes wastedBytes');
+    });
   });
 });

@@ -17,7 +17,7 @@ fi
 
 printf "Determined the following files have been touched:\n\n$CHANGED_FILES\n\n"
 
-if ! echo $CHANGED_FILES | grep -E 'legacy-javascript' > /dev/null; then
+if ! echo $CHANGED_FILES | grep -E 'legacy-javascript|js-bundles|source-map|SourceMap' > /dev/null; then
   echo "No legacy-javascript files affected, skipping test."
   exit 0
 fi

@@ -69,14 +69,16 @@ describe('ConsoleMessages error logs audit', () => {
 
     assert.equal(auditResult.score, 0);
     assert.equal(auditResult.details.items.length, 3);
-    assert.equal(auditResult.details.items[0].url, 'http://www.example.com/favicon.ico');
+    assert.equal(
+      auditResult.details.items[0].sourceLocation.url, 'http://www.example.com/favicon.ico');
     assert.equal(auditResult.details.items[0].description,
       'The server responded with a status of 404 (Not Found)');
-    assert.equal(auditResult.details.items[1].url,
+    assert.equal(auditResult.details.items[1].sourceLocation.url,
       'http://example.com/fancybox.js');
     assert.equal(auditResult.details.items[1].description,
       'TypeError: Cannot read property \'msie\' of undefined');
-    assert.equal(auditResult.details.items[2].url, 'http://www.example.com/wsconnect.ws');
+    assert.equal(
+      auditResult.details.items[2].sourceLocation.url, 'http://www.example.com/wsconnect.ws');
     assert.equal(auditResult.details.items[2].description,
       'WebSocket connection failed: Unexpected response code: 500');
   });
@@ -91,8 +93,8 @@ describe('ConsoleMessages error logs audit', () => {
     }, {options: {}});
     assert.equal(auditResult.score, 0);
     assert.equal(auditResult.details.items.length, 1);
-    // url is undefined
-    assert.strictEqual(auditResult.details.items[0].url, undefined);
+    // sourceLocation is undefined
+    assert.strictEqual(auditResult.details.items[0].sourceLocation, undefined);
     // text is undefined
     assert.strictEqual(auditResult.details.items[0].description, undefined);
   });
@@ -119,7 +121,8 @@ describe('ConsoleMessages error logs audit', () => {
     }, {options: {}});
     assert.equal(auditResult.score, 0);
     assert.equal(auditResult.details.items.length, 1);
-    assert.strictEqual(auditResult.details.items[0].url, 'http://example.com/fancybox.js');
+    assert.strictEqual(
+      auditResult.details.items[0].sourceLocation.url, 'http://example.com/fancybox.js');
     assert.strictEqual(auditResult.details.items[0].description,
       'TypeError: Cannot read property \'msie\' of undefined');
   });
@@ -222,6 +225,23 @@ describe('ConsoleMessages error logs audit', () => {
 
       expect(result.score).toBe(1);
       expect(result.details.items).toHaveLength(0);
+    });
+  });
+
+  describe('defaultOptions', () => {
+    // See https://github.com/GoogleChrome/lighthouse/issues/10198
+    it('filters out blocked_by_client.inspector messages by default', () => {
+      const auditResult = ErrorLogsAudit.audit({
+        ConsoleMessages: [{
+          'source': 'exception',
+          'level': 'error',
+          'timestamp': 1506535813608.003,
+          'url': 'https://www.facebook.com/tr/',
+          'text': 'Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector',
+        }],
+      }, {options: ErrorLogsAudit.defaultOptions});
+      assert.equal(auditResult.score, 1);
+      assert.equal(auditResult.details.items.length, 0);
     });
   });
 });

@@ -8,24 +8,24 @@
 const makeComputedArtifact = require('./computed-artifact.js');
 const speedline = require('speedline-core');
 const LHError = require('../lib/lh-error.js');
-const TraceOfTab = require('./trace-of-tab.js');
+const ProcessedTrace = require('./processed-trace.js');
 
 class Speedline {
   /**
    * @param {LH.Trace} trace
-   * @param {LH.Audit.Context} context
+   * @param {LH.Artifacts.ComputedContext} context
    * @return {Promise<LH.Artifacts.Speedline>}
    */
   static async compute_(trace, context) {
     // speedline() may throw without a promise, so we resolve immediately
     // to get in a promise chain.
-    return TraceOfTab.request(trace, context).then(traceOfTab => {
+    return ProcessedTrace.request(trace, context).then(processedTrace => {
       // Use a shallow copy of traceEvents so speedline can sort as it pleases.
       // See https://github.com/GoogleChrome/lighthouse/issues/2333
       const traceEvents = trace.traceEvents.slice();
       // Force use of timeOrigin as reference point for speedline
       // See https://github.com/GoogleChrome/lighthouse/issues/2095
-      const timeOrigin = traceOfTab.timestamps.timeOrigin;
+      const timeOrigin = processedTrace.timestamps.timeOrigin;
       return speedline(traceEvents, {
         timeOrigin,
         fastMode: true,

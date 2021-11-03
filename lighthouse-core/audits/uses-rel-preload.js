@@ -6,6 +6,7 @@
 'use strict';
 
 const URL = require('../lib/url-shim.js');
+const NetworkRequest = require('../lib/network-request.js');
 const Audit = require('./audit.js');
 const UnusedBytes = require('./byte-efficiency/byte-efficiency-audit.js');
 const CriticalRequestChains = require('../computed/critical-request-chains.js');
@@ -41,6 +42,7 @@ class UsesRelPreloadAudit extends Audit {
       id: 'uses-rel-preload',
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
+      supportedModes: ['navigation'],
       requiredArtifacts: ['devtoolsLogs', 'traces', 'URL'],
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
     };
@@ -86,13 +88,17 @@ class UsesRelPreloadAudit extends Audit {
     }
 
     // A failed preload attempt will manifest as a URL that was requested twice within the same frame.
-    // Once with `isLinkPreload` AND again without `isLinkPreload`.
+    // Once with `isLinkPreload` AND again without `isLinkPreload` but not hitting the cache.
     const duplicateRequestsAfterPreload = requests.filter(request => {
       const preloadURLsForFrame = preloadURLsByFrame.get(request.frameId);
       if (!preloadURLsForFrame) return false;
       if (!preloadURLsForFrame.has(request.url)) return false;
-      return !request.isLinkPreload;
+      const fromCache = request.fromDiskCache ||
+        request.fromMemoryCache ||
+        request.fromPrefetchCache;
+      return !fromCache && !request.isLinkPreload;
     });
+
     return new Set(duplicateRequestsAfterPreload.map(req => req.url));
   }
 
@@ -116,7 +122,7 @@ class UsesRelPreloadAudit extends Audit {
     // It's not critical, don't recommend it.
     if (!CriticalRequestChains.isCritical(request, mainResource)) return false;
     // It's not a request loaded over the network, don't recommend it.
-    if (URL.NON_NETWORK_PROTOCOLS.includes(request.protocol)) return false;
+    if (NetworkRequest.isNonNetworkRequest(request)) return false;
     // It's not at the right depth, don't recommend it.
     if (initiatorPath.length !== mainResourceDepth + 2) return false;
     // It's not a request for the main frame, it wouldn't get reused even if you did preload it.
@@ -203,11 +209,11 @@ class UsesRelPreloadAudit extends Audit {
    * @param {LH.Audit.Context} context
    * @return {Promise<LH.Audit.Product>}
    */
-  static async audit(artifacts, context) {
+  static async audit_(artifacts, context) {
     const trace = artifacts.traces[UsesRelPreloadAudit.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[UsesRelPreloadAudit.DEFAULT_PASS];
     const URL = artifacts.URL;
-    const simulatorOptions = {trace, devtoolsLog, settings: context.settings};
+    const simulatorOptions = {devtoolsLog, settings: context.settings};
 
     const [mainResource, graph, simulator] = await Promise.all([
       MainResource.request({devtoolsLog, URL}, context),
@@ -245,6 +251,16 @@ class UsesRelPreloadAudit extends Audit {
       details,
       warnings,
     };
+  }
+
+  /**
+   * @return {Promise<LH.Audit.Product>}
+   */
+  static async audit() {
+    // Preload advice is dangerous until https://bugs.chromium.org/p/chromium/issues/detail?id=788757
+    // has been fixed and validated. All preload audits are on hold until then.
+    // See https://github.com/GoogleChrome/lighthouse/issues/11960 for more discussion.
+    return {score: 1, notApplicable: true, details: Audit.makeOpportunityDetails([], [], 0)};
   }
 }
 

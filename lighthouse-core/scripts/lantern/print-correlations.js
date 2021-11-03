@@ -14,24 +14,26 @@
 /** @typedef {import('./constants').TargetMetrics} TargetMetrics */
 /** @typedef {import('./constants').LanternMetrics} LanternMetrics */
 
-const fs = require('fs');
-const path = require('path');
-const constants = require('./constants.js');
-const chalk = require('chalk').default;
+import fs from 'fs';
+import path from 'path';
+
+import chalk from 'chalk';
+
+import constants from './constants.js';
+import {readJson} from '../../../root.js';
 
 const GOOD_DIFF_AS_PERCENT_THRESHOLD = 0.2;
 const OK_DIFF_AS_PERCENT_THRESHOLD = 0.5;
 
 const INPUT_PATH = process.argv[2] || constants.SITE_INDEX_WITH_GOLDEN_WITH_COMPUTED_PATH;
 const COMPUTATIONS_PATH = path.resolve(process.cwd(), INPUT_PATH);
-const BASELINE_PATH = constants.MASTER_COMPUTED_PATH;
-
+const BASELINE_PATH = constants.BASELINE_COMPUTED_PATH;
 
 if (!fs.existsSync(COMPUTATIONS_PATH)) throw new Error('Usage $0 <computed summary file>');
 
 /** @type {{sites: LanternSiteDefinition[]}} */
-const siteIndexWithComputed = require(COMPUTATIONS_PATH);
-const baselineLanternData = require(BASELINE_PATH);
+const siteIndexWithComputed = readJson(COMPUTATIONS_PATH);
+const baselineLanternData = readJson(BASELINE_PATH);
 
 const entries = constants.combineBaselineAndComputedDatasets(siteIndexWithComputed,
   baselineLanternData);
@@ -230,10 +232,6 @@ evaluateAndPrintAccuracy('firstMeaningfulPaint', 'optimisticFMP');
 evaluateAndPrintAccuracy('firstMeaningfulPaint', 'pessimisticFMP');
 evaluateAndPrintAccuracy('firstMeaningfulPaint', 'roughEstimateOfFMP');
 
-evaluateAndPrintAccuracy('timeToFirstInteractive', 'optimisticTTFCPUI');
-evaluateAndPrintAccuracy('timeToFirstInteractive', 'pessimisticTTFCPUI');
-evaluateAndPrintAccuracy('timeToFirstInteractive', 'roughEstimateOfTTFCPUI');
-
 evaluateAndPrintAccuracy('timeToConsistentlyInteractive', 'optimisticTTI');
 evaluateAndPrintAccuracy('timeToConsistentlyInteractive', 'pessimisticTTI');
 evaluateAndPrintAccuracy('timeToConsistentlyInteractive', 'roughEstimateOfTTI');
@@ -260,11 +258,6 @@ findAndPrintWorst10Sites('firstMeaningfulPaint', [
   'optimisticFMP',
   'pessimisticFMP',
   'roughEstimateOfFMP',
-]);
-findAndPrintWorst10Sites('timeToFirstInteractive', [
-  'optimisticTTFCPUI',
-  'pessimisticTTFCPUI',
-  'roughEstimateOfTTFCPUI',
 ]);
 findAndPrintWorst10Sites('timeToConsistentlyInteractive', [
   'optimisticTTI',

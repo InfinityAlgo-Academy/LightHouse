@@ -17,7 +17,7 @@ const config = {
       'network-requests',
       'offscreen-images',
       'uses-http2',
-      'uses-webp-images',
+      'modern-image-formats',
       'uses-optimized-images',
       'uses-text-compression',
       'uses-responsive-images',
@@ -43,4 +43,4 @@ const config = {
   ],
 };
 
-module.exports = config;
+export default config;

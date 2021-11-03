@@ -7,6 +7,37 @@
 
 const fs = require('fs');
 const GhPagesApp = require('./gh-pages-app.js');
+const {LH_ROOT} = require('../root.js');
+const {getIcuMessageIdParts} = require('../shared/localization/format.js');
+
+/**
+ * Extract only the strings needed for treemap into
+ * a script that sets a global variable `strings`, whose keys
+ * are locale codes (en-US, es, etc.) and values are localized UIStrings.
+ */
+function buildStrings() {
+  const locales = require('../shared/localization/locales.js');
+  // TODO(esmodules): use dynamic import when build/ is esm.
+  const utilCode = fs.readFileSync(LH_ROOT + '/treemap/app/src/util.js', 'utf-8');
+  const {UIStrings} = eval(utilCode.replace(/export /g, '') + '\nmodule.exports = TreemapUtil;');
+  const strings = /** @type {Record<LH.Locale, string>} */ ({});
+
+  for (const [locale, lhlMessages] of Object.entries(locales)) {
+    const localizedStrings = Object.fromEntries(
+      Object.entries(lhlMessages).map(([icuMessageId, v]) => {
+        const {filename, key} = getIcuMessageIdParts(icuMessageId);
+        if (!filename.endsWith('util.js') || !(key in UIStrings)) {
+          return [];
+        }
+
+        return [key, v.message];
+      })
+    );
+    strings[/** @type {LH.Locale} */ (locale)] = localizedStrings;
+  }
+
+  return 'const strings =' + JSON.stringify(strings, null, 2) + ';';
+}
 
 /**
  * Build treemap app, optionally deploying to gh-pages if `--deploy` flag was set.
@@ -14,16 +45,26 @@ const GhPagesApp = require('./gh-pages-app.js');
 async function run() {
   const app = new GhPagesApp({
     name: 'treemap',
-    appDir: `${__dirname}/../lighthouse-treemap/app`,
+    appDir: `${LH_ROOT}/treemap/app`,
     html: {path: 'index.html'},
     stylesheets: [
+      {path: require.resolve('tabulator-tables/dist/css/tabulator.min.css')},
       {path: 'styles/*'},
     ],
     javascripts: [
-      fs.readFileSync(require.resolve('webtreemap-cdt'), 'utf8'),
-      {path: 'src/*'},
+      buildStrings(),
+      {path: require.resolve('idb-keyval/dist/idb-keyval-min.js')},
+      {path: require.resolve('event-target-shim/umd')},
+      {path: require.resolve('webtreemap-cdt')},
+      {path: require.resolve('tabulator-tables/dist/js/tabulator_core.js')},
+      {path: require.resolve('tabulator-tables/dist/js/modules/sort.js')},
+      {path: require.resolve('tabulator-tables/dist/js/modules/format.js')},
+      {path: require.resolve('tabulator-tables/dist/js/modules/resize_columns.js')},
+      {path: require.resolve('pako/dist/pako_inflate.js')},
+      {path: 'src/main.js', rollup: true},
     ],
     assets: [
+      {path: 'images/**/*', destDir: 'images'},
       {path: 'debug.json'},
     ],
   });
@@ -36,4 +77,7 @@ async function run() {
   }
 }
 
-run();
+run().catch(err => {
+  console.error(err);
+  process.exit(1);
+});

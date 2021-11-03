@@ -6,7 +6,7 @@
   TestRunner.addResult('Tests that Lighthouse report is translated.\n');
   await TestRunner.navigatePromise('resources/lighthouse-basic.html');
 
-  await TestRunner.loadModule('lighthouse_test_runner');
+  await TestRunner.loadTestModule('lighthouse_test_runner');
   await TestRunner.showPanel('lighthouse');
 
   const containerElement = LighthouseTestRunner.getContainerElement();
@@ -21,7 +21,7 @@
     }
   }
 
-  TestRunner.override(LighthouseTestRunner._panel()._protocolService, 'getLocales', overrideLookupLocale, true);
+  TestRunner.override(LighthouseTestRunner._panel().protocolService, 'getLocales', overrideLookupLocale, true);
 
   const locales = ['invalid-locale', 'es'];
   function overrideLookupLocale() {

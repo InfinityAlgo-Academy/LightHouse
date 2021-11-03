@@ -7,6 +7,13 @@
 
 /* eslint-env jest */
 
+const getServiceWorkerVersions = jest.fn();
+const getServiceWorkerRegistrations = jest.fn();
+jest.mock('../../../gather/driver/service-workers.js', () => ({
+  getServiceWorkerVersions,
+  getServiceWorkerRegistrations,
+}));
+
 const ServiceWorkerGather = require('../../../gather/gatherers/service-worker.js');
 const assert = require('assert').strict;
 
@@ -23,17 +30,12 @@ describe('service worker gatherer', () => {
       scopeUrl: url,
       isDeleted: false,
     }];
+    getServiceWorkerVersions.mockResolvedValue({versions});
+    getServiceWorkerRegistrations.mockResolvedValue({registrations});
 
     const serviceWorkerGatherer = new ServiceWorkerGather();
-    const artifact = await serviceWorkerGatherer.beforePass({
-      driver: {
-        async getServiceWorkerVersions() {
-          return {versions};
-        },
-        async getServiceWorkerRegistrations() {
-          return {registrations};
-        },
-      },
+    const artifact = await serviceWorkerGatherer.getArtifact({
+      driver: {},
       url,
     });
 

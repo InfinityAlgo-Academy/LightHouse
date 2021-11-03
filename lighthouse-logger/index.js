@@ -5,13 +5,14 @@
  */
 'use strict';
 
+const process = require('process');
 const debug = require('debug');
 const marky = require('marky');
 
 const EventEmitter = require('events').EventEmitter;
 const isWindows = process.platform === 'win32';
 
-// process.browser is set when browserify'd via the `process` npm module
+// @ts-expect-error: process.browser is set via Rollup.
 const isBrowser = process.browser;
 
 const colors = {
@@ -61,6 +62,7 @@ class Log {
   }
 
   static loggerfn(title) {
+    title = `LH:${title}`;
     let log = loggersByTitle[title];
     if (!log) {
       log = debug(title);
@@ -82,16 +84,16 @@ class Log {
     level_ = level;
     switch (level) {
       case 'silent':
-        debug.enable('-*');
+        debug.enable('-LH:*');
         break;
       case 'verbose':
-        debug.enable('*');
+        debug.enable('LH:*');
         break;
       case 'error':
-        debug.enable('-*, *:error');
+        debug.enable('-LH:*, LH:*:error');
         break;
       default:
-        debug.enable('*, -*:verbose');
+        debug.enable('LH:*, -LH:*:verbose');
     }
   }
 

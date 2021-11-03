@@ -7,19 +7,27 @@
 
 /* eslint-disable max-len */
 
-const yargs = require('yargs');
-const fs = require('fs');
-const {isObjectOfUnknownValues} = require('../lighthouse-core/lib/type-verifiers.js');
+import fs from 'fs';
+
+import yargs from 'yargs';
+import * as yargsHelpers from 'yargs/helpers';
+
+import {LH_ROOT} from '../root.js';
+import {isObjectOfUnknownValues} from '../shared/type-verifiers.js';
 
 /**
  * @param {string=} manualArgv
+ * @param {{noExitOnFailure?: boolean}=} options
  * @return {LH.CliFlags}
  */
-function getFlags(manualArgv) {
-  // @ts-expect-error - undocumented, but yargs() supports parsing a single `string`.
-  const y = manualArgv ? yargs(manualArgv) : yargs;
+function getFlags(manualArgv, options = {}) {
+  const y = manualArgv ?
+    // @ts-expect-error - undocumented, but yargs() supports parsing a single `string`.
+    yargs(manualArgv) :
+    yargs(yargsHelpers.hideBin(process.argv));
 
-  const argv = y.help('help')
+  let parser = y.help('help')
+      .version(JSON.parse(fs.readFileSync(`${LH_ROOT}/package.json`, 'utf-8')).version)
       .showHelpOnFail(false, 'Specify --help for available options')
 
       .usage('lighthouse <url> <options>')
@@ -97,6 +105,11 @@ function getFlags(manualArgv) {
           default: false,
           describe: 'Prints a list of all available audits and exits',
         },
+        'list-locales': {
+          type: 'boolean',
+          default: false,
+          describe: 'Prints a list of all supported locales and exits',
+        },
         'list-trace-categories': {
           type: 'boolean',
           default: false,
@@ -106,6 +119,15 @@ function getFlags(manualArgv) {
           type: 'boolean',
           default: false,
           describe: 'Print the normalized config for the given config and options, then exit.',
+        },
+        'debug-navigation': {
+          type: 'boolean',
+          describe: 'Pause after page load to wait for permission to continue the run, evaluate `continueLighthouseRun` in the console to continue.',
+        },
+        'fraggle-rock': {
+          type: 'boolean',
+          default: false,
+          describe: '[EXPERIMENTAL] Use the new Fraggle Rock navigation runner to gather results.',
         },
         'additional-trace-categories': {
           type: 'string',
@@ -134,7 +156,7 @@ function getFlags(manualArgv) {
         },
         'hostname': {
           type: 'string',
-          default: 'localhost',
+          default: '127.0.0.1',
           describe: 'The hostname to use for the debugging protocol.',
         },
         'form-factor': {
@@ -193,7 +215,7 @@ function getFlags(manualArgv) {
         },
       })
       .group([
-        'save-assets', 'list-all-audits', 'list-trace-categories', 'print-config', 'additional-trace-categories',
+        'save-assets', 'list-all-audits', 'list-locales', 'list-trace-categories', 'print-config', 'additional-trace-categories',
         'config-path', 'preset', 'chrome-flags', 'port', 'hostname', 'form-factor', 'screenEmulation', 'emulatedUserAgent',
         'max-wait-for-load', 'enable-error-reporting', 'gather-mode', 'audit-mode',
         'only-audits', 'only-categories', 'skip-audits', 'budget-path',
@@ -297,7 +319,7 @@ function getFlags(manualArgv) {
         //   - We're just printing the config.
         //   - We're in auditMode (and we have artifacts already)
         // If one of these don't apply, if no URL, stop the program and ask for one.
-        const isPrintSomethingMode = argv.listAllAudits || argv.listTraceCategories || argv.printConfig;
+        const isPrintSomethingMode = argv.listAllAudits || argv.listLocales || argv.listTraceCategories || argv.printConfig;
         const isOnlyAuditMode = !!argv.auditMode && !argv.gatherMode;
         if (isPrintSomethingMode || isOnlyAuditMode) {
           return true;
@@ -308,11 +330,20 @@ function getFlags(manualArgv) {
         throw new Error('Please provide a url');
       })
       .epilogue('For more information on Lighthouse, see https://developers.google.com/web/tools/lighthouse/.')
-      .wrap(yargs.terminalWidth())
-      .argv;
+      .wrap(y.terminalWidth());
+
+  if (options.noExitOnFailure) {
+    // Silence console.error() logging and don't process.exit().
+    // `parser.fail(false)` can be used in yargs once v17 is released.
+    parser = parser.fail((msg, err) => {
+      if (err) throw err;
+      else if (msg) throw new Error(msg);
+    });
+  }
 
   // Augmenting yargs type with auto-camelCasing breaks in tsc@4.1.2 and @types/yargs@15.0.11,
   // so for now cast to add yarg's camelCase properties to type.
+  const argv = parser.argv;
   const cliFlags = /** @type {typeof argv & CamelCasify<typeof argv>} */ (argv);
 
   return cliFlags;
@@ -347,16 +378,20 @@ function coerceOptionalStringBoolean(value) {
  */
 function coerceOutput(values) {
   const outputTypes = ['json', 'html', 'csv'];
-  const errorMsg = `Invalid values. Argument 'output' must be an array from choices "${outputTypes.join('", "')}"`;
+  const errorHint = `Argument 'output' must be an array from choices "${outputTypes.join('", "')}"`;
   if (!values.every(/** @return {item is string} */ item => typeof item === 'string')) {
-    throw new Error(errorMsg);
+    throw new Error('Invalid values. ' + errorHint);
   }
   // Allow parsing of comma-separated values.
   const strings = values.flatMap(value => value.split(','));
-  if (!strings.every(/** @return {str is LH.OutputMode} */ str => outputTypes.includes(str))) {
-    throw new Error(errorMsg);
-  }
-  return strings;
+  const validValues = strings.filter(/** @return {str is LH.OutputMode} */ str => {
+    if (!outputTypes.includes(str)) {
+      throw new Error(`"${str}" is not a valid 'output' value. ` + errorHint);
+    }
+    return true;
+  });
+
+  return validValues;
 }
 
 /**
@@ -456,10 +491,17 @@ function coerceScreenEmulation(value) {
         break;
       case 'mobile':
       case 'disabled':
-        if (possibleSetting !== undefined && typeof possibleSetting !== 'boolean') {
+        // Manually coerce 'true'/'false' strings to booleans since nested property types aren't set.
+        if (possibleSetting === 'true') {
+          screenEmulationSettings[key] = true;
+        } else if (possibleSetting === 'false') {
+          screenEmulationSettings[key] = false;
+        } else if (possibleSetting === undefined || typeof possibleSetting === 'boolean') {
+          screenEmulationSettings[key] = possibleSetting;
+        } else {
           throw new Error(`Invalid value: 'screenEmulation.${key}' must be a boolean`);
         }
-        screenEmulationSettings[key] = possibleSetting;
+
         break;
       default:
         throw new Error(`Unrecognized screenEmulation option: ${key}`);
@@ -469,6 +511,6 @@ function coerceScreenEmulation(value) {
   return screenEmulationSettings;
 }
 
-module.exports = {
+export {
   getFlags,
 };

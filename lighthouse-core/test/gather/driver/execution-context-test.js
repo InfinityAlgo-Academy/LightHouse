@@ -28,6 +28,11 @@ function createMockSession() {
   return session;
 }
 
+/** @param {string} s */
+function trimTrailingWhitespace(s) {
+  return s.split('\n').map(line => line.trimEnd()).join('\n');
+}
+
 describe('ExecutionContext', () => {
   /** @type {LH.Gatherer.FRProtocolSession} */
   let sessionMock;
@@ -39,6 +44,8 @@ describe('ExecutionContext', () => {
 
     forceNewContextId = async (executionContext, executionContextId) => {
       executionContext._session.sendCommand = createMockSendCommandFn()
+        .mockResponse('Page.enable')
+        .mockResponse('Runtime.enable')
         .mockResponse('Page.getResourceTree', {frameTree: {frame: {id: '1337'}}})
         .mockResponse('Page.createIsolatedWorld', {executionContextId})
         .mockResponse('Runtime.evaluate', {result: {value: 2}});
@@ -77,6 +84,8 @@ describe('ExecutionContext', () => {
     executionDestroyed[1]({executionContextId: 42});
     expect(executionContext.getContextId()).toEqual(undefined);
   });
+
+  it.todo('should cache native objects in page');
 });
 
 describe('.evaluateAsync', () => {
@@ -132,6 +141,8 @@ describe('.evaluateAsync', () => {
 
   it('evaluates an expression in isolation', async () => {
     let sendCommand = (sessionMock.sendCommand = createMockSendCommandFn()
+      .mockResponse('Page.enable')
+      .mockResponse('Runtime.enable')
       .mockResponse('Page.getResourceTree', {frameTree: {frame: {id: '1337'}}})
       .mockResponse('Page.createIsolatedWorld', {executionContextId: 1})
       .mockResponse('Runtime.evaluate', {result: {value: 2}}));
@@ -161,9 +172,13 @@ describe('.evaluateAsync', () => {
 
   it('recovers from isolation failures', async () => {
     sessionMock.sendCommand = createMockSendCommandFn()
+      .mockResponse('Page.enable')
+      .mockResponse('Runtime.enable')
       .mockResponse('Page.getResourceTree', {frameTree: {frame: {id: '1337'}}})
       .mockResponse('Page.createIsolatedWorld', {executionContextId: 9001})
       .mockResponse('Runtime.evaluate', Promise.reject(new Error('Cannot find context')))
+      .mockResponse('Page.enable')
+      .mockResponse('Runtime.enable')
       .mockResponse('Page.getResourceTree', {frameTree: {frame: {id: '1337'}}})
       .mockResponse('Page.createIsolatedWorld', {executionContextId: 9002})
       .mockResponse('Runtime.evaluate', {result: {value: 'mocked value'}});
@@ -199,33 +214,34 @@ describe('.evaluate', () => {
     const {expression} = mockFn.findInvocation('Runtime.evaluate');
     const expected = `
 (function wrapInNativePromise() {
-        const __nativePromise = globalThis.__nativePromise || Promise;
-        const URL = globalThis.__nativeURL || globalThis.URL;
+        const Promise = globalThis.__nativePromise || globalThis.Promise;
+const URL = globalThis.__nativeURL || globalThis.URL;
+const performance = globalThis.__nativePerformance || globalThis.performance;
         globalThis.__lighthouseExecutionContextId = undefined;
-        return new __nativePromise(function (resolve) {
-          return __nativePromise.resolve()
+        return new Promise(function (resolve) {
+          return Promise.resolve()
             .then(_ => (() => {
-      
-      function main(value) {
+
+      return (function main(value) {
       return value;
-    }
-      return main(1);
+    })(1);
     })())
             .catch(function wrapRuntimeEvalErrorInBrowser(err) {
-  err = err || new Error();
-  const fallbackMessage = typeof err === 'string' ? err : 'unknown error';
+  if (!err || typeof err === 'string') {
+    err = new Error(err);
+  }
 
   return {
     __failedInBrowser: true,
     name: err.name || 'Error',
-    message: err.message || fallbackMessage,
-    stack: err.stack || (new Error()).stack,
+    message: err.message || 'unknown error',
+    stack: err.stack,
   };
 })
             .then(resolve);
         });
       }())`.trim();
-    expect(expression).toBe(expected);
+    expect(trimTrailingWhitespace(expression)).toBe(trimTrailingWhitespace(expected));
     expect(await eval(expression)).toBe(1);
   });
 
@@ -243,12 +259,34 @@ describe('.evaluate', () => {
     const value = await executionContext.evaluate(mainFn, {args: [1]}); // eslint-disable-line no-unused-vars
 
     const code = mockFn.mock.calls[0][0];
-    expect(code).toBe(`(() => {
-      
-      function mainFn(value) {
+    expect(trimTrailingWhitespace(code)).toBe(`(() => {
+
+      return (function mainFn(value) {
       return value;
-    }
-      return mainFn(1);
+    })(1);
+    })()`);
+    expect(eval(code)).toEqual(1);
+  });
+
+  it('transforms parameters into an expression (arrows)', async () => {
+    // Mock so the argument can be intercepted, and the generated code
+    // can be evaluated without the error catching code.
+    const mockFn = executionContext._evaluateInContext = jest.fn()
+      .mockImplementation(() => Promise.resolve());
+
+    /** @param {number} value */
+    const mainFn = (value) => {
+      return value;
+    };
+    /** @type {number} */
+    const value = await executionContext.evaluate(mainFn, {args: [1]}); // eslint-disable-line no-unused-vars
+
+    const code = mockFn.mock.calls[0][0];
+    expect(trimTrailingWhitespace(code)).toBe(`(() => {
+
+      return ((value) => {
+      return value;
+    })(1);
     })()`);
     expect(eval(code)).toEqual(1);
   });
@@ -286,18 +324,26 @@ describe('.evaluate', () => {
     });
 
     const code = mockFn.mock.calls[0][0];
-    expect(code).toEqual(`(() => {
+    expect(trimTrailingWhitespace(code)).toEqual(`(() => {
       function abs(val) {
       return Math.abs(val);
     }
 function square(val) {
       return val * val;
     }
-      function mainFn({a, b}, passThru) {
+      return (function mainFn({a, b}, passThru) {
       return {a: abs(a), b: square(b), passThru};
-    }
-      return mainFn({"a":-5,"b":10},"hello");
+    })({"a":-5,"b":10},"hello");
     })()`);
     expect(eval(code)).toEqual({a: 5, b: 100, passThru: 'hello'});
+  });
+});
+
+describe('.serializeArguments', () => {
+  it('should serialize a list of differently typed arguments', () => {
+    const args = [undefined, 1, 'foo', null, {x: {y: {z: [2]}}}];
+    expect(ExecutionContext.serializeArguments(args)).toEqual(
+      `undefined,1,"foo",null,{"x":{"y":{"z":[2]}}}`
+    );
   });
 });

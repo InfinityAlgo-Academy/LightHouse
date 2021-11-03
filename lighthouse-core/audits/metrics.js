@@ -11,9 +11,11 @@ const ComputedTimingSummary = require('../computed/metrics/timing-summary.js');
 /** @type {Set<keyof LH.Artifacts.TimingSummary>} */
 const DECIMAL_METRIC_KEYS = new Set([
   'cumulativeLayoutShift',
-  'cumulativeLayoutShiftAllFrames',
+  'cumulativeLayoutShiftMainFrame',
+  'totalCumulativeLayoutShift',
   'observedCumulativeLayoutShift',
-  'observedCumulativeLayoutShiftAllFrames',
+  'observedCumulativeLayoutShiftMainFrame',
+  'observedTotalCumulativeLayoutShift',
 ]);
 
 class Metrics extends Audit {
@@ -26,7 +28,8 @@ class Metrics extends Audit {
       scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
       title: 'Metrics',
       description: 'Collects all available metrics.',
-      requiredArtifacts: ['traces', 'devtoolsLogs'],
+      supportedModes: ['navigation'],
+      requiredArtifacts: ['traces', 'devtoolsLogs', 'GatherContext'],
     };
   }
 
@@ -36,10 +39,11 @@ class Metrics extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
+    const gatherContext = artifacts.GatherContext;
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     const summary = await ComputedTimingSummary
-      .request({trace, devtoolsLog}, context);
+      .request({trace, devtoolsLog, gatherContext, settings: context.settings}, context);
     const metrics = summary.metrics;
     const debugInfo = summary.debugInfo;
 

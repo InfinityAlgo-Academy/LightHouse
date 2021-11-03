@@ -6,7 +6,7 @@ on:
   pull_request: # run on all PRs, not just PRs to a particular branch
 
 jobs:
-  smoke-devtools:
+  integration:
     runs-on: macos-latest # while macbots are much slower, linux reliably crashes running this
 
     steps:
@@ -24,6 +24,8 @@ jobs:
       with:
         path: lighthouse
 
+    - name: Generate cache hash
+      run: bash $GITHUB_WORKSPACE/lighthouse/.github/scripts/generate-devtools-hash.sh > cdt-test-hash.txt
     - name: Cache depot tools, devtools, blink tools and content shell
       uses: actions/cache@v2
       with:
@@ -33,14 +35,16 @@ jobs:
           ${{ env.BLINK_TOOLS_PATH }}
           ${{ github.workspace }}/lighthouse/.tmp/chromium-web-tests/content-shells
         # The number is how many times this hash key was manually updated to break the cache.
-        key: ${{ runner.os }}-0-${{ hashFiles('third-party/chromium-webtests/webtests/http/tests/devtools/lighthouse/*.js', 'lighthouse/.github/workflows/devtools.yml', 'lighthouse/lighthouse-core/test/chromium-web-tests/*', 'lighthouse/clients/devtools-entry.js', 'lighthouse/clients/devtools-report-assets.js', 'lighthouse/build/build-bundle.js', 'lighthouse/build/build-dt-report-resources.js') }}
+        key: ${{ runner.os }}-2-${{ hashFiles('cdt-test-hash.txt') }}
 
-    - name: Use Node.js 12.x
+    - name: Use Node.js 14.x
       uses: actions/setup-node@v1
       with:
-        node-version: 12.x
+        node-version: 14.x
 
     - run: yarn --frozen-lockfile
+      working-directory: ${{ github.workspace }}/lighthouse
+    - run: yarn build-report
       working-directory: ${{ github.workspace }}/lighthouse
     - run: yarn build-devtools
       working-directory: ${{ github.workspace }}/lighthouse
@@ -53,6 +57,9 @@ jobs:
       run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/chromium-web-tests/download-blink-tools.sh
     - name: Download Content Shell
       run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/chromium-web-tests/download-content-shell.sh
+
+    - name: Install python deps
+      run: pip install six requests
 
     - name: Run Web Tests
       run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/chromium-web-tests/run-web-tests.sh

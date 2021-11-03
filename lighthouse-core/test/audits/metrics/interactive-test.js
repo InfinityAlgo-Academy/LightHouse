@@ -37,6 +37,7 @@ const getFakeContext = ({formFactor, throttlingMethod}) => ({
 describe('Performance: interactive audit', () => {
   it('should compute interactive', () => {
     const artifacts = {
+      GatherContext: {gatherMode: 'navigation'},
       traces: {
         [Interactive.DEFAULT_PASS]: acceptableTrace,
       },
@@ -55,6 +56,7 @@ describe('Performance: interactive audit', () => {
 
   it('should compute interactive on pages with redirect', () => {
     const artifacts = {
+      GatherContext: {gatherMode: 'navigation'},
       traces: {
         [Interactive.DEFAULT_PASS]: redirectTrace,
       },

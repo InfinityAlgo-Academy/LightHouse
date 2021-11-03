@@ -14,6 +14,7 @@ const log = require('lighthouse-logger');
 const Gatherer = require('../../gather/gatherers/gatherer.js');
 const Audit = require('../../audits/audit.js');
 const i18n = require('../../lib/i18n/i18n.js');
+const format = require('../../../shared/localization/format.js');
 
 /* eslint-env jest */
 
@@ -132,6 +133,7 @@ describe('Config', () => {
         return {
           id: 'missing-artifact-audit',
           title: 'none',
+          failureTitle: 'none',
           description: 'none',
           requiredArtifacts: [
             // Require fake artifact amidst base artifact and default artifacts.
@@ -160,6 +162,7 @@ describe('Config', () => {
         return {
           id: 'optional-artifact-audit',
           title: 'none',
+          failureTitle: 'none',
           description: 'none',
           requiredArtifacts: [
             'URL', // base artifact
@@ -191,6 +194,7 @@ describe('Config', () => {
         return {
           id: 'optional-artifact-audit',
           title: 'none',
+          failureTitle: 'none',
           description: 'none',
           requiredArtifacts: [
             'URL', // base artifact
@@ -222,6 +226,7 @@ describe('Config', () => {
         return {
           id: 'optional-artifact-audit',
           title: 'none',
+          failureTitle: 'none',
           description: 'none',
           requiredArtifacts: [
             'URL', // base artifact
@@ -253,6 +258,7 @@ describe('Config', () => {
         return {
           id: 'optional-artifact-audit',
           title: 'none',
+          failureTitle: 'none',
           description: 'none',
           requiredArtifacts: [
             'URL', // base artifact
@@ -284,6 +290,7 @@ describe('Config', () => {
         return {
           id: 'base-artifacts-audit',
           title: 'base',
+          failureTitle: 'base',
           description: 'base',
           requiredArtifacts: ['HostUserAgent', 'URL', 'Stacks', 'WebAppManifest'],
         };
@@ -429,7 +436,7 @@ describe('Config', () => {
           }
         },
       ],
-    }), /no failureTitle and should/);
+    }), /no meta.failureTitle and should/);
 
     assert.throws(_ => new Config({
       audits: [basePath + '/missing-description'],
@@ -442,6 +449,7 @@ describe('Config', () => {
             return {
               id: 'empty-string-description',
               title: 'title',
+              failureTitle: 'none',
               description: '',
               requiredArtifacts: [],
             };
@@ -544,25 +552,25 @@ describe('Config', () => {
       audits: [
         'accessibility/color-contrast',
         'metrics/first-meaningful-paint',
-        'metrics/first-cpu-idle',
-        'metrics/estimated-input-latency',
+        'metrics/first-contentful-paint',
+        'metrics/cumulative-layout-shift',
       ],
       categories: {
         'needed-category': {
           auditRefs: [
             {id: 'first-meaningful-paint'},
-            {id: 'first-cpu-idle'},
+            {id: 'first-contentful-paint'},
           ],
         },
         'other-category': {
           auditRefs: [
             {id: 'color-contrast'},
-            {id: 'estimated-input-latency'},
+            {id: 'cumulative-layout-shift'},
           ],
         },
         'unused-category': {
           auditRefs: [
-            {id: 'estimated-input-latency'},
+            {id: 'cumulative-layout-shift'},
           ],
         },
       },
@@ -588,21 +596,21 @@ describe('Config', () => {
       audits: [
         'accessibility/color-contrast',
         'metrics/first-meaningful-paint',
-        'metrics/first-cpu-idle',
-        'metrics/estimated-input-latency',
+        'metrics/first-contentful-paint',
+        'metrics/cumulative-layout-shift',
       ],
       categories: {
         'needed-category': {
           auditRefs: [
             {id: 'first-meaningful-paint'},
-            {id: 'first-cpu-idle'},
+            {id: 'first-contentful-paint'},
             {id: 'color-contrast'},
           ],
         },
         'other-category': {
           auditRefs: [
             {id: 'color-contrast'},
-            {id: 'estimated-input-latency'},
+            {id: 'cumulative-layout-shift'},
           ],
         },
       },
@@ -664,8 +672,11 @@ describe('Config', () => {
     });
 
     assert.ok(config.audits.length, 'inherited audits by extension');
-    assert.equal(config.audits.length, origConfig.categories.performance.auditRefs.length + 1);
+    // +1 for `is-on-https`, +1 for `full-page-screenshot`.
+    assert.equal(config.audits.length, origConfig.categories.performance.auditRefs.length + 2);
     assert.equal(config.passes.length, 1, 'filtered out passes');
+    assert.ok(config.audits.find(a => a.implementation.meta.id === 'is-on-https'));
+    assert.ok(config.audits.find(a => a.implementation.meta.id === 'full-page-screenshot'));
   });
 
   it('warns for invalid filters', () => {
@@ -676,7 +687,7 @@ describe('Config', () => {
       extends: 'lighthouse:default',
       settings: {
         onlyCategories: ['performance', 'missing-category'],
-        onlyAudits: ['first-cpu-idle', 'missing-audit'],
+        onlyAudits: ['first-contentful-paint', 'missing-audit'],
       },
     });
 
@@ -885,7 +896,7 @@ describe('Config', () => {
       },
     };
     const config = new Config(extendedJson);
-    assert.equal(config.passes.length, 3, 'did not filter config');
+    assert.equal(config.passes.length, 2, 'did not filter config');
     assert.equal(Object.keys(config.categories).length, 1, 'did not filter config');
     assert.deepEqual(config.settings.onlyCategories, ['pwa']);
     const configAgain = new Config(config);
@@ -1180,9 +1191,11 @@ describe('Config', () => {
       };
       const config = new Config(extended);
       const selectedCategory = origConfig.categories.performance;
-      const auditCount = Object.keys(selectedCategory.auditRefs).length;
+      // +1 for `full-page-screenshot`.
+      const auditCount = Object.keys(selectedCategory.auditRefs).length + 1;
 
       assert.equal(config.audits.length, auditCount, '# of audits match category list');
+      assert.ok(config.audits.find(a => a.implementation.meta.id === 'full-page-screenshot'));
     });
 
     it('should only run specified audits', () => {
@@ -1207,9 +1220,12 @@ describe('Config', () => {
       };
       const config = new Config(extended);
       const selectedCategory = origConfig.categories.performance;
-      const auditCount = Object.keys(selectedCategory.auditRefs).length + 1;
+      // +1 for `service-worker`, +1 for `full-page-screenshot`.
+      const auditCount = Object.keys(selectedCategory.auditRefs).length + 2;
       assert.equal(config.passes.length, 2, 'incorrect # of passes');
       assert.equal(config.audits.length, auditCount, 'audit filtering failed');
+      assert.ok(config.audits.find(a => a.implementation.meta.id === 'service-worker'));
+      assert.ok(config.audits.find(a => a.implementation.meta.id === 'full-page-screenshot'));
     });
 
     it('should support redundant filtering', () => {
@@ -1222,9 +1238,40 @@ describe('Config', () => {
       };
       const config = new Config(extended);
       const selectedCategory = origConfig.categories.pwa;
-      const auditCount = Object.keys(selectedCategory.auditRefs).length;
-      assert.equal(config.passes.length, 3, 'incorrect # of passes');
+      // +1 for `full-page-screenshot`.
+      const auditCount = Object.keys(selectedCategory.auditRefs).length + 1;
+      assert.equal(config.passes.length, 2, 'incorrect # of passes');
       assert.equal(config.audits.length, auditCount, 'audit filtering failed');
+      assert.ok(config.audits.find(a => a.implementation.meta.id === 'full-page-screenshot'));
+    });
+
+    it('should keep full-page-screenshot even if onlyCategories is set', () => {
+      assert.ok(origConfig.audits.includes('full-page-screenshot'));
+      // full-page-screenshot does not belong to a category.
+      const matchCategories = Object.values(origConfig.categories).filter(cat =>
+          cat.auditRefs.find(ref => ref.id === 'full-page-screenshot'));
+      assert.equal(matchCategories.length, 0);
+
+      const extended = {
+        extends: 'lighthouse:default',
+        settings: {
+          onlyCategories: ['accessibility'],
+        },
+      };
+      const config = new Config(extended);
+
+      assert.ok(config.audits.find(a => a.implementation.meta.id === 'full-page-screenshot'));
+    });
+
+    it('should keep full-page-screenshot even if skipAudits is set', () => {
+      const extended = {
+        extends: 'lighthouse:default',
+        settings: {
+          skipAudits: ['font-size'],
+        },
+      };
+      const config = new Config(extended);
+      assert.ok(config.audits.find(a => a.implementation.meta.id === 'full-page-screenshot'));
     });
   });
 
@@ -1263,8 +1310,13 @@ describe('Config', () => {
       // Round-trip through JSON to drop live 'instance'/'implementation' props.
       const mergedJson = JSON.parse(JSON.stringify(merged));
 
+      const expectedInstance = {
+        meta: {
+          supportedModes: ['snapshot', 'timespan', 'navigation'],
+        },
+      };
       assert.deepEqual(mergedJson[0].gatherers,
-        [{path: 'viewport-dimensions', instance: {}}]);
+        [{path: 'viewport-dimensions', instance: expectedInstance}]);
     });
 
     function loadGatherer(gathererEntry) {
@@ -1408,8 +1460,8 @@ describe('Config', () => {
 
       Object.entries(printedConfig.categories).forEach(([printedCategoryId, printedCategory]) => {
         const origTitle = origConfig.categories[printedCategoryId].title;
-        if (i18n.isIcuMessage(origTitle)) localizableCount++;
-        const i18nOrigTitle = i18n.getFormatted(origTitle, origConfig.settings.locale);
+        if (format.isIcuMessage(origTitle)) localizableCount++;
+        const i18nOrigTitle = format.getFormatted(origTitle, origConfig.settings.locale);
 
         assert.strictEqual(printedCategory.title, i18nOrigTitle);
       });

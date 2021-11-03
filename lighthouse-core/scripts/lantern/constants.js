@@ -5,7 +5,9 @@
  */
 'use strict';
 
-const path = require('path');
+import path from 'path';
+
+import {LH_ROOT} from '../../../root.js';
 
 /* eslint-disable max-len */
 
@@ -54,19 +56,16 @@ const path = require('path');
  * @property {number} optimisticFCP
  * @property {number} optimisticFMP
  * @property {number} optimisticSI
- * @property {number} optimisticTTFCPUI
  * @property {number} optimisticTTI
  * @property {number} optimisticLCP
  * @property {number} pessimisticFCP
  * @property {number} pessimisticFMP
  * @property {number} pessimisticSI
- * @property {number} pessimisticTTFCPUI
  * @property {number} pessimisticTTI
  * @property {number} pessimisticLCP
  * @property {number} roughEstimateOfFCP
  * @property {number} roughEstimateOfFMP
  * @property {number} roughEstimateOfSI
- * @property {number} roughEstimateOfTTFCPUI
  * @property {number} roughEstimateOfTTI
  * @property {number} roughEstimateOfLCP
  */
@@ -74,16 +73,16 @@ const path = require('path');
 /** @type {Array<string>} */
 const WARNINGS = [];
 
-module.exports = {
+export default {
   WARNINGS,
   // prettier-ignore
   SITE_INDEX_WITH_GOLDEN_PATH: './lantern-data/site-index-plus-golden-expectations.json',
   // prettier-ignore
-  SITE_INDEX_WITH_GOLDEN_WITH_COMPUTED_PATH: path.join(__dirname, '../../../.tmp/site-index-plus-golden-expectations-plus-computed.json'),
+  SITE_INDEX_WITH_GOLDEN_WITH_COMPUTED_PATH: path.join(LH_ROOT, '.tmp/site-index-plus-golden-expectations-plus-computed.json'),
   // prettier-ignore
-  MASTER_COMPUTED_PATH: path.join(__dirname, '../../test/fixtures/lantern-master-computed-values.json'),
+  BASELINE_COMPUTED_PATH: path.join(LH_ROOT, 'lighthouse-core/test/fixtures/lantern-baseline-computed-values.json'),
   // prettier-ignore
-  MASTER_ACCURACY_PATH: path.join(__dirname, '../../test/fixtures/lantern-master-accuracy.json'),
+  BASELINE_ACCURACY_PATH: path.join(LH_ROOT, 'lighthouse-core/test/fixtures/lantern-baseline-accuracy.json'),
   /**
    * @param {{sites: Array<LanternSiteDefinition>}} siteIndexWithComputed
    * @param {{sites: Array<LanternMetrics & {url: string}>}} baselineLanternData
@@ -196,7 +195,6 @@ module.exports = {
       roughEstimateOfFCP: evaluate('firstContentfulPaint', 'roughEstimateOfFCP'),
       roughEstimateOfFMP: evaluate('firstMeaningfulPaint', 'roughEstimateOfFMP'),
       roughEstimateOfSI: evaluate('speedIndex', 'roughEstimateOfSI'),
-      roughEstimateOfTTFCPUI: evaluate('timeToFirstInteractive', 'roughEstimateOfTTFCPUI'),
       roughEstimateOfTTI: evaluate('timeToConsistentlyInteractive', 'roughEstimateOfTTI'),
       roughEstimateOfLCP: evaluate('largestContentfulPaint', 'roughEstimateOfLCP'),
     };

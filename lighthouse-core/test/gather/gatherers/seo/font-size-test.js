@@ -121,7 +121,7 @@ describe('Font size gatherer', () => {
   });
 
   it('returns information about font sizes used on page', async () => {
-    const driver = {
+    const session = {
       on() {},
       off() {},
       async sendCommand(command, args) {
@@ -143,6 +143,7 @@ describe('Font size gatherer', () => {
         }
       },
     };
+    const driver = {defaultSession: session};
 
     const artifact = await fontSizeGather.afterPass({driver});
     const expectedFailingTextLength = Array.from(smallText.trim()).length;

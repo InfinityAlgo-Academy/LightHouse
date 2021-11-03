@@ -7,6 +7,11 @@
 
 require('./test-utils.js').makeMocksForGatherRunner();
 
+jest.mock('../gather/driver/service-workers.js', () => ({
+  getServiceWorkerVersions: jest.fn().mockResolvedValue({versions: []}),
+  getServiceWorkerRegistrations: jest.fn().mockResolvedValue({registrations: []}),
+}));
+
 const Runner = require('../runner.js');
 const GatherRunner = require('../gather/gather-runner.js');
 const driverMock = require('./gather/fake-driver.js');
@@ -21,7 +26,6 @@ const Connection = require('../gather/connections/connection.js');
 const fs = require('fs');
 const assert = require('assert').strict;
 const path = require('path');
-const rimraf = require('rimraf');
 const LHError = require('../lib/lh-error.js');
 const i18n = require('../lib/i18n/i18n.js');
 
@@ -30,7 +34,7 @@ const i18n = require('../lib/i18n/i18n.js');
 describe('Runner', () => {
   const defaultGatherFn = opts => Runner._gatherArtifactsFromBrowser(
     opts.requestedUrl,
-    opts,
+    {...opts, computedCache: new Map()},
     null
   );
 
@@ -64,6 +68,7 @@ describe('Runner', () => {
   const basicAuditMeta = {
     id: 'test-audit',
     title: 'A test audit',
+    failureTitle: 'A test audit',
     description: 'An audit for testing',
     requiredArtifacts: [],
   };
@@ -81,7 +86,7 @@ describe('Runner', () => {
     const resolvedPath = path.resolve(process.cwd(), artifactsPath);
 
     afterAll(() => {
-      rimraf.sync(resolvedPath);
+      fs.rmSync(resolvedPath, {recursive: true, force: true});
     });
 
     it('-G gathers, quits, and doesn\'t run audits', () => {
@@ -212,6 +217,7 @@ describe('Runner', () => {
           return {
             id: 'dummy-audit',
             title: 'Dummy',
+            failureTitle: 'Dummy',
             description: 'Will fail because required artifact is an error',
             requiredArtifacts: ['WarningAndErrorGatherer'],
           };
@@ -316,7 +322,7 @@ describe('Runner', () => {
       ],
     });
 
-    return Runner.run({}, {config}).then(results => {
+    return Runner.run({}, {config, computedCache: new Map()}).then(results => {
       const audits = results.lhr.audits;
       assert.equal(audits['user-timings'].displayValue, '2 user timings');
       assert.deepStrictEqual(audits['user-timings'].details.items.map(i => i.startTime),
@@ -439,7 +445,7 @@ describe('Runner', () => {
       assert.strictEqual(auditResult.scoreDisplayMode, 'error');
       assert.ok(auditResult.errorMessage.includes(errorMessage));
 
-      rimraf.sync(resolvedPath);
+      fs.rmSync(resolvedPath, {recursive: true, force: true});
     });
 
     it('only passes the requested artifacts to the audit (no optional artifacts)', async () => {
@@ -555,7 +561,7 @@ describe('Runner', () => {
       ],
     });
 
-    return Runner.run({}, {config}).then(results => {
+    return Runner.run({}, {config, computedCache: new Map()}).then(results => {
       const audits = results.lhr.audits;
       assert.equal(audits['critical-request-chains'].displayValue, '5 chains found');
       assert.equal(audits['critical-request-chains'].details.longestChain.transferSize, 2468);
@@ -763,6 +769,7 @@ describe('Runner', () => {
         return {
           id: 'test-audit',
           title: 'A test audit',
+          failureTitle: 'A test audit',
           description: 'An audit for testing',
           requiredArtifacts: ['RuntimeErrorGatherer'],
         };
@@ -790,7 +797,7 @@ describe('Runner', () => {
 
       // And it bubbled up to the runtimeError.
       expect(lhr.runtimeError.code).toEqual(NO_FCP.code);
-      expect(lhr.runtimeError.message).toBeDisplayString(/did not paint any content.*\(NO_FCP\)/);
+      expect(lhr.runtimeError.message).toMatch(/did not paint any content.*\(NO_FCP\)/);
     });
 
 
@@ -818,15 +825,17 @@ describe('Runner', () => {
       const errorDriverMock = Object.assign({}, driverMock, {
         online: true,
         // Loads the page successfully in the first pass, fails with PAGE_HUNG in the second.
-        async gotoURL(url) {
-          if (url.includes('blank')) return {finalUrl: '', timedOut: false};
-          if (firstLoad) {
-            firstLoad = false;
-            return {finalUrl: url, timedOut: false};
-          } else {
-            throw new LHError(LHError.errors.PAGE_HUNG);
-          }
-        },
+      });
+
+      const gotoURL = jest.requireMock('../gather/driver/navigation.js').gotoURL;
+      gotoURL.mockImplementation((_, url) => {
+        if (url.includes('blank')) return {finalUrl: '', warnings: []};
+        if (firstLoad) {
+          firstLoad = false;
+          return {finalUrl: url, warnings: []};
+        } else {
+          throw new LHError(LHError.errors.PAGE_HUNG);
+        }
       });
 
       const config = new Config(configJson);
@@ -838,7 +847,7 @@ describe('Runner', () => {
 
       // But top-level runtimeError is the pageLoadError.
       expect(lhr.runtimeError.code).toEqual(LHError.errors.PAGE_HUNG.code);
-      expect(lhr.runtimeError.message).toBeDisplayString(/because the page stopped responding/);
+      expect(lhr.runtimeError.message).toMatch(/because the page stopped responding/);
     });
   });
 

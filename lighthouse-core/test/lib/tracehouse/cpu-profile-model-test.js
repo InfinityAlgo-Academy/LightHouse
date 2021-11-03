@@ -413,7 +413,7 @@ describe('CPU Profiler Model', () => {
     });
 
     it('should work on a real trace', () => {
-      const {processEvents} = TraceProcessor.computeTraceOfTab(profilerTrace);
+      const {processEvents} = TraceProcessor.processTrace(profilerTrace);
       const profiles = CpuProfileModel.collectProfileEvents(processEvents);
       const events = CpuProfileModel.synthesizeTraceEvents(profiles[0]);
       expect(events).toHaveLength(230);
@@ -472,7 +472,7 @@ describe('CPU Profiler Model', () => {
     });
 
     it('should work on a real trace', () => {
-      const {processEvents} = TraceProcessor.computeTraceOfTab(profilerTrace);
+      const {processEvents} = TraceProcessor.processTrace(profilerTrace);
       const profiles = CpuProfileModel.collectProfileEvents(processEvents);
       expect(profiles).toMatchObject([
         {

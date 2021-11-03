@@ -13,7 +13,7 @@ const assert = require('assert').strict;
 const WIDTH = 800;
 const HEIGHT = 600;
 
-function generateImage(clientSize, naturalSize, props, src = 'https://google.com/logo.png') {
+function generateImage(clientSize, naturalDimensions, props, src) {
   const clientRect = {
     clientRect: {
       top: 0,
@@ -23,26 +23,27 @@ function generateImage(clientSize, naturalSize, props, src = 'https://google.com
     },
   };
   return {
-    cssComputedObjectFit: 'fill',
+    computedStyles: {objectFit: 'fill'},
     src,
-    mimeType: 'image/png',
+    naturalDimensions,
+    node: {devtoolsNodePath: '1,HTML,1,IMG'},
     ...clientSize,
-    ...naturalSize,
     ...clientRect,
     ...props,
   };
 }
 
 describe('Images: size audit', () => {
-  function testImage(condition, data) {
+  function testImage(condition, data, src = 'https://google.com/logo.png') {
     const description = `identifies when an image ${condition}`;
     it(description, () => {
       const result = ImageSizeResponsiveAudit.audit({
         ImageElements: [
           generateImage(
             {displayedWidth: data.clientSize[0], displayedHeight: data.clientSize[1]},
-            {naturalWidth: data.naturalSize[0], naturalHeight: data.naturalSize[1]},
-            data.props
+            {width: data.naturalSize[0], height: data.naturalSize[1]},
+            data.props,
+            src
           ),
         ],
         ViewportDimensions: {
@@ -99,10 +100,7 @@ describe('Images: size audit', () => {
     score: 1,
     clientSize: [100, 100],
     naturalSize: [5, 5],
-    props: {
-      mimeType: 'image/svg+xml',
-    },
-  });
+  }, 'https://google.com/logo.svg');
 
   testImage('is a css image', {
     score: 1,
@@ -118,7 +116,7 @@ describe('Images: size audit', () => {
     clientSize: [100, 100],
     naturalSize: [5, 5],
     props: {
-      cssComputedObjectFit: 'cover',
+      computedStyles: {objectFit: 'cover'},
     },
   });
 
@@ -127,7 +125,7 @@ describe('Images: size audit', () => {
     clientSize: [100, 100],
     naturalSize: [5, 5],
     props: {
-      cssComputedImageRendering: 'pixelated',
+      computedStyles: {imageRendering: 'pixelated'},
     },
   });
 
@@ -138,6 +136,18 @@ describe('Images: size audit', () => {
     props: {
       srcset: 'https://google.com/logo.png 1x',
     },
+  });
+
+  testImage('wider than the viewport', {
+    score: 1,
+    clientSize: [1000, 100],
+    naturalSize: [5, 5],
+  });
+
+  testImage('taller than the viewport', {
+    score: 1,
+    clientSize: [100, 1000],
+    naturalSize: [5, 5],
   });
 
   describe('visibility', () => {
@@ -376,15 +386,15 @@ describe('Images: size audit', () => {
       ImageElements: [
         generateImage(
           {displayedWidth: 80, displayedHeight: 40},
-          {naturalWidth: 40, naturalHeight: 20}
+          {width: 40, height: 20}
         ),
         generateImage(
           {displayedWidth: 160, displayedHeight: 80},
-          {naturalWidth: 40, naturalHeight: 20}
+          {width: 40, height: 20}
         ),
         generateImage(
           {displayedWidth: 60, displayedHeight: 30},
-          {naturalWidth: 40, naturalHeight: 20}
+          {width: 40, height: 20}
         ),
       ],
       ViewportDimensions: {
@@ -402,19 +412,19 @@ describe('Images: size audit', () => {
       ImageElements: [
         generateImage(
           {displayedWidth: 80, displayedHeight: 40},
-          {naturalWidth: 40, naturalHeight: 20},
+          {width: 40, height: 20},
           {},
           'image1.png'
         ),
         generateImage(
           {displayedWidth: 120, displayedHeight: 60},
-          {naturalWidth: 40, naturalHeight: 20},
+          {width: 40, height: 20},
           {},
           'image2.png'
         ),
         generateImage(
           {displayedWidth: 90, displayedHeight: 45},
-          {naturalWidth: 40, naturalHeight: 20},
+          {width: 40, height: 20},
           {},
           'image3.png'
         ),
@@ -435,7 +445,7 @@ describe('Images: size audit', () => {
       ImageElements: [
         generateImage(
           {displayedWidth: 80, displayedHeight: 40},
-          {naturalWidth: 40, naturalHeight: 20}
+          {width: 40, height: 20}
         ),
       ],
       ViewportDimensions: {

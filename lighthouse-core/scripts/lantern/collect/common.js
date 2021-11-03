@@ -10,13 +10,17 @@
 /** @typedef {Result & {metrics: LH.Artifacts.TimingSummary}} ResultWithMetrics */
 /** @typedef {{results: ResultsForUrl[], warnings: string[]}} Summary */
 
-const fs = require('fs');
-const readline = require('readline');
-const {promisify} = require('util');
-const archiver = require('archiver');
-const streamFinished = promisify(require('stream').finished);
+import fs from 'fs';
+import readline from 'readline';
+import {promisify} from 'util';
+import stream from 'stream';
 
-const LH_ROOT = `${__dirname}/../../../..`;
+import archiver from 'archiver';
+
+import {LH_ROOT} from '../../../../root.js';
+
+const streamFinished = promisify(stream.finished);
+
 const collectFolder = `${LH_ROOT}/dist/collect-lantern-traces`;
 const summaryPath = `${collectFolder}/summary.json`;
 const goldenFolder = `${LH_ROOT}/dist/golden-lantern-traces`;
@@ -124,7 +128,7 @@ function getMetrics(lhr) {
   return metrics;
 }
 
-module.exports = {
+export {
   ProgressLogger,
   collectFolder,
   goldenFolder,

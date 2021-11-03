@@ -1,4 +1,4 @@
-# Lighthouse  [![GitHub Actions Status Badge](https://github.com/GoogleChrome/lighthouse/workflows/💡🏠/badge.svg)](https://github.com/GoogleChrome/lighthouse/actions) [![Linux Build Status](https://img.shields.io/travis/GoogleChrome/lighthouse/master.svg)](https://travis-ci.org/GoogleChrome/lighthouse) [![Coverage Status](https://img.shields.io/coveralls/GoogleChrome/lighthouse/master.svg)](https://coveralls.io/github/GoogleChrome/lighthouse?branch=master) [![Build tracker for Lighthouse](https://img.shields.io/badge/buildtracker-ok-blue)](https://lh-build-tracker.herokuapp.com/) [![NPM lighthouse package](https://img.shields.io/npm/v/lighthouse.svg)](https://npmjs.org/package/lighthouse)
+# Lighthouse  [![GitHub Actions Status Badge](https://github.com/GoogleChrome/lighthouse/workflows/CI/badge.svg)](https://github.com/GoogleChrome/lighthouse/actions/workflows/ci.yml) [![GitHub Actions Status Badge](https://github.com/GoogleChrome/lighthouse/workflows/unit/badge.svg)](https://github.com/GoogleChrome/lighthouse/actions/workflows/unit.yml) [![GitHub Actions Status Badge](https://github.com/GoogleChrome/lighthouse/workflows/smoke/badge.svg)](https://github.com/GoogleChrome/lighthouse/actions/workflows/smoke.yml) [![Coverage Status](https://codecov.io/gh/GoogleChrome/lighthouse/branch/master/graph/badge.svg)](https://codecov.io/gh/GoogleChrome/lighthouse) [![Build tracker for Lighthouse](https://img.shields.io/badge/buildtracker-ok-blue)](https://lh-build-tracker.herokuapp.com/) [![NPM lighthouse package](https://img.shields.io/npm/v/lighthouse.svg)](https://npmjs.org/package/lighthouse)
 
 > Lighthouse analyzes web apps and web pages, collecting modern performance metrics and insights on developer best practices.
 
@@ -26,6 +26,7 @@
   * [Can I configure the lighthouse run?](#can-i-configure-the-lighthouse-run)
   * [How does Lighthouse use network throttling, and how can I make it better?](#how-does-lighthouse-use-network-throttling-and-how-can-i-make-it-better)
   * [Are results sent to a remote server?](#are-results-sent-to-a-remote-server)
+  * [How do I get localized Lighthouse results?](#how-do-i-get-localized-lighthouse-results-via-the-cli)
   * [How do I author custom audits to extend Lighthouse?](#how-do-i-author-custom-audits-to-extend-lighthouse)
   * [How do I contribute?](#how-do-i-contribute)
 
@@ -51,7 +52,7 @@ The Chrome extension was available prior to Lighthouse being available in Chrome
 
 The Node CLI provides the most flexibility in how Lighthouse runs can be configured and reported. Users who want more advanced usage, or want to run Lighthouse in an automated fashion should use the Node CLI.
 
-_Lighthouse requires Node 12 LTS (12.x) or later._
+_Lighthouse requires Node 14 LTS (14.x) or later._
 
 **Installation**:
 
@@ -330,6 +331,8 @@ This section details services that have integrated Lighthouse data. If you're wo
 
 * **[Treo](https://treo.sh)** - Treo is Lighthouse as a Service. It provides regression testing, geographical regions, custom networks, and integrations with GitHub & Slack. Treo is a paid product with plans for solo-developers and teams.
 
+* **[Alertdesk](https://www.alertdesk.com/)** - Alertdesk is based on Lighthouse and helps you to keep track of your site’s quality & performance. Run daily quality & performance tests from both Mobile and Desktop and dive into the powerful & intuitive reports. You can also monitor your uptime (every minute - 24/7) & domain health. Alertdesk is a paid product with a free 14-day trial.
+
 * **[Screpy](https://screpy.com)** - Screpy is a web analysis tool that can analyze all pages of your websites in one dashboard and monitor them with your team. It's powered by Lighthouse and it also includes some different analysis tools (SERP, W3C, Uptime, etc). Screpy has free and paid plans.
 
 * **[Lighthouse Keeper](https://lighthouse-keeper.com/)** - Lighthouse Keeper monitors your pages' Lighthouse scores and notifies you if they drop below your thresholds. Lighthouse Keeper is a free service that monitors up to 3 URLs once per day.
@@ -346,6 +349,10 @@ This section details services that have integrated Lighthouse data. If you're wo
 
 * **[Websu](https://websu.io)** - Websu is an open source project to provide Lighthouse-as-a-Service through a simple HTTP REST API. The main features are ability to host and deploy in your own environment and historical Lighthouse report summaries.
 
+* **[DTEKT.IO](https://dtekt.io)** - DTEKT is a website performance and uptime monitoring service. It uses lighthouse to provide visibility into the performance of websites from multiple locations on multiple devices. It offers three months free trial and paid plans.
+
+* **[SpeedVitals](https://speedvitals.com)** - SpeedVitals is a Lighthouse powered tool to measure web performance across multiple devices and locations. It has various features like Layout Shift Visualization, Waterfall Chart, Field Data and Resource Graphs. SpeedVitals offers both free and paid plans.
+
 ## Lighthouse Integrations in non-Web Perf services
 
 * **[PageWatch](https://pagewatch.dev/)** — PageWatch is a tool to find problem pages on your website.  It provides insights into spelling errors, layout issues, slow pages (powered by Lighthouse) and more.  PageWatch is offered via free and paid plans.
@@ -356,6 +363,8 @@ This section details services that have integrated Lighthouse data. If you're wo
 
 * **[Microlink](https://microlink.io)** — Microlink is a cloud browser as API. It offers Lighthouse reports on demand, making it easy to build any service on top. Similar functionality is available via the underlying open-source project named browserless.
 
+* **[Peyk](https://peyk.com)** - Peyk is a website change detection & monitoring service. Peyk can detect changes in cookies, network requests, technologies, local & session storage, lighthouse audits, screenshots and so much more. Peyk is offered via free and paid plans.
+
 * **[Wattspeed](https://wattspeed.com/)** — Wattspeed is a free tool that generates snapshots - historical captures of your web pages that include Lighthouse scores, a list of technologies, W3C HTML validator results, DOM size, mixed content info, and more.
 
 * **[AwesomeTechStack](https://awesometechstack.com)** — AwesomeTechStack is a free to use website tech stack analyzer. AwesomeTechStack provides insights into the security, modernity, and performance of any website's technology stack and guidance to improve performance. Lighthouse insights are a crucial part of a website's tech stack rating.
@@ -365,6 +374,8 @@ This section details services that have integrated Lighthouse data. If you're wo
 * **[lighthouse-plugin-field-performance](https://github.com/treosh/lighthouse-plugin-field-performance)** - a plugin that adds real-user performance metrics for the URL using the data from [Chrome UX Report](https://developers.google.com/web/tools/chrome-user-experience-report/).
 
 * **[lighthouse-plugin-publisher-ads](https://github.com/googleads/publisher-ads-lighthouse-plugin)** - a tool to improve ad speed and overall quality through a series of automated audits. At the moment, this is primarily targeted at sites using Google Ad Manager. This tool will aid in resolving discovered problems, providing a tool to be used to evaluate effectiveness of iterative changes while suggesting actionable feedback.
+
+* **[lighthouse-plugin-crux](https://github.com/dvelasquez/lighthouse-plugin-crux)** - a plugin that quickly gathers real-user-metrics data from the [Chrome UX Report API](https://developers.google.com/web/tools/chrome-user-experience-report/api/reference).
 
 ## Related Projects
 Other awesome open source projects that use Lighthouse.
@@ -378,11 +389,11 @@ Other awesome open source projects that use Lighthouse.
 * **[lighthouse-badges](https://github.com/emazzotta/lighthouse-badges)** - Generate gh-badges (shields.io) based on Lighthouse performance.
 * **[lighthouse-batch](https://www.npmjs.com/package/lighthouse-batch)** - Run Lighthouse over a number of sites and generate a summary of their metrics/scores.
 * **[lighthouse-batch-parallel](https://www.npmjs.com/package/lighthouse-batch-parallel)** - Run multiple Lighthouse runs in parallel to accelerate the data collecting process, get the result stream (csv, json, js object) in your own process (warning: performance results may be volatile).
-* **[lighthouse-check-action](https://github.com/foo-software/lighthouse-check-action)** - A Github Action to run Lighthouse in a workflow, featuring Slack notifications and report upload to S3.
+* **[lighthouse-check-action](https://github.com/foo-software/lighthouse-check-action)** - A GitHub Action to run Lighthouse in a workflow, featuring Slack notifications and report upload to S3.
 * **[lighthouse-check-orb](https://circleci.com/orbs/registry/orb/foo-software/lighthouse-check)** - A CircleCI Orb to run Lighthouse in a workflow, featuring Slack notifications and report upload to S3.
 * **[andreasonny83/lighthouse-ci](https://github.com/andreasonny83/lighthouse-ci)** - Run Lighthouse and assert scores satisfy your custom thresholds.
 * **[GoogleChrome/lighthouse-ci](https://github.com/GoogleChrome/lighthouse-ci)** - (**official**) Automate running Lighthouse for every commit, viewing the changes, and preventing regressions.
-* **[lighthouse-ci-action](https://github.com/treosh/lighthouse-ci-action)** - A Github Action that makes it easy to run Lighthouse in CI and keep your pages small using performance budgets.
+* **[lighthouse-ci-action](https://github.com/treosh/lighthouse-ci-action)** - A GitHub Action that makes it easy to run Lighthouse in CI and keep your pages small using performance budgets.
 * **[lighthouse-cron](https://github.com/thearegee/lighthouse-cron)** - Cron multiple batch Lighthouse audits and emit results for sending to remote server.
 * **[lighthouse-gh-reporter](https://github.com/carlesnunez/lighthouse-gh-reporter)** - Run Lighthouse in CI and report back in a comment on your pull requests
 * **[lighthouse-hue](https://github.com/ebidel/lighthouse-hue)** - Set the color of Philips Hue lights based on a Lighthouse score
@@ -437,6 +448,12 @@ Read more in our [guide to network throttling](./docs/throttling.md).
 
 Nope. Lighthouse runs locally, auditing a page using a local version of the Chrome browser installed on the
 machine. Report results are never processed or beaconed to a remote server.
+
+### How do I get localized Lighthouse results via the CLI?
+
+Starting in Lighthouse 8.0, Lighthouse relies entirely on native `Intl` support and no longer uses an `Intl` polyfill. If you're using Node 14 or later, there should be no issue because Node is now [built with `full-icu` by default](https://nodejs.medium.com/node-js-12-to-lts-and-node-js-13-is-here-e28d6a4a2bd#9514).
+
+However, if you're using a `small-icu` Node build, you may see Lighthouse log messages about your locale not being available. To remedy this, you can upgrade to Node 14+ or manually install ICU data by using the [`full-icu`](https://www.npmjs.com/package/full-icu) module and the [`--icu-data-dir` node flag](https://nodejs.org/api/intl.html#intl_providing_icu_data_at_runtime) at launch.
 
 ### How do I author custom audits to extend Lighthouse?
 

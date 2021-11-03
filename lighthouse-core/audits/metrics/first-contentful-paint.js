@@ -27,7 +27,8 @@ class FirstContentfulPaint extends Audit {
       title: str_(i18n.UIStrings.firstContentfulPaintMetric),
       description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
-      requiredArtifacts: ['traces', 'devtoolsLogs'],
+      supportedModes: ['navigation'],
+      requiredArtifacts: ['traces', 'devtoolsLogs', 'GatherContext'],
     };
   }
 
@@ -37,16 +38,16 @@ class FirstContentfulPaint extends Audit {
   static get defaultOptions() {
     return {
       mobile: {
-        // 25th and 5th percentiles HTTPArchive -> median and PODR, then p10 is derived from them.
-        // https://bigquery.cloud.google.com/table/httparchive:lighthouse.2018_04_01_mobile?pli=1
-        // see https://www.desmos.com/calculator/oqlvmezbze
+        // 25th and 8th percentiles HTTPArchive -> median and p10.
+        // https://bigquery.cloud.google.com/table/httparchive:lighthouse.2021_05_01_mobile
+        // see https://www.desmos.com/calculator/6wi8rhipve
         scoring: {
-          p10: 2336,
-          median: 4000,
+          p10: 1800,
+          median: 3000,
         },
       },
       desktop: {
-        // SELECT QUANTILES(renderStart, 21) FROM [httparchive:summary_pages.2018_12_15_desktop] LIMIT 1000
+        // SELECT QUANTILES(renderStart, 21) FROM [httparchive:summary_pages.2020_07_01_desktop] LIMIT 1000
         scoring: {
           p10: 934,
           median: 1600,
@@ -63,7 +64,8 @@ class FirstContentfulPaint extends Audit {
   static async audit(artifacts, context) {
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
-    const metricComputationData = {trace, devtoolsLog, settings: context.settings};
+    const gatherContext = artifacts.GatherContext;
+    const metricComputationData = {trace, devtoolsLog, gatherContext, settings: context.settings};
     const metricResult = await ComputedFcp.request(metricComputationData, context);
     const options = context.options[context.settings.formFactor];
 

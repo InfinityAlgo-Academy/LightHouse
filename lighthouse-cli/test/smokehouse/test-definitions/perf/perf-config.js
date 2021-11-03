@@ -6,7 +6,7 @@
 'use strict';
 
 /** @type {LH.Config.Json} */
-const perfConfig = {
+const config = {
   extends: 'lighthouse:default',
   settings: {
     throttlingMethod: 'devtools',
@@ -41,7 +41,6 @@ const perfConfig = {
       ],
       timings: [
         {metric: 'first-contentful-paint', budget: 2000},
-        {metric: 'first-cpu-idle', budget: 2000},
         {metric: 'interactive', budget: 2000},
         {metric: 'first-meaningful-paint', budget: 2000},
         {metric: 'max-potential-fid', budget: 2000},
@@ -50,4 +49,4 @@ const perfConfig = {
   },
 };
 
-module.exports = perfConfig;
+export default config;

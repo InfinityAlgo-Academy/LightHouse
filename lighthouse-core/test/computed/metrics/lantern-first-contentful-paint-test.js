@@ -13,10 +13,11 @@ const devtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.
 
 /* eslint-env jest */
 describe('Metrics: Lantern FCP', () => {
+  const gatherContext = {gatherMode: 'navigation'};
   it('should compute predicted value', async () => {
     const settings = {};
     const context = {settings, computedCache: new Map()};
-    const result = await LanternFirstContentfulPaint.request({trace, devtoolsLog,
+    const result = await LanternFirstContentfulPaint.request({trace, devtoolsLog, gatherContext,
       settings}, context);
 
     expect({

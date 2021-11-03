@@ -26,7 +26,7 @@ const UIStrings = {
   noFcp: 'The page did not paint any content. Please ensure you keep the browser window in the foreground during the load and try again. ({errorCode})',
   /**
    * @description Error message explaining that the page loaded too slowly to perform a Lighthouse run.
-   * @example {FMP_TOO_LATE_FOR_FCPUI} errorCode
+   * @example {NO_TTI_CPU_IDLE_PERIOD} errorCode
    * */
   pageLoadTookTooLong: 'Your page took too long to load. Please follow the opportunities in the report to reduce your page load time, and then try re-running Lighthouse. ({errorCode})',
   /** Error message explaining that Lighthouse could not load the requested URL and the steps that might be taken to fix the unreliability. */
@@ -71,12 +71,12 @@ const UIStrings = {
   /** Error message explaining that Lighthouse timed out while waiting for the initial connection to the Chrome Devtools protocol. */
   criTimeout: 'Timeout waiting for initial Debugger Protocol connection.',
   /**
-   * @description Error message explaning that a resource that was required for testing was never collected. "artifactName" will be replaced with the name of the resource that wasn't collected.
+   * @description Error message explaining that a resource that was required for testing was never collected. "artifactName" will be replaced with the name of the resource that wasn't collected.
    * @example {WebAppManifest} artifactName
    * */
   missingRequiredArtifact: 'Required {artifactName} gatherer did not run.',
   /**
-   * @description Error message explaning that there was an error while trying to collect a resource that was required for testing. "artifactName" will be replaced with the name of the resource that wasn't collected; "errorMessage" will be replaced with a string description of the error that occurred.
+   * @description Error message explaining that there was an error while trying to collect a resource that was required for testing. "artifactName" will be replaced with the name of the resource that wasn't collected; "errorMessage" will be replaced with a string description of the error that occurred.
    * @example {WebAppManifest} artifactName
    * @example {Manifest invalid} errorMessage
    * */
@@ -289,15 +289,8 @@ const ERRORS = {
     code: 'UNSUPPORTED_OLD_CHROME',
     message: UIStrings.oldChromeDoesNotSupportFeature,
   },
-  /** Layout Shift trace events are found but without data */
-  LAYOUT_SHIFT_MISSING_DATA: {
-    code: 'LAYOUT_SHIFT_MISSING_DATA',
-    message: UIStrings.badTraceRecording,
-  },
 
   // TTI calculation failures
-  FMP_TOO_LATE_FOR_FCPUI: {code: 'FMP_TOO_LATE_FOR_FCPUI', message: UIStrings.pageLoadTookTooLong},
-  NO_FCPUI_IDLE_PERIOD: {code: 'NO_FCPUI_IDLE_PERIOD', message: UIStrings.pageLoadTookTooLong},
   NO_TTI_CPU_IDLE_PERIOD: {code: 'NO_TTI_CPU_IDLE_PERIOD', message: UIStrings.pageLoadTookTooLong},
   NO_TTI_NETWORK_IDLE_PERIOD: {
     code: 'NO_TTI_NETWORK_IDLE_PERIOD',

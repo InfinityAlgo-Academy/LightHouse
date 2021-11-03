@@ -8,6 +8,7 @@ By default, the instance will be called `lighthouse-collection-$gcloudusername-i
     1. (Prerequiste Googlers only) Ensure you're on the corp VPN or you won't be able to SSH into a Google-owned instance.
    1. (Optional) Run `export TARGET_GIT_REF=<a lighthouse git ref that has been pushed> ` if wanting to run on anything but master.
    1. (Optional) Run `export TARGET_RUNS=<a number> ` if needing more than 1 run per URL.
+   1. (Optional) Run `export LIGHTHOUSE_FLAGS=...` to configure Lighthouse CLI.
    1. (Optional) Run `export LIGHTHOUSE_COLLECTION_GCLOUD_PROJECT=<project name> ` to set your GCloud project.
    1. Run `bash lighthouse-core/scripts/gcp-collection/fleet-create.sh path/to/your/url/list.txt` from the repo root.
 1. Check status of collection, download data, and kill machines on completion.
@@ -15,6 +16,7 @@ By default, the instance will be called `lighthouse-collection-$gcloudusername-i
    1. Run `bash lighthouse-core/scripts/gcp-collection/fleet-status.sh --kill` to check on the status and terminate finished instances.
 1. Analyze the results
    1. Bespoke for now :)
+   1. Example [analysis](https://docs.google.com/document/d/1uoLYWlhRXHo-kCKnte0HZcCjy5VWOStDe0X78XlIf1o/edit?ts=602c4fd1&resourcekey=0-_FA55GhVpUYqfNsnCVzPdw)
 
 ## Future Work
 

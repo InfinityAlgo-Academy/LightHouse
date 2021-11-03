@@ -28,7 +28,7 @@ const makeComputedArtifact = require('./computed-artifact.js');
  * @property {number} totalBytes
  * @property {number} wastedBytes
  * @property {number=} wastedPercent
- * @property {Record<string, number>=} sourcesWastedBytes
+ * @property {Record<string, number>=} sourcesWastedBytes Keyed by file name. Includes (unmapped) key too.
  */
 
 class UnusedJavascriptSummary {
@@ -127,9 +127,9 @@ class UnusedJavascriptSummary {
       let offset = lineOffsets[mapping.lineNumber];
 
       offset += mapping.columnNumber;
-      const lastColumnOfMapping =
-        // @ts-expect-error: We will upstream lastColumnNumber to CDT eventually.
-        (mapping.lastColumnNumber - 1) || lineLengths[mapping.lineNumber];
+      const lastColumnOfMapping = mapping.lastColumnNumber !== undefined ?
+        mapping.lastColumnNumber - 1 :
+        lineLengths[mapping.lineNumber];
       for (let i = mapping.columnNumber; i <= lastColumnOfMapping; i++) {
         if (wasteData.every(data => data.unusedByIndex[offset] === 1)) {
           const key = mapping.sourceURL || '(unmapped)';

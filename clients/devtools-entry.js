@@ -5,13 +5,21 @@
  */
 'use strict';
 
+/* global globalThis */
+
 const lighthouse = require('../lighthouse-core/index.js');
 const RawProtocol = require('../lighthouse-core/gather/connections/raw.js');
 const log = require('lighthouse-logger');
-const {registerLocaleData, lookupLocale} = require('../lighthouse-core/lib/i18n/i18n.js');
+const {lookupLocale} = require('../lighthouse-core/lib/i18n/i18n.js');
+const {registerLocaleData, getCanonicalLocales} = require('../shared/localization/format.js');
 const constants = require('../lighthouse-core/config/constants.js');
 
 /** @typedef {import('../lighthouse-core/gather/connections/connection.js')} Connection */
+
+// Rollup seems to overlook some references to `Buffer`, so it must be made explicit.
+// (`parseSourceMapFromDataUrl` breaks without this)
+/** @type {BufferConstructor} */
+globalThis.Buffer = require('buffer').Buffer;
 
 /**
  * Returns a config, which runs only certain categories.
@@ -48,7 +56,7 @@ function createConfig(categoryIDs, device) {
 
 /**
  * @param {RawProtocol.Port} port
- * @returns {RawProtocol}
+ * @return {RawProtocol}
  */
 function setUpWorkerConnection(port) {
   return new RawProtocol(port);
@@ -57,6 +65,17 @@ function setUpWorkerConnection(port) {
 /** @param {(status: [string, string, string]) => void} listenCallback */
 function listenForStatus(listenCallback) {
   log.events.addListener('status', listenCallback);
+}
+
+/**
+ * Does a locale lookup but limits the result to the *canonical* Lighthouse
+ * locales, which are only the locales with a messages locale file that can
+ * be downloaded and then used via `registerLocaleData`.
+ * @param {string|string[]=} locales
+ * @return {LH.Locale}
+ */
+function lookupCanonicalLocale(locales) {
+  return lookupLocale(locales, getCanonicalLocales());
 }
 
 // For the bundle smoke test.
@@ -84,6 +103,7 @@ if (typeof self !== 'undefined') {
   self.listenForStatus = listenForStatus;
   // @ts-expect-error
   self.registerLocaleData = registerLocaleData;
+  // TODO: expose as lookupCanonicalLocale in LighthouseService.ts?
   // @ts-expect-error
-  self.lookupLocale = lookupLocale;
+  self.lookupLocale = lookupCanonicalLocale;
 }

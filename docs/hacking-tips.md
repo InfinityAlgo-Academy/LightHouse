@@ -1,5 +1,10 @@
 A few assorted scripts and tips to make hacking on Lighthouse a bit easier
 
+# Eng team resources
+
+* [LH Build Tracker](https://lh-build-tracker.herokuapp.com/builds/limit/100) - plotted results of [build-tracker](../build-tracker.config.js) [data](../.github/workflows/ci.yml#:~:text=buildtracker)
+* [LH PR Tracking](https://paulirish.github.io/lh-pr-tracking/) - stats about open PRs, collected [daily](https://github.com/paulirish/lh-pr-tracking/blob/master/.github/workflows/update-stats.yml).
+
 ## Evaluate Lighthouse's runtime performance
 
 Lighthouse has instrumentation to collect timing data for its operations. The data is exposed at `LHR.timing.entries`.  You can generate a trace from this data for closer analysis.
@@ -43,40 +48,12 @@ node generate_report.js > temp.report.html; open temp.report.html
 // generate_report.js
 'use strict';
 
-const ReportGenerator = require('./lighthouse-core/report/report-generator');
+const ReportGenerator = require('./report/generator/report-generator.js');
 const results = require('./temp.report.json');
 const html = ReportGenerator.generateReportHtml(results);
 
 console.log(html);
 ```
-
-## Debugging Travis via docker image
-
-You can do a local docker image install of Travis to better inspect a travis build:
-
-* [How to run travis-ci locally - Stack Overflow](https://stackoverflow.com/questions/21053657/how-to-run-travis-ci-locally)
-* [Common Build Problems - Travis CI](https://docs.travis-ci.com/user/common-build-problems/#Troubleshooting-Locally-in-a-Docker-Image)
-
-```sh
-docker run --name travis-debug -dit travisci/ci-garnet:packer-1512502276-986baf0 /sbin/init
-docker exec -it travis-debug bash -l
-
-# once inside, change to travis user, rather than root
-su - travis
-
-# once on the travis user, make a clone of lighthouse and play around
-```
-
-```sh
-# you may also want to mount a local folder into your docker instance.
-# This will mount your local machines's ~/temp/trav folder into the container's /home/travis/mountpoint folder
-docker run -v $HOME/temp/trav:/home/travis/mountpoint --name travis-debug -dit travisci/ci-garnet:packer-1496954857 /sbin/init
-
-```
-
-You can then run the travis commands (e.g. `travis compile`) to install an environment and run the build script:
-
-[travis-ci/travis-build: .travis.yml =&gt; build.sh converter](https://github.com/travis-ci/travis-build#invocation)
 
 ## Using Audit Classes Directly, Providing Your Own Artifacts
 

@@ -12,22 +12,12 @@ function stall(ms) {
   while (performance.now() - start < ms) ;
 }
 
-/** Render large number of elements to fill up the backend node cache. */
-async function rerender(iterations) {
-  const waitForAnimationFrame = () => new Promise(r => requestAnimationFrame(r))
-
-  for (let i = 0; i < iterations; i++) {
-    const filler = `<div>Filler element</div>`.repeat(4000);
-    document.body.innerHTML = `<div id="div-${i}">${i} left</div>${filler}`;
-    await waitForAnimationFrame()
-  }
-}
-
 // largest-contentful-paint-element: add the largest element later in page load
 // layout-shift-elements: shift down the `<h1>` in the page
 setTimeout(() => {
   const imgEl = document.createElement('img');
   imgEl.src = '../dobetterweb/lighthouse-480x318.jpg';
+  imgEl.loading = 'lazy';
   const textEl = document.createElement('div');
   textEl.textContent = 'Sorry!';
   textEl.style.height = '18px' // this height can be flaky so we set it manually
@@ -38,16 +28,6 @@ setTimeout(() => {
   const sectionEl = document.createElement('section');
   sectionEl.append(imgEl, textEl);
   shadowRoot.append(sectionEl);
-
-  // layout-shift-elements: ensure we can handle shift elements that the protocol can no longer identify
-  // see https://github.com/GoogleChrome/lighthouse/pull/10877
-  if (window.location.href.includes('?evicted')) {
-    stall(100); // force a long task to ensure we reach the rerendering stage
-    setTimeout(async () => {
-      await rerender(30); // rerender a large number of nodes to evict the early layout shift node
-      document.body.textContent = 'Now it is all gone!';
-    }, 50);
-  }
 }, 1000);
 
 // long-tasks: add a very long task at least 500ms

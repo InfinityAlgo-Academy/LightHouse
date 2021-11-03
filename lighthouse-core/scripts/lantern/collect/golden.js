@@ -9,9 +9,9 @@
 /** @typedef {import('./common.js').Summary} Summary */
 /** @typedef {import('../run-on-all-assets.js').Golden} Golden */
 
-const fs = require('fs');
-const rimraf = require('rimraf');
-const common = require('./common.js');
+import fs from 'fs';
+
+import * as common from './common.js';
 
 /**
  * @template T
@@ -96,7 +96,6 @@ async function main() {
       wpt3g: {
         firstContentfulPaint: wptMetrics.firstContentfulPaint,
         firstMeaningfulPaint: wptMetrics.firstMeaningfulPaint,
-        timeToFirstInteractive: wptMetrics.firstCPUIdle,
         timeToConsistentlyInteractive: wptMetrics.interactive,
         speedIndex: wptMetrics.speedIndex,
         largestContentfulPaint: wptMetrics.largestContentfulPaint,
@@ -110,7 +109,7 @@ async function main() {
   /** @type {Golden} */
   const golden = {sites: goldenSites};
 
-  rimraf.sync(common.goldenFolder);
+  fs.rmSync(common.goldenFolder, {recursive: true, force: true});
   fs.mkdirSync(common.goldenFolder);
   saveGoldenData('site-index-plus-golden-expectations.json', JSON.stringify(golden, null, 2));
   for (const result of goldenSites) {
