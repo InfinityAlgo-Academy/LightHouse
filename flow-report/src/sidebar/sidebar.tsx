@@ -6,9 +6,10 @@
 
 import {FunctionComponent} from 'preact';
 
+import {Util} from '../../../report/renderer/util';
 import {Separator} from '../common';
 import {useI18n, useLocalizedStrings} from '../i18n/i18n';
-import {CpuIcon, EnvIcon, SummaryIcon} from '../icons';
+import {CpuIcon, EnvIcon, NetworkIcon, SummaryIcon} from '../icons';
 import {classNames, useHashState, useFlowResult} from '../util';
 import {SidebarFlow} from './flow';
 
@@ -32,8 +33,10 @@ const SidebarSummary: FunctionComponent = () => {
   );
 };
 
-const SidebarRuntimeSettings: FunctionComponent<{settings: LH.ConfigSettings}> = ({settings}) => {
+const SidebarRuntimeSettings: FunctionComponent<{settings: LH.ConfigSettings}> =
+({settings}) => {
   const strings = useLocalizedStrings();
+  const env = Util.getEmulationDescriptions(settings);
 
   return (
     <div className="SidebarRuntimeSettings">
@@ -42,9 +45,18 @@ const SidebarRuntimeSettings: FunctionComponent<{settings: LH.ConfigSettings}> =
           <EnvIcon/>
         </div>
         {
-          settings.formFactor === 'desktop' ?
-            strings.runtimeDesktopEmulation :
-            strings.runtimeMobileEmulation
+          env.deviceEmulation
+        }
+      </div>
+      <div
+        className="SidebarRuntimeSettings__item"
+        title={strings.runtimeSettingsNetworkThrottling}
+      >
+        <div className="SidebarRuntimeSettings__item--icon">
+          <NetworkIcon/>
+        </div>
+        {
+          env.summary
         }
       </div>
       <div className="SidebarRuntimeSettings__item" title={strings.runtimeSettingsCPUThrottling}>
@@ -87,6 +99,7 @@ const Sidebar: FunctionComponent = () => {
 
 export {
   SidebarSummary,
+  SidebarRuntimeSettings,
   SidebarHeader,
   Sidebar,
 };
