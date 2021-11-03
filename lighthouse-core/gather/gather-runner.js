@@ -98,29 +98,6 @@ class GatherRunner {
   }
 
   /**
-   * Reject if the gathering terminates due to the CDP target crashing, etc
-   * @param {Driver} driver
-   * @return {Promise<void>}
-   */
-  static async getGatherTerminatedPromise(driver) {
-    /** @param {number} ms */
-    const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
-
-    return new Promise((_, reject) => {
-      driver.on('Inspector.targetCrashed', async _ => {
-        await wait(1000);
-        reject(new LHError(LHError.errors.TARGET_CRASHED));
-      });
-      // In case of crash, detached fires after targetCrashed, so we'll exit with the crash code
-      // Detachment happens (in non-crash cases) when the browser tab is closed or unexpected connection failure.
-      driver.on('Inspector.detached', async _ => {
-        await wait(1000);
-        reject(new LHError(LHError.errors.TARGET_DETACHED));
-      });
-    });
-  }
-
-  /**
    * Rejects if any open tabs would share a service worker with the target URL.
    * This includes the target tab, so navigation to something like about:blank
    * should be done before calling.

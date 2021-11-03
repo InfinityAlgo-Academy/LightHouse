@@ -237,7 +237,7 @@ class Runner {
     const gatherPromise = GatherRunner.run(runnerOpts.config.passes, gatherOpts);
     await Promise.race([
       gatherPromise,
-      GatherRunner.getGatherTerminatedPromise(driver),
+      driver.getGatherTerminatedPromise(),
     ]);
 
     return gatherPromise;
