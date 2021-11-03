@@ -42,6 +42,10 @@ const listOfTlds = [
 ];
 
 class Util {
+  /** @type {I18n<typeof UIStrings>} */
+  // @ts-expect-error: Is set in report renderer.
+  static i18n = null;
+
   static get PASS_THRESHOLD() {
     return PASS_THRESHOLD;
   }
@@ -557,14 +561,10 @@ Util.getUniqueSuffix = (() => {
   };
 })();
 
-/** @type {I18n<typeof Util['UIStrings']>} */
-// @ts-expect-error: Is set in report renderer.
-Util.i18n = null;
-
 /**
  * Report-renderer-specific strings.
  */
-Util.UIStrings = {
+const UIStrings = {
   /** Disclaimer shown to users below the metric values (First Contentful Paint, Time to Interactive, etc) to warn them that the numbers they see will likely change slightly the next time they run Lighthouse. */
   varianceDisclaimer: 'Values are estimated and may vary. The [performance score is calculated](https://web.dev/performance-scoring/) directly from these metrics.',
   /** Text link pointing to an interactive calculator that explains Lighthouse scoring. The link text should be fairly short. */
@@ -677,6 +677,9 @@ Util.UIStrings = {
   /** Label indicating that Lighthouse throttled the page using custom throttling settings. */
   runtimeCustom: 'Custom throttling',
 };
+Util.UIStrings = UIStrings;
 
-
-module.exports = Util;
+module.exports = {
+  Util,
+  UIStrings,
+};

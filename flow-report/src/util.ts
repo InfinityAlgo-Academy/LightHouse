@@ -9,14 +9,14 @@ import {useContext, useEffect, useMemo, useState} from 'preact/hooks';
 
 import type {UIStringsType} from './i18n/ui-strings';
 
-export const FlowResultContext = createContext<LH.FlowResult|undefined>(undefined);
+const FlowResultContext = createContext<LH.FlowResult|undefined>(undefined);
 
 function getHashParam(param: string): string|null {
   const params = new URLSearchParams(location.hash.replace('#', '?'));
   return params.get(param);
 }
 
-export function classNames(...args: Array<string|undefined|Record<string, boolean>>): string {
+function classNames(...args: Array<string|undefined|Record<string, boolean>>): string {
   const classes = [];
   for (const arg of args) {
     if (!arg) continue;
@@ -35,12 +35,12 @@ export function classNames(...args: Array<string|undefined|Record<string, boolea
   return classes.join(' ');
 }
 
-export function getScreenDimensions(reportResult: LH.Result) {
+function getScreenDimensions(reportResult: LH.Result) {
   const {width, height} = reportResult.configSettings.screenEmulation;
   return {width, height};
 }
 
-export function getFullPageScreenshot(reportResult: LH.Result) {
+function getFullPageScreenshot(reportResult: LH.Result) {
   const fullPageScreenshotAudit = reportResult.audits['full-page-screenshot'];
   const fullPageScreenshot =
     fullPageScreenshotAudit &&
@@ -51,7 +51,7 @@ export function getFullPageScreenshot(reportResult: LH.Result) {
   return fullPageScreenshot || null;
 }
 
-export function getFilmstripFrames(
+function getFilmstripFrames(
   reportResult: LH.Result
 ): Array<{data: string}> | undefined {
   const filmstripAudit = reportResult.audits['screenshot-thumbnails'];
@@ -65,7 +65,7 @@ export function getFilmstripFrames(
   return frameItems || undefined;
 }
 
-export function getModeDescription(mode: LH.Result.GatherMode, strings: UIStringsType) {
+function getModeDescription(mode: LH.Result.GatherMode, strings: UIStringsType) {
   switch (mode) {
     case 'navigation': return strings.navigationDescription;
     case 'timespan': return strings.timespanDescription;
@@ -73,13 +73,13 @@ export function getModeDescription(mode: LH.Result.GatherMode, strings: UIString
   }
 }
 
-export function useFlowResult(): LH.FlowResult {
+function useFlowResult(): LH.FlowResult {
   const flowResult = useContext(FlowResultContext);
   if (!flowResult) throw Error('useFlowResult must be called in the FlowResultContext');
   return flowResult;
 }
 
-export function useHashParams(...params: string[]) {
+function useHashParams(...params: string[]) {
   const [paramValues, setParamValues] = useState(params.map(getHashParam));
 
   // Use two-way-binding on the URL hash.
@@ -97,7 +97,7 @@ export function useHashParams(...params: string[]) {
   return paramValues;
 }
 
-export function useHashState(): LH.FlowResult.HashState|null {
+function useHashState(): LH.FlowResult.HashState|null {
   const flowResult = useFlowResult();
   const [indexString, anchor] = useHashParams('index', 'anchor');
 
@@ -120,3 +120,15 @@ export function useHashState(): LH.FlowResult.HashState|null {
     return {currentLhr: step.lhr, index, anchor};
   }, [indexString, flowResult, anchor]);
 }
+
+export {
+  FlowResultContext,
+  classNames,
+  getScreenDimensions,
+  getFullPageScreenshot,
+  getFilmstripFrames,
+  getModeDescription,
+  useFlowResult,
+  useHashParams,
+  useHashState,
+};

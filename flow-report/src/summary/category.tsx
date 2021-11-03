@@ -95,7 +95,7 @@ const SummaryTooltipAudits: FunctionComponent<{category: LH.ReportResult.Categor
   );
 };
 
-export const SummaryTooltip: FunctionComponent<{
+const SummaryTooltip: FunctionComponent<{
   category: LH.ReportResult.Category,
   gatherMode: LH.Result.GatherMode,
   url: string,
@@ -153,7 +153,7 @@ export const SummaryTooltip: FunctionComponent<{
   );
 };
 
-export const SummaryCategory: FunctionComponent<{
+const SummaryCategory: FunctionComponent<{
   category: LH.ReportResult.Category|undefined,
   href: string,
   gatherMode: LH.Result.GatherMode,
@@ -175,4 +175,9 @@ export const SummaryCategory: FunctionComponent<{
       }
     </div>
   );
+};
+
+export {
+  SummaryTooltip,
+  SummaryCategory,
 };
