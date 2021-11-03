@@ -23,11 +23,12 @@ limitations under the License.
   <title>Lighthouse Flow Report</title>
   <style>/*%%LIGHTHOUSE_CSS%%*/</style>
   <style>/*%%LIGHTHOUSE_FLOW_CSS%%*/</style>
+  <style>body {margin: 0}</style>
 </head>
-<body class="flow-vars lh-root lh-vars">
+<body>
   <noscript>Lighthouse report requires JavaScript. Please enable.</noscript>
 
-  <main><!-- report populated here --></main>
+  <main class="flow-vars lh-root lh-vars"><!-- report populated here --></main>
 
   <script>window.__LIGHTHOUSE_FLOW_JSON__ = %%LIGHTHOUSE_FLOW_JSON%%;</script>
   <script>%%LIGHTHOUSE_FLOW_JAVASCRIPT%%

@@ -221,6 +221,7 @@ export class LighthouseReportViewer {
       return;
     }
 
+    // @ts-expect-error Legacy use of report renderer
     const dom = new DOM(document);
     const renderer = new ReportRenderer(dom);
 

@@ -29,6 +29,7 @@ function useReportRenderer() {
 
 const ReportRendererProvider: FunctionComponent = ({children}) => {
   const globals = useMemo(() => {
+    // @ts-expect-error Still using legacy
     const dom = new DOM(document);
     const detailsRenderer = new DetailsRenderer(dom);
     const categoryRenderer = new CategoryRenderer(dom, detailsRenderer);

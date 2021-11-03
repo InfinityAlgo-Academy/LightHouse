@@ -8,6 +8,7 @@
 /* eslint-env jest */
 
 import jsdom from 'jsdom';
+import {jest} from '@jest/globals';
 
 import {Util} from '../../renderer/util.js';
 import {DOM} from '../../renderer/dom.js';
@@ -23,6 +24,8 @@ describe('ReportRendererAxe', () => {
     let sampleResults;
 
     beforeAll(async () => {
+      global.console.warn = jest.fn();
+
       const {window} = new jsdom.JSDOM();
       const dom = new DOM(window.document);
       const detailsRenderer = new DetailsRenderer(dom);
@@ -47,10 +50,10 @@ describe('ReportRendererAxe', () => {
     });
 
     it('renders without axe violations', async () => {
-      const container = renderer._dom._document.createElement('main');
+      const container = renderer._dom.document().createElement('main');
       const output = renderer.renderReport(sampleResults, container);
 
-      renderer._dom._document.body.appendChild(container);
+      renderer._dom.document().body.appendChild(container);
 
       const config = {
         rules: {
