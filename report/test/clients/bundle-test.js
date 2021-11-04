@@ -29,11 +29,16 @@ describe('lighthouseRenderer bundle', () => {
     document = window.document;
 
     global.window = global.self = window;
+    global.window.requestAnimationFrame = fn => fn();
     // Stub out matchMedia for Node.
     global.self.matchMedia = function() {
       return {
         addListener: function() {},
       };
+    };
+    global.window.ResizeObserver = class ResizeObserver {
+      observe() { }
+      unobserve() { }
     };
   });
 
