@@ -43,7 +43,6 @@ async function clearDataForOrigin(session, url) {
   // indexeddb, websql, and localstorage are not cleared to prevent loss of potentially important data.
   //   https://chromedevtools.github.io/debugger-protocol-viewer/tot/Storage/#type-StorageType
   const typesToClear = [
-    'appcache',
     // 'cookies',
     'file_systems',
     'shader_cache',

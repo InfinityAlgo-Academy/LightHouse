@@ -11,12 +11,14 @@ import {FlowSegment, FlowStepThumbnail, Separator} from '../common';
 import {getModeDescription, useFlowResult} from '../util';
 import {Util} from '../../../report/renderer/util';
 import {SummaryCategory} from './category';
-import {useUIStrings} from '../i18n/i18n';
+import {useStringFormatter, useLocalizedStrings} from '../i18n/i18n';
 
 const DISPLAYED_CATEGORIES = ['performance', 'accessibility', 'best-practices', 'seo'];
-const THUMBNAIL_WIDTH = 50;
+const THUMBNAIL_WIDTH = 40;
 
 const SummaryNavigationHeader: FunctionComponent<{lhr: LH.Result}> = ({lhr}) => {
+  const strings = useLocalizedStrings();
+
   return (
     <div className="SummaryNavigationHeader" data-testid="SummaryNavigationHeader">
       <FlowSegment/>
@@ -24,16 +26,16 @@ const SummaryNavigationHeader: FunctionComponent<{lhr: LH.Result}> = ({lhr}) => 
         <a rel="noopener" target="_blank" href={lhr.finalUrl}>{lhr.finalUrl}</a>
       </div>
       <div className="SummaryNavigationHeader__category">
-        {lhr.categories['performance'].title}
+        {strings.categoryPerformance}
       </div>
       <div className="SummaryNavigationHeader__category">
-        {lhr.categories['accessibility'].title}
+        {strings.categoryAccessibility}
       </div>
       <div className="SummaryNavigationHeader__category">
-        {lhr.categories['best-practices'].title}
+        {strings.categoryBestPractices}
       </div>
       <div className="SummaryNavigationHeader__category">
-        {lhr.categories['seo'].title}
+        {strings.categorySeo}
       </div>
     </div>
   );
@@ -42,13 +44,13 @@ const SummaryNavigationHeader: FunctionComponent<{lhr: LH.Result}> = ({lhr}) => 
 /**
  * The div should behave like a JSX <>...</>. This still allows us to identify "rows" with CSS selectors.
  */
-export const SummaryFlowStep: FunctionComponent<{
+const SummaryFlowStep: FunctionComponent<{
   lhr: LH.Result,
   label: string,
   hashIndex: number,
 }> = ({lhr, label, hashIndex}) => {
   const reportResult = useMemo(() => Util.prepareReportResult(lhr), [lhr]);
-  const strings = useUIStrings();
+  const strings = useLocalizedStrings();
   const modeDescription = getModeDescription(lhr.gatherMode, strings);
 
   return (
@@ -61,10 +63,7 @@ export const SummaryFlowStep: FunctionComponent<{
             <Separator/>
           </div>
       }
-      {
-        lhr.gatherMode !== 'timespan' &&
-          <FlowStepThumbnail reportResult={reportResult} width={THUMBNAIL_WIDTH}/>
-      }
+      <FlowStepThumbnail lhr={lhr} width={THUMBNAIL_WIDTH}/>
       <FlowSegment mode={lhr.gatherMode}/>
       <div className="SummaryFlowStep__label">
         <div className="SummaryFlowStep__mode">{modeDescription}</div>
@@ -77,6 +76,7 @@ export const SummaryFlowStep: FunctionComponent<{
             category={reportResult.categories[c]}
             href={`#index=${hashIndex}&anchor=${c}`}
             gatherMode={lhr.gatherMode}
+            finalUrl={lhr.finalUrl}
           />
         ))
       }
@@ -106,9 +106,10 @@ const SummaryFlow: FunctionComponent = () => {
   );
 };
 
-export const SummaryHeader: FunctionComponent = () => {
+const SummaryHeader: FunctionComponent = () => {
   const flowResult = useFlowResult();
-  const strings = useUIStrings();
+  const strings = useLocalizedStrings();
+  const str_ = useStringFormatter();
 
   let numNavigation = 0;
   let numTimespan = 0;
@@ -128,9 +129,9 @@ export const SummaryHeader: FunctionComponent = () => {
   }
 
   const subtitleCounts = [];
-  if (numNavigation) subtitleCounts.push(`${numNavigation} navigation reports`);
-  if (numTimespan) subtitleCounts.push(`${numTimespan} timespan reports`);
-  if (numSnapshot) subtitleCounts.push(`${numSnapshot} snapshot reports`);
+  if (numNavigation) subtitleCounts.push(str_(strings.navigationReportCount, {numNavigation}));
+  if (numTimespan) subtitleCounts.push(str_(strings.timespanReportCount, {numTimespan}));
+  if (numSnapshot) subtitleCounts.push(str_(strings.snapshotReportCount, {numSnapshot}));
   const subtitle = subtitleCounts.join(' · ');
 
   return (
@@ -150,8 +151,8 @@ const SummarySectionHeader: FunctionComponent = ({children}) => {
   );
 };
 
-export const Summary: FunctionComponent = () => {
-  const strings = useUIStrings();
+const Summary: FunctionComponent = () => {
+  const strings = useLocalizedStrings();
 
   return (
     <div className="Summary" data-testid="Summary">
@@ -161,4 +162,10 @@ export const Summary: FunctionComponent = () => {
       <SummaryFlow/>
     </div>
   );
+};
+
+export {
+  SummaryFlowStep,
+  SummaryHeader,
+  Summary,
 };

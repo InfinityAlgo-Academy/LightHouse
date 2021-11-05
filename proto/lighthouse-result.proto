@@ -126,7 +126,7 @@ message LighthouseResult {
   map<string, CategoryGroup> category_groups = 11;
 
   // Message containing the configuration settings for the LH run
-  // Next field number: 6
+  // Next ID: 9
   message ConfigSettings {
     // The possible form factors an audit can be run in.
     // This enum served the emulated_form_factor field, but in v7, that field
@@ -158,6 +158,33 @@ message LighthouseResult {
     // How Lighthouse was run, e.g. from the Chrome extension or from the npm
     // module
     string channel = 4;
+
+    // Next ID: 7
+    message ThrottlingSettings {
+      // The round trip time in milliseconds.
+      double rtt_ms = 1;
+
+      // The network throughput in kilobits per second.
+      double throughput_kbps = 2;
+
+      // The network request latency in milliseconds.
+      double request_latency_ms = 3;
+
+      // The network download throughput in kilobits per second.
+      double download_throughput_kbps = 4;
+
+      // The network upload throughput in kilobits per second.
+      double upload_throughput_kbps = 5;
+
+      // The amount of slowdown applied to the cpu (1/<cpuSlowdownMultiplier>).
+      double cpu_slowdown_multiplier = 6;
+    }
+
+    // The throttling config settings.
+    ThrottlingSettings throttling = 7;
+
+    // The method used to throttle the network.
+    string throttling_method = 8;
   }
 
   // The settings that were used to run this audit
@@ -418,7 +445,7 @@ message I18n {
 
     // Label for a row in a table that shows the time at which a Lighthouse run
     // was conducted; formatted as a timestamp, e.g. Jan 1, 1970 12:00 AM UTC.
-    string runtime_settings_fetch_time = 27;
+    string runtime_settings_fetch_time = 27 [deprecated = true];
 
     // Label for a row in a table that describes the network throttling
     // conditions that were used during a Lighthouse run, if any.
@@ -427,11 +454,11 @@ message I18n {
     // Title of the Runtime settings table in a Lighthouse report.  Runtime
     // settings are the environment configurations that a specific report used
     // at auditing time.
-    string runtime_settings_title = 29;
+    string runtime_settings_title = 29 [deprecated = true];
 
     // Label for a row in a table that shows the User Agent that was detected on
     // the Host machine that ran Lighthouse.
-    string runtime_settings_UA = 30;
+    string runtime_settings_UA = 30 [deprecated = true];
 
     // Label for a row in a table that shows the User Agent that was used to
     // send out all network requests during the Lighthouse run.
@@ -439,7 +466,7 @@ message I18n {
 
     // Label for a row in a table that shows the URL that was audited during a
     // Lighthouse run.
-    string runtime_settings_Url = 32;
+    string runtime_settings_Url = 32 [deprecated = true];
 
     // Descriptive explanation for a runtime setting that is set to an unknown
     // value.
@@ -488,7 +515,7 @@ message I18n {
     // Label for a row in a table that shows in what tool Lighthouse is being
     // run (e.g. The lighthouse CLI, Chrome DevTools, Lightrider, WebPageTest,
     // etc).
-    string runtime_settings_channel = 44;
+    string runtime_settings_channel = 44 [deprecated = true];
 
     // Text link pointing to the Lighthouse scoring calculator. This link
     // immediately follows a sentence stating the performance score is
@@ -506,6 +533,40 @@ message I18n {
     // chosen, the audits in the report are hidden if they are not relevant to
     // the selected metric.
     string show_relevant_audits = 48;
+
+    // Descriptive label that this analysis run was from a single pageload
+    // of a browser (not a summary of hundreds of loads)
+    string runtime_single_load = 49;
+
+    // Descriptive explanation that this analysis run was from a single pageload
+    // of a browser, whereas field data often summarizes hundreds+ of page loads
+    string runtime_single_load_tooltip = 50;
+
+    // Descriptive label that this analysis only considers the initial load of the page,
+    // and no interaction beyond when the page had "fully loaded"
+    string runtime_analysis_window = 51;
+
+    // Label for an interactive control that will reveal or hide a group of content.
+    // This control toggles between the text 'Show' and 'Hide'.
+    string show = 52;
+
+    // Label for an interactive control that will reveal or hide a group of content.
+    // This control toggles between the text 'Show' and 'Hide'.
+    string hide = 53;
+
+    // Label for an interactive control that will reveal or hide a group of content.
+    // This control toggles between the text 'Expand view' and 'Collapse view'.
+    string expand_view = 54;
+
+    // Label for an interactive control that will reveal or hide a group of content.
+    // This control toggles between the text 'Expand view' and 'Collapse view'.
+    string collapse_view = 55;
+
+    // Label indicating that Lighthouse throttled the page to emulate a slow 4G network connection.
+    string runtime_slow_4g = 56;
+
+    // Label indicating that Lighthouse throttled the page using custom throttling settings.
+    string runtime_custom = 57;
   }
 
   // The message holding all formatted strings used in the renderer.

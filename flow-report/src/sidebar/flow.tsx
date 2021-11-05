@@ -7,7 +7,7 @@
 import {FunctionComponent} from 'preact';
 
 import {FlowSegment} from '../common';
-import {classNames, useCurrentLhr, useFlowResult} from '../util';
+import {classNames, useHashState, useFlowResult} from '../util';
 import {Separator} from '../common';
 
 const SidebarFlowStep: FunctionComponent<{
@@ -41,7 +41,7 @@ const SidebarFlowSeparator: FunctionComponent = () => {
 
 export const SidebarFlow: FunctionComponent = () => {
   const flowResult = useFlowResult();
-  const currentLhr = useCurrentLhr();
+  const hashState = useHashState();
 
   return (
     <div className="SidebarFlow">
@@ -61,7 +61,7 @@ export const SidebarFlow: FunctionComponent = () => {
               mode={lhr.gatherMode}
               href={url.href}
               label={name}
-              isCurrent={index === (currentLhr && currentLhr.index)}
+              isCurrent={index === (hashState && hashState.index)}
             />
           </>;
         })

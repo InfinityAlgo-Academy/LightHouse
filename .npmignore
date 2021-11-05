@@ -13,8 +13,8 @@ lighthouse-core/lib/sd-validation/
 lighthouse-core/scripts/*
 lighthouse-core/test/
 lighthouse-core/third_party/src/
-lighthouse-viewer/
-lighthouse-treemap/
+viewer/
+treemap/
 clients/
 lighthouse-cli/results/
 lighthouse-logger/

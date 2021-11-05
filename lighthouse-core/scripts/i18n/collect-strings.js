@@ -17,7 +17,7 @@ import tsc from 'typescript';
 import MessageParser from 'intl-messageformat-parser';
 import esMain from 'es-main';
 
-import Util from '../../../lighthouse-core/util-commonjs.js';
+import {Util} from '../../../lighthouse-core/util-commonjs.js';
 import {collectAndBakeCtcStrings} from './bake-ctc-to-lhl.js';
 import {pruneObsoleteLhlMessages} from './prune-obsolete-lhl-messages.js';
 import {countTranslatedMessages} from './count-translated.js';
@@ -33,7 +33,7 @@ const UISTRINGS_REGEX = /UIStrings = .*?\};\n/s;
 const foldersWithStrings = [
   `${LH_ROOT}/lighthouse-core`,
   `${LH_ROOT}/report/renderer`,
-  `${LH_ROOT}/lighthouse-treemap`,
+  `${LH_ROOT}/treemap`,
   `${LH_ROOT}/flow-report`,
   path.dirname(resolveModulePath('lighthouse-stack-packs')) + '/packs',
 ];
@@ -47,7 +47,7 @@ const ignoredPathComponents = [
   '**/*-test.js',
   '**/*-renderer.js',
   '**/util-commonjs.js',
-  'lighthouse-treemap/app/src/main.js',
+  'treemap/app/src/main.js',
 ];
 
 /**
@@ -558,7 +558,7 @@ async function collectAllStringsInDir(dir) {
       // No UIStrings found in the file text or exports, so move to the next.
       if (!exportedUIStrings) continue;
 
-      throw new Error('UIStrings exported but no definition found');
+      throw new Error('UIStrings exported but no definition found: ' + relativeToRootPath);
     }
 
     if (!exportedUIStrings) {
@@ -675,8 +675,6 @@ function resolveMessageCollisions(strings) {
       'Name',
       'Potential Savings',
       'Potential Savings',
-      'URL',
-      'URL',
     ]);
   } catch (err) {
     console.log('The number of duplicate strings has changed. Consider duplicating the `description` to match existing strings so they\'re translated together or update this assertion if they must absolutely be translated separately');

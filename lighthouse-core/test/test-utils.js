@@ -272,18 +272,6 @@ function makeMocksForGatherRunner() {
   }));
 }
 
-/**
- * Returns whether this is running in Node 12 with what we suspect is the default
- * `small-icu` build. Limited to Node 12 so it's not accidentally hitting this
- * path in Node 13+ in CI and we can be certain the `full-icu` path is being exercised.
- * @return {boolean}
- */
-function isNode12SmallIcu() {
-  // COMPAT: Remove when Node 12 is retired and `full-icu` is the default everywhere.
-  return process.versions.node.startsWith('12') &&
-    Intl.NumberFormat.supportedLocalesOf('es').length === 0;
-}
-
 module.exports = {
   getProtoRoundTrip,
   loadSourceMapFixture,
@@ -293,6 +281,5 @@ module.exports = {
   createDecomposedPromise,
   flushAllTimersAndMicrotasks,
   makeMocksForGatherRunner,
-  isNode12SmallIcu,
   ...mockCommands,
 };

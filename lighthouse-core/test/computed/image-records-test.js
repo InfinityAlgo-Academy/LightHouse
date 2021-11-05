@@ -162,29 +162,12 @@ describe('compute_', () => {
     expect(elements).toEqual([mockElement({mimeType: 'image/png'})]);
   });
 
-  it('keep element with no request', async () => {
+  it('guess mime type if no request', async () => {
     const elements = await ImageRecords.compute_({
       ImageElements: [
-        mockElement({mimeType: 'image/png'}),
+        mockElement(),
       ],
       networkRecords: [],
-    });
-
-    expect(elements).toEqual([mockElement({mimeType: 'image/png'})]);
-  });
-
-  it('keep guessed mime type of record has none', async () => {
-    const elements = await ImageRecords.compute_({
-      ImageElements: [
-        mockElement({mimeType: 'image/png'}),
-      ],
-      networkRecords: [
-        mockRequest({
-          url: 'https://example.com/img.png',
-          finished: true,
-          statusCode: 200,
-        }),
-      ],
     });
 
     expect(elements).toEqual([mockElement({mimeType: 'image/png'})]);

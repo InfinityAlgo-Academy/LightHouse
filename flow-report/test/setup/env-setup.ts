@@ -10,7 +10,7 @@ import {JSDOM} from 'jsdom';
 /**
  * The jest environment "jsdom" does not work when preact is combined with the report renderer.
  */
-export function setupJsDom() {
+function setupJsDom() {
   const {window} = new JSDOM(undefined, {
     url: 'file:///Users/example/report.html/',
   });

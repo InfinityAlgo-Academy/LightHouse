@@ -68,7 +68,7 @@ it('reports images that are bigger than displayed dimensions', async () => {
   const result = await UsesResponsiveImagesSnapshot.audit(artifacts);
 
   expect(result.score).toEqual(0);
-  expect(result.details.items).toEqual([
+  expect(result.details.items).toMatchObject([
     {
       actualDimensions: '500x500',
       displayedDimensions: '200x200',
@@ -130,7 +130,7 @@ it('uses pixel ratio to compute used pixels', async () => {
   const result = await UsesResponsiveImagesSnapshot.audit(artifacts);
 
   expect(result.score).toEqual(0);
-  expect(result.details.items).toEqual([
+  expect(result.details.items).toMatchObject([
     {
       actualDimensions: '500x500',
       displayedDimensions: '400x400',
@@ -154,11 +154,27 @@ it('passes if pixel difference is within the threshold', async () => {
   const result = await UsesResponsiveImagesSnapshot.audit(artifacts);
 
   expect(result.score).toEqual(1);
-  expect(result.details.items).toEqual([
+  expect(result.details.items).toMatchObject([
     {
       actualDimensions: '201x200',
       displayedDimensions: '200x200',
       url: 'https://www.paulirish.com/avatar150.jpg',
+      node: {
+        boundingRect: {
+          bottom: 250,
+          height: 200,
+          left: 50,
+          right: 250,
+          top: 50,
+          width: 200,
+        },
+        lhId: '__nodeid__',
+        nodeLabel: 'img',
+        path: '1,HTML,1,BODY,1,DIV,1,IMG',
+        selector: 'body > div > img',
+        snippet: '<img src="https://www.paulirish.com/avatar150.jpg">',
+        type: 'node',
+      },
     },
   ]);
 });

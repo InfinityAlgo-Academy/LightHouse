@@ -115,11 +115,12 @@ class UnusedBytes extends Audit {
       settings,
     };
     const networkRecords = await NetworkRecords.request(devtoolsLog, context);
+    const hasContentfulRecords = networkRecords.some(record => record.transferSize);
 
     // Requesting load simulator requires non-empty network records.
     // Timespans are not guaranteed to have any network activity.
     // There are no bytes to be saved if no bytes were downloaded, so mark N/A if empty.
-    if (!networkRecords.length && gatherContext.gatherMode === 'timespan') {
+    if (!hasContentfulRecords && gatherContext.gatherMode === 'timespan') {
       return {
         score: 1,
         notApplicable: true,

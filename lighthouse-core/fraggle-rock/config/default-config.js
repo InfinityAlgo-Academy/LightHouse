@@ -15,7 +15,7 @@ const frAudits = [
 /** @type {Record<string, LH.Config.AuditRefJson[]>} */
 const frCategoryAuditRefExtensions = {
   'performance': [
-    {id: 'uses-responsive-images-snapshot', weight: 0, group: 'diagnostics'},
+    {id: 'uses-responsive-images-snapshot', weight: 0},
   ],
 };
 
@@ -37,7 +37,6 @@ const artifacts = {
   Trace: '',
   Accessibility: '',
   AnchorElements: '',
-  AppCacheManifest: '',
   CacheContents: '',
   ConsoleMessages: '',
   CSSUsage: '',
@@ -88,7 +87,6 @@ const defaultConfig = {
     /* eslint-disable max-len */
     {id: artifacts.Accessibility, gatherer: 'accessibility'},
     {id: artifacts.AnchorElements, gatherer: 'anchor-elements'},
-    {id: artifacts.AppCacheManifest, gatherer: 'dobetterweb/appcache'},
     {id: artifacts.CacheContents, gatherer: 'cache-contents'},
     {id: artifacts.ConsoleMessages, gatherer: 'console-messages'},
     {id: artifacts.CSSUsage, gatherer: 'css-usage'},
@@ -141,7 +139,6 @@ const defaultConfig = {
 
         artifacts.Accessibility,
         artifacts.AnchorElements,
-        artifacts.AppCacheManifest,
         artifacts.CacheContents,
         artifacts.ConsoleMessages,
         artifacts.CSSUsage,

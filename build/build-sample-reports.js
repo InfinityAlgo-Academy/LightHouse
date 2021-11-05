@@ -85,7 +85,7 @@ function generatePsiReportHtml(sampleLhr) {
   const PSI_TEMPLATE = fs.readFileSync(
     `${LH_ROOT}/report/test-assets/faux-psi-template.html`, 'utf8');
   const PSI_JAVASCRIPT = `
-${fs.readFileSync(`${LH_ROOT}/dist/report/psi.js`, 'utf8')};
+${fs.readFileSync(`${LH_ROOT}/dist/report/bundle.umd.js`, 'utf8')};
 ${fs.readFileSync(`${LH_ROOT}/report/test-assets/faux-psi.js`, 'utf8')};
   `;
 
@@ -188,6 +188,6 @@ async function generateErrorLHR() {
   appleTouchIconAudit.scoreDisplayMode = 'binary';
   appleTouchIconAudit.score = 1;
 
-  fs.rmdirSync(TMP, {recursive: true});
+  fs.rmSync(TMP, {recursive: true, force: true});
   return errorLhr;
 }

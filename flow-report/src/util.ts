@@ -9,14 +9,14 @@ import {useContext, useEffect, useMemo, useState} from 'preact/hooks';
 
 import type {UIStringsType} from './i18n/ui-strings';
 
-export const FlowResultContext = createContext<LH.FlowResult|undefined>(undefined);
+const FlowResultContext = createContext<LH.FlowResult|undefined>(undefined);
 
 function getHashParam(param: string): string|null {
   const params = new URLSearchParams(location.hash.replace('#', '?'));
   return params.get(param);
 }
 
-export function classNames(...args: Array<string|undefined|Record<string, boolean>>): string {
+function classNames(...args: Array<string|undefined|Record<string, boolean>>): string {
   const classes = [];
   for (const arg of args) {
     if (!arg) continue;
@@ -35,22 +35,37 @@ export function classNames(...args: Array<string|undefined|Record<string, boolea
   return classes.join(' ');
 }
 
-export function getScreenDimensions(reportResult: LH.ReportResult) {
+function getScreenDimensions(reportResult: LH.Result) {
   const {width, height} = reportResult.configSettings.screenEmulation;
   return {width, height};
 }
 
-export function getScreenshot(reportResult: LH.ReportResult) {
+function getFullPageScreenshot(reportResult: LH.Result) {
   const fullPageScreenshotAudit = reportResult.audits['full-page-screenshot'];
   const fullPageScreenshot =
+    fullPageScreenshotAudit &&
     fullPageScreenshotAudit.details &&
     fullPageScreenshotAudit.details.type === 'full-page-screenshot' &&
-    fullPageScreenshotAudit.details.screenshot.data;
+    fullPageScreenshotAudit.details;
 
   return fullPageScreenshot || null;
 }
 
-export function getModeDescription(mode: LH.Result.GatherMode, strings: UIStringsType) {
+function getFilmstripFrames(
+  reportResult: LH.Result
+): Array<{data: string}> | undefined {
+  const filmstripAudit = reportResult.audits['screenshot-thumbnails'];
+  if (!filmstripAudit) return undefined;
+
+  const frameItems =
+    filmstripAudit.details &&
+    filmstripAudit.details.type === 'filmstrip' &&
+    filmstripAudit.details.items;
+
+  return frameItems || undefined;
+}
+
+function getModeDescription(mode: LH.Result.GatherMode, strings: UIStringsType) {
   switch (mode) {
     case 'navigation': return strings.navigationDescription;
     case 'timespan': return strings.timespanDescription;
@@ -58,38 +73,33 @@ export function getModeDescription(mode: LH.Result.GatherMode, strings: UIString
   }
 }
 
-export function useFlowResult(): LH.FlowResult {
+function useFlowResult(): LH.FlowResult {
   const flowResult = useContext(FlowResultContext);
   if (!flowResult) throw Error('useFlowResult must be called in the FlowResultContext');
   return flowResult;
 }
 
-export function useLocale(): LH.Locale {
-  const flowResult = useFlowResult();
-  return flowResult.steps[0].lhr.configSettings.locale;
-}
-
-export function useHashParam(param: string) {
-  const [paramValue, setParamValue] = useState(getHashParam(param));
+function useHashParams(...params: string[]) {
+  const [paramValues, setParamValues] = useState(params.map(getHashParam));
 
   // Use two-way-binding on the URL hash.
-  // Triggers a re-render if the param changes.
+  // Triggers a re-render if any param changes.
   useEffect(() => {
     function hashListener() {
-      const newIndexString = getHashParam(param);
-      if (newIndexString === paramValue) return;
-      setParamValue(newIndexString);
+      const newParamValues = params.map(getHashParam);
+      if (newParamValues.every((value, i) => value === paramValues[i])) return;
+      setParamValues(newParamValues);
     }
     window.addEventListener('hashchange', hashListener);
     return () => window.removeEventListener('hashchange', hashListener);
-  }, [paramValue]);
+  }, [paramValues]);
 
-  return paramValue;
+  return paramValues;
 }
 
-export function useCurrentLhr(): LH.FlowResult.LhrRef|null {
+function useHashState(): LH.FlowResult.HashState|null {
   const flowResult = useFlowResult();
-  const indexString = useHashParam('index');
+  const [indexString, anchor] = useHashParams('index', 'anchor');
 
   // Memoize result so a new object is not created on every call.
   return useMemo(() => {
@@ -107,6 +117,18 @@ export function useCurrentLhr(): LH.FlowResult.LhrRef|null {
       return null;
     }
 
-    return {value: step.lhr, index};
-  }, [indexString, flowResult]);
+    return {currentLhr: step.lhr, index, anchor};
+  }, [indexString, flowResult, anchor]);
 }
+
+export {
+  FlowResultContext,
+  classNames,
+  getScreenDimensions,
+  getFullPageScreenshot,
+  getFilmstripFrames,
+  getModeDescription,
+  useFlowResult,
+  useHashParams,
+  useHashState,
+};

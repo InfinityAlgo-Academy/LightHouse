@@ -5,6 +5,7 @@ npm-debug.log
 .tmp
 .idea
 .tmp_env
+.tgz
 
 /dist
 coverage

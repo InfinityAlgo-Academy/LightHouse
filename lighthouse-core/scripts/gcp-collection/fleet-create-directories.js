@@ -22,7 +22,7 @@ const URLS_LIST = process.argv[2]
   ? path.resolve(process.cwd(), process.argv[2])
   : path.join(LH_ROOT, 'lighthouse-core/scripts/gcp-collection/urls.txt');
 
-fs.rmdirSync(TMP_DIR, {recursive: true});
+fs.rmSync(TMP_DIR, {recursive: true, force: true});
 fs.mkdirSync(TMP_DIR);
 
 const MACHINE_BASE_INDEX = 0;

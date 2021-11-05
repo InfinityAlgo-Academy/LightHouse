@@ -18,9 +18,6 @@ const airhorner = {
     requestedUrl: 'https://airhorner.com',
     finalUrl: 'https://airhorner.com/',
     audits: {
-      'redirects-http': {
-        score: 1,
-      },
       'service-worker': {
         score: 1,
       },
@@ -72,9 +69,6 @@ const chromestatus = {
     requestedUrl: 'https://www.chromestatus.com/features',
     finalUrl: 'https://www.chromestatus.com/features',
     audits: {
-      'redirects-http': {
-        score: 1,
-      },
       'service-worker': {
         score: 0,
       },

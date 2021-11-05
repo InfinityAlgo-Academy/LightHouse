@@ -5,15 +5,18 @@
  */
 
 import {FunctionComponent} from 'preact';
+import {useEffect, useState} from 'preact/hooks';
 
 import {NavigationIcon, SnapshotIcon, TimespanIcon} from './icons';
-import {getScreenDimensions, getScreenshot} from './util';
+import {getFilmstripFrames, getScreenDimensions, getFullPageScreenshot} from './util';
 
-export const Separator: FunctionComponent = () => {
+const ANIMATION_FRAME_DURATION_MS = 500;
+
+const Separator: FunctionComponent = () => {
   return <div className="Separator" role="separator"></div>;
 };
 
-export const FlowStepIcon: FunctionComponent<{mode: LH.Result.GatherMode}> = ({mode}) => {
+const FlowStepIcon: FunctionComponent<{mode: LH.Result.GatherMode}> = ({mode}) => {
   return <>
     {
       mode === 'navigation' && <NavigationIcon/>
@@ -27,7 +30,7 @@ export const FlowStepIcon: FunctionComponent<{mode: LH.Result.GatherMode}> = ({m
   </>;
 };
 
-export const FlowSegment: FunctionComponent<{mode?: LH.Result.GatherMode}> = ({mode}) => {
+const FlowSegment: FunctionComponent<{mode?: LH.Result.GatherMode}> = ({mode}) => {
   return (
     <div className="FlowSegment">
       <div className="FlowSegment__top-line"/>
@@ -39,30 +42,82 @@ export const FlowSegment: FunctionComponent<{mode?: LH.Result.GatherMode}> = ({m
   );
 };
 
-export const FlowStepThumbnail: FunctionComponent<{
-  reportResult: LH.ReportResult,
+const FlowStepAnimatedThumbnail: FunctionComponent<{
+  frames: Array<{data: string}>,
+  width: number,
+  height: number,
+}> = ({frames, width, height}) => {
+  const [frameIndex, setFrameIndex] = useState(0);
+  // Handle a frame array of a different length being set.
+  const effectiveFrameIndex = frameIndex % frames.length;
+
+  useEffect(() => {
+    const interval = setInterval(
+      () => setFrameIndex(i => (i + 1) % frames.length),
+      ANIMATION_FRAME_DURATION_MS
+    );
+
+    return () => clearInterval(interval);
+  }, [frames.length]);
+
+  return (
+    <img
+      className="FlowStepThumbnail"
+      data-testid="FlowStepAnimatedThumbnail"
+      src={frames[effectiveFrameIndex].data}
+      style={{width, height}}
+      alt="Animated screenshots of a page tested by Lighthouse"
+    />
+  );
+};
+
+const FlowStepThumbnail: FunctionComponent<{
+  lhr: LH.Result,
   width?: number,
   height?: number,
-}> = ({reportResult, width, height}) => {
-  const screenshot = getScreenshot(reportResult);
+}> = ({lhr, width, height}) => {
+  const fullPageScreenshot = getFullPageScreenshot(lhr);
+  const frames = getFilmstripFrames(lhr);
 
   // Resize the image to fit the viewport aspect ratio.
-  const dimensions = getScreenDimensions(reportResult);
+  const dimensions = getScreenDimensions(lhr);
   if (width && height === undefined) {
     height = dimensions.height * width / dimensions.width;
   } else if (height && width === undefined) {
     width = dimensions.width * height / dimensions.height;
   }
 
+  if (!width || !height) {
+    console.warn(new Error('FlowStepThumbnail requested without any dimensions').stack);
+    return <></>;
+  }
+
+  let thumbnail;
+  if (frames && frames.length) {
+    thumbnail = frames[frames.length - 1].data;
+    if (lhr.gatherMode === 'timespan') {
+      return <FlowStepAnimatedThumbnail frames={frames} width={width} height={height} />;
+    }
+  } else {
+    thumbnail = fullPageScreenshot?.screenshot.data;
+  }
+
   return <>
     {
-      screenshot &&
+      thumbnail &&
         <img
           className="FlowStepThumbnail"
-          src={screenshot}
+          src={thumbnail}
           style={{width, height}}
           alt="Screenshot of a page tested by Lighthouse"
         />
     }
   </>;
+};
+
+export {
+  Separator,
+  FlowStepIcon,
+  FlowSegment,
+  FlowStepThumbnail,
 };

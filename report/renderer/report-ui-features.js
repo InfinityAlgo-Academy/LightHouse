@@ -40,15 +40,17 @@ function getTableRows(tableEl) {
 export class ReportUIFeatures {
   /**
    * @param {DOM} dom
+   * @param {LH.Renderer.Options} opts
    */
-  constructor(dom) {
+  constructor(dom, opts = {}) {
     /** @type {LH.Result} */
     this.json; // eslint-disable-line no-unused-expressions
     /** @type {DOM} */
     this._dom = dom;
-    /** @type {Document} */
-    this._document = this._dom.document();
-    this._topbar = new TopbarFeatures(this, dom);
+
+    this._opts = opts;
+
+    this._topbar = opts.omitTopbar ? null : new TopbarFeatures(this, dom);
   }
 
   /**
@@ -59,15 +61,18 @@ export class ReportUIFeatures {
   initFeatures(lhr) {
     this.json = lhr;
 
-    this._topbar.enable(lhr);
-    this._topbar.resetUIState();
+    if (this._topbar) {
+      this._topbar.enable(lhr);
+      this._topbar.resetUIState();
+    }
     this._setupThirdPartyFilter();
-    this._setupElementScreenshotOverlay(this._dom.find('.lh-main', this._document));
+    this._setupElementScreenshotOverlay(this._dom.rootEl);
 
     let turnOffTheLights = false;
     // Do not query the system preferences for DevTools - DevTools should only apply dark theme
     // if dark is selected in the settings panel.
-    if (!this._dom.isDevTools() && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    const disableDarkMode = this._dom.isDevTools() || this._opts.disableAutoDarkModeAndFireworks;
+    if (!disableDarkMode && window.matchMedia('(prefers-color-scheme: dark)').matches) {
       turnOffTheLights = true;
     }
 
@@ -91,7 +96,7 @@ export class ReportUIFeatures {
     const hasMetricError = lhr.categories.performance && lhr.categories.performance.auditRefs
       .some(audit => Boolean(audit.group === 'metrics' && lhr.audits[audit.id].errorMessage));
     if (hasMetricError) {
-      const toggleInputEl = this._dom.find('input.lh-metrics-toggle__input', this._document);
+      const toggleInputEl = this._dom.find('input.lh-metrics-toggle__input', this._dom.rootEl);
       toggleInputEl.checked = true;
     }
 
@@ -106,7 +111,7 @@ export class ReportUIFeatures {
     }
 
     // Fill in all i18n data.
-    for (const node of this._dom.findAll('[data-i18n]', this._dom.document())) {
+    for (const node of this._dom.findAll('[data-i18n]', this._dom.rootEl)) {
       // These strings are guaranteed to (at least) have a default English string in Util.UIStrings,
       // so this cannot be undefined as long as `report-ui-features.data-i18n` test passes.
       const i18nKey = node.getAttribute('data-i18n');
@@ -116,18 +121,15 @@ export class ReportUIFeatures {
   }
 
   /**
-   * @param {{container?: Element, text: string, icon?: string, onClick: () => void}} opts
+   * @param {{text: string, icon?: string, onClick: () => void}} opts
    */
   addButton(opts) {
-    // report-ui-features doesn't have a reference to the root report el, and PSI has
-    // 2 reports on the page (and not even attached to DOM when installFeatures is called..)
-    // so we need a container option to specify where the element should go.
-    const metricsEl = this._document.querySelector('.lh-audit-group--metrics');
-    const containerEl = opts.container || metricsEl;
-    if (!containerEl) return;
+    // Use qSA directly to as we don't want to throw (if this element is missing).
+    const metricsEl = this._dom.rootEl.querySelector('.lh-audit-group--metrics');
+    if (!metricsEl) return;
 
-    let buttonsEl = containerEl.querySelector('.lh-buttons');
-    if (!buttonsEl) buttonsEl = this._dom.createChildOf(containerEl, 'div', 'lh-buttons');
+    let buttonsEl = metricsEl.querySelector('.lh-buttons');
+    if (!buttonsEl) buttonsEl = this._dom.createChildOf(metricsEl, 'div', 'lh-buttons');
 
     const classes = [
       'lh-button',
@@ -147,8 +149,10 @@ export class ReportUIFeatures {
    * @return {string}
    */
   getReportHtml() {
-    this._topbar.resetUIState();
-    return this._document.documentElement.outerHTML;
+    if (this._topbar) {
+      this._topbar.resetUIState();
+    }
+    return `<!doctype html><body>${this._dom.rootEl.outerHTML}`;
   }
 
   /**
@@ -160,7 +164,7 @@ export class ReportUIFeatures {
   }
 
   _enableFireworks() {
-    const scoresContainer = this._dom.find('.lh-scores-container', this._document);
+    const scoresContainer = this._dom.find('.lh-scores-container', this._dom.rootEl);
     scoresContainer.classList.add('lh-score100');
     scoresContainer.addEventListener('click', _ => {
       scoresContainer.classList.toggle('lh-fireworks-paused');
@@ -173,7 +177,9 @@ export class ReportUIFeatures {
    * be in their closed state (not opened) and the templates should be unstamped.
    */
   _resetUIState() {
-    this._topbar.resetUIState();
+    if (this._topbar) {
+      this._topbar.resetUIState();
+    }
   }
 
   _setupThirdPartyFilter() {
@@ -190,7 +196,7 @@ export class ReportUIFeatures {
     ];
 
     // Get all tables with a text url column.
-    const tables = Array.from(this._document.querySelectorAll('table.lh-table'));
+    const tables = Array.from(this._dom.rootEl.querySelectorAll('table.lh-table'));
     const tablesWithUrls = tables
       .filter(el =>
         el.querySelector('td.lh-table-column--url, td.lh-table-column--source-location'))
@@ -237,10 +243,9 @@ export class ReportUIFeatures {
       const allThirdParty = thirdPartyRows.length === rowEls.length;
       const allFirstParty = !thirdPartyRows.length;
 
-      // If all or none of the rows are 3rd party, disable the checkbox.
+      // If all or none of the rows are 3rd party, hide the control.
       if (allThirdParty || allFirstParty) {
-        filterInput.disabled = true;
-        filterInput.checked = allThirdParty;
+        this._dom.find('div.lh-3p-filter', filterTemplate).hidden = true;
       }
 
       // Add checkbox to the DOM.
@@ -257,9 +262,9 @@ export class ReportUIFeatures {
   }
 
   /**
-   * @param {Element} el
+   * @param {Element} rootEl
    */
-  _setupElementScreenshotOverlay(el) {
+  _setupElementScreenshotOverlay(rootEl) {
     const fullPageScreenshot =
       this.json.audits['full-page-screenshot'] &&
       this.json.audits['full-page-screenshot'].details &&
@@ -269,8 +274,8 @@ export class ReportUIFeatures {
 
     ElementScreenshotRenderer.installOverlayFeature({
       dom: this._dom,
-      reportEl: el,
-      overlayContainerEl: el,
+      rootEl: rootEl,
+      overlayContainerEl: rootEl,
       fullPageScreenshot,
     });
   }

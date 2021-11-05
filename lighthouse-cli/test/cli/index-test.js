@@ -46,6 +46,17 @@ describe('CLI Tests', function() {
     assert.ok(output.traceCategories.length > 0);
   });
 
+  it('accepts just the list-locales flag and exit immediately after', () => {
+    const ret = spawnSync('node', [indexPath, '--list-locales'], {encoding: 'utf8'});
+
+    const output = JSON.parse(ret.stdout);
+    assert.ok(Array.isArray(output.locales));
+    assert.ok(output.locales.length > 52);
+    for (const lang of ['en', 'es', 'ru', 'zh']) {
+      assert.ok(output.locales.includes(lang));
+    }
+  });
+
   describe('extra-headers', () => {
     it('should exit with a error if the path is not valid', () => {
       const ret = spawnSync('node', [indexPath, 'https://www.google.com',

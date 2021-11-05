@@ -9,7 +9,7 @@
       "axe-core": "4.2.3"
     }
   },
-  "lighthouseVersion": "8.5.1",
+  "lighthouseVersion": "8.6.0",
   "fetchTime": "2021-09-07T20:11:11.853Z",
   "requestedUrl": "http://localhost:10200/dobetterweb/dbw_tester.html",
   "finalUrl": "http://localhost:10200/dobetterweb/dbw_tester.html",
@@ -43,13 +43,6 @@
           }
         ]
       }
-    },
-    "redirects-http": {
-      "id": "redirects-http",
-      "title": "Redirects HTTP traffic to HTTPS",
-      "description": "If you've already set up HTTPS, make sure that you redirect all HTTP traffic to HTTPS in order to enable secure web features for all your users. [Learn more](https://web.dev/redirects-http/).",
-      "score": null,
-      "scoreDisplayMode": "notApplicable"
     },
     "service-worker": {
       "id": "service-worker",
@@ -245,7 +238,6 @@
           {
             "source": "exception",
             "description": "Error: A distinctive error\n    at http://localhost:10200/dobetterweb/dbw_tester.html:56:54",
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
             "sourceLocation": {
               "type": "source-location",
               "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
@@ -257,7 +249,6 @@
           {
             "source": "exception",
             "description": "Error: An ignored error\n    at http://localhost:10200/dobetterweb/dbw_tester.html:59:38",
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
             "sourceLocation": {
               "type": "source-location",
               "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
@@ -269,7 +260,6 @@
           {
             "source": "console.error",
             "description": "Error! Error!",
-            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
             "sourceLocation": {
               "type": "source-location",
               "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
@@ -281,7 +271,6 @@
           {
             "source": "network",
             "description": "Failed to load resource: the server responded with a status of 404 (Not Found)",
-            "url": "http://localhost:10200/dobetterweb/unknown404.css?delay=200",
             "sourceLocation": {
               "type": "source-location",
               "url": "http://localhost:10200/dobetterweb/unknown404.css?delay=200",
@@ -293,7 +282,6 @@
           {
             "source": "network",
             "description": "Failed to load resource: the server responded with a status of 404 (Not Found)",
-            "url": "http://localhost:10200/dobetterweb/fcp-delayer.js?delay=5000",
             "sourceLocation": {
               "type": "source-location",
               "url": "http://localhost:10200/dobetterweb/fcp-delayer.js?delay=5000",
@@ -305,7 +293,6 @@
           {
             "source": "network",
             "description": "Failed to load resource: the server responded with a status of 404 (Not Found)",
-            "url": "http://localhost:10200/favicon.ico",
             "sourceLocation": {
               "type": "source-location",
               "url": "http://localhost:10200/favicon.ico",
@@ -317,7 +304,6 @@
           {
             "source": "network",
             "description": "Failed to load resource: the server responded with a status of 404 (Not Found)",
-            "url": "http://localhost:10200/dobetterweb/unknown404.css?delay=200",
             "sourceLocation": {
               "type": "source-location",
               "url": "http://localhost:10200/dobetterweb/unknown404.css?delay=200",
@@ -897,8 +883,8 @@
         "type": "table",
         "headings": [
           {
-            "key": "url",
-            "itemType": "thumbnail",
+            "key": "node",
+            "itemType": "node",
             "text": ""
           },
           {
@@ -920,6 +906,22 @@
         "items": [
           {
             "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg?iar1",
+            "node": {
+              "type": "node",
+              "lhId": "page-0-IMG",
+              "path": "3,HTML,1,BODY,14,IMG",
+              "selector": "body > img",
+              "boundingRect": {
+                "top": 639,
+                "bottom": 654,
+                "left": 8,
+                "right": 128,
+                "width": 120,
+                "height": 15
+              },
+              "snippet": "<img src=\"lighthouse-480x318.jpg?iar1\" width=\"120\" height=\"15\">",
+              "nodeLabel": "body > img"
+            },
             "displayedAspectRatio": "120 x 15\n        (8.00)",
             "actualAspectRatio": "480 x 318\n        (1.51)",
             "doRatiosMatch": false
@@ -937,12 +939,12 @@
         "type": "table",
         "headings": [
           {
-            "key": "url",
-            "itemType": "thumbnail",
+            "key": "node",
+            "itemType": "node",
             "text": ""
           },
           {
-            "key": "elidedUrl",
+            "key": "url",
             "itemType": "url",
             "text": "URL"
           },
@@ -965,7 +967,22 @@
         "items": [
           {
             "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg?isr1",
-            "elidedUrl": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg?isr1",
+            "node": {
+              "type": "node",
+              "lhId": "page-2-IMG",
+              "path": "3,HTML,1,BODY,19,IMG",
+              "selector": "body > img",
+              "boundingRect": {
+                "top": 574,
+                "bottom": 814,
+                "left": 252,
+                "right": 612,
+                "width": 360,
+                "height": 240
+              },
+              "snippet": "<img src=\"lighthouse-480x318.jpg?isr1\" width=\"360\" height=\"240\" style=\"position: absolute;\">",
+              "nodeLabel": "body > img"
+            },
             "displayedSize": "360 x 240",
             "actualSize": "480 x 318",
             "actualPixels": 152640,
@@ -988,7 +1005,7 @@
       "description": "Deprecated APIs will eventually be removed from the browser. [Learn more](https://web.dev/deprecations/).",
       "score": 0,
       "scoreDisplayMode": "binary",
-      "displayValue": "3 warnings found",
+      "displayValue": "2 warnings found",
       "details": {
         "type": "table",
         "headings": [
@@ -1004,16 +1021,6 @@
           }
         ],
         "items": [
-          {
-            "value": "Application Cache API manifest selection is deprecated and will be removed in M85, around August 2020. See https://www.chromestatus.com/features/6192449487634432 for more details.",
-            "source": {
-              "type": "source-location",
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-              "urlProvider": "network",
-              "line": 8,
-              "column": 0
-            }
-          },
           {
             "value": "'window.webkitStorageInfo' is deprecated. Please use 'navigator.webkitTemporaryStorage' or 'navigator.webkitPersistentStorage' instead.",
             "source": {
@@ -2459,19 +2466,14 @@
         "type": "table",
         "headings": [
           {
-            "key": "url",
-            "itemType": "thumbnail",
+            "key": "node",
+            "itemType": "node",
             "text": ""
           },
           {
             "key": "url",
             "itemType": "url",
             "text": "URL"
-          },
-          {
-            "key": "node",
-            "itemType": "node",
-            "text": "Failing Elements"
           }
         ],
         "items": [
@@ -3548,6 +3550,10 @@
           {
             "key": "node",
             "itemType": "node",
+            "subItemsHeading": {
+              "key": "relatedNode",
+              "itemType": "node"
+            },
             "text": "Failing Elements"
           }
         ],
@@ -3566,7 +3572,7 @@
                 "width": 360,
                 "height": 1365
               },
-              "snippet": "<html manifest=\"clock.appcache\">",
+              "snippet": "<html>",
               "nodeLabel": "html",
               "explanation": "Fix any of the following:\n  The <html> element does not have a lang attribute"
             }
@@ -3603,6 +3609,10 @@
           {
             "key": "node",
             "itemType": "node",
+            "subItemsHeading": {
+              "key": "relatedNode",
+              "itemType": "node"
+            },
             "text": "Failing Elements"
           }
         ],
@@ -3754,7 +3764,7 @@
                 "width": 16,
                 "height": 16
               },
-              "snippet": "<img src=\"blob:http://localhost:10200/3f2bc9df-684b-4541-837c-1590152ef65d\">",
+              "snippet": "<img src=\"blob:http://localhost:10200/84c78bd5-a720-43b4-93e0-26591a9ff8ee\">",
               "nodeLabel": "body > img",
               "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute\n  Element's default semantics were not overridden with role=\"none\" or role=\"presentation\""
             }
@@ -3773,7 +3783,7 @@
                 "width": 16,
                 "height": 16
               },
-              "snippet": "<img src=\"filesystem:http://localhost:10200/temporary/empty-0.43448333410631723.png\">",
+              "snippet": "<img src=\"filesystem:http://localhost:10200/temporary/empty-0.48387978403091236.png\">",
               "nodeLabel": "body > img",
               "explanation": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute\n  Element's default semantics were not overridden with role=\"none\" or role=\"presentation\""
             }
@@ -3812,6 +3822,10 @@
           {
             "key": "node",
             "itemType": "node",
+            "subItemsHeading": {
+              "key": "relatedNode",
+              "itemType": "node"
+            },
             "text": "Failing Elements"
           }
         ],
@@ -3901,6 +3915,10 @@
           {
             "key": "node",
             "itemType": "node",
+            "subItemsHeading": {
+              "key": "relatedNode",
+              "itemType": "node"
+            },
             "text": "Failing Elements"
           }
         ],
@@ -4004,6 +4022,10 @@
           {
             "key": "node",
             "itemType": "node",
+            "subItemsHeading": {
+              "key": "relatedNode",
+              "itemType": "node"
+            },
             "text": "Failing Elements"
           }
         ],
@@ -4622,8 +4644,8 @@
         "type": "opportunity",
         "headings": [
           {
-            "key": "url",
-            "valueType": "thumbnail",
+            "key": "node",
+            "valueType": "node",
             "label": ""
           },
           {
@@ -4644,6 +4666,22 @@
         ],
         "items": [
           {
+            "node": {
+              "type": "node",
+              "lhId": "page-0-IMG",
+              "path": "3,HTML,1,BODY,14,IMG",
+              "selector": "body > img",
+              "boundingRect": {
+                "top": 639,
+                "bottom": 654,
+                "left": 8,
+                "right": 128,
+                "width": 120,
+                "height": 15
+              },
+              "snippet": "<img src=\"lighthouse-480x318.jpg?iar1\" width=\"120\" height=\"15\">",
+              "nodeLabel": "body > img"
+            },
             "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg?iar1",
             "fromProtocol": true,
             "isCrossOrigin": false,
@@ -4652,6 +4690,22 @@
             "wastedWebpBytes": 9002
           },
           {
+            "node": {
+              "type": "node",
+              "lhId": "page-2-IMG",
+              "path": "3,HTML,1,BODY,19,IMG",
+              "selector": "body > img",
+              "boundingRect": {
+                "top": 574,
+                "bottom": 814,
+                "left": 252,
+                "right": 612,
+                "width": 360,
+                "height": 240
+              },
+              "snippet": "<img src=\"lighthouse-480x318.jpg?isr1\" width=\"360\" height=\"240\" style=\"position: absolute;\">",
+              "nodeLabel": "body > img"
+            },
             "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg?isr1",
             "fromProtocol": true,
             "isCrossOrigin": false,
@@ -4660,6 +4714,22 @@
             "wastedWebpBytes": 9002
           },
           {
+            "node": {
+              "type": "node",
+              "lhId": "page-3-IMG",
+              "path": "3,HTML,1,BODY,21,IMG",
+              "selector": "body > img",
+              "boundingRect": {
+                "top": 574,
+                "bottom": 654,
+                "left": 252,
+                "right": 372,
+                "width": 120,
+                "height": 80
+              },
+              "snippet": "<img src=\"lighthouse-480x318.jpg?isr2\" width=\"120\" height=\"80\" style=\"position: absolute;\">",
+              "nodeLabel": "body > img"
+            },
             "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg?isr2",
             "fromProtocol": true,
             "isCrossOrigin": false,
@@ -4668,6 +4738,22 @@
             "wastedWebpBytes": 9002
           },
           {
+            "node": {
+              "type": "node",
+              "lhId": "page-4-IMG",
+              "path": "3,HTML,1,BODY,23,IMG",
+              "selector": "body > img",
+              "boundingRect": {
+                "top": 574,
+                "bottom": 814,
+                "left": 252,
+                "right": 612,
+                "width": 360,
+                "height": 240
+              },
+              "snippet": "<img src=\"lighthouse-480x318.jpg?isr3\" width=\"360\" height=\"240\" style=\"image-rendering: pixelated; position: absolute;\">",
+              "nodeLabel": "body > img"
+            },
             "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg?isr3",
             "fromProtocol": true,
             "isCrossOrigin": false,
@@ -4676,6 +4762,22 @@
             "wastedWebpBytes": 9002
           },
           {
+            "node": {
+              "type": "node",
+              "lhId": "page-5-IMG",
+              "path": "3,HTML,1,BODY,25,IMG",
+              "selector": "body > img",
+              "boundingRect": {
+                "top": 574,
+                "bottom": 814,
+                "left": 252,
+                "right": 612,
+                "width": 360,
+                "height": 240
+              },
+              "snippet": "<img src=\"http://localhost:10200/dobetterweb/lighthouse-480x318.jpg\" srcset=\"lighthouse-480x318.jpg 2x\" width=\"360\" height=\"240\" style=\"position: absolute;\">",
+              "nodeLabel": "body > img"
+            },
             "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg",
             "fromProtocol": true,
             "isCrossOrigin": false,
@@ -4684,6 +4786,22 @@
             "wastedWebpBytes": 9002
           },
           {
+            "node": {
+              "type": "node",
+              "lhId": "page-1-IMG",
+              "path": "3,HTML,1,BODY,17,IMG",
+              "selector": "body > img",
+              "boundingRect": {
+                "top": 574,
+                "bottom": 654,
+                "left": 132,
+                "right": 252,
+                "width": 120,
+                "height": 80
+              },
+              "snippet": "<img loading=\"lazy\" src=\"lighthouse-480x318.jpg?iar2\" width=\"120\" height=\"80\">",
+              "nodeLabel": "body > img"
+            },
             "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg?iar2",
             "fromProtocol": true,
             "isCrossOrigin": false,
@@ -4771,8 +4889,8 @@
         "type": "opportunity",
         "headings": [
           {
-            "key": "url",
-            "valueType": "thumbnail",
+            "key": "node",
+            "valueType": "node",
             "label": ""
           },
           {
@@ -4793,18 +4911,66 @@
         ],
         "items": [
           {
+            "node": {
+              "type": "node",
+              "lhId": "page-0-IMG",
+              "path": "3,HTML,1,BODY,14,IMG",
+              "selector": "body > img",
+              "boundingRect": {
+                "top": 639,
+                "bottom": 654,
+                "left": 8,
+                "right": 128,
+                "width": 120,
+                "height": 15
+              },
+              "snippet": "<img src=\"lighthouse-480x318.jpg?iar1\" width=\"120\" height=\"15\">",
+              "nodeLabel": "body > img"
+            },
             "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg?iar1",
             "totalBytes": 24620,
             "wastedBytes": 22619,
             "wastedPercent": 91.87426297169812
           },
           {
+            "node": {
+              "type": "node",
+              "lhId": "page-1-IMG",
+              "path": "3,HTML,1,BODY,17,IMG",
+              "selector": "body > img",
+              "boundingRect": {
+                "top": 574,
+                "bottom": 654,
+                "left": 132,
+                "right": 252,
+                "width": 120,
+                "height": 80
+              },
+              "snippet": "<img loading=\"lazy\" src=\"lighthouse-480x318.jpg?iar2\" width=\"120\" height=\"80\">",
+              "nodeLabel": "body > img"
+            },
             "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg?iar2",
             "totalBytes": 24620,
             "wastedBytes": 13950,
             "wastedPercent": 56.66273584905661
           },
           {
+            "node": {
+              "type": "node",
+              "lhId": "page-3-IMG",
+              "path": "3,HTML,1,BODY,21,IMG",
+              "selector": "body > img",
+              "boundingRect": {
+                "top": 574,
+                "bottom": 654,
+                "left": 252,
+                "right": 372,
+                "width": 120,
+                "height": 80
+              },
+              "snippet": "<img src=\"lighthouse-480x318.jpg?isr2\" width=\"120\" height=\"80\" style=\"position: absolute;\">",
+              "nodeLabel": "body > img"
+            },
             "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg?isr2",
             "totalBytes": 24620,
             "wastedBytes": 13950,
@@ -4942,14 +5108,6 @@
         "overallSavingsBytes": 21189
       }
     },
-    "appcache-manifest": {
-      "id": "appcache-manifest",
-      "title": "Uses Application Cache",
-      "description": "Application Cache is deprecated. [Learn more](https://web.dev/appcache-manifest/).",
-      "score": 0,
-      "scoreDisplayMode": "binary",
-      "displayValue": "Found \"clock.appcache\""
-    },
     "doctype": {
       "id": "doctype",
       "title": "Page has the HTML doctype",
@@ -5036,94 +5194,6 @@
             },
             "statistic": "Maximum Child Elements",
             "value": 100
-          }
-        ]
-      }
-    },
-    "external-anchors-use-rel-noopener": {
-      "id": "external-anchors-use-rel-noopener",
-      "title": "Links to cross-origin destinations are unsafe",
-      "description": "Add `rel=\"noopener\"` or `rel=\"noreferrer\"` to any external links to improve performance and prevent security vulnerabilities. [Learn more](https://web.dev/external-anchors-use-rel-noopener/).",
-      "score": 0,
-      "scoreDisplayMode": "binary",
-      "warnings": [
-        "Unable to determine the destination for anchor (<a target=\"_blank\">). If not used as a hyperlink, consider removing target=_blank."
-      ],
-      "details": {
-        "type": "table",
-        "headings": [
-          {
-            "key": "node",
-            "itemType": "node",
-            "text": "Failing Anchors"
-          }
-        ],
-        "items": [
-          {
-            "node": {
-              "type": "node",
-              "lhId": "5-0-A",
-              "path": "3,HTML,1,BODY,39,A",
-              "selector": "body > a",
-              "boundingRect": {
-                "top": 1166,
-                "bottom": 1184,
-                "left": 91,
-                "right": 171,
-                "width": 80,
-                "height": 18
-              },
-              "snippet": "<a href=\"https://www.google.com/\" target=\"_blank\">",
-              "nodeLabel": "external link"
-            },
-            "href": "https://www.google.com/",
-            "target": "_blank",
-            "rel": "",
-            "outerHTML": "<a href=\"https://www.google.com/\" target=\"_blank\">"
-          },
-          {
-            "node": {
-              "type": "node",
-              "lhId": "5-1-A",
-              "path": "3,HTML,1,BODY,41,A",
-              "selector": "body > a",
-              "boundingRect": {
-                "top": 1166,
-                "bottom": 1184,
-                "left": 175,
-                "right": 255,
-                "width": 80,
-                "height": 18
-              },
-              "snippet": "<a target=\"_blank\">",
-              "nodeLabel": "external link"
-            },
-            "href": "Unknown",
-            "target": "_blank",
-            "rel": "",
-            "outerHTML": "<a target=\"_blank\">"
-          },
-          {
-            "node": {
-              "type": "node",
-              "lhId": "5-2-A",
-              "path": "3,HTML,1,BODY,43,A",
-              "selector": "body > a",
-              "boundingRect": {
-                "top": 1166,
-                "bottom": 1184,
-                "left": 259,
-                "right": 340,
-                "width": 80,
-                "height": 18
-              },
-              "snippet": "<a href=\"https://www.google.com/\" target=\"_blank\" rel=\"nofollow\">",
-              "nodeLabel": "external link"
-            },
-            "href": "https://www.google.com/",
-            "target": "_blank",
-            "rel": "nofollow",
-            "outerHTML": "<a href=\"https://www.google.com/\" target=\"_blank\" rel=\"nofollow\">"
           }
         ]
       }
@@ -5922,147 +5992,170 @@
         },
         {
           "id": "max-potential-fid",
-          "weight": 0
+          "weight": 0,
+          "group": "hidden"
         },
         {
           "id": "first-meaningful-paint",
           "weight": 0,
-          "acronym": "FMP"
+          "acronym": "FMP",
+          "group": "hidden"
         },
         {
           "id": "render-blocking-resources",
-          "weight": 0,
-          "group": "load-opportunities"
+          "weight": 0
         },
         {
           "id": "uses-responsive-images",
-          "weight": 0,
-          "group": "load-opportunities"
+          "weight": 0
         },
         {
           "id": "offscreen-images",
-          "weight": 0,
-          "group": "load-opportunities"
+          "weight": 0
         },
         {
           "id": "unminified-css",
-          "weight": 0,
-          "group": "load-opportunities"
+          "weight": 0
         },
         {
           "id": "unminified-javascript",
-          "weight": 0,
-          "group": "load-opportunities"
+          "weight": 0
         },
         {
           "id": "unused-css-rules",
-          "weight": 0,
-          "group": "load-opportunities"
+          "weight": 0
         },
         {
           "id": "unused-javascript",
-          "weight": 0,
-          "group": "load-opportunities"
+          "weight": 0
         },
         {
           "id": "uses-optimized-images",
-          "weight": 0,
-          "group": "load-opportunities"
+          "weight": 0
         },
         {
           "id": "modern-image-formats",
-          "weight": 0,
-          "group": "load-opportunities"
+          "weight": 0
         },
         {
           "id": "uses-text-compression",
-          "weight": 0,
-          "group": "load-opportunities"
+          "weight": 0
         },
         {
           "id": "uses-rel-preconnect",
-          "weight": 0,
-          "group": "load-opportunities"
+          "weight": 0
         },
         {
           "id": "server-response-time",
-          "weight": 0,
-          "group": "load-opportunities"
+          "weight": 0
         },
         {
           "id": "redirects",
-          "weight": 0,
-          "group": "load-opportunities"
+          "weight": 0
         },
         {
           "id": "uses-rel-preload",
-          "weight": 0,
-          "group": "load-opportunities"
+          "weight": 0
         },
         {
           "id": "uses-http2",
-          "weight": 0,
-          "group": "load-opportunities"
+          "weight": 0
         },
         {
           "id": "efficient-animated-content",
-          "weight": 0,
-          "group": "load-opportunities"
+          "weight": 0
         },
         {
           "id": "duplicated-javascript",
-          "weight": 0,
-          "group": "load-opportunities"
+          "weight": 0
         },
         {
           "id": "legacy-javascript",
-          "weight": 0,
-          "group": "load-opportunities"
+          "weight": 0
         },
         {
           "id": "preload-lcp-image",
-          "weight": 0,
-          "group": "load-opportunities"
+          "weight": 0
         },
         {
           "id": "total-byte-weight",
-          "weight": 0,
-          "group": "diagnostics"
+          "weight": 0
         },
         {
           "id": "uses-long-cache-ttl",
-          "weight": 0,
-          "group": "diagnostics"
+          "weight": 0
         },
         {
           "id": "dom-size",
-          "weight": 0,
-          "group": "diagnostics"
+          "weight": 0
         },
         {
           "id": "critical-request-chains",
-          "weight": 0,
-          "group": "diagnostics"
+          "weight": 0
         },
         {
           "id": "user-timings",
-          "weight": 0,
-          "group": "diagnostics"
+          "weight": 0
         },
         {
           "id": "bootup-time",
-          "weight": 0,
-          "group": "diagnostics"
+          "weight": 0
         },
         {
           "id": "mainthread-work-breakdown",
-          "weight": 0,
-          "group": "diagnostics"
+          "weight": 0
         },
         {
           "id": "font-display",
-          "weight": 0,
-          "group": "diagnostics"
+          "weight": 0
+        },
+        {
+          "id": "resource-summary",
+          "weight": 0
+        },
+        {
+          "id": "third-party-summary",
+          "weight": 0
+        },
+        {
+          "id": "third-party-facades",
+          "weight": 0
+        },
+        {
+          "id": "largest-contentful-paint-element",
+          "weight": 0
+        },
+        {
+          "id": "lcp-lazy-loaded",
+          "weight": 0
+        },
+        {
+          "id": "layout-shift-elements",
+          "weight": 0
+        },
+        {
+          "id": "uses-passive-event-listeners",
+          "weight": 0
+        },
+        {
+          "id": "no-document-write",
+          "weight": 0
+        },
+        {
+          "id": "long-tasks",
+          "weight": 0
+        },
+        {
+          "id": "non-composited-animations",
+          "weight": 0
+        },
+        {
+          "id": "unsized-images",
+          "weight": 0
+        },
+        {
+          "id": "viewport",
+          "weight": 0
         },
         {
           "id": "performance-budget",
@@ -6075,100 +6168,49 @@
           "group": "budgets"
         },
         {
-          "id": "resource-summary",
-          "weight": 0,
-          "group": "diagnostics"
-        },
-        {
-          "id": "third-party-summary",
-          "weight": 0,
-          "group": "diagnostics"
-        },
-        {
-          "id": "third-party-facades",
-          "weight": 0,
-          "group": "diagnostics"
-        },
-        {
-          "id": "largest-contentful-paint-element",
-          "weight": 0,
-          "group": "diagnostics"
-        },
-        {
-          "id": "lcp-lazy-loaded",
-          "weight": 0,
-          "group": "diagnostics"
-        },
-        {
-          "id": "layout-shift-elements",
-          "weight": 0,
-          "group": "diagnostics"
-        },
-        {
-          "id": "uses-passive-event-listeners",
-          "weight": 0,
-          "group": "diagnostics"
-        },
-        {
-          "id": "no-document-write",
-          "weight": 0,
-          "group": "diagnostics"
-        },
-        {
-          "id": "long-tasks",
-          "weight": 0,
-          "group": "diagnostics"
-        },
-        {
-          "id": "non-composited-animations",
-          "weight": 0,
-          "group": "diagnostics"
-        },
-        {
-          "id": "unsized-images",
-          "weight": 0,
-          "group": "diagnostics"
-        },
-        {
-          "id": "viewport",
-          "weight": 0,
-          "group": "diagnostics"
-        },
-        {
           "id": "network-requests",
-          "weight": 0
+          "weight": 0,
+          "group": "hidden"
         },
         {
           "id": "network-rtt",
-          "weight": 0
+          "weight": 0,
+          "group": "hidden"
         },
         {
           "id": "network-server-latency",
-          "weight": 0
+          "weight": 0,
+          "group": "hidden"
         },
         {
           "id": "main-thread-tasks",
-          "weight": 0
+          "weight": 0,
+          "group": "hidden"
         },
         {
           "id": "diagnostics",
-          "weight": 0
+          "weight": 0,
+          "group": "hidden"
         },
         {
           "id": "metrics",
-          "weight": 0
+          "weight": 0,
+          "group": "hidden"
         },
         {
           "id": "screenshot-thumbnails",
-          "weight": 0
+          "weight": 0,
+          "group": "hidden"
         },
         {
           "id": "final-screenshot",
-          "weight": 0
+          "weight": 0,
+          "group": "hidden"
         },
         {
           "id": "script-treemap-data",
-          "weight": 0
+          "weight": 0,
+          "group": "hidden"
         }
       ],
       "id": "performance",
@@ -6461,11 +6503,6 @@
           "group": "best-practices-trust-safety"
         },
         {
-          "id": "external-anchors-use-rel-noopener",
-          "weight": 1,
-          "group": "best-practices-trust-safety"
-        },
-        {
           "id": "geolocation-on-start",
           "weight": 1,
           "group": "best-practices-trust-safety"
@@ -6521,11 +6558,6 @@
           "group": "best-practices-general"
         },
         {
-          "id": "appcache-manifest",
-          "weight": 1,
-          "group": "best-practices-general"
-        },
-        {
           "id": "js-libraries",
           "weight": 0,
           "group": "best-practices-general"
@@ -6552,7 +6584,7 @@
         }
       ],
       "id": "best-practices",
-      "score": 0.2
+      "score": 0.23
     },
     "seo": {
       "title": "SEO",
@@ -6642,7 +6674,7 @@
       "score": 0.67
     },
     "pwa": {
-      "title": "Progressive Web App",
+      "title": "PWA",
       "description": "These checks validate the aspects of a Progressive Web App. [Learn more](https://developers.google.com/web/progressive-web-apps/checklist).",
       "manualDescription": "These checks are required by the baseline [PWA Checklist](https://developers.google.com/web/progressive-web-apps/checklist) but are not automatically checked by Lighthouse. They do not affect your score but it's important that you verify them manually.",
       "supportedModes": [
@@ -6657,11 +6689,6 @@
         {
           "id": "service-worker",
           "weight": 1,
-          "group": "pwa-optimized"
-        },
-        {
-          "id": "redirects-http",
-          "weight": 0,
           "group": "pwa-optimized"
         },
         {
@@ -6788,6 +6815,9 @@
     },
     "best-practices-general": {
       "title": "General"
+    },
+    "hidden": {
+      "title": ""
     }
   },
   "timing": {
@@ -6837,12 +6867,6 @@
       {
         "startTime": 0,
         "name": "lh:computed:NetworkRecords",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:audit:redirects-http",
         "duration": 100,
         "entryType": "measure"
       },
@@ -7874,12 +7898,6 @@
       },
       {
         "startTime": 0,
-        "name": "lh:audit:appcache-manifest",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
         "name": "lh:audit:doctype",
         "duration": 100,
         "entryType": "measure"
@@ -7893,12 +7911,6 @@
       {
         "startTime": 0,
         "name": "lh:audit:dom-size",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:audit:external-anchors-use-rel-noopener",
         "duration": 100,
         "entryType": "measure"
       },
@@ -8040,6 +8052,7 @@
   "i18n": {
     "rendererFormattedStrings": {
       "calculatorLink": "See calculator.",
+      "collapseView": "Collapse view",
       "crcInitialNavigation": "Initial Navigation",
       "crcLongestDurationLabel": "Maximum critical path latency:",
       "dropdownCopyJSON": "Copy JSON",
@@ -8052,7 +8065,9 @@
       "dropdownViewer": "Open in Viewer",
       "errorLabel": "Error!",
       "errorMissingAuditInfo": "Report error: no audit information",
+      "expandView": "Expand view",
       "footerIssue": "File an issue",
+      "hide": "Hide",
       "labDataTitle": "Lab Data",
       "lsPerformanceCategoryDescription": "[Lighthouse](https://developers.google.com/web/tools/lighthouse/) analysis of the current page on an emulated mobile network. Values are estimated and may vary.",
       "manualAuditsGroupTitle": "Additional items to manually check",
@@ -8060,21 +8075,22 @@
       "opportunityResourceColumnLabel": "Opportunity",
       "opportunitySavingsColumnLabel": "Estimated Savings",
       "passedAuditsGroupTitle": "Passed audits",
+      "runtimeAnalysisWindow": "Initial page load",
+      "runtimeCustom": "Custom throttling",
       "runtimeDesktopEmulation": "Emulated Desktop",
       "runtimeMobileEmulation": "Emulated Moto G4",
       "runtimeNoEmulation": "No emulation",
       "runtimeSettingsAxeVersion": "Axe version",
       "runtimeSettingsBenchmark": "CPU/Memory Power",
-      "runtimeSettingsChannel": "Channel",
       "runtimeSettingsCPUThrottling": "CPU throttling",
       "runtimeSettingsDevice": "Device",
-      "runtimeSettingsFetchTime": "Fetch Time",
       "runtimeSettingsNetworkThrottling": "Network throttling",
-      "runtimeSettingsTitle": "Runtime Settings",
-      "runtimeSettingsUA": "User agent (host)",
       "runtimeSettingsUANetwork": "User agent (network)",
-      "runtimeSettingsUrl": "URL",
+      "runtimeSingleLoad": "Single page load",
+      "runtimeSingleLoadTooltip": "This data is taken from a single page load, as opposed to field data summarizing many sessions.",
+      "runtimeSlow4g": "Slow 4G throttling",
       "runtimeUnknown": "Unknown",
+      "show": "Show",
       "showRelevantAudits": "Show audits relevant to:",
       "snippetCollapseButtonLabel": "Collapse snippet",
       "snippetExpandButtonLabel": "Expand snippet",
@@ -8109,12 +8125,6 @@
       ],
       "lighthouse-core/audits/is-on-https.js | allowed": [
         "audits[is-on-https].details.items[0].resolution"
-      ],
-      "lighthouse-core/audits/redirects-http.js | title": [
-        "audits[redirects-http].title"
-      ],
-      "lighthouse-core/audits/redirects-http.js | description": [
-        "audits[redirects-http].description"
       ],
       "lighthouse-core/audits/service-worker.js | failureTitle": [
         "audits[service-worker].title"
@@ -8449,7 +8459,7 @@
       "lighthouse-core/audits/deprecations.js | displayValue": [
         {
           "values": {
-            "itemCount": 3
+            "itemCount": 2
           },
           "path": "audits.deprecations.displayValue"
         }
@@ -8745,15 +8755,6 @@
       "lighthouse-core/audits/unsized-images.js | description": [
         "audits[unsized-images].description"
       ],
-      "lighthouse-core/lib/i18n/i18n.js | columnFailingElem": [
-        "audits[unsized-images].details.headings[2].text",
-        "audits[html-has-lang].details.headings[0].text",
-        "audits[image-alt].details.headings[0].text",
-        "audits.label.details.headings[0].text",
-        "audits[link-name].details.headings[0].text",
-        "audits[object-alt].details.headings[0].text",
-        "audits[password-inputs-can-be-pasted-into].details.headings[0].text"
-      ],
       "lighthouse-core/audits/valid-source-maps.js | title": [
         "audits[valid-source-maps].title"
       ],
@@ -8975,6 +8976,14 @@
       ],
       "lighthouse-core/audits/accessibility/html-has-lang.js | description": [
         "audits[html-has-lang].description"
+      ],
+      "lighthouse-core/lib/i18n/i18n.js | columnFailingElem": [
+        "audits[html-has-lang].details.headings[0].text",
+        "audits[image-alt].details.headings[0].text",
+        "audits.label.details.headings[0].text",
+        "audits[link-name].details.headings[0].text",
+        "audits[object-alt].details.headings[0].text",
+        "audits[password-inputs-can-be-pasted-into].details.headings[0].text"
       ],
       "lighthouse-core/audits/accessibility/html-lang-valid.js | title": [
         "audits[html-lang-valid].title"
@@ -9242,20 +9251,6 @@
       "lighthouse-core/audits/byte-efficiency/legacy-javascript.js | description": [
         "audits[legacy-javascript].description"
       ],
-      "lighthouse-core/audits/dobetterweb/appcache-manifest.js | failureTitle": [
-        "audits[appcache-manifest].title"
-      ],
-      "lighthouse-core/audits/dobetterweb/appcache-manifest.js | description": [
-        "audits[appcache-manifest].description"
-      ],
-      "lighthouse-core/audits/dobetterweb/appcache-manifest.js | displayValue": [
-        {
-          "values": {
-            "AppCacheManifest": "clock.appcache"
-          },
-          "path": "audits[appcache-manifest].displayValue"
-        }
-      ],
       "lighthouse-core/audits/dobetterweb/doctype.js | title": [
         "audits.doctype.title"
       ],
@@ -9296,23 +9291,6 @@
       ],
       "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": [
         "audits[dom-size].details.items[2].statistic"
-      ],
-      "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | failureTitle": [
-        "audits[external-anchors-use-rel-noopener].title"
-      ],
-      "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | description": [
-        "audits[external-anchors-use-rel-noopener].description"
-      ],
-      "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | warning": [
-        {
-          "values": {
-            "anchorHTML": "<a target=\"_blank\">"
-          },
-          "path": "audits[external-anchors-use-rel-noopener].warnings[0]"
-        }
-      ],
-      "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnFailingAnchors": [
-        "audits[external-anchors-use-rel-noopener].details.headings[0].text"
       ],
       "lighthouse-core/audits/dobetterweb/geolocation-on-start.js | failureTitle": [
         "audits[geolocation-on-start].title"

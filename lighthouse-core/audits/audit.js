@@ -7,7 +7,7 @@
 
 const {isUnderTest} = require('../lib/lh-env.js');
 const statistics = require('../lib/statistics.js');
-const Util = require('../util-commonjs.js');
+const {Util} = require('../util-commonjs.js');
 
 const DEFAULT_PASS = 'defaultPass';
 

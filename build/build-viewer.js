@@ -6,9 +6,10 @@
 'use strict';
 
 const browserify = require('browserify');
+const rollupPlugins = require('./rollup-plugins.js');
 const GhPagesApp = require('./gh-pages-app.js');
-const {minifyFileTransform} = require('./build-utils.js');
 const {LH_ROOT} = require('../root.js');
+const inlineFs = require('./plugins/browserify-inline-fs.js');
 
 /**
  * Build viewer, optionally deploying to gh-pages if `--deploy` flag was set.
@@ -19,9 +20,8 @@ async function run() {
   const generatorBrowserify = browserify(generatorFilename, {standalone: 'ReportGenerator'})
     // Flow report is not used in report viewer, so don't include flow assets.
     .ignore(require.resolve('../report/generator/flow-report-assets.js'))
-    .transform('@wardpeet/brfs', {
-      readFileTransform: minifyFileTransform,
-    });
+    // Transform `fs.readFileSync`, etc into inline strings.
+    .transform(inlineFs({verbose: Boolean(process.env.DEBUG)}));
 
   /** @type {Promise<string>} */
   const generatorJsPromise = new Promise((resolve, reject) => {
@@ -33,7 +33,7 @@ async function run() {
 
   const app = new GhPagesApp({
     name: 'viewer',
-    appDir: `${LH_ROOT}/lighthouse-viewer/app`,
+    appDir: `${LH_ROOT}/viewer/app`,
     html: {path: 'index.html'},
     stylesheets: [
       {path: 'styles/*'},
@@ -41,11 +41,25 @@ async function run() {
     javascripts: [
       await generatorJsPromise,
       {path: require.resolve('pako/dist/pako_inflate.js')},
-      {path: 'src/main.js', rollup: true},
+      {path: 'src/main.js', rollup: true, rollupPlugins: [
+        rollupPlugins.shim({
+          './locales.js': 'export default {}',
+        }),
+        rollupPlugins.inlineFs({verbose: Boolean(process.env.DEBUG)}),
+        rollupPlugins.replace({
+          values: {
+            '__dirname': '""',
+          },
+        }),
+        rollupPlugins.commonjs(),
+        rollupPlugins.nodePolyfills(),
+        rollupPlugins.nodeResolve({preferBuiltins: true}),
+      ]},
     ],
     assets: [
-      {path: 'images/**/*'},
+      {path: 'images/**/*', destDir: 'images'},
       {path: 'manifest.json'},
+      {path: '../../shared/localization/locales/*.json', destDir: 'locales'},
     ],
   });
 

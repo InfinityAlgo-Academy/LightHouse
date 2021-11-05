@@ -6,40 +6,39 @@
 
 import {FunctionComponent} from 'preact';
 
-import {Util} from '../../report/renderer/util';
 import {FlowStepIcon, FlowStepThumbnail} from './common';
-import {useUIStrings} from './i18n/i18n';
+import {useLocalizedStrings} from './i18n/i18n';
 import {getModeDescription, useFlowResult} from './util';
 
 const SIDE_THUMBNAIL_HEIGHT = 80;
 const MAIN_THUMBNAIL_HEIGHT = 120;
 
 const HeaderThumbnail: FunctionComponent<{
-  reportResult: LH.ReportResult,
+  lhr: LH.Result,
   position: 'prev'|'next'|'main'
 }> =
-({reportResult, position}) => {
+({lhr, position}) => {
   const height = position === 'main' ? MAIN_THUMBNAIL_HEIGHT : SIDE_THUMBNAIL_HEIGHT;
   return (
     <div className={`HeaderThumbnail HeaderThumbnail--${position}`}>
-      <FlowStepThumbnail reportResult={reportResult} height={height}/>
+      <FlowStepThumbnail lhr={lhr} height={height}/>
       <div className="HeaderThumbnail__icon">
-        <FlowStepIcon mode={reportResult.gatherMode}/>
+        <FlowStepIcon mode={lhr.gatherMode}/>
       </div>
     </div>
   );
 };
 
-export const Header: FunctionComponent<{currentLhr: LH.FlowResult.LhrRef}> =
-({currentLhr}) => {
+export const Header: FunctionComponent<{hashState: LH.FlowResult.HashState}> =
+({hashState}) => {
   const flowResult = useFlowResult();
-  const {index} = currentLhr;
+  const {index} = hashState;
 
   const step = flowResult.steps[index];
   const prevStep = flowResult.steps[index - 1];
   const nextStep = flowResult.steps[index + 1];
 
-  const strings = useUIStrings();
+  const strings = useLocalizedStrings();
   const modeDescription = getModeDescription(step.lhr.gatherMode, strings);
 
   return (
@@ -50,7 +49,7 @@ export const Header: FunctionComponent<{currentLhr: LH.FlowResult.LhrRef}> =
             flowResult.steps[index - 2] && <div className="Header__segment"/>
           }
           <div className="Header__prev-thumbnail">
-            <HeaderThumbnail reportResult={Util.prepareReportResult(prevStep.lhr)} position="prev"/>
+            <HeaderThumbnail lhr={prevStep.lhr} position="prev"/>
             <div className="Header__segment"/>
           </div>
           <a
@@ -60,7 +59,7 @@ export const Header: FunctionComponent<{currentLhr: LH.FlowResult.LhrRef}> =
         </>
       }
       <div className="Header__current-thumbnail">
-        <HeaderThumbnail reportResult={Util.prepareReportResult(step.lhr)} position="main"/>
+        <HeaderThumbnail lhr={step.lhr} position="main"/>
       </div>
       <div className="Header__current-title">
         {step.name}
@@ -72,7 +71,7 @@ export const Header: FunctionComponent<{currentLhr: LH.FlowResult.LhrRef}> =
         nextStep && <>
           <div className="Header__next-thumbnail">
             <div className="Header__segment"/>
-            <HeaderThumbnail reportResult={Util.prepareReportResult(nextStep.lhr)} position="next"/>
+            <HeaderThumbnail lhr={nextStep.lhr} position="next"/>
           </div>
           <a
             className="Header__next-title"

@@ -6,14 +6,47 @@
 'use strict';
 
 import fs from 'fs';
+import assert from 'assert';
 
+import waitForExpect from 'wait-for-expect';
 import puppeteer from 'puppeteer';
 
 import {LH_ROOT} from '../../root.js';
 import UserFlow from '../fraggle-rock/user-flow.js';
 
+
+/** @param {puppeteer.Page} page */
+async function waitForImagesToLoad(page) {
+  const TIMEOUT = 30_000;
+  const QUIET_WINDOW = 3_000;
+
+  /** @return {Promise<Array<{src: string, complete: boolean}>>} */
+  async function getImageLoadingStates() {
+    return page.evaluate(() =>
+      Array.from(document.querySelectorAll('img'))
+        .map(img => ({
+          src: img.src,
+          complete: img.complete,
+        }))
+    );
+  }
+
+  await waitForExpect(async () => {
+    // First check all images that are in the page are complete.
+    const firstRunImages = await getImageLoadingStates();
+    const completeImages = firstRunImages.filter(image => image.complete);
+    assert.deepStrictEqual(completeImages, firstRunImages);
+
+    // Next check we haven't added any new images in the quiet window.
+    await page.waitForTimeout(QUIET_WINDOW);
+    const secondRunImages = await getImageLoadingStates();
+    assert.deepStrictEqual(secondRunImages, firstRunImages);
+  }, TIMEOUT);
+}
+
 (async () => {
   const browser = await puppeteer.launch({
+    ignoreDefaultArgs: ['--enable-automation'],
     executablePath: process.env.CHROME_PATH,
     headless: false,
   });
@@ -29,6 +62,7 @@ import UserFlow from '../fraggle-rock/user-flow.js';
     const networkQuietPromise = page.waitForNavigation({waitUntil: ['networkidle0']});
     await page.click('button[type=submit]');
     await networkQuietPromise;
+    await waitForImagesToLoad(page);
     await flow.endTimespan();
 
     await flow.snapshot({stepName: 'Search results'});

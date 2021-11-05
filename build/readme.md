@@ -7,7 +7,7 @@ Lighthouse is built into browser-friendly bundles for two clients:
 
 Additionally, there are build processes for: 
 
-* [The Lighthouse report viewer](../lighthouse-viewer/)
+* [The Lighthouse report viewer](../viewer/)
 * The chrome extension (as of Nov 2019 is a thin-client that defers to the viewer)
 
 ## Building for DevTools

@@ -86,7 +86,6 @@ describe('Sized images audit', () => {
         width: null,
         height: null,
       },
-      mimeType: 'image/svg+xml',
       src: 'data:image/svg+xml;base64,foo',
     });
     expect(result.score).toEqual(1);
@@ -137,7 +136,6 @@ describe('Sized images audit', () => {
           width: null,
           height: '100',
         },
-        mimeType: 'image/svg+xml',
       });
       expect(result.score).toEqual(0);
     });

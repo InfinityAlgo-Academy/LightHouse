@@ -7,32 +7,68 @@
 import {createContext, FunctionComponent} from 'preact';
 import {useContext, useMemo} from 'preact/hooks';
 
+import {formatMessage} from '../../../shared/localization/format';
 import {I18n} from '../../../report/renderer/i18n';
 import {UIStrings} from './ui-strings';
-import {useLocale} from '../util';
+import {useFlowResult} from '../util';
 import strings from './localized-strings';
+import {Util} from '../../../report/renderer/util';
 
-const I18nContext = createContext<I18n<typeof UIStrings>|undefined>(undefined);
+const I18nContext = createContext(new I18n('en-US', {...Util.UIStrings, ...UIStrings}));
 
-export function useI18n() {
-  const i18n = useContext(I18nContext);
-  if (!i18n) throw Error('i18n was not initialized');
-  return i18n;
+function useLhrLocale() {
+  const flowResult = useFlowResult();
+  const firstLhr = flowResult.steps[0].lhr;
+  const locale = firstLhr.configSettings.locale;
+
+  if (flowResult.steps.some(step => step.lhr.configSettings.locale !== locale)) {
+    console.warn('LHRs have inconsistent locales');
+  }
+
+  return {
+    locale,
+    lhrStrings: firstLhr.i18n.rendererFormattedStrings,
+  };
 }
 
-export function useUIStrings() {
+function useI18n() {
+  return useContext(I18nContext);
+}
+
+function useLocalizedStrings() {
   const i18n = useI18n();
   return i18n.strings;
 }
 
-export const I18nProvider: FunctionComponent = ({children}) => {
-  const locale = useLocale();
-  const i18n = useMemo(() => new I18n(locale, {
-    // Set missing renderer strings to default (english) values.
-    ...UIStrings,
-    // `strings` is generated in build/build-report.js
-    ...strings[locale],
-  }), [locale]);
+function useStringFormatter() {
+  const {locale} = useLhrLocale();
+  return (str: string, values?: Record<string, string|number>) => {
+    return formatMessage(str, values, locale);
+  };
+}
+
+const I18nProvider: FunctionComponent = ({children}) => {
+  const {locale, lhrStrings} = useLhrLocale();
+
+  const i18n = useMemo(() => {
+    const i18n = new I18n(locale, {
+      // Set any missing lhr strings to default (english) values.
+      ...Util.UIStrings,
+      // Preload with strings from the first lhr.
+      // Used for legacy report components imported into the flow report.
+      ...lhrStrings,
+      // Set any missing flow strings to default (english) values.
+      ...UIStrings,
+      // `strings` is generated in build/build-report.js
+      ...strings[locale],
+    });
+
+    // Initialize renderer util i18n for strings rendered in wrapped components.
+    // TODO: Don't attach global i18n to `Util`.
+    Util.i18n = i18n;
+
+    return i18n;
+  }, [locale, lhrStrings]);
 
   return (
     <I18nContext.Provider value={i18n}>
@@ -41,4 +77,9 @@ export const I18nProvider: FunctionComponent = ({children}) => {
   );
 };
 
-
+export {
+  useI18n,
+  useLocalizedStrings,
+  useStringFormatter,
+  I18nProvider,
+};

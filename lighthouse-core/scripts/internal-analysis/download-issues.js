@@ -15,7 +15,7 @@
  *
  * Usage
  *
- * export GH_TOKEN=<your personal github token> # needed to get around API rate limits
+ * export GH_TOKEN=<your personal GitHub token> # needed to get around API rate limits
  * node ./lighthouse-core/scripts/internal-analysis/download-issues.js
  * node ./lighthouse-core/scripts/internal-analysis/analyze-issues.js
  */

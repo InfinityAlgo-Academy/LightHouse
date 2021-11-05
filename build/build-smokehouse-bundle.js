@@ -12,19 +12,21 @@ const {LH_ROOT} = require('../root.js');
 const distDir = `${LH_ROOT}/dist`;
 const bundleOutFile = `${distDir}/smokehouse-bundle.js`;
 const smokehouseLibFilename = './lighthouse-cli/test/smokehouse/frontends/lib.js';
-const smokehouseCliFilename =
-  require.resolve('../lighthouse-cli/test/smokehouse/lighthouse-runners/cli.js');
+const smokehouseCliFilename = `${LH_ROOT}/lighthouse-cli/test/smokehouse/lighthouse-runners/cli.js`;
 
 async function build() {
   const bundle = await rollup.rollup({
     input: smokehouseLibFilename,
     context: 'globalThis',
     plugins: [
-      rollupPlugins.nodeResolve(),
-      rollupPlugins.commonjs(),
       rollupPlugins.shim({
-        [smokehouseCliFilename]: 'export default {}',
+        [smokehouseCliFilename]:
+          'export function runLighthouse() { throw new Error("not supported"); }',
       }),
+      rollupPlugins.inlineFs({verbose: Boolean(process.env.DEBUG)}),
+      rollupPlugins.commonjs(),
+      rollupPlugins.nodePolyfills(),
+      rollupPlugins.nodeResolve(),
     ],
   });
 
@@ -32,6 +34,7 @@ async function build() {
     file: bundleOutFile,
     format: 'commonjs',
   });
+  await bundle.close();
 }
 
 build();

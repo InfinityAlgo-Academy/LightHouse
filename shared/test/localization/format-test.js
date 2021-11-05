@@ -9,10 +9,54 @@ const path = require('path');
 
 const format = require('../../localization/format.js');
 const i18n = require('../../../lighthouse-core/lib/i18n/i18n.js');
+const constants = require('../../../lighthouse-core/config/constants.js');
+const locales = require('../../localization/locales.js');
 
 /* eslint-env jest */
 
 describe('format', () => {
+  describe('DEFAULT_LOCALE', () => {
+    it('is the same as the default config locale', () => {
+      expect(format.DEFAULT_LOCALE).toBe(constants.defaultSettings.locale);
+    });
+  });
+
+  describe('#getAvailableLocales', () => {
+    it('has all the available locales', () => {
+      const availableLocales = format.getAvailableLocales();
+      for (const locale of ['en', 'es', 'ru', 'zh']) {
+        expect(availableLocales).toContain(locale);
+      }
+
+      const rawLocales = Object.keys(locales).sort();
+      expect(availableLocales.sort()).toEqual(rawLocales);
+    });
+
+    it('contains the default locale', () => {
+      expect(format.getAvailableLocales()).toContain(format.DEFAULT_LOCALE);
+    });
+  });
+
+  describe('#getCanonicalLocales', () => {
+    it('contains some canonical locales', () => {
+      const canonicalLocales = format.getCanonicalLocales();
+      for (const locale of ['en-US', 'es', 'ru', 'zh']) {
+        expect(canonicalLocales).toContain(locale);
+      }
+    });
+
+    it('is a subset of the available locales', () => {
+      const canonicalLocales = format.getCanonicalLocales();
+      const availableLocales = format.getAvailableLocales();
+
+      for (const canonicalLocale of canonicalLocales) {
+        expect(availableLocales).toContain(canonicalLocale);
+      }
+
+      expect(canonicalLocales.length).toBeLessThan(availableLocales.length);
+    });
+  });
+
   describe('#_formatPathAsString', () => {
     it('handles simple paths', () => {
       expect(format._formatPathAsString(['foo'])).toBe('foo');
@@ -363,15 +407,7 @@ describe('format', () => {
       expect(helloInfinityStr).toBeDisplayString('Hello ∞ World');
 
       const helloNaNStr = str_(UIStrings.helloBytesWorld, {in: NaN});
-      // TODO(COMPAT): workaround can be removed after Node 13 is retired.
-      // expect(helloNaNStr).toBeDisplayString('Hello NaN World');
-
-      // Node 13/V8 7.9 and 8.0 have a bug where `({a: NaN}).a.toLocaleString() === "-NaN"`. It
-      // works correctly in Node 12 and 14, so work around it since NaN isn't essential for
-      // user-facing strings and it will eventually correct itself.
-      const formattedNaNStr = format.getFormatted(helloNaNStr, 'en-US');
-      expect(formattedNaNStr === 'Hello NaN World' || formattedNaNStr === 'Hello -NaN World')
-        .toBe(true);
+      expect(helloNaNStr).toBeDisplayString('Hello NaN World');
     });
   });
 });

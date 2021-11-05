@@ -25,8 +25,8 @@ beforeEach(() => {
 });
 
 it('renders all sections for a middle step', () => {
-  const currentLhr = {index: 1} as any;
-  const root = render(<Header currentLhr={currentLhr}/>, {wrapper});
+  const hashState = {index: 1} as any;
+  const root = render(<Header hashState={hashState}/>, {wrapper});
 
   expect(root.baseElement.querySelector('.Header__prev-thumbnail')).toBeTruthy();
   expect(root.baseElement.querySelector('.Header__prev-title')).toBeTruthy();
@@ -35,8 +35,8 @@ it('renders all sections for a middle step', () => {
 });
 
 it('renders only next section for first step', () => {
-  const currentLhr = {index: 0} as any;
-  const root = render(<Header currentLhr={currentLhr}/>, {wrapper});
+  const hashState = {index: 0} as any;
+  const root = render(<Header hashState={hashState}/>, {wrapper});
 
   expect(root.baseElement.querySelector('.Header__prev-thumbnail')).toBeFalsy();
   expect(root.baseElement.querySelector('.Header__prev-title')).toBeFalsy();
@@ -45,8 +45,8 @@ it('renders only next section for first step', () => {
 });
 
 it('renders only previous section for last step', () => {
-  const currentLhr = {index: 3} as any;
-  const root = render(<Header currentLhr={currentLhr}/>, {wrapper});
+  const hashState = {index: 3} as any;
+  const root = render(<Header hashState={hashState}/>, {wrapper});
 
   expect(root.baseElement.querySelector('.Header__prev-thumbnail')).toBeTruthy();
   expect(root.baseElement.querySelector('.Header__prev-title')).toBeTruthy();

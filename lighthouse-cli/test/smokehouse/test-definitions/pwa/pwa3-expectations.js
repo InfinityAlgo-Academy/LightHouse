@@ -22,9 +22,6 @@ const pwarocks = {
     requestedUrl: 'https://connorjclark.github.io/pwa.rocks/',
     finalUrl: 'https://connorjclark.github.io/pwa.rocks/',
     audits: {
-      'redirects-http': {
-        score: 1,
-      },
       'service-worker': {
         score: 1,
       },
