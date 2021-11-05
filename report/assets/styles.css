@@ -31,7 +31,9 @@
 
   {intensity} is the Material Design tag - 700, A700, etc.
 */
-.lh-vars {
+
+.lh-vars,
+.lh-vars *::before, .lh-vars *::after {
   /* Palette using Material Design Colors
    * https://www.materialui.co/colors */
   --color-amber-50: #FFF8E1;
@@ -105,6 +107,7 @@
   --image-preview-size: 48px;
   --link-color: var(--color-blue-primary);
   --locale-selector-background-color: var(--color-white);
+  --meta-icon-size: calc(var(--report-icon-size) * 0.667);
   --metric-toggle-lines-fill: #7F7F7F;
   --metric-value-font-size: calc(var(--report-font-size) * 1.8);
   --metrics-toggle-background-color: var(--color-gray-200);
@@ -175,7 +178,8 @@
 }
 
 @media not print {
-  .lh-vars--dark {
+  .lh-vars--dark,
+  .lh-vars--dark *::before, .lh-vars--dark *::after {
     /* Pallete */
     --color-gray-200: var(--color-gray-800);
     --color-gray-300: #616161;
@@ -215,7 +219,8 @@
 }
 
 @media only screen and (max-width: 480px) {
-  .lh-vars {
+  .lh-vars,
+  .lh-vars *::before, .lh-vars *::after {
     --audit-group-margin-bottom: 20px;
     --category-padding: 12px;
     --env-name-min-width: 120px;
@@ -246,7 +251,8 @@
   }
 }
 
-.lh-vars.lh-vars--dense {
+.lh-vars.lh-vars--dense,
+.lh-vars--dense *::before, .lh-vars--dense *::after {
   --audit-explanation-line-height: 14px;
   --audit-group-margin-bottom: 20px;
   --category-padding: 12px;
@@ -1792,7 +1798,6 @@ details[open] .lh-clump-toggletext--hide { display: block;}
 
 
 .lh-meta__items {
-  --meta-icon-size: calc(var(--report-icon-size) * 0.667);
   padding: var(--default-padding);
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
