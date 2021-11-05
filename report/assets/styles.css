@@ -1072,13 +1072,6 @@
   padding-bottom: 20px;
 }
 
-.lh-header-inner {
-  display: block;
-  margin: 0 auto;
-  position: relative;
-  word-wrap: break-word;
-}
-
 .lh-exception {
   font-size: large;
 }
@@ -1128,12 +1121,13 @@
   margin-bottom: 0;
 }
 
-.lh-scores-header {
+.lh-static-gauges-wrapper {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  padding: var(--default-padding) 0;
 }
-.lh-scores-header__solo {
+.lh-static-gauges-wrapper__solo {
   padding: 0;
   border: 0;
 }
@@ -1346,9 +1340,9 @@
   margin-top: 14px;
 }
 
-.lh-scores-header .lh-gauge__wrapper,
-.lh-scores-header .lh-fraction__wrapper,
-.lh-scores-header .lh-gauge--pwa__wrapper,
+.lh-static-gauges-wrapper .lh-gauge__wrapper,
+.lh-static-gauges-wrapper .lh-fraction__wrapper,
+.lh-static-gauges-wrapper .lh-gauge--pwa__wrapper,
 .lh-sticky-header .lh-gauge__wrapper,
 .lh-sticky-header .lh-fraction__wrapper,
 .lh-sticky-header .lh-gauge--pwa__wrapper {
@@ -1388,7 +1382,7 @@
 }
 
 /* Hide category score gauages if it's a single category report */
-.lh-header--solo-category .lh-header-inner {
+.lh-header--no-gauges .lh-static-header {
   display: none;
 }
 

@@ -27,13 +27,14 @@ export class TopbarFeatures {
     this._dropDownMenu = new DropDownMenu(this._dom);
     this._copyAttempt = false;
     /** @type {HTMLElement} */
-    this.topbarEl; // eslint-disable-line no-unused-expressions
+    this.topbarEl = this._dom.find('div.lh-topbar', this._dom.rootEl);
     /** @type {HTMLElement} */
-    this.categoriesEl; // eslint-disable-line no-unused-expressions
-    /** @type {HTMLElement?} */
-    this.stickyHeaderEl; // eslint-disable-line no-unused-expressions
+    this.categoriesEl = this._dom.find('div.lh-categories', this._dom.rootEl);
     /** @type {HTMLElement} */
-    this.highlightEl; // eslint-disable-line no-unused-expressions
+    this.stickyHeaderEl = this._dom.find('div.lh-sticky-header', this._dom.rootEl);
+    /** @type {HTMLElement} */
+    this.highlightEl = this._dom.find('div.lh-highlighter', this.stickyHeaderEl);
+
     this.onDropDownMenuClick = this.onDropDownMenuClick.bind(this);
     this.onKeyUp = this.onKeyUp.bind(this);
     this.onCopy = this.onCopy.bind(this);
@@ -253,21 +254,14 @@ export class TopbarFeatures {
   }
 
   _setupStickyHeader() {
-    // Cache these elements to avoid qSA on each onscroll.
-    this.topbarEl = this._dom.find('div.lh-topbar', this._dom.rootEl);
-    this.categoriesEl = this._dom.find('div.lh-categories', this._dom.rootEl);
-
     // Defer behind rAF to avoid forcing layout.
     window.requestAnimationFrame(() => window.requestAnimationFrame(() => {
-      // Only present in the DOM if it'll be used (>=2 categories)
+      // Only proceed if the sticky header is populated
       try {
-        this.stickyHeaderEl = this._dom.find('div.lh-sticky-header', this._dom.rootEl);
+        this._dom.find('.lh-gauge', this.stickyHeaderEl);
       } catch {
         return;
       }
-
-      // Highlighter will be absolutely positioned at first gauge, then transformed on scroll.
-      this.highlightEl = this._dom.createChildOf(this.stickyHeaderEl, 'div', 'lh-highlighter');
 
       // Update sticky header visibility and highlight when page scrolls/resizes.
       const scrollParent = this._getScrollParent(this._dom.rootEl);

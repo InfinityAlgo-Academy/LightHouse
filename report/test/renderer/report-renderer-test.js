@@ -55,7 +55,7 @@ describe('ReportRenderer', () => {
     it('should render a report', () => {
       const container = renderer._dom.document().body;
       const output = renderer.renderReport(sampleResults, container);
-      assert.ok(output.querySelector('.lh-header-inner'), 'has a header');
+      assert.ok(output.querySelector('.lh-static-header'), 'has a header');
       assert.ok(output.querySelector('.lh-main'), 'has report body');
       // 3 sets of gauges - one in sticky header, one in scores header, and one in each section.
       assert.equal(output.querySelectorAll('.lh-gauge__wrapper, .lh-gauge--pwa__wrapper').length,
@@ -77,8 +77,8 @@ describe('ReportRenderer', () => {
     });
 
     it('renders scores', () => {
-      const header = renderer._renderScoresWrapper();
-      assert.ok(header.querySelector('.lh-scores-container'), 'contains score container');
+      const header = renderer._renderstaticHeader();
+      assert.ok(header.querySelector('.lh-static-header'), 'contains score container');
     });
 
     it('renders score gauges in this order: default, pwa, plugins', () => {
@@ -100,12 +100,12 @@ describe('ReportRenderer', () => {
       }
 
       const indexOfPwaGauge = Array.from(output
-        .querySelectorAll('.lh-scores-header > a[class*="lh-gauge"]')).findIndex(isPWAGauge);
+        .querySelectorAll('.lh-static-gauges-wrapper > a[class*="lh-gauge"]')).findIndex(isPWAGauge);
 
       const indexOfPluginGauge = Array.from(output
-        .querySelectorAll('.lh-scores-header > a[class*="lh-gauge"]')).findIndex(isPluginGauge);
+        .querySelectorAll('.lh-static-gauges-wrapper > a[class*="lh-gauge"]')).findIndex(isPluginGauge);
 
-      const scoresHeaderElem = output.querySelector('.lh-scores-header');
+      const scoresHeaderElem = output.querySelector('.lh-static-gauges-wrapper');
       assert.equal(scoresHeaderElem.children.length - 2, indexOfPwaGauge);
       assert.equal(scoresHeaderElem.children.length - 1, indexOfPluginGauge);
       assert(indexOfPluginGauge > indexOfPwaGauge);
@@ -131,7 +131,7 @@ describe('ReportRenderer', () => {
       };
       const container = renderer._dom.document().body;
       const output = renderer.renderReport(sampleResultsCopy, container);
-      const scoresHeaderElem = output.querySelector('.lh-scores-header');
+      const scoresHeaderElem = output.querySelector('.lh-static-gauges-wrapper');
 
       const gaugeCount = scoresHeaderElem.querySelectorAll('.lh-gauge').length;
       const pluginGaugeCount =

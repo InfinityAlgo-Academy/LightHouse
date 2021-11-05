@@ -89,17 +89,6 @@ export class ReportRenderer {
   }
 
   /**
-   * @return {DocumentFragment}
-   */
-  _renderScoresWrapper() {
-    const el = this._dom.createComponent('heading');
-    const domFragment = this._dom.createComponent('scoresWrapper');
-    const placeholder = this._dom.find('.lh-scores-wrapper-placeholder', el);
-    placeholder.replaceWith(domFragment);
-    return el;
-  }
-
-  /**
    * @param {LH.ReportResult} report
    * @return {DocumentFragment}
    */
@@ -274,33 +263,26 @@ export class ReportRenderer {
     };
 
     const mainEl = this._dom.createElement('div', 'lh-main');
-    const headerEl = this._dom.createElement('header', 'lh-header');
+    const headerEl = this._dom.find('header.lh-header', this._dom.createComponent('header'));
     mainEl.appendChild(headerEl);
-    headerEl.appendChild(this._renderScoresWrapper());
     headerEl.appendChild(this._renderReportWarnings(report));
 
-    let scoreHeader;
+    const scoreScaleEl =
+      this._dom.find('div.lh-scorescale', this._dom.createComponent('scorescale'));
+
+
     const isSoloCategory = Object.keys(report.categories).length === 1;
-    if (!isSoloCategory) {
-      scoreHeader = this._dom.createElement('div', 'lh-scores-header');
+    if (isSoloCategory) {
+      headerEl.classList.add('lh-header--no-gauges');
     } else {
-      headerEl.classList.add('lh-header--solo-category');
-    }
-
-    const scoreScale = this._dom.createElement('div');
-    scoreScale.classList.add('lh-scorescale-wrap');
-    scoreScale.append(this._dom.createComponent('scorescale'));
-    if (scoreHeader) {
-      const scoresContainer = this._dom.find('.lh-scores-container', headerEl);
-      scoreHeader.append(
-        ...this._renderScoreGauges(report, categoryRenderer, specificCategoryRenderers));
-      scoresContainer.appendChild(scoreHeader);
-      scoresContainer.appendChild(scoreScale);
-
-      const stickyHeader = this._dom.createElement('div', 'lh-sticky-header');
+      const stickyHeader = this._dom.find('.lh-sticky-header', headerEl);
       stickyHeader.append(
         ...this._renderScoreGauges(report, categoryRenderer, specificCategoryRenderers));
-      headerEl.prepend(stickyHeader);
+
+      const gaugesWrapperEl = this._dom.find('.lh-static-gauges-wrapper', headerEl);
+      gaugesWrapperEl.append(
+        ...this._renderScoreGauges(report, categoryRenderer, specificCategoryRenderers));
+      this._dom.find('.lh-scorescale-wrap', headerEl).append(scoreScaleEl);
     }
 
     const categories = mainEl.appendChild(this._dom.createElement('div', 'lh-categories'));
@@ -317,7 +299,7 @@ export class ReportRenderer {
       ));
     }
 
-    categoryRenderer.injectFinalScreenshot(categories, report.audits, scoreScale);
+    categoryRenderer.injectFinalScreenshot(categories, report.audits, scoreScaleEl);
 
     const reportFragment = this._dom.createFragment();
     reportFragment.append(this._dom.createComponent('styles'));
