@@ -242,7 +242,7 @@ export class DOM {
    * @return {boolean}
    */
   isDevTools() {
-    return !!this._document.querySelector('.lh-devtools');
+    return !!this.rootEl.matches('.lh-root--devtools');
   }
 
   /**

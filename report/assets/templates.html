@@ -172,11 +172,6 @@ limitations under the License.
       pointer-events: none;
     }
 
-    .lh-devtools .lh-sticky-header {
-      /* The report within DevTools is placed in a container with overflow, which changes the placement of this header unless we change `position` to `sticky.` */
-      position: sticky;
-    }
-
     .lh-sticky-header--visible {
       display: grid;
       grid-auto-flow: column;
@@ -274,7 +269,7 @@ limitations under the License.
     .lh-tools__button svg {
       fill: var(--tools-icon-color);
     }
-    .lh-dark .lh-tools__button svg {
+    .lh-vars--dark .lh-tools__button svg {
       filter: invert(1);
     }
     .lh-tools__button.lh-active + .lh-tools__dropdown {
@@ -509,9 +504,9 @@ limitations under the License.
 <template id="footer">
   <footer class="lh-footer">
   <style>
-    .lh-footer > * {
+    .lh-footer {
       padding: var(--footer-padding-vertical) calc(var(--default-padding) * 2);
-      max-width: var(--report-content-width);
+      max-width: var(--report-content-max-width);
       margin: 0 auto;
     }
     .lh-footer .lh-generated {
@@ -580,7 +575,7 @@ limitations under the License.
     .lh-gauge--pwa__logo--secondary-color {
       fill: #3D3D3D;
     }
-    .lh-dark .lh-gauge--pwa__logo--secondary-color {
+    .lh-vars--dark .lh-gauge--pwa__logo--secondary-color {
       fill: #D8B6B6;
     }
 

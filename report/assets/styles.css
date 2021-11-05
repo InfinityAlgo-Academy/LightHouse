@@ -77,13 +77,12 @@
   --audit-description-padding-left: calc(var(--score-icon-size) + var(--score-icon-margin-left) + var(--score-icon-margin-right));
   --audit-explanation-line-height: 16px;
   --audit-group-margin-bottom: calc(var(--default-padding) * 6);
-  --audit-group-padding-vertical: 8px;
   --audit-margin-horizontal: 5px;
-  --audit-padding-vertical: 8px;
-  --category-padding: calc(var(--default-padding) * 6) calc(var(--default-padding) * 4) calc(var(--default-padding) * 4);
+  --category-padding: calc(var(--default-padding) * 6) var(--edge-gap-padding) calc(var(--default-padding) * 4);
   --chevron-line-stroke: var(--color-gray-600);
   --chevron-size: 12px;
   --default-padding: 8px;
+  --edge-gap-padding: calc(var(--default-padding) * 4);
   --env-item-background-color: var(--color-gray-100);
   --env-item-font-size: 28px;
   --env-item-line-height: 36px;
@@ -124,11 +123,12 @@
   --report-icon-size: var(--score-icon-background-size);
   --report-line-height: 24px;
   --report-line-height-secondary: 20px;
-  --report-min-width: 360px;
   --report-monospace-font-size: calc(var(--report-font-size) * 0.85);
   --report-text-color-secondary: var(--color-gray-800);
   --report-text-color: var(--color-gray-900);
-  --report-content-width: calc(60 * var(--report-font-size)); /* defaults to 840px */
+  --report-content-max-width: calc(60 * var(--report-font-size)); /* defaults to 840px */
+  --report-content-min-width: 360px;
+  --report-content-max-width-minus-edge-gap: calc(var(--report-content-max-width) - var(--edge-gap-padding) * 2);
   --score-container-padding: 8px;
   --score-icon-background-size: 24px;
   --score-icon-margin-left: 6px;
@@ -175,7 +175,7 @@
 }
 
 @media not print {
-  .lh-dark {
+  .lh-vars--dark {
     /* Pallete */
     --color-gray-200: var(--color-gray-800);
     --color-gray-300: #616161;
@@ -246,13 +246,11 @@
   }
 }
 
-.lh-vars.lh-devtools {
+.lh-vars.lh-vars--dense {
   --audit-explanation-line-height: 14px;
   --audit-group-margin-bottom: 20px;
-  --audit-group-padding-vertical: 12px;
-  --audit-padding-vertical: 4px;
   --category-padding: 12px;
-  --default-padding: 12px;
+  --default-padding: 4px;
   --env-name-min-width: 120px;
   --footer-padding-vertical: 8px;
   --gauge-circle-size-big: 72px;
@@ -278,26 +276,29 @@
   --section-padding-vertical: 8px;
 }
 
-.lh-devtools {
+.lh-root--devtools {
   height: 100%;
 }
-.lh-devtools img {
+.lh-root--devtools img {
   /* Override devtools default 'min-width: 0' so svg without size in a flexbox isn't collapsed. */
   min-width: auto;
 }
-.lh-devtools .lh-main {
+.lh-root--devtools .lh-main {
   overflow-y: scroll;
   height: calc(100% - var(--topbar-height));
 }
 @media print {
-  .lh-devtools .lh-main {
+  .lh-root--devtools .lh-main {
     overflow: unset;
   }
 }
-.lh-devtools .lh-sticky-header {
+.lh-root--devtools .lh-sticky-header {
   /* This is normally the height of the topbar, but we want it to stick to the top of our scroll container .lh-main` */
   top: 0;
+  /* The report within DevTools is placed in a container with overflow, which changes the placement of this header unless we change `position` to `sticky.` */
+  position: sticky;
 }
+
 
 @keyframes fadeIn {
   0% { opacity: 0;}
@@ -311,7 +312,7 @@
   box-sizing: border-box;
 }
 
-.lh-topbar, .lh-header, .lh-categories, .lh-footer {
+.lh-root {
   font-family: var(--report-font-family);
   font-size: var(--report-font-size);
   line-height: var(--report-line-height);
@@ -322,20 +323,20 @@
 .lh-root :focus {
     outline: -webkit-focus-ring-color auto 3px;
 }
-.lh-categories summary:focus {
+.lh-root summary:focus {
     outline: none;
     box-shadow: 0 0 0 1px hsl(217, 89%, 61%);
 }
 
-.lh-categories [hidden] {
+.lh-root [hidden] {
   display: none !important;
 }
 
-.lh-categories pre {
+.lh-root pre {
   margin: 0;
 }
 
-.lh-categories details > summary {
+.lh-root details > summary {
   cursor: pointer;
 }
 
@@ -425,7 +426,7 @@
 .lh-report-icon:hover::before {
   opacity: 1;
 }
-.lh-dark .lh-report-icon::before {
+.lh-vars--dark .lh-report-icon::before {
   filter: invert(1);
 }
 .lh-report-icon--print::before {
@@ -1051,7 +1052,7 @@
 }
 
 .lh-audit-explanation {
-  margin: var(--audit-padding-vertical) 0 calc(var(--audit-padding-vertical) / 2) var(--audit-margin-horizontal);
+  margin: var(--default-padding) 0 calc(var(--default-padding) / 2) var(--audit-margin-horizontal);
   line-height: var(--audit-explanation-line-height);
   display: inline-block;
 }
@@ -1072,10 +1073,6 @@
   word-wrap: break-word;
 }
 
-.lh-categories {
-  min-width: var(--report-min-width);
-}
-
 .lh-exception {
   font-size: large;
 }
@@ -1089,7 +1086,7 @@
 .lh-warnings {
   --item-margin: calc(var(--report-line-height) / 6);
   color: var(--color-average-secondary);
-  margin: var(--audit-padding-vertical) 0;
+  margin: var(--default-padding) 0;
   padding: var(--default-padding)
     var(--default-padding)
     var(--default-padding)
@@ -1105,8 +1102,7 @@
   color: var(--toplevel-warning-text-color);
   margin-left: auto;
   margin-right: auto;
-  --content-width-minus-category-padding-sides: calc(var(--report-content-width) - calc(var(--default-padding) * 4) * 2);
-  max-width: var(--content-width-minus-category-padding-sides);
+  max-width: var(--report-content-max-width-minus-edge-gap);
   padding: var(--toplevel-warning-padding);
   border-radius: 8px;
 }
@@ -1398,7 +1394,8 @@
 
 .lh-category {
   padding: var(--category-padding);
-  max-width: var(--report-content-width);
+  max-width: var(--report-content-max-width);
+  min-width: var(--report-content-min-width);
   margin: 0 auto;
 
   --sticky-header-height: calc(var(--gauge-circle-size-sm) + var(--score-container-padding) * 2);
