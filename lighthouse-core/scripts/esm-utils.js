@@ -15,7 +15,7 @@ const require = module.createRequire(import.meta.url);
  * Commonjs equivalent of `require.resolve`.
  * @param {string} packageName
  */
-export function resolveModulePath(packageName) {
+function resolveModulePath(packageName) {
   return require.resolve(packageName);
 }
 
@@ -23,9 +23,14 @@ export function resolveModulePath(packageName) {
  * Commonjs equivalent of `require.resolve`.
  * @param {ImportMeta} importMeta
  */
-export function createCommonjsRefs(importMeta) {
+function createCommonjsRefs(importMeta) {
   const require = module.createRequire(importMeta.url);
   const filename = url.fileURLToPath(importMeta.url);
   const dirname = path.dirname(filename);
   return {require, __filename: filename, __dirname: dirname};
 }
+
+export {
+  resolveModulePath,
+  createCommonjsRefs,
+};
