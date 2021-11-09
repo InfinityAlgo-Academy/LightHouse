@@ -175,7 +175,7 @@ async function potentiallyKillChrome(launchedChrome) {
   /** @type {NodeJS.Timeout} */
   let timeout;
   const timeoutPromise = new Promise((_, reject) => {
-    timeout = setTimeout(() => reject(new Error('Timed out waiting to kill Chrome')), 5000);
+    timeout = setTimeout(reject, 5000, new Error('Timed out waiting to kill Chrome'));
   });
 
   return Promise.race([
