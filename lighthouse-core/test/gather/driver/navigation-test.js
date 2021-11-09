@@ -59,7 +59,7 @@ describe('.gotoURL', () => {
     targetManagerMock.reset();
   });
 
-  it.only('will track redirects through gotoURL load with warning', async () => {
+  it('will track redirects through gotoURL load with warning', async () => {
     mockDriver.defaultSession.on = mockDriver.defaultSession.once = createMockOnceFn();
 
     const url = 'http://example.com';
