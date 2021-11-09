@@ -88,7 +88,7 @@ describe('Lighthouse Viewer', () => {
       await viewerPage.goto(viewerUrl, {waitUntil: 'networkidle2', timeout: 30000});
       const fileInput = await viewerPage.$('#hidden-file-input');
       await fileInput.uploadFile(sampleLhr);
-      await viewerPage.waitForSelector('.lh-container', {timeout: 30000});
+      await viewerPage.waitForSelector('.lh-categories', {timeout: 30000});
     });
 
     it('should load with no errors', async () => {
@@ -196,7 +196,7 @@ describe('Lighthouse Viewer', () => {
     const badPsiResponse = {
       status: 500,
       contentType: 'application/json',
-      body: JSON.stringify({error: {message: 'Test error'}}),
+      body: JSON.stringify({error: {message: 'badPsiResponse error'}}),
       headers: {
         'Access-Control-Allow-Origin': '*',
       },
@@ -332,11 +332,11 @@ describe('Lighthouse Viewer', () => {
       // Wait for error.
       const errorEl = await viewerPage.waitForSelector('#lh-log.lh-show');
       const errorMessage = await viewerPage.evaluate(errorEl => errorEl.textContent, errorEl);
-      expect(errorMessage).toBe('Test error');
+      expect(errorMessage).toBe('badPsiResponse error');
 
       // One error.
       expect(pageErrors).toHaveLength(1);
-      expect(pageErrors[0].message).toContain('Test error');
+      expect(pageErrors[0].message).toContain('badPsiResponse error');
     });
   });
 });

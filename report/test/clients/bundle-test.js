@@ -9,6 +9,7 @@
 import fs from 'fs';
 
 import jsdom from 'jsdom';
+import {jest} from '@jest/globals';
 
 import * as lighthouseRenderer from '../../clients/bundle.js';
 import {LH_ROOT} from '../../../root.js';
@@ -22,15 +23,22 @@ const sampleResultsStr =
 describe('lighthouseRenderer bundle', () => {
   let document;
   beforeAll(() => {
+    global.console.warn = jest.fn();
+
     const {window} = new jsdom.JSDOM();
     document = window.document;
 
     global.window = global.self = window;
+    global.window.requestAnimationFrame = fn => fn();
     // Stub out matchMedia for Node.
     global.self.matchMedia = function() {
       return {
         addListener: function() {},
       };
+    };
+    global.window.ResizeObserver = class ResizeObserver {
+      observe() { }
+      unobserve() { }
     };
   });
 

@@ -38,6 +38,7 @@
   --color-blue-200: #90CAF9;
   --color-blue-900: #0D47A1;
   --color-blue-A700: #2962FF;
+  --color-blue-primary: #06f;
   --color-cyan-500: #00BCD4;
   --color-gray-100: #F5F5F5;
   --color-gray-300: #CFCFCF;
@@ -50,14 +51,14 @@
   --color-gray-800: #424242;
   --color-gray-900: #212121;
   --color-gray: #000000;
-  --color-green-700: #018642;
-  --color-green: #0CCE6B;
+  --color-green-700: #080;
+  --color-green: #0c6;
   --color-lime-400: #D3E156;
   --color-orange-50: #FFF3E0;
-  --color-orange-700: #D04900;
-  --color-orange: #FFA400;
-  --color-red-700: #EB0F00;
-  --color-red: #FF4E42;
+  --color-orange-700: #C33300;
+  --color-orange: #fa3;
+  --color-red-700: #c00;
+  --color-red: #f33;
   --color-teal-600: #00897B;
   --color-white: #FFFFFF;
 
@@ -75,81 +76,81 @@
   /* Component variables */
   --audit-description-padding-left: calc(var(--score-icon-size) + var(--score-icon-margin-left) + var(--score-icon-margin-right));
   --audit-explanation-line-height: 16px;
-  --audit-group-margin-bottom: 40px;
+  --audit-group-margin-bottom: calc(var(--default-padding) * 6);
   --audit-group-padding-vertical: 8px;
   --audit-margin-horizontal: 5px;
   --audit-padding-vertical: 8px;
-  --category-padding: 40px;
+  --category-padding: calc(var(--default-padding) * 6) calc(var(--default-padding) * 4) calc(var(--default-padding) * 4);
   --chevron-line-stroke: var(--color-gray-600);
   --chevron-size: 12px;
-  --default-padding: 12px;
+  --default-padding: 8px;
   --env-item-background-color: var(--color-gray-100);
   --env-item-font-size: 28px;
   --env-item-line-height: 36px;
   --env-item-padding: 10px 0px;
   --env-name-min-width: 220px;
   --footer-padding-vertical: 16px;
-  --gauge-circle-size-big: 112px;
-  --gauge-circle-size: 80px;
-  --gauge-circle-size-sm: 36px;
-  --gauge-label-font-size-big: 28px;
-  --gauge-label-font-size: 20px;
-  --gauge-label-line-height-big: 36px;
-  --gauge-label-line-height: 26px;
+  --gauge-circle-size-big: 96px;
+  --gauge-circle-size: 48px;
+  --gauge-circle-size-sm: 32px;
+  --gauge-label-font-size-big: 18px;
+  --gauge-label-font-size: var(--report-font-size-secondary);
+  --gauge-label-line-height-big: 24px;
+  --gauge-label-line-height: var(--report-line-height-secondary);
   --gauge-percentage-font-size-big: 38px;
-  --gauge-percentage-font-size: 28px;
-  --gauge-wrapper-width: 148px;
+  --gauge-percentage-font-size: var(--report-font-size-secondary);
+  --gauge-wrapper-width: 120px;
   --header-line-height: 24px;
   --highlighter-background-color: var(--report-text-color);
   --icon-square-size: calc(var(--score-icon-size) * 0.88);
   --image-preview-size: 48px;
+  --link-color: var(--color-blue-primary);
   --locale-selector-background-color: var(--color-white);
   --metric-toggle-lines-fill: #7F7F7F;
-  --metric-value-font-size: 28px;
+  --metric-value-font-size: calc(var(--report-font-size) * 1.8);
   --metrics-toggle-background-color: var(--color-gray-200);
   --plugin-badge-background-color: var(--color-white);
   --plugin-badge-size-big: calc(var(--gauge-circle-size-big) / 2.7);
   --plugin-badge-size: calc(var(--gauge-circle-size) / 2.7);
   --plugin-icon-size: 65%;
-  --pwa-icon-margin: 0 6px 0 -2px;
+  --pwa-icon-margin: 0 var(--default-padding);
   --pwa-icon-size: var(--topbar-logo-size);
   --report-background-color: #fff;
   --report-border-color-secondary: #ebebeb;
   --report-font-family-monospace: 'Roboto Mono', 'Menlo', 'dejavu sans mono', 'Consolas', 'Lucida Console', monospace;
   --report-font-family: Roboto, Helvetica, Arial, sans-serif;
-  --report-font-size: 16px;
+  --report-font-size: 14px;
+  --report-font-size-secondary: 12px;
   --report-icon-size: var(--score-icon-background-size);
   --report-line-height: 24px;
-  --report-min-width: 400px;
+  --report-line-height-secondary: 20px;
+  --report-min-width: 360px;
   --report-monospace-font-size: calc(var(--report-font-size) * 0.85);
   --report-text-color-secondary: var(--color-gray-800);
   --report-text-color: var(--color-gray-900);
-  --report-width: calc(60 * var(--report-font-size));
+  --report-content-width: calc(60 * var(--report-font-size)); /* defaults to 840px */
   --score-container-padding: 8px;
   --score-icon-background-size: 24px;
-  --score-icon-margin-left: 4px;
-  --score-icon-margin-right: 12px;
+  --score-icon-margin-left: 6px;
+  --score-icon-margin-right: 14px;
   --score-icon-margin: 0 var(--score-icon-margin-right) 0 var(--score-icon-margin-left);
   --score-icon-size: 12px;
   --score-icon-size-big: 16px;
-  --scores-container-padding: 20px 0 20px 0;
-  --scorescale-height: 6px;
-  --scorescale-width: 18px;
   --screenshot-overlay-background: rgba(0, 0, 0, 0.3);
-  --section-padding-vertical: 12px;
+  --section-padding-vertical: calc(var(--default-padding) * 6);
   --snippet-background-color: var(--color-gray-50);
   --snippet-color: #0938C2;
   --sparkline-height: 5px;
   --stackpack-padding-horizontal: 10px;
   --sticky-header-background-color: var(--report-background-color);
-  --table-higlight-background-color: hsla(0, 0%, 75%, 0.1);
+  --table-higlight-background-color: hsla(210, 17%, 77%, 0.1);
   --tools-icon-color: var(--color-gray-600);
-  --topbar-background-color: var(--color-gray-100);
+  --topbar-background-color: var(--color-white);
   --topbar-height: 32px;
   --topbar-logo-size: 24px;
   --topbar-padding: 0 8px;
-  --toplevel-warning-background-color: var(--color-orange-50);
-  --toplevel-warning-message-text-color: #BD4200;
+  --toplevel-warning-background-color: hsla(30, 100%, 75%, 10%);
+  --toplevel-warning-message-text-color: var(--color-average-secondary);
   --toplevel-warning-padding: 18px;
   --toplevel-warning-text-color: var(--report-text-color);
 
@@ -174,7 +175,7 @@
 }
 
 @media not print {
-  .lh-vars.lh-dark {
+  .lh-dark {
     /* Pallete */
     --color-gray-200: var(--color-gray-800);
     --color-gray-300: #616161;
@@ -193,6 +194,7 @@
 
     /* Component variables */
     --env-item-background-color: #393535;
+    --link-color: var(--color-blue-200);
     --locale-selector-background-color: var(--color-gray-200);
     --plugin-badge-background-color: var(--color-gray-800);
     --report-background-color: var(--color-gray-900);
@@ -201,9 +203,9 @@
     --report-text-color: var(--color-gray-100);
     --snippet-color: var(--color-cyan-500);
     --topbar-background-color: var(--color-gray);
-  	--toplevel-warning-background-color: #544B40;
-  	--toplevel-warning-message-text-color: var(--color-orange-700);
-	--toplevel-warning-text-color: var(--color-gray-100);
+    --toplevel-warning-background-color: hsl(33deg 14% 18%);
+    --toplevel-warning-message-text-color: var(--color-orange-700);
+    --toplevel-warning-text-color: var(--color-gray-100);
 
     /* SVGs */
     --plugin-icon-url: var(--plugin-icon-url-dark);
@@ -215,7 +217,7 @@
 @media only screen and (max-width: 480px) {
   .lh-vars {
     --audit-group-margin-bottom: 20px;
-    --category-padding: 24px;
+    --category-padding: 12px;
     --env-name-min-width: 120px;
     --gauge-circle-size-big: 96px;
     --gauge-circle-size: 72px;
@@ -304,7 +306,6 @@
 
 .lh-root *, .lh-root *::before, .lh-root *::after {
   box-sizing: border-box;
-  -webkit-font-smoothing: antialiased;
 }
 
 .lh-root {
@@ -367,7 +368,7 @@
 .lh-warnings a,
 .lh-footer a,
 .lh-table-column--link a {
-  color: var(--color-informative);
+  color: var(--link-color);
 }
 
 .lh-audit__description, .lh-audit__stackpack {
@@ -379,7 +380,6 @@
 }
 
 .lh-details {
-  font-size: var(--report-font-size);
   margin-top: var(--default-padding);
   margin-bottom: var(--default-padding);
   margin-left: var(--audit-description-padding-left);
@@ -393,7 +393,7 @@
 }
 
 .lh-audit__stackpack__img {
-  max-width: 50px;
+  max-width: 30px;
   margin-right: var(--default-padding)
 }
 
@@ -412,7 +412,7 @@
 
 .lh-report-icon::before {
   content: "";
-  margin-right: 5px;
+  margin: 4px;
   background-repeat: no-repeat;
   width: var(--report-icon-size);
   height: var(--report-icon-size);
@@ -474,21 +474,21 @@
 .lh-buttons {
   display: flex;
   flex-wrap: wrap;
+  margin: var(--default-padding) 0;
 }
 .lh-button {
-  margin: 10px;
-  height: 30px;
-  border: 1px solid var(--color-gray-600);
-  border-radius: 4px;
-  font-weight: bold;
-  color: rgb(26, 115, 232);
+  height: 32px;
+  border: 1px solid var(--report-border-color-secondary);
+  border-radius: 3px;
+  color: var(--link-color);
   background-color: var(--report-background-color);
+  padding: var(--default-padding);
+  font-size: var(--report-font-size-secondary);
+  line-height: var(--report-line-height-secondary);
 }
+
 .lh-button:first-of-type {
   margin-left: 0;
-}
-.lh-dark .lh-button {
-  color: var(--color-blue-200);
 }
 
 /* Node */
@@ -572,8 +572,8 @@
 }
 
 .lh-category-header__description  {
-  font-size: var(--report-font-size);
   text-align: center;
+  color: var(--color-gray-700);
   margin: 0px auto;
   max-width: 400px;
 }
@@ -610,8 +610,7 @@
 .lh-audit__header {
   display: flex;
   align-items: center;
-  font-weight: 500;
-  padding: var(--audit-padding-vertical) 0;
+  padding: var(--default-padding);
 }
 
 .lh-audit--load-opportunity .lh-audit__header {
@@ -620,8 +619,12 @@
 
 
 .lh-metricfilter {
-  text-align: right;
-  margin-top: var(--default-padding);
+  display: grid;
+  justify-content: end;
+  align-items: center;
+  grid-auto-flow: column;
+  gap: 4px;
+  color: var(--color-gray-700);
 }
 
 .lh-metricfilter__radio {
@@ -633,34 +636,29 @@
 }
 
 .lh-metricfilter__label {
-  border: solid 1px var(--color-gray-400);
+  display: inline-flex;
+  padding: 0 4px;
+  height: 16px;
+  text-decoration: underline;
   align-items: center;
-  justify-content: center;
-  padding: 2px 5px;
-  width: 50%;
-  height: 28px;
   cursor: pointer;
   font-size: 90%;
 }
 
-.lh-metricfilter__label:first-of-type {
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
-  margin-left: 5px;
-}
-.lh-metricfilter__label:last-of-type {
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
-}
-
 .lh-metricfilter__label--active {
-  background: var(--color-blue-A700);
+  background: var(--color-blue-primary);
   color: var(--color-white);
+  border-radius: 3px;
+  text-decoration: none;
 }
 /* Give the 'All' choice a more muted display */
 .lh-metricfilter__label--active[for="metric-All"] {
   background-color: var(--color-blue-200) !important;
   color: black !important;
+}
+
+.lh-metricfilter__text {
+  margin-right: 8px;
 }
 
 /* If audits are filtered, hide the itemcount for Passed Audits… */
@@ -674,14 +672,12 @@
 }
 
 /* We want to hide the browser's default arrow marker on summary elements. Admittedly, it's complicated. */
-.lh-audit-group > summary,
-.lh-expandable-details > summary {
+.lh-root details > summary {
   /* Blink 89+ and Firefox will hide the arrow when display is changed from (new) default of `list-item` to block.  https://chromestatus.com/feature/6730096436051968*/
   display: block;
 }
 /* Safari and Blink <=88 require using the -webkit-details-marker selector */
-.lh-audit-group > summary::-webkit-details-marker,
-.lh-expandable-details > summary::-webkit-details-marker {
+.lh-root details > summary::-webkit-details-marker {
   display: none;
 }
 
@@ -699,21 +695,10 @@
   border-top: 1px solid var(--report-border-color-secondary);
 }
 
-@media screen and (min-width: 640px) {
-  .lh-metric:nth-child(3n+3) {
-    border-bottom: 1px solid var(--report-border-color-secondary);
-  }
+.lh-metric:nth-child(3n+3) {
+  border-bottom: 1px solid var(--report-border-color-secondary);
 }
 
-@media screen and (max-width: 640px) {
-  .lh-metrics-container {
-    display: block;
-  }
-
-  .lh-metric:nth-last-child(-n+1) {
-    border-bottom: 1px solid var(--report-border-color-secondary);
-  }
-}
 
 .lh-metric__innerwrap {
   display: grid;
@@ -723,7 +708,7 @@
    */
   grid-template-columns: calc(var(--score-icon-size) + var(--score-icon-margin-left) + var(--score-icon-margin-right)) 1fr;
   align-items: center;
-  padding: 10px 0;
+  padding: var(--default-padding);
 }
 
 .lh-metric__details {
@@ -732,12 +717,6 @@
 
 .lh-metric__title {
   flex: 1;
-  font-weight: 500;
-}
-
-.lh-metrics__disclaimer {
-  color: var(--color-gray-600);
-  margin: var(--section-padding-vertical) 0;
 }
 
 .lh-calclink {
@@ -755,12 +734,20 @@
   font-size: var(--metric-value-font-size);
   margin: calc(var(--default-padding) / 2) 0;
   white-space: nowrap; /* No wrapping between metric value and the icon */
-  font-weight: 500;
   grid-column-start: 2;
 }
 
-/* Change the grid to 3 columns for narrow viewport. */
+
 @media screen and (max-width: 535px) {
+  .lh-metrics-container {
+    display: block;
+  }
+
+  .lh-metric:nth-last-child(-n+1) {
+    border-bottom: 1px solid var(--report-border-color-secondary);
+  }
+
+  /* Change the grid to 3 columns for narrow viewport. */
   .lh-metric__innerwrap {
   /**
    * Icon -- Metric Name -- Metric Value
@@ -779,62 +766,36 @@
   display: block;
 }
 
+/* TODO get rid of the SVGS and clean up these some more */
 .lh-metrics-toggle__input {
-  cursor: pointer;
   opacity: 0;
   position: absolute;
   right: 0;
-  width: 74px;
-  height: 28px;
-  top: -3px;
+  top: 0px;
 }
-.lh-metrics-toggle__label {
-  display: flex;
-  background-color: #eee;
-  border-radius: 20px;
-  overflow: hidden;
-  position: absolute;
-  right: 0;
-  top: -3px;
-  pointer-events: none;
+
+.lh-metrics-toggle__input + div > label > .lh-metrics-toggle__labeltext--hide,
+.lh-metrics-toggle__input:checked + div > label > .lh-metrics-toggle__labeltext--show {
+  display: none;
 }
-.lh-metrics-toggle__input:focus + label {
+.lh-metrics-toggle__input:checked + div > label > .lh-metrics-toggle__labeltext--hide {
+  display: inline;
+}
+.lh-metrics-toggle__input:focus + div > label {
   outline: -webkit-focus-ring-color auto 3px;
 }
-.lh-metrics-toggle__icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2px 5px;
-  width: 50%;
-  height: 28px;
-}
-.lh-metrics-toggle__input:not(:checked) + label .lh-metrics-toggle__icon--less,
-.lh-metrics-toggle__input:checked + label .lh-metrics-toggle__icon--more {
-  background-color: var(--color-blue-A700);
-  --metric-toggle-lines-fill: var(--color-white);
-}
-.lh-metrics-toggle__lines {
-  fill: var(--metric-toggle-lines-fill);
-}
 
-.lh-metrics-toggle__label  {
-  background-color: var(--metrics-toggle-background-color);
-}
-
-.lh-metrics-toggle__label .lh-metrics-toggle__icon--less {
-  padding-left: 8px;
-}
-.lh-metrics-toggle__label .lh-metrics-toggle__icon--more {
-  padding-right: 8px;
+.lh-metrics-toggle__label {
+  cursor: pointer;
+  font-size: var(--report-font-size-secondary);
+  line-height: var(--report-line-height-secondary);
+  color: var(--color-gray-700);
 }
 
 /* Pushes the metric description toggle button to the right. */
 .lh-audit-group--metrics .lh-audit-group__header {
   display: flex;
-}
-.lh-audit-group--metrics .lh-audit-group__header span.lh-audit-group__title {
-  flex: 1;
+  justify-content: space-between;
 }
 
 .lh-metric__icon,
@@ -948,10 +909,11 @@
 }
 
 .lh-filmstrip {
-  display: flex;
-  flex-direction: row;
+  display: grid;
   justify-content: space-between;
   padding-bottom: var(--default-padding);
+  width: 100%;
+  grid-template-columns: repeat(auto-fit, 60px);
 }
 
 .lh-filmstrip__frame {
@@ -963,20 +925,6 @@
   border: 1px solid var(--report-border-color-secondary);
   max-height: 100px;
   max-width: 60px;
-}
-
-@media screen and (max-width: 750px) {
-  .lh-filmstrip {
-    flex-wrap: wrap;
-  }
-  .lh-filmstrip__frame {
-    width: 20%;
-    margin-bottom: 5px;
-  }
-  .lh-filmstrip__thumbnail {
-    display: block;
-    margin: auto;
-  }
 }
 
 /* Audit */
@@ -1030,9 +978,9 @@
   text-align: right;
 }
 
-.lh-audit-group--budgets .lh-table {
+.lh-audit-group--budgets .lh-details--budget {
   width: 100%;
-  margin: 16px 0px 16px 0px;
+  margin: 0 0 var(--default-padding);
 }
 
 .lh-audit-group--pwa-installable .lh-audit-group__header::before {
@@ -1058,61 +1006,46 @@
 .lh-audit-group__summary {
   display: flex;
   justify-content: space-between;
-  margin-top: calc(var(--category-padding) * 1.5);
-  margin-bottom: var(--category-padding);
+  align-items: center;
 }
 
-.lh-audit-group__itemcount {
-  color: var(--color-gray-600);
-  font-weight: bold;
-}
 .lh-audit-group__header .lh-chevron {
   margin-top: calc((var(--report-line-height) - 5px) / 2);
 }
 
 .lh-audit-group__header {
-  font-size: var(--report-font-size);
-  margin: 0 0 var(--audit-group-padding-vertical);
-  /* When the header takes 100% width, the chevron becomes small. */
-  max-width: calc(100% - var(--chevron-size));
-}
-/* max-width makes the metric toggle not flush. metrics doesn't have a chevron so unset. */
-.lh-audit-group--metrics .lh-audit-group__header {
-  max-width: unset;
+  letter-spacing: 0.8px;
+  padding: var(--default-padding);
+  padding-left: 0;
 }
 
-.lh-audit-group__header span.lh-audit-group__title {
-  font-weight: bold;
+.lh-audit-group__header, .lh-audit-group__summary {
+  font-size: var(--report-font-size-secondary);
+  line-height: var(--report-line-height-secondary);
+  color: var(--color-gray-700);
 }
 
-.lh-audit-group__header span.lh-audit-group__itemcount {
-  font-weight: bold;
-  color: var(--color-gray-600);
-}
-
-.lh-audit-group__header span.lh-audit-group__description {
+.lh-audit-group__title {
+  text-transform: uppercase;
   font-weight: 500;
+}
+
+.lh-audit-group__itemcount {
   color: var(--color-gray-600);
 }
-.lh-audit-group__header span.lh-audit-group__description::before {
-  content: '—';
-  margin: 0px var(--audit-margin-horizontal);
+
+.lh-audit-group__footer {
+  color: var(--color-gray-600);
+  display: block;
+  margin-top: var(--default-padding);
 }
 
-.lh-clump > .lh-audit-group__header,
-.lh-audit-group--diagnostics .lh-audit-group__header,
-.lh-audit-group--load-opportunities .lh-audit-group__header,
-.lh-audit-group--metrics .lh-audit-group__header,
-.lh-audit-group--pwa-installable .lh-audit-group__header,
-.lh-audit-group--pwa-optimized .lh-audit-group__header {
-  margin-top: var(--audit-group-padding-vertical);
-}
-
-/* Our report design omits the header 'Metrics', as they're clearly the metrics.
-   It's more straightforward to hide w/ CSS vs change categoryRenderer.renderAuditGroup for this case. */
-.lh-audit-group--metrics > .lh-audit-group__header {
-  /* Also, it's vis hidden (and not display:none) because of spacing regarding the pill. */
-  visibility: hidden;
+.lh-details,
+.lh-category-header__description,
+.lh-load-opportunity__header,
+.lh-audit-group__footer {
+  font-size: var(--report-font-size-secondary);
+  line-height: var(--report-line-height-secondary);
 }
 
 .lh-audit-explanation {
@@ -1153,9 +1086,13 @@
 
 .lh-warnings {
   --item-margin: calc(var(--report-line-height) / 6);
-  color: var(--color-average);
+  color: var(--color-average-secondary);
   margin: var(--audit-padding-vertical) 0;
-  padding: calc(var(--audit-padding-vertical) / 2) calc(var(--audit-description-padding-left));
+  padding: var(--default-padding)
+    var(--default-padding)
+    var(--default-padding)
+    calc(var(--audit-description-padding-left));
+  background-color: var(--toplevel-warning-background-color);
 }
 .lh-warnings span {
   font-weight: bold;
@@ -1166,8 +1103,8 @@
   color: var(--toplevel-warning-text-color);
   margin-left: auto;
   margin-right: auto;
-  max-width: calc(var(--report-width) - var(--category-padding) * 2);
-  background-color: var(--toplevel-warning-background-color);
+  --content-width-minus-category-padding-sides: calc(var(--report-content-width) - calc(var(--default-padding) * 4) * 2);
+  max-width: var(--content-width-minus-category-padding-sides);
   padding: var(--toplevel-warning-padding);
   border-radius: 8px;
 }
@@ -1200,19 +1137,19 @@
 /* Gauge */
 
 .lh-gauge__wrapper--pass {
-  color: var(--color-pass);
+  color: var(--color-pass-secondary);
   fill: var(--color-pass);
   stroke: var(--color-pass);
 }
 
 .lh-gauge__wrapper--average {
-  color: var(--color-average);
+  color: var(--color-average-secondary);
   fill: var(--color-average);
   stroke: var(--color-average);
 }
 
 .lh-gauge__wrapper--fail {
-  color: var(--color-fail);
+  color: var(--color-fail-secondary);
   fill: var(--color-fail);
   stroke: var(--color-fail);
 }
@@ -1231,7 +1168,7 @@
   display: inline-block;
 }
 .lh-fraction__wrapper--pass .lh-fraction__content {
-  color: var(--color-pass);
+  color: var(--color-pass-secondary);
 }
 .lh-fraction__wrapper--pass .lh-fraction__background {
   background-color: var(--color-pass);
@@ -1241,11 +1178,9 @@
   border-radius: 50%;
 }
 .lh-fraction__wrapper--average .lh-fraction__content {
-  color: var(--color-average);
+  color: var(--color-average-secondary);
 }
-.lh-fraction__wrapper--average .lh-fraction__background {
-  background-color: var(--color-average);
-}
+.lh-fraction__wrapper--average .lh-fraction__background,
 .lh-fraction__wrapper--average .lh-fraction__content::before {
   background-color: var(--color-average);
 }
@@ -1392,6 +1327,7 @@
 .lh-gauge__label,
 .lh-fraction__label {
   font-size: var(--gauge-label-font-size);
+  font-weight: 500;
   line-height: var(--gauge-label-line-height);
   margin-top: 10px;
   text-align: center;
@@ -1417,18 +1353,34 @@
 
 .lh-scorescale {
   display: inline-flex;
-  margin: 12px auto 0 auto;
-  border: 1px solid var(--color-gray-200);
-  border-radius: 20px;
-  padding: 8px 8px;
+
+  gap: calc(var(--default-padding) * 4);
+  margin: 16px auto 0 auto;
+  font-size: var(--report-font-size-secondary);
+  color: var(--color-gray-700);
+
 }
 
 .lh-scorescale-range {
   display: flex;
   align-items: center;
-  margin: 0 12px;
   font-family: var(--report-font-family-monospace);
   white-space: nowrap;
+}
+
+.lh-category-header__finalscreenshot .lh-scorescale {
+  border: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.lh-category-header__finalscreenshot .lh-scorescale-range {
+  font-family: unset;
+  font-size: 12px;
+}
+
+.lh-scorescale-wrap {
+  display: contents;
 }
 
 /* Hide category score gauages if it's a single category report */
@@ -1444,12 +1396,16 @@
 
 .lh-category {
   padding: var(--category-padding);
-  max-width: var(--report-width);
+  max-width: var(--report-content-width);
   margin: 0 auto;
 
   --sticky-header-height: calc(var(--gauge-circle-size-sm) + var(--score-container-padding) * 2);
   --topbar-plus-sticky-header: calc(var(--topbar-height) + var(--sticky-header-height));
   scroll-margin-top: var(--topbar-plus-sticky-header);
+
+  /* Faster recalc style & layout of the report. https://web.dev/content-visibility/ */
+  content-visibility: auto;
+  contain-intrinsic-size: 1000px;
 }
 
 .lh-category-wrapper {
@@ -1476,18 +1432,8 @@
   justify-items: center;
   align-items: center;
   gap: var(--report-line-height);
-}
-
-.lh-category-header__finalscreenshot .lh-scorescale {
-  border: 0;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-}
-
-.lh-category-header__finalscreenshot .lh-scorescale-range {
-  font-family: unset;
-  font-size: 12px;
+  min-height: 288px;
+  margin-bottom: var(--default-padding);
 }
 
 .lh-final-ss-image {
@@ -1497,6 +1443,7 @@
   border: 1px solid var(--color-gray-200);
   padding: 4px;
   border-radius: 3px;
+  display: block;
 }
 
 .lh-category-headercol--separator {
@@ -1505,7 +1452,7 @@
   height: var(--gauge-circle-size-big);
 }
 
-@media screen and (max-width: 535px) {
+@media screen and (max-width: 780px) {
   .lh-category-header__finalscreenshot {
     grid-template: 1fr 1fr / none
   }
@@ -1542,7 +1489,9 @@
 .lh-table {
   border-collapse: collapse;
   /* Can't assign padding to table, so shorten the width instead. */
-  width: calc(100% - var(--audit-description-padding-left));
+  width: calc(100% - var(--audit-description-padding-left) - var(--stackpack-padding-horizontal));
+  border: 1px solid var(--report-border-color-secondary);
+
 }
 
 .lh-table thead th {
@@ -1552,7 +1501,7 @@
   word-break: normal;
 }
 
-.lh-row--odd {
+.lh-row--even {
   background-color: var(--table-higlight-background-color);
 }
 .lh-row--hidden {
@@ -1561,13 +1510,7 @@
 
 .lh-table th,
 .lh-table td {
-  padding: 8px 6px;
-}
-.lh-table th:first-child {
-  padding-left: 0;
-}
-.lh-table th:last-child {
-  padding-right: 0;
+  padding: var(--default-padding);
 }
 
 .lh-table tr {
@@ -1601,7 +1544,6 @@
 
 .lh-table .lh-table-column--thumbnail {
   width: var(--image-preview-size);
-  padding: 0;
 }
 
 .lh-table-column--url {
@@ -1689,23 +1631,54 @@
  transition: transform 300ms, stroke 300ms;
 }
 
-.lh-audit-group > summary > .lh-audit-group__summary > .lh-chevron .lh-chevron__line-right,
-.lh-audit-group[open] > summary > .lh-audit-group__summary > .lh-chevron .lh-chevron__line-left,
-.lh-audit > .lh-expandable-details .lh-chevron__line-right,
-.lh-audit > .lh-expandable-details[open] .lh-chevron__line-left {
+.lh-expandable-details .lh-chevron__line-right,
+.lh-expandable-details[open] .lh-chevron__line-left {
  transform: rotate(var(--chevron-angle-right));
 }
 
-.lh-audit-group[open] > summary > .lh-audit-group__summary > .lh-chevron .lh-chevron__line-right,
-.lh-audit > .lh-expandable-details[open] .lh-chevron__line-right {
+.lh-expandable-details[open] .lh-chevron__line-right {
   transform: rotate(var(--chevron-angle));
 }
 
-.lh-audit-group[open] > summary > .lh-audit-group__summary > .lh-chevron .lh-chevron__lines,
-.lh-audit > .lh-expandable-details[open] .lh-chevron__lines {
+
+.lh-expandable-details[open]  .lh-chevron__lines {
  transform: translateY(calc(var(--chevron-size) * -1));
 }
 
+.lh-expandable-details[open] {
+  animation: 300ms openDetails forwards;
+  padding-bottom: var(--default-padding);
+}
+
+@keyframes openDetails {
+  from {
+    outline: 1px solid var(--report-background-color);
+  }
+  to {
+   outline: 1px solid;
+   box-shadow: 0 2px 4px rgba(0, 0, 0, .24);
+  }
+}
+
+@media screen and (max-width: 780px) {
+  /* no black outline if we're not confident the entire table can be displayed within bounds */
+  .lh-expandable-details[open] {
+    animation: none;
+  }
+}
+
+.lh-expandable-details[open] summary, details.lh-clump > summary {
+  border-bottom: 1px solid var(--report-border-color-secondary);
+}
+details.lh-clump[open] > summary {
+  border-bottom-width: 0;
+}
+
+
+
+details .lh-clump-toggletext--hide,
+details[open] .lh-clump-toggletext--show { display: none; }
+details[open] .lh-clump-toggletext--hide { display: block;}
 
 
 /* Tooltip */
@@ -1820,20 +1793,23 @@
 
 
 .lh-meta__items {
+  --meta-icon-size: calc(var(--report-icon-size) * 0.667);
+  padding: var(--default-padding);
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   background-color: var(--env-item-background-color);
   border-radius: 3px;
-  padding: 0;
-  font-size: 13px;
-  padding-bottom: calc(var(--default-padding) / 2);
+  margin: 0 0 var(--default-padding) 0;
+  font-size: 12px;
+  column-gap: var(--default-padding);
+  color: var(--color-gray-700);
 }
 
 .lh-meta__item {
   display: block;
   list-style-type: none;
   position: relative;
-  padding: calc(var(--default-padding) / 2) 0 0 calc(var(--default-padding) * 3);
+  padding: 0 0 0 calc(var(--meta-icon-size) + var(--default-padding) * 2);
   cursor: unset; /* disable pointer cursor from report-icon */
 }
 
@@ -1845,8 +1821,8 @@
 .lh-meta__item.lh-report-icon::before {
   position: absolute;
   left: var(--default-padding);
-  width: calc(var(--report-icon-size) * 0.8);
-  height: calc(var(--report-icon-size) * 0.8);
+  width: var(--meta-icon-size);
+  height: var(--meta-icon-size);
 }
 
 .lh-meta__item.lh-report-icon:hover::before {

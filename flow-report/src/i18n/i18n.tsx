@@ -31,23 +31,23 @@ function useLhrLocale() {
   };
 }
 
-export function useI18n() {
+function useI18n() {
   return useContext(I18nContext);
 }
 
-export function useLocalizedStrings() {
+function useLocalizedStrings() {
   const i18n = useI18n();
   return i18n.strings;
 }
 
-export function useStringFormatter() {
+function useStringFormatter() {
   const {locale} = useLhrLocale();
   return (str: string, values?: Record<string, string|number>) => {
     return formatMessage(str, values, locale);
   };
 }
 
-export const I18nProvider: FunctionComponent = ({children}) => {
+const I18nProvider: FunctionComponent = ({children}) => {
   const {locale, lhrStrings} = useLhrLocale();
 
   const i18n = useMemo(() => {
@@ -65,7 +65,6 @@ export const I18nProvider: FunctionComponent = ({children}) => {
 
     // Initialize renderer util i18n for strings rendered in wrapped components.
     // TODO: Don't attach global i18n to `Util`.
-    // @ts-ignore TS reports as read-only.
     Util.i18n = i18n;
 
     return i18n;
@@ -78,4 +77,9 @@ export const I18nProvider: FunctionComponent = ({children}) => {
   );
 };
 
-
+export {
+  useI18n,
+  useLocalizedStrings,
+  useStringFormatter,
+  I18nProvider,
+};

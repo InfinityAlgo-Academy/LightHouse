@@ -800,21 +800,6 @@
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "หลีกเลี่ยง DOM ที่มีขนาดใหญ่เกินไป"
   },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnFailingAnchors": {
-    "message": "แท็ก Anchor ที่ไม่ผ่านการตรวจสอบ"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | description": {
-    "message": "เพิ่ม `rel=\"noopener\"` หรือ `rel=\"noreferrer\"` ไปยังลิงก์ภายนอกใดๆ เพื่อปรับปรุงประสิทธิภาพและป้องกันช่องโหว่ด้านความปลอดภัย [ดูข้อมูลเพิ่มเติม](https://web.dev/external-anchors-use-rel-noopener/)"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | failureTitle": {
-    "message": "ลิงก์ไปปลายทางแบบ Cross-Origin ไม่ปลอดภัย"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | title": {
-    "message": "ลิงก์ไปปลายทางแบบ Cross-Origin ปลอดภัย"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | warning": {
-    "message": "ระบุปลายทางสำหรับโฆษณาด้านล่างสุด ({anchorHTML}) ไม่ได้ หากไม่ได้ใช้เป็นไฮเปอร์ลิงก์ ลองเอา target=_blank ออก"
-  },
   "lighthouse-core/audits/dobetterweb/geolocation-on-start.js | description": {
     "message": "ผู้ใช้ไม่เชื่อถือหรือเกิดความสับสนในเว็บไซต์ที่ขอข้อมูลตำแหน่งโดยไม่มีบริบทให้ พิจารณาผูกคำขอกับการกระทำของผู้ใช้แทน [ดูข้อมูลเพิ่มเติม](https://web.dev/geolocation-on-start/)"
   },

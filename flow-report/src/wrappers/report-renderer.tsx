@@ -19,16 +19,17 @@ interface ReportRendererGlobals {
    reportRenderer: ReportRenderer,
 }
 
-export const ReportRendererContext = createContext<ReportRendererGlobals|undefined>(undefined);
+const ReportRendererContext = createContext<ReportRendererGlobals|undefined>(undefined);
 
-export function useReportRenderer() {
+function useReportRenderer() {
   const globals = useContext(ReportRendererContext);
   if (!globals) throw Error('Globals not defined');
   return globals;
 }
 
-export const ReportRendererProvider: FunctionComponent = ({children}) => {
+const ReportRendererProvider: FunctionComponent = ({children}) => {
   const globals = useMemo(() => {
+    // @ts-expect-error Still using legacy
     const dom = new DOM(document);
     const detailsRenderer = new DetailsRenderer(dom);
     const categoryRenderer = new CategoryRenderer(dom, detailsRenderer);
@@ -43,4 +44,10 @@ export const ReportRendererProvider: FunctionComponent = ({children}) => {
   return (
     <ReportRendererContext.Provider value={globals}>{children}</ReportRendererContext.Provider>
   );
+};
+
+export {
+  ReportRendererContext,
+  ReportRendererProvider,
+  useReportRenderer,
 };

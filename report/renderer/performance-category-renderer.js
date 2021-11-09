@@ -183,15 +183,26 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
     // Metrics.
     const metricAudits = category.auditRefs.filter(audit => audit.group === 'metrics');
     if (metricAudits.length) {
-      const metricAuditsEl = this.renderAuditGroup(groups.metrics);
+      const [metricsGroupEl, metricsFooterEl] = this.renderAuditGroup(groups.metrics);
 
       // Metric descriptions toggle.
-      const toggleTmpl = this.dom.createComponent('metricsToggle');
-      const _toggleEl = this.dom.find('.lh-metrics-toggle', toggleTmpl);
-      metricAuditsEl.append(..._toggleEl.childNodes);
+      const checkboxEl = this.dom.createElement('input', 'lh-metrics-toggle__input');
+      const checkboxId = `lh-metrics-toggle${Util.getUniqueSuffix()}`;
+      checkboxEl.setAttribute('aria-label', 'Toggle the display of metric descriptions');
+      checkboxEl.type = 'checkbox';
+      checkboxEl.id = checkboxId;
+      metricsGroupEl.prepend(checkboxEl);
+      const metricHeaderEl = this.dom.find('.lh-audit-group__header', metricsGroupEl);
+      const labelEl = this.dom.createChildOf(metricHeaderEl, 'label', 'lh-metrics-toggle__label');
+      labelEl.htmlFor = checkboxId;
+      const showEl = this.dom.createChildOf(labelEl, 'span', 'lh-metrics-toggle__labeltext--show');
+      const hideEl = this.dom.createChildOf(labelEl, 'span', 'lh-metrics-toggle__labeltext--hide');
+      showEl.textContent = Util.i18n.strings.expandView;
+      hideEl.textContent = Util.i18n.strings.collapseView;
 
-      const metricsBoxesEl = this.dom.createChildOf(metricAuditsEl, 'div', 'lh-metrics-container');
-
+      const metricAudits = category.auditRefs.filter(audit => audit.group === 'metrics');
+      const metricsBoxesEl = this.dom.createElement('div', 'lh-metrics-container');
+      metricsGroupEl.insertBefore(metricsBoxesEl, metricsFooterEl);
       metricAudits.forEach(item => {
         metricsBoxesEl.appendChild(this._renderMetric(item));
       });
@@ -208,8 +219,8 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
       this.dom.safelySetHref(calculatorLink, this._getScoringCalculatorHref(category.auditRefs));
 
 
-      metricAuditsEl.classList.add('lh-audit-group--metrics');
-      element.appendChild(metricAuditsEl);
+      metricsGroupEl.classList.add('lh-audit-group--metrics');
+      element.appendChild(metricsGroupEl);
     }
 
     // Filmstrip
@@ -240,7 +251,7 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
       const wastedMsValues = opportunityAudits.map(audit => this._getWastedMs(audit));
       const maxWaste = Math.max(...wastedMsValues);
       const scale = Math.max(Math.ceil(maxWaste / 1000) * 1000, minimumScale);
-      const groupEl = this.renderAuditGroup(groups['load-opportunities']);
+      const [groupEl, footerEl] = this.renderAuditGroup(groups['load-opportunities']);
       const tmpl = this.dom.createComponent('opportunityHeader');
 
       this.dom.find('.lh-load-opportunity__col--one', tmpl).textContent =
@@ -249,8 +260,9 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
         strings.opportunitySavingsColumnLabel;
 
       const headerEl = this.dom.find('.lh-load-opportunity__header', tmpl);
-      groupEl.appendChild(headerEl);
-      opportunityAudits.forEach(item => groupEl.appendChild(this._renderOpportunity(item, scale)));
+      groupEl.insertBefore(headerEl, footerEl);
+      opportunityAudits.forEach(item =>
+        groupEl.insertBefore(this._renderOpportunity(item, scale), footerEl));
       groupEl.classList.add('lh-audit-group--load-opportunities');
       element.appendChild(groupEl);
     }
@@ -266,8 +278,8 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
         });
 
     if (diagnosticAudits.length) {
-      const groupEl = this.renderAuditGroup(groups['diagnostics']);
-      diagnosticAudits.forEach(item => groupEl.appendChild(this.renderAudit(item)));
+      const [groupEl, footerEl] = this.renderAuditGroup(groups['diagnostics']);
+      diagnosticAudits.forEach(item => groupEl.insertBefore(this.renderAudit(item), footerEl));
       groupEl.classList.add('lh-audit-group--diagnostics');
       element.appendChild(groupEl);
     }
@@ -294,16 +306,16 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
         const table = this.detailsRenderer.render(audit.result.details);
         if (table) {
           table.id = id;
-          table.classList.add('lh-audit');
+          table.classList.add('lh-details', 'lh-details--budget', 'lh-audit');
           budgetTableEls.push(table);
         }
       }
     });
     if (budgetTableEls.length > 0) {
-      const budgetsGroupEl = this.renderAuditGroup(groups.budgets);
-      budgetTableEls.forEach(table => budgetsGroupEl.appendChild(table));
-      budgetsGroupEl.classList.add('lh-audit-group--budgets');
-      element.appendChild(budgetsGroupEl);
+      const [groupEl, footerEl] = this.renderAuditGroup(groups.budgets);
+      budgetTableEls.forEach(table => groupEl.insertBefore(table, footerEl));
+      groupEl.classList.add('lh-audit-group--budgets');
+      element.appendChild(groupEl);
     }
 
     return element;

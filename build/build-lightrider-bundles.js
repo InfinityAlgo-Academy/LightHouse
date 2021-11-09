@@ -63,6 +63,7 @@ async function buildStaticServerBundle() {
     file: 'dist/lightrider/static-server.js',
     format: 'commonjs',
   });
+  await bundle.close();
 }
 
 async function run() {

@@ -9,7 +9,7 @@
 
 const PSI_URL = 'https://www.googleapis.com/pagespeedonline/v5/runPagespeed';
 const PSI_KEY = 'AIzaSyAjcDRNN9CX9dCazhqI4lGR7yyQbkd_oYE';
-export const PSI_DEFAULT_CATEGORIES = [
+const PSI_DEFAULT_CATEGORIES = [
   'performance',
   'accessibility',
   'seo',
@@ -29,7 +29,7 @@ export const PSI_DEFAULT_CATEGORIES = [
 /**
  * Wrapper around the PSI API for fetching LHR.
  */
-export class PSIApi {
+class PSIApi {
   /**
    * @param {PSIParams} params
    * @return {Promise<PSIResponse>}
@@ -49,3 +49,8 @@ export class PSIApi {
     return fetch(apiUrl.href).then(res => res.json());
   }
 }
+
+export {
+  PSI_DEFAULT_CATEGORIES,
+  PSIApi,
+};

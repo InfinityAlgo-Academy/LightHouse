@@ -16,7 +16,7 @@ import {LH_ROOT} from '../../root.js';
 
 const PAGE = fs.readFileSync(path.join(LH_ROOT, 'viewer/app/index.html'), 'utf8');
 
-export function setupJsDomGlobals() {
+function setupJsDomGlobals() {
   const {window} = new jsdom.JSDOM(PAGE);
   global.document = window.document;
   global.window = window;
@@ -24,8 +24,13 @@ export function setupJsDomGlobals() {
   global.logger.hide = () => {/* noop */};
 }
 
-export function cleanupJsDomGlobals() {
+function cleanupJsDomGlobals() {
   global.document = undefined;
   global.window = undefined;
   global.logger = undefined;
 }
+
+export {
+  setupJsDomGlobals,
+  cleanupJsDomGlobals,
+};

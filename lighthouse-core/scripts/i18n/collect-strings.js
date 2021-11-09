@@ -17,7 +17,7 @@ import tsc from 'typescript';
 import MessageParser from 'intl-messageformat-parser';
 import esMain from 'es-main';
 
-import Util from '../../../lighthouse-core/util-commonjs.js';
+import {Util} from '../../../lighthouse-core/util-commonjs.js';
 import {collectAndBakeCtcStrings} from './bake-ctc-to-lhl.js';
 import {pruneObsoleteLhlMessages} from './prune-obsolete-lhl-messages.js';
 import {countTranslatedMessages} from './count-translated.js';

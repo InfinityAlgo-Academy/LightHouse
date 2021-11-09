@@ -17,9 +17,6 @@ const onlineOnly = {
       'is-on-https': {
         score: 1,
       },
-      'external-anchors-use-rel-noopener': {
-        score: 1,
-      },
       'geolocation-on-start': {
         score: 1,
       },

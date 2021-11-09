@@ -800,21 +800,6 @@
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Nepoužívá příliš velký model DOM"
   },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnFailingAnchors": {
-    "message": "Ukotvení, která neprošla"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | description": {
-    "message": "Ke všem externím odkazům přidejte atribut `rel=\"noopener\"` nebo `rel=\"noreferrer\"`. Stránku tím zrychlíte a předejdete ohrožení zabezpečení. [Další informace](https://web.dev/external-anchors-use-rel-noopener/)"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | failureTitle": {
-    "message": "Odkazy na cíle v jiných doménách nejsou bezpečné"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | title": {
-    "message": "Odkazy na cíle v jiných doménách jsou bezpečné"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | warning": {
-    "message": "Nepodařilo se určit cíl ukotvení ({anchorHTML}). Pokud tento prvek nepoužíváte jako hypertextový odkaz, zvažte odstranění atributu target=_blank."
-  },
   "lighthouse-core/audits/dobetterweb/geolocation-on-start.js | description": {
     "message": "Vůči webům, které bez kontextu žádají o polohu, mohou být uživatelé nedůvěřiví nebo z nich mohou být zmateni. Zvažte možnost spojit tuto žádost s akcí uživatele. [Další informace](https://web.dev/geolocation-on-start/)"
   },

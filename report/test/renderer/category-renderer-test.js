@@ -197,8 +197,8 @@ describe('CategoryRenderer', () => {
         'score shows informative and dash icon');
 
     assert.ok(pwaCategory.manualDescription);
-    const description = categoryDOM
-      .querySelector('.lh-clump--manual .lh-audit-group__description').textContent;
+    const description = categoryDOM.querySelector('.lh-clump--manual').closest('.lh-audit-group')
+      .querySelector('.lh-audit-group__description').textContent;
     // may need to be adjusted if description includes a link at the beginning
     assert.ok(description.startsWith(pwaCategory.manualDescription.substring(0, 20)),
         'no manual description');

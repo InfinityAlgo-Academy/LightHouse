@@ -19,7 +19,7 @@ function buildStrings() {
   const locales = require('../shared/localization/locales.js');
   // TODO(esmodules): use dynamic import when build/ is esm.
   const utilCode = fs.readFileSync(LH_ROOT + '/treemap/app/src/util.js', 'utf-8');
-  const {UIStrings} = eval(utilCode.replace(/export /g, '') + '\nmodule.exports = TreemapUtil;');
+  const {UIStrings} = eval(utilCode.replace(/export {/g, 'module.exports = {'));
   const strings = /** @type {Record<LH.Locale, string>} */ ({});
 
   for (const [locale, lhlMessages] of Object.entries(locales)) {

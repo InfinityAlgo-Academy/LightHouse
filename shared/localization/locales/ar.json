@@ -800,21 +800,6 @@
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "تجنُب حجم DOM الزائد"
   },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnFailingAnchors": {
-    "message": "علامات الارتساء التي تعذّرت مراجعتها"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | description": {
-    "message": "يمكنك إضافة `rel=\"noopener\"` أو `rel=\"noreferrer\"` إلى أي روابط خارجية لتحسين الأداء ومنع الثغرات الأمنية. [مزيد من المعلومات](https://web.dev/external-anchors-use-rel-noopener/)"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | failureTitle": {
-    "message": "الروابط إلى وجهات مشتركة المصدر هي غير آمنة"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | title": {
-    "message": "الروابط إلى وجهات مشتركة المصدر هي آمنة"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | warning": {
-    "message": "يتعذّر تحديد الوجهة لإعلان ثابت {anchorHTML}). في حال عدم استخدامه كرابط تشعبي، يمكنك إزالة target=_blank."
-  },
   "lighthouse-core/audits/dobetterweb/geolocation-on-start.js | description": {
     "message": "لا يثق المستخدمون في المواقع الإلكترونية التي تطلب مواقعهم الجغرافية بدون سياق أو قد يؤدي ذلك إلى إرباكهم. يمكنك ربط الطلب بإجراء المستخدم بدلاً من ذلك. [مزيد من المعلومات](https://web.dev/geolocation-on-start/)"
   },

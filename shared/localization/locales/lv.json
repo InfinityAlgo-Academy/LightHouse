@@ -800,21 +800,6 @@
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Nepieļauj pārāk lielus DOM izmērus"
   },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnFailingAnchors": {
-    "message": "Nederīgi enkuri"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | description": {
-    "message": "Pievienojiet parametru `rel=\"noopener\"` vai `rel=\"noreferrer\"` jebkurām ārējām saitēm, lai uzlabotu veiktspēju un novērstu drošības ievainojamību. [Uzziniet vairāk](https://web.dev/external-anchors-use-rel-noopener/)."
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | failureTitle": {
-    "message": "Saites uz savstarpējās izcelsmes galamērķiem nav drošas"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | title": {
-    "message": "Saites uz savstarpējās izcelsmes galamērķiem ir drošas"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | warning": {
-    "message": "Nevar noteikt enkura ({anchorHTML}) galamērķi. Ja to neizmantojat kā hipersaiti, apsveriet galamērķa noņemšanu (target=_blank)."
-  },
   "lighthouse-core/audits/dobetterweb/geolocation-on-start.js | description": {
     "message": "Lietotājus mulsina un rada neuzticību vietnes, kas pieprasa viņu atrašanās vietu bez konteksta. Tā vietā ieteicams saistīt pieprasījumu ar lietotāja darbību. [Uzziniet vairāk](https://web.dev/geolocation-on-start/)."
   },

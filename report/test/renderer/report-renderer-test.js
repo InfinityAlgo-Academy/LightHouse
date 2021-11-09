@@ -10,6 +10,7 @@
 import {strict as assert} from 'assert';
 
 import jsdom from 'jsdom';
+import {jest} from '@jest/globals';
 
 import {Util} from '../../renderer/util.js';
 import URL from '../../../lighthouse-core/lib/url-shim.js';
@@ -26,6 +27,8 @@ describe('ReportRenderer', () => {
   let sampleResults;
 
   beforeAll(() => {
+    global.console.warn = jest.fn();
+
     // Stub out matchMedia for Node.
     global.matchMedia = function() {
       return {
@@ -50,7 +53,7 @@ describe('ReportRenderer', () => {
 
   describe('renderReport', () => {
     it('should render a report', () => {
-      const container = renderer._dom._document.body;
+      const container = renderer._dom.document().body;
       const output = renderer.renderReport(sampleResults, container);
       assert.ok(output.querySelector('.lh-header-container'), 'has a header');
       assert.ok(output.querySelector('.lh-report'), 'has report body');
@@ -60,7 +63,7 @@ describe('ReportRenderer', () => {
     });
 
     it('renders additional reports by replacing the existing one', () => {
-      const container = renderer._dom._document.body;
+      const container = renderer._dom.document().body;
       const oldReport = Array.from(renderer.renderReport(sampleResults, container).children);
       const newReport = Array.from(renderer.renderReport(sampleResults, container).children);
       assert.ok(!oldReport.find(node => container.contains(node)), 'old report was removed');
@@ -86,11 +89,11 @@ describe('ReportRenderer', () => {
         auditRefs: [],
       };
 
-      const container = renderer._dom._document.body;
+      const container = renderer._dom.document().body;
       const output = renderer.renderReport(sampleResultsCopy, container);
 
       function isPWAGauge(el) {
-        return el.querySelector('.lh-gauge__label').textContent === 'Progressive Web App';
+        return el.querySelector('.lh-gauge__label').textContent === 'PWA';
       }
       function isPluginGauge(el) {
         return el.querySelector('.lh-gauge__label').textContent === 'Some Plugin';
@@ -126,7 +129,7 @@ describe('ReportRenderer', () => {
         title: 'Some Plugin',
         auditRefs: [],
       };
-      const container = renderer._dom._document.body;
+      const container = renderer._dom.document().body;
       const output = renderer.renderReport(sampleResultsCopy, container);
       const scoresHeaderElem = output.querySelector('.lh-scores-header');
 
@@ -140,7 +143,7 @@ describe('ReportRenderer', () => {
     });
 
     it('should not mutate a report object', () => {
-      const container = renderer._dom._document.body;
+      const container = renderer._dom.document().body;
       const originalResults = JSON.parse(JSON.stringify(sampleResults));
       renderer.renderReport(sampleResults, container);
       assert.deepStrictEqual(sampleResults, originalResults);
@@ -148,13 +151,13 @@ describe('ReportRenderer', () => {
 
     it('renders no warning section when no lighthouseRunWarnings occur', () => {
       const warningResults = Object.assign({}, sampleResults, {runWarnings: []});
-      const container = renderer._dom._document.body;
+      const container = renderer._dom.document().body;
       const output = renderer.renderReport(warningResults, container);
       assert.strictEqual(output.querySelector('.lh-warnings--toplevel'), null);
     });
 
     it('renders a warning section', () => {
-      const container = renderer._dom._document.body;
+      const container = renderer._dom.document().body;
       const output = renderer.renderReport(sampleResults, container);
 
       const warningEls = output.querySelectorAll('.lh-warnings--toplevel > ul > li');
@@ -165,7 +168,7 @@ describe('ReportRenderer', () => {
       const warningResults = Object.assign({}, sampleResults, {
         runWarnings: ['[I am a link](https://example.com/)'],
       });
-      const container = renderer._dom._document.body;
+      const container = renderer._dom.document().body;
       const output = renderer.renderReport(warningResults, container);
 
       const warningEls = output.querySelectorAll('.lh-warnings--toplevel ul li a');
@@ -196,7 +199,7 @@ describe('ReportRenderer', () => {
     // Make sure we have a channel in the LHR.
     assert.ok(lhrChannel.length > 2);
 
-    const container = renderer._dom._document.body;
+    const container = renderer._dom.document().body;
     const output = renderer.renderReport(sampleResults, container);
 
     const DOCS_ORIGINS = ['https://developers.google.com', 'https://web.dev'];
@@ -225,7 +228,7 @@ describe('ReportRenderer', () => {
 
     assert.ok(notApplicableCount > 20); // Make sure something's being tested.
 
-    const container = renderer._dom._document.body;
+    const container = renderer._dom.document().body;
     const reportElement = renderer.renderReport(sampleResults, container);
     const notApplicableElementCount = reportElement
       .querySelectorAll('.lh-audit--notapplicable').length;

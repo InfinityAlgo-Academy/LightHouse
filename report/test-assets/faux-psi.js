@@ -26,43 +26,25 @@ const lighthouseRenderer = window['report'];
   for (const [tabId, lhr] of Object.entries(lhrs)) {
     await distinguishLHR(lhr, tabId);
 
-    const container = document.querySelector(`#${tabId} main`);
+    const container = document.querySelector(`section#${tabId}`);
     if (!container) throw new Error('Unexpected DOM. Bailing.');
 
-    renderLHReport(lhr, container);
+    try {
+      const reportRootEl = lighthouseRenderer.renderReport(lhr, {
+        omitTopbar: true,
+        disableAutoDarkModeAndFireworks: true,
+      });
+      // TODO: display warnings if appropriate.
+      for (const el of reportRootEl.querySelectorAll('.lh-warnings')) {
+        el.setAttribute('hidden', 'true');
+      }
+      container.append(reportRootEl);
+    } catch (e) {
+      console.error(e);
+      container.textContent = 'Error: LHR failed to render.';
+    }
   }
 })();
-
-/**
- * @param {LH.Result} lhrData
- * @param {HTMLElement} reportContainer
- */
-function renderLHReport(lhrData, reportContainer) {
-  /**
-   * @param {Document} doc
-   */
-  function getRenderer(doc) {
-    const dom = new lighthouseRenderer.DOM(doc);
-    return new lighthouseRenderer.ReportRenderer(dom);
-  }
-
-  const renderer = getRenderer(reportContainer.ownerDocument);
-  reportContainer.classList.add('lh-root', 'lh-vars');
-
-  try {
-    renderer.renderReport(lhrData, reportContainer);
-    // TODO: handle topbar removal better
-    // TODO: display warnings if appropriate.
-    for (const el of reportContainer.querySelectorAll('.lh-topbar, .lh-warnings')) {
-      el.setAttribute('hidden', 'true');
-    }
-    const features = new lighthouseRenderer.ReportUIFeatures(renderer._dom);
-    features.initFeatures(lhrData);
-  } catch (e) {
-    console.error(e);
-    reportContainer.textContent = 'Error: LHR failed to render.';
-  }
-}
 
 
 /**
@@ -72,7 +54,6 @@ function renderLHReport(lhrData, reportContainer) {
  * @param {string} tabId
  */
 async function distinguishLHR(lhr, tabId) {
-  lhr.categories.performance.title += ` ${tabId}`; // for easier identification
   if (tabId === 'desktop') {
     lhr.categories.performance.score = 0.81;
   }
@@ -101,15 +82,15 @@ async function decorateScreenshot(datauri, tabId) {
     img.src = datauri;
   });
   const c = document.createElement('canvas');
-  c.width = img.width;
-  c.height = img.height;
+  c.width = tabId === 'desktop' ? 280 : img.width;
+  c.height = tabId === 'desktop' ? 194 : img.height;
 
   const ctx = c.getContext('2d');
   if (!ctx) throw new Error();
-  ctx.drawImage(img, 0, 0);
-  ctx.font = `${img.width / 2}px serif`;
+  ctx.drawImage(img, 0, 0, c.width, c.height);
+  ctx.font = `${c.width / 2}px serif`;
   ctx.textAlign = 'center';
   ctx.globalAlpha = 0.7;
-  ctx.fillText(tabId === 'mobile' ? '📱' : '💻', img.width / 2, Math.min(img.height / 2, 700));
+  ctx.fillText(tabId === 'mobile' ? '📱' : '💻', c.width / 2, Math.min(c.height / 2, 700));
   return c.toDataURL();
 }

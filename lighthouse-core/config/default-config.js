@@ -96,7 +96,7 @@ const UIStrings = {
   /** Description of the navigation section within the Search Engine Optimization (SEO) category. Within this section are audits with descriptive titles that highlight ways to make a website accessible to search engine crawlers. */
   seoCrawlingGroupDescription: 'To appear in search results, crawlers need access to your app.',
   /** Title of the Progressive Web Application (PWA) category of audits. This is displayed at the top of a list of audits focused on topics related to whether or not a site is a progressive web app, e.g. responds offline, uses a service worker, is on https, etc. Also used as a label of a score gauge. */
-  pwaCategoryTitle: 'Progressive Web App',
+  pwaCategoryTitle: 'PWA',
   /** Description of the Progressive Web Application (PWA) category. This is displayed at the top of a list of audits focused on topics related to whether or not a site is a progressive web app, e.g. responds offline, uses a service worker, is on https, etc. No character length limits. 'Learn More' becomes link text to additional documentation. */
   pwaCategoryDescription: 'These checks validate the aspects of a Progressive Web App. ' +
   '[Learn more](https://developers.google.com/web/progressive-web-apps/checklist).',
@@ -303,7 +303,6 @@ const defaultConfig = {
     'dobetterweb/doctype',
     'dobetterweb/charset',
     'dobetterweb/dom-size',
-    'dobetterweb/external-anchors-use-rel-noopener',
     'dobetterweb/geolocation-on-start',
     'dobetterweb/inspector-issues',
     'dobetterweb/no-document-write',
@@ -554,7 +553,6 @@ const defaultConfig = {
       auditRefs: [
         // Trust & Safety
         {id: 'is-on-https', weight: 1, group: 'best-practices-trust-safety'},
-        {id: 'external-anchors-use-rel-noopener', weight: 1, group: 'best-practices-trust-safety'},
         {id: 'geolocation-on-start', weight: 1, group: 'best-practices-trust-safety'},
         {id: 'notification-on-start', weight: 1, group: 'best-practices-trust-safety'},
         {id: 'no-vulnerable-libraries', weight: 1, group: 'best-practices-trust-safety'},

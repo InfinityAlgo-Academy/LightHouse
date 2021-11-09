@@ -821,21 +821,6 @@
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Âv́ôíd̂ś âń êx́ĉéŝśîv́ê D́ÔḾ ŝíẑé"
   },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnFailingAnchors": {
-    "message": "F̂áîĺîńĝ Án̂ćĥór̂ś"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | description": {
-    "message": "Âd́d̂ `rel=\"noopener\"` ór̂ `rel=\"noreferrer\"` t́ô án̂ý êx́t̂ér̂ńâĺ l̂ín̂ḱŝ t́ô ím̂ṕr̂óv̂é p̂ér̂f́ôŕm̂án̂ćê án̂d́ p̂ŕêv́êńt̂ śêćûŕît́ŷ v́ûĺn̂ér̂áb̂íl̂ít̂íêś. [L̂éâŕn̂ ḿôŕê](https://web.dev/external-anchors-use-rel-noopener/)."
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | failureTitle": {
-    "message": "L̂ín̂ḱŝ t́ô ćr̂óŝś-ôŕîǵîń d̂éŝt́îńât́îón̂ś âŕê ún̂śâf́ê"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | title": {
-    "message": "L̂ín̂ḱŝ t́ô ćr̂óŝś-ôŕîǵîń d̂éŝt́îńât́îón̂ś âŕê śâf́ê"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | warning": {
-    "message": "Ûńâb́l̂é t̂ó d̂ét̂ér̂ḿîńê t́ĥé d̂éŝt́îńât́îón̂ f́ôŕ âńĉh́ôŕ ({anchorHTML}). Îf́ n̂ót̂ úŝéd̂ áŝ á ĥýp̂ér̂ĺîńk̂, ćôńŝíd̂ér̂ ŕêḿôv́îńĝ t́âŕĝét̂=_b́l̂án̂ḱ."
-  },
   "lighthouse-core/audits/dobetterweb/geolocation-on-start.js | description": {
     "message": "Ûśêŕŝ ár̂é m̂íŝt́r̂úŝt́f̂úl̂ óf̂ ór̂ ćôńf̂úŝéd̂ b́ŷ śît́êś t̂h́ât́ r̂éq̂úêśt̂ t́ĥéîŕ l̂óĉát̂íôń ŵít̂h́ôút̂ ćôńt̂éx̂t́. Ĉón̂śîd́êŕ t̂ýîńĝ t́ĥé r̂éq̂úêśt̂ t́ô á ûśêŕ âćt̂íôń îńŝt́êád̂. [Ĺêár̂ń m̂ór̂é](https://web.dev/geolocation-on-start/)."
   },
@@ -1776,7 +1761,7 @@
     "message": "T̂h́êśê ćĥéĉḱŝ ár̂é r̂éq̂úîŕêd́ b̂ý t̂h́ê b́âśêĺîńê [ṔŴÁ Ĉh́êćk̂ĺîśt̂](https://developers.google.com/web/progressive-web-apps/checklist) b́ût́ âŕê ńôt́ âút̂óm̂át̂íĉál̂ĺŷ ćĥéĉḱêd́ b̂ý L̂íĝh́t̂h́ôúŝé. T̂h́êý d̂ó n̂ót̂ áf̂f́êćt̂ ýôúr̂ śĉór̂é b̂út̂ ít̂'ś îḿp̂ór̂t́âńt̂ t́ĥát̂ ýôú v̂ér̂íf̂ý t̂h́êḿ m̂án̂úâĺl̂ý."
   },
   "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
-    "message": "P̂ŕôǵr̂éŝśîv́ê Ẃêb́ Âṕp̂"
+    "message": "P̂ẂÂ"
   },
   "lighthouse-core/config/default-config.js | pwaInstallableGroupTitle": {
     "message": "Îńŝt́âĺl̂áb̂ĺê"
@@ -2345,6 +2330,9 @@
   "report/renderer/util.js | calculatorLink": {
     "message": "Ŝéê ćâĺĉúl̂át̂ór̂."
   },
+  "report/renderer/util.js | collapseView": {
+    "message": "Ĉól̂ĺâṕŝé v̂íêẃ"
+  },
   "report/renderer/util.js | crcInitialNavigation": {
     "message": "Îńît́îál̂ Ńâv́îǵât́îón̂"
   },
@@ -2381,8 +2369,14 @@
   "report/renderer/util.js | errorMissingAuditInfo": {
     "message": "R̂ép̂ór̂t́ êŕr̂ór̂: ńô áûd́ît́ îńf̂ór̂ḿât́îón̂"
   },
+  "report/renderer/util.js | expandView": {
+    "message": "Êx́p̂án̂d́ v̂íêẃ"
+  },
   "report/renderer/util.js | footerIssue": {
     "message": "F̂íl̂é âń îśŝúê"
+  },
+  "report/renderer/util.js | hide": {
+    "message": "Ĥíd̂é"
   },
   "report/renderer/util.js | labDataTitle": {
     "message": "L̂áb̂ D́ât́â"
@@ -2407,6 +2401,9 @@
   },
   "report/renderer/util.js | runtimeAnalysisWindow": {
     "message": "Îńît́îál̂ ṕâǵê ĺôád̂"
+  },
+  "report/renderer/util.js | runtimeCustom": {
+    "message": "Ĉúŝt́ôḿ t̂h́r̂ót̂t́l̂ín̂ǵ"
   },
   "report/renderer/util.js | runtimeDesktopEmulation": {
     "message": "Êḿûĺât́êd́ D̂éŝḱt̂óp̂"
@@ -2441,8 +2438,14 @@
   "report/renderer/util.js | runtimeSingleLoadTooltip": {
     "message": "T̂h́îś d̂át̂á îś t̂ák̂én̂ f́r̂óm̂ á ŝín̂ǵl̂é p̂áĝé l̂óâd́, âś ôṕp̂óŝéd̂ t́ô f́îél̂d́ d̂át̂á ŝúm̂ḿâŕîźîńĝ ḿâńŷ śêśŝíôńŝ."
   },
+  "report/renderer/util.js | runtimeSlow4g": {
+    "message": "Ŝĺôẃ 4Ĝ t́ĥŕôt́t̂ĺîńĝ"
+  },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "Ûńk̂ńôẃn̂"
+  },
+  "report/renderer/util.js | show": {
+    "message": "Ŝh́ôẃ"
   },
   "report/renderer/util.js | showRelevantAudits": {
     "message": "Ŝh́ôẃ âúd̂ít̂ś r̂él̂év̂án̂t́ t̂ó:"

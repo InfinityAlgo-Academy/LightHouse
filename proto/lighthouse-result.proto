@@ -126,7 +126,7 @@ message LighthouseResult {
   map<string, CategoryGroup> category_groups = 11;
 
   // Message containing the configuration settings for the LH run
-  // Next field number: 6
+  // Next ID: 9
   message ConfigSettings {
     // The possible form factors an audit can be run in.
     // This enum served the emulated_form_factor field, but in v7, that field
@@ -158,6 +158,33 @@ message LighthouseResult {
     // How Lighthouse was run, e.g. from the Chrome extension or from the npm
     // module
     string channel = 4;
+
+    // Next ID: 7
+    message ThrottlingSettings {
+      // The round trip time in milliseconds.
+      double rtt_ms = 1;
+
+      // The network throughput in kilobits per second.
+      double throughput_kbps = 2;
+
+      // The network request latency in milliseconds.
+      double request_latency_ms = 3;
+
+      // The network download throughput in kilobits per second.
+      double download_throughput_kbps = 4;
+
+      // The network upload throughput in kilobits per second.
+      double upload_throughput_kbps = 5;
+
+      // The amount of slowdown applied to the cpu (1/<cpuSlowdownMultiplier>).
+      double cpu_slowdown_multiplier = 6;
+    }
+
+    // The throttling config settings.
+    ThrottlingSettings throttling = 7;
+
+    // The method used to throttle the network.
+    string throttling_method = 8;
   }
 
   // The settings that were used to run this audit
@@ -518,6 +545,28 @@ message I18n {
     // Descriptive label that this analysis only considers the initial load of the page,
     // and no interaction beyond when the page had "fully loaded"
     string runtime_analysis_window = 51;
+
+    // Label for an interactive control that will reveal or hide a group of content.
+    // This control toggles between the text 'Show' and 'Hide'.
+    string show = 52;
+
+    // Label for an interactive control that will reveal or hide a group of content.
+    // This control toggles between the text 'Show' and 'Hide'.
+    string hide = 53;
+
+    // Label for an interactive control that will reveal or hide a group of content.
+    // This control toggles between the text 'Expand view' and 'Collapse view'.
+    string expand_view = 54;
+
+    // Label for an interactive control that will reveal or hide a group of content.
+    // This control toggles between the text 'Expand view' and 'Collapse view'.
+    string collapse_view = 55;
+
+    // Label indicating that Lighthouse throttled the page to emulate a slow 4G network connection.
+    string runtime_slow_4g = 56;
+
+    // Label indicating that Lighthouse throttled the page using custom throttling settings.
+    string runtime_custom = 57;
   }
 
   // The message holding all formatted strings used in the renderer.

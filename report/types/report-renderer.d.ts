@@ -4,23 +4,20 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import {jest} from '@jest/globals';
-import {JSDOM} from 'jsdom';
+import { Result as AuditResult } from "../../types/lhr/audit-result";
 
-/**
- * The jest environment "jsdom" does not work when preact is combined with the report renderer.
- */
-function setupJsDom() {
-  const {window} = new JSDOM(undefined, {
-    url: 'file:///Users/example/report.html/',
-  });
-  global.window = window as any;
-  global.document = window.document;
-  global.location = window.location;
-  global.Blob = window.Blob;
+declare module Renderer {
+  function renderReport(lhr: AuditResult, options?: Options): HTMLElement;
 
-  // Function not implemented in JSDOM.
-  window.Element.prototype.scrollIntoView = jest.fn();
+  interface Options {
+    /**
+     * Don't automatically apply dark-mode to dark based on (prefers-color-scheme: dark). (DevTools and PSI don't want this.)
+     * Also, the fireworks easter-egg will want to flip to dark, so this setting will also disable chance of fireworks. */
+    disableAutoDarkModeAndFireworks?: boolean;
+
+    /** Disable the topbar UI component */
+    omitTopbar?: boolean;
+  }
 }
 
-global.beforeEach(setupJsDom);
+export default Renderer;
