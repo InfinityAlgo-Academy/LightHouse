@@ -14,6 +14,7 @@ describe('ConsoleMessages deprecations audit', () => {
   it('passes when no console messages were found', () => {
     const auditResult = DeprecationsAudit.audit({
       ConsoleMessages: [],
+      InspectorIssues: {deprecations: []},
     });
     assert.equal(auditResult.score, 1);
     assert.equal(auditResult.details.items.length, 0);
@@ -27,6 +28,7 @@ describe('ConsoleMessages deprecations audit', () => {
           text: 'Deprecation message',
         },
       ],
+      InspectorIssues: {deprecations: []},
     });
     assert.equal(auditResult.score, 0);
     expect(auditResult.displayValue).toBeDisplayString('1 warning found');
@@ -34,7 +36,7 @@ describe('ConsoleMessages deprecations audit', () => {
     assert.equal(auditResult.details.items[0].source, undefined);
   });
 
-  it('fails when deprecation messages are found', () => {
+  it('fails when deprecation messages are found (ConsoleMessages)', () => {
     const URL = 'http://example.com';
 
     const auditResult = DeprecationsAudit.audit({
@@ -56,11 +58,55 @@ describe('ConsoleMessages deprecations audit', () => {
           text: 'Not a deprecation message 789',
         },
       ],
+      InspectorIssues: {deprecations: []},
     });
     assert.equal(auditResult.score, 0);
     expect(auditResult.displayValue).toBeDisplayString('2 warnings found');
     assert.equal(auditResult.details.items.length, 2);
     assert.equal(auditResult.details.items[0].source.url, URL);
     assert.equal(auditResult.details.items[0].source.line, 123);
+  });
+
+  it('fails when deprecation messages are found', () => {
+    const URL = 'http://example.com';
+
+    const auditResult = DeprecationsAudit.audit({
+      ConsoleMessages: [
+        {
+          source: 'deprecation',
+          lineNumber: 456,
+          url: 'http://example2.com',
+          text: 'Ignore me b/c there are InspectorIssues',
+        },
+      ],
+      InspectorIssues: {
+        deprecations: [
+          {
+            message: 'Deprecation message 123',
+            sourceCodeLocation: {
+              url: URL,
+              lineNumber: 123,
+              columnNumber: 100,
+            },
+          },
+          {
+            message: 'Deprecation message 456',
+            sourceCodeLocation: {
+              url: 'http://example2.com',
+              lineNumber: 456,
+              columnNumber: 100,
+            },
+          },
+        ],
+      },
+    });
+
+    assert.equal(auditResult.score, 0);
+    expect(auditResult.displayValue).toBeDisplayString('2 warnings found');
+    assert.equal(auditResult.details.items.length, 2);
+    assert.equal(auditResult.details.items[0].value, 'Deprecation message 123');
+    assert.equal(auditResult.details.items[0].source.url, URL);
+    assert.equal(auditResult.details.items[0].source.line, 123);
+    assert.equal(auditResult.details.items[0].source.column, 99);
   });
 });

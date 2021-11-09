@@ -263,6 +263,7 @@ declare module Details {
     urlProvider: 'network' | 'comment';
     /** Zero-indexed. */
     line: number;
+    /** Zero-indexed. */
     column: number;
     /** The original file location from the source map. */
     original?: {

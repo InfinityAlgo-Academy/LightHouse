@@ -303,9 +303,23 @@ const expectations = {
           items: [
             {
               value: /'window.webkitStorageInfo' is deprecated/,
+              source: {
+                type: 'source-location',
+                url: 'http://localhost:10200/dobetterweb/dbw_tester.js',
+                urlProvider: 'network',
+                line: '>0',
+                column: 9,
+              },
             },
             {
               value: /Synchronous XMLHttpRequest on the main thread is deprecated/,
+              source: {
+                type: 'source-location',
+                url: 'http://localhost:10200/dobetterweb/dbw_tester.html',
+                urlProvider: 'network',
+                line: '>0',
+                column: 6,
+              },
             },
           ],
         },

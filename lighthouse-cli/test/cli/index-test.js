@@ -127,7 +127,7 @@ describe('CLI Tests', function() {
       /* eslint-disable max-len */
       expect(emulationSettings).toMatchInlineSnapshot(`
         Object {
-          "emulatedUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4590.2 Safari/537.36 Chrome-Lighthouse",
+          "emulatedUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4695.0 Safari/537.36 Chrome-Lighthouse",
           "formFactor": "desktop",
           "screenEmulation": Object {
             "deviceScaleFactor": 1,

@@ -558,6 +558,7 @@ declare module Artifacts {
     blockedByResponse: LH.Crdp.Audits.BlockedByResponseIssueDetails[];
     heavyAds: LH.Crdp.Audits.HeavyAdIssueDetails[];
     contentSecurityPolicy: LH.Crdp.Audits.ContentSecurityPolicyIssueDetails[];
+    deprecations: LH.Crdp.Audits.DeprecationIssueDetails[];
   }
 
   // Computed artifact types below.

@@ -3,7 +3,7 @@
   "LighthouseRunWarnings": [],
   "HostFormFactor": "desktop",
   "HostUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4635.0 Safari/537.36",
-  "NetworkUserAgent": "Mozilla/5.0 (Linux; Android 7.0; Moto G (4)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4590.2 Mobile Safari/537.36 Chrome-Lighthouse",
+  "NetworkUserAgent": "Mozilla/5.0 (Linux; Android 7.0; Moto G (4)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4695.0 Mobile Safari/537.36 Chrome-Lighthouse",
   "BenchmarkIndex": 1549,
   "WebAppManifest": null,
   "InstallabilityErrors": {
@@ -52,7 +52,7 @@
       "deviceScaleFactor": 2.625,
       "disabled": false
     },
-    "emulatedUserAgent": "Mozilla/5.0 (Linux; Android 7.0; Moto G (4)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4590.2 Mobile Safari/537.36 Chrome-Lighthouse",
+    "emulatedUserAgent": "Mozilla/5.0 (Linux; Android 7.0; Moto G (4)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4695.0 Mobile Safari/537.36 Chrome-Lighthouse",
     "auditMode": false,
     "gatherMode": "lighthouse-core/test/results/artifacts",
     "disableStorageReset": false,
@@ -12381,7 +12381,33 @@
     "sameSiteCookies": [],
     "blockedByResponse": [],
     "heavyAds": [],
-    "contentSecurityPolicy": []
+    "contentSecurityPolicy": [],
+    "deprecations": [
+      {
+        "affectedFrame": {
+          "frameId": "F9E210B94A1B879B89E1373BA5B496AF"
+        },
+        "sourceCodeLocation": {
+          "scriptId": "11",
+          "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
+          "lineNumber": 13,
+          "columnNumber": 10
+        },
+        "message": "'window.webkitStorageInfo' is deprecated. Please use 'navigator.webkitTemporaryStorage' or 'navigator.webkitPersistentStorage' instead."
+      },
+      {
+        "affectedFrame": {
+          "frameId": "F9E210B94A1B879B89E1373BA5B496AF"
+        },
+        "sourceCodeLocation": {
+          "scriptId": "23",
+          "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+          "lineNumber": 369,
+          "columnNumber": 7
+        },
+        "message": "Synchronous XMLHttpRequest on the main thread is deprecated because of its detrimental effects to the end user's experience. For more help, check https://xhr.spec.whatwg.org/."
+      }
+    ]
   },
   "SourceMaps": [],
   "FullPageScreenshot": {
