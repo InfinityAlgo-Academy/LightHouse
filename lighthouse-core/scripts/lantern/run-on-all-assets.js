@@ -55,5 +55,5 @@ for (const site of expectations.sites) {
   }
 }
 
-// eslint-disable-next-line max-len
-fs.writeFileSync(constants.SITE_INDEX_WITH_GOLDEN_WITH_COMPUTED_PATH, JSON.stringify(expectations, null, 2));
+fs.writeFileSync(
+  constants.SITE_INDEX_WITH_GOLDEN_WITH_COMPUTED_PATH, JSON.stringify(expectations, null, 2));

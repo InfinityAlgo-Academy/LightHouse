@@ -221,7 +221,7 @@ describe('SEO: Tap targets audit', () => {
     assert.equal(auditResult.score, 0);
 
     expect(auditResult.explanation).toBeDisplayString(
-      /* eslint-disable max-len */
+      // eslint-disable-next-line max-len
       'Tap targets are too small because there\'s no viewport meta tag optimized for mobile screens');
   });
 

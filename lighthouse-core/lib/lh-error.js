@@ -88,6 +88,7 @@ const UIStrings = {
    * */
   oldChromeDoesNotSupportFeature: 'This version of Chrome is too old to support \'{featureName}\'. Use a newer version to see full results.',
 };
+/* eslint-enable max-len */
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
@@ -199,7 +200,8 @@ class LighthouseError extends Error {
       if (possibleError.sentinel === LHERROR_SENTINEL) {
         // Include sentinel in destructuring so it doesn't end up in `properties`.
         // eslint-disable-next-line no-unused-vars
-        const {sentinel, code, stack, ...properties} = /** @type {SerializedLighthouseError} */ (possibleError);
+        const {sentinel, code, stack, ...properties} =
+          /** @type {SerializedLighthouseError} */ (possibleError);
         const errorDefinition = LighthouseError.errors[/** @type {keyof typeof ERRORS} */ (code)];
         const lhError = new LighthouseError(errorDefinition, properties);
         lhError.stack = stack;

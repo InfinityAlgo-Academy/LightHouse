@@ -15,11 +15,9 @@ const lcpTrace = require('../fixtures/traces/lcp-m78.json');
 const lcpDevtoolsLog = require('../fixtures/traces/lcp-m78.devtools.log.json');
 
 const lcpAllFramesTrace = require('../fixtures/traces/frame-metrics-m89.json');
-// eslint-disable-next-line max-len
 const lcpAllFramesDevtoolsLog = require('../fixtures/traces/frame-metrics-m89.devtools.log.json');
 
 const clsAllFramesTrace = require('../fixtures/traces/frame-metrics-m90.json');
-// eslint-disable-next-line max-len
 const clsAllFramesDevtoolsLog = require('../fixtures/traces/frame-metrics-m90.devtools.log.json');
 
 const jumpyClsTrace = require('../fixtures/traces/jumpy-cls-m90.json');

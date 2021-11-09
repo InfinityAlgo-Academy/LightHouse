@@ -392,6 +392,7 @@ const status403 = {
   },
 };
 
+/* eslint-disable max-len */
 /**
  * @type {Smokehouse.ExpectedRunnerResult}
  * Expected Lighthouse audit values for a site exercising tap targets.
@@ -413,7 +414,6 @@ const tapTargets = {
             {
               'tapTarget': {
                 'type': 'node',
-                /* eslint-disable max-len */
                 'snippet': '<a data-gathered-target="zero-width-tap-target-with-overflowing-child-content" style="display: block; width: 0; white-space: nowrap">',
                 'path': '2,HTML,1,BODY,14,DIV,0,A',
                 'selector': 'body > div > a',
@@ -421,7 +421,6 @@ const tapTargets = {
               },
               'overlappingTarget': {
                 'type': 'node',
-                /* eslint-disable max-len */
                 'snippet': '<a data-gathered-target="passing-tap-target-next-to-zero-width-target" style="display: block; width: 110px; height: 100px;background: #aaa;">',
                 'path': '2,HTML,1,BODY,14,DIV,1,A',
                 'selector': 'body > div > a',
@@ -483,6 +482,7 @@ const tapTargets = {
     TapTargets: expectedGatheredTapTargets.map(({node}) => ({node})),
   },
 };
+/* eslint-enable max-len */
 
 export {
   passing,

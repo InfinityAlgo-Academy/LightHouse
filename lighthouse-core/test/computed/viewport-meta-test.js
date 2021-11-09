@@ -19,7 +19,6 @@ describe('ViewportMeta computed artifact', () => {
     assert.equal(isMobileOptimized, false);
   });
 
-  /* eslint-disable-next-line max-len */
   it('is not mobile optimized when HTML contains a non-mobile friendly viewport meta tag', async () => {
     const viewport = 'maximum-scale=1';
     const {hasViewportTag, isMobileOptimized} =
@@ -44,7 +43,6 @@ describe('ViewportMeta computed artifact', () => {
     assert.equal(parserWarnings[0], 'Invalid values found: {"initial-scale":"microscopic"}');
   });
 
-  /* eslint-disable-next-line max-len */
   it('is not mobile optimized when HTML contains an invalid viewport meta tag key and value', async () => {
     const viewport = 'nonsense=true, initial-scale=microscopic';
     const {isMobileOptimized, parserWarnings} =

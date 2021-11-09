@@ -333,7 +333,6 @@ describe('parseUIStrings', () => {
 });
 
 describe('#_lhlValidityChecks', () => {
-  /* eslint-disable max-len */
   it('errors when using non-supported custom-formatted ICU format', () => {
     const message = 'Hello World took {var, badFormat, milliseconds}.';
     expect(() => collect.convertMessageToCtc(message)).toThrow(
@@ -347,6 +346,7 @@ describe('#_lhlValidityChecks', () => {
   });
 
   it('errors when there is content outside of a select argument', () => {
+    // eslint-disable-next-line max-len
     const message = '{user_gender, select, female {They} male {They} other {They}} were trying to block the main thread';
     expect(() => collect.convertMessageToCtc(message)).toThrow(
       /Content cannot appear outside plural or select ICU messages.*were trying to block the main thread'\)$/);
@@ -359,6 +359,7 @@ describe('#_lhlValidityChecks', () => {
   });
 
   it('errors when there another argument outside of a plural argument', () => {
+    // eslint-disable-next-line max-len
     const message = '{count, plural, =1 {1 request} other {# requests}}{count, plural, =1 {1 request} other {# requests}}';
     expect(() => collect.convertMessageToCtc(message)).toThrow(
       /Content cannot appear outside plural or select ICU messages.*=1 {1 request} other {# requests}}'\)$/);
@@ -379,7 +380,6 @@ describe('#_lhlValidityChecks', () => {
     expect(() => collect.convertMessageToCtc(message, {name: 'Elbert'})).toThrow(
       /Content cannot appear outside plural or select ICU messages.*\(message: 'Ms. {name} received {count, plural, =1 {one award.} other {# awards.}}'\)$/);
   });
-  /* eslint-enable max-len */
 });
 
 describe('Convert Message to Placeholder', () => {

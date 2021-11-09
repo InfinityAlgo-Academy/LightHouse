@@ -459,7 +459,6 @@ describe('Sized images audit', () => {
       expect(result.score).toEqual(1);
     });
 
-    // eslint-disable-next-line max-len
     it('fails when an image has invalid attribute width & height, and nonexplicit css width & height', async () => {
       const result = await runAudit({
         attributeWidth: '-200',

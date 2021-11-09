@@ -204,7 +204,6 @@ describe('Budget', () => {
     it('throws when an invalid resource type is supplied', () => {
       budgets[0].resourceSizes[0].resourceType = 'movies';
       assert.throws(_ => Budget.initializeBudget(budgets),
-        // eslint-disable-next-line max-len
         /Invalid resource type: movies. \nValid resource types are: total, document,/);
     });
 
@@ -254,7 +253,6 @@ describe('Budget', () => {
     it('throws when an invalid metric is supplied', () => {
       budgets[0].timings[0].metric = 'medianMeaningfulPaint';
       assert.throws(_ => Budget.initializeBudget(budgets),
-        // eslint-disable-next-line max-len
         /Invalid timing metric: medianMeaningfulPaint. \nValid timing metrics are: first-contentful-paint, /);
     });
 

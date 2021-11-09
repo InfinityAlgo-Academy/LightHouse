@@ -6,7 +6,6 @@
 'use strict';
 
 // https://www.ecma-international.org/ecma-262/9.0/index.html#sec-punctuators
-// eslint-disable-next-line max-len
 const PUNCTUATOR_REGEX = /(return|case|{|\(|\[|\.\.\.|;|,|<|>|<=|>=|==|!=|===|!==|\+|-|\*|%|\*\*|\+\+|--|<<|>>|>>>|&|\||\^|!|~|&&|\|\||\?|:|=|\+=|-=|\*=|%=|\*\*=|<<=|>>=|>>>=|&=|\|=|\^=|=>|\/|\/=|\})$/;
 const WHITESPACE_REGEX = /( |\n|\t)+$/;
 

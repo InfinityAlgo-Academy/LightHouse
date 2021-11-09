@@ -73,8 +73,8 @@ describe('Baking Placeholders', () => {
         },
       },
     };
-    // eslint-disable-next-line max-len
-    expect(() => bakery.bakePlaceholders(strings)).toThrow(/Message "Hello `World` \$MARKDOWN_SNIPPET_1\$" is missing placeholder\(s\): \$MARKDOWN_SNIPPET_1\$/);
+    expect(() => bakery.bakePlaceholders(strings)).toThrow(
+      /Message "Hello `World` \$MARKDOWN_SNIPPET_1\$" is missing placeholder\(s\): \$MARKDOWN_SNIPPET_1\$/);
   });
 
   it('throws when a placeholder is not in string', () => {

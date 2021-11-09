@@ -120,12 +120,7 @@ class ValidSourceMaps extends Audit {
     /** @type {LH.Audit.Details.TableColumnHeading[]} */
     const headings = [
       /* eslint-disable max-len */
-      {
-        key: 'scriptUrl',
-        itemType: 'url',
-        subItemsHeading: {key: 'error'},
-        text: str_(i18n.UIStrings.columnURL),
-      },
+      {key: 'scriptUrl', itemType: 'url', subItemsHeading: {key: 'error'}, text: str_(i18n.UIStrings.columnURL)},
       {key: 'sourceMapUrl', itemType: 'url', text: str_(UIStrings.columnMapURL)},
       /* eslint-enable max-len */
     ];
