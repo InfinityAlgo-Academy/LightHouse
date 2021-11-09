@@ -12381,7 +12381,33 @@
     "sameSiteCookies": [],
     "blockedByResponse": [],
     "heavyAds": [],
-    "contentSecurityPolicy": []
+    "contentSecurityPolicy": [],
+    "deprecations": [
+      {
+        "affectedFrame": {
+          "frameId": "F9E210B94A1B879B89E1373BA5B496AF"
+        },
+        "sourceCodeLocation": {
+          "scriptId": "11",
+          "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
+          "lineNumber": 13,
+          "columnNumber": 10
+        },
+        "message": "'window.webkitStorageInfo' is deprecated. Please use 'navigator.webkitTemporaryStorage' or 'navigator.webkitPersistentStorage' instead."
+      },
+      {
+        "affectedFrame": {
+          "frameId": "F9E210B94A1B879B89E1373BA5B496AF"
+        },
+        "sourceCodeLocation": {
+          "scriptId": "23",
+          "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+          "lineNumber": 369,
+          "columnNumber": 7
+        },
+        "message": "Synchronous XMLHttpRequest on the main thread is deprecated because of its detrimental effects to the end user's experience. For more help, check https://xhr.spec.whatwg.org/."
+      }
+    ]
   },
   "SourceMaps": [],
   "FullPageScreenshot": {

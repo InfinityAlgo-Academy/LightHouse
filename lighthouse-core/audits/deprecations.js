@@ -11,6 +11,8 @@
  * that contain deprecated API warnings sent by Chrome.
  */
 
+// TODO: when M97 is sufficiently old, drop support for console messages
+
 const Audit = require('./audit.js');
 const i18n = require('../lib/i18n/i18n.js');
 
@@ -45,7 +47,7 @@ class Deprecations extends Audit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['ConsoleMessages'],
+      requiredArtifacts: ['ConsoleMessages', 'InspectorIssues'],
     };
   }
 
@@ -56,16 +58,36 @@ class Deprecations extends Audit {
   static audit(artifacts) {
     const entries = artifacts.ConsoleMessages;
 
-    const deprecations = entries.filter(log => log.source === 'deprecation')
-    // TODO(M91): Temporary ignore until Chrome M91 became stable version.
-    // M91 doesn't throw deprecation on ::-webkit-details-marker.
-    .filter(log => !log.text.includes('::-webkit-details-marker'))
-    .map(log => {
-      return {
-        value: log.text,
-        source: Audit.makeSourceLocationFromConsoleMessage(log),
-      };
-    });
+    let deprecations;
+
+    if (artifacts.InspectorIssues.deprecations.length) {
+      deprecations = artifacts.InspectorIssues.deprecations
+        .map(deprecation => {
+          return {
+            value: deprecation.message || '',
+            /** @type {LH.Audit.Details.SourceLocationValue} */
+            source: {
+              type: 'source-location',
+              url: deprecation.sourceCodeLocation.url,
+              urlProvider: 'network',
+              line: deprecation.sourceCodeLocation.lineNumber,
+              // Protocol.Audits.SourceCodeLocation.columnNumber is 1-indexed,
+              // but we use 0-indexed.
+              column: deprecation.sourceCodeLocation.columnNumber - 1,
+            },
+          };
+        });
+    } else {
+      // Backcompat for <M97.
+      // https://bugs.chromium.org/p/chromium/issues/detail?id=1248484
+      deprecations = entries.filter(log => log.source === 'deprecation')
+        .map(log => {
+          return {
+            value: log.text,
+            source: Audit.makeSourceLocationFromConsoleMessage(log),
+          };
+        });
+    }
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [

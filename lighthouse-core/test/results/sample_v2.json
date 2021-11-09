@@ -1037,7 +1037,7 @@
               "type": "source-location",
               "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
               "urlProvider": "network",
-              "line": 380,
+              "line": 369,
               "column": 6
             }
           }

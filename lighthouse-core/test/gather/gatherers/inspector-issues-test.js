@@ -131,6 +131,26 @@ function mockCSP(details) {
   };
 }
 
+/**
+ * @param {string} text
+ * @return {LH.Crdp.Audits.InspectorIssue}
+ */
+function mockDeprecation(text) {
+  return {
+    code: 'DeprecationIssue',
+    details: {
+      deprecationIssueDetails: {
+        message: text,
+        sourceCodeLocation: {
+          url: 'https://www.example.com',
+          lineNumber: 10,
+          columnNumber: 10,
+        },
+      },
+    },
+  };
+}
+
 describe('instrumentation', () => {
   it('collects inspector issues', async () => {
     const mockContext = createMockContext();
@@ -154,7 +174,7 @@ describe('instrumentation', () => {
 });
 
 describe('_getArtifact', () => {
-  it('takes 5 types of inspector issues', async () => {
+  it('handles multiple types of inspector issues', async () => {
     const gatherer = new InspectorIssues();
     gatherer._issues = [
       mockMixedContent({request: {requestId: '1'}}),
@@ -162,6 +182,7 @@ describe('_getArtifact', () => {
       mockBlockedByResponse({request: {requestId: '3'}}),
       mockHeavyAd(),
       mockCSP(),
+      mockDeprecation('some warning'),
     ];
     const networkRecords = [
       mockRequest({requestId: '1'}),
@@ -204,6 +225,14 @@ describe('_getArtifact', () => {
         violatedDirective: 'default-drc',
         isReportOnly: false,
         contentSecurityPolicyViolationType: 'kInlineViolation',
+      }],
+      deprecations: [{
+        message: 'some warning',
+        sourceCodeLocation: {
+          url: 'https://www.example.com',
+          columnNumber: 10,
+          lineNumber: 10,
+        },
       }],
     });
   });
@@ -250,6 +279,7 @@ describe('_getArtifact', () => {
       }],
       heavyAds: [],
       contentSecurityPolicy: [],
+      deprecations: [],
     });
   });
 });
@@ -300,6 +330,7 @@ describe('FR compat', () => {
       blockedByResponse: [],
       heavyAds: [],
       contentSecurityPolicy: [],
+      deprecations: [],
     });
   });
 
@@ -325,6 +356,7 @@ describe('FR compat', () => {
       blockedByResponse: [],
       heavyAds: [],
       contentSecurityPolicy: [],
+      deprecations: [],
     });
   });
 });

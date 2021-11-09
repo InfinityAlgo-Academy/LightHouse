@@ -146,7 +146,7 @@
     "cpy": "^7.0.1",
     "cross-env": "^7.0.2",
     "csv-validator": "^0.0.3",
-    "devtools-protocol": "0.0.901419",
+    "devtools-protocol": "0.0.939404",
     "es-main": "^1.0.2",
     "eslint": "^7.23.0",
     "eslint-config-google": "^0.9.1",
@@ -217,6 +217,9 @@
     "ws": "^7.0.0",
     "yargs": "^16.1.1",
     "yargs-parser": "^20.2.4"
+  },
+  "resolutions": {
+    "puppeteer/**/devtools-protocol": "0.0.939404"
   },
   "repository": "GoogleChrome/lighthouse",
   "keywords": [
