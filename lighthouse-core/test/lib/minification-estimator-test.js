@@ -7,7 +7,7 @@
 
 const fs = require('fs');
 const assert = require('assert').strict;
-const {computeCSSTokenLength, computeJSTokenLength} = require('../../lib/minification-estimator.js'); // eslint-disable-line max-len
+const {computeCSSTokenLength, computeJSTokenLength} = require('../../lib/minification-estimator.js');
 
 const angularJs = fs.readFileSync(require.resolve('angular/angular.js'), 'utf8');
 const courseheroFilename = `${__dirname}/../../test/fixtures/source-maps/coursehero-bundle-2.js`;

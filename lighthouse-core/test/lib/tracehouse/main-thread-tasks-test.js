@@ -236,7 +236,7 @@ describe('Main Thread Tasks', () => {
         ts: baseTs + 85e3,
         dur: 15e3,
         ...xhr('urlXHR', 4, ['urlC']),
-      }, // eslint-disable-line max-len
+      },
       {ph: 'X', name: 'TaskC', ts: baseTs + 89e3, dur: 4e3},
     ];
 
@@ -283,7 +283,7 @@ describe('Main Thread Tasks', () => {
         ts: baseTs + 51e3,
         dur: 15e3,
         ...stackTrace('B', ['urlB']),
-      }, // eslint-disable-line max-len
+      },
       {ph: 'X', name: 'TaskC', pid, tid, ts: baseTs + 90e3, dur: 5e3},
       {ph: 'X', name: 'Layout', pid, tid, ts: baseTs + 90e3, dur: 4e3, ...frame('B')},
     ];

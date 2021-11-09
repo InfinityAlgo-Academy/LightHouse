@@ -326,7 +326,8 @@ class ImageElements extends FRGatherer {
     }
 
     if (reachedGatheringBudget) {
-      log.warn('ImageElements', `Reached gathering budget of 5s. Skipped extra details for ${skippedCount}/${elements.length}`); // eslint-disable-line max-len
+      // eslint-disable-next-line max-len
+      log.warn('ImageElements', `Reached gathering budget of 5s. Skipped extra details for ${skippedCount}/${elements.length}`);
     }
   }
 

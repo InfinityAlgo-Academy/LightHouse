@@ -136,7 +136,8 @@ async function generateErrorLHR() {
   const artifacts = {
     fetchTime: '2019-06-26T23:56:58.381Z',
     LighthouseRunWarnings: [
-      `Something went wrong with recording the trace over your page load. Please run Lighthouse again. (NO_FCP)`, // eslint-disable-line max-len
+      // eslint-disable-next-line max-len
+      `Something went wrong with recording the trace over your page load. Please run Lighthouse again. (NO_FCP)`,
     ],
     HostFormFactor: 'desktop',
     HostUserAgent: 'Mozilla/5.0 ErrorUserAgent Chrome/66',

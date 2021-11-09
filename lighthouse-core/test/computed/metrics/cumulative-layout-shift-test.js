@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const CumulativeLayoutShift = require('../../../computed/metrics/cumulative-layout-shift.js'); // eslint-disable-line max-len
+const CumulativeLayoutShift = require('../../../computed/metrics/cumulative-layout-shift.js');
 const jumpyClsTrace = require('../../fixtures/traces/jumpy-cls-m90.json');
 const oldMetricsTrace = require('../../fixtures/traces/frame-metrics-m89.json');
 const allFramesMetricsTrace = require('../../fixtures/traces/frame-metrics-m90.json');

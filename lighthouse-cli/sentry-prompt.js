@@ -11,10 +11,11 @@ import log from 'lighthouse-logger';
 
 const MAXIMUM_WAIT_TIME = 20 * 1000;
 
-// eslint-disable-next-line max-len
+/* eslint-disable max-len */
 const MESSAGE = `${log.reset}We're constantly trying to improve Lighthouse and its reliability.\n  ` +
   `${log.reset}Learn more: https://github.com/GoogleChrome/lighthouse/blob/master/docs/error-reporting.md \n ` +
-  ` ${log.bold}May we anonymously report runtime exceptions to improve the tool over time?${log.reset} `; // eslint-disable-line max-len
+  ` ${log.bold}May we anonymously report runtime exceptions to improve the tool over time?${log.reset} `;
+/* eslint-enable max-len */
 
 /**
  * @return {Promise<boolean>}

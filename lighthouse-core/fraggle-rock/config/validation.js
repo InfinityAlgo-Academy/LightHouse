@@ -50,7 +50,8 @@ function assertValidPluginName(configJSON, pluginName) {
   }
 
   if (configJSON.categories && configJSON.categories[pluginName]) {
-    throw new Error(`plugin name '${pluginName}' not allowed because it is the id of a category already found in config`); // eslint-disable-line max-len
+    // eslint-disable-next-line max-len
+    throw new Error(`plugin name '${pluginName}' not allowed because it is the id of a category already found in config`);
   }
 }
 

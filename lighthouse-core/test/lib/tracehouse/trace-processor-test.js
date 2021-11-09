@@ -592,6 +592,7 @@ Object {
       it('in a trace', () => {
         const trace = TraceProcessor.processTrace(lcpAllFramesTrace);
         const navigation = TraceProcessor.processNavigation(trace);
+        /* eslint-disable max-len */
         expect({
           // Main frame
           'mainFrameIds.frameId': trace.mainFrameIds.frameId,
@@ -604,10 +605,10 @@ Object {
           // All frames
           'firstContentfulPaintAllFramesEvt.ts': navigation.firstContentfulPaintAllFramesEvt.ts,
           'largestContentfulPaintAllFramesEvt.ts': navigation.largestContentfulPaintAllFramesEvt.ts,
-          'timestamps.firstContentfulPaintAllFrames': navigation.timestamps.firstContentfulPaintAllFrames, // eslint-disable-line max-len
-          'timestamps.largestContentfulPaintAllFrames': navigation.timestamps.largestContentfulPaintAllFrames, // eslint-disable-line max-len
+          'timestamps.firstContentfulPaintAllFrames': navigation.timestamps.firstContentfulPaintAllFrames,
+          'timestamps.largestContentfulPaintAllFrames': navigation.timestamps.largestContentfulPaintAllFrames,
           'timings.firstContentfulPaintAllFrames': navigation.timings.firstContentfulPaintAllFrames,
-          'timings.largestContentfulPaintAllFrames': navigation.timings.largestContentfulPaintAllFrames, // eslint-disable-line max-len
+          'timings.largestContentfulPaintAllFrames': navigation.timings.largestContentfulPaintAllFrames,
         }).toMatchInlineSnapshot(`
           Object {
             "firstContentfulPaintAllFramesEvt.ts": 23466705983,
@@ -625,6 +626,7 @@ Object {
             "timings.largestContentfulPaintAllFrames": 682.853,
           }
         `);
+        /* eslint-enable max-len */
       });
 
       it('finds FCP from all frames', () => {

@@ -7,7 +7,7 @@
 
 const assert = require('assert').strict;
 
-const LargestContentfulPaintAllFrames = require('../../../computed/metrics/largest-contentful-paint-all-frames.js'); // eslint-disable-line max-len
+const LargestContentfulPaintAllFrames = require('../../../computed/metrics/largest-contentful-paint-all-frames.js');
 const traceAllFrames = require('../../fixtures/traces/frame-metrics-m89.json');
 const devtoolsLogAllFrames = require('../../fixtures/traces/frame-metrics-m89.devtools.log.json');
 const traceMainFrame = require('../../fixtures/traces/lcp-m78.json');
@@ -23,7 +23,8 @@ describe('Metrics: LCP from all frames', () => {
   it('should throw for predicted value', async () => {
     const settings = {throttlingMethod: 'simulate'};
     const context = {settings, computedCache: new Map()};
-    const resultPromise = LargestContentfulPaintAllFrames.request({gatherContext, trace: traceAllFrames, devtoolsLog: devtoolsLogAllFrames, settings}, context); // eslint-disable-line max-len
+    // eslint-disable-next-line max-len
+    const resultPromise = LargestContentfulPaintAllFrames.request({gatherContext, trace: traceAllFrames, devtoolsLog: devtoolsLogAllFrames, settings}, context);
 
     // TODO: Implement lantern solution for LCP all frames.
     expect(resultPromise).rejects.toThrow();
@@ -32,7 +33,8 @@ describe('Metrics: LCP from all frames', () => {
   it('should compute an observed value', async () => {
     const settings = {throttlingMethod: 'provided'};
     const context = {settings, computedCache: new Map()};
-    const result = await LargestContentfulPaintAllFrames.request({gatherContext, trace: traceAllFrames, devtoolsLog: devtoolsLogAllFrames, settings}, context); // eslint-disable-line max-len
+    // eslint-disable-next-line max-len
+    const result = await LargestContentfulPaintAllFrames.request({gatherContext, trace: traceAllFrames, devtoolsLog: devtoolsLogAllFrames, settings}, context);
 
     assert.equal(Math.round(result.timing), 683);
     assert.equal(result.timestamp, 23466705983);

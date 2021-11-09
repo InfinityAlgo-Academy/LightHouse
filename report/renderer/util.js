@@ -558,6 +558,7 @@ Util.getUniqueSuffix = (() => {
   };
 })();
 
+/* eslint-disable max-len */
 /**
  * Report-renderer-specific strings.
  */
@@ -657,7 +658,7 @@ const UIStrings = {
   /** Descriptive label that this analysis only considers the initial load of the page, and no interaction beyond when the page had "fully loaded" */
   runtimeAnalysisWindow: 'Initial page load',
   /** Descriptive explanation that this analysis run was from a single pageload of a browser, whereas field data often summarizes hundreds+ of page loads */
-  runtimeSingleLoadTooltip: 'This data is taken from a single page load, as opposed to field data summarizing many sessions.', // eslint-disable-line max-len
+  runtimeSingleLoadTooltip: 'This data is taken from a single page load, as opposed to field data summarizing many sessions.',
 
   /** Descriptive explanation for environment throttling that was provided by the runtime environment instead of provided by Lighthouse throttling. */
   throttlingProvided: 'Provided by environment',
@@ -674,6 +675,8 @@ const UIStrings = {
   /** Label indicating that Lighthouse throttled the page using custom throttling settings. */
   runtimeCustom: 'Custom throttling',
 };
+/* eslint-enable max-len */
+
 Util.UIStrings = UIStrings;
 
 export {

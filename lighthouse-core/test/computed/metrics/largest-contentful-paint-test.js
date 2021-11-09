@@ -7,7 +7,7 @@
 
 const assert = require('assert').strict;
 
-const LargestContentfulPaint = require('../../../computed/metrics/largest-contentful-paint.js'); // eslint-disable-line max-len
+const LargestContentfulPaint = require('../../../computed/metrics/largest-contentful-paint.js');
 const trace = require('../../fixtures/traces/lcp-m78.json');
 const devtoolsLog = require('../../fixtures/traces/lcp-m78.devtools.log.json');
 const invalidTrace = require('../../fixtures/traces/progressive-app-m60.json');

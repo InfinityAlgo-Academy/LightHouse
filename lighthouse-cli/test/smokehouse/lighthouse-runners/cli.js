@@ -117,7 +117,8 @@ async function internalRun(url, tmpPath, configJson, options) {
   try {
     await fs.access(outputPath);
   } catch (e) {
-    throw new ChildProcessError(`Lighthouse run failed to produce a report and exited with ${exitCode}.`, // eslint-disable-line max-len
+    // eslint-disable-next-line max-len
+    throw new ChildProcessError(`Lighthouse run failed to produce a report and exited with ${exitCode}.`,
         localConsole.getLog());
   }
 
@@ -134,7 +135,8 @@ async function internalRun(url, tmpPath, configJson, options) {
   // There should either be both an error exitCode and a lhr.runtimeError or neither.
   if (Boolean(exitCode) !== Boolean(lhr.runtimeError)) {
     const runtimeErrorCode = lhr.runtimeError && lhr.runtimeError.code;
-    throw new ChildProcessError(`Lighthouse did not exit with an error correctly, exiting with ${exitCode} but with runtimeError '${runtimeErrorCode}'`, // eslint-disable-line max-len
+    // eslint-disable-next-line max-len
+    throw new ChildProcessError(`Lighthouse did not exit with an error correctly, exiting with ${exitCode} but with runtimeError '${runtimeErrorCode}'`,
         localConsole.getLog());
   }
 

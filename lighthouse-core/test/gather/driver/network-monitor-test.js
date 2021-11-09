@@ -168,8 +168,10 @@ describe('NetworkMonitor', () => {
 
       const type = 'Navigation';
       const frame = /** @type {*} */ ({id: '1', url: 'https://page.example.com'});
-      sessionMock.dispatch({method: 'Page.frameNavigated', params: {frame: {...frame, url: '1'}, type}}); // eslint-disable-line max-len
-      sessionMock.dispatch({method: 'Page.frameNavigated', params: {frame: {...frame, url: '2'}, type}}); // eslint-disable-line max-len
+      // eslint-disable-next-line max-len
+      sessionMock.dispatch({method: 'Page.frameNavigated', params: {frame: {...frame, url: '1'}, type}});
+      // eslint-disable-next-line max-len
+      sessionMock.dispatch({method: 'Page.frameNavigated', params: {frame: {...frame, url: '2'}, type}});
       sessionMock.dispatch({method: 'Page.frameNavigated', params: {frame, type}});
 
       expect(await monitor.getFinalNavigationUrl()).toEqual('https://page.example.com');

@@ -38,6 +38,8 @@ module.exports = {
     'max-len': [2, 100, {
       ignoreComments: true,
       ignoreUrls: true,
+      ignorePattern: 'require\\(|import |\\sit\\(',
+      ignoreRegExpLiterals: true,
       tabWidth: 2,
     }],
     'no-empty': [2, {
@@ -68,6 +70,13 @@ module.exports = {
       imports: 'always-multiline',
       exports: 'always-multiline',
       functions: 'never',
+    }],
+    // Don't allow `eslint-disable-line max-len`, prefer instead `eslint-disable-next-line max-len`
+    // so that the line is made even longer.
+    'line-comment-position': [2, {
+      ignorePattern: '^(?! *eslint-disable-line max-len).*$',
+      applyDefaultIgnorePatterns: false,
+      position: 'above',
     }],
 
     // Custom lighthouse rules

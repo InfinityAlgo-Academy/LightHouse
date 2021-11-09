@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const LanternFirstContentfulPaint = require('../../../computed/metrics/lantern-first-contentful-paint.js'); // eslint-disable-line max-len
+const LanternFirstContentfulPaint = require('../../../computed/metrics/lantern-first-contentful-paint.js');
 const assert = require('assert').strict;
 
 const trace = require('../../fixtures/traces/progressive-app-m60.json');

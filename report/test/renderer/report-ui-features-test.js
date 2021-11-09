@@ -210,7 +210,8 @@ describe('ReportUIFeatures', () => {
 
         function getUrlsInTable() {
           return dom
-            .findAll('#modern-image-formats tr:not(.lh-row--hidden) .lh-text__url a:first-child', container) // eslint-disable-line max-len
+            // eslint-disable-next-line max-len
+            .findAll('#modern-image-formats tr:not(.lh-row--hidden) .lh-text__url a:first-child', container)
             .map(el => el.textContent);
         }
 

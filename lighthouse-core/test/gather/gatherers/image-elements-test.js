@@ -15,7 +15,7 @@ const {
   createMockSession,
 } = require('../../fraggle-rock/gather/mock-driver.js');
 
-const devtoolsLog = /** @type {LH.DevtoolsLog} */ (require('../../fixtures/traces/lcp-m78.devtools.log.json')); // eslint-disable-line max-len
+const devtoolsLog = /** @type {LH.DevtoolsLog} */ (require('../../fixtures/traces/lcp-m78.devtools.log.json'));
 const networkRecords = NetworkRecorder.recordsFromLogs(devtoolsLog);
 
 jest.useFakeTimers();

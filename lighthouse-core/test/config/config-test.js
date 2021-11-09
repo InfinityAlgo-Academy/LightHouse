@@ -1097,7 +1097,7 @@ describe('Config', () => {
         },
       };
       assert.throws(() => new Config(configJson, {configPath: configFixturePath}),
-        /^Error: plugin name 'lighthouse-plugin-simple' not allowed because it is the id of a category/); // eslint-disable-line max-len
+        /^Error: plugin name 'lighthouse-plugin-simple' not allowed because it is the id of a category/);
     });
   });
 

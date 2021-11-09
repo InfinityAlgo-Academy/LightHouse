@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const {createMockDriver, mockTargetManagerModule} = require('../../fraggle-rock/gather/mock-driver.js'); // eslint-disable-line max-len
+const {createMockDriver, mockTargetManagerModule} = require('../../fraggle-rock/gather/mock-driver.js');
 const targetManagerMock = mockTargetManagerModule();
 
 const {gotoURL, getNavigationWarnings} = require('../../../gather/driver/navigation.js');

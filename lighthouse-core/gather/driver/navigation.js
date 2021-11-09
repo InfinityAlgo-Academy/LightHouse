@@ -7,7 +7,7 @@
 
 const log = require('lighthouse-logger');
 const NetworkMonitor = require('./network-monitor.js');
-const {waitForFullyLoaded, waitForFrameNavigated, waitForUserToContinue} = require('./wait-for-condition.js'); // eslint-disable-line max-len
+const {waitForFullyLoaded, waitForFrameNavigated, waitForUserToContinue} = require('./wait-for-condition.js');
 const constants = require('../../config/constants.js');
 const i18n = require('../../lib/i18n/i18n.js');
 const URL = require('../../lib/url-shim.js');

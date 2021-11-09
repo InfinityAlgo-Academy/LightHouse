@@ -8,7 +8,7 @@
 const helpers = require('../../../fraggle-rock/gather/runner-helpers.js');
 const Gatherer = require('../../../fraggle-rock/gather/base-gatherer.js');
 const {defaultSettings} = require('../../../config/constants.js');
-const {createMockDriver, createMockGathererInstance, createMockBaseArtifacts} = require('./mock-driver.js'); // eslint-disable-line max-len
+const {createMockDriver, createMockGathererInstance, createMockBaseArtifacts} = require('./mock-driver.js');
 
 /* eslint-env jest */
 

@@ -19,7 +19,8 @@ function getMockDriverForArtifacts() {
   const driverMock = createMockDriver();
   driverMock._executionContext.evaluate.mockResolvedValue(500);
   driverMock._session.sendCommand.mockResponse('Browser.getVersion', {
-    userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.159 Safari/537.36', // eslint-disable-line max-len
+    // eslint-disable-next-line max-len
+    userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.159 Safari/537.36',
     product: 'Chrome/92.0.4515.159',
   });
   return driverMock;
