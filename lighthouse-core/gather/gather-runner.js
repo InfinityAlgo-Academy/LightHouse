@@ -422,21 +422,44 @@ class GatherRunner {
   static async populateBaseArtifacts(passContext) {
     const status = {msg: 'Populate base artifacts', id: 'lh:gather:populateBaseArtifacts'};
     log.time(status);
+
     const baseArtifacts = passContext.baseArtifacts;
 
     // Copy redirected URL to artifact.
     baseArtifacts.URL.finalUrl = passContext.url;
 
     // Fetch the manifest, if it exists.
-    baseArtifacts.WebAppManifest = await WebAppManifest.getWebAppManifest(
-      passContext.driver.defaultSession, passContext.url);
-
-    if (baseArtifacts.WebAppManifest) {
-      baseArtifacts.InstallabilityErrors = await InstallabilityErrors.getInstallabilityErrors(
-        passContext.driver.defaultSession);
+    try {
+      baseArtifacts.WebAppManifest = await WebAppManifest.getWebAppManifest(
+        passContext.driver.defaultSession, passContext.url);
+    } catch (err) {
+      log.error('GatherRunner WebAppManifest', err);
+      baseArtifacts.WebAppManifest = null;
     }
 
-    baseArtifacts.Stacks = await Stacks.collectStacks(passContext.driver.executionContext);
+    try {
+      if (baseArtifacts.WebAppManifest) {
+        baseArtifacts.InstallabilityErrors = await InstallabilityErrors.getInstallabilityErrors(
+          passContext.driver.defaultSession);
+      }
+    } catch (err) {
+      log.error('GatherRunner InstallabilityErrors', err);
+      baseArtifacts.InstallabilityErrors = {
+        errors: [
+          {
+            errorId: 'protocol-timeout',
+            errorArguments: [],
+          },
+        ],
+      };
+    }
+
+    try {
+      baseArtifacts.Stacks = await Stacks.collectStacks(passContext.driver.executionContext);
+    } catch (err) {
+      log.error('GatherRunner Stacks', err);
+      baseArtifacts.Stacks = [];
+    }
 
     // Find the NetworkUserAgent actually used in the devtoolsLogs.
     const devtoolsLog = baseArtifacts.devtoolsLogs[passContext.passConfig.passName];
