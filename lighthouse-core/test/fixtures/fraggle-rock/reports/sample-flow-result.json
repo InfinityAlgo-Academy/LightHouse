@@ -3826,10 +3826,33 @@
                 ]
               },
               {
+                "id": "interactive",
+                "weight": 10,
+                "group": "metrics",
+                "acronym": "TTI"
+              },
+              {
                 "id": "speed-index",
                 "weight": 10,
                 "group": "metrics",
                 "acronym": "SI"
+              },
+              {
+                "id": "total-blocking-time",
+                "weight": 30,
+                "group": "metrics",
+                "acronym": "TBT",
+                "relevantAudits": [
+                  "long-tasks",
+                  "third-party-summary",
+                  "third-party-facades",
+                  "bootup-time",
+                  "mainthread-work-breakdown",
+                  "dom-size",
+                  "duplicated-javascript",
+                  "legacy-javascript",
+                  "viewport"
+                ]
               },
               {
                 "id": "largest-contentful-paint",
@@ -3853,29 +3876,6 @@
                   "unused-javascript",
                   "efficient-animated-content",
                   "total-byte-weight"
-                ]
-              },
-              {
-                "id": "interactive",
-                "weight": 10,
-                "group": "metrics",
-                "acronym": "TTI"
-              },
-              {
-                "id": "total-blocking-time",
-                "weight": 30,
-                "group": "metrics",
-                "acronym": "TBT",
-                "relevantAudits": [
-                  "long-tasks",
-                  "third-party-summary",
-                  "third-party-facades",
-                  "bootup-time",
-                  "mainthread-work-breakdown",
-                  "dom-size",
-                  "duplicated-javascript",
-                  "legacy-javascript",
-                  "viewport"
                 ]
               },
               {

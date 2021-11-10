@@ -685,9 +685,8 @@
 
 .lh-metrics-container {
   display: grid;
-  grid-template-rows: 1fr 1fr 1fr;
+  grid-auto-rows: 1fr;
   grid-template-columns: 1fr 1fr;
-  grid-auto-flow: column;
   grid-column-gap: var(--report-line-height);
 }
 
@@ -695,7 +694,7 @@
   border-top: 1px solid var(--report-border-color-secondary);
 }
 
-.lh-metric:nth-child(3n+3) {
+.lh-metric:nth-last-child(-n+2) {
   border-bottom: 1px solid var(--report-border-color-secondary);
 }
 
@@ -743,8 +742,11 @@
     display: block;
   }
 
-  .lh-metric:nth-last-child(-n+1) {
-    border-bottom: 1px solid var(--report-border-color-secondary);
+  .lh-metric {
+    border-bottom: none !important;
+  }
+  .lh-metric:nth-last-child(1) {
+    border-bottom: 1px solid var(--report-border-color-secondary) !important;
   }
 
   /* Change the grid to 3 columns for narrow viewport. */
