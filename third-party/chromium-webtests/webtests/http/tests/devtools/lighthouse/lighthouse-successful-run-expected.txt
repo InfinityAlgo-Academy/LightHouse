@@ -93,7 +93,7 @@ Gathering in-page: SourceMaps
 Gathering in-page: FullPageScreenshot
 Gathering trace
 Gathering devtoolsLog & network records
-Computing artifact: NetworkRecords$I
+Computing artifact: NetworkRecords$L
 Running afterPass methods
 Gathering: CSSUsage
 Gathering: JsUsage
@@ -141,7 +141,7 @@ Navigating to http://127.0.0.1:8000/devtools/lighthouse/resources/lighthouse-bas
 Running pass methods
 Gathering in-page: ServiceWorker
 Gathering devtoolsLog & network records
-Computing artifact: NetworkRecords$I
+Computing artifact: NetworkRecords$L
 Running afterPass methods
 Gathering: ServiceWorker
 Disconnecting from browser...
@@ -338,15 +338,15 @@ Auditing: Document avoids plugins
 Auditing: Document has a valid `rel=canonical`
 Auditing: Structured data is valid
 Auditing: No long tasks blocking ad-related network requests
-Computing artifact: LongTasks$1
+Computing artifact: LongTasks$2
 Auditing: Minimal render-blocking resources found
 Auditing: Ad request waterfall
-Computing artifact: AdRequestTime$1
-Computing artifact: LanternAdRequestTime
 Auditing: First bid request time
 Computing artifact: BidRequestTime
 Computing artifact: LanternBidRequestTime
 Auditing: First ad request time
+Computing artifact: AdRequestTime$1
+Computing artifact: LanternAdRequestTime
 Auditing: No ad found at the very top of the viewport
 Auditing: Few or no ads loaded outside viewport
 Auditing: Ad tag is loaded asynchronously
@@ -365,10 +365,11 @@ Auditing: Header bidding is parallelized
 Auditing: Tag load time
 Computing artifact: TagLoadTime$1
 Computing artifact: LanternTagLoadTime
-Auditing: Ad density is within recommended range
+Auditing: Ads to page-height ratio is within recommended range
 Auditing: Cumulative ad shift
 Auditing: Deprecated GPT API Usage
 Auditing: GPT Errors
+Auditing: Total ad JS blocking time
 Generating results...
 
 =============== Lighthouse Results ===============
@@ -426,7 +427,7 @@ cumulative-layout-shift: numeric
 custom-controls-labels: manual
 custom-controls-roles: manual
 definition-list: notApplicable
-deprecated-gpt-api-usage: informative
+deprecated-gpt-api-usage: notApplicable
 deprecations: pass
 diagnostics: informative
 dlitem: notApplicable
@@ -452,7 +453,7 @@ frame-title: notApplicable
 full-page-screenshot: informative
 geolocation-on-start: pass
 gpt-bids-parallel: notApplicable
-gpt-errors-overall: informative
+gpt-errors-overall: notApplicable
 heading-order: notApplicable
 hreflang: pass
 html-has-lang: fail
@@ -534,6 +535,7 @@ themed-omnibox: fail
 third-party-facades: notApplicable
 third-party-summary: notApplicable
 timing-budget: ERROR Chrome didn't collect any screenshots during the page load. Please make sure there is content visible on the page, and then try re-running Lighthouse. (NO_SCREENSHOTS)
+total-ad-blocking-time: notApplicable
 total-blocking-time: numeric
 total-byte-weight: numeric
 unminified-css: flaky
@@ -558,7 +560,7 @@ viewport: fail
 viewport-ad-density: notApplicable
 visual-order-follows-dom: manual
 
-# of .lh-audit divs: 158
+# of .lh-audit divs: 159
 
 .lh-audit divs:
 accesskeys
@@ -695,6 +697,7 @@ th-has-data-cells
 themed-omnibox
 third-party-facades
 third-party-summary
+total-ad-blocking-time
 total-byte-weight
 unminified-css
 unminified-javascript
