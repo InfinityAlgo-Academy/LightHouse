@@ -127,7 +127,7 @@ export class ReportRenderer {
       : 'Chromium';
     const channel = report.configSettings.channel;
     const benchmarkIndex = report.environment.benchmarkIndex.toFixed(0);
-    const axeVersion = report.environment.credits['axe-core'];
+    const axeVersion = report.environment.credits?.['axe-core'];
 
     // [CSS icon class, textContent, tooltipText]
     const metaItems = [
