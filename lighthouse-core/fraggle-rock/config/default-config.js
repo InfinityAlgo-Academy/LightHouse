@@ -6,6 +6,7 @@
 'use strict';
 
 const legacyDefaultConfig = require('../../config/default-config.js');
+const {deepClone} = require('../../config/config-helpers.js');
 
 /** @type {LH.Config.AuditJson[]} */
 const frAudits = [
@@ -22,7 +23,8 @@ const frCategoryAuditRefExtensions = {
 /** @return {LH.Config.Json['categories']} */
 function mergeCategories() {
   if (!legacyDefaultConfig.categories) return {};
-  const categories = legacyDefaultConfig.categories;
+  // Don't modify original default config.
+  const categories = deepClone(legacyDefaultConfig.categories);
   for (const key of Object.keys(frCategoryAuditRefExtensions)) {
     if (!categories[key]) continue;
     categories[key].auditRefs.push(...frCategoryAuditRefExtensions[key]);
