@@ -12,7 +12,7 @@
     "node": ">=14.15"
   },
   "scripts": {
-    "prepack": "yarn build-report --standalone --flow",
+    "prepack": "yarn build-report --standalone --flow --esm",
     "build-all": "npm-run-posix-or-windows build-all:task",
     "build-all:task": "yarn build-report && yarn build-cdt-lib && yarn build-devtools && (yarn build-extension & yarn build-lr & yarn build-viewer & yarn build-treemap & yarn build-smokehouse-bundle & wait) && yarn build-pack",
     "build-all:task:windows": "yarn build-report && yarn build-cdt-lib && yarn build-extension && yarn build-devtools && yarn build-lr && yarn build-viewer && yarn build-treemap && yarn build-smokehouse-bundle",
