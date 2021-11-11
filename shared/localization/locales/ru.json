@@ -3,7 +3,7 @@
     "message": "Все отчеты"
   },
   "flow-report/src/i18n/ui-strings.js | categories": {
-    "message": "Categories"
+    "message": "Категории"
   },
   "flow-report/src/i18n/ui-strings.js | categoryAccessibility": {
     "message": "Специальные возможности"
@@ -24,40 +24,46 @@
     "message": "Версия для компьютера"
   },
   "flow-report/src/i18n/ui-strings.js | helpDialogTitle": {
-    "message": "Understanding the Lighthouse Flow Report"
+    "message": "Интерпретация отчета Lighthouse о пути пользователя"
   },
   "flow-report/src/i18n/ui-strings.js | helpLabel": {
-    "message": "Understanding Flows"
+    "message": "Узнать о путях"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionNavigation": {
-    "message": "Use Navigation reports to..."
+    "message": "Использовать отчеты о навигации, чтобы…"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionSnapshot": {
-    "message": "Use Snapshot reports to..."
+    "message": "Использовать отчеты о состоянии страницы на определенный момент времени, чтобы…"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionTimespan": {
-    "message": "Use Timespan reports to..."
+    "message": "Использовать отчеты о промежутке времени, чтобы…"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation1": {
-    "message": "Obtain a Lighthouse Performance score."
+    "message": "Получить показатель производительности Lighthouse."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation2": {
-    "message": "Measure page load Performance metrics such as Largest Contentful Paint and Speed Index."
+    "message": "Измерить показатели загрузки страницы, например время отрисовки самого крупного контента и индекс скорости загрузки."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation3": {
-    "message": "Assess Progressive Web App capabilities."
+    "message": "Оценить возможности современного веб-приложения."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseSnapshot1": {
-    "message": "Find accessibility issues in single page applications or complex forms."
+    "message": "Обнаружить проблемы доступности в одностраничных приложениях и сложных формах."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseSnapshot2": {
-    "message": "Evaluate best practices of menus and UI elements hidden behind interaction."
+    "message": "Оценить рекомендации в отношении меню и элементов интерфейса, участвующих во взаимодействии."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan1": {
-    "message": "Measure layout shifts and JavaScript execution time on a series of interactions."
+    "message": "Измерить смещения макета и время выполнения JavaScript в ходе серии взаимодействий."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan2": {
-    "message": "Discover performance opportunities to improve the experience for long-lived pages and single-page applications."
+    "message": "Узнать возможности для улучшения взаимодействия со страницами, которые используются в течение длительного времени, и одностраничными приложениями."
+  },
+  "flow-report/src/i18n/ui-strings.js | highestImpact": {
+    "message": "Highest impact"
+  },
+  "flow-report/src/i18n/ui-strings.js | informativeAuditCount": {
+    "message": "{numInformative, plural,\n    =1 {{numInformative} informative audit}\n    other {{numInformative} informative audits}\n  }"
   },
   "flow-report/src/i18n/ui-strings.js | mobile": {
     "message": "Мобильная версия"
@@ -66,10 +72,19 @@
     "message": "Загрузка страницы"
   },
   "flow-report/src/i18n/ui-strings.js | navigationLongDescription": {
-    "message": "Navigation reports analyze a single page load, exactly like the original Lighthouse reports."
+    "message": "В отчетах о навигации представлен анализ загрузки одной страницы, в точности как в исходных отчетах Lighthouse."
   },
   "flow-report/src/i18n/ui-strings.js | navigationReport": {
     "message": "Отчет о навигации"
+  },
+  "flow-report/src/i18n/ui-strings.js | navigationReportCount": {
+    "message": "{numNavigation, plural,\n    =1 {{numNavigation} navigation report}\n    other {{numNavigation} navigation reports}\n  }"
+  },
+  "flow-report/src/i18n/ui-strings.js | passableAuditCount": {
+    "message": "{numPassableAudits, plural,\n    =1 {{numPassableAudits} passable audit}\n    other {{numPassableAudits} passable audits}\n  }"
+  },
+  "flow-report/src/i18n/ui-strings.js | passedAuditCount": {
+    "message": "{numPassed, plural,\n    =1 {{numPassed} audit passed}\n    other {{numPassed} audits passed}\n  }"
   },
   "flow-report/src/i18n/ui-strings.js | ratingAverage": {
     "message": "Средне"
@@ -84,16 +99,19 @@
     "message": "Хорошо"
   },
   "flow-report/src/i18n/ui-strings.js | save": {
-    "message": "Save"
+    "message": "Сохранить"
   },
   "flow-report/src/i18n/ui-strings.js | snapshotDescription": {
     "message": "Зарегистрированное состояние страницы"
   },
   "flow-report/src/i18n/ui-strings.js | snapshotLongDescription": {
-    "message": "Snapshot reports analyze the page in a particular state, typically after user interactions."
+    "message": "В отчетах о состоянии страницы на определенный момент времени представлен анализ конкретного состояния страницы (обычно после взаимодействия с пользователем)."
   },
   "flow-report/src/i18n/ui-strings.js | snapshotReport": {
     "message": "Отчет о состоянии страницы на определенный момент времени"
+  },
+  "flow-report/src/i18n/ui-strings.js | snapshotReportCount": {
+    "message": "{numSnapshot, plural,\n    =1 {{numSnapshot} snapshot report}\n    other {{numSnapshot} snapshot reports}\n  }"
   },
   "flow-report/src/i18n/ui-strings.js | summary": {
     "message": "Сводка"
@@ -102,10 +120,13 @@
     "message": "Взаимодействие пользователя"
   },
   "flow-report/src/i18n/ui-strings.js | timespanLongDescription": {
-    "message": "Timespan reports analyze an arbitrary period of time, typically containing user interactions."
+    "message": "В отчетах о промежутке времени представлен анализ произвольного периода. Обычно он затрагивает взаимодействие с пользователем."
   },
   "flow-report/src/i18n/ui-strings.js | timespanReport": {
     "message": "Отчет о промежутке времени"
+  },
+  "flow-report/src/i18n/ui-strings.js | timespanReportCount": {
+    "message": "{numTimespan, plural,\n    =1 {{numTimespan} timespan report}\n    other {{numTimespan} timespan reports}\n  }"
   },
   "flow-report/src/i18n/ui-strings.js | title": {
     "message": "Отчет Lighthouse о пути пользователя"
@@ -1740,7 +1761,7 @@
     "message": "Lighthouse не проверяет эти пункты автоматически, но они необходимы для соответствия базовому [контрольному списку современных веб-приложений](https://developers.google.com/web/progressive-web-apps/checklist). Они не влияют на показатель приложения, однако их следует проверить вручную."
   },
   "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
-    "message": "Современное веб-приложение"
+    "message": "PWA"
   },
   "lighthouse-core/config/default-config.js | pwaInstallableGroupTitle": {
     "message": "Возможность установки"
@@ -2042,30 +2063,6 @@
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "Недействительный URL."
   },
-  "treemap/app/src/util.js | allLabel": {
-    "message": "Все"
-  },
-  "treemap/app/src/util.js | allScriptsDropdownLabel": {
-    "message": "Все скрипты"
-  },
-  "treemap/app/src/util.js | coverageColumnName": {
-    "message": "Доля использования"
-  },
-  "treemap/app/src/util.js | duplicateModulesLabel": {
-    "message": "Повторяющиеся модули"
-  },
-  "treemap/app/src/util.js | resourceBytesLabel": {
-    "message": "Размер в байтах"
-  },
-  "treemap/app/src/util.js | tableColumnName": {
-    "message": "Название"
-  },
-  "treemap/app/src/util.js | toggleTableButtonLabel": {
-    "message": "Показать/скрыть таблицу"
-  },
-  "treemap/app/src/util.js | unusedBytesLabel": {
-    "message": "Неиспользуемые байты"
-  },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "Если на странице есть анимированный контент, используйте [`amp-anim`](https://amp.dev/documentation/components/amp-anim/), чтобы уменьшить нагрузку на процессор, когда контент не отображается на экране."
   },
@@ -2333,6 +2330,9 @@
   "report/renderer/util.js | calculatorLink": {
     "message": "Показать калькулятор"
   },
+  "report/renderer/util.js | collapseView": {
+    "message": "Collapse view"
+  },
   "report/renderer/util.js | crcInitialNavigation": {
     "message": "Начальная навигация"
   },
@@ -2369,8 +2369,14 @@
   "report/renderer/util.js | errorMissingAuditInfo": {
     "message": "Ошибка отчета: информация аудита отсутствует"
   },
+  "report/renderer/util.js | expandView": {
+    "message": "Expand view"
+  },
   "report/renderer/util.js | footerIssue": {
     "message": "Сообщить о проблеме"
+  },
+  "report/renderer/util.js | hide": {
+    "message": "Hide"
   },
   "report/renderer/util.js | labDataTitle": {
     "message": "Имитация загрузки страницы"
@@ -2392,6 +2398,12 @@
   },
   "report/renderer/util.js | passedAuditsGroupTitle": {
     "message": "Успешные аудиты"
+  },
+  "report/renderer/util.js | runtimeAnalysisWindow": {
+    "message": "Initial page load"
+  },
+  "report/renderer/util.js | runtimeCustom": {
+    "message": "Custom throttling"
   },
   "report/renderer/util.js | runtimeDesktopEmulation": {
     "message": "Эмуляция компьютера"
@@ -2420,8 +2432,20 @@
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "Агент пользователя (сеть)"
   },
+  "report/renderer/util.js | runtimeSingleLoad": {
+    "message": "Single page load"
+  },
+  "report/renderer/util.js | runtimeSingleLoadTooltip": {
+    "message": "This data is taken from a single page load, as opposed to field data summarizing many sessions."
+  },
+  "report/renderer/util.js | runtimeSlow4g": {
+    "message": "Slow 4G throttling"
+  },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "Неизвестно"
+  },
+  "report/renderer/util.js | show": {
+    "message": "Show"
   },
   "report/renderer/util.js | showRelevantAudits": {
     "message": "Показать аудиты"
@@ -2452,5 +2476,29 @@
   },
   "report/renderer/util.js | warningHeader": {
     "message": "Предупреждения: "
+  },
+  "treemap/app/src/util.js | allLabel": {
+    "message": "Все"
+  },
+  "treemap/app/src/util.js | allScriptsDropdownLabel": {
+    "message": "Все скрипты"
+  },
+  "treemap/app/src/util.js | coverageColumnName": {
+    "message": "Доля использования"
+  },
+  "treemap/app/src/util.js | duplicateModulesLabel": {
+    "message": "Повторяющиеся модули"
+  },
+  "treemap/app/src/util.js | resourceBytesLabel": {
+    "message": "Размер в байтах"
+  },
+  "treemap/app/src/util.js | tableColumnName": {
+    "message": "Название"
+  },
+  "treemap/app/src/util.js | toggleTableButtonLabel": {
+    "message": "Показать/скрыть таблицу"
+  },
+  "treemap/app/src/util.js | unusedBytesLabel": {
+    "message": "Неиспользуемые байты"
   }
 }

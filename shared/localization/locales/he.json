@@ -59,6 +59,12 @@
   "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan2": {
     "message": "Discover performance opportunities to improve the experience for long-lived pages and single-page applications."
   },
+  "flow-report/src/i18n/ui-strings.js | highestImpact": {
+    "message": "Highest impact"
+  },
+  "flow-report/src/i18n/ui-strings.js | informativeAuditCount": {
+    "message": "{numInformative, plural,\n    =1 {{numInformative} informative audit}\n    other {{numInformative} informative audits}\n  }"
+  },
   "flow-report/src/i18n/ui-strings.js | mobile": {
     "message": "ניידים"
   },
@@ -70,6 +76,15 @@
   },
   "flow-report/src/i18n/ui-strings.js | navigationReport": {
     "message": "דוח לגבי ניווט"
+  },
+  "flow-report/src/i18n/ui-strings.js | navigationReportCount": {
+    "message": "{numNavigation, plural,\n    =1 {{numNavigation} navigation report}\n    other {{numNavigation} navigation reports}\n  }"
+  },
+  "flow-report/src/i18n/ui-strings.js | passableAuditCount": {
+    "message": "{numPassableAudits, plural,\n    =1 {{numPassableAudits} passable audit}\n    other {{numPassableAudits} passable audits}\n  }"
+  },
+  "flow-report/src/i18n/ui-strings.js | passedAuditCount": {
+    "message": "{numPassed, plural,\n    =1 {{numPassed} audit passed}\n    other {{numPassed} audits passed}\n  }"
   },
   "flow-report/src/i18n/ui-strings.js | ratingAverage": {
     "message": "ממוצעת"
@@ -95,6 +110,9 @@
   "flow-report/src/i18n/ui-strings.js | snapshotReport": {
     "message": "דוח תמונת מצב"
   },
+  "flow-report/src/i18n/ui-strings.js | snapshotReportCount": {
+    "message": "{numSnapshot, plural,\n    =1 {{numSnapshot} snapshot report}\n    other {{numSnapshot} snapshot reports}\n  }"
+  },
   "flow-report/src/i18n/ui-strings.js | summary": {
     "message": "סיכום"
   },
@@ -106,6 +124,9 @@
   },
   "flow-report/src/i18n/ui-strings.js | timespanReport": {
     "message": "דוח על טווח זמן"
+  },
+  "flow-report/src/i18n/ui-strings.js | timespanReportCount": {
+    "message": "{numTimespan, plural,\n    =1 {{numTimespan} timespan report}\n    other {{numTimespan} timespan reports}\n  }"
   },
   "flow-report/src/i18n/ui-strings.js | title": {
     "message": "דוח Lighthouse על מסלולי משתמשים בדף"
@@ -1740,7 +1761,7 @@
     "message": "בדיקות אלה נדרשות עבור שורת הבסיס [רשימת משימות של PWA](https://developers.google.com/web/progressive-web-apps/checklist), אך הן לא נבדקות באופן אוטומטי על ידי Lighthouse. הן לא משפיעות על הניקוד שלך, אך חשוב לאמת אותן באופן ידני."
   },
   "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
-    "message": "Progressive Web App"
+    "message": "PWA"
   },
   "lighthouse-core/config/default-config.js | pwaInstallableGroupTitle": {
     "message": "ניתן להתקנה"
@@ -1896,7 +1917,7 @@
     "message": "גודל ההעברה"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnURL": {
-    "message": "כתובת ה-URL"
+    "message": "כתובת אתר"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnWastedBytes": {
     "message": "פוטנציאל חיסכון"
@@ -2041,30 +2062,6 @@
   },
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "נראה שכתובת ה-URL שסיפקת אינה חוקית."
-  },
-  "treemap/app/src/util.js | allLabel": {
-    "message": "הכול"
-  },
-  "treemap/app/src/util.js | allScriptsDropdownLabel": {
-    "message": "כל הסקריפטים"
-  },
-  "treemap/app/src/util.js | coverageColumnName": {
-    "message": "כיסוי"
-  },
-  "treemap/app/src/util.js | duplicateModulesLabel": {
-    "message": "מודולים כפולים"
-  },
-  "treemap/app/src/util.js | resourceBytesLabel": {
-    "message": "בייטים בשימוש המשאב"
-  },
-  "treemap/app/src/util.js | tableColumnName": {
-    "message": "שם"
-  },
-  "treemap/app/src/util.js | toggleTableButtonLabel": {
-    "message": "החלפת מצב התצוגה של הטבלה"
-  },
-  "treemap/app/src/util.js | unusedBytesLabel": {
-    "message": "בייטים לא בשימוש"
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "להצגת תוכן באנימציה, כשהתוכן לא מוצג במסך כדאי להשתמש ב-[`amp-anim`](https://amp.dev/documentation/components/amp-anim/) כדי לצמצם את השימוש ביחידת העיבוד המרכזית (CPU)."
@@ -2333,6 +2330,9 @@
   "report/renderer/util.js | calculatorLink": {
     "message": "להצגת המחשבון."
   },
+  "report/renderer/util.js | collapseView": {
+    "message": "Collapse view"
+  },
   "report/renderer/util.js | crcInitialNavigation": {
     "message": "ניווט התחלתי"
   },
@@ -2369,8 +2369,14 @@
   "report/renderer/util.js | errorMissingAuditInfo": {
     "message": "שגיאה בדוח: אין מידע על הבדיקה"
   },
+  "report/renderer/util.js | expandView": {
+    "message": "Expand view"
+  },
   "report/renderer/util.js | footerIssue": {
     "message": "דיווח על בעיה"
+  },
+  "report/renderer/util.js | hide": {
+    "message": "Hide"
   },
   "report/renderer/util.js | labDataTitle": {
     "message": "נתוני בדיקה"
@@ -2392,6 +2398,12 @@
   },
   "report/renderer/util.js | passedAuditsGroupTitle": {
     "message": "בדיקות עם ציון 'עובר'"
+  },
+  "report/renderer/util.js | runtimeAnalysisWindow": {
+    "message": "Initial page load"
+  },
+  "report/renderer/util.js | runtimeCustom": {
+    "message": "Custom throttling"
   },
   "report/renderer/util.js | runtimeDesktopEmulation": {
     "message": "אמולציה של מחשב שולחני"
@@ -2420,8 +2432,20 @@
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "סוכן משתמש (רשת)"
   },
+  "report/renderer/util.js | runtimeSingleLoad": {
+    "message": "Single page load"
+  },
+  "report/renderer/util.js | runtimeSingleLoadTooltip": {
+    "message": "This data is taken from a single page load, as opposed to field data summarizing many sessions."
+  },
+  "report/renderer/util.js | runtimeSlow4g": {
+    "message": "Slow 4G throttling"
+  },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "ערך לא ידוע"
+  },
+  "report/renderer/util.js | show": {
+    "message": "Show"
   },
   "report/renderer/util.js | showRelevantAudits": {
     "message": "הצגת הביקורות שרלוונטיות למדדים:"
@@ -2452,5 +2476,29 @@
   },
   "report/renderer/util.js | warningHeader": {
     "message": "אזהרות: "
+  },
+  "treemap/app/src/util.js | allLabel": {
+    "message": "הכול"
+  },
+  "treemap/app/src/util.js | allScriptsDropdownLabel": {
+    "message": "כל הסקריפטים"
+  },
+  "treemap/app/src/util.js | coverageColumnName": {
+    "message": "כיסוי"
+  },
+  "treemap/app/src/util.js | duplicateModulesLabel": {
+    "message": "מודולים כפולים"
+  },
+  "treemap/app/src/util.js | resourceBytesLabel": {
+    "message": "בייטים בשימוש המשאב"
+  },
+  "treemap/app/src/util.js | tableColumnName": {
+    "message": "שם"
+  },
+  "treemap/app/src/util.js | toggleTableButtonLabel": {
+    "message": "החלפת מצב התצוגה של הטבלה"
+  },
+  "treemap/app/src/util.js | unusedBytesLabel": {
+    "message": "בייטים לא בשימוש"
   }
 }

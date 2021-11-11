@@ -59,6 +59,12 @@
   "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan2": {
     "message": "Discover performance opportunities to improve the experience for long-lived pages and single-page applications."
   },
+  "flow-report/src/i18n/ui-strings.js | highestImpact": {
+    "message": "सबसे असरदार ऑडिट"
+  },
+  "flow-report/src/i18n/ui-strings.js | informativeAuditCount": {
+    "message": "{numInformative,plural, =1{जानकारी देने वाला {numInformative} ऑडिट}one{जानकारी देने वाला {numInformative} ऑडिट}other{जानकारी देने वाले {numInformative} ऑडिट}}"
+  },
   "flow-report/src/i18n/ui-strings.js | mobile": {
     "message": "मोबाइल"
   },
@@ -70,6 +76,15 @@
   },
   "flow-report/src/i18n/ui-strings.js | navigationReport": {
     "message": "नेविगेशन रिपोर्ट"
+  },
+  "flow-report/src/i18n/ui-strings.js | navigationReportCount": {
+    "message": "{numNavigation,plural, =1{{numNavigation} नेविगेशन रिपोर्ट}one{{numNavigation} नेविगेशन रिपोर्ट}other{{numNavigation} नेविगेशन रिपोर्ट}}"
+  },
+  "flow-report/src/i18n/ui-strings.js | passableAuditCount": {
+    "message": "{numPassableAudits,plural, =1{{numPassableAudits} पासेबल ऑडिट}one{{numPassableAudits} पासेबल ऑडिट}other{{numPassableAudits} पासेबल ऑडिट}}"
+  },
+  "flow-report/src/i18n/ui-strings.js | passedAuditCount": {
+    "message": "{numPassed,plural, =1{{numPassed} ऑडिट पास किया गया}one{{numPassed} ऑडिट पास किया गया}other{{numPassed} ऑडिट पास किए गए}}"
   },
   "flow-report/src/i18n/ui-strings.js | ratingAverage": {
     "message": "ठीक-ठाक"
@@ -95,6 +110,9 @@
   "flow-report/src/i18n/ui-strings.js | snapshotReport": {
     "message": "किसी खास समय पर, वेब पेज की स्थिति बताने वाली रिपोर्ट"
   },
+  "flow-report/src/i18n/ui-strings.js | snapshotReportCount": {
+    "message": "{numSnapshot,plural, =1{{numSnapshot} स्नैपशॉट रिपोर्ट}one{{numSnapshot} स्नैपशॉट रिपोर्ट}other{{numSnapshot} स्नैपशॉट रिपोर्ट}}"
+  },
   "flow-report/src/i18n/ui-strings.js | summary": {
     "message": "खास जानकारी"
   },
@@ -106,6 +124,9 @@
   },
   "flow-report/src/i18n/ui-strings.js | timespanReport": {
     "message": "पेज पर उपयोगकर्ता के इंटरैक्शन की जानकारी देने वाली रिपोर्ट"
+  },
+  "flow-report/src/i18n/ui-strings.js | timespanReportCount": {
+    "message": "{numTimespan,plural, =1{{numTimespan} टाइमस्पैन रिपोर्ट}one{{numTimespan} टाइमस्पैन रिपोर्ट}other{{numTimespan} टाइमस्पैन रिपोर्ट}}"
   },
   "flow-report/src/i18n/ui-strings.js | title": {
     "message": "Lighthouse की यूज़र फ़्लो रिपोर्ट"
@@ -1740,7 +1761,7 @@
     "message": "इस तरह की जांच, बेसलाइन [PWA चेकलिस्ट](https://developers.google.com/web/progressive-web-apps/checklist) के लिए ज़रूरी हैं, लेकिन Lighthouse इनकी जांच अपने आप नहीं करता है. वे आपके स्कोर पर असर नहीं डालते हैं, लेकिन इनकी मैन्युअल तरीके से पुष्टि करना ज़रूरी है."
   },
   "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
-    "message": "प्रगतिशील वेब ऐप्लिकेशन"
+    "message": "PWA"
   },
   "lighthouse-core/config/default-config.js | pwaInstallableGroupTitle": {
     "message": "इंस्टॉल किया जा सकता है"
@@ -2042,30 +2063,6 @@
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "आपका दिया हुआ यूआरएल गलत लगता है."
   },
-  "treemap/app/src/util.js | allLabel": {
-    "message": "सभी"
-  },
-  "treemap/app/src/util.js | allScriptsDropdownLabel": {
-    "message": "सभी स्क्रिप्ट"
-  },
-  "treemap/app/src/util.js | coverageColumnName": {
-    "message": "कवरेज"
-  },
-  "treemap/app/src/util.js | duplicateModulesLabel": {
-    "message": "डुप्लीकेट मॉड्यूल"
-  },
-  "treemap/app/src/util.js | resourceBytesLabel": {
-    "message": "फ़ाइल का साइज़ (बाइट में)"
-  },
-  "treemap/app/src/util.js | tableColumnName": {
-    "message": "नाम"
-  },
-  "treemap/app/src/util.js | toggleTableButtonLabel": {
-    "message": "टेबल को टॉगल करें"
-  },
-  "treemap/app/src/util.js | unusedBytesLabel": {
-    "message": "इस्तेमाल न की गई बाइट की संख्या"
-  },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "ऐनिमेशन वाले कॉन्टेंट के लिए, [`amp-anim`](https://amp.dev/documentation/components/amp-anim/) का इस्तेमाल करें. इससे, कॉन्टेंट के ऑफ़स्क्रीन होने पर सीपीयू का इस्तेमाल कम होगा."
   },
@@ -2333,6 +2330,9 @@
   "report/renderer/util.js | calculatorLink": {
     "message": "कैलकुलेटर देखें."
   },
+  "report/renderer/util.js | collapseView": {
+    "message": "व्यू को छोटा करें"
+  },
   "report/renderer/util.js | crcInitialNavigation": {
     "message": "शुरुआती नेविगेशन"
   },
@@ -2369,8 +2369,14 @@
   "report/renderer/util.js | errorMissingAuditInfo": {
     "message": "गड़बड़ी की रिपोर्ट करें: कोई ऑडिट जानकारी नहीं"
   },
+  "report/renderer/util.js | expandView": {
+    "message": "व्यू को बड़ा करें"
+  },
   "report/renderer/util.js | footerIssue": {
     "message": "समस्या की रिपोर्ट करें"
+  },
+  "report/renderer/util.js | hide": {
+    "message": "छिपाएं"
   },
   "report/renderer/util.js | labDataTitle": {
     "message": "किसी नई या दुबारा जाँची जाने वाली ऐप्लिकेशन के लिए तैयार किया गया डेटा"
@@ -2392,6 +2398,12 @@
   },
   "report/renderer/util.js | passedAuditsGroupTitle": {
     "message": "पास हुए ऑडिट"
+  },
+  "report/renderer/util.js | runtimeAnalysisWindow": {
+    "message": "शुरुआती पेज लोड"
+  },
+  "report/renderer/util.js | runtimeCustom": {
+    "message": "कस्टम थ्रॉटलिंग"
   },
   "report/renderer/util.js | runtimeDesktopEmulation": {
     "message": "एम्युलेट किया गया डेस्कटॉप"
@@ -2420,8 +2432,20 @@
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "उपयोगकर्ता एजेंट (नेटवर्क)"
   },
+  "report/renderer/util.js | runtimeSingleLoad": {
+    "message": "एक पेज लोड"
+  },
+  "report/renderer/util.js | runtimeSingleLoadTooltip": {
+    "message": "यह डेटा, कई सेशन के बारे में जानकारी देने वाले फ़ील्ड डेटा के बजाय, लोड हुए एक पेज से लिया गया है."
+  },
+  "report/renderer/util.js | runtimeSlow4g": {
+    "message": "धीमी 4G थ्रॉटलिंग"
+  },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "अज्ञात"
+  },
+  "report/renderer/util.js | show": {
+    "message": "दिखाएं"
   },
   "report/renderer/util.js | showRelevantAudits": {
     "message": "वे ऑडिट दिखाएं जो इनके लिए काम के हों:"
@@ -2452,5 +2476,29 @@
   },
   "report/renderer/util.js | warningHeader": {
     "message": "चेतावनियां: "
+  },
+  "treemap/app/src/util.js | allLabel": {
+    "message": "सभी"
+  },
+  "treemap/app/src/util.js | allScriptsDropdownLabel": {
+    "message": "सभी स्क्रिप्ट"
+  },
+  "treemap/app/src/util.js | coverageColumnName": {
+    "message": "कवरेज"
+  },
+  "treemap/app/src/util.js | duplicateModulesLabel": {
+    "message": "डुप्लीकेट मॉड्यूल"
+  },
+  "treemap/app/src/util.js | resourceBytesLabel": {
+    "message": "फ़ाइल का साइज़ (बाइट में)"
+  },
+  "treemap/app/src/util.js | tableColumnName": {
+    "message": "नाम"
+  },
+  "treemap/app/src/util.js | toggleTableButtonLabel": {
+    "message": "टेबल को टॉगल करें"
+  },
+  "treemap/app/src/util.js | unusedBytesLabel": {
+    "message": "इस्तेमाल न की गई बाइट की संख्या"
   }
 }

@@ -3,7 +3,7 @@
     "message": "Visi pārskati"
   },
   "flow-report/src/i18n/ui-strings.js | categories": {
-    "message": "Categories"
+    "message": "Kategorijas"
   },
   "flow-report/src/i18n/ui-strings.js | categoryAccessibility": {
     "message": "Pieejamība"
@@ -24,40 +24,46 @@
     "message": "Datoriem"
   },
   "flow-report/src/i18n/ui-strings.js | helpDialogTitle": {
-    "message": "Understanding the Lighthouse Flow Report"
+    "message": "Par Lighthouse plūsmas pārskatu"
   },
   "flow-report/src/i18n/ui-strings.js | helpLabel": {
-    "message": "Understanding Flows"
+    "message": "Par plūsmām"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionNavigation": {
-    "message": "Use Navigation reports to..."
+    "message": "Izmantojiet navigācijas pārskatus, lai…"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionSnapshot": {
-    "message": "Use Snapshot reports to..."
+    "message": "Izmantojiet momentuzņēmumu pārskatus, lai…"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionTimespan": {
-    "message": "Use Timespan reports to..."
+    "message": "Izmantojiet laika posma pārskatus, lai…"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation1": {
-    "message": "Obtain a Lighthouse Performance score."
+    "message": "Iegūstiet Lighthouse veiktspējas rādītāju."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation2": {
-    "message": "Measure page load Performance metrics such as Largest Contentful Paint and Speed Index."
+    "message": "Nosakiet tādus lapas ielādes veiktspējas rādītājus kā lielākais satura atveidojums un ātruma indekss."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation3": {
-    "message": "Assess Progressive Web App capabilities."
+    "message": "Izvērtējiet progresīvo tīmekļa lietotņu iespējas."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseSnapshot1": {
-    "message": "Find accessibility issues in single page applications or complex forms."
+    "message": "Atrodiet pieejamības problēmas vienas lapas lietojumprogrammās vai sarežģītās veidlapās."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseSnapshot2": {
-    "message": "Evaluate best practices of menus and UI elements hidden behind interaction."
+    "message": "Izvērtējiet paraugprakses principus izvēlnēm un lietotāja saskarnes elementiem, kas atkarīgi no mijiedarbības."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan1": {
-    "message": "Measure layout shifts and JavaScript execution time on a series of interactions."
+    "message": "Izmēriet izkārtojuma nobīdes un JavaScript izpildes laiku vairāku mijiedarbību virknei."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan2": {
-    "message": "Discover performance opportunities to improve the experience for long-lived pages and single-page applications."
+    "message": "Atklājiet veiktspējas iespējas, lai uzlabotu pieredzi ilgi atvērtās lapās un vienas lapas lietojumprogrammās."
+  },
+  "flow-report/src/i18n/ui-strings.js | highestImpact": {
+    "message": "Highest impact"
+  },
+  "flow-report/src/i18n/ui-strings.js | informativeAuditCount": {
+    "message": "{numInformative, plural,\n    =1 {{numInformative} informative audit}\n    other {{numInformative} informative audits}\n  }"
   },
   "flow-report/src/i18n/ui-strings.js | mobile": {
     "message": "Mobilajām ierīcēm"
@@ -66,10 +72,19 @@
     "message": "Lapas ielāde"
   },
   "flow-report/src/i18n/ui-strings.js | navigationLongDescription": {
-    "message": "Navigation reports analyze a single page load, exactly like the original Lighthouse reports."
+    "message": "Navigācijas pārskatos tiek analizēta vienas lapas ielāde, tieši tāpat kā sākotnējos Lighthouse pārskatos."
   },
   "flow-report/src/i18n/ui-strings.js | navigationReport": {
     "message": "Navigācijas pārskats"
+  },
+  "flow-report/src/i18n/ui-strings.js | navigationReportCount": {
+    "message": "{numNavigation, plural,\n    =1 {{numNavigation} navigation report}\n    other {{numNavigation} navigation reports}\n  }"
+  },
+  "flow-report/src/i18n/ui-strings.js | passableAuditCount": {
+    "message": "{numPassableAudits, plural,\n    =1 {{numPassableAudits} passable audit}\n    other {{numPassableAudits} passable audits}\n  }"
+  },
+  "flow-report/src/i18n/ui-strings.js | passedAuditCount": {
+    "message": "{numPassed, plural,\n    =1 {{numPassed} audit passed}\n    other {{numPassed} audits passed}\n  }"
   },
   "flow-report/src/i18n/ui-strings.js | ratingAverage": {
     "message": "Viduvējs līmenis"
@@ -84,16 +99,19 @@
     "message": "Labs līmenis"
   },
   "flow-report/src/i18n/ui-strings.js | save": {
-    "message": "Save"
+    "message": "Saglabāt"
   },
   "flow-report/src/i18n/ui-strings.js | snapshotDescription": {
     "message": "Lapas tvertais statuss"
   },
   "flow-report/src/i18n/ui-strings.js | snapshotLongDescription": {
-    "message": "Snapshot reports analyze the page in a particular state, typically after user interactions."
+    "message": "Momentuzņēmumu pārskatos tiek analizēts konkrēts lapas stāvoklis (parasti pēc lietotāju veiktas mijiedarbības)."
   },
   "flow-report/src/i18n/ui-strings.js | snapshotReport": {
     "message": "Momentuzņēmuma pārskats"
+  },
+  "flow-report/src/i18n/ui-strings.js | snapshotReportCount": {
+    "message": "{numSnapshot, plural,\n    =1 {{numSnapshot} snapshot report}\n    other {{numSnapshot} snapshot reports}\n  }"
   },
   "flow-report/src/i18n/ui-strings.js | summary": {
     "message": "Kopsavilkums"
@@ -102,10 +120,13 @@
     "message": "Lietotāju mijiedarbība"
   },
   "flow-report/src/i18n/ui-strings.js | timespanLongDescription": {
-    "message": "Timespan reports analyze an arbitrary period of time, typically containing user interactions."
+    "message": "Laika posma pārskatos tiek analizēti jebkādi laika periodi, kas parasti ietver lietotāja mijiedarbību."
   },
   "flow-report/src/i18n/ui-strings.js | timespanReport": {
     "message": "Laika posma pārskats"
+  },
+  "flow-report/src/i18n/ui-strings.js | timespanReportCount": {
+    "message": "{numTimespan, plural,\n    =1 {{numTimespan} timespan report}\n    other {{numTimespan} timespan reports}\n  }"
   },
   "flow-report/src/i18n/ui-strings.js | title": {
     "message": "Lighthouse lietotāju plūsmas pārskats"
@@ -1086,7 +1107,7 @@
     "message": "Tas ir lielākais skatvietā atveidotais satura elements. [Uzzināt vairāk](https://web.dev/lighthouse-largest-contentful-paint/)"
   },
   "lighthouse-core/audits/largest-contentful-paint-element.js | title": {
-    "message": "Lielākā satura marķējuma elements"
+    "message": "Lielākais satura atveidojuma elements"
   },
   "lighthouse-core/audits/layout-shift-elements.js | columnContribution": {
     "message": "CLS daļa"
@@ -1098,13 +1119,13 @@
     "message": "Centieties novērst lielas izkārtojuma nobīdes"
   },
   "lighthouse-core/audits/lcp-lazy-loaded.js | description": {
-    "message": "Attēli pirmajā ekrānā, kam tiek veikta atliktā ielāde, tiek atveidoti vēlāk lapas darbības ciklā. Tas var aizkavēt lielāko satura marķējumu. [Uzziniet vairāk](https://web.dev/lcp-lazy-loading/)."
+    "message": "Attēli pirmajā ekrānā, kam tiek veikta atliktā ielāde, tiek atveidoti vēlāk lapas darbības ciklā. Tas var aizkavēt lielāko satura atveidojumu. [Uzziniet vairāk](https://web.dev/lcp-lazy-loading/)."
   },
   "lighthouse-core/audits/lcp-lazy-loaded.js | failureTitle": {
-    "message": "Lielākā satura marķējuma attēlam tika veikta atliktā ielāde"
+    "message": "Lielākā satura atveidojuma attēlam tika veikta atliktā ielāde"
   },
   "lighthouse-core/audits/lcp-lazy-loaded.js | title": {
-    "message": "Lielākā satura marķējuma attēlam netika veikta atliktā ielāde"
+    "message": "Lielākā satura atveidojuma attēlam netika veikta atliktā ielāde"
   },
   "lighthouse-core/audits/long-tasks.js | description": {
     "message": "Šeit ir norādīti galvenā pavediena uzdevumi ar visilgāko izpildes laiku, lai palīdzētu noteikt, kuri uzdevumi visvairāk palielina ievades aizkavi. [Uzzināt vairāk](https://web.dev/long-tasks-devtools/)"
@@ -1167,7 +1188,7 @@
     "message": "Laiks līdz interaktivitātei ir laika apjoms, kas nepieciešams, lai lapa kļūtu pilnībā interaktīva. [Uzziniet vairāk](https://web.dev/interactive/)."
   },
   "lighthouse-core/audits/metrics/largest-contentful-paint.js | description": {
-    "message": "Lielākais satura marķējums norāda laiku, kurā tiek atveidots apjomīgākais teksts vai attēls. [Uzziniet vairāk](https://web.dev/lighthouse-largest-contentful-paint/)."
+    "message": "Lielākais satura atveidojums norāda laiku, kurā tiek atveidots apjomīgākais teksts vai attēls. [Uzziniet vairāk](https://web.dev/lighthouse-largest-contentful-paint/)."
   },
   "lighthouse-core/audits/metrics/max-potential-fid.js | description": {
     "message": "Iespējamā maksimālā pirmās ievades aizkave, ar ko jūsu lietotāji var saskarties, ir ilgākā uzdevuma ilgums. [Uzziniet vairāk](https://web.dev/lighthouse-max-potential-fid/)."
@@ -1248,7 +1269,7 @@
     "message": "Iepriekš ielādējiet attēlu, ko izmanto LCP elements, lai uzlabotu savu LCP laiku. [Uzziniet vairāk](https://web.dev/optimize-lcp/#preload-important-resources)."
   },
   "lighthouse-core/audits/preload-lcp-image.js | title": {
-    "message": "Lielākā satura marķējuma attēla iepriekšēja ielāde"
+    "message": "Lielākā satura atveidojuma attēla iepriekšēja ielāde"
   },
   "lighthouse-core/audits/redirects.js | description": {
     "message": "Novirzīšana rada papildu aizkaves pirms lapas ielādes. [Uzziniet vairāk](https://web.dev/redirects/)."
@@ -1740,7 +1761,7 @@
     "message": "Šīs pārbaudes ir vajadzīgas saskaņā ar standarta [PWA kontrolsarakstu](https://developers.google.com/web/progressive-web-apps/checklist), taču Lighthouse neveic tās automātiski. Tās neietekmē jūsu rezultātu, taču ir svarīgi pārbaudīt šos lietotnes aspektus manuāli."
   },
   "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
-    "message": "Progresīvā tīmekļa lietotne"
+    "message": "PWA"
   },
   "lighthouse-core/config/default-config.js | pwaInstallableGroupTitle": {
     "message": "Instalēšana"
@@ -2042,30 +2063,6 @@
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "Šķiet, ka jūsu norādītais URL nav derīgs."
   },
-  "treemap/app/src/util.js | allLabel": {
-    "message": "Visi"
-  },
-  "treemap/app/src/util.js | allScriptsDropdownLabel": {
-    "message": "Visi skripti"
-  },
-  "treemap/app/src/util.js | coverageColumnName": {
-    "message": "Tvērums"
-  },
-  "treemap/app/src/util.js | duplicateModulesLabel": {
-    "message": "Dublēti moduļi"
-  },
-  "treemap/app/src/util.js | resourceBytesLabel": {
-    "message": "Faila lielums baitos"
-  },
-  "treemap/app/src/util.js | tableColumnName": {
-    "message": "Nosaukums"
-  },
-  "treemap/app/src/util.js | toggleTableButtonLabel": {
-    "message": "Pārslēgt tabulu"
-  },
-  "treemap/app/src/util.js | unusedBytesLabel": {
-    "message": "Neizmantotais apjoms baitos"
-  },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "Animētam saturam izmantojiet komponentu [`amp-anim`](https://amp.dev/documentation/components/amp-anim/), lai samazinātu centrālā procesora lietojumu, kamēr saturs nav redzams ekrānā."
   },
@@ -2333,6 +2330,9 @@
   "report/renderer/util.js | calculatorLink": {
     "message": "Skatiet kalkulatoru."
   },
+  "report/renderer/util.js | collapseView": {
+    "message": "Collapse view"
+  },
   "report/renderer/util.js | crcInitialNavigation": {
     "message": "Sākotnējā navigācija"
   },
@@ -2369,8 +2369,14 @@
   "report/renderer/util.js | errorMissingAuditInfo": {
     "message": "Pārskata kļūda: nav pārbaudes informācijas"
   },
+  "report/renderer/util.js | expandView": {
+    "message": "Expand view"
+  },
   "report/renderer/util.js | footerIssue": {
     "message": "Iesniegt problēmu"
+  },
+  "report/renderer/util.js | hide": {
+    "message": "Hide"
   },
   "report/renderer/util.js | labDataTitle": {
     "message": "Laboratorijas dati"
@@ -2392,6 +2398,12 @@
   },
   "report/renderer/util.js | passedAuditsGroupTitle": {
     "message": "Izpildītās pārbaudes"
+  },
+  "report/renderer/util.js | runtimeAnalysisWindow": {
+    "message": "Initial page load"
+  },
+  "report/renderer/util.js | runtimeCustom": {
+    "message": "Custom throttling"
   },
   "report/renderer/util.js | runtimeDesktopEmulation": {
     "message": "Emulēts dators"
@@ -2420,8 +2432,20 @@
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "Lietotāja aģents (tīkls)"
   },
+  "report/renderer/util.js | runtimeSingleLoad": {
+    "message": "Single page load"
+  },
+  "report/renderer/util.js | runtimeSingleLoadTooltip": {
+    "message": "This data is taken from a single page load, as opposed to field data summarizing many sessions."
+  },
+  "report/renderer/util.js | runtimeSlow4g": {
+    "message": "Slow 4G throttling"
+  },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "Nezināms"
+  },
+  "report/renderer/util.js | show": {
+    "message": "Show"
   },
   "report/renderer/util.js | showRelevantAudits": {
     "message": "Rādīt pārbaudes, kas atbilst:"
@@ -2452,5 +2476,29 @@
   },
   "report/renderer/util.js | warningHeader": {
     "message": "Brīdinājumi: "
+  },
+  "treemap/app/src/util.js | allLabel": {
+    "message": "Visi"
+  },
+  "treemap/app/src/util.js | allScriptsDropdownLabel": {
+    "message": "Visi skripti"
+  },
+  "treemap/app/src/util.js | coverageColumnName": {
+    "message": "Tvērums"
+  },
+  "treemap/app/src/util.js | duplicateModulesLabel": {
+    "message": "Dublēti moduļi"
+  },
+  "treemap/app/src/util.js | resourceBytesLabel": {
+    "message": "Faila lielums baitos"
+  },
+  "treemap/app/src/util.js | tableColumnName": {
+    "message": "Nosaukums"
+  },
+  "treemap/app/src/util.js | toggleTableButtonLabel": {
+    "message": "Pārslēgt tabulu"
+  },
+  "treemap/app/src/util.js | unusedBytesLabel": {
+    "message": "Neizmantotais apjoms baitos"
   }
 }

@@ -3,7 +3,7 @@
     "message": "అన్ని రిపోర్ట్‌లు"
   },
   "flow-report/src/i18n/ui-strings.js | categories": {
-    "message": "Categories"
+    "message": "కేటగిరీలు"
   },
   "flow-report/src/i18n/ui-strings.js | categoryAccessibility": {
     "message": "యాక్సెసిబిలిటీ"
@@ -24,40 +24,46 @@
     "message": "డెస్క్‌టాప్"
   },
   "flow-report/src/i18n/ui-strings.js | helpDialogTitle": {
-    "message": "Understanding the Lighthouse Flow Report"
+    "message": "Lighthouse ఫ్లో రిపోర్ట్‌ను అర్థం చేసుకోవడం"
   },
   "flow-report/src/i18n/ui-strings.js | helpLabel": {
-    "message": "Understanding Flows"
+    "message": "ఫ్లో రిపోర్ట్‌లను అర్థం చేసుకోవడం"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionNavigation": {
-    "message": "Use Navigation reports to..."
+    "message": "నావిగేషన్ రిపోర్ట్‌లను ఉపయోగించి..."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionSnapshot": {
-    "message": "Use Snapshot reports to..."
+    "message": "స్నాప్‌షాట్ రిపోర్ట్‌లను ఉపయోగించి..."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionTimespan": {
-    "message": "Use Timespan reports to..."
+    "message": "కాలవ్యవధి రిపోర్ట్‌లను ఉపయోగించి..."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation1": {
-    "message": "Obtain a Lighthouse Performance score."
+    "message": "Lighthouse పనితీరు స్కోర్‌ను పొందండి."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation2": {
-    "message": "Measure page load Performance metrics such as Largest Contentful Paint and Speed Index."
+    "message": "కంటెంట్ కలిగి ఉండే అతిపెద్ద పెయింట్, వేగం ఇండెక్స్ వంటి పేజీ లోడ్ పనితీరు కొలమానాలను లెక్కించండి."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation3": {
-    "message": "Assess Progressive Web App capabilities."
+    "message": "ప్రోగ్రెసివ్ వెబ్ యాప్ సామర్థ్యాలను అంచనా వేయండి."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseSnapshot1": {
-    "message": "Find accessibility issues in single page applications or complex forms."
+    "message": "సింగిల్ పేజీ యాప్‌లు లేదా సంక్లిష్ట ఫారమ్‌లలో ఉన్న యాక్సెసిబిలిటీ సమస్యలను కనుగొనండి."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseSnapshot2": {
-    "message": "Evaluate best practices of menus and UI elements hidden behind interaction."
+    "message": "ఇంటరాక్షన్ లోపల ఉన్న మెనూలు, UI ఎలిమెంట్‌ల బెస్ట్ ప్రాక్టీసులను పరిశీలించండి."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan1": {
-    "message": "Measure layout shifts and JavaScript execution time on a series of interactions."
+    "message": "వివిధ ఇంటరాక్షన్‌లకు సంబంధించిన లేఅవుట్ షిఫ్ట్‌లను, JavaScript అమలయ్యే సమయాన్ని లెక్కించండి."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan2": {
-    "message": "Discover performance opportunities to improve the experience for long-lived pages and single-page applications."
+    "message": "దీర్ఘకాలిక పేజీలు, సింగిల్-పేజీ యాప్‌ల అనుభవాన్ని మెరుగుపరచడానికి పనితీరు అవకాశాలను కనుగొనండి."
+  },
+  "flow-report/src/i18n/ui-strings.js | highestImpact": {
+    "message": "అత్యంత ప్రభావవంతమైనవి"
+  },
+  "flow-report/src/i18n/ui-strings.js | informativeAuditCount": {
+    "message": "{numInformative,plural, =1{{numInformative} సమాచారాత్మక ఆడిట్}other{{numInformative} సమాచారాత్మక ఆడిట్‌లు}}"
   },
   "flow-report/src/i18n/ui-strings.js | mobile": {
     "message": "మొబైల్"
@@ -66,10 +72,19 @@
     "message": "పేజీ లోడ్"
   },
   "flow-report/src/i18n/ui-strings.js | navigationLongDescription": {
-    "message": "Navigation reports analyze a single page load, exactly like the original Lighthouse reports."
+    "message": "నావిగేషన్ రిపోర్ట్‌లు, ఒరిజినల్ Lighthouse రిపోర్ట్‌ల మాదిరిగానే సింగిల్ పేజీ లోడ్‌ను విశ్లేషిస్తాయి."
   },
   "flow-report/src/i18n/ui-strings.js | navigationReport": {
     "message": "నావిగేషన్ రిపోర్ట్"
+  },
+  "flow-report/src/i18n/ui-strings.js | navigationReportCount": {
+    "message": "{numNavigation,plural, =1{{numNavigation} నావిగేషన్ రిపోర్ట్}other{{numNavigation} నావిగేషన్ రిపోర్ట్‌లు}}"
+  },
+  "flow-report/src/i18n/ui-strings.js | passableAuditCount": {
+    "message": "{numPassableAudits,plural, =1{పాస్ అయ్యే అవకాశం ఉన్న {numPassableAudits} ఆడిట్}other{పాస్ అయ్యే అవకాశం ఉన్న {numPassableAudits} ఆడిట్‌లు}}"
+  },
+  "flow-report/src/i18n/ui-strings.js | passedAuditCount": {
+    "message": "{numPassed,plural, =1{{numPassed} ఆడిట్ పాస్ అయ్యింది}other{{numPassed} ఆడిట్‌లు పాస్ అయ్యాయి}}"
   },
   "flow-report/src/i18n/ui-strings.js | ratingAverage": {
     "message": "ఓ మోస్తరుగా ఉంది"
@@ -84,16 +99,19 @@
     "message": "బాగుంది"
   },
   "flow-report/src/i18n/ui-strings.js | save": {
-    "message": "Save"
+    "message": "సేవ్ చేయండి"
   },
   "flow-report/src/i18n/ui-strings.js | snapshotDescription": {
     "message": "పేజీ తాలూకు క్యాప్చర్ చేయబడిన స్టేట్"
   },
   "flow-report/src/i18n/ui-strings.js | snapshotLongDescription": {
-    "message": "Snapshot reports analyze the page in a particular state, typically after user interactions."
+    "message": "స్నాప్‌షాట్ రిపోర్ట్‌లు, ఒక నిర్దిష్ట స్థితిలో ఉన్న పేజీని విశ్లేషిస్తాయి, సాధారణంగా ఈ విశ్లేషణ అనేది యూజర్ ఇంటరాక్షన్‌ల తర్వాత జరుగుతుంది."
   },
   "flow-report/src/i18n/ui-strings.js | snapshotReport": {
     "message": "స్నాప్‌షాట్ రిపోర్ట్"
+  },
+  "flow-report/src/i18n/ui-strings.js | snapshotReportCount": {
+    "message": "{numSnapshot,plural, =1{{numSnapshot} స్నాప్‌షాట్ రిపోర్ట్}other{{numSnapshot} స్నాప్‌షాట్ రిపోర్ట్‌లు}}"
   },
   "flow-report/src/i18n/ui-strings.js | summary": {
     "message": "సారాంశం"
@@ -102,10 +120,13 @@
     "message": "యూజర్ ఇంటరాక్షన్‌లు"
   },
   "flow-report/src/i18n/ui-strings.js | timespanLongDescription": {
-    "message": "Timespan reports analyze an arbitrary period of time, typically containing user interactions."
+    "message": "కాలవ్యవధి రిపోర్ట్‌లు ఒక యాదృచ్ఛిక సమయ వ్యవధిని విశ్లేషిస్తాయి, సాధారణంగా ఈ వ్యవధి యూజర్ ఇంటరాక్షన్‌లను కలిగి ఉంటుంది."
   },
   "flow-report/src/i18n/ui-strings.js | timespanReport": {
     "message": "పేజీలో యూజర్ ఇంటరాక్టివిటీకి సంబంధించిన రిపోర్ట్"
+  },
+  "flow-report/src/i18n/ui-strings.js | timespanReportCount": {
+    "message": "{numTimespan,plural, =1{{numTimespan} కాలవ్యవధి రిపోర్ట్}other{{numTimespan} కాలవ్యవధి రిపోర్ట్‌లు}}"
   },
   "flow-report/src/i18n/ui-strings.js | title": {
     "message": "Lighthouse యూజర్ ఫ్లో రిపోర్ట్"
@@ -1740,7 +1761,7 @@
     "message": "మౌళికమైన [PWA తనిఖీ లిస్ట్‌](https://developers.google.com/web/progressive-web-apps/checklist) ప్రకారం ఈ తనిఖీలను తప్పనిసరిగా నిర్వహించాలి, కానీ ఇవి Lighthouse ద్వారా ఆటోమేటిక్‌గా తనిఖీ చేయబడవు. ఇవి మీ స్కోర్‌పై ప్రభావం చూపవు, కానీ మీరు వీటిని మాన్యువల్‌గా అయినా ధృవీకరించడం ముఖ్యం."
   },
   "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
-    "message": "ప్రోగ్రెసివ్ వెబ్ యాప్"
+    "message": "PWA"
   },
   "lighthouse-core/config/default-config.js | pwaInstallableGroupTitle": {
     "message": "ఇన్‌స్టాల్ చేయదగినవి"
@@ -2042,30 +2063,6 @@
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "మీరు అందించిన URL చెల్లనిదిగా కనిపిస్తోంది."
   },
-  "treemap/app/src/util.js | allLabel": {
-    "message": "అన్నీ"
-  },
-  "treemap/app/src/util.js | allScriptsDropdownLabel": {
-    "message": "అన్ని స్క్రిప్ట్‌లు"
-  },
-  "treemap/app/src/util.js | coverageColumnName": {
-    "message": "కవరేజీ"
-  },
-  "treemap/app/src/util.js | duplicateModulesLabel": {
-    "message": "డూప్లికేట్ మాడ్యూల్‌లు"
-  },
-  "treemap/app/src/util.js | resourceBytesLabel": {
-    "message": "రిసోర్స్ బైట్‌లు"
-  },
-  "treemap/app/src/util.js | tableColumnName": {
-    "message": "పేరు"
-  },
-  "treemap/app/src/util.js | toggleTableButtonLabel": {
-    "message": "టోగుల్ టేబుల్"
-  },
-  "treemap/app/src/util.js | unusedBytesLabel": {
-    "message": "వినియోగించని బైట్‌లు"
-  },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "యానిమేట్ చేసిన కంటెంట్ కోసం, కంటెంట్ ఆఫ్‌స్క్రీన్‌లో ఉన్నప్పుడు CPU వినియోగాన్ని తగ్గించడానికి, [`amp-anim`](https://amp.dev/documentation/components/amp-anim/)ను ఉపయోగించండి."
   },
@@ -2333,6 +2330,9 @@
   "report/renderer/util.js | calculatorLink": {
     "message": "కాలిక్యులేటర్‌ను చూడండి."
   },
+  "report/renderer/util.js | collapseView": {
+    "message": "వీక్షణను కుదించండి"
+  },
   "report/renderer/util.js | crcInitialNavigation": {
     "message": "ప్రారంభ నావిగేషన్"
   },
@@ -2369,8 +2369,14 @@
   "report/renderer/util.js | errorMissingAuditInfo": {
     "message": "రిపోర్ట్‌ ఎర్రర్: ఆడిట్ సమాచారం లేదు"
   },
+  "report/renderer/util.js | expandView": {
+    "message": "వీక్షణను విస్తరించండి"
+  },
   "report/renderer/util.js | footerIssue": {
     "message": "సమస్యను ఫైల్ చేయండి"
+  },
+  "report/renderer/util.js | hide": {
+    "message": "దాచండి"
   },
   "report/renderer/util.js | labDataTitle": {
     "message": "ల్యాబ్ డేటా"
@@ -2392,6 +2398,12 @@
   },
   "report/renderer/util.js | passedAuditsGroupTitle": {
     "message": "ఉత్తీర్ణత సాధించిన ఆడిట్‌లు"
+  },
+  "report/renderer/util.js | runtimeAnalysisWindow": {
+    "message": "మొదటి పేజీ లోడ్"
+  },
+  "report/renderer/util.js | runtimeCustom": {
+    "message": "అనుకూల త్రోట్లింగ్"
   },
   "report/renderer/util.js | runtimeDesktopEmulation": {
     "message": "అనుకరణ డెస్క్‌టాప్"
@@ -2420,8 +2432,20 @@
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "వెబ్‌సైట్ యాక్సెస్ సాధనం (నెట్‌వర్క్)"
   },
+  "report/renderer/util.js | runtimeSingleLoad": {
+    "message": "సింగిల్ పేజీ లోడ్"
+  },
+  "report/renderer/util.js | runtimeSingleLoadTooltip": {
+    "message": "అనేక సెషన్‌లను కలిగిన ఫీల్డ్ డేటా లాగా కాకుండా, ఈ డేటా సింగిల్ పేజీ లోడ్ నుండి తీసుకోబడింది."
+  },
+  "report/renderer/util.js | runtimeSlow4g": {
+    "message": "నెమ్మదిగా ఉన్న 4G థ్రోట్లింగ్"
+  },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "తెలియదు"
+  },
+  "report/renderer/util.js | show": {
+    "message": "చూపండి"
   },
   "report/renderer/util.js | showRelevantAudits": {
     "message": "వీటికి సంబంధించిన ఆడిట్‌లను చూపండి:"
@@ -2452,5 +2476,29 @@
   },
   "report/renderer/util.js | warningHeader": {
     "message": "హెచ్చరికలు: "
+  },
+  "treemap/app/src/util.js | allLabel": {
+    "message": "అన్నీ"
+  },
+  "treemap/app/src/util.js | allScriptsDropdownLabel": {
+    "message": "అన్ని స్క్రిప్ట్‌లు"
+  },
+  "treemap/app/src/util.js | coverageColumnName": {
+    "message": "కవరేజీ"
+  },
+  "treemap/app/src/util.js | duplicateModulesLabel": {
+    "message": "డూప్లికేట్ మాడ్యూల్‌లు"
+  },
+  "treemap/app/src/util.js | resourceBytesLabel": {
+    "message": "రిసోర్స్ బైట్‌లు"
+  },
+  "treemap/app/src/util.js | tableColumnName": {
+    "message": "పేరు"
+  },
+  "treemap/app/src/util.js | toggleTableButtonLabel": {
+    "message": "టోగుల్ టేబుల్"
+  },
+  "treemap/app/src/util.js | unusedBytesLabel": {
+    "message": "వినియోగించని బైట్‌లు"
   }
 }

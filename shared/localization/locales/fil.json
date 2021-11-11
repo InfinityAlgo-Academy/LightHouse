@@ -59,6 +59,12 @@
   "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan2": {
     "message": "Discover performance opportunities to improve the experience for long-lived pages and single-page applications."
   },
+  "flow-report/src/i18n/ui-strings.js | highestImpact": {
+    "message": "Highest impact"
+  },
+  "flow-report/src/i18n/ui-strings.js | informativeAuditCount": {
+    "message": "{numInformative, plural,\n    =1 {{numInformative} informative audit}\n    other {{numInformative} informative audits}\n  }"
+  },
   "flow-report/src/i18n/ui-strings.js | mobile": {
     "message": "Mobile"
   },
@@ -70,6 +76,15 @@
   },
   "flow-report/src/i18n/ui-strings.js | navigationReport": {
     "message": "Ulat ng pag-navigate"
+  },
+  "flow-report/src/i18n/ui-strings.js | navigationReportCount": {
+    "message": "{numNavigation, plural,\n    =1 {{numNavigation} navigation report}\n    other {{numNavigation} navigation reports}\n  }"
+  },
+  "flow-report/src/i18n/ui-strings.js | passableAuditCount": {
+    "message": "{numPassableAudits, plural,\n    =1 {{numPassableAudits} passable audit}\n    other {{numPassableAudits} passable audits}\n  }"
+  },
+  "flow-report/src/i18n/ui-strings.js | passedAuditCount": {
+    "message": "{numPassed, plural,\n    =1 {{numPassed} audit passed}\n    other {{numPassed} audits passed}\n  }"
   },
   "flow-report/src/i18n/ui-strings.js | ratingAverage": {
     "message": "Average"
@@ -95,6 +110,9 @@
   "flow-report/src/i18n/ui-strings.js | snapshotReport": {
     "message": "Ulat ng snapshot"
   },
+  "flow-report/src/i18n/ui-strings.js | snapshotReportCount": {
+    "message": "{numSnapshot, plural,\n    =1 {{numSnapshot} snapshot report}\n    other {{numSnapshot} snapshot reports}\n  }"
+  },
   "flow-report/src/i18n/ui-strings.js | summary": {
     "message": "Buod"
   },
@@ -106,6 +124,9 @@
   },
   "flow-report/src/i18n/ui-strings.js | timespanReport": {
     "message": "Ulat ng tagal ng panahon"
+  },
+  "flow-report/src/i18n/ui-strings.js | timespanReportCount": {
+    "message": "{numTimespan, plural,\n    =1 {{numTimespan} timespan report}\n    other {{numTimespan} timespan reports}\n  }"
   },
   "flow-report/src/i18n/ui-strings.js | title": {
     "message": "Ulat ng Daloy ng User ng Lighthouse"
@@ -1740,7 +1761,7 @@
     "message": "Kinakailangan ang mga pagsusuring ito ng baseline na [Checklist ng PWA ](https://developers.google.com/web/progressive-web-apps/checklist) pero hindi ito awtomatikong sinusuri ng Lighthouse. Hindi nakakaapekto ang mga ito sa iyong score pero mahalagang ma-verify mo ang mga ito nang manual."
   },
   "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
-    "message": "Progressive Web App"
+    "message": "PWA"
   },
   "lighthouse-core/config/default-config.js | pwaInstallableGroupTitle": {
     "message": "Nai-install"
@@ -2042,30 +2063,6 @@
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "Mukhang invalid ang URL na ibinigay mo."
   },
-  "treemap/app/src/util.js | allLabel": {
-    "message": "Lahat"
-  },
-  "treemap/app/src/util.js | allScriptsDropdownLabel": {
-    "message": "Lahat ng Script"
-  },
-  "treemap/app/src/util.js | coverageColumnName": {
-    "message": "Sakop"
-  },
-  "treemap/app/src/util.js | duplicateModulesLabel": {
-    "message": "Mga Duplicate na Module"
-  },
-  "treemap/app/src/util.js | resourceBytesLabel": {
-    "message": "Mga Byte ng Resource"
-  },
-  "treemap/app/src/util.js | tableColumnName": {
-    "message": "Pangalan"
-  },
-  "treemap/app/src/util.js | toggleTableButtonLabel": {
-    "message": "I-toggle ang Talahanayan"
-  },
-  "treemap/app/src/util.js | unusedBytesLabel": {
-    "message": "Mga Hindi Nagamit na Byte"
-  },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "Para sa animated na content, gamitin ang [`amp-anim`](https://amp.dev/documentation/components/amp-anim/) para mabawasan ang paggamit ng CPU kapag offscreen ang content."
   },
@@ -2333,6 +2330,9 @@
   "report/renderer/util.js | calculatorLink": {
     "message": "Tingnan ang calculator."
   },
+  "report/renderer/util.js | collapseView": {
+    "message": "Collapse view"
+  },
   "report/renderer/util.js | crcInitialNavigation": {
     "message": "Unang Navigation"
   },
@@ -2369,8 +2369,14 @@
   "report/renderer/util.js | errorMissingAuditInfo": {
     "message": "Error sa ulat: walang impormasyon sa pag-audit"
   },
+  "report/renderer/util.js | expandView": {
+    "message": "Expand view"
+  },
   "report/renderer/util.js | footerIssue": {
     "message": "Mag-file ng isyu"
+  },
+  "report/renderer/util.js | hide": {
+    "message": "Hide"
   },
   "report/renderer/util.js | labDataTitle": {
     "message": "Data ng Lab"
@@ -2392,6 +2398,12 @@
   },
   "report/renderer/util.js | passedAuditsGroupTitle": {
     "message": "Mga pumasang pag-audit"
+  },
+  "report/renderer/util.js | runtimeAnalysisWindow": {
+    "message": "Initial page load"
+  },
+  "report/renderer/util.js | runtimeCustom": {
+    "message": "Custom throttling"
   },
   "report/renderer/util.js | runtimeDesktopEmulation": {
     "message": "Na-emulate na Desktop"
@@ -2420,8 +2432,20 @@
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "User agent (network)"
   },
+  "report/renderer/util.js | runtimeSingleLoad": {
+    "message": "Single page load"
+  },
+  "report/renderer/util.js | runtimeSingleLoadTooltip": {
+    "message": "This data is taken from a single page load, as opposed to field data summarizing many sessions."
+  },
+  "report/renderer/util.js | runtimeSlow4g": {
+    "message": "Slow 4G throttling"
+  },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "Hindi alam"
+  },
+  "report/renderer/util.js | show": {
+    "message": "Show"
   },
   "report/renderer/util.js | showRelevantAudits": {
     "message": "Ipakita ang mga audit na may kaugnayan sa:"
@@ -2452,5 +2476,29 @@
   },
   "report/renderer/util.js | warningHeader": {
     "message": "Mga Babala: "
+  },
+  "treemap/app/src/util.js | allLabel": {
+    "message": "Lahat"
+  },
+  "treemap/app/src/util.js | allScriptsDropdownLabel": {
+    "message": "Lahat ng Script"
+  },
+  "treemap/app/src/util.js | coverageColumnName": {
+    "message": "Sakop"
+  },
+  "treemap/app/src/util.js | duplicateModulesLabel": {
+    "message": "Mga Duplicate na Module"
+  },
+  "treemap/app/src/util.js | resourceBytesLabel": {
+    "message": "Mga Byte ng Resource"
+  },
+  "treemap/app/src/util.js | tableColumnName": {
+    "message": "Pangalan"
+  },
+  "treemap/app/src/util.js | toggleTableButtonLabel": {
+    "message": "I-toggle ang Talahanayan"
+  },
+  "treemap/app/src/util.js | unusedBytesLabel": {
+    "message": "Mga Hindi Nagamit na Byte"
   }
 }

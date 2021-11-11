@@ -59,6 +59,12 @@
   "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan2": {
     "message": "Discover performance opportunities to improve the experience for long-lived pages and single-page applications."
   },
+  "flow-report/src/i18n/ui-strings.js | highestImpact": {
+    "message": "Highest impact"
+  },
+  "flow-report/src/i18n/ui-strings.js | informativeAuditCount": {
+    "message": "{numInformative, plural,\n    =1 {{numInformative} informative audit}\n    other {{numInformative} informative audits}\n  }"
+  },
   "flow-report/src/i18n/ui-strings.js | mobile": {
     "message": "Mobiili"
   },
@@ -70,6 +76,15 @@
   },
   "flow-report/src/i18n/ui-strings.js | navigationReport": {
     "message": "Navigointiraportti"
+  },
+  "flow-report/src/i18n/ui-strings.js | navigationReportCount": {
+    "message": "{numNavigation, plural,\n    =1 {{numNavigation} navigation report}\n    other {{numNavigation} navigation reports}\n  }"
+  },
+  "flow-report/src/i18n/ui-strings.js | passableAuditCount": {
+    "message": "{numPassableAudits, plural,\n    =1 {{numPassableAudits} passable audit}\n    other {{numPassableAudits} passable audits}\n  }"
+  },
+  "flow-report/src/i18n/ui-strings.js | passedAuditCount": {
+    "message": "{numPassed, plural,\n    =1 {{numPassed} audit passed}\n    other {{numPassed} audits passed}\n  }"
   },
   "flow-report/src/i18n/ui-strings.js | ratingAverage": {
     "message": "Keskimääräinen"
@@ -95,6 +110,9 @@
   "flow-report/src/i18n/ui-strings.js | snapshotReport": {
     "message": "Tilannekuvaraportti"
   },
+  "flow-report/src/i18n/ui-strings.js | snapshotReportCount": {
+    "message": "{numSnapshot, plural,\n    =1 {{numSnapshot} snapshot report}\n    other {{numSnapshot} snapshot reports}\n  }"
+  },
   "flow-report/src/i18n/ui-strings.js | summary": {
     "message": "Yhteenveto"
   },
@@ -106,6 +124,9 @@
   },
   "flow-report/src/i18n/ui-strings.js | timespanReport": {
     "message": "Aikaväliraportti"
+  },
+  "flow-report/src/i18n/ui-strings.js | timespanReportCount": {
+    "message": "{numTimespan, plural,\n    =1 {{numTimespan} timespan report}\n    other {{numTimespan} timespan reports}\n  }"
   },
   "flow-report/src/i18n/ui-strings.js | title": {
     "message": "Lighthousen käyttökulkuraportti"
@@ -1740,7 +1761,7 @@
     "message": "Normaali [PWA Checklist](https://developers.google.com/web/progressive-web-apps/checklist) sisältää nämä kohdat, mutta Lighthouse ei tarkista niitä automaattisesti. Ne eivät vaikuta tulokseesi, mutta on tärkeää, että tarkistat kohdat manuaalisesti."
   },
   "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
-    "message": "Progressiivinen web-sovellus"
+    "message": "PWA"
   },
   "lighthouse-core/config/default-config.js | pwaInstallableGroupTitle": {
     "message": "Asennettavissa"
@@ -2042,30 +2063,6 @@
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "Kirjoittamasi URL-osoite näyttää olevan virheellinen."
   },
-  "treemap/app/src/util.js | allLabel": {
-    "message": "Kaikki"
-  },
-  "treemap/app/src/util.js | allScriptsDropdownLabel": {
-    "message": "Kaikki skriptit"
-  },
-  "treemap/app/src/util.js | coverageColumnName": {
-    "message": "Kattavuus"
-  },
-  "treemap/app/src/util.js | duplicateModulesLabel": {
-    "message": "Moduulien kaksoiskappaleet"
-  },
-  "treemap/app/src/util.js | resourceBytesLabel": {
-    "message": "Resurssin tavut"
-  },
-  "treemap/app/src/util.js | tableColumnName": {
-    "message": "Nimi"
-  },
-  "treemap/app/src/util.js | toggleTableButtonLabel": {
-    "message": "Näytä/piilota taulukko"
-  },
-  "treemap/app/src/util.js | unusedBytesLabel": {
-    "message": "Käyttämättömät tavut"
-  },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "Käytä animoidun sisällön kanssa [`amp-anim`](https://amp.dev/documentation/components/amp-anim/)-ominaisuutta, joka minimoi suoritinkäytön, kun sisältö ei ole näytöllä."
   },
@@ -2333,6 +2330,9 @@
   "report/renderer/util.js | calculatorLink": {
     "message": "Katso laskin."
   },
+  "report/renderer/util.js | collapseView": {
+    "message": "Collapse view"
+  },
   "report/renderer/util.js | crcInitialNavigation": {
     "message": "Ensimmäinen navigointi"
   },
@@ -2369,8 +2369,14 @@
   "report/renderer/util.js | errorMissingAuditInfo": {
     "message": "Raporttivirhe: ei tarkastustietoja"
   },
+  "report/renderer/util.js | expandView": {
+    "message": "Expand view"
+  },
   "report/renderer/util.js | footerIssue": {
     "message": "Ilmoita ongelmasta"
+  },
+  "report/renderer/util.js | hide": {
+    "message": "Hide"
   },
   "report/renderer/util.js | labDataTitle": {
     "message": "Laboratoriodata"
@@ -2392,6 +2398,12 @@
   },
   "report/renderer/util.js | passedAuditsGroupTitle": {
     "message": "Hyväksytyt tarkastukset"
+  },
+  "report/renderer/util.js | runtimeAnalysisWindow": {
+    "message": "Initial page load"
+  },
+  "report/renderer/util.js | runtimeCustom": {
+    "message": "Custom throttling"
   },
   "report/renderer/util.js | runtimeDesktopEmulation": {
     "message": "Emuloitu työpöytä"
@@ -2420,8 +2432,20 @@
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "Käyttäjäagentti (verkko)"
   },
+  "report/renderer/util.js | runtimeSingleLoad": {
+    "message": "Single page load"
+  },
+  "report/renderer/util.js | runtimeSingleLoadTooltip": {
+    "message": "This data is taken from a single page load, as opposed to field data summarizing many sessions."
+  },
+  "report/renderer/util.js | runtimeSlow4g": {
+    "message": "Slow 4G throttling"
+  },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "Ei tietoa"
+  },
+  "report/renderer/util.js | show": {
+    "message": "Show"
   },
   "report/renderer/util.js | showRelevantAudits": {
     "message": "Näytä tähän liittyvät tarkastukset:"
@@ -2452,5 +2476,29 @@
   },
   "report/renderer/util.js | warningHeader": {
     "message": "Varoitukset: "
+  },
+  "treemap/app/src/util.js | allLabel": {
+    "message": "Kaikki"
+  },
+  "treemap/app/src/util.js | allScriptsDropdownLabel": {
+    "message": "Kaikki skriptit"
+  },
+  "treemap/app/src/util.js | coverageColumnName": {
+    "message": "Kattavuus"
+  },
+  "treemap/app/src/util.js | duplicateModulesLabel": {
+    "message": "Moduulien kaksoiskappaleet"
+  },
+  "treemap/app/src/util.js | resourceBytesLabel": {
+    "message": "Resurssin tavut"
+  },
+  "treemap/app/src/util.js | tableColumnName": {
+    "message": "Nimi"
+  },
+  "treemap/app/src/util.js | toggleTableButtonLabel": {
+    "message": "Näytä/piilota taulukko"
+  },
+  "treemap/app/src/util.js | unusedBytesLabel": {
+    "message": "Käyttämättömät tavut"
   }
 }

@@ -59,6 +59,12 @@
   "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan2": {
     "message": "Discover performance opportunities to improve the experience for long-lived pages and single-page applications."
   },
+  "flow-report/src/i18n/ui-strings.js | highestImpact": {
+    "message": "عمليات التدقيق الأعلى تأثيرًا"
+  },
+  "flow-report/src/i18n/ui-strings.js | informativeAuditCount": {
+    "message": "{numInformative,plural, =1{تدقيق واحد ({numInformative}) مفيد}zero{{numInformative} تدقيق مفيد}two{تدقيقان ({numInformative}) مفيدان}few{{numInformative} عمليات تدقيق مفيدة}many{{numInformative} تدقيقًا مفيدًا}other{{numInformative} تدقيق مفيد}}"
+  },
   "flow-report/src/i18n/ui-strings.js | mobile": {
     "message": "الأجهزة الجوّالة"
   },
@@ -70,6 +76,15 @@
   },
   "flow-report/src/i18n/ui-strings.js | navigationReport": {
     "message": "تقرير التنقُّل في الصفحة"
+  },
+  "flow-report/src/i18n/ui-strings.js | navigationReportCount": {
+    "message": "{numNavigation,plural, =1{تقرير تنقُّل واحد ({numNavigation}) في الصفحة}zero{{numNavigation} تقرير تنقُّل في الصفحة}two{تقريرا تنقُّل ({numNavigation}) في الصفحة}few{{numNavigation} تقارير تنقُّل في الصفحة}many{{numNavigation} تقرير تنقُّل في الصفحة}other{{numNavigation} تقرير تنقُّل في الصفحة}}"
+  },
+  "flow-report/src/i18n/ui-strings.js | passableAuditCount": {
+    "message": "{numPassableAudits,plural, =1{تدقيق واحد ({numPassableAudits}) يمكن اجتيازه}zero{{numPassableAudits} تدقيق يمكن اجتيازه}two{تدقيقان ({numPassableAudits}) يمكن اجتيازهما}few{{numPassableAudits} عمليات تدقيق يمكن اجتيازها}many{{numPassableAudits} تدقيقًا يمكن اجتيازه}other{{numPassableAudits} تدقيق يمكن اجتيازه}}"
+  },
+  "flow-report/src/i18n/ui-strings.js | passedAuditCount": {
+    "message": "{numPassed,plural, =1{تم اجتياز تدقيق واحد ({numPassed})}zero{تم اجتياز {numPassed} تدقيق}two{تم اجتياز تدقيقَين ({numPassed})}few{تم اجتياز {numPassed} عمليات تدقيق}many{تم اجتياز {numPassed} تدقيقًا}other{تم اجتياز {numPassed} تدقيق}}"
   },
   "flow-report/src/i18n/ui-strings.js | ratingAverage": {
     "message": "متوسط"
@@ -95,6 +110,9 @@
   "flow-report/src/i18n/ui-strings.js | snapshotReport": {
     "message": "التقرير الخاص بالصفحة في لحظة معيَّنة"
   },
+  "flow-report/src/i18n/ui-strings.js | snapshotReportCount": {
+    "message": "{numSnapshot,plural, =1{تقرير واحد ({numSnapshot}) لتقييم الصفحة في لحظة معيَّنة}zero{{numSnapshot} تقرير لتقييم الصفحة في لحظة معيَّنة}two{تقريران ({numSnapshot}) لتقييم الصفحة في لحظة معيَّنة}few{{numSnapshot} تقارير لتقييم الصفحة في لحظة معيَّنة}many{{numSnapshot} تقريرًا لتقييم الصفحة في لحظة معيَّنة}other{{numSnapshot} تقرير لتقييم الصفحة في لحظة معيَّنة}}"
+  },
   "flow-report/src/i18n/ui-strings.js | summary": {
     "message": "ملخّص"
   },
@@ -106,6 +124,9 @@
   },
   "flow-report/src/i18n/ui-strings.js | timespanReport": {
     "message": "تقرير الإطار الزمني"
+  },
+  "flow-report/src/i18n/ui-strings.js | timespanReportCount": {
+    "message": "{numTimespan,plural, =1{تقرير واحد ({numTimespan}) لتقييم الصفحة خلال فترة زمنية}zero{{numTimespan} تقرير لتقييم الصفحة خلال فترة زمنية}two{تقريران ({numTimespan}) لتقييم الصفحة خلال فترة زمنية}few{{numTimespan} تقارير لتقييم الصفحة خلال فترة زمنية}many{{numTimespan} تقريرًا لتقييم الصفحة خلال فترة زمنية}other{{numTimespan} تقرير لتقييم الصفحة خلال فترة زمنية}}"
   },
   "flow-report/src/i18n/ui-strings.js | title": {
     "message": "تقرير تدفق المستخدمين في أداة Lighthouse"
@@ -1740,7 +1761,7 @@
     "message": "يُطلب إجراء عمليات التحقّق هذه من خلال المرجع [قائمة التحقق PWA](https://developers.google.com/web/progressive-web-apps/checklist)، ولكن لم يتم التحقُّق منها تلقائيًا من خلال Lighthouse. لا تؤثر عمليات التحقق هذه في نتيجتك، ولكن من المهم أنك تتحقق منها يدويًا."
   },
   "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
-    "message": "تطبيق الويب التقدّمي"
+    "message": "PWA"
   },
   "lighthouse-core/config/default-config.js | pwaInstallableGroupTitle": {
     "message": "القسم القابل للتثبيت"
@@ -2042,30 +2063,6 @@
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "يبدو أن عنوان URL الذي قدمته غير صحيح."
   },
-  "treemap/app/src/util.js | allLabel": {
-    "message": "الكل"
-  },
-  "treemap/app/src/util.js | allScriptsDropdownLabel": {
-    "message": "جميع النصوص البرمجية"
-  },
-  "treemap/app/src/util.js | coverageColumnName": {
-    "message": "التغطية"
-  },
-  "treemap/app/src/util.js | duplicateModulesLabel": {
-    "message": "الوحدات المكرَّرة"
-  },
-  "treemap/app/src/util.js | resourceBytesLabel": {
-    "message": "حجم الموارد بوحدة البايت"
-  },
-  "treemap/app/src/util.js | tableColumnName": {
-    "message": "الاسم"
-  },
-  "treemap/app/src/util.js | toggleTableButtonLabel": {
-    "message": "تبديل الجدول"
-  },
-  "treemap/app/src/util.js | unusedBytesLabel": {
-    "message": "وحدات بايت غير المستخدمة"
-  },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "بالنسبة إلى المحتوى الذي يتضمن صورًا متحركة، يمكنك استخدام [`amp-anim`](https://amp.dev/documentation/components/amp-anim/) لتقليل استخدام وحدة المعالجة المركزية (CPU) عندما يكون المحتوى خارج الشاشة."
   },
@@ -2333,6 +2330,9 @@
   "report/renderer/util.js | calculatorLink": {
     "message": "اطّلِع على الآلة الحاسبة."
   },
+  "report/renderer/util.js | collapseView": {
+    "message": "تصغير العرض"
+  },
   "report/renderer/util.js | crcInitialNavigation": {
     "message": "التنقل الأوّلي"
   },
@@ -2369,8 +2369,14 @@
   "report/renderer/util.js | errorMissingAuditInfo": {
     "message": "الإبلاغ عن خطأ: لا تتوفَّر معلومات تدقيق"
   },
+  "report/renderer/util.js | expandView": {
+    "message": "توسيع العرض"
+  },
   "report/renderer/util.js | footerIssue": {
     "message": "الإبلاغ عن مشكلة"
+  },
+  "report/renderer/util.js | hide": {
+    "message": "إخفاء"
   },
   "report/renderer/util.js | labDataTitle": {
     "message": "بيانات المختبَر"
@@ -2392,6 +2398,12 @@
   },
   "report/renderer/util.js | passedAuditsGroupTitle": {
     "message": "اجتياز عمليات التدقيق بنجاح"
+  },
+  "report/renderer/util.js | runtimeAnalysisWindow": {
+    "message": "التحميل الأولي للصفحة"
+  },
+  "report/renderer/util.js | runtimeCustom": {
+    "message": "تقييد مخصَّص لتحميل الصفحة"
   },
   "report/renderer/util.js | runtimeDesktopEmulation": {
     "message": "محاكاة سطح المكتب"
@@ -2420,8 +2432,20 @@
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "وكيل المستخدم (شبكة)"
   },
+  "report/renderer/util.js | runtimeSingleLoad": {
+    "message": "تحميل صفحة واحدة"
+  },
+  "report/renderer/util.js | runtimeSingleLoadTooltip": {
+    "message": "هذه البيانات مأخوذة من صفحة واحدة تم تحميلها، على عكس بيانات الحقول التي تلخِّص العديد من الجلسات."
+  },
+  "report/renderer/util.js | runtimeSlow4g": {
+    "message": "التقييد البطيء لتحميل الصفحة في شبكة الجيل الرابع"
+  },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "غير معروف"
+  },
+  "report/renderer/util.js | show": {
+    "message": "عرض"
   },
   "report/renderer/util.js | showRelevantAudits": {
     "message": "عرض عمليات التدقيق المرتبطة بالمقاييس:"
@@ -2452,5 +2476,29 @@
   },
   "report/renderer/util.js | warningHeader": {
     "message": "التحذيرات: "
+  },
+  "treemap/app/src/util.js | allLabel": {
+    "message": "الكل"
+  },
+  "treemap/app/src/util.js | allScriptsDropdownLabel": {
+    "message": "جميع النصوص البرمجية"
+  },
+  "treemap/app/src/util.js | coverageColumnName": {
+    "message": "التغطية"
+  },
+  "treemap/app/src/util.js | duplicateModulesLabel": {
+    "message": "الوحدات المكرَّرة"
+  },
+  "treemap/app/src/util.js | resourceBytesLabel": {
+    "message": "حجم الموارد بوحدة البايت"
+  },
+  "treemap/app/src/util.js | tableColumnName": {
+    "message": "الاسم"
+  },
+  "treemap/app/src/util.js | toggleTableButtonLabel": {
+    "message": "تبديل الجدول"
+  },
+  "treemap/app/src/util.js | unusedBytesLabel": {
+    "message": "وحدات بايت غير المستخدمة"
   }
 }

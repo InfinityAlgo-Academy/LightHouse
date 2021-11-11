@@ -59,6 +59,12 @@
   "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan2": {
     "message": "[Ðîšçövéŕ þéŕƒöŕmåñçé öþþöŕţûñîţîéš ţö îmþŕövé ţĥé éxþéŕîéñçé ƒöŕ ļöñĝ-ļîvéð þåĝéš åñð šîñĝļé-þåĝé åþþļîçåţîöñš. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen]"
   },
+  "flow-report/src/i18n/ui-strings.js | highestImpact": {
+    "message": "[Ĥîĝĥéšţ îmþåçţ one two]"
+  },
+  "flow-report/src/i18n/ui-strings.js | informativeAuditCount": {
+    "message": "{numInformative,plural, =1{[ᐅ{numInformative}ᐊ îñƒöŕmåţîvé åûðîţ one two three four five]}other{[ᐅ{numInformative}ᐊ îñƒöŕmåţîvé åûðîţš one two three four five]}}"
+  },
   "flow-report/src/i18n/ui-strings.js | mobile": {
     "message": "[Möбîļé one]"
   },
@@ -70,6 +76,15 @@
   },
   "flow-report/src/i18n/ui-strings.js | navigationReport": {
     "message": "[Ñåvîĝåţîöñ ŕéþöŕţ one two three]"
+  },
+  "flow-report/src/i18n/ui-strings.js | navigationReportCount": {
+    "message": "{numNavigation,plural, =1{[ᐅ{numNavigation}ᐊ ñåvîĝåţîöñ ŕéþöŕţ one two three four five]}other{[ᐅ{numNavigation}ᐊ ñåvîĝåţîöñ ŕéþöŕţš one two three four five]}}"
+  },
+  "flow-report/src/i18n/ui-strings.js | passableAuditCount": {
+    "message": "{numPassableAudits,plural, =1{[ᐅ{numPassableAudits}ᐊ þåššåбļé åûðîţ one two three four]}other{[ᐅ{numPassableAudits}ᐊ þåššåбļé åûðîţš one two three four]}}"
+  },
+  "flow-report/src/i18n/ui-strings.js | passedAuditCount": {
+    "message": "{numPassed,plural, =1{[ᐅ{numPassed}ᐊ åûðîţ þåššéð one two three four]}other{[ᐅ{numPassed}ᐊ åûðîţš þåššéð one two three four]}}"
   },
   "flow-report/src/i18n/ui-strings.js | ratingAverage": {
     "message": "[Åvéŕåĝé one]"
@@ -95,6 +110,9 @@
   "flow-report/src/i18n/ui-strings.js | snapshotReport": {
     "message": "[Šñåþšĥöţ ŕéþöŕţ one two]"
   },
+  "flow-report/src/i18n/ui-strings.js | snapshotReportCount": {
+    "message": "{numSnapshot,plural, =1{[ᐅ{numSnapshot}ᐊ šñåþšĥöţ ŕéþöŕţ one two three four]}other{[ᐅ{numSnapshot}ᐊ šñåþšĥöţ ŕéþöŕţš one two three four five]}}"
+  },
   "flow-report/src/i18n/ui-strings.js | summary": {
     "message": "[Šûmmåŕý one]"
   },
@@ -106,6 +124,9 @@
   },
   "flow-report/src/i18n/ui-strings.js | timespanReport": {
     "message": "[Ţîméšþåñ ŕéþöŕţ one two]"
+  },
+  "flow-report/src/i18n/ui-strings.js | timespanReportCount": {
+    "message": "{numTimespan,plural, =1{[ᐅ{numTimespan}ᐊ ţîméšþåñ ŕéþöŕţ one two three four]}other{[ᐅ{numTimespan}ᐊ ţîméšþåñ ŕéþöŕţš one two three four five]}}"
   },
   "flow-report/src/i18n/ui-strings.js | title": {
     "message": "[Ļîĝĥţĥöûšé Ûšéŕ Fļöŵ Ŕéþöŕţ one two three four five six]"
@@ -1740,7 +1761,7 @@
     "message": "[Ţĥéšé çĥéçķš åŕé ŕéqûîŕéð бý ţĥé бåšéļîñé ᐅ[ᐊÞŴÅ Çĥéçķļîšţᐅ](https://developers.google.com/web/progressive-web-apps/checklist)ᐊ бûţ åŕé ñöţ åûţömåţîçåļļý çĥéçķéð бý Ļîĝĥţĥöûšé. Ţĥéý ðö ñöţ åƒƒéçţ ýöûŕ šçöŕé бûţ îţ'š îmþöŕţåñţ ţĥåţ ýöû véŕîƒý ţĥém måñûåļļý. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone twentytwo twentythree twentyfour twentyfive twentysix]"
   },
   "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
-    "message": "[Þŕöĝŕéššîvé Ŵéб Åþþ one two three]"
+    "message": "[ÞŴÅ one]"
   },
   "lighthouse-core/config/default-config.js | pwaInstallableGroupTitle": {
     "message": "[Îñšţåļļåбļé one two]"
@@ -2042,30 +2063,6 @@
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "[Ţĥé ÛŔĻ ýöû ĥåvé þŕövîðéð åþþéåŕš ţö бé îñvåļîð. one two three four five six seven eight nine ten]"
   },
-  "treemap/app/src/util.js | allLabel": {
-    "message": "[Åļļ one]"
-  },
-  "treemap/app/src/util.js | allScriptsDropdownLabel": {
-    "message": "[Åļļ Šçŕîþţš one two]"
-  },
-  "treemap/app/src/util.js | coverageColumnName": {
-    "message": "[Çövéŕåĝé one]"
-  },
-  "treemap/app/src/util.js | duplicateModulesLabel": {
-    "message": "[Ðûþļîçåţé Möðûļéš one two three]"
-  },
-  "treemap/app/src/util.js | resourceBytesLabel": {
-    "message": "[Ŕéšöûŕçé Бýţéš one two]"
-  },
-  "treemap/app/src/util.js | tableColumnName": {
-    "message": "[Ñåmé one]"
-  },
-  "treemap/app/src/util.js | toggleTableButtonLabel": {
-    "message": "[Ţöĝĝļé Ţåбļé one two]"
-  },
-  "treemap/app/src/util.js | unusedBytesLabel": {
-    "message": "[Ûñûšéð Бýţéš one two]"
-  },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "[Föŕ åñîmåţéð çöñţéñţ, ûšé ᐅ[ᐊᐅ`amp-anim`ᐊᐅ](https://amp.dev/documentation/components/amp-anim/)ᐊ ţö mîñîmîžé ÇÞÛ ûšåĝé ŵĥéñ ţĥé çöñţéñţ îš öƒƒšçŕééñ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen]"
   },
@@ -2333,6 +2330,9 @@
   "report/renderer/util.js | calculatorLink": {
     "message": "[Šéé çåļçûļåţöŕ. one two]"
   },
+  "report/renderer/util.js | collapseView": {
+    "message": "[Çöļļåþšé vîéŵ one two]"
+  },
   "report/renderer/util.js | crcInitialNavigation": {
     "message": "[Îñîţîåļ Ñåvîĝåţîöñ one two three]"
   },
@@ -2369,8 +2369,14 @@
   "report/renderer/util.js | errorMissingAuditInfo": {
     "message": "[Ŕéþöŕţ éŕŕöŕ: ñö åûðîţ îñƒöŕmåţîöñ one two three four five six seven]"
   },
+  "report/renderer/util.js | expandView": {
+    "message": "[Éxþåñð vîéŵ one two]"
+  },
   "report/renderer/util.js | footerIssue": {
     "message": "[Fîļé åñ îššûé one two]"
+  },
+  "report/renderer/util.js | hide": {
+    "message": "[Ĥîðé one]"
   },
   "report/renderer/util.js | labDataTitle": {
     "message": "[Ļåб Ðåţå one]"
@@ -2392,6 +2398,12 @@
   },
   "report/renderer/util.js | passedAuditsGroupTitle": {
     "message": "[Þåššéð åûðîţš one two]"
+  },
+  "report/renderer/util.js | runtimeAnalysisWindow": {
+    "message": "[Îñîţîåļ þåĝé ļöåð one two three]"
+  },
+  "report/renderer/util.js | runtimeCustom": {
+    "message": "[Çûšţöm ţĥŕöţţļîñĝ one two three]"
   },
   "report/renderer/util.js | runtimeDesktopEmulation": {
     "message": "[Émûļåţéð Ðéšķţöþ one two]"
@@ -2420,8 +2432,20 @@
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "[Ûšéŕ åĝéñţ (ñéţŵöŕķ) one two three]"
   },
+  "report/renderer/util.js | runtimeSingleLoad": {
+    "message": "[Šîñĝļé þåĝé ļöåð one two]"
+  },
+  "report/renderer/util.js | runtimeSingleLoadTooltip": {
+    "message": "[Ţĥîš ðåţå îš ţåķéñ ƒŕöm å šîñĝļé þåĝé ļöåð, åš öþþöšéð ţö ƒîéļð ðåţå šûmmåŕîžîñĝ måñý šéššîöñš. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen]"
+  },
+  "report/renderer/util.js | runtimeSlow4g": {
+    "message": "[Šļöŵ 4Ĝ ţĥŕöţţļîñĝ one two three]"
+  },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "[Ûñķñöŵñ one]"
+  },
+  "report/renderer/util.js | show": {
+    "message": "[Šĥöŵ one]"
   },
   "report/renderer/util.js | showRelevantAudits": {
     "message": "[Šĥöŵ åûðîţš ŕéļévåñţ ţö: one two three four five]"
@@ -2452,5 +2476,29 @@
   },
   "report/renderer/util.js | warningHeader": {
     "message": "[Ŵåŕñîñĝš:  one two]"
+  },
+  "treemap/app/src/util.js | allLabel": {
+    "message": "[Åļļ one]"
+  },
+  "treemap/app/src/util.js | allScriptsDropdownLabel": {
+    "message": "[Åļļ Šçŕîþţš one two]"
+  },
+  "treemap/app/src/util.js | coverageColumnName": {
+    "message": "[Çövéŕåĝé one]"
+  },
+  "treemap/app/src/util.js | duplicateModulesLabel": {
+    "message": "[Ðûþļîçåţé Möðûļéš one two three]"
+  },
+  "treemap/app/src/util.js | resourceBytesLabel": {
+    "message": "[Ŕéšöûŕçé Бýţéš one two]"
+  },
+  "treemap/app/src/util.js | tableColumnName": {
+    "message": "[Ñåmé one]"
+  },
+  "treemap/app/src/util.js | toggleTableButtonLabel": {
+    "message": "[Ţöĝĝļé Ţåбļé one two]"
+  },
+  "treemap/app/src/util.js | unusedBytesLabel": {
+    "message": "[Ûñûšéð Бýţéš one two]"
   }
 }

@@ -59,6 +59,12 @@
   "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan2": {
     "message": "Discover performance opportunities to improve the experience for long-lived pages and single-page applications."
   },
+  "flow-report/src/i18n/ui-strings.js | highestImpact": {
+    "message": "Störst effekt"
+  },
+  "flow-report/src/i18n/ui-strings.js | informativeAuditCount": {
+    "message": "{numInformative,plural, =1{{numInformative} informativ granskning}other{{numInformative} informativa granskningar}}"
+  },
   "flow-report/src/i18n/ui-strings.js | mobile": {
     "message": "Mobil"
   },
@@ -70,6 +76,15 @@
   },
   "flow-report/src/i18n/ui-strings.js | navigationReport": {
     "message": "Rapport över navigering"
+  },
+  "flow-report/src/i18n/ui-strings.js | navigationReportCount": {
+    "message": "{numNavigation,plural, =1{{numNavigation} rapport över navigering}other{{numNavigation} rapporter över navigering}}"
+  },
+  "flow-report/src/i18n/ui-strings.js | passableAuditCount": {
+    "message": "{numPassableAudits,plural, =1{{numPassableAudits} granskning som kan godkännas}other{{numPassableAudits} granskningar som kan godkännas}}"
+  },
+  "flow-report/src/i18n/ui-strings.js | passedAuditCount": {
+    "message": "{numPassed,plural, =1{{numPassed} godkänd granskning}other{{numPassed} godkända granskningar}}"
   },
   "flow-report/src/i18n/ui-strings.js | ratingAverage": {
     "message": "Genomsnittlig"
@@ -95,6 +110,9 @@
   "flow-report/src/i18n/ui-strings.js | snapshotReport": {
     "message": "Rapport med ögonblicksbild"
   },
+  "flow-report/src/i18n/ui-strings.js | snapshotReportCount": {
+    "message": "{numSnapshot,plural, =1{{numSnapshot} rapporter med ögonblicksbild}other{{numSnapshot} rapporter med ögonblicksbilder}}"
+  },
   "flow-report/src/i18n/ui-strings.js | summary": {
     "message": "Översikt"
   },
@@ -106,6 +124,9 @@
   },
   "flow-report/src/i18n/ui-strings.js | timespanReport": {
     "message": "Rapport över tidsperiod"
+  },
+  "flow-report/src/i18n/ui-strings.js | timespanReportCount": {
+    "message": "{numTimespan,plural, =1{{numTimespan} rapport över tidsperiod}other{{numTimespan} rapporter över tidsperioder}}"
   },
   "flow-report/src/i18n/ui-strings.js | title": {
     "message": "Rapport över användarflöde i Lighthouse"
@@ -1740,7 +1761,7 @@
     "message": "Dessa kontroller krävs enligt [checklistan för progressiva webbappar](https://developers.google.com/web/progressive-web-apps/checklist) som används som baslinje, men de kontrolleras inte automatiskt av Lighthouse. De påverkar inte resultatet, men det är viktigt att du verifierar dem manuellt."
   },
   "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
-    "message": "Progressiv webbapp"
+    "message": "PWA"
   },
   "lighthouse-core/config/default-config.js | pwaInstallableGroupTitle": {
     "message": "Kan installeras"
@@ -2042,30 +2063,6 @@
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "Den angivna webbadressen verkar vara ogiltig."
   },
-  "treemap/app/src/util.js | allLabel": {
-    "message": "Alla"
-  },
-  "treemap/app/src/util.js | allScriptsDropdownLabel": {
-    "message": "Alla skript"
-  },
-  "treemap/app/src/util.js | coverageColumnName": {
-    "message": "Täckning"
-  },
-  "treemap/app/src/util.js | duplicateModulesLabel": {
-    "message": "Moduldubbletter"
-  },
-  "treemap/app/src/util.js | resourceBytesLabel": {
-    "message": "Resursstorlek i byte"
-  },
-  "treemap/app/src/util.js | tableColumnName": {
-    "message": "Namn"
-  },
-  "treemap/app/src/util.js | toggleTableButtonLabel": {
-    "message": "Aktivera och inaktivera tabell"
-  },
-  "treemap/app/src/util.js | unusedBytesLabel": {
-    "message": "Byte som inte används"
-  },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "För animerat innehåll använder du [`amp-anim`](https://amp.dev/documentation/components/amp-anim/) till att minimera CPU-användningen när innehållet inte visas på skärmen."
   },
@@ -2333,6 +2330,9 @@
   "report/renderer/util.js | calculatorLink": {
     "message": "Visa kalkylator."
   },
+  "report/renderer/util.js | collapseView": {
+    "message": "Komprimera vy"
+  },
   "report/renderer/util.js | crcInitialNavigation": {
     "message": "Första navigering"
   },
@@ -2369,8 +2369,14 @@
   "report/renderer/util.js | errorMissingAuditInfo": {
     "message": "Rapportfel: ingen granskningsinformation"
   },
+  "report/renderer/util.js | expandView": {
+    "message": "Utöka vy"
+  },
   "report/renderer/util.js | footerIssue": {
     "message": "Rapportera ett problem"
+  },
+  "report/renderer/util.js | hide": {
+    "message": "Dölj"
   },
   "report/renderer/util.js | labDataTitle": {
     "message": "Labbdata"
@@ -2392,6 +2398,12 @@
   },
   "report/renderer/util.js | passedAuditsGroupTitle": {
     "message": "Godkända granskningar"
+  },
+  "report/renderer/util.js | runtimeAnalysisWindow": {
+    "message": "Första sidhämtningen"
+  },
+  "report/renderer/util.js | runtimeCustom": {
+    "message": "Anpassad begränsning"
   },
   "report/renderer/util.js | runtimeDesktopEmulation": {
     "message": "Emulerat skrivbord"
@@ -2420,8 +2432,20 @@
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "Användaragent (nätverk)"
   },
+  "report/renderer/util.js | runtimeSingleLoad": {
+    "message": "Enskild sidhämtning"
+  },
+  "report/renderer/util.js | runtimeSingleLoadTooltip": {
+    "message": "Denna data kommer från en enskild sidhämtning, till skillnad från fältdata som sammanfattar flera sessioner."
+  },
+  "report/renderer/util.js | runtimeSlow4g": {
+    "message": "Långsam 4G-begränsning"
+  },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "Okänd"
+  },
+  "report/renderer/util.js | show": {
+    "message": "Visa"
   },
   "report/renderer/util.js | showRelevantAudits": {
     "message": "Visa granskningar som är relevanta för:"
@@ -2452,5 +2476,29 @@
   },
   "report/renderer/util.js | warningHeader": {
     "message": "Varningar: "
+  },
+  "treemap/app/src/util.js | allLabel": {
+    "message": "Alla"
+  },
+  "treemap/app/src/util.js | allScriptsDropdownLabel": {
+    "message": "Alla skript"
+  },
+  "treemap/app/src/util.js | coverageColumnName": {
+    "message": "Täckning"
+  },
+  "treemap/app/src/util.js | duplicateModulesLabel": {
+    "message": "Moduldubbletter"
+  },
+  "treemap/app/src/util.js | resourceBytesLabel": {
+    "message": "Resursstorlek i byte"
+  },
+  "treemap/app/src/util.js | tableColumnName": {
+    "message": "Namn"
+  },
+  "treemap/app/src/util.js | toggleTableButtonLabel": {
+    "message": "Aktivera och inaktivera tabell"
+  },
+  "treemap/app/src/util.js | unusedBytesLabel": {
+    "message": "Byte som inte används"
   }
 }

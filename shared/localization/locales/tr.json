@@ -3,7 +3,7 @@
     "message": "Tüm Raporlar"
   },
   "flow-report/src/i18n/ui-strings.js | categories": {
-    "message": "Categories"
+    "message": "Kategoriler"
   },
   "flow-report/src/i18n/ui-strings.js | categoryAccessibility": {
     "message": "Erişilebilirlik"
@@ -24,40 +24,46 @@
     "message": "Masaüstü"
   },
   "flow-report/src/i18n/ui-strings.js | helpDialogTitle": {
-    "message": "Understanding the Lighthouse Flow Report"
+    "message": "Lighthouse Akış Raporunu Anlama"
   },
   "flow-report/src/i18n/ui-strings.js | helpLabel": {
-    "message": "Understanding Flows"
+    "message": "Akışları Anlama"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionNavigation": {
-    "message": "Use Navigation reports to..."
+    "message": "Gezinme raporlarını kullanarak.."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionSnapshot": {
-    "message": "Use Snapshot reports to..."
+    "message": "Anlık görüntü raporlarını kullanarak..."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionTimespan": {
-    "message": "Use Timespan reports to..."
+    "message": "Etkileşim süresi raporlarını kullanarak..."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation1": {
-    "message": "Obtain a Lighthouse Performance score."
+    "message": "Lighthouse Performans skoru elde edin."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation2": {
-    "message": "Measure page load Performance metrics such as Largest Contentful Paint and Speed Index."
+    "message": "Largest Contentful Paint ve Speed Index gibi sayfa yükleme performans metriklerini ölçün."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation3": {
-    "message": "Assess Progressive Web App capabilities."
+    "message": "Progresif Web Uygulaması özelliklerini değerlendirin."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseSnapshot1": {
-    "message": "Find accessibility issues in single page applications or complex forms."
+    "message": "Tek sayfalık uygulamalardaki veya karmaşık formlardaki erişilebilirlik sorunlarını bulun."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseSnapshot2": {
-    "message": "Evaluate best practices of menus and UI elements hidden behind interaction."
+    "message": "Etkileşimin ardında yatan menülerin ve kullanıcı arayüzü öğelerinin en iyi uygulamalarını değerlendirin."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan1": {
-    "message": "Measure layout shifts and JavaScript execution time on a series of interactions."
+    "message": "Bir dizi etkileşimdeki düzen kaymalarını ve JavaScript yürütme süresini ölçün."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan2": {
-    "message": "Discover performance opportunities to improve the experience for long-lived pages and single-page applications."
+    "message": "Uzun ömürlü sayfalar ve tek sayfalık uygulamalar için deneyimi iyileştirecek performans fırsatlarını keşfedin."
+  },
+  "flow-report/src/i18n/ui-strings.js | highestImpact": {
+    "message": "En yüksek etki"
+  },
+  "flow-report/src/i18n/ui-strings.js | informativeAuditCount": {
+    "message": "{numInformative,plural, =1{{numInformative} bilgilendirici denetim}other{{numInformative} bilgilendirici denetim}}"
   },
   "flow-report/src/i18n/ui-strings.js | mobile": {
     "message": "Mobil"
@@ -66,10 +72,19 @@
     "message": "Sayfa yükleme"
   },
   "flow-report/src/i18n/ui-strings.js | navigationLongDescription": {
-    "message": "Navigation reports analyze a single page load, exactly like the original Lighthouse reports."
+    "message": "Gezinme raporları, orijinal Lighthouse raporlarında olduğu gibi tek bir sayfa yükleme işlemini analiz eder."
   },
   "flow-report/src/i18n/ui-strings.js | navigationReport": {
     "message": "Gezinme raporu"
+  },
+  "flow-report/src/i18n/ui-strings.js | navigationReportCount": {
+    "message": "{numNavigation,plural, =1{{numNavigation} gezinme raporu}other{{numNavigation} gezinme raporu}}"
+  },
+  "flow-report/src/i18n/ui-strings.js | passableAuditCount": {
+    "message": "{numPassableAudits,plural, =1{Geçme ihtimali olan {numPassableAudits} denetim}other{Geçme ihtimali olan {numPassableAudits} denetim}}"
+  },
+  "flow-report/src/i18n/ui-strings.js | passedAuditCount": {
+    "message": "{numPassed,plural, =1{{numPassed} denetim başarılı oldu}other{{numPassed} denetim başarılı oldu}}"
   },
   "flow-report/src/i18n/ui-strings.js | ratingAverage": {
     "message": "Orta düzey"
@@ -84,16 +99,19 @@
     "message": "Başarılı"
   },
   "flow-report/src/i18n/ui-strings.js | save": {
-    "message": "Save"
+    "message": "Kaydet"
   },
   "flow-report/src/i18n/ui-strings.js | snapshotDescription": {
     "message": "Sayfanın yakalanmış durumu"
   },
   "flow-report/src/i18n/ui-strings.js | snapshotLongDescription": {
-    "message": "Snapshot reports analyze the page in a particular state, typically after user interactions."
+    "message": "Anlık görüntü raporları, genellikle kullanıcı etkileşimlerinden sonra olmak üzere sayfayı belirli bir durumda analiz eder."
   },
   "flow-report/src/i18n/ui-strings.js | snapshotReport": {
     "message": "Anlık görüntü raporu"
+  },
+  "flow-report/src/i18n/ui-strings.js | snapshotReportCount": {
+    "message": "{numSnapshot,plural, =1{{numSnapshot} anlık görüntü raporu}other{{numSnapshot} anlık görüntü raporu}}"
   },
   "flow-report/src/i18n/ui-strings.js | summary": {
     "message": "Özet"
@@ -102,10 +120,13 @@
     "message": "Kullanıcı etkileşimleri"
   },
   "flow-report/src/i18n/ui-strings.js | timespanLongDescription": {
-    "message": "Timespan reports analyze an arbitrary period of time, typically containing user interactions."
+    "message": "Etkileşim süresi raporları, genelde kullanıcı etkileşimlerini içeren herhangi bir zaman dilimini analiz eder."
   },
   "flow-report/src/i18n/ui-strings.js | timespanReport": {
     "message": "Etkileşim süresi raporu"
+  },
+  "flow-report/src/i18n/ui-strings.js | timespanReportCount": {
+    "message": "{numTimespan,plural, =1{{numTimespan} etkileşim süresi raporu}other{{numTimespan} etkileşim süresi raporu}}"
   },
   "flow-report/src/i18n/ui-strings.js | title": {
     "message": "Lighthouse Kullanıcı İşlemleri Akışıyla İlgili Rapor"
@@ -1740,7 +1761,7 @@
     "message": "Temel [Progresif Web Uygulaması Yapılacaklar Listesi](https://developers.google.com/web/progressive-web-apps/checklist) tarafından zorunlu tutulan bu denetimler, Lighthouse tarafından otomatik olarak kontrol edilmez. Bunlar skorunuzu etkilemez ancak manuel olarak doğrulamanız önemlidir."
   },
   "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
-    "message": "Progresif Web Uygulaması"
+    "message": "PWA (Progresif Web Uygulaması)"
   },
   "lighthouse-core/config/default-config.js | pwaInstallableGroupTitle": {
     "message": "Yüklenebilir"
@@ -2042,30 +2063,6 @@
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "Sağladığınız URL'nin geçersiz olduğu anlaşılıyor."
   },
-  "treemap/app/src/util.js | allLabel": {
-    "message": "Tümü"
-  },
-  "treemap/app/src/util.js | allScriptsDropdownLabel": {
-    "message": "Tüm Alfabeler"
-  },
-  "treemap/app/src/util.js | coverageColumnName": {
-    "message": "Kapsam"
-  },
-  "treemap/app/src/util.js | duplicateModulesLabel": {
-    "message": "Yinelenen Modüller"
-  },
-  "treemap/app/src/util.js | resourceBytesLabel": {
-    "message": "Kaynak Baytları"
-  },
-  "treemap/app/src/util.js | tableColumnName": {
-    "message": "Ad"
-  },
-  "treemap/app/src/util.js | toggleTableButtonLabel": {
-    "message": "Tabloyu Aç/Kapat"
-  },
-  "treemap/app/src/util.js | unusedBytesLabel": {
-    "message": "Kullanılmayan Baytlar"
-  },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "Animasyonlu içerik için içerik ekran dışındayken CPU kullanımını en aza indirmek amacıyla [`amp-anim`](https://amp.dev/documentation/components/amp-anim/) kullanın."
   },
@@ -2333,6 +2330,9 @@
   "report/renderer/util.js | calculatorLink": {
     "message": "Hesap makinesini göster."
   },
+  "report/renderer/util.js | collapseView": {
+    "message": "Görünümü daralt"
+  },
   "report/renderer/util.js | crcInitialNavigation": {
     "message": "İlk Gezinme"
   },
@@ -2369,8 +2369,14 @@
   "report/renderer/util.js | errorMissingAuditInfo": {
     "message": "Bildirme hatası: denetim bilgisi yok"
   },
+  "report/renderer/util.js | expandView": {
+    "message": "Görünümü genişlet"
+  },
   "report/renderer/util.js | footerIssue": {
     "message": "Sorun bildir"
+  },
+  "report/renderer/util.js | hide": {
+    "message": "Gizle"
   },
   "report/renderer/util.js | labDataTitle": {
     "message": "Test Verileri"
@@ -2392,6 +2398,12 @@
   },
   "report/renderer/util.js | passedAuditsGroupTitle": {
     "message": "Başarılı denetimler"
+  },
+  "report/renderer/util.js | runtimeAnalysisWindow": {
+    "message": "İlk sayfa yükleme"
+  },
+  "report/renderer/util.js | runtimeCustom": {
+    "message": "Özel kısıtlamalar"
   },
   "report/renderer/util.js | runtimeDesktopEmulation": {
     "message": "Emülasyonlu Masaüstü"
@@ -2420,8 +2432,20 @@
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "Kullanıcı aracısı (ağ)"
   },
+  "report/renderer/util.js | runtimeSingleLoad": {
+    "message": "Tek sayfa yükleme"
+  },
+  "report/renderer/util.js | runtimeSingleLoadTooltip": {
+    "message": "Bu veriler, birçok oturumu özetleyen alan verilerinin aksine tek bir sayfa yükleme işleminden alınmıştır."
+  },
+  "report/renderer/util.js | runtimeSlow4g": {
+    "message": "Yavaş 4G kısıtlaması"
+  },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "Bilinmiyor"
+  },
+  "report/renderer/util.js | show": {
+    "message": "Göster"
   },
   "report/renderer/util.js | showRelevantAudits": {
     "message": "Şunlarla alakalı denetimleri göster:"
@@ -2452,5 +2476,29 @@
   },
   "report/renderer/util.js | warningHeader": {
     "message": "Uyarılar: "
+  },
+  "treemap/app/src/util.js | allLabel": {
+    "message": "Tümü"
+  },
+  "treemap/app/src/util.js | allScriptsDropdownLabel": {
+    "message": "Tüm Alfabeler"
+  },
+  "treemap/app/src/util.js | coverageColumnName": {
+    "message": "Kapsam"
+  },
+  "treemap/app/src/util.js | duplicateModulesLabel": {
+    "message": "Yinelenen Modüller"
+  },
+  "treemap/app/src/util.js | resourceBytesLabel": {
+    "message": "Kaynak Baytları"
+  },
+  "treemap/app/src/util.js | tableColumnName": {
+    "message": "Ad"
+  },
+  "treemap/app/src/util.js | toggleTableButtonLabel": {
+    "message": "Tabloyu Aç/Kapat"
+  },
+  "treemap/app/src/util.js | unusedBytesLabel": {
+    "message": "Kullanılmayan Baytlar"
   }
 }

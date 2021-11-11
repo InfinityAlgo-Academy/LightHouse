@@ -3,7 +3,7 @@
     "message": "Todos los informes"
   },
   "flow-report/src/i18n/ui-strings.js | categories": {
-    "message": "Categories"
+    "message": "Categorías"
   },
   "flow-report/src/i18n/ui-strings.js | categoryAccessibility": {
     "message": "Accesibilidad"
@@ -24,40 +24,46 @@
     "message": "Ordenador"
   },
   "flow-report/src/i18n/ui-strings.js | helpDialogTitle": {
-    "message": "Understanding the Lighthouse Flow Report"
+    "message": "Interpretar los informes de flujo de Lighthouse"
   },
   "flow-report/src/i18n/ui-strings.js | helpLabel": {
-    "message": "Understanding Flows"
+    "message": "Interpretar flujos"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionNavigation": {
-    "message": "Use Navigation reports to..."
+    "message": "Usa los informes de navegación para..."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionSnapshot": {
-    "message": "Use Snapshot reports to..."
+    "message": "Usa los informes de un instante para..."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionTimespan": {
-    "message": "Use Timespan reports to..."
+    "message": "Usa los informes de tiempo para..."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation1": {
-    "message": "Obtain a Lighthouse Performance score."
+    "message": "Obtener una puntuación del rendimiento de Lighthouse."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation2": {
-    "message": "Measure page load Performance metrics such as Largest Contentful Paint and Speed Index."
+    "message": "Medir métricas de rendimiento de carga de la página, como el renderizado del mayor elemento con contenido y el Speed Index."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation3": {
-    "message": "Assess Progressive Web App capabilities."
+    "message": "Evaluar las funciones de una aplicación web progresiva."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseSnapshot1": {
-    "message": "Find accessibility issues in single page applications or complex forms."
+    "message": "Detectar problemas de accesibilidad en aplicaciones de página única o formularios complejos."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseSnapshot2": {
-    "message": "Evaluate best practices of menus and UI elements hidden behind interaction."
+    "message": "Evaluar las prácticas recomendadas para los menús y los elementos de interfaz de usuario ocultos tras las interacciones."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan1": {
-    "message": "Measure layout shifts and JavaScript execution time on a series of interactions."
+    "message": "Medir los cambios de diseño y el tiempo de ejecución de JavaScript en una serie de interacciones."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan2": {
-    "message": "Discover performance opportunities to improve the experience for long-lived pages and single-page applications."
+    "message": "Descubrir oportunidades de rendimiento para mejorar la experiencia en páginas de larga duración y en aplicaciones de página única."
+  },
+  "flow-report/src/i18n/ui-strings.js | highestImpact": {
+    "message": "Mayor impacto"
+  },
+  "flow-report/src/i18n/ui-strings.js | informativeAuditCount": {
+    "message": "{numInformative,plural, =1{{numInformative} auditoría informativa}other{{numInformative} auditorías informativas}}"
   },
   "flow-report/src/i18n/ui-strings.js | mobile": {
     "message": "Móvil"
@@ -66,10 +72,19 @@
     "message": "Carga de la página"
   },
   "flow-report/src/i18n/ui-strings.js | navigationLongDescription": {
-    "message": "Navigation reports analyze a single page load, exactly like the original Lighthouse reports."
+    "message": "Los informes de navegación analizan la carga de una sola página, exactamente igual que los informes originales de Lighthouse."
   },
   "flow-report/src/i18n/ui-strings.js | navigationReport": {
     "message": "Informe de navegación"
+  },
+  "flow-report/src/i18n/ui-strings.js | navigationReportCount": {
+    "message": "{numNavigation,plural, =1{{numNavigation} informe de navegación}other{{numNavigation} informes de navegación}}"
+  },
+  "flow-report/src/i18n/ui-strings.js | passableAuditCount": {
+    "message": "{numPassableAudits,plural, =1{{numPassableAudits} auditoría aceptable}other{{numPassableAudits} auditorías aceptables}}"
+  },
+  "flow-report/src/i18n/ui-strings.js | passedAuditCount": {
+    "message": "{numPassed,plural, =1{{numPassed} auditoría superada}other{{numPassed} auditorías superadas}}"
   },
   "flow-report/src/i18n/ui-strings.js | ratingAverage": {
     "message": "Ni buena ni mala"
@@ -84,16 +99,19 @@
     "message": "Buena"
   },
   "flow-report/src/i18n/ui-strings.js | save": {
-    "message": "Save"
+    "message": "Guardar"
   },
   "flow-report/src/i18n/ui-strings.js | snapshotDescription": {
     "message": "Captura del estado de la página"
   },
   "flow-report/src/i18n/ui-strings.js | snapshotLongDescription": {
-    "message": "Snapshot reports analyze the page in a particular state, typically after user interactions."
+    "message": "Los informes de un instante analizan la página en un estado concreto, normalmente tras las interacciones de los usuarios."
   },
   "flow-report/src/i18n/ui-strings.js | snapshotReport": {
     "message": "Informe de un instante"
+  },
+  "flow-report/src/i18n/ui-strings.js | snapshotReportCount": {
+    "message": "{numSnapshot,plural, =1{{numSnapshot} informe de un instante}other{{numSnapshot} informes de un instante}}"
   },
   "flow-report/src/i18n/ui-strings.js | summary": {
     "message": "Resumen"
@@ -102,10 +120,13 @@
     "message": "Interacciones del usuario"
   },
   "flow-report/src/i18n/ui-strings.js | timespanLongDescription": {
-    "message": "Timespan reports analyze an arbitrary period of time, typically containing user interactions."
+    "message": "Los informes de tiempo analizan un periodo de tiempo arbitrario, que normalmente contiene interacciones de usuario."
   },
   "flow-report/src/i18n/ui-strings.js | timespanReport": {
     "message": "Informe de tiempo"
+  },
+  "flow-report/src/i18n/ui-strings.js | timespanReportCount": {
+    "message": "{numTimespan,plural, =1{{numTimespan} informe de tiempo}other{{numTimespan} informes de tiempo}}"
   },
   "flow-report/src/i18n/ui-strings.js | title": {
     "message": "Informe de flujo de usuarios de Lighthouse"
@@ -1740,7 +1761,7 @@
     "message": "Estas comprobaciones son necesarias según el documento de referencia [PWA Checklist](https://developers.google.com/web/progressive-web-apps/checklist) (lista de comprobación para aplicaciones web progresivas), pero Lighthouse no las verifica automáticamente. Es importante que las verifiques manualmente (aunque no afectan a la puntuación)."
   },
   "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
-    "message": "Aplicación web progresiva"
+    "message": "PWA"
   },
   "lighthouse-core/config/default-config.js | pwaInstallableGroupTitle": {
     "message": "Instalabilidad"
@@ -1944,7 +1965,7 @@
     "message": "Media"
   },
   "lighthouse-core/lib/i18n/i18n.js | largestContentfulPaintMetric": {
-    "message": "Largest Contentful Paint"
+    "message": "Renderizado del mayor elemento con contenido"
   },
   "lighthouse-core/lib/i18n/i18n.js | maxPotentialFIDMetric": {
     "message": "Latencia potencial máxima de la primera interacción"
@@ -2041,30 +2062,6 @@
   },
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "La URL que has proporcionado no es válida."
-  },
-  "treemap/app/src/util.js | allLabel": {
-    "message": "Todo"
-  },
-  "treemap/app/src/util.js | allScriptsDropdownLabel": {
-    "message": "Todas las secuencias de comandos"
-  },
-  "treemap/app/src/util.js | coverageColumnName": {
-    "message": "Cobertura"
-  },
-  "treemap/app/src/util.js | duplicateModulesLabel": {
-    "message": "Módulos duplicados"
-  },
-  "treemap/app/src/util.js | resourceBytesLabel": {
-    "message": "Bytes del recurso"
-  },
-  "treemap/app/src/util.js | tableColumnName": {
-    "message": "Nombre"
-  },
-  "treemap/app/src/util.js | toggleTableButtonLabel": {
-    "message": "Mostrar/Ocultar tabla"
-  },
-  "treemap/app/src/util.js | unusedBytesLabel": {
-    "message": "Bytes sin usar"
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "En el caso del contenido animado, usa [`amp-anim`](https://amp.dev/documentation/components/amp-anim/) para reducir el uso de la CPU mientras el contenido no aparece en pantalla."
@@ -2333,6 +2330,9 @@
   "report/renderer/util.js | calculatorLink": {
     "message": "Ver calculadora."
   },
+  "report/renderer/util.js | collapseView": {
+    "message": "Contraer vista"
+  },
   "report/renderer/util.js | crcInitialNavigation": {
     "message": "Navegación inicial"
   },
@@ -2369,8 +2369,14 @@
   "report/renderer/util.js | errorMissingAuditInfo": {
     "message": "Error del informe: no hay información de la auditoría"
   },
+  "report/renderer/util.js | expandView": {
+    "message": "Ampliar vista"
+  },
   "report/renderer/util.js | footerIssue": {
     "message": "Notificar un problema"
+  },
+  "report/renderer/util.js | hide": {
+    "message": "Ocultar"
   },
   "report/renderer/util.js | labDataTitle": {
     "message": "Datos de experimentos"
@@ -2392,6 +2398,12 @@
   },
   "report/renderer/util.js | passedAuditsGroupTitle": {
     "message": "Auditorías aprobadas"
+  },
+  "report/renderer/util.js | runtimeAnalysisWindow": {
+    "message": "Carga inicial de la página"
+  },
+  "report/renderer/util.js | runtimeCustom": {
+    "message": "Limitación personalizada"
   },
   "report/renderer/util.js | runtimeDesktopEmulation": {
     "message": "Escritorio emulado"
@@ -2420,8 +2432,20 @@
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "User-agent (red)"
   },
+  "report/renderer/util.js | runtimeSingleLoad": {
+    "message": "Carga de una única página"
+  },
+  "report/renderer/util.js | runtimeSingleLoadTooltip": {
+    "message": "Estos datos se obtienen a partir de la carga de una única página, mientras que los datos de campo ofrecen un resumen de muchas sesiones."
+  },
+  "report/renderer/util.js | runtimeSlow4g": {
+    "message": "Limitación de 4G lenta"
+  },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "Desconocido"
+  },
+  "report/renderer/util.js | show": {
+    "message": "Mostrar"
   },
   "report/renderer/util.js | showRelevantAudits": {
     "message": "Mostrar auditorías relacionadas con:"
@@ -2452,5 +2476,29 @@
   },
   "report/renderer/util.js | warningHeader": {
     "message": "Advertencias: "
+  },
+  "treemap/app/src/util.js | allLabel": {
+    "message": "Todo"
+  },
+  "treemap/app/src/util.js | allScriptsDropdownLabel": {
+    "message": "Todas las secuencias de comandos"
+  },
+  "treemap/app/src/util.js | coverageColumnName": {
+    "message": "Cobertura"
+  },
+  "treemap/app/src/util.js | duplicateModulesLabel": {
+    "message": "Módulos duplicados"
+  },
+  "treemap/app/src/util.js | resourceBytesLabel": {
+    "message": "Bytes del recurso"
+  },
+  "treemap/app/src/util.js | tableColumnName": {
+    "message": "Nombre"
+  },
+  "treemap/app/src/util.js | toggleTableButtonLabel": {
+    "message": "Mostrar/Ocultar tabla"
+  },
+  "treemap/app/src/util.js | unusedBytesLabel": {
+    "message": "Bytes sin usar"
   }
 }

@@ -3,7 +3,7 @@
     "message": "Сви извештаји"
   },
   "flow-report/src/i18n/ui-strings.js | categories": {
-    "message": "Categories"
+    "message": "Категорије"
   },
   "flow-report/src/i18n/ui-strings.js | categoryAccessibility": {
     "message": "Приступачност"
@@ -24,40 +24,46 @@
     "message": "Рачунар"
   },
   "flow-report/src/i18n/ui-strings.js | helpDialogTitle": {
-    "message": "Understanding the Lighthouse Flow Report"
+    "message": "Разумевање извештаја о току за Lighthouse"
   },
   "flow-report/src/i18n/ui-strings.js | helpLabel": {
-    "message": "Understanding Flows"
+    "message": "Разумевање токова"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionNavigation": {
-    "message": "Use Navigation reports to..."
+    "message": "Користите извештаје о навигацији за..."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionSnapshot": {
-    "message": "Use Snapshot reports to..."
+    "message": "Користите извештаје са прегледом за..."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionTimespan": {
-    "message": "Use Timespan reports to..."
+    "message": "Користите извештаје за период за..."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation1": {
-    "message": "Obtain a Lighthouse Performance score."
+    "message": "Преузмите Lighthouse оцену учинка."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation2": {
-    "message": "Measure page load Performance metrics such as Largest Contentful Paint and Speed Index."
+    "message": "Измерите показатеље учинка за учитавање странице, као што су највеће приказивање садржаја и индекс брзине."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation3": {
-    "message": "Assess Progressive Web App capabilities."
+    "message": "Приступите могућностима прогресивних веб-апликација."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseSnapshot1": {
-    "message": "Find accessibility issues in single page applications or complex forms."
+    "message": "Пронађите проблеме са приступачношћу у апликацијама са једном страницом или комплексним формама."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseSnapshot2": {
-    "message": "Evaluate best practices of menus and UI elements hidden behind interaction."
+    "message": "Процените најбоље праксе за меније и елементе корисничког интерфејса сакривене иза интеракције."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan1": {
-    "message": "Measure layout shifts and JavaScript execution time on a series of interactions."
+    "message": "Измерите време извршавања прелаза изгледа и JavaScript-а за серију интеракција."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan2": {
-    "message": "Discover performance opportunities to improve the experience for long-lived pages and single-page applications."
+    "message": "Откријте прилике за учинак да бисте побољшали доживљај за дугорочне странице и апликације са једном страницом."
+  },
+  "flow-report/src/i18n/ui-strings.js | highestImpact": {
+    "message": "Highest impact"
+  },
+  "flow-report/src/i18n/ui-strings.js | informativeAuditCount": {
+    "message": "{numInformative, plural,\n    =1 {{numInformative} informative audit}\n    other {{numInformative} informative audits}\n  }"
   },
   "flow-report/src/i18n/ui-strings.js | mobile": {
     "message": "Мобилни уређај"
@@ -66,10 +72,19 @@
     "message": "Учитавање странице"
   },
   "flow-report/src/i18n/ui-strings.js | navigationLongDescription": {
-    "message": "Navigation reports analyze a single page load, exactly like the original Lighthouse reports."
+    "message": "Извештаји о навигацији анализирају учитавање појединачне странице, потпуно исто као оригинални Lighthouse извештаји."
   },
   "flow-report/src/i18n/ui-strings.js | navigationReport": {
     "message": "Извештај о навигацији"
+  },
+  "flow-report/src/i18n/ui-strings.js | navigationReportCount": {
+    "message": "{numNavigation, plural,\n    =1 {{numNavigation} navigation report}\n    other {{numNavigation} navigation reports}\n  }"
+  },
+  "flow-report/src/i18n/ui-strings.js | passableAuditCount": {
+    "message": "{numPassableAudits, plural,\n    =1 {{numPassableAudits} passable audit}\n    other {{numPassableAudits} passable audits}\n  }"
+  },
+  "flow-report/src/i18n/ui-strings.js | passedAuditCount": {
+    "message": "{numPassed, plural,\n    =1 {{numPassed} audit passed}\n    other {{numPassed} audits passed}\n  }"
   },
   "flow-report/src/i18n/ui-strings.js | ratingAverage": {
     "message": "Просек"
@@ -84,16 +99,19 @@
     "message": "Добро"
   },
   "flow-report/src/i18n/ui-strings.js | save": {
-    "message": "Save"
+    "message": "Сачувај"
   },
   "flow-report/src/i18n/ui-strings.js | snapshotDescription": {
     "message": "Снимљено стање странице"
   },
   "flow-report/src/i18n/ui-strings.js | snapshotLongDescription": {
-    "message": "Snapshot reports analyze the page in a particular state, typically after user interactions."
+    "message": "Извештаји са прегледом анализирају страницу у посебном стању, обично после интеракције са корисницима."
   },
   "flow-report/src/i18n/ui-strings.js | snapshotReport": {
     "message": "Извештај са прегледом"
+  },
+  "flow-report/src/i18n/ui-strings.js | snapshotReportCount": {
+    "message": "{numSnapshot, plural,\n    =1 {{numSnapshot} snapshot report}\n    other {{numSnapshot} snapshot reports}\n  }"
   },
   "flow-report/src/i18n/ui-strings.js | summary": {
     "message": "Резиме"
@@ -102,10 +120,13 @@
     "message": "Корисничке интеракције"
   },
   "flow-report/src/i18n/ui-strings.js | timespanLongDescription": {
-    "message": "Timespan reports analyze an arbitrary period of time, typically containing user interactions."
+    "message": "Извештаји за период анализирају насумични период, који обично садржи интеракције корисника."
   },
   "flow-report/src/i18n/ui-strings.js | timespanReport": {
     "message": "Извештај за период"
+  },
+  "flow-report/src/i18n/ui-strings.js | timespanReportCount": {
+    "message": "{numTimespan, plural,\n    =1 {{numTimespan} timespan report}\n    other {{numTimespan} timespan reports}\n  }"
   },
   "flow-report/src/i18n/ui-strings.js | title": {
     "message": "Извештај о корисничком току за Lighthouse"
@@ -1740,7 +1761,7 @@
     "message": "Ове провере захтева основна [Контролна листа за прогресивне веб-апликације](https://developers.google.com/web/progressive-web-apps/checklist), али их Lighthouse не спроводи аутоматски. Оне не утичу на ваш резултат, али је важно да их ручно потврдите."
   },
   "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
-    "message": "Прогресивна веб-апликација"
+    "message": "PWA"
   },
   "lighthouse-core/config/default-config.js | pwaInstallableGroupTitle": {
     "message": "Може да се инсталира"
@@ -2042,30 +2063,6 @@
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "Изгледа да је URL који сте навели неважећи."
   },
-  "treemap/app/src/util.js | allLabel": {
-    "message": "Све"
-  },
-  "treemap/app/src/util.js | allScriptsDropdownLabel": {
-    "message": "Све скрипте"
-  },
-  "treemap/app/src/util.js | coverageColumnName": {
-    "message": "Покривеност"
-  },
-  "treemap/app/src/util.js | duplicateModulesLabel": {
-    "message": "Дуплирани модули"
-  },
-  "treemap/app/src/util.js | resourceBytesLabel": {
-    "message": "Бајтови ресурса"
-  },
-  "treemap/app/src/util.js | tableColumnName": {
-    "message": "Назив"
-  },
-  "treemap/app/src/util.js | toggleTableButtonLabel": {
-    "message": "Укључи/искључи табелу"
-  },
-  "treemap/app/src/util.js | unusedBytesLabel": {
-    "message": "Неискоришћени бајтови"
-  },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "Када је у питању анимирани садржај, користите [`amp-anim`](https://amp.dev/documentation/components/amp-anim/) да бисте смањили коришћење процесора када садржај није на екрану."
   },
@@ -2333,6 +2330,9 @@
   "report/renderer/util.js | calculatorLink": {
     "message": "Погледајте калкулатор."
   },
+  "report/renderer/util.js | collapseView": {
+    "message": "Collapse view"
+  },
   "report/renderer/util.js | crcInitialNavigation": {
     "message": "Почетна навигација"
   },
@@ -2369,8 +2369,14 @@
   "report/renderer/util.js | errorMissingAuditInfo": {
     "message": "Пријављивање грешке: нема информација о провери"
   },
+  "report/renderer/util.js | expandView": {
+    "message": "Expand view"
+  },
   "report/renderer/util.js | footerIssue": {
     "message": "Пријавите проблем"
+  },
+  "report/renderer/util.js | hide": {
+    "message": "Hide"
   },
   "report/renderer/util.js | labDataTitle": {
     "message": "Подаци о експерименталним функцијама"
@@ -2392,6 +2398,12 @@
   },
   "report/renderer/util.js | passedAuditsGroupTitle": {
     "message": "Провере са задовољавајућом оценом"
+  },
+  "report/renderer/util.js | runtimeAnalysisWindow": {
+    "message": "Initial page load"
+  },
+  "report/renderer/util.js | runtimeCustom": {
+    "message": "Custom throttling"
   },
   "report/renderer/util.js | runtimeDesktopEmulation": {
     "message": "Емулирани рачунар"
@@ -2420,8 +2432,20 @@
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "Кориснички агент (мрежа)"
   },
+  "report/renderer/util.js | runtimeSingleLoad": {
+    "message": "Single page load"
+  },
+  "report/renderer/util.js | runtimeSingleLoadTooltip": {
+    "message": "This data is taken from a single page load, as opposed to field data summarizing many sessions."
+  },
+  "report/renderer/util.js | runtimeSlow4g": {
+    "message": "Slow 4G throttling"
+  },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "Непознато"
+  },
+  "report/renderer/util.js | show": {
+    "message": "Show"
   },
   "report/renderer/util.js | showRelevantAudits": {
     "message": "Прикажи ревизије релевантне за:"
@@ -2452,5 +2476,29 @@
   },
   "report/renderer/util.js | warningHeader": {
     "message": "Упозорења: "
+  },
+  "treemap/app/src/util.js | allLabel": {
+    "message": "Све"
+  },
+  "treemap/app/src/util.js | allScriptsDropdownLabel": {
+    "message": "Све скрипте"
+  },
+  "treemap/app/src/util.js | coverageColumnName": {
+    "message": "Покривеност"
+  },
+  "treemap/app/src/util.js | duplicateModulesLabel": {
+    "message": "Дуплирани модули"
+  },
+  "treemap/app/src/util.js | resourceBytesLabel": {
+    "message": "Бајтови ресурса"
+  },
+  "treemap/app/src/util.js | tableColumnName": {
+    "message": "Назив"
+  },
+  "treemap/app/src/util.js | toggleTableButtonLabel": {
+    "message": "Укључи/искључи табелу"
+  },
+  "treemap/app/src/util.js | unusedBytesLabel": {
+    "message": "Неискоришћени бајтови"
   }
 }
