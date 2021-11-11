@@ -155,6 +155,28 @@ describe('util helpers', () => {
         const preparedResult = Util.prepareReportResult(clonedSampleResult);
         assert.deepStrictEqual(preparedResult.audits, sampleResult.audits);
       });
+
+      it('corrects performance category without hidden group', () => {
+        const clonedSampleResult = JSON.parse(JSON.stringify(sampleResult));
+
+        clonedSampleResult.lighthouseVersion = '8.6.0';
+        delete clonedSampleResult.categoryGroups['hidden'];
+        for (const auditRef of clonedSampleResult.categories['performance'].auditRefs) {
+          if (auditRef.group === 'hidden') {
+            delete auditRef.group;
+          } else if (!auditRef.group) {
+            auditRef.group = 'diagnostics';
+          }
+        }
+        assert.notDeepStrictEqual(clonedSampleResult.categories, sampleResult.categories);
+        assert.notDeepStrictEqual(clonedSampleResult.categoryGroups, sampleResult.categoryGroups);
+
+        // Original audit results should be restored.
+        const clonedPreparedResult = Util.prepareReportResult(clonedSampleResult);
+        const preparedResult = Util.prepareReportResult(sampleResult);
+        assert.deepStrictEqual(clonedPreparedResult.categories, preparedResult.categories);
+        assert.deepStrictEqual(clonedPreparedResult.categoryGroups, preparedResult.categoryGroups);
+      });
     });
 
     it('appends stack pack descriptions to auditRefs', () => {

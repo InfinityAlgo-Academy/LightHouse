@@ -111,6 +111,23 @@ class Util {
     /** @type {Map<string, Array<LH.ReportResult.AuditRef>>} */
     const relevantAuditToMetricsMap = new Map();
 
+    // This backcompat converts old LHRs (<9.0.0) to use the new "hidden" group.
+    // Old LHRs used "no group" to identify audits that should be hidden in performance instead of the "hidden" group.
+    // Newer LHRs use "no group" to identify opportunities and diagnostics whose groups are assigned by details type.
+    const [majorVersion] = clone.lighthouseVersion.split('.').map(Number);
+    const perfCategory = clone.categories['performance'];
+    if (majorVersion < 9 && perfCategory) {
+      if (!clone.categoryGroups) clone.categoryGroups = {};
+      clone.categoryGroups['hidden'] = {title: ''};
+      for (const auditRef of perfCategory.auditRefs) {
+        if (!auditRef.group) {
+          auditRef.group = 'hidden';
+        } else if (['load-opportunities', 'diagnostics'].includes(auditRef.group)) {
+          delete auditRef.group;
+        }
+      }
+    }
+
     for (const category of Object.values(clone.categories)) {
       // Make basic lookup table for relevantAudits
       category.auditRefs.forEach(metricRef => {
