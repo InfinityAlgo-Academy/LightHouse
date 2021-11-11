@@ -364,4 +364,33 @@ describe('Byte efficiency base audit', () => {
       score: 1,
     });
   });
+
+  it('should handle 0 download throughput in timespan', async () => {
+    class MockAudit extends ByteEfficiencyAudit {
+      static audit_(artifacts, records) {
+        return {
+          items: records.map(record => ({url: record.url, wastedBytes: record.transferSize * 0.5})),
+          headings: [],
+        };
+      }
+    }
+
+    const artifacts = {
+      GatherContext: {gatherMode: 'timespan'},
+      traces: {defaultPass: trace},
+      devtoolsLogs: {defaultPass: devtoolsLog},
+    };
+    const computedCache = new Map();
+
+    const modestThrottling = {
+      rttMs: 150,
+      requestLatencyMs: 150,
+      throughputKbps: 1000,
+      cpuSlowdownMultiplier: 2,
+      downloadThroughputKbps: 0,
+    };
+    const settings = {throttlingMethod: 'devtools', throttling: modestThrottling};
+    const result = await MockAudit.audit(artifacts, {settings, computedCache});
+    expect(result.details.overallSavingsMs).toBeCloseTo(0);
+  });
 });
