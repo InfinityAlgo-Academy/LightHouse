@@ -270,7 +270,8 @@ export class TopbarFeatures {
       this.highlightEl = this._dom.createChildOf(this.stickyHeaderEl, 'div', 'lh-highlighter');
 
       // Update sticky header visibility and highlight when page scrolls/resizes.
-      const scrollParent = this._getScrollParent(this._dom.rootEl);
+      const scrollParent = this._getScrollParent(
+        this._dom.find('.lh-container', this._dom.rootEl));
       // The 'scroll' handler must be should be on {Element | Document}...
       scrollParent.addEventListener('scroll', () => this._updateStickyHeader());
       // However resizeObserver needs an element, *not* the document.

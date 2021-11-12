@@ -482,9 +482,7 @@
   border-radius: 3px;
   color: var(--link-color);
   background-color: var(--report-background-color);
-  padding: var(--default-padding);
-  font-size: var(--report-font-size-secondary);
-  line-height: var(--report-line-height-secondary);
+  margin: 5px;
 }
 
 .lh-button:first-of-type {
@@ -1334,6 +1332,7 @@
   margin-top: 10px;
   text-align: center;
   color: var(--report-text-color);
+  word-break: keep-all;
 }
 
 /* TODO(#8185) use more BEM (.lh-gauge__label--big) instead of relying on descendant selector */
