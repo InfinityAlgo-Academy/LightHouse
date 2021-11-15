@@ -59,6 +59,12 @@
   "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan2": {
     "message": "Discover performance opportunities to improve the experience for long-lived pages and single-page applications."
   },
+  "flow-report/src/i18n/ui-strings.js | highestImpact": {
+    "message": "Highest impact"
+  },
+  "flow-report/src/i18n/ui-strings.js | informativeAuditCount": {
+    "message": "{numInformative, plural,\n    =1 {{numInformative} informative audit}\n    other {{numInformative} informative audits}\n  }"
+  },
   "flow-report/src/i18n/ui-strings.js | mobile": {
     "message": "Mobile"
   },
@@ -70,6 +76,15 @@
   },
   "flow-report/src/i18n/ui-strings.js | navigationReport": {
     "message": "Ulat ng pag-navigate"
+  },
+  "flow-report/src/i18n/ui-strings.js | navigationReportCount": {
+    "message": "{numNavigation, plural,\n    =1 {{numNavigation} navigation report}\n    other {{numNavigation} navigation reports}\n  }"
+  },
+  "flow-report/src/i18n/ui-strings.js | passableAuditCount": {
+    "message": "{numPassableAudits, plural,\n    =1 {{numPassableAudits} passable audit}\n    other {{numPassableAudits} passable audits}\n  }"
+  },
+  "flow-report/src/i18n/ui-strings.js | passedAuditCount": {
+    "message": "{numPassed, plural,\n    =1 {{numPassed} audit passed}\n    other {{numPassed} audits passed}\n  }"
   },
   "flow-report/src/i18n/ui-strings.js | ratingAverage": {
     "message": "Average"
@@ -95,6 +110,9 @@
   "flow-report/src/i18n/ui-strings.js | snapshotReport": {
     "message": "Ulat ng snapshot"
   },
+  "flow-report/src/i18n/ui-strings.js | snapshotReportCount": {
+    "message": "{numSnapshot, plural,\n    =1 {{numSnapshot} snapshot report}\n    other {{numSnapshot} snapshot reports}\n  }"
+  },
   "flow-report/src/i18n/ui-strings.js | summary": {
     "message": "Buod"
   },
@@ -106,6 +124,9 @@
   },
   "flow-report/src/i18n/ui-strings.js | timespanReport": {
     "message": "Ulat ng tagal ng panahon"
+  },
+  "flow-report/src/i18n/ui-strings.js | timespanReportCount": {
+    "message": "{numTimespan, plural,\n    =1 {{numTimespan} timespan report}\n    other {{numTimespan} timespan reports}\n  }"
   },
   "flow-report/src/i18n/ui-strings.js | title": {
     "message": "Ulat ng Daloy ng User ng Lighthouse"
@@ -743,18 +764,6 @@
   "lighthouse-core/audits/deprecations.js | title": {
     "message": "Iniiwasan ang mga hindi na ginagamit na API"
   },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | description": {
-    "message": "Hindi na ginagamit ang Cache ng Application. [Matuto pa](https://web.dev/appcache-manifest/)."
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | displayValue": {
-    "message": "Nakita ang \"{AppCacheManifest}\""
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | failureTitle": {
-    "message": "Gumagamit ng Cache ng Application"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | title": {
-    "message": "Iniiwasan ang Application Cache"
-  },
   "lighthouse-core/audits/dobetterweb/charset.js | description": {
     "message": "Kailangang mag-declare ng pag-encode ng character. Magagawa ito gamit ang isang `<meta>` tag sa unang 1024 na byte ng HTML o sa header ng sagot ng HTTP na Uri ng Content. [Matuto pa](https://web.dev/charset/)."
   },
@@ -811,21 +820,6 @@
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "Umiiwas sa masyadong malaking DOM"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnFailingAnchors": {
-    "message": "Mga Hindi Nakapasang Anchor"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | description": {
-    "message": "Idagdag ang `rel=\"noopener\"` o `rel=\"noreferrer\"` sa anumang external na link para pahusayin ang performance at pigilan ang mga kahinaan sa seguridad. [Matuto pa](https://web.dev/external-anchors-use-rel-noopener/)."
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | failureTitle": {
-    "message": "Hindi ligtas ang mga link sa mga cross-origin na destinasyon"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | title": {
-    "message": "Ligtas ang mga link sa mga cross-origin na destinasyon"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | warning": {
-    "message": "Hindi matukoy ang destinasyon para sa anchor na ({anchorHTML}). Kung hindi ginagamit bilang hyperlink, pag-isipang alisin ang target=_blank."
   },
   "lighthouse-core/audits/dobetterweb/geolocation-on-start.js | description": {
     "message": "Walang tiwala o nalilito ang mga user sa mga site na humihiling ng kanilang lokasyon nang walang konteksto. Sa halip ay pag-isipang iugnay ang kahilingan sa pagkilos ng user. [Matuto pa](https://web.dev/geolocation-on-start/)."
@@ -1276,15 +1270,6 @@
   },
   "lighthouse-core/audits/preload-lcp-image.js | title": {
     "message": "I-preload ang larawan ng Largest Contentful Paint"
-  },
-  "lighthouse-core/audits/redirects-http.js | description": {
-    "message": "Kung na-set up mo na ang HTTPS, tiyaking ire-redirect mo sa HTTPS ang lahat ng trapiko sa HTTP para ma-enable ang mga ligtas na feature sa web para sa lahat ng iyong user. [Matuto pa](https://web.dev/redirects-http/)."
-  },
-  "lighthouse-core/audits/redirects-http.js | failureTitle": {
-    "message": "Hindi nire-redirect sa HTTPS ang trapiko sa HTTP"
-  },
-  "lighthouse-core/audits/redirects-http.js | title": {
-    "message": "Nire-redirect sa HTTPS ang trapiko sa HTTP"
   },
   "lighthouse-core/audits/redirects.js | description": {
     "message": "Nagpapasimula ang mga pag-redirect ng mga karagdagang pagkaantala bago ma-load ang page. [Matuto pa](https://web.dev/redirects/)."
@@ -1776,7 +1761,7 @@
     "message": "Kinakailangan ang mga pagsusuring ito ng baseline na [Checklist ng PWA ](https://developers.google.com/web/progressive-web-apps/checklist) pero hindi ito awtomatikong sinusuri ng Lighthouse. Hindi nakakaapekto ang mga ito sa iyong score pero mahalagang ma-verify mo ang mga ito nang manual."
   },
   "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
-    "message": "Progressive Web App"
+    "message": "PWA"
   },
   "lighthouse-core/config/default-config.js | pwaInstallableGroupTitle": {
     "message": "Nai-install"
@@ -2078,30 +2063,6 @@
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "Mukhang invalid ang URL na ibinigay mo."
   },
-  "lighthouse-treemap/app/src/util.js | allLabel": {
-    "message": "Lahat"
-  },
-  "lighthouse-treemap/app/src/util.js | allScriptsDropdownLabel": {
-    "message": "Lahat ng Script"
-  },
-  "lighthouse-treemap/app/src/util.js | coverageColumnName": {
-    "message": "Sakop"
-  },
-  "lighthouse-treemap/app/src/util.js | duplicateModulesLabel": {
-    "message": "Mga Duplicate na Module"
-  },
-  "lighthouse-treemap/app/src/util.js | resourceBytesLabel": {
-    "message": "Mga Byte ng Resource"
-  },
-  "lighthouse-treemap/app/src/util.js | tableColumnName": {
-    "message": "Pangalan"
-  },
-  "lighthouse-treemap/app/src/util.js | toggleTableButtonLabel": {
-    "message": "I-toggle ang Talahanayan"
-  },
-  "lighthouse-treemap/app/src/util.js | unusedBytesLabel": {
-    "message": "Mga Hindi Nagamit na Byte"
-  },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "Para sa animated na content, gamitin ang [`amp-anim`](https://amp.dev/documentation/components/amp-anim/) para mabawasan ang paggamit ng CPU kapag offscreen ang content."
   },
@@ -2369,6 +2330,9 @@
   "report/renderer/util.js | calculatorLink": {
     "message": "Tingnan ang calculator."
   },
+  "report/renderer/util.js | collapseView": {
+    "message": "Collapse view"
+  },
   "report/renderer/util.js | crcInitialNavigation": {
     "message": "Unang Navigation"
   },
@@ -2405,8 +2369,14 @@
   "report/renderer/util.js | errorMissingAuditInfo": {
     "message": "Error sa ulat: walang impormasyon sa pag-audit"
   },
+  "report/renderer/util.js | expandView": {
+    "message": "Expand view"
+  },
   "report/renderer/util.js | footerIssue": {
     "message": "Mag-file ng isyu"
+  },
+  "report/renderer/util.js | hide": {
+    "message": "Hide"
   },
   "report/renderer/util.js | labDataTitle": {
     "message": "Data ng Lab"
@@ -2429,6 +2399,12 @@
   "report/renderer/util.js | passedAuditsGroupTitle": {
     "message": "Mga pumasang pag-audit"
   },
+  "report/renderer/util.js | runtimeAnalysisWindow": {
+    "message": "Initial page load"
+  },
+  "report/renderer/util.js | runtimeCustom": {
+    "message": "Custom throttling"
+  },
   "report/renderer/util.js | runtimeDesktopEmulation": {
     "message": "Na-emulate na Desktop"
   },
@@ -2447,32 +2423,29 @@
   "report/renderer/util.js | runtimeSettingsCPUThrottling": {
     "message": "Pag-throttle ng CPU"
   },
-  "report/renderer/util.js | runtimeSettingsChannel": {
-    "message": "Channel"
-  },
   "report/renderer/util.js | runtimeSettingsDevice": {
     "message": "Device"
-  },
-  "report/renderer/util.js | runtimeSettingsFetchTime": {
-    "message": "Oras ng Pagkuha"
   },
   "report/renderer/util.js | runtimeSettingsNetworkThrottling": {
     "message": "Pag-throttle ng network"
   },
-  "report/renderer/util.js | runtimeSettingsTitle": {
-    "message": "Mga Setting ng Runtime"
-  },
-  "report/renderer/util.js | runtimeSettingsUA": {
-    "message": "User agent (host)"
-  },
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "User agent (network)"
   },
-  "report/renderer/util.js | runtimeSettingsUrl": {
-    "message": "URL"
+  "report/renderer/util.js | runtimeSingleLoad": {
+    "message": "Single page load"
+  },
+  "report/renderer/util.js | runtimeSingleLoadTooltip": {
+    "message": "This data is taken from a single page load, as opposed to field data summarizing many sessions."
+  },
+  "report/renderer/util.js | runtimeSlow4g": {
+    "message": "Slow 4G throttling"
   },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "Hindi alam"
+  },
+  "report/renderer/util.js | show": {
+    "message": "Show"
   },
   "report/renderer/util.js | showRelevantAudits": {
     "message": "Ipakita ang mga audit na may kaugnayan sa:"
@@ -2503,5 +2476,29 @@
   },
   "report/renderer/util.js | warningHeader": {
     "message": "Mga Babala: "
+  },
+  "treemap/app/src/util.js | allLabel": {
+    "message": "Lahat"
+  },
+  "treemap/app/src/util.js | allScriptsDropdownLabel": {
+    "message": "Lahat ng Script"
+  },
+  "treemap/app/src/util.js | coverageColumnName": {
+    "message": "Sakop"
+  },
+  "treemap/app/src/util.js | duplicateModulesLabel": {
+    "message": "Mga Duplicate na Module"
+  },
+  "treemap/app/src/util.js | resourceBytesLabel": {
+    "message": "Mga Byte ng Resource"
+  },
+  "treemap/app/src/util.js | tableColumnName": {
+    "message": "Pangalan"
+  },
+  "treemap/app/src/util.js | toggleTableButtonLabel": {
+    "message": "I-toggle ang Talahanayan"
+  },
+  "treemap/app/src/util.js | unusedBytesLabel": {
+    "message": "Mga Hindi Nagamit na Byte"
   }
 }

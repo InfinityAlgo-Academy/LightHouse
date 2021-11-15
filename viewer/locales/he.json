@@ -59,6 +59,12 @@
   "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan2": {
     "message": "Discover performance opportunities to improve the experience for long-lived pages and single-page applications."
   },
+  "flow-report/src/i18n/ui-strings.js | highestImpact": {
+    "message": "Highest impact"
+  },
+  "flow-report/src/i18n/ui-strings.js | informativeAuditCount": {
+    "message": "{numInformative, plural,\n    =1 {{numInformative} informative audit}\n    other {{numInformative} informative audits}\n  }"
+  },
   "flow-report/src/i18n/ui-strings.js | mobile": {
     "message": "ניידים"
   },
@@ -70,6 +76,15 @@
   },
   "flow-report/src/i18n/ui-strings.js | navigationReport": {
     "message": "דוח לגבי ניווט"
+  },
+  "flow-report/src/i18n/ui-strings.js | navigationReportCount": {
+    "message": "{numNavigation, plural,\n    =1 {{numNavigation} navigation report}\n    other {{numNavigation} navigation reports}\n  }"
+  },
+  "flow-report/src/i18n/ui-strings.js | passableAuditCount": {
+    "message": "{numPassableAudits, plural,\n    =1 {{numPassableAudits} passable audit}\n    other {{numPassableAudits} passable audits}\n  }"
+  },
+  "flow-report/src/i18n/ui-strings.js | passedAuditCount": {
+    "message": "{numPassed, plural,\n    =1 {{numPassed} audit passed}\n    other {{numPassed} audits passed}\n  }"
   },
   "flow-report/src/i18n/ui-strings.js | ratingAverage": {
     "message": "ממוצעת"
@@ -95,6 +110,9 @@
   "flow-report/src/i18n/ui-strings.js | snapshotReport": {
     "message": "דוח תמונת מצב"
   },
+  "flow-report/src/i18n/ui-strings.js | snapshotReportCount": {
+    "message": "{numSnapshot, plural,\n    =1 {{numSnapshot} snapshot report}\n    other {{numSnapshot} snapshot reports}\n  }"
+  },
   "flow-report/src/i18n/ui-strings.js | summary": {
     "message": "סיכום"
   },
@@ -106,6 +124,9 @@
   },
   "flow-report/src/i18n/ui-strings.js | timespanReport": {
     "message": "דוח על טווח זמן"
+  },
+  "flow-report/src/i18n/ui-strings.js | timespanReportCount": {
+    "message": "{numTimespan, plural,\n    =1 {{numTimespan} timespan report}\n    other {{numTimespan} timespan reports}\n  }"
   },
   "flow-report/src/i18n/ui-strings.js | title": {
     "message": "דוח Lighthouse על מסלולי משתמשים בדף"
@@ -743,18 +764,6 @@
   "lighthouse-core/audits/deprecations.js | title": {
     "message": "אין רכיבי API שהוצאו משימוש"
   },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | description": {
-    "message": "Application Cache הוצא משימוש. [מידע נוסף](https://web.dev/appcache-manifest/)."
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | displayValue": {
-    "message": "בשימוש: \"{AppCacheManifest}\""
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | failureTitle": {
-    "message": "נעשה שימוש ב-Application Cache"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | title": {
-    "message": "לא נעשה שימוש ב-Application Cache"
-  },
   "lighthouse-core/audits/dobetterweb/charset.js | description": {
     "message": "נדרשת הצהרה של קידוד תווים. ניתן להגדיר אותה באמצעות תג `<meta>` שממוקם ב-1,024 הבייטים הראשונים של ה-HTML או ברכיב ה-Content-Type בכותרת התגובה של ה-HTTP. [מידע נוסף](https://web.dev/charset/)."
   },
@@ -811,21 +820,6 @@
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "נמנע מ-DOM גדול מדי"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnFailingAnchors": {
-    "message": "עוגנים שנכשלו"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | description": {
-    "message": "כדי לשפר את הביצועים ולמנוע פגיעויות המסכנות את האבטחה, יש להוסיף `rel=\"noopener\"` או `rel=\"noreferrer\"` לקישורים חיצוניים. [מידע נוסף](https://web.dev/external-anchors-use-rel-noopener/)."
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | failureTitle": {
-    "message": "הדף מכיל קישורים לא בטוחים ליעדים ממקורות שונים"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | title": {
-    "message": "כל הקישורים ליעדים ממקורות שונים בטוחים לשימוש"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | warning": {
-    "message": "לא ניתן לקבוע את יעד העוגן ({anchorHTML}). אם target=_blank לא משמש כהיפר-קישור, כדאי לשקול להסיר אותו."
   },
   "lighthouse-core/audits/dobetterweb/geolocation-on-start.js | description": {
     "message": "אתרים שמבקשים לקבל גישה למיקום של המשתמשים, בלי לציין הקשר, מעוררים אצל המשתמשים תחושת בלבול או חשדנות. במקום זאת, כדאי לשקול לקשר את הבקשות לפעולה של המשתמשים. [מידע נוסף](https://web.dev/geolocation-on-start/)."
@@ -1276,15 +1270,6 @@
   },
   "lighthouse-core/audits/preload-lcp-image.js | title": {
     "message": "טעינה מראש של תמונת ה-Largest Contentful Paint (‏LCP)"
-  },
-  "lighthouse-core/audits/redirects-http.js | description": {
-    "message": "אם כבר הגדרת HTTPS, יש לוודא שכל תנועת ה-HTTP מופנית אוטומטית ל-HTTPS כדי להפעיל תכונות רשת מאובטחות לכל המשתמשים שלך. [מידע נוסף](https://web.dev/redirects-http/)."
-  },
-  "lighthouse-core/audits/redirects-http.js | failureTitle": {
-    "message": "לא מפנה תנועת HTTP באופן אוטומטי אל HTTPS"
-  },
-  "lighthouse-core/audits/redirects-http.js | title": {
-    "message": "מפנה תנועת HTTP באופן אוטומטי אל HTTPS"
   },
   "lighthouse-core/audits/redirects.js | description": {
     "message": "הפניות אוטומטיות מעכבות את טעינת הדף. [מידע נוסף](https://web.dev/redirects/)."
@@ -1776,7 +1761,7 @@
     "message": "בדיקות אלה נדרשות עבור שורת הבסיס [רשימת משימות של PWA](https://developers.google.com/web/progressive-web-apps/checklist), אך הן לא נבדקות באופן אוטומטי על ידי Lighthouse. הן לא משפיעות על הניקוד שלך, אך חשוב לאמת אותן באופן ידני."
   },
   "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
-    "message": "Progressive Web App"
+    "message": "PWA"
   },
   "lighthouse-core/config/default-config.js | pwaInstallableGroupTitle": {
     "message": "ניתן להתקנה"
@@ -1932,7 +1917,7 @@
     "message": "גודל ההעברה"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnURL": {
-    "message": "כתובת ה-URL"
+    "message": "כתובת אתר"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnWastedBytes": {
     "message": "פוטנציאל חיסכון"
@@ -2077,30 +2062,6 @@
   },
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "נראה שכתובת ה-URL שסיפקת אינה חוקית."
-  },
-  "lighthouse-treemap/app/src/util.js | allLabel": {
-    "message": "הכול"
-  },
-  "lighthouse-treemap/app/src/util.js | allScriptsDropdownLabel": {
-    "message": "כל הסקריפטים"
-  },
-  "lighthouse-treemap/app/src/util.js | coverageColumnName": {
-    "message": "כיסוי"
-  },
-  "lighthouse-treemap/app/src/util.js | duplicateModulesLabel": {
-    "message": "מודולים כפולים"
-  },
-  "lighthouse-treemap/app/src/util.js | resourceBytesLabel": {
-    "message": "בייטים בשימוש המשאב"
-  },
-  "lighthouse-treemap/app/src/util.js | tableColumnName": {
-    "message": "שם"
-  },
-  "lighthouse-treemap/app/src/util.js | toggleTableButtonLabel": {
-    "message": "החלפת מצב התצוגה של הטבלה"
-  },
-  "lighthouse-treemap/app/src/util.js | unusedBytesLabel": {
-    "message": "בייטים לא בשימוש"
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "להצגת תוכן באנימציה, כשהתוכן לא מוצג במסך כדאי להשתמש ב-[`amp-anim`](https://amp.dev/documentation/components/amp-anim/) כדי לצמצם את השימוש ביחידת העיבוד המרכזית (CPU)."
@@ -2369,6 +2330,9 @@
   "report/renderer/util.js | calculatorLink": {
     "message": "להצגת המחשבון."
   },
+  "report/renderer/util.js | collapseView": {
+    "message": "Collapse view"
+  },
   "report/renderer/util.js | crcInitialNavigation": {
     "message": "ניווט התחלתי"
   },
@@ -2405,8 +2369,14 @@
   "report/renderer/util.js | errorMissingAuditInfo": {
     "message": "שגיאה בדוח: אין מידע על הבדיקה"
   },
+  "report/renderer/util.js | expandView": {
+    "message": "Expand view"
+  },
   "report/renderer/util.js | footerIssue": {
     "message": "דיווח על בעיה"
+  },
+  "report/renderer/util.js | hide": {
+    "message": "Hide"
   },
   "report/renderer/util.js | labDataTitle": {
     "message": "נתוני בדיקה"
@@ -2429,6 +2399,12 @@
   "report/renderer/util.js | passedAuditsGroupTitle": {
     "message": "בדיקות עם ציון 'עובר'"
   },
+  "report/renderer/util.js | runtimeAnalysisWindow": {
+    "message": "Initial page load"
+  },
+  "report/renderer/util.js | runtimeCustom": {
+    "message": "Custom throttling"
+  },
   "report/renderer/util.js | runtimeDesktopEmulation": {
     "message": "אמולציה של מחשב שולחני"
   },
@@ -2447,32 +2423,29 @@
   "report/renderer/util.js | runtimeSettingsCPUThrottling": {
     "message": "ויסות נתונים (throttle) של יחידת עיבוד מרכזית (CPU)"
   },
-  "report/renderer/util.js | runtimeSettingsChannel": {
-    "message": "ערוץ"
-  },
   "report/renderer/util.js | runtimeSettingsDevice": {
     "message": "מכשיר"
-  },
-  "report/renderer/util.js | runtimeSettingsFetchTime": {
-    "message": "מועד האחזור"
   },
   "report/renderer/util.js | runtimeSettingsNetworkThrottling": {
     "message": "הגבלת רוחב פס"
   },
-  "report/renderer/util.js | runtimeSettingsTitle": {
-    "message": "הגדרות זמן ריצה"
-  },
-  "report/renderer/util.js | runtimeSettingsUA": {
-    "message": "סוכן משתמש (מארח)"
-  },
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "סוכן משתמש (רשת)"
   },
-  "report/renderer/util.js | runtimeSettingsUrl": {
-    "message": "כתובת ה-URL"
+  "report/renderer/util.js | runtimeSingleLoad": {
+    "message": "Single page load"
+  },
+  "report/renderer/util.js | runtimeSingleLoadTooltip": {
+    "message": "This data is taken from a single page load, as opposed to field data summarizing many sessions."
+  },
+  "report/renderer/util.js | runtimeSlow4g": {
+    "message": "Slow 4G throttling"
   },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "ערך לא ידוע"
+  },
+  "report/renderer/util.js | show": {
+    "message": "Show"
   },
   "report/renderer/util.js | showRelevantAudits": {
     "message": "הצגת הביקורות שרלוונטיות למדדים:"
@@ -2503,5 +2476,29 @@
   },
   "report/renderer/util.js | warningHeader": {
     "message": "אזהרות: "
+  },
+  "treemap/app/src/util.js | allLabel": {
+    "message": "הכול"
+  },
+  "treemap/app/src/util.js | allScriptsDropdownLabel": {
+    "message": "כל הסקריפטים"
+  },
+  "treemap/app/src/util.js | coverageColumnName": {
+    "message": "כיסוי"
+  },
+  "treemap/app/src/util.js | duplicateModulesLabel": {
+    "message": "מודולים כפולים"
+  },
+  "treemap/app/src/util.js | resourceBytesLabel": {
+    "message": "בייטים בשימוש המשאב"
+  },
+  "treemap/app/src/util.js | tableColumnName": {
+    "message": "שם"
+  },
+  "treemap/app/src/util.js | toggleTableButtonLabel": {
+    "message": "החלפת מצב התצוגה של הטבלה"
+  },
+  "treemap/app/src/util.js | unusedBytesLabel": {
+    "message": "בייטים לא בשימוש"
   }
 }

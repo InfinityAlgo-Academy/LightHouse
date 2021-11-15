@@ -3,7 +3,7 @@
     "message": "所有報表"
   },
   "flow-report/src/i18n/ui-strings.js | categories": {
-    "message": "Categories"
+    "message": "類別"
   },
   "flow-report/src/i18n/ui-strings.js | categoryAccessibility": {
     "message": "無障礙功能"
@@ -24,40 +24,46 @@
     "message": "電腦版"
   },
   "flow-report/src/i18n/ui-strings.js | helpDialogTitle": {
-    "message": "Understanding the Lighthouse Flow Report"
+    "message": "解讀 Lighthouse 流程報表"
   },
   "flow-report/src/i18n/ui-strings.js | helpLabel": {
-    "message": "Understanding Flows"
+    "message": "解讀流程"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionNavigation": {
-    "message": "Use Navigation reports to..."
+    "message": "使用導覽報表來..."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionSnapshot": {
-    "message": "Use Snapshot reports to..."
+    "message": "使用快照報表來..."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionTimespan": {
-    "message": "Use Timespan reports to..."
+    "message": "使用時間範圍報表來..."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation1": {
-    "message": "Obtain a Lighthouse Performance score."
+    "message": "取得 Lighthouse 效能分數。"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation2": {
-    "message": "Measure page load Performance metrics such as Largest Contentful Paint and Speed Index."
+    "message": "評估載入網頁的效能指標，例如最大內容繪製和速度指數。"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation3": {
-    "message": "Assess Progressive Web App capabilities."
+    "message": "評估漸進式網頁應用程式功能。"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseSnapshot1": {
-    "message": "Find accessibility issues in single page applications or complex forms."
+    "message": "針對單頁應用程式或複雜的表單尋找無障礙功能方面的問題。"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseSnapshot2": {
-    "message": "Evaluate best practices of menus and UI elements hidden behind interaction."
+    "message": "針對隱藏在互動背後的選單和 UI 元素評估最佳做法。"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan1": {
-    "message": "Measure layout shifts and JavaScript execution time on a series of interactions."
+    "message": "測量一系列互動的版面配置位移和 JavaScript 執行時間。"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan2": {
-    "message": "Discover performance opportunities to improve the experience for long-lived pages and single-page applications."
+    "message": "找出增進效能的機會，進而改善長期網頁和單頁應用程式的使用體驗。"
+  },
+  "flow-report/src/i18n/ui-strings.js | highestImpact": {
+    "message": "最大影響力"
+  },
+  "flow-report/src/i18n/ui-strings.js | informativeAuditCount": {
+    "message": "{numInformative,plural, =1{{numInformative} 項資訊型稽核}other{{numInformative} 項資訊型稽核}}"
   },
   "flow-report/src/i18n/ui-strings.js | mobile": {
     "message": "行動版"
@@ -66,10 +72,19 @@
     "message": "載入網頁"
   },
   "flow-report/src/i18n/ui-strings.js | navigationLongDescription": {
-    "message": "Navigation reports analyze a single page load, exactly like the original Lighthouse reports."
+    "message": "導覽報表能分析單一網頁的載入作業，與原 Lighthouse 報表完全相同。"
   },
   "flow-report/src/i18n/ui-strings.js | navigationReport": {
     "message": "導覽報表"
+  },
+  "flow-report/src/i18n/ui-strings.js | navigationReportCount": {
+    "message": "{numNavigation,plural, =1{{numNavigation} 份導覽報表}other{{numNavigation} 份導覽報表}}"
+  },
+  "flow-report/src/i18n/ui-strings.js | passableAuditCount": {
+    "message": "{numPassableAudits,plural, =1{{numPassableAudits} 項可通過的稽核}other{{numPassableAudits} 項可通過的稽核}}"
+  },
+  "flow-report/src/i18n/ui-strings.js | passedAuditCount": {
+    "message": "{numPassed,plural, =1{已通過 {numPassed} 項稽核}other{已通過 {numPassed} 項稽核}}"
   },
   "flow-report/src/i18n/ui-strings.js | ratingAverage": {
     "message": "平均"
@@ -84,16 +99,19 @@
     "message": "良好"
   },
   "flow-report/src/i18n/ui-strings.js | save": {
-    "message": "Save"
+    "message": "儲存"
   },
   "flow-report/src/i18n/ui-strings.js | snapshotDescription": {
     "message": "網頁擷取狀態"
   },
   "flow-report/src/i18n/ui-strings.js | snapshotLongDescription": {
-    "message": "Snapshot reports analyze the page in a particular state, typically after user interactions."
+    "message": "快照報表能分析特定狀態下的網頁，通常是在使用者互動之後的網頁。"
   },
   "flow-report/src/i18n/ui-strings.js | snapshotReport": {
     "message": "快照報表"
+  },
+  "flow-report/src/i18n/ui-strings.js | snapshotReportCount": {
+    "message": "{numSnapshot,plural, =1{{numSnapshot} 份快照報表}other{{numSnapshot} 份快照報表}}"
   },
   "flow-report/src/i18n/ui-strings.js | summary": {
     "message": "摘要"
@@ -102,10 +120,13 @@
     "message": "使用者互動"
   },
   "flow-report/src/i18n/ui-strings.js | timespanLongDescription": {
-    "message": "Timespan reports analyze an arbitrary period of time, typically containing user interactions."
+    "message": "時間範圍報表能分析任意一段時間，通常包含使用者與網頁互動的時間。"
   },
   "flow-report/src/i18n/ui-strings.js | timespanReport": {
     "message": "時間範圍報表"
+  },
+  "flow-report/src/i18n/ui-strings.js | timespanReportCount": {
+    "message": "{numTimespan,plural, =1{{numTimespan} 份時間範圍報表}other{{numTimespan} 份時間範圍報表}}"
   },
   "flow-report/src/i18n/ui-strings.js | title": {
     "message": "Lighthouse 使用者流程報表"
@@ -743,18 +764,6 @@
   "lighthouse-core/audits/deprecations.js | title": {
     "message": "避免使用已淘汰的 API"
   },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | description": {
-    "message": "應用程式快取已遭到淘汰。[瞭解詳情](https://web.dev/appcache-manifest/)。"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | displayValue": {
-    "message": "已找到「{AppCacheManifest}」"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | failureTitle": {
-    "message": "使用應用程式快取"
-  },
-  "lighthouse-core/audits/dobetterweb/appcache-manifest.js | title": {
-    "message": "避免使用應用程式快取"
-  },
   "lighthouse-core/audits/dobetterweb/charset.js | description": {
     "message": "必須定義字元編碼宣告。你可以在 HTML 的前 1024 個位元組中使用 `<meta>` 標記定義，或在 Content-Type HTTP 回應標頭中定義。[瞭解詳情](https://web.dev/charset/)。"
   },
@@ -811,21 +820,6 @@
   },
   "lighthouse-core/audits/dobetterweb/dom-size.js | title": {
     "message": "避免 DOM 過大"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | columnFailingAnchors": {
-    "message": "未通過稽核的錨點"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | description": {
-    "message": "將 `rel=\"noopener\"` 或 `rel=\"noreferrer\"` 新增至所有外部連結，可提升效能並防範安全漏洞。[瞭解詳情](https://web.dev/external-anchors-use-rel-noopener/)。"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | failureTitle": {
-    "message": "跨原始來源目的地的連結不安全"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | title": {
-    "message": "跨來源目的地的連結很安全"
-  },
-  "lighthouse-core/audits/dobetterweb/external-anchors-use-rel-noopener.js | warning": {
-    "message": "無法判定錨點的目的地 ({anchorHTML})。如果 target=_blank 不是做為超連結使用，請考慮移除它。"
   },
   "lighthouse-core/audits/dobetterweb/geolocation-on-start.js | description": {
     "message": "如果未提供其他資訊就要求存取使用者的位置資訊，會讓使用者感到困惑而不信任網站。建議你在使用者執行特定動作時，再提出這項要求。[瞭解詳情](https://web.dev/geolocation-on-start/)。"
@@ -1276,15 +1270,6 @@
   },
   "lighthouse-core/audits/preload-lcp-image.js | title": {
     "message": "預先載入最大內容繪製圖片"
-  },
-  "lighthouse-core/audits/redirects-http.js | description": {
-    "message": "如果你已設定 HTTPS，請確認是否已將所有 HTTP 流量都重新導向至 HTTPS，以便為所有使用者提供安全的網路功能。[瞭解詳情](https://web.dev/redirects-http/)。"
-  },
-  "lighthouse-core/audits/redirects-http.js | failureTitle": {
-    "message": "未將 HTTP 流量重新導向至 HTTPS"
-  },
-  "lighthouse-core/audits/redirects-http.js | title": {
-    "message": "將 HTTP 流量重新導向至 HTTPS"
   },
   "lighthouse-core/audits/redirects.js | description": {
     "message": "重新導向會導致頁面延遲載入。[瞭解詳情](https://web.dev/redirects/)。"
@@ -1776,7 +1761,7 @@
     "message": "這些是基本 [PWA 檢查清單](https://developers.google.com/web/progressive-web-apps/checklist)規定的項目，但 Lighthouse 不會自動進行檢查。它們不會影響你的分數，但請務必手動驗證這些項目。"
   },
   "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
-    "message": "漸進式網頁應用程式"
+    "message": "PWA"
   },
   "lighthouse-core/config/default-config.js | pwaInstallableGroupTitle": {
     "message": "可安裝"
@@ -2078,30 +2063,6 @@
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "你所提供的網址無效。"
   },
-  "lighthouse-treemap/app/src/util.js | allLabel": {
-    "message": "全部"
-  },
-  "lighthouse-treemap/app/src/util.js | allScriptsDropdownLabel": {
-    "message": "所有指令碼"
-  },
-  "lighthouse-treemap/app/src/util.js | coverageColumnName": {
-    "message": "涵蓋率"
-  },
-  "lighthouse-treemap/app/src/util.js | duplicateModulesLabel": {
-    "message": "重複模組"
-  },
-  "lighthouse-treemap/app/src/util.js | resourceBytesLabel": {
-    "message": "資源位元組"
-  },
-  "lighthouse-treemap/app/src/util.js | tableColumnName": {
-    "message": "名稱"
-  },
-  "lighthouse-treemap/app/src/util.js | toggleTableButtonLabel": {
-    "message": "顯示/隱藏表格"
-  },
-  "lighthouse-treemap/app/src/util.js | unusedBytesLabel": {
-    "message": "未使用的位元組"
-  },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "你可以對動畫內容使用 [`amp-anim`](https://amp.dev/documentation/components/amp-anim/)，這樣一來，畫面外的內容即會盡量節省 CPU 用量。"
   },
@@ -2369,6 +2330,9 @@
   "report/renderer/util.js | calculatorLink": {
     "message": "查看計算機。"
   },
+  "report/renderer/util.js | collapseView": {
+    "message": "收合檢視畫面"
+  },
   "report/renderer/util.js | crcInitialNavigation": {
     "message": "起始導覽"
   },
@@ -2405,8 +2369,14 @@
   "report/renderer/util.js | errorMissingAuditInfo": {
     "message": "回報錯誤：無稽核資訊"
   },
+  "report/renderer/util.js | expandView": {
+    "message": "展開檢視畫面"
+  },
   "report/renderer/util.js | footerIssue": {
     "message": "回報問題"
+  },
+  "report/renderer/util.js | hide": {
+    "message": "隱藏"
   },
   "report/renderer/util.js | labDataTitle": {
     "message": "研究資料"
@@ -2429,6 +2399,12 @@
   "report/renderer/util.js | passedAuditsGroupTitle": {
     "message": "通過稽核項目"
   },
+  "report/renderer/util.js | runtimeAnalysisWindow": {
+    "message": "初次載入網頁"
+  },
+  "report/renderer/util.js | runtimeCustom": {
+    "message": "自訂節流"
+  },
   "report/renderer/util.js | runtimeDesktopEmulation": {
     "message": "模擬電腦"
   },
@@ -2447,32 +2423,29 @@
   "report/renderer/util.js | runtimeSettingsCPUThrottling": {
     "message": "CPU 溫控降頻"
   },
-  "report/renderer/util.js | runtimeSettingsChannel": {
-    "message": "管道"
-  },
   "report/renderer/util.js | runtimeSettingsDevice": {
     "message": "裝置"
-  },
-  "report/renderer/util.js | runtimeSettingsFetchTime": {
-    "message": "擷取時間"
   },
   "report/renderer/util.js | runtimeSettingsNetworkThrottling": {
     "message": "網路節流"
   },
-  "report/renderer/util.js | runtimeSettingsTitle": {
-    "message": "執行階段設定"
-  },
-  "report/renderer/util.js | runtimeSettingsUA": {
-    "message": "使用者代理程式 (主機)"
-  },
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "使用者代理程式 (網路)"
   },
-  "report/renderer/util.js | runtimeSettingsUrl": {
-    "message": "網址"
+  "report/renderer/util.js | runtimeSingleLoad": {
+    "message": "單一網頁載入"
+  },
+  "report/renderer/util.js | runtimeSingleLoadTooltip": {
+    "message": "這項資料取自單一網頁載入作業，而非匯總多個工作階段的現場資料。"
+  },
+  "report/renderer/util.js | runtimeSlow4g": {
+    "message": "慢速 4G 節流"
   },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "不明"
+  },
+  "report/renderer/util.js | show": {
+    "message": "顯示"
   },
   "report/renderer/util.js | showRelevantAudits": {
     "message": "顯示與下列指標相關的稽核項目："
@@ -2503,5 +2476,29 @@
   },
   "report/renderer/util.js | warningHeader": {
     "message": "警告： "
+  },
+  "treemap/app/src/util.js | allLabel": {
+    "message": "全部"
+  },
+  "treemap/app/src/util.js | allScriptsDropdownLabel": {
+    "message": "所有指令碼"
+  },
+  "treemap/app/src/util.js | coverageColumnName": {
+    "message": "涵蓋率"
+  },
+  "treemap/app/src/util.js | duplicateModulesLabel": {
+    "message": "重複模組"
+  },
+  "treemap/app/src/util.js | resourceBytesLabel": {
+    "message": "資源位元組"
+  },
+  "treemap/app/src/util.js | tableColumnName": {
+    "message": "名稱"
+  },
+  "treemap/app/src/util.js | toggleTableButtonLabel": {
+    "message": "顯示/隱藏表格"
+  },
+  "treemap/app/src/util.js | unusedBytesLabel": {
+    "message": "未使用的位元組"
   }
 }
