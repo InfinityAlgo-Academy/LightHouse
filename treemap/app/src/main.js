@@ -589,7 +589,8 @@ class TreemapViewer {
     ];
 
     if (bytes !== undefined && total !== undefined) {
-      const percentStr = TreemapUtil.i18n.formatPercent(bytes / total);
+      const percent = total === 0 ? 1 : bytes / total;
+      const percentStr = TreemapUtil.i18n.formatPercent(percent);
       let str = `${TreemapUtil.i18n.formatBytesWithBestUnit(bytes)} (${percentStr})`;
       // Only add label for bytes on the root node.
       if (node === this.currentTreemapRoot) {
