@@ -24,6 +24,8 @@ if (!logEl) {
   throw new Error('logger element not found');
 }
 const logger = new Logger(logEl);
+// `getGistFileContentAsJson` expects logger to be defined globally.
+window.logger = logger;
 
 /** @type {TreemapViewer} */
 let treemapViewer;
@@ -787,16 +789,40 @@ class LighthouseTreemap {
   }
 
   /**
+   * Coerce json into LH.Treemap.Options
+   * Accepts if json is an lhr, or {lhr: ...} or {lighthouseResult: ...}
+   * Throws error if json does not match expectations.
    * @param {any} json
    * @return {LH.Treemap.Options}
    */
-  convertToOptions(json) {
+  coerceToOptions(json) {
+    /** @type {LH.Treemap.Options['lhr']|null} */
+    let lhr = null;
     if (json && typeof json === 'object') {
-      if (json.audits) json = {lhr: json};
-      if (json.lhr && json.lhr.audits && typeof json.lhr.audits === 'object') return json;
+      for (const maybeLhr of [json, json.lhr, json.lighthouseResult]) {
+        if (maybeLhr && maybeLhr.audits && typeof maybeLhr.audits === 'object') {
+          lhr = maybeLhr;
+          break;
+        }
+      }
     }
 
-    throw new Error('unknown json');
+    if (!lhr) {
+      throw new Error('provided json is not a Lighthouse result');
+    }
+
+    if (!lhr.audits['script-treemap-data']) {
+      throw new Error('provided Lighthouse result is missing audit: `script-treemap-data`');
+    }
+
+    if (lhr === json.lhr) {
+      // Special case: file was {lhr: ...} and potentially has other properties.
+      // LH.Treemap.Options only has `lhr` currently, but may have more in the future.
+      return json;
+    }
+
+    // json was exactly a LHR, or a PSI result object aka {lighthouseResult}
+    return {lhr};
   }
 
   /**
@@ -818,7 +844,7 @@ class LighthouseTreemap {
         const gistId = match[0];
         history.pushState({}, '', `${LighthouseTreemap.APP_URL}?gist=${gistId}`);
         const json = await this._github.getGistFileContentAsJson(gistId);
-        const options = this.convertToOptions(json);
+        const options = this.coerceToOptions(json);
         this.init(options);
       }
     } catch (err) {
@@ -834,7 +860,7 @@ class LighthouseTreemap {
     let options;
     try {
       json = JSON.parse(str);
-      options = this.convertToOptions(json);
+      options = this.coerceToOptions(json);
     } catch (e) {
       logger.error('Could not parse JSON file.');
     }
@@ -867,7 +893,7 @@ class LighthouseTreemap {
     // Try paste as json content.
     try {
       const json = JSON.parse(e.clipboardData.getData('text'));
-      const options = this.convertToOptions(json);
+      const options = this.coerceToOptions(json);
       this.init(options);
 
       if (window.ga) {
@@ -898,47 +924,26 @@ async function main() {
 
   if (window.__treemapOptions) {
     // Prefer the hardcoded options from a saved HTML file above all.
-    app.init(window.__treemapOptions);
+    app.init(app.coerceToOptions(window.__treemapOptions));
   } else if ('debug' in params) {
     const response = await fetch('debug.json');
-    app.init(await response.json());
+    const json = await response.json();
+    const options = app.coerceToOptions(json);
+    app.init(options);
   } else if (params.lhr) {
-    const options = {
-      lhr: params.lhr,
-    };
+    const options = app.coerceToOptions(params.lhr);
     app.init(options);
   } else if (params.gist) {
-    let json;
-    let options;
-    try {
-      json = await app._github.getGistFileContentAsJson(params.gist || '');
-      options = app.convertToOptions(json);
-    } catch (err) {
-      logger.log(err);
-    }
-    if (options) app.init(options);
-  } else {
-    // TODO: remove for v8.
-    window.addEventListener('message', e => {
-      if (e.source !== self.opener) return;
-
-      /** @type {LH.Treemap.Options} */
-      const options = e.data;
-      const {lhr} = options;
-      if (!lhr) return logger.error('Error: Invalid options');
-
-      const documentUrl = lhr.requestedUrl;
-      if (!documentUrl) return logger.error('Error: Invalid options');
-
-      app.init(options);
-    });
-  }
-
-  // TODO: remove for v8.
-  // If the page was opened as a popup, tell the opening window we're ready.
-  if (self.opener && !self.opener.closed) {
-    self.opener.postMessage({opened: true}, '*');
+    const json = await app._github.getGistFileContentAsJson(params.gist || '');
+    const options = app.coerceToOptions(json);
+    app.init(options);
   }
 }
 
-document.addEventListener('DOMContentLoaded', main);
+document.addEventListener('DOMContentLoaded', async () => {
+  try {
+    await main();
+  } catch (err) {
+    logger.error(err);
+  }
+});
