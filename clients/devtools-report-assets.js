@@ -21,9 +21,6 @@ const cachedResources = globalThis.EXPORTED_CACHED_RESOURCES_ONLY_FOR_LIGHTHOUSE
 // read from immediately, so we can defer reading with getters and everything
 // is going to be OK.
 module.exports = {
-  get REPORT_CSS() {
-    return cachedResources.get('third_party/lighthouse/report-assets/report.css');
-  },
   get REPORT_JAVASCRIPT() {
     return cachedResources.get('third_party/lighthouse/report-assets/report.js');
   },
