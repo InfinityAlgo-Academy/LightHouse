@@ -50,9 +50,9 @@ const UIStrings = {
    * for the current page encloses the scope and start URL from the manifest. */
   'no-matching-service-worker': `No matching service worker detected. You may need to reload the page, or check that the scope of the service worker for the current page encloses the scope and start URL from the manifest.`,
   /**
-  * @description Error message explaining that the manifest does not contain a suitable icon.
-  * @example {192} value0
-  */
+   * @description Error message explaining that the manifest does not contain a suitable icon.
+   * @example {192} value0
+   */
   'manifest-missing-suitable-icon': `Manifest does not contain a suitable icon - PNG, SVG or WebP format of at least {value0}\xa0px is required, the sizes attribute must be set, and the purpose attribute, if set, must include "any".`,
 
   /**
@@ -93,6 +93,8 @@ const UIStrings = {
   'manifest-location-changed': `Manifest URL changed while the manifest was being fetched.`,
   /** Warning message explaining that the page does not work offline. */
   'warn-not-offline-capable': `Page does not work offline. The page will not be regarded as installable after Chrome 93, stable release August 2021.`,
+  /** Error message explaining that Lighthouse failed while detecting a service worker, and directing the user to try again in a new Chrome. */
+  'protocol-timeout': `Lighthouse could not determine if there was a service worker. Please try with a newer version of Chrome.`,
 };
 /* eslint-enable max-len */
 

@@ -59,6 +59,12 @@
   "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan2": {
     "message": "Discover performance opportunities to improve the experience for long-lived pages and single-page applications."
   },
+  "flow-report/src/i18n/ui-strings.js | highestImpact": {
+    "message": "Υψηλότερος αντίκτυπος"
+  },
+  "flow-report/src/i18n/ui-strings.js | informativeAuditCount": {
+    "message": "{numInformative,plural, =1{{numInformative} πληροφοριακός έλεγχος}other{{numInformative} πληροφοριακοί έλεγχοι}}"
+  },
   "flow-report/src/i18n/ui-strings.js | mobile": {
     "message": "Κινητό"
   },
@@ -70,6 +76,15 @@
   },
   "flow-report/src/i18n/ui-strings.js | navigationReport": {
     "message": "Αναφορά πλοήγησης"
+  },
+  "flow-report/src/i18n/ui-strings.js | navigationReportCount": {
+    "message": "{numNavigation,plural, =1{{numNavigation} αναφορά πλοήγησης}other{{numNavigation} αναφορές πλοήγησης}}"
+  },
+  "flow-report/src/i18n/ui-strings.js | passableAuditCount": {
+    "message": "{numPassableAudits,plural, =1{{numPassableAudits} έλεγχος που μπορεί να ολοκληρωθεί}other{{numPassableAudits} έλεγχοι που μπορούν να ολοκληρωθούν}}"
+  },
+  "flow-report/src/i18n/ui-strings.js | passedAuditCount": {
+    "message": "{numPassed,plural, =1{{numPassed} έλεγχος ολοκληρώθηκε}other{{numPassed} έλεγχοι ολοκληρώθηκαν}}"
   },
   "flow-report/src/i18n/ui-strings.js | ratingAverage": {
     "message": "Μέτρια"
@@ -95,6 +110,9 @@
   "flow-report/src/i18n/ui-strings.js | snapshotReport": {
     "message": "Αναφορά σύνοψης"
   },
+  "flow-report/src/i18n/ui-strings.js | snapshotReportCount": {
+    "message": "{numSnapshot,plural, =1{{numSnapshot} αναφορά σύνοψης}other{{numSnapshot} αναφορές σύνοψης}}"
+  },
   "flow-report/src/i18n/ui-strings.js | summary": {
     "message": "Σύνοψη"
   },
@@ -106,6 +124,9 @@
   },
   "flow-report/src/i18n/ui-strings.js | timespanReport": {
     "message": "Αναφορά χρονικού διαστήματος"
+  },
+  "flow-report/src/i18n/ui-strings.js | timespanReportCount": {
+    "message": "{numTimespan,plural, =1{{numTimespan} αναφορά χρονικού διαστήματος}other{{numTimespan} αναφορές χρονικού διαστήματος}}"
   },
   "flow-report/src/i18n/ui-strings.js | title": {
     "message": "Αναφορά ροής χρήστη Lighthouse"
@@ -1740,7 +1761,7 @@
     "message": "Αυτοί οι έλεγχοι απαιτούνται από τη [Λίστα ελέγχου PWA](https://developers.google.com/web/progressive-web-apps/checklist) σημείου αναφοράς αλλά δεν ελέγχονται αυτόματα από το Lighthouse. Δεν επηρεάζουν τη βαθμολογία σας αλλά είναι σημαντικό να τους επαληθεύσετε με μη αυτόματο τρόπο."
   },
   "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
-    "message": "Προηγμένη εφαρμογή ιστού"
+    "message": "PWA"
   },
   "lighthouse-core/config/default-config.js | pwaInstallableGroupTitle": {
     "message": "Δυνατότητα εγκατάστασης"
@@ -2042,30 +2063,6 @@
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "Το URL που παρείχατε φαίνεται ότι δεν είναι έγκυρο."
   },
-  "treemap/app/src/util.js | allLabel": {
-    "message": "Όλα"
-  },
-  "treemap/app/src/util.js | allScriptsDropdownLabel": {
-    "message": "Όλες οι γραφές"
-  },
-  "treemap/app/src/util.js | coverageColumnName": {
-    "message": "Κάλυψη"
-  },
-  "treemap/app/src/util.js | duplicateModulesLabel": {
-    "message": "Διπλότυπες λειτουργικές μονάδες"
-  },
-  "treemap/app/src/util.js | resourceBytesLabel": {
-    "message": "Byte πόρου"
-  },
-  "treemap/app/src/util.js | tableColumnName": {
-    "message": "Όνομα"
-  },
-  "treemap/app/src/util.js | toggleTableButtonLabel": {
-    "message": "Εναλλαγή πίνακα"
-  },
-  "treemap/app/src/util.js | unusedBytesLabel": {
-    "message": "Byte που δεν χρησιμοποιούνται"
-  },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "Για περιεχόμενο κινούμενης εικόνας, χρησιμοποιήστε το [`amp-anim`](https://amp.dev/documentation/components/amp-anim/) για να ελαχιστοποιήσετε τη χρήση CPU όταν το περιεχόμενο είναι εκτός οθόνης."
   },
@@ -2333,6 +2330,9 @@
   "report/renderer/util.js | calculatorLink": {
     "message": "Προβολή αριθμομηχανής."
   },
+  "report/renderer/util.js | collapseView": {
+    "message": "Σύμπτυξη προβολής"
+  },
   "report/renderer/util.js | crcInitialNavigation": {
     "message": "Αρχική πλοήγηση"
   },
@@ -2369,8 +2369,14 @@
   "report/renderer/util.js | errorMissingAuditInfo": {
     "message": "Σφάλμα αναφοράς: Δεν υπάρχουν πληροφορίες ελέγχου"
   },
+  "report/renderer/util.js | expandView": {
+    "message": "Ανάπτυξη προβολής"
+  },
   "report/renderer/util.js | footerIssue": {
     "message": "Υποβολή προβλήματος"
+  },
+  "report/renderer/util.js | hide": {
+    "message": "Απόκρυψη"
   },
   "report/renderer/util.js | labDataTitle": {
     "message": "Εργαστηριακά δεδομένα"
@@ -2392,6 +2398,12 @@
   },
   "report/renderer/util.js | passedAuditsGroupTitle": {
     "message": "Έλεγχοι που ολοκληρώθηκαν επιτυχώς"
+  },
+  "report/renderer/util.js | runtimeAnalysisWindow": {
+    "message": "Αρχική φόρτωση σελίδας"
+  },
+  "report/renderer/util.js | runtimeCustom": {
+    "message": "Προσαρμοσμένη ρύθμιση ροής δεδομένων"
   },
   "report/renderer/util.js | runtimeDesktopEmulation": {
     "message": "Προσομοιωμένη επιφάνεια εργασίας"
@@ -2420,8 +2432,20 @@
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "Παράγοντας χρήστη (δίκτυο)"
   },
+  "report/renderer/util.js | runtimeSingleLoad": {
+    "message": "Μία φόρτωση σελίδας"
+  },
+  "report/renderer/util.js | runtimeSingleLoadTooltip": {
+    "message": "Αυτά τα δεδομένα λαμβάνονται από μία φόρτωση σελίδας, σε αντίθεση με τα δεδομένα πεδίου που συνοψίζουν πολλές περιόδους λειτουργίας."
+  },
+  "report/renderer/util.js | runtimeSlow4g": {
+    "message": "Ρύθμιση ροής δεδομένων αργού 4G"
+  },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "Άγνωστη"
+  },
+  "report/renderer/util.js | show": {
+    "message": "Εμφάνιση"
   },
   "report/renderer/util.js | showRelevantAudits": {
     "message": "Εμφάνιση ελέγχων που σχετίζονται με:"
@@ -2452,5 +2476,29 @@
   },
   "report/renderer/util.js | warningHeader": {
     "message": "Προειδοποιήσεις: "
+  },
+  "treemap/app/src/util.js | allLabel": {
+    "message": "Όλα"
+  },
+  "treemap/app/src/util.js | allScriptsDropdownLabel": {
+    "message": "Όλες οι γραφές"
+  },
+  "treemap/app/src/util.js | coverageColumnName": {
+    "message": "Κάλυψη"
+  },
+  "treemap/app/src/util.js | duplicateModulesLabel": {
+    "message": "Διπλότυπες λειτουργικές μονάδες"
+  },
+  "treemap/app/src/util.js | resourceBytesLabel": {
+    "message": "Byte πόρου"
+  },
+  "treemap/app/src/util.js | tableColumnName": {
+    "message": "Όνομα"
+  },
+  "treemap/app/src/util.js | toggleTableButtonLabel": {
+    "message": "Εναλλαγή πίνακα"
+  },
+  "treemap/app/src/util.js | unusedBytesLabel": {
+    "message": "Byte που δεν χρησιμοποιούνται"
   }
 }

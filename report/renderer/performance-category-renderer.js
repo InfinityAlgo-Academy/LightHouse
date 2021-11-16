@@ -200,7 +200,6 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
       showEl.textContent = Util.i18n.strings.expandView;
       hideEl.textContent = Util.i18n.strings.collapseView;
 
-      const metricAudits = category.auditRefs.filter(audit => audit.group === 'metrics');
       const metricsBoxesEl = this.dom.createElement('div', 'lh-metrics-container');
       metricsGroupEl.insertBefore(metricsBoxesEl, metricsFooterEl);
       metricAudits.forEach(item => {

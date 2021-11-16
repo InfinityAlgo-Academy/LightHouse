@@ -59,6 +59,12 @@
   "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan2": {
     "message": "Discover performance opportunities to improve the experience for long-lived pages and single-page applications."
   },
+  "flow-report/src/i18n/ui-strings.js | highestImpact": {
+    "message": "Millor impacte"
+  },
+  "flow-report/src/i18n/ui-strings.js | informativeAuditCount": {
+    "message": "{numInformative,plural, =1{{numInformative} auditoria informativa}other{{numInformative} auditories informatives}}"
+  },
   "flow-report/src/i18n/ui-strings.js | mobile": {
     "message": "Mòbil"
   },
@@ -70,6 +76,15 @@
   },
   "flow-report/src/i18n/ui-strings.js | navigationReport": {
     "message": "Informe de navegació"
+  },
+  "flow-report/src/i18n/ui-strings.js | navigationReportCount": {
+    "message": "{numNavigation,plural, =1{{numNavigation} informe de navegació}other{{numNavigation} informes de navegació}}"
+  },
+  "flow-report/src/i18n/ui-strings.js | passableAuditCount": {
+    "message": "{numPassableAudits,plural, =1{{numPassableAudits} auditoria aprovable}other{{numPassableAudits} auditories aprovables}}"
+  },
+  "flow-report/src/i18n/ui-strings.js | passedAuditCount": {
+    "message": "{numPassed,plural, =1{{numPassed} auditoria aprovada}other{{numPassed} auditories aprovades}}"
   },
   "flow-report/src/i18n/ui-strings.js | ratingAverage": {
     "message": "Normal"
@@ -95,6 +110,9 @@
   "flow-report/src/i18n/ui-strings.js | snapshotReport": {
     "message": "Informe d'una instantània"
   },
+  "flow-report/src/i18n/ui-strings.js | snapshotReportCount": {
+    "message": "{numSnapshot,plural, =1{{numSnapshot} informe d'una instantània}other{{numSnapshot} informes d'una instantània}}"
+  },
   "flow-report/src/i18n/ui-strings.js | summary": {
     "message": "Resum"
   },
@@ -106,6 +124,9 @@
   },
   "flow-report/src/i18n/ui-strings.js | timespanReport": {
     "message": "Informe d'un període de temps"
+  },
+  "flow-report/src/i18n/ui-strings.js | timespanReportCount": {
+    "message": "{numTimespan,plural, =1{{numTimespan} informe d'un període de temps}other{{numTimespan} informes d'un període de temps}}"
   },
   "flow-report/src/i18n/ui-strings.js | title": {
     "message": "Informe del flux d'usuaris de Lighthouse"
@@ -1740,7 +1761,7 @@
     "message": "La [llista de comprovació de referència per a aplicacions web progressives](https://developers.google.com/web/progressive-web-apps/checklist) requereix aquestes validacions, però Lighthouse no les verifica automàticament. Tot i que no afecten la teva puntuació, és important que les verifiquis manualment."
   },
   "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
-    "message": "Aplicació web progressiva"
+    "message": "PWA"
   },
   "lighthouse-core/config/default-config.js | pwaInstallableGroupTitle": {
     "message": "Es pot instal·lar"
@@ -2042,30 +2063,6 @@
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "Sembla que l'URL que has proporcionat no és vàlid."
   },
-  "treemap/app/src/util.js | allLabel": {
-    "message": "Tot"
-  },
-  "treemap/app/src/util.js | allScriptsDropdownLabel": {
-    "message": "Tots els scripts"
-  },
-  "treemap/app/src/util.js | coverageColumnName": {
-    "message": "Cobertura"
-  },
-  "treemap/app/src/util.js | duplicateModulesLabel": {
-    "message": "Mòduls duplicats"
-  },
-  "treemap/app/src/util.js | resourceBytesLabel": {
-    "message": "Bytes del recurs"
-  },
-  "treemap/app/src/util.js | tableColumnName": {
-    "message": "Nom"
-  },
-  "treemap/app/src/util.js | toggleTableButtonLabel": {
-    "message": "Commuta la taula"
-  },
-  "treemap/app/src/util.js | unusedBytesLabel": {
-    "message": "Bytes no utilitzats"
-  },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "En el cas de contingut animat, fes servir [`amp-anim`](https://amp.dev/documentation/components/amp-anim/) per minimitzar l'ús de la CPU quan el contingut és fora de la pantalla."
   },
@@ -2333,6 +2330,9 @@
   "report/renderer/util.js | calculatorLink": {
     "message": "Consulta la calculadora."
   },
+  "report/renderer/util.js | collapseView": {
+    "message": "Replega la visualització"
+  },
   "report/renderer/util.js | crcInitialNavigation": {
     "message": "Navegació inicial"
   },
@@ -2369,8 +2369,14 @@
   "report/renderer/util.js | errorMissingAuditInfo": {
     "message": "Error de l'informe: no hi ha informació d'auditoria"
   },
+  "report/renderer/util.js | expandView": {
+    "message": "Desplega la visualització"
+  },
   "report/renderer/util.js | footerIssue": {
     "message": "Informa d'un problema"
+  },
+  "report/renderer/util.js | hide": {
+    "message": "Amaga"
   },
   "report/renderer/util.js | labDataTitle": {
     "message": "Dades de laboratori"
@@ -2392,6 +2398,12 @@
   },
   "report/renderer/util.js | passedAuditsGroupTitle": {
     "message": "Auditories aprovades"
+  },
+  "report/renderer/util.js | runtimeAnalysisWindow": {
+    "message": "Càrrega de la pàgina inicial"
+  },
+  "report/renderer/util.js | runtimeCustom": {
+    "message": "Limitació personalitzada"
   },
   "report/renderer/util.js | runtimeDesktopEmulation": {
     "message": "Escriptori emulat"
@@ -2420,8 +2432,20 @@
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "Agent d'usuari (xarxa)"
   },
+  "report/renderer/util.js | runtimeSingleLoad": {
+    "message": "Càrrega de la pàgina única"
+  },
+  "report/renderer/util.js | runtimeSingleLoadTooltip": {
+    "message": "Aquestes dades s'han extret d'una única càrrega de la pàgina, a diferència de les dades de camps que resumeixen moltes sessions."
+  },
+  "report/renderer/util.js | runtimeSlow4g": {
+    "message": "Limitació 4G lenta"
+  },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "Desconegut"
+  },
+  "report/renderer/util.js | show": {
+    "message": "Mostra"
   },
   "report/renderer/util.js | showRelevantAudits": {
     "message": "Mostra auditories relacionades amb:"
@@ -2452,5 +2476,29 @@
   },
   "report/renderer/util.js | warningHeader": {
     "message": "Advertiments: "
+  },
+  "treemap/app/src/util.js | allLabel": {
+    "message": "Tot"
+  },
+  "treemap/app/src/util.js | allScriptsDropdownLabel": {
+    "message": "Tots els scripts"
+  },
+  "treemap/app/src/util.js | coverageColumnName": {
+    "message": "Cobertura"
+  },
+  "treemap/app/src/util.js | duplicateModulesLabel": {
+    "message": "Mòduls duplicats"
+  },
+  "treemap/app/src/util.js | resourceBytesLabel": {
+    "message": "Bytes del recurs"
+  },
+  "treemap/app/src/util.js | tableColumnName": {
+    "message": "Nom"
+  },
+  "treemap/app/src/util.js | toggleTableButtonLabel": {
+    "message": "Commuta la taula"
+  },
+  "treemap/app/src/util.js | unusedBytesLabel": {
+    "message": "Bytes no utilitzats"
   }
 }

@@ -78,16 +78,6 @@ function lookupCanonicalLocale(locales) {
   return lookupLocale(locales, getCanonicalLocales());
 }
 
-// For the bundle smoke test.
-if (typeof module !== 'undefined' && module.exports) {
-  // Ideally this could be exposed via browserify's `standalone`, but it doesn't
-  // work for LH because of https://github.com/browserify/browserify/issues/968
-  // Instead, since this file is only ever run in node for testing, expose a
-  // bundle entry point as global.
-  // @ts-expect-error
-  global.runBundledLighthouse = lighthouse;
-}
-
 // Expose only in DevTools' worker
 if (typeof self !== 'undefined') {
   // TODO: refactor and delete `global.isDevtools`.
@@ -106,4 +96,8 @@ if (typeof self !== 'undefined') {
   // TODO: expose as lookupCanonicalLocale in LighthouseService.ts?
   // @ts-expect-error
   self.lookupLocale = lookupCanonicalLocale;
+} else {
+  // For the bundle smoke test.
+  // @ts-expect-error
+  global.runBundledLighthouse = lighthouse;
 }

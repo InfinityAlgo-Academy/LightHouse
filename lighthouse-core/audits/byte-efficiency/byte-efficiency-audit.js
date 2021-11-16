@@ -206,6 +206,8 @@ class UnusedBytes extends Audit {
    */
   static computeWastedMsWithThroughput(wastedBytes, simulator) {
     const bitsPerSecond = simulator.getOptions().throughput;
+    // https://github.com/GoogleChrome/lighthouse/pull/13323#issuecomment-962031709
+    if (bitsPerSecond === 0) return 0;
     const wastedBits = wastedBytes * 8;
     const wastedMs = wastedBits / bitsPerSecond * 1000;
     return wastedMs;

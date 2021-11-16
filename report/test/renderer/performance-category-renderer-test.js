@@ -67,6 +67,17 @@ describe('PerfCategoryRenderer', () => {
     const timelineElements = metricsSection.querySelectorAll('.lh-metric');
     const nontimelineElements = metricsSection.querySelectorAll('.lh-audit');
     assert.equal(timelineElements.length + nontimelineElements.length, metricAudits.length);
+    assert.deepStrictEqual(
+      Array.from(timelineElements).map(el => el.id),
+      [
+        'first-contentful-paint',
+        'interactive',
+        'speed-index',
+        'total-blocking-time',
+        'largest-contentful-paint',
+        'cumulative-layout-shift',
+      ]
+    );
   });
 
   it('does not render metrics section if no metric group audits', () => {
@@ -282,10 +293,10 @@ describe('PerfCategoryRenderer', () => {
       expect(url.hash.split('&')).toMatchInlineSnapshot(`
 Array [
   "#FCP=6844",
-  "SI=8114",
-  "LCP=6844",
   "TTI=8191",
+  "SI=8114",
   "TBT=1221",
+  "LCP=6844",
   "CLS=0",
   "FMP=6844",
 ]
@@ -303,10 +314,10 @@ Array [
         expect(url.hash.split('&')).toMatchInlineSnapshot(`
 Array [
   "#FCP=6844",
-  "SI=8114",
-  "LCP=6844",
   "TTI=8191",
+  "SI=8114",
   "TBT=1221",
+  "LCP=6844",
   "CLS=0.14",
   "FMP=6844",
   "device=mobile",

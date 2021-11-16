@@ -3,7 +3,7 @@
     "message": "Alle rapporten"
   },
   "flow-report/src/i18n/ui-strings.js | categories": {
-    "message": "Categories"
+    "message": "Categorieën"
   },
   "flow-report/src/i18n/ui-strings.js | categoryAccessibility": {
     "message": "Toegankelijkheid"
@@ -24,40 +24,46 @@
     "message": "Desktop"
   },
   "flow-report/src/i18n/ui-strings.js | helpDialogTitle": {
-    "message": "Understanding the Lighthouse Flow Report"
+    "message": "Het rapport van de Lighthouse-stroom begrijpen"
   },
   "flow-report/src/i18n/ui-strings.js | helpLabel": {
-    "message": "Understanding Flows"
+    "message": "Begrijpen hoe stromen werken"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionNavigation": {
-    "message": "Use Navigation reports to..."
+    "message": "Navigatierapporten gebruiken…"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionSnapshot": {
-    "message": "Use Snapshot reports to..."
+    "message": "Momentopnamerapporten gebruiken…"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionTimespan": {
-    "message": "Use Timespan reports to..."
+    "message": "Tijdsduurrapporten gebruiken…"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation1": {
-    "message": "Obtain a Lighthouse Performance score."
+    "message": "Lighthouse-prestatiescore ophalen."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation2": {
-    "message": "Measure page load Performance metrics such as Largest Contentful Paint and Speed Index."
+    "message": "Prestatiestatistieken voor het laden van de pagina meten, zoals de Grootste weergave met content (LCP) en de snelheidsindex."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation3": {
-    "message": "Assess Progressive Web App capabilities."
+    "message": "Mogelijkheden van progressive web-apps evalueren."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseSnapshot1": {
-    "message": "Find accessibility issues in single page applications or complex forms."
+    "message": "Toegankelijkheidsproblemen opsporen in apps met één pagina of in complexe formulieren."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseSnapshot2": {
-    "message": "Evaluate best practices of menus and UI elements hidden behind interaction."
+    "message": "Praktische tips evalueren voor menu's en UI-elementen die achter interactie verborgen zijn."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan1": {
-    "message": "Measure layout shifts and JavaScript execution time on a series of interactions."
+    "message": "Indelingsverschuivingen en de JavaScript-uitvoeringstijd meten voor verschillende interacties."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan2": {
-    "message": "Discover performance opportunities to improve the experience for long-lived pages and single-page applications."
+    "message": "Ontdek mogelijkheden om de functionaliteit van langdurige pagina's en apps met één pagina te verbeteren."
+  },
+  "flow-report/src/i18n/ui-strings.js | highestImpact": {
+    "message": "Highest impact"
+  },
+  "flow-report/src/i18n/ui-strings.js | informativeAuditCount": {
+    "message": "{numInformative, plural,\n    =1 {{numInformative} informative audit}\n    other {{numInformative} informative audits}\n  }"
   },
   "flow-report/src/i18n/ui-strings.js | mobile": {
     "message": "Mobiel"
@@ -66,10 +72,19 @@
     "message": "Laden van pagina"
   },
   "flow-report/src/i18n/ui-strings.js | navigationLongDescription": {
-    "message": "Navigation reports analyze a single page load, exactly like the original Lighthouse reports."
+    "message": "In navigatierapporten wordt het laden van één pagina geanalyseerd, net als in de oorspronkelijke Lighthouse-rapporten."
   },
   "flow-report/src/i18n/ui-strings.js | navigationReport": {
     "message": "Navigatierapport"
+  },
+  "flow-report/src/i18n/ui-strings.js | navigationReportCount": {
+    "message": "{numNavigation, plural,\n    =1 {{numNavigation} navigation report}\n    other {{numNavigation} navigation reports}\n  }"
+  },
+  "flow-report/src/i18n/ui-strings.js | passableAuditCount": {
+    "message": "{numPassableAudits, plural,\n    =1 {{numPassableAudits} passable audit}\n    other {{numPassableAudits} passable audits}\n  }"
+  },
+  "flow-report/src/i18n/ui-strings.js | passedAuditCount": {
+    "message": "{numPassed, plural,\n    =1 {{numPassed} audit passed}\n    other {{numPassed} audits passed}\n  }"
   },
   "flow-report/src/i18n/ui-strings.js | ratingAverage": {
     "message": "Gemiddeld"
@@ -84,16 +99,19 @@
     "message": "Goed"
   },
   "flow-report/src/i18n/ui-strings.js | save": {
-    "message": "Save"
+    "message": "Opslaan"
   },
   "flow-report/src/i18n/ui-strings.js | snapshotDescription": {
     "message": "Vastgelegde staat van pagina"
   },
   "flow-report/src/i18n/ui-strings.js | snapshotLongDescription": {
-    "message": "Snapshot reports analyze the page in a particular state, typically after user interactions."
+    "message": "In momentopnamerapporten worden pagina's in een bepaalde situatie geanalyseerd, doorgaans na interactie van de gebruiker."
   },
   "flow-report/src/i18n/ui-strings.js | snapshotReport": {
     "message": "Momentopnamerapport"
+  },
+  "flow-report/src/i18n/ui-strings.js | snapshotReportCount": {
+    "message": "{numSnapshot, plural,\n    =1 {{numSnapshot} snapshot report}\n    other {{numSnapshot} snapshot reports}\n  }"
   },
   "flow-report/src/i18n/ui-strings.js | summary": {
     "message": "Overzicht"
@@ -102,10 +120,13 @@
     "message": "Gebruikersinteracties"
   },
   "flow-report/src/i18n/ui-strings.js | timespanLongDescription": {
-    "message": "Timespan reports analyze an arbitrary period of time, typically containing user interactions."
+    "message": "In tijdsduurrapporten wordt een bepaalde tijdsduur geanalyseerd die meestal gebruikersinteracties omvat."
   },
   "flow-report/src/i18n/ui-strings.js | timespanReport": {
     "message": "Perioderapport"
+  },
+  "flow-report/src/i18n/ui-strings.js | timespanReportCount": {
+    "message": "{numTimespan, plural,\n    =1 {{numTimespan} timespan report}\n    other {{numTimespan} timespan reports}\n  }"
   },
   "flow-report/src/i18n/ui-strings.js | title": {
     "message": "Lighthouse-rapport over gebruikersstroom"
@@ -1740,7 +1761,7 @@
     "message": "Deze controles worden vereist door de baseline [PWA-checklist](https://developers.google.com/web/progressive-web-apps/checklist) maar worden niet automatisch gecontroleerd door Lighthouse. Ze zijn niet van invloed op je score, maar het is wel belangrijk dat je ze handmatig verifieert."
   },
   "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
-    "message": "Progressive web-app"
+    "message": "PWA"
   },
   "lighthouse-core/config/default-config.js | pwaInstallableGroupTitle": {
     "message": "Installeerbaar"
@@ -2042,30 +2063,6 @@
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "Het lijkt erop dat je een ongeldige URL hebt opgegeven."
   },
-  "treemap/app/src/util.js | allLabel": {
-    "message": "Alle"
-  },
-  "treemap/app/src/util.js | allScriptsDropdownLabel": {
-    "message": "Alle scripts"
-  },
-  "treemap/app/src/util.js | coverageColumnName": {
-    "message": "Dekking"
-  },
-  "treemap/app/src/util.js | duplicateModulesLabel": {
-    "message": "Dubbele modules"
-  },
-  "treemap/app/src/util.js | resourceBytesLabel": {
-    "message": "Resourcebytes"
-  },
-  "treemap/app/src/util.js | tableColumnName": {
-    "message": "Naam"
-  },
-  "treemap/app/src/util.js | toggleTableButtonLabel": {
-    "message": "Tabel schakelen"
-  },
-  "treemap/app/src/util.js | unusedBytesLabel": {
-    "message": "Ongebruikte bytes"
-  },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "Gebruik in het geval van content met animatie [`amp-anim`](https://amp.dev/documentation/components/amp-anim/) om het CPU-gebruik te minimaliseren als de content niet in beeld is."
   },
@@ -2333,6 +2330,9 @@
   "report/renderer/util.js | calculatorLink": {
     "message": "Rekenmachine bekijken"
   },
+  "report/renderer/util.js | collapseView": {
+    "message": "Collapse view"
+  },
   "report/renderer/util.js | crcInitialNavigation": {
     "message": "Beginnavigatie"
   },
@@ -2369,8 +2369,14 @@
   "report/renderer/util.js | errorMissingAuditInfo": {
     "message": "Rapportfout: geen controlegegevens"
   },
+  "report/renderer/util.js | expandView": {
+    "message": "Expand view"
+  },
   "report/renderer/util.js | footerIssue": {
     "message": "Een probleem melden"
+  },
+  "report/renderer/util.js | hide": {
+    "message": "Hide"
   },
   "report/renderer/util.js | labDataTitle": {
     "message": "Labgegevens"
@@ -2392,6 +2398,12 @@
   },
   "report/renderer/util.js | passedAuditsGroupTitle": {
     "message": "Geslaagde controles"
+  },
+  "report/renderer/util.js | runtimeAnalysisWindow": {
+    "message": "Initial page load"
+  },
+  "report/renderer/util.js | runtimeCustom": {
+    "message": "Custom throttling"
   },
   "report/renderer/util.js | runtimeDesktopEmulation": {
     "message": "Desktopemulatie"
@@ -2420,8 +2432,20 @@
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "User-agent (netwerk)"
   },
+  "report/renderer/util.js | runtimeSingleLoad": {
+    "message": "Single page load"
+  },
+  "report/renderer/util.js | runtimeSingleLoadTooltip": {
+    "message": "This data is taken from a single page load, as opposed to field data summarizing many sessions."
+  },
+  "report/renderer/util.js | runtimeSlow4g": {
+    "message": "Slow 4G throttling"
+  },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "Onbekend"
+  },
+  "report/renderer/util.js | show": {
+    "message": "Show"
   },
   "report/renderer/util.js | showRelevantAudits": {
     "message": "Audits laten zien die relevant zijn voor:"
@@ -2452,5 +2476,29 @@
   },
   "report/renderer/util.js | warningHeader": {
     "message": "Waarschuwingen: "
+  },
+  "treemap/app/src/util.js | allLabel": {
+    "message": "Alle"
+  },
+  "treemap/app/src/util.js | allScriptsDropdownLabel": {
+    "message": "Alle scripts"
+  },
+  "treemap/app/src/util.js | coverageColumnName": {
+    "message": "Dekking"
+  },
+  "treemap/app/src/util.js | duplicateModulesLabel": {
+    "message": "Dubbele modules"
+  },
+  "treemap/app/src/util.js | resourceBytesLabel": {
+    "message": "Resourcebytes"
+  },
+  "treemap/app/src/util.js | tableColumnName": {
+    "message": "Naam"
+  },
+  "treemap/app/src/util.js | toggleTableButtonLabel": {
+    "message": "Tabel schakelen"
+  },
+  "treemap/app/src/util.js | unusedBytesLabel": {
+    "message": "Ongebruikte bytes"
   }
 }

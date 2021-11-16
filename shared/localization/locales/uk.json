@@ -3,13 +3,13 @@
     "message": "Усі звіти"
   },
   "flow-report/src/i18n/ui-strings.js | categories": {
-    "message": "Categories"
+    "message": "Категорії"
   },
   "flow-report/src/i18n/ui-strings.js | categoryAccessibility": {
     "message": "Спеціальні можливості"
   },
   "flow-report/src/i18n/ui-strings.js | categoryBestPractices": {
-    "message": "Практичні поради"
+    "message": "Оптимальні методи"
   },
   "flow-report/src/i18n/ui-strings.js | categoryPerformance": {
     "message": "Ефективність"
@@ -24,40 +24,46 @@
     "message": "Версія для комп’ютера"
   },
   "flow-report/src/i18n/ui-strings.js | helpDialogTitle": {
-    "message": "Understanding the Lighthouse Flow Report"
+    "message": "Пояснення звіту Lighthouse про послідовність переходів"
   },
   "flow-report/src/i18n/ui-strings.js | helpLabel": {
-    "message": "Understanding Flows"
+    "message": "Пояснення звіту про переходи"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionNavigation": {
-    "message": "Use Navigation reports to..."
+    "message": "Звіти про навігацію допоможуть вам…"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionSnapshot": {
-    "message": "Use Snapshot reports to..."
+    "message": "Звіти про стан на певний момент часу допоможуть вам…"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionTimespan": {
-    "message": "Use Timespan reports to..."
+    "message": "Звіти про період часу допоможуть вам…"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation1": {
-    "message": "Obtain a Lighthouse Performance score."
+    "message": "Отримати оцінку ефективності в Lighthouse."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation2": {
-    "message": "Measure page load Performance metrics such as Largest Contentful Paint and Speed Index."
+    "message": "Вимірювати показники ефективності завантаження сторінки, такі як візуалізація великого контенту й індекс швидкості."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation3": {
-    "message": "Assess Progressive Web App capabilities."
+    "message": "Оцінювати можливості прогресивного веб-додатка."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseSnapshot1": {
-    "message": "Find accessibility issues in single page applications or complex forms."
+    "message": "Знаходити проблеми з доступністю в односторінкових додатках чи складних формах."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseSnapshot2": {
-    "message": "Evaluate best practices of menus and UI elements hidden behind interaction."
+    "message": "Оцінювати меню й елементи інтерфейсу на відповідність оптимальним методам підтримки взаємодії."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan1": {
-    "message": "Measure layout shifts and JavaScript execution time on a series of interactions."
+    "message": "Вимірювати зміщення макета й час виконання JavaScript для серії взаємодій."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan2": {
-    "message": "Discover performance opportunities to improve the experience for long-lived pages and single-page applications."
+    "message": "Знаходити можливості покращити ефективність постійних сторінок і односторінкових додатків."
+  },
+  "flow-report/src/i18n/ui-strings.js | highestImpact": {
+    "message": "Highest impact"
+  },
+  "flow-report/src/i18n/ui-strings.js | informativeAuditCount": {
+    "message": "{numInformative, plural,\n    =1 {{numInformative} informative audit}\n    other {{numInformative} informative audits}\n  }"
   },
   "flow-report/src/i18n/ui-strings.js | mobile": {
     "message": "Мобільна версія"
@@ -66,10 +72,19 @@
     "message": "Завантаження сторінки"
   },
   "flow-report/src/i18n/ui-strings.js | navigationLongDescription": {
-    "message": "Navigation reports analyze a single page load, exactly like the original Lighthouse reports."
+    "message": "Звіти про навігацію аналізують завантаження однієї сторінки, як і оригінальні звіти Lighthouse."
   },
   "flow-report/src/i18n/ui-strings.js | navigationReport": {
     "message": "Звіт про навігацію"
+  },
+  "flow-report/src/i18n/ui-strings.js | navigationReportCount": {
+    "message": "{numNavigation, plural,\n    =1 {{numNavigation} navigation report}\n    other {{numNavigation} navigation reports}\n  }"
+  },
+  "flow-report/src/i18n/ui-strings.js | passableAuditCount": {
+    "message": "{numPassableAudits, plural,\n    =1 {{numPassableAudits} passable audit}\n    other {{numPassableAudits} passable audits}\n  }"
+  },
+  "flow-report/src/i18n/ui-strings.js | passedAuditCount": {
+    "message": "{numPassed, plural,\n    =1 {{numPassed} audit passed}\n    other {{numPassed} audits passed}\n  }"
   },
   "flow-report/src/i18n/ui-strings.js | ratingAverage": {
     "message": "Посередньо"
@@ -84,16 +99,19 @@
     "message": "Добре"
   },
   "flow-report/src/i18n/ui-strings.js | save": {
-    "message": "Save"
+    "message": "Зберегти"
   },
   "flow-report/src/i18n/ui-strings.js | snapshotDescription": {
     "message": "Зафіксований статус сторінки"
   },
   "flow-report/src/i18n/ui-strings.js | snapshotLongDescription": {
-    "message": "Snapshot reports analyze the page in a particular state, typically after user interactions."
+    "message": "Звіти про стан на певний момент часу аналізують сторінку в конкретному стані, зазвичай після дій користувача."
   },
   "flow-report/src/i18n/ui-strings.js | snapshotReport": {
-    "message": "Звіт про поточний статус"
+    "message": "Звіт про стан на певний момент часу"
+  },
+  "flow-report/src/i18n/ui-strings.js | snapshotReportCount": {
+    "message": "{numSnapshot, plural,\n    =1 {{numSnapshot} snapshot report}\n    other {{numSnapshot} snapshot reports}\n  }"
   },
   "flow-report/src/i18n/ui-strings.js | summary": {
     "message": "Підсумок"
@@ -102,10 +120,13 @@
     "message": "Взаємодії користувача"
   },
   "flow-report/src/i18n/ui-strings.js | timespanLongDescription": {
-    "message": "Timespan reports analyze an arbitrary period of time, typically containing user interactions."
+    "message": "Звіти про період часу аналізують довільний період часу та зазвичай містять дані про дії користувачів."
   },
   "flow-report/src/i18n/ui-strings.js | timespanReport": {
     "message": "Звіт про період часу"
+  },
+  "flow-report/src/i18n/ui-strings.js | timespanReportCount": {
+    "message": "{numTimespan, plural,\n    =1 {{numTimespan} timespan report}\n    other {{numTimespan} timespan reports}\n  }"
   },
   "flow-report/src/i18n/ui-strings.js | title": {
     "message": "Звіт про послідовність переходів у Lighthouse"
@@ -1686,7 +1707,7 @@
     "message": "Сумісність веб-переглядача"
   },
   "lighthouse-core/config/default-config.js | bestPracticesCategoryTitle": {
-    "message": "Практичні поради"
+    "message": "Оптимальні методи"
   },
   "lighthouse-core/config/default-config.js | bestPracticesGeneralGroupTitle": {
     "message": "Загальні"
@@ -1740,7 +1761,7 @@
     "message": "Ці категорії обов'язкові відповідно до основного [контрольного списку для прогресивних веб-додатків](https://developers.google.com/web/progressive-web-apps/checklist), але Lighthouse не перевіряє їх автоматично. Вони не впливають на ваш показник, проте їх потрібно підтвердити вручну."
   },
   "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
-    "message": "Прогресивний веб-додаток"
+    "message": "PWA"
   },
   "lighthouse-core/config/default-config.js | pwaInstallableGroupTitle": {
     "message": "Можна встановити"
@@ -2042,30 +2063,6 @@
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "Схоже, указана вами URL-адреса недійсна."
   },
-  "treemap/app/src/util.js | allLabel": {
-    "message": "Усе"
-  },
-  "treemap/app/src/util.js | allScriptsDropdownLabel": {
-    "message": "Усі скрипти"
-  },
-  "treemap/app/src/util.js | coverageColumnName": {
-    "message": "Дані про використання"
-  },
-  "treemap/app/src/util.js | duplicateModulesLabel": {
-    "message": "Задубльовані модулі"
-  },
-  "treemap/app/src/util.js | resourceBytesLabel": {
-    "message": "Розмір ресурсу в байтах"
-  },
-  "treemap/app/src/util.js | tableColumnName": {
-    "message": "Назва"
-  },
-  "treemap/app/src/util.js | toggleTableButtonLabel": {
-    "message": "Показати або сховати таблицю"
-  },
-  "treemap/app/src/util.js | unusedBytesLabel": {
-    "message": "Невикористані байти"
-  },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "Для анімованого контенту застосовуйте [`amp-anim`](https://amp.dev/documentation/components/amp-anim/), щоб зменшити використання ЦП, коли контент поза межами екрана."
   },
@@ -2333,6 +2330,9 @@
   "report/renderer/util.js | calculatorLink": {
     "message": "Показати калькулятор."
   },
+  "report/renderer/util.js | collapseView": {
+    "message": "Collapse view"
+  },
   "report/renderer/util.js | crcInitialNavigation": {
     "message": "Початкова навігація"
   },
@@ -2369,8 +2369,14 @@
   "report/renderer/util.js | errorMissingAuditInfo": {
     "message": "Повідомлення про помилку: немає інформації про перевірку"
   },
+  "report/renderer/util.js | expandView": {
+    "message": "Expand view"
+  },
   "report/renderer/util.js | footerIssue": {
     "message": "Повідомити про проблему"
+  },
+  "report/renderer/util.js | hide": {
+    "message": "Hide"
   },
   "report/renderer/util.js | labDataTitle": {
     "message": "Дані тестів"
@@ -2392,6 +2398,12 @@
   },
   "report/renderer/util.js | passedAuditsGroupTitle": {
     "message": "Виконані перевірки"
+  },
+  "report/renderer/util.js | runtimeAnalysisWindow": {
+    "message": "Initial page load"
+  },
+  "report/renderer/util.js | runtimeCustom": {
+    "message": "Custom throttling"
   },
   "report/renderer/util.js | runtimeDesktopEmulation": {
     "message": "Емульований комп'ютер"
@@ -2420,8 +2432,20 @@
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "Агент користувача (мережа)"
   },
+  "report/renderer/util.js | runtimeSingleLoad": {
+    "message": "Single page load"
+  },
+  "report/renderer/util.js | runtimeSingleLoadTooltip": {
+    "message": "This data is taken from a single page load, as opposed to field data summarizing many sessions."
+  },
+  "report/renderer/util.js | runtimeSlow4g": {
+    "message": "Slow 4G throttling"
+  },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "Невідомо"
+  },
+  "report/renderer/util.js | show": {
+    "message": "Show"
   },
   "report/renderer/util.js | showRelevantAudits": {
     "message": "Показано аудити, релевантні для:"
@@ -2452,5 +2476,29 @@
   },
   "report/renderer/util.js | warningHeader": {
     "message": "Застереження. "
+  },
+  "treemap/app/src/util.js | allLabel": {
+    "message": "Усе"
+  },
+  "treemap/app/src/util.js | allScriptsDropdownLabel": {
+    "message": "Усі скрипти"
+  },
+  "treemap/app/src/util.js | coverageColumnName": {
+    "message": "Дані про використання"
+  },
+  "treemap/app/src/util.js | duplicateModulesLabel": {
+    "message": "Задубльовані модулі"
+  },
+  "treemap/app/src/util.js | resourceBytesLabel": {
+    "message": "Розмір ресурсу в байтах"
+  },
+  "treemap/app/src/util.js | tableColumnName": {
+    "message": "Назва"
+  },
+  "treemap/app/src/util.js | toggleTableButtonLabel": {
+    "message": "Показати або сховати таблицю"
+  },
+  "treemap/app/src/util.js | unusedBytesLabel": {
+    "message": "Невикористані байти"
   }
 }

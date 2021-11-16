@@ -3,7 +3,7 @@
     "message": "Toate rapoartele"
   },
   "flow-report/src/i18n/ui-strings.js | categories": {
-    "message": "Categories"
+    "message": "Categorii"
   },
   "flow-report/src/i18n/ui-strings.js | categoryAccessibility": {
     "message": "Accesibilitate"
@@ -24,40 +24,46 @@
     "message": "Computer"
   },
   "flow-report/src/i18n/ui-strings.js | helpDialogTitle": {
-    "message": "Understanding the Lighthouse Flow Report"
+    "message": "Înțelegerea Raportului privind fluxul Lighthouse"
   },
   "flow-report/src/i18n/ui-strings.js | helpLabel": {
-    "message": "Understanding Flows"
+    "message": "Înțelegerea fluxurilor"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionNavigation": {
-    "message": "Use Navigation reports to..."
+    "message": "Folosește Rapoartele privind navigarea pentru..."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionSnapshot": {
-    "message": "Use Snapshot reports to..."
+    "message": "Folosește Rapoartele privind instantaneele pentru..."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionTimespan": {
-    "message": "Use Timespan reports to..."
+    "message": "Folosește Rapoartele privind perioada pentru..."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation1": {
-    "message": "Obtain a Lighthouse Performance score."
+    "message": "Obține un scor de performanță pentru Lighthouse."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation2": {
-    "message": "Measure page load Performance metrics such as Largest Contentful Paint and Speed Index."
+    "message": "Măsoară valorile de performanță pentru încărcarea paginii, cum ar fi Largest Contentful Paint și indicele de viteză."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation3": {
-    "message": "Assess Progressive Web App capabilities."
+    "message": "Evaluează funcțiile aplicațiilor web progresive."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseSnapshot1": {
-    "message": "Find accessibility issues in single page applications or complex forms."
+    "message": "Identifică problemele legate de accesibilitate în aplicații cu o singură pagină sau formulare complexe."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseSnapshot2": {
-    "message": "Evaluate best practices of menus and UI elements hidden behind interaction."
+    "message": "Evaluează recomandările pentru meniuri și elemente IU din spatele interacțiunilor."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan1": {
-    "message": "Measure layout shifts and JavaScript execution time on a series of interactions."
+    "message": "Măsoară modificările de aspect și timpul de execuție JavaScript pentru o serie de interacțiuni."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan2": {
-    "message": "Discover performance opportunities to improve the experience for long-lived pages and single-page applications."
+    "message": "Descoperă oportunități de performanță pentru a îmbunătăți experiența în paginile vechi și aplicațiile cu o singură pagină."
+  },
+  "flow-report/src/i18n/ui-strings.js | highestImpact": {
+    "message": "Cel mai mare impact"
+  },
+  "flow-report/src/i18n/ui-strings.js | informativeAuditCount": {
+    "message": "{numInformative,plural, =1{{numInformative} audit informativ}few{{numInformative} audituri informative}other{{numInformative} de audituri informative}}"
   },
   "flow-report/src/i18n/ui-strings.js | mobile": {
     "message": "Mobil"
@@ -66,10 +72,19 @@
     "message": "Încărcarea paginii"
   },
   "flow-report/src/i18n/ui-strings.js | navigationLongDescription": {
-    "message": "Navigation reports analyze a single page load, exactly like the original Lighthouse reports."
+    "message": "Rapoartele privind navigarea analizează încărcarea unei singure pagini, exact ca rapoartele Lighthouse inițiale."
   },
   "flow-report/src/i18n/ui-strings.js | navigationReport": {
     "message": "Raport privind navigarea"
+  },
+  "flow-report/src/i18n/ui-strings.js | navigationReportCount": {
+    "message": "{numNavigation,plural, =1{{numNavigation} raport privind navigarea}few{{numNavigation} rapoarte privind navigarea}other{{numNavigation} de rapoarte privind navigarea}}"
+  },
+  "flow-report/src/i18n/ui-strings.js | passableAuditCount": {
+    "message": "{numPassableAudits,plural, =1{{numPassableAudits} audit care poate fi trecut}few{{numPassableAudits} audituri care pot fi trecute}other{{numPassableAudits} de audituri care pot fi trecute}}"
+  },
+  "flow-report/src/i18n/ui-strings.js | passedAuditCount": {
+    "message": "{numPassed,plural, =1{{numPassed} audit trecut}few{{numPassed} audituri trecute}other{{numPassed} de audituri trecute}}"
   },
   "flow-report/src/i18n/ui-strings.js | ratingAverage": {
     "message": "Medie"
@@ -84,16 +99,19 @@
     "message": "Bună"
   },
   "flow-report/src/i18n/ui-strings.js | save": {
-    "message": "Save"
+    "message": "Salvează"
   },
   "flow-report/src/i18n/ui-strings.js | snapshotDescription": {
     "message": "Starea înregistrată a paginii"
   },
   "flow-report/src/i18n/ui-strings.js | snapshotLongDescription": {
-    "message": "Snapshot reports analyze the page in a particular state, typically after user interactions."
+    "message": "Rapoartele privind instantaneele analizează pagina într-o anumită stare, de obicei după interacțiunile cu utilizatorul."
   },
   "flow-report/src/i18n/ui-strings.js | snapshotReport": {
     "message": "Raport instantaneu"
+  },
+  "flow-report/src/i18n/ui-strings.js | snapshotReportCount": {
+    "message": "{numSnapshot,plural, =1{{numSnapshot} raport instantaneu}few{{numSnapshot} rapoarte instantanee}other{{numSnapshot} de rapoarte instantanee}}"
   },
   "flow-report/src/i18n/ui-strings.js | summary": {
     "message": "Rezumat"
@@ -102,10 +120,13 @@
     "message": "Interacțiunile utilizatorilor"
   },
   "flow-report/src/i18n/ui-strings.js | timespanLongDescription": {
-    "message": "Timespan reports analyze an arbitrary period of time, typically containing user interactions."
+    "message": "Rapoartele privind perioada analizează o perioadă arbitrară, care conține de obicei interacțiuni cu utilizatorul."
   },
   "flow-report/src/i18n/ui-strings.js | timespanReport": {
     "message": "Raport privind perioada de timp"
+  },
+  "flow-report/src/i18n/ui-strings.js | timespanReportCount": {
+    "message": "{numTimespan,plural, =1{{numTimespan} raport privind perioada de timp}few{{numTimespan} rapoarte privind perioada de timp}other{{numTimespan} de rapoarte privind perioada de timp}}"
   },
   "flow-report/src/i18n/ui-strings.js | title": {
     "message": "Raport privind fluxul pentru utilizatori Lighthouse"
@@ -1740,7 +1761,7 @@
     "message": "Aceste verificări sunt impuse de [Lista de verificare PWA](https://developers.google.com/web/progressive-web-apps/checklist) de referință, dar nu sunt verificate automat de Lighthouse. Ele nu-ți afectează scorul, dar e important să fie făcute manual."
   },
   "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
-    "message": "Aplicație web progresivă"
+    "message": "PWA"
   },
   "lighthouse-core/config/default-config.js | pwaInstallableGroupTitle": {
     "message": "Poate fi instalat"
@@ -1896,7 +1917,7 @@
     "message": "Dimensiunea transferului"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnURL": {
-    "message": "Adresă URL"
+    "message": "Adresa URL"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnWastedBytes": {
     "message": "Economii potențiale"
@@ -2041,30 +2062,6 @@
   },
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "Adresa URL furnizată pare să fie nevalidă."
-  },
-  "treemap/app/src/util.js | allLabel": {
-    "message": "Toate"
-  },
-  "treemap/app/src/util.js | allScriptsDropdownLabel": {
-    "message": "Toate scripturile"
-  },
-  "treemap/app/src/util.js | coverageColumnName": {
-    "message": "Acoperire"
-  },
-  "treemap/app/src/util.js | duplicateModulesLabel": {
-    "message": "Module dublate"
-  },
-  "treemap/app/src/util.js | resourceBytesLabel": {
-    "message": "Byți resursă"
-  },
-  "treemap/app/src/util.js | tableColumnName": {
-    "message": "Nume"
-  },
-  "treemap/app/src/util.js | toggleTableButtonLabel": {
-    "message": "Activează / dezactivează tabelul"
-  },
-  "treemap/app/src/util.js | unusedBytesLabel": {
-    "message": "Byți nefolosiți"
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "Pentru conținut animat, folosește [`amp-anim`](https://amp.dev/documentation/components/amp-anim/) ca să minimizezi utilizarea CPU în timp ce conținutul rămâne în afara ecranului."
@@ -2333,6 +2330,9 @@
   "report/renderer/util.js | calculatorLink": {
     "message": "Accesează calculatorul."
   },
+  "report/renderer/util.js | collapseView": {
+    "message": "Restrânge vizualizarea"
+  },
   "report/renderer/util.js | crcInitialNavigation": {
     "message": "Navigare inițială"
   },
@@ -2369,8 +2369,14 @@
   "report/renderer/util.js | errorMissingAuditInfo": {
     "message": "Eroare de raport: nu există informații de auditare"
   },
+  "report/renderer/util.js | expandView": {
+    "message": "Extinde vizualizarea"
+  },
   "report/renderer/util.js | footerIssue": {
     "message": "Raportează o problemă"
+  },
+  "report/renderer/util.js | hide": {
+    "message": "Ascunde"
   },
   "report/renderer/util.js | labDataTitle": {
     "message": "Datele testului"
@@ -2392,6 +2398,12 @@
   },
   "report/renderer/util.js | passedAuditsGroupTitle": {
     "message": "Auditări trecute"
+  },
+  "report/renderer/util.js | runtimeAnalysisWindow": {
+    "message": "Încărcarea inițială a paginii"
+  },
+  "report/renderer/util.js | runtimeCustom": {
+    "message": "Limitare personalizată"
   },
   "report/renderer/util.js | runtimeDesktopEmulation": {
     "message": "Computer simulat"
@@ -2420,8 +2432,20 @@
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "User Agent (rețea)"
   },
+  "report/renderer/util.js | runtimeSingleLoad": {
+    "message": "O singură încărcare a paginii"
+  },
+  "report/renderer/util.js | runtimeSingleLoadTooltip": {
+    "message": "Datele se preiau dintr-o singură încărcare a paginii, spre deosebire de datele de pe teren care rezumă mai multe sesiuni."
+  },
+  "report/renderer/util.js | runtimeSlow4g": {
+    "message": "Limitare 4G lentă"
+  },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "Necunoscută"
+  },
+  "report/renderer/util.js | show": {
+    "message": "Afișează"
   },
   "report/renderer/util.js | showRelevantAudits": {
     "message": "Vezi audituri relevante pentru:"
@@ -2452,5 +2476,29 @@
   },
   "report/renderer/util.js | warningHeader": {
     "message": "Avertismente: "
+  },
+  "treemap/app/src/util.js | allLabel": {
+    "message": "Toate"
+  },
+  "treemap/app/src/util.js | allScriptsDropdownLabel": {
+    "message": "Toate scripturile"
+  },
+  "treemap/app/src/util.js | coverageColumnName": {
+    "message": "Acoperire"
+  },
+  "treemap/app/src/util.js | duplicateModulesLabel": {
+    "message": "Module dublate"
+  },
+  "treemap/app/src/util.js | resourceBytesLabel": {
+    "message": "Byți resursă"
+  },
+  "treemap/app/src/util.js | tableColumnName": {
+    "message": "Nume"
+  },
+  "treemap/app/src/util.js | toggleTableButtonLabel": {
+    "message": "Activează / dezactivează tabelul"
+  },
+  "treemap/app/src/util.js | unusedBytesLabel": {
+    "message": "Byți nefolosiți"
   }
 }

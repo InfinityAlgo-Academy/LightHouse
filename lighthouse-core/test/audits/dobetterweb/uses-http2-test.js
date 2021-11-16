@@ -23,6 +23,7 @@ describe('Resources are fetched over http/2', () => {
     artifacts = {
       traces: {defaultPass: trace},
       devtoolsLogs: {defaultPass: devtoolsLog},
+      GatherContext: {gatherMode: 'navigation'},
     };
   });
 
@@ -72,5 +73,24 @@ describe('Resources are fetched over http/2', () => {
     // make sure we report less savings
     expect(result.numericValue).toMatchInlineSnapshot(`500`);
     expect(result.details.overallSavingsMs).toMatchInlineSnapshot(`500`);
+  });
+
+  it('should return table items for timespan mode', async () => {
+    const records = await NetworkRecords.compute_(artifacts.devtoolsLogs.defaultPass);
+    records.forEach(record => (record.protocol = 'HTTP/1.1'));
+    artifacts.devtoolsLogs.defaultPass = networkRecordsToDevtoolsLog(records);
+    artifacts.GatherContext.gatherMode = 'timespan';
+    const result = await UsesHTTP2Audit.audit(artifacts, context);
+    const hosts = new Set(result.details.items.map(item => new URL(item.url).host));
+
+    // make sure we don't pull in domains with only a few requests (GTM, GA)
+    expect(hosts).toEqual(new Set(['pwa.rocks']));
+    // make sure we flag all the rest
+    expect(result.details.items).toHaveLength(60);
+    // no savings calculated
+    expect(result.numericValue).toBeUndefined();
+    expect(result.details.overallSavingsMs).toBeUndefined();
+    // make sure we have a failing score
+    expect(result.score).toEqual(0);
   });
 });

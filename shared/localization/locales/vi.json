@@ -3,7 +3,7 @@
     "message": "Tất cả báo cáo"
   },
   "flow-report/src/i18n/ui-strings.js | categories": {
-    "message": "Categories"
+    "message": "Danh mục"
   },
   "flow-report/src/i18n/ui-strings.js | categoryAccessibility": {
     "message": "Hỗ trợ tiếp cận"
@@ -24,40 +24,46 @@
     "message": "Máy tính"
   },
   "flow-report/src/i18n/ui-strings.js | helpDialogTitle": {
-    "message": "Understanding the Lighthouse Flow Report"
+    "message": "Tìm hiểu về Báo cáo luồng Lighthouse"
   },
   "flow-report/src/i18n/ui-strings.js | helpLabel": {
-    "message": "Understanding Flows"
+    "message": "Tìm hiểu về Luồng"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionNavigation": {
-    "message": "Use Navigation reports to..."
+    "message": "Sử dụng chế độ Báo cáo di chuyển để…"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionSnapshot": {
-    "message": "Use Snapshot reports to..."
+    "message": "Sử dụng chế độ Báo cáo ảnh chụp nhanh để..."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionTimespan": {
-    "message": "Use Timespan reports to..."
+    "message": "Sử dụng chế độ Báo cáo khoảng thời gian để..."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation1": {
-    "message": "Obtain a Lighthouse Performance score."
+    "message": "Đạt được điểm Hiệu suất Lighthouse."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation2": {
-    "message": "Measure page load Performance metrics such as Largest Contentful Paint and Speed Index."
+    "message": "Đo lường các chỉ số về Hiệu suất tải trang, chẳng hạn như Thời gian hiển thị nội dung lớn nhất và Chỉ số tốc độ."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation3": {
-    "message": "Assess Progressive Web App capabilities."
+    "message": "Đánh giá các chức năng của Ứng dụng web tiến bộ."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseSnapshot1": {
-    "message": "Find accessibility issues in single page applications or complex forms."
+    "message": "Tìm các vấn đề về khả năng hỗ trợ tiếp cận trong các ứng dụng trang đơn hoặc các biểu mẫu phức tạp."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseSnapshot2": {
-    "message": "Evaluate best practices of menus and UI elements hidden behind interaction."
+    "message": "Đánh giá các phương pháp hay nhất về trình đơn và các thành phần trên giao diện người dùng ẩn phía sau sự tương tác."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan1": {
-    "message": "Measure layout shifts and JavaScript execution time on a series of interactions."
+    "message": "Đo lường mức thay đổi bố cục và thời gian thực thi JavaScript trên một chuỗi các tương tác."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan2": {
-    "message": "Discover performance opportunities to improve the experience for long-lived pages and single-page applications."
+    "message": "Khám phá các cơ hội về hiệu suất để cải thiện trải nghiệm cho những trang tồn tại lâu dài và các ứng dụng trang đơn."
+  },
+  "flow-report/src/i18n/ui-strings.js | highestImpact": {
+    "message": "Highest impact"
+  },
+  "flow-report/src/i18n/ui-strings.js | informativeAuditCount": {
+    "message": "{numInformative, plural,\n    =1 {{numInformative} informative audit}\n    other {{numInformative} informative audits}\n  }"
   },
   "flow-report/src/i18n/ui-strings.js | mobile": {
     "message": "Di động"
@@ -66,10 +72,19 @@
     "message": "Tải trang"
   },
   "flow-report/src/i18n/ui-strings.js | navigationLongDescription": {
-    "message": "Navigation reports analyze a single page load, exactly like the original Lighthouse reports."
+    "message": "Báo cáo di chuyển phân tích một lượt tải trang, giống hệt như các báo cáo Lighthouse gốc."
   },
   "flow-report/src/i18n/ui-strings.js | navigationReport": {
     "message": "Báo cáo di chuyển trên trang"
+  },
+  "flow-report/src/i18n/ui-strings.js | navigationReportCount": {
+    "message": "{numNavigation, plural,\n    =1 {{numNavigation} navigation report}\n    other {{numNavigation} navigation reports}\n  }"
+  },
+  "flow-report/src/i18n/ui-strings.js | passableAuditCount": {
+    "message": "{numPassableAudits, plural,\n    =1 {{numPassableAudits} passable audit}\n    other {{numPassableAudits} passable audits}\n  }"
+  },
+  "flow-report/src/i18n/ui-strings.js | passedAuditCount": {
+    "message": "{numPassed, plural,\n    =1 {{numPassed} audit passed}\n    other {{numPassed} audits passed}\n  }"
   },
   "flow-report/src/i18n/ui-strings.js | ratingAverage": {
     "message": "Trung bình"
@@ -84,16 +99,19 @@
     "message": "Tốt"
   },
   "flow-report/src/i18n/ui-strings.js | save": {
-    "message": "Save"
+    "message": "Lưu"
   },
   "flow-report/src/i18n/ui-strings.js | snapshotDescription": {
     "message": "Trạng thái đã chụp của trang"
   },
   "flow-report/src/i18n/ui-strings.js | snapshotLongDescription": {
-    "message": "Snapshot reports analyze the page in a particular state, typically after user interactions."
+    "message": "Báo cáo ảnh chụp nhanh phân tích trang ở một trạng thái cụ thể, thường là sau khi người dùng tương tác."
   },
   "flow-report/src/i18n/ui-strings.js | snapshotReport": {
     "message": "Báo cáo tổng quan"
+  },
+  "flow-report/src/i18n/ui-strings.js | snapshotReportCount": {
+    "message": "{numSnapshot, plural,\n    =1 {{numSnapshot} snapshot report}\n    other {{numSnapshot} snapshot reports}\n  }"
   },
   "flow-report/src/i18n/ui-strings.js | summary": {
     "message": "Tóm tắt"
@@ -102,10 +120,13 @@
     "message": "Sự tương tác của người dùng"
   },
   "flow-report/src/i18n/ui-strings.js | timespanLongDescription": {
-    "message": "Timespan reports analyze an arbitrary period of time, typically containing user interactions."
+    "message": "Báo cáo khoảng thời gian phân tích một khoảng thời gian bất kỳ, thường chứa các tương tác của người dùng."
   },
   "flow-report/src/i18n/ui-strings.js | timespanReport": {
     "message": "Báo cáo khoảng thời gian"
+  },
+  "flow-report/src/i18n/ui-strings.js | timespanReportCount": {
+    "message": "{numTimespan, plural,\n    =1 {{numTimespan} timespan report}\n    other {{numTimespan} timespan reports}\n  }"
   },
   "flow-report/src/i18n/ui-strings.js | title": {
     "message": "Báo cáo luồng người dùng Lighthouse"
@@ -1740,7 +1761,7 @@
     "message": "Đây là những hoạt động kiểm tra được chỉ định trong [Danh sách kiểm tra ứng dụng web tiến bộ (PWA)](https://developers.google.com/web/progressive-web-apps/checklist) cơ bản, nhưng Lighthouse không tự động kiểm tra các mục này. Các hoạt động kiểm tra này không ảnh hưởng đến điểm số của bạn, nhưng bạn nên xác minh theo cách thủ công."
   },
   "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
-    "message": "Ứng dụng web tiến bộ"
+    "message": "PWA"
   },
   "lighthouse-core/config/default-config.js | pwaInstallableGroupTitle": {
     "message": "Có thể cài đặt"
@@ -2042,30 +2063,6 @@
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "URL bạn cung cấp có vẻ không hợp lệ."
   },
-  "treemap/app/src/util.js | allLabel": {
-    "message": "Tất cả"
-  },
-  "treemap/app/src/util.js | allScriptsDropdownLabel": {
-    "message": "Tất cả tập lệnh"
-  },
-  "treemap/app/src/util.js | coverageColumnName": {
-    "message": "Độ bao phủ"
-  },
-  "treemap/app/src/util.js | duplicateModulesLabel": {
-    "message": "Mô-đun trùng lặp"
-  },
-  "treemap/app/src/util.js | resourceBytesLabel": {
-    "message": "Số byte tài nguyên"
-  },
-  "treemap/app/src/util.js | tableColumnName": {
-    "message": "Tên"
-  },
-  "treemap/app/src/util.js | toggleTableButtonLabel": {
-    "message": "Ẩn/hiện bảng"
-  },
-  "treemap/app/src/util.js | unusedBytesLabel": {
-    "message": "Số byte chưa dùng đến"
-  },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "Đối với nội dung động, hãy sử dụng [`amp-anim`](https://amp.dev/documentation/components/amp-anim/) để giảm thiểu mức sử dụng CPU khi nội dung nằm ngoài màn hình."
   },
@@ -2333,6 +2330,9 @@
   "report/renderer/util.js | calculatorLink": {
     "message": "Xem máy tính."
   },
+  "report/renderer/util.js | collapseView": {
+    "message": "Collapse view"
+  },
   "report/renderer/util.js | crcInitialNavigation": {
     "message": "Điều hướng ban đầu"
   },
@@ -2369,8 +2369,14 @@
   "report/renderer/util.js | errorMissingAuditInfo": {
     "message": "Lỗi báo cáo: không có thông tin kiểm tra"
   },
+  "report/renderer/util.js | expandView": {
+    "message": "Expand view"
+  },
   "report/renderer/util.js | footerIssue": {
     "message": "Tạo vấn đề"
+  },
+  "report/renderer/util.js | hide": {
+    "message": "Hide"
   },
   "report/renderer/util.js | labDataTitle": {
     "message": "Dữ liệu của phòng thí nghiệm"
@@ -2392,6 +2398,12 @@
   },
   "report/renderer/util.js | passedAuditsGroupTitle": {
     "message": "Số lần kiểm tra đạt yêu cầu"
+  },
+  "report/renderer/util.js | runtimeAnalysisWindow": {
+    "message": "Initial page load"
+  },
+  "report/renderer/util.js | runtimeCustom": {
+    "message": "Custom throttling"
   },
   "report/renderer/util.js | runtimeDesktopEmulation": {
     "message": "Màn hình mô phỏng"
@@ -2420,8 +2432,20 @@
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "Tác nhân người dùng (mạng)"
   },
+  "report/renderer/util.js | runtimeSingleLoad": {
+    "message": "Single page load"
+  },
+  "report/renderer/util.js | runtimeSingleLoadTooltip": {
+    "message": "This data is taken from a single page load, as opposed to field data summarizing many sessions."
+  },
+  "report/renderer/util.js | runtimeSlow4g": {
+    "message": "Slow 4G throttling"
+  },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "Không xác định"
+  },
+  "report/renderer/util.js | show": {
+    "message": "Show"
   },
   "report/renderer/util.js | showRelevantAudits": {
     "message": "Hiển thị các lượt kiểm tra liên quan đến:"
@@ -2452,5 +2476,29 @@
   },
   "report/renderer/util.js | warningHeader": {
     "message": "Cảnh báo: "
+  },
+  "treemap/app/src/util.js | allLabel": {
+    "message": "Tất cả"
+  },
+  "treemap/app/src/util.js | allScriptsDropdownLabel": {
+    "message": "Tất cả tập lệnh"
+  },
+  "treemap/app/src/util.js | coverageColumnName": {
+    "message": "Độ bao phủ"
+  },
+  "treemap/app/src/util.js | duplicateModulesLabel": {
+    "message": "Mô-đun trùng lặp"
+  },
+  "treemap/app/src/util.js | resourceBytesLabel": {
+    "message": "Số byte tài nguyên"
+  },
+  "treemap/app/src/util.js | tableColumnName": {
+    "message": "Tên"
+  },
+  "treemap/app/src/util.js | toggleTableButtonLabel": {
+    "message": "Ẩn/hiện bảng"
+  },
+  "treemap/app/src/util.js | unusedBytesLabel": {
+    "message": "Số byte chưa dùng đến"
   }
 }

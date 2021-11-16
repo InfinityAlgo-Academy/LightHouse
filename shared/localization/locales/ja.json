@@ -3,7 +3,7 @@
     "message": "すべてのレポート"
   },
   "flow-report/src/i18n/ui-strings.js | categories": {
-    "message": "Categories"
+    "message": "カテゴリ"
   },
   "flow-report/src/i18n/ui-strings.js | categoryAccessibility": {
     "message": "ユーザー補助"
@@ -24,40 +24,46 @@
     "message": "パソコン"
   },
   "flow-report/src/i18n/ui-strings.js | helpDialogTitle": {
-    "message": "Understanding the Lighthouse Flow Report"
+    "message": "Lighthouse フローレポートについて"
   },
   "flow-report/src/i18n/ui-strings.js | helpLabel": {
-    "message": "Understanding Flows"
+    "message": "フローの詳細"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionNavigation": {
-    "message": "Use Navigation reports to..."
+    "message": "ナビゲーション レポートの使用例"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionSnapshot": {
-    "message": "Use Snapshot reports to..."
+    "message": "スナップショット レポートの使用例"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionTimespan": {
-    "message": "Use Timespan reports to..."
+    "message": "期間レポートの使用例"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation1": {
-    "message": "Obtain a Lighthouse Performance score."
+    "message": "Lighthouse のパフォーマンス スコアを取得する。"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation2": {
-    "message": "Measure page load Performance metrics such as Largest Contentful Paint and Speed Index."
+    "message": "Largest Contentful Paint（最大コンテンツの描画時間）、Speed Index（速度インデックス）などのページ読み込みに関するパフォーマンス指標を測定する。"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation3": {
-    "message": "Assess Progressive Web App capabilities."
+    "message": "プログレッシブ ウェブアプリの機能を評価する。"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseSnapshot1": {
-    "message": "Find accessibility issues in single page applications or complex forms."
+    "message": "シングルページ アプリケーションや複雑なフォームでユーザー補助機能の問題がないか調べる。"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseSnapshot2": {
-    "message": "Evaluate best practices of menus and UI elements hidden behind interaction."
+    "message": "操作の背後に隠れてしまうメニューや UI 要素のおすすめの方法を検討する。"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan1": {
-    "message": "Measure layout shifts and JavaScript execution time on a series of interactions."
+    "message": "一連の操作におけるレイアウトの移動と JavaScript の実行時間を測定する。"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan2": {
-    "message": "Discover performance opportunities to improve the experience for long-lived pages and single-page applications."
+    "message": "長期使用のページやシングルページ アプリケーションでパフォーマンスの利便性を改善できる余地を見つける。"
+  },
+  "flow-report/src/i18n/ui-strings.js | highestImpact": {
+    "message": "Highest impact"
+  },
+  "flow-report/src/i18n/ui-strings.js | informativeAuditCount": {
+    "message": "{numInformative, plural,\n    =1 {{numInformative} informative audit}\n    other {{numInformative} informative audits}\n  }"
   },
   "flow-report/src/i18n/ui-strings.js | mobile": {
     "message": "モバイル"
@@ -66,10 +72,19 @@
     "message": "ページの読み込み"
   },
   "flow-report/src/i18n/ui-strings.js | navigationLongDescription": {
-    "message": "Navigation reports analyze a single page load, exactly like the original Lighthouse reports."
+    "message": "ナビゲーション レポートでは、Lighthouse のオリジナルのレポートとまったく同じように単一ページの読み込みについて分析できます。"
   },
   "flow-report/src/i18n/ui-strings.js | navigationReport": {
     "message": "ナビゲーション レポート"
+  },
+  "flow-report/src/i18n/ui-strings.js | navigationReportCount": {
+    "message": "{numNavigation, plural,\n    =1 {{numNavigation} navigation report}\n    other {{numNavigation} navigation reports}\n  }"
+  },
+  "flow-report/src/i18n/ui-strings.js | passableAuditCount": {
+    "message": "{numPassableAudits, plural,\n    =1 {{numPassableAudits} passable audit}\n    other {{numPassableAudits} passable audits}\n  }"
+  },
+  "flow-report/src/i18n/ui-strings.js | passedAuditCount": {
+    "message": "{numPassed, plural,\n    =1 {{numPassed} audit passed}\n    other {{numPassed} audits passed}\n  }"
   },
   "flow-report/src/i18n/ui-strings.js | ratingAverage": {
     "message": "普通"
@@ -84,16 +99,19 @@
     "message": "高"
   },
   "flow-report/src/i18n/ui-strings.js | save": {
-    "message": "Save"
+    "message": "保存"
   },
   "flow-report/src/i18n/ui-strings.js | snapshotDescription": {
     "message": "取得したページの状態"
   },
   "flow-report/src/i18n/ui-strings.js | snapshotLongDescription": {
-    "message": "Snapshot reports analyze the page in a particular state, typically after user interactions."
+    "message": "スナップショット レポートでは、特定の状態（通常はユーザー操作後）のページを分析できます。"
   },
   "flow-report/src/i18n/ui-strings.js | snapshotReport": {
     "message": "スナップショット レポート"
+  },
+  "flow-report/src/i18n/ui-strings.js | snapshotReportCount": {
+    "message": "{numSnapshot, plural,\n    =1 {{numSnapshot} snapshot report}\n    other {{numSnapshot} snapshot reports}\n  }"
   },
   "flow-report/src/i18n/ui-strings.js | summary": {
     "message": "概要"
@@ -102,10 +120,13 @@
     "message": "ユーザー操作"
   },
   "flow-report/src/i18n/ui-strings.js | timespanLongDescription": {
-    "message": "Timespan reports analyze an arbitrary period of time, typically containing user interactions."
+    "message": "期間レポートでは、任意の期間（ユーザーの操作が見込まれる期間など）を分析できます。"
   },
   "flow-report/src/i18n/ui-strings.js | timespanReport": {
     "message": "期間レポート"
+  },
+  "flow-report/src/i18n/ui-strings.js | timespanReportCount": {
+    "message": "{numTimespan, plural,\n    =1 {{numTimespan} timespan report}\n    other {{numTimespan} timespan reports}\n  }"
   },
   "flow-report/src/i18n/ui-strings.js | title": {
     "message": "Lighthouse ユーザーフロー レポート"
@@ -1740,7 +1761,7 @@
     "message": "これらのチェック項目は基本の [PWA チェックリスト](https://developers.google.com/web/progressive-web-apps/checklist)で必須とされていますが、Lighthouse では自動的にチェックされません。スコアには影響しませんが、手動で確認することが重要です。"
   },
   "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
-    "message": "プログレッシブ ウェブアプリ"
+    "message": "PWA"
   },
   "lighthouse-core/config/default-config.js | pwaInstallableGroupTitle": {
     "message": "インストール対応"
@@ -2042,30 +2063,6 @@
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "指定した URL は無効の可能性があります。"
   },
-  "treemap/app/src/util.js | allLabel": {
-    "message": "すべて"
-  },
-  "treemap/app/src/util.js | allScriptsDropdownLabel": {
-    "message": "すべてのスクリプト"
-  },
-  "treemap/app/src/util.js | coverageColumnName": {
-    "message": "カバレッジ"
-  },
-  "treemap/app/src/util.js | duplicateModulesLabel": {
-    "message": "重複モジュール"
-  },
-  "treemap/app/src/util.js | resourceBytesLabel": {
-    "message": "リソースのサイズ（バイト）"
-  },
-  "treemap/app/src/util.js | tableColumnName": {
-    "message": "名前"
-  },
-  "treemap/app/src/util.js | toggleTableButtonLabel": {
-    "message": "表を切り替える"
-  },
-  "treemap/app/src/util.js | unusedBytesLabel": {
-    "message": "使用していないバイト"
-  },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "アニメーション コンテンツの場合は、[`amp-anim`](https://amp.dev/documentation/components/amp-anim/) を使用して、コンテンツが画面外にあるときの CPU 使用量を最小限に抑えることができます。"
   },
@@ -2333,6 +2330,9 @@
   "report/renderer/util.js | calculatorLink": {
     "message": "計算ツールはこちら。"
   },
+  "report/renderer/util.js | collapseView": {
+    "message": "Collapse view"
+  },
   "report/renderer/util.js | crcInitialNavigation": {
     "message": "最初の移動先"
   },
@@ -2369,8 +2369,14 @@
   "report/renderer/util.js | errorMissingAuditInfo": {
     "message": "レポートエラー: 監査情報はありません"
   },
+  "report/renderer/util.js | expandView": {
+    "message": "Expand view"
+  },
   "report/renderer/util.js | footerIssue": {
     "message": "問題を提出"
+  },
+  "report/renderer/util.js | hide": {
+    "message": "Hide"
   },
   "report/renderer/util.js | labDataTitle": {
     "message": "ラボデータ"
@@ -2392,6 +2398,12 @@
   },
   "report/renderer/util.js | passedAuditsGroupTitle": {
     "message": "合格した監査"
+  },
+  "report/renderer/util.js | runtimeAnalysisWindow": {
+    "message": "Initial page load"
+  },
+  "report/renderer/util.js | runtimeCustom": {
+    "message": "Custom throttling"
   },
   "report/renderer/util.js | runtimeDesktopEmulation": {
     "message": "デスクトップのエミュレーション"
@@ -2420,8 +2432,20 @@
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "ユーザー エージェント（ネットワーク）"
   },
+  "report/renderer/util.js | runtimeSingleLoad": {
+    "message": "Single page load"
+  },
+  "report/renderer/util.js | runtimeSingleLoadTooltip": {
+    "message": "This data is taken from a single page load, as opposed to field data summarizing many sessions."
+  },
+  "report/renderer/util.js | runtimeSlow4g": {
+    "message": "Slow 4G throttling"
+  },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "不明"
+  },
+  "report/renderer/util.js | show": {
+    "message": "Show"
   },
   "report/renderer/util.js | showRelevantAudits": {
     "message": "次に関連する監査を表示:"
@@ -2452,5 +2476,29 @@
   },
   "report/renderer/util.js | warningHeader": {
     "message": "警告: "
+  },
+  "treemap/app/src/util.js | allLabel": {
+    "message": "すべて"
+  },
+  "treemap/app/src/util.js | allScriptsDropdownLabel": {
+    "message": "すべてのスクリプト"
+  },
+  "treemap/app/src/util.js | coverageColumnName": {
+    "message": "カバレッジ"
+  },
+  "treemap/app/src/util.js | duplicateModulesLabel": {
+    "message": "重複モジュール"
+  },
+  "treemap/app/src/util.js | resourceBytesLabel": {
+    "message": "リソースのサイズ（バイト）"
+  },
+  "treemap/app/src/util.js | tableColumnName": {
+    "message": "名前"
+  },
+  "treemap/app/src/util.js | toggleTableButtonLabel": {
+    "message": "表を切り替える"
+  },
+  "treemap/app/src/util.js | unusedBytesLabel": {
+    "message": "使用していないバイト"
   }
 }

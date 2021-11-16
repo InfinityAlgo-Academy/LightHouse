@@ -3,7 +3,7 @@
     "message": "Všetky prehľady"
   },
   "flow-report/src/i18n/ui-strings.js | categories": {
-    "message": "Categories"
+    "message": "Kategórie"
   },
   "flow-report/src/i18n/ui-strings.js | categoryAccessibility": {
     "message": "Dostupnosť"
@@ -24,40 +24,46 @@
     "message": "Počítač"
   },
   "flow-report/src/i18n/ui-strings.js | helpDialogTitle": {
-    "message": "Understanding the Lighthouse Flow Report"
+    "message": "Vysvetlenie prehľadu cesty používateľov v službe Lighthouse"
   },
   "flow-report/src/i18n/ui-strings.js | helpLabel": {
-    "message": "Understanding Flows"
+    "message": "Vysvetlenie cesty používateľov"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionNavigation": {
-    "message": "Use Navigation reports to..."
+    "message": "Pomocou prehľadov navigácie môžete..."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionSnapshot": {
-    "message": "Use Snapshot reports to..."
+    "message": "Pomocou prehľadov stavu môžete…"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionTimespan": {
-    "message": "Use Timespan reports to..."
+    "message": "Pomocou prehľadov časového rozsahu môžete..."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation1": {
-    "message": "Obtain a Lighthouse Performance score."
+    "message": "Získať skóre výkonnosti v nástroji Lighthouse"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation2": {
-    "message": "Measure page load Performance metrics such as Largest Contentful Paint and Speed Index."
+    "message": "Merať metriky výkonnosti načítania stránok, ako sú vykreslenie najväčšieho obsahu a index rýchlosti."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation3": {
-    "message": "Assess Progressive Web App capabilities."
+    "message": "Získať prístup k možnostiam progresívnych webových aplikácií."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseSnapshot1": {
-    "message": "Find accessibility issues in single page applications or complex forms."
+    "message": "Nájsť problémy s dostupnosťou v jednostránkových aplikáciách alebo zložitých formulároch."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseSnapshot2": {
-    "message": "Evaluate best practices of menus and UI elements hidden behind interaction."
+    "message": "Ohodnotiť osvedčené postupy ponúk a prvkov používateľského rozhrania skrytých za interakciou."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan1": {
-    "message": "Measure layout shifts and JavaScript execution time on a series of interactions."
+    "message": "Merať posuny rozloženia a čas spustenia kódu JavaScript v rámci radu interakcií."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan2": {
-    "message": "Discover performance opportunities to improve the experience for long-lived pages and single-page applications."
+    "message": "Objaviť príležitosti na zvýšenie výkonnosti s cieľom zlepšiť prostredie dlhodobých stránok a jednostránkových aplikácií."
+  },
+  "flow-report/src/i18n/ui-strings.js | highestImpact": {
+    "message": "Najvyšší vplyv"
+  },
+  "flow-report/src/i18n/ui-strings.js | informativeAuditCount": {
+    "message": "{numInformative,plural, =1{{numInformative} informatívna kontrola}few{{numInformative} informatívne kontroly}many{{numInformative} informative audits}other{{numInformative} informatívnych kontrol}}"
   },
   "flow-report/src/i18n/ui-strings.js | mobile": {
     "message": "Mobilná verzia"
@@ -66,10 +72,19 @@
     "message": "Načítanie stránky"
   },
   "flow-report/src/i18n/ui-strings.js | navigationLongDescription": {
-    "message": "Navigation reports analyze a single page load, exactly like the original Lighthouse reports."
+    "message": "Prehľady navigácie analyzujú jedno načítanie stránky rovnako ako pôvodné prehľady nástroja Lighthouse."
   },
   "flow-report/src/i18n/ui-strings.js | navigationReport": {
     "message": "Prehľad navigácie"
+  },
+  "flow-report/src/i18n/ui-strings.js | navigationReportCount": {
+    "message": "{numNavigation,plural, =1{{numNavigation} prehľad navigácie}few{{numNavigation} prehľady navigácie}many{{numNavigation} navigation reports}other{{numNavigation} prehľadov navigácie}}"
+  },
+  "flow-report/src/i18n/ui-strings.js | passableAuditCount": {
+    "message": "{numPassableAudits,plural, =1{{numPassableAudits} kontrola, ktorá môže byť úspešná}few{{numPassableAudits} kontroly, ktoré môžu byť úspešné}many{{numPassableAudits} passable audits}other{{numPassableAudits} kontrol, ktoré môže byť úspešné}}"
+  },
+  "flow-report/src/i18n/ui-strings.js | passedAuditCount": {
+    "message": "{numPassed,plural, =1{{numPassed} úspešná kontrola}few{{numPassed} úspešné kontroly}many{{numPassed} audits passed}other{{numPassed} úspešných kontrol}}"
   },
   "flow-report/src/i18n/ui-strings.js | ratingAverage": {
     "message": "Priemer"
@@ -84,16 +99,19 @@
     "message": "Dobré"
   },
   "flow-report/src/i18n/ui-strings.js | save": {
-    "message": "Save"
+    "message": "Uložiť"
   },
   "flow-report/src/i18n/ui-strings.js | snapshotDescription": {
     "message": "Zachytený stav stránky"
   },
   "flow-report/src/i18n/ui-strings.js | snapshotLongDescription": {
-    "message": "Snapshot reports analyze the page in a particular state, typically after user interactions."
+    "message": "Prehľady stavu analyzujú stránku v konkrétnom stave, zvyčajne po interakciách používateľov."
   },
   "flow-report/src/i18n/ui-strings.js | snapshotReport": {
     "message": "Prehľad stavu"
+  },
+  "flow-report/src/i18n/ui-strings.js | snapshotReportCount": {
+    "message": "{numSnapshot,plural, =1{{numSnapshot} prehľad stavu}few{{numSnapshot} prehľady stavu}many{{numSnapshot} snapshot reports}other{{numSnapshot} prehľadov stavu}}"
   },
   "flow-report/src/i18n/ui-strings.js | summary": {
     "message": "Súhrn"
@@ -102,10 +120,13 @@
     "message": "Interakcie používateľov"
   },
   "flow-report/src/i18n/ui-strings.js | timespanLongDescription": {
-    "message": "Timespan reports analyze an arbitrary period of time, typically containing user interactions."
+    "message": "Prehľady časového rozsahu analyzujú ľubovoľné obdobie zvyčajne obsahujúce interakcie používateľov."
   },
   "flow-report/src/i18n/ui-strings.js | timespanReport": {
     "message": "Prehľad časového rozsahu"
+  },
+  "flow-report/src/i18n/ui-strings.js | timespanReportCount": {
+    "message": "{numTimespan,plural, =1{{numTimespan} prehľad časového rozsahu}few{{numTimespan} prehľady časového rozsahu}many{{numTimespan} timespan reports}other{{numTimespan} prehľadov časového rozsahu}}"
   },
   "flow-report/src/i18n/ui-strings.js | title": {
     "message": "Prehľad cesty používateľov v službe Lighthouse"
@@ -1740,7 +1761,7 @@
     "message": "Tieto kontroly vyžaduje základný [kontrolný zoznam PWA](https://developers.google.com/web/progressive-web-apps/checklist), ale Lighthouse ich automaticky nevykonáva. Nemajú vplyv na vaše skóre, ale je dôležité, aby ste ich overili ručne."
   },
   "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
-    "message": "Progresívna webová aplikácia"
+    "message": "PWA"
   },
   "lighthouse-core/config/default-config.js | pwaInstallableGroupTitle": {
     "message": "Inštalovateľné"
@@ -2042,30 +2063,6 @@
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "Poskytnutá webová adresa je zrejme neplatná."
   },
-  "treemap/app/src/util.js | allLabel": {
-    "message": "Všetko"
-  },
-  "treemap/app/src/util.js | allScriptsDropdownLabel": {
-    "message": "Všetky skripty"
-  },
-  "treemap/app/src/util.js | coverageColumnName": {
-    "message": "Pokrytie"
-  },
-  "treemap/app/src/util.js | duplicateModulesLabel": {
-    "message": "Duplikovať moduly"
-  },
-  "treemap/app/src/util.js | resourceBytesLabel": {
-    "message": "Počet bajtov zdroja"
-  },
-  "treemap/app/src/util.js | tableColumnName": {
-    "message": "Názov"
-  },
-  "treemap/app/src/util.js | toggleTableButtonLabel": {
-    "message": "Prepnúť tabuľku"
-  },
-  "treemap/app/src/util.js | unusedBytesLabel": {
-    "message": "Nepoužité bajty"
-  },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "V prípade animovaného obsahu minimalizujete využitie procesora pomocou komponenta [`amp-anim`](https://amp.dev/documentation/components/amp-anim/), keď je tento obsah mimo obrazovky."
   },
@@ -2333,6 +2330,9 @@
   "report/renderer/util.js | calculatorLink": {
     "message": "Zobraziť kalkulačku"
   },
+  "report/renderer/util.js | collapseView": {
+    "message": "Zbaliť zobrazenie"
+  },
   "report/renderer/util.js | crcInitialNavigation": {
     "message": "Počiatočná navigácia"
   },
@@ -2369,8 +2369,14 @@
   "report/renderer/util.js | errorMissingAuditInfo": {
     "message": "Nahlásenie chyby: žiadne informácie o kontrole"
   },
+  "report/renderer/util.js | expandView": {
+    "message": "Rozbaliť zobrazenie"
+  },
   "report/renderer/util.js | footerIssue": {
     "message": "Nahlásiť problém"
+  },
+  "report/renderer/util.js | hide": {
+    "message": "Skryť"
   },
   "report/renderer/util.js | labDataTitle": {
     "message": "Údaje laboratória"
@@ -2392,6 +2398,12 @@
   },
   "report/renderer/util.js | passedAuditsGroupTitle": {
     "message": "Absolvované kontroly"
+  },
+  "report/renderer/util.js | runtimeAnalysisWindow": {
+    "message": "Počiatočné načítanie stránky"
+  },
+  "report/renderer/util.js | runtimeCustom": {
+    "message": "Vlastné obmedzenie toku dát"
   },
   "report/renderer/util.js | runtimeDesktopEmulation": {
     "message": "Emulovaná pracovná plocha"
@@ -2420,8 +2432,20 @@
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "Používateľský agent (sieť)"
   },
+  "report/renderer/util.js | runtimeSingleLoad": {
+    "message": "Načítanie jednej stránky"
+  },
+  "report/renderer/util.js | runtimeSingleLoadTooltip": {
+    "message": "Tieto údaje sú prevzaté z jedného načítania stránky na rozdiel od údajov poľa zhrnujúcich mnoho relácií."
+  },
+  "report/renderer/util.js | runtimeSlow4g": {
+    "message": "Pomalé obmedzenie toku dát 4G"
+  },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "Neznáme"
+  },
+  "report/renderer/util.js | show": {
+    "message": "Zobraziť"
   },
   "report/renderer/util.js | showRelevantAudits": {
     "message": "Zobraziť kontroly relevantné pre:"
@@ -2452,5 +2476,29 @@
   },
   "report/renderer/util.js | warningHeader": {
     "message": "Upozornenia: "
+  },
+  "treemap/app/src/util.js | allLabel": {
+    "message": "Všetko"
+  },
+  "treemap/app/src/util.js | allScriptsDropdownLabel": {
+    "message": "Všetky skripty"
+  },
+  "treemap/app/src/util.js | coverageColumnName": {
+    "message": "Pokrytie"
+  },
+  "treemap/app/src/util.js | duplicateModulesLabel": {
+    "message": "Duplikovať moduly"
+  },
+  "treemap/app/src/util.js | resourceBytesLabel": {
+    "message": "Počet bajtov zdroja"
+  },
+  "treemap/app/src/util.js | tableColumnName": {
+    "message": "Názov"
+  },
+  "treemap/app/src/util.js | toggleTableButtonLabel": {
+    "message": "Prepnúť tabuľku"
+  },
+  "treemap/app/src/util.js | unusedBytesLabel": {
+    "message": "Nepoužité bajty"
   }
 }

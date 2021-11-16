@@ -482,9 +482,7 @@
   border-radius: 3px;
   color: var(--link-color);
   background-color: var(--report-background-color);
-  padding: var(--default-padding);
-  font-size: var(--report-font-size-secondary);
-  line-height: var(--report-line-height-secondary);
+  margin: 5px;
 }
 
 .lh-button:first-of-type {
@@ -685,9 +683,8 @@
 
 .lh-metrics-container {
   display: grid;
-  grid-template-rows: 1fr 1fr 1fr;
+  grid-auto-rows: 1fr;
   grid-template-columns: 1fr 1fr;
-  grid-auto-flow: column;
   grid-column-gap: var(--report-line-height);
 }
 
@@ -695,7 +692,7 @@
   border-top: 1px solid var(--report-border-color-secondary);
 }
 
-.lh-metric:nth-child(3n+3) {
+.lh-metric:nth-last-child(-n+2) {
   border-bottom: 1px solid var(--report-border-color-secondary);
 }
 
@@ -743,8 +740,11 @@
     display: block;
   }
 
-  .lh-metric:nth-last-child(-n+1) {
-    border-bottom: 1px solid var(--report-border-color-secondary);
+  .lh-metric {
+    border-bottom: none !important;
+  }
+  .lh-metric:nth-last-child(1) {
+    border-bottom: 1px solid var(--report-border-color-secondary) !important;
   }
 
   /* Change the grid to 3 columns for narrow viewport. */
@@ -1332,6 +1332,7 @@
   margin-top: 10px;
   text-align: center;
   color: var(--report-text-color);
+  word-break: keep-all;
 }
 
 /* TODO(#8185) use more BEM (.lh-gauge__label--big) instead of relying on descendant selector */

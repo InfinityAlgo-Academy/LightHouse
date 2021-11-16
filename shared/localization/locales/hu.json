@@ -3,7 +3,7 @@
     "message": "Az összes jelentés"
   },
   "flow-report/src/i18n/ui-strings.js | categories": {
-    "message": "Categories"
+    "message": "Kategóriák"
   },
   "flow-report/src/i18n/ui-strings.js | categoryAccessibility": {
     "message": "Kisegítő lehetőségek"
@@ -24,40 +24,46 @@
     "message": "Asztali"
   },
   "flow-report/src/i18n/ui-strings.js | helpDialogTitle": {
-    "message": "Understanding the Lighthouse Flow Report"
+    "message": "A Lighthouse-folyamatjelentés értelmezése"
   },
   "flow-report/src/i18n/ui-strings.js | helpLabel": {
-    "message": "Understanding Flows"
+    "message": "A folyamatok értelmezése"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionNavigation": {
-    "message": "Use Navigation reports to..."
+    "message": "A navigációs jelentések használatával a következőket teheti:…"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionSnapshot": {
-    "message": "Use Snapshot reports to..."
+    "message": "A pillanatkép-jelentések használatával a következőket teheti:…"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionTimespan": {
-    "message": "Use Timespan reports to..."
+    "message": "Az időtartam-jelentések használatával a következőket teheti:…"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation1": {
-    "message": "Obtain a Lighthouse Performance score."
+    "message": "pontszámot kaphat a Lighthouse-teljesítményre vonatkozóan;"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation2": {
-    "message": "Measure page load Performance metrics such as Largest Contentful Paint and Speed Index."
+    "message": "mérheti az oldalbetöltési teljesítménnyel kapcsolatos mutatókat (például a legnagyobb vizuális tartalomválaszt és a sebességindexet)."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation3": {
-    "message": "Assess Progressive Web App capabilities."
+    "message": "értékelheti a progresszív webes alkalmazások képességeit;"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseSnapshot1": {
-    "message": "Find accessibility issues in single page applications or complex forms."
+    "message": "megtalálhatja a kisegítő lehetőségekkel kapcsolatos problémákat az egyoldalas alkalmazásokban vagy az összetettebb űrlapokon"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseSnapshot2": {
-    "message": "Evaluate best practices of menus and UI elements hidden behind interaction."
+    "message": "értékelheti az interakciók mögötti rejtett menükkel és UI-elemekkel kapcsolatos bevált módszereket;"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan1": {
-    "message": "Measure layout shifts and JavaScript execution time on a series of interactions."
+    "message": "különböző interakciók esetében mérheti az elrendezésmozgást és a JavaScript végrehajtási idejét."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan2": {
-    "message": "Discover performance opportunities to improve the experience for long-lived pages and single-page applications."
+    "message": "teljesítményre vonatkozó lehetőségeket fedezhet fel a hosszú életű oldalak és az egyoldalas alkalmazásokkal kapcsolatos élmények javítása érdekében;"
+  },
+  "flow-report/src/i18n/ui-strings.js | highestImpact": {
+    "message": "Highest impact"
+  },
+  "flow-report/src/i18n/ui-strings.js | informativeAuditCount": {
+    "message": "{numInformative, plural,\n    =1 {{numInformative} informative audit}\n    other {{numInformative} informative audits}\n  }"
   },
   "flow-report/src/i18n/ui-strings.js | mobile": {
     "message": "Mobil"
@@ -66,10 +72,19 @@
     "message": "Oldalbetöltés"
   },
   "flow-report/src/i18n/ui-strings.js | navigationLongDescription": {
-    "message": "Navigation reports analyze a single page load, exactly like the original Lighthouse reports."
+    "message": "A navigációs jelentések (pontosan úgy, ahogy az eredeti Lighthouse-jelentések is) az egyes oldalak betöltését elemzik."
   },
   "flow-report/src/i18n/ui-strings.js | navigationReport": {
     "message": "Navigációs jelentés"
+  },
+  "flow-report/src/i18n/ui-strings.js | navigationReportCount": {
+    "message": "{numNavigation, plural,\n    =1 {{numNavigation} navigation report}\n    other {{numNavigation} navigation reports}\n  }"
+  },
+  "flow-report/src/i18n/ui-strings.js | passableAuditCount": {
+    "message": "{numPassableAudits, plural,\n    =1 {{numPassableAudits} passable audit}\n    other {{numPassableAudits} passable audits}\n  }"
+  },
+  "flow-report/src/i18n/ui-strings.js | passedAuditCount": {
+    "message": "{numPassed, plural,\n    =1 {{numPassed} audit passed}\n    other {{numPassed} audits passed}\n  }"
   },
   "flow-report/src/i18n/ui-strings.js | ratingAverage": {
     "message": "Átlagos"
@@ -84,16 +99,19 @@
     "message": "Jó"
   },
   "flow-report/src/i18n/ui-strings.js | save": {
-    "message": "Save"
+    "message": "mentés;"
   },
   "flow-report/src/i18n/ui-strings.js | snapshotDescription": {
     "message": "Az oldal rögzített állapota"
   },
   "flow-report/src/i18n/ui-strings.js | snapshotLongDescription": {
-    "message": "Snapshot reports analyze the page in a particular state, typically after user interactions."
+    "message": "A pillanatkép-jelentés az oldalt adott állapotában, jellemzően a felhasználói interakciókat követően elemzi."
   },
   "flow-report/src/i18n/ui-strings.js | snapshotReport": {
     "message": "Pillanatkép-jelentés"
+  },
+  "flow-report/src/i18n/ui-strings.js | snapshotReportCount": {
+    "message": "{numSnapshot, plural,\n    =1 {{numSnapshot} snapshot report}\n    other {{numSnapshot} snapshot reports}\n  }"
   },
   "flow-report/src/i18n/ui-strings.js | summary": {
     "message": "Összegzés"
@@ -102,10 +120,13 @@
     "message": "Felhasználói interakciók"
   },
   "flow-report/src/i18n/ui-strings.js | timespanLongDescription": {
-    "message": "Timespan reports analyze an arbitrary period of time, typically containing user interactions."
+    "message": "Az időtartam-jelentések a tetszőleges, jellemzően felhasználó interakciókat tartalmazó időtartamokat elemzik."
   },
   "flow-report/src/i18n/ui-strings.js | timespanReport": {
     "message": "Időtartam-jelentés"
+  },
+  "flow-report/src/i18n/ui-strings.js | timespanReportCount": {
+    "message": "{numTimespan, plural,\n    =1 {{numTimespan} timespan report}\n    other {{numTimespan} timespan reports}\n  }"
   },
   "flow-report/src/i18n/ui-strings.js | title": {
     "message": "Lighthouse felhasználóimunkafolyamat-jelentés"
@@ -1740,7 +1761,7 @@
     "message": "Ezek az ellenőrzések kötelezők a [progresszív webes alkalmazások alapvető ellenőrzőlistáján](https://developers.google.com/web/progressive-web-apps/checklist), de a Lighthouse nem végzi el őket automatikusan. Az ellenőrzések a kapott pontszámot nem befolyásolják, de fontos a manuális végrehajtásuk."
   },
   "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
-    "message": "Progresszív webes alkalmazás"
+    "message": "PWA"
   },
   "lighthouse-core/config/default-config.js | pwaInstallableGroupTitle": {
     "message": "Telepíthető"
@@ -2042,30 +2063,6 @@
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "Úgy tűnik, a megadott URL érvénytelen."
   },
-  "treemap/app/src/util.js | allLabel": {
-    "message": "Összes"
-  },
-  "treemap/app/src/util.js | allScriptsDropdownLabel": {
-    "message": "Minden szkript"
-  },
-  "treemap/app/src/util.js | coverageColumnName": {
-    "message": "Lefedettség"
-  },
-  "treemap/app/src/util.js | duplicateModulesLabel": {
-    "message": "Ismétlődő modulok"
-  },
-  "treemap/app/src/util.js | resourceBytesLabel": {
-    "message": "Forrásfájl mérete bájtokban"
-  },
-  "treemap/app/src/util.js | tableColumnName": {
-    "message": "Név"
-  },
-  "treemap/app/src/util.js | toggleTableButtonLabel": {
-    "message": "Táblázat elrejtése/megjelenítése"
-  },
-  "treemap/app/src/util.js | unusedBytesLabel": {
-    "message": "Fel nem használt bájtok"
-  },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "Animált tartalmak esetében csökkentheti a processzorhasználatot az [`amp-anim`](https://amp.dev/documentation/components/amp-anim/) segítségével, amikor a tartalom nem látható a képernyőn."
   },
@@ -2333,6 +2330,9 @@
   "report/renderer/util.js | calculatorLink": {
     "message": "Számológép megtekintése"
   },
+  "report/renderer/util.js | collapseView": {
+    "message": "Collapse view"
+  },
   "report/renderer/util.js | crcInitialNavigation": {
     "message": "Kezdeti navigáció"
   },
@@ -2369,8 +2369,14 @@
   "report/renderer/util.js | errorMissingAuditInfo": {
     "message": "Jelentési hiba: nincs ellenőrzési információ"
   },
+  "report/renderer/util.js | expandView": {
+    "message": "Expand view"
+  },
   "report/renderer/util.js | footerIssue": {
     "message": "Probléma beküldése"
+  },
+  "report/renderer/util.js | hide": {
+    "message": "Hide"
   },
   "report/renderer/util.js | labDataTitle": {
     "message": "Laboradatok"
@@ -2392,6 +2398,12 @@
   },
   "report/renderer/util.js | passedAuditsGroupTitle": {
     "message": "Sikeresen teljesített ellenőrzések"
+  },
+  "report/renderer/util.js | runtimeAnalysisWindow": {
+    "message": "Initial page load"
+  },
+  "report/renderer/util.js | runtimeCustom": {
+    "message": "Custom throttling"
   },
   "report/renderer/util.js | runtimeDesktopEmulation": {
     "message": "Emulált asztal"
@@ -2420,8 +2432,20 @@
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "Felhasználói ügynök (hálózat)"
   },
+  "report/renderer/util.js | runtimeSingleLoad": {
+    "message": "Single page load"
+  },
+  "report/renderer/util.js | runtimeSingleLoadTooltip": {
+    "message": "This data is taken from a single page load, as opposed to field data summarizing many sessions."
+  },
+  "report/renderer/util.js | runtimeSlow4g": {
+    "message": "Slow 4G throttling"
+  },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "Ismeretlen"
+  },
+  "report/renderer/util.js | show": {
+    "message": "Show"
   },
   "report/renderer/util.js | showRelevantAudits": {
     "message": "A következővel kapcsolatos naplóbejegyzések megjelenítése:"
@@ -2452,5 +2476,29 @@
   },
   "report/renderer/util.js | warningHeader": {
     "message": "Figyelmeztetések: "
+  },
+  "treemap/app/src/util.js | allLabel": {
+    "message": "Összes"
+  },
+  "treemap/app/src/util.js | allScriptsDropdownLabel": {
+    "message": "Minden szkript"
+  },
+  "treemap/app/src/util.js | coverageColumnName": {
+    "message": "Lefedettség"
+  },
+  "treemap/app/src/util.js | duplicateModulesLabel": {
+    "message": "Ismétlődő modulok"
+  },
+  "treemap/app/src/util.js | resourceBytesLabel": {
+    "message": "Forrásfájl mérete bájtokban"
+  },
+  "treemap/app/src/util.js | tableColumnName": {
+    "message": "Név"
+  },
+  "treemap/app/src/util.js | toggleTableButtonLabel": {
+    "message": "Táblázat elrejtése/megjelenítése"
+  },
+  "treemap/app/src/util.js | unusedBytesLabel": {
+    "message": "Fel nem használt bájtok"
   }
 }

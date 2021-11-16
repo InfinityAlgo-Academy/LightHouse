@@ -3,7 +3,7 @@
     "message": "Semua Laporan"
   },
   "flow-report/src/i18n/ui-strings.js | categories": {
-    "message": "Categories"
+    "message": "Kategori"
   },
   "flow-report/src/i18n/ui-strings.js | categoryAccessibility": {
     "message": "Aksesibilitas"
@@ -24,40 +24,46 @@
     "message": "Desktop"
   },
   "flow-report/src/i18n/ui-strings.js | helpDialogTitle": {
-    "message": "Understanding the Lighthouse Flow Report"
+    "message": "Memahami Laporan Alur Lighthouse"
   },
   "flow-report/src/i18n/ui-strings.js | helpLabel": {
-    "message": "Understanding Flows"
+    "message": "Memahami Alur"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionNavigation": {
-    "message": "Use Navigation reports to..."
+    "message": "Gunakan laporan Navigasi untuk ..."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionSnapshot": {
-    "message": "Use Snapshot reports to..."
+    "message": "Gunakan laporan Snapshot untuk ..."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionTimespan": {
-    "message": "Use Timespan reports to..."
+    "message": "Gunakan laporan Rentang Waktu untuk ..."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation1": {
-    "message": "Obtain a Lighthouse Performance score."
+    "message": "Mendapatkan skor Performa Lighthouse."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation2": {
-    "message": "Measure page load Performance metrics such as Largest Contentful Paint and Speed Index."
+    "message": "Mengukur metrik Performa pemuatan halaman seperti Largest Contentful Paint dan Speed Index."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation3": {
-    "message": "Assess Progressive Web App capabilities."
+    "message": "Menilai kemampuan Progressive Web App."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseSnapshot1": {
-    "message": "Find accessibility issues in single page applications or complex forms."
+    "message": "Menemukan masalah aksesibilitas dalam aplikasi web satu halaman atau formulir yang rumit."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseSnapshot2": {
-    "message": "Evaluate best practices of menus and UI elements hidden behind interaction."
+    "message": "Mengevaluasi praktik terbaik menu dan elemen UI yang tersembunyi di balik interaksi."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan1": {
-    "message": "Measure layout shifts and JavaScript execution time on a series of interactions."
+    "message": "Mengukur pergeseran tata letak dan waktu eksekusi JavaScript pada serangkaian interaksi."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan2": {
-    "message": "Discover performance opportunities to improve the experience for long-lived pages and single-page applications."
+    "message": "Menemukan peluang performa guna meningkatkan pengalaman untuk halaman yang dibuka dalam waktu lama dan aplikasi web satu halaman."
+  },
+  "flow-report/src/i18n/ui-strings.js | highestImpact": {
+    "message": "Highest impact"
+  },
+  "flow-report/src/i18n/ui-strings.js | informativeAuditCount": {
+    "message": "{numInformative, plural,\n    =1 {{numInformative} informative audit}\n    other {{numInformative} informative audits}\n  }"
   },
   "flow-report/src/i18n/ui-strings.js | mobile": {
     "message": "Seluler"
@@ -66,10 +72,19 @@
     "message": "Pemuatan halaman"
   },
   "flow-report/src/i18n/ui-strings.js | navigationLongDescription": {
-    "message": "Navigation reports analyze a single page load, exactly like the original Lighthouse reports."
+    "message": "Laporan Navigasi menganalisis pemuatan satu halaman, persis seperti laporan Lighthouse asli."
   },
   "flow-report/src/i18n/ui-strings.js | navigationReport": {
     "message": "Laporan navigasi"
+  },
+  "flow-report/src/i18n/ui-strings.js | navigationReportCount": {
+    "message": "{numNavigation, plural,\n    =1 {{numNavigation} navigation report}\n    other {{numNavigation} navigation reports}\n  }"
+  },
+  "flow-report/src/i18n/ui-strings.js | passableAuditCount": {
+    "message": "{numPassableAudits, plural,\n    =1 {{numPassableAudits} passable audit}\n    other {{numPassableAudits} passable audits}\n  }"
+  },
+  "flow-report/src/i18n/ui-strings.js | passedAuditCount": {
+    "message": "{numPassed, plural,\n    =1 {{numPassed} audit passed}\n    other {{numPassed} audits passed}\n  }"
   },
   "flow-report/src/i18n/ui-strings.js | ratingAverage": {
     "message": "Biasa"
@@ -84,16 +99,19 @@
     "message": "Baik"
   },
   "flow-report/src/i18n/ui-strings.js | save": {
-    "message": "Save"
+    "message": "Simpan"
   },
   "flow-report/src/i18n/ui-strings.js | snapshotDescription": {
     "message": "Status halaman yang ditangkap"
   },
   "flow-report/src/i18n/ui-strings.js | snapshotLongDescription": {
-    "message": "Snapshot reports analyze the page in a particular state, typically after user interactions."
+    "message": "Laporan Snapshot menganalisis halaman dalam status tertentu, biasanya setelah interaksi pengguna."
   },
   "flow-report/src/i18n/ui-strings.js | snapshotReport": {
     "message": "Laporan snapshot"
+  },
+  "flow-report/src/i18n/ui-strings.js | snapshotReportCount": {
+    "message": "{numSnapshot, plural,\n    =1 {{numSnapshot} snapshot report}\n    other {{numSnapshot} snapshot reports}\n  }"
   },
   "flow-report/src/i18n/ui-strings.js | summary": {
     "message": "Ringkasan"
@@ -102,10 +120,13 @@
     "message": "Interaksi pengguna"
   },
   "flow-report/src/i18n/ui-strings.js | timespanLongDescription": {
-    "message": "Timespan reports analyze an arbitrary period of time, typically containing user interactions."
+    "message": "Laporan Rentang Waktu menganalisis periode waktu yang arbitrer, biasanya yang berisi interaksi pengguna."
   },
   "flow-report/src/i18n/ui-strings.js | timespanReport": {
     "message": "Laporan rentang waktu"
+  },
+  "flow-report/src/i18n/ui-strings.js | timespanReportCount": {
+    "message": "{numTimespan, plural,\n    =1 {{numTimespan} timespan report}\n    other {{numTimespan} timespan reports}\n  }"
   },
   "flow-report/src/i18n/ui-strings.js | title": {
     "message": "Laporan Alur Pengguna Lighthouse"
@@ -1740,7 +1761,7 @@
     "message": "Pemeriksaan ini diperlukan oleh [Checklist PWA](https://developers.google.com/web/progressive-web-apps/checklist) untuk dasar pengukuran tetapi tidak otomatis diperiksa oleh Lighthouse. Pemeriksaan tersebut tidak memengaruhi skor, tetapi penting karena hal ini berarti Anda memverifikasi situs-situs secara manual."
   },
   "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
-    "message": "Progressive Web App"
+    "message": "PWA"
   },
   "lighthouse-core/config/default-config.js | pwaInstallableGroupTitle": {
     "message": "Dapat Diinstal"
@@ -2042,30 +2063,6 @@
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "URL yang Anda berikan tampaknya tidak valid."
   },
-  "treemap/app/src/util.js | allLabel": {
-    "message": "Semua"
-  },
-  "treemap/app/src/util.js | allScriptsDropdownLabel": {
-    "message": "Semua Skrip"
-  },
-  "treemap/app/src/util.js | coverageColumnName": {
-    "message": "Cakupan"
-  },
-  "treemap/app/src/util.js | duplicateModulesLabel": {
-    "message": "Modul Duplikat"
-  },
-  "treemap/app/src/util.js | resourceBytesLabel": {
-    "message": "Byte Resource"
-  },
-  "treemap/app/src/util.js | tableColumnName": {
-    "message": "Nama"
-  },
-  "treemap/app/src/util.js | toggleTableButtonLabel": {
-    "message": "Tampilkan/Sembunyikan Tabel"
-  },
-  "treemap/app/src/util.js | unusedBytesLabel": {
-    "message": "Byte yang Tidak Digunakan"
-  },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "Untuk konten animasi, gunakan [`amp-anim`](https://amp.dev/documentation/components/amp-anim/) untuk meminimalkan penggunaan CPU saat konten tidak berada di layar."
   },
@@ -2333,6 +2330,9 @@
   "report/renderer/util.js | calculatorLink": {
     "message": "Lihat kalkulator."
   },
+  "report/renderer/util.js | collapseView": {
+    "message": "Collapse view"
+  },
   "report/renderer/util.js | crcInitialNavigation": {
     "message": "Navigasi Awal"
   },
@@ -2369,8 +2369,14 @@
   "report/renderer/util.js | errorMissingAuditInfo": {
     "message": "Error laporan: tidak ada informasi audit"
   },
+  "report/renderer/util.js | expandView": {
+    "message": "Expand view"
+  },
   "report/renderer/util.js | footerIssue": {
     "message": "Laporkan masalah"
+  },
+  "report/renderer/util.js | hide": {
+    "message": "Hide"
   },
   "report/renderer/util.js | labDataTitle": {
     "message": "Data Lab"
@@ -2392,6 +2398,12 @@
   },
   "report/renderer/util.js | passedAuditsGroupTitle": {
     "message": "Lulus audit"
+  },
+  "report/renderer/util.js | runtimeAnalysisWindow": {
+    "message": "Initial page load"
+  },
+  "report/renderer/util.js | runtimeCustom": {
+    "message": "Custom throttling"
   },
   "report/renderer/util.js | runtimeDesktopEmulation": {
     "message": "Desktop Emulasi"
@@ -2420,8 +2432,20 @@
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "Agen pengguna (jaringan)"
   },
+  "report/renderer/util.js | runtimeSingleLoad": {
+    "message": "Single page load"
+  },
+  "report/renderer/util.js | runtimeSingleLoadTooltip": {
+    "message": "This data is taken from a single page load, as opposed to field data summarizing many sessions."
+  },
+  "report/renderer/util.js | runtimeSlow4g": {
+    "message": "Slow 4G throttling"
+  },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "Tidak dikenal"
+  },
+  "report/renderer/util.js | show": {
+    "message": "Show"
   },
   "report/renderer/util.js | showRelevantAudits": {
     "message": "Tampilkan audit yang relevan dengan:"
@@ -2452,5 +2476,29 @@
   },
   "report/renderer/util.js | warningHeader": {
     "message": "Peringatan: "
+  },
+  "treemap/app/src/util.js | allLabel": {
+    "message": "Semua"
+  },
+  "treemap/app/src/util.js | allScriptsDropdownLabel": {
+    "message": "Semua Skrip"
+  },
+  "treemap/app/src/util.js | coverageColumnName": {
+    "message": "Cakupan"
+  },
+  "treemap/app/src/util.js | duplicateModulesLabel": {
+    "message": "Modul Duplikat"
+  },
+  "treemap/app/src/util.js | resourceBytesLabel": {
+    "message": "Byte Resource"
+  },
+  "treemap/app/src/util.js | tableColumnName": {
+    "message": "Nama"
+  },
+  "treemap/app/src/util.js | toggleTableButtonLabel": {
+    "message": "Tampilkan/Sembunyikan Tabel"
+  },
+  "treemap/app/src/util.js | unusedBytesLabel": {
+    "message": "Byte yang Tidak Digunakan"
   }
 }

@@ -59,6 +59,12 @@
   "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan2": {
     "message": "Discover performance opportunities to improve the experience for long-lived pages and single-page applications."
   },
+  "flow-report/src/i18n/ui-strings.js | highestImpact": {
+    "message": "С най-голямо въздействие"
+  },
+  "flow-report/src/i18n/ui-strings.js | informativeAuditCount": {
+    "message": "{numInformative,plural, =1{{numInformative} информативна проверка}other{{numInformative} информативни проверки}}"
+  },
   "flow-report/src/i18n/ui-strings.js | mobile": {
     "message": "Мобилни устройства"
   },
@@ -70,6 +76,15 @@
   },
   "flow-report/src/i18n/ui-strings.js | navigationReport": {
     "message": "Отчет за навигирането"
+  },
+  "flow-report/src/i18n/ui-strings.js | navigationReportCount": {
+    "message": "{numNavigation,plural, =1{{numNavigation} отчет за навигирането}other{{numNavigation} отчета за навигирането}}"
+  },
+  "flow-report/src/i18n/ui-strings.js | passableAuditCount": {
+    "message": "{numPassableAudits,plural, =1{{numPassableAudits} проверка, която може да бъде премината успешно}other{{numPassableAudits} проверки, които могат да бъдат преминати успешно}}"
+  },
+  "flow-report/src/i18n/ui-strings.js | passedAuditCount": {
+    "message": "{numPassed,plural, =1{{numPassed} успешна проверка}other{{numPassed} успешни проверки}}"
   },
   "flow-report/src/i18n/ui-strings.js | ratingAverage": {
     "message": "Средна"
@@ -95,6 +110,9 @@
   "flow-report/src/i18n/ui-strings.js | snapshotReport": {
     "message": "Отчет за моментното състояние"
   },
+  "flow-report/src/i18n/ui-strings.js | snapshotReportCount": {
+    "message": "{numSnapshot,plural, =1{{numSnapshot} отчет за моментната снимка}other{{numSnapshot} отчета за моментната снимка}}"
+  },
   "flow-report/src/i18n/ui-strings.js | summary": {
     "message": "Обобщена информация"
   },
@@ -106,6 +124,9 @@
   },
   "flow-report/src/i18n/ui-strings.js | timespanReport": {
     "message": "Отчет за периода от време"
+  },
+  "flow-report/src/i18n/ui-strings.js | timespanReportCount": {
+    "message": "{numTimespan,plural, =1{{numTimespan} отчет за периода от време}other{{numTimespan} отчета за периода от време}}"
   },
   "flow-report/src/i18n/ui-strings.js | title": {
     "message": "Отчет на Lighthouse за потребителската навигация"
@@ -1740,7 +1761,7 @@
     "message": "Тези проверки са задължителни според отправния [контролен списък за PWA](https://developers.google.com/web/progressive-web-apps/checklist), но не се извършват автоматично от Lighthouse. Те не се отразяват на резултата ви, но е важно да ги потвърдите ръчно."
   },
   "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
-    "message": "Прогресивно уеб приложение (PWA)"
+    "message": "PWA"
   },
   "lighthouse-core/config/default-config.js | pwaInstallableGroupTitle": {
     "message": "Възможност за инсталиране"
@@ -2042,30 +2063,6 @@
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "Предоставеният от вас URL адрес изглежда невалиден."
   },
-  "treemap/app/src/util.js | allLabel": {
-    "message": "Всички"
-  },
-  "treemap/app/src/util.js | allScriptsDropdownLabel": {
-    "message": "Всички скриптове"
-  },
-  "treemap/app/src/util.js | coverageColumnName": {
-    "message": "Обхват"
-  },
-  "treemap/app/src/util.js | duplicateModulesLabel": {
-    "message": "Дублиращи се модули"
-  },
-  "treemap/app/src/util.js | resourceBytesLabel": {
-    "message": "Байтове на ресурсите"
-  },
-  "treemap/app/src/util.js | tableColumnName": {
-    "message": "Име"
-  },
-  "treemap/app/src/util.js | toggleTableButtonLabel": {
-    "message": "Превключване на таблицата"
-  },
-  "treemap/app/src/util.js | unusedBytesLabel": {
-    "message": "Неизползвани байтове"
-  },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "При анимирано съдържание използвайте маркера [`amp-anim`](https://amp.dev/documentation/components/amp-anim/), за да намалите използването на процесора, когато съдържанието е извън екрана."
   },
@@ -2333,6 +2330,9 @@
   "report/renderer/util.js | calculatorLink": {
     "message": "Вижте калкулатора."
   },
+  "report/renderer/util.js | collapseView": {
+    "message": "Свиване на изгледа"
+  },
   "report/renderer/util.js | crcInitialNavigation": {
     "message": "Първоначална навигация"
   },
@@ -2369,8 +2369,14 @@
   "report/renderer/util.js | errorMissingAuditInfo": {
     "message": "Грешка в отчета: няма информация за проверката"
   },
+  "report/renderer/util.js | expandView": {
+    "message": "Разгъване на изгледа"
+  },
   "report/renderer/util.js | footerIssue": {
     "message": "Добавяне на проблем"
+  },
+  "report/renderer/util.js | hide": {
+    "message": "Скриване"
   },
   "report/renderer/util.js | labDataTitle": {
     "message": "Данни от контролиран тест"
@@ -2392,6 +2398,12 @@
   },
   "report/renderer/util.js | passedAuditsGroupTitle": {
     "message": "Успешно преминати проверки"
+  },
+  "report/renderer/util.js | runtimeAnalysisWindow": {
+    "message": "Първоначално зареждане на страницата"
+  },
+  "report/renderer/util.js | runtimeCustom": {
+    "message": "Персонализирано ограничаване на потока на данни"
   },
   "report/renderer/util.js | runtimeDesktopEmulation": {
     "message": "Емулиран компютър"
@@ -2420,8 +2432,20 @@
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "Потребителски агент (мрежа)"
   },
+  "report/renderer/util.js | runtimeSingleLoad": {
+    "message": "При едно зареждане на страницата"
+  },
+  "report/renderer/util.js | runtimeSingleLoadTooltip": {
+    "message": "Тези данни са генерирани от едно зареждане на страницата за разлика от данните от реалното ползване, които обобщават голям брой сесии."
+  },
+  "report/renderer/util.js | runtimeSlow4g": {
+    "message": "Ограничаване до бавна 4G връзка"
+  },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "Неизвестно"
+  },
+  "report/renderer/util.js | show": {
+    "message": "Показване"
   },
   "report/renderer/util.js | showRelevantAudits": {
     "message": "Показване на проверките, уместни за:"
@@ -2452,5 +2476,29 @@
   },
   "report/renderer/util.js | warningHeader": {
     "message": "Предупреждения: "
+  },
+  "treemap/app/src/util.js | allLabel": {
+    "message": "Всички"
+  },
+  "treemap/app/src/util.js | allScriptsDropdownLabel": {
+    "message": "Всички скриптове"
+  },
+  "treemap/app/src/util.js | coverageColumnName": {
+    "message": "Обхват"
+  },
+  "treemap/app/src/util.js | duplicateModulesLabel": {
+    "message": "Дублиращи се модули"
+  },
+  "treemap/app/src/util.js | resourceBytesLabel": {
+    "message": "Байтове на ресурсите"
+  },
+  "treemap/app/src/util.js | tableColumnName": {
+    "message": "Име"
+  },
+  "treemap/app/src/util.js | toggleTableButtonLabel": {
+    "message": "Превключване на таблицата"
+  },
+  "treemap/app/src/util.js | unusedBytesLabel": {
+    "message": "Неизползвани байтове"
   }
 }

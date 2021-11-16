@@ -59,6 +59,12 @@
   "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan2": {
     "message": "‏‮Discover‬‏ ‏‮performance‬‏ ‏‮opportunities‬‏ ‏‮to‬‏ ‏‮improve‬‏ ‏‮the‬‏ ‏‮experience‬‏ ‏‮for‬‏ ‏‮long‬‏-‏‮lived‬‏ ‏‮pages‬‏ ‏‮and‬‏ ‏‮single‬‏-‏‮page‬‏ ‏‮applications‬‏."
   },
+  "flow-report/src/i18n/ui-strings.js | highestImpact": {
+    "message": "‏‮Highest‬‏ ‏‮impact‬‏"
+  },
+  "flow-report/src/i18n/ui-strings.js | informativeAuditCount": {
+    "message": "{numInformative,plural, =1{{numInformative} ‏‮informative‬‏ ‏‮audit‬‏}zero{{numInformative} ‏‮informative‬‏ ‏‮audits‬‏}two{{numInformative} ‏‮informative‬‏ ‏‮audits‬‏}few{{numInformative} ‏‮informative‬‏ ‏‮audits‬‏}many{{numInformative} ‏‮informative‬‏ ‏‮audits‬‏}other{{numInformative} ‏‮informative‬‏ ‏‮audits‬‏}}"
+  },
   "flow-report/src/i18n/ui-strings.js | mobile": {
     "message": "‏‮Mobile‬‏"
   },
@@ -70,6 +76,15 @@
   },
   "flow-report/src/i18n/ui-strings.js | navigationReport": {
     "message": "‏‮Navigation‬‏ ‏‮report‬‏"
+  },
+  "flow-report/src/i18n/ui-strings.js | navigationReportCount": {
+    "message": "{numNavigation,plural, =1{{numNavigation} ‏‮navigation‬‏ ‏‮report‬‏}zero{{numNavigation} ‏‮navigation‬‏ ‏‮reports‬‏}two{{numNavigation} ‏‮navigation‬‏ ‏‮reports‬‏}few{{numNavigation} ‏‮navigation‬‏ ‏‮reports‬‏}many{{numNavigation} ‏‮navigation‬‏ ‏‮reports‬‏}other{{numNavigation} ‏‮navigation‬‏ ‏‮reports‬‏}}"
+  },
+  "flow-report/src/i18n/ui-strings.js | passableAuditCount": {
+    "message": "{numPassableAudits,plural, =1{{numPassableAudits} ‏‮passable‬‏ ‏‮audit‬‏}zero{{numPassableAudits} ‏‮passable‬‏ ‏‮audits‬‏}two{{numPassableAudits} ‏‮passable‬‏ ‏‮audits‬‏}few{{numPassableAudits} ‏‮passable‬‏ ‏‮audits‬‏}many{{numPassableAudits} ‏‮passable‬‏ ‏‮audits‬‏}other{{numPassableAudits} ‏‮passable‬‏ ‏‮audits‬‏}}"
+  },
+  "flow-report/src/i18n/ui-strings.js | passedAuditCount": {
+    "message": "{numPassed,plural, =1{{numPassed} ‏‮audit‬‏ ‏‮passed‬‏}zero{{numPassed} ‏‮audits‬‏ ‏‮passed‬‏}two{{numPassed} ‏‮audits‬‏ ‏‮passed‬‏}few{{numPassed} ‏‮audits‬‏ ‏‮passed‬‏}many{{numPassed} ‏‮audits‬‏ ‏‮passed‬‏}other{{numPassed} ‏‮audits‬‏ ‏‮passed‬‏}}"
   },
   "flow-report/src/i18n/ui-strings.js | ratingAverage": {
     "message": "‏‮Average‬‏"
@@ -95,6 +110,9 @@
   "flow-report/src/i18n/ui-strings.js | snapshotReport": {
     "message": "‏‮Snapshot‬‏ ‏‮report‬‏"
   },
+  "flow-report/src/i18n/ui-strings.js | snapshotReportCount": {
+    "message": "{numSnapshot,plural, =1{{numSnapshot} ‏‮snapshot‬‏ ‏‮report‬‏}zero{{numSnapshot} ‏‮snapshot‬‏ ‏‮reports‬‏}two{{numSnapshot} ‏‮snapshot‬‏ ‏‮reports‬‏}few{{numSnapshot} ‏‮snapshot‬‏ ‏‮reports‬‏}many{{numSnapshot} ‏‮snapshot‬‏ ‏‮reports‬‏}other{{numSnapshot} ‏‮snapshot‬‏ ‏‮reports‬‏}}"
+  },
   "flow-report/src/i18n/ui-strings.js | summary": {
     "message": "‏‮Summary‬‏"
   },
@@ -106,6 +124,9 @@
   },
   "flow-report/src/i18n/ui-strings.js | timespanReport": {
     "message": "‏‮Timespan‬‏ ‏‮report‬‏"
+  },
+  "flow-report/src/i18n/ui-strings.js | timespanReportCount": {
+    "message": "{numTimespan,plural, =1{{numTimespan} ‏‮timespan‬‏ ‏‮report‬‏}zero{{numTimespan} ‏‮timespan‬‏ ‏‮reports‬‏}two{{numTimespan} ‏‮timespan‬‏ ‏‮reports‬‏}few{{numTimespan} ‏‮timespan‬‏ ‏‮reports‬‏}many{{numTimespan} ‏‮timespan‬‏ ‏‮reports‬‏}other{{numTimespan} ‏‮timespan‬‏ ‏‮reports‬‏}}"
   },
   "flow-report/src/i18n/ui-strings.js | title": {
     "message": "‏‮Lighthouse‬‏ ‏‮User‬‏ ‏‮Flow‬‏ ‏‮Report‬‏"
@@ -1740,7 +1761,7 @@
     "message": "‏‮These‬‏ ‏‮checks‬‏ ‏‮are‬‏ ‏‮required‬‏ ‏‮by‬‏ ‏‮the‬‏ ‏‮baseline‬‏ [‏‮PWA‬‏ ‏‮Checklist‬‏](https://developers.google.com/web/progressive-web-apps/checklist) ‏‮but‬‏ ‏‮are‬‏ ‏‮not‬‏ ‏‮automatically‬‏ ‏‮checked‬‏ ‏‮by‬‏ ‏‮Lighthouse‬‏. ‏‮They‬‏ ‏‮do‬‏ ‏‮not‬‏ ‏‮affect‬‏ ‏‮your‬‏ ‏‮score‬‏ ‏‮but‬‏ ‏‮it‬‏'‏‮s‬‏ ‏‮important‬‏ ‏‮that‬‏ ‏‮you‬‏ ‏‮verify‬‏ ‏‮them‬‏ ‏‮manually‬‏."
   },
   "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
-    "message": "‏‮Progressive‬‏ ‏‮Web‬‏ ‏‮App‬‏"
+    "message": "‏‮PWA‬‏"
   },
   "lighthouse-core/config/default-config.js | pwaInstallableGroupTitle": {
     "message": "‏‮Installable‬‏"
@@ -2042,30 +2063,6 @@
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "‏‮The‬‏ ‏‮URL‬‏ ‏‮you‬‏ ‏‮have‬‏ ‏‮provided‬‏ ‏‮appears‬‏ ‏‮to‬‏ ‏‮be‬‏ ‏‮invalid‬‏."
   },
-  "treemap/app/src/util.js | allLabel": {
-    "message": "‏‮All‬‏"
-  },
-  "treemap/app/src/util.js | allScriptsDropdownLabel": {
-    "message": "‏‮All‬‏ ‏‮Scripts‬‏"
-  },
-  "treemap/app/src/util.js | coverageColumnName": {
-    "message": "‏‮Coverage‬‏"
-  },
-  "treemap/app/src/util.js | duplicateModulesLabel": {
-    "message": "‏‮Duplicate‬‏ ‏‮Modules‬‏"
-  },
-  "treemap/app/src/util.js | resourceBytesLabel": {
-    "message": "‏‮Resource‬‏ ‏‮Bytes‬‏"
-  },
-  "treemap/app/src/util.js | tableColumnName": {
-    "message": "‏‮Name‬‏"
-  },
-  "treemap/app/src/util.js | toggleTableButtonLabel": {
-    "message": "‏‮Toggle‬‏ ‏‮Table‬‏"
-  },
-  "treemap/app/src/util.js | unusedBytesLabel": {
-    "message": "‏‮Unused‬‏ ‏‮Bytes‬‏"
-  },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "‏‮For‬‏ ‏‮animated‬‏ ‏‮content‬‏, ‏‮use‬‏ [`amp-anim`](https://amp.dev/documentation/components/amp-anim/) ‏‮to‬‏ ‏‮minimize‬‏ ‏‮CPU‬‏ ‏‮usage‬‏ ‏‮when‬‏ ‏‮the‬‏ ‏‮content‬‏ ‏‮is‬‏ ‏‮offscreen‬‏."
   },
@@ -2333,6 +2330,9 @@
   "report/renderer/util.js | calculatorLink": {
     "message": "‏‮See‬‏ ‏‮calculator‬‏."
   },
+  "report/renderer/util.js | collapseView": {
+    "message": "‏‮Collapse‬‏ ‏‮view‬‏"
+  },
   "report/renderer/util.js | crcInitialNavigation": {
     "message": "‏‮Initial‬‏ ‏‮Navigation‬‏"
   },
@@ -2369,8 +2369,14 @@
   "report/renderer/util.js | errorMissingAuditInfo": {
     "message": "‏‮Report‬‏ ‏‮error‬‏: ‏‮no‬‏ ‏‮audit‬‏ ‏‮information‬‏"
   },
+  "report/renderer/util.js | expandView": {
+    "message": "‏‮Expand‬‏ ‏‮view‬‏"
+  },
   "report/renderer/util.js | footerIssue": {
     "message": "‏‮File‬‏ ‏‮an‬‏ ‏‮issue‬‏"
+  },
+  "report/renderer/util.js | hide": {
+    "message": "‏‮Hide‬‏"
   },
   "report/renderer/util.js | labDataTitle": {
     "message": "‏‮Lab‬‏ ‏‮Data‬‏"
@@ -2392,6 +2398,12 @@
   },
   "report/renderer/util.js | passedAuditsGroupTitle": {
     "message": "‏‮Passed‬‏ ‏‮audits‬‏"
+  },
+  "report/renderer/util.js | runtimeAnalysisWindow": {
+    "message": "‏‮Initial‬‏ ‏‮page‬‏ ‏‮load‬‏"
+  },
+  "report/renderer/util.js | runtimeCustom": {
+    "message": "‏‮Custom‬‏ ‏‮throttling‬‏"
   },
   "report/renderer/util.js | runtimeDesktopEmulation": {
     "message": "‏‮Emulated‬‏ ‏‮Desktop‬‏"
@@ -2420,8 +2432,20 @@
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "‏‮User‬‏ ‏‮agent‬‏ (‏‮network‬‏)"
   },
+  "report/renderer/util.js | runtimeSingleLoad": {
+    "message": "‏‮Single‬‏ ‏‮page‬‏ ‏‮load‬‏"
+  },
+  "report/renderer/util.js | runtimeSingleLoadTooltip": {
+    "message": "‏‮This‬‏ ‏‮data‬‏ ‏‮is‬‏ ‏‮taken‬‏ ‏‮from‬‏ ‏‮a‬‏ ‏‮single‬‏ ‏‮page‬‏ ‏‮load‬‏, ‏‮as‬‏ ‏‮opposed‬‏ ‏‮to‬‏ ‏‮field‬‏ ‏‮data‬‏ ‏‮summarizing‬‏ ‏‮many‬‏ ‏‮sessions‬‏."
+  },
+  "report/renderer/util.js | runtimeSlow4g": {
+    "message": "‏‮Slow‬‏ 4‏‮G‬‏ ‏‮throttling‬‏"
+  },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "‏‮Unknown‬‏"
+  },
+  "report/renderer/util.js | show": {
+    "message": "‏‮Show‬‏"
   },
   "report/renderer/util.js | showRelevantAudits": {
     "message": "‏‮Show‬‏ ‏‮audits‬‏ ‏‮relevant‬‏ ‏‮to‬‏:"
@@ -2452,5 +2476,29 @@
   },
   "report/renderer/util.js | warningHeader": {
     "message": "‏‮Warnings‬‏: "
+  },
+  "treemap/app/src/util.js | allLabel": {
+    "message": "‏‮All‬‏"
+  },
+  "treemap/app/src/util.js | allScriptsDropdownLabel": {
+    "message": "‏‮All‬‏ ‏‮Scripts‬‏"
+  },
+  "treemap/app/src/util.js | coverageColumnName": {
+    "message": "‏‮Coverage‬‏"
+  },
+  "treemap/app/src/util.js | duplicateModulesLabel": {
+    "message": "‏‮Duplicate‬‏ ‏‮Modules‬‏"
+  },
+  "treemap/app/src/util.js | resourceBytesLabel": {
+    "message": "‏‮Resource‬‏ ‏‮Bytes‬‏"
+  },
+  "treemap/app/src/util.js | tableColumnName": {
+    "message": "‏‮Name‬‏"
+  },
+  "treemap/app/src/util.js | toggleTableButtonLabel": {
+    "message": "‏‮Toggle‬‏ ‏‮Table‬‏"
+  },
+  "treemap/app/src/util.js | unusedBytesLabel": {
+    "message": "‏‮Unused‬‏ ‏‮Bytes‬‏"
   }
 }

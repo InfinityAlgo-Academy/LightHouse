@@ -16,21 +16,22 @@ import {Topbar} from './topbar';
 import {Header} from './header';
 import {I18nProvider} from './i18n/i18n';
 
+function getAnchorElement(hashState: LH.FlowResult.HashState|null) {
+  if (!hashState || !hashState.anchor) return null;
+  return document.getElementById(hashState.anchor);
+}
+
 const Content: FunctionComponent = () => {
   const hashState = useHashState();
   const ref = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
-    if (hashState && hashState.anchor) {
-      const el = document.getElementById(hashState.anchor);
-      if (el) {
-        el.scrollIntoView({behavior: 'smooth'});
-        return;
-      }
+    const el = getAnchorElement(hashState);
+    if (el) {
+      el.scrollIntoView();
+    } else if (ref.current) {
+      ref.current.scrollTop = 0;
     }
-
-    // Scroll to top no anchor is found.
-    if (ref.current) ref.current.scrollTop = 0;
   }, [hashState]);
 
   return (

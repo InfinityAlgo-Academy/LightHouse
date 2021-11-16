@@ -48,7 +48,13 @@ describe('emulation', () => {
       await emulation.emulate(driver, getSettings('mobile', metrics.mobile));
 
       const uaArgs = connectionStub.sendCommand.findInvocation('Network.setUserAgentOverride');
-      expect(uaArgs).toMatchObject({userAgent: constants.userAgents.mobile});
+      expect(uaArgs).toMatchObject({
+        userAgent: constants.userAgents.mobile,
+        userAgentMetadata: {
+          mobile: true,
+          platform: 'Android',
+        },
+      });
 
       const emulateArgs = connectionStub.sendCommand.findInvocation(
         'Emulation.setDeviceMetricsOverride'
@@ -60,7 +66,13 @@ describe('emulation', () => {
       await emulation.emulate(driver, getSettings('desktop', metrics.desktop));
 
       const uaArgs = connectionStub.sendCommand.findInvocation('Network.setUserAgentOverride');
-      expect(uaArgs).toMatchObject({userAgent: constants.userAgents.desktop});
+      expect(uaArgs).toMatchObject({
+        userAgent: constants.userAgents.desktop,
+        userAgentMetadata: {
+          mobile: false,
+          platform: 'macOS',
+        },
+      });
 
       const emulateArgs = connectionStub.sendCommand.findInvocation(
         'Emulation.setDeviceMetricsOverride'
@@ -134,6 +146,42 @@ describe('emulation', () => {
         deviceScaleFactor: metrics.desktop.deviceScaleFactor,
       });
       expect(emulateArgs).toMatchObject({mobile: false});
+    });
+
+    it('custom chrome UA', async () => {
+      const settings = getSettings('desktop', metrics.desktop, false);
+      const chromeTablet = 'Mozilla/5.0 (Linux; Android 4.3; Nexus 7 Build/JSS15Q) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/%s Safari/537.36'; // eslint-disable-line max-len
+      settings.emulatedUserAgent = chromeTablet;
+      await emulation.emulate(driver, settings);
+
+      const uaArgs = connectionStub.sendCommand.findInvocation('Network.setUserAgentOverride');
+      expect(uaArgs).toMatchObject({
+        userAgent: chromeTablet,
+        userAgentMetadata: {
+          mobile: false,
+          // Incorrect. See TODO in emulation.js
+          platform: 'macOS',
+          architecture: 'x86',
+        },
+      });
+    });
+
+
+    it('custom non-chrome UA', async () => {
+      const settings = getSettings('desktop', metrics.desktop, false);
+      const FFdesktopUA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:70.0) Gecko/20100101 Firefox/70.0'; // eslint-disable-line max-len
+      settings.emulatedUserAgent = FFdesktopUA;
+      await emulation.emulate(driver, settings);
+
+      const uaArgs = connectionStub.sendCommand.findInvocation('Network.setUserAgentOverride');
+      expect(uaArgs).toMatchObject({
+        userAgent: FFdesktopUA,
+        userAgentMetadata: {
+          mobile: false,
+          platform: 'macOS',
+          architecture: 'x86',
+        },
+      });
     });
   });
 });

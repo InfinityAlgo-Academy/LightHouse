@@ -3,7 +3,7 @@
     "message": "அனைத்து அறிக்கைகளும்"
   },
   "flow-report/src/i18n/ui-strings.js | categories": {
-    "message": "Categories"
+    "message": "வகைகள்"
   },
   "flow-report/src/i18n/ui-strings.js | categoryAccessibility": {
     "message": "அணுகல்தன்மை"
@@ -24,40 +24,46 @@
     "message": "டெஸ்க்டாப்"
   },
   "flow-report/src/i18n/ui-strings.js | helpDialogTitle": {
-    "message": "Understanding the Lighthouse Flow Report"
+    "message": "Lighthouse செயல்முறை அறிக்கையை அறிந்துகொள்ளுதல்"
   },
   "flow-report/src/i18n/ui-strings.js | helpLabel": {
-    "message": "Understanding Flows"
+    "message": "செயல்முறைகளை அறிந்துகொள்க"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionNavigation": {
-    "message": "Use Navigation reports to..."
+    "message": "வழிசெலுத்துதல் குறித்த அறிக்கைகளை இவற்றுக்குப் பயன்படுத்து..."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionSnapshot": {
-    "message": "Use Snapshot reports to..."
+    "message": "ஸ்னாப்ஷாட் குறித்த அறிக்கைகளை இவற்றுக்குப் பயன்படுத்து..."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionTimespan": {
-    "message": "Use Timespan reports to..."
+    "message": "கால அளவு குறித்த அறிக்கைகளை இவற்றுக்குப் பயன்படுத்து..."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation1": {
-    "message": "Obtain a Lighthouse Performance score."
+    "message": "Lighthouseஸின் செயல்திறன் ஸ்கோரைப் பெறுதல்."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation2": {
-    "message": "Measure page load Performance metrics such as Largest Contentful Paint and Speed Index."
+    "message": "பெரிய பகுதியைக் காண்பிக்கும் நேரம், ஸ்பீடு இண்டெக்ஸ் போன்ற ‘பக்க ஏற்றச் செயல்திறன் அளவீடுகளை’ அளவிடுதல்."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation3": {
-    "message": "Assess Progressive Web App capabilities."
+    "message": "மேம்பட்ட இணைய ஆப்ஸின் திறன்களை மதிப்பாய்வு செய்தல்."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseSnapshot1": {
-    "message": "Find accessibility issues in single page applications or complex forms."
+    "message": "ஒற்றைப் பக்க ஆப்ஸ், சிக்கலான படிவங்கள் போன்றவற்றில் உள்ள அணுகல்தன்மைச் சிக்கல்களைக் கண்டறிதல்."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseSnapshot2": {
-    "message": "Evaluate best practices of menus and UI elements hidden behind interaction."
+    "message": "செயல்பாட்டிற்குப் பின்னால் மறைக்கப்பட்டுள்ள மெனுக்கள், UI உறுப்புகள் ஆகியவற்றின் சிறந்த நடைமுறைகளை மதிப்பாய்வு செய்தல்."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan1": {
-    "message": "Measure layout shifts and JavaScript execution time on a series of interactions."
+    "message": "தொடர் செயல்பாடுகளில் தளவமைப்பு மாற்றங்கள், JavaScript செயல்பாட்டு நேரம் ஆகியவற்றை அளவிடுதல்."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan2": {
-    "message": "Discover performance opportunities to improve the experience for long-lived pages and single-page applications."
+    "message": "நீண்ட நேரம் திறந்திருக்கும் பக்கங்கள், ஒற்றைப் பக்க ஆப்ஸ் ஆகியவை தரும் பயனர் அனுபவத்தை மேம்படுத்தும் வகையில் செயல்திறன் வாய்ப்புகளைக் கண்டறிதல்."
+  },
+  "flow-report/src/i18n/ui-strings.js | highestImpact": {
+    "message": "அதிகளவு தாக்கத்தை ஏற்படுத்தியவை"
+  },
+  "flow-report/src/i18n/ui-strings.js | informativeAuditCount": {
+    "message": "{numInformative,plural, =1{தகவல்பூர்வமான தணிக்கை: {numInformative}}other{தகவல்பூர்வமான தணிக்கைகள்: {numInformative}}}"
   },
   "flow-report/src/i18n/ui-strings.js | mobile": {
     "message": "மொபைல்"
@@ -66,10 +72,19 @@
     "message": "பக்க ஏற்றம்"
   },
   "flow-report/src/i18n/ui-strings.js | navigationLongDescription": {
-    "message": "Navigation reports analyze a single page load, exactly like the original Lighthouse reports."
+    "message": "அசல் Lighthouse அறிக்கைகளைப் போலவே வழிசெலுத்துதல் அறிக்கைகளும் ஒற்றைப் பக்க ஏற்றத்தைப் பகுப்பாய்வு செய்யும்."
   },
   "flow-report/src/i18n/ui-strings.js | navigationReport": {
     "message": "வழிசெலுத்துதல் அறிக்கை"
+  },
+  "flow-report/src/i18n/ui-strings.js | navigationReportCount": {
+    "message": "{numNavigation,plural, =1{வழிசெலுத்துதல் குறித்த அறிக்கை: {numNavigation}}other{வழிசெலுத்துதல் குறித்த அறிக்கைகள்: {numNavigation}}}"
+  },
+  "flow-report/src/i18n/ui-strings.js | passableAuditCount": {
+    "message": "{numPassableAudits,plural, =1{தேர்ச்சி பெறக்கூடிய தணிக்கை: {numPassableAudits}}other{தேர்ச்சி பெறக்கூடிய தணிக்கைகள்: {numPassableAudits}}}"
+  },
+  "flow-report/src/i18n/ui-strings.js | passedAuditCount": {
+    "message": "{numPassed,plural, =1{{numPassed} தணிக்கை தேர்ச்சி பெற்றது}other{{numPassed} தணிக்கைகள் தேர்ச்சி பெற்றன}}"
   },
   "flow-report/src/i18n/ui-strings.js | ratingAverage": {
     "message": "சராசரி"
@@ -84,16 +99,19 @@
     "message": "நன்று"
   },
   "flow-report/src/i18n/ui-strings.js | save": {
-    "message": "Save"
+    "message": "சேமி"
   },
   "flow-report/src/i18n/ui-strings.js | snapshotDescription": {
     "message": "படமெடுக்கப்பட்ட பக்கத்தின் நிலை"
   },
   "flow-report/src/i18n/ui-strings.js | snapshotLongDescription": {
-    "message": "Snapshot reports analyze the page in a particular state, typically after user interactions."
+    "message": "ஸ்னாப்ஷாட் அறிக்கைகள் ஒரு குறிப்பிட்ட நிலையில் பக்கத்தைப் பகுப்பாய்வு செய்யும். பெரும்பாலும் பயனரின் செயல்பாடுகளுக்குப் பிறகே பகுப்பாய்வு செய்யும்."
   },
   "flow-report/src/i18n/ui-strings.js | snapshotReport": {
     "message": "ஸ்னாப்ஷாட் அறிக்கை"
+  },
+  "flow-report/src/i18n/ui-strings.js | snapshotReportCount": {
+    "message": "{numSnapshot,plural, =1{ஸ்னாப்ஷாட் குறித்த அறிக்கை: {numSnapshot}}other{ஸ்னாப்ஷாட் குறித்த அறிக்கைகள்: {numSnapshot}}}"
   },
   "flow-report/src/i18n/ui-strings.js | summary": {
     "message": "சுருக்க விவரம்"
@@ -102,10 +120,13 @@
     "message": "பயனர் செயல்பாடுகள்"
   },
   "flow-report/src/i18n/ui-strings.js | timespanLongDescription": {
-    "message": "Timespan reports analyze an arbitrary period of time, typically containing user interactions."
+    "message": "கால அளவு குறித்த அறிக்கைகள் தன்னிச்சையான கால அளவைப் பகுப்பாய்வு செய்யும். பெரும்பாலும், இந்தக் கால அளவில் பயனரின் செயல்பாடுகள் இடம்பெற்றிருக்கும்."
   },
   "flow-report/src/i18n/ui-strings.js | timespanReport": {
     "message": "கால அளவு குறித்த அறிக்கை"
+  },
+  "flow-report/src/i18n/ui-strings.js | timespanReportCount": {
+    "message": "{numTimespan,plural, =1{கால அளவு குறித்த அறிக்கை: {numTimespan}}other{கால அளவு குறித்த அறிக்கைகள்: {numTimespan}}}"
   },
   "flow-report/src/i18n/ui-strings.js | title": {
     "message": "Lighthouseஸில் பயனர் செல்லும் பக்கங்களின் வரிசை குறித்த அறிக்கை"
@@ -1740,7 +1761,7 @@
     "message": "பேஸ்லைன் [PWA சரிபார்ப்புப் பட்டியலுக்கு ](https://developers.google.com/web/progressive-web-apps/checklist) இந்தச் சரிபார்ப்புகள் தேவை, இருப்பினும் இவற்றை Lighthouse தானாகச் சரிபார்ப்பதில்லை. அவை உங்களின் ஸ்கோரில் பாதிப்பை ஏற்படுத்தாது, இருப்பினும் நீங்களாகவே அவற்றைச் சரிபார்ப்பது முக்கியமாகும்."
   },
   "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
-    "message": "நவீன இணைய ஆப்ஸ்"
+    "message": "PWA"
   },
   "lighthouse-core/config/default-config.js | pwaInstallableGroupTitle": {
     "message": "நிறுவக்கூடியவை"
@@ -2042,30 +2063,6 @@
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "நீங்கள் அளித்துள்ள URL செல்லாததெனத் தோன்றுகிறது."
   },
-  "treemap/app/src/util.js | allLabel": {
-    "message": "எல்லாம்"
-  },
-  "treemap/app/src/util.js | allScriptsDropdownLabel": {
-    "message": "எல்லா ஸ்கிரிப்ட்டுகளும்"
-  },
-  "treemap/app/src/util.js | coverageColumnName": {
-    "message": "கவரேஜ்"
-  },
-  "treemap/app/src/util.js | duplicateModulesLabel": {
-    "message": "நகல் மாடியூல்கள்"
-  },
-  "treemap/app/src/util.js | resourceBytesLabel": {
-    "message": "ஃபைலின் அளவு (பைட்டுகள்)"
-  },
-  "treemap/app/src/util.js | tableColumnName": {
-    "message": "பெயர்"
-  },
-  "treemap/app/src/util.js | toggleTableButtonLabel": {
-    "message": "டேபிளைக் காட்டு/மறை"
-  },
-  "treemap/app/src/util.js | unusedBytesLabel": {
-    "message": "பயன்படுத்தப்படாத பைட்டுகள்"
-  },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "அனிமேஷன் செய்யப்பட்ட உள்ளடக்கமாக இருந்தால், உள்ளடக்கம் திரைக்கு வெளியில் இருக்கும்போது CPU உபயோகத்தைக் குறைக்கும் வகையில் [`amp-anim`](https://amp.dev/documentation/components/amp-anim/) காம்பனென்ட்டைப் பயன்படுத்தவும்."
   },
@@ -2333,6 +2330,9 @@
   "report/renderer/util.js | calculatorLink": {
     "message": "கால்குலேட்டரைக் காட்டு."
   },
+  "report/renderer/util.js | collapseView": {
+    "message": "சுருக்கு"
+  },
   "report/renderer/util.js | crcInitialNavigation": {
     "message": "துவக்க நெட்வொர்க் கோரிக்கை"
   },
@@ -2369,8 +2369,14 @@
   "report/renderer/util.js | errorMissingAuditInfo": {
     "message": "அறிக்கைப் பிழை: தணிக்கைத் தகவல் இல்லை"
   },
+  "report/renderer/util.js | expandView": {
+    "message": "விரிவாக்கு"
+  },
   "report/renderer/util.js | footerIssue": {
     "message": "சிக்கலைப் புகார் செய்க"
+  },
+  "report/renderer/util.js | hide": {
+    "message": "மறை"
   },
   "report/renderer/util.js | labDataTitle": {
     "message": "ஆய்வகத் தரவு"
@@ -2392,6 +2398,12 @@
   },
   "report/renderer/util.js | passedAuditsGroupTitle": {
     "message": "தேர்ச்சி பெற்ற தணிக்கைகள்"
+  },
+  "report/renderer/util.js | runtimeAnalysisWindow": {
+    "message": "பக்கத்தின் முதற்கட்ட ஏற்றம்"
+  },
+  "report/renderer/util.js | runtimeCustom": {
+    "message": "பிரத்தியேகமான த்ராட்லிங்"
   },
   "report/renderer/util.js | runtimeDesktopEmulation": {
     "message": "மாதிரி இயக்கப்பட்ட டெஸ்க்டாப்"
@@ -2420,8 +2432,20 @@
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "பயனர் ஏஜெண்ட் (நெட்வொர்க்)"
   },
+  "report/renderer/util.js | runtimeSingleLoad": {
+    "message": "ஒற்றைப் பக்க ஏற்றம்"
+  },
+  "report/renderer/util.js | runtimeSingleLoadTooltip": {
+    "message": "ஒன்றுக்கும் மேற்பட்ட அமர்வுகளைப் பற்றிய சுருக்கவிவரத்தை வழங்கும் புலத் தரவுக்குப் பதிலாக ஒற்றைப் பக்கம் ஏற்றப்படும் செயலாக்கத்தின் மூலம் இந்தத் தரவு பெறப்பட்டது."
+  },
+  "report/renderer/util.js | runtimeSlow4g": {
+    "message": "வேகம் குறைவான 4G த்ராட்லிங்"
+  },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "தெரியவில்லை"
+  },
+  "report/renderer/util.js | show": {
+    "message": "காட்டு"
   },
   "report/renderer/util.js | showRelevantAudits": {
     "message": "இதற்குத் தொடர்புடைய தணிக்கைகளைக் காட்டு:"
@@ -2452,5 +2476,29 @@
   },
   "report/renderer/util.js | warningHeader": {
     "message": "எச்சரிக்கைகள்: "
+  },
+  "treemap/app/src/util.js | allLabel": {
+    "message": "எல்லாம்"
+  },
+  "treemap/app/src/util.js | allScriptsDropdownLabel": {
+    "message": "எல்லா ஸ்கிரிப்ட்டுகளும்"
+  },
+  "treemap/app/src/util.js | coverageColumnName": {
+    "message": "கவரேஜ்"
+  },
+  "treemap/app/src/util.js | duplicateModulesLabel": {
+    "message": "நகல் மாடியூல்கள்"
+  },
+  "treemap/app/src/util.js | resourceBytesLabel": {
+    "message": "ஃபைலின் அளவு (பைட்டுகள்)"
+  },
+  "treemap/app/src/util.js | tableColumnName": {
+    "message": "பெயர்"
+  },
+  "treemap/app/src/util.js | toggleTableButtonLabel": {
+    "message": "டேபிளைக் காட்டு/மறை"
+  },
+  "treemap/app/src/util.js | unusedBytesLabel": {
+    "message": "பயன்படுத்தப்படாத பைட்டுகள்"
   }
 }
