@@ -13,6 +13,7 @@ import Sentry from '../../lib/sentry.js';
 
 jest.mock('raven');
 
+// Must mock raven it is imported.
 let raven;
 beforeAll(async () => {
   raven = (await import('raven')).default;
