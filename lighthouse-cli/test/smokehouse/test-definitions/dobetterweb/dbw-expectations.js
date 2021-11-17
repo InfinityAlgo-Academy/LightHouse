@@ -20,6 +20,7 @@ const expectations = {
     length: 28,
   },
   artifacts: {
+    BenchmarkIndex: '<10000',
     HostFormFactor: 'desktop',
     Stacks: [{
       id: 'jquery',
