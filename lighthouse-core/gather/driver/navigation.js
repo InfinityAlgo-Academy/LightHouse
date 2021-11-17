@@ -129,8 +129,7 @@ async function gotoURL(driver, url, options) {
     await waitForUserToContinue(driver);
   }
 
-  // TODO: navigation-test fails for some reason without this ...
-  if (!process.env.JEST_WORKER_ID) log.timeEnd(status);
+  log.timeEnd(status);
   return {
     finalUrl,
     warnings: getNavigationWarnings({timedOut, finalUrl, requestedUrl: url}),

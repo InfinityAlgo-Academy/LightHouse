@@ -20,7 +20,6 @@ function resolveModulePath(packageName) {
 }
 
 /**
- * Commonjs equivalent of `require.resolve`.
  * @param {ImportMeta} importMeta
  */
 function createCommonjsRefs(importMeta) {

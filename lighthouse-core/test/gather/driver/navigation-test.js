@@ -7,6 +7,7 @@
 
 /* eslint-env jest */
 
+import 'lighthouse-logger'; // Needed otherwise `log.timeEnd` errors in navigation.js inexplicably.
 import {jest} from '@jest/globals';
 import {createMockDriver, mockTargetManagerModule} from '../../fraggle-rock/gather/mock-driver.js';
 import {
