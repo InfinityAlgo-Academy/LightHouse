@@ -7,7 +7,7 @@
 
 const path = require('path');
 const expect = require('expect');
-const {SnapshotState, toMatchSnapshot} = require('jest-snapshot');
+const {SnapshotState, toMatchSnapshot, toMatchInlineSnapshot} = require('jest-snapshot');
 
 module.exports = {
   mochaHooks: {
@@ -71,12 +71,29 @@ function makeTestTitle(test) {
 expect.extend({
   toMatchSnapshot(actual) {
     const test = global.mochaCurrentTest;
+    const title = makeTestTitle(test);
+    const result = toMatchSnapshotWrapper(actual, test.file, title);
+    return result;
+  },
+  toMatchInlineSnapshot(actual, expected) {
+    const test = global.mochaCurrentTest;
+    const title = makeTestTitle(test);
+    const snapshotState = new SnapshotState('', {
+      updateSnapshot: process.env.SNAPSHOT_UPDATE ? 'all' : 'new',
+      prettierPath: '',
+      snapshotFormat: {},
+    });
+    const matcher = toMatchInlineSnapshot.bind({snapshotState, title});
+    const result = matcher(actual, expected);
 
-    // would contain the full path to test file
-    const testFile = test.file;
-    const testTitle = makeTestTitle(test);
+    for (const snapshot of snapshotState._inlineSnapshots) {
+      // Jest adds `file://` to paths, and uses its own fs module to read things,
+      // falling be to fs.readFileSync if not defined. node `fs` does not support
+      // protocols in the path specifier, so we remove it here.
+      snapshot.frame.file = snapshot.frame.file.replace('file://', '');
+    }
+    snapshotState.save();
 
-    const result = toMatchSnapshotWrapper(actual, testFile, testTitle);
     return result;
   },
 });
