@@ -10,7 +10,7 @@ module.exports = {
   testEnvironment: 'node',
   testMatch: [
     '**/lighthouse-core/**/*-test.js',
-    '**/lighthouse-cli/**/*-test.js',
+    // '**/lighthouse-cli/**/*-test.js',
     '**/report/**/*-test.js',
     '**/lighthouse-core/test/fraggle-rock/**/*-test-pptr.js',
     '**/treemap/**/*-test.js',
