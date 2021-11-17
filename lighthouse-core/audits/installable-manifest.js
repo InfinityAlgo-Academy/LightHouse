@@ -21,7 +21,7 @@ const UIStrings = {
   'columnValue': 'Failure reason',
   /**
    * @description [ICU Syntax] Label for an audit identifying the number of installability errors found in the page.
-  */
+   */
   'displayValue': `{itemCount, plural,
     =1 {1 reason}
     other {# reasons}
@@ -56,9 +56,9 @@ const UIStrings = {
   'manifest-missing-suitable-icon': `Manifest does not contain a suitable icon - PNG, SVG or WebP format of at least {value0}\xa0px is required, the sizes attribute must be set, and the purpose attribute, if set, must include "any".`,
 
   /**
-  * @description Error message explaining that the manifest does not supply an icon of the correct format.
-  * @example {192} value0
-  */
+   * @description Error message explaining that the manifest does not supply an icon of the correct format.
+   * @example {192} value0
+   */
   'no-acceptable-icon': `No supplied icon is at least {value0}\xa0px square in PNG, SVG or WebP format, with the purpose attribute unset or set to "any"`,
 
   /** Error message explaining that the icon could not be downloaded. */
@@ -95,6 +95,8 @@ const UIStrings = {
   'warn-not-offline-capable': `Page does not work offline. The page will not be regarded as installable after Chrome 93, stable release August 2021.`,
   /** Error message explaining that Lighthouse failed while detecting a service worker, and directing the user to try again in a new Chrome. */
   'protocol-timeout': `Lighthouse could not determine if there was a service worker. Please try with a newer version of Chrome.`,
+  /** Message logged when the web app has been uninstalled o desktop, signalling that the install banner state is being reset. */
+  'pipeline-restarted': 'PWA has been uninstalled and installability checks resetting.',
 };
 /* eslint-enable max-len */
 
@@ -143,6 +145,11 @@ class InstallableManifest extends Audit {
 
       if (err.errorId === 'warn-not-offline-capable') {
         warnings.push(str_(UIStrings[err.errorId]));
+        continue;
+      }
+
+      // Filter out errorId 'pipeline-restarted' since it only applies when the PWA is uninstalled.
+      if (err.errorId === 'pipeline-restarted') {
         continue;
       }
 
