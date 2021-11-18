@@ -9,8 +9,28 @@ const path = require('path');
 const expect = require('expect');
 const {SnapshotState, toMatchSnapshot, toMatchInlineSnapshot} = require('jest-snapshot');
 
-/** @type {SnapshotState['prototype']} */
-let snapshotState;
+/** @type {Map<string, SnapshotState['prototype']>} */
+const snapshotStatesByTestFile = new Map();
+
+/**
+ * @param {string} testFile
+ */
+function getSnapshotState(testFile) {
+  // For every test file, persist the same snapshot state object so there is
+  // not a read/write per snapshot access/change, but one per file.
+  let snapshotState = snapshotStatesByTestFile.get(testFile);
+  if (snapshotState) return snapshotState;
+
+  const snapshotDir = path.join(path.dirname(testFile), '__snapshots__');
+  const snapshotFile = path.join(snapshotDir, path.basename(testFile) + '.snap');
+  snapshotState = new SnapshotState(snapshotFile, {
+    updateSnapshot: process.env.SNAPSHOT_UPDATE ? 'all' : 'new',
+    prettierPath: '',
+    snapshotFormat: {},
+  });
+  snapshotStatesByTestFile.set(testFile, snapshotState);
+  return snapshotState;
+}
 
 module.exports = {
   mochaHooks: {
@@ -18,39 +38,28 @@ module.exports = {
       // Needed so `expect` extension method can access information about the current test.
       global.mochaCurrentTest = this.currentTest;
     },
-    beforeAll() {
-      // For every test file, persist the same snapshot state object so there is
-      // not a read/write per snapshot access/change, but one per file.
-      const testFile = this.test.parent.suites[0].file;
-      const snapshotDir = path.join(path.dirname(testFile), '__snapshots__');
-      const snapshotFile = path.join(snapshotDir, path.basename(testFile) + '.snap');
-      snapshotState = new SnapshotState(snapshotFile, {
-        updateSnapshot: process.env.SNAPSHOT_UPDATE ? 'all' : 'new',
-        prettierPath: '',
-        snapshotFormat: {},
-      });
-    },
     afterAll() {
-      // Jest adds `file://` to inline snapshot paths, and uses its own fs module to read things,
-      // falling back to fs.readFileSync if not defined. node `fs` does not support
-      // protocols in the path specifier, so we remove it here.
-      for (const snapshot of snapshotState._inlineSnapshots) {
-        snapshot.frame.file = snapshot.frame.file.replace('file://', '');
-      }
+      for (const snapshotState of snapshotStatesByTestFile.values()) {
+        // Jest adds `file://` to inline snapshot paths, and uses its own fs module to read things,
+        // falling back to fs.readFileSync if not defined. node `fs` does not support
+        // protocols in the path specifier, so we remove it here.
+        for (const snapshot of snapshotState._inlineSnapshots) {
+          snapshot.frame.file = snapshot.frame.file.replace('file://', '');
+        }
 
-      snapshotState.save();
+        snapshotState.save();
+      }
     },
   },
 };
 
 /**
  * @param {*} actual
+ * @param {string} testFile
  * @param {string} testTitle
  */
-function toMatchSnapshotWrapper(actual, testTitle) {
-  // Bind the `toMatchSnapshot` to the object with snapshotState and
-  // currentTest name, as `toMatchSnapshot` expects it as it's `this`
-  // object members
+function toMatchSnapshotWrapper(actual, testFile, testTitle) {
+  const snapshotState = getSnapshotState(testFile);
   const matcher = toMatchSnapshot.bind({
     snapshotState,
     currentTestName: testTitle,
@@ -83,12 +92,13 @@ expect.extend({
   toMatchSnapshot(actual) {
     const test = global.mochaCurrentTest;
     const title = makeTestTitle(test);
-    const result = toMatchSnapshotWrapper(actual, title);
+    const result = toMatchSnapshotWrapper(actual, test.file, title);
     return result;
   },
   toMatchInlineSnapshot(actual, expected) {
     const test = global.mochaCurrentTest;
     const title = makeTestTitle(test);
+    const snapshotState = getSnapshotState(test.file);
     const matcher = toMatchInlineSnapshot.bind({snapshotState, title});
     const result = matcher(actual, expected);
     return result;
