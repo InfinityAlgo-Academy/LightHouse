@@ -28,12 +28,10 @@ limitations under the License.
 <body>
   <noscript>Lighthouse report requires JavaScript. Please enable.</noscript>
 
-  <main class="flow-vars lh-root lh-vars"><!-- report populated here --></main>
+  <main><!-- report populated here --></main>
 
   <script>window.__LIGHTHOUSE_FLOW_JSON__ = %%LIGHTHOUSE_FLOW_JSON%%;</script>
-  <script>%%LIGHTHOUSE_FLOW_JAVASCRIPT%%
-  __initLighthouseFlowReport__();
-  </script>
+  <script>%%LIGHTHOUSE_FLOW_JAVASCRIPT%%</script>
   <script>console.log('window.__LIGHTHOUSE_FLOW_JSON__', __LIGHTHOUSE_FLOW_JSON__);</script>
 </body>
 </html>

@@ -7,7 +7,6 @@
 import {FunctionComponent} from 'preact';
 import {useLayoutEffect, useRef, useState} from 'preact/hooks';
 
-import {ReportRendererProvider} from './wrappers/report-renderer';
 import {Sidebar} from './sidebar/sidebar';
 import {Summary} from './summary/summary';
 import {classNames, FlowResultContext, useHashState} from './util';
@@ -52,15 +51,13 @@ export const App: FunctionComponent<{flowResult: LH.FlowResult}> = ({flowResult}
   const [collapsed, setCollapsed] = useState(false);
   return (
     <FlowResultContext.Provider value={flowResult}>
-      <ReportRendererProvider>
-        <I18nProvider>
-          <div className={classNames('App', {'App--collapsed': collapsed})} data-testid="App">
-            <Topbar onMenuClick={() => setCollapsed(c => !c)} />
-            <Sidebar/>
-            <Content/>
-          </div>
-        </I18nProvider>
-      </ReportRendererProvider>
+      <I18nProvider>
+        <div className={classNames('App', {'App--collapsed': collapsed})} data-testid="App">
+          <Topbar onMenuClick={() => setCollapsed(c => !c)} />
+          <Sidebar/>
+          <Content/>
+        </div>
+      </I18nProvider>
     </FlowResultContext.Provider>
   );
 };

@@ -12,11 +12,9 @@ import {getFilenamePrefix} from '../../report/generator/file-namer';
 import {useLocalizedStrings} from './i18n/i18n';
 import {HamburgerIcon, InfoIcon} from './icons';
 import {useFlowResult} from './util';
-import {useReportRenderer} from './wrappers/report-renderer';
+import {saveFile} from '../../report/renderer/api';
 
-import type {DOM} from '../../report/renderer/dom';
-
-function saveHtml(flowResult: LH.FlowResult, dom: DOM) {
+function saveHtml(flowResult: LH.FlowResult) {
   const htmlStr = document.documentElement.outerHTML;
   const blob = new Blob([htmlStr], {type: 'text/html'});
 
@@ -24,7 +22,7 @@ function saveHtml(flowResult: LH.FlowResult, dom: DOM) {
   const name = flowResult.name.replace(/\s/g, '-');
   const filename = getFilenamePrefix(name, lhr.fetchTime);
 
-  dom.saveFile(blob, filename);
+  saveFile(blob, filename);
 }
 
 /* eslint-disable max-len */
@@ -78,7 +76,6 @@ const TopbarButton: FunctionComponent<{
 export const Topbar: FunctionComponent<{onMenuClick: JSX.MouseEventHandler<HTMLButtonElement>}> =
 ({onMenuClick}) => {
   const flowResult = useFlowResult();
-  const {dom} = useReportRenderer();
   const strings = useLocalizedStrings();
   const [showHelpDialog, setShowHelpDialog] = useState(false);
 
@@ -92,7 +89,7 @@ export const Topbar: FunctionComponent<{onMenuClick: JSX.MouseEventHandler<HTMLB
       </div>
       <div className="Topbar__title">{strings.title}</div>
       <TopbarButton
-        onClick={() => saveHtml(flowResult, dom)}
+        onClick={() => saveHtml(flowResult)}
         label="Button that saves the report as HTML"
       >{strings.save}</TopbarButton>
       <div style={{flexGrow: 1}} />

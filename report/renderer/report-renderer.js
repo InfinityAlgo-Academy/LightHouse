@@ -224,6 +224,7 @@ export class ReportRenderer {
           e.preventDefault();
           destEl.scrollIntoView();
         });
+        this._opts.onPageAnchorRendered?.(gaugeWrapperEl);
       }
 
 

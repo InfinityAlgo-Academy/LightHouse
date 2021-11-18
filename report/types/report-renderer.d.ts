@@ -17,6 +17,11 @@ declare module Renderer {
 
     /** Disable the topbar UI component */
     omitTopbar?: boolean;
+    /**
+     * Convert report anchor links to a different format.
+     * Flow report uses this to convert `#seo` to `#index=0&anchor=seo`.
+     */
+    onPageAnchorRendered?: (link: HTMLAnchorElement) => void;
   }
 }
 

@@ -5,11 +5,12 @@
  */
 
 import {jest} from '@jest/globals';
+import {render} from '@testing-library/preact';
 import {renderHook} from '@testing-library/preact-hooks';
 import {FunctionComponent} from 'preact';
 import {act} from 'preact/test-utils';
 
-import {FlowResultContext, useHashState} from '../src/util';
+import {FlowResultContext, useExternalRenderer, useHashState} from '../src/util';
 import {flowResult} from './sample-flow';
 
 let wrapper: FunctionComponent;
@@ -92,5 +93,41 @@ describe('useHashState', () => {
     const {result} = renderHook(() => useHashState(), {wrapper});
     expect(console.warn).toHaveBeenCalled();
     expect(result.current).toBeNull();
+  });
+});
+
+describe('useExternalRenderer', () => {
+  it('attaches DOM subtree of render callback', () => {
+    const Container: FunctionComponent = () => {
+      const ref = useExternalRenderer<HTMLDivElement>(() => {
+        const el = document.createElement('div');
+        el.textContent = 'Some text';
+        return el;
+      });
+      return <div ref={ref}/>;
+    };
+
+    const root = render(<Container/>);
+
+    expect(root.getByText('Some text')).toBeTruthy();
+  });
+
+  it('re-renders DOM subtree when input changes', () => {
+    const Container: FunctionComponent<{text: string}> = ({text}) => {
+      const ref = useExternalRenderer<HTMLDivElement>(() => {
+        const el = document.createElement('div');
+        el.textContent = text;
+        return el;
+      }, [text]);
+      return <div ref={ref}/>;
+    };
+
+    const root = render(<Container text="Some text"/>);
+
+    expect(root.getByText('Some text')).toBeTruthy();
+
+    root.rerender(<Container text="New text"/>);
+
+    expect(root.getByText('New text')).toBeTruthy();
   });
 });

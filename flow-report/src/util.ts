@@ -5,7 +5,7 @@
  */
 
 import {createContext} from 'preact';
-import {useContext, useEffect, useMemo, useState} from 'preact/hooks';
+import {useContext, useEffect, useLayoutEffect, useMemo, useRef, useState} from 'preact/hooks';
 
 import type {UIStringsType} from './i18n/ui-strings';
 
@@ -121,6 +121,32 @@ function useHashState(): LH.FlowResult.HashState|null {
   }, [indexString, flowResult, anchor]);
 }
 
+/**
+ * Creates a DOM subtree from non-preact code (e.g. LH report renderer).
+ * @param renderCallback Callback that renders a DOM subtree.
+ * @param inputs Changes to these values will trigger a re-render of the DOM subtree.
+ * @return Reference to the element that will contain the DOM subtree.
+ */
+function useExternalRenderer<T extends Element>(
+  renderCallback: () => Node,
+  inputs?: ReadonlyArray<unknown>
+) {
+  const ref = useRef<T>(null);
+
+  useLayoutEffect(() => {
+    if (!ref.current) return;
+
+    const root = renderCallback();
+    ref.current.appendChild(root);
+
+    return () => {
+      if (ref.current?.contains(root)) ref.current.removeChild(root);
+    };
+  }, inputs);
+
+  return ref;
+}
+
 export {
   FlowResultContext,
   classNames,
@@ -131,4 +157,5 @@ export {
   useFlowResult,
   useHashParams,
   useHashState,
+  useExternalRenderer,
 };

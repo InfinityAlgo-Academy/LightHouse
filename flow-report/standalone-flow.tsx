@@ -13,12 +13,12 @@ import {render} from 'preact';
 
 import {App} from './src/app';
 
-// Used by standalone-flow.html
 function __initLighthouseFlowReport__() {
-  // TODO(adamraine): add lh-vars, etc classes programmatically instead of in the HTML template
   const container = document.body.querySelector('main');
   if (!container) throw Error('Container element not found');
+  container.classList.add('flow-vars', 'lh-root', 'lh-vars');
   render(<App flowResult={window.__LIGHTHOUSE_FLOW_JSON__} />, container);
 }
 
 window.__initLighthouseFlowReport__ = __initLighthouseFlowReport__;
+window.__initLighthouseFlowReport__();
