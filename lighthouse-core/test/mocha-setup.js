@@ -53,25 +53,6 @@ module.exports = {
   },
 };
 
-/**
- * @param {*} actual
- * @param {string} testFile
- * @param {string} testTitle
- */
-function toMatchSnapshotWrapper(actual, testFile, testTitle) {
-  const snapshotState = getSnapshotState(testFile);
-  const matcher = toMatchSnapshot.bind({
-    snapshotState,
-    currentTestName: testTitle,
-  });
-
-  // Execute the matcher
-  const result = matcher(actual);
-
-  // Return results outside
-  return result;
-}
-
 function makeTestTitle(test) {
   let next = test;
   const title = [];
@@ -92,16 +73,16 @@ expect.extend({
   toMatchSnapshot(actual) {
     const test = global.mochaCurrentTest;
     const title = makeTestTitle(test);
-    const result = toMatchSnapshotWrapper(actual, test.file, title);
-    return result;
+    const snapshotState = getSnapshotState(test.file);
+    const matcher = toMatchSnapshot.bind({snapshotState, title});
+    return matcher(actual);
   },
   toMatchInlineSnapshot(actual, expected) {
     const test = global.mochaCurrentTest;
     const title = makeTestTitle(test);
     const snapshotState = getSnapshotState(test.file);
     const matcher = toMatchInlineSnapshot.bind({snapshotState, title});
-    const result = matcher(actual, expected);
-    return result;
+    return matcher(actual, expected);
   },
 });
 
