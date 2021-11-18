@@ -41,13 +41,13 @@ We plan to improve the experience of viewing a trace under simulated throttling.
 
 This Performance Calendar article, [Testing with Realistic Networking Conditions](https://calendar.perfplanet.com/2016/testing-with-realistic-networking-conditions/), has a good explanation of packet-level traffic shaping (which applies across TCP/UDP/ICMP) and recommendations.
 
-The `throttle` npm package appears to be the most usable Mac/Linux commandline app for managing your network connection. Important to note: it changes your **entire** machine's network interface. Also, **`throttle` requires `sudo`** (as all packet-level shapers do).
+The [`@sitespeed.io/throttle`](https://www.npmjs.com/package/@sitespeed.io/throttle) npm package appears to be the most usable Mac/Linux commandline app for managing your network connection. Important to note: it changes your **entire** machine's network interface. Also, **`@sitespeed.io/throttle` requires `sudo`** (as all packet-level shapers do).
 
 **Windows?** As of today, there is no single cross-platform tool for throttling. But there are two recommended **Windows 7** network shaping utilities: [WinShaper](https://calendar.perfplanet.com/2016/testing-with-realistic-networking-conditions/#introducing_winshaper) and [Clumsy](http://jagt.github.io/clumsy/).
 
 For **Windows 10** [NetLimiter](https://www.netlimiter.com/buy/nl4lite/standard-license/1/0) (Paid option) and [TMeter](http://www.tmeter.ru/en/) (Freeware Edition) are the most usable solutions.
 
-### `throttle` set up
+### `@sitespeed.io/throttle` set up
 
 ```sh
 # Install with npm
@@ -66,9 +66,11 @@ throttle --stop
 
 For more information and a complete list of features visit the documentation on [sitespeed.io website](https://www.sitespeed.io/documentation/throttle/).
 
-### Using Lighthouse with `throttle`
+### Using Lighthouse with `@sitespeed.io/throttle`
 
 ```sh
+npm install @sitespeed.io/throttle -g
+
 # Enable system traffic throttling
 throttle 3gfast
 
