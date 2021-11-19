@@ -22,5 +22,4 @@ export {ReportUIFeatures} from '../renderer/report-ui-features.js';
 export {renderReport} from '../renderer/api.js';
 
 
-
 export {generateReportHtml}

@@ -158,22 +158,22 @@ window.__initLighthouseReport__ = __initLighthouseReport__;
     ]);
   }
 
-  /**
-   * Returns the standalone flow report HTML as a string with the report JSON and renderer JS inlined.
-   * @param {FlowResult} flow
-   * @return {string}
-   */
-  static generateFlowReportHtml(flow) {
-    const sanitizedJson = ReportGenerator.sanitizeJson(flow);
+  // /**
+  //  * Returns the standalone flow report HTML as a string with the report JSON and renderer JS inlined.
+  //  * @param {FlowResult} flow
+  //  * @return {string}
+  //  */
+  // static generateFlowReportHtml(flow) {
+  //   const sanitizedJson = ReportGenerator.sanitizeJson(flow);
 
-    return ReportGenerator.replaceStrings(htmlReportAssets.FLOW_REPORT_TEMPLATE, [
-      /* eslint-disable max-len */
-      {search: '%%LIGHTHOUSE_FLOW_JSON%%', replacement: sanitizedJson},
-      {search: '%%LIGHTHOUSE_FLOW_JAVASCRIPT%%', replacement: htmlReportAssets.FLOW_REPORT_JAVASCRIPT},
-      {search: '/*%%LIGHTHOUSE_FLOW_CSS%%*/', replacement: htmlReportAssets.FLOW_REPORT_CSS},
-      /* eslint-enable max-len */
-    ]);
-  }
+  //   return ReportGenerator.replaceStrings(htmlReportAssets.FLOW_REPORT_TEMPLATE, [
+  //     /* eslint-disable max-len */
+  //     {search: '%%LIGHTHOUSE_FLOW_JSON%%', replacement: sanitizedJson},
+  //     {search: '%%LIGHTHOUSE_FLOW_JAVASCRIPT%%', replacement: htmlReportAssets.FLOW_REPORT_JAVASCRIPT},
+  //     {search: '/*%%LIGHTHOUSE_FLOW_CSS%%*/', replacement: htmlReportAssets.FLOW_REPORT_CSS},
+  //     /* eslint-enable max-len */
+  //   ]);
+  // }
 
   /**
    * Converts the results to a CSV formatted string
