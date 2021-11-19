@@ -518,6 +518,46 @@ function createSnippetLineComponent(dom) {
 /**
  * @param {DOM} dom
  */
+function createStandaloneComponent(dom) {
+  const el0 = dom.createFragment();
+  const el1 = dom.createElement('meta');
+  el1.setAttribute('charset', 'utf-8');
+  el0.append(el1);
+  const el2 = dom.createElement('meta');
+  el2.setAttribute('name', 'viewport');
+  el2.setAttribute('content', 'width=device-width, initial-scale=1, minimum-scale=1');
+  el0.append(el2);
+  const el3 = dom.createElement('link');
+  el3.setAttribute('rel', 'icon');
+  el3.setAttribute('href', 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAEhklEQVR4AWJxL/BhIAesev1U5tcflpncgNrKIsqNIwzC9feMpDUzs70kOczMzMzJJcxwCTMzncPMnOwtzBwzMzPb0vRfeZPp0VhPS5I39V5fdiXV1/VD+9QC7OVn9BsyH1XIoEI1PfmJvLFowVV564+34DFUHudbmfDh4kVXh//7XwE+WjS/YfXZe3yr4j2rqj1AIhSB7hZ8ZtPZu/zw8cK523U4wE1/rvPfWrz4zs0m9ZdC9yUJAlASdBAgocRegfF/f3/h/PuaFsxMdwjAR0vm1+06eMMfIrhLqTWqdH4EumU2SPfMhigJAlRQbZrgrRsl9U+Y2DYDFCz3ILC9kiAiqSrMwbWT0nceEnR+9Kggc2zjOJCASDENkg0a5HfZZgDP81CM3CrQs2Z1+o7DJ6ePr8sK0AOCHv5Jjdt3evyYSaZ351VIStIxPRAUtrBYbxC6w+BZ0ivVSBKkIhJhemSyZpfB00EiPO2VjzYkxhcqXQqCWCShGplvi3y0QxqbuBurMjyJeWnkHZuAEgIQGsUBqwrfjZ+IlBgKyRJzVVYF8O6qFWdh86YzQzMrZigYmxAyfvHgLZQ/LC1CbeniW2Hkqr/PH16SgvGuf2/uzNMBwJA/njxizGPtSyAf7EziJCMGRDRdhoAC4PL1A/SrKQMAAQkEfpJAcRQdrBJ7gNwjSpJsdwK+CANBkqa1LgQB4IicV9nYUct7gaxuDJUErQIiEAiMxLVOFlKzIktPpT0ggpdpC/8YAHnxbgkUY4tAAFSR7AAXNyAAWHJrA/kHGjzg5nleuwFO7Nd/IoDw4Pm58+4jNLmYG0wRA5bErc2Mr3Y+dXTDW1VvwqbJkzMCHQ4S1GTCBOIgUHJrGdEwqzR+jAp/o2qAZelUDoQnruEEdDclJI6576AlNVfc+22XN/+Y1vnJD0Yind6UpEEvn/Hqq15EYjCW7jZCJEpnNvDgkyelDjs106kuux2AAXCSobULOWP8mLhYlpoDMK4qAFXJGk+grtH8YXVz5KJblqaG1+VUdTc0I290bmUQAriGITRbdQnom0aoFj8kx1+wMD2ifncAXUQE4SkDqN1hE0jEophs1SUwZAOhUAiMCLwRtamtTZtbbmZErSAUHbSysaoEmnrsakiMiUAURi283gN6wans9oX8rOCrj7/JP35DFD+iQ7Au/K2KE1jzx6ujjUnXFH9KjEq6ZlhsTBICrNLJf47Pv/pkHzvup1w4dmUbEei0+bcXRqJuh5kVARQ8byyYxOwNGr7A87xh1tp8sGT+uMInrwi++Xj7TQz2d27NvwEkrOflAFQGIDA5khASBCGdO2/Z/MnLPwYfv5TFhjW7QhVKAB6afwe2LpFlFsCnlQEosgQgDsdOG1/LKeNqJS4JCSPJ/i+TakwEARor7gER1Iva5JmPOJK0RUqmoPnnlzFCtmIAhAAQEIQRgDaiYPIauNXcnDlRIrWNFY3hm7PG9YRqr7IV7HrCgAC17befjEvRq2nGhAHtBqDpOuI/I1diUUAMYIxEdyejBJqLnNoszGZtfiX/CztGv2mq+sdaAAAAAElFTkSuQmCC');
+  el0.append(el3);
+  const el4 = dom.createElement('title');
+  el4.append('Lighthouse Report');
+  el0.append(el4);
+  const el5 = dom.createElement('style');
+  el5.append('body {margin: 0}');
+  el0.append(el5);
+  const el6 = dom.createElement('noscript');
+  el6.append('Lighthouse report requires JavaScript. Please enable.');
+  el0.append(el6);
+  const el7 = dom.createElement('div');
+  el7.setAttribute('id', 'lh-log');
+  el0.append(el7);
+  const el8 = dom.createElement('script');
+  el8.setAttribute('id', 'lhr');
+  el0.append(el8);
+  const el9 = dom.createElement('script');
+  el9.append(' __initLighthouseReport__(); //# sourceURL=compiled-reportrenderer.js ');
+  el0.append(el9);
+  const el10 = dom.createElement('script');
+  el10.append('console.log(\'window.__LIGHTHOUSE_JSON__\', __LIGHTHOUSE_JSON__);');
+  el0.append(el10);
+  return el0;
+}
+
+/**
+ * @param {DOM} dom
+ */
 function createStylesComponent(dom) {
   const el0 = dom.createFragment();
   const el1 = dom.createElement('style');
@@ -757,13 +797,13 @@ function createWarningsToplevelComponent(dom) {
 }
 
 
-/** @typedef {'3pFilter'|'audit'|'categoryHeader'|'chevron'|'clump'|'crc'|'crcChain'|'elementScreenshot'|'footer'|'fraction'|'gauge'|'gaugePwa'|'heading'|'metric'|'opportunity'|'opportunityHeader'|'scorescale'|'scoresWrapper'|'snippet'|'snippetContent'|'snippetHeader'|'snippetLine'|'styles'|'topbar'|'warningsToplevel'} ComponentName */
+/** @typedef {'3pFilter'|'audit'|'categoryHeader'|'chevron'|'clump'|'crc'|'crcChain'|'elementScreenshot'|'footer'|'fraction'|'gauge'|'gaugePwa'|'heading'|'metric'|'opportunity'|'opportunityHeader'|'scorescale'|'scoresWrapper'|'snippet'|'snippetContent'|'snippetHeader'|'snippetLine'|'standalone'|'styles'|'topbar'|'warningsToplevel'} ComponentName */
 /**
  * @param {DOM} dom
  * @param {ComponentName} componentName
  * @return {DocumentFragment}
  */
-export function createComponent(dom, componentName) {
+function createComponent(dom, componentName) {
   switch (componentName) {
     case '3pFilter': return create3pFilterComponent(dom);
     case 'audit': return createAuditComponent(dom);
@@ -787,9 +827,40 @@ export function createComponent(dom, componentName) {
     case 'snippetContent': return createSnippetContentComponent(dom);
     case 'snippetHeader': return createSnippetHeaderComponent(dom);
     case 'snippetLine': return createSnippetLineComponent(dom);
+    case 'standalone': return createStandaloneComponent(dom);
     case 'styles': return createStylesComponent(dom);
     case 'topbar': return createTopbarComponent(dom);
     case 'warningsToplevel': return createWarningsToplevelComponent(dom);
   }
   throw new Error('unexpected component: ' + componentName);
 }
+
+const fns = [
+  create3pFilterComponent,
+  createAuditComponent,
+  createCategoryHeaderComponent,
+  createChevronComponent,
+  createClumpComponent,
+  createCrcComponent,
+  createCrcChainComponent,
+  createElementScreenshotComponent,
+  createFooterComponent,
+  createFractionComponent,
+  createGaugeComponent,
+  createGaugePwaComponent,
+  createHeadingComponent,
+  createMetricComponent,
+  createOpportunityComponent,
+  createOpportunityHeaderComponent,
+  createScorescaleComponent,
+  createScoresWrapperComponent,
+  createSnippetComponent,
+  createSnippetContentComponent,
+  createSnippetHeaderComponent,
+  createSnippetLineComponent,
+  createStandaloneComponent,
+  createStylesComponent,
+  createTopbarComponent,
+  createWarningsToplevelComponent,
+];
+export {createComponent, fns};

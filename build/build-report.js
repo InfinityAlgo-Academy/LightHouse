@@ -96,6 +96,7 @@ async function buildEsModulesBundle() {
     input: 'report/clients/bundle.js',
     plugins: [
       rollupPlugins.commonjs(),
+      rollupPlugins.inlineFs({verbose: true}),
     ],
   });
 

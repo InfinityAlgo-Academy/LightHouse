@@ -25,12 +25,14 @@
 
 import {Util} from './util.js';
 
+export class ElementScreenshotRenderer {
+
 /**
  * @param {LH.Audit.Details.FullPageScreenshot['screenshot']} screenshot
  * @param {LH.Audit.Details.Rect} rect
  * @return {boolean}
  */
-function screenshotOverlapsRect(screenshot, rect) {
+static _screenshotOverlapsRect(screenshot, rect) {
   return rect.left <= screenshot.width &&
     0 <= rect.right &&
     rect.top <= screenshot.height &&
@@ -42,7 +44,7 @@ function screenshotOverlapsRect(screenshot, rect) {
  * @param {number} min
  * @param {number} max
  */
-function clamp(value, min, max) {
+static _clamp(value, min, max) {
   if (value < min) return min;
   if (value > max) return max;
   return value;
@@ -51,14 +53,14 @@ function clamp(value, min, max) {
 /**
  * @param {Rect} rect
  */
-function getElementRectCenterPoint(rect) {
+static _getElementRectCenterPoint(rect) {
   return {
     x: rect.left + rect.width / 2,
     y: rect.top + rect.height / 2,
   };
 }
 
-export class ElementScreenshotRenderer {
+
   /**
    * Given the location of an element and the sizes of the preview and screenshot,
    * compute the absolute positions (in screenshot coordinate scale) of the screenshot content
@@ -68,14 +70,14 @@ export class ElementScreenshotRenderer {
    * @param {Size} screenshotSize
    */
   static getScreenshotPositions(elementRectSC, elementPreviewSizeSC, screenshotSize) {
-    const elementRectCenter = getElementRectCenterPoint(elementRectSC);
+    const elementRectCenter = ElementScreenshotRenderer._getElementRectCenterPoint(elementRectSC);
 
     // Try to center clipped region.
-    const screenshotLeftVisibleEdge = clamp(
+    const screenshotLeftVisibleEdge = ElementScreenshotRenderer._clamp(
       elementRectCenter.x - elementPreviewSizeSC.width / 2,
       0, screenshotSize.width - elementPreviewSizeSC.width
     );
-    const screenshotTopVisisbleEdge = clamp(
+    const screenshotTopVisisbleEdge = ElementScreenshotRenderer._clamp(
       elementRectCenter.y - elementPreviewSizeSC.height / 2,
       0, screenshotSize.height - elementPreviewSizeSC.height
     );
@@ -220,7 +222,7 @@ export class ElementScreenshotRenderer {
    * @return {Element|null}
    */
   static render(dom, screenshot, elementRectSC, maxRenderSizeDC) {
-    if (!screenshotOverlapsRect(screenshot, elementRectSC)) {
+    if (ElementScreenshotRenderer._screenshotOverlapsRect(screenshot, elementRectSC)) {
       return null;
     }
 

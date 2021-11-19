@@ -11,8 +11,16 @@
 // until we work out a common rendering interface.
 // See: https://github.com/GoogleChrome/lighthouse/pull/12623
 
+import pkg from '../generator/report-generator.js';
+const {generateReportHtml} = pkg;
+
+
 // Modify lighthouse-core/scripts/roll-to-devtools.sh if exports change.
 export {DOM} from '../renderer/dom.js';
 export {ReportRenderer} from '../renderer/report-renderer.js';
 export {ReportUIFeatures} from '../renderer/report-ui-features.js';
 export {renderReport} from '../renderer/api.js';
+
+
+
+export {generateReportHtml}
