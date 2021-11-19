@@ -5,7 +5,31 @@
  */
 'use strict';
 
-const htmlReportAssets = require('./report-assets.js');
+// const htmlReportAssets = require('./report-assets.js');
+
+const REPORT_TEMPLATE = `<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+  <link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAEhklEQVR4AWJxL/BhIAesev1U5tcflpncgNrKIsqNIwzC9feMpDUzs70kOczMzMzJJcxwCTMzncPMnOwtzBwzMzPb0vRfeZPp0VhPS5I39V5fdiXV1/VD+9QC7OVn9BsyH1XIoEI1PfmJvLFowVV564+34DFUHudbmfDh4kVXh//7XwE+WjS/YfXZe3yr4j2rqj1AIhSB7hZ8ZtPZu/zw8cK523U4wE1/rvPfWrz4zs0m9ZdC9yUJAlASdBAgocRegfF/f3/h/PuaFsxMdwjAR0vm1+06eMMfIrhLqTWqdH4EumU2SPfMhigJAlRQbZrgrRsl9U+Y2DYDFCz3ILC9kiAiqSrMwbWT0nceEnR+9Kggc2zjOJCASDENkg0a5HfZZgDP81CM3CrQs2Z1+o7DJ6ePr8sK0AOCHv5Jjdt3evyYSaZ351VIStIxPRAUtrBYbxC6w+BZ0ivVSBKkIhJhemSyZpfB00EiPO2VjzYkxhcqXQqCWCShGplvi3y0QxqbuBurMjyJeWnkHZuAEgIQGsUBqwrfjZ+IlBgKyRJzVVYF8O6qFWdh86YzQzMrZigYmxAyfvHgLZQ/LC1CbeniW2Hkqr/PH16SgvGuf2/uzNMBwJA/njxizGPtSyAf7EziJCMGRDRdhoAC4PL1A/SrKQMAAQkEfpJAcRQdrBJ7gNwjSpJsdwK+CANBkqa1LgQB4IicV9nYUct7gaxuDJUErQIiEAiMxLVOFlKzIktPpT0ggpdpC/8YAHnxbgkUY4tAAFSR7AAXNyAAWHJrA/kHGjzg5nleuwFO7Nd/IoDw4Pm58+4jNLmYG0wRA5bErc2Mr3Y+dXTDW1VvwqbJkzMCHQ4S1GTCBOIgUHJrGdEwqzR+jAp/o2qAZelUDoQnruEEdDclJI6576AlNVfc+22XN/+Y1vnJD0Yind6UpEEvn/Hqq15EYjCW7jZCJEpnNvDgkyelDjs106kuux2AAXCSobULOWP8mLhYlpoDMK4qAFXJGk+grtH8YXVz5KJblqaG1+VUdTc0I290bmUQAriGITRbdQnom0aoFj8kx1+wMD2ifncAXUQE4SkDqN1hE0jEophs1SUwZAOhUAiMCLwRtamtTZtbbmZErSAUHbSysaoEmnrsakiMiUAURi283gN6wans9oX8rOCrj7/JP35DFD+iQ7Au/K2KE1jzx6ujjUnXFH9KjEq6ZlhsTBICrNLJf47Pv/pkHzvup1w4dmUbEei0+bcXRqJuh5kVARQ8byyYxOwNGr7A87xh1tp8sGT+uMInrwi++Xj7TQz2d27NvwEkrOflAFQGIDA5khASBCGdO2/Z/MnLPwYfv5TFhjW7QhVKAB6afwe2LpFlFsCnlQEosgQgDsdOG1/LKeNqJS4JCSPJ/i+TakwEARor7gER1Iva5JmPOJK0RUqmoPnnlzFCtmIAhAAQEIQRgDaiYPIauNXcnDlRIrWNFY3hm7PG9YRqr7IV7HrCgAC17befjEvRq2nGhAHtBqDpOuI/I1diUUAMYIxEdyejBJqLnNoszGZtfiX/CztGv2mq+sdaAAAAAElFTkSuQmCC">
+  <title>Lighthouse Report</title>
+  <style>body {margin: 0}</style>
+</head>
+<body>
+  <noscript>Lighthouse report requires JavaScript. Please enable.</noscript>
+
+  <div id="lh-log"></div>
+
+  <script>window.__LIGHTHOUSE_JSON__ = %%LIGHTHOUSE_JSON%%;</script>
+  <script type=module>%%LIGHTHOUSE_JAVASCRIPT%%
+  __initLighthouseReport__();
+  //# sourceURL=compiled-reportrenderer.js
+  </script>
+  <script>console.log('window.__LIGHTHOUSE_JSON__', __LIGHTHOUSE_JSON__);</script>
+</body>
+</html>
+`;
 
 
 /** @typedef {import('../../types/lhr/lhr').default} LHResult */
@@ -48,6 +72,14 @@ class ReportGenerator {
    * @return {string}
    */
   static async generateReportHtml(lhr) {
+
+    // this shitty shit is almost done.
+
+    // the last step woudl be to only import these if the relvant globals are not there.
+    // that way when a report is generating itself again.. it can just reuse its own parts.
+
+    console.log('cur', typeof document !== 'undefined' && document.currentScript);
+    console.log('imp cur', typeof globalThis.import !== 'undefined' && globalThis.import?.meta);
     const comp = await import('../renderer/components.js');
     let reportJs = [
 
@@ -77,24 +109,25 @@ const URL_PREFIXES = ['http://', 'https://', 'data:'];
 
       `,
 
-      (await import('../renderer/i18n.js')).I18n.toString(), // DOM
-      (await import('../renderer/util.js')).Util.toString(), // DOM
-      (await import('../renderer/dom.js')).DOM.toString(), // DOM
-      ...comp.fns.map(fn => fn.toString()), // DOM
-      comp.createComponent.toString(), // DOM
-      (await import('../renderer/report-renderer.js')).ReportRenderer.toString(), // ReportRenderer
-      (await import('../renderer/report-ui-features.js')).ReportUIFeatures.toString(), // ReportUIFeatures
-      (await import('../renderer/category-renderer.js')).CategoryRenderer.toString(), // CategoryRenderer
-      (await import('../renderer/performance-category-renderer.js')).PerformanceCategoryRenderer.toString(), // CategoryRenderer
-      (await import('../renderer/pwa-category-renderer.js')).PwaCategoryRenderer.toString(), // CategoryRenderer
-      (await import('../renderer/details-renderer.js')).DetailsRenderer.toString(), // DetailsRenderer
-      (await import('../renderer/element-screenshot-renderer.js')).ElementScreenshotRenderer.toString(), // DetailsRenderer
-      (await import('../renderer/crc-details-renderer.js')).CriticalRequestChainRenderer.toString(), // DetailsRenderer
-      (await import('../renderer/topbar-features.js')).TopbarFeatures.toString(), // DetailsRenderer
-      (await import('../renderer/drop-down-menu.js')).DropDownMenu.toString(), // DetailsRenderer
-      //  (await import('../renderer/details-renderer.js')).DetailsRenderer.toString(), // DetailsRenderer
-      (await import('../renderer/api.js')).renderReport.toString(), // DetailsRenderer
+      (await import('../renderer/i18n.js')).I18n.toString(),
+      (await import('../renderer/util.js')).Util.toString(),
+      (await import('../renderer/dom.js')).DOM.toString(),
+      ...comp.fns.map(fn => fn.toString()),
+      comp.createComponent.toString(),
+      (await import('../renderer/report-renderer.js')).ReportRenderer.toString(),
+      (await import('../renderer/report-ui-features.js')).ReportUIFeatures.toString(),
+      (await import('../renderer/category-renderer.js')).CategoryRenderer.toString(),
+      (await import('../renderer/performance-category-renderer.js')).PerformanceCategoryRenderer.toString(),
+      (await import('../renderer/pwa-category-renderer.js')).PwaCategoryRenderer.toString(),
+      (await import('../renderer/details-renderer.js')).DetailsRenderer.toString(),
+      (await import('../renderer/element-screenshot-renderer.js')).ElementScreenshotRenderer.toString(),
+      (await import('../renderer/crc-details-renderer.js')).CriticalRequestChainRenderer.toString(),
+      (await import('../renderer/topbar-features.js')).TopbarFeatures.toString(),
+      (await import('../renderer/drop-down-menu.js')).DropDownMenu.toString(),
 
+      (await import('../renderer/api.js')).renderReport.toString(),
+
+      (await import('./report-generator.js')).ReportGenerator.toString(),
 
       `
 
@@ -152,7 +185,7 @@ window.__initLighthouseReport__ = __initLighthouseReport__;
     // we want to generate a report without minification.
     const sanitizedJavascript = reportJs.replace(/<\//g, '\\u003c/');
 
-    return ReportGenerator.replaceStrings(htmlReportAssets.REPORT_TEMPLATE, [
+    return ReportGenerator.replaceStrings(REPORT_TEMPLATE, [
       {search: '%%LIGHTHOUSE_JSON%%', replacement: sanitizedJson},
       {search: '%%LIGHTHOUSE_JAVASCRIPT%%', replacement: sanitizedJavascript},
     ]);
@@ -250,4 +283,4 @@ window.__initLighthouseReport__ = __initLighthouseReport__;
   }
 }
 
-module.exports = ReportGenerator;
+module.exports = {ReportGenerator, generateReportHtml: ReportGenerator.generateReportHtml};

@@ -29,6 +29,8 @@ import {openTreemap} from './open-tab.js';
 import {TopbarFeatures} from './topbar-features.js';
 import {Util} from './util.js';
 import {getLhrFilenamePrefix} from '../generator/file-namer.js';
+import {ReportGenerator} from '../generator/report-generator.js';
+// const {ReportGenerator} = pkg;
 
 /**
  * @param {HTMLTableElement} tableEl
@@ -150,7 +152,8 @@ export class ReportUIFeatures {
    * Returns the html that recreates this report.
    * @return {string}
    */
-  getReportHtml() {
+  async getReportHtml() {
+    return ReportGenerator.generateReportHtml(this.json);
     if (this._topbar) {
       this._topbar.resetUIState();
     }

@@ -60,7 +60,7 @@ export class TopbarFeatures {
    * Handler for tool button.
    * @param {Event} e
    */
-  onDropDownMenuClick(e) {
+  async onDropDownMenuClick(e) {
     e.preventDefault();
 
     const el = /** @type {?Element} */ (e.target);
@@ -87,7 +87,7 @@ export class TopbarFeatures {
         break;
       }
       case 'save-html': {
-        const htmlStr = this._reportUIFeatures.getReportHtml();
+        const htmlStr = await this._reportUIFeatures.getReportHtml();
         try {
           this._reportUIFeatures._saveFile(new Blob([htmlStr], {type: 'text/html'}));
         } catch (e) {
