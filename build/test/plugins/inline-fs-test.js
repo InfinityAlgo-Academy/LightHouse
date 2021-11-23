@@ -345,7 +345,10 @@ describe('inline-fs', () => {
       });
 
       it('warns and skips on unsupported encoding', async () => {
-        const content = `const myTextContent = fs.readFileSync('${tmpPath}', 'binary');`;
+        const content = `const myTextContent = fs.readFileSync(
+          '${tmpPath}',
+          'binary'
+        );`;
         const result = await inlineFs(content, filepath);
         expect(result).toEqual({
           code: null,
@@ -353,8 +356,8 @@ describe('inline-fs', () => {
             text: 'only utf8 readFileSync is supported',
             location: {
               file: filepath,
-              line: 1,
-              column: 105,
+              line: 3,
+              column: 10,
             },
           }],
         });
@@ -447,7 +450,10 @@ describe('inline-fs', () => {
       });
 
       it('warns and skips on unsupported encoding', async () => {
-        const content = `const files = fs.readdirSync('${tmpDir}', 'binary');`;
+        const content = `const files = fs.readdirSync(
+          '${tmpDir}',
+          'binary'
+        );`;
         const result = await inlineFs(content, filepath);
         expect(result).toEqual({
           code: null,
@@ -455,8 +461,8 @@ describe('inline-fs', () => {
             text: 'only utf8 readdirSync is supported',
             location: {
               file: filepath,
-              line: 1,
-              column: 87,
+              line: 3,
+              column: 10,
             },
           }],
         });
