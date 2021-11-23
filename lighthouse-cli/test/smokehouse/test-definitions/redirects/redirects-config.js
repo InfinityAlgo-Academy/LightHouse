@@ -20,7 +20,7 @@ const config = {
       'redirects',
     ],
     // Use provided throttling method to test usage of correct navStart.
-    throttlingMethod: /** @type {'provided'} */ ('provided'),
+    throttlingMethod: /** @type {const} */ ('provided'),
   },
 };
 

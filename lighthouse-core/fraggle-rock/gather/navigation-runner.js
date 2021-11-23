@@ -142,8 +142,8 @@ async function _collectDebugData(navigationContext, phaseState) {
 /**
  * @param {NavigationContext} navigationContext
  * @param {PhaseState} phaseState
- * @param {UnPromise<ReturnType<typeof _setupNavigation>>} setupResult
- * @param {UnPromise<ReturnType<typeof _navigate>>} navigateResult
+ * @param {Awaited<ReturnType<typeof _setupNavigation>>} setupResult
+ * @param {Awaited<ReturnType<typeof _navigate>>} navigateResult
  * @return {Promise<{finalUrl: string, artifacts: Partial<LH.GathererArtifacts>, warnings: Array<LH.IcuMessage>, pageLoadError: LH.LighthouseError | undefined}>}
  */
 async function _computeNavigationResult(
@@ -195,7 +195,7 @@ async function _computeNavigationResult(
 async function _navigation(navigationContext) {
   const artifactState = getEmptyArtifactState();
   const phaseState = {
-    gatherMode: /** @type {'navigation'} */ ('navigation'),
+    gatherMode: /** @type {const} */ ('navigation'),
     driver: navigationContext.driver,
     computedCache: navigationContext.computedCache,
     artifactDefinitions: navigationContext.navigation.artifacts,

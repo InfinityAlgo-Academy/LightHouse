@@ -92,7 +92,7 @@ describe('Snapshot Runner', () => {
 
   it('should use configContext', async () => {
     const settingsOverrides = {
-      formFactor: /** @type {'desktop'} */ ('desktop'),
+      formFactor: /** @type {const} */ ('desktop'),
       maxWaitForLoad: 1234,
       screenEmulation: {mobile: false},
     };

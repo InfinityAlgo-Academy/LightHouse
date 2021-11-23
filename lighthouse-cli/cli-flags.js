@@ -225,7 +225,7 @@ function getFlags(manualArgv, options = {}) {
       .options({
         'output': {
           type: 'array',
-          default: /** @type {['html']} */ (['html']),
+          default: /** @type {const} */ (['html']),
           coerce: coerceOutput,
           describe: 'Reporter for the results, supports multiple values. choices: "json", "html", "csv"',
         },
@@ -309,9 +309,9 @@ function getFlags(manualArgv, options = {}) {
       })
 
       // Choices added outside of `options()` and cast so tsc picks them up.
-      .choices('form-factor', /** @type {['mobile', 'desktop']} */ (['mobile', 'desktop']))
-      .choices('throttling-method', /** @type {['devtools', 'provided', 'simulate']} */ (['devtools', 'provided', 'simulate']))
-      .choices('preset', /** @type {['perf', 'experimental', 'desktop']} */ (['perf', 'experimental', 'desktop']))
+      .choices('form-factor', /** @type {const} */ (['mobile', 'desktop']))
+      .choices('throttling-method', /** @type {const} */ (['devtools', 'provided', 'simulate']))
+      .choices('preset', /** @type {const} */ (['perf', 'experimental', 'desktop']))
 
       .check(argv => {
         // Lighthouse doesn't need a URL if...

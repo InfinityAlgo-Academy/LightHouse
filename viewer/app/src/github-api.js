@@ -111,7 +111,8 @@ export class GithubApi {
           }
 
           if (!resp.ok) {
-            if (resp.status === 304) {
+            // Should only be 304 if cachedGist exists and etag was sent, but double check.
+            if (resp.status === 304 && cachedGist) {
               return Promise.resolve(cachedGist);
             } else if (resp.status === 404) {
               // Delete the entry from IDB if it no longer exists on the server.
@@ -151,7 +152,6 @@ export class GithubApi {
       // not return a 304 and so will be overwritten.
       return idbKeyval.set(id, response).then(_ => {
         logger.hide();
-        // @ts-expect-error - TODO(bckenny): tsc unable to flatten promise chain here
         return response.content;
       });
     });

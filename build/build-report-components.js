@@ -128,7 +128,7 @@ function compileTemplate(tmpEl) {
         continue;
       }
 
-      if (!(childNode instanceof /** @type {typeof Element} */ (window.Element))) {
+      if (!(childNode instanceof window.Element)) {
         throw new Error(`Expected ${childNode} to be an element`);
       }
       process(childNode);

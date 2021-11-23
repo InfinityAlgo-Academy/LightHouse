@@ -461,7 +461,7 @@ describe('NavigationRunner', () => {
   describe('navigation', () => {
     it('should initialize config', async () => {
       const settingsOverrides = {
-        formFactor: /** @type {'desktop'} */ ('desktop'),
+        formFactor: /** @type {const} */ ('desktop'),
         maxWaitForLoad: 1234,
         screenEmulation: {mobile: false},
       };
