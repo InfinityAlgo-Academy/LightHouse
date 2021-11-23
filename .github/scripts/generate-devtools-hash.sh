@@ -19,6 +19,6 @@ md5 \
   build/build-bundle.js \
   build/build-dt-report-resources.js \
   clients/devtools-entry.js \
-  clients/devtools-report-assets.js \
+  report/**/*.js \
   lighthouse-core/test/chromium-web-tests/* \
   third-party/chromium-webtests/webtests/http/tests/devtools/lighthouse/*.js
