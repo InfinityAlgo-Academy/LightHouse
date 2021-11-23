@@ -17,6 +17,7 @@ module.exports = {
   REPORT_TEMPLATE,
   REPORT_JAVASCRIPT,
   // Flow report assets are not needed for every bundle.
-  // Ignoring flow-report-assets.js (e.g. `browserify.ignore`) will remove the flow assets from the bundle.
+  // Replacing/ignoring flow-report-assets.js (e.g. `rollupPlugins.shim`) will
+  // remove the flow assets from the bundle.
   ...flowReportAssets,
 };
