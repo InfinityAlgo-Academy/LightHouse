@@ -12,11 +12,6 @@ const {SnapshotState, toMatchSnapshot, toMatchInlineSnapshot} = require('jest-sn
 /** @type {Map<string, SnapshotState['prototype']>} */
 const snapshotStatesByTestFile = new Map();
 
-// console.log(require('mocha'));
-
-global.beforeAll = require('mocha').before;
-global.afterAll = require('mocha').after;
-
 /**
  * @param {string} testFile
  */
@@ -93,3 +88,7 @@ expect.extend({
 
 // @ts-expect-error
 global.expect = expect;
+// @ts-expect-error
+global.beforeAll = require('mocha').before;
+// @ts-expect-error
+global.afterAll = require('mocha').after;
