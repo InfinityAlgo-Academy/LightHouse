@@ -127,26 +127,6 @@ describe('SEO: Document has valid canonical link', () => {
     });
   });
 
-  it('fails when canonical points to a different domain', () => {
-    const finalUrl = 'http://localhost.test';
-    const mainResource = {url: finalUrl};
-    const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
-    const artifacts = {
-      devtoolsLogs: {[CanonicalAudit.DEFAULT_PASS]: devtoolsLog},
-      URL: {finalUrl},
-      LinkElements: [
-        link({rel: 'canonical', source: 'head', href: 'https://example.com'}),
-      ],
-    };
-
-    const context = {computedCache: new Map()};
-    return CanonicalAudit.audit(artifacts, context).then(auditResult => {
-      assert.equal(auditResult.score, 0);
-      expect(auditResult.explanation)
-        .toBeDisplayString('Points to a different domain (https://example.com/)');
-    });
-  });
-
   it('passes when canonical points to the root while current URL is also the root', async () => {
     const finalUrl = 'https://example.com/';
     const mainResource = {

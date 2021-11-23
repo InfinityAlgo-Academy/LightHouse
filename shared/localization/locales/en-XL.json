@@ -1298,9 +1298,6 @@
   "lighthouse-core/audits/seo/canonical.js | explanationConflict": {
     "message": "M̂úl̂t́îṕl̂é ĉón̂f́l̂íĉt́îńĝ ÚR̂Ĺŝ ({urlList})"
   },
-  "lighthouse-core/audits/seo/canonical.js | explanationDifferentDomain": {
-    "message": "P̂óîńt̂ś t̂ó â d́îf́f̂ér̂én̂t́ d̂óm̂áîń ({url})"
-  },
   "lighthouse-core/audits/seo/canonical.js | explanationInvalid": {
     "message": "Îńv̂ál̂íd̂ ÚR̂Ĺ ({url})"
   },
