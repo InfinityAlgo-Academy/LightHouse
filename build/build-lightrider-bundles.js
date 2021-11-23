@@ -5,20 +5,15 @@
  */
 'use strict';
 
-const browserify = require('browserify');
 const rollup = require('rollup');
 const rollupPlugins = require('./rollup-plugins.js');
 const fs = require('fs');
 const path = require('path');
 const bundleBuilder = require('./build-bundle.js');
 const {LH_ROOT} = require('../root.js');
-const inlineFs = require('./plugins/browserify-inline-fs.js');
 
 const distDir = path.join(LH_ROOT, 'dist', 'lightrider');
 const sourceDir = path.join(LH_ROOT, 'clients', 'lightrider');
-
-const bundleOutFile = `${distDir}/report-generator-bundle.js`;
-const generatorFilename = `./report/generator/report-generator.js`;
 
 const entrySourceName = 'lightrider-entry.js';
 const entryDistName = 'lighthouse-lr-bundle.js';
@@ -31,19 +26,25 @@ function buildEntryPoint() {
   return bundleBuilder.build(inFile, outFile, {minify: false});
 }
 
-/**
- * Browserify and minify the LR report generator.
- */
-function buildReportGenerator() {
-  browserify(generatorFilename, {standalone: 'ReportGenerator'})
-    // Flow report is not used in LR, so don't include flow assets.
-    .ignore(require.resolve('../report/generator/flow-report-assets.js'))
-    // Transform `fs.readFileSync`, etc into inline strings.
-    .transform(inlineFs({verbose: Boolean(process.env.DEBUG)}))
-    .bundle((err, src) => {
-      if (err) throw err;
-      fs.writeFileSync(bundleOutFile, src.toString());
-    });
+async function buildReportGenerator() {
+  const bundle = await rollup.rollup({
+    input: 'report/generator/report-generator.js',
+    plugins: [
+      rollupPlugins.shim({
+        [`${LH_ROOT}/report/generator/flow-report-assets.js`]: 'export default {}',
+      }),
+      rollupPlugins.commonjs(),
+      rollupPlugins.nodeResolve(),
+      rollupPlugins.inlineFs({verbose: Boolean(process.env.DEBUG)}),
+    ],
+  });
+
+  await bundle.write({
+    file: 'dist/lightrider/report-generator-bundle.js',
+    format: 'umd',
+    name: 'ReportGenerator',
+  });
+  await bundle.close();
 }
 
 async function buildStaticServerBundle() {
