@@ -49,7 +49,7 @@
     "unit-core": "yarn jest \"lighthouse-core\"",
     "exp-mocha": "sh -c 'node node_modules/.bin/mocha ${0}:benchmark'",
     "unit-cli": "yarn jest \"lighthouse-cli/\"",
-    "unit-cli-mocha": "yarn mocha \"lighthouse-cli/test/**/*.js\"",
+    "unit-cli-mocha": "yarn mocha \"lighthouse-cli/test/**/*-test.js\"",
     "unit-report": "yarn jest \"report/\"",
     "unit-treemap": "yarn jest \"treemap/.*-test.js\"",
     "unit-viewer": "yarn jest \"viewer/.*-test.js\"",
