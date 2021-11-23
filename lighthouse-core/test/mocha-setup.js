@@ -12,6 +12,11 @@ const {SnapshotState, toMatchSnapshot, toMatchInlineSnapshot} = require('jest-sn
 /** @type {Map<string, SnapshotState['prototype']>} */
 const snapshotStatesByTestFile = new Map();
 
+// console.log(require('mocha'));
+
+global.beforeAll = require('mocha').before;
+global.afterAll = require('mocha').after;
+
 /**
  * @param {string} testFile
  */

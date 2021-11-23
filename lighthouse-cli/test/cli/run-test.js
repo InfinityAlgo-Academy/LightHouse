@@ -32,7 +32,7 @@ describe('CLI run', function() {
     /** @type {LH.Result} */
     let fileResults;
 
-    before(async () => {
+    beforeAll(async () => {
       const url = 'http://localhost:10200/dobetterweb/dbw_tester.html';
       // eslint-disable-next-line max-len
       const samplev2ArtifactsPath = LH_ROOT + '/lighthouse-core/test/results/artifacts/';
@@ -60,7 +60,7 @@ describe('CLI run', function() {
       fileResults = JSON.parse(fs.readFileSync(filename, 'utf-8'));
     }, 60 * 1000);
 
-    after(() => {
+    afterAll(() => {
       fs.unlinkSync(filename);
     });
 
