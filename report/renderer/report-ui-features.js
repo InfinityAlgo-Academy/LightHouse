@@ -148,9 +148,9 @@ export class ReportUIFeatures {
 
   /**
    * Returns the html that recreates this report.
-   * @return {string}
+   * @return {Promise<string>}
    */
-  getReportHtml() {
+  async getReportHtml() {
     if (this._topbar) {
       this._topbar.resetUIState();
     }

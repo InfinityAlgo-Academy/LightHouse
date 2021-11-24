@@ -87,8 +87,8 @@ export const Topbar: FunctionComponent<{onMenuClick: JSX.MouseEventHandler<HTMLB
       {
         getReportHtml &&
           <TopbarButton
-            onClick={() => {
-              const htmlStr = getReportHtml(flowResult);
+            onClick={async () => {
+              const htmlStr = await getReportHtml(flowResult);
               saveHtml(flowResult, htmlStr);
             }}
             label="Button that saves the report as HTML"

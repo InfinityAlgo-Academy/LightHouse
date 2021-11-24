@@ -5,38 +5,14 @@
  */
 'use strict';
 
-const rollup = require('rollup');
 const rollupPlugins = require('./rollup-plugins.js');
 const GhPagesApp = require('./gh-pages-app.js');
 const {LH_ROOT} = require('../root.js');
-
-async function buildReportGenerator() {
-  const bundle = await rollup.rollup({
-    input: 'report/generator/report-generator.js',
-    plugins: [
-      rollupPlugins.shim({
-        [`${LH_ROOT}/report/generator/flow-report-assets.js`]: 'export default {}',
-      }),
-      rollupPlugins.commonjs(),
-      rollupPlugins.nodeResolve(),
-      rollupPlugins.inlineFs({verbose: Boolean(process.env.DEBUG)}),
-    ],
-  });
-
-  const result = await bundle.generate({
-    format: 'umd',
-    name: 'ReportGenerator',
-  });
-  await bundle.close();
-  return result.output[0].code;
-}
 
 /**
  * Build viewer, optionally deploying to gh-pages if `--deploy` flag was set.
  */
 async function run() {
-  const reportGeneratorJs = await buildReportGenerator();
-
   const app = new GhPagesApp({
     name: 'viewer',
     appDir: `${LH_ROOT}/viewer/app`,
@@ -46,7 +22,6 @@ async function run() {
       {path: '../../flow-report/assets/styles.css'},
     ],
     javascripts: [
-      reportGeneratorJs,
       {path: require.resolve('pako/dist/pako_inflate.js')},
       {path: 'src/main.js', rollup: true, rollupPlugins: [
         rollupPlugins.shim({

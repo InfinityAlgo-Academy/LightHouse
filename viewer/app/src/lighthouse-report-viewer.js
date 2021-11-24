@@ -255,9 +255,13 @@ export class LighthouseReportViewer {
    * @param {(json: LH.Result|LH.FlowResult) => void} [saveGistCallback]
    */
   _renderFlowResult(json, rootEl, saveGistCallback) {
-    // TODO: Add save HTML functionality with ReportGenerator loaded async.
     renderFlowReport(json, rootEl, {
       saveAsGist: saveGistCallback,
+      getReportHtml: async () => {
+        const {default: ReportGenerator} =
+          await import('../../../report/generator/report-generator.js');
+        return ReportGenerator.generateFlowReportHtml(json);
+      },
     });
     // Install as global for easier debugging.
     window.__LIGHTHOUSE_FLOW_JSON__ = json;

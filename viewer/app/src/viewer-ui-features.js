@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/* global ReportGenerator */
+/* global */
 
 /** @typedef {import('../../../report/renderer/dom').DOM} DOM */
 /** @typedef {import('../../../shared/localization/locales').LhlMessages} LhlMessages */
@@ -55,10 +55,12 @@ export class ViewerUIFeatures extends ReportUIFeatures {
 
   /**
    * Uses ReportGenerator to create the html that recreates this report.
-   * @return {string}
+   * @return {Promise<string>}
    * @override
    */
-  getReportHtml() {
+  async getReportHtml() {
+    const {default: ReportGenerator} =
+      await import('../../../report/generator/report-generator.js');
     return ReportGenerator.generateReportHtml(this.json);
   }
 
