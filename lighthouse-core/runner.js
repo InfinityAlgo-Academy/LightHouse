@@ -132,7 +132,13 @@ class Runner {
 
       /** @type {LH.RawIcu<LH.Result>} */
       const i18nLhr = {
+        lighthouseVersion,
+        requestedUrl,
+        finalUrl: artifacts.URL.finalUrl,
+        fetchTime: artifacts.fetchTime,
         gatherMode: artifacts.GatherContext.gatherMode,
+        runtimeError: Runner.getArtifactRuntimeError(artifacts),
+        runWarnings: lighthouseRunWarnings,
         userAgent: artifacts.HostUserAgent,
         environment: {
           networkUserAgent: artifacts.NetworkUserAgent,
@@ -140,22 +146,16 @@ class Runner {
           benchmarkIndex: artifacts.BenchmarkIndex,
           credits,
         },
-        lighthouseVersion,
-        fetchTime: artifacts.fetchTime,
-        requestedUrl: requestedUrl,
-        finalUrl: artifacts.URL.finalUrl,
-        runWarnings: lighthouseRunWarnings,
-        runtimeError: Runner.getArtifactRuntimeError(artifacts),
         audits: auditResultsById,
         configSettings: settings,
         categories,
         categoryGroups: runOpts.config.groups || undefined,
+        stackPacks: stackPacks.getStackPacks(artifacts.Stacks),
         timing: this._getTiming(artifacts),
         i18n: {
           rendererFormattedStrings: format.getRendererFormattedStrings(settings.locale),
           icuMessagePaths: {},
         },
-        stackPacks: stackPacks.getStackPacks(artifacts.Stacks),
       };
 
       // Replace ICU message references with localized strings; save replaced paths in lhr.
