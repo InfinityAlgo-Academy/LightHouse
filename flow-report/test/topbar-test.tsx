@@ -52,7 +52,9 @@ it('save button opens save dialog for HTML file', async () => {
   const root = render(<Topbar onMenuClick={() => {}}/>, {wrapper});
 
   const saveButton = root.getByText('Save');
-  saveButton.click();
+  await act(() => {
+    saveButton.click();
+  });
 
   expect(mockSaveFile).toHaveBeenCalledWith(
     expect.any(Blob),
