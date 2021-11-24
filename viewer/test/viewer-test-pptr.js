@@ -21,6 +21,8 @@ import {getCanonicalLocales} from '../../shared/localization/format.js';
 const portNumber = 10200;
 const viewerUrl = `http://localhost:${portNumber}/dist/gh-pages/viewer/index.html`;
 const sampleLhr = LH_ROOT + '/lighthouse-core/test/results/sample_v2.json';
+// eslint-disable-next-line max-len
+const sampleFlowResult = LH_ROOT + '/lighthouse-core/test/fixtures/fraggle-rock/reports/sample-flow-result.json';
 
 const lighthouseCategories = Object.keys(defaultConfig.categories);
 const getAuditsOfCategory = category => defaultConfig.categories[category].auditRefs;
@@ -81,6 +83,31 @@ describe('Lighthouse Viewer', () => {
       server.close(),
       browser && browser.close(),
     ]);
+  });
+
+  describe('Renders the flow report', () => {
+    beforeAll(async () => {
+      await viewerPage.goto(viewerUrl, {waitUntil: 'networkidle2', timeout: 30000});
+      const fileInput = await viewerPage.$('#hidden-file-input');
+      await fileInput.uploadFile(sampleFlowResult);
+      await viewerPage.waitForSelector('.App', {timeout: 30000});
+    });
+
+    it('should load with no errors', async () => {
+      assert.deepStrictEqual(pageErrors, []);
+    });
+
+    it('renders the summary page', async () => {
+      const summary = await viewerPage.evaluate(() => document.querySelector('.Summary'));
+      assert.ok(summary);
+
+      const scores = await viewerPage.evaluate(() =>
+        Array.from(document.querySelectorAll('.lh-gauge__wrapper, .lh-fraction__wrapper'))
+      );
+      assert.equal(scores.length, 14);
+
+      assert.deepStrictEqual(pageErrors, []);
+    });
   });
 
   describe('Renders the report', () => {

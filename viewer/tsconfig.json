@@ -10,7 +10,8 @@
   },
   "references": [
     {"path": "../types/lhr/"},
-    {"path": "../report/"}
+    {"path": "../report/"},
+    {"path": "../flow-report/"}
   ],
   "include": [
     "app/src/**/*.js",

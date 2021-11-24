@@ -8,20 +8,15 @@ import {FunctionComponent, JSX} from 'preact';
 import {useState} from 'preact/hooks';
 
 import {HelpDialog} from './help-dialog';
-import {getFilenamePrefix} from '../../report/generator/file-namer';
+import {getFlowResultFilenamePrefix} from '../../report/generator/file-namer';
 import {useLocalizedStrings} from './i18n/i18n';
 import {HamburgerIcon, InfoIcon} from './icons';
-import {useFlowResult} from './util';
+import {useFlowResult, useOptions} from './util';
 import {saveFile} from '../../report/renderer/api';
 
-function saveHtml(flowResult: LH.FlowResult) {
-  const htmlStr = document.documentElement.outerHTML;
+function saveHtml(flowResult: LH.FlowResult, htmlStr: string) {
   const blob = new Blob([htmlStr], {type: 'text/html'});
-
-  const lhr = flowResult.steps[0].lhr;
-  const name = flowResult.name.replace(/\s/g, '-');
-  const filename = getFilenamePrefix(name, lhr.fetchTime);
-
+  const filename = getFlowResultFilenamePrefix(flowResult);
   saveFile(blob, filename);
 }
 
@@ -78,6 +73,7 @@ export const Topbar: FunctionComponent<{onMenuClick: JSX.MouseEventHandler<HTMLB
   const flowResult = useFlowResult();
   const strings = useLocalizedStrings();
   const [showHelpDialog, setShowHelpDialog] = useState(false);
+  const {getReportHtml, saveAsGist} = useOptions();
 
   return (
     <div className="Topbar">
@@ -88,10 +84,23 @@ export const Topbar: FunctionComponent<{onMenuClick: JSX.MouseEventHandler<HTMLB
         <Logo/>
       </div>
       <div className="Topbar__title">{strings.title}</div>
-      <TopbarButton
-        onClick={() => saveHtml(flowResult)}
-        label="Button that saves the report as HTML"
-      >{strings.save}</TopbarButton>
+      {
+        getReportHtml &&
+          <TopbarButton
+            onClick={() => {
+              const htmlStr = getReportHtml(flowResult);
+              saveHtml(flowResult, htmlStr);
+            }}
+            label="Button that saves the report as HTML"
+          >{strings.save}</TopbarButton>
+      }
+      {
+        saveAsGist &&
+          <TopbarButton
+            onClick={() => saveAsGist(flowResult)}
+            label="Button that saves the report to a gist"
+          >{strings.dropdownSaveGist}</TopbarButton>
+      }
       <div style={{flexGrow: 1}} />
       <TopbarButton
         onClick={() => setShowHelpDialog(previous => !previous)}

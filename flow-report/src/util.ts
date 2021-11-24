@@ -10,6 +10,7 @@ import {useContext, useEffect, useLayoutEffect, useMemo, useRef, useState} from 
 import type {UIStringsType} from './i18n/ui-strings';
 
 const FlowResultContext = createContext<LH.FlowResult|undefined>(undefined);
+const OptionsContext = createContext<LH.FlowReportOptions>({});
 
 function getHashParam(param: string): string|null {
   const params = new URLSearchParams(location.hash.replace('#', '?'));
@@ -147,8 +148,13 @@ function useExternalRenderer<T extends Element>(
   return ref;
 }
 
+function useOptions() {
+  return useContext(OptionsContext);
+}
+
 export {
   FlowResultContext,
+  OptionsContext,
   classNames,
   getScreenDimensions,
   getFullPageScreenshot,
@@ -158,4 +164,5 @@ export {
   useHashParams,
   useHashState,
   useExternalRenderer,
+  useOptions,
 };

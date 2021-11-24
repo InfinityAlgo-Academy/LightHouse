@@ -43,6 +43,7 @@ async function run() {
     html: {path: 'index.html'},
     stylesheets: [
       {path: 'styles/*'},
+      {path: '../../flow-report/assets/styles.css'},
     ],
     javascripts: [
       reportGeneratorJs,
@@ -50,6 +51,15 @@ async function run() {
       {path: 'src/main.js', rollup: true, rollupPlugins: [
         rollupPlugins.shim({
           './locales.js': 'export default {}',
+        }),
+        rollupPlugins.typescript({
+          tsconfig: 'flow-report/tsconfig.json',
+          // Plugin struggles with custom outDir, so revert it from tsconfig value
+          // as well as any options that require an outDir is set.
+          outDir: null,
+          composite: false,
+          emitDeclarationOnly: false,
+          declarationMap: false,
         }),
         rollupPlugins.inlineFs({verbose: Boolean(process.env.DEBUG)}),
         rollupPlugins.replace({

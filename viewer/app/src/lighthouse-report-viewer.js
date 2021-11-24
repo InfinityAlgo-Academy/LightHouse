@@ -14,6 +14,7 @@ import {ViewerUIFeatures} from './viewer-ui-features.js';
 import {DOM} from '../../../report/renderer/dom.js';
 import {ReportRenderer} from '../../../report/renderer/report-renderer.js';
 import {TextEncoding} from '../../../report/renderer/text-encoding.js';
+import {renderFlowReport} from '../../../flow-report/api';
 
 /* global logger */
 
@@ -116,12 +117,16 @@ export class LighthouseReportViewer {
     const gzip = params.get('gzip') === '1';
 
     if (location.hash) {
-      const hashParams = JSON.parse(TextEncoding.fromBase64(location.hash.substr(1), {gzip}));
-      if (hashParams.lhr) {
-        this._replaceReportHtml(hashParams.lhr);
-        return Promise.resolve();
-      } else {
-        console.warn('URL hash is populated, but not decoded successfully', hashParams);
+      try {
+        const hashParams = JSON.parse(TextEncoding.fromBase64(location.hash.substr(1), {gzip}));
+        if (hashParams.lhr) {
+          this._replaceReportHtml(hashParams.lhr);
+          return Promise.resolve();
+        } else {
+          console.warn('URL hash is populated, but no LHR was found', hashParams);
+        }
+      } catch {
+        console.warn('URL hash is populated, but not decoded successfully');
       }
     }
 
@@ -190,12 +195,19 @@ export class LighthouseReportViewer {
   }
 
   /**
-   * @param {LH.Result} json
-   * @private
+   * @param {LH.Result | LH.FlowResult} json
+   * @return {json is LH.FlowResult}
    */
-  // TODO: Really, `json` should really have type `unknown` and
-  // we can have _validateReportJson verify that it's an LH.Result
-  _replaceReportHtml(json) {
+  _isFlowReport(json) {
+    return 'steps' in json && Array.isArray(json.steps);
+  }
+
+  /**
+   * @param {LH.Result} json
+   * @param {HTMLElement} rootEl
+   * @param {(json: LH.Result|LH.FlowResult) => void} [saveGistCallback]
+   */
+  _renderLhr(json, rootEl, saveGistCallback) {
     // Allow users to view the runnerResult
     if ('lhr' in json) {
       const runnerResult = /** @type {{lhr: LH.Result}} */ (/** @type {unknown} */ (json));
@@ -225,32 +237,68 @@ export class LighthouseReportViewer {
     const dom = new DOM(document);
     const renderer = new ReportRenderer(dom);
 
-    const container = find('main', document);
-    try {
-      renderer.renderReport(json, container);
+    renderer.renderReport(json, rootEl);
 
-      // Only give gist-saving callback if current report isn't from a gist.
-      let saveGistCallback;
-      if (!this._reportIsFromGist) {
-        saveGistCallback = this._onSaveJson;
+    const features = new ViewerUIFeatures(dom, {
+      saveGist: saveGistCallback,
+      /** @param {LH.Result} newLhr */
+      refresh: newLhr => {
+        this._replaceReportHtml(newLhr);
+      },
+    });
+    features.initFeatures(json);
+  }
+
+  /**
+   * @param {LH.FlowResult} json
+   * @param {HTMLElement} rootEl
+   * @param {(json: LH.Result|LH.FlowResult) => void} [saveGistCallback]
+   */
+  _renderFlowResult(json, rootEl, saveGistCallback) {
+    // TODO: Add save HTML functionality with ReportGenerator loaded async.
+    renderFlowReport(json, rootEl, {
+      saveAsGist: saveGistCallback,
+    });
+    // Install as global for easier debugging.
+    window.__LIGHTHOUSE_FLOW_JSON__ = json;
+    // eslint-disable-next-line no-console
+    console.log('window.__LIGHTHOUSE_FLOW_JSON__', json);
+  }
+
+  /**
+   * @param {LH.Result | LH.FlowResult} json
+   * @private
+   */
+  // TODO: Really, `json` should really have type `unknown` and
+  // we can have _validateReportJson verify that it's an LH.Result
+  _replaceReportHtml(json) {
+    const container = find('main', document);
+
+    // Reset container content.
+    container.innerHTML = '';
+    const rootEl = document.createElement('div');
+    container.appendChild(rootEl);
+
+    // Only give gist-saving callback if current report isn't from a gist.
+    let saveGistCallback;
+    if (!this._reportIsFromGist) {
+      saveGistCallback = this._onSaveJson;
+    }
+
+    try {
+      if (this._isFlowReport(json)) {
+        this._renderFlowResult(json, rootEl, saveGistCallback);
+      } else {
+        this._renderLhr(json, rootEl, saveGistCallback);
       }
 
       // Only clear query string if current report isn't from a gist or PSI.
       if (!this._reportIsFromGist && !this._reportIsFromPSI && !this._reportIsFromJSON) {
         history.pushState({}, '', LighthouseReportViewer.APP_URL);
       }
-
-      const features = new ViewerUIFeatures(dom, {
-        saveGist: saveGistCallback,
-        /** @param {LH.Result} newLhr */
-        refresh: newLhr => {
-          this._replaceReportHtml(newLhr);
-        },
-      });
-      features.initFeatures(json);
     } catch (e) {
       logger.error(`Error rendering report: ${e.message}`);
-      container.textContent = '';
+      container.innerHTML = '';
       throw e;
     } finally {
       this._reportIsFromGist = this._reportIsFromPSI = this._reportIsFromJSON = false;
@@ -308,7 +356,7 @@ export class LighthouseReportViewer {
 
   /**
    * Saves the current report by creating a gist on GitHub.
-   * @param {LH.Result} reportJson
+   * @param {LH.Result|LH.FlowResult} reportJson
    * @return {Promise<string|void>} id of the created gist.
    * @private
    */

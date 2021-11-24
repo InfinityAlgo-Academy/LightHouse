@@ -29,6 +29,7 @@ import {PerformanceCategoryRenderer} from './performance-category-renderer.js';
 import {PwaCategoryRenderer} from './pwa-category-renderer.js';
 import {Util} from './util.js';
 
+
 export class ReportRenderer {
   /**
    * @param {DOM} dom
@@ -322,7 +323,9 @@ export class ReportRenderer {
     categoryRenderer.injectFinalScreenshot(categories, report.audits, scoreScale);
 
     const reportFragment = this._dom.createFragment();
-    reportFragment.append(this._dom.createComponent('styles'));
+    if (!this._opts.omitGlobalStyles) {
+      reportFragment.append(this._dom.createComponent('styles'));
+    }
 
     if (!this._opts.omitTopbar) {
       reportFragment.appendChild(this._renderReportTopbar(report));

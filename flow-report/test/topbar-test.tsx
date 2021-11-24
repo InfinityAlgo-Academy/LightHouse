@@ -8,7 +8,7 @@ import {jest} from '@jest/globals';
 import {FunctionComponent} from 'preact';
 import {act, render} from '@testing-library/preact';
 
-import {FlowResultContext} from '../src/util';
+import {FlowResultContext, OptionsContext} from '../src/util';
 import {I18nProvider} from '../src/i18n/i18n';
 
 const mockSaveFile = jest.fn();
@@ -31,19 +31,24 @@ const flowResult = {
 } as any;
 
 let wrapper: FunctionComponent;
+let options: LH.FlowReportOptions;
 
 beforeEach(() => {
   mockSaveFile.mockReset();
+  options = {};
   wrapper = ({children}) => (
-    <FlowResultContext.Provider value={flowResult}>
-      <I18nProvider>
-        {children}
-      </I18nProvider>
-    </FlowResultContext.Provider>
+    <OptionsContext.Provider value={options}>
+      <FlowResultContext.Provider value={flowResult}>
+        <I18nProvider>
+          {children}
+        </I18nProvider>
+      </FlowResultContext.Provider>
+    </OptionsContext.Provider>
   );
 });
 
 it('save button opens save dialog for HTML file', async () => {
+  options = {getReportHtml: () => '<html></html>'};
   const root = render(<Topbar onMenuClick={() => {}}/>, {wrapper});
 
   const saveButton = root.getByText('Save');
@@ -53,6 +58,17 @@ it('save button opens save dialog for HTML file', async () => {
     expect.any(Blob),
     'User-flow_2021-09-14_22-24-22'
   );
+});
+
+it('provides save as gist option if defined', async () => {
+  const saveAsGist = jest.fn();
+  options = {saveAsGist};
+  const root = render(<Topbar onMenuClick={() => {}}/>, {wrapper});
+
+  const saveButton = root.getByText('Save as Gist');
+  saveButton.click();
+
+  expect(saveAsGist).toHaveBeenCalledWith(flowResult);
 });
 
 it('toggles help dialog', async () => {

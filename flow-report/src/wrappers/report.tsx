@@ -35,6 +35,7 @@ export const Report: FunctionComponent<{hashState: LH.FlowResult.HashState}> =
     return renderReport(hashState.currentLhr, {
       disableAutoDarkModeAndFireworks: true,
       omitTopbar: true,
+      omitGlobalStyles: true,
       onPageAnchorRendered: link => convertAnchor(link, hashState.index),
     });
   }, [hashState]);

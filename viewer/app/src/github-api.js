@@ -12,7 +12,8 @@
 import idbKeyval from 'idb-keyval';
 
 import {FirebaseAuth} from './firebase-auth.js';
-import {getLhrFilenamePrefix} from '../../../report/generator/file-namer.js';
+// eslint-disable-next-line max-len
+import {getLhrFilenamePrefix, getFlowResultFilenamePrefix} from '../../../report/generator/file-namer.js';
 
 /**
  * Wrapper around the GitHub API for reading/writing gists.
@@ -33,7 +34,7 @@ export class GithubApi {
 
   /**
    * Creates a gist under the users account.
-   * @param {LH.Result} jsonFile The gist file body.
+   * @param {LH.Result|LH.FlowResult} jsonFile The gist file body.
    * @return {Promise<string>} id of the created gist.
    */
   async createGist(jsonFile) {
@@ -46,10 +47,15 @@ export class GithubApi {
 
     try {
       const accessToken = await this._auth.getAccessToken();
-      const filename = getLhrFilenamePrefix({
-        finalUrl: jsonFile.finalUrl,
-        fetchTime: jsonFile.fetchTime,
-      });
+      let filename;
+      if ('steps' in jsonFile) {
+        filename = getFlowResultFilenamePrefix(jsonFile);
+      } else {
+        filename = getLhrFilenamePrefix({
+          finalUrl: jsonFile.finalUrl,
+          fetchTime: jsonFile.fetchTime,
+        });
+      }
       const body = {
         description: 'Lighthouse json report',
         public: false,

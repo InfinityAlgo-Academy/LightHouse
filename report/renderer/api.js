@@ -63,4 +63,18 @@ function convertMarkdownCodeSnippets(markdownText) {
   return dom.convertMarkdownCodeSnippets(markdownText);
 }
 
-export {renderReport, renderCategoryScore, saveFile, convertMarkdownCodeSnippets};
+/**
+ * @return {DocumentFragment}
+ */
+function createStylesElement() {
+  const dom = new DOM(document, document.documentElement);
+  return dom.createComponent('styles');
+}
+
+export {
+  renderReport,
+  renderCategoryScore,
+  saveFile,
+  convertMarkdownCodeSnippets,
+  createStylesElement,
+};
