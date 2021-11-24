@@ -29,16 +29,17 @@ describe('stack-packs lib', () => {
 // These tests summarize the contents of the lighthouse-stack-packs package.
 describe('lighthouse-stack-packs dep', () => {
   it('snapshot packs', () => {
-    expect(lighthouseStackPacksDep.map(p => p.id)).toMatchInlineSnapshot(`
+    expect(lighthouseStackPacksDep.map((p) => p.id)).toMatchInlineSnapshot(`
       Array [
-        "wordpress",
-        "drupal",
-        "react",
-        "angular",
         "amp",
-        "magento",
+        "angular",
+        "drupal",
         "joomla",
+        "magento",
+        "next.js",
         "octobercms",
+        "react",
+        "wordpress",
       ]
     `);
   });
@@ -51,22 +52,25 @@ describe('lighthouse-stack-packs dep', () => {
     expect(result).toMatchInlineSnapshot(`
       Array [
         Object {
-          "id": "wordpress",
+          "id": "amp",
           "keys": Array [
-            "unused-css-rules",
             "modern-image-formats",
             "offscreen-images",
-            "total-byte-weight",
             "render-blocking-resources",
             "unminified-css",
-            "unminified-javascript",
             "efficient-animated-content",
-            "unused-javascript",
-            "uses-long-cache-ttl",
-            "uses-optimized-images",
-            "uses-text-compression",
             "uses-responsive-images",
-            "server-response-time",
+          ],
+        },
+        Object {
+          "id": "angular",
+          "keys": Array [
+            "total-byte-weight",
+            "unminified-warning",
+            "unused-javascript",
+            "uses-responsive-images",
+            "uses-rel-preload",
+            "dom-size",
           ],
         },
         Object {
@@ -90,37 +94,22 @@ describe('lighthouse-stack-packs dep', () => {
           ],
         },
         Object {
-          "id": "react",
+          "id": "joomla",
           "keys": Array [
-            "unminified-css",
-            "unminified-javascript",
-            "unused-javascript",
-            "server-response-time",
-            "redirects",
-            "user-timings",
-            "dom-size",
-          ],
-        },
-        Object {
-          "id": "angular",
-          "keys": Array [
-            "total-byte-weight",
-            "unminified-warning",
-            "unused-javascript",
-            "uses-responsive-images",
-            "uses-rel-preload",
-            "dom-size",
-          ],
-        },
-        Object {
-          "id": "amp",
-          "keys": Array [
+            "unused-css-rules",
             "modern-image-formats",
             "offscreen-images",
+            "total-byte-weight",
             "render-blocking-resources",
             "unminified-css",
+            "unminified-javascript",
             "efficient-animated-content",
+            "unused-javascript",
+            "uses-long-cache-ttl",
+            "uses-optimized-images",
+            "uses-text-compression",
             "uses-responsive-images",
+            "server-response-time",
           ],
         },
         Object {
@@ -141,7 +130,22 @@ describe('lighthouse-stack-packs dep', () => {
           ],
         },
         Object {
-          "id": "joomla",
+          "id": "next.js",
+          "keys": Array [
+            "unused-css-rules",
+            "modern-image-formats",
+            "offscreen-images",
+            "render-blocking-resources",
+            "unused-javascript",
+            "uses-long-cache-ttl",
+            "uses-optimized-images",
+            "uses-text-compression",
+            "uses-responsive-images",
+            "user-timings",
+          ],
+        },
+        Object {
+          "id": "octobercms",
           "keys": Array [
             "unused-css-rules",
             "modern-image-formats",
@@ -160,7 +164,19 @@ describe('lighthouse-stack-packs dep', () => {
           ],
         },
         Object {
-          "id": "octobercms",
+          "id": "react",
+          "keys": Array [
+            "unminified-css",
+            "unminified-javascript",
+            "unused-javascript",
+            "server-response-time",
+            "redirects",
+            "user-timings",
+            "dom-size",
+          ],
+        },
+        Object {
+          "id": "wordpress",
           "keys": Array [
             "unused-css-rules",
             "modern-image-formats",

@@ -24,14 +24,6 @@ const stackPacksToInclude = [
     requiredStacks: ['js:drupal'],
   },
   {
-    packId: 'react',
-    requiredStacks: ['js:react'],
-  },
-  {
-    packId: 'angular',
-    requiredStacks: ['js:@angular/core'],
-  },
-  {
     packId: 'amp',
     requiredStacks: ['js:amp'],
   },
@@ -46,6 +38,18 @@ const stackPacksToInclude = [
   {
     packId: 'joomla',
     requiredStacks: ['js:joomla'],
+  },
+  {
+    packId: 'next.js',
+    requiredStacks: ['js:next'],
+  },
+  {
+    packId: 'angular',
+    requiredStacks: ['js:@angular/core'],
+  },
+  {
+    packId: 'react',
+    requiredStacks: ['js:react'],
   },
 ];
 

@@ -24,7 +24,10 @@ import {countTranslatedMessages} from './count-translated.js';
 import {LH_ROOT} from '../../../root.js';
 import {resolveModulePath} from '../esm-utils.js';
 
-const UISTRINGS_REGEX = /UIStrings = .*?\};\n/s;
+// Match declarations of UIStrings, terminating in either a `};\n` (very likely to always be right)
+// or `}\n\n` (allowing semicolon to be optional, but insisting on a double newline so that an
+// closing brace in the middle of the declaration does not prematurely end the pattern)
+const UISTRINGS_REGEX = /UIStrings = .*?\}(;|\n)\n/s;
 
 /** @typedef {import('./bake-ctc-to-lhl.js').CtcMessage} CtcMessage */
 /** @typedef {Required<Pick<CtcMessage, 'message'|'placeholders'>>} IncrementalCtc */

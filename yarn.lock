@@ -5778,10 +5778,10 @@ lighthouse-plugin-publisher-ads@^1.5.4:
     intl-messageformat "^4.1.2"
     yargs "^16.1.1"
 
-lighthouse-stack-packs@^1.5.0:
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/lighthouse-stack-packs/-/lighthouse-stack-packs-1.5.0.tgz#c191f2b94db21602254baaebfb0bb90307a00ffa"
-  integrity sha512-ntVOqFsrrTQYrNf+W+sNE9GjddW+ab5QN0WrrCikjMFsUvEQ28CvT0SXcHPZXFtcsb1lMSuVaNCmEuj7oXtYGQ==
+lighthouse-stack-packs@^1.6.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/lighthouse-stack-packs/-/lighthouse-stack-packs-1.6.0.tgz#f7327352089f65f4ca61135956c77b9d13f6d681"
+  integrity sha512-isv4qY9YCiRis5Z3ijy14IUyAbl6AoD+Q8Co1t0GBBuQK2ZUTSK6mLgFd91MVJrhXaF3LXJRcO+JXaUFHedHhA==
 
 load-json-file@^1.0.0:
   version "1.1.0"
