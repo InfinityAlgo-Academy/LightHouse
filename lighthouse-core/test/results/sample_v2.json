@@ -5084,9 +5084,9 @@
                   "location": {
                     "type": "source-location",
                     "url": "http://localhost:10200/dobetterweb/third_party/aggressive-promise-polyfill.js",
+                    "urlProvider": "network",
                     "line": 2613,
-                    "column": 8,
-                    "urlProvider": "network"
+                    "column": 8
                   }
                 },
                 {
@@ -5094,9 +5094,9 @@
                   "location": {
                     "type": "source-location",
                     "url": "http://localhost:10200/dobetterweb/third_party/aggressive-promise-polyfill.js",
+                    "urlProvider": "network",
                     "line": 2623,
-                    "column": 8,
-                    "urlProvider": "network"
+                    "column": 8
                   }
                 }
               ]
@@ -7022,6 +7022,12 @@
       },
       {
         "startTime": 0,
+        "name": "lh:computed:JSBundles",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:audit:server-response-time",
         "duration": 100,
         "entryType": "measure"
@@ -7184,6 +7190,12 @@
       },
       {
         "startTime": 0,
+        "name": "lh:computed:JSBundles",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:audit:mainthread-work-breakdown",
         "duration": 100,
         "entryType": "measure"
@@ -7335,6 +7347,12 @@
       {
         "startTime": 0,
         "name": "lh:audit:no-unload-listeners",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:JSBundles",
         "duration": 100,
         "entryType": "measure"
       },
