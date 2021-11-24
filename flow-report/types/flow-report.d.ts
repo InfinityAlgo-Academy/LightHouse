@@ -21,7 +21,7 @@ declare global {
   module LH {
     export type ConfigSettings = Settings.ConfigSettings;
     export interface FlowReportOptions {
-      getReportHtml?: (flowResult: FlowResult_) => Promise<string>;
+      getReportHtml?: (flowResult: FlowResult_) => Promise<string>|string;
       saveAsGist?: (flowResult: FlowResult_) => void;
     }
 
