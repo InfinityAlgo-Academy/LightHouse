@@ -1,5 +1,5 @@
 {
-  "lighthouseVersion": "9.0.0",
+  "lighthouseVersion": "9.1.0",
   "requestedUrl": "http://localhost:10200/dobetterweb/dbw_tester.html",
   "finalUrl": "http://localhost:10200/dobetterweb/dbw_tester.html",
   "fetchTime": "2021-09-07T20:11:11.853Z",

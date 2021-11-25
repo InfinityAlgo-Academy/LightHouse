@@ -1,3 +1,73 @@
+<a name="9.1.0"></a>
+# 9.1.0 (2021-11-24)
+[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v9.0.0...v9.1.0)
+
+We expect this release to ship in the DevTools of [Chrome 98](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
+
+## New Contributors
+
+Thanks to our new contributors 👽🐷🐰🐯🐻! 
+
+- @whitep4nth3r
+- Adam Read @adamread
+
+## Notable Changes
+
+* If using Next.js, you will now see advice specific to it in some audits ([#13424](https://github.com/GoogleChrome/lighthouse/pull/13424))
+
+## Core
+
+* canonical: remove cross-origin check ([#13412](https://github.com/GoogleChrome/lighthouse/pull/13412))
+* add original location to most usages of source-location ([#13393](https://github.com/GoogleChrome/lighthouse/pull/13393))
+* mindfully order properties in the lhr ([#13418](https://github.com/GoogleChrome/lighthouse/pull/13418))
+* ensure log-normal score is always in correct range ([#13392](https://github.com/GoogleChrome/lighthouse/pull/13392))
+* installable-manifest: pipeline-restarted check ([#13365](https://github.com/GoogleChrome/lighthouse/pull/13365))
+
+## Report
+
+* remove margin when saving html in standalone report ([#13409](https://github.com/GoogleChrome/lighthouse/pull/13409))
+* consistent red display text ([#13391](https://github.com/GoogleChrome/lighthouse/pull/13391))
+* treemap: correct percentages when 0 bytes JS ([#13382](https://github.com/GoogleChrome/lighthouse/pull/13382))
+
+## ⛏️👷 Fraggle Rock
+
+  Support for auditing user flows ([#11313](https://github.com/GoogleChrome/lighthouse/issues/11313))
+
+* rebaseline sample ([#13358](https://github.com/GoogleChrome/lighthouse/pull/13358))
+* report api ([#13374](https://github.com/GoogleChrome/lighthouse/pull/13374))
+
+## Deps
+
+* remove browserify ([#13417](https://github.com/GoogleChrome/lighthouse/pull/13417))
+* update to typescript 4.5 ([#13399](https://github.com/GoogleChrome/lighthouse/pull/13399))
+* snyk: update snyk snapshot ([#13388](https://github.com/GoogleChrome/lighthouse/pull/13388))
+
+## Clients
+
+* devtools: remove report.css ([#13377](https://github.com/GoogleChrome/lighthouse/pull/13377))
+* viewer: add support for flow reports ([#13260](https://github.com/GoogleChrome/lighthouse/pull/13260))
+
+## I18n
+
+* import ([#13427](https://github.com/GoogleChrome/lighthouse/pull/13427))
+
+## Docs
+
+* example to save flow as json ([#13415](https://github.com/GoogleChrome/lighthouse/pull/13415))
+* throttling: clarify throttle npm name ([#13371](https://github.com/GoogleChrome/lighthouse/pull/13371))
+
+## Tests
+
+* fix undefined HTMLInputElement in bundle-test ([#13421](https://github.com/GoogleChrome/lighthouse/pull/13421))
+* make inline-fs-test not reliant on cwd ([#13420](https://github.com/GoogleChrome/lighthouse/pull/13420))
+* increase timeout for axe test ([#13386](https://github.com/GoogleChrome/lighthouse/pull/13386))
+
+## Misc
+
+* build: replace browserify with rollup ([#13416](https://github.com/GoogleChrome/lighthouse/pull/13416), [#13406](https://github.com/GoogleChrome/lighthouse/pull/13406), [#13407](https://github.com/GoogleChrome/lighthouse/pull/13407), [#13408](https://github.com/GoogleChrome/lighthouse/pull/13408))
+* build: prevent over optimization of computeBenchmarkIndex ([#13366](https://github.com/GoogleChrome/lighthouse/pull/13366))
+* treemap: remove postMessage. refactor options input ([#13356](https://github.com/GoogleChrome/lighthouse/pull/13356))
+
 <a name="9.0.0"></a>
 # 9.0.0 (2021-11-15)
 [Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v8.6.0...v9.0.0)
