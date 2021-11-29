@@ -239,7 +239,7 @@ async function main() {
     });
   }
 
-  for (const coreJsVersion of ['2.6.12', '3.9.1']) {
+  for (const coreJsVersion of ['2.6.12', '3.19.1']) {
     const major = coreJsVersion.split('.')[0];
     removeCoreJs();
     installCoreJs(coreJsVersion);

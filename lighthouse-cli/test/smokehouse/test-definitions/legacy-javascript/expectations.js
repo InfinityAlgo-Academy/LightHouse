@@ -46,7 +46,6 @@ const expectations = {
                   {signal: 'Object.entries'},
                   {signal: 'Object.freeze'},
                   {signal: 'Object.getOwnPropertyDescriptors'},
-                  {signal: 'Object.getOwnPropertyNames'},
                   {signal: 'Object.getPrototypeOf'},
                   {signal: 'Object.isExtensible'},
                   {signal: 'Object.isFrozen'},

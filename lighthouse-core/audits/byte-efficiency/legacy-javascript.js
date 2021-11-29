@@ -192,7 +192,6 @@ class LegacyJavascript extends ByteEfficiencyAudit {
       ['Object.defineProperties', 'es6.object.define-properties'],
       ['Object.defineProperty', 'es6.object.define-property'],
       ['Object.freeze', 'es6.object.freeze'],
-      ['Object.getOwnPropertyNames', 'es6.object.get-own-property-names'],
       ['Object.getPrototypeOf', 'es6.object.get-prototype-of'],
       ['Object.isExtensible', 'es6.object.is-extensible'],
       ['Object.isFrozen', 'es6.object.is-frozen'],
