@@ -1,4 +1,4 @@
-var n,u,i,t,r,o,e={},c=[],s=/acit|ex(?:s|g|n|p|$)|rph|grid|ows|mnc|ntw|ine[ch]|zoo|^ord/i;function a(n,l){for(var u in l){ n[u]=l[u]; }return n}function v(n){var l=n.parentNode;l&&l.removeChild(n);}function h(n,l,u){var i,t=arguments,r={};for(i in l){ "key"!==i&&"ref"!==i&&(r[i]=l[i]); }if(arguments.length>3){ for(u=[u],i=3;i<arguments.length;i++){ u.push(t[i]); } }if(null!=u&&(r.children=u),"function"==typeof n&&null!=n.defaultProps){ for(i in n.defaultProps){ void 0===r[i]&&(r[i]=n.defaultProps[i]); } }return p(n,r,l&&l.key,l&&l.ref,null)}function p(l,u,i,t,r){var o={type:l,props:u,key:i,ref:t,__k:null,__:null,__b:0,__e:null,__d:void 0,__c:null,constructor:void 0,__v:r};return null==r&&(o.__v=o),n.vnode&&n.vnode(o),o}function y(){return {}}function d(n){return n.children}function m(n,l){this.props=n,this.context=l;}function w(n,l){if(null==l){ return n.__?w(n.__,n.__.__k.indexOf(n)+1):null; }for(var u;l<n.__k.length;l++){ if(null!=(u=n.__k[l])&&null!=u.__e){ return u.__e; } }return "function"==typeof n.type?w(n):null}function k(n){var l,u;if(null!=(n=n.__)&&null!=n.__c){for(n.__e=n.__c.base=null,l=0;l<n.__k.length;l++){ if(null!=(u=n.__k[l])&&null!=u.__e){n.__e=n.__c.base=u.__e;break} }return k(n)}}function g(l){(!l.__d&&(l.__d=!0)&&u.push(l)&&!i++||r!==n.debounceRendering)&&((r=n.debounceRendering)||t)(_);}function _(){for(var n;i=u.length;){ n=u.sort(function(n,l){return n.__v.__b-l.__v.__b}),u=[],n.some(function(n){var l,u,i,t,r,o,f;n.__d&&(o=(r=(l=n).__v).__e,(f=l.__P)&&(u=[],(i=a({},r)).__v=i,t=A(f,r,i,l.__n,void 0!==f.ownerSVGElement,null,u,null==o?w(r):o),T(u,r),t!=o&&k(r)));}); }}function b(n,l,u,i,t,r,o,f,s){var a,h,p,y,d,m,k,g=u&&u.__k||c,_=g.length;if(f==e&&(f=null!=r?r[0]:_?w(u,0):null),a=0,l.__k=x(l.__k,function(u){if(null!=u){if(u.__=l,u.__b=l.__b+1,null===(p=g[a])||p&&u.key==p.key&&u.type===p.type){ g[a]=void 0; }else { for(h=0;h<_;h++){if((p=g[h])&&u.key==p.key&&u.type===p.type){g[h]=void 0;break}p=null;} }if(y=A(n,u,p=p||e,i,t,r,o,f,s),(h=u.ref)&&p.ref!=h&&(k||(k=[]),p.ref&&k.push(p.ref,null,u),k.push(h,u.__c||y,u)),null!=y){var c;if(null==m&&(m=y),void 0!==u.__d){ c=u.__d,u.__d=void 0; }else if(r==p||y!=f||null==y.parentNode){n:if(null==f||f.parentNode!==n){ n.appendChild(y),c=null; }else {for(d=f,h=0;(d=d.nextSibling)&&h<_;h+=2){ if(d==y){ break n; } }n.insertBefore(y,f),c=f;}"option"==l.type&&(n.value="");}f=void 0!==c?c:y.nextSibling,"function"==typeof l.type&&(l.__d=f);}else { f&&p.__e==f&&f.parentNode!=n&&(f=w(p)); }}return a++,u}),l.__e=m,null!=r&&"function"!=typeof l.type){ for(a=r.length;a--;){ null!=r[a]&&v(r[a]); } }for(a=_;a--;){ null!=g[a]&&D(g[a],g[a]); }if(k){ for(a=0;a<k.length;a++){ j(k[a],k[++a],k[++a]); } }}function x(n,l,u){if(null==u&&(u=[]),null==n||"boolean"==typeof n){ l&&u.push(l(null)); }else if(Array.isArray(n)){ for(var i=0;i<n.length;i++){ x(n[i],l,u); } }else { u.push(l?l("string"==typeof n||"number"==typeof n?p(null,n,null,null,n):null!=n.__e||null!=n.__c?p(n.type,n.props,n.key,null,n.__v):n):n); }return u}function P(n,l,u,i,t){var r;for(r in u){ "children"===r||"key"===r||r in l||N(n,r,null,u[r],i); }for(r in l){ t&&"function"!=typeof l[r]||"children"===r||"key"===r||"value"===r||"checked"===r||u[r]===l[r]||N(n,r,l[r],u[r],i); }}function C(n,l,u){"-"===l[0]?n.setProperty(l,u):n[l]="number"==typeof u&&!1===s.test(l)?u+"px":null==u?"":u;}function N(n,l,u,i,t){var r,o,f,e,c;if(t?"className"===l&&(l="class"):"class"===l&&(l="className"),"style"===l){ if(r=n.style,"string"==typeof u){ r.cssText=u; }else {if("string"==typeof i&&(r.cssText="",i=null),i){ for(e in i){ u&&e in u||C(r,e,""); } }if(u){ for(c in u){ i&&u[c]===i[c]||C(r,c,u[c]); } }} }else { "o"===l[0]&&"n"===l[1]?(o=l!==(l=l.replace(/Capture$/,"")),f=l.toLowerCase(),l=(f in n?f:l).slice(2),u?(i||n.addEventListener(l,z,o),(n.l||(n.l={}))[l]=u):n.removeEventListener(l,z,o)):"list"!==l&&"tagName"!==l&&"form"!==l&&"type"!==l&&"size"!==l&&!t&&l in n?n[l]=null==u?"":u:"function"!=typeof u&&"dangerouslySetInnerHTML"!==l&&(l!==(l=l.replace(/^xlink:?/,""))?null==u||!1===u?n.removeAttributeNS("http://www.w3.org/1999/xlink",l.toLowerCase()):n.setAttributeNS("http://www.w3.org/1999/xlink",l.toLowerCase(),u):null==u||!1===u&&!/^ar/.test(l)?n.removeAttribute(l):n.setAttribute(l,u)); }}function z(l){this.l[l.type](n.event?n.event(l):l);}function A(l,u,i,t,r,o,f,e,c){var s,v,h,p,y,w,k,g,_,x,P=u.type;if(void 0!==u.constructor){ return null; }(s=n.__b)&&s(u);try{n:if("function"==typeof P){if(g=u.props,_=(s=P.contextType)&&t[s.__c],x=s?_?_.props.value:s.__:t,i.__c?k=(v=u.__c=i.__c).__=v.__E:("prototype"in P&&P.prototype.render?u.__c=v=new P(g,x):(u.__c=v=new m(g,x),v.constructor=P,v.render=E),_&&_.sub(v),v.props=g,v.state||(v.state={}),v.context=x,v.__n=t,h=v.__d=!0,v.__h=[]),null==v.__s&&(v.__s=v.state),null!=P.getDerivedStateFromProps&&(v.__s==v.state&&(v.__s=a({},v.__s)),a(v.__s,P.getDerivedStateFromProps(g,v.__s))),p=v.props,y=v.state,h){ null==P.getDerivedStateFromProps&&null!=v.componentWillMount&&v.componentWillMount(),null!=v.componentDidMount&&v.__h.push(v.componentDidMount); }else {if(null==P.getDerivedStateFromProps&&g!==p&&null!=v.componentWillReceiveProps&&v.componentWillReceiveProps(g,x),!v.__e&&null!=v.shouldComponentUpdate&&!1===v.shouldComponentUpdate(g,v.__s,x)||u.__v===i.__v&&!v.__){for(v.props=g,v.state=v.__s,u.__v!==i.__v&&(v.__d=!1),v.__v=u,u.__e=i.__e,u.__k=i.__k,v.__h.length&&f.push(v),s=0;s<u.__k.length;s++){ u.__k[s]&&(u.__k[s].__=u); }break n}null!=v.componentWillUpdate&&v.componentWillUpdate(g,v.__s,x),null!=v.componentDidUpdate&&v.__h.push(function(){v.componentDidUpdate(p,y,w);});}v.context=x,v.props=g,v.state=v.__s,(s=n.__r)&&s(u),v.__d=!1,v.__v=u,v.__P=l,s=v.render(v.props,v.state,v.context),u.__k=null!=s&&s.type==d&&null==s.key?s.props.children:Array.isArray(s)?s:[s],null!=v.getChildContext&&(t=a(a({},t),v.getChildContext())),h||null==v.getSnapshotBeforeUpdate||(w=v.getSnapshotBeforeUpdate(p,y)),b(l,u,i,t,r,o,f,e,c),v.base=u.__e,v.__h.length&&f.push(v),k&&(v.__E=v.__=null),v.__e=!1;}else { null==o&&u.__v===i.__v?(u.__k=i.__k,u.__e=i.__e):u.__e=$$1(i.__e,u,i,t,r,o,f,c); }(s=n.diffed)&&s(u);}catch(l$1){u.__v=null,n.__e(l$1,u,i);}return u.__e}function T(l,u){n.__c&&n.__c(u,l),l.some(function(u){try{l=u.__h,u.__h=[],l.some(function(n){n.call(u);});}catch(l$1){n.__e(l$1,u.__v);}});}function $$1(n,l,u,i,t,r,o,f){var s,a,v,h,p,y=u.props,d=l.props;if(t="svg"===l.type||t,null!=r){ for(s=0;s<r.length;s++){ if(null!=(a=r[s])&&((null===l.type?3===a.nodeType:a.localName===l.type)||n==a)){n=a,r[s]=null;break} } }if(null==n){if(null===l.type){ return document.createTextNode(d); }n=t?document.createElementNS("http://www.w3.org/2000/svg",l.type):document.createElement(l.type,d.is&&{is:d.is}),r=null,f=!1;}if(null===l.type){ y!==d&&n.data!=d&&(n.data=d); }else {if(null!=r&&(r=c.slice.call(n.childNodes)),v=(y=u.props||e).dangerouslySetInnerHTML,h=d.dangerouslySetInnerHTML,!f){if(y===e){ for(y={},p=0;p<n.attributes.length;p++){ y[n.attributes[p].name]=n.attributes[p].value; } }(h||v)&&(h&&v&&h.__html==v.__html||(n.innerHTML=h&&h.__html||""));}P(n,d,y,t,f),h?l.__k=[]:(l.__k=l.props.children,b(n,l,u,i,"foreignObject"!==l.type&&t,r,o,e,f)),f||("value"in d&&void 0!==(s=d.value)&&s!==n.value&&N(n,"value",s,y.value,!1),"checked"in d&&void 0!==(s=d.checked)&&s!==n.checked&&N(n,"checked",s,y.checked,!1));}return n}function j(l,u,i){try{"function"==typeof l?l(u):l.current=u;}catch(l$1){n.__e(l$1,i);}}function D(l,u,i){var t,r,o;if(n.unmount&&n.unmount(l),(t=l.ref)&&(t.current&&t.current!==l.__e||j(t,null,u)),i||"function"==typeof l.type||(i=null!=(r=l.__e)),l.__e=l.__d=void 0,null!=(t=l.__c)){if(t.componentWillUnmount){ try{t.componentWillUnmount();}catch(l$1){n.__e(l$1,u);} }t.base=t.__P=null;}if(t=l.__k){ for(o=0;o<t.length;o++){ t[o]&&D(t[o],u,i); } }null!=r&&v(r);}function E(n,l,u){return this.constructor(n,u)}function H(l,u,i){var t,r,f;n.__&&n.__(l,u),r=(t=i===o)?null:i&&i.__k||u.__k,l=h(d,null,[l]),f=[],A(u,(t?u:i||u).__k=l,r||e,e,void 0!==u.ownerSVGElement,i&&!t?[i]:r?null:c.slice.call(u.childNodes),f,i||e,t),T(f,l);}n={__e:function(n,l){for(var u,i;l=l.__;){ if((u=l.__c)&&!u.__){ try{if(u.constructor&&null!=u.constructor.getDerivedStateFromError&&(i=!0,u.setState(u.constructor.getDerivedStateFromError(n))),null!=u.componentDidCatch&&(i=!0,u.componentDidCatch(n)),i){ return g(u.__E=u) }}catch(l$1){n=l$1;} } }throw n}},m.prototype.setState=function(n,l){var u;u=this.__s!==this.state?this.__s:this.__s=a({},this.state),"function"==typeof n&&(n=n(u,this.props)),n&&a(u,n),null!=n&&this.__v&&(l&&this.__h.push(l),g(this));},m.prototype.forceUpdate=function(n){this.__v&&(this.__e=!0,n&&this.__h.push(n),g(this));},m.prototype.render=d,u=[],i=0,t="function"==typeof Promise?Promise.prototype.then.bind(Promise.resolve()):setTimeout,o=e,0;
+var n,u,i,t,r,o,e={},c=[],s=/acit|ex(?:s|g|n|p|$)|rph|grid|ows|mnc|ntw|ine[ch]|zoo|^ord/i;function a(n,l){for(var u in l){ n[u]=l[u]; }return n}function v(n){var l=n.parentNode;l&&l.removeChild(n);}function h(n,l,u){var i,t=arguments,r={};for(i in l){ "key"!==i&&"ref"!==i&&(r[i]=l[i]); }if(arguments.length>3){ for(u=[u],i=3;i<arguments.length;i++){ u.push(t[i]); } }if(null!=u&&(r.children=u),"function"==typeof n&&null!=n.defaultProps){ for(i in n.defaultProps){ void 0===r[i]&&(r[i]=n.defaultProps[i]); } }return p(n,r,l&&l.key,l&&l.ref,null)}function p(l,u,i,t,r){var o={type:l,props:u,key:i,ref:t,__k:null,__:null,__b:0,__e:null,__d:void 0,__c:null,constructor:void 0,__v:r};return null==r&&(o.__v=o),n.vnode&&n.vnode(o),o}function y(){return {}}function d(n){return n.children}function m(n,l){this.props=n,this.context=l;}function w(n,l){if(null==l){ return n.__?w(n.__,n.__.__k.indexOf(n)+1):null; }for(var u;l<n.__k.length;l++){ if(null!=(u=n.__k[l])&&null!=u.__e){ return u.__e; } }return "function"==typeof n.type?w(n):null}function k(n){var l,u;if(null!=(n=n.__)&&null!=n.__c){for(n.__e=n.__c.base=null,l=0;l<n.__k.length;l++){ if(null!=(u=n.__k[l])&&null!=u.__e){n.__e=n.__c.base=u.__e;break} }return k(n)}}function g(l){(!l.__d&&(l.__d=!0)&&u.push(l)&&!i++||r!==n.debounceRendering)&&((r=n.debounceRendering)||t)(_);}function _(){for(var n;i=u.length;){ n=u.sort(function(n,l){return n.__v.__b-l.__v.__b}),u=[],n.some(function(n){var l,u,i,t,r,o,f;n.__d&&(o=(r=(l=n).__v).__e,(f=l.__P)&&(u=[],(i=a({},r)).__v=i,t=A(f,r,i,l.__n,void 0!==f.ownerSVGElement,null,u,null==o?w(r):o),T(u,r),t!=o&&k(r)));}); }}function b(n,l,u,i,t,r,o,f,s){var a,h,p,y,d,m,k,g=u&&u.__k||c,_=g.length;if(f==e&&(f=null!=r?r[0]:_?w(u,0):null),a=0,l.__k=x(l.__k,function(u){if(null!=u){if(u.__=l,u.__b=l.__b+1,null===(p=g[a])||p&&u.key==p.key&&u.type===p.type){ g[a]=void 0; }else { for(h=0;h<_;h++){if((p=g[h])&&u.key==p.key&&u.type===p.type){g[h]=void 0;break}p=null;} }if(y=A(n,u,p=p||e,i,t,r,o,f,s),(h=u.ref)&&p.ref!=h&&(k||(k=[]),p.ref&&k.push(p.ref,null,u),k.push(h,u.__c||y,u)),null!=y){var c;if(null==m&&(m=y),void 0!==u.__d){ c=u.__d,u.__d=void 0; }else if(r==p||y!=f||null==y.parentNode){n:if(null==f||f.parentNode!==n){ n.appendChild(y),c=null; }else {for(d=f,h=0;(d=d.nextSibling)&&h<_;h+=2){ if(d==y){ break n; } }n.insertBefore(y,f),c=f;}"option"==l.type&&(n.value="");}f=void 0!==c?c:y.nextSibling,"function"==typeof l.type&&(l.__d=f);}else { f&&p.__e==f&&f.parentNode!=n&&(f=w(p)); }}return a++,u}),l.__e=m,null!=r&&"function"!=typeof l.type){ for(a=r.length;a--;){ null!=r[a]&&v(r[a]); } }for(a=_;a--;){ null!=g[a]&&D(g[a],g[a]); }if(k){ for(a=0;a<k.length;a++){ j(k[a],k[++a],k[++a]); } }}function x(n,l,u){if(null==u&&(u=[]),null==n||"boolean"==typeof n){ l&&u.push(l(null)); }else if(Array.isArray(n)){ for(var i=0;i<n.length;i++){ x(n[i],l,u); } }else { u.push(l?l("string"==typeof n||"number"==typeof n?p(null,n,null,null,n):null!=n.__e||null!=n.__c?p(n.type,n.props,n.key,null,n.__v):n):n); }return u}function P(n,l,u,i,t){var r;for(r in u){ "children"===r||"key"===r||r in l||N(n,r,null,u[r],i); }for(r in l){ t&&"function"!=typeof l[r]||"children"===r||"key"===r||"value"===r||"checked"===r||u[r]===l[r]||N(n,r,l[r],u[r],i); }}function C(n,l,u){"-"===l[0]?n.setProperty(l,u):n[l]="number"==typeof u&&!1===s.test(l)?u+"px":null==u?"":u;}function N(n,l,u,i,t){var r,o,f,e,c;if(t?"className"===l&&(l="class"):"class"===l&&(l="className"),"style"===l){ if(r=n.style,"string"==typeof u){ r.cssText=u; }else {if("string"==typeof i&&(r.cssText="",i=null),i){ for(e in i){ u&&e in u||C(r,e,""); } }if(u){ for(c in u){ i&&u[c]===i[c]||C(r,c,u[c]); } }} }else { "o"===l[0]&&"n"===l[1]?(o=l!==(l=l.replace(/Capture$/,"")),f=l.toLowerCase(),l=(f in n?f:l).slice(2),u?(i||n.addEventListener(l,z,o),(n.l||(n.l={}))[l]=u):n.removeEventListener(l,z,o)):"list"!==l&&"tagName"!==l&&"form"!==l&&"type"!==l&&"size"!==l&&!t&&l in n?n[l]=null==u?"":u:"function"!=typeof u&&"dangerouslySetInnerHTML"!==l&&(l!==(l=l.replace(/^xlink:?/,""))?null==u||!1===u?n.removeAttributeNS("http://www.w3.org/1999/xlink",l.toLowerCase()):n.setAttributeNS("http://www.w3.org/1999/xlink",l.toLowerCase(),u):null==u||!1===u&&!/^ar/.test(l)?n.removeAttribute(l):n.setAttribute(l,u)); }}function z(l){this.l[l.type](n.event?n.event(l):l);}function A(l,u,i,t,r,o,f,e,c){var s,v,h,p,y,w,k,g,_,x,P=u.type;if(void 0!==u.constructor){ return null; }(s=n.__b)&&s(u);try{n:if("function"==typeof P){if(g=u.props,_=(s=P.contextType)&&t[s.__c],x=s?_?_.props.value:s.__:t,i.__c?k=(v=u.__c=i.__c).__=v.__E:("prototype"in P&&P.prototype.render?u.__c=v=new P(g,x):(u.__c=v=new m(g,x),v.constructor=P,v.render=E),_&&_.sub(v),v.props=g,v.state||(v.state={}),v.context=x,v.__n=t,h=v.__d=!0,v.__h=[]),null==v.__s&&(v.__s=v.state),null!=P.getDerivedStateFromProps&&(v.__s==v.state&&(v.__s=a({},v.__s)),a(v.__s,P.getDerivedStateFromProps(g,v.__s))),p=v.props,y=v.state,h){ null==P.getDerivedStateFromProps&&null!=v.componentWillMount&&v.componentWillMount(),null!=v.componentDidMount&&v.__h.push(v.componentDidMount); }else {if(null==P.getDerivedStateFromProps&&g!==p&&null!=v.componentWillReceiveProps&&v.componentWillReceiveProps(g,x),!v.__e&&null!=v.shouldComponentUpdate&&!1===v.shouldComponentUpdate(g,v.__s,x)||u.__v===i.__v&&!v.__){for(v.props=g,v.state=v.__s,u.__v!==i.__v&&(v.__d=!1),v.__v=u,u.__e=i.__e,u.__k=i.__k,v.__h.length&&f.push(v),s=0;s<u.__k.length;s++){ u.__k[s]&&(u.__k[s].__=u); }break n}null!=v.componentWillUpdate&&v.componentWillUpdate(g,v.__s,x),null!=v.componentDidUpdate&&v.__h.push(function(){v.componentDidUpdate(p,y,w);});}v.context=x,v.props=g,v.state=v.__s,(s=n.__r)&&s(u),v.__d=!1,v.__v=u,v.__P=l,s=v.render(v.props,v.state,v.context),u.__k=null!=s&&s.type==d&&null==s.key?s.props.children:Array.isArray(s)?s:[s],null!=v.getChildContext&&(t=a(a({},t),v.getChildContext())),h||null==v.getSnapshotBeforeUpdate||(w=v.getSnapshotBeforeUpdate(p,y)),b(l,u,i,t,r,o,f,e,c),v.base=u.__e,v.__h.length&&f.push(v),k&&(v.__E=v.__=null),v.__e=!1;}else { null==o&&u.__v===i.__v?(u.__k=i.__k,u.__e=i.__e):u.__e=$$1(i.__e,u,i,t,r,o,f,c); }(s=n.diffed)&&s(u);}catch(l){u.__v=null,n.__e(l,u,i);}return u.__e}function T(l,u){n.__c&&n.__c(u,l),l.some(function(u){try{l=u.__h,u.__h=[],l.some(function(n){n.call(u);});}catch(l){n.__e(l,u.__v);}});}function $$1(n,l,u,i,t,r,o,f){var s,a,v,h,p,y=u.props,d=l.props;if(t="svg"===l.type||t,null!=r){ for(s=0;s<r.length;s++){ if(null!=(a=r[s])&&((null===l.type?3===a.nodeType:a.localName===l.type)||n==a)){n=a,r[s]=null;break} } }if(null==n){if(null===l.type){ return document.createTextNode(d); }n=t?document.createElementNS("http://www.w3.org/2000/svg",l.type):document.createElement(l.type,d.is&&{is:d.is}),r=null,f=!1;}if(null===l.type){ y!==d&&n.data!=d&&(n.data=d); }else {if(null!=r&&(r=c.slice.call(n.childNodes)),v=(y=u.props||e).dangerouslySetInnerHTML,h=d.dangerouslySetInnerHTML,!f){if(y===e){ for(y={},p=0;p<n.attributes.length;p++){ y[n.attributes[p].name]=n.attributes[p].value; } }(h||v)&&(h&&v&&h.__html==v.__html||(n.innerHTML=h&&h.__html||""));}P(n,d,y,t,f),h?l.__k=[]:(l.__k=l.props.children,b(n,l,u,i,"foreignObject"!==l.type&&t,r,o,e,f)),f||("value"in d&&void 0!==(s=d.value)&&s!==n.value&&N(n,"value",s,y.value,!1),"checked"in d&&void 0!==(s=d.checked)&&s!==n.checked&&N(n,"checked",s,y.checked,!1));}return n}function j(l,u,i){try{"function"==typeof l?l(u):l.current=u;}catch(l){n.__e(l,i);}}function D(l,u,i){var t,r,o;if(n.unmount&&n.unmount(l),(t=l.ref)&&(t.current&&t.current!==l.__e||j(t,null,u)),i||"function"==typeof l.type||(i=null!=(r=l.__e)),l.__e=l.__d=void 0,null!=(t=l.__c)){if(t.componentWillUnmount){ try{t.componentWillUnmount();}catch(l){n.__e(l,u);} }t.base=t.__P=null;}if(t=l.__k){ for(o=0;o<t.length;o++){ t[o]&&D(t[o],u,i); } }null!=r&&v(r);}function E(n,l,u){return this.constructor(n,u)}function H(l,u,i){var t,r,f;n.__&&n.__(l,u),r=(t=i===o)?null:i&&i.__k||u.__k,l=h(d,null,[l]),f=[],A(u,(t?u:i||u).__k=l,r||e,e,void 0!==u.ownerSVGElement,i&&!t?[i]:r?null:c.slice.call(u.childNodes),f,i||e,t),T(f,l);}n={__e:function(n,l){for(var u,i;l=l.__;){ if((u=l.__c)&&!u.__){ try{if(u.constructor&&null!=u.constructor.getDerivedStateFromError&&(i=!0,u.setState(u.constructor.getDerivedStateFromError(n))),null!=u.componentDidCatch&&(i=!0,u.componentDidCatch(n)),i){ return g(u.__E=u) }}catch(l){n=l;} } }throw n}},m.prototype.setState=function(n,l){var u;u=this.__s!==this.state?this.__s:this.__s=a({},this.state),"function"==typeof n&&(n=n(u,this.props)),n&&a(u,n),null!=n&&this.__v&&(l&&this.__h.push(l),g(this));},m.prototype.forceUpdate=function(n){this.__v&&(this.__e=!0,n&&this.__h.push(n),g(this));},m.prototype.render=d,u=[],i=0,t="function"==typeof Promise?Promise.prototype.then.bind(Promise.resolve()):setTimeout,o=e,0;
 
 /**
  * Approximates the Gauss error function, the probability that a random variable
@@ -33,11 +33,7 @@ function internalErf_(x) {
  * @return The complement of the quantile at value.
  * @customfunction
  */
-function QUANTILE_AT_VALUE(ref, value) {
-  var median = ref.median;
-  var podr = ref.podr;
-  var p10 = ref.p10;
-
+function QUANTILE_AT_VALUE({median, podr, p10}, value) {
   if (!podr) {
     podr = derivePodrFromP10(median, p10);
   }
@@ -81,11 +77,7 @@ function internalErfInv_(x) {
  * @return The value at this quantile.
  * @customfunction
  */
-function VALUE_AT_QUANTILE(ref, quantile) {
-  var median = ref.median;
-  var podr = ref.podr;
-  var p10 = ref.p10;
-
+function VALUE_AT_QUANTILE({median, podr, p10}, quantile) {
   if (!podr) {
     podr = derivePodrFromP10(median, p10);
   }
@@ -99,30 +91,30 @@ function VALUE_AT_QUANTILE(ref, quantile) {
 
 // https://www.desmos.com/calculator/oqlvmezbze
 function derivePodrFromP10(median, p10) {
-  var u = Math.log(median);
-  var shape = Math.abs(Math.log(p10) - u) / (Math.SQRT2 * 0.9061938024368232);
-  var inner1 = -3 * shape - Math.sqrt(4 + shape * shape);
-  var podr = Math.exp(u + shape/2 * inner1);
+  const u = Math.log(median);
+  const shape = Math.abs(Math.log(p10) - u) / (Math.SQRT2 * 0.9061938024368232);
+  const inner1 = -3 * shape - Math.sqrt(4 + shape * shape);
+  const podr = Math.exp(u + shape/2 * inner1);
   return podr;
 }
 
 // blingjs
-var $ = document.querySelector.bind(document);
+const $ = document.querySelector.bind(document);
 document.querySelectorAll.bind(document);
 
 Element.prototype.$ = Element.prototype.querySelector;
 Element.prototype.$$ = Element.prototype.querySelectorAll;
 
-var NBSP = '\xa0';
-var numberFormatter = new Intl.NumberFormat();
+const NBSP = '\xa0';
+const numberFormatter = new Intl.NumberFormat();
 
 // thx Lighthouse's util.js
 function arithmeticMean(items) {
-  items = items.filter(function (item) { return item.weight > 0; });
-  var results = items.reduce(
-    function (result, item) {
-      var score = item.result.score;
-      var weight = item.weight;
+  items = items.filter(item => item.weight > 0);
+  const results = items.reduce(
+    (result, item) => {
+      const score = item.result.score;
+      const weight = item.weight;
       return {
         weight: result.weight + weight,
         sum: result.sum + score * weight,
@@ -134,13 +126,13 @@ function arithmeticMean(items) {
 }
 
 function calculateRating(score) {
-	var RATINGS = {
+	const RATINGS = {
 		PASS: {label: 'pass', minScore: 0.9},
 		AVERAGE: {label: 'average', minScore: 0.5},
 		FAIL: {label: 'fail'},
 	};
 
-  var rating = RATINGS.FAIL.label;
+  let rating = RATINGS.FAIL.label;
   if (score >= RATINGS.PASS.minScore) {
     rating = RATINGS.PASS.label;
   } else if (score >= RATINGS.AVERAGE.minScore) {
@@ -149,7 +141,7 @@ function calculateRating(score) {
   return rating;
 }
 
-var metrics = {
+const metrics = {
   FCP: {auditId: 'first-contentful-paint', name: 'First Contentful Paint'},
   SI: {auditId: 'speed-index', name: 'Speed Index'},
   LCP: {auditId: 'largest-contentful-paint', name: 'Largest Contentful Paint'},
@@ -160,7 +152,7 @@ var metrics = {
   FCI: {auditId: 'first-cpu-idle', name: 'First CPU Idle'},
 };
 
-var curves = {
+const curves = {
   v8: {
     mobile: {
       FCP: {weight: 0.10, median: 3000, p10: 1800},
@@ -210,22 +202,18 @@ var curves = {
  * @param {Record<string, {weight: number, median: number, podr: number}>} curves
  */
 function makeScoringGuide(curves) {
-  var scoringGuide = {};
-  for (var [key, curve] of Object.entries(curves)) {
-    scoringGuide[key] = Object.assign({}, metrics[key], curve);
+  const scoringGuide = {};
+  for (const [key, curve] of Object.entries(curves)) {
+    scoringGuide[key] = {...metrics[key], ...curve};
   }
   return scoringGuide;
 }
 
-var scoringGuides = {
+const scoringGuides = {
+  // v9 => v8 and v7 => v6 is handled in normalizeVersions()
   v8: {
     mobile: makeScoringGuide(curves.v8.mobile),
     desktop: makeScoringGuide(curves.v8.desktop),
-  },
-  // v7 scoring is identical to v6
-  v7: {
-    mobile: makeScoringGuide(curves.v6.mobile),
-    desktop: makeScoringGuide(curves.v6.desktop),
   },
   v6: {
     mobile: makeScoringGuide(curves.v6.mobile),
@@ -244,36 +232,36 @@ function updateGauge(wrapper, category) {
 function _determineTrig(sizeSVG, percent, strokeWidth) {
   strokeWidth = strokeWidth || sizeSVG / 32;
 
-  var radiusInner = sizeSVG / strokeWidth;
-  var strokeGap = 0.5 * strokeWidth;
-  var radiusOuter = radiusInner + strokeGap + strokeWidth;
+  const radiusInner = sizeSVG / strokeWidth;
+  const strokeGap = 0.5 * strokeWidth;
+  const radiusOuter = radiusInner + strokeGap + strokeWidth;
 
-  var circumferenceInner = 2 * Math.PI * radiusInner;
+  const circumferenceInner = 2 * Math.PI * radiusInner;
   // arc length we need to subtract
   // for very small strokeWidth:radius ratios this is ≈ strokeWidth
   // angle = acute angle of isosceles △ with 2 edges equal to radius & 3rd equal to strokeWidth
   // angle formula given by law of cosines
-  var endDiffInner = Math.acos(1 - 0.5 * Math.pow((0.5 * strokeWidth) / radiusInner, 2)) * radiusInner;
+  const endDiffInner = Math.acos(1 - 0.5 * Math.pow((0.5 * strokeWidth) / radiusInner, 2)) * radiusInner;
 
-  var circumferenceOuter = 2 * Math.PI * radiusOuter;
-  var endDiffOuter = Math.acos(1 - 0.5 * Math.pow((0.5 * strokeWidth) / radiusOuter, 2)) * radiusOuter;
+  const circumferenceOuter = 2 * Math.PI * radiusOuter;
+  const endDiffOuter = Math.acos(1 - 0.5 * Math.pow((0.5 * strokeWidth) / radiusOuter, 2)) * radiusOuter;
 
   return {
-    radiusInner: radiusInner,
-    radiusOuter: radiusOuter,
-    circumferenceInner: circumferenceInner,
-    circumferenceOuter: circumferenceOuter,
-    getArcLength: function (_) { return Math.max(0, +(percent * circumferenceInner - 2 * endDiffInner).toFixed(4)); },
+    radiusInner,
+    radiusOuter,
+    circumferenceInner,
+    circumferenceOuter,
+    getArcLength: _ => Math.max(0, +(percent * circumferenceInner - 2 * endDiffInner).toFixed(4)),
     // isButt case is for metricArcHoverTarget
-    getMetricArcLength: function (weightingPct, isButt) {
+    getMetricArcLength: (weightingPct, isButt) => {
       // TODO: this math isn't perfect butt it's very close.
-      var linecapFactor = isButt ? 0 : 2 * endDiffOuter;
+      const linecapFactor = isButt ? 0 : 2 * endDiffOuter;
       return Math.max(0, +(weightingPct * circumferenceOuter - strokeGap - linecapFactor).toFixed(4));
     },
-    endDiffInner: endDiffInner,
-    endDiffOuter: endDiffOuter,
-    strokeWidth: strokeWidth,
-    strokeGap: strokeGap,
+    endDiffInner,
+    endDiffOuter,
+    strokeWidth,
+    strokeGap,
   };
 }
 
@@ -282,104 +270,105 @@ function _determineTrig(sizeSVG, percent, strokeWidth) {
  * @param {LH.ReportResult.Category} category
  */
 function _setPerfGaugeExplodey(wrapper, category) {
-  var sizeSVG = 128;
-  var offsetSVG = -0.5 * sizeSVG;
+  const sizeSVG = 128;
+  const offsetSVG = -0.5 * sizeSVG;
 
-  var percent = Number(category.score);
-  var ref = _determineTrig(sizeSVG, percent);
-  var radiusInner = ref.radiusInner;
-  var radiusOuter = ref.radiusOuter;
-  var circumferenceInner = ref.circumferenceInner;
-  var circumferenceOuter = ref.circumferenceOuter;
-  var getArcLength = ref.getArcLength;
-  var getMetricArcLength = ref.getMetricArcLength;
-  var endDiffInner = ref.endDiffInner;
-  var endDiffOuter = ref.endDiffOuter;
-  var strokeWidth = ref.strokeWidth;
-  var strokeGap = ref.strokeGap;
+  const percent = Number(category.score);
+  const {
+    radiusInner,
+    radiusOuter,
+    circumferenceInner,
+    circumferenceOuter,
+    getArcLength,
+    getMetricArcLength,
+    endDiffInner,
+    endDiffOuter,
+    strokeWidth,
+    strokeGap,
+  } = _determineTrig(sizeSVG, percent);
 
-  var SVG = wrapper.querySelector('.lh-gauge');
-  var NS_URI = 'http://www.w3.org/2000/svg';
+  const SVG = wrapper.querySelector('.lh-gauge');
+  const NS_URI = 'http://www.w3.org/2000/svg';
 
   SVG.setAttribute('viewBox', [offsetSVG, offsetSVG, sizeSVG, sizeSVG].join(' '));
-  SVG.style.setProperty('--stroke-width', (strokeWidth + "px"));
+  SVG.style.setProperty('--stroke-width', `${strokeWidth}px`);
   SVG.style.setProperty('--circle-meas', 2 * Math.PI.toFixed(4));
 
-  var groupOuter = wrapper.querySelector('.lh-gauge__outer');
-  var groupInner = wrapper.querySelector('.lh-gauge__inner');
-  var cover = groupOuter.querySelector('.cover');
-  var gaugeArc = groupInner.querySelector('.lh-gauge__arc');
-  var gaugePerc = groupInner.querySelector('.lh-gauge__percentage');
+  const groupOuter = wrapper.querySelector('.lh-gauge__outer');
+  const groupInner = wrapper.querySelector('.lh-gauge__inner');
+  const cover = groupOuter.querySelector('.cover');
+  const gaugeArc = groupInner.querySelector('.lh-gauge__arc');
+  const gaugePerc = groupInner.querySelector('.lh-gauge__percentage');
 
   groupOuter.style.setProperty('--scale-initial', radiusInner / radiusOuter);
-  groupOuter.style.setProperty('--radius', (radiusOuter + "px"));
-  cover.style.setProperty('--radius', ((0.5 * (radiusInner + radiusOuter)) + "px"));
+  groupOuter.style.setProperty('--radius', `${radiusOuter}px`);
+  cover.style.setProperty('--radius', `${0.5 * (radiusInner + radiusOuter)}px`);
   cover.setAttribute('stroke-width', strokeGap);
-  SVG.style.setProperty('--radius', (radiusInner + "px"));
+  SVG.style.setProperty('--radius', `${radiusInner}px`);
 
-  gaugeArc.setAttribute('stroke-dasharray', ((getArcLength()) + " " + ((circumferenceInner - getArcLength()).toFixed(4))));
+  gaugeArc.setAttribute('stroke-dasharray', `${getArcLength()} ${(circumferenceInner - getArcLength()).toFixed(4)}`);
   gaugeArc.setAttribute('stroke-dashoffset', 0.25 * circumferenceInner - endDiffInner);
 
   gaugePerc.textContent = Math.round(percent * 100);
 
-  var radiusTextOuter = radiusOuter + strokeWidth;
-  var radiusTextInner = radiusOuter - strokeWidth;
+  const radiusTextOuter = radiusOuter + strokeWidth;
+  const radiusTextInner = radiusOuter - strokeWidth;
 
-  var metrics = category.auditRefs.filter(function (r) { return r.group === 'metrics' && r.weight; });
-  var totalWeight = metrics.reduce(function (sum, each) { return (sum += each.weight); }, 0);
-  var offsetAdder = 0.25 * circumferenceOuter - endDiffOuter - 0.5 * strokeGap;
-  var angleAdder = -0.5 * Math.PI;
+  const metrics = category.auditRefs.filter(r => r.group === 'metrics' && r.weight);
+  const totalWeight = metrics.reduce((sum, each) => (sum += each.weight), 0);
+  let offsetAdder = 0.25 * circumferenceOuter - endDiffOuter - 0.5 * strokeGap;
+  let angleAdder = -0.5 * Math.PI;
 
   // Extra hack on top of the HACK for element reuse below. Delete any metric elems that aren't needed anymore (happens when the same gauge goes from v5 to v6)
-  groupOuter.querySelectorAll('.metric').forEach(function (metricElem) {
-    var classNamesToRetain = metrics.map(function (metric) { return ("metric--" + (metric.id)); });
-    var match = classNamesToRetain.find(function (selector) { return metricElem.classList.contains(selector); });
+  groupOuter.querySelectorAll('.metric').forEach(metricElem => {
+    const classNamesToRetain = metrics.map(metric => `metric--${metric.id}`);
+    const match = classNamesToRetain.find(selector => metricElem.classList.contains(selector));
     if (!match) { metricElem.remove(); }
   });
 
-  metrics.forEach(function (metric, i) {
+  metrics.forEach((metric, i) => {
     // TODO(porting to real LHR..): in scorecalc we dont use the real audit ID just the acronym.
-    var alias = metric.id;
+    const alias = metric.id;
 
     // Hack
-    var needsDomPopulation = !groupOuter.querySelector((".metric--" + alias));
+    const needsDomPopulation = !groupOuter.querySelector(`.metric--${alias}`);
 
     // HACK:This isn't ideal but it was quick. Create element during initialization or reuse existing during updates
-    var metricGroup = groupOuter.querySelector((".metric--" + alias)) || document.createElementNS(NS_URI, 'g');
-    var metricArcMax = groupOuter.querySelector((".metric--" + alias + " .lh-gauge--faded")) || document.createElementNS(NS_URI, 'circle');
-    var metricArc = groupOuter.querySelector((".metric--" + alias + " .lh-gauge--miniarc")) || document.createElementNS(NS_URI, 'circle');
-    var metricArcHoverTarget = groupOuter.querySelector((".metric--" + alias + " .lh-gauge-hover")) || document.createElementNS(NS_URI, 'circle');
-    var metricLabel = groupOuter.querySelector((".metric--" + alias + " .metric__label")) || document.createElementNS(NS_URI, 'text');
-    var metricValue = groupOuter.querySelector((".metric--" + alias + " .metric__value")) || document.createElementNS(NS_URI, 'text');
+    const metricGroup = groupOuter.querySelector(`.metric--${alias}`) || document.createElementNS(NS_URI, 'g');
+    const metricArcMax = groupOuter.querySelector(`.metric--${alias} .lh-gauge--faded`) || document.createElementNS(NS_URI, 'circle');
+    const metricArc = groupOuter.querySelector(`.metric--${alias} .lh-gauge--miniarc`) || document.createElementNS(NS_URI, 'circle');
+    const metricArcHoverTarget = groupOuter.querySelector(`.metric--${alias} .lh-gauge-hover`) || document.createElementNS(NS_URI, 'circle');
+    const metricLabel = groupOuter.querySelector(`.metric--${alias} .metric__label`) || document.createElementNS(NS_URI, 'text');
+    const metricValue = groupOuter.querySelector(`.metric--${alias} .metric__value`) || document.createElementNS(NS_URI, 'text');
 
-    metricGroup.classList.add('metric', ("metric--" + alias));
+    metricGroup.classList.add('metric', `metric--${alias}`);
     metricArcMax.classList.add('lh-gauge__arc', 'lh-gauge__arc--metric', 'lh-gauge--faded');
     metricArc.classList.add('lh-gauge__arc', 'lh-gauge__arc--metric', 'lh-gauge--miniarc');
     metricArcHoverTarget.classList.add('lh-gauge__arc', 'lh-gauge__arc--metric', 'lh-gauge--faded', 'lh-gauge-hover');
 
-    var weightingPct = metric.weight / totalWeight;
-    var metricLengthMax = getMetricArcLength(weightingPct);
-    var metricPercent = metric.result.score * weightingPct;
-    var metricLength = getMetricArcLength(metricPercent);
-    var metricOffset = weightingPct * circumferenceOuter;
-    var metricHoverLength = getMetricArcLength(weightingPct, true);
+    const weightingPct = metric.weight / totalWeight;
+    const metricLengthMax = getMetricArcLength(weightingPct);
+    const metricPercent = metric.result.score * weightingPct;
+    const metricLength = getMetricArcLength(metricPercent);
+    const metricOffset = weightingPct * circumferenceOuter;
+    const metricHoverLength = getMetricArcLength(weightingPct, true);
 
-    metricGroup.style.setProperty('--metric-color', ("var(--palette-" + i + ")"));
-    metricGroup.style.setProperty('--metric-offset', ("" + offsetAdder));
+    metricGroup.style.setProperty('--metric-color', `var(--palette-${i})`);
+    metricGroup.style.setProperty('--metric-offset', `${offsetAdder}`);
     metricGroup.style.setProperty('--i', i);
 
-    metricArcMax.setAttribute('stroke-dasharray', (metricLengthMax + " " + (circumferenceOuter - metricLengthMax)));
-    metricArc.style.setProperty('--metric-array', (metricLength + " " + (circumferenceOuter - metricLength)));
-    metricArcHoverTarget.setAttribute('stroke-dasharray', (metricHoverLength + " " + (circumferenceOuter - metricHoverLength - endDiffOuter)));
+    metricArcMax.setAttribute('stroke-dasharray', `${metricLengthMax} ${circumferenceOuter - metricLengthMax}`);
+    metricArc.style.setProperty('--metric-array', `${metricLength} ${circumferenceOuter - metricLength}`);
+    metricArcHoverTarget.setAttribute('stroke-dasharray', `${metricHoverLength} ${circumferenceOuter - metricHoverLength - endDiffOuter}`);
 
     metricLabel.classList.add('metric__label');
     metricValue.classList.add('metric__value');
     metricLabel.textContent = alias;
-    metricValue.textContent = "+" + (Math.round(metricPercent * 100));
+    metricValue.textContent = `+${Math.round(metricPercent * 100)}`;
 
-    var midAngle = angleAdder + weightingPct * Math.PI;
-    var cos = Math.cos(midAngle);
-    var sin = Math.sin(midAngle);
+    const midAngle = angleAdder + weightingPct * Math.PI;
+    const cos = Math.cos(midAngle);
+    const sin = Math.sin(midAngle);
 
     // only set non-default alignments
     switch (true) {
@@ -437,7 +426,7 @@ function _setPerfGaugeExplodey(wrapper, category) {
     wrapper.state-highlight: gauge is exploded and one of the metrics is being highlighted
     metric.metric-highlight: highlight this particular metric
   */
-  SVG.addEventListener('mouseover', function (e) {
+  SVG.addEventListener('mouseover', e => {
     // if hovering on the SVG and its expanded, get rid of everything
     if (e.target === SVG && wrapper.classList.contains('state--expanded')) {
       // paul: not sure why we want to remove this.. seems like we want to keep it expanded...
@@ -450,19 +439,19 @@ function _setPerfGaugeExplodey(wrapper, category) {
       return;
     }
 
-    var parent = e.target.parentNode;
+    const parent = e.target.parentNode;
 
     // if hovering on a metric, highlight that one.
     // TODO: The hover target is a little small. ideally it's thicker.
     if (parent && parent.classList && parent.classList.contains('metric')) {
       // match the bg color of the gauge during a metric highlight
-      wrapper.style.setProperty('--color-highlight', ("var(--palette-" + (parent.style.getPropertyValue('--i')) + ")"));
+      wrapper.style.setProperty('--color-highlight', `var(--palette-${parent.style.getPropertyValue('--i')})`);
 
       if (!SVG.classList.contains('state--highlight')) {
         SVG.classList.add('state--highlight');
         parent.classList.add('metric--highlight');
       } else {
-        var highlighted = SVG.querySelector('.metric--highlight');
+        const highlighted = SVG.querySelector('.metric--highlight');
 
         if (highlighted && parent !== highlighted) {
           highlighted.classList.remove('metric--highlight');
@@ -473,22 +462,22 @@ function _setPerfGaugeExplodey(wrapper, category) {
   });
 
   // clear on mouselave even if mousemove didn't catch it.
-  SVG.addEventListener('mouseleave', function (e) {
+  SVG.addEventListener('mouseleave', e => {
     SVG.classList.remove('state--highlight');
-    var mh = SVG.querySelector('.metric--highlight');
+    const mh = SVG.querySelector('.metric--highlight');
     mh && mh.classList.remove('metric--highlight');
   });
 }
 
-var params = new URLSearchParams(location.hash.substr(1));
+const params = new URLSearchParams(location.hash.substr(1));
 
 function determineMinMax(metricScoring) {
-  var valueAtScore100 = VALUE_AT_QUANTILE(metricScoring, 0.995);
-  var valueAtScore5 = VALUE_AT_QUANTILE(metricScoring, 0.05);
+  const valueAtScore100 = VALUE_AT_QUANTILE(metricScoring, 0.995);
+  const valueAtScore5 = VALUE_AT_QUANTILE(metricScoring, 0.05);
 
-  var min = Math.floor(valueAtScore100 / 1000) * 1000;
-  var max = Math.ceil(valueAtScore5 / 1000) * 1000;
-  var step = 10;
+  let min = Math.floor(valueAtScore100 / 1000) * 1000;
+  let max = Math.ceil(valueAtScore5 / 1000) * 1000;
+  let step = 10;
 
   // Special handling for CLS
   if (metricScoring.units === 'unitless') {
@@ -498,9 +487,9 @@ function determineMinMax(metricScoring) {
   }
 
   return {
-    min: min,
-    max: max,
-    step: step,
+    min,
+    max,
+    step,
   };
 }
 
@@ -511,41 +500,26 @@ function getMajorVersion(version) {
   return version.split('.')[0];
 }
 
-var Metric = /*@__PURE__*/(function (Component) {
-  function Metric () {
-    Component.apply(this, arguments);
-  }
-
-  if ( Component ) Metric.__proto__ = Component;
-  Metric.prototype = Object.create( Component && Component.prototype );
-  Metric.prototype.constructor = Metric;
-
-  Metric.prototype.onValueChange = function onValueChange (e) {
-    var obj;
-
-    var ref = this.props;
-    var id = ref.id;
+class Metric extends m {
+  onValueChange(e) {
+    const {id} = this.props;
 
     this.props.app.setState({
-      metricValues: Object.assign({}, this.props.app.state.metricValues,
-        ( obj = {}, obj[id] = e.target.valueAsNumber, obj )),
+      metricValues: {
+        ...this.props.app.state.metricValues,
+        [id]: e.target.valueAsNumber,
+      },
     });
-  };
+  }
 
-  Metric.prototype.onScoreChange = function onScoreChange (e) {
-    var obj;
+  onScoreChange(e) {
+    const {id, metricScoring} = this.props;
 
-    var ref = this.props;
-    var id = ref.id;
-    var metricScoring = ref.metricScoring;
-
-    var score = e.target.valueAsNumber;
-    var computedValue = VALUE_AT_QUANTILE(metricScoring, score / 100);
+    const score = e.target.valueAsNumber;
+    let computedValue = VALUE_AT_QUANTILE(metricScoring, score / 100);
 
     // Clamp because we can end up with Infinity
-    var ref$1 = determineMinMax(metricScoring);
-    var min = ref$1.min;
-    var max = ref$1.max;
+    const { min, max } = determineMinMax(metricScoring);
     computedValue = Math.max(Math.min(computedValue, max), min);
 
     if (metricScoring.units !== 'unitless') {
@@ -553,87 +527,71 @@ var Metric = /*@__PURE__*/(function (Component) {
     }
 
     this.props.app.setState({
-      metricValues: Object.assign({}, this.props.app.state.metricValues,
-        ( obj = {}, obj[id] = computedValue, obj )),
+      metricValues: {
+        ...this.props.app.state.metricValues,
+        [id]: computedValue,
+      },
     });
-  };
+  }
 
-  Metric.prototype.render = function render (ref) {
-    var this$1 = this;
-    var id = ref.id;
-    var value = ref.value;
-    var score = ref.score;
-    var weightMax = ref.weightMax;
-    var metricScoring = ref.metricScoring;
-
-    var ref$1 = determineMinMax(metricScoring);
-    var min = ref$1.min;
-    var max = ref$1.max;
-    var step = ref$1.step;
-    var weight = metricScoring.weight;
-    var valueFormatted = metricScoring.units === 'unitless' ?
+  render({ id, value, score, weightMax, metricScoring }) {
+    const { min, max, step } = determineMinMax(metricScoring);
+    const weight = metricScoring.weight;
+    const valueFormatted = metricScoring.units === 'unitless' ?
       value.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) :
       // TODO: Use https://github.com/tc39/proposal-unified-intl-numberformat#i-units when Safari/FF support it
-      ("" + (numberFormatter.format(value)) + NBSP + "ms");
-    var weightFormatted = (weight * 100).toLocaleString(undefined, {maximumFractionDigits: 1});
+      `${numberFormatter.format(value)}${NBSP}ms`;
+    const weightFormatted = (weight * 100).toLocaleString(undefined, {maximumFractionDigits: 1});
 
-    return h( 'tr', { class: ("lh-metric--" + (calculateRating(score / 100))) },
+    return h( 'tr', { class: `lh-metric--${calculateRating(score / 100)}` },
       h( 'td', null,
         h( 'span', { class: "lh-metric__score-icon" })
       ),
-      h( 'td', null, (id + " (" + (metricScoring.name) + ")") ),
+      h( 'td', null, `${id} (${metricScoring.name})` ),
       h( 'td', null,
-        h( 'input', { type: "range", min: min, value: value, max: max, step: step, class: (id + " metric-value"), onInput: function (e) { return this$1.onValueChange(e); } }),
+        h( 'input', { type: "range", min: min, value: value, max: max, step: step, class: `${id} metric-value`, onInput: (e) => this.onValueChange(e) }),
         h( 'output', { class: "${id} value-output" }, valueFormatted)
       ),
       h( 'td', null ),
 
       h( 'td', null,
-        h( 'input', { type: "range", class: (id + " metric-score"), style: ("width: " + (weight / weightMax * 100) + "%"), value: score, onInput: function (e) { return this$1.onScoreChange(e); } }),
-        h( 'output', { class: (id + " score-output") }, score)
+        h( 'input', { type: "range", class: `${id} metric-score`, style: `width: ${weight / weightMax * 100}%`, value: score, onInput: (e) => this.onScoreChange(e) }),
+        h( 'output', { class: `${id} score-output` }, score)
       ),
 
       h( 'td', null,
-        h( 'span', { class: (id + " weight-text") }, weightFormatted, "%")
+        h( 'span', { class: `${id} weight-text` }, weightFormatted, "%")
       )
     )
-  };
+  }
+}
 
-  return Metric;
-}(m));
-
-var Gauge = /*@__PURE__*/(function (Component) {
-  function Gauge(props) {
-    Component.call(this, props);
+class Gauge extends m {
+  constructor(props) {
+    super(props);
     this.ref = y();
   }
 
-  if ( Component ) Gauge.__proto__ = Component;
-  Gauge.prototype = Object.create( Component && Component.prototype );
-  Gauge.prototype.constructor = Gauge;
-
-  Gauge.prototype.refreshGauge = function refreshGauge () {
+  refreshGauge() {
     updateGauge(this.ref.current, {
       title: 'Performance',
       auditRefs: this.props.auditRefs,
       id: 'performance',
       score: this.props.score,
     });
-  };
+  }
 
-  Gauge.prototype.componentDidMount = function componentDidMount () {
+  componentDidMount() {
     this.refreshGauge();
-  };
+  }
 
-  Gauge.prototype.componentDidUpdate = function componentDidUpdate () {
+  componentDidUpdate() {
     this.refreshGauge();
-  };
+  }
 
-  Gauge.prototype.render = function render (ref) {
-    var score = ref.score;
-
+  render({ score }) {
     return (
-      h( 'div', { ref: this.ref, class: ("lh-gauge__wrapper lh-gauge__wrapper--" + (calculateRating(score))) },
+      h( 'div', { ref: this.ref, class: `lh-gauge__wrapper lh-gauge__wrapper--${calculateRating(score)}` },
         h( 'div', { class: 'lh-gauge__svg-wrapper' },
           h( 'svg', { class: 'lh-gauge state--expanded' },
             h( 'g', { class: 'lh-gauge__inner' },
@@ -649,43 +607,28 @@ var Gauge = /*@__PURE__*/(function (Component) {
         )
       )
     );
-  };
-
-  return Gauge;
-}(m));
-
-var ScoringGuide = /*@__PURE__*/(function (Component) {
-  function ScoringGuide () {
-    Component.apply(this, arguments);
   }
+}
 
-  if ( Component ) ScoringGuide.__proto__ = Component;
-  ScoringGuide.prototype = Object.create( Component && Component.prototype );
-  ScoringGuide.prototype.constructor = ScoringGuide;
-
-  ScoringGuide.prototype.render = function render (ref) {
-    var app = ref.app;
-    var name = ref.name;
-    var values = ref.values;
-    var scoring = ref.scoring;
-
+class ScoringGuide extends m {
+  render({ app, name, values, scoring }) {
     // Make sure weights total to 1
-    var weights = Object.values(scoring).map(function (metricScoring) { return metricScoring.weight; });
-    var weightSum = weights.reduce(function (agg, val) { return (agg += val); });
-    var weightMax = Math.max.apply(Math, Object.values(weights));
+    const weights = Object.values(scoring).map(metricScoring => metricScoring.weight);
+    const weightSum = weights.reduce((agg, val) => (agg += val));
+    const weightMax = Math.max(...Object.values(weights));
     console.assert(weightSum > 0.999 && weightSum < 1.0001); // lol rounding is hard.
 
-    var metricsData = Object.keys(scoring).map(function (id) {
-      var metricScoring = scoring[id];
+    const metricsData = Object.keys(scoring).map(id => {
+      const metricScoring = scoring[id];
       return {
-        id: id,
-        metricScoring: metricScoring,
+        id,
+        metricScoring,
         value: values[id],
         score: Math.round(QUANTILE_AT_VALUE(metricScoring, values[id]) * 100),
       };
     });
 
-    var auditRefs = metricsData.map(function (metric) {
+    const auditRefs = metricsData.map(metric => {
       return {
         id: metric.id,
         weight: metric.metricScoring.weight,
@@ -696,11 +639,11 @@ var ScoringGuide = /*@__PURE__*/(function (Component) {
       };
     });
 
-    var score = arithmeticMean(auditRefs);
+    const score = arithmeticMean(auditRefs);
 
-    var title = h( 'h2', null, name );
+    let title = h( 'h2', null, name );
     if (name === 'v8') {
-      title = h( 'h2', null, "latest", h( 'br', null ), h( 'i', null, h( 'a', { href: "https://github.com/GoogleChrome/lighthouse/releases/tag/v8.0.0" }, "v8") ) );
+      title = h( 'h2', null, "latest", h( 'br', null ), h( 'i', null, h( 'a', { href: "https://github.com/GoogleChrome/lighthouse/releases/tag/v8.0.0" }, "v8, v9") ) );
     } else if (name === 'v6') {
       title = h( 'h2', null, h( 'i', null, h( 'a', { href: "https://github.com/GoogleChrome/lighthouse/releases/tag/v6.0.0" }, "v6, v7") ) );
     }
@@ -719,7 +662,7 @@ var ScoringGuide = /*@__PURE__*/(function (Component) {
           )
         ),
         h( 'tbody', null,
-          metricsData.map(function (metric) {
+          metricsData.map(metric => {
             return h( Metric, Object.assign({}, { app: app, weightMax: weightMax, metricScoring: metric.metricScoring }, metric))
           })
         )
@@ -729,26 +672,18 @@ var ScoringGuide = /*@__PURE__*/(function (Component) {
         h( Gauge, { score: score, auditRefs: auditRefs })
       )
     )
-  };
+  }
+}
 
-  return ScoringGuide;
-}(m));
-
-var debounce = function (callback, time, interval) {
-    if ( time === void 0 ) time = 250;
-
-    return (function () {
-    var args = [], len = arguments.length;
-    while ( len-- ) args[ len ] = arguments[ len ];
-
+const debounce = (callback, time = 250, interval) =>
+  ((...args) => {
     clearTimeout(interval);
-    interval = setTimeout(function () { return callback.apply(void 0, args); }, time);
+    interval = setTimeout(() => callback(...args), time);
   });
-};
 
-var App = /*@__PURE__*/(function (Component) {
-  function App(props) {
-    Component.call(this, props);
+class App extends m {
+  constructor(props) {
+    super(props);
     this.state = getInitialState();
     this.onDeviceChange = this.onDeviceChange.bind(this);
     this.onVersionsChange = this.onVersionsChange.bind(this);
@@ -756,64 +691,50 @@ var App = /*@__PURE__*/(function (Component) {
     this.debouncedUpdatePermalink = debounce(this.updatePermalink);
   }
 
-  if ( Component ) App.__proto__ = Component;
-  App.prototype = Object.create( Component && Component.prototype );
-  App.prototype.constructor = App;
-
-  App.prototype.updatePermalink = function updatePermalink (state) {
-    var versions = state.versions;
-    var device = state.device;
-    var metricValues = state.metricValues;
-    var url = new URL(location.href);
-    var auditIdValuePairs = Object.entries(metricValues).map(function (ref) {
-      var id = ref[0];
-      var value = ref[1];
-
+  updatePermalink(state) {
+    const {versions, device, metricValues} = state;
+    const url = new URL(location.href);
+    const auditIdValuePairs = Object.entries(metricValues).map(([id, value]) => {
       return [id, value];
     });
-    var params = new URLSearchParams(auditIdValuePairs);
+    const params = new URLSearchParams(auditIdValuePairs);
     params.set('device', device);
-    for (var version of versions) params.append('version', version);
+    for (const version of versions) params.append('version', version);
     url.hash = params.toString();
     history.replaceState(state, '', url.toString());
-  };
+  }
 
-  App.prototype.componentDidUpdate = function componentDidUpdate () {
+  componentDidUpdate() {
     this.debouncedUpdatePermalink(this.state);
-  };
+  }
 
-  App.prototype.onDeviceChange = function onDeviceChange (e) {
+  onDeviceChange(e) {
     this.setState({device: e.target.value});
-  };
+  }
 
-  App.prototype.onVersionsChange = function onVersionsChange (e) {
+  onVersionsChange(e) {
     this.setState({versions: e.target.value.split(',')});
-  };
+  }
 
-  App.prototype.normalizeVersions = function normalizeVersions (versions) {
-    return versions.map(function (version) {
+  normalizeVersions(versions) {
+    return versions.map(version => {
       if (parseInt(version) < 5) {
-        throw new Error(("Unsupported Lighthouse version (" + version + ")"));
+        throw new Error(`Unsupported Lighthouse version (${version})`);
       }
-      // In the future we might want a more generalized `version % 2 === 1` thing, but for now, hardcode the change.
-      if (parseInt(version) === 7) { return 6..toString(); }
+      // Odd-number major versions are identical (score-wise to the previous one)
+      if (version % 2 === 1) { return parseInt(version, 10) - 1; }
       return version.toString();
     }).sort().reverse();
-  };
+  }
 
-  App.prototype.render = function render () {
-    var this$1 = this;
+  render() {
+    const {versions, device, metricValues} = this.state;
 
-    var ref = this.state;
-    var versions = ref.versions;
-    var device = ref.device;
-    var metricValues = ref.metricValues;
+    const normalizedVersions = this.normalizeVersions(versions);
 
-    var normalizedVersions = this.normalizeVersions(versions);
-
-    var scoringGuideEls = normalizedVersions.map(function (version) {
-      var key = "v" + version;
-      return h( ScoringGuide, { app: this$1, name: key, values: metricValues, scoring: scoringGuides[key][device] });
+    const scoringGuideEls = normalizedVersions.map(version => {
+      const key = `v${version}`;
+      return h( ScoringGuide, { app: this, name: key, values: metricValues, scoring: scoringGuides[key][device] });
     });
     return h( 'div', { class: "app" },
       h( 'div', { class: "controls wrapper" },
@@ -824,7 +745,7 @@ var App = /*@__PURE__*/(function (Component) {
         ),
         h( 'label', null, "Versions: ", h( 'select', { name: "versions", value: normalizedVersions.join(','), onChange: this.onVersionsChange },
             h( 'option', { value: "8,6,5" }, "show all"),
-            h( 'option', { value: "8" }, "v8"),
+            h( 'option', { value: "8" }, "v8+"),
             h( 'option', { value: "6" }, "v6, v7"),
             h( 'option', { value: "5" }, "v5")
           )
@@ -832,44 +753,42 @@ var App = /*@__PURE__*/(function (Component) {
       ),
       scoringGuideEls
     )
-  };
-
-  return App;
-}(m));
+  }
+}
 
 function getInitialState() {
-  var versions = params.has('version') ?
+  const versions = params.has('version') ?
     params.getAll('version').map(getMajorVersion) :
-    ['6', '8']; // version to show by default
+    ['8']; // version (or versions) to show by default
 
   // Default to mobile if it's not matching our known emulatedFormFactors. https://github.com/GoogleChrome/lighthouse/blob/master/types/externs.d.ts#:~:text=emulatedFormFactor
-  var device = params.get('device');
+  let device = params.get('device');
   if (device && device !== 'mobile' && device !== 'desktop') {
-    console.warn(("Invalid emulatedFormFactors value: " + device + ". Fallback to mobile scoring."));
+    console.warn(`Invalid emulatedFormFactors value: ${device}. Fallback to mobile scoring.`);
     device = 'mobile';
   } else if (!device) {
     // Device not expressed in the params
     device = 'mobile';
   }
 
-  var metricValues = {};
+  const metricValues = {};
   // If no metric values come in w/ params, initalize with mobile medians (score of 50)
-  var metricScorings = Object.assign({}, scoringGuides.v5.mobile, scoringGuides.v8.mobile); // v5 is neccessary for FCI
-  for (var id in metricScorings) {
+  const metricScorings = {...scoringGuides.v5.mobile, ...scoringGuides.v8.mobile}; // v5 is neccessary for FCI
+  for (const id in metricScorings) {
     metricValues[id] = metricScorings[id].median;
   }
 
   // Populate metricValues from query string.
-  for (var [id$1, metric] of Object.entries(metrics)) {
-    var value = params.get(id$1) || params.get(metric.auditId);
+  for (const [id, metric] of Object.entries(metrics)) {
+    const value = params.get(id) || params.get(metric.auditId);
     if (!value) { continue; }
-    metricValues[id$1] = Number(value);
+    metricValues[id] = Number(value);
   }
 
   return {
-    versions: versions,
-    device: device,
-    metricValues: metricValues,
+    versions,
+    device,
+    metricValues,
   };}
 
 function main() {
