@@ -73,6 +73,18 @@ class InspectorIssues extends FRGatherer {
       deprecations: [],
     };
 
+    /** @type {Array<keyof LH.Artifacts['InspectorIssues']>} */
+    const keys = Object.keys(artifact);
+    for (const key of keys) {
+      /** @type {`${key}IssueDetails`} */
+      const detailsKey = `${key}IssueDetails`;
+      const allDetails = this._issues.map(issue => issue.details[detailsKey]);
+      // TODO the duplicate stuff
+      artifact[key].push(...allDetails);
+    }
+
+    // ...
+
     for (const issue of this._issues) {
       if (issue.details.mixedContentIssueDetails) {
         const issueDetails = issue.details.mixedContentIssueDetails;
