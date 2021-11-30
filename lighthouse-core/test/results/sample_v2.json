@@ -7159,19 +7159,7 @@
       },
       {
         "startTime": 0,
-        "name": "lh:computed:ManifestValues",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
         "name": "lh:audit:themed-omnibox",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:computed:ManifestValues",
         "duration": 100,
         "entryType": "measure"
       },
@@ -7208,12 +7196,6 @@
       {
         "startTime": 0,
         "name": "lh:audit:deprecations",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:computed:JSBundles",
         "duration": 100,
         "entryType": "measure"
       },
@@ -7375,12 +7357,6 @@
       },
       {
         "startTime": 0,
-        "name": "lh:computed:JSBundles",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
         "name": "lh:audit:non-composited-animations",
         "duration": 100,
         "entryType": "measure"
@@ -7418,12 +7394,6 @@
       {
         "startTime": 0,
         "name": "lh:audit:script-treemap-data",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:computed:JSBundles",
         "duration": 100,
         "entryType": "measure"
       },
@@ -7867,12 +7837,6 @@
       },
       {
         "startTime": 0,
-        "name": "lh:computed:JSBundles",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
         "name": "lh:computed:UnusedJavascriptSummary",
         "duration": 100,
         "entryType": "measure"
@@ -7916,18 +7880,6 @@
       {
         "startTime": 0,
         "name": "lh:audit:duplicated-javascript",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:computed:ModuleDuplication",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:computed:JSBundles",
         "duration": 100,
         "entryType": "measure"
       },

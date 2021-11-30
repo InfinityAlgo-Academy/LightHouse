@@ -151,4 +151,4 @@ class UnusedCSS {
   }
 }
 
-module.exports = makeComputedArtifact(UnusedCSS);
+module.exports = makeComputedArtifact(UnusedCSS, ['CSSUsage', 'URL', 'devtoolsLog']);

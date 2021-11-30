@@ -88,4 +88,4 @@ class LoadSimulator {
   }
 }
 
-module.exports = makeComputedArtifact(LoadSimulator);
+module.exports = makeComputedArtifact(LoadSimulator, ['devtoolsLog', 'settings']);

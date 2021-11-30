@@ -467,7 +467,7 @@ class PageDependencyGraph {
   }
 }
 
-module.exports = makeComputedArtifact(PageDependencyGraph);
+module.exports = makeComputedArtifact(PageDependencyGraph, ['devtoolsLog', 'trace']);
 
 /**
  * @typedef {Object} NetworkNodeOutput
