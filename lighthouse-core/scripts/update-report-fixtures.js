@@ -30,18 +30,18 @@ const MAGIC_SERVER_PORT = 10200;
 async function update(artifactNames) {
   const oldArtifacts = assetSaver.loadArtifacts(artifactPath);
 
-  // await server.listen(MAGIC_SERVER_PORT, 'localhost');
-  // const url = `http://localhost:${MAGIC_SERVER_PORT}/dobetterweb/dbw_tester.html`;
-  // const rawFlags = [
-  //   `--gather-mode=${artifactPath}`,
-  //   url,
-  // ].join(' ');
-  // const flags = cliFlags.getFlags(rawFlags);
-  // await cli.runLighthouse(url, flags, budgetedConfig);
-  // await server.close();
+  await server.listen(MAGIC_SERVER_PORT, 'localhost');
+  const url = `http://localhost:${MAGIC_SERVER_PORT}/dobetterweb/dbw_tester.html`;
+  const rawFlags = [
+    `--gather-mode=${artifactPath}`,
+    url,
+  ].join(' ');
+  const flags = cliFlags.getFlags(rawFlags);
+  await cli.runLighthouse(url, flags, budgetedConfig);
+  await server.close();
 
   const rebaselinedArtifacts = assetSaver.loadArtifacts(artifactPath);
-  const finalArtifacts = oldArtifacts;
+  let finalArtifacts = oldArtifacts;
 
   // Revert everything except the specified artifacts
   if (artifactNames.length) {
@@ -55,6 +55,7 @@ async function update(artifactNames) {
     }
   } else {
     console.warn('This will overwrite ALL artifacts!');
+    finalArtifacts = rebaselinedArtifacts;
   }
 
   normalize(finalArtifacts);
