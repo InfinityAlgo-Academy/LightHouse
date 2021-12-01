@@ -28,18 +28,17 @@ const MAGIC_SERVER_PORT = 10200;
  * @param {Array<keyof LH.Artifacts>} artifactNames
  */
 async function update(artifactNames) {
-  await server.listen(MAGIC_SERVER_PORT, 'localhost');
-
   const oldArtifacts = assetSaver.loadArtifacts(artifactPath);
 
-  const url = `http://localhost:${MAGIC_SERVER_PORT}/dobetterweb/dbw_tester.html`;
-  const rawFlags = [
-    `--gather-mode=${artifactPath}`,
-    url,
-  ].join(' ');
-  const flags = cliFlags.getFlags(rawFlags);
-  await cli.runLighthouse(url, flags, budgetedConfig);
-  await server.close();
+  // await server.listen(MAGIC_SERVER_PORT, 'localhost');
+  // const url = `http://localhost:${MAGIC_SERVER_PORT}/dobetterweb/dbw_tester.html`;
+  // const rawFlags = [
+  //   `--gather-mode=${artifactPath}`,
+  //   url,
+  // ].join(' ');
+  // const flags = cliFlags.getFlags(rawFlags);
+  // await cli.runLighthouse(url, flags, budgetedConfig);
+  // await server.close();
 
   const rebaselinedArtifacts = assetSaver.loadArtifacts(artifactPath);
   const finalArtifacts = oldArtifacts;
