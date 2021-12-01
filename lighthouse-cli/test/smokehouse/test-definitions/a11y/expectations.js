@@ -205,7 +205,7 @@ const expectations = {
                 'type': 'node',
                 'selector': 'body > section > div > div#aria-required-parent',
                 'snippet': '<div id="aria-required-parent" role="option">',
-                'explanation': 'Fix any of the following:\n  Required ARIA parent role not present: listbox',
+                'explanation': 'Fix any of the following:\n  Required ARIA parents role not present: group, listbox',
                 'nodeLabel': 'body > section > div > div#aria-required-parent',
               },
             },
