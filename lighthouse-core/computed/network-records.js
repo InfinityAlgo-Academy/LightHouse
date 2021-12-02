@@ -11,22 +11,17 @@ const NetworkRecorder = require('../lib/network-recorder.js');
 const constructRecordsFromTrace = require('../lib/network-records-from-trace.js');
 
 class NetworkRecords {
-  // commenting out the dtLog-based version…
-  // /**
-  //  * @param {LH.DevtoolsLog} devtoolsLog
-  //  * @return {Promise<Array<LH.Artifacts.NetworkRequest>>} networkRecords
-  //  */
-  // static async compute_(devtoolsLog) {
-  //   return NetworkRecorder.recordsFromLogs(devtoolsLog);
-  // }
-
-  // HIJACKeD!!!
   /**
-   * @param {LH.Trace} trace
+   * @param {LH.DevtoolsLog} devtoolsLog
    * @return {Promise<Array<LH.Artifacts.NetworkRequest>>} networkRecords
    */
-  static async compute_(trace) {
-    return constructRecordsFromTrace(trace);
+  static async compute_(devtoolsLog) {
+    // If we have a smuggledTrace thanks to traceBasedNetworkRecords, build from that.
+    if (devtoolsLog.smuggledTrace) {
+      return constructRecordsFromTrace(devtoolsLog.smuggledTrace);
+    } else {
+      return NetworkRecorder.recordsFromLogs(devtoolsLog);
+    }
   }
 }
 

@@ -521,9 +521,14 @@ class GatherRunner {
    * @param {string} passName
    */
   static _addLoadDataToBaseArtifacts(passContext, loadData, passName) {
+    debugger;
     const baseArtifacts = passContext.baseArtifacts;
     baseArtifacts.devtoolsLogs[passName] = loadData.devtoolsLog;
     if (loadData.trace) baseArtifacts.traces[passName] = loadData.trace;
+
+    if (passContext.settings.traceBasedNetworkRecords && loadData.trace) {
+      baseArtifacts.devtoolsLogs[passName].smuggledTrace = loadData.trace;
+    }
   }
 
   /**

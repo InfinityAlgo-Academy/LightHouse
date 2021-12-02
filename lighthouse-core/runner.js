@@ -59,6 +59,7 @@ class Runner {
       // Either load saved artifacts off disk or from the browser
       let artifacts;
       let requestedUrl;
+      debugger;
       if (settings.auditMode && !settings.gatherMode) {
         // No browser required, just load the artifacts from disk.
         const path = Runner._getDataSavePath(settings);
@@ -92,7 +93,7 @@ class Runner {
           await assetSaver.saveArtifacts(artifacts, path);
         }
       }
-
+      debugger;
       // Potentially quit early
       if (settings.gatherMode && !settings.auditMode) return;
 

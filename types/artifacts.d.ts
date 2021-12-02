@@ -966,8 +966,14 @@ export interface TraceEvent {
     local?: string;
   };
 }
+/**
+ * Minor hack for traceBasedNetworkRecords
+ */
+interface AugmentedDevtoolsLog extends Array<Protocol.RawEventMessage> {
+  attachedTrace?: Trace;
+}
 
 /**
  * A record of DevTools Debugging Protocol events.
  */
-export type DevtoolsLog = Array<Protocol.RawEventMessage>;
+export type DevtoolsLog = AugmentedDevtoolsLog;

@@ -97,6 +97,8 @@ export type ScreenEmulationSettings = {
   precomputedLanternData?: PrecomputedLanternData | null;
   /** The budget.json object for LightWallet. */
   budgets?: Array<Budget> | null;
+  /** By default, network records and timing come from the devtools protocol. If true, the trace will be used as the source of truth for network activity. */
+  traceBasedNetworkRecords: boolean;
 }
 
 export interface ConfigSettings extends Required<SharedFlagsSettings> {

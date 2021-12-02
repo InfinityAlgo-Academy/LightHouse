@@ -89,6 +89,7 @@ function analyzeTrace(trace, opts) {
       // In DevTools, emulation is applied _before_ Lighthouse starts (to deal with viewport emulation bugs). go/xcnjf
       // As a result, we don't double-apply viewport emulation.
       screenEmulation: {disabled: true},
+      traceBasedNetworkRecords: true,
     },
   };
 
@@ -101,10 +102,14 @@ function analyzeTrace(trace, opts) {
   const runOpts = {url, config, computedCache: new Map()};
 
   const gatherFn = _ => {
+    /** @type {LH.DevtoolsLog} */
+    const fakeDtLogs = [];
+    fakeDtLogs.smuggledTrace = trace;
+
     /** @type {Partial<LH.Artifacts>} */
     const artifacts = {
       traces: {defaultPass: trace},
-      devtoolsLogs: {defaultPass: []},
+      devtoolsLogs: {defaultPass: fakeDtLogs},
 
       GatherContext: {gatherMode: 'navigation'}, // todo: timespan???
       settings: config.settings,
@@ -158,43 +163,42 @@ if (typeof self !== 'undefined') {
 }
 
 
-// // If invoked as CLI, we're gonna read latest-run's trace and analyze that (as desktop)
-// if (require.main === module) {
-//   localDev = true;
+// If invoked as CLI, we're gonna read latest-run's trace and analyze that (as desktop)
+if (require.main === module) {
+  localDev = true;
 
-//   /** @type {LH.Trace} */
-//   const trace = JSON.parse(
-//     // Gather with:
-//     //     lighthouse https://paulirish.com --preset=desktop --only-categories=performance -GA --throttling-method=devtools
-//     require('fs').readFileSync(__dirname + '/../latest-run/defaultPass.trace.json', 'utf8')
-//   );
+  /** @type {LH.Trace} */
+  const trace = JSON.parse(
+    // Gather with:
+    //     lighthouse https://paulirish.com --preset=desktop --only-categories=performance -GA --throttling-method=devtools
+    require('fs').readFileSync(__dirname + '/../latest-run/defaultPass.trace.json', 'utf8')
+  );
 
-//   /**
-//    * @param {LH.Trace} trace
-//    */
-//   const getInitialUrl = trace => {
-//     const urls = trace.traceEvents
-//     .filter(e =>
-//         (e.name === 'navigationStart' && e?.args?.data?.isLoadingMainFrame === true) ||
-//         e.name === 'NavigationBodyLoader::StartLoadingBody'
-//     )
-//     .map(e => e.args.data?.documentLoaderURL || e.args.url);
-//     // find most common item: https://stackoverflow.com/a/20762713/89484
-//     return urls.sort(
-//       (a, b) => urls.filter(v => v === a).length - urls.filter(v => v === b).length).pop();
-//   };
+  /**
+   * @param {LH.Trace} trace
+   */
+  const getInitialUrl = trace => {
+    const urls = trace.traceEvents
+    .filter(e =>
+        (e.name === 'navigationStart' && e?.args?.data?.isLoadingMainFrame === true) ||
+        e.name === 'NavigationBodyLoader::StartLoadingBody'
+    )
+    .map(e => e.args.data?.documentLoaderURL || e.args.url);
+    // find most common item: https://stackoverflow.com/a/20762713/89484
+    return urls.sort(
+      (a, b) => urls.filter(v => v === a).length - urls.filter(v => v === b).length).pop();
+  };
 
 
-//   analyzeTrace(trace, {
-//     device: 'desktop',
-//     url: getInitialUrl(trace),
-//   }).then(res => {
-//     require('fs').writeFileSync('./tracereport.json', res?.report[0], 'utf8');
-//     require('fs').writeFileSync('./tracereport.html', res?.report[1], 'utf8');
-//     console.log('done. written to ./tracereport.html');
-//   });
-
-// }
+  analyzeTrace(trace, {
+    device: 'desktop',
+    url: getInitialUrl(trace),
+  }).then(res => {
+    require('fs').writeFileSync('./tracereport.json', res?.report[0], 'utf8');
+    require('fs').writeFileSync('./tracereport.html', res?.report[1], 'utf8');
+    console.log('done. written to ./tracereport.html');
+  });
+}
 
 // find clients/ lighthouse-core/ lighthouse-core/audits/metrics/ -iname "*.js" | grep -v test | entr bash -c "node clients/devtools-entry.js && node lighthouse-core/scripts/cleanup-LHR-for-diff.js ./tracereport.json && git --no-pager diff --no-index --color=always ./tracereport-base.json ./tracereport.json; echo 'done' "
 

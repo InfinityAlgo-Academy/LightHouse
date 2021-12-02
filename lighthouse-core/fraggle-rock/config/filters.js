@@ -68,6 +68,11 @@ function filterArtifactsByAvailableAudits(artifacts, audits) {
     ...audits.flatMap(audit => audit.implementation.meta.requiredArtifacts),
   ]);
 
+  // TODO: something like but here for FR
+  // if (settings.traceBasedNetworkRecords && requiredArtifacts.includes('DevtoolsLogs')) {
+  //   gatherers.add('Trace');
+  // }
+
   // Keep all artifacts in the dependency tree of required artifacts.
   // Iterate through all kept artifacts, adding their dependencies along the way, until the set does not change.
   let previousSize = 0;
