@@ -10,8 +10,8 @@ if [[ -z "$LHCI_CANARY_SERVER_TOKEN" ]]; then
 fi
 
 NODE_VERSION=$(node --version)
-if [[ "$NODE_VERSION" != "v12"* ]]; then
-  echo "Not running dogfood script on node versions other than 12";
+if [[ "$NODE_VERSION" != "v14"* ]]; then
+  echo "Not running dogfood script on node versions other than 14";
   exit 0;
 fi
 

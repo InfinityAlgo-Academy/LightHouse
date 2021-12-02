@@ -72,13 +72,13 @@
   <!-- PASS(crawlable-anchors): Link with a relative path -->
   <a href="/pass">Some link</a>
 
-  <!-- PASS(crawlable-anchors): Link with a click event listener -->
+  <!-- FAIL(crawlable-anchors): Link with a click event listener -->
   <a class="some-link">Some link</a>
   <script>
     document.querySelector('.some-link').addEventListener('click', () => {});
   </script>
 
-  <!-- PASS(crawlable-anchors): Link with an onclick which won't match the audit regex -->
+  <!-- FAIL(crawlable-anchors): Link with an onclick which won't match the audit regex -->
   <a onclick="window.Location = '';">Some link</a>
 </body>
 </html>

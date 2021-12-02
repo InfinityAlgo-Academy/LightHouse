@@ -37,7 +37,7 @@ const license = `/*
 /**
  * Literal string (representing JS, CSS, etc...), or an object with a path, which would
  * be interpreted relative to opts.appDir and be glob-able.
- * @typedef {{path: string, rollup?: boolean} | string} Source
+ * @typedef {{path: string, rollup?: boolean, rollupPlugins?: rollup.Plugin[]} | string} Source
  */
 
 /**
@@ -48,7 +48,7 @@ const license = `/*
  * @property {Record<string, string>=} htmlReplacements Needle -> Replacement mapping, used on html source.
  * @property {Source[]} stylesheets
  * @property {Source[]} javascripts
- * @property {Array<{path: string}>} assets List of paths to copy. Glob-able, maintains directory structure.
+ * @property {Array<{path: string, destDir?: string, rename?: string}>} assets List of paths to copy. Glob-able, maintains directory structure and copies into appDir. Provide a `destDir` and `rename` to state explicitly how to save in the app dir folder.
  */
 
 /**
@@ -79,11 +79,15 @@ class GhPagesApp {
   constructor(opts) {
     this.opts = opts;
     this.distDir = `${ghPagesDistDir}/${opts.name}`;
+    /** @type {string[]} */
+    this.preloadScripts = [];
   }
 
   async build() {
-    fs.mkdirSync(this.distDir, {recursive: true}); // Ensure dist is present, else rmdir will throw. COMPAT: when dropping Node 12, replace with fs.rm(p, {force: true})
-    fs.rmdirSync(this.distDir, {recursive: true});
+    fs.rmSync(this.distDir, {recursive: true, force: true});
+
+    const bundledJs = await this._compileJs();
+    safeWriteFile(`${this.distDir}/src/bundled.js`, bundledJs);
 
     const html = await this._compileHtml();
     safeWriteFile(`${this.distDir}/index.html`, html);
@@ -91,13 +95,13 @@ class GhPagesApp {
     const css = await this._compileCss();
     safeWriteFile(`${this.distDir}/styles/bundled.css`, css);
 
-    const bundledJs = await this._compileJs();
-    safeWriteFile(`${this.distDir}/src/bundled.js`, bundledJs);
-
-    await cpy(this.opts.assets.map(asset => asset.path), this.distDir, {
-      cwd: this.opts.appDir,
-      parents: true,
-    });
+    for (const {path, destDir, rename} of this.opts.assets) {
+      const dir = destDir ? `${this.distDir}/${destDir}` : this.distDir;
+      await cpy(path, dir, {
+        cwd: this.opts.appDir,
+        rename,
+      });
+    }
   }
 
   /**
@@ -127,7 +131,10 @@ class GhPagesApp {
       if (typeof source === 'string') {
         result.push(source);
       } else if (source.rollup) {
-        result.push(await this._rollupSource(path.resolve(this.opts.appDir, source.path)));
+        result.push(await this._rollupSource(
+          path.resolve(this.opts.appDir, source.path),
+          source.rollupPlugins)
+        );
       } else {
         result.push(...loadFiles(path.resolve(this.opts.appDir, source.path)));
       }
@@ -138,19 +145,32 @@ class GhPagesApp {
 
   /**
    * @param {string} input
+   * @param {rollup.Plugin[]=} plugins
    * @return {Promise<string>}
    */
-  async _rollupSource(input) {
-    const plugins = [
+  async _rollupSource(input, plugins) {
+    plugins = plugins || [
       rollupPlugins.nodeResolve(),
       rollupPlugins.commonjs(),
     ];
     if (!process.env.DEBUG) plugins.push(rollupPlugins.terser());
     const bundle = await rollup.rollup({
+      preserveEntrySignatures: 'strict',
       input,
       plugins,
     });
-    const {output} = await bundle.generate({format: 'iife'});
+    const {output} = await bundle.generate({format: 'esm'});
+
+    // Return the code from the main chunk, and save the rest to the src directory.
+    for (let i = 1; i < output.length; i++) {
+      if (output[i].type === 'chunk') {
+        // @ts-expect-error This is a chunk, not an asset.
+        const code = output[i].code;
+        safeWriteFile(`${this.distDir}/src/${output[i].fileName}`, code);
+      }
+    }
+    const scripts = output[0].imports.map(fileName => `src/${fileName}`);
+    this.preloadScripts.push(...scripts);
     return output[0].code;
   }
 
@@ -162,6 +182,17 @@ class GhPagesApp {
       for (const [key, value] of Object.entries(this.opts.htmlReplacements)) {
         htmlSrc = htmlSrc.replace(key, value);
       }
+    }
+
+    if (this.preloadScripts.length) {
+      const preloads = this.preloadScripts.map(fileName =>
+        `<link rel="preload" href="${fileName}" as="script" crossorigin="anonymous" />`
+      ).join('\n');
+      const endHeadIndex = htmlSrc.indexOf('</head>');
+      if (endHeadIndex === -1) {
+        throw new Error('HTML file needs a <head> element to inject preloads');
+      }
+      htmlSrc = htmlSrc.slice(0, endHeadIndex) + preloads + htmlSrc.slice(endHeadIndex);
     }
 
     return htmlSrc;

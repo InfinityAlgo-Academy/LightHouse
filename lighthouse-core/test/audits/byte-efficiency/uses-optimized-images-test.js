@@ -33,6 +33,7 @@ function generateArtifacts(images) {
     imageElements.push({
       src: url,
       naturalDimensions: image,
+      node: {devtoolsNodePath: '1,HTML,1,IMG'},
     });
   }
 
@@ -57,13 +58,14 @@ describe('Page uses optimized images', () => {
     const artifacts = generateArtifacts([{originalSize: 15000, jpegSize: 4500}]);
     const auditResult = OptimizedImagesAudit.audit_(artifacts);
 
-    expect(auditResult.items).toEqual([
+    expect(auditResult.items).toMatchObject([
       {
         fromProtocol: true,
         isCrossOrigin: false,
         totalBytes: 15000,
         wastedBytes: 15000 - 4500,
         url: 'http://google.com/image.jpeg',
+        node: {path: '1,HTML,1,IMG'},
       },
     ]);
   });
@@ -72,13 +74,14 @@ describe('Page uses optimized images', () => {
     const artifacts = generateArtifacts([{originalSize: 1e6, width: 1000, height: 1000}]);
     const auditResult = OptimizedImagesAudit.audit_(artifacts);
 
-    expect(auditResult.items).toEqual([
+    expect(auditResult.items).toMatchObject([
       {
         fromProtocol: false,
         isCrossOrigin: false,
         totalBytes: 1e6,
         wastedBytes: 1e6 - 1000 * 1000 * 2 / 8,
         url: 'http://google.com/image.jpeg',
+        node: {path: '1,HTML,1,IMG'},
       },
     ]);
   });

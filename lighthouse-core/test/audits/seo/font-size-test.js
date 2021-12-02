@@ -335,6 +335,7 @@ describe('SEO: Font size audit', () => {
         urlProvider: 'network',
         line: 50,
         column: 50,
+        original: undefined,
       });
     });
 
@@ -360,6 +361,7 @@ describe('SEO: Font size audit', () => {
         urlProvider: 'network',
         line: 15,
         column: 10,
+        original: undefined,
       });
     });
 
@@ -385,6 +387,7 @@ describe('SEO: Font size audit', () => {
         urlProvider: 'network',
         line: 5,
         column: 15,
+        original: undefined,
       });
     });
 
@@ -411,6 +414,7 @@ describe('SEO: Font size audit', () => {
         urlProvider: 'comment',
         line: 10,
         column: 10,
+        original: undefined,
       });
     });
   });

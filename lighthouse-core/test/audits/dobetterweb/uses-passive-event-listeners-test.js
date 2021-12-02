@@ -11,10 +11,11 @@ const assert = require('assert').strict;
 /* eslint-env jest */
 
 describe('Page uses passive events listeners where applicable', () => {
-  it('fails when scroll blocking listeners should be passive', () => {
+  it('fails when scroll blocking listeners should be passive', async () => {
     const text = 'Use passive event listeners when you do not use preventDefault';
 
-    const auditResult = PassiveEventsAudit.audit({
+    const context = {computedCache: new Map()};
+    const auditResult = await PassiveEventsAudit.audit({
       ConsoleMessages: [
         {source: 'violation', url: 'https://example.com/', text},
         {source: 'violation', url: 'https://example2.com/two', text},
@@ -22,16 +23,21 @@ describe('Page uses passive events listeners where applicable', () => {
         {source: 'violation', url: 'http://abc.com/', text: 'No document.write'},
         {source: 'deprecation', url: 'https://example.com/two'},
       ],
-    });
+      SourceMaps: [],
+      ScriptElements: [],
+    }, context);
 
     assert.equal(auditResult.score, 0);
     assert.equal(auditResult.details.items.length, 2);
   });
 
-  it('passes scroll blocking listeners should be passive', () => {
-    const auditResult = PassiveEventsAudit.audit({
+  it('passes scroll blocking listeners should be passive', async () => {
+    const context = {computedCache: new Map()};
+    const auditResult = await PassiveEventsAudit.audit({
       ConsoleMessages: [],
-    });
+      SourceMaps: [],
+      ScriptElements: [],
+    }, context);
     assert.equal(auditResult.score, 1);
     assert.equal(auditResult.details.items.length, 0);
   });

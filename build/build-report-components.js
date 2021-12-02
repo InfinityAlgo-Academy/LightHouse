@@ -128,7 +128,7 @@ function compileTemplate(tmpEl) {
         continue;
       }
 
-      if (!(childNode instanceof /** @type {typeof Element} */ (window.Element))) {
+      if (!(childNode instanceof window.Element)) {
         throw new Error(`Expected ${childNode} to be an element`);
       }
       process(childNode);
@@ -143,7 +143,7 @@ function compileTemplate(tmpEl) {
   }
 
   const fragmentVarName = makeOrGetVarName(tmpEl);
-  lines.push(`const ${fragmentVarName} = dom.document().createDocumentFragment();`);
+  lines.push(`const ${fragmentVarName} = dom.createFragment();`);
 
   for (const topLevelEl of tmpEl.content.children) {
     process(topLevelEl);

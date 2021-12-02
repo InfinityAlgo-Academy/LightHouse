@@ -31,7 +31,7 @@ function generateSize(width, height, prefix = 'displayed') {
 }
 
 function generateImage(clientSize, naturalDimensions, src = 'https://google.com/logo.png') {
-  return {src, ...clientSize, naturalDimensions};
+  return {src, ...clientSize, naturalDimensions, node: {devtoolsNodePath: '1,HTML,1,IMG'}};
 }
 
 describe('Page uses responsive images', () => {

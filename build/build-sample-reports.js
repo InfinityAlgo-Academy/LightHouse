@@ -10,19 +10,17 @@
 /* eslint-disable no-console */
 const fs = require('fs');
 const path = require('path');
-const swapLocale = require('../lighthouse-core/lib/i18n/swap-locale.js');
+const swapLocale = require('../shared/localization/swap-locale.js');
+const swapFlowLocale = require('../shared/localization/swap-flow-locale.js');
 const ReportGenerator = require('../report/generator/report-generator.js');
 const {defaultSettings} = require('../lighthouse-core/config/constants.js');
 const lighthouse = require('../lighthouse-core/index.js');
 const lhr = /** @type {LH.Result} */ (require('../lighthouse-core/test/results/sample_v2.json'));
-const {LH_ROOT} = require('../root.js');
+const {LH_ROOT, readJson} = require('../root.js');
 
 /** @type {LH.FlowResult} */
-const flowResult = JSON.parse(
-  fs.readFileSync(
-    `${LH_ROOT}/lighthouse-core/test/fixtures/fraggle-rock/reports/sample-lhrs.json`,
-    'utf-8'
-  )
+const flowResult = readJson(
+  `${LH_ROOT}/lighthouse-core/test/fixtures/fraggle-rock/reports/sample-flow-result.json`
 );
 
 const DIST = path.join(LH_ROOT, 'dist');
@@ -41,11 +39,11 @@ const DIST = path.join(LH_ROOT, 'dist');
   };
 
   // Generate and write reports
-  Object.entries(filenameToLhr).forEach(([filename, lhr]) => {
+  Object.entries(filenameToLhr).forEach(([filename, sampleLhr]) => {
     for (const variant of ['', '⌣.cdt.', '⌣.psi.']) {
       let html = variant.includes('psi') ?
-        generatePsiReportHtml() :
-        ReportGenerator.generateReportHtml(lhr);
+        generatePsiReportHtml(sampleLhr) :
+        ReportGenerator.generateReportHtml(sampleLhr);
 
       if (variant.includes('cdt')) {
         // TODO: Make the DevTools Audits panel "emulation" more comprehensive
@@ -60,26 +58,34 @@ const DIST = path.join(LH_ROOT, 'dist');
     }
   });
 
-  generateFlowReport();
+  generateFlowReports();
 })();
 
-function generateFlowReport() {
-  const html = ReportGenerator.generateFlowReportHtml(flowResult);
-  const filepath = `${DIST}/sample-reports/flow-report/index.html`;
-  fs.mkdirSync(path.dirname(filepath), {recursive: true});
-  fs.writeFileSync(filepath, html, {encoding: 'utf-8'});
-  console.log('✅', filepath, 'written.');
+function generateFlowReports() {
+  const filenameToFlowResult = {
+    'flow-report': flowResult,
+    'xl.flow-report': swapFlowLocale(flowResult, 'en-XL'),
+  };
+
+  for (const [filename, fr] of Object.entries(filenameToFlowResult)) {
+    const html = ReportGenerator.generateFlowReportHtml(fr);
+    const filepath = `${DIST}/sample-reports/${filename}/index.html`;
+    fs.mkdirSync(path.dirname(filepath), {recursive: true});
+    fs.writeFileSync(filepath, html, {encoding: 'utf-8'});
+    console.log('✅', filepath, 'written.');
+  }
 }
 
 /**
+ * @param {LH.Result} sampleLhr
  * @return {string}
  */
-function generatePsiReportHtml() {
-  const sanitizedJson = ReportGenerator.sanitizeJson(tweakLhrForPsi(lhr));
+function generatePsiReportHtml(sampleLhr) {
+  const sanitizedJson = ReportGenerator.sanitizeJson(tweakLhrForPsi(sampleLhr));
   const PSI_TEMPLATE = fs.readFileSync(
     `${LH_ROOT}/report/test-assets/faux-psi-template.html`, 'utf8');
   const PSI_JAVASCRIPT = `
-${fs.readFileSync(`${LH_ROOT}/dist/report/psi.js`, 'utf8')};
+${fs.readFileSync(`${LH_ROOT}/dist/report/bundle.umd.js`, 'utf8')};
 ${fs.readFileSync(`${LH_ROOT}/report/test-assets/faux-psi.js`, 'utf8')};
   `;
 
@@ -91,10 +97,10 @@ ${fs.readFileSync(`${LH_ROOT}/report/test-assets/faux-psi.js`, 'utf8')};
 }
 /**
  * Add a plugin to demo plugin rendering.
- * @param {LH.Result} lhr
+ * @param {LH.Result} sampleLhr
  */
-function addPluginCategory(lhr) {
-  lhr.categories['lighthouse-plugin-someplugin'] = {
+function addPluginCategory(sampleLhr) {
+  sampleLhr.categories['lighthouse-plugin-someplugin'] = {
     id: 'lighthouse-plugin-someplugin',
     title: 'Plugin',
     score: 0.5,
@@ -104,11 +110,11 @@ function addPluginCategory(lhr) {
 
 /**
  * Drops the LHR to only one, solo category (performance), and removes budgets.
- * @param {LH.Result} lhr
+ * @param {LH.Result} sampleLhr
  */
-function tweakLhrForPsi(lhr) {
+function tweakLhrForPsi(sampleLhr) {
   /** @type {LH.Result} */
-  const clone = JSON.parse(JSON.stringify(lhr));
+  const clone = JSON.parse(JSON.stringify(sampleLhr));
   clone.categories = {
     'performance': clone.categories.performance,
   };
@@ -182,6 +188,6 @@ async function generateErrorLHR() {
   appleTouchIconAudit.scoreDisplayMode = 'binary';
   appleTouchIconAudit.score = 1;
 
-  fs.rmdirSync(TMP, {recursive: true});
+  fs.rmSync(TMP, {recursive: true, force: true});
   return errorLhr;
 }

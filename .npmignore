@@ -13,8 +13,8 @@ lighthouse-core/lib/sd-validation/
 lighthouse-core/scripts/*
 lighthouse-core/test/
 lighthouse-core/third_party/src/
-lighthouse-viewer/
-lighthouse-treemap/
+viewer/
+treemap/
 clients/
 lighthouse-cli/results/
 lighthouse-logger/
@@ -56,6 +56,7 @@ results.html
 dist/**
 !dist/report/standalone.js
 !dist/report/flow.js
+!dist/report/bundle.esm.js
 
 # large files
 changelog.md

@@ -179,8 +179,7 @@ async function initPopup() {
 
   // Generate checkboxes from saved settings.
   generateOptionsList(settings);
-  const selectedDeviceEl = /** @type {HTMLInputElement} */ (
-    find(`.options__device input[value="${settings.device}"]`));
+  const selectedDeviceEl = find(`.options__device input[value="${settings.device}"]`);
   selectedDeviceEl.checked = true;
 
   generateReportButton.addEventListener('click', () => {

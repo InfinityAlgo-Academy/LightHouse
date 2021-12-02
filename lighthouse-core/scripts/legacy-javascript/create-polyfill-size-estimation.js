@@ -28,15 +28,18 @@
  *                             in `.dependencies` or `.moduleSizes`
 */
 
-const fs = require('fs');
-const makeHash = require('./hash.js');
-const LegacyJavascript = require('../../audits/byte-efficiency/legacy-javascript.js');
-const JsBundles = require('../../computed/js-bundles.js');
-const prettyJSONStringify = require('pretty-json-stringify');
+import fs from 'fs';
+
+import prettyJSONStringify from 'pretty-json-stringify';
+
+import {makeHash} from './hash.js';
+import LegacyJavascript from '../../audits/byte-efficiency/legacy-javascript.js';
+import JsBundles from '../../computed/js-bundles.js';
+import {LH_ROOT} from '../../../root.js';
 
 const hash = makeHash();
-const VARIANT_DIR = `${__dirname}/variants/${hash}`;
-const OUTPUT_PATH = `${__dirname}/../../audits/byte-efficiency/polyfill-graph-data.json`;
+const VARIANT_DIR = `${LH_ROOT}/lighthouse-core/scripts/legacy-javascript/variants/${hash}`;
+const OUTPUT_PATH = `${LH_ROOT}/lighthouse-core/audits/byte-efficiency/polyfill-graph-data.json`;
 
 /**
  * @param {number[]} arr

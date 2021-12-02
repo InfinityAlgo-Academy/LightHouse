@@ -9,7 +9,7 @@
 
 /** @fileoverview Read in a LHR JSON file, remove whatever shouldn't be compared, write it back. */
 
-const {readFileSync, writeFileSync} = require('fs');
+import {readFileSync, writeFileSync} from 'fs';
 
 const filename = process.argv[2];
 const extraFlag = process.argv[3];
@@ -36,6 +36,7 @@ function cleanAndFormatLHR(lhrString) {
 
   // Set timing values, which change from run to run, to predictable values
   lhr.timing.total = 12345.6789;
+  lhr.timing.entries.sort((a, b) => a.startTime - b.startTime);
   lhr.timing.entries.forEach(entry => {
     // @ts-expect-error - write to readonly property
     entry.duration = 100;
@@ -50,5 +51,6 @@ function cleanAndFormatLHR(lhrString) {
       auditResult.description = '**Excluded from diff**';
     }
   }
-  return JSON.stringify(lhr, null, 2);
+  // Ensure we have a final newline to conform to .editorconfig
+  return `${JSON.stringify(lhr, null, 2)}\n`;
 }

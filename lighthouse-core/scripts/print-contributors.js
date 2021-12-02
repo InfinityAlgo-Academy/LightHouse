@@ -6,14 +6,15 @@
 'use strict';
 
 /**
- * @fileoverview Print names and github usernames of new contributors in specified range.
+ * @fileoverview Print names and GitHub usernames of new contributors in specified range.
  * Ex: node lighthouse-core/scripts/print-contributors.js v6.4.0 HEAD
  */
 
 /* eslint-disable no-console */
 
-const {execFileSync} = require('child_process');
-const fetch = require('node-fetch');
+import {execFileSync} from 'child_process';
+
+import fetch from 'node-fetch';
 
 const startingHash = process.argv[2];
 const endingHash = process.argv[3];

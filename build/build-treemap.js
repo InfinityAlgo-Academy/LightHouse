@@ -8,28 +8,29 @@
 const fs = require('fs');
 const GhPagesApp = require('./gh-pages-app.js');
 const {LH_ROOT} = require('../root.js');
+const {getIcuMessageIdParts} = require('../shared/localization/format.js');
 
 /**
- * Extract only the strings needed for lighthouse-treemap into
+ * Extract only the strings needed for treemap into
  * a script that sets a global variable `strings`, whose keys
  * are locale codes (en-US, es, etc.) and values are localized UIStrings.
  */
 function buildStrings() {
-  const locales = require('../lighthouse-core/lib/i18n/locales.js');
+  const locales = require('../shared/localization/locales.js');
   // TODO(esmodules): use dynamic import when build/ is esm.
-  const utilCode = fs.readFileSync(LH_ROOT + '/lighthouse-treemap/app/src/util.js', 'utf-8');
-  const {UIStrings} = eval(utilCode.replace(/export /g, '') + '\nmodule.exports = TreemapUtil;');
+  const utilCode = fs.readFileSync(LH_ROOT + '/treemap/app/src/util.js', 'utf-8');
+  const {UIStrings} = eval(utilCode.replace(/export {/g, 'module.exports = {'));
   const strings = /** @type {Record<LH.Locale, string>} */ ({});
 
   for (const [locale, lhlMessages] of Object.entries(locales)) {
     const localizedStrings = Object.fromEntries(
       Object.entries(lhlMessages).map(([icuMessageId, v]) => {
-        const [filename, varName] = icuMessageId.split(' | ');
-        if (!filename.endsWith('util.js') || !(varName in UIStrings)) {
+        const {filename, key} = getIcuMessageIdParts(icuMessageId);
+        if (!filename.endsWith('util.js') || !(key in UIStrings)) {
           return [];
         }
 
-        return [varName, v.message];
+        return [key, v.message];
       })
     );
     strings[/** @type {LH.Locale} */ (locale)] = localizedStrings;
@@ -44,7 +45,7 @@ function buildStrings() {
 async function run() {
   const app = new GhPagesApp({
     name: 'treemap',
-    appDir: `${LH_ROOT}/lighthouse-treemap/app`,
+    appDir: `${LH_ROOT}/treemap/app`,
     html: {path: 'index.html'},
     stylesheets: [
       {path: require.resolve('tabulator-tables/dist/css/tabulator.min.css')},
@@ -63,7 +64,7 @@ async function run() {
       {path: 'src/main.js', rollup: true},
     ],
     assets: [
-      {path: 'images/**/*'},
+      {path: 'images/**/*', destDir: 'images'},
       {path: 'debug.json'},
     ],
   });

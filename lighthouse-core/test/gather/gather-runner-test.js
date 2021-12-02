@@ -411,7 +411,7 @@ describe('GatherRunner', function() {
   it('prepares target for navigation', async () => {
     const passConfig = {
       passName: 'default',
-      loadFailureMode: /** @type {'ignore'} */ ('ignore'),
+      loadFailureMode: /** @type {const} */ ('ignore'),
       recordTrace: true,
       useThrottling: true,
       gatherers: [],

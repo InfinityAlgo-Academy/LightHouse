@@ -235,7 +235,12 @@ const passing = {
         },
       },
       'crawlable-anchors': {
-        score: 1,
+        score: 0,
+        details: {
+          items: {
+            length: 2,
+          },
+        },
       },
       'link-text': {
         score: 1,

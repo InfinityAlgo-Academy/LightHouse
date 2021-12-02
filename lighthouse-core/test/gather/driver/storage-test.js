@@ -27,7 +27,7 @@ describe('.clearDataForOrigin', () => {
     // Cookies are not cleared to preserve login.
     // websql, indexeddb, and local_storage are not cleared to preserve important user data.
     expect(foundStorageTypes).toMatchInlineSnapshot(
-      `"appcache,file_systems,shader_cache,service_workers,cache_storage"`
+      `"file_systems,shader_cache,service_workers,cache_storage"`
     );
   });
 });
@@ -39,7 +39,6 @@ describe('.getImportantDataWarning', () => {
         {storageType: 'local_storage', usage: 5},
         {storageType: 'indexeddb', usage: 5},
         {storageType: 'websql', usage: 0},
-        {storageType: 'appcache', usage: 5},
         {storageType: 'cookies', usage: 5},
         {storageType: 'file_systems', usage: 5},
         {storageType: 'shader_cache', usage: 5},
@@ -65,7 +64,6 @@ describe('.getImportantDataWarning', () => {
         {storageType: 'local_storage', usage: 0},
         {storageType: 'indexeddb', usage: 0},
         {storageType: 'websql', usage: 0},
-        {storageType: 'appcache', usage: 5},
         {storageType: 'cookies', usage: 5},
         {storageType: 'file_systems', usage: 5},
         {storageType: 'shader_cache', usage: 5},

@@ -17,10 +17,10 @@ const expectations = {
 
     // 22 requests made for a single navigation.
     // 6 extra requests made because stylesheets are evicted from the cache by the time DT opens.
-    // 1 request made to /dobetterweb/clock.appcache
-    length: 29,
+    length: 28,
   },
   artifacts: {
+    BenchmarkIndex: '<10000',
     HostFormFactor: 'desktop',
     Stacks: [{
       id: 'jquery',
@@ -200,27 +200,27 @@ const expectations = {
             0: {
               source: 'exception',
               description: /^Error: A distinctive error\s+at http:\/\/localhost:10200\/dobetterweb\/dbw_tester.html:\d+:\d+$/,
-              url: 'http://localhost:10200/dobetterweb/dbw_tester.html',
+              sourceLocation: {url: 'http://localhost:10200/dobetterweb/dbw_tester.html'},
             },
             1: {
               source: 'console.error',
               description: 'Error! Error!',
-              url: 'http://localhost:10200/dobetterweb/dbw_tester.html',
+              sourceLocation: {url: 'http://localhost:10200/dobetterweb/dbw_tester.html'},
             },
             2: {
               source: 'network',
               description: 'Failed to load resource: the server responded with a status of 404 (Not Found)',
-              url: 'http://localhost:10200/dobetterweb/unknown404.css?delay=200',
+              sourceLocation: {url: 'http://localhost:10200/dobetterweb/unknown404.css?delay=200'},
             },
             3: {
               source: 'network',
               description: 'Failed to load resource: the server responded with a status of 404 (Not Found)',
-              url: 'http://localhost:10200/dobetterweb/fcp-delayer.js?delay=5000',
+              sourceLocation: {url: 'http://localhost:10200/dobetterweb/fcp-delayer.js?delay=5000'},
             },
             4: {
               source: 'network',
               description: 'Failed to load resource: the server responded with a status of 404 (Not Found)',
-              url: 'http://localhost:10200/favicon.ico',
+              sourceLocation: {url: 'http://localhost:10200/favicon.ico'},
             },
             // In legacy Lighthouse this audit will have additional duplicate failures which are a mistake.
             // Fraggle Rock ordering of gatherer `stopInstrumentation` and `getArtifact` fixes the re-request issue.
@@ -237,19 +237,6 @@ const expectations = {
             },
           ],
         },
-      },
-      'external-anchors-use-rel-noopener': {
-        score: 0,
-        warnings: [/Unable to determine.*<a target="_blank">/],
-        details: {
-          items: {
-            length: 3,
-          },
-        },
-      },
-      'appcache-manifest': {
-        score: 0,
-        displayValue: 'Found "clock.appcache"',
       },
       'geolocation-on-start': {
         score: 0,
@@ -314,10 +301,28 @@ const expectations = {
       'deprecations': {
         score: 0,
         details: {
-          items: {
-          // Note: HTML Imports added to deprecations in m70, so 3 before, 4 after.
-            length: '>=3',
-          },
+          items: [
+            {
+              value: /'window.webkitStorageInfo' is deprecated/,
+              source: {
+                type: 'source-location',
+                url: 'http://localhost:10200/dobetterweb/dbw_tester.js',
+                urlProvider: 'network',
+                line: '>0',
+                column: 9,
+              },
+            },
+            {
+              value: /Synchronous XMLHttpRequest on the main thread is deprecated/,
+              source: {
+                type: 'source-location',
+                url: 'http://localhost:10200/dobetterweb/dbw_tester.html',
+                urlProvider: 'network',
+                line: '>0',
+                column: 6,
+              },
+            },
+          ],
         },
       },
       'password-inputs-can-be-pasted-into': {

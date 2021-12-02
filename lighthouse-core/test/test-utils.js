@@ -8,14 +8,14 @@
 /* eslint-env jest */
 
 const fs = require('fs');
-const i18n = require('../lib/i18n/i18n.js');
+const format = require('../../shared/localization/format.js');
 const mockCommands = require('./gather/mock-commands.js');
 const {default: {toBeCloseTo}} = require('expect/build/matchers.js');
 const {LH_ROOT} = require('../../root.js');
 
 expect.extend({
   toBeDisplayString(received, expected) {
-    if (!i18n.isIcuMessage(received)) {
+    if (!format.isIcuMessage(received)) {
       const message = () =>
       [
         `${this.utils.matcherHint('.toBeDisplayString')}\n`,
@@ -27,7 +27,7 @@ expect.extend({
       return {message, pass: false};
     }
 
-    const actual = i18n.getFormatted(received, 'en-US');
+    const actual = format.getFormatted(received, 'en-US');
     const pass = expected instanceof RegExp ?
       expected.test(actual) :
       actual === expected;
@@ -272,18 +272,6 @@ function makeMocksForGatherRunner() {
   }));
 }
 
-/**
- * Returns whether this is running in Node 12 with what we suspect is the default
- * `small-icu` build. Limited to Node 12 so it's not accidentally hitting this
- * path in Node 13+ in CI and we can be certain the `full-icu` path is being exercised.
- * @return {boolean}
- */
-function isNode12SmallIcu() {
-  // COMPAT: Remove when Node 12 is retired and `full-icu` is the default everywhere.
-  return process.versions.node.startsWith('12') &&
-    Intl.NumberFormat.supportedLocalesOf('es').length === 0;
-}
-
 module.exports = {
   getProtoRoundTrip,
   loadSourceMapFixture,
@@ -293,6 +281,5 @@ module.exports = {
   createDecomposedPromise,
   flushAllTimersAndMicrotasks,
   makeMocksForGatherRunner,
-  isNode12SmallIcu,
   ...mockCommands,
 };

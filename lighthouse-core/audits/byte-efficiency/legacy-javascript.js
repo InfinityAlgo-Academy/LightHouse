@@ -192,7 +192,6 @@ class LegacyJavascript extends ByteEfficiencyAudit {
       ['Object.defineProperties', 'es6.object.define-properties'],
       ['Object.defineProperty', 'es6.object.define-property'],
       ['Object.freeze', 'es6.object.freeze'],
-      ['Object.getOwnPropertyNames', 'es6.object.get-own-property-names'],
       ['Object.getPrototypeOf', 'es6.object.get-prototype-of'],
       ['Object.isExtensible', 'es6.object.is-extensible'],
       ['Object.isFrozen', 'es6.object.is-frozen'],
@@ -398,23 +397,6 @@ class LegacyJavascript extends ByteEfficiencyAudit {
   }
 
   /**
-   * @param {LH.Artifacts.Bundle} bundle
-   * @param {number} generatedLine
-   * @param {number} generatedColumn
-   * @return {LH.Audit.Details.SourceLocationValue['original']}
-   */
-  static _findOriginalLocation(bundle, generatedLine, generatedColumn) {
-    const entry = bundle && bundle.map.findEntry(generatedLine, generatedColumn);
-    if (!entry) return;
-
-    return {
-      file: entry.sourceURL || '',
-      line: entry.sourceLineNumber || 0,
-      column: entry.sourceColumnNumber || 0,
-    };
-  }
-
-  /**
    * @param {LH.Artifacts} artifacts
    * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
    * @param {LH.Audit.Context} context
@@ -456,18 +438,10 @@ class LegacyJavascript extends ByteEfficiencyAudit {
       const bundle = bundles.find(bundle => bundle.script.src === url);
       for (const match of matches) {
         const {name, line, column} = match;
-
         /** @type {SubItem} */
         const subItem = {
           signal: name,
-          location: {
-            type: 'source-location',
-            url,
-            line,
-            column,
-            original: bundle && this._findOriginalLocation(bundle, line, column),
-            urlProvider: 'network',
-          },
+          location: ByteEfficiencyAudit.makeSourceLocation(url, line, column, bundle),
         };
         item.subItems.items.push(subItem);
       }

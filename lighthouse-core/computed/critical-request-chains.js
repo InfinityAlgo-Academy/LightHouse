@@ -143,4 +143,4 @@ class CriticalRequestChains {
   }
 }
 
-module.exports = makeComputedArtifact(CriticalRequestChains);
+module.exports = makeComputedArtifact(CriticalRequestChains, ['URL', 'devtoolsLog', 'trace']);

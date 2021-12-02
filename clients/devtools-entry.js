@@ -5,15 +5,23 @@
  */
 'use strict';
 
+/* global globalThis */
+
 const lighthouse = require('../lighthouse-core/index.js');
 const Runner = require('../lighthouse-core/runner.js');
 const RawProtocol = require('../lighthouse-core/gather/connections/raw.js');
 const log = require('lighthouse-logger');
-const {registerLocaleData, lookupLocale} = require('../lighthouse-core/lib/i18n/i18n.js');
+const {lookupLocale} = require('../lighthouse-core/lib/i18n/i18n.js');
+const {registerLocaleData, getCanonicalLocales} = require('../shared/localization/format.js');
 const constants = require('../lighthouse-core/config/constants.js');
 const defaultConfig = require('../lighthouse-core/config/default-config.js');
 
 /** @typedef {import('../lighthouse-core/gather/connections/connection.js')} Connection */
+
+// Rollup seems to overlook some references to `Buffer`, so it must be made explicit.
+// (`parseSourceMapFromDataUrl` breaks without this)
+/** @type {BufferConstructor} */
+globalThis.Buffer = require('buffer').Buffer;
 
 /**
  * Returns a config, which runs only certain categories.
@@ -61,7 +69,7 @@ function listenForStatus(listenCallback) {
   log.events.addListener('status', listenCallback);
 }
 
-let localDev = false;
+let localDev = true;
 
 /**
  * With just a trace, provide Lighthouse performance report
@@ -131,14 +139,15 @@ function analyzeTrace(trace, opts) {
   return Runner.run(gatherFn, runOpts);
 }
 
-// For the bundle smoke test.
-if (typeof module !== 'undefined' && module.exports) {
-  // Ideally this could be exposed via browserify's `standalone`, but it doesn't
-  // work for LH because of https://github.com/browserify/browserify/issues/968
-  // Instead, since this file is only ever run in node for testing, expose a
-  // bundle entry point as global.
-  // @ts-expect-error
-  global.runBundledLighthouse = lighthouse;
+/**
+ * Does a locale lookup but limits the result to the *canonical* Lighthouse
+ * locales, which are only the locales with a messages locale file that can
+ * be downloaded and then used via `registerLocaleData`.
+ * @param {string|string[]=} locales
+ * @return {LH.Locale}
+ */
+function lookupCanonicalLocale(locales) {
+  return lookupLocale(locales, getCanonicalLocales());
 }
 
 // Expose only in DevTools' worker
@@ -156,10 +165,15 @@ if (typeof self !== 'undefined') {
   self.listenForStatus = listenForStatus;
   // @ts-expect-error
   self.registerLocaleData = registerLocaleData;
+  // TODO: expose as lookupCanonicalLocale in LighthouseService.ts?
   // @ts-expect-error
-  self.lookupLocale = lookupLocale;
+  self.lookupLocale = lookupCanonicalLocale;
   // @ts-expect-error
   self.analyzeTrace = analyzeTrace;
+} else {
+  // For the bundle smoke test.
+  // @ts-expect-error
+  global.runBundledLighthouse = lighthouse;
 }
 
 

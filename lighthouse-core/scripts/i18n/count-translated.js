@@ -5,16 +5,14 @@
  */
 'use strict';
 
-/** @typedef {import('../../lib/i18n/locales').LhlMessages} LhlMessages */
+/** @typedef {import('../../../shared/localization/locales').LhlMessages} LhlMessages */
 
-const fs = require('fs');
-const glob = require('glob');
-const path = require('path');
-const {LH_ROOT} = require('../../../root.js');
+import glob from 'glob';
 
-const enUsLhlFilename = LH_ROOT + '/lighthouse-core/lib/i18n/locales/en-US.json';
+import {LH_ROOT, readJson} from '../../../root.js';
+
 /** @type {LhlMessages} */
-const enUsLhl = JSON.parse(fs.readFileSync(enUsLhlFilename, 'utf8'));
+const enUsLhl = readJson('shared/localization/locales/en-US.json');
 
 /**
  * Count how many locale files have a translated version of each string found in
@@ -28,7 +26,7 @@ function countTranslatedMessages() {
     '**/en-US.json',
     '**/en-XL.json',
   ];
-  const globPattern = 'lighthouse-core/lib/i18n/locales/**/+([-a-zA-Z0-9]).json';
+  const globPattern = 'shared/localization/locales/**/+([-a-zA-Z0-9]).json';
   const localeFilenames = glob.sync(globPattern, {
     ignore,
     cwd: LH_ROOT,
@@ -39,9 +37,9 @@ function countTranslatedMessages() {
   const countPerMessage = new Map(enUsEntries);
 
   for (const localeFilename of localeFilenames) {
-    // Use readFileSync in case other code in this process has altered the require()d form.
+    // Re-read data in case other code in this process has altered the require()d form.
     /** @type {LhlMessages} */
-    const localeLhl = JSON.parse(fs.readFileSync(path.join(LH_ROOT, localeFilename), 'utf-8'));
+    const localeLhl = readJson(localeFilename);
 
     for (const localeKey of Object.keys(localeLhl)) {
       const messageCount = countPerMessage.get(localeKey);
@@ -67,6 +65,6 @@ function countTranslatedMessages() {
   };
 }
 
-module.exports = {
+export {
   countTranslatedMessages,
 };

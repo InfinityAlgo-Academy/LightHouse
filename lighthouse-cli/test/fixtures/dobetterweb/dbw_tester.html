@@ -5,8 +5,7 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 -->
 
-<!-- FAIL - appcache manifest. Note: Appcache cannot be toggled at runtime. -->
-<html manifest="clock.appcache">
+<html>
 <head>
 <title>DoBetterWeb Mega Tester... Of Death</title>
 <meta charset="utf-8">
@@ -100,14 +99,6 @@
                 3px green;
   }
 </style>
-</template>
-
-<template id="deprecations-tmpl">
-  <style>
-    body /deep/ div {
-      color: pink; /* FAIL - deprecation warning */
-    }
-  </style>
 </template>
 
 <!-- Force FCP to be ~5s out, necessary to make sure our render-blocking audits still work -->
@@ -371,8 +362,6 @@ function passwordInputsCanBePastedIntoTest() {
 
 
 function deprecationsTest() {
-  stampTemplate('deprecations-tmpl', document.head);
-
   // TODO: some deprecated API messages are not currently being logged correctly.
   // See: https://crbug.com/680832
 

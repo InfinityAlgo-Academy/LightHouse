@@ -25,28 +25,46 @@ const testJsUsage = {
 };
 
 describe('No Unload Listeners', () => {
-  it('passes when there were no listeners', () => {
-    const artifacts = {JsUsage: testJsUsage, GlobalListeners: []};
-    const result = NoUnloadListeners.audit(artifacts);
+  it('passes when there were no listeners', async () => {
+    const artifacts = {
+      JsUsage: testJsUsage,
+      GlobalListeners: [],
+      SourceMaps: [],
+      ScriptElements: [],
+    };
+    const context = {computedCache: new Map()};
+    const result = await NoUnloadListeners.audit(artifacts, context);
     expect(result).toEqual({score: 1});
   });
 
-  it('passes when there were no `unload` listeners', () => {
+  it('passes when there were no `unload` listeners', async () => {
     const GlobalListeners = [{
       type: 'DOMContentLoaded', scriptId: '12', lineNumber: 5, columnNumber: 0,
     }];
-    const artifacts = {JsUsage: testJsUsage, GlobalListeners};
-    const result = NoUnloadListeners.audit(artifacts);
+    const artifacts = {
+      JsUsage: testJsUsage,
+      GlobalListeners,
+      SourceMaps: [],
+      ScriptElements: [],
+    };
+    const context = {computedCache: new Map()};
+    const result = await NoUnloadListeners.audit(artifacts, context);
     expect(result).toEqual({score: 1});
   });
 
-  it('fails when there are unload listeners and matches them to script locations', () => {
+  it('fails when there are unload listeners and matches them to script locations', async () => {
     const GlobalListeners = [
       {type: 'unload', scriptId: '16', lineNumber: 10, columnNumber: 30},
       {type: 'unload', scriptId: '23', lineNumber: 0, columnNumber: 0},
     ];
-    const artifacts = {JsUsage: testJsUsage, GlobalListeners};
-    const result = NoUnloadListeners.audit(artifacts);
+    const artifacts = {
+      JsUsage: testJsUsage,
+      GlobalListeners,
+      SourceMaps: [],
+      ScriptElements: [],
+    };
+    const context = {computedCache: new Map()};
+    const result = await NoUnloadListeners.audit(artifacts, context);
     expect(result.score).toEqual(0);
     expect(result.details.items).toMatchObject([
       {
@@ -57,14 +75,21 @@ describe('No Unload Listeners', () => {
     ]);
   });
 
-  it('fails when there are unload listeners and has a fallback if script URL is not found', () => {
+  // eslint-disable-next-line max-len
+  it('fails when there are unload listeners and has a fallback if script URL is not found', async () => {
     const GlobalListeners = [
       {type: 'DOMContentLoaded', scriptId: '12', lineNumber: 5, columnNumber: 0},
       {type: 'unload', scriptId: 'notascriptid', lineNumber: 10, columnNumber: 30},
       {type: 'unload', scriptId: '22', lineNumber: 1, columnNumber: 100},
     ];
-    const artifacts = {JsUsage: testJsUsage, GlobalListeners};
-    const result = NoUnloadListeners.audit(artifacts);
+    const artifacts = {
+      JsUsage: testJsUsage,
+      GlobalListeners,
+      SourceMaps: [],
+      ScriptElements: [],
+    };
+    const context = {computedCache: new Map()};
+    const result = await NoUnloadListeners.audit(artifacts, context);
     expect(result.score).toEqual(0);
     expect(result.details.items).toMatchObject([
       {

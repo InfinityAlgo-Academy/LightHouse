@@ -10,7 +10,7 @@ const NetworkRecords = require('./network-records.js');
 const URL = require('../lib/url-shim.js');
 const NetworkRequest = require('../lib/network-request.js');
 const Budget = require('../config/budget.js');
-const Util = require('../util-commonjs.js');
+const {Util} = require('../util-commonjs.js');
 
 /** @typedef {{count: number, resourceSize: number, transferSize: number}} ResourceEntry */
 
@@ -111,4 +111,4 @@ class ResourceSummary {
   }
 }
 
-module.exports = makeComputedArtifact(ResourceSummary);
+module.exports = makeComputedArtifact(ResourceSummary, ['URL', 'devtoolsLog', 'budgets']);

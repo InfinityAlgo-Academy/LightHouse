@@ -13,7 +13,7 @@ const assert = require('assert').strict;
 const WIDTH = 800;
 const HEIGHT = 600;
 
-function generateImage(clientSize, naturalDimensions, props, src = 'https://google.com/logo.png') {
+function generateImage(clientSize, naturalDimensions, props, src) {
   const clientRect = {
     clientRect: {
       top: 0,
@@ -25,8 +25,8 @@ function generateImage(clientSize, naturalDimensions, props, src = 'https://goog
   return {
     computedStyles: {objectFit: 'fill'},
     src,
-    mimeType: 'image/png',
     naturalDimensions,
+    node: {devtoolsNodePath: '1,HTML,1,IMG'},
     ...clientSize,
     ...clientRect,
     ...props,
@@ -34,7 +34,7 @@ function generateImage(clientSize, naturalDimensions, props, src = 'https://goog
 }
 
 describe('Images: size audit', () => {
-  function testImage(condition, data) {
+  function testImage(condition, data, src = 'https://google.com/logo.png') {
     const description = `identifies when an image ${condition}`;
     it(description, () => {
       const result = ImageSizeResponsiveAudit.audit({
@@ -42,7 +42,8 @@ describe('Images: size audit', () => {
           generateImage(
             {displayedWidth: data.clientSize[0], displayedHeight: data.clientSize[1]},
             {width: data.naturalSize[0], height: data.naturalSize[1]},
-            data.props
+            data.props,
+            src
           ),
         ],
         ViewportDimensions: {
@@ -99,10 +100,7 @@ describe('Images: size audit', () => {
     score: 1,
     clientSize: [100, 100],
     naturalSize: [5, 5],
-    props: {
-      mimeType: 'image/svg+xml',
-    },
-  });
+  }, 'https://google.com/logo.svg');
 
   testImage('is a css image', {
     score: 1,

@@ -23,7 +23,6 @@ const Runner = require('../../runner.js');
 const Gatherer = require('../../gather/gatherers/gatherer.js');
 const ImageElementsGatherer = require('../../gather/gatherers/image-elements.js');
 const UserTimingsAudit = require('../../audits/user-timings.js');
-const {isNode12SmallIcu} = require('../test-utils.js');
 const {LH_ROOT} = require('../../../root.js');
 
 jest.mock('process', () => ({
@@ -249,11 +248,6 @@ describe('.mergePlugins', () => {
 describe('.resolveSettings', () => {
   it('resolves the locale', () => {
     const settings = resolveSettings({locale: 'zh-CN'});
-    // COMPAT: Node 12 only has 'en' by default.
-    if (isNode12SmallIcu()) {
-      expect(settings.locale).toEqual('en');
-      return;
-    }
     expect(settings.locale).toEqual('zh');
   });
 

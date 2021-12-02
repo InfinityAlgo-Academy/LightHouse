@@ -21,20 +21,22 @@
 /** @typedef {{url:string, unthrottled: GoldenUnthrottled, wpt3g: Wpt3gUnthrottled}} GoldenSite */
 /** @typedef {{sites: GoldenSite[]}} Golden */
 
-const fs = require('fs');
-const path = require('path');
-const execFileSync = require('child_process').execFileSync;
-const constants = require('./constants.js');
+import fs from 'fs';
+import path from 'path';
+import {execFileSync} from 'child_process';
+
+import constants from './constants.js';
+import {LH_ROOT, readJson} from '../../../root.js';
 
 const INPUT_PATH = process.argv[2] || constants.SITE_INDEX_WITH_GOLDEN_PATH;
 const SITE_INDEX_PATH = path.resolve(process.cwd(), INPUT_PATH);
 const SITE_INDEX_DIR = path.dirname(SITE_INDEX_PATH);
-const RUN_ONCE_PATH = path.join(__dirname, 'run-once.js');
+const RUN_ONCE_PATH = path.join(LH_ROOT, 'lighthouse-core/scripts/lantern/run-once.js');
 
 if (!fs.existsSync(SITE_INDEX_PATH)) throw new Error('Usage $0 <expectations file>');
 
 /** @type {Golden} */
-const expectations = require(SITE_INDEX_PATH);
+const expectations = readJson(SITE_INDEX_PATH);
 
 for (const site of expectations.sites) {
   const trace = path.join(SITE_INDEX_DIR, site.unthrottled.tracePath);
