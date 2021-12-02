@@ -62,7 +62,7 @@ class HTTPS extends Audit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['devtoolsLogs', 'traces', 'InspectorIssues'],
+      requiredArtifacts: ['devtoolsLogs', 'InspectorIssues'],
     };
   }
 
@@ -73,7 +73,7 @@ class HTTPS extends Audit {
    */
   static audit(artifacts, context) {
     const devtoolsLogs = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
-    return NetworkRecords.request(trace, context).then(networkRecords => {
+    return NetworkRecords.request(devtoolsLogs, context).then(networkRecords => {
       const insecureURLs = networkRecords
           .filter(record => !NetworkRequest.isSecureRequest(record))
           .map(record => URL.elideDataURI(record.url));

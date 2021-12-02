@@ -40,7 +40,7 @@ class ResourceBudget extends Audit {
       description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
       supportedModes: ['navigation'],
-      requiredArtifacts: ['devtoolsLogs', 'traces', 'URL'],
+      requiredArtifacts: ['devtoolsLogs', 'URL'],
     };
   }
 
@@ -121,10 +121,9 @@ class ResourceBudget extends Audit {
    */
   static async audit(artifacts, context) {
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
-    const trace = artifacts.traces[Audit.DEFAULT_PASS];
-    const data = {devtoolsLog, trace, URL: artifacts.URL, budgets: context.settings.budgets};
+    const data = {devtoolsLog, URL: artifacts.URL, budgets: context.settings.budgets};
     const summary = await ResourceSummary.request(data, context);
-    const mainResource = await MainResource.request({URL: artifacts.URL, trace}, context);
+    const mainResource = await MainResource.request({URL: artifacts.URL, devtoolsLog}, context);
     const budget = Budget.getMatchingBudget(context.settings.budgets, mainResource.url);
 
     if (!budget) {

@@ -34,7 +34,7 @@ describe('Resources are fetched over http/2', () => {
   });
 
   it('should fail when resources are requested via http/1.x', async () => {
-    const records = await NetworkRecords.compute_(artifacts.traces.defaultPass);
+    const records = await NetworkRecords.compute_(artifacts.devtoolsLogs.defaultPass);
     records.forEach(record => (record.protocol = 'HTTP/1.1'));
     artifacts.devtoolsLogs.defaultPass = networkRecordsToDevtoolsLog(records);
     const result = await UsesHTTP2Audit.audit(artifacts, context);
@@ -52,7 +52,7 @@ describe('Resources are fetched over http/2', () => {
   });
 
   it('should ignore service worker requests', async () => {
-    const records = await NetworkRecords.compute_(artifacts.traces.defaultPass);
+    const records = await NetworkRecords.compute_(artifacts.devtoolsLogs.defaultPass);
     records.forEach(record => (record.protocol = 'HTTP/1.1'));
     records.slice(30).forEach(record => {
       // Force the records we're making service worker to another origin.

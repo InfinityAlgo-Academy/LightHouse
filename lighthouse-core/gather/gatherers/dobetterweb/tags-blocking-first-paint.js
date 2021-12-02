@@ -19,7 +19,7 @@
 'use strict';
 
 const NetworkRecords = require('../../../computed/network-records.js');
-const Trace = require('../trace.js');
+const DevtoolsLog = require('../devtools-log.js');
 const FRGatherer = require('../../../fraggle-rock/gather/base-gatherer.js');
 
 /* global document, window, performance, HTMLLinkElement, SVGScriptElement */
@@ -115,10 +115,10 @@ async function collectTagsThatBlockFirstPaint() {
 /* c8 ignore stop */
 
 class TagsBlockingFirstPaint extends FRGatherer {
-  /** @type {LH.Gatherer.GathererMeta<'Trace'>} */
+  /** @type {LH.Gatherer.GathererMeta<'DevtoolsLog'>} */
   meta = {
     supportedModes: ['navigation'],
-    dependencies: {Trace: Trace.symbol},
+    dependencies: {DevtoolsLog: DevtoolsLog.symbol},
   }
 
   /**
@@ -216,12 +216,12 @@ class TagsBlockingFirstPaint extends FRGatherer {
   }
 
   /**
-   * @param {LH.Gatherer.FRTransitionalContext<'Trace'>} context
+   * @param {LH.Gatherer.FRTransitionalContext<'DevtoolsLog'>} context
    * @return {Promise<LH.Artifacts['TagsBlockingFirstPaint']>}
    */
   async getArtifact(context) {
-    const trace = context.dependencies.Trace;
-    const networkRecords = await NetworkRecords.request(trace, context);
+    const devtoolsLog = context.dependencies.DevtoolsLog;
+    const networkRecords = await NetworkRecords.request(devtoolsLog, context);
     return TagsBlockingFirstPaint.findBlockingTags(context.driver, networkRecords);
   }
 

@@ -45,7 +45,7 @@ class CacheHeaders extends Audit {
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
-      requiredArtifacts: ['devtoolsLogs', 'traces'],
+      requiredArtifacts: ['devtoolsLogs'],
     };
   }
 
@@ -195,8 +195,7 @@ class CacheHeaders extends Audit {
    */
   static audit(artifacts, context) {
     const devtoolsLogs = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
-    const trace = artifacts.traces[Audit.DEFAULT_PASS];
-    return NetworkRecords.request(trace, context).then(records => {
+    return NetworkRecords.request(devtoolsLogs, context).then(records => {
       const results = [];
       let totalWastedBytes = 0;
 

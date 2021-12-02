@@ -238,7 +238,7 @@ class GatherRunner {
     };
     log.time(status);
     const devtoolsLog = driver.endDevtoolsLog();
-    const networkRecords = await NetworkRecords.request(trace, passContext);
+    const networkRecords = await NetworkRecords.request(devtoolsLog, passContext);
     log.timeEnd(status);
 
     return {

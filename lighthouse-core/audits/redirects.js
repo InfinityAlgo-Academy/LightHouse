@@ -90,8 +90,8 @@ class Redirects extends Audit {
     const gatherContext = artifacts.GatherContext;
 
     const processedTrace = await ProcessedTrace.request(trace, context);
-    const networkRecords = await NetworkRecords.request(trace, context);
-    const mainResource = await MainResource.request({URL: artifacts.URL, trace}, context);
+    const networkRecords = await NetworkRecords.request(devtoolsLog, context);
+    const mainResource = await MainResource.request({URL: artifacts.URL, devtoolsLog}, context);
 
     const metricComputationData = {trace, devtoolsLog, gatherContext, settings};
     const metricResult = await LanternInteractive.request(metricComputationData, context);

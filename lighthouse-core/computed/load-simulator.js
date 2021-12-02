@@ -12,13 +12,13 @@ const NetworkAnalysis = require('./network-analysis.js');
 
 class LoadSimulator {
   /**
-   * @param {{trace: LH.Trace, settings: Immutable<LH.Config.Settings>}} data
+   * @param {{devtoolsLog: LH.DevtoolsLog, settings: Immutable<LH.Config.Settings>}} data
    * @param {LH.Artifacts.ComputedContext} context
    * @return {Promise<Simulator>}
    */
   static async compute_(data, context) {
     const {throttlingMethod, throttling, precomputedLanternData} = data.settings;
-    const networkAnalysis = await NetworkAnalysis.request(data.trace, context);
+    const networkAnalysis = await NetworkAnalysis.request(data.devtoolsLog, context);
 
     /** @type {LH.Gatherer.Simulation.Options} */
     const options = {

@@ -205,7 +205,7 @@ describe('Byte efficiency base audit', () => {
     const settings = {throttlingMethod: 'simulate', throttling};
     const computedCache = new Map();
     const graph = await PageDependencyGraph.request({trace, devtoolsLog}, {computedCache});
-    const simulator = await LoadSimulator.request({trace, settings}, {computedCache});
+    const simulator = await LoadSimulator.request({devtoolsLog, settings}, {computedCache});
     const result = ByteEfficiencyAudit.createAuditProduct(
       {
         headings: [{key: 'wastedBytes', text: 'Label'}],

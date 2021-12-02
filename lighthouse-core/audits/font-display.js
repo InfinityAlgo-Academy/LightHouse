@@ -49,7 +49,7 @@ class FontDisplay extends Audit {
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
       supportedModes: ['navigation'],
-      requiredArtifacts: ['devtoolsLogs', 'traces', 'CSSUsage', 'URL'],
+      requiredArtifacts: ['devtoolsLogs', 'CSSUsage', 'URL'],
     };
   }
 
@@ -142,8 +142,7 @@ class FontDisplay extends Audit {
    */
   static async audit(artifacts, context) {
     const devtoolsLogs = artifacts.devtoolsLogs[this.DEFAULT_PASS];
-    const trace = artifacts.traces[this.DEFAULT_PASS];
-    const networkRecords = await NetworkRecords.request(trace, context);
+    const networkRecords = await NetworkRecords.request(devtoolsLogs, context);
     const {passingURLs, failingURLs} =
       FontDisplay.findFontDisplayDeclarations(artifacts, PASSING_FONT_DISPLAY_REGEX);
     /** @type {Array<string>} */

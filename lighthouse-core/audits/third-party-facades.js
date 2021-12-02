@@ -86,7 +86,7 @@ class ThirdPartyFacades extends Audit {
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
       supportedModes: ['navigation'],
-      requiredArtifacts: ['traces', 'URL'],
+      requiredArtifacts: ['traces', 'devtoolsLogs', 'URL'],
     };
   }
 
@@ -149,8 +149,9 @@ class ThirdPartyFacades extends Audit {
   static async audit(artifacts, context) {
     const settings = context.settings;
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
-    const networkRecords = await NetworkRecords.request(trace, context);
-    const mainResource = await MainResource.request({trace, URL: artifacts.URL}, context);
+    const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+    const networkRecords = await NetworkRecords.request(devtoolsLog, context);
+    const mainResource = await MainResource.request({devtoolsLog, URL: artifacts.URL}, context);
     const mainEntity = thirdPartyWeb.getEntity(mainResource.url);
     const tasks = await MainThreadTasks.request(trace, context);
     const multiplier = settings.throttlingMethod === 'simulate' ?

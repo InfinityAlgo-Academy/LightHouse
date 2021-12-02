@@ -11,7 +11,7 @@ const NetworkAnalyzer = require('../../lib/dependency-graph/simulator/network-an
 const NetworkRequest = require('../../lib/network-request.js');
 const pageFunctions = require('../../lib/page-functions.js');
 const {fetchResponseBodyFromCache} = require('../driver/network.js');
-const Trace = require('./trace.js');
+const DevtoolsLog = require('./devtools-log.js');
 
 /* global getNodeDetails */
 
@@ -66,10 +66,10 @@ async function runInSeriesOrParallel(values, promiseMapper, runInSeries) {
  * @fileoverview Gets JavaScript file contents.
  */
 class ScriptElements extends FRGatherer {
-  /** @type {LH.Gatherer.GathererMeta<'Trace'>} */
+  /** @type {LH.Gatherer.GathererMeta<'DevtoolsLog'>} */
   meta = {
     supportedModes: ['timespan', 'navigation'],
-    dependencies: {Trace: Trace.symbol},
+    dependencies: {DevtoolsLog: DevtoolsLog.symbol},
   }
 
   /**
@@ -137,12 +137,12 @@ class ScriptElements extends FRGatherer {
   }
 
   /**
-   * @param {LH.Gatherer.FRTransitionalContext<'Trace'>} context
+   * @param {LH.Gatherer.FRTransitionalContext<'DevtoolsLog'>} context
    */
   async getArtifact(context) {
-    const trace = context.dependencies.Trace;
+    const devtoolsLog = context.dependencies.DevtoolsLog;
     const formFactor = context.baseArtifacts.HostFormFactor;
-    const networkRecords = await NetworkRecords.request(trace, context);
+    const networkRecords = await NetworkRecords.request(devtoolsLog, context);
     return this._getArtifact(context, networkRecords, formFactor);
   }
 

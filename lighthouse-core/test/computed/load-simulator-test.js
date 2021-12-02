@@ -54,7 +54,7 @@ describe('Simulator artifact', () => {
     const throttling = {rttMs: 120, throughputKbps: 1000, cpuSlowdownMultiplier: 3};
     const settings = {throttlingMethod: 'simulate', throttling};
     const context = {settings, computedCache: new Map()};
-    const simulator = await LoadSimulator.request({trace, settings}, context);
+    const simulator = await LoadSimulator.request({devtoolsLog, settings}, context);
 
     assert.equal(simulator._rtt, 120);
     assert.equal(simulator._throughput / 1024, 1000);

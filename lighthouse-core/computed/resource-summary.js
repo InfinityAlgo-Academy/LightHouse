@@ -101,12 +101,12 @@ class ResourceSummary {
   }
 
   /**
-   * @param {{URL: LH.Artifacts['URL'], trace: LH.Trace, budgets: ImmutableObject<LH.Budget[]|null>}} data
+   * @param {{URL: LH.Artifacts['URL'], devtoolsLog: LH.DevtoolsLog, budgets: ImmutableObject<LH.Budget[]|null>}} data
    * @param {LH.Artifacts.ComputedContext} context
    * @return {Promise<Record<LH.Budget.ResourceType,ResourceEntry>>}
    */
   static async compute_(data, context) {
-    const networkRecords = await NetworkRecords.request(data.trace, context);
+    const networkRecords = await NetworkRecords.request(data.devtoolsLog, context);
     return ResourceSummary.summarize(networkRecords, data.URL.finalUrl, data.budgets);
   }
 }

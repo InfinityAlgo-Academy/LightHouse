@@ -305,7 +305,7 @@ async function saveLanternNetworkData(devtoolsLog, outputPath) {
   /** @type {LH.Audit.Context} */
   // @ts-expect-error - the full audit context isn't needed for analysis.
   const context = {computedCache: new Map()};
-  const networkAnalysis = await NetworkAnalysisComputed.request(trace, context);
+  const networkAnalysis = await NetworkAnalysisComputed.request(devtoolsLog, context);
   const lanternData = LoadSimulatorComputed.convertAnalysisToSaveableLanternData(networkAnalysis);
 
   fs.writeFileSync(outputPath, JSON.stringify(lanternData));

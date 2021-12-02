@@ -131,7 +131,7 @@ class CriticalRequestChains {
   static async compute_(data, context) {
     const mainResource = await MainResource.request({
       URL: data.URL,
-      trace: data.trace,
+      devtoolsLog: data.devtoolsLog,
     }, context);
 
     const graph = await PageDependencyGraph.request({

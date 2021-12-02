@@ -119,9 +119,9 @@ class UsesRelPreconnectAudit extends Audit {
 
     const [networkRecords, mainResource, loadSimulator, processedNavigation, pageGraph] =
       await Promise.all([
-        NetworkRecords.request(trace, context),
-        MainResource.request({trace, URL: artifacts.URL}, context),
-        LoadSimulator.request({trace, settings}, context),
+        NetworkRecords.request(devtoolsLog, context),
+        MainResource.request({devtoolsLog, URL: artifacts.URL}, context),
+        LoadSimulator.request({devtoolsLog, settings}, context),
         ProcessedNavigation.request(processedTrace, context),
         PageDependencyGraph.request({trace, devtoolsLog}, context),
       ]);

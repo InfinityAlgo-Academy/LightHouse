@@ -138,7 +138,7 @@ class BootupTime extends Audit {
     const settings = context.settings || {};
     const trace = artifacts.traces[BootupTime.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[BootupTime.DEFAULT_PASS];
-    const networkRecords = await NetworkRecords.request(trace, context);
+    const networkRecords = await NetworkRecords.request(devtoolsLog, context);
     const tasks = await MainThreadTasks.request(trace, context);
     const multiplier = settings.throttlingMethod === 'simulate' ?
       settings.throttling.cpuSlowdownMultiplier : 1;

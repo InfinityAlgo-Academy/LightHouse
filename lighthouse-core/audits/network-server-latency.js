@@ -31,7 +31,7 @@ class NetworkServerLatency extends Audit {
       scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['traces'],
+      requiredArtifacts: ['devtoolsLogs'],
     };
   }
 
@@ -41,8 +41,8 @@ class NetworkServerLatency extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
-    const trace = artifacts.traces[Audit.DEFAULT_PASS];
-    const records = await NetworkRecords.request(trace, context);
+    const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+    const records = await NetworkRecords.request(devtoolsLog, context);
     if (!records.length) {
       return {
         score: 1,
@@ -50,7 +50,7 @@ class NetworkServerLatency extends Audit {
       };
     }
 
-    const analysis = await NetworkAnalysisComputed.request(trace, context);
+    const analysis = await NetworkAnalysisComputed.request(devtoolsLog, context);
 
     /** @type {number} */
     let maxLatency = 0;

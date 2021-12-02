@@ -1,4 +1,3 @@
-
 /**
  * @license Copyright 2019 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -8,7 +7,7 @@
 
 const Audit = require('./audit.js');
 const MainThreadTasksComputed = require('../computed/main-thread-tasks.js');
-const TraceNetworkRecordsComputed = require('../computed/network-records.js');
+const NetworkRecordsComputed = require('../computed/network-records.js');
 const NetworkAnalysisComputed = require('../computed/network-analysis.js');
 const NetworkAnalyzer = require('../lib/dependency-graph/simulator/network-analyzer.js');
 
@@ -36,8 +35,8 @@ class Diagnostics extends Audit {
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     const tasks = await MainThreadTasksComputed.request(trace, context);
-    const records = await TraceNetworkRecordsComputed.request(trace, context);
-    const analysis = await NetworkAnalysisComputed.request(trace, context);
+    const records = await NetworkRecordsComputed.request(devtoolsLog, context);
+    const analysis = await NetworkAnalysisComputed.request(devtoolsLog, context);
 
     const toplevelTasks = tasks.filter(t => !t.parent);
     const mainDocumentTransferSize = NetworkAnalyzer.findMainDocument(records).transferSize;

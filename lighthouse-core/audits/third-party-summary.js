@@ -74,7 +74,7 @@ class ThirdPartySummary extends Audit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['traces', 'URL'],
+      requiredArtifacts: ['traces', 'devtoolsLogs', 'URL'],
     };
   }
 
@@ -195,7 +195,8 @@ class ThirdPartySummary extends Audit {
   static async audit(artifacts, context) {
     const settings = context.settings || {};
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
-    const networkRecords = await NetworkRecords.request(trace, context);
+    const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+    const networkRecords = await NetworkRecords.request(devtoolsLog, context);
     const mainEntity = thirdPartyWeb.getEntity(artifacts.URL.finalUrl);
     const tasks = await MainThreadTasks.request(trace, context);
     const multiplier = settings.throttlingMethod === 'simulate' ?

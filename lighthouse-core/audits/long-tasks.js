@@ -56,7 +56,7 @@ class LongTasks extends Audit {
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
     const tasks = await MainThreadTasks.request(trace, context);
     const devtoolsLog = artifacts.devtoolsLogs[LongTasks.DEFAULT_PASS];
-    const networkRecords = await NetworkRecords.request(trace, context);
+    const networkRecords = await NetworkRecords.request(devtoolsLog, context);
 
     /** @type {Map<LH.TraceEvent, LH.Gatherer.Simulation.NodeTiming>} */
     const taskTimingsByEvent = new Map();

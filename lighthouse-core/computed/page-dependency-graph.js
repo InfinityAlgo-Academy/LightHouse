@@ -456,11 +456,11 @@ class PageDependencyGraph {
    * @return {Promise<Node>}
    */
   static async compute_(data, context) {
-    // TODO(paul-netreq): remove devtoolslog from this CA
     const trace = data.trace;
+    const devtoolsLog = data.devtoolsLog;
     const [processedTrace, networkRecords] = await Promise.all([
       ProcessedTrace.request(trace, context),
-      NetworkRecords.request(trace, context),
+      NetworkRecords.request(devtoolsLog, context),
     ]);
 
     return PageDependencyGraph.createGraph(processedTrace, networkRecords);

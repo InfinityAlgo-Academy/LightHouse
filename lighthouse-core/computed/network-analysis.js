@@ -49,12 +49,12 @@ class NetworkAnalysis {
   }
 
   /**
-   * @param {LH.Trace} trace
+   * @param {LH.DevtoolsLog} devtoolsLog
    * @param {LH.Artifacts.ComputedContext} context
    * @return {Promise<LH.Artifacts.NetworkAnalysis>}
    */
-  static async compute_(trace, context) {
-    const records = await NetworkRecords.request(trace, context);
+  static async compute_(devtoolsLog, context) {
+    const records = await NetworkRecords.request(devtoolsLog, context);
     const throughput = NetworkAnalyzer.estimateThroughput(records);
     const rttAndServerResponseTime = NetworkAnalysis.computeRTTAndServerResponseTime(records);
     return {throughput, ...rttAndServerResponseTime};

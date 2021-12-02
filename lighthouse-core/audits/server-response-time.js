@@ -40,7 +40,7 @@ class ServerResponseTime extends Audit {
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
       supportedModes: ['timespan', 'navigation'],
-      requiredArtifacts: ['traces', 'URL', 'GatherContext'],
+      requiredArtifacts: ['devtoolsLogs', 'URL', 'GatherContext'],
     };
   }
 
@@ -58,12 +58,12 @@ class ServerResponseTime extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
-    const trace = artifacts.traces[Audit.DEFAULT_PASS];
+    const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
 
     /** @type {LH.Artifacts.NetworkRequest} */
     let mainResource;
     if (artifacts.GatherContext.gatherMode === 'timespan') {
-      const networkRecords = await NetworkRecords.request(trace, context);
+      const networkRecords = await NetworkRecords.request(devtoolsLog, context);
       const optionalMainResource = NetworkAnalyzer.findOptionalMainDocument(
         networkRecords,
         artifacts.URL.finalUrl
@@ -73,7 +73,7 @@ class ServerResponseTime extends Audit {
       }
       mainResource = optionalMainResource;
     } else {
-      mainResource = await MainResource.request({trace, URL: artifacts.URL}, context);
+      mainResource = await MainResource.request({devtoolsLog, URL: artifacts.URL}, context);
     }
 
     const responseTime = ServerResponseTime.calculateResponseTime(mainResource);

@@ -15,13 +15,13 @@ const NetworkRecords = require('./network-records.js');
  */
 class MainResource {
   /**
-   * @param {{URL: LH.Artifacts['URL'], trace: LH.Trace}} data
+   * @param {{URL: LH.Artifacts['URL'], devtoolsLog: LH.DevtoolsLog}} data
    * @param {LH.Artifacts.ComputedContext} context
    * @return {Promise<LH.Artifacts.NetworkRequest>}
    */
   static async compute_(data, context) {
     const finalUrl = data.URL.finalUrl;
-    const requests = await NetworkRecords.request(data.trace, context);
+    const requests = await NetworkRecords.request(data.devtoolsLog, context);
     const mainResource = NetworkAnalyzer.findMainDocument(requests, finalUrl);
     if (!mainResource) {
       throw new Error('Unable to identify the main resource');

@@ -208,9 +208,9 @@ class PreloadLCPImageAudit extends Audit {
       .find(element => element.traceEventType === 'largest-contentful-paint');
 
     const [mainResource, lanternLCP, simulator] = await Promise.all([
-      MainResource.request({trace, URL}, context),
+      MainResource.request({devtoolsLog, URL}, context),
       LanternLCP.request(metricData, context),
-      LoadSimulator.request({trace, settings: context.settings}, context),
+      LoadSimulator.request({devtoolsLog, settings: context.settings}, context),
     ]);
 
     const graph = lanternLCP.pessimisticGraph;

@@ -132,7 +132,7 @@ class RenderBlockingResources extends Audit {
     const gatherContext = artifacts.GatherContext;
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
-    const simulatorData = {trace, settings: context.settings};
+    const simulatorData = {devtoolsLog, settings: context.settings};
     const processedTrace = await ProcessedTrace.request(trace, context);
     const processedNavigation = await ProcessedNavigation.request(processedTrace, context);
     const simulator = await LoadSimulator.request(simulatorData, context);
@@ -263,7 +263,7 @@ class RenderBlockingResources extends Audit {
       const unusedCssItems = await UnusedCSS.request({
         CSSUsage: artifacts.CSSUsage,
         URL: artifacts.URL,
-        trace: artifacts.traces[Audit.DEFAULT_PASS],
+        devtoolsLog: artifacts.devtoolsLogs[Audit.DEFAULT_PASS],
       }, context);
       for (const item of unusedCssItems) {
         wastedBytesByUrl.set(item.url, item.wastedBytes);

@@ -47,7 +47,7 @@ class CspXss extends Audit {
       scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['devtoolsLogs', 'traces', 'MetaElements', 'URL'],
+      requiredArtifacts: ['devtoolsLogs', 'MetaElements', 'URL'],
     };
   }
 

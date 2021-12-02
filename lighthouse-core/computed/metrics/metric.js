@@ -73,7 +73,7 @@ class Metric {
       undefined : await ProcessedNavigation.request(processedTrace, context);
 
     const augmentedData = Object.assign({
-      networkRecords: await NetworkRecords.request(trace, context),
+      networkRecords: await NetworkRecords.request(devtoolsLog, context),
       gatherContext,
       processedTrace,
       processedNavigation,
