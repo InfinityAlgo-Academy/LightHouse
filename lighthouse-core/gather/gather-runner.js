@@ -544,7 +544,6 @@ class GatherRunner {
    * @param {string} passName
    */
   static _addLoadDataToBaseArtifacts(passContext, loadData, passName) {
-    debugger;
     const baseArtifacts = passContext.baseArtifacts;
     baseArtifacts.devtoolsLogs[passName] = loadData.devtoolsLog;
     if (loadData.trace) baseArtifacts.traces[passName] = loadData.trace;

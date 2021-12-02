@@ -14,7 +14,6 @@ const log = require('lighthouse-logger');
 const {lookupLocale} = require('../lighthouse-core/lib/i18n/i18n.js');
 const {registerLocaleData, getCanonicalLocales} = require('../shared/localization/format.js');
 const constants = require('../lighthouse-core/config/constants.js');
-const defaultConfig = require('../lighthouse-core/config/default-config.js');
 
 /** @typedef {import('../lighthouse-core/gather/connections/connection.js')} Connection */
 
@@ -109,12 +108,12 @@ function analyzeTrace(trace, opts) {
   const config = lighthouse.generateConfig(configJSON, {});
   const runOpts = {url, config, computedCache: new Map()};
 
-  const gatherFn = _ => {
+  const gatherFn = () => {
     /** @type {LH.DevtoolsLog} */
     const fakeDtLogs = [];
     fakeDtLogs.smuggledTrace = trace;
 
-    /** @type {Partial<LH.Artifacts>} */
+    // /** @type {Partial<LH.Artifacts>} */
     const artifacts = {
       traces: {defaultPass: trace},
       devtoolsLogs: {defaultPass: fakeDtLogs},
@@ -127,7 +126,7 @@ function analyzeTrace(trace, opts) {
       NetworkUserAgent: '',
       Stacks: [],
       InstallabilityErrors: {errors: []},
-      fetchTime: new Date().toJSON(),
+      fetchTime: new Date().toJSON() || '',
       LighthouseRunWarnings: [],
       BenchmarkIndex: 1000,
       Timing: [],
@@ -192,6 +191,7 @@ if (require.main === module) {
    * @param {LH.Trace} trace
    */
   const getInitialUrl = trace => {
+    // TODO: this technique is wrong. it broke on the rv camping site.
     const urls = trace.traceEvents
     .filter(e =>
         (e.name === 'navigationStart' && e?.args?.data?.isLoadingMainFrame === true) ||

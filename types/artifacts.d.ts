@@ -970,7 +970,7 @@ export interface TraceEvent {
  * Minor hack for traceBasedNetworkRecords
  */
 interface AugmentedDevtoolsLog extends Array<Protocol.RawEventMessage> {
-  attachedTrace?: Trace;
+  smuggledTrace?: Trace;
 }
 
 /**
