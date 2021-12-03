@@ -16,9 +16,10 @@ roll_devtools() {
   cd -
 }
 
-# Setup inspector-sources.
 cd "$DEVTOOLS_PATH"
 git --no-pager log -1
 roll_devtools
-autoninja -C out/Default build_release_devtools # Build devtools resources.
+# Build devtools. The creates `out/Default/gen/front_end`,
+# which is served as `inspector-sources` by the webtests server.
+autoninja -C out/Default
 cd -
