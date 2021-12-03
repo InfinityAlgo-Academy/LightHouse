@@ -27,7 +27,7 @@ describe('NetworkRecordsFromTrace', () => {
     console.log('Try replacing with another req Id!', allReqIds);
 
     // TODO this is currently testing just 1 request. ideally this "test" tries ALL requests that DTlog finds.
-    const pred = (nr) => nr.requestId === '37148.3';
+    const pred = (nr) => nr.requestId === '868B884023EA82545E754C3734974FE7';
 
     const dtlNR = netReqsDTL.find(pred);
     const myTraceNR = netReqsTrace.find(pred);

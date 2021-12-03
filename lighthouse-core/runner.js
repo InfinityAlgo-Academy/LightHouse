@@ -70,7 +70,7 @@ class Runner {
           throw new Error('Cannot run audit mode on empty URL');
         }
         if (runOpts.url && !URL.equalWithExcludedFragments(runOpts.url, requestedUrl)) {
-          throw new Error('Cannot run audit mode on different URL');
+          // throw new Error('Cannot run audit mode on different URL');
         }
       } else {
         // verify the url is valid and that protocol is allowed
@@ -263,7 +263,7 @@ class Runner {
       const normalizedAuditSettings = Object.assign({}, settings, overrides);
 
       if (!isDeepEqual(normalizedGatherSettings, normalizedAuditSettings)) {
-        throw new Error('Cannot change settings between gathering and auditing');
+        // throw new Error('Cannot change settings between gathering and auditing');
       }
     }
 
