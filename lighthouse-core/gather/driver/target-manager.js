@@ -85,6 +85,9 @@ class TargetManager {
    */
   async enable() {
     if (this._enabled) return;
+    // Only enable targetmanager in FraggleRock. Otherwise it conflicts with legacy driver's target handling.
+    // @ts-expect-error: This only exists on the FR impl, not in the type.
+    if (!this._session._callbackMap) return;
 
     this._enabled = true;
     this._targets = new Map();

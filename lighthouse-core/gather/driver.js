@@ -300,7 +300,7 @@ class Driver {
     // If it's not an iframe, just resume it and move on.
     if (event.targetInfo.type !== 'iframe') {
       // We suspended the target when we auto-attached, so make sure it goes back to being normal.
-      await this.sendCommandToSession('Runtime.runIfWaitingForDebugger', event.sessionId);
+      this.sendCommandToSession('Runtime.runIfWaitingForDebugger', event.sessionId);
       return;
     }
 
@@ -317,7 +317,7 @@ class Driver {
     });
 
     // We suspended the target when we auto-attached, so make sure it goes back to being normal.
-    await this.sendCommandToSession('Runtime.runIfWaitingForDebugger', event.sessionId);
+    this.sendCommandToSession('Runtime.runIfWaitingForDebugger', event.sessionId);
   }
 
   /**
