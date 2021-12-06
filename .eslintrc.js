@@ -80,7 +80,7 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['lighthouse-cli/test/smokehouse/**/*expectations.js'],
+      files: ['lighthouse-cli/test/smokehouse/test-definitions/*.js'],
       rules: {
         'max-len': 0,
       },
