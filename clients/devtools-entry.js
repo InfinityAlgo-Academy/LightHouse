@@ -36,6 +36,7 @@ function createConfig(categoryIDs, device) {
   /** @type {LH.SharedFlagsSettings} */
   const settings = {
     onlyCategories: categoryIDs,
+    skipAudits: ['full-page-screenshot'],
     // In DevTools, emulation is applied _before_ Lighthouse starts (to deal with viewport emulation bugs). go/xcnjf
     // As a result, we don't double-apply viewport emulation.
     screenEmulation: {disabled: true},

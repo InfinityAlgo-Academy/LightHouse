@@ -567,7 +567,7 @@ class GatherRunner {
     const {driver, passConfig} = passContext;
 
     // Go to about:blank, set up, and run `beforePass()` on gatherers.
-    await GatherRunner.loadBlank(driver, passConfig.blankPage);
+    // await GatherRunner.loadBlank(driver, passConfig.blankPage);
     const {warnings} = await prepare.prepareTargetForIndividualNavigation(
       driver.defaultSession,
       passContext.settings,
@@ -583,7 +583,8 @@ class GatherRunner {
 
     // Navigate, start recording, and run `pass()` on gatherers.
     await GatherRunner.beginRecording(passContext);
-    const {navigationError: possibleNavError} = await GatherRunner.loadPage(driver, passContext);
+    // const {navigationError: possibleNavError} = await GatherRunner.loadPage(driver, passContext);
+    await driver.sendCommand('Page.navigate', {url: passContext.url});
     await GatherRunner.pass(passContext, gathererResults);
     const loadData = await GatherRunner.endRecording(passContext);
 
@@ -591,7 +592,7 @@ class GatherRunner {
     await emulation.clearThrottling(driver.defaultSession);
 
     // In case of load error, save log and trace with an error prefix, return no artifacts for this pass.
-    const pageLoadError = getPageLoadError(possibleNavError, {
+    /* const pageLoadError = getPageLoadError(possibleNavError, {
       url: passContext.url,
       loadFailureMode: passConfig.loadFailureMode,
       networkRecords: loadData.networkRecords,
@@ -607,7 +608,7 @@ class GatherRunner {
 
       log.timeEnd(status);
       return {artifacts: {}, pageLoadError};
-    }
+    }*/
 
     // If no error, save devtoolsLog and trace.
     GatherRunner._addLoadDataToBaseArtifacts(passContext, loadData, passConfig.passName);
