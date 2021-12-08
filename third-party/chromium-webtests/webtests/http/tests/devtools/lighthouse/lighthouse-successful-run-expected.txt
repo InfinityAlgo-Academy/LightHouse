@@ -1,5 +1,6 @@
 Tests that audits panel works.
 
+error: Inspected target navigated or closed
 
 ========== Lighthouse Start Audit State ==========
 [x] Performance
@@ -63,6 +64,7 @@ Gathering setup: FullPageScreenshot
 Beginning devtoolsLog and trace
 Loading page & waiting for onload
 Navigating to http://127.0.0.1:8000/devtools/lighthouse/resources/lighthouse-basic.html
+error: Inspected target navigated or closed
 Running pass methods
 Gathering in-page: CSSUsage
 Gathering in-page: JsUsage
@@ -142,6 +144,7 @@ Running pass methods
 Gathering in-page: ServiceWorker
 Gathering devtoolsLog & network records
 Computing artifact: NetworkRecords$L
+error: Inspected target navigated or closed
 Running afterPass methods
 Gathering: ServiceWorker
 Disconnecting from browser...
@@ -300,6 +303,7 @@ Auditing: Minify CSS
 Auditing: Minify JavaScript
 Auditing: Reduce unused CSS
 Auditing: Reduce unused JavaScript
+Computing artifact: UnusedJavascriptSummary
 Auditing: Serve images in next-gen formats
 Auditing: Efficiently encode images
 Auditing: Enable text compression
@@ -434,7 +438,7 @@ duplicate-id-aria: notApplicable
 duplicate-tags: notApplicable
 duplicated-javascript: numeric
 efficient-animated-content: flaky
-errors-in-console: pass
+errors-in-console: fail
 final-screenshot: ERROR Chrome didn't collect any screenshots during the page load. Please make sure there is content visible on the page, and then try re-running Lighthouse. (NO_SCREENSHOTS)
 first-ad-render: notApplicable
 first-contentful-paint: flaky

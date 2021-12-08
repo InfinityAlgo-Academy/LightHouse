@@ -1,5 +1,6 @@
 Tests that lighthouse panel passes flags.
 
+error: Inspected target navigated or closed
 
 ========== Lighthouse Start Audit State ==========
 [x] Performance
@@ -11,6 +12,8 @@ Tests that lighthouse panel passes flags.
 [x] Clear storage
 [ ] Simulated throttling
 Generate report: enabled visible
+error: Inspected target navigated or closed
+error: Inspected target navigated or closed
 
 =============== Lighthouse Results ===============
 formFactor: desktop

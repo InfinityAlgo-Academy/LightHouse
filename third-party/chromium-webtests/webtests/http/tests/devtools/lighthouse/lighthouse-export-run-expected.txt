@@ -1,6 +1,10 @@
 Tests that exporting works.
 
+error: Inspected target navigated or closed
+error: Inspected target navigated or closed
+error: Inspected target navigated or closed
 ++++++++ testExportHtml
+error: Inspected target navigated or closed
 
 # of .lh-audit divs (original): 136
 
