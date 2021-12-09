@@ -19,8 +19,7 @@ const UIStrings = {
    * @example {https://example.com/final/resolved/page} final
    */
   warningRedirected: 'The page may not be loading as expected because your test URL ' +
-  `({requested}) was redirected to {final}. ` +
-  'Try testing the second URL directly.',
+  `( {requested} ) was redirected to ( {final} )—try testing the second URL directly.`,
   /**
    * @description Warning that Lighthouse timed out while waiting for the page to load.
    */

@@ -52,7 +52,7 @@ const expectations = {
       },
     },
     runWarnings: [
-      /The page may not be loading as expected because your test URL \(.*js-redirect.html.*\) was redirected to .*redirects-final.html. Try testing the second URL directly./,
+      /The page may not be loading as expected because your test URL \(.*js-redirect.html.*\) was redirected to \(.*redirects-final.html \)—try testing the second URL directly./,
     ],
   },
 };
