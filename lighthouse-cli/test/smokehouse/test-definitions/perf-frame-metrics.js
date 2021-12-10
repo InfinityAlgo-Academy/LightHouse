@@ -87,6 +87,15 @@ const expectations = {
           ],
         },
       },
+      'layout-shift-elements': {
+        score: null,
+        displayValue: '1 element found',
+        details: {
+          items: {
+            length: 1,
+          },
+        },
+      },
     },
   },
 };

@@ -116,13 +116,13 @@ class TraceElements extends FRGatherer {
    * We calculate the score per element by taking the 'score' of each layout shift event and
    * distributing it between all the nodes that were shifted, proportianal to the impact region of
    * each shifted element.
-   * @param {Array<LH.TraceEvent>} mainThreadEvents
+   * @param {Array<LH.TraceEvent>} frameEvents
    * @return {Array<TraceElementData>}
    */
-  static getTopLayoutShiftElements(mainThreadEvents) {
+  static getTopLayoutShiftElements(frameEvents) {
     /** @type {Map<number, number>} */
     const clsPerNode = new Map();
-    const shiftEvents = mainThreadEvents
+    const shiftEvents = frameEvents
       .filter(e => e.name === 'LayoutShift')
       .map(e => e.args && e.args.data);
     const indexFirstEventWithoutInput =
@@ -268,10 +268,10 @@ class TraceElements extends FRGatherer {
 
         throw err;
       });
-    const {mainThreadEvents} = processedTrace;
+    const {mainThreadEvents, frameEvents} = processedTrace;
 
     const lcpNodeId = TraceElements.getNodeIDFromTraceEvent(largestContentfulPaintEvt);
-    const clsNodeData = TraceElements.getTopLayoutShiftElements(mainThreadEvents);
+    const clsNodeData = TraceElements.getTopLayoutShiftElements(frameEvents);
     const animatedElementData =
       await this.getAnimatedElements(mainThreadEvents);
 

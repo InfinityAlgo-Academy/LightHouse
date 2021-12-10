@@ -32,7 +32,7 @@ function makeLayoutShiftTraceEvent(score, impactedNodes, had_recent_input = fals
         impacted_nodes: impactedNodes,
         score: score,
       },
-      frame: '3C4CBF06AF1ED5B9EAA59BECA70111F4',
+      frame: '3EFC2700D7BC3F4734CAF2F726EFB78C',
     },
   };
 }
