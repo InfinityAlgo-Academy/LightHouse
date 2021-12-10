@@ -6,6 +6,7 @@
 'use strict';
 
 const FRGatherer = require('../../../fraggle-rock/gather/base-gatherer.js');
+const {fetchResource, shouldUseLegacyFetcher} = require('../../driver/fetcher.js');
 
 /* global fetch, location */
 
@@ -37,9 +38,11 @@ class RobotsTxt extends FRGatherer {
    * @return {Promise<LH.Artifacts['RobotsTxt']>}
    */
   async getArtifact(passContext) {
+    const session = passContext.driver.defaultSession;
+
     // Iframe fetcher still has issues with CSPs.
     // Only use the fetcher if we are fetching over the protocol.
-    if (await passContext.driver.fetcher.shouldUseLegacyFetcher()) {
+    if (await shouldUseLegacyFetcher(session)) {
       return passContext.driver.executionContext.evaluate(getRobotsTxtContent, {
         args: [],
         useIsolation: true,
@@ -47,8 +50,7 @@ class RobotsTxt extends FRGatherer {
     }
 
     const robotsUrl = new URL('/robots.txt', passContext.url).href;
-    await passContext.driver.fetcher.enable();
-    return passContext.driver.fetcher.fetchResource(robotsUrl)
+    return fetchResource(session, robotsUrl)
       .catch(err => ({status: null, content: null, errorMessage: err.message}));
   }
 }

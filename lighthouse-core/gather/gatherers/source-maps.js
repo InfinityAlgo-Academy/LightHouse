@@ -7,6 +7,7 @@
 
 const FRGatherer = require('../../fraggle-rock/gather/base-gatherer.js');
 const URL = require('../../lib/url-shim.js');
+const {fetchResource} = require('../driver/fetcher.js');
 
 /**
  * @fileoverview Gets JavaScript source maps.
@@ -30,7 +31,7 @@ class SourceMaps extends FRGatherer {
    * @return {Promise<LH.Artifacts.RawSourceMap>}
    */
   async fetchSourceMap(driver, sourceMapUrl) {
-    const response = await driver.fetcher.fetchResource(sourceMapUrl, {timeout: 1500});
+    const response = await fetchResource(driver.defaultSession, sourceMapUrl, {timeout: 1500});
     if (response.content === null) {
       throw new Error(`Failed fetching source map (${response.status})`);
     }
@@ -140,7 +141,6 @@ class SourceMaps extends FRGatherer {
    * @return {Promise<LH.Artifacts['SourceMaps']>}
    */
   async getArtifact(context) {
-    await context.driver.fetcher.enable();
     const eventProcessPromises = this._scriptParsedEvents
       .map((event) => this._retrieveMapFromScriptParsedEvent(context.driver, event));
     return Promise.all(eventProcessPromises);

@@ -9,7 +9,6 @@ import _CPUNode = require('../lighthouse-core/lib/dependency-graph/cpu-node');
 import _Simulator = require('../lighthouse-core/lib/dependency-graph/simulator/simulator');
 import Driver = require('../lighthouse-core/gather/driver');
 import ExecutionContext = require('../lighthouse-core/gather/driver/execution-context');
-import Fetcher = require('../lighthouse-core/gather/fetcher');
 import ArbitraryEqualityMap = require('../lighthouse-core/lib/arbitrary-equality-map');
 
 import {Artifacts, BaseArtifacts, FRBaseArtifacts, GathererArtifacts} from './artifacts';
@@ -41,7 +40,6 @@ declare module Gatherer {
   interface FRTransitionalDriver {
     defaultSession: FRProtocolSession;
     executionContext: ExecutionContext;
-    fetcher: Fetcher;
   }
 
   /** The limited context interface shared between pre and post Fraggle Rock Lighthouse. */

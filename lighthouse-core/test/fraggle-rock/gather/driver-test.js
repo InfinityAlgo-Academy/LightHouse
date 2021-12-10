@@ -78,17 +78,6 @@ describe('.executionContext', () => {
   });
 });
 
-describe('.fetcher', () => {
-  it('should fail if called before connect', () => {
-    expect(() => driver.fetcher).toThrow();
-  });
-
-  it('should create a fetcher on connect', async () => {
-    await driver.connect();
-    expect(driver.fetcher).toBeTruthy();
-  });
-});
-
 describe('.disconnect', () => {
   it('should do nothing if called before connect', async () => {
     await driver.disconnect();

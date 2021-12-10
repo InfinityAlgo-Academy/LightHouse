@@ -5,7 +5,6 @@
  */
 'use strict';
 
-const Fetcher = require('./fetcher.js');
 const ExecutionContext = require('./driver/execution-context.js');
 const LHError = require('../lib/lh-error.js');
 const {fetchResponseBodyFromCache} = require('../gather/driver/network.js');
@@ -62,9 +61,6 @@ class Driver {
 
   // eslint-disable-next-line no-invalid-this
   defaultSession = this;
-
-  // eslint-disable-next-line no-invalid-this
-  fetcher = new Fetcher(this.defaultSession, this.executionContext);
 
   /**
    * @param {Connection} connection
