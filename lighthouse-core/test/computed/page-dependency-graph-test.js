@@ -592,16 +592,24 @@ describe('PageDependencyGraph computed artifact:', () => {
       assert.deepEqual(nodes[2].getDependencies(), [nodes[0]]);
     });
 
-
-    it('should throw when root node is not related to main document', () => {
+    it('should find root if it is not the first node', () => {
       const request1 = createRequest(1, '1', 0, null, NetworkRequest.TYPES.Other);
       const request2 = createRequest(2, '2', 5, null, NetworkRequest.TYPES.Document);
       const networkRecords = [request1, request2];
 
-      addTaskEvents(0, 0, []);
+      // Evaluated before root request.
+      addTaskEvents(0.1, 50, [
+        {name: 'EvaluateScript'},
+      ]);
 
-      const fn = () => PageDependencyGraph.createGraph(processedTrace, networkRecords);
-      expect(fn).toThrow(/root node.*document/i);
+      const graph = PageDependencyGraph.createGraph(processedTrace, networkRecords);
+      const nodes = [];
+      graph.traverse(node => nodes.push(node));
+
+      assert.equal(nodes.length, 1);
+      assert.deepEqual(nodes.map(node => node.id), [2]);
+      assert.deepEqual(nodes[0].getDependencies(), []);
+      assert.deepEqual(nodes[0].getDependents(), []);
     });
   });
 });

@@ -128,6 +128,11 @@ describe('NavigationRunner', () => {
       );
     });
 
+    it('skip about:blank if option is true', async () => {
+      await runner._setup({driver, config, requestedUrl, options: {skipAboutBlank: true}});
+      expect(mocks.navigationMock.gotoURL).not.toHaveBeenCalled();
+    });
+
     it('should collect base artifacts', async () => {
       const {baseArtifacts} = await runner._setup({driver, config, requestedUrl});
       expect(baseArtifacts).toMatchObject({URL: {requestedUrl}});
@@ -241,7 +246,26 @@ describe('NavigationRunner', () => {
       expect(artifactIds).toContain('Timespan');
       expect(artifactIds).toContain('Snapshot');
 
-      expect(mocks.navigationMock.gotoURL).toHaveBeenCalled();
+      // Once for about:blank, once for the requested URL.
+      expect(mocks.navigationMock.gotoURL).toHaveBeenCalledTimes(2);
+    });
+
+    it('skips about:blank if option is set to true', async () => {
+      const {artifacts} = await runner._navigation({
+        driver,
+        config,
+        navigation,
+        requestedUrl,
+        computedCache,
+        baseArtifacts,
+        options: {skipAboutBlank: true},
+      });
+      const artifactIds = Object.keys(artifacts);
+      expect(artifactIds).toContain('Timespan');
+      expect(artifactIds).toContain('Snapshot');
+
+      // Only once for the requested URL.
+      expect(mocks.navigationMock.gotoURL).toHaveBeenCalledTimes(1);
     });
 
     it('collects timespan, snapshot, and navigation artifacts', async () => {
