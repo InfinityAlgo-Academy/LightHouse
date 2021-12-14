@@ -8,8 +8,8 @@ self.addEventListener('install', function(event) {
   event.waitUntil(
     caches.open('simple-sw-v1').then(function(cache) {
       return cache.addAll([
-        './',
-        'lighthouse-basic.css',
+        '/devtools/lighthouse/resources/lighthouse-sw.html',
+        '/devtools/lighthouse/resources/lighthouse-basic.css',
       ]);
     })
   );

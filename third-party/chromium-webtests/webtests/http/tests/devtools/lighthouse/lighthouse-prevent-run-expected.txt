@@ -1,6 +1,5 @@
 Tests that audits panel prevents run of unauditable pages.
 
-error: Inspected target navigated or closed
 
 
 **Prevents audit with no categories**

@@ -1,6 +1,5 @@
 Tests that Lighthouse block requests specified in DevTools BlockedURLsPane.
 
-error: Inspected target navigated or closed
 
 ========== Lighthouse Start Audit State ==========
 [x] Performance
@@ -12,7 +11,6 @@ error: Inspected target navigated or closed
 [x] Clear storage
 [x] Simulated throttling
 Generate report: enabled visible
-error: Inspected target navigated or closed
 
 Requests made: http://127.0.0.1:8000/devtools/lighthouse/resources/lighthouse-basic.html
 Requests blocked: http://127.0.0.1:8000/devtools/lighthouse/resources/lighthouse-basic.css

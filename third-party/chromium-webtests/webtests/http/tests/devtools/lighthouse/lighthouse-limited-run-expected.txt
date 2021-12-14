@@ -1,6 +1,5 @@
 Tests that audits panel works when only the pwa category is selected.
 
-error: Inspected target navigated or closed
 
 ========== Lighthouse Start Audit State ==========
 [ ] Performance
@@ -12,8 +11,6 @@ error: Inspected target navigated or closed
 [x] Clear storage
 [x] Simulated throttling
 Generate report: enabled visible
-error: Inspected target navigated or closed
-error: Inspected target navigated or closed
 
 =============== Audits run ===============
 apple-touch-icon

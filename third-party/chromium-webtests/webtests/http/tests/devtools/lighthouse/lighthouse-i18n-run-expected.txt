@@ -1,6 +1,5 @@
 Tests that Lighthouse report is translated.
 
-error: Inspected target navigated or closed
 
 ========== Lighthouse Start Audit State ==========
 [x] Performance
@@ -12,7 +11,6 @@ error: Inspected target navigated or closed
 [x] Clear storage
 [x] Simulated throttling
 Generate report: enabled visible
-error: Inspected target navigated or closed
 resolved to locale es
 
 i18n footerIssue: "Notificar un problema"
