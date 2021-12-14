@@ -759,7 +759,9 @@ class LighthouseTreemap {
     TreemapUtil.find('.treemap-placeholder').classList.add('hidden');
     TreemapUtil.find('main').classList.remove('hidden');
 
-    const i18n = new I18n(options.lhr.configSettings.locale, {
+    const locale = options.lhr.configSettings.locale;
+    document.documentElement.lang = locale;
+    const i18n = new I18n(locale, {
       // Set missing renderer strings to default (english) values.
       ...TreemapUtil.UIStrings,
       // `strings` is generated in build/build-treemap.js
