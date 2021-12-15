@@ -38,7 +38,7 @@ export class DragAndDrop {
       reader.onload = function(e) {
         const result = /** @type {?string} */ (e.target && e.target.result);
         if (!result) {
-          reject('Could not read file');
+          reject(new Error('Could not read file'));
           return;
         }
         resolve(result);
