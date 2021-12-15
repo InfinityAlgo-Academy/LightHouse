@@ -62,7 +62,7 @@ Gathering setup: SourceMaps
 Gathering setup: FullPageScreenshot
 Beginning devtoolsLog and trace
 Loading page & waiting for onload
-Navigating to http://127.0.0.1:8000/devtools/lighthouse/resources/lighthouse-basic.html
+Navigating to http://127.0.0.1:8000/devtools/lighthouse/resources/lighthouse-sw.html
 Running pass methods
 Gathering in-page: CSSUsage
 Gathering in-page: JsUsage
@@ -137,7 +137,7 @@ Running beforePass methods
 Gathering setup: ServiceWorker
 Beginning devtoolsLog and trace
 Loading page & waiting for onload
-Navigating to http://127.0.0.1:8000/devtools/lighthouse/resources/lighthouse-basic.html
+Navigating to http://127.0.0.1:8000/devtools/lighthouse/resources/lighthouse-sw.html
 Running pass methods
 Gathering in-page: ServiceWorker
 Gathering devtoolsLog & network records
@@ -300,6 +300,7 @@ Auditing: Minify CSS
 Auditing: Minify JavaScript
 Auditing: Reduce unused CSS
 Auditing: Reduce unused JavaScript
+Computing artifact: UnusedJavascriptSummary
 Auditing: Serve images in next-gen formats
 Auditing: Efficiently encode images
 Auditing: Enable text compression
@@ -368,7 +369,7 @@ Auditing: Total ad JS blocking time
 Generating results...
 
 =============== Lighthouse Results ===============
-URL: http://127.0.0.1:8000/devtools/lighthouse/resources/lighthouse-basic.html
+URL: http://127.0.0.1:8000/devtools/lighthouse/resources/lighthouse-sw.html
 Version: 9.1.0
 ViewportDimensions: {
   "innerWidth": 980,

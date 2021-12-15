@@ -88,6 +88,7 @@
   if (networkResponseRecievedEvents.length !== 1) {
     TestRunner.addResult(`ERROR: Network.responseReceived events for main resource; expected 1, got ${
         networkResponseRecievedEvents.length}`);
+    TestRunner.addResult(JSON.stringify(networkResponseRecievedEvents, null, 2));
   }
 
   TestRunner.completeTest();
