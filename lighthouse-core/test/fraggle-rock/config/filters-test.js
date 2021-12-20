@@ -5,6 +5,8 @@
  */
 'use strict';
 
+const log = require('lighthouse-logger');
+
 const BaseAudit = require('../../../audits/audit.js');
 const BaseGatherer = require('../../../fraggle-rock/gather/base-gatherer.js');
 const {defaultSettings, defaultNavigationConfig} = require('../../../config/constants.js');
@@ -455,6 +457,34 @@ describe('Fraggle Rock Config Filtering', () => {
           timespan: {},
         },
       });
+    });
+
+    it('should warn and drop unknown onlyCategories entries', () => {
+      /** @type {Array<unknown>} */
+      const warnings = [];
+      /** @param {unknown} evt */
+      const saveWarning = evt => warnings.push(evt);
+
+      log.events.on('warning', saveWarning);
+      const filtered = filters.filterConfigByExplicitFilters(config, {
+        onlyAudits: null,
+        onlyCategories: ['timespan', 'thisIsNotACategory'],
+        skipAudits: null,
+      });
+      log.events.off('warning', saveWarning);
+
+      if (!filtered.categories) throw new Error('Failed to keep any categories');
+      expect(Object.keys(filtered.categories)).toEqual(['timespan']);
+      expect(filtered).toMatchObject({
+        artifacts: [{id: 'Timespan'}],
+        audits: [{implementation: TimespanAudit}],
+        categories: {
+          timespan: {},
+        },
+      });
+      expect(warnings).toEqual(expect.arrayContaining([
+        ['config', `unrecognized category in 'onlyCategories': thisIsNotACategory`],
+      ]));
     });
 
     it('should filter via a combination of filters', () => {
