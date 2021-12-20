@@ -10,6 +10,14 @@
  * Make sure CHROME_PATH is set to a modern version of Chrome.
  * May work on older versions of Chrome.
  *
+ * To use with locally built DevTools and Lighthouse, run (assuming devtools at ~/src/devtools/devtools-frontend):
+ *    yarn devtools
+ *    yarn run-devtools --custom-devtools-frontend=file://$HOME/src/devtools/devtools-frontend/out/Default/gen/front_end
+ *
+ * Or with the DevTools in .tmp:
+ *   bash lighthouse-core/test/chromium-web-tests/setup.sh
+ *   yarn run-devtools --custom-devtools-frontend=file://$PWD/.tmp/chromium-web-tests/devtools/devtools-frontend/out/Default/gen/front_end
+ *
  * URL list file: yarn run-devtools < path/to/urls.txt
  * Single URL: yarn run-devtools "https://example.com"
  */
@@ -217,6 +225,10 @@ async function run() {
   }
 
   const customDevtools = argv['custom-devtools-frontend'];
+  if (customDevtools) {
+    console.log(`Using custom devtools frontend: ${customDevtools}`);
+    console.log('Make sure it has been built recently!');
+  }
 
   const browser = await puppeteer.launch({
     executablePath: process.env.CHROME_PATH,
@@ -242,6 +254,7 @@ async function run() {
     }
   }
   console.log(`${urlList.length - errorCount} / ${urlList.length} urls run successfully.`);
+  console.log(`Results saved to ${argv.o}`);
 
   await browser.close();
 

@@ -7,11 +7,15 @@ This runs the Chromium webtests using the devtools integration tester.
 ## Run
 
 ```sh
-yarn build-devtools
 yarn test-devtools
 
 # Reset the results.
 yarn update:test-devtools
+
+# Run the test runner, without updating content_shell or getting the latest
+# DevTools commits like `yarn test-devtools` does.
+# This still bundles Lighthouse + rolls to DevTools before running the tests.
+SKIP_DOWNLOADS=1 yarn test-devtools
 ```
 
 ### Prerequistes
