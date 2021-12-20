@@ -23,7 +23,7 @@ class UserFlow {
     /** @type {FrOptions} */
     this.options = {page, ...options};
     /** @type {string|undefined} */
-    this.name = options && options.name;
+    this.name = options?.name;
     /** @type {LH.FlowResult.Step[]} */
     this.steps = [];
   }
@@ -90,7 +90,7 @@ class UserFlow {
     const result = await navigation(this._getNextNavigationOptions(url, stepOptions));
     if (!result) throw Error('Navigation returned undefined');
 
-    const providedName = stepOptions && stepOptions.stepName;
+    const providedName = stepOptions?.stepName;
     this.steps.push({
       lhr: result.lhr,
       name: providedName || this._getDefaultStepName(result.lhr),
@@ -118,7 +118,7 @@ class UserFlow {
     this.currentTimespan = undefined;
     if (!result) throw Error('Timespan returned undefined');
 
-    const providedName = options && options.stepName;
+    const providedName = options?.stepName;
     this.steps.push({
       lhr: result.lhr,
       name: providedName || this._getDefaultStepName(result.lhr),
@@ -137,7 +137,7 @@ class UserFlow {
     const result = await snapshot(options);
     if (!result) throw Error('Snapshot returned undefined');
 
-    const providedName = stepOptions && stepOptions.stepName;
+    const providedName = stepOptions?.stepName;
     this.steps.push({
       lhr: result.lhr,
       name: providedName || this._getDefaultStepName(result.lhr),

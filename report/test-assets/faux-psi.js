@@ -92,13 +92,12 @@ async function distinguishLHR(lhr, tabId) {
     lhr.categories.performance.score = 0.81;
   }
 
-  const finalSSDetails = lhr.audits['final-screenshot'] && lhr.audits['final-screenshot'].details;
+  const finalSSDetails = lhr.audits['final-screenshot']?.details;
   if (finalSSDetails && finalSSDetails.type === 'screenshot') {
     finalSSDetails.data = await decorateScreenshot(finalSSDetails.data, tabId);
   }
 
-  const fpSSDetails = lhr.audits['full-page-screenshot'] &&
-      lhr.audits['full-page-screenshot'].details;
+  const fpSSDetails = lhr.audits['full-page-screenshot']?.details;
   if (fpSSDetails && fpSSDetails.type === 'full-page-screenshot') {
     fpSSDetails.screenshot.data = await decorateScreenshot(fpSSDetails.screenshot.data, tabId);
   }

@@ -102,7 +102,7 @@ export class GithubApi {
       }
 
       return idbKeyval.get(id).then(/** @param {?CachableGist} cachedGist */ (cachedGist) => {
-        if (cachedGist && cachedGist.etag) {
+        if (cachedGist?.etag) {
           headers.set('If-None-Match', cachedGist.etag);
         }
 

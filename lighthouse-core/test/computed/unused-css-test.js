@@ -88,7 +88,7 @@ describe('UnusedCSS computed artifact', () => {
     const baseUrl = 'http://g.co/';
 
     function map(overrides, url = baseUrl) {
-      if (overrides.header && overrides.header.sourceURL) {
+      if (overrides.header?.sourceURL) {
         overrides.header.sourceURL = baseUrl + overrides.header.sourceURL;
       }
       return UnusedCSS.mapSheetToResult(Object.assign(baseSheet, overrides), url);

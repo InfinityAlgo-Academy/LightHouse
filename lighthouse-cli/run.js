@@ -254,7 +254,7 @@ async function runLighthouse(url, flags, config) {
     // Runtime errors indicate something was *very* wrong with the page result.
     // We don't want the user to have to parse the report to figure it out, so we'll still exit
     // with an error code after we saved the results.
-    if (runnerResult && runnerResult.lhr.runtimeError) {
+    if (runnerResult?.lhr.runtimeError) {
       const {runtimeError} = runnerResult.lhr;
       return printErrorAndExit({
         name: 'LHError',

@@ -310,12 +310,12 @@ describe('ScriptTreemapData audit', () => {
       expect(node.resourceBytes).toBe(201);
       expect(node.unusedBytes).toBe(101);
 
-      node = /** @type {LH.Treemap.Node} */ (node.children && node.children[0]);
+      node = /** @type {LH.Treemap.Node} */ (node.children?.[0]);
       expect(node.name).toBe('some/prefix');
       expect(node.resourceBytes).toBe(201);
       expect(node.unusedBytes).toBe(101);
-      expect(node.children && node.children[0].name).toBe('main.js');
-      expect(node.children && node.children[1].name).toBe('not/a.js');
+      expect(node.children?.[0].name).toBe('main.js');
+      expect(node.children?.[1].name).toBe('not/a.js');
     });
 
     it('nodes have unusedBytes data', () => {

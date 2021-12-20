@@ -440,7 +440,7 @@ class TreemapViewer {
       if (node.children) return;
 
       const depthOneNode = this.nodeToDepthOneNodeMap.get(node);
-      const bundleNode = depthOneNode && depthOneNode.children ? depthOneNode : undefined;
+      const bundleNode = depthOneNode?.children ? depthOneNode : undefined;
 
       let name;
       if (bundleNode) {
@@ -803,7 +803,7 @@ class LighthouseTreemap {
     let lhr = null;
     if (json && typeof json === 'object') {
       for (const maybeLhr of [json, json.lhr, json.lighthouseResult]) {
-        if (maybeLhr && maybeLhr.audits && typeof maybeLhr.audits === 'object') {
+        if (maybeLhr?.audits && typeof maybeLhr.audits === 'object') {
           lhr = maybeLhr;
           break;
         }

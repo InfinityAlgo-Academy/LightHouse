@@ -58,7 +58,7 @@ class IssuesPanelEntries extends Audit {
   static getMixedContentRow(mixedContentIssues) {
     const requestUrls = new Set();
     for (const issue of mixedContentIssues) {
-      const requestUrl = (issue.request && issue.request.url) || issue.mainResourceURL;
+      const requestUrl = issue.request?.url || issue.mainResourceURL;
       requestUrls.add(requestUrl);
     }
     return {
@@ -77,7 +77,7 @@ class IssuesPanelEntries extends Audit {
   static getSameSiteCookieRow(sameSiteCookieIssues) {
     const requestUrls = new Set();
     for (const issue of sameSiteCookieIssues) {
-      const requestUrl = (issue.request && issue.request.url) || issue.cookieUrl;
+      const requestUrl = (issue.request?.url) || issue.cookieUrl;
       if (requestUrl) {
         requestUrls.add(requestUrl);
       }
@@ -102,7 +102,7 @@ class IssuesPanelEntries extends Audit {
   static getBlockedByResponseRow(blockedByResponseIssues) {
     const requestUrls = new Set();
     for (const issue of blockedByResponseIssues) {
-      const requestUrl = issue.request && issue.request.url;
+      const requestUrl = issue.request?.url;
       if (requestUrl) {
         requestUrls.add(requestUrl);
       }

@@ -36,7 +36,7 @@ export class DragAndDrop {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.onload = function(e) {
-        const result = /** @type {?string} */ (e.target && e.target.result);
+        const result = /** @type {?string} */ (e.target?.result);
         if (!result) {
           reject(new Error('Could not read file'));
           return;

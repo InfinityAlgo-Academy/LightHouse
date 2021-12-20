@@ -144,7 +144,7 @@ class NetworkMonitor {
     const finalNavigation = mainFrameNavigations[mainFrameNavigations.length - 1];
     if (!finalNavigation) log.warn('NetworkMonitor', 'No detected navigations');
 
-    return finalNavigation && finalNavigation.url;
+    return finalNavigation?.url;
   }
 
   /**
@@ -172,7 +172,7 @@ class NetworkMonitor {
     if (!this._networkRecorder) return false;
     const requests = this._networkRecorder.getRawRecords();
     const rootFrameRequest = requests.find(r => r.resourceType === 'Document');
-    const rootFrameId = rootFrameRequest && rootFrameRequest.frameId;
+    const rootFrameId = rootFrameRequest?.frameId;
 
     return this._isActiveIdlePeriod(
       0,

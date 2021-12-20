@@ -136,11 +136,11 @@ async function _collectDebugData(navigationContext, phaseState) {
   await collectPhaseArtifacts({...phaseState, phase: 'getArtifact', artifactDefinitions});
   const getArtifactState = phaseState.artifactState.getArtifact;
 
-  const devtoolsLogArtifactId = devtoolsLogArtifactDefn && devtoolsLogArtifactDefn.id;
+  const devtoolsLogArtifactId = devtoolsLogArtifactDefn?.id;
   const devtoolsLog = devtoolsLogArtifactId && await getArtifactState[devtoolsLogArtifactId];
   const records = devtoolsLog && await NetworkRecords.request(devtoolsLog, navigationContext);
 
-  const traceArtifactId = traceArtifactDefn && traceArtifactDefn.id;
+  const traceArtifactId = traceArtifactDefn?.id;
   const trace = traceArtifactId && await getArtifactState[traceArtifactId];
 
   return {devtoolsLog, records, trace};

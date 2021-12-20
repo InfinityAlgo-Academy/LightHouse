@@ -555,7 +555,7 @@ async function collectAllStringsInDir(dir) {
     const content = fs.readFileSync(absolutePath, 'utf8');
     const exportVars = await import(absolutePath);
     const regexMatch = content.match(UISTRINGS_REGEX);
-    const exportedUIStrings = exportVars.UIStrings || (exportVars.default && exportVars.default.UIStrings);
+    const exportedUIStrings = exportVars.UIStrings || exportVars.default?.UIStrings;
 
     if (!regexMatch) {
       // No UIStrings found in the file text or exports, so move to the next.

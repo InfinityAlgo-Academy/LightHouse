@@ -244,7 +244,7 @@ function getShardedDefinitions(testDefns, shardArg) {
   // eslint-disable-next-line max-len
   const errorMessage = `'shard' must be of the form 'n/d' and n and d must be positive integers with 1 ≤ n ≤ d. Got '${shardArg}'`;
   const match = /^(?<shardNumber>\d+)\/(?<shardTotal>\d+)$/.exec(shardArg);
-  assert(match && match.groups, errorMessage);
+  assert(match?.groups, errorMessage);
   const shardNumber = Number(match.groups.shardNumber);
   const shardTotal = Number(match.groups.shardTotal);
   assert(shardNumber > 0 && Number.isInteger(shardNumber), errorMessage);

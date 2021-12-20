@@ -40,7 +40,7 @@ beforeEach(() => {
     }
     if (method === 'Page.captureScreenshot') {
       return {
-        data: screenshotData && screenshotData.length ? screenshotData.shift() : 'abc',
+        data: screenshotData?.length ? screenshotData.shift() : 'abc',
       };
     }
   });

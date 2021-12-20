@@ -79,7 +79,7 @@ function computeAndLogReviewResponseStats(label, issues) {
   const initialReviewRequests = issues
     .map(issue => {
       const assignEvent = issue.events.find(event => event.event === 'assigned');
-      const assignee = (assignEvent && assignEvent.assignee && assignEvent.assignee.login) || '';
+      const assignee = assignEvent?.assignee?.login || '';
       const firstCommentByAssignee = issue.comments.find(
         comment => comment.user.login === assignee
       );
