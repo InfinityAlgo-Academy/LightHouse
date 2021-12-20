@@ -477,13 +477,13 @@
     "message": "`[user-scalable=\"no\"]` îś n̂ót̂ úŝéd̂ ín̂ t́ĥé `<meta name=\"viewport\">` êĺêḿêńt̂ án̂d́ t̂h́ê `[maximum-scale]` át̂t́r̂íb̂út̂é îś n̂ót̂ ĺêśŝ t́ĥán̂ 5."
   },
   "lighthouse-core/audits/accessibility/object-alt.js | description": {
-    "message": "Ŝćr̂éêń r̂éâd́êŕŝ ćâńn̂ót̂ t́r̂án̂śl̂át̂é n̂ón̂-t́êx́t̂ ćôńt̂én̂t́. Âd́d̂ín̂ǵ âĺt̂ t́êx́t̂ t́ô `<object>` él̂ém̂én̂t́ŝ h́êĺp̂ś ŝćr̂éêń r̂éâd́êŕŝ ćôńv̂éŷ ḿêán̂ín̂ǵ t̂ó ûśêŕŝ. [Ĺêár̂ń m̂ór̂é](https://web.dev/object-alt/)."
+    "message": "Ŝćr̂éêń r̂éâd́êŕŝ ćâńn̂ót̂ t́r̂án̂śl̂át̂é n̂ón̂-t́êx́t̂ ćôńt̂én̂t́. Âd́d̂ín̂ǵ âĺt̂ér̂ńât́ê t́êx́t̂ t́ô `<object>` él̂ém̂én̂t́ŝ h́êĺp̂ś ŝćr̂éêń r̂éâd́êŕŝ ćôńv̂éŷ ḿêán̂ín̂ǵ t̂ó ûśêŕŝ. [Ĺêár̂ń m̂ór̂é](https://web.dev/object-alt/)."
   },
   "lighthouse-core/audits/accessibility/object-alt.js | failureTitle": {
-    "message": "`<object>` êĺêḿêńt̂ś d̂ó n̂ót̂ h́âv́ê `[alt]` t́êx́t̂"
+    "message": "`<object>` êĺêḿêńt̂ś d̂ó n̂ót̂ h́âv́ê ál̂t́êŕn̂át̂é t̂éx̂t́"
   },
   "lighthouse-core/audits/accessibility/object-alt.js | title": {
-    "message": "`<object>` êĺêḿêńt̂ś ĥáv̂é `[alt]` t̂éx̂t́"
+    "message": "`<object>` êĺêḿêńt̂ś ĥáv̂é âĺt̂ér̂ńât́ê t́êx́t̂"
   },
   "lighthouse-core/audits/accessibility/tabindex.js | description": {
     "message": "Â v́âĺûé ĝŕêát̂ér̂ t́ĥán̂ 0 ím̂ṕl̂íêś âń êx́p̂ĺîćît́ n̂áv̂íĝát̂íôń ôŕd̂ér̂ín̂ǵ. Âĺt̂h́ôúĝh́ t̂éĉh́n̂íĉál̂ĺŷ v́âĺîd́, t̂h́îś ôf́t̂én̂ ćr̂éât́êś f̂ŕûśt̂ŕât́îńĝ éx̂ṕêŕîén̂ćêś f̂ór̂ úŝér̂ś ŵh́ô ŕêĺŷ ón̂ áŝśîśt̂ív̂é t̂éĉh́n̂ól̂óĝíêś. [L̂éâŕn̂ ḿôŕê](https://web.dev/tabindex/)."

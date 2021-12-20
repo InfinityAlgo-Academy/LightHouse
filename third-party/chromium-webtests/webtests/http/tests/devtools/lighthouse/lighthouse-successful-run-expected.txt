@@ -274,7 +274,7 @@ Auditing: Lists contain only `<li>` elements and script supporting elements (`<s
 Auditing: List items (`<li>`) are contained within `<ul>` or `<ol>` parent elements
 Auditing: The document does not use `<meta http-equiv="refresh">`
 Auditing: `[user-scalable="no"]` is not used in the `<meta name="viewport">` element and the `[maximum-scale]` attribute is not less than 5.
-Auditing: `<object>` elements have `[alt]` text
+Auditing: `<object>` elements have alternate text
 Auditing: No element has a `[tabindex]` value greater than 0
 Auditing: Cells in a `<table>` element that use the `[headers]` attribute refer to table cells within the same table.
 Auditing: `<th>` elements and elements with `[role="columnheader"/"rowheader"]` have data cells they describe.
