@@ -218,6 +218,12 @@ class Driver {
     // OOPIF handling in legacy driver is implicit.
   }
 
+  /** @return {Promise<LH.Gatherer.FRProtocolSession>} */
+  async createChildSession() {
+    // Legacy driver doesn't use child sessions.
+    return this;
+  }
+
   /**
    * Debounce enabling or disabling domains to prevent driver users from
    * stomping on each other. Maintains an internal count of the times a domain

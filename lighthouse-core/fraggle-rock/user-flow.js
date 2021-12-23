@@ -9,23 +9,53 @@ const {generateFlowReportHtml} = require('../../report/generator/report-generato
 const {snapshot} = require('./gather/snapshot-runner.js');
 const {startTimespan} = require('./gather/timespan-runner.js');
 const {navigation} = require('./gather/navigation-runner.js');
+const ProtocolSession = require('./gather/session.js');
 
 /** @typedef {Parameters<snapshot>[0]} FrOptions */
-/** @typedef {Omit<FrOptions, 'page'> & {name?: string}} UserFlowOptions */
-/** @typedef {Omit<FrOptions, 'page'> & {stepName?: string}} StepOptions */
+/** @typedef {Omit<FrOptions, 'session'> & {name?: string}} UserFlowOptions */
+/** @typedef {Omit<FrOptions, 'session'> & {stepName?: string}} StepOptions */
+
+/** @return {*} */
+const throwNotConnectedFn = () => {
+  throw new Error('User flow not connected');
+};
+
+/** @type {LH.Gatherer.FRProtocolSession} */
+const defaultSession = {
+  setTargetInfo: throwNotConnectedFn,
+  hasNextProtocolTimeout: throwNotConnectedFn,
+  getNextProtocolTimeout: throwNotConnectedFn,
+  setNextProtocolTimeout: throwNotConnectedFn,
+  on: throwNotConnectedFn,
+  once: throwNotConnectedFn,
+  off: throwNotConnectedFn,
+  addProtocolMessageListener: throwNotConnectedFn,
+  removeProtocolMessageListener: throwNotConnectedFn,
+  addSessionAttachedListener: throwNotConnectedFn,
+  removeSessionAttachedListener: throwNotConnectedFn,
+  sendCommand: throwNotConnectedFn,
+  dispose: throwNotConnectedFn,
+};
 
 class UserFlow {
   /**
-   * @param {FrOptions['page']} page
+   * @param {import('puppeteer').Page} page
    * @param {UserFlowOptions=} options
    */
   constructor(page, options) {
+    this.page = page;
     /** @type {FrOptions} */
-    this.options = {page, ...options};
+    this.options = {session: defaultSession, ...options};
     /** @type {string|undefined} */
     this.name = options?.name;
     /** @type {LH.FlowResult.Step[]} */
     this.steps = [];
+  }
+
+  async connect() {
+    if (this.options.session !== defaultSession) return;
+    const session = await this.page.target().createCDPSession();
+    this.options.session = new ProtocolSession(session);
   }
 
   /**

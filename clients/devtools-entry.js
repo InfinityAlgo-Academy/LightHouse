@@ -9,10 +9,12 @@
 
 const lighthouse = require('../lighthouse-core/index.js');
 const RawProtocol = require('../lighthouse-core/gather/connections/raw.js');
+const RawSession = require('../lighthouse-core/fraggle-rock/gather/raw-session.js');
 const log = require('lighthouse-logger');
 const {lookupLocale} = require('../lighthouse-core/lib/i18n/i18n.js');
 const {registerLocaleData, getCanonicalLocales} = require('../shared/localization/format.js');
 const constants = require('../lighthouse-core/config/constants.js');
+const {navigation} = require('../lighthouse-core/fraggle-rock/api.js');
 
 /** @typedef {import('../lighthouse-core/gather/connections/connection.js')} Connection */
 
@@ -78,6 +80,15 @@ function lookupCanonicalLocale(locales) {
   return lookupLocale(locales, getCanonicalLocales());
 }
 
+/** @type {typeof lighthouse} */
+// @ts-expect-error
+const runLighthouse = (url, flags, config, connection) => {
+  if (!url) throw new Error('Bad URL');
+  if (!connection) throw new Error('Bad connection');
+  const session = new RawSession(connection);
+  return navigation({url, config, session});
+};
+
 // Expose only in DevTools' worker
 if (typeof self !== 'undefined') {
   // TODO: refactor and delete `global.isDevtools`.
@@ -86,7 +97,7 @@ if (typeof self !== 'undefined') {
   // @ts-expect-error
   self.setUpWorkerConnection = setUpWorkerConnection;
   // @ts-expect-error
-  self.runLighthouse = lighthouse;
+  self.runLighthouse = runLighthouse;
   // @ts-expect-error
   self.createConfig = createConfig;
   // @ts-expect-error

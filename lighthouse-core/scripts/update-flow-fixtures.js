@@ -12,7 +12,7 @@ import waitForExpect from 'wait-for-expect';
 import puppeteer from 'puppeteer';
 
 import {LH_ROOT} from '../../root.js';
-import UserFlow from '../fraggle-rock/user-flow.js';
+import {startFlow} from '../fraggle-rock/api.js';
 
 
 /** @param {puppeteer.Page} page */
@@ -53,7 +53,7 @@ async function waitForImagesToLoad(page) {
 
   try {
     const page = await browser.newPage();
-    const flow = new UserFlow(page);
+    const flow = await startFlow(page);
 
     await flow.navigate('https://www.mikescerealshack.co');
 

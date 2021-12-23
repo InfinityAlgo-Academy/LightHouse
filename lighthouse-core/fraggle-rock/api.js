@@ -15,7 +15,9 @@ const UserFlow = require('./user-flow.js');
  * @param {UserFlow.UserFlowOptions} [options]
  */
 async function startFlow(page, options) {
-  return new UserFlow(page, options);
+  const flow = new UserFlow(page, options);
+  await flow.connect();
+  return flow;
 }
 
 module.exports = {

@@ -17,19 +17,19 @@ const {initializeConfig} = require('../config/config.js');
 const {getBaseArtifacts, finalizeArtifacts} = require('./base-artifacts.js');
 
 /**
- * @param {{page: import('puppeteer').Page, config?: LH.Config.Json, configContext?: LH.Config.FRContext}} options
+ * @param {{session: LH.Gatherer.FRProtocolSession, config?: LH.Config.Json, configContext?: LH.Config.FRContext}} options
  * @return {Promise<{endTimespan(): Promise<LH.RunnerResult|undefined>}>}
  */
 async function startTimespan(options) {
   const {configContext = {}} = options;
   const {config} = initializeConfig(options.config, {...configContext, gatherMode: 'timespan'});
-  const driver = new Driver(options.page);
+  const driver = new Driver(options.session);
   await driver.connect();
 
   /** @type {Map<string, LH.ArbitraryEqualityMap>} */
   const computedCache = new Map();
   const artifactDefinitions = config.artifacts || [];
-  const requestedUrl = await options.page.url();
+  const requestedUrl = await driver.url();
   const baseArtifacts = await getBaseArtifacts(config, driver, {gatherMode: 'timespan'});
   const artifactState = getEmptyArtifactState();
   /** @type {Omit<import('./runner-helpers.js').CollectPhaseArtifactOptions, 'phase'>} */
@@ -49,7 +49,7 @@ async function startTimespan(options) {
 
   return {
     async endTimespan() {
-      const finalUrl = await options.page.url();
+      const finalUrl = await driver.url();
       return Runner.run(
         async () => {
           baseArtifacts.URL.requestedUrl = requestedUrl;

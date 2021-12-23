@@ -15,16 +15,16 @@ const {
 const {initializeConfig} = require('../config/config.js');
 const {getBaseArtifacts, finalizeArtifacts} = require('./base-artifacts.js');
 
-/** @param {{page: import('puppeteer').Page, config?: LH.Config.Json, configContext?: LH.Config.FRContext}} options */
+/** @param {{session: LH.Gatherer.FRProtocolSession, config?: LH.Config.Json, configContext?: LH.Config.FRContext}} options */
 async function snapshot(options) {
   const {configContext = {}} = options;
   const {config} = initializeConfig(options.config, {...configContext, gatherMode: 'snapshot'});
-  const driver = new Driver(options.page);
+  const driver = new Driver(options.session);
   await driver.connect();
 
   /** @type {Map<string, LH.ArbitraryEqualityMap>} */
   const computedCache = new Map();
-  const url = await options.page.url();
+  const url = await driver.url();
 
   return Runner.run(
     async () => {

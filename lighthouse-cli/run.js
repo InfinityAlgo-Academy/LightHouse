@@ -20,6 +20,7 @@ import lighthouse from '../lighthouse-core/index.js';
 import {getLhrFilenamePrefix} from '../report/generator/file-namer.js';
 import * as assetSaver from '../lighthouse-core/lib/asset-saver.js';
 import URL from '../lighthouse-core/lib/url-shim.js';
+import ProtocolSession from '../lighthouse-core/fraggle-rock/gather/session.js';
 
 /** @typedef {Error & {code: string, friendlyMessage?: string}} ExitError */
 
@@ -206,9 +207,10 @@ async function runLighthouseWithFraggleRock(url, flags, config, launchedChrome) 
   const puppeteer = (await import('puppeteer')).default;
   const browser = await puppeteer.connect({browserURL: `http://localhost:${launchedChrome.port}`});
   const page = await browser.newPage();
+  const session = new ProtocolSession(await page.target().createCDPSession());
   flags.channel = 'fraggle-rock-cli';
   const configContext = {configPath: flags.configPath, settingsOverrides: flags};
-  return fraggleRock.navigation({url, page, config, configContext});
+  return fraggleRock.navigation({url, session, config, configContext});
 }
 
 /**

@@ -6,7 +6,6 @@
 'use strict';
 
 const log = require('lighthouse-logger');
-const ProtocolSession = require('./session.js');
 const ExecutionContext = require('../../gather/driver/execution-context.js');
 const Fetcher = require('../../gather/fetcher.js');
 
@@ -15,38 +14,20 @@ const throwNotConnectedFn = () => {
   throw new Error('Session not connected');
 };
 
-/** @type {LH.Gatherer.FRProtocolSession} */
-const defaultSession = {
-  setTargetInfo: throwNotConnectedFn,
-  hasNextProtocolTimeout: throwNotConnectedFn,
-  getNextProtocolTimeout: throwNotConnectedFn,
-  setNextProtocolTimeout: throwNotConnectedFn,
-  on: throwNotConnectedFn,
-  once: throwNotConnectedFn,
-  off: throwNotConnectedFn,
-  addProtocolMessageListener: throwNotConnectedFn,
-  removeProtocolMessageListener: throwNotConnectedFn,
-  addSessionAttachedListener: throwNotConnectedFn,
-  removeSessionAttachedListener: throwNotConnectedFn,
-  sendCommand: throwNotConnectedFn,
-  dispose: throwNotConnectedFn,
-};
-
 /** @implements {LH.Gatherer.FRTransitionalDriver} */
 class Driver {
   /**
-   * @param {import('puppeteer').Page} page
+   * @param {LH.Gatherer.FRProtocolSession} session
    */
-  constructor(page) {
-    this._page = page;
-    /** @type {LH.Gatherer.FRProtocolSession|undefined} */
-    this._session = undefined;
+  constructor(session) {
+    /** @type {LH.Gatherer.FRProtocolSession} */
+    this._session = this.defaultSession = session;
     /** @type {ExecutionContext|undefined} */
     this._executionContext = undefined;
     /** @type {Fetcher|undefined} */
     this._fetcher = undefined;
 
-    this.defaultSession = defaultSession;
+    this._onFrameNavigated = this._onFrameNavigated.bind(this);
   }
 
   /** @return {LH.Gatherer.FRTransitionalDriver['executionContext']} */
@@ -63,16 +44,18 @@ class Driver {
 
   /** @return {Promise<string>} */
   async url() {
-    return this._page.url();
+    if (!this._url) return throwNotConnectedFn();
+    return this._url;
   }
 
   /** @return {Promise<void>} */
   async connect() {
-    if (this._session) return;
     const status = {msg: 'Connecting to browser', id: 'lh:driver:connect'};
     log.time(status);
-    const session = await this._page.target().createCDPSession();
-    this._session = this.defaultSession = new ProtocolSession(session);
+    const {frameTree} = await this._session.sendCommand('Page.getFrameTree');
+    this._url = frameTree.frame.url + (frameTree.frame.urlFragment || '');
+    this.defaultSession.on('Page.frameNavigated', this._onFrameNavigated);
+
     this._executionContext = new ExecutionContext(this._session);
     this._fetcher = new Fetcher(this._session, this._executionContext);
     log.timeEnd(status);
@@ -80,8 +63,17 @@ class Driver {
 
   /** @return {Promise<void>} */
   async disconnect() {
+    this.defaultSession.off('Page.frameNavigated', this._onFrameNavigated);
     if (!this._session) return;
-    await this._session.dispose();
+    // await this._session.dispose();
+  }
+
+  /**
+   *
+   * @param {LH.Crdp.Page.FrameNavigatedEvent} event
+   */
+  _onFrameNavigated(event) {
+    this._url = event.frame.url + (event.frame.urlFragment || '');
   }
 }
 

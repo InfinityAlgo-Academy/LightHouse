@@ -275,11 +275,11 @@ async function _cleanup({requestedUrl, driver, config}) {
 }
 
 /**
- * @param {{url: string, page: import('puppeteer').Page, config?: LH.Config.Json, configContext?: LH.Config.FRContext}} options
+ * @param {{url: string, session: LH.Gatherer.FRProtocolSession, config?: LH.Config.Json, configContext?: LH.Config.FRContext}} options
  * @return {Promise<LH.RunnerResult|undefined>}
  */
 async function navigation(options) {
-  const {url: requestedUrl, page, configContext = {}} = options;
+  const {url: requestedUrl, session, configContext = {}} = options;
   const {config} = initializeConfig(options.config, {...configContext, gatherMode: 'navigation'});
   const computedCache = new Map();
   const internalOptions = {
@@ -288,7 +288,7 @@ async function navigation(options) {
 
   return Runner.run(
     async () => {
-      const driver = new Driver(page);
+      const driver = new Driver(session);
       const context = {driver, config, requestedUrl, options: internalOptions};
       const {baseArtifacts} = await _setup(context);
       const {artifacts} = await _navigations({...context, baseArtifacts, computedCache});
