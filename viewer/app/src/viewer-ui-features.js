@@ -5,8 +5,6 @@
  */
 'use strict';
 
-/* global ReportGenerator */
-
 /** @typedef {import('../../../report/renderer/dom').DOM} DOM */
 /** @typedef {import('../../../shared/localization/locales').LhlMessages} LhlMessages */
 
@@ -20,10 +18,12 @@ import {SwapLocaleFeature} from '../../../report/renderer/swap-locale-feature.js
 export class ViewerUIFeatures extends ReportUIFeatures {
   /**
    * @param {DOM} dom
-   * @param {{saveGist?: function(LH.Result): void, refresh: function(LH.Result): void}} callbacks
+   * @param {{saveGist?: function(LH.Result): void, refresh: function(LH.Result): void, getStandaloneReportHTML: function(): string}} callbacks
    */
   constructor(dom, callbacks) {
-    super(dom);
+    super(dom, {
+      getStandaloneReportHTML: callbacks.getStandaloneReportHTML,
+    });
 
     this._saveGistCallback = callbacks.saveGist;
     this._refreshCallback = callbacks.refresh;
@@ -51,15 +51,6 @@ export class ViewerUIFeatures extends ReportUIFeatures {
         await i18nModule.format.getCanonicalLocales());
       this._swapLocales.enable(locales);
     }).catch(err => console.error(err));
-  }
-
-  /**
-   * Uses ReportGenerator to create the html that recreates this report.
-   * @return {string}
-   * @override
-   */
-  getReportHtml() {
-    return ReportGenerator.generateReportHtml(this.json);
   }
 
   /**

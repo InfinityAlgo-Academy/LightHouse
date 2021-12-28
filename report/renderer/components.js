@@ -706,7 +706,7 @@ function createTopbarComponent(dom) {
   el40.setAttribute('href', '#');
   el40.setAttribute('data-i18n', 'dropdownCopyJSON');
   el40.setAttribute('data-action', 'copy');
-  const el41 = dom.createElement('a', 'lh-report-icon lh-report-icon--download');
+  const el41 = dom.createElement('a', 'lh-report-icon lh-report-icon--download lh-hidden');
   el41.setAttribute('role', 'menuitem');
   el41.setAttribute('tabindex', '-1');
   el41.setAttribute('href', '#');
@@ -736,7 +736,7 @@ function createTopbarComponent(dom) {
   el45.setAttribute('href', '#');
   el45.setAttribute('data-i18n', 'dropdownDarkTheme');
   el45.setAttribute('data-action', 'toggle-dark');
-  el37.append(' ', el38, ' ', el39, ' ', el40, ' ', el41, ' ', el42, ' ', el43, ' ', el44, ' ', el45, ' ');
+  el37.append(' ', el38, ' ', el39, ' ', el40, ' ', ' ', el41, ' ', el42, ' ', el43, ' ', el44, ' ', el45, ' ');
   el26.append(' ', el27, ' ', el33, ' ', el37, ' ');
   el2.append(' ', ' ', el3, ' ', el25, ' ', el26, ' ');
   el0.append(el2);

@@ -417,7 +417,8 @@ limitations under the License.
         <a role="menuitem" tabindex="-1" href="#" class="lh-report-icon lh-report-icon--print" data-i18n="dropdownPrintSummary" data-action="print-summary"></a>
         <a role="menuitem" tabindex="-1" href="#" class="lh-report-icon lh-report-icon--print" data-i18n="dropdownPrintExpanded" data-action="print-expanded"></a>
         <a role="menuitem" tabindex="-1" href="#" class="lh-report-icon lh-report-icon--copy" data-i18n="dropdownCopyJSON" data-action="copy"></a>
-        <a role="menuitem" tabindex="-1" href="#" class="lh-report-icon lh-report-icon--download" data-i18n="dropdownSaveHTML" data-action="save-html"></a>
+        <!-- Only enabled if Options.getStandaloneReportHTML is set. -->
+        <a role="menuitem" tabindex="-1" href="#" class="lh-report-icon lh-report-icon--download lh-hidden" data-i18n="dropdownSaveHTML" data-action="save-html"></a>
         <a role="menuitem" tabindex="-1" href="#" class="lh-report-icon lh-report-icon--download" data-i18n="dropdownSaveJSON" data-action="save-json"></a>
         <a role="menuitem" tabindex="-1" href="#" class="lh-report-icon lh-report-icon--open" data-i18n="dropdownViewer" data-action="open-viewer"></a>
         <a role="menuitem" tabindex="-1" href="#" class="lh-report-icon lh-report-icon--open" data-i18n="dropdownSaveGist" data-action="save-gist"></a>
