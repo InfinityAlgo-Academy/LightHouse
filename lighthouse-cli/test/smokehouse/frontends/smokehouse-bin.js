@@ -36,6 +36,7 @@ const coreTestDefnsPath =
 const runnerPaths = {
   cli: '../lighthouse-runners/cli.js',
   bundle: '../lighthouse-runners/bundle.js',
+  devtools: '../lighthouse-runners/devtools.js',
 };
 
 /**
@@ -151,7 +152,7 @@ async function begin() {
       },
       'runner': {
         default: 'cli',
-        choices: ['cli', 'bundle'],
+        choices: ['cli', 'bundle', 'devtools'],
         describe: 'The method of running Lighthouse',
       },
       'tests-path': {

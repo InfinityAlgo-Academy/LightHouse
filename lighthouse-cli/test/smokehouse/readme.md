@@ -118,14 +118,15 @@ Smokehouse Frontends                                        Lighthouse Runners
 |            |    |            |               |   <lhr   |   +--------------+
 +------------+    |            +-------+-------+          |   |              |
                   |                    ^                  +-->+   bundle.js  |
-+------------+    |                    |                      |              |
-|            |    |                    |                      +--------------+
-|   lib.js   +----+                    v
-|            |                +--------+--------+
-+------------+                |                 |
-                              |  report/assert  |
-                              |                 |
-                              +-----------------+
++------------+    |                    |                  |   |              |
+|            |    |                    |                  |   +--------------+
+|   lib.js   +----+                    v                  |
+|            |                +--------+--------+         |
++------------+                |                 |         |   +--------------+
+                              |  report/assert  |         |   |              |
+                              |                 |         +-->+  devtools.js |
+                              +-----------------+             |              |
+                                                              +--------------+
 ```
 
 ### Smokehouse frontends
@@ -142,6 +143,7 @@ Smokehouse Frontends                                        Lighthouse Runners
 
 - `lighthouse-runners/cli.js` - the original test runner, exercising the Lighthouse CLI from command-line argument parsing to the results written to disk on completion.
 - `lighthouse-runners/bundle.js` - a smoke test runner that operates on an already-bundled version of Lighthouse for end-to-end testing of that version.
+- `lighthouse-runners/devtools.js` - a smoke test runner that operates on Lighthouse running from inside DevTools.
 
 ## Custom smoke tests (for plugins et al.)
 
