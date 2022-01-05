@@ -26,6 +26,11 @@ jobs:
 
     - name: Generate cache hash
       run: bash $GITHUB_WORKSPACE/lighthouse/.github/scripts/generate-devtools-hash.sh > cdt-test-hash.txt
+    - name: Set week of the year
+      run: echo "WEEK_OF_THE_YEAR=$(date +%V)" >> $GITHUB_ENV
+    # Caches are invalidated at least once a week, so that's the max time between testing
+    # with the latest dependencies. Any commit to the DevTools repo touching Lighthouse
+    # code will invalidate the cache sooner.
     - name: Cache depot tools, devtools, blink tools and content shell
       uses: actions/cache@v2
       with:
@@ -34,8 +39,13 @@ jobs:
           ${{ env.DEVTOOLS_PATH }}
           ${{ env.BLINK_TOOLS_PATH }}
           ${{ github.workspace }}/lighthouse/.tmp/chromium-web-tests/content-shells
+        # This hash key changes:
+        # 1) every monday (so invalidates once a week)
+        # 2) every commit to CDT touching files important to Lighthouse web tests
+        # 3) every change to file in Lighthouse repo important to running these tests.
+        #
         # The number is how many times this hash key was manually updated to break the cache.
-        key: ${{ runner.os }}-2-${{ hashFiles('cdt-test-hash.txt') }}
+        key: ${{ runner.os }}-2-${{ env.WEEK_OF_THE_YEAR }}-${{ hashFiles('cdt-test-hash.txt') }}
 
     - name: Use Node.js 14.x
       uses: actions/setup-node@v1
@@ -61,6 +71,7 @@ jobs:
     - name: Install python deps
       run: pip install six requests
 
+    # In addition to running the layout tests, this also rolls Lighthouse to DevTools and builds it.
     - name: Run Web Tests
       run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/chromium-web-tests/run-web-tests.sh
 
@@ -87,5 +98,5 @@ jobs:
       # - Current DevTools hangs on any page with a service worker.
       #   https://github.com/GoogleChrome/lighthouse/issues/13396
       # - Various other issues that needed investigation.
-      run: yarn smoke --runner devtools --invert-match a11y byte-efficiency byte-gzip dbw errors-expired-ssl errors-infinite-loop lantern-idle-callback-short legacy-javascript metrics-tricky-tti metrics-tricky-tti-late-fcp offline-ready offline-sw-broken offline-sw-slow oopif-requests perf-budgets perf-diagnostics-third-party perf-fonts perf-frame-metrics perf-preload perf-trace-elements pwa redirects-client-paint-server redirects-history-push-state redirects-multiple-server redirects-single-client redirects-single-server screenshot seo-passing seo-tap-targets
+      run: yarn smoke --runner devtools --retries=2 --invert-match a11y byte-efficiency byte-gzip dbw errors-expired-ssl errors-infinite-loop lantern-idle-callback-short legacy-javascript metrics-tricky-tti metrics-tricky-tti-late-fcp offline-ready offline-sw-broken offline-sw-slow oopif-requests perf-budgets perf-diagnostics-third-party perf-fonts perf-frame-metrics perf-preload perf-trace-elements pwa redirects-client-paint-server redirects-history-push-state redirects-multiple-server redirects-single-client redirects-single-server screenshot seo-passing seo-tap-targets
       working-directory: ${{ github.workspace }}/lighthouse
