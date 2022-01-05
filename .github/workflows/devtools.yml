@@ -87,5 +87,5 @@ jobs:
       # - Current DevTools hangs on any page with a service worker.
       #   https://github.com/GoogleChrome/lighthouse/issues/13396
       # - Various other issues that needed investigation.
-      run: yarn smoke --runner devtools --invert-match a11y byte-efficiency byte-gzip dbw errors-expired-ssl errors-infinite-loop lantern-idle-callback-short legacy-javascript metrics-tricky-tti metrics-tricky-tti-late-fcp offline-ready offline-sw-broken offline-sw-slow oopif-requests perf-budgets perf-diagnostics-third-party perf-fonts perf-frame-metrics perf-preload perf-trace-elements pwa redirects-client-paint-server redirects-history-push-state redirects-multiple-server redirects-single-client redirects-single-server screenshot seo-passing seo-tap-targets
+      run: yarn smoke --runner devtools --invert-match byte-efficiency byte-gzip dbw errors-infinite-loop lantern-idle-callback-short metrics-tricky-tti-late-fcp metrics-tricky-tti perf-budgets perf-fonts perf-frame-metrics perf-preload perf-trace-elements pwa-chromestatus pwa-svgomg pwa-rocks redirects-client-paint-server redirects-multiple-server redirects-single-server screenshot seo-tap-targets
       working-directory: ${{ github.workspace }}/lighthouse
