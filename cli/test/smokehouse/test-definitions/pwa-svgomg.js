@@ -28,9 +28,10 @@ const expectations = {
       _runner: 'devtools',
       length: 1,
     },
-    // Intentionally start out on http.
+    // Intentionally start out on http to test the redirect.
     requestedUrl: 'http://jakearchibald.github.io/svgomg/',
     finalUrl: 'https://jakearchibald.github.io/svgomg/',
+    runWarnings: [/redirected/],
     audits: {
       'redirects-http': {
         score: 1,
