@@ -51,7 +51,6 @@ async function snapshot(options) {
       return finalizeArtifacts(baseArtifacts, artifacts);
     },
     {
-      url,
       config,
       computedCache,
     }

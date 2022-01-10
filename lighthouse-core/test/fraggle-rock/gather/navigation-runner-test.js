@@ -22,9 +22,7 @@ const TraceGatherer = require('../../../gather/gatherers/trace.js');
 const toDevtoolsLog = require('../../network-records-to-devtools-log.js');
 
 // Establish the mocks before we require our file under test.
-let mockRunnerRun = jest.fn();
-
-jest.mock('../../../runner.js', () => mockRunnerModule(() => mockRunnerRun));
+const mockRunner = mockRunnerModule();
 
 const runner = require('../../../fraggle-rock/gather/navigation-runner.js');
 
@@ -93,7 +91,7 @@ describe('NavigationRunner', () => {
 
   beforeEach(() => {
     requestedUrl = 'http://example.com';
-    mockRunnerRun = jest.fn();
+    mockRunner.reset();
     config = initializeConfig(undefined, {gatherMode: 'navigation'}).config;
     navigation = createNavigation().navigation;
     computedCache = new Map();
@@ -483,6 +481,19 @@ describe('NavigationRunner', () => {
   });
 
   describe('navigation', () => {
+    it('should throw on invalid URL', async () => {
+      const runnerActual = jest.requireActual('../../../runner.js');
+      mockRunner.run.mockImplementation(runnerActual.run);
+      mockRunner.gatherAndManageArtifacts.mockImplementation(runnerActual.gatherAndManageArtifacts);
+
+      const navigatePromise = runner.navigation({
+        url: '',
+        page: mockDriver._page.asPage(),
+      });
+
+      await expect(navigatePromise).rejects.toThrow('INVALID_URL');
+    });
+
     it('should initialize config', async () => {
       const settingsOverrides = {
         formFactor: /** @type {const} */ ('desktop'),
@@ -497,7 +508,7 @@ describe('NavigationRunner', () => {
         configContext,
       });
 
-      expect(mockRunnerRun.mock.calls[0][1]).toMatchObject({
+      expect(mockRunner.run.mock.calls[0][1]).toMatchObject({
         config: {
           settings: settingsOverrides,
         },
