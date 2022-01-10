@@ -76,7 +76,7 @@ jobs:
   # Only run smoke tests for windows against stable chrome.
   smoke-windows:
     runs-on: windows-latest
-    name: Windows
+    name: Windows smoke
 
     steps:
     - name: git clone

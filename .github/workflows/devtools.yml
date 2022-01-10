@@ -125,11 +125,7 @@ jobs:
       # e.g. if set 1 fails, continue with set 2 anyway
       fail-fast: false
     runs-on: macos-latest
-    env:
-      # The total number of shards. Set dynamically when length of single matrix variable is
-      # computable. See https://github.community/t/get-length-of-strategy-matrix-or-get-all-matrix-options/18342
-      SHARD_TOTAL: 2
-    name: Smoke batch ${{ matrix.smoke-test-shard }}
+    name: DevTools smoke ${{ matrix.smoke-test-shard }}
 
     steps:
     - name: git clone
@@ -169,5 +165,5 @@ jobs:
       # - Current DevTools hangs on any page with a service worker.
       #   https://github.com/GoogleChrome/lighthouse/issues/13396
       # - Various other issues that needed investigation.
-      run: yarn smoke --runner devtools --shard=${{ matrix.smoke-test-shard }}/$SHARD_TOTAL --retries=2 --invert-match a11y byte-efficiency byte-gzip dbw errors-expired-ssl errors-infinite-loop lantern-idle-callback-short legacy-javascript metrics-tricky-tti metrics-tricky-tti-late-fcp offline-ready offline-sw-broken offline-sw-slow oopif-requests perf-budgets perf-diagnostics-third-party perf-fonts perf-frame-metrics perf-preload perf-trace-elements pwa redirects-client-paint-server redirects-history-push-state redirects-multiple-server redirects-single-client redirects-single-server screenshot seo-passing seo-tap-targets
+      run: yarn smoke --runner devtools --shard=${{ matrix.smoke-test-shard }}/${{ strategy.job-total }} --retries=2 --invert-match a11y byte-efficiency byte-gzip dbw errors-expired-ssl errors-infinite-loop lantern-idle-callback-short legacy-javascript metrics-tricky-tti metrics-tricky-tti-late-fcp offline-ready offline-sw-broken offline-sw-slow oopif-requests perf-budgets perf-diagnostics-third-party perf-fonts perf-frame-metrics perf-preload perf-trace-elements pwa redirects-client-paint-server redirects-history-push-state redirects-multiple-server redirects-single-client redirects-single-server screenshot seo-passing seo-tap-targets
       working-directory: ${{ github.workspace }}/lighthouse
