@@ -722,7 +722,7 @@ class App extends m {
         throw new Error(`Unsupported Lighthouse version (${version})`);
       }
       // Odd-number major versions are identical (score-wise to the previous one)
-      if (version % 2 === 1) { return parseInt(version, 10) - 1; }
+      if (version % 2 === 1) { return (parseInt(version, 10) - 1).toString(); }
       return version.toString();
     }).sort().reverse();
   }
@@ -734,6 +734,7 @@ class App extends m {
 
     const scoringGuideEls = normalizedVersions.map(version => {
       const key = `v${version}`;
+      console.assert(scoringGuides[key], `scoringGuide for ${key} doesnt exist`);
       return h( ScoringGuide, { app: this, name: key, values: metricValues, scoring: scoringGuides[key][device] });
     });
     return h( 'div', { class: "app" },
@@ -745,7 +746,7 @@ class App extends m {
         ),
         h( 'label', null, "Versions: ", h( 'select', { name: "versions", value: normalizedVersions.join(','), onChange: this.onVersionsChange },
             h( 'option', { value: "8,6,5" }, "show all"),
-            h( 'option', { value: "8" }, "v8+"),
+            h( 'option', { value: "8" }, "v8, v9"),
             h( 'option', { value: "6" }, "v6, v7"),
             h( 'option', { value: "5" }, "v5")
           )
@@ -757,9 +758,11 @@ class App extends m {
 }
 
 function getInitialState() {
+  const availableScoringGuides = Object.keys(scoringGuides).map(k => parseInt(k.replace('v',''), 10)).sort((a, b) => b - a);
+
   const versions = params.has('version') ?
     params.getAll('version').map(getMajorVersion) :
-    ['8']; // version (or versions) to show by default
+    [`${availableScoringGuides.at(0) || 8}`]; // version (or versions) to show by default
 
   // Default to mobile if it's not matching our known emulatedFormFactors. https://github.com/GoogleChrome/lighthouse/blob/master/types/externs.d.ts#:~:text=emulatedFormFactor
   let device = params.get('device');
