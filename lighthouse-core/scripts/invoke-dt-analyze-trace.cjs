@@ -26,12 +26,12 @@ const trace = JSON.parse(
    */
 const getInitialUrl = trace => {
   // TODO: this technique is wrong. it broke on the rv camping site.
-  const urls = trace.traceEvents
-  .filter(e =>
-      (e.name === 'navigationStart' && e?.args?.data?.isLoadingMainFrame === true) ||
-      e.name === 'NavigationBodyLoader::StartLoadingBody'
+  const urls = trace.traceEvents.filter(e =>
+    (e.name === 'navigationStart' && e?.args?.data?.isLoadingMainFrame === true)
+    // || e.name === 'NavigationBodyLoader::StartLoadingBody'
   )
-  .map(e => e.args.data?.documentLoaderURL || e.args.url);
+  .map(e => e.args.data?.documentLoaderURL || e.args.url)
+  .filter(Boolean);
   // find most common item: https://stackoverflow.com/a/20762713/89484
   return urls.sort(
     (a, b) => urls.filter(v => v === a).length - urls.filter(v => v === b).length).pop();
