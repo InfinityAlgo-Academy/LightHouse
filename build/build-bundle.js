@@ -155,7 +155,6 @@ async function build(entryPath, distPath, opts = {minify: true}) {
         // that's all that's needed, so make a mini-polyfill.
         // @see https://github.com/GoogleChrome/lighthouse/issues/5273
         // TODO: remove when not needed for pubads (https://github.com/googleads/publisher-ads-lighthouse-plugin/pull/325)
-        // and robots-parser (https://github.com/samclarke/robots-parser/pull/23)
         'url': 'export const URL = globalThis.URL;',
       }),
       rollupPlugins.json(),
