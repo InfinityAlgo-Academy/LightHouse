@@ -275,7 +275,6 @@ function getShardedDefinitions(testDefns, shardArg) {
   return shardDefns;
 }
 
-
 export {
   runSmokehouse,
   getShardedDefinitions,

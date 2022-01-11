@@ -54,4 +54,7 @@ async function buildReportGenerator() {
   await bundle.close();
 }
 
-buildReportGenerator();
+buildReportGenerator().catch(err => {
+  console.error(err);
+  process.exit(1);
+});
