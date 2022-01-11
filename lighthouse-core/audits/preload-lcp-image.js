@@ -176,7 +176,7 @@ class PreloadLCPImageAudit extends Audit {
       const node = modifiedNodesById.get(nodeId);
       if (!node) throw new Error('Impossible - node should never be undefined');
       const timings = simulationAfterChanges.nodeTimings.get(node);
-      const endTime = timings && timings.endTime || 0;
+      const endTime = timings?.endTime || 0;
       maxDependencyEndTime = Math.max(maxDependencyEndTime, endTime);
     }
 

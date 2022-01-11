@@ -16,7 +16,7 @@ import {ReportRenderer} from '../../../report/renderer/report-renderer.js';
 import {TextEncoding} from '../../../report/renderer/text-encoding.js';
 import {renderFlowReport} from '../../../flow-report/api';
 
-/* global logger */
+/* global logger ReportGenerator */
 
 /** @typedef {import('./psi-api').PSIParams} PSIParams */
 
@@ -244,6 +244,9 @@ export class LighthouseReportViewer {
       /** @param {LH.Result} newLhr */
       refresh: newLhr => {
         this._replaceReportHtml(newLhr);
+      },
+      getStandaloneReportHTML() {
+        return ReportGenerator.generateReportHtml(json);
       },
     });
     features.initFeatures(json);

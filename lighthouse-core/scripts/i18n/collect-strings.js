@@ -555,7 +555,7 @@ async function collectAllStringsInDir(dir) {
     const content = fs.readFileSync(absolutePath, 'utf8');
     const exportVars = await import(absolutePath);
     const regexMatch = content.match(UISTRINGS_REGEX);
-    const exportedUIStrings = exportVars.UIStrings || (exportVars.default && exportVars.default.UIStrings);
+    const exportedUIStrings = exportVars.UIStrings || exportVars.default?.UIStrings;
 
     if (!regexMatch) {
       // No UIStrings found in the file text or exports, so move to the next.
@@ -653,10 +653,6 @@ function resolveMessageCollisions(strings) {
 
   try {
     expect(collidingMessages).toEqual([
-      '$MARKDOWN_SNIPPET_0$ elements do not have $MARKDOWN_SNIPPET_1$ text',
-      '$MARKDOWN_SNIPPET_0$ elements do not have $MARKDOWN_SNIPPET_1$ text',
-      '$MARKDOWN_SNIPPET_0$ elements have $MARKDOWN_SNIPPET_1$ text',
-      '$MARKDOWN_SNIPPET_0$ elements have $MARKDOWN_SNIPPET_1$ text',
       'ARIA $MARKDOWN_SNIPPET_0$ elements do not have accessible names.',
       'ARIA $MARKDOWN_SNIPPET_0$ elements do not have accessible names.',
       'ARIA $MARKDOWN_SNIPPET_0$ elements do not have accessible names.',

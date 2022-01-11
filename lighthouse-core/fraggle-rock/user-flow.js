@@ -23,7 +23,7 @@ class UserFlow {
     /** @type {FrOptions} */
     this.options = {page, ...options};
     /** @type {string|undefined} */
-    this.name = options && options.name;
+    this.name = options?.name;
     /** @type {LH.FlowResult.Step[]} */
     this.steps = [];
   }
@@ -59,19 +59,23 @@ class UserFlow {
    */
   _getNextNavigationOptions(url, stepOptions) {
     const options = {url, ...this.options, ...stepOptions};
+    const configContext = {...options.configContext};
+    const settingsOverrides = {...configContext.settingsOverrides};
+
+    if (configContext.skipAboutBlank === undefined) {
+      configContext.skipAboutBlank = true;
+    }
 
     // On repeat navigations, we want to disable storage reset by default (i.e. it's not a cold load).
     const isSubsequentNavigation = this.steps.some(step => step.lhr.gatherMode === 'navigation');
     if (isSubsequentNavigation) {
-      const configContext = {...options.configContext};
-      const settingsOverrides = {...configContext.settingsOverrides};
       if (settingsOverrides.disableStorageReset === undefined) {
         settingsOverrides.disableStorageReset = true;
       }
-
-      configContext.settingsOverrides = settingsOverrides;
-      options.configContext = configContext;
     }
+
+    configContext.settingsOverrides = settingsOverrides;
+    options.configContext = configContext;
 
     return options;
   }
@@ -86,7 +90,7 @@ class UserFlow {
     const result = await navigation(this._getNextNavigationOptions(url, stepOptions));
     if (!result) throw Error('Navigation returned undefined');
 
-    const providedName = stepOptions && stepOptions.stepName;
+    const providedName = stepOptions?.stepName;
     this.steps.push({
       lhr: result.lhr,
       name: providedName || this._getDefaultStepName(result.lhr),
@@ -114,7 +118,7 @@ class UserFlow {
     this.currentTimespan = undefined;
     if (!result) throw Error('Timespan returned undefined');
 
-    const providedName = options && options.stepName;
+    const providedName = options?.stepName;
     this.steps.push({
       lhr: result.lhr,
       name: providedName || this._getDefaultStepName(result.lhr),
@@ -133,7 +137,7 @@ class UserFlow {
     const result = await snapshot(options);
     if (!result) throw Error('Snapshot returned undefined');
 
-    const providedName = stepOptions && stepOptions.stepName;
+    const providedName = stepOptions?.stepName;
     this.steps.push({
       lhr: result.lhr,
       name: providedName || this._getDefaultStepName(result.lhr),

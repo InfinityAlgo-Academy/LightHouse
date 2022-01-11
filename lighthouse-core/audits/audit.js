@@ -360,8 +360,8 @@ class Audit {
 
       score,
       scoreDisplayMode,
-      numericValue: numericProduct && numericProduct.numericValue,
-      numericUnit: numericProduct && numericProduct.numericUnit,
+      numericValue: numericProduct?.numericValue,
+      numericUnit: numericProduct?.numericUnit,
 
       displayValue: product.displayValue,
       explanation: product.explanation,

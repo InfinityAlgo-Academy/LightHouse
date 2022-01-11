@@ -91,6 +91,33 @@ describe('UserFlow', () => {
       expect(configContext).toEqual({settingsOverrides: {maxWaitForLoad: 1000}});
       expect(configContextExplicit).toEqual({settingsOverrides: {disableStorageReset: false}});
     });
+
+    it('should disable about:blank jumps by default', async () => {
+      const flow = new UserFlow(mockPage.asPage());
+      await flow.navigate('https://example.com/1');
+
+      // Try once when we have some other settings.
+      const configContext = {settingsOverrides: {maxWaitForLoad: 1000}};
+      await flow.navigate('https://example.com/2', {configContext});
+
+      // Try once when we explicitly set it.
+      const configContextExplicit = {skipAboutBlank: false};
+      await flow.navigate('https://example.com/3', {configContext: configContextExplicit});
+
+      // Check that we have the property set.
+      expect(navigationModule.navigation).toHaveBeenCalledTimes(3);
+      const [[call1], [call2], [call3]] = navigationModule.navigation.mock.calls;
+      expect(call1).toHaveProperty('configContext.skipAboutBlank');
+      expect(call2).toHaveProperty('configContext.skipAboutBlank');
+      expect(call3).toHaveProperty('configContext.skipAboutBlank');
+      expect(call1.configContext.skipAboutBlank).toBe(true);
+      expect(call2.configContext.skipAboutBlank).toBe(true);
+      expect(call3.configContext.skipAboutBlank).toBe(false);
+
+      // Check that we didn't mutate the original objects.
+      expect(configContext).toEqual({settingsOverrides: {maxWaitForLoad: 1000}});
+      expect(configContextExplicit).toEqual({skipAboutBlank: false});
+    });
   });
 
   describe('.startTimespan()', () => {

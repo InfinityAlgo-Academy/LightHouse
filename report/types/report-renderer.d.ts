@@ -24,6 +24,8 @@ declare module Renderer {
      * Flow report uses this to convert `#seo` to `#index=0&anchor=seo`.
      */
     onPageAnchorRendered?: (link: HTMLAnchorElement) => void;
+    /** If defined, `Save as HTML` option is shown in dropdown menu. */
+    getStandaloneReportHTML?: () => string;
   }
 }
 

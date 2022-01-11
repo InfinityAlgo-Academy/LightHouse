@@ -43,7 +43,7 @@ function processData(data) {
   function cleanIdPrefixes(parents) {
     if (Array.isArray(parents)) {
       return parents.map(item => removePrefix(item['@id']));
-    } else if (parents && parents['@id']) {
+    } else if (parents?.['@id']) {
       return [removePrefix(parents['@id'])];
     }
 

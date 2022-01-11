@@ -10,12 +10,21 @@
  * Make sure CHROME_PATH is set to a modern version of Chrome.
  * May work on older versions of Chrome.
  *
+ * To use with locally built DevTools and Lighthouse, run (assuming devtools at ~/src/devtools/devtools-frontend):
+ *    yarn devtools
+ *    yarn run-devtools --custom-devtools-frontend=file://$HOME/src/devtools/devtools-frontend/out/Default/gen/front_end
+ *
+ * Or with the DevTools in .tmp:
+ *   bash lighthouse-core/test/chromium-web-tests/setup.sh
+ *   yarn run-devtools --custom-devtools-frontend=file://$PWD/.tmp/chromium-web-tests/devtools/devtools-frontend/out/Default/gen/front_end
+ *
  * URL list file: yarn run-devtools < path/to/urls.txt
  * Single URL: yarn run-devtools "https://example.com"
  */
 
 import fs from 'fs';
 import readline from 'readline';
+import {fileURLToPath} from 'url';
 
 import puppeteer from 'puppeteer';
 import yargs from 'yargs';
@@ -35,7 +44,14 @@ const argv = y
     type: 'string',
     alias: 'd',
   })
+  .option('config', {
+    type: 'string',
+    alias: 'c',
+  })
   .argv;
+
+/** @type {LH.Config.Json=} */
+const config = argv.config ? JSON.parse(argv.config) : undefined;
 
 /**
  * https://source.chromium.org/chromium/chromium/src/+/main:third_party/devtools-frontend/src/front_end/test_runner/TestRunner.js;l=170;drc=f59e6de269f4f50bca824f8ca678d5906c7d3dc8
@@ -78,7 +94,7 @@ new Promise(resolve => {
   (${addSniffer.toString()})(
     panel.__proto__,
     methodName,
-    (lhr, artifacts) => resolve(lhr)
+    (lhr, artifacts) => resolve({lhr, artifacts})
   );
 });
 `;
@@ -105,6 +121,32 @@ const startLighthouse = `
   const panel = UI.panels.lighthouse || UI.panels.audits;
   const button = panel.contentElement.querySelector('button');
   if (button.disabled) throw new Error('Start button disabled');
+
+  UI.dockController.setDockSide('undocked');
+
+  // Give the main target model a moment to be available.
+  // Otherwise, 'SDK.TargetManager.TargetManager.instance().mainTarget()' is null.
+  if (self.runtime && self.runtime.loadLegacyModule) {
+    // This exposes TargetManager via self.SDK.
+    try {
+      await self.runtime.loadLegacyModule('core/sdk/sdk-legacy.js');
+    } catch {}
+  }
+  const targetManager =
+    SDK.targetManager || (SDK.TargetManager.TargetManager || SDK.TargetManager).instance();
+  if (targetManager.mainTarget() === null) {
+    if (targetManager?.observeTargets) {
+      await new Promise(resolve => targetManager.observeTargets({
+        targetAdded: resolve,
+        targetRemoved: () => {},
+      }));
+    } else {
+      while (targetManager.mainTarget() === null) {
+        await new Promise(resolve => setTimeout(resolve, 100));
+      }
+    }
+  }
+
   button.click();
 })()
 `;
@@ -125,9 +167,10 @@ function isValidUrl(url) {
  * @param {import('puppeteer').Page} page
  * @param {import('puppeteer').Browser} browser
  * @param {string} url
- * @return {Promise<string>}
+ * @param {LH.Config.Json=} config
+ * @return {Promise<{lhr: LH.Result, artifacts: LH.Artifacts}>}
  */
-async function testPage(page, browser, url) {
+async function testPage(page, browser, url, config) {
   const targets = await browser.targets();
   const inspectorTarget = targets.filter(t => t.url().includes('devtools'))[1];
   if (!inspectorTarget) throw new Error('No inspector found.');
@@ -146,6 +189,35 @@ async function testPage(page, browser, url) {
       })
       .catch(reject);
   });
+
+  if (config) {
+    // Must attach to the Lighthouse worker target and override the `self.createConfig`
+    // function, allowing us to use any config we want.
+    session.send('Target.setAutoAttach', {
+      autoAttach: true, flatten: true, waitForDebuggerOnStart: false,
+    });
+    session.once('Target.attachedToTarget', async (event) => {
+      if (event.targetInfo.type !== 'worker') throw new Error('expected lighthouse worker');
+
+      const targets = await browser.targets();
+      const workerTarget = targets.find(t => t._targetId === event.targetInfo.targetId);
+      if (!workerTarget) throw new Error('No lighthouse worker target found.');
+
+      const workerSession = await workerTarget.createCDPSession();
+      await Promise.all([
+        workerSession.send('Runtime.enable'),
+        workerSession.send('Debugger.enable'),
+        new Promise(resolve => {
+          workerSession.once('Debugger.scriptParsed', resolve);
+        }),
+      ]);
+      await workerSession.send('Debugger.pause');
+      await workerSession.send('Runtime.evaluate', {
+        expression: `self.createConfig = () => (${JSON.stringify(config)});`,
+      });
+      await workerSession.send('Debugger.resume');
+    });
+  }
 
   /** @type {Omit<puppeteer.Protocol.Runtime.EvaluateResponse, 'result'>|undefined} */
   let startLHResponse;
@@ -178,11 +250,14 @@ async function testPage(page, browser, url) {
     returnByValue: true,
   }).catch(err => err);
 
-  if (!remoteLhrResponse.result || !remoteLhrResponse.result.value) {
+  if (!remoteLhrResponse.result?.value?.lhr) {
     throw new Error('Problem sniffing LHR.');
   }
+  if (!remoteLhrResponse.result?.value?.artifacts) {
+    throw new Error('Problem sniffing artifacts.');
+  }
 
-  return JSON.stringify(remoteLhrResponse.result.value, null, 2);
+  return remoteLhrResponse.result.value;
 }
 
 /**
@@ -217,6 +292,16 @@ async function run() {
   }
 
   const customDevtools = argv['custom-devtools-frontend'];
+  if (customDevtools) {
+    console.log(`Using custom devtools frontend: ${customDevtools}`);
+    console.log('Make sure it has been built recently!');
+    if (!customDevtools.startsWith('file://')) {
+      throw new Error('custom-devtools-frontend must be a file:// URL');
+    }
+    if (!fs.existsSync(fileURLToPath(customDevtools))) {
+      throw new Error('custom-devtools-frontend does not exist');
+    }
+  }
 
   const browser = await puppeteer.launch({
     executablePath: process.env.CHROME_PATH,
@@ -224,13 +309,29 @@ async function run() {
     devtools: true,
   });
 
+  if ((await browser.version()).startsWith('Headless')) {
+    throw new Error('You cannot use headless');
+  }
+
   let errorCount = 0;
   const urlList = await readUrlList();
   for (let i = 0; i < urlList.length; ++i) {
     const page = await browser.newPage();
     try {
-      const lhr = await testPage(page, browser, urlList[i]);
-      fs.writeFileSync(`${argv.o}/lhr-${i}.json`, lhr);
+      /** @type {NodeJS.Timeout} */
+      let timeout;
+      const timeoutPromise = new Promise((_, reject) => {
+        timeout = setTimeout(reject, 100_000, new Error('Timed out waiting for Lighthouse to run'));
+      });
+      const {lhr, artifacts} = await Promise.race([
+        testPage(page, browser, urlList[i], config),
+        timeoutPromise,
+      ]).finally(() => {
+        clearTimeout(timeout);
+      });
+
+      fs.writeFileSync(`${argv.o}/lhr-${i}.json`, JSON.stringify(lhr, null, 2));
+      fs.writeFileSync(`${argv.o}/artifacts-${i}.json`, JSON.stringify(artifacts, null, 2));
     } catch (error) {
       errorCount += 1;
       console.error(error.message);
@@ -242,6 +343,7 @@ async function run() {
     }
   }
   console.log(`${urlList.length - errorCount} / ${urlList.length} urls run successfully.`);
+  console.log(`Results saved to ${argv.o}`);
 
   await browser.close();
 

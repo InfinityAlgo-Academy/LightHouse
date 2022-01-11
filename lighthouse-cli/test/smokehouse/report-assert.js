@@ -162,7 +162,7 @@ function makeComparison(name, actualResult, expectedResult) {
  */
 function pruneExpectations(localConsole, lhr, expected, reportOptions) {
   const isFraggleRock = lhr.configSettings.channel === 'fraggle-rock-cli';
-  const isBundled = reportOptions && reportOptions.isBundled;
+  const isBundled = reportOptions?.isBundled;
 
   /**
    * Lazily compute the Chrome version because some reports are explicitly asserting error conditions.

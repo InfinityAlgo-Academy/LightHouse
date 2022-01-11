@@ -15,7 +15,7 @@
 
 import cloneDeep from 'lodash.clonedeep';
 
-import smokeTests from '../test-definitions/core-tests.js';
+import smokeTests from '../core-tests.js';
 import {runSmokehouse, getShardedDefinitions} from '../smokehouse.js';
 
 /**

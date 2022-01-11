@@ -27,7 +27,7 @@ import {updateTestDefnFormat} from './back-compat-util.js';
 import {LH_ROOT} from '../../../../root.js';
 
 const coreTestDefnsPath =
-  path.join(LH_ROOT, 'lighthouse-cli/test/smokehouse/test-definitions/core-tests.js');
+  path.join(LH_ROOT, 'lighthouse-cli/test/smokehouse/core-tests.js');
 
 /**
  * Possible Lighthouse runners. Loaded dynamically so e.g. a CLI run isn't
@@ -36,6 +36,7 @@ const coreTestDefnsPath =
 const runnerPaths = {
   cli: '../lighthouse-runners/cli.js',
   bundle: '../lighthouse-runners/bundle.js',
+  devtools: '../lighthouse-runners/devtools.js',
 };
 
 /**
@@ -151,7 +152,7 @@ async function begin() {
       },
       'runner': {
         default: 'cli',
-        choices: ['cli', 'bundle'],
+        choices: ['cli', 'bundle', 'devtools'],
         describe: 'The method of running Lighthouse',
       },
       'tests-path': {
