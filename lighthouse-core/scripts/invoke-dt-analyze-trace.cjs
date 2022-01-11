@@ -17,7 +17,7 @@ if (require.main !== module) {
 /** @type {LH.Trace} */
 const trace = JSON.parse(
   // Gather with:
-  //     lighthouse https://www.theverge.com/ --preset=desktop --only-categories=performance -GA --throttling-method=devtools
+  //     lighthouse https://www.nytimes.com --preset=desktop --only-categories=performance -GA --throttling-method=devtools
     require('fs').readFileSync(__dirname + '/../../latest-run/defaultPass.trace.json', 'utf8')
 );
 
@@ -55,7 +55,7 @@ global.analyzeTrace(trace, {
 
 /**
  * See also:
- *     node lighthouse-core/test/lib/network-records-from-trace-test.js
+ *     yarn jest lighthouse-core/test/lib/network-records-from-trace-test.js
  * which compares the network requests we constructed from trace compared to the dtlog ones.
  * it currently only tests 1 netreq at a time.
  */
