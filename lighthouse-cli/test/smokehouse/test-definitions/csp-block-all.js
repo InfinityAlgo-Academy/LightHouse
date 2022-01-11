@@ -35,7 +35,7 @@ const expectations = {
       status: 200,
     },
     InspectorIssues: {
-      contentSecurityPolicy: [],
+      contentSecurityPolicyIssue: [],
     },
     SourceMaps: [{
       sourceMapUrl: 'http://localhost:10200/source-map/script.js.map',

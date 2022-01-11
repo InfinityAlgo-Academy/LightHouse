@@ -12,7 +12,7 @@
 const expectations = {
   artifacts: {
     InspectorIssues: {
-      mixedContent: [
+      mixedContentIssue: [
         {
           _minChromiumMilestone: 88, // We went from Warning to AutoUpgrade in https://chromium-review.googlesource.com/c/chromium/src/+/2480817
           resourceType: 'Image',

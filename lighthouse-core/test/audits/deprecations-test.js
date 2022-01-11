@@ -15,7 +15,7 @@ describe('ConsoleMessages deprecations audit', () => {
     const context = {computedCache: new Map()};
     const auditResult = await DeprecationsAudit.audit({
       ConsoleMessages: [],
-      InspectorIssues: {deprecations: []},
+      InspectorIssues: {deprecationIssue: []},
       SourceMaps: [],
       ScriptElements: [],
     }, context);
@@ -32,7 +32,7 @@ describe('ConsoleMessages deprecations audit', () => {
           text: 'Deprecation message',
         },
       ],
-      InspectorIssues: {deprecations: []},
+      InspectorIssues: {deprecationIssue: []},
       SourceMaps: [],
       ScriptElements: [],
     }, context);
@@ -65,7 +65,7 @@ describe('ConsoleMessages deprecations audit', () => {
           text: 'Not a deprecation message 789',
         },
       ],
-      InspectorIssues: {deprecations: []},
+      InspectorIssues: {deprecationIssue: []},
       SourceMaps: [],
       ScriptElements: [],
     }, context);
@@ -90,7 +90,7 @@ describe('ConsoleMessages deprecations audit', () => {
         },
       ],
       InspectorIssues: {
-        deprecations: [
+        deprecationIssue: [
           {
             message: 'Deprecation message 123',
             sourceCodeLocation: {
