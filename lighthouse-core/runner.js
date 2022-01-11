@@ -264,7 +264,7 @@ class Runner {
       const normalizedAuditSettings = Object.assign({}, settings, overrides);
 
       if (!isDeepEqual(normalizedGatherSettings, normalizedAuditSettings)) {
-        // throw new Error('Cannot change settings between gathering and auditing');
+        throw new Error('Cannot change settings between gathering and auditing');
       }
     }
 
@@ -371,11 +371,9 @@ class Runner {
 
       auditResult = Audit.generateAuditResult(audit, product);
     } catch (err) {
-      // throw err;
       // Log error if it hasn't already been logged above.
       if (err.code !== 'MISSING_REQUIRED_ARTIFACT' && err.code !== 'ERRORED_REQUIRED_ARTIFACT') {
         log.warn(audit.meta.id, `Caught exception: ${err.message}`);
-        throw err;
       }
 
       Sentry.captureException(err, {tags: {audit: audit.meta.id}, level: 'error'});

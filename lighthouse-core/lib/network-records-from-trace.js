@@ -38,9 +38,9 @@ class NetworkRecordsMaker {
     if (!networkTraceEventNames.includes(event.name)) {
       return;
     }
-    const requestId = event.args.data.requestId;
+    const requestId = event.args.data?.requestId;
     if (!requestId) {
-      throw new Error('network trace events expectd to have a requestId');
+      throw new Error('network trace events expected to have a requestId');
     }
 
     const evtBag = this.requestIdToEventsMap.get(requestId) || {};
@@ -50,7 +50,6 @@ class NetworkRecordsMaker {
 
   synthesizeRequests() {
     for (const [requestId, evtBag] of this.requestIdToEventsMap.entries()) {
-      /** @type {NetworkRequest} */
       let request = this.networkRecorder._findRealRequestAndSetSession(requestId);
 
       // This is a simple new request, create the NetworkRequest object
@@ -64,7 +63,7 @@ class NetworkRecordsMaker {
         continue;
       }
 
-      if (evtBag.sendRequest.args.data.url?.startsWith('data:')) {
+      if (evtBag.sendRequest.args.data?.url?.startsWith('data:')) {
         // TODO: handle the fact that data uris don't have a timing block at all :/
         continue;
       }
@@ -73,60 +72,61 @@ class NetworkRecordsMaker {
       /** @type {LH.Crdp.Network.RequestWillBeSentEvent} */
       const requestWillBeSentEventData = {
         // documentURL:     // brendan: Required, get from frame info?
-        frameId: evtBag.receiveResponse.args.data.frame,
+        frameId: evtBag.receiveResponse.args.data?.frame,
         // initiator:    // not available AFAICT
         request: {
-          initialPriority: evtBag.sendRequest.args.data.priority,
-          method: evtBag.sendRequest.args.data.requestMethod,
-          url: evtBag.sendRequest.args.data.url,
+          initialPriority: evtBag.sendRequest.args.data?.priority,
+          method: evtBag.sendRequest.args.data?.requestMethod,
+          url: evtBag.sendRequest.args.data?.url,
           headers: {}, // not available, required, tho
           referrerPolicy: 'unsafe-url', // not populated, but required…
           // .isLinkPreload: // not there
         },
         initiator: {type: 'other'}, // No preload signals in trace…
         requestId,
-        timestamp: evtBag.receiveResponse.args.data.timing?.requestTime ?? evtBag.receiveResponse.ts / 1_000_000,
-        type: evtBag.receiveResponse.args.data.mimeType === 'text/html' ? 'Document' : undefined, // This is imperfect.
+        timestamp: evtBag.receiveResponse.args.data?.timing?.requestTime ??
+            evtBag.receiveResponse.ts / 1_000_000,
+        type: evtBag.receiveResponse.args.data?.mimeType === 'text/html' ? 'Document' : undefined, // This is imperfect.
       };
       request.onRequestWillBeSent(requestWillBeSentEventData);
 
       // TODO: not entirely sure this is memorycache, but perhaps.
       // also LOL that even blink has to guess about this. https://source.chromium.org/chromium/chromium/src/+/main:third_party/blink/renderer/platform/loader/fetch/url_loader/web_url_loader.cc;l=796-798;drc=62b6100d21dde58ad66fb6f42383bfa975f6d4ba
-      request.fromMemoryCache = evtBag.receiveResponse.args.data.fromCache;
+      request.fromMemoryCache = evtBag.receiveResponse.args.data?.fromCache;
 
       this.networkRecorder.onRequestStarted(request);
 
       // Handle response
       /** @type {LH.Crdp.Network.ResponseReceivedEvent} */
       const responseReceivedEventData = {
-        timestamp: evtBag.receiveResponse.args.data.responseTime,
+        timestamp: evtBag.receiveResponse.args.data?.responseTime,
         response: {
-          status: evtBag.receiveResponse.args.data.statusCode,
-          timing: evtBag.receiveResponse.args.data.timing,
+          status: evtBag.receiveResponse.args.data?.statusCode,
+          timing: evtBag.receiveResponse.args.data?.timing,
           headers: {}, // not available, required, tho
-          mimeType: evtBag.receiveResponse.args.data.mimeType,
-          fromServiceWorker: evtBag.receiveResponse.args.data.fromServiceWorker,
+          mimeType: evtBag.receiveResponse.args.data?.mimeType,
+          fromServiceWorker: evtBag.receiveResponse.args.data?.fromServiceWorker,
           encodedDataLength: 0, // zero only because the full total is set in DataReceived
-          url: evtBag.sendRequest.args.data.url,
+          url: evtBag.sendRequest.args.data?.url,
         },
-        frameId: evtBag.receiveResponse.args.data.frame,
+        frameId: evtBag.receiveResponse.args.data?.frame,
       };
       request.onResponseReceived(responseReceivedEventData);
 
       // Set resourceSize & transferSize
       /** @type {LH.Crdp.Network.DataReceivedEvent} */
       const dataReceivedEventData = {
-        encodedDataLength: evtBag.resourceFinish.args.data.encodedDataLength,
-        dataLength: evtBag.resourceFinish.args.data.decodedBodyLength,
+        encodedDataLength: evtBag.resourceFinish.args.data?.encodedDataLength,
+        dataLength: evtBag.resourceFinish.args.data?.decodedBodyLength,
       };
       request.onDataReceived(dataReceivedEventData);
 
       // Finish (or fail)
       /** @type {LH.Crdp.Network.LoadingFinishedEvent} */
       const loadingFinishedEventData = {
-        timestamp: evtBag.resourceFinish.args.data.finishTime,
+        timestamp: evtBag.resourceFinish.args.data?.finishTime,
       };
-      if (evtBag.resourceFinish.args.data.didFail) {
+      if (evtBag.resourceFinish.args.data?.didFail) {
         request.onLoadingFailed(loadingFinishedEventData);
       } else {
         request.onLoadingFinished(loadingFinishedEventData);

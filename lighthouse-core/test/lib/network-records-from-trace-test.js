@@ -10,7 +10,6 @@
 const devtoolsLog = require('../../../latest-run/defaultPass.devtoolslog.json');
 const trace = require('../../../latest-run/defaultPass.trace.json');
 
-const NetworkRecords = require('../../computed/network-records.js');
 const constructRecordsFromTrace = require('../../lib/network-records-from-trace.js');
 
 const NetworkRecorder = require('../../lib/network-recorder.js');
@@ -27,10 +26,14 @@ describe('NetworkRecordsFromTrace', () => {
     console.log('Try replacing with another req Id!', allReqIds);
 
     // TODO this is currently testing just 1 request. ideally this "test" tries ALL requests that DTlog finds.
-    const pred = (nr) => nr.requestId === '868B884023EA82545E754C3734974FE7';
+    const pred = /** @type {LH.Artifacts.NetworkRequest} */ (nr) =>
+      nr.requestId === '868B884023EA82545E754C3734974FE7';
 
     const dtlNR = netReqsDTL.find(pred);
     const myTraceNR = netReqsTrace.find(pred);
+
+    if (!dtlNR) throw new Error('no matching request found in devtools logs');
+    if (!myTraceNR) throw new Error('no matching request found in devtools logs');
 
     // TODO: handle these…
     dtlNR.initiatorRequest = undefined;

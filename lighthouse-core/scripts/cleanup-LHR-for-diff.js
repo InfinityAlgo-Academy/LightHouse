@@ -44,8 +44,6 @@ function cleanAndFormatLHR(lhrString) {
     entry.startTime = 0; // Not realsitic, but avoids a lot of diff churn
   });
 
-  lhr.timing.entries = [];
-
   if (extraFlag !== '--only-remove-timing') {
     for (const auditResult of Object.values(lhr.audits)) {
       auditResult.description = '**Excluded from diff**';
