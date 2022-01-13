@@ -84,8 +84,9 @@ jobs:
     - run: yarn install --frozen-lockfile --network-timeout 1000000
     - run: yarn build-report
 
-    - name: yarn unit-cli
-      run: yarn unit-cli
+    # - name: yarn unit-cli
+    #   run: yarn unit-cli
+    - run: yarn unit-cli-mocha
     - run: yarn diff:sample-json
 
     # Fail if any changes were written to any source files or generated untracked files (ex, from -GA).
