@@ -88,7 +88,26 @@ expect.extend({
 
 // @ts-expect-error
 global.expect = expect;
+
+/**
+ * @param {(fn: () => void) => void} mochaFn
+ * @return {jest.Lifecycle}
+ */
+const makeFn = (mochaFn) => (fn, timeout) => {
+  mochaFn(function() {
+    // @ts-expect-error
+    // eslint-disable-next-line no-invalid-this
+    if (timeout !== undefined) this.timeout(timeout);
+    /** @type {jest.DoneCallback} */
+    const cb = () => {};
+    cb.fail = (error) => {
+      throw new Error(typeof error === 'string' ? error : error?.message);
+    };
+    return fn(cb);
+  });
+};
+
 // @ts-expect-error
-global.beforeAll = require('mocha').before;
-// @ts-expect-error
-global.afterAll = require('mocha').after;
+const {before, after} = require('mocha');
+global.beforeAll = makeFn(before);
+global.afterAll = makeFn(after);
