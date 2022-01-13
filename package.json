@@ -13,7 +13,6 @@
   },
   "scripts": {
     "prepack": "yarn build-report --standalone --flow --esm",
-    "postinstall": "npx patch-package",
     "build-all": "npm-run-posix-or-windows build-all:task",
     "build-all:task": "yarn build-report && yarn build-cdt-lib && yarn build-devtools && concurrently 'yarn build-extension' 'yarn build-lr' 'yarn build-viewer' 'yarn build-treemap' 'yarn build-smokehouse-bundle' && yarn build-pack",
     "build-all:task:windows": "yarn build-report && yarn build-cdt-lib && yarn build-extension && yarn build-devtools && yarn build-lr && yarn build-viewer && yarn build-treemap && yarn build-smokehouse-bundle",
@@ -74,7 +73,7 @@
     "dogfood-lhci": "./lighthouse-core/scripts/dogfood-lhci.sh",
     "timing-trace": "node lighthouse-core/scripts/generate-timing-trace.js",
     "changelog": "conventional-changelog --config ./build/changelog-generator/index.js --infile changelog.md --same-file",
-    "type-check": "tsc --build ./tsconfig-all.json",
+    "type-check": "npx patch-package && tsc --build ./tsconfig-all.json",
     "i18n:checks": "./lighthouse-core/scripts/i18n/assert-strings-collected.sh",
     "i18n:collect-strings": "node lighthouse-core/scripts/i18n/collect-strings.js",
     "update:lantern-baseline": "node lighthouse-core/scripts/lantern/update-baseline-lantern-values.js",
