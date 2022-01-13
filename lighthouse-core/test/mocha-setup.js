@@ -32,28 +32,12 @@ function getSnapshotState(testFile) {
   return snapshotState;
 }
 
-module.exports = {
-  mochaHooks: {
-    beforeEach() {
-      // Needed so `expect` extension method can access information about the current test.
-      global.mochaCurrentTest = this.currentTest;
-    },
-    afterAll() {
-      for (const snapshotState of snapshotStatesByTestFile.values()) {
-        // Jest adds `file://` to inline snapshot paths, and uses its own fs module to read things,
-        // falling back to fs.readFileSync if not defined. node `fs` does not support
-        // protocols in the path specifier, so we remove it here.
-        for (const snapshot of snapshotState._inlineSnapshots) {
-          snapshot.frame.file = snapshot.frame.file.replace('file://', '');
-        }
-
-        snapshotState.save();
-      }
-    },
-  },
-};
-
+/**
+ * @param {Mocha.Test} test
+ * @return {string}
+ */
 function makeTestTitle(test) {
+  /** @type {Mocha.Test | Mocha.Suite} */
   let next = test;
   const title = [];
 
@@ -70,18 +54,37 @@ function makeTestTitle(test) {
 }
 
 expect.extend({
+  /**
+   * @param {any} actual
+   */
   toMatchSnapshot(actual) {
-    const test = global.mochaCurrentTest;
+    const test = mochaCurrentTest;
+    if (!test.file) throw new Error('unexpected value');
+
     const title = makeTestTitle(test);
     const snapshotState = getSnapshotState(test.file);
-    const matcher = toMatchSnapshot.bind({snapshotState, title});
+    /** @type {import('jest-snapshot/build/types').Context} */
+    // @ts-expect-error - this is enough for snapshots to work.
+    const context = {snapshotState, currentTestName: title};
+    const matcher = toMatchSnapshot.bind(context);
+
     return matcher(actual);
   },
+  /**
+   * @param {any} actual
+   * @param {any} expected
+   */
   toMatchInlineSnapshot(actual, expected) {
-    const test = global.mochaCurrentTest;
+    const test = mochaCurrentTest;
+    if (!test.file) throw new Error('unexpected value');
+
     const title = makeTestTitle(test);
     const snapshotState = getSnapshotState(test.file);
-    const matcher = toMatchInlineSnapshot.bind({snapshotState, title});
+    /** @type {import('jest-snapshot/build/types').Context} */
+    // @ts-expect-error - this is enough for snapshots to work.
+    const context = {snapshotState, currentTestName: title};
+    const matcher = toMatchInlineSnapshot.bind(context);
+
     return matcher(actual, expected);
   },
 });
@@ -90,14 +93,14 @@ expect.extend({
 global.expect = expect;
 
 /**
- * @param {(fn: () => void) => void} mochaFn
+ * @param {Mocha.HookFunction} mochaFn
  * @return {jest.Lifecycle}
  */
 const makeFn = (mochaFn) => (fn, timeout) => {
   mochaFn(function() {
-    // @ts-expect-error
     // eslint-disable-next-line no-invalid-this
     if (timeout !== undefined) this.timeout(timeout);
+
     /** @type {jest.DoneCallback} */
     const cb = () => {};
     cb.fail = (error) => {
@@ -107,7 +110,33 @@ const makeFn = (mochaFn) => (fn, timeout) => {
   });
 };
 
-// @ts-expect-error
 const {before, after} = require('mocha');
 global.beforeAll = makeFn(before);
 global.afterAll = makeFn(after);
+
+/** @type {Mocha.Test} */
+let mochaCurrentTest;
+module.exports = {
+  mochaHooks: {
+    /** @this {Mocha.Context} */
+    beforeEach() {
+      if (!this.currentTest) throw new Error('unexpected value');
+
+      // Needed so `expect` extension method can access information about the current test.
+      mochaCurrentTest = this.currentTest;
+    },
+    afterAll() {
+      for (const snapshotState of snapshotStatesByTestFile.values()) {
+        // Jest adds `file://` to inline snapshot paths, and uses its own fs module to read things,
+        // falling back to fs.readFileSync if not defined. node `fs` does not support
+        // protocols in the path specifier, so we remove it here.
+        // @ts-expect-error - private property.
+        for (const snapshot of snapshotState._inlineSnapshots) {
+          snapshot.frame.file = snapshot.frame.file.replace('file://', '');
+        }
+
+        snapshotState.save();
+      }
+    },
+  },
+};
