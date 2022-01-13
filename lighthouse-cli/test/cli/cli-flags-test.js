@@ -10,24 +10,21 @@
 import {strict as assert} from 'assert';
 import fs from 'fs';
 
-import yargs from 'yargs';
-
-import {getFlags} from '../../cli-flags.js';
+import {getFlags, getYargsParser} from '../../cli-flags.js';
 import {LH_ROOT} from '../../../root.js';
 
 describe('CLI flags', function() {
   it('all options should have descriptions', () => {
-    getFlags('chrome://version');
-
+    const parser = getYargsParser();
     // @ts-expect-error - getGroups is private
-    const optionGroups = yargs.getGroups();
+    const optionGroups = parser.getGroups();
     /** @type {string[]} */
     const allOptions = [];
     Object.keys(optionGroups).forEach(key => {
       allOptions.push(...optionGroups[key]);
     });
     // @ts-expect-error - getUsageInstance is private
-    const optionsWithDescriptions = Object.keys(yargs.getUsageInstance().getDescriptions());
+    const optionsWithDescriptions = Object.keys(parser.getUsageInstance().getDescriptions());
 
     allOptions.forEach(opt => {
       assert.ok(optionsWithDescriptions.includes(opt), `cli option '${opt}' has no description`);
