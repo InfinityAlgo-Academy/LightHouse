@@ -96,6 +96,7 @@ describe('asset-saver helper', () => {
           {args: {IsMainFrame: true}, cat: 'v8', pid: 1, ts: 5},
           {args: {data: {encodedDataLength: 20, requestId: '1.22'}}, pid: 1, ts: 6},
         ],
+        metadata: {'cpu-model': 9001, 'network-type': 'Unknown'},
       };
       await assetSaver.saveTrace(trace, traceFilename);
 
@@ -107,7 +108,11 @@ describe('asset-saver helper', () => {
   {"args":{},"cat":"v8","pid":1,"ts":3},
   {"args":{"IsMainFrame":true},"cat":"v8","pid":1,"ts":5},
   {"args":{"data":{"encodedDataLength":20,"requestId":"1.22"}},"pid":1,"ts":6}
-]}
+],
+"metadata": {
+  "cpu-model": 9001,
+  "network-type": "Unknown"
+}}
 `);
     });
 
@@ -202,7 +207,8 @@ describe('asset-saver helper', () => {
 `[
   {"method":"Network.requestServedFromCache","params":{"requestId":"1.22"}},
   {"method":"Network.responseReceived","params":{"status":301,"headers":{":method":"POST"}}}
-]`);
+]
+`);
     });
   });
 
@@ -297,6 +303,27 @@ describe('asset-saver helper', () => {
           /^LHError: PROTOCOL_TIMEOUT.*test[\\/]lib[\\/]asset-saver-test\.js/s);
       expect(roundTripArtifacts.ScriptElements.friendlyMessage)
         .toBeDisplayString(/\(Method: Page\.getFastness\)/);
+    });
+
+    it('saves artifacts in files concluding with a newline', async () => {
+      const artifacts = {
+        devtoolsLogs: {
+          [Audit.DEFAULT_PASS]: [{method: 'first'}, {method: 'second'}],
+        },
+        traces: {
+          [Audit.DEFAULT_PASS]: {traceEvents: traceEvents.slice(0, 100)},
+        },
+        RobotsTxt: {status: 404, content: null},
+      };
+      await assetSaver.saveArtifacts(artifacts, outputPath);
+
+      const artifactFilenames = fs.readdirSync(outputPath);
+      expect(artifactFilenames.length).toBeGreaterThanOrEqual(3);
+      for (const artifactFilename of artifactFilenames) {
+        expect(artifactFilename).toMatch(/\.json$/);
+        const contents = fs.readFileSync(`${outputPath}/${artifactFilename}`, 'utf8');
+        expect(contents).toMatch(/\n$/);
+      }
     });
   });
 
