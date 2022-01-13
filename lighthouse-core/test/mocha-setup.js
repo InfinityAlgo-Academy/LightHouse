@@ -5,6 +5,12 @@
  */
 'use strict';
 
+/**
+ * @fileoverview
+ * 1) sets global.expect
+ * 2) configures the mocha test runner to use jest-snapshot
+ */
+
 const path = require('path');
 const expect = require('expect');
 const {SnapshotState, toMatchSnapshot, toMatchInlineSnapshot} = require('jest-snapshot');
