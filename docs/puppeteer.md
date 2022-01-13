@@ -19,7 +19,7 @@ const lighthouse = require('lighthouse');
 const {URL} = require('url');
 
 (async() => {
-const url = 'https://www.chromestatus.com/features';
+const url = 'https://chromestatus.com/features';
 
 // Use Puppeteer to launch headful Chrome and don't use its default 800x600 viewport.
 const browser = await puppeteer.launch({
@@ -63,7 +63,7 @@ const util = require('util');
 
 (async() => {
 
-const URL = 'https://www.chromestatus.com/features';
+const URL = 'https://chromestatus.com/features';
 
 const opts = {
   //chromeFlags: ['--headless'],

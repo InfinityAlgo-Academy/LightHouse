@@ -391,6 +391,6 @@ describe('Byte efficiency base audit', () => {
     };
     const settings = {throttlingMethod: 'devtools', throttling: modestThrottling};
     const result = await MockAudit.audit(artifacts, {settings, computedCache});
-    expect(result.details.overallSavingsMs).toBeCloseTo(0);
+    expect(result.details.overallSavingsMs).toBeCloseTo(575, 1);
   });
 });

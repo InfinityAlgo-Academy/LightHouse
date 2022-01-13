@@ -59,7 +59,9 @@ body:
         - node
         - PageSpeed Insights
         - Chrome DevTools
+        - web.dev
         - WebPageTest
+        - Other
     validations:
       required: true
   - type: input

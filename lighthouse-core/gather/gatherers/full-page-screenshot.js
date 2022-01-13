@@ -16,19 +16,19 @@ const pageFunctions = require('../../lib/page-functions.js');
 const FULL_PAGE_SCREENSHOT_QUALITY = 30;
 
 /**
- * @param {string} str
+ * @template {string} S
+ * @param {S} str
  */
-function snakeCaseToCamelCase(str) {
-  return str.replace(/(-\w)/g, m => m[1].toUpperCase());
+function kebabCaseToCamelCase(str) {
+  return /** @type {KebabToCamelCase<S>} */ (str.replace(/(-\w)/g, m => m[1].toUpperCase()));
 }
 
 /* c8 ignore start */
 
 // eslint-disable-next-line no-inner-declarations
 function getObservedDeviceMetrics() {
-  // Convert the Web API's snake case (landscape-primary) to camel case (landscapePrimary).
-  const screenOrientationType = /** @type {LH.Crdp.Emulation.ScreenOrientationType} */ (
-    snakeCaseToCamelCase(window.screen.orientation.type));
+  // Convert the Web API's kebab case (landscape-primary) to camel case (landscapePrimary).
+  const screenOrientationType = kebabCaseToCamelCase(window.screen.orientation.type);
   return {
     width: document.documentElement.clientWidth,
     height: document.documentElement.clientHeight,
@@ -46,7 +46,7 @@ class FullPageScreenshot extends FRGatherer {
   /** @type {LH.Gatherer.GathererMeta} */
   meta = {
     supportedModes: ['snapshot', 'timespan', 'navigation'],
-  }
+  };
 
   /**
    * @param {LH.Gatherer.FRTransitionalContext} context
@@ -168,7 +168,7 @@ class FullPageScreenshot extends FRGatherer {
       observedDeviceMetrics = await executionContext.evaluate(getObservedDeviceMetrics, {
         args: [],
         useIsolation: true,
-        deps: [snakeCaseToCamelCase],
+        deps: [kebabCaseToCamelCase],
       });
     }
 

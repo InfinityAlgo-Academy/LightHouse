@@ -14,7 +14,7 @@ class JsUsage extends FRGatherer {
   /** @type {LH.Gatherer.GathererMeta} */
   meta = {
     supportedModes: ['snapshot', 'timespan', 'navigation'],
-  }
+  };
 
   constructor() {
     super();
@@ -116,7 +116,7 @@ class JsUsage extends FRGatherer {
       let url = scriptUsage.url;
       const scriptParsedEvent =
         this._scriptParsedEvents.find(e => e.scriptId === scriptUsage.scriptId);
-      if (scriptParsedEvent && scriptParsedEvent.embedderName) {
+      if (scriptParsedEvent?.embedderName) {
         url = scriptParsedEvent.embedderName;
       }
 

@@ -12,8 +12,8 @@ const {
   mockDriverSubmodules,
 } = require('../../../fraggle-rock/gather/mock-driver.js');
 const mocks = mockDriverSubmodules();
-const ResponseCompression
-  = require('../../../../gather/gatherers/dobetterweb/response-compression.js');
+const ResponseCompression =
+  require('../../../../gather/gatherers/dobetterweb/response-compression.js');
 
 const networkRecords = [
   {

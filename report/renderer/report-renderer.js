@@ -29,6 +29,7 @@ import {PerformanceCategoryRenderer} from './performance-category-renderer.js';
 import {PwaCategoryRenderer} from './pwa-category-renderer.js';
 import {Util} from './util.js';
 
+
 export class ReportRenderer {
   /**
    * @param {DOM} dom
@@ -224,6 +225,7 @@ export class ReportRenderer {
           e.preventDefault();
           destEl.scrollIntoView();
         });
+        this._opts.onPageAnchorRendered?.(gaugeWrapperEl);
       }
 
 
@@ -258,7 +260,7 @@ export class ReportRenderer {
     Util.reportJson = report;
 
     const fullPageScreenshot =
-      report.audits['full-page-screenshot'] && report.audits['full-page-screenshot'].details &&
+      report.audits['full-page-screenshot']?.details &&
       report.audits['full-page-screenshot'].details.type === 'full-page-screenshot' ?
       report.audits['full-page-screenshot'].details : undefined;
     const detailsRenderer = new DetailsRenderer(this._dom, {
@@ -309,7 +311,7 @@ export class ReportRenderer {
     for (const category of Object.values(report.categories)) {
       const renderer = specificCategoryRenderers[category.id] || categoryRenderer;
       // .lh-category-wrapper is full-width and provides horizontal rules between categories.
-      // .lh-category within has the max-width: var(--report-content-width);
+      // .lh-category within has the max-width: var(--report-content-max-width);
       const wrapper = renderer.dom.createChildOf(categories, 'div', 'lh-category-wrapper');
       wrapper.appendChild(renderer.render(
         category,
@@ -321,7 +323,9 @@ export class ReportRenderer {
     categoryRenderer.injectFinalScreenshot(categories, report.audits, scoreScale);
 
     const reportFragment = this._dom.createFragment();
-    reportFragment.append(this._dom.createComponent('styles'));
+    if (!this._opts.omitGlobalStyles) {
+      reportFragment.append(this._dom.createComponent('styles'));
+    }
 
     if (!this._opts.omitTopbar) {
       reportFragment.appendChild(this._renderReportTopbar(report));

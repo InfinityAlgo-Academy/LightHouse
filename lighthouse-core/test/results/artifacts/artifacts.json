@@ -12377,15 +12377,15 @@
     }
   ],
   "InspectorIssues": {
-    "mixedContent": [],
-    "sameSiteCookies": [],
-    "blockedByResponse": [],
-    "heavyAds": [],
-    "contentSecurityPolicy": [],
-    "deprecations": [
+    "attributionReportingIssue": [],
+    "blockedByResponseIssue": [],
+    "clientHintIssue": [],
+    "contentSecurityPolicyIssue": [],
+    "corsIssue": [],
+    "deprecationIssue": [
       {
         "affectedFrame": {
-          "frameId": "F9E210B94A1B879B89E1373BA5B496AF"
+          "frameId": "24A14DFFDE5346A96956F4F977A4F84D"
         },
         "sourceCodeLocation": {
           "scriptId": "11",
@@ -12393,11 +12393,12 @@
           "lineNumber": 13,
           "columnNumber": 10
         },
-        "message": "'window.webkitStorageInfo' is deprecated. Please use 'navigator.webkitTemporaryStorage' or 'navigator.webkitPersistentStorage' instead."
+        "message": "'window.webkitStorageInfo' is deprecated. Please use 'navigator.webkitTemporaryStorage' or 'navigator.webkitPersistentStorage' instead.",
+        "deprecationType": "PrefixedStorageInfo"
       },
       {
         "affectedFrame": {
-          "frameId": "F9E210B94A1B879B89E1373BA5B496AF"
+          "frameId": "24A14DFFDE5346A96956F4F977A4F84D"
         },
         "sourceCodeLocation": {
           "scriptId": "23",
@@ -12405,9 +12406,30 @@
           "lineNumber": 369,
           "columnNumber": 7
         },
-        "message": "Synchronous XMLHttpRequest on the main thread is deprecated because of its detrimental effects to the end user's experience. For more help, check https://xhr.spec.whatwg.org/."
+        "message": "Synchronous XMLHttpRequest on the main thread is deprecated because of its detrimental effects to the end user's experience. For more help, check https://xhr.spec.whatwg.org/.",
+        "deprecationType": "XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload"
       }
-    ]
+    ],
+    "genericIssue": [],
+    "heavyAdIssue": [],
+    "lowTextContrastIssue": [],
+    "mixedContentIssue": [],
+    "navigatorUserAgentIssue": [
+      {
+        "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+        "location": {
+          "scriptId": "0",
+          "url": "http://localhost:10200/dobetterweb/third_party/aggressive-promise-polyfill.js",
+          "lineNumber": 0,
+          "columnNumber": 0
+        }
+      }
+    ],
+    "quirksModeIssue": [],
+    "sameSiteCookieIssue": [],
+    "sharedArrayBufferIssue": [],
+    "twaQualityEnforcement": [],
+    "wasmCrossOriginModuleSharingIssue": []
   },
   "SourceMaps": [],
   "FullPageScreenshot": {

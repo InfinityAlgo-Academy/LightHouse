@@ -195,8 +195,7 @@ function assertLhr(lhr) {
   if (!lhr) throw new Error('missing lhr');
   if (lhr.runtimeError) throw new Error(`runtime error: ${lhr.runtimeError}`);
   const metrics = common.getMetrics(lhr);
-  if (metrics &&
-      metrics.firstContentfulPaint &&
+  if (metrics?.firstContentfulPaint &&
       metrics.firstMeaningfulPaint &&
       metrics.interactive &&
       // WPT won't have this, we'll just get from the trace.

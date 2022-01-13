@@ -24,7 +24,10 @@ import {countTranslatedMessages} from './count-translated.js';
 import {LH_ROOT} from '../../../root.js';
 import {resolveModulePath} from '../esm-utils.js';
 
-const UISTRINGS_REGEX = /UIStrings = .*?\};\n/s;
+// Match declarations of UIStrings, terminating in either a `};\n` (very likely to always be right)
+// or `}\n\n` (allowing semicolon to be optional, but insisting on a double newline so that an
+// closing brace in the middle of the declaration does not prematurely end the pattern)
+const UISTRINGS_REGEX = /UIStrings = .*?\}(;|\n)\n/s;
 
 /** @typedef {import('./bake-ctc-to-lhl.js').CtcMessage} CtcMessage */
 /** @typedef {Required<Pick<CtcMessage, 'message'|'placeholders'>>} IncrementalCtc */
@@ -552,7 +555,7 @@ async function collectAllStringsInDir(dir) {
     const content = fs.readFileSync(absolutePath, 'utf8');
     const exportVars = await import(absolutePath);
     const regexMatch = content.match(UISTRINGS_REGEX);
-    const exportedUIStrings = exportVars.UIStrings || (exportVars.default && exportVars.default.UIStrings);
+    const exportedUIStrings = exportVars.UIStrings || exportVars.default?.UIStrings;
 
     if (!regexMatch) {
       // No UIStrings found in the file text or exports, so move to the next.
@@ -650,10 +653,6 @@ function resolveMessageCollisions(strings) {
 
   try {
     expect(collidingMessages).toEqual([
-      '$MARKDOWN_SNIPPET_0$ elements do not have $MARKDOWN_SNIPPET_1$ text',
-      '$MARKDOWN_SNIPPET_0$ elements do not have $MARKDOWN_SNIPPET_1$ text',
-      '$MARKDOWN_SNIPPET_0$ elements have $MARKDOWN_SNIPPET_1$ text',
-      '$MARKDOWN_SNIPPET_0$ elements have $MARKDOWN_SNIPPET_1$ text',
       'ARIA $MARKDOWN_SNIPPET_0$ elements do not have accessible names.',
       'ARIA $MARKDOWN_SNIPPET_0$ elements do not have accessible names.',
       'ARIA $MARKDOWN_SNIPPET_0$ elements do not have accessible names.',

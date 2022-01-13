@@ -15,11 +15,11 @@ const {
 } = require('../../lib/navigation-error.js');
 const NetworkRequest = require('../../lib/network-request.js');
 
-const LoadFailureMode = {
-  fatal: /** @type {'fatal'} */ ('fatal'),
-  ignore: /** @type {'ignore'} */ ('ignore'),
-  warn: /** @type {'warn'} */ ('warn'),
-};
+const LoadFailureMode = /** @type {const} */ ({
+  fatal: 'fatal',
+  ignore: 'ignore',
+  warn: 'warn',
+});
 
 describe('#getNetworkError', () => {
   /**

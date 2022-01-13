@@ -109,7 +109,7 @@ class UnusedBytes extends Audit {
     const gatherContext = artifacts.GatherContext;
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
-    const settings = context && context.settings || {};
+    const settings = context?.settings || {};
     const simulatorOptions = {
       devtoolsLog,
       settings,
@@ -201,19 +201,6 @@ class UnusedBytes extends Audit {
   }
 
   /**
-   * @param {number} wastedBytes
-   * @param {Simulator} simulator
-   */
-  static computeWastedMsWithThroughput(wastedBytes, simulator) {
-    const bitsPerSecond = simulator.getOptions().throughput;
-    // https://github.com/GoogleChrome/lighthouse/pull/13323#issuecomment-962031709
-    if (bitsPerSecond === 0) return 0;
-    const wastedBits = wastedBytes * 8;
-    const wastedMs = wastedBits / bitsPerSecond * 1000;
-    return wastedMs;
-  }
-
-  /**
    * @param {ByteEfficiencyProduct} result
    * @param {Node|null} graph
    * @param {Simulator} simulator
@@ -232,7 +219,7 @@ class UnusedBytes extends Audit {
         providedWastedBytesByUrl: result.wastedBytesByUrl,
       });
     } else {
-      wastedMs = this.computeWastedMsWithThroughput(wastedBytes, simulator);
+      wastedMs = simulator.computeWastedMsFromWastedBytes(wastedBytes);
     }
 
     let displayValue = result.displayValue || '';

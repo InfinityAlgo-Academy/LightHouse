@@ -58,7 +58,7 @@ async function buildStandaloneReport() {
 
 async function buildFlowReport() {
   const bundle = await rollup.rollup({
-    input: 'flow-report/standalone-flow.tsx',
+    input: 'flow-report/clients/standalone.ts',
     plugins: [
       rollupPlugins.inlineFs({verbose: true}),
       rollupPlugins.replace({
@@ -156,7 +156,10 @@ async function main() {
 }
 
 if (require.main === module) {
-  main();
+  main().catch(err => {
+    console.error(err);
+    process.exit(1);
+  });
 }
 
 module.exports = {

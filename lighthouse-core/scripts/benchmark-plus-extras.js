@@ -27,7 +27,7 @@ async function runOctane(page) {
   await page.click('#run-octane');
   await page.waitForFunction(() => {
     const banner = document.querySelector('#main-banner');
-    return /Octane Score: \d+/.test(banner && banner.textContent || '');
+    return /Octane Score: \d+/.test(banner?.textContent || '');
   }, {timeout: 300e3});
 
   const score = await page.evaluate(() => {
@@ -52,7 +52,7 @@ async function runSpeedometer(page) {
   const loggerInterval = setInterval(async () => {
     const progress = await page.evaluate(() => {
       const infoEl = document.querySelector('#running #info');
-      return infoEl && infoEl.textContent || 'Unknown';
+      return infoEl?.textContent || 'Unknown';
     });
     process.stdout.write(`  Progress: ${progress}\n`);
   }, 10000);

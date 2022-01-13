@@ -143,12 +143,22 @@ function createMockDriver() {
   };
 }
 
-/** @param {() => jest.Mock} runProvider */
-function mockRunnerModule(runProvider) {
-  const runnerModule = {getGathererList: () => []};
-  Object.defineProperty(runnerModule, 'run', {
-    get: runProvider,
-  });
+function mockRunnerModule() {
+  const runnerModule = {
+    getGathererList: jest.fn().mockReturnValue([]),
+    gatherAndManageArtifacts: jest.fn(),
+    run: jest.fn(),
+    reset,
+  };
+
+  jest.mock('../../../runner.js', () => runnerModule);
+
+  function reset() {
+    runnerModule.getGathererList.mockReturnValue([]);
+    runnerModule.gatherAndManageArtifacts.mockReset();
+    runnerModule.run.mockReset();
+  }
+
   return runnerModule;
 }
 

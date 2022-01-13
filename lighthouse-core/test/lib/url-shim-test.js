@@ -364,4 +364,34 @@ describe('URL Shim', () => {
       expect(URL.guessMimeType('https://example.com/')).toEqual(undefined);
     });
   });
+
+  describe('normalizeUrl', () => {
+    it('returns normalized URL', () => {
+      expect(URL.normalizeUrl('https://example.com')).toEqual('https://example.com/');
+    });
+
+    it('rejects when not given a URL', () => {
+      expect(() => {
+        URL.normalizeUrl(undefined);
+      }).toThrow('INVALID_URL');
+    });
+
+    it('rejects when given a URL of zero length', () => {
+      expect(() => {
+        URL.normalizeUrl('');
+      }).toThrow('INVALID_URL');
+    });
+
+    it('rejects when given a URL without protocol', () => {
+      expect(() => {
+        URL.normalizeUrl('localhost');
+      }).toThrow('INVALID_URL');
+    });
+
+    it('rejects when given a URL without hostname', () => {
+      expect(() => {
+        URL.normalizeUrl('https://');
+      }).toThrow('INVALID_URL');
+    });
+  });
 });

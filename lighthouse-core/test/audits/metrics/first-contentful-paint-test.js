@@ -65,7 +65,7 @@ describe('Performance: first-contentful-paint audit', () => {
 
     const context = getFakeContext({formFactor: 'mobile', throttlingMethod: 'provided'});
     const result = await FcpAudit.audit(artifacts, context);
-    assert.equal(result.score, 0.06);
+    assert.equal(result.score, 0.05);
     assert.equal(result.numericValue, 5668.275);
   });
 });

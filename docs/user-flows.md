@@ -225,6 +225,8 @@ async function main() {
 
   // Get the comprehensive flow report.
   writeFileSync('report.html', flow.generateReport());
+  // Save results as JSON.
+  writeFileSync('flow-result.json', JSON.stringify(flow.getFlowResult(), null, 2));
 
   // Cleanup.
   await browser.close();

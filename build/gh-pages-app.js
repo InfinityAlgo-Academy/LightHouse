@@ -79,19 +79,21 @@ class GhPagesApp {
   constructor(opts) {
     this.opts = opts;
     this.distDir = `${ghPagesDistDir}/${opts.name}`;
+    /** @type {string[]} */
+    this.preloadScripts = [];
   }
 
   async build() {
     fs.rmSync(this.distDir, {recursive: true, force: true});
+
+    const bundledJs = await this._compileJs();
+    safeWriteFile(`${this.distDir}/src/bundled.js`, bundledJs);
 
     const html = await this._compileHtml();
     safeWriteFile(`${this.distDir}/index.html`, html);
 
     const css = await this._compileCss();
     safeWriteFile(`${this.distDir}/styles/bundled.css`, css);
-
-    const bundledJs = await this._compileJs();
-    safeWriteFile(`${this.distDir}/src/bundled.js`, bundledJs);
 
     for (const {path, destDir, rename} of this.opts.assets) {
       const dir = destDir ? `${this.distDir}/${destDir}` : this.distDir;
@@ -153,6 +155,7 @@ class GhPagesApp {
     ];
     if (!process.env.DEBUG) plugins.push(rollupPlugins.terser());
     const bundle = await rollup.rollup({
+      preserveEntrySignatures: 'strict',
       input,
       plugins,
     });
@@ -166,6 +169,8 @@ class GhPagesApp {
         safeWriteFile(`${this.distDir}/src/${output[i].fileName}`, code);
       }
     }
+    const scripts = output[0].imports.map(fileName => `src/${fileName}`);
+    this.preloadScripts.push(...scripts);
     return output[0].code;
   }
 
@@ -177,6 +182,17 @@ class GhPagesApp {
       for (const [key, value] of Object.entries(this.opts.htmlReplacements)) {
         htmlSrc = htmlSrc.replace(key, value);
       }
+    }
+
+    if (this.preloadScripts.length) {
+      const preloads = this.preloadScripts.map(fileName =>
+        `<link rel="preload" href="${fileName}" as="script" crossorigin="anonymous" />`
+      ).join('\n');
+      const endHeadIndex = htmlSrc.indexOf('</head>');
+      if (endHeadIndex === -1) {
+        throw new Error('HTML file needs a <head> element to inject preloads');
+      }
+      htmlSrc = htmlSrc.slice(0, endHeadIndex) + preloads + htmlSrc.slice(endHeadIndex);
     }
 
     return htmlSrc;

@@ -64,7 +64,6 @@ async function startTimespan(options) {
           return finalizeArtifacts(baseArtifacts, artifacts);
         },
         {
-          url: finalUrl,
           config,
           computedCache,
         }

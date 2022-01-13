@@ -157,8 +157,8 @@ describe('getRawCsps', () => {
         ]),
       },
     };
-    const {cspHeaders, cspMetaTags}
-      = await CspXss.getRawCsps(artifacts, {computedCache: new Map()});
+    const {cspHeaders, cspMetaTags} =
+      await CspXss.getRawCsps(artifacts, {computedCache: new Map()});
     expect(cspHeaders).toEqual([
       `script-src 'none'`,
       `object-src 'none'`,
@@ -190,8 +190,8 @@ describe('getRawCsps', () => {
         ]),
       },
     };
-    const {cspHeaders, cspMetaTags}
-      = await CspXss.getRawCsps(artifacts, {computedCache: new Map()});
+    const {cspHeaders, cspMetaTags} =
+      await CspXss.getRawCsps(artifacts, {computedCache: new Map()});
     expect(cspHeaders).toEqual([
       `script-src 'none'`,
       `default-src 'none'`,
@@ -222,8 +222,8 @@ describe('getRawCsps', () => {
         ]),
       },
     };
-    const {cspHeaders, cspMetaTags}
-      = await CspXss.getRawCsps(artifacts, {computedCache: new Map()});
+    const {cspHeaders, cspMetaTags} =
+      await CspXss.getRawCsps(artifacts, {computedCache: new Map()});
     expect(cspHeaders).toEqual([
       `object-src 'none'`,
     ]);
@@ -252,8 +252,8 @@ describe('getRawCsps', () => {
         ]),
       },
     };
-    const {cspHeaders, cspMetaTags}
-      = await CspXss.getRawCsps(artifacts, {computedCache: new Map()});
+    const {cspHeaders, cspMetaTags} =
+      await CspXss.getRawCsps(artifacts, {computedCache: new Map()});
     expect(cspHeaders).toEqual([
       `object-src 'none'`,
     ]);

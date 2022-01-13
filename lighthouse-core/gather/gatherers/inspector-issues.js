@@ -19,7 +19,7 @@ class InspectorIssues extends FRGatherer {
   meta = {
     supportedModes: ['timespan', 'navigation'],
     dependencies: {DevtoolsLog: DevtoolsLog.symbol},
-  }
+  };
 
   constructor() {
     super();
@@ -58,57 +58,47 @@ class InspectorIssues extends FRGatherer {
    * @return {Promise<LH.Artifacts['InspectorIssues']>}
    */
   async _getArtifact(networkRecords) {
+    /** @type {LH.Artifacts.InspectorIssues} */
     const artifact = {
-      /** @type {Array<LH.Crdp.Audits.MixedContentIssueDetails>} */
-      mixedContent: [],
-      /** @type {Array<LH.Crdp.Audits.SameSiteCookieIssueDetails>} */
-      sameSiteCookies: [],
-      /** @type {Array<LH.Crdp.Audits.BlockedByResponseIssueDetails>} */
-      blockedByResponse: [],
-      /** @type {Array<LH.Crdp.Audits.HeavyAdIssueDetails>} */
-      heavyAds: [],
-      /** @type {Array<LH.Crdp.Audits.ContentSecurityPolicyIssueDetails>} */
-      contentSecurityPolicy: [],
-      /** @type {Array<LH.Crdp.Audits.DeprecationIssueDetails>} */
-      deprecations: [],
+      attributionReportingIssue: [],
+      blockedByResponseIssue: [],
+      clientHintIssue: [],
+      contentSecurityPolicyIssue: [],
+      corsIssue: [],
+      deprecationIssue: [],
+      genericIssue: [],
+      heavyAdIssue: [],
+      lowTextContrastIssue: [],
+      mixedContentIssue: [],
+      navigatorUserAgentIssue: [],
+      quirksModeIssue: [],
+      sameSiteCookieIssue: [],
+      sharedArrayBufferIssue: [],
+      twaQualityEnforcement: [],
+      wasmCrossOriginModuleSharingIssue: [],
     };
-
-    for (const issue of this._issues) {
-      if (issue.details.mixedContentIssueDetails) {
-        const issueDetails = issue.details.mixedContentIssueDetails;
-        const issueReqId = issueDetails.request && issueDetails.request.requestId;
-        // Duplicate issues can occur for the same request; only use the one with a matching networkRequest.
-        if (issueReqId &&
-          networkRecords.find(req => req.requestId === issueReqId)) {
-          artifact.mixedContent.push(issueDetails);
+    const keys = /** @type {Array<keyof LH.Artifacts['InspectorIssues']>} */(Object.keys(artifact));
+    for (const key of keys) {
+      // The wasmCrossOriginModuleSharingIssue key doesn't follow the pattern of the rest. See
+      // https://source.chromium.org/chromium/chromium/src/+/main:third_party/blink/public/devtools_protocol/browser_protocol.pdl;l=811;drc=9c10bf258928b5d169ba6a449f8f33958f7947ea
+      /** @type {`${key}Details` | `wasmCrossOriginModuleSharingIssue`} */
+      const detailsKey = (key === 'wasmCrossOriginModuleSharingIssue' ? `${key}` : `${key}Details`);
+      const allDetails = this._issues.map(issue => issue.details[detailsKey]);
+      for (const detail of allDetails) {
+        if (!detail) {
+          continue;
         }
-      }
-      if (issue.details.sameSiteCookieIssueDetails) {
-        const issueDetails = issue.details.sameSiteCookieIssueDetails;
-        const issueReqId = issueDetails.request && issueDetails.request.requestId;
         // Duplicate issues can occur for the same request; only use the one with a matching networkRequest.
-        if (issueReqId &&
-          networkRecords.find(req => req.requestId === issueReqId)) {
-          artifact.sameSiteCookies.push(issueDetails);
+        const requestId = 'request' in detail && detail.request && detail.request.requestId;
+        if (requestId) {
+          if (networkRecords.find(req => req.requestId === requestId)) {
+            // @ts-expect-error - detail types are not all compatible
+            artifact[key].push(detail);
+          }
+        } else {
+          // @ts-expect-error - detail types are not all compatible
+          artifact[key].push(detail);
         }
-      }
-      if (issue.details.blockedByResponseIssueDetails) {
-        const issueDetails = issue.details.blockedByResponseIssueDetails;
-        const issueReqId = issueDetails.request && issueDetails.request.requestId;
-        // Duplicate issues can occur for the same request; only use the one with a matching networkRequest.
-        if (issueReqId &&
-          networkRecords.find(req => req.requestId === issueReqId)) {
-          artifact.blockedByResponse.push(issueDetails);
-        }
-      }
-      if (issue.details.heavyAdIssueDetails) {
-        artifact.heavyAds.push(issue.details.heavyAdIssueDetails);
-      }
-      if (issue.details.contentSecurityPolicyIssueDetails) {
-        artifact.contentSecurityPolicy.push(issue.details.contentSecurityPolicyIssueDetails);
-      }
-      if (issue.details.deprecationIssueDetails) {
-        artifact.deprecations.push(issue.details.deprecationIssueDetails);
       }
     }
 

@@ -128,7 +128,7 @@ function compileTemplate(tmpEl) {
         continue;
       }
 
-      if (!(childNode instanceof /** @type {typeof Element} */ (window.Element))) {
+      if (!(childNode instanceof window.Element)) {
         throw new Error(`Expected ${childNode} to be an element`);
       }
       process(childNode);
@@ -217,7 +217,10 @@ async function main() {
 }
 
 if (require.main === module) {
-  main();
+  main().catch(err => {
+    console.error(err);
+    process.exit(1);
+  });
 }
 
 module.exports = {normalizeTextNodeText};

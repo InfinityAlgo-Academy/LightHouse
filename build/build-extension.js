@@ -9,8 +9,8 @@ const fs = require('fs');
 const mkdir = fs.promises.mkdir;
 const archiver = require('archiver');
 const cpy = require('cpy');
-const browserify = require('browserify');
-const path = require('path');
+const rollup = require('rollup');
+const rollupPlugins = require('./rollup-plugins.js');
 const {LH_ROOT} = require('../root.js');
 
 const argv = process.argv.slice(2);
@@ -26,32 +26,34 @@ const packagePath = `${distDir}/../extension-${browserBrand}-package`;
 const manifestVersion = require(`${sourceDir}/manifest.json`).version;
 
 /**
- * Browserify and minify entry point.
+ * Bundle and minify entry point.
  */
 async function buildEntryPoint() {
-  const inFile = `${sourceDir}/scripts/${sourceName}`;
-  const outFile = `${distDir}/scripts/${distName}`;
-  const bundleStream = browserify(inFile).bundle();
-
-  await mkdir(path.dirname(outFile), {recursive: true});
-  await new Promise((resolve, reject) => {
-    const writeStream = fs.createWriteStream(outFile);
-    writeStream.on('finish', resolve);
-    writeStream.on('error', reject);
-
-    bundleStream.pipe(writeStream);
+  const bundle = await rollup.rollup({
+    input: `${sourceDir}/scripts/${sourceName}`,
+    plugins: [
+      rollupPlugins.shim({
+        [`${LH_ROOT}/report/generator/flow-report-assets.js`]: 'export default {}',
+      }),
+      rollupPlugins.replace({
+        '___BROWSER_BRAND___': browserBrand,
+      }),
+      rollupPlugins.commonjs(),
+      rollupPlugins.nodeResolve(),
+      rollupPlugins.inlineFs({verbose: false}),
+      rollupPlugins.terser(),
+    ],
   });
 
-  let outCode = fs.readFileSync(outFile, 'utf-8');
-  outCode = outCode.replace('___BROWSER_BRAND___', browserBrand);
-  fs.writeFileSync(outFile, outCode);
+  await bundle.write({
+    file: `${distDir}/scripts/${distName}`,
+    format: 'iife',
+  });
+  await bundle.close();
 }
 
-/**
- * @return {Promise<void>}
- */
 function copyAssets() {
-  return cpy([
+  cpy([
     '*.html',
     'styles/**/*.css',
     'images/**/*',
@@ -95,4 +97,7 @@ async function run() {
   await packageExtension();
 }
 
-run();
+run().catch(err => {
+  console.error(err);
+  process.exit(1);
+});

@@ -136,7 +136,7 @@ function getLegacyJavascriptResults(code, map, {sourceMaps}) {
   const documentUrl = 'http://localhost/index.html'; // These URLs don't matter.
   const scriptUrl = 'https://localhost/main.bundle.min.js';
   const networkRecords = [
-    {url: documentUrl, requestId: '1000.1', resourceType: /** @type {'Document'} */ ('Document')},
+    {url: documentUrl, requestId: '1000.1', resourceType: /** @type {const} */ ('Document')},
     {url: scriptUrl, requestId: '1000.2'},
   ];
   const devtoolsLogs = networkRecordsToDevtoolsLog(networkRecords);
@@ -239,7 +239,7 @@ async function main() {
     });
   }
 
-  for (const coreJsVersion of ['2.6.12', '3.9.1']) {
+  for (const coreJsVersion of ['2.6.12', '3.19.1']) {
     const major = coreJsVersion.split('.')[0];
     removeCoreJs();
     installCoreJs(coreJsVersion);

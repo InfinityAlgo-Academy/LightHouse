@@ -16,5 +16,6 @@ import {LH_ROOT, readJson} from '../../root.js';
 
 const flow = readJson('lighthouse-core/test/fixtures/fraggle-rock/reports/sample-flow-result.json');
 const htmlReport = reportGenerator.generateFlowReportHtml(flow);
-fs.writeFileSync(`${LH_ROOT}/flow.report.html`, htmlReport);
-open(`${LH_ROOT}/flow.report.html`);
+const filepath = `${LH_ROOT}/dist/sample-reports/flow-report/index.html`;
+fs.writeFileSync(filepath, htmlReport);
+open(filepath);

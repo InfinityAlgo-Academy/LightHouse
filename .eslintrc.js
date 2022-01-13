@@ -69,6 +69,7 @@ module.exports = {
       exports: 'always-multiline',
       functions: 'never',
     }],
+    'operator-linebreak': ['error', 'after', {'overrides': {'?': 'ignore', ':': 'ignore'}}],
 
     // Custom lighthouse rules
     'local-rules/require-file-extension': 2,
@@ -80,7 +81,7 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['lighthouse-cli/test/smokehouse/**/*expectations.js'],
+      files: ['lighthouse-cli/test/smokehouse/test-definitions/*.js'],
       rules: {
         'max-len': 0,
       },
@@ -88,7 +89,7 @@ module.exports = {
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
-    ecmaVersion: 2019,
+    ecmaVersion: 2020,
     ecmaFeatures: {
       globalReturn: true,
       jsx: false,

@@ -22,9 +22,7 @@ const TraceGatherer = require('../../../gather/gatherers/trace.js');
 const toDevtoolsLog = require('../../network-records-to-devtools-log.js');
 
 // Establish the mocks before we require our file under test.
-let mockRunnerRun = jest.fn();
-
-jest.mock('../../../runner.js', () => mockRunnerModule(() => mockRunnerRun));
+const mockRunner = mockRunnerModule();
 
 const runner = require('../../../fraggle-rock/gather/navigation-runner.js');
 
@@ -93,7 +91,7 @@ describe('NavigationRunner', () => {
 
   beforeEach(() => {
     requestedUrl = 'http://example.com';
-    mockRunnerRun = jest.fn();
+    mockRunner.reset();
     config = initializeConfig(undefined, {gatherMode: 'navigation'}).config;
     navigation = createNavigation().navigation;
     computedCache = new Map();
@@ -126,6 +124,11 @@ describe('NavigationRunner', () => {
         'about:blank',
         expect.anything()
       );
+    });
+
+    it('skip about:blank if option is true', async () => {
+      await runner._setup({driver, config, requestedUrl, options: {skipAboutBlank: true}});
+      expect(mocks.navigationMock.gotoURL).not.toHaveBeenCalled();
     });
 
     it('should collect base artifacts', async () => {
@@ -241,7 +244,26 @@ describe('NavigationRunner', () => {
       expect(artifactIds).toContain('Timespan');
       expect(artifactIds).toContain('Snapshot');
 
-      expect(mocks.navigationMock.gotoURL).toHaveBeenCalled();
+      // Once for about:blank, once for the requested URL.
+      expect(mocks.navigationMock.gotoURL).toHaveBeenCalledTimes(2);
+    });
+
+    it('skips about:blank if option is set to true', async () => {
+      const {artifacts} = await runner._navigation({
+        driver,
+        config,
+        navigation,
+        requestedUrl,
+        computedCache,
+        baseArtifacts,
+        options: {skipAboutBlank: true},
+      });
+      const artifactIds = Object.keys(artifacts);
+      expect(artifactIds).toContain('Timespan');
+      expect(artifactIds).toContain('Snapshot');
+
+      // Only once for the requested URL.
+      expect(mocks.navigationMock.gotoURL).toHaveBeenCalledTimes(1);
     });
 
     it('collects timespan, snapshot, and navigation artifacts', async () => {
@@ -459,9 +481,22 @@ describe('NavigationRunner', () => {
   });
 
   describe('navigation', () => {
+    it('should throw on invalid URL', async () => {
+      const runnerActual = jest.requireActual('../../../runner.js');
+      mockRunner.run.mockImplementation(runnerActual.run);
+      mockRunner.gatherAndManageArtifacts.mockImplementation(runnerActual.gatherAndManageArtifacts);
+
+      const navigatePromise = runner.navigation({
+        url: '',
+        page: mockDriver._page.asPage(),
+      });
+
+      await expect(navigatePromise).rejects.toThrow('INVALID_URL');
+    });
+
     it('should initialize config', async () => {
       const settingsOverrides = {
-        formFactor: /** @type {'desktop'} */ ('desktop'),
+        formFactor: /** @type {const} */ ('desktop'),
         maxWaitForLoad: 1234,
         screenEmulation: {mobile: false},
       };
@@ -473,7 +508,7 @@ describe('NavigationRunner', () => {
         configContext,
       });
 
-      expect(mockRunnerRun.mock.calls[0][1]).toMatchObject({
+      expect(mockRunner.run.mock.calls[0][1]).toMatchObject({
         config: {
           settings: settingsOverrides,
         },
