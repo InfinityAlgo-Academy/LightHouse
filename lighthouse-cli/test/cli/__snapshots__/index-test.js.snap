@@ -791,11 +791,6 @@ Object {
         },
         Object {
           "group": "best-practices-general",
-          "id": "no-unload-listeners",
-          "weight": 1,
-        },
-        Object {
-          "group": "best-practices-general",
           "id": "js-libraries",
           "weight": 0,
         },
@@ -1077,6 +1072,10 @@ Object {
         },
         Object {
           "id": "viewport",
+          "weight": 0,
+        },
+        Object {
+          "id": "no-unload-listeners",
           "weight": 0,
         },
         Object {
