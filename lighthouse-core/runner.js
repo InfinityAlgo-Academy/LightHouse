@@ -138,7 +138,6 @@ class Runner {
       if (err.friendlyMessage) {
         err.friendlyMessage = format.getFormatted(err.friendlyMessage, settings.locale);
       }
-      console.log({Sentry, err});
       await Sentry.captureException(err, {level: 'fatal'});
       throw err;
     }
