@@ -107,6 +107,7 @@ jobs:
     - name: Install python deps
       run: pip install six requests
 
+    - run: npx patch-package # TODO: remove when mocha replaces jest
     - name: Run Web Tests
       run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/chromium-web-tests/run-web-tests.sh
 
