@@ -85,7 +85,7 @@ describe('ExecutionContext', () => {
     expect(executionContext.getContextId()).toEqual(undefined);
   });
 
-  it('TODO: should cache native objects in page');
+  it.todo('TODO: should cache native objects in page');
 });
 
 describe('.evaluateAsync', () => {
