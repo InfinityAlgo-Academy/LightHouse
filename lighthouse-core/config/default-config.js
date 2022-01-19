@@ -162,12 +162,6 @@ const defaultConfig = {
       'inspector-issues',
       'source-maps',
       'full-page-screenshot',
-    ],
-  },
-  {
-    passName: 'offlinePass',
-    loadFailureMode: 'ignore',
-    gatherers: [
       'service-worker',
     ],
   }],

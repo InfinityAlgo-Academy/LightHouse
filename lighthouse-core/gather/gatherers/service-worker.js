@@ -15,18 +15,6 @@ class ServiceWorker extends FRGatherer {
   };
 
   /**
-   * @param {LH.Gatherer.PassContext} passContext
-   * @return {Promise<LH.Artifacts['ServiceWorker']>}
-   */
-  async beforePass(passContext) {
-    return this.getArtifact({...passContext, dependencies: {}});
-  }
-
-  // This gatherer is run in a separate pass for legacy mode.
-  // Legacy compat code is in `beforePass`.
-  async afterPass() { }
-
-  /**
    * @param {LH.Gatherer.FRTransitionalContext} context
    * @return {Promise<LH.Artifacts['ServiceWorker']>}
    */
