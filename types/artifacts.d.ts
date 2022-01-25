@@ -568,7 +568,6 @@ declare module Artifacts {
     sameSiteCookieIssue: LH.Crdp.Audits.SameSiteCookieIssueDetails[];
     sharedArrayBufferIssue: LH.Crdp.Audits.SharedArrayBufferIssueDetails[];
     twaQualityEnforcement: LH.Crdp.Audits.TrustedWebActivityIssueDetails[];
-    wasmCrossOriginModuleSharingIssue: LH.Crdp.Audits.WasmCrossOriginModuleSharingIssueDetails[];
   }
 
   // Computed artifact types below.

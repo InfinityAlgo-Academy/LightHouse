@@ -49,7 +49,6 @@ Array [
   "sameSiteCookieIssueDetails",
   "sharedArrayBufferIssueDetails",
   "twaQualityEnforcementDetails",
-  "wasmCrossOriginModuleSharingIssue",
 ]
 `);
   });
