@@ -29,7 +29,6 @@ describe('Has inspector issues audit', () => {
       sameSiteCookieIssue: [],
       sharedArrayBufferIssue: [],
       twaQualityEnforcement: [],
-      wasmCrossOriginModuleSharingIssue: [],
     };
   });
 

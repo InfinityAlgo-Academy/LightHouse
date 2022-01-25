@@ -75,14 +75,11 @@ class InspectorIssues extends FRGatherer {
       sameSiteCookieIssue: [],
       sharedArrayBufferIssue: [],
       twaQualityEnforcement: [],
-      wasmCrossOriginModuleSharingIssue: [],
     };
     const keys = /** @type {Array<keyof LH.Artifacts['InspectorIssues']>} */(Object.keys(artifact));
     for (const key of keys) {
-      // The wasmCrossOriginModuleSharingIssue key doesn't follow the pattern of the rest. See
-      // https://source.chromium.org/chromium/chromium/src/+/main:third_party/blink/public/devtools_protocol/browser_protocol.pdl;l=811;drc=9c10bf258928b5d169ba6a449f8f33958f7947ea
-      /** @type {`${key}Details` | `wasmCrossOriginModuleSharingIssue`} */
-      const detailsKey = (key === 'wasmCrossOriginModuleSharingIssue' ? `${key}` : `${key}Details`);
+      /** @type {`${key}Details`} */
+      const detailsKey = `${key}Details`;
       const allDetails = this._issues.map(issue => issue.details[detailsKey]);
       for (const detail of allDetails) {
         if (!detail) {
