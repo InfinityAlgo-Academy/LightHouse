@@ -39,11 +39,6 @@ jest.unstable_mockModule('lighthouse-logger', () => {
   return {default: {setLevel: mockLoggerSetLevel}};
 });
 
-const mockNotify = jest.fn();
-jest.unstable_mockModule('update-notifier', () => {
-  return {default: () => ({notify: mockNotify})};
-});
-
 /** @type {import('../../bin.js')} */
 let bin;
 beforeAll(async () => {
@@ -57,7 +52,6 @@ beforeEach(async () => {
   mockAskPermission.mockReset();
   mockGetFlags.mockReset();
   mockLoggerSetLevel.mockReset();
-  mockNotify.mockReset();
   mockRunLighthouse.mockReset();
   mockSentryInit.mockReset();
   mockRunLighthouse.mockResolvedValue({});
