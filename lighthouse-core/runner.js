@@ -263,6 +263,19 @@ class Runner {
       const normalizedGatherSettings = Object.assign({}, artifacts.settings, overrides);
       const normalizedAuditSettings = Object.assign({}, settings, overrides);
 
+      // First, try each key individually so we can print which key differed.
+      const keys = new Set([
+        ...Object.keys(normalizedGatherSettings),
+        ...Object.keys(normalizedAuditSettings),
+      ]);
+      for (const k of keys) {
+        if (!isDeepEqual(normalizedGatherSettings[k], normalizedAuditSettings[k])) {
+          throw new Error(
+            `Cannot change settings between gathering and auditing. Difference found at: ${k}`);
+        }
+      }
+
+      // Call `isDeepEqual` on the entire thing, just in case something was missed.
       if (!isDeepEqual(normalizedGatherSettings, normalizedAuditSettings)) {
         throw new Error('Cannot change settings between gathering and auditing');
       }

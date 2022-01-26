@@ -23,8 +23,6 @@ Object {
     "--enabled-features=NetworkService,VirtualTime",
   ],
   "chromeIgnoreDefaultFlags": false,
-  "enable-error-reporting": undefined,
-  "enableErrorReporting": undefined,
   "fraggle-rock": false,
   "fraggleRock": false,
   "hostname": "127.0.0.1",
@@ -59,8 +57,6 @@ Object {
   "chrome-ignore-default-flags": false,
   "chromeFlags": "",
   "chromeIgnoreDefaultFlags": false,
-  "enable-error-reporting": undefined,
-  "enableErrorReporting": undefined,
   "fraggle-rock": false,
   "fraggleRock": false,
   "hostname": "127.0.0.1",
@@ -113,8 +109,6 @@ Object {
   "chrome-ignore-default-flags": false,
   "chromeFlags": "",
   "chromeIgnoreDefaultFlags": false,
-  "enable-error-reporting": undefined,
-  "enableErrorReporting": undefined,
   "extra-headers": Object {
     "foo": "bar",
   },
@@ -155,8 +149,6 @@ Object {
   "chrome-ignore-default-flags": false,
   "chromeFlags": "",
   "chromeIgnoreDefaultFlags": false,
-  "enable-error-reporting": undefined,
-  "enableErrorReporting": undefined,
   "extra-headers": Object {
     "Cookie": "monster=blue",
     "x-men": "wolverine",
@@ -199,8 +191,6 @@ Object {
   "chrome-ignore-default-flags": false,
   "chromeFlags": "",
   "chromeIgnoreDefaultFlags": false,
-  "enable-error-reporting": undefined,
-  "enableErrorReporting": undefined,
   "fraggle-rock": false,
   "fraggleRock": false,
   "hostname": "127.0.0.1",
@@ -249,8 +239,6 @@ Object {
   "chrome-ignore-default-flags": false,
   "chromeFlags": "",
   "chromeIgnoreDefaultFlags": false,
-  "enable-error-reporting": undefined,
-  "enableErrorReporting": undefined,
   "fraggle-rock": false,
   "fraggleRock": false,
   "hostname": "127.0.0.1",
@@ -299,8 +287,6 @@ Object {
   "chrome-ignore-default-flags": false,
   "chromeFlags": "",
   "chromeIgnoreDefaultFlags": false,
-  "enable-error-reporting": undefined,
-  "enableErrorReporting": undefined,
   "fraggle-rock": false,
   "fraggleRock": false,
   "hostname": "127.0.0.1",
@@ -349,8 +335,6 @@ Object {
   "chrome-ignore-default-flags": false,
   "chromeFlags": "",
   "chromeIgnoreDefaultFlags": false,
-  "enable-error-reporting": undefined,
-  "enableErrorReporting": undefined,
   "fraggle-rock": false,
   "fraggleRock": false,
   "hostname": "127.0.0.1",
@@ -388,6 +372,47 @@ Object {
 }
 `;
 
+exports[`CLI flags settings are accepted from a file path (inlined budgets) 1`] = `
+Object {
+  "$0": "node_modules/jest/bin/jest.js",
+  "_": Array [
+    "http://www.example.com",
+  ],
+  "budgets": Array [
+    Object {
+      "anything": "works",
+    },
+  ],
+  "channel": "cli",
+  "chrome-flags": "",
+  "chrome-ignore-default-flags": false,
+  "chromeFlags": "",
+  "chromeIgnoreDefaultFlags": false,
+  "cli-flags-path": "__REPLACED__/lighthouse-cli/test/fixtures/cli-flags-path-inline-budgets.json",
+  "cliFlagsPath": "__REPLACED__/lighthouse-cli/test/fixtures/cli-flags-path-inline-budgets.json",
+  "fraggle-rock": false,
+  "fraggleRock": false,
+  "hostname": "127.0.0.1",
+  "list-all-audits": false,
+  "list-locales": false,
+  "list-trace-categories": false,
+  "listAllAudits": false,
+  "listLocales": false,
+  "listTraceCategories": false,
+  "output": Array [
+    "html",
+  ],
+  "port": 0,
+  "print-config": false,
+  "printConfig": false,
+  "quiet": false,
+  "save-assets": false,
+  "saveAssets": false,
+  "verbose": false,
+  "view": false,
+}
+`;
+
 exports[`CLI flags settings are accepted from a file path 1`] = `
 Object {
   "$0": "node_modules/jest/bin/jest.js",
@@ -405,16 +430,11 @@ Object {
   "chromeIgnoreDefaultFlags": false,
   "cli-flags-path": "__REPLACED__/lighthouse-cli/test/fixtures/cli-flags-path.json",
   "cliFlagsPath": "__REPLACED__/lighthouse-cli/test/fixtures/cli-flags-path.json",
-  "enable-error-reporting": undefined,
-  "enableErrorReporting": undefined,
   "extra-headers": Object {
     "X-Men": "wolverine",
   },
   "extraHeaders": Object {
     "X-Men": "wolverine",
-  },
-  "extraheaders": Object {
-    "xMen": "wolverine",
   },
   "fraggle-rock": false,
   "fraggleRock": false,

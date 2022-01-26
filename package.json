@@ -126,7 +126,7 @@
     "@types/semver": "^5.5.0",
     "@types/tabulator-tables": "^4.9.1",
     "@types/ws": "^7.0.0",
-    "@types/yargs": "^16.0.0",
+    "@types/yargs": "^17.0.8",
     "@types/yargs-parser": "^15.0.0",
     "@typescript-eslint/eslint-plugin": "^5.6.0",
     "@typescript-eslint/parser": "^5.6.0",
@@ -210,7 +210,7 @@
     "speedline-core": "^1.4.3",
     "third-party-web": "^0.12.7",
     "ws": "^7.0.0",
-    "yargs": "^16.1.1",
+    "yargs": "^17.3.1",
     "yargs-parser": "^20.2.4"
   },
   "resolutions": {

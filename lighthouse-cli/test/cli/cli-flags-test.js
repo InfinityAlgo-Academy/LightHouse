@@ -46,8 +46,9 @@ describe('CLI flags', function() {
     Object.keys(optionGroups).forEach(key => {
       allOptions.push(...optionGroups[key]);
     });
-    // @ts-expect-error - getUsageInstance is private
-    const optionsWithDescriptions = Object.keys(yargs.getUsageInstance().getDescriptions());
+    const optionsWithDescriptions =
+      // @ts-expect-error - getUsageInstance is private
+      Object.keys(yargs.getInternalMethods().getUsageInstance().getDescriptions());
 
     allOptions.forEach(opt => {
       assert.ok(optionsWithDescriptions.includes(opt), `cli option '${opt}' has no description`);
@@ -72,6 +73,17 @@ describe('CLI flags', function() {
         cpuSlowdownMultiplier: 6,
       },
     });
+    snapshot(flags);
+  });
+
+  it('settings are accepted from a file path (inlined budgets)', () => {
+    const flags = getFlags([
+      'http://www.example.com',
+      // eslint-disable-next-line max-len
+      `--cli-flags-path="${LH_ROOT}/lighthouse-cli/test/fixtures/cli-flags-path-inline-budgets.json"`,
+    ].join(' '));
+
+    expect(flags.budgets).toMatchObject([{'anything': 'works'}]);
     snapshot(flags);
   });
 
