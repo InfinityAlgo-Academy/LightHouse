@@ -46,6 +46,7 @@ function sum(values) {
 }
 
 const axeImpacts = ['minor', 'moderate', 'serious', 'critical'];
+const axeImpactValues = [1, 2, 3, 10];
 
 /**
  * @param {string[]} checks
@@ -53,12 +54,12 @@ const axeImpacts = ['minor', 'moderate', 'serious', 'critical'];
 function parseImpactsFromChecks(checks) {
   const impactStrings = uniq(checks.map(check => axeChecks[check].metadata.impact));
   return impactStrings.map(impactString => {
-    const value = axeImpacts.indexOf(impactString);
-    if (value === -1) throw new Error(`unknown impact ${impactString}`);
+    const index = axeImpacts.indexOf(impactString);
+    if (index === -1) throw new Error(`unknown impact ${impactString}`);
 
     return {
       impactString,
-      value,
+      value: axeImpactValues[index],
     };
   }).sort((a, b) => b.value - a.value);
 }
@@ -82,11 +83,16 @@ for (const {id} of Object.values(config.categories.accessibility.auditRefs)) {
   if (impacts.any.length) impacts.any = [impacts.any[0]];
   const impactValues =
     uniq([...impacts.any, ...impacts.all, ...impacts.none].map(impact => impact.value));
-  const weight = sum(impactValues);
-  results.push({id, weight, impactValues});
+  const impactStrings =
+    uniq([...impacts.any, ...impacts.all, ...impacts.none].map(impact => impact.impactString));
+  // const weight = sum(impactValues);
+  // const weight = Math.max(...impactValues);
+  const weight = sum([...new Set([...impactValues])]);
+
+  results.push({id, weight, impactValues, impactStrings});
 }
 results.sort((a, b) => b.weight - a.weight);
 
-for (const {id, weight, impactValues} of results) {
-  console.log(id, weight, ...impactValues.map(i => axeImpacts[i]));
+for (const {id, weight, impactStrings} of results) {
+  console.log(id, weight, ...impactStrings);
 }
