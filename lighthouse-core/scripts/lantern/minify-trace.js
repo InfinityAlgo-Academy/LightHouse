@@ -9,9 +9,10 @@
 /* eslint-disable no-console */
 
 
-const fs = require('fs');
-const path = require('path');
-const {minifyTrace} = require('../../lib/minify-trace.js');
+import fs from 'fs';
+import path from 'path';
+
+import {minifyTrace} from '../../lib/minify-trace.js';
 
 if (process.argv.length !== 4) {
   console.error('Usage $0: <input file> <output file>');

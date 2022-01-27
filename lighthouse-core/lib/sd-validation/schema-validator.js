@@ -12,7 +12,7 @@ const SCHEMA_ORG_URL_REGEX = /https?:\/\/schema\.org\//;
 
 /**
  * @param {string} uri
- * @returns {string}
+ * @return {string}
  */
 function cleanName(uri) {
   return uri.replace(SCHEMA_ORG_URL_REGEX, '');
@@ -20,7 +20,7 @@ function cleanName(uri) {
 
 /**
  * @param {string} type
- * @returns {Array<string>}
+ * @return {Array<string>}
  */
 function getPropsForType(type) {
   const cleanType = cleanName(type);
@@ -36,7 +36,7 @@ function getPropsForType(type) {
 
 /**
  * @param {string} type
- * @returns {{name: string, parent: Array<string>}|undefined}
+ * @return {{name: string, parent: Array<string>}|undefined}
  */
 function findType(type) {
   const cleanType = cleanName(type);
@@ -49,7 +49,7 @@ function findType(type) {
  *
  * @param {string|Array<string>} typeOrTypes
  * @param {Array<string>} keys
- * @returns {Array<Pick<LH.StructuredData.ValidationError, "message" | "validTypes"> & {key?: string}>}
+ * @return {Array<Pick<LH.StructuredData.ValidationError, "message" | "validTypes"> & {key?: string}>}
  */
 function validateObjectKeys(typeOrTypes, keys) {
   /** @type {Array<string>} */

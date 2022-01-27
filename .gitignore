@@ -5,6 +5,7 @@ npm-debug.log
 .tmp
 .idea
 .tmp_env
+.tgz
 
 /dist
 coverage
@@ -46,6 +47,7 @@ yarn-error.log
 
 /chrome-linux/
 /chrome-win32/
+/chrome-mac/
 /chrome.zip
 
 *__pycache__

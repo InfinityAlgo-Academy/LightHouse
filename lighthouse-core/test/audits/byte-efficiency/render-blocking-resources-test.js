@@ -25,6 +25,7 @@ const ampDevtoolsLog = require('../../fixtures/traces/amp-m86.devtoolslog.json')
 describe('Render blocking resources audit', () => {
   it('evaluates http2 input correctly', async () => {
     const artifacts = {
+      GatherContext: {gatherMode: 'navigation'},
       traces: {defaultPass: trace},
       devtoolsLogs: {defaultPass: devtoolsLog},
       TagsBlockingFirstPaint: [
@@ -44,6 +45,7 @@ describe('Render blocking resources audit', () => {
 
   it('evaluates amp page correctly', async () => {
     const artifacts = {
+      GatherContext: {gatherMode: 'navigation'},
       traces: {defaultPass: ampTrace},
       devtoolsLogs: {defaultPass: ampDevtoolsLog},
       TagsBlockingFirstPaint: [
@@ -95,13 +97,14 @@ describe('Render blocking resources audit', () => {
 
     beforeEach(() => {
       requestId = 1;
+      const scheme = 'http';
       const protocol = 'http';
       record = props => {
-        const parsedURL = {host: 'example.com', securityOrigin: 'http://example.com'};
+        const parsedURL = {host: 'example.com', scheme, securityOrigin: 'http://example.com'};
         return Object.assign({parsedURL, requestId: requestId++}, props, {protocol});
       };
       recordSlow = props => {
-        const parsedURL = {host: 'slow.com', securityOrigin: 'http://slow.com'};
+        const parsedURL = {host: 'slow.com', scheme, securityOrigin: 'http://slow.com'};
         return Object.assign({parsedURL, requestId: requestId++}, props, {protocol});
       };
     });

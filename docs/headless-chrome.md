@@ -5,8 +5,8 @@
 Setup:
 
 ```sh
-# Lighthouse requires Node 12 LTS (12.x) or later.
-curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash - &&\
+# Lighthouse requires Node 14 LTS (14.x) or later.
+curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash - &&\
 sudo apt-get install -y nodejs npm
 
 # get chromium (stable)
@@ -27,8 +27,8 @@ lighthouse --chrome-flags="--headless" https://github.com
 Alternatively, you can run full Chrome + xvfb instead of headless mode. These steps worked on Debian Jessie:
 
 ```sh
-# get node 12
-curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+# get node 14
+curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
 sudo apt-get install -y nodejs npm
 
 # get chromium (stable) and Xvfb

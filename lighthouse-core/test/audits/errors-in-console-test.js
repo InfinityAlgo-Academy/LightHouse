@@ -11,17 +11,21 @@ const ErrorLogsAudit = require('../../audits/errors-in-console.js');
 const assert = require('assert').strict;
 
 describe('ConsoleMessages error logs audit', () => {
-  it('passes when no console messages were found', () => {
-    const auditResult = ErrorLogsAudit.audit({
+  it('passes when no console messages were found', async () => {
+    const context = {options: {}, computedCache: new Map()};
+    const auditResult = await ErrorLogsAudit.audit({
       ConsoleMessages: [],
-    }, {options: {}});
+      SourceMaps: [],
+      ScriptElements: [],
+    }, context);
     assert.equal(auditResult.score, 1);
     assert.ok(!auditResult.displayValue, 0);
     assert.equal(auditResult.details.items.length, 0);
   });
 
-  it('filter out the non error logs', () => {
-    const auditResult = ErrorLogsAudit.audit({
+  it('filter out the non error logs', async () => {
+    const context = {options: {}, computedCache: new Map()};
+    const auditResult = await ErrorLogsAudit.audit({
       ConsoleMessages: [
         {
           level: 'info',
@@ -29,13 +33,16 @@ describe('ConsoleMessages error logs audit', () => {
           text: 'This is a simple info msg',
         },
       ],
-    }, {options: {}});
+      SourceMaps: [],
+      ScriptElements: [],
+    }, context);
     assert.equal(auditResult.score, 1);
     assert.equal(auditResult.details.items.length, 0);
   });
 
-  it('fails when error logs are found ', () => {
-    const auditResult = ErrorLogsAudit.audit({
+  it('fails when error logs are found ', async () => {
+    const context = {options: {}, computedCache: new Map()};
+    const auditResult = await ErrorLogsAudit.audit({
       ConsoleMessages: [
         {
           level: 'error',
@@ -65,41 +72,49 @@ describe('ConsoleMessages error logs audit', () => {
           },
         },
       ],
-    }, {options: {}});
+      SourceMaps: [],
+      ScriptElements: [],
+    }, context);
 
     assert.equal(auditResult.score, 0);
     assert.equal(auditResult.details.items.length, 3);
-    assert.equal(auditResult.details.items[0].url, 'http://www.example.com/favicon.ico');
+    assert.equal(
+      auditResult.details.items[0].sourceLocation.url, 'http://www.example.com/favicon.ico');
     assert.equal(auditResult.details.items[0].description,
       'The server responded with a status of 404 (Not Found)');
-    assert.equal(auditResult.details.items[1].url,
+    assert.equal(auditResult.details.items[1].sourceLocation.url,
       'http://example.com/fancybox.js');
     assert.equal(auditResult.details.items[1].description,
       'TypeError: Cannot read property \'msie\' of undefined');
-    assert.equal(auditResult.details.items[2].url, 'http://www.example.com/wsconnect.ws');
+    assert.equal(
+      auditResult.details.items[2].sourceLocation.url, 'http://www.example.com/wsconnect.ws');
     assert.equal(auditResult.details.items[2].description,
       'WebSocket connection failed: Unexpected response code: 500');
   });
 
-  it('handle the case when some logs fields are undefined', () => {
-    const auditResult = ErrorLogsAudit.audit({
+  it('handle the case when some logs fields are undefined', async () => {
+    const context = {options: {}, computedCache: new Map()};
+    const auditResult = await ErrorLogsAudit.audit({
       ConsoleMessages: [
         {
           level: 'error',
         },
       ],
-    }, {options: {}});
+      SourceMaps: [],
+      ScriptElements: [],
+    }, context);
     assert.equal(auditResult.score, 0);
     assert.equal(auditResult.details.items.length, 1);
-    // url is undefined
-    assert.strictEqual(auditResult.details.items[0].url, undefined);
+    // sourceLocation is undefined
+    assert.strictEqual(auditResult.details.items[0].sourceLocation, undefined);
     // text is undefined
     assert.strictEqual(auditResult.details.items[0].description, undefined);
   });
 
   // Checks bug #4188
-  it('handle the case when exception info is not present', () => {
-    const auditResult = ErrorLogsAudit.audit({
+  it('handle the case when exception info is not present', async () => {
+    const context = {options: {}, computedCache: new Map()};
+    const auditResult = await ErrorLogsAudit.audit({
       ConsoleMessages: [{
         'source': 'exception',
         'level': 'error',
@@ -116,18 +131,22 @@ describe('ConsoleMessages error logs audit', () => {
           ],
         },
       }],
-    }, {options: {}});
+      SourceMaps: [],
+      ScriptElements: [],
+    }, context);
     assert.equal(auditResult.score, 0);
     assert.equal(auditResult.details.items.length, 1);
-    assert.strictEqual(auditResult.details.items[0].url, 'http://example.com/fancybox.js');
+    assert.strictEqual(
+      auditResult.details.items[0].sourceLocation.url, 'http://example.com/fancybox.js');
     assert.strictEqual(auditResult.details.items[0].description,
       'TypeError: Cannot read property \'msie\' of undefined');
   });
 
   describe('options', () => {
-    it('does nothing with an empty pattern', () => {
+    it('does nothing with an empty pattern', async () => {
       const options = {ignoredPatterns: ''};
-      const result = ErrorLogsAudit.audit({
+      const context = {options, computedCache: new Map()};
+      const result = await ErrorLogsAudit.audit({
         ConsoleMessages: [
           {
             level: 'error',
@@ -135,43 +154,52 @@ describe('ConsoleMessages error logs audit', () => {
             text: 'This is a simple error msg',
           },
         ],
-      }, {options});
+        SourceMaps: [],
+        ScriptElements: [],
+      }, context);
 
       expect(result.score).toBe(0);
       expect(result.details.items).toHaveLength(1);
     });
 
-    it('does nothing with an empty description', () => {
+    it('does nothing with an empty description', async () => {
       const options = {ignoredPatterns: 'pattern'};
-      const result = ErrorLogsAudit.audit({
+      const context = {options, computedCache: new Map()};
+      const result = await ErrorLogsAudit.audit({
         ConsoleMessages: [
           {
             level: 'error',
           },
         ],
-      }, {options});
+        SourceMaps: [],
+        ScriptElements: [],
+      }, context);
 
       expect(result.score).toBe(0);
       expect(result.details.items).toHaveLength(1);
     });
 
-    it('does nothing with an empty description', () => {
+    it('does nothing with an empty description', async () => {
       const options = {ignoredPatterns: 'pattern'};
-      const result = ErrorLogsAudit.audit({
+      const context = {options, computedCache: new Map()};
+      const result = await ErrorLogsAudit.audit({
         ConsoleMessages: [
           {
             level: 'error',
           },
         ],
-      }, {options});
+        SourceMaps: [],
+        ScriptElements: [],
+      }, context);
 
       expect(result.score).toBe(0);
       expect(result.details.items).toHaveLength(1);
     });
 
-    it('filters console messages as a string', () => {
+    it('filters console messages as a string', async () => {
       const options = {ignoredPatterns: ['simple']};
-      const result = ErrorLogsAudit.audit({
+      const context = {options, computedCache: new Map()};
+      const result = await ErrorLogsAudit.audit({
         ConsoleMessages: [
           {
             level: 'error',
@@ -179,15 +207,18 @@ describe('ConsoleMessages error logs audit', () => {
             text: 'This is a simple error msg',
           },
         ],
-      }, {options});
+        SourceMaps: [],
+        ScriptElements: [],
+      }, context);
 
       expect(result.score).toBe(1);
       expect(result.details.items).toHaveLength(0);
     });
 
-    it('filters console messages as a regex', () => {
+    it('filters console messages as a regex', async () => {
       const options = {ignoredPatterns: [/simple.*msg/]};
-      const result = ErrorLogsAudit.audit({
+      const context = {options, computedCache: new Map()};
+      const result = await ErrorLogsAudit.audit({
         ConsoleMessages: [
           {
             level: 'error',
@@ -195,15 +226,18 @@ describe('ConsoleMessages error logs audit', () => {
             text: 'This is a simple error msg',
           },
         ],
-      }, {options});
+        SourceMaps: [],
+        ScriptElements: [],
+      }, context);
 
       expect(result.score).toBe(1);
       expect(result.details.items).toHaveLength(0);
     });
 
-    it('filters exceptions with both regex and strings', () => {
+    it('filters exceptions with both regex and strings', async () => {
       const options = {ignoredPatterns: [/s.mple/i, 'really']};
-      const result = ErrorLogsAudit.audit({
+      const context = {options, computedCache: new Map()};
+      const result = await ErrorLogsAudit.audit({
         ConsoleMessages: [
           {
             source: 'exception',
@@ -218,7 +252,9 @@ describe('ConsoleMessages error logs audit', () => {
             text: 'Bad Error: You really messed up',
           },
         ],
-      }, {options});
+        SourceMaps: [],
+        ScriptElements: [],
+      }, context);
 
       expect(result.score).toBe(1);
       expect(result.details.items).toHaveLength(0);
@@ -227,8 +263,9 @@ describe('ConsoleMessages error logs audit', () => {
 
   describe('defaultOptions', () => {
     // See https://github.com/GoogleChrome/lighthouse/issues/10198
-    it('filters out blocked_by_client.inspector messages by default', () => {
-      const auditResult = ErrorLogsAudit.audit({
+    it('filters out blocked_by_client.inspector messages by default', async () => {
+      const context = {options: ErrorLogsAudit.defaultOptions, computedCache: new Map()};
+      const auditResult = await ErrorLogsAudit.audit({
         ConsoleMessages: [{
           'source': 'exception',
           'level': 'error',
@@ -236,7 +273,9 @@ describe('ConsoleMessages error logs audit', () => {
           'url': 'https://www.facebook.com/tr/',
           'text': 'Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector',
         }],
-      }, {options: ErrorLogsAudit.defaultOptions});
+        SourceMaps: [],
+        ScriptElements: [],
+      }, context);
       assert.equal(auditResult.score, 1);
       assert.equal(auditResult.details.items.length, 0);
     });

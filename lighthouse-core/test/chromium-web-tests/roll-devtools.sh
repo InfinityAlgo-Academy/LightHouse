@@ -8,6 +8,9 @@
 
 set -euo pipefail
 
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+LH_ROOT="$SCRIPT_DIR/../../.."
+
 roll_devtools() {
   # Roll devtools. Besides giving DevTools the latest lighthouse source files,
   # this also copies over the webtests.
@@ -16,9 +19,10 @@ roll_devtools() {
   cd -
 }
 
-# Setup inspector-sources.
 cd "$DEVTOOLS_PATH"
 git --no-pager log -1
 roll_devtools
-autoninja -C out/Default build_release_devtools # Build devtools resources.
+# Build devtools. The creates `out/Default/gen/front_end`,
+# which is served as `inspector-sources` by the webtests server.
+autoninja -C out/Default
 cd -

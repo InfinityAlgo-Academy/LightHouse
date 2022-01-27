@@ -17,7 +17,7 @@ jest.useFakeTimers();
 
 /**
  * @param {Partial<LH.Artifacts.NetworkRequest>=} partial
- * @returns {LH.Artifacts.NetworkRequest}
+ * @return {LH.Artifacts.NetworkRequest}
  */
 function mockRequest(partial) {
   return Object.assign(new NetworkRequest(), {
@@ -131,12 +131,36 @@ function mockCSP(details) {
   };
 }
 
+/**
+ * @param {string} text
+ * @return {LH.Crdp.Audits.InspectorIssue}
+ */
+function mockDeprecation(text) {
+  return {
+    code: 'DeprecationIssue',
+    details: {
+      deprecationIssueDetails: {
+        message: text,
+        deprecationType: 'test',
+        sourceCodeLocation: {
+          url: 'https://www.example.com',
+          lineNumber: 10,
+          columnNumber: 10,
+        },
+      },
+    },
+  };
+}
+
 describe('instrumentation', () => {
   it('collects inspector issues', async () => {
     const mockContext = createMockContext();
+    const mockMixedContentIssue = mockMixedContent({resourceType: 'Audio'});
+    const mockSameSiteCookieIssue =
+      mockSameSiteCookie({cookieWarningReasons: ['WarnSameSiteNoneInsecure']});
     mockContext.driver.defaultSession.on
-      .mockEvent('Audits.issueAdded', {issue: mockMixedContent()})
-      .mockEvent('Audits.issueAdded', {issue: mockSameSiteCookie()});
+      .mockEvent('Audits.issueAdded', {issue: mockMixedContentIssue})
+      .mockEvent('Audits.issueAdded', {issue: mockSameSiteCookieIssue});
     mockContext.driver.defaultSession.sendCommand
       .mockResponse('Audits.enable')
       .mockResponse('Audits.disable');
@@ -147,14 +171,14 @@ describe('instrumentation', () => {
     await gatherer.stopInstrumentation(mockContext.asContext());
 
     expect(gatherer._issues).toEqual([
-      mockMixedContent(),
-      mockSameSiteCookie(),
+      mockMixedContentIssue,
+      mockSameSiteCookieIssue,
     ]);
   });
 });
 
 describe('_getArtifact', () => {
-  it('takes 5 types of inspector issues', async () => {
+  it('handles multiple types of inspector issues', async () => {
     const gatherer = new InspectorIssues();
     gatherer._issues = [
       mockMixedContent({request: {requestId: '1'}}),
@@ -162,6 +186,7 @@ describe('_getArtifact', () => {
       mockBlockedByResponse({request: {requestId: '3'}}),
       mockHeavyAd(),
       mockCSP(),
+      mockDeprecation('some warning'),
     ];
     const networkRecords = [
       mockRequest({requestId: '1'}),
@@ -172,13 +197,13 @@ describe('_getArtifact', () => {
     const artifact = await gatherer._getArtifact(networkRecords);
 
     expect(artifact).toEqual({
-      mixedContent: [{
+      mixedContentIssue: [{
         request: {requestId: '1'},
         resolutionStatus: 'MixedContentBlocked',
         insecureURL: 'https://example.com',
         mainResourceURL: 'https://example.com',
       }],
-      sameSiteCookies: [{
+      sameSiteCookieIssue: [{
         request: {requestId: '2'},
         cookie: {
           name: 'name',
@@ -189,22 +214,40 @@ describe('_getArtifact', () => {
         cookieExclusionReasons: [],
         operation: 'ReadCookie',
       }],
-      blockedByResponse: [{
+      blockedByResponseIssue: [{
         request: {requestId: '3'},
         reason: 'CorpNotSameOrigin',
       }],
-      heavyAds: [{
+      heavyAdIssue: [{
         resolution: 'HeavyAdBlocked',
         reason: 'CpuPeakLimit',
         frame: {
           frameId: 'frameId',
         },
       }],
-      contentSecurityPolicy: [{
+      contentSecurityPolicyIssue: [{
         violatedDirective: 'default-drc',
         isReportOnly: false,
         contentSecurityPolicyViolationType: 'kInlineViolation',
       }],
+      deprecationIssue: [{
+        message: 'some warning',
+        deprecationType: 'test',
+        sourceCodeLocation: {
+          url: 'https://www.example.com',
+          columnNumber: 10,
+          lineNumber: 10,
+        },
+      }],
+      attributionReportingIssue: [],
+      clientHintIssue: [],
+      corsIssue: [],
+      genericIssue: [],
+      lowTextContrastIssue: [],
+      navigatorUserAgentIssue: [],
+      quirksModeIssue: [],
+      sharedArrayBufferIssue: [],
+      twaQualityEnforcement: [],
     });
   });
 
@@ -227,13 +270,13 @@ describe('_getArtifact', () => {
     const artifact = await gatherer._getArtifact(networkRecords);
 
     expect(artifact).toEqual({
-      mixedContent: [{
+      mixedContentIssue: [{
         request: {requestId: '1'},
         resolutionStatus: 'MixedContentBlocked',
         insecureURL: 'https://example.com',
         mainResourceURL: 'https://example.com',
       }],
-      sameSiteCookies: [{
+      sameSiteCookieIssue: [{
         request: {requestId: '3'},
         cookie: {
           name: 'name',
@@ -244,12 +287,22 @@ describe('_getArtifact', () => {
         cookieExclusionReasons: [],
         operation: 'ReadCookie',
       }],
-      blockedByResponse: [{
+      blockedByResponseIssue: [{
         request: {requestId: '5'},
         reason: 'CorpNotSameOrigin',
       }],
-      heavyAds: [],
-      contentSecurityPolicy: [],
+      heavyAdIssue: [],
+      clientHintIssue: [],
+      contentSecurityPolicyIssue: [],
+      deprecationIssue: [],
+      attributionReportingIssue: [],
+      corsIssue: [],
+      genericIssue: [],
+      lowTextContrastIssue: [],
+      navigatorUserAgentIssue: [],
+      quirksModeIssue: [],
+      sharedArrayBufferIssue: [],
+      twaQualityEnforcement: [],
     });
   });
 });
@@ -290,16 +343,26 @@ describe('FR compat', () => {
     const artifact = await gatherer.afterPass(mockContext.asLegacyContext(), loadData);
 
     expect(artifact).toEqual({
-      mixedContent: [{
+      mixedContentIssue: [{
         request: {requestId: '1'},
         resolutionStatus: 'MixedContentBlocked',
         insecureURL: 'https://example.com',
         mainResourceURL: 'https://example.com',
       }],
-      sameSiteCookies: [],
-      blockedByResponse: [],
-      heavyAds: [],
-      contentSecurityPolicy: [],
+      sameSiteCookieIssue: [],
+      blockedByResponseIssue: [],
+      heavyAdIssue: [],
+      clientHintIssue: [],
+      contentSecurityPolicyIssue: [],
+      deprecationIssue: [],
+      attributionReportingIssue: [],
+      corsIssue: [],
+      genericIssue: [],
+      lowTextContrastIssue: [],
+      navigatorUserAgentIssue: [],
+      quirksModeIssue: [],
+      sharedArrayBufferIssue: [],
+      twaQualityEnforcement: [],
     });
   });
 
@@ -315,16 +378,26 @@ describe('FR compat', () => {
     const artifact = await gatherer.getArtifact(context);
 
     expect(artifact).toEqual({
-      mixedContent: [{
+      mixedContentIssue: [{
         request: {requestId: '1'},
         resolutionStatus: 'MixedContentBlocked',
         insecureURL: 'https://example.com',
         mainResourceURL: 'https://example.com',
       }],
-      sameSiteCookies: [],
-      blockedByResponse: [],
-      heavyAds: [],
-      contentSecurityPolicy: [],
+      sameSiteCookieIssue: [],
+      blockedByResponseIssue: [],
+      clientHintIssue: [],
+      heavyAdIssue: [],
+      contentSecurityPolicyIssue: [],
+      deprecationIssue: [],
+      attributionReportingIssue: [],
+      corsIssue: [],
+      genericIssue: [],
+      lowTextContrastIssue: [],
+      navigatorUserAgentIssue: [],
+      quirksModeIssue: [],
+      sharedArrayBufferIssue: [],
+      twaQualityEnforcement: [],
     });
   });
 });

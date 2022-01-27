@@ -8,10 +8,10 @@
 
 /* eslint-disable no-console */
 
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
 
-const LH_ROOT = path.join(__dirname, '../../../');
+import {LH_ROOT, readJson} from '../../../root.js';
 
 /**
  * @typedef CtcMessage
@@ -103,9 +103,7 @@ function bakePlaceholders(messages) {
 function loadCtcStrings(file) {
   if (!file.endsWith('.ctc.json')) throw new Error('Can only load ctc files');
 
-  const rawdata = fs.readFileSync(file, 'utf8');
-  const messages = JSON.parse(rawdata);
-  return messages;
+  return readJson(file);
 }
 
 /**
@@ -138,7 +136,7 @@ function collectAndBakeCtcStrings(dir) {
   return lhlFilenames;
 }
 
-module.exports = {
+export {
   collectAndBakeCtcStrings,
   bakePlaceholders,
 };

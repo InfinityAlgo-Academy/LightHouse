@@ -2,7 +2,7 @@
 
 Smokehouse is the Lighthouse end-to-end/smoke test runner. It takes in a set of URLs (usually pointing to custom-built test sites), runs Lighthouse on them, and compares the results against a set of expectations.
 
-By default this is done using the Lighthouse CLI (to exercise the full pipeline) with the tests listed in [`smokehouse/test-definitions/core-tests.js`](./test-definitions/core-tests.js).
+By default this is done using the Lighthouse CLI (to exercise the full pipeline) with the tests listed in [`smokehouse/core-tests.js`](./core-tests.js).
 
 ## Options
 
@@ -118,14 +118,15 @@ Smokehouse Frontends                                        Lighthouse Runners
 |            |    |            |               |   <lhr   |   +--------------+
 +------------+    |            +-------+-------+          |   |              |
                   |                    ^                  +-->+   bundle.js  |
-+------------+    |                    |                      |              |
-|            |    |                    |                      +--------------+
-|   lib.js   +----+                    v
-|            |                +--------+--------+
-+------------+                |                 |
-                              |  report/assert  |
-                              |                 |
-                              +-----------------+
++------------+    |                    |                  |   |              |
+|            |    |                    |                  |   +--------------+
+|   lib.js   +----+                    v                  |
+|            |                +--------+--------+         |
++------------+                |                 |         |   +--------------+
+                              |  report/assert  |         |   |              |
+                              |                 |         +-->+  devtools.js |
+                              +-----------------+             |              |
+                                                              +--------------+
 ```
 
 ### Smokehouse frontends
@@ -142,6 +143,7 @@ Smokehouse Frontends                                        Lighthouse Runners
 
 - `lighthouse-runners/cli.js` - the original test runner, exercising the Lighthouse CLI from command-line argument parsing to the results written to disk on completion.
 - `lighthouse-runners/bundle.js` - a smoke test runner that operates on an already-bundled version of Lighthouse for end-to-end testing of that version.
+- `lighthouse-runners/devtools.js` - a smoke test runner that operates on Lighthouse running from inside DevTools.
 
 ## Custom smoke tests (for plugins et al.)
 

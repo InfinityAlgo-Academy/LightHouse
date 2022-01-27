@@ -217,6 +217,7 @@ describe('.evaluate', () => {
         const Promise = globalThis.__nativePromise || globalThis.Promise;
 const URL = globalThis.__nativeURL || globalThis.URL;
 const performance = globalThis.__nativePerformance || globalThis.performance;
+const fetch = globalThis.__nativeFetch || globalThis.fetch;
         globalThis.__lighthouseExecutionContextId = undefined;
         return new Promise(function (resolve) {
           return Promise.resolve()

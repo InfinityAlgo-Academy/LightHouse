@@ -77,7 +77,7 @@ describe('Performance: page execution timings audit', () => {
 
     assert.equal(Math.round(output.numericValue), 4081);
     assert.equal(output.details.items.length, 7);
-    assert.equal(output.score, 0.49);
+    assert.equal(output.score, 0.48);
   });
 
   it('should compute the correct values for the redirect trace', async () => {

@@ -14,6 +14,7 @@ const log = require('lighthouse-logger');
 const Gatherer = require('../../gather/gatherers/gatherer.js');
 const Audit = require('../../audits/audit.js');
 const i18n = require('../../lib/i18n/i18n.js');
+const format = require('../../../shared/localization/format.js');
 
 /* eslint-env jest */
 
@@ -132,6 +133,7 @@ describe('Config', () => {
         return {
           id: 'missing-artifact-audit',
           title: 'none',
+          failureTitle: 'none',
           description: 'none',
           requiredArtifacts: [
             // Require fake artifact amidst base artifact and default artifacts.
@@ -160,6 +162,7 @@ describe('Config', () => {
         return {
           id: 'optional-artifact-audit',
           title: 'none',
+          failureTitle: 'none',
           description: 'none',
           requiredArtifacts: [
             'URL', // base artifact
@@ -191,6 +194,7 @@ describe('Config', () => {
         return {
           id: 'optional-artifact-audit',
           title: 'none',
+          failureTitle: 'none',
           description: 'none',
           requiredArtifacts: [
             'URL', // base artifact
@@ -222,6 +226,7 @@ describe('Config', () => {
         return {
           id: 'optional-artifact-audit',
           title: 'none',
+          failureTitle: 'none',
           description: 'none',
           requiredArtifacts: [
             'URL', // base artifact
@@ -253,6 +258,7 @@ describe('Config', () => {
         return {
           id: 'optional-artifact-audit',
           title: 'none',
+          failureTitle: 'none',
           description: 'none',
           requiredArtifacts: [
             'URL', // base artifact
@@ -284,6 +290,7 @@ describe('Config', () => {
         return {
           id: 'base-artifacts-audit',
           title: 'base',
+          failureTitle: 'base',
           description: 'base',
           requiredArtifacts: ['HostUserAgent', 'URL', 'Stacks', 'WebAppManifest'],
         };
@@ -429,7 +436,7 @@ describe('Config', () => {
           }
         },
       ],
-    }), /no failureTitle and should/);
+    }), /no meta.failureTitle and should/);
 
     assert.throws(_ => new Config({
       audits: [basePath + '/missing-description'],
@@ -442,6 +449,7 @@ describe('Config', () => {
             return {
               id: 'empty-string-description',
               title: 'title',
+              failureTitle: 'none',
               description: '',
               requiredArtifacts: [],
             };
@@ -828,8 +836,6 @@ describe('Config', () => {
     it('uses config setting for locale if set', () => {
       const locale = 'ar-XB';
       const config = new Config({settings: {locale}});
-      // COMPAT: Node 12 only has 'en' by default.
-      if (process.versions.node.startsWith('12')) return;
       assert.strictEqual(config.settings.locale, locale);
     });
 
@@ -837,8 +843,6 @@ describe('Config', () => {
       const settingsLocale = 'en-XA';
       const flagsLocale = 'ar-XB';
       const config = new Config({settings: {locale: settingsLocale}}, {locale: flagsLocale});
-      // COMPAT: Node 12 only has 'en' by default.
-      if (process.versions.node.startsWith('12')) return;
       assert.strictEqual(config.settings.locale, flagsLocale);
     });
   });
@@ -892,7 +896,7 @@ describe('Config', () => {
       },
     };
     const config = new Config(extendedJson);
-    assert.equal(config.passes.length, 3, 'did not filter config');
+    assert.equal(config.passes.length, 2, 'did not filter config');
     assert.equal(Object.keys(config.categories).length, 1, 'did not filter config');
     assert.deepEqual(config.settings.onlyCategories, ['pwa']);
     const configAgain = new Config(config);
@@ -1236,12 +1240,12 @@ describe('Config', () => {
       const selectedCategory = origConfig.categories.pwa;
       // +1 for `full-page-screenshot`.
       const auditCount = Object.keys(selectedCategory.auditRefs).length + 1;
-      assert.equal(config.passes.length, 3, 'incorrect # of passes');
+      assert.equal(config.passes.length, 2, 'incorrect # of passes');
       assert.equal(config.audits.length, auditCount, 'audit filtering failed');
       assert.ok(config.audits.find(a => a.implementation.meta.id === 'full-page-screenshot'));
     });
 
-    it('should keep uncategorized audits even if onlyCategories is set', () => {
+    it('should keep full-page-screenshot even if onlyCategories is set', () => {
       assert.ok(origConfig.audits.includes('full-page-screenshot'));
       // full-page-screenshot does not belong to a category.
       const matchCategories = Object.values(origConfig.categories).filter(cat =>
@@ -1256,6 +1260,17 @@ describe('Config', () => {
       };
       const config = new Config(extended);
 
+      assert.ok(config.audits.find(a => a.implementation.meta.id === 'full-page-screenshot'));
+    });
+
+    it('should keep full-page-screenshot even if skipAudits is set', () => {
+      const extended = {
+        extends: 'lighthouse:default',
+        settings: {
+          skipAudits: ['font-size'],
+        },
+      };
+      const config = new Config(extended);
       assert.ok(config.audits.find(a => a.implementation.meta.id === 'full-page-screenshot'));
     });
   });
@@ -1297,7 +1312,7 @@ describe('Config', () => {
 
       const expectedInstance = {
         meta: {
-          supportedModes: ['snapshot', 'navigation'],
+          supportedModes: ['snapshot', 'timespan', 'navigation'],
         },
       };
       assert.deepEqual(mergedJson[0].gatherers,
@@ -1445,8 +1460,8 @@ describe('Config', () => {
 
       Object.entries(printedConfig.categories).forEach(([printedCategoryId, printedCategory]) => {
         const origTitle = origConfig.categories[printedCategoryId].title;
-        if (i18n.isIcuMessage(origTitle)) localizableCount++;
-        const i18nOrigTitle = i18n.getFormatted(origTitle, origConfig.settings.locale);
+        if (format.isIcuMessage(origTitle)) localizableCount++;
+        const i18nOrigTitle = format.getFormatted(origTitle, origConfig.settings.locale);
 
         assert.strictEqual(printedCategory.title, i18nOrigTitle);
       });

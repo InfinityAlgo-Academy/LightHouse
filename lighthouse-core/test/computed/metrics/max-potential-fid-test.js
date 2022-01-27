@@ -14,10 +14,13 @@ const devtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.
 /* eslint-env jest */
 
 describe('Metrics: Max Potential FID', () => {
+  const gatherContext = {gatherMode: 'navigation'};
+
   it('should compute a simulated value', async () => {
     const settings = {throttlingMethod: 'simulate'};
     const context = {settings, computedCache: new Map()};
-    const result = await MaxPotentialFID.request({trace, devtoolsLog, settings}, context);
+    const result = await MaxPotentialFID.request({trace, devtoolsLog, gatherContext, settings},
+      context);
 
     expect({
       timing: Math.round(result.timing),
@@ -29,7 +32,8 @@ describe('Metrics: Max Potential FID', () => {
   it('should compute an observed value', async () => {
     const settings = {throttlingMethod: 'provided'};
     const context = {settings, computedCache: new Map()};
-    const result = await MaxPotentialFID.request({trace, devtoolsLog, settings}, context);
+    const result = await MaxPotentialFID.request({trace, devtoolsLog, gatherContext, settings},
+      context);
 
     assert.equal(Math.round(result.timing), 198);
   });

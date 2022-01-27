@@ -8,7 +8,14 @@
 /* eslint-env jest */
 
 const CSSUsage = require('../../../gather/gatherers/css-usage.js');
-const {createMockDriver} = require('../../fraggle-rock/gather/mock-driver.js');
+const {defaultSettings} = require('../../../config/constants.js');
+const {
+  createMockDriver,
+  createMockBaseArtifacts,
+} = require('../../fraggle-rock/gather/mock-driver.js');
+const {flushAllTimersAndMicrotasks} = require('../../test-utils.js');
+
+jest.useFakeTimers();
 
 describe('.getArtifact', () => {
   it('gets CSS usage', async () => {
@@ -18,7 +25,8 @@ describe('.getArtifact', () => {
       .mockEvent('CSS.styleSheetAdded', {header: {styleSheetId: '2'}});
     driver.defaultSession.sendCommand
       .mockResponse('DOM.enable')
-      .mockResponse('CSS.enable', undefined, 1) // Force events to emit
+      // @ts-expect-error - Force events to emit.
+      .mockResponse('CSS.enable', flushAllTimersAndMicrotasks)
       .mockResponse('CSS.startRuleUsageTracking')
       .mockResponse('CSS.getStyleSheetText', {text: 'CSS text 1'})
       .mockResponse('CSS.getStyleSheetText', {text: 'CSS text 2'})
@@ -37,7 +45,9 @@ describe('.getArtifact', () => {
       url: 'https://example.com',
       gatherMode: 'snapshot',
       computedCache: new Map(),
+      baseArtifacts: createMockBaseArtifacts(),
       dependencies: {},
+      settings: defaultSettings,
     };
     const gatherer = new CSSUsage();
     const artifact = await gatherer.getArtifact(context);
@@ -66,6 +76,61 @@ describe('.getArtifact', () => {
     });
   });
 
+  it('ignores removed stylesheets', async () => {
+    const driver = createMockDriver();
+    driver.defaultSession.on
+      .mockEvent('CSS.styleSheetAdded', {header: {styleSheetId: '1'}})
+      .mockEvent('CSS.styleSheetAdded', {header: {styleSheetId: '2'}})
+      .mockEvent('CSS.styleSheetRemoved', {styleSheetId: '1'});
+    driver.defaultSession.sendCommand
+      .mockResponse('DOM.enable')
+      .mockResponse('CSS.enable')
+      .mockResponse('CSS.startRuleUsageTracking')
+      .mockResponse('CSS.getStyleSheetText', {text: 'CSS text 2'})
+      .mockResponse('CSS.stopRuleUsageTracking', {
+        ruleUsage: [
+          {styleSheetId: '2', used: false},
+        ],
+      })
+      .mockResponse('CSS.disable')
+      .mockResponse('DOM.disable');
+
+    /** @type {LH.Gatherer.FRTransitionalContext} */
+    const context = {
+      driver: driver.asDriver(),
+      url: 'https://example.com',
+      gatherMode: 'timespan',
+      computedCache: new Map(),
+      baseArtifacts: createMockBaseArtifacts(),
+      dependencies: {},
+      settings: defaultSettings,
+    };
+
+    const gatherer = new CSSUsage();
+    await gatherer.startInstrumentation(context);
+
+    // Force events to emit.
+    await flushAllTimersAndMicrotasks(1);
+
+    await gatherer.stopInstrumentation(context);
+    const artifact = await gatherer.getArtifact(context);
+
+    expect(artifact).toEqual({
+      stylesheets: [
+        {
+          header: {styleSheetId: '2'},
+          content: 'CSS text 2',
+        },
+      ],
+      rules: [
+        {
+          styleSheetId: '2',
+          used: false,
+        },
+      ],
+    });
+  });
+
   it('dedupes stylesheets', async () => {
     const driver = createMockDriver();
     driver.defaultSession.on
@@ -73,7 +138,8 @@ describe('.getArtifact', () => {
       .mockEvent('CSS.styleSheetAdded', {header: {styleSheetId: '1'}});
     driver.defaultSession.sendCommand
       .mockResponse('DOM.enable')
-      .mockResponse('CSS.enable', undefined, 1) // Force events to emit
+      // @ts-expect-error - Force events to emit.
+      .mockResponse('CSS.enable', flushAllTimersAndMicrotasks)
       .mockResponse('CSS.startRuleUsageTracking')
       .mockResponse('CSS.getStyleSheetText', {text: 'CSS text 1'})
       .mockResponse('CSS.getStyleSheetText', {text: 'CSS text 1'})
@@ -91,7 +157,9 @@ describe('.getArtifact', () => {
       url: 'https://example.com',
       gatherMode: 'snapshot',
       computedCache: new Map(),
+      baseArtifacts: createMockBaseArtifacts(),
       dependencies: {},
+      settings: defaultSettings,
     };
     const gatherer = new CSSUsage();
     const artifact = await gatherer.getArtifact(context);

@@ -5,7 +5,7 @@
  */
 'use strict';
 
-module.exports = [
+export default [
   // Flagship sites.
   'https://www.espn.com/',
   'https://www.flipkart.com',

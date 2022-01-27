@@ -8,6 +8,10 @@
 
   await TestRunner.loadTestModule('lighthouse_test_runner');
   await TestRunner.showPanel('lighthouse');
+  await TestRunner.RuntimeAgent.invoke_evaluate({
+    expression: 'webSqlPromise',
+    awaitPromise: true,
+  });
 
   const containerElement = LighthouseTestRunner.getContainerElement();
   const checkboxes = containerElement.querySelectorAll('.checkbox');
@@ -27,7 +31,7 @@
   const warningText = containerElement.querySelector('.lighthouse-warning-text');
 
   // Wait for warning event to be handled
-  LighthouseTestRunner._panel()._controller.addEventListener(Events.PageWarningsChanged, () => {
+  LighthouseTestRunner._panel().controller.addEventListener(Events.PageWarningsChanged, () => {
     TestRunner.addResult(`Warning Text: ${warningText.textContent}`);
     TestRunner.completeTest();
   });

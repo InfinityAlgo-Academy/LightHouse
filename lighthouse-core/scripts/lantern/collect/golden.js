@@ -9,8 +9,9 @@
 /** @typedef {import('./common.js').Summary} Summary */
 /** @typedef {import('../run-on-all-assets.js').Golden} Golden */
 
-const fs = require('fs');
-const common = require('./common.js');
+import fs from 'fs';
+
+import * as common from './common.js';
 
 /**
  * @template T
@@ -108,7 +109,7 @@ async function main() {
   /** @type {Golden} */
   const golden = {sites: goldenSites};
 
-  fs.rmdirSync(common.goldenFolder, {recursive: true});
+  fs.rmSync(common.goldenFolder, {recursive: true, force: true});
   fs.mkdirSync(common.goldenFolder);
   saveGoldenData('site-index-plus-golden-expectations.json', JSON.stringify(golden, null, 2));
   for (const result of goldenSites) {

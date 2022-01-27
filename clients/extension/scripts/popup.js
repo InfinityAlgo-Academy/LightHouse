@@ -102,7 +102,7 @@ function fillDevToolsShortcut() {
 
 /**
  * Create the settings from the state of the options form, save in storage, and return it.
- * @returns {SettingsController.Settings}
+ * @return {SettingsController.Settings}
  */
 function readSettingsFromDomAndPersist() {
   const optionsEl = find('.section--options');
@@ -179,8 +179,7 @@ async function initPopup() {
 
   // Generate checkboxes from saved settings.
   generateOptionsList(settings);
-  const selectedDeviceEl = /** @type {HTMLInputElement} */ (
-    find(`.options__device input[value="${settings.device}"]`));
+  const selectedDeviceEl = find(`.options__device input[value="${settings.device}"]`);
   selectedDeviceEl.checked = true;
 
   generateReportButton.addEventListener('click', () => {

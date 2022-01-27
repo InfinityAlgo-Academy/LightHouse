@@ -5,33 +5,32 @@
  */
 'use strict';
 
-/** @typedef {import('../lighthouse-core/lib/i18n/locales').LhlMessages} LhlMessages */
-
 const fs = require('fs');
 const GhPagesApp = require('./gh-pages-app.js');
+const {LH_ROOT} = require('../root.js');
+const {getIcuMessageIdParts} = require('../shared/localization/format.js');
 
 /**
- * Extract only the strings needed for lighthouse-treemap into
+ * Extract only the strings needed for treemap into
  * a script that sets a global variable `strings`, whose keys
  * are locale codes (en-US, es, etc.) and values are localized UIStrings.
  */
 function buildStrings() {
-  const locales = require('../lighthouse-core/lib/i18n/locales.js');
-  const UIStrings = require(
-    // Prevent `tsc -p .` from evaluating util.js using core types, it is already typchecked by `tsc -p lighthouse-treemap`.
-    '' + '../lighthouse-treemap/app/src/util.js'
-  ).UIStrings;
-  const strings = /** @type {Record<LH.Locale, LhlMessages>} */ ({});
+  const locales = require('../shared/localization/locales.js');
+  // TODO(esmodules): use dynamic import when build/ is esm.
+  const utilCode = fs.readFileSync(LH_ROOT + '/treemap/app/src/util.js', 'utf-8');
+  const {UIStrings} = eval(utilCode.replace(/export {/g, 'module.exports = {'));
+  const strings = /** @type {Record<LH.Locale, string>} */ ({});
 
   for (const [locale, lhlMessages] of Object.entries(locales)) {
     const localizedStrings = Object.fromEntries(
       Object.entries(lhlMessages).map(([icuMessageId, v]) => {
-        const [filename, varName] = icuMessageId.split(' | ');
-        if (!filename.endsWith('util.js') || !(varName in UIStrings)) {
+        const {filename, key} = getIcuMessageIdParts(icuMessageId);
+        if (!filename.endsWith('util.js') || !(key in UIStrings)) {
           return [];
         }
 
-        return [varName, v];
+        return [key, v.message];
       })
     );
     strings[/** @type {LH.Locale} */ (locale)] = localizedStrings;
@@ -46,32 +45,26 @@ function buildStrings() {
 async function run() {
   const app = new GhPagesApp({
     name: 'treemap',
-    appDir: `${__dirname}/../lighthouse-treemap/app`,
+    appDir: `${LH_ROOT}/treemap/app`,
     html: {path: 'index.html'},
     stylesheets: [
-      fs.readFileSync(require.resolve('tabulator-tables/dist/css/tabulator.min.css'), 'utf8'),
+      {path: require.resolve('tabulator-tables/dist/css/tabulator.min.css')},
       {path: 'styles/*'},
     ],
     javascripts: [
-      /* eslint-disable max-len */
-      fs.readFileSync(require.resolve('idb-keyval/dist/idb-keyval-min.js'), 'utf8'),
-      fs.readFileSync(require.resolve('event-target-shim/umd'), 'utf8'),
-      fs.readFileSync(require.resolve('webtreemap-cdt'), 'utf8'),
-      fs.readFileSync(require.resolve('tabulator-tables/dist/js/tabulator_core.js'), 'utf8'),
-      fs.readFileSync(require.resolve('tabulator-tables/dist/js/modules/sort.js'), 'utf8'),
-      fs.readFileSync(require.resolve('tabulator-tables/dist/js/modules/format.js'), 'utf8'),
-      fs.readFileSync(require.resolve('tabulator-tables/dist/js/modules/resize_columns.js'), 'utf8'),
-      /* eslint-enable max-len */
       buildStrings(),
-      {path: '../../lighthouse-core/report/html/renderer/logger.js'},
-      {path: '../../lighthouse-core/report/html/renderer/i18n.js'},
-      {path: '../../lighthouse-viewer/app/src/drag-and-drop.js'},
-      {path: '../../lighthouse-viewer/app/src/github-api.js'},
-      {path: '../../lighthouse-viewer/app/src/firebase-auth.js'},
-      {path: 'src/**/*'},
+      {path: require.resolve('idb-keyval/dist/idb-keyval-min.js')},
+      {path: require.resolve('event-target-shim/umd')},
+      {path: require.resolve('webtreemap-cdt')},
+      {path: require.resolve('tabulator-tables/dist/js/tabulator_core.js')},
+      {path: require.resolve('tabulator-tables/dist/js/modules/sort.js')},
+      {path: require.resolve('tabulator-tables/dist/js/modules/format.js')},
+      {path: require.resolve('tabulator-tables/dist/js/modules/resize_columns.js')},
+      {path: require.resolve('pako/dist/pako_inflate.js')},
+      {path: 'src/main.js', rollup: true},
     ],
     assets: [
-      {path: 'images/**/*'},
+      {path: 'images/**/*', destDir: 'images'},
       {path: 'debug.json'},
     ],
   });
@@ -84,4 +77,7 @@ async function run() {
   }
 }
 
-run();
+run().catch(err => {
+  console.error(err);
+  process.exit(1);
+});

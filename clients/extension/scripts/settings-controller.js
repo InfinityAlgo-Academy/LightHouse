@@ -20,7 +20,7 @@ const DEFAULT_CATEGORIES = [{
   title: 'SEO',
 }, {
   id: 'pwa',
-  title: 'Progressive Web App',
+  title: 'PWA',
 }];
 
 /** @typedef {{selectedCategories: string[], device: string}} Settings */

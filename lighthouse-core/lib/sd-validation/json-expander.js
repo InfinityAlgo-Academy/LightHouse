@@ -43,14 +43,14 @@ async function documentLoader(schemaUrl) {
  * (https://json-ld.org/spec/latest/json-ld-api/#expansion).
  *
  * @param {any} inputObject
- * @returns {Promise<LH.StructuredData.ExpandedSchemaRepresentation|null>}
+ * @return {Promise<LH.StructuredData.ExpandedSchemaRepresentation|null>}
  */
 module.exports = async function expand(inputObject) {
   try {
     return await jsonld.expand(inputObject, {documentLoader});
   } catch (err) {
     // jsonld wraps real errors in a bunch of junk, so see we have an underlying error first
-    if (err.details && err.details.cause) throw err.details.cause;
+    if (err.details?.cause) throw err.details.cause;
     throw err;
   }
 };

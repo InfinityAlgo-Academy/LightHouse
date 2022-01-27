@@ -8,13 +8,14 @@
 /* eslint-env jest */
 
 const fs = require('fs');
-const i18n = require('../lib/i18n/i18n.js');
+const format = require('../../shared/localization/format.js');
 const mockCommands = require('./gather/mock-commands.js');
 const {default: {toBeCloseTo}} = require('expect/build/matchers.js');
+const {LH_ROOT} = require('../../root.js');
 
 expect.extend({
   toBeDisplayString(received, expected) {
-    if (!i18n.isIcuMessage(received)) {
+    if (!format.isIcuMessage(received)) {
       const message = () =>
       [
         `${this.utils.matcherHint('.toBeDisplayString')}\n`,
@@ -26,7 +27,7 @@ expect.extend({
       return {message, pass: false};
     }
 
-    const actual = i18n.getFormatted(received, 'en-US');
+    const actual = format.getFormatted(received, 'en-US');
     const pass = expected instanceof RegExp ?
       expected.test(actual) :
       actual === expected;
@@ -89,7 +90,7 @@ function getProtoRoundTrip() {
   let itIfProtoExists;
   try {
     sampleResultsRoundtripStr =
-      fs.readFileSync(__dirname + '/../../.tmp/sample_v2_round_trip.json', 'utf-8');
+      fs.readFileSync(LH_ROOT + '/.tmp/sample_v2_round_trip.json', 'utf-8');
     describeIfProtoExists = describe;
     itIfProtoExists = it;
   } catch (err) {

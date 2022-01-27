@@ -5,14 +5,14 @@
  */
 'use strict';
 
-/* global document */
-
 /**
  * @fileoverview This script computes the BenchmarkIndex and a few other related browser benchmarks.
+ * node lighthouse-core/scripts/benchmark-plus-extras.js
  */
 
-const puppeteer = require('puppeteer');
-const {computeBenchmarkIndex} = require('../lib/page-functions.js');
+import puppeteer from 'puppeteer';
+
+import pageFunctions from '../lib/page-functions.js';
 
 /** @param {import('puppeteer').Page} page */
 async function runOctane(page) {
@@ -27,7 +27,7 @@ async function runOctane(page) {
   await page.click('#run-octane');
   await page.waitForFunction(() => {
     const banner = document.querySelector('#main-banner');
-    return /Octane Score: \d+/.test(banner && banner.textContent || '');
+    return /Octane Score: \d+/.test(banner?.textContent || '');
   }, {timeout: 300e3});
 
   const score = await page.evaluate(() => {
@@ -52,7 +52,7 @@ async function runSpeedometer(page) {
   const loggerInterval = setInterval(async () => {
     const progress = await page.evaluate(() => {
       const infoEl = document.querySelector('#running #info');
-      return infoEl && infoEl.textContent || 'Unknown';
+      return infoEl?.textContent || 'Unknown';
     });
     process.stdout.write(`  Progress: ${progress}\n`);
   }, 10000);
@@ -80,7 +80,7 @@ async function main() {
 
   process.stdout.write(`Running BenchmarkIndex...\n`);
   for (let i = 0; i < 10; i++) {
-    const BenchmarkIndex = await page.evaluate(computeBenchmarkIndex);
+    const BenchmarkIndex = await page.evaluate(pageFunctions.computeBenchmarkIndex);
     process.stdout.write(`  ${i + 1}: BenchmarkIndex=${BenchmarkIndex}\n`);
   }
 

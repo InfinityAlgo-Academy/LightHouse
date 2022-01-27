@@ -6,14 +6,15 @@
 'use strict';
 
 /**
- * @fileoverview Print names and github usernames of new contributors in specified range.
+ * @fileoverview Print names and GitHub usernames of new contributors in specified range.
  * Ex: node lighthouse-core/scripts/print-contributors.js v6.4.0 HEAD
  */
 
 /* eslint-disable no-console */
 
-const {execFileSync} = require('child_process');
-const fetch = require('node-fetch');
+import {execFileSync} from 'child_process';
+
+import fetch from 'node-fetch';
 
 const startingHash = process.argv[2];
 const endingHash = process.argv[3];
@@ -53,7 +54,11 @@ async function main() {
   for (const author of authors) {
     const response = await fetch(`https://api.github.com/repos/GoogleChrome/lighthouse/commits/${author.hash}`);
     const json = await response.json();
-    console.log(`${json.commit.author.name} @${json.author.login}`);
+    try {
+      console.log(`${json.commit.author.name} @${json.author.login}`);
+    } catch {
+      console.log(`https://api.github.com/repos/GoogleChrome/lighthouse/commits/${author.hash}`, 'unexpected json', json);
+    }
   }
 }
 

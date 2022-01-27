@@ -51,11 +51,11 @@ class ImageAspectRatio extends Audit {
 
   /**
    * @param {WellDefinedImage} image
-   * @return {{url: string, displayedAspectRatio: string, actualAspectRatio: string, doRatiosMatch: boolean}}
+   * @return {{url: string, node: LH.Audit.Details.NodeValue, displayedAspectRatio: string, actualAspectRatio: string, doRatiosMatch: boolean}}
    */
   static computeAspectRatios(image) {
     const url = URL.elideDataURI(image.src);
-    const actualAspectRatio = image.naturalWidth / image.naturalHeight;
+    const actualAspectRatio = image.naturalDimensions.width / image.naturalDimensions.height;
     const displayedAspectRatio = image.displayedWidth / image.displayedHeight;
 
     const targetDisplayHeight = image.displayedWidth / actualAspectRatio;
@@ -63,9 +63,10 @@ class ImageAspectRatio extends Audit {
 
     return {
       url,
+      node: Audit.makeNodeItem(image.node),
       displayedAspectRatio: `${image.displayedWidth} x ${image.displayedHeight}
         (${displayedAspectRatio.toFixed(2)})`,
-      actualAspectRatio: `${image.naturalWidth} x ${image.naturalHeight}
+      actualAspectRatio: `${image.naturalDimensions.width} x ${image.naturalDimensions.height}
         (${actualAspectRatio.toFixed(2)})`,
       doRatiosMatch,
     };
@@ -78,7 +79,7 @@ class ImageAspectRatio extends Audit {
   static audit(artifacts) {
     const images = artifacts.ImageElements;
 
-    /** @type {Array<{url: string, displayedAspectRatio: string, actualAspectRatio: string, doRatiosMatch: boolean}>} */
+    /** @type {Array<{url: string, node: LH.Audit.Details.NodeValue, displayedAspectRatio: string, actualAspectRatio: string, doRatiosMatch: boolean}>} */
     const results = [];
     images.filter(image => {
       // - filter out css background images since we don't have a reliable way to tell if it's a
@@ -88,13 +89,13 @@ class ImageAspectRatio extends Audit {
       // - filter all svgs as they have no natural dimensions to audit
       // - filter out images that have falsy naturalWidth or naturalHeight
       return !image.isCss &&
-        image.mimeType &&
-        image.mimeType !== 'image/svg+xml' &&
-        image.naturalHeight && image.naturalHeight > 5 &&
-        image.naturalWidth && image.naturalWidth > 5 &&
+        URL.guessMimeType(image.src) !== 'image/svg+xml' &&
+        image.naturalDimensions &&
+        image.naturalDimensions.height > 5 &&
+        image.naturalDimensions.width > 5 &&
         image.displayedWidth &&
         image.displayedHeight &&
-        image.cssComputedObjectFit === 'fill';
+        image.computedStyles.objectFit === 'fill';
     }).forEach(image => {
       const wellDefinedImage = /** @type {WellDefinedImage} */ (image);
       const processed = ImageAspectRatio.computeAspectRatios(wellDefinedImage);
@@ -104,7 +105,7 @@ class ImageAspectRatio extends Audit {
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
-      {key: 'url', itemType: 'thumbnail', text: ''},
+      {key: 'node', itemType: 'node', text: ''},
       {key: 'url', itemType: 'url', text: str_(i18n.UIStrings.columnURL)},
       {key: 'displayedAspectRatio', itemType: 'text', text: str_(UIStrings.columnDisplayed)},
       {key: 'actualAspectRatio', itemType: 'text', text: str_(UIStrings.columnActual)},

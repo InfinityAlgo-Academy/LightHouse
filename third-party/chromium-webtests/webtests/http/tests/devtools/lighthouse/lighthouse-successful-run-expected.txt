@@ -20,11 +20,16 @@ Requiring audits
 Runner setup
 Connecting to browser
 Resetting state with about:blank
+Navigating to about:blank
 Getting browser version
 Benchmarking machine
 Initializing…
+Preparing target for navigation mode
 Running defaultPass pass
 Resetting state with about:blank
+Navigating to about:blank
+Preparing target for navigation
+Cleaning origin data
 Cleaning browser cache
 Preparing network conditions
 Running beforePass methods
@@ -40,7 +45,6 @@ Gathering setup: ScriptElements
 Gathering setup: IFrameElements
 Gathering setup: MainDocumentContent
 Gathering setup: GlobalListeners
-Gathering setup: AppCacheManifest
 Gathering setup: Doctype
 Gathering setup: DOMStats
 Gathering setup: OptimizedImages
@@ -58,6 +62,7 @@ Gathering setup: SourceMaps
 Gathering setup: FullPageScreenshot
 Beginning devtoolsLog and trace
 Loading page & waiting for onload
+Navigating to http://127.0.0.1:8000/devtools/lighthouse/resources/lighthouse-basic.html
 Running pass methods
 Gathering in-page: CSSUsage
 Gathering in-page: JsUsage
@@ -71,7 +76,6 @@ Gathering in-page: ScriptElements
 Gathering in-page: IFrameElements
 Gathering in-page: MainDocumentContent
 Gathering in-page: GlobalListeners
-Gathering in-page: AppCacheManifest
 Gathering in-page: Doctype
 Gathering in-page: DOMStats
 Gathering in-page: OptimizedImages
@@ -89,7 +93,7 @@ Gathering in-page: SourceMaps
 Gathering in-page: FullPageScreenshot
 Gathering trace
 Gathering devtoolsLog & network records
-Computing artifact: NetworkRecords
+Computing artifact: NetworkRecords$M
 Running afterPass methods
 Gathering: CSSUsage
 Gathering: JsUsage
@@ -103,7 +107,6 @@ Gathering: ScriptElements
 Gathering: IFrameElements
 Gathering: MainDocumentContent
 Gathering: GlobalListeners
-Gathering: AppCacheManifest
 Gathering: Doctype
 Gathering: DOMStats
 Gathering: OptimizedImages
@@ -117,6 +120,8 @@ Getting browser version
 Gathering: TapTargets
 Gathering: Accessibility
 Gathering: TraceElements
+Computing artifact: ProcessedTrace$f
+Computing artifact: ProcessedNavigation$7
 Gathering: InspectorIssues
 Gathering: SourceMaps
 Gathering: FullPageScreenshot
@@ -125,83 +130,71 @@ Get webapp manifest
 Collect stacks
 Running offlinePass pass
 Resetting state with about:blank
+Navigating to about:blank
+Preparing target for navigation
 Preparing network conditions
 Running beforePass methods
 Gathering setup: ServiceWorker
 Beginning devtoolsLog and trace
 Loading page & waiting for onload
+Navigating to http://127.0.0.1:8000/devtools/lighthouse/resources/lighthouse-basic.html
 Running pass methods
 Gathering in-page: ServiceWorker
 Gathering devtoolsLog & network records
-Computing artifact: NetworkRecords
+Computing artifact: NetworkRecords$M
 Running afterPass methods
 Gathering: ServiceWorker
-Running redirectPass pass
-Resetting state with about:blank
-Preparing network conditions
-Running beforePass methods
-Gathering setup: HTTPRedirect
-Beginning devtoolsLog and trace
-Loading page & waiting for onload
-Running pass methods
-Gathering in-page: HTTPRedirect
-Gathering devtoolsLog & network records
-Computing artifact: NetworkRecords
-Running afterPass methods
-Gathering: HTTPRedirect
 Disconnecting from browser...
+Cleaning origin data
 Analyzing and running audits...
 Auditing: Uses HTTPS
-Auditing: Redirects HTTP traffic to HTTPS
 Auditing: Registers a service worker that controls page and `start_url`
 Auditing: Has a `<meta name="viewport">` tag with `width` or `initial-scale`
 Computing artifact: ViewportMeta
 Auditing: First Contentful Paint
-Computing artifact: FirstContentfulPaint
-Computing artifact: TraceOfTab
-Computing artifact: LanternFirstContentfulPaint
-Computing artifact: PageDependencyGraph
-Computing artifact: LoadSimulator
-Computing artifact: NetworkAnalysis
+Computing artifact: FirstContentfulPaint$3
+Computing artifact: LanternFirstContentfulPaint$6
+Computing artifact: PageDependencyGraph$a
+Computing artifact: LoadSimulator$a
+Computing artifact: NetworkAnalysis$1
 Auditing: Largest Contentful Paint
-Computing artifact: LargestContentfulPaint
-Computing artifact: LanternLargestContentfulPaint
+Computing artifact: LargestContentfulPaint$2
+Computing artifact: LanternLargestContentfulPaint$1
 Auditing: First Meaningful Paint
-Computing artifact: FirstMeaningfulPaint
-Computing artifact: LanternFirstMeaningfulPaint
+Computing artifact: FirstMeaningfulPaint$2
+Computing artifact: LanternFirstMeaningfulPaint$2
 Auditing: Speed Index
-Computing artifact: SpeedIndex
-Computing artifact: LanternSpeedIndex
-Computing artifact: Speedline
+Computing artifact: SpeedIndex$2
+Computing artifact: LanternSpeedIndex$2
+Computing artifact: Speedline$4
 Auditing: Screenshot Thumbnails
 Auditing: Final Screenshot
-Computing artifact: Screenshots
+Computing artifact: Screenshots$1
 Auditing: Total Blocking Time
-Computing artifact: TotalBlockingTime
-Computing artifact: LanternTotalBlockingTime
-Computing artifact: LanternInteractive
+Computing artifact: TotalBlockingTime$2
+Computing artifact: LanternTotalBlockingTime$1
+Computing artifact: LanternInteractive$4
 Auditing: Max Potential First Input Delay
-Computing artifact: MaxPotentialFID
-Computing artifact: LanternMaxPotentialFID
+Computing artifact: MaxPotentialFID$2
+Computing artifact: LanternMaxPotentialFID$1
 Auditing: Cumulative Layout Shift
-Computing artifact: CumulativeLayoutShift
+Computing artifact: CumulativeLayoutShift$2
 Auditing: No browser errors logged to the console
+Computing artifact: JSBundles
 Auditing: Initial server response time was short
-Computing artifact: MainResource
+Computing artifact: MainResource$g
 Auditing: Time to Interactive
-Computing artifact: Interactive
+Computing artifact: Interactive$4
 Auditing: User Timing marks and measures
-Computing artifact: UserTimings
+Computing artifact: UserTimings$1
 Auditing: Avoid chaining critical requests
-Computing artifact: CriticalRequestChains
+Computing artifact: CriticalRequestChains$2
 Auditing: Avoid multiple page redirects
 Auditing: Web app manifest and service worker meet the installability requirements
-Computing artifact: ManifestValues
+Computing artifact: ManifestValues$4
 Auditing: Provides a valid `apple-touch-icon`
 Auditing: Configured for a custom splash screen
-Computing artifact: ManifestValues
 Auditing: Sets a theme color for the address bar.
-Computing artifact: ManifestValues
 Auditing: Manifest has a maskable icon
 Auditing: Content is sized correctly for the viewport
 Auditing: Displays images with correct aspect ratio
@@ -209,10 +202,9 @@ Auditing: Serves images with appropriate resolution
 Auditing: Fonts with `font-display: optional` are preloaded
 Auditing: Avoids deprecated APIs
 Auditing: Minimizes main-thread work
-Computing artifact: MainThreadTasks
+Computing artifact: MainThreadTasks$7
 Auditing: JavaScript execution time
 Auditing: Preload key requests
-Computing artifact: LoadSimulator
 Auditing: Preconnect to required origins
 Auditing: All text remains visible during webfont loads
 Auditing: Diagnostics
@@ -221,14 +213,15 @@ Auditing: Network Round Trip Times
 Auditing: Server Backend Latencies
 Auditing: Tasks
 Auditing: Metrics
-Computing artifact: TimingSummary
+Computing artifact: TimingSummary$1
 Auditing: Performance budget
-Computing artifact: ResourceSummary
+Computing artifact: ResourceSummary$2
 Auditing: Timing budget
 Auditing: Keep request counts low and transfer sizes small
 Auditing: Minimize third-party usage
 Auditing: Lazy load third-party resources with facades
 Auditing: Largest Contentful Paint element
+Auditing: Largest Contentful Paint image was not lazily loaded
 Auditing: Avoid large layout shifts
 Auditing: Avoid long main-thread tasks
 Auditing: Avoids `unload` event listeners
@@ -236,13 +229,10 @@ Auditing: Avoid non-composited animations
 Auditing: Image elements have explicit `width` and `height`
 Auditing: Page has valid source maps
 Auditing: Preload Largest Contentful Paint image
-Computing artifact: LanternLargestContentfulPaint
-Computing artifact: LanternFirstContentfulPaint
 Auditing: Ensure CSP is effective against XSS attacks
 Auditing: Full-page screenshot
 Auditing: Script Treemap Data
-Computing artifact: JSBundles
-Computing artifact: ModuleDuplication
+Computing artifact: ModuleDuplication$2
 Auditing: Site works cross-browser
 Auditing: Page transitions don't feel like they block on the network
 Auditing: Each page has a URL
@@ -286,7 +276,7 @@ Auditing: Lists contain only `<li>` elements and script supporting elements (`<s
 Auditing: List items (`<li>`) are contained within `<ul>` or `<ol>` parent elements
 Auditing: The document does not use `<meta http-equiv="refresh">`
 Auditing: `[user-scalable="no"]` is not used in the `<meta name="viewport">` element and the `[maximum-scale]` attribute is not less than 5.
-Auditing: `<object>` elements have `[alt]` text
+Auditing: `<object>` elements have alternate text
 Auditing: No element has a `[tabindex]` value greater than 0
 Auditing: Cells in a `<table>` element that use the `[headers]` attribute refer to table cells within the same table.
 Auditing: `<th>` elements and elements with `[role="columnheader"/"rowheader"]` have data cells they describe.
@@ -306,28 +296,23 @@ Auditing: Uses efficient cache policy on static assets
 Auditing: Avoids enormous network payloads
 Auditing: Defer offscreen images
 Auditing: Eliminate render-blocking resources
-Computing artifact: UnusedCSS
-Computing artifact: FirstContentfulPaint
-Computing artifact: LanternFirstContentfulPaint
+Computing artifact: UnusedCSS$3
+Computing artifact: FirstContentfulPaint$3
 Auditing: Minify CSS
 Auditing: Minify JavaScript
 Auditing: Reduce unused CSS
 Auditing: Reduce unused JavaScript
-Computing artifact: JSBundles
 Auditing: Serve images in next-gen formats
 Auditing: Efficiently encode images
 Auditing: Enable text compression
 Auditing: Properly size images
+Computing artifact: ImageRecords$1
 Auditing: Use video formats for animated content
 Auditing: Remove duplicate modules in JavaScript bundles
-Computing artifact: ModuleDuplication
-Computing artifact: JSBundles
 Auditing: Avoid serving legacy JavaScript to modern browsers
-Auditing: Avoids Application Cache
 Auditing: Page has the HTML doctype
 Auditing: Properly defines charset
 Auditing: Avoids an excessive DOM size
-Auditing: Links to cross-origin destinations are safe
 Auditing: Avoids requesting the geolocation permission on page load
 Auditing: No issues in the `Issues` panel in Chrome Devtools
 Auditing: Avoids `document.write()`
@@ -350,19 +335,20 @@ Auditing: Document avoids plugins
 Auditing: Document has a valid `rel=canonical`
 Auditing: Structured data is valid
 Auditing: No long tasks blocking ad-related network requests
-Computing artifact: LongTasks
+Computing artifact: LongTasks$2
 Auditing: Minimal render-blocking resources found
 Auditing: Ad request waterfall
-Computing artifact: AdRequestTime
-Computing artifact: LanternAdRequestTime
 Auditing: First bid request time
 Computing artifact: BidRequestTime
 Computing artifact: LanternBidRequestTime
 Auditing: First ad request time
+Computing artifact: AdRequestTime$1
+Computing artifact: LanternAdRequestTime
 Auditing: No ad found at the very top of the viewport
 Auditing: Few or no ads loaded outside viewport
 Auditing: Ad tag is loaded asynchronously
 Auditing: Ads not blocked by load events
+Computing artifact: TraceOfTab$1
 Auditing: No bottleneck requests found
 Auditing: No duplicate tags found
 Auditing: Latency of first ad render
@@ -374,15 +360,18 @@ Auditing: Ad tag is loaded over HTTPS
 Auditing: Ad scripts are loaded statically
 Auditing: Header bidding is parallelized
 Auditing: Tag load time
-Computing artifact: TagLoadTime
+Computing artifact: TagLoadTime$1
 Computing artifact: LanternTagLoadTime
-Auditing: Ad density is within recommended range
+Auditing: Ads to page-height ratio is within recommended range
 Auditing: Cumulative ad shift
+Auditing: Deprecated GPT API Usage
+Auditing: GPT Errors
+Auditing: Total ad JS blocking time
 Generating results...
 
 =============== Lighthouse Results ===============
 URL: http://127.0.0.1:8000/devtools/lighthouse/resources/lighthouse-basic.html
-Version: 7.5.0
+Version: 9.2.0
 ViewportDimensions: {
   "innerWidth": 980,
   "innerHeight": 1743,
@@ -399,7 +388,6 @@ ad-request-critical-path: notApplicable
 ad-request-from-page-start: notApplicable
 ad-top-of-viewport: notApplicable
 ads-in-viewport: notApplicable
-appcache-manifest: pass
 apple-touch-icon: fail
 aria-allowed-attr: notApplicable
 aria-command-name: notApplicable
@@ -436,6 +424,7 @@ cumulative-layout-shift: numeric
 custom-controls-labels: manual
 custom-controls-roles: manual
 definition-list: notApplicable
+deprecated-gpt-api-usage: notApplicable
 deprecations: pass
 diagnostics: informative
 dlitem: notApplicable
@@ -449,7 +438,6 @@ duplicated-javascript: numeric
 efficient-animated-content: flaky
 empty-table-header: notApplicable
 errors-in-console: pass
-external-anchors-use-rel-noopener: pass
 final-screenshot: ERROR Chrome didn't collect any screenshots during the page load. Please make sure there is content visible on the page, and then try re-running Lighthouse. (NO_SCREENSHOTS)
 first-ad-render: notApplicable
 first-contentful-paint: flaky
@@ -464,6 +452,7 @@ frame-title: notApplicable
 full-page-screenshot: informative
 geolocation-on-start: pass
 gpt-bids-parallel: notApplicable
+gpt-errors-overall: notApplicable
 heading-order: notApplicable
 hreflang: pass
 html-has-lang: fail
@@ -479,11 +468,12 @@ interactive: flaky
 interactive-element-affordance: manual
 is-crawlable: pass
 is-on-https: pass
-js-libraries: pass
+js-libraries: notApplicable
 label: notApplicable
 largest-contentful-paint: numeric
 largest-contentful-paint-element: informative
 layout-shift-elements: notApplicable
+lcp-lazy-loaded: notApplicable
 legacy-javascript: numeric
 link-name: notApplicable
 link-text: pass
@@ -523,7 +513,6 @@ pwa-cross-browser: manual
 pwa-each-page-has-url: manual
 pwa-page-transitions: manual
 redirects: flaky
-redirects-http: notApplicable
 render-blocking-resources: flaky
 resource-summary: informative
 robots-txt: notApplicable
@@ -545,6 +534,7 @@ themed-omnibox: fail
 third-party-facades: notApplicable
 third-party-summary: notApplicable
 timing-budget: ERROR Chrome didn't collect any screenshots during the page load. Please make sure there is content visible on the page, and then try re-running Lighthouse. (NO_SCREENSHOTS)
+total-ad-blocking-time: notApplicable
 total-blocking-time: numeric
 total-byte-weight: numeric
 unminified-css: flaky
@@ -554,7 +544,7 @@ unused-css-rules: flaky
 unused-javascript: numeric
 use-landmarks: manual
 user-timings: flaky
-uses-http2: pass
+uses-http2: numeric
 uses-long-cache-ttl: numeric
 uses-optimized-images: flaky
 uses-passive-event-listeners: pass
@@ -579,7 +569,6 @@ ad-request-critical-path
 ad-request-from-page-start
 ad-top-of-viewport
 ads-in-viewport
-appcache-manifest
 apple-touch-icon
 aria-allowed-attr
 aria-command-name
@@ -615,6 +604,7 @@ cumulative-ad-shift
 custom-controls-labels
 custom-controls-roles
 definition-list
+deprecated-gpt-api-usage
 deprecations
 dlitem
 doctype
@@ -628,7 +618,6 @@ duplicated-javascript
 efficient-animated-content
 empty-table-header
 errors-in-console
-external-anchors-use-rel-noopener
 first-ad-render
 focus-traps
 focusable-controls
@@ -639,6 +628,7 @@ frame-focusable-content
 frame-title
 geolocation-on-start
 gpt-bids-parallel
+gpt-errors-overall
 heading-order
 hreflang
 html-has-lang
@@ -658,6 +648,7 @@ js-libraries
 label
 largest-contentful-paint-element
 layout-shift-elements
+lcp-lazy-loaded
 legacy-javascript
 link-name
 link-text
@@ -690,7 +681,6 @@ pwa-cross-browser
 pwa-each-page-has-url
 pwa-page-transitions
 redirects
-redirects-http
 render-blocking-resources
 resource-summary
 robots-txt
@@ -708,6 +698,7 @@ th-has-data-cells
 themed-omnibox
 third-party-facades
 third-party-summary
+total-ad-blocking-time
 total-byte-weight
 unminified-css
 unminified-javascript
@@ -727,6 +718,7 @@ uses-text-compression
 valid-lang
 valid-source-maps
 video-caption
+viewport
 viewport
 viewport
 viewport-ad-density

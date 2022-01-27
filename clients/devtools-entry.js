@@ -5,13 +5,22 @@
  */
 'use strict';
 
+/* global globalThis */
+
 const lighthouse = require('../lighthouse-core/index.js');
+const {navigation, startTimespan, snapshot} = require('../lighthouse-core/fraggle-rock/api.js');
 const RawProtocol = require('../lighthouse-core/gather/connections/raw.js');
 const log = require('lighthouse-logger');
-const {registerLocaleData, lookupLocale} = require('../lighthouse-core/lib/i18n/i18n.js');
+const {lookupLocale} = require('../lighthouse-core/lib/i18n/i18n.js');
+const {registerLocaleData, getCanonicalLocales} = require('../shared/localization/format.js');
 const constants = require('../lighthouse-core/config/constants.js');
 
 /** @typedef {import('../lighthouse-core/gather/connections/connection.js')} Connection */
+
+// Rollup seems to overlook some references to `Buffer`, so it must be made explicit.
+// (`parseSourceMapFromDataUrl` breaks without this)
+/** @type {BufferConstructor} */
+globalThis.Buffer = require('buffer').Buffer;
 
 /**
  * Returns a config, which runs only certain categories.
@@ -19,7 +28,7 @@ const constants = require('../lighthouse-core/config/constants.js');
  * If `lighthouse-plugin-publisher-ads` is in the list of
  * `categoryIDs` the plugin will also be run.
  * Counterpart to the CDT code that sets flags.
- * @see https://cs.chromium.org/chromium/src/third_party/devtools-frontend/src/front_end/lighthouse/LighthouseController.js?type=cs&q=%22const+RuntimeSettings%22+f:lighthouse+-f:out&g=0&l=250
+ * @see https://source.chromium.org/chromium/chromium/src/+/main:third_party/devtools-frontend/src/front_end/panels/lighthouse/LighthouseController.ts;l=280
  * @param {Array<string>} categoryIDs
  * @param {string} device
  * @return {LH.Config.Json}
@@ -48,7 +57,7 @@ function createConfig(categoryIDs, device) {
 
 /**
  * @param {RawProtocol.Port} port
- * @returns {RawProtocol}
+ * @return {RawProtocol}
  */
 function setUpWorkerConnection(port) {
   return new RawProtocol(port);
@@ -59,14 +68,15 @@ function listenForStatus(listenCallback) {
   log.events.addListener('status', listenCallback);
 }
 
-// For the bundle smoke test.
-if (typeof module !== 'undefined' && module.exports) {
-  // Ideally this could be exposed via browserify's `standalone`, but it doesn't
-  // work for LH because of https://github.com/browserify/browserify/issues/968
-  // Instead, since this file is only ever run in node for testing, expose a
-  // bundle entry point as global.
-  // @ts-expect-error
-  global.runBundledLighthouse = lighthouse;
+/**
+ * Does a locale lookup but limits the result to the *canonical* Lighthouse
+ * locales, which are only the locales with a messages locale file that can
+ * be downloaded and then used via `registerLocaleData`.
+ * @param {string|string[]=} locales
+ * @return {LH.Locale}
+ */
+function lookupCanonicalLocale(locales) {
+  return lookupLocale(locales, getCanonicalLocales());
 }
 
 // Expose only in DevTools' worker
@@ -79,11 +89,22 @@ if (typeof self !== 'undefined') {
   // @ts-expect-error
   self.runLighthouse = lighthouse;
   // @ts-expect-error
+  self.runLighthouseNavigation = navigation;
+  // @ts-expect-error
+  self.startLighthouseTimespan = startTimespan;
+  // @ts-expect-error
+  self.runLighthouseSnapshot = snapshot;
+  // @ts-expect-error
   self.createConfig = createConfig;
   // @ts-expect-error
   self.listenForStatus = listenForStatus;
   // @ts-expect-error
   self.registerLocaleData = registerLocaleData;
+  // TODO: expose as lookupCanonicalLocale in LighthouseService.ts?
   // @ts-expect-error
-  self.lookupLocale = lookupLocale;
+  self.lookupLocale = lookupCanonicalLocale;
+} else {
+  // For the bundle smoke test.
+  // @ts-expect-error
+  global.runBundledLighthouse = lighthouse;
 }

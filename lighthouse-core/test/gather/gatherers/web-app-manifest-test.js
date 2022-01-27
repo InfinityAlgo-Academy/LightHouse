@@ -72,11 +72,11 @@ describe('WebAppManifest Gatherer', () => {
 
       const result = await WebAppManifest.getWebAppManifest(session.asSession(), PAGE_URL);
       expect(result).toHaveProperty('raw', JSON.stringify(manifest));
-      expect(result && result.value).toMatchObject({
+      expect(result?.value).toMatchObject({
         name: {value: 'App', raw: 'App'},
         start_url: {value: PAGE_URL, raw: undefined},
       });
-      expect(result && result.url).toMatch(MANIFEST_URL);
+      expect(result?.url).toMatch(MANIFEST_URL);
     });
   });
 });

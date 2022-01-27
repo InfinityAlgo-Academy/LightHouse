@@ -15,8 +15,8 @@
  */
 
 /* eslint-disable no-console */
-const {readdirSync, readFileSync} = require('fs');
-const {join} = require('path');
+import {readdirSync, readFileSync} from 'fs';
+import {join} from 'path';
 
 const directory = process.argv[2];
 const audit = process.argv[3];

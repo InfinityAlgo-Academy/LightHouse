@@ -15,12 +15,15 @@ const {
   resolveGathererToDefn,
   resolveAuditsToDefns,
   resolveModulePath,
+  mergePlugins,
   mergeConfigFragment,
+  mergeConfigFragmentArrayByKey,
 } = require('../../config/config-helpers.js');
 const Runner = require('../../runner.js');
 const Gatherer = require('../../gather/gatherers/gatherer.js');
 const ImageElementsGatherer = require('../../gather/gatherers/image-elements.js');
 const UserTimingsAudit = require('../../audits/user-timings.js');
+const {LH_ROOT} = require('../../../root.js');
 
 jest.mock('process', () => ({
   cwd: () => jest.fn(),
@@ -79,6 +82,44 @@ describe('.mergeConfigFragment', () => {
     expect(() => mergeConfigFragment('foo', [])).toThrow();
     expect(() => mergeConfigFragment({}, [])).toThrow();
     expect(() => mergeConfigFragment([], {})).toThrow();
+  });
+});
+
+describe('.mergeConfigFragmentArrayByKey', () => {
+  it('should use mergeConfigFragment to merge items', () => {
+    const base = [{a: 1, b: 'yes', c: true}];
+    const extension = [{a: 2, c: false, d: 123}];
+    const merged = mergeConfigFragmentArrayByKey(base, extension, () => 'key');
+    expect(merged).toBe(base);
+    expect(merged).toEqual([{a: 2, b: 'yes', c: false, d: 123}]);
+  });
+
+  it('should merge by the keyFn', () => {
+    const base = [{id: 'a', value: 1}, {id: 'b', value: 2}];
+    const extension = [{id: 'b', value: 1}, {id: 'a', value: 2}, {id: 'c'}];
+    const merged = mergeConfigFragmentArrayByKey(base, extension, item => item.id);
+    expect(merged).toEqual([{id: 'a', value: 2}, {id: 'b', value: 1}, {id: 'c'}]);
+  });
+
+  it('should merge recursively', () => {
+    const base = [{foo: {bar: 1}}];
+    const extension = [{foo: {baz: 2, bam: 3}}];
+    const merged = mergeConfigFragmentArrayByKey(base, extension, () => 'key');
+    expect(merged).toEqual([{foo: {bar: 1, baz: 2, bam: 3}}]);
+  });
+
+  it('should handle null items in base', () => {
+    const base = [null];
+    const extension = [{x: 1}];
+    const merged = mergeConfigFragmentArrayByKey(base, extension, () => '');
+    expect(merged).toEqual([{x: 1}]);
+  });
+
+  it('should handle undefined items in extension', () => {
+    const base = [{x: 1}];
+    const extension = [undefined];
+    const merged = mergeConfigFragmentArrayByKey(base, extension, () => '');
+    expect(merged).toEqual([undefined]);
   });
 });
 
@@ -146,14 +187,67 @@ describe('.deepCloneConfigJson', () => {
   });
 });
 
+describe('.mergePlugins', () => {
+  // Include a configPath flag so that config.js looks for the plugins in the fixtures dir.
+  const configDir = `${LH_ROOT}/lighthouse-core/test/fixtures/config-plugins/`;
+
+  it('merge plugins from the config', () => {
+    const configJson = {
+      audits: ['installable-manifest', 'metrics'],
+      plugins: ['lighthouse-plugin-simple'],
+    };
+
+    const config = mergePlugins(configJson, configDir, {});
+    expect(config).toMatchObject({
+      audits: [
+        'installable-manifest',
+        'metrics',
+        {path: 'redirects'},
+        {path: 'user-timings'},
+      ],
+      categories: {
+        'lighthouse-plugin-simple': {title: 'Simple'},
+      },
+      groups: {
+        'lighthouse-plugin-simple-new-group': {title: 'New Group'},
+      },
+    });
+  });
+
+  it('merge plugins from flags', () => {
+    const configJson = {
+      audits: ['installable-manifest', 'metrics'],
+      plugins: ['lighthouse-plugin-simple'],
+    };
+    const flags = {plugins: ['lighthouse-plugin-no-groups']};
+    const config = mergePlugins(configJson, configDir, flags);
+
+    expect(config.categories).toHaveProperty('lighthouse-plugin-simple');
+    expect(config.categories).toHaveProperty('lighthouse-plugin-no-groups');
+  });
+
+  it('validate plugin name', () => {
+    const configJson = {audits: ['installable-manifest', 'metrics']};
+    const flags = {plugins: ['not-a-plugin']};
+    expect(() => mergePlugins(configJson, configDir, flags)).toThrow(/does not start/);
+  });
+
+  it('validate plugin existence', () => {
+    const configJson = {audits: ['installable-manifest', 'metrics']};
+    const flags = {plugins: ['lighthouse-plugin-missing']};
+    expect(() => mergePlugins(configJson, configDir, flags)).toThrow(/Unable to locate plugin/);
+  });
+
+  it('validate plugin structure', () => {
+    const configJson = {audits: ['installable-manifest', 'metrics']};
+    const flags = {plugins: ['lighthouse-plugin-no-category']};
+    expect(() => mergePlugins(configJson, configDir, flags)).toThrow(/no valid category/);
+  });
+});
+
 describe('.resolveSettings', () => {
   it('resolves the locale', () => {
     const settings = resolveSettings({locale: 'zh-CN'});
-    // COMPAT: Node 12 only has 'en' by default.
-    if (process.versions.node.startsWith('12')) {
-      expect(settings.locale).toEqual('en');
-      return;
-    }
     expect(settings.locale).toEqual('zh');
   });
 

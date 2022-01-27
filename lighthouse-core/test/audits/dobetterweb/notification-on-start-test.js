@@ -11,24 +11,30 @@ const assert = require('assert').strict;
 /* eslint-env jest */
 
 describe('UX: notification audit', () => {
-  it('fails when notification has been automatically requested', () => {
+  it('fails when notification has been automatically requested', async () => {
     const text = 'Do not request notification permission without a user action.';
-    const auditResult = NotificationOnStart.audit({
+    const context = {computedCache: new Map()};
+    const auditResult = await NotificationOnStart.audit({
       ConsoleMessages: [
         {source: 'violation', url: 'https://example.com/', text},
         {source: 'violation', url: 'https://example2.com/two', text},
         {source: 'violation', url: 'http://abc.com/', text: 'No document.write'},
         {source: 'deprecation', url: 'https://example.com/two'},
       ],
-    });
+      SourceMaps: [],
+      ScriptElements: [],
+    }, context);
     assert.equal(auditResult.score, 0);
     assert.equal(auditResult.details.items.length, 2);
   });
 
-  it('passes when notification has not been automatically requested', () => {
-    const auditResult = NotificationOnStart.audit({
+  it('passes when notification has not been automatically requested', async () => {
+    const context = {computedCache: new Map()};
+    const auditResult = await NotificationOnStart.audit({
       ConsoleMessages: [],
-    });
+      SourceMaps: [],
+      ScriptElements: [],
+    }, context);
     assert.equal(auditResult.score, 1);
     assert.equal(auditResult.details.items.length, 0);
   });

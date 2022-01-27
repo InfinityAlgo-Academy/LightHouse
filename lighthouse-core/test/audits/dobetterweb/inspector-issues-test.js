@@ -14,11 +14,21 @@ describe('Has inspector issues audit', () => {
   let issues;
   beforeEach(() => {
     issues = {
-      mixedContent: [],
-      sameSiteCookies: [],
-      blockedByResponse: [],
-      heavyAds: [],
-      contentSecurityPolicy: [],
+      attributionReportingIssue: [],
+      blockedByResponseIssue: [],
+      clientHintIssue: [],
+      contentSecurityPolicyIssue: [],
+      corsIssue: [],
+      deprecationIssue: [],
+      genericIssue: [],
+      heavyAdIssue: [],
+      lowTextContrastIssue: [],
+      mixedContentIssue: [],
+      navigatorUserAgentIssue: [],
+      quirksModeIssue: [],
+      sameSiteCookieIssue: [],
+      sharedArrayBufferIssue: [],
+      twaQualityEnforcement: [],
     };
   });
 
@@ -47,7 +57,7 @@ describe('Has inspector issues audit', () => {
         },
       },
     ];
-    issues.mixedContent.push(...mixedContentIssues);
+    issues.mixedContentIssue.push(...mixedContentIssues);
 
     const auditResult = InspectorIssuesAudit.audit({
       InspectorIssues: issues,
@@ -82,7 +92,7 @@ describe('Has inspector issues audit', () => {
         },
       },
     ];
-    issues.sameSiteCookies.push(...samesiteIssues);
+    issues.sameSiteCookieIssue.push(...samesiteIssues);
 
     const auditResult = InspectorIssuesAudit.audit({
       InspectorIssues: issues,
@@ -138,7 +148,7 @@ describe('Has inspector issues audit', () => {
         },
       },
     ];
-    issues.blockedByResponse.push(...blockedByResponseIssues);
+    issues.blockedByResponseIssue.push(...blockedByResponseIssues);
 
     const auditResult = InspectorIssuesAudit.audit({
       InspectorIssues: issues,
@@ -184,7 +194,7 @@ describe('Has inspector issues audit', () => {
         reason: 'CpuPeakLimit',
       },
     ];
-    issues.heavyAds.push(...heavyAdsIssues);
+    issues.heavyAdIssue.push(...heavyAdsIssues);
 
     const auditResult = InspectorIssuesAudit.audit({
       InspectorIssues: issues,
@@ -221,7 +231,7 @@ describe('Has inspector issues audit', () => {
         blockedURL: 'www.csp.com/policy-violation',
       },
     ];
-    issues.contentSecurityPolicy.push(...cspIssues);
+    issues.contentSecurityPolicyIssue.push(...cspIssues);
 
     const auditResult = InspectorIssuesAudit.audit({
       InspectorIssues: issues,

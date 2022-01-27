@@ -1,0 +1,9 @@
+{
+  "private": true,
+  "scripts": {
+    "install-all": "yarn --cwd auth/ && yarn --cwd integration-test/ && yarn --cwd custom-gatherer-puppeteer/",
+    "integration-test": "yarn --cwd integration-test/ jest --config-path=docs-jest.config.js",
+    "custom-gatherer-puppeteer-test": "yarn --cwd custom-gatherer-puppeteer/ test",
+    "test": "yarn install-all && yarn integration-test && yarn custom-gatherer-puppeteer-test"
+  }
+}

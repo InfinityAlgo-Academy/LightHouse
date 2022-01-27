@@ -6,13 +6,38 @@
 'use strict';
 
 /* eslint-env jest */
-const assert = require('assert').strict;
-const getFlags = require('../../cli-flags.js').getFlags;
+
+import {strict as assert} from 'assert';
+import fs from 'fs';
+
+import yargs from 'yargs';
+
+import {getFlags} from '../../cli-flags.js';
+import {LH_ROOT} from '../../../root.js';
+
+/**
+ * @param {LH.CliFlags} flags
+ */
+function snapshot(flags) {
+  flags = {...flags};
+
+  // `path` properties will have different values based on the filesystem,
+  // so normalize.
+  for (const [k, v] of Object.entries(flags)) {
+    if (typeof v === 'string') {
+      // @ts-expect-error
+      flags[k] = v
+        .replace(process.cwd(), '__REPLACED__')
+        .replace(/\\/g, '/');
+    }
+  }
+
+  expect(flags).toMatchSnapshot();
+}
 
 describe('CLI flags', function() {
   it('all options should have descriptions', () => {
     getFlags('chrome://version');
-    const yargs = require('yargs');
 
     // @ts-expect-error - getGroups is private
     const optionGroups = yargs.getGroups();
@@ -21,8 +46,9 @@ describe('CLI flags', function() {
     Object.keys(optionGroups).forEach(key => {
       allOptions.push(...optionGroups[key]);
     });
-    // @ts-expect-error - getUsageInstance is private
-    const optionsWithDescriptions = Object.keys(yargs.getUsageInstance().getDescriptions());
+    const optionsWithDescriptions =
+      // @ts-expect-error - getUsageInstance is private
+      Object.keys(yargs.getInternalMethods().getUsageInstance().getDescriptions());
 
     allOptions.forEach(opt => {
       assert.ok(optionsWithDescriptions.includes(opt), `cli option '${opt}' has no description`);
@@ -32,7 +58,7 @@ describe('CLI flags', function() {
   it('settings are accepted from a file path', () => {
     const flags = getFlags([
       'http://www.example.com',
-      `--cli-flags-path="${__dirname}/../fixtures/cli-flags-path.json"`,
+      `--cli-flags-path="${LH_ROOT}/lighthouse-cli/test/fixtures/cli-flags-path.json"`,
       '--budgets-path=path/to/my/budget-from-command-line.json', // this should override the config value
     ].join(' '));
 
@@ -47,6 +73,18 @@ describe('CLI flags', function() {
         cpuSlowdownMultiplier: 6,
       },
     });
+    snapshot(flags);
+  });
+
+  it('settings are accepted from a file path (inlined budgets)', () => {
+    const flags = getFlags([
+      'http://www.example.com',
+      // eslint-disable-next-line max-len
+      `--cli-flags-path="${LH_ROOT}/lighthouse-cli/test/fixtures/cli-flags-path-inline-budgets.json"`,
+    ].join(' '));
+
+    expect(flags.budgets).toMatchObject([{'anything': 'works'}]);
+    snapshot(flags);
   });
 
   it('array values support csv when appropriate', () => {
@@ -58,6 +96,7 @@ describe('CLI flags', function() {
     ].join(' '));
     expect(flags.onlyCategories).toEqual(['performance', 'seo']);
     expect(flags.skipAudits).toEqual(['unused-javascript', 'redirects', 'bootup-time']);
+    snapshot(flags);
   });
 
   it('array values do not support csv when appropriate', () => {
@@ -72,6 +111,7 @@ describe('CLI flags', function() {
       '--enabled-features=NetworkService,VirtualTime',
     ]);
     expect(flags.blockedUrlPatterns).toEqual(['.*x,y\\.png']);
+    snapshot(flags);
   });
 
   describe('extraHeaders', () => {
@@ -82,16 +122,19 @@ describe('CLI flags', function() {
       ].join(' '));
 
       expect(flags).toHaveProperty('extraHeaders', {foo: 'bar'});
+      snapshot(flags);
     });
 
-    it('should read extra headers from file', async () => {
-      const headersFile = require.resolve('../fixtures/extra-headers/valid.json');
+    it('should read extra headers from file', () => {
+      const headersFile = `${LH_ROOT}/lighthouse-cli/test/fixtures/extra-headers/valid.json`;
+      const headers = JSON.parse(fs.readFileSync(headersFile, 'utf-8'));
       const flags = getFlags([
         'http://www.example.com',
         `--extra-headers=${headersFile}`,
       ].join(' '));
 
-      expect(flags).toHaveProperty('extraHeaders', require(headersFile));
+      expect(flags).toHaveProperty('extraHeaders', headers);
+      snapshot(flags);
     });
   });
 
@@ -102,6 +145,7 @@ describe('CLI flags', function() {
       it('parses a number value', () => {
         const flags = getFlags(`${url} --screenEmulation.width=500`, {noExitOnFailure: true});
         expect(flags.screenEmulation).toEqual({width: 500});
+        snapshot(flags);
       });
 
       it('throws on a non-number', () => {
@@ -137,6 +181,7 @@ describe('CLI flags', function() {
         const flags = getFlags(`${url} --screenEmulation.deviceScaleFactor=1.325`,
             {noExitOnFailure: true});
         expect(flags.screenEmulation).toEqual({deviceScaleFactor: 1.325});
+        snapshot(flags);
       });
 
       it('throws on a non-number', () => {
@@ -156,6 +201,7 @@ describe('CLI flags', function() {
       it('parses the flag with no value as true', () => {
         const flags = getFlags(`${url} --screenEmulation.mobile`, {noExitOnFailure: true});
         expect(flags.screenEmulation).toEqual({mobile: true});
+        snapshot(flags);
       });
 
       it('parses the --no-mobile flag as false', () => {
@@ -181,6 +227,7 @@ describe('CLI flags', function() {
       it('parses the flag with no value as true', () => {
         const flags = getFlags(`${url} --screenEmulation.disabled`, {noExitOnFailure: true});
         expect(flags.screenEmulation).toEqual({disabled: true});
+        snapshot(flags);
       });
 
       it('parses the --no-disabled flag as false', () => {

@@ -13,18 +13,20 @@ const URL = 'https://example.com';
 /* eslint-env jest */
 
 describe('Page does not use document.write()', () => {
-  it('passes when document.write() is not used', () => {
-    const auditResult = DocWriteUseAudit.audit({
+  it('passes when document.write() is not used', async () => {
+    const auditResult = await DocWriteUseAudit.audit({
       ConsoleMessages: [],
       URL: {finalUrl: URL},
-    });
+      SourceMaps: [],
+      ScriptElements: [],
+    }, {computedCache: new Map()});
     assert.equal(auditResult.score, 1);
     assert.equal(auditResult.details.items.length, 0);
   });
 
-  it('fails when document.write() is used', () => {
+  it('fails when document.write() is used', async () => {
     const text = 'Do not use document.write';
-    const auditResult = DocWriteUseAudit.audit({
+    const auditResult = await DocWriteUseAudit.audit({
       URL: {finalUrl: URL},
       ConsoleMessages: [
         {source: 'violation', url: 'https://example.com/', text},
@@ -32,7 +34,9 @@ describe('Page does not use document.write()', () => {
         {source: 'violation', url: 'http://abc.com/', text: 'Long event handler!'},
         {source: 'deprecation', url: 'https://example.com/two'},
       ],
-    });
+      SourceMaps: [],
+      ScriptElements: [],
+    }, {computedCache: new Map()});
     assert.equal(auditResult.score, 0);
     assert.equal(auditResult.details.items.length, 2);
   });

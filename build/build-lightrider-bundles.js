@@ -5,54 +5,77 @@
  */
 'use strict';
 
-const browserify = require('browserify');
+const rollup = require('rollup');
+const rollupPlugins = require('./rollup-plugins.js');
 const fs = require('fs');
 const path = require('path');
 const bundleBuilder = require('./build-bundle.js');
-const {minifyFileTransform} = require('./build-utils.js');
+const {LH_ROOT} = require('../root.js');
 
-const distDir = path.join(__dirname, '..', 'dist', 'lightrider');
-const sourceDir = __dirname + '/../clients/lightrider';
-
-const bundleOutFile = `${distDir}/report-generator-bundle.js`;
-const generatorFilename = `./lighthouse-core/report/report-generator.js`;
+const distDir = path.join(LH_ROOT, 'dist', 'lightrider');
+const sourceDir = path.join(LH_ROOT, 'clients', 'lightrider');
 
 const entrySourceName = 'lightrider-entry.js';
 const entryDistName = 'lighthouse-lr-bundle.js';
 
-fs.mkdirSync(path.dirname(distDir), {recursive: true});
+fs.mkdirSync(distDir, {recursive: true});
 
-/**
- * Browserify and minify entry point.
- */
 function buildEntryPoint() {
   const inFile = `${sourceDir}/${entrySourceName}`;
   const outFile = `${distDir}/${entryDistName}`;
-  return bundleBuilder.build(inFile, outFile);
+  return bundleBuilder.build(inFile, outFile, {minify: false});
 }
 
-/**
- * Browserify and minify the LR report generator.
- */
-function buildReportGenerator() {
-  browserify(generatorFilename, {standalone: 'ReportGenerator'})
-    // Transform the fs.readFile etc into inline strings.
-    .transform('@wardpeet/brfs', {
-      readFileSyncTransform: minifyFileTransform,
-      global: true,
-      parserOpts: {ecmaVersion: 12},
-    })
-    .bundle((err, src) => {
-      if (err) throw err;
-      fs.writeFileSync(bundleOutFile, src.toString());
-    });
+async function buildReportGenerator() {
+  const bundle = await rollup.rollup({
+    input: 'report/generator/report-generator.js',
+    plugins: [
+      rollupPlugins.shim({
+        [`${LH_ROOT}/report/generator/flow-report-assets.js`]: 'export default {}',
+      }),
+      rollupPlugins.commonjs(),
+      rollupPlugins.nodeResolve(),
+      rollupPlugins.inlineFs({verbose: Boolean(process.env.DEBUG)}),
+    ],
+  });
+
+  await bundle.write({
+    file: 'dist/lightrider/report-generator-bundle.js',
+    format: 'umd',
+    name: 'ReportGenerator',
+  });
+  await bundle.close();
+}
+
+async function buildStaticServerBundle() {
+  const bundle = await rollup.rollup({
+    input: 'lighthouse-cli/test/fixtures/static-server.js',
+    plugins: [
+      rollupPlugins.shim({
+        'es-main': 'export default function() { return false; }',
+      }),
+      rollupPlugins.commonjs(),
+      rollupPlugins.nodeResolve(),
+    ],
+    external: ['mime-types', 'glob'],
+  });
+
+  await bundle.write({
+    file: 'dist/lightrider/static-server.js',
+    format: 'commonjs',
+  });
+  await bundle.close();
 }
 
 async function run() {
   await Promise.all([
     buildEntryPoint(),
     buildReportGenerator(),
+    buildStaticServerBundle(),
   ]);
 }
 
-run();
+run().catch(err => {
+  console.error(err);
+  process.exit(1);
+});

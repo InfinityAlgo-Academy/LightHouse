@@ -5,17 +5,20 @@
  */
 'use strict';
 
-const fs = require('fs');
-const path = require('path');
-const {createTraceString} = require('../lib/timing-trace-saver.js');
-
 /**
  * @fileoverview This script takes the timing entries saved during a Lighthouse run and generates
  * a trace file that's readable in DevTools perf panel or chrome://tracing.
  *
- * input = LHR.json
- * output = LHR.timing.trace.json
+ * node lighthouse-core/scripts/generate-timing-trace.js latest-run/lhr.report.json
+ *
+ * input = lhr.json
+ * output = lhr.timing.trace.json
  */
+
+import fs from 'fs';
+import path from 'path';
+
+import {createTraceString} from '../lib/timing-trace-saver.js';
 
 /**
  * @param {string} msg
@@ -45,7 +48,8 @@ function saveTraceFromCLI() {
   const lhrObject = JSON.parse(fs.readFileSync(filename, 'utf8'));
   const jsonStr = createTraceString(lhrObject);
 
-  const traceFilePath = `${filename}.timing.trace.json`;
+  const pathObj = path.parse(filename);
+  const traceFilePath = path.join(pathObj.dir, `${pathObj.name}.timing.trace.json`);
   fs.writeFileSync(traceFilePath, jsonStr, 'utf8');
   // eslint-disable-next-line no-console
   console.log(`

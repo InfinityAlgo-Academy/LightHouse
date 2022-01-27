@@ -28,6 +28,7 @@ const jumpyClsDevtoolsLog = require('../fixtures/traces/jumpy-cls-m90.devtoolslo
 describe('Performance: metrics', () => {
   it('evaluates valid input correctly', async () => {
     const artifacts = {
+      GatherContext: {gatherMode: 'navigation'},
       traces: {
         [MetricsAudit.DEFAULT_PASS]: pwaTrace,
       },
@@ -43,6 +44,7 @@ describe('Performance: metrics', () => {
 
   it('evaluates valid input correctly (throttlingMethod=provided)', async () => {
     const artifacts = {
+      GatherContext: {gatherMode: 'navigation'},
       traces: {
         [MetricsAudit.DEFAULT_PASS]: pwaTrace,
       },
@@ -58,6 +60,7 @@ describe('Performance: metrics', () => {
 
   it('evaluates valid input (with lcp) correctly', async () => {
     const artifacts = {
+      GatherContext: {gatherMode: 'navigation'},
       traces: {
         [MetricsAudit.DEFAULT_PASS]: lcpTrace,
       },
@@ -73,6 +76,7 @@ describe('Performance: metrics', () => {
 
   it('evaluates valid input (with lcp from all frames) correctly', async () => {
     const artifacts = {
+      GatherContext: {gatherMode: 'navigation'},
       traces: {
         [MetricsAudit.DEFAULT_PASS]: lcpAllFramesTrace,
       },
@@ -88,6 +92,7 @@ describe('Performance: metrics', () => {
 
   it('leaves CLS undefined in an old trace without weighted scores', async () => {
     const artifacts = {
+      GatherContext: {gatherMode: 'navigation'},
       traces: {
         [MetricsAudit.DEFAULT_PASS]: lcpAllFramesTrace,
       },
@@ -110,6 +115,7 @@ describe('Performance: metrics', () => {
 
   it('evaluates new CLS correctly across all frames', async () => {
     const artifacts = {
+      GatherContext: {gatherMode: 'navigation'},
       traces: {
         [MetricsAudit.DEFAULT_PASS]: clsAllFramesTrace,
       },
@@ -135,6 +141,7 @@ describe('Performance: metrics', () => {
 
   it('does not fail the entire audit when TTI errors', async () => {
     const artifacts = {
+      GatherContext: {gatherMode: 'navigation'},
       traces: {
         [MetricsAudit.DEFAULT_PASS]: pwaTrace,
       },
@@ -152,6 +159,7 @@ describe('Performance: metrics', () => {
 
   it('evaluates CLS correctly', async () => {
     const artifacts = {
+      GatherContext: {gatherMode: 'navigation'},
       traces: {
         [MetricsAudit.DEFAULT_PASS]: jumpyClsTrace,
       },

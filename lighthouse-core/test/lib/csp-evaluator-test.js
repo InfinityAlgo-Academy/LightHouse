@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const {isIcuMessage} = require('../../lib/i18n/i18n.js');
+const {isIcuMessage} = require('../../../shared/localization/format.js');
 const {getTranslatedDescription, parseCsp} = require('../../lib/csp-evaluator.js');
 
 const {
@@ -58,9 +58,8 @@ describe('getTranslatedDescription', () => {
     expect(translated).toHaveLength(1);
     expect(isIcuMessage(translated[0])).toBeTruthy();
     expect(translated[0]).toBeDisplayString(
-      'Elements controlled by object-src are considered legacy features. ' +
-      'Consider setting object-src to \'none\' to prevent the injection of ' +
-      'plugins that execute unsafe scripts.'
+      'Missing object-src allows the injection of plugins that execute unsafe scripts. ' +
+      'Consider setting object-src to \'none\' if you can.'
     );
   });
 
@@ -91,8 +90,36 @@ describe('getTranslatedDescription', () => {
     );
   });
 
+  it('wildcard', () => {
+    const rawCsp = `script-src 'strict-dynamic' *; object-src *`;
+    const findings = evaluateRawCspForFailures([rawCsp]);
+    const translated = findings.map(getTranslatedDescription);
+
+    expect(translated).toHaveLength(1);
+    expect(findings[0].directive).toEqual('object-src');
+    expect(isIcuMessage(translated[0])).toBeTruthy();
+    expect(translated[0]).toBeDisplayString(
+      'Avoid using plain wildcards (*) in this directive. ' +
+      'Plain wildcards allow scripts to be sourced from an unsafe domain.'
+    );
+  });
+
+  it('plain url scheme', () => {
+    const rawCsp = `script-src 'strict-dynamic' https:; object-src https:`;
+    const findings = evaluateRawCspForFailures([rawCsp]);
+    const translated = findings.map(getTranslatedDescription);
+
+    expect(translated).toHaveLength(1);
+    expect(findings[0].directive).toEqual('object-src');
+    expect(isIcuMessage(translated[0])).toBeTruthy();
+    expect(translated[0]).toBeDisplayString(
+      'Avoid using plain URL schemes (https:) in this directive. ' +
+      'Plain URL schemes allow scripts to be sourced from an unsafe domain.'
+    );
+  });
+
   it('strict-dynamic', () => {
-    const rawCsp = `script-src http:; object-src 'none'`;
+    const rawCsp = `script-src https://example.com; object-src 'none'`;
     const findings = evaluateRawCspForFailures([rawCsp]);
     const translated = findings.map(getTranslatedDescription);
 
@@ -100,34 +127,7 @@ describe('getTranslatedDescription', () => {
     expect(isIcuMessage(translated[0])).toBeTruthy();
     expect(translated[0]).toBeDisplayString(
       'Host allowlists can frequently be bypassed. Consider using ' +
-      '\'strict-dynamic\' in combination with CSP nonces or hashes.'
-    );
-  });
-
-  it('no reporting destination', () => {
-    const rawCsp = `script-src 'none'`;
-    const findings = evaluateRawCspForWarnings([rawCsp]);
-    const translated = findings.map(getTranslatedDescription);
-
-    expect(translated).toHaveLength(1);
-    expect(isIcuMessage(translated[0])).toBeTruthy();
-    expect(translated[0]).toBeDisplayString(
-      'No CSP configures a reporting destination. ' +
-      'This makes it difficult to maintain the CSP over time and monitor for any breakages.'
-    );
-  });
-
-  it('report-to only', () => {
-    const rawCsp = `script-src 'none'; report-to https://example.com`;
-    const findings = evaluateRawCspForWarnings([rawCsp]);
-    const translated = findings.map(getTranslatedDescription);
-
-    expect(translated).toHaveLength(1);
-    expect(isIcuMessage(translated[0])).toBeTruthy();
-    expect(translated[0]).toBeDisplayString(
-      'The reporting destination is only configured via the report-to directive. ' +
-      'This directive is only supported in Chromium-based browsers so it is ' +
-      'recommended to also use a report-uri directive.'
+      'CSP nonces or hashes instead, along with \'strict-dynamic\' if necessary.'
     );
   });
 

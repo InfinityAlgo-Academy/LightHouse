@@ -13,7 +13,8 @@ const devtoolsLog = require('../../fixtures/traces/frame-metrics-m90.devtools.lo
 /* eslint-env jest */
 describe('Timing summary', () => {
   it('contains the correct data', async () => {
-    const artifacts = {settings: {throttlingMethod: 'devtools'}, trace, devtoolsLog};
+    const gatherContext = {gatherMode: 'navigation'};
+    const artifacts = {settings: {throttlingMethod: 'devtools'}, trace, devtoolsLog, gatherContext};
     const context = {computedCache: new Map()};
     const result = await TimingSummary.request(artifacts, context);
 

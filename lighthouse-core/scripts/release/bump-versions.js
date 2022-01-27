@@ -5,14 +5,18 @@
  */
 'use strict';
 
-const fs = require('fs');
-const path = require('path');
-const glob = require('glob');
+import fs from 'fs';
+
+import glob from 'glob';
+
+import {readJson} from '../../../root.js';
 
 const NEW_VERSION = process.argv[2];
 if (!/^\d+\.\d+\.\d+(-dev\.\d{8})?$/.test(NEW_VERSION)) {
   throw new Error('Usage: node bump-versions.json x.x.x');
 }
+
+const OLD_VERSION = readJson('package.json').version;
 
 const ignore = [
   '**/node_modules/**',
@@ -22,17 +26,20 @@ const ignore = [
   'docs/recipes/integration-test/package.json',
 ];
 
-for (const file of glob.sync('**/{package.json,*.md}', {ignore})) {
+for (const file of glob.sync('**/{package.json,*.md,*-expected.txt}', {ignore})) {
   let text;
   if (file === 'package.json') {
-    const pkg = require(path.resolve(file));
+    const pkg = readJson(file);
     if (pkg.version.startsWith('file')) continue;
     pkg.version = NEW_VERSION;
     text = JSON.stringify(pkg, null, 2) + '\n';
-  } else {
+  } else if (file.endsWith('.md')) {
     // Replace `package.json`-like examples in markdown files.
     text = fs.readFileSync(file, 'utf-8');
     text = text.replace(/"lighthouse": ".*?"/g, `"lighthouse": "^${NEW_VERSION}"`);
+  } else {
+    text = fs.readFileSync(file, 'utf-8');
+    text = text.replace(OLD_VERSION, NEW_VERSION);
   }
 
   fs.writeFileSync(file, text);

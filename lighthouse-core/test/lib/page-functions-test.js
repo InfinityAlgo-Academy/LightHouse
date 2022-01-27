@@ -5,28 +5,31 @@
  */
 'use strict';
 
-const assert = require('assert').strict;
+const assert = require('assert');
 const jsdom = require('jsdom');
-const DOM = require('../../report/html/renderer/dom.js');
 const pageFunctions = require('../../lib/page-functions.js');
 
 /* eslint-env jest */
 
+/* global document */
+
 describe('Page Functions', () => {
   const url = 'http://www.example.com';
-  let dom;
 
-  beforeAll(() => {
+  beforeAll(async () => {
     const {document, ShadowRoot, Node, HTMLElement} = new jsdom.JSDOM('', {url}).window;
     global.ShadowRoot = ShadowRoot;
     global.Node = Node;
     global.HTMLElement = HTMLElement;
-    dom = new DOM(document);
+    global.document = document;
+    global.window = {};
   });
 
   afterAll(() => {
     global.ShadowRoot = undefined;
     global.Node = undefined;
+    global.window = undefined;
+    global.document = undefined;
   });
 
   describe('wrapRuntimeEvalErrorInBrowser()', () => {
@@ -70,71 +73,89 @@ describe('Page Functions', () => {
 
   describe('get outer HTML snippets', () => {
     it('gets full HTML snippet', () => {
-      assert.equal(pageFunctions.getOuterHTMLSnippet(
-        dom.createElement('div', '', {id: '1', style: 'style'})), '<div id="1" style="style">');
+      const elem = document.createElement('div');
+      elem.id = '1';
+      elem.style = 'width: 1px;';
+      assert.equal(pageFunctions.getOuterHTMLSnippet(elem), '<div id="1" style="width: 1px;">');
     });
 
     it('replaces img.src with img.currentSrc', () => {
-      const el = dom.createElement('img', '', {id: '1', src: 'no'});
+      const el = document.createElement('img');
+      el.id = '1';
+      el.src = 'no';
       Object.defineProperty(el, 'currentSrc', {value: 'yes'});
       assert.equal(pageFunctions.getOuterHTMLSnippet(el), '<img id="1" src="yes">');
     });
 
     it('does not replace img.src with img.currentSrc if resolve to same URL', () => {
-      const el = dom.createElement('img', '', {id: '1', src: './a.png'});
+      const el = document.createElement('img');
+      el.id = '1';
+      el.src = './a.png';
       Object.defineProperty(el, 'currentSrc', {value: `${url}/a.png`});
       assert.equal(pageFunctions.getOuterHTMLSnippet(el), '<img id="1" src="./a.png">');
     });
 
     it('removes a specific attribute', () => {
-      assert.equal(pageFunctions.getOuterHTMLSnippet(
-        dom.createElement('div', '', {id: '1', style: 'style'}), ['style']), '<div id="1">');
+      const elem = document.createElement('div');
+      elem.id = '1';
+      elem.style = 'width: 1px;';
+      assert.equal(pageFunctions.getOuterHTMLSnippet(elem, ['style']), '<div id="1">');
     });
 
     it('removes multiple attributes', () => {
-      assert.equal(pageFunctions.getOuterHTMLSnippet(
-        dom.createElement('div', '', {'id': '1', 'style': 'style', 'aria-label': 'label'}),
-        ['style', 'aria-label']
-      ), '<div id="1">');
+      const elem = document.createElement('div');
+      elem.id = '1';
+      elem.style = 'width: 1px;';
+      elem.setAttribute('aria-label', 'label');
+      assert.equal(
+        pageFunctions.getOuterHTMLSnippet(elem, ['style', 'aria-label']),
+        '<div id="1">');
     });
 
     it('should handle dom nodes that cannot be cloned', () => {
-      const element = dom.createElement('div');
+      const element = document.createElement('div');
       element.cloneNode = () => {
         throw new Error('oops!');
       };
       assert.equal(pageFunctions.getOuterHTMLSnippet(element), '<div>');
     });
     it('ignores when attribute not found', () => {
+      const elem = document.createElement('div');
+      elem.id = '1';
+      elem.style = 'width: 1px;';
+      elem.setAttribute('aria-label', 'label');
       assert.equal(pageFunctions.getOuterHTMLSnippet(
-        dom.createElement('div', '', {'id': '1', 'style': 'style', 'aria-label': 'label'}),
+        elem,
         ['style-missing', 'aria-label-missing']
-      ), '<div id="1" style="style" aria-label="label">');
+      ), '<div id="1" style="width: 1px;" aria-label="label">');
     });
 
     it('works if attribute values contain line breaks', () => {
-      assert.equal(pageFunctions.getOuterHTMLSnippet(
-        dom.createElement('div', '', {style: 'style1\nstyle2'})), '<div style="style1\nstyle2">');
+      const elem = document.createElement('div');
+      elem.style = 'width: 1px;\nheight: 2px;';
+      assert.equal(pageFunctions.getOuterHTMLSnippet(elem),
+        '<div style="width: 1px; height: 2px;">');
     });
 
     it('truncates attribute values that are too long', () => {
-      const longClass = 'a'.repeat(200);
+      const elem = document.createElement('div');
+      elem.className = 'a'.repeat(200);
       const truncatedExpectation = 'a'.repeat(74) + '…';
-      assert.equal(pageFunctions.getOuterHTMLSnippet(
-        dom.createElement('div', '', {class: longClass})), `<div class="${truncatedExpectation}">`
-      );
+      assert.equal(
+        pageFunctions.getOuterHTMLSnippet(elem),
+        `<div class="${truncatedExpectation}">`);
     });
 
     it('removes attributes if the length of the attribute name + value is too long', () => {
       const longValue = 'a'.repeat(200);
       const truncatedValue = 'a'.repeat(74) + '…';
-      const element = dom.createElement('div', '', {
-        class: longValue,
-        id: longValue,
-        att1: 'shouldn\'t see this',
-        att2: 'shouldn\'t see this either',
-      });
-      const snippet = pageFunctions.getOuterHTMLSnippet(element, [], 150);
+      const elem = document.createElement('div');
+      elem.className = longValue;
+      elem.id = longValue;
+      elem.setAttribute('att1', 'shouldn\'t see this');
+      elem.setAttribute('att2', 'shouldn\'t see this either');
+
+      const snippet = pageFunctions.getOuterHTMLSnippet(elem, [], 150);
       assert.equal(snippet, `<div class="${truncatedValue}" id="${truncatedValue}" …>`
       );
     });
@@ -142,8 +163,11 @@ describe('Page Functions', () => {
 
   describe('getNodeSelector', () => {
     it('Uses IDs where available and otherwise falls back to classes', () => {
-      const parentEl = dom.createElement('div', '', {id: 'wrapper', class: 'dont-use-this'});
-      const childEl = dom.createElement('div', '', {class: 'child'});
+      const parentEl = document.createElement('div');
+      parentEl.id = 'wrapper';
+      parentEl.className = 'dont-use-this';
+      const childEl = document.createElement('div');
+      childEl.className = 'child';
       parentEl.appendChild(childEl);
       assert.equal(pageFunctions.getNodeSelector(childEl), 'div#wrapper > div.child');
     });
@@ -151,48 +175,44 @@ describe('Page Functions', () => {
 
   describe('getNodeLabel', () => {
     it('Returns innerText if element has visible text', () => {
-      const el = dom.createElement('div');
+      const el = document.createElement('div');
       el.innerText = 'Hello';
       assert.equal(pageFunctions.getNodeLabel(el), 'Hello');
     });
 
     it('Falls back to children and alt/aria-label if a title can\'t be determined', () => {
-      const el = dom.createElement('div');
-      const childEl = dom.createElement('div', '', {'aria-label': 'Something'});
+      const el = document.createElement('div');
+      const childEl = document.createElement('div');
+      childEl.setAttribute('aria-label', 'Something');
       el.appendChild(childEl);
       assert.equal(pageFunctions.getNodeLabel(el), 'Something');
     });
 
     it('Truncates long text', () => {
-      const el = dom.createElement('div');
+      const el = document.createElement('div');
       el.setAttribute('alt', Array(100).fill('a').join(''));
       assert.equal(pageFunctions.getNodeLabel(el).length, 80);
     });
 
     it('Truncates long text containing unicode surrogate pairs', () => {
-      const el = dom.createElement('div');
+      const el = document.createElement('div');
       // `getNodeLabel` truncates to 80 characters internally.
       // We want to test a unicode character on the boundary.
       el.innerText = Array(78).fill('a').join('') + '💡💡💡';
       assert.equal(pageFunctions.getNodeLabel(el), Array(78).fill('a').join('') + '💡…');
     });
 
-    it('Uses tag name for html tags', () => {
-      const el = dom.createElement('html');
-      assert.equal(pageFunctions.getNodeLabel(el), 'html');
-    });
-
-    it('Uses tag name if there is no better label', () => {
-      const el = dom.createElement('div');
-      const childEl = dom.createElement('span');
+    it('Returns null if there is no better label', () => {
+      const el = document.createElement('div');
+      const childEl = document.createElement('span');
       el.appendChild(childEl);
-      assert.equal(pageFunctions.getNodeLabel(el), 'div');
+      assert.equal(pageFunctions.getNodeLabel(el), null);
     });
   });
 
   describe('getNodePath', () => {
     it('returns basic node path', () => {
-      const el = dom.createElement('div');
+      const el = document.createElement('div');
       el.innerHTML = `
         <section>
           <span>Sup</span>
@@ -205,16 +225,30 @@ describe('Page Functions', () => {
     });
 
     it('returns node path through shadow root', () => {
-      const el = dom.createElement('div');
-      const main = el.appendChild(dom.createElement('main'));
+      const el = document.createElement('div');
+      const main = el.appendChild(document.createElement('main'));
       const shadowRoot = main.attachShadow({mode: 'open'});
-      const sectionEl = dom.createElement('section');
-      const img = dom.createElement('img');
+      const sectionEl = document.createElement('section');
+      const img = document.createElement('img');
       img.src = '#';
       sectionEl.append(img);
       shadowRoot.append(sectionEl);
 
       assert.equal(pageFunctions.getNodePath(img), '0,MAIN,a,#document-fragment,0,SECTION,0,IMG');
+    });
+  });
+
+  describe('getNodeDetails', () => {
+    it('Returns selector as fallback if nodeLabel equals html tag name', () => {
+      const el = document.createElement('div');
+      el.id = 'parent';
+      el.className = 'parent-el';
+      const childEl = document.createElement('p');
+      childEl.id = 'child';
+      childEl.className = 'child-el';
+      el.appendChild(childEl);
+      const {nodeLabel} = pageFunctions.getNodeDetails(el);
+      assert.equal(nodeLabel, 'div#parent');
     });
   });
 });

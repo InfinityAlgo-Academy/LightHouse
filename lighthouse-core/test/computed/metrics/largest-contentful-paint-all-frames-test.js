@@ -18,10 +18,12 @@ const invalidDevtoolsLog = require('../../fixtures/traces/progressive-app-m60.de
 /* eslint-env jest */
 
 describe('Metrics: LCP from all frames', () => {
+  const gatherContext = {gatherMode: 'navigation'};
+
   it('should throw for predicted value', async () => {
     const settings = {throttlingMethod: 'simulate'};
     const context = {settings, computedCache: new Map()};
-    const resultPromise = LargestContentfulPaintAllFrames.request({trace: traceAllFrames, devtoolsLog: devtoolsLogAllFrames, settings}, context); // eslint-disable-line max-len
+    const resultPromise = LargestContentfulPaintAllFrames.request({gatherContext, trace: traceAllFrames, devtoolsLog: devtoolsLogAllFrames, settings}, context); // eslint-disable-line max-len
 
     // TODO: Implement lantern solution for LCP all frames.
     expect(resultPromise).rejects.toThrow();
@@ -30,7 +32,7 @@ describe('Metrics: LCP from all frames', () => {
   it('should compute an observed value', async () => {
     const settings = {throttlingMethod: 'provided'};
     const context = {settings, computedCache: new Map()};
-    const result = await LargestContentfulPaintAllFrames.request({trace: traceAllFrames, devtoolsLog: devtoolsLogAllFrames, settings}, context); // eslint-disable-line max-len
+    const result = await LargestContentfulPaintAllFrames.request({gatherContext, trace: traceAllFrames, devtoolsLog: devtoolsLogAllFrames, settings}, context); // eslint-disable-line max-len
 
     assert.equal(Math.round(result.timing), 683);
     assert.equal(result.timestamp, 23466705983);
@@ -40,7 +42,7 @@ describe('Metrics: LCP from all frames', () => {
     const settings = {throttlingMethod: 'provided'};
     const context = {settings, computedCache: new Map()};
     const resultPromise = LargestContentfulPaintAllFrames.request(
-      {trace: invalidTrace, devtoolsLog: invalidDevtoolsLog, settings},
+      {gatherContext, trace: invalidTrace, devtoolsLog: invalidDevtoolsLog, settings},
       context
     );
     await expect(resultPromise).rejects.toThrow('NO_LCP_ALL_FRAMES');
@@ -50,7 +52,7 @@ describe('Metrics: LCP from all frames', () => {
     const settings = {throttlingMethod: 'provided'};
     const context = {settings, computedCache: new Map()};
     const result = await LargestContentfulPaintAllFrames.request(
-      {trace: traceMainFrame, devtoolsLog: devtoolsLogMainFrame, settings},
+      {gatherContext, trace: traceMainFrame, devtoolsLog: devtoolsLogMainFrame, settings},
       context
     );
     await expect(result).toEqual({
