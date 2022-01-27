@@ -476,7 +476,7 @@ const expectations = {
               node: {
                 'type': 'node',
                 'selector': 'body > section > input#form-field-multiple-labels',
-                'path': '2,HTML,1,BODY,43,SECTION,2,INPUT',
+                'path': '2,HTML,1,BODY,45,SECTION,2,INPUT',
                 'snippet': '<input type="checkbox" id="form-field-multiple-labels">',
                 'explanation': 'Fix all of the following:\n  Multiple label elements is not widely supported in assistive technologies. Ensure the first label contains all necessary information.',
                 'nodeLabel': 'body > section > input#form-field-multiple-labels',
@@ -487,7 +487,7 @@ const expectations = {
                   {
                     relatedNode: {
                       'type': 'node',
-                      'path': '2,HTML,1,BODY,43,SECTION,0,LABEL',
+                      'path': '2,HTML,1,BODY,45,SECTION,0,LABEL',
                       'selector': 'body > section > label#label1',
                       'snippet': '<label for="form-field-multiple-labels" id="label1">',
                       'nodeLabel': 'label1',
@@ -496,7 +496,7 @@ const expectations = {
                   {
                     relatedNode: {
                       'type': 'node',
-                      'path': '2,HTML,1,BODY,43,SECTION,1,LABEL',
+                      'path': '2,HTML,1,BODY,45,SECTION,1,LABEL',
                       'selector': 'body > section > label',
                       'snippet': '<label for="form-field-multiple-labels">',
                       'nodeLabel': 'label2',
@@ -532,7 +532,7 @@ const expectations = {
               node: {
                 'type': 'node',
                 'selector': 'body > section > h3',
-                'path': '2,HTML,1,BODY,47,SECTION,1,H3',
+                'path': '2,HTML,1,BODY,51,SECTION,1,H3',
                 'snippet': '<h3>',
                 'explanation': 'Fix any of the following:\n  Heading order invalid',
                 'nodeLabel': 'sub-sub-header',
@@ -746,6 +746,27 @@ const expectations = {
                 'snippet': '<button id="accesskeys1" accesskey="s">',
                 'explanation': 'Fix all of the following:\n  Document has multiple elements with the same accesskey',
                 'nodeLabel': 'Foo',
+              },
+            },
+          ],
+        },
+      },
+      'frame-focusable-content': {
+        score: null,
+        scoreDisplayMode: 'notApplicable',
+      },
+      'empty-table-header': {
+        score: null,
+        details: {
+          items: [
+            {
+              node: {
+                'type': 'node',
+                'selector': 'table > tbody > tr > th',
+                'path': '2,HTML,1,BODY,43,SECTION,0,TABLE,0,TBODY,0,TR,0,TH',
+                'snippet': '<th>',
+                'explanation': 'Fix any of the following:\n  Element does not have text that is visible to screen readers',
+                'nodeLabel': 'table > tbody > tr > th',
               },
             },
           ],
