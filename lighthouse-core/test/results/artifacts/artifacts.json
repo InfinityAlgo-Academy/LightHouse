@@ -12410,6 +12410,7 @@
         "deprecationType": "XMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload"
       }
     ],
+    "federatedAuthRequestIssue": [],
     "genericIssue": [],
     "heavyAdIssue": [],
     "lowTextContrastIssue": [],

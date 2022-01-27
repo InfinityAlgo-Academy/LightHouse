@@ -559,6 +559,7 @@ declare module Artifacts {
     contentSecurityPolicyIssue: LH.Crdp.Audits.ContentSecurityPolicyIssueDetails[];
     corsIssue: LH.Crdp.Audits.CorsIssueDetails[];
     deprecationIssue: LH.Crdp.Audits.DeprecationIssueDetails[];
+    federatedAuthRequestIssue: LH.Crdp.Audits.FederatedAuthRequestIssueDetails[],
     genericIssue: LH.Crdp.Audits.GenericIssueDetails[];
     heavyAdIssue: LH.Crdp.Audits.HeavyAdIssueDetails[];
     lowTextContrastIssue: LH.Crdp.Audits.LowTextContrastIssueDetails[];

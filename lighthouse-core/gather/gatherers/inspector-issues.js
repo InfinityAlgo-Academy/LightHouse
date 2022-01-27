@@ -66,6 +66,7 @@ class InspectorIssues extends FRGatherer {
       contentSecurityPolicyIssue: [],
       corsIssue: [],
       deprecationIssue: [],
+      federatedAuthRequestIssue: [],
       genericIssue: [],
       heavyAdIssue: [],
       lowTextContrastIssue: [],
