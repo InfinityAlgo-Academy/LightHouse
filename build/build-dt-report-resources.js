@@ -27,10 +27,6 @@ function writeFile(name, content) {
 fs.rmSync(distDir, {recursive: true, force: true});
 fs.mkdirSync(distDir, {recursive: true});
 
-writeFile('report.js', '// This can be removed after the next CDT roll deletes this file');
-writeFile('standalone-template.html',
-  '<!-- This can be removed after the next CDT roll deletes this file -->');
-writeFile('report.d.ts', 'export {}');
 writeFile('report-generator.d.ts', 'export {}');
 
 async function buildReportGenerator() {
