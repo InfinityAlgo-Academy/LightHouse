@@ -198,7 +198,7 @@ class PreloadLCPImageAudit extends Audit {
    * @param {LH.Audit.Context} context
    * @return {Promise<LH.Audit.Product>}
    */
-  static async audit_(artifacts, context) {
+  static async audit(artifacts, context) {
     const gatherContext = artifacts.GatherContext;
     const trace = artifacts.traces[PreloadLCPImageAudit.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[PreloadLCPImageAudit.DEFAULT_PASS];
@@ -235,16 +235,6 @@ class PreloadLCPImageAudit extends Audit {
       displayValue: wastedMs ? str_(i18n.UIStrings.displayValueMsSavings, {wastedMs}) : '',
       details,
     };
-  }
-
-  /**
-   * @return {Promise<LH.Audit.Product>}
-   */
-  static async audit() {
-    // Preload advice is dangerous until https://bugs.chromium.org/p/chromium/issues/detail?id=788757
-    // has been fixed and validated. All preload audits are on hold until then.
-    // See https://github.com/GoogleChrome/lighthouse/issues/11960 for more discussion.
-    return {score: 1, notApplicable: true, details: Audit.makeOpportunityDetails([], [], 0)};
   }
 }
 
