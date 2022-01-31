@@ -1,3 +1,11 @@
+<a name="9.3.1"></a>
+# 9.3.1 (2022-01-31)
+[Full Changelog](https://github.com/compare/v9.3.0...v9.3.1)
+
+## Report
+
+* disable fireworks with flag ([#13610](https://github.com/GoogleChrome/lighthouse/pull/13610))
+
 <a name="9.3.0"></a>
 # 9.3.0 (2022-01-31)
 [Full Changelog](https://github.com/compare/v9.2.0...v9.3.0)
