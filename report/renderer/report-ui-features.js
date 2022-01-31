@@ -85,7 +85,7 @@ export class ReportUIFeatures {
       const cat = lhr.categories[id];
       return cat && cat.score === 1;
     });
-    if (scoresAll100) {
+    if (scoresAll100 && !this._opts.disableAutoDarkModeAndFireworks) {
       turnOffTheLights = true;
       this._enableFireworks();
     }
