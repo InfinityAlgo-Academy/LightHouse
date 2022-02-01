@@ -13,7 +13,7 @@ const assert = require('assert').strict;
 const {LH_ROOT} = require('../root.js');
 
 const distDir = path.join(LH_ROOT, 'dist', 'dt-report-resources');
-const bundleOutFile = `${distDir}/report-generator.js`;
+const bundleOutFile = `${distDir}/report-generator.mjs`;
 
 /**
  * @param {string} name
@@ -27,7 +27,7 @@ function writeFile(name, content) {
 fs.rmSync(distDir, {recursive: true, force: true});
 fs.mkdirSync(distDir, {recursive: true});
 
-writeFile('report-generator.d.ts', 'export {}');
+writeFile('report-generator.mjs.d.ts', 'export {}');
 
 async function buildReportGenerator() {
   const bundle = await rollup.rollup({
