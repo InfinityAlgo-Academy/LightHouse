@@ -166,8 +166,6 @@ limitations under the License.
       justify-content: center;
       background-color: var(--sticky-header-background-color);
       border-bottom: 1px solid var(--color-gray-200);
-      padding-top: var(--score-container-padding);
-      padding-bottom: 4px;
       z-index: 1;
       pointer-events: none;
     }
@@ -195,14 +193,13 @@ limitations under the License.
       margin-left: 10px;
     }
 
-    .lh-highlighter {
-      width: var(--gauge-wrapper-width);
-      height: 1px;
-      background-color: var(--highlighter-background-color);
-      /* Position at bottom of first gauge in sticky header. */
-      position: absolute;
-      grid-column: 1;
-      bottom: -1px;
+    .lh-sticky-header .lh-gauge__wrapper,
+    .lh-sticky-header .lh-fraction__wrapper {
+      border-bottom: 1px transparent solid;
+    }
+
+    .lh-gauge--highlight {
+      border-color: var(--highlighter-background-color) !important;
     }
 
     .lh-gauge__wrapper:first-of-type {
