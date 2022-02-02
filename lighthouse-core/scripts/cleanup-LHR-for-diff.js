@@ -26,7 +26,7 @@ function cleanAndFormatLHR(lhrString) {
   /** @type {LH.Result} */
   const lhr = JSON.parse(lhrString);
 
-  lhr.fetchTime = new Date(2021, 6, 23).toISOString();
+  lhr.fetchTime = new Date(1627023600000).toISOString();
   lhr.i18n = undefined;
 
   // TODO: Resolve the below so we don't need to force it to a boolean value:
