@@ -305,7 +305,6 @@ export class TopbarFeatures {
     }
     gaugeToHighlight.classList.add('lh-gauge--highlight');
 
-    // Mutate at end to avoid layout thrashing.
     this.stickyHeaderEl.classList.toggle('lh-sticky-header--visible', showStickyHeader);
   }
 }
