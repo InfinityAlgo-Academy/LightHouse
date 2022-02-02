@@ -189,8 +189,10 @@ limitations under the License.
       animation: none;
     }
 
-    .lh-sticky-header .lh-gauge__label {
-      display: none;
+    .lh-sticky-header .lh-gauge__label,
+    .lh-sticky-header .lh-fraction__label {
+      margin-top: 0;
+      margin-left: 10px;
     }
 
     .lh-highlighter {
@@ -541,8 +543,8 @@ limitations under the License.
         <circle class="lh-gauge-base" r="56" cx="60" cy="60" stroke-width="8"></circle>
         <circle class="lh-gauge-arc"  r="56" cx="60" cy="60" stroke-width="8"></circle>
       </svg>
+      <div class="lh-gauge__percentage"></div>
     </div>
-    <div class="lh-gauge__percentage"></div>
     <!-- TODO: should likely be an h2  -->
     <div class="lh-gauge__label"></div>
   </a>
