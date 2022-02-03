@@ -13,6 +13,7 @@ jobs:
         with:
           node-version: 14.x
           registry-url: https://registry.npmjs.org/
+      - run: npm install -g npm
       - run: npm ci
 
       # Build report bundles needed for publishing.

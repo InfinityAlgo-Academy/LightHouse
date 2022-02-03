@@ -35,6 +35,7 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 14.x
+    - run: npm install -g npm
 
     - name: Define ToT chrome path
       if: matrix.chrome-channel == 'ToT'
@@ -86,6 +87,7 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 14.x
+    - run: npm install -g npm
 
     - run: npm ci --fetch-timeout 1000000
     - run: npm run build-report
@@ -116,6 +118,7 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 14.x
+    - run: npm install -g npm
 
     - run: npm ci --fetch-timeout 1000000
     - run: npm run build-report
@@ -147,6 +150,7 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 14.x
+    - run: npm install -g npm
 
     - run: npm ci --fetch-timeout 1000000
     - run: npm run build-report

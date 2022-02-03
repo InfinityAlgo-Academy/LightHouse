@@ -27,6 +27,7 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 14.x
+    - run: npm install -g npm
 
     - name: Generate cache hash
       run: bash $GITHUB_WORKSPACE/lighthouse/.github/scripts/generate-devtools-hash.sh > cdt-test-hash.txt
@@ -92,6 +93,7 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 14.x
+    - run: npm install -g npm
 
     - name: Download artifact
       uses: actions/download-artifact@v2
@@ -137,6 +139,7 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 14.x
+    - run: npm install -g npm
 
     - name: Download artifact
       uses: actions/download-artifact@v2
