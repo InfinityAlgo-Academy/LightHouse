@@ -57,7 +57,7 @@ jobs:
       if: steps.devtools-cache.outputs.cache-hit == 'true'
       run: echo "GHA_DEVTOOLS_CACHE_HIT=1" >> $GITHUB_ENV
 
-    - run: yarn --frozen-lockfile
+    - run: npm ci
       working-directory: ${{ github.workspace }}/lighthouse
 
     - name: Download depot tools
@@ -149,7 +149,7 @@ jobs:
     - name: Download Content Shell
       run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/chromium-web-tests/download-content-shell.sh
 
-    - run: yarn --frozen-lockfile
+    - run: npm ci
       working-directory: ${{ github.workspace }}/lighthouse
 
     - name: Define ToT chrome path

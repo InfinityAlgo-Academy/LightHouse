@@ -28,7 +28,7 @@ jobs:
       with:
         node-version: 14.x
 
-    - run: yarn install --frozen-lockfile --network-timeout 1000000
+    - run: npm ci --fetch-timeout 1000000
     - run: yarn build-all
 
     # Run tests that require headfull Chrome.

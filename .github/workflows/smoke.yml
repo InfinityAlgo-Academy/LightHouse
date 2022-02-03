@@ -46,7 +46,7 @@ jobs:
       working-directory: /home/runner
       run: bash $GITHUB_WORKSPACE/lighthouse-core/scripts/download-chrome.sh && mv chrome-linux chrome-linux-tot
 
-    - run: yarn install --frozen-lockfile --network-timeout 1000000
+    - run: npm ci --fetch-timeout 1000000
     - run: yarn build-report
     - run: yarn reset-link
 
@@ -87,7 +87,7 @@ jobs:
       with:
         node-version: 14.x
 
-    - run: yarn install --frozen-lockfile --network-timeout 1000000
+    - run: npm ci --fetch-timeout 1000000
     - run: yarn build-report
 
     - name: Run smoke tests
@@ -117,7 +117,7 @@ jobs:
       with:
         node-version: 14.x
 
-    - run: yarn install --frozen-lockfile --network-timeout 1000000
+    - run: npm ci --fetch-timeout 1000000
     - run: yarn build-report
     - run: yarn reset-link
 
@@ -148,7 +148,7 @@ jobs:
       with:
         node-version: 14.x
 
-    - run: yarn install --frozen-lockfile --network-timeout 1000000
+    - run: npm ci --fetch-timeout 1000000
     - run: yarn build-report
     - run: yarn build-devtools
 

@@ -21,7 +21,7 @@ git clone https://github.com/GoogleChrome/lighthouse.git
 cd ./lighthouse
 git checkout -f "$LIGHTHOUSE_GIT_REF"
 
-sudo yarn --frozen-lockfile
+sudo npm ci
 sudo yarn link
 
 cd /home/lighthouse
