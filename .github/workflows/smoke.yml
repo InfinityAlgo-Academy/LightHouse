@@ -47,14 +47,14 @@ jobs:
       run: bash $GITHUB_WORKSPACE/lighthouse-core/scripts/download-chrome.sh && mv chrome-linux chrome-linux-tot
 
     - run: npm ci --fetch-timeout 1000000
-    - run: yarn build-report
-    - run: yarn reset-link
+    - run: npm run build-report
+    - run: npm run reset-link
 
     - run: sudo apt-get install xvfb
     - name: Run smoke tests
       run: |
-        xvfb-run --auto-servernum yarn c8 yarn smoke --debug -j=1 --retries=2 --shard=${{ matrix.smoke-test-shard }}/$SHARD_TOTAL
-        yarn c8 report --reporter text-lcov > smoke-coverage.lcov
+        xvfb-run --auto-servernum npm run c8 npm run smoke --debug -j=1 --retries=2 --shard=${{ matrix.smoke-test-shard }}/$SHARD_TOTAL
+        npm run c8 report --reporter text-lcov > smoke-coverage.lcov
 
     - name: Upload test coverage to Codecov
       if: matrix.chrome-channel == 'ToT'
@@ -88,11 +88,11 @@ jobs:
         node-version: 14.x
 
     - run: npm ci --fetch-timeout 1000000
-    - run: yarn build-report
+    - run: npm run build-report
 
     - name: Run smoke tests
       # Windows bots are slow, so only run enough tests to verify matching behavior.
-      run: yarn smoke --debug -j=1 --retries=2 dbw oopif offline lantern metrics
+      run: npm run smoke --debug -j=1 --retries=2 dbw oopif offline lantern metrics
 
     # Fail if any changes were written to source files.
     - run: git diff --exit-code
@@ -118,12 +118,12 @@ jobs:
         node-version: 14.x
 
     - run: npm ci --fetch-timeout 1000000
-    - run: yarn build-report
-    - run: yarn reset-link
+    - run: npm run build-report
+    - run: npm run reset-link
 
     - run: sudo apt-get install xvfb
-    - name: yarn smoke --fraggle-rock
-      run: xvfb-run --auto-servernum yarn smoke --debug --fraggle-rock -j=1 --retries=2 --invert-match pwa offline
+    - name: npm run smoke --fraggle-rock
+      run: xvfb-run --auto-servernum npm run smoke --debug --fraggle-rock -j=1 --retries=2 --invert-match pwa offline
 
     # Fail if any changes were written to source files.
     - run: git diff --exit-code
@@ -149,12 +149,12 @@ jobs:
         node-version: 14.x
 
     - run: npm ci --fetch-timeout 1000000
-    - run: yarn build-report
-    - run: yarn build-devtools
+    - run: npm run build-report
+    - run: npm run build-devtools
 
     - run: sudo apt-get install xvfb
-    - name: yarn test-bundle
-      run: xvfb-run --auto-servernum yarn test-bundle
+    - name: npm run test-bundle
+      run: xvfb-run --auto-servernum npm run test-bundle
 
     # Fail if any changes were written to source files.
     - run: git diff --exit-code

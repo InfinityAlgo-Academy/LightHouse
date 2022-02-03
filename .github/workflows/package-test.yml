@@ -20,7 +20,7 @@ jobs:
         node-version: 14.x
 
     - run: npm ci --fetch-timeout 1000000
-    - run: yarn build-report
+    - run: npm run build-report
     - run: sudo apt-get install xvfb
 
     - run: xvfb-run --auto-servernum bash $GITHUB_WORKSPACE/lighthouse-core/scripts/release/package-test.sh

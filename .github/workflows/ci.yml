@@ -29,26 +29,26 @@ jobs:
         node-version: 14.x
 
     - run: npm ci --fetch-timeout 1000000
-    - run: yarn build-all
+    - run: npm run build-all
 
     # Run tests that require headfull Chrome.
     - run: sudo apt-get install xvfb
-    - name: yarn test-clients
-      run: xvfb-run --auto-servernum bash $GITHUB_WORKSPACE/.github/scripts/jest-retry.sh yarn test-clients
-    - name: yarn test-docs
-      run: xvfb-run --auto-servernum yarn test-docs
-    - name: yarn test-viewer
-      run: xvfb-run --auto-servernum bash $GITHUB_WORKSPACE/.github/scripts/jest-retry.sh yarn test-viewer
-    - name: yarn test-treemap
-      run: xvfb-run --auto-servernum bash $GITHUB_WORKSPACE/.github/scripts/jest-retry.sh yarn test-treemap
+    - name: npm run test-clients
+      run: xvfb-run --auto-servernum bash $GITHUB_WORKSPACE/.github/scripts/jest-retry.sh npm run test-clients
+    - name: npm run test-docs
+      run: xvfb-run --auto-servernum npm run test-docs
+    - name: npm run test-viewer
+      run: xvfb-run --auto-servernum bash $GITHUB_WORKSPACE/.github/scripts/jest-retry.sh npm run test-viewer
+    - name: npm run test-treemap
+      run: xvfb-run --auto-servernum bash $GITHUB_WORKSPACE/.github/scripts/jest-retry.sh npm run test-treemap
 
-    - run: yarn diff:sample-json
-    - run: yarn type-check
-    - run: yarn lint
-    - run: yarn test-lantern
-    - run: yarn test-legacy-javascript
-    - run: yarn i18n:checks
-    - run: yarn dogfood-lhci
+    - run: npm run diff:sample-json
+    - run: npm run type-check
+    - run: npm run lint
+    - run: npm run test-lantern
+    - run: npm run test-legacy-javascript
+    - run: npm run i18n:checks
+    - run: npm run dogfood-lhci
     - run: bash lighthouse-core/scripts/copy-util-commonjs.sh
 
     # Fail if any changes were written to any source files or generated untracked files (ex, from: build/build-cdt-lib.js).
@@ -62,7 +62,7 @@ jobs:
         BT_API_AUTH_TOKEN: ${{ secrets.BT_API_AUTH_TOKEN }}
     - name: Store in buildtracker
       # TODO(paulirish): Don't allow this to fail the build. https://github.com/paularmstrong/build-tracker/issues/200
-      run: yarn bt-cli upload-build || true
+      run: npx run bt-cli upload-build || true
       env:
         # https://buildtracker.dev/docs/guides/github-actions#configuration
         BT_API_AUTH_TOKEN: ${{ secrets.BT_API_AUTH_TOKEN }}

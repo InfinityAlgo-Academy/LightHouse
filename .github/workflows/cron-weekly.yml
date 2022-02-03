@@ -36,5 +36,4 @@ jobs:
       with:
         node-version: 14.x
     - run: npm ci
-
-    - run: yarn jest --testMatch="**/third-party/chromium-synchronization/*-test.js"
+    - run: npm run jest --testMatch="**/third-party/chromium-synchronization/*-test.js"
