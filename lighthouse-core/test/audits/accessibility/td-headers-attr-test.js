@@ -31,7 +31,7 @@ describe('Accessibility: td-headers-attr audit', () => {
       Accessibility: {
         violations: [{
           id: 'td-headers-attr',
-          nodes: [],
+          nodes: [{node: {}, relatedNodes: []}],
           help: 'http://example.com/',
         }],
       },

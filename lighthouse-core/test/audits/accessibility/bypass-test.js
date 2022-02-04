@@ -31,7 +31,7 @@ describe('Accessibility: bypass audit', () => {
       Accessibility: {
         violations: [{
           id: 'bypass',
-          nodes: [],
+          nodes: [{node: {}, relatedNodes: []}],
           help: 'http://example.com/',
         }],
       },
