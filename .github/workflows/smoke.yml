@@ -87,6 +87,8 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 14.x
+    # https://github.com/microsoft/WSL/issues/14#issuecomment-210867367
+    - run: npm config set unsafe-perm true
     - run: npm install -g npm
 
     - run: npm ci --fetch-timeout 1000000
