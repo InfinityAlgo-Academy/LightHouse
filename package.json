@@ -37,7 +37,7 @@
     "start": "yarn build-report --standalone && node ./lighthouse-cli/index.js",
     "jest": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js",
     "____comment": "echo https://github.com/cucumber/cucumber-js/issues/1844",
-    "mocha": "cp node_modules/mocha/bin/mocha node_modules/mocha/bin/mocha.js && node --loader=testdouble node_modules/mocha/bin/mocha.js --require=lighthouse-core/test/mocha-setup.js",
+    "mocha": "cp node_modules/mocha/bin/mocha node_modules/mocha/bin/mocha.js && node lighthouse-core/test/scripts/run-tests.js",
     "test": "yarn diff:sample-json && yarn lint --quiet && yarn unit && yarn type-check",
     "test-bundle": "yarn smoke --runner bundle -j=1 --retries=2 --invert-match forms",
     "test-clients": "yarn jest \"$PWD/clients/\" && yarn jest --testMatch=\"**/clients/test/**/*-test-pptr.js\"",

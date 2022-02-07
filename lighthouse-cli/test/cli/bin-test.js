@@ -19,7 +19,6 @@ const mockGetFlags = jestMock.fn();
 const mockAskPermission = jestMock.fn();
 const mockSentryInit = jestMock.fn();
 const mockLoggerSetLevel = jestMock.fn();
-const mockNotify = jestMock.fn();
 
 /** @type {import('../../bin.js')} */
 let bin;
@@ -37,7 +36,6 @@ beforeAll(async () => {
     init: mockSentryInit,
   });
   await td.replaceEsm('lighthouse-logger', undefined, {setLevel: mockLoggerSetLevel});
-  await td.replaceEsm('update-notifier', undefined, () => ({notify: mockNotify}));
   bin = await import('../../bin.js');
 });
 

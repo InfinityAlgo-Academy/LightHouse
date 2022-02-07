@@ -149,7 +149,7 @@ module.exports = {
 
       if (!process.env.SNAPSHOT_UPDATE && snapshotTestFailed) {
         process.on('exit', () => {
-          console.log('To update snapshots, run again with SNAPSHOT_UPDATE=1');
+          console.log('To update snapshots, run again with `yarn mocha -u`');
         });
       }
     },
