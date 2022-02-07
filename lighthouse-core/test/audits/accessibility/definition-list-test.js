@@ -31,7 +31,7 @@ describe('Accessibility: definition-list audit', () => {
       Accessibility: {
         violations: [{
           id: 'definition-list',
-          nodes: [],
+          nodes: [{node: {}, relatedNodes: []}],
           help: 'http://example.com/',
         }],
       },

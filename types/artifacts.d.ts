@@ -559,6 +559,7 @@ declare module Artifacts {
     contentSecurityPolicyIssue: LH.Crdp.Audits.ContentSecurityPolicyIssueDetails[];
     corsIssue: LH.Crdp.Audits.CorsIssueDetails[];
     deprecationIssue: LH.Crdp.Audits.DeprecationIssueDetails[];
+    federatedAuthRequestIssue: LH.Crdp.Audits.FederatedAuthRequestIssueDetails[],
     genericIssue: LH.Crdp.Audits.GenericIssueDetails[];
     heavyAdIssue: LH.Crdp.Audits.HeavyAdIssueDetails[];
     lowTextContrastIssue: LH.Crdp.Audits.LowTextContrastIssueDetails[];
@@ -568,7 +569,6 @@ declare module Artifacts {
     sameSiteCookieIssue: LH.Crdp.Audits.SameSiteCookieIssueDetails[];
     sharedArrayBufferIssue: LH.Crdp.Audits.SharedArrayBufferIssueDetails[];
     twaQualityEnforcement: LH.Crdp.Audits.TrustedWebActivityIssueDetails[];
-    wasmCrossOriginModuleSharingIssue: LH.Crdp.Audits.WasmCrossOriginModuleSharingIssueDetails[];
   }
 
   // Computed artifact types below.

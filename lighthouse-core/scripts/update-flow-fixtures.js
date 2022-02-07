@@ -8,6 +8,7 @@
 import fs from 'fs';
 import assert from 'assert';
 
+import open from 'open';
 import waitForExpect from 'wait-for-expect';
 import puppeteer from 'puppeteer';
 
@@ -75,6 +76,13 @@ async function waitForImagesToLoad(page) {
       `${LH_ROOT}/lighthouse-core/test/fixtures/fraggle-rock/reports/sample-flow-result.json`,
       JSON.stringify(flowResult, null, 2)
     );
+
+    if (process.argv.includes('--view')) {
+      const htmlReport = flow.generateReport();
+      const filepath = `${LH_ROOT}/dist/sample-reports/flow-report/index.html`;
+      fs.writeFileSync(filepath, htmlReport);
+      open(filepath);
+    }
 
     process.exit(0);
   } catch (err) {

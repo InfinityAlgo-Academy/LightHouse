@@ -31,7 +31,7 @@ import yargs from 'yargs';
 import * as yargsHelpers from 'yargs/helpers';
 
 const y = yargs(yargsHelpers.hideBin(process.argv));
-const argv = y
+const argv_ = y
   .usage('$0 [url]')
   .help('help').alias('help', 'h')
   .option('_', {type: 'string'})
@@ -50,6 +50,7 @@ const argv = y
   })
   .argv;
 
+const argv = /** @type {Awaited<typeof argv_>} */ (argv_);
 /** @type {LH.Config.Json=} */
 const config = argv.config ? JSON.parse(argv.config) : undefined;
 

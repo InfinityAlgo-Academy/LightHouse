@@ -24,7 +24,6 @@ import url from 'url';
 import module from 'module';
 
 import log from 'lighthouse-logger';
-import updateNotifier from 'update-notifier';
 
 import * as commands from './commands/commands.js';
 import * as Printer from './printer.js';
@@ -51,9 +50,6 @@ function isDev() {
  * @return {Promise<LH.RunnerResult|void>}
  */
 async function begin() {
-  // Tell user if there's a newer version of LH.
-  updateNotifier({pkg}).notify();
-
   const cliFlags = getFlags();
 
   // Process terminating command

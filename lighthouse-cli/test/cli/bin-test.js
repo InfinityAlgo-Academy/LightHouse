@@ -52,7 +52,6 @@ beforeEach(async () => {
   mockAskPermission.mockReset();
   mockGetFlags.mockReset();
   mockLoggerSetLevel.mockReset();
-  mockNotify.mockReset();
   mockRunLighthouse.mockReset();
   mockSentryInit.mockReset();
   mockRunLighthouse.mockResolvedValue({});

@@ -31,7 +31,7 @@ describe('Accessibility: color-contrast audit', () => {
       Accessibility: {
         violations: [{
           id: 'color-contrast',
-          nodes: [],
+          nodes: [{node: {}, relatedNodes: []}],
           help: 'http://example.com/',
         }],
       },

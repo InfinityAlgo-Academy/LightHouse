@@ -177,7 +177,6 @@ function getYargsParser(manualArgv) {
       },
       'enable-error-reporting': {
         type: 'boolean',
-        default: undefined, // Explicitly `undefined` so prompted by default.
         describe: 'Enables error reporting, overriding any saved preference. --no-enable-error-reporting will do the opposite. More: https://git.io/vFFTO',
       },
       'gather-mode': {
@@ -351,8 +350,15 @@ function getFlags(manualArgv, options = {}) {
 
   // Augmenting yargs type with auto-camelCasing breaks in tsc@4.1.2 and @types/yargs@15.0.11,
   // so for now cast to add yarg's camelCase properties to type.
-  const argv = parser.argv;
+  const argv = /** @type {Awaited<typeof parser.argv>} */ (parser.argv);
   const cliFlags = /** @type {typeof argv & CamelCasify<typeof argv>} */ (argv);
+
+  // yargs will return `undefined` for options that have a `coerce` function but
+  // are not actually present in the user input. Instead of passing properties
+  // explicitly set to undefined, delete them from the flags object.
+  for (const [k, v] of Object.entries(cliFlags)) {
+    if (v === undefined) delete cliFlags[k];
+  }
 
   return cliFlags;
 }
@@ -360,10 +366,10 @@ function getFlags(manualArgv, options = {}) {
 /**
  * Support comma-separated values for some array flags by splitting on any ',' found.
  * @param {Array<string>=} strings
- * @return {Array<string>|undefined}
+ * @return {Array<string>=}
  */
 function splitCommaSeparatedValues(strings) {
-  if (!strings) return strings;
+  if (!strings) return;
 
   return strings.flatMap(value => value.split(','));
 }
@@ -373,7 +379,9 @@ function splitCommaSeparatedValues(strings) {
  * @return {boolean|string|undefined}
  */
 function coerceOptionalStringBoolean(value) {
-  if (typeof value !== 'undefined' && typeof value !== 'string' && typeof value !== 'boolean') {
+  if (value === undefined) return;
+
+  if (typeof value !== 'string' && typeof value !== 'boolean') {
     throw new Error('Invalid value: Argument must be a string or a boolean');
   }
   return value;
@@ -407,9 +415,11 @@ function coerceOutput(values) {
  * allowlist specific locales. Why? So we can support the user who requests 'es-MX' (unsupported)
  * and we'll fall back to 'es' (supported).
  * @param {unknown} value
- * @return {LH.Locale}
+ * @return {LH.Locale|undefined}
  */
 function coerceLocale(value) {
+  if (value === undefined) return;
+
   if (typeof value !== 'string') throw new Error(`Invalid value: Argument 'locale' must be a string`);
   return /** @type {LH.Locale} */ (value);
 }
@@ -439,9 +449,11 @@ function coerceExtraHeaders(value) {
 /**
  * Take yarg's unchecked object value and ensure it's proper throttling settings.
  * @param {unknown} value
- * @return {LH.ThrottlingSettings}
+ * @return {LH.ThrottlingSettings|undefined}
  */
 function coerceThrottling(value) {
+  if (value === undefined) return;
+
   if (!isObjectOfUnknownValues(value)) {
     throw new Error(`Invalid value: Argument 'throttling' must be an object, specified per-property ('throttling.rttMs', 'throttling.throughputKbps', etc)`);
   }
@@ -473,9 +485,11 @@ function coerceThrottling(value) {
 /**
  * Take yarg's unchecked object value and ensure it is a proper LH.screenEmulationSettings.
  * @param {unknown} value
- * @return {Partial<LH.ScreenEmulationSettings>}
+ * @return {Partial<LH.ScreenEmulationSettings>|undefined}
  */
 function coerceScreenEmulation(value) {
+  if (value === undefined) return;
+
   if (!isObjectOfUnknownValues(value)) {
     throw new Error(`Invalid value: Argument 'screenEmulation' must be an object, specified per-property ('screenEmulation.width', 'screenEmulation.deviceScaleFactor', etc)`);
   }

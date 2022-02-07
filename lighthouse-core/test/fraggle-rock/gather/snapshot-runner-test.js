@@ -66,14 +66,15 @@ describe('Snapshot Runner', () => {
   it('should connect to the page and run', async () => {
     await snapshot({page, config});
     expect(mockDriver.connect).toHaveBeenCalled();
-    expect(mockRunner.run).toHaveBeenCalled();
+    expect(mockRunner.gather).toHaveBeenCalled();
+    expect(mockRunner.audit).toHaveBeenCalled();
   });
 
   it('should collect base artifacts', async () => {
     mockPage.url.mockResolvedValue('https://lighthouse.example.com/');
 
     await snapshot({page, config});
-    const artifacts = await mockRunner.run.mock.calls[0][0]();
+    const artifacts = await mockRunner.gather.mock.calls[0][0]();
     expect(artifacts).toMatchObject({
       fetchTime: expect.any(String),
       URL: {finalUrl: 'https://lighthouse.example.com/'},
@@ -82,7 +83,7 @@ describe('Snapshot Runner', () => {
 
   it('should collect snapshot artifacts', async () => {
     await snapshot({page, config});
-    const artifacts = await mockRunner.run.mock.calls[0][0]();
+    const artifacts = await mockRunner.gather.mock.calls[0][0]();
     expect(artifacts).toMatchObject({A: 'Artifact A', B: 'Artifact B'});
     expect(gathererA.getArtifact).toHaveBeenCalled();
     expect(gathererB.getArtifact).toHaveBeenCalled();
@@ -99,7 +100,7 @@ describe('Snapshot Runner', () => {
     const configContext = {settingsOverrides};
     await snapshot({page, config, configContext});
 
-    expect(mockRunner.run.mock.calls[0][1]).toMatchObject({
+    expect(mockRunner.gather.mock.calls[0][1]).toMatchObject({
       config: {
         settings: settingsOverrides,
       },
@@ -108,7 +109,7 @@ describe('Snapshot Runner', () => {
 
   it('should not invoke instrumentation methods', async () => {
     await snapshot({page, config});
-    await mockRunner.run.mock.calls[0][0]();
+    await mockRunner.gather.mock.calls[0][0]();
     expect(gathererA.startInstrumentation).not.toHaveBeenCalled();
     expect(gathererA.startSensitiveInstrumentation).not.toHaveBeenCalled();
     expect(gathererA.stopSensitiveInstrumentation).not.toHaveBeenCalled();
@@ -119,7 +120,7 @@ describe('Snapshot Runner', () => {
     gathererB.meta.supportedModes = ['timespan'];
 
     await snapshot({page, config});
-    const artifacts = await mockRunner.run.mock.calls[0][0]();
+    const artifacts = await mockRunner.gather.mock.calls[0][0]();
     expect(artifacts).toMatchObject({A: 'Artifact A'});
     expect(artifacts).not.toHaveProperty('B');
     expect(gathererB.getArtifact).not.toHaveBeenCalled();
@@ -132,7 +133,7 @@ describe('Snapshot Runner', () => {
     gathererB.meta.dependencies = {ImageElements: dependencySymbol};
 
     await snapshot({page, config});
-    const artifacts = await mockRunner.run.mock.calls[0][0]();
+    const artifacts = await mockRunner.gather.mock.calls[0][0]();
     expect(artifacts).toMatchObject({A: 'Artifact A', B: 'Artifact B'});
     expect(gathererB.getArtifact.mock.calls[0][0]).toMatchObject({
       dependencies: {

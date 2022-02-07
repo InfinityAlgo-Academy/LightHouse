@@ -64,11 +64,15 @@ Individual elements of an array can be asserted by using numeric properties in a
 
 However, if an array literal is used as the expectation, an extra condition is enforced that the actual array _must_ have the same length as the provided expected array.
 
+Arrays can be checked against a subset of elements using the special `_includes` property. The value of `_includes` _must_ be an array. Each assertion in `_includes` will remove the matching item from consideration for the rest.
+
 **Examples**:
 | Actual | Expected | Result |
 | -- | -- | -- |
 | `[{url: 'http://badssl.com'}, {url: 'http://example.com'}]` | `{1: {url: 'http://example.com'}}` | ✅ PASS |
 | `[{timeInMs: 5}, {timeInMs: 15}]` | `{length: 2}` | ✅ PASS |
+| `[{timeInMs: 5}, {timeInMs: 15}]` | `{_includes: [{timeInMs: 5}]}` | ✅ PASS |
+| `[{timeInMs: 5}, {timeInMs: 15}]` | `{_includes: [{timeInMs: 5}, {timeInMs: 5}]}` | ❌ FAIL |
 | `[{timeInMs: 5}, {timeInMs: 15}]` | `[{timeInMs: 5}]` | ❌ FAIL |
 
 ### Special environment checks

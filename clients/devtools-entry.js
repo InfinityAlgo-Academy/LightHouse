@@ -8,6 +8,7 @@
 /* global globalThis */
 
 const lighthouse = require('../lighthouse-core/index.js');
+const {navigation, startTimespan, snapshot} = require('../lighthouse-core/fraggle-rock/api.js');
 const RawProtocol = require('../lighthouse-core/gather/connections/raw.js');
 const log = require('lighthouse-logger');
 const {lookupLocale} = require('../lighthouse-core/lib/i18n/i18n.js');
@@ -87,6 +88,12 @@ if (typeof self !== 'undefined') {
   self.setUpWorkerConnection = setUpWorkerConnection;
   // @ts-expect-error
   self.runLighthouse = lighthouse;
+  // @ts-expect-error
+  self.runLighthouseNavigation = navigation;
+  // @ts-expect-error
+  self.startLighthouseTimespan = startTimespan;
+  // @ts-expect-error
+  self.runLighthouseSnapshot = snapshot;
   // @ts-expect-error
   self.createConfig = createConfig;
   // @ts-expect-error

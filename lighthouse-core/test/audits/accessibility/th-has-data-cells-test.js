@@ -31,7 +31,7 @@ describe('Accessibility: th-has-data-cells audit', () => {
       Accessibility: {
         violations: [{
           id: 'th-has-data-cells',
-          nodes: [],
+          nodes: [{node: {}, relatedNodes: []}],
           help: 'http://example.com/',
         }],
       },

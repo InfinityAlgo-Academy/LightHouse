@@ -5,14 +5,11 @@
  */
 'use strict';
 
-import fs from 'fs';
-
 import * as cli from '../../lighthouse-cli/run.js';
 import * as cliFlags from '../../lighthouse-cli/cli-flags.js';
 import assetSaver from '../lib/asset-saver.js';
 import {server} from '../../lighthouse-cli/test/fixtures/static-server.js';
 import budgetedConfig from '../test/results/sample-config.js';
-import {LH_ROOT} from '../../root.js';
 
 const artifactPath = 'lighthouse-core/test/results/artifacts';
 // All artifacts must have resources from a consistent port, to ensure reproducibility.
@@ -20,7 +17,7 @@ const artifactPath = 'lighthouse-core/test/results/artifacts';
 const MAGIC_SERVER_PORT = 10200;
 
 /**
- * Update the report artifacts. If artifactName is set only that artifact will be updated.
+ * Update the report artifacts. If artifactName is set, only that artifact will be updated.
  * @param {keyof LH.Artifacts=} artifactName
  */
 async function update(artifactName) {
@@ -37,32 +34,31 @@ async function update(artifactName) {
   await cli.runLighthouse(url, flags, budgetedConfig);
   await server.close();
 
-  if (artifactName) {
-    // Revert everything except the one artifact
-    const newArtifacts = assetSaver.loadArtifacts(artifactPath);
-    if (!(artifactName in newArtifacts) && !(artifactName in oldArtifacts)) {
-      throw Error('Unknown artifact name: ' + artifactName);
-    }
-    const finalArtifacts = oldArtifacts;
-    const newArtifact = newArtifacts[artifactName];
-    // @ts-expect-error tsc can't yet express that artifactName is only a single type in each iteration, not a union of types.
-    finalArtifacts[artifactName] = newArtifact;
-    await assetSaver.saveArtifacts(finalArtifacts, artifactPath);
-  }
+  let newArtifacts = assetSaver.loadArtifacts(artifactPath);
 
-  // Normalize some data.
-  const artifactsFile = `${LH_ROOT}/${artifactPath}/artifacts.json`;
-  /** @type {LH.Artifacts} */
-  const artifacts = JSON.parse(fs.readFileSync(artifactsFile, 'utf-8'));
-
-  for (const timing of artifacts.Timing) {
+  // Normalize some data so it doesn't change on every update.
+  let baseTime = 0;
+  for (const timing of newArtifacts.Timing) {
     // @ts-expect-error: Value actually is writeable at this point.
-    timing.startTime = 0;
+    timing.startTime = baseTime++;
     // @ts-expect-error: Value actually is writeable at this point.
     timing.duration = 1;
   }
 
-  fs.writeFileSync(artifactsFile, JSON.stringify(artifacts, null, 2));
+  if (artifactName) {
+    // Revert everything except the one artifact
+    if (!(artifactName in newArtifacts) && !(artifactName in oldArtifacts)) {
+      throw Error('Unknown artifact name: ' + artifactName);
+    }
+
+    const newArtifactToKeep = newArtifacts[artifactName];
+
+    newArtifacts = oldArtifacts;
+    // @ts-expect-error tsc can't yet express that artifactName is only a single type in each iteration, not a union of types.
+    newArtifacts[artifactName] = newArtifactToKeep;
+  }
+
+  await assetSaver.saveArtifacts(newArtifacts, artifactPath);
 }
 
 update(/** @type {keyof LH.Artifacts | undefined} */ (process.argv[2]));

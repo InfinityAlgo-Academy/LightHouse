@@ -10,7 +10,6 @@ import byteEfficiency from './test-definitions/byte-efficiency.js';
 import byteGzip from './test-definitions/byte-gzip.js';
 import cspAllowAll from './test-definitions/csp-allow-all.js';
 import cspBlockAll from './test-definitions/csp-block-all.js';
-import cspBlockAllM91 from './test-definitions/csp-block-all-m91.js';
 import dbw from './test-definitions/dobetterweb.js';
 import errorsExpiredSsl from './test-definitions/errors-expired-ssl.js';
 import errorsIframeExpiredSsl from './test-definitions/errors-iframe-expired-ssl.js';
@@ -60,6 +59,7 @@ import seoPassing from './test-definitions/seo-passing.js';
 import seoStatus403 from './test-definitions/seo-status-403.js';
 import seoTapTargets from './test-definitions/seo-tap-targets.js';
 import sourceMaps from './test-definitions/source-maps.js';
+import timing from './test-definitions/timing.js';
 
 /** @type {ReadonlyArray<Smokehouse.TestDfn>} */
 const smokeTests = [
@@ -68,7 +68,6 @@ const smokeTests = [
   byteGzip,
   cspAllowAll,
   cspBlockAll,
-  cspBlockAllM91,
   dbw,
   errorsExpiredSsl,
   errorsIframeExpiredSsl,
@@ -119,6 +118,7 @@ const smokeTests = [
   seoStatus403,
   seoTapTargets,
   sourceMaps,
+  timing,
 ];
 
 export default smokeTests;

@@ -20,6 +20,7 @@ describe('Has inspector issues audit', () => {
       contentSecurityPolicyIssue: [],
       corsIssue: [],
       deprecationIssue: [],
+      federatedAuthRequestIssue: [],
       genericIssue: [],
       heavyAdIssue: [],
       lowTextContrastIssue: [],
@@ -29,7 +30,6 @@ describe('Has inspector issues audit', () => {
       sameSiteCookieIssue: [],
       sharedArrayBufferIssue: [],
       twaQualityEnforcement: [],
-      wasmCrossOriginModuleSharingIssue: [],
     };
   });
 

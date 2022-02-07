@@ -248,7 +248,7 @@ describe('_getArtifact', () => {
       quirksModeIssue: [],
       sharedArrayBufferIssue: [],
       twaQualityEnforcement: [],
-      wasmCrossOriginModuleSharingIssue: [],
+      federatedAuthRequestIssue: [],
     });
   });
 
@@ -304,7 +304,7 @@ describe('_getArtifact', () => {
       quirksModeIssue: [],
       sharedArrayBufferIssue: [],
       twaQualityEnforcement: [],
-      wasmCrossOriginModuleSharingIssue: [],
+      federatedAuthRequestIssue: [],
     });
   });
 });
@@ -365,7 +365,7 @@ describe('FR compat', () => {
       quirksModeIssue: [],
       sharedArrayBufferIssue: [],
       twaQualityEnforcement: [],
-      wasmCrossOriginModuleSharingIssue: [],
+      federatedAuthRequestIssue: [],
     });
   });
 
@@ -401,7 +401,7 @@ describe('FR compat', () => {
       quirksModeIssue: [],
       sharedArrayBufferIssue: [],
       twaQualityEnforcement: [],
-      wasmCrossOriginModuleSharingIssue: [],
+      federatedAuthRequestIssue: [],
     });
   });
 });

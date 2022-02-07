@@ -15,17 +15,15 @@ function headersParam(headers) {
 }
 
 /**
- * Only allow the empty script with the source map.
- * Hash generated using https://strict-csp-codelab.glitch.me/csp_sha256_util.html
- * Easiest way to get script contents with whitespace is by copying script node in DevTools.
+ * Some script are required for the test.
+ * Allow scripts with the attribute nonce="00000000".
  */
 const blockAllExceptInlineScriptCsp = headersParam([[
   'Content-Security-Policy',
-  `default-src 'none'; script-src 'sha256-NCWlI90TxQpIfghtBWJyNU5Y92Nj8XhO+AYMm0gqGfQ='`,
+  `default-src 'none'; script-src 'nonce-00000000'`,
 ]]);
 
 /**
- * Same CSP as block-all-m91.js, but verifies correct behavior for M92.
  * @type {Smokehouse.ExpectedRunnerResult}
  */
 const expectations = {

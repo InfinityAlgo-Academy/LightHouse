@@ -111,6 +111,35 @@ function findDifference(path, actual, expected) {
     const keyPath = path + keyAccessor;
     const expectedValue = expected[key];
 
+    if (key === '_includes') {
+      if (!Array.isArray(expectedValue)) throw new Error('Array subset must be array');
+      if (!Array.isArray(actual)) {
+        return {
+          path,
+          actual: 'Actual value is not an array',
+          expected,
+        };
+      }
+
+      const actualCopy = [...actual];
+      for (const expectedEntry of expectedValue) {
+        const matchingIndex =
+          actualCopy.findIndex(actualEntry => !findDifference(keyPath, actualEntry, expectedEntry));
+        if (matchingIndex !== -1) {
+          actualCopy.splice(matchingIndex, 1);
+          continue;
+        }
+
+        return {
+          path,
+          actual: 'Item not found in array',
+          expected: expectedEntry,
+        };
+      }
+
+      continue;
+    }
+
     const actualValue = actual[key];
     const subDifference = findDifference(keyPath, actualValue, expectedValue);
 
@@ -305,6 +334,12 @@ function collateResults(localConsole, actual, expected) {
     return makeComparison(auditName + ' audit', actualResult, expectedResult);
   });
 
+  const timingAssertions = [];
+  if (expected.lhr.timing) {
+    const comparison = makeComparison('timing', actual.lhr.timing, expected.lhr.timing);
+    timingAssertions.push(comparison);
+  }
+
   /** @type {Comparison[]} */
   const requestCountAssertion = [];
   if (expected.networkRequests) {
@@ -322,6 +357,7 @@ function collateResults(localConsole, actual, expected) {
     ...requestCountAssertion,
     ...artifactAssertions,
     ...auditAssertions,
+    ...timingAssertions,
   ];
 }
 

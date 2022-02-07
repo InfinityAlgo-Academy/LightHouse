@@ -31,7 +31,7 @@ describe('Accessibility: label audit', () => {
       Accessibility: {
         violations: [{
           id: 'label',
-          nodes: [],
+          nodes: [{node: {}, relatedNodes: []}],
           help: 'http://example.com/',
         }],
       },

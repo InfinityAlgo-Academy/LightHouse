@@ -12,7 +12,6 @@ docs/
 lighthouse-core/lib/sd-validation/
 lighthouse-core/scripts/*
 lighthouse-core/test/
-lighthouse-core/third_party/src/
 viewer/
 treemap/
 clients/
