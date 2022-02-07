@@ -17,6 +17,7 @@ const {SnapshotState, toMatchSnapshot, toMatchInlineSnapshot} = require('jest-sn
 
 /** @type {Map<string, SnapshotState['prototype']>} */
 const snapshotStatesByTestFile = new Map();
+let snapshotTestFailed = false;
 
 /**
  * @param {string} testFile
@@ -73,8 +74,9 @@ expect.extend({
     // @ts-expect-error - this is enough for snapshots to work.
     const context = {snapshotState, currentTestName: title};
     const matcher = toMatchSnapshot.bind(context);
-
-    return matcher(actual);
+    const result = matcher(actual);
+    if (!result.pass) snapshotTestFailed = true;
+    return result;
   },
   /**
    * @param {any} actual
@@ -90,8 +92,9 @@ expect.extend({
     // @ts-expect-error - this is enough for snapshots to work.
     const context = {snapshotState, currentTestName: title};
     const matcher = toMatchInlineSnapshot.bind(context);
-
-    return matcher(actual, expected);
+    const result = matcher(actual, expected);
+    if (!result.pass) snapshotTestFailed = true;
+    return result;
   },
 });
 
@@ -142,6 +145,12 @@ module.exports = {
         }
 
         snapshotState.save();
+      }
+
+      if (!process.env.SNAPSHOT_UPDATE && snapshotTestFailed) {
+        process.on('exit', () => {
+          console.log('To update snapshots, run again with SNAPSHOT_UPDATE=1');
+        });
       }
     },
   },
