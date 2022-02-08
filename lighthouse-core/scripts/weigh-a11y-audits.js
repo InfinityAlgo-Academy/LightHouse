@@ -14,7 +14,7 @@ if (!config.categories || !config.audits) throw new Error('wut');
 
 const axePath = path.dirname(require.resolve('axe-core'));
 
-/** @type {Record<string, {any: string[], all: string[], none: string[]}>} */
+/** @type {Record<string, {any: string[], all: string[], none: string[], impact?: string}>} */
 const axeRules = {};
 const axeRulesPath = `${axePath}/lib/rules`;
 for (const file of glob.sync(`${axeRulesPath}/**/*.json`)) {
@@ -39,10 +39,13 @@ function uniq(values) {
 }
 
 /**
- * @param {number[]} values
+ * @param {string} impactString
  */
-function sum(values) {
-  return values.reduce((acc, cur) => acc + cur, 0);
+function impactToValue(impactString) {
+  const index = axeImpacts.indexOf(impactString);
+  if (index === -1) throw new Error(`unknown impact ${impactString}`);
+
+  return axeImpactValues[index];
 }
 
 const axeImpacts = ['minor', 'moderate', 'serious', 'critical'];
@@ -54,12 +57,9 @@ const axeImpactValues = [1, 2, 3, 10];
 function parseImpactsFromChecks(checks) {
   const impactStrings = uniq(checks.map(check => axeChecks[check].metadata.impact));
   return impactStrings.map(impactString => {
-    const index = axeImpacts.indexOf(impactString);
-    if (index === -1) throw new Error(`unknown impact ${impactString}`);
-
     return {
       impactString,
-      value: axeImpactValues[index],
+      value: impactToValue(impactString),
     };
   }).sort((a, b) => b.value - a.value);
 }
@@ -80,16 +80,19 @@ for (const {id} of Object.values(config.categories.accessibility.auditRefs)) {
     none: parseImpactsFromChecks(rule.none),
   };
 
-  if (impacts.any.length) impacts.any = [impacts.any[0]];
-  const impactValues =
-    uniq([...impacts.any, ...impacts.all, ...impacts.none].map(impact => impact.value));
+  let weight;
+  if (rule.impact) {
+    weight = impactToValue(rule.impact);
+  } else {
+    if (impacts.any.length) impacts.any = [impacts.any[0]];
+    const impactValues =
+      uniq([...impacts.any, ...impacts.all, ...impacts.none].map(impact => impact.value));
+    weight = Math.max(...impactValues);
+  }
+
   const impactStrings =
     uniq([...impacts.any, ...impacts.all, ...impacts.none].map(impact => impact.impactString));
-  // const weight = sum(impactValues);
-  // const weight = Math.max(...impactValues);
-  const weight = sum([...new Set([...impactValues])]);
-
-  results.push({id, weight, impactValues, impactStrings});
+  results.push({id, weight, impactStrings});
 }
 results.sort((a, b) => b.weight - a.weight);
 
