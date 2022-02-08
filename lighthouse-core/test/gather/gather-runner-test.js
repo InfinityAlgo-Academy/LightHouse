@@ -122,16 +122,16 @@ beforeEach(() => {
   resetDefaultMockResponses();
 
   const emulation = require('../../lib/emulation.js');
-  emulation.emulate = jest.fn();
-  emulation.throttle = jest.fn();
-  emulation.clearThrottling = jest.fn();
+  emulation.emulate = jestMock.fn();
+  emulation.throttle = jestMock.fn();
+  emulation.clearThrottling = jestMock.fn();
 
   const prepare = require('../../gather/driver/prepare.js');
-  prepare.prepareTargetForNavigationMode = jest.fn();
-  prepare.prepareTargetForIndividualNavigation = jest.fn().mockResolvedValue({warnings: []});
+  prepare.prepareTargetForNavigationMode = jestMock.fn();
+  prepare.prepareTargetForIndividualNavigation = jestMock.fn().mockResolvedValue({warnings: []});
 
   const navigation = jest.requireMock('../../gather/driver/navigation.js');
-  navigation.gotoURL = jest.fn().mockResolvedValue({
+  navigation.gotoURL = jestMock.fn().mockResolvedValue({
     finalUrl: 'https://example.com',
     timedOut: false,
     warnings: [],
@@ -514,8 +514,8 @@ describe('GatherRunner', function() {
     // NO_FCP should be ignored because it's a warn pass.
     const navigationError = new LHError(LHError.errors.NO_FCP);
 
-    const gotoUrlForAboutBlank = jest.fn().mockResolvedValue({});
-    const gotoUrlForRealUrl = jest.fn()
+    const gotoUrlForAboutBlank = jestMock.fn().mockResolvedValue({});
+    const gotoUrlForRealUrl = jestMock.fn()
       .mockResolvedValueOnce({finalUrl: requestedUrl, timedOut: false, warnings: []})
       .mockRejectedValueOnce(navigationError);
     const driver = Object.assign({}, fakeDriver, {

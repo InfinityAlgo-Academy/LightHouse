@@ -47,7 +47,7 @@ function createMockSendCommandFn(options) {
    * @type {Array<{command: C|any, sessionId?: string, response?: MockResponse<C>, delay?: number}>}
    */
   const mockResponses = [];
-  const mockFnImpl = jest.fn().mockImplementation(
+  const mockFnImpl = jestMock.fn().mockImplementation(
     /**
      * @template {keyof LH.CrdpCommands} C
      * @param {C} command
@@ -135,7 +135,7 @@ function createMockOnceFn() {
    * @type {Array<{event: E|any, response?: MockEvent<E>}>}
    */
   const mockEvents = [];
-  const mockFnImpl = jest.fn().mockImplementation((eventName, listener) => {
+  const mockFnImpl = jestMock.fn().mockImplementation((eventName, listener) => {
     const indexOfResponse = mockEvents.findIndex(entry => entry.event === eventName);
     if (indexOfResponse === -1) return;
     const {response} = mockEvents[indexOfResponse];
@@ -182,7 +182,7 @@ function createMockOnFn() {
    * @type {Array<{event: E|any, response?: MockEvent<E>}>}
    */
   const mockEvents = [];
-  const mockFnImpl = jest.fn().mockImplementation((eventName, listener) => {
+  const mockFnImpl = jestMock.fn().mockImplementation((eventName, listener) => {
     const events = mockEvents.filter(entry => entry.event === eventName);
     if (!events.length) return;
     for (const event of events) {

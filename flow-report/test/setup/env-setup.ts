@@ -25,8 +25,8 @@ beforeEach(() => {
   global.HTMLInputElement = window.HTMLInputElement;
 
   // Functions not implemented in JSDOM.
-  window.Element.prototype.scrollIntoView = jest.fn();
+  window.Element.prototype.scrollIntoView = jestMock.fn();
   global.self.matchMedia = jest.fn<any, any>(() => ({
-    addListener: jest.fn(),
+    addListener: jestMock.fn(),
   }));
 });

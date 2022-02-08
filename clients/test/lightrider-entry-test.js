@@ -6,6 +6,7 @@
 'use strict';
 
 const assert = require('assert').strict;
+const jestMock = require('jest-mock');
 const lhBackground = require('../lightrider/lightrider-entry.js');
 const Runner = require('../../lighthouse-core/runner.js');
 const LHError = require('../../lighthouse-core/lib/lh-error.js');
@@ -59,7 +60,7 @@ describe('lightrider-entry', () => {
     });
 
     it('specifies the channel as lr', async () => {
-      const runStub = jest.spyOn(Runner, 'gather');
+      const runStub = jestMock.spyOn(Runner, 'gather');
 
       const mockConnection = {};
       const url = 'https://example.com';
@@ -72,7 +73,7 @@ describe('lightrider-entry', () => {
     });
 
     it('uses the desktop config preset when device is desktop', async () => {
-      const runStub = jest.spyOn(Runner, 'gather');
+      const runStub = jestMock.spyOn(Runner, 'gather');
 
       const mockConnection = {};
       const url = 'https://example.com';
@@ -86,7 +87,7 @@ describe('lightrider-entry', () => {
     });
 
     it('uses the mobile config preset when device is mobile', async () => {
-      const runStub = jest.spyOn(Runner, 'gather');
+      const runStub = jestMock.spyOn(Runner, 'gather');
 
       const mockConnection = {};
       const url = 'https://example.com';
@@ -100,7 +101,7 @@ describe('lightrider-entry', () => {
     });
 
     it('overrides the default config when one is provided', async () => {
-      const runStub = jest.spyOn(Runner, 'gather');
+      const runStub = jestMock.spyOn(Runner, 'gather');
 
       const mockConnection = {};
       const url = 'https://example.com';
@@ -128,8 +129,8 @@ describe('lightrider-entry', () => {
     });
 
     it('exposes artifacts when logAssets is true', async () => {
-      Runner.gather = jest.fn();
-      Runner.audit = jest.fn(Runner.audit).mockReturnValue(Promise.resolve({
+      Runner.gather = jestMock.fn();
+      Runner.audit = jestMock.fn(Runner.audit).mockReturnValue(Promise.resolve({
         lhr: {},
         artifacts: {
           Artifact: new Error('some error'),

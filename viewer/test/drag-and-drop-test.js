@@ -7,7 +7,7 @@
 
 /* eslint-env jest */
 
-import {jest} from '@jest/globals';
+import jestMock from 'jest-mock';
 
 import {DragAndDrop} from '../app/src/drag-and-drop.js';
 import * as testHelpers from './test-helpers.js';
@@ -37,7 +37,7 @@ describe('DragAndDrop', () => {
   });
 
   it('document ignores drop event without file', () => {
-    const mockCallback = jest.fn();
+    const mockCallback = jestMock.fn();
     new DragAndDrop(mockCallback);
 
     document.dispatchEvent(new window.CustomEvent('drop'));
@@ -45,7 +45,7 @@ describe('DragAndDrop', () => {
   });
 
   it('document responds to dragover event with file', () => {
-    const mockCallback = jest.fn();
+    const mockCallback = jestMock.fn();
     new DragAndDrop(mockCallback);
 
     const event = new window.CustomEvent('dragover');
@@ -57,7 +57,7 @@ describe('DragAndDrop', () => {
   });
 
   it('document ignores dragover event without file', () => {
-    const mockCallback = jest.fn();
+    const mockCallback = jestMock.fn();
     new DragAndDrop(mockCallback);
 
     const event = new window.CustomEvent('dragover');
@@ -66,14 +66,14 @@ describe('DragAndDrop', () => {
   });
 
   it('document responds to mouseleave event when not dragging', () => {
-    new DragAndDrop(jest.fn);
+    new DragAndDrop(jestMock.fn);
 
     document.dispatchEvent(new window.CustomEvent('mouseleave'));
     expect(document.querySelector('.drop_zone').classList.contains('dropping')).toBeFalsy();
   });
 
   it('document responds to mouseleave and dragenter events', () => {
-    new DragAndDrop(jest.fn);
+    new DragAndDrop(jestMock.fn);
 
     document.dispatchEvent(new window.CustomEvent('dragenter'));
     expect(document.querySelector('.drop_zone').classList.contains('dropping')).toBeTruthy();

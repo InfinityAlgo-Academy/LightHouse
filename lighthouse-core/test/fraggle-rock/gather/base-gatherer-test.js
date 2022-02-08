@@ -30,8 +30,8 @@ describe('BaseGatherer', () => {
   describe('.beforePass', () => {
     it('delegates to startInstrumentation by default', async () => {
       class MyGatherer extends Gatherer {
-        startInstrumentation = jest.fn();
-        startSensitiveInstrumentation = jest.fn();
+        startInstrumentation = jestMock.fn();
+        startSensitiveInstrumentation = jestMock.fn();
       }
 
       const gatherer = new MyGatherer();
@@ -59,8 +59,8 @@ describe('BaseGatherer', () => {
       class MyGatherer extends Gatherer {
         /** @type {LH.Gatherer.GathererMeta} */
         meta = {supportedModes: ['timespan']};
-        stopInstrumentation = jest.fn();
-        stopSensitiveInstrumentation = jest.fn();
+        stopInstrumentation = jestMock.fn();
+        stopSensitiveInstrumentation = jestMock.fn();
       }
 
       const gatherer = new MyGatherer();
@@ -73,8 +73,8 @@ describe('BaseGatherer', () => {
       class MyGatherer extends Gatherer {
         /** @type {LH.Gatherer.GathererMeta<'Trace'>} */
         meta = {supportedModes: ['timespan'], dependencies: {Trace: Symbol('Trace')}};
-        stopInstrumentation = jest.fn();
-        stopSensitiveInstrumentation = jest.fn();
+        stopInstrumentation = jestMock.fn();
+        stopSensitiveInstrumentation = jestMock.fn();
       }
 
       const gatherer = new MyGatherer();

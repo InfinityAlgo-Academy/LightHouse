@@ -23,17 +23,17 @@ const {defaultSettings} = require('../../../config/constants.js');
 
 function createMockSession() {
   return {
-    setTargetInfo: jest.fn(),
+    setTargetInfo: jestMock.fn(),
     sendCommand: createMockSendCommandFn({useSessionId: false}),
-    setNextProtocolTimeout: jest.fn(),
+    setNextProtocolTimeout: jestMock.fn(),
     once: createMockOnceFn(),
     on: createMockOnFn(),
-    off: jest.fn(),
+    off: jestMock.fn(),
     addProtocolMessageListener: createMockOnFn(),
-    removeProtocolMessageListener: jest.fn(),
+    removeProtocolMessageListener: jestMock.fn(),
     addSessionAttachedListener: createMockOnFn(),
-    removeSessionAttachedListener: jest.fn(),
-    dispose: jest.fn(),
+    removeSessionAttachedListener: jestMock.fn(),
+    dispose: jestMock.fn(),
 
     /** @return {LH.Gatherer.FRProtocolSession} */
     asSession() {
@@ -49,11 +49,11 @@ function createMockSession() {
 function createMockGathererInstance(meta) {
   return {
     meta,
-    startInstrumentation: jest.fn(),
-    stopInstrumentation: jest.fn(),
-    startSensitiveInstrumentation: jest.fn(),
-    stopSensitiveInstrumentation: jest.fn(),
-    getArtifact: jest.fn(),
+    startInstrumentation: jestMock.fn(),
+    stopInstrumentation: jestMock.fn(),
+    startSensitiveInstrumentation: jestMock.fn(),
+    stopSensitiveInstrumentation: jestMock.fn(),
+    getArtifact: jestMock.fn(),
 
     /** @return {LH.Gatherer.AnyFRGathererInstance} */
     asGatherer() {
@@ -65,8 +65,8 @@ function createMockGathererInstance(meta) {
 
 function createMockPage() {
   return {
-    url: jest.fn().mockReturnValue('https://example.com'),
-    goto: jest.fn(),
+    url: jestMock.fn().mockReturnValue('https://example.com'),
+    goto: jestMock.fn(),
     target: () => ({createCDPSession: () => createMockSession()}),
 
     /** @return {import('puppeteer').Page} */
@@ -79,10 +79,10 @@ function createMockPage() {
 
 function createMockExecutionContext() {
   return {
-    evaluate: jest.fn(),
-    evaluateAsync: jest.fn(),
-    evaluateOnNewDocument: jest.fn(),
-    cacheNativesOnNewDocument: jest.fn(),
+    evaluate: jestMock.fn(),
+    evaluateAsync: jestMock.fn(),
+    evaluateOnNewDocument: jestMock.fn(),
+    cacheNativesOnNewDocument: jestMock.fn(),
 
     /** @return {ExecutionContext} */
     asExecutionContext() {
@@ -94,10 +94,10 @@ function createMockExecutionContext() {
 
 function createMockTargetManager() {
   return {
-    enable: jest.fn(),
-    disable: jest.fn(),
+    enable: jestMock.fn(),
+    disable: jestMock.fn(),
     addTargetAttachedListener: createMockOnFn(),
-    removeTargetAttachedListener: jest.fn(),
+    removeTargetAttachedListener: jestMock.fn(),
     /** @param {LH.Gatherer.FRProtocolSession} session */
     mockEnable(session) {
       this.enable.mockImplementation(async () => {
@@ -107,10 +107,10 @@ function createMockTargetManager() {
       });
     },
     reset() {
-      this.enable = jest.fn();
-      this.disable = jest.fn();
+      this.enable = jestMock.fn();
+      this.disable = jestMock.fn();
       this.addTargetAttachedListener = createMockOnFn();
-      this.removeTargetAttachedListener = jest.fn();
+      this.removeTargetAttachedListener = jestMock.fn();
     },
     /** @return {import('../../../gather/driver/target-manager.js')} */
     asTargetManager() {
@@ -131,8 +131,8 @@ function createMockDriver() {
     _session: session,
     url: () => page.url(),
     defaultSession: session,
-    connect: jest.fn(),
-    disconnect: jest.fn(),
+    connect: jestMock.fn(),
+    disconnect: jestMock.fn(),
     executionContext: context.asExecutionContext(),
 
     /** @return {Driver} */
@@ -145,9 +145,9 @@ function createMockDriver() {
 
 function mockRunnerModule() {
   const runnerModule = {
-    getGathererList: jest.fn().mockReturnValue([]),
-    audit: jest.fn(),
-    gather: jest.fn(),
+    getGathererList: jestMock.fn().mockReturnValue([]),
+    audit: jestMock.fn(),
+    gather: jestMock.fn(),
     reset,
   };
 
@@ -228,33 +228,33 @@ function createMockContext() {
 }
 
 function mockDriverSubmodules() {
-  const navigationMock = {gotoURL: jest.fn()};
+  const navigationMock = {gotoURL: jestMock.fn()};
   const prepareMock = {
-    prepareThrottlingAndNetwork: jest.fn(),
-    prepareTargetForTimespanMode: jest.fn(),
-    prepareTargetForNavigationMode: jest.fn(),
-    prepareTargetForIndividualNavigation: jest.fn(),
+    prepareThrottlingAndNetwork: jestMock.fn(),
+    prepareTargetForTimespanMode: jestMock.fn(),
+    prepareTargetForNavigationMode: jestMock.fn(),
+    prepareTargetForIndividualNavigation: jestMock.fn(),
   };
-  const storageMock = {clearDataForOrigin: jest.fn()};
+  const storageMock = {clearDataForOrigin: jestMock.fn()};
   const emulationMock = {
-    clearThrottling: jest.fn(),
-    emulate: jest.fn(),
+    clearThrottling: jestMock.fn(),
+    emulate: jestMock.fn(),
   };
   const networkMock = {
-    fetchResponseBodyFromCache: jest.fn(),
+    fetchResponseBodyFromCache: jestMock.fn(),
   };
   const targetManagerMock = mockTargetManagerModule();
 
   function reset() {
-    navigationMock.gotoURL = jest.fn().mockResolvedValue({finalUrl: 'https://example.com', warnings: [], timedOut: false});
-    prepareMock.prepareThrottlingAndNetwork = jest.fn().mockResolvedValue(undefined);
-    prepareMock.prepareTargetForTimespanMode = jest.fn().mockResolvedValue(undefined);
-    prepareMock.prepareTargetForNavigationMode = jest.fn().mockResolvedValue({warnings: []});
-    prepareMock.prepareTargetForIndividualNavigation = jest.fn().mockResolvedValue({warnings: []});
-    storageMock.clearDataForOrigin = jest.fn();
-    emulationMock.clearThrottling = jest.fn();
-    emulationMock.emulate = jest.fn();
-    networkMock.fetchResponseBodyFromCache = jest.fn().mockResolvedValue('');
+    navigationMock.gotoURL = jestMock.fn().mockResolvedValue({finalUrl: 'https://example.com', warnings: [], timedOut: false});
+    prepareMock.prepareThrottlingAndNetwork = jestMock.fn().mockResolvedValue(undefined);
+    prepareMock.prepareTargetForTimespanMode = jestMock.fn().mockResolvedValue(undefined);
+    prepareMock.prepareTargetForNavigationMode = jestMock.fn().mockResolvedValue({warnings: []});
+    prepareMock.prepareTargetForIndividualNavigation = jestMock.fn().mockResolvedValue({warnings: []});
+    storageMock.clearDataForOrigin = jestMock.fn();
+    emulationMock.clearThrottling = jestMock.fn();
+    emulationMock.emulate = jestMock.fn();
+    networkMock.fetchResponseBodyFromCache = jestMock.fn().mockResolvedValue('');
     targetManagerMock.reset();
   }
 

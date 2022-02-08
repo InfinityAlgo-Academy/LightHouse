@@ -14,7 +14,7 @@ describe('StacksGatherer', () => {
   let driver;
 
   beforeEach(() => {
-    driver = {executionContext: {evaluate: jest.fn()}};
+    driver = {executionContext: {evaluate: jestMock.fn()}};
   });
 
   it('returns the detected stacks', async () => {

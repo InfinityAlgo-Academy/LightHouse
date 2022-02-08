@@ -107,8 +107,8 @@ describe('FR compat', () => {
     networkRecords = ['1', '2'];
     devtoolsLog = ['3', '4'];
     gatherer = new LinkElements();
-    gatherer._getArtifact = jest.fn();
-    NetworkRecords.request = jest.fn().mockReturnValue(Promise.resolve(networkRecords));
+    gatherer._getArtifact = jestMock.fn();
+    NetworkRecords.request = jestMock.fn().mockReturnValue(Promise.resolve(networkRecords));
   });
 
   it('uses loadData in legacy mode', async () => {

@@ -16,7 +16,7 @@ import {flowResult} from './sample-flow';
 let wrapper: FunctionComponent;
 
 beforeEach(() => {
-  global.console.warn = jest.fn();
+  global.console.warn = jestMock.fn();
   wrapper = ({children}) => (
     <FlowResultContext.Provider value={flowResult}>{children}</FlowResultContext.Provider>
   );

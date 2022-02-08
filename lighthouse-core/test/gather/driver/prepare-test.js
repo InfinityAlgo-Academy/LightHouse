@@ -8,9 +8,9 @@
 /* eslint-env jest */
 
 const storageMock = {
-  clearDataForOrigin: jest.fn(),
-  clearBrowserCaches: jest.fn(),
-  getImportantStorageWarning: jest.fn(),
+  clearDataForOrigin: jestMock.fn(),
+  clearBrowserCaches: jestMock.fn(),
+  getImportantStorageWarning: jestMock.fn(),
 };
 jest.mock('../../../gather/driver/storage.js', () => storageMock);
 
@@ -29,9 +29,9 @@ beforeEach(() => {
     .mockResponse('Emulation.setCPUThrottlingRate')
     .mockResponse('Network.setBlockedURLs')
     .mockResponse('Network.setExtraHTTPHeaders');
-  storageMock.clearBrowserCaches = jest.fn();
-  storageMock.clearDataForOrigin = jest.fn();
-  storageMock.getImportantStorageWarning = jest.fn();
+  storageMock.clearBrowserCaches = jestMock.fn();
+  storageMock.clearDataForOrigin = jestMock.fn();
+  storageMock.getImportantStorageWarning = jestMock.fn();
 });
 
 afterEach(() => {

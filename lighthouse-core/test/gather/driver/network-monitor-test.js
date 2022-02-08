@@ -37,11 +37,11 @@ describe('NetworkMonitor', () => {
   function createMockSession() {
     /** @type {any} */
     const session = {};
-    session.off = jest.fn();
-    session.removeProtocolMessageListener = jest.fn();
+    session.off = jestMock.fn();
+    session.removeProtocolMessageListener = jestMock.fn();
 
-    const on = (session.on = jest.fn());
-    const addProtocolMessageListener = (session.addProtocolMessageListener = jest.fn());
+    const on = (session.on = jestMock.fn());
+    const addProtocolMessageListener = (session.addProtocolMessageListener = jestMock.fn());
     sendCommandMock = session.sendCommand = createMockSendCommandFn()
       .mockResponse('Page.enable')
       .mockResponse('Network.enable');

@@ -8,8 +8,8 @@
 require('./test-utils.js').makeMocksForGatherRunner();
 
 jest.mock('../gather/driver/service-workers.js', () => ({
-  getServiceWorkerVersions: jest.fn().mockResolvedValue({versions: []}),
-  getServiceWorkerRegistrations: jest.fn().mockResolvedValue({registrations: []}),
+  getServiceWorkerVersions: jestMock.fn().mockResolvedValue({versions: []}),
+  getServiceWorkerRegistrations: jestMock.fn().mockResolvedValue({registrations: []}),
 }));
 
 const Runner = require('../runner.js');
@@ -483,7 +483,7 @@ describe('Runner', () => {
         }
       }
 
-      const auditMockFn = SimpleAudit.audit = jest.fn().mockReturnValue({score: 1});
+      const auditMockFn = SimpleAudit.audit = jestMock.fn().mockReturnValue({score: 1});
       const config = new Config({
         settings: {
           auditMode: __dirname + '/fixtures/artifacts/alphabet-artifacts/',
@@ -516,7 +516,7 @@ describe('Runner', () => {
         }
       }
 
-      const auditMockFn = SimpleAudit.audit = jest.fn().mockReturnValue({score: 1});
+      const auditMockFn = SimpleAudit.audit = jestMock.fn().mockReturnValue({score: 1});
       const config = new Config({
         settings: {
           auditMode: __dirname + '/fixtures/artifacts/alphabet-artifacts/',

@@ -7,8 +7,8 @@
 
 /* eslint-env jest */
 
-const getServiceWorkerVersions = jest.fn();
-const getServiceWorkerRegistrations = jest.fn();
+const getServiceWorkerVersions = jestMock.fn();
+const getServiceWorkerRegistrations = jestMock.fn();
 jest.mock('../../../gather/driver/service-workers.js', () => ({
   getServiceWorkerVersions,
   getServiceWorkerRegistrations,

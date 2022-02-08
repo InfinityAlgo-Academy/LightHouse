@@ -23,7 +23,7 @@ const sampleResultsStr =
 describe('lighthouseRenderer bundle', () => {
   let document;
   beforeAll(() => {
-    global.console.warn = jest.fn();
+    global.console.warn = jestMock.fn();
 
     const {window} = new jsdom.JSDOM();
     document = window.document;

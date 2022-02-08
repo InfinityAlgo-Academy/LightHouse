@@ -7,11 +7,11 @@
 
 /* eslint-env jest */
 
-const snapshotModule = {snapshot: jest.fn()};
+const snapshotModule = {snapshot: jestMock.fn()};
 jest.mock('../../fraggle-rock/gather/snapshot-runner.js', () => snapshotModule);
-const navigationModule = {navigation: jest.fn()};
+const navigationModule = {navigation: jestMock.fn()};
 jest.mock('../../fraggle-rock/gather/navigation-runner.js', () => navigationModule);
-const timespanModule = {startTimespan: jest.fn()};
+const timespanModule = {startTimespan: jestMock.fn()};
 jest.mock('../../fraggle-rock/gather/timespan-runner.js', () => timespanModule);
 
 const {createMockPage} = require('./gather/mock-driver.js');
@@ -31,7 +31,7 @@ describe('UserFlow', () => {
     navigationModule.navigation.mockResolvedValue({lhr: {...lhr, gatherMode: 'navigation'}});
 
     const timespanLhr = {...lhr, gatherMode: 'timespan'};
-    const timespan = {endTimespan: jest.fn().mockResolvedValue({lhr: timespanLhr})};
+    const timespan = {endTimespan: jestMock.fn().mockResolvedValue({lhr: timespanLhr})};
     timespanModule.startTimespan.mockReset();
     timespanModule.startTimespan.mockResolvedValue(timespan);
   });

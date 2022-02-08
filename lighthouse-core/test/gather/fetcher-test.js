@@ -11,7 +11,7 @@
 let browserMilestone;
 
 jest.mock('../../gather/driver/environment.js', () => ({
-  getBrowserVersion: jest.fn().mockImplementation(() => {
+  getBrowserVersion: jestMock.fn().mockImplementation(() => {
     return Promise.resolve({milestone: browserMilestone});
   }),
 }));
@@ -38,8 +38,8 @@ beforeEach(() => {
 describe('.fetchResource', () => {
   beforeEach(() => {
     fetcher._enabled = true;
-    fetcher._fetchResourceOverProtocol = jest.fn().mockReturnValue(Promise.resolve('PROTOCOL'));
-    fetcher._fetchResourceIframe = jest.fn().mockReturnValue(Promise.resolve('IFRAME'));
+    fetcher._fetchResourceOverProtocol = jestMock.fn().mockReturnValue(Promise.resolve('PROTOCOL'));
+    fetcher._fetchResourceIframe = jestMock.fn().mockReturnValue(Promise.resolve('IFRAME'));
   });
 
   it('throws if fetcher not enabled', async () => {
@@ -104,7 +104,7 @@ describe('._readIOStream', () => {
   });
 
   it('throws on timeout', async () => {
-    connectionStub.sendCommand = jest.fn()
+    connectionStub.sendCommand = jestMock.fn()
       .mockReturnValue(Promise.resolve({data: 'No stop', eof: false, base64Encoded: false}));
 
     const dataPromise = fetcher._readIOStream('1', {timeout: 50});
@@ -118,7 +118,7 @@ describe('._fetchResourceOverProtocol', () => {
 
   beforeEach(() => {
     streamContents = 'STREAM CONTENTS';
-    fetcher._readIOStream = jest.fn().mockImplementation(() => {
+    fetcher._readIOStream = jestMock.fn().mockImplementation(() => {
       return Promise.resolve(streamContents);
     });
   });
@@ -164,7 +164,7 @@ describe('._fetchResourceOverProtocol', () => {
       }, 500);
 
     let timeout;
-    fetcher._readIOStream = jest.fn().mockImplementation((_, options) => {
+    fetcher._readIOStream = jestMock.fn().mockImplementation((_, options) => {
       timeout = options.timeout;
     });
 

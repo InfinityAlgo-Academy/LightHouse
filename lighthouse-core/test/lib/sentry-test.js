@@ -27,10 +27,10 @@ describe('Sentry', () => {
     // We want to have a fresh state for every test.
     originalSentry = {...Sentry};
 
-    raven.config = jest.fn().mockReturnValue({install: jest.fn()});
-    raven.mergeContext = jest.fn();
-    raven.captureException = jest.fn().mockImplementation((err, opts, cb) => cb());
-    Sentry._shouldSample = jest.fn().mockReturnValue(true);
+    raven.config = jestMock.fn().mockReturnValue({install: jestMock.fn()});
+    raven.mergeContext = jestMock.fn();
+    raven.captureException = jestMock.fn().mockImplementation((err, opts, cb) => cb());
+    Sentry._shouldSample = jestMock.fn().mockReturnValue(true);
   });
 
   afterEach(() => {

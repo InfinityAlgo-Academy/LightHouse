@@ -49,11 +49,11 @@ describe('NavigationRunner', () => {
       instance: {
         name: 'Accessibility',
         meta: {supportedModes: []},
-        startInstrumentation: jest.fn(),
-        stopInstrumentation: jest.fn(),
-        startSensitiveInstrumentation: jest.fn(),
-        stopSensitiveInstrumentation: jest.fn(),
-        getArtifact: jest.fn(),
+        startInstrumentation: jestMock.fn(),
+        stopInstrumentation: jestMock.fn(),
+        startSensitiveInstrumentation: jestMock.fn(),
+        stopSensitiveInstrumentation: jestMock.fn(),
+        getArtifact: jestMock.fn(),
       },
     };
   }
@@ -62,13 +62,13 @@ describe('NavigationRunner', () => {
   function createNavigation() {
     const timespanGatherer = createGathererDefn();
     timespanGatherer.instance.meta.supportedModes = ['timespan', 'navigation'];
-    timespanGatherer.instance.getArtifact = jest.fn().mockResolvedValue({type: 'timespan'});
+    timespanGatherer.instance.getArtifact = jestMock.fn().mockResolvedValue({type: 'timespan'});
     const snapshotGatherer = createGathererDefn();
     snapshotGatherer.instance.meta.supportedModes = ['snapshot', 'navigation'];
-    snapshotGatherer.instance.getArtifact = jest.fn().mockResolvedValue({type: 'snapshot'});
+    snapshotGatherer.instance.getArtifact = jestMock.fn().mockResolvedValue({type: 'snapshot'});
     const navigationGatherer = createGathererDefn();
     navigationGatherer.instance.meta.supportedModes = ['navigation'];
-    navigationGatherer.instance.getArtifact = jest.fn().mockResolvedValue({type: 'navigation'});
+    navigationGatherer.instance.getArtifact = jestMock.fn().mockResolvedValue({type: 'navigation'});
 
     const navigation = {
       ...defaultNavigationConfig,
@@ -364,9 +364,9 @@ describe('NavigationRunner', () => {
       mocks.navigationMock.gotoURL.mockResolvedValue({finalUrl: requestedUrl, warnings: []});
       const devtoolsLog = toDevtoolsLog([{url: requestedUrl, failed: true}]);
       gatherers.timespan.meta.symbol = DevtoolsLogGatherer.symbol;
-      gatherers.timespan.getArtifact = jest.fn().mockResolvedValue(devtoolsLog);
+      gatherers.timespan.getArtifact = jestMock.fn().mockResolvedValue(devtoolsLog);
       gatherers.navigation.meta.symbol = TraceGatherer.symbol;
-      gatherers.navigation.getArtifact = jest.fn().mockResolvedValue({traceEvents: []});
+      gatherers.navigation.getArtifact = jestMock.fn().mockResolvedValue({traceEvents: []});
 
       const {artifacts, pageLoadError} = await run(navigation);
       expect(pageLoadError).toBeInstanceOf(LighthouseError);
@@ -378,7 +378,7 @@ describe('NavigationRunner', () => {
 
     it('cleans up throttling before getArtifact', async () => {
       const {navigation, gatherers} = createNavigation();
-      gatherers.navigation.getArtifact = jest.fn().mockImplementation(() => {
+      gatherers.navigation.getArtifact = jestMock.fn().mockImplementation(() => {
         expect(mocks.emulationMock.clearThrottling).toHaveBeenCalled();
       });
 

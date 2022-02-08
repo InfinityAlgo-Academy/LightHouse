@@ -65,7 +65,6 @@ jobs:
     - name: Download DevTools Frontend
       run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/chromium-web-tests/download-devtools.sh
 
-    - run: npx patch-package # TODO: remove when mocha replaces jest
     - name: Roll Lighthouse + build DevTools
       run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/chromium-web-tests/roll-devtools.sh
 

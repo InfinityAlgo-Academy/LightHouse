@@ -34,16 +34,33 @@ const rawArgv = y
       default: false,
       describe: 'Update snapshots',
     },
+    'mode': {
+      choices: ['unit', 'pptr', 'all'],
+      default: 'unit',
+      describe: 'Run *-test.js or *-test-pptr.js files',
+    },
   })
   .wrap(y.terminalWidth())
   .argv;
 const argv =
   /** @type {Awaited<typeof rawArgv> & CamelCasify<Awaited<typeof rawArgv>>} */ (rawArgv);
 
-const allTestFiles = glob.sync('lighthouse-cli/test/cli/*.js', {cwd: LH_ROOT});
+const allTestFiles = [];
+if (argv.mode === 'all' || argv.mode === 'unit') {
+  allTestFiles.push(
+    ...glob.sync('!(node_modules)/**/test/**/*-test.{js,ts,tsx}', {cwd: LH_ROOT})
+  );
+}
+if (argv.mode === 'all' || argv.mode === 'pptr') {
+  allTestFiles.push(
+    ...glob.sync('!(node_modules)/**/test/**/*-test-pptr.{js,ts,tsx}', {cwd: LH_ROOT})
+  );
+}
+// TODO use ts-node
 const filteredTests = argv._.length ?
-  allTestFiles.filter((file) => argv._.some(pattern => file.includes(pattern))) :
+  allTestFiles.filter((file) => argv._.some(pattern => file.match(new RegExp(pattern)))) :
   allTestFiles;
+if (filteredTests.length === 0) throw new Error('no tests found matching pattern');
 
 const args = [
   '--loader=testdouble',

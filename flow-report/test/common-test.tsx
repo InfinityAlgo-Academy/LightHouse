@@ -15,7 +15,7 @@ jest.useFakeTimers();
 
 describe('FlowStepThumbnail', () => {
   beforeEach(() => {
-    global.console.warn = jest.fn();
+    global.console.warn = jestMock.fn();
 
     lhr = {
       gatherMode: 'navigation',

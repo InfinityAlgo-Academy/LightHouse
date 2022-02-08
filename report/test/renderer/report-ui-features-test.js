@@ -42,7 +42,7 @@ describe('ReportUIFeatures', () => {
   }
 
   beforeAll(() => {
-    global.console.warn = jest.fn();
+    global.console.warn = jestMock.fn();
 
     // Stub out matchMedia for Node.
     global.matchMedia = function() {
@@ -284,7 +284,7 @@ describe('ReportUIFeatures', () => {
       const getSaveEl = () => dom.find('a[data-action="save-html"]', container);
       expect(getSaveEl().classList.contains('lh-hidden')).toBeTruthy();
 
-      const getHtmlMock = jest.fn();
+      const getHtmlMock = jestMock.fn();
       container = render(sampleResults, {
         getStandaloneReportHTML: getHtmlMock,
       });

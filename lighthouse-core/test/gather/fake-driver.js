@@ -22,8 +22,8 @@ function makeFakeDriver({protocolGetVersionResponse}) {
     get defaultSession() {
       return this;
     },
-    on: jest.fn(),
-    sendCommand: jest.fn().mockResolvedValue(undefined),
+    on: jestMock.fn(),
+    sendCommand: jestMock.fn().mockResolvedValue(undefined),
     getBrowserVersion() {
       return Promise.resolve(Object.assign({}, protocolGetVersionResponse, {milestone: 71}));
     },

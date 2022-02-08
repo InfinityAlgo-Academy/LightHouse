@@ -11,7 +11,7 @@ import {act, render} from '@testing-library/preact';
 import {FlowResultContext, OptionsContext} from '../src/util';
 import {I18nProvider} from '../src/i18n/i18n';
 
-const mockSaveFile = jest.fn();
+const mockSaveFile = jestMock.fn();
 jest.unstable_mockModule('../../../report/renderer/api.js', () => ({
   saveFile: mockSaveFile,
 }));
@@ -61,7 +61,7 @@ it('save button opens save dialog for HTML file', async () => {
 });
 
 it('provides save as gist option if defined', async () => {
-  const saveAsGist = jest.fn();
+  const saveAsGist = jestMock.fn();
   options = {saveAsGist};
   const root = render(<Topbar onMenuClick={() => {}}/>, {wrapper});
 

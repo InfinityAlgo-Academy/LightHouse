@@ -23,8 +23,8 @@ const createMockSendCommandFn = createMockSendCommandFn_.bind(null, {useSessionI
 function createMockSession() {
   /** @type {any} */
   const session = {};
-  session.hasNextProtocolTimeout = jest.fn().mockReturnValue(false);
-  session.setNextProtocolTimeout = jest.fn();
+  session.hasNextProtocolTimeout = jestMock.fn().mockReturnValue(false);
+  session.setNextProtocolTimeout = jestMock.fn();
   return session;
 }
 
@@ -55,7 +55,7 @@ describe('ExecutionContext', () => {
   });
 
   it('should clear context on frame navigations', async () => {
-    const onMock = sessionMock.on = jest.fn();
+    const onMock = sessionMock.on = jestMock.fn();
 
     const executionContext = new ExecutionContext(sessionMock);
 
@@ -69,7 +69,7 @@ describe('ExecutionContext', () => {
   });
 
   it('should clear context on execution context destroyed', async () => {
-    const onMock = sessionMock.on = jest.fn();
+    const onMock = sessionMock.on = jestMock.fn();
 
     const executionContext = new ExecutionContext(sessionMock);
 
@@ -96,7 +96,7 @@ describe('.evaluateAsync', () => {
 
   beforeEach(() => {
     sessionMock = createMockSession();
-    sessionMock.on = jest.fn();
+    sessionMock.on = jestMock.fn();
     executionContext = new ExecutionContext(sessionMock);
   });
 
@@ -112,8 +112,8 @@ describe('.evaluateAsync', () => {
   });
 
   it('uses a high default timeout', async () => {
-    const setNextProtocolTimeout = sessionMock.setNextProtocolTimeout = jest.fn();
-    sessionMock.hasNextProtocolTimeout = jest.fn().mockReturnValue(false);
+    const setNextProtocolTimeout = sessionMock.setNextProtocolTimeout = jestMock.fn();
+    sessionMock.hasNextProtocolTimeout = jestMock.fn().mockReturnValue(false);
     sessionMock.sendCommand = createMockSendCommandFn().mockRejectedValue(new Error('Timeout'));
 
     const evaluatePromise = makePromiseInspectable(executionContext.evaluateAsync('1 + 1'));
@@ -126,9 +126,9 @@ describe('.evaluateAsync', () => {
 
   it('uses the specific timeout given', async () => {
     const expectedTimeout = 5000;
-    const setNextProtocolTimeout = sessionMock.setNextProtocolTimeout = jest.fn();
-    sessionMock.hasNextProtocolTimeout = jest.fn().mockReturnValue(true);
-    sessionMock.getNextProtocolTimeout = jest.fn().mockReturnValue(expectedTimeout);
+    const setNextProtocolTimeout = sessionMock.setNextProtocolTimeout = jestMock.fn();
+    sessionMock.hasNextProtocolTimeout = jestMock.fn().mockReturnValue(true);
+    sessionMock.getNextProtocolTimeout = jestMock.fn().mockReturnValue(expectedTimeout);
     sessionMock.sendCommand = createMockSendCommandFn().mockRejectedValue(new Error('Timeout'));
 
     const evaluatePromise = makePromiseInspectable(executionContext.evaluateAsync('1 + 1'));
@@ -196,7 +196,7 @@ describe('.evaluate', () => {
 
   beforeEach(() => {
     sessionMock = createMockSession();
-    sessionMock.on = jest.fn();
+    sessionMock.on = jestMock.fn();
     executionContext = new ExecutionContext(sessionMock);
   });
 
@@ -249,7 +249,7 @@ const fetch = globalThis.__nativeFetch || globalThis.fetch;
   it('transforms parameters into an expression (basic)', async () => {
     // Mock so the argument can be intercepted, and the generated code
     // can be evaluated without the error catching code.
-    const mockFn = executionContext._evaluateInContext = jest.fn()
+    const mockFn = executionContext._evaluateInContext = jestMock.fn()
       .mockImplementation(() => Promise.resolve());
 
     /** @param {number} value */
@@ -272,7 +272,7 @@ const fetch = globalThis.__nativeFetch || globalThis.fetch;
   it('transforms parameters into an expression (arrows)', async () => {
     // Mock so the argument can be intercepted, and the generated code
     // can be evaluated without the error catching code.
-    const mockFn = executionContext._evaluateInContext = jest.fn()
+    const mockFn = executionContext._evaluateInContext = jestMock.fn()
       .mockImplementation(() => Promise.resolve());
 
     /** @param {number} value */
@@ -295,7 +295,7 @@ const fetch = globalThis.__nativeFetch || globalThis.fetch;
   it('transforms parameters into an expression (complex)', async () => {
     // Mock so the argument can be intercepted, and the generated code
     // can be evaluated without the error catching code.
-    const mockFn = executionContext._evaluateInContext = jest.fn()
+    const mockFn = executionContext._evaluateInContext = jestMock.fn()
       .mockImplementation(() => Promise.resolve());
 
     /**

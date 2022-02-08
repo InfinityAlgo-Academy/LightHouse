@@ -237,8 +237,8 @@ describe('.collectExtraDetails', () => {
   beforeEach(() => {
     driver = createMockDriver().asDriver();
     gatherer = makeImageElements();
-    gatherer.fetchSourceRules = jest.fn();
-    gatherer.fetchElementWithSizeInformation = jest.fn();
+    gatherer.fetchSourceRules = jestMock.fn();
+    gatherer.fetchElementWithSizeInformation = jestMock.fn();
   });
 
   it('respects the overall time budget for source rules', async () => {
@@ -247,7 +247,7 @@ describe('.collectExtraDetails', () => {
       mockElement({isInShadowDOM: false, isCss: false}),
       mockElement({isInShadowDOM: false, isCss: false}),
     ];
-    gatherer.fetchSourceRules = jest.fn().mockImplementation(async () => {
+    gatherer.fetchSourceRules = jestMock.fn().mockImplementation(async () => {
       jest.advanceTimersByTime(6000);
     });
 

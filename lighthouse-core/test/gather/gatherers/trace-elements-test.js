@@ -783,8 +783,8 @@ describe('FR compat', () => {
   it('uses loadData in legacy mode', async () => {
     const trace = ['1', '2'];
     const gatherer = new TraceElementsGatherer();
-    gatherer._getArtifact = jest.fn();
-    gatherer.stopInstrumentation = jest.fn();
+    gatherer._getArtifact = jestMock.fn();
+    gatherer.stopInstrumentation = jestMock.fn();
 
     await gatherer.afterPass({}, {trace});
 
@@ -795,8 +795,8 @@ describe('FR compat', () => {
   it('uses dependency in legacy mode', async () => {
     const trace = ['1', '2'];
     const gatherer = new TraceElementsGatherer();
-    gatherer._getArtifact = jest.fn();
-    gatherer.stopInstrumentation = jest.fn();
+    gatherer._getArtifact = jestMock.fn();
+    gatherer.stopInstrumentation = jestMock.fn();
 
     const context = {dependencies: {Trace: trace}};
     await gatherer.getArtifact(context);

@@ -30,11 +30,11 @@ let driver;
 
 beforeEach(() => {
   // @ts-expect-error - Individual mock functions are applied as necessary.
-  page = {target: () => pageTarget, url: jest.fn()};
+  page = {target: () => pageTarget, url: jestMock.fn()};
   // @ts-expect-error - Individual mock functions are applied as necessary.
   pageTarget = {createCDPSession: () => puppeteerSession};
   // @ts-expect-error - Individual mock functions are applied as necessary.
-  puppeteerSession = {on: jest.fn(), off: jest.fn(), send: jest.fn(), emit: jest.fn()};
+  puppeteerSession = {on: jestMock.fn(), off: jestMock.fn(), send: jestMock.fn(), emit: jestMock.fn()};
   driver = new Driver(page);
 });
 
@@ -51,7 +51,7 @@ for (const fnName of DELEGATED_FUNCTIONS) {
       /** @type {any} */
       const args = [1, {arg: 2}];
       const returnValue = {foo: 'bar'};
-      driver._session[fnName] = jest.fn().mockReturnValue(returnValue);
+      driver._session[fnName] = jestMock.fn().mockReturnValue(returnValue);
       // @ts-expect-error - typescript can't handle this union type.
       const actualResult = driver.defaultSession[fnName](...args);
       expect(driver._session[fnName]).toHaveBeenCalledWith(...args);
@@ -62,7 +62,7 @@ for (const fnName of DELEGATED_FUNCTIONS) {
 
 describe('.url', () => {
   it('should return the page url', async () => {
-    page.url = jest.fn().mockReturnValue('https://example.com');
+    page.url = jestMock.fn().mockReturnValue('https://example.com');
     expect(await driver.url()).toEqual('https://example.com');
   });
 });
@@ -96,7 +96,7 @@ describe('.disconnect', () => {
 
   it('should invoke session dispose', async () => {
     await driver.connect();
-    const dispose = driver.defaultSession.dispose = jest.fn();
+    const dispose = driver.defaultSession.dispose = jestMock.fn();
     await driver.disconnect();
     expect(dispose).toHaveBeenCalled();
   });
