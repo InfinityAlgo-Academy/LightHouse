@@ -159,7 +159,12 @@ class TagsBlockingFirstPaint extends FRGatherer {
       (min, record) => Math.min(min, record.endTime),
       Infinity
     );
-    const tags = await driver.executionContext.evaluate(collectTagsThatBlockFirstPaint, {args: []});
+    const tags = await driver.executionContext.evaluate(
+      collectTagsThatBlockFirstPaint,
+      {
+        args: [],
+        useIsolation: true,
+      });
     const requests = TagsBlockingFirstPaint._filteredAndIndexedByUrl(networkRecords);
 
     /** @type {Array<LH.Artifacts.TagBlockingFirstPaint>} */

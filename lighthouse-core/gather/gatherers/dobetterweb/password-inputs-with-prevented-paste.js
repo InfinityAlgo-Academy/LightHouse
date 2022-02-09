@@ -42,6 +42,7 @@ class PasswordInputsWithPreventedPaste extends FRGatherer {
     return passContext.driver.executionContext.evaluate(findPasswordInputsWithPreventedPaste, {
       args: [],
       deps: [pageFunctions.getNodeDetailsString],
+      useIsolation: true,
     });
   }
 }

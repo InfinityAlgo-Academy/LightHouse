@@ -57,6 +57,7 @@ class EmbeddedContent extends FRGatherer {
         pageFunctions.getElementsInDocument,
         pageFunctions.getNodeDetailsString,
       ],
+      useIsolation: true,
     });
   }
 }
