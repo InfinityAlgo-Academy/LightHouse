@@ -26,7 +26,6 @@ Navigation reports analyze a single page load. Navigation is the most common typ
 #### Limitations
 
 - Cannot analyze form submissions or single page app transitions.
-- Cannot analyze user interactions.
 - Cannot analyze content that isn't available immediately on page load.
 
 #### Use Cases
@@ -34,6 +33,14 @@ Navigation reports analyze a single page load. Navigation is the most common typ
 - Obtain a Lighthouse Performance score.
 - Measure Performance metrics (First Contentful Paint, Largest Contentful Paint, Speed Index, Time to Interactive, Cumulative Layout Shift, Total Blocking Time).
 - Assess Progressive Web App capabilities.
+
+#### Triggering a navigation via user interactions
+
+Instead of providing a URL to navigate to, you can provide a callback function. This is useful when you want to audit a navigation where the destination is unknown before navigating.
+
+> Aside: Lighthouse typically clears out any active Service Worker and Cache Storage for the origin under test. However, in this case, as it doesn't know the URL being analyzed, Lighthouse cannot clear this storage. This generally reflects the real user experience, but if you still wish to clear the Service Workers and Cache Storage you must do it manually.
+
+This callback function _must_ perform an action that will trigger a navigation. Any interactions completed before the callback promise resolves will be captured by the navigation.
 
 #### Code
 
@@ -47,7 +54,14 @@ async function main() {
   const page = await browser.newPage();
   const flow = await lighthouse.startFlow(page);
 
+  // Navigate with a URL
   await flow.navigate('https://example.com');
+
+  // Navigate with a callback function
+  await flow.navigate(async () => {
+    await page.click('a.link');
+  });
+
   await browser.close();
 
   writeFileSync('report.html', flow.generateReport());

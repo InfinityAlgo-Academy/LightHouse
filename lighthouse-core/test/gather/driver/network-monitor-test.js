@@ -159,20 +159,23 @@ describe('NetworkMonitor', () => {
 
   describe('.getFinalNavigationUrl()', () => {
     it('should handle the empty case', async () => {
-      expect(await monitor.getFinalNavigationUrl()).toBe(undefined);
+      expect(await monitor.getNavigationUrls()).toEqual({});
     });
 
-    it('should return the last navigation', async () => {
+    it('should return the first and last navigation', async () => {
       sendCommandMock.mockResponse('Page.getResourceTree', {frameTree: {frame: {id: '1'}}});
       await monitor.enable();
 
       const type = 'Navigation';
       const frame = /** @type {*} */ ({id: '1', url: 'https://page.example.com'});
-      sessionMock.dispatch({method: 'Page.frameNavigated', params: {frame: {...frame, url: '1'}, type}}); // eslint-disable-line max-len
-      sessionMock.dispatch({method: 'Page.frameNavigated', params: {frame: {...frame, url: '2'}, type}}); // eslint-disable-line max-len
+      sessionMock.dispatch({method: 'Page.frameNavigated', params: {frame: {...frame, url: 'https://example.com'}, type}}); // eslint-disable-line max-len
+      sessionMock.dispatch({method: 'Page.frameNavigated', params: {frame: {...frame, url: 'https://intermediate.example.com'}, type}}); // eslint-disable-line max-len
       sessionMock.dispatch({method: 'Page.frameNavigated', params: {frame, type}});
 
-      expect(await monitor.getFinalNavigationUrl()).toEqual('https://page.example.com');
+      expect(await monitor.getNavigationUrls()).toEqual({
+        requestedUrl: 'https://example.com',
+        finalUrl: 'https://page.example.com',
+      });
     });
 
     it('should ignore non-main-frame navigations', async () => {
@@ -185,7 +188,10 @@ describe('NetworkMonitor', () => {
       const iframe = /** @type {*} */ ({id: '2', url: 'https://iframe.example.com'});
       sessionMock.dispatch({method: 'Page.frameNavigated', params: {frame: iframe, type}});
 
-      expect(await monitor.getFinalNavigationUrl()).toEqual('https://page.example.com');
+      expect(await monitor.getNavigationUrls()).toEqual({
+        requestedUrl: 'https://page.example.com',
+        finalUrl: 'https://page.example.com',
+      });
     });
   });
 

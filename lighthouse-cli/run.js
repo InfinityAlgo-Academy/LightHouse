@@ -208,7 +208,7 @@ async function runLighthouseWithFraggleRock(url, flags, config, launchedChrome) 
   const page = await browser.newPage();
   flags.channel = 'fraggle-rock-cli';
   const configContext = {configPath: flags.configPath, settingsOverrides: flags};
-  return fraggleRock.navigation({url, page, config, configContext});
+  return fraggleRock.navigation(url, {page, config, configContext});
 }
 
 /**

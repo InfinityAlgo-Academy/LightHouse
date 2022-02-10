@@ -78,7 +78,7 @@ describe('UserFlow', () => {
 
       // Check that we have the property set.
       expect(navigationModule.navigation).toHaveBeenCalledTimes(4);
-      const [[call1], [call2], [call3], [call4]] = navigationModule.navigation.mock.calls;
+      const [[, call1], [, call2], [, call3], [, call4]] = navigationModule.navigation.mock.calls;
       expect(call1).not.toHaveProperty('configContext.settingsOverrides.disableStorageReset');
       expect(call2).toHaveProperty('configContext.settingsOverrides.disableStorageReset');
       expect(call3).toHaveProperty('configContext.settingsOverrides.disableStorageReset');
@@ -106,7 +106,7 @@ describe('UserFlow', () => {
 
       // Check that we have the property set.
       expect(navigationModule.navigation).toHaveBeenCalledTimes(3);
-      const [[call1], [call2], [call3]] = navigationModule.navigation.mock.calls;
+      const [[, call1], [, call2], [, call3]] = navigationModule.navigation.mock.calls;
       expect(call1).toHaveProperty('configContext.skipAboutBlank');
       expect(call2).toHaveProperty('configContext.skipAboutBlank');
       expect(call3).toHaveProperty('configContext.skipAboutBlank');

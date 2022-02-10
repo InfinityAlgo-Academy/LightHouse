@@ -54,11 +54,10 @@ class UserFlow {
   }
 
   /**
-   * @param {string} url
    * @param {StepOptions=} stepOptions
    */
-  _getNextNavigationOptions(url, stepOptions) {
-    const options = {url, ...this.options, ...stepOptions};
+  _getNextNavigationOptions(stepOptions) {
+    const options = {...this.options, ...stepOptions};
     const configContext = {...options.configContext};
     const settingsOverrides = {...configContext.settingsOverrides};
 
@@ -81,13 +80,16 @@ class UserFlow {
   }
 
   /**
-   * @param {string} url
+   * @param {LH.NavigationRequestor} requestor
    * @param {StepOptions=} stepOptions
    */
-  async navigate(url, stepOptions) {
+  async navigate(requestor, stepOptions) {
     if (this.currentTimespan) throw Error('Timespan already in progress');
 
-    const result = await navigation(this._getNextNavigationOptions(url, stepOptions));
+    const result = await navigation(
+      requestor,
+      this._getNextNavigationOptions(stepOptions)
+    );
     if (!result) throw Error('Navigation returned undefined');
 
     const providedName = stepOptions?.stepName;

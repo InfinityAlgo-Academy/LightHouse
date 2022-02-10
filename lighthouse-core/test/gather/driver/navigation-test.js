@@ -84,6 +84,7 @@ describe('.gotoURL', () => {
     expect(loadPromise).toBeDone('Did not resolve after frameNavigated');
 
     const results = await loadPromise;
+    expect(results.requestedUrl).toEqual('http://example.com');
     expect(results.finalUrl).toEqual('https://m.example.com/client');
     expect(results.warnings).toMatchObject([
       {
@@ -93,6 +94,44 @@ describe('.gotoURL', () => {
         },
       },
     ]);
+  });
+
+  it('backfills requestedUrl when using a callback requestor', async () => {
+    mockDriver.defaultSession.on = mockDriver.defaultSession.once = createMockOnceFn();
+
+    const requestor = () => Promise.resolve();
+
+    const loadPromise = makePromiseInspectable(
+      gotoURL(driver, requestor, {waitUntil: ['navigated']})
+    );
+    await flushAllTimersAndMicrotasks();
+    const listeners = mockDriver.defaultSession.on.getListeners('Page.frameNavigated');
+    for (const listener of listeners) {
+      listener({frame: {id: 'ABC', url: 'https://www.example.com'}});
+    }
+
+    const results = await loadPromise;
+    expect(results.requestedUrl).toEqual('https://www.example.com');
+    expect(results.finalUrl).toEqual('https://www.example.com');
+  });
+
+  it('throws if no navigations found using a callback requestor', async () => {
+    mockDriver.defaultSession.on = mockDriver.defaultSession.once = createMockOnceFn();
+
+    const requestor = () => Promise.resolve();
+
+    const loadPromise = makePromiseInspectable(
+      gotoURL(driver, requestor, {waitUntil: ['navigated']})
+    );
+    await flushAllTimersAndMicrotasks();
+
+    // Trigger the load listener, but not the network monitor one.
+    const [_, listener] = mockDriver.defaultSession.on.getListeners('Page.frameNavigated');
+    listener({frame: {id: 'ABC', url: 'https://www.example.com'}});
+
+    await expect(loadPromise).rejects.toThrow(
+      'No navigations detected when running user defined requestor.'
+    );
   });
 
   it('does not add warnings when URLs are equal', async () => {

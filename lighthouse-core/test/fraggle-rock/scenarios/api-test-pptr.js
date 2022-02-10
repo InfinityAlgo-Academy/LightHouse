@@ -141,10 +141,47 @@ describe('Fraggle Rock API', () => {
 
     it('should compute both snapshot & timespan results', async () => {
       const {page, serverBaseUrl} = state;
-      const result = await lighthouse.navigation({page, url: `${serverBaseUrl}/index.html`});
+      const result = await lighthouse.navigation(`${serverBaseUrl}/index.html`, {page});
       if (!result) throw new Error('Lighthouse failed to produce a result');
 
       const {lhr} = result;
+      const {auditResults, failedAudits, erroredAudits} = getAuditsBreakdown(lhr);
+      // TODO(FR-COMPAT): This assertion can be removed when full compatibility is reached.
+      expect(auditResults.length).toMatchInlineSnapshot(`152`);
+      expect(erroredAudits).toHaveLength(0);
+
+      const failedAuditIds = failedAudits.map(audit => audit.id);
+      expect(failedAuditIds).toContain('label');
+      expect(failedAuditIds).toContain('errors-in-console');
+
+      // Check that network request information was computed.
+      expect(lhr.audits).toHaveProperty('total-byte-weight');
+      const details = lhr.audits['total-byte-weight'].details;
+      if (!details || details.type !== 'table') throw new Error('Unexpected byte weight details');
+      expect(details.items).toMatchObject([{url: `${serverBaseUrl}/index.html`}]);
+
+      // Check that performance metrics were computed.
+      expect(lhr.audits).toHaveProperty('first-contentful-paint');
+      expect(Number.isFinite(lhr.audits['first-contentful-paint'].numericValue)).toBe(true);
+    });
+
+    it('should compute results with callback requestor', async () => {
+      const {page, serverBaseUrl} = state;
+      await page.goto(`${serverBaseUrl}/links-to-index.html`);
+
+      const requestor = jest.fn(async () => {
+        await page.click('a');
+      });
+
+      const result = await lighthouse.navigation(requestor, {page});
+      if (!result) throw new Error('Lighthouse failed to produce a result');
+
+      expect(requestor).toHaveBeenCalled();
+
+      const {lhr} = result;
+      expect(lhr.requestedUrl).toEqual(`${serverBaseUrl}/index.html`);
+      expect(lhr.finalUrl).toEqual(`${serverBaseUrl}/index.html`);
+
       const {auditResults, failedAudits, erroredAudits} = getAuditsBreakdown(lhr);
       // TODO(FR-COMPAT): This assertion can be removed when full compatibility is reached.
       expect(auditResults.length).toMatchInlineSnapshot(`152`);
