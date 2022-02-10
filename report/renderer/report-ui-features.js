@@ -180,9 +180,6 @@ export class ReportUIFeatures {
   _enableFireworks() {
     const scoresContainer = this._dom.find('.lh-scores-container', this._dom.rootEl);
     scoresContainer.classList.add('lh-score100');
-    scoresContainer.addEventListener('click', _ => {
-      scoresContainer.classList.toggle('lh-fireworks-paused');
-    });
   }
 
   _setupMediaQueryListeners() {
