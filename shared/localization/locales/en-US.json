@@ -2543,6 +2543,12 @@
   "report/renderer/util.js | varianceDisclaimer": {
     "message": "Values are estimated and may vary. The [performance score is calculated](https://web.dev/performance-scoring/) directly from these metrics."
   },
+  "report/renderer/util.js | viewOriginalTraceLabel": {
+    "message": "View Original Trace"
+  },
+  "report/renderer/util.js | viewTraceLabel": {
+    "message": "View Trace"
+  },
   "report/renderer/util.js | viewTreemapLabel": {
     "message": "View Treemap"
   },

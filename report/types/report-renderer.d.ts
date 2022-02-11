@@ -5,6 +5,7 @@
  */
 
 import { Result as AuditResult } from "../../types/lhr/audit-result";
+import { ReportUIFeatures } from "../renderer/report-ui-features.js";
 
 declare module Renderer {
   function renderReport(lhr: AuditResult, options?: Options): HTMLElement;
@@ -26,6 +27,12 @@ declare module Renderer {
     onPageAnchorRendered?: (link: HTMLAnchorElement) => void;
     /** If defined, `Save as HTML` option is shown in dropdown menu. */
     getStandaloneReportHTML?: () => string;
+    /**
+     * If defined, adds a `View Trace` button to the report, and calls this callback when clicked.
+     * The callback should do something to present the user with a visualization of the trace
+     * data, which can be gotten from the artifacts.
+     */
+    onViewTrace?: () => void;
   }
 }
 
