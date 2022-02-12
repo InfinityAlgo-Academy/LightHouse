@@ -97,6 +97,7 @@
   },
   "devDependencies": {
     "@build-tracker/cli": "^1.0.0-beta.15",
+    "@jest/fake-timers": "^27.5.1",
     "@rollup/plugin-alias": "^3.1.2",
     "@rollup/plugin-commonjs": "^20.0.0",
     "@rollup/plugin-dynamic-import-vars": "^1.1.1",

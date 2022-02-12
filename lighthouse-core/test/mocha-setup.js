@@ -18,9 +18,17 @@
 const path = require('path');
 const expect = require('expect');
 const {SnapshotState, toMatchSnapshot, toMatchInlineSnapshot} = require('jest-snapshot');
+const fakeTimers = require('@jest/fake-timers');
 // TODO
 // const {default: {toBeCloseTo}} = require('expect/build/matchers.js');
 const format = require('../../shared/localization/format.js');
+const {LH_ROOT} = require('../../root.js');
+
+global.timers = new fakeTimers.ModernFakeTimers({
+  global,
+  config: {rootDir: LH_ROOT, testMatch: ['*']},
+  maxLoops: 10,
+});
 
 /** @type {Map<string, SnapshotState['prototype']>} */
 const snapshotStatesByTestFile = new Map();

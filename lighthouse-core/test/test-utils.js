@@ -165,8 +165,7 @@ function createDecomposedPromise() {
  */
 async function flushAllTimersAndMicrotasks(ms = 1000) {
   for (let i = 0; i < ms; i++) {
-    // jest.advanceTimersByTime(1);
-    // TODO ?
+    timers.advanceTimersByTime(1);
     await Promise.resolve();
   }
 }
