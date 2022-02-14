@@ -1408,7 +1408,7 @@ Object {
           "path": "iframe-elements",
         },
         Object {
-          "path": "form-elements",
+          "path": "inputs",
         },
         Object {
           "path": "main-document-content",

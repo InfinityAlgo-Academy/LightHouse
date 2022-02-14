@@ -139,8 +139,8 @@ export interface GathererArtifacts extends PublicGathererArtifacts,LegacyBaseArt
   Fonts: Artifacts.Font[];
   /** Information on poorly sized font usage and the text affected by it. */
   FontSize: Artifacts.FontSize;
-  /** All the form elements in the page and formless inputs. */
-  FormElements: Artifacts.Form[];
+  /** All the input elements, including associated form and label elements. */
+  Inputs: {inputs: Artifacts.InputElement[]; forms: Artifacts.FormElement[]; labels: Artifacts.LabelElement[]};
   /** Screenshot of the entire page (rather than just the above the fold content). */
   FullPageScreenshot: Artifacts.FullPageScreenshot | null;
   /** Information about event listeners registered on the global object. */
@@ -787,22 +787,22 @@ declare module Artifacts {
     observedSpeedIndexTs: number;
   }
 
-  interface Form {
-    /** If attributes is missing that means this is a formless set of elements. */
-    attributes?: {
-      id: string;
-      name: string;
-      autocomplete: string;
-    };
-    node: NodeDetails | null;
-    inputs: Array<FormInput>;
-    labels: Array<FormLabel>;
+  interface FormElement {
+    id: string;
+    name: string;
+    autocomplete: string;
+    node: NodeDetails;
   }
 
   /** Attributes collected for every input element in the inputs array from the forms interface. */
-  interface FormInput {
+  interface InputElement {
+    /** If set, the parent form is the index into the associated FormElement array. Otherwise, the input element has no parent form. */
+    parentFormIndex?: number;
+    /** Array of indices into associated LabelElement array. */
+    labelIndicies: number[];
     id: string;
     name: string;
+    type: string;
     placeholder?: string;
     autocomplete: {
       property: string;
@@ -813,7 +813,7 @@ declare module Artifacts {
   }
 
   /** Attributes collected for every label element in the labels array from the forms interface */
-  interface FormLabel {
+  interface LabelElement {
     for: string;
     node: NodeDetails;
   }

@@ -14,7 +14,7 @@ import dbw from './test-definitions/dobetterweb.js';
 import errorsExpiredSsl from './test-definitions/errors-expired-ssl.js';
 import errorsIframeExpiredSsl from './test-definitions/errors-iframe-expired-ssl.js';
 import errorsInfiniteLoop from './test-definitions/errors-infinite-loop.js';
-// import formsAutoComplete from './test-definitions/forms-autocomplete.js';
+import formsAutoComplete from './test-definitions/forms-autocomplete.js';
 import issuesMixedContent from './test-definitions/issues-mixed-content.js';
 import lanternFetch from './test-definitions/lantern-fetch.js';
 import lanternIdleCallbackLong from './test-definitions/lantern-idle-callback-long.js';
@@ -72,8 +72,7 @@ const smokeTests = [
   errorsExpiredSsl,
   errorsIframeExpiredSsl,
   errorsInfiniteLoop,
-  // TODO: restore when --enable-features=AutofillShowTypePredictions is not needed.
-  // formsAutoComplete,
+  formsAutoComplete,
   issuesMixedContent,
   lanternOnline,
   lanternSetTimeout,
