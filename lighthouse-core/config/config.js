@@ -429,6 +429,12 @@ class Config {
       includedAudits.add('full-page-screenshot');
     }
 
+    const explicitlyExcludesFullPageScreenshot__2 =
+      settings.skipAudits && settings.skipAudits.includes('node-stack-traces');
+    if (!explicitlyExcludesFullPageScreenshot__2 && (settings.onlyCategories || settings.skipAudits)) {
+      includedAudits.add('node-stack-traces');
+    }
+
     return {categories, requestedAuditNames: includedAudits};
   }
 

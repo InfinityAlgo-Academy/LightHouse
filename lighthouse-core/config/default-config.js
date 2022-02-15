@@ -162,6 +162,7 @@ const defaultConfig = {
       'inspector-issues',
       'source-maps',
       'full-page-screenshot',
+      'node-stack-traces',
     ],
   },
   {
@@ -227,6 +228,7 @@ const defaultConfig = {
     'preload-lcp-image',
     'csp-xss',
     'full-page-screenshot',
+    // 'node-stack-traces', // TODO
     'script-treemap-data',
     'manual/pwa-cross-browser',
     'manual/pwa-page-transitions',

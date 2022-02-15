@@ -143,6 +143,8 @@ export interface GathererArtifacts extends PublicGathererArtifacts,LegacyBaseArt
   Inputs: {inputs: Artifacts.InputElement[]; forms: Artifacts.FormElement[]; labels: Artifacts.LabelElement[]};
   /** Screenshot of the entire page (rather than just the above the fold content). */
   FullPageScreenshot: Artifacts.FullPageScreenshot | null;
+  /** Stack traces . */
+  NodeStackTraces: {nodes: Array<{creation?: any}>};
   /** Information about event listeners registered on the global object. */
   GlobalListeners: Array<Artifacts.GlobalListener>;
   /** The issues surfaced in the devtools Issues panel */

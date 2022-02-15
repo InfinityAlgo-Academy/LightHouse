@@ -27,11 +27,17 @@ const baseArtifactKeys = Object.keys(baseArtifactKeySource);
 
 // Some audits are used by the report for additional information.
 // Keep these audits unless they are *directly* skipped with `skipAudits`.
-const filterResistantAuditIds = ['full-page-screenshot'];
+const filterResistantAuditIds = ['full-page-screenshot', 'node-stack-traces'];
 
 // Some artifacts are used by the report for additional information.
 // Always run these artifacts even if audits do not request them.
-const filterResistantArtifactIds = ['HostUserAgent', 'HostFormFactor', 'Stacks', 'GatherContext'];
+const filterResistantArtifactIds = [
+  'HostUserAgent',
+  'HostFormFactor',
+  'Stacks',
+  'GatherContext',
+  'NodeStackTraces',
+];
 
 /**
  * Returns the set of audit IDs used in the list of categories.

@@ -73,9 +73,10 @@ class ExecutionContext {
    * page without isolation.
    * @param {string} expression
    * @param {number|undefined} contextId
+   * @param {boolean|undefined} returnRawObject
    * @return {Promise<*>}
    */
-  async _evaluateInContext(expression, contextId) {
+  async _evaluateInContext(expression, contextId, returnRawObject) {
     // Use a higher than default timeout if the user hasn't specified a specific timeout.
     // Otherwise, use whatever was requested.
     const timeout = this._session.hasNextProtocolTimeout() ?
@@ -100,7 +101,7 @@ class ExecutionContext {
       }())`,
       includeCommandLineAPI: true,
       awaitPromise: true,
-      returnByValue: true,
+      returnByValue: !returnRawObject,
       timeout,
       contextId,
     };
@@ -120,7 +121,7 @@ class ExecutionContext {
       return Promise.reject(
         new Error('Runtime.evaluate response did not contain a "result" object'));
     }
-    const value = response.result.value;
+    const value = returnRawObject ? response.result : response.result.value;
     if (value?.__failedInBrowser) {
       return Promise.reject(Object.assign(new Error(), value));
     } else {
@@ -135,7 +136,7 @@ class ExecutionContext {
    * is completely separate.
    * Returns a promise that resolves on the expression's value.
    * @param {string} expression
-   * @param {{useIsolation?: boolean}=} options
+   * @param {{useIsolation?: boolean, returnRawObject?: boolean}=} options
    * @return {Promise<*>}
    */
   async evaluateAsync(expression, options = {}) {
@@ -143,13 +144,13 @@ class ExecutionContext {
 
     try {
       // `await` is not redundant here because we want to `catch` the async errors
-      return await this._evaluateInContext(expression, contextId);
+      return await this._evaluateInContext(expression, contextId, options.returnRawObject);
     } catch (err) {
       // If we were using isolation and the context disappeared on us, retry one more time.
       if (contextId && err.message.includes('Cannot find context')) {
         this.clearContextId();
         const freshContextId = await this._getOrCreateIsolatedContextId();
-        return this._evaluateInContext(expression, freshContextId);
+        return this._evaluateInContext(expression, freshContextId, options.returnRawObject);
       }
 
       throw err;

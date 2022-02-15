@@ -98,6 +98,7 @@ const defaultConfig = {
     {id: artifacts.FontSize, gatherer: 'seo/font-size'},
     {id: artifacts.Inputs, gatherer: 'inputs'},
     {id: artifacts.FullPageScreenshot, gatherer: 'full-page-screenshot'},
+    {id: artifacts.NodeStackTraces, gatherer: 'node-stack-traces'},
     {id: artifacts.GlobalListeners, gatherer: 'global-listeners'},
     {id: artifacts.IFrameElements, gatherer: 'iframe-elements'},
     {id: artifacts.ImageElements, gatherer: 'image-elements'},
