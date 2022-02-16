@@ -799,7 +799,7 @@ declare module Artifacts {
     /** If set, the parent form is the index into the associated FormElement array. Otherwise, the input element has no parent form. */
     parentFormIndex?: number;
     /** Array of indices into associated LabelElement array. */
-    labelIndicies: number[];
+    labelIndices: number[];
     id: string;
     name: string;
     type: string;
