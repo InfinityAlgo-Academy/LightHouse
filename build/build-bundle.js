@@ -94,7 +94,7 @@ async function build(entryPath, distPath, opts = {minify: true}) {
     'intl-pluralrules',
     'intl',
     'pako/lib/zlib/inflate.js',
-    'raven',
+    '@sentry/node',
     'source-map',
     'ws',
     require.resolve('../lighthouse-core/gather/connections/cri.js'),

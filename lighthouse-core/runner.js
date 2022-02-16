@@ -149,7 +149,7 @@ class Runner {
       Sentry.captureBreadcrumb({
         message: 'Run started',
         category: 'lifecycle',
-        data: sentryContext?.extra,
+        data: sentryContext,
       });
 
       /** @type {LH.Artifacts} */
