@@ -345,13 +345,15 @@ export class ReportUIFeatures {
   }
 
   /**
-   * DevTools uses its own file manager to download files, so it redefines this function.
-   * Wrapper is necessary so DevTools can still override this function.
-   *
    * @param {Blob|File} blob
    */
   _saveFile(blob) {
-    const filename = getLhrFilenamePrefix(this.json);
-    this._dom.saveFile(blob, filename);
+    const ext = blob.type.match('json') ? '.json' : '.html';
+    const filename = getLhrFilenamePrefix(this.json) + ext;
+    if (this._opts.onSaveFileOverride) {
+      this._opts.onSaveFileOverride(blob, filename);
+    } else {
+      this._dom.saveFile(blob, filename);
+    }
   }
 }

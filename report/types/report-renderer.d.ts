@@ -35,6 +35,10 @@ declare module Renderer {
     onPageAnchorRendered?: (link: HTMLAnchorElement) => void;
     /** If defined, `Save as HTML` option is shown in dropdown menu. */
     getStandaloneReportHTML?: () => string;
+    /** If defined, renderer will call this instead of `self.print()` */
+    onPrintOverride?: (rootEl: HTMLElement) => Promise<void>;
+    /** If defined, renderer will call this instead of using a `<a download>.click()>` to trigger a JSON/HTML download. Blob will be either json or html. */
+    onSaveFileOverride?: (blob: Blob, suggestedFilename: string) => Promise<void>;
     /**
      * If defined, adds a `View Trace` button to the report, and calls this callback when clicked.
      * The callback should do something to present the user with a visualization of the trace
