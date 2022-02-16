@@ -144,7 +144,7 @@ export interface GathererArtifacts extends PublicGathererArtifacts,LegacyBaseArt
   /** Screenshot of the entire page (rather than just the above the fold content). */
   FullPageScreenshot: Artifacts.FullPageScreenshot | null;
   /** Stack traces . */
-  NodeStackTraces: {nodes: Array<{creation?: any}>};
+  NodeStackTraces: {nodes: Record<string, LH.Crdp.DOM.GetNodeStackTracesResponse>};
   /** Information about event listeners registered on the global object. */
   GlobalListeners: Array<Artifacts.GlobalListener>;
   /** The issues surfaced in the devtools Issues panel */
