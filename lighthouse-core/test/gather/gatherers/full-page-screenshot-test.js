@@ -25,6 +25,8 @@ let screenSize;
 let screenshotData;
 let mockContext = createMockContext();
 
+jest.setTimeout(10_000);
+
 beforeEach(() => {
   contentSize = {width: 100, height: 100};
   screenSize = {dpr: 1};
@@ -61,6 +63,8 @@ beforeEach(() => {
         },
         deviceScaleFactor: screenSize.dpr,
       };
+    } else if (fn.name === 'waitForDoubleRaf') {
+      return {};
     } else {
       throw new Error(`unexpected fn ${fn.name}`);
     }
