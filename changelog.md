@@ -1,3 +1,48 @@
+<a name="9.4.0"></a>
+# 9.4.0 (2022-02-16)
+[Full Changelog](https://github.com/compare/v9.3.1...v9.4.0)
+
+We expect this release to ship in the DevTools of [Chrome 100](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
+
+## Notable Changes
+
+* Allow auditing of navigations triggered by user interactions in user flows. See our [user flow docs](https://github.com/GoogleChrome/lighthouse/blob/master/docs/user-flows.md) for more info. ([#13496](https://github.com/GoogleChrome/lighthouse/pull/13496))
+
+## Core
+
+* a11y: change link in category description to web.dev ([#13638](https://github.com/GoogleChrome/lighthouse/pull/13638))
+* full-page-screenshot: wait for doubleraf, network quiet ([#13663](https://github.com/GoogleChrome/lighthouse/pull/13663))
+* hreflang: remove eval, import axe valid-langs.js directly ([#13385](https://github.com/GoogleChrome/lighthouse/pull/13385))
+* inputs: refactor form-elements gatherer ([#13662](https://github.com/GoogleChrome/lighthouse/pull/13662), [#13671](https://github.com/GoogleChrome/lighthouse/pull/13671))
+* page-functions: set style in getOuterHTMLSnippet without violating CSP ([#13636](https://github.com/GoogleChrome/lighthouse/pull/13636))
+* runner: independent gather and audit functions ([#13569](https://github.com/GoogleChrome/lighthouse/pull/13569))
+* uses-long-cache-ttl: ignore `stale-while-revalidate` ([#13612](https://github.com/GoogleChrome/lighthouse/pull/13612))
+
+## Report
+
+* add options onPrintOverride and onSaveFileOverride ([#13529](https://github.com/GoogleChrome/lighthouse/pull/13529))
+* add options disableFireworks and disableDarkMode ([#13649](https://github.com/GoogleChrome/lighthouse/pull/13649))
+* add onViewTrace to renderer options ([#13528](https://github.com/GoogleChrome/lighthouse/pull/13528))
+* remove pausing fireworks on click ([#13650](https://github.com/GoogleChrome/lighthouse/pull/13650))
+* fix fireworks ([#13635](https://github.com/GoogleChrome/lighthouse/pull/13635))
+
+## Deps
+
+* sentry: move from raven to @sentry/node ([#9325](https://github.com/GoogleChrome/lighthouse/pull/9325))
+* snyk: update snyk snapshot ([#13669](https://github.com/GoogleChrome/lighthouse/pull/13669), [#13644](https://github.com/GoogleChrome/lighthouse/pull/13644), [#13616](https://github.com/GoogleChrome/lighthouse/pull/13616))
+
+## Tests
+
+* use simpler assertion in report-renderer-axe-test.js ([#13658](https://github.com/GoogleChrome/lighthouse/pull/13658))
+* fix single node a11y tests ([#13626](https://github.com/GoogleChrome/lighthouse/pull/13626))
+* devtools: sync ([#13656](https://github.com/GoogleChrome/lighthouse/pull/13656))
+* devtools: update report resource names ([#13615](https://github.com/GoogleChrome/lighthouse/pull/13615))
+* smoke: test array `_includes` and `lhr.timing` ([#13619](https://github.com/GoogleChrome/lighthouse/pull/13619))
+
+## Misc
+
+* temporarily remove brendan from triage rotation ([#13618](https://github.com/GoogleChrome/lighthouse/pull/13618))
+
 <a name="9.3.1"></a>
 # 9.3.1 (2022-01-31)
 [Full Changelog](https://github.com/compare/v9.3.0...v9.3.1)
