@@ -40,6 +40,10 @@ class NodeStackTraces extends FRGatherer {
         deps: [],
         useIsolation,
       });
+      if (lhIds.length === 0) {
+        // No need to continue with zero elements.
+        return {};
+      }
 
       const backendNodeIds = [];
       for (let i = 0; i < lhIds.length; i++) {
@@ -54,23 +58,27 @@ class NodeStackTraces extends FRGatherer {
         backendNodeIds.push(describeNodeResult.node.backendNodeId);
       }
 
-      await session.sendCommand('DOM.getDocument', {depth: -1, pierce: true});
       const {nodeIds} = await session.sendCommand('DOM.pushNodesByBackendIdsToFrontend', {
         backendNodeIds,
       });
 
+      /** @type {LH.Artifacts['NodeStackTraces']['nodes']} */
       const lhIdToStackTraces = {};
       for (let i = 0; i < nodeIds.length; i++) {
         const nodeId = nodeIds[i];
-        // TODO: crashes rn
-        // const result = await session.sendCommand('DOM.getNodeStackTraces', {nodeId});
-        // lhIdToStackTraces[lhIds[i]] = result;
-        lhIdToStackTraces[lhIds[i]] = nodeId;
+        const result = await session.sendCommand('DOM.getNodeStackTraces', {nodeId});
+        // TODO: why is this always empty??
+        // test on http://localhost:10200/delayed-lcp.html
+        console.log(lhIds[i], nodeId, result);
+        if (Object.keys(result).length > 0) {
+          lhIdToStackTraces[lhIds[i]] = result;
+        }
       }
 
-      console.log(lhIdToStackTraces);
       return lhIdToStackTraces;
     }
+
+    await session.sendCommand('DOM.getDocument', {depth: -1, pierce: true});
 
     // Collect nodes with the page context (`useIsolation: false`) and with our own, reused
     // context (`useIsolation: true`). Gatherers use both modes when collecting node details,
@@ -83,10 +91,20 @@ class NodeStackTraces extends FRGatherer {
   /**
    * @param {LH.Gatherer.FRTransitionalContext} context
    */
-  async beforePass(context) {
+  async startInstrumentation(context) {
     await context.driver.defaultSession.sendCommand('DOM.setNodeStackTracesEnabled', {
       enable: true,
     });
+  }
+
+  /**
+   * @param {LH.Gatherer.FRTransitionalContext} context
+   */
+  async stopInstrumentation(context) {
+    // TODO: ???
+    // await context.driver.defaultSession.sendCommand('DOM.setNodeStackTracesEnabled', {
+    //   enable: false,
+    // });
   }
 
   /**

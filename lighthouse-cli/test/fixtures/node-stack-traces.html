@@ -1,0 +1,18 @@
+<body>
+  <style>
+    .small {
+      font-size: 2px;
+    }
+  </style>
+  <script src="./node-stack-traces-lib.js"></script>
+  <script>
+    createElement('div', 'el-0').textContent = 'Hello!';
+    createElement('div', 'el-1', 'small').textContent = 'Hello!';
+
+    const elToRemove = createElement('div', 'el-2', 'small');
+    elToRemove.textContent = 'Hello!';
+    setTimeout(() => {
+      elToRemove.remove();
+    }, 2000);
+  </script>
+</body>
