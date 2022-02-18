@@ -48,6 +48,7 @@ const artifacts = {
   FontSize: '',
   Inputs: '',
   FullPageScreenshot: '',
+  NodeStackTraces: '',
   GlobalListeners: '',
   IFrameElements: '',
   ImageElements: '',
@@ -178,8 +179,9 @@ const defaultConfig = {
         artifacts.devtoolsLogs,
         artifacts.traces,
 
-        // FullPageScreenshot comes at the very end so all other node analysis is captured.
+        // These come at the very end so all other node analysis is captured.
         artifacts.FullPageScreenshot,
+        artifacts.NodeStackTraces,
       ],
     },
   ],

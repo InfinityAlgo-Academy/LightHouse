@@ -435,9 +435,9 @@ class Driver {
     if (this.isDomainEnabled('CSS')) {
       throw new Error('CSS domain enabled when starting trace');
     }
-    if (this.isDomainEnabled('DOM')) {
-      throw new Error('DOM domain enabled when starting trace');
-    }
+    // if (this.isDomainEnabled('DOM')) {
+    //   throw new Error('DOM domain enabled when starting trace');
+    // }
 
     // Enable Page domain to wait for Page.loadEventFired
     return this.sendCommand('Page.enable')

@@ -67,10 +67,7 @@ class NodeStackTraces extends FRGatherer {
       for (let i = 0; i < nodeIds.length; i++) {
         const nodeId = nodeIds[i];
         const result = await session.sendCommand('DOM.getNodeStackTraces', {nodeId});
-        // TODO: why is this always empty??
-        // test on http://localhost:10200/delayed-lcp.html
-        console.log(lhIds[i], nodeId, result);
-        if (Object.keys(result).length > 0) {
+        if (result.creation) {
           lhIdToStackTraces[lhIds[i]] = result;
         }
       }
@@ -92,6 +89,7 @@ class NodeStackTraces extends FRGatherer {
    * @param {LH.Gatherer.FRTransitionalContext} context
    */
   async startInstrumentation(context) {
+    await context.driver.defaultSession.sendCommand('DOM.enable');
     await context.driver.defaultSession.sendCommand('DOM.setNodeStackTracesEnabled', {
       enable: true,
     });
@@ -101,10 +99,10 @@ class NodeStackTraces extends FRGatherer {
    * @param {LH.Gatherer.FRTransitionalContext} context
    */
   async stopInstrumentation(context) {
-    // TODO: ???
-    // await context.driver.defaultSession.sendCommand('DOM.setNodeStackTracesEnabled', {
-    //   enable: false,
-    // });
+    await context.driver.defaultSession.sendCommand('DOM.disable');
+    await context.driver.defaultSession.sendCommand('DOM.setNodeStackTracesEnabled', {
+      enable: false,
+    });
   }
 
   /**
