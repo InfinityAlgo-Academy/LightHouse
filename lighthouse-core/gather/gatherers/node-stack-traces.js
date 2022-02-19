@@ -68,7 +68,7 @@ class NodeStackTraces extends FRGatherer {
         const nodeId = nodeIds[i];
         const result = await session.sendCommand('DOM.getNodeStackTraces', {nodeId});
         if (result.creation) {
-          lhIdToStackTraces[lhIds[i]] = result;
+          lhIdToStackTraces[lhIds[i]] = {creation: result.creation};
         }
       }
 

@@ -228,7 +228,7 @@ const defaultConfig = {
     'preload-lcp-image',
     'csp-xss',
     'full-page-screenshot',
-    // 'node-stack-traces', // TODO
+    'node-stack-traces',
     'script-treemap-data',
     'manual/pwa-cross-browser',
     'manual/pwa-page-transitions',

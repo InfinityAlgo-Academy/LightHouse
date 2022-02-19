@@ -35,11 +35,12 @@ const URL_PREFIXES = ['http://', 'https://', 'data:'];
 export class DetailsRenderer {
   /**
    * @param {DOM} dom
-   * @param {{fullPageScreenshot?: LH.Audit.Details.FullPageScreenshot}} [options]
+   * @param {{fullPageScreenshot?: LH.Audit.Details.FullPageScreenshot; nodeStackTraces?: LH.Audit.Details.DebugData}} [options]
    */
   constructor(dom, options = {}) {
     this._dom = dom;
     this._fullPageScreenshot = options.fullPageScreenshot;
+    this._nodeStackTraces = options.nodeStackTraces;
   }
 
   /**
@@ -509,6 +510,9 @@ export class DetailsRenderer {
     if (item.path) element.setAttribute('data-path', item.path);
     if (item.selector) element.setAttribute('data-selector', item.selector);
     if (item.snippet) element.setAttribute('data-snippet', item.snippet);
+    if (item.lhId && this._nodeStackTraces?.nodes?.[item.lhId]) {
+      element.setAttribute('data-creation-url', this._nodeStackTraces.nodes[item.lhId].url);
+    }
 
     if (!this._fullPageScreenshot) return element;
 

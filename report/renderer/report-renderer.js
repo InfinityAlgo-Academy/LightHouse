@@ -263,8 +263,13 @@ export class ReportRenderer {
       report.audits['full-page-screenshot']?.details &&
       report.audits['full-page-screenshot'].details.type === 'full-page-screenshot' ?
       report.audits['full-page-screenshot'].details : undefined;
+    const nodeStackTraces =
+      report.audits['node-stack-traces']?.details &&
+      report.audits['node-stack-traces'].details.type === 'debugdata' ?
+      report.audits['node-stack-traces'].details : undefined;
     const detailsRenderer = new DetailsRenderer(this._dom, {
       fullPageScreenshot,
+      nodeStackTraces,
     });
 
     const categoryRenderer = new CategoryRenderer(this._dom, detailsRenderer);
