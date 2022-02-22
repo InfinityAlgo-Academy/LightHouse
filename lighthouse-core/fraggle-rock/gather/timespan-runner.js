@@ -5,6 +5,7 @@
  */
 'use strict';
 
+const log = require('lighthouse-logger');
 const Driver = require('./driver.js');
 const Runner = require('../../runner.js');
 const {
@@ -22,6 +23,8 @@ const {getBaseArtifacts, finalizeArtifacts} = require('./base-artifacts.js');
  */
 async function startTimespan(options) {
   const {configContext = {}} = options;
+  log.setLevel(configContext.logLevel || 'error');
+
   const {config} = initializeConfig(options.config, {...configContext, gatherMode: 'timespan'});
   const driver = new Driver(options.page);
   await driver.connect();

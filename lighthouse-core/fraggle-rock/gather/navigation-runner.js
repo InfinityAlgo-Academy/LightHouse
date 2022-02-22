@@ -292,6 +292,8 @@ async function _cleanup({requestedUrl, driver, config}) {
  */
 async function navigation(requestor, options) {
   const {page, configContext = {}} = options;
+  log.setLevel(configContext.logLevel || 'error');
+
   const {config} = initializeConfig(options.config, {...configContext, gatherMode: 'navigation'});
   const computedCache = new Map();
   const internalOptions = {
