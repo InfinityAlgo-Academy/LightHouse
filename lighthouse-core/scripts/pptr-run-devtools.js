@@ -104,9 +104,12 @@ const sniffLighthouseStarted = `
 new Promise(resolve => {
   const panel = UI.panels.lighthouse || UI.panels.audits;
   const protocolService = panel.protocolService || panel._protocolService;
+  const functionName = protocolService.__proto__.startLighthouse ?
+    'startLighthouse' :
+    'collectLighthouseResults';
   (${addSniffer.toString()})(
     protocolService.__proto__,
-    'startLighthouse',
+    functionName,
     (inspectedURL) => resolve(inspectedURL)
   );
 });
@@ -237,9 +240,13 @@ async function testPage(page, browser, url, config) {
     returnByValue: true,
   }).catch(err => err);
   // Verify the first parameter to `startLighthouse`, which should be a url.
+  // In M100 the LHR is returned on `collectLighthouseResults` which has just 1 options parameter containing `inspectedUrl`.
   // Don't try to check the exact value (because of redirects and such), just
   // make sure it exists.
-  if (!isValidUrl(lhStartedResponse.result.value)) {
+  if (
+    !isValidUrl(lhStartedResponse.result.value) &&
+    !isValidUrl(lhStartedResponse.result.value.inspectedURL)
+  ) {
     throw new Error(`Lighthouse did not start correctly. Got unexpected value for url: ${
       JSON.stringify(lhStartedResponse.result.value)}`);
   }
