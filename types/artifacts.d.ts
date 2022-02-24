@@ -147,8 +147,8 @@ export interface GathererArtifacts extends PublicGathererArtifacts,LegacyBaseArt
   GlobalListeners: Array<Artifacts.GlobalListener>;
   /** The issues surfaced in the devtools Issues panel */
   InspectorIssues: Artifacts.InspectorIssues;
-  /** JS coverage information for code used during page load. Keyed by network URL. */
-  JsUsage: Record<string, Array<Omit<LH.Crdp.Profiler.ScriptCoverage, 'url'>>>;
+  /** JS coverage information for code used during audit. Keyed by script id. */
+  JsUsage: Record<string, Omit<LH.Crdp.Profiler.ScriptCoverage, 'url'>>;
   /** Parsed version of the page's Web App Manifest, or null if none found. */
   Manifest: Artifacts.Manifest | null;
   /** The URL loaded with interception */
@@ -161,6 +161,8 @@ export interface GathererArtifacts extends PublicGathererArtifacts,LegacyBaseArt
   ResponseCompression: {requestId: string, url: string, mimeType: string, transferSize: number, resourceSize: number, gzipSize?: number}[];
   /** Information on fetching and the content of the /robots.txt file. */
   RobotsTxt: {status: number|null, content: string|null, errorMessage?: string};
+  /** Information on all scripts in the page. */
+  Scripts: Artifacts.Script[];
   /** Version information for all ServiceWorkers active after the first page load. */
   ServiceWorker: {versions: LH.Crdp.ServiceWorker.ServiceWorkerVersion[], registrations: LH.Crdp.ServiceWorker.ServiceWorkerRegistration[]};
   /** Source maps of scripts executed in the page. */
@@ -287,6 +289,16 @@ declare module Artifacts {
 
   interface PasswordInputsWithPreventedPaste {node: NodeDetails}
 
+  interface Script extends Omit<LH.Crdp.Debugger.ScriptParsedEvent, 'url'|'embedderName'> {
+    /**
+     * Set by a sourceURL= magic comment if present, otherwise this is the same as the URL.
+     * Use this field for presentational purposes only.
+     */
+    name: string;
+    url: string;
+    content?: string;
+  }
+  
   interface ScriptElement {
     type: string | null
     src: string | null
@@ -333,6 +345,8 @@ declare module Artifacts {
    * parsing the map, errorMessage will be defined instead of map.
    */
   type SourceMap = {
+    /** The DevTools protocol script identifier. */
+    scriptId: string;
     /** URL of code that source map applies to. */
     scriptUrl: string
     /** URL of the source map. undefined if from data URL. */
@@ -340,6 +354,8 @@ declare module Artifacts {
     /** Source map data structure. */
     map: RawSourceMap
   } | {
+    /** The DevTools protocol script identifier. */
+    scriptId: string;
     /** URL of code that source map applies to. */
     scriptUrl: string
     /** URL of the source map. undefined if from data URL. */
@@ -352,7 +368,7 @@ declare module Artifacts {
 
   interface Bundle {
     rawMap: RawSourceMap;
-    script: ScriptElement;
+    script: LH.Artifacts.Script;
     map: TextSourceMap;
     sizes: {
       // TODO(cjamcl): Rename to `sources`.
@@ -848,6 +864,8 @@ declare module Artifacts {
     stackTrace?: LH.Crdp.Runtime.StackTrace;
     /** The URL of the log/exception, if known. */
     url?: string;
+    /** The script id of the log/exception, if known. */
+    scriptId?: string;
     /** Line number in the script (0-indexed), if known. */
     lineNumber?: number;
     /** Column number in the script (0-indexed), if known. */

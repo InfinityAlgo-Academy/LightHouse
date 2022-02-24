@@ -84,11 +84,11 @@ async function main() {
     `${VARIANT_DIR}/all-legacy-polyfills/all-legacy-polyfills-core-js-3/main.bundle.min.js`;
   const bundleContents = fs.readFileSync(bundlePath, 'utf-8');
   const bundleMap = JSON.parse(fs.readFileSync(bundlePath + '.map', 'utf-8'));
-  /** @type {Pick<LH.Artifacts, 'ScriptElements'|'SourceMaps'>} */
+  /** @type {Pick<LH.Artifacts, 'Scripts'|'SourceMaps'>} */
   const artifacts = {
-    // @ts-expect-error don't need most properties on ScriptElement.
-    ScriptElements: [{requestId: '', src: '', content: bundleContents}],
-    SourceMaps: [{scriptUrl: '', map: bundleMap}],
+    // @ts-expect-error don't need most properties on Script.
+    Scripts: [{scriptId: '', url: '', content: bundleContents}],
+    SourceMaps: [{scriptId: '', scriptUrl: '', map: bundleMap}],
   };
   const bundles = await JsBundles.compute_(artifacts);
   if ('errorMessage' in bundles[0].sizes) throw new Error(bundles[0].sizes.errorMessage);

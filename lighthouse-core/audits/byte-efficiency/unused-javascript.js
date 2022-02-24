@@ -67,7 +67,7 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
       scoreDisplayMode: ByteEfficiencyAudit.SCORING_MODES.NUMERIC,
-      requiredArtifacts: ['JsUsage', 'ScriptElements', 'SourceMaps', 'GatherContext',
+      requiredArtifacts: ['JsUsage', 'Scripts', 'SourceMaps', 'GatherContext',
         'devtoolsLogs', 'traces'],
     };
   }
@@ -86,12 +86,16 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
     } = context.options || {};
 
     const items = [];
-    for (const [url, scriptCoverages] of Object.entries(artifacts.JsUsage)) {
-      const networkRecord = networkRecords.find(record => record.url === url);
+    for (const [scriptId, scriptCoverage] of Object.entries(artifacts.JsUsage)) {
+      const script = artifacts.Scripts.find(s => s.scriptId === scriptId);
+      if (!script) continue; // This should never happen.
+
+      const networkRecord = networkRecords.find(record => record.url === script.url);
       if (!networkRecord) continue;
-      const bundle = bundles.find(b => b.script.src === url);
+
+      const bundle = bundles.find(b => b.script.scriptId === scriptId);
       const unusedJsSummary =
-        await UnusedJavaScriptSummary.request({url, scriptCoverages, bundle}, context);
+        await UnusedJavaScriptSummary.request({scriptId, scriptCoverage, bundle}, context);
       if (unusedJsSummary.wastedBytes === 0 || unusedJsSummary.totalBytes === 0) continue;
 
       const transfer = ByteEfficiencyAudit
@@ -99,7 +103,7 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
       const transferRatio = transfer / unusedJsSummary.totalBytes;
       /** @type {LH.Audit.ByteEfficiencyItem} */
       const item = {
-        url: unusedJsSummary.url,
+        url: script.name,
         totalBytes: Math.round(transferRatio * unusedJsSummary.totalBytes),
         wastedBytes: Math.round(transferRatio * unusedJsSummary.wastedBytes),
         wastedPercent: unusedJsSummary.wastedPercent,
