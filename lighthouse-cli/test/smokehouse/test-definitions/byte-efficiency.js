@@ -84,7 +84,6 @@ const expectations = {
         async: false,
         defer: false,
         source: 'body',
-        content: /shadowRoot/,
       },
       {
         type: null,
@@ -92,7 +91,6 @@ const expectations = {
         async: false,
         defer: false,
         source: 'body',
-        content: /generateInlineStyleWithSize/,
       },
       {
         type: null,
@@ -100,7 +98,6 @@ const expectations = {
         async: false,
         defer: false,
         source: 'body',
-        content: /Used block #1/,
       },
       {
         type: null,
@@ -108,7 +105,6 @@ const expectations = {
         async: false,
         defer: false,
         source: 'body',
-        content: /Unused block #1/,
       },
       {
         type: null,
@@ -118,21 +114,6 @@ const expectations = {
         source: 'body',
       },
     ],
-    JsUsage: {
-      'http://localhost:10200/byte-efficiency/tester.html': [
-        {url: 'http://localhost:10200/byte-efficiency/tester.html'},
-        {url: 'http://localhost:10200/byte-efficiency/tester.html'},
-        {url: 'http://localhost:10200/byte-efficiency/tester.html'},
-        {url: 'http://localhost:10200/byte-efficiency/tester.html'},
-        {url: '/some-custom-url.js'},
-      ],
-      'http://localhost:10200/byte-efficiency/script.js': [
-        {url: 'http://localhost:10200/byte-efficiency/script.js'},
-      ],
-      'http://localhost:10200/byte-efficiency/bundle.js': [
-        {url: 'http://localhost:10200/byte-efficiency/bundle.js'},
-      ],
-    },
   },
   lhr: {
     requestedUrl: 'http://localhost:10200/byte-efficiency/tester.html',
@@ -169,13 +150,13 @@ const expectations = {
               wastedPercent: '87 +/- 5',
             },
             {
-              url: 'inline: \n  function unusedFunction() {\n    // Un...',
+              url: '/some-custom-url.js',
               wastedBytes: '6700 +/- 100',
               wastedPercent: '99.6 +/- 0.1',
             },
             {
               url: 'inline: \n  // Used block #1\n  // FILLER DATA JUS...',
-              wastedBytes: '6559 +/- 100',
+              wastedBytes: '6563 +/- 100',
               wastedPercent: 100,
             },
             {
@@ -212,9 +193,9 @@ const expectations = {
               wastedBytes: '22000 +/- 1000',
             },
             {
-              url: 'http://localhost:10200/byte-efficiency/tester.html',
-              totalBytes: '15000 +/- 1000',
-              wastedBytes: '6500 +/- 1000',
+              url: '/some-custom-url.js',
+              totalBytes: '6700 +/- 500',
+              wastedBytes: '6600 +/- 500',
             },
             {
               url: 'http://localhost:10200/byte-efficiency/bundle.js',
