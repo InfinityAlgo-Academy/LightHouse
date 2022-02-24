@@ -102,8 +102,8 @@ class Scripts extends FRGatherer {
       return {
         name: event.url,
         ...event,
-        // It's unclear why embedderName is optional.
-        // TODO: ask devtools team why
+        // embedderName is optional on the protocol because backends like Node may not set it.
+        // For our purposes, it is always set.
         url: event.embedderName || '',
       };
     });
