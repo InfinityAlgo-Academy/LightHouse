@@ -67,10 +67,7 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
       scoreDisplayMode: ByteEfficiencyAudit.SCORING_MODES.NUMERIC,
-      // Note: ScriptElements is not used by any core audits, not even this one,
-      // but it is part of our public artifacts and and pubads uses it. So we should
-      // include it somewhere so our smoke tests still run it.
-      requiredArtifacts: ['JsUsage', 'Scripts', 'ScriptElements', 'SourceMaps', 'GatherContext',
+      requiredArtifacts: ['JsUsage', 'Scripts', 'SourceMaps', 'GatherContext',
         'devtoolsLogs', 'traces'],
     };
   }

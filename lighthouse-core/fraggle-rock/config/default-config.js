@@ -167,6 +167,7 @@ const defaultConfig = {
         artifacts.RobotsTxt,
         artifacts.ServiceWorker,
         artifacts.ScriptElements,
+        artifacts.Scripts,
         artifacts.SourceMaps,
         artifacts.Stacks,
         artifacts.TagsBlockingFirstPaint,

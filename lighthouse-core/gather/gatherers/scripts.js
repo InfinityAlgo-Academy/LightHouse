@@ -59,8 +59,8 @@ class Scripts extends FRGatherer {
    */
   async startInstrumentation(context) {
     const session = context.driver.defaultSession;
-    await session.sendCommand('Debugger.enable');
     session.on('Debugger.scriptParsed', this.onScriptParsed);
+    await session.sendCommand('Debugger.enable');
   }
 
   /**
@@ -73,7 +73,7 @@ class Scripts extends FRGatherer {
   }
 
   /**
-   * @param {LH.Gatherer.FRTransitionalContext<'DevtoolsLog'>} context
+   * @param {LH.Gatherer.FRTransitionalContext} context
    */
   async getArtifact(context) {
     const session = context.driver.defaultSession;
