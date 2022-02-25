@@ -57,7 +57,7 @@ async function runSmokehouse(smokeTestDefns, smokehouseOptions) {
     useFraggleRock,
     jobs = DEFAULT_CONCURRENT_RUNS,
     retries = DEFAULT_RETRIES,
-    lighthouseRunner = cliLighthouseRunner,
+    lighthouseRunner = Object.assign(cliLighthouseRunner, {_runnerName: 'cli'}),
     takeNetworkRequestUrls,
   } = smokehouseOptions;
   assertPositiveInteger('jobs', jobs);
@@ -159,7 +159,10 @@ async function runSmokeTest(smokeTestDefn, testOptions) {
     }
 
     // Assert result.
-    report = getAssertionReport(result, expectations, {isDebug});
+    report = getAssertionReport(result, expectations, {
+      runner: lighthouseRunner._runnerName,
+      isDebug,
+    });
 
     runs.push({
       ...result,
