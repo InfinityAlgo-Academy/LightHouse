@@ -97,14 +97,33 @@ const expectations = {
       {
         src: 'http://localhost:10200/simple-script.js',
         source: 'network',
-        content: /🪁/,
       },
       {
         src: 'http://localhost:10503/simple-script.js',
         source: 'network',
-        content: /🪁/,
       },
     ],
+    Scripts: {
+      _includes: [
+        {
+          url: 'http://localhost:10200/simple-script.js',
+          content: /🪁/,
+        },
+        {
+          url: 'http://localhost:10200/oopif-simple-page.html',
+          content: /new Worker/,
+        },
+        {
+          url: 'http://localhost:10503/simple-script.js',
+          content: /🪁/,
+        },
+        {
+          url: 'http://localhost:10503/oopif-simple-page.html',
+          content: /new Worker/,
+        },
+      ],
+      _excludes: [{}],
+    },
   },
 };
 

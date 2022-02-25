@@ -114,6 +114,8 @@ const expectations = {
         source: 'body',
       },
     ],
+    // TODO
+    Scripts: [],
   },
   lhr: {
     requestedUrl: 'http://localhost:10200/byte-efficiency/tester.html',

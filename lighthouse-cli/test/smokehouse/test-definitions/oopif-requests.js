@@ -69,6 +69,7 @@ const expectations = {
       },
     ],
     ScriptElements: [],
+    Scripts: [],
   },
 };
 
