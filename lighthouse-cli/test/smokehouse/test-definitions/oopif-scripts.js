@@ -61,11 +61,9 @@ const expectations = {
               {url: 'http://localhost:10503/simple-worker.js'},
               {url: 'http://localhost:10200/favicon.ico'},
             ],
+            // Ensure the above is exhaustive.
             _excludes: [
-              {url: 'http://localhost:10200/simple-script.js'},
-              {url: 'http://localhost:10503/simple-script.js'},
-              {url: 'http://localhost:10200/simple-script.mjs'},
-              {url: 'http://localhost:10503/simple-script.mjs'},
+              {},
             ],
           },
         },
