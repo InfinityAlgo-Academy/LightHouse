@@ -152,18 +152,17 @@ function findDifference(path, actual, expected) {
       if (!Array.isArray(expectedValue)) throw new Error('Array subset must be array');
       if (!Array.isArray(actual)) continue;
 
-      const unexpectedValues = expectedValue;
-      console.log({arrToCheckAgainst});
-      for (const unexpectedEntry of unexpectedValues) {
+      const expectedExclusions = expectedValue;
+      for (const expectedExclusion of expectedExclusions) {
         const matchingIndex = arrToCheckAgainst.findIndex(actualEntry =>
-            !findDifference(keyPath, actualEntry, unexpectedEntry));
+            !findDifference(keyPath, actualEntry, expectedExclusion));
         if (matchingIndex !== -1) {
           return {
             path,
             actual: arrToCheckAgainst[matchingIndex],
             expected: {
               message: 'Expected to not find matching entry via _excludes',
-              unexpectedEntry,
+              expectedExclusion,
             },
           };
         }
