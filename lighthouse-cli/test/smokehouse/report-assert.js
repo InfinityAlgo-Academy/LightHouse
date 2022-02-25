@@ -103,6 +103,8 @@ function findDifference(path, actual, expected) {
     };
   }
 
+  let inclExclCopy;
+
   // We only care that all expected's own properties are on actual (and not the other way around).
   // Note an expected `undefined` can match an actual that is either `undefined` or not defined.
   for (const key of Object.keys(expected)) {
@@ -112,6 +114,8 @@ function findDifference(path, actual, expected) {
     const expectedValue = expected[key];
 
     if (key === '_includes') {
+      inclExclCopy = [...actual];
+
       if (!Array.isArray(expectedValue)) throw new Error('Array subset must be array');
       if (!Array.isArray(actual)) {
         return {
@@ -121,12 +125,12 @@ function findDifference(path, actual, expected) {
         };
       }
 
-      const actualCopy = [...actual];
       for (const expectedEntry of expectedValue) {
         const matchingIndex =
-          actualCopy.findIndex(actualEntry => !findDifference(keyPath, actualEntry, expectedEntry));
+          inclExclCopy.findIndex(actualEntry =>
+            !findDifference(keyPath, actualEntry, expectedEntry));
         if (matchingIndex !== -1) {
-          actualCopy.splice(matchingIndex, 1);
+          inclExclCopy.splice(matchingIndex, 1);
           continue;
         }
 
@@ -135,6 +139,33 @@ function findDifference(path, actual, expected) {
           actual: 'Item not found in array',
           expected: expectedEntry,
         };
+      }
+
+      continue;
+    }
+
+    if (key === '_excludes') {
+      // Re-use state from `_includes` check, if there was one.
+      /** @type {any[]} */
+      const arrToCheckAgainst = inclExclCopy || actual;
+
+      if (!Array.isArray(expectedValue)) throw new Error('Array subset must be array');
+      if (!Array.isArray(actual)) continue;
+
+      const expectedExclusions = expectedValue;
+      for (const expectedExclusion of expectedExclusions) {
+        const matchingIndex = arrToCheckAgainst.findIndex(actualEntry =>
+            !findDifference(keyPath, actualEntry, expectedExclusion));
+        if (matchingIndex !== -1) {
+          return {
+            path,
+            actual: arrToCheckAgainst[matchingIndex],
+            expected: {
+              message: 'Expected to not find matching entry via _excludes',
+              expectedExclusion,
+            },
+          };
+        }
       }
 
       continue;

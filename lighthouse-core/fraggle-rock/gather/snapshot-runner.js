@@ -5,6 +5,7 @@
  */
 'use strict';
 
+const log = require('lighthouse-logger');
 const Driver = require('./driver.js');
 const Runner = require('../../runner.js');
 const {
@@ -18,6 +19,8 @@ const {getBaseArtifacts, finalizeArtifacts} = require('./base-artifacts.js');
 /** @param {{page: import('puppeteer').Page, config?: LH.Config.Json, configContext?: LH.Config.FRContext}} options */
 async function snapshot(options) {
   const {configContext = {}} = options;
+  log.setLevel(configContext.logLevel || 'error');
+
   const {config} = initializeConfig(options.config, {...configContext, gatherMode: 'snapshot'});
   const driver = new Driver(options.page);
   await driver.connect();
