@@ -50,13 +50,22 @@ const expectations = {
               {url: 'http://localhost:10200/oopif-scripts.html'},
               {url: 'http://localhost:10200/oopif-simple-page.html'},
               {url: 'http://localhost:10503/oopif-simple-page.html'},
-              {url: 'http://localhost:10200/simple-script.js'},
-              {url: 'http://localhost:10503/simple-script.js'},
-              {url: 'http://localhost:10200/simple-script.js'},
-              {url: 'http://localhost:10503/simple-script.js'},
+              // simple-script.js is included many times
+              // 2 * (1 from <script>, 1 from fetch) = 4
+              // Note, the network records from the workers are _not_ captured!
+              {url: 'http://localhost:10200/simple-script.js', resourceType: 'Script'},
+              {url: 'http://localhost:10503/simple-script.js', resourceType: 'Script'},
+              {url: 'http://localhost:10200/simple-script.js', resourceType: 'Fetch'},
+              {url: 'http://localhost:10503/simple-script.js', resourceType: 'Fetch'},
               {url: 'http://localhost:10200/simple-worker.js'},
               {url: 'http://localhost:10503/simple-worker.js'},
               {url: 'http://localhost:10200/favicon.ico'},
+            ],
+            _excludes: [
+              {url: 'http://localhost:10200/simple-script.js'},
+              {url: 'http://localhost:10503/simple-script.js'},
+              {url: 'http://localhost:10200/simple-script.mjs'},
+              {url: 'http://localhost:10503/simple-script.mjs'},
             ],
           },
         },
