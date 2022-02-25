@@ -129,7 +129,7 @@ function createMockDriver() {
     _page: page,
     _executionContext: context,
     _session: session,
-    url: () => page.url(),
+    url: jest.fn(() => page.url()),
     defaultSession: session,
     connect: jest.fn(),
     disconnect: jest.fn(),

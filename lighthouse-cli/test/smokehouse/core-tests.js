@@ -53,6 +53,7 @@ import redirectsHistoryPushState from './test-definitions/redirects-history-push
 import redirectsMultipleServer from './test-definitions/redirects-multiple-server.js';
 import redirectsSingleClient from './test-definitions/redirects-single-client.js';
 import redirectsSingleServer from './test-definitions/redirects-single-server.js';
+import redirectsSelf from './test-definitions/redirects-self.js';
 import screenshot from './test-definitions/screenshot.js';
 import seoFailing from './test-definitions/seo-failing.js';
 import seoPassing from './test-definitions/seo-passing.js';
@@ -111,6 +112,7 @@ const smokeTests = [
   redirectsMultipleServer,
   redirectsSingleClient,
   redirectsSingleServer,
+  redirectsSelf,
   screenshot,
   seoFailing,
   seoPassing,
