@@ -75,6 +75,9 @@ Arrays can be asserted to not match any elements using the special `_excludes` p
 | `[{timeInMs: 5}, {timeInMs: 15}]` | `{length: 2}` | ✅ PASS |
 | `[{timeInMs: 5}, {timeInMs: 15}]` | `{_includes: [{timeInMs: 5}]}` | ✅ PASS |
 | `[{timeInMs: 5}, {timeInMs: 15}]` | `{_includes: [{timeInMs: 5}, {timeInMs: 5}]}` | ❌ FAIL |
+| `[{timeInMs: 5}, {timeInMs: 15}]` | `{_includes: [{timeInMs: 5}], _excludes: [{timeInMs: 5}]}` | ✅ PASS |
+| `[{timeInMs: 5}, {timeInMs: 15}]` | `{_includes: [{timeInMs: 5}], _excludes: [{timeInMs: 15}]}` | ❌ FAIL |
+| `[{timeInMs: 5}, {timeInMs: 15}]` | `{_includes: [{timeInMs: 5}], _excludes: [{}]}` | ❌ FAIL |
 | `[{timeInMs: 5}, {timeInMs: 15}]` | `[{timeInMs: 5}]` | ❌ FAIL |
 
 ### Special environment checks
