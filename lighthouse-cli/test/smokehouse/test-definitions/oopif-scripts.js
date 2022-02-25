@@ -1,5 +1,5 @@
 /**
- * @license Copyright 2019 The Lighthouse Authors. All Rights Reserved.
+ * @license Copyright 2022 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
@@ -40,17 +40,24 @@ const config = {
  */
 const expectations = {
   lhr: {
-    requestedUrl: 'http://localhost:10200/oopif-requests.html',
-    finalUrl: 'http://localhost:10200/oopif-requests.html',
+    requestedUrl: 'http://localhost:10200/oopif-scripts.html',
+    finalUrl: 'http://localhost:10200/oopif-scripts.html',
     audits: {
       'network-requests': {
         details: {
           items: {
-          // We want to make sure we are finding the iframe's requests (paulirish.com) *AND*
-          // the iframe's iframe's iframe's requests (youtube.com/doubleclick/etc).
-          // - paulirish.com ~40-60 requests
-          // - paulirish.com + all descendant iframes ~80-90 requests
-            length: '>70',
+            _includes: [
+              {url: 'http://localhost:10200/oopif-scripts.html'},
+              {url: 'http://localhost:10200/oopif-simple-page.html'},
+              {url: 'http://localhost:10503/oopif-simple-page.html'},
+              {url: 'http://localhost:10200/simple-script.js'},
+              {url: 'http://localhost:10503/simple-script.js'},
+              {url: 'http://localhost:10200/simple-script.js'},
+              {url: 'http://localhost:10503/simple-script.js'},
+              {url: 'http://localhost:10200/simple-worker.js'},
+              {url: 'http://localhost:10503/simple-worker.js'},
+              {url: 'http://localhost:10200/favicon.ico'},
+            ],
           },
         },
       },
@@ -59,21 +66,44 @@ const expectations = {
   artifacts: {
     IFrameElements: [
       {
-        id: 'oopif',
-        src: 'https://www.paulirish.com/2012/why-moving-elements-with-translate-is-better-than-posabs-topleft/',
+        id: 'iframe-1',
+        src: 'http://localhost:10200/oopif-simple-page.html',
         clientRect: {
           width: '>0',
           height: '>0',
         },
-        isPositionFixed: false,
+        isPositionFixed: true,
+      },
+      {
+        id: 'iframe-2',
+        src: 'http://localhost:10503/oopif-simple-page.html',
+        clientRect: {
+          width: '>0',
+          height: '>0',
+        },
+        isPositionFixed: true,
       },
     ],
-    ScriptElements: [],
+    // Only `oopif-simple-page.html`'s inclusion of `simple-script.js` should show up here.
+    // All other scripts are filtered out because of our "OOPIF" filter (including anything
+    // that is just in another process, like a worker).
+    ScriptElements: [
+      {
+        src: 'http://localhost:10200/simple-script.js',
+        source: 'network',
+        content: /🪁/,
+      },
+      {
+        src: 'http://localhost:10503/simple-script.js',
+        source: 'network',
+        content: /🪁/,
+      },
+    ],
   },
 };
 
 export default {
-  id: 'oopif-requests',
+  id: 'oopif-scripts',
   expectations,
   config,
 };
