@@ -59,11 +59,10 @@ const expectations = {
               {url: 'http://localhost:10503/simple-script.js', resourceType: 'Fetch'},
               {url: 'http://localhost:10200/simple-worker.js'},
               {url: 'http://localhost:10503/simple-worker.js'},
-              {url: 'http://localhost:10200/favicon.ico'},
             ],
-            // Ensure the above is exhaustive.
+            // Ensure the above is exhaustive (except for favicon, which won't be fetched in devtools/LR).
             _excludes: [
-              {},
+              {url: /^((?!favicon).)*$/s},
             ],
           },
         },
