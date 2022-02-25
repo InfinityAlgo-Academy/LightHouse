@@ -109,6 +109,15 @@ If an expectation requires a minimum version of Chromium, use `_minChromiumMiles
   },
 ```
 
+All pruning checks:
+
+- `_minChromiumMilestone`
+- `_maxChromiumMilestone`
+- `_legacyOnly`
+- `_fraggleRockOnly`
+- `_skipInBundled`
+- `_runner` (set to same value provided to CLI --runner flag, ex: `'devtools'`)
+
 ## Pipeline
 
 The different frontends launch smokehouse with a set of tests to run. Smokehouse then coordinates the tests using a particular method of running Lighthouse (CLI, as a bundle, etc).
