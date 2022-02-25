@@ -103,6 +103,8 @@ function findDifference(path, actual, expected) {
     };
   }
 
+  let inclExclCopy;
+
   // We only care that all expected's own properties are on actual (and not the other way around).
   // Note an expected `undefined` can match an actual that is either `undefined` or not defined.
   for (const key of Object.keys(expected)) {
@@ -112,6 +114,8 @@ function findDifference(path, actual, expected) {
     const expectedValue = expected[key];
 
     if (key === '_includes') {
+      inclExclCopy = [...actual];
+
       if (!Array.isArray(expectedValue)) throw new Error('Array subset must be array');
       if (!Array.isArray(actual)) {
         return {
@@ -121,12 +125,12 @@ function findDifference(path, actual, expected) {
         };
       }
 
-      const actualCopy = [...actual];
       for (const expectedEntry of expectedValue) {
         const matchingIndex =
-          actualCopy.findIndex(actualEntry => !findDifference(keyPath, actualEntry, expectedEntry));
+          inclExclCopy.findIndex(actualEntry =>
+            !findDifference(keyPath, actualEntry, expectedEntry));
         if (matchingIndex !== -1) {
-          actualCopy.splice(matchingIndex, 1);
+          inclExclCopy.splice(matchingIndex, 1);
           continue;
         }
 
@@ -135,6 +139,33 @@ function findDifference(path, actual, expected) {
           actual: 'Item not found in array',
           expected: expectedEntry,
         };
+      }
+
+      continue;
+    }
+
+    if (key === '_excludes') {
+      // Re-use state from `_includes` check, if there was one.
+      /** @type {any[]} */
+      const arrToCheckAgainst = inclExclCopy || actual;
+
+      if (!Array.isArray(expectedValue)) throw new Error('Array subset must be array');
+      if (!Array.isArray(actual)) continue;
+
+      const expectedExclusions = expectedValue;
+      for (const expectedExclusion of expectedExclusions) {
+        const matchingIndex = arrToCheckAgainst.findIndex(actualEntry =>
+            !findDifference(keyPath, actualEntry, expectedExclusion));
+        if (matchingIndex !== -1) {
+          return {
+            path,
+            actual: arrToCheckAgainst[matchingIndex],
+            expected: {
+              message: 'Expected to not find matching entry via _excludes',
+              expectedExclusion,
+            },
+          };
+        }
       }
 
       continue;
@@ -187,7 +218,7 @@ function makeComparison(name, actualResult, expectedResult) {
  * @param {LocalConsole} localConsole
  * @param {LH.Result} lhr
  * @param {Smokehouse.ExpectedRunnerResult} expected
- * @param {{isBundled?: boolean}=} reportOptions
+ * @param {{runner?: string, isBundled?: boolean}=} reportOptions
  */
 function pruneExpectations(localConsole, lhr, expected, reportOptions) {
   const isFraggleRock = lhr.configSettings.channel === 'fraggle-rock-cli';
@@ -217,8 +248,20 @@ function pruneExpectations(localConsole, lhr, expected, reportOptions) {
    * @param {*} obj
    */
   function pruneRecursively(obj) {
-    for (const key of Object.keys(obj)) {
-      const value = obj[key];
+    /**
+     * @param {string} key
+     */
+    const remove = (key) => {
+      if (Array.isArray(obj)) {
+        obj.splice(Number(key), 1);
+      } else {
+        delete obj[key];
+      }
+    };
+
+    // Because we may be deleting keys, we should iterate the keys backwards
+    // otherwise arrays with multiple pruning checks will skip elements.
+    for (const [key, value] of Object.entries(obj).reverse()) {
       if (!value || typeof value !== 'object') {
         continue;
       }
@@ -229,42 +272,32 @@ function pruneExpectations(localConsole, lhr, expected, reportOptions) {
           JSON.stringify(value, null, 2),
           `Actual Chromium version: ${getChromeVersion()}`,
         ].join(' '));
-        if (Array.isArray(obj)) {
-          obj.splice(Number(key), 1);
-        } else {
-          delete obj[key];
-        }
+        remove(key);
       } else if (value._legacyOnly && isFraggleRock) {
         localConsole.log([
           `[${key}] marked legacy only but run is Fraggle Rock, pruning expectation:`,
           JSON.stringify(value, null, 2),
         ].join(' '));
-        if (Array.isArray(obj)) {
-          obj.splice(Number(key), 1);
-        } else {
-          delete obj[key];
-        }
+        remove(key);
       } else if (value._fraggleRockOnly && !isFraggleRock) {
         localConsole.log([
           `[${key}] marked Fraggle Rock only but run is legacy, pruning expectation:`,
           JSON.stringify(value, null, 2),
           `Actual channel: ${lhr.configSettings.channel}`,
         ].join(' '));
-        if (Array.isArray(obj)) {
-          obj.splice(Number(key), 1);
-        } else {
-          delete obj[key];
-        }
+        remove(key);
       } else if (value._skipInBundled && !isBundled) {
         localConsole.log([
           `[${key}] marked as skip in bundled and runner is bundled, pruning expectation:`,
           JSON.stringify(value, null, 2),
         ].join(' '));
-        if (Array.isArray(obj)) {
-          obj.splice(Number(key), 1);
-        } else {
-          delete obj[key];
-        }
+        remove(key);
+      } else if (value._runner && reportOptions?.runner !== value._runner) {
+        localConsole.log([
+          `[${key}] is only for runner ${value._runner}, pruning expectation:`,
+          JSON.stringify(value, null, 2),
+        ].join(' '));
+        remove(key);
       } else {
         pruneRecursively(value);
       }
@@ -275,6 +308,7 @@ function pruneExpectations(localConsole, lhr, expected, reportOptions) {
     delete obj._skipInBundled;
     delete obj._minChromiumMilestone;
     delete obj._maxChromiumMilestone;
+    delete obj._runner;
   }
 
   const cloned = cloneDeep(expected);
@@ -420,7 +454,7 @@ function reportAssertion(localConsole, assertion) {
  * summary. Returns count of passed and failed tests.
  * @param {{lhr: LH.Result, artifacts: LH.Artifacts, networkRequests?: string[]}} actual
  * @param {Smokehouse.ExpectedRunnerResult} expected
- * @param {{isDebug?: boolean, isBundled?: boolean}=} reportOptions
+ * @param {{runner?: string, isDebug?: boolean, isBundled?: boolean}=} reportOptions
  * @return {{passed: number, failed: number, log: string}}
  */
 function getAssertionReport(actual, expected, reportOptions = {}) {
