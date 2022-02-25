@@ -69,12 +69,19 @@ const expectations = {
       },
       {
         id: 'outer-iframe',
-        src: 'http://localhost:10200/online-only.html',
+        src: 'http://localhost:10200/simple-page.html',
         clientRect: {
           width: '>0',
           height: '>0',
         },
         isPositionFixed: true,
+      },
+    ],
+    ScriptElements: [
+      {
+        src: 'http://localhost:10200/simple-script.js',
+        source: 'network',
+        content: /🪁/,
       },
     ],
   },
