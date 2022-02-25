@@ -272,6 +272,13 @@ function makeMocksForGatherRunner() {
   }));
 }
 
+/**
+ * @param {Partial<LH.Artifacts.Script>} script
+ */
+function createScript(script) {
+  return {...script, length: script.content?.length ?? script.length ?? 0};
+}
+
 module.exports = {
   getProtoRoundTrip,
   loadSourceMapFixture,
@@ -281,5 +288,6 @@ module.exports = {
   createDecomposedPromise,
   flushAllTimersAndMicrotasks,
   makeMocksForGatherRunner,
+  createScript,
   ...mockCommands,
 };

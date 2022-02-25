@@ -109,7 +109,7 @@ class ModuleDuplication {
       }
     }
 
-    /** @type {Map<string, Array<{scriptId: string, resourceSize: number}>>} */
+    /** @type {Map<string, Array<{scriptId: string, scriptUrl: string, resourceSize: number}>>} */
     const moduleNameToSourceData = new Map();
     for (const {rawMap, script} of bundles) {
       const sourceDataArray = sourceDatasMap.get(rawMap);
@@ -123,6 +123,7 @@ class ModuleDuplication {
         }
         data.push({
           scriptId: script.scriptId,
+          scriptUrl: script.url,
           resourceSize: sourceData.resourceSize,
         });
       }

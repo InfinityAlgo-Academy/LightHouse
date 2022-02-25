@@ -30,7 +30,7 @@ describe('No Unload Listeners', () => {
       JsUsage: testJsUsage,
       GlobalListeners: [],
       SourceMaps: [],
-      ScriptElements: [],
+      Scripts: [],
     };
     const context = {computedCache: new Map()};
     const result = await NoUnloadListeners.audit(artifacts, context);
@@ -45,7 +45,7 @@ describe('No Unload Listeners', () => {
       JsUsage: testJsUsage,
       GlobalListeners,
       SourceMaps: [],
-      ScriptElements: [],
+      Scripts: [],
     };
     const context = {computedCache: new Map()};
     const result = await NoUnloadListeners.audit(artifacts, context);
@@ -61,7 +61,7 @@ describe('No Unload Listeners', () => {
       JsUsage: testJsUsage,
       GlobalListeners,
       SourceMaps: [],
-      ScriptElements: [],
+      Scripts: [],
     };
     const context = {computedCache: new Map()};
     const result = await NoUnloadListeners.audit(artifacts, context);
@@ -86,7 +86,7 @@ describe('No Unload Listeners', () => {
       JsUsage: testJsUsage,
       GlobalListeners,
       SourceMaps: [],
-      ScriptElements: [],
+      Scripts: [],
     };
     const context = {computedCache: new Map()};
     const result = await NoUnloadListeners.audit(artifacts, context);
