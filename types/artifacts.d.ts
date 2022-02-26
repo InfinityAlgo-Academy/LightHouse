@@ -148,6 +148,7 @@ export interface GathererArtifacts extends PublicGathererArtifacts,LegacyBaseArt
   /** The issues surfaced in the devtools Issues panel */
   InspectorIssues: Artifacts.InspectorIssues;
   /** JS coverage information for code used during audit. Keyed by script id. */
+  // 'url' is excluded because it can be overriden by a magic sourceURL= comment, which makes keeping it a dangerous footgun!
   JsUsage: Record<string, Omit<LH.Crdp.Profiler.ScriptCoverage, 'url'>>;
   /** Parsed version of the page's Web App Manifest, or null if none found. */
   Manifest: Artifacts.Manifest | null;

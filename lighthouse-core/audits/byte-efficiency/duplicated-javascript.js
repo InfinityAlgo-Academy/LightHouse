@@ -85,10 +85,10 @@ class DuplicatedJavascript extends ByteEfficiencyAudit {
 
       const normalizedSource = 'node_modules/' + DuplicatedJavascript._getNodeModuleName(source);
       const aggregatedSourceDatas = groupedDuplication.get(normalizedSource) || [];
-      for (const {scriptId, resourceSize} of sourceDatas) {
+      for (const {scriptId, scriptUrl, resourceSize} of sourceDatas) {
         let sourceData = aggregatedSourceDatas.find(d => d.scriptId === scriptId);
         if (!sourceData) {
-          sourceData = {scriptId, resourceSize: 0};
+          sourceData = {scriptId, scriptUrl, resourceSize: 0};
           aggregatedSourceDatas.push(sourceData);
         }
         sourceData.resourceSize += resourceSize;
