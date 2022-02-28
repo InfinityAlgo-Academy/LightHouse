@@ -1456,6 +1456,9 @@ Object {
           "path": "inspector-issues",
         },
         Object {
+          "path": "service-worker",
+        },
+        Object {
           "path": "source-maps",
         },
         Object {
@@ -1469,23 +1472,6 @@ Object {
       "pauseAfterLoadMs": 1000,
       "recordTrace": true,
       "useThrottling": true,
-    },
-    Object {
-      "blankPage": "about:blank",
-      "blockedUrlPatterns": Array [],
-      "cpuQuietThresholdMs": 0,
-      "gatherers": Array [
-        Object {
-          "path": "service-worker",
-        },
-      ],
-      "loadFailureMode": "ignore",
-      "networkQuietThresholdMs": 0,
-      "passName": "offlinePass",
-      "pauseAfterFcpMs": 0,
-      "pauseAfterLoadMs": 0,
-      "recordTrace": false,
-      "useThrottling": false,
     },
   ],
   "settings": Object {
