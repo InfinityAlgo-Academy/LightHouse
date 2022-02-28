@@ -160,15 +160,9 @@ const defaultConfig = {
       'accessibility',
       'trace-elements',
       'inspector-issues',
+      'service-worker',
       'source-maps',
       'full-page-screenshot',
-    ],
-  },
-  {
-    passName: 'offlinePass',
-    loadFailureMode: 'ignore',
-    gatherers: [
-      'service-worker',
     ],
   }],
   audits: [
