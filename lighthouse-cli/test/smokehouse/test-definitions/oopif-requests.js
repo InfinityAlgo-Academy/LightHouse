@@ -40,8 +40,8 @@ const config = {
  */
 const expectations = {
   lhr: {
-    requestedUrl: 'http://localhost:10200/oopif.html',
-    finalUrl: 'http://localhost:10200/oopif.html',
+    requestedUrl: 'http://localhost:10200/oopif-requests.html',
+    finalUrl: 'http://localhost:10200/oopif-requests.html',
     audits: {
       'network-requests': {
         details: {
@@ -67,16 +67,8 @@ const expectations = {
         },
         isPositionFixed: false,
       },
-      {
-        id: 'outer-iframe',
-        src: 'http://localhost:10200/online-only.html',
-        clientRect: {
-          width: '>0',
-          height: '>0',
-        },
-        isPositionFixed: true,
-      },
     ],
+    ScriptElements: [],
   },
 };
 
