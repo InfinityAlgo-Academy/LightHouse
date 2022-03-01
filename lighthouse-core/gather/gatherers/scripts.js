@@ -96,23 +96,19 @@ class Scripts extends FRGatherer {
       // 'embedderName' and 'url' are confusingly named, so we rewrite them here.
       // On the protocol, 'embedderName' always refers to the URL of the script (or HTML if inline).
       // Same for 'url' ... except, magic "sourceURL=" comments will override the value.
-      // It's nice to display that user-provided value in Lighthouse, so we add a field 'name'
+      // It's nice to display the user-provided value in Lighthouse, so we add a field 'name'
       // to make it clear this is for presentational purposes.
       // See https://chromium-review.googlesource.com/c/v8/v8/+/2317310
       return {
         name: event.url,
         ...event,
         // embedderName is optional on the protocol because backends like Node may not set it.
-        // For our purposes, it is always set.
-        url: event.embedderName || '',
+        // For our purposes, it is always set. But just in case it isn't... fallback to the url.
+        url: event.embedderName || event.url,
       };
     });
     for (let i = 0; i < scripts.length; i++) {
       scripts[i].content = scriptContents[i];
-
-      if (scripts[i].name !== scripts[i].url) {
-        console.log(scripts[i].url, scripts[i].name);
-      }
     }
 
     return scripts;

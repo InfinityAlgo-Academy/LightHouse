@@ -216,104 +216,11 @@
     },
     "errors-in-console": {
       "id": "errors-in-console",
-      "title": "Browser errors were logged to the console",
+      "title": "No browser errors logged to the console",
       "description": "Errors logged to the console indicate unresolved problems. They can come from network request failures and other browser concerns. [Learn more](https://web.dev/errors-in-console/)",
-      "score": 0,
-      "scoreDisplayMode": "binary",
-      "details": {
-        "type": "table",
-        "headings": [
-          {
-            "key": "sourceLocation",
-            "itemType": "source-location",
-            "text": "Source"
-          },
-          {
-            "key": "description",
-            "itemType": "code",
-            "text": "Description"
-          }
-        ],
-        "items": [
-          {
-            "source": "exception",
-            "description": "Error: A distinctive error\n    at http://localhost:10200/dobetterweb/dbw_tester.html:56:54",
-            "sourceLocation": {
-              "type": "source-location",
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-              "urlProvider": "network",
-              "line": 55,
-              "column": 53
-            }
-          },
-          {
-            "source": "exception",
-            "description": "Error: An ignored error\n    at http://localhost:10200/dobetterweb/dbw_tester.html:59:38",
-            "sourceLocation": {
-              "type": "source-location",
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-              "urlProvider": "network",
-              "line": 58,
-              "column": 37
-            }
-          },
-          {
-            "source": "console.error",
-            "description": "Error! Error!",
-            "sourceLocation": {
-              "type": "source-location",
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-              "urlProvider": "network",
-              "line": 483,
-              "column": 10
-            }
-          },
-          {
-            "source": "network",
-            "description": "Failed to load resource: the server responded with a status of 404 (Not Found)",
-            "sourceLocation": {
-              "type": "source-location",
-              "url": "http://localhost:10200/dobetterweb/unknown404.css?delay=200",
-              "urlProvider": "network",
-              "line": 0,
-              "column": 0
-            }
-          },
-          {
-            "source": "network",
-            "description": "Failed to load resource: the server responded with a status of 404 (Not Found)",
-            "sourceLocation": {
-              "type": "source-location",
-              "url": "http://localhost:10200/dobetterweb/fcp-delayer.js?delay=5000",
-              "urlProvider": "network",
-              "line": 0,
-              "column": 0
-            }
-          },
-          {
-            "source": "network",
-            "description": "Failed to load resource: the server responded with a status of 404 (Not Found)",
-            "sourceLocation": {
-              "type": "source-location",
-              "url": "http://localhost:10200/favicon.ico",
-              "urlProvider": "network",
-              "line": 0,
-              "column": 0
-            }
-          },
-          {
-            "source": "network",
-            "description": "Failed to load resource: the server responded with a status of 404 (Not Found)",
-            "sourceLocation": {
-              "type": "source-location",
-              "url": "http://localhost:10200/dobetterweb/unknown404.css?delay=200",
-              "urlProvider": "network",
-              "line": 0,
-              "column": 0
-            }
-          }
-        ]
-      }
+      "score": null,
+      "scoreDisplayMode": "error",
+      "errorMessage": "Required Scripts gatherer did not run."
     },
     "server-response-time": {
       "id": "server-response-time",
@@ -1001,48 +908,11 @@
     },
     "deprecations": {
       "id": "deprecations",
-      "title": "Uses deprecated APIs",
+      "title": "Avoids deprecated APIs",
       "description": "Deprecated APIs will eventually be removed from the browser. [Learn more](https://web.dev/deprecations/).",
-      "score": 0,
-      "scoreDisplayMode": "binary",
-      "displayValue": "2 warnings found",
-      "details": {
-        "type": "table",
-        "headings": [
-          {
-            "key": "value",
-            "itemType": "text",
-            "text": "Deprecation / Warning"
-          },
-          {
-            "key": "source",
-            "itemType": "source-location",
-            "text": "Source"
-          }
-        ],
-        "items": [
-          {
-            "value": "'window.webkitStorageInfo' is deprecated. Please use 'navigator.webkitTemporaryStorage' or 'navigator.webkitPersistentStorage' instead.",
-            "source": {
-              "type": "source-location",
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
-              "urlProvider": "network",
-              "line": 13,
-              "column": 9
-            }
-          },
-          {
-            "value": "Synchronous XMLHttpRequest on the main thread is deprecated because of its detrimental effects to the end user's experience. For more help, check https://xhr.spec.whatwg.org/.",
-            "source": {
-              "type": "source-location",
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-              "urlProvider": "network",
-              "line": 369,
-              "column": 6
-            }
-          }
-        ]
-      }
+      "score": null,
+      "scoreDisplayMode": "error",
+      "errorMessage": "Required Scripts gatherer did not run."
     },
     "mainthread-work-breakdown": {
       "id": "mainthread-work-breakdown",
@@ -2370,31 +2240,11 @@
     },
     "no-unload-listeners": {
       "id": "no-unload-listeners",
-      "title": "Registers an `unload` listener",
+      "title": "Avoids `unload` event listeners",
       "description": "The `unload` event does not fire reliably and listening for it can prevent browser optimizations like the Back-Forward Cache. Use `pagehide` or `visibilitychange` events instead. [Learn more](https://web.dev/bfcache/#never-use-the-unload-event)",
-      "score": 0,
-      "scoreDisplayMode": "binary",
-      "details": {
-        "type": "table",
-        "headings": [
-          {
-            "key": "source",
-            "itemType": "source-location",
-            "text": "Source"
-          }
-        ],
-        "items": [
-          {
-            "source": {
-              "type": "source-location",
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-              "urlProvider": "network",
-              "line": 395,
-              "column": 36
-            }
-          }
-        ]
-      }
+      "score": null,
+      "scoreDisplayMode": "error",
+      "errorMessage": "Required Scripts gatherer did not run."
     },
     "non-composited-animations": {
       "id": "non-composited-animations",
@@ -2522,13 +2372,9 @@
       "id": "valid-source-maps",
       "title": "Page has valid source maps",
       "description": "Source maps translate minified code to the original source code. This helps developers debug in production. In addition, Lighthouse is able to provide further insights. Consider deploying source maps to take advantage of these benefits. [Learn more](https://developers.google.com/web/tools/chrome-devtools/javascript/source-maps).",
-      "score": 1,
-      "scoreDisplayMode": "binary",
-      "details": {
-        "type": "table",
-        "headings": [],
-        "items": []
-      }
+      "score": null,
+      "scoreDisplayMode": "error",
+      "errorMessage": "Required Scripts gatherer did not run."
     },
     "preload-lcp-image": {
       "id": "preload-lcp-image",
@@ -3226,43 +3072,8 @@
       "title": "Script Treemap Data",
       "description": "Used for treemap app",
       "score": null,
-      "scoreDisplayMode": "informative",
-      "details": {
-        "type": "treemap-data",
-        "nodes": [
-          {
-            "name": "http://localhost:10200/dobetterweb/dbw_tester.html",
-            "resourceBytes": 7197
-          },
-          {
-            "name": "http://localhost:10200/dobetterweb/dbw_tester.js",
-            "resourceBytes": 824,
-            "unusedBytes": 0
-          },
-          {
-            "name": "http://localhost:10200/dobetterweb/empty_module.js?delay=500",
-            "resourceBytes": 60
-          },
-          {
-            "name": "http://localhost:10200/dobetterweb/fake-script-wp-includes",
-            "resourceBytes": 58
-          },
-          {
-            "name": "http://localhost:10200/dobetterweb/fcp-delayer.js?delay=5000",
-            "resourceBytes": 60
-          },
-          {
-            "name": "http://localhost:10200/dobetterweb/third_party/aggressive-promise-polyfill.js",
-            "resourceBytes": 166320,
-            "unusedBytes": 43507
-          },
-          {
-            "name": "http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js",
-            "resourceBytes": 84245,
-            "unusedBytes": 59810
-          }
-        ]
-      }
+      "scoreDisplayMode": "error",
+      "errorMessage": "Required Scripts gatherer did not run."
     },
     "pwa-cross-browser": {
       "id": "pwa-cross-browser",
@@ -4523,42 +4334,9 @@
       "id": "unminified-javascript",
       "title": "Minify JavaScript",
       "description": "Minifying JavaScript files can reduce payload sizes and script parse time. [Learn more](https://web.dev/unminified-javascript/).",
-      "score": 0.48,
-      "scoreDisplayMode": "numeric",
-      "numericValue": 900,
-      "numericUnit": "millisecond",
-      "displayValue": "Potential savings of 82 KiB",
-      "warnings": [],
-      "details": {
-        "type": "opportunity",
-        "headings": [
-          {
-            "key": "url",
-            "valueType": "url",
-            "label": "URL"
-          },
-          {
-            "key": "totalBytes",
-            "valueType": "bytes",
-            "label": "Transfer Size"
-          },
-          {
-            "key": "wastedBytes",
-            "valueType": "bytes",
-            "label": "Potential Savings"
-          }
-        ],
-        "items": [
-          {
-            "url": "http://localhost:10200/dobetterweb/third_party/aggressive-promise-polyfill.js",
-            "totalBytes": 166550,
-            "wastedBytes": 83568,
-            "wastedPercent": 50.176166426166425
-          }
-        ],
-        "overallSavingsMs": 900,
-        "overallSavingsBytes": 83568
-      }
+      "score": null,
+      "scoreDisplayMode": "error",
+      "errorMessage": "Required Scripts gatherer did not run."
     },
     "unused-css-rules": {
       "id": "unused-css-rules",
@@ -4581,57 +4359,9 @@
       "id": "unused-javascript",
       "title": "Reduce unused JavaScript",
       "description": "Reduce unused JavaScript and defer loading scripts until they are required to decrease bytes consumed by network activity. [Learn more](https://web.dev/unused-javascript/).",
-      "score": 0.58,
-      "scoreDisplayMode": "numeric",
-      "numericValue": 600,
-      "numericUnit": "millisecond",
-      "displayValue": "Potential savings of 64 KiB",
-      "details": {
-        "type": "opportunity",
-        "headings": [
-          {
-            "key": "url",
-            "valueType": "url",
-            "subItemsHeading": {
-              "key": "source",
-              "valueType": "code"
-            },
-            "label": "URL"
-          },
-          {
-            "key": "totalBytes",
-            "valueType": "bytes",
-            "subItemsHeading": {
-              "key": "sourceBytes"
-            },
-            "label": "Transfer Size"
-          },
-          {
-            "key": "wastedBytes",
-            "valueType": "bytes",
-            "subItemsHeading": {
-              "key": "sourceWastedBytes"
-            },
-            "label": "Potential Savings"
-          }
-        ],
-        "items": [
-          {
-            "url": "http://localhost:10200/dobetterweb/third_party/aggressive-promise-polyfill.js",
-            "totalBytes": 166550,
-            "wastedBytes": 43567,
-            "wastedPercent": 26.158609908609908
-          },
-          {
-            "url": "http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js",
-            "totalBytes": 30346,
-            "wastedBytes": 21544,
-            "wastedPercent": 70.99531129443884
-          }
-        ],
-        "overallSavingsMs": 600,
-        "overallSavingsBytes": 65111
-      }
+      "score": null,
+      "scoreDisplayMode": "error",
+      "errorMessage": "Required Scripts gatherer did not run."
     },
     "modern-image-formats": {
       "id": "modern-image-formats",
@@ -5027,89 +4757,17 @@
       "id": "duplicated-javascript",
       "title": "Remove duplicate modules in JavaScript bundles",
       "description": "Remove large, duplicate JavaScript modules from bundles to reduce unnecessary bytes consumed by network activity. ",
-      "score": 1,
-      "scoreDisplayMode": "numeric",
-      "numericValue": 0,
-      "numericUnit": "millisecond",
-      "displayValue": "",
-      "details": {
-        "type": "opportunity",
-        "headings": [],
-        "items": [],
-        "overallSavingsMs": 0,
-        "overallSavingsBytes": 0
-      }
+      "score": null,
+      "scoreDisplayMode": "error",
+      "errorMessage": "Required Scripts gatherer did not run."
     },
     "legacy-javascript": {
       "id": "legacy-javascript",
       "title": "Avoid serving legacy JavaScript to modern browsers",
       "description": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. For your bundled JavaScript, adopt a modern script deployment strategy using module/nomodule feature detection to reduce the amount of code shipped to modern browsers, while retaining support for legacy browsers. [Learn More](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)",
-      "score": 0.88,
-      "scoreDisplayMode": "numeric",
-      "numericValue": 150,
-      "numericUnit": "millisecond",
-      "displayValue": "Potential savings of 21 KiB",
-      "details": {
-        "type": "opportunity",
-        "headings": [
-          {
-            "key": "url",
-            "valueType": "url",
-            "subItemsHeading": {
-              "key": "location",
-              "valueType": "source-location"
-            },
-            "label": "URL"
-          },
-          {
-            "key": null,
-            "valueType": "code",
-            "subItemsHeading": {
-              "key": "signal"
-            },
-            "label": ""
-          },
-          {
-            "key": "wastedBytes",
-            "valueType": "bytes",
-            "label": "Potential Savings"
-          }
-        ],
-        "items": [
-          {
-            "url": "http://localhost:10200/dobetterweb/third_party/aggressive-promise-polyfill.js",
-            "wastedBytes": 21189,
-            "subItems": {
-              "type": "subitems",
-              "items": [
-                {
-                  "signal": "Object.defineProperty",
-                  "location": {
-                    "type": "source-location",
-                    "url": "http://localhost:10200/dobetterweb/third_party/aggressive-promise-polyfill.js",
-                    "urlProvider": "network",
-                    "line": 2613,
-                    "column": 8
-                  }
-                },
-                {
-                  "signal": "Object.defineProperties",
-                  "location": {
-                    "type": "source-location",
-                    "url": "http://localhost:10200/dobetterweb/third_party/aggressive-promise-polyfill.js",
-                    "urlProvider": "network",
-                    "line": 2623,
-                    "column": 8
-                  }
-                }
-              ]
-            },
-            "totalBytes": 0
-          }
-        ],
-        "overallSavingsMs": 150,
-        "overallSavingsBytes": 21189
-      }
+      "score": null,
+      "scoreDisplayMode": "error",
+      "errorMessage": "Required Scripts gatherer did not run."
     },
     "doctype": {
       "id": "doctype",
@@ -5203,40 +4861,11 @@
     },
     "geolocation-on-start": {
       "id": "geolocation-on-start",
-      "title": "Requests the geolocation permission on page load",
+      "title": "Avoids requesting the geolocation permission on page load",
       "description": "Users are mistrustful of or confused by sites that request their location without context. Consider tying the request to a user action instead. [Learn more](https://web.dev/geolocation-on-start/).",
-      "score": 0,
-      "scoreDisplayMode": "binary",
-      "details": {
-        "type": "table",
-        "headings": [
-          {
-            "key": "source",
-            "itemType": "source-location",
-            "text": "Source"
-          }
-        ],
-        "items": [
-          {
-            "source": {
-              "type": "source-location",
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-              "urlProvider": "network",
-              "line": 340,
-              "column": 24
-            }
-          },
-          {
-            "source": {
-              "type": "source-location",
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-              "urlProvider": "network",
-              "line": 344,
-              "column": 40
-            }
-          }
-        ]
-      }
+      "score": null,
+      "scoreDisplayMode": "error",
+      "errorMessage": "Required Scripts gatherer did not run."
     },
     "inspector-issues": {
       "id": "inspector-issues",
@@ -5252,49 +4881,11 @@
     },
     "no-document-write": {
       "id": "no-document-write",
-      "title": "Avoid `document.write()`",
+      "title": "Avoids `document.write()`",
       "description": "For users on slow connections, external scripts dynamically injected via `document.write()` can delay page load by tens of seconds. [Learn more](https://web.dev/no-document-write/).",
-      "score": 0,
-      "scoreDisplayMode": "binary",
-      "details": {
-        "type": "table",
-        "headings": [
-          {
-            "key": "source",
-            "itemType": "source-location",
-            "text": "Source"
-          }
-        ],
-        "items": [
-          {
-            "source": {
-              "type": "source-location",
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-              "urlProvider": "network",
-              "line": 278,
-              "column": 11
-            }
-          },
-          {
-            "source": {
-              "type": "source-location",
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-              "urlProvider": "network",
-              "line": 279,
-              "column": 11
-            }
-          },
-          {
-            "source": {
-              "type": "source-location",
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-              "urlProvider": "network",
-              "line": 280,
-              "column": 11
-            }
-          }
-        ]
-      }
+      "score": null,
+      "scoreDisplayMode": "error",
+      "errorMessage": "Required Scripts gatherer did not run."
     },
     "no-vulnerable-libraries": {
       "id": "no-vulnerable-libraries",
@@ -5386,31 +4977,11 @@
     },
     "notification-on-start": {
       "id": "notification-on-start",
-      "title": "Requests the notification permission on page load",
+      "title": "Avoids requesting the notification permission on page load",
       "description": "Users are mistrustful of or confused by sites that request to send notifications without context. Consider tying the request to user gestures instead. [Learn more](https://web.dev/notification-on-start/).",
-      "score": 0,
-      "scoreDisplayMode": "binary",
-      "details": {
-        "type": "table",
-        "headings": [
-          {
-            "key": "source",
-            "itemType": "source-location",
-            "text": "Source"
-          }
-        ],
-        "items": [
-          {
-            "source": {
-              "type": "source-location",
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-              "urlProvider": "network",
-              "line": 350,
-              "column": 15
-            }
-          }
-        ]
-      }
+      "score": null,
+      "scoreDisplayMode": "error",
+      "errorMessage": "Required Scripts gatherer did not run."
     },
     "password-inputs-can-be-pasted-into": {
       "id": "password-inputs-can-be-pasted-into",
@@ -5484,31 +5055,11 @@
     },
     "uses-passive-event-listeners": {
       "id": "uses-passive-event-listeners",
-      "title": "Does not use passive listeners to improve scrolling performance",
+      "title": "Uses passive listeners to improve scrolling performance",
       "description": "Consider marking your touch and wheel event listeners as `passive` to improve your page's scroll performance. [Learn more](https://web.dev/uses-passive-event-listeners/).",
-      "score": 0,
-      "scoreDisplayMode": "binary",
-      "details": {
-        "type": "table",
-        "headings": [
-          {
-            "key": "source",
-            "itemType": "source-location",
-            "text": "Source"
-          }
-        ],
-        "items": [
-          {
-            "source": {
-              "type": "source-location",
-              "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-              "urlProvider": "network",
-              "line": 311,
-              "column": 5
-            }
-          }
-        ]
-      }
+      "score": null,
+      "scoreDisplayMode": "error",
+      "errorMessage": "Required Scripts gatherer did not run."
     },
     "meta-description": {
       "id": "meta-description",
@@ -6586,7 +6137,7 @@
         }
       ],
       "id": "best-practices",
-      "score": 0.25
+      "score": null
     },
     "seo": {
       "title": "SEO",
@@ -7677,12 +7228,6 @@
       },
       {
         "startTime": 0,
-        "name": "lh:computed:JSBundles",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
         "name": "lh:audit:server-response-time",
         "duration": 100,
         "entryType": "measure"
@@ -8032,30 +7577,6 @@
       {
         "startTime": 0,
         "name": "lh:audit:script-treemap-data",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:computed:ModuleDuplication",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:computed:UnusedJavascriptSummary",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:computed:UnusedJavascriptSummary",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:computed:UnusedJavascriptSummary",
         "duration": 100,
         "entryType": "measure"
       },
@@ -8475,12 +7996,6 @@
       },
       {
         "startTime": 0,
-        "name": "lh:computed:UnusedJavascriptSummary",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
         "name": "lh:audit:modern-image-formats",
         "duration": 100,
         "entryType": "measure"
@@ -8886,25 +8401,104 @@
       "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": [
         "audits[cumulative-layout-shift].description"
       ],
-      "lighthouse-core/audits/errors-in-console.js | failureTitle": [
+      "lighthouse-core/audits/errors-in-console.js | title": [
         "audits[errors-in-console].title"
       ],
       "lighthouse-core/audits/errors-in-console.js | description": [
         "audits[errors-in-console].description"
       ],
-      "lighthouse-core/lib/i18n/i18n.js | columnSource": [
-        "audits[errors-in-console].details.headings[0].text",
-        "audits.deprecations.details.headings[1].text",
-        "audits[no-unload-listeners].details.headings[0].text",
-        "audits[geolocation-on-start].details.headings[0].text",
-        "audits[no-document-write].details.headings[0].text",
-        "audits[notification-on-start].details.headings[0].text",
-        "audits[uses-passive-event-listeners].details.headings[0].text",
-        "audits[font-size].details.headings[0].text"
-      ],
-      "lighthouse-core/lib/i18n/i18n.js | columnDescription": [
-        "audits[errors-in-console].details.headings[1].text",
-        "audits[csp-xss].details.headings[0].text"
+      "lighthouse-core/lib/lh-error.js | missingRequiredArtifact": [
+        {
+          "values": {
+            "errorCode": "MISSING_REQUIRED_ARTIFACT",
+            "artifactName": "Scripts"
+          },
+          "path": "audits[errors-in-console].errorMessage"
+        },
+        {
+          "values": {
+            "errorCode": "MISSING_REQUIRED_ARTIFACT",
+            "artifactName": "Scripts"
+          },
+          "path": "audits.deprecations.errorMessage"
+        },
+        {
+          "values": {
+            "errorCode": "MISSING_REQUIRED_ARTIFACT",
+            "artifactName": "Scripts"
+          },
+          "path": "audits[no-unload-listeners].errorMessage"
+        },
+        {
+          "values": {
+            "errorCode": "MISSING_REQUIRED_ARTIFACT",
+            "artifactName": "Scripts"
+          },
+          "path": "audits[valid-source-maps].errorMessage"
+        },
+        {
+          "values": {
+            "errorCode": "MISSING_REQUIRED_ARTIFACT",
+            "artifactName": "Scripts"
+          },
+          "path": "audits[script-treemap-data].errorMessage"
+        },
+        {
+          "values": {
+            "errorCode": "MISSING_REQUIRED_ARTIFACT",
+            "artifactName": "Scripts"
+          },
+          "path": "audits[unminified-javascript].errorMessage"
+        },
+        {
+          "values": {
+            "errorCode": "MISSING_REQUIRED_ARTIFACT",
+            "artifactName": "Scripts"
+          },
+          "path": "audits[unused-javascript].errorMessage"
+        },
+        {
+          "values": {
+            "errorCode": "MISSING_REQUIRED_ARTIFACT",
+            "artifactName": "Scripts"
+          },
+          "path": "audits[duplicated-javascript].errorMessage"
+        },
+        {
+          "values": {
+            "errorCode": "MISSING_REQUIRED_ARTIFACT",
+            "artifactName": "Scripts"
+          },
+          "path": "audits[legacy-javascript].errorMessage"
+        },
+        {
+          "values": {
+            "errorCode": "MISSING_REQUIRED_ARTIFACT",
+            "artifactName": "Scripts"
+          },
+          "path": "audits[geolocation-on-start].errorMessage"
+        },
+        {
+          "values": {
+            "errorCode": "MISSING_REQUIRED_ARTIFACT",
+            "artifactName": "Scripts"
+          },
+          "path": "audits[no-document-write].errorMessage"
+        },
+        {
+          "values": {
+            "errorCode": "MISSING_REQUIRED_ARTIFACT",
+            "artifactName": "Scripts"
+          },
+          "path": "audits[notification-on-start].errorMessage"
+        },
+        {
+          "values": {
+            "errorCode": "MISSING_REQUIRED_ARTIFACT",
+            "artifactName": "Scripts"
+          },
+          "path": "audits[uses-passive-event-listeners].errorMessage"
+        }
       ],
       "lighthouse-core/audits/server-response-time.js | title": [
         "audits[server-response-time].title"
@@ -8932,13 +8526,10 @@
         "audits[uses-long-cache-ttl].details.headings[0].text",
         "audits[total-byte-weight].details.headings[0].text",
         "audits[render-blocking-resources].details.headings[0].label",
-        "audits[unminified-javascript].details.headings[0].label",
-        "audits[unused-javascript].details.headings[0].label",
         "audits[modern-image-formats].details.headings[1].label",
         "audits[uses-text-compression].details.headings[0].label",
         "audits[uses-responsive-images].details.headings[1].label",
-        "audits[efficient-animated-content].details.headings[0].label",
-        "audits[legacy-javascript].details.headings[0].label"
+        "audits[efficient-animated-content].details.headings[0].label"
       ],
       "lighthouse-core/lib/i18n/i18n.js | columnTimeSpent": [
         "audits[server-response-time].details.headings[1].label",
@@ -9083,22 +8674,11 @@
       "lighthouse-core/audits/preload-fonts.js | description": [
         "audits[preload-fonts].description"
       ],
-      "lighthouse-core/audits/deprecations.js | failureTitle": [
+      "lighthouse-core/audits/deprecations.js | title": [
         "audits.deprecations.title"
       ],
       "lighthouse-core/audits/deprecations.js | description": [
         "audits.deprecations.description"
-      ],
-      "lighthouse-core/audits/deprecations.js | displayValue": [
-        {
-          "values": {
-            "itemCount": 2
-          },
-          "path": "audits.deprecations.displayValue"
-        }
-      ],
-      "lighthouse-core/audits/deprecations.js | columnDeprecate": [
-        "audits.deprecations.details.headings[0].text"
       ],
       "lighthouse-core/audits/mainthread-work-breakdown.js | failureTitle": [
         "audits[mainthread-work-breakdown].title"
@@ -9175,8 +8755,6 @@
         "audits[uses-long-cache-ttl].details.headings[2].text",
         "audits[total-byte-weight].details.headings[1].text",
         "audits[render-blocking-resources].details.headings[1].label",
-        "audits[unminified-javascript].details.headings[1].label",
-        "audits[unused-javascript].details.headings[1].label",
         "audits[uses-text-compression].details.headings[1].label"
       ],
       "lighthouse-core/lib/i18n/i18n.js | columnOverBudget": [
@@ -9353,7 +8931,7 @@
           "path": "audits[long-tasks].displayValue"
         }
       ],
-      "lighthouse-core/audits/no-unload-listeners.js | failureTitle": [
+      "lighthouse-core/audits/no-unload-listeners.js | title": [
         "audits[no-unload-listeners].title"
       ],
       "lighthouse-core/audits/no-unload-listeners.js | description": [
@@ -9405,6 +8983,9 @@
       ],
       "lighthouse-core/audits/csp-xss.js | description": [
         "audits[csp-xss].description"
+      ],
+      "lighthouse-core/lib/i18n/i18n.js | columnDescription": [
+        "audits[csp-xss].details.headings[0].text"
       ],
       "lighthouse-core/audits/csp-xss.js | columnDirective": [
         "audits[csp-xss].details.headings[1].text"
@@ -9761,13 +9342,10 @@
       ],
       "lighthouse-core/lib/i18n/i18n.js | columnWastedBytes": [
         "audits[render-blocking-resources].details.headings[2].label",
-        "audits[unminified-javascript].details.headings[2].label",
-        "audits[unused-javascript].details.headings[2].label",
         "audits[modern-image-formats].details.headings[3].label",
         "audits[uses-text-compression].details.headings[2].label",
         "audits[uses-responsive-images].details.headings[3].label",
-        "audits[efficient-animated-content].details.headings[2].label",
-        "audits[legacy-javascript].details.headings[2].label"
+        "audits[efficient-animated-content].details.headings[2].label"
       ],
       "lighthouse-core/audits/byte-efficiency/unminified-css.js | title": [
         "audits[unminified-css].title"
@@ -9781,19 +9359,25 @@
       "lighthouse-core/audits/byte-efficiency/unminified-javascript.js | description": [
         "audits[unminified-javascript].description"
       ],
+      "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | title": [
+        "audits[unused-css-rules].title"
+      ],
+      "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | description": [
+        "audits[unused-css-rules].description"
+      ],
+      "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": [
+        "audits[unused-javascript].title"
+      ],
+      "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": [
+        "audits[unused-javascript].description"
+      ],
+      "lighthouse-core/audits/byte-efficiency/modern-image-formats.js | title": [
+        "audits[modern-image-formats].title"
+      ],
+      "lighthouse-core/audits/byte-efficiency/modern-image-formats.js | description": [
+        "audits[modern-image-formats].description"
+      ],
       "lighthouse-core/lib/i18n/i18n.js | displayValueByteSavings": [
-        {
-          "values": {
-            "wastedBytes": 83568
-          },
-          "path": "audits[unminified-javascript].displayValue"
-        },
-        {
-          "values": {
-            "wastedBytes": 65111
-          },
-          "path": "audits[unused-javascript].displayValue"
-        },
         {
           "values": {
             "wastedBytes": 77874.3
@@ -9817,31 +9401,7 @@
             "wastedBytes": 682028
           },
           "path": "audits[efficient-animated-content].displayValue"
-        },
-        {
-          "values": {
-            "wastedBytes": 21189
-          },
-          "path": "audits[legacy-javascript].displayValue"
         }
-      ],
-      "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | title": [
-        "audits[unused-css-rules].title"
-      ],
-      "lighthouse-core/audits/byte-efficiency/unused-css-rules.js | description": [
-        "audits[unused-css-rules].description"
-      ],
-      "lighthouse-core/audits/byte-efficiency/unused-javascript.js | title": [
-        "audits[unused-javascript].title"
-      ],
-      "lighthouse-core/audits/byte-efficiency/unused-javascript.js | description": [
-        "audits[unused-javascript].description"
-      ],
-      "lighthouse-core/audits/byte-efficiency/modern-image-formats.js | title": [
-        "audits[modern-image-formats].title"
-      ],
-      "lighthouse-core/audits/byte-efficiency/modern-image-formats.js | description": [
-        "audits[modern-image-formats].description"
       ],
       "lighthouse-core/lib/i18n/i18n.js | columnResourceSize": [
         "audits[modern-image-formats].details.headings[2].label",
@@ -9925,7 +9485,7 @@
       "lighthouse-core/audits/dobetterweb/dom-size.js | statisticDOMWidth": [
         "audits[dom-size].details.items[2].statistic"
       ],
-      "lighthouse-core/audits/dobetterweb/geolocation-on-start.js | failureTitle": [
+      "lighthouse-core/audits/dobetterweb/geolocation-on-start.js | title": [
         "audits[geolocation-on-start].title"
       ],
       "lighthouse-core/audits/dobetterweb/geolocation-on-start.js | description": [
@@ -9937,7 +9497,7 @@
       "lighthouse-core/audits/dobetterweb/inspector-issues.js | description": [
         "audits[inspector-issues].description"
       ],
-      "lighthouse-core/audits/dobetterweb/no-document-write.js | failureTitle": [
+      "lighthouse-core/audits/dobetterweb/no-document-write.js | title": [
         "audits[no-document-write].title"
       ],
       "lighthouse-core/audits/dobetterweb/no-document-write.js | description": [
@@ -9978,7 +9538,7 @@
       "lighthouse-core/audits/dobetterweb/js-libraries.js | columnVersion": [
         "audits[js-libraries].details.headings[1].text"
       ],
-      "lighthouse-core/audits/dobetterweb/notification-on-start.js | failureTitle": [
+      "lighthouse-core/audits/dobetterweb/notification-on-start.js | title": [
         "audits[notification-on-start].title"
       ],
       "lighthouse-core/audits/dobetterweb/notification-on-start.js | description": [
@@ -9996,7 +9556,7 @@
       "lighthouse-core/audits/dobetterweb/uses-http2.js | description": [
         "audits[uses-http2].description"
       ],
-      "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | failureTitle": [
+      "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | title": [
         "audits[uses-passive-event-listeners].title"
       ],
       "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | description": [
@@ -10027,6 +9587,9 @@
           },
           "path": "audits[font-size].displayValue"
         }
+      ],
+      "lighthouse-core/lib/i18n/i18n.js | columnSource": [
+        "audits[font-size].details.headings[0].text"
       ],
       "lighthouse-core/audits/seo/font-size.js | columnSelector": [
         "audits[font-size].details.headings[1].text"
