@@ -29,7 +29,7 @@ SKIP_DOWNLOADS=1 yarn test-devtools
   ```sh
   curl https://bootstrap.pypa.io/pip/2.7/get-pip.py -o get-pip.py
   python get-pip.py
-  pip -m pip install requests
+  python -m pip install requests
   ```
 
 </details>
