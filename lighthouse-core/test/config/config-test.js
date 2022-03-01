@@ -757,6 +757,14 @@ describe('Config', () => {
       settings: {
         throttlingMethod: 'devtools',
       },
+      // Add a second pass.
+      passes: [{
+        passName: 'offlinePass',
+        loadFailureMode: 'ignore',
+        gatherers: [
+          'service-worker',
+        ],
+      }],
     });
 
     assert.equal(config.settings.throttlingMethod, 'devtools');
@@ -894,6 +902,14 @@ describe('Config', () => {
       settings: {
         onlyCategories: ['pwa'],
       },
+      // Add a second pass.
+      passes: [{
+        passName: 'offlinePass',
+        loadFailureMode: 'ignore',
+        gatherers: [
+          'service-worker',
+        ],
+      }],
     };
     const config = new Config(extendedJson);
     assert.equal(config.passes.length, 2, 'did not filter config');
@@ -1103,12 +1119,22 @@ describe('Config', () => {
 
   describe('filterConfigIfNeeded', () => {
     it('should not mutate the original config', () => {
-      const configCopy = JSON.parse(JSON.stringify(origConfig));
+      const originalConfigPlusSecondPass = JSON.parse(JSON.stringify(origConfig));
+      originalConfigPlusSecondPass.passes.push({
+        passName: 'offlinePass',
+        loadFailureMode: 'ignore',
+        gatherers: [
+          'service-worker',
+        ],
+      });
+      assert.equal(originalConfigPlusSecondPass.passes.length, 2);
+      const configCopy = JSON.parse(JSON.stringify(originalConfigPlusSecondPass));
       configCopy.settings.onlyCategories = ['performance'];
+
       const config = new Config(configCopy);
       configCopy.settings.onlyCategories = null;
       assert.equal(config.passes.length, 1, 'did not filter config');
-      assert.deepStrictEqual(configCopy, origConfig, 'had mutations');
+      assert.deepStrictEqual(configCopy, originalConfigPlusSecondPass, 'had mutations');
     });
 
     it('should generate the same filtered config, extended or original', () => {
@@ -1204,6 +1230,14 @@ describe('Config', () => {
         settings: {
           onlyAudits: ['service-worker'], // something from non-defaultPass
         },
+        // Add a second pass.
+        passes: [{
+          passName: 'offlinePass',
+          loadFailureMode: 'ignore',
+          gatherers: [
+            'service-worker',
+          ],
+        }],
       };
       const config = new Config(extended);
       assert.equal(config.passes.length, 2, 'incorrect # of passes');
@@ -1217,6 +1251,14 @@ describe('Config', () => {
           onlyCategories: ['performance'],
           onlyAudits: ['service-worker'], // something from non-defaultPass
         },
+        // Add a second pass.
+        passes: [{
+          passName: 'offlinePass',
+          loadFailureMode: 'ignore',
+          gatherers: [
+            'service-worker',
+          ],
+        }],
       };
       const config = new Config(extended);
       const selectedCategory = origConfig.categories.performance;
@@ -1235,7 +1277,16 @@ describe('Config', () => {
           onlyCategories: ['pwa'],
           onlyAudits: ['apple-touch-icon'],
         },
+        // Add a second pass.
+        passes: [{
+          passName: 'offlinePass',
+          loadFailureMode: 'ignore',
+          gatherers: [
+            'service-worker',
+          ],
+        }],
       };
+
       const config = new Config(extended);
       const selectedCategory = origConfig.categories.pwa;
       // +1 for `full-page-screenshot`.
