@@ -10,10 +10,12 @@
  * against the results actually collected from Lighthouse.
  */
 
-import cloneDeep from 'lodash.clonedeep';
+import _ from 'lodash';
 import log from 'lighthouse-logger';
 
 import {LocalConsole} from './lib/local-console.js';
+
+const {cloneDeep} = _;
 
 /**
  * @typedef Difference

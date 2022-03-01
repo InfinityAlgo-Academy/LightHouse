@@ -71,7 +71,7 @@ describe('Snapshot Runner', () => {
   });
 
   it('should collect base artifacts', async () => {
-    mockPage.url.mockResolvedValue('https://lighthouse.example.com/');
+    mockDriver.url.mockResolvedValue('https://lighthouse.example.com/');
 
     await snapshot({page, config});
     const artifacts = await mockRunner.gather.mock.calls[0][0]();

@@ -210,6 +210,7 @@ async function _computeNavigationResult(
 async function _navigation(navigationContext) {
   const artifactState = getEmptyArtifactState();
   const phaseState = {
+    url: await navigationContext.driver.url(),
     gatherMode: /** @type {const} */ ('navigation'),
     driver: navigationContext.driver,
     computedCache: navigationContext.computedCache,
@@ -223,6 +224,7 @@ async function _navigation(navigationContext) {
   await collectPhaseArtifacts({phase: 'startInstrumentation', ...phaseState});
   await collectPhaseArtifacts({phase: 'startSensitiveInstrumentation', ...phaseState});
   const navigateResult = await _navigate(navigationContext);
+  phaseState.url = navigateResult.finalUrl;
   await collectPhaseArtifacts({phase: 'stopSensitiveInstrumentation', ...phaseState});
   await collectPhaseArtifacts({phase: 'stopInstrumentation', ...phaseState});
   await _cleanupNavigation(navigationContext);

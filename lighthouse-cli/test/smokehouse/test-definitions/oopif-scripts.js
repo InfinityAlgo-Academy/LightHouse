@@ -53,7 +53,7 @@ const expectations = {
               // simple-script.js is included many times
               // 2 * (1 from <script>, 1 from fetch) = 4
               // Note, the network records from the workers are _not_ captured! If they
-              // were, then we would see 6 simple-script.js
+              // were, then we would see 8 simple-script.js
               {url: 'http://localhost:10200/simple-script.js', resourceType: 'Script'},
               {url: 'http://localhost:10503/simple-script.js', resourceType: 'Script'},
               {url: 'http://localhost:10200/simple-script.js', resourceType: 'Fetch'},
@@ -63,6 +63,10 @@ const expectations = {
               // For some reason, we only see these when running in DevTools!
               {_runner: 'devtools', url: 'http://localhost:10200/simple-worker.mjs'},
               {_runner: 'devtools', url: 'http://localhost:10503/simple-worker.mjs'},
+              {_runner: 'devtools', url: 'http://localhost:10200/simple-script.js?esm', resourceType: 'Script'},
+              {_runner: 'devtools', url: 'http://localhost:10503/simple-script.js?esm', resourceType: 'Script'},
+              {_runner: 'devtools', url: 'http://localhost:10200/simple-script.js?importScripts', resourceType: 'Other'},
+              {_runner: 'devtools', url: 'http://localhost:10503/simple-script.js?importScripts', resourceType: 'Other'},
             ],
             // Ensure the above is exhaustive (except for favicon, which won't be fetched in devtools/LR).
             _excludes: [

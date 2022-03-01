@@ -1,5 +1,5 @@
 'use strict';
 
-self.importScripts('./simple-script.js');
+self.importScripts('./simple-script.js?importScripts');
 
-console.log('hello from worker!', fetch);
+console.log('hello from worker!');

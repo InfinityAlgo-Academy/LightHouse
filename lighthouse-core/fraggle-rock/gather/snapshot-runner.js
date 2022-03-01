@@ -27,7 +27,7 @@ async function snapshot(options) {
 
   /** @type {Map<string, LH.ArbitraryEqualityMap>} */
   const computedCache = new Map();
-  const url = await options.page.url();
+  const url = await driver.url();
 
   const runnerOptions = {config, computedCache};
   const artifacts = await Runner.gather(
@@ -39,6 +39,7 @@ async function snapshot(options) {
       const artifactDefinitions = config.artifacts || [];
       const artifactState = getEmptyArtifactState();
       await collectPhaseArtifacts({
+        url,
         phase: 'getArtifact',
         gatherMode: 'snapshot',
         driver,
