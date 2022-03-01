@@ -41,6 +41,12 @@ const config = {
       unusedThreshold: 2000,
     }},
   ],
+  // passes: [{
+  //   passName: 'defaultPass',
+  //   gatherers: [
+  //     'script-elements',
+  //   ],
+  // }],
 };
 
 /**
