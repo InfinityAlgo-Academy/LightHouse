@@ -5,9 +5,11 @@
  */
 'use strict';
 
-const {snapshot} = require('./gather/snapshot-runner.js');
-const {startTimespan} = require('./gather/timespan-runner.js');
-const {navigation} = require('./gather/navigation-runner.js');
+const {snapshotGather} = require('./gather/snapshot-runner.js');
+const {startTimespanGather} = require('./gather/timespan-runner.js');
+const {navigationGather} = require('./gather/navigation-runner.js');
+const {generateFlowReportHtml} = require('../../report/generator/report-generator.js');
+const Runner = require('../runner.js');
 const UserFlow = require('./user-flow.js');
 
 /**
@@ -18,9 +20,48 @@ async function startFlow(page, options) {
   return new UserFlow(page, options);
 }
 
+/**
+ * @param  {Parameters<navigationGather>} params
+ * @return {Promise<LH.RunnerResult|undefined>}
+ */
+async function navigation(...params) {
+  const gatherResult = await navigationGather(...params);
+  return Runner.audit(gatherResult.artifacts, gatherResult.runnerOptions);
+}
+
+/**
+ * @param  {Parameters<snapshotGather>} params
+ * @return {Promise<LH.RunnerResult|undefined>}
+ */
+async function snapshot(...params) {
+  const gatherResult = await snapshotGather(...params);
+  return Runner.audit(gatherResult.artifacts, gatherResult.runnerOptions);
+}
+
+/**
+ * @param  {Parameters<startTimespanGather>} params
+ * @return {Promise<{endTimespan: () => Promise<LH.RunnerResult|undefined>}>}
+ */
+async function startTimespan(...params) {
+  const {endTimespanGather} = await startTimespanGather(...params);
+  const endTimespan = async () => {
+    const gatherResult = await endTimespanGather();
+    return Runner.audit(gatherResult.artifacts, gatherResult.runnerOptions);
+  };
+  return {endTimespan};
+}
+
+/**
+ * @param {LH.FlowResult} flowResult
+ */
+async function generateFlowReport(flowResult) {
+  return generateFlowReportHtml(flowResult);
+}
+
 module.exports = {
   snapshot,
   startTimespan,
   navigation,
   startFlow,
+  generateFlowReport,
 };
