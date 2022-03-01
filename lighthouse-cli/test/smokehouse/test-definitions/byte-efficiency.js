@@ -41,12 +41,12 @@ const config = {
       unusedThreshold: 2000,
     }},
   ],
-  // passes: [{
-  //   passName: 'defaultPass',
-  //   gatherers: [
-  //     'script-elements',
-  //   ],
-  // }],
+  passes: [{
+    passName: 'defaultPass',
+    gatherers: [
+      'script-elements',
+    ],
+  }],
 };
 
 /**
@@ -120,8 +120,44 @@ const expectations = {
         source: 'body',
       },
     ],
-    // TODO
-    Scripts: [],
+    Scripts: {
+      _includes: [
+        {
+          url: 'http://localhost:10200/byte-efficiency/tester.html',
+          content: /generateInlineStyleWithSize/,
+        },
+        {
+          url: 'http://localhost:10200/byte-efficiency/tester.html',
+          content: /image-in-shadow-root/,
+        },
+        {
+          url: 'http://localhost:10200/byte-efficiency/tester.html',
+          content: /definitely-unused/,
+        },
+        {
+          url: 'http://localhost:10200/byte-efficiency/tester.html',
+          content: /Used block #1/,
+        },
+        {
+          name: '/some-custom-url.js',
+          url: 'http://localhost:10200/byte-efficiency/tester.html',
+          content: /Unused block #1/,
+        },
+        {
+          url: 'http://localhost:10200/byte-efficiency/script.js',
+        },
+        {
+          url: 'http://localhost:10200/byte-efficiency/bundle.js',
+        },
+        {
+          url: 'http://localhost:10200/byte-efficiency/delay-complete.js?delay=8000',
+        },
+      ],
+      // Ensure the above is exhaustive (except for favicon, which won't be fetched in devtools/LR).
+      _excludes: [
+        {url: /^((?!favicon).)*$/s},
+      ],
+    },
   },
   lhr: {
     requestedUrl: 'http://localhost:10200/byte-efficiency/tester.html',
