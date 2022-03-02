@@ -31,6 +31,7 @@ const config = {
       // unsized-images is not a byte-efficiency audit but can easily leverage the variety of images present in
       // byte-efficiency tests & thus makes sense to test together.
       'unsized-images',
+      'script-elements-test-audit',
     ],
     throttlingMethod: 'devtools',
   },
@@ -40,13 +41,8 @@ const config = {
       // Lower the threshold so we don't need huge resources to make a test.
       unusedThreshold: 2000,
     }},
+    'script-elements-test-audit',
   ],
-  passes: [{
-    passName: 'defaultPass',
-    gatherers: [
-      'script-elements',
-    ],
-  }],
 };
 
 /**
