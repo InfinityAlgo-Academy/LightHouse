@@ -166,11 +166,11 @@ class ScriptTreemapDataAudit extends Audit {
     /** @type {LH.Treemap.Node[]} */
     const nodes = [];
 
-    // Combine inline scripts so they show up as a single root node.
     let inlineScriptLength = 0;
     for (const script of artifacts.Scripts) {
+      // Combine so that inline scripts show up as a single root node.
       if (script.url === artifacts.URL.finalUrl) {
-        inlineScriptLength += script.length || 0;
+        inlineScriptLength += (script.content || '').length;
       }
     }
     if (inlineScriptLength) {
@@ -184,94 +184,13 @@ class ScriptTreemapDataAudit extends Audit {
     const bundles = await JsBundles.request(artifacts, context);
     const duplicationByPath = await ModuleDuplication.request(artifacts, context);
 
-    // First we handle scripts inlined inside the HTML.
-    //
-    // In the simplest case, no inline scripts have source maps and the result is
-    // a single node that combines the bytes from every inline script.
-    //
-    //     <node src=/page-being-audited.html resourceBytes=1000 unusedBytes=100>
-    //
-    // TODO
-    // But when there are inline scripts with a source map (or with a sourceMapUrl),
-    // all the scripts without one will go into their own node and each other script
-    // will get their own node.
-    //
-    //     <node /page-being-audited.html resourceBytes=1000 unusedBytes=100>
-    //         <node (inlined) resourceBytes=500 unusedBytes=50>
-    //         <node some-magic-comment-script.js resourceBytes=500 unusedBytes=50>
-    //             <node main.js resourceBytes=500 unusedBytes=50>
-    //
-    // TODO
-    // In the most complex cases, there are multiple HTML urls to consider (iframes).
-    // const inlineScripts =
-    //   artifacts.Scripts.filter((s) => s.url === artifacts.URL.finalUrl);
-    // console.log(bundles.map(b => [b.script.scriptId, b.script.url]));
-    // if (inlineScripts.length) {
-    //   let resourceBytes = 0;
-    //   for (const script of inlineScripts) {
-    //     resourceBytes += (script.content || '').length;
-    //     console.log(bundles.find(b => b.script.scriptId === script.scriptId));
-    //   }
-
-    //   const scriptCoverages = artifacts.JsUsage[artifacts.URL.finalUrl] || [];
-    //   const unusedJavascriptSummary = await UnusedJavaScriptSummary.request(
-    //     {url: artifacts.URL.finalUrl, scriptCoverages}, context);
-
-    //   let theRestOfResourceBytes = resourceBytes;
-    //   let theRestOfUnusedBytes = unusedJavascriptSummary.wastedBytes;
-    //   const children = [];
-    //   for (const script of inlineScripts) {
-    //     // IF sourceURL=
-    //     // IF has source map
-    //     const scriptId = '?';
-    //     const coverage = scriptCoverages.find(s => s.scriptId === scriptId);
-    //     if (coverage) {
-    //       const unusedJavascriptSummary = await UnusedJavaScriptSummary.request(
-    //         {url: artifacts.URL.finalUrl, scriptCoverages: [coverage]}, context);
-    //       const childResourceBytes = script.length || 0;
-    //       // console.log(script.length);
-    //       const childUnusedBytes = unusedJavascriptSummary.wastedBytes;
-    //       children.push({
-    //         name: scriptId,
-    //         resourceBytes: childResourceBytes,
-    //         unusedBytes: childUnusedBytes,
-    //       });
-    //       theRestOfResourceBytes -= childResourceBytes;
-    //       theRestOfUnusedBytes -= childUnusedBytes;
-    //     }
-    //   }
-
-    //   if (children.length) {
-    //     children.unshift({
-    //       name: '(inlined)',
-    //       resourceBytes: theRestOfResourceBytes,
-    //       unusedBytes: theRestOfUnusedBytes,
-    //     });
-    //     /** @type {LH.Treemap.Node} */
-    //     const node = {
-    //       name: artifacts.URL.finalUrl,
-    //       resourceBytes,
-    //       unusedBytes: unusedJavascriptSummary.wastedBytes,
-    //       children,
-    //     };
-    //     nodes.push(node);
-    //   } else {
-    //     /** @type {LH.Treemap.Node} */
-    //     const node = {
-    //       name: artifacts.URL.finalUrl,
-    //       resourceBytes,
-    //       unusedBytes: unusedJavascriptSummary.wastedBytes,
-    //     };
-    //     nodes.push(node);
-    //   }
-    // }
-
     for (const script of artifacts.Scripts) {
-      if (script.url === artifacts.URL.finalUrl) continue; // Already handled above.
+      if (script.url === artifacts.URL.finalUrl) continue; // Handled above.
 
       const name = script.name;
       const bundle = bundles.find(bundle => script.scriptId === bundle.script.scriptId);
-      const scriptCoverage = artifacts.JsUsage[script.scriptId];
+      const scriptCoverage = /** @type {Omit<LH.Crdp.Profiler.ScriptCoverage, "url"> | undefined} */
+        (artifacts.JsUsage[script.scriptId]);
       if (!bundle && !scriptCoverage) {
         // No bundle and no coverage information, so simply make a single node
         // detailing how big the script is.
@@ -283,8 +202,10 @@ class ScriptTreemapDataAudit extends Audit {
         continue;
       }
 
-      const unusedJavascriptSummary = await UnusedJavaScriptSummary.request(
-        {scriptId: script.scriptId, scriptCoverage, bundle}, context);
+      const unusedJavascriptSummary = scriptCoverage ?
+        await UnusedJavaScriptSummary.request(
+          {scriptId: script.scriptId, scriptCoverage, bundle}, context) :
+        undefined;
 
       /** @type {LH.Treemap.Node} */
       let node;
@@ -299,7 +220,7 @@ class ScriptTreemapDataAudit extends Audit {
             resourceBytes: bundle.sizes.files[source],
           };
 
-          if (unusedJavascriptSummary.sourcesWastedBytes) {
+          if (unusedJavascriptSummary?.sourcesWastedBytes) {
             sourceData.unusedBytes = unusedJavascriptSummary.sourcesWastedBytes[source];
           }
 
@@ -322,20 +243,19 @@ class ScriptTreemapDataAudit extends Audit {
           const sourceData = {
             resourceBytes: bundle.sizes.unmappedBytes,
           };
-          if (unusedJavascriptSummary.sourcesWastedBytes) {
+          if (unusedJavascriptSummary?.sourcesWastedBytes) {
             sourceData.unusedBytes = unusedJavascriptSummary.sourcesWastedBytes['(unmapped)'];
           }
           sourcesData['(unmapped)'] = sourceData;
         }
 
-        node = this.makeScriptNode(name, bundle.rawMap.sourceRoot || '', sourcesData);
+        node = this.makeScriptNode(script.name, bundle.rawMap.sourceRoot || '', sourcesData);
       } else {
         // No valid source map for this script, so we can only produce a single node.
-
         node = {
           name,
-          resourceBytes: unusedJavascriptSummary.totalBytes,
-          unusedBytes: unusedJavascriptSummary.wastedBytes,
+          resourceBytes: unusedJavascriptSummary?.totalBytes ?? script.length ?? 0,
+          unusedBytes: unusedJavascriptSummary?.wastedBytes,
         };
       }
 
