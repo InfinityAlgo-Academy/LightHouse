@@ -145,9 +145,11 @@ const expectations = {
         {
           url: 'http://localhost:10200/byte-efficiency/bundle.js',
         },
-        {
-          url: 'http://localhost:10200/byte-efficiency/delay-complete.js?delay=8000',
-        },
+        // This _does not_ appear becuase it's a fake
+        // resource (so the response is not served as JS content type).
+        // {
+        //   url: 'http://localhost:10200/byte-efficiency/delay-complete.js?delay=8000',
+        // },
       ],
       // Ensure the above is exhaustive (except for favicon, which won't be fetched in devtools/LR).
       _excludes: [
