@@ -39,7 +39,7 @@ Array [
         "impact": "minor",
         "none": Array [],
         "target": Array [
-          ".lh-audit--binary.lh-audit--pass.lh-audit:nth-child(20)",
+          ".lh-audit--binary.lh-audit--pass.lh-audit:nth-child(21)",
         ],
       },
       Object {

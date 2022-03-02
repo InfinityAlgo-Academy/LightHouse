@@ -8,6 +8,7 @@
 const KB = 1024;
 const UnminifiedJavascriptAudit =
   require('../../../audits/byte-efficiency/unminified-javascript.js');
+const {createScript} = require('../../test-utils.js');
 const assert = require('assert').strict;
 
 /* eslint-env jest */
@@ -16,6 +17,7 @@ const resourceType = 'Script';
 describe('Page uses optimized responses', () => {
   it('fails when given unminified scripts', () => {
     const auditResult = UnminifiedJavascriptAudit.audit_({
+      URL: {finalUrl: 'https://www.example.com'},
       Scripts: [
         {
           scriptId: '123.1',
@@ -57,7 +59,7 @@ describe('Page uses optimized responses', () => {
           url: 'invalid.js',
           content: '#$*%dense',
         },
-      ],
+      ].map(createScript),
     }, [
       {requestId: '123.1', url: 'foo.js', transferSize: 20 * KB, resourceType},
       {requestId: '123.2', url: 'other.js', transferSize: 50 * KB, resourceType},
@@ -79,9 +81,11 @@ describe('Page uses optimized responses', () => {
 
   it('fails when given unminified scripts even with missing network record', () => {
     const auditResult = UnminifiedJavascriptAudit.audit_({
+      URL: {finalUrl: 'https://www.example.com'},
       Scripts: [
         {
           scriptId: '123.1',
+          url: 'https://www.example.com',
           content: `
             var foo = new Set();
             foo.add(1);
@@ -96,7 +100,7 @@ describe('Page uses optimized responses', () => {
             // ${'a++;'.repeat(2000)}
         `,
         },
-      ],
+      ].map(createScript),
     }, []);
 
     assert.strictEqual(auditResult.items.length, 1);
@@ -110,6 +114,7 @@ describe('Page uses optimized responses', () => {
 
   it('passes when scripts are already minified', () => {
     const auditResult = UnminifiedJavascriptAudit.audit_({
+      URL: {finalUrl: 'https://www.example.com'},
       Scripts: [
         {
           scriptId: '123.1',
@@ -134,7 +139,7 @@ describe('Page uses optimized responses', () => {
           src: 'invalid.js',
           content: 'for{(wtf',
         },
-      ],
+      ].map(createScript),
     }, [
       {requestId: '123.1', url: 'foo.js', transferSize: 20 * KB, resourceType},
       {requestId: '123.2', url: 'other.js', transferSize: 3 * KB, resourceType}, // too small
