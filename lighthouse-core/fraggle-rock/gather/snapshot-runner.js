@@ -16,8 +16,11 @@ const {
 const {initializeConfig} = require('../config/config.js');
 const {getBaseArtifacts, finalizeArtifacts} = require('./base-artifacts.js');
 
-/** @param {{page: import('puppeteer').Page, config?: LH.Config.Json, configContext?: LH.Config.FRContext}} options */
-async function snapshot(options) {
+/**
+ * @param {{page: import('puppeteer').Page, config?: LH.Config.Json, configContext?: LH.Config.FRContext}} options
+ * @return {Promise<LH.Gatherer.FRGatherResult>}
+ */
+async function snapshotGather(options) {
   const {configContext = {}} = options;
   log.setLevel(configContext.logLevel || 'error');
 
@@ -57,9 +60,9 @@ async function snapshot(options) {
     },
     runnerOptions
   );
-  return Runner.audit(artifacts, runnerOptions);
+  return {artifacts, runnerOptions};
 }
 
 module.exports = {
-  snapshot,
+  snapshotGather,
 };

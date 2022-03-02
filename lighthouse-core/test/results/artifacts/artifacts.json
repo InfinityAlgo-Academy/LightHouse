@@ -12323,7 +12323,7 @@
       }
     ],
     "quirksModeIssue": [],
-    "sameSiteCookieIssue": [],
+    "cookieIssue": [],
     "sharedArrayBufferIssue": [],
     "twaQualityEnforcement": []
   },

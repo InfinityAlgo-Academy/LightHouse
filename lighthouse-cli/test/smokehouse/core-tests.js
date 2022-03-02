@@ -33,6 +33,7 @@ import offlineReady from './test-definitions/offline-ready.js';
 import offlineSwBroken from './test-definitions/offline-sw-broken.js';
 import offlineSwSlow from './test-definitions/offline-sw-slow.js';
 import oopifRequests from './test-definitions/oopif-requests.js';
+import oopifScripts from './test-definitions/oopif-scripts.js';
 import perfBudgets from './test-definitions/perf-budgets.js';
 import perfDebug from './test-definitions/perf-debug.js';
 import perfDiagnosticsAnimations from './test-definitions/perf-diagnostics-animations.js';
@@ -92,6 +93,7 @@ const smokeTests = [
   offlineSwBroken,
   offlineSwSlow,
   oopifRequests,
+  oopifScripts,
   perfBudgets,
   perfDebug,
   perfDiagnosticsAnimations,

@@ -290,9 +290,9 @@ async function _cleanup({requestedUrl, driver, config}) {
 /**
  * @param {LH.NavigationRequestor} requestor
  * @param {{page: import('puppeteer').Page, config?: LH.Config.Json, configContext?: LH.Config.FRContext}} options
- * @return {Promise<LH.RunnerResult|undefined>}
+ * @return {Promise<LH.Gatherer.FRGatherResult>}
  */
-async function navigation(requestor, options) {
+async function navigationGather(requestor, options) {
   const {page, configContext = {}} = options;
   log.setLevel(configContext.logLevel || 'error');
 
@@ -325,11 +325,11 @@ async function navigation(requestor, options) {
     },
     runnerOptions
   );
-  return Runner.audit(artifacts, runnerOptions);
+  return {artifacts, runnerOptions};
 }
 
 module.exports = {
-  navigation,
+  navigationGather,
   _setup,
   _setupNavigation,
   _navigate,
