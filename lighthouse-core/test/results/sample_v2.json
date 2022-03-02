@@ -3241,15 +3241,15 @@
           },
           {
             "name": "http://localhost:10200/dobetterweb/empty_module.js?delay=500",
-            "resourceBytes": 60
+            "resourceBytes": 0
           },
           {
             "name": "http://localhost:10200/dobetterweb/fake-script-wp-includes",
-            "resourceBytes": 58
+            "resourceBytes": 0
           },
           {
             "name": "http://localhost:10200/dobetterweb/fcp-delayer.js?delay=5000",
-            "resourceBytes": 60
+            "resourceBytes": 0
           },
           {
             "name": "http://localhost:10200/dobetterweb/third_party/aggressive-promise-polyfill.js",

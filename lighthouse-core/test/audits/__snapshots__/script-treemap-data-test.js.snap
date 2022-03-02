@@ -5795,7 +5795,7 @@ Array [
   },
   Object {
     "name": "https://sqoosh.app/no-map-or-usage.js",
-    "resourceBytes": 37,
+    "resourceBytes": 5,
   },
 ]
 `;

@@ -64,7 +64,7 @@ describe('ScriptTreemapData audit', () => {
         .toMatchInlineSnapshot(`
         Object {
           "name": "https://sqoosh.app/no-map-or-usage.js",
-          "resourceBytes": 37,
+          "resourceBytes": 5,
         }
       `);
 
@@ -79,7 +79,7 @@ describe('ScriptTreemapData audit', () => {
         }
       `);
 
-      expect(JSON.stringify(treemapData.nodes).length).toMatchInlineSnapshot(`6674`);
+      expect(JSON.stringify(treemapData.nodes).length).toMatchInlineSnapshot(`6673`);
       expect(treemapData.nodes).toMatchSnapshot();
     });
   });
