@@ -42,15 +42,16 @@ class Scripts extends FRGatherer {
 
   constructor() {
     super();
-    this.onScriptParsed = this.onScriptParsed.bind(this);
+    this.onProtocolMessage = this.onProtocolMessage.bind(this);
   }
 
   /**
-   * @param {LH.Crdp.Debugger.ScriptParsedEvent} event
+   * @param {LH.Protocol.RawEventMessage} event
    */
-  onScriptParsed(event) {
-    if (event.embedderName) {
-      this._scriptParsedEvents.push(event);
+   onProtocolMessage(event) {
+    if (event.method === 'Debugger.scriptParsed' && !event.sessionId) {
+      // Events without an embedderName (read: a url) are for JS that we ran over the protocol.
+      if (event.params.embedderName) this._scriptParsedEvents.push(event.params);
     }
   }
 
@@ -59,7 +60,7 @@ class Scripts extends FRGatherer {
    */
   async startInstrumentation(context) {
     const session = context.driver.defaultSession;
-    session.on('Debugger.scriptParsed', this.onScriptParsed);
+    session.addProtocolMessageListener(this.onProtocolMessage);
     await session.sendCommand('Debugger.enable');
   }
 
@@ -69,7 +70,7 @@ class Scripts extends FRGatherer {
   async stopInstrumentation(context) {
     const session = context.driver.defaultSession;
     await session.sendCommand('Debugger.disable');
-    session.off('Debugger.scriptParsed', this.onScriptParsed);
+    session.removeProtocolMessageListener(this.onProtocolMessage);
   }
 
   /**
