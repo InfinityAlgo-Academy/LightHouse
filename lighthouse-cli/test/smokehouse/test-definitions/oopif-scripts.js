@@ -117,20 +117,18 @@ const expectations = {
           url: 'http://localhost:10200/simple-script.js',
           content: /🪁/,
         },
-        // Excluded because of our OOPIF check.
-        // {
-        //   url: 'http://localhost:10200/oopif-simple-page.html',
-        //   content: /new Worker/,
-        // },
+        {
+          url: 'http://localhost:10200/oopif-simple-page.html',
+          content: /new Worker/,
+        },
         {
           url: 'http://localhost:10503/simple-script.js',
           content: /🪁/,
         },
-        // Excluded because of our OOPIF check.
-        // {
-        //   url: 'http://localhost:10503/oopif-simple-page.html',
-        //   content: /new Worker/,
-        // },
+        {
+          url: 'http://localhost:10503/oopif-simple-page.html',
+          content: /new Worker/,
+        },
       ],
       _excludes: [{}],
     },
