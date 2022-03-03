@@ -3236,7 +3236,8 @@
           },
           {
             "name": "http://localhost:10200/dobetterweb/dbw_tester.js",
-            "resourceBytes": 824
+            "resourceBytes": 824,
+            "unusedBytes": 0
           },
           {
             "name": "http://localhost:10200/dobetterweb/empty_module.js?delay=500",
@@ -3244,11 +3245,13 @@
           },
           {
             "name": "http://localhost:10200/dobetterweb/third_party/aggressive-promise-polyfill.js",
-            "resourceBytes": 166320
+            "resourceBytes": 166320,
+            "unusedBytes": 43507
           },
           {
             "name": "http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js",
-            "resourceBytes": 84245
+            "resourceBytes": 84245,
+            "unusedBytes": 59810
           }
         ]
       }
@@ -4570,17 +4573,56 @@
       "id": "unused-javascript",
       "title": "Reduce unused JavaScript",
       "description": "Reduce unused JavaScript and defer loading scripts until they are required to decrease bytes consumed by network activity. [Learn more](https://web.dev/unused-javascript/).",
-      "score": 1,
+      "score": 0.58,
       "scoreDisplayMode": "numeric",
-      "numericValue": 0,
+      "numericValue": 600,
       "numericUnit": "millisecond",
-      "displayValue": "",
+      "displayValue": "Potential savings of 64 KiB",
       "details": {
         "type": "opportunity",
-        "headings": [],
-        "items": [],
-        "overallSavingsMs": 0,
-        "overallSavingsBytes": 0
+        "headings": [
+          {
+            "key": "url",
+            "valueType": "url",
+            "subItemsHeading": {
+              "key": "source",
+              "valueType": "code"
+            },
+            "label": "URL"
+          },
+          {
+            "key": "totalBytes",
+            "valueType": "bytes",
+            "subItemsHeading": {
+              "key": "sourceBytes"
+            },
+            "label": "Transfer Size"
+          },
+          {
+            "key": "wastedBytes",
+            "valueType": "bytes",
+            "subItemsHeading": {
+              "key": "sourceWastedBytes"
+            },
+            "label": "Potential Savings"
+          }
+        ],
+        "items": [
+          {
+            "url": "http://localhost:10200/dobetterweb/third_party/aggressive-promise-polyfill.js",
+            "totalBytes": 166550,
+            "wastedBytes": 43567,
+            "wastedPercent": 26.158609908609908
+          },
+          {
+            "url": "http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js",
+            "totalBytes": 30346,
+            "wastedBytes": 21544,
+            "wastedPercent": 70.99531129443884
+          }
+        ],
+        "overallSavingsMs": 600,
+        "overallSavingsBytes": 65111
       }
     },
     "modern-image-formats": {
@@ -7993,6 +8035,24 @@
       },
       {
         "startTime": 0,
+        "name": "lh:computed:UnusedJavascriptSummary",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:UnusedJavascriptSummary",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:UnusedJavascriptSummary",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:audit:pwa-cross-browser",
         "duration": 100,
         "entryType": "measure"
@@ -8402,6 +8462,84 @@
       {
         "startTime": 0,
         "name": "lh:audit:unused-javascript",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:UnusedJavascriptSummary",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:UnusedJavascriptSummary",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:UnusedJavascriptSummary",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:UnusedJavascriptSummary",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:UnusedJavascriptSummary",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:UnusedJavascriptSummary",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:UnusedJavascriptSummary",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:UnusedJavascriptSummary",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:UnusedJavascriptSummary",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:UnusedJavascriptSummary",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:UnusedJavascriptSummary",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:UnusedJavascriptSummary",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:UnusedJavascriptSummary",
         "duration": 100,
         "entryType": "measure"
       },
@@ -8859,6 +8997,7 @@
         "audits[total-byte-weight].details.headings[0].text",
         "audits[render-blocking-resources].details.headings[0].label",
         "audits[unminified-javascript].details.headings[0].label",
+        "audits[unused-javascript].details.headings[0].label",
         "audits[modern-image-formats].details.headings[1].label",
         "audits[uses-text-compression].details.headings[0].label",
         "audits[uses-responsive-images].details.headings[1].label",
@@ -9101,6 +9240,7 @@
         "audits[total-byte-weight].details.headings[1].text",
         "audits[render-blocking-resources].details.headings[1].label",
         "audits[unminified-javascript].details.headings[1].label",
+        "audits[unused-javascript].details.headings[1].label",
         "audits[uses-text-compression].details.headings[1].label"
       ],
       "lighthouse-core/lib/i18n/i18n.js | columnOverBudget": [
@@ -9686,6 +9826,7 @@
       "lighthouse-core/lib/i18n/i18n.js | columnWastedBytes": [
         "audits[render-blocking-resources].details.headings[2].label",
         "audits[unminified-javascript].details.headings[2].label",
+        "audits[unused-javascript].details.headings[2].label",
         "audits[modern-image-formats].details.headings[3].label",
         "audits[uses-text-compression].details.headings[2].label",
         "audits[uses-responsive-images].details.headings[3].label",
@@ -9710,6 +9851,12 @@
             "wastedBytes": 83568
           },
           "path": "audits[unminified-javascript].displayValue"
+        },
+        {
+          "values": {
+            "wastedBytes": 65111
+          },
+          "path": "audits[unused-javascript].displayValue"
         },
         {
           "values": {

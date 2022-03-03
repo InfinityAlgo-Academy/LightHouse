@@ -232,7 +232,6 @@ export class ReportUIFeatures {
 
     // Get all tables with a text url column.
     const tables = Array.from(this._dom.rootEl.querySelectorAll('table.lh-table'));
-    console.log(this._dom.rootEl.querySelector('#unused-javascript')?.outerHTML);
     const tablesWithUrls = tables
       .filter(el =>
         el.querySelector('td.lh-table-column--url, td.lh-table-column--source-location'))
