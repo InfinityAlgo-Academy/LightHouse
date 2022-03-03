@@ -149,7 +149,7 @@ jobs:
     - name: Download Content Shell
       run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/chromium-web-tests/download-content-shell.sh
 
-    - run: yarn --frozen-lockfile
+    - run: yarn --frozen-lockfile --network-timeout 1000000
       working-directory: ${{ github.workspace }}/lighthouse
 
     - name: Define ToT chrome path
