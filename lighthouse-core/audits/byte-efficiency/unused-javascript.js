@@ -103,7 +103,7 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
       const transferRatio = transfer / unusedJsSummary.totalBytes;
       /** @type {LH.Audit.ByteEfficiencyItem} */
       const item = {
-        url: script.name,
+        url: script.url,
         totalBytes: Math.round(transferRatio * unusedJsSummary.totalBytes),
         wastedBytes: Math.round(transferRatio * unusedJsSummary.wastedBytes),
         wastedPercent: unusedJsSummary.wastedPercent,

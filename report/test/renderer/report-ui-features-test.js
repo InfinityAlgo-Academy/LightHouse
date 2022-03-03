@@ -223,7 +223,7 @@ describe('ReportUIFeatures', () => {
         expect(getUrlsInTable()).toEqual(['/img1.jpg', '/img2.jpg', '/img3.jpg']);
       });
 
-      it('filters out sub-item rows of third party resources on click', () => {
+      it.only('filters out sub-item rows of third party resources on click', () => {
         dom.find('#unused-javascript', container);
         const filterCheckbox = dom.find('#unused-javascript .lh-3p-filter-input', container);
 

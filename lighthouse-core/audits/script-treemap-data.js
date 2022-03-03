@@ -187,7 +187,7 @@ class ScriptTreemapDataAudit extends Audit {
     for (const script of artifacts.Scripts) {
       if (script.url === artifacts.URL.finalUrl) continue; // Handled above.
 
-      const name = script.name;
+      const name = script.url;
       const bundle = bundles.find(bundle => script.scriptId === bundle.script.scriptId);
       const scriptCoverage = /** @type {Omit<LH.Crdp.Profiler.ScriptCoverage, "url"> | undefined} */
         (artifacts.JsUsage[script.scriptId]);
@@ -249,7 +249,7 @@ class ScriptTreemapDataAudit extends Audit {
           sourcesData['(unmapped)'] = sourceData;
         }
 
-        node = this.makeScriptNode(script.name, bundle.rawMap.sourceRoot || '', sourcesData);
+        node = this.makeScriptNode(script.url, bundle.rawMap.sourceRoot || '', sourcesData);
       } else {
         // No valid source map for this script, so we can only produce a single node.
         node = {
