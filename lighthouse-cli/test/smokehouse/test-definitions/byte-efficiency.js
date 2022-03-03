@@ -192,7 +192,8 @@ const expectations = {
               wastedPercent: '87 +/- 5',
             },
             {
-              url: '/some-custom-url.js',
+              // /some-custom-url.js,
+              url: 'inline: \n  function unusedFunction() {\n    // Un...',
               wastedBytes: '6700 +/- 100',
               wastedPercent: '99.6 +/- 0.1',
             },
@@ -235,7 +236,8 @@ const expectations = {
               wastedBytes: '22000 +/- 1000',
             },
             {
-              url: '/some-custom-url.js',
+              // /some-custom-url.js,
+              url: 'inline: \n  function unusedFunction() {\n    // Un...',
               totalBytes: '6700 +/- 500',
               wastedBytes: '6600 +/- 500',
             },
