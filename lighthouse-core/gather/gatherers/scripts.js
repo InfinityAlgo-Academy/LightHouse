@@ -48,7 +48,7 @@ class Scripts extends FRGatherer {
   /**
    * @param {LH.Protocol.RawEventMessage} event
    */
-   onProtocolMessage(event) {
+  onProtocolMessage(event) {
     if (event.method === 'Debugger.scriptParsed' && !event.sessionId) {
       // Events without an embedderName (read: a url) are for JS that we ran over the protocol.
       if (event.params.embedderName) this._scriptParsedEvents.push(event.params);
