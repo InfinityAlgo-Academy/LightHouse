@@ -19,9 +19,9 @@ const {getBaseArtifacts, finalizeArtifacts} = require('./base-artifacts.js');
 
 /**
  * @param {{page: import('puppeteer').Page, config?: LH.Config.Json, configContext?: LH.Config.FRContext}} options
- * @return {Promise<{endTimespan(): Promise<LH.RunnerResult|undefined>}>}
+ * @return {Promise<{endTimespanGather(): Promise<LH.Gatherer.FRGatherResult>}>}
  */
-async function startTimespan(options) {
+async function startTimespanGather(options) {
   const {configContext = {}} = options;
   log.setLevel(configContext.logLevel || 'error');
 
@@ -52,7 +52,7 @@ async function startTimespan(options) {
   await collectPhaseArtifacts({phase: 'startSensitiveInstrumentation', ...phaseOptions});
 
   return {
-    async endTimespan() {
+    async endTimespanGather() {
       const finalUrl = await driver.url();
       phaseOptions.url = finalUrl;
 
@@ -72,11 +72,11 @@ async function startTimespan(options) {
         },
         runnerOptions
       );
-      return Runner.audit(artifacts, runnerOptions);
+      return {artifacts, runnerOptions};
     },
   };
 }
 
 module.exports = {
-  startTimespan,
+  startTimespanGather,
 };
