@@ -237,7 +237,7 @@ const expectations = {
             },
             {
               // /some-custom-url.js,
-              url: 'inline: \n  function unusedFunction() {\n    // Un...',
+              url: 'http://localhost:10200/byte-efficiency/tester.html',
               totalBytes: '6700 +/- 500',
               wastedBytes: '6600 +/- 500',
             },
