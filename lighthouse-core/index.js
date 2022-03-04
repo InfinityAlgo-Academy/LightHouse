@@ -6,7 +6,7 @@
 'use strict';
 
 const Runner = require('./runner.js');
-const log = require('lighthouse-logger');
+const log = require('../lighthouse-core/lib/lighthouse-logger/index.js');
 const ChromeProtocol = require('./gather/connections/cri.js');
 const Config = require('./config/config.js');
 const URL = require('./lib/url-shim.js');

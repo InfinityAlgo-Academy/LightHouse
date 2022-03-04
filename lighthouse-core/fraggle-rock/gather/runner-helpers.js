@@ -24,7 +24,7 @@
 
 /** @typedef {LH.Gatherer.FRTransitionalContext<LH.Gatherer.DependencyKey>['dependencies']} Dependencies */
 
-const log = require('lighthouse-logger');
+const log = require('../../../lighthouse-core/lib/lighthouse-logger/index.js');
 
 /**
  *

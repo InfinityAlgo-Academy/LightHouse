@@ -10,7 +10,7 @@
   */
 'use strict';
 
-const log = require('lighthouse-logger');
+const log = require('../../../../lighthouse-core/lib/lighthouse-logger/index.js');
 const FRGatherer = require('../../../fraggle-rock/gather/base-gatherer.js');
 const URL = require('../../../lib/url-shim.js');
 const NetworkRequest = require('../../../lib/network-request.js');

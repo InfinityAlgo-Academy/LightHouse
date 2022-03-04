@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const log = require('lighthouse-logger');
+const log = require('../../../lighthouse-core/lib/lighthouse-logger/index.js');
 const Driver = require('./driver.js');
 const Runner = require('../../runner.js');
 const {

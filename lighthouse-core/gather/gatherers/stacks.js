@@ -13,7 +13,7 @@
 /* global d41d8cd98f00b204e9800998ecf8427e_LibraryDetectorTests */
 
 const fs = require('fs');
-const log = require('lighthouse-logger');
+const log = require('../../../lighthouse-core/lib/lighthouse-logger/index.js');
 const FRGatherer = require('../../fraggle-rock/gather/base-gatherer.js');
 const libDetectorSource = fs.readFileSync(
   require.resolve('js-library-detector/library/libraries.js'), 'utf8');

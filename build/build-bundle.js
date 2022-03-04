@@ -141,7 +141,7 @@ async function build(entryPath, distPath, opts = {minify: true}) {
       rollupPlugins.alias({
         entries: {
           'debug': require.resolve('debug/src/browser.js'),
-          'lighthouse-logger': require.resolve('../lighthouse-logger/index.js'),
+          // 'lighthouse-logger': require.resolve('../lighthouse-logger/index.js'),
         },
       }),
       rollupPlugins.shim({

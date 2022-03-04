@@ -10,7 +10,7 @@
 const lighthouse = require('../lighthouse-core/index.js');
 const {navigation, startTimespan, snapshot} = require('../lighthouse-core/fraggle-rock/api.js');
 const RawProtocol = require('../lighthouse-core/gather/connections/raw.js');
-const log = require('lighthouse-logger');
+const log = require('../lighthouse-core/lib/lighthouse-logger/index.js');
 const {lookupLocale} = require('../lighthouse-core/lib/i18n/i18n.js');
 const {registerLocaleData, getCanonicalLocales} = require('../shared/localization/format.js');
 const constants = require('../lighthouse-core/config/constants.js');

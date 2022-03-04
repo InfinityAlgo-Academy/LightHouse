@@ -7,7 +7,7 @@
 
 const path = require('path');
 const i18n = require('../../../lib/i18n/i18n.js');
-const log = require('lighthouse-logger');
+const log = require('../../../../lighthouse-core/lib/lighthouse-logger/index.js');
 
 /* eslint-env jest */
 

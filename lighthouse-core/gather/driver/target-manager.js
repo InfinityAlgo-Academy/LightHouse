@@ -10,7 +10,7 @@
   * listen for protocol events before each target is resumed.
   */
 
-const log = require('lighthouse-logger');
+const log = require('../../../lighthouse-core/lib/lighthouse-logger/index.js');
 
 /** @typedef {{target: LH.Crdp.Target.TargetInfo, session: LH.Gatherer.FRProtocolSession}} TargetWithSession */
 

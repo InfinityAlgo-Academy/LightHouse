@@ -16,7 +16,7 @@ const {Type} = require('csp_evaluator/dist/finding.js');
 const {CspParser} = require('csp_evaluator/dist/parser.js');
 const {Directive} = require('csp_evaluator/dist/csp.js');
 
-const log = require('lighthouse-logger');
+const log = require('./lighthouse-logger/index.js');
 const i18n = require('../lib/i18n/i18n.js');
 const {isIcuMessage} = require('../../shared/localization/format.js');
 

@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const log = require('lighthouse-logger');
+const log = require('../../../lighthouse-core/lib/lighthouse-logger/index.js');
 const constants = require('../../config/constants.js');
 const pageFunctions = require('../../lib/page-functions.js');
 const i18n = require('../../lib/i18n/i18n.js');

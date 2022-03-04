@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const log = require('lighthouse-logger');
+const log = require('../../../lighthouse-core/lib/lighthouse-logger/index.js');
 const FRGatherer = require('../../fraggle-rock/gather/base-gatherer.js');
 
 class InstallabilityErrors extends FRGatherer {

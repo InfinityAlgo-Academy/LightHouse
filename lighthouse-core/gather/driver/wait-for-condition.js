@@ -7,7 +7,7 @@
 
 /* global window */
 
-const log = require('lighthouse-logger');
+const log = require('../../../lighthouse-core/lib/lighthouse-logger/index.js');
 const LHError = require('../../lib/lh-error.js');
 const ExecutionContext = require('./execution-context.js');
 

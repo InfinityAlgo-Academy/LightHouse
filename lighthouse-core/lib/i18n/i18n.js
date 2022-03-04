@@ -10,7 +10,7 @@
 const path = require('path');
 const lookupClosestLocale = require('lookup-closest-locale');
 const {getAvailableLocales} = require('../../../shared/localization/format.js');
-const log = require('lighthouse-logger');
+const log = require('../lighthouse-logger/index.js');
 const {LH_ROOT} = require('../../../root.js');
 const {
   isIcuMessage,

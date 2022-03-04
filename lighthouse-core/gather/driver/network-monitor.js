@@ -10,7 +10,7 @@
  * status inspection state.
  */
 
-const log = require('lighthouse-logger');
+const log = require('../../../lighthouse-core/lib/lighthouse-logger/index.js');
 const {EventEmitter} = require('events');
 const NetworkRecorder = require('../../lib/network-recorder.js');
 const NetworkRequest = require('../../lib/network-request.js');

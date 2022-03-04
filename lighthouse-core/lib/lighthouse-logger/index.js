@@ -13,7 +13,7 @@ const EventEmitter = require('events').EventEmitter;
 const isWindows = process.platform === 'win32';
 
 // @ts-expect-error: process.browser is set via Rollup.
-const isBrowser = process.browser;
+const isBrowser = !process || process.browser;
 
 const colors = {
   red: isBrowser ? 'crimson' : 1,
@@ -25,6 +25,7 @@ const colors = {
 };
 
 // allow non-red/yellow colors for debug()
+// @ts-expect-error
 debug.colors = [colors.cyan, colors.green, colors.blue, colors.magenta];
 
 class Emitter extends EventEmitter {
@@ -51,14 +52,20 @@ class Emitter extends EventEmitter {
   }
 }
 
+/** @type {Record<string, debug.Debugger>} */
 const loggersByTitle = {};
 const loggingBufferColumns = 25;
+/** @type {string} */
 let level_;
 
 class Log {
+  /**
+   * @param {string} title
+   * @param {*} argsArray
+   */
   static _logToStdErr(title, argsArray) {
     const log = Log.loggerfn(title);
-    log(...argsArray);
+    log.log(...argsArray);
   }
 
   static loggerfn(title) {
@@ -100,11 +107,11 @@ class Log {
   /**
    * A simple formatting utility for event logging.
    * @param {string} prefix
-   * @param {!Object} data A JSON-serializable object of event data to log.
+   * @param {any} data A JSON-serializable object of event data to log.
    * @param {string=} level Optional logging level. Defaults to 'log'.
    */
   static formatProtocol(prefix, data, level) {
-    const columns = (!process || process.browser) ? Infinity : process.stdout.columns;
+    const columns = isBrowser ? Infinity : process.stdout.columns;
     const method = data.method || '?????';
     const maxLength = columns - method.length - prefix.length - loggingBufferColumns;
     // IO.read ignored here to avoid logging megabytes of trace data

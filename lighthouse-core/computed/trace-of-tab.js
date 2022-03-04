@@ -7,7 +7,7 @@
 
 /** @fileoverview This file is no longer used internally, but remains here for backcompat with plugins. */
 
-const log = require('lighthouse-logger');
+const log = require('../../lighthouse-core/lib/lighthouse-logger/index.js');
 const makeComputedArtifact = require('./computed-artifact.js');
 const ProcessedTrace = require('./processed-trace.js');
 const ProcessedNavigation = require('./processed-navigation.js');

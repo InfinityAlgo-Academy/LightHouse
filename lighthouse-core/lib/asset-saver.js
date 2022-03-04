@@ -7,7 +7,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const log = require('lighthouse-logger');
+const log = require('./lighthouse-logger/index.js');
 const stream = require('stream');
 const {promisify} = require('util');
 const Simulator = require('./dependency-graph/simulator/simulator.js');

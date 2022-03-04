@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const log = require('lighthouse-logger');
+const log = require('../../lighthouse-core/lib/lighthouse-logger/index.js');
 const makeComputedArtifact = require('./computed-artifact.js');
 const SDK = require('../lib/cdt/SDK.js');
 

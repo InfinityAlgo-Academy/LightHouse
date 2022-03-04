@@ -11,7 +11,7 @@ const constants = require('./constants.js');
 const format = require('../../shared/localization/format.js');
 const validation = require('./../fraggle-rock/config/validation.js');
 
-const log = require('lighthouse-logger');
+const log = require('../../lighthouse-core/lib/lighthouse-logger/index.js');
 const path = require('path');
 const Runner = require('../runner.js');
 const {

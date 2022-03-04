@@ -15,7 +15,7 @@
 
 /** @typedef {{content: string|null, status: number|null}} FetchResponse */
 
-const log = require('lighthouse-logger');
+const log = require('../../lighthouse-core/lib/lighthouse-logger/index.js');
 const {getBrowserVersion} = require('./driver/environment.js');
 
 class Fetcher {

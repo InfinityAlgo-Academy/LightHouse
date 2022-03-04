@@ -11,7 +11,7 @@ const LHError = require('../lib/lh-error.js');
 const {fetchResponseBodyFromCache} = require('../gather/driver/network.js');
 const EventEmitter = require('events').EventEmitter;
 
-const log = require('lighthouse-logger');
+const log = require('../../lighthouse-core/lib/lighthouse-logger/index.js');
 const DevtoolsLog = require('./devtools-log.js');
 const TraceGatherer = require('./gatherers/trace.js');
 

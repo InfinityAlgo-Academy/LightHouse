@@ -6,7 +6,7 @@
 'use strict';
 
 const ArbitraryEqualityMap = require('../lib/arbitrary-equality-map.js');
-const log = require('lighthouse-logger');
+const log = require('../../lighthouse-core/lib/lighthouse-logger/index.js');
 
 /**
  * Decorate computableArtifact with a caching `request()` method which will

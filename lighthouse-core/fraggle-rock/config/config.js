@@ -6,7 +6,7 @@
 'use strict';
 
 const path = require('path');
-const log = require('lighthouse-logger');
+const log = require('../../../lighthouse-core/lib/lighthouse-logger/index.js');
 const Runner = require('../../runner.js');
 const defaultConfig = require('./default-config.js');
 const {defaultNavigationConfig, nonSimulatedPassConfigOverrides} = require('../../config/constants.js'); // eslint-disable-line max-len

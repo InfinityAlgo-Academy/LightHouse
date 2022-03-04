@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const log = require('lighthouse-logger');
+const log = require('./lighthouse-logger/index.js');
 const stackPacks = require('lighthouse-stack-packs');
 const i18n = require('./i18n/i18n.js');
 

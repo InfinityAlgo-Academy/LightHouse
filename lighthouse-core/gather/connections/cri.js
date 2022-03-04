@@ -8,7 +8,7 @@
 const Connection = require('./connection.js');
 const WebSocket = require('ws');
 const http = require('http');
-const log = require('lighthouse-logger');
+const log = require('../../../lighthouse-core/lib/lighthouse-logger/index.js');
 const LighthouseError = require('../../lib/lh-error.js');
 
 const DEFAULT_HOSTNAME = '127.0.0.1';

@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const log = require('lighthouse-logger');
+const log = require('../../../../lighthouse-core/lib/lighthouse-logger/index.js');
 
 const BaseAudit = require('../../../audits/audit.js');
 const BaseGatherer = require('../../../fraggle-rock/gather/base-gatherer.js');

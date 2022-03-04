@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const log = require('lighthouse-logger');
+const log = require('./lighthouse-logger/index.js');
 const NetworkRequest = require('./network-request.js');
 const EventEmitter = require('events').EventEmitter;
 

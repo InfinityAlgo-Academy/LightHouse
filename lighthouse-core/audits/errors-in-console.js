@@ -10,7 +10,7 @@
  * This is done by collecting Chrome console log messages and filtering out the non-error ones.
  */
 
-const log = require('lighthouse-logger');
+const log = require('../../lighthouse-core/lib/lighthouse-logger/index.js');
 const Audit = require('./audit.js');
 const JsBundles = require('../computed/js-bundles.js');
 const i18n = require('../lib/i18n/i18n.js');
