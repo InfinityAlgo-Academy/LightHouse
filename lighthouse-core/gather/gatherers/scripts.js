@@ -97,6 +97,7 @@ class Scripts extends FRGatherer {
 
     // If run on a mobile device, be sensitive to memory limitations and only
     // request one at a time.
+    await session.sendCommand('Debugger.enable');
     const scriptContents = await runInSeriesOrParallel(
       this._scriptParsedEvents,
       ({scriptId}) => {
@@ -106,6 +107,7 @@ class Scripts extends FRGatherer {
       },
       formFactor === 'mobile' /* runInSeries */
     );
+    await session.sendCommand('Debugger.disable');
 
     /** @type {LH.Artifacts['Scripts']} */
     const scripts = this._scriptParsedEvents.map((event) => {
