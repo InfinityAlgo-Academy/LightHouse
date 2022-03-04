@@ -40,6 +40,9 @@ class Scripts extends FRGatherer {
   /** @type {LH.Crdp.Debugger.ScriptParsedEvent[]} */
   _scriptParsedEvents = [];
 
+  /** @type {string|null|undefined} */
+  _mainSessionId = null;
+
   constructor() {
     super();
     this.onProtocolMessage = this.onProtocolMessage.bind(this);
@@ -49,10 +52,19 @@ class Scripts extends FRGatherer {
    * @param {LH.Protocol.RawEventMessage} event
    */
   onProtocolMessage(event) {
+    // Go read the comments in network-recorder.js _findRealRequestAndSetSession.
+    let sessionId = event.sessionId;
+    if (this._mainSessionId === null) {
+      this._mainSessionId = sessionId;
+    }
+    if (this._mainSessionId === sessionId) {
+      sessionId = undefined;
+    }
+
     // We want to ignore scripts from OOPIFs. In reality, this does more than block just OOPIFs,
     // it also blocks scripts from the same origin but that happen to run in a different process,
     // like a worker.
-    if (event.method === 'Debugger.scriptParsed' && !event.sessionId) {
+    if (event.method === 'Debugger.scriptParsed' && !sessionId) {
       // Events without an embedderName (read: a url) are for JS that we ran over the protocol.
       if (event.params.embedderName) this._scriptParsedEvents.push(event.params);
     }
