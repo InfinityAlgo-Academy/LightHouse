@@ -5,10 +5,11 @@
  */
 'use strict';
 
-const assert = require('assert').strict;
-const lhBackground = require('../lightrider/lightrider-entry.js');
-const Runner = require('../../lighthouse-core/runner.js');
-const LHError = require('../../lighthouse-core/lib/lh-error.js');
+import {jest} from '@jest/globals';
+import {strict as assert} from 'assert';
+import {runLighthouseInLR} from '../../lightrider/lightrider-entry.js';
+import Runner from '../../../lighthouse-core/runner.js';
+import LHError from '../../../lighthouse-core/lib/lh-error.js';
 
 /* eslint-env jest */
 
@@ -31,7 +32,7 @@ describe('lightrider-entry', () => {
       const url = 'https://example.com';
       const output = 'json';
 
-      const result = await lhBackground.runLighthouseInLR(mockConnection, url, {output}, {});
+      const result = await runLighthouseInLR(mockConnection, url, {output}, {});
       const parsedResult = JSON.parse(result);
       assert.strictEqual(parsedResult.runtimeError.code, connectionError.code);
       assert.ok(parsedResult.runtimeError.message.includes(connectionError.friendlyMessage));
@@ -52,7 +53,7 @@ describe('lightrider-entry', () => {
       const url = 'https://example.com';
       const output = 'json';
 
-      const result = await lhBackground.runLighthouseInLR(mockConnection, url, {output}, {});
+      const result = await runLighthouseInLR(mockConnection, url, {output}, {});
       const parsedResult = JSON.parse(result);
       assert.strictEqual(parsedResult.runtimeError.code, LHError.UNKNOWN_ERROR);
       assert.ok(parsedResult.runtimeError.message.includes(errorMsg));
@@ -64,7 +65,7 @@ describe('lightrider-entry', () => {
       const mockConnection = {};
       const url = 'https://example.com';
 
-      await lhBackground.runLighthouseInLR(mockConnection, url, {}, {});
+      await runLighthouseInLR(mockConnection, url, {}, {});
       const config = runStub.mock.calls[0][1].config;
       assert.equal(config.settings.channel, 'lr');
 
@@ -78,7 +79,7 @@ describe('lightrider-entry', () => {
       const url = 'https://example.com';
 
       const lrDevice = 'desktop';
-      await lhBackground.runLighthouseInLR(mockConnection, url, {}, {lrDevice});
+      await runLighthouseInLR(mockConnection, url, {}, {lrDevice});
       const config = runStub.mock.calls[0][1].config;
       assert.equal(config.settings.formFactor, 'desktop');
 
@@ -92,7 +93,7 @@ describe('lightrider-entry', () => {
       const url = 'https://example.com';
 
       const lrDevice = 'mobile';
-      await lhBackground.runLighthouseInLR(mockConnection, url, {}, {lrDevice});
+      await runLighthouseInLR(mockConnection, url, {}, {lrDevice});
       const config = runStub.mock.calls[0][1].config;
       assert.equal(config.settings.formFactor, 'mobile');
 
@@ -111,7 +112,7 @@ describe('lightrider-entry', () => {
           onlyAudits: ['network-requests'],
         },
       };
-      await lhBackground.runLighthouseInLR(mockConnection, url, {}, {configOverride});
+      await runLighthouseInLR(mockConnection, url, {}, {configOverride});
       const config = runStub.mock.calls[0][1].config;
       assert.equal(config.settings.onlyAudits.length, 1);
       assert.equal(config.settings.onlyAudits[0], 'network-requests');
@@ -141,7 +142,7 @@ describe('lightrider-entry', () => {
       const lrFlags = {
         logAssets: true,
       };
-      const resultJson = await lhBackground.runLighthouseInLR(mockConnection, url, {}, lrFlags);
+      const resultJson = await runLighthouseInLR(mockConnection, url, {}, lrFlags);
       const result = JSON.parse(resultJson);
       expect(result.artifacts).toMatchObject({
         Artifact: {
