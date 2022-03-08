@@ -12,11 +12,11 @@
  *
  * To use with locally built DevTools and Lighthouse, run (assuming devtools at ~/src/devtools/devtools-frontend):
  *    yarn devtools
- *    yarn run-devtools --custom-devtools-frontend=file://$HOME/src/devtools/devtools-frontend/out/Default/gen/front_end
+ *    yarn run-devtools --chrome-flags=--custom-devtools-frontend=file://$HOME/src/devtools/devtools-frontend/out/Default/gen/front_end
  *
  * Or with the DevTools in .tmp:
  *   bash lighthouse-core/test/chromium-web-tests/setup.sh
- *   yarn run-devtools --custom-devtools-frontend=file://$PWD/.tmp/chromium-web-tests/devtools/devtools-frontend/out/Default/gen/front_end
+ *   yarn run-devtools --chrome-flags=--custom-devtools-frontend=file://$PWD/.tmp/chromium-web-tests/devtools/devtools-frontend/out/Default/gen/front_end
  *
  * URL list file: yarn run-devtools < path/to/urls.txt
  * Single URL: yarn run-devtools "https://example.com"
@@ -30,6 +30,8 @@ import puppeteer from 'puppeteer';
 import yargs from 'yargs';
 import * as yargsHelpers from 'yargs/helpers';
 
+import {parseChromeFlags} from '../../lighthouse-cli/run.js';
+
 const y = yargs(yargsHelpers.hideBin(process.argv));
 const argv_ = y
   .usage('$0 [url]')
@@ -40,9 +42,9 @@ const argv_ = y
     default: 'latest-run/devtools-lhrs',
     alias: 'o',
   })
-  .option('custom-devtools-frontend', {
+  .option('chrome-flags', {
     type: 'string',
-    alias: 'd',
+    default: '',
   })
   .option('config', {
     type: 'string',
@@ -287,6 +289,7 @@ async function readUrlList() {
 }
 
 async function run() {
+  const chromeFlags = parseChromeFlags(argv['chromeFlags']);
   const outputDir = argv['output-dir'];
 
   // Create output directory.
@@ -299,7 +302,9 @@ async function run() {
     fs.mkdirSync(outputDir);
   }
 
-  const customDevtools = argv['custom-devtools-frontend'];
+  const customDevtools = chromeFlags
+    .find(f => f.startsWith('--custom-devtools-frontend='))
+    ?.replace('--custom-devtools-frontend=', '');
   if (customDevtools) {
     console.log(`Using custom devtools frontend: ${customDevtools}`);
     console.log('Make sure it has been built recently!');
@@ -313,7 +318,7 @@ async function run() {
 
   const browser = await puppeteer.launch({
     executablePath: process.env.CHROME_PATH,
-    args: customDevtools ? [`--custom-devtools-frontend=${customDevtools}`] : [],
+    args: chromeFlags,
     devtools: true,
   });
 
