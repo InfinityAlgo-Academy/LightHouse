@@ -86,16 +86,6 @@ class UnusedJavascriptSummary {
 
   /**
    * @param {WasteData} wasteData
-   */
-  static determineLengths(wasteData) {
-    return {
-      content: wasteData.contentLength,
-      unused: wasteData.unusedLength,
-    };
-  }
-
-  /**
-   * @param {WasteData} wasteData
    * @param {LH.Artifacts.Bundle} bundle
    */
   static createSourceWastedBytes(wasteData, bundle) {

@@ -105,7 +105,7 @@ class JSBundles {
 
       const bundle = {
         rawMap,
-        script: script,
+        script,
         map,
         sizes,
       };
