@@ -568,7 +568,7 @@ declare module Artifacts {
     mixedContentIssue: LH.Crdp.Audits.MixedContentIssueDetails[];
     navigatorUserAgentIssue: LH.Crdp.Audits.NavigatorUserAgentIssueDetails[];
     quirksModeIssue: LH.Crdp.Audits.QuirksModeIssueDetails[];
-    sameSiteCookieIssue: LH.Crdp.Audits.SameSiteCookieIssueDetails[];
+    cookieIssue: LH.Crdp.Audits.CookieIssueDetails[];
     sharedArrayBufferIssue: LH.Crdp.Audits.SharedArrayBufferIssueDetails[];
     twaQualityEnforcement: LH.Crdp.Audits.TrustedWebActivityIssueDetails[];
   }
@@ -801,7 +801,7 @@ declare module Artifacts {
     /** If set, the parent form is the index into the associated FormElement array. Otherwise, the input element has no parent form. */
     parentFormIndex?: number;
     /** Array of indices into associated LabelElement array. */
-    labelIndicies: number[];
+    labelIndices: number[];
     id: string;
     name: string;
     type: string;

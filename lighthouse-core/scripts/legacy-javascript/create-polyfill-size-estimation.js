@@ -21,7 +21,7 @@
 
 /**
  * @typedef PolyfillSizeEstimator
- * @property {Record<string, number[]>} dependencies indexed by the polyfill name. array of module indicies
+ * @property {Record<string, number[]>} dependencies indexed by the polyfill name. array of module indices
  * @property {number[]} moduleSizes indices in the arrays in `.dependencies` are for this array
  * @property {number} maxSize sum of `.moduleSizes`
  * @property {number} baseSize size of using core-js at all. sum of common modules, and does not show up

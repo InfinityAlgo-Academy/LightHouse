@@ -149,7 +149,7 @@ jobs:
     - name: Download Content Shell
       run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/chromium-web-tests/download-content-shell.sh
 
-    - run: yarn --frozen-lockfile
+    - run: yarn --frozen-lockfile --network-timeout 1000000
       working-directory: ${{ github.workspace }}/lighthouse
 
     - name: Define ToT chrome path
@@ -161,9 +161,9 @@ jobs:
     - run: mkdir latest-run
       working-directory: ${{ github.workspace }}/lighthouse
     - name: yarn smoke --runner devtools
-      # TODO: run on all tests.
-      # - Current DevTools hangs on any page with a service worker.
-      #   https://github.com/GoogleChrome/lighthouse/issues/13396
-      # - Various other issues that needed investigation.
-      run: yarn smoke --runner devtools --shard=${{ matrix.smoke-test-shard }}/${{ strategy.job-total }} --retries=2 --invert-match a11y byte-efficiency byte-gzip dbw errors-expired-ssl errors-infinite-loop lantern-idle-callback-short legacy-javascript metrics-tricky-tti metrics-tricky-tti-late-fcp offline-ready offline-sw-broken offline-sw-slow oopif-requests perf-budgets perf-diagnostics-third-party perf-fonts perf-frame-metrics perf-preload perf-trace-elements pwa redirects-client-paint-server redirects-history-push-state redirects-multiple-server redirects-single-client redirects-single-server screenshot seo-passing seo-tap-targets
+      # Disabled because normal Chrome usage makes DevTools not function on these poorly constructed pages
+      #   errors-expired-ssl errors-infinite-loop
+      # Disabled because Chrome will follow the redirect first, and Lighthouse will only ever see/run the final URL.
+      #   redirects-client-paint-server redirects-multiple-server redirects-single-server redirects-single-client
+      run: yarn smoke --runner devtools --shard=${{ matrix.smoke-test-shard }}/${{ strategy.job-total }} --retries=2 --invert-match a11y byte-efficiency byte-gzip dbw errors-expired-ssl errors-infinite-loop lantern-idle-callback-short legacy-javascript metrics-tricky-tti metrics-tricky-tti-late-fcp oopif-requests perf-budgets perf-diagnostics-third-party perf-fonts perf-frame-metrics perf-preload perf-trace-elements pwa redirects-client-paint-server redirects-history-push-state redirects-multiple-server redirects-single-server redirects-single-client screenshot seo-passing seo-tap-targets
       working-directory: ${{ github.workspace }}/lighthouse

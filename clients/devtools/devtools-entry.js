@@ -7,20 +7,22 @@
 
 /* global globalThis */
 
-const lighthouse = require('../lighthouse-core/index.js');
-const {navigation, startTimespan, snapshot} = require('../lighthouse-core/fraggle-rock/api.js');
-const RawProtocol = require('../lighthouse-core/gather/connections/raw.js');
-const log = require('lighthouse-logger');
-const {lookupLocale} = require('../lighthouse-core/lib/i18n/i18n.js');
-const {registerLocaleData, getCanonicalLocales} = require('../shared/localization/format.js');
-const constants = require('../lighthouse-core/config/constants.js');
+import {Buffer} from 'buffer';
 
-/** @typedef {import('../lighthouse-core/gather/connections/connection.js')} Connection */
+import lighthouse from '../../lighthouse-core/index.js';
+import {navigation, startTimespan, snapshot} from '../../lighthouse-core/fraggle-rock/api.js';
+import RawProtocol from '../../lighthouse-core/gather/connections/raw.js';
+import log from 'lighthouse-logger';
+import {lookupLocale} from '../../lighthouse-core/lib/i18n/i18n.js';
+import {registerLocaleData, getCanonicalLocales} from '../../shared/localization/format.js';
+import constants from '../../lighthouse-core/config/constants.js';
+
+/** @typedef {import('../../lighthouse-core/gather/connections/connection.js')} Connection */
 
 // Rollup seems to overlook some references to `Buffer`, so it must be made explicit.
 // (`parseSourceMapFromDataUrl` breaks without this)
 /** @type {BufferConstructor} */
-globalThis.Buffer = require('buffer').Buffer;
+globalThis.Buffer = Buffer;
 
 /**
  * Returns a config, which runs only certain categories.
