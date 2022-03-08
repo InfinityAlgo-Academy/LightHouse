@@ -421,18 +421,17 @@ class Config {
       }
     });
 
-    // The `full-page-screenshot` audit belongs to no category, but we still want to include
-    // it (unless explictly excluded) because there are audits in every category that can use it.
-    const explicitlyExcludesFullPageScreenshot =
-      settings.skipAudits && settings.skipAudits.includes('full-page-screenshot');
-    if (!explicitlyExcludesFullPageScreenshot && (settings.onlyCategories || settings.skipAudits)) {
-      includedAudits.add('full-page-screenshot');
-    }
-
-    const explicitlyExcludesFullPageScreenshot__2 =
-      settings.skipAudits && settings.skipAudits.includes('node-stack-traces');
-    if (!explicitlyExcludesFullPageScreenshot__2 && (settings.onlyCategories || settings.skipAudits)) {
-      includedAudits.add('node-stack-traces');
+    // Some audits belongs to no category, but we still want to include them (unless explictly excluded)
+    // because they are used to enhance the report.
+    const auditsToKeepUnlessExplicitlyExcluded = [
+      'full-page-screenshot',
+      'node-stack-traces',
+    ];
+    for (const audit of auditsToKeepUnlessExplicitlyExcluded) {
+      const explicitlyExcludes = settings.skipAudits && settings.skipAudits.includes(audit);
+      if (!explicitlyExcludes && (settings.onlyCategories || settings.skipAudits)) {
+        includedAudits.add(audit);
+      }
     }
 
     return {categories, requestedAuditNames: includedAudits};

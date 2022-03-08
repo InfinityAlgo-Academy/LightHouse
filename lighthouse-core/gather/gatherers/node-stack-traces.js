@@ -16,12 +16,6 @@ class NodeStackTraces extends FRGatherer {
   };
 
   /**
-   * Gatherers can collect details about DOM nodes, including their position on the page.
-   * Layout shifts occuring after a gatherer runs can cause these positions to be incorrect,
-   * resulting in a poor experience for element screenshots.
-   * `getNodeDetails` maintains a collection of DOM objects in the page, which we can iterate
-   * to re-collect the bounding client rectangle.
-   * @see pageFunctions.getNodeDetails
    * @param {LH.Gatherer.FRTransitionalContext} context
    * @return {Promise<LH.Artifacts['NodeStackTraces']['nodes']>}
    */
@@ -47,13 +41,17 @@ class NodeStackTraces extends FRGatherer {
 
       const backendNodeIds = [];
       for (let i = 0; i < lhIds.length; i++) {
-        const fn = `[...window.__lighthouseNodesDontTouchOrAllVarianceGoesAway.keys()][${i}]`;
-        const rawElementResult = await context.driver.executionContext.evaluateAsync(fn, {
+        /** @param {number} index */
+        const fn = (index) => {
+          const keys = [...window.__lighthouseNodesDontTouchOrAllVarianceGoesAway.keys()];
+          return keys[index];
+        };
+        const rawElementResult = await context.driver.executionContext.evaluateRaw(fn, {
+          args: [i],
           useIsolation,
-          returnRawObject: true,
         });
         const describeNodeResult = await session.sendCommand('DOM.describeNode', {
-          objectId: rawElementResult.objectId,
+          objectId: rawElementResult.result.objectId,
         });
         backendNodeIds.push(describeNodeResult.node.backendNodeId);
       }
