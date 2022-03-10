@@ -1,6 +1,6 @@
 {
   "name": "lighthouse",
-  "version": "9.4.0",
+  "version": "9.5.0",
   "description": "Automated auditing, performance metrics, and best practices for the web.",
   "main": "./lighthouse-core/index.js",
   "bin": {
@@ -20,7 +20,7 @@
     "build-extension": "yarn build-extension-chrome && yarn build-extension-firefox",
     "build-extension-chrome": "node ./build/build-extension.js chrome",
     "build-extension-firefox": "node ./build/build-extension.js firefox",
-    "build-devtools": "yarn reset-link && node ./build/build-bundle.js clients/devtools-entry.js dist/lighthouse-dt-bundle.js && node ./build/build-dt-report-resources.js",
+    "build-devtools": "yarn reset-link && node ./build/build-bundle.js clients/devtools/devtools-entry.js dist/lighthouse-dt-bundle.js && node ./build/build-dt-report-resources.js",
     "build-smokehouse-bundle": "node ./build/build-smokehouse-bundle.js",
     "build-lr": "yarn reset-link && node ./build/build-lightrider-bundles.js",
     "build-pack": "bash build/build-pack.sh",
@@ -76,6 +76,7 @@
     "update:sample-artifacts": "node lighthouse-core/scripts/update-report-fixtures.js",
     "update:sample-json": "yarn i18n:collect-strings && node ./lighthouse-cli -A=./lighthouse-core/test/results/artifacts --config-path=./lighthouse-core/test/results/sample-config.js --output=json --output-path=./lighthouse-core/test/results/sample_v2.json && node lighthouse-core/scripts/cleanup-LHR-for-diff.js ./lighthouse-core/test/results/sample_v2.json --only-remove-timing",
     "update:flow-sample-json": "node ./lighthouse-core/scripts/update-flow-fixtures.js",
+    "update:snapshot-sample-json": "node ./lighthouse-core/scripts/update-snapshot-sample.js",
     "update:test-devtools": "bash lighthouse-core/test/chromium-web-tests/test-locally.sh --reset-results",
     "test-devtools": "bash lighthouse-core/test/chromium-web-tests/test-locally.sh",
     "open-devtools": "bash lighthouse-core/scripts/open-devtools.sh",

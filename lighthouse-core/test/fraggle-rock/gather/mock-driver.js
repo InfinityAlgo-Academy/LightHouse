@@ -145,6 +145,7 @@ function createMockDriver() {
 
 function mockRunnerModule() {
   const runnerModule = {
+    getAuditList: jest.fn().mockReturnValue([]),
     getGathererList: jest.fn().mockReturnValue([]),
     audit: jest.fn(),
     gather: jest.fn(),
@@ -155,6 +156,7 @@ function mockRunnerModule() {
 
   function reset() {
     runnerModule.getGathererList.mockReturnValue([]);
+    runnerModule.getAuditList.mockReturnValue([]);
     runnerModule.audit.mockReset();
     runnerModule.gather.mockReset();
   }

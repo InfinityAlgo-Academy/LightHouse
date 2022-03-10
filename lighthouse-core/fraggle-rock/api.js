@@ -5,16 +5,16 @@
  */
 'use strict';
 
+const {UserFlow, auditGatherSteps} = require('./user-flow.js');
 const {snapshotGather} = require('./gather/snapshot-runner.js');
 const {startTimespanGather} = require('./gather/timespan-runner.js');
 const {navigationGather} = require('./gather/navigation-runner.js');
 const {generateFlowReportHtml} = require('../../report/generator/report-generator.js');
 const Runner = require('../runner.js');
-const UserFlow = require('./user-flow.js');
 
 /**
  * @param {import('puppeteer').Page} page
- * @param {UserFlow.UserFlowOptions} [options]
+ * @param {ConstructorParameters<LH.UserFlow>[1]} [options]
  */
 async function startFlow(page, options) {
   return new UserFlow(page, options);
@@ -58,10 +58,20 @@ async function generateFlowReport(flowResult) {
   return generateFlowReportHtml(flowResult);
 }
 
+/**
+ * @param {LH.UserFlow.FlowArtifacts} flowArtifacts
+ * @param {LH.Config.Json} [config]
+ */
+async function auditFlowArtifacts(flowArtifacts, config) {
+  const {gatherSteps, name} = flowArtifacts;
+  return await auditGatherSteps(gatherSteps, {name, config});
+}
+
 module.exports = {
   snapshot,
   startTimespan,
   navigation,
   startFlow,
   generateFlowReport,
+  auditFlowArtifacts,
 };

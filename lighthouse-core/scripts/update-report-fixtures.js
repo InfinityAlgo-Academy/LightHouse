@@ -37,14 +37,7 @@ async function update(artifactNames) {
 
   const newArtifacts = assetSaver.loadArtifacts(artifactPath);
 
-  // Normalize some data so it doesn't change on every update.
-  let baseTime = 0;
-  for (const timing of newArtifacts.Timing) {
-    // @ts-expect-error: Value actually is writeable at this point.
-    timing.startTime = baseTime++;
-    // @ts-expect-error: Value actually is writeable at this point.
-    timing.duration = 1;
-  }
+  assetSaver.normalizeTimingEntries(newArtifacts.Timing);
 
   if (artifactNames.length === 0) {
     await assetSaver.saveArtifacts(newArtifacts, artifactPath);
