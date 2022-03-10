@@ -40,6 +40,9 @@ class Scripts extends FRGatherer {
   /** @type {LH.Crdp.Debugger.ScriptParsedEvent[]} */
   _scriptParsedEvents = [];
 
+  /** @type {Array<string | undefined>} */
+  _scriptContents = [];
+
   /** @type {string|null|undefined} */
   _mainSessionId = null;
 
@@ -84,21 +87,17 @@ class Scripts extends FRGatherer {
    */
   async stopInstrumentation(context) {
     const session = context.driver.defaultSession;
-    await session.sendCommand('Debugger.disable');
-    session.removeProtocolMessageListener(this.onProtocolMessage);
-  }
-
-  /**
-   * @param {LH.Gatherer.FRTransitionalContext} context
-   */
-  async getArtifact(context) {
-    const session = context.driver.defaultSession;
     const formFactor = context.baseArtifacts.HostFormFactor;
+
+    session.removeProtocolMessageListener(this.onProtocolMessage);
+
+    // Without this line the Debugger domain will be off in FR runner.
+    // Odd, because `startInstrumentation` enabled it...
+    await session.sendCommand('Debugger.enable');
 
     // If run on a mobile device, be sensitive to memory limitations and only
     // request one at a time.
-    await session.sendCommand('Debugger.enable');
-    const scriptContents = await runInSeriesOrParallel(
+    this._scriptContents = await runInSeriesOrParallel(
       this._scriptParsedEvents,
       ({scriptId}) => {
         return session.sendCommand('Debugger.getScriptSource', {scriptId})
@@ -108,9 +107,14 @@ class Scripts extends FRGatherer {
       formFactor === 'mobile' /* runInSeries */
     );
     await session.sendCommand('Debugger.disable');
+  }
 
+  /**
+   * @param {LH.Gatherer.FRTransitionalContext} context
+   */
+  async getArtifact(context) {
     /** @type {LH.Artifacts['Scripts']} */
-    const scripts = this._scriptParsedEvents.map((event) => {
+    const scripts = this._scriptParsedEvents.map((event, i) => {
       // 'embedderName' and 'url' are confusingly named, so we rewrite them here.
       // On the protocol, 'embedderName' always refers to the URL of the script (or HTML if inline).
       // Same for 'url' ... except, magic "sourceURL=" comments will override the value.
@@ -123,11 +127,9 @@ class Scripts extends FRGatherer {
         // embedderName is optional on the protocol because backends like Node may not set it.
         // For our purposes, it is always set. But just in case it isn't... fallback to the url.
         url: event.embedderName || event.url,
+        content: this._scriptContents[i],
       };
     });
-    for (let i = 0; i < scripts.length; i++) {
-      scripts[i].content = scriptContents[i];
-    }
 
     return scripts;
   }
