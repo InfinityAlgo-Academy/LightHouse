@@ -1,3 +1,57 @@
+<a name="9.5.0"></a>
+# 9.5.0 (2022-03-09)
+[Full Changelog](https://github.com/compare/v9.4.0...v9.5.0)
+
+We expect this release to ship in the DevTools of [Chrome 101](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
+
+## New Contributors
+
+Thanks to our new contributor 👽🐷🐰🐯🐻!
+
+- Marc Hassan @mhassan1
+
+## Core
+
+* full-page-screenshot: leave emulated width unchanged ([#13643](https://github.com/GoogleChrome/lighthouse/pull/13643))
+* inspector-issues: update sameSiteCookie to cookie ([#13708](https://github.com/GoogleChrome/lighthouse/pull/13708))
+* script-treemap-data: correct value for size ([#13716](https://github.com/GoogleChrome/lighthouse/pull/13716))
+* lighthouse-logger: convert to ES modules ([#13720](https://github.com/GoogleChrome/lighthouse/pull/13720))
+
+## ⛏️👷 Fraggle Rock
+
+  Support for auditing user flows ([#11313](https://github.com/GoogleChrome/lighthouse/issues/11313))
+
+* separate audit phase for flows ([#13623](https://github.com/GoogleChrome/lighthouse/pull/13623))
+* use frame url in gather context ([#13699](https://github.com/GoogleChrome/lighthouse/pull/13699))
+* add `logLevel` to config context ([#13681](https://github.com/GoogleChrome/lighthouse/pull/13681))
+* user-flow: audit flow from artifacts json ([#13715](https://github.com/GoogleChrome/lighthouse/pull/13715))
+
+## Report
+
+* fix timespan/snapshot sticky header ([#13732](https://github.com/GoogleChrome/lighthouse/pull/13732))
+
+## Deps
+
+* lodash: replace `lodash` per-method packages with full `lodash` ([#13695](https://github.com/GoogleChrome/lighthouse/pull/13695))
+* snyk: update snyk snapshot ([#13731](https://github.com/GoogleChrome/lighthouse/pull/13731) [#13712](https://github.com/GoogleChrome/lighthouse/pull/13712))
+
+## Clients
+
+* convert devtools and lightrider entries to ES modules ([#13722](https://github.com/GoogleChrome/lighthouse/pull/13722))
+
+## Tests
+
+* add more cases for oopif smoke test ([#13705](https://github.com/GoogleChrome/lighthouse/pull/13705))
+* devtools: add yarn install timeout ([#13717](https://github.com/GoogleChrome/lighthouse/pull/13717))
+* devtools: update Lighthouse sniffer for smokes ([#13693](https://github.com/GoogleChrome/lighthouse/pull/13693))
+* devtools: navigation web test ([#13673](https://github.com/GoogleChrome/lighthouse/pull/13673))
+* smoke: enable more devtools smoke tests ([#13624](https://github.com/GoogleChrome/lighthouse/pull/13624))
+* smoke: add _excludes and _runner ([#13707](https://github.com/GoogleChrome/lighthouse/pull/13707))
+
+## Misc
+
+* support --chrome-flags in run devtools script ([#13625](https://github.com/GoogleChrome/lighthouse/pull/13625))
+
 <a name="9.4.0"></a>
 # 9.4.0 (2022-02-16)
 [Full Changelog](https://github.com/compare/v9.3.1...v9.4.0)
