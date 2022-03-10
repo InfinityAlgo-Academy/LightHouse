@@ -109,10 +109,7 @@ class Scripts extends FRGatherer {
     await session.sendCommand('Debugger.disable');
   }
 
-  /**
-   * @param {LH.Gatherer.FRTransitionalContext} context
-   */
-  async getArtifact(context) {
+  async getArtifact() {
     /** @type {LH.Artifacts['Scripts']} */
     const scripts = this._scriptParsedEvents.map((event, i) => {
       // 'embedderName' and 'url' are confusingly named, so we rewrite them here.
