@@ -470,6 +470,15 @@ class Driver {
     this._devtoolsLog.endRecording();
     return this._devtoolsLog.messages;
   }
+
+  /**
+   * The FR driver will create a new session here so enable/disable calls to the same domain don't clobber each other.
+   * We don't need to actually create a session in the legacy driver because it already prevents clobbering in `_innerSendCommand`.
+   * @return {Promise<LH.Gatherer.FRProtocolSession>}
+   */
+  async createSession() {
+    return this;
+  }
 }
 
 module.exports = Driver;

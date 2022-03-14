@@ -83,6 +83,11 @@ class Driver {
     if (!this._session) return;
     await this._session.dispose();
   }
+
+  async createSession() {
+    const session = await this._page.target().createCDPSession();
+    return new ProtocolSession(session);
+  }
 }
 
 module.exports = Driver;

@@ -38,54 +38,34 @@ class JsUsage extends FRGatherer {
    * @param {LH.Gatherer.FRTransitionalContext} context
    */
   async startInstrumentation(context) {
-    const session = context.driver.defaultSession;
-    await session.sendCommand('Profiler.enable');
-    await session.sendCommand('Profiler.startPreciseCoverage', {detailed: false});
+    this.localSession = await context.driver.createSession();
+    await this.localSession.sendCommand('Profiler.enable');
+    await this.localSession.sendCommand('Profiler.startPreciseCoverage', {detailed: false});
   }
 
-  /**
-   * @param {LH.Gatherer.FRTransitionalContext} context
-   */
-  async stopInstrumentation(context) {
-    const session = context.driver.defaultSession;
-    const coverageResponse = await session.sendCommand('Profiler.takePreciseCoverage');
+  async stopInstrumentation() {
+    const coverageResponse = await this.localSession.sendCommand('Profiler.takePreciseCoverage');
     this._scriptUsages = coverageResponse.result;
-    await session.sendCommand('Profiler.stopPreciseCoverage');
-    await session.sendCommand('Profiler.disable');
+    await this.localSession.sendCommand('Profiler.stopPreciseCoverage');
+    await this.localSession.sendCommand('Profiler.disable');
+  }
+
+  async startSensitiveInstrumentation() {
+    this.localSession.on('Debugger.scriptParsed', this.onScriptParsed);
+    await this.localSession.sendCommand('Debugger.enable');
+  }
+
+  async stopSensitiveInstrumentation() {
+    await this.localSession.sendCommand('Debugger.disable');
+    this.localSession.off('Debugger.scriptParsed', this.onScriptParsed);
   }
 
   /**
-   * @param {LH.Gatherer.FRTransitionalContext} context
-   */
-  async startSensitiveInstrumentation(context) {
-    const session = context.driver.defaultSession;
-    session.on('Debugger.scriptParsed', this.onScriptParsed);
-    await session.sendCommand('Debugger.enable');
-  }
-
-  /**
-   * @param {LH.Gatherer.FRTransitionalContext} context
-   */
-  async stopSensitiveInstrumentation(context) {
-    const session = context.driver.defaultSession;
-    await session.sendCommand('Debugger.disable');
-    session.off('Debugger.scriptParsed', this.onScriptParsed);
-  }
-
-  /**
-   * @param {LH.Gatherer.FRTransitionalContext} context
    * @return {Promise<LH.Artifacts['JsUsage']>}
    */
-  async getArtifact(context) {
+  async getArtifact() {
     /** @type {Record<string, LH.Crdp.Profiler.ScriptCoverage>} */
     const usageByScriptId = {};
-
-    // TODO: remove?
-    // Force `Debugger.scriptParsed` events for url to scriptId mappings in snapshot mode.
-    if (context.gatherMode === 'snapshot') {
-      await this.startSensitiveInstrumentation(context);
-      await this.stopSensitiveInstrumentation(context);
-    }
 
     for (const scriptUsage of this._scriptUsages) {
       // If `url` is blank, that means the script was anonymous (eval, new Function, onload, ...).

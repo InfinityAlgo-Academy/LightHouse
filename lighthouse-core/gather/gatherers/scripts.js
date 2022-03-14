@@ -34,7 +34,7 @@ async function runInSeriesOrParallel(values, promiseMapper, runInSeries) {
 class Scripts extends FRGatherer {
   /** @type {LH.Gatherer.GathererMeta} */
   meta = {
-    supportedModes: ['timespan', 'navigation'],
+    supportedModes: ['snapshot', 'timespan', 'navigation'],
   };
 
   /** @type {LH.Crdp.Debugger.ScriptParsedEvent[]} */
@@ -49,6 +49,7 @@ class Scripts extends FRGatherer {
   constructor() {
     super();
     this.onProtocolMessage = this.onProtocolMessage.bind(this);
+    this.onFrameNavigated = this.onFrameNavigated.bind(this);
   }
 
   /**
@@ -74,42 +75,63 @@ class Scripts extends FRGatherer {
   }
 
   /**
+   * If we aren't navigating from about:blank, the protocol will pick up scripts from the starting page and destination page.
+   * If navigating within the same origin, the same script can show up multiple times with a different script id.
+   * To prevent this, we clear the scripts every time we detect a navigation.
+   * @param {LH.Crdp.Page.FrameNavigatedEvent} event
+   */
+  onFrameNavigated(event) {
+    // Only clear for main frame navigation events.
+    if (!event.frame.parentId) {
+      this._scriptParsedEvents = [];
+    }
+  }
+
+  /**
    * @param {LH.Gatherer.FRTransitionalContext} context
    */
   async startInstrumentation(context) {
-    const session = context.driver.defaultSession;
-    session.addProtocolMessageListener(this.onProtocolMessage);
-    await session.sendCommand('Debugger.enable');
+    this.localSession = await context.driver.createSession();
+    this.localSession.addProtocolMessageListener(this.onProtocolMessage);
+    await this.localSession.sendCommand('Debugger.enable');
+    this.localSession.on('Page.frameNavigated', this.onFrameNavigated);
+    await this.localSession.sendCommand('Page.enable');
   }
 
   /**
    * @param {LH.Gatherer.FRTransitionalContext} context
    */
   async stopInstrumentation(context) {
-    const session = context.driver.defaultSession;
     const formFactor = context.baseArtifacts.HostFormFactor;
 
-    session.removeProtocolMessageListener(this.onProtocolMessage);
+    await this.localSession.sendCommand('Page.disable');
+    this.localSession.off('Page.frameNavigated', this.onFrameNavigated);
 
-    // Without this line the Debugger domain will be off in FR runner.
-    // Odd, because `startInstrumentation` enabled it...
-    await session.sendCommand('Debugger.enable');
+    this.localSession.removeProtocolMessageListener(this.onProtocolMessage);
 
     // If run on a mobile device, be sensitive to memory limitations and only
     // request one at a time.
     this._scriptContents = await runInSeriesOrParallel(
       this._scriptParsedEvents,
       ({scriptId}) => {
-        return session.sendCommand('Debugger.getScriptSource', {scriptId})
+        return this.localSession.sendCommand('Debugger.getScriptSource', {scriptId})
           .then((resp) => resp.scriptSource)
           .catch(() => undefined);
       },
       formFactor === 'mobile' /* runInSeries */
     );
-    await session.sendCommand('Debugger.disable');
+    await this.localSession.sendCommand('Debugger.disable');
   }
 
-  async getArtifact() {
+  /**
+   * @param {LH.Gatherer.FRTransitionalContext} context
+   */
+  async getArtifact(context) {
+    if (context.gatherMode === 'snapshot') {
+      await this.startInstrumentation(context);
+      await this.stopInstrumentation(context);
+    }
+
     /** @type {LH.Artifacts['Scripts']} */
     const scripts = this._scriptParsedEvents.map((event, i) => {
       // 'embedderName' and 'url' are confusingly named, so we rewrite them here.

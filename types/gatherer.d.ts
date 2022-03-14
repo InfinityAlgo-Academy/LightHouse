@@ -42,6 +42,7 @@ declare module Gatherer {
     defaultSession: FRProtocolSession;
     executionContext: ExecutionContext;
     fetcher: Fetcher;
+    createSession: () => Promise<FRProtocolSession>;
   }
 
   /** The limited context interface shared between pre and post Fraggle Rock Lighthouse. */

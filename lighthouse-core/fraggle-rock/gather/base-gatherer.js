@@ -20,6 +20,12 @@ class FRGatherer {
   meta = {supportedModes: []};
 
   /**
+   * @private
+   * @type {LH.Gatherer.FRProtocolSession|null}
+   */
+  _localSession = null;
+
+  /**
    * Method to start observing a page for an arbitrary period of time.
    * @param {LH.Gatherer.FRTransitionalContext} passContext
    * @return {Promise<void>|void}
@@ -69,6 +75,15 @@ class FRGatherer {
     }
     // @ts-expect-error - assume that class name has been added to LH.GathererArtifacts.
     return name;
+  }
+
+  set localSession(session) {
+    this._localSession = session;
+  }
+
+  get localSession() {
+    if (!this._localSession) throw new Error('Local session was not initialized');
+    return this._localSession;
   }
 
   /**

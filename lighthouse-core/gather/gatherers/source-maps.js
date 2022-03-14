@@ -14,7 +14,7 @@ const URL = require('../../lib/url-shim.js');
 class SourceMaps extends FRGatherer {
   /** @type {LH.Gatherer.GathererMeta} */
   meta = {
-    supportedModes: ['timespan', 'navigation'],
+    supportedModes: ['snapshot', 'timespan', 'navigation'],
   };
 
   constructor() {
@@ -124,18 +124,14 @@ class SourceMaps extends FRGatherer {
    * @param {LH.Gatherer.FRTransitionalContext} context
    */
   async startSensitiveInstrumentation(context) {
-    const session = context.driver.defaultSession;
-    session.on('Debugger.scriptParsed', this.onScriptParsed);
-    await session.sendCommand('Debugger.enable');
+    this.localSession = await context.driver.createSession();
+    this.localSession.on('Debugger.scriptParsed', this.onScriptParsed);
+    await this.localSession.sendCommand('Debugger.enable');
   }
 
-  /**
-   * @param {LH.Gatherer.FRTransitionalContext} context
-   */
-  async stopSensitiveInstrumentation(context) {
-    const session = context.driver.defaultSession;
-    await session.sendCommand('Debugger.disable');
-    session.off('Debugger.scriptParsed', this.onScriptParsed);
+  async stopSensitiveInstrumentation() {
+    await this.localSession.sendCommand('Debugger.disable');
+    this.localSession.off('Debugger.scriptParsed', this.onScriptParsed);
   }
 
   /**
@@ -143,6 +139,11 @@ class SourceMaps extends FRGatherer {
    * @return {Promise<LH.Artifacts['SourceMaps']>}
    */
   async getArtifact(context) {
+    if (context.gatherMode === 'snapshot') {
+      await this.startSensitiveInstrumentation(context);
+      await this.stopSensitiveInstrumentation();
+    }
+
     await context.driver.fetcher.enable();
     const eventProcessPromises = this._scriptParsedEvents
       .map((event) => this._retrieveMapFromScriptParsedEvent(context.driver, event));
