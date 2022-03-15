@@ -42,7 +42,7 @@ class UnminifiedJavaScript extends ByteEfficiencyAudit {
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
       scoreDisplayMode: ByteEfficiencyAudit.SCORING_MODES.NUMERIC,
-      requiredArtifacts: ['ScriptElements', 'devtoolsLogs', 'traces', 'GatherContext'],
+      requiredArtifacts: ['Scripts', 'devtoolsLogs', 'traces', 'GatherContext', 'URL'],
     };
   }
 
@@ -78,15 +78,15 @@ class UnminifiedJavaScript extends ByteEfficiencyAudit {
     /** @type {Array<LH.Audit.ByteEfficiencyItem>} */
     const items = [];
     const warnings = [];
-    for (const {requestId, src, content} of artifacts.ScriptElements) {
-      if (!content) continue;
+    for (const script of artifacts.Scripts) {
+      if (!script.content) continue;
 
-      const networkRecord = networkRecords.find(record => record.requestId === requestId);
-      const displayUrl = !src || !networkRecord ?
-        `inline: ${content.substr(0, 40)}...` :
-        networkRecord.url;
+      const networkRecord = networkRecords.find(record => record.url === script.url);
+      const displayUrl = script.name === artifacts.URL.finalUrl ?
+        `inline: ${script.content.substring(0, 40)}...` :
+        script.url;
       try {
-        const result = UnminifiedJavaScript.computeWaste(content, displayUrl, networkRecord);
+        const result = UnminifiedJavaScript.computeWaste(script.content, displayUrl, networkRecord);
         // If the ratio is minimal, the file is likely already minified, so ignore it.
         // If the total number of bytes to be saved is quite small, it's also safe to ignore.
         if (result.wastedPercent < IGNORE_THRESHOLD_IN_PERCENT ||
@@ -94,8 +94,7 @@ class UnminifiedJavaScript extends ByteEfficiencyAudit {
           !Number.isFinite(result.wastedBytes)) continue;
         items.push(result);
       } catch (err) {
-        const url = networkRecord ? networkRecord.url : '?';
-        warnings.push(`Unable to process script ${url}: ${err.message}`);
+        warnings.push(`Unable to process script ${script.url}: ${err.message}`);
       }
     }
 

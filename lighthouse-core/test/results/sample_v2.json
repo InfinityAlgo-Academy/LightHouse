@@ -3232,7 +3232,7 @@
         "nodes": [
           {
             "name": "http://localhost:10200/dobetterweb/dbw_tester.html",
-            "resourceBytes": 7197
+            "resourceBytes": 7166
           },
           {
             "name": "http://localhost:10200/dobetterweb/dbw_tester.js",
@@ -3241,14 +3241,6 @@
           },
           {
             "name": "http://localhost:10200/dobetterweb/empty_module.js?delay=500",
-            "resourceBytes": 0
-          },
-          {
-            "name": "http://localhost:10200/dobetterweb/fake-script-wp-includes",
-            "resourceBytes": 0
-          },
-          {
-            "name": "http://localhost:10200/dobetterweb/fcp-delayer.js?delay=5000",
             "resourceBytes": 0
           },
           {
@@ -8470,6 +8462,78 @@
       {
         "startTime": 0,
         "name": "lh:audit:unused-javascript",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:UnusedJavascriptSummary",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:UnusedJavascriptSummary",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:UnusedJavascriptSummary",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:UnusedJavascriptSummary",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:UnusedJavascriptSummary",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:UnusedJavascriptSummary",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:UnusedJavascriptSummary",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:UnusedJavascriptSummary",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:UnusedJavascriptSummary",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:UnusedJavascriptSummary",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:UnusedJavascriptSummary",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:UnusedJavascriptSummary",
         "duration": 100,
         "entryType": "measure"
       },

@@ -11,12 +11,16 @@ const config = {
   categories: {
     performance: {
       title: 'Performance',
-      auditRefs: [{id: 'oopif-iframe-test-audit', weight: 0}],
+      auditRefs: [
+        {id: 'oopif-iframe-test-audit', weight: 0},
+        {id: 'script-elements-test-audit', weight: 0},
+      ],
     },
   },
   audits: [
     // Include an audit that *forces* the IFrameElements artifact to be used for our test.
     {path: 'oopif-iframe-test-audit'},
+    {path: 'script-elements-test-audit'},
   ],
   settings: {
     // This test runs in CI and hits the outside network of a live site.
@@ -105,14 +109,33 @@ const expectations = {
       {
         src: 'http://localhost:10200/simple-script.js',
         source: 'network',
-        content: /🪁/,
       },
       {
         src: 'http://localhost:10503/simple-script.js',
         source: 'network',
-        content: /🪁/,
       },
     ],
+    Scripts: {
+      _includes: [
+        {
+          url: 'http://localhost:10200/simple-script.js',
+          content: /🪁/,
+        },
+        {
+          url: 'http://localhost:10200/oopif-simple-page.html',
+          content: /new Worker/,
+        },
+        {
+          url: 'http://localhost:10503/simple-script.js',
+          content: /🪁/,
+        },
+        {
+          url: 'http://localhost:10503/oopif-simple-page.html',
+          content: /new Worker/,
+        },
+      ],
+      _excludes: [{}],
+    },
   },
 };
 

@@ -143,6 +143,7 @@ const defaultConfig = {
       'link-elements',
       'meta-elements',
       'script-elements',
+      'scripts',
       'iframe-elements',
       'inputs',
       'main-document-content',
