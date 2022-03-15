@@ -92,6 +92,7 @@ class Redirects extends Audit {
     const processedTrace = await ProcessedTrace.request(trace, context);
     const networkRecords = await NetworkRecords.request(devtoolsLog, context);
     const mainResource = await MainResource.request({devtoolsLog}, context);
+    console.log(mainResource.url);
 
     const metricComputationData = {trace, devtoolsLog, gatherContext, settings};
     const metricResult = await LanternInteractive.request(metricComputationData, context);
