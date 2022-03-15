@@ -8,10 +8,9 @@
 const LinkHeader = require('http-link-header');
 const FRGatherer = require('../../fraggle-rock/gather/base-gatherer.js');
 const {URL} = require('../../lib/url-shim.js');
-const NetworkRecords = require('../../computed/network-records.js');
-const NetworkAnalyzer = require('../../lib/dependency-graph/simulator/network-analyzer.js');
 const pageFunctions = require('../../lib/page-functions.js');
 const DevtoolsLog = require('./devtools-log.js');
+const MainResource = require('../../computed/main-resource.js');
 
 /* globals HTMLLinkElement getNodeDetails */
 
@@ -114,12 +113,13 @@ class LinkElements extends FRGatherer {
 
   /**
    * @param {LH.Gatherer.FRTransitionalContext} context
-   * @param {LH.Artifacts.NetworkRequest[]} networkRecords
-   * @return {LH.Artifacts['LinkElements']}
+   * @param {LH.Artifacts['DevtoolsLog']} devtoolsLog
+   * @return {Promise<LH.Artifacts['LinkElements']>}
    */
-  static getLinkElementsInHeaders(context, networkRecords) {
+  static async getLinkElementsInHeaders(context, devtoolsLog) {
     const finalUrl = context.url;
-    const mainDocument = NetworkAnalyzer.findMainDocument(networkRecords, finalUrl);
+    const mainDocument =
+      await MainResource.request({devtoolsLog}, context);
 
     /** @type {LH.Artifacts['LinkElements']} */
     const linkElements = [];
@@ -146,12 +146,12 @@ class LinkElements extends FRGatherer {
 
   /**
    * @param {LH.Gatherer.FRTransitionalContext} context
-   * @param {LH.Artifacts.NetworkRequest[]} networkRecords
+   * @param {LH.Artifacts['DevtoolsLog']} devtoolsLog
    * @return {Promise<LH.Artifacts['LinkElements']>}
    */
-  async _getArtifact(context, networkRecords) {
+  async _getArtifact(context, devtoolsLog) {
     const fromDOM = await LinkElements.getLinkElementsInDOM(context);
-    const fromHeaders = LinkElements.getLinkElementsInHeaders(context, networkRecords);
+    const fromHeaders = await LinkElements.getLinkElementsInHeaders(context, devtoolsLog);
     const linkElements = fromDOM.concat(fromHeaders);
 
     for (const link of linkElements) {
@@ -168,7 +168,7 @@ class LinkElements extends FRGatherer {
    * @return {Promise<LH.Artifacts['LinkElements']>}
    */
   async afterPass(context, loadData) {
-    return this._getArtifact({...context, dependencies: {}}, loadData.networkRecords);
+    return this._getArtifact({...context, dependencies: {}}, loadData.devtoolsLog);
   }
 
   /**
@@ -176,8 +176,7 @@ class LinkElements extends FRGatherer {
    * @return {Promise<LH.Artifacts['LinkElements']>}
    */
   async getArtifact(context) {
-    const records = await NetworkRecords.request(context.dependencies.DevtoolsLog, context);
-    return this._getArtifact(context, records);
+    return this._getArtifact(context, context.dependencies.DevtoolsLog);
   }
 }
 

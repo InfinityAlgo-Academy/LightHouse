@@ -11,7 +11,6 @@
 
 const ByteEfficiencyAudit = require('./byte-efficiency-audit.js');
 const ModuleDuplication = require('../../computed/module-duplication.js');
-const NetworkAnalyzer = require('../../lib/dependency-graph/simulator/network-analyzer.js');
 const i18n = require('../../lib/i18n/i18n.js');
 
 const UIStrings = {
@@ -48,8 +47,7 @@ class DuplicatedJavascript extends ByteEfficiencyAudit {
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
       scoreDisplayMode: ByteEfficiencyAudit.SCORING_MODES.NUMERIC,
-      requiredArtifacts: ['devtoolsLogs', 'traces', 'SourceMaps', 'Scripts',
-        'GatherContext', 'URL'],
+      requiredArtifacts: ['devtoolsLogs', 'traces', 'SourceMaps', 'Scripts', 'GatherContext'],
     };
   }
 
@@ -130,7 +128,6 @@ class DuplicatedJavascript extends ByteEfficiencyAudit {
       context.options?.ignoreThresholdInBytes || IGNORE_THRESHOLD_IN_BYTES;
     const duplication =
       await DuplicatedJavascript._getDuplicationGroupedByNodeModules(artifacts, context);
-    const mainDocumentRecord = NetworkAnalyzer.findOptionalMainDocument(networkRecords);
 
     /** @type {Map<string, number>} */
     const transferRatioByUrl = new Map();
@@ -164,9 +161,7 @@ class DuplicatedJavascript extends ByteEfficiencyAudit {
         /** @type {number|undefined} */
         let transferRatio = transferRatioByUrl.get(url);
         if (transferRatio === undefined) {
-          const networkRecord = url === artifacts.URL.finalUrl ?
-            mainDocumentRecord :
-            networkRecords.find(n => n.url === url);
+          const networkRecord = networkRecords.find(n => n.url === url);
 
           if (!script || script.length === undefined) {
             // This should never happen because we found the wasted bytes from bundles, which required contents in a ScriptElement.

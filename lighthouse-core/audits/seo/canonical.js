@@ -64,7 +64,7 @@ class Canonical extends Audit {
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
       supportedModes: ['navigation'],
-      requiredArtifacts: ['LinkElements', 'URL', 'devtoolsLogs'],
+      requiredArtifacts: ['LinkElements', 'devtoolsLogs'],
     };
   }
 
@@ -190,7 +190,7 @@ class Canonical extends Audit {
   static async audit(artifacts, context) {
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
 
-    const mainResource = await MainResource.request({devtoolsLog, URL: artifacts.URL}, context);
+    const mainResource = await MainResource.request({devtoolsLog}, context);
     const baseURL = new URL(mainResource.url);
     const canonicalURLData = Canonical.collectCanonicalURLs(artifacts.LinkElements);
 

@@ -33,7 +33,7 @@ class PreloadLCPImageAudit extends Audit {
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
       supportedModes: ['navigation'],
-      requiredArtifacts: ['traces', 'devtoolsLogs', 'GatherContext', 'URL', 'TraceElements',
+      requiredArtifacts: ['traces', 'devtoolsLogs', 'GatherContext', 'TraceElements',
         'ImageElements'],
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
     };
@@ -202,13 +202,12 @@ class PreloadLCPImageAudit extends Audit {
     const gatherContext = artifacts.GatherContext;
     const trace = artifacts.traces[PreloadLCPImageAudit.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[PreloadLCPImageAudit.DEFAULT_PASS];
-    const URL = artifacts.URL;
     const metricData = {trace, devtoolsLog, gatherContext, settings: context.settings};
     const lcpElement = artifacts.TraceElements
       .find(element => element.traceEventType === 'largest-contentful-paint');
 
     const [mainResource, lanternLCP, simulator] = await Promise.all([
-      MainResource.request({devtoolsLog, URL}, context),
+      MainResource.request({devtoolsLog}, context),
       LanternLCP.request(metricData, context),
       LoadSimulator.request({devtoolsLog, settings: context.settings}, context),
     ]);

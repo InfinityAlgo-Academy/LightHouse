@@ -33,7 +33,7 @@ class Redirects extends Audit {
       description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
       supportedModes: ['navigation'],
-      requiredArtifacts: ['URL', 'GatherContext', 'devtoolsLogs', 'traces'],
+      requiredArtifacts: ['GatherContext', 'devtoolsLogs', 'traces'],
     };
   }
 
@@ -91,7 +91,7 @@ class Redirects extends Audit {
 
     const processedTrace = await ProcessedTrace.request(trace, context);
     const networkRecords = await NetworkRecords.request(devtoolsLog, context);
-    const mainResource = await MainResource.request({URL: artifacts.URL, devtoolsLog}, context);
+    const mainResource = await MainResource.request({devtoolsLog}, context);
 
     const metricComputationData = {trace, devtoolsLog, gatherContext, settings};
     const metricResult = await LanternInteractive.request(metricComputationData, context);

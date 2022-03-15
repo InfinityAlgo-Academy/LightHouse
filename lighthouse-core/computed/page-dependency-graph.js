@@ -8,11 +8,11 @@
 const makeComputedArtifact = require('./computed-artifact.js');
 const NetworkNode = require('../lib/dependency-graph/network-node.js');
 const CPUNode = require('../lib/dependency-graph/cpu-node.js');
-const NetworkAnalyzer = require('../lib/dependency-graph/simulator/network-analyzer.js');
 const TracingProcessor = require('../lib/tracehouse/trace-processor.js');
 const NetworkRequest = require('../lib/network-request.js');
 const ProcessedTrace = require('./processed-trace.js');
 const NetworkRecords = require('./network-records.js');
+const MainResource = require('./main-resource.js');
 
 /** @typedef {import('../lib/dependency-graph/base-node.js').Node} Node */
 
@@ -387,16 +387,18 @@ class PageDependencyGraph {
 
   /**
    * @param {LH.Artifacts.ProcessedTrace} processedTrace
-   * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
-   * @return {Node}
+   * @param {LH.Artifacts['DevtoolsLog']} devtoolsLog
+   * @param {LH.Artifacts.ComputedContext} context
+   * @return {Promise<Node>}
    */
-  static createGraph(processedTrace, networkRecords) {
+  static async createGraph(processedTrace, devtoolsLog, context) {
+    const networkRecords = await NetworkRecords.request(devtoolsLog, context);
     const networkNodeOutput = PageDependencyGraph.getNetworkNodeOutput(networkRecords);
     const cpuNodes = PageDependencyGraph.getCPUNodes(processedTrace);
 
     // The main document request is the earliest network request *of type document*.
     // This will be different from the root request when there are server redirects.
-    const mainDocumentRequest = NetworkAnalyzer.findMainDocument(networkRecords);
+    const mainDocumentRequest = await MainResource.request({devtoolsLog}, context);
     const mainDocumentNode = networkNodeOutput.idToNodeMap.get(mainDocumentRequest.requestId);
     if (!mainDocumentNode) {
       // mainDocumentNode should always be found.
@@ -468,12 +470,9 @@ class PageDependencyGraph {
   static async compute_(data, context) {
     const trace = data.trace;
     const devtoolsLog = data.devtoolsLog;
-    const [processedTrace, networkRecords] = await Promise.all([
-      ProcessedTrace.request(trace, context),
-      NetworkRecords.request(devtoolsLog, context),
-    ]);
+    const processedTrace = await ProcessedTrace.request(trace, context);
 
-    return PageDependencyGraph.createGraph(processedTrace, networkRecords);
+    return await PageDependencyGraph.createGraph(processedTrace, devtoolsLog, context);
   }
 }
 

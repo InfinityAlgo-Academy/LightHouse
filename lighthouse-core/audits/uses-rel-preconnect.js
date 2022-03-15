@@ -64,7 +64,7 @@ class UsesRelPreconnectAudit extends Audit {
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
       supportedModes: ['navigation'],
-      requiredArtifacts: ['traces', 'devtoolsLogs', 'URL', 'LinkElements'],
+      requiredArtifacts: ['traces', 'devtoolsLogs', 'LinkElements'],
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
     };
   }
@@ -120,7 +120,7 @@ class UsesRelPreconnectAudit extends Audit {
     const [networkRecords, mainResource, loadSimulator, processedNavigation, pageGraph] =
       await Promise.all([
         NetworkRecords.request(devtoolsLog, context),
-        MainResource.request({devtoolsLog, URL: artifacts.URL}, context),
+        MainResource.request({devtoolsLog}, context),
         LoadSimulator.request({devtoolsLog, settings}, context),
         ProcessedNavigation.request(processedTrace, context),
         PageDependencyGraph.request({trace, devtoolsLog}, context),

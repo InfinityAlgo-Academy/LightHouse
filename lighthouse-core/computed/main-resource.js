@@ -15,14 +15,26 @@ const NetworkRecords = require('./network-records.js');
  */
 class MainResource {
   /**
-   * @param {{URL: LH.Artifacts['URL'], devtoolsLog: LH.DevtoolsLog}} data
+   * @param {{devtoolsLog: LH.DevtoolsLog}} data
    * @param {LH.Artifacts.ComputedContext} context
    * @return {Promise<LH.Artifacts.NetworkRequest>}
    */
   static async compute_(data, context) {
-    const finalUrl = data.URL.finalUrl;
+    /** @type {string|undefined} */
+    let mainDocumentUrl;
+    for (let i = data.devtoolsLog.length - 1; i >= 0; --i) {
+      const event = data.devtoolsLog[i];
+      if (event.method !== 'Page.frameNavigated' || event.params.frame.parentId) continue;
+      // Intentionally exclude the URL fragment when looking for the network request.
+      mainDocumentUrl = event.params.frame.url;
+    }
+
+    if (!mainDocumentUrl) {
+      throw new Error('Could not find main document URL');
+    }
+
     const requests = await NetworkRecords.request(data.devtoolsLog, context);
-    const mainResource = NetworkAnalyzer.findMainDocument(requests, finalUrl);
+    const mainResource = NetworkAnalyzer.findMainDocument(requests, mainDocumentUrl);
     if (!mainResource) {
       throw new Error('Unable to identify the main resource');
     }
@@ -31,4 +43,4 @@ class MainResource {
   }
 }
 
-module.exports = makeComputedArtifact(MainResource, ['URL', 'devtoolsLog']);
+module.exports = makeComputedArtifact(MainResource, ['devtoolsLog']);

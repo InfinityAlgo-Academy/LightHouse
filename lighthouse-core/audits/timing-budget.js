@@ -37,7 +37,7 @@ class TimingBudget extends Audit {
       description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
       supportedModes: ['navigation'],
-      requiredArtifacts: ['devtoolsLogs', 'traces', 'URL', 'GatherContext'],
+      requiredArtifacts: ['devtoolsLogs', 'traces', 'GatherContext'],
     };
   }
 
@@ -140,7 +140,7 @@ class TimingBudget extends Audit {
     const gatherContext = artifacts.GatherContext;
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
-    const mainResource = await MainResource.request({URL: artifacts.URL, devtoolsLog}, context);
+    const mainResource = await MainResource.request({devtoolsLog}, context);
     const data = {trace, devtoolsLog, gatherContext, settings: context.settings};
     const summary = (await TimingSummary.request(data, context)).metrics;
     const budget = Budget.getMatchingBudget(context.settings.budgets, mainResource.url);

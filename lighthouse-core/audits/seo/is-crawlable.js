@@ -82,7 +82,7 @@ class IsCrawlable extends Audit {
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
       supportedModes: ['navigation'],
-      requiredArtifacts: ['MetaElements', 'RobotsTxt', 'URL', 'devtoolsLogs'],
+      requiredArtifacts: ['MetaElements', 'RobotsTxt', 'devtoolsLogs'],
     };
   }
 
@@ -95,7 +95,7 @@ class IsCrawlable extends Audit {
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     const metaRobots = artifacts.MetaElements.find(meta => meta.name === 'robots');
 
-    return MainResource.request({devtoolsLog, URL: artifacts.URL}, context)
+    return MainResource.request({devtoolsLog}, context)
       .then(mainResource => {
         /** @type {LH.Audit.Details.Table['items']} */
         const blockingDirectives = [];
