@@ -27,6 +27,7 @@ class MainResource {
       if (event.method !== 'Page.frameNavigated' || event.params.frame.parentId) continue;
       // Intentionally exclude the URL fragment when looking for the network request.
       mainDocumentUrl = event.params.frame.url;
+      break;
     }
 
     if (!mainDocumentUrl) {
