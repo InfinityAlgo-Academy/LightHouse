@@ -69,25 +69,23 @@ async function rebaselineArtifacts() {
   const page = await browser.newPage();
   const flow = await api.startFlow(page, {config});
 
-  // await flow.navigate('https://www.mikescerealshack.co');
-  await page.goto('https://www.mikescerealshack.co');
+  await flow.navigate('https://www.mikescerealshack.co');
 
-  // await flow.startTimespan({stepName: 'Search input'});
+  await flow.startTimespan({stepName: 'Search input'});
   await page.type('input', 'call of duty');
   const networkQuietPromise = page.waitForNavigation({waitUntil: ['networkidle0']});
   await page.click('button[type=submit]');
   await networkQuietPromise;
   await waitForImagesToLoad(page);
-  // await flow.endTimespan();
+  await flow.endTimespan();
 
   await flow.snapshot({stepName: 'Search results'});
 
-  // await flow.navigate('https://www.mikescerealshack.co/corrections');
+  await flow.navigate('https://www.mikescerealshack.co/corrections');
 
   await browser.close();
 
   const flowArtifacts = flow.createArtifactsJson();
-  console.log(flowArtifacts.gatherSteps[0].artifacts.JsUsage);
 
   // Normalize some data so it doesn't change on every update.
   for (const {artifacts} of flowArtifacts.gatherSteps) {
