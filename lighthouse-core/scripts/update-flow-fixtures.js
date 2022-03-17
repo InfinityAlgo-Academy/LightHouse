@@ -11,6 +11,7 @@ import assert from 'assert';
 import open from 'open';
 import waitForExpect from 'wait-for-expect';
 import puppeteer from 'puppeteer';
+import yargs from 'yargs';
 
 import {LH_ROOT} from '../../root.js';
 import api from '../fraggle-rock/api.js';
@@ -21,6 +22,23 @@ const ARTIFACTS_PATH =
 const FLOW_RESULT_PATH =
   `${LH_ROOT}/lighthouse-core/test/fixtures/fraggle-rock/reports/sample-flow-result.json`;
 const FLOW_REPORT_PATH = `${LH_ROOT}/dist/sample-reports/flow-report/index.html`;
+
+const args = yargs(process.argv.slice(2))
+  .options({
+    'view': {
+      type: 'boolean',
+      default: false,
+    },
+    'rebaseline-artifacts': {
+      type: 'boolean',
+      default: false,
+    },
+    'output-path': {
+      type: 'string',
+      default: FLOW_RESULT_PATH,
+    },
+  })
+  .parseSync();
 
 /** @param {puppeteer.Page} page */
 async function waitForImagesToLoad(page) {
@@ -106,9 +124,9 @@ async function generateFlowResult() {
     lhr.timing.total = lhr.timing.entries.length;
   }
 
-  fs.writeFileSync(FLOW_RESULT_PATH, JSON.stringify(flowResult, null, 2));
+  fs.writeFileSync(args.outputPath, JSON.stringify(flowResult, null, 2));
 
-  if (process.argv.includes('--view')) {
+  if (args.view) {
     const htmlReport = await api.generateFlowReport(flowResult);
     fs.writeFileSync(FLOW_REPORT_PATH, htmlReport);
     open(FLOW_REPORT_PATH);
@@ -117,7 +135,7 @@ async function generateFlowResult() {
 
 (async () => {
   try {
-    if (process.argv.includes('--rebaseline-artifacts')) {
+    if (args.rebaselineArtifacts) {
       await rebaselineArtifacts();
     }
     await generateFlowResult();
