@@ -18,20 +18,8 @@ class JsUsage extends FRGatherer {
 
   constructor() {
     super();
-    /** @type {LH.Crdp.Debugger.ScriptParsedEvent[]} */
-    this._scriptParsedEvents = [];
     /** @type {LH.Crdp.Profiler.ScriptCoverage[]} */
     this._scriptUsages = [];
-    this.onScriptParsed = this.onScriptParsed.bind(this);
-  }
-
-  /**
-   * @param {LH.Crdp.Debugger.ScriptParsedEvent} event
-   */
-  onScriptParsed(event) {
-    if (event.embedderName) {
-      this._scriptParsedEvents.push(event);
-    }
   }
 
   /**
@@ -52,24 +40,6 @@ class JsUsage extends FRGatherer {
     this._scriptUsages = coverageResponse.result;
     await session.sendCommand('Profiler.stopPreciseCoverage');
     await session.sendCommand('Profiler.disable');
-  }
-
-  /**
-   * @param {LH.Gatherer.FRTransitionalContext} context
-   */
-  async startSensitiveInstrumentation(context) {
-    const session = context.driver.defaultSession;
-    session.on('Debugger.scriptParsed', this.onScriptParsed);
-    await session.sendCommand('Debugger.enable');
-  }
-
-  /**
-   * @param {LH.Gatherer.FRTransitionalContext} context
-   */
-  async stopSensitiveInstrumentation(context) {
-    const session = context.driver.defaultSession;
-    await session.sendCommand('Debugger.disable');
-    session.off('Debugger.scriptParsed', this.onScriptParsed);
   }
 
   /**

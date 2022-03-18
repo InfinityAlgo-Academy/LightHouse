@@ -20,26 +20,18 @@ describe('JsUsage gatherer', () => {
   /**
    * `scriptParsedEvents` mocks the `Debugger.scriptParsed` events.
    * `coverage` mocks the result of `Profiler.takePreciseCoverage`.
-   * @param {{coverage: LH.Crdp.Profiler.ScriptCoverage[], scriptParsedEvents: LH.Crdp.Debugger.ScriptParsedEvent[]}} _
+   * @param {{coverage: LH.Crdp.Profiler.ScriptCoverage[]}} _
    * @return {Promise<LH.Artifacts['JsUsage']>}
    */
-  async function runJsUsage({coverage, scriptParsedEvents = []}) {
+  async function runJsUsage({coverage}) {
     const onMock = createMockOnFn();
     const sendCommandMock = createMockSendCommandFn()
       .mockResponse('Profiler.enable', {})
       .mockResponse('Profiler.disable', {})
-      .mockResponse('Debugger.enable', {})
-      .mockResponse('Debugger.disable', {})
       .mockResponse('Profiler.startPreciseCoverage', {})
       .mockResponse('Profiler.takePreciseCoverage', {result: coverage})
       .mockResponse('Profiler.stopPreciseCoverage', {});
 
-    for (const scriptParsedEvent of scriptParsedEvents) {
-      onMock.mockEvent('protocolevent', {
-        method: 'Debugger.scriptParsed',
-        params: scriptParsedEvent,
-      });
-    }
     const connectionStub = new Connection();
     connectionStub.sendCommand = sendCommandMock;
     connectionStub.on = onMock;
@@ -52,8 +44,6 @@ describe('JsUsage gatherer', () => {
 
     // Needed for protocol events to emit.
     await flushAllTimersAndMicrotasks(1);
-
-    expect(gatherer._scriptParsedEvents).toEqual(scriptParsedEvents.filter((c) => c.embedderName));
 
     await gatherer.stopSensitiveInstrumentation({driver});
     await gatherer.stopInstrumentation({driver});
@@ -124,8 +114,6 @@ Object {
     context.driver._session.sendCommand
       .mockResponse('Profiler.enable', {})
       .mockResponse('Profiler.disable', {})
-      .mockResponse('Debugger.enable', {})
-      .mockResponse('Debugger.disable', {})
       .mockResponse('Profiler.startPreciseCoverage', {})
       .mockResponse('Profiler.takePreciseCoverage', {
         result: [{
