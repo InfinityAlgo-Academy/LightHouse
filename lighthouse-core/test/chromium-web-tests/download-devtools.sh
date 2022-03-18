@@ -24,12 +24,11 @@ then
     git pull --ff-only -f origin main
     gclient sync --delete_unversioned_trees --reset
   elif [ -z "${GHA_DEVTOOLS_CACHE_HIT:-}" ]; then
-    # For CI, just update, but only if this was a cache-miss.
+    # For CI, only run if this was a cache-miss.
     # The only way the folder already exists _and_ there is a cache-miss is
     # if actions/cache@v2 `restore-keys` has provided a partial environment for us.
-    # Do the same as for local, but don't clean! That would toss out all the
-    # (stale, but still useful) build artifacts.
     git reset --hard
+    git clean -fd
     git pull --ff-only -f origin main
     gclient sync --delete_unversioned_trees --reset
   fi
