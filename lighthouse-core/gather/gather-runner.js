@@ -80,6 +80,7 @@ class GatherRunner {
         ...passContext.passConfig,
       });
       passContext.url = finalUrl;
+      passContext.baseArtifacts.URL.finalUrl = finalUrl;
       if (passContext.passConfig.loadFailureMode === 'fatal') {
         passContext.LighthouseRunWarnings.push(...warnings);
       }

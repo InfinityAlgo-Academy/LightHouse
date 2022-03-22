@@ -7,11 +7,10 @@
 
 /**
  * @param {LH.Artifacts.NetworkRequest[]} networkRecords
- * @param {LH.Artifacts.Script|undefined} script
+ * @param {LH.Artifacts.Script} script
  * @return {LH.Artifacts.NetworkRequest|undefined}
  */
 function getRequestForScript(networkRecords, script) {
-  if (!script) return;
   let networkRequest = networkRecords.find(request => request.url === script.url);
   while (networkRequest?.redirectDestination) {
     networkRequest = networkRequest.redirectDestination;

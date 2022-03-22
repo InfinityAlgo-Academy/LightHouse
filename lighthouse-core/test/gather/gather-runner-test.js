@@ -144,7 +144,7 @@ afterEach(() => {
 });
 
 describe('GatherRunner', function() {
-  it('loads a page and updates passContext.URL on redirect', () => {
+  it('loads a page and updates passContext urls on redirect', () => {
     const url1 = 'https://example.com';
     const url2 = 'https://example.com/interstitial';
     const driver = {};
@@ -158,10 +158,16 @@ describe('GatherRunner', function() {
       passConfig: {
         gatherers: [],
       },
+      baseArtifacts: {
+        URL: {
+          finalUrl: url1,
+        },
+      },
     };
 
     return GatherRunner.loadPage(driver, passContext).then(_ => {
       assert.equal(passContext.url, url2);
+      assert.equal(passContext.baseArtifacts.URL.finalUrl, url2);
     });
   });
 

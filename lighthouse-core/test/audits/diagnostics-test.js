@@ -17,6 +17,9 @@ describe('Diagnostics audit', () => {
     const artifacts = {
       traces: {defaultPass: acceptableTrace},
       devtoolsLogs: {defaultPass: acceptableDevToolsLog},
+      URL: {
+        finalUrl: 'https://pwa.rocks/',
+      },
     };
 
     const result = await Diagnostics.audit(artifacts, {computedCache: new Map()});

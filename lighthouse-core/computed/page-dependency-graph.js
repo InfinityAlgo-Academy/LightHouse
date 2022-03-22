@@ -394,6 +394,9 @@ class PageDependencyGraph {
     const networkNodeOutput = PageDependencyGraph.getNetworkNodeOutput(networkRecords);
     const cpuNodes = PageDependencyGraph.getCPUNodes(processedTrace);
 
+    // TODO: Remove this usage of `findMainDocument` and create a new function to get the first document request.
+    // https://github.com/GoogleChrome/lighthouse/issues/8984
+    //
     // The main document request is the earliest network request *of type document*.
     // This will be different from the root request when there are server redirects.
     const mainDocumentRequest = NetworkAnalyzer.findMainDocument(networkRecords);

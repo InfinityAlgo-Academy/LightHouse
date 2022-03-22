@@ -373,12 +373,12 @@ class LegacyJavascript extends ByteEfficiencyAudit {
     if (transferRatio !== undefined) return transferRatio;
 
     const script = artifacts.Scripts.find(script => script.url === url);
-    const networkRecord = getRequestForScript(networkRecords, script);
 
     if (!script || script.content === null) {
       // Can't find content, so just use 1.
       transferRatio = 1;
     } else {
+      const networkRecord = getRequestForScript(networkRecords, script);
       const contentLength = script.length || 0;
       const transferSize =
         ByteEfficiencyAudit.estimateTransferSize(networkRecord, contentLength, 'Script');

@@ -7566,13 +7566,6 @@
               "items": []
             }
           },
-          "server-response-time": {
-            "id": "server-response-time",
-            "title": "Initial server response time was short",
-            "description": "Keep the server response time for the main document short because all other requests depend on it. [Learn more](https://web.dev/time-to-first-byte/).",
-            "score": null,
-            "scoreDisplayMode": "notApplicable"
-          },
           "user-timings": {
             "id": "user-timings",
             "title": "User Timing marks and measures",
@@ -9132,10 +9125,6 @@
                 "weight": 0
               },
               {
-                "id": "server-response-time",
-                "weight": 0
-              },
-              {
                 "id": "efficient-animated-content",
                 "weight": 0
               },
@@ -9562,163 +9551,163 @@
             },
             {
               "startTime": 30,
-              "name": "lh:audit:server-response-time",
-              "duration": 1,
-              "entryType": "measure"
-            },
-            {
-              "startTime": 31,
               "name": "lh:audit:user-timings",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 32,
+              "startTime": 31,
               "name": "lh:computed:UserTimings",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 33,
+              "startTime": 32,
               "name": "lh:audit:image-aspect-ratio",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 34,
+              "startTime": 33,
               "name": "lh:audit:image-size-responsive",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 35,
+              "startTime": 34,
               "name": "lh:audit:preload-fonts",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 36,
+              "startTime": 35,
               "name": "lh:audit:deprecations",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 37,
+              "startTime": 36,
               "name": "lh:audit:mainthread-work-breakdown",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 38,
+              "startTime": 37,
               "name": "lh:computed:MainThreadTasks",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 39,
+              "startTime": 38,
               "name": "lh:audit:bootup-time",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 40,
+              "startTime": 39,
               "name": "lh:audit:network-requests",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 41,
+              "startTime": 40,
               "name": "lh:audit:network-rtt",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 42,
+              "startTime": 41,
               "name": "lh:computed:NetworkAnalysis",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 43,
+              "startTime": 42,
               "name": "lh:audit:network-server-latency",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 44,
+              "startTime": 43,
               "name": "lh:audit:main-thread-tasks",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 45,
+              "startTime": 44,
               "name": "lh:audit:resource-summary",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 46,
+              "startTime": 45,
               "name": "lh:computed:ResourceSummary",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 47,
+              "startTime": 46,
               "name": "lh:audit:third-party-summary",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 48,
+              "startTime": 47,
               "name": "lh:audit:layout-shift-elements",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 49,
+              "startTime": 48,
               "name": "lh:audit:long-tasks",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 50,
+              "startTime": 49,
               "name": "lh:audit:no-unload-listeners",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 51,
+              "startTime": 50,
               "name": "lh:audit:non-composited-animations",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 52,
+              "startTime": 51,
               "name": "lh:audit:unsized-images",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 53,
+              "startTime": 52,
               "name": "lh:audit:valid-source-maps",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 54,
+              "startTime": 53,
               "name": "lh:audit:full-page-screenshot",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 55,
+              "startTime": 54,
               "name": "lh:audit:script-treemap-data",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 56,
+              "startTime": 55,
               "name": "lh:computed:ModuleDuplication",
+              "duration": 1,
+              "entryType": "measure"
+            },
+            {
+              "startTime": 56,
+              "name": "lh:computed:UnusedJavascriptSummary",
               "duration": 1,
               "entryType": "measure"
             },
@@ -9736,132 +9725,126 @@
             },
             {
               "startTime": 59,
-              "name": "lh:computed:UnusedJavascriptSummary",
-              "duration": 1,
-              "entryType": "measure"
-            },
-            {
-              "startTime": 60,
               "name": "lh:audit:uses-long-cache-ttl",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 61,
+              "startTime": 60,
               "name": "lh:audit:total-byte-weight",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 62,
+              "startTime": 61,
               "name": "lh:audit:unminified-css",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 63,
+              "startTime": 62,
               "name": "lh:computed:LoadSimulator",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 64,
+              "startTime": 63,
               "name": "lh:audit:unminified-javascript",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 65,
+              "startTime": 64,
               "name": "lh:audit:unused-css-rules",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 66,
+              "startTime": 65,
               "name": "lh:computed:UnusedCSS",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 67,
+              "startTime": 66,
               "name": "lh:audit:unused-javascript",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 68,
+              "startTime": 67,
               "name": "lh:audit:modern-image-formats",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 69,
+              "startTime": 68,
               "name": "lh:audit:uses-optimized-images",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 70,
+              "startTime": 69,
               "name": "lh:audit:uses-text-compression",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 71,
+              "startTime": 70,
               "name": "lh:audit:uses-responsive-images",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 72,
+              "startTime": 71,
               "name": "lh:computed:ImageRecords",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 73,
+              "startTime": 72,
               "name": "lh:audit:efficient-animated-content",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 74,
+              "startTime": 73,
               "name": "lh:audit:duplicated-javascript",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 75,
+              "startTime": 74,
               "name": "lh:audit:legacy-javascript",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 76,
+              "startTime": 75,
               "name": "lh:audit:inspector-issues",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 77,
+              "startTime": 76,
               "name": "lh:audit:no-document-write",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 78,
+              "startTime": 77,
               "name": "lh:audit:uses-passive-event-listeners",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 79,
+              "startTime": 78,
               "name": "lh:runner:generate",
               "duration": 1,
               "entryType": "measure"
             }
           ],
-          "total": 80
+          "total": 79
         },
         "i18n": {
           "rendererFormattedStrings": {
@@ -9962,12 +9945,6 @@
             ],
             "lighthouse-core/audits/errors-in-console.js | description": [
               "audits[errors-in-console].description"
-            ],
-            "lighthouse-core/audits/server-response-time.js | title": [
-              "audits[server-response-time].title"
-            ],
-            "lighthouse-core/audits/server-response-time.js | description": [
-              "audits[server-response-time].description"
             ],
             "lighthouse-core/audits/user-timings.js | title": [
               "audits[user-timings].title"

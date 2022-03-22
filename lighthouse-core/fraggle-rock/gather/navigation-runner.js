@@ -224,6 +224,7 @@ async function _navigation(navigationContext) {
   await collectPhaseArtifacts({phase: 'startInstrumentation', ...phaseState});
   await collectPhaseArtifacts({phase: 'startSensitiveInstrumentation', ...phaseState});
   const navigateResult = await _navigate(navigationContext);
+  phaseState.baseArtifacts.URL.finalUrl = navigateResult.finalUrl;
   phaseState.url = navigateResult.finalUrl;
   await collectPhaseArtifacts({phase: 'stopSensitiveInstrumentation', ...phaseState});
   await collectPhaseArtifacts({phase: 'stopInstrumentation', ...phaseState});

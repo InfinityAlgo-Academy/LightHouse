@@ -30,8 +30,9 @@ Cleaning origin data
 Cleaning browser cache
 Preparing network conditions
 Navigating to http://127.0.0.1:8000/devtools/lighthouse/resources/lighthouse-basic.html
-Computing artifact: NetworkRecords$M
+Computing artifact: NetworkRecords$I
 Get webapp installability errors
+Computing artifact: MainResource$k
 Getting browser version
 Collect stacks
 Computing artifact: ProcessedTrace$f
@@ -74,7 +75,6 @@ Computing artifact: CumulativeLayoutShift$2
 Auditing: No browser errors logged to the console
 Computing artifact: JSBundles
 Auditing: Initial server response time was short
-Computing artifact: MainResource$g
 Auditing: Time to Interactive
 Computing artifact: Interactive$4
 Auditing: User Timing marks and measures
