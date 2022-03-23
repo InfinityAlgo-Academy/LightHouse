@@ -30,7 +30,7 @@ const expectations = {
       },
       'installable-manifest': {
         score: 0,
-        details: {items: [{reason: 'No manifest was fetched'}]},
+        details: {items: [{reason: 'Page has no manifest <link> URL'}]},
       },
       'splash-screen': {
         score: 0,

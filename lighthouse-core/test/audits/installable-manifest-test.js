@@ -59,11 +59,12 @@ describe('PWA: webapp install banner audit', () => {
 
     it('fails with a non-parsable manifest', () => {
       const artifacts = generateMockArtifacts('{,:}');
+      artifacts.InstallabilityErrors.errors.push({errorId: 'manifest-empty', errorArguments: []});
       const context = generateMockAuditContext();
       return InstallableManifestAudit.audit(artifacts, context).then(result => {
         assert.strictEqual(result.score, 0);
         const items = result.details.items;
-        assert.ok(items[0].reason.includes('failed to parse as valid JSON'));
+        expect(items[0].reason).toBeDisplayString(/could not be parsed/);
       });
     });
 

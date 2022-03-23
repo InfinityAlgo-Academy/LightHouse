@@ -362,9 +362,9 @@
             "description": "Service worker is the technology that enables your app to use many Progressive Web App features, such as offline, add to homescreen, and push notifications. With proper service worker and manifest implementations, browsers can proactively prompt users to add your app to their homescreen, which can lead to higher engagement. [Learn more](https://web.dev/installable-manifest/).",
             "score": 0,
             "scoreDisplayMode": "binary",
-            "numericValue": 2,
+            "numericValue": 1,
             "numericUnit": "element",
-            "displayValue": "2 reasons",
+            "displayValue": "1 reason",
             "warnings": [],
             "details": {
               "type": "table",
@@ -378,9 +378,6 @@
               "items": [
                 {
                   "reason": "Page has no manifest <link> URL"
-                },
-                {
-                  "reason": "No manifest was fetched"
                 }
               ],
               "debugData": {
@@ -5071,19 +5068,19 @@
             },
             {
               "startTime": 72,
-              "name": "lh:computed:ManifestValues",
-              "duration": 1,
-              "entryType": "measure"
-            },
-            {
-              "startTime": 73,
               "name": "lh:audit:apple-touch-icon",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 74,
+              "startTime": 73,
               "name": "lh:audit:splash-screen",
+              "duration": 1,
+              "entryType": "measure"
+            },
+            {
+              "startTime": 74,
+              "name": "lh:computed:ManifestValues",
               "duration": 1,
               "entryType": "measure"
             },
@@ -6293,7 +6290,7 @@
             "lighthouse-core/audits/installable-manifest.js | displayValue": [
               {
                 "values": {
-                  "itemCount": 2
+                  "itemCount": 1
                 },
                 "path": "audits[installable-manifest].displayValue"
               }
@@ -14412,9 +14409,9 @@
             "description": "Service worker is the technology that enables your app to use many Progressive Web App features, such as offline, add to homescreen, and push notifications. With proper service worker and manifest implementations, browsers can proactively prompt users to add your app to their homescreen, which can lead to higher engagement. [Learn more](https://web.dev/installable-manifest/).",
             "score": 0,
             "scoreDisplayMode": "binary",
-            "numericValue": 2,
+            "numericValue": 1,
             "numericUnit": "element",
-            "displayValue": "2 reasons",
+            "displayValue": "1 reason",
             "warnings": [],
             "details": {
               "type": "table",
@@ -14428,9 +14425,6 @@
               "items": [
                 {
                   "reason": "Page has no manifest <link> URL"
-                },
-                {
-                  "reason": "No manifest was fetched"
                 }
               ],
               "debugData": {
@@ -19109,19 +19103,19 @@
             },
             {
               "startTime": 70,
-              "name": "lh:computed:ManifestValues",
-              "duration": 1,
-              "entryType": "measure"
-            },
-            {
-              "startTime": 71,
               "name": "lh:audit:apple-touch-icon",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 72,
+              "startTime": 71,
               "name": "lh:audit:splash-screen",
+              "duration": 1,
+              "entryType": "measure"
+            },
+            {
+              "startTime": 72,
+              "name": "lh:computed:ManifestValues",
               "duration": 1,
               "entryType": "measure"
             },
@@ -20327,7 +20321,7 @@
             "lighthouse-core/audits/installable-manifest.js | displayValue": [
               {
                 "values": {
-                  "itemCount": 2
+                  "itemCount": 1
                 },
                 "path": "audits[installable-manifest].displayValue"
               }
