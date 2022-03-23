@@ -7,7 +7,12 @@
   "BenchmarkIndex": 1549,
   "WebAppManifest": null,
   "InstallabilityErrors": {
-    "errors": []
+    "errors": [
+      {
+        "errorId": "no-manifest",
+        "errorArguments": []
+      }
+    ]
   },
   "Stacks": [
     {

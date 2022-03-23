@@ -799,7 +799,7 @@
         ],
         "items": [
           {
-            "reason": "No manifest was fetched"
+            "reason": "Page has no manifest <link> URL"
           }
         ],
         "debugData": {
@@ -7773,12 +7773,6 @@
       },
       {
         "startTime": 0,
-        "name": "lh:computed:ManifestValues",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
         "name": "lh:audit:apple-touch-icon",
         "duration": 100,
         "entryType": "measure"
@@ -7786,6 +7780,12 @@
       {
         "startTime": 0,
         "name": "lh:audit:splash-screen",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:ManifestValues",
         "duration": 100,
         "entryType": "measure"
       },
@@ -9019,6 +9019,9 @@
       ],
       "lighthouse-core/audits/installable-manifest.js | columnValue": [
         "audits[installable-manifest].details.headings[0].text"
+      ],
+      "lighthouse-core/audits/installable-manifest.js | no-manifest": [
+        "audits[installable-manifest].details.items[0].reason"
       ],
       "lighthouse-core/audits/apple-touch-icon.js | failureTitle": [
         "audits[apple-touch-icon].title"

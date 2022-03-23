@@ -128,6 +128,7 @@ Gathering: SourceMaps
 Gathering: FullPageScreenshot
 Populate base artifacts
 Get webapp manifest
+Get webapp installability errors
 Collect stacks
 Running offlinePass pass
 Resetting state with about:blank
