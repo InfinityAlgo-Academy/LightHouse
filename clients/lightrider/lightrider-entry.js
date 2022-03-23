@@ -9,7 +9,7 @@
 
 import {Buffer} from 'buffer';
 
-import lighthouse from '../../lighthouse-core/index.js';
+import api from '../../lighthouse-core/fraggle-rock/api.js';
 import LHError from '../../lighthouse-core/lib/lh-error.js';
 import preprocessor from '../../lighthouse-core/lib/proto-preprocessor.js';
 import assetSaver from '../../lighthouse-core/lib/asset-saver.js';
@@ -34,13 +34,13 @@ globalThis.Buffer = Buffer;
  * Run lighthouse for connection and provide similar results as in CLI.
  *
  * If configOverride is provided, lrDevice and categoryIDs are ignored.
- * @param {Connection} connection
+ * @param {import('puppeteer').Page} page
  * @param {string} url
  * @param {LH.Flags} flags Lighthouse flags
  * @param {{lrDevice?: 'desktop'|'mobile', categoryIDs?: Array<string>, logAssets: boolean, configOverride?: LH.Config.Json}} lrOpts Options coming from Lightrider
  * @return {Promise<string>}
  */
-export async function runLighthouseInLR(connection, url, flags, lrOpts) {
+export async function runLighthouseInLR(page, url, flags, lrOpts) {
   const {lrDevice, categoryIDs, logAssets, configOverride} = lrOpts;
 
   // Certain fixes need to kick in under LR, see https://github.com/GoogleChrome/lighthouse/issues/5839
@@ -63,7 +63,12 @@ export async function runLighthouseInLR(connection, url, flags, lrOpts) {
   }
 
   try {
-    const runnerResult = await lighthouse(url, flags, config, connection);
+    const runnerResult = await api.navigation(url, {page, config, configContext: {
+      logLevel: flags.logLevel,
+      settingsOverrides: flags,
+      configPath: flags.configPath,
+    }});
+    // const runnerResult = await lighthouse(url, flags, config, page);
     if (!runnerResult) throw new Error('Lighthouse finished without a runnerResult');
 
     // pre process the LHR for proto
