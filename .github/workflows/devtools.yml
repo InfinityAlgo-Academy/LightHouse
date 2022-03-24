@@ -108,7 +108,7 @@ jobs:
       run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/chromium-web-tests/download-content-shell.sh
 
     - name: Install python deps
-      run: pip install six requests
+      run: python3 -m pip install six requests
 
     - run: git config --global user.name "lighthouse"
     - run: git config --global user.email "lighthouse@example.com"
