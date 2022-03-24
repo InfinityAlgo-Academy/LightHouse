@@ -105,12 +105,7 @@ yarn run-devtools http://example.com
 
 #### How to modify blink-tools.patch?
 
-Simply make your changes in `.tmp/chromium-web-tests/blink_tools`, and run:
-
-```
-cd .tmp/chromium-web-tests/blink_tools/latest
-git diff > ../../../../lighthouse-core/test/chromium-web-tests/blink-tools.patch
-```
+Simply make your changes in `.tmp/chromium-web-tests/blink_tools/latest`, and run: `git -C .tmp/chromium-web-tests/blink_tools/latest diff > lighthouse-core/test/chromium-web-tests/blink-tools.patch`
 
 #### How does the python module `typ` get added to python sys path?
 
