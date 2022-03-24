@@ -60,6 +60,9 @@ jobs:
     - run: yarn --frozen-lockfile
       working-directory: ${{ github.workspace }}/lighthouse
 
+    - run: git config --global user.name "lighthouse"
+    - run: git config --global user.email "lighthouse@example.com"
+
     - name: Download depot tools
       run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/chromium-web-tests/download-depot-tools.sh
     - name: Download DevTools Frontend
@@ -106,6 +109,9 @@ jobs:
 
     - name: Install python deps
       run: pip install six requests
+
+    - run: git config --global user.name "lighthouse"
+    - run: git config --global user.email "lighthouse@example.com"
 
     - name: Run Web Tests
       run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/chromium-web-tests/run-web-tests.sh

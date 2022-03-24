@@ -57,9 +57,8 @@ else
   cd "$VERSIONED_DIR"
   git init
 
-
   echo "*.pyc" > .gitignore
   git add .
-  GIT_AUTHOR_NAME="lighthouse" GIT_AUTHOR_EMAIL="lighthouse@example.com" git commit -m baseline
+  git commit -m baseline
   patch -p1 < "$SCRIPT_DIR/blink-tools.patch"
 fi
