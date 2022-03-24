@@ -80,7 +80,7 @@ jobs:
 
   web-tests:
     needs: [build]
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
 
     steps:
     - name: git clone
@@ -124,7 +124,7 @@ jobs:
         smoke-test-shard: [1, 2]
       # e.g. if set 1 fails, continue with set 2 anyway
       fail-fast: false
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     name: DevTools smoke ${{ matrix.smoke-test-shard }}
 
     steps:

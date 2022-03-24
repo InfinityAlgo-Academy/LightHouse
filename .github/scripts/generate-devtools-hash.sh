@@ -14,6 +14,6 @@ LH_ROOT="$SCRIPT_DIR/../.."
 
 cd "$LH_ROOT"
 bash .github/scripts/print-devtools-relevant-commits.sh
-md5 \
+md5sum \
   lighthouse-core/test/chromium-web-tests/* \
   third-party/chromium-webtests/webtests/http/tests/devtools/lighthouse/**/*.*
