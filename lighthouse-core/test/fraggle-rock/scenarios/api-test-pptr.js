@@ -197,6 +197,7 @@ describe('Fraggle Rock API', () => {
     it('should compute results with callback requestor', async () => {
       const {page, serverBaseUrl} = state;
       const initialUrl = `${serverBaseUrl}/links-to-index.html`;
+      const requestedUrl = `${serverBaseUrl}/?redirect=/index.html`;
       const mainDocumentUrl = `${serverBaseUrl}/index.html`;
       await page.goto(initialUrl);
 
@@ -210,11 +211,11 @@ describe('Fraggle Rock API', () => {
       expect(requestor).toHaveBeenCalled();
 
       const {lhr, artifacts} = result;
-      expect(lhr.requestedUrl).toEqual(mainDocumentUrl);
+      expect(lhr.requestedUrl).toEqual(requestedUrl);
       expect(lhr.finalUrl).toEqual(mainDocumentUrl);
       expect(artifacts.URL).toEqual({
         initialUrl,
-        requestedUrl: mainDocumentUrl,
+        requestedUrl,
         mainDocumentUrl,
         finalUrl: mainDocumentUrl,
       });
@@ -232,7 +233,10 @@ describe('Fraggle Rock API', () => {
       expect(lhr.audits).toHaveProperty('total-byte-weight');
       const details = lhr.audits['total-byte-weight'].details;
       if (!details || details.type !== 'table') throw new Error('Unexpected byte weight details');
-      expect(details.items).toMatchObject([{url: mainDocumentUrl}]);
+      expect(details.items).toMatchObject([
+        {url: mainDocumentUrl},
+        {url: `${serverBaseUrl}/?redirect=/index.html`},
+      ]);
 
       // Check that performance metrics were computed.
       expect(lhr.audits).toHaveProperty('first-contentful-paint');

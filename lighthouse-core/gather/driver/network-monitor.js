@@ -143,8 +143,21 @@ class NetworkMonitor {
     const mainFrameNavigations = frameNavigations.filter(frame => frame.id === mainFrameId);
     if (!mainFrameNavigations.length) log.warn('NetworkMonitor', 'No detected navigations');
 
+    // The requested URL is the initiator request for the first frame navigation.
+    /** @type {string|undefined} */
+    let requestedUrl = mainFrameNavigations[0]?.url;
+    if (this._networkRecorder) {
+      const records = this._networkRecorder.getRawRecords();
+
+      let initialUrlRequest = records.find(record => record.url === requestedUrl);
+      while (initialUrlRequest?.redirectSource) {
+        initialUrlRequest = initialUrlRequest.redirectSource;
+        requestedUrl = initialUrlRequest.url;
+      }
+    }
+
     return {
-      requestedUrl: mainFrameNavigations[0]?.url,
+      requestedUrl,
       mainDocumentUrl: mainFrameNavigations[mainFrameNavigations.length - 1]?.url,
     };
   }
