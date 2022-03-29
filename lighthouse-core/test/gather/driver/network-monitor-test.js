@@ -174,7 +174,7 @@ describe('NetworkMonitor', () => {
 
       expect(await monitor.getNavigationUrls()).toEqual({
         requestedUrl: 'https://example.com',
-        finalUrl: 'https://page.example.com',
+        mainDocumentUrl: 'https://page.example.com',
       });
     });
 
@@ -190,7 +190,7 @@ describe('NetworkMonitor', () => {
 
       expect(await monitor.getNavigationUrls()).toEqual({
         requestedUrl: 'https://page.example.com',
-        finalUrl: 'https://page.example.com',
+        mainDocumentUrl: 'https://page.example.com',
       });
     });
   });
