@@ -217,7 +217,7 @@ class UsesRelPreloadAudit extends Audit {
 
     const [mainResource, graph, simulator] = await Promise.all([
       MainResource.request({devtoolsLog, URL}, context),
-      PageDependencyGraph.request({trace, devtoolsLog}, context),
+      PageDependencyGraph.request({trace, devtoolsLog, URL}, context),
       LoadSimulator.request(simulatorOptions, context),
     ]);
 

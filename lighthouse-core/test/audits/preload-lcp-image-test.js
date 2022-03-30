@@ -28,7 +28,12 @@ describe('Performance: preload-lcp audit', () => {
         }),
       },
       devtoolsLogs: {[PreloadLCPImage.DEFAULT_PASS]: networkRecordsToDevtoolsLog(networkRecords)},
-      URL: {finalUrl},
+      URL: {
+        initialUrl: 'about:blank',
+        requestedUrl: finalUrl,
+        mainDocumentUrl: finalUrl,
+        finalUrl,
+      },
       TraceElements: [
         {
           traceEventType: 'largest-contentful-paint',

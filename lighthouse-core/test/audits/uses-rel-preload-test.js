@@ -15,6 +15,7 @@ const pwaTrace = require('../fixtures/traces/progressive-app-m60.json');
 const pwaDevtoolsLog = require('../fixtures/traces/progressive-app-m60.devtools.log.json');
 const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
 const createTestTrace = require('../create-test-trace.js');
+const {getURLArtifactFromDevtoolsLog} = require('../test-utils.js');
 
 const defaultMainResourceUrl = 'http://www.example.com/';
 const defaultMainResource = {
@@ -38,7 +39,12 @@ describe('Performance: uses-rel-preload audit', () => {
     return {
       traces: {[UsesRelPreload.DEFAULT_PASS]: createTestTrace({traceEnd: 5000})},
       devtoolsLogs: {[UsesRelPreload.DEFAULT_PASS]: networkRecordsToDevtoolsLog(networkRecords)},
-      URL: {finalUrl},
+      URL: {
+        initialUrl: 'about:blank',
+        requestedUrl: finalUrl,
+        mainDocumentUrl: finalUrl,
+        finalUrl,
+      },
     };
   };
 
@@ -148,6 +154,7 @@ describe('Performance: uses-rel-preload audit', () => {
     ];
 
     const artifacts = mockArtifacts(networkRecords, mainDocumentNodeUrl);
+    artifacts.URL.requestedUrl = rootNodeUrl;
     const context = {settings: {}, computedCache: new Map()};
     return UsesRelPreload.audit_(artifacts, context).then(
       output => {
@@ -321,7 +328,7 @@ describe('Performance: uses-rel-preload audit', () => {
 
   it('does not throw on a real trace/devtools log', async () => {
     const artifacts = {
-      URL: {finalUrl: 'https://pwa.rocks/'},
+      URL: getURLArtifactFromDevtoolsLog(pwaDevtoolsLog),
       traces: {
         [UsesRelPreload.DEFAULT_PASS]: pwaTrace,
       },

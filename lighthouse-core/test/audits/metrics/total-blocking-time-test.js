@@ -15,11 +15,14 @@ const devtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.
 const lcpTrace = require('../../fixtures/traces/lcp-m78.json');
 const lcpDevtoolsLog = require('../../fixtures/traces/lcp-m78.devtools.log.json');
 
+const {getURLArtifactFromDevtoolsLog} = require('../../test-utils.js');
+
 function generateArtifacts({gatherMode = 'navigation', trace, devtoolsLog}) {
   return {
     GatherContext: {gatherMode},
     traces: {[TBTAudit.DEFAULT_PASS]: trace},
     devtoolsLogs: {[TBTAudit.DEFAULT_PASS]: devtoolsLog},
+    URL: getURLArtifactFromDevtoolsLog(devtoolsLog),
   };
 }
 

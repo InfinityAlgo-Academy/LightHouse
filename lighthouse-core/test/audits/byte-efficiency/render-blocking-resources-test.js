@@ -13,6 +13,7 @@ const CPUNode = require('../../../lib/dependency-graph/cpu-node.js');
 const Simulator = require('../../../lib/dependency-graph/simulator/simulator.js');
 const NetworkRequest = require('../../../lib/network-request.js');
 const assert = require('assert').strict;
+const {getURLArtifactFromDevtoolsLog} = require('../../test-utils.js');
 
 const trace = require('../../fixtures/traces/progressive-app-m60.json');
 const devtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
@@ -25,6 +26,7 @@ const ampDevtoolsLog = require('../../fixtures/traces/amp-m86.devtoolslog.json')
 describe('Render blocking resources audit', () => {
   it('evaluates http2 input correctly', async () => {
     const artifacts = {
+      URL: getURLArtifactFromDevtoolsLog(devtoolsLog),
       GatherContext: {gatherMode: 'navigation'},
       traces: {defaultPass: trace},
       devtoolsLogs: {defaultPass: devtoolsLog},
@@ -45,6 +47,7 @@ describe('Render blocking resources audit', () => {
 
   it('evaluates amp page correctly', async () => {
     const artifacts = {
+      URL: getURLArtifactFromDevtoolsLog(ampDevtoolsLog),
       GatherContext: {gatherMode: 'navigation'},
       traces: {defaultPass: ampTrace},
       devtoolsLogs: {defaultPass: ampDevtoolsLog},

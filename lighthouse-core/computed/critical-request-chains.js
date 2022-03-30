@@ -129,15 +129,8 @@ class CriticalRequestChains {
    * @return {Promise<LH.Artifacts.CriticalRequestNode>}
    */
   static async compute_(data, context) {
-    const mainResource = await MainResource.request({
-      URL: data.URL,
-      devtoolsLog: data.devtoolsLog,
-    }, context);
-
-    const graph = await PageDependencyGraph.request({
-      trace: data.trace,
-      devtoolsLog: data.devtoolsLog,
-    }, context);
+    const mainResource = await MainResource.request(data, context);
+    const graph = await PageDependencyGraph.request(data, context);
 
     return CriticalRequestChains.extractChainsFromGraph(mainResource, graph);
   }

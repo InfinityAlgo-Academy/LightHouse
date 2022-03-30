@@ -22,7 +22,7 @@ class MainResource {
   static async compute_(data, context) {
     const finalUrl = data.URL.finalUrl;
     const requests = await NetworkRecords.request(data.devtoolsLog, context);
-    const mainResource = NetworkAnalyzer.findMainDocument(requests, finalUrl);
+    const mainResource = NetworkAnalyzer.findResourceForUrl(requests, finalUrl);
     if (!mainResource) {
       throw new Error('Unable to identify the main resource');
     }

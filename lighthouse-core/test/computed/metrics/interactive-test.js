@@ -11,6 +11,8 @@ const assert = require('assert').strict;
 
 const trace = require('../../fixtures/traces/progressive-app-m60.json');
 const devtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
+const {getURLArtifactFromDevtoolsLog} = require('../../test-utils.js');
+const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
 
 function generateNetworkRecords(records, timeOrigin) {
   const timeOriginInMs = timeOrigin / 1000;
@@ -34,7 +36,7 @@ describe('Metrics: TTI', () => {
   it('should compute a simulated value', async () => {
     const settings = {throttlingMethod: 'simulate'};
     const context = {settings, computedCache: new Map()};
-    const result = await Interactive.request({trace, devtoolsLog, gatherContext, settings},
+    const result = await Interactive.request({trace, devtoolsLog, gatherContext, settings, URL},
       context);
 
     expect({

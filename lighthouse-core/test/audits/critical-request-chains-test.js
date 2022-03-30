@@ -78,7 +78,12 @@ const mockArtifacts = (chainNetworkRecords) => {
     devtoolsLogs: {
       [CriticalRequestChains.DEFAULT_PASS]: devtoolsLog,
     },
-    URL: {finalUrl},
+    URL: {
+      initialUrl: 'about:blank',
+      requestedUrl: finalUrl,
+      mainDocumentUrl: finalUrl,
+      finalUrl,
+    },
   };
 };
 
@@ -107,7 +112,12 @@ describe('Performance: critical-request-chains audit', () => {
     const artifacts = {
       traces: {defaultPass: createTestTrace({topLevelTasks: [{ts: 0}]})},
       devtoolsLogs: {defaultPass: redditDevtoolsLog},
-      URL: {finalUrl: 'https://www.reddit.com/r/nba'},
+      URL: {
+        initialUrl: 'about:blank',
+        requestedUrl: 'https://www.reddit.com/r/nba',
+        mainDocumentUrl: 'https://www.reddit.com/r/nba',
+        finalUrl: 'https://www.reddit.com/r/nba',
+      },
     };
     const context = {computedCache: new Map()};
     return CriticalRequestChains.audit(artifacts, context).then(output => {

@@ -202,6 +202,7 @@ class UsesHTTP2Audit extends Audit {
   static async audit(artifacts, context) {
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+    const URL = artifacts.URL;
     const networkRecords = await NetworkRecords.request(devtoolsLog, context);
     const resources = UsesHTTP2Audit.determineNonHttp2Resources(networkRecords);
 
@@ -232,7 +233,7 @@ class UsesHTTP2Audit extends Audit {
       devtoolsLog,
       settings,
     };
-    const graph = await PageDependencyGraph.request({trace, devtoolsLog}, context);
+    const graph = await PageDependencyGraph.request({trace, devtoolsLog, URL}, context);
     const simulator = await LoadSimulator.request(simulatorOptions, context);
     const wastedMs = UsesHTTP2Audit.computeWasteWithTTIGraph(resources, graph, simulator);
 

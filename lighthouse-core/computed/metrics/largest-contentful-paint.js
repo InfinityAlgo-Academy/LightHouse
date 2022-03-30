@@ -48,5 +48,5 @@ class LargestContentfulPaint extends NavigationMetric {
 
 module.exports = makeComputedArtifact(
   LargestContentfulPaint,
-  ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace']
+  ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL']
 );

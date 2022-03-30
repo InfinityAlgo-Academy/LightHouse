@@ -12,6 +12,7 @@ const trace = require('../../fixtures/traces/progressive-app-m60.json');
 const devtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
 const iframeTrace = require('../../fixtures/traces/iframe-m79.trace.json');
 const iframeDevtoolsLog = require('../../fixtures/traces/iframe-m79.devtoolslog.json');
+const {getURLArtifactFromDevtoolsLog} = require('../../test-utils.js');
 
 /* eslint-env jest */
 
@@ -21,8 +22,9 @@ describe('Metrics: Lantern TTI', () => {
   it('should compute predicted value', async () => {
     const settings = {};
     const context = {settings, computedCache: new Map()};
+    const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
     const result = await LanternInteractive.request({trace, devtoolsLog, gatherContext,
-      settings}, context);
+      settings, URL}, context);
 
     expect({
       timing: Math.round(result.timing),
@@ -38,11 +40,13 @@ describe('Metrics: Lantern TTI', () => {
   it('should compute predicted value on iframes with substantial layout', async () => {
     const settings = {};
     const context = {settings, computedCache: new Map()};
+    const URL = getURLArtifactFromDevtoolsLog(iframeDevtoolsLog);
     const result = await LanternInteractive.request({
       trace: iframeTrace,
       devtoolsLog: iframeDevtoolsLog,
       gatherContext,
       settings,
+      URL,
     }, context);
 
     expect({

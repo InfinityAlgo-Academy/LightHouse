@@ -21,7 +21,7 @@ class FirstContentfulPaint3G extends Audit {
         `painted while on a 3G network. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint).`,
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
       supportedModes: ['navigation'],
-      requiredArtifacts: ['traces', 'devtoolsLogs', 'GatherContext'],
+      requiredArtifacts: ['traces', 'devtoolsLogs', 'GatherContext', 'URL'],
     };
   }
 
@@ -49,7 +49,7 @@ class FirstContentfulPaint3G extends Audit {
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     /** @type {Immutable<LH.Config.Settings>} */
     const settings = {...context.settings, throttlingMethod: 'simulate', throttling: regular3G};
-    const metricComputationData = {trace, devtoolsLog, gatherContext, settings};
+    const metricComputationData = {trace, devtoolsLog, gatherContext, settings, URL: artifacts.URL};
     const metricResult = await ComputedFcp.request(metricComputationData, context);
 
     return {

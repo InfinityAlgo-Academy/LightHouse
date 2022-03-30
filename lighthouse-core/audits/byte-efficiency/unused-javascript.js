@@ -69,7 +69,7 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
       description: str_(UIStrings.description),
       scoreDisplayMode: ByteEfficiencyAudit.SCORING_MODES.NUMERIC,
       requiredArtifacts: ['JsUsage', 'Scripts', 'SourceMaps', 'GatherContext',
-        'devtoolsLogs', 'traces'],
+        'devtoolsLogs', 'traces', 'URL'],
     };
   }
 

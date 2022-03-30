@@ -416,7 +416,7 @@ describe('NavigationRunner', () => {
 
     it('finds page load errors in network records when available', async () => {
       const {navigation, gatherers} = createNavigation();
-      mocks.navigationMock.gotoURL.mockResolvedValue({finalUrl: requestedUrl, warnings: []});
+      mocks.navigationMock.gotoURL.mockResolvedValue({mainDocumentUrl: requestedUrl, warnings: []});
       const devtoolsLog = toDevtoolsLog([{url: requestedUrl, failed: true}]);
       gatherers.timespan.meta.symbol = DevtoolsLogGatherer.symbol;
       gatherers.timespan.getArtifact = jest.fn().mockResolvedValue(devtoolsLog);

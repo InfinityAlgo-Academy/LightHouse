@@ -340,6 +340,7 @@ Auditing: Document has a valid `rel=canonical`
 Auditing: Structured data is valid
 Auditing: No long tasks blocking ad-related network requests
 Computing artifact: LongTasks$2
+Computing artifact: PageDependencyGraph$a
 Auditing: Minimal render-blocking resources found
 Auditing: Ad request waterfall
 Auditing: First bid request time

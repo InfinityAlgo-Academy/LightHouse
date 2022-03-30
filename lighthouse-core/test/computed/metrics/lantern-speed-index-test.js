@@ -10,6 +10,8 @@ const LanternSpeedIndex = require('../../../computed/metrics/lantern-speed-index
 
 const trace = require('../../fixtures/traces/progressive-app-m60.json');
 const devtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
+const {getURLArtifactFromDevtoolsLog} = require('../../test-utils.js');
+const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
 
 /* eslint-env jest */
 describe('Metrics: Lantern Speed Index', () => {
@@ -17,7 +19,8 @@ describe('Metrics: Lantern Speed Index', () => {
   it('should compute predicted value', async () => {
     const settings = {throttlingMethod: 'simulate', throttling: defaultThrottling};
     const context = {settings, computedCache: new Map()};
-    const result = await LanternSpeedIndex.request({trace, devtoolsLog, gatherContext, settings},
+    const result = await LanternSpeedIndex.request(
+      {trace, devtoolsLog, gatherContext, settings, URL},
       context);
 
     expect({
@@ -36,7 +39,8 @@ describe('Metrics: Lantern Speed Index', () => {
   it('should compute predicted value for different settings', async () => {
     const settings = {throttlingMethod: 'simulate', throttling: {...defaultThrottling, rttMs: 300}};
     const context = {settings, computedCache: new Map()};
-    const result = await LanternSpeedIndex.request({trace, devtoolsLog, gatherContext, settings},
+    const result = await LanternSpeedIndex.request(
+      {trace, devtoolsLog, gatherContext, settings, URL},
       context);
 
     expect({

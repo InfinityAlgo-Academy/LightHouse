@@ -145,7 +145,7 @@ class RenderBlockingResources extends Audit {
     };
 
     const metricComputationData = {trace, devtoolsLog, gatherContext, simulator,
-      settings: metricSettings};
+      settings: metricSettings, URL: artifacts.URL};
 
     // Cast to just `LanternMetric` since we explicitly set `throttlingMethod: 'simulate'`.
     const fcpSimulation = /** @type {LH.Artifacts.LanternMetric} */

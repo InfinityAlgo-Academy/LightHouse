@@ -811,10 +811,10 @@ describe('Runner', () => {
 
       const gotoURL = jest.requireMock('../gather/driver/navigation.js').gotoURL;
       gotoURL.mockImplementation((_, url) => {
-        if (url.includes('blank')) return {finalUrl: '', warnings: []};
+        if (url.includes('blank')) return {mainDocumentUrl: '', warnings: []};
         if (firstLoad) {
           firstLoad = false;
-          return {finalUrl: url, warnings: []};
+          return {mainDocumentUrl: url, warnings: []};
         } else {
           throw new LHError(LHError.errors.PAGE_HUNG);
         }

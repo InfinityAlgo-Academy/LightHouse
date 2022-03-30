@@ -89,5 +89,5 @@ class LanternMaxPotentialFID extends LanternMetricArtifact {
 
 module.exports = makeComputedArtifact(
   LanternMaxPotentialFID,
-  ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace']
+  ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL']
 );

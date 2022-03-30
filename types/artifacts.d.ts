@@ -641,6 +641,7 @@ declare module Artifacts {
     settings: Immutable<Config.Settings>;
     gatherContext: Artifacts['GatherContext'];
     simulator?: InstanceType<typeof LanternSimulator>;
+    URL: Artifacts['URL'];
   }
 
   interface MetricComputationData extends MetricComputationDataInput {

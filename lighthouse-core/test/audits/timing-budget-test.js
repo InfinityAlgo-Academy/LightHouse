@@ -10,6 +10,7 @@ const trace = require('../fixtures/traces/progressive-app-m60.json');
 const devtoolsLog = require('../fixtures/traces/progressive-app-m60.devtools.log.json');
 const lcpTrace = require('../fixtures/traces/lcp-m78.json');
 const lcpDevtoolsLog = require('../fixtures/traces/lcp-m78.devtools.log.json');
+const {getURLArtifactFromDevtoolsLog} = require('../test-utils.js');
 
 /* eslint-env jest */
 
@@ -23,7 +24,7 @@ describe('Performance: Timing budget audit', () => {
         defaultPass: devtoolsLog,
       },
       traces: {defaultPass: trace},
-      URL: {requestedUrl: 'http://example.com', finalUrl: 'http://example.com'},
+      URL: getURLArtifactFromDevtoolsLog(devtoolsLog),
     };
 
     context = {
@@ -126,6 +127,7 @@ describe('Performance: Timing budget audit', () => {
       it('supports Largest Contentful Paint', async () => {
         artifacts.devtoolsLogs.defaultPass = lcpDevtoolsLog;
         artifacts.traces.defaultPass = lcpTrace;
+        artifacts.URL = getURLArtifactFromDevtoolsLog(lcpDevtoolsLog);
 
         // Use an observed throttlingMethod so we don't have to worry about the value changing in the future.
         context.settings.throttlingMethod = 'provided';

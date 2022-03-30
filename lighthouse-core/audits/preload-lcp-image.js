@@ -203,7 +203,7 @@ class PreloadLCPImageAudit extends Audit {
     const trace = artifacts.traces[PreloadLCPImageAudit.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[PreloadLCPImageAudit.DEFAULT_PASS];
     const URL = artifacts.URL;
-    const metricData = {trace, devtoolsLog, gatherContext, settings: context.settings};
+    const metricData = {trace, devtoolsLog, gatherContext, settings: context.settings, URL};
     const lcpElement = artifacts.TraceElements
       .find(element => element.traceEventType === 'largest-contentful-paint');
 

@@ -12,6 +12,7 @@ const createTestTrace = require('../../create-test-trace.js');
 
 const trace = require('../../fixtures/traces/progressive-app-m60.json');
 const devtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
+const {getURLArtifactFromDevtoolsLog} = require('../../test-utils.js');
 
 /* eslint-env jest */
 describe('Metrics: Lantern FCP', () => {
@@ -20,8 +21,9 @@ describe('Metrics: Lantern FCP', () => {
   it('should compute predicted value', async () => {
     const settings = {};
     const context = {settings, computedCache: new Map()};
+    const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
     const result = await LanternFirstContentfulPaint.request({trace, devtoolsLog, gatherContext,
-      settings}, context);
+      settings, URL}, context);
 
     expect({
       timing: Math.round(result.timing),
@@ -58,11 +60,17 @@ describe('Metrics: Lantern FCP', () => {
       },
     ]);
     const trace = createTestTrace({timeOrigin: 0, traceEnd: 2000});
+    const URL = {
+      requestedUrl: 'https://example.com/',
+      mainDocumentUrl: 'https://example.com/',
+      finalUrl: 'https://example.com/',
+    };
     const artifacts = {
       trace,
       devtoolsLog,
       gatherContext,
       settings,
+      URL,
     };
     const result = await LanternFirstContentfulPaint.request(artifacts, context);
 

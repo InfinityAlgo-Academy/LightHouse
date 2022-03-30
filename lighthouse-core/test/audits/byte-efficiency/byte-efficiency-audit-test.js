@@ -11,7 +11,7 @@ const CPUNode = require('../../../lib/dependency-graph/cpu-node.js');
 const Simulator = require('../../../lib/dependency-graph/simulator/simulator.js');
 const PageDependencyGraph = require('../../../computed/page-dependency-graph.js');
 const LoadSimulator = require('../../../computed/load-simulator.js');
-
+const {getURLArtifactFromDevtoolsLog} = require('../../test-utils.js');
 
 const trace = require('../../fixtures/traces/progressive-app-m60.json');
 const devtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
@@ -204,8 +204,9 @@ describe('Byte efficiency base audit', () => {
     const throttling = {rttMs: 150, throughputKbps: 1600, cpuSlowdownMultiplier: 1};
     const settings = {throttlingMethod: 'simulate', throttling};
     const computedCache = new Map();
-    const graph = await PageDependencyGraph.request({trace, devtoolsLog}, {computedCache});
-    const simulator = await LoadSimulator.request({devtoolsLog, settings}, {computedCache});
+    const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
+    const graph = await PageDependencyGraph.request({trace, devtoolsLog, URL}, {computedCache});
+    const simulator = await LoadSimulator.request({devtoolsLog, settings, URL}, {computedCache});
     const result = ByteEfficiencyAudit.createAuditProduct(
       {
         headings: [{key: 'wastedBytes', text: 'Label'}],
@@ -235,6 +236,7 @@ describe('Byte efficiency base audit', () => {
       GatherContext: {gatherMode: 'navigation'},
       traces: {defaultPass: trace},
       devtoolsLogs: {defaultPass: devtoolsLog},
+      URL: getURLArtifactFromDevtoolsLog(devtoolsLog),
     };
     const computedCache = new Map();
 
@@ -274,6 +276,7 @@ describe('Byte efficiency base audit', () => {
       GatherContext: {gatherMode: 'navigation'},
       traces: {defaultPass: traceM78},
       devtoolsLogs: {defaultPass: devtoolsLogM78},
+      URL: getURLArtifactFromDevtoolsLog(devtoolsLogM78),
     };
     const computedCache = new Map();
 
@@ -306,6 +309,7 @@ describe('Byte efficiency base audit', () => {
       GatherContext: {gatherMode: 'navigation'},
       traces: {defaultPass: trace},
       devtoolsLogs: {defaultPass: devtoolsLog},
+      URL: getURLArtifactFromDevtoolsLog(devtoolsLog),
     };
     const computedCache = new Map();
 
@@ -330,6 +334,7 @@ describe('Byte efficiency base audit', () => {
       GatherContext: {gatherMode: 'timespan'},
       traces: {defaultPass: trace},
       devtoolsLogs: {defaultPass: devtoolsLog},
+      URL: getURLArtifactFromDevtoolsLog(devtoolsLog),
     };
     const computedCache = new Map();
 
@@ -379,6 +384,7 @@ describe('Byte efficiency base audit', () => {
       GatherContext: {gatherMode: 'timespan'},
       traces: {defaultPass: trace},
       devtoolsLogs: {defaultPass: devtoolsLog},
+      URL: getURLArtifactFromDevtoolsLog(devtoolsLog),
     };
     const computedCache = new Map();
 
