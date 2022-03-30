@@ -19,45 +19,49 @@ const devtoolsDir =
   process.env.DEVTOOLS_PATH || `${LH_ROOT}/.tmp/chromium-web-tests/devtools/devtools-frontend`;
 
 /**
+ * @param {string[]} logs
  * @param {string} command
  * @param {string[]} args
  */
-async function spawnAndLog(command, args) {
-  let log = '';
-
+async function spawnAndLog(logs, command, args) {
   /** @type {Promise<void>} */
-  const promise = new Promise((resolve, reject) => {
+  const promise = new Promise((resolve) => {
     const spawnHandle = spawn(command, args);
     spawnHandle.on('close', code => {
-      if (code === 0) resolve();
-      else reject(new Error(`Command exited with code ${code}`));
+      if (code) {
+        logs.push(`[FAILURE] Command exited with code: ${code}\n`);
+      } else {
+        logs.push('[SUCCESS] Command exited with code: 0\n');
+      }
+      resolve();
     });
-    spawnHandle.on('error', reject);
+    spawnHandle.on('error', (error) => {
+      logs.push(`ERROR: ${error.toString()}`);
+    });
     spawnHandle.stdout.on('data', data => {
-      console.log(data.toString());
-      log += `STDOUT: ${data.toString()}`;
+      process.stdout.write(data);
+      logs.push(`STDOUT: ${data.toString()}`);
     });
     spawnHandle.stderr.on('data', data => {
-      console.log(data.toString());
-      log += `STDERR: ${data.toString()}`;
+      process.stderr.write(data);
+      logs.push(`STDERR: ${data.toString()}`);
     });
   });
   await promise;
-
-  return log;
 }
 
 /** @type {Promise<void>} */
 let buildDevtoolsPromise;
 /**
+ * @param {string[]} logs
  * Download/pull latest DevTools, build Lighthouse for DevTools, roll to DevTools, and build DevTools.
  */
-async function buildDevtools() {
+async function buildDevtools(logs) {
   if (process.env.CI) return;
 
   process.env.DEVTOOLS_PATH = devtoolsDir;
-  await spawnAndLog('bash', ['lighthouse-core/test/chromium-web-tests/download-devtools.sh']);
-  await spawnAndLog('bash', ['lighthouse-core/test/chromium-web-tests/roll-devtools.sh']);
+  await spawnAndLog(logs, 'bash', ['lighthouse-core/test/chromium-web-tests/download-devtools.sh']);
+  await spawnAndLog(logs, 'bash', ['lighthouse-core/test/chromium-web-tests/roll-devtools.sh']);
 }
 
 /**
@@ -71,7 +75,10 @@ async function buildDevtools() {
  * @return {Promise<{lhr: LH.Result, artifacts: LH.Artifacts, log: string}>}
  */
 async function runLighthouse(url, configJson, testRunnerOptions = {}) {
-  if (!buildDevtoolsPromise) buildDevtoolsPromise = buildDevtools();
+  /** @type {string[]} */
+  const logs = [];
+
+  if (!buildDevtoolsPromise) buildDevtoolsPromise = buildDevtools(logs);
   await buildDevtoolsPromise;
 
   const outputDir = fs.mkdtempSync(os.tmpdir() + '/lh-smoke-cdt-runner-');
@@ -88,7 +95,7 @@ async function runLighthouse(url, configJson, testRunnerOptions = {}) {
     args.push('--config', JSON.stringify(configJson));
   }
 
-  const log = await spawnAndLog('yarn', args);
+  await spawnAndLog(logs, 'yarn', args);
   const lhr = JSON.parse(fs.readFileSync(`${outputDir}/lhr-0.json`, 'utf-8'));
   const artifacts = JSON.parse(fs.readFileSync(`${outputDir}/artifacts-0.json`, 'utf-8'));
 
@@ -98,6 +105,7 @@ async function runLighthouse(url, configJson, testRunnerOptions = {}) {
     fs.rmSync(outputDir, {recursive: true, force: true});
   }
 
+  const log = logs.join('') + '\n';
   return {lhr, artifacts, log};
 }
 
