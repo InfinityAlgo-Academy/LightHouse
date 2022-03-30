@@ -29,6 +29,23 @@ async function runInSeriesOrParallel(values, promiseMapper, runInSeries) {
 }
 
 /**
+ * Returns true if the script was created via our own calls
+ * to Runtime.evaluate.
+ * @param {LH.Crdp.Debugger.ScriptParsedEvent} script
+ */
+function isLighthouseRuntimeEvaluateScript(script) {
+  // Scripts created by Runtime.evaluate that run on the main session/frame
+  // result in an empty string for the embedderName.
+  // Or, it means the script was dynamically created (eval, new Function, onload, ...)
+  if (!script.embedderName) return true;
+
+  // Otherwise, when running our own code inside other frames, the embedderName
+  // is set to the frame's url. In that case, we rely on the special sourceURL that
+  // we set.
+  return script.hasSourceURL && script.url === '_lighthouse-eval.js';
+}
+
+/**
  * @fileoverview Gets JavaScript file contents.
  */
 class Scripts extends FRGatherer {
@@ -68,8 +85,9 @@ class Scripts extends FRGatherer {
     // it also blocks scripts from the same origin but that happen to run in a different process,
     // like a worker.
     if (event.method === 'Debugger.scriptParsed' && !sessionId) {
-      // Events without an embedderName (read: a url) are for JS that we ran over the protocol.
-      if (event.params.embedderName) this._scriptParsedEvents.push(event.params);
+      if (!isLighthouseRuntimeEvaluateScript(event.params)) {
+        this._scriptParsedEvents.push(event.params);
+      }
     }
   }
 

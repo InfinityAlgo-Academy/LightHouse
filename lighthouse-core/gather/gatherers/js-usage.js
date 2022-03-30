@@ -50,12 +50,13 @@ class JsUsage extends FRGatherer {
     const usageByScriptId = {};
 
     for (const scriptUsage of this._scriptUsages) {
-      // If `url` is blank, that means the script was anonymous (eval, new Function, onload, ...).
-      // Or, it's because it was code Lighthouse over the protocol via `Runtime.evaluate`.
-      // We currently don't consider coverage of anonymous scripts, and we definitely don't want
-      // coverage of code Lighthouse ran to inspect the page, so we ignore this ScriptCoverage if
-      // url is blank.
-      if (scriptUsage.url === '') {
+      // If `url` is blank, that means the script was dynamically
+      // created (eval, new Function, onload, ...)
+      if (scriptUsage.url === '' || scriptUsage.url === '_lighthouse-eval.js') {
+        // We currently don't consider coverage of dynamic scripts, and we definitely don't want
+        // coverage of code Lighthouse ran to inspect the page, so we ignore this ScriptCoverage.
+        // Audits would work the same without this, it is only an optimization (not tracking coverage
+        // for scripts we don't care about).
         continue;
       }
 

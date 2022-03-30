@@ -97,7 +97,8 @@ class ExecutionContext {
             .catch(${pageFunctions.wrapRuntimeEvalErrorInBrowserString})
             .then(resolve);
         });
-      }())`,
+      }())
+      //# sourceURL=_lighthouse-eval.js`,
       includeCommandLineAPI: true,
       awaitPromise: true,
       returnByValue: true,
@@ -195,7 +196,8 @@ class ExecutionContext {
       ${ExecutionContext._cachedNativesPreamble};
       ${depsSerialized};
       (${mainFn})(${argsSerialized});
-    })()`;
+    })()
+    //# sourceURL=_lighthouse-eval.js`;
 
     await this._session.sendCommand('Page.addScriptToEvaluateOnNewDocument', {source: expression});
   }
