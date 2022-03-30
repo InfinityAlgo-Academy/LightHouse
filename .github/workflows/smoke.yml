@@ -62,7 +62,7 @@ jobs:
     # Fail if any changes were written to source files.
     - run: git diff --exit-code
 
-    - name: Upload dist
+    - name: Upload failures
       if: failure()
       uses: actions/upload-artifact@v1
       with:
@@ -93,7 +93,7 @@ jobs:
     # Fail if any changes were written to source files.
     - run: git diff --exit-code
 
-    - name: Upload dist
+    - name: Upload failures
       if: failure()
       uses: actions/upload-artifact@v1
       with:
@@ -124,7 +124,7 @@ jobs:
     # Fail if any changes were written to source files.
     - run: git diff --exit-code
 
-    - name: Upload dist
+    - name: Upload failures
       if: failure()
       uses: actions/upload-artifact@v1
       with:
@@ -155,7 +155,7 @@ jobs:
     # Fail if any changes were written to source files.
     - run: git diff --exit-code
 
-    - name: Upload dist
+    - name: Upload failures
       if: failure()
       uses: actions/upload-artifact@v1
       with:
