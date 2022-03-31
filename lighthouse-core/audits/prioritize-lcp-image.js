@@ -106,13 +106,73 @@ class PrioritizeLCPImageAudit extends Audit {
       };
     }
 
-    // TODO: make this a real opportunity.
+    // Store the IDs of the LCP Node's dependencies for later
+    /** @type {Set<string>} */
+    const dependenciesIds = new Set();
+    for (const node of lcpNode.getDependencies()) {
+      dependenciesIds.add(node.id);
+    }
+
+    /** @type {LH.Gatherer.Simulation.GraphNode|null} */
+    let mainDocumentNode = null;
+
+    for (const {node} of graph.traverseGenerator()) {
+      if (node.type !== 'network') continue;
+
+      if (node.isMainDocument()) {
+        mainDocumentNode = node;
+      }
+    }
+
+    if (!mainDocumentNode) {
+      // Should always find the main document node
+      throw new Error('Could not find main document node');
+    }
+
+    if (lcpNode.record.compareInitialPriorityWith('High') >= 0) {
+      // Should never happen, because `getLCPNodeToPrioritize` excludes this case.
+      throw new Error('LCP node is already prioritized');
+    }
+
+    const originalRecordInitialPriority = lcpNode.record.initialPriority;
+    let simulationBeforeChanges;
+    let simulationAfterChanges;
+    try {
+      simulationBeforeChanges = simulator.simulate(graph, {flexibleOrdering: true});
+      lcpNode.record.initialPriority = 'High';
+      simulationAfterChanges = simulator.simulate(graph, {flexibleOrdering: true});
+    } finally {
+      lcpNode.record.initialPriority = originalRecordInitialPriority;
+    }
+
+    const lcpTimingsBefore = simulationBeforeChanges.nodeTimings.get(lcpNode);
+    if (!lcpTimingsBefore) throw new Error('Impossible - node timings should never be undefined');
+    const lcpTimingsAfter = simulationAfterChanges.nodeTimings.get(lcpNode);
+    if (!lcpTimingsAfter) throw new Error('Impossible - node timings should never be undefined');
+    /** @type {Map<String, LH.Gatherer.Simulation.GraphNode>} */
+    const modifiedNodesById = Array.from(simulationAfterChanges.nodeTimings.keys())
+      .reduce((map, node) => map.set(node.id, node), new Map());
+
+    // Even with preload, the image can't be painted before it's even inserted into the DOM.
+    // New LCP time will be the max of image download and image in DOM (endTime of its deps).
+    let maxDependencyEndTime = 0;
+    for (const nodeId of Array.from(dependenciesIds)) {
+      const node = modifiedNodesById.get(nodeId);
+      if (!node) throw new Error('Impossible - node should never be undefined');
+      const timings = simulationAfterChanges.nodeTimings.get(node);
+      const endTime = timings?.endTime || 0;
+      maxDependencyEndTime = Math.max(maxDependencyEndTime, endTime);
+    }
+
+    const wastedMs = lcpTimingsBefore.endTime -
+      Math.max(lcpTimingsAfter.endTime, maxDependencyEndTime);
+
     return {
-      wastedMs: 0,
+      wastedMs,
       results: [{
         node: Audit.makeNodeItem(lcpElement.node),
         url: lcpNode.record.url,
-        wastedMs: 0,
+        wastedMs,
       }],
     };
   }

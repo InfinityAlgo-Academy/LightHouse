@@ -516,7 +516,8 @@ class Simulator {
    */
   static _computeNodeStartPosition(node) {
     if (node.type === 'cpu') return node.startTime;
-    return node.startTime + (PriorityStartTimePenalty[node.record.priority] * 1000 * 1000 || 0);
+    return node.startTime +
+      (PriorityStartTimePenalty[node.record.initialPriority || 'Low'] * 1000 * 1000 || 0);
   }
 }
 
