@@ -148,10 +148,10 @@ class ScriptTreemapDataAudit extends Audit {
    * Returns nodes where the first level of nodes are URLs.
    * Every external script has a node.
    * All inline scripts are combined into a single node.
-   * If a script has a source map, that node will be set by makeNodeFromSourceMapData.
+   * If a script has a source map, that node will be created by makeScriptNode.
    *
    * Example return result:
-     - index.html (inlines scripts)
+     - index.html (inline scripts)
      - main.js
      - - webpack://
      - - - react.js
@@ -165,43 +165,18 @@ class ScriptTreemapDataAudit extends Audit {
   static async makeNodes(artifacts, context) {
     /** @type {LH.Treemap.Node[]} */
     const nodes = [];
-
-    let inlineScriptLength = 0;
-    for (const script of artifacts.Scripts) {
-      // Combine so that inline scripts show up as a single root node.
-      if (script.url === artifacts.URL.finalUrl) {
-        inlineScriptLength += (script.content || '').length;
-      }
-    }
-    if (inlineScriptLength) {
-      const name = artifacts.URL.finalUrl;
-      nodes.push({
-        name,
-        resourceBytes: inlineScriptLength,
-      });
-    }
-
+    /** @type {Map<string, LH.Treemap.Node>} */
+    const htmlNodesByFrameId = new Map();
     const bundles = await JsBundles.request(artifacts, context);
     const duplicationByPath = await ModuleDuplication.request(artifacts, context);
 
     for (const script of artifacts.Scripts) {
-      if (script.url === artifacts.URL.finalUrl) continue; // Handled above.
+      if (script.scriptLanguage !== 'JavaScript') continue;
 
       const name = script.url;
       const bundle = bundles.find(bundle => script.scriptId === bundle.script.scriptId);
-      const scriptCoverage = /** @type {Omit<LH.Crdp.Profiler.ScriptCoverage, "url"> | undefined} */
+      const scriptCoverage = /** @type {LH.Artifacts['JsUsage'][string] | undefined} */
         (artifacts.JsUsage[script.scriptId]);
-      if (!bundle && !scriptCoverage) {
-        // No bundle and no coverage information, so simply make a single node
-        // detailing how big the script is.
-
-        nodes.push({
-          name,
-          resourceBytes: script.length || 0,
-        });
-        continue;
-      }
-
       const unusedJavascriptSummary = scriptCoverage ?
         await UnusedJavaScriptSummary.request(
           {scriptId: script.scriptId, scriptCoverage, bundle}, context) :
@@ -259,7 +234,31 @@ class ScriptTreemapDataAudit extends Audit {
         };
       }
 
-      nodes.push(node);
+      // If this is an inline script, place the node inside a top-level (aka depth-one) node.
+      // Also separate each iframe / the main page's inline scripts into their own top-level nodes.
+      const isInlineHtmlScript = script.startColumn || script.startLine;
+      if (isInlineHtmlScript) {
+        let htmlNode = htmlNodesByFrameId.get(script.executionContextAuxData.frameId);
+        if (!htmlNode) {
+          htmlNode = {
+            name,
+            resourceBytes: 0,
+            unusedBytes: undefined,
+            children: [],
+          };
+          htmlNodesByFrameId.set(script.executionContextAuxData.frameId, htmlNode);
+          nodes.push(htmlNode);
+        }
+        htmlNode.resourceBytes += node.resourceBytes;
+        if (node.unusedBytes) htmlNode.unusedBytes = (htmlNode.unusedBytes || 0) + node.unusedBytes;
+        node.name = script.content ?
+          '(inline) ' + script.content.trimStart().substring(0, 15) + '…' :
+          '(inline)';
+        htmlNode.children?.push(node);
+      } else {
+        // Non-inline scripts each have their own top-level node.
+        nodes.push(node);
+      }
     }
 
     return nodes;

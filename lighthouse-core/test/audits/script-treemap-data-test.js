@@ -68,6 +68,7 @@ describe('ScriptTreemapData audit', () => {
         Object {
           "name": "https://sqoosh.app/no-map-or-usage.js",
           "resourceBytes": 5,
+          "unusedBytes": undefined,
         }
       `);
 

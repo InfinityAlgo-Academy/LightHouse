@@ -3232,7 +3232,75 @@
         "nodes": [
           {
             "name": "http://localhost:10200/dobetterweb/dbw_tester.html",
-            "resourceBytes": 7166
+            "resourceBytes": 7166,
+            "unusedBytes": 937,
+            "children": [
+              {
+                "name": "(inline) setTimeout(() =…",
+                "resourceBytes": 274,
+                "unusedBytes": 0
+              },
+              {
+                "name": "(inline) this.rel = 'sty…",
+                "resourceBytes": 23,
+                "unusedBytes": 0
+              },
+              {
+                "name": "(inline) throw new Error…",
+                "resourceBytes": 39,
+                "unusedBytes": 0
+              },
+              {
+                "name": "(inline) throw new Error…",
+                "resourceBytes": 36,
+                "unusedBytes": 0
+              },
+              {
+                "name": "(inline) setTimeout(() =…",
+                "resourceBytes": 194,
+                "unusedBytes": 0
+              },
+              {
+                "name": "(inline) // DOM Size has…",
+                "resourceBytes": 434,
+                "unusedBytes": 0
+              },
+              {
+                "name": "(inline) // Ensure gathe…",
+                "resourceBytes": 480,
+                "unusedBytes": 0
+              },
+              {
+                "name": "(inline) window.Error = …",
+                "resourceBytes": 62,
+                "unusedBytes": 46
+              },
+              {
+                "name": "(inline) window.confirm(…",
+                "resourceBytes": 51,
+                "unusedBytes": 0
+              },
+              {
+                "name": "(inline) function stampT…",
+                "resourceBytes": 5060,
+                "unusedBytes": 847
+              },
+              {
+                "name": "(inline) window.fetch = …",
+                "resourceBytes": 60,
+                "unusedBytes": 44
+              },
+              {
+                "name": "(inline) function onInit…",
+                "resourceBytes": 373,
+                "unusedBytes": 0
+              },
+              {
+                "name": "(inline) // Log console.…",
+                "resourceBytes": 80,
+                "unusedBytes": 0
+              }
+            ]
           },
           {
             "name": "http://localhost:10200/dobetterweb/dbw_tester.js",
@@ -8053,6 +8121,84 @@
       },
       {
         "startTime": 0,
+        "name": "lh:computed:UnusedJavascriptSummary",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:UnusedJavascriptSummary",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:UnusedJavascriptSummary",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:UnusedJavascriptSummary",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:UnusedJavascriptSummary",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:UnusedJavascriptSummary",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:UnusedJavascriptSummary",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:UnusedJavascriptSummary",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:UnusedJavascriptSummary",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:UnusedJavascriptSummary",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:UnusedJavascriptSummary",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:UnusedJavascriptSummary",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:UnusedJavascriptSummary",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:audit:pwa-cross-browser",
         "duration": 100,
         "entryType": "measure"
@@ -8462,84 +8608,6 @@
       {
         "startTime": 0,
         "name": "lh:audit:unused-javascript",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:computed:UnusedJavascriptSummary",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:computed:UnusedJavascriptSummary",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:computed:UnusedJavascriptSummary",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:computed:UnusedJavascriptSummary",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:computed:UnusedJavascriptSummary",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:computed:UnusedJavascriptSummary",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:computed:UnusedJavascriptSummary",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:computed:UnusedJavascriptSummary",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:computed:UnusedJavascriptSummary",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:computed:UnusedJavascriptSummary",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:computed:UnusedJavascriptSummary",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:computed:UnusedJavascriptSummary",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:computed:UnusedJavascriptSummary",
         "duration": 100,
         "entryType": "measure"
       },
