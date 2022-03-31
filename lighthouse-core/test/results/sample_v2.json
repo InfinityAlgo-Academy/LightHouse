@@ -3232,7 +3232,8 @@
         "nodes": [
           {
             "name": "http://localhost:10200/dobetterweb/dbw_tester.html",
-            "resourceBytes": 7166
+            "resourceBytes": 7166,
+            "isInline": true
           },
           {
             "name": "http://localhost:10200/dobetterweb/dbw_tester.js",

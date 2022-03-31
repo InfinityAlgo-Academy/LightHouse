@@ -2306,7 +2306,8 @@
               "nodes": [
                 {
                   "name": "https://www.mikescerealshack.co/",
-                  "resourceBytes": 421
+                  "resourceBytes": 421,
+                  "isInline": true
                 },
                 {
                   "name": "https://www.mikescerealshack.co/_next/static/chunks/webpack-657a8433bac0aabd564e.js",
@@ -16189,7 +16190,8 @@
               "nodes": [
                 {
                   "name": "https://www.mikescerealshack.co/corrections",
-                  "resourceBytes": 421
+                  "resourceBytes": 421,
+                  "isInline": true
                 },
                 {
                   "name": "https://events.mikescerealshack.co/js/index.js",
