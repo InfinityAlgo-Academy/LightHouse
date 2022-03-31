@@ -2533,7 +2533,7 @@
     "preload-lcp-image": {
       "id": "preload-lcp-image",
       "title": "Preload Largest Contentful Paint image",
-      "description": "Preload the image used by the LCP element in order to improve your LCP time. [Learn more](https://web.dev/optimize-lcp/#preload-important-resources).",
+      "description": "If the LCP element is dynamically added to the page, you should preload the image in order to improve LCP. [Learn more](https://web.dev/optimize-lcp/#preload-important-resources).",
       "score": 1,
       "scoreDisplayMode": "numeric",
       "numericValue": 0,
