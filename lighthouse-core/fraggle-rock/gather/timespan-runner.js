@@ -37,7 +37,6 @@ async function startTimespanGather(options) {
   const artifactState = getEmptyArtifactState();
   /** @type {Omit<import('./runner-helpers.js').CollectPhaseArtifactOptions, 'phase'>} */
   const phaseOptions = {
-    url: initialUrl,
     driver,
     artifactDefinitions,
     artifactState,
@@ -54,7 +53,6 @@ async function startTimespanGather(options) {
   return {
     async endTimespanGather() {
       const finalUrl = await driver.url();
-      phaseOptions.url = finalUrl;
 
       const runnerOptions = {config, computedCache};
       const artifacts = await Runner.gather(

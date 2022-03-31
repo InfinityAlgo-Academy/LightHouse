@@ -47,8 +47,6 @@ declare module Gatherer {
 
   /** The limited context interface shared between pre and post Fraggle Rock Lighthouse. */
   interface FRTransitionalContext<TDependencies extends DependencyKey = DefaultDependenciesKey> {
-    /** The URL of the page that is currently active. Might be `about:blank` in the before phases */
-    url: string;
     /** The gather mode Lighthouse is currently in. */
     gatherMode: GatherMode;
     /** The connection to the page being analyzed. */

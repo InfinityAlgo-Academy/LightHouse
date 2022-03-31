@@ -46,7 +46,6 @@ async function snapshotGather(options) {
       const artifactDefinitions = config.artifacts || [];
       const artifactState = getEmptyArtifactState();
       await collectPhaseArtifacts({
-        url,
         phase: 'getArtifact',
         gatherMode: 'snapshot',
         driver,

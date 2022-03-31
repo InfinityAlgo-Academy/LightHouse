@@ -132,7 +132,6 @@ describe('collectPhaseArtifacts', () => {
       it(`should run the ${phase} phase of gatherers in ${gatherMode} mode`, async () => {
         const {artifactDefinitions, gatherers} = createGathererSet();
         await helpers.collectPhaseArtifacts({
-          url: 'https://example.com',
           driver,
           artifactDefinitions,
           artifactState,
@@ -157,7 +156,6 @@ describe('collectPhaseArtifacts', () => {
   it('should gather the artifacts', async () => {
     const {artifactDefinitions} = createGathererSet();
     await helpers.collectPhaseArtifacts({
-      url: 'https://example.com',
       driver,
       artifactDefinitions,
       artifactState,
@@ -190,7 +188,6 @@ describe('collectPhaseArtifacts', () => {
     ];
 
     await helpers.collectPhaseArtifacts({
-      url: 'https://example.com',
       driver,
       artifactDefinitions,
       artifactState,
@@ -224,7 +221,6 @@ describe('collectPhaseArtifacts', () => {
 
     const {artifactDefinitions, gatherers} = createGathererSet();
     await helpers.collectPhaseArtifacts({
-      url: 'https://example.com',
       driver,
       artifactDefinitions,
       artifactState,
