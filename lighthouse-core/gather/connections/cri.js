@@ -88,6 +88,7 @@ class CriConnection extends Connection {
         path: '/json/' + command,
       }, response => {
         let data = '';
+        response.setEncoding('utf8');
         response.on('data', chunk => {
           data += chunk;
         });
