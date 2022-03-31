@@ -1277,6 +1277,12 @@
   "lighthouse-core/audits/preload-lcp-image.js | title": {
     "message": "P̂ŕêĺôád̂ Ĺâŕĝéŝt́ Ĉón̂t́êńt̂f́ûĺ P̂áîńt̂ ím̂áĝé"
   },
+  "lighthouse-core/audits/prioritize-lcp-image.js | description": {
+    "message": "Îf́ t̂h́ê ĹĈṔ êĺêḿêńt̂ íŝ án̂ ím̂áĝé, ŷóû śĥóûĺd̂ úŝé [P̂ŕîór̂ít̂ý Ĥín̂t́ŝ](https://chromestatus.com/feature/5273474901737472) t́ô ím̂ṕr̂óv̂é L̂ĆP̂. [Ĺêár̂ń m̂ór̂é](https://web.dev/optimize-lcp/#preload-important-resources)."
+  },
+  "lighthouse-core/audits/prioritize-lcp-image.js | title": {
+    "message": "P̂ŕîór̂ít̂íẑé L̂ár̂ǵêśt̂ Ćôńt̂én̂t́f̂úl̂ Ṕâín̂t́ îḿâǵê"
+  },
   "lighthouse-core/audits/redirects.js | description": {
     "message": "R̂éd̂ír̂éĉt́ŝ ín̂t́r̂ód̂úĉé âd́d̂ít̂íôńâĺ d̂él̂áŷś b̂éf̂ór̂é t̂h́ê ṕâǵê ćâń b̂é l̂óâd́êd́. [L̂éâŕn̂ ḿôŕê](https://web.dev/redirects/)."
   },

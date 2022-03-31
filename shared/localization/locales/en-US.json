@@ -1277,6 +1277,12 @@
   "lighthouse-core/audits/preload-lcp-image.js | title": {
     "message": "Preload Largest Contentful Paint image"
   },
+  "lighthouse-core/audits/prioritize-lcp-image.js | description": {
+    "message": "If the LCP element is an image, you should use [Priority Hints](https://chromestatus.com/feature/5273474901737472) to improve LCP. [Learn more](https://web.dev/optimize-lcp/#preload-important-resources)."
+  },
+  "lighthouse-core/audits/prioritize-lcp-image.js | title": {
+    "message": "Prioritize Largest Contentful Paint image"
+  },
   "lighthouse-core/audits/redirects.js | description": {
     "message": "Redirects introduce additional delays before the page can be loaded. [Learn more](https://web.dev/redirects/)."
   },

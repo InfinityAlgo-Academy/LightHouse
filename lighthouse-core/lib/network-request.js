@@ -137,6 +137,22 @@ class NetworkRequest {
      */
     this.sessionId = undefined;
     this.isLinkPreload = false;
+    /** @type {LH.Crdp.Network.ResourcePriority|undefined} */
+    this.initialPriority = undefined;
+  }
+
+  /**
+   * Returns 1 if `this.initialPriority` is greater than `other`, -1 if less, 0 if equal.
+   * @param {LH.Crdp.Network.ResourcePriority} other
+   */
+  compareInitialPriorityWith(other) {
+    if (!this.initialPriority) return 1;
+    const values = ['VeryLow', 'Low', 'Medium', 'High', 'VeryHigh'];
+    const thisValue = values.indexOf(this.initialPriority);
+    const otherValue = values.indexOf(other);
+    if (thisValue < otherValue) return -1;
+    if (thisValue > otherValue) return 1;
+    return 0;
   }
 
   /**
@@ -186,6 +202,7 @@ class NetworkRequest {
 
     this.frameId = data.frameId;
     this.isLinkPreload = data.initiator.type === 'preload' || !!data.request.isLinkPreload;
+    this.initialPriority = data.request.initialPriority;
     this.isValid = true;
   }
 

@@ -2546,6 +2546,22 @@
         "overallSavingsMs": 0
       }
     },
+    "prioritize-lcp-image": {
+      "id": "prioritize-lcp-image",
+      "title": "Prioritize Largest Contentful Paint image",
+      "description": "If the LCP element is an image, you should use [Priority Hints](https://chromestatus.com/feature/5273474901737472) to improve LCP. [Learn more](https://web.dev/optimize-lcp/#preload-important-resources).",
+      "score": 1,
+      "scoreDisplayMode": "numeric",
+      "numericValue": 0,
+      "numericUnit": "millisecond",
+      "displayValue": "",
+      "details": {
+        "type": "opportunity",
+        "headings": [],
+        "items": [],
+        "overallSavingsMs": 0
+      }
+    },
     "csp-xss": {
       "id": "csp-xss",
       "title": "Ensure CSP is effective against XSS attacks",
@@ -6141,6 +6157,10 @@
           "weight": 0
         },
         {
+          "id": "prioritize-lcp-image",
+          "weight": 0
+        },
+        {
           "id": "total-byte-weight",
           "weight": 0
         },
@@ -8079,6 +8099,12 @@
       },
       {
         "startTime": 0,
+        "name": "lh:audit:prioritize-lcp-image",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:audit:csp-xss",
         "duration": 100,
         "entryType": "measure"
@@ -9534,6 +9560,12 @@
       ],
       "lighthouse-core/audits/preload-lcp-image.js | description": [
         "audits[preload-lcp-image].description"
+      ],
+      "lighthouse-core/audits/prioritize-lcp-image.js | title": [
+        "audits[prioritize-lcp-image].title"
+      ],
+      "lighthouse-core/audits/prioritize-lcp-image.js | description": [
+        "audits[prioritize-lcp-image].description"
       ],
       "lighthouse-core/audits/csp-xss.js | title": [
         "audits[csp-xss].title"
