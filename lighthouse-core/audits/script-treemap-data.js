@@ -19,6 +19,7 @@ const Audit = require('./audit.js');
 const JsBundles = require('../computed/js-bundles.js');
 const UnusedJavaScriptSummary = require('../computed/unused-javascript-summary.js');
 const ModuleDuplication = require('../computed/module-duplication.js');
+const {isInline} = require('../lib/script-helpers.js');
 
 class ScriptTreemapDataAudit extends Audit {
   /**
@@ -166,18 +167,23 @@ class ScriptTreemapDataAudit extends Audit {
     /** @type {LH.Treemap.Node[]} */
     const nodes = [];
 
-    let inlineScriptLength = 0;
+    // Group inline scripts by URL.
+    // At most, the treemap will have 1 inline node for each frame.
+    /** @type {Map<string, number>} */
+    const inlineNodeLengths = new Map();
+
     for (const script of artifacts.Scripts) {
-      // Combine so that inline scripts show up as a single root node.
-      if (script.url === artifacts.URL.finalUrl) {
-        inlineScriptLength += (script.content || '').length;
-      }
+      if (!isInline(script)) continue;
+      let length = inlineNodeLengths.get(script.url) || 0;
+      length += script.length || 0;
+      inlineNodeLengths.set(script.url, length);
     }
-    if (inlineScriptLength) {
-      const name = artifacts.URL.finalUrl;
+
+    for (const [url, length] of inlineNodeLengths.entries()) {
       nodes.push({
-        name,
-        resourceBytes: inlineScriptLength,
+        name: url,
+        resourceBytes: length,
+        isInline: true,
       });
     }
 
@@ -185,7 +191,7 @@ class ScriptTreemapDataAudit extends Audit {
     const duplicationByPath = await ModuleDuplication.request(artifacts, context);
 
     for (const script of artifacts.Scripts) {
-      if (script.url === artifacts.URL.finalUrl) continue; // Handled above.
+      if (isInline(script)) continue; // Handled above.
 
       const name = script.url;
       const bundle = bundles.find(bundle => script.scriptId === bundle.script.scriptId);

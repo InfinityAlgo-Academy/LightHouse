@@ -74,7 +74,7 @@ class TreemapViewer {
     /** @type {WeakMap<LH.Treemap.Node, LH.Treemap.NodePath>} */
     this.nodeToPathMap = new WeakMap();
 
-    this.documentUrl = new URL(options.lhr.requestedUrl);
+    this.pageUrl = new URL(options.lhr.finalUrl);
     this.el = el;
     this.getHueForD1NodeName = TreemapUtil.stableHasher(TreemapUtil.COLOR_HUES);
 
@@ -83,8 +83,8 @@ class TreemapViewer {
     for (const node of this.depthOneNodesByGroup.scripts) {
       try {
         const url = new URL(node.name);
-        node.name = TreemapUtil.elideSameOrigin(url, this.documentUrl);
-        if (url.href === this.documentUrl.href) {
+        node.name = TreemapUtil.elideSameOrigin(url, this.pageUrl);
+        if (node.isInline) {
           node.name += ' (inline)';
         }
       } catch {}
@@ -116,8 +116,8 @@ class TreemapViewer {
 
   createHeader() {
     const urlEl = TreemapUtil.find('a.lh-header--url');
-    urlEl.textContent = this.documentUrl.toString();
-    urlEl.href = this.documentUrl.toString();
+    urlEl.textContent = this.pageUrl.toString();
+    urlEl.href = this.pageUrl.toString();
 
     this.createBundleSelector();
   }
@@ -237,7 +237,7 @@ class TreemapViewer {
   wrapNodesInNewRootNode(nodes) {
     const children = [...nodes];
     return {
-      name: this.documentUrl.toString(),
+      name: this.pageUrl.toString(),
       resourceBytes: children.reduce((acc, cur) => cur.resourceBytes + acc, 0),
       unusedBytes: children.reduce((acc, cur) => (cur.unusedBytes || 0) + acc, 0),
       children,

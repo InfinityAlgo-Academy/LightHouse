@@ -51,6 +51,7 @@ declare module Treemap {
     /** If present, this module is a duplicate. String is normalized source path. See ModuleDuplication.normalizeSource */
     duplicatedNormalizedModuleName?: string;
     children?: Node[];
+    isInline?: boolean;
   }
 }
 

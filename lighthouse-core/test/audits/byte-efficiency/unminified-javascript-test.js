@@ -84,6 +84,7 @@ describe('Page uses optimized responses', () => {
       URL: {finalUrl: 'https://www.example.com'},
       Scripts: [
         {
+          startLine: 30,
           scriptId: '123.1',
           url: 'https://www.example.com',
           content: `
