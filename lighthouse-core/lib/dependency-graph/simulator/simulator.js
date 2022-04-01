@@ -79,6 +79,8 @@ class Simulator {
     this._numberInProgressByType = new Map();
     /** @type {Record<number, Set<Node>>} */
     this._nodes = {};
+    /** @type {Record<string, NetworkNode>} */
+    this._networkNodes = {};
     this._dns = new DNSCache({rtt: this._rtt});
     /** @type {ConnectionPool} */
     // @ts-expect-error
@@ -116,6 +118,7 @@ class Simulator {
     this._numberInProgressByType = new Map();
 
     this._nodes = {};
+    this._networkNodes = {};
     this._cachedNodeListByStartPosition = [];
     // NOTE: We don't actually need *all* of these sets, but the clarity that each node progresses
     // through the system is quite nice.
@@ -172,6 +175,19 @@ class Simulator {
     this._nodes[NodeState.InProgress].delete(node);
     this._numberInProgressByType.set(node.type, this._numberInProgress(node.type) - 1);
     this._nodeTimings.setCompleted(node, {endTime});
+
+    if (node.type === 'cpu') {
+      for (const event of node.childEvents) {
+        if (event.name !== 'ResourceChangePriority') continue;
+
+        const networkNode =
+          event.args.data?.requestId && this._networkNodes[event.args.data.requestId];
+        // The graph may have excluded some network nodes.
+        if (!networkNode) continue;
+
+        if (event.args.data?.priority) networkNode.priority = event.args.data.priority;
+      }
+    }
 
     // Try to add all its dependents to the queue
     for (const dependent of node.getDependents()) {
@@ -337,7 +353,8 @@ class Simulator {
     const timingData = this._nodeTimings.getInProgress(node);
     const isFinished = timingData.estimatedTimeElapsed === timePeriodLength;
 
-    if (node.type === BaseNode.TYPES.CPU || node.isConnectionless) {
+    const hasNetworkComponent = node.type === BaseNode.TYPES.NETWORK && !node.isConnectionless;
+    if (!hasNetworkComponent) {
       return isFinished
         ? this._markNodeAsComplete(node, totalElapsedTime)
         : (timingData.timeElapsed += timePeriodLength);
@@ -437,6 +454,9 @@ class Simulator {
 
     const rootNode = graph.getRootNode();
     rootNode.traverse(node => nodesNotReadyToStart.add(node));
+    rootNode.traverse(node => {
+      if (node.type === 'network') this._networkNodes[node.id] = node;
+    });
     let totalElapsedTime = 0;
     let iteration = 0;
 

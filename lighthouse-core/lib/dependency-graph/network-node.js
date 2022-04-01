@@ -17,8 +17,10 @@ class NetworkNode extends BaseNode {
     /** @private */
     this._record = networkRecord;
     /** @private */
-    // this._priority = networkRecord.initialPriority || networkRecord.priority;
-    this._priority = networkRecord.priority;
+    // Initial priority should always be set, it's a side effect of how network-request
+    // is implemented that this property could be undefined. It should never really happen
+    // but fallback to the network record's "priority" to make TS happy.
+    this._priority = networkRecord.initialPriority || networkRecord.priority;
   }
 
   get type() {
@@ -27,6 +29,10 @@ class NetworkNode extends BaseNode {
 
   get priority() {
     return this._priority;
+  }
+
+  set priority(priority) {
+    this._priority = priority;
   }
 
   /**

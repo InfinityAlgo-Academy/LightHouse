@@ -997,7 +997,7 @@ export interface TraceEvent {
       compositeFailed?: number;
       unsupportedProperties?: string[];
       size?: number;
-      priority?: string;
+      priority?: LH.Crdp.Network.ResourcePriority;
     };
     frame?: string;
     name?: string;
