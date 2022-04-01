@@ -350,9 +350,10 @@ class PageDependencyGraph {
       if (!foundFirstParse && node.childEvents.some(evt => evt.name === 'ParseHTML')) {
         isFirst = foundFirstParse = true;
       }
-      // const hasPriortizeEvent = node.childEvents.some(evt => evt.name === 'ParseHTML');
+      const hasResourceChangePriorityEvent =
+        node.childEvents.some(evt => evt.name === 'ResourceChangePriority');
 
-      if (isFirst || node.event.dur >= minimumEvtDur) {
+      if (isFirst || node.event.dur >= minimumEvtDur || hasResourceChangePriorityEvent) {
         // Don't prune this node. The task is long / important so it will impact simulation.
         continue;
       }
