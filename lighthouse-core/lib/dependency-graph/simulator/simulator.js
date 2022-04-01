@@ -176,19 +176,6 @@ class Simulator {
     this._numberInProgressByType.set(node.type, this._numberInProgress(node.type) - 1);
     this._nodeTimings.setCompleted(node, {endTime});
 
-    if (node.type === 'cpu') {
-      for (const event of node.childEvents) {
-        if (event.name !== 'ResourceChangePriority') continue;
-
-        const networkNode =
-          event.args.data?.requestId && this._networkNodes[event.args.data.requestId];
-        // The graph may have excluded some network nodes.
-        if (!networkNode) continue;
-
-        if (event.args.data?.priority) networkNode.priority = event.args.data.priority;
-      }
-    }
-
     // Try to add all its dependents to the queue
     for (const dependent of node.getDependents()) {
       // Skip dependent node if one of its dependencies hasn't finished yet
@@ -275,11 +262,19 @@ class Simulator {
    * @param {CpuNode} cpuNode
    * @return {number}
    */
-  _estimateCPUTimeRemaining(cpuNode) {
-    const timingData = this._nodeTimings.getCpuStarted(cpuNode);
-    const multiplier = cpuNode.didPerformLayout()
+  _getCPUMultiplier(cpuNode) {
+    return cpuNode.didPerformLayout()
       ? this._layoutTaskMultiplier
       : this._cpuSlowdownMultiplier;
+  }
+
+  /**
+   * @param {CpuNode} cpuNode
+   * @return {number}
+   */
+  _estimateCPUTimeRemaining(cpuNode) {
+    const timingData = this._nodeTimings.getCpuStarted(cpuNode);
+    const multiplier = this._getCPUMultiplier(cpuNode);
     const totalDuration = Math.min(
       Math.round(cpuNode.event.dur / 1000 * multiplier),
       DEFAULT_MAXIMUM_CPU_TASK_DURATION
@@ -352,6 +347,26 @@ class Simulator {
   _updateProgressMadeInTimePeriod(node, timePeriodLength, totalElapsedTime) {
     const timingData = this._nodeTimings.getInProgress(node);
     const isFinished = timingData.estimatedTimeElapsed === timePeriodLength;
+
+    // Adjust network node priority if this cpu node has a ResourceChangePriority event.
+    if (node.type === BaseNode.TYPES.CPU) {
+      const multiplier = this._getCPUMultiplier(node);
+      const newTimeElapsed = timingData.timeElapsed + timePeriodLength;
+      for (const event of node.childEvents) {
+        if (event.name !== 'ResourceChangePriority' || !event.args.data?.priority) continue;
+
+        // Convert the event timestamp to the simulation time domain.
+        const eventTs = (event.ts - node.event.ts) / 1000 * multiplier;
+        if (!(eventTs > timingData.timeElapsed && eventTs <= newTimeElapsed)) continue;
+
+        const networkNode =
+          event.args.data?.requestId && this._networkNodes[event.args.data.requestId];
+        // The graph may have excluded some network nodes.
+        if (!networkNode) continue;
+
+        networkNode.priority = event.args.data.priority;
+      }
+    }
 
     const hasNetworkComponent = node.type === BaseNode.TYPES.NETWORK && !node.isConnectionless;
     if (!hasNetworkComponent) {
