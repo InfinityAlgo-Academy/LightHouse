@@ -27,9 +27,9 @@ fi
 
 rm -rf lantern-data/
 mkdir -p lantern-data/ && cd lantern-data
-echo $VERSION > version
 
 curl -o golden-lantern-traces.zip -L https://storage.googleapis.com/lh-lantern-data/golden-lantern-traces-$VERSION.zip
 
 unzip -q golden-lantern-traces.zip
 rm golden-lantern-traces.zip
+echo $VERSION > version
