@@ -997,6 +997,7 @@ export interface TraceEvent {
       compositeFailed?: number;
       unsupportedProperties?: string[];
       size?: number;
+      priority?: string;
     };
     frame?: string;
     name?: string;

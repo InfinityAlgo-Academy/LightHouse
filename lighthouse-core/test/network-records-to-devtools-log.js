@@ -43,6 +43,7 @@ function headersArrayToHeadersDict(headersArray = []) {
 
 /**
  * @param {Partial<NetworkRequest>} networkRecord
+ * @param {number} index
  * @return {LH.Protocol.RawEventMessage}
  */
 function getRequestWillBeSentEvent(networkRecord, index) {
@@ -60,7 +61,7 @@ function getRequestWillBeSentEvent(networkRecord, index) {
         url: networkRecord.url || exampleUrl,
         method: networkRecord.requestMethod || 'GET',
         headers: {},
-        initialPriority: networkRecord.priority || 'Low',
+        initialPriority: networkRecord.initialPriority || 'Low',
         isLinkPreload: networkRecord.isLinkPreload,
       },
       timestamp: networkRecord.redirectResponseTimestamp || networkRecord.startTime || 0,
@@ -69,6 +70,23 @@ function getRequestWillBeSentEvent(networkRecord, index) {
       type: networkRecord.resourceType || 'Document',
       frameId: networkRecord.frameId || `${idBase}.1`,
       redirectResponse: networkRecord.redirectResponse,
+    },
+  };
+}
+
+/**
+ * @param {Partial<NetworkRequest>} networkRecord
+ * @param {number} index
+ * @param {LH.Protocol.Network.ResourcePriority} newPriority
+ * @return {LH.Protocol.RawEventMessage}
+ */
+function getResourceChangedPriorityEvent(networkRecord, index, newPriority) {
+  return {
+    method: 'Network.resourceChangedPriority',
+    params: {
+      requestId: getBaseRequestId(networkRecord) || `${idBase}.${index}`,
+      newPriority,
+      timestamp: networkRecord.redirectResponseTimestamp || networkRecord.startTime || 0,
     },
   };
 }
@@ -226,10 +244,24 @@ function addRedirectResponseIfNeeded(networkRecords, record) {
  * @return {LH.DevtoolsLog}
  */
 function networkRecordsToDevtoolsLog(networkRecords, options = {}) {
+  // For tests, allow callers to not explicitly specify `initialPriority`.
+  if (global.expect) {
+    for (const networkRecord of networkRecords) {
+      if (!networkRecord.initialPriority) {
+        networkRecord.initialPriority = networkRecord.priority || 'Low';
+      }
+    }
+  }
+
   const devtoolsLog = [];
   networkRecords.forEach((networkRecord, index) => {
     networkRecord = addRedirectResponseIfNeeded(networkRecords, networkRecord);
     devtoolsLog.push(getRequestWillBeSentEvent(networkRecord, index));
+
+    if (networkRecord.priority && networkRecord.priority !== networkRecord.initialPriority) {
+      devtoolsLog.push(
+        getResourceChangedPriorityEvent(networkRecord, index, networkRecord.priority));
+    }
 
     if (willBeRedirected(networkRecords, networkRecord)) {
       // If record is going to redirect, only issue the first event.

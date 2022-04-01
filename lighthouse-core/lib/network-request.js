@@ -120,6 +120,8 @@ class NetworkRequest {
     this.mimeType = '';
     /** @type {LH.Crdp.Network.ResourcePriority} */
     this.priority = 'Low';
+    /** @type {LH.Crdp.Network.ResourcePriority|undefined} */
+    this.initialPriority = undefined;
     /** @type {NetworkRequest|undefined} */
     this.initiatorRequest = undefined;
     /** @type {HeaderEntry[]} */
@@ -183,6 +185,7 @@ class NetworkRequest {
     this.initiator = data.initiator;
     this.resourceType = data.type && RESOURCE_TYPES[data.type];
     this.priority = data.request.initialPriority;
+    this.initialPriority = data.request.initialPriority;
 
     this.frameId = data.frameId;
     this.isLinkPreload = data.initiator.type === 'preload' || !!data.request.isLinkPreload;

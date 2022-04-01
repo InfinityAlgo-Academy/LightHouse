@@ -268,14 +268,14 @@ describe('DependencyGraph/Simulator', () => {
       assertNodeTiming(result, imageNodes[0], {startTime: 4150, endTime: 4950});
     });
 
-    it('should start network requests in priority order to break startTime ties', () => {
+    it('should start network requests in initialPriority order to break startTime ties', () => {
       const rootNode = new NetworkNode(request({startTime: 0, endTime: 0.05, connectionId: '1'}));
       const imageNodes = [
-        new NetworkNode(request({startTime: 0.1, priority: 'VeryLow'})),
-        new NetworkNode(request({startTime: 0.2, priority: 'Low'})),
-        new NetworkNode(request({startTime: 0.3, priority: 'Medium'})),
-        new NetworkNode(request({startTime: 0.4, priority: 'High'})),
-        new NetworkNode(request({startTime: 0.5, priority: 'VeryHigh'})),
+        new NetworkNode(request({startTime: 0.1, initialPriority: 'VeryLow'})),
+        new NetworkNode(request({startTime: 0.2, initialPriority: 'Low'})),
+        new NetworkNode(request({startTime: 0.3, initialPriority: 'Medium'})),
+        new NetworkNode(request({startTime: 0.4, initialPriority: 'High'})),
+        new NetworkNode(request({startTime: 0.5, initialPriority: 'VeryHigh'})),
       ];
 
       for (const imageNode of imageNodes) {

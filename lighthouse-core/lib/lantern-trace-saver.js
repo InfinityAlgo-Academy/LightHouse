@@ -29,10 +29,15 @@ function convertNodeTimingsToTrace(nodeTimings) {
     if (node.type === 'cpu') {
       // Represent all CPU work that was bundled in a task as an EvaluateScript event
       traceEvents.push(...createFakeTaskEvents(node, timing));
-    } else {
+    } else if (node.type === 'network') {
       // Ignore data URIs as they don't really add much value
       if (/^data/.test(node.record.url)) continue;
       traceEvents.push(...createFakeNetworkEvents(node.record, timing));
+    } else if (node.type === 'network-priority') {
+      traceEvents.push(createFakeNetworkPriorityEvent(node, timing));
+    } else {
+      // @ts-expect-error: never say never.
+      throw new Error('unhandled node type: ' + node.type);
     }
   }
 
@@ -183,6 +188,19 @@ function convertNodeTimingsToTrace(nodeTimings) {
     }
 
     return events;
+  }
+
+  /**
+   * @param {import('./dependency-graph/network-priority-node.js')} node
+   * @param {LH.Gatherer.Simulation.NodeTiming} timing
+   * @return {LH.TraceEvent}
+   */
+  function createFakeNetworkPriorityEvent(node, timing) {
+    return {
+      ...node._event,
+      ts: timing.startTime,
+      dur: timing.duration,
+    };
   }
 }
 

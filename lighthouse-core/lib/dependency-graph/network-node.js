@@ -16,10 +16,17 @@ class NetworkNode extends BaseNode {
     super(networkRecord.requestId);
     /** @private */
     this._record = networkRecord;
+    /** @private */
+    // this._priority = networkRecord.initialPriority || networkRecord.priority;
+    this._priority = networkRecord.priority;
   }
 
   get type() {
     return BaseNode.TYPES.NETWORK;
+  }
+
+  get priority() {
+    return this._priority;
   }
 
   /**
@@ -78,7 +85,7 @@ class NetworkNode extends BaseNode {
    * @return {boolean}
    */
   hasRenderBlockingPriority() {
-    const priority = this._record.priority;
+    const priority = this.priority;
     const isScript = this._record.resourceType === NetworkRequest.TYPES.Script;
     const isDocument = this._record.resourceType === NetworkRequest.TYPES.Document;
     const isBlockingScript = priority === 'High' && isScript;
