@@ -98,17 +98,12 @@ const expectations = {
         isPositionFixed: true,
       },
     ],
-    // Only `oopif-simple-page.html`'s inclusion of `simple-script.js` should show up here.
+    // Only `:10200/oopif-simple-page.html`'s inclusion of `simple-script.js` shows here.
     // All other scripts are filtered out because of our "OOPIF" filter (including anything
     // that is just in another process, like a worker).
     ScriptElements: [
       {
         src: 'http://localhost:10200/simple-script.js',
-        source: 'network',
-        content: /🪁/,
-      },
-      {
-        src: 'http://localhost:10503/simple-script.js',
         source: 'network',
         content: /🪁/,
       },
