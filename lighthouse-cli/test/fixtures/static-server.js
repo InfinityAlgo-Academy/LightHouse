@@ -100,7 +100,10 @@ class Server {
       // Used by Smokerider.
       if (this._dataTransformer) data = this._dataTransformer(data);
 
-      const headers = {'Access-Control-Allow-Origin': '*'};
+      const headers = {
+        'Access-Control-Allow-Origin': '*',
+        'Origin-Agent-Cluster': '?1',
+      };
 
       const contentType = mime.lookup(filePath);
       const charset = mime.lookup(contentType);

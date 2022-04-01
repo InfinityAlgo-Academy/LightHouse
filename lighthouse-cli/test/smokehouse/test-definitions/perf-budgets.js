@@ -63,7 +63,7 @@ const expectations = {
     audits: {
       'resource-summary': {
         score: null,
-        displayValue: '10 requests • 164 KiB',
+        displayValue: '10 requests • 165 KiB',
         details: {
           items: [
             {resourceType: 'total', requestCount: 10, transferSize: '168000±1000'},
@@ -86,7 +86,7 @@ const expectations = {
             {
               resourceType: 'total',
               countOverBudget: '2 requests',
-              sizeOverBudget: '65000±1000',
+              sizeOverBudget: '66000±1000',
             },
             {
               resourceType: 'script',
@@ -101,7 +101,7 @@ const expectations = {
             {
               resourceType: 'document',
               countOverBudget: '1 request',
-              sizeOverBudget: '1200±50',
+              sizeOverBudget: '1250±50',
             },
             {
               resourceType: 'stylesheet',
