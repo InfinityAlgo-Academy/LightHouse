@@ -10,7 +10,7 @@ DIRNAME="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 LH_ROOT_PATH="$DIRNAME/../../.."
 cd $LH_ROOT_PATH
 
-if [[ -f lantern-data/version ]] && [[ "$VERSION" != "$(cat lantern-data/version)" ]]; then
+if [![ -f lantern-data/version ]] || [[ "$VERSION" != "$(cat lantern-data/version)" ]]; then
   if ! [[ "$CI" ]]; then
     echo "Version out of date. About to delete ./lantern-data..."
     echo "Press Space to continue, Ctrl+C to exit"
