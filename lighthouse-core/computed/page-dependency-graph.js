@@ -13,7 +13,6 @@ const NetworkRequest = require('../lib/network-request.js');
 const ProcessedTrace = require('./processed-trace.js');
 const NetworkRecords = require('./network-records.js');
 const NetworkAnalyzer = require('../lib/dependency-graph/simulator/network-analyzer.js');
-const NetworkPriorityNode = require('../lib/dependency-graph/network-priority-node.js');
 
 /** @typedef {import('../lib/dependency-graph/base-node.js').Node} Node */
 /** @typedef {Omit<LH.Artifacts['URL'], 'initialUrl'|'finalUrl'>} URLArtifact */
@@ -69,8 +68,6 @@ class PageDependencyGraph {
     /** @type {Map<string, NetworkNode|null>} */
     const frameIdToNodeMap = new Map();
 
-    // ResourceChangePriority
-
     networkRecords.forEach(record => {
       if (IGNORED_MIME_TYPES_REGEX.test(record.mimeType)) return;
 
@@ -103,23 +100,6 @@ class PageDependencyGraph {
     });
 
     return {nodes, idToNodeMap, urlToNodeMap, frameIdToNodeMap};
-  }
-
-  /**
-   * @param {LH.Artifacts.ProcessedTrace} processedTrace
-   * @return {Array<NetworkPriorityNode>}
-   */
-  static getNetworkPriorityNodes({mainThreadEvents}) {
-    /** @type {Array<NetworkPriorityNode>} */
-    const nodes = [];
-
-    for (const evt of mainThreadEvents) {
-      if (evt.name === 'ResourceChangePriority') {
-        nodes.push(new NetworkPriorityNode(evt));
-      }
-    }
-
-    return nodes;
   }
 
   /**
@@ -370,6 +350,7 @@ class PageDependencyGraph {
       if (!foundFirstParse && node.childEvents.some(evt => evt.name === 'ParseHTML')) {
         isFirst = foundFirstParse = true;
       }
+      // const hasPriortizeEvent = node.childEvents.some(evt => evt.name === 'ParseHTML');
 
       if (isFirst || node.event.dur >= minimumEvtDur) {
         // Don't prune this node. The task is long / important so it will impact simulation.
@@ -414,7 +395,6 @@ class PageDependencyGraph {
     TracingProcessor.assertHasToplevelEvents(processedTrace.mainThreadEvents);
 
     const networkNodeOutput = PageDependencyGraph.getNetworkNodeOutput(networkRecords);
-    const networkPriorityNodes = PageDependencyGraph.getNetworkPriorityNodes(processedTrace);
     const cpuNodes = PageDependencyGraph.getCPUNodes(processedTrace);
     const {requestedUrl, mainDocumentUrl} = URL;
     if (!mainDocumentUrl) throw new Error('mainDocumentUrl is required to get the main resource');

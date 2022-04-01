@@ -8,7 +8,7 @@
 /**
  * A union of all types derived from BaseNode, allowing type check discrimination
  * based on `node.type`. If a new node type is created, it should be added here.
- * @typedef {import('./cpu-node.js') | import('./network-node.js') | import('./network-priority-node.js')} Node
+ * @typedef {import('./cpu-node.js') | import('./network-node.js')} Node
  */
 
 /**
@@ -357,7 +357,6 @@ class BaseNode {
 
 BaseNode.TYPES = /** @type {const} */({
   NETWORK: 'network',
-  NETWORK_PRIORITY: 'network-priority',
   CPU: 'cpu',
 });
 

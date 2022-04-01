@@ -550,7 +550,7 @@ class Simulator {
    * @param {Node} node
    */
   static _computeNodeStartPosition(node) {
-    if (node.type === 'cpu' || node.type === 'network-priority') return node.startTime;
+    if (node.type === 'cpu') return node.startTime;
     return node.startTime + (PriorityStartTimePenalty[node.priority] * 1000 * 1000 || 0);
   }
 }
