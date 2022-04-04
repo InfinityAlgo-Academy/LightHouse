@@ -140,13 +140,7 @@ class Simulator {
    * @param {number} queuedTime
    */
   _markNodeAsReadyToStart(node, queuedTime) {
-    const nodeStartPosition = Simulator._computeNodeStartPosition(node);
-    const firstNodeIndexWithGreaterStartPosition = this._cachedNodeListByStartPosition
-      .findIndex(candidate => Simulator._computeNodeStartPosition(candidate) > nodeStartPosition);
-    const insertionIndex = firstNodeIndexWithGreaterStartPosition === -1 ?
-      this._cachedNodeListByStartPosition.length : firstNodeIndexWithGreaterStartPosition;
-    this._cachedNodeListByStartPosition.splice(insertionIndex, 0, node);
-
+    this._insertNodeIntoSortedStartPositions(node);
     this._nodes[NodeState.ReadyToStart].add(node);
     this._nodes[NodeState.NotReadyToStart].delete(node);
     this._nodeTimings.setReadyToStart(node, {queuedTime});
@@ -157,9 +151,7 @@ class Simulator {
    * @param {number} startTime
    */
   _markNodeAsInProgress(node, startTime) {
-    const indexOfNodeToStart = this._cachedNodeListByStartPosition.indexOf(node);
-    this._cachedNodeListByStartPosition.splice(indexOfNodeToStart, 1);
-
+    this._removeNodeFromSortedStartPositions(node);
     this._nodes[NodeState.InProgress].add(node);
     this._nodes[NodeState.ReadyToStart].delete(node);
     this._numberInProgressByType.set(node.type, this._numberInProgress(node.type) + 1);
@@ -203,6 +195,26 @@ class Simulator {
   _getNodesSortedByStartPosition() {
     // Make a copy so we don't skip nodes due to concurrent modification
     return Array.from(this._cachedNodeListByStartPosition);
+  }
+
+  /**
+   * @param {Node} node
+   */
+  _insertNodeIntoSortedStartPositions(node) {
+    const nodeStartPosition = Simulator._computeNodeStartPosition(node);
+    const firstNodeIndexWithGreaterStartPosition = this._cachedNodeListByStartPosition
+      .findIndex(candidate => Simulator._computeNodeStartPosition(candidate) > nodeStartPosition);
+    const insertionIndex = firstNodeIndexWithGreaterStartPosition === -1 ?
+      this._cachedNodeListByStartPosition.length : firstNodeIndexWithGreaterStartPosition;
+    this._cachedNodeListByStartPosition.splice(insertionIndex, 0, node);
+  }
+
+  /**
+   * @param {Node} node
+   */
+  _removeNodeFromSortedStartPositions(node) {
+    const indexOfNodeToStart = this._cachedNodeListByStartPosition.indexOf(node);
+    this._cachedNodeListByStartPosition.splice(indexOfNodeToStart, 1);
   }
 
   /**
@@ -365,6 +377,10 @@ class Simulator {
         if (!networkNode) continue;
 
         networkNode.priority = event.args.data.priority;
+        if (this._cachedNodeListByStartPosition.includes(node)) {
+          this._removeNodeFromSortedStartPositions(node);
+          this._insertNodeIntoSortedStartPositions(node);
+        }
       }
     }
 
