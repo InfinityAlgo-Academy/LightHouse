@@ -5,7 +5,7 @@ Array [
   Object {
     "description": "Ensures every id attribute value is unique",
     "help": "id attribute value must be unique",
-    "helpUrl": "https://dequeuniversity.com/rules/axe/4.3/duplicate-id?application=axeAPI",
+    "helpUrl": "https://dequeuniversity.com/rules/axe/4.4/duplicate-id?application=axeAPI",
     "id": "duplicate-id",
     "impact": "minor",
     "nodes": Array [
