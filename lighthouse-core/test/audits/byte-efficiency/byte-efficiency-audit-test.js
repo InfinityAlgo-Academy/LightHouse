@@ -285,7 +285,7 @@ describe('Byte efficiency base audit', () => {
     const result = await MockAudit.audit(artifacts, {settings, computedCache});
     const resultTti = await MockTtiAudit.audit(artifacts, {settings, computedCache});
     expect(resultTti.numericValue).toBeLessThan(result.numericValue);
-    expect(result.numericValue).toMatchInlineSnapshot(`2120`);
+    expect(result.numericValue).toMatchInlineSnapshot(`2430`);
     expect(resultTti.numericValue).toMatchInlineSnapshot(`150`);
   });
 
