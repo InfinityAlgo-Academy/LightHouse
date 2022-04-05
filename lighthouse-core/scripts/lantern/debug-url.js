@@ -29,4 +29,4 @@ if (!site) throw new Error(`Could not find with site URL ${INPUT_URL}`);
 const trace = path.join(SITE_INDEX_DIR, site.unthrottled.tracePath);
 const log = path.join(SITE_INDEX_DIR, site.unthrottled.devtoolsLogPath);
 process.env.LANTERN_DEBUG = 'true';
-execFileSync('node', [RUN_ONCE_PATH, trace, log], {stdio: 'inherit'});
+execFileSync('node', ['--inspect-brk', RUN_ONCE_PATH, trace, log], {stdio: 'inherit'});

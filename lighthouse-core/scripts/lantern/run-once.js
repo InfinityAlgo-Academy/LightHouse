@@ -31,13 +31,11 @@ async function run() {
   process.stdout.write(JSON.stringify(result.details.items[0], null, 2));
 
   // Dump the TTI graph with simulated timings to a trace if LANTERN_DEBUG is enabled
-  // console.log(Simulator.ALL_NODE_TIMINGS.keys());
-  const pessimisticTTINodeTimings = Simulator.ALL_NODE_TIMINGS.get('pessimisticLargestContentfulPaint');
+  const pessimisticTTINodeTimings = Simulator.ALL_NODE_TIMINGS.get('pessimisticInteractive');
   if (process.env.LANTERN_DEBUG && pessimisticTTINodeTimings) {
     const outputTraceFile = path.basename(tracePath).replace(/.trace.json$/, '.lantern.trace.json');
     const outputTracePath = path.join(LH_ROOT, '.tmp', outputTraceFile);
     const trace = traceSaver.convertNodeTimingsToTrace(pessimisticTTINodeTimings);
-    // console.log(outputTracePath);
     fs.writeFileSync(outputTracePath, JSON.stringify(trace, null, 2));
   }
 }

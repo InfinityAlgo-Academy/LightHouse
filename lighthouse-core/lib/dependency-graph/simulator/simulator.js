@@ -30,15 +30,6 @@ const NodeState = {
   Complete: 3,
 };
 
-/** @type {Record<NetworkNode['record']['priority'], number>} */
-const PriorityStartTimePenalty = {
-  VeryHigh: 0,
-  High: 0.25,
-  Medium: 0.5,
-  Low: 1,
-  VeryLow: 2,
-};
-
 /** @type {Map<string, LH.Gatherer.Simulation.Result['nodeTimings']>} */
 const ALL_SIMULATION_NODE_TIMINGS = new Map();
 
@@ -543,8 +534,6 @@ class Simulator {
    */
   static _computeNodeStartPosition(node) {
     if (node.type === 'cpu') return node.startTime;
-    // return node.startTime + (PriorityStartTimePenalty[node.priority] * 1000 * 1000 || 0);
-    // console.log(node.priority, node.weightedPriority);
     const penalty = (1 - node.weightedPriority) * 2.0 * (1000 * 1000);
     return node.startTime + (penalty || 0);
   }
