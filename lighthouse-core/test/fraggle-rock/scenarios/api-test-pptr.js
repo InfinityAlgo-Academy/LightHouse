@@ -45,8 +45,6 @@ describe('Fraggle Rock API', () => {
       const url = `${state.serverBaseUrl}/onclick.html#done`;
       expect(artifacts.URL).toEqual({
         initialUrl: url,
-        // TODO: Remove `requestedUrl` in snapshot mode
-        requestedUrl: url,
         finalUrl: url,
       });
 
@@ -79,8 +77,6 @@ describe('Fraggle Rock API', () => {
       const {lhr, artifacts} = result;
       expect(artifacts.URL).toEqual({
         initialUrl: 'about:blank',
-        // TODO: Remove `requestedUrl` in timespan mode
-        requestedUrl: 'about:blank',
         finalUrl: `${state.serverBaseUrl}/onclick.html#done`,
       });
 
@@ -139,8 +135,6 @@ describe('Fraggle Rock API', () => {
 
       expect(result.artifacts.URL).toEqual({
         initialUrl,
-        // TODO: Remove `requestedUrl` in timespan mode
-        requestedUrl: initialUrl,
         finalUrl: `${initialUrl}#done`,
       });
 

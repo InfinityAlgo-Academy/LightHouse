@@ -396,6 +396,7 @@ class PageDependencyGraph {
     const networkNodeOutput = PageDependencyGraph.getNetworkNodeOutput(networkRecords);
     const cpuNodes = PageDependencyGraph.getCPUNodes(processedTrace);
     const {requestedUrl, mainDocumentUrl} = URL;
+    if (!requestedUrl) throw new Error('requestedUrl is required to get the root request');
     if (!mainDocumentUrl) throw new Error('mainDocumentUrl is required to get the main resource');
 
     const rootRequest = NetworkAnalyzer.findResourceForUrl(networkRecords, requestedUrl);

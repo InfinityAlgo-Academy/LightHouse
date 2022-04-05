@@ -229,9 +229,8 @@ async function _navigation(navigationContext) {
   const navigateResult = await _navigate(navigationContext);
 
   // Every required url is initialized to an empty string in `getBaseArtifacts`.
-  // If we haven't set the required urls yet, set them here.
-  const {URL} = phaseState.baseArtifacts;
-  if (!URL.finalUrl || !URL.initialUrl) {
+  // If we haven't set all the required urls yet, set them here.
+  if (!Object.values(phaseState.baseArtifacts).every(Boolean)) {
     phaseState.baseArtifacts.URL = {
       initialUrl,
       requestedUrl: navigateResult.requestedUrl,

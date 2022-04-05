@@ -59,8 +59,6 @@ async function startTimespanGather(options) {
         async () => {
           baseArtifacts.URL = {
             initialUrl,
-            // TODO: Remove requestedUrl from timespan mode
-            requestedUrl: initialUrl,
             finalUrl,
           };
 

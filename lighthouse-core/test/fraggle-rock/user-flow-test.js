@@ -302,7 +302,6 @@ describe('UserFlow', () => {
           artifacts: {
             URL: {
               initialUrl: 'https://www.example.com',
-              requestedUrl: 'https://www.example.com',
               finalUrl: 'https://www.example.com',
             },
             GatherContext: {gatherMode: 'timespan'},
@@ -315,7 +314,6 @@ describe('UserFlow', () => {
           artifacts: {
             URL: {
               initialUrl: 'https://www.example.com',
-              requestedUrl: 'https://www.example.com',
               finalUrl: 'https://www.example.com',
             },
             GatherContext: {gatherMode: 'snapshot'},

@@ -181,9 +181,9 @@ function createMockBaseArtifacts() {
     fetchTime: new Date().toISOString(),
     URL: {
       initialUrl: 'about:blank',
-      finalUrl: 'https://example.com',
-      mainDocumentUrl: 'https://example.com',
       requestedUrl: 'https://example.com',
+      mainDocumentUrl: 'https://example.com',
+      finalUrl: 'https://example.com',
     },
     PageLoadError: null,
     settings: defaultSettings,

@@ -99,8 +99,7 @@ describe('NavigationRunner', () => {
     navigation = createNavigation().navigation;
     computedCache = new Map();
     baseArtifacts = createMockBaseArtifacts();
-    // TODO: Make `requestedUrl` optional.
-    baseArtifacts.URL = {initialUrl: '', requestedUrl: '', finalUrl: ''};
+    baseArtifacts.URL = {initialUrl: '', finalUrl: ''};
 
     mockDriver = createMockDriver();
     mockDriver.url.mockReturnValue('about:blank');
@@ -146,7 +145,6 @@ describe('NavigationRunner', () => {
       expect(baseArtifacts).toMatchObject({
         URL: {
           initialUrl: '',
-          requestedUrl: '',
           finalUrl: '',
         },
       });

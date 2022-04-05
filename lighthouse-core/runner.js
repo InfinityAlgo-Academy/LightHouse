@@ -158,11 +158,6 @@ class Runner {
         // No browser required, just load the artifacts from disk.
         const path = this._getDataSavePath(settings);
         artifacts = assetSaver.loadArtifacts(path);
-        const requestedUrl = artifacts.URL.requestedUrl;
-
-        if (!requestedUrl) {
-          throw new Error('Cannot run audit mode on empty URL');
-        }
       } else {
         const runnerStatus = {msg: 'Gather phase', id: 'lh:runner:gather'};
         log.time(runnerStatus, 'verbose');

@@ -1,7 +1,6 @@
 {
   "lhr": {
     "lighthouseVersion": "9.5.0",
-    "requestedUrl": "https://www.coursehero.com/",
     "finalUrl": "https://www.coursehero.com/",
     "fetchTime": "2022-03-31T18:06:36.404Z",
     "gatherMode": "navigation",
@@ -24133,5 +24132,5 @@
       }
     }
   }
-  
+
 }

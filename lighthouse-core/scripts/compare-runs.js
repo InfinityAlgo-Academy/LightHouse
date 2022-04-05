@@ -233,7 +233,7 @@ function aggregateResults(name) {
       continue;
     }
 
-    if (argv.urlFilter && !lhr.requestedUrl.includes(argv.urlFilter)) continue;
+    if (argv.urlFilter && !lhr.requestedUrl?.includes(argv.urlFilter)) continue;
 
     const metrics = lhr.audits.metrics?.details ?
     /** @type {!LH.Audit.Details.Table} */ (lhr.audits.metrics.details).items[0] :

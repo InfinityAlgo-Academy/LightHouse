@@ -79,7 +79,6 @@ describe('Snapshot Runner', () => {
       fetchTime: expect.any(String),
       URL: {
         initialUrl: 'https://lighthouse.example.com/',
-        requestedUrl: 'https://lighthouse.example.com/',
         finalUrl: 'https://lighthouse.example.com/',
       },
     });
