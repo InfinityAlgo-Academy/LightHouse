@@ -360,30 +360,6 @@ class Simulator {
     const timingData = this._nodeTimings.getInProgress(node);
     const isFinished = timingData.estimatedTimeElapsed === timePeriodLength;
 
-    // Adjust network node priority if this cpu node has a ResourceChangePriority event.
-    if (node.type === BaseNode.TYPES.CPU) {
-      const multiplier = this._getCPUMultiplier(node);
-      const newTimeElapsed = timingData.timeElapsed + timePeriodLength;
-      for (const event of node.childEvents) {
-        if (event.name !== 'ResourceChangePriority' || !event.args.data?.priority) continue;
-
-        // Convert the event timestamp to the simulation time domain.
-        const eventTs = (event.ts - node.event.ts) / 1000 * multiplier;
-        if (!(eventTs > timingData.timeElapsed && eventTs <= newTimeElapsed)) continue;
-
-        const networkNode =
-          event.args.data?.requestId && this._networkNodes[event.args.data.requestId];
-        // The graph may have excluded some network nodes.
-        if (!networkNode) continue;
-
-        networkNode.priority = event.args.data.priority;
-        if (this._cachedNodeListByStartPosition.includes(node)) {
-          this._removeNodeFromSortedStartPositions(node);
-          this._insertNodeIntoSortedStartPositions(node);
-        }
-      }
-    }
-
     const hasNetworkComponent = node.type === BaseNode.TYPES.NETWORK && !node.isConnectionless;
     if (!hasNetworkComponent) {
       return isFinished
@@ -567,7 +543,10 @@ class Simulator {
    */
   static _computeNodeStartPosition(node) {
     if (node.type === 'cpu') return node.startTime;
-    return node.startTime + (PriorityStartTimePenalty[node.priority] * 1000 * 1000 || 0);
+    // return node.startTime + (PriorityStartTimePenalty[node.priority] * 1000 * 1000 || 0);
+    // console.log(node.priority, node.weightedPriority);
+    const penalty = (1 - node.weightedPriority) * 2.0 * (1000 * 1000);
+    return node.startTime + (penalty || 0);
   }
 }
 

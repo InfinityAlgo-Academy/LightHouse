@@ -17,18 +17,24 @@ class NetworkNode extends BaseNode {
     /** @private */
     this._record = networkRecord;
     /** @private */
-    // Initial priority should always be set, it's a side effect of how network-request
-    // is implemented that this property could be undefined. It should never really happen
-    // but fallback to the network record's "priority" to make TS happy.
-    this._priority = networkRecord.initialPriority || networkRecord.priority;
+    this._priority = networkRecord.priority;
+    /**
+     * Value 0-1 where 0 is VeryLow and 1 is VeryHigh, weighted over time
+     * as a network resource's priority is elevated as marked by ResourceChangePriority
+     * trace events.
+     */
+    this.weightedPriority = 0; // Is really initialized by createGraph.
   }
 
   get type() {
     return BaseNode.TYPES.NETWORK;
   }
 
+  /**
+   * Final priority of the network record.
+   */
   get priority() {
-    return this._priority;
+    return this._record.priority;
   }
 
   set priority(priority) {
@@ -104,6 +110,7 @@ class NetworkNode extends BaseNode {
    */
   cloneWithoutRelationships() {
     const node = new NetworkNode(this._record);
+    node.weightedPriority = this.weightedPriority;
     node.setIsMainDocument(this._isMainDocument);
     return node;
   }

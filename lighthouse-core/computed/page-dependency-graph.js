@@ -13,6 +13,7 @@ const NetworkRequest = require('../lib/network-request.js');
 const ProcessedTrace = require('./processed-trace.js');
 const NetworkRecords = require('./network-records.js');
 const NetworkAnalyzer = require('../lib/dependency-graph/simulator/network-analyzer.js');
+const { arithmeticMean } = require('../scoring.js');
 
 /** @typedef {import('../lib/dependency-graph/base-node.js').Node} Node */
 /** @typedef {Omit<LH.Artifacts['URL'], 'initialUrl'|'finalUrl'>} URLArtifact */
@@ -368,6 +369,53 @@ class PageDependencyGraph {
   }
 
   /**
+   * @param {NetworkNodeOutput} networkNodeOutput
+   * @param {Array<CPUNode>} cpuNodes
+   */
+  static setNetworkWeightedPriorities(networkNodeOutput, cpuNodes) {
+    /** @type {Map<NetworkNode, Array<{ts: number, priority: string}>>} */
+    const nodeToPriorityChanges = new Map();
+
+    for (const node of networkNodeOutput.nodes) {
+      const changes = nodeToPriorityChanges.get(node) || [];
+      changes.push({ts: node.startTime, priority: node.record.initialPriority || 'VeryLow'});
+      nodeToPriorityChanges.set(node, changes);
+    }
+
+    for (const node of cpuNodes) {
+      for (const event of node.childEvents) {
+        if (event.name !== 'ResourceChangePriority' || !event.args.data?.priority) continue;
+
+        const networkNode = networkNodeOutput.nodes.find(n => n.id === event.args.data?.requestId);
+        // The graph may have excluded some network nodes.
+        if (!networkNode) continue;
+
+        const changes = nodeToPriorityChanges.get(networkNode) || [];
+        changes.push({ts: event.ts, priority: event.args.data.priority});
+        nodeToPriorityChanges.set(networkNode, changes);
+      }
+    }
+
+    const priorities = ['VeryLow', 'Low', 'Medium', 'High', 'VeryHigh'];
+    for (const [node, changes] of nodeToPriorityChanges) {
+      const duration = node.endTime - node.startTime;
+      const weightedValues = changes.map((c, i) => {
+        const nextTs = i === changes.length - 1 ? node.endTime : changes[i + 1].ts;
+        const weight = (nextTs - c.ts) / duration;
+        return {
+          score: priorities.indexOf(c.priority) / (priorities.length - 1),
+          weight,
+        };
+      });
+      node.weightedPriority = arithmeticMean(weightedValues) || 0;
+
+      // if (node.weightedPriority === 0.25 && node.priority === 'High') {
+      //   console.log('?', node.id, node.record.url, node.priority, node.weightedPriority, changes);
+      // }
+    }
+  }
+
+  /**
    * Removes the given node from the graph, but retains all paths between its dependencies and
    * dependents.
    * @param {Node} node
@@ -412,6 +460,8 @@ class PageDependencyGraph {
 
     PageDependencyGraph.linkNetworkNodes(rootNode, networkNodeOutput);
     PageDependencyGraph.linkCPUNodes(rootNode, networkNodeOutput, cpuNodes);
+    PageDependencyGraph.setNetworkWeightedPriorities(networkNodeOutput, cpuNodes);
+
     mainDocumentNode.setIsMainDocument(true);
 
     if (NetworkNode.hasCycle(rootNode)) {

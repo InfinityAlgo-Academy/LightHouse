@@ -169,6 +169,7 @@ class TcpConnection {
       congestionWindow = Math.max(Math.min(maximumCongestionWindow, congestionWindow * 2), 1);
 
       const bytesDownloadedInWindow = congestionWindow * TCP_SEGMENT_SIZE;
+      // if (options.debug) console.log({bytesDownloadedInWindow});
       totalBytesDownloaded += bytesDownloadedInWindow;
       bytesRemaining -= bytesDownloadedInWindow;
     }
@@ -176,6 +177,7 @@ class TcpConnection {
     const timeElapsed = timeElapsedForTTFB + downloadTimeElapsed;
     const extraBytesDownloaded = this._h2 ? Math.max(totalBytesDownloaded - bytesToDownload, 0) : 0;
     const bytesDownloaded = Math.max(Math.min(totalBytesDownloaded, bytesToDownload), 0);
+    // if (options.debug) console.log({totalBytesDownloaded, bytesDownloaded});
 
     return {
       roundTrips,
