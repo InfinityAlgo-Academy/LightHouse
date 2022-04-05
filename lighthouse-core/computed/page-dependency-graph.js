@@ -13,7 +13,7 @@ const NetworkRequest = require('../lib/network-request.js');
 const ProcessedTrace = require('./processed-trace.js');
 const NetworkRecords = require('./network-records.js');
 const NetworkAnalyzer = require('../lib/dependency-graph/simulator/network-analyzer.js');
-const { arithmeticMean } = require('../scoring.js');
+const {arithmeticMean} = require('../scoring.js');
 
 /** @typedef {import('../lib/dependency-graph/base-node.js').Node} Node */
 /** @typedef {Omit<LH.Artifacts['URL'], 'initialUrl'|'finalUrl'>} URLArtifact */

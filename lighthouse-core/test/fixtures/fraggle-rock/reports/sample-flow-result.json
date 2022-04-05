@@ -8402,8 +8402,61 @@
             "id": "third-party-summary",
             "title": "Minimize third-party usage",
             "description": "Third-party code can significantly impact load performance. Limit the number of redundant third-party providers and try to load third-party code after your page has primarily finished loading. [Learn more](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/).",
-            "score": null,
-            "scoreDisplayMode": "notApplicable"
+            "score": 1,
+            "scoreDisplayMode": "binary",
+            "displayValue": "Third-party code blocked the main thread for 0 ms",
+            "details": {
+              "type": "table",
+              "headings": [
+                {
+                  "key": "entity",
+                  "itemType": "link",
+                  "text": "Third-Party",
+                  "subItemsHeading": {
+                    "key": "url",
+                    "itemType": "url"
+                  }
+                },
+                {
+                  "key": "transferSize",
+                  "granularity": 1,
+                  "itemType": "bytes",
+                  "text": "Transfer Size",
+                  "subItemsHeading": {
+                    "key": "transferSize"
+                  }
+                },
+                {
+                  "key": "blockingTime",
+                  "granularity": 1,
+                  "itemType": "ms",
+                  "text": "Main-Thread Blocking Time",
+                  "subItemsHeading": {
+                    "key": "blockingTime"
+                  }
+                }
+              ],
+              "items": [
+                {
+                  "mainThreadTime": 0,
+                  "blockingTime": 0,
+                  "transferSize": 3888,
+                  "entity": {
+                    "type": "link",
+                    "text": "Algolia",
+                    "url": "https://www.algolia.com/"
+                  },
+                  "subItems": {
+                    "type": "subitems",
+                    "items": []
+                  }
+                }
+              ],
+              "summary": {
+                "wastedBytes": 3888,
+                "wastedMs": 0
+              }
+            }
           },
           "layout-shift-elements": {
             "id": "layout-shift-elements",
@@ -10105,6 +10158,7 @@
             ],
             "lighthouse-core/lib/i18n/i18n.js | columnTransferSize": [
               "audits[resource-summary].details.headings[2].text",
+              "audits[third-party-summary].details.headings[1].text",
               "audits[uses-long-cache-ttl].details.headings[2].text",
               "audits[total-byte-weight].details.headings[1].text"
             ],
@@ -10140,6 +10194,20 @@
             ],
             "lighthouse-core/audits/third-party-summary.js | description": [
               "audits[third-party-summary].description"
+            ],
+            "lighthouse-core/audits/third-party-summary.js | displayValue": [
+              {
+                "values": {
+                  "timeInMs": 0
+                },
+                "path": "audits[third-party-summary].displayValue"
+              }
+            ],
+            "lighthouse-core/audits/third-party-summary.js | columnThirdParty": [
+              "audits[third-party-summary].details.headings[0].text"
+            ],
+            "lighthouse-core/lib/i18n/i18n.js | columnBlockingTime": [
+              "audits[third-party-summary].details.headings[2].text"
             ],
             "lighthouse-core/audits/layout-shift-elements.js | title": [
               "audits[layout-shift-elements].title"
