@@ -80,6 +80,7 @@ async function internalRun(url, tmpPath, configJson, options) {
     `-A=${artifactsDirectory}`,
     '--port=0',
     '--quiet',
+    '--chrome-flags=--headless=chrome',
   ];
 
   if (useFraggleRock) {
