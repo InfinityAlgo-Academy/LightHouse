@@ -15,7 +15,7 @@ interface Result {
   gatherMode: Result.GatherMode;
   /** The URL that Lighthouse initially navigated to. Will be `undefined` in timespan/snapshot. */
   requestedUrl?: string;
-  /** The post-redirects URL that Lighthouse loaded. */
+  /** The URL of the page after Lighthouse finishes. */
   finalUrl: string;
   /** The ISO-8601 timestamp of when the results were generated. */
   fetchTime: string;

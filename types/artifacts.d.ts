@@ -200,11 +200,7 @@ declare module Artifacts {
      * Will be `undefined` in timespan/snapshot.
      */
     mainDocumentUrl?: string;
-    /**
-     * Will be the same as `mainDocumentUrl` in navigation mode.
-     * Wil be the URL of the main frame after Lighthouse finishes in timespan/snapshot.
-     * TODO: Use the main frame URL in navigation mode as well.
-     */
+    /** URL of the main frame after Lighthouse finishes. */
     finalUrl: string;
   }
 

@@ -84,7 +84,12 @@ class TreemapViewer {
       try {
         const url = new URL(node.name);
         node.name = TreemapUtil.elideSameOrigin(url, this.documentUrl);
-        if (url.href === this.documentUrl.href) {
+        const isInlineHtmlNode =
+          node.children?.every(child => child.name.startsWith('(inline)')) ||
+          // Backport for treemap data that does not add the "(inline)" prefix to each inline script.
+          // This is pre-10.0 when the `finalUrl` represented the main document url.
+          url.href === this.documentUrl.href;
+        if (isInlineHtmlNode) {
           node.name += ' (inline)';
         }
       } catch {}

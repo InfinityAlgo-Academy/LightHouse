@@ -124,6 +124,8 @@ beforeEach(() => {
   driver = new EmulationDriver(connectionStub);
   resetDefaultMockResponses();
 
+  fakeDriver.url = jest.fn().mockResolvedValue('about:blank');
+
   const emulation = require('../../lib/emulation.js');
   emulation.emulate = jest.fn();
   emulation.throttle = jest.fn();
@@ -153,6 +155,8 @@ describe('GatherRunner', function() {
     const driver = {};
     const gotoURL = jest.requireMock('../../gather/driver/navigation.js').gotoURL;
     gotoURL.mockResolvedValue({mainDocumentUrl: url2, warnings: []});
+    driver.url = jest.fn()
+      .mockResolvedValueOnce(url2);
 
     const passContext = {
       url: url1,
@@ -166,6 +170,7 @@ describe('GatherRunner', function() {
           finalUrl: url1,
         },
       },
+      driver,
     };
 
     return GatherRunner.loadPage(driver, passContext).then(_ => {
@@ -228,6 +233,9 @@ describe('GatherRunner', function() {
     const mainDocumentUrl = 'https://example.com/interstitial';
     const gotoURL = jest.requireMock('../../gather/driver/navigation.js').gotoURL;
     gotoURL.mockResolvedValue({mainDocumentUrl, timedOut: false, warnings: []});
+    fakeDriver.url = jest.fn()
+      .mockResolvedValueOnce('about:blank')
+      .mockResolvedValueOnce(mainDocumentUrl);
     const config = makeConfig({passes: [{passName: 'defaultPass'}]});
     const options = {
       requestedUrl,

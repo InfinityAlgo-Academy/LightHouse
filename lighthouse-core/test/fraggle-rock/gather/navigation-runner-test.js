@@ -102,7 +102,9 @@ describe('NavigationRunner', () => {
     baseArtifacts.URL = {initialUrl: '', finalUrl: ''};
 
     mockDriver = createMockDriver();
-    mockDriver.url.mockReturnValue('about:blank');
+    mockDriver.url
+      .mockReturnValueOnce('about:blank')
+      .mockImplementationOnce(() => requestedUrl);
     driver = mockDriver.asDriver();
 
     mocks.reset();
