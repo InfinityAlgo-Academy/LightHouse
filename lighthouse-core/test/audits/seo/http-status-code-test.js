@@ -16,9 +16,9 @@ describe('SEO: HTTP code audit', () => {
     const statusCodes = [403, 404, 500];
 
     const allRuns = statusCodes.map(statusCode => {
-      const finalUrl = 'https://example.com';
+      const mainDocumentUrl = 'https://example.com';
       const mainResource = {
-        url: finalUrl,
+        url: mainDocumentUrl,
         statusCode,
       };
       const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
@@ -26,7 +26,7 @@ describe('SEO: HTTP code audit', () => {
       const artifacts = {
         GatherContext: {gatherMode: 'timespan'},
         devtoolsLogs: {[HTTPStatusCodeAudit.DEFAULT_PASS]: devtoolsLog},
-        URL: {finalUrl},
+        URL: {mainDocumentUrl},
       };
 
       return HTTPStatusCodeAudit.audit(artifacts, {computedCache: new Map()}).then(auditResult => {
@@ -39,9 +39,9 @@ describe('SEO: HTTP code audit', () => {
   });
 
   it('passes when status code is successful', () => {
-    const finalUrl = 'https://example.com';
+    const mainDocumentUrl = 'https://example.com';
     const mainResource = {
-      url: finalUrl,
+      url: mainDocumentUrl,
       statusCode: 200,
     };
     const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
@@ -49,7 +49,7 @@ describe('SEO: HTTP code audit', () => {
     const artifacts = {
       GatherContext: {gatherMode: 'navigation'},
       devtoolsLogs: {[HTTPStatusCodeAudit.DEFAULT_PASS]: devtoolsLog},
-      URL: {finalUrl},
+      URL: {mainDocumentUrl},
     };
 
     return HTTPStatusCodeAudit.audit(artifacts, {computedCache: new Map()}).then(auditResult => {
@@ -58,12 +58,12 @@ describe('SEO: HTTP code audit', () => {
   });
 
   it('throws when main resource cannot be found in navigation', async () => {
-    const finalUrl = 'https://example.com';
+    const mainDocumentUrl = 'https://example.com';
 
     const artifacts = {
       GatherContext: {gatherMode: 'navigation'},
       devtoolsLogs: {[HTTPStatusCodeAudit.DEFAULT_PASS]: []},
-      URL: {finalUrl},
+      URL: {mainDocumentUrl},
     };
 
     const resultPromise = HTTPStatusCodeAudit.audit(artifacts, {computedCache: new Map()});

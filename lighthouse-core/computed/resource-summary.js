@@ -35,11 +35,11 @@ class ResourceSummary {
 
   /**
    * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
-   * @param {string} mainResourceURL
+   * @param {LH.Artifacts.URL} URLArtifact
    * @param {ImmutableObject<LH.Budget[]|null>} budgets
    * @return {Record<LH.Budget.ResourceType, ResourceEntry>}
    */
-  static summarize(networkRecords, mainResourceURL, budgets) {
+  static summarize(networkRecords, URLArtifact, budgets) {
     /** @type {Record<LH.Budget.ResourceType, ResourceEntry>} */
     const resourceSummary = {
       'stylesheet': {count: 0, resourceSize: 0, transferSize: 0},
@@ -52,13 +52,13 @@ class ResourceSummary {
       'total': {count: 0, resourceSize: 0, transferSize: 0},
       'third-party': {count: 0, resourceSize: 0, transferSize: 0},
     };
-    const budget = Budget.getMatchingBudget(budgets, mainResourceURL);
+    const budget = Budget.getMatchingBudget(budgets, URLArtifact.mainDocumentUrl);
     /** @type {ReadonlyArray<string>} */
     let firstPartyHosts = [];
     if (budget?.options?.firstPartyHostnames) {
       firstPartyHosts = budget.options.firstPartyHostnames;
     } else {
-      const rootDomain = Util.getRootDomain(mainResourceURL);
+      const rootDomain = Util.getRootDomain(URLArtifact.finalUrl);
       firstPartyHosts = [`*.${rootDomain}`];
     }
 
@@ -107,7 +107,7 @@ class ResourceSummary {
    */
   static async compute_(data, context) {
     const networkRecords = await NetworkRecords.request(data.devtoolsLog, context);
-    return ResourceSummary.summarize(networkRecords, data.URL.finalUrl, data.budgets);
+    return ResourceSummary.summarize(networkRecords, data.URL, data.budgets);
   }
 }
 

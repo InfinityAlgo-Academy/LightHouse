@@ -20,7 +20,7 @@ describe('Performance: server-response-time audit', () => {
 
     const artifacts = {
       devtoolsLogs: {[ServerResponseTime.DEFAULT_PASS]: devtoolsLog},
-      URL: {finalUrl: 'https://example.com/'},
+      URL: {mainDocumentUrl: 'https://example.com/'},
       GatherContext: {gatherMode: 'navigation'},
     };
 
@@ -45,7 +45,7 @@ describe('Performance: server-response-time audit', () => {
 
     const artifacts = {
       devtoolsLogs: {[ServerResponseTime.DEFAULT_PASS]: devtoolsLog},
-      URL: {finalUrl: 'https://example.com/'},
+      URL: {mainDocumentUrl: 'https://example.com/'},
       GatherContext: {gatherMode: 'navigation'},
     };
 
@@ -61,7 +61,7 @@ describe('Performance: server-response-time audit', () => {
 
     const artifacts = {
       devtoolsLogs: {[ServerResponseTime.DEFAULT_PASS]: devtoolsLog},
-      URL: {finalUrl: 'https://example.com/'},
+      URL: {mainDocumentUrl: 'https://example.com/'},
       GatherContext: {gatherMode: 'navigation'},
     };
 

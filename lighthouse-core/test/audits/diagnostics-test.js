@@ -18,7 +18,7 @@ describe('Diagnostics audit', () => {
       traces: {defaultPass: acceptableTrace},
       devtoolsLogs: {defaultPass: acceptableDevToolsLog},
       URL: {
-        finalUrl: 'https://pwa.rocks/',
+        mainDocumentUrl: 'https://pwa.rocks/',
       },
     };
 

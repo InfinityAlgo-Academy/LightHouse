@@ -44,7 +44,7 @@ describe('Third party facades audit', () => {
         ]),
       },
       traces: {defaultPass: createTestTrace({timeOrigin: 0, traceEnd: 2000})},
-      URL: {finalUrl: 'https://example.com'},
+      URL: {mainDocumentUrl: 'https://example.com'},
     };
 
     const settings = {throttlingMethod: 'simulate', throttling: {cpuSlowdownMultiplier: 4}};
@@ -91,7 +91,7 @@ describe('Third party facades audit', () => {
         ]),
       },
       traces: {defaultPass: createTestTrace({timeOrigin: 0, traceEnd: 2000})},
-      URL: {finalUrl: 'https://example.com'},
+      URL: {mainDocumentUrl: 'https://example.com'},
     };
 
     const settings = {throttlingMethod: 'simulate', throttling: {cpuSlowdownMultiplier: 4}};
@@ -159,7 +159,7 @@ describe('Third party facades audit', () => {
         ]),
       },
       traces: {defaultPass: createTestTrace({timeOrigin: 0, traceEnd: 2000})},
-      URL: {finalUrl: 'https://example.com'},
+      URL: {mainDocumentUrl: 'https://example.com'},
     };
 
     const settings = {throttlingMethod: 'simulate', throttling: {cpuSlowdownMultiplier: 4}};
@@ -203,7 +203,7 @@ describe('Third party facades audit', () => {
         ]),
       },
       traces: {defaultPass: createTestTrace({timeOrigin: 0, traceEnd: 2000})},
-      URL: {finalUrl: 'https://intercomcdn.com'},
+      URL: {mainDocumentUrl: 'https://intercomcdn.com'},
     };
 
     const settings = {throttlingMethod: 'simulate', throttling: {cpuSlowdownMultiplier: 4}};
@@ -240,7 +240,7 @@ describe('Third party facades audit', () => {
         ]),
       },
       traces: {defaultPass: noThirdPartyTrace},
-      URL: {finalUrl: 'https://example.com'},
+      URL: {mainDocumentUrl: 'https://example.com'},
     };
 
     const settings = {throttlingMethod: 'simulate', throttling: {cpuSlowdownMultiplier: 4}};

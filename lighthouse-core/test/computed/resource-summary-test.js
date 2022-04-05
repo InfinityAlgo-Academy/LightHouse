@@ -14,7 +14,11 @@ const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.
 function mockArtifacts(networkRecords) {
   return {
     devtoolsLog: networkRecordsToDevtoolsLog(networkRecords),
-    URL: {requestedUrl: networkRecords[0].url, finalUrl: networkRecords[0].url},
+    URL: {
+      requestedUrl: networkRecords[0].url,
+      mainDocumentUrl: networkRecords[0].url,
+      finalUrl: networkRecords[0].url,
+    },
     budgets: null,
   };
 }

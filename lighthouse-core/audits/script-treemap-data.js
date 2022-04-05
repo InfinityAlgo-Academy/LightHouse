@@ -19,6 +19,7 @@ const Audit = require('./audit.js');
 const JsBundles = require('../computed/js-bundles.js');
 const UnusedJavaScriptSummary = require('../computed/unused-javascript-summary.js');
 const ModuleDuplication = require('../computed/module-duplication.js');
+const {isInline} = require('../lib/script-helpers.js');
 
 class ScriptTreemapDataAudit extends Audit {
   /**
@@ -236,8 +237,7 @@ class ScriptTreemapDataAudit extends Audit {
 
       // If this is an inline script, place the node inside a top-level (aka depth-one) node.
       // Also separate each iframe / the main page's inline scripts into their own top-level nodes.
-      const isInlineHtmlScript = script.startColumn || script.startLine;
-      if (isInlineHtmlScript) {
+      if (isInline(script)) {
         let htmlNode = htmlNodesByFrameId.get(script.executionContextAuxData.frameId);
         if (!htmlNode) {
           htmlNode = {

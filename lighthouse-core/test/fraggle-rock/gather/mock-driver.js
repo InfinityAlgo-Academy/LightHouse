@@ -179,7 +179,12 @@ function mockDriverModule(driverProvider) {
 function createMockBaseArtifacts() {
   return {
     fetchTime: new Date().toISOString(),
-    URL: {initialUrl: 'about:blank', finalUrl: 'https://example.com', requestedUrl: 'https://example.com'},
+    URL: {
+      initialUrl: 'about:blank',
+      finalUrl: 'https://example.com',
+      mainDocumentUrl: 'https://example.com',
+      requestedUrl: 'https://example.com',
+    },
     PageLoadError: null,
     settings: defaultSettings,
     BenchmarkIndex: 500,

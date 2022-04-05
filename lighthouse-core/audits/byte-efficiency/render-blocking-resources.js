@@ -262,7 +262,6 @@ class RenderBlockingResources extends Audit {
     try {
       const unusedCssItems = await UnusedCSS.request({
         CSSUsage: artifacts.CSSUsage,
-        URL: artifacts.URL,
         devtoolsLog: artifacts.devtoolsLogs[Audit.DEFAULT_PASS],
       }, context);
       for (const item of unusedCssItems) {

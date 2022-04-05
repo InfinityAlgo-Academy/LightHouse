@@ -6,6 +6,14 @@
 'use strict';
 
 /**
+ * @param {LH.Artifacts.Script} script
+ * @return {boolean}
+ */
+function isInline(script) {
+  return Boolean(script.startLine || script.startColumn);
+}
+
+/**
  * @param {LH.Artifacts.NetworkRequest[]} networkRecords
  * @param {LH.Artifacts.Script} script
  * @return {LH.Artifacts.NetworkRequest|undefined}
@@ -18,4 +26,4 @@ function getRequestForScript(networkRecords, script) {
   return networkRequest;
 }
 
-module.exports = {getRequestForScript};
+module.exports = {getRequestForScript, isInline};
