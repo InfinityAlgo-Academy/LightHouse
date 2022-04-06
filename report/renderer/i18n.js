@@ -22,14 +22,37 @@ export class I18n {
     // When testing, use a locale with more exciting numeric formatting.
     if (locale === 'en-XA') locale = 'de';
 
-    this._numberDateLocale = locale;
-    this._numberFormatter = new Intl.NumberFormat(locale);
-    this._percentFormatter = new Intl.NumberFormat(locale, {style: 'percent'});
+    this._locale = locale;
     this._strings = strings;
   }
 
   get strings() {
     return this._strings;
+  }
+
+  /**
+   * @param {number} number
+   * @param {number} granularity
+   * @param {Intl.NumberFormatOptions} opts
+   * @return {string}
+   */
+  _formatNumberWithGranularity(number, granularity, opts = {}) {
+    opts = {...opts};
+    const log10 = -Math.log10(granularity);
+    if (!Number.isFinite(log10) || (granularity > 1 && Math.floor(log10) !== log10)) {
+      throw new Error(`granularity of ${granularity} is invalid`);
+    }
+
+    if (granularity < 1) {
+      opts.minimumFractionDigits = opts.maximumFractionDigits = Math.ceil(log10);
+    }
+
+    number = Math.round(number / granularity) * granularity;
+
+    // Avoid displaying a negative value that rounds to zero as "0".
+    if (Object.is(number, -0)) number = 0;
+
+    return new Intl.NumberFormat(this._locale, opts).format(number).replace(' ', NBSP2);
   }
 
   /**
@@ -39,8 +62,7 @@ export class I18n {
    * @return {string}
    */
   formatNumber(number, granularity = 0.1) {
-    const coarseValue = Math.round(number / granularity) * granularity;
-    return this._numberFormatter.format(coarseValue);
+    return this._formatNumberWithGranularity(number, granularity);
   }
 
   /**
@@ -49,7 +71,7 @@ export class I18n {
    * @return {string}
    */
   formatPercent(number) {
-    return this._percentFormatter.format(number);
+    return new Intl.NumberFormat(this._locale, {style: 'percent'}).format(number);
   }
 
   /**
@@ -58,9 +80,7 @@ export class I18n {
    * @return {string}
    */
   formatBytesToKiB(size, granularity = 0.1) {
-    const formatter = this._byteFormatterForGranularity(granularity);
-    const kbs = formatter.format(Math.round(size / 1024 / granularity) * granularity);
-    return `${kbs}${NBSP2}KiB`;
+    return this._formatNumberWithGranularity(size / KiB, granularity) + `${NBSP2}KiB`;
   }
 
   /**
@@ -69,9 +89,7 @@ export class I18n {
    * @return {string}
    */
   formatBytesToMiB(size, granularity = 0.1) {
-    const formatter = this._byteFormatterForGranularity(granularity);
-    const kbs = formatter.format(Math.round(size / (1024 ** 2) / granularity) * granularity);
-    return `${kbs}${NBSP2}MiB`;
+    return this._formatNumberWithGranularity(size / MiB, granularity) + `${NBSP2}MiB`;
   }
 
   /**
@@ -80,9 +98,11 @@ export class I18n {
    * @return {string}
    */
   formatBytes(size, granularity = 1) {
-    const formatter = this._byteFormatterForGranularity(granularity);
-    const kbs = formatter.format(Math.round(size / granularity) * granularity);
-    return `${kbs}${NBSP2}bytes`;
+    return this._formatNumberWithGranularity(size, granularity, {
+      style: 'unit',
+      unit: 'byte',
+      unitDisplay: 'long',
+    });
   }
 
   /**
@@ -93,26 +113,7 @@ export class I18n {
   formatBytesWithBestUnit(size, granularity = 0.1) {
     if (size >= MiB) return this.formatBytesToMiB(size, granularity);
     if (size >= KiB) return this.formatBytesToKiB(size, granularity);
-    return this.formatNumber(size, granularity) + '\xa0B';
-  }
-
-  /**
-   * Format bytes with a constant number of fractional digits, i.e. for a granularity of 0.1, 10 becomes '10.0'
-   * @param {number} granularity Controls how coarse the displayed value is
-   * @return {Intl.NumberFormat}
-   */
-  _byteFormatterForGranularity(granularity) {
-    // assume any granularity above 1 will not contain fractional parts, i.e. will never be 1.5
-    let numberOfFractionDigits = 0;
-    if (granularity < 1) {
-      numberOfFractionDigits = -Math.floor(Math.log10(granularity));
-    }
-
-    return new Intl.NumberFormat(this._numberDateLocale, {
-      ...this._numberFormatter.resolvedOptions(),
-      maximumFractionDigits: numberOfFractionDigits,
-      minimumFractionDigits: numberOfFractionDigits,
-    });
+    return this.formatBytes(size, granularity);
   }
 
   /**
@@ -121,10 +122,11 @@ export class I18n {
    * @return {string}
    */
   formatMilliseconds(ms, granularity = 10) {
-    const coarseTime = Math.round(ms / granularity) * granularity;
-    return coarseTime === 0
-      ? `${this._numberFormatter.format(0)}${NBSP2}ms`
-      : `${this._numberFormatter.format(coarseTime)}${NBSP2}ms`;
+    return this._formatNumberWithGranularity(ms, granularity, {
+      style: 'unit',
+      unit: 'millisecond',
+      unitDisplay: 'short',
+    });
   }
 
   /**
@@ -133,8 +135,11 @@ export class I18n {
    * @return {string}
    */
   formatSeconds(ms, granularity = 0.1) {
-    const coarseTime = Math.round(ms / 1000 / granularity) * granularity;
-    return `${this._numberFormatter.format(coarseTime)}${NBSP2}s`;
+    return this._formatNumberWithGranularity(ms / 1000, granularity, {
+      style: 'unit',
+      unit: 'second',
+      unitDisplay: 'short',
+    });
   }
 
   /**
@@ -154,10 +159,10 @@ export class I18n {
     // and https://github.com/GoogleChrome/lighthouse/pull/9822
     let formatter;
     try {
-      formatter = new Intl.DateTimeFormat(this._numberDateLocale, options);
+      formatter = new Intl.DateTimeFormat(this._locale, options);
     } catch (err) {
       options.timeZone = 'UTC';
-      formatter = new Intl.DateTimeFormat(this._numberDateLocale, options);
+      formatter = new Intl.DateTimeFormat(this._locale, options);
     }
 
     return formatter.format(new Date(date));
@@ -169,6 +174,9 @@ export class I18n {
    * @return {string}
    */
   formatDuration(timeInMilliseconds) {
+    // There is a proposal for a Intl.DurationFormat.
+    // https://github.com/tc39/proposal-intl-duration-format
+
     let timeInSeconds = timeInMilliseconds / 1000;
     if (Math.round(timeInSeconds) === 0) {
       return 'None';
