@@ -106,6 +106,21 @@ describe('util helpers', () => {
     assert.equal(i18n.formatDuration(28 * 60 * 60 * 1000 + 5000), `1${NBSP}d 4${NBSP}h 5${NBSP}s`);
   });
 
+  it('formats a duration based on locale', () => {
+    let i18n = new I18n('de', {...Util.UIStrings});
+    assert.equal(i18n.formatDuration(60 * 1000), `1${NBSP}Min.`);
+    assert.equal(i18n.formatDuration(60 * 60 * 1000 + 5000), `1${NBSP}Std. 5${NBSP}Sek.`);
+    assert.equal(
+      i18n.formatDuration(28 * 60 * 60 * 1000 + 5000), `1${NBSP}T 4${NBSP}Std. 5${NBSP}Sek.`);
+
+    // idk?
+    i18n = new I18n('ar', {...Util.UIStrings});
+    // assert.equal(i18n.formatDuration(60 * 1000), `1${NBSP}د`);
+    // assert.equal(i18n.formatDuration(60 * 60 * 1000 + 5000), `1${NBSP}س 5${NBSP}ث`);
+    // assert.equal(
+    //   i18n.formatDuration(28 * 60 * 60 * 1000 + 5000), `1${NBSP}T 4${NBSP}Std. 5${NBSP}Sek.`);
+  });
+
   it('formats numbers based on locale', () => {
     // Requires full-icu or Intl polyfill.
     const number = 12346.858558;

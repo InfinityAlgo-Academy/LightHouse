@@ -176,6 +176,7 @@ export class I18n {
   formatDuration(timeInMilliseconds) {
     // There is a proposal for a Intl.DurationFormat.
     // https://github.com/tc39/proposal-intl-duration-format
+    // Until then, we do things a bit more manually.
 
     let timeInSeconds = timeInMilliseconds / 1000;
     if (Math.round(timeInSeconds) === 0) {
@@ -185,19 +186,33 @@ export class I18n {
     /** @type {Array<string>} */
     const parts = [];
     /** @type {Record<string, number>} */
-    const unitLabels = {
-      d: 60 * 60 * 24,
-      h: 60 * 60,
-      m: 60,
-      s: 1,
+    const unitToSecondsPer = {
+      day: 60 * 60 * 24,
+      hour: 60 * 60,
+      minute: 60,
+      second: 1,
+    };
+    /** @type {Record<string, string>} */
+    const unitToDefaultLabel = {
+      day: 'd',
+      hour: 'h',
+      minute: 'm',
+      second: 's',
     };
 
-    Object.keys(unitLabels).forEach(label => {
-      const unit = unitLabels[label];
-      const numberOfUnits = Math.floor(timeInSeconds / unit);
+    Object.keys(unitToSecondsPer).forEach(unit => {
+      const unitFormatter = new Intl.NumberFormat(this._locale, {
+        style: 'unit',
+        unit,
+        unitDisplay: 'narrow',
+      });
+      const label = unitFormatter.formatToParts(0)
+        .find(p => p.type === 'unit')?.value || unitToDefaultLabel[unit];
+      const secondsPerUnit = unitToSecondsPer[unit];
+      const numberOfUnits = Math.floor(timeInSeconds / secondsPerUnit);
       if (numberOfUnits > 0) {
-        timeInSeconds -= numberOfUnits * unit;
-        parts.push(`${numberOfUnits}\xa0${label}`);
+        timeInSeconds -= numberOfUnits * secondsPerUnit;
+        parts.push(`${numberOfUnits}${NBSP2}${label}`);
       }
     });
 
