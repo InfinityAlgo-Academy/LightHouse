@@ -113,7 +113,11 @@ export class I18n {
   formatBytesWithBestUnit(size, granularity = 0.1) {
     if (size >= MiB) return this.formatBytesToMiB(size, granularity);
     if (size >= KiB) return this.formatBytesToKiB(size, granularity);
-    return this.formatBytes(size, granularity);
+    return this._formatNumberWithGranularity(size, granularity, {
+      style: 'unit',
+      unit: 'byte',
+      unitDisplay: 'narrow',
+    });
   }
 
   /**
