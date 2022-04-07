@@ -14,7 +14,7 @@ import path from 'path';
 import glob from 'glob';
 import expect from 'expect';
 import tsc from 'typescript';
-import MessageParser from 'intl-messageformat-parser';
+import MessageParser from '@formatjs/icu-messageformat-parser';
 import esMain from 'es-main';
 
 import {Util} from '../../../lighthouse-core/util-commonjs.js';
@@ -23,6 +23,7 @@ import {pruneObsoleteLhlMessages} from './prune-obsolete-lhl-messages.js';
 import {countTranslatedMessages} from './count-translated.js';
 import {LH_ROOT} from '../../../root.js';
 import {resolveModulePath} from '../esm-utils.js';
+import {escapeIcuMessage} from '../../../shared/localization/format.js';
 
 // Match declarations of UIStrings, terminating in either a `};\n` (very likely to always be right)
 // or `}\n\n` (allowing semicolon to be optional, but insisting on a double newline so that an
@@ -188,36 +189,35 @@ function convertMessageToCtc(lhlMessage, examples = {}) {
  * @param {string} lhlMessage
  */
 function _lhlValidityChecks(lhlMessage) {
-  let parsedMessage;
+  let parsedMessageElements;
   try {
-    parsedMessage = MessageParser.parse(lhlMessage);
+    parsedMessageElements = MessageParser.parse(lhlMessage);
   } catch (err) {
     if (err.name !== 'SyntaxError') throw err;
-    // Improve the intl-messageformat-parser syntax error output.
-    /** @type {Array<{text: string}>} */
-    const expected = err.expected;
-    const expectedStr = expected.map(exp => `'${exp.text}'`).join(', ');
-    throw new Error(`Did not find the expected syntax (one of ${expectedStr}) in message "${lhlMessage}"`);
+    throw new Error(`[${err.message}] Did not find the expected syntax in message: ${err.originalMessage}`);
   }
 
-  for (const element of parsedMessage.elements) {
-    if (element.type !== 'argumentElement' || !element.format) continue;
+  /**
+   * @param {MessageParser.MessageFormatElement[]} elements
+   */
+  function validate(elements) {
+    for (const element of elements) {
+      if (element.type === MessageParser.TYPE.plural || element.type === MessageParser.TYPE.select) {
+        // `plural`/`select` arguments can't have content before or after them.
+        // See http://userguide.icu-project.org/formatparse/messages#TOC-Complex-Argument-Types
+        // e.g. https://github.com/GoogleChrome/lighthouse/pull/11068#discussion_r451682796
+        if (elements.length > 1) {
+          throw new Error(`Content cannot appear outside plural or select ICU messages. Instead, repeat that content in each option (message: '${lhlMessage}')`);
+        }
 
-    if (element.format.type === 'pluralFormat' || element.format.type === 'selectFormat') {
-      // `plural`/`select` arguments can't have content before or after them.
-      // See http://userguide.icu-project.org/formatparse/messages#TOC-Complex-Argument-Types
-      // e.g. https://github.com/GoogleChrome/lighthouse/pull/11068#discussion_r451682796
-      if (parsedMessage.elements.length > 1) {
-        throw new Error(`Content cannot appear outside plural or select ICU messages. Instead, repeat that content in each option (message: '${lhlMessage}')`);
-      }
-
-      // Each option value must also be a valid lhlMessage.
-      for (const option of element.format.options) {
-        const optionStr = lhlMessage.slice(option.value.location.start.offset, option.value.location.end.offset);
-        _lhlValidityChecks(optionStr);
+        for (const option of Object.values(element.options)) {
+          validate(option.value);
+        }
       }
     }
   }
+
+  validate(parsedMessageElements);
 }
 
 /**
@@ -388,7 +388,7 @@ function _processPlaceholderDirectIcu(icu, examples) {
   for (const [key, value] of Object.entries(examples)) {
     // Make sure all examples have ICU vars
     if (!icu.message.includes(`{${key}}`)) {
-      throw Error(`Example '${key}' provided, but has not corresponding ICU replacement in message "${icu.message}"`);
+      throw Error(`Example '${key}' provided, but has no corresponding ICU replacement in message "${icu.message}"`);
     }
     const eName = `ICU_${idx++}`;
     tempMessage = tempMessage.replace(`{${key}}`, `$${eName}$`);
@@ -516,7 +516,7 @@ function parseUIStrings(sourceStr, liveUIStrings) {
     const key = getIdentifier(property);
 
     // Use live message to avoid having to e.g. concat strings broken into parts.
-    const message = liveUIStrings[key];
+    const message = escapeIcuMessage(liveUIStrings[key]);
 
     // @ts-expect-error - Not part of the public tsc interface yet.
     const jsDocComments = tsc.getJSDocCommentsAndTags(property);

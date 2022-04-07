@@ -40,9 +40,9 @@ const UIStrings = {
   /** Error message explaining that the provided manifest URL is invalid. */
   'start-url-not-valid': `Manifest start URL is not valid`,
   /** Error message explaining that the provided manifest does not contain a name or short_name field. */
-  'manifest-missing-name-or-short-name': `Manifest does not contain a 'name' or 'short_name' field`,
+  'manifest-missing-name-or-short-name': 'Manifest does not contain a `name` or `short_name` field',
   /** Error message explaining that the manifest display property must be one of 'standalone', 'fullscreen', or 'minimal-ui'. */
-  'manifest-display-not-supported': `Manifest 'display' property must be one of 'standalone', 'fullscreen', or 'minimal-ui'`,
+  'manifest-display-not-supported': 'Manifest `display` property must be one of `standalone`, `fullscreen`, or `minimal-ui`',
   /** Error message explaining that the manifest could not be fetched, might be empty, or could not be parsed. */
   'manifest-empty': `Manifest could not be fetched, is empty, or could not be parsed`,
   /** Error message explaining that no matching service worker was detected,

@@ -9,9 +9,12 @@ import fs from 'fs';
 import path from 'path';
 
 import glob from 'glob';
-import MessageParser from 'intl-messageformat-parser';
+import MessageParser from '@formatjs/icu-messageformat-parser';
 
-import {collectAllCustomElementsFromICU} from '../../../shared/localization/format.js';
+import {
+  collectAllCustomElementsFromICU,
+  escapeIcuMessage,
+} from '../../../shared/localization/format.js';
 import {LH_ROOT, readJson} from '../../../root.js';
 
 /** @typedef {Record<string, {message: string}>} LhlMessages */
@@ -24,8 +27,8 @@ import {LH_ROOT, readJson} from '../../../root.js';
  * @return {boolean}
  */
 function equalArguments(goldenArgumentIds, lhlMessage) {
-  const parsedMessage = MessageParser.parse(lhlMessage);
-  const lhlArgumentElements = collectAllCustomElementsFromICU(parsedMessage.elements);
+  const parsedMessageElements = MessageParser.parse(escapeIcuMessage(lhlMessage));
+  const lhlArgumentElements = collectAllCustomElementsFromICU(parsedMessageElements);
   const lhlArgumentIds = [...lhlArgumentElements.keys()];
 
   if (goldenArgumentIds.length !== lhlArgumentIds.length) return false;
@@ -96,8 +99,8 @@ function getGoldenLocaleArgumentIds(goldenLhl) {
   const goldenLocaleArgumentIds = {};
 
   for (const [messageId, {message}] of Object.entries(goldenLhl)) {
-    const parsedMessage = MessageParser.parse(message);
-    const goldenArgumentElements = collectAllCustomElementsFromICU(parsedMessage.elements);
+    const parsedMessageElements = MessageParser.parse(message);
+    const goldenArgumentElements = collectAllCustomElementsFromICU(parsedMessageElements);
     const goldenArgumentIds = [...goldenArgumentElements.keys()].sort();
 
     goldenLocaleArgumentIds[messageId] = goldenArgumentIds;
