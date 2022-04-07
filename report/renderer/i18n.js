@@ -66,6 +66,17 @@ export class I18n {
   }
 
   /**
+   * Format integer.
+   * Just like {@link formatNumber} but uses a granularity of 1, rounding to the nearest
+   * whole number.
+   * @param {number} number
+   * @return {string}
+   */
+  formatInteger(number) {
+    return this._formatNumberWithGranularity(number, 1);
+  }
+
+  /**
    * Format percent.
    * @param {number} number 0–1
    * @return {string}

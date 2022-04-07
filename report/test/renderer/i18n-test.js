@@ -25,6 +25,9 @@ describe('util helpers', () => {
     assert.strictEqual(i18n.formatNumber(10), '10.0');
     assert.strictEqual(i18n.formatNumber(100.01), '100.0');
     assert.strictEqual(i18n.formatNumber(13000.456), '13,000.5');
+    assert.strictEqual(i18n.formatInteger(10), '10');
+    assert.strictEqual(i18n.formatInteger(100.01), '100');
+    assert.strictEqual(i18n.formatInteger(13000.6), '13,001');
   });
 
   it('formats a date', () => {

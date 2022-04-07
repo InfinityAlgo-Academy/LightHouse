@@ -147,8 +147,8 @@ class TreemapUtil {
    * @param {string} unit
    */
   static format(value, unit) {
-    if (unit === 'bytes') return this.i18n.formatBytes(value);
-    if (unit === 'time') return `${this.i18n.formatNumber(value)}\xa0ms`;
+    if (unit === 'byte') return this.i18n.formatBytes(value);
+    if (unit === 'ms') return this.i18n.formatMilliseconds(value);
     return `${this.i18n.formatNumber(value)}\xa0${unit}`;
   }
 

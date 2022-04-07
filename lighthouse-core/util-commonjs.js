@@ -434,9 +434,9 @@ class Util {
       case 'devtools': {
         const {cpuSlowdownMultiplier, requestLatencyMs} = throttling;
         cpuThrottling = `${Util.i18n.formatNumber(cpuSlowdownMultiplier)}x slowdown (DevTools)`;
-        networkThrottling = `${Util.i18n.formatNumber(requestLatencyMs)}${NBSP}ms HTTP RTT, ` +
-          `${Util.i18n.formatNumber(throttling.downloadThroughputKbps)}${NBSP}Kbps down, ` +
-          `${Util.i18n.formatNumber(throttling.uploadThroughputKbps)}${NBSP}Kbps up (DevTools)`;
+        networkThrottling = `${Util.i18n.formatMilliseconds(requestLatencyMs, 1)} HTTP RTT, ` +
+          `${Util.i18n.formatInteger(throttling.downloadThroughputKbps)}${NBSP}Kbps down, ` +
+          `${Util.i18n.formatInteger(throttling.uploadThroughputKbps)}${NBSP}Kbps up (DevTools)`;
 
         const isSlow4G = () => {
           return requestLatencyMs === 150 * 3.75 &&
@@ -449,8 +449,8 @@ class Util {
       case 'simulate': {
         const {cpuSlowdownMultiplier, rttMs, throughputKbps} = throttling;
         cpuThrottling = `${Util.i18n.formatNumber(cpuSlowdownMultiplier)}x slowdown (Simulated)`;
-        networkThrottling = `${Util.i18n.formatNumber(rttMs)}${NBSP}ms TCP RTT, ` +
-          `${Util.i18n.formatNumber(throughputKbps)}${NBSP}Kbps throughput (Simulated)`;
+        networkThrottling = `${Util.i18n.formatMilliseconds(rttMs)} TCP RTT, ` +
+          `${Util.i18n.formatInteger(throughputKbps)}${NBSP}Kbps throughput (Simulated)`;
 
         const isSlow4G = () => {
           return rttMs === 150 && throughputKbps === 1.6 * 1024;
