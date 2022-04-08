@@ -252,6 +252,7 @@ main();
 - Keep timespan recordings _short_ and focused on a single interaction sequence or page transition.
 - Use snapshot recordings when a substantial portion of the page content has changed.
 - Always wait for transitions and interactions to finish before ending a timespan. `page.waitForSelector`/`page.waitForFunction`/`page.waitForResponse`/`page.waitForTimeout` are your friends here.
+- Quickly validate your user flow by doing a dry run: `api.startFlow(page, {dryRun: true})`.
 
 ## Related Reading
 

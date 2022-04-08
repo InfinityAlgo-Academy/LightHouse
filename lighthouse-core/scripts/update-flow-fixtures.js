@@ -87,7 +87,7 @@ async function rebaselineArtifacts(artifactKeys) {
   });
 
   const page = await browser.newPage();
-  const flow = await api.startFlow(page, {config});
+  const flow = await api.startFlow(page, {config, dryRun: true});
 
   await flow.navigate('https://www.mikescerealshack.co');
 

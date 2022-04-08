@@ -9,11 +9,12 @@ const {generateFlowReportHtml} = require('../../report/generator/report-generato
 const {snapshotGather} = require('./gather/snapshot-runner.js');
 const {startTimespanGather} = require('./gather/timespan-runner.js');
 const {navigationGather} = require('./gather/navigation-runner.js');
+const {dryRunSetup, dryRunNavigation} = require('./gather/dry-run.js');
 const Runner = require('../runner.js');
 const {initializeConfig} = require('./config/config.js');
 
 /** @typedef {Parameters<snapshotGather>[0]} FrOptions */
-/** @typedef {Omit<FrOptions, 'page'> & {name?: string}} UserFlowOptions */
+/** @typedef {Omit<FrOptions, 'page'> & {name?: string, dryRun?: boolean}} UserFlowOptions */
 /** @typedef {Omit<FrOptions, 'page'> & {stepName?: string}} StepOptions */
 /** @typedef {WeakMap<LH.UserFlow.GatherStep, LH.Gatherer.FRGatherResult['runnerOptions']>} GatherStepRunnerOptions */
 
@@ -24,9 +25,11 @@ class UserFlow {
    */
   constructor(page, options) {
     /** @type {FrOptions} */
-    this.options = {page, ...options};
+    this._options = {page, ...options};
     /** @type {string|undefined} */
-    this.name = options?.name;
+    this._name = options?.name;
+    /** @type {boolean|undefined} */
+    this._dryRun = options?.dryRun;
     /** @type {LH.UserFlow.GatherStep[]} */
     this._gatherSteps = [];
     /** @type {GatherStepRunnerOptions} */
@@ -62,7 +65,7 @@ class UserFlow {
    * @param {StepOptions=} stepOptions
    */
   _getNextNavigationOptions(stepOptions) {
-    const options = {...this.options, ...stepOptions};
+    const options = {...this._options, ...stepOptions};
     const configContext = {...options.configContext};
     const settingsOverrides = {...configContext.settingsOverrides};
 
@@ -108,13 +111,15 @@ class UserFlow {
    */
   async navigate(requestor, stepOptions) {
     if (this.currentTimespan) throw new Error('Timespan already in progress');
-
     const options = this._getNextNavigationOptions(stepOptions);
+
+    if (this._dryRun) {
+      await dryRunNavigation(requestor, options);
+      return;
+    }
+
     const gatherResult = await navigationGather(requestor, options);
-
     this._addGatherStep(gatherResult, options);
-
-    return gatherResult;
   }
 
   /**
@@ -122,13 +127,19 @@ class UserFlow {
    */
   async startTimespan(stepOptions) {
     if (this.currentTimespan) throw new Error('Timespan already in progress');
+    const options = {...this._options, ...stepOptions};
 
-    const options = {...this.options, ...stepOptions};
+    if (this._dryRun) {
+      await dryRunSetup('timespan', options);
+      return;
+    }
+
     const timespan = await startTimespanGather(options);
     this.currentTimespan = {timespan, options};
   }
 
   async endTimespan() {
+    if (this._dryRun) return;
     if (!this.currentTimespan) throw new Error('No timespan in progress');
 
     const {timespan, options} = this.currentTimespan;
@@ -136,8 +147,6 @@ class UserFlow {
     this.currentTimespan = undefined;
 
     this._addGatherStep(gatherResult, options);
-
-    return gatherResult;
   }
 
   /**
@@ -145,22 +154,25 @@ class UserFlow {
    */
   async snapshot(stepOptions) {
     if (this.currentTimespan) throw new Error('Timespan already in progress');
+    const options = {...this._options, ...stepOptions};
 
-    const options = {...this.options, ...stepOptions};
+    if (this._dryRun) {
+      await dryRunSetup('snapshot', options);
+      return;
+    }
+
     const gatherResult = await snapshotGather(options);
-
     this._addGatherStep(gatherResult, options);
-
-    return gatherResult;
   }
 
   /**
    * @returns {Promise<LH.FlowResult>}
    */
   async createFlowResult() {
+    if (this._dryRun) throw new Error('Cannot get flow result from a dry run');
     return auditGatherSteps(this._gatherSteps, {
-      name: this.name,
-      config: this.options.config,
+      name: this._name,
+      config: this._options.config,
       gatherStepRunnerOptions: this._gatherStepRunnerOptions,
     });
   }
@@ -169,6 +181,7 @@ class UserFlow {
    * @return {Promise<string>}
    */
   async generateReport() {
+    if (this._dryRun) throw new Error('Cannot generate a flow report from a dry run');
     const flowResult = await this.createFlowResult();
     return generateFlowReportHtml(flowResult);
   }
@@ -177,9 +190,10 @@ class UserFlow {
    * @return {LH.UserFlow.FlowArtifacts}
    */
   createArtifactsJson() {
+    if (this._dryRun) throw new Error('Cannot create flow artifacts from a dry run');
     return {
       gatherSteps: this._gatherSteps,
-      name: this.name,
+      name: this._name,
     };
   }
 }
