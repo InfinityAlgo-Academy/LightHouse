@@ -248,6 +248,13 @@ describe('UserFlow', () => {
       await expect(flowResultPromise).rejects.toThrow(/Need at least one step/);
     });
 
+    it('should throw after a dry run', async () => {
+      const flow = new UserFlow(mockPage.asPage(), {dryRun: true});
+      await flow.snapshot();
+      const flowResultPromise = flow.createFlowResult();
+      await expect(flowResultPromise).rejects.toThrow(/Cannot.*dry run/);
+    });
+
     it('should audit active gather steps', async () => {
       mockRunner.audit.mockImplementation(artifacts => ({
         lhr: {
