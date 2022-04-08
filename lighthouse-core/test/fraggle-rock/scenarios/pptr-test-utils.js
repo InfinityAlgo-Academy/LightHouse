@@ -40,6 +40,7 @@ export function createTestState() {
         this.serverBaseUrl = `http://localhost:${this.server.getPort()}`;
         this.browser = await puppeteer.launch({
           headless: true,
+          ignoreDefaultArgs: ['--enable-automation'],
         });
       });
 
