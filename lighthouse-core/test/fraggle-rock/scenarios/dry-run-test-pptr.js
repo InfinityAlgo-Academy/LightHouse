@@ -45,12 +45,10 @@ describe('Dry Run', () => {
     const deviceMetrics = await state.page.evaluate(() => ({
       width: document.documentElement.clientWidth,
       height: document.documentElement.clientHeight,
-      deviceScaleFactor: window.devicePixelRatio,
     }));
     expect(deviceMetrics).toEqual({
       height: 640,
       width: 360,
-      deviceScaleFactor: 2,
     });
 
     expect(() => flow.createArtifactsJson()).toThrow();
