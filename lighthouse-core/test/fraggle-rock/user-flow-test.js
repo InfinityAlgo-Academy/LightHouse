@@ -15,7 +15,7 @@ const navigationModule = {navigationGather: jest.fn()};
 jest.mock('../../fraggle-rock/gather/navigation-runner.js', () => navigationModule);
 const timespanModule = {startTimespanGather: jest.fn()};
 jest.mock('../../fraggle-rock/gather/timespan-runner.js', () => timespanModule);
-const dryRunModule = {dryRunSetup: jest.fn(), dryRunNavigation: jest.fn()};
+const dryRunModule = {dryRun: jest.fn(), dryRunNavigation: jest.fn()};
 jest.mock('../../fraggle-rock/gather/dry-run.js', () => dryRunModule);
 
 const mockRunner = mockRunnerModule();
@@ -30,7 +30,7 @@ describe('UserFlow', () => {
 
     mockRunner.reset();
 
-    dryRunModule.dryRunSetup.mockReset();
+    dryRunModule.dryRun.mockReset();
     dryRunModule.dryRunNavigation.mockReset();
 
     snapshotModule.snapshotGather.mockReset();
@@ -193,7 +193,7 @@ describe('UserFlow', () => {
       await flow.startTimespan();
 
       expect(timespanModule.startTimespanGather).not.toHaveBeenCalled();
-      expect(dryRunModule.dryRunSetup).toHaveBeenCalled();
+      expect(dryRunModule.dryRun).toHaveBeenCalled();
     });
   });
 
@@ -208,7 +208,7 @@ describe('UserFlow', () => {
       await flow.endTimespan();
 
       expect(timespanModule.startTimespanGather).not.toHaveBeenCalled();
-      expect(dryRunModule.dryRunSetup).not.toHaveBeenCalled();
+      expect(dryRunModule.dryRun).not.toHaveBeenCalled();
     });
   });
 
@@ -237,7 +237,7 @@ describe('UserFlow', () => {
       await flow.snapshot();
 
       expect(snapshotModule.snapshotGather).not.toHaveBeenCalled();
-      expect(dryRunModule.dryRunSetup).toHaveBeenCalled();
+      expect(dryRunModule.dryRun).toHaveBeenCalled();
     });
   });
 

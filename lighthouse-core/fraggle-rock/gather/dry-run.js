@@ -8,6 +8,7 @@
 const Driver = require('./driver.js');
 const emulation = require('../../lib/emulation.js');
 const {initializeConfig} = require('../config/config.js');
+const {gotoURL} = require('../../gather/driver/navigation.js');
 
 /**
  * @param {LH.Gatherer.GatherMode} gatherMode
@@ -19,6 +20,15 @@ async function dryRunSetup(gatherMode, options) {
   const driver = new Driver(page);
   await driver.connect();
   await emulation.emulate(driver.defaultSession, config.settings);
+  return {driver, config};
+}
+
+/**
+ * @param {Exclude<LH.Gatherer.GatherMode, 'navigation'>} gatherMode
+ * @param {{page: import('puppeteer').Page, config?: LH.Config.Json, configContext?: LH.Config.FRContext}} options
+ */
+async function dryRun(gatherMode, options) {
+  const {driver} = await dryRunSetup(gatherMode, options);
   await driver.disconnect();
 }
 
@@ -27,15 +37,23 @@ async function dryRunSetup(gatherMode, options) {
  * @param {{page: import('puppeteer').Page, config?: LH.Config.Json, configContext?: LH.Config.FRContext}} options
  */
 async function dryRunNavigation(requestor, options) {
-  await dryRunSetup('navigation', options);
-  if (typeof requestor === 'string') {
-    await options.page.goto(requestor);
-  } else {
-    await requestor();
+  const {driver, config} = await dryRunSetup('navigation', options);
+  if (!config.navigations || !config.navigations.length) {
+    throw new Error('No navigations configured');
   }
+
+  const navigation = config.navigations[0];
+  await gotoURL(driver, requestor, {
+    ...navigation,
+    maxWaitForFcp: config.settings.maxWaitForFcp,
+    maxWaitForLoad: config.settings.maxWaitForLoad,
+    waitUntil: navigation.pauseAfterFcpMs ? ['fcp', 'load'] : ['load'],
+  });
+
+  await driver.disconnect();
 }
 
 module.exports = {
-  dryRunSetup,
+  dryRun,
   dryRunNavigation,
 };

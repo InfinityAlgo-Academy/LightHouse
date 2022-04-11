@@ -9,7 +9,7 @@ const {generateFlowReportHtml} = require('../../report/generator/report-generato
 const {snapshotGather} = require('./gather/snapshot-runner.js');
 const {startTimespanGather} = require('./gather/timespan-runner.js');
 const {navigationGather} = require('./gather/navigation-runner.js');
-const {dryRunSetup, dryRunNavigation} = require('./gather/dry-run.js');
+const {dryRun, dryRunNavigation} = require('./gather/dry-run.js');
 const Runner = require('../runner.js');
 const {initializeConfig} = require('./config/config.js');
 
@@ -130,7 +130,7 @@ class UserFlow {
     const options = {...this._options, ...stepOptions};
 
     if (this._dryRun) {
-      await dryRunSetup('timespan', options);
+      await dryRun('timespan', options);
       return;
     }
 
@@ -157,7 +157,7 @@ class UserFlow {
     const options = {...this._options, ...stepOptions};
 
     if (this._dryRun) {
-      await dryRunSetup('snapshot', options);
+      await dryRun('snapshot', options);
       return;
     }
 
