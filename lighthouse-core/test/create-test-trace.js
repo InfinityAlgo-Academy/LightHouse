@@ -81,7 +81,7 @@ function createTestTrace(options) {
     cat: 'blink.user_timing',
     args: {
       frame: rootFrame,
-      data: {documentLoaderURL: ''},
+      data: {documentLoaderURL: 'https://example.com/'},
     },
   }, {
     name: 'TracingStartedInBrowser',

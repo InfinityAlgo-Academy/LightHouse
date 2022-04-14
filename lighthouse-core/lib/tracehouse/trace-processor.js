@@ -82,11 +82,15 @@ class TraceProcessor {
    * Returns true if the event is a navigation start event of a document whose URL seems valid.
    *
    * @param {LH.TraceEvent} event
+   * @return {boolean}
    */
   static _isNavigationStartOfInterest(event) {
-    return event.name === 'navigationStart' &&
-      (!event.args.data || !event.args.data.documentLoaderURL ||
-        ACCEPTABLE_NAVIGATION_URL_REGEX.test(event.args.data.documentLoaderURL));
+    if (event.name !== 'navigationStart') return false;
+    // COMPAT: support pre-m67 test traces before `args.data` added to all navStart events.
+    // TODO: remove next line when old test traces (e.g. progressive-app-m60.json) are updated.
+    if (event.args.data?.documentLoaderURL === undefined) return true;
+    if (!event.args.data?.documentLoaderURL) return false;
+    return ACCEPTABLE_NAVIGATION_URL_REGEX.test(event.args.data.documentLoaderURL);
   }
 
   /**
@@ -462,8 +466,9 @@ class TraceProcessor {
     // If we can't find either TracingStarted event, then we'll fallback to the first navStart that
     // looks like it was loading the main frame with a real URL. Because the schema for this event
     // has changed across Chrome versions, we'll be extra defensive about finding this case.
-    const navStartEvt = events.find(e => Boolean(e.name === 'navigationStart' &&
-      e.args?.data?.isLoadingMainFrame && e.args.data.documentLoaderURL));
+    const navStartEvt = events.find(e =>
+      this._isNavigationStartOfInterest(e) && e.args.data?.isLoadingMainFrame
+    );
     // Find the first resource that was requested and make sure it agrees on the id.
     const firstResourceSendEvt = events.find(e => e.name === 'ResourceSendRequest');
     // We know that these properties exist if we found the events, but TSC doesn't.
