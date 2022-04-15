@@ -135,44 +135,49 @@ describe('UnusedJavaScript audit', () => {
     const result = await UnusedJavaScript.audit_(artifacts, networkRecords, context);
 
     expect(result.items).toMatchInlineSnapshot(`
-      Array [
+Array [
+  Object {
+    "subItems": Object {
+      "items": Array [
         Object {
-          "subItems": Object {
-            "items": Array [
-              Object {
-                "source": "(unmapped)",
-                "sourceBytes": 10062,
-                "sourceWastedBytes": 3760,
-              },
-              Object {
-                "source": "…src/codecs/webp/encoder-meta.ts",
-                "sourceBytes": 660,
-                "sourceWastedBytes": 660,
-              },
-              Object {
-                "source": "…src/lib/util.ts",
-                "sourceBytes": 4043,
-                "sourceWastedBytes": 500,
-              },
-              Object {
-                "source": "…src/custom-els/RangeInput/index.ts",
-                "sourceBytes": 2138,
-                "sourceWastedBytes": 293,
-              },
-              Object {
-                "source": "…node_modules/comlink/comlink.js",
-                "sourceBytes": 4117,
-                "sourceWastedBytes": 256,
-              },
-            ],
-            "type": "subitems",
-          },
-          "totalBytes": 83748,
-          "url": "https://squoosh.app/main-app.js",
-          "wastedBytes": 6961,
-          "wastedPercent": 8.312435814764395,
+          "source": "(unmapped)",
+          "sourceBytes": 10062,
+          "sourceWastedBytes": 3760,
         },
-      ]
-    `);
+        Object {
+          "source": "…src/codecs/webp/encoder-meta.ts",
+          "sourceBytes": 660,
+          "sourceWastedBytes": 660,
+        },
+        Object {
+          "source": "…src/lib/util.ts",
+          "sourceBytes": 4043,
+          "sourceWastedBytes": 500,
+        },
+        Object {
+          "source": "…src/custom-els/RangeInput/index.ts",
+          "sourceBytes": 2138,
+          "sourceWastedBytes": 293,
+        },
+        Object {
+          "source": "…node_modules/comlink/comlink.js",
+          "sourceBytes": 4117,
+          "sourceWastedBytes": 256,
+        },
+      ],
+      "label": Object {
+        "formattedDefault": "Module",
+        "i18nId": "lighthouse-core/lib/i18n/i18n.js | module",
+        "values": undefined,
+      },
+      "type": "subitems",
+    },
+    "totalBytes": 83748,
+    "url": "https://squoosh.app/main-app.js",
+    "wastedBytes": 6961,
+    "wastedPercent": 8.312435814764395,
+  },
+]
+`);
   });
 });
