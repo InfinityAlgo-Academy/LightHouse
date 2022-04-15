@@ -432,6 +432,11 @@ export class DetailsRenderer {
       tdEl.append(this._renderText(item.subItems.label));
       tdEl.append(this._dom.createElement('hr'));
       rowEl.classList.add('lh-sub-item-row');
+      // Need a `td` per column so that background color of the table will
+      // span the width of the label row.
+      for (let i = 1; i < headings.length; i++) {
+        this._dom.createChildOf(rowEl, 'td');
+      }
       fragment.append(rowEl);
     }
 
