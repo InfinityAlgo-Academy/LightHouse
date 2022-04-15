@@ -3214,6 +3214,7 @@
                   "url": "https://www.mikescerealshack.co/_next/static/chunks/commons.49455e4fa8cc3f51203f.js",
                   "wastedBytes": 57,
                   "subItems": {
+                    "label": "Location",
                     "type": "subitems",
                     "items": [
                       {
@@ -7018,6 +7019,9 @@
                 },
                 "path": "audits[legacy-javascript].displayValue"
               }
+            ],
+            "lighthouse-core/lib/i18n/i18n.js | columnLocation": [
+              "audits[legacy-javascript].details.items[0].subItems.label"
             ],
             "lighthouse-core/audits/dobetterweb/doctype.js | title": [
               "audits.doctype.title"
@@ -11245,6 +11249,7 @@
                   },
                   "subItems": {
                     "type": "subitems",
+                    "label": "Background Element",
                     "items": [
                       {
                         "relatedNode": {
@@ -11287,6 +11292,7 @@
                   },
                   "subItems": {
                     "type": "subitems",
+                    "label": "Background Element",
                     "items": [
                       {
                         "relatedNode": {
@@ -11329,6 +11335,7 @@
                   },
                   "subItems": {
                     "type": "subitems",
+                    "label": "Background Element",
                     "items": [
                       {
                         "relatedNode": {
@@ -11371,6 +11378,7 @@
                   },
                   "subItems": {
                     "type": "subitems",
+                    "label": "Background Element",
                     "items": [
                       {
                         "relatedNode": {
@@ -11413,6 +11421,7 @@
                   },
                   "subItems": {
                     "type": "subitems",
+                    "label": "Background Element",
                     "items": [
                       {
                         "relatedNode": {
@@ -11455,6 +11464,7 @@
                   },
                   "subItems": {
                     "type": "subitems",
+                    "label": "Background Element",
                     "items": [
                       {
                         "relatedNode": {
@@ -13613,6 +13623,14 @@
             "lighthouse-core/lib/i18n/i18n.js | columnFailingElem": [
               "audits[color-contrast].details.headings[0].text",
               "audits[image-alt].details.headings[0].text"
+            ],
+            "lighthouse-core/audits/accessibility/color-contrast.js | backgroundElementHeader": [
+              "audits[color-contrast].details.items[0].subItems.label",
+              "audits[color-contrast].details.items[1].subItems.label",
+              "audits[color-contrast].details.items[2].subItems.label",
+              "audits[color-contrast].details.items[3].subItems.label",
+              "audits[color-contrast].details.items[4].subItems.label",
+              "audits[color-contrast].details.items[5].subItems.label"
             ],
             "lighthouse-core/audits/accessibility/definition-list.js | title": [
               "audits[definition-list].title"
@@ -17285,6 +17303,7 @@
                   "url": "https://www.mikescerealshack.co/_next/static/chunks/commons.49455e4fa8cc3f51203f.js",
                   "wastedBytes": 0,
                   "subItems": {
+                    "label": "Location",
                     "type": "subitems",
                     "items": [
                       {
@@ -21135,6 +21154,9 @@
             ],
             "lighthouse-core/audits/byte-efficiency/legacy-javascript.js | description": [
               "audits[legacy-javascript].description"
+            ],
+            "lighthouse-core/lib/i18n/i18n.js | columnLocation": [
+              "audits[legacy-javascript].details.items[0].subItems.label"
             ],
             "lighthouse-core/audits/dobetterweb/doctype.js | title": [
               "audits.doctype.title"

@@ -287,6 +287,9 @@
   "lighthouse-core/audits/accessibility/axe-audit.js | failingElementsHeader": {
     "message": "F̂áîĺîńĝ Él̂ém̂én̂t́ŝ"
   },
+  "lighthouse-core/audits/accessibility/axe-audit.js | relatedElementsHeader": {
+    "message": "R̂él̂át̂éd̂ Él̂ém̂én̂t́ŝ"
+  },
   "lighthouse-core/audits/accessibility/button-name.js | description": {
     "message": "Ŵh́êń â b́ût́t̂ón̂ d́ôéŝń't̂ h́âv́ê án̂ áĉćêśŝíb̂ĺê ńâḿê, śĉŕêén̂ ŕêád̂ér̂ś âńn̂óûńĉé ît́ âś \"b̂út̂t́ôń\", m̂ák̂ín̂ǵ ît́ ûńûśâb́l̂é f̂ór̂ úŝér̂ś ŵh́ô ŕêĺŷ ón̂ śĉŕêén̂ ŕêád̂ér̂ś. [L̂éâŕn̂ ḿôŕê](https://web.dev/button-name/)."
   },
@@ -304,6 +307,9 @@
   },
   "lighthouse-core/audits/accessibility/bypass.js | title": {
     "message": "T̂h́ê ṕâǵê ćôńt̂áîńŝ á ĥéâd́îńĝ, śk̂íp̂ ĺîńk̂, ór̂ ĺâńd̂ḿâŕk̂ ŕêǵîón̂"
+  },
+  "lighthouse-core/audits/accessibility/color-contrast.js | backgroundElementHeader": {
+    "message": "B̂áĉḱĝŕôún̂d́ Êĺêḿêńt̂"
   },
   "lighthouse-core/audits/accessibility/color-contrast.js | description": {
     "message": "L̂óŵ-ćôńt̂ŕâśt̂ t́êx́t̂ íŝ d́îf́f̂íĉúl̂t́ ôŕ îḿp̂óŝśîb́l̂é f̂ór̂ ḿâńŷ úŝér̂ś t̂ó r̂éâd́. [L̂éâŕn̂ ḿôŕê](https://web.dev/color-contrast/)."
@@ -355,6 +361,9 @@
   },
   "lighthouse-core/audits/accessibility/duplicate-id-aria.js | failureTitle": {
     "message": "ÂŔÎÁ ÎD́ŝ ár̂é n̂ót̂ ún̂íq̂úê"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | relatedElementsHeader": {
+    "message": "D̂úp̂ĺîćât́ê Él̂ém̂én̂t́ŝ"
   },
   "lighthouse-core/audits/accessibility/duplicate-id-aria.js | title": {
     "message": "ÂŔÎÁ ÎD́ŝ ár̂é ûńîq́ûé"
@@ -1979,6 +1988,9 @@
   "lighthouse-core/lib/i18n/i18n.js | mediaResourceType": {
     "message": "M̂éd̂íâ"
   },
+  "lighthouse-core/lib/i18n/i18n.js | module": {
+    "message": "M̂ód̂úl̂é"
+  },
   "lighthouse-core/lib/i18n/i18n.js | ms": {
     "message": "{timeInMs, number, milliseconds} m̂ś"
   },
@@ -1987,6 +1999,9 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | otherResourceType": {
     "message": "Ôt́ĥér̂"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | reasons": {
+    "message": "R̂éâśôńŝ"
   },
   "lighthouse-core/lib/i18n/i18n.js | scriptResourceType": {
     "message": "Ŝćr̂íp̂t́"

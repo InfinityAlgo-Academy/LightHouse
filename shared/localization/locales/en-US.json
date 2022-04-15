@@ -287,6 +287,9 @@
   "lighthouse-core/audits/accessibility/axe-audit.js | failingElementsHeader": {
     "message": "Failing Elements"
   },
+  "lighthouse-core/audits/accessibility/axe-audit.js | relatedElementsHeader": {
+    "message": "Related Elements"
+  },
   "lighthouse-core/audits/accessibility/button-name.js | description": {
     "message": "When a button doesn't have an accessible name, screen readers announce it as \"button\", making it unusable for users who rely on screen readers. [Learn more](https://web.dev/button-name/)."
   },
@@ -304,6 +307,9 @@
   },
   "lighthouse-core/audits/accessibility/bypass.js | title": {
     "message": "The page contains a heading, skip link, or landmark region"
+  },
+  "lighthouse-core/audits/accessibility/color-contrast.js | backgroundElementHeader": {
+    "message": "Background Element"
   },
   "lighthouse-core/audits/accessibility/color-contrast.js | description": {
     "message": "Low-contrast text is difficult or impossible for many users to read. [Learn more](https://web.dev/color-contrast/)."
@@ -355,6 +361,9 @@
   },
   "lighthouse-core/audits/accessibility/duplicate-id-aria.js | failureTitle": {
     "message": "ARIA IDs are not unique"
+  },
+  "lighthouse-core/audits/accessibility/duplicate-id-aria.js | relatedElementsHeader": {
+    "message": "Duplicate Elements"
   },
   "lighthouse-core/audits/accessibility/duplicate-id-aria.js | title": {
     "message": "ARIA IDs are unique"
@@ -1979,6 +1988,9 @@
   "lighthouse-core/lib/i18n/i18n.js | mediaResourceType": {
     "message": "Media"
   },
+  "lighthouse-core/lib/i18n/i18n.js | module": {
+    "message": "Module"
+  },
   "lighthouse-core/lib/i18n/i18n.js | ms": {
     "message": "{timeInMs, number, milliseconds} ms"
   },
@@ -1987,6 +1999,9 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | otherResourceType": {
     "message": "Other"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | reasons": {
+    "message": "Reasons"
   },
   "lighthouse-core/lib/i18n/i18n.js | scriptResourceType": {
     "message": "Script"

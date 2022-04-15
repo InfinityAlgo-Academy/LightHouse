@@ -6,7 +6,7 @@
 'use strict';
 
 /** @typedef {string|LH.Audit.Details.NodeValue|undefined} Source */
-/** @typedef {{source: Source, subItems: {type: 'subitems', items: SubItem[]}}} InvalidHreflang */
+/** @typedef {{source: Source, subItems: {type: 'subitems', label: LH.IcuMessage, items: SubItem[]}}} InvalidHreflang */
 /** @typedef {{reason: LH.IcuMessage}} SubItem */
 
 const Audit = require('../audit.js');
@@ -120,6 +120,7 @@ class Hreflang extends Audit {
         source,
         subItems: {
           type: 'subitems',
+          label: str_(i18n.UIStrings.reasons),
           items: reasons.map(reason => ({reason})),
         },
       });

@@ -23,6 +23,8 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user *why* they should try to pass. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'Low-contrast text is difficult or impossible for many users to read. ' +
       '[Learn more](https://web.dev/color-contrast/).',
+  /** Label of a table column that identifies a single HTML element that is the background of another HTML element. */
+  backgroundElementHeader: 'Background Element',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
@@ -39,6 +41,10 @@ class ColorContrast extends AxeAudit {
       description: str_(UIStrings.description),
       requiredArtifacts: ['Accessibility'],
     };
+  }
+
+  static get relatedNodesLabel() {
+    return str_(UIStrings.backgroundElementHeader);
   }
 }
 

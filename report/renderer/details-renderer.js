@@ -424,7 +424,16 @@ export class DetailsRenderer {
     if (!item.subItems) return fragment;
 
     const subItemsHeadings = headings.map(this._getDerivedsubItemsHeading);
-    if (!subItemsHeadings.some(Boolean)) return fragment;
+    if (!subItemsHeadings.some(Boolean) || !item.subItems.items.length) return fragment;
+
+    if (item.subItems.label) {
+      const rowEl = this._dom.createElement('tr');
+      const tdEl = this._dom.createChildOf(rowEl, 'td');
+      tdEl.append(this._renderText(item.subItems.label));
+      tdEl.append(this._dom.createElement('hr'));
+      rowEl.classList.add('lh-sub-item-row');
+      fragment.append(rowEl);
+    }
 
     for (const subItem of item.subItems.items) {
       const rowEl = this._renderTableRow(subItem, subItemsHeadings);

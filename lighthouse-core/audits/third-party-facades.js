@@ -187,7 +187,11 @@ class ThirdPartyFacades extends Audit {
         product: productWithCategory,
         transferSize: entitySummary.transferSize,
         blockingTime: entitySummary.blockingTime,
-        subItems: {type: 'subitems', items},
+        subItems: {
+          type: 'subitems',
+          label: str_(i18n.UIStrings.scriptResourceType),
+          items,
+        },
       });
     }
 

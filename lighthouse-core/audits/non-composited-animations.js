@@ -166,6 +166,7 @@ class NonCompositedAnimations extends Audit {
         node: Audit.makeNodeItem(element.node),
         subItems: {
           type: 'subitems',
+          label: str_(i18n.UIStrings.reasons),
           items: allFailureReasons,
         },
       });

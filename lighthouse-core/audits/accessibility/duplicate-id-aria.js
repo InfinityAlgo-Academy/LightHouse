@@ -20,6 +20,8 @@ const UIStrings = {
   failureTitle: 'ARIA IDs are not unique',
   /** Description of a Lighthouse audit that tells the user *why* they should try to pass. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'The value of an ARIA ID must be unique to prevent other instances from being overlooked by assistive technologies. [Learn more](https://web.dev/duplicate-id-aria/).',
+  /** Label of a table column that identifies HTML elements that are duplicates of another HTML element. */
+  relatedElementsHeader: 'Duplicate Elements',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
@@ -36,6 +38,10 @@ class DuplicateIdAria extends AxeAudit {
       description: str_(UIStrings.description),
       requiredArtifacts: ['Accessibility'],
     };
+  }
+
+  static get relatedNodesLabel() {
+    return str_(UIStrings.relatedElementsHeader);
   }
 }
 

@@ -117,6 +117,7 @@ declare module Details {
   interface TableSubItems {
     type: 'subitems';
     items: TableItem[];
+    label?: string | IcuMessage;
   }
 
   /**

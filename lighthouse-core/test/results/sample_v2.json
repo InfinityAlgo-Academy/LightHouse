@@ -2445,6 +2445,7 @@
             },
             "subItems": {
               "type": "subitems",
+              "label": "Reasons",
               "items": [
                 {
                   "failureReason": "Unsupported CSS Properties: margin-left, height",
@@ -5140,6 +5141,7 @@
             "url": "http://localhost:10200/dobetterweb/third_party/aggressive-promise-polyfill.js",
             "wastedBytes": 21189,
             "subItems": {
+              "label": "Location",
               "type": "subitems",
               "items": [
                 {
@@ -9508,6 +9510,9 @@
           "path": "audits[non-composited-animations].displayValue"
         }
       ],
+      "lighthouse-core/lib/i18n/i18n.js | reasons": [
+        "audits[non-composited-animations].details.items[0].subItems.label"
+      ],
       "lighthouse-core/audits/non-composited-animations.js | unsupportedCSSProperty": [
         {
           "values": {
@@ -10018,6 +10023,9 @@
       ],
       "lighthouse-core/audits/byte-efficiency/legacy-javascript.js | description": [
         "audits[legacy-javascript].description"
+      ],
+      "lighthouse-core/lib/i18n/i18n.js | columnLocation": [
+        "audits[legacy-javascript].details.items[0].subItems.label"
       ],
       "lighthouse-core/audits/dobetterweb/doctype.js | title": [
         "audits.doctype.title"

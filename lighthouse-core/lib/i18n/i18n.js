@@ -89,6 +89,10 @@ const UIStrings = {
   thirdPartyResourceType: 'Third-party',
   /** Label used to identify a value in a table where many individual values are aggregated to a single value, for brevity. "Other resources" could also be read as "the rest of the resources". Resource refers to network resources requested by the browser. */
   otherResourcesLabel: 'Other resources',
+  /** Label for a row in a data table; 'Module' refers to a JavaScript module file. */
+  module: 'Module',
+  /** Label for a row in a data table; What follows are reasons why something failed or occurred. */
+  reasons: 'Reasons',
   /** The name of the metric that marks the time at which the first text or image is painted by the browser. Shown to users as the label for the numeric metric value. Ideally fits within a ~40 character limit. */
   firstContentfulPaintMetric: 'First Contentful Paint',
   /** The name of the metric that marks the time at which the page is fully loaded and is able to quickly respond to user input (clicks, taps, and keypresses feel responsive). Shown to users as the label for the numeric metric value. Ideally fits within a ~40 character limit. */

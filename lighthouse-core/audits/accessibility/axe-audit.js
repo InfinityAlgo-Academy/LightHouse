@@ -16,11 +16,17 @@ const i18n = require('../../lib/i18n/i18n.js');
 const UIStrings = {
   /** Label of a table column that identifies HTML elements that have failed an audit. */
   failingElementsHeader: 'Failing Elements',
+  /** Label of a table column that identifies HTML elements that are related to a failure in an audit. */
+  relatedElementsHeader: 'Related Elements',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
 class AxeAudit extends Audit {
+  static get relatedNodesLabel() {
+    return str_(UIStrings.relatedElementsHeader);
+  }
+
   /**
    * Base class for audit rules which reflect assessment performed by the aXe accessibility library
    * See https://github.com/dequelabs/axe-core/blob/6b444546cff492a62a70a74a8fc3c62bd4729400/doc/API.md#results-object for result type and format details
@@ -81,7 +87,10 @@ class AxeAudit extends Audit {
         },
         subItems: axeNode.relatedNodes.length ? {
           type: 'subitems',
-          items: axeNode.relatedNodes.map(node => ({relatedNode: Audit.makeNodeItem(node)})),
+          label: this.relatedNodesLabel,
+          items: axeNode.relatedNodes.map(node => ({
+            relatedNode: Audit.makeNodeItem(node),
+          })),
         } : undefined,
       }));
     }
