@@ -1,4 +1,3 @@
-'use strict';
 
 self.importScripts('./simple-script.js?importScripts');
 
