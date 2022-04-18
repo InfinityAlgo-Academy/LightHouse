@@ -674,6 +674,8 @@ function resolveMessageCollisions(strings) {
       'Name',
       'Potential Savings',
       'Potential Savings',
+      'Use the $MARKDOWN_SNIPPET_0$ component and set the appropriate $MARKDOWN_SNIPPET_1$. $LINK_START_0$Learn more$LINK_END_0$.',
+      'Use the $MARKDOWN_SNIPPET_0$ component and set the appropriate $MARKDOWN_SNIPPET_1$. $LINK_START_0$Learn more$LINK_END_0$.',
     ]);
   } catch (err) {
     console.log('The number of duplicate strings has changed. Consider duplicating the `description` to match existing strings so they\'re translated together or update this assertion if they must absolutely be translated separately');

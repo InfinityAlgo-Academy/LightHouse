@@ -38,6 +38,7 @@ Array [
   "joomla",
   "magento",
   "next.js",
+  "nuxt",
   "octobercms",
   "react",
   "wordpress",
@@ -162,6 +163,18 @@ Array [
       "uses-responsive-images",
       "user-timings",
       "preload-lcp-image",
+      "unsized-images",
+    ],
+  },
+  Object {
+    "id": "nuxt",
+    "keys": Array [
+      "modern-image-formats",
+      "offscreen-images",
+      "uses-optimized-images",
+      "uses-responsive-images",
+      "preload-lcp-image",
+      "unsized-images",
     ],
   },
   Object {
