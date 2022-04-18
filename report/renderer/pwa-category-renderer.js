@@ -14,7 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-'use strict';
 
 import {Util} from './util.js';
 import {CategoryRenderer} from './category-renderer.js';
