@@ -193,7 +193,7 @@
     "jpeg-js": "^0.4.3",
     "js-library-detector": "^6.4.0",
     "lighthouse-logger": "^1.3.0",
-    "lighthouse-stack-packs": "^1.7.0",
+    "lighthouse-stack-packs": "^1.8.1",
     "lodash": "^4.17.21",
     "lookup-closest-locale": "6.2.0",
     "metaviewport-parser": "0.2.0",
