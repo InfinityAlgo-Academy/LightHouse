@@ -12,7 +12,7 @@ const {gotoURL} = require('../../gather/driver/navigation.js');
 
 /**
  * @param {LH.Gatherer.GatherMode} gatherMode
- * @param {{page: import('puppeteer').Page, config?: LH.Config.Json, configContext?: LH.Config.FRContext}} options
+ * @param {{page: LH.Puppeteer.Page, config?: LH.Config.Json, configContext?: LH.Config.FRContext}} options
  */
 async function dryRunSetup(gatherMode, options) {
   const {page, config: configJson, configContext} = options;
@@ -25,7 +25,7 @@ async function dryRunSetup(gatherMode, options) {
 
 /**
  * @param {Exclude<LH.Gatherer.GatherMode, 'navigation'>} gatherMode
- * @param {{page: import('puppeteer').Page, config?: LH.Config.Json, configContext?: LH.Config.FRContext}} options
+ * @param {{page: LH.Puppeteer.Page, config?: LH.Config.Json, configContext?: LH.Config.FRContext}} options
  */
 async function dryRun(gatherMode, options) {
   const {driver} = await dryRunSetup(gatherMode, options);
@@ -34,7 +34,7 @@ async function dryRun(gatherMode, options) {
 
 /**
  * @param {LH.NavigationRequestor} requestor
- * @param {{page: import('puppeteer').Page, config?: LH.Config.Json, configContext?: LH.Config.FRContext}} options
+ * @param {{page: LH.Puppeteer.Page, config?: LH.Config.Json, configContext?: LH.Config.FRContext}} options
  */
 async function dryRunNavigation(requestor, options) {
   const {driver, config} = await dryRunSetup('navigation', options);
