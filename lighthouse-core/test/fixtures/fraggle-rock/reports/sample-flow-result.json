@@ -3177,7 +3177,7 @@
           "legacy-javascript": {
             "id": "legacy-javascript",
             "title": "Avoid serving legacy JavaScript to modern browsers",
-            "description": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. For your bundled JavaScript, adopt a modern script deployment strategy using module/nomodule feature detection to reduce the amount of code shipped to modern browsers, while retaining support for legacy browsers. [Learn More](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)",
+            "description": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. For your bundled JavaScript, adopt a modern script deployment strategy using module/nomodule feature detection to reduce the amount of code shipped to modern browsers, while retaining support for legacy browsers. [Learn More](https://web.dev/publish-modern-javascript/)",
             "score": 1,
             "scoreDisplayMode": "numeric",
             "numericValue": 0,
@@ -9032,7 +9032,7 @@
           "legacy-javascript": {
             "id": "legacy-javascript",
             "title": "Avoid serving legacy JavaScript to modern browsers",
-            "description": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. For your bundled JavaScript, adopt a modern script deployment strategy using module/nomodule feature detection to reduce the amount of code shipped to modern browsers, while retaining support for legacy browsers. [Learn More](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)",
+            "description": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. For your bundled JavaScript, adopt a modern script deployment strategy using module/nomodule feature detection to reduce the amount of code shipped to modern browsers, while retaining support for legacy browsers. [Learn More](https://web.dev/publish-modern-javascript/)",
             "score": 1,
             "scoreDisplayMode": "numeric",
             "numericValue": 0,
@@ -17256,7 +17256,7 @@
           "legacy-javascript": {
             "id": "legacy-javascript",
             "title": "Avoid serving legacy JavaScript to modern browsers",
-            "description": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. For your bundled JavaScript, adopt a modern script deployment strategy using module/nomodule feature detection to reduce the amount of code shipped to modern browsers, while retaining support for legacy browsers. [Learn More](https://philipwalton.com/articles/deploying-es2015-code-in-production-today/)",
+            "description": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. For your bundled JavaScript, adopt a modern script deployment strategy using module/nomodule feature detection to reduce the amount of code shipped to modern browsers, while retaining support for legacy browsers. [Learn More](https://web.dev/publish-modern-javascript/)",
             "score": 1,
             "scoreDisplayMode": "numeric",
             "numericValue": 0,
