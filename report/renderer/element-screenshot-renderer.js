@@ -252,9 +252,6 @@ export class ElementScreenshotRenderer {
       {width: screenshot.width, height: screenshot.height}
     );
 
-    const contentEl = dom.find('div.lh-element-screenshot__content', containerEl);
-    contentEl.style.top = `-${elementPreviewSizeDC.height}px`;
-
     const imageEl = dom.find('div.lh-element-screenshot__image', containerEl);
     imageEl.style.width = elementPreviewSizeDC.width + 'px';
     imageEl.style.height = elementPreviewSizeDC.height + 'px';

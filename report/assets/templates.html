@@ -893,16 +893,17 @@ limitations under the License.
 <template id="elementScreenshot">
   <div class="lh-element-screenshot">
     <div class="lh-element-screenshot__content">
-      <div class="lh-element-screenshot__mask">
-        <svg height="0" width="0">
-          <defs>
-            <clipPath clipPathUnits="objectBoundingBox"></clipPath>
-            <!-- clipPath filled by ElementScreenshotRenderer.renderClipPath -->
-          </defs>
-        </svg>
+      <div class="lh-element-screenshot__image">
+        <div class="lh-element-screenshot__mask">
+          <svg height="0" width="0">
+            <defs>
+              <clipPath clipPathUnits="objectBoundingBox"></clipPath>
+              <!-- clipPath filled by ElementScreenshotRenderer.renderClipPath -->
+            </defs>
+          </svg>
+        </div>
+        <div class="lh-element-screenshot__element-marker"></div>
       </div>
-      <div class="lh-element-screenshot__image"></div>
-      <div class="lh-element-screenshot__element-marker"></div>
     </div>
   </div>
 </template>
