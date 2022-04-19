@@ -7538,10 +7538,10 @@ text-table@^0.2.0:
   resolved "https://registry.yarnpkg.com/text-table/-/text-table-0.2.0.tgz#7f5ee823ae805207c00af2df4a84ec3fcfa570b4"
   integrity sha1-f17oI66AUgfACvLfSoTsP8+lcLQ=
 
-third-party-web@^0.15.0:
-  version "0.15.0"
-  resolved "https://registry.yarnpkg.com/third-party-web/-/third-party-web-0.15.0.tgz#40790a6394233ecf1d0b8095abde3bfadde67338"
-  integrity sha512-kv+TVeppmasvDBXHfKCuQ4HNXapsyEXAGVANguzVDJ98xXm88ggtb9B09rVWvwDqapU5VZ4Q4JkCu2viyD/k0w==
+third-party-web@^0.17.1:
+  version "0.17.1"
+  resolved "https://registry.yarnpkg.com/third-party-web/-/third-party-web-0.17.1.tgz#22e03f1ff519a6380bae4594b704b9bb28e15158"
+  integrity sha512-X9Mha8cVeBwakunlZXkXL6xRzw8VCcDGWqT59EzeTYAJIi8ien3CuufnEGEx4ZUFahumNQdoOwf4H2T9Ca6lBg==
 
 throat@^6.0.1:
   version "6.0.1"
