@@ -44,7 +44,7 @@ class UsesResponsiveImages extends ByteEfficiencyAudit {
       description: str_(UIStrings.description),
       scoreDisplayMode: ByteEfficiencyAudit.SCORING_MODES.NUMERIC,
       requiredArtifacts: ['ImageElements', 'ViewportDimensions', 'GatherContext',
-        'devtoolsLogs', 'traces'],
+        'devtoolsLogs', 'traces', 'URL'],
     };
   }
 

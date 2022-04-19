@@ -3,7 +3,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 /* eslint-env jest */
 
@@ -39,11 +38,6 @@ jest.unstable_mockModule('lighthouse-logger', () => {
   return {default: {setLevel: mockLoggerSetLevel}};
 });
 
-const mockNotify = jest.fn();
-jest.unstable_mockModule('update-notifier', () => {
-  return {default: () => ({notify: mockNotify})};
-});
-
 /** @type {import('../../bin.js')} */
 let bin;
 beforeAll(async () => {
@@ -57,7 +51,6 @@ beforeEach(async () => {
   mockAskPermission.mockReset();
   mockGetFlags.mockReset();
   mockLoggerSetLevel.mockReset();
-  mockNotify.mockReset();
   mockRunLighthouse.mockReset();
   mockSentryInit.mockReset();
   mockRunLighthouse.mockResolvedValue({});
@@ -109,7 +102,7 @@ describe('CLI bin', function() {
 
     it('should load the config from the path (es modules)', async () => {
       const configPath =
-        `${LH_ROOT}/lighthouse-cli/test/smokehouse/test-definitions/a11y/a11y-config.js`;
+        `${LH_ROOT}/lighthouse-cli/test/fixtures/esm-config.js`;
       cliFlags = {...cliFlags, configPath: configPath};
       const actualConfig = (await import(configPath)).default;
       await bin.begin();

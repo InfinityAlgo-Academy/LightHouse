@@ -146,6 +146,9 @@ beforeEach(() => {
     getImportantStorageWarning() {
       return Promise.resolve(undefined);
     }
+    url() {
+      return Promise.resolve('about:blank');
+    }
   }
 
   jest.useFakeTimers();
@@ -169,7 +172,7 @@ beforeEach(() => {
 
   const navigation = requireMockAny('../../gather/driver/navigation.js');
   navigation.gotoURL = fnAny().mockResolvedValue({
-    finalUrl: 'https://example.com',
+    mainDocumentUrl: 'https://example.com',
     timedOut: false,
     warnings: [],
   });
@@ -181,12 +184,12 @@ afterEach(() => {
 });
 
 describe('GatherRunner', function() {
-  it('loads a page and updates passContext.URL on redirect', () => {
+  it('loads a page and updates passContext urls on redirect', () => {
     const url1 = 'https://example.com';
     const url2 = 'https://example.com/interstitial';
     const driver = {};
     const gotoURL = requireMockAny('../../gather/driver/navigation.js').gotoURL;
-    gotoURL.mockResolvedValue({finalUrl: url2, warnings: []});
+    gotoURL.mockResolvedValue({mainDocumentUrl: url2, warnings: []});
 
     const passContext = {
       url: url1,
@@ -195,10 +198,16 @@ describe('GatherRunner', function() {
       passConfig: {
         gatherers: [],
       },
+      baseArtifacts: {
+        URL: {
+          finalUrl: url1,
+        },
+      },
     };
 
     return GatherRunner.loadPage(driver, passContext).then(_ => {
       assert.equal(passContext.url, url2);
+      assert.equal(passContext.baseArtifacts.URL.finalUrl, url2);
     });
   });
 
@@ -225,7 +234,7 @@ describe('GatherRunner', function() {
   it('collects benchmark as an artifact', async () => {
     const requestedUrl = 'https://example.com';
     const driver = fakeDriver;
-    const config = makeConfig({passes: []});
+    const config = makeConfig({passes: [{passName: 'defaultPass'}]});
     const options = {requestedUrl, driver, settings: config.settings, computedCache: new Map()};
 
     const results = await GatherRunner.run(config.passes, options);
@@ -235,7 +244,7 @@ describe('GatherRunner', function() {
   it('collects host user agent as an artifact', async () => {
     const requestedUrl = 'https://example.com';
     const driver = fakeDriver;
-    const config = makeConfig({passes: []});
+    const config = makeConfig({passes: [{passName: 'defaultPass'}]});
     const options = {requestedUrl, driver, settings: config.settings, computedCache: new Map()};
 
     const results = await GatherRunner.run(config.passes, options);
@@ -255,9 +264,9 @@ describe('GatherRunner', function() {
 
   it('collects requested and final URLs as an artifact', () => {
     const requestedUrl = 'https://example.com';
-    const finalUrl = 'https://example.com/interstitial';
+    const mainDocumentUrl = 'https://example.com/interstitial';
     const gotoURL = requireMockAny('../../gather/driver/navigation.js').gotoURL;
-    gotoURL.mockResolvedValue({finalUrl, timedOut: false, warnings: []});
+    gotoURL.mockResolvedValue({mainDocumentUrl, timedOut: false, warnings: []});
     const config = makeConfig({passes: [{passName: 'defaultPass'}]});
     const options = {
       requestedUrl,
@@ -267,7 +276,9 @@ describe('GatherRunner', function() {
     };
 
     return GatherRunner.run(config.passes, options).then(artifacts => {
-      assert.deepStrictEqual(artifacts.URL, {requestedUrl, finalUrl},
+      assert.deepStrictEqual(
+        artifacts.URL,
+        {initialUrl: 'about:blank', requestedUrl, mainDocumentUrl, finalUrl: mainDocumentUrl},
         'did not find expected URL artifact');
     });
   });
@@ -288,7 +299,7 @@ describe('GatherRunner', function() {
           },
         });
         const config = makeConfig({
-          passes: [],
+          passes: [{passName: 'defaultPass'}],
           settings: {},
         });
         const options = {requestedUrl, driver, settings: config.settings, computedCache: new Map()};
@@ -450,7 +461,7 @@ describe('GatherRunner', function() {
   it('prepares target for navigation', async () => {
     const passConfig = {
       passName: 'default',
-      loadFailureMode: /** @type {'ignore'} */ ('ignore'),
+      loadFailureMode: /** @type {const} */ ('ignore'),
       recordTrace: true,
       useThrottling: true,
       gatherers: [],
@@ -555,7 +566,7 @@ describe('GatherRunner', function() {
 
     const gotoUrlForAboutBlank = fnAny().mockResolvedValue({});
     const gotoUrlForRealUrl = fnAny()
-      .mockResolvedValueOnce({finalUrl: requestedUrl, timedOut: false, warnings: []})
+      .mockResolvedValueOnce({mainDocumentUrl: requestedUrl, timedOut: false, warnings: []})
       .mockRejectedValueOnce(navigationError);
     const driver = Object.assign({}, fakeDriver, {
       online: true,
@@ -849,7 +860,7 @@ describe('GatherRunner', function() {
         if (url.includes('blank')) return null;
         if (firstLoad) {
           firstLoad = false;
-          return {finalUrl: requestedUrl, timedOut: false, warnings: []};
+          return {mainDocumentUrl: requestedUrl, timedOut: false, warnings: []};
         } else {
           throw new LHError(LHError.errors.NO_FCP);
         }
@@ -1251,7 +1262,7 @@ describe('GatherRunner', function() {
       });
 
       const gotoURL = requireMockAny('../../gather/driver/navigation.js').gotoURL;
-      gotoURL.mockResolvedValue({finalUrl: requestedUrl, warnings: ['It is too slow']});
+      gotoURL.mockResolvedValue({mainDocumentUrl: requestedUrl, warnings: ['It is too slow']});
 
       return GatherRunner.run(config.passes, {
         driver: timedoutDriver,
@@ -1311,13 +1322,14 @@ describe('GatherRunner', function() {
       const unresolvedDriver = Object.assign({}, fakeDriver, {
         online: false,
         gotoURL() {
-          return Promise.resolve({finalUrl: requestedUrl, timedOut: false});
+          return Promise.resolve({mainDocumentUrl: requestedUrl, timedOut: false});
         },
         endDevtoolsLog() {
           return unresolvedPerfLog;
         },
       });
 
+      // why is context.url being set to null maindDocumenturl
       return GatherRunner.run(config.passes, {
         driver: unresolvedDriver,
         requestedUrl,

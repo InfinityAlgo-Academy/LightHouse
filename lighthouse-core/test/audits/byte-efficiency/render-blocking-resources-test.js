@@ -16,6 +16,7 @@ import trace from '../../fixtures/traces/progressive-app-m60.json';
 import devtoolsLog from '../../fixtures/traces/progressive-app-m60.devtools.log.json';
 import ampTrace from '../../fixtures/traces/amp-m86.trace.json';
 import ampDevtoolsLog from '../../fixtures/traces/amp-m86.devtoolslog.json';
+import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';
 
 const mobileSlow4G = constants.throttling.mobileSlow4G;
 
@@ -24,6 +25,7 @@ const mobileSlow4G = constants.throttling.mobileSlow4G;
 describe('Render blocking resources audit', () => {
   it('evaluates http2 input correctly', async () => {
     const artifacts = {
+      URL: getURLArtifactFromDevtoolsLog(devtoolsLog),
       GatherContext: {gatherMode: 'navigation'},
       traces: {defaultPass: trace},
       devtoolsLogs: {defaultPass: devtoolsLog},
@@ -44,6 +46,7 @@ describe('Render blocking resources audit', () => {
 
   it('evaluates amp page correctly', async () => {
     const artifacts = {
+      URL: getURLArtifactFromDevtoolsLog(ampDevtoolsLog),
       GatherContext: {gatherMode: 'navigation'},
       traces: {defaultPass: ampTrace},
       devtoolsLogs: {defaultPass: ampDevtoolsLog},

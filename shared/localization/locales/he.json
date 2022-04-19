@@ -60,10 +60,10 @@
     "message": "Discover performance opportunities to improve the experience for long-lived pages and single-page applications."
   },
   "flow-report/src/i18n/ui-strings.js | highestImpact": {
-    "message": "Highest impact"
+    "message": "הכי הרבה השפעה"
   },
   "flow-report/src/i18n/ui-strings.js | informativeAuditCount": {
-    "message": "{numInformative, plural,\n    =1 {{numInformative} informative audit}\n    other {{numInformative} informative audits}\n  }"
+    "message": "{numInformative,plural, =1{ביקורת אינפורמטיבית אחת ({numInformative})}two{{numInformative} ביקורות אינפורמטיביות}many{{numInformative} ביקורות אינפורמטיביות}other{{numInformative} ביקורות אינפורמטיביות}}"
   },
   "flow-report/src/i18n/ui-strings.js | mobile": {
     "message": "ניידים"
@@ -78,13 +78,13 @@
     "message": "דוח לגבי ניווט"
   },
   "flow-report/src/i18n/ui-strings.js | navigationReportCount": {
-    "message": "{numNavigation, plural,\n    =1 {{numNavigation} navigation report}\n    other {{numNavigation} navigation reports}\n  }"
+    "message": "{numNavigation,plural, =1{דוח אחד ({numNavigation}) לגבי ניווט}two{{numNavigation} דוחות לגבי ניווט}many{{numNavigation} דוחות לגבי ניווט}other{{numNavigation} דוחות לגבי ניווט}}"
   },
   "flow-report/src/i18n/ui-strings.js | passableAuditCount": {
-    "message": "{numPassableAudits, plural,\n    =1 {{numPassableAudits} passable audit}\n    other {{numPassableAudits} passable audits}\n  }"
+    "message": "{numPassableAudits,plural, =1{ביקורת עוברת אחת ({numPassableAudits})}two{{numPassableAudits} ביקורות עוברות}many{{numPassableAudits} ביקורות עוברות}other{{numPassableAudits} ביקורות עוברות}}"
   },
   "flow-report/src/i18n/ui-strings.js | passedAuditCount": {
-    "message": "{numPassed, plural,\n    =1 {{numPassed} audit passed}\n    other {{numPassed} audits passed}\n  }"
+    "message": "{numPassed,plural, =1{ביקורת אחת ({numPassed}) עברה}two{{numPassed} ביקורות עברו}many{{numPassed} ביקורות עברו}other{{numPassed} ביקורות עברו}}"
   },
   "flow-report/src/i18n/ui-strings.js | ratingAverage": {
     "message": "ממוצעת"
@@ -111,7 +111,7 @@
     "message": "דוח תמונת מצב"
   },
   "flow-report/src/i18n/ui-strings.js | snapshotReportCount": {
-    "message": "{numSnapshot, plural,\n    =1 {{numSnapshot} snapshot report}\n    other {{numSnapshot} snapshot reports}\n  }"
+    "message": "{numSnapshot,plural, =1{דוח תמונת מצב אחד ({numSnapshot})}two{{numSnapshot} דוחות תמונת מצב}many{{numSnapshot} דוחות תמונת מצב}other{{numSnapshot} דוחות תמונת מצב}}"
   },
   "flow-report/src/i18n/ui-strings.js | summary": {
     "message": "סיכום"
@@ -126,7 +126,7 @@
     "message": "דוח על טווח זמן"
   },
   "flow-report/src/i18n/ui-strings.js | timespanReportCount": {
-    "message": "{numTimespan, plural,\n    =1 {{numTimespan} timespan report}\n    other {{numTimespan} timespan reports}\n  }"
+    "message": "{numTimespan,plural, =1{דוח אחד ({numTimespan}) על טווח זמן}two{{numTimespan} דוחות על טווח זמן}many{{numTimespan} דוחות על טווח זמן}other{{numTimespan} דוחות על טווח זמן}}"
   },
   "flow-report/src/i18n/ui-strings.js | title": {
     "message": "דוח Lighthouse על מסלולי משתמשים בדף"
@@ -480,10 +480,10 @@
     "message": "קוראי מסך לא יכולים לתרגם תוכן שאינו טקסט. הוספה של טקסט חלופי לרכיבי `<object>` עוזרת להבהיר את המשמעות כשמשתמשים בקוראי מסך. [מידע נוסף](https://web.dev/object-alt/)."
   },
   "lighthouse-core/audits/accessibility/object-alt.js | failureTitle": {
-    "message": "יש רכיבי `<object>` שאין להם טקסט `[alt]`"
+    "message": "לרכיבי `<object>` אין טקסט חלופי"
   },
   "lighthouse-core/audits/accessibility/object-alt.js | title": {
-    "message": "לרכיבים מסוג `<object>` יש טקסט `[alt]`"
+    "message": "לרכיבי `<object>` יש טקסט חלופי"
   },
   "lighthouse-core/audits/accessibility/tabindex.js | description": {
     "message": "ערך גדול מ-0 מרמז על סדר ניווט מפורש. זו אפשרות תקינה מבחינה טכנית, אבל במקרים רבים היא גורמת לחוויה מתסכלת עבור משתמשים שמסתמכים על טכנולוגיות לנגישות. [מידע נוסף](https://web.dev/tabindex/)."
@@ -1052,6 +1052,9 @@
   "lighthouse-core/audits/installable-manifest.js | not-offline-capable": {
     "message": "הדף לא פועל ללא חיבור לאינטרנט"
   },
+  "lighthouse-core/audits/installable-manifest.js | pipeline-restarted": {
+    "message": "PWA הוסרה ומתבצע איפוס של בדיקות לגבי אפשרות התקנה."
+  },
   "lighthouse-core/audits/installable-manifest.js | platform-not-supported-on-android": {
     "message": "פלטפורמת האפליקציה שסופקה לא נתמכת ב-Android"
   },
@@ -1060,6 +1063,9 @@
   },
   "lighthouse-core/audits/installable-manifest.js | prefer-related-applications-only-beta-stable": {
     "message": "התכונה prefer_related_applications נתמכת רק בגרסת הבטא של Chrome ובערוצים יציבים ב-Android."
+  },
+  "lighthouse-core/audits/installable-manifest.js | protocol-timeout": {
+    "message": "במסגרת Lighthouse לא ניתן לקבוע אם היה קובץ שירות (service worker). צריך לנסות שוב בגרסה חדשה יותר של Chrome."
   },
   "lighthouse-core/audits/installable-manifest.js | start-url-not-valid": {
     "message": "כתובת ה-URL להתחלה של המניפסט לא חוקית"
@@ -1212,7 +1218,7 @@
     "message": "זמני אחזור בקצה עורפי של שרת"
   },
   "lighthouse-core/audits/no-unload-listeners.js | description": {
-    "message": "האירוע `unload` לא מופעל בצורה אמינה, והאזנה כדי לקלוט את האירוע הזה עשויה למנוע את השימוש באופטימיזציות שונות של הדפדפן, כמו שמירה במטמון לצורך מעבר לדף הקודם או הבא. מומלץ להשתמש במקומו באירוע `pagehide` או `visibilitychange`. [למידע נוסף](https://developers.google.com/web/updates/2018/07/page-lifecycle-api#the-unload-event)"
+    "message": "האירוע `unload` לא מופעל בצורה אמינה, והאזנה כדי לקלוט את האירוע הזה עשויה למנוע את השימוש באופטימיזציות שונות של הדפדפן, כמו שמירה במטמון לצורך מעבר לדף הקודם או הבא. יש להשתמש באירועי `pagehide` או `visibilitychange` במקום זאת. [למידע נוסף](https://web.dev/bfcache/#never-use-the-unload-event)"
   },
   "lighthouse-core/audits/no-unload-listeners.js | failureTitle": {
     "message": "רישום מעבד אירוע של `unload`"
@@ -1291,9 +1297,6 @@
   },
   "lighthouse-core/audits/seo/canonical.js | explanationConflict": {
     "message": "התנגשויות בין כתובות URL מרובות ({urlList})"
-  },
-  "lighthouse-core/audits/seo/canonical.js | explanationDifferentDomain": {
-    "message": "הכתובת מפנה לדומיין אחר ({url})"
   },
   "lighthouse-core/audits/seo/canonical.js | explanationInvalid": {
     "message": "כתובת אתר לא חוקית ({url})"
@@ -2148,7 +2151,7 @@
     "message": "כדאי לשקול העלאה של ה-GIF לשירות שיאפשר להטמיע אותו כסרטון HTML5."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | modern-image-formats": {
-    "message": "כדאי לשקול להשתמש ב[פלאגין](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=webp) או בשירות שימירו את התמונות שהועלו לפורמטים האופטימליים באופן אוטומטי."
+    "message": "כדאי לשקול להשתמש ב[פלאגין](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=webp) או בשירות שימירו אוטומטית את התמונות שהועלו לפורמטים האופטימליים."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | offscreen-images": {
     "message": "ניתן להתקין [פלאגין של Joomla לטעינה מדורגת](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=lazy%20loading) שמאפשר לדחות את הטעינה של תמונות שאינן מופיעות מיד במסך. ניתן גם לעבור לתבנית שמספקת את הפונקציונליות הזו. בגרסה 4.0 ואילך של Joomla, כל התמונות החדשות יקבלו את המאפיין `loading` [באופן אוטומטי](https://github.com/joomla/joomla-cms/pull/30748) מהליבה."
@@ -2222,6 +2225,36 @@
   "node_modules/lighthouse-stack-packs/packs/magento.js | uses-rel-preload": {
     "message": "אפשר להוסיף תגי `<link rel=preload>` על-ידי [שינוי פריסה של עיצוב](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
   },
+  "node_modules/lighthouse-stack-packs/packs/next.js | modern-image-formats": {
+    "message": "צריך להשתמש ב-Image Optimization API של `Next.js` כדי להציג פורמטים מודרניים כמו `WebP` וכמו `AVIF`. [מידע נוסף](https://nextjs.org/docs/api-reference/next/image#acceptable-formats)."
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | offscreen-images": {
+    "message": "עליך להשתמש ברכיב `next/image` שערך ברירת המחדל שלו הוא `loading=\"lazy\"`. [מידע נוסף](https://nextjs.org/docs/api-reference/next/image#loading)."
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | render-blocking-resources": {
+    "message": "עליך להשתמש ברכיב `next/script` כדי לדחות טעינה של סקריפטים שאינם קריטיים של צדדים שלישיים. [מידע נוסף](https://nextjs.org/docs/basic-features/script)."
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | unused-css-rules": {
+    "message": "כדאי לשקול להגדיר את `PurgeCSS` בהגדרות האישיות`Next.js`, כדי להסיר כללים שלא נמצאים בשימוש מגיליונות של סגנונות. [מידע נוסף](https://purgecss.com/guides/next.html)."
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | unused-javascript": {
+    "message": "יש להשתמש בכלי `Webpack Bundle Analyzer` כדי לזהות קוד JavaScript שלא נמצא בשימוש. [מידע נוסף](https://github.com/vercel/next.js/tree/canary/packages/next-bundle-analyzer)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | user-timings": {
+    "message": "כדאי להשתמש ב-`Next.js Analytics` כדי למדוד את ביצועי האפליקציה שלך בפועל. [מידע נוסף](https://nextjs.org/docs/advanced-features/measuring-performance)."
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | uses-long-cache-ttl": {
+    "message": "צריך להגדיר שמירה במטמון לנכסים ולדפי `Server-side Rendered`‏ (SSR) שאינם משתנים. [מידע נוסף](https://nextjs.org/docs/going-to-production#caching)."
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | uses-optimized-images": {
+    "message": "כדי לבצע אופטימיזציה של תמונות, עליך להשתמש ברכיב `next/image` במקום ברכיב `<img>`. [מידע נוסף](https://nextjs.org/docs/basic-features/image-optimization)."
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | uses-responsive-images": {
+    "message": "עליך להשתמש ברכיב `next/image` כדי לבצע הגדרה מתאימה של `sizes`. [מידע נוסף](https://nextjs.org/docs/api-reference/next/image#sizes)."
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | uses-text-compression": {
+    "message": "עליך להפעיל דחיסת נתונים בשרת Next.js. [למידע נוסף](https://nextjs.org/docs/api-reference/next.config.js/compression)."
+  },
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | efficient-animated-content": {
     "message": "[כדאי להחליף אנימציות GIF בסרטונים](https://web.dev/replace-gifs-with-videos/) כדי להאיץ את הטעינה של דפי אינטרנט. מומלץ גם להשתמש בפורמטים מודרניים של קבצים כמו [WebM](https://web.dev/replace-gifs-with-videos/#create-webm-videos) או [AV1](https://developers.google.com/web/updates/2018/09/chrome-70-media-updates#av1-decoder) כדי לייעל את דחיסת הנתונים ביותר מ-30% עם קידוד הווידאו המתקדם ביותר, VP9."
   },
@@ -2289,7 +2322,7 @@
     "message": "כדאי לשקול העלאה של ה-GIF לשירות שיאפשר להטמיע אותו כסרטון HTML5."
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | modern-image-formats": {
-    "message": "כדאי לשקול להשתמש ב[פלאגין](https://wordpress.org/plugins/search/convert+webp/) או בשירות שימירו את התמונות שהועלו לפורמטים האופטימליים באופן אוטומטי."
+    "message": "כדאי לשקול להשתמש ב[פלאגין](https://wordpress.org/plugins/search/convert+webp/) או בשירות שימירו אוטומטית את התמונות שהועלו לפורמטים האופטימליים."
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | offscreen-images": {
     "message": "ניתן להתקין [פלאגין של WordPress לטעינה מדורגת](https://wordpress.org/plugins/search/lazy+load/) שמאפשר לדחות את הטעינה של רכיבים שאינם מופיעים מיד במסך. ניתן גם להשתמש בעיצוב שמספק את האפשרות הזו. אפשרות נוספת היא להשתמש ב[פלאגין של AMP](https://wordpress.org/plugins/amp/)."
@@ -2331,7 +2364,7 @@
     "message": "להצגת המחשבון."
   },
   "report/renderer/util.js | collapseView": {
-    "message": "Collapse view"
+    "message": "כיווץ התצוגה"
   },
   "report/renderer/util.js | crcInitialNavigation": {
     "message": "ניווט התחלתי"
@@ -2370,13 +2403,13 @@
     "message": "שגיאה בדוח: אין מידע על הבדיקה"
   },
   "report/renderer/util.js | expandView": {
-    "message": "Expand view"
+    "message": "הרחבת התצוגה"
   },
   "report/renderer/util.js | footerIssue": {
     "message": "דיווח על בעיה"
   },
   "report/renderer/util.js | hide": {
-    "message": "Hide"
+    "message": "הסתרה"
   },
   "report/renderer/util.js | labDataTitle": {
     "message": "נתוני בדיקה"
@@ -2400,10 +2433,10 @@
     "message": "בדיקות עם ציון 'עובר'"
   },
   "report/renderer/util.js | runtimeAnalysisWindow": {
-    "message": "Initial page load"
+    "message": "טעינת הדף הראשונית"
   },
   "report/renderer/util.js | runtimeCustom": {
-    "message": "Custom throttling"
+    "message": "ויסות נתונים בהתאמה אישית"
   },
   "report/renderer/util.js | runtimeDesktopEmulation": {
     "message": "אמולציה של מחשב שולחני"
@@ -2433,19 +2466,19 @@
     "message": "סוכן משתמש (רשת)"
   },
   "report/renderer/util.js | runtimeSingleLoad": {
-    "message": "Single page load"
+    "message": "טעינת דף יחיד"
   },
   "report/renderer/util.js | runtimeSingleLoadTooltip": {
-    "message": "This data is taken from a single page load, as opposed to field data summarizing many sessions."
+    "message": "הנתונים האלה מגיעים מטעינת דף יחיד, בניגוד לנתוני שטח שמסכמים מספר סשנים."
   },
   "report/renderer/util.js | runtimeSlow4g": {
-    "message": "Slow 4G throttling"
+    "message": "ויסות נתונים איטי ב-4G"
   },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "ערך לא ידוע"
   },
   "report/renderer/util.js | show": {
-    "message": "Show"
+    "message": "הצגה"
   },
   "report/renderer/util.js | showRelevantAudits": {
     "message": "הצגת הביקורות שרלוונטיות למדדים:"

@@ -477,13 +477,13 @@
     "message": "`[user-scalable=\"no\"]` is not used in the `<meta name=\"viewport\">` element and the `[maximum-scale]` attribute is not less than 5."
   },
   "lighthouse-core/audits/accessibility/object-alt.js | description": {
-    "message": "Screen readers cannot translate non-text content. Adding alt text to `<object>` elements helps screen readers convey meaning to users. [Learn more](https://web.dev/object-alt/)."
+    "message": "Screen readers cannot translate non-text content. Adding alternate text to `<object>` elements helps screen readers convey meaning to users. [Learn more](https://web.dev/object-alt/)."
   },
   "lighthouse-core/audits/accessibility/object-alt.js | failureTitle": {
-    "message": "`<object>` elements do not have `[alt]` text"
+    "message": "`<object>` elements do not have alternate text"
   },
   "lighthouse-core/audits/accessibility/object-alt.js | title": {
-    "message": "`<object>` elements have `[alt]` text"
+    "message": "`<object>` elements have alternate text"
   },
   "lighthouse-core/audits/accessibility/tabindex.js | description": {
     "message": "A value greater than 0 implies an explicit navigation ordering. Although technically valid, this often creates frustrating experiences for users who rely on assistive technologies. [Learn more](https://web.dev/tabindex/)."
@@ -1052,6 +1052,9 @@
   "lighthouse-core/audits/installable-manifest.js | not-offline-capable": {
     "message": "Page does not work offline"
   },
+  "lighthouse-core/audits/installable-manifest.js | pipeline-restarted": {
+    "message": "PWA has been uninstalled and installability checks resetting."
+  },
   "lighthouse-core/audits/installable-manifest.js | platform-not-supported-on-android": {
     "message": "The specified application platform is not supported on Android"
   },
@@ -1063,6 +1066,9 @@
   },
   "lighthouse-core/audits/installable-manifest.js | protocol-timeout": {
     "message": "Lighthouse could not determine if there was a service worker. Please try with a newer version of Chrome."
+  },
+  "lighthouse-core/audits/installable-manifest.js | scheme-not-supported-for-webapk": {
+    "message": "The manifest URL scheme ({scheme}) is not supported on Android."
   },
   "lighthouse-core/audits/installable-manifest.js | start-url-not-valid": {
     "message": "Manifest start URL is not valid"
@@ -1215,7 +1221,7 @@
     "message": "Server Backend Latencies"
   },
   "lighthouse-core/audits/no-unload-listeners.js | description": {
-    "message": "The `unload` event does not fire reliably and listening for it can prevent browser optimizations like the Back-Forward Cache. Consider using the `pagehide` or `visibilitychange` events instead. [Learn more](https://developers.google.com/web/updates/2018/07/page-lifecycle-api#the-unload-event)"
+    "message": "The `unload` event does not fire reliably and listening for it can prevent browser optimizations like the Back-Forward Cache. Use `pagehide` or `visibilitychange` events instead. [Learn more](https://web.dev/bfcache/#never-use-the-unload-event)"
   },
   "lighthouse-core/audits/no-unload-listeners.js | failureTitle": {
     "message": "Registers an `unload` listener"
@@ -1269,7 +1275,7 @@
     "message": "Fonts with `font-display: optional` are preloaded"
   },
   "lighthouse-core/audits/preload-lcp-image.js | description": {
-    "message": "Preload the image used by the LCP element in order to improve your LCP time. [Learn more](https://web.dev/optimize-lcp/#preload-important-resources)."
+    "message": "If the LCP element is dynamically added to the page, you should preload the image in order to improve LCP. [Learn more](https://web.dev/optimize-lcp/#preload-important-resources)."
   },
   "lighthouse-core/audits/preload-lcp-image.js | title": {
     "message": "Preload Largest Contentful Paint image"
@@ -1294,9 +1300,6 @@
   },
   "lighthouse-core/audits/seo/canonical.js | explanationConflict": {
     "message": "Multiple conflicting URLs ({urlList})"
-  },
-  "lighthouse-core/audits/seo/canonical.js | explanationDifferentDomain": {
-    "message": "Points to a different domain ({url})"
   },
   "lighthouse-core/audits/seo/canonical.js | explanationInvalid": {
     "message": "Invalid URL ({url})"
@@ -1668,7 +1671,7 @@
     "message": "Best practices"
   },
   "lighthouse-core/config/default-config.js | a11yCategoryDescription": {
-    "message": "These checks highlight opportunities to [improve the accessibility of your web app](https://developers.google.com/web/fundamentals/accessibility). Only a subset of accessibility issues can be automatically detected so manual testing is also encouraged."
+    "message": "These checks highlight opportunities to [improve the accessibility of your web app](https://web.dev/lighthouse-accessibility/). Only a subset of accessibility issues can be automatically detected so manual testing is also encouraged."
   },
   "lighthouse-core/config/default-config.js | a11yCategoryManualDescription": {
     "message": "These items address areas which an automated testing tool cannot cover. Learn more in our guide on [conducting an accessibility review](https://developers.google.com/web/fundamentals/accessibility/how-to-review)."
@@ -2109,7 +2112,7 @@
     "message": "Specify `@font-display` when defining custom fonts in your theme."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | modern-image-formats": {
-    "message": "Consider installing and configuring [a module to leverage WebP image formats](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=webp&solrsort=iss_project_release_usage+desc&op=Search) in your site. Such modules automatically generate a WebP version of your uploaded images to optimize loading times."
+    "message": "Consider configuring [WebP image formats with a Convert image style](https://www.drupal.org/docs/core-modules-and-themes/core-modules/image-module/working-with-images#styles) on your site."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | offscreen-images": {
     "message": "Install [a Drupal module](https://www.drupal.org/project/project_module?f%5B0%5D=&f%5B1%5D=&f%5B2%5D=im_vid_3%3A67&f%5B3%5D=&f%5B4%5D=sm_field_project_type%3Afull&f%5B5%5D=&f%5B6%5D=&text=%22lazy+load%22&solrsort=iss_project_release_usage+desc&op=Search) that can lazy load images. Such modules provide the ability to defer any offscreen images to improve performance."
@@ -2146,6 +2149,45 @@
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | uses-responsive-images": {
     "message": "Ensure that you are using the native [Responsive Image Styles](https://www.drupal.org/docs/8/mobile-guide/responsive-images-in-drupal-8) provided from Drupal (available in Drupal 8 and above). Use the Responsive Image Styles when rendering image fields through view modes, views, or images uploaded through the WYSIWYG editor."
+  },
+  "node_modules/lighthouse-stack-packs/packs/ezoic.js | font-display": {
+    "message": "Use [Ezoic Leap](https://pubdash.ezoic.com/speed) and enable `Optimize Fonts` to automatically leverage the `font-display` CSS feature to ensure text is user-visible while webfonts are loading."
+  },
+  "node_modules/lighthouse-stack-packs/packs/ezoic.js | modern-image-formats": {
+    "message": "Use [Ezoic Leap](https://pubdash.ezoic.com/speed) and enable `Next-Gen Formats` to convert images to WebP."
+  },
+  "node_modules/lighthouse-stack-packs/packs/ezoic.js | offscreen-images": {
+    "message": "Use [Ezoic Leap](https://pubdash.ezoic.com/speed) and enable `Lazy Load Images` to defer loading off-screen images until they are needed."
+  },
+  "node_modules/lighthouse-stack-packs/packs/ezoic.js | render-blocking-resources": {
+    "message": "Use [Ezoic Leap](https://pubdash.ezoic.com/speed) and enable `Critical CSS` and `Script Delay` to defer non-critical JS/CSS."
+  },
+  "node_modules/lighthouse-stack-packs/packs/ezoic.js | server-response-time": {
+    "message": "Use [Ezoic Cloud Caching](https://pubdash.ezoic.com/speed/caching) to cache your content across our world wide network, improving time to first byte."
+  },
+  "node_modules/lighthouse-stack-packs/packs/ezoic.js | unminified-css": {
+    "message": "Use [Ezoic Leap](https://pubdash.ezoic.com/speed) and enable `Minify CSS` to automatically minify your CSS to reduce network payload sizes."
+  },
+  "node_modules/lighthouse-stack-packs/packs/ezoic.js | unminified-javascript": {
+    "message": "Use [Ezoic Leap](https://pubdash.ezoic.com/speed) and enable `Minify Javascript` to automatically minify your JS to reduce network payload sizes."
+  },
+  "node_modules/lighthouse-stack-packs/packs/ezoic.js | unused-css-rules": {
+    "message": "Use [Ezoic Leap](https://pubdash.ezoic.com/speed) and enable `Remove Unused CSS` to help with this issue. It will identify the CSS classes that are actually used on each page of your site, and remove any others to keep the file size small."
+  },
+  "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-long-cache-ttl": {
+    "message": "Use [Ezoic Leap](https://pubdash.ezoic.com/speed) and enable `Efficient Static Cache Policy` to set recommended values in the caching header for static assests."
+  },
+  "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-optimized-images": {
+    "message": "Use [Ezoic Leap](https://pubdash.ezoic.com/speed) and enable `Next-Gen Formats` to convert images to WebP."
+  },
+  "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-rel-preconnect": {
+    "message": "Use [Ezoic Leap](https://pubdash.ezoic.com/speed) and enable `Pre-Connect Origins` to automatically add `preconnect` resource hints to establish early connections to important third-party origins."
+  },
+  "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-rel-preload": {
+    "message": "Use [Ezoic Leap](https://pubdash.ezoic.com/speed) and enable `Preload Fonts` and `Preload Background Images` to add `preload` links to prioritize fetching resources that are currently requested later in page load."
+  },
+  "node_modules/lighthouse-stack-packs/packs/ezoic.js | uses-responsive-images": {
+    "message": "Use [Ezoic Leap](https://pubdash.ezoic.com/speed) and enable `Resize Images` to resize images to a device appropriate size, reducing network payload sizes."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | efficient-animated-content": {
     "message": "Consider uploading your GIF to a service which will make it available to embed as an HTML5 video."
@@ -2224,6 +2266,60 @@
   },
   "node_modules/lighthouse-stack-packs/packs/magento.js | uses-rel-preload": {
     "message": "`<link rel=preload>` tags can be added by [modifying a themes's layout](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | modern-image-formats": {
+    "message": "Use the `next/image` component instead of `<img>` to automatically optimize image format. [Learn more](https://nextjs.org/docs/basic-features/image-optimization)."
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | offscreen-images": {
+    "message": "Use the `next/image` component instead of `<img>` to automatically lazy-load images. [Learn more](https://nextjs.org/docs/basic-features/image-optimization)."
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | preload-lcp-image": {
+    "message": "Use the `next/image` component and set \"priority\" to true to preload LCP image. [Learn more](https://nextjs.org/docs/api-reference/next/image#priority)."
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | render-blocking-resources": {
+    "message": "Use the `next/script` component to defer loading of non-critical third-party scripts. [Learn more](https://nextjs.org/docs/basic-features/script)."
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | unsized-images": {
+    "message": "Use the `next/image` component to make sure images are always sized appropriately. [Learn more](https://nextjs.org/docs/api-reference/next/image#width)."
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | unused-css-rules": {
+    "message": "Consider setting up `PurgeCSS` in `Next.js` configuration to remove unused rules from stylesheets. [Learn more](https://purgecss.com/guides/next.html)."
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | unused-javascript": {
+    "message": "Use `Webpack Bundle Analyzer` to detect unused JavaScript code. [Learn more](https://github.com/vercel/next.js/tree/canary/packages/next-bundle-analyzer)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | user-timings": {
+    "message": "Consider using `Next.js Analytics` to measure your app's real-world performance. [Learn more](https://nextjs.org/docs/advanced-features/measuring-performance)."
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | uses-long-cache-ttl": {
+    "message": "Configure caching for immutable assets and `Server-side Rendered` (SSR) pages. [Learn more](https://nextjs.org/docs/going-to-production#caching)."
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | uses-optimized-images": {
+    "message": "Use the `next/image` component instead of `<img>` to adjust image quality. [Learn more](https://nextjs.org/docs/basic-features/image-optimization)."
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | uses-responsive-images": {
+    "message": "Use the `next/image` component to set the appropriate `sizes`. [Learn more](https://nextjs.org/docs/api-reference/next/image#sizes)."
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | uses-text-compression": {
+    "message": "Enable compression on your Next.js server. [Learn more](https://nextjs.org/docs/api-reference/next.config.js/compression)."
+  },
+  "node_modules/lighthouse-stack-packs/packs/nuxt.js | modern-image-formats": {
+    "message": "Use the `nuxt/image` component and set `format=\"webp\"`. [Learn more](https://image.nuxtjs.org/components/nuxt-img#format)."
+  },
+  "node_modules/lighthouse-stack-packs/packs/nuxt.js | offscreen-images": {
+    "message": "Use the `nuxt/image` component and set `loading=\"lazy\"` for offscreen images. [Learn more](https://image.nuxtjs.org/components/nuxt-img#loading)."
+  },
+  "node_modules/lighthouse-stack-packs/packs/nuxt.js | preload-lcp-image": {
+    "message": "Use the `nuxt/image` component and specify `preload` for LCP image. [Learn more](https://image.nuxtjs.org/components/nuxt-img#preload)."
+  },
+  "node_modules/lighthouse-stack-packs/packs/nuxt.js | unsized-images": {
+    "message": "Use the `nuxt/image` component and specify explicit `width` and `height`. [Learn more](https://image.nuxtjs.org/components/nuxt-img#width--height)."
+  },
+  "node_modules/lighthouse-stack-packs/packs/nuxt.js | uses-optimized-images": {
+    "message": "Use the `nuxt/image` component and set the appropriate `quality`. [Learn more](https://image.nuxtjs.org/components/nuxt-img#quality)."
+  },
+  "node_modules/lighthouse-stack-packs/packs/nuxt.js | uses-responsive-images": {
+    "message": "Use the `nuxt/image` component and set the appropriate `sizes`. [Learn more](https://image.nuxtjs.org/components/nuxt-img#sizes)."
   },
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | efficient-animated-content": {
     "message": "[Replace animated GIFs with video](https://web.dev/replace-gifs-with-videos/) for faster web page loads and consider using modern file formats such as [WebM](https://web.dev/replace-gifs-with-videos/#create-webm-videos) or [AV1](https://developers.google.com/web/updates/2018/09/chrome-70-media-updates#av1-decoder) to improve compression efficiency by greater than 30% over the current state-of-the-art video codec, VP9."
@@ -2313,10 +2409,10 @@
     "message": "A number of [WordPress plugins](https://wordpress.org/plugins/search/minify+javascript/) can speed up your site by concatenating, minifying, and compressing your scripts. You may also want to use a build process to do this minification up front if possible."
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | unused-css-rules": {
-    "message": "Consider reducing, or switching, the number of [WordPress plugins](https://wordpress.org/plugins/) loading unused CSS in your page. To identify plugins that are adding extraneous CSS, try running [code coverage](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) in Chrome DevTools. You can identify the theme/plugin responsible from the URL of the stylesheet. Look out for plugins that have many stylesheets in the list which have a lot of red in code coverage. A plugin should only enqueue a stylesheet if it is actually used on the page."
+    "message": "Consider reducing, or switching, the number of [WordPress plugins](https://wordpress.org/plugins/) loading unused CSS in your page. To identify plugins that are adding extraneous CSS, try running [code coverage](https://developer.chrome.com/docs/devtools/coverage/) in Chrome DevTools. You can identify the theme/plugin responsible from the URL of the stylesheet. Look out for plugins that have many stylesheets in the list which have a lot of red in code coverage. A plugin should only enqueue a stylesheet if it is actually used on the page."
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | unused-javascript": {
-    "message": "Consider reducing, or switching, the number of [WordPress plugins](https://wordpress.org/plugins/) loading unused JavaScript in your page. To identify plugins that are adding extraneous JS, try running [code coverage](https://developers.google.com/web/updates/2017/04/devtools-release-notes#coverage) in Chrome DevTools. You can identify the theme/plugin responsible from the URL of the script. Look out for plugins that have many scripts in the list which have a lot of red in code coverage. A plugin should only enqueue a script if it is actually used on the page."
+    "message": "Consider reducing, or switching, the number of [WordPress plugins](https://wordpress.org/plugins/) loading unused JavaScript in your page. To identify plugins that are adding extraneous JS, try running [code coverage](https://developer.chrome.com/docs/devtools/coverage/) in Chrome DevTools. You can identify the theme/plugin responsible from the URL of the script. Look out for plugins that have many scripts in the list which have a lot of red in code coverage. A plugin should only enqueue a script if it is actually used on the page."
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | uses-long-cache-ttl": {
     "message": "Read about [Browser Caching in WordPress](https://wordpress.org/support/article/optimization/#browser-caching)."
@@ -2470,6 +2566,12 @@
   },
   "report/renderer/util.js | varianceDisclaimer": {
     "message": "Values are estimated and may vary. The [performance score is calculated](https://web.dev/performance-scoring/) directly from these metrics."
+  },
+  "report/renderer/util.js | viewOriginalTraceLabel": {
+    "message": "View Original Trace"
+  },
+  "report/renderer/util.js | viewTraceLabel": {
+    "message": "View Trace"
   },
   "report/renderer/util.js | viewTreemapLabel": {
     "message": "View Treemap"

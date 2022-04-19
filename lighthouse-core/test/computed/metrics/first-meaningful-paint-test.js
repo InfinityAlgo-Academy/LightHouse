@@ -10,6 +10,7 @@
 import FirstMeaningfulPaint from '../../../computed/metrics/first-meaningful-paint.js';
 import {strict as assert} from 'assert';
 import {readJson} from '../../../../root.js';
+import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';
 
 /* eslint-disable max-len */
 const TRACE_FIXTURES = '../../fixtures/traces';
@@ -45,9 +46,11 @@ describe('Metrics: FMP', () => {
     settings = {throttlingMethod: 'simulate'};
     trace = pwaTrace;
     devtoolsLog = pwaDevtoolsLog;
+    const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
 
     const context = {computedCache: new Map()};
-    const result = await FirstMeaningfulPaint.request({trace, devtoolsLog, gatherContext, settings},
+    const result = await FirstMeaningfulPaint.request(
+      {trace, devtoolsLog, gatherContext, settings, URL},
       context);
 
     expect({

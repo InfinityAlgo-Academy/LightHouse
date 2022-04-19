@@ -4,7 +4,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 /* eslint-disable no-console, max-len */
 
@@ -24,7 +23,10 @@ import {countTranslatedMessages} from './count-translated.js';
 import {LH_ROOT} from '../../../root.js';
 import {resolveModulePath} from '../esm-utils.js';
 
-const UISTRINGS_REGEX = /UIStrings = .*?\};\n/s;
+// Match declarations of UIStrings, terminating in either a `};\n` (very likely to always be right)
+// or `}\n\n` (allowing semicolon to be optional, but insisting on a double newline so that an
+// closing brace in the middle of the declaration does not prematurely end the pattern)
+const UISTRINGS_REGEX = /UIStrings = .*?\}(;|\n)\n/s;
 
 /** @typedef {import('./bake-ctc-to-lhl.js').CtcMessage} CtcMessage */
 /** @typedef {Required<Pick<CtcMessage, 'message'|'placeholders'>>} IncrementalCtc */
@@ -552,7 +554,7 @@ async function collectAllStringsInDir(dir) {
     const content = fs.readFileSync(absolutePath, 'utf8');
     const exportVars = await import(absolutePath);
     const regexMatch = content.match(UISTRINGS_REGEX);
-    const exportedUIStrings = exportVars.UIStrings || (exportVars.default && exportVars.default.UIStrings);
+    const exportedUIStrings = exportVars.UIStrings || exportVars.default?.UIStrings;
 
     if (!regexMatch) {
       // No UIStrings found in the file text or exports, so move to the next.
@@ -650,10 +652,6 @@ function resolveMessageCollisions(strings) {
 
   try {
     expect(collidingMessages).toEqual([
-      '$MARKDOWN_SNIPPET_0$ elements do not have $MARKDOWN_SNIPPET_1$ text',
-      '$MARKDOWN_SNIPPET_0$ elements do not have $MARKDOWN_SNIPPET_1$ text',
-      '$MARKDOWN_SNIPPET_0$ elements have $MARKDOWN_SNIPPET_1$ text',
-      '$MARKDOWN_SNIPPET_0$ elements have $MARKDOWN_SNIPPET_1$ text',
       'ARIA $MARKDOWN_SNIPPET_0$ elements do not have accessible names.',
       'ARIA $MARKDOWN_SNIPPET_0$ elements do not have accessible names.',
       'ARIA $MARKDOWN_SNIPPET_0$ elements do not have accessible names.',
@@ -675,6 +673,8 @@ function resolveMessageCollisions(strings) {
       'Name',
       'Potential Savings',
       'Potential Savings',
+      'Use the $MARKDOWN_SNIPPET_0$ component and set the appropriate $MARKDOWN_SNIPPET_1$. $LINK_START_0$Learn more$LINK_END_0$.',
+      'Use the $MARKDOWN_SNIPPET_0$ component and set the appropriate $MARKDOWN_SNIPPET_1$. $LINK_START_0$Learn more$LINK_END_0$.',
     ]);
   } catch (err) {
     console.log('The number of duplicate strings has changed. Consider duplicating the `description` to match existing strings so they\'re translated together or update this assertion if they must absolutely be translated separately');

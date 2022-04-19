@@ -47,7 +47,6 @@ class UnusedCSSRules extends ByteEfficiencyAudit {
   static async audit_(artifacts, _, context) {
     const unusedCssItems = await UnusedCSS.request({
       CSSUsage: artifacts.CSSUsage,
-      URL: artifacts.URL,
       devtoolsLog: artifacts.devtoolsLogs[ByteEfficiencyAudit.DEFAULT_PASS],
     }, context);
     const items = unusedCssItems

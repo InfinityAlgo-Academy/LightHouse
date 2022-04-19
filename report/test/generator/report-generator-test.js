@@ -5,6 +5,8 @@
  */
 'use strict';
 
+/* eslint-disable no-irregular-whitespace */
+
 const assert = require('assert').strict;
 const fs = require('fs');
 
@@ -81,28 +83,33 @@ describe('ReportGenerator', () => {
 
     it('creates CSV for results', async () => {
       const path = './.results-as-csv.csv';
-      const headers = {
-        category: '',
-        name: '',
-        title: '',
-        type: '',
-        score: 42,
-      };
 
       const csvOutput = ReportGenerator.generateReport(sampleResults, 'csv');
       fs.writeFileSync(path, csvOutput);
 
       const lines = csvOutput.split('\n');
       expect(lines.length).toBeGreaterThan(100);
-      expect(lines.slice(0, 3).join('\n')).toMatchInlineSnapshot(`
-"requestedUrl,finalUrl,category,name,title,type,score
-\\"http://localhost:10200/dobetterweb/dbw_tester.html\\",\\"http://localhost:10200/dobetterweb/dbw_tester.html\\",\\"Performance\\",\\"performance-score\\",\\"Overall Performance Category Score\\",\\"numeric\\",\\"0.26\\"
-\\"http://localhost:10200/dobetterweb/dbw_tester.html\\",\\"http://localhost:10200/dobetterweb/dbw_tester.html\\",\\"Performance\\",\\"first-contentful-paint\\",\\"First Contentful Paint\\",\\"numeric\\",\\"0.02\\"
+      expect(lines.slice(0, 15).join('\n')).toMatchInlineSnapshot(`
+"\\"requestedUrl\\",\\"finalUrl\\",\\"fetchTime\\",\\"gatherMode\\"
+\\"http://localhost:10200/dobetterweb/dbw_tester.html\\",\\"http://localhost:10200/dobetterweb/dbw_tester.html\\",\\"2021-09-07T20:11:11.853Z\\",\\"navigation\\"
+
+category,score
+\\"performance\\",\\"0.26\\"
+\\"accessibility\\",\\"0.78\\"
+\\"best-practices\\",\\"0.25\\"
+\\"seo\\",\\"0.67\\"
+\\"pwa\\",\\"0.3\\"
+
+category,audit,score,displayValue,description
+\\"performance\\",\\"first-contentful-paint\\",\\"0.01\\",\\"6.8 s\\",\\"First Contentful Paint marks the time at which the first text or image is painted. [Learn more](https://web.dev/first-contentful-paint/).\\"
+\\"performance\\",\\"interactive\\",\\"0.41\\",\\"8.2 s\\",\\"Time to interactive is the amount of time it takes for the page to become fully interactive. [Learn more](https://web.dev/interactive/).\\"
+\\"performance\\",\\"speed-index\\",\\"0.21\\",\\"8.1 s\\",\\"Speed Index shows how quickly the contents of a page are visibly populated. [Learn more](https://web.dev/speed-index/).\\"
+\\"performance\\",\\"total-blocking-time\\",\\"0.2\\",\\"1,220 ms\\",\\"Sum of all time periods between FCP and Time to Interactive, when task length exceeded 50ms, expressed in milliseconds. [Learn more](https://web.dev/lighthouse-total-blocking-time/).\\"
 "
 `);
 
       try {
-        await csvValidator(path, headers);
+        await csvValidator(path);
       } catch (err) {
         assert.fail('CSV parser error:\n' + err.join('\n'));
       } finally {
@@ -110,13 +117,13 @@ describe('ReportGenerator', () => {
       }
     });
 
-    it('creates CSV for results including overall category scores', () => {
+    it('creates CSV for results including categories', () => {
       const csvOutput = ReportGenerator.generateReport(sampleResults, 'csv');
-      expect(csvOutput).toContain('performance-score');
-      expect(csvOutput).toContain('accessibility-score');
-      expect(csvOutput).toContain('best-practices-score');
-      expect(csvOutput).toContain('seo-score');
-      expect(csvOutput).toContain('pwa-score');
+      expect(csvOutput).toContain('performance');
+      expect(csvOutput).toContain('accessibility');
+      expect(csvOutput).toContain('best-practices');
+      expect(csvOutput).toContain('seo');
+      expect(csvOutput).toContain('pwa');
     });
 
     it('writes extended info', () => {

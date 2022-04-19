@@ -53,6 +53,7 @@ yarn serve-viewer
 # Works with v4 report? http://localhost:8000/viewer?gist=7251f9eba409f385e4c0424515fe8009
 # Works with v5 report? http://localhost:8000/viewer?gist=6093e41b9b50c8d642a7e6bbc784e32f
 # Works with v6 report? http://localhost:8000/viewer?gist=94722e917a507feb5371ad51be6c3334
+# Works with v8 report? http://localhost:8000/viewer?gist=18d523b86779185ecfd376d58f891e1d
 # Current production viewer (https://googlechrome.github.io/lighthouse/viewer/) has forward compat with next major LHR?
 
 # Confirm DevTools integration will work: Do some manual testing on a number of sites.
@@ -80,9 +81,6 @@ Now that the integrations are confirmed to work, go back to `lighthouse` folder.
 ```sh
 # Prepare the commit, replace x.x.x with the desired version
 bash ./lighthouse-core/scripts/release/prepare-commit.sh x.x.x
-
-# Rebaseline DevTools tests one more time (only version number should change).
-yarn build-devtools && yarn update:test-devtools
 ```
 
 1. Edit changelog.md before opening the PR

@@ -634,8 +634,8 @@ Object {
         const cat = 'loading,rail,devtools.timeline';
 
         // Remove default FCP event because we will define them manually.
-        testTrace.traceEvents
-          = testTrace.traceEvents.filter(e => e.name !== 'firstContentfulPaint');
+        testTrace.traceEvents =
+          testTrace.traceEvents.filter(e => e.name !== 'firstContentfulPaint');
 
         testTrace.traceEvents.push(
           /* eslint-disable max-len */

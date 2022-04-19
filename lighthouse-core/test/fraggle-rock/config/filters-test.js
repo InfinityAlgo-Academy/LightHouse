@@ -10,6 +10,7 @@ import BaseGatherer from '../../../fraggle-rock/gather/base-gatherer.js';
 import {defaultSettings, defaultNavigationConfig} from '../../../config/constants.js';
 import filters from '../../../fraggle-rock/config/filters.js';
 import {initializeConfig} from '../../../fraggle-rock/config/config.js';
+import log from 'lighthouse-logger';
 
 /* eslint-env jest */
 
@@ -455,6 +456,34 @@ describe('Fraggle Rock Config Filtering', () => {
           timespan: {},
         },
       });
+    });
+
+    it('should warn and drop unknown onlyCategories entries', () => {
+      /** @type {Array<unknown>} */
+      const warnings = [];
+      /** @param {unknown} evt */
+      const saveWarning = evt => warnings.push(evt);
+
+      log.events.on('warning', saveWarning);
+      const filtered = filters.filterConfigByExplicitFilters(config, {
+        onlyAudits: null,
+        onlyCategories: ['timespan', 'thisIsNotACategory'],
+        skipAudits: null,
+      });
+      log.events.off('warning', saveWarning);
+
+      if (!filtered.categories) throw new Error('Failed to keep any categories');
+      expect(Object.keys(filtered.categories)).toEqual(['timespan']);
+      expect(filtered).toMatchObject({
+        artifacts: [{id: 'Timespan'}],
+        audits: [{implementation: TimespanAudit}],
+        categories: {
+          timespan: {},
+        },
+      });
+      expect(warnings).toEqual(expect.arrayContaining([
+        ['config', `unrecognized category in 'onlyCategories': thisIsNotACategory`],
+      ]));
     });
 
     it('should filter via a combination of filters', () => {

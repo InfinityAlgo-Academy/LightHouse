@@ -9,6 +9,9 @@ import {strict as assert} from 'assert';
 import FirstContentfulPaint from '../../../computed/metrics/first-contentful-paint.js'; // eslint-disable-line max-len
 import trace from '../../fixtures/traces/progressive-app-m60.json';
 import devtoolsLog from '../../fixtures/traces/progressive-app-m60.devtools.log.json';
+import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';
+
+const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
 
 /* eslint-env jest */
 
@@ -18,7 +21,8 @@ describe('Metrics: FCP', () => {
   it('should compute a simulated value', async () => {
     const settings = {throttlingMethod: 'simulate'};
     const context = {settings, computedCache: new Map()};
-    const result = await FirstContentfulPaint.request({trace, devtoolsLog, gatherContext, settings},
+    const result = await FirstContentfulPaint.request(
+      {trace, devtoolsLog, gatherContext, settings, URL},
       context);
 
     expect({

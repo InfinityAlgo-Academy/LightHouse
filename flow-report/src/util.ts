@@ -5,11 +5,12 @@
  */
 
 import {createContext} from 'preact';
-import {useContext, useEffect, useMemo, useState} from 'preact/hooks';
+import {useContext, useEffect, useLayoutEffect, useMemo, useRef, useState} from 'preact/hooks';
 
 import type {UIStringsType} from './i18n/ui-strings';
 
 const FlowResultContext = createContext<LH.FlowResult|undefined>(undefined);
+const OptionsContext = createContext<LH.FlowReportOptions>({});
 
 function getHashParam(param: string): string|null {
   const params = new URLSearchParams(location.hash.replace('#', '?'));
@@ -43,8 +44,7 @@ function getScreenDimensions(reportResult: LH.Result) {
 function getFullPageScreenshot(reportResult: LH.Result) {
   const fullPageScreenshotAudit = reportResult.audits['full-page-screenshot'];
   const fullPageScreenshot =
-    fullPageScreenshotAudit &&
-    fullPageScreenshotAudit.details &&
+    fullPageScreenshotAudit?.details &&
     fullPageScreenshotAudit.details.type === 'full-page-screenshot' &&
     fullPageScreenshotAudit.details;
 
@@ -121,8 +121,39 @@ function useHashState(): LH.FlowResult.HashState|null {
   }, [indexString, flowResult, anchor]);
 }
 
+/**
+ * Creates a DOM subtree from non-preact code (e.g. LH report renderer).
+ * @param renderCallback Callback that renders a DOM subtree.
+ * @param inputs Changes to these values will trigger a re-render of the DOM subtree.
+ * @return Reference to the element that will contain the DOM subtree.
+ */
+function useExternalRenderer<T extends Element>(
+  renderCallback: () => Node,
+  inputs?: ReadonlyArray<unknown>
+) {
+  const ref = useRef<T>(null);
+
+  useLayoutEffect(() => {
+    if (!ref.current) return;
+
+    const root = renderCallback();
+    ref.current.appendChild(root);
+
+    return () => {
+      if (ref.current?.contains(root)) ref.current.removeChild(root);
+    };
+  }, inputs);
+
+  return ref;
+}
+
+function useOptions() {
+  return useContext(OptionsContext);
+}
+
 export {
   FlowResultContext,
+  OptionsContext,
   classNames,
   getScreenDimensions,
   getFullPageScreenshot,
@@ -131,4 +162,6 @@ export {
   useFlowResult,
   useHashParams,
   useHashState,
+  useExternalRenderer,
+  useOptions,
 };

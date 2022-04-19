@@ -23,7 +23,7 @@ function getBaseRequestId(record) {
   if (!record.requestId) return;
 
   const match = /^([\w.]+)(?::redirect)*$/.exec(record.requestId);
-  return match && match[1];
+  return match?.[1];
 }
 
 /**

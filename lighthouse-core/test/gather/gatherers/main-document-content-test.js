@@ -12,14 +12,17 @@ import MainDocumentContent from '../../../gather/gatherers/main-document-content
 import NetworkRecorder from '../../../lib/network-recorder.js';
 import {createMockContext} from '../../fraggle-rock/gather/mock-driver.js';
 import {readJson} from '../../../../root.js';
+import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';
 
 const devtoolsLog = readJson('lighthouse-core/test/fixtures/traces/lcp-m78.devtools.log.json');
+const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
 
 describe('FR compat', () => {
   it('uses loadData in legacy mode', async () => {
     const gatherer = new MainDocumentContent();
     const networkRecords = NetworkRecorder.recordsFromLogs(devtoolsLog);
     const mockContext = createMockContext();
+    mockContext.baseArtifacts.URL = URL;
     mockContext.driver.defaultSession.sendCommand
       .mockResponse('Network.getResponseBody', {body: 'RESPONSE'});
 
@@ -34,6 +37,7 @@ describe('FR compat', () => {
   it('uses dependencies for FR', async () => {
     const gatherer = new MainDocumentContent();
     const mockContext = createMockContext();
+    mockContext.baseArtifacts.URL = URL;
     mockContext.driver.defaultSession.sendCommand
       .mockResponse('Network.getResponseBody', {body: 'RESPONSE'});
 

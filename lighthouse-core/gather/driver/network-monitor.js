@@ -133,18 +133,33 @@ class NetworkMonitor {
     this._sessions = new Map();
   }
 
-  /** @return {Promise<string | undefined>} */
-  async getFinalNavigationUrl() {
+  /** @return {Promise<{requestedUrl?: string, mainDocumentUrl?: string}>} */
+  async getNavigationUrls() {
     const frameNavigations = this._frameNavigations;
-    if (!frameNavigations.length) return undefined;
+    if (!frameNavigations.length) return {};
 
     const resourceTreeResponse = await this._session.sendCommand('Page.getResourceTree');
     const mainFrameId = resourceTreeResponse.frameTree.frame.id;
     const mainFrameNavigations = frameNavigations.filter(frame => frame.id === mainFrameId);
-    const finalNavigation = mainFrameNavigations[mainFrameNavigations.length - 1];
-    if (!finalNavigation) log.warn('NetworkMonitor', 'No detected navigations');
+    if (!mainFrameNavigations.length) log.warn('NetworkMonitor', 'No detected navigations');
 
-    return finalNavigation && finalNavigation.url;
+    // The requested URL is the initiator request for the first frame navigation.
+    /** @type {string|undefined} */
+    let requestedUrl = mainFrameNavigations[0]?.url;
+    if (this._networkRecorder) {
+      const records = this._networkRecorder.getRawRecords();
+
+      let initialUrlRequest = records.find(record => record.url === requestedUrl);
+      while (initialUrlRequest?.redirectSource) {
+        initialUrlRequest = initialUrlRequest.redirectSource;
+        requestedUrl = initialUrlRequest.url;
+      }
+    }
+
+    return {
+      requestedUrl,
+      mainDocumentUrl: mainFrameNavigations[mainFrameNavigations.length - 1]?.url,
+    };
   }
 
   /**
@@ -172,7 +187,7 @@ class NetworkMonitor {
     if (!this._networkRecorder) return false;
     const requests = this._networkRecorder.getRawRecords();
     const rootFrameRequest = requests.find(r => r.resourceType === 'Document');
-    const rootFrameId = rootFrameRequest && rootFrameRequest.frameId;
+    const rootFrameId = rootFrameRequest?.frameId;
 
     return this._isActiveIdlePeriod(
       0,

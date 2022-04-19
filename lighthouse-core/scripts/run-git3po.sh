@@ -11,6 +11,11 @@ cd "$DIRNAME"
 
 START_AT="$(date +%s -d '1 day ago')000"
 
-npm install -g git3po
+# Only install if the version has bumped
+installed_version=$(git3po --version)
+latest_version=$(npm info git3po version)
+if [[ "$installed_version" != "$latest_version" ]]; then
+  npm install -g git3po
+fi
 
 find git3po-rules/*.yaml -exec git3po --start-at="$START_AT" -c {} \;

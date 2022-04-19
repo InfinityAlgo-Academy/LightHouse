@@ -29,7 +29,12 @@ describe('Performance: preload-lcp audit', () => {
         }),
       },
       devtoolsLogs: {[PreloadLCPImage.DEFAULT_PASS]: networkRecordsToDevtoolsLog(networkRecords)},
-      URL: {finalUrl},
+      URL: {
+        initialUrl: 'about:blank',
+        requestedUrl: finalUrl,
+        mainDocumentUrl: finalUrl,
+        finalUrl,
+      },
       TraceElements: [
         {
           traceEventType: 'largest-contentful-paint',
@@ -98,7 +103,7 @@ describe('Performance: preload-lcp audit', () => {
     const artifacts = mockArtifacts(networkRecords, mainDocumentNodeUrl, imageUrl);
     artifacts.ImageElements = [];
     const context = {settings: {}, computedCache: new Map()};
-    const results = await PreloadLCPImage.audit_(artifacts, context);
+    const results = await PreloadLCPImage.audit(artifacts, context);
     expect(results.score).toEqual(1);
     expect(results.details.overallSavingsMs).toEqual(0);
     expect(results.details.items).toHaveLength(0);
@@ -109,7 +114,7 @@ describe('Performance: preload-lcp audit', () => {
     networkRecords[3].isLinkPreload = true;
     const artifacts = mockArtifacts(networkRecords, mainDocumentNodeUrl, imageUrl);
     const context = {settings: {}, computedCache: new Map()};
-    const results = await PreloadLCPImage.audit_(artifacts, context);
+    const results = await PreloadLCPImage.audit(artifacts, context);
     expect(results.score).toEqual(1);
     expect(results.details.overallSavingsMs).toEqual(0);
     expect(results.details.items).toHaveLength(0);
@@ -120,7 +125,7 @@ describe('Performance: preload-lcp audit', () => {
     networkRecords[3].protocol = 'data';
     const artifacts = mockArtifacts(networkRecords, mainDocumentNodeUrl, imageUrl);
     const context = {settings: {}, computedCache: new Map()};
-    const results = await PreloadLCPImage.audit_(artifacts, context);
+    const results = await PreloadLCPImage.audit(artifacts, context);
     expect(results.score).toEqual(1);
     expect(results.details.overallSavingsMs).toEqual(0);
     expect(results.details.items).toHaveLength(0);
@@ -130,7 +135,7 @@ describe('Performance: preload-lcp audit', () => {
     const networkRecords = mockNetworkRecords();
     const artifacts = mockArtifacts(networkRecords, mainDocumentNodeUrl, imageUrl);
     const context = {settings: {}, computedCache: new Map()};
-    const results = await PreloadLCPImage.audit_(artifacts, context);
+    const results = await PreloadLCPImage.audit(artifacts, context);
     expect(results.numericValue).toEqual(180);
     expect(results.details.overallSavingsMs).toEqual(180);
     expect(results.details.items[0].url).toEqual(imageUrl);
@@ -142,7 +147,7 @@ describe('Performance: preload-lcp audit', () => {
     networkRecords[3].transferSize = 5 * 1000 * 1000;
     const artifacts = mockArtifacts(networkRecords, mainDocumentNodeUrl, imageUrl);
     const context = {settings: {}, computedCache: new Map()};
-    const results = await PreloadLCPImage.audit_(artifacts, context);
+    const results = await PreloadLCPImage.audit(artifacts, context);
     expect(results.numericValue).toEqual(30);
     expect(results.details.overallSavingsMs).toEqual(30);
     expect(results.details.items[0].url).toEqual(imageUrl);
@@ -154,7 +159,7 @@ describe('Performance: preload-lcp audit', () => {
     networkRecords[2].transferSize = 2 * 1000 * 1000;
     const artifacts = mockArtifacts(networkRecords, mainDocumentNodeUrl, imageUrl);
     const context = {settings: {}, computedCache: new Map()};
-    const results = await PreloadLCPImage.audit_(artifacts, context);
+    const results = await PreloadLCPImage.audit(artifacts, context);
     expect(results.numericValue).toEqual(30);
     expect(results.details.overallSavingsMs).toEqual(30);
     expect(results.details.items[0].url).toEqual(imageUrl);

@@ -44,7 +44,7 @@ describe('UnusedCSS computed artifact', () => {
             body {
               color: white;
             }
-    
+
             html {
               content: '${generate('random', 50)}';
             }
@@ -89,7 +89,7 @@ describe('UnusedCSS computed artifact', () => {
     const baseUrl = 'http://g.co/';
 
     function map(overrides, url = baseUrl) {
-      if (overrides.header && overrides.header.sourceURL) {
+      if (overrides.header?.sourceURL) {
         overrides.header.sourceURL = baseUrl + overrides.header.sourceURL;
       }
       return UnusedCSS.mapSheetToResult(Object.assign(baseSheet, overrides), url);
@@ -111,8 +111,8 @@ describe('UnusedCSS computed artifact', () => {
 
     it('correctly computes url', () => {
       const expectedPreview = 'dummy';
-      assert.strictEqual(map({header: {sourceURL: ''}}).url, expectedPreview);
-      assert.strictEqual(map({header: {sourceURL: 'a'}}, 'http://g.co/a').url, expectedPreview);
+      assert.strictEqual(map({header: {sourceURL: '', isInline: false}}).url, expectedPreview);
+      assert.strictEqual(map({header: {sourceURL: 'a', isInline: true}}, 'http://g.co/a').url, expectedPreview);
       assert.equal(map({header: {sourceURL: 'foobar'}}).url, 'http://g.co/foobar');
     });
   });

@@ -97,7 +97,8 @@ class ExecutionContext {
             .catch(${pageFunctions.wrapRuntimeEvalErrorInBrowserString})
             .then(resolve);
         });
-      }())`,
+      }())
+      //# sourceURL=_lighthouse-eval.js`,
       includeCommandLineAPI: true,
       awaitPromise: true,
       returnByValue: true,
@@ -121,7 +122,7 @@ class ExecutionContext {
         new Error('Runtime.evaluate response did not contain a "result" object'));
     }
     const value = response.result.value;
-    if (value && value.__failedInBrowser) {
+    if (value?.__failedInBrowser) {
       return Promise.reject(Object.assign(new Error(), value));
     } else {
       return value;
@@ -166,7 +167,7 @@ class ExecutionContext {
    * @param {{args: T, useIsolation?: boolean, deps?: Array<Function|string>}} options `args` should
    *   match the args of `mainFn`, and can be any serializable value. `deps` are functions that must be
    *   defined for `mainFn` to work.
-   * @return {FlattenedPromise<R>}
+   * @return {Promise<Awaited<R>>}
    */
   evaluate(mainFn, options) {
     const argsSerialized = ExecutionContext.serializeArguments(options.args);
@@ -195,7 +196,8 @@ class ExecutionContext {
       ${ExecutionContext._cachedNativesPreamble};
       ${depsSerialized};
       (${mainFn})(${argsSerialized});
-    })()`;
+    })()
+    //# sourceURL=_lighthouse-eval.js`;
 
     await this._session.sendCommand('Page.addScriptToEvaluateOnNewDocument', {source: expression});
   }
@@ -211,6 +213,7 @@ class ExecutionContext {
       window.__nativePromise = window.Promise;
       window.__nativeURL = window.URL;
       window.__nativePerformance = window.performance;
+      window.__nativeFetch = window.fetch;
       window.__ElementMatches = window.Element.prototype.matches;
       // Ensure the native `performance.now` is not overwritable.
       const performance = window.performance;
@@ -232,6 +235,7 @@ class ExecutionContext {
     'const Promise = globalThis.__nativePromise || globalThis.Promise',
     'const URL = globalThis.__nativeURL || globalThis.URL',
     'const performance = globalThis.__nativePerformance || globalThis.performance',
+    'const fetch = globalThis.__nativeFetch || globalThis.fetch',
   ].join(';\n');
 
   /**

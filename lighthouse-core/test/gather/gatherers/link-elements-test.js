@@ -9,12 +9,23 @@
 
 import {jest} from '@jest/globals';
 
-import LinkElements from '../../../gather/gatherers/link-elements.js';
+// Some imports needs to be done dynamically, so that their dependencies will be mocked.
+// See: https://jestjs.io/docs/ecmascript-modules#differences-between-esm-and-commonjs
+//      https://github.com/facebook/jest/issues/10025
+/** @typedef {import('../../../gather/gatherers/link-elements.js')} LinkElements */
+/** @type {typeof import('../../../gather/gatherers/link-elements.js')} */
+let LinkElements;
 
-import NetworkRecords from '../../../computed/network-records.js';
-import {fnAny} from '../../test-utils.js';
+beforeAll(async () => {
+  LinkElements = (await import('../../../gather/gatherers/link-elements.js')).default;
+});
 
-jest.mock('../../../computed/network-records.js');
+const mockMainResource = jest.fn();
+jest.mock('../../../computed/main-resource.js', () => ({request: mockMainResource}));
+
+beforeEach(() => {
+  mockMainResource.mockReset();
+});
 
 describe('Link Elements gatherer', () => {
   /**
@@ -37,14 +48,19 @@ describe('Link Elements gatherer', () => {
 
   function getPassData({linkElementsInDOM = [], headers = []}) {
     const url = 'https://example.com';
-    const loadData = {networkRecords: [{url, responseHeaders: headers, resourceType: 'Document'}]};
+    mockMainResource.mockReturnValue({url, responseHeaders: headers, resourceType: 'Document'});
     const driver = {
       executionContext: {
         evaluate: () => Promise.resolve(linkElementsInDOM),
       },
     };
-    const passContext = {driver, url};
-    return [passContext, loadData];
+    const baseArtifacts = {
+      URL: {
+        finalUrl: url,
+      },
+    };
+    const passContext = {driver, url, baseArtifacts, computedCache: new Map()};
+    return [passContext, {}];
   }
 
   it('returns elements from DOM', async () => {
@@ -96,42 +112,5 @@ describe('Link Elements gatherer', () => {
       link({source: 'body', rel: 'icon', href: 'https://example.com/a.png'}),
       link({source: 'headers', rel: 'prefetch', href: 'https://example.com/', as: 'image'}),
     ]);
-  });
-});
-
-describe('FR compat', () => {
-  /** @type {LinkElements} */
-  let gatherer;
-  /** @type {any[]} */
-  let networkRecords;
-  /** @type {any[]} */
-  let devtoolsLog;
-
-  beforeEach(() => {
-    networkRecords = ['1', '2'];
-    devtoolsLog = ['3', '4'];
-    gatherer = new LinkElements();
-    gatherer._getArtifact = fnAny();
-    NetworkRecords.request = fnAny().mockReturnValue(Promise.resolve(networkRecords));
-  });
-
-  it('uses loadData in legacy mode', async () => {
-    const context = {
-      computedCache: new Map(),
-      dependencies: {},
-    };
-    await gatherer.afterPass(context, {networkRecords, devtoolsLog});
-    expect(gatherer._getArtifact).toHaveBeenCalledWith(context, networkRecords);
-    expect(NetworkRecords.request).not.toHaveBeenCalled();
-  });
-
-  it('uses dependency in FR', async () => {
-    const context = {
-      computedCache: new Map(),
-      dependencies: {DevtoolsLog: devtoolsLog},
-    };
-    await gatherer.getArtifact(context);
-    expect(gatherer._getArtifact).toHaveBeenCalledWith(context, networkRecords);
-    expect(NetworkRecords.request).toHaveBeenCalledWith(devtoolsLog, context);
   });
 });

@@ -31,7 +31,7 @@ describe('Accessibility: tabindex audit', () => {
       Accessibility: {
         violations: [{
           id: 'tabindex',
-          nodes: [],
+          nodes: [{node: {}, relatedNodes: []}],
           help: 'http://example.com/',
         }],
       },

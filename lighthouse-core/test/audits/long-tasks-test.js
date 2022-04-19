@@ -56,9 +56,16 @@ function generateTraceWithLongTasks({count, duration = 200, withChildTasks = fal
 
 describe('Long tasks audit', () => {
   const devtoolsLog = networkRecordsToDevtoolsLog([{url: TASK_URL}]);
+  const URL = {
+    initialUrl: 'about:blank',
+    requestedUrl: TASK_URL,
+    mainDocumentUrl: TASK_URL,
+    finalUrl: TASK_URL,
+  };
 
   it('should pass and be non-applicable if there are no long tasks', async () => {
     const artifacts = {
+      URL,
       traces: {defaultPass: generateTraceWithLongTasks({count: 0})},
       devtoolsLogs: {defaultPass: devtoolsLog},
     };
@@ -71,6 +78,7 @@ describe('Long tasks audit', () => {
 
   it('should return a list of long tasks with duration >= 50 ms', async () => {
     const artifacts = {
+      URL,
       traces: {defaultPass: generateTraceWithLongTasks({count: 4})},
       devtoolsLogs: {defaultPass: devtoolsLog},
     };
@@ -98,6 +106,7 @@ describe('Long tasks audit', () => {
       ],
     });
     const artifacts = {
+      URL,
       traces: {defaultPass: trace},
       devtoolsLogs: {defaultPass: devtoolsLog},
     };
@@ -113,6 +122,7 @@ describe('Long tasks audit', () => {
 
   it('should not filter out tasks with duration >= 50 ms only after throttling', async () => {
     const artifacts = {
+      URL,
       traces: {defaultPass: generateTraceWithLongTasks({count: 4, duration: 25})},
       devtoolsLogs: {defaultPass: networkRecordsToDevtoolsLog([
         {url: TASK_URL, timing: {connectEnd: 50, connectStart: 0.01, sslStart: 25, sslEnd: 40}},
@@ -148,6 +158,7 @@ describe('Long tasks audit', () => {
   it('should populate url when tasks have an attributable url', async () => {
     const trace = generateTraceWithLongTasks({count: 1, duration: 300, withChildTasks: true});
     const artifacts = {
+      URL,
       traces: {defaultPass: trace},
       devtoolsLogs: {defaultPass: devtoolsLog},
     };

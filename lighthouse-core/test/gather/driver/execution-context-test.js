@@ -220,6 +220,7 @@ describe('.evaluate', () => {
         const Promise = globalThis.__nativePromise || globalThis.Promise;
 const URL = globalThis.__nativeURL || globalThis.URL;
 const performance = globalThis.__nativePerformance || globalThis.performance;
+const fetch = globalThis.__nativeFetch || globalThis.fetch;
         globalThis.__lighthouseExecutionContextId = undefined;
         return new Promise(function (resolve) {
           return Promise.resolve()
@@ -243,7 +244,8 @@ const performance = globalThis.__nativePerformance || globalThis.performance;
 })
             .then(resolve);
         });
-      }())`.trim();
+      }())
+      //# sourceURL=_lighthouse-eval.js`.trim();
     expect(trimTrailingWhitespace(expression)).toBe(trimTrailingWhitespace(expected));
     expect(await eval(expression)).toBe(1);
   });

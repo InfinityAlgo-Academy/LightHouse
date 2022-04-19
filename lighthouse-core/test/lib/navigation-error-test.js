@@ -16,11 +16,11 @@ import {
 
 import NetworkRequest from '../../lib/network-request.js';
 
-const LoadFailureMode = {
-  fatal: /** @type {'fatal'} */ ('fatal'),
-  ignore: /** @type {'ignore'} */ ('ignore'),
-  warn: /** @type {'warn'} */ ('warn'),
-};
+const LoadFailureMode = /** @type {const} */ ({
+  fatal: 'fatal',
+  ignore: 'ignore',
+  warn: 'warn',
+});
 
 describe('#getNetworkError', () => {
   /**

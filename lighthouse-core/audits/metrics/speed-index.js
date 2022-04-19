@@ -28,7 +28,7 @@ class SpeedIndex extends Audit {
       description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
       supportedModes: ['navigation'],
-      requiredArtifacts: ['traces', 'devtoolsLogs', 'GatherContext'],
+      requiredArtifacts: ['traces', 'devtoolsLogs', 'GatherContext', 'URL'],
     };
   }
 
@@ -67,7 +67,8 @@ class SpeedIndex extends Audit {
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     const gatherContext = artifacts.GatherContext;
-    const metricComputationData = {trace, devtoolsLog, gatherContext, settings: context.settings};
+    const metricComputationData = {trace, devtoolsLog, gatherContext,
+      settings: context.settings, URL: artifacts.URL};
     const metricResult = await ComputedSi.request(metricComputationData, context);
     const options = context.options[context.settings.formFactor];
 

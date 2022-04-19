@@ -6,7 +6,7 @@
 'use strict';
 
 const path = require('path');
-const isDeepEqual = require('lodash.isequal');
+const {isEqual: isDeepEqual} = require('lodash');
 const constants = require('./constants.js');
 const Budget = require('./budget.js');
 const ConfigPlugin = require('./config-plugin.js');
@@ -295,7 +295,7 @@ function resolveSettings(settingsJson = {}, overrides = undefined) {
   // however `lookupLocale` will always determine which of our supported locales to use (falling
   // back if necessary).
   // TODO: could do more work to sniff out the user's locale
-  const locale = i18n.lookupLocale((overrides && overrides.locale) || settingsJson.locale);
+  const locale = i18n.lookupLocale(overrides?.locale || settingsJson.locale);
 
   // Fill in missing settings with defaults
   const {defaultSettings} = constants;
@@ -332,7 +332,7 @@ function resolveSettings(settingsJson = {}, overrides = undefined) {
  */
 function mergePlugins(configJSON, configDir, flags) {
   const configPlugins = configJSON.plugins || [];
-  const flagPlugins = (flags && flags.plugins) || [];
+  const flagPlugins = flags?.plugins || [];
   const pluginNames = new Set([...configPlugins, ...flagPlugins]);
 
   for (const pluginName of pluginNames) {

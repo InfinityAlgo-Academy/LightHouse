@@ -425,7 +425,7 @@ class Driver {
    * @return {Promise<void>}
    */
   async beginTrace(settings) {
-    const additionalCategories = (settings && settings.additionalTraceCategories &&
+    const additionalCategories = (settings?.additionalTraceCategories &&
         settings.additionalTraceCategories.split(',')) || [];
     const traceCategories = TraceGatherer.getDefaultTraceCategories().concat(additionalCategories);
 
@@ -469,6 +469,11 @@ class Driver {
   endDevtoolsLog() {
     this._devtoolsLog.endRecording();
     return this._devtoolsLog.messages;
+  }
+
+  async url() {
+    const {frameTree} = await this.sendCommand('Page.getFrameTree');
+    return `${frameTree.frame.url}${frameTree.frame.urlFragment || ''}`;
   }
 }
 

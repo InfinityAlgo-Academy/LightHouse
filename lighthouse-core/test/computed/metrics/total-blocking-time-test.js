@@ -9,8 +9,11 @@ import TotalBlockingTime from '../../../computed/metrics/total-blocking-time.js'
 import trace from '../../fixtures/traces/progressive-app-m60.json';
 import devtoolsLog from '../../fixtures/traces/progressive-app-m60.devtools.log.json';
 import {calculateSumOfBlockingTime} from '../../../computed/metrics/tbt-utils.js';
+import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';
 
 /* eslint-env jest */
+
+const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
 
 describe('Metrics: TotalBlockingTime', () => {
   const gatherContext = {gatherMode: 'navigation'};
@@ -18,8 +21,10 @@ describe('Metrics: TotalBlockingTime', () => {
   it('should compute a simulated value', async () => {
     const settings = {throttlingMethod: 'simulate'};
     const context = {settings, computedCache: new Map()};
-    const result = await TotalBlockingTime.request({trace, devtoolsLog, gatherContext, settings},
-      context);
+    const result = await TotalBlockingTime.request(
+      {trace, devtoolsLog, gatherContext, settings, URL},
+      context
+    );
 
     expect({
       timing: Math.round(result.timing),
@@ -37,8 +42,10 @@ describe('Metrics: TotalBlockingTime', () => {
   it('should compute an observed value', async () => {
     const settings = {throttlingMethod: 'provided'};
     const context = {settings, computedCache: new Map()};
-    const result = await TotalBlockingTime.request({trace, devtoolsLog, gatherContext, settings},
-      context);
+    const result = await TotalBlockingTime.request(
+      {trace, devtoolsLog, gatherContext, settings, URL},
+      context
+    );
     expect(result.timing).toBeCloseTo(48.3, 1);
   });
 

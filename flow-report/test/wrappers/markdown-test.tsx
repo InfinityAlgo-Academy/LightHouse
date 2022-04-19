@@ -5,24 +5,12 @@
  */
 
 import {render} from '@testing-library/preact';
-import {FunctionComponent} from 'preact';
 
 import {Markdown} from '../../src/wrappers/markdown';
-import {ReportRendererProvider} from '../../src/wrappers/report-renderer';
-
-let wrapper: FunctionComponent;
-
-beforeEach(() => {
-  wrapper = ({children}) => (
-    <ReportRendererProvider>
-      {children}
-    </ReportRendererProvider>
-  );
-});
 
 describe('Markdown', () => {
   it('renders markdown text', () => {
-    const root = render(<Markdown text="Some `fancy` text"/>, {wrapper});
+    const root = render(<Markdown text="Some `fancy` text"/>);
     const text = root.getByText(/^Some.*text$/);
     expect(text.innerHTML).toEqual('Some <code>fancy</code> text');
   });

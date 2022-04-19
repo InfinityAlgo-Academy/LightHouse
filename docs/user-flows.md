@@ -26,7 +26,6 @@ Navigation reports analyze a single page load. Navigation is the most common typ
 #### Limitations
 
 - Cannot analyze form submissions or single page app transitions.
-- Cannot analyze user interactions.
 - Cannot analyze content that isn't available immediately on page load.
 
 #### Use Cases
@@ -35,22 +34,37 @@ Navigation reports analyze a single page load. Navigation is the most common typ
 - Measure Performance metrics (First Contentful Paint, Largest Contentful Paint, Speed Index, Time to Interactive, Cumulative Layout Shift, Total Blocking Time).
 - Assess Progressive Web App capabilities.
 
+#### Triggering a navigation via user interactions
+
+Instead of providing a URL to navigate to, you can provide a callback function. This is useful when you want to audit a navigation where the destination is unknown before navigating.
+
+> Aside: Lighthouse typically clears out any active Service Worker and Cache Storage for the origin under test. However, in this case, as it doesn't know the URL being analyzed, Lighthouse cannot clear this storage. This generally reflects the real user experience, but if you still wish to clear the Service Workers and Cache Storage you must do it manually.
+
+This callback function _must_ perform an action that will trigger a navigation. Any interactions completed before the callback promise resolves will be captured by the navigation.
+
 #### Code
 
 ```js
 import {writeFileSync} from 'fs';
 import puppeteer from 'puppeteer';
-import lighthouse from 'lighthouse';
+import api from 'lighthouse/lighthouse-core/fraggle-rock/api.js';
 
 async function main() {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
-  const flow = await lighthouse.startFlow(page);
+  const flow = await api.startFlow(page);
 
+  // Navigate with a URL
   await flow.navigate('https://example.com');
+
+  // Navigate with a callback function
+  await flow.navigate(async () => {
+    await page.click('a.link');
+  });
+
   await browser.close();
 
-  writeFileSync('report.html', flow.generateReport());
+  writeFileSync('report.html', await flow.generateReport());
 }
 
 main();
@@ -81,13 +95,13 @@ Timespan reports analyze an arbitrary period of time, typically containing user 
 ```js
 import {writeFileSync} from 'fs';
 import puppeteer from 'puppeteer';
-import lighthouse from 'lighthouse';
+import api from 'lighthouse/lighthouse-core/fraggle-rock/api.js';
 
 async function main() {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
   await page.goto('https://example.com');
-  const flow = await lighthouse.startFlow(page);
+  const flow = await api.startFlow(page);
 
   await flow.beginTimespan();
   await page.type('#username', 'lighthouse');
@@ -98,7 +112,7 @@ async function main() {
 
   await browser.close();
 
-  writeFileSync('report.html', flow.generateReport());
+  writeFileSync('report.html', await flow.generateReport());
 }
 
 main();
@@ -127,20 +141,20 @@ Snapshot reports analyze the page in a particular state, typically after the use
 ```js
 import {writeFileSync} from 'fs';
 import puppeteer from 'puppeteer';
-import lighthouse from 'lighthouse';
+import api from 'lighthouse/lighthouse-core/fraggle-rock/api.js';
 
 async function main() {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
   await page.goto('https://example.com');
-  const flow = await lighthouse.startFlow(page);
+  const flow = await api.startFlow(page);
 
   await page.click('#expand-sidebar');
   await flow.snapshot();
 
   await browser.close();
 
-  writeFileSync('report.html', flow.generateReport());
+  writeFileSync('report.html', await flow.generateReport());
 }
 
 main();
@@ -183,7 +197,7 @@ The below example codifies a user flow for an ecommerce site where the user navi
 import {writeFileSync} from 'fs';
 import puppeteer from 'puppeteer';
 import * as pptrTestingLibrary from 'pptr-testing-library';
-import lighthouse from 'lighthouse';
+import api from 'lighthouse/lighthouse-core/fraggle-rock/api.js';
 
 const {getDocument, queries} = pptrTestingLibrary;
 
@@ -197,17 +211,11 @@ async function search(page) {
   ]);
 }
 
-async function getDetailsHref(page) {
-  const $document = await getDocument(page);
-  const $link = await queries.getByText($document, /Xbox Series X 1TB Console/);
-  return $link.evaluate(node => node.href);
-}
-
 async function main() {
   // Setup the browser and Lighthouse.
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
-  const flow = await lighthouse.startFlow(page);
+  const flow = await api.startFlow(page);
 
   // Phase 1 - Navigate to our landing page.
   await flow.navigate('https://www.bestbuy.com');
@@ -221,10 +229,16 @@ async function main() {
   await flow.snapshot();
 
   // Phase 4 - Navigate to a detail page.
-  await flow.navigate(await getDetailsHref(page));
+  await flow.navigate(async () => {
+    const $document = await getDocument(page);
+    const $link = await queries.getByText($document, /Xbox Series X 1TB Console/);
+    $link.click();
+  });
 
   // Get the comprehensive flow report.
-  writeFileSync('report.html', flow.generateReport());
+  writeFileSync('report.html', await flow.generateReport());
+  // Save results as JSON.
+  writeFileSync('flow-result.json', JSON.stringify(await flow.createFlowResult(), null, 2));
 
   // Cleanup.
   await browser.close();

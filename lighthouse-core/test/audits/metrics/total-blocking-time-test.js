@@ -6,18 +6,21 @@
 'use strict';
 
 import TBTAudit from '../../../audits/metrics/total-blocking-time.js';
-const defaultOptions = TBTAudit.defaultOptions;
 import constants from '../../../config/constants.js';
 import trace from '../../fixtures/traces/progressive-app-m60.json';
 import devtoolsLog from '../../fixtures/traces/progressive-app-m60.devtools.log.json';
 import lcpTrace from '../../fixtures/traces/lcp-m78.json';
 import lcpDevtoolsLog from '../../fixtures/traces/lcp-m78.devtools.log.json';
+import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';
+
+const defaultOptions = TBTAudit.defaultOptions;
 
 function generateArtifacts({gatherMode = 'navigation', trace, devtoolsLog}) {
   return {
     GatherContext: {gatherMode},
     traces: {[TBTAudit.DEFAULT_PASS]: trace},
     devtoolsLogs: {[TBTAudit.DEFAULT_PASS]: devtoolsLog},
+    URL: getURLArtifactFromDevtoolsLog(devtoolsLog),
   };
 }
 

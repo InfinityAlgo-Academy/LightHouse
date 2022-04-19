@@ -3,7 +3,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 /* eslint-disable no-console */
 
@@ -135,25 +134,31 @@ function getLegacyJavascriptResults(code, map, {sourceMaps}) {
   // Much faster than running Lighthouse.
   const documentUrl = 'http://localhost/index.html'; // These URLs don't matter.
   const scriptUrl = 'https://localhost/main.bundle.min.js';
+  const scriptId = '10001';
   const networkRecords = [
-    {url: documentUrl, requestId: '1000.1', resourceType: /** @type {'Document'} */ ('Document')},
+    {url: documentUrl, requestId: '1000.1', resourceType: /** @type {const} */ ('Document')},
     {url: scriptUrl, requestId: '1000.2'},
   ];
   const devtoolsLogs = networkRecordsToDevtoolsLog(networkRecords);
 
-  /** @type {Pick<LH.Artifacts, 'devtoolsLogs'|'URL'|'ScriptElements'|'SourceMaps'>} */
+  /** @type {Pick<LH.Artifacts, 'devtoolsLogs'|'URL'|'Scripts'|'SourceMaps'>} */
   const artifacts = {
-    URL: {finalUrl: documentUrl, requestedUrl: documentUrl},
+    URL: {
+      initialUrl: 'about:blank',
+      requestedUrl: documentUrl,
+      mainDocumentUrl: documentUrl,
+      finalUrl: documentUrl,
+    },
     devtoolsLogs: {
       [LegacyJavascript.DEFAULT_PASS]: devtoolsLogs,
     },
-    ScriptElements: [
-      // @ts-expect-error - partial ScriptElement excluding unused DOM properties
-      {src: scriptUrl, requestId: '1000.2', content: code},
+    Scripts: [
+      // @ts-expect-error - partial Script excluding unused properties
+      {scriptId, url: scriptUrl, content: code},
     ],
     SourceMaps: [],
   };
-  if (sourceMaps) artifacts.SourceMaps = [{scriptUrl, map}];
+  if (sourceMaps) artifacts.SourceMaps = [{scriptId, scriptUrl, map}];
   // @ts-expect-error: partial Artifacts.
   return LegacyJavascript.audit_(artifacts, networkRecords, {
     computedCache: new Map(),
@@ -239,7 +244,7 @@ async function main() {
     });
   }
 
-  for (const coreJsVersion of ['2.6.12', '3.9.1']) {
+  for (const coreJsVersion of ['2.6.12', '3.19.1']) {
     const major = coreJsVersion.split('.')[0];
     removeCoreJs();
     installCoreJs(coreJsVersion);

@@ -17,11 +17,9 @@ const SidebarSummary: FunctionComponent = () => {
   const hashState = useHashState();
   const strings = useLocalizedStrings();
 
-  const url = new URL(location.href);
-  url.hash = '#';
   return (
     <a
-      href={url.href}
+      href="#"
       className={classNames('SidebarSummary', {'Sidebar--current': hashState === null})}
       data-testid="SidebarSummary"
     >

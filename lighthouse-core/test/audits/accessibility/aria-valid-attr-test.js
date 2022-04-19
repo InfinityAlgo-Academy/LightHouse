@@ -31,7 +31,7 @@ describe('Accessibility: aria-valid-attr audit', () => {
       Accessibility: {
         violations: [{
           id: 'aria-valid-attr',
-          nodes: [],
+          nodes: [{node: {}, relatedNodes: []}],
           help: 'http://example.com/',
         }],
       },

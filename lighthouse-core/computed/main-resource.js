@@ -20,9 +20,10 @@ class MainResource {
    * @return {Promise<LH.Artifacts.NetworkRequest>}
    */
   static async compute_(data, context) {
-    const finalUrl = data.URL.finalUrl;
+    const {mainDocumentUrl} = data.URL;
+    if (!mainDocumentUrl) throw new Error('mainDocumentUrl must exist to get the main resource');
     const requests = await NetworkRecords.request(data.devtoolsLog, context);
-    const mainResource = NetworkAnalyzer.findMainDocument(requests, finalUrl);
+    const mainResource = NetworkAnalyzer.findResourceForUrl(requests, mainDocumentUrl);
     if (!mainResource) {
       throw new Error('Unable to identify the main resource');
     }
@@ -31,4 +32,4 @@ class MainResource {
   }
 }
 
-module.exports = makeComputedArtifact(MainResource);
+module.exports = makeComputedArtifact(MainResource, ['URL', 'devtoolsLog']);

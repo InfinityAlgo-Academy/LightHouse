@@ -6,7 +6,8 @@
 'use strict';
 
 const Audit = require('../audit.js');
-const robotsParser = require('robots-parser');
+// TODO(esmodules): cast can be removed when this switches to import.
+const robotsParser = /** @type {typeof import('robots-parser').default} */ (/** @type {unknown} */(require('robots-parser'))); // eslint-disable-line max-len
 const URL = require('../../lib/url-shim.js');
 const MainResource = require('../../computed/main-resource.js');
 const BLOCKLIST = new Set([
@@ -126,9 +127,9 @@ class IsCrawlable extends Audit {
             const line = robotsTxt.getMatchingLineNumber(mainResource.url) || 1;
             blockingDirectives.push({
               source: {
-                type: /** @type {'source-location'} */ ('source-location'),
+                type: /** @type {const} */ ('source-location'),
                 url: robotsFileUrl.href,
-                urlProvider: /** @type {'network'} */ ('network'),
+                urlProvider: /** @type {const} */ ('network'),
                 line: line - 1,
                 column: 0,
               },

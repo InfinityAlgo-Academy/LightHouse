@@ -123,7 +123,7 @@ class UsesRelPreconnectAudit extends Audit {
         MainResource.request({devtoolsLog, URL: artifacts.URL}, context),
         LoadSimulator.request({devtoolsLog, settings}, context),
         ProcessedNavigation.request(processedTrace, context),
-        PageDependencyGraph.request({trace, devtoolsLog}, context),
+        PageDependencyGraph.request({trace, devtoolsLog, URL: artifacts.URL}, context),
       ]);
 
     const {rtt, additionalRttByOrigin} = loadSimulator.getOptions();

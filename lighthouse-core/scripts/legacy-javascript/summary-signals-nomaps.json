@@ -1,15 +1,12 @@
 {
-  "totalSignals": 265,
+  "totalSignals": 250,
   "variantsMissingSignals": [
     "core-js-2-only-polyfill/es6-array-filter",
     "core-js-2-only-polyfill/es6-array-map",
-    "core-js-2-only-polyfill/es6-array-reduce",
-    "core-js-2-only-polyfill/es6-array-reduce-right",
     "core-js-2-only-polyfill/es6-array-some",
     "core-js-2-only-polyfill/es6-date-to-string",
     "core-js-2-only-polyfill/es6-function-name",
     "core-js-2-only-polyfill/es6-object-freeze",
-    "core-js-2-only-polyfill/es6-object-get-own-property-names",
     "core-js-2-only-polyfill/es6-object-get-prototype-of",
     "core-js-2-only-polyfill/es6-object-is-extensible",
     "core-js-2-only-polyfill/es6-object-is-frozen",
@@ -28,11 +25,11 @@
   "variants": [
     {
       "name": "all-legacy-polyfills/all-legacy-polyfills-core-js-2",
-      "signals": "Array.prototype.fill, Array.prototype.findIndex, Array.prototype.find, Array.prototype.forEach, Array.from, Array.isArray, Array.of, Date.now, Date.prototype.toISOString, Date.prototype.toJSON, Number.isInteger, Number.isSafeInteger, Number.parseInt, Object.defineProperties, Object.defineProperty, Object.setPrototypeOf, Reflect.apply, Reflect.construct, Reflect.deleteProperty, Reflect.getOwnPropertyDescriptor, Reflect.getPrototypeOf, Reflect.get, Reflect.has, Reflect.isExtensible, Reflect.ownKeys, Reflect.preventExtensions, Reflect.setPrototypeOf, String.prototype.codePointAt, String.fromCodePoint, String.raw, String.prototype.repeat, Array.prototype.includes, Object.entries, Object.getOwnPropertyDescriptors, Object.values"
+      "signals": "Array.prototype.fill, Array.prototype.findIndex, Array.prototype.find, Array.prototype.forEach, Array.from, Array.isArray, Array.of, Date.now, Date.prototype.toISOString, Date.prototype.toJSON, Number.isInteger, Number.isSafeInteger, Object.defineProperties, Object.defineProperty, Object.setPrototypeOf, Reflect.apply, Reflect.construct, Reflect.deleteProperty, Reflect.getOwnPropertyDescriptor, Reflect.getPrototypeOf, Reflect.get, Reflect.has, Reflect.isExtensible, Reflect.ownKeys, Reflect.preventExtensions, Reflect.setPrototypeOf, String.prototype.codePointAt, String.fromCodePoint, String.raw, String.prototype.repeat, Array.prototype.includes, Object.entries, Object.getOwnPropertyDescriptors, Object.values"
     },
     {
       "name": "all-legacy-polyfills/all-legacy-polyfills-core-js-3",
-      "signals": "Array.prototype.fill, Array.prototype.filter, Array.prototype.findIndex, Array.prototype.find, Array.prototype.forEach, Array.from, Array.prototype.includes, Array.isArray, Array.prototype.map, Array.of, Array.prototype.reduceRight, Array.prototype.reduce, Array.prototype.some, Date.now, Date.prototype.toISOString, Date.prototype.toJSON, Number.isInteger, Number.isSafeInteger, Number.parseInt, Object.defineProperties, Object.defineProperty, Object.entries, Object.freeze, Object.getOwnPropertyDescriptors, Object.getOwnPropertyNames, Object.getPrototypeOf, Object.isExtensible, Object.isFrozen, Object.isSealed, Object.keys, Object.preventExtensions, Object.seal, Object.setPrototypeOf, Object.values, Reflect.apply, Reflect.construct, Reflect.defineProperty, Reflect.deleteProperty, Reflect.getOwnPropertyDescriptor, Reflect.getPrototypeOf, Reflect.get, Reflect.has, Reflect.isExtensible, Reflect.ownKeys, Reflect.preventExtensions, Reflect.setPrototypeOf, String.prototype.codePointAt, String.fromCodePoint, String.raw, String.prototype.repeat"
+      "signals": "Array.prototype.fill, Array.prototype.filter, Array.prototype.findIndex, Array.prototype.find, Array.prototype.forEach, Array.from, Array.prototype.includes, Array.isArray, Array.prototype.map, Array.of, Array.prototype.some, Date.now, Date.prototype.toISOString, Date.prototype.toJSON, Number.isInteger, Number.isSafeInteger, Object.defineProperties, Object.defineProperty, Object.entries, Object.freeze, Object.getOwnPropertyDescriptors, Object.getPrototypeOf, Object.isExtensible, Object.isFrozen, Object.isSealed, Object.keys, Object.preventExtensions, Object.seal, Object.setPrototypeOf, Object.values, Reflect.apply, Reflect.construct, Reflect.defineProperty, Reflect.deleteProperty, Reflect.getOwnPropertyDescriptor, Reflect.getPrototypeOf, Reflect.get, Reflect.has, Reflect.isExtensible, Reflect.ownKeys, Reflect.preventExtensions, Reflect.setPrototypeOf, String.prototype.codePointAt, String.fromCodePoint, String.raw, String.prototype.repeat"
     },
     {
       "name": "core-js-2-only-polyfill/es6-array-fill",
@@ -71,14 +68,6 @@
       "signals": "Array.of"
     },
     {
-      "name": "core-js-2-only-polyfill/es6-array-reduce",
-      "signals": ""
-    },
-    {
-      "name": "core-js-2-only-polyfill/es6-array-reduce-right",
-      "signals": ""
-    },
-    {
       "name": "core-js-2-only-polyfill/es6-array-some",
       "signals": ""
     },
@@ -111,10 +100,6 @@
       "signals": "Number.isSafeInteger"
     },
     {
-      "name": "core-js-2-only-polyfill/es6-number-parse-int",
-      "signals": "Number.parseInt"
-    },
-    {
       "name": "core-js-2-only-polyfill/es6-object-define-properties",
       "signals": "Object.defineProperties"
     },
@@ -124,10 +109,6 @@
     },
     {
       "name": "core-js-2-only-polyfill/es6-object-freeze",
-      "signals": ""
-    },
-    {
-      "name": "core-js-2-only-polyfill/es6-object-get-own-property-names",
       "signals": ""
     },
     {
@@ -244,7 +225,7 @@
     },
     {
       "name": "core-js-2-preset-env-esmodules/false",
-      "signals": "Array.prototype.fill, Array.prototype.findIndex, Array.prototype.find, Array.prototype.forEach, Array.from, Array.isArray, Array.of, Date.now, Date.prototype.toISOString, Date.prototype.toJSON, Number.isInteger, Number.isSafeInteger, Number.parseInt, Object.defineProperties, Object.defineProperty, Object.setPrototypeOf, Reflect.apply, Reflect.construct, Reflect.deleteProperty, Reflect.getOwnPropertyDescriptor, Reflect.getPrototypeOf, Reflect.get, Reflect.has, Reflect.isExtensible, Reflect.ownKeys, Reflect.preventExtensions, Reflect.setPrototypeOf, String.prototype.codePointAt, String.fromCodePoint, String.raw, String.prototype.repeat, Array.prototype.includes, Object.entries, Object.getOwnPropertyDescriptors, Object.values, @babel/plugin-transform-classes, @babel/plugin-transform-regenerator, @babel/plugin-transform-spread"
+      "signals": "Array.prototype.fill, Array.prototype.findIndex, Array.prototype.find, Array.prototype.forEach, Array.from, Array.isArray, Array.of, Date.now, Date.prototype.toISOString, Date.prototype.toJSON, Number.isInteger, Number.isSafeInteger, Object.defineProperties, Object.defineProperty, Object.setPrototypeOf, Reflect.apply, Reflect.construct, Reflect.deleteProperty, Reflect.getOwnPropertyDescriptor, Reflect.getPrototypeOf, Reflect.get, Reflect.has, Reflect.isExtensible, Reflect.ownKeys, Reflect.preventExtensions, Reflect.setPrototypeOf, String.prototype.codePointAt, String.fromCodePoint, String.raw, String.prototype.repeat, Array.prototype.includes, Object.entries, Object.getOwnPropertyDescriptors, Object.values, @babel/plugin-transform-classes, @babel/plugin-transform-regenerator, @babel/plugin-transform-spread"
     },
     {
       "name": "core-js-2-preset-env-esmodules/true",
@@ -295,14 +276,6 @@
       "signals": "Array.of"
     },
     {
-      "name": "core-js-3-only-polyfill/es-array-reduce",
-      "signals": "Array.prototype.reduce"
-    },
-    {
-      "name": "core-js-3-only-polyfill/es-array-reduce-right",
-      "signals": "Array.prototype.reduceRight"
-    },
-    {
       "name": "core-js-3-only-polyfill/es-array-some",
       "signals": "Array.prototype.some"
     },
@@ -335,10 +308,6 @@
       "signals": "Number.isSafeInteger"
     },
     {
-      "name": "core-js-3-only-polyfill/es-number-parse-int",
-      "signals": "Number.parseInt"
-    },
-    {
       "name": "core-js-3-only-polyfill/es-object-define-properties",
       "signals": "Object.defineProperties"
     },
@@ -357,10 +326,6 @@
     {
       "name": "core-js-3-only-polyfill/es-object-get-own-property-descriptors",
       "signals": "Object.getOwnPropertyDescriptors"
-    },
-    {
-      "name": "core-js-3-only-polyfill/es-object-get-own-property-names",
-      "signals": "Object.getOwnPropertyNames"
     },
     {
       "name": "core-js-3-only-polyfill/es-object-get-prototype-of",
@@ -464,7 +429,7 @@
     },
     {
       "name": "core-js-3-preset-env-esmodules/false",
-      "signals": "Array.prototype.fill, Array.prototype.filter, Array.prototype.findIndex, Array.prototype.find, Array.prototype.forEach, Array.from, Array.prototype.includes, Array.isArray, Array.prototype.map, Array.of, Array.prototype.reduceRight, Array.prototype.reduce, Array.prototype.some, Date.now, Date.prototype.toISOString, Date.prototype.toJSON, Number.isInteger, Number.isSafeInteger, Number.parseInt, Object.defineProperties, Object.defineProperty, Object.entries, Object.freeze, Object.getOwnPropertyDescriptors, Object.getOwnPropertyNames, Object.getPrototypeOf, Object.isExtensible, Object.isFrozen, Object.isSealed, Object.keys, Object.preventExtensions, Object.seal, Object.setPrototypeOf, Object.values, Reflect.apply, Reflect.construct, Reflect.defineProperty, Reflect.deleteProperty, Reflect.getOwnPropertyDescriptor, Reflect.getPrototypeOf, Reflect.get, Reflect.has, Reflect.isExtensible, Reflect.ownKeys, Reflect.preventExtensions, Reflect.setPrototypeOf, String.prototype.codePointAt, String.fromCodePoint, String.raw, String.prototype.repeat, @babel/plugin-transform-classes, @babel/plugin-transform-regenerator, @babel/plugin-transform-spread"
+      "signals": "Array.prototype.fill, Array.prototype.filter, Array.prototype.findIndex, Array.prototype.find, Array.prototype.forEach, Array.from, Array.prototype.includes, Array.isArray, Array.prototype.map, Array.of, Array.prototype.some, Date.now, Date.prototype.toISOString, Date.prototype.toJSON, Number.isInteger, Number.isSafeInteger, Object.defineProperties, Object.defineProperty, Object.entries, Object.freeze, Object.getOwnPropertyDescriptors, Object.getPrototypeOf, Object.isExtensible, Object.isFrozen, Object.isSealed, Object.keys, Object.preventExtensions, Object.seal, Object.setPrototypeOf, Object.values, Reflect.apply, Reflect.construct, Reflect.defineProperty, Reflect.deleteProperty, Reflect.getOwnPropertyDescriptor, Reflect.getPrototypeOf, Reflect.get, Reflect.has, Reflect.isExtensible, Reflect.ownKeys, Reflect.preventExtensions, Reflect.setPrototypeOf, String.prototype.codePointAt, String.fromCodePoint, String.raw, String.prototype.repeat, @babel/plugin-transform-classes, @babel/plugin-transform-regenerator, @babel/plugin-transform-spread"
     },
     {
       "name": "core-js-3-preset-env-esmodules/true",

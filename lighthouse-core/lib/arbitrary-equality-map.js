@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const isEqual = require('lodash.isequal');
+const {isEqual} = require('lodash');
 
 /**
  * @fileoverview This class is designed to allow maps with arbitrary equality functions.
@@ -40,7 +40,7 @@ class ArbitraryEqualityMap {
    */
   get(key) {
     const entry = this._entries[this._findIndexOf(key)];
-    return entry && entry.value;
+    return entry?.value;
   }
 
   /**

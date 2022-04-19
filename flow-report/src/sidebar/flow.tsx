@@ -48,8 +48,6 @@ export const SidebarFlow: FunctionComponent = () => {
       {
         flowResult.steps.map((step, index) => {
           const {lhr, name} = step;
-          const url = new URL(location.href);
-          url.hash = `#index=${index}`;
           return <>
             {
               lhr.gatherMode === 'navigation' && index !== 0 ?
@@ -59,9 +57,9 @@ export const SidebarFlow: FunctionComponent = () => {
             <SidebarFlowStep
               key={lhr.fetchTime}
               mode={lhr.gatherMode}
-              href={url.href}
+              href={`#index=${index}`}
               label={name}
-              isCurrent={index === (hashState && hashState.index)}
+              isCurrent={index === hashState?.index}
             />
           </>;
         })

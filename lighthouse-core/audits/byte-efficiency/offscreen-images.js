@@ -51,7 +51,7 @@ class OffscreenImages extends ByteEfficiencyAudit {
       scoreDisplayMode: ByteEfficiencyAudit.SCORING_MODES.NUMERIC,
       supportedModes: ['navigation'],
       requiredArtifacts: ['ImageElements', 'ViewportDimensions', 'GatherContext', 'devtoolsLogs',
-        'traces'],
+        'traces', 'URL'],
     };
   }
 
@@ -182,6 +182,7 @@ class OffscreenImages extends ByteEfficiencyAudit {
     const gatherContext = artifacts.GatherContext;
     const trace = artifacts.traces[ByteEfficiencyAudit.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[ByteEfficiencyAudit.DEFAULT_PASS];
+    const URL = artifacts.URL;
 
     /** @type {string[]} */
     const warnings = [];
@@ -212,7 +213,7 @@ class OffscreenImages extends ByteEfficiencyAudit {
     const unfilteredResults = Array.from(resultsMap.values());
     // get the interactive time or fallback to getting the end of trace time
     try {
-      const metricComputationData = {trace, devtoolsLog, gatherContext, settings};
+      const metricComputationData = {trace, devtoolsLog, gatherContext, settings, URL};
       const interactive = await Interactive.request(metricComputationData, context);
 
       // use interactive to generate items

@@ -9,7 +9,7 @@ const Audit = require('./audit.js');
 const MainThreadTasksComputed = require('../computed/main-thread-tasks.js');
 const NetworkRecordsComputed = require('../computed/network-records.js');
 const NetworkAnalysisComputed = require('../computed/network-analysis.js');
-const NetworkAnalyzer = require('../lib/dependency-graph/simulator/network-analyzer.js');
+const MainResource = require('../computed/main-resource.js');
 
 class Diagnostics extends Audit {
   /**
@@ -22,7 +22,7 @@ class Diagnostics extends Audit {
       title: 'Diagnostics',
       description: 'Collection of useful page vitals.',
       supportedModes: ['navigation'],
-      requiredArtifacts: ['traces', 'devtoolsLogs'],
+      requiredArtifacts: ['URL', 'traces', 'devtoolsLogs'],
     };
   }
 
@@ -37,9 +37,10 @@ class Diagnostics extends Audit {
     const tasks = await MainThreadTasksComputed.request(trace, context);
     const records = await NetworkRecordsComputed.request(devtoolsLog, context);
     const analysis = await NetworkAnalysisComputed.request(devtoolsLog, context);
+    const mainResource = await MainResource.request({devtoolsLog, URL: artifacts.URL}, context);
 
     const toplevelTasks = tasks.filter(t => !t.parent);
-    const mainDocumentTransferSize = NetworkAnalyzer.findMainDocument(records).transferSize;
+    const mainDocumentTransferSize = mainResource.transferSize;
     const totalByteWeight = records.reduce((sum, r) => sum + (r.transferSize || 0), 0);
     const totalTaskTime = toplevelTasks.reduce((sum, t) => sum + (t.duration || 0), 0);
     const maxRtt = Math.max(...analysis.additionalRttByOrigin.values()) + analysis.rtt;

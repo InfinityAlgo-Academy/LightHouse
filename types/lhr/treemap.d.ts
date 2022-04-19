@@ -10,7 +10,6 @@ import {Locale} from './settings';
 declare module Treemap {
   interface Options {
     lhr: {
-      requestedUrl: string;
       finalUrl: string;
       audits: {
         'script-treemap-data': AuditResult;

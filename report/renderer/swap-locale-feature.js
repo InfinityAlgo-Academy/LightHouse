@@ -3,7 +3,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 /**
  * @fileoverview Creates a <select> element, filled with all supported locales
@@ -53,13 +52,8 @@ export class SwapLocaleFeature {
       optionEl.value = locale;
       if (locale === currentLocale) optionEl.selected = true;
 
-      // @ts-expect-error: waiting for typescript 4.5. Might need to add "ES2020.Intl"
-      // to tsconfig libs.
-      // https://github.com/microsoft/TypeScript/pull/44022#issuecomment-915087098
       if (window.Intl && Intl.DisplayNames) {
-        // @ts-expect-error
         const currentLocaleDisplay = new Intl.DisplayNames([currentLocale], {type: 'language'});
-        // @ts-expect-error
         const optionLocaleDisplay = new Intl.DisplayNames([locale], {type: 'language'});
 
         const optionLocaleName = optionLocaleDisplay.of(locale);

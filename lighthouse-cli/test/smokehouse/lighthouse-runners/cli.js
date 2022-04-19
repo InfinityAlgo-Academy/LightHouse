@@ -3,7 +3,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 /**
  * @fileoverview  A runner that executes Lighthouse via the Lighthouse CLI to
@@ -78,8 +77,8 @@ async function internalRun(url, tmpPath, configJson, options) {
     '--output=json',
     `-G=${artifactsDirectory}`,
     `-A=${artifactsDirectory}`,
-    '--quiet',
     '--port=0',
+    '--quiet',
   ];
 
   if (useFraggleRock) {
@@ -133,7 +132,7 @@ async function internalRun(url, tmpPath, configJson, options) {
 
   // There should either be both an error exitCode and a lhr.runtimeError or neither.
   if (Boolean(exitCode) !== Boolean(lhr.runtimeError)) {
-    const runtimeErrorCode = lhr.runtimeError && lhr.runtimeError.code;
+    const runtimeErrorCode = lhr.runtimeError?.code;
     throw new ChildProcessError(`Lighthouse did not exit with an error correctly, exiting with ${exitCode} but with runtimeError '${runtimeErrorCode}'`, // eslint-disable-line max-len
         localConsole.getLog());
   }

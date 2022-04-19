@@ -19,6 +19,7 @@ import {
 } from '../../gather/mock-commands.js';
 import constants from '../../../config/constants.js';
 import {fnAny} from '../../test-utils.js';
+import {LH_ROOT} from '../../../../root.js';
 
 /** @typedef {import('../../../fraggle-rock/gather/driver.js')} Driver */
 /** @typedef {import('../../../gather/driver/execution-context.js')} ExecutionContext */
@@ -71,7 +72,7 @@ function createMockPage() {
     goto: fnAny(),
     target: () => ({createCDPSession: () => createMockSession()}),
 
-    /** @return {import('puppeteer').Page} */
+    /** @return {LH.Puppeteer.Page} */
     asPage() {
       // @ts-expect-error - We'll rely on the tests passing to know this matches.
       return this;
@@ -131,7 +132,7 @@ function createMockDriver() {
     _page: page,
     _executionContext: context,
     _session: session,
-    url: () => page.url(),
+    url: jest.fn(() => page.url()),
     defaultSession: session,
     connect: fnAny(),
     disconnect: fnAny(),
@@ -145,12 +146,24 @@ function createMockDriver() {
   };
 }
 
-/** @param {() => jest.Mock} runProvider */
-function mockRunnerModule(runProvider) {
-  const runnerModule = {getGathererList: () => []};
-  Object.defineProperty(runnerModule, 'run', {
-    get: runProvider,
-  });
+function mockRunnerModule() {
+  const runnerModule = {
+    getAuditList: fnAny().mockReturnValue([]),
+    getGathererList: fnAny().mockReturnValue([]),
+    audit: fnAny(),
+    gather: fnAny(),
+    reset,
+  };
+
+  jest.mock(`${LH_ROOT}/lighthouse-core/runner.js`, () => runnerModule);
+
+  function reset() {
+    runnerModule.getGathererList.mockReturnValue([]);
+    runnerModule.getAuditList.mockReturnValue([]);
+    runnerModule.audit.mockReset();
+    runnerModule.gather.mockReset();
+  }
+
   return runnerModule;
 }
 
@@ -169,7 +182,12 @@ function mockDriverModule(driverProvider) {
 function createMockBaseArtifacts() {
   return {
     fetchTime: new Date().toISOString(),
-    URL: {finalUrl: 'https://example.com', requestedUrl: 'https://example.com'},
+    URL: {
+      initialUrl: 'about:blank',
+      requestedUrl: 'https://example.com',
+      mainDocumentUrl: 'https://example.com',
+      finalUrl: 'https://example.com',
+    },
     PageLoadError: null,
     settings: constants.defaultSettings,
     BenchmarkIndex: 500,

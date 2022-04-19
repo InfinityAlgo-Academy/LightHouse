@@ -31,7 +31,7 @@ describe('Accessibility: button-name audit', () => {
       Accessibility: {
         violations: [{
           id: 'button-name',
-          nodes: [],
+          nodes: [{node: {}, relatedNodes: []}],
           help: 'http://example.com/',
         }],
       },

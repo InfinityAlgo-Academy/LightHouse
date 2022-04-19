@@ -8,10 +8,18 @@ import {jest} from '@jest/globals';
 import {FunctionComponent} from 'preact';
 import {act, render} from '@testing-library/preact';
 
-import {Topbar} from '../src/topbar';
-import {FlowResultContext} from '../src/util';
-import {ReportRendererContext} from '../src/wrappers/report-renderer';
+import {FlowResultContext, OptionsContext} from '../src/util';
 import {I18nProvider} from '../src/i18n/i18n';
+
+const mockSaveFile = jest.fn();
+jest.unstable_mockModule('../../../report/renderer/api.js', () => ({
+  saveFile: mockSaveFile,
+}));
+
+let Topbar: typeof import('../src/topbar').Topbar;
+beforeAll(async () => {
+  Topbar = (await import('../src/topbar')).Topbar;
+});
 
 const flowResult = {
   name: 'User flow',
@@ -23,27 +31,24 @@ const flowResult = {
 } as any;
 
 let wrapper: FunctionComponent;
-let mockSaveFile = jest.fn();
+let options: LH.FlowReportOptions;
 
 beforeEach(() => {
-  mockSaveFile = jest.fn();
-  const reportRendererValue: any = {
-    dom: {
-      saveFile: mockSaveFile,
-    },
-  };
+  mockSaveFile.mockReset();
+  options = {};
   wrapper = ({children}) => (
-    <FlowResultContext.Provider value={flowResult}>
-      <ReportRendererContext.Provider value={reportRendererValue}>
+    <OptionsContext.Provider value={options}>
+      <FlowResultContext.Provider value={flowResult}>
         <I18nProvider>
           {children}
         </I18nProvider>
-      </ReportRendererContext.Provider>
-    </FlowResultContext.Provider>
+      </FlowResultContext.Provider>
+    </OptionsContext.Provider>
   );
 });
 
 it('save button opens save dialog for HTML file', async () => {
+  options = {getReportHtml: () => '<html></html>'};
   const root = render(<Topbar onMenuClick={() => {}}/>, {wrapper});
 
   const saveButton = root.getByText('Save');
@@ -51,8 +56,19 @@ it('save button opens save dialog for HTML file', async () => {
 
   expect(mockSaveFile).toHaveBeenCalledWith(
     expect.any(Blob),
-    'User-flow_2021-09-14_22-24-22'
+    'User-flow_2021-09-14_22-24-22.html'
   );
+});
+
+it('provides save as gist option if defined', async () => {
+  const saveAsGist = jest.fn();
+  options = {saveAsGist};
+  const root = render(<Topbar onMenuClick={() => {}}/>, {wrapper});
+
+  const saveButton = root.getByText('Save as Gist');
+  saveButton.click();
+
+  expect(saveAsGist).toHaveBeenCalledWith(flowResult);
 });
 
 it('toggles help dialog', async () => {

@@ -460,6 +460,12 @@ describe('OffscreenImages audit', () => {
       ],
       traces: {defaultPass: createTestTrace({topLevelTasks})},
       devtoolsLogs: {defaultPass: devtoolsLog},
+      URL: {
+        initialUrl: 'about:blank',
+        requestedUrl: recordA.url,
+        mainDocumentUrl: recordA.url,
+        finalUrl: recordA.url,
+      },
     };
 
     return UnusedImages.audit_(artifacts, [recordA, recordB], context).then(auditResult => {
@@ -519,6 +525,12 @@ describe('OffscreenImages audit', () => {
       ],
       traces: {defaultPass: createTestTrace({topLevelTasks})},
       devtoolsLogs: {defaultPass: devtoolsLog},
+      URL: {
+        initialUrl: 'about:blank',
+        requestedUrl: recordA.url,
+        mainDocumentUrl: recordA.url,
+        finalUrl: recordA.url,
+      },
     };
 
     return UnusedImages.audit_(artifacts, [recordA, recordB], context).then(auditResult => {

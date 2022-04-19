@@ -31,7 +31,7 @@ describe('Accessibility: dlitem audit', () => {
       Accessibility: {
         violations: [{
           id: 'dlitem',
-          nodes: [],
+          nodes: [{node: {}, relatedNodes: []}],
           help: 'http://example.com/',
         }],
       },

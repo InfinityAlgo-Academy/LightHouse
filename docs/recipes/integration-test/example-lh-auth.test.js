@@ -40,8 +40,9 @@ expect.extend({
       const status = audit.score === 1 ?
         this.utils.EXPECTED_COLOR('○') :
         this.utils.RECEIVED_COLOR('✕');
-      const weight = this.utils.DIM_COLOR(`[weight: ${auditRef.weight}]`);
-      return `\t${status} ${weight} ${audit.id}`;
+      const attrs = this.utils.DIM_COLOR(`[weight: ${auditRef.weight}, score: ${audit.score}]`);
+      const error = audit.errorMessage ? ` ${audit.errorMessage}` : '';
+      return `\t${status} ${attrs} ${audit.id}${error}`;
     }).join('\n');
 
     if (score >= threshold) {

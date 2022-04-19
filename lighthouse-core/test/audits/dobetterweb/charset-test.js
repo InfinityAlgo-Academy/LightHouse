@@ -15,9 +15,9 @@ const HTML_PRE = '<!doctype html><head>';
 const HTML_POST = '</head><body><h1>hello';
 
 function generateArtifacts(htmlContent, contentTypeValue = 'text/html') {
-  const finalUrl = 'https://example.com/';
+  const mainDocumentUrl = 'https://example.com/';
   const mainResource = {
-    url: finalUrl,
+    url: mainDocumentUrl,
     responseHeaders: [
       {name: 'content-type', value: contentTypeValue},
     ],
@@ -26,7 +26,7 @@ function generateArtifacts(htmlContent, contentTypeValue = 'text/html') {
   const context = {computedCache: new Map()};
   return [{
     devtoolsLogs: {[CharsetDefinedAudit.DEFAULT_PASS]: devtoolsLog},
-    URL: {finalUrl},
+    URL: {mainDocumentUrl},
     MainDocumentContent: htmlContent,
     MetaElements: [],
   }, context];

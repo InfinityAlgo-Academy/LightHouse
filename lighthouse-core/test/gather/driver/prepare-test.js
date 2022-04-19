@@ -166,7 +166,7 @@ describe('.prepareTargetForIndividualNavigation()', () => {
     await prepare.prepareTargetForIndividualNavigation(
       sessionMock.asSession(),
       {...constants.defaultSettings, disableStorageReset: false},
-      {...constants.defaultNavigationConfig, disableStorageReset: false, url}
+      {...constants.defaultNavigationConfig, disableStorageReset: false, requestor: url}
     );
 
     expect(storageMock.clearDataForOrigin).toHaveBeenCalled();
@@ -177,7 +177,7 @@ describe('.prepareTargetForIndividualNavigation()', () => {
     await prepare.prepareTargetForIndividualNavigation(
       sessionMock.asSession(),
       {...constants.defaultSettings, disableStorageReset: true},
-      {...constants.defaultNavigationConfig, disableStorageReset: false, url}
+      {...constants.defaultNavigationConfig, disableStorageReset: false, requestor: url}
     );
 
     expect(storageMock.clearDataForOrigin).not.toHaveBeenCalled();
@@ -188,7 +188,18 @@ describe('.prepareTargetForIndividualNavigation()', () => {
     await prepare.prepareTargetForIndividualNavigation(
       sessionMock.asSession(),
       {...constants.defaultSettings, disableStorageReset: false},
-      {...constants.defaultNavigationConfig, disableStorageReset: true, url}
+      {...constants.defaultNavigationConfig, disableStorageReset: true, requestor: url}
+    );
+
+    expect(storageMock.clearDataForOrigin).not.toHaveBeenCalled();
+    expect(storageMock.clearBrowserCaches).not.toHaveBeenCalled();
+  });
+
+  it('does not clear storage when given a callback requestor', async () => {
+    await prepare.prepareTargetForIndividualNavigation(
+      sessionMock.asSession(),
+      {...constants.defaultSettings, disableStorageReset: false},
+      {...constants.defaultNavigationConfig, disableStorageReset: false, requestor: () => {}}
     );
 
     expect(storageMock.clearDataForOrigin).not.toHaveBeenCalled();
@@ -200,7 +211,7 @@ describe('.prepareTargetForIndividualNavigation()', () => {
     const {warnings} = await prepare.prepareTargetForIndividualNavigation(
       sessionMock.asSession(),
       {...constants.defaultSettings, disableStorageReset: false},
-      {...constants.defaultNavigationConfig, disableStorageReset: false, url}
+      {...constants.defaultNavigationConfig, disableStorageReset: false, requestor: url}
     );
 
     expect(warnings).toEqual([{message: 'This is a warning'}]);

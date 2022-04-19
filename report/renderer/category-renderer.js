@@ -14,7 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-'use strict';
 
 /** @typedef {import('./dom.js').DOM} DOM */
 /** @typedef {import('./report-renderer.js').ReportRenderer} ReportRenderer */
@@ -348,14 +347,28 @@ export class CategoryRenderer {
   /**
    * @param {LH.ReportResult.Category} category
    * @param {Record<string, LH.Result.ReportGroup>} groupDefinitions
-   * @param {{gatherMode: LH.Result.GatherMode}=} options
+   * @param {{gatherMode: LH.Result.GatherMode, omitLabel?: boolean, onPageAnchorRendered?: (link: HTMLAnchorElement) => void}=} options
    * @return {DocumentFragment}
    */
   renderCategoryScore(category, groupDefinitions, options) {
+    let categoryScore;
     if (options && Util.shouldDisplayAsFraction(options.gatherMode)) {
-      return this.renderCategoryFraction(category);
+      categoryScore = this.renderCategoryFraction(category);
+    } else {
+      categoryScore = this.renderScoreGauge(category, groupDefinitions);
     }
-    return this.renderScoreGauge(category, groupDefinitions);
+
+    if (options?.omitLabel) {
+      const label = this.dom.find('.lh-gauge__label,.lh-fraction__label', categoryScore);
+      label.remove();
+    }
+
+    if (options?.onPageAnchorRendered) {
+      const anchor = this.dom.find('a', categoryScore);
+      options.onPageAnchorRendered(anchor);
+    }
+
+    return categoryScore;
   }
 
   /**
@@ -466,7 +479,7 @@ export class CategoryRenderer {
    * @return {boolean}
    */
   _auditHasWarning(audit) {
-    return Boolean(audit.result.warnings && audit.result.warnings.length);
+    return Boolean(audit.result.warnings?.length);
   }
 
   /**

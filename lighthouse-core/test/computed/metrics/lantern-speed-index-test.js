@@ -8,6 +8,7 @@
 import constants from '../../../config/constants.js';
 import LanternSpeedIndex from '../../../computed/metrics/lantern-speed-index.js';
 import {readJson} from '../../../../root.js';
+import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';
 
 const defaultThrottling = constants.throttling.mobileSlow4G;
 
@@ -15,6 +16,7 @@ const defaultThrottling = constants.throttling.mobileSlow4G;
 const TRACE_FIXTURES = '../../fixtures/traces';
 const trace = readJson(`${TRACE_FIXTURES}/progressive-app-m60.json`, import.meta);
 const devtoolsLog = readJson(`${TRACE_FIXTURES}/progressive-app-m60.devtools.log.json`, import.meta);
+const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
 /* eslint-enable max-len */
 
 /* eslint-env jest */
@@ -23,7 +25,8 @@ describe('Metrics: Lantern Speed Index', () => {
   it('should compute predicted value', async () => {
     const settings = {throttlingMethod: 'simulate', throttling: defaultThrottling};
     const context = {settings, computedCache: new Map()};
-    const result = await LanternSpeedIndex.request({trace, devtoolsLog, gatherContext, settings},
+    const result = await LanternSpeedIndex.request(
+      {trace, devtoolsLog, gatherContext, settings, URL},
       context);
 
     expect({
@@ -42,7 +45,8 @@ describe('Metrics: Lantern Speed Index', () => {
   it('should compute predicted value for different settings', async () => {
     const settings = {throttlingMethod: 'simulate', throttling: {...defaultThrottling, rttMs: 300}};
     const context = {settings, computedCache: new Map()};
-    const result = await LanternSpeedIndex.request({trace, devtoolsLog, gatherContext, settings},
+    const result = await LanternSpeedIndex.request(
+      {trace, devtoolsLog, gatherContext, settings, URL},
       context);
 
     expect({

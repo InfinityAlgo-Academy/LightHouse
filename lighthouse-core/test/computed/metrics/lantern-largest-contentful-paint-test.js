@@ -9,6 +9,9 @@ import {strict as assert} from 'assert';
 import trace from '../../fixtures/traces/lcp-m78.json';
 import devtoolsLog from '../../fixtures/traces/lcp-m78.devtools.log.json';
 import LanternLargestContentfulPaint from '../../../computed/metrics/lantern-largest-contentful-paint.js'; // eslint-disable-line max-len
+import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';
+
+const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
 
 /* eslint-env jest */
 describe('Metrics: Lantern LCP', () => {
@@ -17,7 +20,7 @@ describe('Metrics: Lantern LCP', () => {
     const settings = {};
     const computedCache = new Map();
     const result = await LanternLargestContentfulPaint.request(
-      {trace, devtoolsLog, gatherContext, settings},
+      {trace, devtoolsLog, gatherContext, settings, URL},
       {computedCache}
     );
 

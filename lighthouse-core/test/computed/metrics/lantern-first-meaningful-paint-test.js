@@ -10,6 +10,9 @@ import trace from '../../fixtures/traces/progressive-app-m60.json';
 import devtoolsLog from '../../fixtures/traces/progressive-app-m60.devtools.log.json';
 import LanternFirstMeaningfulPaint from
   '../../../computed/metrics/lantern-first-meaningful-paint.js';
+import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';
+
+const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
 
 /* eslint-env jest */
 describe('Metrics: Lantern FMP', () => {
@@ -17,7 +20,7 @@ describe('Metrics: Lantern FMP', () => {
     const gatherContext = {gatherMode: 'navigation'};
     const computedCache = new Map();
     const result = await LanternFirstMeaningfulPaint.request({trace, devtoolsLog, gatherContext,
-      settings: {}}, {computedCache});
+      settings: {}, URL}, {computedCache});
 
     expect({
       timing: Math.round(result.timing),

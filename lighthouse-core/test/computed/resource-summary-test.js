@@ -14,7 +14,11 @@ import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
 function mockArtifacts(networkRecords) {
   return {
     devtoolsLog: networkRecordsToDevtoolsLog(networkRecords),
-    URL: {requestedUrl: networkRecords[0].url, finalUrl: networkRecords[0].url},
+    URL: {
+      requestedUrl: networkRecords[0].url,
+      mainDocumentUrl: networkRecords[0].url,
+      finalUrl: networkRecords[0].url,
+    },
     budgets: null,
   };
 }

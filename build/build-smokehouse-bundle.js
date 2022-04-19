@@ -37,4 +37,7 @@ async function build() {
   await bundle.close();
 }
 
-build();
+build().catch(err => {
+  console.error(err);
+  process.exit(1);
+});

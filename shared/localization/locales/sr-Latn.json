@@ -60,10 +60,10 @@
     "message": "Otkrijte prilike za učinak da biste poboljšali doživljaj za dugoročne stranice i aplikacije sa jednom stranicom."
   },
   "flow-report/src/i18n/ui-strings.js | highestImpact": {
-    "message": "Highest impact"
+    "message": "Najveći uticaj"
   },
   "flow-report/src/i18n/ui-strings.js | informativeAuditCount": {
-    "message": "{numInformative, plural,\n    =1 {{numInformative} informative audit}\n    other {{numInformative} informative audits}\n  }"
+    "message": "{numInformative,plural, =1{{numInformative} informativna provera}one{{numInformative} informativna provera}few{{numInformative} informativne provere}other{{numInformative} informativnih provera}}"
   },
   "flow-report/src/i18n/ui-strings.js | mobile": {
     "message": "Mobilni uređaj"
@@ -78,13 +78,13 @@
     "message": "Izveštaj o navigaciji"
   },
   "flow-report/src/i18n/ui-strings.js | navigationReportCount": {
-    "message": "{numNavigation, plural,\n    =1 {{numNavigation} navigation report}\n    other {{numNavigation} navigation reports}\n  }"
+    "message": "{numNavigation,plural, =1{{numNavigation} izveštaj o navigaciji}one{{numNavigation} izveštaj o navigaciji}few{{numNavigation} izveštaja o navigaciji}other{{numNavigation} izveštaja o navigaciji}}"
   },
   "flow-report/src/i18n/ui-strings.js | passableAuditCount": {
-    "message": "{numPassableAudits, plural,\n    =1 {{numPassableAudits} passable audit}\n    other {{numPassableAudits} passable audits}\n  }"
+    "message": "{numPassableAudits,plural, =1{{numPassableAudits} provera koja može da se prođe}one{{numPassableAudits} provera koja može da se prođe}few{{numPassableAudits} provere koje mogu da se prođu}other{{numPassableAudits} provera koje mogu da se prođu}}"
   },
   "flow-report/src/i18n/ui-strings.js | passedAuditCount": {
-    "message": "{numPassed, plural,\n    =1 {{numPassed} audit passed}\n    other {{numPassed} audits passed}\n  }"
+    "message": "{numPassed,plural, =1{Prošli ste {numPassed} proveru}one{Prošli ste{numPassed} proveru}few{Prošli ste{numPassed} provere}other{Prošli ste{numPassed} provera}}"
   },
   "flow-report/src/i18n/ui-strings.js | ratingAverage": {
     "message": "Prosek"
@@ -111,7 +111,7 @@
     "message": "Izveštaj sa pregledom"
   },
   "flow-report/src/i18n/ui-strings.js | snapshotReportCount": {
-    "message": "{numSnapshot, plural,\n    =1 {{numSnapshot} snapshot report}\n    other {{numSnapshot} snapshot reports}\n  }"
+    "message": "{numSnapshot,plural, =1{{numSnapshot} izveštaj sa pregledom}one{{numSnapshot} izveštaj sa pregledom}few{{numSnapshot} izveštaja sa pregledom}other{{numSnapshot} izveštaja sa pregledom}}"
   },
   "flow-report/src/i18n/ui-strings.js | summary": {
     "message": "Rezime"
@@ -126,7 +126,7 @@
     "message": "Izveštaj za period"
   },
   "flow-report/src/i18n/ui-strings.js | timespanReportCount": {
-    "message": "{numTimespan, plural,\n    =1 {{numTimespan} timespan report}\n    other {{numTimespan} timespan reports}\n  }"
+    "message": "{numTimespan,plural, =1{{numTimespan} izveštaj za period}one{{numTimespan} izveštaj za period}few{{numTimespan} izveštaja za period}other{{numTimespan} izveštaja za period}}"
   },
   "flow-report/src/i18n/ui-strings.js | title": {
     "message": "Izveštaj o korisničkom toku za Lighthouse"
@@ -477,13 +477,13 @@
     "message": "`[user-scalable=\"no\"]` se ne koristi u elementu `<meta name=\"viewport\">`, a vrednost atributa `[maximum-scale]` nije manja od 5."
   },
   "lighthouse-core/audits/accessibility/object-alt.js | description": {
-    "message": "Čitači ekrana ne mogu da prevode sadržaj koji nije tekst. Dodavanje alt teksta elementima `<object>` omogućava da čitači ekrana lakše prenesu značenje korisnicima. [Saznajte više](https://web.dev/object-alt/)."
+    "message": "Čitači ekrana ne mogu da prevode sadržaj koji nije tekst. Dodavanje alternativnog teksta elementima `<object>` omogućava da čitači ekrana lakše prenesu značenje korisnicima. [Saznajte više](https://web.dev/object-alt/)."
   },
   "lighthouse-core/audits/accessibility/object-alt.js | failureTitle": {
-    "message": "Elementi `<object>` ne sadrže tekst `[alt]`"
+    "message": "Elementi `<object>` nemaju alternativni tekst"
   },
   "lighthouse-core/audits/accessibility/object-alt.js | title": {
-    "message": "Elementi `<object>` sadrže tekst `[alt]`"
+    "message": "Elementi `<object>` imaju alternativni tekst"
   },
   "lighthouse-core/audits/accessibility/tabindex.js | description": {
     "message": "Vrednost veća od 0 označava eksplicitno naručivanje navigacije. Iako je tehnički ispravno, to često frustrira korisnike koji se oslanjaju na tehnologije za pomoć osobama sa invaliditetom. [Saznajte više](https://web.dev/tabindex/)."
@@ -1052,6 +1052,9 @@
   "lighthouse-core/audits/installable-manifest.js | not-offline-capable": {
     "message": "Stranica ne radi oflajn"
   },
+  "lighthouse-core/audits/installable-manifest.js | pipeline-restarted": {
+    "message": "PWA je deinstalirana i provere nestabilnosti se resetuju."
+  },
   "lighthouse-core/audits/installable-manifest.js | platform-not-supported-on-android": {
     "message": "Navedena platforma za aplikacije nije podržana na Android-u"
   },
@@ -1060,6 +1063,9 @@
   },
   "lighthouse-core/audits/installable-manifest.js | prefer-related-applications-only-beta-stable": {
     "message": "Stavka prefer_related_applications je podržana samo u Chrome-u beta i na Stabilnim kanalima na Android-u."
+  },
+  "lighthouse-core/audits/installable-manifest.js | protocol-timeout": {
+    "message": "Lighthouse nije uspeo da utvrdi da li je postojao serviser. Probajte sa novijom verzijom Chrome-a."
   },
   "lighthouse-core/audits/installable-manifest.js | start-url-not-valid": {
     "message": "Početni URL manifesta nije važeći"
@@ -1212,7 +1218,7 @@
     "message": "Pozadinska kašnjenja servera"
   },
   "lighthouse-core/audits/no-unload-listeners.js | description": {
-    "message": "Događaj `unload` se ne pokreće pouzdano i ako se on obrađuje, to može da spreči optimizacije pregledača poput keša za kretanje unazad i unapred. Predlažemo vam da koristite događaje `pagehide` ili `visibilitychange` umesto njega. [Saznajte više](https://developers.google.com/web/updates/2018/07/page-lifecycle-api#the-unload-event)"
+    "message": "Događaj `unload` se ne pokreće pouzdano i ako se on obrađuje, to može da spreči optimizacije pregledača poput keša za kretanje unazad i unapred. Bolje da koristite događaje`pagehide` ili `visibilitychange`. [Saznajte više](https://web.dev/bfcache/#never-use-the-unload-event)"
   },
   "lighthouse-core/audits/no-unload-listeners.js | failureTitle": {
     "message": "Registruje obrađivača događaja `unload`"
@@ -1291,9 +1297,6 @@
   },
   "lighthouse-core/audits/seo/canonical.js | explanationConflict": {
     "message": "Više neusaglašenih URL-ova ({urlList})"
-  },
-  "lighthouse-core/audits/seo/canonical.js | explanationDifferentDomain": {
-    "message": "Usmerava ka drugom domenu ({url})"
   },
   "lighthouse-core/audits/seo/canonical.js | explanationInvalid": {
     "message": "Nevažeći URL ({url})"
@@ -2222,6 +2225,36 @@
   "node_modules/lighthouse-stack-packs/packs/magento.js | uses-rel-preload": {
     "message": "Oznake `<link rel=preload>` mogu da se dodaju [izmenom izgleda teme](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
   },
+  "node_modules/lighthouse-stack-packs/packs/next.js | modern-image-formats": {
+    "message": "Koristite API za optimizaciju slike `Next.js` da biste prikazivali moderne formate poput `WebP` i `AVIF`. [Saznajte više](https://nextjs.org/docs/api-reference/next/image#acceptable-formats)."
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | offscreen-images": {
+    "message": "Koristite komponentu `next/image`, koja je podrazumevano podešena na `loading=\"lazy\"`. [Saznajte više](https://nextjs.org/docs/api-reference/next/image#loading)."
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | render-blocking-resources": {
+    "message": "Koristite komponentu `next/script` da biste odložili učitavanje skripta treće strane koje nisu toliko važne. [Saznajte više](https://nextjs.org/docs/basic-features/script)."
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | unused-css-rules": {
+    "message": "Preporučujemo vam da podesite `PurgeCSS` u konfiguraciji komponente `Next.js` da biste uklonili neiskorišćena pravila iz opisa stilova. [Saznajte više](https://purgecss.com/guides/next.html)."
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | unused-javascript": {
+    "message": "Koristite `Webpack Bundle Analyzer` da biste otkrili neiskorišćeni JavaScript kôd. [Saznajte više](https://github.com/vercel/next.js/tree/canary/packages/next-bundle-analyzer)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | user-timings": {
+    "message": "Preporučujemo vam da koristite `Next.js Analytics` za merenje učinka aplikacije u stvarnom svetu. [Saznajte više](https://nextjs.org/docs/advanced-features/measuring-performance)."
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | uses-long-cache-ttl": {
+    "message": "Konfigurišite keširanje za nepromenljive elemente i `Server-side Rendered` (SSR) stranice. [Saznajte više](https://nextjs.org/docs/going-to-production#caching)."
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | uses-optimized-images": {
+    "message": "Koristite komponentu `next/image`, a ne `<img>`, da biste optimizovali slike. [Saznajte više](https://nextjs.org/docs/basic-features/image-optimization)."
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | uses-responsive-images": {
+    "message": "Koristite komponentu `next/image` da biste podesili odgovarajuće `sizes`. [Saznajte više](https://nextjs.org/docs/api-reference/next/image#sizes)."
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | uses-text-compression": {
+    "message": "Omogućite komprimovanje na Next.js serveru. [Saznajte više](https://nextjs.org/docs/api-reference/next.config.js/compression)."
+  },
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | efficient-animated-content": {
     "message": "[Zamenite animirane GIF-ove video sadržajem](https://web.dev/replace-gifs-with-videos/) da bi se veb-stranice brže učitavale, a predlažemo i da koristite moderne formate fajlova, kao što je [WebM](https://web.dev/replace-gifs-with-videos/#create-webm-videos) ili [AV1](https://developers.google.com/web/updates/2018/09/chrome-70-media-updates#av1-decoder), da biste poboljšali efikasnost komprimovanja za više od 30% u odnosu na aktuelni najsavremeniji video kodek, VP9."
   },
@@ -2331,7 +2364,7 @@
     "message": "Pogledajte kalkulator."
   },
   "report/renderer/util.js | collapseView": {
-    "message": "Collapse view"
+    "message": "Skupi prikaz"
   },
   "report/renderer/util.js | crcInitialNavigation": {
     "message": "Početna navigacija"
@@ -2370,13 +2403,13 @@
     "message": "Prijavljivanje greške: nema informacija o proveri"
   },
   "report/renderer/util.js | expandView": {
-    "message": "Expand view"
+    "message": "Proširi prikaz"
   },
   "report/renderer/util.js | footerIssue": {
     "message": "Prijavite problem"
   },
   "report/renderer/util.js | hide": {
-    "message": "Hide"
+    "message": "Sakrij"
   },
   "report/renderer/util.js | labDataTitle": {
     "message": "Podaci o eksperimentalnim funkcijama"
@@ -2400,10 +2433,10 @@
     "message": "Provere sa zadovoljavajućom ocenom"
   },
   "report/renderer/util.js | runtimeAnalysisWindow": {
-    "message": "Initial page load"
+    "message": "Početno učitavanje stranice"
   },
   "report/renderer/util.js | runtimeCustom": {
-    "message": "Custom throttling"
+    "message": "Prilagođeno ograničavanje"
   },
   "report/renderer/util.js | runtimeDesktopEmulation": {
     "message": "Emulirani računar"
@@ -2433,19 +2466,19 @@
     "message": "Korisnički agent (mreža)"
   },
   "report/renderer/util.js | runtimeSingleLoad": {
-    "message": "Single page load"
+    "message": "Jedno učitavanje stranice"
   },
   "report/renderer/util.js | runtimeSingleLoadTooltip": {
-    "message": "This data is taken from a single page load, as opposed to field data summarizing many sessions."
+    "message": "Ovi podaci su dobijeni na osnovu jednog učitavanja stranice, nasuprot podacima iz polja koji rezimiraju mnoge sesije."
   },
   "report/renderer/util.js | runtimeSlow4g": {
-    "message": "Slow 4G throttling"
+    "message": "Ograničavanje poput spore 4G veze"
   },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "Nepoznato"
   },
   "report/renderer/util.js | show": {
-    "message": "Show"
+    "message": "Prikaži"
   },
   "report/renderer/util.js | showRelevantAudits": {
     "message": "Prikaži revizije relevantne za:"

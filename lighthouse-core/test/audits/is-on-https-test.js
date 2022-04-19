@@ -16,7 +16,7 @@ describe('Security: HTTPS audit', () => {
     const devtoolsLog = networkRecordsToDevtoolsLog(networkRecords);
     return {
       devtoolsLogs: {[Audit.DEFAULT_PASS]: devtoolsLog},
-      InspectorIssues: {mixedContent: mixedContentIssues || []},
+      InspectorIssues: {mixedContentIssue: mixedContentIssues || []},
     };
   }
 

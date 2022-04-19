@@ -14,6 +14,7 @@ import CriticalRequestChains from '../../computed/critical-request-chains.js';
 import NetworkRequest from '../../lib/network-request.js';
 import createTestTrace from '../create-test-trace.js';
 import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
+import {getURLArtifactFromDevtoolsLog} from '../test-utils.js';
 
 const HIGH = 'High';
 const VERY_HIGH = 'VeryHigh';
@@ -48,8 +49,17 @@ async function createChainsFromMockRecords(prioritiesList, edges, setExtrasFn) {
 
   if (setExtrasFn) setExtrasFn(networkRecords);
 
+  const docUrl = networkRecords
+    .find(r => r.resourceType === 'Document' && r.frameId === 1)
+    .url;
+
   const trace = createTestTrace({topLevelTasks: [{ts: 0}]});
-  const URL = {finalUrl: networkRecords[0].documentURL};
+  const URL = {
+    initialUrl: 'about:blank',
+    requestedUrl: docUrl,
+    mainDocumentUrl: docUrl,
+    finalUrl: docUrl,
+  };
   const devtoolsLog = networkRecordsToDevtoolsLog(networkRecords);
 
   const context = {computedCache: new Map()};
@@ -82,7 +92,7 @@ describe('CriticalRequestChain computed artifact', () => {
     const trace = createTestTrace({topLevelTasks: [{ts: 0}]});
     const devtoolsLog =
       readJson('lighthouse-core/test/fixtures/wikipedia-redirect.devtoolslog.json');
-    const URL = {finalUrl: 'https://en.m.wikipedia.org/wiki/Main_Page'};
+    const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
 
     const context = {computedCache: new Map()};
     const chains = await CriticalRequestChains.request({trace, devtoolsLog, URL}, context);

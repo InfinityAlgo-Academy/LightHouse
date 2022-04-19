@@ -15,6 +15,7 @@ import trace from '../../fixtures/traces/progressive-app-m60.json';
 import devtoolsLog from '../../fixtures/traces/progressive-app-m60.devtools.log.json';
 import traceM78 from '../../fixtures/traces/lcp-m78.json';
 import devtoolsLogM78 from '../../fixtures/traces/lcp-m78.devtools.log.json';
+import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';
 import {strict as assert} from 'assert';
 
 /* eslint-env jest */
@@ -202,8 +203,9 @@ describe('Byte efficiency base audit', () => {
     const throttling = {rttMs: 150, throughputKbps: 1600, cpuSlowdownMultiplier: 1};
     const settings = {throttlingMethod: 'simulate', throttling};
     const computedCache = new Map();
-    const graph = await PageDependencyGraph.request({trace, devtoolsLog}, {computedCache});
-    const simulator = await LoadSimulator.request({devtoolsLog, settings}, {computedCache});
+    const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
+    const graph = await PageDependencyGraph.request({trace, devtoolsLog, URL}, {computedCache});
+    const simulator = await LoadSimulator.request({devtoolsLog, settings, URL}, {computedCache});
     const result = ByteEfficiencyAudit.createAuditProduct(
       {
         headings: [{key: 'wastedBytes', text: 'Label'}],
@@ -233,6 +235,7 @@ describe('Byte efficiency base audit', () => {
       GatherContext: {gatherMode: 'navigation'},
       traces: {defaultPass: trace},
       devtoolsLogs: {defaultPass: devtoolsLog},
+      URL: getURLArtifactFromDevtoolsLog(devtoolsLog),
     };
     const computedCache = new Map();
 
@@ -272,6 +275,7 @@ describe('Byte efficiency base audit', () => {
       GatherContext: {gatherMode: 'navigation'},
       traces: {defaultPass: traceM78},
       devtoolsLogs: {defaultPass: devtoolsLogM78},
+      URL: getURLArtifactFromDevtoolsLog(devtoolsLogM78),
     };
     const computedCache = new Map();
 
@@ -304,6 +308,7 @@ describe('Byte efficiency base audit', () => {
       GatherContext: {gatherMode: 'navigation'},
       traces: {defaultPass: trace},
       devtoolsLogs: {defaultPass: devtoolsLog},
+      URL: getURLArtifactFromDevtoolsLog(devtoolsLog),
     };
     const computedCache = new Map();
 
@@ -328,6 +333,7 @@ describe('Byte efficiency base audit', () => {
       GatherContext: {gatherMode: 'timespan'},
       traces: {defaultPass: trace},
       devtoolsLogs: {defaultPass: devtoolsLog},
+      URL: getURLArtifactFromDevtoolsLog(devtoolsLog),
     };
     const computedCache = new Map();
 
@@ -377,6 +383,7 @@ describe('Byte efficiency base audit', () => {
       GatherContext: {gatherMode: 'timespan'},
       traces: {defaultPass: trace},
       devtoolsLogs: {defaultPass: devtoolsLog},
+      URL: getURLArtifactFromDevtoolsLog(devtoolsLog),
     };
     const computedCache = new Map();
 
@@ -389,6 +396,6 @@ describe('Byte efficiency base audit', () => {
     };
     const settings = {throttlingMethod: 'devtools', throttling: modestThrottling};
     const result = await MockAudit.audit(artifacts, {settings, computedCache});
-    expect(result.details.overallSavingsMs).toBeCloseTo(0);
+    expect(result.details.overallSavingsMs).toBeCloseTo(575, 1);
   });
 });

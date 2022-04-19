@@ -11,6 +11,7 @@ import trace from '../../fixtures/traces/progressive-app-m60.json';
 import devtoolsLog from '../../fixtures/traces/progressive-app-m60.devtools.log.json';
 import trace1msLayout from '../../fixtures/traces/speedindex-1ms-layout-m84.trace.json';
 import devtoolsLog1msLayout from '../../fixtures/traces/speedindex-1ms-layout-m84.devtoolslog.json'; // eslint-disable-line max-len
+import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';
 
 /* eslint-env jest */
 
@@ -20,7 +21,8 @@ describe('Metrics: Speed Index', () => {
   it('should compute a simulated value', async () => {
     const settings = {throttlingMethod: 'simulate'};
     const context = {settings, computedCache: new Map()};
-    const result = await SpeedIndex.request({trace, devtoolsLog, gatherContext, settings},
+    const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
+    const result = await SpeedIndex.request({trace, devtoolsLog, gatherContext, settings, URL},
       context);
 
     expect({
@@ -46,6 +48,7 @@ describe('Metrics: Speed Index', () => {
       },
     };
 
+    const URL = getURLArtifactFromDevtoolsLog(devtoolsLog1msLayout);
     const context = {settings, computedCache: new Map()};
     const result = await SpeedIndex.request(
       {
@@ -53,6 +56,7 @@ describe('Metrics: Speed Index', () => {
         trace: trace1msLayout,
         devtoolsLog: devtoolsLog1msLayout,
         settings,
+        URL,
       },
       context
     );
@@ -73,7 +77,8 @@ describe('Metrics: Speed Index', () => {
   it('should compute an observed value (desktop)', async () => {
     const settings = {throttlingMethod: 'provided', formFactor: 'desktop'};
     const context = {settings, computedCache: new Map()};
-    const result = await SpeedIndex.request({trace, devtoolsLog, gatherContext, settings},
+    const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
+    const result = await SpeedIndex.request({trace, devtoolsLog, gatherContext, settings, URL},
       context);
 
     assert.equal(result.timing, 605);
@@ -83,7 +88,8 @@ describe('Metrics: Speed Index', () => {
   it('should compute an observed value (mobile)', async () => {
     const settings = {throttlingMethod: 'provided', formFactor: 'mobile'};
     const context = {settings, computedCache: new Map()};
-    const result = await SpeedIndex.request({trace, devtoolsLog, gatherContext, settings},
+    const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
+    const result = await SpeedIndex.request({trace, devtoolsLog, gatherContext, settings, URL},
       context);
 
     assert.equal(result.timing, 605);

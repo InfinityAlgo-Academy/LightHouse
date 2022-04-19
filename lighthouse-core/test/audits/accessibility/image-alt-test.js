@@ -31,7 +31,7 @@ describe('Accessibility: image-alt audit', () => {
       Accessibility: {
         violations: [{
           id: 'image-alt',
-          nodes: [],
+          nodes: [{node: {}, relatedNodes: []}],
           help: 'http://example.com/',
         }],
       },

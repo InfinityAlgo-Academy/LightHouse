@@ -6,7 +6,7 @@
 'use strict';
 
 const log = require('lighthouse-logger');
-const isEqual = require('lodash.isequal');
+const {isEqual} = require('lodash');
 const {
   getBrowserVersion,
   getBenchmarkIndex,
@@ -35,7 +35,10 @@ async function getBaseArtifacts(config, driver, context) {
     HostFormFactor: userAgent.includes('Android') || userAgent.includes('Mobile') ?
       'mobile' : 'desktop',
     // Contextual artifacts whose collection changes based on gather mode.
-    URL: {requestedUrl: '', finalUrl: ''},
+    URL: {
+      initialUrl: '',
+      finalUrl: '',
+    },
     PageLoadError: null,
     GatherContext: context,
     // Artifacts that have been replaced by regular gatherers in Fraggle Rock.
@@ -83,11 +86,11 @@ function finalizeArtifacts(baseArtifacts, gathererArtifacts) {
   artifacts.LighthouseRunWarnings = deduplicateWarnings(warnings);
 
   if (artifacts.PageLoadError && !artifacts.URL.finalUrl) {
-    artifacts.URL.finalUrl = artifacts.URL.requestedUrl;
+    artifacts.URL.finalUrl = artifacts.URL.requestedUrl || artifacts.URL.initialUrl;
   }
 
   // Check that the runner remembered to mutate the special-case URL artifact.
-  if (!artifacts.URL.requestedUrl) throw new Error('Runner did not set requestedUrl');
+  if (!artifacts.URL.initialUrl) throw new Error('Runner did not set initialUrl');
   if (!artifacts.URL.finalUrl) throw new Error('Runner did not set finalUrl');
 
   return artifacts;

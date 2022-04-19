@@ -112,7 +112,12 @@ describe('Performance: Redirects audit', () => {
       GatherContext: {gatherMode: 'navigation'},
       traces: {defaultPass: createTestTrace({traceEnd: 5000})},
       devtoolsLogs: {defaultPass: devtoolsLog},
-      URL: {finalUrl},
+      URL: {
+        initialUrl: 'about:blank',
+        requestedUrl: networkRecords[0].url,
+        mainDocumentUrl: finalUrl,
+        finalUrl,
+      },
     };
   };
 

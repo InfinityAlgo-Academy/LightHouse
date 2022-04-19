@@ -10,6 +10,7 @@ import trace from '../../fixtures/traces/progressive-app-m60.json';
 import devtoolsLog from '../../fixtures/traces/progressive-app-m60.devtools.log.json';
 import NetworkRecords from '../../../computed/network-records.js';
 import networkRecordsToDevtoolsLog from '../../network-records-to-devtools-log.js';
+import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';
 
 /* eslint-env jest */
 
@@ -24,6 +25,7 @@ describe('Resources are fetched over http/2', () => {
       traces: {defaultPass: trace},
       devtoolsLogs: {defaultPass: devtoolsLog},
       GatherContext: {gatherMode: 'navigation'},
+      URL: getURLArtifactFromDevtoolsLog(devtoolsLog),
     };
   });
 

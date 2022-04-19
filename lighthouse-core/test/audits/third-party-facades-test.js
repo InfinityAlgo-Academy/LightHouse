@@ -13,6 +13,7 @@ import pwaDevtoolsLog from '../fixtures/traces/progressive-app-m60.devtools.log.
 import videoEmbedsTrace from '../fixtures/traces/video-embeds-m84.json';
 import videoEmbedsDevtolsLog from '../fixtures/traces/video-embeds-m84.devtools.log.json';
 import noThirdPartyTrace from '../fixtures/traces/no-tracingstarted-m74.json';
+import {getURLArtifactFromDevtoolsLog} from '../test-utils.js';
 
 function intercomProductUrl(id) {
   return `https://widget.intercom.io/widget/${id}`;
@@ -42,7 +43,7 @@ describe('Third party facades audit', () => {
         ]),
       },
       traces: {defaultPass: createTestTrace({timeOrigin: 0, traceEnd: 2000})},
-      URL: {finalUrl: 'https://example.com'},
+      URL: {mainDocumentUrl: 'https://example.com'},
     };
 
     const settings = {throttlingMethod: 'simulate', throttling: {cpuSlowdownMultiplier: 4}};
@@ -89,7 +90,7 @@ describe('Third party facades audit', () => {
         ]),
       },
       traces: {defaultPass: createTestTrace({timeOrigin: 0, traceEnd: 2000})},
-      URL: {finalUrl: 'https://example.com'},
+      URL: {mainDocumentUrl: 'https://example.com'},
     };
 
     const settings = {throttlingMethod: 'simulate', throttling: {cpuSlowdownMultiplier: 4}};
@@ -157,7 +158,7 @@ describe('Third party facades audit', () => {
         ]),
       },
       traces: {defaultPass: createTestTrace({timeOrigin: 0, traceEnd: 2000})},
-      URL: {finalUrl: 'https://example.com'},
+      URL: {mainDocumentUrl: 'https://example.com'},
     };
 
     const settings = {throttlingMethod: 'simulate', throttling: {cpuSlowdownMultiplier: 4}};
@@ -201,7 +202,7 @@ describe('Third party facades audit', () => {
         ]),
       },
       traces: {defaultPass: createTestTrace({timeOrigin: 0, traceEnd: 2000})},
-      URL: {finalUrl: 'https://intercomcdn.com'},
+      URL: {mainDocumentUrl: 'https://intercomcdn.com'},
     };
 
     const settings = {throttlingMethod: 'simulate', throttling: {cpuSlowdownMultiplier: 4}};
@@ -218,7 +219,7 @@ describe('Third party facades audit', () => {
       // This devtools log has third party requests but none have facades
       devtoolsLogs: {defaultPass: pwaDevtoolsLog},
       traces: {defaultPass: pwaTrace},
-      URL: {finalUrl: 'https://pwa-rocks.com'},
+      URL: getURLArtifactFromDevtoolsLog(pwaDevtoolsLog),
     };
 
     const settings = {throttlingMethod: 'simulate', throttling: {cpuSlowdownMultiplier: 4}};
@@ -238,7 +239,7 @@ describe('Third party facades audit', () => {
         ]),
       },
       traces: {defaultPass: noThirdPartyTrace},
-      URL: {finalUrl: 'https://example.com'},
+      URL: {mainDocumentUrl: 'https://example.com'},
     };
 
     const settings = {throttlingMethod: 'simulate', throttling: {cpuSlowdownMultiplier: 4}};
@@ -254,7 +255,7 @@ describe('Third party facades audit', () => {
     const artifacts = {
       devtoolsLogs: {defaultPass: videoEmbedsDevtolsLog},
       traces: {defaultPass: videoEmbedsTrace},
-      URL: {finalUrl: 'https://example.com'},
+      URL: getURLArtifactFromDevtoolsLog(videoEmbedsDevtolsLog),
     };
 
     const settings = {throttlingMethod: 'simulate', throttling: {cpuSlowdownMultiplier: 4}};
