@@ -9,13 +9,10 @@
 
 import CumulativeLayoutShift from '../../../computed/metrics/cumulative-layout-shift.js';
 import createTestTrace from '../../create-test-trace.js';
-import {readJson} from '../../../../root.js';
-
-const TRACE_FIXTURES = '../../fixtures/traces';
-const jumpyClsTrace = readJson(`${TRACE_FIXTURES}/jumpy-cls-m90.json`, import.meta);
-const oldMetricsTrace = readJson(`${TRACE_FIXTURES}/frame-metrics-m89.json`, import.meta);
-const allFramesMetricsTrace = readJson(`${TRACE_FIXTURES}/frame-metrics-m90.json`, import.meta);
-const preClsTrace = readJson(`${TRACE_FIXTURES}/progressive-app-m60.json`, import.meta);
+import jumpyClsTrace from '../../fixtures/traces/jumpy-cls-m90.json';
+import oldMetricsTrace from '../../fixtures/traces/frame-metrics-m89.json';
+import allFramesMetricsTrace from '../../fixtures/traces/frame-metrics-m90.json';
+import preClsTrace from '../../fixtures/traces/progressive-app-m60.json';
 
 const childFrameId = 'CAF4634127666E186C9C8B35627DBF0B';
 

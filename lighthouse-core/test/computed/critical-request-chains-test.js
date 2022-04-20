@@ -8,13 +8,13 @@
 /* eslint-env jest */
 
 import {strict as assert} from 'assert';
-import {readJson} from '../../../root.js';
 
 import CriticalRequestChains from '../../computed/critical-request-chains.js';
 import NetworkRequest from '../../lib/network-request.js';
 import createTestTrace from '../create-test-trace.js';
 import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
 import {getURLArtifactFromDevtoolsLog} from '../test-utils.js';
+import wikipediaDevtoolsLog from '../fixtures/wikipedia-redirect.devtoolslog.json';
 
 const HIGH = 'High';
 const VERY_HIGH = 'VeryHigh';
@@ -90,8 +90,7 @@ describe('CriticalRequestChain computed artifact', () => {
     }
 
     const trace = createTestTrace({topLevelTasks: [{ts: 0}]});
-    const devtoolsLog =
-      readJson('lighthouse-core/test/fixtures/wikipedia-redirect.devtoolslog.json');
+    const devtoolsLog = wikipediaDevtoolsLog;
     const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
 
     const context = {computedCache: new Map()};

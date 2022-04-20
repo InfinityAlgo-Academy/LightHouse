@@ -11,15 +11,16 @@ import MainDocumentContent from '../../../gather/gatherers/main-document-content
 
 import NetworkRecorder from '../../../lib/network-recorder.js';
 import {createMockContext} from '../../fraggle-rock/gather/mock-driver.js';
-import {readJson} from '../../../../root.js';
 import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';
+import devtoolsLog from '../../fixtures/traces/lcp-m78.devtools.log.json';
 
-const devtoolsLog = readJson('lighthouse-core/test/fixtures/traces/lcp-m78.devtools.log.json');
+// @ts-expect-error
 const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
 
 describe('FR compat', () => {
   it('uses loadData in legacy mode', async () => {
     const gatherer = new MainDocumentContent();
+    // @ts-expect-error
     const networkRecords = NetworkRecorder.recordsFromLogs(devtoolsLog);
     const mockContext = createMockContext();
     mockContext.baseArtifacts.URL = URL;
@@ -28,6 +29,7 @@ describe('FR compat', () => {
 
     const artifact = await gatherer.afterPass(
       mockContext.asLegacyContext(),
+      // @ts-expect-error
       {devtoolsLog, networkRecords}
     );
 
@@ -44,6 +46,7 @@ describe('FR compat', () => {
     /** @type {LH.Gatherer.FRTransitionalContext<'DevtoolsLog'>} */
     const context = {
       ...mockContext.asContext(),
+      // @ts-expect-error
       dependencies: {DevtoolsLog: devtoolsLog},
     };
 

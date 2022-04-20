@@ -10,9 +10,10 @@ import CpuNode from '../../../../lib/dependency-graph/cpu-node.js';
 import Simulator from '../../../../lib/dependency-graph/simulator/simulator.js';
 import DNSCache from '../../../../lib/dependency-graph/simulator/dns-cache.js';
 import PageDependencyGraph from '../../../../computed/page-dependency-graph.js';
-import {readJson} from '../../../../../root.js';
 import {strict as assert} from 'assert';
 import {getURLArtifactFromDevtoolsLog} from '../../../test-utils.js';
+import pwaTrace from '../../../fixtures/traces/progressive-app-m60.json';
+import pwaDevtoolsLog from '../../../fixtures/traces/progressive-app-m60.devtools.log.json';
 
 let nextRequestId = 1;
 let nextTid = 1;
@@ -360,9 +361,8 @@ describe('DependencyGraph/Simulator', () => {
     });
 
     describe('on a real trace', () => {
-      const trace = readJson('../../../fixtures/traces/progressive-app-m60.json', import.meta);
-      const devtoolsLog =
-        readJson('../../../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
+      const trace = pwaTrace;
+      const devtoolsLog = pwaDevtoolsLog;
       const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
 
       it('should compute a timeInMs', async () => {

@@ -7,11 +7,11 @@
 
 import MaskableIconAudit from '../../audits/maskable-icon.js';
 import manifestParser from '../../lib/manifest-parser.js';
-import {readJson} from '../../../root.js';
+import manifest from '../fixtures/manifest.json';
+import manifestWithoutMaskable from '../fixtures/manifest-no-maskable-icon.json';
 
-const manifestSrc = JSON.stringify(readJson('lighthouse-core/test/fixtures/manifest.json'));
-const manifestWithoutMaskableSrc =
-  JSON.stringify(readJson('lighthouse-core/test/fixtures/manifest-no-maskable-icon.json'));
+const manifestSrc = JSON.stringify(manifest);
+const manifestWithoutMaskableSrc = JSON.stringify(manifestWithoutMaskable);
 const EXAMPLE_MANIFEST_URL = 'https://example.com/manifest.json';
 const EXAMPLE_DOC_URL = 'https://example.com/index.html';
 

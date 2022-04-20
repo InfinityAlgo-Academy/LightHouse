@@ -8,7 +8,6 @@
 import TraceProcessor from '../../../lib/tracehouse/trace-processor.js';
 import {strict as assert} from 'assert';
 import createTestTrace from '../../create-test-trace.js';
-import {readJson} from '../../../../root.js';
 
 import pwaTrace from '../../fixtures/traces/progressive-app.json';
 import badNavStartTrace from '../../fixtures/traces/bad-nav-start-ts.json';
@@ -22,6 +21,7 @@ import noNavStartTrace from '../../fixtures/traces/no_navstart_event.json';
 import backgroundTabTrace from '../../fixtures/traces/backgrounded-tab-missing-paints.json';
 import lcpTrace from '../../fixtures/traces/lcp-m78.json';
 import lcpAllFramesTrace from '../../fixtures/traces/frame-metrics-m89.json';
+import startedAfterNavstartTrace from '../../fixtures/traces/tracingstarted-after-navstart.json';
 
 /* eslint-env jest */
 
@@ -382,9 +382,8 @@ describe('TraceProcessor', () => {
     });
 
     it('sorts events by increasing timestamp', () => {
-      const trace =
-        readJson('lighthouse-core/test/fixtures/traces/tracingstarted-after-navstart.json');
-      const shuffledEvents = trace.traceEvents.slice().sort(() => Math.random() * 2 - 1);
+      const shuffledEvents =
+        startedAfterNavstartTrace.traceEvents.slice().sort(() => Math.random() * 2 - 1);
       const processedTrace = TraceProcessor.processTrace({traceEvents: shuffledEvents});
 
       let lastTs = -Infinity;

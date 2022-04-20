@@ -8,11 +8,11 @@
 import InstallableManifestAudit from '../../audits/installable-manifest.js';
 import {strict as assert} from 'assert';
 import manifestParser from '../../lib/manifest-parser.js';
-import {readJson} from '../../../root.js';
+import manifest from '../fixtures/manifest.json';
+import manifestDirtyJpg from '../fixtures/manifest-dirty-jpg.json';
 
-const manifestSrc = JSON.stringify(readJson('lighthouse-core/test/fixtures/manifest.json'));
-const manifestDirtyJpgSrc =
-  JSON.stringify(readJson('lighthouse-core/test/fixtures/manifest-dirty-jpg.json'));
+const manifestSrc = JSON.stringify(manifest);
+const manifestDirtyJpgSrc = JSON.stringify(manifestDirtyJpg);
 const EXAMPLE_MANIFEST_URL = 'https://example.com/manifest.json';
 const EXAMPLE_DOC_URL = 'https://example.com/index.html';
 

@@ -8,12 +8,12 @@
 /* eslint-env jest */
 
 import {strict as assert} from 'assert';
-import {readJson} from '../../../root.js';
 
 import ManifestValues from '../../computed/manifest-values.js';
 import manifestParser from '../../lib/manifest-parser.js';
+import manifest from '../fixtures/manifest.json';
 
-const manifestSrc = JSON.stringify(readJson('lighthouse-core/test/fixtures/manifest.json'));
+const manifestSrc = JSON.stringify(manifest);
 
 function getMockContext() {
   return {
