@@ -60,6 +60,8 @@ async function renderLHReport() {
           metaItemsEl,
           reportRootEl.querySelector('.lh-buttons')
         );
+        reportRootEl.querySelector('.lh-metrics-container')?.closest('.lh-category')?.classList
+            .add('lh--hoisted-meta');
       }
 
       container.append(reportRootEl);
