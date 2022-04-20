@@ -102,7 +102,7 @@ describe('FullPageScreenshot gatherer', () => {
 
     expect(artifact).toEqual({
       screenshot: {
-        data: 'data:image/jpeg;base64,abc',
+        data: 'data:image/webp;base64,abc',
         height: 2000,
         width: 412,
       },

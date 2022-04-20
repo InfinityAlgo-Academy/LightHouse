@@ -142,16 +142,6 @@ class TreemapUtil {
   }
 
   /**
-   * @param {number} value
-   * @param {string} unit
-   */
-  static format(value, unit) {
-    if (unit === 'bytes') return this.i18n.formatBytes(value);
-    if (unit === 'time') return `${this.i18n.formatNumber(value)}\xa0ms`;
-    return `${this.i18n.formatNumber(value)}\xa0${unit}`;
-  }
-
-  /**
    * Given a list of items, return a function (a hasher) that will map keys to an item.
    * When a key is seen for the first time, the item returned is cached and will always
    * be returned for the same key.

@@ -5,7 +5,6 @@
  */
 'use strict';
 
-const puppeteer = require('puppeteer-core');
 const Runner = require('./runner.js');
 const log = require('lighthouse-logger');
 const ChromeProtocol = require('./gather/connections/cri.js');
@@ -14,9 +13,6 @@ const URL = require('./lib/url-shim.js');
 const fraggleRock = require('./fraggle-rock/api.js');
 
 /** @typedef {import('./gather/connections/connection.js')} Connection */
-
-const DEFAULT_HOSTNAME = '127.0.0.1';
-const DEFAULT_PORT = 9222;
 
 /*
  * The relationship between these root modules:
@@ -42,15 +38,12 @@ const DEFAULT_PORT = 9222;
  * @return {Promise<LH.RunnerResult|undefined>}
  */
 async function lighthouse(url, flags = {}, configJSON, page) {
-  if (!page) {
-    const {hostname = DEFAULT_HOSTNAME, port = DEFAULT_PORT} = flags;
-    const browser = await puppeteer.connect({browserURL: `http://${hostname}:${port}`});
-    page = await browser.newPage();
-  }
   const configContext = {
     configPath: flags.configPath,
     settingsOverrides: flags,
     logLevel: flags.logLevel,
+    hostname: flags.hostname,
+    port: flags.port,
   };
   return fraggleRock.navigation(url, {page, config: configJSON, configContext});
 }

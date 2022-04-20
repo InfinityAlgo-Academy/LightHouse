@@ -1745,15 +1745,18 @@ details[open] .lh-clump-toggletext--hide { display: block;}
 
 /* Element screenshot */
 .lh-element-screenshot {
-  position: relative;
-  overflow: hidden;
   float: left;
   margin-right: 20px;
 }
 .lh-element-screenshot__content {
   overflow: hidden;
+  min-width: 110px;
+  display: flex;
+  justify-content: center;
+  background-color: var(--report-background-color);
 }
 .lh-element-screenshot__image {
+  position: relative;
   /* Set by ElementScreenshotRenderer.installFullPageScreenshotCssVariable */
   background-image: var(--element-screenshot-url);
   outline: 2px solid #777;
