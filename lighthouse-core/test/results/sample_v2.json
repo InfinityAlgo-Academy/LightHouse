@@ -3348,14 +3348,14 @@
     "accesskeys": {
       "id": "accesskeys",
       "title": "`[accesskey]` values are unique",
-      "description": "Access keys let users quickly focus a part of the page. For proper navigation, each access key must be unique. [Learn more](https://web.dev/accesskeys/).",
+      "description": "Access keys let users quickly focus a part of the page. For proper navigation, each access key must be unique. [Learn more](https://dequeuniversity.com/rules/axe/4.4/accesskeys).",
       "score": null,
       "scoreDisplayMode": "notApplicable"
     },
     "aria-allowed-attr": {
       "id": "aria-allowed-attr",
       "title": "`[aria-*]` attributes match their roles",
-      "description": "Each ARIA `role` supports a specific subset of `aria-*` attributes. Mismatching these invalidates the `aria-*` attributes. [Learn more](https://web.dev/aria-allowed-attr/).",
+      "description": "Each ARIA `role` supports a specific subset of `aria-*` attributes. Mismatching these invalidates the `aria-*` attributes. [Learn more](https://dequeuniversity.com/rules/axe/4.4/aria-allowed-attr).",
       "score": 1,
       "scoreDisplayMode": "binary",
       "details": {
@@ -3367,14 +3367,14 @@
     "aria-command-name": {
       "id": "aria-command-name",
       "title": "`button`, `link`, and `menuitem` elements have accessible names",
-      "description": "When an element doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://web.dev/aria-name/).",
+      "description": "When an element doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://dequeuniversity.com/rules/axe/4.4/aria-command-name).",
       "score": null,
       "scoreDisplayMode": "notApplicable"
     },
     "aria-hidden-body": {
       "id": "aria-hidden-body",
       "title": "`[aria-hidden=\"true\"]` is not present on the document `<body>`",
-      "description": "Assistive technologies, like screen readers, work inconsistently when `aria-hidden=\"true\"` is set on the document `<body>`. [Learn more](https://web.dev/aria-hidden-body/).",
+      "description": "Assistive technologies, like screen readers, work inconsistently when `aria-hidden=\"true\"` is set on the document `<body>`. [Learn more](https://dequeuniversity.com/rules/axe/4.4/aria-hidden-body).",
       "score": 1,
       "scoreDisplayMode": "binary",
       "details": {
@@ -3386,35 +3386,35 @@
     "aria-hidden-focus": {
       "id": "aria-hidden-focus",
       "title": "`[aria-hidden=\"true\"]` elements do not contain focusable descendents",
-      "description": "Focusable descendents within an `[aria-hidden=\"true\"]` element prevent those interactive elements from being available to users of assistive technologies like screen readers. [Learn more](https://web.dev/aria-hidden-focus/).",
+      "description": "Focusable descendents within an `[aria-hidden=\"true\"]` element prevent those interactive elements from being available to users of assistive technologies like screen readers. [Learn more](https://dequeuniversity.com/rules/axe/4.4/aria-hidden-focus).",
       "score": null,
       "scoreDisplayMode": "notApplicable"
     },
     "aria-input-field-name": {
       "id": "aria-input-field-name",
       "title": "ARIA input fields have accessible names",
-      "description": "When an input field doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://web.dev/aria-name/).",
+      "description": "When an input field doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://dequeuniversity.com/rules/axe/4.4/aria-input-field-name).",
       "score": null,
       "scoreDisplayMode": "notApplicable"
     },
     "aria-meter-name": {
       "id": "aria-meter-name",
       "title": "ARIA `meter` elements have accessible names",
-      "description": "When an element doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://web.dev/aria-name/).",
+      "description": "When an element doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://dequeuniversity.com/rules/axe/4.4/aria-meter-name).",
       "score": null,
       "scoreDisplayMode": "notApplicable"
     },
     "aria-progressbar-name": {
       "id": "aria-progressbar-name",
       "title": "ARIA `progressbar` elements have accessible names",
-      "description": "When a `progressbar` element doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://web.dev/aria-name/).",
+      "description": "When a `progressbar` element doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://dequeuniversity.com/rules/axe/4.4/aria-progressbar-name).",
       "score": null,
       "scoreDisplayMode": "notApplicable"
     },
     "aria-required-attr": {
       "id": "aria-required-attr",
       "title": "`[role]`s have all required `[aria-*]` attributes",
-      "description": "Some ARIA roles have required attributes that describe the state of the element to screen readers. [Learn more](https://web.dev/aria-required-attr/).",
+      "description": "Some ARIA roles have required attributes that describe the state of the element to screen readers. [Learn more](https://dequeuniversity.com/rules/axe/4.4/aria-required-attr).",
       "score": 1,
       "scoreDisplayMode": "binary",
       "details": {
@@ -3426,21 +3426,21 @@
     "aria-required-children": {
       "id": "aria-required-children",
       "title": "Elements with an ARIA `[role]` that require children to contain a specific `[role]` have all required children.",
-      "description": "Some ARIA parent roles must contain specific child roles to perform their intended accessibility functions. [Learn more](https://web.dev/aria-required-children/).",
+      "description": "Some ARIA parent roles must contain specific child roles to perform their intended accessibility functions. [Learn more](https://dequeuniversity.com/rules/axe/4.4/aria-required-children).",
       "score": null,
       "scoreDisplayMode": "notApplicable"
     },
     "aria-required-parent": {
       "id": "aria-required-parent",
       "title": "`[role]`s are contained by their required parent element",
-      "description": "Some ARIA child roles must be contained by specific parent roles to properly perform their intended accessibility functions. [Learn more](https://web.dev/aria-required-parent/).",
+      "description": "Some ARIA child roles must be contained by specific parent roles to properly perform their intended accessibility functions. [Learn more](https://dequeuniversity.com/rules/axe/4.4/aria-required-parent).",
       "score": null,
       "scoreDisplayMode": "notApplicable"
     },
     "aria-roles": {
       "id": "aria-roles",
       "title": "`[role]` values are valid",
-      "description": "ARIA roles must have valid values in order to perform their intended accessibility functions. [Learn more](https://web.dev/aria-roles/).",
+      "description": "ARIA roles must have valid values in order to perform their intended accessibility functions. [Learn more](https://dequeuniversity.com/rules/axe/4.4/aria-roles).",
       "score": 1,
       "scoreDisplayMode": "binary",
       "details": {
@@ -3452,28 +3452,28 @@
     "aria-toggle-field-name": {
       "id": "aria-toggle-field-name",
       "title": "ARIA toggle fields have accessible names",
-      "description": "When a toggle field doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://web.dev/aria-name/).",
+      "description": "When a toggle field doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://dequeuniversity.com/rules/axe/4.4/aria-toggle-field-name).",
       "score": null,
       "scoreDisplayMode": "notApplicable"
     },
     "aria-tooltip-name": {
       "id": "aria-tooltip-name",
       "title": "ARIA `tooltip` elements have accessible names",
-      "description": "When an element doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://web.dev/aria-name/).",
+      "description": "When an element doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://dequeuniversity.com/rules/axe/4.4/aria-tooltip-name).",
       "score": null,
       "scoreDisplayMode": "notApplicable"
     },
     "aria-treeitem-name": {
       "id": "aria-treeitem-name",
       "title": "ARIA `treeitem` elements have accessible names",
-      "description": "When an element doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://web.dev/aria-name/).",
+      "description": "When an element doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://dequeuniversity.com/rules/axe/4.4/aria-treeitem-name).",
       "score": null,
       "scoreDisplayMode": "notApplicable"
     },
     "aria-valid-attr-value": {
       "id": "aria-valid-attr-value",
       "title": "`[aria-*]` attributes have valid values",
-      "description": "Assistive technologies, like screen readers, can't interpret ARIA attributes with invalid values. [Learn more](https://web.dev/aria-valid-attr-value/).",
+      "description": "Assistive technologies, like screen readers, can't interpret ARIA attributes with invalid values. [Learn more](https://dequeuniversity.com/rules/axe/4.4/aria-valid-attr-value).",
       "score": 1,
       "scoreDisplayMode": "binary",
       "details": {
@@ -3485,7 +3485,7 @@
     "aria-valid-attr": {
       "id": "aria-valid-attr",
       "title": "`[aria-*]` attributes are valid and not misspelled",
-      "description": "Assistive technologies, like screen readers, can't interpret ARIA attributes with invalid names. [Learn more](https://web.dev/aria-valid-attr/).",
+      "description": "Assistive technologies, like screen readers, can't interpret ARIA attributes with invalid names. [Learn more](https://dequeuniversity.com/rules/axe/4.4/aria-valid-attr).",
       "score": 1,
       "scoreDisplayMode": "binary",
       "details": {
@@ -3497,7 +3497,7 @@
     "button-name": {
       "id": "button-name",
       "title": "Buttons have an accessible name",
-      "description": "When a button doesn't have an accessible name, screen readers announce it as \"button\", making it unusable for users who rely on screen readers. [Learn more](https://web.dev/button-name/).",
+      "description": "When a button doesn't have an accessible name, screen readers announce it as \"button\", making it unusable for users who rely on screen readers. [Learn more](https://dequeuniversity.com/rules/axe/4.4/button-name).",
       "score": 1,
       "scoreDisplayMode": "binary",
       "details": {
@@ -3509,7 +3509,7 @@
     "bypass": {
       "id": "bypass",
       "title": "The page contains a heading, skip link, or landmark region",
-      "description": "Adding ways to bypass repetitive content lets keyboard users navigate the page more efficiently. [Learn more](https://web.dev/bypass/).",
+      "description": "Adding ways to bypass repetitive content lets keyboard users navigate the page more efficiently. [Learn more](https://dequeuniversity.com/rules/axe/4.4/bypass).",
       "score": 1,
       "scoreDisplayMode": "binary",
       "details": {
@@ -3521,7 +3521,7 @@
     "color-contrast": {
       "id": "color-contrast",
       "title": "Background and foreground colors have a sufficient contrast ratio",
-      "description": "Low-contrast text is difficult or impossible for many users to read. [Learn more](https://web.dev/color-contrast/).",
+      "description": "Low-contrast text is difficult or impossible for many users to read. [Learn more](https://dequeuniversity.com/rules/axe/4.4/color-contrast).",
       "score": 1,
       "scoreDisplayMode": "binary",
       "details": {
@@ -3533,21 +3533,21 @@
     "definition-list": {
       "id": "definition-list",
       "title": "`<dl>`'s contain only properly-ordered `<dt>` and `<dd>` groups, `<script>`, `<template>` or `<div>` elements.",
-      "description": "When definition lists are not properly marked up, screen readers may produce confusing or inaccurate output. [Learn more](https://web.dev/definition-list/).",
+      "description": "When definition lists are not properly marked up, screen readers may produce confusing or inaccurate output. [Learn more](https://dequeuniversity.com/rules/axe/4.4/definition-list).",
       "score": null,
       "scoreDisplayMode": "notApplicable"
     },
     "dlitem": {
       "id": "dlitem",
       "title": "Definition list items are wrapped in `<dl>` elements",
-      "description": "Definition list items (`<dt>` and `<dd>`) must be wrapped in a parent `<dl>` element to ensure that screen readers can properly announce them. [Learn more](https://web.dev/dlitem/).",
+      "description": "Definition list items (`<dt>` and `<dd>`) must be wrapped in a parent `<dl>` element to ensure that screen readers can properly announce them. [Learn more](https://dequeuniversity.com/rules/axe/4.4/dlitem).",
       "score": null,
       "scoreDisplayMode": "notApplicable"
     },
     "document-title": {
       "id": "document-title",
       "title": "Document has a `<title>` element",
-      "description": "The title gives screen reader users an overview of the page, and search engine users rely on it heavily to determine if a page is relevant to their search. [Learn more](https://web.dev/document-title/).",
+      "description": "The title gives screen reader users an overview of the page, and search engine users rely on it heavily to determine if a page is relevant to their search. [Learn more](https://dequeuniversity.com/rules/axe/4.4/document-title).",
       "score": 1,
       "scoreDisplayMode": "binary",
       "details": {
@@ -3559,14 +3559,14 @@
     "duplicate-id-active": {
       "id": "duplicate-id-active",
       "title": "`[id]` attributes on active, focusable elements are unique",
-      "description": "All focusable elements must have a unique `id` to ensure that they're visible to assistive technologies. [Learn more](https://web.dev/duplicate-id-active/).",
+      "description": "All focusable elements must have a unique `id` to ensure that they're visible to assistive technologies. [Learn more](https://dequeuniversity.com/rules/axe/4.4/duplicate-id-active).",
       "score": null,
       "scoreDisplayMode": "notApplicable"
     },
     "duplicate-id-aria": {
       "id": "duplicate-id-aria",
       "title": "ARIA IDs are unique",
-      "description": "The value of an ARIA ID must be unique to prevent other instances from being overlooked by assistive technologies. [Learn more](https://web.dev/duplicate-id-aria/).",
+      "description": "The value of an ARIA ID must be unique to prevent other instances from being overlooked by assistive technologies. [Learn more](https://dequeuniversity.com/rules/axe/4.4/duplicate-id-aria).",
       "score": 1,
       "scoreDisplayMode": "binary",
       "details": {
@@ -3578,21 +3578,21 @@
     "form-field-multiple-labels": {
       "id": "form-field-multiple-labels",
       "title": "No form fields have multiple labels",
-      "description": "Form fields with multiple labels can be confusingly announced by assistive technologies like screen readers which use either the first, the last, or all of the labels. [Learn more](https://web.dev/form-field-multiple-labels/).",
+      "description": "Form fields with multiple labels can be confusingly announced by assistive technologies like screen readers which use either the first, the last, or all of the labels. [Learn more](https://dequeuniversity.com/rules/axe/4.4/form-field-multiple-labels).",
       "score": null,
       "scoreDisplayMode": "notApplicable"
     },
     "frame-title": {
       "id": "frame-title",
       "title": "`<frame>` or `<iframe>` elements have a title",
-      "description": "Screen reader users rely on frame titles to describe the contents of frames. [Learn more](https://web.dev/frame-title/).",
+      "description": "Screen reader users rely on frame titles to describe the contents of frames. [Learn more](https://dequeuniversity.com/rules/axe/4.4/frame-title).",
       "score": null,
       "scoreDisplayMode": "notApplicable"
     },
     "heading-order": {
       "id": "heading-order",
       "title": "Heading elements appear in a sequentially-descending order",
-      "description": "Properly ordered headings that do not skip levels convey the semantic structure of the page, making it easier to navigate and understand when using assistive technologies. [Learn more](https://web.dev/heading-order/).",
+      "description": "Properly ordered headings that do not skip levels convey the semantic structure of the page, making it easier to navigate and understand when using assistive technologies. [Learn more](https://dequeuniversity.com/rules/axe/4.4/heading-order).",
       "score": 1,
       "scoreDisplayMode": "binary",
       "details": {
@@ -3604,7 +3604,7 @@
     "html-has-lang": {
       "id": "html-has-lang",
       "title": "`<html>` element does not have a `[lang]` attribute",
-      "description": "If a page doesn't specify a lang attribute, a screen reader assumes that the page is in the default language that the user chose when setting up the screen reader. If the page isn't actually in the default language, then the screen reader might not announce the page's text correctly. [Learn more](https://web.dev/html-has-lang/).",
+      "description": "If a page doesn't specify a lang attribute, a screen reader assumes that the page is in the default language that the user chose when setting up the screen reader. If the page isn't actually in the default language, then the screen reader might not announce the page's text correctly. [Learn more](https://dequeuniversity.com/rules/axe/4.4/html-has-lang).",
       "score": 0,
       "scoreDisplayMode": "binary",
       "details": {
@@ -3656,14 +3656,14 @@
     "html-lang-valid": {
       "id": "html-lang-valid",
       "title": "`<html>` element has a valid value for its `[lang]` attribute",
-      "description": "Specifying a valid [BCP 47 language](https://www.w3.org/International/questions/qa-choosing-language-tags#question) helps screen readers announce text properly. [Learn more](https://web.dev/html-lang-valid/).",
+      "description": "Specifying a valid [BCP 47 language](https://www.w3.org/International/questions/qa-choosing-language-tags#question) helps screen readers announce text properly. [Learn more](https://dequeuniversity.com/rules/axe/4.4/html-lang-valid).",
       "score": null,
       "scoreDisplayMode": "notApplicable"
     },
     "image-alt": {
       "id": "image-alt",
       "title": "Image elements do not have `[alt]` attributes",
-      "description": "Informative elements should aim for short, descriptive alternate text. Decorative elements can be ignored with an empty alt attribute. [Learn more](https://web.dev/image-alt/).",
+      "description": "Informative elements should aim for short, descriptive alternate text. Decorative elements can be ignored with an empty alt attribute. [Learn more](https://dequeuniversity.com/rules/axe/4.4/image-alt).",
       "score": 0,
       "scoreDisplayMode": "binary",
       "details": {
@@ -3869,14 +3869,14 @@
     "input-image-alt": {
       "id": "input-image-alt",
       "title": "`<input type=\"image\">` elements have `[alt]` text",
-      "description": "When an image is being used as an `<input>` button, providing alternative text can help screen reader users understand the purpose of the button. [Learn more](https://web.dev/input-image-alt/).",
+      "description": "When an image is being used as an `<input>` button, providing alternative text can help screen reader users understand the purpose of the button. [Learn more](https://dequeuniversity.com/rules/axe/4.4/input-image-alt).",
       "score": null,
       "scoreDisplayMode": "notApplicable"
     },
     "label": {
       "id": "label",
       "title": "Form elements do not have associated labels",
-      "description": "Labels ensure that form controls are announced properly by assistive technologies, like screen readers. [Learn more](https://web.dev/label/).",
+      "description": "Labels ensure that form controls are announced properly by assistive technologies, like screen readers. [Learn more](https://dequeuniversity.com/rules/axe/4.4/label).",
       "score": 0,
       "scoreDisplayMode": "binary",
       "details": {
@@ -3969,7 +3969,7 @@
     "link-name": {
       "id": "link-name",
       "title": "Links do not have a discernible name",
-      "description": "Link text (and alternate text for images, when used as links) that is discernible, unique, and focusable improves the navigation experience for screen reader users. [Learn more](https://web.dev/link-name/).",
+      "description": "Link text (and alternate text for images, when used as links) that is discernible, unique, and focusable improves the navigation experience for screen reader users. [Learn more](https://dequeuniversity.com/rules/axe/4.4/link-name).",
       "score": 0,
       "scoreDisplayMode": "binary",
       "details": {
@@ -4043,28 +4043,28 @@
     "list": {
       "id": "list",
       "title": "Lists contain only `<li>` elements and script supporting elements (`<script>` and `<template>`).",
-      "description": "Screen readers have a specific way of announcing lists. Ensuring proper list structure aids screen reader output. [Learn more](https://web.dev/list/).",
+      "description": "Screen readers have a specific way of announcing lists. Ensuring proper list structure aids screen reader output. [Learn more](https://dequeuniversity.com/rules/axe/4.4/list).",
       "score": null,
       "scoreDisplayMode": "notApplicable"
     },
     "listitem": {
       "id": "listitem",
       "title": "List items (`<li>`) are contained within `<ul>` or `<ol>` parent elements",
-      "description": "Screen readers require list items (`<li>`) to be contained within a parent `<ul>` or `<ol>` to be announced properly. [Learn more](https://web.dev/listitem/).",
+      "description": "Screen readers require list items (`<li>`) to be contained within a parent `<ul>` or `<ol>` to be announced properly. [Learn more](https://dequeuniversity.com/rules/axe/4.4/listitem).",
       "score": null,
       "scoreDisplayMode": "notApplicable"
     },
     "meta-refresh": {
       "id": "meta-refresh",
       "title": "The document does not use `<meta http-equiv=\"refresh\">`",
-      "description": "Users do not expect a page to refresh automatically, and doing so will move focus back to the top of the page. This may create a frustrating or confusing experience. [Learn more](https://web.dev/meta-refresh/).",
+      "description": "Users do not expect a page to refresh automatically, and doing so will move focus back to the top of the page. This may create a frustrating or confusing experience. [Learn more](https://dequeuniversity.com/rules/axe/4.4/meta-refresh).",
       "score": null,
       "scoreDisplayMode": "notApplicable"
     },
     "meta-viewport": {
       "id": "meta-viewport",
       "title": "`[user-scalable=\"no\"]` is not used in the `<meta name=\"viewport\">` element and the `[maximum-scale]` attribute is not less than 5.",
-      "description": "Disabling zooming is problematic for users with low vision who rely on screen magnification to properly see the contents of a web page. [Learn more](https://web.dev/meta-viewport/).",
+      "description": "Disabling zooming is problematic for users with low vision who rely on screen magnification to properly see the contents of a web page. [Learn more](https://dequeuniversity.com/rules/axe/4.4/meta-viewport).",
       "score": 1,
       "scoreDisplayMode": "binary",
       "details": {
@@ -4076,7 +4076,7 @@
     "object-alt": {
       "id": "object-alt",
       "title": "`<object>` elements do not have alternate text",
-      "description": "Screen readers cannot translate non-text content. Adding alternate text to `<object>` elements helps screen readers convey meaning to users. [Learn more](https://web.dev/object-alt/).",
+      "description": "Screen readers cannot translate non-text content. Adding alternate text to `<object>` elements helps screen readers convey meaning to users. [Learn more](https://dequeuniversity.com/rules/axe/4.4/object-alt).",
       "score": 0,
       "scoreDisplayMode": "binary",
       "details": {
@@ -4148,35 +4148,35 @@
     "tabindex": {
       "id": "tabindex",
       "title": "No element has a `[tabindex]` value greater than 0",
-      "description": "A value greater than 0 implies an explicit navigation ordering. Although technically valid, this often creates frustrating experiences for users who rely on assistive technologies. [Learn more](https://web.dev/tabindex/).",
+      "description": "A value greater than 0 implies an explicit navigation ordering. Although technically valid, this often creates frustrating experiences for users who rely on assistive technologies. [Learn more](https://dequeuniversity.com/rules/axe/4.4/tabindex).",
       "score": null,
       "scoreDisplayMode": "notApplicable"
     },
     "td-headers-attr": {
       "id": "td-headers-attr",
       "title": "Cells in a `<table>` element that use the `[headers]` attribute refer to table cells within the same table.",
-      "description": "Screen readers have features to make navigating tables easier. Ensuring `<td>` cells using the `[headers]` attribute only refer to other cells in the same table may improve the experience for screen reader users. [Learn more](https://web.dev/td-headers-attr/).",
+      "description": "Screen readers have features to make navigating tables easier. Ensuring `<td>` cells using the `[headers]` attribute only refer to other cells in the same table may improve the experience for screen reader users. [Learn more](https://dequeuniversity.com/rules/axe/4.4/td-headers-attr).",
       "score": null,
       "scoreDisplayMode": "notApplicable"
     },
     "th-has-data-cells": {
       "id": "th-has-data-cells",
       "title": "`<th>` elements and elements with `[role=\"columnheader\"/\"rowheader\"]` have data cells they describe.",
-      "description": "Screen readers have features to make navigating tables easier. Ensuring table headers always refer to some set of cells may improve the experience for screen reader users. [Learn more](https://web.dev/th-has-data-cells/).",
+      "description": "Screen readers have features to make navigating tables easier. Ensuring table headers always refer to some set of cells may improve the experience for screen reader users. [Learn more](https://dequeuniversity.com/rules/axe/4.4/th-has-data-cells).",
       "score": null,
       "scoreDisplayMode": "notApplicable"
     },
     "valid-lang": {
       "id": "valid-lang",
       "title": "`[lang]` attributes have a valid value",
-      "description": "Specifying a valid [BCP 47 language](https://www.w3.org/International/questions/qa-choosing-language-tags#question) on elements helps ensure that text is pronounced correctly by a screen reader. [Learn more](https://web.dev/valid-lang/).",
+      "description": "Specifying a valid [BCP 47 language](https://www.w3.org/International/questions/qa-choosing-language-tags#question) on elements helps ensure that text is pronounced correctly by a screen reader. [Learn more](https://dequeuniversity.com/rules/axe/4.4/valid-lang).",
       "score": null,
       "scoreDisplayMode": "notApplicable"
     },
     "video-caption": {
       "id": "video-caption",
       "title": "`<video>` elements contain a `<track>` element with `[kind=\"captions\"]`",
-      "description": "When a video provides a caption it is easier for deaf and hearing impaired users to access its information. [Learn more](https://web.dev/video-caption/).",
+      "description": "When a video provides a caption it is easier for deaf and hearing impaired users to access its information. [Learn more](https://dequeuniversity.com/rules/axe/4.4/video-caption).",
       "score": null,
       "scoreDisplayMode": "notApplicable"
     },
@@ -6286,7 +6286,7 @@
     "accessibility": {
       "title": "Accessibility",
       "description": "These checks highlight opportunities to [improve the accessibility of your web app](https://web.dev/lighthouse-accessibility/). Only a subset of accessibility issues can be automatically detected so manual testing is also encouraged.",
-      "manualDescription": "These items address areas which an automated testing tool cannot cover. Learn more in our guide on [conducting an accessibility review](https://developers.google.com/web/fundamentals/accessibility/how-to-review).",
+      "manualDescription": "These items address areas which an automated testing tool cannot cover. Learn more in our guide on [conducting an accessibility review](https://web.dev/how-to-review/).",
       "supportedModes": [
         "navigation",
         "snapshot"

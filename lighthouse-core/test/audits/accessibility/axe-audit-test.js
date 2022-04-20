@@ -7,6 +7,9 @@
 
 const AxeAudit = require('../../../audits/accessibility/axe-audit.js');
 const assert = require('assert').strict;
+const axeCore = require('axe-core');
+const Accesskeys = require('../../../audits/accessibility/accesskeys.js');
+const format = require('../../../../shared/localization/format.js');
 
 /* eslint-env jest */
 
@@ -263,5 +266,13 @@ describe('Accessibility: axe-audit', () => {
 
     const output = FakeA11yAudit.audit(artifacts);
     expect(output.details.items[0].node.snippet).toMatch(`<input id="snippet"/>`);
+  });
+
+  it('has description links to axe-core docs matching the current axe-core version', () => {
+    const {axeVersion} = /(?<axeVersion>\d+\.\d+)/.exec(axeCore.version).groups;
+
+    // Check the docs for a single audit as a stand-in for all axe audits.
+    const accesskeysDescription = format.getFormatted(Accesskeys.meta.description, 'en-US');
+    expect(accesskeysDescription).toContain(`https://dequeuniversity.com/rules/axe/${axeVersion}/accesskeys`);
   });
 });
