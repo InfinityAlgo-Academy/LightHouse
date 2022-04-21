@@ -27,7 +27,7 @@ const blockAllExceptInlineScriptCsp = headersParam([[
  */
 const expectations = {
   artifacts: {
-    _minChromiumMilestone: 92,
+    _minChromiumVersion: '92',
     RobotsTxt: {
       status: 200,
     },

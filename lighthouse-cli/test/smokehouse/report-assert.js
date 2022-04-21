@@ -13,6 +13,7 @@ import _ from 'lodash';
 import log from 'lighthouse-logger';
 
 import {LocalConsole} from './lib/local-console.js';
+import {chromiumVersionCheck} from './version-check.js';
 
 const {cloneDeep} = _;
 
@@ -227,22 +228,26 @@ function pruneExpectations(localConsole, lhr, expected, reportOptions) {
 
   /**
    * Lazily compute the Chrome version because some reports are explicitly asserting error conditions.
-   * @returns {number}
+   * @returns {string}
    */
-  function getChromeVersion() {
+  function getChromeVersionString() {
     const userAgent = lhr.environment.hostUserAgent;
-    const userAgentMatch = /Chrome\/(\d+)/.exec(userAgent); // Chrome/85.0.4174.0
+    const userAgentMatch = /Chrome\/([\d.]+)/.exec(userAgent); // Chrome/85.0.4174.0
     if (!userAgentMatch) throw new Error('Could not get chrome version.');
-    return Number(userAgentMatch[1]);
+    const versionString = userAgentMatch[1];
+    if (versionString.split('.').length !== 4) throw new Error(`unexpected ua: ${userAgent}`);
+    return versionString;
   }
 
   /**
    * @param {*} obj
    */
   function failsChromeVersionCheck(obj) {
-    if (obj._minChromiumMilestone && getChromeVersion() < obj._minChromiumMilestone) return true;
-    if (obj._maxChromiumMilestone && getChromeVersion() > obj._maxChromiumMilestone) return true;
-    return false;
+    return !chromiumVersionCheck({
+      version: getChromeVersionString(),
+      min: obj._minChromiumVersion,
+      max: obj._maxChromiumVersion,
+    });
   }
 
   /**
@@ -271,7 +276,7 @@ function pruneExpectations(localConsole, lhr, expected, reportOptions) {
         localConsole.log([
           `[${key}] failed chrome version check, pruning expectation:`,
           JSON.stringify(value, null, 2),
-          `Actual Chromium version: ${getChromeVersion()}`,
+          `Actual Chromium version: ${getChromeVersionString()}`,
         ].join(' '));
         remove(key);
       } else if (value._legacyOnly && isFraggleRock) {
@@ -307,8 +312,8 @@ function pruneExpectations(localConsole, lhr, expected, reportOptions) {
     delete obj._legacyOnly;
     delete obj._fraggleRockOnly;
     delete obj._skipInBundled;
-    delete obj._minChromiumMilestone;
-    delete obj._maxChromiumMilestone;
+    delete obj._minChromiumVersion;
+    delete obj._maxChromiumVersion;
     delete obj._runner;
   }
 

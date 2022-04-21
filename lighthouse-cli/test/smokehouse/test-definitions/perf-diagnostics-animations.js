@@ -23,7 +23,7 @@ const expectations = {
       'non-composited-animations': {
         // Requires compositor failure reasons to be in the trace
         // https://chromiumdash.appspot.com/commit/995baabedf9e70d16deafc4bc37a2b215a9b8ec9
-        _minChromiumMilestone: 86,
+        _minChromiumVersion: '86',
         score: null,
         displayValue: '1 animated element found',
         details: {
