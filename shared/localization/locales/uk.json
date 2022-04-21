@@ -1649,12 +1649,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "Має тег `<meta name=\"viewport\">` з атрибутами `width` або `initial-scale`"
   },
-  "lighthouse-core/config/default-config.js | a11yAudioVideoGroupDescription": {
-    "message": "Ці рекомендації допоможуть надати альтернативний вміст для аудіо та відео. Це може покращити взаємодію для користувачів із вадами слуху або зору."
-  },
-  "lighthouse-core/config/default-config.js | a11yAudioVideoGroupTitle": {
-    "message": "Аудіо та відео"
-  },
   "lighthouse-core/config/default-config.js | a11yCategoryDescription": {
     "message": "Ці перевірки визначають можливості для [покращення доступності веб-додатка](https://developers.google.com/web/fundamentals/accessibility). Радимо також проводити перевірки вручну, оскільки не всі проблеми з доступністю визначаються автоматично."
   },
@@ -1663,18 +1657,6 @@
   },
   "lighthouse-core/config/default-config.js | a11yCategoryTitle": {
     "message": "Спеціальні можливості"
-  },
-  "lighthouse-core/config/default-config.js | a11yLanguageGroupDescription": {
-    "message": "Ці рекомендації допоможуть покращити те, як користувачі тлумачать ваш вміст різними мовами."
-  },
-  "lighthouse-core/config/default-config.js | a11yLanguageGroupTitle": {
-    "message": "Інтернаціоналізація та локалізація"
-  },
-  "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupDescription": {
-    "message": "Ці рекомендації допоможуть покращити перегляд даних у таблиці чи списку за допомогою технології для людей з обмеженими можливостями, наприклад програми зчитування з екрана."
-  },
-  "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupTitle": {
-    "message": "Таблиці та списки"
   },
   "lighthouse-core/config/default-config.js | bestPracticesBrowserCompatGroupTitle": {
     "message": "Сумісність веб-переглядача"

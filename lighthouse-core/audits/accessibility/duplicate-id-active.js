@@ -19,7 +19,7 @@ const UIStrings = {
   /** Title of an accesibility audit that checks if there are any duplicate id HTML attributes on active, focusable elements. This title is descriptive of the failing state and is shown to users when there is a failure that needs to be addressed. */
   failureTitle: '`[id]` attributes on active, focusable elements are not unique',
   /** Description of a Lighthouse audit that tells the user *why* they should try to pass. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
-  description: 'All focusable elements must have a unique `id` to ensure that they\'re visible to assistive technologies. [Learn more](https://web.dev/duplicate-id-active/).',
+  description: 'All focusable elements must have a unique `id` to ensure that they\'re visible to assistive technologies. [Learn more](https://dequeuniversity.com/rules/axe/4.4/duplicate-id-active).',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);

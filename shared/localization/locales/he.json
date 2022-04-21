@@ -1649,12 +1649,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "יש תג `<meta name=\"viewport\">` עם `width` או `initial-scale`"
   },
-  "lighthouse-core/config/default-config.js | a11yAudioVideoGroupDescription": {
-    "message": "אלה הזדמנויות לספק תוכן חלופי לווידאו ואודיו. הפעולות האלה יכולות לשפר את החוויה של משתמשים עם לקויות שמיעה או ראייה."
-  },
-  "lighthouse-core/config/default-config.js | a11yAudioVideoGroupTitle": {
-    "message": "וידאו ואודיו"
-  },
   "lighthouse-core/config/default-config.js | a11yCategoryDescription": {
     "message": "הבדיקות האלה מדגישות הזדמנויות [לשפר את הנגישות של אפליקציית האינטרנט](https://developers.google.com/web/fundamentals/accessibility). אפשר לזהות באופן אוטומטי רק חלק מבעיות הנגישות, ולכן מומלץ לבצע גם בדיקות ידניות."
   },
@@ -1663,18 +1657,6 @@
   },
   "lighthouse-core/config/default-config.js | a11yCategoryTitle": {
     "message": "נגישות"
-  },
-  "lighthouse-core/config/default-config.js | a11yLanguageGroupDescription": {
-    "message": "אלו הזדמנויות לשיפור של פענוח התוכן על-ידי משתמשים בלוקאלים שונים."
-  },
-  "lighthouse-core/config/default-config.js | a11yLanguageGroupTitle": {
-    "message": "התאמה לשוק המקומי והבינלאומי"
-  },
-  "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupDescription": {
-    "message": "אלו הזדמנויות לשיפור חוויית הקריאה של נתונים בטבלאות או ברשימות באמצעות טכנולוגיה מסייעת, כמו קורא מסך."
-  },
-  "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupTitle": {
-    "message": "טבלאות ורשימות"
   },
   "lighthouse-core/config/default-config.js | bestPracticesBrowserCompatGroupTitle": {
     "message": "תאימות לדפדפנים"

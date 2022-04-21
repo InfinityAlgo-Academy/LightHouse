@@ -3,7 +3,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 import {strict as assert} from 'assert';
 
@@ -22,9 +21,12 @@ const NBSP = '\xa0';
 describe('util helpers', () => {
   it('formats a number', () => {
     const i18n = new I18n('en', {...Util.UIStrings});
-    assert.strictEqual(i18n.formatNumber(10), '10');
-    assert.strictEqual(i18n.formatNumber(100.01), '100');
+    assert.strictEqual(i18n.formatNumber(10), '10.0');
+    assert.strictEqual(i18n.formatNumber(100.01), '100.0');
     assert.strictEqual(i18n.formatNumber(13000.456), '13,000.5');
+    assert.strictEqual(i18n.formatInteger(10), '10');
+    assert.strictEqual(i18n.formatInteger(100.01), '100');
+    assert.strictEqual(i18n.formatInteger(13000.6), '13,001');
   });
 
   it('formats a date', () => {
@@ -101,9 +103,25 @@ describe('util helpers', () => {
 
   it('formats a duration', () => {
     const i18n = new I18n('en', {...Util.UIStrings});
-    assert.equal(i18n.formatDuration(60 * 1000), `1${NBSP}m`);
-    assert.equal(i18n.formatDuration(60 * 60 * 1000 + 5000), `1${NBSP}h 5${NBSP}s`);
-    assert.equal(i18n.formatDuration(28 * 60 * 60 * 1000 + 5000), `1${NBSP}d 4${NBSP}h 5${NBSP}s`);
+    assert.equal(i18n.formatDuration(60 * 1000), '1m');
+    assert.equal(i18n.formatDuration(60 * 60 * 1000 + 5000), '1h 5s');
+    assert.equal(i18n.formatDuration(28 * 60 * 60 * 1000 + 5000), '1d 4h 5s');
+  });
+
+  it('formats a duration based on locale', () => {
+    let i18n = new I18n('de', {...Util.UIStrings});
+    assert.equal(i18n.formatDuration(60 * 1000), `1${NBSP}Min.`);
+    assert.equal(i18n.formatDuration(60 * 60 * 1000 + 5000), `1${NBSP}Std. 5${NBSP}Sek.`);
+    assert.equal(
+      i18n.formatDuration(28 * 60 * 60 * 1000 + 5000), `1${NBSP}T 4${NBSP}Std. 5${NBSP}Sek.`);
+
+    // Yes, this is actually backwards (s h d).
+    i18n = new I18n('ar', {...Util.UIStrings});
+    /* eslint-disable no-irregular-whitespace */
+    assert.equal(i18n.formatDuration(60 * 1000), `١${NBSP}د`);
+    assert.equal(i18n.formatDuration(60 * 60 * 1000 + 5000), `١${NBSP}س ٥${NBSP}ث`);
+    assert.equal(i18n.formatDuration(28 * 60 * 60 * 1000 + 5000), `١ ي ٤ س ٥ ث`);
+    /* eslint-enable no-irregular-whitespace */
   });
 
   it('formats numbers based on locale', () => {
@@ -114,7 +132,7 @@ describe('util helpers', () => {
     assert.strictEqual(i18n.formatNumber(number), '12.346,9');
     assert.strictEqual(i18n.formatBytesToKiB(number), `12,1${NBSP}KiB`);
     assert.strictEqual(i18n.formatMilliseconds(number), `12.350${NBSP}ms`);
-    assert.strictEqual(i18n.formatSeconds(number), `12,3${NBSP}s`);
+    assert.strictEqual(i18n.formatSeconds(number), `12,3${NBSP}Sek.`);
   });
 
   it('uses decimal comma with en-XA test locale', () => {
@@ -125,7 +143,7 @@ describe('util helpers', () => {
     assert.strictEqual(i18n.formatNumber(number), '12.346,9');
     assert.strictEqual(i18n.formatBytesToKiB(number), `12,1${NBSP}KiB`);
     assert.strictEqual(i18n.formatMilliseconds(number), `12.350${NBSP}ms`);
-    assert.strictEqual(i18n.formatSeconds(number), `12,3${NBSP}s`);
+    assert.strictEqual(i18n.formatSeconds(number), `12,3${NBSP}Sek.`);
   });
 
   it('should not crash on unknown locales', () => {

@@ -1649,12 +1649,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "[Ĥåš å ᐅ`<meta name=\"viewport\">`ᐊ ţåĝ ŵîţĥ ᐅ`width`ᐊ öŕ ᐅ`initial-scale`ᐊ one two three four five six seven]"
   },
-  "lighthouse-core/config/default-config.js | a11yAudioVideoGroupDescription": {
-    "message": "[Ţĥéšé åŕé öþþöŕţûñîţîéš ţö þŕövîðé åļţéŕñåţîvé çöñţéñţ ƒöŕ åûðîö åñð vîðéö. Ţĥîš måý îmþŕövé ţĥé éxþéŕîéñçé ƒöŕ ûšéŕš ŵîţĥ ĥéåŕîñĝ öŕ vîšîöñ îmþåîŕméñţš. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone twentytwo twentythree]"
-  },
-  "lighthouse-core/config/default-config.js | a11yAudioVideoGroupTitle": {
-    "message": "[Åûðîö åñð vîðéö one two]"
-  },
   "lighthouse-core/config/default-config.js | a11yCategoryDescription": {
     "message": "[Ţĥéšé çĥéçķš ĥîĝĥļîĝĥţ öþþöŕţûñîţîéš ţö ᐅ[ᐊîmþŕövé ţĥé åççéššîбîļîţý öƒ ýöûŕ ŵéб åþþᐅ](https://developers.google.com/web/fundamentals/accessibility)ᐊ. Öñļý å šûбšéţ öƒ åççéššîбîļîţý îššûéš çåñ бé åûţömåţîçåļļý ðéţéçţéð šö måñûåļ ţéšţîñĝ îš åļšö éñçöûŕåĝéð. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone twentytwo twentythree twentyfour twentyfive twentysix]"
   },
@@ -1663,18 +1657,6 @@
   },
   "lighthouse-core/config/default-config.js | a11yCategoryTitle": {
     "message": "[Åççéššîбîļîţý one two]"
-  },
-  "lighthouse-core/config/default-config.js | a11yLanguageGroupDescription": {
-    "message": "[Ţĥéšé åŕé öþþöŕţûñîţîéš ţö îmþŕövé ţĥé îñţéŕþŕéţåţîöñ öƒ ýöûŕ çöñţéñţ бý ûšéŕš îñ ðîƒƒéŕéñţ ļöçåļéš. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen]"
-  },
-  "lighthouse-core/config/default-config.js | a11yLanguageGroupTitle": {
-    "message": "[Îñţéŕñåţîöñåļîžåţîöñ åñð ļöçåļîžåţîöñ one two three four]"
-  },
-  "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupDescription": {
-    "message": "[Ţĥéšé åŕé öþþöŕţûñîţîéš ţö îmþŕövé ţĥé éxþéŕîéñçé öƒ ŕéåðîñĝ ţåбûļåŕ öŕ ļîšţ ðåţå ûšîñĝ åššîšţîvé ţéçĥñöļöĝý, ļîķé å šçŕééñ ŕéåðéŕ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty]"
-  },
-  "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupTitle": {
-    "message": "[Ţåбļéš åñð ļîšţš one two]"
   },
   "lighthouse-core/config/default-config.js | bestPracticesBrowserCompatGroupTitle": {
     "message": "[Бŕöŵšéŕ Çömþåţîбîļîţý one two three]"

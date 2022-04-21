@@ -66,6 +66,8 @@ declare module Config {
     settingsOverrides?: SharedFlagsSettings & Pick<LH.Flags, 'plugins'>;
     skipAboutBlank?: boolean;
     logLevel?: string;
+    hostname?: string;
+    port?: number;
   }
 
   interface SharedPassNavigationJson {

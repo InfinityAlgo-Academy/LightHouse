@@ -1649,12 +1649,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "Are o etichetă `<meta name=\"viewport\">` cu `width` sau `initial-scale`"
   },
-  "lighthouse-core/config/default-config.js | a11yAudioVideoGroupDescription": {
-    "message": "Acestea sunt oportunități de a oferi conținut secundar audio și video. Astfel se poate îmbunătăți experiența utilizatorilor cu deficiențe de auz sau de vedere."
-  },
-  "lighthouse-core/config/default-config.js | a11yAudioVideoGroupTitle": {
-    "message": "Audio și video"
-  },
   "lighthouse-core/config/default-config.js | a11yCategoryDescription": {
     "message": "Aceste verificări evidențiază oportunitățile pentru a [îmbunătăți accesibilitatea aplicației web](https://developers.google.com/web/fundamentals/accessibility). Doar un subset de probleme de accesibilitate pot fi detectate automat, astfel încât se recomandă și testarea manuală."
   },
@@ -1663,18 +1657,6 @@
   },
   "lighthouse-core/config/default-config.js | a11yCategoryTitle": {
     "message": "Accesibilitate"
-  },
-  "lighthouse-core/config/default-config.js | a11yLanguageGroupDescription": {
-    "message": "Acestea sunt oportunități de a îmbunătăți interpretarea conținutului tău de utilizatori, în diferite coduri locale."
-  },
-  "lighthouse-core/config/default-config.js | a11yLanguageGroupTitle": {
-    "message": "Internaționalizare și localizare"
-  },
-  "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupDescription": {
-    "message": "Acestea sunt oportunități de a îmbunătăți experiența citirii datelor din tabele sau din liste folosind tehnologia care asigură asistență, cum ar fi un cititor de ecran."
-  },
-  "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupTitle": {
-    "message": "Tabele și liste"
   },
   "lighthouse-core/config/default-config.js | bestPracticesBrowserCompatGroupTitle": {
     "message": "Compatibilitatea browserului"

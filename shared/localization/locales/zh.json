@@ -1649,12 +1649,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "具有包含 `width` 或 `initial-scale` 的 `<meta name=\"viewport\">` 标记"
   },
-  "lighthouse-core/config/default-config.js | a11yAudioVideoGroupDescription": {
-    "message": "这提示旨在为音频和视频提供替代内容。这或许能改善听障用户或视障用户的体验。"
-  },
-  "lighthouse-core/config/default-config.js | a11yAudioVideoGroupTitle": {
-    "message": "音频和视频"
-  },
   "lighthouse-core/config/default-config.js | a11yCategoryDescription": {
     "message": "这些检查会突出显示可[改进您网络应用的无障碍功能](https://developers.google.com/web/fundamentals/accessibility)的提示。系统只能自动检测到一小部分无障碍功能问题，因此您最好也手动测试一下。"
   },
@@ -1663,18 +1657,6 @@
   },
   "lighthouse-core/config/default-config.js | a11yCategoryTitle": {
     "message": "无障碍"
-  },
-  "lighthouse-core/config/default-config.js | a11yLanguageGroupDescription": {
-    "message": "这些提示旨在让不同语言区域中的用户能够更好地解读您的内容。"
-  },
-  "lighthouse-core/config/default-config.js | a11yLanguageGroupTitle": {
-    "message": "国际化和本地化"
-  },
-  "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupDescription": {
-    "message": "这些提示旨在改善使用辅助技术（例如屏幕阅读器）查看表格数据或列表数据的体验。"
-  },
-  "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupTitle": {
-    "message": "表格和列表"
   },
   "lighthouse-core/config/default-config.js | bestPracticesBrowserCompatGroupTitle": {
     "message": "浏览器兼容性"

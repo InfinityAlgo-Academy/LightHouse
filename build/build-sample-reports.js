@@ -65,7 +65,10 @@ const DIST = path.join(LH_ROOT, 'dist');
   });
 
   generateFlowReports();
-})();
+})().catch(err => {
+  console.error(err);
+  process.exit(1);
+});
 
 function generateFlowReports() {
   const filenameToFlowResult = {

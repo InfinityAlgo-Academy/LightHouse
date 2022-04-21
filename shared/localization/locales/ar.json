@@ -1649,12 +1649,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "تضمين علامة `<meta name=\"viewport\">` مع `width` أو `initial-scale`"
   },
-  "lighthouse-core/config/default-config.js | a11yAudioVideoGroupDescription": {
-    "message": "هذه الفرص تتيح توفير محتوى بديل للصوت والفيديو. قد يحسّن ذلك التجربة للمستخدمين الذين يعانون من إعاقات سمعية أو بصرية."
-  },
-  "lighthouse-core/config/default-config.js | a11yAudioVideoGroupTitle": {
-    "message": "الصوت والفيديو"
-  },
   "lighthouse-core/config/default-config.js | a11yCategoryDescription": {
     "message": "تحدّد عمليات التحقق هذه الفرص التي تتيح [تحسين إمكانية الوصول إلى تطبيق الويب](https://developers.google.com/web/fundamentals/accessibility). ولا يمكن إجراء رصد تلقائي إلّا لمجموعة فرعية من مشاكل إمكانية الوصول، لذلك يُنصح أيضًا باستخدام الاختبار اليدوي."
   },
@@ -1663,18 +1657,6 @@
   },
   "lighthouse-core/config/default-config.js | a11yCategoryTitle": {
     "message": "إمكانية الوصول"
-  },
-  "lighthouse-core/config/default-config.js | a11yLanguageGroupDescription": {
-    "message": "هذه هي فرص لتحسين تفسير المحتوى من خلال المستخدمين بلغات مختلفة."
-  },
-  "lighthouse-core/config/default-config.js | a11yLanguageGroupTitle": {
-    "message": "التدويل والأقلمة"
-  },
-  "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupDescription": {
-    "message": "تُعرَض هنا فرص لتحسين تجربة قراءة بيانات القوائم أو الجداول باستخدام التكنولوجيا المساعِدة، مثل قارئ الشاشة."
-  },
-  "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupTitle": {
-    "message": "الجداول والقوائم"
   },
   "lighthouse-core/config/default-config.js | bestPracticesBrowserCompatGroupTitle": {
     "message": "توافق المتصفّح"

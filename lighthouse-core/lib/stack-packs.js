@@ -49,6 +49,10 @@ const stackPacksToInclude = [
     requiredStacks: ['js:next'],
   },
   {
+    packId: 'nuxt',
+    requiredStacks: ['js:nuxt'],
+  },
+  {
     packId: 'angular',
     requiredStacks: ['js:@angular/core'],
   },

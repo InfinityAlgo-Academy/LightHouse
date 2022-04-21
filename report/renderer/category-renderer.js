@@ -14,7 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-'use strict';
 
 /** @typedef {import('./dom.js').DOM} DOM */
 /** @typedef {import('./report-renderer.js').ReportRenderer} ReportRenderer */

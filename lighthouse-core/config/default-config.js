@@ -42,24 +42,12 @@ const UIStrings = {
   a11yCategoryDescription: 'These checks highlight opportunities to [improve the accessibility of your web app](https://web.dev/lighthouse-accessibility/). Only a subset of accessibility issues can be automatically detected so manual testing is also encouraged.',
   /** Description of the Accessibility manual checks category. This description is displayed above a list of accessibility audits that currently have no automated test and so must be verified manually by the user. No character length limits. 'conducting an accessibility review' becomes link text to additional documentation. */
   a11yCategoryManualDescription: 'These items address areas which an automated testing tool cannot cover. Learn more in our guide on [conducting an accessibility review](https://developers.google.com/web/fundamentals/accessibility/how-to-review).',
-  /** Title of the language section within the Accessibility category. Within this section are audits with descriptive titles that highlight if the page has critical (worst of three descriptors, the others being: serious and moderate) accessibility issues. */
-  a11yLanguageCriticalTitle: 'Critical accessibility problems',
-  /** Title of the language section within the Accessibility category. Within this section are audits with descriptive titles that highlight if the page has serious (second worst of three descriptors, the others being: critical and moderate) accessibility issues. */
-  a11yLanguageSeriousTitle: 'Serious accessibility problems',
-  /** Title of the language section within the Accessibility category. Within this section are audits with descriptive titles that highlight if the page has moderate (least worst of three descriptors, the others being: critical and serious) accessibility issues. */
-  a11yLanguageModerateTitle: 'Moderate accessibility problems',
-  /** Title of the language section within the Accessibility category. Within this section are audits with descriptive titles that highlight if the language has been annotated in the correct HTML attributes on the page. */
-  a11yLanguageGroupTitle: 'Internationalization and localization',
-  /** Description of the language section within the Accessibility category. Within this section are audits with descriptive titles that highlight if the language has been annotated in the correct HTML attributes on the page. */
-  a11yLanguageGroupDescription: 'These are opportunities to improve the interpretation of your content by users in different locales.',
-  /** Title of the navigation section within the Accessibility category. Within this section are audits with descriptive titles that highlight opportunities to provide alternative content for audio and video. */
-  a11yAudioVideoGroupTitle: 'Audio and video',
-  /** Description of the navigation section within the Accessibility category. Within this section are audits with descriptive titles that highlight opportunities to provide alternative content for audio and video. */
-  a11yAudioVideoGroupDescription: 'These are opportunities to provide alternative content for audio and video. This may improve the experience for users with hearing or vision impairments.',
-  /** Title of the navigation section within the Accessibility category. Within this section are audits with descriptive titles that highlight opportunities to improve the experience of reading tabular or list data using assistive technology. */
-  a11yTablesListsVideoGroupTitle: 'Tables and lists',
-  /** Description of the navigation section within the Accessibility category. Within this section are audits with descriptive titles that highlight opportunities to improve the experience of reading tabular or list data using assistive technology. */
-  a11yTablesListsVideoGroupDescription: 'These are opportunities to improve the experience of reading tabular or list data using assistive technology, like a screen reader.',
+  /** Title of a section within the Accessibility category. Within this section are audits with descriptive titles that highlight if the page has critical (worst of three descriptors, the others being: serious and moderate) accessibility issues. */
+  a11yCriticalTitle: 'Critical accessibility problems',
+  /** Title of a section within the Accessibility category. Within this section are audits with descriptive titles that highlight if the page has serious (second worst of three descriptors, the others being: critical and moderate) accessibility issues. */
+  a11ySeriousTitle: 'Serious accessibility problems',
+  /** Title of a section within the Accessibility category. Within this section are audits with descriptive titles that highlight if the page has moderate (least worst of three descriptors, the others being: critical and serious) accessibility issues. */
+  a11yModerateTitle: 'Moderate accessibility problems',
   /** Title of the Search Engine Optimization (SEO) category of audits. This is displayed at the top of a list of audits focused on topics related to optimizing a website for indexing by search engines. Also used as a label of a score gauge; try to limit to 20 characters. */
   seoCategoryTitle: 'SEO',
   /** Description of the Search Engine Optimization (SEO) category. This is displayed at the top of a list of audits focused on optimizing a website for indexing by search engines. No character length limits. 'Learn More' becomes link text to additional documentation. */
@@ -336,13 +324,13 @@ const defaultConfig = {
       title: str_(UIStrings.pwaOptimizedGroupTitle),
     },
     'a11y-critical': {
-      title: str_(UIStrings.a11yLanguageCriticalTitle),
+      title: str_(UIStrings.a11yCriticalTitle),
     },
     'a11y-serious': {
-      title: str_(UIStrings.a11yLanguageSeriousTitle),
+      title: str_(UIStrings.a11ySeriousTitle),
     },
     'a11y-moderate': {
-      title: str_(UIStrings.a11yLanguageModerateTitle),
+      title: str_(UIStrings.a11yModerateTitle),
     },
     'seo-mobile': {
       title: str_(UIStrings.seoMobileGroupTitle),

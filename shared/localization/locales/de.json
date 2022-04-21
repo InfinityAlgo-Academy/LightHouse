@@ -1649,12 +1649,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "Hat ein `<meta name=\"viewport\">`-Tag mit `width` oder `initial-scale`"
   },
-  "lighthouse-core/config/default-config.js | a11yAudioVideoGroupDescription": {
-    "message": "Hier finden Sie Möglichkeiten, um Alternativen für Audio- und Videoinhalte anzubieten. Dies kann die Nutzung für Personen mit eingeschränktem Hör- und Sehvermögen verbessern."
-  },
-  "lighthouse-core/config/default-config.js | a11yAudioVideoGroupTitle": {
-    "message": "Audio und Video"
-  },
   "lighthouse-core/config/default-config.js | a11yCategoryDescription": {
     "message": "Mit diesen Prüfungen erfahren Sie, [wie Sie die Barrierefreiheit Ihrer Web-App verbessern](https://developers.google.com/web/fundamentals/accessibility). Nur bestimmte Probleme mit der Barrierefreiheit können durch automatisierte Tests erkannt werden. Deshalb ist es empfehlenswert, zusätzlich manuelle Tests durchzuführen."
   },
@@ -1663,18 +1657,6 @@
   },
   "lighthouse-core/config/default-config.js | a11yCategoryTitle": {
     "message": "Barrierefreiheit"
-  },
-  "lighthouse-core/config/default-config.js | a11yLanguageGroupDescription": {
-    "message": "Damit können Sie dafür sorgen, dass Ihre Inhalte in verschiedenen Sprachen besser verstanden werden."
-  },
-  "lighthouse-core/config/default-config.js | a11yLanguageGroupTitle": {
-    "message": "Internationalisierung und Lokalisierung"
-  },
-  "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupDescription": {
-    "message": "Hier finden Sie Möglichkeiten, um das Lesen von Daten in Tabellen oder Listen mit Hilfstechnologie wie Screenreadern zu verbessern."
-  },
-  "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupTitle": {
-    "message": "Tabellen und Listen"
   },
   "lighthouse-core/config/default-config.js | bestPracticesBrowserCompatGroupTitle": {
     "message": "Browserkompatibilität"

@@ -1649,12 +1649,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "Ima oznaku `<meta name=\"viewport\">` s `width` ili `initial-scale`"
   },
-  "lighthouse-core/config/default-config.js | a11yAudioVideoGroupDescription": {
-    "message": "Ovo su prilike za poboljšanje zamjenskog sadržaja za zvuk i videoprikaz. To može poboljšati doživljaj za korisnike s oštećenjem sluha ili vida."
-  },
-  "lighthouse-core/config/default-config.js | a11yAudioVideoGroupTitle": {
-    "message": "Zvuk i videoprikaz"
-  },
   "lighthouse-core/config/default-config.js | a11yCategoryDescription": {
     "message": "Ove provjere ističu prilike za [poboljšanje pristupačnosti vaše web-aplikacije](https://developers.google.com/web/fundamentals/accessibility). Budući da se automatskom provjerom može otkriti samo dio poteškoća s pristupačnošću, savjetujemo i ručno testiranje."
   },
@@ -1663,18 +1657,6 @@
   },
   "lighthouse-core/config/default-config.js | a11yCategoryTitle": {
     "message": "Pristupačnost"
-  },
-  "lighthouse-core/config/default-config.js | a11yLanguageGroupDescription": {
-    "message": "To su prilike da unaprijedite tumačenje svojeg sadržaja za korisnike na različitim jezicima."
-  },
-  "lighthouse-core/config/default-config.js | a11yLanguageGroupTitle": {
-    "message": "Internacionalizacija i lokalizacija"
-  },
-  "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupDescription": {
-    "message": "Ovo su prilike za poboljšanje doživljaja čitanja podataka u tablicama ili na popisima koristeći se asistivnom tehnologijom, primjerice čitačem zaslona."
-  },
-  "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupTitle": {
-    "message": "Tablice i popisi"
   },
   "lighthouse-core/config/default-config.js | bestPracticesBrowserCompatGroupTitle": {
     "message": "Kompatibilnost preglednika"

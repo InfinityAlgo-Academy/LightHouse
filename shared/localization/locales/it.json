@@ -1649,12 +1649,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "Ha un tag `<meta name=\"viewport\">` con `width` o `initial-scale`"
   },
-  "lighthouse-core/config/default-config.js | a11yAudioVideoGroupDescription": {
-    "message": "Si tratta di opportunità per fornire contenuti alternativi per audio e video. Ciò può migliorare l'esperienza per gli utenti con problemi di udito o di vista."
-  },
-  "lighthouse-core/config/default-config.js | a11yAudioVideoGroupTitle": {
-    "message": "Audio e video"
-  },
   "lighthouse-core/config/default-config.js | a11yCategoryDescription": {
     "message": "Questi controlli mettono in evidenza le opportunità per [migliorare l'accessibilità della tua applicazione web](https://developers.google.com/web/fundamentals/accessibility). È possibile rilevare automaticamente soltanto un sottoinsieme di problemi di accessibilità, pertanto sono consigliati anche i test manuali."
   },
@@ -1663,18 +1657,6 @@
   },
   "lighthouse-core/config/default-config.js | a11yCategoryTitle": {
     "message": "Accessibilità"
-  },
-  "lighthouse-core/config/default-config.js | a11yLanguageGroupDescription": {
-    "message": "Si tratta di opportunità per migliorare l'interpretazione data ai tuoi contenuti da utenti di lingua diversa."
-  },
-  "lighthouse-core/config/default-config.js | a11yLanguageGroupTitle": {
-    "message": "Internazionalizzazione e localizzazione"
-  },
-  "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupDescription": {
-    "message": "Si tratta di opportunità per migliorare l'esperienza di lettura dei dati nelle tabelle o negli elenchi per gli utenti di tecnologie per la disabilità, come gli screen reader."
-  },
-  "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupTitle": {
-    "message": "Tabelle ed elenchi"
   },
   "lighthouse-core/config/default-config.js | bestPracticesBrowserCompatGroupTitle": {
     "message": "Compatibilità dei browser"

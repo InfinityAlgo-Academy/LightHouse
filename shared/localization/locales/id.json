@@ -1649,12 +1649,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "Memiliki tag `<meta name=\"viewport\">` dengan `width` atau `initial-scale`"
   },
-  "lighthouse-core/config/default-config.js | a11yAudioVideoGroupDescription": {
-    "message": "Ini adalah peluang untuk memberikan konten alternatif untuk audio dan video. Hal ini dapat meningkatkan pengalaman bagi pengguna yang menyandang gangguan penglihatan atau pendengaran."
-  },
-  "lighthouse-core/config/default-config.js | a11yAudioVideoGroupTitle": {
-    "message": "Audio dan video"
-  },
   "lighthouse-core/config/default-config.js | a11yCategoryDescription": {
     "message": "Pemeriksaan ini menandai peluang untuk [menyempurnakan aksesibilitas aplikasi web Anda](https://developers.google.com/web/fundamentals/accessibility). Hanya sejumlah kecil masalah aksesibilitas yang dapat terdeteksi secara otomatis, sehingga pengujian manual juga dianjurkan."
   },
@@ -1663,18 +1657,6 @@
   },
   "lighthouse-core/config/default-config.js | a11yCategoryTitle": {
     "message": "Aksesibilitas"
-  },
-  "lighthouse-core/config/default-config.js | a11yLanguageGroupDescription": {
-    "message": "Ini adalah peluang untuk menyempurnakan interpretasi konten Anda oleh pengguna dalam lokal yang berbeda."
-  },
-  "lighthouse-core/config/default-config.js | a11yLanguageGroupTitle": {
-    "message": "Internasionalisasi dan pelokalan"
-  },
-  "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupDescription": {
-    "message": "Ini adalah peluang untuk menyempurnakan pengalaman membaca data dalam format tabel atau daftar menggunakan teknologi pendukung, seperti pembaca layar."
-  },
-  "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupTitle": {
-    "message": "Tabel dan daftar"
   },
   "lighthouse-core/config/default-config.js | bestPracticesBrowserCompatGroupTitle": {
     "message": "Kompatibilitas Browser"

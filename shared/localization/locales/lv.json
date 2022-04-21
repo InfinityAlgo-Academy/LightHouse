@@ -1649,12 +1649,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "Ir tags `<meta name=\"viewport\">` ar `width` vai `initial-scale`"
   },
-  "lighthouse-core/config/default-config.js | a11yAudioVideoGroupDescription": {
-    "message": "Šie ieteikumi ļauj nodrošināt papildu audio vai video saturu. Tādējādi var uzlabot pieredzi lietotājiem ar dzirdes vai redzes traucējumiem."
-  },
-  "lighthouse-core/config/default-config.js | a11yAudioVideoGroupTitle": {
-    "message": "Audio un video"
-  },
   "lighthouse-core/config/default-config.js | a11yCategoryDescription": {
     "message": "Šīs atzīmes parāda iespējas [uzlabot jūsu tīmekļa lietotnes pieejamību](https://developers.google.com/web/fundamentals/accessibility). Automātiski var noteikt tikai pieejamības problēmu apakškopu, tāpēc ir ieteicama arī manuālā testēšana."
   },
@@ -1663,18 +1657,6 @@
   },
   "lighthouse-core/config/default-config.js | a11yCategoryTitle": {
     "message": "Pieejamība"
-  },
-  "lighthouse-core/config/default-config.js | a11yLanguageGroupDescription": {
-    "message": "Šie ieteikumi lietotājiem, kuri izmanto dažādas lokalizācijas, ļauj labāk izprast jūsu saturu."
-  },
-  "lighthouse-core/config/default-config.js | a11yLanguageGroupTitle": {
-    "message": "Internacionalizācija un lokalizēšana"
-  },
-  "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupDescription": {
-    "message": "Šeit ir norādītas iespējas uzlabot tabulu vai sarakstu datu lasīšanas pieredzi lietotājiem, kas izmanto palīgtehnoloģijas, piemēram, ekrāna lasītājus."
-  },
-  "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupTitle": {
-    "message": "Tabulas un saraksti"
   },
   "lighthouse-core/config/default-config.js | bestPracticesBrowserCompatGroupTitle": {
     "message": "Pārlūka saderība"

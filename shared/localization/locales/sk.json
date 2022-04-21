@@ -1649,12 +1649,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "Obsahuje značku `<meta name=\"viewport\">` s vlastnosťou `width` alebo `initial-scale`"
   },
-  "lighthouse-core/config/default-config.js | a11yAudioVideoGroupDescription": {
-    "message": "Toto sú možnosti na poskytnutie alternatívneho obsahu pre zvuk a video. Môže to zlepšiť dojem používateľov so slabým sluchom alebo zrakom."
-  },
-  "lighthouse-core/config/default-config.js | a11yAudioVideoGroupTitle": {
-    "message": "Zvuk a video"
-  },
   "lighthouse-core/config/default-config.js | a11yCategoryDescription": {
     "message": "Tieto kontroly zvýrazňujú možnosti [zlepšenia dostupnosti vašej webovej aplikácie](https://developers.google.com/web/fundamentals/accessibility). Automaticky je možné zistiť iba podmnožinu problémov s dostupnosťou, preto sa odporúča ručné testovanie."
   },
@@ -1663,18 +1657,6 @@
   },
   "lighthouse-core/config/default-config.js | a11yCategoryTitle": {
     "message": "Dostupnosť"
-  },
-  "lighthouse-core/config/default-config.js | a11yLanguageGroupDescription": {
-    "message": "Toto sú možnosti zlepšenia interpretácie vášho obsahu používateľmi rôznych jazykov."
-  },
-  "lighthouse-core/config/default-config.js | a11yLanguageGroupTitle": {
-    "message": "Internacionalizácia a lokalizácia"
-  },
-  "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupDescription": {
-    "message": "Toto sú možnosti na zlepšenie dojmu z čítania údajov v tabuľke alebo zozname pomocou asistenčných technológií, ako je čítačka obrazovky."
-  },
-  "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupTitle": {
-    "message": "Tabuľky a zoznamy"
   },
   "lighthouse-core/config/default-config.js | bestPracticesBrowserCompatGroupTitle": {
     "message": "Kompatibilita prehliadača"

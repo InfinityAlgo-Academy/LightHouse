@@ -14,7 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-'use strict';
 
 /** @template T @typedef {import('./i18n').I18n<T>} I18n */
 
@@ -430,10 +429,13 @@ class Util {
         break;
       case 'devtools': {
         const {cpuSlowdownMultiplier, requestLatencyMs} = throttling;
-        cpuThrottling = `${Util.i18n.formatNumber(cpuSlowdownMultiplier)}x slowdown (DevTools)`;
-        networkThrottling = `${Util.i18n.formatNumber(requestLatencyMs)}${NBSP}ms HTTP RTT, ` +
-          `${Util.i18n.formatNumber(throttling.downloadThroughputKbps)}${NBSP}Kbps down, ` +
-          `${Util.i18n.formatNumber(throttling.uploadThroughputKbps)}${NBSP}Kbps up (DevTools)`;
+        // TODO: better api in i18n formatter such that this isn't needed.
+        const cpuGranularity = Number.isInteger(cpuSlowdownMultiplier) ? 1 : 0.1;
+        // eslint-disable-next-line max-len
+        cpuThrottling = `${Util.i18n.formatNumber(cpuSlowdownMultiplier, cpuGranularity)}x slowdown (DevTools)`;
+        networkThrottling = `${Util.i18n.formatMilliseconds(requestLatencyMs, 1)} HTTP RTT, ` +
+          `${Util.i18n.formatKbps(throttling.downloadThroughputKbps)} down, ` +
+          `${Util.i18n.formatKbps(throttling.uploadThroughputKbps)} up (DevTools)`;
 
         const isSlow4G = () => {
           return requestLatencyMs === 150 * 3.75 &&
@@ -445,9 +447,12 @@ class Util {
       }
       case 'simulate': {
         const {cpuSlowdownMultiplier, rttMs, throughputKbps} = throttling;
-        cpuThrottling = `${Util.i18n.formatNumber(cpuSlowdownMultiplier)}x slowdown (Simulated)`;
-        networkThrottling = `${Util.i18n.formatNumber(rttMs)}${NBSP}ms TCP RTT, ` +
-          `${Util.i18n.formatNumber(throughputKbps)}${NBSP}Kbps throughput (Simulated)`;
+        // TODO: better api in i18n formatter such that this isn't needed.
+        const cpuGranularity = Number.isInteger(cpuSlowdownMultiplier) ? 1 : 0.1;
+        // eslint-disable-next-line max-len
+        cpuThrottling = `${Util.i18n.formatNumber(cpuSlowdownMultiplier, cpuGranularity)}x slowdown (Simulated)`;
+        networkThrottling = `${Util.i18n.formatMilliseconds(rttMs)} TCP RTT, ` +
+          `${Util.i18n.formatKbps(throughputKbps)} throughput (Simulated)`;
 
         const isSlow4G = () => {
           return rttMs === 150 && throughputKbps === 1.6 * 1024;

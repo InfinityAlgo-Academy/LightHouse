@@ -1649,12 +1649,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "Der er et `<meta name=\"viewport\">`-tag med `width` eller `initial-scale`"
   },
-  "lighthouse-core/config/default-config.js | a11yAudioVideoGroupDescription": {
-    "message": "Disse er muligheder for at angive alternativt indhold for lyd og video. Dette kan forbedre oplevelsen for brugere med nedsat hørelse eller syn."
-  },
-  "lighthouse-core/config/default-config.js | a11yAudioVideoGroupTitle": {
-    "message": "Lyd og video"
-  },
   "lighthouse-core/config/default-config.js | a11yCategoryDescription": {
     "message": "Disse kontroller fremhæver muligheder for at [forbedre tilgængeligheden af din webapp](https://developers.google.com/web/fundamentals/accessibility). Det er kun visse tilgængelighedsproblemer, der kan registreres automatisk, og derfor anbefales det også at teste manuelt."
   },
@@ -1663,18 +1657,6 @@
   },
   "lighthouse-core/config/default-config.js | a11yCategoryTitle": {
     "message": "Hjælpefunktioner"
-  },
-  "lighthouse-core/config/default-config.js | a11yLanguageGroupDescription": {
-    "message": "Disse er muligheder for at gøre det nemmere for brugere med forskellige landestandarder at forstå dit indhold."
-  },
-  "lighthouse-core/config/default-config.js | a11yLanguageGroupTitle": {
-    "message": "Internationalisering og lokalisering"
-  },
-  "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupDescription": {
-    "message": "Disse er muligheder for at forbedre oplevelsen af oplæste tabel- eller listedata ved hjælp af hjælpeteknologi som f.eks. en skærmlæser."
-  },
-  "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupTitle": {
-    "message": "Tabeller og lister"
   },
   "lighthouse-core/config/default-config.js | bestPracticesBrowserCompatGroupTitle": {
     "message": "Browserkompatibilitet"

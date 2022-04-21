@@ -1649,12 +1649,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "`width` または `initial-scale` を指定した `<meta name=\"viewport\">` タグがあります"
   },
-  "lighthouse-core/config/default-config.js | a11yAudioVideoGroupDescription": {
-    "message": "ここで、音声と動画の代替コンテンツを提供できます。代替コンテンツを提供すると、聴覚や視覚に障がいがあるユーザーの利便性が向上する可能性があります。"
-  },
-  "lighthouse-core/config/default-config.js | a11yAudioVideoGroupTitle": {
-    "message": "音声と動画"
-  },
   "lighthouse-core/config/default-config.js | a11yCategoryDescription": {
     "message": "これらのチェックにより、[ウェブアプリのユーザー補助機能の改善点](https://developers.google.com/web/fundamentals/accessibility)が明確になります。自動的に検出できるユーザー補助の問題は一部に過ぎないため、手動テストも実施することをおすすめします。"
   },
@@ -1663,18 +1657,6 @@
   },
   "lighthouse-core/config/default-config.js | a11yCategoryTitle": {
     "message": "ユーザー補助"
-  },
-  "lighthouse-core/config/default-config.js | a11yLanguageGroupDescription": {
-    "message": "ここには、地域ユーザー別のコンテンツの解釈に関する改善点が表示されます。"
-  },
-  "lighthouse-core/config/default-config.js | a11yLanguageGroupTitle": {
-    "message": "多言語対応とローカライズ"
-  },
-  "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupDescription": {
-    "message": "ここには、支援技術（スクリーン リーダーなど）を使用した表やリストのデータの読み取りの利便性に関する改善点が表示されます。"
-  },
-  "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupTitle": {
-    "message": "表とリスト"
   },
   "lighthouse-core/config/default-config.js | bestPracticesBrowserCompatGroupTitle": {
     "message": "ブラウザの互換性"

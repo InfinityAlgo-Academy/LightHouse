@@ -1649,12 +1649,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "Có thẻ `<meta name=\"viewport\">` có `width` hoặc `initial-scale`"
   },
-  "lighthouse-core/config/default-config.js | a11yAudioVideoGroupDescription": {
-    "message": "Đây là các cơ hội để cung cấp nội dung thay thế cho âm thanh và video. Điều này có thể cải thiện trải nghiệm của người dùng khiếm thính hoặc khiếm thị."
-  },
-  "lighthouse-core/config/default-config.js | a11yAudioVideoGroupTitle": {
-    "message": "Âm thanh và video"
-  },
   "lighthouse-core/config/default-config.js | a11yCategoryDescription": {
     "message": "Các hoạt động kiểm tra này giúp xác định cơ hội [cải thiện khả năng hỗ trợ tiếp cận của ứng dụng web](https://developers.google.com/web/fundamentals/accessibility). Các hoạt động này chỉ có thể tự động phát hiện một phần vấn đề liên quan đến khả năng hỗ trợ tiếp cận, do đó, bạn nên kiểm tra cả theo cách thủ công."
   },
@@ -1663,18 +1657,6 @@
   },
   "lighthouse-core/config/default-config.js | a11yCategoryTitle": {
     "message": "Hỗ trợ tiếp cận"
-  },
-  "lighthouse-core/config/default-config.js | a11yLanguageGroupDescription": {
-    "message": "Đây là những cơ hội giúp cải thiện khả năng diễn giải của người dùng đối với nội dung của bạn ở các ngôn ngữ khác nhau."
-  },
-  "lighthouse-core/config/default-config.js | a11yLanguageGroupTitle": {
-    "message": "Quốc tế hóa và bản địa hóa"
-  },
-  "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupDescription": {
-    "message": "Đây là những cơ hội để cải thiện trải nghiệm đọc dữ liệu trong bảng hoặc danh sách bằng công nghệ hỗ trợ, chẳng hạn như trình đọc màn hình."
-  },
-  "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupTitle": {
-    "message": "Bảng và danh sách"
   },
   "lighthouse-core/config/default-config.js | bestPracticesBrowserCompatGroupTitle": {
     "message": "Khả năng tương thích của trình duyệt"

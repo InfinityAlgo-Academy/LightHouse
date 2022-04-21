@@ -1649,12 +1649,6 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "Yra žyma `<meta name=\"viewport\">` su `width` arba `initial-scale`"
   },
-  "lighthouse-core/config/default-config.js | a11yAudioVideoGroupDescription": {
-    "message": "Tai yra galimybės, skirtos alternatyviam garso ir vaizdo įrašų turiniui teikti. Tai gali pagerinti klausos ar regėjimo sutrikimų turinčių naudotojų patirtį."
-  },
-  "lighthouse-core/config/default-config.js | a11yAudioVideoGroupTitle": {
-    "message": "Garsas ir vaizdas"
-  },
   "lighthouse-core/config/default-config.js | a11yCategoryDescription": {
     "message": "Atlikę šias patikras sužinosite, kaip galite [geriau pritaikyti žiniatinklio programą](https://developers.google.com/web/fundamentals/accessibility). Automatiškai galima aptikti tik dalį pritaikomumo problemų, todėl rekomenduojama atlikti ir neautomatinį tikrinimą."
   },
@@ -1663,18 +1657,6 @@
   },
   "lighthouse-core/config/default-config.js | a11yCategoryTitle": {
     "message": "Pritaikomumas"
-  },
-  "lighthouse-core/config/default-config.js | a11yLanguageGroupDescription": {
-    "message": "Tai yra galimybės, skirtos pagerinti, kaip skirtingų lokalių naudotojai interpretuoja jūsų turinį."
-  },
-  "lighthouse-core/config/default-config.js | a11yLanguageGroupTitle": {
-    "message": "Internacionalizavimas ir lokalizavimas"
-  },
-  "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupDescription": {
-    "message": "Tai yra galimybės, skirtos pagerinti lentelėse ar sąrašuose pateiktų duomenų skaitymą naudojant pagalbines technologijas, pvz., ekrano skaitytuvą."
-  },
-  "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupTitle": {
-    "message": "Lentelės ir sąrašai"
   },
   "lighthouse-core/config/default-config.js | bestPracticesBrowserCompatGroupTitle": {
     "message": "Naršyklės suderinamumas"
