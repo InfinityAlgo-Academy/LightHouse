@@ -321,6 +321,7 @@ const expectations = {
               },
             },
             {
+              _maxChromiumVersion: '103.0.5017.0',
               value: /Synchronous XMLHttpRequest on the main thread is deprecated/,
               source: {
                 type: 'source-location',
