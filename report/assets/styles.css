@@ -695,10 +695,9 @@
   border-top: 1px solid var(--report-border-color-secondary);
 }
 
-.lh-metric:nth-last-child(-n+2) {
+.lh-category:not(.lh--hoisted-meta) .lh-metric:nth-last-child(-n+2) {
   border-bottom: 1px solid var(--report-border-color-secondary);
 }
-
 
 .lh-metric__innerwrap {
   display: grid;
@@ -746,7 +745,7 @@
   .lh-metric {
     border-bottom: none !important;
   }
-  .lh-metric:nth-last-child(1) {
+  .lh-category:not(.lh--hoisted-meta) .lh-metric:nth-last-child(1) {
     border-bottom: 1px solid var(--report-border-color-secondary) !important;
   }
 
@@ -1418,6 +1417,9 @@
 
 .lh-category-wrapper {
   border-bottom: 1px solid var(--color-gray-200);
+}
+.lh-category-wrapper:last-of-type {
+  border-bottom: 0;
 }
 
 .lh-category-header {

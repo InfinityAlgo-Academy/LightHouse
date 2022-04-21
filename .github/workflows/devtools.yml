@@ -57,7 +57,7 @@ jobs:
       if: steps.devtools-cache.outputs.cache-hit == 'true'
       run: echo "GHA_DEVTOOLS_CACHE_HIT=1" >> $GITHUB_ENV
 
-    - run: yarn --frozen-lockfile
+    - run: yarn --frozen-lockfile --network-timeout 1000000
       working-directory: ${{ github.workspace }}/lighthouse
 
     - name: Download depot tools

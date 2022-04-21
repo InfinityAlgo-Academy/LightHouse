@@ -160,7 +160,6 @@
       {"id":"npm:socket.io:20120323","severity":"medium","semver":{"vulnerable":["<0.9.7"]}}
     ],
     "three":[
-      {"id":"SNYK-JS-THREE-2359738","severity":"medium","semver":{"vulnerable":["<=0.124.0"]}},
       {"id":"SNYK-JS-THREE-1064931","severity":"high","semver":{"vulnerable":["<0.125.0"]}}
     ],
     "underscore":[

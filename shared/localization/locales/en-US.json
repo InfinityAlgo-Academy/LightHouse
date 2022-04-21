@@ -132,7 +132,7 @@
     "message": "Lighthouse User Flow Report"
   },
   "lighthouse-core/audits/accessibility/accesskeys.js | description": {
-    "message": "Access keys let users quickly focus a part of the page. For proper navigation, each access key must be unique. [Learn more](https://web.dev/accesskeys/)."
+    "message": "Access keys let users quickly focus a part of the page. For proper navigation, each access key must be unique. [Learn more](https://dequeuniversity.com/rules/axe/4.4/accesskeys)."
   },
   "lighthouse-core/audits/accessibility/accesskeys.js | failureTitle": {
     "message": "`[accesskey]` values are not unique"
@@ -141,7 +141,7 @@
     "message": "`[accesskey]` values are unique"
   },
   "lighthouse-core/audits/accessibility/aria-allowed-attr.js | description": {
-    "message": "Each ARIA `role` supports a specific subset of `aria-*` attributes. Mismatching these invalidates the `aria-*` attributes. [Learn more](https://web.dev/aria-allowed-attr/)."
+    "message": "Each ARIA `role` supports a specific subset of `aria-*` attributes. Mismatching these invalidates the `aria-*` attributes. [Learn more](https://dequeuniversity.com/rules/axe/4.4/aria-allowed-attr)."
   },
   "lighthouse-core/audits/accessibility/aria-allowed-attr.js | failureTitle": {
     "message": "`[aria-*]` attributes do not match their roles"
@@ -150,7 +150,7 @@
     "message": "`[aria-*]` attributes match their roles"
   },
   "lighthouse-core/audits/accessibility/aria-command-name.js | description": {
-    "message": "When an element doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://web.dev/aria-name/)."
+    "message": "When an element doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://dequeuniversity.com/rules/axe/4.4/aria-command-name)."
   },
   "lighthouse-core/audits/accessibility/aria-command-name.js | failureTitle": {
     "message": "`button`, `link`, and `menuitem` elements do not have accessible names."
@@ -159,7 +159,7 @@
     "message": "`button`, `link`, and `menuitem` elements have accessible names"
   },
   "lighthouse-core/audits/accessibility/aria-hidden-body.js | description": {
-    "message": "Assistive technologies, like screen readers, work inconsistently when `aria-hidden=\"true\"` is set on the document `<body>`. [Learn more](https://web.dev/aria-hidden-body/)."
+    "message": "Assistive technologies, like screen readers, work inconsistently when `aria-hidden=\"true\"` is set on the document `<body>`. [Learn more](https://dequeuniversity.com/rules/axe/4.4/aria-hidden-body)."
   },
   "lighthouse-core/audits/accessibility/aria-hidden-body.js | failureTitle": {
     "message": "`[aria-hidden=\"true\"]` is present on the document `<body>`"
@@ -168,7 +168,7 @@
     "message": "`[aria-hidden=\"true\"]` is not present on the document `<body>`"
   },
   "lighthouse-core/audits/accessibility/aria-hidden-focus.js | description": {
-    "message": "Focusable descendents within an `[aria-hidden=\"true\"]` element prevent those interactive elements from being available to users of assistive technologies like screen readers. [Learn more](https://web.dev/aria-hidden-focus/)."
+    "message": "Focusable descendents within an `[aria-hidden=\"true\"]` element prevent those interactive elements from being available to users of assistive technologies like screen readers. [Learn more](https://dequeuniversity.com/rules/axe/4.4/aria-hidden-focus)."
   },
   "lighthouse-core/audits/accessibility/aria-hidden-focus.js | failureTitle": {
     "message": "`[aria-hidden=\"true\"]` elements contain focusable descendents"
@@ -177,7 +177,7 @@
     "message": "`[aria-hidden=\"true\"]` elements do not contain focusable descendents"
   },
   "lighthouse-core/audits/accessibility/aria-input-field-name.js | description": {
-    "message": "When an input field doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://web.dev/aria-name/)."
+    "message": "When an input field doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://dequeuniversity.com/rules/axe/4.4/aria-input-field-name)."
   },
   "lighthouse-core/audits/accessibility/aria-input-field-name.js | failureTitle": {
     "message": "ARIA input fields do not have accessible names"
@@ -186,7 +186,7 @@
     "message": "ARIA input fields have accessible names"
   },
   "lighthouse-core/audits/accessibility/aria-meter-name.js | description": {
-    "message": "When an element doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://web.dev/aria-name/)."
+    "message": "When an element doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://dequeuniversity.com/rules/axe/4.4/aria-meter-name)."
   },
   "lighthouse-core/audits/accessibility/aria-meter-name.js | failureTitle": {
     "message": "ARIA `meter` elements do not have accessible names."
@@ -195,7 +195,7 @@
     "message": "ARIA `meter` elements have accessible names"
   },
   "lighthouse-core/audits/accessibility/aria-progressbar-name.js | description": {
-    "message": "When a `progressbar` element doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://web.dev/aria-name/)."
+    "message": "When a `progressbar` element doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://dequeuniversity.com/rules/axe/4.4/aria-progressbar-name)."
   },
   "lighthouse-core/audits/accessibility/aria-progressbar-name.js | failureTitle": {
     "message": "ARIA `progressbar` elements do not have accessible names."
@@ -204,7 +204,7 @@
     "message": "ARIA `progressbar` elements have accessible names"
   },
   "lighthouse-core/audits/accessibility/aria-required-attr.js | description": {
-    "message": "Some ARIA roles have required attributes that describe the state of the element to screen readers. [Learn more](https://web.dev/aria-required-attr/)."
+    "message": "Some ARIA roles have required attributes that describe the state of the element to screen readers. [Learn more](https://dequeuniversity.com/rules/axe/4.4/aria-required-attr)."
   },
   "lighthouse-core/audits/accessibility/aria-required-attr.js | failureTitle": {
     "message": "`[role]`s do not have all required `[aria-*]` attributes"
@@ -213,7 +213,7 @@
     "message": "`[role]`s have all required `[aria-*]` attributes"
   },
   "lighthouse-core/audits/accessibility/aria-required-children.js | description": {
-    "message": "Some ARIA parent roles must contain specific child roles to perform their intended accessibility functions. [Learn more](https://web.dev/aria-required-children/)."
+    "message": "Some ARIA parent roles must contain specific child roles to perform their intended accessibility functions. [Learn more](https://dequeuniversity.com/rules/axe/4.4/aria-required-children)."
   },
   "lighthouse-core/audits/accessibility/aria-required-children.js | failureTitle": {
     "message": "Elements with an ARIA `[role]` that require children to contain a specific `[role]` are missing some or all of those required children."
@@ -222,7 +222,7 @@
     "message": "Elements with an ARIA `[role]` that require children to contain a specific `[role]` have all required children."
   },
   "lighthouse-core/audits/accessibility/aria-required-parent.js | description": {
-    "message": "Some ARIA child roles must be contained by specific parent roles to properly perform their intended accessibility functions. [Learn more](https://web.dev/aria-required-parent/)."
+    "message": "Some ARIA child roles must be contained by specific parent roles to properly perform their intended accessibility functions. [Learn more](https://dequeuniversity.com/rules/axe/4.4/aria-required-parent)."
   },
   "lighthouse-core/audits/accessibility/aria-required-parent.js | failureTitle": {
     "message": "`[role]`s are not contained by their required parent element"
@@ -231,7 +231,7 @@
     "message": "`[role]`s are contained by their required parent element"
   },
   "lighthouse-core/audits/accessibility/aria-roles.js | description": {
-    "message": "ARIA roles must have valid values in order to perform their intended accessibility functions. [Learn more](https://web.dev/aria-roles/)."
+    "message": "ARIA roles must have valid values in order to perform their intended accessibility functions. [Learn more](https://dequeuniversity.com/rules/axe/4.4/aria-roles)."
   },
   "lighthouse-core/audits/accessibility/aria-roles.js | failureTitle": {
     "message": "`[role]` values are not valid"
@@ -240,7 +240,7 @@
     "message": "`[role]` values are valid"
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | description": {
-    "message": "When a toggle field doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://web.dev/aria-name/)."
+    "message": "When a toggle field doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://dequeuniversity.com/rules/axe/4.4/aria-toggle-field-name)."
   },
   "lighthouse-core/audits/accessibility/aria-toggle-field-name.js | failureTitle": {
     "message": "ARIA toggle fields do not have accessible names"
@@ -249,7 +249,7 @@
     "message": "ARIA toggle fields have accessible names"
   },
   "lighthouse-core/audits/accessibility/aria-tooltip-name.js | description": {
-    "message": "When an element doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://web.dev/aria-name/)."
+    "message": "When an element doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://dequeuniversity.com/rules/axe/4.4/aria-tooltip-name)."
   },
   "lighthouse-core/audits/accessibility/aria-tooltip-name.js | failureTitle": {
     "message": "ARIA `tooltip` elements do not have accessible names."
@@ -258,7 +258,7 @@
     "message": "ARIA `tooltip` elements have accessible names"
   },
   "lighthouse-core/audits/accessibility/aria-treeitem-name.js | description": {
-    "message": "When an element doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://web.dev/aria-name/)."
+    "message": "When an element doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://dequeuniversity.com/rules/axe/4.4/aria-treeitem-name)."
   },
   "lighthouse-core/audits/accessibility/aria-treeitem-name.js | failureTitle": {
     "message": "ARIA `treeitem` elements do not have accessible names."
@@ -267,7 +267,7 @@
     "message": "ARIA `treeitem` elements have accessible names"
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr-value.js | description": {
-    "message": "Assistive technologies, like screen readers, can't interpret ARIA attributes with invalid values. [Learn more](https://web.dev/aria-valid-attr-value/)."
+    "message": "Assistive technologies, like screen readers, can't interpret ARIA attributes with invalid values. [Learn more](https://dequeuniversity.com/rules/axe/4.4/aria-valid-attr-value)."
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr-value.js | failureTitle": {
     "message": "`[aria-*]` attributes do not have valid values"
@@ -276,7 +276,7 @@
     "message": "`[aria-*]` attributes have valid values"
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr.js | description": {
-    "message": "Assistive technologies, like screen readers, can't interpret ARIA attributes with invalid names. [Learn more](https://web.dev/aria-valid-attr/)."
+    "message": "Assistive technologies, like screen readers, can't interpret ARIA attributes with invalid names. [Learn more](https://dequeuniversity.com/rules/axe/4.4/aria-valid-attr)."
   },
   "lighthouse-core/audits/accessibility/aria-valid-attr.js | failureTitle": {
     "message": "`[aria-*]` attributes are not valid or misspelled"
@@ -288,7 +288,7 @@
     "message": "Failing Elements"
   },
   "lighthouse-core/audits/accessibility/button-name.js | description": {
-    "message": "When a button doesn't have an accessible name, screen readers announce it as \"button\", making it unusable for users who rely on screen readers. [Learn more](https://web.dev/button-name/)."
+    "message": "When a button doesn't have an accessible name, screen readers announce it as \"button\", making it unusable for users who rely on screen readers. [Learn more](https://dequeuniversity.com/rules/axe/4.4/button-name)."
   },
   "lighthouse-core/audits/accessibility/button-name.js | failureTitle": {
     "message": "Buttons do not have an accessible name"
@@ -297,7 +297,7 @@
     "message": "Buttons have an accessible name"
   },
   "lighthouse-core/audits/accessibility/bypass.js | description": {
-    "message": "Adding ways to bypass repetitive content lets keyboard users navigate the page more efficiently. [Learn more](https://web.dev/bypass/)."
+    "message": "Adding ways to bypass repetitive content lets keyboard users navigate the page more efficiently. [Learn more](https://dequeuniversity.com/rules/axe/4.4/bypass)."
   },
   "lighthouse-core/audits/accessibility/bypass.js | failureTitle": {
     "message": "The page does not contain a heading, skip link, or landmark region"
@@ -306,7 +306,7 @@
     "message": "The page contains a heading, skip link, or landmark region"
   },
   "lighthouse-core/audits/accessibility/color-contrast.js | description": {
-    "message": "Low-contrast text is difficult or impossible for many users to read. [Learn more](https://web.dev/color-contrast/)."
+    "message": "Low-contrast text is difficult or impossible for many users to read. [Learn more](https://dequeuniversity.com/rules/axe/4.4/color-contrast)."
   },
   "lighthouse-core/audits/accessibility/color-contrast.js | failureTitle": {
     "message": "Background and foreground colors do not have a sufficient contrast ratio."
@@ -315,7 +315,7 @@
     "message": "Background and foreground colors have a sufficient contrast ratio"
   },
   "lighthouse-core/audits/accessibility/definition-list.js | description": {
-    "message": "When definition lists are not properly marked up, screen readers may produce confusing or inaccurate output. [Learn more](https://web.dev/definition-list/)."
+    "message": "When definition lists are not properly marked up, screen readers may produce confusing or inaccurate output. [Learn more](https://dequeuniversity.com/rules/axe/4.4/definition-list)."
   },
   "lighthouse-core/audits/accessibility/definition-list.js | failureTitle": {
     "message": "`<dl>`'s do not contain only properly-ordered `<dt>` and `<dd>` groups, `<script>`, `<template>` or `<div>` elements."
@@ -324,7 +324,7 @@
     "message": "`<dl>`'s contain only properly-ordered `<dt>` and `<dd>` groups, `<script>`, `<template>` or `<div>` elements."
   },
   "lighthouse-core/audits/accessibility/dlitem.js | description": {
-    "message": "Definition list items (`<dt>` and `<dd>`) must be wrapped in a parent `<dl>` element to ensure that screen readers can properly announce them. [Learn more](https://web.dev/dlitem/)."
+    "message": "Definition list items (`<dt>` and `<dd>`) must be wrapped in a parent `<dl>` element to ensure that screen readers can properly announce them. [Learn more](https://dequeuniversity.com/rules/axe/4.4/dlitem)."
   },
   "lighthouse-core/audits/accessibility/dlitem.js | failureTitle": {
     "message": "Definition list items are not wrapped in `<dl>` elements"
@@ -333,7 +333,7 @@
     "message": "Definition list items are wrapped in `<dl>` elements"
   },
   "lighthouse-core/audits/accessibility/document-title.js | description": {
-    "message": "The title gives screen reader users an overview of the page, and search engine users rely on it heavily to determine if a page is relevant to their search. [Learn more](https://web.dev/document-title/)."
+    "message": "The title gives screen reader users an overview of the page, and search engine users rely on it heavily to determine if a page is relevant to their search. [Learn more](https://dequeuniversity.com/rules/axe/4.4/document-title)."
   },
   "lighthouse-core/audits/accessibility/document-title.js | failureTitle": {
     "message": "Document doesn't have a `<title>` element"
@@ -342,7 +342,7 @@
     "message": "Document has a `<title>` element"
   },
   "lighthouse-core/audits/accessibility/duplicate-id-active.js | description": {
-    "message": "All focusable elements must have a unique `id` to ensure that they're visible to assistive technologies. [Learn more](https://web.dev/duplicate-id-active/)."
+    "message": "All focusable elements must have a unique `id` to ensure that they're visible to assistive technologies. [Learn more](https://dequeuniversity.com/rules/axe/4.4/duplicate-id-active)."
   },
   "lighthouse-core/audits/accessibility/duplicate-id-active.js | failureTitle": {
     "message": "`[id]` attributes on active, focusable elements are not unique"
@@ -351,7 +351,7 @@
     "message": "`[id]` attributes on active, focusable elements are unique"
   },
   "lighthouse-core/audits/accessibility/duplicate-id-aria.js | description": {
-    "message": "The value of an ARIA ID must be unique to prevent other instances from being overlooked by assistive technologies. [Learn more](https://web.dev/duplicate-id-aria/)."
+    "message": "The value of an ARIA ID must be unique to prevent other instances from being overlooked by assistive technologies. [Learn more](https://dequeuniversity.com/rules/axe/4.4/duplicate-id-aria)."
   },
   "lighthouse-core/audits/accessibility/duplicate-id-aria.js | failureTitle": {
     "message": "ARIA IDs are not unique"
@@ -360,7 +360,7 @@
     "message": "ARIA IDs are unique"
   },
   "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | description": {
-    "message": "Form fields with multiple labels can be confusingly announced by assistive technologies like screen readers which use either the first, the last, or all of the labels. [Learn more](https://web.dev/form-field-multiple-labels/)."
+    "message": "Form fields with multiple labels can be confusingly announced by assistive technologies like screen readers which use either the first, the last, or all of the labels. [Learn more](https://dequeuniversity.com/rules/axe/4.4/form-field-multiple-labels)."
   },
   "lighthouse-core/audits/accessibility/form-field-multiple-labels.js | failureTitle": {
     "message": "Form fields have multiple labels"
@@ -369,7 +369,7 @@
     "message": "No form fields have multiple labels"
   },
   "lighthouse-core/audits/accessibility/frame-title.js | description": {
-    "message": "Screen reader users rely on frame titles to describe the contents of frames. [Learn more](https://web.dev/frame-title/)."
+    "message": "Screen reader users rely on frame titles to describe the contents of frames. [Learn more](https://dequeuniversity.com/rules/axe/4.4/frame-title)."
   },
   "lighthouse-core/audits/accessibility/frame-title.js | failureTitle": {
     "message": "`<frame>` or `<iframe>` elements do not have a title"
@@ -378,7 +378,7 @@
     "message": "`<frame>` or `<iframe>` elements have a title"
   },
   "lighthouse-core/audits/accessibility/heading-order.js | description": {
-    "message": "Properly ordered headings that do not skip levels convey the semantic structure of the page, making it easier to navigate and understand when using assistive technologies. [Learn more](https://web.dev/heading-order/)."
+    "message": "Properly ordered headings that do not skip levels convey the semantic structure of the page, making it easier to navigate and understand when using assistive technologies. [Learn more](https://dequeuniversity.com/rules/axe/4.4/heading-order)."
   },
   "lighthouse-core/audits/accessibility/heading-order.js | failureTitle": {
     "message": "Heading elements are not in a sequentially-descending order"
@@ -387,7 +387,7 @@
     "message": "Heading elements appear in a sequentially-descending order"
   },
   "lighthouse-core/audits/accessibility/html-has-lang.js | description": {
-    "message": "If a page doesn't specify a lang attribute, a screen reader assumes that the page is in the default language that the user chose when setting up the screen reader. If the page isn't actually in the default language, then the screen reader might not announce the page's text correctly. [Learn more](https://web.dev/html-has-lang/)."
+    "message": "If a page doesn't specify a lang attribute, a screen reader assumes that the page is in the default language that the user chose when setting up the screen reader. If the page isn't actually in the default language, then the screen reader might not announce the page's text correctly. [Learn more](https://dequeuniversity.com/rules/axe/4.4/html-has-lang)."
   },
   "lighthouse-core/audits/accessibility/html-has-lang.js | failureTitle": {
     "message": "`<html>` element does not have a `[lang]` attribute"
@@ -396,7 +396,7 @@
     "message": "`<html>` element has a `[lang]` attribute"
   },
   "lighthouse-core/audits/accessibility/html-lang-valid.js | description": {
-    "message": "Specifying a valid [BCP 47 language](https://www.w3.org/International/questions/qa-choosing-language-tags#question) helps screen readers announce text properly. [Learn more](https://web.dev/html-lang-valid/)."
+    "message": "Specifying a valid [BCP 47 language](https://www.w3.org/International/questions/qa-choosing-language-tags#question) helps screen readers announce text properly. [Learn more](https://dequeuniversity.com/rules/axe/4.4/html-lang-valid)."
   },
   "lighthouse-core/audits/accessibility/html-lang-valid.js | failureTitle": {
     "message": "`<html>` element does not have a valid value for its `[lang]` attribute."
@@ -405,7 +405,7 @@
     "message": "`<html>` element has a valid value for its `[lang]` attribute"
   },
   "lighthouse-core/audits/accessibility/image-alt.js | description": {
-    "message": "Informative elements should aim for short, descriptive alternate text. Decorative elements can be ignored with an empty alt attribute. [Learn more](https://web.dev/image-alt/)."
+    "message": "Informative elements should aim for short, descriptive alternate text. Decorative elements can be ignored with an empty alt attribute. [Learn more](https://dequeuniversity.com/rules/axe/4.4/image-alt)."
   },
   "lighthouse-core/audits/accessibility/image-alt.js | failureTitle": {
     "message": "Image elements do not have `[alt]` attributes"
@@ -414,7 +414,7 @@
     "message": "Image elements have `[alt]` attributes"
   },
   "lighthouse-core/audits/accessibility/input-image-alt.js | description": {
-    "message": "When an image is being used as an `<input>` button, providing alternative text can help screen reader users understand the purpose of the button. [Learn more](https://web.dev/input-image-alt/)."
+    "message": "When an image is being used as an `<input>` button, providing alternative text can help screen reader users understand the purpose of the button. [Learn more](https://dequeuniversity.com/rules/axe/4.4/input-image-alt)."
   },
   "lighthouse-core/audits/accessibility/input-image-alt.js | failureTitle": {
     "message": "`<input type=\"image\">` elements do not have `[alt]` text"
@@ -423,7 +423,7 @@
     "message": "`<input type=\"image\">` elements have `[alt]` text"
   },
   "lighthouse-core/audits/accessibility/label.js | description": {
-    "message": "Labels ensure that form controls are announced properly by assistive technologies, like screen readers. [Learn more](https://web.dev/label/)."
+    "message": "Labels ensure that form controls are announced properly by assistive technologies, like screen readers. [Learn more](https://dequeuniversity.com/rules/axe/4.4/label)."
   },
   "lighthouse-core/audits/accessibility/label.js | failureTitle": {
     "message": "Form elements do not have associated labels"
@@ -432,7 +432,7 @@
     "message": "Form elements have associated labels"
   },
   "lighthouse-core/audits/accessibility/link-name.js | description": {
-    "message": "Link text (and alternate text for images, when used as links) that is discernible, unique, and focusable improves the navigation experience for screen reader users. [Learn more](https://web.dev/link-name/)."
+    "message": "Link text (and alternate text for images, when used as links) that is discernible, unique, and focusable improves the navigation experience for screen reader users. [Learn more](https://dequeuniversity.com/rules/axe/4.4/link-name)."
   },
   "lighthouse-core/audits/accessibility/link-name.js | failureTitle": {
     "message": "Links do not have a discernible name"
@@ -441,7 +441,7 @@
     "message": "Links have a discernible name"
   },
   "lighthouse-core/audits/accessibility/list.js | description": {
-    "message": "Screen readers have a specific way of announcing lists. Ensuring proper list structure aids screen reader output. [Learn more](https://web.dev/list/)."
+    "message": "Screen readers have a specific way of announcing lists. Ensuring proper list structure aids screen reader output. [Learn more](https://dequeuniversity.com/rules/axe/4.4/list)."
   },
   "lighthouse-core/audits/accessibility/list.js | failureTitle": {
     "message": "Lists do not contain only `<li>` elements and script supporting elements (`<script>` and `<template>`)."
@@ -450,7 +450,7 @@
     "message": "Lists contain only `<li>` elements and script supporting elements (`<script>` and `<template>`)."
   },
   "lighthouse-core/audits/accessibility/listitem.js | description": {
-    "message": "Screen readers require list items (`<li>`) to be contained within a parent `<ul>` or `<ol>` to be announced properly. [Learn more](https://web.dev/listitem/)."
+    "message": "Screen readers require list items (`<li>`) to be contained within a parent `<ul>` or `<ol>` to be announced properly. [Learn more](https://dequeuniversity.com/rules/axe/4.4/listitem)."
   },
   "lighthouse-core/audits/accessibility/listitem.js | failureTitle": {
     "message": "List items (`<li>`) are not contained within `<ul>` or `<ol>` parent elements."
@@ -459,7 +459,7 @@
     "message": "List items (`<li>`) are contained within `<ul>` or `<ol>` parent elements"
   },
   "lighthouse-core/audits/accessibility/meta-refresh.js | description": {
-    "message": "Users do not expect a page to refresh automatically, and doing so will move focus back to the top of the page. This may create a frustrating or confusing experience. [Learn more](https://web.dev/meta-refresh/)."
+    "message": "Users do not expect a page to refresh automatically, and doing so will move focus back to the top of the page. This may create a frustrating or confusing experience. [Learn more](https://dequeuniversity.com/rules/axe/4.4/meta-refresh)."
   },
   "lighthouse-core/audits/accessibility/meta-refresh.js | failureTitle": {
     "message": "The document uses `<meta http-equiv=\"refresh\">`"
@@ -468,7 +468,7 @@
     "message": "The document does not use `<meta http-equiv=\"refresh\">`"
   },
   "lighthouse-core/audits/accessibility/meta-viewport.js | description": {
-    "message": "Disabling zooming is problematic for users with low vision who rely on screen magnification to properly see the contents of a web page. [Learn more](https://web.dev/meta-viewport/)."
+    "message": "Disabling zooming is problematic for users with low vision who rely on screen magnification to properly see the contents of a web page. [Learn more](https://dequeuniversity.com/rules/axe/4.4/meta-viewport)."
   },
   "lighthouse-core/audits/accessibility/meta-viewport.js | failureTitle": {
     "message": "`[user-scalable=\"no\"]` is used in the `<meta name=\"viewport\">` element or the `[maximum-scale]` attribute is less than 5."
@@ -477,7 +477,7 @@
     "message": "`[user-scalable=\"no\"]` is not used in the `<meta name=\"viewport\">` element and the `[maximum-scale]` attribute is not less than 5."
   },
   "lighthouse-core/audits/accessibility/object-alt.js | description": {
-    "message": "Screen readers cannot translate non-text content. Adding alternate text to `<object>` elements helps screen readers convey meaning to users. [Learn more](https://web.dev/object-alt/)."
+    "message": "Screen readers cannot translate non-text content. Adding alternate text to `<object>` elements helps screen readers convey meaning to users. [Learn more](https://dequeuniversity.com/rules/axe/4.4/object-alt)."
   },
   "lighthouse-core/audits/accessibility/object-alt.js | failureTitle": {
     "message": "`<object>` elements do not have alternate text"
@@ -486,7 +486,7 @@
     "message": "`<object>` elements have alternate text"
   },
   "lighthouse-core/audits/accessibility/tabindex.js | description": {
-    "message": "A value greater than 0 implies an explicit navigation ordering. Although technically valid, this often creates frustrating experiences for users who rely on assistive technologies. [Learn more](https://web.dev/tabindex/)."
+    "message": "A value greater than 0 implies an explicit navigation ordering. Although technically valid, this often creates frustrating experiences for users who rely on assistive technologies. [Learn more](https://dequeuniversity.com/rules/axe/4.4/tabindex)."
   },
   "lighthouse-core/audits/accessibility/tabindex.js | failureTitle": {
     "message": "Some elements have a `[tabindex]` value greater than 0"
@@ -495,7 +495,7 @@
     "message": "No element has a `[tabindex]` value greater than 0"
   },
   "lighthouse-core/audits/accessibility/td-headers-attr.js | description": {
-    "message": "Screen readers have features to make navigating tables easier. Ensuring `<td>` cells using the `[headers]` attribute only refer to other cells in the same table may improve the experience for screen reader users. [Learn more](https://web.dev/td-headers-attr/)."
+    "message": "Screen readers have features to make navigating tables easier. Ensuring `<td>` cells using the `[headers]` attribute only refer to other cells in the same table may improve the experience for screen reader users. [Learn more](https://dequeuniversity.com/rules/axe/4.4/td-headers-attr)."
   },
   "lighthouse-core/audits/accessibility/td-headers-attr.js | failureTitle": {
     "message": "Cells in a `<table>` element that use the `[headers]` attribute refer to an element `id` not found within the same table."
@@ -504,7 +504,7 @@
     "message": "Cells in a `<table>` element that use the `[headers]` attribute refer to table cells within the same table."
   },
   "lighthouse-core/audits/accessibility/th-has-data-cells.js | description": {
-    "message": "Screen readers have features to make navigating tables easier. Ensuring table headers always refer to some set of cells may improve the experience for screen reader users. [Learn more](https://web.dev/th-has-data-cells/)."
+    "message": "Screen readers have features to make navigating tables easier. Ensuring table headers always refer to some set of cells may improve the experience for screen reader users. [Learn more](https://dequeuniversity.com/rules/axe/4.4/th-has-data-cells)."
   },
   "lighthouse-core/audits/accessibility/th-has-data-cells.js | failureTitle": {
     "message": "`<th>` elements and elements with `[role=\"columnheader\"/\"rowheader\"]` do not have data cells they describe."
@@ -513,7 +513,7 @@
     "message": "`<th>` elements and elements with `[role=\"columnheader\"/\"rowheader\"]` have data cells they describe."
   },
   "lighthouse-core/audits/accessibility/valid-lang.js | description": {
-    "message": "Specifying a valid [BCP 47 language](https://www.w3.org/International/questions/qa-choosing-language-tags#question) on elements helps ensure that text is pronounced correctly by a screen reader. [Learn more](https://web.dev/valid-lang/)."
+    "message": "Specifying a valid [BCP 47 language](https://www.w3.org/International/questions/qa-choosing-language-tags#question) on elements helps ensure that text is pronounced correctly by a screen reader. [Learn more](https://dequeuniversity.com/rules/axe/4.4/valid-lang)."
   },
   "lighthouse-core/audits/accessibility/valid-lang.js | failureTitle": {
     "message": "`[lang]` attributes do not have a valid value"
@@ -522,7 +522,7 @@
     "message": "`[lang]` attributes have a valid value"
   },
   "lighthouse-core/audits/accessibility/video-caption.js | description": {
-    "message": "When a video provides a caption it is easier for deaf and hearing impaired users to access its information. [Learn more](https://web.dev/video-caption/)."
+    "message": "When a video provides a caption it is easier for deaf and hearing impaired users to access its information. [Learn more](https://dequeuniversity.com/rules/axe/4.4/video-caption)."
   },
   "lighthouse-core/audits/accessibility/video-caption.js | failureTitle": {
     "message": "`<video>` elements do not contain a `<track>` element with `[kind=\"captions\"]`."
@@ -1674,7 +1674,7 @@
     "message": "These checks highlight opportunities to [improve the accessibility of your web app](https://web.dev/lighthouse-accessibility/). Only a subset of accessibility issues can be automatically detected so manual testing is also encouraged."
   },
   "lighthouse-core/config/default-config.js | a11yCategoryManualDescription": {
-    "message": "These items address areas which an automated testing tool cannot cover. Learn more in our guide on [conducting an accessibility review](https://developers.google.com/web/fundamentals/accessibility/how-to-review)."
+    "message": "These items address areas which an automated testing tool cannot cover. Learn more in our guide on [conducting an accessibility review](https://web.dev/how-to-review/)."
   },
   "lighthouse-core/config/default-config.js | a11yCategoryTitle": {
     "message": "Accessibility"
