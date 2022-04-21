@@ -1649,23 +1649,11 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "Memiliki tag `<meta name=\"viewport\">` dengan `width` atau `initial-scale`"
   },
-  "lighthouse-core/config/default-config.js | a11yAriaGroupDescription": {
-    "message": "Ini adalah peluang untuk meningkatkan penggunaan ARIA pada aplikasi Anda, yang dapat meningkatkan pengalaman bagi pengguna teknologi asistif, seperti pembaca layar."
-  },
-  "lighthouse-core/config/default-config.js | a11yAriaGroupTitle": {
-    "message": "ARIA"
-  },
   "lighthouse-core/config/default-config.js | a11yAudioVideoGroupDescription": {
     "message": "Ini adalah peluang untuk memberikan konten alternatif untuk audio dan video. Hal ini dapat meningkatkan pengalaman bagi pengguna yang menyandang gangguan penglihatan atau pendengaran."
   },
   "lighthouse-core/config/default-config.js | a11yAudioVideoGroupTitle": {
     "message": "Audio dan video"
-  },
-  "lighthouse-core/config/default-config.js | a11yBestPracticesGroupDescription": {
-    "message": "Item berikut memperjelas praktik terbaik yang umum untuk aksesibilitas."
-  },
-  "lighthouse-core/config/default-config.js | a11yBestPracticesGroupTitle": {
-    "message": "Praktik terbaik"
   },
   "lighthouse-core/config/default-config.js | a11yCategoryDescription": {
     "message": "Pemeriksaan ini menandai peluang untuk [menyempurnakan aksesibilitas aplikasi web Anda](https://developers.google.com/web/fundamentals/accessibility). Hanya sejumlah kecil masalah aksesibilitas yang dapat terdeteksi secara otomatis, sehingga pengujian manual juga dianjurkan."
@@ -1676,29 +1664,11 @@
   "lighthouse-core/config/default-config.js | a11yCategoryTitle": {
     "message": "Aksesibilitas"
   },
-  "lighthouse-core/config/default-config.js | a11yColorContrastGroupDescription": {
-    "message": "Ini adalah peluang untuk meningkatkan keterbacaan konten Anda."
-  },
-  "lighthouse-core/config/default-config.js | a11yColorContrastGroupTitle": {
-    "message": "Kontras"
-  },
   "lighthouse-core/config/default-config.js | a11yLanguageGroupDescription": {
     "message": "Ini adalah peluang untuk menyempurnakan interpretasi konten Anda oleh pengguna dalam lokal yang berbeda."
   },
   "lighthouse-core/config/default-config.js | a11yLanguageGroupTitle": {
     "message": "Internasionalisasi dan pelokalan"
-  },
-  "lighthouse-core/config/default-config.js | a11yNamesLabelsGroupDescription": {
-    "message": "Ini adalah peluang untuk meningkatkan semantik kontrol dalam aplikasi Anda. Hal ini dapat menyempurnakan pengalaman bagi pengguna teknologi asistif, seperti pembaca layar."
-  },
-  "lighthouse-core/config/default-config.js | a11yNamesLabelsGroupTitle": {
-    "message": "Nama dan label"
-  },
-  "lighthouse-core/config/default-config.js | a11yNavigationGroupDescription": {
-    "message": "Ini adalah peluang untuk menyempurnakan navigasi keyboard pada aplikasi Anda."
-  },
-  "lighthouse-core/config/default-config.js | a11yNavigationGroupTitle": {
-    "message": "Navigasi"
   },
   "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupDescription": {
     "message": "Ini adalah peluang untuk menyempurnakan pengalaman membaca data dalam format tabel atau daftar menggunakan teknologi pendukung, seperti pembaca layar."

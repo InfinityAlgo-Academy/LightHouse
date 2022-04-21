@@ -1649,23 +1649,11 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "May tag na `<meta name=\"viewport\">` na may `width` o `initial-scale`"
   },
-  "lighthouse-core/config/default-config.js | a11yAriaGroupDescription": {
-    "message": "Mga pagkakataon ito na pahusayin ang paggamit ng ARIA sa iyong application na maaaring mapahusay ang karanasan para sa mga user ng nakakatulong na teknolohiya, tulad ng screen reader."
-  },
-  "lighthouse-core/config/default-config.js | a11yAriaGroupTitle": {
-    "message": "ARIA"
-  },
   "lighthouse-core/config/default-config.js | a11yAudioVideoGroupDescription": {
     "message": "Ito ay mga pagkakataong magbigay ng alternatibong content para sa audio at video. Puwede nitong mapaganda ang karanasan para sa mga user na may mga problema sa paningin o pandinig."
   },
   "lighthouse-core/config/default-config.js | a11yAudioVideoGroupTitle": {
     "message": "Audio at video"
-  },
-  "lighthouse-core/config/default-config.js | a11yBestPracticesGroupDescription": {
-    "message": "Hina-highlight ng mga item na ito ang mga karaniwang pinakamahusay na kagawian sa pagiging accessible."
-  },
-  "lighthouse-core/config/default-config.js | a11yBestPracticesGroupTitle": {
-    "message": "Pinakamahuhusay na kagawian"
   },
   "lighthouse-core/config/default-config.js | a11yCategoryDescription": {
     "message": "Hina-highlight ng mga pagsusuring ito ang mga pagkakataong [gawing mas accessible ng iyong web app](https://developers.google.com/web/fundamentals/accessibility). Isang subset lang ng mga isyu sa pagiging accessible ang awtomatikong matutukoy kaya hinihikayat din ang manual na pagsusuri."
@@ -1676,29 +1664,11 @@
   "lighthouse-core/config/default-config.js | a11yCategoryTitle": {
     "message": "Pagiging accessible"
   },
-  "lighthouse-core/config/default-config.js | a11yColorContrastGroupDescription": {
-    "message": "Mga pagkakataon ito na pahusayin ang pagiging nababasa ng iyong content."
-  },
-  "lighthouse-core/config/default-config.js | a11yColorContrastGroupTitle": {
-    "message": "Contrast"
-  },
   "lighthouse-core/config/default-config.js | a11yLanguageGroupDescription": {
     "message": "Mga pagkakataon ito na pahusayin ang pagsasalin ng mga user sa iyong content sa iba't ibang lokal."
   },
   "lighthouse-core/config/default-config.js | a11yLanguageGroupTitle": {
     "message": "Pag-internationalize at pag-localize"
-  },
-  "lighthouse-core/config/default-config.js | a11yNamesLabelsGroupDescription": {
-    "message": "Mga pagkakataon ito ng pahusayin ang mga semantic ng mga kontrol sa iyong application. Maaari nitong pahusayin ang karanasan para sa mga user ng nakakatulong na teknolohiya, tulad ng screen reader."
-  },
-  "lighthouse-core/config/default-config.js | a11yNamesLabelsGroupTitle": {
-    "message": "Mga pangalan at label"
-  },
-  "lighthouse-core/config/default-config.js | a11yNavigationGroupDescription": {
-    "message": "Ito ay mga pagkakataong pahusayin ang pag-navigate gamit ang keyboard sa iyong application."
-  },
-  "lighthouse-core/config/default-config.js | a11yNavigationGroupTitle": {
-    "message": "Navigation"
   },
   "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupDescription": {
     "message": "Ang mga ito ay mga pagkakataong mapahusay ang karanasan ng pagbabasa ng data na nasa talahanayan o listahan gamit ang pantulong na teknolohiya, gaya ng screen reader."

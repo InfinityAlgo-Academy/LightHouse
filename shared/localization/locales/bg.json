@@ -1649,23 +1649,11 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "Има маркер `<meta name=\"viewport\">` с атрибут `width` или `initial-scale`"
   },
-  "lighthouse-core/config/default-config.js | a11yAriaGroupDescription": {
-    "message": "Това са възможности за подобряване на използването на ARIA в приложението ви. Така може да подобрите практическата работа за потребителите на помощни технологии, като например екранни четци."
-  },
-  "lighthouse-core/config/default-config.js | a11yAriaGroupTitle": {
-    "message": "ARIA"
-  },
   "lighthouse-core/config/default-config.js | a11yAudioVideoGroupDescription": {
     "message": "Това са възможности да предоставите алтернативно съдържание за аудио- и видеоелементите. Така може да подобрите практическата работа за потребители със слухови или зрителни нарушения."
   },
   "lighthouse-core/config/default-config.js | a11yAudioVideoGroupTitle": {
     "message": "Аудио и видео"
-  },
-  "lighthouse-core/config/default-config.js | a11yBestPracticesGroupDescription": {
-    "message": "Тези елементи открояват често използвани най-добри практики за достъпност."
-  },
-  "lighthouse-core/config/default-config.js | a11yBestPracticesGroupTitle": {
-    "message": "Най-добри практики"
   },
   "lighthouse-core/config/default-config.js | a11yCategoryDescription": {
     "message": "Тези проверки открояват възможности за [подобряване на достъпността на уеб приложението ви](https://developers.google.com/web/fundamentals/accessibility). Само определени проблеми с достъпността могат да бъдат открити автоматично. Затова ръчното тестване също е препоръчително."
@@ -1676,29 +1664,11 @@
   "lighthouse-core/config/default-config.js | a11yCategoryTitle": {
     "message": "Достъпност"
   },
-  "lighthouse-core/config/default-config.js | a11yColorContrastGroupDescription": {
-    "message": "Това са възможности за подобряване на четливостта на съдържанието ви."
-  },
-  "lighthouse-core/config/default-config.js | a11yColorContrastGroupTitle": {
-    "message": "Контраст"
-  },
   "lighthouse-core/config/default-config.js | a11yLanguageGroupDescription": {
     "message": "Това са възможности да направите съдържанието си по-разбираемо за потребителите, използващи други езици."
   },
   "lighthouse-core/config/default-config.js | a11yLanguageGroupTitle": {
     "message": "Интернационализация и локализация"
-  },
-  "lighthouse-core/config/default-config.js | a11yNamesLabelsGroupDescription": {
-    "message": "Това са възможности за подобряване на семантиката на контролите в приложението ви. Така може да подобрите практическата работа за потребителите на помощни технологии, като например екранни четци."
-  },
-  "lighthouse-core/config/default-config.js | a11yNamesLabelsGroupTitle": {
-    "message": "Имена и етикети"
-  },
-  "lighthouse-core/config/default-config.js | a11yNavigationGroupDescription": {
-    "message": "Това са възможности за подобряване на навигирането с клавиатура в приложението ви."
-  },
-  "lighthouse-core/config/default-config.js | a11yNavigationGroupTitle": {
-    "message": "Навигация"
   },
   "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupDescription": {
     "message": "Това са възможности да улесните четенето на данни в таблици или списъци посредством помощни технологии, като например екранни четци."

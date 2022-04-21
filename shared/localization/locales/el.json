@@ -1649,23 +1649,11 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "Έχει ετικέτα `<meta name=\"viewport\">` με `width` ή `initial-scale`"
   },
-  "lighthouse-core/config/default-config.js | a11yAriaGroupDescription": {
-    "message": "Αυτές είναι ευκαιρίες να βελτιώσετε τη χρήση των ARIA στην εφαρμογή σας, κάνοντας καλύτερη την εμπειρία χρήστη σε τεχνολογίες υποβοήθησης, όπως στον αναγνώστη οθόνης."
-  },
-  "lighthouse-core/config/default-config.js | a11yAriaGroupTitle": {
-    "message": "ARIA"
-  },
   "lighthouse-core/config/default-config.js | a11yAudioVideoGroupDescription": {
     "message": "Αυτές είναι ευκαιρίες να παρέχετε εναλλακτικό περιεχόμενο για ήχο και βίντεο. Αυτό μπορεί να βελτιώσει την εμπειρία για χρήστες με προβλήματα ακοής ή όρασης."
   },
   "lighthouse-core/config/default-config.js | a11yAudioVideoGroupTitle": {
     "message": "Ήχος και βίντεο"
-  },
-  "lighthouse-core/config/default-config.js | a11yBestPracticesGroupDescription": {
-    "message": "Αυτά τα στοιχεία επισημαίνουν συνήθεις βέλτιστες πρακτικές για την προσβασιμότητα."
-  },
-  "lighthouse-core/config/default-config.js | a11yBestPracticesGroupTitle": {
-    "message": "Βέλτιστες πρακτικές"
   },
   "lighthouse-core/config/default-config.js | a11yCategoryDescription": {
     "message": "Αυτοί οι έλεγχοι επισημαίνουν ευκαιρίες για τη [βελτίωση της προσβασιμότητας της εφαρμογής ιστού σας](https://developers.google.com/web/fundamentals/accessibility). Μόνο ένα μέρος των ζητημάτων προσβασιμότητας μπορεί να εντοπιστεί αυτόματα. Ως εκ τούτου, συνιστάται να προβείτε και σε μη αυτόματες δοκιμές."
@@ -1676,29 +1664,11 @@
   "lighthouse-core/config/default-config.js | a11yCategoryTitle": {
     "message": "Προσβασιμότητα"
   },
-  "lighthouse-core/config/default-config.js | a11yColorContrastGroupDescription": {
-    "message": "Αυτές είναι ευκαιρίες να βελτιώσετε την αναγνωσιμότητα του περιεχομένου σας."
-  },
-  "lighthouse-core/config/default-config.js | a11yColorContrastGroupTitle": {
-    "message": "Αντίθεση"
-  },
   "lighthouse-core/config/default-config.js | a11yLanguageGroupDescription": {
     "message": "Αυτές είναι ευκαιρίες να βελτιώσετε την ερμηνεία του περιεχομένου σας από χρήστες με διαφορετικές τοπικές ρυθμίσεις."
   },
   "lighthouse-core/config/default-config.js | a11yLanguageGroupTitle": {
     "message": "Διεθνοποίηση και τοπική προσαρμογή"
-  },
-  "lighthouse-core/config/default-config.js | a11yNamesLabelsGroupDescription": {
-    "message": "Αυτές είναι ευκαιρίες να βελτιώσετε τη σημασιολογία των στοιχείων ελέγχου στην εφαρμογή σας. Αυτό μπορεί να κάνει καλύτερη την εμπειρία για τους χρήστες τεχνολογίας υποβοήθησης, όπως του αναγνώστη οθόνης."
-  },
-  "lighthouse-core/config/default-config.js | a11yNamesLabelsGroupTitle": {
-    "message": "Ονόματα και ετικέτες"
-  },
-  "lighthouse-core/config/default-config.js | a11yNavigationGroupDescription": {
-    "message": "Αυτές είναι ευκαιρίες να βελτιώσετε την πλοήγηση με πληκτρολόγιο στην εφαρμογή σας."
-  },
-  "lighthouse-core/config/default-config.js | a11yNavigationGroupTitle": {
-    "message": "Πλοήγηση"
   },
   "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupDescription": {
     "message": "Αυτές είναι ευκαιρίες να βελτιώσετε την εμπειρία ανάγνωσης δεδομένων σε πίνακες ή λίστες με τη χρήση τεχνολογίας υποβοήθησης, όπως του αναγνώστη οθόνης."

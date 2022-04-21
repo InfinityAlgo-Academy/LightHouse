@@ -1649,23 +1649,11 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "[Ĥåš å ᐅ`<meta name=\"viewport\">`ᐊ ţåĝ ŵîţĥ ᐅ`width`ᐊ öŕ ᐅ`initial-scale`ᐊ one two three four five six seven]"
   },
-  "lighthouse-core/config/default-config.js | a11yAriaGroupDescription": {
-    "message": "[Ţĥéšé åŕé öþþöŕţûñîţîéš ţö îmþŕövé ţĥé ûšåĝé öƒ ÅŔÎÅ îñ ýöûŕ åþþļîçåţîöñ ŵĥîçĥ måý éñĥåñçé ţĥé éxþéŕîéñçé ƒöŕ ûšéŕš öƒ åššîšţîvé ţéçĥñöļöĝý, ļîķé å šçŕééñ ŕéåðéŕ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone twentytwo twentythree]"
-  },
-  "lighthouse-core/config/default-config.js | a11yAriaGroupTitle": {
-    "message": "[ÅŔÎÅ one]"
-  },
   "lighthouse-core/config/default-config.js | a11yAudioVideoGroupDescription": {
     "message": "[Ţĥéšé åŕé öþþöŕţûñîţîéš ţö þŕövîðé åļţéŕñåţîvé çöñţéñţ ƒöŕ åûðîö åñð vîðéö. Ţĥîš måý îmþŕövé ţĥé éxþéŕîéñçé ƒöŕ ûšéŕš ŵîţĥ ĥéåŕîñĝ öŕ vîšîöñ îmþåîŕméñţš. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone twentytwo twentythree]"
   },
   "lighthouse-core/config/default-config.js | a11yAudioVideoGroupTitle": {
     "message": "[Åûðîö åñð vîðéö one two]"
-  },
-  "lighthouse-core/config/default-config.js | a11yBestPracticesGroupDescription": {
-    "message": "[Ţĥéšé îţémš ĥîĝĥļîĝĥţ çömmöñ åççéššîбîļîţý бéšţ þŕåçţîçéš. one two three four five six seven eight nine ten eleven twelve]"
-  },
-  "lighthouse-core/config/default-config.js | a11yBestPracticesGroupTitle": {
-    "message": "[Бéšţ þŕåçţîçéš one two]"
   },
   "lighthouse-core/config/default-config.js | a11yCategoryDescription": {
     "message": "[Ţĥéšé çĥéçķš ĥîĝĥļîĝĥţ öþþöŕţûñîţîéš ţö ᐅ[ᐊîmþŕövé ţĥé åççéššîбîļîţý öƒ ýöûŕ ŵéб åþþᐅ](https://developers.google.com/web/fundamentals/accessibility)ᐊ. Öñļý å šûбšéţ öƒ åççéššîбîļîţý îššûéš çåñ бé åûţömåţîçåļļý ðéţéçţéð šö måñûåļ ţéšţîñĝ îš åļšö éñçöûŕåĝéð. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone twentytwo twentythree twentyfour twentyfive twentysix]"
@@ -1676,29 +1664,11 @@
   "lighthouse-core/config/default-config.js | a11yCategoryTitle": {
     "message": "[Åççéššîбîļîţý one two]"
   },
-  "lighthouse-core/config/default-config.js | a11yColorContrastGroupDescription": {
-    "message": "[Ţĥéšé åŕé öþþöŕţûñîţîéš ţö îmþŕövé ţĥé ļéĝîбîļîţý öƒ ýöûŕ çöñţéñţ. one two three four five six seven eight nine ten eleven twelve thirteen]"
-  },
-  "lighthouse-core/config/default-config.js | a11yColorContrastGroupTitle": {
-    "message": "[Çöñţŕåšţ one]"
-  },
   "lighthouse-core/config/default-config.js | a11yLanguageGroupDescription": {
     "message": "[Ţĥéšé åŕé öþþöŕţûñîţîéš ţö îmþŕövé ţĥé îñţéŕþŕéţåţîöñ öƒ ýöûŕ çöñţéñţ бý ûšéŕš îñ ðîƒƒéŕéñţ ļöçåļéš. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen]"
   },
   "lighthouse-core/config/default-config.js | a11yLanguageGroupTitle": {
     "message": "[Îñţéŕñåţîöñåļîžåţîöñ åñð ļöçåļîžåţîöñ one two three four]"
-  },
-  "lighthouse-core/config/default-config.js | a11yNamesLabelsGroupDescription": {
-    "message": "[Ţĥéšé åŕé öþþöŕţûñîţîéš ţö îmþŕövé ţĥé šémåñţîçš öƒ ţĥé çöñţŕöļš îñ ýöûŕ åþþļîçåţîöñ. Ţĥîš måý éñĥåñçé ţĥé éxþéŕîéñçé ƒöŕ ûšéŕš öƒ åššîšţîvé ţéçĥñöļöĝý, ļîķé å šçŕééñ ŕéåðéŕ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone twentytwo twentythree twentyfour]"
-  },
-  "lighthouse-core/config/default-config.js | a11yNamesLabelsGroupTitle": {
-    "message": "[Ñåméš åñð ļåбéļš one two]"
-  },
-  "lighthouse-core/config/default-config.js | a11yNavigationGroupDescription": {
-    "message": "[Ţĥéšé åŕé öþþöŕţûñîţîéš ţö îmþŕövé ķéýбöåŕð ñåvîĝåţîöñ îñ ýöûŕ åþþļîçåţîöñ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen]"
-  },
-  "lighthouse-core/config/default-config.js | a11yNavigationGroupTitle": {
-    "message": "[Ñåvîĝåţîöñ one two]"
   },
   "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupDescription": {
     "message": "[Ţĥéšé åŕé öþþöŕţûñîţîéš ţö îmþŕövé ţĥé éxþéŕîéñçé öƒ ŕéåðîñĝ ţåбûļåŕ öŕ ļîšţ ðåţå ûšîñĝ åššîšţîvé ţéçĥñöļöĝý, ļîķé å šçŕééñ ŕéåðéŕ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty]"

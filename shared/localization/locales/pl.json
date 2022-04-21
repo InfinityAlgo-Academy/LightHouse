@@ -1649,23 +1649,11 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "Zawiera tag `<meta name=\"viewport\">` z elementem `width` lub `initial-scale`"
   },
-  "lighthouse-core/config/default-config.js | a11yAriaGroupDescription": {
-    "message": "To są możliwości lepszego wykorzystania atrybutów ARIA w Twojej aplikacji, by była ona wygodniejsza dla użytkowników technologii wspomagających, takich jak czytniki ekranu."
-  },
-  "lighthouse-core/config/default-config.js | a11yAriaGroupTitle": {
-    "message": "ARIA"
-  },
   "lighthouse-core/config/default-config.js | a11yAudioVideoGroupDescription": {
     "message": "To są możliwości dostarczenia alternatywnej treści dla audio i wideo. Dzięki temu treści mogą stać się bardziej przystępne dla osób niedowidzących i niedosłyszących."
   },
   "lighthouse-core/config/default-config.js | a11yAudioVideoGroupTitle": {
     "message": "Dźwięk i obraz"
-  },
-  "lighthouse-core/config/default-config.js | a11yBestPracticesGroupDescription": {
-    "message": "Te pozycje wskazują typowe sprawdzone metody ułatwień dostępu."
-  },
-  "lighthouse-core/config/default-config.js | a11yBestPracticesGroupTitle": {
-    "message": "Sprawdzone metody"
   },
   "lighthouse-core/config/default-config.js | a11yCategoryDescription": {
     "message": "Te testy wskazują możliwości [poprawy ułatwień dostępu Twojej aplikacji internetowej](https://developers.google.com/web/fundamentals/accessibility). Ponieważ wykryć automatycznie można tylko część problemów z ułatwieniami dostępu, wskazane jest przeprowadzenie też testów ręcznych."
@@ -1676,29 +1664,11 @@
   "lighthouse-core/config/default-config.js | a11yCategoryTitle": {
     "message": "Ułatwienia dostępu"
   },
-  "lighthouse-core/config/default-config.js | a11yColorContrastGroupDescription": {
-    "message": "To są możliwości poprawy czytelności treści."
-  },
-  "lighthouse-core/config/default-config.js | a11yColorContrastGroupTitle": {
-    "message": "Kontrast"
-  },
   "lighthouse-core/config/default-config.js | a11yLanguageGroupDescription": {
     "message": "To są możliwości ulepszenia interpretacji treści przez użytkowników mających różne ustawienia języka."
   },
   "lighthouse-core/config/default-config.js | a11yLanguageGroupTitle": {
     "message": "Internacjonalizacja i lokalizacja"
-  },
-  "lighthouse-core/config/default-config.js | a11yNamesLabelsGroupDescription": {
-    "message": "To są możliwości ulepszenia semantyki kontrolek aplikacji. Dzięki temu treści mogą stać się bardziej przystępne dla użytkowników technologii wspomagających, takich jak czytniki ekranu."
-  },
-  "lighthouse-core/config/default-config.js | a11yNamesLabelsGroupTitle": {
-    "message": "Nazwy i etykiety"
-  },
-  "lighthouse-core/config/default-config.js | a11yNavigationGroupDescription": {
-    "message": "To są możliwości ulepszenia nawigacji za pomocą klawiatury w Twojej aplikacji."
-  },
-  "lighthouse-core/config/default-config.js | a11yNavigationGroupTitle": {
-    "message": "Nawigacja"
   },
   "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupDescription": {
     "message": "Tutaj znajdziesz informacje o tym, jak możesz ułatwić odczytywanie danych z tabel i list za pomocą technologii wspomagających osoby z niepełnosprawnością (np. czytników ekranu)."

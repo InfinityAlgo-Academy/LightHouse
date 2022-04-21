@@ -1649,23 +1649,11 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "Có thẻ `<meta name=\"viewport\">` có `width` hoặc `initial-scale`"
   },
-  "lighthouse-core/config/default-config.js | a11yAriaGroupDescription": {
-    "message": "Đây là những cơ hội giúp cải thiện việc sử dụng ARIA trong ứng dụng của bạn, nhờ đó có thể nâng cao trải nghiệm cho người dùng công nghệ hỗ trợ, chẳng hạn như trình đọc màn hình."
-  },
-  "lighthouse-core/config/default-config.js | a11yAriaGroupTitle": {
-    "message": "ARIA"
-  },
   "lighthouse-core/config/default-config.js | a11yAudioVideoGroupDescription": {
     "message": "Đây là các cơ hội để cung cấp nội dung thay thế cho âm thanh và video. Điều này có thể cải thiện trải nghiệm của người dùng khiếm thính hoặc khiếm thị."
   },
   "lighthouse-core/config/default-config.js | a11yAudioVideoGroupTitle": {
     "message": "Âm thanh và video"
-  },
-  "lighthouse-core/config/default-config.js | a11yBestPracticesGroupDescription": {
-    "message": "Những mục này nêu bật các phương pháp hay nhất thường dùng cho hỗ trợ tiếp cận"
-  },
-  "lighthouse-core/config/default-config.js | a11yBestPracticesGroupTitle": {
-    "message": "Những phương pháp hay nhất"
   },
   "lighthouse-core/config/default-config.js | a11yCategoryDescription": {
     "message": "Các hoạt động kiểm tra này giúp xác định cơ hội [cải thiện khả năng hỗ trợ tiếp cận của ứng dụng web](https://developers.google.com/web/fundamentals/accessibility). Các hoạt động này chỉ có thể tự động phát hiện một phần vấn đề liên quan đến khả năng hỗ trợ tiếp cận, do đó, bạn nên kiểm tra cả theo cách thủ công."
@@ -1676,29 +1664,11 @@
   "lighthouse-core/config/default-config.js | a11yCategoryTitle": {
     "message": "Hỗ trợ tiếp cận"
   },
-  "lighthouse-core/config/default-config.js | a11yColorContrastGroupDescription": {
-    "message": "Đây là các cơ hội giúp cải thiện độ dễ đọc cho nội dung của bạn."
-  },
-  "lighthouse-core/config/default-config.js | a11yColorContrastGroupTitle": {
-    "message": "Độ tương phản"
-  },
   "lighthouse-core/config/default-config.js | a11yLanguageGroupDescription": {
     "message": "Đây là những cơ hội giúp cải thiện khả năng diễn giải của người dùng đối với nội dung của bạn ở các ngôn ngữ khác nhau."
   },
   "lighthouse-core/config/default-config.js | a11yLanguageGroupTitle": {
     "message": "Quốc tế hóa và bản địa hóa"
-  },
-  "lighthouse-core/config/default-config.js | a11yNamesLabelsGroupDescription": {
-    "message": "Đây là những cơ hội giúp cải thiện chức năng diễn giải ngữ nghĩa của các biện pháp kiểm soát trong ứng dụng của bạn. Điều này có thể nâng cao trải nghiệm cho những người dùng công nghệ hỗ trợ, chẳng hạn như trình đọc màn hình."
-  },
-  "lighthouse-core/config/default-config.js | a11yNamesLabelsGroupTitle": {
-    "message": "Tên và nhãn"
-  },
-  "lighthouse-core/config/default-config.js | a11yNavigationGroupDescription": {
-    "message": "Đây là các cơ hội để cải thiện khả năng điều hướng bằng bàn phím trong ứng dụng của bạn."
-  },
-  "lighthouse-core/config/default-config.js | a11yNavigationGroupTitle": {
-    "message": "Điều hướng"
   },
   "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupDescription": {
     "message": "Đây là những cơ hội để cải thiện trải nghiệm đọc dữ liệu trong bảng hoặc danh sách bằng công nghệ hỗ trợ, chẳng hạn như trình đọc màn hình."

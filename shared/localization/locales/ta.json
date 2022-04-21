@@ -1649,23 +1649,11 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "`width` அல்லது `initial-scale` உடன் `<meta name=\"viewport\">` குறிச்சொல் அமைக்கப்பட்டுள்ளது"
   },
-  "lighthouse-core/config/default-config.js | a11yAriaGroupDescription": {
-    "message": "இந்த வாய்ப்புகள் உங்கள் ஆப்ஸில் உள்ள ARIAயின் ஆப்ஸை மேம்படுத்தும், இது ஸ்க்ரீன் ரீடர் போன்ற உதவிகரமான தொழில்நுட்பத்தைப் பயன்படுத்தும் பயனர்களின் அனுபவத்தை மேம்படுத்தக்கூடும்."
-  },
-  "lighthouse-core/config/default-config.js | a11yAriaGroupTitle": {
-    "message": "ARIA"
-  },
   "lighthouse-core/config/default-config.js | a11yAudioVideoGroupDescription": {
     "message": "இவை ஆடியோவுக்கும் வீடியோவுக்கும் மாற்று உள்ளடக்கத்தை வழங்குவதற்கான வாய்ப்புகளாகும். இது செவித்திறன் அல்லது பார்வைக் குறைபாடுள்ள பயனர்களுக்கான அனுபவத்தை மேம்படுத்தக்கூடும்."
   },
   "lighthouse-core/config/default-config.js | a11yAudioVideoGroupTitle": {
     "message": "ஆடியோ & வீடியோ"
-  },
-  "lighthouse-core/config/default-config.js | a11yBestPracticesGroupDescription": {
-    "message": "இவை பொதுவான அணுகல்தன்மைக்கான சிறந்த நடைமுறைகளைத் தனிப்படுத்துகின்றன."
-  },
-  "lighthouse-core/config/default-config.js | a11yBestPracticesGroupTitle": {
-    "message": "சிறந்த நடைமுறைகள்"
   },
   "lighthouse-core/config/default-config.js | a11yCategoryDescription": {
     "message": "இந்த சரிபார்ப்புகள் [உங்கள் இணைய ஆப்ஸின் அணுகல்தன்மையை மேம்படுத்துவதற்கான](https://developers.google.com/web/fundamentals/accessibility) வாய்ப்புகளைத் தனிப்படுத்திக் காட்டுகின்றன. அணுகல்தன்மை சிக்கல்களில் சிலவற்றை மட்டுமே தானாகக் கண்டறிய முடியும் என்பதால் நேரடி பரிசோதனையையும் செய்ய ஊக்குவிக்கிறோம்."
@@ -1676,29 +1664,11 @@
   "lighthouse-core/config/default-config.js | a11yCategoryTitle": {
     "message": "அணுகல்தன்மை"
   },
-  "lighthouse-core/config/default-config.js | a11yColorContrastGroupDescription": {
-    "message": "இவை உங்கள் உள்ளடக்கத்தின் நம்பகத்தன்மையை மேம்படுத்துவதற்கான வாய்ப்புகளாகும்."
-  },
-  "lighthouse-core/config/default-config.js | a11yColorContrastGroupTitle": {
-    "message": "ஒளி மாறுபாடு"
-  },
   "lighthouse-core/config/default-config.js | a11yLanguageGroupDescription": {
     "message": "இந்த வாய்ப்புகள், பல்வேறு மொழிப் பயனர்கள் உங்கள் உள்ளடக்கத்தைப் புரிந்துகொள்வதற்கான வாய்ப்பினை மேம்படுத்தும்."
   },
   "lighthouse-core/config/default-config.js | a11yLanguageGroupTitle": {
     "message": "சர்வதேசமயமாக்குதல் & உள்ளூர்மயமாக்குதல்"
-  },
-  "lighthouse-core/config/default-config.js | a11yNamesLabelsGroupDescription": {
-    "message": "இந்த வாய்ப்புகள் உங்கள் ஆப்ஸின் கட்டுப்பாடுகளின் பொருள்விளக்கத்தை மேம்படுத்தும். இது ஸ்க்ரீன் ரீடர் போன்ற உதவிகரமான தொழில்நுட்பத்தைப் பயன்படுத்தும் பயனர்களின் அனுபவத்தை மேம்படுத்தக்கூடும்."
-  },
-  "lighthouse-core/config/default-config.js | a11yNamesLabelsGroupTitle": {
-    "message": "பெயர்கள் & லேபிள்கள்"
-  },
-  "lighthouse-core/config/default-config.js | a11yNavigationGroupDescription": {
-    "message": "இவை உங்கள் ஆப்ஸில் கீபோர்டு நேவிகேஷனை மேம்படுத்துவதற்கான வாய்ப்புகளாகும்."
-  },
-  "lighthouse-core/config/default-config.js | a11yNavigationGroupTitle": {
-    "message": "நேவிகேஷன்"
   },
   "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupDescription": {
     "message": "இவை ஸ்க்ரீன் ரீடர் போன்ற உதவிகரமான தொழில்நுட்பத்தைப் பயன்படுத்தி அட்டவணையையோ பட்டியல் தரவையோ படிக்கும் அனுபவத்தை மேம்படுத்துவதற்கான வாய்ப்புகளாகும்."

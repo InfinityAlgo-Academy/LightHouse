@@ -1649,23 +1649,11 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "Van `width` vagy `initial-scale` beállítással rendelkező `<meta name=\"viewport\">` címkéje"
   },
-  "lighthouse-core/config/default-config.js | a11yAriaGroupDescription": {
-    "message": "Ezek a lehetőségek segíthetnek az ARIA alkalmazásban való használatának javításában, ami jobb felhasználói élményt biztosíthat a kisegítő technológiákat (például képernyőolvasót) használó személyeknek."
-  },
-  "lighthouse-core/config/default-config.js | a11yAriaGroupTitle": {
-    "message": "ARIA"
-  },
   "lighthouse-core/config/default-config.js | a11yAudioVideoGroupDescription": {
     "message": "Több lehetőség van, melyek révén alternatív tartalmakat biztosíthat videókhoz és hanganyagokhoz. Ezzel javíthatja a hallás- és látássérült felhasználók élményét."
   },
   "lighthouse-core/config/default-config.js | a11yAudioVideoGroupTitle": {
     "message": "Hang- és videohívások"
-  },
-  "lighthouse-core/config/default-config.js | a11yBestPracticesGroupDescription": {
-    "message": "Itt a kisegítő lehetőségekkel kapcsolatos bevált módszereket találja."
-  },
-  "lighthouse-core/config/default-config.js | a11yBestPracticesGroupTitle": {
-    "message": "Bevált módszerek"
   },
   "lighthouse-core/config/default-config.js | a11yCategoryDescription": {
     "message": "Ezek az ellenőrzések olyan lehetőségeket emelnek ki, melyekkel javíthatók a [webalkalmazás kisegítő lehetőségei](https://developers.google.com/web/fundamentals/accessibility). A kisegítő lehetőségekkel kapcsolatos problémáknak csak egy része észlelhető automatikusan, ezért a manuális ellenőrzés is ajánlott."
@@ -1676,29 +1664,11 @@
   "lighthouse-core/config/default-config.js | a11yCategoryTitle": {
     "message": "Kisegítő lehetőségek"
   },
-  "lighthouse-core/config/default-config.js | a11yColorContrastGroupDescription": {
-    "message": "Ezek a lehetőségek a tartalom olvashatóságát segítik."
-  },
-  "lighthouse-core/config/default-config.js | a11yColorContrastGroupTitle": {
-    "message": "Kontraszt"
-  },
   "lighthouse-core/config/default-config.js | a11yLanguageGroupDescription": {
     "message": "Ezek a lehetőségek a tartalom különböző országokban élő felhasználók általi értelmezését segítik."
   },
   "lighthouse-core/config/default-config.js | a11yLanguageGroupTitle": {
     "message": "Nemzetközi megoldások és honosítás"
-  },
-  "lighthouse-core/config/default-config.js | a11yNamesLabelsGroupDescription": {
-    "message": "Ezek a lehetőségek az alkalmazás szemantikai jellemzőinek fejlesztését segítik. Javíthatják a kisegítő technológiákat (például képernyőolvasót) használó személyek felhasználói élményét."
-  },
-  "lighthouse-core/config/default-config.js | a11yNamesLabelsGroupTitle": {
-    "message": "Nevek és címkék"
-  },
-  "lighthouse-core/config/default-config.js | a11yNavigationGroupDescription": {
-    "message": "Több lehetőség is van a billentyűzettel való navigáció fejlesztésére az alkalmazásban."
-  },
-  "lighthouse-core/config/default-config.js | a11yNavigationGroupTitle": {
-    "message": "Navigáció"
   },
   "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupDescription": {
     "message": "Ezek a lehetőségek a táblázatos és listaformátumú adatok olvasási élményét javítják olyan kisegítő technológiák használata esetén, mint a képernyőolvasó."

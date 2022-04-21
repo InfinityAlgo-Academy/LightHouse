@@ -1649,23 +1649,11 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "Har en `<meta name=\"viewport\">`-tagg med `width` eller `initial-scale`"
   },
-  "lighthouse-core/config/default-config.js | a11yAriaGroupDescription": {
-    "message": "Det här är förslag på hur ARIA kan förbättras i appen så att den fungerar bättre för den som använder skärmläsare eller andra hjälpmedel."
-  },
-  "lighthouse-core/config/default-config.js | a11yAriaGroupTitle": {
-    "message": "ARIA"
-  },
   "lighthouse-core/config/default-config.js | a11yAudioVideoGroupDescription": {
     "message": "Det här är möjligheter att tillhandahålla alternativt innehåll för ljud och video. Detta kan förbättra upplevelsen för användare med nedsatt syn eller hörsel."
   },
   "lighthouse-core/config/default-config.js | a11yAudioVideoGroupTitle": {
     "message": "Ljud och bild"
-  },
-  "lighthouse-core/config/default-config.js | a11yBestPracticesGroupDescription": {
-    "message": "Dessa punkter visar bra metoder för vanliga hjälpmedel."
-  },
-  "lighthouse-core/config/default-config.js | a11yBestPracticesGroupTitle": {
-    "message": "Bästa metoder"
   },
   "lighthouse-core/config/default-config.js | a11yCategoryDescription": {
     "message": "Dessa kontroller visar möjligheter att [förbättra tillgängligheten för din webbapp](https://developers.google.com/web/fundamentals/accessibility). Alla tillgänglighetsproblem kan inte identifieras automatiskt. Du bör därför även testa manuellt."
@@ -1676,29 +1664,11 @@
   "lighthouse-core/config/default-config.js | a11yCategoryTitle": {
     "message": "Tillgänglighet"
   },
-  "lighthouse-core/config/default-config.js | a11yColorContrastGroupDescription": {
-    "message": "Det här är förslag på hur du kan göra innehållet lättare att läsa."
-  },
-  "lighthouse-core/config/default-config.js | a11yColorContrastGroupTitle": {
-    "message": "Kontrast"
-  },
   "lighthouse-core/config/default-config.js | a11yLanguageGroupDescription": {
     "message": "Det här är förslag på hur du kan göra det lättare för användare med olika språkinställningar att tolka innehållet."
   },
   "lighthouse-core/config/default-config.js | a11yLanguageGroupTitle": {
     "message": "Internationalisering och lokalisering"
-  },
-  "lighthouse-core/config/default-config.js | a11yNamesLabelsGroupDescription": {
-    "message": "Det här är förslag på hur du kan göra det tydligare vad olika objekt i appens gränssnitt är. Det kan förenkla för den som använder skärmläsare eller andra hjälpmedel."
-  },
-  "lighthouse-core/config/default-config.js | a11yNamesLabelsGroupTitle": {
-    "message": "Namn och etiketter"
-  },
-  "lighthouse-core/config/default-config.js | a11yNavigationGroupDescription": {
-    "message": "Det här är möjligheter att förbättra tangentbordsnavigeringen i appen."
-  },
-  "lighthouse-core/config/default-config.js | a11yNavigationGroupTitle": {
-    "message": "Navigering"
   },
   "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupDescription": {
     "message": "Det här är förslag till att förbättra upplevelsen av att läsa tabeller eller listor med skärmläsare eller annan hjälpmedelsteknik."

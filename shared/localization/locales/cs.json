@@ -1649,23 +1649,11 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "Obsahuje značku `<meta name=\"viewport\">` s atributem `width` nebo `initial-scale`"
   },
-  "lighthouse-core/config/default-config.js | a11yAriaGroupDescription": {
-    "message": "Toto jsou příležitosti ke zlepšení používání specifikace ARIA ve vaší aplikaci, které mohou zlepšit prostředí pro uživatele asistenčních technologií, jako jsou čtečky obrazovek."
-  },
-  "lighthouse-core/config/default-config.js | a11yAriaGroupTitle": {
-    "message": "ARIA"
-  },
   "lighthouse-core/config/default-config.js | a11yAudioVideoGroupDescription": {
     "message": "Toto jsou příležitosti k poskytnutí alternativního obsahu pro zvuky a videa. Mohou zlepšit prostředí pro sluchově nebo zrakově postižené uživatele."
   },
   "lighthouse-core/config/default-config.js | a11yAudioVideoGroupTitle": {
     "message": "Zvuk a video"
-  },
-  "lighthouse-core/config/default-config.js | a11yBestPracticesGroupDescription": {
-    "message": "Tyto položky upozorňují na běžné doporučené postupy v oblasti přístupnosti."
-  },
-  "lighthouse-core/config/default-config.js | a11yBestPracticesGroupTitle": {
-    "message": "Rady a tipy pro odpovídání na recenze"
   },
   "lighthouse-core/config/default-config.js | a11yCategoryDescription": {
     "message": "Tyto kontroly odhalují příležitosti ke [zlepšení přístupnosti webové aplikace](https://developers.google.com/web/fundamentals/accessibility). Automaticky lze odhalit jen část problémů s přístupností, proto obsah doporučujeme otestovat i ručně."
@@ -1676,29 +1664,11 @@
   "lighthouse-core/config/default-config.js | a11yCategoryTitle": {
     "message": "Přístupnost"
   },
-  "lighthouse-core/config/default-config.js | a11yColorContrastGroupDescription": {
-    "message": "Toto jsou příležitosti ke zlepšení čitelnosti obsahu."
-  },
-  "lighthouse-core/config/default-config.js | a11yColorContrastGroupTitle": {
-    "message": "Kontrast"
-  },
   "lighthouse-core/config/default-config.js | a11yLanguageGroupDescription": {
     "message": "Toto jsou příležitosti ke zlepšení interpretace vašeho obsahu u uživatelů různých jazyků."
   },
   "lighthouse-core/config/default-config.js | a11yLanguageGroupTitle": {
     "message": "Internacionalizace a lokalizace"
-  },
-  "lighthouse-core/config/default-config.js | a11yNamesLabelsGroupDescription": {
-    "message": "Toto jsou příležitosti ke zlepšení sémantiky ovládacích prvků v aplikaci. Mohou zlepšit prostředí pro uživatele asistenčních technologií, jako jsou například čtečky obrazovek."
-  },
-  "lighthouse-core/config/default-config.js | a11yNamesLabelsGroupTitle": {
-    "message": "Názvy a štítky"
-  },
-  "lighthouse-core/config/default-config.js | a11yNavigationGroupDescription": {
-    "message": "Toto jsou příležitosti ke zlepšení navigace pomocí klávesnice v aplikaci."
-  },
-  "lighthouse-core/config/default-config.js | a11yNavigationGroupTitle": {
-    "message": "Navigace"
   },
   "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupDescription": {
     "message": "Toto jsou příležitosti ke zlepšení dojmu při čtení tabulek nebo seznamů pomocí asistenčních technologií, jako je čtečka obrazovky."

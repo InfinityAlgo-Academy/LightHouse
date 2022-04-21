@@ -1649,23 +1649,11 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "Ir tags `<meta name=\"viewport\">` ar `width` vai `initial-scale`"
   },
-  "lighthouse-core/config/default-config.js | a11yAriaGroupDescription": {
-    "message": "Šie ieteikumi ļauj uzlabot ARIA lietojumu jūsu lietojumprogrammā. Tādējādi varat uzlabot pieredzi lietotājiem, kuri izmanto palīgtehnoloģijas, piemēram, ekrāna lasītājus."
-  },
-  "lighthouse-core/config/default-config.js | a11yAriaGroupTitle": {
-    "message": "ARIA"
-  },
   "lighthouse-core/config/default-config.js | a11yAudioVideoGroupDescription": {
     "message": "Šie ieteikumi ļauj nodrošināt papildu audio vai video saturu. Tādējādi var uzlabot pieredzi lietotājiem ar dzirdes vai redzes traucējumiem."
   },
   "lighthouse-core/config/default-config.js | a11yAudioVideoGroupTitle": {
     "message": "Audio un video"
-  },
-  "lighthouse-core/config/default-config.js | a11yBestPracticesGroupDescription": {
-    "message": "Šie vienumi parāda izplatītas pieejamības paraugprakses."
-  },
-  "lighthouse-core/config/default-config.js | a11yBestPracticesGroupTitle": {
-    "message": "Paraugprakse"
   },
   "lighthouse-core/config/default-config.js | a11yCategoryDescription": {
     "message": "Šīs atzīmes parāda iespējas [uzlabot jūsu tīmekļa lietotnes pieejamību](https://developers.google.com/web/fundamentals/accessibility). Automātiski var noteikt tikai pieejamības problēmu apakškopu, tāpēc ir ieteicama arī manuālā testēšana."
@@ -1676,29 +1664,11 @@
   "lighthouse-core/config/default-config.js | a11yCategoryTitle": {
     "message": "Pieejamība"
   },
-  "lighthouse-core/config/default-config.js | a11yColorContrastGroupDescription": {
-    "message": "Šie ieteikumi ļauj uzlabot satura lasāmību."
-  },
-  "lighthouse-core/config/default-config.js | a11yColorContrastGroupTitle": {
-    "message": "Kontrasts"
-  },
   "lighthouse-core/config/default-config.js | a11yLanguageGroupDescription": {
     "message": "Šie ieteikumi lietotājiem, kuri izmanto dažādas lokalizācijas, ļauj labāk izprast jūsu saturu."
   },
   "lighthouse-core/config/default-config.js | a11yLanguageGroupTitle": {
     "message": "Internacionalizācija un lokalizēšana"
-  },
-  "lighthouse-core/config/default-config.js | a11yNamesLabelsGroupDescription": {
-    "message": "Šie ieteikumi ļauj uzlabot lietojumprogrammas vadīklu semantiku. Tādējādi var nodrošināt labāku pieredzi lietotājiem, kuri izmanto palīgtehnoloģijas, piemēram, ekrāna lasītājus."
-  },
-  "lighthouse-core/config/default-config.js | a11yNamesLabelsGroupTitle": {
-    "message": "Nosaukumi un iezīmes"
-  },
-  "lighthouse-core/config/default-config.js | a11yNavigationGroupDescription": {
-    "message": "Šie ieteikumi ļauj uzlabot jūsu lietotnes tastatūras navigāciju."
-  },
-  "lighthouse-core/config/default-config.js | a11yNavigationGroupTitle": {
-    "message": "Navigācija"
   },
   "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupDescription": {
     "message": "Šeit ir norādītas iespējas uzlabot tabulu vai sarakstu datu lasīšanas pieredzi lietotājiem, kas izmanto palīgtehnoloģijas, piemēram, ekrāna lasītājus."

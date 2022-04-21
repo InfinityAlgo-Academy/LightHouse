@@ -1649,23 +1649,11 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "'`width`' లేదా '`initial-scale`'తో '`<meta name=\"viewport\">`' ట్యాగ్‌ను కలిగి ఉంది"
   },
-  "lighthouse-core/config/default-config.js | a11yAriaGroupDescription": {
-    "message": "మీ అప్లికేషన్‌లో ARIA వినియోగాన్ని మెరుగుపరచాడానికి ఇవి అవకాశాలుగా ఉపయోగపడతాయి, ఇది స్క్రీన్ రీడర్ లాంటి సహాయక సాంకేతిక పరిజ్ఞానం ఉపయోగించే వినియోగదారులకు మెరుగైన అనుభవాన్ని అందించవచ్చు."
-  },
-  "lighthouse-core/config/default-config.js | a11yAriaGroupTitle": {
-    "message": "ARIA"
-  },
   "lighthouse-core/config/default-config.js | a11yAudioVideoGroupDescription": {
     "message": "ఇవి, ఆడియో మరియు వీడియో కోసం ప్రత్యామ్నాయ వచనాన్ని అందించ‌గ‌ల అవకాశాలు. వినికిడి లేదా కంటిచూపులో సమస్యలు ఉన్న వినియోగదారులకు ఇది మెరుగైన అనుభవాన్ని అందించగలదు."
   },
   "lighthouse-core/config/default-config.js | a11yAudioVideoGroupTitle": {
     "message": "ఆడియో మరియు వీడియో"
-  },
-  "lighthouse-core/config/default-config.js | a11yBestPracticesGroupDescription": {
-    "message": "సాధారణ యాక్సెసిబిలిటీ ఉత్తమ అభ్యాసాలను ఈ అంశాలు హైలైట్ చేస్తాయి."
-  },
-  "lighthouse-core/config/default-config.js | a11yBestPracticesGroupTitle": {
-    "message": "ఉత్తమ అభ్యాసాలు"
   },
   "lighthouse-core/config/default-config.js | a11yCategoryDescription": {
     "message": "[మీ వెబ్ యాప్ యొక్క యాక్సెసిబిలిటీని మెరుగుపరచగల](https://developers.google.com/web/fundamentals/accessibility) అవకాశాలను ఈ తనిఖీలు హైలైట్ చేస్తాయి. యాక్సెసిబిలిటీ సమస్యలలోని ఒక సబ్‌సెట్‌ను మాత్రమే ఆటోమేటిక్‌గా గుర్తించడం సాధ్యపడుతుంది, కనుక మాన్యువల్ పరీక్ష కూడా చేయాల్సిందిగా సిఫార్సు చేస్తున్నాము."
@@ -1676,29 +1664,11 @@
   "lighthouse-core/config/default-config.js | a11yCategoryTitle": {
     "message": "యాక్సెసిబిలిటీ"
   },
-  "lighthouse-core/config/default-config.js | a11yColorContrastGroupDescription": {
-    "message": "మీ కంటెంట్ స్పష్టతను మెరుగుపరచడానికి ఇవి అవకాశాలుగా ఉపయోగపడతాయి."
-  },
-  "lighthouse-core/config/default-config.js | a11yColorContrastGroupTitle": {
-    "message": "కాంట్రాస్ట్"
-  },
   "lighthouse-core/config/default-config.js | a11yLanguageGroupDescription": {
     "message": "వివిధ లొకేల్‌లలో వినియోగదారుల ద్వారా మీ కంటెంట్ భావ వ్యక్తీకరణను మెరుగుపరచడానికి ఇవి అవకాశాలుగా ఉపయోగపడతాయి."
   },
   "lighthouse-core/config/default-config.js | a11yLanguageGroupTitle": {
     "message": "అంతర్జాతీయీకరణ మరియు స్థానికీకరణ"
-  },
-  "lighthouse-core/config/default-config.js | a11yNamesLabelsGroupDescription": {
-    "message": "మీ అప్లికేషన్‌లోని నియంత్రణల అర్థ విచారాలను మెరుగుపరచడానికి ఇవి అవకాశాలుగా ఉపయోగపడతాయి. స్క్రీన్ రీడర్ లాంటి సహాయక సాంకేతిక పరిజ్ఞాన వినియోగదారులకు ఇది మరింత మెరుగైన అనుభవాన్ని అందించవచ్చు."
-  },
-  "lighthouse-core/config/default-config.js | a11yNamesLabelsGroupTitle": {
-    "message": "పేరు మరియు లేబుళ్లు"
-  },
-  "lighthouse-core/config/default-config.js | a11yNavigationGroupDescription": {
-    "message": "ఇవి, మీ అప్లికేషన్‌లో కీబోర్డ్ నావిగేషన్‌ను మెరుగ‌ప‌ర‌చ‌గ‌ల అవ‌కాశాలు."
-  },
-  "lighthouse-core/config/default-config.js | a11yNavigationGroupTitle": {
-    "message": "నావిగేషన్"
   },
   "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupDescription": {
     "message": "ఇవి, స్క్రీన్ రీడర్ లాంటి సహాయకరమైన సాంకేతికతను ఉపయోగించి పట్టికను లేదా లిస్ట్ డేటాను చదువుతున్నప్పుడు మెరుగైన అనుభవాన్ని అందించగల అవకాశాలు."

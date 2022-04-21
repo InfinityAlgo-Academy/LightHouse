@@ -1652,23 +1652,11 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "Ĥáŝ á `<meta name=\"viewport\">` t̂áĝ ẃît́ĥ `width` ór̂ `initial-scale`"
   },
-  "lighthouse-core/config/default-config.js | a11yAriaGroupDescription": {
-    "message": "T̂h́êśê ár̂é ôṕp̂ór̂t́ûńît́îéŝ t́ô ím̂ṕr̂óv̂é t̂h́ê úŝáĝé ôf́ ÂŔÎÁ îń ŷóûŕ âṕp̂ĺîćât́îón̂ ẃĥíĉh́ m̂áŷ én̂h́âńĉé t̂h́ê éx̂ṕêŕîén̂ćê f́ôŕ ûśêŕŝ óf̂ áŝśîśt̂ív̂é t̂éĉh́n̂ól̂óĝý, l̂ík̂é â śĉŕêén̂ ŕêád̂ér̂."
-  },
-  "lighthouse-core/config/default-config.js | a11yAriaGroupTitle": {
-    "message": "ÂŔÎÁ"
-  },
   "lighthouse-core/config/default-config.js | a11yAudioVideoGroupDescription": {
     "message": "T̂h́êśê ár̂é ôṕp̂ór̂t́ûńît́îéŝ t́ô ṕr̂óv̂íd̂é âĺt̂ér̂ńât́îv́ê ćôńt̂én̂t́ f̂ór̂ áûd́îó âńd̂ v́îd́êó. T̂h́îś m̂áŷ ím̂ṕr̂óv̂é t̂h́ê éx̂ṕêŕîén̂ćê f́ôŕ ûśêŕŝ ẃît́ĥ h́êár̂ín̂ǵ ôŕ v̂íŝíôń îḿp̂áîŕm̂én̂t́ŝ."
   },
   "lighthouse-core/config/default-config.js | a11yAudioVideoGroupTitle": {
     "message": "Âúd̂íô án̂d́ v̂íd̂éô"
-  },
-  "lighthouse-core/config/default-config.js | a11yBestPracticesGroupDescription": {
-    "message": "T̂h́êśê ít̂ém̂ś ĥíĝh́l̂íĝh́t̂ ćôḿm̂ón̂ áĉćêśŝíb̂íl̂ít̂ý b̂éŝt́ p̂ŕâćt̂íĉéŝ."
-  },
-  "lighthouse-core/config/default-config.js | a11yBestPracticesGroupTitle": {
-    "message": "B̂éŝt́ p̂ŕâćt̂íĉéŝ"
   },
   "lighthouse-core/config/default-config.js | a11yCategoryDescription": {
     "message": "T̂h́êśê ćĥéĉḱŝ h́îǵĥĺîǵĥt́ ôṕp̂ór̂t́ûńît́îéŝ t́ô [ím̂ṕr̂óv̂é t̂h́ê áĉćêśŝíb̂íl̂ít̂ý ôf́ ŷóûŕ ŵéb̂ áp̂ṕ](https://web.dev/lighthouse-accessibility/). Ôńl̂ý â śûb́ŝét̂ óf̂ áĉćêśŝíb̂íl̂ít̂ý îśŝúêś ĉán̂ b́ê áût́ôḿât́îćâĺl̂ý d̂ét̂éĉt́êd́ ŝó m̂án̂úâĺ t̂éŝt́îńĝ íŝ ál̂śô én̂ćôúr̂áĝéd̂."
@@ -1679,11 +1667,8 @@
   "lighthouse-core/config/default-config.js | a11yCategoryTitle": {
     "message": "Âćĉéŝśîb́îĺît́ŷ"
   },
-  "lighthouse-core/config/default-config.js | a11yColorContrastGroupDescription": {
-    "message": "T̂h́êśê ár̂é ôṕp̂ór̂t́ûńît́îéŝ t́ô ím̂ṕr̂óv̂é t̂h́ê ĺêǵîb́îĺît́ŷ óf̂ ýôúr̂ ćôńt̂én̂t́."
-  },
-  "lighthouse-core/config/default-config.js | a11yColorContrastGroupTitle": {
-    "message": "Ĉón̂t́r̂áŝt́"
+  "lighthouse-core/config/default-config.js | a11yLanguageCriticalTitle": {
+    "message": "Ĉŕît́îćâĺ âćĉéŝśîb́îĺît́ŷ ṕr̂ób̂ĺêḿŝ"
   },
   "lighthouse-core/config/default-config.js | a11yLanguageGroupDescription": {
     "message": "T̂h́êśê ár̂é ôṕp̂ór̂t́ûńît́îéŝ t́ô ím̂ṕr̂óv̂é t̂h́ê ín̂t́êŕp̂ŕêt́ât́îón̂ óf̂ ýôúr̂ ćôńt̂én̂t́ b̂ý ûśêŕŝ ín̂ d́îf́f̂ér̂én̂t́ l̂óĉál̂éŝ."
@@ -1691,17 +1676,11 @@
   "lighthouse-core/config/default-config.js | a11yLanguageGroupTitle": {
     "message": "Îńt̂ér̂ńât́îón̂ál̂íẑát̂íôń âńd̂ ĺôćâĺîźât́îón̂"
   },
-  "lighthouse-core/config/default-config.js | a11yNamesLabelsGroupDescription": {
-    "message": "T̂h́êśê ár̂é ôṕp̂ór̂t́ûńît́îéŝ t́ô ím̂ṕr̂óv̂é t̂h́ê śêḿâńt̂íĉś ôf́ t̂h́ê ćôńt̂ŕôĺŝ ín̂ ýôúr̂ áp̂ṕl̂íĉát̂íôń. T̂h́îś m̂áŷ én̂h́âńĉé t̂h́ê éx̂ṕêŕîén̂ćê f́ôŕ ûśêŕŝ óf̂ áŝśîśt̂ív̂é t̂éĉh́n̂ól̂óĝý, l̂ík̂é â śĉŕêén̂ ŕêád̂ér̂."
+  "lighthouse-core/config/default-config.js | a11yLanguageModerateTitle": {
+    "message": "M̂ód̂ér̂át̂é âćĉéŝśîb́îĺît́ŷ ṕr̂ób̂ĺêḿŝ"
   },
-  "lighthouse-core/config/default-config.js | a11yNamesLabelsGroupTitle": {
-    "message": "N̂ám̂éŝ án̂d́ l̂áb̂él̂ś"
-  },
-  "lighthouse-core/config/default-config.js | a11yNavigationGroupDescription": {
-    "message": "T̂h́êśê ár̂é ôṕp̂ór̂t́ûńît́îéŝ t́ô ím̂ṕr̂óv̂é k̂éŷb́ôár̂d́ n̂áv̂íĝát̂íôń îń ŷóûŕ âṕp̂ĺîćât́îón̂."
-  },
-  "lighthouse-core/config/default-config.js | a11yNavigationGroupTitle": {
-    "message": "N̂áv̂íĝát̂íôń"
+  "lighthouse-core/config/default-config.js | a11yLanguageSeriousTitle": {
+    "message": "Ŝér̂íôúŝ áĉćêśŝíb̂íl̂ít̂ý p̂ŕôb́l̂ém̂ś"
   },
   "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupDescription": {
     "message": "T̂h́êśê ár̂é ôṕp̂ór̂t́ûńît́îéŝ t́ô ím̂ṕr̂óv̂é t̂h́ê éx̂ṕêŕîén̂ćê óf̂ ŕêád̂ín̂ǵ t̂áb̂úl̂ár̂ ór̂ ĺîśt̂ d́ât́â úŝín̂ǵ âśŝíŝt́îv́ê t́êćĥńôĺôǵŷ, ĺîḱê á ŝćr̂éêń r̂éâd́êŕ."

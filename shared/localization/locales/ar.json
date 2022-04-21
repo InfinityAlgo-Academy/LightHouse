@@ -1649,23 +1649,11 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "تضمين علامة `<meta name=\"viewport\">` مع `width` أو `initial-scale`"
   },
-  "lighthouse-core/config/default-config.js | a11yAriaGroupDescription": {
-    "message": "هذه هي فرص لتحسين استخدام ARIA في تطبيقك، ما قد يحسّن تجربة مستخدمي التكنولوجيا المساعدة، مثل قارئ الشاشة."
-  },
-  "lighthouse-core/config/default-config.js | a11yAriaGroupTitle": {
-    "message": "ARIA"
-  },
   "lighthouse-core/config/default-config.js | a11yAudioVideoGroupDescription": {
     "message": "هذه الفرص تتيح توفير محتوى بديل للصوت والفيديو. قد يحسّن ذلك التجربة للمستخدمين الذين يعانون من إعاقات سمعية أو بصرية."
   },
   "lighthouse-core/config/default-config.js | a11yAudioVideoGroupTitle": {
     "message": "الصوت والفيديو"
-  },
-  "lighthouse-core/config/default-config.js | a11yBestPracticesGroupDescription": {
-    "message": "تحدّد هذه العناصر أفضل الممارسات الشائعة المتعلقة بإمكانية الوصول."
-  },
-  "lighthouse-core/config/default-config.js | a11yBestPracticesGroupTitle": {
-    "message": "أفضل الممارسات"
   },
   "lighthouse-core/config/default-config.js | a11yCategoryDescription": {
     "message": "تحدّد عمليات التحقق هذه الفرص التي تتيح [تحسين إمكانية الوصول إلى تطبيق الويب](https://developers.google.com/web/fundamentals/accessibility). ولا يمكن إجراء رصد تلقائي إلّا لمجموعة فرعية من مشاكل إمكانية الوصول، لذلك يُنصح أيضًا باستخدام الاختبار اليدوي."
@@ -1676,29 +1664,11 @@
   "lighthouse-core/config/default-config.js | a11yCategoryTitle": {
     "message": "إمكانية الوصول"
   },
-  "lighthouse-core/config/default-config.js | a11yColorContrastGroupDescription": {
-    "message": "هذه هي فرص لتحسين سهولة قراءة المحتوى."
-  },
-  "lighthouse-core/config/default-config.js | a11yColorContrastGroupTitle": {
-    "message": "التباين"
-  },
   "lighthouse-core/config/default-config.js | a11yLanguageGroupDescription": {
     "message": "هذه هي فرص لتحسين تفسير المحتوى من خلال المستخدمين بلغات مختلفة."
   },
   "lighthouse-core/config/default-config.js | a11yLanguageGroupTitle": {
     "message": "التدويل والأقلمة"
-  },
-  "lighthouse-core/config/default-config.js | a11yNamesLabelsGroupDescription": {
-    "message": "هذه هي فرص لتحسين دلالات عناصر التحكُّم في التطبيق. قد يحسّن ذلك من تجربة مستخدمي التكنولوجيا المساعدة، مثل قارئ الشاشة."
-  },
-  "lighthouse-core/config/default-config.js | a11yNamesLabelsGroupTitle": {
-    "message": "الأسماء والتصنيفات"
-  },
-  "lighthouse-core/config/default-config.js | a11yNavigationGroupDescription": {
-    "message": "هذه الفرص تتيح لك تحسين التنقل باستخدام لوحة المفاتيح في تطبيقك."
-  },
-  "lighthouse-core/config/default-config.js | a11yNavigationGroupTitle": {
-    "message": "التنقل"
   },
   "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupDescription": {
     "message": "تُعرَض هنا فرص لتحسين تجربة قراءة بيانات القوائم أو الجداول باستخدام التكنولوجيا المساعِدة، مثل قارئ الشاشة."

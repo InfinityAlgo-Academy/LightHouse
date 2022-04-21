@@ -1649,23 +1649,11 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "יש תג `<meta name=\"viewport\">` עם `width` או `initial-scale`"
   },
-  "lighthouse-core/config/default-config.js | a11yAriaGroupDescription": {
-    "message": "אלו הזדמנויות לשיפור השימוש ב-ARIA באפליקציה, והן יכולות לשפר את החוויה של משתמשים שנעזרים בטכנולוגיות לנגישות, כמו קוראי מסך."
-  },
-  "lighthouse-core/config/default-config.js | a11yAriaGroupTitle": {
-    "message": "ARIA"
-  },
   "lighthouse-core/config/default-config.js | a11yAudioVideoGroupDescription": {
     "message": "אלה הזדמנויות לספק תוכן חלופי לווידאו ואודיו. הפעולות האלה יכולות לשפר את החוויה של משתמשים עם לקויות שמיעה או ראייה."
   },
   "lighthouse-core/config/default-config.js | a11yAudioVideoGroupTitle": {
     "message": "וידאו ואודיו"
-  },
-  "lighthouse-core/config/default-config.js | a11yBestPracticesGroupDescription": {
-    "message": "הפריטים האלה מדגישים שיטות מומלצות נפוצות בשביל נגישות."
-  },
-  "lighthouse-core/config/default-config.js | a11yBestPracticesGroupTitle": {
-    "message": "שיטות מומלצות"
   },
   "lighthouse-core/config/default-config.js | a11yCategoryDescription": {
     "message": "הבדיקות האלה מדגישות הזדמנויות [לשפר את הנגישות של אפליקציית האינטרנט](https://developers.google.com/web/fundamentals/accessibility). אפשר לזהות באופן אוטומטי רק חלק מבעיות הנגישות, ולכן מומלץ לבצע גם בדיקות ידניות."
@@ -1676,29 +1664,11 @@
   "lighthouse-core/config/default-config.js | a11yCategoryTitle": {
     "message": "נגישות"
   },
-  "lighthouse-core/config/default-config.js | a11yColorContrastGroupDescription": {
-    "message": "אלו הזדמנויות לשיפורים שיאפשרו לקרוא את התוכן בצורה קלה יותר."
-  },
-  "lighthouse-core/config/default-config.js | a11yColorContrastGroupTitle": {
-    "message": "ניגודיות"
-  },
   "lighthouse-core/config/default-config.js | a11yLanguageGroupDescription": {
     "message": "אלו הזדמנויות לשיפור של פענוח התוכן על-ידי משתמשים בלוקאלים שונים."
   },
   "lighthouse-core/config/default-config.js | a11yLanguageGroupTitle": {
     "message": "התאמה לשוק המקומי והבינלאומי"
-  },
-  "lighthouse-core/config/default-config.js | a11yNamesLabelsGroupDescription": {
-    "message": "אלו הזדמנויות לשיפור הסמנטיקה של פקדים באפליקציה. הן יכולות לשפר את החוויה של משתמשים שנעזרים בטכנולוגיות לנגישות, כמו קורא מסך."
-  },
-  "lighthouse-core/config/default-config.js | a11yNamesLabelsGroupTitle": {
-    "message": "שמות ותוויות"
-  },
-  "lighthouse-core/config/default-config.js | a11yNavigationGroupDescription": {
-    "message": "אלו הזדמנויות לשיפור הניווט באפליקציה באמצעות מקלדת."
-  },
-  "lighthouse-core/config/default-config.js | a11yNavigationGroupTitle": {
-    "message": "ניווט"
   },
   "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupDescription": {
     "message": "אלו הזדמנויות לשיפור חוויית הקריאה של נתונים בטבלאות או ברשימות באמצעות טכנולוגיה מסייעת, כמו קורא מסך."

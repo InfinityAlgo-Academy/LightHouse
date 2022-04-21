@@ -1649,23 +1649,11 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "Ima oznaku `<meta name=\"viewport\">` s `width` ili `initial-scale`"
   },
-  "lighthouse-core/config/default-config.js | a11yAriaGroupDescription": {
-    "message": "To su prilike za poboljšanje uporabe sustava ARIA u vašoj aplikaciji, što može unaprijediti doživljaj za korisnike pomoćne tehnologije, primjerice čitača zaslona."
-  },
-  "lighthouse-core/config/default-config.js | a11yAriaGroupTitle": {
-    "message": "ARIA"
-  },
   "lighthouse-core/config/default-config.js | a11yAudioVideoGroupDescription": {
     "message": "Ovo su prilike za poboljšanje zamjenskog sadržaja za zvuk i videoprikaz. To može poboljšati doživljaj za korisnike s oštećenjem sluha ili vida."
   },
   "lighthouse-core/config/default-config.js | a11yAudioVideoGroupTitle": {
     "message": "Zvuk i videoprikaz"
-  },
-  "lighthouse-core/config/default-config.js | a11yBestPracticesGroupDescription": {
-    "message": "Ove stavke ističu uobičajene najbolje primjere iz prakse za pristupačnost."
-  },
-  "lighthouse-core/config/default-config.js | a11yBestPracticesGroupTitle": {
-    "message": "Najbolji primjeri iz prakse"
   },
   "lighthouse-core/config/default-config.js | a11yCategoryDescription": {
     "message": "Ove provjere ističu prilike za [poboljšanje pristupačnosti vaše web-aplikacije](https://developers.google.com/web/fundamentals/accessibility). Budući da se automatskom provjerom može otkriti samo dio poteškoća s pristupačnošću, savjetujemo i ručno testiranje."
@@ -1676,29 +1664,11 @@
   "lighthouse-core/config/default-config.js | a11yCategoryTitle": {
     "message": "Pristupačnost"
   },
-  "lighthouse-core/config/default-config.js | a11yColorContrastGroupDescription": {
-    "message": "To su mogućnosti za poboljšanje čitljivosti vašeg sadržaja."
-  },
-  "lighthouse-core/config/default-config.js | a11yColorContrastGroupTitle": {
-    "message": "Kontrast"
-  },
   "lighthouse-core/config/default-config.js | a11yLanguageGroupDescription": {
     "message": "To su prilike da unaprijedite tumačenje svojeg sadržaja za korisnike na različitim jezicima."
   },
   "lighthouse-core/config/default-config.js | a11yLanguageGroupTitle": {
     "message": "Internacionalizacija i lokalizacija"
-  },
-  "lighthouse-core/config/default-config.js | a11yNamesLabelsGroupDescription": {
-    "message": "To su prilike za poboljšanje semantike kontrola u vašoj aplikaciji. Na taj način možete poboljšati doživljaj za korisnike pomoćne tehnologije, primjerice čitača zaslona."
-  },
-  "lighthouse-core/config/default-config.js | a11yNamesLabelsGroupTitle": {
-    "message": "Nazivi i oznake"
-  },
-  "lighthouse-core/config/default-config.js | a11yNavigationGroupDescription": {
-    "message": "Ovo su prilike za poboljšanje kretanja tipkovnicom u vašoj aplikaciji."
-  },
-  "lighthouse-core/config/default-config.js | a11yNavigationGroupTitle": {
-    "message": "Kretanje"
   },
   "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupDescription": {
     "message": "Ovo su prilike za poboljšanje doživljaja čitanja podataka u tablicama ili na popisima koristeći se asistivnom tehnologijom, primjerice čitačem zaslona."

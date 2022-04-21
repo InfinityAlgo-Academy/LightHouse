@@ -1649,23 +1649,11 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "Are o etichetă `<meta name=\"viewport\">` cu `width` sau `initial-scale`"
   },
-  "lighthouse-core/config/default-config.js | a11yAriaGroupDescription": {
-    "message": "Acestea sunt oportunități de a îmbunătăți utilizarea ARIA în aplicație, lucru care poate îmbunătăți experiența pentru utilizatorii tehnologiei care asigură asistență, precum un cititor de ecran."
-  },
-  "lighthouse-core/config/default-config.js | a11yAriaGroupTitle": {
-    "message": "ARIA"
-  },
   "lighthouse-core/config/default-config.js | a11yAudioVideoGroupDescription": {
     "message": "Acestea sunt oportunități de a oferi conținut secundar audio și video. Astfel se poate îmbunătăți experiența utilizatorilor cu deficiențe de auz sau de vedere."
   },
   "lighthouse-core/config/default-config.js | a11yAudioVideoGroupTitle": {
     "message": "Audio și video"
-  },
-  "lighthouse-core/config/default-config.js | a11yBestPracticesGroupDescription": {
-    "message": "Aceste elemente evidențiază cele mai bune practici privind accesibilitatea."
-  },
-  "lighthouse-core/config/default-config.js | a11yBestPracticesGroupTitle": {
-    "message": "Cele mai bune practici"
   },
   "lighthouse-core/config/default-config.js | a11yCategoryDescription": {
     "message": "Aceste verificări evidențiază oportunitățile pentru a [îmbunătăți accesibilitatea aplicației web](https://developers.google.com/web/fundamentals/accessibility). Doar un subset de probleme de accesibilitate pot fi detectate automat, astfel încât se recomandă și testarea manuală."
@@ -1676,29 +1664,11 @@
   "lighthouse-core/config/default-config.js | a11yCategoryTitle": {
     "message": "Accesibilitate"
   },
-  "lighthouse-core/config/default-config.js | a11yColorContrastGroupDescription": {
-    "message": "Acestea sunt oportunități de a-ți îmbunătăți lizibilitatea conținutului."
-  },
-  "lighthouse-core/config/default-config.js | a11yColorContrastGroupTitle": {
-    "message": "Contrast"
-  },
   "lighthouse-core/config/default-config.js | a11yLanguageGroupDescription": {
     "message": "Acestea sunt oportunități de a îmbunătăți interpretarea conținutului tău de utilizatori, în diferite coduri locale."
   },
   "lighthouse-core/config/default-config.js | a11yLanguageGroupTitle": {
     "message": "Internaționalizare și localizare"
-  },
-  "lighthouse-core/config/default-config.js | a11yNamesLabelsGroupDescription": {
-    "message": "Acestea sunt oportunități de a îmbunătăți semantica opțiunilor de control din aplicația ta. Astfel se poate îmbunătăți experiența utilizatorilor de tehnologii care asigură asistență, precum un cititor de ecran."
-  },
-  "lighthouse-core/config/default-config.js | a11yNamesLabelsGroupTitle": {
-    "message": "Nume și etichete"
-  },
-  "lighthouse-core/config/default-config.js | a11yNavigationGroupDescription": {
-    "message": "Acestea sunt oportunități de a îmbunătăți navigarea pe tastatură în aplicația ta."
-  },
-  "lighthouse-core/config/default-config.js | a11yNavigationGroupTitle": {
-    "message": "Navigare"
   },
   "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupDescription": {
     "message": "Acestea sunt oportunități de a îmbunătăți experiența citirii datelor din tabele sau din liste folosind tehnologia care asigură asistență, cum ar fi un cititor de ecran."

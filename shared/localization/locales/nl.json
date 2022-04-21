@@ -1649,23 +1649,11 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "Bevat een `<meta name=\"viewport\">`-tag met `width` of `initial-scale`"
   },
-  "lighthouse-core/config/default-config.js | a11yAriaGroupDescription": {
-    "message": "Dit zijn suggesties om het gebruik van ARIA in je app te verbeteren, wat kan leiden tot betere functionaliteit voor gebruikers van hulptechnologie, zoals een schermlezer."
-  },
-  "lighthouse-core/config/default-config.js | a11yAriaGroupTitle": {
-    "message": "ARIA"
-  },
   "lighthouse-core/config/default-config.js | a11yAudioVideoGroupDescription": {
     "message": "Dit zijn mogelijkheden om alternatieve content voor audio en video te bieden. Dit verbetert mogelijk de functionaliteit voor gebruikers met een visuele of gehoorbeperking."
   },
   "lighthouse-core/config/default-config.js | a11yAudioVideoGroupTitle": {
     "message": "Audio en video"
-  },
-  "lighthouse-core/config/default-config.js | a11yBestPracticesGroupDescription": {
-    "message": "Deze items geven praktische tips voor algemene toegankelijkheid aan."
-  },
-  "lighthouse-core/config/default-config.js | a11yBestPracticesGroupTitle": {
-    "message": "Praktische tips"
   },
   "lighthouse-core/config/default-config.js | a11yCategoryDescription": {
     "message": "Deze controles geven mogelijkheden aan om [de toegang tot je web-app te verbeteren](https://developers.google.com/web/fundamentals/accessibility). Alleen een subset van toegankelijkheidsproblemen kan automatisch worden gedetecteerd. Daarom wordt handmatig testen ook aangeraden."
@@ -1676,29 +1664,11 @@
   "lighthouse-core/config/default-config.js | a11yCategoryTitle": {
     "message": "Toegankelijkheid"
   },
-  "lighthouse-core/config/default-config.js | a11yColorContrastGroupDescription": {
-    "message": "Dit zijn suggesties om de leesbaarheid van je content te verbeteren."
-  },
-  "lighthouse-core/config/default-config.js | a11yColorContrastGroupTitle": {
-    "message": "Contrast"
-  },
   "lighthouse-core/config/default-config.js | a11yLanguageGroupDescription": {
     "message": "Dit zijn suggesties om de interpretatie van je content door gebruikers in verschillende landen te verbeteren."
   },
   "lighthouse-core/config/default-config.js | a11yLanguageGroupTitle": {
     "message": "Internationalisering en lokalisatie"
-  },
-  "lighthouse-core/config/default-config.js | a11yNamesLabelsGroupDescription": {
-    "message": "Dit zijn suggesties om de semantiek van de opties in je app te verbeteren. Zo kun je de functionaliteit verbeteren voor gebruikers van hulptechnologie, zoals een schermlezer."
-  },
-  "lighthouse-core/config/default-config.js | a11yNamesLabelsGroupTitle": {
-    "message": "Namen en labels"
-  },
-  "lighthouse-core/config/default-config.js | a11yNavigationGroupDescription": {
-    "message": "Dit zijn de mogelijkheden om toetsenbordnavigatie in je app te verbeteren."
-  },
-  "lighthouse-core/config/default-config.js | a11yNavigationGroupTitle": {
-    "message": "Navigatie"
   },
   "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupDescription": {
     "message": "Dit zijn mogelijkheden om de functionaliteit voor het lezen van gegevens in tabellen of lijsten te verbeteren met ondersteunende technologie, zoals een schermlezer."

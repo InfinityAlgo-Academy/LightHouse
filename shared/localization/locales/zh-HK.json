@@ -1649,23 +1649,11 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "具備包括 `<meta name=\"viewport\">` 或 `width` 的 `initial-scale` 標籤"
   },
-  "lighthouse-core/config/default-config.js | a11yAriaGroupDescription": {
-    "message": "這些提示可協助改善 ARIA 在應用程式中的使用情況，進而提升輔助技術 (例如螢幕閱讀器) 使用者的體驗。"
-  },
-  "lighthouse-core/config/default-config.js | a11yAriaGroupTitle": {
-    "message": "ARIA"
-  },
   "lighthouse-core/config/default-config.js | a11yAudioVideoGroupDescription": {
     "message": "這些審核結果建議您為音訊和影片提供替代內容。這或許能改善聽障或視障人士的使用體驗。"
   },
   "lighthouse-core/config/default-config.js | a11yAudioVideoGroupTitle": {
     "message": "音訊和影片"
-  },
-  "lighthouse-core/config/default-config.js | a11yBestPracticesGroupDescription": {
-    "message": "這些審核項目會提供常見的無障礙功能最佳做法。"
-  },
-  "lighthouse-core/config/default-config.js | a11yBestPracticesGroupTitle": {
-    "message": "最佳做法"
   },
   "lighthouse-core/config/default-config.js | a11yCategoryDescription": {
     "message": "這些檢查會提供[網頁應用程式無障礙功能的改善建議](https://developers.google.com/web/fundamentals/accessibility)。系統只能自動偵測一部分的無障礙功能問題，因此建議您另行手動測試。"
@@ -1676,29 +1664,11 @@
   "lighthouse-core/config/default-config.js | a11yCategoryTitle": {
     "message": "無障礙功能"
   },
-  "lighthouse-core/config/default-config.js | a11yColorContrastGroupDescription": {
-    "message": "這些提示有助提高內容的易讀性。"
-  },
-  "lighthouse-core/config/default-config.js | a11yColorContrastGroupTitle": {
-    "message": "對比"
-  },
   "lighthouse-core/config/default-config.js | a11yLanguageGroupDescription": {
     "message": "您可以根據這些提示作出改善，讓其他地區的使用者更容易理解您的內容。"
   },
   "lighthouse-core/config/default-config.js | a11yLanguageGroupTitle": {
     "message": "國際化和本地化"
-  },
-  "lighthouse-core/config/default-config.js | a11yNamesLabelsGroupDescription": {
-    "message": "這些提示可協助提高應用程式中的控制項語義品質。這或許能改善輔助技術 (例如螢幕閱讀器) 的使用體驗。"
-  },
-  "lighthouse-core/config/default-config.js | a11yNamesLabelsGroupTitle": {
-    "message": "名稱和標籤"
-  },
-  "lighthouse-core/config/default-config.js | a11yNavigationGroupDescription": {
-    "message": "這些審核結果可協助提高應用程式中的鍵盤瀏覽體驗。"
-  },
-  "lighthouse-core/config/default-config.js | a11yNavigationGroupTitle": {
-    "message": "導覽"
   },
   "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupDescription": {
     "message": "這些審核結果建議您運用輔助技術 (例如螢幕閱讀器)，改善表格或清單資料的閱讀體驗。"

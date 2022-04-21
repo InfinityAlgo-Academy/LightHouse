@@ -1649,23 +1649,11 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "वेब पेज पर `width` या `initial-scale` वाला `<meta name=\"viewport\">` टैग है"
   },
-  "lighthouse-core/config/default-config.js | a11yAriaGroupDescription": {
-    "message": "ये आपके ऐप्लिकेशन में ARIA के इस्तेमाल को बेहतर बनाने के अवसर हैं, जिससे उपयोगकर्ताओं का स्क्रीन रीडर जैसी सहायक तकनीक का अनुभव बेहतर हो सकता है."
-  },
-  "lighthouse-core/config/default-config.js | a11yAriaGroupTitle": {
-    "message": "ARIA"
-  },
   "lighthouse-core/config/default-config.js | a11yAudioVideoGroupDescription": {
     "message": "ये अवसर ऑडियो और वीडियो के लिए वैकल्पिक सामग्री मुहैया कराते हैं. इससे ऐसे इस्तेमाल करने वालों को बेहतर सुविधा मिल सकती है जो ठीक से सुन या देख नहीं पाते हैं."
   },
   "lighthouse-core/config/default-config.js | a11yAudioVideoGroupTitle": {
     "message": "ऑडियो और वीडियो"
-  },
-  "lighthouse-core/config/default-config.js | a11yBestPracticesGroupDescription": {
-    "message": "ये आइटम सुलभता के सबसे अच्छे सामान्य तरीके हाइलाइट करते हैं."
-  },
-  "lighthouse-core/config/default-config.js | a11yBestPracticesGroupTitle": {
-    "message": "सबसे अच्छे तरीके"
   },
   "lighthouse-core/config/default-config.js | a11yCategoryDescription": {
     "message": "ये सभी जांच आपको [आपके वेब ऐप्लिकेशन की सुलभता बेहतर करने](https://developers.google.com/web/fundamentals/accessibility) के अवसर देती हैं. सुलभता गड़बड़ियों के सिर्फ़ एक उपसेट के बारे में अपने आप पता लगाया जा सकता है, इसलिए हम मैन्युअल टेस्टिंग का सुझाव देते हैं."
@@ -1676,29 +1664,11 @@
   "lighthouse-core/config/default-config.js | a11yCategoryTitle": {
     "message": "सुलभता"
   },
-  "lighthouse-core/config/default-config.js | a11yColorContrastGroupDescription": {
-    "message": "आपकी सामग्री को पढ़ने में आसान बनाने के अवसर मौजूद हैं."
-  },
-  "lighthouse-core/config/default-config.js | a11yColorContrastGroupTitle": {
-    "message": "कंट्रास्ट"
-  },
   "lighthouse-core/config/default-config.js | a11yLanguageGroupDescription": {
     "message": "इन मौकों से कई भाषाओं में उपयोगकर्ताओं के ज़रिए आपके कॉन्टेंट के पेश करने के तरीके को बेहतर बनाया जा सकता है."
   },
   "lighthouse-core/config/default-config.js | a11yLanguageGroupTitle": {
     "message": "अंतरराष्ट्रीय और स्थानीय भाषा के अनुसार"
-  },
-  "lighthouse-core/config/default-config.js | a11yNamesLabelsGroupDescription": {
-    "message": "इन अवसरों से आपके ऐप्लिकेशन में नियंत्रणों के सीमेंटिक (शब्दार्थ विज्ञान) को बेहतर बनाया जा सकता है. इससे उपयोगकर्ता का स्क्रीन रीडर जैसी सहायक तकनीक का अनुभव बेहतर हो सकता है."
-  },
-  "lighthouse-core/config/default-config.js | a11yNamesLabelsGroupTitle": {
-    "message": "नाम और लेबल"
-  },
-  "lighthouse-core/config/default-config.js | a11yNavigationGroupDescription": {
-    "message": "ये अवसर आपके ऐप्लिकेशन में कीबोर्ड नेविगेशन को बेहतर बनाते हैं."
-  },
-  "lighthouse-core/config/default-config.js | a11yNavigationGroupTitle": {
-    "message": "नेविगेशन"
   },
   "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupDescription": {
     "message": "स्क्रीन रीडर जैसी इन सहायक टेक्नोलॉजी का इस्तेमाल करके, आप टेबल या सूची का डेटा पढ़ने की सुविधा को बेहतर बना सकते हैं."

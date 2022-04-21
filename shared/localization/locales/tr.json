@@ -1649,23 +1649,11 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "`width` veya `initial-scale` değerleri olan bir `<meta name=\"viewport\">` etiketi var"
   },
-  "lighthouse-core/config/default-config.js | a11yAriaGroupDescription": {
-    "message": "Bu fırsatlar, uygulamanızda ARIA kullanımının iyileştirilmesine olanak tanır. Bu da ekran okuyucu gibi yardımcı teknolojilerin kullanıcılarına daha iyi bir deneyim sunulmasını sağlayabilir."
-  },
-  "lighthouse-core/config/default-config.js | a11yAriaGroupTitle": {
-    "message": "ARIA"
-  },
   "lighthouse-core/config/default-config.js | a11yAudioVideoGroupDescription": {
     "message": "Bu fırsatlar, alternatif ses ve video içerikleri sağlanmasına olanak tanır. Bu durum, işitme veya görme bozukluğu olan kullanıcıların daha iyi bir deneyim yaşamalarını sağlayabilir."
   },
   "lighthouse-core/config/default-config.js | a11yAudioVideoGroupTitle": {
     "message": "Ses ve video"
-  },
-  "lighthouse-core/config/default-config.js | a11yBestPracticesGroupDescription": {
-    "message": "Bu öğeler, erişilebilirlikle ilgili yaygın en iyi uygulamaları öne çıkarır."
-  },
-  "lighthouse-core/config/default-config.js | a11yBestPracticesGroupTitle": {
-    "message": "En iyi uygulamalar"
   },
   "lighthouse-core/config/default-config.js | a11yCategoryDescription": {
     "message": "Bu kontroller, [web uygulamanızın erişilebilirliğini iyileştirme](https://developers.google.com/web/fundamentals/accessibility) fırsatlarını ön plana çıkarır. Erişilebilirlik sorunlarının yalnızca bir alt kümesi otomatik olarak algılanabildiğinden manuel test yapılması da önerilir."
@@ -1676,29 +1664,11 @@
   "lighthouse-core/config/default-config.js | a11yCategoryTitle": {
     "message": "Erişilebilirlik"
   },
-  "lighthouse-core/config/default-config.js | a11yColorContrastGroupDescription": {
-    "message": "Bu fırsatlar, içeriğinizin daha rahat okunmasına olanak tanır."
-  },
-  "lighthouse-core/config/default-config.js | a11yColorContrastGroupTitle": {
-    "message": "Kontrast"
-  },
   "lighthouse-core/config/default-config.js | a11yLanguageGroupDescription": {
     "message": "Bu fırsatlar, içeriğinizin farklı ülkelerdeki kullanıcılar tarafından daha iyi yorumlanmasına olanak tanır."
   },
   "lighthouse-core/config/default-config.js | a11yLanguageGroupTitle": {
     "message": "Uluslararası hale getirme ve yerelleştirme"
-  },
-  "lighthouse-core/config/default-config.js | a11yNamesLabelsGroupDescription": {
-    "message": "Bu fırsatlar, uygulamanızdaki kontrollerin anlamının iyileştirilmesine olanak tanır. Bu durum, ekran okuyucu gibi yardımcı teknolojilerin kullanıcılarına daha iyi bir deneyim sunulmasını sağlayabilir."
-  },
-  "lighthouse-core/config/default-config.js | a11yNamesLabelsGroupTitle": {
-    "message": "Adlar ve etiketler"
-  },
-  "lighthouse-core/config/default-config.js | a11yNavigationGroupDescription": {
-    "message": "Bu fırsatlar, uygulamanızda klavyeyle gezinmeyi kolaylaştırır."
-  },
-  "lighthouse-core/config/default-config.js | a11yNavigationGroupTitle": {
-    "message": "Gezinme"
   },
   "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupDescription": {
     "message": "Bu fırsatlar, tablo veya liste halindeki verilerin ekran okuyucu gibi yardımcı teknolojiler kullanılarak daha rahat okunmasına olanak tanır."

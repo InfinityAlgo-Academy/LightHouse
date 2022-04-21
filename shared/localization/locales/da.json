@@ -1649,23 +1649,11 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "Der er et `<meta name=\"viewport\">`-tag med `width` eller `initial-scale`"
   },
-  "lighthouse-core/config/default-config.js | a11yAriaGroupDescription": {
-    "message": "Disse er muligheder for at forbedre brugen af ARIA i din app, hvilket kan forbedre oplevelsen for brugere af hjælpeteknologi, f.eks. skærmlæsere."
-  },
-  "lighthouse-core/config/default-config.js | a11yAriaGroupTitle": {
-    "message": "ARIA"
-  },
   "lighthouse-core/config/default-config.js | a11yAudioVideoGroupDescription": {
     "message": "Disse er muligheder for at angive alternativt indhold for lyd og video. Dette kan forbedre oplevelsen for brugere med nedsat hørelse eller syn."
   },
   "lighthouse-core/config/default-config.js | a11yAudioVideoGroupTitle": {
     "message": "Lyd og video"
-  },
-  "lighthouse-core/config/default-config.js | a11yBestPracticesGroupDescription": {
-    "message": "Disse elementer fremhæver almindelige optimale løsninger for hjælpefunktioner."
-  },
-  "lighthouse-core/config/default-config.js | a11yBestPracticesGroupTitle": {
-    "message": "Optimale løsninger"
   },
   "lighthouse-core/config/default-config.js | a11yCategoryDescription": {
     "message": "Disse kontroller fremhæver muligheder for at [forbedre tilgængeligheden af din webapp](https://developers.google.com/web/fundamentals/accessibility). Det er kun visse tilgængelighedsproblemer, der kan registreres automatisk, og derfor anbefales det også at teste manuelt."
@@ -1676,29 +1664,11 @@
   "lighthouse-core/config/default-config.js | a11yCategoryTitle": {
     "message": "Hjælpefunktioner"
   },
-  "lighthouse-core/config/default-config.js | a11yColorContrastGroupDescription": {
-    "message": "Disse er muligheder for at forbedre forståelsen af dit indhold."
-  },
-  "lighthouse-core/config/default-config.js | a11yColorContrastGroupTitle": {
-    "message": "Kontrast"
-  },
   "lighthouse-core/config/default-config.js | a11yLanguageGroupDescription": {
     "message": "Disse er muligheder for at gøre det nemmere for brugere med forskellige landestandarder at forstå dit indhold."
   },
   "lighthouse-core/config/default-config.js | a11yLanguageGroupTitle": {
     "message": "Internationalisering og lokalisering"
-  },
-  "lighthouse-core/config/default-config.js | a11yNamesLabelsGroupDescription": {
-    "message": "Disse er muligheder for at forbedre semantikken i styringen af din app. De kan forbedre oplevelsen for brugere af hjælpeteknologi, f.eks. skærmlæsere."
-  },
-  "lighthouse-core/config/default-config.js | a11yNamesLabelsGroupTitle": {
-    "message": "Navne og etiketter"
-  },
-  "lighthouse-core/config/default-config.js | a11yNavigationGroupDescription": {
-    "message": "Disse er muligheder for at forbedre tastaturnavigation i din app."
-  },
-  "lighthouse-core/config/default-config.js | a11yNavigationGroupTitle": {
-    "message": "Navigation"
   },
   "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupDescription": {
     "message": "Disse er muligheder for at forbedre oplevelsen af oplæste tabel- eller listedata ved hjælp af hjælpeteknologi som f.eks. en skærmlæser."

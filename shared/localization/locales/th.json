@@ -1649,23 +1649,11 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "มีแท็ก `<meta name=\"viewport\">` ที่มี `width` หรือ `initial-scale`"
   },
-  "lighthouse-core/config/default-config.js | a11yAriaGroupDescription": {
-    "message": "นี่เป็นโอกาสปรับปรุงการใช้งาน ARIA ในแอปพลิเคชันของคุณ ซึ่งอาจช่วยให้ผู้ใช้ได้รับประสบการณ์การใช้งานเทคโนโลยีอำนวยความสะดวก เช่น โปรแกรมอ่านหน้าจอ ที่ดียิ่งขึ้น"
-  },
-  "lighthouse-core/config/default-config.js | a11yAriaGroupTitle": {
-    "message": "ARIA"
-  },
   "lighthouse-core/config/default-config.js | a11yAudioVideoGroupDescription": {
     "message": "นี่เป็นโอกาสระบุเนื้อหาสำรองสำหรับเสียงและวิดีโอ การดำเนินการนี้อาจช่วยปรับปรุงประสบการณ์ของผู้ใช้ที่มีความบกพร่องทางการได้ยินหรือการมองเห็น"
   },
   "lighthouse-core/config/default-config.js | a11yAudioVideoGroupTitle": {
     "message": "เสียงและวิดีโอ"
-  },
-  "lighthouse-core/config/default-config.js | a11yBestPracticesGroupDescription": {
-    "message": "รายการเหล่านี้ไฮไลต์แนวทางปฏิบัติที่ดีที่สุดที่พบบ่อยของการช่วยเหลือพิเศษ"
-  },
-  "lighthouse-core/config/default-config.js | a11yBestPracticesGroupTitle": {
-    "message": "แนวทางปฏิบัติที่ดีที่สุด"
   },
   "lighthouse-core/config/default-config.js | a11yCategoryDescription": {
     "message": "การตรวจสอบเหล่านี้ไฮไลต์โอกาสในการ[ปรับปรุงการช่วยเหลือพิเศษของเว็บแอป](https://developers.google.com/web/fundamentals/accessibility) โดยจะตรวจพบอัตโนมัติได้เฉพาะปัญหากลุ่มย่อยด้านการช่วยเหลือพิเศษ เราจึงขอแนะนำให้ตรวจสอบด้วยตนเองด้วย"
@@ -1676,29 +1664,11 @@
   "lighthouse-core/config/default-config.js | a11yCategoryTitle": {
     "message": "การช่วยเหลือพิเศษ"
   },
-  "lighthouse-core/config/default-config.js | a11yColorContrastGroupDescription": {
-    "message": "นี่เป็นโอกาสปรับปรุงความอ่านง่ายของเนื้อหา"
-  },
-  "lighthouse-core/config/default-config.js | a11yColorContrastGroupTitle": {
-    "message": "คอนทราสต์"
-  },
   "lighthouse-core/config/default-config.js | a11yLanguageGroupDescription": {
     "message": "นี่เป็นโอกาสปรับปรุงการตีความเนื้อหาของคุณโดยผู้ใช้ภาษาต่างๆ"
   },
   "lighthouse-core/config/default-config.js | a11yLanguageGroupTitle": {
     "message": "การปรับให้เป็นสากลและการแปล"
-  },
-  "lighthouse-core/config/default-config.js | a11yNamesLabelsGroupDescription": {
-    "message": "นี่เป็นโอกาสปรับปรุงความหมายของส่วนควบคุมในแอปพลิเคชันของคุณ การดำเนินการนี้อาจช่วยให้ผู้ใช้ได้รับประสบการณ์การใช้งานเทคโนโลยีอำนวยความสะดวก เช่น โปรแกรมอ่านหน้าจอ ที่ดียิ่งขึ้น"
-  },
-  "lighthouse-core/config/default-config.js | a11yNamesLabelsGroupTitle": {
-    "message": "ชื่อและป้ายกำกับ"
-  },
-  "lighthouse-core/config/default-config.js | a11yNavigationGroupDescription": {
-    "message": "นี่เป็นโอกาสปรับปรุงการไปยังส่วนต่างๆ ในแอปพลิเคชันของคุณด้วยแป้นพิมพ์"
-  },
-  "lighthouse-core/config/default-config.js | a11yNavigationGroupTitle": {
-    "message": "การนำทาง"
   },
   "lighthouse-core/config/default-config.js | a11yTablesListsVideoGroupDescription": {
     "message": "นี่เป็นโอกาสปรับปรุงประสบการณ์การอ่านตารางหรือข้อมูลรายการโดยใช้เทคโนโลยีความช่วยเหลือพิเศษ เช่น โปรแกรมอ่านหน้าจอ"
