@@ -10,17 +10,16 @@
 import BootupTime from '../../audits/bootup-time.js';
 
 import {strict as assert} from 'assert';
-import acceptableTrace from '../fixtures/traces/progressive-app-m60.json';
-import acceptableDevtoolsLogs from '../fixtures/traces/progressive-app-m60.devtools.log.json';
 import errorTrace from '../fixtures/traces/no_fmp_event.json';
+import {pwa} from '../fixtures/fixtures.js';
 
 describe('Performance: bootup-time audit', () => {
   const auditOptions = Object.assign({}, BootupTime.defaultOptions, {thresholdInMs: 10});
 
   it('should compute the correct BootupTime values', () => {
     const artifacts = Object.assign({
-      traces: {[BootupTime.DEFAULT_PASS]: acceptableTrace},
-      devtoolsLogs: {[BootupTime.DEFAULT_PASS]: acceptableDevtoolsLogs},
+      traces: {[BootupTime.DEFAULT_PASS]: pwa.trace},
+      devtoolsLogs: {[BootupTime.DEFAULT_PASS]: pwa.devtoolsLog},
     });
     const computedCache = new Map();
 
@@ -74,8 +73,8 @@ Array [
 
   it('should compute the correct values when simulated', async () => {
     const artifacts = Object.assign({
-      traces: {defaultPass: acceptableTrace},
-      devtoolsLogs: {defaultPass: acceptableDevtoolsLogs},
+      traces: {defaultPass: pwa.trace},
+      devtoolsLogs: {defaultPass: pwa.devtoolsLog},
     });
 
     const options = auditOptions;

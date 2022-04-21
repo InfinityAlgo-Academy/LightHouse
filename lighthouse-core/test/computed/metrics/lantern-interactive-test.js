@@ -7,11 +7,7 @@
 
 import LanternInteractive from '../../../computed/metrics/lantern-interactive.js';
 import {strict as assert} from 'assert';
-import trace from '../../fixtures/traces/progressive-app-m60.json';
-import devtoolsLog from '../../fixtures/traces/progressive-app-m60.devtools.log.json';
-import iframeTrace from '../../fixtures/traces/iframe-m79.trace.json';
-import iframeDevtoolsLog from '../../fixtures/traces/iframe-m79.devtoolslog.json';
-import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';
+import {iframe, pwa} from '../../fixtures/fixtures.js';
 
 /* eslint-env jest */
 
@@ -21,7 +17,7 @@ describe('Metrics: Lantern TTI', () => {
   it('should compute predicted value', async () => {
     const settings = {};
     const context = {settings, computedCache: new Map()};
-    const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
+    const {trace, devtoolsLog, URL} = pwa.devtoolsLog;
     const result = await LanternInteractive.request({trace, devtoolsLog, gatherContext,
       settings, URL}, context);
 
@@ -39,10 +35,10 @@ describe('Metrics: Lantern TTI', () => {
   it('should compute predicted value on iframes with substantial layout', async () => {
     const settings = {};
     const context = {settings, computedCache: new Map()};
-    const URL = getURLArtifactFromDevtoolsLog(iframeDevtoolsLog);
+    const {trace, devtoolsLog, URL} = iframe.devtoolsLog;
     const result = await LanternInteractive.request({
-      trace: iframeTrace,
-      devtoolsLog: iframeDevtoolsLog,
+      trace,
+      devtoolsLog,
       gatherContext,
       settings,
       URL,

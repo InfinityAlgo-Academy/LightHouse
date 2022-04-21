@@ -6,16 +6,15 @@
 'use strict';
 
 import Diagnostics from '../../audits/diagnostics.js';
-import acceptableTrace from '../fixtures/traces/progressive-app-m60.json';
-import acceptableDevToolsLog from '../fixtures/traces/progressive-app-m60.devtools.log.json';
+import {pwa} from '../fixtures/fixtures.js';
 
 /* eslint-env jest */
 
 describe('Diagnostics audit', () => {
   it('should work', async () => {
     const artifacts = {
-      traces: {defaultPass: acceptableTrace},
-      devtoolsLogs: {defaultPass: acceptableDevToolsLog},
+      traces: {defaultPass: pwa.trace},
+      devtoolsLogs: {defaultPass: pwa.devtoolsLog},
       URL: {
         mainDocumentUrl: 'https://pwa.rocks/',
       },
