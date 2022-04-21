@@ -320,7 +320,7 @@ describe('CategoryRenderer', () => {
 
       // All the group names in the config.
       const groupNames = Array.from(new Set(auditRefs.map(ref => ref.group))).filter(Boolean);
-      assert.ok(groupNames.length > 5, `not enough groups found in category for test`);
+      expect([...groupNames]).toEqual(['a11y-critical', 'a11y-serious', 'a11y-moderate']);
 
       // All the group roots in the DOM.
       const failedGroupElems = Array.from(
@@ -389,7 +389,8 @@ describe('CategoryRenderer', () => {
         ref.result.scoreDisplayMode = 'binary';
       });
       const categoryGroupIds = new Set(category.auditRefs.filter(a => a.group).map(a => a.group));
-      assert.ok(categoryGroupIds.size > 6); // Ensure there's something to test.
+      // Ensure there's something to test.
+      expect([...categoryGroupIds]).toEqual(['a11y-critical', 'a11y-serious', 'a11y-moderate']);
 
       const categoryElem = renderer.render(categoryClone, sampleResults.categoryGroups);
 
