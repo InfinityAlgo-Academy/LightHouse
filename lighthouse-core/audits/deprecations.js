@@ -64,6 +64,10 @@ class Deprecations extends Audit {
     let deprecations;
     if (artifacts.InspectorIssues.deprecationIssue.length) {
       deprecations = artifacts.InspectorIssues.deprecationIssue
+        // TODO: translate these strings.
+        // see https://github.com/GoogleChrome/lighthouse/issues/13895
+        // @ts-expect-error: .type hasn't released to npm yet
+        .filter(deprecation => !deprecation.type || deprecation.type === 'Untranslated')
         .map(deprecation => {
           const {url, lineNumber, columnNumber} = deprecation.sourceCodeLocation;
           const bundle = bundles.find(bundle => bundle.script.src === url);
