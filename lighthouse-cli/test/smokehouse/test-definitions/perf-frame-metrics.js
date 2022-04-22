@@ -71,7 +71,7 @@ const expectations = {
               //
               // Weighted score on emulated mobile bug fixed in m92:
               // https://chromium.googlesource.com/chromium/src/+/042fbfb4cc6a675da0dff4bf3fc08622af42422b
-              _minChromiumMilestone: 92,
+              _minChromiumVersion: '92',
               firstContentfulPaint: '>5000',
               firstContentfulPaintAllFrames: '<5000',
               largestContentfulPaint: '>5000',

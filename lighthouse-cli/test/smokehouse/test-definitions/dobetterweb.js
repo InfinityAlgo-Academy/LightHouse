@@ -201,7 +201,7 @@ const expectations = {
     finalUrl: 'http://localhost:10200/dobetterweb/dbw_tester.html',
     audits: {
       'errors-in-console': {
-        _minChromiumMilestone: 95,
+        _minChromiumVersion: '95',
         score: 0,
         details: {
           items: {
@@ -321,6 +321,7 @@ const expectations = {
               },
             },
             {
+              _maxChromiumVersion: '103.0.5017.0',
               value: /Synchronous XMLHttpRequest on the main thread is deprecated/,
               source: {
                 type: 'source-location',
