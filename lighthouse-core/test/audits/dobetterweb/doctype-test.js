@@ -19,7 +19,7 @@ describe('DOBETTERWEB: doctype audit', () => {
     expect(auditResult.explanation).toBeDisplayString('Document must contain a doctype');
   });
 
-  it('fails when the value of the name attribute is a value other then lowercase "html"', () => {
+  it('fails when the value of the name attribute is a value other than "html"', () => {
     const auditResult = Audit.audit({
       Doctype: {
         name: 'xml',
@@ -29,20 +29,7 @@ describe('DOBETTERWEB: doctype audit', () => {
     });
     assert.equal(auditResult.score, 0);
     expect(auditResult.explanation).toBeDisplayString(
-      'Doctype name must be the lowercase string `html`');
-  });
-
-  it('fails when the value of the name attribute is not the lowercase string "html"', () => {
-    const auditResult = Audit.audit({
-      Doctype: {
-        name: 'HTML',
-        publicId: '',
-        systemId: '',
-      },
-    });
-    assert.equal(auditResult.score, 0);
-    expect(auditResult.explanation).toBeDisplayString(
-      'Doctype name must be the lowercase string `html`');
+      'Doctype name must be the string `html`');
   });
 
   it('fails when the publicId attribute is not an empty string', () => {
