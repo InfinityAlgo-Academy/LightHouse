@@ -238,6 +238,7 @@ declare module Artifacts {
   interface Accessibility {
     violations: Array<AxeRuleResult>;
     notApplicable: Array<Pick<AxeRuleResult, 'id'>>;
+    passes: Array<Pick<AxeRuleResult, 'id'>>;
     incomplete: Array<AxeRuleResult>;
     version: string;
   }
