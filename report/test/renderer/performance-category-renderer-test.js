@@ -328,10 +328,20 @@ Array [
       }
     });
 
-    it('uses null if the metric is missing its value', () => {
+    it('uses null if the metric\'s value is undefined', () => {
       const categoryClone = JSON.parse(JSON.stringify(category));
       const lcp = categoryClone.auditRefs.find(audit => audit.id === 'largest-contentful-paint');
       lcp.result.numericValue = undefined;
+      lcp.result.score = null;
+      const href = renderer._getScoringCalculatorHref(categoryClone.auditRefs);
+      expect(href).toContain('LCP=null');
+    });
+
+    it('uses null if the metric\'s value is null (LR)', () => {
+      const categoryClone = JSON.parse(JSON.stringify(category));
+      const lcp = categoryClone.auditRefs.find(audit => audit.id === 'largest-contentful-paint');
+      // In LR, we think there might be some case where undefined becomes null, but we can't prove it.
+      lcp.result.numericValue = null;
       lcp.result.score = null;
       const href = renderer._getScoringCalculatorHref(categoryClone.auditRefs);
       expect(href).toContain('LCP=null');
