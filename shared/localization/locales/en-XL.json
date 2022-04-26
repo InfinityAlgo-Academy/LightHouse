@@ -788,6 +788,9 @@
   "lighthouse-core/audits/dobetterweb/doctype.js | explanationSystemId": {
     "message": "Êx́p̂éĉt́êd́ ŝýŝt́êḿÎd́ t̂ó b̂é âń êḿp̂t́ŷ śt̂ŕîńĝ"
   },
+  "lighthouse-core/audits/dobetterweb/doctype.js | explanationWrongDoctype": {
+    "message": "D̂óĉúm̂én̂t́ ĉón̂t́âín̂ś â d́ôćt̂ýp̂é t̂h́ât́ t̂ŕîǵĝér̂ś q̂úîŕk̂ś-m̂ód̂é"
+  },
   "lighthouse-core/audits/dobetterweb/doctype.js | failureTitle": {
     "message": "P̂áĝé l̂áĉḱŝ t́ĥé ĤT́M̂Ĺ d̂óĉt́ŷṕê, t́ĥúŝ t́r̂íĝǵêŕîńĝ q́ûír̂ḱŝ-ḿôd́ê"
   },

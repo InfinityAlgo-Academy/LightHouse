@@ -252,6 +252,7 @@ declare module Artifacts {
     name: string;
     publicId: string;
     systemId: string;
+    documentCompatMode: string;
   }
 
   interface DOMStats {

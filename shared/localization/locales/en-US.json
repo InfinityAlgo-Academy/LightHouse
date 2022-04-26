@@ -788,6 +788,9 @@
   "lighthouse-core/audits/dobetterweb/doctype.js | explanationSystemId": {
     "message": "Expected systemId to be an empty string"
   },
+  "lighthouse-core/audits/dobetterweb/doctype.js | explanationWrongDoctype": {
+    "message": "Document contains a doctype that triggers quirks-mode"
+  },
   "lighthouse-core/audits/dobetterweb/doctype.js | failureTitle": {
     "message": "Page lacks the HTML doctype, thus triggering quirks-mode"
   },
