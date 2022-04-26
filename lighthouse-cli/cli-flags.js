@@ -177,7 +177,7 @@ function getFlags(manualArgv, options = {}) {
         },
         'enable-error-reporting': {
           type: 'boolean',
-          describe: 'Enables error reporting, overriding any saved preference. --no-enable-error-reporting will do the opposite. More: https://git.io/vFFTO',
+          describe: 'Enables error reporting, overriding any saved preference. --no-enable-error-reporting will do the opposite. More: https://github.com/GoogleChrome/lighthouse/blob/master/docs/error-reporting.md',
         },
         'gather-mode': {
           alias: 'G',
