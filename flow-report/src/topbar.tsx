@@ -23,15 +23,13 @@ function saveHtml(flowResult: LH.FlowResult, htmlStr: string) {
 /* eslint-disable max-len */
 const Logo: FunctionComponent = () => {
   return (
-    <svg role="img" fill="none" height="48" width="48" xmlns="http://www.w3.org/2000/svg">
+    <svg role="img" class="lh-topbar__logo" width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
       <clipPath id="a">
         <path d="M0 0h48v48H0z"/>
       </clipPath>
       <g clip-path="url(#a)">
         <path d="M15 17.5V8.268a.5.5 0 0 1 .223-.416l8.5-5.667a.5.5 0 0 1 .554 0l8.5 5.667a.5.5 0 0 1 .223.416V17.5a.5.5 0 0 0 .5.5h3a.5.5 0 0 1 .5.5v5a.5.5 0 0 1-.5.5h-2.905a.5.5 0 0 0-.493.586l3.796 22.828a.5.5 0 0 1-.493.586h-24.81a.5.5 0 0 1-.493-.586l3.796-22.828a.5.5 0 0 0-.493-.586H11.5a.5.5 0 0 1-.5-.5v-5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 0 .5-.5z" fill="#f63"/>
-        <g fill="#fff" opacity=".4">
-          <path d="M21.07 48h-9.476a.5.5 0 0 1-.492-.586l.563-3.385L34.44 32.641l1.332 8.007zM31.058 24l-17.52 8.76 1.36-8.174a.5.5 0 0 0-.49-.586z"/>
-        </g>
+        <path d="M21.07 48h-9.476a.5.5 0 0 1-.492-.586l.563-3.385L34.44 32.641l1.332 8.007zm9.988-24-17.52 8.76 1.36-8.174a.5.5 0 0 0-.49-.586z" fill="#fff" opacity=".4"/>
         <path d="M20 10.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5z" fill="#ff3"/>
       </g>
     </svg>
