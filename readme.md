@@ -474,7 +474,7 @@ See [Contributing](./CONTRIBUTING.md) to get started.
 
 ---
 <p align="center">
-  <img src="https://raw.githubusercontent.com/GoogleChrome/lighthouse/8b3d7f052b2e64dd857e741d7395647f487697e7/assets/lighthouse-logo.png" alt="Lighthouse logo" height="150">
+  <img src="./assets/lighthouse-logo_512px.png" alt="Lighthouse logo" height="150">
   <br>
   <b>Lighthouse</b>, ˈlītˌhous (n): a <s>tower or other structure</s> tool containing a beacon light
   to warn or guide <s>ships at sea</s> developers.
