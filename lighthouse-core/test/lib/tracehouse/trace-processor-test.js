@@ -210,7 +210,6 @@ describe('TraceProcessor', () => {
       const cat = 'loading,rail,devtools.timeline';
       testTrace.traceEvents.push(
         /* eslint-disable max-len */
-        {name: 'FrameCommittedInBrowser', cat, args: {data: {frame: mainFrame, url: 'https://example.com'}}},
         {name: 'FrameCommittedInBrowser', cat, args: {data: {frame: childFrame, parent: mainFrame, url: 'https://frame.com'}}},
         {name: 'FrameCommittedInBrowser', cat, args: {data: {frame: otherMainFrame, url: 'https://example.com'}}},
         {name: 'Event1', cat, args: {frame: mainFrame}},
@@ -249,6 +248,37 @@ describe('TraceProcessor', () => {
         'firstContentfulPaint',
         'firstMeaningfulPaint',
         'Event1',
+      ]);
+    });
+
+    it('frameTreeEvents included even if no FrameCommittedInBrowser events', () => {
+      const testTrace = createTestTrace({timeOrigin: 0, traceEnd: 2000});
+      testTrace.traceEvents = testTrace.traceEvents
+        .filter(e => e.name !== 'FrameCommittedInBrowser');
+
+      const mainFrame = testTrace.traceEvents[0].args.frame;
+      const childFrame = 'CHILDFRAME';
+      const otherMainFrame = 'ANOTHERTAB';
+      const cat = 'loading,rail,devtools.timeline';
+
+      testTrace.traceEvents.find(e => e.name === 'TracingStartedInBrowser').args.data.frames.push(
+        {frame: childFrame, parent: mainFrame, url: 'https://frame.com'},
+        {frame: otherMainFrame, url: 'https://example.com'}
+      );
+
+      testTrace.traceEvents.push(
+        {name: 'Event1', cat, args: {frame: mainFrame}},
+        {name: 'Event2', cat, args: {frame: childFrame}},
+        {name: 'Event3', cat, args: {frame: otherMainFrame}}
+      );
+      const trace = TraceProcessor.processTrace(testTrace);
+      expect(trace.frameTreeEvents.map(e => e.name)).toEqual([
+        'navigationStart',
+        'domContentLoadedEventEnd',
+        'firstContentfulPaint',
+        'firstMeaningfulPaint',
+        'Event1',
+        'Event2',
       ]);
     });
   });
@@ -639,7 +669,6 @@ Object {
 
         testTrace.traceEvents.push(
           /* eslint-disable max-len */
-          {name: 'FrameCommittedInBrowser', cat, args: {data: {frame: mainFrame, url: 'https://example.com'}}, ts: 900, duration: 10},
           {name: 'FrameCommittedInBrowser', cat, args: {data: {frame: childFrame, parent: mainFrame, url: 'https://frame.com'}}, ts: 910, duration: 10},
           {name: 'firstContentfulPaint', cat, args: {frame: childFrame}, ts: 1000, duration: 10},
           {name: 'firstContentfulPaint', cat, args: {frame: mainFrame}, ts: 1100, duration: 10}
@@ -658,7 +687,6 @@ Object {
         const cat = 'loading,rail,devtools.timeline';
         testTrace.traceEvents.push(
           /* eslint-disable max-len */
-          {name: 'FrameCommittedInBrowser', cat, args: {data: {frame: mainFrame, url: 'https://example.com'}}, ts: 900, duration: 10},
           {name: 'FrameCommittedInBrowser', cat, args: {data: {frame: childFrame, parent: mainFrame, url: 'https://frame.com'}}, ts: 910, duration: 10},
           {name: 'largestContentfulPaint::Candidate', cat, args: {data: {size: 300}, frame: mainFrame}, ts: 1000, duration: 10},
           {name: 'largestContentfulPaint::Candidate', cat, args: {data: {size: 100}, frame: childFrame}, ts: 1100, duration: 10},

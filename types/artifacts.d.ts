@@ -923,6 +923,7 @@ export interface TraceEvent {
       documentLoaderURL?: string;
       frames?: {
         frame: string;
+        url: string;
         parent?: string;
         processId?: number;
       }[];

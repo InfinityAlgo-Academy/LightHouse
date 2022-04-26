@@ -7997,7 +7997,7 @@
             "description": "Consider reducing the time spent parsing, compiling, and executing JS. You may find delivering smaller JS payloads helps with this. [Learn more](https://web.dev/bootup-time/).",
             "score": 1,
             "scoreDisplayMode": "numeric",
-            "numericValue": 397.00499999999965,
+            "numericValue": 383.5219999999999,
             "numericUnit": "millisecond",
             "displayValue": "0.4 s",
             "details": {
@@ -8029,26 +8029,26 @@
               ],
               "items": [
                 {
-                  "url": "Unattributable",
-                  "total": 321.11799999999914,
-                  "scripting": 24.528999999999996,
+                  "url": "https://www.mikescerealshack.co/",
+                  "total": 455.9500000000001,
+                  "scripting": 193.52499999999992,
                   "scriptParseCompile": 0
                 },
                 {
                   "url": "https://www.mikescerealshack.co/_next/static/chunks/framework.9d524150d48315f49e80.js",
-                  "total": 283.2019999999998,
-                  "scripting": 186.7769999999998,
+                  "total": 192.43299999999994,
+                  "scripting": 176.82499999999996,
                   "scriptParseCompile": 0
                 },
                 {
-                  "url": "https://www.mikescerealshack.co/_next/static/chunks/1aeab0175d4c4d823d7a78205bceb5dd9cd36d32.a629f28ec97ae6e480bf.js",
-                  "total": 190.22199999999992,
-                  "scripting": 185.6989999999999,
+                  "url": "Unattributable",
+                  "total": 135.34700000000004,
+                  "scripting": 13.171999999999992,
                   "scriptParseCompile": 0
                 }
               ],
               "summary": {
-                "wastedMs": 397.00499999999965
+                "wastedMs": 383.5219999999999
               }
             }
           },
@@ -8705,7 +8705,7 @@
               ],
               "items": [
                 {
-                  "url": "https://www.mikescerealshack.co/_next/static/chunks/1aeab0175d4c4d823d7a78205bceb5dd9cd36d32.a629f28ec97ae6e480bf.js",
+                  "url": "https://www.mikescerealshack.co/",
                   "duration": 194.901,
                   "startTime": 2256.773
                 }
@@ -10503,7 +10503,7 @@
               },
               {
                 "values": {
-                  "timeInMs": 397.00499999999965
+                  "timeInMs": 383.5219999999999
                 },
                 "path": "audits[bootup-time].displayValue"
               }
