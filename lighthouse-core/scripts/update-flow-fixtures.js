@@ -13,6 +13,7 @@ import open from 'open';
 import waitForExpect from 'wait-for-expect';
 import puppeteer from 'puppeteer-core';
 import yargs from 'yargs';
+import {getChromePath} from 'chrome-launcher';
 
 import {LH_ROOT} from '../../root.js';
 import api from '../fraggle-rock/api.js';
@@ -83,7 +84,7 @@ const config = {
 async function rebaselineArtifacts(artifactKeys) {
   const browser = await puppeteer.launch({
     ignoreDefaultArgs: ['--enable-automation'],
-    executablePath: process.env.CHROME_PATH,
+    executablePath: getChromePath(),
     headless: false,
   });
 

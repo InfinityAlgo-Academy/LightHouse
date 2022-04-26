@@ -28,6 +28,7 @@ import {fileURLToPath} from 'url';
 import puppeteer from 'puppeteer-core';
 import yargs from 'yargs';
 import * as yargsHelpers from 'yargs/helpers';
+import {getChromePath} from 'chrome-launcher';
 
 import {parseChromeFlags} from '../../lighthouse-cli/run.js';
 
@@ -316,7 +317,7 @@ async function run() {
   }
 
   const browser = await puppeteer.launch({
-    executablePath: process.env.CHROME_PATH,
+    executablePath: getChromePath(),
     args: chromeFlags,
     devtools: true,
   });

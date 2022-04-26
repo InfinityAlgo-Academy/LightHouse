@@ -7,6 +7,7 @@
 import fs from 'fs';
 
 import puppeteer from 'puppeteer-core';
+import {getChromePath} from 'chrome-launcher';
 
 import {LH_ROOT} from '../../root.js';
 import {snapshot} from '../fraggle-rock/api.js';
@@ -14,7 +15,7 @@ import {snapshot} from '../fraggle-rock/api.js';
 (async () => {
   const browser = await puppeteer.launch({
     ignoreDefaultArgs: ['--enable-automation'],
-    executablePath: process.env.CHROME_PATH,
+    executablePath: getChromePath(),
     headless: false,
   });
   const page = await browser.newPage();
