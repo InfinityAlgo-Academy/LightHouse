@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-'use strict';
 
 /**
  * @fileoverview Script to launch a clean Chrome instance on-demand.

@@ -12,6 +12,7 @@ const trace = require('../../fixtures/traces/lcp-m78.json');
 const devtoolsLog = require('../../fixtures/traces/lcp-m78.devtools.log.json');
 const invalidTrace = require('../../fixtures/traces/progressive-app-m60.json');
 const invalidDevtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
+const {getURLArtifactFromDevtoolsLog} = require('../../test-utils.js');
 
 /* eslint-env jest */
 
@@ -21,8 +22,9 @@ describe('Metrics: LCP', () => {
   it('should compute predicted value', async () => {
     const settings = {throttlingMethod: 'simulate'};
     const context = {settings, computedCache: new Map()};
+    const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
     const result = await LargestContentfulPaint.request({trace, devtoolsLog, gatherContext,
-      settings}, context);
+      settings, URL}, context);
 
     expect({
       timing: Math.round(result.timing),
@@ -40,8 +42,9 @@ describe('Metrics: LCP', () => {
   it('should compute an observed value', async () => {
     const settings = {throttlingMethod: 'provided'};
     const context = {settings, computedCache: new Map()};
+    const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
     const result = await LargestContentfulPaint.request({trace, devtoolsLog, gatherContext,
-      settings}, context);
+      settings, URL}, context);
 
     assert.equal(Math.round(result.timing), 1122);
     assert.equal(result.timestamp, 713038144775);
@@ -50,8 +53,9 @@ describe('Metrics: LCP', () => {
   it('should fail to compute an observed value for old trace', async () => {
     const settings = {throttlingMethod: 'provided'};
     const context = {settings, computedCache: new Map()};
+    const URL = getURLArtifactFromDevtoolsLog(invalidDevtoolsLog);
     const resultPromise = LargestContentfulPaint.request(
-      {gatherContext, trace: invalidTrace, devtoolsLog: invalidDevtoolsLog, settings},
+      {gatherContext, trace: invalidTrace, devtoolsLog: invalidDevtoolsLog, settings, URL},
       context
     );
     await expect(resultPromise).rejects.toThrow('NO_LCP');

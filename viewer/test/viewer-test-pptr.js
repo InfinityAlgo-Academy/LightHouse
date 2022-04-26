@@ -3,7 +3,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 /* eslint-env jest */
 
@@ -200,6 +199,44 @@ describe('Lighthouse Viewer', () => {
       const resultAfterSwap = await queryLocaleState();
       expect(resultAfterSwap.selectedValue).toBe('es');
       expect(resultAfterSwap.sampleString).toBe('Copiar JSON');
+    });
+
+    it('should support saving as html', async () => {
+      const tmpDir = `${LH_ROOT}/.tmp/pptr-downloads`;
+      fs.rmSync(tmpDir, {force: true, recursive: true});
+      await viewerPage._client.send('Page.setDownloadBehavior', {
+        behavior: 'allow',
+        downloadPath: tmpDir,
+      });
+
+      await viewerPage.click('.lh-tools__button');
+      await viewerPage.waitForFunction(() => {
+        return getComputedStyle(
+          document.querySelector('.lh-tools__dropdown')).visibility === 'visible';
+      });
+
+      const [, filename] = await Promise.all([
+        viewerPage.click('a[data-action="save-html"]'),
+        new Promise(resolve => {
+          viewerPage._client.on('Page.downloadWillBegin', ({suggestedFilename}) => {
+            resolve(suggestedFilename);
+          });
+        }),
+        new Promise(resolve => {
+          viewerPage._client.on('Page.downloadProgress', ({state}) => {
+            if (state === 'completed') resolve();
+          });
+        }),
+      ]);
+
+      const savedPage = await browser.newPage();
+      const savedPageErrors = [];
+      savedPage.on('pageerror', pageError => savedPageErrors.push(pageError));
+      const firstLogPromise =
+        new Promise(resolve => savedPage.once('console', e => resolve(e.text())));
+      await savedPage.goto(`file://${tmpDir}/${filename}`);
+      expect(await firstLogPromise).toEqual('window.__LIGHTHOUSE_JSON__ JSHandle@object');
+      expect(savedPageErrors).toHaveLength(0);
     });
   });
 

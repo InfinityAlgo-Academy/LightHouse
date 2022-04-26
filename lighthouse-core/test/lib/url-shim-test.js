@@ -349,8 +349,10 @@ describe('URL Shim', () => {
       expect(URL.guessMimeType('data:image/png;DATA')).toEqual('image/png');
       expect(URL.guessMimeType('data:image/jpeg;DATA')).toEqual('image/jpeg');
       expect(URL.guessMimeType('data:image/svg+xml;DATA')).toEqual('image/svg+xml');
+      expect(URL.guessMimeType('data:image/svg+xml,DATA')).toEqual('image/svg+xml');
       expect(URL.guessMimeType('data:text/html;DATA')).toEqual(undefined);
       expect(URL.guessMimeType('data:image/jpg;DATA')).toEqual(undefined);
+      expect(URL.guessMimeType('data:text/plain,image/png;base64,DATA')).toEqual(undefined);
     });
 
     it('uses path extension for normal files', () => {
@@ -362,6 +364,36 @@ describe('URL Shim', () => {
       expect(URL.guessMimeType('https://example.com/img.svg')).toEqual('image/svg+xml');
       expect(URL.guessMimeType('https://example.com/page.html')).toEqual(undefined);
       expect(URL.guessMimeType('https://example.com/')).toEqual(undefined);
+    });
+  });
+
+  describe('normalizeUrl', () => {
+    it('returns normalized URL', () => {
+      expect(URL.normalizeUrl('https://example.com')).toEqual('https://example.com/');
+    });
+
+    it('rejects when not given a URL', () => {
+      expect(() => {
+        URL.normalizeUrl(undefined);
+      }).toThrow('INVALID_URL');
+    });
+
+    it('rejects when given a URL of zero length', () => {
+      expect(() => {
+        URL.normalizeUrl('');
+      }).toThrow('INVALID_URL');
+    });
+
+    it('rejects when given a URL without protocol', () => {
+      expect(() => {
+        URL.normalizeUrl('localhost');
+      }).toThrow('INVALID_URL');
+    });
+
+    it('rejects when given a URL without hostname', () => {
+      expect(() => {
+        URL.normalizeUrl('https://');
+      }).toThrow('INVALID_URL');
     });
   });
 });

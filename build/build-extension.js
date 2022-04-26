@@ -52,11 +52,8 @@ async function buildEntryPoint() {
   await bundle.close();
 }
 
-/**
- * @return {Promise<void>}
- */
 function copyAssets() {
-  return cpy([
+  cpy([
     '*.html',
     'styles/**/*.css',
     'images/**/*',
@@ -100,4 +97,7 @@ async function run() {
   await packageExtension();
 }
 
-run();
+run().catch(err => {
+  console.error(err);
+  process.exit(1);
+});

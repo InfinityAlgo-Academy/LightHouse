@@ -15,9 +15,9 @@ describe('ConsoleMessages deprecations audit', () => {
     const context = {computedCache: new Map()};
     const auditResult = await DeprecationsAudit.audit({
       ConsoleMessages: [],
-      InspectorIssues: {deprecations: []},
+      InspectorIssues: {deprecationIssue: []},
       SourceMaps: [],
-      ScriptElements: [],
+      Scripts: [],
     }, context);
     assert.equal(auditResult.score, 1);
     assert.equal(auditResult.details.items.length, 0);
@@ -32,9 +32,9 @@ describe('ConsoleMessages deprecations audit', () => {
           text: 'Deprecation message',
         },
       ],
-      InspectorIssues: {deprecations: []},
+      InspectorIssues: {deprecationIssue: []},
       SourceMaps: [],
-      ScriptElements: [],
+      Scripts: [],
     }, context);
     assert.equal(auditResult.score, 0);
     expect(auditResult.displayValue).toBeDisplayString('1 warning found');
@@ -65,9 +65,9 @@ describe('ConsoleMessages deprecations audit', () => {
           text: 'Not a deprecation message 789',
         },
       ],
-      InspectorIssues: {deprecations: []},
+      InspectorIssues: {deprecationIssue: []},
       SourceMaps: [],
-      ScriptElements: [],
+      Scripts: [],
     }, context);
     assert.equal(auditResult.score, 0);
     expect(auditResult.displayValue).toBeDisplayString('2 warnings found');
@@ -90,7 +90,7 @@ describe('ConsoleMessages deprecations audit', () => {
         },
       ],
       InspectorIssues: {
-        deprecations: [
+        deprecationIssue: [
           {
             message: 'Deprecation message 123',
             sourceCodeLocation: {
@@ -110,7 +110,7 @@ describe('ConsoleMessages deprecations audit', () => {
         ],
       },
       SourceMaps: [],
-      ScriptElements: [],
+      Scripts: [],
     }, context);
 
     assert.equal(auditResult.score, 0);

@@ -4,7 +4,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 /**
  * @fileoverview A smokehouse frontend for running from the command line. Parse
@@ -17,7 +16,7 @@ import path from 'path';
 import fs from 'fs';
 import url from 'url';
 
-import cloneDeep from 'lodash.clonedeep';
+import _ from 'lodash';
 import yargs from 'yargs';
 import * as yargsHelpers from 'yargs/helpers';
 import log from 'lighthouse-logger';
@@ -25,6 +24,8 @@ import log from 'lighthouse-logger';
 import {runSmokehouse, getShardedDefinitions} from '../smokehouse.js';
 import {updateTestDefnFormat} from './back-compat-util.js';
 import {LH_ROOT} from '../../../../root.js';
+
+const {cloneDeep} = _;
 
 const coreTestDefnsPath =
   path.join(LH_ROOT, 'lighthouse-cli/test/smokehouse/core-tests.js');
@@ -36,6 +37,7 @@ const coreTestDefnsPath =
 const runnerPaths = {
   cli: '../lighthouse-runners/cli.js',
   bundle: '../lighthouse-runners/bundle.js',
+  devtools: '../lighthouse-runners/devtools.js',
 };
 
 /**
@@ -151,7 +153,7 @@ async function begin() {
       },
       'runner': {
         default: 'cli',
-        choices: ['cli', 'bundle'],
+        choices: ['cli', 'bundle', 'devtools'],
         describe: 'The method of running Lighthouse',
       },
       'tests-path': {
@@ -174,7 +176,8 @@ async function begin() {
 
   // Augmenting yargs type with auto-camelCasing breaks in tsc@4.1.2 and @types/yargs@15.0.11,
   // so for now cast to add yarg's camelCase properties to type.
-  const argv = /** @type {typeof rawArgv & CamelCasify<typeof rawArgv>} */ (rawArgv);
+  const argv =
+    /** @type {Awaited<typeof rawArgv> & CamelCasify<Awaited<typeof rawArgv>>} */ (rawArgv);
 
   const jobs = Number.isFinite(argv.jobs) ? argv.jobs : undefined;
   const retries = Number.isFinite(argv.retries) ? argv.retries : undefined;
@@ -184,6 +187,7 @@ async function begin() {
     console.log('\n✨ Be sure to have recently run this: yarn build-all');
   }
   const {runLighthouse} = await import(runnerPath);
+  runLighthouse.runnerName = argv.runner;
 
   // Find test definition file and filter by requestedTestIds.
   let testDefnPath = argv.testsPath || coreTestDefnsPath;

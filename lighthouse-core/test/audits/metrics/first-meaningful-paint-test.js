@@ -12,6 +12,7 @@ const assert = require('assert').strict;
 const options = FMPAudit.defaultOptions;
 const trace = require('../../fixtures/traces/progressive-app-m60.json');
 const devtoolsLogs = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
+const {getURLArtifactFromDevtoolsLog} = require('../../test-utils.js');
 
 /**
  * @param {{
@@ -36,6 +37,7 @@ describe('Performance: first-meaningful-paint audit', () => {
       GatherContext: {gatherMode: 'navigation'},
       traces: {[Audit.DEFAULT_PASS]: trace},
       devtoolsLogs: {[Audit.DEFAULT_PASS]: devtoolsLogs},
+      URL: getURLArtifactFromDevtoolsLog(devtoolsLogs),
     };
     const context = getFakeContext({formFactor: 'mobile', throttlingMethod: 'provided'});
     const fmpResult = await FMPAudit.audit(artifacts, context);
@@ -50,6 +52,7 @@ describe('Performance: first-meaningful-paint audit', () => {
       GatherContext: {gatherMode: 'navigation'},
       traces: {[Audit.DEFAULT_PASS]: trace},
       devtoolsLogs: {[Audit.DEFAULT_PASS]: devtoolsLogs},
+      URL: getURLArtifactFromDevtoolsLog(devtoolsLogs),
     };
     const context = getFakeContext({formFactor: 'mobile', throttlingMethod: 'simulate'});
     const fmpResult = await FMPAudit.audit(artifacts, context);

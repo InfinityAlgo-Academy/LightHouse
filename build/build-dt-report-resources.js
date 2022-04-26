@@ -13,7 +13,7 @@ const assert = require('assert').strict;
 const {LH_ROOT} = require('../root.js');
 
 const distDir = path.join(LH_ROOT, 'dist', 'dt-report-resources');
-const bundleOutFile = `${distDir}/report-generator.js`;
+const bundleOutFile = `${distDir}/report-generator.mjs`;
 
 /**
  * @param {string} name
@@ -27,11 +27,7 @@ function writeFile(name, content) {
 fs.rmSync(distDir, {recursive: true, force: true});
 fs.mkdirSync(distDir, {recursive: true});
 
-writeFile('report.js', '// This can be removed after the next CDT roll deletes this file');
-writeFile('standalone-template.html',
-  '<!-- This can be removed after the next CDT roll deletes this file -->');
-writeFile('report.d.ts', 'export {}');
-writeFile('report-generator.d.ts', 'export {}');
+writeFile('report-generator.mjs.d.ts', 'export {}');
 
 async function buildReportGenerator() {
   const bundle = await rollup.rollup({
@@ -54,4 +50,7 @@ async function buildReportGenerator() {
   await bundle.close();
 }
 
-buildReportGenerator();
+buildReportGenerator().catch(err => {
+  console.error(err);
+  process.exit(1);
+});

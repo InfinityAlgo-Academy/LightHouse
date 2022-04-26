@@ -31,7 +31,7 @@ describe('Accessibility: html-lang-valid audit', () => {
       Accessibility: {
         violations: [{
           id: 'html-lang-valid',
-          nodes: [],
+          nodes: [{node: {}, relatedNodes: []}],
           help: 'http://example.com/',
         }],
       },

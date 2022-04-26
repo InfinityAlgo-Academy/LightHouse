@@ -65,7 +65,6 @@ const STATIC_RESULTS = {
 
 it('audit basic header', async () => {
   const artifacts = {
-    URL: 'https://example.com',
     MetaElements: [],
     devtoolsLogs: {
       defaultPass: networkRecordsToDevtoolsLog([
@@ -76,6 +75,12 @@ it('audit basic header', async () => {
           ],
         },
       ]),
+    },
+    URL: {
+      initialUrl: 'about:blank',
+      requestedUrl: 'https://example.com',
+      mainDocumentUrl: 'https://example.com',
+      finalUrl: 'https://example.com',
     },
   };
   const results = await CspXss.audit(artifacts, {computedCache: new Map()});
@@ -109,7 +114,12 @@ it('audit basic header', async () => {
 
 it('marked N/A if no warnings found', async () => {
   const artifacts = {
-    URL: 'https://example.com',
+    URL: {
+      initialUrl: 'about:blank',
+      requestedUrl: 'https://example.com',
+      mainDocumentUrl: 'https://example.com',
+      finalUrl: 'https://example.com',
+    },
     MetaElements: [],
     devtoolsLogs: {
       defaultPass: networkRecordsToDevtoolsLog([
@@ -132,7 +142,12 @@ it('marked N/A if no warnings found', async () => {
 describe('getRawCsps', () => {
   it('basic case', async () => {
     const artifacts = {
-      URL: 'https://example.com',
+      URL: {
+        initialUrl: 'about:blank',
+        requestedUrl: 'https://example.com',
+        mainDocumentUrl: 'https://example.com',
+        finalUrl: 'https://example.com',
+      },
       MetaElements: [
         {
           httpEquiv: 'Content-Security-Policy',
@@ -157,8 +172,8 @@ describe('getRawCsps', () => {
         ]),
       },
     };
-    const {cspHeaders, cspMetaTags}
-      = await CspXss.getRawCsps(artifacts, {computedCache: new Map()});
+    const {cspHeaders, cspMetaTags} =
+      await CspXss.getRawCsps(artifacts, {computedCache: new Map()});
     expect(cspHeaders).toEqual([
       `script-src 'none'`,
       `object-src 'none'`,
@@ -170,7 +185,12 @@ describe('getRawCsps', () => {
 
   it('split on comma', async () => {
     const artifacts = {
-      URL: 'https://example.com',
+      URL: {
+        initialUrl: 'about:blank',
+        requestedUrl: 'https://example.com',
+        mainDocumentUrl: 'https://example.com',
+        finalUrl: 'https://example.com',
+      },
       MetaElements: [],
       devtoolsLogs: {
         defaultPass: networkRecordsToDevtoolsLog([
@@ -190,8 +210,8 @@ describe('getRawCsps', () => {
         ]),
       },
     };
-    const {cspHeaders, cspMetaTags}
-      = await CspXss.getRawCsps(artifacts, {computedCache: new Map()});
+    const {cspHeaders, cspMetaTags} =
+      await CspXss.getRawCsps(artifacts, {computedCache: new Map()});
     expect(cspHeaders).toEqual([
       `script-src 'none'`,
       `default-src 'none'`,
@@ -202,7 +222,12 @@ describe('getRawCsps', () => {
 
   it('ignore if empty', async () => {
     const artifacts = {
-      URL: 'https://example.com',
+      URL: {
+        initialUrl: 'about:blank',
+        requestedUrl: 'https://example.com',
+        mainDocumentUrl: 'https://example.com',
+        finalUrl: 'https://example.com',
+      },
       MetaElements: [],
       devtoolsLogs: {
         defaultPass: networkRecordsToDevtoolsLog([
@@ -222,8 +247,8 @@ describe('getRawCsps', () => {
         ]),
       },
     };
-    const {cspHeaders, cspMetaTags}
-      = await CspXss.getRawCsps(artifacts, {computedCache: new Map()});
+    const {cspHeaders, cspMetaTags} =
+      await CspXss.getRawCsps(artifacts, {computedCache: new Map()});
     expect(cspHeaders).toEqual([
       `object-src 'none'`,
     ]);
@@ -232,7 +257,12 @@ describe('getRawCsps', () => {
 
   it('ignore if only whitespace', async () => {
     const artifacts = {
-      URL: 'https://example.com',
+      URL: {
+        initialUrl: 'about:blank',
+        requestedUrl: 'https://example.com',
+        mainDocumentUrl: 'https://example.com',
+        finalUrl: 'https://example.com',
+      },
       MetaElements: [],
       devtoolsLogs: {
         defaultPass: networkRecordsToDevtoolsLog([
@@ -252,8 +282,8 @@ describe('getRawCsps', () => {
         ]),
       },
     };
-    const {cspHeaders, cspMetaTags}
-      = await CspXss.getRawCsps(artifacts, {computedCache: new Map()});
+    const {cspHeaders, cspMetaTags} =
+      await CspXss.getRawCsps(artifacts, {computedCache: new Map()});
     expect(cspHeaders).toEqual([
       `object-src 'none'`,
     ]);

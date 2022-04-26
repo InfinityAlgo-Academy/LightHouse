@@ -31,7 +31,7 @@ describe('Accessibility: link-name audit', () => {
       Accessibility: {
         violations: [{
           id: 'link-name',
-          nodes: [],
+          nodes: [{node: {}, relatedNodes: []}],
           help: 'http://example.com/',
         }],
       },

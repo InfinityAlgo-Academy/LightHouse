@@ -3,7 +3,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 /** @type {LH.Config.Json} */
 const config = {
@@ -11,12 +10,16 @@ const config = {
   categories: {
     performance: {
       title: 'Performance',
-      auditRefs: [{id: 'oopif-iframe-test-audit', weight: 0}],
+      auditRefs: [
+        {id: 'oopif-iframe-test-audit', weight: 0},
+        {id: 'script-elements-test-audit', weight: 0},
+      ],
     },
   },
   audits: [
     // Include an audit that *forces* the IFrameElements artifact to be used for our test.
     {path: 'oopif-iframe-test-audit'},
+    {path: 'script-elements-test-audit'},
   ],
   settings: {
     // This test runs in CI and hits the outside network of a live site.
@@ -24,14 +27,12 @@ const config = {
     // to complete.
     maxWaitForLoad: 180000,
   },
-  passes: [
+  passes: [{
+    passName: 'defaultPass',
     // CI machines are pretty weak which lead to many more long tasks than normal.
     // Reduce our requirement for CPU quiet.
-    {
-      passName: 'defaultPass',
-      cpuQuietThresholdMs: 500,
-    },
-  ],
+    cpuQuietThresholdMs: 500,
+  }],
 };
 
 /**
@@ -40,8 +41,8 @@ const config = {
  */
 const expectations = {
   lhr: {
-    requestedUrl: 'http://localhost:10200/oopif.html',
-    finalUrl: 'http://localhost:10200/oopif.html',
+    requestedUrl: 'http://localhost:10200/oopif-requests.html',
+    finalUrl: 'http://localhost:10200/oopif-requests.html',
     audits: {
       'network-requests': {
         details: {
@@ -67,16 +68,9 @@ const expectations = {
         },
         isPositionFixed: false,
       },
-      {
-        id: 'outer-iframe',
-        src: 'http://localhost:10200/online-only.html',
-        clientRect: {
-          width: '>0',
-          height: '>0',
-        },
-        isPositionFixed: true,
-      },
     ],
+    ScriptElements: [],
+    Scripts: [],
   },
 };
 

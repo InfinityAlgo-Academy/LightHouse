@@ -10,15 +10,18 @@
 const MainDocumentContent = require('../../../gather/gatherers/main-document-content.js');
 const NetworkRecorder = require('../../../lib/network-recorder.js');
 const {createMockContext} = require('../../fraggle-rock/gather/mock-driver.js');
+const {getURLArtifactFromDevtoolsLog} = require('../../test-utils.js');
 
-const devtoolsLog
-  = /** @type {LH.DevtoolsLog} */ (require('../../fixtures/traces/lcp-m78.devtools.log.json'));
+const devtoolsLog =
+  /** @type {LH.DevtoolsLog} */ (require('../../fixtures/traces/lcp-m78.devtools.log.json'));
+const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
 
 describe('FR compat', () => {
   it('uses loadData in legacy mode', async () => {
     const gatherer = new MainDocumentContent();
     const networkRecords = NetworkRecorder.recordsFromLogs(devtoolsLog);
     const mockContext = createMockContext();
+    mockContext.baseArtifacts.URL = URL;
     mockContext.driver.defaultSession.sendCommand
       .mockResponse('Network.getResponseBody', {body: 'RESPONSE'});
 
@@ -33,6 +36,7 @@ describe('FR compat', () => {
   it('uses dependencies for FR', async () => {
     const gatherer = new MainDocumentContent();
     const mockContext = createMockContext();
+    mockContext.baseArtifacts.URL = URL;
     mockContext.driver.defaultSession.sendCommand
       .mockResponse('Network.getResponseBody', {body: 'RESPONSE'});
 

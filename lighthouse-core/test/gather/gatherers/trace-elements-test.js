@@ -18,7 +18,7 @@ const animationTrace = require('../../fixtures/traces/animation.json');
 
 jest.useFakeTimers();
 
-function makeLayoutShiftTraceEvent(score, impactedNodes, had_recent_input = false) {
+function makeLayoutShiftTraceEvent(score, impactedNodes, had_recent_input = false) { // eslint-disable-line camelcase
   return {
     name: 'LayoutShift',
     cat: 'loading',
@@ -28,7 +28,7 @@ function makeLayoutShiftTraceEvent(score, impactedNodes, had_recent_input = fals
     ts: 1200,
     args: {
       data: {
-        had_recent_input,
+        had_recent_input, // eslint-disable-line camelcase
         impacted_nodes: impactedNodes,
         score: score,
       },

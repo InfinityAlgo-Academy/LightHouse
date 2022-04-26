@@ -173,7 +173,7 @@ describe('Optimized images', () => {
       const failed = artifact.find(record => record.failed);
 
       expect(artifact).toHaveLength(5);
-      expect(failed && failed.errMsg).toEqual('whoops driver failed');
+      expect(failed?.errMsg).toEqual('whoops driver failed');
     });
   });
 

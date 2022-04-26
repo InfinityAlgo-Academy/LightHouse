@@ -42,7 +42,6 @@ describe('.getArtifact', () => {
     /** @type {LH.Gatherer.FRTransitionalContext} */
     const context = {
       driver: driver.asDriver(),
-      url: 'https://example.com',
       gatherMode: 'snapshot',
       computedCache: new Map(),
       baseArtifacts: createMockBaseArtifacts(),
@@ -98,7 +97,6 @@ describe('.getArtifact', () => {
     /** @type {LH.Gatherer.FRTransitionalContext} */
     const context = {
       driver: driver.asDriver(),
-      url: 'https://example.com',
       gatherMode: 'timespan',
       computedCache: new Map(),
       baseArtifacts: createMockBaseArtifacts(),
@@ -154,7 +152,6 @@ describe('.getArtifact', () => {
     /** @type {LH.Gatherer.FRTransitionalContext} */
     const context = {
       driver: driver.asDriver(),
-      url: 'https://example.com',
       gatherMode: 'snapshot',
       computedCache: new Map(),
       baseArtifacts: createMockBaseArtifacts(),

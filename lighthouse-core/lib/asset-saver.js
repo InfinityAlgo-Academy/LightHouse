@@ -19,6 +19,8 @@ const LHError = require('../lib/lh-error.js');
 // TODO(esmodules): Rollup does not support `promisfy` or `stream.pipeline`. Bundled files
 // don't need anything in this file except for `stringifyReplacer`, so a check for
 // truthiness before using is enough.
+// TODO: Can remove promisify(pipeline) in Node 15.
+// https://nodejs.org/api/stream.html#streams-promises-api
 const pipeline = promisify && promisify(stream.pipeline);
 
 const artifactsFilename = 'artifacts.json';
@@ -238,8 +240,6 @@ async function saveTrace(traceData, traceFilename) {
   const traceIter = traceJsonGenerator(traceData);
   const writeStream = fs.createWriteStream(traceFilename);
 
-  // TODO: Can remove promisify(pipeline) in Node 15.
-  // https://nodejs.org/api/stream.html#stream_stream_pipeline_streams_callback
   return pipeline(traceIter, writeStream);
 }
 
@@ -250,10 +250,12 @@ async function saveTrace(traceData, traceFilename) {
  * @return {Promise<void>}
  */
 function saveDevtoolsLog(devtoolsLog, devtoolLogFilename) {
-  const logIter = arrayOfObjectsJsonGenerator(devtoolsLog);
   const writeStream = fs.createWriteStream(devtoolLogFilename);
 
-  return pipeline(logIter, writeStream);
+  return pipeline(function* () {
+    yield* arrayOfObjectsJsonGenerator(devtoolsLog);
+    yield '\n';
+  }, writeStream);
 }
 
 /**
@@ -311,6 +313,20 @@ async function saveLanternNetworkData(devtoolsLog, outputPath) {
   fs.writeFileSync(outputPath, JSON.stringify(lanternData));
 }
 
+/**
+ * Normalize timing data so it doesn't change every update.
+ * @param {LH.Result.MeasureEntry[]} timings
+ */
+function normalizeTimingEntries(timings) {
+  let baseTime = 0;
+  for (const timing of timings) {
+    // @ts-expect-error: Value actually is writeable at this point.
+    timing.startTime = baseTime++;
+    // @ts-expect-error: Value actually is writeable at this point.
+    timing.duration = 1;
+  }
+}
+
 module.exports = {
   saveArtifacts,
   saveLhr,
@@ -321,4 +337,5 @@ module.exports = {
   saveDevtoolsLog,
   saveLanternNetworkData,
   stringifyReplacer,
+  normalizeTimingEntries,
 };

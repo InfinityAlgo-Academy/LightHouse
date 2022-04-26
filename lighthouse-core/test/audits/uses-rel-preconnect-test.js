@@ -29,7 +29,12 @@ function buildArtifacts(networkRecords) {
 
   return {
     LinkElements: [],
-    URL: {finalUrl: mainResource.url},
+    URL: {
+      initialUrl: 'about:blank',
+      requestedUrl: mainResource.url,
+      mainDocumentUrl: mainResource.url,
+      finalUrl: mainResource.url,
+    },
     devtoolsLogs: {defaultPass: devtoolsLog},
     traces: {defaultPass: trace},
   };

@@ -47,6 +47,7 @@ yarn-error.log
 
 /chrome-linux/
 /chrome-win32/
+/chrome-mac/
 /chrome.zip
 
 *__pycache__

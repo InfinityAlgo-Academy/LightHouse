@@ -20,7 +20,7 @@ describe('Performance: server-response-time audit', () => {
 
     const artifacts = {
       devtoolsLogs: {[ServerResponseTime.DEFAULT_PASS]: devtoolsLog},
-      URL: {finalUrl: 'https://example.com/'},
+      URL: {mainDocumentUrl: 'https://example.com/'},
       GatherContext: {gatherMode: 'navigation'},
     };
 
@@ -45,7 +45,7 @@ describe('Performance: server-response-time audit', () => {
 
     const artifacts = {
       devtoolsLogs: {[ServerResponseTime.DEFAULT_PASS]: devtoolsLog},
-      URL: {finalUrl: 'https://example.com/'},
+      URL: {mainDocumentUrl: 'https://example.com/'},
       GatherContext: {gatherMode: 'navigation'},
     };
 
@@ -56,49 +56,12 @@ describe('Performance: server-response-time audit', () => {
     });
   });
 
-  it('identifies main resource in timespan mode', async () => {
-    const mainResource = {
-      url: 'https://example.com/',
-      requestId: '0',
-      timing: {receiveHeadersEnd: 400, sendEnd: 200},
-    };
-    const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
-
-    const artifacts = {
-      devtoolsLogs: {[ServerResponseTime.DEFAULT_PASS]: devtoolsLog},
-      URL: {finalUrl: 'https://example.com/'},
-      GatherContext: {gatherMode: 'timespan'},
-    };
-
-    const result = await ServerResponseTime.audit(artifacts, {computedCache: new Map()});
-    expect(result).toMatchObject({
-      numericValue: 200,
-      score: 1,
-    });
-  });
-
-  it('result is n/a if no main resource in timespan', async () => {
+  it('throws error if no main resource', async () => {
     const devtoolsLog = networkRecordsToDevtoolsLog([]);
 
     const artifacts = {
       devtoolsLogs: {[ServerResponseTime.DEFAULT_PASS]: devtoolsLog},
-      URL: {finalUrl: 'https://example.com/'},
-      GatherContext: {gatherMode: 'timespan'},
-    };
-
-    const result = await ServerResponseTime.audit(artifacts, {computedCache: new Map()});
-    expect(result).toEqual({
-      score: null,
-      notApplicable: true,
-    });
-  });
-
-  it('throws error if no main resource in navigation', async () => {
-    const devtoolsLog = networkRecordsToDevtoolsLog([]);
-
-    const artifacts = {
-      devtoolsLogs: {[ServerResponseTime.DEFAULT_PASS]: devtoolsLog},
-      URL: {finalUrl: 'https://example.com/'},
+      URL: {mainDocumentUrl: 'https://example.com/'},
       GatherContext: {gatherMode: 'navigation'},
     };
 

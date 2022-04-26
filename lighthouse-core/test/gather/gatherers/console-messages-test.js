@@ -31,7 +31,7 @@ class MockSession {
 }
 
 class MockDriver {
-  defaultSession = new MockSession
+  defaultSession = new MockSession;
 }
 
 describe('ConsoleMessages', () => {

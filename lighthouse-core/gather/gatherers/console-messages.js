@@ -34,7 +34,7 @@ class ConsoleMessages extends FRGatherer {
   /** @type {LH.Gatherer.GathererMeta} */
   meta = {
     supportedModes: ['timespan', 'navigation'],
-  }
+  };
 
   constructor() {
     super();
@@ -66,7 +66,7 @@ class ConsoleMessages extends FRGatherer {
     }
 
     const {url, lineNumber, columnNumber} =
-      event.stackTrace && event.stackTrace.callFrames[0] || {};
+      event.stackTrace?.callFrames[0] || {};
     /** @type {LH.Artifacts.ConsoleMessage} */
     const consoleMessage = {
       eventType: 'consoleAPI',
@@ -101,6 +101,7 @@ class ConsoleMessages extends FRGatherer {
       stackTrace: event.exceptionDetails.stackTrace,
       timestamp: event.timestamp,
       url: event.exceptionDetails.url,
+      scriptId: event.exceptionDetails.scriptId,
       lineNumber: event.exceptionDetails.lineNumber,
       columnNumber: event.exceptionDetails.columnNumber,
     };
@@ -117,7 +118,7 @@ class ConsoleMessages extends FRGatherer {
 
     // JS events have a stack trace, which we use to get the column.
     // CSS/HTML events only expose a line number.
-    const {columnNumber} = event.entry.stackTrace && event.entry.stackTrace.callFrames[0] || {};
+    const firstStackFrame = event.entry.stackTrace?.callFrames[0];
 
     this._logEntries.push({
       eventType: 'protocolLog',
@@ -127,8 +128,9 @@ class ConsoleMessages extends FRGatherer {
       stackTrace,
       timestamp,
       url,
+      scriptId: firstStackFrame?.scriptId,
       lineNumber,
-      columnNumber,
+      columnNumber: firstStackFrame?.columnNumber,
     });
   }
 

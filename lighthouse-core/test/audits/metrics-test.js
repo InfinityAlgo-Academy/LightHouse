@@ -23,11 +23,15 @@ const clsAllFramesDevtoolsLog = require('../fixtures/traces/frame-metrics-m90.de
 const jumpyClsTrace = require('../fixtures/traces/jumpy-cls-m90.json');
 const jumpyClsDevtoolsLog = require('../fixtures/traces/jumpy-cls-m90.devtoolslog.json');
 
+const {getURLArtifactFromDevtoolsLog} = require('../test-utils.js');
+
 /* eslint-env jest */
 
 describe('Performance: metrics', () => {
   it('evaluates valid input correctly', async () => {
+    const URL = getURLArtifactFromDevtoolsLog(pwaDevtoolsLog);
     const artifacts = {
+      URL,
       GatherContext: {gatherMode: 'navigation'},
       traces: {
         [MetricsAudit.DEFAULT_PASS]: pwaTrace,
@@ -43,7 +47,9 @@ describe('Performance: metrics', () => {
   });
 
   it('evaluates valid input correctly (throttlingMethod=provided)', async () => {
+    const URL = getURLArtifactFromDevtoolsLog(pwaDevtoolsLog);
     const artifacts = {
+      URL,
       GatherContext: {gatherMode: 'navigation'},
       traces: {
         [MetricsAudit.DEFAULT_PASS]: pwaTrace,
@@ -59,7 +65,9 @@ describe('Performance: metrics', () => {
   });
 
   it('evaluates valid input (with lcp) correctly', async () => {
+    const URL = getURLArtifactFromDevtoolsLog(lcpDevtoolsLog);
     const artifacts = {
+      URL,
       GatherContext: {gatherMode: 'navigation'},
       traces: {
         [MetricsAudit.DEFAULT_PASS]: lcpTrace,
@@ -75,7 +83,9 @@ describe('Performance: metrics', () => {
   });
 
   it('evaluates valid input (with lcp from all frames) correctly', async () => {
+    const URL = getURLArtifactFromDevtoolsLog(lcpAllFramesDevtoolsLog);
     const artifacts = {
+      URL,
       GatherContext: {gatherMode: 'navigation'},
       traces: {
         [MetricsAudit.DEFAULT_PASS]: lcpAllFramesTrace,
@@ -114,7 +124,9 @@ describe('Performance: metrics', () => {
   });
 
   it('evaluates new CLS correctly across all frames', async () => {
+    const URL = getURLArtifactFromDevtoolsLog(clsAllFramesDevtoolsLog);
     const artifacts = {
+      URL,
       GatherContext: {gatherMode: 'navigation'},
       traces: {
         [MetricsAudit.DEFAULT_PASS]: clsAllFramesTrace,
@@ -140,7 +152,9 @@ describe('Performance: metrics', () => {
   });
 
   it('does not fail the entire audit when TTI errors', async () => {
+    const URL = getURLArtifactFromDevtoolsLog(pwaDevtoolsLog);
     const artifacts = {
+      URL,
       GatherContext: {gatherMode: 'navigation'},
       traces: {
         [MetricsAudit.DEFAULT_PASS]: pwaTrace,
@@ -158,7 +172,9 @@ describe('Performance: metrics', () => {
   });
 
   it('evaluates CLS correctly', async () => {
+    const URL = getURLArtifactFromDevtoolsLog(jumpyClsDevtoolsLog);
     const artifacts = {
+      URL,
       GatherContext: {gatherMode: 'navigation'},
       traces: {
         [MetricsAudit.DEFAULT_PASS]: jumpyClsTrace,

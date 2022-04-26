@@ -12,6 +12,7 @@ const DNSCache = require('../../../../lib/dependency-graph/simulator/dns-cache.j
 const PageDependencyGraph = require('../../../../computed/page-dependency-graph.js');
 
 const assert = require('assert').strict;
+const {getURLArtifactFromDevtoolsLog} = require('../../../test-utils.js');
 let nextRequestId = 1;
 let nextTid = 1;
 
@@ -360,10 +361,11 @@ describe('DependencyGraph/Simulator', () => {
     describe('on a real trace', () => {
       const trace = require('../../../fixtures/traces/progressive-app-m60.json');
       const devtoolsLog = require('../../../fixtures/traces/progressive-app-m60.devtools.log.json');
+      const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
 
       it('should compute a timeInMs', async () => {
         const computedCache = new Map();
-        const graph = await PageDependencyGraph.request({trace, devtoolsLog}, {computedCache});
+        const graph = await PageDependencyGraph.request({trace, devtoolsLog, URL}, {computedCache});
         const simulator = new Simulator({serverResponseTimeByOrigin});
         const result = simulator.simulate(graph);
         expect(result.timeInMs).toBeGreaterThan(100);
@@ -371,7 +373,7 @@ describe('DependencyGraph/Simulator', () => {
 
       it('should sort the task event times', async () => {
         const computedCache = new Map();
-        const graph = await PageDependencyGraph.request({trace, devtoolsLog}, {computedCache});
+        const graph = await PageDependencyGraph.request({trace, devtoolsLog, URL}, {computedCache});
         const simulator = new Simulator({serverResponseTimeByOrigin});
         const result = simulator.simulate(graph);
         const nodeTimings = Array.from(result.nodeTimings.entries());
@@ -382,6 +384,26 @@ describe('DependencyGraph/Simulator', () => {
           expect(startTime).toBeGreaterThanOrEqual(previousStartTime);
         }
       });
+    });
+  });
+
+  describe('.simulateTimespan', () => {
+    it('calculates savings using throughput', () => {
+      const simulator = new Simulator({throughput: 1000, observedThroughput: 2000});
+      const wastedMs = simulator.computeWastedMsFromWastedBytes(500);
+      expect(wastedMs).toBeCloseTo(4000);
+    });
+
+    it('falls back to observed throughput if throughput is 0', () => {
+      const simulator = new Simulator({throughput: 0, observedThroughput: 2000});
+      const wastedMs = simulator.computeWastedMsFromWastedBytes(500);
+      expect(wastedMs).toBeCloseTo(2000);
+    });
+
+    it('returns 0 if throughput and observed throughput are 0', () => {
+      const simulator = new Simulator({throughput: 0, observedThroughput: 0});
+      const wastedMs = simulator.computeWastedMsFromWastedBytes(500);
+      expect(wastedMs).toEqual(0);
     });
   });
 });

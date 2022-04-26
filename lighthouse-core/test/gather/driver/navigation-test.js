@@ -84,7 +84,8 @@ describe('.gotoURL', () => {
     expect(loadPromise).toBeDone('Did not resolve after frameNavigated');
 
     const results = await loadPromise;
-    expect(results.finalUrl).toEqual('https://m.example.com/client');
+    expect(results.requestedUrl).toEqual('http://example.com');
+    expect(results.mainDocumentUrl).toEqual('https://m.example.com/client');
     expect(results.warnings).toMatchObject([
       {
         values: {
@@ -93,6 +94,44 @@ describe('.gotoURL', () => {
         },
       },
     ]);
+  });
+
+  it('backfills requestedUrl when using a callback requestor', async () => {
+    mockDriver.defaultSession.on = mockDriver.defaultSession.once = createMockOnceFn();
+
+    const requestor = () => Promise.resolve();
+
+    const loadPromise = makePromiseInspectable(
+      gotoURL(driver, requestor, {waitUntil: ['navigated']})
+    );
+    await flushAllTimersAndMicrotasks();
+    const listeners = mockDriver.defaultSession.on.getListeners('Page.frameNavigated');
+    for (const listener of listeners) {
+      listener({frame: {id: 'ABC', url: 'https://www.example.com'}});
+    }
+
+    const results = await loadPromise;
+    expect(results.requestedUrl).toEqual('https://www.example.com');
+    expect(results.mainDocumentUrl).toEqual('https://www.example.com');
+  });
+
+  it('throws if no navigations found using a callback requestor', async () => {
+    mockDriver.defaultSession.on = mockDriver.defaultSession.once = createMockOnceFn();
+
+    const requestor = () => Promise.resolve();
+
+    const loadPromise = makePromiseInspectable(
+      gotoURL(driver, requestor, {waitUntil: ['navigated']})
+    );
+    await flushAllTimersAndMicrotasks();
+
+    // Trigger the load listener, but not the network monitor one.
+    const [_, listener] = mockDriver.defaultSession.on.getListeners('Page.frameNavigated');
+    listener({frame: {id: 'ABC', url: 'https://www.example.com'}});
+
+    await expect(loadPromise).rejects.toThrow(
+      'No navigations detected when running user defined requestor.'
+    );
   });
 
   it('does not add warnings when URLs are equal', async () => {
@@ -209,7 +248,7 @@ describe('.getNavigationWarnings()', () => {
   const normalNavigation = {
     timedOut: false,
     requestedUrl: 'http://example.com/',
-    finalUrl: 'http://example.com/',
+    mainDocumentUrl: 'http://example.com/',
   };
 
   it('finds no warnings by default', () => {
@@ -223,27 +262,27 @@ describe('.getNavigationWarnings()', () => {
   });
 
   it('adds a url mismatch warning', () => {
-    const finalUrl = 'https://m.example.com/client';
-    const warnings = getNavigationWarnings({...normalNavigation, finalUrl});
+    const mainDocumentUrl = 'https://m.example.com/client';
+    const warnings = getNavigationWarnings({...normalNavigation, mainDocumentUrl});
     expect(warnings).toMatchObject([
       {
         values: {
           requested: 'http://example.com/',
-          final: finalUrl,
+          final: mainDocumentUrl,
         },
       },
     ]);
   });
 
   it('does not add a url mismatch warning for fragment differences', () => {
-    const finalUrl = 'http://example.com/#fragment';
-    const warnings = getNavigationWarnings({...normalNavigation, finalUrl});
+    const mainDocumentUrl = 'http://example.com/#fragment';
+    const warnings = getNavigationWarnings({...normalNavigation, mainDocumentUrl});
     expect(warnings).toHaveLength(0);
   });
 
   it('adds a url mismatch warning for failed navigations', () => {
-    const finalUrl = 'chrome-error://chromewebdata/';
-    const warnings = getNavigationWarnings({...normalNavigation, finalUrl});
+    const mainDocumentUrl = 'chrome-error://chromewebdata/';
+    const warnings = getNavigationWarnings({...normalNavigation, mainDocumentUrl});
     expect(warnings).toHaveLength(1);
   });
 });

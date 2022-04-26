@@ -59,11 +59,12 @@ describe('PWA: webapp install banner audit', () => {
 
     it('fails with a non-parsable manifest', () => {
       const artifacts = generateMockArtifacts('{,:}');
+      artifacts.InstallabilityErrors.errors.push({errorId: 'manifest-empty', errorArguments: []});
       const context = generateMockAuditContext();
       return InstallableManifestAudit.audit(artifacts, context).then(result => {
         assert.strictEqual(result.score, 0);
         const items = result.details.items;
-        assert.ok(items[0].reason.includes('failed to parse as valid JSON'));
+        expect(items[0].reason).toBeDisplayString(/could not be parsed/);
       });
     });
 
@@ -191,6 +192,39 @@ describe('PWA: webapp install banner audit', () => {
       return InstallableManifestAudit.audit(artifacts, context).then(result => {
         assert.strictEqual(result.score, 1);
       });
+    });
+
+    it('adds scheme to invalid scheme error message', async () => {
+      const artifacts = generateMockArtifacts();
+      artifacts.WebAppManifest.url = 'data:application/json;base64,AAAAAAAAAA';
+      artifacts.InstallabilityErrors.errors.push({
+        errorId: 'scheme-not-supported-for-webapk',
+        errorArguments: [],
+      });
+      const context = generateMockAuditContext();
+
+      const result = await InstallableManifestAudit.audit(artifacts, context);
+      expect(result.score).toEqual(0);
+      expect(result.details.items[0].reason).toBeDisplayString(
+        'The manifest URL scheme (data:) is not supported on Android.'
+      );
+    });
+
+    it('ignores invalid scheme error if there was no manifest url', async () => {
+      const artifacts = generateMockArtifacts();
+      artifacts.WebAppManifest = undefined;
+      artifacts.InstallabilityErrors.errors.push(
+        {errorId: 'no-manifest', errorArguments: []},
+        {errorId: 'scheme-not-supported-for-webapk', errorArguments: []}
+      );
+      const context = generateMockAuditContext();
+
+      const result = await InstallableManifestAudit.audit(artifacts, context);
+      expect(result.score).toEqual(0);
+      expect(result.details.items).toHaveLength(1);
+      expect(result.details.items[0].reason).toBeDisplayString(
+        'Page has no manifest <link> URL'
+      );
     });
   });
 

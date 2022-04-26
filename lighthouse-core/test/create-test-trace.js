@@ -81,7 +81,7 @@ function createTestTrace(options) {
     cat: 'blink.user_timing',
     args: {
       frame: rootFrame,
-      data: {documentLoaderURL: ''},
+      data: {documentLoaderURL: 'https://example.com/'},
     },
   }, {
     name: 'TracingStartedInBrowser',
@@ -181,8 +181,7 @@ function createTestTrace(options) {
   if (options.topLevelTasks) {
     for (const task of options.topLevelTasks) {
       traceEvents.push(getTopLevelTask(task));
-      if (task.children &&
-        task.children.length) {
+      if (task.children?.length) {
         for (const child of task.children) {
           traceEvents.push(getChildTask(child));
         }

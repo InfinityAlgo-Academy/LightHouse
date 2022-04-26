@@ -17,7 +17,6 @@
  * Dummy text for ensuring report robustness: </script> pre$`post %%LIGHTHOUSE_JSON%%
  * (this is handled by terser)
  */
-'use strict';
 
 /** @typedef {import('./dom.js').DOM} DOM */
 
@@ -260,7 +259,7 @@ export class ReportRenderer {
     Util.reportJson = report;
 
     const fullPageScreenshot =
-      report.audits['full-page-screenshot'] && report.audits['full-page-screenshot'].details &&
+      report.audits['full-page-screenshot']?.details &&
       report.audits['full-page-screenshot'].details.type === 'full-page-screenshot' ?
       report.audits['full-page-screenshot'].details : undefined;
     const detailsRenderer = new DetailsRenderer(this._dom, {
@@ -311,7 +310,7 @@ export class ReportRenderer {
     for (const category of Object.values(report.categories)) {
       const renderer = specificCategoryRenderers[category.id] || categoryRenderer;
       // .lh-category-wrapper is full-width and provides horizontal rules between categories.
-      // .lh-category within has the max-width: var(--report-content-width);
+      // .lh-category within has the max-width: var(--report-content-max-width);
       const wrapper = renderer.dom.createChildOf(categories, 'div', 'lh-category-wrapper');
       wrapper.appendChild(renderer.render(
         category,

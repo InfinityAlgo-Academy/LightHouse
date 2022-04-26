@@ -101,17 +101,15 @@ class LanternMetricArtifact {
   static async computeMetricWithGraphs(data, context, extras) {
     // TODO: remove this fallback when lighthouse-pub-ads plugin can update.
     const gatherContext = data.gatherContext || {gatherMode: 'navigation'};
-    const {trace, devtoolsLog, settings} = data;
     if (gatherContext.gatherMode !== 'navigation') {
       throw new Error(`Lantern metrics can only be computed on navigations`);
     }
 
     const metricName = this.name.replace('Lantern', '');
-    const graph = await PageDependencyGraph.request({trace, devtoolsLog}, context);
-    const processedTrace = await ProcessedTrace.request(trace, context);
+    const graph = await PageDependencyGraph.request(data, context);
+    const processedTrace = await ProcessedTrace.request(data.trace, context);
     const processedNavigation = await ProcessedNavigation.request(processedTrace, context);
-    const simulator = data.simulator ||
-        await LoadSimulator.request({devtoolsLog, settings}, context);
+    const simulator = data.simulator || (await LoadSimulator.request(data, context));
 
     const optimisticGraph = this.getOptimisticGraph(graph, processedNavigation);
     const pessimisticGraph = this.getPessimisticGraph(graph, processedNavigation);

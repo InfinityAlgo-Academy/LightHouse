@@ -8,6 +8,9 @@
 
 set -euo pipefail
 
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+LH_ROOT="$SCRIPT_DIR/../../.."
+
 roll_devtools() {
   # Roll devtools. Besides giving DevTools the latest lighthouse source files,
   # this also copies over the webtests.

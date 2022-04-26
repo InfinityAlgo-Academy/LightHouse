@@ -12,6 +12,7 @@ const format = require('../../shared/localization/format.js');
 const mockCommands = require('./gather/mock-commands.js');
 const {default: {toBeCloseTo}} = require('expect/build/matchers.js');
 const {LH_ROOT} = require('../../root.js');
+const NetworkRecorder = require('../lib/network-recorder.js');
 
 expect.extend({
   toBeDisplayString(received, expected) {
@@ -139,7 +140,7 @@ function loadSourceMapAndUsageFixture(name) {
   /** @type {{url: string, ranges: Array<{start: number, end: number, count: number}>}} */
   const exportedUsage = JSON.parse(usageJson);
   const usage = {
-    scriptId: 'FakeId', // Not used.
+    scriptId: name,
     url: exportedUsage.url,
     functions: [
       {
@@ -266,10 +267,57 @@ function makeMocksForGatherRunner() {
   }));
   jest.mock('../gather/driver/navigation.js', () => ({
     gotoURL: jest.fn().mockResolvedValue({
-      finalUrl: 'http://example.com',
+      mainDocumentUrl: 'http://example.com',
       warnings: [],
     }),
   }));
+}
+
+/**
+ * @param {Partial<LH.Artifacts.Script>} script
+ * @return {LH.Artifacts.Script} script
+ */
+function createScript(script) {
+  if (!script.scriptId) throw new Error('Must include a scriptId');
+
+  // @ts-expect-error For testing purposes we assume the test set all valid properties.
+  return {
+    ...script,
+    length: script.content?.length ?? script.length,
+    name: script.name ?? script.url ?? '<no name>',
+    scriptLanguage: 'JavaScript',
+  };
+}
+
+/**
+ * This has a slightly different, less strict implementation than `PageDependencyGraph`.
+ * It's a convenience function so we don't have to dig through the log and determine the URL artifact manually.
+ *
+ * @param {LH.DevtoolsLog} devtoolsLog
+ * @return {LH.Artifacts['URL']}
+ */
+function getURLArtifactFromDevtoolsLog(devtoolsLog) {
+  /** @type {string|undefined} */
+  let requestedUrl;
+  /** @type {string|undefined} */
+  let mainDocumentUrl;
+  for (const event of devtoolsLog) {
+    if (event.method === 'Page.frameNavigated' && !event.params.frame.parentId) {
+      const {url} = event.params.frame;
+      // Only set requestedUrl on the first main frame navigation.
+      if (!requestedUrl) requestedUrl = url;
+      mainDocumentUrl = url;
+    }
+  }
+  const networkRecords = NetworkRecorder.recordsFromLogs(devtoolsLog);
+  let initialRequest = networkRecords.find(r => r.url === requestedUrl);
+  while (initialRequest?.redirectSource) {
+    initialRequest = initialRequest.redirectSource;
+    requestedUrl = initialRequest.url;
+  }
+  if (!requestedUrl || !mainDocumentUrl) throw new Error('No main frame navigations found');
+
+  return {initialUrl: 'about:blank', requestedUrl, mainDocumentUrl, finalUrl: mainDocumentUrl};
 }
 
 module.exports = {
@@ -281,5 +329,7 @@ module.exports = {
   createDecomposedPromise,
   flushAllTimersAndMicrotasks,
   makeMocksForGatherRunner,
+  createScript,
+  getURLArtifactFromDevtoolsLog,
   ...mockCommands,
 };

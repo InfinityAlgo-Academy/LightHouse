@@ -3,7 +3,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 /* eslint-env jest */
 
@@ -66,7 +65,8 @@ describe('ElementScreenshotRenderer', () => {
     /* eslint-disable max-len */
     expect(htmlFormatted).toMatchInlineSnapshot(`
 " 
-<div class=\\"lh-element-screenshot__content\\" style=\\"top: -500px;\\"> 
+<div class=\\"lh-element-screenshot__content\\"> 
+<div class=\\"lh-element-screenshot__image\\" style=\\"width: 500px; height: 500px; background-position-y: 0px; background-position-x: 0px; background-size: 1000px 1000px;\\"> 
 <div class=\\"lh-element-screenshot__mask\\" style=\\"width: 500px; height: 500px; clip-path: url(#clip-0);\\"> 
 <svg height=\\"0\\" width=\\"0\\"> <defs> 
 <clipPath clipPathUnits=\\"objectBoundingBox\\" id=\\"clip-0\\">
@@ -74,8 +74,7 @@ describe('ElementScreenshotRenderer', () => {
 <polygon points=\\"0,0.7     1,0.7    1,1               0,1\\"></polygon>
 <polygon points=\\"0,0.1        0.1,0.1 0.1,0.7 0,0.7\\"></polygon>
 <polygon points=\\"0.5,0.1 1,0.1       1,0.7       0.5,0.7\\"></polygon></clipPath>  </defs> </svg> </div> 
-<div class=\\"lh-element-screenshot__image\\" style=\\"width: 500px; height: 500px; background-position-y: 0px; background-position-x: 0px; background-size: 1000px 1000px;\\"></div> 
-<div class=\\"lh-element-screenshot__element-marker\\" style=\\"width: 200px; height: 300px; left: 50px; top: 50px;\\"></div> </div> "
+<div class=\\"lh-element-screenshot__element-marker\\" style=\\"width: 200px; height: 300px; left: 50px; top: 50px;\\"></div> </div> </div> "
 `);
     /* eslint-enable max-len */
   });

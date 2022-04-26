@@ -14,11 +14,22 @@ describe('Has inspector issues audit', () => {
   let issues;
   beforeEach(() => {
     issues = {
-      mixedContent: [],
-      sameSiteCookies: [],
-      blockedByResponse: [],
-      heavyAds: [],
-      contentSecurityPolicy: [],
+      attributionReportingIssue: [],
+      blockedByResponseIssue: [],
+      clientHintIssue: [],
+      contentSecurityPolicyIssue: [],
+      corsIssue: [],
+      deprecationIssue: [],
+      federatedAuthRequestIssue: [],
+      genericIssue: [],
+      heavyAdIssue: [],
+      lowTextContrastIssue: [],
+      mixedContentIssue: [],
+      navigatorUserAgentIssue: [],
+      quirksModeIssue: [],
+      cookieIssue: [],
+      sharedArrayBufferIssue: [],
+      twaQualityEnforcement: [],
     };
   });
 
@@ -47,7 +58,7 @@ describe('Has inspector issues audit', () => {
         },
       },
     ];
-    issues.mixedContent.push(...mixedContentIssues);
+    issues.mixedContentIssue.push(...mixedContentIssues);
 
     const auditResult = InspectorIssuesAudit.audit({
       InspectorIssues: issues,
@@ -70,8 +81,8 @@ describe('Has inspector issues audit', () => {
     });
   });
 
-  it('correctly displays SameSite cookie issues', () => {
-    const samesiteIssues = [
+  it('correctly displays cookie issues', () => {
+    const cookieIssues = [
       {
         cookieUrl: 'www.samesitecookies.com',
       },
@@ -82,14 +93,14 @@ describe('Has inspector issues audit', () => {
         },
       },
     ];
-    issues.sameSiteCookies.push(...samesiteIssues);
+    issues.cookieIssue.push(...cookieIssues);
 
     const auditResult = InspectorIssuesAudit.audit({
       InspectorIssues: issues,
     });
     expect(auditResult.score).toBe(0);
     expect(auditResult.details.items[0]).toMatchObject({
-      issueType: 'SameSite cookie',
+      issueType: 'Cookie',
       subItems: {
         type: 'subitems',
         items: [
@@ -138,7 +149,7 @@ describe('Has inspector issues audit', () => {
         },
       },
     ];
-    issues.blockedByResponse.push(...blockedByResponseIssues);
+    issues.blockedByResponseIssue.push(...blockedByResponseIssues);
 
     const auditResult = InspectorIssuesAudit.audit({
       InspectorIssues: issues,
@@ -184,7 +195,7 @@ describe('Has inspector issues audit', () => {
         reason: 'CpuPeakLimit',
       },
     ];
-    issues.heavyAds.push(...heavyAdsIssues);
+    issues.heavyAdIssue.push(...heavyAdsIssues);
 
     const auditResult = InspectorIssuesAudit.audit({
       InspectorIssues: issues,
@@ -221,7 +232,7 @@ describe('Has inspector issues audit', () => {
         blockedURL: 'www.csp.com/policy-violation',
       },
     ];
-    issues.contentSecurityPolicy.push(...cspIssues);
+    issues.contentSecurityPolicyIssue.push(...cspIssues);
 
     const auditResult = InspectorIssuesAudit.audit({
       InspectorIssues: issues,

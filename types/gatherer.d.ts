@@ -40,12 +40,11 @@ declare module Gatherer {
   interface FRTransitionalDriver {
     defaultSession: FRProtocolSession;
     executionContext: ExecutionContext;
+    url: () => Promise<string>;
   }
 
   /** The limited context interface shared between pre and post Fraggle Rock Lighthouse. */
   interface FRTransitionalContext<TDependencies extends DependencyKey = DefaultDependenciesKey> {
-    /** The URL of the page that is currently active. Might be `about:blank` in the before phases */
-    url: string;
     /** The gather mode Lighthouse is currently in. */
     gatherMode: GatherMode;
     /** The connection to the page being analyzed. */
@@ -58,6 +57,14 @@ declare module Gatherer {
     dependencies: Pick<GathererArtifacts, Exclude<TDependencies, DefaultDependenciesKey>>;
     /** The settings used for gathering. */
     settings: Config.Settings;
+  }
+
+  interface FRGatherResult {
+    artifacts: Artifacts;
+    runnerOptions: {
+      config: Config.FRConfig;
+      computedCache: Map<string, ArbitraryEqualityMap>
+    }
   }
 
   interface PassContext {
@@ -151,6 +158,7 @@ declare module Gatherer {
     interface Options {
       rtt?: number;
       throughput?: number;
+      observedThroughput: number;
       maximumConcurrentRequests?: number;
       cpuSlowdownMultiplier?: number;
       layoutTaskMultiplier?: number;

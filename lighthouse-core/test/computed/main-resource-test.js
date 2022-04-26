@@ -20,7 +20,7 @@ describe('MainResource computed artifact', () => {
       {url: 'http://example.com'},
       record,
     ];
-    const URL = {finalUrl: 'https://example.com'};
+    const URL = {mainDocumentUrl: 'https://example.com'};
     const devtoolsLog = networkRecordsToDevtoolsLog(networkRecords);
 
     const context = {computedCache: new Map()};
@@ -33,7 +33,7 @@ describe('MainResource computed artifact', () => {
     const networkRecords = [
       {url: 'https://example.com', resourceType: 'Script'},
     ];
-    const URL = {finalUrl: 'https://m.example.com'};
+    const URL = {mainDocumentUrl: 'https://m.example.com'};
     const devtoolsLog = networkRecordsToDevtoolsLog(networkRecords);
 
     const context = {computedCache: new Map()};
@@ -46,7 +46,7 @@ describe('MainResource computed artifact', () => {
 
   it('should identify correct main resource in the wikipedia fixture', () => {
     const wikiDevtoolsLog = require('../fixtures/wikipedia-redirect.devtoolslog.json');
-    const URL = {finalUrl: 'https://en.m.wikipedia.org/wiki/Main_Page'};
+    const URL = {mainDocumentUrl: 'https://en.m.wikipedia.org/wiki/Main_Page'};
     const artifacts = {devtoolsLog: wikiDevtoolsLog, URL};
 
     const context = {computedCache: new Map()};
@@ -61,7 +61,7 @@ describe('MainResource computed artifact', () => {
       {url: 'https://beta.httparchive.org/reports/state-of-the-web'},
     ];
 
-    const URL = {finalUrl: 'https://beta.httparchive.org/reports/state-of-the-web#pctHttps'};
+    const URL = {mainDocumentUrl: 'https://beta.httparchive.org/reports/state-of-the-web#pctHttps'};
     const devtoolsLog = networkRecordsToDevtoolsLog(networkRecords);
     const artifacts = {URL, devtoolsLog};
 

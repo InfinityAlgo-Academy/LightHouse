@@ -15,7 +15,7 @@ const UIStrings = {
   /** Descriptive title of a Lighthouse audit that checks if a web page has 'unload' event listeners and finds that it is using them. */
   failureTitle: 'Registers an `unload` listener',
   /** Description of a Lighthouse audit that tells the user why pages should not use the 'unload' event. This is displayed after a user expands the section to see more. 'Learn More' becomes link text to additional documentation. */
-  description: 'The `unload` event does not fire reliably and listening for it can prevent browser optimizations like the Back-Forward Cache. Consider using the `pagehide` or `visibilitychange` events instead. [Learn more](https://developers.google.com/web/updates/2018/07/page-lifecycle-api#the-unload-event)',
+  description: 'The `unload` event does not fire reliably and listening for it can prevent browser optimizations like the Back-Forward Cache. Use `pagehide` or `visibilitychange` events instead. [Learn more](https://web.dev/bfcache/#never-use-the-unload-event)',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
@@ -30,7 +30,7 @@ class NoUnloadListeners extends Audit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['GlobalListeners', 'JsUsage', 'SourceMaps', 'ScriptElements'],
+      requiredArtifacts: ['GlobalListeners', 'SourceMaps', 'Scripts'],
     };
   }
 
@@ -54,33 +54,25 @@ class NoUnloadListeners extends Audit {
       {key: 'source', itemType: 'source-location', text: str_(i18n.UIStrings.columnSource)},
     ];
 
-    // Look up scriptId to script URL via the JsUsage artifact.
-    /** @type {Map<string, string>} */
-    const scriptIdToUrl = new Map();
-    for (const [url, usages] of Object.entries(artifacts.JsUsage)) {
-      for (const usage of usages) {
-        scriptIdToUrl.set(usage.scriptId, url);
-      }
-    }
-
     /** @type {Array<{source: LH.Audit.Details.ItemValue}>} */
     const tableItems = unloadListeners.map(listener => {
-      const url = scriptIdToUrl.get(listener.scriptId);
+      const {lineNumber, columnNumber} = listener;
+      const script = artifacts.Scripts.find(s => s.scriptId === listener.scriptId);
 
       // If we can't find a url, still show something so the user can manually
       // look for where an `unload` handler is being created.
-      if (!url) {
+      if (!script) {
         return {
           source: {
             type: 'url',
-            value: '(unknown)',
+            value: `(unknown):${lineNumber}:${columnNumber}`,
           },
         };
       }
 
-      const bundle = bundles.find(bundle => bundle.script.src === url);
+      const bundle = bundles.find(bundle => bundle.script.scriptId === script.scriptId);
       return {
-        source: Audit.makeSourceLocation(url, listener.lineNumber, listener.columnNumber, bundle),
+        source: Audit.makeSourceLocation(script.url, lineNumber, columnNumber, bundle),
       };
     });
 

@@ -3,7 +3,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 /** @type {LH.Config.Json} */
 const config = {
@@ -32,7 +31,7 @@ const expectations = {
           items: [
             {
               url: 'http://localhost:10200/legacy-javascript.js',
-              wastedBytes: '78000 +/- 2000',
+              wastedBytes: '73000 +/- 2000',
               subItems: {
                 items: [
                   {signal: 'Array.prototype.fill'},
@@ -45,15 +44,12 @@ const expectations = {
                   {signal: 'Array.isArray'},
                   {signal: 'Array.prototype.map'},
                   {signal: 'Array.of'},
-                  {signal: 'Array.prototype.reduceRight'},
-                  {signal: 'Array.prototype.reduce'},
                   {signal: 'Array.prototype.some'},
                   {signal: 'Date.now'},
                   {signal: 'Date.prototype.toISOString'},
                   {signal: 'Date.prototype.toJSON'},
                   {signal: 'Number.isInteger'},
                   {signal: 'Number.isSafeInteger'},
-                  {signal: 'Number.parseInt'},
                   {signal: 'Object.defineProperties'},
                   {signal: 'Object.defineProperty'},
                   {signal: 'Object.entries'},

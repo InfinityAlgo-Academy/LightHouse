@@ -97,7 +97,8 @@ class ExecutionContext {
             .catch(${pageFunctions.wrapRuntimeEvalErrorInBrowserString})
             .then(resolve);
         });
-      }())`,
+      }())
+      //# sourceURL=_lighthouse-eval.js`,
       includeCommandLineAPI: true,
       awaitPromise: true,
       returnByValue: true,
@@ -121,7 +122,7 @@ class ExecutionContext {
         new Error('Runtime.evaluate response did not contain a "result" object'));
     }
     const value = response.result.value;
-    if (value && value.__failedInBrowser) {
+    if (value?.__failedInBrowser) {
       return Promise.reject(Object.assign(new Error(), value));
     } else {
       return value;
@@ -195,7 +196,8 @@ class ExecutionContext {
       ${ExecutionContext._cachedNativesPreamble};
       ${depsSerialized};
       (${mainFn})(${argsSerialized});
-    })()`;
+    })()
+    //# sourceURL=_lighthouse-eval.js`;
 
     await this._session.sendCommand('Page.addScriptToEvaluateOnNewDocument', {source: expression});
   }

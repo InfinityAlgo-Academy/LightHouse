@@ -10,7 +10,12 @@
 const DuplicatedJavascript = require('../../../audits/byte-efficiency/duplicated-javascript.js');
 const trace = require('../../fixtures/traces/lcp-m78.json');
 const devtoolsLog = require('../../fixtures/traces/lcp-m78.devtools.log.json');
-const {loadSourceMapFixture} = require('../../test-utils.js');
+const {
+  loadSourceMapFixture,
+  createScript,
+  getURLArtifactFromDevtoolsLog,
+} = require('../../test-utils.js');
+
 
 describe('DuplicatedJavascript computed artifact', () => {
   it('works (simple)', async () => {
@@ -20,13 +25,13 @@ describe('DuplicatedJavascript computed artifact', () => {
       GatherContext: {gatherMode: 'navigation'},
       URL: {finalUrl: 'https://example.com'},
       SourceMaps: [
-        {scriptUrl: 'https://example.com/foo1.min.js', map},
-        {scriptUrl: 'https://example.com/foo2.min.js', map},
+        {scriptId: '1', scriptUrl: 'https://example.com/foo1.min.js', map},
+        {scriptId: '2', scriptUrl: 'https://example.com/foo2.min.js', map},
       ],
-      ScriptElements: [
-        {src: 'https://example.com/foo1.min.js', content},
-        {src: 'https://example.com/foo2.min.js', content},
-      ],
+      Scripts: [
+        {scriptId: '1', url: 'https://example.com/foo1.min.js', content},
+        {scriptId: '2', url: 'https://example.com/foo2.min.js', content},
+      ].map(createScript),
     };
     const networkRecords = [{url: 'https://example.com', resourceType: 'Document'}];
     const results = await DuplicatedJavascript.audit_(artifacts, networkRecords, context);
@@ -47,13 +52,13 @@ describe('DuplicatedJavascript computed artifact', () => {
       GatherContext: {gatherMode: 'navigation'},
       URL: {finalUrl: 'https://example.com'},
       SourceMaps: [
-        {scriptUrl: 'https://example.com/coursehero-bundle-1.js', map: bundleData1.map},
-        {scriptUrl: 'https://example.com/coursehero-bundle-2.js', map: bundleData2.map},
+        {scriptId: '1', scriptUrl: 'https://example.com/coursehero-bundle-1.js', map: bundleData1.map},
+        {scriptId: '2', scriptUrl: 'https://example.com/coursehero-bundle-2.js', map: bundleData2.map},
       ],
-      ScriptElements: [
-        {src: 'https://example.com/coursehero-bundle-1.js', content: bundleData1.content},
-        {src: 'https://example.com/coursehero-bundle-2.js', content: bundleData2.content},
-      ],
+      Scripts: [
+        {scriptId: '1', url: 'https://example.com/coursehero-bundle-1.js', content: bundleData1.content},
+        {scriptId: '2', url: 'https://example.com/coursehero-bundle-2.js', content: bundleData2.content},
+      ].map(createScript),
     };
     const networkRecords = [{url: 'https://example.com', resourceType: 'Document'}];
     const results = await DuplicatedJavascript.audit_(artifacts, networkRecords, context);
@@ -320,7 +325,7 @@ describe('DuplicatedJavascript computed artifact', () => {
     const bundleData1 = loadSourceMapFixture('coursehero-bundle-1');
     const bundleData2 = loadSourceMapFixture('coursehero-bundle-2');
     const artifacts = {
-      URL: {finalUrl: 'https://www.paulirish.com'},
+      URL: getURLArtifactFromDevtoolsLog(devtoolsLog),
       GatherContext: {gatherMode: 'navigation'},
       devtoolsLogs: {
         [DuplicatedJavascript.DEFAULT_PASS]: devtoolsLog,
@@ -330,24 +335,28 @@ describe('DuplicatedJavascript computed artifact', () => {
       },
       SourceMaps: [
         {
+          scriptId: '1',
           scriptUrl: 'https://www.paulirish.com/javascripts/firebase-performance.js',
           map: bundleData1.map,
         },
         {
+          scriptId: '2',
           scriptUrl: 'https://www.paulirish.com/javascripts/firebase-app.js',
           map: bundleData2.map,
         },
       ],
-      ScriptElements: [
+      Scripts: [
         {
-          src: 'https://www.paulirish.com/javascripts/firebase-performance.js',
+          scriptId: '1',
+          url: 'https://www.paulirish.com/javascripts/firebase-performance.js',
           content: bundleData1.content,
         },
         {
-          src: 'https://www.paulirish.com/javascripts/firebase-app.js',
+          scriptId: '2',
+          url: 'https://www.paulirish.com/javascripts/firebase-app.js',
           content: bundleData2.content,
         },
-      ],
+      ].map(createScript),
     };
 
     const ultraSlowThrottling = {rttMs: 150, throughputKbps: 100, cpuSlowdownMultiplier: 8};

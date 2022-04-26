@@ -280,10 +280,40 @@ describe('Audit', () => {
 
       assert.strictEqual(Audit.computeLogNormalScore(params, 0), 1);
       assert.strictEqual(Audit.computeLogNormalScore(params, 250), 0.99);
-      assert.strictEqual(Audit.computeLogNormalScore(params, 1500), 0.23);
-      assert.strictEqual(Audit.computeLogNormalScore(params, 2500), 0.05);
-      assert.strictEqual(Audit.computeLogNormalScore(params, 4000), 0.01);
-      assert.strictEqual(Audit.computeLogNormalScore(params, 4100), 0);
+      assert.strictEqual(Audit.computeLogNormalScore(params, 1500), 0.22);
+      assert.strictEqual(Audit.computeLogNormalScore(params, 2500), 0.04);
+      assert.strictEqual(Audit.computeLogNormalScore(params, 3500), 0.01);
+      assert.strictEqual(Audit.computeLogNormalScore(params, 3600), 0);
+    });
+
+    it('correctly bins scores relative to control points and allows achievable 100s', () => {
+      const params = {
+        median: 800,
+        p10: 200,
+      };
+
+      // Clamps negative values to a score of 1.
+      assert.strictEqual(Audit.computeLogNormalScore(params, -100), 1);
+
+      // 0 value is always scored with a 1.
+      assert.strictEqual(Audit.computeLogNormalScore(params, 0), 1);
+
+      // A really good value has its score rounded up to 1.
+      assert.strictEqual(Audit.computeLogNormalScore(params, 25), 1);
+      assert.strictEqual(Audit.computeLogNormalScore(params, 50), 0.99);
+
+      // p10 param gets a 0.9.
+      assert.strictEqual(Audit.computeLogNormalScore(params, params.p10), 0.9);
+      // Anything worse than p10 gets < 0.9.
+      assert.strictEqual(Audit.computeLogNormalScore(params, params.p10 + 1), 0.89);
+
+      // Median param gets a 0.5.
+      assert.strictEqual(Audit.computeLogNormalScore(params, params.median), 0.5);
+      // Anything worse than the median gets < 0.5.
+      assert.strictEqual(Audit.computeLogNormalScore(params, params.median + 1), 0.49);
+
+      assert.strictEqual(Audit.computeLogNormalScore(params, 8_000), 0.01);
+      assert.strictEqual(Audit.computeLogNormalScore(params, 10_000), 0);
     });
   });
 });

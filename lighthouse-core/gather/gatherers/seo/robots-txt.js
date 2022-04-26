@@ -31,7 +31,7 @@ class RobotsTxt extends FRGatherer {
   /** @type {LH.Gatherer.GathererMeta} */
   meta = {
     supportedModes: ['snapshot', 'navigation'],
-  }
+  };
 
   /**
    * @param {LH.Gatherer.FRTransitionalContext} passContext
@@ -49,7 +49,8 @@ class RobotsTxt extends FRGatherer {
       });
     }
 
-    const robotsUrl = new URL('/robots.txt', passContext.url).href;
+    const {finalUrl} = passContext.baseArtifacts.URL;
+    const robotsUrl = new URL('/robots.txt', finalUrl).href;
     return fetchResource(session, robotsUrl)
       .catch(err => ({status: null, content: null, errorMessage: err.message}));
   }

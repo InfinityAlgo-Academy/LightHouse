@@ -71,7 +71,7 @@ class GatherRunner {
     log.time(status);
     try {
       const requestedUrl = passContext.url;
-      const {finalUrl, warnings} = await navigation.gotoURL(driver, requestedUrl, {
+      const {mainDocumentUrl, warnings} = await navigation.gotoURL(driver, requestedUrl, {
         waitUntil: passContext.passConfig.recordTrace ?
           ['load', 'fcp'] : ['load'],
         debugNavigation: passContext.settings.debugNavigation,
@@ -79,7 +79,12 @@ class GatherRunner {
         maxWaitForLoad: passContext.settings.maxWaitForLoad,
         ...passContext.passConfig,
       });
-      passContext.url = finalUrl;
+      passContext.url = mainDocumentUrl;
+      const {URL} = passContext.baseArtifacts;
+      if (!URL.finalUrl || !URL.mainDocumentUrl) {
+        URL.finalUrl = mainDocumentUrl;
+        URL.mainDocumentUrl = mainDocumentUrl;
+      }
       if (passContext.passConfig.loadFailureMode === 'fatal') {
         passContext.LighthouseRunWarnings.push(...warnings);
       }
@@ -402,7 +407,12 @@ class GatherRunner {
       devtoolsLogs: {},
       settings: options.settings,
       GatherContext: {gatherMode: 'navigation'},
-      URL: {requestedUrl: options.requestedUrl, finalUrl: options.requestedUrl},
+      URL: {
+        initialUrl: await options.driver.url(),
+        requestedUrl: options.requestedUrl,
+        mainDocumentUrl: '',
+        finalUrl: '',
+      },
       Timing: [],
       PageLoadError: null,
     };
@@ -420,9 +430,6 @@ class GatherRunner {
 
     const baseArtifacts = passContext.baseArtifacts;
 
-    // Copy redirected URL to artifact.
-    baseArtifacts.URL.finalUrl = passContext.url;
-
     // Fetch the manifest, if it exists.
     try {
       baseArtifacts.WebAppManifest = await WebAppManifest.getWebAppManifest(
@@ -433,10 +440,8 @@ class GatherRunner {
     }
 
     try {
-      if (baseArtifacts.WebAppManifest) {
-        baseArtifacts.InstallabilityErrors = await InstallabilityErrors.getInstallabilityErrors(
-          passContext.driver.defaultSession);
-      }
+      baseArtifacts.InstallabilityErrors = await InstallabilityErrors.getInstallabilityErrors(
+        passContext.driver.defaultSession);
     } catch (err) {
       log.error('GatherRunner InstallabilityErrors', err);
       baseArtifacts.InstallabilityErrors = {
@@ -561,7 +566,7 @@ class GatherRunner {
       driver.defaultSession,
       passContext.settings,
       {
-        url: passContext.url,
+        requestor: passContext.url,
         disableStorageReset: !passConfig.useThrottling,
         disableThrottling: !passConfig.useThrottling,
         blockedUrlPatterns: passConfig.blockedUrlPatterns,

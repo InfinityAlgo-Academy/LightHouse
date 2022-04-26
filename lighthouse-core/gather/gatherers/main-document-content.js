@@ -6,10 +6,9 @@
 'use strict';
 
 const FRGatherer = require('../../fraggle-rock/gather/base-gatherer.js');
-const NetworkAnalyzer = require('../../lib/dependency-graph/simulator/network-analyzer.js');
-const NetworkRecords = require('../../computed/network-records.js');
 const DevtoolsLog = require('./devtools-log.js');
 const {fetchResponseBodyFromCache} = require('../driver/network.js');
+const MainResource = require('../../computed/main-resource.js');
 
 /**
  * Collects the content of the main html document.
@@ -19,19 +18,21 @@ class MainDocumentContent extends FRGatherer {
   meta = {
     supportedModes: ['navigation'],
     dependencies: {DevtoolsLog: DevtoolsLog.symbol},
-  }
+  };
 
   /**
    *
    * @param {LH.Gatherer.FRTransitionalContext} context
-   * @param {LH.Artifacts.NetworkRequest[]} networkRecords
+   * @param {LH.Artifacts['DevtoolsLog']} devtoolsLog
    * @return {Promise<LH.Artifacts['MainDocumentContent']>}
    */
-  async _getArtifact(context, networkRecords) {
-    const mainResource = NetworkAnalyzer.findMainDocument(networkRecords, context.url);
+  async _getArtifact(context, devtoolsLog) {
+    const mainResource =
+      await MainResource.request({devtoolsLog, URL: context.baseArtifacts.URL}, context);
     const session = context.driver.defaultSession;
     return fetchResponseBodyFromCache(session, mainResource.requestId);
   }
+
   /**
    *
    * @param {LH.Gatherer.FRTransitionalContext<'DevtoolsLog'>} context
@@ -39,8 +40,7 @@ class MainDocumentContent extends FRGatherer {
    */
   async getArtifact(context) {
     const devtoolsLog = context.dependencies.DevtoolsLog;
-    const networkRecords = await NetworkRecords.request(devtoolsLog, context);
-    return this._getArtifact(context, networkRecords);
+    return this._getArtifact(context, devtoolsLog);
   }
 
   /**
@@ -49,7 +49,7 @@ class MainDocumentContent extends FRGatherer {
    * @return {Promise<LH.Artifacts['MainDocumentContent']>}
    */
   async afterPass(passContext, loadData) {
-    return this._getArtifact({...passContext, dependencies: {}}, loadData.networkRecords);
+    return this._getArtifact({...passContext, dependencies: {}}, loadData.devtoolsLog);
   }
 }
 
