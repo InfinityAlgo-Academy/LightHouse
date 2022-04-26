@@ -304,7 +304,6 @@ describe('Metrics: CLS', () => {
         const cat = 'loading,rail,devtools.timeline';
         trace.traceEvents.push(
           /* eslint-disable max-len */
-          {name: 'FrameCommittedInBrowser', cat, args: {data: {frame: mainFrame, url: 'https://example.com'}}},
           {name: 'FrameCommittedInBrowser', cat, args: {data: {frame: childFrame, parent: mainFrame, url: 'https://frame.com'}}},
           {name: 'FrameCommittedInBrowser', cat, args: {data: {frame: otherMainFrame, url: 'https://example.com'}}},
           {name: 'LayoutShift', cat, args: {frame: mainFrame, data: {had_recent_input: false, score: 1, weighted_score_delta: 1, is_main_frame: true}}},
