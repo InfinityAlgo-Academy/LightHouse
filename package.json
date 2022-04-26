@@ -139,7 +139,7 @@
     "cpy": "^8.1.2",
     "cross-env": "^7.0.2",
     "csv-validator": "^0.0.3",
-    "devtools-protocol": "0.0.975298",
+    "devtools-protocol": "0.0.995287",
     "es-main": "^1.0.2",
     "eslint": "^8.4.1",
     "eslint-config-google": "^0.14.0",
@@ -210,8 +210,8 @@
     "yargs-parser": "^21.0.0"
   },
   "resolutions": {
-    "puppeteer/**/devtools-protocol": "0.0.975298",
-    "puppeteer-core/**/devtools-protocol": "0.0.975298"
+    "puppeteer/**/devtools-protocol": "0.0.995287",
+    "puppeteer-core/**/devtools-protocol": "0.0.995287"
   },
   "repository": "GoogleChrome/lighthouse",
   "keywords": [

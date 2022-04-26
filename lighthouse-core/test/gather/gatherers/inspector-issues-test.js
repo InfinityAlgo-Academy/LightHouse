@@ -142,6 +142,7 @@ function mockDeprecation(text) {
       deprecationIssueDetails: {
         message: text,
         deprecationType: 'test',
+        type: 'Untranslated',
         sourceCodeLocation: {
           url: 'https://www.example.com',
           lineNumber: 10,
@@ -238,6 +239,7 @@ describe('_getArtifact', () => {
           columnNumber: 10,
           lineNumber: 10,
         },
+        type: 'Untranslated',
       }],
       attributionReportingIssue: [],
       clientHintIssue: [],
