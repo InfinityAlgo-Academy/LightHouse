@@ -959,6 +959,9 @@ export interface TraceEvent {
       compositeFailed?: number;
       unsupportedProperties?: string[];
       size?: number;
+      /** Responsiveness data. */
+      interactionType?: 'drag'|'keyboard'|'tapOrClick';
+      maxDuration?: number;
     };
     frame?: string;
     name?: string;

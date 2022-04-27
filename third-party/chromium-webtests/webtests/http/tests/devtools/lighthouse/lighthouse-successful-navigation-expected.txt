@@ -34,7 +34,7 @@ Computing artifact: NetworkRecords$M
 Get webapp installability errors
 Getting browser version
 Collect stacks
-Computing artifact: ProcessedTrace$f
+Computing artifact: ProcessedTrace$g
 Computing artifact: ProcessedNavigation$7
 Get webapp manifest
 Audit phase
