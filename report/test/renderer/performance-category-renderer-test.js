@@ -11,7 +11,7 @@ import {strict as assert} from 'assert';
 import jsdom from 'jsdom';
 
 import {Util} from '../../renderer/util.js';
-import {I18n} from '../../renderer/i18n.js';
+import {Formatter} from '../../renderer/formatter.js';
 import URL from '../../../lighthouse-core/lib/url-shim.js';
 import {DOM} from '../../renderer/dom.js';
 import {DetailsRenderer} from '../../renderer/details-renderer.js';
@@ -24,7 +24,7 @@ describe('PerfCategoryRenderer', () => {
   let sampleResults;
 
   beforeAll(() => {
-    Util.i18n = new I18n('en', {...Util.UIStrings});
+    Util.formatter = new Formatter('en', {...Util.UIStrings});
 
     const {document} = new jsdom.JSDOM().window;
     const dom = new DOM(document);
@@ -37,7 +37,7 @@ describe('PerfCategoryRenderer', () => {
   });
 
   afterAll(() => {
-    Util.i18n = undefined;
+    Util.formatter = undefined;
   });
 
   it('renders the category header', () => {

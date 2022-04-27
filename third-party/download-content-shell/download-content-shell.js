@@ -133,6 +133,7 @@ async function prepareContentShellDirectory(folder) {
 }
 
 function downloadContentShell(url, folder) {
+  console.log({url});
   console.log('Downloading content shell from:', url);
   console.log('NOTE: Download is ~300 MB depending on OS');
   return utils.fetch(url).then(writeZip).catch(onError);

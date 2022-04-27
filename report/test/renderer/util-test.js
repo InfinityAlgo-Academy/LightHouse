@@ -7,18 +7,18 @@
 import {strict as assert} from 'assert';
 
 import {Util} from '../../renderer/util.js';
-import {I18n} from '../../renderer/i18n.js';
+import {Formatter} from '../../renderer/formatter.js';
 import sampleResult from '../../../lighthouse-core/test/results/sample_v2.json';
 
 /* eslint-env jest */
 
 describe('util helpers', () => {
   beforeEach(() => {
-    Util.i18n = new I18n('en', {...Util.UIStrings});
+    Util.formatter = new Formatter('en', {...Util.UIStrings});
   });
 
   afterEach(() => {
-    Util.i18n = undefined;
+    Util.formatter = undefined;
   });
 
   it('calculates a score ratings', () => {

@@ -10,7 +10,7 @@ import jsdom from 'jsdom';
 
 import {DOM} from '../../renderer/dom.js';
 import {Util} from '../../renderer/util.js';
-import {I18n} from '../../renderer/i18n.js';
+import {Formatter} from '../../renderer/formatter.js';
 import {DetailsRenderer} from '../../renderer/details-renderer.js';
 
 /* eslint-env jest */
@@ -25,12 +25,12 @@ describe('DetailsRenderer', () => {
   }
 
   beforeAll(() => {
-    Util.i18n = new I18n('en', {...Util.UIStrings});
+    Util.formatter = new Formatter('en');
     createRenderer();
   });
 
   afterAll(() => {
-    Util.i18n = undefined;
+    Util.formatter = undefined;
   });
 
   describe('render', () => {
