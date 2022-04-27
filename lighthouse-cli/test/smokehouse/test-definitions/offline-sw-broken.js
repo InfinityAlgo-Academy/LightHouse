@@ -53,17 +53,11 @@ const expectations = {
   },
   artifacts: {
     InstallabilityErrors: {
-      // COMPAT: `warn-not-offline-capable` occurs in m89 but may be cherry-picked out of m90.
-      _minChromiumVersion: '91',
-      errors: {
-        length: 1,
-        // 0: {
-        //   errorId: /warn-not-offline-capable/,
-        // },
-        0: {
+      errors: [
+        {
           errorId: /no-icon-available/,
         },
-      },
+      ],
     },
   },
 };

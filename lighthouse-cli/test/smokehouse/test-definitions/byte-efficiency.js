@@ -219,9 +219,6 @@ const expectations = {
         },
       },
       'unused-javascript': {
-        // ScriptParsedEvent.embedderName wasn't added to the protocol until M86.
-        // https://chromiumdash.appspot.com/commit/52ed57138d0b83e8afd9de25e60655c6ace7527c
-        _minChromiumVersion: '86',
         score: '<1',
         details: {
           // the specific ms value here is not meaningful for this smoketest

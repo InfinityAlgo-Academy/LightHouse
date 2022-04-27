@@ -13,7 +13,6 @@ const expectations = {
     InspectorIssues: {
       mixedContentIssue: [
         {
-          _minChromiumVersion: '88', // We went from Warning to AutoUpgrade in https://chromium-review.googlesource.com/c/chromium/src/+/2480817
           resourceType: 'Image',
           resolutionStatus: 'MixedContentAutomaticallyUpgraded',
           insecureURL: 'http://www.mixedcontentexamples.com/Content/Test/steveholt.jpg',

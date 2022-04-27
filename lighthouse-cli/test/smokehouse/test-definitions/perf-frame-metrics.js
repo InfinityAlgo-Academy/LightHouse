@@ -66,12 +66,6 @@ const expectations = {
           type: 'debugdata',
           items: [
             {
-              // Weighted CLS score was added to the trace in m90:
-              // https://bugs.chromium.org/p/chromium/issues/detail?id=1173139
-              //
-              // Weighted score on emulated mobile bug fixed in m92:
-              // https://chromium.googlesource.com/chromium/src/+/042fbfb4cc6a675da0dff4bf3fc08622af42422b
-              _minChromiumVersion: '92',
               firstContentfulPaint: '>5000',
               firstContentfulPaintAllFrames: '<5000',
               largestContentfulPaint: '>5000',
