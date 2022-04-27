@@ -10,11 +10,10 @@ const assert = require('assert').strict;
 
 /* eslint-env jest */
 
-describe('ConsoleMessages deprecations audit', () => {
-  it('passes when no console messages were found', async () => {
+describe('Deprecations audit', () => {
+  it('passes when no deprecations were found', async () => {
     const context = {computedCache: new Map()};
     const auditResult = await DeprecationsAudit.audit({
-      ConsoleMessages: [],
       InspectorIssues: {deprecationIssue: []},
       SourceMaps: [],
       Scripts: [],
@@ -23,72 +22,11 @@ describe('ConsoleMessages deprecations audit', () => {
     assert.equal(auditResult.details.items.length, 0);
   });
 
-  it('handles deprecations that do not have url or line numbers', async () => {
-    const context = {computedCache: new Map()};
-    const auditResult = await DeprecationsAudit.audit({
-      ConsoleMessages: [
-        {
-          source: 'deprecation',
-          text: 'Deprecation message',
-        },
-      ],
-      InspectorIssues: {deprecationIssue: []},
-      SourceMaps: [],
-      Scripts: [],
-    }, context);
-    assert.equal(auditResult.score, 0);
-    expect(auditResult.displayValue).toBeDisplayString('1 warning found');
-    assert.equal(auditResult.details.items.length, 1);
-    assert.equal(auditResult.details.items[0].source, undefined);
-  });
-
-  it('fails when deprecation messages are found (ConsoleMessages)', async () => {
-    const URL = 'http://example.com';
-
-    const context = {computedCache: new Map()};
-    const auditResult = await DeprecationsAudit.audit({
-      ConsoleMessages: [
-        {
-          source: 'deprecation',
-          lineNumber: 123,
-          url: URL,
-          text: 'Deprecation message 123',
-        }, {
-          source: 'deprecation',
-          lineNumber: 456,
-          url: 'http://example2.com',
-          text: 'Deprecation message 456',
-        }, {
-          source: 'somethingelse',
-          lineNumber: 789,
-          url: 'http://example3.com',
-          text: 'Not a deprecation message 789',
-        },
-      ],
-      InspectorIssues: {deprecationIssue: []},
-      SourceMaps: [],
-      Scripts: [],
-    }, context);
-    assert.equal(auditResult.score, 0);
-    expect(auditResult.displayValue).toBeDisplayString('2 warnings found');
-    assert.equal(auditResult.details.items.length, 2);
-    assert.equal(auditResult.details.items[0].source.url, URL);
-    assert.equal(auditResult.details.items[0].source.line, 123);
-  });
-
   it('fails when deprecation messages are found', async () => {
     const URL = 'http://example.com';
 
     const context = {computedCache: new Map()};
     const auditResult = await DeprecationsAudit.audit({
-      ConsoleMessages: [
-        {
-          source: 'deprecation',
-          lineNumber: 456,
-          url: 'http://example2.com',
-          text: 'Ignore me b/c there are InspectorIssues',
-        },
-      ],
       InspectorIssues: {
         deprecationIssue: [
           {
