@@ -9,13 +9,11 @@
  * against the results actually collected from Lighthouse.
  */
 
-import _ from 'lodash';
+import cloneDeep from 'lodash/cloneDeep.js';
 import log from 'lighthouse-logger';
 
 import {LocalConsole} from './lib/local-console.js';
 import {chromiumVersionCheck} from './version-check.js';
-
-const {cloneDeep} = _;
 
 /**
  * @typedef Difference
