@@ -306,6 +306,8 @@ const expectations = {
         },
       },
       'deprecations': {
+        _maxChromiumVersion: '103.0.5017.0', // TODO: deprecation strings need to be translated
+        // see https://github.com/GoogleChrome/lighthouse/issues/13895
         score: 0,
         details: {
           items: [
@@ -320,7 +322,6 @@ const expectations = {
               },
             },
             {
-              _maxChromiumVersion: '103.0.5017.0',
               value: /Synchronous XMLHttpRequest on the main thread is deprecated/,
               source: {
                 type: 'source-location',
