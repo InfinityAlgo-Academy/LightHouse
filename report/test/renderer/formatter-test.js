@@ -6,13 +6,7 @@
 
 import {strict as assert} from 'assert';
 
-import {Util} from '../../renderer/util.js';
-import {I18n} from '../../renderer/i18n.js';
-
-// Require i18n to make sure Intl is polyfilled in Node without full-icu for testing.
-// When Util is run in a browser, Intl will be supplied natively (IE11+).
-// eslint-disable-next-line no-unused-vars
-import '../../../lighthouse-core/lib/i18n/i18n.js';
+import {Formatter} from '../../renderer/formatter.js';
 
 const NBSP = '\xa0';
 
@@ -20,7 +14,7 @@ const NBSP = '\xa0';
 
 describe('util helpers', () => {
   it('formats a number', () => {
-    const i18n = new I18n('en', {...Util.UIStrings});
+    const i18n = new Formatter('en');
     assert.strictEqual(i18n.formatNumber(10), '10');
     assert.strictEqual(i18n.formatNumber(100.01), '100.01');
     assert.strictEqual(i18n.formatNumber(13000.456), '13,000.456');
@@ -48,7 +42,7 @@ describe('util helpers', () => {
   });
 
   it('formats a date', () => {
-    const i18n = new I18n('en', {...Util.UIStrings});
+    const i18n = new Formatter('en');
     const timestamp = i18n.formatDateTime('2017-04-28T23:07:51.189Z');
     assert.ok(
       timestamp.includes('Apr 27, 2017') ||
@@ -58,7 +52,7 @@ describe('util helpers', () => {
   });
 
   it('formats bytes', () => {
-    const i18n = new I18n('en', {...Util.UIStrings});
+    const i18n = new Formatter('en');
     assert.equal(i18n.formatBytesToKiB(100), `0.098${NBSP}KiB`);
     assert.equal(i18n.formatBytesToKiB(100, 0.1), `0.1${NBSP}KiB`);
     assert.equal(i18n.formatBytesToKiB(2000, 0.1), `2.0${NBSP}KiB`);
@@ -66,7 +60,7 @@ describe('util helpers', () => {
   });
 
   it('formats bytes with different granularities', () => {
-    const i18n = new I18n('en', {...Util.UIStrings});
+    const i18n = new Formatter('en');
 
     let granularity = 10;
     assert.strictEqual(i18n.formatBytes(15.0, granularity), `20${NBSP}bytes`);
@@ -90,7 +84,7 @@ describe('util helpers', () => {
   });
 
   it('formats bytes with invalid granularity', () => {
-    const i18n = new I18n('en', {...Util.UIStrings});
+    const i18n = new Formatter('en');
     const granularity = 0.5;
     const originalWarn = console.warn;
 
@@ -105,7 +99,7 @@ describe('util helpers', () => {
   });
 
   it('formats kibibytes with different granularities', () => {
-    const i18n = new I18n('en', {...Util.UIStrings});
+    const i18n = new Formatter('en');
 
     let granularity = 10;
     assert.strictEqual(i18n.formatBytesToKiB(5 * 1024, granularity), `10${NBSP}KiB`);
@@ -123,7 +117,7 @@ describe('util helpers', () => {
   });
 
   it('formats ms', () => {
-    const i18n = new I18n('en', {...Util.UIStrings});
+    const i18n = new Formatter('en');
     assert.equal(i18n.formatMilliseconds(123, 10), `120${NBSP}ms`);
     assert.equal(i18n.formatMilliseconds(2456.5, 0.1), `2,456.5${NBSP}ms`);
     assert.equal(i18n.formatMilliseconds(0.000001), `0${NBSP}ms`);
@@ -131,21 +125,21 @@ describe('util helpers', () => {
   });
 
   it('formats a duration', () => {
-    const i18n = new I18n('en', {...Util.UIStrings});
+    const i18n = new Formatter('en');
     assert.equal(i18n.formatDuration(60 * 1000), '1m');
     assert.equal(i18n.formatDuration(60 * 60 * 1000 + 5000), '1h 5s');
     assert.equal(i18n.formatDuration(28 * 60 * 60 * 1000 + 5000), '1d 4h 5s');
   });
 
   it('formats a duration based on locale', () => {
-    let i18n = new I18n('de', {...Util.UIStrings});
+    let i18n = new Formatter('de');
     assert.equal(i18n.formatDuration(60 * 1000), `1${NBSP}Min.`);
     assert.equal(i18n.formatDuration(60 * 60 * 1000 + 5000), `1${NBSP}Std. 5${NBSP}Sek.`);
     assert.equal(
       i18n.formatDuration(28 * 60 * 60 * 1000 + 5000), `1${NBSP}T 4${NBSP}Std. 5${NBSP}Sek.`);
 
     // Yes, this is actually backwards (s h d).
-    i18n = new I18n('ar', {...Util.UIStrings});
+    i18n = new Formatter('ar');
     /* eslint-disable no-irregular-whitespace */
     assert.equal(i18n.formatDuration(60 * 1000), `١${NBSP}د`);
     assert.equal(i18n.formatDuration(60 * 60 * 1000 + 5000), `١${NBSP}س ٥${NBSP}ث`);
@@ -157,7 +151,7 @@ describe('util helpers', () => {
     // Requires full-icu or Intl polyfill.
     const number = 12346.858558;
 
-    const i18n = new I18n('de', {...Util.UIStrings});
+    const i18n = new Formatter('de');
     assert.strictEqual(i18n.formatNumber(number), '12.346,859');
     assert.strictEqual(i18n.formatBytesToKiB(number, 0.1), `12,1${NBSP}KiB`);
     assert.strictEqual(i18n.formatMilliseconds(number, 10), `12.350${NBSP}ms`);
@@ -168,7 +162,7 @@ describe('util helpers', () => {
     // Requires full-icu or Intl polyfill.
     const number = 12346.858558;
 
-    const i18n = new I18n('en-XA', {...Util.UIStrings});
+    const i18n = new Formatter('en-XA');
     assert.strictEqual(i18n.formatNumber(number), '12.346,859');
     assert.strictEqual(i18n.formatBytesToKiB(number, 0.1), `12,1${NBSP}KiB`);
     assert.strictEqual(i18n.formatMilliseconds(number, 100), `12.300${NBSP}ms`);
@@ -176,7 +170,7 @@ describe('util helpers', () => {
   });
 
   it('should not crash on unknown locales', () => {
-    const i18n = new I18n('unknown-mystery-locale', {...Util.UIStrings});
+    const i18n = new Formatter('unknown-mystery-locale');
     const timestamp = i18n.formatDateTime('2017-04-28T23:07:51.189Z');
     assert.ok(
       timestamp.includes('Apr 27, 2017') ||
