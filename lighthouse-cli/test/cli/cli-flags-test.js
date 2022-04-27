@@ -30,6 +30,9 @@ function snapshot(flags) {
         .replace(/\\/g, '/');
     }
   }
+  // Command changes depending on how test was run, so remove.
+  // @ts-expect-error - '$0' not in CliFlags type.
+  flags.$0 = '__REPLACED__';
 
   expect(flags).toMatchSnapshot();
 }
