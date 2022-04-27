@@ -9087,6 +9087,16 @@
               "headings": [],
               "items": []
             }
+          },
+          "experimental-interaction-to-next-paint": {
+            "id": "experimental-interaction-to-next-paint",
+            "title": "Interaction to Next Paint",
+            "description": "Interaction to Next Paint measures page responsiveness, how long it takes the page to visibly respond to user input. [Learn more](https://web.dev/inp/).",
+            "score": 1,
+            "scoreDisplayMode": "numeric",
+            "numericValue": 60,
+            "numericUnit": "millisecond",
+            "displayValue": "60 ms"
           }
         },
         "configSettings": {
@@ -9299,6 +9309,12 @@
                 "id": "script-treemap-data",
                 "weight": 0,
                 "group": "hidden"
+              },
+              {
+                "id": "experimental-interaction-to-next-paint",
+                "weight": 0,
+                "group": "metrics",
+                "acronym": "INP"
               }
             ],
             "id": "performance",
@@ -9912,12 +9928,24 @@
             },
             {
               "startTime": 78,
+              "name": "lh:audit:experimental-interaction-to-next-paint",
+              "duration": 1,
+              "entryType": "measure"
+            },
+            {
+              "startTime": 79,
+              "name": "lh:computed:Responsiveness",
+              "duration": 1,
+              "entryType": "measure"
+            },
+            {
+              "startTime": 80,
               "name": "lh:runner:generate",
               "duration": 1,
               "entryType": "measure"
             }
           ],
-          "total": 79
+          "total": 81
         },
         "i18n": {
           "rendererFormattedStrings": {
@@ -10005,6 +10033,12 @@
                   "timeInMs": 539.765
                 },
                 "path": "audits[network-server-latency].displayValue"
+              },
+              {
+                "values": {
+                  "timeInMs": 60
+                },
+                "path": "audits[experimental-interaction-to-next-paint].displayValue"
               }
             ],
             "lighthouse-core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": [
@@ -10391,6 +10425,12 @@
             ],
             "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | description": [
               "audits[uses-passive-event-listeners].description"
+            ],
+            "lighthouse-core/lib/i18n/i18n.js | interactionToNextPaint": [
+              "audits[experimental-interaction-to-next-paint].title"
+            ],
+            "lighthouse-core/audits/metrics/experimental-interaction-to-next-paint.js | description": [
+              "audits[experimental-interaction-to-next-paint].description"
             ],
             "lighthouse-core/config/default-config.js | performanceCategoryTitle": [
               "categories.performance.title"

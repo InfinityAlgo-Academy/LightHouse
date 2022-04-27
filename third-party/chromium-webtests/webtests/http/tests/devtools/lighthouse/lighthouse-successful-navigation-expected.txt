@@ -35,7 +35,7 @@ Get webapp installability errors
 Computing artifact: MainResource$k
 Getting browser version
 Collect stacks
-Computing artifact: ProcessedTrace$f
+Computing artifact: ProcessedTrace$g
 Computing artifact: ProcessedNavigation$7
 Get webapp manifest
 Audit phase

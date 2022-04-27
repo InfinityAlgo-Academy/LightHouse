@@ -125,7 +125,7 @@ Getting browser version
 Gathering: TapTargets
 Gathering: Accessibility
 Gathering: TraceElements
-Computing artifact: ProcessedTrace$f
+Computing artifact: ProcessedTrace$g
 Computing artifact: ProcessedNavigation$7
 Gathering: InspectorIssues
 Gathering: SourceMaps

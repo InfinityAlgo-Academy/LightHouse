@@ -1190,6 +1190,9 @@
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
     "message": "Cumulative Layout Shift measures the movement of visible elements within the viewport. [Learn more](https://web.dev/cls/)."
   },
+  "lighthouse-core/audits/metrics/experimental-interaction-to-next-paint.js | description": {
+    "message": "Interaction to Next Paint measures page responsiveness, how long it takes the page to visibly respond to user input. [Learn more](https://web.dev/inp/)."
+  },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
     "message": "First Contentful Paint marks the time at which the first text or image is painted. [Learn more](https://web.dev/first-contentful-paint/)."
   },
@@ -1960,6 +1963,9 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | imageResourceType": {
     "message": "Image"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | interactionToNextPaint": {
+    "message": "Interaction to Next Paint"
   },
   "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
     "message": "Time to Interactive"

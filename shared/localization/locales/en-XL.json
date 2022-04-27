@@ -1190,6 +1190,9 @@
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
     "message": "Ĉúm̂úl̂át̂ív̂é L̂áŷóût́ Ŝh́îf́t̂ ḿêáŝúr̂éŝ t́ĥé m̂óv̂ém̂én̂t́ ôf́ v̂íŝíb̂ĺê él̂ém̂én̂t́ŝ ẃît́ĥín̂ t́ĥé v̂íêẃp̂ór̂t́. [L̂éâŕn̂ ḿôŕê](https://web.dev/cls/)."
   },
+  "lighthouse-core/audits/metrics/experimental-interaction-to-next-paint.js | description": {
+    "message": "Îńt̂ér̂áĉt́îón̂ t́ô Ńêx́t̂ Ṕâín̂t́ m̂éâśûŕêś p̂áĝé r̂éŝṕôńŝív̂én̂éŝś, ĥóŵ ĺôńĝ ít̂ t́âḱêś t̂h́ê ṕâǵê t́ô v́îśîb́l̂ý r̂éŝṕôńd̂ t́ô úŝér̂ ín̂ṕût́. [L̂éâŕn̂ ḿôŕê](https://web.dev/inp/)."
+  },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
     "message": "F̂ír̂śt̂ Ćôńt̂én̂t́f̂úl̂ Ṕâín̂t́ m̂ár̂ḱŝ t́ĥé t̂ím̂é ât́ ŵh́îćĥ t́ĥé f̂ír̂śt̂ t́êx́t̂ ór̂ ím̂áĝé îś p̂áîńt̂éd̂. [Ĺêár̂ń m̂ór̂é](https://web.dev/first-contentful-paint/)."
   },
@@ -1960,6 +1963,9 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | imageResourceType": {
     "message": "Îḿâǵê"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | interactionToNextPaint": {
+    "message": "Îńt̂ér̂áĉt́îón̂ t́ô Ńêx́t̂ Ṕâín̂t́"
   },
   "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
     "message": "T̂ím̂é t̂ó Îńt̂ér̂áĉt́îv́ê"
