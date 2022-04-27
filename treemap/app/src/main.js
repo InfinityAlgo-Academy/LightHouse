@@ -11,7 +11,7 @@
 import {TreemapUtil} from './util.js';
 import {DragAndDrop} from '../../../viewer/app/src/drag-and-drop.js';
 import {GithubApi} from '../../../viewer/app/src/github-api.js';
-import {I18n} from '../../../report/renderer/i18n.js';
+import {Formatter} from '../../../report/renderer/formatter.js';
 import {TextEncoding} from '../../../report/renderer/text-encoding.js';
 import {Logger} from '../../../report/renderer/logger.js';
 
@@ -141,7 +141,7 @@ class TreemapViewer {
 
     for (const [group, depthOneNodes] of Object.entries(this.depthOneNodesByGroup)) {
       const allLabel = {
-        scripts: TreemapUtil.i18n.strings.allScriptsDropdownLabel,
+        scripts: TreemapUtil.formatter.strings.allScriptsDropdownLabel,
       }[group] || `All ${group}`;
       makeOption({type: 'group', value: group}, allLabel);
       for (const depthOneNode of depthOneNodes) {
@@ -253,8 +253,8 @@ class TreemapViewer {
 
       return {
         id: 'unused-bytes',
-        label: TreemapUtil.i18n.strings.unusedBytesLabel,
-        subLabel: TreemapUtil.i18n.formatBytesWithBestUnit(root.unusedBytes),
+        label: TreemapUtil.formatter.strings.unusedBytesLabel,
+        subLabel: TreemapUtil.formatter.formatBytesWithBestUnit(root.unusedBytes),
         enabled: true,
       };
     }
@@ -313,8 +313,9 @@ class TreemapViewer {
 
       return {
         id: 'duplicate-modules',
-        label: TreemapUtil.i18n.strings.duplicateModulesLabel,
-        subLabel: enabled ? TreemapUtil.i18n.formatBytesWithBestUnit(potentialByteSavings) : 'N/A',
+        label: TreemapUtil.formatter.strings.duplicateModulesLabel,
+        subLabel: enabled ?
+          TreemapUtil.formatter.formatBytesWithBestUnit(potentialByteSavings) : 'N/A',
         highlights,
         enabled,
       };
@@ -325,8 +326,9 @@ class TreemapViewer {
 
     viewModes.push({
       id: 'all',
-      label: TreemapUtil.i18n.strings.allLabel,
-      subLabel: TreemapUtil.i18n.formatBytesWithBestUnit(this.currentTreemapRoot.resourceBytes),
+      label: TreemapUtil.formatter.strings.allLabel,
+      subLabel: TreemapUtil.formatter.formatBytesWithBestUnit(
+        this.currentTreemapRoot.resourceBytes),
       enabled: true,
     });
 
@@ -473,7 +475,7 @@ class TreemapViewer {
         const value = dataRow[field];
         if (value === undefined) return '';
 
-        return TreemapUtil.i18n.formatBytes(value);
+        return TreemapUtil.formatter.formatBytes(value);
       };
       return fn;
     };
@@ -494,7 +496,7 @@ class TreemapViewer {
       if (!dataRow.unusedBytes) return '';
 
       const percent = dataRow.unusedBytes / dataRow.resourceBytes;
-      return `${TreemapUtil.i18n.formatPercent(percent)} bytes unused`;
+      return `${TreemapUtil.formatter.formatPercent(percent)} bytes unused`;
     };
 
     const gridEl = document.createElement('div');
@@ -516,20 +518,20 @@ class TreemapViewer {
       ],
       columns: [
         // eslint-disable-next-line max-len
-        {title: TreemapUtil.i18n.strings.tableColumnName, field: 'name', widthGrow: 5, tooltip: makeNameTooltip},
+        {title: TreemapUtil.formatter.strings.tableColumnName, field: 'name', widthGrow: 5, tooltip: makeNameTooltip},
         // eslint-disable-next-line max-len
-        {title: TreemapUtil.i18n.strings.resourceBytesLabel, field: 'resourceBytes', headerSortStartingDir: 'desc', tooltip: makeBytesTooltip('resourceBytes'), formatter: cell => {
+        {title: TreemapUtil.formatter.strings.resourceBytesLabel, field: 'resourceBytes', headerSortStartingDir: 'desc', tooltip: makeBytesTooltip('resourceBytes'), formatter: cell => {
           const value = cell.getValue();
-          return TreemapUtil.i18n.formatBytesWithBestUnit(value);
+          return TreemapUtil.formatter.formatBytesWithBestUnit(value);
         }},
         // eslint-disable-next-line max-len
-        {title: TreemapUtil.i18n.strings.unusedBytesLabel, field: 'unusedBytes', widthGrow: 1, sorterParams: {alignEmptyValues: 'bottom'}, headerSortStartingDir: 'desc', tooltip: makeBytesTooltip('unusedBytes'), formatter: cell => {
+        {title: TreemapUtil.formatter.strings.unusedBytesLabel, field: 'unusedBytes', widthGrow: 1, sorterParams: {alignEmptyValues: 'bottom'}, headerSortStartingDir: 'desc', tooltip: makeBytesTooltip('unusedBytes'), formatter: cell => {
           const value = cell.getValue();
           if (value === undefined) return '';
-          return TreemapUtil.i18n.formatBytesWithBestUnit(value);
+          return TreemapUtil.formatter.formatBytesWithBestUnit(value);
         }},
         // eslint-disable-next-line max-len
-        {title: TreemapUtil.i18n.strings.coverageColumnName, widthGrow: 3, headerSort: false, tooltip: makeCoverageTooltip, formatter: cell => {
+        {title: TreemapUtil.formatter.strings.coverageColumnName, widthGrow: 3, headerSort: false, tooltip: makeCoverageTooltip, formatter: cell => {
           /** @type {typeof data[number]} */
           const dataRow = cell.getRow().getData();
 
@@ -577,8 +579,8 @@ class TreemapViewer {
   makeCaption(node) {
     const partitionBy = this.currentViewMode.partitionBy || 'resourceBytes';
     const partitionByStr = {
-      resourceBytes: TreemapUtil.i18n.strings.resourceBytesLabel,
-      unusedBytes: TreemapUtil.i18n.strings.unusedBytesLabel,
+      resourceBytes: TreemapUtil.formatter.strings.resourceBytesLabel,
+      unusedBytes: TreemapUtil.formatter.strings.unusedBytesLabel,
     }[partitionBy];
     const bytes = node[partitionBy];
     const total = this.currentTreemapRoot[partitionBy];
@@ -589,8 +591,8 @@ class TreemapViewer {
 
     if (bytes !== undefined && total !== undefined) {
       const percent = total === 0 ? 1 : bytes / total;
-      const percentStr = TreemapUtil.i18n.formatPercent(percent);
-      let str = `${TreemapUtil.i18n.formatBytesWithBestUnit(bytes)} (${percentStr})`;
+      const percentStr = TreemapUtil.formatter.formatPercent(percent);
+      let str = `${TreemapUtil.formatter.formatBytesWithBestUnit(bytes)} (${percentStr})`;
       // Only add label for bytes on the root node.
       if (node === this.currentTreemapRoot) {
         str = `${partitionByStr}: ${str}`;
@@ -760,13 +762,13 @@ class LighthouseTreemap {
 
     const locale = options.lhr.configSettings.locale;
     document.documentElement.lang = locale;
-    const i18n = new I18n(locale, {
+    const formatter = new Formatter(locale, {
       // Set missing renderer strings to default (english) values.
       ...TreemapUtil.UIStrings,
       // `strings` is generated in build/build-treemap.js
       ...strings[options.lhr.configSettings.locale],
     });
-    TreemapUtil.i18n = i18n;
+    TreemapUtil.formatter = formatter;
 
     // Fill in all i18n data.
     for (const node of document.querySelectorAll('[data-i18n]')) {
@@ -774,7 +776,7 @@ class LighthouseTreemap {
       // so this cannot be undefined as long as `report-ui-features.data-i18n` test passes.
       const i18nAttr = /** @type {keyof typeof TreemapUtil['UIStrings']} */ (
         node.getAttribute('data-i18n'));
-      node.textContent = TreemapUtil.i18n.strings[i18nAttr];
+      node.textContent = TreemapUtil.formatter.strings[i18nAttr];
     }
 
     if (treemapViewer) {

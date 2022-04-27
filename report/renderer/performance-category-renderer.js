@@ -75,7 +75,7 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
       this.dom.find('span.lh-audit__display-text, div.lh-audit__display-text', element);
     const sparklineWidthPct = `${details.overallSavingsMs / scale * 100}%`;
     this.dom.find('div.lh-sparkline__bar', element).style.width = sparklineWidthPct;
-    displayEl.textContent = Util.i18n.formatSeconds(details.overallSavingsMs, 0.01);
+    displayEl.textContent = Util.formatter.formatSeconds(details.overallSavingsMs, 0.01);
 
     // Set [title] tooltips
     if (audit.result.displayValue) {
@@ -174,7 +174,7 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
    * @override
    */
   render(category, groups, options) {
-    const strings = Util.i18n.strings;
+    const strings = Util.formatter.strings;
     const element = this.dom.createElement('div', 'lh-category');
     element.id = category.id;
     element.appendChild(this.renderCategoryHeader(category, groups, options));
@@ -196,8 +196,8 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
       labelEl.htmlFor = checkboxId;
       const showEl = this.dom.createChildOf(labelEl, 'span', 'lh-metrics-toggle__labeltext--show');
       const hideEl = this.dom.createChildOf(labelEl, 'span', 'lh-metrics-toggle__labeltext--hide');
-      showEl.textContent = Util.i18n.strings.expandView;
-      hideEl.textContent = Util.i18n.strings.collapseView;
+      showEl.textContent = Util.formatter.strings.expandView;
+      hideEl.textContent = Util.formatter.strings.collapseView;
 
       const metricsBoxesEl = this.dom.createElement('div', 'lh-metrics-container');
       metricsGroupEl.insertBefore(metricsBoxesEl, metricsFooterEl);
@@ -327,7 +327,7 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
   renderMetricAuditFilter(filterableMetrics, categoryEl) {
     const metricFilterEl = this.dom.createElement('div', 'lh-metricfilter');
     const textEl = this.dom.createChildOf(metricFilterEl, 'span', 'lh-metricfilter__text');
-    textEl.textContent = Util.i18n.strings.showRelevantAudits;
+    textEl.textContent = Util.formatter.strings.showRelevantAudits;
 
     const filterChoices = /** @type {LH.ReportResult.AuditRef[]} */ ([
       ({acronym: 'All'}),

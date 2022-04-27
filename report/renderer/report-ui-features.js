@@ -105,7 +105,7 @@ export class ReportUIFeatures {
       this.json.audits['script-treemap-data'] && this.json.audits['script-treemap-data'].details;
     if (showTreemapApp) {
       this.addButton({
-        text: Util.i18n.strings.viewTreemapLabel,
+        text: Util.formatter.strings.viewTreemapLabel,
         icon: 'treemap',
         onClick: () => openTreemap(this.json),
       });
@@ -114,8 +114,8 @@ export class ReportUIFeatures {
     if (this._opts.onViewTrace) {
       this.addButton({
         text: lhr.configSettings.throttlingMethod === 'simulate' ?
-          Util.i18n.strings.viewOriginalTraceLabel :
-          Util.i18n.strings.viewTraceLabel,
+          Util.formatter.strings.viewOriginalTraceLabel :
+          Util.formatter.strings.viewTraceLabel,
         onClick: () => this._opts.onViewTrace?.(),
       });
     }
@@ -129,8 +129,8 @@ export class ReportUIFeatures {
       // These strings are guaranteed to (at least) have a default English string in Util.UIStrings,
       // so this cannot be undefined as long as `report-ui-features.data-i18n` test passes.
       const i18nKey = node.getAttribute('data-i18n');
-      const i18nAttr = /** @type {keyof typeof Util.i18n.strings} */ (i18nKey);
-      node.textContent = Util.i18n.strings[i18nAttr];
+      const i18nAttr = /** @type {keyof typeof Util.formatter.strings} */ (i18nKey);
+      node.textContent = Util.formatter.strings[i18nAttr];
     }
   }
 
@@ -272,7 +272,7 @@ export class ReportUIFeatures {
       this._dom.find('.lh-3p-filter-count', filterTemplate).textContent =
           `${thirdPartyRows.length}`;
       this._dom.find('.lh-3p-ui-string', filterTemplate).textContent =
-          Util.i18n.strings.thirdPartyResourcesLabel;
+          Util.formatter.strings.thirdPartyResourcesLabel;
 
       const allThirdParty = thirdPartyRows.length === rowEls.length;
       const allFirstParty = !thirdPartyRows.length;

@@ -12,7 +12,7 @@ const MiB = KiB * KiB;
 /**
  * @template T
  */
-export class I18n {
+export class Formatter {
   /**
    * @param {LH.Locale} locale
    * @param {T} strings

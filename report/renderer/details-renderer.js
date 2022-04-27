@@ -79,9 +79,9 @@ export class DetailsRenderer {
    */
   _renderBytes(details) {
     // TODO: handle displayUnit once we have something other than 'KiB'
-    const value = Util.i18n.formatBytesToKiB(details.value, details.granularity || 0.1);
+    const value = Util.formatter.formatBytesToKiB(details.value, details.granularity || 0.1);
     const textEl = this._renderText(value);
-    textEl.title = Util.i18n.formatBytes(details.value);
+    textEl.title = Util.formatter.formatBytes(details.value);
     return textEl;
   }
 
@@ -92,9 +92,9 @@ export class DetailsRenderer {
   _renderMilliseconds(details) {
     let value;
     if (details.displayUnit === 'duration') {
-      value = Util.i18n.formatDuration(details.value);
+      value = Util.formatter.formatDuration(details.value);
     } else {
-      value = Util.i18n.formatMilliseconds(details.value, details.granularity || 10);
+      value = Util.formatter.formatMilliseconds(details.value, details.granularity || 10);
     }
 
     return this._renderText(value);
@@ -173,7 +173,7 @@ export class DetailsRenderer {
    * @return {Element}
    */
   _renderNumeric(details) {
-    const value = Util.i18n.formatNumber(details.value, details.granularity || 0.1);
+    const value = Util.formatter.formatNumber(details.value, details.granularity || 0.1);
     const element = this._dom.createElement('div', 'lh-numeric');
     element.textContent = value;
     return element;

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-/** @template T @typedef {import('./i18n').I18n<T>} I18n */
+/** @template T @typedef {import('./formatter').Formatter<T>} Formatter */
 
 const ELLIPSIS = '\u2026';
 const NBSP = '\xa0';
@@ -38,9 +38,9 @@ const listOfTlds = [
 ];
 
 class Util {
-  /** @type {I18n<typeof UIStrings>} */
+  /** @type {Formatter<typeof UIStrings>} */
   // @ts-expect-error: Is set in report renderer.
-  static i18n = null;
+  static formatter = null;
 
   static get PASS_THRESHOLD() {
     return PASS_THRESHOLD;
@@ -425,46 +425,48 @@ class Util {
 
     switch (settings.throttlingMethod) {
       case 'provided':
-        summary = networkThrottling = cpuThrottling = Util.i18n.strings.throttlingProvided;
+        summary = networkThrottling = cpuThrottling = Util.formatter.strings.throttlingProvided;
         break;
       case 'devtools': {
         const {cpuSlowdownMultiplier, requestLatencyMs} = throttling;
         // eslint-disable-next-line max-len
-        cpuThrottling = `${Util.i18n.formatNumber(cpuSlowdownMultiplier)}x slowdown (DevTools)`;
-        networkThrottling = `${Util.i18n.formatMilliseconds(requestLatencyMs)} HTTP RTT, ` +
-          `${Util.i18n.formatKbps(throttling.downloadThroughputKbps)} down, ` +
-          `${Util.i18n.formatKbps(throttling.uploadThroughputKbps)} up (DevTools)`;
+        cpuThrottling = `${Util.formatter.formatNumber(cpuSlowdownMultiplier)}x slowdown (DevTools)`;
+        networkThrottling = `${Util.formatter.formatMilliseconds(requestLatencyMs)} HTTP RTT, ` +
+          `${Util.formatter.formatKbps(throttling.downloadThroughputKbps)} down, ` +
+          `${Util.formatter.formatKbps(throttling.uploadThroughputKbps)} up (DevTools)`;
 
         const isSlow4G = () => {
           return requestLatencyMs === 150 * 3.75 &&
             throttling.downloadThroughputKbps === 1.6 * 1024 * 0.9 &&
             throttling.uploadThroughputKbps === 750 * 0.9;
         };
-        summary = isSlow4G() ? Util.i18n.strings.runtimeSlow4g : Util.i18n.strings.runtimeCustom;
+        summary = isSlow4G() ?
+          Util.formatter.strings.runtimeSlow4g : Util.formatter.strings.runtimeCustom;
         break;
       }
       case 'simulate': {
         const {cpuSlowdownMultiplier, rttMs, throughputKbps} = throttling;
         // eslint-disable-next-line max-len
-        cpuThrottling = `${Util.i18n.formatNumber(cpuSlowdownMultiplier)}x slowdown (Simulated)`;
-        networkThrottling = `${Util.i18n.formatMilliseconds(rttMs)} TCP RTT, ` +
-          `${Util.i18n.formatKbps(throughputKbps)} throughput (Simulated)`;
+        cpuThrottling = `${Util.formatter.formatNumber(cpuSlowdownMultiplier)}x slowdown (Simulated)`;
+        networkThrottling = `${Util.formatter.formatMilliseconds(rttMs)} TCP RTT, ` +
+          `${Util.formatter.formatKbps(throughputKbps)} throughput (Simulated)`;
 
         const isSlow4G = () => {
           return rttMs === 150 && throughputKbps === 1.6 * 1024;
         };
-        summary = isSlow4G() ? Util.i18n.strings.runtimeSlow4g : Util.i18n.strings.runtimeCustom;
+        summary = isSlow4G() ?
+          Util.formatter.strings.runtimeSlow4g : Util.formatter.strings.runtimeCustom;
         break;
       }
       default:
-        summary = cpuThrottling = networkThrottling = Util.i18n.strings.runtimeUnknown;
+        summary = cpuThrottling = networkThrottling = Util.formatter.strings.runtimeUnknown;
     }
 
     // TODO(paulirish): revise Runtime Settings strings: https://github.com/GoogleChrome/lighthouse/pull/11796
     const deviceEmulation = {
-      mobile: Util.i18n.strings.runtimeMobileEmulation,
-      desktop: Util.i18n.strings.runtimeDesktopEmulation,
-    }[settings.formFactor] || Util.i18n.strings.runtimeNoEmulation;
+      mobile: Util.formatter.strings.runtimeMobileEmulation,
+      desktop: Util.formatter.strings.runtimeDesktopEmulation,
+    }[settings.formFactor] || Util.formatter.strings.runtimeNoEmulation;
 
     return {
       deviceEmulation,
