@@ -290,8 +290,10 @@ export class LighthouseReportViewer {
     try {
       if (this._isFlowReport(json)) {
         this._renderFlowResult(json, rootEl, saveGistCallback);
+        window.ga('send', 'event', 'report', 'flow-report');
       } else {
         this._renderLhr(json, rootEl, saveGistCallback);
+        window.ga('send', 'event', 'report', 'report');
       }
 
       // Only clear query string if current report isn't from a gist or PSI.
