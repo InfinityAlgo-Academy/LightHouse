@@ -20,7 +20,7 @@ const MEDIUM = 'Medium';
 const LOW = 'Low';
 const VERY_LOW = 'VeryLow';
 
-async function createChainsFromMockRecords(prioritiesList, edges, setExtrasFn) {
+async function createChainsFromMockRecords(prioritiesList, edges, setExtrasFn, reverseRecords) {
   const networkRecords = prioritiesList.map((priority, index) => ({
     requestId: index.toString(),
     url: 'https://www.example.com/' + index,
@@ -36,6 +36,8 @@ async function createChainsFromMockRecords(prioritiesList, edges, setExtrasFn) {
     endTime: index + 1,
   }));
 
+  if (setExtrasFn) setExtrasFn(networkRecords);
+
   // add mock initiator information
   edges.forEach(edge => {
     const initiatorRequest = networkRecords[edge[0]];
@@ -45,7 +47,7 @@ async function createChainsFromMockRecords(prioritiesList, edges, setExtrasFn) {
     };
   });
 
-  if (setExtrasFn) setExtrasFn(networkRecords);
+  if (reverseRecords) networkRecords.reverse();
 
   const docUrl = networkRecords
     .find(r => r.resourceType === 'Document' && r.frameId === 1)
@@ -377,10 +379,8 @@ describe('CriticalRequestChain computed artifact', () => {
     const {networkRecords, criticalChains} = await createChainsFromMockRecords(
       [HIGH, HIGH],
       [[0, 1]],
-      networkRecords => {
-        // Reverse the records so we force nodes to be made early.
-        networkRecords.reverse();
-      }
+      undefined,
+      true // Reverse the records so we force nodes to be made early.
     );
     assert.deepEqual(criticalChains, {
       0: {
