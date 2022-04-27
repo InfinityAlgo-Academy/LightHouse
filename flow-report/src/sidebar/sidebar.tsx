@@ -74,7 +74,7 @@ const SidebarHeader: FunctionComponent<{title: string, date: string}> = ({title,
   return (
     <div className="SidebarHeader">
       <div className="SidebarHeader__title">{title}</div>
-      <div className="SidebarHeader__date">{i18n.formatDateTime(date)}</div>
+      <div className="SidebarHeader__date">{i18n.formatter.formatDateTime(date)}</div>
     </div>
   );
 };

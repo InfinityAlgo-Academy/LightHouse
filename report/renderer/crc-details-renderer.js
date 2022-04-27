@@ -180,9 +180,9 @@ class CriticalRequestChainRenderer {
     const containerEl = dom.find('.lh-crc', tmpl);
 
     // Fill in top summary.
-    dom.find('.lh-crc-initial-nav', tmpl).textContent = Util.formatter.strings.crcInitialNavigation;
+    dom.find('.lh-crc-initial-nav', tmpl).textContent = Util.strings.crcInitialNavigation;
     dom.find('.lh-crc__longest_duration_label', tmpl).textContent =
-        Util.formatter.strings.crcLongestDurationLabel;
+        Util.strings.crcLongestDurationLabel;
     dom.find('.lh-crc__longest_duration', tmpl).textContent =
         Util.formatter.formatMilliseconds(details.longestChain.duration);
 

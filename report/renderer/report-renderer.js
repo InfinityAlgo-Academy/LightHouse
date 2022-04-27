@@ -108,8 +108,7 @@ export class ReportRenderer {
 
     this._renderMetaBlock(report, footer);
 
-    this._dom.find('.lh-footer__version_issue', footer).textContent =
-      Util.formatter.strings.footerIssue;
+    this._dom.find('.lh-footer__version_issue', footer).textContent = Util.strings.footerIssue;
     this._dom.find('.lh-footer__version', footer).textContent = report.lighthouseVersion;
     return footer;
   }
@@ -129,7 +128,6 @@ export class ReportRenderer {
     const channel = report.configSettings.channel;
     const benchmarkIndex = report.environment.benchmarkIndex.toFixed(0);
     const axeVersion = report.environment.credits?.['axe-core'];
-    const strings = Util.formatter.strings;
 
     // [CSS icon class, textContent, tooltipText]
     const metaItems = [
@@ -137,20 +135,20 @@ export class ReportRenderer {
         `Captured at ${Util.formatter.formatDateTime(report.fetchTime)}`],
       ['devices',
         `${envValues.deviceEmulation} with Lighthouse ${report.lighthouseVersion}`,
-        `${strings.runtimeSettingsBenchmark}: ${benchmarkIndex}` +
-            `\n${strings.runtimeSettingsCPUThrottling}: ${envValues.cpuThrottling}` +
-            (axeVersion ? `\n${strings.runtimeSettingsAxeVersion}: ${axeVersion}` : '')],
+        `${Util.strings.runtimeSettingsBenchmark}: ${benchmarkIndex}` +
+            `\n${Util.strings.runtimeSettingsCPUThrottling}: ${envValues.cpuThrottling}` +
+            (axeVersion ? `\n${Util.strings.runtimeSettingsAxeVersion}: ${axeVersion}` : '')],
       ['samples-one',
-        strings.runtimeSingleLoad,
-        strings.runtimeSingleLoadTooltip],
+        Util.strings.runtimeSingleLoad,
+        Util.strings.runtimeSingleLoadTooltip],
       ['stopwatch',
-        strings.runtimeAnalysisWindow],
+        Util.strings.runtimeAnalysisWindow],
       ['networkspeed',
         `${envValues.summary}`,
-        `${strings.runtimeSettingsNetworkThrottling}: ${envValues.networkThrottling}`],
+        `${Util.strings.runtimeSettingsNetworkThrottling}: ${envValues.networkThrottling}`],
       ['chrome',
         `Using ${chromeVer}` + (channel ? ` with ${channel}` : ''),
-        `${strings.runtimeSettingsUANetwork}: "${report.environment.networkUserAgent}"`],
+        `${Util.strings.runtimeSettingsUANetwork}: "${report.environment.networkUserAgent}"`],
     ];
 
     const metaItemsEl = this._dom.find('.lh-meta__items', footer);
@@ -178,7 +176,7 @@ export class ReportRenderer {
 
     const container = this._dom.createComponent('warningsToplevel');
     const message = this._dom.find('.lh-warnings__msg', container);
-    message.textContent = Util.formatter.strings.toplevelWarningsMessage;
+    message.textContent = Util.strings.toplevelWarningsMessage;
 
     const warnings = this._dom.find('ul', container);
     for (const warningString of report.runWarnings) {
@@ -252,12 +250,8 @@ export class ReportRenderer {
    * @return {!DocumentFragment}
    */
   _renderReport(report) {
-    const formatter = new Formatter(report.configSettings.locale, {
-      // Set missing renderer strings to default (english) values.
-      ...Util.UIStrings,
-      ...report.i18n.rendererFormattedStrings,
-    });
-    Util.formatter = formatter;
+    Util.applyStrings(report.i18n.rendererFormattedStrings);
+    Util.formatter = new Formatter(report.configSettings.locale);
     Util.reportJson = report;
 
     const fullPageScreenshot =

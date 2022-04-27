@@ -9,24 +9,15 @@ const NBSP2 = '\xa0';
 const KiB = 1024;
 const MiB = KiB * KiB;
 
-/**
- * @template T
- */
 export class Formatter {
   /**
    * @param {LH.Locale} locale
-   * @param {T} strings
    */
-  constructor(locale, strings) {
+  constructor(locale) {
     // When testing, use a locale with more exciting numeric formatting.
     if (locale === 'en-XA') locale = 'de';
 
     this._locale = locale;
-    this._strings = strings;
-  }
-
-  get strings() {
-    return this._strings;
   }
 
   /**

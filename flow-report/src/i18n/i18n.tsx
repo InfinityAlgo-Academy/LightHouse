@@ -14,7 +14,10 @@ import {useFlowResult} from '../util';
 import strings from './localized-strings';
 import {Util} from '../../../report/renderer/util';
 
-const I18nContext = createContext(new Formatter('en-US', {...Util.UIStrings, ...UIStrings}));
+const I18nContext = createContext({
+  formatter: new Formatter('en-US'),
+  strings: {...Util.UIStrings, ...UIStrings},
+});
 
 function useLhrLocale() {
   const flowResult = useFlowResult();
@@ -50,10 +53,8 @@ function useStringFormatter() {
 const I18nProvider: FunctionComponent = ({children}) => {
   const {locale, lhrStrings} = useLhrLocale();
 
-  const i18n = useMemo(() => {
-    const i18n = new Formatter(locale, {
-      // Set any missing lhr strings to default (english) values.
-      ...Util.UIStrings,
+  const formatter = useMemo(() => {
+    Util.applyStrings({
       // Preload with strings from the first lhr.
       // Used for legacy report components imported into the flow report.
       ...lhrStrings,
@@ -64,14 +65,17 @@ const I18nProvider: FunctionComponent = ({children}) => {
     });
 
     // Initialize renderer util i18n for strings rendered in wrapped components.
-    // TODO: Don't attach global i18n to `Util`.
-    Util.formatter = i18n;
+    // TODO: Don't attach global formatter to `Util`.
+    Util.formatter = new Formatter(locale);
 
-    return i18n;
+    return {
+      formatter: Util.formatter,
+      strings: Util.strings as typeof UIStrings & typeof Util.UIStrings,
+    };
   }, [locale, lhrStrings]);
 
   return (
-    <I18nContext.Provider value={i18n}>
+    <I18nContext.Provider value={formatter}>
       {children}
     </I18nContext.Provider>
   );
