@@ -31,8 +31,27 @@ An audit can return a number of different [detail types](https://github.com/Goog
 | `'url'`                   | Network Resource      | we will make it a pretty link          |
 | `'thumbnail'`             | Image Resource        | same as above, but we show a thumbnail |
 | `'link'`                  | -                     | arbitrary link / url combination       |
+| `'bytes'`                 | -                     | value is in bytes but formatted as KiB |
 | `'text'\|'ms'\|'numeric'` | -                     |                                        |
 
+### Granularity
+
+The following detail types accept a `granularity` field:
+
+- `bytes`
+- `ms`
+- `numeric`
+
+`granularity` must be an integer power of 10. Some examples of valid values for `granularity`:
+
+- 0.001
+- 0.01
+- 0.1
+- 1
+- 10
+- 100
+
+The formatted value will be rounded to that nearest number. If not provided, the default is `0.1` (except for `ms`, which is `10`).
 
 <!--- https://docs.google.com/document/d/1KS6PGPYDfE_TWrRdw55Rd67P-g_MU4KdMetT3cTPHjI/edit#heading=h.32w9jjm4c70w -->
 ![Detail type examples](../assets/detail-type-examples.png)

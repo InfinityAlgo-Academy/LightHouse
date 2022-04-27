@@ -21,9 +21,27 @@ const NBSP = '\xa0';
 describe('util helpers', () => {
   it('formats a number', () => {
     const i18n = new I18n('en', {...Util.UIStrings});
-    assert.strictEqual(i18n.formatNumber(10), '10.0');
-    assert.strictEqual(i18n.formatNumber(100.01), '100.0');
-    assert.strictEqual(i18n.formatNumber(13000.456), '13,000.5');
+    assert.strictEqual(i18n.formatNumber(10), '10');
+    assert.strictEqual(i18n.formatNumber(100.01), '100.01');
+    assert.strictEqual(i18n.formatNumber(13000.456), '13,000.456');
+    assert.strictEqual(i18n.formatNumber(13000.456444), '13,000.456');
+
+    assert.strictEqual(i18n.formatNumber(10, 0.1), '10.0');
+    assert.strictEqual(i18n.formatNumber(100.01, 0.1), '100.0');
+    assert.strictEqual(i18n.formatNumber(13000.456, 0.1), '13,000.5');
+
+    assert.strictEqual(i18n.formatNumber(0), '0');
+    assert.strictEqual(i18n.formatNumber(-0), '0');
+    assert.strictEqual(i18n.formatNumber(-0, 0.1), '0.0');
+    assert.strictEqual(i18n.formatNumber(0.000001), '0');
+    assert.strictEqual(i18n.formatNumber(-0.000001), '0');
+    assert.strictEqual(i18n.formatNumber(0.000001, 0.1), '0.0');
+    assert.strictEqual(i18n.formatNumber(-0.000001, 0.1), '0.0');
+
+    assert.strictEqual(i18n.formatNumber(10), '10');
+    assert.strictEqual(i18n.formatNumber(100.01), '100.01');
+    assert.strictEqual(i18n.formatNumber(13000.456, 0.1), '13,000.5');
+
     assert.strictEqual(i18n.formatInteger(10), '10');
     assert.strictEqual(i18n.formatInteger(100.01), '100');
     assert.strictEqual(i18n.formatInteger(13000.6), '13,001');
@@ -41,9 +59,10 @@ describe('util helpers', () => {
 
   it('formats bytes', () => {
     const i18n = new I18n('en', {...Util.UIStrings});
-    assert.equal(i18n.formatBytesToKiB(100), `0.1${NBSP}KiB`);
-    assert.equal(i18n.formatBytesToKiB(2000), `2.0${NBSP}KiB`);
-    assert.equal(i18n.formatBytesToKiB(1014 * 1024), `1,014.0${NBSP}KiB`);
+    assert.equal(i18n.formatBytesToKiB(100), `0.098${NBSP}KiB`);
+    assert.equal(i18n.formatBytesToKiB(100, 0.1), `0.1${NBSP}KiB`);
+    assert.equal(i18n.formatBytesToKiB(2000, 0.1), `2.0${NBSP}KiB`);
+    assert.equal(i18n.formatBytesToKiB(1014 * 1024, 0.1), `1,014.0${NBSP}KiB`);
   });
 
   it('formats bytes with different granularities', () => {
@@ -59,11 +78,6 @@ describe('util helpers', () => {
     assert.strictEqual(i18n.formatBytes(15.12345, granularity), `15${NBSP}bytes`);
     assert.strictEqual(i18n.formatBytes(15.54321, granularity), `16${NBSP}bytes`);
 
-    granularity = 0.5;
-    assert.strictEqual(i18n.formatBytes(15.0, granularity), `15.0${NBSP}bytes`);
-    assert.strictEqual(i18n.formatBytes(15.12345, granularity), `15.0${NBSP}bytes`);
-    assert.strictEqual(i18n.formatBytes(15.54321, granularity), `15.5${NBSP}bytes`);
-
     granularity = 0.1;
     assert.strictEqual(i18n.formatBytes(15.0, granularity), `15.0${NBSP}bytes`);
     assert.strictEqual(i18n.formatBytes(15.12345, granularity), `15.1${NBSP}bytes`);
@@ -73,6 +87,21 @@ describe('util helpers', () => {
     assert.strictEqual(i18n.formatBytes(15.0, granularity), `15.00${NBSP}bytes`);
     assert.strictEqual(i18n.formatBytes(15.12345, granularity), `15.12${NBSP}bytes`);
     assert.strictEqual(i18n.formatBytes(15.19999, granularity), `15.20${NBSP}bytes`);
+  });
+
+  it('formats bytes with invalid granularity', () => {
+    const i18n = new I18n('en', {...Util.UIStrings});
+    const granularity = 0.5;
+    const originalWarn = console.warn;
+
+    try {
+      console.warn = () => {};
+      assert.strictEqual(i18n.formatBytes(15.0, granularity), `15${NBSP}bytes`);
+      assert.strictEqual(i18n.formatBytes(15.12345, granularity), `15${NBSP}bytes`);
+      assert.strictEqual(i18n.formatBytes(15.54321, granularity), `16${NBSP}bytes`);
+    } finally {
+      console.warn = originalWarn;
+    }
   });
 
   it('formats kibibytes with different granularities', () => {
@@ -95,7 +124,7 @@ describe('util helpers', () => {
 
   it('formats ms', () => {
     const i18n = new I18n('en', {...Util.UIStrings});
-    assert.equal(i18n.formatMilliseconds(123), `120${NBSP}ms`);
+    assert.equal(i18n.formatMilliseconds(123, 10), `120${NBSP}ms`);
     assert.equal(i18n.formatMilliseconds(2456.5, 0.1), `2,456.5${NBSP}ms`);
     assert.equal(i18n.formatMilliseconds(0.000001), `0${NBSP}ms`);
     assert.equal(i18n.formatMilliseconds(-0.000001), `0${NBSP}ms`);
@@ -129,10 +158,10 @@ describe('util helpers', () => {
     const number = 12346.858558;
 
     const i18n = new I18n('de', {...Util.UIStrings});
-    assert.strictEqual(i18n.formatNumber(number), '12.346,9');
-    assert.strictEqual(i18n.formatBytesToKiB(number), `12,1${NBSP}KiB`);
-    assert.strictEqual(i18n.formatMilliseconds(number), `12.350${NBSP}ms`);
-    assert.strictEqual(i18n.formatSeconds(number), `12,3${NBSP}Sek.`);
+    assert.strictEqual(i18n.formatNumber(number), '12.346,859');
+    assert.strictEqual(i18n.formatBytesToKiB(number, 0.1), `12,1${NBSP}KiB`);
+    assert.strictEqual(i18n.formatMilliseconds(number, 10), `12.350${NBSP}ms`);
+    assert.strictEqual(i18n.formatSeconds(number), `12,347${NBSP}Sek.`);
   });
 
   it('uses decimal comma with en-XA test locale', () => {
@@ -140,10 +169,10 @@ describe('util helpers', () => {
     const number = 12346.858558;
 
     const i18n = new I18n('en-XA', {...Util.UIStrings});
-    assert.strictEqual(i18n.formatNumber(number), '12.346,9');
-    assert.strictEqual(i18n.formatBytesToKiB(number), `12,1${NBSP}KiB`);
-    assert.strictEqual(i18n.formatMilliseconds(number), `12.350${NBSP}ms`);
-    assert.strictEqual(i18n.formatSeconds(number), `12,3${NBSP}Sek.`);
+    assert.strictEqual(i18n.formatNumber(number), '12.346,859');
+    assert.strictEqual(i18n.formatBytesToKiB(number, 0.1), `12,1${NBSP}KiB`);
+    assert.strictEqual(i18n.formatMilliseconds(number, 100), `12.300${NBSP}ms`);
+    assert.strictEqual(i18n.formatSeconds(number, 1), `12${NBSP}Sek.`);
   });
 
   it('should not crash on unknown locales', () => {
