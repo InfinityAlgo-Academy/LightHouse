@@ -107,10 +107,11 @@ const FAILING_CLIENTSIDE = [
 describe('Performance: Redirects audit', () => {
   const mockArtifacts = (networkRecords, finalUrl) => {
     const devtoolsLog = networkRecordsToDevtoolsLog(networkRecords);
+    const frameUrl = networkRecords[0].url;
 
     return {
       GatherContext: {gatherMode: 'navigation'},
-      traces: {defaultPass: createTestTrace({traceEnd: 5000})},
+      traces: {defaultPass: createTestTrace({frameUrl, traceEnd: 5000})},
       devtoolsLogs: {defaultPass: devtoolsLog},
       URL: {
         initialUrl: 'about:blank',

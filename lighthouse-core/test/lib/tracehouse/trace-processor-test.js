@@ -204,7 +204,7 @@ describe('TraceProcessor', () => {
   describe('.processTrace() - frameTreeEvents', () => {
     it('frameTreeEvents excludes other frame trees', () => {
       const testTrace = createTestTrace({timeOrigin: 0, traceEnd: 2000});
-      const mainFrame = testTrace.traceEvents[0].args.frame;
+      const mainFrame = testTrace.traceEvents.find(e => e.name === 'navigationStart').args.frame;
       const childFrame = 'CHILDFRAME';
       const otherMainFrame = 'ANOTHERTAB';
       const cat = 'loading,rail,devtools.timeline';
@@ -230,7 +230,7 @@ describe('TraceProcessor', () => {
 
     it('frameTreeEvents includes main frame events if no FrameCommittedInBrowser found', () => {
       const testTrace = createTestTrace({timeOrigin: 0, traceEnd: 2000});
-      const mainFrame = testTrace.traceEvents[0].args.frame;
+      const mainFrame = testTrace.traceEvents.find(e => e.name === 'navigationStart').args.frame;
       const childFrame = 'CHILDFRAME';
       const otherMainFrame = 'ANOTHERTAB';
       const cat = 'loading,rail,devtools.timeline';
@@ -256,7 +256,7 @@ describe('TraceProcessor', () => {
       testTrace.traceEvents = testTrace.traceEvents
         .filter(e => e.name !== 'FrameCommittedInBrowser');
 
-      const mainFrame = testTrace.traceEvents[0].args.frame;
+      const mainFrame = testTrace.traceEvents.find(e => e.name === 'navigationStart').args.frame;
       const childFrame = 'CHILDFRAME';
       const otherMainFrame = 'ANOTHERTAB';
       const cat = 'loading,rail,devtools.timeline';
@@ -566,7 +566,7 @@ Object {
 
       it('uses latest candidate', () => {
         const testTrace = createTestTrace({timeOrigin: 0, traceEnd: 2000});
-        const frame = testTrace.traceEvents[0].args.frame;
+        const frame = testTrace.traceEvents.find(e => e.name === 'navigationStart').args.frame;
         const args = {frame, data: {size: 50}};
         const cat = 'loading,rail,devtools.timeline';
         testTrace.traceEvents.push(
@@ -590,7 +590,7 @@ Object {
 
       it('invalidates if last event is ::Invalidate', () => {
         const testTrace = createTestTrace({timeOrigin: 0, traceEnd: 2000});
-        const frame = testTrace.traceEvents[0].args.frame;
+        const frame = testTrace.traceEvents.find(e => e.name === 'navigationStart').args.frame;
         const args = {frame};
         const cat = 'loading,rail,devtools.timeline';
         testTrace.traceEvents.push(
@@ -659,7 +659,7 @@ Object {
 
       it('finds FCP from all frames', () => {
         const testTrace = createTestTrace({timeOrigin: 0, traceEnd: 2000});
-        const mainFrame = testTrace.traceEvents[0].args.frame;
+        const mainFrame = testTrace.traceEvents.find(e => e.name === 'navigationStart').args.frame;
         const childFrame = 'CHILDFRAME';
         const cat = 'loading,rail,devtools.timeline';
 
@@ -682,7 +682,7 @@ Object {
 
       it('finds LCP from all frames', () => {
         const testTrace = createTestTrace({timeOrigin: 0, traceEnd: 2000});
-        const mainFrame = testTrace.traceEvents[0].args.frame;
+        const mainFrame = testTrace.traceEvents.find(e => e.name === 'navigationStart').args.frame;
         const childFrame = 'CHILDFRAME';
         const cat = 'loading,rail,devtools.timeline';
         testTrace.traceEvents.push(
