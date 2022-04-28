@@ -298,7 +298,7 @@ describe('Metrics: CLS', () => {
 
       it('ignores layout shift data from other tabs', async () => {
         const trace = createTestTrace({timeOrigin: 0, traceEnd: 2000});
-        const mainFrame = trace.traceEvents[0].args.frame;
+        const mainFrame = trace.traceEvents.find(e => e.name === 'navigationStart').args.frame;
         const childFrame = 'CHILDFRAME';
         const otherMainFrame = 'ANOTHERTABOPEN';
         const cat = 'loading,rail,devtools.timeline';
