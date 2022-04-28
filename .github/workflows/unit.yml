@@ -47,6 +47,7 @@ jobs:
     - run: yarn build-report
 
     # Run pptr tests using ToT Chrome instead of stable default.
+    - run: pwd
     - run: mkdir -p /home/runner
     - name: Define ToT chrome path
       run: echo "CHROME_PATH=/home/runner/chrome-linux-tot/chrome" >> $GITHUB_ENV
