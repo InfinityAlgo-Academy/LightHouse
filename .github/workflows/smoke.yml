@@ -2,7 +2,7 @@ name: smoke
 
 on:
   push:
-    branches: [master]
+    # branches: [master]
   pull_request: # run on all PRs, not just PRs to a particular branch
 
 jobs:
@@ -16,7 +16,7 @@ jobs:
         smoke-test-shard: [1, 2, 3]
       # e.g. if set 1 fails, continue with set 2 anyway
       fail-fast: false
-    runs-on: ubuntu-latest
+    runs-on: buildjet-4vcpu-ubuntu-2004
     env:
       # The total number of shards. Set dynamically when length of *single* matrix variable is
       # computable. See https://github.community/t/get-length-of-strategy-matrix-or-get-all-matrix-options/18342
@@ -38,12 +38,12 @@ jobs:
 
     - name: Define ToT chrome path
       if: matrix.chrome-channel == 'ToT'
-      run: echo "CHROME_PATH=/home/runner/chrome-linux-tot/chrome" >> $GITHUB_ENV
+      run: echo "CHROME_PATH=/home/ubuntu/chrome-linux-tot/chrome" >> $GITHUB_ENV
 
     # Chrome Stable is already installed by default.
     - name: Install Chrome ToT
       if: matrix.chrome-channel == 'ToT'
-      working-directory: /home/runner
+      working-directory: /home/ubuntu
       run: bash $GITHUB_WORKSPACE/lighthouse-core/scripts/download-chrome.sh && mv chrome-linux chrome-linux-tot
 
     - run: yarn install --frozen-lockfile --network-timeout 1000000
@@ -105,7 +105,7 @@ jobs:
         path: .tmp/smokehouse-ci-failures/
 
   smoke-fr:
-    runs-on: ubuntu-latest
+    runs-on: buildjet-4vcpu-ubuntu-2004
     name: Fraggle Rock
 
     steps:
@@ -136,7 +136,7 @@ jobs:
         path: .tmp/smokehouse-ci-failures/
 
   smoke-bundle:
-    runs-on: ubuntu-latest
+    runs-on: buildjet-4vcpu-ubuntu-2004
     name: Bundled Lighthouse
 
     steps:
@@ -167,7 +167,7 @@ jobs:
         path: .tmp/smokehouse-ci-failures/
 
   smoke-bundle-fr:
-    runs-on: ubuntu-latest
+    runs-on: buildjet-4vcpu-ubuntu-2004
     name: Bundled Fraggle Rock
 
     steps:
