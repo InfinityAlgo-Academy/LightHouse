@@ -2,12 +2,12 @@ name: package-test
 
 on:
   push:
-    branches: [master]
+    # branches: [master]
   pull_request: # run on all PRs, not just PRs to a particular branch
 
 jobs:
   package-test:
-    runs-on: ubuntu-latest
+    runs-on: buildjet-4vcpu-ubuntu-2004
     name: Package Test
 
     steps:
