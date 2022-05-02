@@ -54,6 +54,9 @@ function getLayoutShiftWindows(layoutEvents) {
       const ULTStart = layoutEvents[j].timing;
       const ULTEnd = ULTStart + layoutEvents[j].duration;
       if (layoutEvents[j].event.name !== 'UpdateLayerTree') continue;
+      // TODO: not getting UpdateLayerTree in my trace from chrome...
+      console.log({SSRStart, SSREnd});
+      console.log({ULTStart, ULTEnd}, layoutEvents[j]);
       if (!(ULTStart >= SSRStart && ULTStart < limit)) continue;
 
       // If there is a layout shift within an update layer tree, it may cause a layout shift.
@@ -88,7 +91,8 @@ async function getLayoutShiftTimelineEvents(trace, context) {
   const layoutShiftTimelineEvents = mainThreadEvents
     .filter(evt => relevantEvents.includes(evt.name))
     .map(evt => {
-      return {event: evt, timing: getTiming(evt.ts), duration: evt.dur / 1000};
+      // TODO: why is evt.dur undefined?!
+      return {event: evt, timing: getTiming(evt.ts), duration: (evt.dur / 1000) || 20};
     });
   return layoutShiftTimelineEvents;
 }
