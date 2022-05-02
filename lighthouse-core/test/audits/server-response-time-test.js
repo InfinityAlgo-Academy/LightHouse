@@ -6,7 +6,6 @@
 'use strict';
 
 const ServerResponseTime = require('../../audits/server-response-time.js');
-const assert = require('assert').strict;
 const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
 
 /* eslint-env jest */
@@ -21,7 +20,8 @@ describe('Performance: server-response-time audit', () => {
 
     const artifacts = {
       devtoolsLogs: {[ServerResponseTime.DEFAULT_PASS]: devtoolsLog},
-      URL: {finalUrl: 'https://example.com/'},
+      URL: {mainDocumentUrl: 'https://example.com/'},
+      GatherContext: {gatherMode: 'navigation'},
     };
 
     const result = await ServerResponseTime.audit(artifacts, {computedCache: new Map()});
@@ -35,7 +35,7 @@ describe('Performance: server-response-time audit', () => {
     });
   });
 
-  it('succeeds when response time of root document is lower than 600ms', () => {
+  it('succeeds when response time of root document is lower than 600ms', async () => {
     const mainResource = {
       url: 'https://example.com/',
       requestId: '0',
@@ -45,12 +45,27 @@ describe('Performance: server-response-time audit', () => {
 
     const artifacts = {
       devtoolsLogs: {[ServerResponseTime.DEFAULT_PASS]: devtoolsLog},
-      URL: {finalUrl: 'https://example.com/'},
+      URL: {mainDocumentUrl: 'https://example.com/'},
+      GatherContext: {gatherMode: 'navigation'},
     };
 
-    return ServerResponseTime.audit(artifacts, {computedCache: new Map()}).then(result => {
-      assert.strictEqual(result.numericValue, 200);
-      assert.strictEqual(result.score, 1);
+    const result = await ServerResponseTime.audit(artifacts, {computedCache: new Map()});
+    expect(result).toMatchObject({
+      numericValue: 200,
+      score: 1,
     });
+  });
+
+  it('throws error if no main resource', async () => {
+    const devtoolsLog = networkRecordsToDevtoolsLog([]);
+
+    const artifacts = {
+      devtoolsLogs: {[ServerResponseTime.DEFAULT_PASS]: devtoolsLog},
+      URL: {mainDocumentUrl: 'https://example.com/'},
+      GatherContext: {gatherMode: 'navigation'},
+    };
+
+    const resultPromise = ServerResponseTime.audit(artifacts, {computedCache: new Map()});
+    await expect(resultPromise).rejects.toThrow(/Unable to identify the main resource/);
   });
 });

@@ -11,7 +11,7 @@ const http = require('http');
 const log = require('lighthouse-logger');
 const LighthouseError = require('../../lib/lh-error.js');
 
-const DEFAULT_HOSTNAME = 'localhost';
+const DEFAULT_HOSTNAME = '127.0.0.1';
 const CONNECT_TIMEOUT = 10000;
 const DEFAULT_PORT = 9222;
 
@@ -88,6 +88,7 @@ class CriConnection extends Connection {
         path: '/json/' + command,
       }, response => {
         let data = '';
+        response.setEncoding('utf8');
         response.on('data', chunk => {
           data += chunk;
         });

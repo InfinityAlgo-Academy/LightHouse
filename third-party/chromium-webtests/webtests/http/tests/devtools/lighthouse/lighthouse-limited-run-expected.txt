@@ -8,6 +8,7 @@ Tests that audits panel works when only the pwa category is selected.
 [ ] Accessibility
 [ ] SEO
 [ ] Publisher Ads
+[x] Legacy navigation
 [x] Clear storage
 [x] Simulated throttling
 Generate report: enabled visible
@@ -15,19 +16,14 @@ Generate report: enabled visible
 =============== Audits run ===============
 apple-touch-icon
 content-width
+full-page-screenshot
 installable-manifest
-is-on-https
-load-fast-enough-for-pwa
 maskable-icon
-offline-start-url
 pwa-cross-browser
 pwa-each-page-has-url
 pwa-page-transitions
-redirects-http
 service-worker
 splash-screen
 themed-omnibox
 viewport
-without-javascript
-works-offline
 

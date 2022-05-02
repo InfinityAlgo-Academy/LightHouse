@@ -4,7 +4,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 /* eslint-disable no-console */
 
@@ -14,24 +13,26 @@
 /** @typedef {import('./constants').TargetMetrics} TargetMetrics */
 /** @typedef {import('./constants').LanternMetrics} LanternMetrics */
 
-const fs = require('fs');
-const path = require('path');
-const constants = require('./constants.js');
-const chalk = require('chalk').default;
+import fs from 'fs';
+import path from 'path';
+
+import chalk from 'chalk';
+
+import constants from './constants.js';
+import {readJson} from '../../../root.js';
 
 const GOOD_DIFF_AS_PERCENT_THRESHOLD = 0.2;
 const OK_DIFF_AS_PERCENT_THRESHOLD = 0.5;
 
 const INPUT_PATH = process.argv[2] || constants.SITE_INDEX_WITH_GOLDEN_WITH_COMPUTED_PATH;
 const COMPUTATIONS_PATH = path.resolve(process.cwd(), INPUT_PATH);
-const BASELINE_PATH = constants.MASTER_COMPUTED_PATH;
-
+const BASELINE_PATH = constants.BASELINE_COMPUTED_PATH;
 
 if (!fs.existsSync(COMPUTATIONS_PATH)) throw new Error('Usage $0 <computed summary file>');
 
 /** @type {{sites: LanternSiteDefinition[]}} */
-const siteIndexWithComputed = require(COMPUTATIONS_PATH);
-const baselineLanternData = require(BASELINE_PATH);
+const siteIndexWithComputed = readJson(COMPUTATIONS_PATH);
+const baselineLanternData = readJson(BASELINE_PATH);
 
 const entries = constants.combineBaselineAndComputedDatasets(siteIndexWithComputed,
   baselineLanternData);
@@ -117,8 +118,8 @@ function evaluateAndPrintAccuracy(metric, lanternMetric) {
     )}`.padEnd(30),
   ];
 
-  allEvaluations.push(...actualAccuracy.evaluations);
-  baselineEvaluations.push(...baselineAccuracy.evaluations);
+  if (actualAccuracy.evaluations) allEvaluations.push(...actualAccuracy.evaluations);
+  if (baselineAccuracy.evaluations) baselineEvaluations.push(...baselineAccuracy.evaluations);
 
   if (lanternMetric.includes('roughEstimate')) {
     console.log(...strings);
@@ -230,10 +231,6 @@ evaluateAndPrintAccuracy('firstMeaningfulPaint', 'optimisticFMP');
 evaluateAndPrintAccuracy('firstMeaningfulPaint', 'pessimisticFMP');
 evaluateAndPrintAccuracy('firstMeaningfulPaint', 'roughEstimateOfFMP');
 
-evaluateAndPrintAccuracy('timeToFirstInteractive', 'optimisticTTFCPUI');
-evaluateAndPrintAccuracy('timeToFirstInteractive', 'pessimisticTTFCPUI');
-evaluateAndPrintAccuracy('timeToFirstInteractive', 'roughEstimateOfTTFCPUI');
-
 evaluateAndPrintAccuracy('timeToConsistentlyInteractive', 'optimisticTTI');
 evaluateAndPrintAccuracy('timeToConsistentlyInteractive', 'pessimisticTTI');
 evaluateAndPrintAccuracy('timeToConsistentlyInteractive', 'roughEstimateOfTTI');
@@ -260,11 +257,6 @@ findAndPrintWorst10Sites('firstMeaningfulPaint', [
   'optimisticFMP',
   'pessimisticFMP',
   'roughEstimateOfFMP',
-]);
-findAndPrintWorst10Sites('timeToFirstInteractive', [
-  'optimisticTTFCPUI',
-  'pessimisticTTFCPUI',
-  'roughEstimateOfTTFCPUI',
 ]);
 findAndPrintWorst10Sites('timeToConsistentlyInteractive', [
   'optimisticTTI',

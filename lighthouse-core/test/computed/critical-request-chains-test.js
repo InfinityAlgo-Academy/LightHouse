@@ -12,6 +12,7 @@ const CriticalRequestChains = require('../../computed/critical-request-chains.js
 const NetworkRequest = require('../../lib/network-request.js');
 const createTestTrace = require('../create-test-trace.js');
 const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
+const {getURLArtifactFromDevtoolsLog} = require('../test-utils.js');
 
 const HIGH = 'High';
 const VERY_HIGH = 'VeryHigh';
@@ -19,7 +20,7 @@ const MEDIUM = 'Medium';
 const LOW = 'Low';
 const VERY_LOW = 'VeryLow';
 
-async function createChainsFromMockRecords(prioritiesList, edges, setExtrasFn) {
+async function createChainsFromMockRecords(prioritiesList, edges, setExtrasFn, reverseRecords) {
   const networkRecords = prioritiesList.map((priority, index) => ({
     requestId: index.toString(),
     url: 'https://www.example.com/' + index,
@@ -35,6 +36,8 @@ async function createChainsFromMockRecords(prioritiesList, edges, setExtrasFn) {
     endTime: index + 1,
   }));
 
+  if (setExtrasFn) setExtrasFn(networkRecords);
+
   // add mock initiator information
   edges.forEach(edge => {
     const initiatorRequest = networkRecords[edge[0]];
@@ -44,10 +47,19 @@ async function createChainsFromMockRecords(prioritiesList, edges, setExtrasFn) {
     };
   });
 
-  if (setExtrasFn) setExtrasFn(networkRecords);
+  if (reverseRecords) networkRecords.reverse();
+
+  const docUrl = networkRecords
+    .find(r => r.resourceType === 'Document' && r.frameId === 1)
+    .url;
 
   const trace = createTestTrace({topLevelTasks: [{ts: 0}]});
-  const URL = {finalUrl: networkRecords[0].documentURL};
+  const URL = {
+    initialUrl: 'about:blank',
+    requestedUrl: docUrl,
+    mainDocumentUrl: docUrl,
+    finalUrl: docUrl,
+  };
   const devtoolsLog = networkRecordsToDevtoolsLog(networkRecords);
 
   const context = {computedCache: new Map()};
@@ -79,7 +91,7 @@ describe('CriticalRequestChain computed artifact', () => {
 
     const trace = createTestTrace({topLevelTasks: [{ts: 0}]});
     const devtoolsLog = require('../fixtures/wikipedia-redirect.devtoolslog.json');
-    const URL = {finalUrl: 'https://en.m.wikipedia.org/wiki/Main_Page'};
+    const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
 
     const context = {computedCache: new Map()};
     const chains = await CriticalRequestChains.request({trace, devtoolsLog, URL}, context);
@@ -367,10 +379,8 @@ describe('CriticalRequestChain computed artifact', () => {
     const {networkRecords, criticalChains} = await createChainsFromMockRecords(
       [HIGH, HIGH],
       [[0, 1]],
-      networkRecords => {
-        // Reverse the records so we force nodes to be made early.
-        networkRecords.reverse();
-      }
+      undefined,
+      true // Reverse the records so we force nodes to be made early.
     );
     assert.deepEqual(criticalChains, {
       0: {

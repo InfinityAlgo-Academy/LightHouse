@@ -13,26 +13,30 @@ const URL = 'https://example.com';
 /* eslint-env jest */
 
 describe('Page does not use document.write()', () => {
-  it('passes when document.write() is not used', () => {
-    const auditResult = DocWriteUseAudit.audit({
+  it('passes when document.write() is not used', async () => {
+    const auditResult = await DocWriteUseAudit.audit({
       ConsoleMessages: [],
       URL: {finalUrl: URL},
-    });
+      SourceMaps: [],
+      Scripts: [],
+    }, {computedCache: new Map()});
     assert.equal(auditResult.score, 1);
     assert.equal(auditResult.details.items.length, 0);
   });
 
-  it('fails when document.write() is used', () => {
+  it('fails when document.write() is used', async () => {
     const text = 'Do not use document.write';
-    const auditResult = DocWriteUseAudit.audit({
+    const auditResult = await DocWriteUseAudit.audit({
       URL: {finalUrl: URL},
       ConsoleMessages: [
-        {entry: {source: 'violation', url: 'https://example.com/', text}},
-        {entry: {source: 'violation', url: 'https://example2.com/two', text}},
-        {entry: {source: 'violation', url: 'http://abc.com/', text: 'Long event handler!'}},
-        {entry: {source: 'deprecation', url: 'https://example.com/two'}},
+        {source: 'violation', url: 'https://example.com/', text},
+        {source: 'violation', url: 'https://example2.com/two', text},
+        {source: 'violation', url: 'http://abc.com/', text: 'Long event handler!'},
+        {source: 'deprecation', url: 'https://example.com/two'},
       ],
-    });
+      SourceMaps: [],
+      Scripts: [],
+    }, {computedCache: new Map()});
     assert.equal(auditResult.score, 0);
     assert.equal(auditResult.details.items.length, 2);
   });

@@ -16,7 +16,7 @@ const TraceProcessor = require('../../lib/tracehouse/trace-processor.js');
 function setupObserver() {
   // @ts-expect-error TS doesn't know PerformanceTimeline types
   window.___timeAlignTs = performance.mark('lh_timealign').startTime;
-  
+
   // @ts-expect-error ___domTimestamps does not exist on window by default
   window.___domTimestamps = [];
   // @ts-expect-error ___observer does not exist on window by default
@@ -30,7 +30,7 @@ function setupObserver() {
         // TODO: verify that Iframe src is of an ad network / ignore non-ad iframes
         // Working with nodes, getNodeDetails uses elements, similar work in trace-elements.js
         // TODO: does this change things?
-        const elem = node.nodeType === node.ELEMENT_NODE ? node : node.parentElement; 
+        const elem = node.nodeType === node.ELEMENT_NODE ? node : node.parentElement;
         // @ts-expect-error ___domTimestamps does not exist on window by default
         window.___domTimestamps.push({
           currTime: performance.now(),
@@ -40,7 +40,6 @@ function setupObserver() {
         });
       }
     }
-    
   });
   // @ts-expect-error ___observer does not exist on window by default
   window.___observer.observe(document, {childList: true, subtree: true});
@@ -54,7 +53,7 @@ function getDomDetails() {
   window.___observer.disconnect();
   return {
     // @ts-expect-error ___domTimestamps does not exist on window by default
-    domTimestamps: window.___domTimestamps, 
+    domTimestamps: window.___domTimestamps,
     // @ts-expect-error ___timeAlignTs does not exist on window by default
     timeAlignTs: window.___timeAlignTs,
   };

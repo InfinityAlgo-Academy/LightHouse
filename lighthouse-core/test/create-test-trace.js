@@ -7,10 +7,22 @@
 
 const pid = 1111;
 const tid = 222;
-const frame = '3EFC2700D7BC3F4734CAF2F726EFB78C';
+const browserPid = 13725;
+const rootFrame = '3EFC2700D7BC3F4734CAF2F726EFB78C';
+const defaultUrl = 'https://example.com/';
 
 /** @typedef {{ts: number, duration: number, children?: Array<ChildTaskDef>}} TopLevelTaskDef */
 /** @typedef {{ts: number, duration: number, url: string | undefined}} ChildTaskDef */
+/** @typedef {{frame: string}} ChildFrame */
+/**
+ * @typedef TraceOptions
+ * @property {string} [frameUrl]
+ * @property {number} [timeOrigin]
+ * @property {number} [largestContentfulPaint]
+ * @property {number} [traceEnd]
+ * @property {Array<TopLevelTaskDef>} [topLevelTasks]
+ * @property {Array<ChildFrame>} [childFrames] Add a child frame with a known `frame` id for easy insertion of child frame events.
+ */
 
 /**
  * @param {TopLevelTaskDef} options
@@ -23,11 +35,8 @@ function getTopLevelTask({ts, duration}) {
     pid,
     tid,
     ph: 'X',
-    cat: 'disabled-by-default-lighthouse',
-    args: {
-      src_file: '../../third_party/blink/renderer/core/fake_runner.cc',
-      src_func: 'FakeRunnerFinished',
-    },
+    cat: 'disabled-by-default-devtools.timeline',
+    args: {},
   };
 }
 
@@ -42,12 +51,11 @@ function getChildTask({ts, duration, url}) {
     pid,
     tid,
     ph: 'X',
-    cat: 'disabled-by-default-lighthouse',
+    cat: 'devtools.timeline',
     args: {
-      src_file: '../../third_party/blink/renderer/core/fake_runner.cc',
-      src_func: 'FakeRunnerFinished',
       data: {
         url,
+        functionName: 'fakeFunction',
       },
     },
   };
@@ -57,26 +65,16 @@ function getChildTask({ts, duration, url}) {
  * Creates a simple trace that fits the desired options. Useful for basic trace
  * generation, e.g a trace that will result in particular long-task quiet
  * periods. Input times should be in milliseconds.
- * @param {{timeOrigin?: number, largestContentfulPaint?: number, traceEnd?: number, topLevelTasks?: Array<TopLevelTaskDef>}} options
+ * @param {TraceOptions} options
  */
 function createTestTrace(options) {
+  const frameUrl = options.frameUrl ?? defaultUrl;
   const timeOrigin = (options.timeOrigin || 0) * 1000;
 
   const traceEvents = [{
-    name: 'navigationStart',
-    ts: timeOrigin,
-    pid,
-    tid,
-    ph: 'R',
-    cat: 'blink.user_timing',
-    args: {
-      frame,
-      data: {documentLoaderURL: ''},
-    },
-  }, {
     name: 'TracingStartedInBrowser',
     ts: timeOrigin,
-    pid,
+    pid: browserPid,
     tid,
     ph: 'I',
     cat: 'disabled-by-default-devtools.timeline',
@@ -84,10 +82,24 @@ function createTestTrace(options) {
       data: {
         frameTreeNodeId: 6,
         persistentIds: true,
-        frames: [{frame, url: 'about:blank', name: '', processId: pid}],
+        frames: [{frame: rootFrame, url: 'about:blank', name: '', processId: pid}],
       },
     },
     s: 't',
+  }, {
+    name: 'navigationStart',
+    ts: timeOrigin,
+    pid,
+    tid,
+    ph: 'R',
+    cat: 'blink.user_timing',
+    args: {
+      frame: rootFrame,
+      data: {
+        documentLoaderURL: frameUrl,
+        isLoadingMainFrame: true,
+      },
+    },
   }, {
     // Needed to identify main thread for TracingStartedInBrowser.
     name: 'thread_name',
@@ -98,13 +110,24 @@ function createTestTrace(options) {
     cat: '__metadata',
     args: {name: 'CrRendererMain'},
   }, {
+    // Used for identifying frame tree.
+    name: 'FrameCommittedInBrowser',
+    ts: timeOrigin,
+    pid: browserPid,
+    tid,
+    ph: 'I',
+    cat: 'disabled-by-default-devtools.timeline',
+    args: {
+      data: {frame: rootFrame, url: frameUrl, name: '', processId: pid},
+    },
+  }, {
     name: 'domContentLoadedEventEnd',
     ts: timeOrigin + 10,
     pid,
     tid,
     ph: 'R',
     cat: 'blink.user_timing,rail',
-    args: {frame},
+    args: {frame: rootFrame},
   }, {
     name: 'firstContentfulPaint',
     ts: timeOrigin + 10,
@@ -112,7 +135,7 @@ function createTestTrace(options) {
     tid,
     ph: 'R',
     cat: 'loading,rail,devtools.timeline',
-    args: {frame},
+    args: {frame: rootFrame},
   }, {
     name: 'firstMeaningfulPaint',
     ts: timeOrigin + 15,
@@ -120,26 +143,47 @@ function createTestTrace(options) {
     tid,
     ph: 'R',
     cat: 'loading,rail,devtools.timeline',
-    args: {frame},
+    args: {frame: rootFrame},
   }];
+
+  if (options.childFrames) {
+    for (const childFrame of options.childFrames) {
+      traceEvents.push({
+        name: 'FrameCommittedInBrowser',
+        ts: timeOrigin + 20,
+        pid: browserPid,
+        tid,
+        ph: 'I',
+        cat: 'disabled-by-default-devtools.timeline',
+        args: {
+          data: {
+            frame: childFrame.frame,
+            parent: rootFrame,
+            url: `${frameUrl}${childFrame.frame}`,
+            name: '',
+            processId: pid,
+          },
+        },
+      });
+    }
+  }
 
   if (options.largestContentfulPaint) {
     traceEvents.push({
       name: 'largestContentfulPaint::Candidate',
-      ts: options.largestContentfulPaint,
+      ts: options.largestContentfulPaint * 1000,
       pid,
       tid,
       ph: 'R',
       cat: 'loading,rail,devtools.timeline',
-      args: {frame},
+      args: {frame: rootFrame, isMainFrame: true, data: {size: 50}},
     });
   }
 
   if (options.topLevelTasks) {
     for (const task of options.topLevelTasks) {
       traceEvents.push(getTopLevelTask(task));
-      if (task.children &&
-        task.children.length) {
+      if (task.children?.length) {
         for (const child of task.children) {
           traceEvents.push(getChildTask(child));
         }

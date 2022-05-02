@@ -6,22 +6,31 @@
 'use strict';
 
 const Audit = require('../../audits/content-width.js');
+const constants = require('../../config/constants.js');
 const assert = require('assert').strict;
 
 /* eslint-env jest */
 
+/** @param {LH.SharedFlagsSettings['formFactor']} formFactor */
+const getFakeContext = (formFactor = 'mobile') => ({
+  computedCache: new Map(),
+  settings: {
+    formFactor: formFactor,
+    screenEmulation: constants.screenEmulationMetrics[formFactor],
+  },
+});
+
 describe('Mobile-friendly: content-width audit', () => {
   it('fails when scroll width differs from viewport width', () => {
-    const result = Audit.audit({
-      TestedAsMobileDevice: true,
+    const product = Audit.audit({
       ViewportDimensions: {
         innerWidth: 100,
         outerWidth: 300,
       },
-    });
+    }, getFakeContext());
 
-    assert.equal(result.score, 0);
-    assert.ok(result.explanation);
+    assert.equal(product.score, 0);
+    assert.ok(product.explanation);
   });
 
   it('passes when widths match', () => {
@@ -31,16 +40,17 @@ describe('Mobile-friendly: content-width audit', () => {
         innerWidth: 300,
         outerWidth: 300,
       },
-    }, {settings: {emulatedFormFactor: 'mobile'}}).score, 1);
+    }, getFakeContext()).score, 1);
   });
 
   it('not applicable when run on desktop', () => {
-    return assert.equal(Audit.audit({
-      TestedAsMobileDevice: false,
+    const product = Audit.audit({
       ViewportDimensions: {
         innerWidth: 300,
         outerWidth: 450,
       },
-    }).notApplicable, true);
+    }, getFakeContext('desktop'));
+
+    assert.equal(product.notApplicable, true);
   });
 });

@@ -5,7 +5,10 @@ filters:
     criteria:
       state: open
       mergeable: true
-      mergeableState: clean
+      mergeableState:
+        $or:
+          - clean
+          - unstable
   - type: label
     label: land-when-ci-is-green
 actions:

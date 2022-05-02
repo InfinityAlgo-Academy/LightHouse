@@ -10,25 +10,28 @@ const options = FCP3G.defaultOptions;
 
 const pwaTrace = require('../../fixtures/traces/progressive-app-m60.json');
 const pwaDevtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
+const {getURLArtifactFromDevtoolsLog} = require('../../test-utils.js');
 
 /* eslint-env jest */
 
 describe('Performance: first-contentful-paint-3g audit', () => {
   it('evaluates valid input correctly', async () => {
     const artifacts = {
+      GatherContext: {gatherMode: 'navigation'},
       traces: {
         [FCP3G.DEFAULT_PASS]: pwaTrace,
       },
       devtoolsLogs: {
         [FCP3G.DEFAULT_PASS]: pwaDevtoolsLog,
       },
+      URL: getURLArtifactFromDevtoolsLog(pwaDevtoolsLog),
     };
 
     const result = await FCP3G.audit(artifacts, {settings: {}, options, computedCache: new Map()});
     // Use InlineSnapshot here so changes to Lantern coefficients can be easily updated en masse
     expect({score: result.score, value: Math.round(result.numericValue)}).toMatchInlineSnapshot(`
 Object {
-  "score": 0.99,
+  "score": 0.97,
   "value": 2087,
 }
 `);

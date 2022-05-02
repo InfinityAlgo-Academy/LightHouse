@@ -22,7 +22,7 @@ const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on whether fonts that used `font-display: optional` were preloaded. This descriptive title is shown to users when one or more fonts used `font-display: optional` and were not preloaded. */
   failureTitle: 'Fonts with `font-display: optional` are not preloaded',
   /** Description of a Lighthouse audit that tells the user why they should preload fonts if they are using `font-display: optional`. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
-  description: 'Preload `optional` fonts so first-time visitors may use them. [Learn More](https://web.dev/preload-optional-fonts/)',
+  description: 'Preload `optional` fonts so first-time visitors may use them. [Learn more](https://web.dev/preload-optional-fonts/)',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
@@ -63,7 +63,7 @@ class PreloadFontsAudit extends Audit {
    * @param {LH.Audit.Context} context
    * @return {Promise<LH.Audit.Product>}
    */
-  static async audit(artifacts, context) {
+  static async audit_(artifacts, context) {
     const devtoolsLog = artifacts.devtoolsLogs[this.DEFAULT_PASS];
     const networkRecords = await NetworkRecords.request(devtoolsLog, context);
 
@@ -91,6 +91,15 @@ class PreloadFontsAudit extends Audit {
       details: Audit.makeTableDetails(headings, results),
       notApplicable: optionalFontURLs.size === 0,
     };
+  }
+
+  /**
+   * @return {Promise<LH.Audit.Product>}
+   */
+  static async audit() {
+    // Preload advice is on hold until https://github.com/GoogleChrome/lighthouse/issues/11960
+    // is resolved.
+    return {score: 1, notApplicable: true};
   }
 }
 

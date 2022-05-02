@@ -13,7 +13,6 @@
 
 const URL = require('./url-shim.js');
 
-const SECURE_SCHEMES = ['data', 'https', 'wss', 'blob', 'chrome', 'chrome-extension', 'about'];
 
 // Lightrider X-Header names for timing information.
 // See: _updateTransferSizeForLightrider and _updateTimingsForLightrider.
@@ -33,8 +32,8 @@ const HEADER_PROTOCOL_IS_H2 = 'X-ProtocolIsH2';
 
 /**
  * @typedef ParsedURL
- * @property {string} scheme
- * @property {string} host
+ * @property {string} scheme Equivalent to a `new URL(url).protocol` BUT w/o the trailing colon (:)
+ * @property {string} host Equivalent to a `new URL(url).hostname`
  * @property {string} securityOrigin
  */
 
@@ -67,6 +66,7 @@ const RESOURCE_TYPES = {
   Manifest: 'Manifest',
   SignedExchange: 'SignedExchange',
   Ping: 'Ping',
+  Preflight: 'Preflight',
   CSPViolationReport: 'CSPViolationReport',
 };
 
@@ -94,6 +94,7 @@ class NetworkRequest {
     this.resourceSize = 0;
     this.fromDiskCache = false;
     this.fromMemoryCache = false;
+    this.fromPrefetchCache = false;
 
     /** @type {LightriderStatistics|undefined} Extra timing information available only when run in Lightrider. */
     this.lrStatistics = undefined;
@@ -110,7 +111,8 @@ class NetworkRequest {
     this.failed = false;
     this.localizedFailDescription = '';
 
-    this.initiator = /** @type {LH.Crdp.Network.Initiator} */ ({type: 'other'});
+    /** @type {LH.Crdp.Network.Initiator} */
+    this.initiator = {type: 'other'};
     /** @type {LH.Crdp.Network.ResourceTiming|undefined} */
     this.timing = undefined;
     /** @type {LH.Crdp.Network.ResourceType|undefined} */
@@ -172,7 +174,7 @@ class NetworkRequest {
       host: url.hostname,
       securityOrigin: url.origin,
     };
-    this.isSecure = SECURE_SCHEMES.includes(this.parsedURL.scheme);
+    this.isSecure = URL.isSecureScheme(this.parsedURL.scheme);
 
     this.startTime = data.timestamp;
 
@@ -291,6 +293,9 @@ class NetworkRequest {
 
     this.transferSize = response.encodedDataLength;
     if (typeof response.fromDiskCache === 'boolean') this.fromDiskCache = response.fromDiskCache;
+    if (typeof response.fromPrefetchCache === 'boolean') {
+      this.fromPrefetchCache = response.fromPrefetchCache;
+    }
 
     this.statusCode = response.status;
 
@@ -467,6 +472,60 @@ class NetworkRequest {
 
   static get TYPES() {
     return RESOURCE_TYPES;
+  }
+
+  /**
+   * @param {NetworkRequest} record
+   * @return {boolean}
+   */
+  static isNonNetworkRequest(record) {
+    // The 'protocol' field in devtools a string more like a `scheme`
+    return URL.isNonNetworkProtocol(record.protocol) ||
+      // But `protocol` can fail to be populated if the request fails, so fallback to scheme.
+      URL.isNonNetworkProtocol(record.parsedURL.scheme);
+  }
+
+  /**
+   * Technically there's not alignment on URLs that create "secure connections" vs "secure contexts"
+   * https://github.com/GoogleChrome/lighthouse/pull/11766#discussion_r582340683
+   * But for our purposes, we don't need to worry too much.
+   * @param {NetworkRequest} record
+   * @return {boolean}
+   */
+  static isSecureRequest(record) {
+    return URL.isSecureScheme(record.parsedURL.scheme) ||
+        URL.isSecureScheme(record.protocol) ||
+        URL.isLikeLocalhost(record.parsedURL.host) ||
+        NetworkRequest.isHstsRequest(record);
+  }
+
+  /**
+   * Returns whether the network request was an HSTS redirect request.
+   * @param {NetworkRequest} record
+   * @return {boolean}
+   */
+  static isHstsRequest(record) {
+    const destination = record.redirectDestination;
+    if (!destination) return false;
+
+    const reasonHeader = record.responseHeaders
+      .find(header => header.name === 'Non-Authoritative-Reason');
+    const reason = reasonHeader?.value;
+    return reason === 'HSTS' && NetworkRequest.isSecureRequest(destination);
+  }
+
+  /**
+   * Resource size is almost always the right one to be using because of the below:
+   *     `transferSize = resourceSize + headers.length`.
+   * HOWEVER, there are some cases where an image is compressed again over the network and transfer size
+   * is smaller (see https://github.com/GoogleChrome/lighthouse/pull/4968).
+   * Use the min of the two numbers to be safe.
+   * `tranferSize` of cached records is 0
+   * @param {NetworkRequest} networkRecord
+   * @return {number}
+   */
+  static getResourceSizeOnNetwork(networkRecord) {
+    return Math.min(networkRecord.resourceSize || 0, networkRecord.transferSize || Infinity);
   }
 }
 

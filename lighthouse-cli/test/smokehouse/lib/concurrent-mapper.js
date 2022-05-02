@@ -3,7 +3,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 /**
  * A class that maintains a concurrency pool to coordinate many jobs that should
@@ -106,6 +105,21 @@ class ConcurrentMapper {
 
     return Promise.all(result);
   }
+
+  /**
+   * Runs `fn` concurrent to other operations in the pool, at a max of
+   * `concurrency` at a time across all callers on this instance. Default
+   * `concurrency` limit is `Infinity`.
+   * @template U
+   * @param {() => Promise<U>} fn
+   * @param {{concurrency: number}} [options]
+   * @return {Promise<U>}
+   */
+  async runInPool(fn, options = {concurrency: Infinity}) {
+    // Let pooledMap handle the pool management for the cost of boxing a fake `value`.
+    const result = await this.pooledMap([''], fn, options);
+    return result[0];
+  }
 }
 
-module.exports = ConcurrentMapper;
+export {ConcurrentMapper};

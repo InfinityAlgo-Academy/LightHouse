@@ -3,32 +3,28 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 /* eslint-env jest */
-const assert = require('assert').strict;
-const path = require('path');
-const fs = require('fs');
 
-const run = require('../../run.js');
-const parseChromeFlags = require('../../run.js').parseChromeFlags;
-const fastConfig = {
+import {strict as assert} from 'assert';
+import path from 'path';
+import fs from 'fs';
+
+import * as run from '../../run.js';
+import {parseChromeFlags} from '../../run.js';
+import {getFlags} from '../../cli-flags.js';
+import {LH_ROOT} from '../../../root.js';
+
+/** @type {LH.Config.Json} */
+const testConfig = {
   'extends': 'lighthouse:default',
   'settings': {
-    'onlyAudits': ['viewport'],
+    'throttlingMethod': 'devtools',
   },
 };
 
-// Map plugin name to fixture since not actually installed in node_modules/.
-jest.mock('lighthouse-plugin-simple', () => {
-  // eslint-disable-next-line max-len
-  return require('../../../lighthouse-core/test/fixtures/config-plugins/lighthouse-plugin-simple/plugin-simple.js');
-}, {virtual: true});
-
-const getFlags = require('../../cli-flags.js').getFlags;
-
 describe('CLI run', function() {
-  describe('LH round trip', () => {
+  describe('runLighthouse runs Lighthouse as a node module', () => {
     /** @type {LH.RunnerResult} */
     let passedResults;
     const filename = path.join(process.cwd(), 'run.ts.results.json');
@@ -36,14 +32,23 @@ describe('CLI run', function() {
     let fileResults;
 
     beforeAll(async () => {
-      const url = 'chrome://version';
-      const timeoutFlag = `--max-wait-for-load=${9000}`;
-      const pluginsFlag = '--plugins=lighthouse-plugin-simple';
+      const url = 'http://localhost:10200/dobetterweb/dbw_tester.html';
+      // eslint-disable-next-line max-len
+      const samplev2ArtifactsPath = LH_ROOT + '/lighthouse-core/test/results/artifacts/';
 
       // eslint-disable-next-line max-len
-      const flags = getFlags(`--output=json --output-path=${filename} ${pluginsFlag} ${timeoutFlag} ${url}`);
+      const flags = getFlags([
+        '--output=json',
+        `--output-path=${filename}`,
+        // Jest allows us to resolve this module with no setup.
+        // https://github.com/GoogleChrome/lighthouse/pull/13045#discussion_r708690607
+        '--plugins=lighthouse-plugin-simple',
+        // Use sample artifacts to avoid gathering during a unit test.
+        `--audit-mode=${samplev2ArtifactsPath}`,
+        url,
+      ].join(' '));
 
-      const rawResult = await run.runLighthouse(url, flags, fastConfig);
+      const rawResult = await run.runLighthouse(url, flags, testConfig);
 
       if (!rawResult) {
         return assert.fail('no results');
@@ -60,7 +65,7 @@ describe('CLI run', function() {
 
     it('returns results that match the saved results', () => {
       const {lhr} = passedResults;
-      assert.equal(fileResults.audits.viewport.score, 0);
+      assert.equal(fileResults.audits.viewport.score, 1);
 
       // passed results match saved results
       assert.strictEqual(fileResults.fetchTime, lhr.fetchTime);

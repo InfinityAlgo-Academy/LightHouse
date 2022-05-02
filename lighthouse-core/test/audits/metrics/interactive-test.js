@@ -8,6 +8,7 @@
 const Interactive = require('../../../audits/metrics/interactive.js');
 const assert = require('assert').strict;
 const options = Interactive.defaultOptions;
+const constants = require('../../../config/constants.js');
 
 const acceptableTrace = require('../../fixtures/traces/progressive-app-m60.json');
 const acceptableDevToolsLog =
@@ -16,11 +17,27 @@ const acceptableDevToolsLog =
 const redirectTrace = require('../../fixtures/traces/site-with-redirect.json');
 const redirectDevToolsLog = require('../../fixtures/traces/site-with-redirect.devtools.log.json');
 
+/**
+ * @param {{
+ * {LH.SharedFlagsSettings['formFactor']} formFactor
+ * {LH.SharedFlagsSettings['throttlingMethod']} throttlingMethod
+ * }} param0
+ */
+const getFakeContext = ({formFactor, throttlingMethod}) => ({
+  options: options,
+  computedCache: new Map(),
+  settings: {
+    formFactor: formFactor,
+    throttlingMethod,
+    screenEmulation: constants.screenEmulationMetrics[formFactor],
+  },
+});
 
 /* eslint-env jest */
 describe('Performance: interactive audit', () => {
   it('should compute interactive', () => {
     const artifacts = {
+      GatherContext: {gatherMode: 'navigation'},
       traces: {
         [Interactive.DEFAULT_PASS]: acceptableTrace,
       },
@@ -29,7 +46,7 @@ describe('Performance: interactive audit', () => {
       },
     };
 
-    const context = {options, settings: {throttlingMethod: 'provided'}, computedCache: new Map()};
+    const context = getFakeContext({formFactor: 'mobile', throttlingMethod: 'provided'});
     return Interactive.audit(artifacts, context).then(output => {
       assert.equal(output.score, 1);
       assert.equal(Math.round(output.numericValue), 1582);
@@ -39,6 +56,7 @@ describe('Performance: interactive audit', () => {
 
   it('should compute interactive on pages with redirect', () => {
     const artifacts = {
+      GatherContext: {gatherMode: 'navigation'},
       traces: {
         [Interactive.DEFAULT_PASS]: redirectTrace,
       },
@@ -47,7 +65,7 @@ describe('Performance: interactive audit', () => {
       },
     };
 
-    const context = {options, settings: {throttlingMethod: 'provided'}, computedCache: new Map()};
+    const context = getFakeContext({formFactor: 'mobile', throttlingMethod: 'provided'});
     return Interactive.audit(artifacts, context).then(output => {
       assert.equal(output.score, 0.97);
       assert.equal(Math.round(output.numericValue), 2712);

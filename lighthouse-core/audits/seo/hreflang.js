@@ -10,9 +10,10 @@
 /** @typedef {{reason: LH.IcuMessage}} SubItem */
 
 const Audit = require('../audit.js');
-const VALID_LANGS = importValidLangs();
-const NO_LANGUAGE = 'x-default';
 const i18n = require('../../lib/i18n/i18n.js');
+const {isValidLang} = require('../../../third-party/axe/valid-langs.js');
+
+const NO_LANGUAGE = 'x-default';
 
 const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on the `hreflang` attribute on a page. This descriptive title is shown when the page's `hreflang` attribute is configured correctly. "hreflang" is an HTML attribute and should not be translated. */
@@ -32,29 +33,8 @@ const UIStrings = {
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
 /**
- * Import list of valid languages from axe core without including whole axe-core package
- * This is a huge array of language codes that can be stored more efficiently if we will need to
- * shrink the bundle size.
- * @return {Array<string>}
- */
-function importValidLangs() {
-  // @ts-expect-error - global switcheroo to load axe valid-langs
-  const axeCache = global.axe;
-  // @ts-expect-error
-  global.axe = {utils: {}};
-  // @ts-expect-error
-  require('axe-core/lib/core/utils/valid-langs.js');
-  // @ts-expect-error
-  const validLangs = global.axe.utils.validLangs();
-  // @ts-expect-error
-  global.axe = axeCache;
-
-  return validLangs;
-}
-
-/**
  * @param {string} href
- * @returns {boolean}
+ * @return {boolean}
  */
 function isFullyQualified(href) {
   return href.startsWith('http:') || href.startsWith('https:');
@@ -62,7 +42,7 @@ function isFullyQualified(href) {
 
 /**
  * @param {string} hreflang
- * @returns {boolean}
+ * @return {boolean}
  */
 function isExpectedLanguageCode(hreflang) {
   if (hreflang.toLowerCase() === NO_LANGUAGE) {
@@ -71,7 +51,7 @@ function isExpectedLanguageCode(hreflang) {
 
   // hreflang can consist of language-script-region, we are validating only language
   const [lang] = hreflang.split('-');
-  return VALID_LANGS.includes(lang.toLowerCase());
+  return isValidLang(lang.toLowerCase());
 }
 
 class Hreflang extends Audit {
@@ -84,6 +64,7 @@ class Hreflang extends Audit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
+      supportedModes: ['navigation'],
       requiredArtifacts: ['LinkElements', 'URL'],
     };
   }
@@ -118,13 +99,17 @@ class Hreflang extends Audit {
       }
 
       if (link.source === 'head') {
-        source = {
-          type: 'node',
-          snippet: `<link rel="alternate" hreflang="${link.hreflang}" href="${link.hrefRaw}" />`,
-          path: link.devtoolsNodePath || '',
-          selector: link.selector || '',
-          nodeLabel: link.nodeLabel || '',
-        };
+        if (link.node) {
+          source = {
+            ...Audit.makeNodeItem(link.node),
+            snippet: `<link rel="alternate" hreflang="${link.hreflang}" href="${link.hrefRaw}" />`,
+          };
+        } else {
+          source = {
+            type: 'node',
+            snippet: `<link rel="alternate" hreflang="${link.hreflang}" href="${link.hrefRaw}" />`,
+          };
+        }
       } else if (link.source === 'headers') {
         source = `Link: <${link.hrefRaw}>; rel="alternate"; hreflang="${link.hreflang}"`;
       }

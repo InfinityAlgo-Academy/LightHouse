@@ -7,17 +7,23 @@
 
 const LanternFirstContentfulPaint = require('../../../computed/metrics/lantern-first-contentful-paint.js'); // eslint-disable-line max-len
 const assert = require('assert').strict;
+const networkRecordsToDevtoolsLog = require('../../network-records-to-devtools-log.js');
+const createTestTrace = require('../../create-test-trace.js');
 
 const trace = require('../../fixtures/traces/progressive-app-m60.json');
 const devtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
+const {getURLArtifactFromDevtoolsLog} = require('../../test-utils.js');
 
 /* eslint-env jest */
 describe('Metrics: Lantern FCP', () => {
+  const gatherContext = {gatherMode: 'navigation'};
+
   it('should compute predicted value', async () => {
     const settings = {};
     const context = {settings, computedCache: new Map()};
-    const result = await LanternFirstContentfulPaint.request({trace, devtoolsLog,
-      settings}, context);
+    const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
+    const result = await LanternFirstContentfulPaint.request({trace, devtoolsLog, gatherContext,
+      settings, URL}, context);
 
     expect({
       timing: Math.round(result.timing),
@@ -28,5 +34,52 @@ describe('Metrics: Lantern FCP', () => {
     assert.equal(result.pessimisticEstimate.nodeTimings.size, 3);
     assert.ok(result.optimisticGraph, 'should have created optimistic graph');
     assert.ok(result.pessimisticGraph, 'should have created pessimistic graph');
+  });
+
+  it('should handle negative request endTime', async () => {
+    const settings = {};
+    const context = {settings, computedCache: new Map()};
+    const devtoolsLog = networkRecordsToDevtoolsLog([
+      {
+        transferSize: 2000,
+        url: 'https://example.com/',
+        resourceType: 'Document',
+        priority: 'High',
+        startTime: 0,
+        endTime: 0.0000001, // Before FCP
+        timing: {sslStart: 50, sslEnd: 100, connectStart: 50, connectEnd: 100},
+      },
+      {
+        transferSize: 2000,
+        url: 'https://example.com/script.js',
+        resourceType: 'Script',
+        priority: 'High',
+        startTime: 0.000015, // After FCP
+        endTime: -1,
+        timing: {sslStart: 50, sslEnd: 100, connectStart: 50, connectEnd: 100},
+      },
+    ]);
+    const trace = createTestTrace({timeOrigin: 0, traceEnd: 2000});
+    const URL = {
+      requestedUrl: 'https://example.com/',
+      mainDocumentUrl: 'https://example.com/',
+      finalUrl: 'https://example.com/',
+    };
+    const artifacts = {
+      trace,
+      devtoolsLog,
+      gatherContext,
+      settings,
+      URL,
+    };
+    const result = await LanternFirstContentfulPaint.request(artifacts, context);
+
+    const optimisticNodes = [];
+    result.optimisticGraph.traverse(node => optimisticNodes.push(node));
+    expect(optimisticNodes.map(node => node._record.url)).toEqual(['https://example.com/']);
+
+    const pessimisticNodes = [];
+    result.pessimisticGraph.traverse(node => pessimisticNodes.push(node));
+    expect(pessimisticNodes.map(node => node._record.url)).toEqual(['https://example.com/']);
   });
 });

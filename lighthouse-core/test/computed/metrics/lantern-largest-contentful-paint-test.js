@@ -10,14 +10,17 @@ const assert = require('assert').strict;
 const trace = require('../../fixtures/traces/lcp-m78.json');
 const devtoolsLog = require('../../fixtures/traces/lcp-m78.devtools.log.json');
 const LanternLargestContentfulPaint = require('../../../computed/metrics/lantern-largest-contentful-paint.js'); // eslint-disable-line max-len
+const {getURLArtifactFromDevtoolsLog} = require('../../test-utils.js');
+const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
 
 /* eslint-env jest */
 describe('Metrics: Lantern LCP', () => {
   it('should compute predicted value', async () => {
+    const gatherContext = {gatherMode: 'navigation'};
     const settings = {};
     const computedCache = new Map();
     const result = await LanternLargestContentfulPaint.request(
-      {trace, devtoolsLog, settings},
+      {trace, devtoolsLog, gatherContext, settings, URL},
       {computedCache}
     );
 

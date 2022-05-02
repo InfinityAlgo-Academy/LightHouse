@@ -14,7 +14,8 @@
 'use strict';
 
 const ByteEfficiencyAudit = require('./byte-efficiency-audit.js');
-const Sentry = require('../../lib/sentry.js');
+const NetworkRequest = require('../../lib/network-request.js');
+const ImageRecords = require('../../computed/image-records.js');
 const URL = require('../../lib/url-shim.js');
 const i18n = require('../../lib/i18n/i18n.js');
 
@@ -42,53 +43,68 @@ class UsesResponsiveImages extends ByteEfficiencyAudit {
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
       scoreDisplayMode: ByteEfficiencyAudit.SCORING_MODES.NUMERIC,
-      requiredArtifacts: ['ImageElements', 'ViewportDimensions', 'devtoolsLogs', 'traces'],
+      requiredArtifacts: ['ImageElements', 'ViewportDimensions', 'GatherContext',
+        'devtoolsLogs', 'traces', 'URL'],
     };
   }
 
   /**
-   * @param {LH.Artifacts.ImageElement} image
+   * @param {LH.Artifacts.ImageElement & {naturalWidth: number, naturalHeight: number}} image
    * @param {LH.Artifacts.ViewportDimensions} ViewportDimensions
-   * @return {null|Error|LH.Audit.ByteEfficiencyItem};
+   * @return {{width: number, height: number}};
    */
-  static computeWaste(image, ViewportDimensions) {
-    // Nothing can be done without network info.
-    if (!image.resourceSize) {
+  static getDisplayedDimensions(image, ViewportDimensions) {
+    if (image.displayedWidth && image.displayedHeight) {
+      return {
+        width: image.displayedWidth * ViewportDimensions.devicePixelRatio,
+        height: image.displayedHeight * ViewportDimensions.devicePixelRatio,
+      };
+    }
+
+    // If the image has 0 dimensions, it's probably hidden/offscreen, so we'll be as forgiving as possible
+    // and assume it's the size of two viewports. See https://github.com/GoogleChrome/lighthouse/issues/7236
+    const viewportWidth = ViewportDimensions.innerWidth;
+    const viewportHeight = ViewportDimensions.innerHeight * 2;
+    const imageAspectRatio = image.naturalWidth / image.naturalHeight;
+    const viewportAspectRatio = viewportWidth / viewportHeight;
+    let usedViewportWidth = viewportWidth;
+    let usedViewportHeight = viewportHeight;
+    if (imageAspectRatio > viewportAspectRatio) {
+      usedViewportHeight = viewportWidth / imageAspectRatio;
+    } else {
+      usedViewportWidth = viewportHeight * imageAspectRatio;
+    }
+
+    return {
+      width: usedViewportWidth * ViewportDimensions.devicePixelRatio,
+      height: usedViewportHeight * ViewportDimensions.devicePixelRatio,
+    };
+  }
+
+  /**
+   * @param {LH.Artifacts.ImageElement & {naturalWidth: number, naturalHeight: number}} image
+   * @param {LH.Artifacts.ViewportDimensions} ViewportDimensions
+   * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
+   * @return {null|LH.Audit.ByteEfficiencyItem};
+   */
+  static computeWaste(image, ViewportDimensions, networkRecords) {
+    const networkRecord = networkRecords.find(record => record.url === image.src);
+    // Nothing can be done without network info, ignore images without resource size information.
+    if (!networkRecord) {
       return null;
     }
 
-    let usedPixels = image.displayedWidth * image.displayedHeight *
-      Math.pow(ViewportDimensions.devicePixelRatio, 2);
-    // If the image has 0 dimensions, it's probably hidden/offscreen, so we'll be as forgiving as possible
-    // and assume it's the size of two viewports. See https://github.com/GoogleChrome/lighthouse/issues/7236
-    if (!usedPixels) {
-      const viewportWidth = ViewportDimensions.innerWidth;
-      const viewportHeight = ViewportDimensions.innerHeight * 2;
-      const imageAspectRatio = image.naturalWidth / image.naturalHeight;
-      const viewportAspectRatio = viewportWidth / viewportHeight;
-      let usedViewportWidth = viewportWidth;
-      let usedViewportHeight = viewportHeight;
-      if (imageAspectRatio > viewportAspectRatio) {
-        usedViewportHeight = viewportWidth / imageAspectRatio;
-      } else {
-        usedViewportWidth = viewportHeight * imageAspectRatio;
-      }
-
-      usedPixels = usedViewportWidth * usedViewportHeight *
-        Math.pow(ViewportDimensions.devicePixelRatio, 2);
-    }
+    const displayed = this.getDisplayedDimensions(image, ViewportDimensions);
+    const usedPixels = displayed.width * displayed.height;
 
     const url = URL.elideDataURI(image.src);
     const actualPixels = image.naturalWidth * image.naturalHeight;
     const wastedRatio = 1 - (usedPixels / actualPixels);
-    const totalBytes = image.resourceSize;
+    const totalBytes = NetworkRequest.getResourceSizeOnNetwork(networkRecord);
     const wastedBytes = Math.round(totalBytes * wastedRatio);
 
-    if (!Number.isFinite(wastedRatio)) {
-      return new Error(`Invalid image sizing information ${url}`);
-    }
-
     return {
+      node: ByteEfficiencyAudit.makeNodeItem(image.node),
       url,
       totalBytes,
       wastedBytes,
@@ -98,33 +114,38 @@ class UsesResponsiveImages extends ByteEfficiencyAudit {
 
   /**
    * @param {LH.Artifacts} artifacts
-   * @return {ByteEfficiencyAudit.ByteEfficiencyProduct}
+   * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
+   * @param {LH.Audit.Context} context
+   * @return {Promise<ByteEfficiencyAudit.ByteEfficiencyProduct>}
    */
-  static audit_(artifacts) {
-    const images = artifacts.ImageElements;
+  static async audit_(artifacts, networkRecords, context) {
+    const images = await ImageRecords.request({
+      ImageElements: artifacts.ImageElements,
+      networkRecords,
+    }, context);
     const ViewportDimensions = artifacts.ViewportDimensions;
-
-    /** @type {string[]} */
-    const warnings = [];
     /** @type {Map<string, LH.Audit.ByteEfficiencyItem>} */
     const resultsMap = new Map();
     for (const image of images) {
-      // Ignore images without resource size information.
       // Give SVG a free pass because creating a "responsive" SVG is of questionable value.
       // Ignore CSS images because it's difficult to determine what is a spritesheet,
       // and the reward-to-effort ratio for responsive CSS images is quite low https://css-tricks.com/responsive-images-css/.
-      if (!image.resourceSize || image.mimeType === 'image/svg+xml' || image.isCss) {
+      if (image.mimeType === 'image/svg+xml' || image.isCss) {
         continue;
       }
 
-      const processed = UsesResponsiveImages.computeWaste(image, ViewportDimensions);
+      // Skip if we couldn't collect natural image size information.
+      if (!image.naturalDimensions) continue;
+      const naturalHeight = image.naturalDimensions.height;
+      const naturalWidth = image.naturalDimensions.width;
+      // If naturalHeight or naturalWidth are falsy, information is not valid, skip.
+      if (!naturalWidth || !naturalHeight) continue;
+      const processed =
+        UsesResponsiveImages.computeWaste(
+          {...image, naturalHeight, naturalWidth},
+          ViewportDimensions, networkRecords
+        );
       if (!processed) continue;
-
-      if (processed instanceof Error) {
-        warnings.push(processed.message);
-        Sentry.captureException(processed, {tags: {audit: this.meta.id}, level: 'warning'});
-        continue;
-      }
 
       // Don't warn about an image that was later used appropriately
       const existing = resultsMap.get(processed.url);
@@ -138,14 +159,13 @@ class UsesResponsiveImages extends ByteEfficiencyAudit {
 
     /** @type {LH.Audit.Details.Opportunity['headings']} */
     const headings = [
-      {key: 'url', valueType: 'thumbnail', label: ''},
+      {key: 'node', valueType: 'node', label: ''},
       {key: 'url', valueType: 'url', label: str_(i18n.UIStrings.columnURL)},
       {key: 'totalBytes', valueType: 'bytes', label: str_(i18n.UIStrings.columnResourceSize)},
       {key: 'wastedBytes', valueType: 'bytes', label: str_(i18n.UIStrings.columnWastedBytes)},
     ];
 
     return {
-      warnings,
       items,
       headings,
     };
@@ -154,3 +174,4 @@ class UsesResponsiveImages extends ByteEfficiencyAudit {
 
 module.exports = UsesResponsiveImages;
 module.exports.UIStrings = UIStrings;
+module.exports.str_ = str_;

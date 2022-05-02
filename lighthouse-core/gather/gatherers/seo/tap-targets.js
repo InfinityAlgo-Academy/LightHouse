@@ -7,7 +7,7 @@
 
 /* global document, window, getComputedStyle, getElementsInDocument, Node, getNodeDetails, getRectCenterPoint */
 
-const Gatherer = require('../gatherer.js');
+const FRGatherer = require('../../../fraggle-rock/gather/base-gatherer.js');
 const pageFunctions = require('../../../lib/page-functions.js');
 const RectHelpers = require('../../../lib/rect-helpers.js');
 
@@ -33,18 +33,19 @@ const tapTargetsSelector = TARGET_SELECTORS.join(',');
 
 /**
  * @param {HTMLElement} element
- * @returns {boolean}
+ * @return {boolean}
  */
-/* istanbul ignore next */
+/* c8 ignore start */
 function elementIsVisible(element) {
   return !!(element.offsetWidth || element.offsetHeight || element.getClientRects().length);
 }
+/* c8 ignore stop */
 
 /**
  * @param {Element} element
- * @returns {LH.Artifacts.Rect[]}
+ * @return {LH.Artifacts.Rect[]}
  */
-/* istanbul ignore next */
+/* c8 ignore start */
 function getClientRects(element) {
   const clientRects = Array.from(
     element.getClientRects()
@@ -61,13 +62,14 @@ function getClientRects(element) {
 
   return clientRects;
 }
+/* c8 ignore stop */
 
 /**
  * @param {Element} element
  * @param {string} tapTargetsSelector
- * @returns {boolean}
+ * @return {boolean}
  */
-/* istanbul ignore next */
+/* c8 ignore start */
 function elementHasAncestorTapTarget(element, tapTargetsSelector) {
   if (!element.parentElement) {
     return false;
@@ -77,11 +79,12 @@ function elementHasAncestorTapTarget(element, tapTargetsSelector) {
   }
   return elementHasAncestorTapTarget(element.parentElement, tapTargetsSelector);
 }
+/* c8 ignore stop */
 
 /**
  * @param {Element} element
  */
-/* istanbul ignore next */
+/* c8 ignore start */
 function hasTextNodeSiblingsFormingTextBlock(element) {
   if (!element.parentElement) {
     return false;
@@ -113,15 +116,16 @@ function hasTextNodeSiblingsFormingTextBlock(element) {
 
   return false;
 }
+/* c8 ignore stop */
 
 /**
  * Check if element is in a block of text, such as paragraph with a bunch of links in it.
  * Makes a reasonable guess, but for example gets it wrong if the element is surrounded by other
  * HTML elements instead of direct text nodes.
  * @param {Element} element
- * @returns {boolean}
+ * @return {boolean}
  */
-/* istanbul ignore next */
+/* c8 ignore start */
 function elementIsInTextBlock(element) {
   const {display} = getComputedStyle(element);
   if (display !== 'inline' && display !== 'inline-block') {
@@ -136,12 +140,13 @@ function elementIsInTextBlock(element) {
     return false;
   }
 }
+/* c8 ignore stop */
 
 /**
  * @param {Element} el
  * @param {{x: number, y: number}} elCenterPoint
  */
-/* istanbul ignore next */
+/* c8 ignore start */
 function elementCenterIsAtZAxisTop(el, elCenterPoint) {
   const viewportHeight = window.innerHeight;
   const targetScrollY = Math.floor(elCenterPoint.y / viewportHeight) * viewportHeight;
@@ -156,19 +161,16 @@ function elementCenterIsAtZAxisTop(el, elCenterPoint) {
 
   return topEl === el || el.contains(topEl);
 }
+/* c8 ignore stop */
 
 /**
  * Finds all position sticky/absolute elements on the page and adds a class
  * that disables pointer events on them.
- * @returns {() => void} - undo function to re-enable pointer events
+ * @param {string} className
+ * @return {() => void} - undo function to re-enable pointer events
  */
-/* istanbul ignore next */
-function disableFixedAndStickyElementPointerEvents() {
-  const className = 'lighthouse-disable-pointer-events';
-  const styleTag = document.createElement('style');
-  styleTag.textContent = `.${className} { pointer-events: none !important }`;
-  document.body.appendChild(styleTag);
-
+/* c8 ignore start */
+function disableFixedAndStickyElementPointerEvents(className) {
   document.querySelectorAll('*').forEach(el => {
     const position = getComputedStyle(el).position;
     if (position === 'fixed' || position === 'sticky') {
@@ -180,16 +182,17 @@ function disableFixedAndStickyElementPointerEvents() {
     Array.from(document.getElementsByClassName(className)).forEach(el => {
       el.classList.remove(className);
     });
-    styleTag.remove();
   };
 }
+/* c8 ignore stop */
 
 /**
  * @param {string} tapTargetsSelector
- * @returns {LH.Artifacts.TapTarget[]}
+ * @param {string} className
+ * @return {LH.Artifacts.TapTarget[]}
  */
-/* istanbul ignore next */
-function gatherTapTargets(tapTargetsSelector) {
+/* c8 ignore start */
+function gatherTapTargets(tapTargetsSelector, className) {
   /** @type {LH.Artifacts.TapTarget[]} */
   const targets = [];
 
@@ -202,7 +205,7 @@ function gatherTapTargets(tapTargetsSelector) {
 
   /** @type {{
     tapTargetElement: Element,
-    clientRects: ClientRect[]
+    clientRects: LH.Artifacts.Rect[]
   }[]} */
   const tapTargetsWithClientRects = [];
   tapTargetElements.forEach(tapTargetElement => {
@@ -230,11 +233,12 @@ function gatherTapTargets(tapTargetsSelector) {
   // Disable pointer events so that tap targets below them don't get
   // detected as non-tappable (they are tappable, just not while the viewport
   // is at the current scroll position)
-  const reenableFixedAndStickyElementPointerEvents = disableFixedAndStickyElementPointerEvents();
+  const reenableFixedAndStickyElementPointerEvents =
+    disableFixedAndStickyElementPointerEvents(className);
 
   /** @type {{
     tapTargetElement: Element,
-    visibleClientRects: ClientRect[]
+    visibleClientRects: LH.Artifacts.Rect[]
   }[]} */
   const tapTargetsWithVisibleClientRects = [];
   // We use separate loop here to get visible client rects because that involves
@@ -270,7 +274,7 @@ function gatherTapTargets(tapTargetsSelector) {
       clientRects: visibleClientRects,
       href: /** @type {HTMLAnchorElement} */(tapTargetElement)['href'] || '',
       // @ts-expect-error - getNodeDetails put into scope via stringification
-      ...getNodeDetails(tapTargetElement),
+      node: getNodeDetails(tapTargetElement),
     });
   }
 
@@ -278,30 +282,88 @@ function gatherTapTargets(tapTargetsSelector) {
 
   return targets;
 }
+/* c8 ignore stop */
 
-class TapTargets extends Gatherer {
+class TapTargets extends FRGatherer {
+  constructor() {
+    super();
+    /**
+     * This needs to be in the constructor.
+     * https://github.com/GoogleChrome/lighthouse/issues/12134
+     * @type {LH.Gatherer.GathererMeta}
+     */
+    this.meta = {
+      supportedModes: ['snapshot', 'navigation'],
+    };
+  }
+
   /**
-   * @param {LH.Gatherer.PassContext} passContext
+   * @param {LH.Gatherer.FRProtocolSession} session
+   * @param {string} className
+   * @return {Promise<string>}
+   */
+  async addStyleRule(session, className) {
+    const frameTreeResponse = await session.sendCommand('Page.getFrameTree');
+    const {styleSheetId} = await session.sendCommand('CSS.createStyleSheet', {
+      frameId: frameTreeResponse.frameTree.frame.id,
+    });
+    const ruleText = `.${className} { pointer-events: none !important }`;
+    await session.sendCommand('CSS.setStyleSheetText', {
+      styleSheetId,
+      text: ruleText,
+    });
+    return styleSheetId;
+  }
+
+  /**
+   * @param {LH.Gatherer.FRProtocolSession} session
+   * @param {string} styleSheetId
+   */
+  async removeStyleRule(session, styleSheetId) {
+    await session.sendCommand('CSS.setStyleSheetText', {
+      styleSheetId,
+      text: '',
+    });
+  }
+
+  /**
+   * @param {LH.Gatherer.FRTransitionalContext} passContext
    * @return {Promise<LH.Artifacts.TapTarget[]>} All visible tap targets with their positions and sizes
    */
-  afterPass(passContext) {
-    const expression = `(function() {
-      ${pageFunctions.getElementsInDocumentString};
-      ${disableFixedAndStickyElementPointerEvents.toString()};
-      ${elementIsVisible.toString()};
-      ${elementHasAncestorTapTarget.toString()};
-      ${elementCenterIsAtZAxisTop.toString()}
-      ${getClientRects.toString()};
-      ${hasTextNodeSiblingsFormingTextBlock.toString()};
-      ${elementIsInTextBlock.toString()};
-      ${RectHelpers.getRectCenterPoint.toString()};
-      ${pageFunctions.getNodeDetailsString};
-      ${gatherTapTargets.toString()};
+  async getArtifact(passContext) {
+    const session = passContext.driver.defaultSession;
+    await session.sendCommand('DOM.enable');
+    await session.sendCommand('CSS.enable');
 
-      return gatherTapTargets("${tapTargetsSelector}");
-    })()`;
+    const className = 'lighthouse-disable-pointer-events';
+    const styleSheetId = await this.addStyleRule(session, className);
 
-    return passContext.driver.evaluateAsync(expression, {useIsolation: true});
+    const tapTargets = await passContext.driver.executionContext.evaluate(gatherTapTargets, {
+      args: [tapTargetsSelector, className],
+      useIsolation: true,
+      deps: [
+        pageFunctions.getNodeDetailsString,
+        pageFunctions.getElementsInDocument,
+        disableFixedAndStickyElementPointerEvents,
+        elementIsVisible,
+        elementHasAncestorTapTarget,
+        elementCenterIsAtZAxisTop,
+        getClientRects,
+        hasTextNodeSiblingsFormingTextBlock,
+        elementIsInTextBlock,
+        RectHelpers.getRectCenterPoint,
+        pageFunctions.getNodePath,
+        pageFunctions.getNodeSelector,
+        pageFunctions.getNodeLabel,
+      ],
+    });
+
+    await this.removeStyleRule(session, styleSheetId);
+
+    await session.sendCommand('CSS.disable');
+    await session.sendCommand('DOM.disable');
+
+    return tapTargets;
   }
 }
 

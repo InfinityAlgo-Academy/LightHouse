@@ -5,31 +5,43 @@
  */
 'use strict';
 
-const Gatherer = require('../gatherer.js');
+const FRGatherer = require('../../../fraggle-rock/gather/base-gatherer.js');
+
+/* global document */
 
 /**
  * Get and return `name`, `publicId`, `systemId` from
  * `document.doctype`
- * @return {{name: string, publicId: string, systemId: string} | null}
+ * and `compatMode` from `document` to check `quirks-mode`
+ * @return {{name: string, publicId: string, systemId: string, documentCompatMode: string} | null}
  */
 function getDoctype() {
   // An example of this is warnerbros.com/archive/spacejam/movie/jam.htm
-  if (!document.doctype) { // eslint-disable-line no-undef
+  if (!document.doctype) {
     return null;
   }
 
-  const {name, publicId, systemId} = document.doctype; // eslint-disable-line no-undef
-  return {name, publicId, systemId};
+  const documentCompatMode = document.compatMode;
+  const {name, publicId, systemId} = document.doctype;
+  return {name, publicId, systemId, documentCompatMode};
 }
 
-class Doctype extends Gatherer {
+class Doctype extends FRGatherer {
+  /** @type {LH.Gatherer.GathererMeta} */
+  meta = {
+    supportedModes: ['snapshot', 'navigation'],
+  };
+
   /**
-   * @param {LH.Gatherer.PassContext} passContext
+   * @param {LH.Gatherer.FRTransitionalContext} passContext
    * @return {Promise<LH.Artifacts['Doctype']>}
    */
-  afterPass(passContext) {
+  getArtifact(passContext) {
     const driver = passContext.driver;
-    return driver.evaluateAsync(`(${getDoctype.toString()}())`);
+    return driver.executionContext.evaluate(getDoctype, {
+      args: [],
+      useIsolation: true,
+    });
   }
 }
 

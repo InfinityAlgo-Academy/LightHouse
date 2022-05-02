@@ -14,27 +14,27 @@ const SCHEMA_ORG_HOST = 'schema.org';
  * Custom loader that prevents network calls and allows us to return local version of the
  * schema.org document
  * @param {string} schemaUrl
- * @param {(err: null|Error, value?: any) => void} callback
+ * @return {Promise<import('jsonld').RemoteDocument>}
  */
-function documentLoader(schemaUrl, callback) {
+async function documentLoader(schemaUrl) {
   let urlObj = null;
 
   try {
     // Give a dummy base URL so relative URLs will be considered valid.
     urlObj = new URL(schemaUrl, 'http://example.com');
   } catch (e) {
-    return callback(new Error('Error parsing URL: ' + schemaUrl), undefined);
+    throw new Error('Error parsing URL: ' + schemaUrl);
   }
 
   if (urlObj.host === SCHEMA_ORG_HOST && urlObj.pathname === '/') {
-    callback(null, {
+    return {
       document: schemaOrgContext,
-    });
+    };
   } else {
     // We only process schema.org, for other schemas we return an empty object
-    callback(null, {
+    return {
       document: {},
-    });
+    };
   }
 }
 
@@ -43,14 +43,14 @@ function documentLoader(schemaUrl, callback) {
  * (https://json-ld.org/spec/latest/json-ld-api/#expansion).
  *
  * @param {any} inputObject
- * @returns {Promise<LH.StructuredData.ExpandedSchemaRepresentation|null>}
+ * @return {Promise<LH.StructuredData.ExpandedSchemaRepresentation|null>}
  */
 module.exports = async function expand(inputObject) {
   try {
     return await jsonld.expand(inputObject, {documentLoader});
   } catch (err) {
     // jsonld wraps real errors in a bunch of junk, so see we have an underlying error first
-    if (err.details && err.details.cause) throw err.details.cause;
+    if (err.details?.cause) throw err.details.cause;
     throw err;
   }
 };

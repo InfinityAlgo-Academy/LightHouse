@@ -30,7 +30,7 @@ const UIStrings = {
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
 /**
- * LayoutShift timing windows are determined by trace events. We consider a timing window to be 
+ * LayoutShift timing windows are determined by trace events. We consider a timing window to be
  * between a ScheduleStyleRecalculation event and the end of its possibly corresponding UpdateLayerTree event.
  * We assume that an UpdateLayerTree event belongs to a ScheduleStyleRecalculation event if it occurs within
  * 20ms. This window is then determined to be a "layoutShiftWindow", if a LayoutShift event occurs
@@ -39,7 +39,7 @@ const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
  * @return {Array<LH.Artifacts.DOMWindow>}
  */
 function getLayoutShiftWindows(layoutEvents) {
-  /**@type {Array<LH.Artifacts.DOMWindow>} */
+  /** @type {Array<LH.Artifacts.DOMWindow>} */
   const shiftWindows = [];
 
   // TODO: use a map for this ?
@@ -50,13 +50,13 @@ function getLayoutShiftWindows(layoutEvents) {
     // look for a ScheduleStyleRecalculation
     if (event.name === 'ScheduleStyleRecalculation') {
       // look for a ULT within this limit, assume that a ULT belongs to a SSR if occurs within 20ms
-      const limit = SSRStart +  20;
-      for (let j = i+1; j < layoutEvents.length; j++) {
+      const limit = SSRStart + 20;
+      for (let j = i + 1; j < layoutEvents.length; j++) {
         const ULTStart = layoutEvents[j].timing;
         const ULTEnd = ULTStart + layoutEvents[j].duration;
         if (layoutEvents[j].event.name === 'UpdateLayerTree' && ULTStart >= SSRStart && ULTStart < limit) {
           // Look for ULT's layout shift if any
-          for(let k = j+1; k < layoutEvents.length; k++) {
+          for (let k = j + 1; k < layoutEvents.length; k++) {
             // If there is a layout shift within an update layer tree, it may cause a layout shift.
             if (layoutEvents[k].event.name === 'LayoutShift') {
               const layoutShiftStart = layoutEvents[k].timing;
@@ -83,12 +83,12 @@ function getLayoutShiftTimelineEvents(trace) {
   const getTiming = (ts) => (ts - timeOriginEvt.ts) / 1000;
 
   const mainThreadEvents = TraceProcessor.computeTraceOfTab(trace).mainThreadEvents;
-  var layoutShiftTimelineEvents = mainThreadEvents
-      .filter(evt => (evt.cat === 'devtools.timeline' && (evt.name === 'UpdateLayerTree')
-        || evt.name === 'LayoutShift' || evt.name === 'ScheduleStyleRecalculation'))
+  const layoutShiftTimelineEvents = mainThreadEvents
+      .filter(evt => (evt.cat === 'devtools.timeline' && (evt.name === 'UpdateLayerTree') ||
+        evt.name === 'LayoutShift' || evt.name === 'ScheduleStyleRecalculation'))
       .map(evt => {
         return {event: evt, timing: getTiming(evt.ts), duration: evt.dur};
-    });
+      });
   return layoutShiftTimelineEvents;
 }
 
@@ -114,18 +114,18 @@ class PreloadFontsAudit extends Audit {
   static async audit(artifacts, context) {
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
     const domTimestamps = artifacts.DOMTimeline.domTimestamps;
-    const timeAlignClientTs = artifacts.DOMTimeline.timeAlignTs
+    const timeAlignClientTs = artifacts.DOMTimeline.timeAlignTs;
     const layoutShiftTimelineEvents = getLayoutShiftTimelineEvents(trace);
     const shiftWindows = getLayoutShiftWindows(layoutShiftTimelineEvents);
 
 
-    //console.log("timestamps: ", timestamps, " ", timestamps.length);
-    console.log("window stamps: ", shiftWindows, " ", shiftWindows.length);
-    console.log("number of iframe timestamps: ", domTimestamps.length);
-    console.log("number of CLS windows: ", shiftWindows.length);
-    //console.log("iframes: ", domTimestamps);
-    
-    let iframeResults = new Map();
+    // console.log("timestamps: ", timestamps, " ", timestamps.length);
+    console.log('window stamps: ', shiftWindows, ' ', shiftWindows.length);
+    console.log('number of iframe timestamps: ', domTimestamps.length);
+    console.log('number of CLS windows: ', shiftWindows.length);
+    // console.log("iframes: ", domTimestamps);
+
+    const iframeResults = new Map();
     // console.log(" trace: ", trace);
 
     // Difference of getTiming-normalized trace event time to clientside perf.now time
@@ -133,7 +133,7 @@ class PreloadFontsAudit extends Audit {
 
     timingNormalization = await ComputedUserTimings.request(trace, context).then(computedUserTimings => {
       const timeAlignTimings = computedUserTimings.filter(timing => timing.name === 'lh_timealign');
-      console.log("getting user timings?? ", timeAlignTimings.length);
+      console.log('getting user timings?? ', timeAlignTimings.length);
       // TODO: handle if we have 0 timeAlignTimings
 
       // timeAlignNormalizedTraceTs have already been baselined against trace's timeOrigin and converted to milliseconds (see computed/user-timings)
@@ -146,11 +146,11 @@ class PreloadFontsAudit extends Audit {
       timingNormalization = (timeAlignNormalizedTraceTs - timeAlignClientTs);
       return timingNormalization;
     });
-    
+
     const results = [];
     for (const timestamp of domTimestamps) {
-      //const time = timestamp.time + timingNormalization;
-      //console.log("is node type element node? ", typeof timestamp.element);
+      // const time = timestamp.time + timingNormalization;
+      // console.log("is node type element node? ", typeof timestamp.element);
       const clientTs = timestamp.currTime;
 
       // time is a NormalizedTraceTs, as described above.
@@ -160,9 +160,9 @@ class PreloadFontsAudit extends Audit {
         if (time > window.start && time < window.end) {
           // Make sure an iframe is only added once to results
           // const ad = "id=\"aswift_"; - to filter ads from https://github.com/monofrio/stylish_ad_removal
-          if (!iframeResults.has(timestamp.devtoolsNodePath)){
+          if (!iframeResults.has(timestamp.devtoolsNodePath)) {
             iframeResults.set(timestamp.devtoolsNodePath, timestamp.snippet);
-            //console.log("time in range, with normalization: ", time);
+            // console.log("time in range, with normalization: ", time);
             results.push({
               node: /** @type {LH.Audit.Details.NodeValue} */ ({
                 type: 'node',
@@ -177,9 +177,9 @@ class PreloadFontsAudit extends Audit {
         }
       }
     }
-    //console.log("RESULTS: ", results);
-    console.log("num of RESULTS: ", results.length);
-    //console.log("RESULTS: ", results);
+    // console.log("RESULTS: ", results);
+    console.log('num of RESULTS: ', results.length);
+    // console.log("RESULTS: ", results);
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [

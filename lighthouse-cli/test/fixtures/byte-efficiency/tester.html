@@ -52,6 +52,11 @@ setTimeout(() => {
     top: 0;
     left: 0;
   }
+
+  .stylesheet-sizing {
+    width: 160px;
+    height: 110px;
+  }
 </style>
 <script src="script.js" type="application/javascript"></script>
 <script src="bundle.js"></script>
@@ -135,6 +140,14 @@ setTimeout(() => {
   <img style="width: auto; height: auto;" src="lighthouse-320x212-poor.jpg?cssauto">
 
   <!-- PASS(optimized): image is JPEG optimized -->
+  <!-- PASS(webp): image has insigificant WebP savings -->
+  <!-- PASS(responsive): image is used at full size -->
+  <!-- PASS(responsive-inverse): image does not account for DPR 2.625 -->
+  <!-- PASS(offscreen): image is lazily loaded -->
+  <!-- PASS(unsized-images): CSS sizing from stylesheet, not inline -->
+  <img class="stylesheet-sizing" src="lighthouse-320x212-poor.jpg?stylesheet-sizing" loading="lazy">
+
+  <!-- PASS(optimized): image is JPEG optimized -->
   <!-- PASS(webp): image is WebP savings -->
   <!-- PASS(responsive): image is used at full size with srcset -->
   <!-- PASS(responsive-inverse): image is big enough -->
@@ -177,6 +190,14 @@ setTimeout(() => {
   <!-- FAIL(offscreen): image is offscreen -->
   <!-- PASS(unsized-images): has CSS sizing -->
   <img style="width: 100px; height: 100px;" src="large.svg">
+
+  <!-- PASS(optimized): image is vector -->
+  <!-- PASS(webp): image is vector -->
+  <!-- PASS(responsive): image is vector -->
+  <!-- PASS(responsive-inverse): is vector -->
+  <!-- PASS(offscreen): image is too small -->
+  <!-- PASS(unsized-images): is non-network SVG -->
+  <img src="data:image/svg+xml;charset=utf-8,<svg width=&quot;180&quot; height=&quot;60&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot; version=&quot;1.1&quot;/>">
 
   <!-- PASS(optimized): image is vector -->
   <!-- PASS(webp): image is vector -->

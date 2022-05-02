@@ -6,24 +6,15 @@
 # Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 ##
 
+# Runs the layout tests in third-party/chromium-webtests using the latest
+# Lighthouse, DevTools, and Chrome content_shell*
+#
+# * Not exactly the latest, but close. See download-content-shell.js
+
 set -euo pipefail
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-LH_ROOT="$SCRIPT_DIR/../../.."
-TEST_DIR="$LH_ROOT/.tmp/chromium-web-tests"
 
-# Setup dependencies.
-export DEPOT_TOOLS_PATH="$TEST_DIR/depot-tools"
-export DEVTOOLS_PATH=${DEVTOOLS_PATH:-"$TEST_DIR/devtools/devtools-frontend"}
-export BLINK_TOOLS_PATH="$TEST_DIR/blink_tools"
-export PATH=$DEPOT_TOOLS_PATH:$PATH
-
-set -x
-
-bash "$SCRIPT_DIR/download-depot-tools.sh"
-bash "$SCRIPT_DIR/download-devtools.sh"
-bash "$SCRIPT_DIR/download-blink-tools.sh"
-bash "$SCRIPT_DIR/download-content-shell.sh"
-
-# Run web tests.
+source "$SCRIPT_DIR/setup.sh"
+bash "$SCRIPT_DIR/roll-devtools.sh"
 bash "$SCRIPT_DIR/run-web-tests.sh" $*

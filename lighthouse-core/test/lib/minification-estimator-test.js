@@ -214,6 +214,15 @@ describe('minification estimator', () => {
       assert.equal(computeJSTokenLength(js), 9);
     });
 
+    it('should handle regex as switch case clause edge cases', () => {
+      const js = `
+        switch(true){case/^hello!/.test("hello!"):"///123456789"}
+      `;
+
+      assert.equal(computeJSTokenLength(js), 57);
+      assert.equal(computeJSTokenLength(js), js.trim().length);
+    });
+
     it('should handle large, real, unminified javscript files', () => {
       assert.equal(angularJs.length, 1374505);
       const minificationPct = 1 - computeJSTokenLength(angularJs) / angularJs.length;

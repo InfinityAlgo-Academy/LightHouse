@@ -12,6 +12,7 @@ const DNSCache = require('../../../../lib/dependency-graph/simulator/dns-cache.j
 const PageDependencyGraph = require('../../../../computed/page-dependency-graph.js');
 
 const assert = require('assert').strict;
+const {getURLArtifactFromDevtoolsLog} = require('../../../test-utils.js');
 let nextRequestId = 1;
 let nextTid = 1;
 
@@ -23,6 +24,7 @@ function request(opts) {
     requestId: opts.requestId || nextRequestId++,
     url,
     transferSize: opts.transferSize || 1000,
+    protocol: scheme,
     parsedURL: {scheme, host: 'example.com', securityOrigin: url},
     timing: opts.timing,
   }, opts);
@@ -323,6 +325,29 @@ describe('DependencyGraph/Simulator', () => {
       assert.equal(resultB.timeInMs, 950 + 800);
     });
 
+    it('should maximize throughput with H2', () => {
+      const simulator = new Simulator({serverResponseTimeByOrigin});
+      const connectionDefaults = {protocol: 'h2', connectionId: '1'};
+      const nodeA = new NetworkNode(request({startTime: 0, endTime: 1, ...connectionDefaults}));
+      const nodeB = new NetworkNode(request({startTime: 1, endTime: 2, ...connectionDefaults}));
+      const nodeC = new NetworkNode(request({startTime: 2, endTime: 3, ...connectionDefaults}));
+      const nodeD = new NetworkNode(request({startTime: 3, endTime: 4, ...connectionDefaults}));
+
+      nodeA.addDependent(nodeB);
+      nodeB.addDependent(nodeC);
+      nodeB.addDependent(nodeD);
+
+      // Run two simulations:
+      //  - The first with C & D in parallel.
+      //  - The second with C & D in series.
+      // Under HTTP/2 simulation these should be equivalent, but definitely parallel
+      // shouldn't be slower.
+      const resultA = simulator.simulate(nodeA, {flexibleOrdering: true});
+      nodeC.addDependent(nodeD);
+      const resultB = simulator.simulate(nodeA, {flexibleOrdering: true});
+      expect(resultA.timeInMs).toBeLessThanOrEqual(resultB.timeInMs);
+    });
+
     it('should throw (not hang) on graphs with cycles', () => {
       const rootNode = new NetworkNode(request({}));
       const depNode = new NetworkNode(request({}));
@@ -336,10 +361,11 @@ describe('DependencyGraph/Simulator', () => {
     describe('on a real trace', () => {
       const trace = require('../../../fixtures/traces/progressive-app-m60.json');
       const devtoolsLog = require('../../../fixtures/traces/progressive-app-m60.devtools.log.json');
+      const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
 
       it('should compute a timeInMs', async () => {
         const computedCache = new Map();
-        const graph = await PageDependencyGraph.request({trace, devtoolsLog}, {computedCache});
+        const graph = await PageDependencyGraph.request({trace, devtoolsLog, URL}, {computedCache});
         const simulator = new Simulator({serverResponseTimeByOrigin});
         const result = simulator.simulate(graph);
         expect(result.timeInMs).toBeGreaterThan(100);
@@ -347,7 +373,7 @@ describe('DependencyGraph/Simulator', () => {
 
       it('should sort the task event times', async () => {
         const computedCache = new Map();
-        const graph = await PageDependencyGraph.request({trace, devtoolsLog}, {computedCache});
+        const graph = await PageDependencyGraph.request({trace, devtoolsLog, URL}, {computedCache});
         const simulator = new Simulator({serverResponseTimeByOrigin});
         const result = simulator.simulate(graph);
         const nodeTimings = Array.from(result.nodeTimings.entries());
@@ -358,6 +384,26 @@ describe('DependencyGraph/Simulator', () => {
           expect(startTime).toBeGreaterThanOrEqual(previousStartTime);
         }
       });
+    });
+  });
+
+  describe('.simulateTimespan', () => {
+    it('calculates savings using throughput', () => {
+      const simulator = new Simulator({throughput: 1000, observedThroughput: 2000});
+      const wastedMs = simulator.computeWastedMsFromWastedBytes(500);
+      expect(wastedMs).toBeCloseTo(4000);
+    });
+
+    it('falls back to observed throughput if throughput is 0', () => {
+      const simulator = new Simulator({throughput: 0, observedThroughput: 2000});
+      const wastedMs = simulator.computeWastedMsFromWastedBytes(500);
+      expect(wastedMs).toBeCloseTo(2000);
+    });
+
+    it('returns 0 if throughput and observed throughput are 0', () => {
+      const simulator = new Simulator({throughput: 0, observedThroughput: 0});
+      const wastedMs = simulator.computeWastedMsFromWastedBytes(500);
+      expect(wastedMs).toEqual(0);
     });
   });
 });

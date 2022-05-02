@@ -16,7 +16,6 @@ module.exports = {
     onlyAudits: [
       'first-meaningful-paint',
       'speed-index',
-      'first-cpu-idle',
       'interactive',
     ],
   },
@@ -39,18 +38,16 @@ lighthouse('https://example.com/', {port: 9222}, config);
 
 | Name | Type |
 | - | - |
-| extends | <code>string&#124;boolean&#124;undefined</code> |
+| extends | <code>string&#124;undefined</code> |
 | settings | <code>Object&#124;undefined</code> |
 | passes | <code>Object[]</code> |
 | audits | <code>string[]</code> |
 | categories | <code>Object&#124;undefined</code> |
 | groups | <code>Object&#124;undefined</code> |
 
-### `extends: "lighthouse:default"|boolean|undefined`
+### `extends: "lighthouse:default"|undefined`
 
 The `extends` property controls if your configuration should inherit from the default Lighthouse configuration. [Learn more.](#config-extension)
-
-Both the values `"lighthouse:default"` and `true` will enable inheritance, while `false` and `undefined` will not.
 
 #### Example
 ```js
@@ -129,8 +126,7 @@ The audits property controls which audits to run and include with your Lighthous
 ```js
 {
   audits: [
-    'first-meaningful-paint',
-    'first-cpu-idle',
+    'first-contentful-paint',
     'byte-efficiency/uses-optimized-images',
   ]
 }
@@ -152,7 +148,7 @@ The categories property controls how to score and organize the audit results in 
       description: 'This category judges your performance',
       auditRefs: [
         {id: 'first-meaningful-paint', weight: 2, group: 'metrics'},
-        {id: 'first-cpu-idle', weight: 3, group: 'metrics'},
+        {id: 'first-contentful-paint', weight: 3, group: 'metrics'},
         {id: 'interactive', weight: 5, group: 'metrics'},
       ],
     }

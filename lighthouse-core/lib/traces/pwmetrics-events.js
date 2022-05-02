@@ -9,7 +9,7 @@ const log = require('lighthouse-logger');
 const TraceProcessor = require('../tracehouse/trace-processor.js');
 
 /**
- * @param {LH.Audit.Results} auditResults
+ * @param {LH.Result['audits']} auditResults
  * @return {LH.Artifacts.TimingSummary|undefined}
  */
 function getUberMetrics(auditResults) {
@@ -22,7 +22,7 @@ function getUberMetrics(auditResults) {
 class Metrics {
   /**
    * @param {Array<LH.TraceEvent>} traceEvents
-   * @param {LH.Audit.Results} auditResults
+   * @param {LH.Result['audits']} auditResults
    */
   constructor(traceEvents, auditResults) {
     this._traceEvents = traceEvents;
@@ -64,11 +64,6 @@ class Metrics {
         name: 'Visually Complete 100%',
         id: 'vc100',
         tsKey: 'observedLastVisualChangeTs',
-      },
-      {
-        name: 'First CPU Idle',
-        id: 'ttfi',
-        tsKey: 'firstCPUIdleTs',
       },
       {
         name: 'Interactive',

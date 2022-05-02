@@ -3,7 +3,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 /* eslint-disable no-console */
 
@@ -15,14 +14,17 @@
  *
  * Usage
  *
- * export GH_TOKEN=<your personal github token> # needed to get around API rate limits
+ * export GH_TOKEN=<your personal GitHub token> # needed to get around API rate limits
  * node ./lighthouse-core/scripts/internal-analysis/download-issues.js
  * node ./lighthouse-core/scripts/internal-analysis/analyze-issues.js
  */
 
-const fs = require('fs');
-const path = require('path');
-const fetch = require('isomorphic-fetch');
+import fs from 'fs';
+import path from 'path';
+
+import fetch from 'node-fetch';
+
+import {LH_ROOT} from '../../../root.js';
 
 const DAY_FILTER = 90;
 const HOUR_IN_MS = 60 * 60 * 1000;
@@ -132,7 +134,7 @@ async function downloadIssues(urlToStartAt) {
 async function go() {
   const issues = await downloadIssues();
   fs.writeFileSync(
-    path.join(__dirname, '../../../.tmp', '_issues.json'),
+    path.join(LH_ROOT, '.tmp/_issues.json'),
     JSON.stringify(issues, null, 2)
   );
 }

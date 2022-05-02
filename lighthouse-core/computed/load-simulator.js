@@ -13,7 +13,7 @@ const NetworkAnalysis = require('./network-analysis.js');
 class LoadSimulator {
   /**
    * @param {{devtoolsLog: LH.DevtoolsLog, settings: Immutable<LH.Config.Settings>}} data
-   * @param {LH.Audit.Context} context
+   * @param {LH.Artifacts.ComputedContext} context
    * @return {Promise<Simulator>}
    */
   static async compute_(data, context) {
@@ -24,6 +24,7 @@ class LoadSimulator {
     const options = {
       additionalRttByOrigin: networkAnalysis.additionalRttByOrigin,
       serverResponseTimeByOrigin: networkAnalysis.serverResponseTimeByOrigin,
+      observedThroughput: networkAnalysis.throughput,
     };
 
     // If we have precomputed lantern data, overwrite our observed estimates and use precomputed instead
@@ -88,4 +89,4 @@ class LoadSimulator {
   }
 }
 
-module.exports = makeComputedArtifact(LoadSimulator);
+module.exports = makeComputedArtifact(LoadSimulator, ['devtoolsLog', 'settings']);

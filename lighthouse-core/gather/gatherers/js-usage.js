@@ -5,81 +5,65 @@
  */
 'use strict';
 
-const Gatherer = require('./gatherer.js');
+const FRGatherer = require('../../fraggle-rock/gather/base-gatherer.js');
 
 /**
  * @fileoverview Tracks unused JavaScript
  */
-class JsUsage extends Gatherer {
+class JsUsage extends FRGatherer {
+  /** @type {LH.Gatherer.GathererMeta} */
+  meta = {
+    supportedModes: ['snapshot', 'timespan', 'navigation'],
+  };
+
   constructor() {
     super();
-    /** @type {LH.Crdp.Debugger.ScriptParsedEvent[]} */
-    this._scriptParsedEvents = [];
-    this.onScriptParsed = this.onScriptParsed.bind(this);
+    /** @type {LH.Crdp.Profiler.ScriptCoverage[]} */
+    this._scriptUsages = [];
   }
 
   /**
-   * @param {LH.Crdp.Debugger.ScriptParsedEvent} event
+   * @param {LH.Gatherer.FRTransitionalContext} context
    */
-  onScriptParsed(event) {
-    if (event.embedderName) {
-      this._scriptParsedEvents.push(event);
-    }
+  async startInstrumentation(context) {
+    const session = context.driver.defaultSession;
+    await session.sendCommand('Profiler.enable');
+    await session.sendCommand('Profiler.startPreciseCoverage', {detailed: false});
   }
 
   /**
-   * @param {LH.Gatherer.PassContext} passContext
+   * @param {LH.Gatherer.FRTransitionalContext} context
    */
-  async beforePass(passContext) {
-    await passContext.driver.sendCommand('Profiler.enable');
-    await passContext.driver.sendCommand('Profiler.startPreciseCoverage', {detailed: false});
-
-    await passContext.driver.sendCommand('Debugger.enable');
-    await passContext.driver.on('Debugger.scriptParsed', this.onScriptParsed);
+  async stopInstrumentation(context) {
+    const session = context.driver.defaultSession;
+    const coverageResponse = await session.sendCommand('Profiler.takePreciseCoverage');
+    this._scriptUsages = coverageResponse.result;
+    await session.sendCommand('Profiler.stopPreciseCoverage');
+    await session.sendCommand('Profiler.disable');
   }
 
   /**
-   * @param {LH.Gatherer.PassContext} passContext
    * @return {Promise<LH.Artifacts['JsUsage']>}
    */
-  async afterPass(passContext) {
-    const driver = passContext.driver;
+  async getArtifact() {
+    /** @type {Record<string, LH.Crdp.Profiler.ScriptCoverage>} */
+    const usageByScriptId = {};
 
-    const coverageResponse = await driver.sendCommand('Profiler.takePreciseCoverage');
-    const scriptUsages = coverageResponse.result;
-    await driver.sendCommand('Profiler.stopPreciseCoverage');
-    await driver.sendCommand('Profiler.disable');
-
-    await passContext.driver.sendCommand('Debugger.disable');
-
-    /** @type {Record<string, Array<LH.Crdp.Profiler.ScriptCoverage>>} */
-    const usageByUrl = {};
-    for (const scriptUsage of scriptUsages) {
-      // `ScriptCoverage.url` can be overridden by a magic sourceURL comment.
-      // Get the associated ScriptParsedEvent and use embedderName, which is the original url.
-      // See https://chromium-review.googlesource.com/c/v8/v8/+/2317310
-      let url = scriptUsage.url;
-      const scriptParsedEvent =
-        this._scriptParsedEvents.find(e => e.scriptId === scriptUsage.scriptId);
-      if (scriptParsedEvent && scriptParsedEvent.embedderName) {
-        url = scriptParsedEvent.embedderName;
-      }
-
-      // If `url` is blank, that means the script was anonymous (eval, new Function, onload, ...).
-      // Or, it's because it was code Lighthouse over the protocol via `Runtime.evaluate`.
-      // We currently don't consider coverage of anonymous scripts, and we defintelty don't want
-      // coverage of code Lighthouse ran to inspect the page, so we ignore this ScriptCoverage if
-      // url is blank.
-      if (scriptUsage.url === '' || (scriptParsedEvent && scriptParsedEvent.embedderName === '')) {
+    for (const scriptUsage of this._scriptUsages) {
+      // If `url` is blank, that means the script was dynamically
+      // created (eval, new Function, onload, ...)
+      if (scriptUsage.url === '' || scriptUsage.url === '_lighthouse-eval.js') {
+        // We currently don't consider coverage of dynamic scripts, and we definitely don't want
+        // coverage of code Lighthouse ran to inspect the page, so we ignore this ScriptCoverage.
+        // Audits would work the same without this, it is only an optimization (not tracking coverage
+        // for scripts we don't care about).
         continue;
       }
 
-      const scripts = usageByUrl[url] || [];
-      scripts.push(scriptUsage);
-      usageByUrl[url] = scripts;
+      usageByScriptId[scriptUsage.scriptId] = scriptUsage;
     }
 
-    return usageByUrl;
+    return usageByScriptId;
   }
 }
 

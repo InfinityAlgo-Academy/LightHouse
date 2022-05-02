@@ -10,6 +10,7 @@ const trace = require('../fixtures/traces/progressive-app-m60.json');
 const devtoolsLog = require('../fixtures/traces/progressive-app-m60.devtools.log.json');
 const lcpTrace = require('../fixtures/traces/lcp-m78.json');
 const lcpDevtoolsLog = require('../fixtures/traces/lcp-m78.devtools.log.json');
+const {getURLArtifactFromDevtoolsLog} = require('../test-utils.js');
 
 /* eslint-env jest */
 
@@ -18,17 +19,18 @@ describe('Performance: Timing budget audit', () => {
   let context;
   beforeEach(() => {
     artifacts = {
+      GatherContext: {gatherMode: 'navigation'},
       devtoolsLogs: {
         defaultPass: devtoolsLog,
       },
       traces: {defaultPass: trace},
-      URL: {requestedUrl: 'http://example.com', finalUrl: 'http://example.com'},
+      URL: getURLArtifactFromDevtoolsLog(devtoolsLog),
     };
 
     context = {
       computedCache: new Map(),
       settings: {
-        throttlingMethod: 'simulate',
+        throttlingMethod: 'devtools',
       },
     };
   });
@@ -43,8 +45,12 @@ describe('Performance: Timing budget audit', () => {
             budget: 9999,
           },
           {
-            metric: 'estimated-input-latency',
-            budget: 10,
+            metric: 'speed-index',
+            budget: 1,
+          },
+          {
+            metric: 'cumulative-layout-shift',
+            budget: 0.1,
           },
         ],
       }];
@@ -62,35 +68,34 @@ describe('Performance: Timing budget audit', () => {
       const result = await TimingBudgetAudit.audit(artifacts, context);
       const items = result.details.items;
       // Failing Budget
-      expect(items[0].label).toBeDisplayString('Estimated Input Latency');
-      expect(items[0].measurement).toBeCloseTo(77.8);
-      expect(items[0].overBudget).toBeCloseTo(67.8);
+      expect(items[0].label).toBeDisplayString('Speed Index');
+      expect(items[0].measurement).toBeCloseTo(605);
+      expect(items[0].overBudget).toBeCloseTo(604);
     });
 
     it('calculates the "overBudget" column correctly', async () => {
       const result = await TimingBudgetAudit.audit(artifacts, context);
 
       // Failing Budget
-      expect(result.details.items[0].overBudget).toBeCloseTo(67.8);
+      expect(result.details.items[0].overBudget).toBeCloseTo(604);
 
       // Passing Budget
       expect(result.details.items[1].overBudget).toBeUndefined();
+      expect(result.details.items[2].overBudget).toBeUndefined();
     });
 
     it('only includes rows for timing metrics with budgets', async () => {
       const result = await TimingBudgetAudit.audit(artifacts, context);
-      expect(result.details.items).toHaveLength(2);
+      expect(result.details.items).toHaveLength(3);
     });
 
     describe('timings metrics', () => {
       it('work for all supported timing metrics', async () => {
         const metrics = [
           'first-contentful-paint',
-          'first-cpu-idle',
           'interactive',
           'first-meaningful-paint',
           'max-potential-fid',
-          'estimated-input-latency',
           'total-blocking-time',
           'speed-index',
           'largest-contentful-paint',
@@ -122,6 +127,7 @@ describe('Performance: Timing budget audit', () => {
       it('supports Largest Contentful Paint', async () => {
         artifacts.devtoolsLogs.defaultPass = lcpDevtoolsLog;
         artifacts.traces.defaultPass = lcpTrace;
+        artifacts.URL = getURLArtifactFromDevtoolsLog(lcpDevtoolsLog);
 
         // Use an observed throttlingMethod so we don't have to worry about the value changing in the future.
         context.settings.throttlingMethod = 'provided';
@@ -145,7 +151,7 @@ describe('Performance: Timing budget audit', () => {
         path: '/',
         timings: [
           {
-            metric: 'first-cpu-idle',
+            metric: 'first-contentful-paint',
             budget: 0,
           },
           {
@@ -182,7 +188,7 @@ describe('Performance: Timing budget audit', () => {
           path: '/',
           timings: [
             {
-              metric: 'first-cpu-idle',
+              metric: 'first-contentful-paint',
               budget: 0,
             },
           ],
@@ -191,14 +197,14 @@ describe('Performance: Timing budget audit', () => {
           path: '/not-a-match',
           timings: [
             {
-              resourceType: 'estimated-input-delay',
+              resourceType: 'cumulative-layout-shift',
               budget: 0,
             },
           ],
         },
         ];
         const result = await TimingBudgetAudit.audit(artifacts, context);
-        expect(result.details.items[0].metric).toBe('first-cpu-idle');
+        expect(result.details.items[0].metric).toBe('first-contentful-paint');
       });
     });
 

@@ -3,7 +3,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 /**
  * @fileoverview This script splits a large URL list into chunks and creates a copy of the GCP
@@ -12,17 +11,17 @@
  * USAGE: node lighthouse-core/scripts/gcp-collection/fleet-create-directories.js [<url list file>]
  */
 
-const fs = require('fs');
-const path = require('path');
-const rimraf = require('rimraf');
+import fs from 'fs';
+import path from 'path';
 
-const LH_ROOT = path.join(__dirname, '../../../');
+import {LH_ROOT} from '../../../root.js';
+
 const TMP_DIR = path.join(LH_ROOT, '.tmp/gcp-instances');
 const URLS_LIST = process.argv[2]
   ? path.resolve(process.cwd(), process.argv[2])
-  : path.join(__dirname, 'urls.txt');
+  : path.join(LH_ROOT, 'lighthouse-core/scripts/gcp-collection/urls.txt');
 
-rimraf.sync(TMP_DIR);
+fs.rmSync(TMP_DIR, {recursive: true, force: true});
 fs.mkdirSync(TMP_DIR);
 
 const MACHINE_BASE_INDEX = 0;
@@ -45,9 +44,10 @@ instanceUrls.forEach((urls, i) => {
 
   const dir = path.join(TMP_DIR, `instance${MACHINE_BASE_INDEX + i}`);
   fs.mkdirSync(dir);
-  const files = fs.readdirSync(__dirname).filter(f => f.endsWith('.sh'));
+  const scriptDir = `${LH_ROOT}/lighthouse-core/scripts/gcp-collection`;
+  const files = fs.readdirSync(scriptDir).filter(f => f.endsWith('.sh'));
   files.forEach(f =>
-    fs.copyFileSync(path.join(__dirname, f), path.join(dir, f))
+    fs.copyFileSync(path.join(scriptDir, f), path.join(dir, f))
   );
   fs.writeFileSync(path.join(dir, 'urls.txt'), urls.join('\n'));
 });

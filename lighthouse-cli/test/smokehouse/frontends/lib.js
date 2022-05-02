@@ -3,7 +3,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 /**
  * @fileoverview Smoke test runner.
@@ -13,41 +12,37 @@
 
 /* eslint-disable no-console */
 
-const cloneDeep = require('lodash.clonedeep');
-const smokeTests = require('../test-definitions/core-tests.js');
-const {runSmokehouse} = require('../smokehouse.js');
+import cloneDeep from 'lodash/cloneDeep.js';
+
+import smokeTests from '../core-tests.js';
+import {runSmokehouse, getShardedDefinitions} from '../smokehouse.js';
 
 /**
  * @param {Smokehouse.SmokehouseLibOptions} options
  */
 async function smokehouse(options) {
-  const {urlFilterRegex, skip, modify, ...smokehouseOptions} = options;
+  const {urlFilterRegex, skip, modify, shardArg, ...smokehouseOptions} = options;
 
   const clonedTests = cloneDeep(smokeTests);
-  const modifiedTests = clonedTests.map(test => {
-    const modifiedExpectations = [];
-    for (const expected of test.expectations) {
-      if (urlFilterRegex && !expected.lhr.requestedUrl.match(urlFilterRegex)) {
-        continue;
-      }
-
-      const reasonToSkip = skip && skip(test, expected);
-      if (reasonToSkip) {
-        console.log(`skipping ${expected.lhr.requestedUrl}: ${reasonToSkip}`);
-        continue;
-      }
-
-      modify && modify(test, expected);
-      modifiedExpectations.push(expected);
+  const modifiedTests = [];
+  for (const test of clonedTests) {
+    if (urlFilterRegex && !test.expectations.lhr.requestedUrl.match(urlFilterRegex)) {
+      continue;
     }
 
-    return {
-      ...test,
-      expectations: modifiedExpectations,
-    };
-  }).filter(test => test.expectations.length > 0);
+    const reasonToSkip = skip && skip(test, test.expectations);
+    if (reasonToSkip) {
+      console.log(`skipping ${test.expectations.lhr.requestedUrl}: ${reasonToSkip}`);
+      continue;
+    }
 
-  return runSmokehouse(modifiedTests, smokehouseOptions);
+    modify && modify(test, test.expectations);
+    modifiedTests.push(test);
+  }
+
+  const shardedTests = getShardedDefinitions(modifiedTests, shardArg);
+
+  return runSmokehouse(shardedTests, smokehouseOptions);
 }
 
-module.exports = smokehouse;
+export {smokehouse};

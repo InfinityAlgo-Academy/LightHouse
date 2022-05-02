@@ -3,15 +3,14 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 /** @typedef {import('./common.js').Result} Result */
 /** @typedef {import('./common.js').Summary} Summary */
 /** @typedef {import('../run-on-all-assets.js').Golden} Golden */
 
-const fs = require('fs');
-const rimraf = require('rimraf');
-const common = require('./common.js');
+import fs from 'fs';
+
+import * as common from './common.js';
 
 /**
  * @template T
@@ -96,7 +95,6 @@ async function main() {
       wpt3g: {
         firstContentfulPaint: wptMetrics.firstContentfulPaint,
         firstMeaningfulPaint: wptMetrics.firstMeaningfulPaint,
-        timeToFirstInteractive: wptMetrics.firstCPUIdle,
         timeToConsistentlyInteractive: wptMetrics.interactive,
         speedIndex: wptMetrics.speedIndex,
         largestContentfulPaint: wptMetrics.largestContentfulPaint,
@@ -110,7 +108,7 @@ async function main() {
   /** @type {Golden} */
   const golden = {sites: goldenSites};
 
-  rimraf.sync(common.goldenFolder);
+  fs.rmSync(common.goldenFolder, {recursive: true, force: true});
   fs.mkdirSync(common.goldenFolder);
   saveGoldenData('site-index-plus-golden-expectations.json', JSON.stringify(golden, null, 2));
   for (const result of goldenSites) {

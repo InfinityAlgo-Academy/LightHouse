@@ -74,8 +74,10 @@ module.exports = class ConnectionPool {
         throw new Error(`Could not find a connection for origin: ${origin}`);
       }
 
-      // Make sure each origin has minimum number of connections available for max throughput
-      while (connections.length < CONNECTIONS_PER_ORIGIN) connections.push(connections[0].clone());
+      // Make sure each origin has minimum number of connections available for max throughput.
+      // But only if it's not over H2 which maximizes throughput already.
+      const minConnections = connections[0].isH2() ? 1 : CONNECTIONS_PER_ORIGIN;
+      while (connections.length < minConnections) connections.push(connections[0].clone());
 
       this._connectionsByOrigin.set(origin, connections);
     }
@@ -107,7 +109,7 @@ module.exports = class ConnectionPool {
       }
 
       // This connection is a match and is available! Update our max if it has a larger congestionWindow
-      const currentMax = (maxConnection && maxConnection.congestionWindow) || -Infinity;
+      const currentMax = (maxConnection?.congestionWindow) || -Infinity;
       if (connection.congestionWindow > currentMax) maxConnection = connection;
     }
 

@@ -23,7 +23,7 @@ function getBaseRequestId(record) {
   if (!record.requestId) return;
 
   const match = /^([\w.]+)(?::redirect)*$/.exec(record.requestId);
-  return match && match[1];
+  return match?.[1];
 }
 
 /**
@@ -115,7 +115,8 @@ function getResponseReceivedEvent(networkRecord, index) {
         connectionId: networkRecord.connectionId || 140,
         fromDiskCache: networkRecord.fromDiskCache || false,
         fromServiceWorker: networkRecord.fetchedViaServiceWorker || false,
-        encodedDataLength: networkRecord.transferSize || 0,
+        encodedDataLength: networkRecord.transferSize === undefined ?
+          0 : networkRecord.transferSize,
         timing,
         protocol: networkRecord.protocol || 'http/1.1',
       },
@@ -134,7 +135,8 @@ function getDataReceivedEvent(networkRecord, index) {
     params: {
       requestId: getBaseRequestId(networkRecord) || `${idBase}.${index}`,
       dataLength: networkRecord.resourceSize || 0,
-      encodedDataLength: networkRecord.transferSize || 0,
+      encodedDataLength: networkRecord.transferSize === undefined ?
+        0 : networkRecord.transferSize,
     },
   };
 }
@@ -149,7 +151,23 @@ function getLoadingFinishedEvent(networkRecord, index) {
     params: {
       requestId: getBaseRequestId(networkRecord) || `${idBase}.${index}`,
       timestamp: networkRecord.endTime || 3,
-      encodedDataLength: networkRecord.transferSize || 0,
+      encodedDataLength: networkRecord.transferSize === undefined ?
+        0 : networkRecord.transferSize,
+    },
+  };
+}
+
+/**
+ * @param {Partial<NetworkRequest>} networkRecord
+ * @return {LH.Protocol.RawEventMessage}
+ */
+function getLoadingFailedEvent(networkRecord, index) {
+  return {
+    method: 'Network.loadingFailed',
+    params: {
+      requestId: getBaseRequestId(networkRecord) || `${idBase}.${index}`,
+      timestamp: networkRecord.endTime || 3,
+      errorText: networkRecord.localizedFailDescription || 'Request failed',
     },
   };
 }
@@ -220,6 +238,11 @@ function networkRecordsToDevtoolsLog(networkRecords, options = {}) {
 
     if (networkRecord.fromMemoryCache) {
       devtoolsLog.push(getRequestServedFromCacheEvent(networkRecord, index));
+    }
+
+    if (networkRecord.failed) {
+      devtoolsLog.push(getLoadingFailedEvent(networkRecord, index));
+      return;
     }
 
     devtoolsLog.push(getResponseReceivedEvent(networkRecord, index));

@@ -5,53 +5,7 @@
  */
 'use strict';
 
-/** @typedef {import('../gather/driver.js')} Driver */
-
-/**
- * @type {LH.Crdp.Emulation.SetDeviceMetricsOverrideRequest}
- */
-const MOTOG4_EMULATION_METRICS = {
-  mobile: true,
-  screenWidth: 360,
-  screenHeight: 640,
-  width: 360,
-  height: 640,
-  positionX: 0,
-  positionY: 0,
-  scale: 1,
-  // Moto G4 is really 3, but a higher value here works against
-  // our perf recommendations.
-  // https://github.com/GoogleChrome/lighthouse/issues/10741#issuecomment-626903508
-  deviceScaleFactor: 2.625,
-  screenOrientation: {
-    angle: 0,
-    type: 'portraitPrimary',
-  },
-};
-
-/**
- * Desktop metrics adapted from emulated_devices/module.json
- * @type {LH.Crdp.Emulation.SetDeviceMetricsOverrideRequest}
- */
-const DESKTOP_EMULATION_METRICS = {
-  mobile: false,
-  width: 1350,
-  height: 940,
-  deviceScaleFactor: 1,
-};
-
-// eslint-disable-next-line max-len
-const MOTOG4_USERAGENT = 'Mozilla/5.0 (Linux; Android 7.0; Moto G (4)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4143.7 Mobile Safari/537.36 Chrome-Lighthouse';
-// eslint-disable-next-line max-len
-const DESKTOP_USERAGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4143.7 Safari/537.36 Chrome-Lighthouse';
-
-const OFFLINE_METRICS = {
-  offline: true,
-  // values of 0 remove any active throttling. crbug.com/456324#c9
-  latency: 0,
-  downloadThroughput: 0,
-  uploadThroughput: 0,
-};
+const {version: lighthouseVersion} = require('../../package.json');
 
 const NO_THROTTLING_METRICS = {
   latency: 0,
@@ -64,50 +18,101 @@ const NO_CPU_THROTTLE_METRICS = {
   rate: 1,
 };
 
-const emulationParams = {
-  mobile: {
-    userAgent: MOTOG4_USERAGENT,
-    metrics: MOTOG4_EMULATION_METRICS,
-    touchEnabled: true,
-  },
-  desktop: {
-    userAgent: DESKTOP_USERAGENT,
-    metrics: DESKTOP_EMULATION_METRICS,
-    touchEnabled: false,
-  },
-};
+/**
+ * @param {string} userAgent
+ * @param {LH.Config.Settings['formFactor']} formFactor
+ * @return {LH.Crdp.Emulation.SetUserAgentOverrideRequest['userAgentMetadata']}
+ */
+function parseUseragentIntoMetadata(userAgent, formFactor) {
+  const match = userAgent.match(/Chrome\/([\d.]+)/); // eg 'Chrome/(71.0.3577.0)'
+  const fullVersion = match?.[1] || '99.0.1234.0';
+  const [version] = fullVersion.split('.', 1);
+  const brands = [
+    {brand: 'Chromium', version},
+    {brand: 'Google Chrome', version},
+    {brand: 'Lighthouse', version: lighthouseVersion},
+  ];
+
+  const motoG4Details = {
+    platform: 'Android',
+    platformVersion: '6.0',
+    architecture: '',
+    model: 'Moto G4',
+  };
+  const macDesktopDetails = {
+    platform: 'macOS',
+    platformVersion: '10.15.7',
+    architecture: 'x86',
+    model: '',
+  };
+  const mobile = formFactor === 'mobile';
+
+  return {
+    brands,
+    fullVersion,
+    // Since config users can supply a custom useragent, they likely are emulating something
+    // other than Moto G4 and MacOS Desktop.
+    // TODO: Determine how to thoughtfully expose this metadata/client-hints configurability.
+    ...(mobile ? motoG4Details : macDesktopDetails),
+    mobile,
+  };
+}
 
 /**
- *
- * @param {Driver} driver
+ * @param {LH.Gatherer.FRProtocolSession} session
  * @param {LH.Config.Settings} settings
  * @return {Promise<void>}
  */
-async function emulate(driver, settings) {
-  if (!settings.emulatedFormFactor || settings.emulatedFormFactor === 'none') return;
-  const params = emulationParams[settings.emulatedFormFactor];
-
-  // In DevTools, emulation is applied before Lighthouse starts (to deal with viewport emulation bugs)
-  // As a result, we don't double-apply viewport emulation (devtools sets `internalDisableDeviceScreenEmulation`).
-  // UA emulation, however, is lost in the protocol handover from devtools frontend to the audits_worker. So it's always applied.
-
-  // Network.enable must be called for UA overriding to work
-  await driver.sendCommand('Network.enable');
-  await driver.sendCommand('Network.setUserAgentOverride', {userAgent: params.userAgent});
-
-  if (!settings.internalDisableDeviceScreenEmulation) {
-    await driver.sendCommand('Emulation.setDeviceMetricsOverride', params.metrics);
-    await driver.sendCommand('Emulation.setTouchEmulationEnabled', {enabled: params.touchEnabled});
+async function emulate(session, settings) {
+  if (settings.emulatedUserAgent !== false) {
+    const userAgent = /** @type {string} */ (settings.emulatedUserAgent);
+    await session.sendCommand('Network.setUserAgentOverride', {
+      userAgent,
+      userAgentMetadata: parseUseragentIntoMetadata(userAgent, settings.formFactor),
+    });
+  }
+  // See devtools-entry for one usecase for disabling screenEmulation
+  if (settings.screenEmulation.disabled !== true) {
+    const {width, height, deviceScaleFactor, mobile} = settings.screenEmulation;
+    const params = {width, height, deviceScaleFactor, mobile};
+    await session.sendCommand('Emulation.setDeviceMetricsOverride', params);
+    await session.sendCommand('Emulation.setTouchEmulationEnabled', {
+      enabled: params.mobile,
+    });
   }
 }
 
+/**
+ * Sets the throttling options specified in config settings, clearing existing network throttling if
+ * throttlingMethod is not `devtools` (but not CPU throttling, suspected requirement of WPT-compat).
+ *
+ * @param {LH.Gatherer.FRProtocolSession} session
+ * @param {LH.Config.Settings} settings
+ * @return {Promise<void>}
+ */
+async function throttle(session, settings) {
+  if (settings.throttlingMethod !== 'devtools') return clearNetworkThrottling(session);
+
+  await Promise.all([
+    enableNetworkThrottling(session, settings.throttling),
+    enableCPUThrottling(session, settings.throttling),
+  ]);
+}
 
 /**
- * @param {Driver} driver
+ * @param {LH.Gatherer.FRProtocolSession} session
+ * @return {Promise<void>}
+ */
+async function clearThrottling(session) {
+  await Promise.all([clearNetworkThrottling(session), clearCPUThrottling(session)]);
+}
+
+/**
+ * @param {LH.Gatherer.FRProtocolSession} session
  * @param {Required<LH.ThrottlingSettings>} throttlingSettings
  * @return {Promise<void>}
  */
-function enableNetworkThrottling(driver, throttlingSettings) {
+function enableNetworkThrottling(session, throttlingSettings) {
   /** @type {LH.Crdp.Network.EmulateNetworkConditionsRequest} */
   const conditions = {
     offline: false,
@@ -119,50 +124,41 @@ function enableNetworkThrottling(driver, throttlingSettings) {
   // DevTools expects throughput in bytes per second rather than kbps
   conditions.downloadThroughput = Math.floor(conditions.downloadThroughput * 1024 / 8);
   conditions.uploadThroughput = Math.floor(conditions.uploadThroughput * 1024 / 8);
-  return driver.sendCommand('Network.emulateNetworkConditions', conditions);
+  return session.sendCommand('Network.emulateNetworkConditions', conditions);
 }
 
 /**
- * @param {Driver} driver
+ * @param {LH.Gatherer.FRProtocolSession} session
  * @return {Promise<void>}
  */
-function clearAllNetworkEmulation(driver) {
-  return driver.sendCommand('Network.emulateNetworkConditions', NO_THROTTLING_METRICS);
+function clearNetworkThrottling(session) {
+  return session.sendCommand('Network.emulateNetworkConditions', NO_THROTTLING_METRICS);
 }
 
 /**
- * @param {Driver} driver
- * @return {Promise<void>}
- */
-function goOffline(driver) {
-  return driver.sendCommand('Network.emulateNetworkConditions', OFFLINE_METRICS);
-}
-
-/**
- * @param {Driver} driver
+ * @param {LH.Gatherer.FRProtocolSession} session
  * @param {Required<LH.ThrottlingSettings>} throttlingSettings
  * @return {Promise<void>}
  */
-function enableCPUThrottling(driver, throttlingSettings) {
+function enableCPUThrottling(session, throttlingSettings) {
   const rate = throttlingSettings.cpuSlowdownMultiplier;
-  return driver.sendCommand('Emulation.setCPUThrottlingRate', {rate});
+  return session.sendCommand('Emulation.setCPUThrottlingRate', {rate});
 }
 
 /**
- * @param {Driver} driver
+ * @param {LH.Gatherer.FRProtocolSession} session
  * @return {Promise<void>}
  */
-function disableCPUThrottling(driver) {
-  return driver.sendCommand('Emulation.setCPUThrottlingRate', NO_CPU_THROTTLE_METRICS);
+function clearCPUThrottling(session) {
+  return session.sendCommand('Emulation.setCPUThrottlingRate', NO_CPU_THROTTLE_METRICS);
 }
 
 module.exports = {
   emulate,
+  throttle,
+  clearThrottling,
   enableNetworkThrottling,
-  clearAllNetworkEmulation,
+  clearNetworkThrottling,
   enableCPUThrottling,
-  disableCPUThrottling,
-  goOffline,
-  MOBILE_USERAGENT: MOTOG4_USERAGENT,
-  DESKTOP_USERAGENT,
+  clearCPUThrottling,
 };

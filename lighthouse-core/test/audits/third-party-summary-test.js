@@ -53,7 +53,7 @@ describe('Third party summary', () => {
         entity: {
           text: 'Google Analytics',
           type: 'link',
-          url: 'https://www.google.com/analytics/analytics/',
+          url: 'https://marketingplatform.google.com/about/analytics/',
         },
         mainThreadTime: 95.15599999999999,
         blockingTime: 0,

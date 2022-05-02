@@ -8,15 +8,15 @@ Tests that lighthouse panel passes flags.
 [x] Accessibility
 [x] SEO
 [ ] Publisher Ads
+[x] Legacy navigation
 [x] Clear storage
 [ ] Simulated throttling
 Generate report: enabled visible
 
 =============== Lighthouse Results ===============
-emulatedFormFactor: desktop
+formFactor: desktop
 disableStorageReset: false
 throttlingMethod: devtools
-TestedAsMobileDevice: false
 
 View Trace Button Text: "View Trace"
 View Trace Button Title: ""

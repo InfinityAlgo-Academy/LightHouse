@@ -7,37 +7,19 @@
 
 /**
  * @fileoverview
- * Creates treemap data for treemap app.
+ * Creates nodes for treemap app.
+ * Example output: treemap/app/debug.json
+ */
+
+/**
+ * @typedef {Omit<LH.Treemap.Node, 'name'|'children'>} SourceData
  */
 
 const Audit = require('./audit.js');
 const JsBundles = require('../computed/js-bundles.js');
 const UnusedJavaScriptSummary = require('../computed/unused-javascript-summary.js');
 const ModuleDuplication = require('../computed/module-duplication.js');
-
-/**
- * @typedef {RootNodeContainer[]} TreemapData
- */
-
-/**
- * Ex: https://gist.github.com/connorjclark/0ef1099ae994c075e36d65fecb4d26a7
- * @typedef RootNodeContainer
- * @property {string} name Arbitrary name identifier. Usually a script url.
- * @property {Node} node
- */
-
-/**
- * @typedef Node
- * @property {string} name Arbitrary name identifier. Usually a path component from a source map.
- * @property {number} resourceBytes
- * @property {number=} unusedBytes
- * @property {string=} duplicatedNormalizedModuleName If present, this module is a duplicate. String is normalized source path. See ModuleDuplication.normalizeSource
- * @property {Node[]=} children
- */
-
-/**
- * @typedef {Omit<Node, 'name'|'children'>} SourceData
- */
+const {isInline} = require('../lib/script-helpers.js');
 
 class ScriptTreemapDataAudit extends Audit {
   /**
@@ -50,7 +32,7 @@ class ScriptTreemapDataAudit extends Audit {
       title: 'Script Treemap Data',
       description: 'Used for treemap app',
       requiredArtifacts:
-        ['traces', 'devtoolsLogs', 'SourceMaps', 'ScriptElements', 'JsUsage', 'URL'],
+        ['traces', 'devtoolsLogs', 'SourceMaps', 'Scripts', 'JsUsage', 'URL'],
     };
   }
 
@@ -59,14 +41,15 @@ class ScriptTreemapDataAudit extends Audit {
    * from a source map, and non-leaf nodes are directories. Leaf nodes have data
    * for bytes, coverage, etc., when available, and non-leaf nodes have the
    * same data as the sum of all descendant leaf nodes.
+   * @param {string} src
    * @param {string} sourceRoot
    * @param {Record<string, SourceData>} sourcesData
-   * @return {Node}
+   * @return {LH.Treemap.Node}
    */
-  static prepareTreemapNodes(sourceRoot, sourcesData) {
+  static makeScriptNode(src, sourceRoot, sourcesData) {
     /**
      * @param {string} name
-     * @return {Node}
+     * @return {LH.Treemap.Node}
      */
     function newNode(name) {
       return {
@@ -75,7 +58,7 @@ class ScriptTreemapDataAudit extends Audit {
       };
     }
 
-    const topNode = newNode(sourceRoot);
+    const sourceRootNode = newNode(sourceRoot);
 
     /**
      * Given a slash-delimited path, traverse the Node structure and increment
@@ -86,15 +69,19 @@ class ScriptTreemapDataAudit extends Audit {
      * @param {SourceData} data
      */
     function addAllNodesInSourcePath(source, data) {
-      let node = topNode;
+      let node = sourceRootNode;
 
-      // Apply the data to the topNode.
-      topNode.resourceBytes += data.resourceBytes;
-      if (data.unusedBytes) topNode.unusedBytes = (topNode.unusedBytes || 0) + data.unusedBytes;
+      // Apply the data to the sourceRootNode.
+      sourceRootNode.resourceBytes += data.resourceBytes;
+      if (data.unusedBytes) {
+        sourceRootNode.unusedBytes = (sourceRootNode.unusedBytes || 0) + data.unusedBytes;
+      }
 
       // Strip off the shared root.
       const sourcePathSegments = source.replace(sourceRoot, '').split(/\/+/);
       sourcePathSegments.forEach((sourcePathSegment, i) => {
+        if (sourcePathSegment.length === 0) return;
+
         const isLeaf = i === sourcePathSegments.length - 1;
 
         let child = node.children && node.children.find(child => child.name === sourcePathSegment);
@@ -124,7 +111,7 @@ class ScriptTreemapDataAudit extends Audit {
 
     /**
      * Collapse nodes that have only one child.
-     * @param {Node} node
+     * @param {LH.Treemap.Node} node
      */
     function collapseAll(node) {
       while (node.children && node.children.length === 1) {
@@ -138,70 +125,67 @@ class ScriptTreemapDataAudit extends Audit {
         }
       }
     }
-    collapseAll(topNode);
+    collapseAll(sourceRootNode);
 
-    return topNode;
+    // If sourceRootNode.name is falsy (no defined sourceRoot + no collapsed common prefix),
+    // collapse the sourceRootNode children into the scriptNode.
+    // Otherwise, we add another node.
+    if (!sourceRootNode.name) {
+      return {
+        ...sourceRootNode,
+        name: src,
+        children: sourceRootNode.children,
+      };
+    }
+
+    // Script node should be just the script src.
+    const scriptNode = {...sourceRootNode};
+    scriptNode.name = src;
+    scriptNode.children = [sourceRootNode];
+    return scriptNode;
   }
 
   /**
-   * Returns root node containers where the first level of nodes are script URLs.
-   * If a script has a source map, that node will be set by prepareTreemapNodes.
+   * Returns nodes where the first level of nodes are URLs.
+   * Every external script has a node.
+   * All inline scripts are combined into a single node.
+   * If a script has a source map, that node will be created by makeScriptNode.
+   *
+   * Example return result:
+     - index.html (inline scripts)
+     - main.js
+     - - webpack://
+     - - - react.js
+     - - - app.js
+     - i-have-no-map.js
+   *
    * @param {LH.Artifacts} artifacts
    * @param {LH.Audit.Context} context
-   * @return {Promise<TreemapData>}
+   * @return {Promise<LH.Treemap.Node[]>}
    */
-  static async makeRootNodes(artifacts, context) {
-    /** @type {RootNodeContainer[]} */
-    const rootNodeContainers = [];
-
-    let inlineScriptLength = 0;
-    for (const scriptElement of artifacts.ScriptElements) {
-      // No src means script is inline.
-      // Combine these ScriptElements so that inline scripts show up as a single root node.
-      if (!scriptElement.src) {
-        inlineScriptLength += (scriptElement.content || '').length;
-      }
-    }
-    if (inlineScriptLength) {
-      const name = artifacts.URL.finalUrl;
-      rootNodeContainers.push({
-        name,
-        node: {
-          name,
-          resourceBytes: inlineScriptLength,
-        },
-      });
-    }
-
+  static async makeNodes(artifacts, context) {
+    /** @type {LH.Treemap.Node[]} */
+    const nodes = [];
+    /** @type {Map<string, LH.Treemap.Node>} */
+    const htmlNodesByFrameId = new Map();
     const bundles = await JsBundles.request(artifacts, context);
     const duplicationByPath = await ModuleDuplication.request(artifacts, context);
 
-    for (const scriptElement of artifacts.ScriptElements) {
-      if (!scriptElement.src) continue;
+    for (const script of artifacts.Scripts) {
+      if (script.scriptLanguage !== 'JavaScript') continue;
 
-      const name = scriptElement.src;
-      const bundle = bundles.find(bundle => scriptElement.src === bundle.script.src);
-      const scriptCoverages = artifacts.JsUsage[scriptElement.src];
-      if (!bundle || !scriptCoverages) {
-        // No bundle or coverage information, so simply make a single node
-        // detailing how big the script is.
+      const name = script.url;
+      const bundle = bundles.find(bundle => script.scriptId === bundle.script.scriptId);
+      const scriptCoverage = /** @type {LH.Artifacts['JsUsage'][string] | undefined} */
+        (artifacts.JsUsage[script.scriptId]);
+      const unusedJavascriptSummary = scriptCoverage ?
+        await UnusedJavaScriptSummary.request(
+          {scriptId: script.scriptId, scriptCoverage, bundle}, context) :
+        undefined;
 
-        rootNodeContainers.push({
-          name,
-          node: {
-            name,
-            resourceBytes: scriptElement.src.length,
-          },
-        });
-        continue;
-      }
-
-      const unusedJavascriptSummary = await UnusedJavaScriptSummary.request(
-        {url: scriptElement.src, scriptCoverages, bundle}, context);
-
-      /** @type {Node} */
+      /** @type {LH.Treemap.Node} */
       let node;
-      if (unusedJavascriptSummary.sourcesWastedBytes && !('errorMessage' in bundle.sizes)) {
+      if (bundle && !('errorMessage' in bundle.sizes)) {
         // Create nodes for each module in a bundle.
 
         /** @type {Record<string, SourceData>} */
@@ -210,33 +194,74 @@ class ScriptTreemapDataAudit extends Audit {
           /** @type {SourceData} */
           const sourceData = {
             resourceBytes: bundle.sizes.files[source],
-            unusedBytes: unusedJavascriptSummary.sourcesWastedBytes[source],
           };
 
-          const key = ModuleDuplication.normalizeSource(source);
+          if (unusedJavascriptSummary?.sourcesWastedBytes) {
+            sourceData.unusedBytes = unusedJavascriptSummary.sourcesWastedBytes[source];
+          }
+
+          // ModuleDuplication uses keys without the source root prepended, but
+          // bundle.sizes uses keys with it prepended, so we remove the source root before
+          // using it with duplicationByPath.
+          let sourceWithoutSourceRoot = source;
+          if (bundle.rawMap.sourceRoot && source.startsWith(bundle.rawMap.sourceRoot)) {
+            sourceWithoutSourceRoot = source.replace(bundle.rawMap.sourceRoot, '');
+          }
+
+          const key = ModuleDuplication.normalizeSource(sourceWithoutSourceRoot);
           if (duplicationByPath.has(key)) sourceData.duplicatedNormalizedModuleName = key;
 
           sourcesData[source] = sourceData;
         }
 
-        node = this.prepareTreemapNodes(bundle.rawMap.sourceRoot || '', sourcesData);
-      } else {
-        // There was no source map for this script, so we can only produce a single node.
+        if (bundle.sizes.unmappedBytes) {
+          /** @type {SourceData} */
+          const sourceData = {
+            resourceBytes: bundle.sizes.unmappedBytes,
+          };
+          if (unusedJavascriptSummary?.sourcesWastedBytes) {
+            sourceData.unusedBytes = unusedJavascriptSummary.sourcesWastedBytes['(unmapped)'];
+          }
+          sourcesData['(unmapped)'] = sourceData;
+        }
 
+        node = this.makeScriptNode(script.url, bundle.rawMap.sourceRoot || '', sourcesData);
+      } else {
+        // No valid source map for this script, so we can only produce a single node.
         node = {
           name,
-          resourceBytes: unusedJavascriptSummary.totalBytes,
-          unusedBytes: unusedJavascriptSummary.wastedBytes,
+          resourceBytes: unusedJavascriptSummary?.totalBytes ?? script.length ?? 0,
+          unusedBytes: unusedJavascriptSummary?.wastedBytes,
         };
       }
 
-      rootNodeContainers.push({
-        name,
-        node,
-      });
+      // If this is an inline script, place the node inside a top-level (aka depth-one) node.
+      // Also separate each iframe / the main page's inline scripts into their own top-level nodes.
+      if (isInline(script)) {
+        let htmlNode = htmlNodesByFrameId.get(script.executionContextAuxData.frameId);
+        if (!htmlNode) {
+          htmlNode = {
+            name,
+            resourceBytes: 0,
+            unusedBytes: undefined,
+            children: [],
+          };
+          htmlNodesByFrameId.set(script.executionContextAuxData.frameId, htmlNode);
+          nodes.push(htmlNode);
+        }
+        htmlNode.resourceBytes += node.resourceBytes;
+        if (node.unusedBytes) htmlNode.unusedBytes = (htmlNode.unusedBytes || 0) + node.unusedBytes;
+        node.name = script.content ?
+          '(inline) ' + script.content.trimStart().substring(0, 15) + '…' :
+          '(inline)';
+        htmlNode.children?.push(node);
+      } else {
+        // Non-inline scripts each have their own top-level node.
+        nodes.push(node);
+      }
     }
 
-    return rootNodeContainers;
+    return nodes;
   }
 
   /**
@@ -245,13 +270,12 @@ class ScriptTreemapDataAudit extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
-    const treemapData = await ScriptTreemapDataAudit.makeRootNodes(artifacts, context);
+    const nodes = await ScriptTreemapDataAudit.makeNodes(artifacts, context);
 
-    // TODO: when out of experimental should make a new detail type.
-    /** @type {LH.Audit.Details.DebugData} */
+    /** @type {LH.Audit.Details.TreemapData} */
     const details = {
-      type: 'debugdata',
-      treemapData,
+      type: 'treemap-data',
+      nodes,
     };
 
     return {

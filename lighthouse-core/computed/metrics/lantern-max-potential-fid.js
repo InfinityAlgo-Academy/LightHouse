@@ -67,7 +67,7 @@ class LanternMaxPotentialFID extends LanternMetricArtifact {
 
   /**
    * @param {LH.Artifacts.MetricComputationDataInput} data
-   * @param {LH.Audit.Context} context
+   * @param {LH.Artifacts.ComputedContext} context
    * @return {Promise<LH.Artifacts.LanternMetric>}
    */
   static async compute_(data, context) {
@@ -87,4 +87,7 @@ class LanternMaxPotentialFID extends LanternMetricArtifact {
   }
 }
 
-module.exports = makeComputedArtifact(LanternMaxPotentialFID);
+module.exports = makeComputedArtifact(
+  LanternMaxPotentialFID,
+  ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL']
+);

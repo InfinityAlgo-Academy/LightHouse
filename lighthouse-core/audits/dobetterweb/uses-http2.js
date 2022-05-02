@@ -15,6 +15,7 @@
 
 const Audit = require('../audit.js');
 const ThirdParty = require('../../lib/third-party-web.js');
+const URL = require('../../lib/url-shim.js');
 const ByteEfficiencyAudit = require('../byte-efficiency/byte-efficiency-audit.js');
 const Interactive = require('../../computed/metrics/lantern-interactive.js');
 const NetworkRequest = require('../../lib/network-request.js');
@@ -27,8 +28,8 @@ const UIStrings = {
   /** Imperative title of a Lighthouse audit that tells the user to enable HTTP/2. This is displayed in a list of audit titles that Lighthouse generates. */
   title: 'Use HTTP/2',
   /** Description of a Lighthouse audit that tells the user why they should use HTTP/2. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
-  description: 'HTTP/2 offers many benefits over HTTP/1.1, including binary headers, ' +
-      'multiplexing, and server push. [Learn more](https://web.dev/uses-http2/).',
+  description: 'HTTP/2 offers many benefits over HTTP/1.1, including binary headers and ' +
+      'multiplexing. [Learn more](https://web.dev/uses-http2/).',
   /** [ICU Syntax] Label identifying the number of network requests that were not served with HTTP/2. */
   displayValue: `{itemCount, plural,
     =1 {1 request not served via HTTP/2}
@@ -59,7 +60,9 @@ class UsesHTTP2Audit extends Audit {
       id: 'uses-http2',
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['URL', 'devtoolsLogs', 'traces'],
+      scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
+      supportedModes: ['timespan', 'navigation'],
+      requiredArtifacts: ['URL', 'devtoolsLogs', 'traces', 'GatherContext'],
     };
   }
 
@@ -146,6 +149,7 @@ class UsesHTTP2Audit extends Audit {
    *    - Served over HTTP/1.1 or earlier
    *    - Served over an origin that serves at least 6 static asset requests
    *      (if there aren't more requests than browser's max/host, multiplexing isn't as big a deal)
+   *    - Not served on localhost (h2 is a pain to deal with locally & and CI)
    *
    * ** = https://news.ycombinator.com/item?id=19086639
    *      https://www.twilio.com/blog/2017/10/http2-issues.html
@@ -164,6 +168,7 @@ class UsesHTTP2Audit extends Audit {
     const groupedByOrigin = new Map();
     for (const record of networkRecords) {
       if (!UsesHTTP2Audit.isStaticAsset(record)) continue;
+      if (URL.isLikeLocalhost(record.parsedURL.host)) continue;
       const existing = groupedByOrigin.get(record.parsedURL.securityOrigin) || [];
       existing.push(record);
       groupedByOrigin.set(record.parsedURL.securityOrigin, existing);
@@ -197,23 +202,40 @@ class UsesHTTP2Audit extends Audit {
   static async audit(artifacts, context) {
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
-    const settings = context && context.settings || {};
-    const simulatorOptions = {
-      devtoolsLog,
-      settings,
-    };
-
+    const URL = artifacts.URL;
     const networkRecords = await NetworkRecords.request(devtoolsLog, context);
-    const graph = await PageDependencyGraph.request({trace, devtoolsLog}, context);
-    const simulator = await LoadSimulator.request(simulatorOptions, context);
-
     const resources = UsesHTTP2Audit.determineNonHttp2Resources(networkRecords);
-    const wastedMs = UsesHTTP2Audit.computeWasteWithTTIGraph(resources, graph, simulator);
 
     let displayValue;
     if (resources.length > 0) {
       displayValue = str_(UIStrings.displayValue, {itemCount: resources.length});
     }
+
+    // TODO: Compute actual savings for timespan mode.
+    if (artifacts.GatherContext.gatherMode === 'timespan') {
+      /** @type {LH.Audit.Details.Table['headings']} */
+      const headings = [
+        {key: 'url', itemType: 'url', text: str_(i18n.UIStrings.columnURL)},
+        {key: 'protocol', itemType: 'text', text: str_(UIStrings.columnProtocol)},
+      ];
+
+      const details = Audit.makeTableDetails(headings, resources);
+
+      return {
+        displayValue,
+        score: resources.length ? 0 : 1,
+        details,
+      };
+    }
+
+    const settings = context?.settings || {};
+    const simulatorOptions = {
+      devtoolsLog,
+      settings,
+    };
+    const graph = await PageDependencyGraph.request({trace, devtoolsLog, URL}, context);
+    const simulator = await LoadSimulator.request(simulatorOptions, context);
+    const wastedMs = UsesHTTP2Audit.computeWasteWithTTIGraph(resources, graph, simulator);
 
     /** @type {LH.Audit.Details.Opportunity['headings']} */
     const headings = [

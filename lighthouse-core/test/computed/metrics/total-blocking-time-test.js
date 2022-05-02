@@ -8,32 +8,44 @@
 const TotalBlockingTime = require('../../../computed/metrics/total-blocking-time.js');
 const trace = require('../../fixtures/traces/progressive-app-m60.json');
 const devtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
+const {calculateSumOfBlockingTime} = require('../../../computed/metrics/tbt-utils.js');
+const {getURLArtifactFromDevtoolsLog} = require('../../test-utils.js');
+
+const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
 
 /* eslint-env jest */
 
 describe('Metrics: TotalBlockingTime', () => {
+  const gatherContext = {gatherMode: 'navigation'};
+
   it('should compute a simulated value', async () => {
     const settings = {throttlingMethod: 'simulate'};
     const context = {settings, computedCache: new Map()};
-    const result = await TotalBlockingTime.request({trace, devtoolsLog, settings}, context);
+    const result = await TotalBlockingTime.request(
+      {trace, devtoolsLog, gatherContext, settings, URL},
+      context
+    );
 
     expect({
       timing: Math.round(result.timing),
       optimistic: Math.round(result.optimisticEstimate.timeInMs),
       pessimistic: Math.round(result.pessimisticEstimate.timeInMs),
     }).toMatchInlineSnapshot(`
-Object {
-  "optimistic": 676,
-  "pessimistic": 777,
-  "timing": 726,
-}
-`);
+      Object {
+        "optimistic": 777,
+        "pessimistic": 777,
+        "timing": 777,
+      }
+    `);
   });
 
   it('should compute an observed value', async () => {
     const settings = {throttlingMethod: 'provided'};
     const context = {settings, computedCache: new Map()};
-    const result = await TotalBlockingTime.request({trace, devtoolsLog, settings}, context);
+    const result = await TotalBlockingTime.request(
+      {trace, devtoolsLog, gatherContext, settings, URL},
+      context
+    );
     expect(result.timing).toBeCloseTo(48.3, 1);
   });
 
@@ -48,7 +60,7 @@ Object {
       const interactiveTimeMs = 4000;
 
       expect(
-        TotalBlockingTime.calculateSumOfBlockingTime(events, fcpTimeMs, interactiveTimeMs)
+        calculateSumOfBlockingTime(events, fcpTimeMs, interactiveTimeMs)
       ).toBe(0);
     });
 
@@ -64,7 +76,7 @@ Object {
       const interactiveTimeMs = 2500;
 
       expect(
-        TotalBlockingTime.calculateSumOfBlockingTime(events, fcpTimeMs, interactiveTimeMs)
+        calculateSumOfBlockingTime(events, fcpTimeMs, interactiveTimeMs)
       ).toBe(150);
     });
 
@@ -83,7 +95,7 @@ Object {
       ];
 
       expect(
-        TotalBlockingTime.calculateSumOfBlockingTime(events, fcpTimeMs, interactiveTimeMs)
+        calculateSumOfBlockingTime(events, fcpTimeMs, interactiveTimeMs)
       ).toBe(10); // 0ms + 10ms.
     });
 
@@ -94,42 +106,54 @@ Object {
       const fcpTimeMs = 1000;
       const interactiveTimeMs = 2000;
 
-      expect(TotalBlockingTime.calculateSumOfBlockingTime(
-        [{start: 1951, end: 2100, duration: 149}],
-        fcpTimeMs,
-        interactiveTimeMs
-      )).toBe(0); // Duration after clipping is 49, which is < 50.
-      expect(TotalBlockingTime.calculateSumOfBlockingTime(
-        [{start: 1950, end: 2100, duration: 150}],
-        fcpTimeMs,
-        interactiveTimeMs
-      )).toBe(0); // Duration after clipping is 50, so time after 50ms is 0ms.
-      expect(TotalBlockingTime.calculateSumOfBlockingTime(
-        [{start: 1949, end: 2100, duration: 151}],
-        fcpTimeMs,
-        interactiveTimeMs
-      )).toBe(1); // Duration after clipping is 51, so time after 50ms is 1ms.
+      expect(
+        calculateSumOfBlockingTime(
+          [{start: 1951, end: 2100, duration: 149}],
+          fcpTimeMs,
+          interactiveTimeMs
+        )
+      ).toBe(0); // Duration after clipping is 49, which is < 50.
+      expect(
+        calculateSumOfBlockingTime(
+          [{start: 1950, end: 2100, duration: 150}],
+          fcpTimeMs,
+          interactiveTimeMs
+        )
+      ).toBe(0); // Duration after clipping is 50, so time after 50ms is 0ms.
+      expect(
+        calculateSumOfBlockingTime(
+          [{start: 1949, end: 2100, duration: 151}],
+          fcpTimeMs,
+          interactiveTimeMs
+        )
+      ).toBe(1); // Duration after clipping is 51, so time after 50ms is 1ms.
     });
 
     it('clips properly if FCP falls in the middle of a task', () => {
       const fcpTimeMs = 1000;
       const interactiveTimeMs = 2000;
 
-      expect(TotalBlockingTime.calculateSumOfBlockingTime(
-        [{start: 900, end: 1049, duration: 149}],
-        fcpTimeMs,
-        interactiveTimeMs
-      )).toBe(0); // Duration after clipping is 49, which is < 50.
-      expect(TotalBlockingTime.calculateSumOfBlockingTime(
-        [{start: 900, end: 1050, duration: 150}],
-        fcpTimeMs,
-        interactiveTimeMs
-      )).toBe(0); // Duration after clipping is 50, so time after 50ms is 0ms.
-      expect(TotalBlockingTime.calculateSumOfBlockingTime(
-        [{start: 900, end: 1051, duration: 151}],
-        fcpTimeMs,
-        interactiveTimeMs
-      )).toBe(1); // Duration after clipping is 51, so time after 50ms is 1ms.
+      expect(
+        calculateSumOfBlockingTime(
+          [{start: 900, end: 1049, duration: 149}],
+          fcpTimeMs,
+          interactiveTimeMs
+        )
+      ).toBe(0); // Duration after clipping is 49, which is < 50.
+      expect(
+        calculateSumOfBlockingTime(
+          [{start: 900, end: 1050, duration: 150}],
+          fcpTimeMs,
+          interactiveTimeMs
+        )
+      ).toBe(0); // Duration after clipping is 50, so time after 50ms is 0ms.
+      expect(
+        calculateSumOfBlockingTime(
+          [{start: 900, end: 1051, duration: 151}],
+          fcpTimeMs,
+          interactiveTimeMs
+        )
+      ).toBe(1); // Duration after clipping is 51, so time after 50ms is 1ms.
     });
 
     // This can happen in the lantern metric case, where we use the optimistic
@@ -141,7 +165,7 @@ Object {
       const events = [{start: 500, end: 3000, duration: 2500}];
 
       expect(
-        TotalBlockingTime.calculateSumOfBlockingTime(events, fcpTimeMs, interactiveTimeMs)
+        calculateSumOfBlockingTime(events, fcpTimeMs, interactiveTimeMs)
       ).toBe(0);
     });
   });

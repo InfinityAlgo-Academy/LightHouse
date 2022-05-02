@@ -45,7 +45,7 @@ class CacheHeaders extends Audit {
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
-      requiredArtifacts: ['devtoolsLogs', 'traces'],
+      requiredArtifacts: ['devtoolsLogs'],
     };
   }
 
@@ -154,7 +154,8 @@ class CacheHeaders extends Audit {
     ]);
 
     // It's not a request loaded over the network, caching makes no sense
-    if (URL.NON_NETWORK_PROTOCOLS.includes(record.protocol)) return false;
+    if (NetworkRequest.isNonNetworkRequest(record)) return false;
+
 
     return (
       CACHEABLE_STATUS_CODES.has(record.statusCode) &&
@@ -166,7 +167,7 @@ class CacheHeaders extends Audit {
    * Returns true if headers suggest a record should not be cached for a long time.
    * @param {Map<string, string>} headers
    * @param {ReturnType<typeof parseCacheControl>} cacheControl
-   * @returns {boolean}
+   * @return {boolean}
    */
   static shouldSkipRecord(headers, cacheControl) {
     // The HTTP/1.0 Pragma header can disable caching if cache-control is not set, see https://tools.ietf.org/html/rfc7234#section-5.4
@@ -180,6 +181,7 @@ class CacheHeaders extends Audit {
         cacheControl['must-revalidate'] ||
         cacheControl['no-cache'] ||
         cacheControl['no-store'] ||
+        cacheControl['stale-while-revalidate'] ||
         cacheControl['private'])) {
       return true;
     }

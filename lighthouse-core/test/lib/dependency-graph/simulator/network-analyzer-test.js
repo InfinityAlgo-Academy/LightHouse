@@ -10,6 +10,9 @@ const assert = require('assert').strict;
 const NetworkAnalyzer = require('../../../../lib/dependency-graph/simulator/network-analyzer.js');
 const NetworkRecords = require('../../../../computed/network-records.js');
 const devtoolsLog = require('../../../fixtures/traces/progressive-app-m60.devtools.log.json');
+const devtoolsLogWithRedirect = require(
+  '../../../fixtures/traces/site-with-redirect.devtools.log.json'
+);
 
 /* eslint-env jest */
 describe('DependencyGraph/Simulator/NetworkAnalyzer', () => {
@@ -370,19 +373,36 @@ describe('DependencyGraph/Simulator/NetworkAnalyzer', () => {
   describe('#findMainDocument', () => {
     it('should find the main document', async () => {
       const records = await NetworkRecords.request(devtoolsLog, {computedCache: new Map()});
-      const mainDocument = NetworkAnalyzer.findMainDocument(records);
+      const mainDocument = NetworkAnalyzer.findResourceForUrl(records, 'https://pwa.rocks/');
       assert.equal(mainDocument.url, 'https://pwa.rocks/');
     });
 
-    it('should break ties using position in array', async () => {
-      const records = [
-        {url: 'http://example.com', resourceType: 'Other'},
-        {url: 'https://example.com', resourceType: 'Other'},
-        {url: 'https://www.example.com', resourceType: 'Document', startTime: 0},
-        {url: 'https://www.iframe.com', resourceType: 'Document', startTime: 0},
-      ];
-      const mainDocument = NetworkAnalyzer.findMainDocument(records);
-      assert.equal(mainDocument.url, 'https://www.example.com');
+    it('should find the main document if the URL includes a fragment', async () => {
+      const records = await NetworkRecords.request(devtoolsLog, {computedCache: new Map()});
+      const mainDocument = NetworkAnalyzer.findResourceForUrl(records, 'https://pwa.rocks/#info');
+      assert.equal(mainDocument.url, 'https://pwa.rocks/');
+    });
+  });
+
+  describe('#resolveRedirects', () => {
+    it('should resolve to the same document when no redirect', async () => {
+      const records = await NetworkRecords.request(devtoolsLog, {computedCache: new Map()});
+
+      const mainDocument = NetworkAnalyzer.findResourceForUrl(records, 'https://pwa.rocks/');
+      const finalDocument = NetworkAnalyzer.resolveRedirects(mainDocument);
+      assert.equal(mainDocument.url, finalDocument.url);
+      assert.equal(finalDocument.url, 'https://pwa.rocks/');
+    });
+
+    it('should resolve to the final document with redirects', async () => {
+      const records = await NetworkRecords.request(devtoolsLogWithRedirect, {
+        computedCache: new Map(),
+      });
+
+      const mainDocument = NetworkAnalyzer.findResourceForUrl(records, 'http://www.vkontakte.ru/');
+      const finalDocument = NetworkAnalyzer.resolveRedirects(mainDocument);
+      assert.notEqual(mainDocument.url, finalDocument.url);
+      assert.equal(finalDocument.url, 'https://m.vk.com/');
     });
   });
 });

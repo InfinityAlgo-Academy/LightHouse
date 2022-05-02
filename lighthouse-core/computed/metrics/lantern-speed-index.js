@@ -93,7 +93,7 @@ class LanternSpeedIndex extends LanternMetric {
 
   /**
    * @param {LH.Artifacts.MetricComputationDataInput} data
-   * @param {LH.Audit.Context} context
+   * @param {LH.Artifacts.ComputedContext} context
    * @return {Promise<LH.Artifacts.LanternMetric>}
    */
   static async compute_(data, context) {
@@ -144,4 +144,7 @@ class LanternSpeedIndex extends LanternMetric {
   }
 }
 
-module.exports = makeComputedArtifact(LanternSpeedIndex);
+module.exports = makeComputedArtifact(
+  LanternSpeedIndex,
+  ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL']
+);

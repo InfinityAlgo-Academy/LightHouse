@@ -7,7 +7,8 @@
 
 const BaseNode = require('../../lib/dependency-graph/base-node.js');
 const NetworkRequest = require('../../lib/network-request.js');
-const TraceOfTab = require('../trace-of-tab.js');
+const ProcessedTrace = require('../processed-trace.js');
+const ProcessedNavigation = require('../processed-navigation.js');
 const PageDependencyGraph = require('../page-dependency-graph.js');
 const LoadSimulator = require('../load-simulator.js');
 
@@ -66,19 +67,19 @@ class LanternMetricArtifact {
 
   /**
    * @param {Node} dependencyGraph
-   * @param {LH.Artifacts.TraceOfTab} traceOfTab
+   * @param {LH.Artifacts.ProcessedNavigation} processedNavigation
    * @return {Node}
    */
-  static getOptimisticGraph(dependencyGraph, traceOfTab) { // eslint-disable-line no-unused-vars
+  static getOptimisticGraph(dependencyGraph, processedNavigation) { // eslint-disable-line no-unused-vars
     throw new Error('Optimistic graph unimplemented!');
   }
 
   /**
    * @param {Node} dependencyGraph
-   * @param {LH.Artifacts.TraceOfTab} traceOfTab
+   * @param {LH.Artifacts.ProcessedNavigation} processedNavigation
    * @return {Node}
    */
-  static getPessimisticGraph(dependencyGraph, traceOfTab) { // eslint-disable-line no-unused-vars
+  static getPessimisticGraph(dependencyGraph, processedNavigation) { // eslint-disable-line no-unused-vars
     throw new Error('Pessmistic graph unimplemented!');
   }
 
@@ -93,20 +94,25 @@ class LanternMetricArtifact {
 
   /**
    * @param {LH.Artifacts.MetricComputationDataInput} data
-   * @param {LH.Audit.Context} context
+   * @param {LH.Artifacts.ComputedContext} context
    * @param {Omit<Extras, 'optimistic'>=} extras
    * @return {Promise<LH.Artifacts.LanternMetric>}
    */
   static async computeMetricWithGraphs(data, context, extras) {
-    const {trace, devtoolsLog, settings} = data;
-    const metricName = this.name.replace('Lantern', '');
-    const graph = await PageDependencyGraph.request({trace, devtoolsLog}, context);
-    const traceOfTab = await TraceOfTab.request(trace, context);
-    const simulator = data.simulator ||
-        await LoadSimulator.request({devtoolsLog, settings}, context);
+    // TODO: remove this fallback when lighthouse-pub-ads plugin can update.
+    const gatherContext = data.gatherContext || {gatherMode: 'navigation'};
+    if (gatherContext.gatherMode !== 'navigation') {
+      throw new Error(`Lantern metrics can only be computed on navigations`);
+    }
 
-    const optimisticGraph = this.getOptimisticGraph(graph, traceOfTab);
-    const pessimisticGraph = this.getPessimisticGraph(graph, traceOfTab);
+    const metricName = this.name.replace('Lantern', '');
+    const graph = await PageDependencyGraph.request(data, context);
+    const processedTrace = await ProcessedTrace.request(data.trace, context);
+    const processedNavigation = await ProcessedNavigation.request(processedTrace, context);
+    const simulator = data.simulator || (await LoadSimulator.request(data, context));
+
+    const optimisticGraph = this.getOptimisticGraph(graph, processedNavigation);
+    const pessimisticGraph = this.getPessimisticGraph(graph, processedNavigation);
 
     /** @type {{flexibleOrdering?: boolean, label?: string}} */
     let simulateOptions = {label: `optimistic${metricName}`};
@@ -148,7 +154,7 @@ class LanternMetricArtifact {
 
   /**
    * @param {LH.Artifacts.MetricComputationDataInput} data
-   * @param {LH.Audit.Context} context
+   * @param {LH.Artifacts.ComputedContext} context
    * @return {Promise<LH.Artifacts.LanternMetric>}
    */
   static async compute_(data, context) {

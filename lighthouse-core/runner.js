@@ -5,35 +5,39 @@
  */
 'use strict';
 
-const isDeepEqual = require('lodash.isequal');
+const isDeepEqual = require('lodash/isEqual.js');
 const Driver = require('./gather/driver.js');
 const GatherRunner = require('./gather/gather-runner.js');
 const ReportScoring = require('./scoring.js');
 const Audit = require('./audits/audit.js');
 const log = require('lighthouse-logger');
-const i18n = require('./lib/i18n/i18n.js');
+const format = require('../shared/localization/format.js');
 const stackPacks = require('./lib/stack-packs.js');
 const assetSaver = require('./lib/asset-saver.js');
 const fs = require('fs');
 const path = require('path');
-const URL = require('./lib/url-shim.js');
 const Sentry = require('./lib/sentry.js');
-const generateReport = require('./report/report-generator.js').generateReport;
+const generateReport = require('../report/generator/report-generator.js').generateReport;
 const LHError = require('./lib/lh-error.js');
+const {version: lighthouseVersion} = require('../package.json');
 
 /** @typedef {import('./gather/connections/connection.js')} Connection */
-/** @typedef {import('./config/config.js')} Config */
+/** @typedef {import('./lib/arbitrary-equality-map.js')} ArbitraryEqualityMap */
+/** @typedef {LH.Config.Config} Config */
 
 class Runner {
   /**
-   * @param {Connection} connection
-   * @param {{config: Config, url?: string, driverMock?: Driver}} runOpts
+   * @template {LH.Config.Config | LH.Config.FRConfig} TConfig
+   * @param {LH.Artifacts} artifacts
+   * @param {{config: TConfig, driverMock?: Driver, computedCache: Map<string, ArbitraryEqualityMap>}} options
    * @return {Promise<LH.RunnerResult|undefined>}
    */
-  static async run(connection, runOpts) {
-    const settings = runOpts.config.settings;
+  static async audit(artifacts, options) {
+    const {config, computedCache} = options;
+    const settings = config.settings;
+
     try {
-      const runnerStatus = {msg: 'Runner setup', id: 'lh:runner:run'};
+      const runnerStatus = {msg: 'Audit phase', id: 'lh:runner:audit'};
       log.time(runnerStatus, 'verbose');
 
       /**
@@ -42,59 +46,14 @@ class Runner {
        */
       const lighthouseRunWarnings = [];
 
-      const sentryContext = Sentry.getContext();
-      Sentry.captureBreadcrumb({
-        message: 'Run started',
-        category: 'lifecycle',
-        data: sentryContext && sentryContext.extra,
-      });
-
-      // User can run -G solo, -A solo, or -GA together
-      // -G and -A will run partial lighthouse pipelines,
-      // and -GA will run everything plus save artifacts and lhr to disk.
-
-      // Gather phase
-      // Either load saved artifacts off disk or from the browser
-      let artifacts;
-      let requestedUrl;
-      if (settings.auditMode && !settings.gatherMode) {
-        // No browser required, just load the artifacts from disk.
-        const path = Runner._getDataSavePath(settings);
-        artifacts = assetSaver.loadArtifacts(path);
-        requestedUrl = artifacts.URL.requestedUrl;
-
-        if (!requestedUrl) {
-          throw new Error('Cannot run audit mode on empty URL');
-        }
-        if (runOpts.url && !URL.equalWithExcludedFragments(runOpts.url, requestedUrl)) {
-          throw new Error('Cannot run audit mode on different URL');
-        }
-      } else {
-        // verify the url is valid and that protocol is allowed
-        if (runOpts.url && URL.isValid(runOpts.url) && URL.isProtocolAllowed(runOpts.url)) {
-          // Use canonicalized URL (with trailing slashes and such)
-          requestedUrl = new URL(runOpts.url).href;
-        } else {
-          throw new LHError(LHError.errors.INVALID_URL);
-        }
-
-        artifacts = await Runner._gatherArtifactsFromBrowser(requestedUrl, runOpts, connection);
-        // -G means save these to ./latest-run, etc.
-        if (settings.gatherMode) {
-          const path = Runner._getDataSavePath(settings);
-          await assetSaver.saveArtifacts(artifacts, path);
-        }
-      }
-
       // Potentially quit early
       if (settings.gatherMode && !settings.auditMode) return;
 
-      // Audit phase
-      if (!runOpts.config.audits) {
+      if (!config.audits) {
         throw new Error('No audits to evaluate.');
       }
-      const auditResultsById = await Runner._runAudits(settings, runOpts.config.audits, artifacts,
-          lighthouseRunWarnings);
+      const auditResultsById = await Runner._runAudits(settings, config.audits, artifacts,
+          lighthouseRunWarnings, computedCache);
 
       // LHR construction phase
       const resultsStatus = {msg: 'Generating results...', id: 'lh:runner:generate'};
@@ -105,19 +64,18 @@ class Runner {
       }
 
       // Entering: conclusion of the lighthouse result object
-      const lighthouseVersion = require('../package.json').version;
 
       // Use version from gathering stage.
       // If accessibility gatherer didn't run or errored, it won't be in credits.
-      const axeVersion = artifacts.Accessibility && artifacts.Accessibility.version;
+      const axeVersion = artifacts.Accessibility?.version;
       const credits = {
         'axe-core': axeVersion,
       };
 
       /** @type {Record<string, LH.RawIcu<LH.Result.Category>>} */
       let categories = {};
-      if (runOpts.config.categories) {
-        categories = ReportScoring.scoreAllCategories(runOpts.config.categories, auditResultsById);
+      if (config.categories) {
+        categories = ReportScoring.scoreAllCategories(config.categories, auditResultsById);
       }
 
       log.timeEnd(resultsStatus);
@@ -125,6 +83,13 @@ class Runner {
 
       /** @type {LH.RawIcu<LH.Result>} */
       const i18nLhr = {
+        lighthouseVersion,
+        requestedUrl: artifacts.URL.requestedUrl,
+        finalUrl: artifacts.URL.finalUrl,
+        fetchTime: artifacts.fetchTime,
+        gatherMode: artifacts.GatherContext.gatherMode,
+        runtimeError: Runner.getArtifactRuntimeError(artifacts),
+        runWarnings: lighthouseRunWarnings,
         userAgent: artifacts.HostUserAgent,
         environment: {
           networkUserAgent: artifacts.NetworkUserAgent,
@@ -132,26 +97,20 @@ class Runner {
           benchmarkIndex: artifacts.BenchmarkIndex,
           credits,
         },
-        lighthouseVersion,
-        fetchTime: artifacts.fetchTime,
-        requestedUrl: requestedUrl,
-        finalUrl: artifacts.URL.finalUrl,
-        runWarnings: lighthouseRunWarnings,
-        runtimeError: Runner.getArtifactRuntimeError(artifacts),
         audits: auditResultsById,
         configSettings: settings,
         categories,
-        categoryGroups: runOpts.config.groups || undefined,
+        categoryGroups: config.groups || undefined,
+        stackPacks: stackPacks.getStackPacks(artifacts.Stacks),
         timing: this._getTiming(artifacts),
         i18n: {
-          rendererFormattedStrings: i18n.getRendererFormattedStrings(settings.locale),
+          rendererFormattedStrings: format.getRendererFormattedStrings(settings.locale),
           icuMessagePaths: {},
         },
-        stackPacks: stackPacks.getStackPacks(artifacts.Stacks),
       };
 
       // Replace ICU message references with localized strings; save replaced paths in lhr.
-      i18nLhr.i18n.icuMessagePaths = i18n.replaceIcuMessages(i18nLhr, settings.locale);
+      i18nLhr.i18n.icuMessagePaths = format.replaceIcuMessages(i18nLhr, settings.locale);
 
       // LHR has now been localized.
       const lhr = /** @type {LH.Result} */ (i18nLhr);
@@ -167,13 +126,78 @@ class Runner {
 
       return {lhr, artifacts, report};
     } catch (err) {
-      // i18n LighthouseError strings.
-      if (err.friendlyMessage) {
-        err.friendlyMessage = i18n.getFormatted(err.friendlyMessage, settings.locale);
-      }
-      await Sentry.captureException(err, {level: 'fatal'});
-      throw err;
+      throw Runner.createRunnerError(err, settings);
     }
+  }
+
+  /**
+   * User can run -G solo, -A solo, or -GA together
+   * -G and -A will run partial lighthouse pipelines,
+   * and -GA will run everything plus save artifacts and lhr to disk.
+   *
+   * @template {LH.Config.Config | LH.Config.FRConfig} TConfig
+   * @param {(runnerData: {config: TConfig, driverMock?: Driver}) => Promise<LH.Artifacts>} gatherFn
+   * @param {{config: TConfig, driverMock?: Driver, computedCache: Map<string, ArbitraryEqualityMap>}} options
+   * @return {Promise<LH.Artifacts>}
+   */
+  static async gather(gatherFn, options) {
+    const settings = options.config.settings;
+
+    // Either load saved artifacts from disk or from the browser.
+    try {
+      const sentryContext = Sentry.getContext();
+      Sentry.captureBreadcrumb({
+        message: 'Run started',
+        category: 'lifecycle',
+        data: sentryContext,
+      });
+
+      /** @type {LH.Artifacts} */
+      let artifacts;
+      if (settings.auditMode && !settings.gatherMode) {
+        // No browser required, just load the artifacts from disk.
+        const path = this._getDataSavePath(settings);
+        artifacts = assetSaver.loadArtifacts(path);
+      } else {
+        const runnerStatus = {msg: 'Gather phase', id: 'lh:runner:gather'};
+        log.time(runnerStatus, 'verbose');
+
+        artifacts = await gatherFn({
+          config: options.config,
+          driverMock: options.driverMock,
+        });
+
+        log.timeEnd(runnerStatus);
+
+        // If `gather` is run multiple times before `audit`, the timing entries for each `gather` can pollute one another.
+        // We need to clear the timing entries at the end of gathering.
+        // Set artifacts.Timing again to ensure lh:runner:gather is included.
+        artifacts.Timing = log.takeTimeEntries();
+
+        // -G means save these to disk (e.g. ./latest-run).
+        if (settings.gatherMode) {
+          const path = this._getDataSavePath(settings);
+          await assetSaver.saveArtifacts(artifacts, path);
+        }
+      }
+
+      return artifacts;
+    } catch (err) {
+      throw Runner.createRunnerError(err, settings);
+    }
+  }
+
+  /**
+   * @param {any} err
+   * @param {LH.Config.Settings} settings
+   */
+  static createRunnerError(err, settings) {
+    // i18n LighthouseError strings.
+    if (err.friendlyMessage) {
+      err.friendlyMessage = format.getFormatted(err.friendlyMessage, settings.locale);
+    }
+    Sentry.captureException(err, {level: 'fatal'});
+    return err;
   }
 
   /**
@@ -189,29 +213,35 @@ class Runner {
     const timingEntriesKeyValues = [
       ...timingEntriesFromArtifacts,
       ...timingEntriesFromRunner,
-      // As entries can share a name, dedupe based on the startTime timestamp
-    ].map(entry => /** @type {[number, PerformanceEntry]} */ ([entry.startTime, entry]));
+    ].map(entry => /** @type {[string, PerformanceEntry]} */ ([
+      // As entries can share a name and start time, dedupe based on the name, startTime and duration
+      `${entry.startTime}-${entry.name}-${entry.duration}`,
+      entry,
+    ]));
     const timingEntries = Array.from(new Map(timingEntriesKeyValues).values())
     // Truncate timestamps to hundredths of a millisecond saves ~4KB. No need for microsecond
     // resolution.
     .map(entry => {
-      return /** @type {PerformanceEntry} */ ({
+      return {
         // Don't spread entry because browser PerformanceEntries can't be spread.
         // https://github.com/GoogleChrome/lighthouse/issues/8638
         startTime: parseFloat(entry.startTime.toFixed(2)),
         name: entry.name,
         duration: parseFloat(entry.duration.toFixed(2)),
         entryType: entry.entryType,
-      });
-    });
-    const runnerEntry = timingEntries.find(e => e.name === 'lh:runner:run');
-    return {entries: timingEntries, total: runnerEntry && runnerEntry.duration || 0};
+      };
+    }).sort((a, b) => a.startTime - b.startTime);
+    const gatherEntry = timingEntries.find(e => e.name === 'lh:runner:gather');
+    const auditEntry = timingEntries.find(e => e.name === 'lh:runner:audit');
+    const gatherTiming = gatherEntry?.duration || 0;
+    const auditTiming = auditEntry?.duration || 0;
+    return {entries: timingEntries, total: gatherTiming + auditTiming};
   }
 
   /**
    * Establish connection, load page and collect all required artifacts
    * @param {string} requestedUrl
-   * @param {{config: Config, driverMock?: Driver}} runnerOpts
+   * @param {{config: Config, computedCache: Map<string, ArbitraryEqualityMap>, driverMock?: Driver}} runnerOpts
    * @param {Connection} connection
    * @return {Promise<LH.Artifacts>}
    */
@@ -224,6 +254,7 @@ class Runner {
       driver,
       requestedUrl,
       settings: runnerOpts.config.settings,
+      computedCache: runnerOpts.computedCache,
     };
     const artifacts = await GatherRunner.run(runnerOpts.config.passes, gatherOpts);
     return artifacts;
@@ -235,9 +266,10 @@ class Runner {
    * @param {Array<LH.Config.AuditDefn>} audits
    * @param {LH.Artifacts} artifacts
    * @param {Array<string | LH.IcuMessage>} runWarnings
+   * @param {Map<string, ArbitraryEqualityMap>} computedCache
    * @return {Promise<Record<string, LH.RawIcu<LH.Audit.Result>>>}
    */
-  static async _runAudits(settings, audits, artifacts, runWarnings) {
+  static async _runAudits(settings, audits, artifacts, runWarnings, computedCache) {
     const status = {msg: 'Analyzing and running audits...', id: 'lh:runner:auditing'};
     log.time(status);
 
@@ -253,6 +285,19 @@ class Runner {
       const normalizedGatherSettings = Object.assign({}, artifacts.settings, overrides);
       const normalizedAuditSettings = Object.assign({}, settings, overrides);
 
+      // First, try each key individually so we can print which key differed.
+      const keys = new Set([
+        ...Object.keys(normalizedGatherSettings),
+        ...Object.keys(normalizedAuditSettings),
+      ]);
+      for (const k of keys) {
+        if (!isDeepEqual(normalizedGatherSettings[k], normalizedAuditSettings[k])) {
+          throw new Error(
+            `Cannot change settings between gathering and auditing. Difference found at: ${k}`);
+        }
+      }
+
+      // Call `isDeepEqual` on the entire thing, just in case something was missed.
       if (!isDeepEqual(normalizedGatherSettings, normalizedAuditSettings)) {
         throw new Error('Cannot change settings between gathering and auditing');
       }
@@ -261,7 +306,7 @@ class Runner {
     // Members of LH.Audit.Context that are shared across all audits.
     const sharedAuditContext = {
       settings,
-      computedCache: new Map(),
+      computedCache,
     };
 
     // Run each audit sequentially
@@ -291,7 +336,7 @@ class Runner {
   static async _runAudit(auditDefn, artifacts, sharedAuditContext, runWarnings) {
     const audit = auditDefn.implementation;
     const status = {
-      msg: `Auditing: ${i18n.getFormatted(audit.meta.title, 'en-US')}`,
+      msg: `Auditing: ${format.getFormatted(audit.meta.title, 'en-US')}`,
       id: `lh:audit:${audit.meta.id}`,
     };
     log.time(status);
@@ -357,7 +402,7 @@ class Runner {
           return narrowedArtifacts;
         }, /** @type {LH.Artifacts} */ ({}));
       const product = await audit.audit(narrowedArtifacts, auditContext);
-      runWarnings.push(...product.runWarnings || []);
+      runWarnings.push(...(product.runWarnings || []));
 
       auditResult = Audit.generateAuditResult(audit, product);
     } catch (err) {

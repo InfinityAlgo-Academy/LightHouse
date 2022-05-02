@@ -6,7 +6,7 @@ LH_ROOT="$DIRNAME/.."
 tmp_dir=$(mktemp -d -t lh-XXXXXXXXXX)
 
 cd "$tmp_dir"
-npm pack "$LH_ROOT"
+npm pack "$LH_ROOT" 2>/dev/null
 mv *.tgz "$LH_ROOT/dist/lighthouse.tgz"
 
 rmdir "$tmp_dir"

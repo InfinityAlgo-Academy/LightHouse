@@ -12,14 +12,19 @@ const trace = require('../../fixtures/traces/progressive-app-m60.json');
 const devtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
 const trace1msLayout = require('../../fixtures/traces/speedindex-1ms-layout-m84.trace.json');
 const devtoolsLog1msLayout = require('../../fixtures/traces/speedindex-1ms-layout-m84.devtoolslog.json'); // eslint-disable-line max-len
+const {getURLArtifactFromDevtoolsLog} = require('../../test-utils.js');
 
 /* eslint-env jest */
 
 describe('Metrics: Speed Index', () => {
+  const gatherContext = {gatherMode: 'navigation'};
+
   it('should compute a simulated value', async () => {
     const settings = {throttlingMethod: 'simulate'};
     const context = {settings, computedCache: new Map()};
-    const result = await SpeedIndex.request({trace, devtoolsLog, settings}, context);
+    const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
+    const result = await SpeedIndex.request({trace, devtoolsLog, gatherContext, settings, URL},
+      context);
 
     expect({
       timing: Math.round(result.timing),
@@ -44,12 +49,15 @@ describe('Metrics: Speed Index', () => {
       },
     };
 
+    const URL = getURLArtifactFromDevtoolsLog(devtoolsLog1msLayout);
     const context = {settings, computedCache: new Map()};
     const result = await SpeedIndex.request(
       {
+        gatherContext,
         trace: trace1msLayout,
         devtoolsLog: devtoolsLog1msLayout,
         settings,
+        URL,
       },
       context
     );
@@ -61,28 +69,29 @@ describe('Metrics: Speed Index', () => {
     }).toMatchInlineSnapshot(`
       Object {
         "optimistic": 575,
-        "pessimistic": 563,
-        "timing": 599,
+        "pessimistic": 633,
+        "timing": 635,
       }
     `);
   });
 
   it('should compute an observed value (desktop)', async () => {
-    const settings = {throttlingMethod: 'provided'};
+    const settings = {throttlingMethod: 'provided', formFactor: 'desktop'};
     const context = {settings, computedCache: new Map()};
-    const result = await SpeedIndex.request({trace, devtoolsLog, settings}, context);
+    const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
+    const result = await SpeedIndex.request({trace, devtoolsLog, gatherContext, settings, URL},
+      context);
 
     assert.equal(result.timing, 605);
     assert.equal(result.timestamp, 225414777015);
   });
 
   it('should compute an observed value (mobile)', async () => {
-    const settings = {throttlingMethod: 'provided'};
+    const settings = {throttlingMethod: 'provided', formFactor: 'mobile'};
     const context = {settings, computedCache: new Map()};
-    const result = await SpeedIndex.request(
-      {trace, devtoolsLog, settings, TestedAsMobileDevice: true},
-      context
-    );
+    const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
+    const result = await SpeedIndex.request({trace, devtoolsLog, gatherContext, settings, URL},
+      context);
 
     assert.equal(result.timing, 605);
     assert.equal(result.timestamp, 225414777015);

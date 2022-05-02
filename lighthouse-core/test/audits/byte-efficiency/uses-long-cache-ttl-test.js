@@ -30,6 +30,18 @@ function networkRecord(options = {}) {
 }
 
 describe('Cache headers audit', () => {
+  // Stub Date.now so the tests are not sensitive to timing.
+  let dateNowFn;
+  beforeAll(() => {
+    dateNowFn = Date.now;
+    const now = Date.now();
+    Date.now = () => now;
+  });
+
+  afterAll(() => {
+    Date.now = dateNowFn;
+  });
+
   function getArtifacts(networkRecords) {
     const devtoolLogs = networkRecordsToDevtoolsLog(networkRecords);
 

@@ -37,22 +37,23 @@ class GeolocationOnStart extends ViolationAudit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['ConsoleMessages'],
+      supportedModes: ['navigation'],
+      requiredArtifacts: ['ConsoleMessages', 'SourceMaps', 'Scripts'],
     };
   }
 
   /**
    * @param {LH.Artifacts} artifacts
-   * @return {LH.Audit.Product}
+   * @param {LH.Audit.Context} context
+   * @return {Promise<LH.Audit.Product>}
    */
-  static audit(artifacts) {
+  static async audit(artifacts, context) {
     // 'Only request geolocation information in response to a user gesture.'
-    const results = ViolationAudit.getViolationResults(artifacts, /geolocation/);
+    const results = await ViolationAudit.getViolationResults(artifacts, context, /geolocation/);
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
-      {key: 'url', itemType: 'url', text: str_(i18n.UIStrings.columnURL)},
-      {key: 'label', itemType: 'text', text: str_(i18n.UIStrings.columnLocation)},
+      {key: 'source', itemType: 'source-location', text: str_(i18n.UIStrings.columnSource)},
     ];
     // TODO(bckenny): there should actually be a ts error here. results[0].stackTrace
     // should violate the results type. Shouldn't be removed from details items regardless.

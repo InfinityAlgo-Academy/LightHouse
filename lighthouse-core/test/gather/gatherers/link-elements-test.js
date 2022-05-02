@@ -7,7 +7,14 @@
 
 /* eslint-env jest */
 
+const mockMainResource = jest.fn();
+jest.mock('../../../computed/main-resource.js', () => ({request: mockMainResource}));
+
 const LinkElements = require('../../../gather/gatherers/link-elements.js');
+
+beforeEach(() => {
+  mockMainResource.mockReset();
+});
 
 describe('Link Elements gatherer', () => {
   /**
@@ -23,21 +30,26 @@ describe('Link Elements gatherer', () => {
       hreflang: '',
       as: '',
       crossOrigin: null,
-      devtoolsNodePath: '',
-      nodeLabel: '',
-      snippet: '',
-      boundingRect: null,
-      selector: '',
+      node: null,
       ...overrides,
     };
   }
 
   function getPassData({linkElementsInDOM = [], headers = []}) {
     const url = 'https://example.com';
-    const loadData = {networkRecords: [{url, responseHeaders: headers, resourceType: 'Document'}]};
-    const driver = {evaluateAsync: () => Promise.resolve(linkElementsInDOM)};
-    const passContext = {driver, url};
-    return [passContext, loadData];
+    mockMainResource.mockReturnValue({url, responseHeaders: headers, resourceType: 'Document'});
+    const driver = {
+      executionContext: {
+        evaluate: () => Promise.resolve(linkElementsInDOM),
+      },
+    };
+    const baseArtifacts = {
+      URL: {
+        finalUrl: url,
+      },
+    };
+    const passContext = {driver, url, baseArtifacts, computedCache: new Map()};
+    return [passContext, {}];
   }
 
   it('returns elements from DOM', async () => {

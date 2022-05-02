@@ -5,19 +5,17 @@
  */
 'use strict';
 
-const browserify = require('browserify');
+const rollup = require('rollup');
+const rollupPlugins = require('./rollup-plugins.js');
 const fs = require('fs');
 const path = require('path');
-const rimraf = require('rimraf');
 const assert = require('assert').strict;
+const {LH_ROOT} = require('../root.js');
 
-const distDir = path.join(__dirname, '..', 'dist', 'dt-report-resources');
-const bundleOutFile = `${distDir}/report-generator.js`;
-const generatorFilename = `./lighthouse-core/report/report-generator.js`;
-const htmlReportAssets = require('../lighthouse-core/report/html/html-report-assets.js');
+const distDir = path.join(LH_ROOT, 'dist', 'dt-report-resources');
+const bundleOutFile = `${distDir}/report-generator.mjs`;
 
 /**
- * Used to save cached resources (Runtime.cachedResources).
  * @param {string} name
  * @param {string} content
  */
@@ -26,21 +24,33 @@ function writeFile(name, content) {
   fs.writeFileSync(`${distDir}/${name}`, content);
 }
 
-rimraf.sync(distDir);
-fs.mkdirSync(distDir);
+fs.rmSync(distDir, {recursive: true, force: true});
+fs.mkdirSync(distDir, {recursive: true});
 
-writeFile('report.js', htmlReportAssets.REPORT_JAVASCRIPT);
-writeFile('report.css', htmlReportAssets.REPORT_CSS);
-writeFile('template.html', htmlReportAssets.REPORT_TEMPLATE);
-writeFile('templates.html', htmlReportAssets.REPORT_TEMPLATES);
-writeFile('report.d.ts', 'export {}');
-writeFile('report-generator.d.ts', 'export {}');
+writeFile('report-generator.mjs.d.ts', 'export {}');
 
-const pathToReportAssets = require.resolve('../clients/devtools-report-assets.js');
-browserify(generatorFilename, {standalone: 'Lighthouse.ReportGenerator'})
-  // Shims './html/html-report-assets.js' to resolve to devtools-report-assets.js
-  .require(pathToReportAssets, {expose: './html/html-report-assets.js'})
-  .bundle((err, src) => {
-    if (err) throw err;
-    fs.writeFileSync(bundleOutFile, src.toString());
+async function buildReportGenerator() {
+  const bundle = await rollup.rollup({
+    input: 'report/generator/report-generator.js',
+    plugins: [
+      rollupPlugins.shim({
+        [`${LH_ROOT}/report/generator/flow-report-assets.js`]: 'export default {}',
+      }),
+      rollupPlugins.commonjs(),
+      rollupPlugins.nodeResolve(),
+      rollupPlugins.inlineFs({verbose: Boolean(process.env.DEBUG)}),
+    ],
   });
+
+  await bundle.write({
+    file: bundleOutFile,
+    format: 'umd',
+    name: 'Lighthouse.ReportGenerator',
+  });
+  await bundle.close();
+}
+
+buildReportGenerator().catch(err => {
+  console.error(err);
+  process.exit(1);
+});

@@ -7,11 +7,10 @@
 
 /**
  * @fileoverview Audits a page to determine if it is calling deprecated APIs.
- * This is done by collecting console log messages and filtering them by ones
- * that contain deprecated API warnings sent by Chrome.
  */
 
 const Audit = require('./audit.js');
+const JsBundles = require('../computed/js-bundles.js');
 const i18n = require('../lib/i18n/i18n.js');
 
 const UIStrings = {
@@ -45,45 +44,36 @@ class Deprecations extends Audit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['ConsoleMessages'],
+      requiredArtifacts: ['InspectorIssues', 'SourceMaps', 'Scripts'],
     };
   }
 
   /**
    * @param {LH.Artifacts} artifacts
-   * @return {LH.Audit.Product}
+   * @param {LH.Audit.Context} context
+   * @return {Promise<LH.Audit.Product>}
    */
-  static audit(artifacts) {
-    const entries = artifacts.ConsoleMessages;
+  static async audit(artifacts, context) {
+    const bundles = await JsBundles.request(artifacts, context);
 
-    const deprecations = entries.filter(log => log.entry.source === 'deprecation').map(log => {
-      // HTML deprecations will have no url and no way to attribute to a specific line.
-      /** @type {LH.Audit.Details.SourceLocationValue=} */
-      let source;
-      if (log.entry.url) {
-        // JS deprecations will have a stack trace.
-        // CSS deprecations only expose a line number.
-        const topCallFrame = log.entry.stackTrace && log.entry.stackTrace.callFrames[0];
-        const line = log.entry.lineNumber || 0;
-        const column = topCallFrame ? topCallFrame.columnNumber : 0;
-        source = {
-          type: 'source-location',
-          url: log.entry.url,
-          urlProvider: 'network',
-          line,
-          column,
+    const deprecations = artifacts.InspectorIssues.deprecationIssue
+      // TODO: translate these strings.
+      // see https://github.com/GoogleChrome/lighthouse/issues/13895
+      .filter(deprecation => !deprecation.type || deprecation.type === 'Untranslated')
+      .map(deprecation => {
+        const {scriptId, url, lineNumber, columnNumber} = deprecation.sourceCodeLocation;
+        const bundle = bundles.find(bundle => bundle.script.scriptId === scriptId);
+        return {
+          value: deprecation.message || '',
+          // Protocol.Audits.SourceCodeLocation.columnNumber is 1-indexed, but we use 0-indexed.
+          source: Audit.makeSourceLocation(url, lineNumber, columnNumber - 1, bundle),
         };
-      }
-      return {
-        value: log.entry.text,
-        source,
-      };
-    });
+      });
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
       {key: 'value', itemType: 'text', text: str_(UIStrings.columnDeprecate)},
-      {key: 'source', itemType: 'source-location', text: str_(i18n.UIStrings.columnURL)},
+      {key: 'source', itemType: 'source-location', text: str_(i18n.UIStrings.columnSource)},
     ];
     const details = Audit.makeTableDetails(headings, deprecations);
 

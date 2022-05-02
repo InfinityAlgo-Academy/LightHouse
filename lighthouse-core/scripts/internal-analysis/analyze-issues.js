@@ -3,13 +3,8 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 /* eslint-disable no-console */
-
-const fs = require('fs');
-const path = require('path');
-const log = require('lighthouse-logger');
 
 /**
  * @fileoverview Used in conjunction with `./download-issues.js` to analyze our Issue and PR response times as a team.
@@ -19,6 +14,10 @@ const log = require('lighthouse-logger');
  *
  * See the download script for usage information.
  */
+
+import log from 'lighthouse-logger';
+
+import {readJson} from '../../../root.js';
 
 /** @typedef {import('./download-issues.js').AugmentedGitHubIssue} AugmentedGitHubIssue */
 
@@ -62,9 +61,8 @@ function normalizeIssue(issue) {
   return issue;
 }
 
-const ISSUES_PATH = path.join(__dirname, '../../../.tmp', '_issues.json');
 /** @type {Array<AugmentedGitHubIssue>} */
-const _ISSUES = JSON.parse(fs.readFileSync(ISSUES_PATH, 'utf8')).map(normalizeIssue);
+const _ISSUES = readJson('.tmp/_issues.json').map(normalizeIssue);
 const _ISSUES_SINCE = _ISSUES.filter(issue => new Date(issue.created_at).getTime() > START_AT);
 const ISSUES = _ISSUES_SINCE.filter(issue => !issue.pull_request);
 
@@ -80,7 +78,7 @@ function computeAndLogReviewResponseStats(label, issues) {
   const initialReviewRequests = issues
     .map(issue => {
       const assignEvent = issue.events.find(event => event.event === 'assigned');
-      const assignee = (assignEvent && assignEvent.assignee && assignEvent.assignee.login) || '';
+      const assignee = assignEvent?.assignee?.login || '';
       const firstCommentByAssignee = issue.comments.find(
         comment => comment.user.login === assignee
       );

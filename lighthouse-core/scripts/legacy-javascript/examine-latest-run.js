@@ -3,7 +3,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an 'AS IS' BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 /* eslint-disable no-console */
 
@@ -16,40 +15,29 @@
  *   3. Inspect output for fishy looking polyfills.
  */
 
-const path = require('path');
+import path from 'path';
+
 // @ts-expect-error - We don't really need types for this
-const colors = require('colors');
-const LegacyJavascript = require('../../audits/byte-efficiency/legacy-javascript.js');
-const i18n = require('../../lib/i18n/i18n.js');
+import colors from 'colors';
 
-const LH_ROOT_DIR = path.join(__dirname, '../../../');
-const LATEST_RUN_DIR = path.join(LH_ROOT_DIR, 'latest-run');
+import LegacyJavascript from '../../audits/byte-efficiency/legacy-javascript.js';
+import format from '../../../shared/localization/format.js';
+import {LH_ROOT, readJson} from '../../../root.js';
 
-/** @param {LH.DevtoolsLog} log */
-function requestUrlToId(log) {
-  return log.reduce(
-    (map, entry) => {
-      if (entry.method === 'Network.requestWillBeSent') {
-        map[entry.params.request.url] = entry.params.requestId;
-      }
-      return map;
-    },
-    /** @type {Record<string, string>} */ ({})
-  );
-}
+const LATEST_RUN_DIR = path.join(LH_ROOT, 'latest-run');
 
 async function main() {
   /** @type {LH.Artifacts} */
-  const artifacts = require(`${LATEST_RUN_DIR}/artifacts.json`);
-  const devtoolsLog = require(`${LATEST_RUN_DIR}/defaultPass.devtoolslog.json`);
-  const scripts = artifacts.ScriptElements;
-  const requestUrlMap = requestUrlToId(devtoolsLog);
+  const artifacts = readJson(`${LATEST_RUN_DIR}/artifacts.json`);
+  const devtoolsLog = readJson(`${LATEST_RUN_DIR}/defaultPass.devtoolslog.json`);
+  const scripts = artifacts.Scripts;
   artifacts.devtoolsLogs = {defaultPass: devtoolsLog};
 
   const auditResults = await LegacyJavascript.audit(artifacts, {
     computedCache: new Map(),
     options: {},
-    settings: /** @type {any} */ ({}),
+    /** @type {any} */
+    settings: {},
   });
 
   const items =
@@ -65,8 +53,8 @@ async function main() {
   console.log(colors.bold(`${items.length} signals found!`));
   for (const item of items) {
     if (typeof item.url !== 'string') continue;
-    const requestId = requestUrlMap[item.url];
-    const script = scripts.find(s => s.requestId === requestId);
+
+    const script = scripts.find(s => s.url === item.url);
     const signals = Array.isArray(item.signals) ? item.signals : [];
     const locations = Array.isArray(item.locations) ? item.locations : [];
 
@@ -83,7 +71,7 @@ async function main() {
     for (let i = 0; i < signals.length; i++) {
       const signal = signals[i];
       const location = locations[i];
-      if (typeof location !== 'object' || i18n.isIcuMessage(location) ||
+      if (typeof location !== 'object' || format.isIcuMessage(location) ||
           location.type !== 'source-location') {
         continue;
       }

@@ -11,13 +11,16 @@ const trace = require('../../fixtures/traces/progressive-app-m60.json');
 const devtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
 const LanternFirstMeaningfulPaint =
   require('../../../computed/metrics/lantern-first-meaningful-paint.js');
+const {getURLArtifactFromDevtoolsLog} = require('../../test-utils.js');
+const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
 
 /* eslint-env jest */
 describe('Metrics: Lantern FMP', () => {
   it('should compute predicted value', async () => {
+    const gatherContext = {gatherMode: 'navigation'};
     const computedCache = new Map();
-    const result = await LanternFirstMeaningfulPaint.request({trace, devtoolsLog,
-      settings: {}}, {computedCache});
+    const result = await LanternFirstMeaningfulPaint.request({trace, devtoolsLog, gatherContext,
+      settings: {}, URL}, {computedCache});
 
     expect({
       timing: Math.round(result.timing),

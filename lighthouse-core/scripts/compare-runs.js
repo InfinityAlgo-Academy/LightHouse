@@ -3,7 +3,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 /* eslint-disable no-console */
 
@@ -15,19 +14,24 @@
 // The script will report both timings and perf metric results. View just one of them by using --filter:
 //     node lighthouse-core/scripts/compare-runs.js --summarize --name pr --filter=metric
 
-const fs = require('fs');
+import fs from 'fs';
+import util from 'util';
+import childProcess from 'child_process';
+
+import glob from 'glob';
+import yargs from 'yargs';
+import * as yargsHelpers from 'yargs/helpers';
+
+import {LH_ROOT} from '../../root.js';
+import {ProgressLogger} from './lantern/collect/common.js';
+
 const mkdir = fs.promises.mkdir;
-const glob = require('glob');
-const util = require('util');
-const execFile = util.promisify(require('child_process').execFile);
-const yargs = require('yargs');
+const execFile = util.promisify(childProcess.execFile);
 
-const {ProgressLogger} = require('./lantern/collect/common.js');
-
-const LH_ROOT = `${__dirname}/../..`;
 const ROOT_OUTPUT_DIR = `${LH_ROOT}/timings-data`;
 
-const argv = yargs
+const y = yargs(yargsHelpers.hideBin(process.argv));
+const rawArgv = y
   .help('help')
   .describe({
     // common flags
@@ -51,19 +55,26 @@ const argv = yargs
     'delta-property-sort': 'Property to sort by its delta',
     'desc': 'Set to override default ascending sort',
   })
+  .option('n', {type: 'number', default: 1})
   .string('filter')
+  .string('url-filter')
   .alias({'gather': 'G', 'audit': 'A'})
   .default('report-exclude', 'key|min|max|stdev|^n$')
   .default('delta-property-sort', 'mean')
   .default('output', 'table')
-  .array('urls')
+  .option('urls', {array: true, type: 'string'})
   .string('lh-flags')
   .default('desc', false)
   .default('sort-by-absolute-value', false)
   .default('lh-flags', '')
   .strict() // fail on unknown commands
-  .wrap(yargs.terminalWidth())
+  .wrap(y.terminalWidth())
   .argv;
+
+// Augmenting yargs type with auto-camelCasing breaks in tsc@4.1.2 and @types/yargs@15.0.11,
+// so for now cast to add yarg's camelCase properties to type.
+const argv =
+  /** @type {Awaited<typeof rawArgv> & CamelCasify<Awaited<typeof rawArgv>>} */ (rawArgv);
 
 const reportExcludeRegex =
   argv.reportExclude !== 'none' ? new RegExp(argv.reportExclude, 'i') : null;
@@ -120,12 +131,15 @@ function round(value) {
  * @param {number} total
  * @return {string}
  */
-function getProgressBar(i, total = argv.n * argv.urls.length) {
+function getProgressBar(i, total = argv.n * (argv.urls || []).length) {
   const bars = new Array(Math.round(i * 40 / total)).fill('▄').join('').padEnd(40);
   return `${i + 1} / ${total} [${bars}]`;
 }
 
 async function gather() {
+  if (typeof argv.name !== 'string') {
+    throw new Error('expected entry for name option');
+  }
   const outputDir = dir(argv.name);
   if (fs.existsSync(outputDir)) {
     console.log('Collection already started - resuming.');
@@ -136,7 +150,7 @@ async function gather() {
   progress.log('Gathering…');
 
   let progressCount = 0;
-  for (const url of argv.urls) {
+  for (const url of argv.urls || []) {
     const urlFolder = `${outputDir}/${urlToFolder(url)}`;
     await mkdir(urlFolder, {recursive: true});
 
@@ -161,12 +175,15 @@ async function gather() {
 }
 
 async function audit() {
+  if (typeof argv.name !== 'string') {
+    throw new Error('expected entry for name option');
+  }
   const outputDir = dir(argv.name);
   const progress = new ProgressLogger();
   progress.log('Auditing…');
 
   let progressCount = 0;
-  for (const url of argv.urls) {
+  for (const url of argv.urls || []) {
     const urlDir = `${outputDir}/${urlToFolder(url)}`;
     for (let i = 0; i < argv.n; i++) {
       const gatherDir = `${urlDir}/${i}`;
@@ -215,9 +232,9 @@ function aggregateResults(name) {
       continue;
     }
 
-    if (argv.urlFilter && !lhr.requestedUrl.includes(argv.urlFilter)) continue;
+    if (argv.urlFilter && !lhr.requestedUrl?.includes(argv.urlFilter)) continue;
 
-    const metrics = lhr.audits.metrics && lhr.audits.metrics.details ?
+    const metrics = lhr.audits.metrics?.details ?
     /** @type {!LH.Audit.Details.Table} */ (lhr.audits.metrics.details).items[0] :
       {};
     const allEntries = {
@@ -309,6 +326,9 @@ function isNumber(value) {
 }
 
 function summarize() {
+  if (typeof argv.name !== 'string') {
+    throw new Error('expected entry for name option');
+  }
   const results = aggregateResults(argv.name);
   print(filter(results));
 }
@@ -342,12 +362,12 @@ function compare() {
     const someResult = baseResult || otherResult;
     if (!someResult) throw new Error('impossible');
 
-    const mean = compareValues(baseResult && baseResult.mean, otherResult && otherResult.mean);
-    const stdev = compareValues(baseResult && baseResult.stdev, otherResult && otherResult.stdev);
+    const mean = compareValues(baseResult?.mean, otherResult?.mean);
+    const stdev = compareValues(baseResult?.stdev, otherResult?.stdev);
     // eslint-disable-next-line max-len
     const cv = compareValues(baseResult && parseFloat(baseResult.CV), otherResult && parseFloat(otherResult.CV));
-    const min = compareValues(baseResult && baseResult.min, otherResult && otherResult.min);
-    const max = compareValues(baseResult && baseResult.max, otherResult && otherResult.max);
+    const min = compareValues(baseResult?.min, otherResult?.min);
+    const max = compareValues(baseResult?.max, otherResult?.max);
 
     return {
       'key': someResult.key,

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
+set -euxo pipefail
 
 ##
 # @license Copyright 2020 The Lighthouse Authors. All Rights Reserved.
@@ -12,6 +12,27 @@ if [ -d "$DEVTOOLS_PATH" ]
 then
   echo "Directory $DEVTOOLS_PATH already exists."
   cd "$DEVTOOLS_PATH"
+
+  git status
+  git --no-pager log -1
+
+  # Update to keep current.
+  if [ -z "${CI:-}" ]; then
+    # Locally, clean everything and update to latest code.
+    git reset --hard
+    git clean -fd
+    git pull --ff-only -f origin main
+    gclient sync --delete_unversioned_trees --reset
+  elif [ -z "${GHA_DEVTOOLS_CACHE_HIT:-}" ]; then
+    # For CI, only run if this was a cache-miss.
+    # The only way the folder already exists _and_ there is a cache-miss is
+    # if actions/cache@v2 `restore-keys` has provided a partial environment for us.
+    git reset --hard
+    git clean -fd
+    git pull --ff-only -f origin main
+    gclient sync --delete_unversioned_trees --reset
+  fi
+
   exit 0
 fi
 

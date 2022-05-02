@@ -6,10 +6,11 @@
 'use strict';
 
 const LinkHeader = require('http-link-header');
-const Gatherer = require('./gatherer.js');
+const FRGatherer = require('../../fraggle-rock/gather/base-gatherer.js');
 const {URL} = require('../../lib/url-shim.js');
-const NetworkAnalyzer = require('../../lib/dependency-graph/simulator/network-analyzer.js');
-const {getElementsInDocumentString, getNodeDetailsString} = require('../../lib/page-functions.js');
+const pageFunctions = require('../../lib/page-functions.js');
+const DevtoolsLog = require('./devtools-log.js');
+const MainResource = require('../../computed/main-resource.js');
 
 /* globals HTMLLinkElement getNodeDetails */
 
@@ -46,7 +47,7 @@ function getCrossoriginFromHeader(value) {
 /**
  * @return {LH.Artifacts['LinkElements']}
  */
-/* istanbul ignore next */
+/* c8 ignore start */
 function getLinkElementsInDOM() {
   /** @type {Array<HTMLOrSVGElement>} */
   // @ts-expect-error - getElementsInDocument put into scope via stringification
@@ -71,39 +72,53 @@ function getLinkElementsInDOM() {
       hrefRaw,
       source,
       // @ts-expect-error - put into scope via stringification
-      ...getNodeDetails(link),
+      node: getNodeDetails(link),
     });
   }
 
   return linkElements;
 }
+/* c8 ignore stop */
 
-class LinkElements extends Gatherer {
-  /**
-   * @param {LH.Gatherer.PassContext} passContext
-   * @return {Promise<LH.Artifacts['LinkElements']>}
-   */
-  static getLinkElementsInDOM(passContext) {
-    // We'll use evaluateAsync because the `node.getAttribute` method doesn't actually normalize
-    // the values like access from JavaScript does.
-    return passContext.driver.evaluateAsync(`(() => {
-      ${getElementsInDocumentString};
-      ${getLinkElementsInDOM};
-      ${getNodeDetailsString};
-
-      return getLinkElementsInDOM();
-    })()`, {useIsolation: true});
+class LinkElements extends FRGatherer {
+  constructor() {
+    super();
+    /**
+     * This needs to be in the constructor.
+     * https://github.com/GoogleChrome/lighthouse/issues/12134
+     * @type {LH.Gatherer.GathererMeta<'DevtoolsLog'>}
+     */
+    this.meta = {
+      supportedModes: ['timespan', 'navigation'],
+      dependencies: {DevtoolsLog: DevtoolsLog.symbol},
+    };
   }
 
   /**
-   * @param {LH.Gatherer.PassContext} passContext
-   * @param {LH.Gatherer.LoadData} loadData
-   * @return {LH.Artifacts['LinkElements']}
+   * @param {LH.Gatherer.FRTransitionalContext} context
+   * @return {Promise<LH.Artifacts['LinkElements']>}
    */
-  static getLinkElementsInHeaders(passContext, loadData) {
-    const finalUrl = passContext.url;
-    const records = loadData.networkRecords;
-    const mainDocument = NetworkAnalyzer.findMainDocument(records, finalUrl);
+  static getLinkElementsInDOM(context) {
+    // We'll use evaluateAsync because the `node.getAttribute` method doesn't actually normalize
+    // the values like access from JavaScript does.
+    return context.driver.executionContext.evaluate(getLinkElementsInDOM, {
+      args: [],
+      useIsolation: true,
+      deps: [
+        pageFunctions.getNodeDetailsString,
+        pageFunctions.getElementsInDocument,
+      ],
+    });
+  }
+
+  /**
+   * @param {LH.Gatherer.FRTransitionalContext} context
+   * @param {LH.Artifacts['DevtoolsLog']} devtoolsLog
+   * @return {Promise<LH.Artifacts['LinkElements']>}
+   */
+  static async getLinkElementsInHeaders(context, devtoolsLog) {
+    const mainDocument =
+      await MainResource.request({devtoolsLog, URL: context.baseArtifacts.URL}, context);
 
     /** @type {LH.Artifacts['LinkElements']} */
     const linkElements = [];
@@ -114,17 +129,13 @@ class LinkElements extends Gatherer {
       for (const link of LinkHeader.parse(header.value).refs) {
         linkElements.push({
           rel: link.rel || '',
-          href: normalizeUrlOrNull(link.uri, finalUrl),
+          href: normalizeUrlOrNull(link.uri, context.baseArtifacts.URL.finalUrl),
           hrefRaw: link.uri || '',
           hreflang: link.hreflang || '',
           as: link.as || '',
           crossOrigin: getCrossoriginFromHeader(link.crossorigin),
           source: 'headers',
-          devtoolsNodePath: '',
-          selector: '',
-          nodeLabel: '',
-          boundingRect: null,
-          snippet: '',
+          node: null,
         });
       }
     }
@@ -133,13 +144,13 @@ class LinkElements extends Gatherer {
   }
 
   /**
-   * @param {LH.Gatherer.PassContext} passContext
-   * @param {LH.Gatherer.LoadData} loadData
+   * @param {LH.Gatherer.FRTransitionalContext} context
+   * @param {LH.Artifacts['DevtoolsLog']} devtoolsLog
    * @return {Promise<LH.Artifacts['LinkElements']>}
    */
-  async afterPass(passContext, loadData) {
-    const fromDOM = await LinkElements.getLinkElementsInDOM(passContext);
-    const fromHeaders = LinkElements.getLinkElementsInHeaders(passContext, loadData);
+  async _getArtifact(context, devtoolsLog) {
+    const fromDOM = await LinkElements.getLinkElementsInDOM(context);
+    const fromHeaders = await LinkElements.getLinkElementsInHeaders(context, devtoolsLog);
     const linkElements = fromDOM.concat(fromHeaders);
 
     for (const link of linkElements) {
@@ -148,6 +159,23 @@ class LinkElements extends Gatherer {
     }
 
     return linkElements;
+  }
+
+  /**
+   * @param {LH.Gatherer.PassContext} context
+   * @param {LH.Gatherer.LoadData} loadData
+   * @return {Promise<LH.Artifacts['LinkElements']>}
+   */
+  async afterPass(context, loadData) {
+    return this._getArtifact({...context, dependencies: {}}, loadData.devtoolsLog);
+  }
+
+  /**
+   * @param {LH.Gatherer.FRTransitionalContext<'DevtoolsLog'>} context
+   * @return {Promise<LH.Artifacts['LinkElements']>}
+   */
+  async getArtifact(context) {
+    return this._getArtifact(context, context.dependencies.DevtoolsLog);
   }
 }
 

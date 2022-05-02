@@ -9,7 +9,7 @@
  * Call this script to update assets/schema-tree.json with the latest schema.org spec
  */
 
-const fetch = require('isomorphic-fetch');
+const fetch = require('node-fetch');
 const path = require('path');
 const fs = require('fs');
 
@@ -43,7 +43,7 @@ function processData(data) {
   function cleanIdPrefixes(parents) {
     if (Array.isArray(parents)) {
       return parents.map(item => removePrefix(item['@id']));
-    } else if (parents && parents['@id']) {
+    } else if (parents?.['@id']) {
       return [removePrefix(parents['@id'])];
     }
 

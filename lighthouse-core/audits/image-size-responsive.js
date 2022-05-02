@@ -14,6 +14,8 @@ const Audit = require('./audit.js');
 const URL = require('../lib/url-shim.js');
 const i18n = require('../lib/i18n/i18n.js');
 
+/** @typedef {LH.Artifacts.ImageElement & Required<Pick<LH.Artifacts.ImageElement, 'naturalDimensions'>>} ImageWithNaturalDimensions */
+
 const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on the size of visible images on the page. This descriptive title is shown to users when all images have correct sizes. */
   title: 'Serves images with appropriate resolution',
@@ -43,7 +45,7 @@ const LARGE_IMAGE_FACTOR = 0.75;
 // considered SMALL.
 const SMALL_IMAGE_THRESHOLD = 64;
 
-/** @typedef {{url: string, elidedUrl: string, displayedSize: string, actualSize: string, actualPixels: number, expectedSize: string, expectedPixels: number}} Result */
+/** @typedef {{url: string, node: LH.Audit.Details.NodeValue, displayedSize: string, actualSize: string, actualPixels: number, expectedSize: string, expectedPixels: number}} Result */
 
 /**
  * @param {{top: number, bottom: number, left: number, right: number}} imageRect
@@ -61,47 +63,82 @@ function isVisible(imageRect, viewportDimensions) {
 }
 
 /**
+ * @param {{top: number, bottom: number, left: number, right: number}} imageRect
+ * @param {{innerWidth: number, innerHeight: number}} viewportDimensions
+ * @return {boolean}
+ */
+function isSmallerThanViewport(imageRect, viewportDimensions) {
+  return (
+    (imageRect.bottom - imageRect.top) <= viewportDimensions.innerHeight &&
+    (imageRect.right - imageRect.left) <= viewportDimensions.innerWidth
+  );
+}
+
+/**
  * @param {LH.Artifacts.ImageElement} image
  * @return {boolean}
  */
 function isCandidate(image) {
+  /** image-rendering solution for pixel art scaling.
+   * https://developer.mozilla.org/en-US/docs/Games/Techniques/Crisp_pixel_art_look
+  */
+  const artisticImageRenderingValues = ['pixelated', 'crisp-edges'];
+  // https://html.spec.whatwg.org/multipage/images.html#pixel-density-descriptor
+  const densityDescriptorRegex = / \d+(\.\d+)?x/;
   if (image.displayedWidth <= 1 || image.displayedHeight <= 1) {
     return false;
   }
-  if (image.naturalWidth === 0 || image.naturalHeight === 0) {
+  if (
+    !image.naturalDimensions ||
+    !image.naturalDimensions.width ||
+    !image.naturalDimensions.height
+  ) {
     return false;
   }
-  if (image.mimeType === 'image/svg+xml') {
+  if (URL.guessMimeType(image.src) === 'image/svg+xml') {
     return false;
   }
   if (image.isCss) {
     return false;
   }
-  if (image.usesObjectFit) {
+  if (image.computedStyles.objectFit !== 'fill') {
     return false;
   }
-  if (image.usesPixelArtScaling) {
+  // Check if pixel art scaling is used.
+  if (artisticImageRenderingValues.includes(image.computedStyles.imageRendering)) {
     return false;
   }
-  if (image.usesSrcSetDensityDescriptor) {
+  // Check if density descriptor is used.
+  if (densityDescriptorRegex.test(image.srcset)) {
     return false;
   }
   return true;
 }
 
 /**
+ * Type check to ensure that the ImageElement has natural dimensions.
+ *
  * @param {LH.Artifacts.ImageElement} image
+ * @return {image is ImageWithNaturalDimensions}
+ */
+function imageHasNaturalDimensions(image) {
+  return !!image.naturalDimensions;
+}
+
+/**
+ * @param {ImageWithNaturalDimensions} image
  * @param {number} DPR
  * @return {boolean}
  */
 function imageHasRightSize(image, DPR) {
   const [expectedWidth, expectedHeight] =
       allowedImageSize(image.displayedWidth, image.displayedHeight, DPR);
-  return image.naturalWidth >= expectedWidth && image.naturalHeight >= expectedHeight;
+  return image.naturalDimensions.width >= expectedWidth &&
+    image.naturalDimensions.height >= expectedHeight;
 }
 
 /**
- * @param {LH.Artifacts.ImageElement} image
+ * @param {ImageWithNaturalDimensions} image
  * @param {number} DPR
  * @return {Result}
  */
@@ -109,11 +146,11 @@ function getResult(image, DPR) {
   const [expectedWidth, expectedHeight] =
       expectedImageSize(image.displayedWidth, image.displayedHeight, DPR);
   return {
-    url: image.src,
-    elidedUrl: URL.elideDataURI(image.src),
+    url: URL.elideDataURI(image.src),
+    node: Audit.makeNodeItem(image.node),
     displayedSize: `${image.displayedWidth} x ${image.displayedHeight}`,
-    actualSize: `${image.naturalWidth} x ${image.naturalHeight}`,
-    actualPixels: image.naturalWidth * image.naturalHeight,
+    actualSize: `${image.naturalDimensions.width} x ${image.naturalDimensions.height}`,
+    actualPixels: image.naturalDimensions.width * image.naturalDimensions.height,
     expectedSize: `${expectedWidth} x ${expectedHeight}`,
     expectedPixels: expectedWidth * expectedHeight,
   };
@@ -167,7 +204,8 @@ function expectedImageSize(displayedWidth, displayedHeight, DPR) {
  */
 function deduplicateResultsByUrl(results) {
   results.sort((a, b) => a.url === b.url ? 0 : (a.url < b. url ? -1 : 1));
-  const deduplicated = /** @type {Result[]} */ ([]);
+  /** @type {Result[]} */
+  const deduplicated = [];
   for (const r of results) {
     const previousResult = deduplicated[deduplicated.length - 1];
     if (previousResult && previousResult.url === r.url) {
@@ -213,17 +251,20 @@ class ImageSizeResponsive extends Audit {
    */
   static audit(artifacts) {
     const DPR = artifacts.ViewportDimensions.devicePixelRatio;
+
     const results = Array
       .from(artifacts.ImageElements)
       .filter(isCandidate)
+      .filter(imageHasNaturalDimensions)
       .filter(image => !imageHasRightSize(image, DPR))
       .filter(image => isVisible(image.clientRect, artifacts.ViewportDimensions))
+      .filter(image => isSmallerThanViewport(image.clientRect, artifacts.ViewportDimensions))
       .map(image => getResult(image, DPR));
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
-      {key: 'url', itemType: 'thumbnail', text: ''},
-      {key: 'elidedUrl', itemType: 'url', text: str_(i18n.UIStrings.columnURL)},
+      {key: 'node', itemType: 'node', text: ''},
+      {key: 'url', itemType: 'url', text: str_(i18n.UIStrings.columnURL)},
       {key: 'displayedSize', itemType: 'text', text: str_(UIStrings.columnDisplayed)},
       {key: 'actualSize', itemType: 'text', text: str_(UIStrings.columnActual)},
       {key: 'expectedSize', itemType: 'text', text: str_(UIStrings.columnExpected)},

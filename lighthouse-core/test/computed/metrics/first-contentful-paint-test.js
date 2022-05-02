@@ -10,14 +10,20 @@ const assert = require('assert').strict;
 const FirstContentfulPaint = require('../../../computed/metrics/first-contentful-paint.js'); // eslint-disable-line max-len
 const trace = require('../../fixtures/traces/progressive-app-m60.json');
 const devtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
+const {getURLArtifactFromDevtoolsLog} = require('../../test-utils.js');
+const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
 
 /* eslint-env jest */
 
 describe('Metrics: FCP', () => {
+  const gatherContext = {gatherMode: 'navigation'};
+
   it('should compute a simulated value', async () => {
     const settings = {throttlingMethod: 'simulate'};
     const context = {settings, computedCache: new Map()};
-    const result = await FirstContentfulPaint.request({trace, devtoolsLog, settings}, context);
+    const result = await FirstContentfulPaint.request(
+      {trace, devtoolsLog, gatherContext, settings, URL},
+      context);
 
     expect({
       timing: Math.round(result.timing),
@@ -31,19 +37,20 @@ describe('Metrics: FCP', () => {
   });
 
   it('should compute an observed value (desktop)', async () => {
-    const settings = {throttlingMethod: 'provided'};
+    const settings = {throttlingMethod: 'provided', formFactor: 'desktop'};
     const context = {settings, computedCache: new Map()};
-    const result = await FirstContentfulPaint.request({trace, devtoolsLog, settings}, context);
+    const result = await FirstContentfulPaint.request({trace, devtoolsLog, gatherContext, settings},
+      context);
 
     assert.equal(Math.round(result.timing), 499);
     assert.equal(result.timestamp, 225414670885);
   });
 
   it('should compute an observed value (mobile)', async () => {
-    const settings = {throttlingMethod: 'provided'};
+    const settings = {throttlingMethod: 'provided', formFactor: 'mobile'};
     const context = {settings, computedCache: new Map()};
     const result = await FirstContentfulPaint.request(
-      {trace, devtoolsLog, settings, TestedAsMobileDevice: true}, context);
+      {gatherContext, trace, devtoolsLog, settings}, context);
 
     assert.equal(Math.round(result.timing), 499);
     assert.equal(result.timestamp, 225414670885);

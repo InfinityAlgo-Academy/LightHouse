@@ -3,14 +3,15 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-const fs = require('fs');
-const path = require('path');
-const glob = require('glob');
-const MessageParser = require('intl-messageformat-parser').default;
+import fs from 'fs';
+import path from 'path';
 
-const {collectAllCustomElementsFromICU} = require('../../lib/i18n/i18n.js');
+import glob from 'glob';
+import MessageParser from 'intl-messageformat-parser';
+
+import {collectAllCustomElementsFromICU} from '../../../shared/localization/format.js';
+import {LH_ROOT, readJson} from '../../../root.js';
 
 /** @typedef {Record<string, {message: string}>} LhlMessages */
 
@@ -115,7 +116,7 @@ function getGoldenLocaleArgumentIds(goldenLhl) {
  * (e.g. by picking a new message id).
  */
 function pruneObsoleteLhlMessages() {
-  const goldenLhl = require('../../lib/i18n/locales/en-US.json');
+  const goldenLhl = readJson('shared/localization/locales/en-US.json');
   const goldenLocaleArgumentIds = getGoldenLocaleArgumentIds(goldenLhl);
 
   // Find all locale files, ignoring self-generated en-US, en-XL, and ctc files.
@@ -124,19 +125,18 @@ function pruneObsoleteLhlMessages() {
     '**/en-US.json',
     '**/en-XL.json',
   ];
-  const globPattern = 'lighthouse-core/lib/i18n/locales/**/+([-a-zA-Z0-9]).json';
-  const lhRoot = `${__dirname}/../../../`;
+  const globPattern = 'shared/localization/locales/**/+([-a-zA-Z0-9]).json';
   const localePaths = glob.sync(globPattern, {
     ignore,
-    cwd: lhRoot,
+    cwd: LH_ROOT,
   });
 
   /** @type {Set<string>} */
   const alreadyLoggedPrunes = new Set();
   for (const localePath of localePaths) {
-    const absoluteLocalePath = path.join(lhRoot, localePath);
-    // readFileSync so that the file is pulled again once updated by a collect-strings run
-    const localeLhl = JSON.parse(fs.readFileSync(absoluteLocalePath, 'utf-8'));
+    const absoluteLocalePath = path.join(LH_ROOT, localePath);
+    // Re-read data so that the file is pulled again once updated by a collect-strings run.
+    const localeLhl = readJson(absoluteLocalePath);
     const prunedLocale = pruneLocale(goldenLocaleArgumentIds, localeLhl, alreadyLoggedPrunes);
 
     const stringified = JSON.stringify(prunedLocale, null, 2) + '\n';
@@ -144,7 +144,7 @@ function pruneObsoleteLhlMessages() {
   }
 }
 
-module.exports = {
+export {
   pruneObsoleteLhlMessages,
 
   // Exported for testing.

@@ -13,6 +13,7 @@ const CPUNode = require('../../../lib/dependency-graph/cpu-node.js');
 const Simulator = require('../../../lib/dependency-graph/simulator/simulator.js');
 const NetworkRequest = require('../../../lib/network-request.js');
 const assert = require('assert').strict;
+const {getURLArtifactFromDevtoolsLog} = require('../../test-utils.js');
 
 const trace = require('../../fixtures/traces/progressive-app-m60.json');
 const devtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
@@ -25,6 +26,8 @@ const ampDevtoolsLog = require('../../fixtures/traces/amp-m86.devtoolslog.json')
 describe('Render blocking resources audit', () => {
   it('evaluates http2 input correctly', async () => {
     const artifacts = {
+      URL: getURLArtifactFromDevtoolsLog(devtoolsLog),
+      GatherContext: {gatherMode: 'navigation'},
       traces: {defaultPass: trace},
       devtoolsLogs: {defaultPass: devtoolsLog},
       TagsBlockingFirstPaint: [
@@ -44,6 +47,8 @@ describe('Render blocking resources audit', () => {
 
   it('evaluates amp page correctly', async () => {
     const artifacts = {
+      URL: getURLArtifactFromDevtoolsLog(ampDevtoolsLog),
+      GatherContext: {gatherMode: 'navigation'},
       traces: {defaultPass: ampTrace},
       devtoolsLogs: {defaultPass: ampDevtoolsLog},
       TagsBlockingFirstPaint: [
@@ -80,11 +85,9 @@ describe('Render blocking resources audit', () => {
         'url': 'https://fonts.googleapis.com/css?family=Fira+Sans+Condensed%3A400%2C400i%2C600%2C600i&subset=latin%2Clatin-ext&display=swap',
         'wastedMs': 440,
       },
-      {
-        'totalBytes': 621,
-        'url': 'https://fonts.googleapis.com/css?family=Montserrat',
-        'wastedMs': 440,
-      },
+      // Due to internal H2 simulation details, parallel HTTP/2 requests are pipelined which makes
+      // it look like Montserrat starts after Fira Sans finishes. It would be preferred
+      // if eventual simulation improvements list Montserrat here as well.
     ]);
   });
 
@@ -97,13 +100,15 @@ describe('Render blocking resources audit', () => {
 
     beforeEach(() => {
       requestId = 1;
+      const scheme = 'http';
+      const protocol = 'http';
       record = props => {
-        const parsedURL = {host: 'example.com', securityOrigin: 'http://example.com'};
-        return Object.assign({parsedURL, requestId: requestId++}, props);
+        const parsedURL = {host: 'example.com', scheme, securityOrigin: 'http://example.com'};
+        return Object.assign({parsedURL, requestId: requestId++}, props, {protocol});
       };
       recordSlow = props => {
-        const parsedURL = {host: 'slow.com', securityOrigin: 'http://slow.com'};
-        return Object.assign({parsedURL, requestId: requestId++}, props);
+        const parsedURL = {host: 'slow.com', scheme, securityOrigin: 'http://slow.com'};
+        return Object.assign({parsedURL, requestId: requestId++}, props, {protocol});
       };
     });
 

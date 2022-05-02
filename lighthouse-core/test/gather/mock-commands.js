@@ -29,8 +29,16 @@
  *    - `mockResponse` which pushes protocol message responses for consumption
  *    - `findInvocation` which asserts that `sendCommand` was invoked with the given command and
  *      returns the protocol message argument.
+ *
+ * There are two variants of sendCommand, one that expects a sessionId as the second positional
+ * argument (legacy Lighthouse `Connection.sendCommand`) and one that does not (Fraggle Rock
+ * `ProtocolSession.sendCommand`).
+ *
+ * @param {{useSessionId: boolean}} [options]
  */
-function createMockSendCommandFn() {
+function createMockSendCommandFn(options) {
+  const {useSessionId = true} = options || {};
+
   /**
    * Typescript fails to equate template type `C` here with `C` when pushing to this array.
    * Instead of sprinkling a couple ts-ignores, make `command` be any, but leave `C` for just
@@ -46,7 +54,13 @@ function createMockSendCommandFn() {
      * @param {string|undefined=} sessionId
      * @param {LH.CrdpCommands[C]['paramsType']} args
      */
-    (command, sessionId, ...args) => {
+    async (command, sessionId, ...args) => {
+      if (!useSessionId) {
+        // @ts-expect-error - If sessionId isn't used, it *is* args.
+        args = [sessionId, ...args];
+        sessionId = undefined;
+      }
+
       const indexOfResponse = mockResponses
         .findIndex(entry => entry.command === command && entry.sessionId === sessionId);
       if (indexOfResponse === -1) throw new Error(`${command} unimplemented`);
@@ -54,8 +68,7 @@ function createMockSendCommandFn() {
       mockResponses.splice(indexOfResponse, 1);
       const returnValue = typeof response === 'function' ? response(...args) : response;
       if (delay) return new Promise(resolve => setTimeout(() => resolve(returnValue), delay));
-      // @ts-expect-error: Some covariant type stuff doesn't work here. idk, I'm not a type scientist.
-      return Promise.resolve(returnValue);
+      return returnValue;
     });
 
   const mockFn = Object.assign(mockFnImpl, {
@@ -85,8 +98,22 @@ function createMockSendCommandFn() {
      * @param {string=} sessionId
      */
     findInvocation(command, sessionId) {
-      expect(mockFn).toHaveBeenCalledWith(command, sessionId, expect.anything());
-      return mockFn.mock.calls.find(call => call[0] === command && call[1] === sessionId)[2];
+      const expectedArgs = useSessionId ?
+        [command, sessionId, expect.anything()] :
+        [command, expect.anything()];
+      expect(mockFn).toHaveBeenCalledWith(...expectedArgs);
+      return mockFn.mock.calls.find(
+        call => call[0] === command && (!useSessionId || call[1] === sessionId)
+      )[useSessionId ? 2 : 1];
+    },
+    /**
+     * @param {keyof LH.CrdpCommands} command
+     * @param {string=} sessionId
+     */
+    findAllInvocations(command, sessionId) {
+      return mockFn.mock.calls.filter(
+        call => call[0] === command && (!useSessionId || call[1] === sessionId)
+      ).map(invocation => useSessionId ? invocation[2] : invocation[1]);
     },
   });
 
@@ -134,6 +161,12 @@ function createMockOnceFn() {
       expect(mockFn).toHaveBeenCalledWith(event, expect.anything());
       return mockFn.mock.calls.find(call => call[0] === event)[1];
     },
+    /**
+     * @param {keyof LH.CrdpEvents} event
+     */
+    getListeners(event) {
+      return mockFn.mock.calls.filter(call => call[0] === event).map(call => call[1]);
+    },
   });
 
   return mockFn;
@@ -180,6 +213,12 @@ function createMockOnFn() {
     findListener(event) {
       expect(mockFn).toHaveBeenCalledWith(event, expect.anything());
       return mockFn.mock.calls.find(call => call[0] === event)[1];
+    },
+    /**
+     * @param {keyof LH.CrdpEvents} event
+     */
+    getListeners(event) {
+      return mockFn.mock.calls.filter(call => call[0] === event).map(call => call[1]);
     },
   });
 

@@ -5,18 +5,18 @@
  */
 'use strict';
 
-const Gatherer = require('./gatherer.js');
-const NetworkAnalyzer = require('../../lib/dependency-graph/simulator/network-analyzer.js');
+const FRGatherer = require('../../fraggle-rock/gather/base-gatherer.js');
+const NetworkRecords = require('../../computed/network-records.js');
 const NetworkRequest = require('../../lib/network-request.js');
-const getElementsInDocumentString = require('../../lib/page-functions.js').getElementsInDocumentString; // eslint-disable-line max-len
 const pageFunctions = require('../../lib/page-functions.js');
+const DevtoolsLog = require('./devtools-log.js');
 
 /* global getNodeDetails */
 
 /**
  * @return {LH.Artifacts['ScriptElements']}
  */
-/* istanbul ignore next */
+/* c8 ignore start */
 function collectAllScriptElements() {
   /** @type {HTMLScriptElement[]} */
   // @ts-expect-error - getElementsInDocument put into scope via stringification
@@ -29,102 +29,82 @@ function collectAllScriptElements() {
       id: script.id || null,
       async: script.async,
       defer: script.defer,
-      source: /** @type {'head'|'body'} */ (script.closest('head') ? 'head' : 'body'),
+      source: script.closest('head') ? 'head' : 'body',
       // @ts-expect-error - getNodeDetails put into scope via stringification
-      ...getNodeDetails(script),
-      content: script.src ? null : script.text,
-      requestId: null,
+      node: getNodeDetails(script),
     };
   });
 }
-
-/**
- * @template T, U
- * @param {Array<T>} values
- * @param {(value: T) => Promise<U>} promiseMapper
- * @param {boolean} runInSeries
- * @return {Promise<Array<U>>}
- */
-async function runInSeriesOrParallel(values, promiseMapper, runInSeries) {
-  if (runInSeries) {
-    const results = [];
-    for (const value of values) {
-      const result = await promiseMapper(value);
-      results.push(result);
-    }
-    return results;
-  } else {
-    const promises = values.map(promiseMapper);
-    return await Promise.all(promises);
-  }
-}
+/* c8 ignore stop */
 
 /**
  * @fileoverview Gets JavaScript file contents.
  */
-class ScriptElements extends Gatherer {
+class ScriptElements extends FRGatherer {
+  /** @type {LH.Gatherer.GathererMeta<'DevtoolsLog'>} */
+  meta = {
+    supportedModes: ['timespan', 'navigation'],
+    dependencies: {DevtoolsLog: DevtoolsLog.symbol},
+  };
+
   /**
-   * @param {LH.Gatherer.PassContext} passContext
-   * @param {LH.Gatherer.LoadData} loadData
+   * @param {LH.Gatherer.FRTransitionalContext} context
+   * @param {LH.Artifacts.NetworkRequest[]} networkRecords
    * @return {Promise<LH.Artifacts['ScriptElements']>}
    */
-  async afterPass(passContext, loadData) {
-    const driver = passContext.driver;
-    const mainResource = NetworkAnalyzer.findMainDocument(loadData.networkRecords, passContext.url);
+  async _getArtifact(context, networkRecords) {
+    const executionContext = context.driver.executionContext;
 
-    /** @type {LH.Artifacts['ScriptElements']} */
-    const scripts = await driver.evaluateAsync(`(() => {
-      ${getElementsInDocumentString}
-      ${pageFunctions.getNodeDetailsString};
-      return (${collectAllScriptElements.toString()})();
-    })()`, {useIsolation: true});
+    const scripts = await executionContext.evaluate(collectAllScriptElements, {
+      args: [],
+      useIsolation: true,
+      deps: [
+        pageFunctions.getNodeDetailsString,
+        pageFunctions.getElementsInDocument,
+      ],
+    });
 
-    for (const script of scripts) {
-      if (script.content) script.requestId = mainResource.requestId;
-    }
-
-    const scriptRecords = loadData.networkRecords
+    const scriptRecords = networkRecords
+      .filter(record => record.resourceType === NetworkRequest.TYPES.Script)
       // Ignore records from OOPIFs
-      .filter(record => !record.sessionId)
-      // Only get the content of script requests
-      .filter(record => record.resourceType === NetworkRequest.TYPES.Script);
-
-    // If run on a mobile device, be sensitive to memory limitations and only request one
-    // record at a time.
-    const scriptRecordContents = await runInSeriesOrParallel(
-      scriptRecords,
-      record => driver.getRequestContent(record.requestId).catch(() => ''),
-      passContext.baseArtifacts.HostFormFactor === 'mobile' /* runInSeries*/ );
+      .filter(record => !record.sessionId);
 
     for (let i = 0; i < scriptRecords.length; i++) {
       const record = scriptRecords[i];
-      const content = scriptRecordContents[i];
-      if (!content) continue;
 
       const matchedScriptElement = scripts.find(script => script.src === record.url);
-      if (matchedScriptElement) {
-        matchedScriptElement.requestId = record.requestId;
-        matchedScriptElement.content = content;
-      } else {
+      if (!matchedScriptElement) {
         scripts.push({
-          devtoolsNodePath: '',
-          snippet: '',
-          selector: '',
-          nodeLabel: '',
-          boundingRect: null,
           type: null,
           src: record.url,
           id: null,
           async: false,
           defer: false,
           source: 'network',
-          requestId: record.requestId,
-          content,
+          node: null,
         });
       }
     }
 
     return scripts;
+  }
+
+  /**
+   * @param {LH.Gatherer.FRTransitionalContext<'DevtoolsLog'>} context
+   */
+  async getArtifact(context) {
+    const devtoolsLog = context.dependencies.DevtoolsLog;
+    const networkRecords = await NetworkRecords.request(devtoolsLog, context);
+    return this._getArtifact(context, networkRecords);
+  }
+
+  /**
+   * @param {LH.Gatherer.PassContext} passContext
+   * @param {LH.Gatherer.LoadData} loadData
+   */
+  async afterPass(passContext, loadData) {
+    const networkRecords = loadData.networkRecords;
+    return this._getArtifact({...passContext, dependencies: {}}, networkRecords);
   }
 }
 

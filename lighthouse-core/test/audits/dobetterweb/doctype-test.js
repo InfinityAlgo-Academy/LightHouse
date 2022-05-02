@@ -19,30 +19,33 @@ describe('DOBETTERWEB: doctype audit', () => {
     expect(auditResult.explanation).toBeDisplayString('Document must contain a doctype');
   });
 
-  it('fails when the value of the name attribute is a value other then lowercase "html"', () => {
+  it('fails when document is in quirks-mode (but passes other checks)', () => {
+    const auditResult = Audit.audit({
+      // eg `<!DOCTYPE html foo>`. https://github.com/GoogleChrome/lighthouse/issues/10030
+      Doctype: {
+        name: 'html',
+        publicId: '',
+        systemId: '',
+        documentCompatMode: 'BackCompat',
+      },
+    });
+    assert.equal(auditResult.score, 0);
+    expect(auditResult.explanation)
+        .toBeDisplayString('Document contains a doctype that triggers quirks-mode');
+  });
+
+  it('fails when the value of the name attribute is a value other than "html"', () => {
     const auditResult = Audit.audit({
       Doctype: {
         name: 'xml',
         publicId: '',
         systemId: '',
+        documentCompatMode: 'BackCompat',
       },
     });
     assert.equal(auditResult.score, 0);
     expect(auditResult.explanation).toBeDisplayString(
-      'Doctype name must be the lowercase string `html`');
-  });
-
-  it('fails when the value of the name attribute is not the lowercase string "html"', () => {
-    const auditResult = Audit.audit({
-      Doctype: {
-        name: 'HTML',
-        publicId: '',
-        systemId: '',
-      },
-    });
-    assert.equal(auditResult.score, 0);
-    expect(auditResult.explanation).toBeDisplayString(
-      'Doctype name must be the lowercase string `html`');
+      'Doctype name must be the string `html`');
   });
 
   it('fails when the publicId attribute is not an empty string', () => {
@@ -51,6 +54,7 @@ describe('DOBETTERWEB: doctype audit', () => {
         name: 'html',
         publicId: '189655',
         systemId: '',
+        documentCompatMode: 'BackCompat',
       },
     });
     assert.equal(auditResult.score, 0);
@@ -63,6 +67,7 @@ describe('DOBETTERWEB: doctype audit', () => {
         name: 'html',
         publicId: '',
         systemId: '189655',
+        documentCompatMode: 'BackCompat',
       },
     });
     assert.equal(auditResult.score, 0);
@@ -75,6 +80,7 @@ describe('DOBETTERWEB: doctype audit', () => {
         name: 'html',
         publicId: '',
         systemId: '',
+        documentCompatMode: 'CSS1Compat',
       },
     });
     assert.equal(auditResult.score, 1);

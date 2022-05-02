@@ -5,12 +5,12 @@
  */
 'use strict';
 
-const Gatherer = require('../gatherer.js');
+const FRGatherer = require('../../../fraggle-rock/gather/base-gatherer.js');
 
-/* global fetch, URL, location */
+/* global fetch, location */
 
 /** @return {Promise<LH.Artifacts['RobotsTxt']>} */
-/* istanbul ignore next */
+/* c8 ignore start */
 async function getRobotsTxtContent() {
   try {
     const response = await fetch(new URL('/robots.txt', location.href).href);
@@ -20,21 +20,37 @@ async function getRobotsTxtContent() {
 
     const content = await response.text();
     return {status: response.status, content};
-  } catch (_) {
-    return {status: null, content: null};
+  } catch (err) {
+    return {status: null, content: null, errorMessage: err.message};
   }
 }
+/* c8 ignore stop */
 
+class RobotsTxt extends FRGatherer {
+  /** @type {LH.Gatherer.GathererMeta} */
+  meta = {
+    supportedModes: ['snapshot', 'navigation'],
+  };
 
-class RobotsTxt extends Gatherer {
   /**
-   * @param {LH.Gatherer.PassContext} passContext
+   * @param {LH.Gatherer.FRTransitionalContext} passContext
    * @return {Promise<LH.Artifacts['RobotsTxt']>}
    */
-  afterPass(passContext) {
-    return passContext.driver.evaluateAsync(`(${getRobotsTxtContent.toString()}())`, {
-      useIsolation: true,
-    });
+  async getArtifact(passContext) {
+    // Iframe fetcher still has issues with CSPs.
+    // Only use the fetcher if we are fetching over the protocol.
+    if (await passContext.driver.fetcher.shouldUseLegacyFetcher()) {
+      return passContext.driver.executionContext.evaluate(getRobotsTxtContent, {
+        args: [],
+        useIsolation: true,
+      });
+    }
+
+    const {finalUrl} = passContext.baseArtifacts.URL;
+    const robotsUrl = new URL('/robots.txt', finalUrl).href;
+    await passContext.driver.fetcher.enable();
+    return passContext.driver.fetcher.fetchResource(robotsUrl)
+      .catch(err => ({status: null, content: null, errorMessage: err.message}));
   }
 }
 

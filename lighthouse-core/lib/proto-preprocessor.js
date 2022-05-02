@@ -16,10 +16,10 @@ const fs = require('fs');
  */
 
 /**
-  * Transform an LHR into a proto-friendly, mostly-compatible LHR.
-  * @param {LH.Result} lhr
-  * @return {LH.Result}
-  */
+ * Transform an LHR into a proto-friendly, mostly-compatible LHR.
+ * @param {LH.Result} lhr
+ * @return {LH.Result}
+ */
 function processForProto(lhr) {
   /** @type {LH.Result} */
   const reportJson = JSON.parse(JSON.stringify(lhr));
@@ -29,10 +29,22 @@ function processForProto(lhr) {
   // 'ignore unknown fields' in the language of conversion.
   if (reportJson.configSettings) {
     // The settings that are in both proto and LHR
-    const {emulatedFormFactor, locale, onlyCategories, channel} = reportJson.configSettings;
+    const {
+      formFactor,
+      locale,
+      onlyCategories,
+      channel,
+      throttling,
+      throttlingMethod} = reportJson.configSettings;
 
     // @ts-expect-error - intentionally only a subset of settings.
-    reportJson.configSettings = {emulatedFormFactor, locale, onlyCategories, channel};
+    reportJson.configSettings = {
+      formFactor,
+      locale,
+      onlyCategories,
+      channel,
+      throttling,
+      throttlingMethod};
   }
 
   // Remove runtimeError if it is NO_ERROR
@@ -68,13 +80,8 @@ function processForProto(lhr) {
     });
   }
 
-  // Drop the i18n icuMessagePaths. Painful in proto, and low priority to expose currently.
-  if (reportJson.i18n && reportJson.i18n.icuMessagePaths) {
-    delete reportJson.i18n.icuMessagePaths;
-  }
-
-  // Remove any found empty strings, as they are dropped after round-tripping anyway
   /**
+   * Remove any found empty strings, as they are dropped after round-tripping anyway
    * @param {any} obj
    */
   function removeStrings(obj) {
@@ -100,7 +107,7 @@ function processForProto(lhr) {
   return reportJson;
 }
 
-// @ts-expect-error claims always false, but this checks if cli or module
+// Test if called from the CLI or as a module.
 if (require.main === module) {
   // read in the argv for the input & output
   const args = process.argv.slice(2);

@@ -40,7 +40,7 @@ const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
 /**
  * @param {Array<FailingNodeData>} fontSizeArtifact
- * @returns {Array<FailingNodeData>}
+ * @return {Array<FailingNodeData>}
  */
 function getUniqueFailingRules(fontSizeArtifact) {
   /** @type {Map<string, FailingNodeData>} */
@@ -68,18 +68,21 @@ function getUniqueFailingRules(fontSizeArtifact) {
 }
 
 /**
- * @param {Array<string>=} attributes
- * @returns {Map<string, string>}
+ * @param {Array<string|undefined>=} attributes
+ * @return {Map<string, string>}
  */
 function getAttributeMap(attributes = []) {
   const map = new Map();
 
   for (let i = 0; i < attributes.length; i += 2) {
-    const name = attributes[i].toLowerCase();
-    const value = attributes[i + 1].trim();
+    const name = attributes[i];
+    const value = attributes[i + 1];
+    if (!name || !value) continue;
 
-    if (value) {
-      map.set(name, value);
+    const normalizedValue = value.trim();
+
+    if (normalizedValue) {
+      map.set(name.toLowerCase(), normalizedValue);
     }
   }
 
@@ -89,7 +92,7 @@ function getAttributeMap(attributes = []) {
 /**
  * TODO: return unique selector, like axe-core does, instead of just id/class/name of a single node
  * @param {FailingNodeData['parentNode']} parentNode
- * @returns {string}
+ * @return {string}
  */
 function getSelector(parentNode) {
   const attributeMap = getAttributeMap(parentNode.attributes);
@@ -127,7 +130,7 @@ function nodeToTableNode(parentNode) {
  * @param {string} baseURL
  * @param {FailingNodeData['cssRule']} styleDeclaration
  * @param {FailingNodeData['parentNode']} parentNode
- * @returns {{source: LH.Audit.Details.UrlValue | LH.Audit.Details.SourceLocationValue | LH.Audit.Details.CodeValue, selector: string | LH.Audit.Details.NodeValue}}
+ * @return {{source: LH.Audit.Details.UrlValue | LH.Audit.Details.SourceLocationValue | LH.Audit.Details.CodeValue, selector: string | LH.Audit.Details.NodeValue}}
  */
 function findStyleRuleSource(baseURL, styleDeclaration, parentNode) {
   if (!styleDeclaration ||
@@ -193,9 +196,11 @@ function findStyleRuleSource(baseURL, styleDeclaration, parentNode) {
       }
     }
 
-    const url = stylesheet.sourceURL;
+    const source = Audit.makeSourceLocation(stylesheet.sourceURL, line, column);
+    source.urlProvider = urlProvider;
+
     return {
-      source: {type: 'source-location', url, urlProvider, line, column},
+      source,
       selector,
     };
   }
@@ -233,7 +238,7 @@ class FontSize extends Audit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['FontSize', 'URL', 'MetaElements', 'TestedAsMobileDevice'],
+      requiredArtifacts: ['FontSize', 'URL', 'MetaElements'],
     };
   }
 
@@ -243,7 +248,7 @@ class FontSize extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
-    if (!artifacts.TestedAsMobileDevice) {
+    if (context.settings.formFactor === 'desktop') {
       // Font size isn't important to desktop SEO
       return {
         score: 1,

@@ -22,18 +22,21 @@ const getResult = scripts => {
     })),
   ];
   const artifacts = {
+    GatherContext: {gatherMode: 'navigation'},
     URL: {finalUrl: mainDocumentUrl, requestedUrl: mainDocumentUrl},
     devtoolsLogs: {defaultPass: networkRecordsToDevtoolsLog(networkRecords)},
-    ScriptElements: scripts.map(({url, code}, index) => {
+    Scripts: scripts.map(({url, code}, index) => {
       return {
-        src: url,
+        scriptId: String(index),
+        url,
         content: code,
-        requestId: String(index),
+        length: code.length,
       };
     }),
-    SourceMaps: scripts.reduce((acc, {url, map}) => {
+    SourceMaps: scripts.reduce((acc, {url, map}, index) => {
       if (!map) return acc;
       acc.push({
+        scriptId: String(index),
         scriptUrl: url,
         map,
       });
@@ -102,6 +105,7 @@ describe('LegacyJavaScript audit', () => {
               "location": Object {
                 "column": 0,
                 "line": 0,
+                "original": undefined,
                 "type": "source-location",
                 "url": "https://www.googletagmanager.com/a.js",
                 "urlProvider": "network",

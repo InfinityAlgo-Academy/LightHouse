@@ -7,38 +7,37 @@
 
 /* eslint-env jest */
 
+require('../test-utils.js').makeMocksForGatherRunner();
+
 const Gatherer = require('../../gather/gatherers/gatherer.js');
 const GatherRunner_ = require('../../gather/gather-runner.js');
 const assert = require('assert').strict;
 const Config = require('../../config/config.js');
 const unresolvedPerfLog = require('./../fixtures/unresolved-perflog.json');
-const NetworkRequest = require('../../lib/network-request.js');
 const LHError = require('../../lib/lh-error.js');
 const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
 const Driver = require('../../gather/driver.js');
 const Connection = require('../../gather/connections/connection.js');
-const {createMockSendCommandFn} = require('./mock-commands.js');
-const {makeParamsOptional} = require('../test-utils.js');
-
-jest.mock('../../lib/stack-collector.js', () => () => Promise.resolve([]));
+const {createMockSendCommandFn, createMockOnceFn} = require('./mock-commands.js');
+const {
+  makeParamsOptional,
+  makePromiseInspectable,
+  flushAllTimersAndMicrotasks,
+} = require('../test-utils.js');
 
 const GatherRunner = {
   afterPass: makeParamsOptional(GatherRunner_.afterPass),
   beginRecording: makeParamsOptional(GatherRunner_.beginRecording),
   collectArtifacts: makeParamsOptional(GatherRunner_.collectArtifacts),
   endRecording: makeParamsOptional(GatherRunner_.endRecording),
-  getInstallabilityErrors: makeParamsOptional(GatherRunner_.getInstallabilityErrors),
-  getInterstitialError: makeParamsOptional(GatherRunner_.getInterstitialError),
-  getNetworkError: makeParamsOptional(GatherRunner_.getNetworkError),
-  getNonHtmlError: makeParamsOptional(GatherRunner_.getNonHtmlError),
-  getPageLoadError: makeParamsOptional(GatherRunner_.getPageLoadError),
-  getWebAppManifest: makeParamsOptional(GatherRunner_.getWebAppManifest),
   initializeBaseArtifacts: makeParamsOptional(GatherRunner_.initializeBaseArtifacts),
   loadPage: makeParamsOptional(GatherRunner_.loadPage),
   run: makeParamsOptional(GatherRunner_.run),
   runPass: makeParamsOptional(GatherRunner_.runPass),
   setupDriver: makeParamsOptional(GatherRunner_.setupDriver),
-  setupPassNetwork: makeParamsOptional(GatherRunner_.setupPassNetwork),
+  // Spies that should have mock implemenations most of the time.
+  assertNoSameOriginServiceWorkerClients: jest.spyOn(GatherRunner_,
+    'assertNoSameOriginServiceWorkerClients'),
 };
 
 /**
@@ -53,12 +52,6 @@ function makeConfig(json) {
   }
   return /** @type {Config & {passes: Array<LH.Config.Pass>}} */ (config);
 }
-
-const LoadFailureMode = {
-  fatal: /** @type {'fatal'} */ ('fatal'),
-  ignore: /** @type {'ignore'} */ ('ignore'),
-  warn: /** @type {'warn'} */ ('warn'),
-};
 
 class TestGatherer extends Gatherer {
   constructor() {
@@ -79,37 +72,18 @@ class TestGathererNoArtifact extends Gatherer {
 }
 
 class EmulationDriver extends Driver {
-  enableRuntimeEvents() {
-    return Promise.resolve();
-  }
-  enableAsyncStacks() {
-    return Promise.resolve();
-  }
-  assertNoSameOriginServiceWorkerClients() {
-    return Promise.resolve();
-  }
-  cacheNatives() {
-    return Promise.resolve();
-  }
-  registerPerformanceObserver() {
-    return Promise.resolve();
-  }
-  cleanBrowserCaches() {
-    return Promise.resolve();
-  }
-  clearDataForOrigin() {
-    return Promise.resolve();
-  }
   registerRequestIdleCallbackWrap() {
     return Promise.resolve();
   }
   getImportantStorageWarning() {
     return Promise.resolve(undefined);
   }
+  url() {
+    return Promise.resolve('about:blank');
+  }
 }
 
 const fakeDriver = require('./fake-driver.js');
-const fakeDriverUsingRealMobileDevice = fakeDriver.fakeDriverUsingRealMobileDevice;
 
 /** @type {EmulationDriver} */
 let driver;
@@ -117,7 +91,15 @@ let driver;
 let connectionStub;
 
 function resetDefaultMockResponses() {
+  GatherRunner.assertNoSameOriginServiceWorkerClients = jest.spyOn(GatherRunner_,
+    'assertNoSameOriginServiceWorkerClients');
+  GatherRunner.assertNoSameOriginServiceWorkerClients.mockReset();
+  GatherRunner.assertNoSameOriginServiceWorkerClients.mockResolvedValue();
+
   connectionStub.sendCommand = createMockSendCommandFn()
+    .mockResponse('Debugger.enable')
+    .mockResponse('Debugger.setSkipAllPauses')
+    .mockResponse('Debugger.setAsyncCallStackDepth')
     .mockResponse('Emulation.setCPUThrottlingRate')
     .mockResponse('Emulation.setDeviceMetricsOverride')
     .mockResponse('Emulation.setTouchEmulationEnabled')
@@ -126,11 +108,13 @@ function resetDefaultMockResponses() {
     .mockResponse('Network.setBlockedURLs')
     .mockResponse('Network.setExtraHTTPHeaders')
     .mockResponse('Network.setUserAgentOverride')
+    .mockResponse('Page.addScriptToEvaluateOnNewDocument')
     .mockResponse('Page.enable')
     .mockResponse('ServiceWorker.enable');
 }
 
 beforeEach(() => {
+  jest.useFakeTimers();
   // @ts-expect-error - connectionStub has a mocked version of sendCommand implemented in each test
   connectionStub = new Connection();
   // @ts-expect-error
@@ -139,39 +123,63 @@ beforeEach(() => {
   };
   driver = new EmulationDriver(connectionStub);
   resetDefaultMockResponses();
+
+  const emulation = require('../../lib/emulation.js');
+  emulation.emulate = jest.fn();
+  emulation.throttle = jest.fn();
+  emulation.clearThrottling = jest.fn();
+
+  const prepare = require('../../gather/driver/prepare.js');
+  prepare.prepareTargetForNavigationMode = jest.fn();
+  prepare.prepareTargetForIndividualNavigation = jest.fn().mockResolvedValue({warnings: []});
+
+  const navigation = jest.requireMock('../../gather/driver/navigation.js');
+  navigation.gotoURL = jest.fn().mockResolvedValue({
+    mainDocumentUrl: 'https://example.com',
+    timedOut: false,
+    warnings: [],
+  });
+});
+
+afterEach(() => {
+  GatherRunner.assertNoSameOriginServiceWorkerClients.mockRestore();
+  jest.useRealTimers();
 });
 
 describe('GatherRunner', function() {
-  it('loads a page and updates passContext.URL on redirect', () => {
+  it('loads a page and updates passContext urls on redirect', () => {
     const url1 = 'https://example.com';
     const url2 = 'https://example.com/interstitial';
-    const driver = {
-      gotoURL() {
-        return Promise.resolve({finalUrl: url2, timedOut: false});
-      },
-    };
+    const driver = {};
+    const gotoURL = jest.requireMock('../../gather/driver/navigation.js').gotoURL;
+    gotoURL.mockResolvedValue({mainDocumentUrl: url2, warnings: []});
 
     const passContext = {
       url: url1,
       settings: {},
+      LighthouseRunWarnings: [],
       passConfig: {
         gatherers: [],
+      },
+      baseArtifacts: {
+        URL: {
+          finalUrl: url1,
+        },
       },
     };
 
     return GatherRunner.loadPage(driver, passContext).then(_ => {
       assert.equal(passContext.url, url2);
+      assert.equal(passContext.baseArtifacts.URL.finalUrl, url2);
     });
   });
 
   it('loads a page and returns a pageLoadError', async () => {
     const url = 'https://example.com';
     const error = new LHError(LHError.errors.NO_FCP);
-    const driver = {
-      gotoURL() {
-        return Promise.reject(error);
-      },
-    };
+    const driver = {};
+    const gotoURL = jest.requireMock('../../gather/driver/navigation.js').gotoURL;
+    gotoURL.mockRejectedValue(error);
 
     const passContext = {
       url,
@@ -187,8 +195,8 @@ describe('GatherRunner', function() {
   it('collects benchmark as an artifact', async () => {
     const requestedUrl = 'https://example.com';
     const driver = fakeDriver;
-    const config = makeConfig({passes: []});
-    const options = {requestedUrl, driver, settings: config.settings};
+    const config = makeConfig({passes: [{passName: 'defaultPass'}]});
+    const options = {requestedUrl, driver, settings: config.settings, computedCache: new Map()};
 
     const results = await GatherRunner.run(config.passes, options);
     expect(Number.isFinite(results.BenchmarkIndex)).toBeTruthy();
@@ -197,8 +205,8 @@ describe('GatherRunner', function() {
   it('collects host user agent as an artifact', async () => {
     const requestedUrl = 'https://example.com';
     const driver = fakeDriver;
-    const config = makeConfig({passes: []});
-    const options = {requestedUrl, driver, settings: config.settings};
+    const config = makeConfig({passes: [{passName: 'defaultPass'}]});
+    const options = {requestedUrl, driver, settings: config.settings, computedCache: new Map()};
 
     const results = await GatherRunner.run(config.passes, options);
     expect(results.HostUserAgent).toEqual(fakeDriver.protocolGetVersionResponse.userAgent);
@@ -209,7 +217,7 @@ describe('GatherRunner', function() {
     const requestedUrl = 'https://example.com';
     const driver = fakeDriver;
     const config = makeConfig({passes: [{passName: 'defaultPass'}]});
-    const options = {requestedUrl, driver, settings: config.settings};
+    const options = {requestedUrl, driver, settings: config.settings, computedCache: new Map()};
 
     const results = await GatherRunner.run(config.passes, options);
     expect(results.NetworkUserAgent).toContain('Mozilla');
@@ -217,70 +225,22 @@ describe('GatherRunner', function() {
 
   it('collects requested and final URLs as an artifact', () => {
     const requestedUrl = 'https://example.com';
-    const finalUrl = 'https://example.com/interstitial';
-    const driver = Object.assign({}, fakeDriver, {
-      gotoURL() {
-        return Promise.resolve({finalUrl, timedOut: false});
-      },
-    });
+    const mainDocumentUrl = 'https://example.com/interstitial';
+    const gotoURL = jest.requireMock('../../gather/driver/navigation.js').gotoURL;
+    gotoURL.mockResolvedValue({mainDocumentUrl, timedOut: false, warnings: []});
     const config = makeConfig({passes: [{passName: 'defaultPass'}]});
-    const options = {requestedUrl, driver, settings: config.settings};
+    const options = {
+      requestedUrl,
+      driver: fakeDriver,
+      settings: config.settings,
+      computedCache: new Map(),
+    };
 
     return GatherRunner.run(config.passes, options).then(artifacts => {
-      assert.deepStrictEqual(artifacts.URL, {requestedUrl, finalUrl},
+      assert.deepStrictEqual(
+        artifacts.URL,
+        {initialUrl: 'about:blank', requestedUrl, mainDocumentUrl, finalUrl: mainDocumentUrl},
         'did not find expected URL artifact');
-    });
-  });
-
-  describe('collects TestedAsMobileDevice as an artifact', () => {
-    const requestedUrl = 'https://example.com';
-
-    it('works when running on desktop device without emulation', async () => {
-      const driver = fakeDriver;
-      const config = makeConfig({
-        passes: [],
-        settings: {emulatedFormFactor: 'none', internalDisableDeviceScreenEmulation: false},
-      });
-      const options = {requestedUrl, driver, settings: config.settings};
-
-      const results = await GatherRunner.run(config.passes, options);
-      expect(results.TestedAsMobileDevice).toBe(false);
-    });
-
-    it('works when running on desktop device with mobile emulation', async () => {
-      const driver = fakeDriver;
-      const config = makeConfig({
-        passes: [],
-        settings: {emulatedFormFactor: 'mobile', internalDisableDeviceScreenEmulation: false},
-      });
-      const options = {requestedUrl, driver, settings: config.settings};
-
-      const results = await GatherRunner.run(config.passes, options);
-      expect(results.TestedAsMobileDevice).toBe(true);
-    });
-
-    it('works when running on mobile device without emulation', async () => {
-      const driver = fakeDriverUsingRealMobileDevice;
-      const config = makeConfig({
-        passes: [],
-        settings: {emulatedFormFactor: 'none', internalDisableDeviceScreenEmulation: false},
-      });
-      const options = {requestedUrl, driver, settings: config.settings};
-
-      const results = await GatherRunner.run(config.passes, options);
-      expect(results.TestedAsMobileDevice).toBe(true);
-    });
-
-    it('works when running on mobile device with desktop emulation', async () => {
-      const driver = fakeDriverUsingRealMobileDevice;
-      const config = makeConfig({
-        passes: [],
-        settings: {emulatedFormFactor: 'desktop', internalDisableDeviceScreenEmulation: false},
-      });
-      const options = {requestedUrl, driver, settings: config.settings};
-
-      const results = await GatherRunner.run(config.passes, options);
-      expect(results.TestedAsMobileDevice).toBe(false);
     });
   });
 
@@ -300,10 +260,10 @@ describe('GatherRunner', function() {
           },
         });
         const config = makeConfig({
-          passes: [],
+          passes: [{passName: 'defaultPass'}],
           settings: {},
         });
-        const options = {requestedUrl, driver, settings: config.settings};
+        const options = {requestedUrl, driver, settings: config.settings, computedCache: new Map()};
 
         const results = await GatherRunner.run(config.passes, options);
         expect(results.HostFormFactor).toBe(expectedValue);
@@ -321,132 +281,148 @@ describe('GatherRunner', function() {
     test('works when running on desktop device', DESKTOP_UA, 'desktop');
   });
 
-  it('sets up the driver to begin emulation when all flags are undefined', async () => {
-    await GatherRunner.setupDriver(driver, {
-      settings: {
-        emulatedFormFactor: 'mobile',
-        throttlingMethod: 'provided',
-        internalDisableDeviceScreenEmulation: false,
-      },
+  describe('.assertNoSameOriginServiceWorkerClients', () => {
+    /** @type {LH.Gatherer.FRProtocolSession} */
+    let session;
+    /** @type {typeof GatherRunner_['assertNoSameOriginServiceWorkerClients']} */
+    let assertNoSameOriginServiceWorkerClients;
+
+    beforeEach(() => {
+      GatherRunner.assertNoSameOriginServiceWorkerClients.mockRestore();
+      assertNoSameOriginServiceWorkerClients = GatherRunner_.assertNoSameOriginServiceWorkerClients;
+      session = driver.defaultSession;
+      connectionStub.sendCommand = createMockSendCommandFn()
+        .mockResponse('ServiceWorker.enable')
+        .mockResponse('ServiceWorker.disable')
+        .mockResponse('ServiceWorker.enable')
+        .mockResponse('ServiceWorker.disable');
     });
 
-    connectionStub.sendCommand.findInvocation('Emulation.setDeviceMetricsOverride');
-    expect(connectionStub.sendCommand.findInvocation('Network.emulateNetworkConditions')).toEqual({
-      latency: 0, downloadThroughput: 0, uploadThroughput: 0, offline: false,
+    /**
+   * @param {number} id
+   * @param {string} url
+   * @param {boolean=} isDeleted
+   */
+    function createSWRegistration(id, url, isDeleted) {
+      return {
+        isDeleted: !!isDeleted,
+        registrationId: String(id),
+        scopeURL: url,
+      };
+    }
+
+    /**
+   * @param {number} id
+   * @param {string} url
+   * @param {string[]} controlledClients
+   * @param {LH.Crdp.ServiceWorker.ServiceWorkerVersionStatus=} status
+   */
+    function createActiveWorker(id, url, controlledClients, status = 'activated') {
+      return {
+        registrationId: String(id),
+        scriptURL: url,
+        controlledClients,
+        status,
+      };
+    }
+
+    it('will pass if there are no current service workers', async () => {
+      const pageUrl = 'https://example.com/';
+
+      driver.on = driver.once = createMockOnceFn()
+      .mockEvent('ServiceWorker.workerRegistrationUpdated', {registrations: []})
+      .mockEvent('ServiceWorker.workerVersionUpdated', {versions: []});
+
+      const assertPromise = assertNoSameOriginServiceWorkerClients(session, pageUrl);
+      await flushAllTimersAndMicrotasks();
+      await assertPromise;
     });
-    expect(() =>
-      connectionStub.sendCommand.findInvocation('Emulation.setCPUThrottlingRate')).toThrow();
+
+    it('will pass if there is an active service worker for a different origin', async () => {
+      const pageUrl = 'https://example.com/';
+      const secondUrl = 'https://example.edu';
+      const swUrl = `${secondUrl}sw.js`;
+
+      const registrations = [createSWRegistration(1, secondUrl)];
+      const versions = [createActiveWorker(1, swUrl, ['uniqueId'])];
+
+      driver.on = driver.once = createMockOnceFn()
+      .mockEvent('ServiceWorker.workerRegistrationUpdated', {registrations})
+      .mockEvent('ServiceWorker.workerVersionUpdated', {versions});
+
+      const assertPromise = assertNoSameOriginServiceWorkerClients(session, pageUrl);
+      await flushAllTimersAndMicrotasks();
+      await assertPromise;
+    });
+
+    it('will fail if a service worker with a matching origin has a controlled client', async () => {
+      const pageUrl = 'https://example.com/';
+      const swUrl = `${pageUrl}sw.js`;
+      const registrations = [createSWRegistration(1, pageUrl)];
+      const versions = [createActiveWorker(1, swUrl, ['uniqueId'])];
+
+      driver.on = driver.once = createMockOnceFn()
+      .mockEvent('ServiceWorker.workerRegistrationUpdated', {registrations})
+      .mockEvent('ServiceWorker.workerVersionUpdated', {versions});
+
+      expect.assertions(1);
+
+      try {
+        const assertPromise = assertNoSameOriginServiceWorkerClients(session, pageUrl);
+        await flushAllTimersAndMicrotasks();
+        await assertPromise;
+      } catch (err) {
+        expect(err.message.toLowerCase()).toContain('multiple tabs');
+      }
+    });
+
+    it('will succeed if a service worker with has no controlled clients', async () => {
+      const pageUrl = 'https://example.com/';
+      const swUrl = `${pageUrl}sw.js`;
+      const registrations = [createSWRegistration(1, pageUrl)];
+      const versions = [createActiveWorker(1, swUrl, [])];
+
+      driver.on = driver.once = createMockOnceFn()
+      .mockEvent('ServiceWorker.workerRegistrationUpdated', {registrations})
+      .mockEvent('ServiceWorker.workerVersionUpdated', {versions});
+
+      const assertPromise = assertNoSameOriginServiceWorkerClients(session, pageUrl);
+      await flushAllTimersAndMicrotasks();
+      await assertPromise;
+    });
+
+    it('will wait for serviceworker to be activated', async () => {
+      const pageUrl = 'https://example.com/';
+      const swUrl = `${pageUrl}sw.js`;
+      const registrations = [createSWRegistration(1, pageUrl)];
+      const versions = [createActiveWorker(1, swUrl, [], 'installing')];
+      const activatedVersions = [createActiveWorker(1, swUrl, [], 'activated')];
+
+      const mockOn = driver.on = driver.once = createMockOnceFn()
+      .mockEvent('ServiceWorker.workerRegistrationUpdated', {registrations})
+      .mockEvent('ServiceWorker.workerVersionUpdated', {versions});
+
+      const assertPromise = assertNoSameOriginServiceWorkerClients(session, pageUrl);
+      const inspectable = makePromiseInspectable(assertPromise);
+
+      // After receiving the empty versions the promise still shouldn't be resolved
+      await flushAllTimersAndMicrotasks();
+      expect(inspectable).not.toBeDone();
+
+      // Use `findListener` instead of `mockEvent` so we can control exactly when the promise resolves
+      // After we invoke the listener with the activated versions we expect the promise to have resolved
+      const listener = mockOn.findListener('ServiceWorker.workerVersionUpdated');
+      listener({versions: activatedVersions});
+      await flushAllTimersAndMicrotasks();
+      expect(inspectable).toBeDone();
+      await assertPromise;
+    });
   });
 
-  it('applies the correct emulation given a particular emulationFormFactor', async () => {
-    /** @param {'mobile'|'desktop'|'none'} formFactor */
-    const getSettings = formFactor => ({
-      emulatedFormFactor: formFactor,
-      internalDisableDeviceScreenEmulation: false,
-    });
-
-    await GatherRunner.setupDriver(driver, {settings: getSettings('mobile')});
-    expect(connectionStub.sendCommand.findInvocation('Emulation.setDeviceMetricsOverride'))
-      .toMatchObject({mobile: true});
-
-    resetDefaultMockResponses();
-    await GatherRunner.setupDriver(driver, {settings: getSettings('desktop')});
-    expect(connectionStub.sendCommand.findInvocation('Emulation.setDeviceMetricsOverride'))
-      .toMatchObject({mobile: false});
-
-    resetDefaultMockResponses();
-    await GatherRunner.setupDriver(driver, {settings: getSettings('none')});
-    expect(() =>
-      connectionStub.sendCommand.findInvocation('Emulation.setDeviceMetricsOverride')).toThrow();
-  });
-
-  it('sets throttling according to settings', async () => {
-    await GatherRunner.setupDriver(driver, {
-      settings: {
-        emulatedFormFactor: 'mobile', internalDisableDeviceScreenEmulation: false,
-        throttlingMethod: 'devtools',
-        throttling: {
-          requestLatencyMs: 100,
-          downloadThroughputKbps: 8,
-          uploadThroughputKbps: 8,
-          cpuSlowdownMultiplier: 1,
-        },
-      },
-    });
-
-    connectionStub.sendCommand.findInvocation('Emulation.setDeviceMetricsOverride');
-    expect(connectionStub.sendCommand.findInvocation('Network.emulateNetworkConditions')).toEqual({
-      latency: 100, downloadThroughput: 1024, uploadThroughput: 1024, offline: false,
-    });
-    expect(connectionStub.sendCommand.findInvocation('Emulation.setCPUThrottlingRate')).toEqual({
-      rate: 1,
-    });
-  });
-
-  it('clears origin storage', () => {
-    const asyncFunc = () => Promise.resolve();
-    /** @type {Record<string, boolean>} */
-    const tests = {
-      calledCleanBrowserCaches: false,
-      calledClearStorage: false,
-    };
-    /** @param {string} variable */
-    const createCheck = variable => () => {
-      tests[variable] = true;
-      return Promise.resolve();
-    };
-    const driver = {
-      assertNoSameOriginServiceWorkerClients: asyncFunc,
-      beginEmulation: asyncFunc,
-      setThrottling: asyncFunc,
-      dismissJavaScriptDialogs: asyncFunc,
-      enableRuntimeEvents: asyncFunc,
-      enableAsyncStacks: asyncFunc,
-      cacheNatives: asyncFunc,
-      gotoURL: asyncFunc,
-      registerPerformanceObserver: asyncFunc,
-      registerRequestIdleCallbackWrap: asyncFunc,
-      cleanBrowserCaches: createCheck('calledCleanBrowserCaches'),
-      clearDataForOrigin: createCheck('calledClearStorage'),
-      blockUrlPatterns: asyncFunc,
-      setExtraHTTPHeaders: asyncFunc,
-      getImportantStorageWarning: asyncFunc,
-    };
-
-    return GatherRunner.setupDriver(driver, {settings: {}}).then(_ => {
-      assert.equal(tests.calledCleanBrowserCaches, false);
-      assert.equal(tests.calledClearStorage, true);
-    });
-  });
-
-  it('clears the disk & memory cache on a perf run', async () => {
-    const asyncFunc = () => Promise.resolve();
-    /** @type {Record<string, boolean>} */
-    const tests = {
-      calledCleanBrowserCaches: false,
-    };
-    /** @param {string} variable */
-    const createCheck = variable => () => {
-      tests[variable] = true;
-      return Promise.resolve();
-    };
-    const driver = {
-      beginDevtoolsLog: asyncFunc,
-      beginTrace: asyncFunc,
-      gotoURL: async () => ({}),
-      cleanBrowserCaches: createCheck('calledCleanBrowserCaches'),
-      setThrottling: asyncFunc,
-      blockUrlPatterns: asyncFunc,
-      setExtraHTTPHeaders: asyncFunc,
-      endTrace: asyncFunc,
-      endDevtoolsLog: () => [],
-      getBrowserVersion: async () => ({userAgent: ''}),
-      getScrollPosition: async () => 1,
-      scrollTo: async () => {},
-    };
+  it('prepares target for navigation', async () => {
     const passConfig = {
       passName: 'default',
-      loadFailureMode: LoadFailureMode.ignore,
+      loadFailureMode: /** @type {const} */ ('ignore'),
       recordTrace: true,
       useThrottling: true,
       gatherers: [],
@@ -456,14 +432,17 @@ describe('GatherRunner', function() {
     };
     const requestedUrl = 'https://example.com';
     const passContext = {
-      driver,
+      driver: fakeDriver,
       passConfig,
       settings,
       baseArtifacts: await GatherRunner.initializeBaseArtifacts({driver, settings, requestedUrl}),
+      computedCache: new Map(),
+      LighthouseRunWarnings: [],
     };
 
+    const prepare = jest.requireMock('../../gather/driver/prepare.js');
     await GatherRunner.runPass(passContext);
-    assert.equal(tests.calledCleanBrowserCaches, true);
+    expect(prepare.prepareTargetForIndividualNavigation).toHaveBeenCalled();
   });
 
   it('returns a pageLoadError and no artifacts when there is a network error', async () => {
@@ -491,6 +470,7 @@ describe('GatherRunner', function() {
       driver,
       requestedUrl,
       settings: config.settings,
+      computedCache: new Map(),
     };
 
     const artifacts = await GatherRunner.run(config.passes, options);
@@ -507,12 +487,16 @@ describe('GatherRunner', function() {
     const navigationError = new LHError(LHError.errors.NO_FCP);
     const driver = Object.assign({}, fakeDriver, {
       online: true,
-      /** @param {string} url */
-      gotoURL: url => url.includes('blank') ? null : Promise.reject(navigationError),
       endDevtoolsLog() {
         return networkRecordsToDevtoolsLog([{url: requestedUrl}]);
       },
     });
+
+    const gotoURL = jest.requireMock('../../gather/driver/navigation.js').gotoURL;
+    gotoURL.mockImplementation(
+      /** @param {any} _ @param {string} url */
+      (_, url) => url.includes('blank') ? null : Promise.reject(navigationError)
+    );
 
     const config = makeConfig({
       passes: [{
@@ -525,6 +509,7 @@ describe('GatherRunner', function() {
       driver,
       requestedUrl,
       settings: config.settings,
+      computedCache: new Map(),
     };
 
     const artifacts = await GatherRunner.run(config.passes, options);
@@ -542,16 +527,20 @@ describe('GatherRunner', function() {
 
     const gotoUrlForAboutBlank = jest.fn().mockResolvedValue({});
     const gotoUrlForRealUrl = jest.fn()
-      .mockResolvedValueOnce({finalUrl: requestedUrl, timedOut: false})
+      .mockResolvedValueOnce({mainDocumentUrl: requestedUrl, timedOut: false, warnings: []})
       .mockRejectedValueOnce(navigationError);
     const driver = Object.assign({}, fakeDriver, {
       online: true,
-      /** @param {string} url */
-      gotoURL: url => url.includes('blank') ? gotoUrlForAboutBlank() : gotoUrlForRealUrl(),
       endDevtoolsLog() {
         return networkRecordsToDevtoolsLog([{url: requestedUrl}]);
       },
     });
+
+    const gotoURL = jest.requireMock('../../gather/driver/navigation.js').gotoURL;
+    gotoURL.mockImplementation(
+      /** @param {any} _ @param {string} url */
+      (_, url) => url.includes('blank') ? gotoUrlForAboutBlank() : gotoUrlForRealUrl()
+    );
 
     const config = makeConfig({
       passes: [{passName: 'defaultPass', recordTrace: true}, {
@@ -565,6 +554,7 @@ describe('GatherRunner', function() {
       driver,
       requestedUrl,
       settings: config.settings,
+      computedCache: new Map(),
     };
 
     const artifacts = await GatherRunner.run(config.passes, options);
@@ -573,90 +563,6 @@ describe('GatherRunner', function() {
     // @ts-expect-error: Test-only gatherer.
     expect(artifacts.TestGatherer).toBeUndefined();
     expect(artifacts.devtoolsLogs).toHaveProperty('pageLoadError-nextPass');
-  });
-
-  it('does not clear origin storage with flag --disable-storage-reset', () => {
-    const asyncFunc = () => Promise.resolve();
-    /** @type {Record<string, boolean>} */
-    const tests = {
-      calledCleanBrowserCaches: false,
-      calledClearStorage: false,
-    };
-    /** @param {string} variable */
-    const createCheck = variable => () => {
-      tests[variable] = true;
-      return Promise.resolve();
-    };
-    const driver = {
-      assertNoSameOriginServiceWorkerClients: asyncFunc,
-      beginEmulation: asyncFunc,
-      setThrottling: asyncFunc,
-      dismissJavaScriptDialogs: asyncFunc,
-      enableRuntimeEvents: asyncFunc,
-      enableAsyncStacks: asyncFunc,
-      cacheNatives: asyncFunc,
-      gotoURL: asyncFunc,
-      registerPerformanceObserver: asyncFunc,
-      registerRequestIdleCallbackWrap: asyncFunc,
-      cleanBrowserCaches: createCheck('calledCleanBrowserCaches'),
-      clearDataForOrigin: createCheck('calledClearStorage'),
-      blockUrlPatterns: asyncFunc,
-      setExtraHTTPHeaders: asyncFunc,
-    };
-
-    return GatherRunner.setupDriver(driver, {
-      settings: {disableStorageReset: true},
-    }).then(_ => {
-      assert.equal(tests.calledCleanBrowserCaches, false);
-      assert.equal(tests.calledClearStorage, false);
-    });
-  });
-
-  it('tells the driver to block given URL patterns when blockedUrlPatterns is given', async () => {
-    await GatherRunner.setupPassNetwork({
-      driver,
-      settings: {
-        blockedUrlPatterns: ['http://*.evil.com', '.jpg', '.woff2'],
-      },
-      passConfig: {
-        blockedUrlPatterns: ['*.jpeg'],
-        gatherers: [],
-      },
-    });
-
-    const blockedUrlsResult = connectionStub.sendCommand.findInvocation('Network.setBlockedURLs');
-    blockedUrlsResult.urls.sort();
-    expect(blockedUrlsResult)
-      .toEqual({urls: ['*.jpeg', '.jpg', '.woff2', 'http://*.evil.com']});
-  });
-
-  it('does not throw when blockedUrlPatterns is not given', async () => {
-    await GatherRunner.setupPassNetwork({
-      driver,
-      settings: {},
-      passConfig: {gatherers: []},
-    });
-
-    expect(connectionStub.sendCommand.findInvocation('Network.setBlockedURLs'))
-      .toEqual({urls: []});
-  });
-
-  it('tells the driver to set additional http when extraHeaders flag is given', async () => {
-    const extraHeaders = {
-      'Cookie': 'monster',
-      'x-men': 'wolverine',
-    };
-
-    await GatherRunner.setupPassNetwork({
-      driver,
-      settings: {
-        extraHeaders,
-      },
-      passConfig: {gatherers: []},
-    });
-
-    expect(connectionStub.sendCommand.findInvocation('Network.setExtraHTTPHeaders'))
-      .toEqual({headers: extraHeaders});
   });
 
   it('tells the driver to begin tracing', async () => {
@@ -702,7 +608,8 @@ describe('GatherRunner', function() {
       ],
     };
 
-    return GatherRunner.endRecording({url, driver, passConfig}).then(passData => {
+    const passContext = {url, driver, passConfig, computedCache: new Map()};
+    return GatherRunner.endRecording(passContext).then(passData => {
       assert.equal(calledTrace, true);
       assert.equal(passData.trace, fakeTraceData);
     });
@@ -727,7 +634,7 @@ describe('GatherRunner', function() {
     };
     const settings = {};
 
-    await GatherRunner.beginRecording({driver, passConfig, settings});
+    await GatherRunner.beginRecording({driver, passConfig, settings, computedCache: new Map()});
     assert.equal(calledDevtoolsLogCollect, true);
   });
 
@@ -751,7 +658,8 @@ describe('GatherRunner', function() {
       ],
     };
 
-    return GatherRunner.endRecording({url, driver, passConfig}).then(passData => {
+    const passContext = {url, driver, passConfig, computedCache: new Map()};
+    return GatherRunner.endRecording(passContext).then(passData => {
       assert.equal(calledDevtoolsLogCollect, true);
       assert.strictEqual(passData.devtoolsLog[0], fakeDevtoolsMessage);
     });
@@ -781,7 +689,8 @@ describe('GatherRunner', function() {
     const gathererResults = {
       TestGatherer: [],
     };
-    await GatherRunner.afterPass({url, driver, passConfig}, {}, gathererResults);
+    const passContext = {url, driver, passConfig, computedCache: new Map()};
+    await GatherRunner.afterPass(passContext, {}, gathererResults);
     // One time for the afterPass of ScrollMcScrolly, two times for the resets of the two gatherers.
     expect(scrollToSpy.mock.calls).toEqual([
       [{x: 1000, y: 1000}],
@@ -813,6 +722,7 @@ describe('GatherRunner', function() {
       driver: fakeDriver,
       requestedUrl: 'https://example.com',
       settings: config.settings,
+      computedCache: new Map(),
     }).then(_ => {
       assert.ok(t1.called);
       assert.ok(t2.called);
@@ -835,6 +745,7 @@ describe('GatherRunner', function() {
       driver: fakeDriver,
       requestedUrl: 'https://example.com',
       settings: config.settings,
+      computedCache: new Map(),
     };
 
     return GatherRunner.run(config.passes, options)
@@ -862,7 +773,7 @@ describe('GatherRunner', function() {
         gatherers: [{instance: new TestGatherer()}],
       }],
     });
-    const options = {driver, requestedUrl, settings: config.settings};
+    const options = {driver, requestedUrl, settings: config.settings, computedCache: new Map()};
     const artifacts = await GatherRunner.run(config.passes, options);
 
     expect(artifacts.PageLoadError).toMatchObject({code: 'NO_DOCUMENT_REQUEST'});
@@ -896,20 +807,26 @@ describe('GatherRunner', function() {
 
     const requestedUrl = 'https://www.reddit.com/r/nba';
     let firstLoad = true;
-    const driver = Object.assign({}, fakeDriver, {
-      /** @param {string} url Loads the page successfully in the first pass, fails with NO_FCP in the second. */
-      async gotoURL(url) {
+    const driver = Object.assign({}, fakeDriver, {online: true});
+
+    const gotoURL = jest.requireMock('../../gather/driver/navigation.js').gotoURL;
+
+    gotoURL.mockImplementation(
+      /**
+       * Loads the page successfully in the first pass, fails with NO_FCP in the second.
+       * @param {any} _
+       * @param {string} url
+       */
+      (_, url) => {
         if (url.includes('blank')) return null;
         if (firstLoad) {
           firstLoad = false;
-          return {finalUrl: requestedUrl, timedOut: false};
+          return {mainDocumentUrl: requestedUrl, timedOut: false, warnings: []};
         } else {
           throw new LHError(LHError.errors.NO_FCP);
         }
-      },
-      online: true,
-    });
-    const options = {driver, requestedUrl, settings: config.settings};
+      });
+    const options = {driver, requestedUrl, settings: config.settings, computedCache: new Map()};
     const artifacts = await GatherRunner.run(config.passes, options);
 
     // t1.pass() and t2.pass() called; t3.pass(), after the error, was not.
@@ -934,352 +851,10 @@ describe('GatherRunner', function() {
     expect(Object.keys(artifacts.devtoolsLogs)).toEqual(['firstPass', 'pageLoadError-secondPass']);
   });
 
-  describe('#getNetworkError', () => {
-    /**
-     * @param {NetworkRequest=} mainRecord
-     */
-    function getAndExpectError(mainRecord) {
-      const error = GatherRunner.getNetworkError(mainRecord);
-      if (!error) throw new Error('expected a network error');
-      return error;
-    }
-
-    it('passes when the page is loaded', () => {
-      const url = 'http://the-page.com';
-      const mainRecord = new NetworkRequest();
-      mainRecord.url = url;
-      assert.ok(!GatherRunner.getNetworkError(mainRecord));
-    });
-
-    it('fails when page fails to load', () => {
-      const url = 'http://the-page.com';
-      const mainRecord = new NetworkRequest();
-      mainRecord.url = url;
-      mainRecord.failed = true;
-      mainRecord.localizedFailDescription = 'foobar';
-      const error = getAndExpectError(mainRecord);
-      assert.equal(error.message, 'FAILED_DOCUMENT_REQUEST');
-      assert.equal(error.code, 'FAILED_DOCUMENT_REQUEST');
-      expect(error.friendlyMessage)
-        .toBeDisplayString(/^Lighthouse was unable to reliably load.*foobar/);
-    });
-
-    it('fails when page times out', () => {
-      const error = getAndExpectError(undefined);
-      assert.equal(error.message, 'NO_DOCUMENT_REQUEST');
-      assert.equal(error.code, 'NO_DOCUMENT_REQUEST');
-      expect(error.friendlyMessage).toBeDisplayString(/^Lighthouse was unable to reliably load/);
-    });
-
-    it('fails when page returns with a 404', () => {
-      const url = 'http://the-page.com';
-      const mainRecord = new NetworkRequest();
-      mainRecord.url = url;
-      mainRecord.statusCode = 404;
-      const error = getAndExpectError(mainRecord);
-      assert.equal(error.message, 'ERRORED_DOCUMENT_REQUEST');
-      assert.equal(error.code, 'ERRORED_DOCUMENT_REQUEST');
-      expect(error.friendlyMessage)
-        .toBeDisplayString(/^Lighthouse was unable to reliably load.*404/);
-    });
-
-    it('fails when page returns with a 500', () => {
-      const url = 'http://the-page.com';
-      const mainRecord = new NetworkRequest();
-      mainRecord.url = url;
-      mainRecord.statusCode = 500;
-      const error = getAndExpectError(mainRecord);
-      assert.equal(error.message, 'ERRORED_DOCUMENT_REQUEST');
-      assert.equal(error.code, 'ERRORED_DOCUMENT_REQUEST');
-      expect(error.friendlyMessage)
-        .toBeDisplayString(/^Lighthouse was unable to reliably load.*500/);
-    });
-
-    it('fails when page domain doesn\'t resolve', () => {
-      const url = 'http://the-page.com';
-      const mainRecord = new NetworkRequest();
-      mainRecord.url = url;
-      mainRecord.failed = true;
-      mainRecord.localizedFailDescription = 'net::ERR_NAME_NOT_RESOLVED';
-      const error = getAndExpectError(mainRecord);
-      assert.equal(error.message, 'DNS_FAILURE');
-      assert.equal(error.code, 'DNS_FAILURE');
-      expect(error.friendlyMessage).toBeDisplayString(/^DNS servers could not resolve/);
-    });
-  });
-
-  describe('#getInterstitialError', () => {
-    /**
-     * @param {NetworkRequest} mainRecord
-     * @param {NetworkRequest[]} networkRecords
-     */
-    function getAndExpectError(mainRecord, networkRecords) {
-      const error = GatherRunner.getInterstitialError(mainRecord, networkRecords);
-      if (!error) throw new Error('expected an interstitial error');
-      return error;
-    }
-
-    it('passes when the page was not requested', () => {
-      expect(GatherRunner.getInterstitialError(undefined, [])).toBeUndefined();
-    });
-
-    it('passes when the page is loaded', () => {
-      const url = 'http://the-page.com';
-      const mainRecord = new NetworkRequest();
-      mainRecord.url = url;
-      expect(GatherRunner.getInterstitialError(mainRecord, [mainRecord])).toBeUndefined();
-    });
-
-    it('passes when page fails to load normally', () => {
-      const url = 'http://the-page.com';
-      const mainRecord = new NetworkRequest();
-      mainRecord.url = url;
-      mainRecord.failed = true;
-      mainRecord.localizedFailDescription = 'foobar';
-      expect(GatherRunner.getInterstitialError(mainRecord, [mainRecord])).toBeUndefined();
-    });
-
-    it('passes when page gets a generic interstitial but somehow also loads everything', () => {
-      // This case, AFAIK, is impossible, but we'll err on the side of not tanking the run.
-      const url = 'http://the-page.com';
-      const mainRecord = new NetworkRequest();
-      mainRecord.url = url;
-      const interstitialRecord = new NetworkRequest();
-      interstitialRecord.url = 'data:text/html;base64,abcdef';
-      interstitialRecord.documentURL = 'chrome-error://chromewebdata/';
-      const records = [mainRecord, interstitialRecord];
-      expect(GatherRunner.getInterstitialError(mainRecord, records)).toBeUndefined();
-    });
-
-    it('fails when page gets a generic interstitial', () => {
-      const url = 'http://the-page.com';
-      const mainRecord = new NetworkRequest();
-      mainRecord.url = url;
-      mainRecord.failed = true;
-      mainRecord.localizedFailDescription = 'ERR_CONNECTION_RESET';
-      const interstitialRecord = new NetworkRequest();
-      interstitialRecord.url = 'data:text/html;base64,abcdef';
-      interstitialRecord.documentURL = 'chrome-error://chromewebdata/';
-      const records = [mainRecord, interstitialRecord];
-      const error = getAndExpectError(mainRecord, records);
-      expect(error.message).toEqual('CHROME_INTERSTITIAL_ERROR');
-      expect(error.code).toEqual('CHROME_INTERSTITIAL_ERROR');
-      expect(error.friendlyMessage).toBeDisplayString(/^Chrome prevented/);
-    });
-
-    it('fails when page gets a security interstitial', () => {
-      const url = 'http://the-page.com';
-      const mainRecord = new NetworkRequest();
-      mainRecord.url = url;
-      mainRecord.failed = true;
-      mainRecord.localizedFailDescription = 'net::ERR_CERT_COMMON_NAME_INVALID';
-      const interstitialRecord = new NetworkRequest();
-      interstitialRecord.url = 'data:text/html;base64,abcdef';
-      interstitialRecord.documentURL = 'chrome-error://chromewebdata/';
-      const records = [mainRecord, interstitialRecord];
-      const error = getAndExpectError(mainRecord, records);
-      expect(error.message).toEqual('INSECURE_DOCUMENT_REQUEST');
-      expect(error.code).toEqual('INSECURE_DOCUMENT_REQUEST');
-      expect(error.friendlyMessage).toBeDisplayString(/valid security certificate/);
-      expect(error.friendlyMessage).toBeDisplayString(/net::ERR_CERT_COMMON_NAME_INVALID/);
-    });
-
-    it('passes when page iframe gets a generic interstitial', () => {
-      const url = 'http://the-page.com';
-      const mainRecord = new NetworkRequest();
-      mainRecord.url = url;
-      mainRecord.failed = false;
-      const iframeRecord = new NetworkRequest();
-      iframeRecord.failed = true;
-      iframeRecord.url = 'https://the-ad.com';
-      iframeRecord.documentURL = 'https://the-ad.com';
-      const interstitialRecord = new NetworkRequest();
-      interstitialRecord.url = 'data:text/html;base64,abcdef';
-      interstitialRecord.documentURL = 'chrome-error://chromewebdata/';
-      const records = [mainRecord, iframeRecord, interstitialRecord];
-      const error = GatherRunner.getInterstitialError(mainRecord, records);
-      expect(error).toBeUndefined();
-    });
-  });
-
-  describe('#getNonHtmlError', () => {
-    /**
-     * @param {NetworkRequest} mainRecord
-     */
-    function getAndExpectError(mainRecord) {
-      const error = GatherRunner.getNonHtmlError(mainRecord);
-      if (!error) throw new Error('expected a non-HTML error');
-      return error;
-    }
-
-    it('passes when the page was not requested', () => {
-      expect(GatherRunner.getNonHtmlError(undefined)).toBeUndefined();
-    });
-
-    it('passes when the page is of MIME type text/html', () => {
-      const url = 'http://the-page.com';
-      const mainRecord = new NetworkRequest();
-      const mimeType = 'text/html';
-      mainRecord.url = url;
-      mainRecord.mimeType = mimeType;
-      expect(GatherRunner.getNonHtmlError(mainRecord)).toBeUndefined();
-    });
-
-    it('fails when the page is not of MIME type text/html', () => {
-      const url = 'http://the-page.com';
-      const mimeType = 'application/xml';
-      const mainRecord = new NetworkRequest();
-      mainRecord.url = url;
-      mainRecord.mimeType = mimeType;
-      const error = getAndExpectError(mainRecord);
-      expect(error.message).toEqual('NOT_HTML');
-      expect(error.code).toEqual('NOT_HTML');
-      expect(error.friendlyMessage).toBeDisplayString(/is not HTML \(served as/);
-    });
-  });
-
-
-  describe('#getPageLoadError', () => {
-    /**
-     * @param {RecursivePartial<LH.Gatherer.PassContext>} passContext
-     * @param {RecursivePartial<LH.Gatherer.LoadData>} loadData
-     * @param {LH.LighthouseError|undefined} navigationError
-     */
-    function getAndExpectError(passContext, loadData, navigationError) {
-      const error = GatherRunner.getPageLoadError(passContext, loadData, navigationError);
-      if (!error) throw new Error('expected a page load error');
-      return error;
-    }
-
-    /** @type {LH.LighthouseError} */
-    let navigationError;
-
-    beforeEach(() => {
-      navigationError = /** @type {LH.LighthouseError} */ (new Error('NAVIGATION_ERROR'));
-    });
-
-    it('passes when the page is loaded', () => {
-      const passContext = {
-        url: 'http://the-page.com',
-        passConfig: {loadFailureMode: LoadFailureMode.fatal},
-      };
-      const mainRecord = new NetworkRequest();
-      const loadData = {networkRecords: [mainRecord]};
-      mainRecord.url = passContext.url;
-      mainRecord.mimeType = 'text/html';
-      const error = GatherRunner.getPageLoadError(passContext, loadData, undefined);
-      expect(error).toBeUndefined();
-    });
-
-    it('passes when the page is loaded, ignoring any fragment', () => {
-      const passContext = {
-        url: 'http://example.com/#/page/list',
-        passConfig: {loadFailureMode: LoadFailureMode.fatal},
-      };
-      const mainRecord = new NetworkRequest();
-      const loadData = {networkRecords: [mainRecord]};
-      mainRecord.url = 'http://example.com';
-      mainRecord.mimeType = 'text/html';
-      const error = GatherRunner.getPageLoadError(passContext, loadData, undefined);
-      expect(error).toBeUndefined();
-    });
-
-    it('passes when the page is expected to fail', () => {
-      const passContext = {
-        url: 'http://the-page.com',
-        passConfig: {loadFailureMode: LoadFailureMode.ignore},
-      };
-      const mainRecord = new NetworkRequest();
-      const loadData = {networkRecords: [mainRecord]};
-      mainRecord.url = passContext.url;
-      mainRecord.failed = true;
-
-      const error = GatherRunner.getPageLoadError(passContext, loadData, undefined);
-      expect(error).toBeUndefined();
-    });
-
-    it('fails with interstitial error first', () => {
-      const passContext = {
-        url: 'http://the-page.com',
-        passConfig: {loadFailureMode: LoadFailureMode.fatal},
-      };
-      const mainRecord = new NetworkRequest();
-      const interstitialRecord = new NetworkRequest();
-      const loadData = {networkRecords: [mainRecord, interstitialRecord]};
-
-      mainRecord.url = passContext.url;
-      mainRecord.failed = true;
-      interstitialRecord.url = 'data:text/html;base64,abcdef';
-      interstitialRecord.documentURL = 'chrome-error://chromewebdata/';
-
-      const error = getAndExpectError(passContext, loadData, navigationError);
-      expect(error.message).toEqual('CHROME_INTERSTITIAL_ERROR');
-    });
-
-    it('fails with network error second', () => {
-      const passContext = {
-        url: 'http://the-page.com',
-        passConfig: {loadFailureMode: LoadFailureMode.fatal},
-      };
-      const mainRecord = new NetworkRequest();
-      const loadData = {networkRecords: [mainRecord]};
-
-      mainRecord.url = passContext.url;
-      mainRecord.failed = true;
-
-      const error = getAndExpectError(passContext, loadData, navigationError);
-      expect(error.message).toEqual('FAILED_DOCUMENT_REQUEST');
-    });
-
-    it('fails with non-HTML error third', () => {
-      const passContext = {
-        url: 'http://the-page.com',
-        passConfig: {loadFailureMode: LoadFailureMode.fatal},
-      };
-      const mainRecord = new NetworkRequest();
-      const loadData = {networkRecords: [mainRecord]};
-
-      mainRecord.url = passContext.url;
-      mainRecord.mimeType = 'application/xml';
-
-      const error = getAndExpectError(passContext, loadData, navigationError);
-      expect(error.message).toEqual('NOT_HTML');
-    });
-
-    it('fails with nav error last', () => {
-      const passContext = {
-        url: 'http://the-page.com',
-        passConfig: {loadFailureMode: LoadFailureMode.fatal},
-      };
-      const mainRecord = new NetworkRequest();
-      const loadData = {networkRecords: [mainRecord]};
-
-      mainRecord.url = passContext.url;
-      mainRecord.mimeType = 'text/html';
-
-      const error = getAndExpectError(passContext, loadData, navigationError);
-      expect(error.message).toEqual('NAVIGATION_ERROR');
-    });
-
-    it('fails when loadFailureMode is warn', () => {
-      const passContext = {
-        url: 'http://the-page.com',
-        passConfig: {loadFailureMode: LoadFailureMode.warn},
-      };
-      const mainRecord = new NetworkRequest();
-      const loadData = {networkRecords: [mainRecord]};
-
-      mainRecord.url = passContext.url;
-      mainRecord.mimeType = 'text/html';
-
-      const error = getAndExpectError(passContext, loadData, navigationError);
-      expect(error.message).toEqual('NAVIGATION_ERROR');
-    });
-  });
-
   describe('artifact collection', () => {
     // Make sure our gatherers never execute in parallel
     it('runs gatherer lifecycle methods strictly in sequence', async () => {
+      jest.useRealTimers();
       /** @type {Record<string, number>} */
       const counter = {
         beforePass: 0,
@@ -1366,6 +941,7 @@ describe('GatherRunner', function() {
         driver: fakeDriver,
         requestedUrl: 'https://example.com',
         settings: config.settings,
+        computedCache: new Map(),
       });
 
       // Ensure artifacts returned and not errors.
@@ -1422,69 +998,12 @@ describe('GatherRunner', function() {
         driver: fakeDriver,
         requestedUrl: 'https://example.com',
         settings: config.settings,
+        computedCache: new Map(),
       }).then(artifacts => {
         gathererNames.forEach(gathererName => {
           assert.strictEqual(artifacts[gathererName], gathererName);
         });
       });
-    });
-
-    it('passes gatherer options', async () => {
-      /** @type {Record<string, any[]>} */
-      const calls = {beforePass: [], pass: [], afterPass: []};
-      /** @param {string} name */
-      const makeEavesdropGatherer = name => {
-        const C = class extends Gatherer {};
-        Object.defineProperty(C, 'name', {value: name});
-        return Object.assign(new C, {
-          /** @param {LH.Gatherer.PassContext} context */
-          beforePass(context) {
-            calls.beforePass.push(context.options);
-          },
-          /** @param {LH.Gatherer.PassContext} context */
-          pass(context) {
-            calls.pass.push(context.options);
-          },
-          /** @param {LH.Gatherer.PassContext} context */
-          afterPass(context) {
-            calls.afterPass.push(context.options);
-            // @ts-expect-error
-            return context.options.x || 'none';
-          },
-        });
-      };
-
-      const gatherers = [
-        {instance: makeEavesdropGatherer('EavesdropGatherer1'), options: {x: 1}},
-        {instance: makeEavesdropGatherer('EavesdropGatherer2'), options: {x: 2}},
-        {instance: makeEavesdropGatherer('EavesdropGatherer3')},
-      ];
-
-      const config = makeConfig({
-        passes: [{
-          passName: 'defaultPass',
-          gatherers,
-        }],
-      });
-
-      /** @type {any} Using Test-only gatherers. */
-      const artifacts = await GatherRunner.run(config.passes, {
-        driver: fakeDriver,
-        requestedUrl: 'https://example.com',
-        settings: config.settings,
-      });
-
-      assert.equal(artifacts.EavesdropGatherer1, 1);
-      assert.equal(artifacts.EavesdropGatherer2, 2);
-      assert.equal(artifacts.EavesdropGatherer3, 'none');
-
-      // assert that all three phases received the gatherer options expected
-      const expectedOptions = [{x: 1}, {x: 2}, {}];
-      for (let i = 0; i < 3; i++) {
-        assert.deepEqual(calls.beforePass[i], expectedOptions[i]);
-        assert.deepEqual(calls.pass[i], expectedOptions[i]);
-        assert.deepEqual(calls.afterPass[i], expectedOptions[i]);
-      }
     });
 
     it('uses the last not-undefined phase result as artifact', async () => {
@@ -1536,13 +1055,26 @@ describe('GatherRunner', function() {
         'warning0',
         'warning1',
         'warning2',
+        {
+          i18nId: 'LH.IcuMessage0',
+          formattedDefault: 'warning3',
+        },
+        {
+          i18nId: 'LH.IcuMessage1',
+          formattedDefault: 'warning4',
+        },
       ];
 
       class WarningGatherer extends Gatherer {
         /** @param {LH.Gatherer.PassContext} passContext */
         afterPass(passContext) {
-          passContext.LighthouseRunWarnings.push(...runWarnings, ...runWarnings);
-          assert.strictEqual(passContext.LighthouseRunWarnings.length, runWarnings.length * 2);
+          passContext.LighthouseRunWarnings.push(
+            ...runWarnings,
+            ...runWarnings,
+            // adding one of the warnings with keys in different order
+            {formattedDefault: 'warning3', i18nId: 'LH.IcuMessage0'}
+          );
+          assert.strictEqual(passContext.LighthouseRunWarnings.length, runWarnings.length * 2 + 1);
 
           return '';
         }
@@ -1558,6 +1090,7 @@ describe('GatherRunner', function() {
         driver: fakeDriver,
         requestedUrl: 'https://example.com',
         settings: config.settings,
+        computedCache: new Map(),
       });
       assert.deepStrictEqual(artifacts.LighthouseRunWarnings, runWarnings);
     });
@@ -1613,6 +1146,7 @@ describe('GatherRunner', function() {
         driver: fakeDriver,
         requestedUrl: 'https://example.com',
         settings: config.settings,
+        computedCache: new Map(),
       }).then(artifacts => {
         gathererNames.forEach(gathererName => {
           const errorArtifact = artifacts[gathererName];
@@ -1637,6 +1171,7 @@ describe('GatherRunner', function() {
         driver: fakeDriver,
         requestedUrl: 'https://example.com',
         settings: config.settings,
+        computedCache: new Map(),
       }).then(_ => assert.ok(false), _ => assert.ok(true));
     });
 
@@ -1665,6 +1200,7 @@ describe('GatherRunner', function() {
         driver: unresolvedDriver,
         requestedUrl,
         settings: config.settings,
+        computedCache: new Map(),
       }).then(artifacts => {
         assert.equal(artifacts.LighthouseRunWarnings.length, 1);
         expect(artifacts.LighthouseRunWarnings[0])
@@ -1684,19 +1220,52 @@ describe('GatherRunner', function() {
       const requestedUrl = 'http://www.slow-loading-page.com/';
       const timedoutDriver = Object.assign({}, fakeDriver, {
         online: true,
-        gotoURL() {
-          return Promise.resolve({finalUrl: requestedUrl, timedOut: true});
-        },
       });
+
+      const gotoURL = jest.requireMock('../../gather/driver/navigation.js').gotoURL;
+      gotoURL.mockResolvedValue({mainDocumentUrl: requestedUrl, warnings: ['It is too slow']});
 
       return GatherRunner.run(config.passes, {
         driver: timedoutDriver,
         requestedUrl,
         settings: config.settings,
+        computedCache: new Map(),
       }).then(artifacts => {
-        assert.equal(artifacts.LighthouseRunWarnings.length, 1);
-        expect(artifacts.LighthouseRunWarnings[0])
-          .toBeDisplayString(/too slow/);
+        expect(artifacts.LighthouseRunWarnings).toEqual(['It is too slow']);
+      });
+    });
+
+    it('resolves and does not warn when page times out on non-fatal pass', () => {
+      const config = makeConfig({
+        passes: [{
+          recordTrace: true,
+          passName: 'firstPass',
+          gatherers: [],
+        }, {
+          recordTrace: true,
+          passName: 'secondPass',
+          loadFailureMode: 'warn',
+          gatherers: [],
+        }],
+      });
+
+      const requestedUrl = 'http://www.slow-loading-page.com/';
+      const timedoutDriver = Object.assign({}, fakeDriver, {
+        online: true,
+      });
+
+      const gotoURL = jest.requireMock('../../gather/driver/navigation.js').gotoURL;
+      gotoURL
+        .mockResolvedValueOnce({finalUrl: requestedUrl, warnings: []})
+        .mockResolvedValueOnce({finalUrl: requestedUrl, warnings: ['It is too slow']});
+
+      return GatherRunner.run(config.passes, {
+        driver: timedoutDriver,
+        requestedUrl,
+        settings: config.settings,
+        computedCache: new Map(),
+      }).then(artifacts => {
+        expect(artifacts.LighthouseRunWarnings).toEqual([]);
       });
     });
 
@@ -1725,81 +1294,11 @@ describe('GatherRunner', function() {
         driver: unresolvedDriver,
         requestedUrl,
         settings: config.settings,
+        computedCache: new Map(),
       })
         .then(_ => {
           assert.ok(true);
         });
-    });
-  });
-
-  describe('.getInstallabilityErrors', () => {
-    /** @type {RecursivePartial<LH.Gatherer.PassContext>} */
-    let passContext;
-
-    beforeEach(() => {
-      passContext = {
-        driver,
-      };
-    });
-
-    it('should return the response from the protocol, if in >=M82 format', async () => {
-      connectionStub.sendCommand
-        .mockResponse('Page.getInstallabilityErrors', {
-          installabilityErrors: [{errorId: 'no-icon-available', errorArguments: []}],
-        });
-      const result = await GatherRunner.getInstallabilityErrors(passContext);
-      expect(result).toEqual({
-        errors: [{errorId: 'no-icon-available', errorArguments: []}],
-      });
-    });
-
-    it('should transform the response from the protocol, if in <M82 format', async () => {
-      connectionStub.sendCommand
-        .mockResponse('Page.getInstallabilityErrors', {
-          // @ts-expect-error
-          errors: ['Downloaded icon was empty or corrupted'],
-        });
-      const result = await GatherRunner.getInstallabilityErrors(passContext);
-      expect(result).toEqual({
-        errors: [{errorId: 'no-icon-available', errorArguments: []}],
-      });
-    });
-  });
-
-  describe('.getWebAppManifest', () => {
-    const MANIFEST_URL = 'https://example.com/manifest.json';
-    /** @type {RecursivePartial<LH.Gatherer.PassContext>} */
-    let passContext;
-
-    beforeEach(() => {
-      passContext = {
-        url: 'https://example.com/index.html',
-        baseArtifacts: {},
-        driver,
-      };
-    });
-
-    it('should return null when there is no manifest', async () => {
-      connectionStub.sendCommand
-        .mockResponse('Page.getAppManifest', {})
-        .mockResponse('Page.getInstallabilityErrors', {installabilityErrors: []});
-      const result = await GatherRunner.getWebAppManifest(passContext);
-      expect(result).toEqual(null);
-    });
-
-    it('should parse the manifest when found', async () => {
-      const manifest = {name: 'App'};
-      connectionStub.sendCommand
-        .mockResponse('Page.getAppManifest', {data: JSON.stringify(manifest), url: MANIFEST_URL})
-        .mockResponse('Page.getInstallabilityErrors', {installabilityErrors: []});
-
-      const result = await GatherRunner.getWebAppManifest(passContext);
-      expect(result).toHaveProperty('raw', JSON.stringify(manifest));
-      expect(result && result.value).toMatchObject({
-        name: {value: 'App', raw: 'App'},
-        start_url: {value: passContext.url, raw: undefined},
-      });
-      expect(result && result.url).toMatch(MANIFEST_URL);
     });
   });
 });

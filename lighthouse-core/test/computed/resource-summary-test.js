@@ -14,7 +14,12 @@ const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.
 function mockArtifacts(networkRecords) {
   return {
     devtoolsLog: networkRecordsToDevtoolsLog(networkRecords),
-    URL: {requestedUrl: networkRecords[0].url, finalUrl: networkRecords[0].url},
+    URL: {
+      requestedUrl: networkRecords[0].url,
+      mainDocumentUrl: networkRecords[0].url,
+      finalUrl: networkRecords[0].url,
+    },
+    budgets: null,
   };
 }
 
@@ -28,7 +33,7 @@ describe('Resource summary computed', () => {
       {url: 'http://cdn.example.com/script.js', resourceType: 'Script', transferSize: 50},
       {url: 'http://third-party.com/file.jpg', resourceType: 'Image', transferSize: 70},
     ]);
-    context = {computedCache: new Map(), settings: {budgets: null}};
+    context = {computedCache: new Map()};
   });
 
   it('includes all resource types, regardless of whether page contains them', async () => {
@@ -49,14 +54,12 @@ describe('Resource summary computed', () => {
   });
 
   it('sets "other" resource metrics correctly', async () => {
-    // networkRecordsToDevToolsLog errors with an 'other' resource type, so this test does not use it
-    const networkRecords = [
+    artifacts = mockArtifacts([
       {url: 'http://example.com/file.html', resourceType: 'Document', transferSize: 30},
-      {url: 'http://third-party.com/another-file.html', resourceType: 'manifest', transferSize: 50},
-    ];
+      {url: 'http://third-party.com/another-file.html', resourceType: 'Manifest', transferSize: 50},
+    ]);
+    const result = await ComputedResourceSummary.request(artifacts, context);
 
-    const result = ComputedResourceSummary.summarize(
-      networkRecords, networkRecords[0].url, context);
     assert.equal(result.other.count, 1);
     assert.equal(result.other.transferSize, 50);
   });
@@ -73,7 +76,7 @@ describe('Resource summary computed', () => {
   });
 
   it('ignores records with non-network protocols', async () => {
-    context.settings.budgets = [{
+    artifacts.budgets = [{
       path: '/',
       options: {
         firstPartyHostnames: ['example.com'],
@@ -82,9 +85,12 @@ describe('Resource summary computed', () => {
 
     artifacts = mockArtifacts([
       {url: 'http://example.com/file.html', resourceType: 'Document', transferSize: 30},
-      {url: 'data:image/png;base64,iVBORw0KGgoAA', resourceType: 'Image', transferSize: 10},
-      {url: 'blob:http://www.example.com/dflskdfjlkj', resourceType: 'Other', transferSize: 99},
-      {url: 'intent://example.com', resourceType: 'Other', transferSize: 1},
+      {url: 'data:image/png;base64,iVBORw0KGgoAA', resourceType: 'Image', transferSize: 10,
+        protocol: 'data'},
+      {url: 'blob:http://www.example.com/dflskdfjlkj', resourceType: 'Other', transferSize: 99,
+        protocol: 'blob'},
+      {url: 'intent://example.com', resourceType: 'Other', transferSize: 1,
+        protocol: 'intent'},
     ]);
 
     const result = await ComputedResourceSummary.request(artifacts, context);
@@ -106,7 +112,7 @@ describe('Resource summary computed', () => {
 
     describe('when firstPartyHostnames is not set', () => {
       it('the root domain and all subdomains are considered first-party', async () => {
-        context.settings.budgets = null;
+        artifacts.budgets = null;
         const result = await ComputedResourceSummary.request(artifacts, context);
         expect(result['third-party'].transferSize).toBe(25 + 50 + 70);
         expect(result['third-party'].count).toBe(3);
@@ -118,7 +124,7 @@ describe('Resource summary computed', () => {
           {url: 'http://es.shopping-mall.co.uk/file.html', resourceType: 'Script', transferSize: 7},
           {url: 'http://co.uk', resourceType: 'Script', transferSize: 10},
         ]);
-        context.settings.budgets = null;
+        artifacts.budgets = null;
         const result = await ComputedResourceSummary.request(artifacts, context);
         expect(result['third-party'].transferSize).toBe(10);
         expect(result['third-party'].count).toBe(1);
@@ -129,7 +135,7 @@ describe('Resource summary computed', () => {
       const allResourcesSize = 30 + 10 + 25 + 50 + 70;
       const allResourcesCount = 5;
       it('handles subdomain hostnames correctly', async () => {
-        context.settings.budgets = [{
+        artifacts.budgets = [{
           path: '/',
           options: {
             firstPartyHostnames: ['cdn.example.com'],
@@ -141,7 +147,7 @@ describe('Resource summary computed', () => {
       });
 
       it('handles wildcard expressions correctly', async () => {
-        context.settings.budgets = [{
+        artifacts.budgets = [{
           path: '/',
           options: {
             // Matches example.com and cdn.example.com
@@ -154,7 +160,7 @@ describe('Resource summary computed', () => {
       });
 
       it('handles root domain hostname correctly', async () => {
-        context.settings.budgets = [{
+        artifacts.budgets = [{
           path: '/',
           options: {
             // Matches example.com; does not match cdn.example.com
@@ -167,7 +173,7 @@ describe('Resource summary computed', () => {
       });
 
       it('handles multiple hostnames correctly', async () => {
-        context.settings.budgets = [{
+        artifacts.budgets = [{
           path: '/',
           options: {
             firstPartyHostnames: ['example.com', 'my-cdn.com'],
@@ -179,7 +185,7 @@ describe('Resource summary computed', () => {
       });
 
       it('handles duplication of hostnames', async () => {
-        context.settings.budgets = [{
+        artifacts.budgets = [{
           path: '/',
           options: {
             firstPartyHostnames: ['my-cdn.com', 'my-cdn.com', 'my-cdn.com'],
@@ -191,7 +197,7 @@ describe('Resource summary computed', () => {
       });
 
       it('handles logical duplication of hostnames', async () => {
-        context.settings.budgets = [{
+        artifacts.budgets = [{
           path: '/',
           options: {
             firstPartyHostnames: ['example.com', '*.example.com', 'cdn.example.com'],
@@ -203,7 +209,7 @@ describe('Resource summary computed', () => {
       });
 
       it('handles using top-level domains as firstPartyHostnames correctly', async () => {
-        context.settings.budgets = [{
+        artifacts.budgets = [{
           path: '/',
           options: {
             firstPartyHostnames: ['*.com'],

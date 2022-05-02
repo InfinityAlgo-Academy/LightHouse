@@ -10,14 +10,20 @@ const assert = require('assert').strict;
 const MaxPotentialFID = require('../../../computed/metrics/max-potential-fid.js');
 const trace = require('../../fixtures/traces/progressive-app-m60.json');
 const devtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
+const {getURLArtifactFromDevtoolsLog} = require('../../test-utils.js');
+
+const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
 
 /* eslint-env jest */
 
 describe('Metrics: Max Potential FID', () => {
+  const gatherContext = {gatherMode: 'navigation'};
+
   it('should compute a simulated value', async () => {
     const settings = {throttlingMethod: 'simulate'};
     const context = {settings, computedCache: new Map()};
-    const result = await MaxPotentialFID.request({trace, devtoolsLog, settings}, context);
+    const result = await MaxPotentialFID.request({trace, devtoolsLog, gatherContext, settings, URL},
+      context);
 
     expect({
       timing: Math.round(result.timing),
@@ -29,7 +35,8 @@ describe('Metrics: Max Potential FID', () => {
   it('should compute an observed value', async () => {
     const settings = {throttlingMethod: 'provided'};
     const context = {settings, computedCache: new Map()};
-    const result = await MaxPotentialFID.request({trace, devtoolsLog, settings}, context);
+    const result = await MaxPotentialFID.request({trace, devtoolsLog, gatherContext, settings, URL},
+      context);
 
     assert.equal(Math.round(result.timing), 198);
   });

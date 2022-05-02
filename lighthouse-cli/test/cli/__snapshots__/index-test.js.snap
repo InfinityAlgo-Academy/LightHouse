@@ -7,19 +7,10 @@ Object {
       "path": "is-on-https",
     },
     Object {
-      "path": "redirects-http",
-    },
-    Object {
       "path": "service-worker",
     },
     Object {
-      "path": "works-offline",
-    },
-    Object {
       "path": "viewport",
-    },
-    Object {
-      "path": "without-javascript",
     },
     Object {
       "path": "metrics/first-contentful-paint",
@@ -31,9 +22,6 @@ Object {
       "path": "metrics/first-meaningful-paint",
     },
     Object {
-      "path": "load-fast-enough-for-pwa",
-    },
-    Object {
       "path": "metrics/speed-index",
     },
     Object {
@@ -41,9 +29,6 @@ Object {
     },
     Object {
       "path": "final-screenshot",
-    },
-    Object {
-      "path": "metrics/estimated-input-latency",
     },
     Object {
       "path": "metrics/total-blocking-time",
@@ -59,9 +44,6 @@ Object {
     },
     Object {
       "path": "server-response-time",
-    },
-    Object {
-      "path": "metrics/first-cpu-idle",
     },
     Object {
       "path": "metrics/interactive",
@@ -139,9 +121,6 @@ Object {
       "path": "metrics",
     },
     Object {
-      "path": "offline-start-url",
-    },
-    Object {
       "path": "performance-budget",
     },
     Object {
@@ -154,7 +133,13 @@ Object {
       "path": "third-party-summary",
     },
     Object {
+      "path": "third-party-facades",
+    },
+    Object {
       "path": "largest-contentful-paint-element",
+    },
+    Object {
+      "path": "lcp-lazy-loaded",
     },
     Object {
       "path": "layout-shift-elements",
@@ -175,9 +160,25 @@ Object {
       "path": "valid-source-maps",
     },
     Object {
+<<<<<<< HEAD
       "path": "injected-iframes",
     },
     Object {
+||||||| 63106556b
+=======
+      "path": "preload-lcp-image",
+    },
+    Object {
+      "path": "csp-xss",
+    },
+    Object {
+      "path": "full-page-screenshot",
+    },
+    Object {
+      "path": "script-treemap-data",
+    },
+    Object {
+>>>>>>> origin/master
       "path": "manual/pwa-cross-browser",
     },
     Object {
@@ -193,6 +194,9 @@ Object {
       "path": "accessibility/aria-allowed-attr",
     },
     Object {
+      "path": "accessibility/aria-command-name",
+    },
+    Object {
       "path": "accessibility/aria-hidden-body",
     },
     Object {
@@ -200,6 +204,12 @@ Object {
     },
     Object {
       "path": "accessibility/aria-input-field-name",
+    },
+    Object {
+      "path": "accessibility/aria-meter-name",
+    },
+    Object {
+      "path": "accessibility/aria-progressbar-name",
     },
     Object {
       "path": "accessibility/aria-required-attr",
@@ -215,6 +225,12 @@ Object {
     },
     Object {
       "path": "accessibility/aria-toggle-field-name",
+    },
+    Object {
+      "path": "accessibility/aria-tooltip-name",
+    },
+    Object {
+      "path": "accessibility/aria-treeitem-name",
     },
     Object {
       "path": "accessibility/aria-valid-attr-value",
@@ -271,9 +287,6 @@ Object {
       "path": "accessibility/label",
     },
     Object {
-      "path": "accessibility/layout-table",
-    },
-    Object {
       "path": "accessibility/link-name",
     },
     Object {
@@ -305,9 +318,6 @@ Object {
     },
     Object {
       "path": "accessibility/video-caption",
-    },
-    Object {
-      "path": "accessibility/video-description",
     },
     Object {
       "path": "accessibility/manual/custom-controls-labels",
@@ -364,7 +374,7 @@ Object {
       "path": "byte-efficiency/unused-javascript",
     },
     Object {
-      "path": "byte-efficiency/uses-webp-images",
+      "path": "byte-efficiency/modern-image-formats",
     },
     Object {
       "path": "byte-efficiency/uses-optimized-images",
@@ -385,9 +395,6 @@ Object {
       "path": "byte-efficiency/legacy-javascript",
     },
     Object {
-      "path": "dobetterweb/appcache-manifest",
-    },
-    Object {
       "path": "dobetterweb/doctype",
     },
     Object {
@@ -397,10 +404,10 @@ Object {
       "path": "dobetterweb/dom-size",
     },
     Object {
-      "path": "dobetterweb/external-anchors-use-rel-noopener",
+      "path": "dobetterweb/geolocation-on-start",
     },
     Object {
-      "path": "dobetterweb/geolocation-on-start",
+      "path": "dobetterweb/inspector-issues",
     },
     Object {
       "path": "dobetterweb/no-document-write",
@@ -475,6 +482,11 @@ Object {
         },
         Object {
           "group": "a11y-aria",
+          "id": "aria-command-name",
+          "weight": 3,
+        },
+        Object {
+          "group": "a11y-aria",
           "id": "aria-hidden-body",
           "weight": 10,
         },
@@ -486,6 +498,16 @@ Object {
         Object {
           "group": "a11y-aria",
           "id": "aria-input-field-name",
+          "weight": 3,
+        },
+        Object {
+          "group": "a11y-aria",
+          "id": "aria-meter-name",
+          "weight": 3,
+        },
+        Object {
+          "group": "a11y-aria",
+          "id": "aria-progressbar-name",
           "weight": 3,
         },
         Object {
@@ -511,6 +533,16 @@ Object {
         Object {
           "group": "a11y-aria",
           "id": "aria-toggle-field-name",
+          "weight": 3,
+        },
+        Object {
+          "group": "a11y-aria",
+          "id": "aria-tooltip-name",
+          "weight": 3,
+        },
+        Object {
+          "group": "a11y-aria",
+          "id": "aria-treeitem-name",
           "weight": 3,
         },
         Object {
@@ -604,11 +636,6 @@ Object {
           "weight": 10,
         },
         Object {
-          "group": "a11y-tables-lists",
-          "id": "layout-table",
-          "weight": 3,
-        },
-        Object {
           "group": "a11y-names-labels",
           "id": "link-name",
           "weight": 3,
@@ -664,11 +691,6 @@ Object {
           "weight": 10,
         },
         Object {
-          "group": "a11y-audio-video",
-          "id": "video-description",
-          "weight": 10,
-        },
-        Object {
           "id": "logical-tab-order",
           "weight": 0,
         },
@@ -709,8 +731,12 @@ Object {
           "weight": 0,
         },
       ],
-      "description": "These checks highlight opportunities to [improve the accessibility of your web app](https://developers.google.com/web/fundamentals/accessibility). Only a subset of accessibility issues can be automatically detected so manual testing is also encouraged.",
-      "manualDescription": "These items address areas which an automated testing tool cannot cover. Learn more in our guide on [conducting an accessibility review](https://developers.google.com/web/fundamentals/accessibility/how-to-review).",
+      "description": "These checks highlight opportunities to [improve the accessibility of your web app](https://web.dev/lighthouse-accessibility/). Only a subset of accessibility issues can be automatically detected so manual testing is also encouraged.",
+      "manualDescription": "These items address areas which an automated testing tool cannot cover. Learn more in our guide on [conducting an accessibility review](https://web.dev/how-to-review/).",
+      "supportedModes": Array [
+        "navigation",
+        "snapshot",
+      ],
       "title": "Accessibility",
     },
     "best-practices": Object {
@@ -718,11 +744,6 @@ Object {
         Object {
           "group": "best-practices-trust-safety",
           "id": "is-on-https",
-          "weight": 1,
-        },
-        Object {
-          "group": "best-practices-trust-safety",
-          "id": "external-anchors-use-rel-noopener",
           "weight": 1,
         },
         Object {
@@ -739,6 +760,11 @@ Object {
           "group": "best-practices-trust-safety",
           "id": "no-vulnerable-libraries",
           "weight": 1,
+        },
+        Object {
+          "group": "best-practices-trust-safety",
+          "id": "csp-xss",
+          "weight": 0,
         },
         Object {
           "group": "best-practices-ux",
@@ -772,16 +798,6 @@ Object {
         },
         Object {
           "group": "best-practices-general",
-          "id": "no-unload-listeners",
-          "weight": 1,
-        },
-        Object {
-          "group": "best-practices-general",
-          "id": "appcache-manifest",
-          "weight": 1,
-        },
-        Object {
-          "group": "best-practices-general",
           "id": "js-libraries",
           "weight": 0,
         },
@@ -800,185 +816,273 @@ Object {
           "id": "valid-source-maps",
           "weight": 0,
         },
+        Object {
+          "group": "best-practices-general",
+          "id": "inspector-issues",
+          "weight": 1,
+        },
+      ],
+      "supportedModes": Array [
+        "navigation",
+        "timespan",
+        "snapshot",
       ],
       "title": "Best Practices",
     },
     "performance": Object {
       "auditRefs": Array [
         Object {
+          "acronym": "FCP",
           "group": "metrics",
           "id": "first-contentful-paint",
-          "weight": 15,
+          "relevantAudits": Array [
+            "server-response-time",
+            "render-blocking-resources",
+            "redirects",
+            "critical-request-chains",
+            "uses-text-compression",
+            "uses-rel-preconnect",
+            "uses-rel-preload",
+            "font-display",
+            "unminified-javascript",
+            "unminified-css",
+            "unused-css-rules",
+          ],
+          "weight": 10,
         },
         Object {
-          "group": "metrics",
-          "id": "speed-index",
-          "weight": 15,
-        },
-        Object {
-          "group": "metrics",
-          "id": "largest-contentful-paint",
-          "weight": 25,
-        },
-        Object {
+          "acronym": "TTI",
           "group": "metrics",
           "id": "interactive",
-          "weight": 15,
+          "weight": 10,
         },
         Object {
+          "acronym": "SI",
+          "group": "metrics",
+          "id": "speed-index",
+          "weight": 10,
+        },
+        Object {
+          "acronym": "TBT",
           "group": "metrics",
           "id": "total-blocking-time",
+          "relevantAudits": Array [
+            "long-tasks",
+            "third-party-summary",
+            "third-party-facades",
+            "bootup-time",
+            "mainthread-work-breakdown",
+            "dom-size",
+            "duplicated-javascript",
+            "legacy-javascript",
+            "viewport",
+          ],
+          "weight": 30,
+        },
+        Object {
+          "acronym": "LCP",
+          "group": "metrics",
+          "id": "largest-contentful-paint",
+          "relevantAudits": Array [
+            "server-response-time",
+            "render-blocking-resources",
+            "redirects",
+            "critical-request-chains",
+            "uses-text-compression",
+            "uses-rel-preconnect",
+            "uses-rel-preload",
+            "font-display",
+            "unminified-javascript",
+            "unminified-css",
+            "unused-css-rules",
+            "largest-contentful-paint-element",
+            "preload-lcp-image",
+            "unused-javascript",
+            "efficient-animated-content",
+            "total-byte-weight",
+          ],
           "weight": 25,
         },
         Object {
+          "acronym": "CLS",
           "group": "metrics",
           "id": "cumulative-layout-shift",
-          "weight": 5,
+          "relevantAudits": Array [
+            "layout-shift-elements",
+            "non-composited-animations",
+            "unsized-images",
+          ],
+          "weight": 15,
         },
         Object {
-          "id": "first-cpu-idle",
-          "weight": 0,
-        },
-        Object {
+          "group": "hidden",
           "id": "max-potential-fid",
           "weight": 0,
         },
         Object {
+          "acronym": "FMP",
+          "group": "hidden",
           "id": "first-meaningful-paint",
           "weight": 0,
         },
         Object {
-          "id": "estimated-input-latency",
-          "weight": 0,
-        },
-        Object {
-          "group": "load-opportunities",
           "id": "render-blocking-resources",
           "weight": 0,
         },
         Object {
-          "group": "load-opportunities",
           "id": "uses-responsive-images",
           "weight": 0,
         },
         Object {
-          "group": "load-opportunities",
           "id": "offscreen-images",
           "weight": 0,
         },
         Object {
-          "group": "load-opportunities",
           "id": "unminified-css",
           "weight": 0,
         },
         Object {
-          "group": "load-opportunities",
           "id": "unminified-javascript",
           "weight": 0,
         },
         Object {
-          "group": "load-opportunities",
           "id": "unused-css-rules",
           "weight": 0,
         },
         Object {
-          "group": "load-opportunities",
           "id": "unused-javascript",
           "weight": 0,
         },
         Object {
-          "group": "load-opportunities",
           "id": "uses-optimized-images",
           "weight": 0,
         },
         Object {
-          "group": "load-opportunities",
-          "id": "uses-webp-images",
+          "id": "modern-image-formats",
           "weight": 0,
         },
         Object {
-          "group": "load-opportunities",
           "id": "uses-text-compression",
           "weight": 0,
         },
         Object {
-          "group": "load-opportunities",
           "id": "uses-rel-preconnect",
           "weight": 0,
         },
         Object {
-          "group": "load-opportunities",
           "id": "server-response-time",
           "weight": 0,
         },
         Object {
-          "group": "load-opportunities",
           "id": "redirects",
           "weight": 0,
         },
         Object {
-          "group": "load-opportunities",
           "id": "uses-rel-preload",
           "weight": 0,
         },
         Object {
-          "group": "load-opportunities",
           "id": "uses-http2",
           "weight": 0,
         },
         Object {
-          "group": "load-opportunities",
           "id": "efficient-animated-content",
           "weight": 0,
         },
         Object {
-          "group": "load-opportunities",
           "id": "duplicated-javascript",
           "weight": 0,
         },
         Object {
-          "group": "load-opportunities",
           "id": "legacy-javascript",
           "weight": 0,
         },
         Object {
-          "group": "diagnostics",
+          "id": "preload-lcp-image",
+          "weight": 0,
+        },
+        Object {
           "id": "total-byte-weight",
           "weight": 0,
         },
         Object {
-          "group": "diagnostics",
           "id": "uses-long-cache-ttl",
           "weight": 0,
         },
         Object {
-          "group": "diagnostics",
           "id": "dom-size",
           "weight": 0,
         },
         Object {
-          "group": "diagnostics",
           "id": "critical-request-chains",
           "weight": 0,
         },
         Object {
-          "group": "diagnostics",
           "id": "user-timings",
           "weight": 0,
         },
         Object {
-          "group": "diagnostics",
           "id": "bootup-time",
           "weight": 0,
         },
         Object {
-          "group": "diagnostics",
           "id": "mainthread-work-breakdown",
           "weight": 0,
         },
         Object {
-          "group": "diagnostics",
           "id": "font-display",
+          "weight": 0,
+        },
+        Object {
+          "id": "resource-summary",
+          "weight": 0,
+        },
+        Object {
+          "id": "third-party-summary",
+          "weight": 0,
+        },
+        Object {
+          "id": "third-party-facades",
+          "weight": 0,
+        },
+        Object {
+          "id": "largest-contentful-paint-element",
+          "weight": 0,
+        },
+        Object {
+          "id": "lcp-lazy-loaded",
+          "weight": 0,
+        },
+        Object {
+          "id": "layout-shift-elements",
+          "weight": 0,
+        },
+        Object {
+          "id": "uses-passive-event-listeners",
+          "weight": 0,
+        },
+        Object {
+          "id": "no-document-write",
+          "weight": 0,
+        },
+        Object {
+          "id": "long-tasks",
+          "weight": 0,
+        },
+        Object {
+          "id": "non-composited-animations",
+          "weight": 0,
+        },
+        Object {
+          "id": "unsized-images",
+          "weight": 0,
+        },
+        Object {
+          "id": "viewport",
+          "weight": 0,
+        },
+        Object {
+          "id": "no-unload-listeners",
           "weight": 0,
         },
         Object {
@@ -992,6 +1096,7 @@ Object {
           "weight": 0,
         },
         Object {
+<<<<<<< HEAD
           "group": "diagnostics",
           "id": "resource-summary",
           "weight": 0,
@@ -1047,67 +1152,108 @@ Object {
           "weight": 0,
         },
         Object {
+||||||| 63106556b
+          "group": "diagnostics",
+          "id": "resource-summary",
+          "weight": 0,
+        },
+        Object {
+          "group": "diagnostics",
+          "id": "third-party-summary",
+          "weight": 0,
+        },
+        Object {
+          "group": "diagnostics",
+          "id": "largest-contentful-paint-element",
+          "weight": 0,
+        },
+        Object {
+          "group": "diagnostics",
+          "id": "layout-shift-elements",
+          "weight": 0,
+        },
+        Object {
+          "group": "diagnostics",
+          "id": "uses-passive-event-listeners",
+          "weight": 0,
+        },
+        Object {
+          "group": "diagnostics",
+          "id": "no-document-write",
+          "weight": 0,
+        },
+        Object {
+          "group": "diagnostics",
+          "id": "long-tasks",
+          "weight": 0,
+        },
+        Object {
+          "group": "diagnostics",
+          "id": "non-composited-animations",
+          "weight": 0,
+        },
+        Object {
+          "group": "diagnostics",
+          "id": "unsized-images",
+          "weight": 0,
+        },
+        Object {
+=======
+          "group": "hidden",
+>>>>>>> origin/master
           "id": "network-requests",
           "weight": 0,
         },
         Object {
+          "group": "hidden",
           "id": "network-rtt",
           "weight": 0,
         },
         Object {
+          "group": "hidden",
           "id": "network-server-latency",
           "weight": 0,
         },
         Object {
+          "group": "hidden",
           "id": "main-thread-tasks",
           "weight": 0,
         },
         Object {
+          "group": "hidden",
           "id": "diagnostics",
           "weight": 0,
         },
         Object {
+          "group": "hidden",
           "id": "metrics",
           "weight": 0,
         },
         Object {
+          "group": "hidden",
           "id": "screenshot-thumbnails",
           "weight": 0,
         },
         Object {
+          "group": "hidden",
           "id": "final-screenshot",
           "weight": 0,
         },
+        Object {
+          "group": "hidden",
+          "id": "script-treemap-data",
+          "weight": 0,
+        },
+      ],
+      "supportedModes": Array [
+        "navigation",
+        "timespan",
+        "snapshot",
       ],
       "title": "Performance",
     },
     "pwa": Object {
       "auditRefs": Array [
-        Object {
-          "group": "pwa-fast-reliable",
-          "id": "load-fast-enough-for-pwa",
-          "weight": 7,
-        },
-        Object {
-          "group": "pwa-fast-reliable",
-          "id": "works-offline",
-          "weight": 5,
-        },
-        Object {
-          "group": "pwa-fast-reliable",
-          "id": "offline-start-url",
-          "weight": 1,
-        },
-        Object {
-          "group": "pwa-installable",
-          "id": "is-on-https",
-          "weight": 2,
-        },
-        Object {
-          "group": "pwa-installable",
-          "id": "service-worker",
-          "weight": 1,
-        },
         Object {
           "group": "pwa-installable",
           "id": "installable-manifest",
@@ -1115,8 +1261,8 @@ Object {
         },
         Object {
           "group": "pwa-optimized",
-          "id": "redirects-http",
-          "weight": 2,
+          "id": "service-worker",
+          "weight": 1,
         },
         Object {
           "group": "pwa-optimized",
@@ -1137,11 +1283,6 @@ Object {
           "group": "pwa-optimized",
           "id": "viewport",
           "weight": 2,
-        },
-        Object {
-          "group": "pwa-optimized",
-          "id": "without-javascript",
-          "weight": 1,
         },
         Object {
           "group": "pwa-optimized",
@@ -1168,7 +1309,10 @@ Object {
       ],
       "description": "These checks validate the aspects of a Progressive Web App. [Learn more](https://developers.google.com/web/progressive-web-apps/checklist).",
       "manualDescription": "These checks are required by the baseline [PWA Checklist](https://developers.google.com/web/progressive-web-apps/checklist) but are not automatically checked by Lighthouse. They do not affect your score but it's important that you verify them manually.",
-      "title": "Progressive Web App",
+      "supportedModes": Array [
+        "navigation",
+      ],
+      "title": "PWA",
     },
     "seo": Object {
       "auditRefs": Array [
@@ -1247,8 +1391,12 @@ Object {
           "weight": 0,
         },
       ],
-      "description": "These checks ensure that your page is optimized for search engine results ranking. There are additional factors Lighthouse does not check that may affect your search ranking. [Learn more](https://support.google.com/webmasters/answer/35769).",
+      "description": "These checks ensure that your page is following basic search engine optimization advice. There are many additional factors Lighthouse does not score here that may affect your search ranking, including performance on [Core Web Vitals](https://web.dev/learn-web-vitals/). [Learn more](https://support.google.com/webmasters/answer/35769).",
       "manualDescription": "Run these additional validators on your site to check additional SEO best practices.",
+      "supportedModes": Array [
+        "navigation",
+        "snapshot",
+      ],
       "title": "SEO",
     },
   },
@@ -1305,15 +1453,15 @@ Object {
       "description": "More information about the performance of your application. These numbers don't [directly affect](https://web.dev/performance-scoring/) the Performance score.",
       "title": "Diagnostics",
     },
+    "hidden": Object {
+      "title": "",
+    },
     "load-opportunities": Object {
       "description": "These suggestions can help your page load faster. They don't [directly affect](https://web.dev/performance-scoring/) the Performance score.",
       "title": "Opportunities",
     },
     "metrics": Object {
       "title": "Metrics",
-    },
-    "pwa-fast-reliable": Object {
-      "title": "Fast and reliable",
     },
     "pwa-installable": Object {
       "title": "Installable",
@@ -1350,9 +1498,6 @@ Object {
           "path": "viewport-dimensions",
         },
         Object {
-          "path": "runtime-exceptions",
-        },
-        Object {
           "path": "console-messages",
         },
         Object {
@@ -1374,19 +1519,19 @@ Object {
           "path": "script-elements",
         },
         Object {
+          "path": "scripts",
+        },
+        Object {
           "path": "iframe-elements",
         },
         Object {
-          "path": "form-elements",
+          "path": "inputs",
         },
         Object {
           "path": "main-document-content",
         },
         Object {
           "path": "global-listeners",
-        },
-        Object {
-          "path": "dobetterweb/appcache",
         },
         Object {
           "path": "dobetterweb/doctype",
@@ -1430,6 +1575,9 @@ Object {
         Object {
           "path": "source-maps",
         },
+        Object {
+          "path": "full-page-screenshot",
+        },
       ],
       "loadFailureMode": "fatal",
       "networkQuietThresholdMs": 1000,
@@ -1447,46 +1595,10 @@ Object {
         Object {
           "path": "service-worker",
         },
-        Object {
-          "path": "offline",
-        },
-        Object {
-          "path": "start-url",
-        },
       ],
       "loadFailureMode": "ignore",
       "networkQuietThresholdMs": 0,
       "passName": "offlinePass",
-      "pauseAfterFcpMs": 0,
-      "pauseAfterLoadMs": 0,
-      "recordTrace": false,
-      "useThrottling": false,
-    },
-    Object {
-      "blankPage": "about:blank",
-      "blockedUrlPatterns": Array [
-        "*.css",
-        "*.jpg",
-        "*.jpeg",
-        "*.png",
-        "*.gif",
-        "*.svg",
-        "*.ttf",
-        "*.woff",
-        "*.woff2",
-      ],
-      "cpuQuietThresholdMs": 0,
-      "gatherers": Array [
-        Object {
-          "path": "http-redirect",
-        },
-        Object {
-          "path": "html-without-javascript",
-        },
-      ],
-      "loadFailureMode": "warn",
-      "networkQuietThresholdMs": 0,
-      "passName": "redirectPass",
       "pauseAfterFcpMs": 0,
       "pauseAfterLoadMs": 0,
       "recordTrace": false,
@@ -1499,11 +1611,12 @@ Object {
     "blockedUrlPatterns": null,
     "budgets": null,
     "channel": "cli",
+    "debugNavigation": false,
     "disableStorageReset": false,
-    "emulatedFormFactor": "mobile",
+    "emulatedUserAgent": "Mozilla/5.0 (Linux; Android 7.0; Moto G (4)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4695.0 Mobile Safari/537.36 Chrome-Lighthouse",
     "extraHeaders": null,
+    "formFactor": "mobile",
     "gatherMode": false,
-    "internalDisableDeviceScreenEmulation": false,
     "locale": "en-US",
     "maxWaitForFcp": 30000,
     "maxWaitForLoad": 45000,
@@ -1513,6 +1626,13 @@ Object {
       "html",
     ],
     "precomputedLanternData": null,
+    "screenEmulation": Object {
+      "deviceScaleFactor": 2.625,
+      "disabled": false,
+      "height": 640,
+      "mobile": true,
+      "width": 360,
+    },
     "skipAudits": null,
     "throttling": Object {
       "cpuSlowdownMultiplier": 4,
@@ -1538,9 +1658,15 @@ Object {
     "performance": Object {
       "auditRefs": Array [
         Object {
+          "group": "hidden",
           "id": "metrics",
           "weight": 0,
         },
+      ],
+      "supportedModes": Array [
+        "navigation",
+        "timespan",
+        "snapshot",
       ],
       "title": "Performance",
     },
@@ -1598,15 +1724,15 @@ Object {
       "description": "More information about the performance of your application. These numbers don't [directly affect](https://web.dev/performance-scoring/) the Performance score.",
       "title": "Diagnostics",
     },
+    "hidden": Object {
+      "title": "",
+    },
     "load-opportunities": Object {
       "description": "These suggestions can help your page load faster. They don't [directly affect](https://web.dev/performance-scoring/) the Performance score.",
       "title": "Opportunities",
     },
     "metrics": Object {
       "title": "Metrics",
-    },
-    "pwa-fast-reliable": Object {
-      "title": "Fast and reliable",
     },
     "pwa-installable": Object {
       "title": "Installable",
@@ -1648,11 +1774,12 @@ Object {
     "blockedUrlPatterns": null,
     "budgets": null,
     "channel": "cli",
+    "debugNavigation": false,
     "disableStorageReset": false,
-    "emulatedFormFactor": "mobile",
+    "emulatedUserAgent": "Mozilla/5.0 (Linux; Android 7.0; Moto G (4)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4695.0 Mobile Safari/537.36 Chrome-Lighthouse",
     "extraHeaders": null,
+    "formFactor": "mobile",
     "gatherMode": false,
-    "internalDisableDeviceScreenEmulation": false,
     "locale": "en-US",
     "maxWaitForFcp": 30000,
     "maxWaitForLoad": 45000,
@@ -1664,6 +1791,13 @@ Object {
       "json",
     ],
     "precomputedLanternData": null,
+    "screenEmulation": Object {
+      "deviceScaleFactor": 2.625,
+      "disabled": false,
+      "height": 640,
+      "mobile": true,
+      "width": 360,
+    },
     "skipAudits": null,
     "throttling": Object {
       "cpuSlowdownMultiplier": 4,

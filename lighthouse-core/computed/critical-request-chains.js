@@ -41,8 +41,8 @@ class CriticalRequestChains {
     }
 
     // Iframes are considered High Priority but they are not render blocking
-    const isIframe = request.resourceType === NetworkRequest.TYPES.Document
-      && request.frameId !== mainResource.frameId;
+    const isIframe = request.resourceType === NetworkRequest.TYPES.Document &&
+      request.frameId !== mainResource.frameId;
     // XHRs are fetched at High priority, but we exclude them, as they are unlikely to be critical
     // Images are also non-critical.
     // Treat any missed images, primarily favicons, as non-critical resources
@@ -125,22 +125,15 @@ class CriticalRequestChains {
 
   /**
    * @param {{URL: LH.Artifacts['URL'], devtoolsLog: LH.DevtoolsLog, trace: LH.Trace}} data
-   * @param {LH.Audit.Context} context
+   * @param {LH.Artifacts.ComputedContext} context
    * @return {Promise<LH.Artifacts.CriticalRequestNode>}
    */
   static async compute_(data, context) {
-    const mainResource = await MainResource.request({
-      URL: data.URL,
-      devtoolsLog: data.devtoolsLog,
-    }, context);
-
-    const graph = await PageDependencyGraph.request({
-      trace: data.trace,
-      devtoolsLog: data.devtoolsLog,
-    }, context);
+    const mainResource = await MainResource.request(data, context);
+    const graph = await PageDependencyGraph.request(data, context);
 
     return CriticalRequestChains.extractChainsFromGraph(mainResource, graph);
   }
 }
 
-module.exports = makeComputedArtifact(CriticalRequestChains);
+module.exports = makeComputedArtifact(CriticalRequestChains, ['URL', 'devtoolsLog', 'trace']);

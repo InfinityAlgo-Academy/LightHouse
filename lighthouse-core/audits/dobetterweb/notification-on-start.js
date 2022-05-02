@@ -37,21 +37,23 @@ class NotificationOnStart extends ViolationAudit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['ConsoleMessages'],
+      supportedModes: ['navigation'],
+      requiredArtifacts: ['ConsoleMessages', 'SourceMaps', 'Scripts'],
     };
   }
 
   /**
    * @param {LH.Artifacts} artifacts
-   * @return {LH.Audit.Product}
+   * @param {LH.Audit.Context} context
+   * @return {Promise<LH.Audit.Product>}
    */
-  static audit(artifacts) {
-    const results = ViolationAudit.getViolationResults(artifacts, /notification permission/);
+  static async audit(artifacts, context) {
+    const results =
+      await ViolationAudit.getViolationResults(artifacts, context, /notification permission/);
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
-      {key: 'url', itemType: 'url', text: str_(i18n.UIStrings.columnURL)},
-      {key: 'label', itemType: 'text', text: str_(i18n.UIStrings.columnLocation)},
+      {key: 'source', itemType: 'source-location', text: str_(i18n.UIStrings.columnSource)},
     ];
     // TODO(bckenny): see TODO in geolocation-on-start
     const details = ViolationAudit.makeTableDetails(headings, results);

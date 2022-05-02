@@ -3,17 +3,21 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 /* eslint-disable no-console */
 
-const fs = require('fs');
-const path = require('path');
-const glob = require('glob');
-const {execFileSync} = require('child_process');
-const makeHash = require('./hash.js');
-const LegacyJavascript = require('../../audits/byte-efficiency/legacy-javascript.js');
-const networkRecordsToDevtoolsLog = require('../../test/network-records-to-devtools-log.js');
+import fs from 'fs';
+import path from 'path';
+import {execFileSync} from 'child_process';
+
+import glob from 'glob';
+
+import {makeHash} from './hash.js';
+import LegacyJavascript from '../../audits/byte-efficiency/legacy-javascript.js';
+import networkRecordsToDevtoolsLog from '../../test/network-records-to-devtools-log.js';
+import {LH_ROOT, readJson} from '../../../root.js';
+
+const scriptDir = `${LH_ROOT}/lighthouse-core/scripts/legacy-javascript`;
 
 // Create variants in a directory named-cached by contents of this script and the lockfile.
 // This folder is in the CI cache, so that the time consuming part of this test only runs if
@@ -21,12 +25,12 @@ const networkRecordsToDevtoolsLog = require('../../test/network-records-to-devto
 removeCoreJs(); // (in case the script was canceled halfway - there shouldn't be a core-js dep checked in.)
 
 const hash = makeHash();
-const VARIANT_DIR = `${__dirname}/variants/${hash}`;
+const VARIANT_DIR = `${scriptDir}/variants/${hash}`;
 
 // build, audit, all.
 const STAGE = process.env.STAGE || 'all';
 
-const mainCode = fs.readFileSync(`${__dirname}/main.js`, 'utf-8');
+const mainCode = fs.readFileSync(`${scriptDir}/main.js`, 'utf-8');
 
 const plugins = LegacyJavascript.getTransformPatterns().map(pattern => pattern.name);
 const polyfills = LegacyJavascript.getPolyfillData();
@@ -36,11 +40,11 @@ const polyfills = LegacyJavascript.getPolyfillData();
  * @param {string[]} args
  */
 function runCommand(command, args) {
-  execFileSync(command, args, {cwd: __dirname});
+  execFileSync(command, args, {cwd: scriptDir});
 }
 
 /**
- * @param {number} version
+ * @param {string} version
  */
 function installCoreJs(version) {
   runCommand('yarn', [
@@ -67,6 +71,7 @@ async function createVariant(options) {
 
   if (!fs.existsSync(`${dir}/main.bundle.js`) && (STAGE === 'build' || STAGE === 'all')) {
     fs.mkdirSync(dir, {recursive: true});
+    fs.writeFileSync(`${dir}/package.json`, JSON.stringify({type: 'commonjs'}));
     fs.writeFileSync(`${dir}/main.js`, code);
     fs.writeFileSync(`${dir}/.babelrc`, JSON.stringify(babelrc || {}, null, 2));
     // Not used in this script, but useful for running Lighthouse manually.
@@ -129,25 +134,31 @@ function getLegacyJavascriptResults(code, map, {sourceMaps}) {
   // Much faster than running Lighthouse.
   const documentUrl = 'http://localhost/index.html'; // These URLs don't matter.
   const scriptUrl = 'https://localhost/main.bundle.min.js';
+  const scriptId = '10001';
   const networkRecords = [
-    {url: documentUrl, requestId: '1000.1', resourceType: /** @type {'Document'} */ ('Document')},
+    {url: documentUrl, requestId: '1000.1', resourceType: /** @type {const} */ ('Document')},
     {url: scriptUrl, requestId: '1000.2'},
   ];
   const devtoolsLogs = networkRecordsToDevtoolsLog(networkRecords);
 
-  /** @type {Pick<LH.Artifacts, 'devtoolsLogs'|'URL'|'ScriptElements'|'SourceMaps'>} */
+  /** @type {Pick<LH.Artifacts, 'devtoolsLogs'|'URL'|'Scripts'|'SourceMaps'>} */
   const artifacts = {
-    URL: {finalUrl: documentUrl, requestedUrl: documentUrl},
+    URL: {
+      initialUrl: 'about:blank',
+      requestedUrl: documentUrl,
+      mainDocumentUrl: documentUrl,
+      finalUrl: documentUrl,
+    },
     devtoolsLogs: {
       [LegacyJavascript.DEFAULT_PASS]: devtoolsLogs,
     },
-    ScriptElements: [
-      // @ts-expect-error - partial ScriptElement excluding unused DOM properties
-      {src: scriptUrl, requestId: '1000.2', content: code},
+    Scripts: [
+      // @ts-expect-error - partial Script excluding unused properties
+      {scriptId, url: scriptUrl, content: code},
     ],
     SourceMaps: [],
   };
-  if (sourceMaps) artifacts.SourceMaps = [{scriptUrl, map}];
+  if (sourceMaps) artifacts.SourceMaps = [{scriptId, scriptUrl, map}];
   // @ts-expect-error: partial Artifacts.
   return LegacyJavascript.audit_(artifacts, networkRecords, {
     computedCache: new Map(),
@@ -162,7 +173,7 @@ function makeSummary(legacyJavascriptFilename) {
   const variants = [];
   for (const dir of glob.sync('*/*', {cwd: VARIANT_DIR})) {
     /** @type {import('../../audits/byte-efficiency/legacy-javascript.js').Item[]} */
-    const legacyJavascriptItems = require(`${VARIANT_DIR}/${dir}/${legacyJavascriptFilename}`);
+    const legacyJavascriptItems = readJson(`${VARIANT_DIR}/${dir}/${legacyJavascriptFilename}`);
 
     const signals = [];
     for (const item of legacyJavascriptItems) {
@@ -207,7 +218,7 @@ function createSummarySizes() {
     lines.push('');
   }
 
-  fs.writeFileSync(`${__dirname}/summary-sizes.txt`, lines.join('\n'));
+  fs.writeFileSync(`${scriptDir}/summary-sizes.txt`, lines.join('\n'));
 }
 
 /**
@@ -233,7 +244,8 @@ async function main() {
     });
   }
 
-  for (const coreJsVersion of [2, 3]) {
+  for (const coreJsVersion of ['2.6.12', '3.19.1']) {
+    const major = coreJsVersion.split('.')[0];
     removeCoreJs();
     installCoreJs(coreJsVersion);
 
@@ -245,7 +257,7 @@ async function main() {
     ];
     for (const {esmodules, bugfixes} of moduleOptions) {
       await createVariant({
-        group: `core-js-${coreJsVersion}-preset-env-esmodules`,
+        group: `core-js-${major}-preset-env-esmodules`,
         name: String(esmodules) + (bugfixes ? '_and_bugfixes' : ''),
         code: `require('core-js');\n${mainCode}`,
         babelrc: {
@@ -255,7 +267,7 @@ async function main() {
               {
                 targets: {esmodules},
                 useBuiltIns: 'entry',
-                corejs: coreJsVersion,
+                corejs: major,
                 bugfixes,
               },
             ],
@@ -265,21 +277,21 @@ async function main() {
     }
 
     for (const polyfill of polyfills) {
-      const module = coreJsVersion === 2 ? polyfill.coreJs2Module : polyfill.coreJs3Module;
+      const module = major === '2' ? polyfill.coreJs2Module : polyfill.coreJs3Module;
       await createVariant({
-        group: `core-js-${coreJsVersion}-only-polyfill`,
+        group: `core-js-${major}-only-polyfill`,
         name: module,
         code: makeRequireCodeForPolyfill(module),
       });
     }
 
     const allPolyfillCode = polyfills.map(polyfill => {
-      const module = coreJsVersion === 2 ? polyfill.coreJs2Module : polyfill.coreJs3Module;
+      const module = major === '2' ? polyfill.coreJs2Module : polyfill.coreJs3Module;
       return makeRequireCodeForPolyfill(module);
     }).join('\n');
     await createVariant({
       group: 'all-legacy-polyfills',
-      name: `all-legacy-polyfills-core-js-${coreJsVersion}`,
+      name: `all-legacy-polyfills-core-js-${major}`,
       code: allPolyfillCode,
     });
   }
@@ -290,11 +302,11 @@ async function main() {
 
   // Summary of using source maps and pattern matching.
   summary = makeSummary('legacy-javascript.json');
-  fs.writeFileSync(`${__dirname}/summary-signals.json`, JSON.stringify(summary, null, 2));
+  fs.writeFileSync(`${scriptDir}/summary-signals.json`, JSON.stringify(summary, null, 2));
 
   // Summary of using only pattern matching.
   summary = makeSummary('legacy-javascript-nomaps.json');
-  fs.writeFileSync(`${__dirname}/summary-signals-nomaps.json`, JSON.stringify(summary, null, 2));
+  fs.writeFileSync(`${scriptDir}/summary-signals-nomaps.json`, JSON.stringify(summary, null, 2));
   console.log({
     totalSignals: summary.totalSignals,
     variantsMissingSignals: summary.variantsMissingSignals,

@@ -13,63 +13,51 @@
  * We take the backend nodeId from the trace and use it to find the corresponding element in the DOM.
  */
 
-const Gatherer = require('./gatherer.js');
+const FRGatherer = require('../../fraggle-rock/gather/base-gatherer.js');
+const {resolveNodeIdToObjectId} = require('../driver/dom.js');
 const pageFunctions = require('../../lib/page-functions.js');
-const TraceProcessor = require('../../lib/tracehouse/trace-processor.js');
 const RectHelpers = require('../../lib/rect-helpers.js');
 const Sentry = require('../../lib/sentry.js');
+const Trace = require('./trace.js');
+const ProcessedTrace = require('../../computed/processed-trace.js');
+const ProcessedNavigation = require('../../computed/processed-navigation.js');
+const LighthouseError = require('../../lib/lh-error.js');
 
 /** @typedef {{nodeId: number, score?: number, animations?: {name?: string, failureReasonsMask?: number, unsupportedProperties?: string[]}[]}} TraceElementData */
 
 /**
  * @this {HTMLElement}
  */
-/* istanbul ignore next */
+/* c8 ignore start */
 function getNodeDetailsData() {
   const elem = this.nodeType === document.ELEMENT_NODE ? this : this.parentElement; // eslint-disable-line no-undef
   let traceElement;
   if (elem) {
     // @ts-expect-error - getNodeDetails put into scope via stringification
-    traceElement = getNodeDetails(elem);
+    traceElement = {node: getNodeDetails(elem)};
   }
   return traceElement;
 }
+/* c8 ignore stop */
 
-class TraceElements extends Gatherer {
-  /**
-   * @param {LH.TraceEvent | undefined} event
-   * @return {number | undefined}
-   */
-  static getNodeIDFromTraceEvent(event) {
-    return event && event.args &&
-      event.args.data && event.args.data.nodeId;
+class TraceElements extends FRGatherer {
+  /** @type {LH.Gatherer.GathererMeta<'Trace'>} */
+  meta = {
+    supportedModes: ['timespan', 'navigation'],
+    dependencies: {Trace: Trace.symbol},
+  };
+
+  /** @type {Map<string, string>} */
+  animationIdToName = new Map();
+
+  constructor() {
+    super();
+    this._onAnimationStarted = this._onAnimationStarted.bind(this);
   }
 
-  /**
-   * @param {LH.TraceEvent | undefined} event
-   * @return {string | undefined}
-   */
-  static getAnimationIDFromTraceEvent(event) {
-    return event && event.args &&
-      event.args.data && event.args.data.id;
-  }
-
-  /**
-   * @param {LH.TraceEvent | undefined} event
-   * @return {number | undefined}
-   */
-  static getFailureReasonsFromTraceEvent(event) {
-    return event && event.args &&
-      event.args.data && event.args.data.compositeFailed;
-  }
-
-  /**
-   * @param {LH.TraceEvent | undefined} event
-   * @return {string[] | undefined}
-   */
-  static getUnsupportedPropertiesFromTraceEvent(event) {
-    return event && event.args &&
-      event.args.data && event.args.data.unsupportedProperties;
+  /** @param {LH.Crdp.Animation.AnimationStartedEvent} args */
+  _onAnimationStarted({animation: {id, name}}) {
+    if (name) this.animationIdToName.set(id, name);
   }
 
   /**
@@ -87,34 +75,6 @@ class TraceElements extends Gatherer {
   }
 
   /**
-   * @param {LH.Gatherer.PassContext} passContext
-   * @param {string} animationId
-   * @return {Promise<string | undefined>}
-   */
-  static async resolveAnimationName(passContext, animationId) {
-    const driver = passContext.driver;
-    try {
-      const result = await driver.sendCommand('Animation.resolveAnimation', {animationId});
-      const objectId = result.remoteObject.objectId;
-      if (!objectId) return undefined;
-      const response = await driver.sendCommand('Runtime.getProperties', {
-        objectId,
-      });
-      const nameProperty = response.result.find((property) => property.name === 'animationName');
-      const animationName = nameProperty && nameProperty.value && nameProperty.value.value;
-      if (animationName === '') return undefined;
-      return animationName;
-    } catch (err) {
-      // Animation name is not mission critical information and can be evicted, so don't throw fatally if we can't find it.
-      Sentry.captureException(err, {
-        tags: {gatherer: TraceElements.name},
-        level: 'error',
-      });
-      return undefined;
-    }
-  }
-
-  /**
    * This function finds the top (up to 5) elements that contribute to the CLS score of the page.
    * Each layout shift event has a 'score' which is the amount added to the CLS as a result of the given shift(s).
    * We calculate the score per element by taking the 'score' of each layout shift event and
@@ -128,7 +88,7 @@ class TraceElements extends Gatherer {
     const clsPerNode = new Map();
     const shiftEvents = mainThreadEvents
       .filter(e => e.name === 'LayoutShift')
-      .map(e => e.args && e.args.data);
+      .map(e => e.args?.data);
     const indexFirstEventWithoutInput =
       shiftEvents.findIndex(event => event && !event.had_recent_input);
 
@@ -184,11 +144,10 @@ class TraceElements extends Gatherer {
 
   /**
    * Find the node ids of elements which are animated using the Animation trace events.
-   * @param {LH.Gatherer.PassContext} passContext
    * @param {Array<LH.TraceEvent>} mainThreadEvents
    * @return {Promise<Array<TraceElementData>>}
    */
-  static async getAnimatedElements(passContext, mainThreadEvents) {
+  async getAnimatedElements(mainThreadEvents) {
     /** @type {Map<string, {begin: LH.TraceEvent | undefined, status: LH.TraceEvent | undefined}>} */
     const animationPairs = new Map();
     for (const event of mainThreadEvents) {
@@ -212,11 +171,12 @@ class TraceElements extends Gatherer {
     /** @type {Map<number, Set<{animationId: string, failureReasonsMask?: number, unsupportedProperties?: string[]}>>} */
     const elementAnimations = new Map();
     for (const {begin, status} of animationPairs.values()) {
-      const nodeId = this.getNodeIDFromTraceEvent(begin);
-      const animationId = this.getAnimationIDFromTraceEvent(begin);
-      const failureReasonsMask = this.getFailureReasonsFromTraceEvent(status);
-      const unsupportedProperties = this.getUnsupportedPropertiesFromTraceEvent(status);
+      const nodeId = begin?.args?.data?.nodeId;
+      const animationId = begin?.args?.data?.id;
+      const failureReasonsMask = status?.args?.data?.compositeFailed;
+      const unsupportedProperties = status?.args?.data?.unsupportedProperties;
       if (!nodeId || !animationId) continue;
+
       const animationIds = elementAnimations.get(nodeId) || new Set();
       animationIds.add({animationId, failureReasonsMask, unsupportedProperties});
       elementAnimations.set(nodeId, animationIds);
@@ -227,7 +187,7 @@ class TraceElements extends Gatherer {
     for (const [nodeId, animationIds] of elementAnimations) {
       const animations = [];
       for (const {animationId, failureReasonsMask, unsupportedProperties} of animationIds) {
-        const animationName = await this.resolveAnimationName(passContext, animationId);
+        const animationName = this.animationIdToName.get(animationId);
         animations.push({name: animationName, failureReasonsMask, unsupportedProperties});
       }
       animatedElementData.push({nodeId, animations});
@@ -236,30 +196,49 @@ class TraceElements extends Gatherer {
   }
 
   /**
-   * @param {LH.Gatherer.PassContext} passContext
+   * @param {LH.Gatherer.FRTransitionalContext} context
    */
-  async beforePass(passContext) {
-    await passContext.driver.sendCommand('Animation.enable');
+  async startInstrumentation(context) {
+    await context.driver.defaultSession.sendCommand('Animation.enable');
+    context.driver.defaultSession.on('Animation.animationStarted', this._onAnimationStarted);
   }
 
   /**
-   * @param {LH.Gatherer.PassContext} passContext
-   * @param {LH.Gatherer.LoadData} loadData
+   * @param {LH.Gatherer.FRTransitionalContext} context
+   */
+  async stopInstrumentation(context) {
+    context.driver.defaultSession.off('Animation.animationStarted', this._onAnimationStarted);
+    await context.driver.defaultSession.sendCommand('Animation.disable');
+  }
+
+  /**
+   * @param {LH.Gatherer.FRTransitionalContext} context
+   * @param {LH.Trace|undefined} trace
    * @return {Promise<LH.Artifacts['TraceElements']>}
    */
-  async afterPass(passContext, loadData) {
-    const driver = passContext.driver;
-    if (!loadData.trace) {
+  async _getArtifact(context, trace) {
+    const session = context.driver.defaultSession;
+    if (!trace) {
       throw new Error('Trace is missing!');
     }
 
-    const {largestContentfulPaintEvt, mainThreadEvents} =
-      TraceProcessor.computeTraceOfTab(loadData.trace);
+    const processedTrace = await ProcessedTrace.request(trace, context);
+    const {largestContentfulPaintEvt} = await ProcessedNavigation
+      .request(processedTrace, context)
+      .catch(err => {
+        // If we were running in timespan mode and there was no paint, treat LCP as missing.
+        if (context.gatherMode === 'timespan' && err.code === LighthouseError.errors.NO_FCP.code) {
+          return {largestContentfulPaintEvt: undefined};
+        }
 
-    const lcpNodeId = TraceElements.getNodeIDFromTraceEvent(largestContentfulPaintEvt);
+        throw err;
+      });
+    const {mainThreadEvents} = processedTrace;
+
+    const lcpNodeId = largestContentfulPaintEvt?.args?.data?.nodeId;
     const clsNodeData = TraceElements.getTopLayoutShiftElements(mainThreadEvents);
     const animatedElementData =
-      await TraceElements.getAnimatedElements(passContext, mainThreadEvents);
+      await this.getAnimatedElements(mainThreadEvents);
 
     /** @type {Map<string, TraceElementData[]>} */
     const backendNodeDataMap = new Map([
@@ -274,9 +253,9 @@ class TraceElements extends Gatherer {
         const backendNodeId = backendNodeData[i].nodeId;
         let response;
         try {
-          const objectId = await driver.resolveNodeIdToObjectId(backendNodeId);
+          const objectId = await resolveNodeIdToObjectId(session, backendNodeId);
           if (!objectId) continue;
-          response = await driver.sendCommand('Runtime.callFunctionOn', {
+          response = await session.sendCommand('Runtime.callFunctionOn', {
             objectId,
             functionDeclaration: `function () {
               ${getNodeDetailsData.toString()};
@@ -294,7 +273,7 @@ class TraceElements extends Gatherer {
           continue;
         }
 
-        if (response && response.result && response.result.value) {
+        if (response?.result?.value) {
           traceElements.push({
             traceEventType,
             ...response.result.value,
@@ -306,9 +285,26 @@ class TraceElements extends Gatherer {
       }
     }
 
-    await driver.sendCommand('Animation.disable');
-
     return traceElements;
+  }
+
+  /**
+   * @param {LH.Gatherer.FRTransitionalContext<'Trace'>} context
+   * @return {Promise<LH.Artifacts.TraceElement[]>}
+   */
+  async getArtifact(context) {
+    return this._getArtifact(context, context.dependencies.Trace);
+  }
+
+  /**
+   * @param {LH.Gatherer.PassContext} passContext
+   * @param {LH.Gatherer.LoadData} loadData
+   * @return {Promise<LH.Artifacts.TraceElement[]>}
+   */
+  async afterPass(passContext, loadData) {
+    const context = {...passContext, dependencies: {}};
+    await this.stopInstrumentation(context);
+    return this._getArtifact(context, loadData.trace);
   }
 }
 

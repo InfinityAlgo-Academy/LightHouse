@@ -10,6 +10,7 @@ const trace = require('../../fixtures/traces/progressive-app-m60.json');
 const devtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
 const NetworkRecords = require('../../../computed/network-records.js');
 const networkRecordsToDevtoolsLog = require('../../network-records-to-devtools-log.js');
+const {getURLArtifactFromDevtoolsLog} = require('../../test-utils.js');
 
 /* eslint-env jest */
 
@@ -23,6 +24,8 @@ describe('Resources are fetched over http/2', () => {
     artifacts = {
       traces: {defaultPass: trace},
       devtoolsLogs: {defaultPass: devtoolsLog},
+      GatherContext: {gatherMode: 'navigation'},
+      URL: getURLArtifactFromDevtoolsLog(devtoolsLog),
     };
   });
 
@@ -44,8 +47,8 @@ describe('Resources are fetched over http/2', () => {
     // make sure we flag all the rest
     expect(result.details.items).toHaveLength(60);
     // make sure we report savings
-    expect(result.numericValue).toMatchInlineSnapshot(`1030`);
-    expect(result.details.overallSavingsMs).toMatchInlineSnapshot(`1030`);
+    expect(result.numericValue).toMatchInlineSnapshot(`1340`);
+    expect(result.details.overallSavingsMs).toMatchInlineSnapshot(`1340`);
     // make sure we have a failing score
     expect(result.score).toBeLessThan(0.5);
   });
@@ -70,7 +73,26 @@ describe('Resources are fetched over http/2', () => {
     expect(urls).not.toContain(records[30].url);
     expect(result.details.items).toHaveLength(30);
     // make sure we report less savings
-    expect(result.numericValue).toMatchInlineSnapshot(`250`);
-    expect(result.details.overallSavingsMs).toMatchInlineSnapshot(`250`);
+    expect(result.numericValue).toMatchInlineSnapshot(`500`);
+    expect(result.details.overallSavingsMs).toMatchInlineSnapshot(`500`);
+  });
+
+  it('should return table items for timespan mode', async () => {
+    const records = await NetworkRecords.compute_(artifacts.devtoolsLogs.defaultPass);
+    records.forEach(record => (record.protocol = 'HTTP/1.1'));
+    artifacts.devtoolsLogs.defaultPass = networkRecordsToDevtoolsLog(records);
+    artifacts.GatherContext.gatherMode = 'timespan';
+    const result = await UsesHTTP2Audit.audit(artifacts, context);
+    const hosts = new Set(result.details.items.map(item => new URL(item.url).host));
+
+    // make sure we don't pull in domains with only a few requests (GTM, GA)
+    expect(hosts).toEqual(new Set(['pwa.rocks']));
+    // make sure we flag all the rest
+    expect(result.details.items).toHaveLength(60);
+    // no savings calculated
+    expect(result.numericValue).toBeUndefined();
+    expect(result.details.overallSavingsMs).toBeUndefined();
+    // make sure we have a failing score
+    expect(result.score).toEqual(0);
   });
 });
