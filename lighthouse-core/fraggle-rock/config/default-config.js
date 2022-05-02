@@ -46,6 +46,7 @@ const artifacts = {
   CSSUsage: '',
   Doctype: '',
   DOMStats: '',
+  DOMTimeline: '',
   EmbeddedContent: '',
   FontSize: '',
   Inputs: '',

@@ -5,11 +5,10 @@
  */
 'use strict';
 
-
 const Audit = require('./audit.js');
 const i18n = require('./../lib/i18n/i18n.js');
 const ComputedUserTimings = require('../computed/user-timings.js');
-const TraceProcessor = require('../lib/tracehouse/trace-processor.js');
+const ProcessedTrace = require('../computed/processed-trace.js');
 
 const UIStrings = {
   /** Title of a Lighthouse audit that provides a potential cause of CLS. This descriptive title is shown to users when no iframe is injected in a time window before a LayoutShift event. */
@@ -35,7 +34,7 @@ const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
  * We assume that an UpdateLayerTree event belongs to a ScheduleStyleRecalculation event if it occurs within
  * 20ms. This window is then determined to be a "layoutShiftWindow", if a LayoutShift event occurs
  * within a time frame of this UpdateLayerTree event.
- * @param {{ event: LH.TraceEvent; timing: any; duration: number; }[]} layoutEvents
+ * @param {Array<{event: LH.TraceEvent; timing: number; duration: number}>} layoutEvents
  * @return {Array<LH.Artifacts.DOMWindow>}
  */
 function getLayoutShiftWindows(layoutEvents) {
@@ -47,52 +46,54 @@ function getLayoutShiftWindows(layoutEvents) {
     const event = layoutEvents[i].event;
     const SSRStart = layoutEvents[i].timing;
     const SSREnd = SSRStart + layoutEvents[i].duration;
-    // look for a ScheduleStyleRecalculation
-    if (event.name === 'ScheduleStyleRecalculation') {
-      // look for a ULT within this limit, assume that a ULT belongs to a SSR if occurs within 20ms
-      const limit = SSRStart + 20;
-      for (let j = i + 1; j < layoutEvents.length; j++) {
-        const ULTStart = layoutEvents[j].timing;
-        const ULTEnd = ULTStart + layoutEvents[j].duration;
-        if (layoutEvents[j].event.name === 'UpdateLayerTree' && ULTStart >= SSRStart && ULTStart < limit) {
-          // Look for ULT's layout shift if any
-          for (let k = j + 1; k < layoutEvents.length; k++) {
-            // If there is a layout shift within an update layer tree, it may cause a layout shift.
-            if (layoutEvents[k].event.name === 'LayoutShift') {
-              const layoutShiftStart = layoutEvents[k].timing;
-              const layoutShiftEnd = layoutShiftStart + layoutEvents[k].duration;
-              if (layoutShiftStart >= ULTStart && layoutShiftStart <= ULTEnd) {
-                shiftWindows.push({start: SSRStart, end: ULTEnd});
-              }
-            }
-          }
+    if (event.name !== 'ScheduleStyleRecalculation') continue;
+
+    // look for a ULT within this limit, assume that a ULT belongs to a SSR if occurs within 20ms
+    const limit = SSRStart + 20;
+    for (let j = i + 1; j < layoutEvents.length; j++) {
+      const ULTStart = layoutEvents[j].timing;
+      const ULTEnd = ULTStart + layoutEvents[j].duration;
+      if (layoutEvents[j].event.name !== 'UpdateLayerTree') continue;
+      if (!(ULTStart >= SSRStart && ULTStart < limit)) continue;
+
+      // If there is a layout shift within an update layer tree, it may cause a layout shift.
+      for (let k = j + 1; k < layoutEvents.length; k++) {
+        if (layoutEvents[k].event.name !== 'LayoutShift') continue;
+
+        const layoutShiftStart = layoutEvents[k].timing;
+        const layoutShiftEnd = layoutShiftStart + layoutEvents[k].duration;
+        if (layoutShiftStart >= ULTStart && layoutShiftStart <= ULTEnd) {
+          shiftWindows.push({start: SSRStart, end: ULTEnd});
         }
       }
     }
   }
+
   return shiftWindows;
 }
 
 /**
-   * @param {LH.Trace} trace
-   * @return {{ event: LH.TraceEvent; timing: any; duration: number; }[]}
-   */
-function getLayoutShiftTimelineEvents(trace) {
-  const timeOriginEvt = TraceProcessor.computeTraceOfTab(trace).timeOriginEvt;
+ * @param {LH.Trace} trace
+ * @param {LH.Audit.Context} context
+ * @return {Promise<Array<{event: LH.TraceEvent; timing: number; duration: number}>>}
+ */
+async function getLayoutShiftTimelineEvents(trace, context) {
+  const processedTrace = await ProcessedTrace.request(trace, context);
+  const timeOriginEvt = processedTrace.timeOriginEvt;
   /** @param {number} ts */
   const getTiming = (ts) => (ts - timeOriginEvt.ts) / 1000;
 
-  const mainThreadEvents = TraceProcessor.computeTraceOfTab(trace).mainThreadEvents;
+  const mainThreadEvents = processedTrace.mainThreadEvents;
+  const relevantEvents = ['UpdateLayerTree', 'LayoutShift', 'ScheduleStyleRecalculation'];
   const layoutShiftTimelineEvents = mainThreadEvents
-      .filter(evt => (evt.cat === 'devtools.timeline' && (evt.name === 'UpdateLayerTree') ||
-        evt.name === 'LayoutShift' || evt.name === 'ScheduleStyleRecalculation'))
-      .map(evt => {
-        return {event: evt, timing: getTiming(evt.ts), duration: evt.dur};
-      });
+    .filter(evt => relevantEvents.includes(evt.name))
+    .map(evt => {
+      return {event: evt, timing: getTiming(evt.ts), duration: evt.dur / 1000};
+    });
   return layoutShiftTimelineEvents;
 }
 
-class PreloadFontsAudit extends Audit {
+class InjectedIframesAudit extends Audit {
   /**
    * @return {LH.Audit.Meta}
    */
@@ -115,11 +116,11 @@ class PreloadFontsAudit extends Audit {
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
     const domTimestamps = artifacts.DOMTimeline.domTimestamps;
     const timeAlignClientTs = artifacts.DOMTimeline.timeAlignTs;
-    const layoutShiftTimelineEvents = getLayoutShiftTimelineEvents(trace);
+    const layoutShiftTimelineEvents = await getLayoutShiftTimelineEvents(trace, context);
     const shiftWindows = getLayoutShiftWindows(layoutShiftTimelineEvents);
 
-
     // console.log("timestamps: ", timestamps, " ", timestamps.length);
+    console.log('layoutShiftTimelineEvents.length: ', layoutShiftTimelineEvents.length);
     console.log('window stamps: ', shiftWindows, ' ', shiftWindows.length);
     console.log('number of iframe timestamps: ', domTimestamps.length);
     console.log('number of CLS windows: ', shiftWindows.length);
@@ -128,24 +129,21 @@ class PreloadFontsAudit extends Audit {
     const iframeResults = new Map();
     // console.log(" trace: ", trace);
 
+    const userTimings = await ComputedUserTimings.request(trace, context);
+    const timeAlignTimings = userTimings.filter(timing => timing.name === 'lh_timealign');
+    console.log('getting user timings?? ', timeAlignTimings.length);
+    // TODO: handle if we have 0 timeAlignTimings
+
+    // timeAlignNormalizedTraceTs have already been baselined against trace's timeOrigin and converted to milliseconds (see computed/user-timings)
+    //   This adjustment is identical to traceprocessor's getTiming
+    // whereas timeAlignClientTs times are clientside perf.now timestamps
+    const timeAlignNormalizedTraceTs = timeAlignTimings[0].startTime;
+    // can we assume that timing in client will always be <= timing on trace ?
+    // are assuming that first item in timeAlignTimings / smallest will be the one we want
+    console.log({timeAlignNormalizedTraceTs, timeAlignClientTs});
+
     // Difference of getTiming-normalized trace event time to clientside perf.now time
-    let timingNormalization = 0;
-
-    timingNormalization = await ComputedUserTimings.request(trace, context).then(computedUserTimings => {
-      const timeAlignTimings = computedUserTimings.filter(timing => timing.name === 'lh_timealign');
-      console.log('getting user timings?? ', timeAlignTimings.length);
-      // TODO: handle if we have 0 timeAlignTimings
-
-      // timeAlignNormalizedTraceTs have already been baselined against trace's timeOrigin and converted to milliseconds (see computed/user-timings)
-      //   This adjustment is identical to traceprocessor's getTiming
-      // whereas timeAlignClientTs times are clientside perf.now timestamps
-      const timeAlignNormalizedTraceTs = timeAlignTimings[0].startTime;
-      // can we assume that timing in client will always be <= timing on trace ?
-      // are assuming that first item in timeAlignTimings / smallest will be the one we want
-      console.log({timeAlignNormalizedTraceTs, timeAlignClientTs});
-      timingNormalization = (timeAlignNormalizedTraceTs - timeAlignClientTs);
-      return timingNormalization;
-    });
+    const timingNormalization = (timeAlignNormalizedTraceTs - timeAlignClientTs);
 
     const results = [];
     for (const timestamp of domTimestamps) {
@@ -196,5 +194,5 @@ class PreloadFontsAudit extends Audit {
   }
 }
 
-module.exports = PreloadFontsAudit;
+module.exports = InjectedIframesAudit;
 module.exports.UIStrings = UIStrings;
