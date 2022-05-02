@@ -5,6 +5,7 @@
  */
 'use strict';
 
+const { isSet } = require('util/types');
 const InspectorIssuesAudit =
   require('../../../audits/dobetterweb/inspector-issues.js');
 
