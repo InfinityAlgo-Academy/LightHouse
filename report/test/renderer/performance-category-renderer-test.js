@@ -106,6 +106,17 @@ describe('PerfCategoryRenderer', () => {
     assert.strictEqual(new URL(calcLink.href).hostname, 'googlechrome.github.io');
   });
 
+  it('does not render disclaimer if there is no category gauge', () => {
+    // Timespan mode uses a category fraction instead of a gauge.
+    const categoryDOM = renderer.render(
+      category,
+      sampleResults.categoryGroups,
+      {gatherMode: 'timespan'}
+    );
+    const disclaimerEl = categoryDOM.querySelector('.lh-metrics__disclaimer');
+    assert.ok(!disclaimerEl);
+  });
+
   it('ignores hidden audits', () => {
     const categoryDOM = renderer.render(category, sampleResults.categoryGroups);
 
