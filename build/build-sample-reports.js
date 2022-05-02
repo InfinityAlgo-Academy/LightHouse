@@ -23,10 +23,10 @@ const flowResult = readJson(
   `${LH_ROOT}/lighthouse-core/test/fixtures/fraggle-rock/reports/sample-flow-result.json`
 );
 
-/** @type {LH.Result} */
-const snapshotLhr = readJson(
-  `${LH_ROOT}/lighthouse-core/test/fixtures/fraggle-rock/reports/sample-snapshot-lhr.json`
-);
+const snapshotLhr = flowResult.steps.find(step => step.lhr.gatherMode === 'snapshot')?.lhr;
+const timespanLhr = flowResult.steps.find(step => step.lhr.gatherMode === 'timespan')?.lhr;
+if (!snapshotLhr) throw new Error('Could not find a snapshot report on the sample flow result');
+if (!timespanLhr) throw new Error('Could not find a timespan report on the sample flow result');
 
 const DIST = path.join(LH_ROOT, 'dist');
 
@@ -42,6 +42,7 @@ const DIST = path.join(LH_ROOT, 'dist');
     'error': errorLhr,
     'single-category': tweakLhrForPsi(lhr),
     'snapshot': snapshotLhr,
+    'timespan': timespanLhr,
   };
 
   // Generate and write reports
