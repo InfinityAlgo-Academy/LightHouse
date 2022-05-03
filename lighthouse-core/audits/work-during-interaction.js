@@ -374,34 +374,14 @@ class WorkDuringInteraction extends Audit {
     } = await ProcessedTrace.request(trace, context);
     const interactionEvent = WorkDuringInteraction.findInteractionEvent(
         responsivenessEvent, frameTreeEvents);
-    console.log('responsivenessEvent', responsivenessEvent);
-    console.log('interactionEvent', interactionEvent);
+    // console.log('responsivenessEvent', responsivenessEvent);
+    // console.log('interactionEvent', interactionEvent);
 
     const devtoolsLog = artifacts.devtoolsLogs[WorkDuringInteraction.DEFAULT_PASS];
     const networkRecords = await NetworkRecords.request(devtoolsLog, context);
     const items = await WorkDuringInteraction.mainThreadBreakdown(
       interactionEvent, mainThreadEvents, frames, networkRecords);
 
-    /** @type {LH.Audit.Details.TableItem[]} */
-    // const items = [{
-    //   phase: 'Input Delay',
-    //   subItems: {
-    //     type: 'subitems',
-    //     items: subitems.input,
-    //   },
-    // }, {
-    //   phase: 'Processing Delay',
-    //   subItems: {
-    //     type: 'subitems',
-    //     items: subitems.processing,
-    //   },
-    // }, {
-    //   phase: 'Presentation Delay',
-    //   subItems: {
-    //     type: 'subitems',
-    //     items: subitems.presentation,
-    //   },
-    // }];
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
       /* eslint-disable max-len */

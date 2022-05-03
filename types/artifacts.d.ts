@@ -1007,6 +1007,7 @@ export interface TraceEvent {
     frame?: string;
     name?: string;
     labels?: string;
+    startTime?: number;
   };
   pid: number;
   tid: number;

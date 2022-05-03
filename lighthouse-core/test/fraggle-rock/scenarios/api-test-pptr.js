@@ -93,9 +93,9 @@ describe('Fraggle Rock API', () => {
         notApplicableAudits,
       } = getAuditsBreakdown(lhr);
       // TODO(FR-COMPAT): This assertion can be removed when full compatibility is reached.
-      expect(auditResults.length).toMatchInlineSnapshot(`45`);
+      expect(auditResults.length).toMatchInlineSnapshot(`46`);
 
-      expect(notApplicableAudits.length).toMatchInlineSnapshot(`5`);
+      expect(notApplicableAudits.length).toMatchInlineSnapshot(`4`);
       expect(notApplicableAudits.map(audit => audit.id)).not.toContain('total-blocking-time');
 
       expect(erroredAudits).toHaveLength(0);
@@ -145,9 +145,9 @@ describe('Fraggle Rock API', () => {
       });
 
       const {auditResults, erroredAudits, notApplicableAudits} = getAuditsBreakdown(result.lhr);
-      expect(auditResults.length).toMatchInlineSnapshot(`45`);
+      expect(auditResults.length).toMatchInlineSnapshot(`46`);
 
-      expect(notApplicableAudits.length).toMatchInlineSnapshot(`18`);
+      expect(notApplicableAudits.length).toMatchInlineSnapshot(`17`);
       expect(notApplicableAudits.map(audit => audit.id)).not.toContain('total-blocking-time');
 
       expect(erroredAudits).toHaveLength(0);

@@ -1658,6 +1658,15 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "Ĥáŝ á `<meta name=\"viewport\">` t̂áĝ ẃît́ĥ `width` ór̂ `initial-scale`"
   },
+  "lighthouse-core/audits/work-during-interaction.js | description": {
+    "message": "T̂h́êśê ẃêŕê t́ĥé m̂áîń-t̂h́r̂éâd́ t̂áŝḱŝ t́ĥát̂ b́l̂óĉḱêd́ d̂úr̂ín̂ǵ âń îńt̂ér̂áĉt́îón̂. [Ĺêár̂ń m̂ór̂é](https://web.dev/inp/)."
+  },
+  "lighthouse-core/audits/work-during-interaction.js | failureTitle": {
+    "message": "M̂ín̂ím̂íẑé ŵór̂ḱ d̂úr̂ín̂ǵ îńt̂ér̂áĉt́îón̂ś"
+  },
+  "lighthouse-core/audits/work-during-interaction.js | title": {
+    "message": "M̂ín̂ím̂íẑéŝ ẃôŕk̂ d́ûŕîńĝ ín̂t́êŕâćt̂íôńŝ"
+  },
   "lighthouse-core/config/default-config.js | a11yAriaGroupDescription": {
     "message": "T̂h́êśê ár̂é ôṕp̂ór̂t́ûńît́îéŝ t́ô ím̂ṕr̂óv̂é t̂h́ê úŝáĝé ôf́ ÂŔÎÁ îń ŷóûŕ âṕp̂ĺîćât́îón̂ ẃĥíĉh́ m̂áŷ én̂h́âńĉé t̂h́ê éx̂ṕêŕîén̂ćê f́ôŕ ûśêŕŝ óf̂ áŝśîśt̂ív̂é t̂éĉh́n̂ól̂óĝý, l̂ík̂é â śĉŕêén̂ ŕêád̂ér̂."
   },

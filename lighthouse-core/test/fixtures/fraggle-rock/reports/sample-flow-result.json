@@ -7586,7 +7586,7 @@
             "description": "Consider instrumenting your app with the User Timing API to measure your app's real-world performance during key user experiences. [Learn more](https://web.dev/user-timings/).",
             "score": null,
             "scoreDisplayMode": "informative",
-            "displayValue": "5 user timings",
+            "displayValue": "6 user timings",
             "details": {
               "type": "table",
               "headings": [
@@ -7614,6 +7614,12 @@
                 }
               ],
               "items": [
+                {
+                  "name": "__lighthouseTimespanStart__",
+                  "startTime": 0,
+                  "duration": 0,
+                  "timingType": "Measure"
+                },
                 {
                   "name": "Next.js-route-change-to-render",
                   "startTime": 262.203,
@@ -9097,6 +9103,138 @@
             "numericValue": 60,
             "numericUnit": "millisecond",
             "displayValue": "60 ms"
+          },
+          "work-during-interaction": {
+            "id": "work-during-interaction",
+            "title": "Minimizes work during interactions",
+            "description": "These were the main-thread tasks that blocked during an interaction. [Learn more](https://web.dev/inp/).",
+            "score": 1,
+            "scoreDisplayMode": "numeric",
+            "details": {
+              "type": "table",
+              "headings": [
+                {
+                  "key": "phase",
+                  "itemType": "text",
+                  "subItemsHeading": {
+                    "key": "url",
+                    "itemType": "url"
+                  },
+                  "text": "Phase"
+                },
+                {
+                  "key": "total",
+                  "itemType": "ms",
+                  "subItemsHeading": {
+                    "key": "total",
+                    "granularity": 1,
+                    "itemType": "ms"
+                  },
+                  "text": "Total time"
+                },
+                {
+                  "key": null,
+                  "itemType": "ms",
+                  "subItemsHeading": {
+                    "key": "scripting",
+                    "granularity": 1,
+                    "itemType": "ms"
+                  },
+                  "text": "Script evaluation"
+                },
+                {
+                  "key": null,
+                  "itemType": "ms",
+                  "subItemsHeading": {
+                    "key": "layout",
+                    "granularity": 1,
+                    "itemType": "ms"
+                  },
+                  "text": "Style & Layout"
+                },
+                {
+                  "key": null,
+                  "itemType": "ms",
+                  "subItemsHeading": {
+                    "key": "render",
+                    "granularity": 1,
+                    "itemType": "ms"
+                  },
+                  "text": "Rendering"
+                }
+              ],
+              "items": [
+                {
+                  "phase": "Input Delay",
+                  "total": 14,
+                  "subItems": {
+                    "type": "subitems",
+                    "items": [
+                      {
+                        "url": "https://www.mikescerealshack.co/",
+                        "total": 9.73,
+                        "scripting": 4.24,
+                        "layout": 1.758,
+                        "render": 0
+                      },
+                      {
+                        "url": "https://www.mikescerealshack.co/_next/static/chunks/framework.9d524150d48315f49e80.js",
+                        "total": 2.9109999999999996,
+                        "scripting": 2.9109999999999996,
+                        "layout": 0,
+                        "render": 0
+                      }
+                    ]
+                  }
+                },
+                {
+                  "phase": "Processing Delay",
+                  "total": 43,
+                  "subItems": {
+                    "type": "subitems",
+                    "items": [
+                      {
+                        "url": "https://www.mikescerealshack.co/",
+                        "total": 33.382000000000005,
+                        "scripting": 31.014000000000003,
+                        "layout": 1.709,
+                        "render": 0
+                      },
+                      {
+                        "url": "https://www.mikescerealshack.co/_next/static/chunks/framework.9d524150d48315f49e80.js",
+                        "total": 9.604999999999999,
+                        "scripting": 9.604999999999999,
+                        "layout": 0,
+                        "render": 0
+                      }
+                    ]
+                  }
+                },
+                {
+                  "phase": "Presentation Delay",
+                  "total": 7,
+                  "subItems": {
+                    "type": "subitems",
+                    "items": [
+                      {
+                        "url": "https://www.mikescerealshack.co/_next/static/chunks/framework.9d524150d48315f49e80.js",
+                        "total": 5.244999999999999,
+                        "scripting": 2.1309999999999993,
+                        "layout": 0,
+                        "render": 0
+                      },
+                      {
+                        "url": "https://www.mikescerealshack.co/",
+                        "total": 1.7319999999999998,
+                        "scripting": 0,
+                        "layout": 0,
+                        "render": 1.0919999999999999
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
           }
         },
         "configSettings": {
@@ -9314,7 +9452,14 @@
                 "id": "experimental-interaction-to-next-paint",
                 "weight": 0,
                 "group": "metrics",
-                "acronym": "INP"
+                "acronym": "INP",
+                "relevantAudits": [
+                  "work-during-interaction"
+                ]
+              },
+              {
+                "id": "work-during-interaction",
+                "weight": 0
               }
             ],
             "id": "performance",
@@ -9940,12 +10085,18 @@
             },
             {
               "startTime": 80,
+              "name": "lh:audit:work-during-interaction",
+              "duration": 1,
+              "entryType": "measure"
+            },
+            {
+              "startTime": 81,
               "name": "lh:runner:generate",
               "duration": 1,
               "entryType": "measure"
             }
           ],
-          "total": 81
+          "total": 82
         },
         "i18n": {
           "rendererFormattedStrings": {
@@ -10062,7 +10213,7 @@
             "lighthouse-core/audits/user-timings.js | displayValue": [
               {
                 "values": {
-                  "itemCount": 5
+                  "itemCount": 6
                 },
                 "path": "audits[user-timings].displayValue"
               }
@@ -10431,6 +10582,12 @@
             ],
             "lighthouse-core/audits/metrics/experimental-interaction-to-next-paint.js | description": [
               "audits[experimental-interaction-to-next-paint].description"
+            ],
+            "lighthouse-core/audits/work-during-interaction.js | title": [
+              "audits[work-during-interaction].title"
+            ],
+            "lighthouse-core/audits/work-during-interaction.js | description": [
+              "audits[work-during-interaction].description"
             ],
             "lighthouse-core/config/default-config.js | performanceCategoryTitle": [
               "categories.performance.title"

@@ -1658,6 +1658,15 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "Has a `<meta name=\"viewport\">` tag with `width` or `initial-scale`"
   },
+  "lighthouse-core/audits/work-during-interaction.js | description": {
+    "message": "These were the main-thread tasks that blocked during an interaction. [Learn more](https://web.dev/inp/)."
+  },
+  "lighthouse-core/audits/work-during-interaction.js | failureTitle": {
+    "message": "Minimize work during interactions"
+  },
+  "lighthouse-core/audits/work-during-interaction.js | title": {
+    "message": "Minimizes work during interactions"
+  },
   "lighthouse-core/config/default-config.js | a11yAriaGroupDescription": {
     "message": "These are opportunities to improve the usage of ARIA in your application which may enhance the experience for users of assistive technology, like a screen reader."
   },

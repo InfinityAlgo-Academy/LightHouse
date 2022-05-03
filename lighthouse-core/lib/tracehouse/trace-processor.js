@@ -824,7 +824,7 @@ class TraceProcessor {
       return frameEvents.find(
         evt =>
           evt.name === TraceProcessor.TIMESPAN_MARKER_ID &&
-          evt.ph === 'b'
+          evt.args.startTime !== undefined
       );
     };
 

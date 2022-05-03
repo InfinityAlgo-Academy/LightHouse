@@ -52,6 +52,8 @@ const traceEventsToAlwaysKeep = new Set([
   // Needed for CPU profiler task attribution
   'Profile',
   'ProfileChunk',
+  // Deliberately inserted performance marks.
+  TracingProcessor.TIMESPAN_MARKER_ID,
 ]);
 
 const traceEventsToKeepInToplevelTask = new Set([
