@@ -50,6 +50,7 @@ const taskGroups = {
       'UpdateLayer',
       'UpdateLayerTree',
       'CompositeLayers',
+      'PrePaint',
     ],
   },
   scriptParseCompile: {

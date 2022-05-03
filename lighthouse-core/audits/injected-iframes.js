@@ -53,10 +53,9 @@ function getLayoutShiftWindows(layoutEvents) {
     for (let j = i + 1; j < layoutEvents.length; j++) {
       const ULTStart = layoutEvents[j].timing;
       const ULTEnd = ULTStart + layoutEvents[j].duration;
-      if (layoutEvents[j].event.name !== 'UpdateLayerTree') continue;
-      // TODO: not getting UpdateLayerTree in my trace from chrome...
-      console.log({SSRStart, SSREnd});
-      console.log({ULTStart, ULTEnd}, layoutEvents[j]);
+      // eslint-disable-next-line max-len
+      if (layoutEvents[j].event.name !== 'UpdateLayerTree' && layoutEvents[j].event.name !== 'PrePaint') continue;
+
       if (!(ULTStart >= SSRStart && ULTStart < limit)) continue;
 
       // If there is a layout shift within an update layer tree, it may cause a layout shift.
@@ -87,7 +86,12 @@ async function getLayoutShiftTimelineEvents(trace, context) {
   const getTiming = (ts) => (ts - timeOriginEvt.ts) / 1000;
 
   const mainThreadEvents = processedTrace.mainThreadEvents;
-  const relevantEvents = ['UpdateLayerTree', 'LayoutShift', 'ScheduleStyleRecalculation'];
+  const relevantEvents = [
+    'UpdateLayerTree', // M102 renames this to PrePaint.
+    'PrePaint',
+    'LayoutShift',
+    'ScheduleStyleRecalculation',
+  ];
   const layoutShiftTimelineEvents = mainThreadEvents
     .filter(evt => relevantEvents.includes(evt.name))
     .map(evt => {
