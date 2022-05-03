@@ -96,6 +96,11 @@ async function buildEsModulesBundle() {
     input: 'report/clients/bundle.js',
     plugins: [
       rollupPlugins.commonjs(),
+      // Exclude this 30kb from the devtools bundle for now.
+      rollupPlugins.shim({
+        [`${LH_ROOT}/shared/localization/i18n-module.js`]:
+            'export const swapLocale = _ => {}; export const format = _ => {};',
+      }),
     ],
   });
 
@@ -110,12 +115,19 @@ async function buildUmdBundle() {
   const bundle = await rollup.rollup({
     input: 'report/clients/bundle.js',
     plugins: [
+      rollupPlugins.inlineFs({verbose: true}),
       rollupPlugins.commonjs(),
       rollupPlugins.terser({
         format: {
           beautify: true,
         },
       }),
+      // Shim this empty to ensure the bundle isn't 10MB
+      rollupPlugins.shim({
+        [`${LH_ROOT}/shared/localization/locales.js`]: 'export default {}',
+        'fs': 'export default {}',
+      }),
+      rollupPlugins.nodeResolve({preferBuiltins: true}),
     ],
   });
 
@@ -123,6 +135,7 @@ async function buildUmdBundle() {
     file: 'dist/report/bundle.umd.js',
     format: 'umd',
     name: 'report',
+    sourcemap: Boolean(process.env.DEBUG),
   });
   await bundle.close();
 }
