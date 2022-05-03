@@ -7,8 +7,9 @@
 
 /* eslint-env jest */
 
-const ErrorLogsAudit = require('../../audits/errors-in-console.js');
-const assert = require('assert').strict;
+import ErrorLogsAudit from '../../audits/errors-in-console.js';
+
+import {strict as assert} from 'assert';
 
 describe('ConsoleMessages error logs audit', () => {
   it('passes when no console messages were found', async () => {

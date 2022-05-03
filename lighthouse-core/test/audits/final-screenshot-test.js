@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const FinalScreenshotAudit = require('../../audits/final-screenshot.js');
-const pwaTrace = require('../fixtures/traces/progressive-app-m60.json');
+import FinalScreenshotAudit from '../../audits/final-screenshot.js';
+import pwaTrace from '../fixtures/traces/progressive-app-m60.json';
 const noScreenshotsTrace = {traceEvents: pwaTrace.traceEvents.filter(e => e.name !== 'Screenshot')};
 
 /* eslint-env jest */

@@ -5,10 +5,9 @@
  */
 'use strict';
 
-const BaseNode = require('../../../lib/dependency-graph/base-node.js');
-const NetworkNode = require('../../../lib/dependency-graph/network-node.js');
-
-const assert = require('assert').strict;
+import BaseNode from '../../../lib/dependency-graph/base-node.js';
+import NetworkNode from '../../../lib/dependency-graph/network-node.js';
+import {strict as assert} from 'assert';
 
 function sortedById(nodeArray) {
   return nodeArray.sort((node1, node2) => node1.id.localeCompare(node2.id));

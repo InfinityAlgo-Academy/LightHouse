@@ -5,12 +5,12 @@
  */
 'use strict';
 
-const TimingBudgetAudit = require('../../audits/timing-budget.js');
-const trace = require('../fixtures/traces/progressive-app-m60.json');
-const devtoolsLog = require('../fixtures/traces/progressive-app-m60.devtools.log.json');
-const lcpTrace = require('../fixtures/traces/lcp-m78.json');
-const lcpDevtoolsLog = require('../fixtures/traces/lcp-m78.devtools.log.json');
-const {getURLArtifactFromDevtoolsLog} = require('../test-utils.js');
+import TimingBudgetAudit from '../../audits/timing-budget.js';
+import trace from '../fixtures/traces/progressive-app-m60.json';
+import devtoolsLog from '../fixtures/traces/progressive-app-m60.devtools.log.json';
+import lcpTrace from '../fixtures/traces/lcp-m78.json';
+import lcpDevtoolsLog from '../fixtures/traces/lcp-m78.devtools.log.json';
+import {getURLArtifactFromDevtoolsLog} from '../test-utils.js';
 
 /* eslint-env jest */
 

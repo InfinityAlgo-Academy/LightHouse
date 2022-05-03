@@ -7,13 +7,11 @@
 
 /* eslint-env jest */
 
-const {
-  getBaseArtifacts,
-  finalizeArtifacts,
-} = require('../../../fraggle-rock/gather/base-artifacts.js');
-const {initializeConfig} = require('../../../fraggle-rock/config/config.js');
-const {createMockDriver} = require('./mock-driver.js');
-const LighthouseError = require('../../../lib/lh-error.js');
+import {getBaseArtifacts, finalizeArtifacts} from '../../../fraggle-rock/gather/base-artifacts.js';
+
+import {initializeConfig} from '../../../fraggle-rock/config/config.js';
+import {createMockDriver} from './mock-driver.js';
+import LighthouseError from '../../../lib/lh-error.js';
 
 function getMockDriverForArtifacts() {
   const driverMock = createMockDriver();

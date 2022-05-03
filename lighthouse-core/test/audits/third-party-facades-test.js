@@ -5,16 +5,15 @@
  */
 'use strict';
 
-const ThirdPartyFacades = require('../../audits/third-party-facades.js');
-const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
-const createTestTrace = require('../create-test-trace.js');
-
-const pwaTrace = require('../fixtures/traces/progressive-app-m60.json');
-const pwaDevtoolsLog = require('../fixtures/traces/progressive-app-m60.devtools.log.json');
-const videoEmbedsTrace = require('../fixtures/traces/video-embeds-m84.json');
-const videoEmbedsDevtolsLog = require('../fixtures/traces/video-embeds-m84.devtools.log.json');
-const noThirdPartyTrace = require('../fixtures/traces/no-tracingstarted-m74.json');
-const {getURLArtifactFromDevtoolsLog} = require('../test-utils.js');
+import ThirdPartyFacades from '../../audits/third-party-facades.js';
+import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
+import createTestTrace from '../create-test-trace.js';
+import pwaTrace from '../fixtures/traces/progressive-app-m60.json';
+import pwaDevtoolsLog from '../fixtures/traces/progressive-app-m60.devtools.log.json';
+import videoEmbedsTrace from '../fixtures/traces/video-embeds-m84.json';
+import videoEmbedsDevtolsLog from '../fixtures/traces/video-embeds-m84.devtools.log.json';
+import noThirdPartyTrace from '../fixtures/traces/no-tracingstarted-m74.json';
+import {getURLArtifactFromDevtoolsLog} from '../test-utils.js';
 
 function intercomProductUrl(id) {
   return `https://widget.intercom.io/widget/${id}`;

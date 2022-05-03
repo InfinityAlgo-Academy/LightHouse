@@ -7,7 +7,7 @@
 
 /* eslint-env jest */
 
-const thirdPartyWeb = require('../../lib/third-party-web.js');
+import thirdPartyWeb from '../../lib/third-party-web.js';
 
 describe('third party web', () => {
   it('basic', () => {

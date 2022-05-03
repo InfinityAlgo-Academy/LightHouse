@@ -7,6 +7,9 @@
 
 /* eslint-env jest */
 
+import {readJson} from '../../../root.js';
+import {fnAny} from '../test-utils.js';
+
 /**
  * @param {{protocolGetVersionResponse: LH.CrdpCommands['Browser.getVersion']['returnType']}} param0
  */
@@ -22,8 +25,8 @@ function makeFakeDriver({protocolGetVersionResponse}) {
     get defaultSession() {
       return this;
     },
-    on: jest.fn(),
-    sendCommand: jest.fn().mockResolvedValue(undefined),
+    on: fnAny(),
+    sendCommand: fnAny().mockResolvedValue(undefined),
     getBrowserVersion() {
       return Promise.resolve(Object.assign({}, protocolGetVersionResponse, {milestone: 71}));
     },
@@ -71,15 +74,13 @@ function makeFakeDriver({protocolGetVersionResponse}) {
       return Promise.resolve();
     },
     endTrace() {
-      // Minimal indirection so TypeScript doesn't crash trying to infer a type.
-      const modulePath = '../fixtures/traces/progressive-app.json';
-      return Promise.resolve(require(modulePath));
+      return Promise.resolve(
+        readJson('lighthouse-core/test/fixtures/traces/progressive-app.json'));
     },
     beginDevtoolsLog() {},
     endDevtoolsLog() {
-      // Minimal indirection so TypeScript doesn't crash trying to infer a type.
-      const modulePath = '../fixtures/artifacts/perflog/defaultPass.devtoolslog.json';
-      return require(modulePath);
+      return readJson(
+        'lighthouse-core/test/fixtures/artifacts/perflog/defaultPass.devtoolslog.json');
     },
     registerRequestIdleCallbackWrap() {
       return Promise.resolve();
@@ -109,7 +110,8 @@ const fakeDriverUsingRealMobileDevice = makeFakeDriver({
   },
 });
 
-module.exports = {
+// TODO(esmodules): fix awkward export.
+export default {
   ...fakeDriver,
   fakeDriverUsingRealMobileDevice,
   protocolGetVersionResponse,

@@ -5,8 +5,7 @@
  */
 'use strict';
 
-const NonCompositedAnimationsAudit =
-  require('../../audits/non-composited-animations.js');
+import NonCompositedAnimationsAudit from '../../audits/non-composited-animations.js';
 
 /* eslint-env jest */
 describe('Non-composited animations audit', () => {

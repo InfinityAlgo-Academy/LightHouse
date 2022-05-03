@@ -8,14 +8,14 @@
 
 /* eslint-env jest */
 
-const UsesRelPreload = require('../../audits/uses-rel-preload.js');
-const assert = require('assert').strict;
+import UsesRelPreload from '../../audits/uses-rel-preload.js';
 
-const pwaTrace = require('../fixtures/traces/progressive-app-m60.json');
-const pwaDevtoolsLog = require('../fixtures/traces/progressive-app-m60.devtools.log.json');
-const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
-const createTestTrace = require('../create-test-trace.js');
-const {getURLArtifactFromDevtoolsLog} = require('../test-utils.js');
+import {strict as assert} from 'assert';
+import pwaTrace from '../fixtures/traces/progressive-app-m60.json';
+import pwaDevtoolsLog from '../fixtures/traces/progressive-app-m60.devtools.log.json';
+import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
+import createTestTrace from '../create-test-trace.js';
+import {getURLArtifactFromDevtoolsLog} from '../test-utils.js';
 
 const defaultMainResourceUrl = 'http://www.example.com/';
 const defaultMainResource = {

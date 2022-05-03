@@ -5,10 +5,10 @@
  */
 'use strict';
 
-const assert = require('assert').strict;
-const UnusedJavaScript = require('../../../audits/byte-efficiency/unused-javascript.js');
-const networkRecordsToDevtoolsLog = require('../../network-records-to-devtools-log.js');
-const {loadSourceMapAndUsageFixture, createScript} = require('../../test-utils.js');
+import {strict as assert} from 'assert';
+import UnusedJavaScript from '../../../audits/byte-efficiency/unused-javascript.js';
+import networkRecordsToDevtoolsLog from '../../network-records-to-devtools-log.js';
+import {createScript, loadSourceMapAndUsageFixture} from '../../test-utils.js';
 
 /* eslint-env jest */
 

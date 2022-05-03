@@ -7,19 +7,34 @@
 
 /* eslint-env jest */
 
+import {jest} from '@jest/globals';
+import Connection from '../../gather/connections/connection.js';
+import {fnAny, mockCommands} from '../test-utils.js';
+
+const {createMockSendCommandFn} = mockCommands;
+
+// Some imports needs to be done dynamically, so that their dependencies will be mocked.
+// See: https://jestjs.io/docs/ecmascript-modules#differences-between-esm-and-commonjs
+//      https://github.com/facebook/jest/issues/10025
+/** @typedef {import('../../gather/driver.js')} Driver */
+/** @type {typeof import('../../gather/driver.js')} */
+let Driver;
+/** @typedef {import('../../gather/fetcher.js')} Fetcher */
+/** @type {typeof import('../../gather/fetcher.js')} */
+let Fetcher;
+
+beforeAll(async () => {
+  Driver = (await import('../../gather/driver.js')).default;
+  Fetcher = (await import('../../gather/fetcher.js')).default;
+});
+
 /** @type {number} */
 let browserMilestone;
-
 jest.mock('../../gather/driver/environment.js', () => ({
-  getBrowserVersion: jest.fn().mockImplementation(() => {
+  getBrowserVersion: fnAny().mockImplementation(() => {
     return Promise.resolve({milestone: browserMilestone});
   }),
 }));
-
-const Fetcher = require('../../gather/fetcher.js');
-const Driver = require('../../gather/driver.js');
-const Connection = require('../../gather/connections/connection.js');
-const {createMockSendCommandFn} = require('../test-utils.js');
 
 /** @type {Connection} */
 let connectionStub;
@@ -38,8 +53,8 @@ beforeEach(() => {
 describe('.fetchResource', () => {
   beforeEach(() => {
     fetcher._enabled = true;
-    fetcher._fetchResourceOverProtocol = jest.fn().mockReturnValue(Promise.resolve('PROTOCOL'));
-    fetcher._fetchResourceIframe = jest.fn().mockReturnValue(Promise.resolve('IFRAME'));
+    fetcher._fetchResourceOverProtocol = fnAny().mockReturnValue(Promise.resolve('PROTOCOL'));
+    fetcher._fetchResourceIframe = fnAny().mockReturnValue(Promise.resolve('IFRAME'));
   });
 
   it('throws if fetcher not enabled', async () => {
@@ -104,7 +119,7 @@ describe('._readIOStream', () => {
   });
 
   it('throws on timeout', async () => {
-    connectionStub.sendCommand = jest.fn()
+    connectionStub.sendCommand = fnAny()
       .mockReturnValue(Promise.resolve({data: 'No stop', eof: false, base64Encoded: false}));
 
     const dataPromise = fetcher._readIOStream('1', {timeout: 50});
@@ -118,7 +133,7 @@ describe('._fetchResourceOverProtocol', () => {
 
   beforeEach(() => {
     streamContents = 'STREAM CONTENTS';
-    fetcher._readIOStream = jest.fn().mockImplementation(() => {
+    fetcher._readIOStream = fnAny().mockImplementation(() => {
       return Promise.resolve(streamContents);
     });
   });
@@ -164,7 +179,7 @@ describe('._fetchResourceOverProtocol', () => {
       }, 500);
 
     let timeout;
-    fetcher._readIOStream = jest.fn().mockImplementation((_, options) => {
+    fetcher._readIOStream = fnAny().mockImplementation((_, options) => {
       timeout = options.timeout;
     });
 

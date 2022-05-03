@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const NoUnloadListeners = require('../../audits/no-unload-listeners.js');
-const {createScript} = require('../test-utils.js');
+import NoUnloadListeners from '../../audits/no-unload-listeners.js';
+import {createScript} from '../test-utils.js';
 
 /* eslint-env jest */
 

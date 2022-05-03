@@ -5,11 +5,12 @@
  */
 'use strict';
 
-const ThemedOmniboxAudit = require('../../audits/themed-omnibox.js');
-const assert = require('assert').strict;
-const manifestParser = require('../../lib/manifest-parser.js');
+import ThemedOmniboxAudit from '../../audits/themed-omnibox.js';
+import {strict as assert} from 'assert';
+import manifestParser from '../../lib/manifest-parser.js';
+import manifest from '../fixtures/manifest.json';
 
-const manifestSrc = JSON.stringify(require('../fixtures/manifest.json'));
+const manifestSrc = JSON.stringify(manifest);
 const EXAMPLE_MANIFEST_URL = 'https://example.com/manifest.json';
 const EXAMPLE_DOC_URL = 'https://example.com/index.html';
 

@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const assert = require('assert');
-const CrawlableAnchorsAudit = require('../../../audits/seo/crawlable-anchors.js');
+import assert from 'assert';
+import CrawlableAnchorsAudit from '../../../audits/seo/crawlable-anchors.js';
 
 /* eslint-env jest */
 

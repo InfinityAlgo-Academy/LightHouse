@@ -6,8 +6,9 @@
 'use strict';
 
 /* eslint-env jest */
-const JsBundles = require('../../computed/js-bundles.js');
-const {loadSourceMapFixture, createScript} = require('../test-utils.js');
+import JsBundles from '../../computed/js-bundles.js';
+
+import {createScript, loadSourceMapFixture} from '../test-utils.js';
 
 describe('JsBundles computed artifact', () => {
   it('collates script element and source map', async () => {

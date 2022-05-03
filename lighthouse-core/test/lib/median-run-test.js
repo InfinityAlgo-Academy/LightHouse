@@ -7,7 +7,7 @@
 
 /* eslint-env jest */
 
-const {computeMedianRun, filterToValidRuns} = require('../../lib/median-run.js');
+import {computeMedianRun, filterToValidRuns} from '../../lib/median-run.js';
 
 describe('Median Runs', () => {
   function lhr(auditNumericValues) {

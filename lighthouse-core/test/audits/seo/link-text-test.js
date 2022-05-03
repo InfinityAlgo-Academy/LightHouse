@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const LinkTextAudit = require('../../../audits/seo/link-text.js');
-const assert = require('assert').strict;
+import LinkTextAudit from '../../../audits/seo/link-text.js';
+import {strict as assert} from 'assert';
 
 /* eslint-env jest */
 

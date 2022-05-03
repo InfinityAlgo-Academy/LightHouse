@@ -5,23 +5,23 @@
  */
 'use strict';
 
-const TraceProcessor = require('../../../lib/tracehouse/trace-processor.js');
+import TraceProcessor from '../../../lib/tracehouse/trace-processor.js';
+import {strict as assert} from 'assert';
+import createTestTrace from '../../create-test-trace.js';
 
-const assert = require('assert').strict;
-const fs = require('fs');
-const createTestTrace = require('../../create-test-trace.js');
-const pwaTrace = require('../../fixtures/traces/progressive-app.json');
-const badNavStartTrace = require('../../fixtures/traces/bad-nav-start-ts.json');
-const lateTracingStartedTrace = require('../../fixtures/traces/tracingstarted-after-navstart.json');
-const noTracingStartedTrace = require('../../fixtures/traces/no-tracingstarted-m74.json');
-const preactTrace = require('../../fixtures/traces/preactjs.com_ts_of_undefined.json');
-const noFMPtrace = require('../../fixtures/traces/no_fmp_event.json');
-const noFCPtrace = require('../../fixtures/traces/airhorner_no_fcp.json');
-const timespanTrace = require('../../fixtures/traces/timespan-trace-m91.json');
-const noNavStartTrace = require('../../fixtures/traces/no_navstart_event.json');
-const backgroundTabTrace = require('../../fixtures/traces/backgrounded-tab-missing-paints.json');
-const lcpTrace = require('../../fixtures/traces/lcp-m78.json');
-const lcpAllFramesTrace = require('../../fixtures/traces/frame-metrics-m89.json');
+import pwaTrace from '../../fixtures/traces/progressive-app.json';
+import badNavStartTrace from '../../fixtures/traces/bad-nav-start-ts.json';
+import lateTracingStartedTrace from '../../fixtures/traces/tracingstarted-after-navstart.json';
+import noTracingStartedTrace from '../../fixtures/traces/no-tracingstarted-m74.json';
+import preactTrace from '../../fixtures/traces/preactjs.com_ts_of_undefined.json';
+import noFMPtrace from '../../fixtures/traces/no_fmp_event.json';
+import noFCPtrace from '../../fixtures/traces/airhorner_no_fcp.json';
+import timespanTrace from '../../fixtures/traces/timespan-trace-m91.json';
+import noNavStartTrace from '../../fixtures/traces/no_navstart_event.json';
+import backgroundTabTrace from '../../fixtures/traces/backgrounded-tab-missing-paints.json';
+import lcpTrace from '../../fixtures/traces/lcp-m78.json';
+import lcpAllFramesTrace from '../../fixtures/traces/frame-metrics-m89.json';
+import startedAfterNavstartTrace from '../../fixtures/traces/tracingstarted-after-navstart.json';
 
 /* eslint-env jest */
 
@@ -412,9 +412,8 @@ describe('TraceProcessor', () => {
     });
 
     it('sorts events by increasing timestamp', () => {
-      const trace = JSON.parse(fs.readFileSync(__dirname +
-          '/../../fixtures/traces/tracingstarted-after-navstart.json', 'utf8'));
-      const shuffledEvents = trace.traceEvents.slice().sort(() => Math.random() * 2 - 1);
+      const shuffledEvents =
+        startedAfterNavstartTrace.traceEvents.slice().sort(() => Math.random() * 2 - 1);
       const processedTrace = TraceProcessor.processTrace({traceEvents: shuffledEvents});
 
       let lastTs = -Infinity;

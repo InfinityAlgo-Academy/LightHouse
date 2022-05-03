@@ -6,7 +6,7 @@
 'use strict';
 
 module.exports = {
-  setupFilesAfterEnv: ['./lighthouse-core/test/test-utils.js'],
+  setupFilesAfterEnv: ['./lighthouse-core/test/jest-setup/setup.js'],
   testEnvironment: 'node',
   testMatch: [
     '**/lighthouse-core/**/*-test.js',

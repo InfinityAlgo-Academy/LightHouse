@@ -7,9 +7,12 @@
 
 /* eslint-env jest */
 
-const {makePromiseInspectable, flushAllTimersAndMicrotasks} = require('../../test-utils.js');
-const {createMockContext} = require('../../fraggle-rock/gather/mock-driver.js');
-const TraceGatherer = require('../../../gather/gatherers/trace.js');
+import {jest} from '@jest/globals';
+
+import {makePromiseInspectable, flushAllTimersAndMicrotasks} from '../../test-utils.js';
+
+import {createMockContext} from '../../fraggle-rock/gather/mock-driver.js';
+import TraceGatherer from '../../../gather/gatherers/trace.js';
 
 jest.useFakeTimers();
 

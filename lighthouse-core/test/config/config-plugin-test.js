@@ -5,11 +5,14 @@
  */
 'use strict';
 
-const assert = require('assert').strict;
-const ConfigPlugin = require('../../config/config-plugin.js');
-const i18n = require('../../lib/i18n/i18n.js');
-
 /* eslint-env jest */
+
+import {strict as assert} from 'assert';
+import ConfigPlugin from '../../config/config-plugin.js';
+import i18n from '../../lib/i18n/i18n.js';
+import {createCommonjsRefs} from '../../scripts/esm-utils.js';
+
+const {__filename} = createCommonjsRefs(import.meta);
 
 /**
  * @param {any} val

@@ -48,4 +48,4 @@ const budgetedConfig = {
   },
 };
 
-module.exports = budgetedConfig;
+export default budgetedConfig;

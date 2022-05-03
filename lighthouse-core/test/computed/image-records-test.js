@@ -7,8 +7,9 @@
 
 /* eslint-env jest */
 
-const ImageRecords = require('../../computed/image-records.js');
-const NetworkRequest = require('../../lib/network-request.js');
+import ImageRecords from '../../computed/image-records.js';
+
+import NetworkRequest from '../../lib/network-request.js';
 
 /**
  * @param {Partial<LH.Artifacts.NetworkRequest>=} partial

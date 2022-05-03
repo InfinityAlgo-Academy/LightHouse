@@ -5,12 +5,19 @@
  */
 'use strict';
 
+/* eslint-env jest */
+
+import {jest} from '@jest/globals';
+// import sentryNode from '@sentry/node';
+import Sentry from '../../lib/sentry.js';
+
 jest.mock('@sentry/node');
 
-const sentryNode = require('@sentry/node');
-const Sentry = require('../../lib/sentry.js');
-
-/* eslint-env jest */
+// Must mock sentry it is imported.
+let sentryNode;
+beforeAll(async () => {
+  sentryNode = (await import('@sentry/node')).default;
+});
 
 describe('Sentry', () => {
   let configPayload;

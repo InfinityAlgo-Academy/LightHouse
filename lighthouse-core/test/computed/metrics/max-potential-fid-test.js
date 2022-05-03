@@ -5,12 +5,11 @@
  */
 'use strict';
 
-const assert = require('assert').strict;
-
-const MaxPotentialFID = require('../../../computed/metrics/max-potential-fid.js');
-const trace = require('../../fixtures/traces/progressive-app-m60.json');
-const devtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
-const {getURLArtifactFromDevtoolsLog} = require('../../test-utils.js');
+import {strict as assert} from 'assert';
+import MaxPotentialFID from '../../../computed/metrics/max-potential-fid.js';
+import trace from '../../fixtures/traces/progressive-app-m60.json';
+import devtoolsLog from '../../fixtures/traces/progressive-app-m60.devtools.log.json';
+import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';
 
 const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
 

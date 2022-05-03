@@ -5,10 +5,9 @@
  */
 'use strict';
 
-const TimingSummary = require('../../../computed/metrics/timing-summary.js');
-
-const trace = require('../../fixtures/traces/frame-metrics-m90.json');
-const devtoolsLog = require('../../fixtures/traces/frame-metrics-m90.devtools.log.json');
+import TimingSummary from '../../../computed/metrics/timing-summary.js';
+import trace from '../../fixtures/traces/frame-metrics-m90.json';
+import devtoolsLog from '../../fixtures/traces/frame-metrics-m90.devtools.log.json';
 
 /* eslint-env jest */
 describe('Timing summary', () => {

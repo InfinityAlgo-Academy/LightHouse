@@ -5,9 +5,13 @@
  */
 'use strict';
 
-const path = require('path');
-const i18n = require('../../../lib/i18n/i18n.js');
-const log = require('lighthouse-logger');
+import {jest} from '@jest/globals';
+import path from 'path';
+import i18n from '../../../lib/i18n/i18n.js';
+import log from 'lighthouse-logger';
+import {createCommonjsRefs} from '../../../scripts/esm-utils.js';
+
+const {__dirname} = createCommonjsRefs(import.meta);
 
 /* eslint-env jest */
 

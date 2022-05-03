@@ -5,10 +5,10 @@
  */
 'use strict';
 
-const assert = require('assert').strict;
-const defaultConfig = require('../../config/default-config.js');
-
 /* eslint-env jest */
+
+import {strict as assert} from 'assert';
+import defaultConfig from '../../config/default-config.js';
 
 describe('Default Config', () => {
   it('relevantAudits map to existing perf audit', () => {

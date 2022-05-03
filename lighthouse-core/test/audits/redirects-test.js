@@ -5,10 +5,10 @@
  */
 'use strict';
 
-const RedirectsAudit = require('../../audits/redirects.js');
-const assert = require('assert').strict;
-const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
-const createTestTrace = require('../create-test-trace.js');
+import RedirectsAudit from '../../audits/redirects.js';
+import {strict as assert} from 'assert';
+import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
+import createTestTrace from '../create-test-trace.js';
 
 /* eslint-env jest */
 

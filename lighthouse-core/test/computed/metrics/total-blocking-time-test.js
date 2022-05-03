@@ -5,15 +5,15 @@
  */
 'use strict';
 
-const TotalBlockingTime = require('../../../computed/metrics/total-blocking-time.js');
-const trace = require('../../fixtures/traces/progressive-app-m60.json');
-const devtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
-const {calculateSumOfBlockingTime} = require('../../../computed/metrics/tbt-utils.js');
-const {getURLArtifactFromDevtoolsLog} = require('../../test-utils.js');
-
-const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
+import TotalBlockingTime from '../../../computed/metrics/total-blocking-time.js';
+import trace from '../../fixtures/traces/progressive-app-m60.json';
+import devtoolsLog from '../../fixtures/traces/progressive-app-m60.devtools.log.json';
+import {calculateSumOfBlockingTime} from '../../../computed/metrics/tbt-utils.js';
+import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';
 
 /* eslint-env jest */
+
+const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
 
 describe('Metrics: TotalBlockingTime', () => {
   const gatherContext = {gatherMode: 'navigation'};

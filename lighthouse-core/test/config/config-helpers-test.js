@@ -7,8 +7,10 @@
 
 /* eslint-env jest */
 
-const path = require('path');
-const {
+import {jest} from '@jest/globals';
+import path from 'path';
+
+import {
   deepClone,
   deepCloneConfigJson,
   resolveSettings,
@@ -18,12 +20,15 @@ const {
   mergePlugins,
   mergeConfigFragment,
   mergeConfigFragmentArrayByKey,
-} = require('../../config/config-helpers.js');
-const Runner = require('../../runner.js');
-const Gatherer = require('../../gather/gatherers/gatherer.js');
-const ImageElementsGatherer = require('../../gather/gatherers/image-elements.js');
-const UserTimingsAudit = require('../../audits/user-timings.js');
-const {LH_ROOT} = require('../../../root.js');
+} from '../../config/config-helpers.js';
+import Runner from '../../runner.js';
+import Gatherer from '../../gather/gatherers/gatherer.js';
+import ImageElementsGatherer from '../../gather/gatherers/image-elements.js';
+import UserTimingsAudit from '../../audits/user-timings.js';
+import {LH_ROOT} from '../../../root.js';
+import {createCommonjsRefs} from '../../scripts/esm-utils.js';
+
+const {require, __dirname} = createCommonjsRefs(import.meta);
 
 jest.mock('process', () => ({
   cwd: () => jest.fn(),

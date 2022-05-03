@@ -7,18 +7,20 @@
 
 /* eslint-env jest */
 
-const MainDocumentContent = require('../../../gather/gatherers/main-document-content.js');
-const NetworkRecorder = require('../../../lib/network-recorder.js');
-const {createMockContext} = require('../../fraggle-rock/gather/mock-driver.js');
-const {getURLArtifactFromDevtoolsLog} = require('../../test-utils.js');
+import MainDocumentContent from '../../../gather/gatherers/main-document-content.js';
 
-const devtoolsLog =
-  /** @type {LH.DevtoolsLog} */ (require('../../fixtures/traces/lcp-m78.devtools.log.json'));
+import NetworkRecorder from '../../../lib/network-recorder.js';
+import {createMockContext} from '../../fraggle-rock/gather/mock-driver.js';
+import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';
+import devtoolsLog from '../../fixtures/traces/lcp-m78.devtools.log.json';
+
+// @ts-expect-error
 const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
 
 describe('FR compat', () => {
   it('uses loadData in legacy mode', async () => {
     const gatherer = new MainDocumentContent();
+    // @ts-expect-error
     const networkRecords = NetworkRecorder.recordsFromLogs(devtoolsLog);
     const mockContext = createMockContext();
     mockContext.baseArtifacts.URL = URL;
@@ -27,6 +29,7 @@ describe('FR compat', () => {
 
     const artifact = await gatherer.afterPass(
       mockContext.asLegacyContext(),
+      // @ts-expect-error
       {devtoolsLog, networkRecords}
     );
 
@@ -43,6 +46,7 @@ describe('FR compat', () => {
     /** @type {LH.Gatherer.FRTransitionalContext<'DevtoolsLog'>} */
     const context = {
       ...mockContext.asContext(),
+      // @ts-expect-error
       dependencies: {DevtoolsLog: devtoolsLog},
     };
 

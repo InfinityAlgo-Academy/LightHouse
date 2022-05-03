@@ -7,14 +7,14 @@
 
 /* eslint-env jest */
 
-const {
+import {
   addRectTopAndBottom,
   getRectOverlapArea,
   getLargestRect,
   getRectAtCenter,
   allRectsContainedWithinEachOther,
   getBoundingRectWithPadding,
-} = require('../../lib/rect-helpers.js');
+} from '../../lib/rect-helpers.js';
 
 describe('Rect Helpers', () => {
   it('getRectOverlapArea', () => {

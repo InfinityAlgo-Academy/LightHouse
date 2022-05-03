@@ -7,11 +7,13 @@
 
 /* eslint-env jest */
 
-const ManifestValues = require('../../computed/manifest-values.js');
-const assert = require('assert').strict;
+import {strict as assert} from 'assert';
 
-const manifestSrc = JSON.stringify(require('../fixtures/manifest.json'));
-const manifestParser = require('../../lib/manifest-parser.js');
+import ManifestValues from '../../computed/manifest-values.js';
+import manifestParser from '../../lib/manifest-parser.js';
+import manifest from '../fixtures/manifest.json';
+
+const manifestSrc = JSON.stringify(manifest);
 
 function getMockContext() {
   return {

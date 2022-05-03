@@ -199,4 +199,4 @@ function createTestTrace(options) {
   return {traceEvents};
 }
 
-module.exports = createTestTrace;
+export default createTestTrace;

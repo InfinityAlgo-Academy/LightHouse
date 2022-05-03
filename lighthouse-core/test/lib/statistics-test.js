@@ -7,7 +7,7 @@
 
 /* eslint-env jest */
 
-const statistics = require('../../lib/statistics.js');
+import statistics from '../../lib/statistics.js';
 
 describe('statistics', () => {
   describe('#getLogNormalScore', () => {

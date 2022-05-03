@@ -5,14 +5,13 @@
  */
 'use strict';
 
-const LanternFirstContentfulPaint = require('../../../computed/metrics/lantern-first-contentful-paint.js'); // eslint-disable-line max-len
-const assert = require('assert').strict;
-const networkRecordsToDevtoolsLog = require('../../network-records-to-devtools-log.js');
-const createTestTrace = require('../../create-test-trace.js');
-
-const trace = require('../../fixtures/traces/progressive-app-m60.json');
-const devtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
-const {getURLArtifactFromDevtoolsLog} = require('../../test-utils.js');
+import LanternFirstContentfulPaint from '../../../computed/metrics/lantern-first-contentful-paint.js'; // eslint-disable-line max-len
+import {strict as assert} from 'assert';
+import trace from '../../fixtures/traces/progressive-app-m60.json';
+import devtoolsLog from '../../fixtures/traces/progressive-app-m60.devtools.log.json';
+import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';
+import networkRecordsToDevtoolsLog from '../../network-records-to-devtools-log.js';
+import createTestTrace from '../../create-test-trace.js';
 
 /* eslint-env jest */
 describe('Metrics: Lantern FCP', () => {

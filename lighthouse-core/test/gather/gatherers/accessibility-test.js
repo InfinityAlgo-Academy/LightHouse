@@ -7,9 +7,14 @@
 
 /* eslint-env jest */
 
-const AccessibilityGather = require('../../../gather/gatherers/accessibility.js');
-const assert = require('assert').strict;
-const {LH_ROOT} = require('../../../../root.js');
+import fs from 'fs';
+import {strict as assert} from 'assert';
+import puppeteer from 'puppeteer';
+
+import AccessibilityGather from '../../../gather/gatherers/accessibility.js';
+import {LH_ROOT} from '../../../../root.js';
+import axeLib from '../../../../lighthouse-core/lib/axe.js';
+import pageFunctions from '../../../../lighthouse-core/lib/page-functions.js';
 
 describe('Accessibility gatherer', () => {
   let accessibilityGather;
@@ -36,12 +41,9 @@ describe('Accessibility gatherer', () => {
 
 describe('a11y audits + aXe', () => {
   let browser;
-  const axeLibSource = require('../../../lib/axe.js').source;
-  const pageFunctions = require('../../../lib/page-functions.js');
-  const fs = require('fs');
 
   beforeAll(async () => {
-    browser = await require('puppeteer').launch();
+    browser = await puppeteer.launch();
   });
 
   afterAll(async () => {
@@ -51,7 +53,7 @@ describe('a11y audits + aXe', () => {
   it('only runs the axe rules we have audits defined for', async () => {
     const page = await browser.newPage();
     page.setContent(`<!doctype html><meta charset="utf8"><title>hi</title>valid.`);
-    await page.evaluate(axeLibSource);
+    await page.evaluate(axeLib.source);
     await page.evaluate(pageFunctions.getNodeDetailsString);
     await page.evaluate(AccessibilityGather.pageFns.runA11yChecks.toString());
     await page.evaluate(AccessibilityGather.pageFns.createAxeRuleResultArtifact.toString());

@@ -11,6 +11,8 @@
 
 /* eslint-env jest */
 
+import {fnAny} from '../test-utils.js';
+
 /**
  * @template {keyof LH.CrdpCommands} C
  * @typedef {((...args: LH.CrdpCommands[C]['paramsType']) => MockResponse<C>) | RecursivePartial<LH.CrdpCommands[C]['returnType']> | Promise<Error>} MockResponse
@@ -47,7 +49,7 @@ function createMockSendCommandFn(options) {
    * @type {Array<{command: C|any, sessionId?: string, response?: MockResponse<C>, delay?: number}>}
    */
   const mockResponses = [];
-  const mockFnImpl = jest.fn().mockImplementation(
+  const mockFnImpl = fnAny().mockImplementation(
     /**
      * @template {keyof LH.CrdpCommands} C
      * @param {C} command
@@ -135,7 +137,7 @@ function createMockOnceFn() {
    * @type {Array<{event: E|any, response?: MockEvent<E>}>}
    */
   const mockEvents = [];
-  const mockFnImpl = jest.fn().mockImplementation((eventName, listener) => {
+  const mockFnImpl = fnAny().mockImplementation((eventName, listener) => {
     const indexOfResponse = mockEvents.findIndex(entry => entry.event === eventName);
     if (indexOfResponse === -1) return;
     const {response} = mockEvents[indexOfResponse];
@@ -182,7 +184,7 @@ function createMockOnFn() {
    * @type {Array<{event: E|any, response?: MockEvent<E>}>}
    */
   const mockEvents = [];
-  const mockFnImpl = jest.fn().mockImplementation((eventName, listener) => {
+  const mockFnImpl = fnAny().mockImplementation((eventName, listener) => {
     const events = mockEvents.filter(entry => entry.event === eventName);
     if (!events.length) return;
     for (const event of events) {
@@ -225,7 +227,7 @@ function createMockOnFn() {
   return mockFn;
 }
 
-module.exports = {
+export {
   createMockSendCommandFn,
   createMockOnceFn,
   createMockOnFn,

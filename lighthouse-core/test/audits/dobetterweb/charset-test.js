@@ -5,9 +5,9 @@
  */
 'use strict';
 
-const CharsetDefinedAudit = require('../../../audits/dobetterweb/charset.js');
-const assert = require('assert').strict;
-const networkRecordsToDevtoolsLog = require('../../network-records-to-devtools-log.js');
+import CharsetDefinedAudit from '../../../audits/dobetterweb/charset.js';
+import {strict as assert} from 'assert';
+import networkRecordsToDevtoolsLog from '../../network-records-to-devtools-log.js';
 
 /* eslint-env jest */
 

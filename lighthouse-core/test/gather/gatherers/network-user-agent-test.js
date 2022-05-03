@@ -7,9 +7,8 @@
 
 /* eslint-env jest */
 
-const NetworkUserAgent = require('../../../gather/gatherers/network-user-agent.js');
-/** @type {*} */
-const devtoolsLog = require('../../fixtures/traces/lcp-m78.devtools.log.json');
+import NetworkUserAgent from '../../../gather/gatherers/network-user-agent.js';
+import devtoolsLog from '../../fixtures/traces/lcp-m78.devtools.log.json';
 
 describe('.getNetworkUserAgent', () => {
   it('should return empty string when no network events available', async () => {
@@ -18,6 +17,7 @@ describe('.getNetworkUserAgent', () => {
   });
 
   it('should return the user agent that was used to make requests', async () => {
+    // @ts-expect-error
     const result = await NetworkUserAgent.getNetworkUserAgent(devtoolsLog);
     // eslint-disable-next-line max-len
     expect(result).toEqual('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36');

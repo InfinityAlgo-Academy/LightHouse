@@ -5,11 +5,11 @@
  */
 'use strict';
 
+import UnminifiedJavascriptAudit from '../../../audits/byte-efficiency/unminified-javascript.js';
+import {strict as assert} from 'assert';
+import {createScript} from '../../test-utils.js';
+
 const KB = 1024;
-const UnminifiedJavascriptAudit =
-  require('../../../audits/byte-efficiency/unminified-javascript.js');
-const {createScript} = require('../../test-utils.js');
-const assert = require('assert').strict;
 
 /* eslint-env jest */
 

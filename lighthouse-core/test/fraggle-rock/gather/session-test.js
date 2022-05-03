@@ -5,15 +5,17 @@
  */
 'use strict';
 
-const {EventEmitter} = require('events');
-const ProtocolSession = require('../../../fraggle-rock/gather/session.js');
-const {
+/* eslint-env jest */
+
+import {jest} from '@jest/globals';
+import {EventEmitter} from 'events';
+import ProtocolSession from '../../../fraggle-rock/gather/session.js';
+import {
   flushAllTimersAndMicrotasks,
   makePromiseInspectable,
   createDecomposedPromise,
-} = require('../../test-utils.js');
-
-/* eslint-env jest */
+  fnAny,
+} from '../../test-utils.js';
 
 jest.useFakeTimers();
 
@@ -27,7 +29,7 @@ describe('ProtocolSession', () => {
 
   beforeEach(() => {
     // @ts-expect-error - Individual mock functions are applied as necessary.
-    puppeteerSession = {emit: jest.fn(), send: jest.fn().mockResolvedValue()};
+    puppeteerSession = {emit: fnAny(), send: fnAny().mockResolvedValue()};
     session = new ProtocolSession(puppeteerSession);
   });
 
@@ -37,8 +39,8 @@ describe('ProtocolSession', () => {
       puppeteerSession = new EventEmitter();
       session = new ProtocolSession(puppeteerSession);
 
-      const regularListener = jest.fn();
-      const allListener = jest.fn();
+      const regularListener = fnAny();
+      const allListener = fnAny();
 
       puppeteerSession.on('Foo', regularListener);
       puppeteerSession.on('*', allListener);
@@ -57,8 +59,8 @@ describe('ProtocolSession', () => {
       session = new ProtocolSession(puppeteerSession);
       session = new ProtocolSession(puppeteerSession);
 
-      const regularListener = jest.fn();
-      const allListener = jest.fn();
+      const regularListener = fnAny();
+      const allListener = fnAny();
 
       puppeteerSession.on('Foo', regularListener);
       puppeteerSession.on('*', allListener);
@@ -74,7 +76,7 @@ describe('ProtocolSession', () => {
       puppeteerSession = new EventEmitter();
       session = new ProtocolSession(puppeteerSession);
 
-      const listener = jest.fn();
+      const listener = fnAny();
       const targetInfo = {title: '', url: '', attached: true, canAccessOpener: false};
 
       puppeteerSession.on('*', listener);
@@ -94,7 +96,7 @@ describe('ProtocolSession', () => {
   for (const method of delegateMethods) {
     describe(`.${method}`, () => {
       it('delegates to puppeteer', async () => {
-        const puppeteerFn = puppeteerSession[method] = jest.fn();
+        const puppeteerFn = puppeteerSession[method] = fnAny();
         const callback = () => undefined;
 
         session[method]('Page.frameNavigated', callback);
@@ -105,10 +107,10 @@ describe('ProtocolSession', () => {
 
   describe('.dispose', () => {
     it('should detach from the session', async () => {
-      const detach = jest.fn();
-      const removeAllListeners = jest.fn();
+      const detach = fnAny();
+      const removeAllListeners = fnAny();
       // @ts-expect-error - we want to use a more limited test.
-      puppeteerSession = {detach, emit: jest.fn(), removeAllListeners};
+      puppeteerSession = {detach, emit: fnAny(), removeAllListeners};
       session = new ProtocolSession(puppeteerSession);
 
       await session.dispose();
@@ -123,8 +125,8 @@ describe('ProtocolSession', () => {
       puppeteerSession = new EventEmitter();
       session = new ProtocolSession(puppeteerSession);
 
-      const regularListener = jest.fn();
-      const allListener = jest.fn();
+      const regularListener = fnAny();
+      const allListener = fnAny();
 
       session.on('Page.frameNavigated', regularListener);
       session.addProtocolMessageListener(allListener);
@@ -149,7 +151,7 @@ describe('ProtocolSession', () => {
       puppeteerSession = new EventEmitter();
       session = new ProtocolSession(puppeteerSession);
 
-      const allListener = jest.fn();
+      const allListener = fnAny();
 
       session.addProtocolMessageListener(allListener);
       puppeteerSession.emit('Page.frameNavigated');
@@ -162,32 +164,32 @@ describe('ProtocolSession', () => {
 
   describe('.addSessionAttachedListener', () => {
     it('should listen for new sessions', () => {
-      const mockOn = jest.fn();
+      const mockOn = fnAny();
       // @ts-expect-error - we want to use a more limited, controllable test
-      puppeteerSession = {connection: () => ({on: mockOn}), emit: jest.fn()};
+      puppeteerSession = {connection: () => ({on: mockOn}), emit: fnAny()};
       session = new ProtocolSession(puppeteerSession);
 
       // Make sure we listen for the event.
-      const listener = jest.fn();
+      const listener = fnAny();
       session.addSessionAttachedListener(listener);
       expect(mockOn).toHaveBeenCalledWith('sessionattached', expect.any(Function));
 
       // Make sure we wrap the return in a ProtocolSession.
-      mockOn.mock.calls[0][1]({emit: jest.fn()});
+      mockOn.mock.calls[0][1]({emit: fnAny()});
       expect(listener).toHaveBeenCalledWith(expect.any(ProtocolSession));
     });
   });
 
   describe('.removeSessionAttachedListener', () => {
     it('should stop listening for new sessions', () => {
-      const mockOn = jest.fn();
-      const mockOff = jest.fn();
+      const mockOn = fnAny();
+      const mockOff = fnAny();
       // @ts-expect-error - we want to use a more limited, controllable test
-      puppeteerSession = {connection: () => ({on: mockOn, off: mockOff}), emit: jest.fn()};
+      puppeteerSession = {connection: () => ({on: mockOn, off: mockOff}), emit: fnAny()};
       session = new ProtocolSession(puppeteerSession);
 
       // Make sure we listen for the event.
-      const userListener = jest.fn();
+      const userListener = fnAny();
       session.addSessionAttachedListener(userListener);
       expect(mockOn).toHaveBeenCalledWith('sessionattached', expect.any(Function));
 
@@ -200,7 +202,7 @@ describe('ProtocolSession', () => {
 
   describe('.sendCommand', () => {
     it('delegates to puppeteer', async () => {
-      const send = puppeteerSession.send = jest.fn().mockResolvedValue(123);
+      const send = puppeteerSession.send = fnAny().mockResolvedValue(123);
 
       const result = await session.sendCommand('Page.navigate', {url: 'foo'});
       expect(result).toEqual(123);
@@ -209,7 +211,7 @@ describe('ProtocolSession', () => {
 
     it('times out a request by default', async () => {
       const sendPromise = createDecomposedPromise();
-      puppeteerSession.send = jest.fn().mockReturnValue(sendPromise.promise);
+      puppeteerSession.send = fnAny().mockReturnValue(sendPromise.promise);
 
       const resultPromise = makePromiseInspectable(session.sendCommand('Page.navigate', {url: ''}));
 
@@ -225,7 +227,7 @@ describe('ProtocolSession', () => {
 
     it('times out a request with explicit timeout', async () => {
       const sendPromise = createDecomposedPromise();
-      puppeteerSession.send = jest.fn().mockReturnValue(sendPromise.promise);
+      puppeteerSession.send = fnAny().mockReturnValue(sendPromise.promise);
 
       session.setNextProtocolTimeout(60_000);
       const resultPromise = makePromiseInspectable(session.sendCommand('Page.navigate', {url: ''}));
@@ -247,7 +249,7 @@ describe('ProtocolSession', () => {
 
     it('respects a timeout of infinity', async () => {
       const sendPromise = createDecomposedPromise();
-      puppeteerSession.send = jest.fn().mockReturnValue(sendPromise.promise);
+      puppeteerSession.send = fnAny().mockReturnValue(sendPromise.promise);
 
       session.setNextProtocolTimeout(Infinity);
       const resultPromise = makePromiseInspectable(session.sendCommand('Page.navigate', {url: ''}));

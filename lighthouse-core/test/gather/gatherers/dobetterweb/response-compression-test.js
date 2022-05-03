@@ -7,13 +7,22 @@
 
 /* eslint-env jest */
 
-const {
-  createMockContext,
-  mockDriverSubmodules,
-} = require('../../../fraggle-rock/gather/mock-driver.js');
+import {createMockContext, mockDriverSubmodules} from '../../../fraggle-rock/gather/mock-driver.js';
+// import ResponseCompression from '../../../../gather/gatherers/dobetterweb/response-compression.js';
+
+// Some imports needs to be done dynamically, so that their dependencies will be mocked.
+// See: https://jestjs.io/docs/ecmascript-modules#differences-between-esm-and-commonjs
+//      https://github.com/facebook/jest/issues/10025
+/** @typedef {import('../../../../gather/gatherers/dobetterweb/response-compression.js')} ResponseCompression */
+/** @type {typeof import('../../../../gather/gatherers/dobetterweb/response-compression.js')} */
+let ResponseCompression;
+
+beforeAll(async () => {
+  ResponseCompression =
+    (await import('../../../../gather/gatherers/dobetterweb/response-compression.js')).default;
+});
+
 const mocks = mockDriverSubmodules();
-const ResponseCompression =
-  require('../../../../gather/gatherers/dobetterweb/response-compression.js');
 
 const networkRecords = [
   {

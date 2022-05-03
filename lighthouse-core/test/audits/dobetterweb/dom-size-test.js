@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const DOMSize = require('../../../audits/dobetterweb/dom-size.js');
-const assert = require('assert').strict;
+import DOMSize from '../../../audits/dobetterweb/dom-size.js';
+import {strict as assert} from 'assert';
 const options = DOMSize.defaultOptions;
 
 /* eslint-env jest */

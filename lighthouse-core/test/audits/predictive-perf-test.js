@@ -5,11 +5,10 @@
  */
 'use strict';
 
-const PredictivePerf = require('../../audits/predictive-perf.js');
-
-const acceptableTrace = require('../fixtures/traces/lcp-m78.json');
-const acceptableDevToolsLog = require('../fixtures/traces/lcp-m78.devtools.log.json');
-const {getURLArtifactFromDevtoolsLog} = require('../test-utils.js');
+import PredictivePerf from '../../audits/predictive-perf.js';
+import acceptableTrace from '../fixtures/traces/lcp-m78.json';
+import acceptableDevToolsLog from '../fixtures/traces/lcp-m78.devtools.log.json';
+import {getURLArtifactFromDevtoolsLog} from '../test-utils.js';
 
 /* eslint-env jest */
 describe('Performance: predictive performance audit', () => {

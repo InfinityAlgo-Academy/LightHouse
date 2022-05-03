@@ -5,9 +5,9 @@
  */
 'use strict';
 
-const NetworkRequest = require('../../lib/network-request.js');
-const NetworkRecorder = require('../../lib/network-recorder.js');
-const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
+import NetworkRequest from '../../lib/network-request.js';
+import NetworkRecorder from '../../lib/network-recorder.js';
+import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
 
 /* eslint-env jest */
 describe('NetworkRequest', () => {

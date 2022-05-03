@@ -5,18 +5,21 @@
  */
 'use strict';
 
-const Config = require('../../config/config.js');
-const assert = require('assert').strict;
-const path = require('path');
-const defaultConfig = require('../../config/default-config.js');
-const constants = require('../../config/constants.js');
-const log = require('lighthouse-logger');
-const Gatherer = require('../../gather/gatherers/gatherer.js');
-const Audit = require('../../audits/audit.js');
-const i18n = require('../../lib/i18n/i18n.js');
-const format = require('../../../shared/localization/format.js');
-
 /* eslint-env jest */
+
+import Config from '../../config/config.js';
+import {strict as assert} from 'assert';
+import path from 'path';
+import defaultConfig from '../../config/default-config.js';
+import constants from '../../config/constants.js';
+import log from 'lighthouse-logger';
+import Gatherer from '../../gather/gatherers/gatherer.js';
+import Audit from '../../audits/audit.js';
+import i18n from '../../lib/i18n/i18n.js';
+import format from '../../../shared/localization/format.js';
+import {createCommonjsRefs} from '../../scripts/esm-utils.js';
+
+const {require, __filename, __dirname} = createCommonjsRefs(import.meta);
 
 describe('Config', () => {
   let origConfig;

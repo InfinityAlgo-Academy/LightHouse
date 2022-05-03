@@ -7,8 +7,9 @@
 
 /* eslint-env jest */
 
-const assert = require('assert').strict;
-const UnusedCSS = require('../../computed/unused-css.js');
+import {strict as assert} from 'assert';
+
+import UnusedCSS from '../../computed/unused-css.js';
 
 describe('UnusedCSS computed artifact', () => {
   function generate(content, length) {

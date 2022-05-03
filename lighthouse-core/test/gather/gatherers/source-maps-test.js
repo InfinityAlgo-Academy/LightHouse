@@ -7,13 +7,15 @@
 
 /* eslint-env jest */
 
+import {jest} from '@jest/globals';
+
 jest.useFakeTimers();
 
-const Driver = require('../../../gather/driver.js');
-const Connection = require('../../../gather/connections/connection.js');
-const SourceMaps = require('../../../gather/gatherers/source-maps.js');
-const {createMockSendCommandFn, createMockOnFn} = require('../mock-commands.js');
-const {flushAllTimersAndMicrotasks} = require('../../test-utils.js');
+import Driver from '../../../gather/driver.js';
+import Connection from '../../../gather/connections/connection.js';
+import SourceMaps from '../../../gather/gatherers/source-maps.js';
+import {createMockSendCommandFn, createMockOnFn} from '../mock-commands.js';
+import {flushAllTimersAndMicrotasks, fnAny} from '../../test-utils.js';
 
 const mapJson = JSON.stringify({
   version: 3,
@@ -49,7 +51,7 @@ describe('SourceMaps gatherer', () => {
       .mockResponse('Network.enable', {})
       .mockResponse('Fetch.enable', {})
       .mockResponse('Fetch.disable', {});
-    const fetchMock = jest.fn();
+    const fetchMock = fnAny();
 
     for (const mapAndEvents of mapsAndEvents) {
       const {

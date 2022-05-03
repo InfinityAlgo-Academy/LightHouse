@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const ResourceBudgetAudit = require('../../audits/performance-budget.js');
-const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
+import ResourceBudgetAudit from '../../audits/performance-budget.js';
+import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
 
 /* eslint-env jest */
 

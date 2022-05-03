@@ -5,14 +5,14 @@
  */
 'use strict';
 
-const CumulativeLayoutShift = require('../../../computed/metrics/cumulative-layout-shift.js'); // eslint-disable-line max-len
-const jumpyClsTrace = require('../../fixtures/traces/jumpy-cls-m90.json');
-const oldMetricsTrace = require('../../fixtures/traces/frame-metrics-m89.json');
-const allFramesMetricsTrace = require('../../fixtures/traces/frame-metrics-m90.json');
-const preClsTrace = require('../../fixtures/traces/progressive-app-m60.json');
-const createTestTrace = require('../../create-test-trace.js');
-
 /* eslint-env jest */
+
+import CumulativeLayoutShift from '../../../computed/metrics/cumulative-layout-shift.js';
+import createTestTrace from '../../create-test-trace.js';
+import jumpyClsTrace from '../../fixtures/traces/jumpy-cls-m90.json';
+import oldMetricsTrace from '../../fixtures/traces/frame-metrics-m89.json';
+import allFramesMetricsTrace from '../../fixtures/traces/frame-metrics-m90.json';
+import preClsTrace from '../../fixtures/traces/progressive-app-m60.json';
 
 const childFrameId = 'CAF4634127666E186C9C8B35627DBF0B';
 

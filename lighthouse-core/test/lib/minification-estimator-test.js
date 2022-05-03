@@ -5,14 +5,20 @@
  */
 'use strict';
 
-const fs = require('fs');
-const assert = require('assert').strict;
-const {computeCSSTokenLength, computeJSTokenLength} = require('../../lib/minification-estimator.js'); // eslint-disable-line max-len
+/* eslint-env jest */
+
+import fs from 'fs';
+import {strict as assert} from 'assert';
+import {computeCSSTokenLength, computeJSTokenLength} from '../../lib/minification-estimator.js'; // eslint-disable-line max-len
+import {LH_ROOT} from '../../../root.js';
+import {createCommonjsRefs} from '../../scripts/esm-utils.js';
+
+const {require} = createCommonjsRefs(import.meta);
 
 const angularJs = fs.readFileSync(require.resolve('angular/angular.js'), 'utf8');
-const courseheroFilename = `${__dirname}/../../test/fixtures/source-maps/coursehero-bundle-2.js`;
+const courseheroFilename =
+  `${LH_ROOT}/lighthouse-core/test/fixtures/source-maps/coursehero-bundle-2.js`;
 const courseheroJs = fs.readFileSync(courseheroFilename, 'utf8');
-/* eslint-env jest */
 
 describe('minification estimator', () => {
   describe('CSS', () => {

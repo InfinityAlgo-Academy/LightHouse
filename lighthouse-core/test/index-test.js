@@ -7,10 +7,14 @@
 
 /* eslint-env jest */
 
-const pkg = require('../../package.json');
-const assert = require('assert').strict;
-const lighthouse = require('../index.js');
-const legacyNavigation = lighthouse.legacyNavigation;
+import pkg from '../../package.json';
+
+import {strict as assert} from 'assert';
+import lighthouse from '../index.js';
+import {LH_ROOT} from '../../root.js';
+
+const {legacyNavigation} = lighthouse;
+const TEST_DIR = `${LH_ROOT}/lighthouse-core/test`;
 
 describe('Module Tests', function() {
   it('should have a main attribute defined in the package.json', function() {
@@ -125,7 +129,7 @@ describe('Module Tests', function() {
         output: 'html',
       }, {
         settings: {
-          auditMode: __dirname + '/fixtures/artifacts/perflog/',
+          auditMode: TEST_DIR + '/fixtures/artifacts/perflog/',
           formFactor: 'mobile',
         },
         audits: [
@@ -151,7 +155,7 @@ describe('Module Tests', function() {
       const exampleUrl = 'https://www.reddit.com/r/nba';
       const results = await legacyNavigation(exampleUrl, {}, {
         settings: {
-          auditMode: __dirname + '/fixtures/artifacts/perflog/',
+          auditMode: TEST_DIR + '/fixtures/artifacts/perflog/',
           formFactor: 'mobile',
         },
         audits: [],
@@ -163,7 +167,7 @@ describe('Module Tests', function() {
       const exampleUrl = 'https://www.reddit.com/r/nba';
       const results = await legacyNavigation(exampleUrl, {}, {
         settings: {
-          auditMode: __dirname + '/fixtures/artifacts/perflog/',
+          auditMode: TEST_DIR + '/fixtures/artifacts/perflog/',
           formFactor: 'mobile',
           channel: 'custom',
         },

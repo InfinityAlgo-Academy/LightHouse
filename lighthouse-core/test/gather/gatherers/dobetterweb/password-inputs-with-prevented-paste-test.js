@@ -7,9 +7,10 @@
 
 /* eslint-env jest */
 
-const PasswordInputsWithPreventedPasteGatherer =
-  require('../../../../gather/gatherers/dobetterweb/password-inputs-with-prevented-paste.js');
-const assert = require('assert').strict;
+import PasswordInputsWithPreventedPasteGatherer from
+  '../../../../gather/gatherers/dobetterweb/password-inputs-with-prevented-paste.js';
+
+import {strict as assert} from 'assert';
 let gatherer;
 
 describe('PasswordInputsWithPreventedPaste gatherer', () => {

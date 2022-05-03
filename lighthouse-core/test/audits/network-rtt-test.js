@@ -5,9 +5,8 @@
  */
 'use strict';
 
-const NetworkRTT = require('../../audits/network-rtt.js');
-
-const acceptableDevToolsLog = require('../fixtures/traces/progressive-app-m60.devtools.log.json');
+import NetworkRTT from '../../audits/network-rtt.js';
+import acceptableDevToolsLog from '../fixtures/traces/progressive-app-m60.devtools.log.json';
 
 /* eslint-env jest */
 

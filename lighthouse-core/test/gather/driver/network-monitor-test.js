@@ -5,20 +5,33 @@
  */
 'use strict';
 
-const {mockDriverSubmodules} = require('../../fraggle-rock/gather/mock-driver.js');
-const mocks = mockDriverSubmodules();
-
-const NetworkMonitor = require('../../../gather/driver/network-monitor.js');
-const NetworkRequest = require('../../../lib/network-request.js');
-const networkRecordsToDevtoolsLog = require('../../network-records-to-devtools-log.js');
-const {createMockSendCommandFn: createMockSendCommandFn_} = require('../../test-utils.js');
-
 /* eslint-env jest */
+
+import {jest} from '@jest/globals';
+import {mockDriverSubmodules} from '../../fraggle-rock/gather/mock-driver.js';
+// import NetworkMonitor from '../../../gather/driver/network-monitor.js';
+import NetworkRequest from '../../../lib/network-request.js';
+import networkRecordsToDevtoolsLog from '../../network-records-to-devtools-log.js';
+import {fnAny, mockCommands} from '../../test-utils.js';
+
+const mocks = mockDriverSubmodules();
 
 jest.useFakeTimers();
 
 // This can be removed when FR becomes the default.
-const createMockSendCommandFn = createMockSendCommandFn_.bind(null, {useSessionId: false});
+const createMockSendCommandFn =
+  mockCommands.createMockSendCommandFn.bind(null, {useSessionId: false});
+
+// Some imports needs to be done dynamically, so that their dependencies will be mocked.
+// See: https://jestjs.io/docs/ecmascript-modules#differences-between-esm-and-commonjs
+//      https://github.com/facebook/jest/issues/10025
+/** @typedef {import('../../../gather/driver/network-monitor.js')} NetworkMonitor */
+/** @type {typeof import('../../../gather/driver/network-monitor.js')} */
+let NetworkMonitor;
+
+beforeAll(async () => {
+  NetworkMonitor = (await import('../../../gather/driver/network-monitor.js')).default;
+});
 
 const tscErr = new Error('Typecheck constrait failed');
 
@@ -37,11 +50,11 @@ describe('NetworkMonitor', () => {
   function createMockSession() {
     /** @type {any} */
     const session = {};
-    session.off = jest.fn();
-    session.removeProtocolMessageListener = jest.fn();
+    session.off = fnAny();
+    session.removeProtocolMessageListener = fnAny();
 
-    const on = (session.on = jest.fn());
-    const addProtocolMessageListener = (session.addProtocolMessageListener = jest.fn());
+    const on = (session.on = fnAny());
+    const addProtocolMessageListener = (session.addProtocolMessageListener = fnAny());
     sendCommandMock = session.sendCommand = createMockSendCommandFn()
       .mockResponse('Page.enable')
       .mockResponse('Network.enable');

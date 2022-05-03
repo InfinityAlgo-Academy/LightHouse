@@ -7,75 +7,14 @@
 
 /* eslint-env jest */
 
-const fs = require('fs');
-const format = require('../../shared/localization/format.js');
-const mockCommands = require('./gather/mock-commands.js');
-const {default: {toBeCloseTo}} = require('expect/build/matchers.js');
-const {LH_ROOT} = require('../../root.js');
-const NetworkRecorder = require('../lib/network-recorder.js');
+import {jest} from '@jest/globals';
+import fs from 'fs';
+import {LH_ROOT} from '../../root.js';
+import {createCommonjsRefs} from '../scripts/esm-utils.js';
+import * as mockCommands from './gather/mock-commands.js';
+import NetworkRecorder from '../lib/network-recorder.js';
 
-expect.extend({
-  toBeDisplayString(received, expected) {
-    if (!format.isIcuMessage(received)) {
-      const message = () =>
-      [
-        `${this.utils.matcherHint('.toBeDisplayString')}\n`,
-        `Expected object to be an ${this.utils.printExpected('LH.IcuMessage')}`,
-        `Received ${typeof received}`,
-        `  ${this.utils.printReceived(received)}`,
-      ].join('\n');
-
-      return {message, pass: false};
-    }
-
-    const actual = format.getFormatted(received, 'en-US');
-    const pass = expected instanceof RegExp ?
-      expected.test(actual) :
-      actual === expected;
-
-    const message = () =>
-      [
-        `${this.utils.matcherHint('.toBeDisplayString')}\n`,
-        `Expected object to be a display string matching:`,
-        `  ${this.utils.printExpected(expected)}`,
-        `Received:`,
-        `  ${this.utils.printReceived(actual)}`,
-      ].join('\n');
-
-    return {message, pass};
-  },
-
-  // Expose toBeCloseTo() so it can be used as an asymmetric matcher.
-  toBeApproximately(...args) {
-    // If called asymmetrically, a fake matcher `this` object needs to be passed
-    // in (see https://github.com/facebook/jest/issues/8295). There's no effect
-    // because it's only used for the printing of full failures, which isn't
-    // done for asymmetric matchers anyways.
-    const thisObj = (this && this.utils) ? this :
-        {isNot: false, promise: ''};
-    // @ts-expect-error
-    return toBeCloseTo.call(thisObj, ...args);
-  },
-  /**
-    * Asserts that an inspectable promise created by makePromiseInspectable is currently resolved or rejected.
-    * This is useful for situations where we want to test that we are actually waiting for a particular event.
-    *
-    * @param {ReturnType<typeof makePromiseInspectable>} received
-    * @param {string} failureMessage
-    */
-  toBeDone(received, failureMessage) {
-    const pass = received.isDone();
-
-    const message = () =>
-      [
-        `${this.utils.matcherHint('.toBeDone')}\n`,
-        `Expected promise to be resolved: ${this.utils.printExpected(failureMessage)}`,
-        `  ${this.utils.printReceived(received.getDebugValues())}`,
-      ].join('\n');
-
-    return {message, pass};
-  },
-});
+const {require} = createCommonjsRefs(import.meta);
 
 /**
  * Some tests use the result of a LHR processed by our proto serialization.
@@ -117,7 +56,7 @@ function getProtoRoundTrip() {
  * @return {{map: LH.Artifacts.RawSourceMap, content: string}}
  */
 function loadSourceMapFixture(name) {
-  const dir = `${__dirname}/fixtures/source-maps`;
+  const dir = `${LH_ROOT}/lighthouse-core/test/fixtures/source-maps`;
   const mapJson = fs.readFileSync(`${dir}/${name}.js.map`, 'utf-8');
   const content = fs.readFileSync(`${dir}/${name}.js`, 'utf-8');
   return {
@@ -131,7 +70,7 @@ function loadSourceMapFixture(name) {
  * @return {{map: LH.Artifacts.RawSourceMap, content: string, usage: LH.Crdp.Profiler.ScriptCoverage}}
  */
 function loadSourceMapAndUsageFixture(name) {
-  const dir = `${__dirname}/fixtures/source-maps`;
+  const dir = `${LH_ROOT}/lighthouse-core/test/fixtures/source-maps`;
   const usagePath = `${dir}/${name}.usage.json`;
   const usageJson = fs.readFileSync(usagePath, 'utf-8');
 
@@ -239,39 +178,47 @@ async function flushAllTimersAndMicrotasks(ms = 1000) {
  * shouldn't concern themselves about.
  */
 function makeMocksForGatherRunner() {
-  jest.mock('../gather/driver/environment.js', () => ({
+  jest.mock(require.resolve('../gather/driver/environment.js'), () => ({
     getBenchmarkIndex: () => Promise.resolve(150),
     getBrowserVersion: async () => ({userAgent: 'Chrome', milestone: 80}),
     getEnvironmentWarnings: () => [],
   }));
-  jest.mock('../gather/gatherers/stacks.js', () => ({collectStacks: () => Promise.resolve([])}));
-  jest.mock('../gather/gatherers/installability-errors.js', () => ({
+  jest.mock(require.resolve('../gather/gatherers/stacks.js'),
+    () => ({collectStacks: () => Promise.resolve([])}));
+  jest.mock(require.resolve('../gather/gatherers/installability-errors.js'), () => ({
     getInstallabilityErrors: async () => ({errors: []}),
   }));
-  jest.mock('../gather/gatherers/web-app-manifest.js', () => ({
+  jest.mock(require.resolve('../gather/gatherers/web-app-manifest.js'), () => ({
     getWebAppManifest: async () => null,
   }));
-  jest.mock('../lib/emulation.js', () => ({
+  jest.mock(require.resolve('../lib/emulation.js'), () => ({
     emulate: jest.fn(),
     throttle: jest.fn(),
     clearThrottling: jest.fn(),
   }));
-  jest.mock('../gather/driver/prepare.js', () => ({
+  jest.mock(require.resolve('../gather/driver/prepare.js'), () => ({
     prepareTargetForNavigationMode: jest.fn(),
     prepareTargetForIndividualNavigation: jest.fn().mockResolvedValue({warnings: []}),
   }));
-  jest.mock('../gather/driver/storage.js', () => ({
+  jest.mock(require.resolve('../gather/driver/storage.js'), () => ({
     clearDataForOrigin: jest.fn(),
     cleanBrowserCaches: jest.fn(),
     getImportantStorageWarning: jest.fn(),
   }));
-  jest.mock('../gather/driver/navigation.js', () => ({
+  jest.mock(require.resolve('../gather/driver/navigation.js'), () => ({
     gotoURL: jest.fn().mockResolvedValue({
       mainDocumentUrl: 'http://example.com',
       warnings: [],
     }),
   }));
 }
+
+/**
+ * Same as jest.fn(), but uses `any` instead of `unknown`.
+ */
+const fnAny = () => {
+  return /** @type {jest.Mock<any, any>} */ (jest.fn());
+};
 
 /**
  * @param {Partial<LH.Artifacts.Script>} script
@@ -320,7 +267,7 @@ function getURLArtifactFromDevtoolsLog(devtoolsLog) {
   return {initialUrl: 'about:blank', requestedUrl, mainDocumentUrl, finalUrl: mainDocumentUrl};
 }
 
-module.exports = {
+export {
   getProtoRoundTrip,
   loadSourceMapFixture,
   loadSourceMapAndUsageFixture,
@@ -329,7 +276,8 @@ module.exports = {
   createDecomposedPromise,
   flushAllTimersAndMicrotasks,
   makeMocksForGatherRunner,
+  fnAny,
+  mockCommands,
   createScript,
   getURLArtifactFromDevtoolsLog,
-  ...mockCommands,
 };

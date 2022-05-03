@@ -7,8 +7,7 @@
 
 /* eslint-env jest */
 
-const Autocomplete = require('../../audits/autocomplete.js');
-
+import Autocomplete from '../../audits/autocomplete.js';
 
 describe('Best Practices: autocomplete audit', () => {
   it('fails when an there is no autocomplete attribute set', () => {

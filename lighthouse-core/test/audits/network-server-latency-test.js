@@ -5,9 +5,8 @@
  */
 'use strict';
 
-const ServerLatency = require('../../audits/network-server-latency.js');
-
-const acceptableDevToolsLog = require('../fixtures/traces/progressive-app-m60.devtools.log.json');
+import ServerLatency from '../../audits/network-server-latency.js';
+import acceptableDevToolsLog from '../fixtures/traces/progressive-app-m60.devtools.log.json';
 
 /* eslint-env jest */
 

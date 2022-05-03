@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const ImageAspectRatioAudit = require('../../audits/image-aspect-ratio.js');
-const assert = require('assert').strict;
+import ImageAspectRatioAudit from '../../audits/image-aspect-ratio.js';
+import {strict as assert} from 'assert';
 
 /* eslint-env jest */
 

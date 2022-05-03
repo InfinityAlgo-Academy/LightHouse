@@ -5,14 +5,13 @@
  */
 'use strict';
 
-const {isIcuMessage} = require('../../../shared/localization/format.js');
-const {getTranslatedDescription, parseCsp} = require('../../lib/csp-evaluator.js');
-
-const {
+import {isIcuMessage} from '../../../shared/localization/format.js';
+import {getTranslatedDescription, parseCsp} from '../../lib/csp-evaluator.js';
+import {
   evaluateForFailure,
   evaluateForWarnings,
   evaluateForSyntaxErrors,
-} = require('csp_evaluator/dist/lighthouse/lighthouse_checks.js');
+} from 'csp_evaluator/dist/lighthouse/lighthouse_checks.js';
 
 /**
  * @param {string[]} rawCsps

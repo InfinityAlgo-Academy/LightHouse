@@ -5,10 +5,10 @@
  */
 'use strict';
 
-const ServiceWorker = require('../../audits/service-worker.js');
-const URL = require('../../lib/url-shim.js');
-const manifestParser = require('../../lib/manifest-parser.js');
-const assert = require('assert').strict;
+import ServiceWorker from '../../audits/service-worker.js';
+import URL from '../../lib/url-shim.js';
+import manifestParser from '../../lib/manifest-parser.js';
+import {strict as assert} from 'assert';
 
 /* eslint-env jest */
 

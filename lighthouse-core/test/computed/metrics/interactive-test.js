@@ -5,13 +5,12 @@
  */
 'use strict';
 
-const Interactive = require('../../../computed/metrics/interactive.js');
+import Interactive from '../../../computed/metrics/interactive.js';
+import {strict as assert} from 'assert';
+import trace from '../../fixtures/traces/progressive-app-m60.json';
+import devtoolsLog from '../../fixtures/traces/progressive-app-m60.devtools.log.json';
+import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';
 
-const assert = require('assert').strict;
-
-const trace = require('../../fixtures/traces/progressive-app-m60.json');
-const devtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
-const {getURLArtifactFromDevtoolsLog} = require('../../test-utils.js');
 const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
 
 function generateNetworkRecords(records, timeOrigin) {

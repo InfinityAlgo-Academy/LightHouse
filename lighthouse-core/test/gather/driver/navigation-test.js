@@ -5,17 +5,33 @@
  */
 'use strict';
 
-const {createMockDriver, mockTargetManagerModule} = require('../../fraggle-rock/gather/mock-driver.js'); // eslint-disable-line max-len
-const targetManagerMock = mockTargetManagerModule();
+/* eslint-env jest */
 
-const {gotoURL, getNavigationWarnings} = require('../../../gather/driver/navigation.js');
-const {
-  createMockOnceFn,
+import 'lighthouse-logger'; // Needed otherwise `log.timeEnd` errors in navigation.js inexplicably.
+import {jest} from '@jest/globals';
+import {createMockDriver, mockTargetManagerModule} from '../../fraggle-rock/gather/mock-driver.js';
+import {
+  mockCommands,
   makePromiseInspectable,
   flushAllTimersAndMicrotasks,
-} = require('../../test-utils.js');
+} from '../../test-utils.js';
+// import {gotoURL, getNavigationWarnings} from '../../../gather/driver/navigation.js';
 
-/* eslint-env jest */
+const {createMockOnceFn} = mockCommands;
+
+// Some imports needs to be done dynamically, so that their dependencies will be mocked.
+// See: https://jestjs.io/docs/ecmascript-modules#differences-between-esm-and-commonjs
+//      https://github.com/facebook/jest/issues/10025
+/** @type {import('../../../gather/driver/navigation.js')['gotoURL']} */
+let gotoURL;
+/** @type {import('../../../gather/driver/navigation.js')['getNavigationWarnings']} */
+let getNavigationWarnings;
+
+beforeAll(async () => {
+  ({gotoURL, getNavigationWarnings} = (await import('../../../gather/driver/navigation.js')));
+});
+
+const targetManagerMock = mockTargetManagerModule();
 
 jest.useFakeTimers();
 

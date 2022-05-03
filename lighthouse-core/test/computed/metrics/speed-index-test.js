@@ -5,14 +5,13 @@
  */
 'use strict';
 
-const assert = require('assert').strict;
-
-const SpeedIndex = require('../../../computed/metrics/speed-index.js');
-const trace = require('../../fixtures/traces/progressive-app-m60.json');
-const devtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
-const trace1msLayout = require('../../fixtures/traces/speedindex-1ms-layout-m84.trace.json');
-const devtoolsLog1msLayout = require('../../fixtures/traces/speedindex-1ms-layout-m84.devtoolslog.json'); // eslint-disable-line max-len
-const {getURLArtifactFromDevtoolsLog} = require('../../test-utils.js');
+import {strict as assert} from 'assert';
+import SpeedIndex from '../../../computed/metrics/speed-index.js';
+import trace from '../../fixtures/traces/progressive-app-m60.json';
+import devtoolsLog from '../../fixtures/traces/progressive-app-m60.devtools.log.json';
+import trace1msLayout from '../../fixtures/traces/speedindex-1ms-layout-m84.trace.json';
+import devtoolsLog1msLayout from '../../fixtures/traces/speedindex-1ms-layout-m84.devtoolslog.json'; // eslint-disable-line max-len
+import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';
 
 /* eslint-env jest */
 

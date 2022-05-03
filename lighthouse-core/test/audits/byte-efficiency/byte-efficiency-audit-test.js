@@ -5,19 +5,18 @@
  */
 'use strict';
 
-const ByteEfficiencyAudit_ = require('../../../audits/byte-efficiency/byte-efficiency-audit.js');
-const NetworkNode = require('../../../lib/dependency-graph/network-node.js');
-const CPUNode = require('../../../lib/dependency-graph/cpu-node.js');
-const Simulator = require('../../../lib/dependency-graph/simulator/simulator.js');
-const PageDependencyGraph = require('../../../computed/page-dependency-graph.js');
-const LoadSimulator = require('../../../computed/load-simulator.js');
-const {getURLArtifactFromDevtoolsLog} = require('../../test-utils.js');
-
-const trace = require('../../fixtures/traces/progressive-app-m60.json');
-const devtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
-const traceM78 = require('../../fixtures/traces/lcp-m78.json');
-const devtoolsLogM78 = require('../../fixtures/traces/lcp-m78.devtools.log.json');
-const assert = require('assert').strict;
+import ByteEfficiencyAudit_ from '../../../audits/byte-efficiency/byte-efficiency-audit.js';
+import NetworkNode from '../../../lib/dependency-graph/network-node.js';
+import CPUNode from '../../../lib/dependency-graph/cpu-node.js';
+import Simulator from '../../../lib/dependency-graph/simulator/simulator.js';
+import PageDependencyGraph from '../../../computed/page-dependency-graph.js';
+import LoadSimulator from '../../../computed/load-simulator.js';
+import trace from '../../fixtures/traces/progressive-app-m60.json';
+import devtoolsLog from '../../fixtures/traces/progressive-app-m60.devtools.log.json';
+import traceM78 from '../../fixtures/traces/lcp-m78.json';
+import devtoolsLogM78 from '../../fixtures/traces/lcp-m78.devtools.log.json';
+import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';
+import {strict as assert} from 'assert';
 
 /* eslint-env jest */
 

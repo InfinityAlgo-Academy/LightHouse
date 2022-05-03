@@ -6,12 +6,13 @@
 'use strict';
 
 /* eslint-env jest */
-const BootupTime = require('../../audits/bootup-time.js');
-const assert = require('assert').strict;
 
-const acceptableTrace = require('../fixtures/traces/progressive-app-m60.json');
-const acceptableDevtoolsLogs = require('../fixtures/traces/progressive-app-m60.devtools.log.json');
-const errorTrace = require('../fixtures/traces/no_fmp_event.json');
+import BootupTime from '../../audits/bootup-time.js';
+
+import {strict as assert} from 'assert';
+import acceptableTrace from '../fixtures/traces/progressive-app-m60.json';
+import acceptableDevtoolsLogs from '../fixtures/traces/progressive-app-m60.devtools.log.json';
+import errorTrace from '../fixtures/traces/no_fmp_event.json';
 
 describe('Performance: bootup-time audit', () => {
   const auditOptions = Object.assign({}, BootupTime.defaultOptions, {thresholdInMs: 10});

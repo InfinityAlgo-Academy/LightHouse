@@ -5,9 +5,9 @@
  */
 'use strict';
 
-const assert = require('assert');
-const jsdom = require('jsdom');
-const pageFunctions = require('../../lib/page-functions.js');
+import assert from 'assert';
+import jsdom from 'jsdom';
+import pageFunctions from '../../lib/page-functions.js';
 
 /* eslint-env jest */
 

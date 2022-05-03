@@ -7,8 +7,9 @@
 
 /* eslint-env jest */
 
-const ProcessedTrace = require('../../computed/processed-trace.js');
-const pwaTrace = require('../fixtures/traces/progressive-app-m60.json');
+import ProcessedTrace from '../../computed/processed-trace.js';
+
+import pwaTrace from '../fixtures/traces/progressive-app-m60.json';
 
 describe('ProcessedTrace', () => {
   it('computes the artifact', async () => {

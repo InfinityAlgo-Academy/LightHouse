@@ -7,8 +7,12 @@
 
 /* eslint-env jest */
 
-const WebAppManifest = require('../../../gather/gatherers/web-app-manifest.js');
-const {createMockSession} = require('../../fraggle-rock/gather/mock-driver.js');
+import fs from 'fs';
+import {LH_ROOT} from '../../../../root.js';
+
+import WebAppManifest from '../../../gather/gatherers/web-app-manifest.js';
+
+import {createMockSession} from '../../fraggle-rock/gather/mock-driver.js';
 
 describe('WebAppManifest Gatherer', () => {
   let session = createMockSession();
@@ -35,12 +39,11 @@ describe('WebAppManifest Gatherer', () => {
     });
 
     it('should handle BOM-encoded manifest', async () => {
-      const fs = require('fs');
       const manifestWithoutBOM = fs
-        .readFileSync(__dirname + '/../../fixtures/manifest.json')
+        .readFileSync(LH_ROOT + '/lighthouse-core/test/fixtures/manifest.json')
         .toString();
       const manifestWithBOM = fs
-        .readFileSync(__dirname + '/../../fixtures/manifest-bom.json')
+        .readFileSync(LH_ROOT + '/lighthouse-core/test/fixtures/manifest-bom.json')
         .toString();
 
       session.sendCommand.mockResponse('Page.getAppManifest', {

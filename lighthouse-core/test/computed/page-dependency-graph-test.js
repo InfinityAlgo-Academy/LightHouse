@@ -5,17 +5,15 @@
  */
 'use strict';
 
-const PageDependencyGraph = require('../../computed/page-dependency-graph.js');
-const BaseNode = require('../../lib/dependency-graph/base-node.js');
-const NetworkRequest = require('../../lib/network-request.js');
-const NetworkRecorder = require('../../lib/network-recorder.js');
-
-const sampleTrace = require('../fixtures/traces/iframe-m79.trace.json');
-const sampleDevtoolsLog = require('../fixtures/traces/iframe-m79.devtoolslog.json');
-
-const assert = require('assert').strict;
-const {getURLArtifactFromDevtoolsLog} = require('../test-utils.js');
-const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
+import PageDependencyGraph from '../../computed/page-dependency-graph.js';
+import BaseNode from '../../lib/dependency-graph/base-node.js';
+import NetworkRequest from '../../lib/network-request.js';
+import sampleTrace from '../fixtures/traces/iframe-m79.trace.json';
+import sampleDevtoolsLog from '../fixtures/traces/iframe-m79.devtoolslog.json';
+import {strict as assert} from 'assert';
+import {getURLArtifactFromDevtoolsLog} from '../test-utils.js';
+import NetworkRecorder from '../../lib/network-recorder.js';
+import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
 
 function createRequest(
   requestId,

@@ -7,8 +7,9 @@
 
 /* eslint-env jest */
 
-const ViewportDimensionsGatherer = require('../../../gather/gatherers/viewport-dimensions.js');
-const assert = require('assert').strict;
+import ViewportDimensionsGatherer from '../../../gather/gatherers/viewport-dimensions.js';
+
+import {strict as assert} from 'assert';
 let gatherer;
 
 describe('ViewportDimensions gatherer', () => {

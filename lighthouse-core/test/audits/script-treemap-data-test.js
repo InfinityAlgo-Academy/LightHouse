@@ -7,10 +7,15 @@
 
 /* eslint-env jest */
 
-const ScriptTreemapData_ = require('../../audits/script-treemap-data.js');
-const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
-const {loadSourceMapAndUsageFixture, loadSourceMapFixture, makeParamsOptional, createScript} =
-  require('../test-utils.js');
+import ScriptTreemapData_ from '../../audits/script-treemap-data.js';
+
+import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
+import {
+  createScript,
+  loadSourceMapAndUsageFixture,
+  loadSourceMapFixture,
+  makeParamsOptional,
+} from '../test-utils.js';
 
 const ScriptTreemapData = {
   audit: makeParamsOptional(ScriptTreemapData_.audit),

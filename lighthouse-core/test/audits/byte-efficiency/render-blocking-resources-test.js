@@ -5,21 +5,20 @@
  */
 'use strict';
 
-const RenderBlockingResourcesAudit = require('../../../audits/byte-efficiency/render-blocking-resources.js'); // eslint-disable-line max-len
+import RenderBlockingResourcesAudit from '../../../audits/byte-efficiency/render-blocking-resources.js'; // eslint-disable-line max-len
+import constants from '../../../config/constants.js';
+import NetworkNode from '../../../lib/dependency-graph/network-node.js';
+import CPUNode from '../../../lib/dependency-graph/cpu-node.js';
+import Simulator from '../../../lib/dependency-graph/simulator/simulator.js';
+import NetworkRequest from '../../../lib/network-request.js';
+import {strict as assert} from 'assert';
+import trace from '../../fixtures/traces/progressive-app-m60.json';
+import devtoolsLog from '../../fixtures/traces/progressive-app-m60.devtools.log.json';
+import ampTrace from '../../fixtures/traces/amp-m86.trace.json';
+import ampDevtoolsLog from '../../fixtures/traces/amp-m86.devtoolslog.json';
+import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';
 
-const mobileSlow4G = require('../../../config/constants.js').throttling.mobileSlow4G;
-const NetworkNode = require('../../../lib/dependency-graph/network-node.js');
-const CPUNode = require('../../../lib/dependency-graph/cpu-node.js');
-const Simulator = require('../../../lib/dependency-graph/simulator/simulator.js');
-const NetworkRequest = require('../../../lib/network-request.js');
-const assert = require('assert').strict;
-const {getURLArtifactFromDevtoolsLog} = require('../../test-utils.js');
-
-const trace = require('../../fixtures/traces/progressive-app-m60.json');
-const devtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
-
-const ampTrace = require('../../fixtures/traces/amp-m86.trace.json');
-const ampDevtoolsLog = require('../../fixtures/traces/amp-m86.devtoolslog.json');
+const mobileSlow4G = constants.throttling.mobileSlow4G;
 
 /* eslint-env jest */
 

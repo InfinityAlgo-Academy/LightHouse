@@ -5,11 +5,10 @@
  */
 'use strict';
 
-const Metrics = require('../../../lib/traces/pwmetrics-events.js');
-const assert = require('assert').strict;
-
-const dbwTrace = require('../../results/artifacts/defaultPass.trace.json');
-const dbwResults = require('../../results/sample_v2.json');
+import Metrics from '../../../lib/traces/pwmetrics-events.js';
+import {strict as assert} from 'assert';
+import dbwTrace from '../../results/artifacts/defaultPass.trace.json';
+import dbwResults from '../../results/sample_v2.json';
 
 /* eslint-env jest */
 describe('metrics events class', () => {

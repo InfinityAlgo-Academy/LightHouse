@@ -5,9 +5,9 @@
  */
 'use strict';
 
-const LongTasks = require('../../audits/long-tasks.js');
-const createTestTrace = require('../create-test-trace.js');
-const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
+import LongTasks from '../../audits/long-tasks.js';
+import createTestTrace from '../create-test-trace.js';
+import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
 
 const BASE_TS = 12345e3;
 const TASK_URL = 'https://pwa.rocks';

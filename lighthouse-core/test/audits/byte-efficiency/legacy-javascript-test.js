@@ -5,8 +5,9 @@
  */
 'use strict';
 
-const LegacyJavascript = require('../../../audits/byte-efficiency/legacy-javascript.js');
-const networkRecordsToDevtoolsLog = require('../../network-records-to-devtools-log.js');
+import {readJson} from '../../../../root.js';
+import LegacyJavascript from '../../../audits/byte-efficiency/legacy-javascript.js';
+import networkRecordsToDevtoolsLog from '../../network-records-to-devtools-log.js';
 
 /**
  * @param {Array<{url: string, code: string, map?: LH.Artifacts.RawSourceMap}>} scripts
@@ -258,7 +259,8 @@ describe('LegacyJavaScript audit', () => {
 describe('LegacyJavaScript signals', () => {
   it('expect babel-preset-env = true variant to not have any signals', () => {
     for (const summaryFilename of ['summary-signals.json', 'summary-signals-nomaps.json']) {
-      const signalSummary = require(`../../../scripts/legacy-javascript/${summaryFilename}`);
+      const signalSummary =
+        readJson(`lighthouse-core/scripts/legacy-javascript/${summaryFilename}`);
       const expectedMissingSignals = [
         'core-js-2-preset-env-esmodules/true',
         'core-js-3-preset-env-esmodules/true',

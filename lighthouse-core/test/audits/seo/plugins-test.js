@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const PluginsAudit = require('../../../audits/seo/plugins.js');
-const assert = require('assert').strict;
+import PluginsAudit from '../../../audits/seo/plugins.js';
+import {strict as assert} from 'assert';
 
 /* eslint-env jest */
 

@@ -5,8 +5,10 @@
  */
 'use strict';
 
-const TargetManager = require('../../../gather/driver/target-manager.js');
-const {createMockSession} = require('../../fraggle-rock/gather/mock-driver.js');
+import {jest} from '@jest/globals';
+import TargetManager from '../../../gather/driver/target-manager.js';
+import {createMockSession} from '../../fraggle-rock/gather/mock-driver.js';
+import {fnAny} from '../../test-utils.js';
 
 /* eslint-env jest */
 
@@ -103,7 +105,7 @@ describe('TargetManager', () => {
       sessionMock.sendCommand
         .mockResponse('Target.getTargetInfo', {targetInfo})
         .mockResponse('Target.setAutoAttach');
-      targetManager.addTargetAttachedListener(jest.fn().mockImplementation(() => {
+      targetManager.addTargetAttachedListener(fnAny().mockImplementation(() => {
         const setAutoAttachCalls = sessionMock.sendCommand.mock.calls
           .filter(call => call[0] === 'Target.setAutoAttach');
         expect(setAutoAttachCalls).toHaveLength(0);
@@ -114,14 +116,14 @@ describe('TargetManager', () => {
     it('should handle target closed gracefully', async () => {
       sessionMock.sendCommand.mockResponse('Target.getTargetInfo', {targetInfo});
       const targetClosedError = new Error('Target closed');
-      targetManager.addTargetAttachedListener(jest.fn().mockRejectedValue(targetClosedError));
+      targetManager.addTargetAttachedListener(fnAny().mockRejectedValue(targetClosedError));
       await targetManager.enable();
     });
 
     it('should throw other listener errors', async () => {
       sessionMock.sendCommand.mockResponse('Target.getTargetInfo', {targetInfo});
       const targetClosedError = new Error('Fatal error');
-      targetManager.addTargetAttachedListener(jest.fn().mockRejectedValue(targetClosedError));
+      targetManager.addTargetAttachedListener(fnAny().mockRejectedValue(targetClosedError));
       await expect(targetManager.enable()).rejects.toMatchObject({message: 'Fatal error'});
     });
 

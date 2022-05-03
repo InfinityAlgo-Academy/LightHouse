@@ -7,13 +7,13 @@
 
 /* eslint-env jest */
 
-const Audit = require('../../../audits/metrics/speed-index.js');
-const assert = require('assert').strict;
-const options = Audit.defaultOptions;
-const constants = require('../../../config/constants.js');
+import Audit from '../../../audits/metrics/speed-index.js';
 
-const pwaTrace = require('../../fixtures/traces/progressive-app-m60.json');
-const pwaDevtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
+import {strict as assert} from 'assert';
+const options = Audit.defaultOptions;
+import constants from '../../../config/constants.js';
+import pwaTrace from '../../fixtures/traces/progressive-app-m60.json';
+import pwaDevtoolsLog from '../../fixtures/traces/progressive-app-m60.devtools.log.json';
 
 /**
  * @param {{

@@ -7,9 +7,11 @@
 
 /* eslint-env jest */
 
-const MainResource = require('../../computed/main-resource.js');
-const assert = require('assert').strict;
-const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
+import {strict as assert} from 'assert';
+
+import MainResource from '../../computed/main-resource.js';
+import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
+import wikipediaDevtoolsLog from '../fixtures/wikipedia-redirect.devtoolslog.json';
 
 describe('MainResource computed artifact', () => {
   it('returns an artifact', () => {
@@ -45,7 +47,7 @@ describe('MainResource computed artifact', () => {
   });
 
   it('should identify correct main resource in the wikipedia fixture', () => {
-    const wikiDevtoolsLog = require('../fixtures/wikipedia-redirect.devtoolslog.json');
+    const wikiDevtoolsLog = wikipediaDevtoolsLog;
     const URL = {mainDocumentUrl: 'https://en.m.wikipedia.org/wiki/Main_Page'};
     const artifacts = {devtoolsLog: wikiDevtoolsLog, URL};
 

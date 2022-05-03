@@ -7,8 +7,9 @@
 
 /* eslint-env jest */
 
-const ConsoleMessagesGatherer = require('../../../gather/gatherers/console-messages.js');
-const assert = require('assert').strict;
+import ConsoleMessagesGatherer from '../../../gather/gatherers/console-messages.js';
+
+import {strict as assert} from 'assert';
 
 class MockSession {
   constructor() {

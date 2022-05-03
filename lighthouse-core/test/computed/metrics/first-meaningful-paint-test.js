@@ -5,21 +5,17 @@
  */
 'use strict';
 
-const FirstMeaningfulPaint = require('../../../computed/metrics/first-meaningful-paint.js');
-const assert = require('assert').strict;
-
-const TRACE_FIXTURES = '../../fixtures/traces';
-const pwaTrace = require(`${TRACE_FIXTURES}/progressive-app-m60.json`);
-const pwaDevtoolsLog = require(`${TRACE_FIXTURES}/progressive-app-m60.devtools.log.json`);
-
-const badNavStartTrace = require(`${TRACE_FIXTURES}/bad-nav-start-ts.json`);
-const lateTracingStartedTrace = require(`${TRACE_FIXTURES}/tracingstarted-after-navstart.json`);
-const preactTrace = require(`${TRACE_FIXTURES}/preactjs.com_ts_of_undefined.json`);
-const noFMPtrace = require(`${TRACE_FIXTURES}/no_fmp_event.json`);
-
-const {getURLArtifactFromDevtoolsLog} = require('../../test-utils.js');
-
 /* eslint-env jest */
+
+import FirstMeaningfulPaint from '../../../computed/metrics/first-meaningful-paint.js';
+import {strict as assert} from 'assert';
+import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';
+import pwaTrace from '../../fixtures/traces/progressive-app-m60.json';
+import pwaDevtoolsLog from '../../fixtures/traces/progressive-app-m60.devtools.log.json';
+import badNavStartTrace from '../../fixtures/traces/bad-nav-start-ts.json';
+import lateTracingStartedTrace from '../../fixtures/traces/tracingstarted-after-navstart.json';
+import preactTrace from '../../fixtures/traces/preactjs.com_ts_of_undefined.json';
+import noFMPtrace from '../../fixtures/traces/no_fmp_event.json';
 
 describe('Metrics: FMP', () => {
   const gatherContext = {gatherMode: 'navigation'};

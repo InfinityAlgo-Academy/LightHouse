@@ -5,12 +5,12 @@
  */
 'use strict';
 
-const assert = require('assert').strict;
+import {strict as assert} from 'assert';
+import trace from '../../fixtures/traces/lcp-m78.json';
+import devtoolsLog from '../../fixtures/traces/lcp-m78.devtools.log.json';
+import LanternLargestContentfulPaint from '../../../computed/metrics/lantern-largest-contentful-paint.js'; // eslint-disable-line max-len
+import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';
 
-const trace = require('../../fixtures/traces/lcp-m78.json');
-const devtoolsLog = require('../../fixtures/traces/lcp-m78.devtools.log.json');
-const LanternLargestContentfulPaint = require('../../../computed/metrics/lantern-largest-contentful-paint.js'); // eslint-disable-line max-len
-const {getURLArtifactFromDevtoolsLog} = require('../../test-utils.js');
 const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
 
 /* eslint-env jest */

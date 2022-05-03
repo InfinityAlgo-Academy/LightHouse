@@ -5,12 +5,12 @@
  */
 'use strict';
 
-const {defaultSettings, defaultNavigationConfig} = require('../../../config/constants.js');
-const defaultConfig = require('../../../fraggle-rock/config/default-config.js');
-const BaseAudit = require('../../../audits/audit.js');
-const BaseFRGatherer = require('../../../fraggle-rock/gather/base-gatherer.js');
-const BaseLegacyGatherer = require('../../../gather/gatherers/gatherer.js');
-const validation = require('../../../fraggle-rock/config/validation.js');
+import {defaultSettings, defaultNavigationConfig} from '../../../config/constants.js';
+import defaultConfig from '../../../fraggle-rock/config/default-config.js';
+import BaseAudit from '../../../audits/audit.js';
+import BaseFRGatherer from '../../../fraggle-rock/gather/base-gatherer.js';
+import BaseLegacyGatherer from '../../../gather/gatherers/gatherer.js';
+import validation from '../../../fraggle-rock/config/validation.js';
 
 /* eslint-env jest */
 

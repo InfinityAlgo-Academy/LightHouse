@@ -7,10 +7,11 @@
 
 /* eslint-env jest */
 
-const lighthouseStackPacksDep = require('lighthouse-stack-packs');
-const stackPacksLib = require('../../lib/stack-packs.js');
-const defaultConfig = require('../../config/default-config.js');
-const Config = require('../../config/config.js');
+import lighthouseStackPacksDep from 'lighthouse-stack-packs';
+
+import stackPacksLib from '../../lib/stack-packs.js';
+import defaultConfig from '../../config/default-config.js';
+import Config from '../../config/config.js';
 
 function getAuditIds() {
   const config = new Config(defaultConfig);

@@ -7,17 +7,28 @@
 
 /* eslint-env jest */
 
+import {jest} from '@jest/globals';
+import {createMockSession, createMockDriver} from '../../fraggle-rock/gather/mock-driver.js';
+import {flushAllTimersAndMicrotasks, fnAny} from '../../test-utils.js';
+// import prepare from '../../../gather/driver/prepare.js';
+import constants from '../../../config/constants.js';
+
+// Some imports needs to be done dynamically, so that their dependencies will be mocked.
+// See: https://jestjs.io/docs/ecmascript-modules#differences-between-esm-and-commonjs
+//      https://github.com/facebook/jest/issues/10025
+/** @type {import('../../../gather/driver/prepare.js')} */
+let prepare;
+
+beforeAll(async () => {
+  prepare = (await import('../../../gather/driver/prepare.js'));
+});
+
 const storageMock = {
-  clearDataForOrigin: jest.fn(),
-  clearBrowserCaches: jest.fn(),
-  getImportantStorageWarning: jest.fn(),
+  clearDataForOrigin: fnAny(),
+  clearBrowserCaches: fnAny(),
+  getImportantStorageWarning: fnAny(),
 };
 jest.mock('../../../gather/driver/storage.js', () => storageMock);
-
-const {createMockSession, createMockDriver} = require('../../fraggle-rock/gather/mock-driver.js');
-const {flushAllTimersAndMicrotasks} = require('../../test-utils.js');
-const prepare = require('../../../gather/driver/prepare.js');
-const constants = require('../../../config/constants.js');
 
 const url = 'https://example.com';
 let sessionMock = createMockSession();
@@ -29,9 +40,9 @@ beforeEach(() => {
     .mockResponse('Emulation.setCPUThrottlingRate')
     .mockResponse('Network.setBlockedURLs')
     .mockResponse('Network.setExtraHTTPHeaders');
-  storageMock.clearBrowserCaches = jest.fn();
-  storageMock.clearDataForOrigin = jest.fn();
-  storageMock.getImportantStorageWarning = jest.fn();
+  storageMock.clearBrowserCaches = fnAny();
+  storageMock.clearDataForOrigin = fnAny();
+  storageMock.getImportantStorageWarning = fnAny();
 });
 
 afterEach(() => {

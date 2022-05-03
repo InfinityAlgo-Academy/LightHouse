@@ -7,7 +7,21 @@
 
 /* eslint-env jest */
 
-const {createMockPage, mockRunnerModule} = require('./gather/mock-driver.js');
+import {jest} from '@jest/globals';
+import {createMockPage, mockRunnerModule} from './gather/mock-driver.js';
+// import UserFlow from '../../fraggle-rock/user-flow.js';
+
+// Some imports needs to be done dynamically, so that their dependencies will be mocked.
+// See: https://jestjs.io/docs/ecmascript-modules#differences-between-esm-and-commonjs
+//      https://github.com/facebook/jest/issues/10025
+/** @type {typeof import('../../fraggle-rock/user-flow.js').UserFlow} */
+let UserFlow;
+/** @type {typeof import('../../fraggle-rock/user-flow.js')['auditGatherSteps']} */
+let auditGatherSteps;
+
+beforeAll(async () => {
+  ({UserFlow, auditGatherSteps} = await import('../../fraggle-rock/user-flow.js'));
+});
 
 const snapshotModule = {snapshotGather: jest.fn()};
 jest.mock('../../fraggle-rock/gather/snapshot-runner.js', () => snapshotModule);
@@ -17,8 +31,6 @@ const timespanModule = {startTimespanGather: jest.fn()};
 jest.mock('../../fraggle-rock/gather/timespan-runner.js', () => timespanModule);
 
 const mockRunner = mockRunnerModule();
-
-const {UserFlow, auditGatherSteps} = require('../../fraggle-rock/user-flow.js');
 
 describe('UserFlow', () => {
   let mockPage = createMockPage();
@@ -109,6 +121,7 @@ describe('UserFlow', () => {
 
       // Check that we have the property set.
       expect(navigationModule.navigationGather).toHaveBeenCalledTimes(4);
+      /** @type {any[][]} */
       const [[, call1], [, call2], [, call3], [, call4]] =
         navigationModule.navigationGather.mock.calls;
       expect(call1).not.toHaveProperty('configContext.settingsOverrides.disableStorageReset');
@@ -138,6 +151,7 @@ describe('UserFlow', () => {
 
       // Check that we have the property set.
       expect(navigationModule.navigationGather).toHaveBeenCalledTimes(3);
+      /** @type {any[][]} */
       const [[, call1], [, call2], [, call3]] = navigationModule.navigationGather.mock.calls;
       expect(call1).toHaveProperty('configContext.skipAboutBlank');
       expect(call2).toHaveProperty('configContext.skipAboutBlank');
@@ -248,7 +262,8 @@ describe('UserFlow', () => {
 
   describe('auditGatherSteps', () => {
     it('should audit gather steps', async () => {
-      const runnerActual = jest.requireActual('../../runner.js');
+      const runnerActual = /** @type {typeof import('../../runner.js')} */ (
+        jest.requireActual('../../runner.js'));
       mockRunner.getGathererList.mockImplementation(runnerActual.getGathererList);
       mockRunner.getAuditList.mockImplementation(runnerActual.getAuditList);
       mockRunner.audit.mockImplementation(artifacts => ({

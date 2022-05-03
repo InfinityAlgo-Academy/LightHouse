@@ -5,9 +5,9 @@
  */
 'use strict';
 
-const Audit = require('../../audits/content-width.js');
-const constants = require('../../config/constants.js');
-const assert = require('assert').strict;
+import Audit from '../../audits/content-width.js';
+import constants from '../../config/constants.js';
+import {strict as assert} from 'assert';
 
 /* eslint-env jest */
 

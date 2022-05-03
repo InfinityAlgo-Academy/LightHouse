@@ -5,14 +5,13 @@
  */
 'use strict';
 
-const assert = require('assert').strict;
-
-const LargestContentfulPaint = require('../../../computed/metrics/largest-contentful-paint.js'); // eslint-disable-line max-len
-const trace = require('../../fixtures/traces/lcp-m78.json');
-const devtoolsLog = require('../../fixtures/traces/lcp-m78.devtools.log.json');
-const invalidTrace = require('../../fixtures/traces/progressive-app-m60.json');
-const invalidDevtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
-const {getURLArtifactFromDevtoolsLog} = require('../../test-utils.js');
+import {strict as assert} from 'assert';
+import LargestContentfulPaint from '../../../computed/metrics/largest-contentful-paint.js'; // eslint-disable-line max-len
+import trace from '../../fixtures/traces/lcp-m78.json';
+import devtoolsLog from '../../fixtures/traces/lcp-m78.devtools.log.json';
+import invalidTrace from '../../fixtures/traces/progressive-app-m60.json';
+import invalidDevtoolsLog from '../../fixtures/traces/progressive-app-m60.devtools.log.json';
+import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';
 
 /* eslint-env jest */
 

@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const ManualAudit = require('../../audits/manual/manual-audit.js');
-const assert = require('assert').strict;
+import ManualAudit from '../../audits/manual/manual-audit.js';
+import {strict as assert} from 'assert';
 
 /* eslint-env jest */
 

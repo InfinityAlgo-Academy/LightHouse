@@ -7,13 +7,14 @@
 
 /* eslint-env jest */
 
-const {
+import {
   getNetworkError,
   getInterstitialError,
   getPageLoadError,
   getNonHtmlError,
-} = require('../../lib/navigation-error.js');
-const NetworkRequest = require('../../lib/network-request.js');
+} from '../../lib/navigation-error.js';
+
+import NetworkRequest from '../../lib/network-request.js';
 
 const LoadFailureMode = /** @type {const} */ ({
   fatal: 'fatal',

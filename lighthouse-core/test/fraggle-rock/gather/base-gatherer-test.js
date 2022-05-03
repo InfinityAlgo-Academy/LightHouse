@@ -5,7 +5,8 @@
  */
 'use strict';
 
-const Gatherer = require('../../../fraggle-rock/gather/base-gatherer.js');
+import Gatherer from '../../../fraggle-rock/gather/base-gatherer.js';
+import {fnAny} from '../../test-utils.js';
 
 /* eslint-env jest */
 
@@ -30,8 +31,8 @@ describe('BaseGatherer', () => {
   describe('.beforePass', () => {
     it('delegates to startInstrumentation by default', async () => {
       class MyGatherer extends Gatherer {
-        startInstrumentation = jest.fn();
-        startSensitiveInstrumentation = jest.fn();
+        startInstrumentation = fnAny();
+        startSensitiveInstrumentation = fnAny();
       }
 
       const gatherer = new MyGatherer();
@@ -59,8 +60,8 @@ describe('BaseGatherer', () => {
       class MyGatherer extends Gatherer {
         /** @type {LH.Gatherer.GathererMeta} */
         meta = {supportedModes: ['timespan']};
-        stopInstrumentation = jest.fn();
-        stopSensitiveInstrumentation = jest.fn();
+        stopInstrumentation = fnAny();
+        stopSensitiveInstrumentation = fnAny();
       }
 
       const gatherer = new MyGatherer();
@@ -73,8 +74,8 @@ describe('BaseGatherer', () => {
       class MyGatherer extends Gatherer {
         /** @type {LH.Gatherer.GathererMeta<'Trace'>} */
         meta = {supportedModes: ['timespan'], dependencies: {Trace: Symbol('Trace')}};
-        stopInstrumentation = jest.fn();
-        stopSensitiveInstrumentation = jest.fn();
+        stopInstrumentation = fnAny();
+        stopSensitiveInstrumentation = fnAny();
       }
 
       const gatherer = new MyGatherer();

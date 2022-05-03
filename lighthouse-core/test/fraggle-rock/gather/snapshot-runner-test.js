@@ -7,24 +7,35 @@
 
 /* eslint-env jest */
 
-const {
+import {jest} from '@jest/globals';
+// import {snapshotGather} from '../../../fraggle-rock/gather/snapshot-runner.js';
+import {
   createMockDriver,
   createMockPage,
   createMockGathererInstance,
   mockDriverModule,
   mockRunnerModule,
-} = require('./mock-driver.js');
+} from './mock-driver.js';
 
-// Establish the mocks before we require our file under test.
+// Some imports needs to be done dynamically, so that their dependencies will be mocked.
+// See: https://jestjs.io/docs/ecmascript-modules#differences-between-esm-and-commonjs
+//      https://github.com/facebook/jest/issues/10025
+/** @type {import('../../../fraggle-rock/gather/snapshot-runner.js')['snapshotGather']} */
+let snapshotGather;
+
+beforeAll(async () => {
+  snapshotGather = (await import('../../../fraggle-rock/gather/snapshot-runner.js')).snapshotGather;
+});
+
+const mockRunner = mockRunnerModule();
+
+// Establish the mocks before we import the file under test.
 /** @type {ReturnType<typeof createMockDriver>} */
 let mockDriver;
-const mockRunner = mockRunnerModule();
 
 jest.mock('../../../fraggle-rock/gather/driver.js', () =>
   mockDriverModule(() => mockDriver.asDriver())
 );
-
-const {snapshotGather} = require('../../../fraggle-rock/gather/snapshot-runner.js');
 
 describe('Snapshot Runner', () => {
   /** @type {ReturnType<typeof createMockPage>} */

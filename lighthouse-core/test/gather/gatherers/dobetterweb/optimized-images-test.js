@@ -7,8 +7,9 @@
 
 /* eslint-env jest */
 
-const OptimizedImages = require('../../../../gather/gatherers/dobetterweb/optimized-images.js');
-const {createMockContext} = require('../../../fraggle-rock/gather/mock-driver.js');
+import OptimizedImages from '../../../../gather/gatherers/dobetterweb/optimized-images.js';
+
+import {createMockContext} from '../../../fraggle-rock/gather/mock-driver.js';
 
 let context = createMockContext();
 let optimizedImages;

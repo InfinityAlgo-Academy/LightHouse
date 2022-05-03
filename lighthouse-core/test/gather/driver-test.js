@@ -5,19 +5,23 @@
  */
 'use strict';
 
-const Driver = require('../../gather/driver.js');
-const Connection = require('../../gather/connections/connection.js');
-const {protocolGetVersionResponse} = require('./fake-driver.js');
-const {
-  createMockSendCommandFn,
-  makePromiseInspectable,
-  flushAllTimersAndMicrotasks,
-} = require('../test-utils.js');
-
 /* eslint-env jest */
 
-jest.useFakeTimers();
+import {jest} from '@jest/globals';
+import Driver from '../../gather/driver.js';
+import Connection from '../../gather/connections/connection.js';
+import FakeDriver from './fake-driver.js';
+import {
+  mockCommands,
+  makePromiseInspectable,
+  flushAllTimersAndMicrotasks,
+  fnAny,
+} from '../test-utils.js';
 
+const {protocolGetVersionResponse} = FakeDriver;
+const {createMockSendCommandFn} = mockCommands;
+
+jest.useFakeTimers();
 
 /**
  * @typedef DriverMockMethods
@@ -48,7 +52,7 @@ describe('.getRequestContent', () => {
     const mockTimeout = 5000;
     const driverTimeout = 1000;
     // @ts-expect-error
-    connectionStub.sendCommand = jest.fn()
+    connectionStub.sendCommand = fnAny()
       .mockImplementation(() => new Promise(r => setTimeout(r, mockTimeout)));
 
     // Fail if we don't reach our two assertions in the catch block
@@ -97,7 +101,7 @@ describe('.sendCommand', () => {
   it('.sendCommand timesout when commands take too long', async () => {
     const mockTimeout = 5000;
     // @ts-expect-error
-    connectionStub.sendCommand = jest.fn()
+    connectionStub.sendCommand = fnAny()
       .mockImplementation(() => new Promise(r => setTimeout(r, mockTimeout)));
 
     driver.setNextProtocolTimeout(10000);

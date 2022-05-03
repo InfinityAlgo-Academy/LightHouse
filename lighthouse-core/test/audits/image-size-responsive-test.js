@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const ImageSizeResponsiveAudit = require('../../audits/image-size-responsive.js');
-const assert = require('assert').strict;
+import ImageSizeResponsiveAudit from '../../audits/image-size-responsive.js';
+import {strict as assert} from 'assert';
 
 /* eslint-env jest */
 

@@ -7,12 +7,23 @@
 
 /* eslint-env jest */
 
-const {
-  createMockContext,
-  mockDriverSubmodules,
-} = require('../../fraggle-rock/gather/mock-driver.js');
+import {jest} from '@jest/globals';
+import {createMockContext, mockDriverSubmodules} from '../../fraggle-rock/gather/mock-driver.js';
+// import FullPageScreenshotGatherer from '../../../gather/gatherers/full-page-screenshot.js';
+
+// Some imports needs to be done dynamically, so that their dependencies will be mocked.
+// See: https://jestjs.io/docs/ecmascript-modules#differences-between-esm-and-commonjs
+//      https://github.com/facebook/jest/issues/10025
+/** @typedef {import('../../../gather/gatherers/full-page-screenshot.js')} FullPageScreenshotGatherer */
+/** @type {typeof import('../../../gather/gatherers/full-page-screenshot.js')} */
+let FullPageScreenshotGatherer;
+
+beforeAll(async () => {
+  FullPageScreenshotGatherer =
+    (await import('../../../gather/gatherers/full-page-screenshot.js')).default;
+});
+
 const mocks = mockDriverSubmodules();
-const FullPageScreenshotGatherer = require('../../../gather/gatherers/full-page-screenshot.js');
 
 // Headless's default value is (1024 * 16), but this varies by device
 const maxTextureSizeMock = 1024 * 8;

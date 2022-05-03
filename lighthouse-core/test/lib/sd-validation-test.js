@@ -7,8 +7,9 @@
 
 /* eslint-env jest */
 
-const assert = require('assert').strict;
-const validateJSONLD = require('../../lib/sd-validation/sd-validation.js');
+import {strict as assert} from 'assert';
+
+import validateJSONLD from '../../lib/sd-validation/sd-validation.js';
 
 describe('JSON validation', () => {
   it('reports missing closing bracket', async () => {

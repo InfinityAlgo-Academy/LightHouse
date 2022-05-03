@@ -5,13 +5,13 @@
  */
 'use strict';
 
-const assert = require('assert').strict;
+import {strict as assert} from 'assert';
+import trace from '../../fixtures/traces/progressive-app-m60.json';
+import devtoolsLog from '../../fixtures/traces/progressive-app-m60.devtools.log.json';
+import LanternFirstMeaningfulPaint from
+  '../../../computed/metrics/lantern-first-meaningful-paint.js';
+import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';
 
-const trace = require('../../fixtures/traces/progressive-app-m60.json');
-const devtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
-const LanternFirstMeaningfulPaint =
-  require('../../../computed/metrics/lantern-first-meaningful-paint.js');
-const {getURLArtifactFromDevtoolsLog} = require('../../test-utils.js');
 const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
 
 /* eslint-env jest */

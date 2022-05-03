@@ -5,12 +5,13 @@
  */
 'use strict';
 
-const defaultThrottling = require('../../../config/constants.js').throttling.mobileSlow4G;
-const LanternSpeedIndex = require('../../../computed/metrics/lantern-speed-index.js');
+import constants from '../../../config/constants.js';
+import LanternSpeedIndex from '../../../computed/metrics/lantern-speed-index.js';
+import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';
+import trace from '../../fixtures/traces/progressive-app-m60.json';
+import devtoolsLog from '../../fixtures/traces/progressive-app-m60.devtools.log.json';
 
-const trace = require('../../fixtures/traces/progressive-app-m60.json');
-const devtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
-const {getURLArtifactFromDevtoolsLog} = require('../../test-utils.js');
+const defaultThrottling = constants.throttling.mobileSlow4G;
 const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
 
 /* eslint-env jest */

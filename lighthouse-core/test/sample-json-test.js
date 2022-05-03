@@ -7,7 +7,7 @@
 
 /* eslint-env jest */
 
-const sampleJson = require('./results/sample_v2.json');
+import sampleJson from './results/sample_v2.json';
 
 describe('Sample JSON', () => {
   /** @type {LH.Result} */

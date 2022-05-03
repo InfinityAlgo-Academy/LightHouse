@@ -5,11 +5,11 @@
  */
 'use strict';
 
-const AxeAudit = require('../../../audits/accessibility/axe-audit.js');
-const assert = require('assert').strict;
-const axeCore = require('axe-core');
-const Accesskeys = require('../../../audits/accessibility/accesskeys.js');
-const format = require('../../../../shared/localization/format.js');
+import AxeAudit from '../../../audits/accessibility/axe-audit.js';
+import {strict as assert} from 'assert';
+import axeCore from 'axe-core';
+import Accesskeys from '../../../audits/accessibility/accesskeys.js';
+import format from '../../../../shared/localization/format.js';
 
 /* eslint-env jest */
 

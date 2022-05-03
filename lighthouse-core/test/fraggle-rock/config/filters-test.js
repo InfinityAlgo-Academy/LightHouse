@@ -5,13 +5,12 @@
  */
 'use strict';
 
-const log = require('lighthouse-logger');
-
-const BaseAudit = require('../../../audits/audit.js');
-const BaseGatherer = require('../../../fraggle-rock/gather/base-gatherer.js');
-const {defaultSettings, defaultNavigationConfig} = require('../../../config/constants.js');
-const filters = require('../../../fraggle-rock/config/filters.js');
-const {initializeConfig} = require('../../../fraggle-rock/config/config.js');
+import BaseAudit from '../../../audits/audit.js';
+import BaseGatherer from '../../../fraggle-rock/gather/base-gatherer.js';
+import {defaultSettings, defaultNavigationConfig} from '../../../config/constants.js';
+import filters from '../../../fraggle-rock/config/filters.js';
+import {initializeConfig} from '../../../fraggle-rock/config/config.js';
+import log from 'lighthouse-logger';
 
 /* eslint-env jest */
 

@@ -5,12 +5,12 @@
  */
 'use strict';
 
-const FCP3G = require('../../../audits/metrics/first-contentful-paint-3g.js');
+import FCP3G from '../../../audits/metrics/first-contentful-paint-3g.js';
 const options = FCP3G.defaultOptions;
 
-const pwaTrace = require('../../fixtures/traces/progressive-app-m60.json');
-const pwaDevtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
-const {getURLArtifactFromDevtoolsLog} = require('../../test-utils.js');
+import pwaTrace from '../../fixtures/traces/progressive-app-m60.json';
+import pwaDevtoolsLog from '../../fixtures/traces/progressive-app-m60.devtools.log.json';
+import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';
 
 /* eslint-env jest */
 

@@ -6,10 +6,12 @@
 'use strict';
 
 /* eslint-env jest */
-const EfficientAnimatedContent =
-  require('../../../audits/byte-efficiency/efficient-animated-content.js');
-const NetworkRequest = require('../../../lib/network-request.js');
-const assert = require('assert').strict;
+
+import EfficientAnimatedContent from
+  '../../../audits/byte-efficiency/efficient-animated-content.js';
+
+import NetworkRequest from '../../../lib/network-request.js';
+import {strict as assert} from 'assert';
 
 describe('Page uses videos for animated GIFs', () => {
   it('should flag gifs above 100kb as unoptimized', async () => {

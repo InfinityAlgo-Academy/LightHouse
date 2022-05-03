@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const assert = require('assert').strict;
-const HreflangAudit = require('../../../audits/seo/hreflang.js');
+import {strict as assert} from 'assert';
+import HreflangAudit from '../../../audits/seo/hreflang.js';
 
 const node = {};
 

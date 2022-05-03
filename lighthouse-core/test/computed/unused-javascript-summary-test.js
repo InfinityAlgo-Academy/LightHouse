@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const assert = require('assert');
-const UnusedJavaScriptSummary = require('../../computed/unused-javascript-summary.js');
+import assert from 'assert';
+import UnusedJavaScriptSummary from '../../computed/unused-javascript-summary.js';
 
 /* eslint-env jest */
 

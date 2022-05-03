@@ -5,9 +5,10 @@
  */
 'use strict';
 
-const Budget = require('../../config/budget.js');
-const assert = require('assert').strict;
 /* eslint-env jest */
+
+import Budget from '../../config/budget.js';
+import {strict as assert} from 'assert';
 
 describe('Budget', () => {
   let budgets;

@@ -5,14 +5,14 @@
  */
 'use strict';
 
-const fs = require('fs');
-const path = require('path');
-const assert = require('assert').strict;
-
-const ScreenshotThumbnailsAudit = require('../../audits/screenshot-thumbnails.js');
-const pwaTrace = require('../fixtures/traces/progressive-app-m60.json');
+import fs from 'fs';
+import path from 'path';
+import {strict as assert} from 'assert';
+import ScreenshotThumbnailsAudit from '../../audits/screenshot-thumbnails.js';
+import pwaTrace from '../fixtures/traces/progressive-app-m60.json';
 const noScreenshotsTrace = {traceEvents: pwaTrace.traceEvents.filter(e => e.name !== 'Screenshot')};
-const pwaDevtoolsLog = require('../fixtures/traces/progressive-app-m60.devtools.log.json');
+import pwaDevtoolsLog from '../fixtures/traces/progressive-app-m60.devtools.log.json';
+import {LH_ROOT} from '../../../root.js';
 
 /* eslint-env jest */
 
@@ -29,8 +29,8 @@ describe('Screenshot thumbnails', () => {
     const context = {settings, options, computedCache: new Map()};
     return ScreenshotThumbnailsAudit.audit(artifacts, context).then(results => {
       results.details.items.forEach((result, index) => {
-        const framePath = path.join(__dirname,
-            `../fixtures/traces/screenshots/progressive-app-frame-${index}.jpg`);
+        const framePath = path.join(LH_ROOT,
+          `lighthouse-core/test/fixtures/traces/screenshots/progressive-app-frame-${index}.jpg`);
         const expectedData = fs.readFileSync(framePath, 'base64');
         const actualData = result.data.slice('data:image/jpeg;base64,'.length);
         expect(actualData).toEqual(expectedData);

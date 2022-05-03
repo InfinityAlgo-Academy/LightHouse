@@ -7,13 +7,14 @@
 
 /* eslint-env jest */
 
-const MainThreadTasks = require('../../../lib/tracehouse/main-thread-tasks.js');
-const TraceProcessor = require('../../../lib/tracehouse/trace-processor.js');
-const taskGroups = require('../../../lib/tracehouse/task-groups.js').taskGroups;
-const pwaTrace = require('../../fixtures/traces/progressive-app.json');
-const noTracingStartedTrace = require('../../fixtures/traces/no-tracingstarted-m74.json');
-const TracingProcessor = require('../../../lib/tracehouse/trace-processor.js');
-const assert = require('assert').strict;
+import MainThreadTasks from '../../../lib/tracehouse/main-thread-tasks.js';
+
+import TraceProcessor from '../../../lib/tracehouse/trace-processor.js';
+import {taskGroups} from '../../../lib/tracehouse/task-groups.js';
+import pwaTrace from '../../fixtures/traces/progressive-app.json';
+import noTracingStartedTrace from '../../fixtures/traces/no-tracingstarted-m74.json';
+import TracingProcessor from '../../../lib/tracehouse/trace-processor.js';
+import {strict as assert} from 'assert';
 
 describe('Main Thread Tasks', () => {
   const pid = 1;

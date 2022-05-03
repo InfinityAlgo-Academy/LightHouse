@@ -5,11 +5,11 @@
  */
 'use strict';
 
-const testUtils = require('../test-utils.js');
-const {processForProto} = require('../../lib/proto-preprocessor.js');
-const sampleJson = require('../results/sample_v2.json');
+import {getProtoRoundTrip} from '../test-utils.js';
+import {processForProto} from '../../lib/proto-preprocessor.js';
+import sampleJson from '../results/sample_v2.json';
 
-const {describeIfProtoExists, sampleResultsRoundtripStr} = testUtils.getProtoRoundTrip();
+const {describeIfProtoExists, sampleResultsRoundtripStr} = getProtoRoundTrip();
 const roundTripJson = sampleResultsRoundtripStr && JSON.parse(sampleResultsRoundtripStr);
 
 /* eslint-env jest */

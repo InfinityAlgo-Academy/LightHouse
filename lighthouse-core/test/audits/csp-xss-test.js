@@ -5,9 +5,9 @@
  */
 'use strict';
 
-const CspXss = require('../../audits/csp-xss.js');
-const {Type} = require('csp_evaluator/dist/finding.js');
-const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
+import CspXss from '../../audits/csp-xss.js';
+import {Type} from 'csp_evaluator/dist/finding.js';
+import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
 
 /* eslint-env jest */
 
