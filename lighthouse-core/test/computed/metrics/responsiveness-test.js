@@ -76,8 +76,8 @@ describe('Metric: Responsiveness', () => {
       settings: {throttlingMethod: 'provided'},
     };
     const context = {computedCache: new Map()};
-    const result = await Responsiveness.request(metricInputData, context);
-    expect(result).toEqual(null);
+    const event = await Responsiveness.request(metricInputData, context);
+    expect(event).toEqual(null);
   });
 
   it('should select the 98th percentile interaction', async () => {
@@ -102,8 +102,8 @@ describe('Metric: Responsiveness', () => {
       }
 
       const context = {computedCache: new Map()};
-      const result = await Responsiveness.request(metricInputData, context);
-      assert.equal(result.timing, expectedTiming, `error at ${eventCount} events`);
+      const event = await Responsiveness.request(metricInputData, context);
+      assert.equal(event.args.data.maxDuration, expectedTiming, `error at ${eventCount} events`);
     }
   });
 
@@ -131,8 +131,8 @@ describe('Metric: Responsiveness', () => {
       settings: {throttlingMethod: 'provided'},
     };
     const context = {computedCache: new Map()};
-    const result = await Responsiveness.request(metricInputData, context);
-    expect(result).toEqual({timing: 49});
+    const event = await Responsiveness.request(metricInputData, context);
+    expect(event.args.data).toMatchObject({maxDuration: 49});
   });
 
   it('should throw on attempting with a simulated timespan', async () => {
@@ -150,8 +150,8 @@ describe('Metric: Responsiveness', () => {
       settings: {throttlingMethod: 'provided'},
     };
     const context = {computedCache: new Map()};
-    const result = await Responsiveness.request(metricInputData, context);
-    expect(result).toEqual({timing: 392});
+    const event = await Responsiveness.request(metricInputData, context);
+    expect(event.args.data).toMatchObject({maxDuration: 392});
   });
 
   it('evaluates from a real trace with no interaction events', async () => {
@@ -160,7 +160,7 @@ describe('Metric: Responsiveness', () => {
       settings: {throttlingMethod: 'provided'},
     };
     const context = {computedCache: new Map()};
-    const result = await Responsiveness.request(metricInputData, context);
-    expect(result).toEqual(null);
+    const event = await Responsiveness.request(metricInputData, context);
+    expect(event).toEqual(null);
   });
 });

@@ -823,8 +823,8 @@ class TraceProcessor {
       const frameEvents = traceEventSubsets.keyEvents;
       return frameEvents.find(
         evt =>
-          evt.name === 'clock_sync' &&
-          evt.args.sync_id === TraceProcessor.TIMESPAN_MARKER_ID
+          evt.name === TraceProcessor.TIMESPAN_MARKER_ID &&
+          evt.ph === 'b'
       );
     };
 

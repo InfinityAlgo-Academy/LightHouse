@@ -1002,6 +1002,7 @@ export interface TraceEvent {
       /** Responsiveness data. */
       interactionType?: 'drag'|'keyboard'|'tapOrClick';
       maxDuration?: number;
+      type?: string;
     };
     frame?: string;
     name?: string;
@@ -1018,6 +1019,23 @@ export interface TraceEvent {
   id2?: {
     local?: string;
   };
+}
+
+declare module Trace {
+  /**
+   * Base event of a `ph: 'X'` 'complete' event. Extend with `name` and `args` as
+   * needed.
+   */
+  interface CompleteEvent {
+    ph: 'X';
+    cat: string;
+    pid: number;
+    tid: number;
+    dur: number;
+    ts: number;
+    tdur: number;
+    tts: number;
+  }
 }
 
 /**

@@ -111,8 +111,13 @@ class Trace extends FRGatherer {
     });
 
     if (gatherMode === 'timespan') {
-      await driver.defaultSession.sendCommand('Tracing.recordClockSyncMarker',
-        {syncId: TraceProcessor.TIMESPAN_MARKER_ID});
+      // https://crrev.com/c/3617408 added relative-to-navstart startTime to measures.
+      // TODO(bckenny): switch to performance.mark() when that has a startTime.
+      await driver.executionContext.evaluate(id => {
+        performance.measure(id, {start: performance.now()});
+      }, {
+        args: [TraceProcessor.TIMESPAN_MARKER_ID],
+      });
     }
   }
 
