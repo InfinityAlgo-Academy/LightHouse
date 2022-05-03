@@ -95,8 +95,7 @@ async function getLayoutShiftTimelineEvents(trace, context) {
   const layoutShiftTimelineEvents = mainThreadEvents
     .filter(evt => relevantEvents.includes(evt.name))
     .map(evt => {
-      // TODO: why is evt.dur undefined?!
-      return {event: evt, timing: getTiming(evt.ts), duration: (evt.dur / 1000) || 20};
+      return {event: evt, timing: getTiming(evt.ts), duration: (evt.dur || 0) / 1000};
     });
   return layoutShiftTimelineEvents;
 }
@@ -132,20 +131,21 @@ class InjectedIframesAudit extends Audit {
     console.log('window stamps: ', shiftWindows, ' ', shiftWindows.length);
     console.log('number of iframe timestamps: ', domTimestamps.length);
     console.log('number of CLS windows: ', shiftWindows.length);
-    // console.log("iframes: ", domTimestamps);
 
     const iframeResults = new Map();
-    // console.log(" trace: ", trace);
 
     const userTimings = await ComputedUserTimings.request(trace, context);
-    const timeAlignTimings = userTimings.filter(timing => timing.name === 'lh_timealign');
-    console.log('getting user timings?? ', timeAlignTimings.length);
-    // TODO: handle if we have 0 timeAlignTimings
+    const timeAlignTiming = userTimings.find(timing => timing.name === 'lh_timealign');
+    console.log('timeAlignTiming:', timeAlignTiming);
+
+    if (!timeAlignTiming) {
+      throw new Error('missing timeAlignTiming');
+    }
 
     // timeAlignNormalizedTraceTs have already been baselined against trace's timeOrigin and converted to milliseconds (see computed/user-timings)
     //   This adjustment is identical to traceprocessor's getTiming
     // whereas timeAlignClientTs times are clientside perf.now timestamps
-    const timeAlignNormalizedTraceTs = timeAlignTimings[0].startTime;
+    const timeAlignNormalizedTraceTs = timeAlignTiming.startTime;
     // can we assume that timing in client will always be <= timing on trace ?
     // are assuming that first item in timeAlignTimings / smallest will be the one we want
     console.log({timeAlignNormalizedTraceTs, timeAlignClientTs});
@@ -163,7 +163,8 @@ class InjectedIframesAudit extends Audit {
       const time = clientTs + timingNormalization;
       for (const window of shiftWindows) {
         // if iframe timestamp is within a CLS window timeframe, it is considered to contribute to CLS
-        if (time > window.start && time < window.end) {
+        if (time >= window.start && time <= window.end) {
+          // console.log('...');
           // Make sure an iframe is only added once to results
           // const ad = "id=\"aswift_"; - to filter ads from https://github.com/monofrio/stylish_ad_removal
           if (!iframeResults.has(timestamp.devtoolsNodePath)) {
@@ -183,6 +184,7 @@ class InjectedIframesAudit extends Audit {
         }
       }
     }
+
     // console.log("RESULTS: ", results);
     console.log('num of RESULTS: ', results.length);
     // console.log("RESULTS: ", results);

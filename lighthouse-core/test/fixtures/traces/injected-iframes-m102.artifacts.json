@@ -1,0 +1,473 @@
+{
+  "DOMTimeline": {
+    "domTimestamps": [
+      {
+        "currTime": 1986.5999999940395,
+        "element": {},
+        "lhId": "page-0-IFRAME",
+        "devtoolsNodePath": "1,HTML,1,BODY,0,DIV,1,DIV,1,DIV,0,DIV,2,ASIDE,0,DIV,0,DIV,6,DIV,1,IFRAME",
+        "selector": "div.sticky-region > div.sidebar-columns > div.component-iframed > iframe",
+        "boundingRect": {
+          "top": 1822,
+          "bottom": 1822,
+          "left": 1020,
+          "right": 1318,
+          "width": 298,
+          "height": 0
+        },
+        "snippet": "<iframe aria-label=\"Iframed\" src=\"https://static.foxnews.com/static/orion/html/embed/vaccine-finder.html\" border=\"0\" frameborder=\"0\" scrolling=\"no\" style=\"width: 100%; height: 0;\">",
+        "nodeLabel": "Iframed"
+      },
+      {
+        "currTime": 2168.199999988079,
+        "element": {},
+        "lhId": "page-1-IFRAME",
+        "devtoolsNodePath": "1,HTML,1,BODY,0,DIV,1,DIV,1,DIV,0,DIV,2,ASIDE,0,DIV,0,DIV,7,DIV,1,IFRAME",
+        "selector": "div.sticky-region > div.sidebar-columns > div.component-iframed > iframe",
+        "boundingRect": {
+          "top": 1836,
+          "bottom": 1836,
+          "left": 1036,
+          "right": 1302,
+          "width": 266,
+          "height": 0
+        },
+        "snippet": "<iframe aria-label=\"Vaccine Distribution\" src=\"https://static.foxnews.com/static/orion/html/embed/vaccine-distribution.ht…\" border=\"0\" frameborder=\"0\" scrolling=\"no\" style=\"width: 100%; height: 0;\">",
+        "nodeLabel": "Vaccine Distribution"
+      },
+      {
+        "currTime": 3346.9000000059605,
+        "element": {},
+        "lhId": "page-2-IFRAME",
+        "devtoolsNodePath": "1,HTML,1,BODY,1,IFRAME",
+        "selector": "body.fn > iframe",
+        "boundingRect": {
+          "top": 0,
+          "bottom": 0,
+          "left": 0,
+          "right": 0,
+          "width": 0,
+          "height": 0
+        },
+        "snippet": "<iframe name=\"googlefcPresent\" style=\"display: none; width: 0px; height: 0px; border: none; z-index: -1000;\">",
+        "nodeLabel": "body.fn > iframe"
+      },
+      {
+        "currTime": 6088.5,
+        "element": {},
+        "lhId": "page-3-IFRAME",
+        "devtoolsNodePath": "1,HTML,1,BODY,10,IFRAME",
+        "selector": "body.fn > iframe",
+        "boundingRect": {
+          "top": 0,
+          "bottom": 0,
+          "left": 0,
+          "right": 0,
+          "width": 0,
+          "height": 0
+        },
+        "snippet": "<iframe name=\"googlefcInactive\" src=\"about:blank\" style=\"display: none; width: 0px; height: 0px; border: none; z-index: -1000;\">",
+        "nodeLabel": "body.fn > iframe"
+      },
+      {
+        "currTime": 6088.9000000059605,
+        "element": {},
+        "lhId": "page-4-IFRAME",
+        "devtoolsNodePath": "1,HTML,1,BODY,11,IFRAME",
+        "selector": "body.fn > iframe",
+        "boundingRect": {
+          "top": 0,
+          "bottom": 0,
+          "left": 0,
+          "right": 0,
+          "width": 0,
+          "height": 0
+        },
+        "snippet": "<iframe name=\"googlefcLoaded\" src=\"about:blank\" style=\"display: none; width: 0px; height: 0px; border: none; z-index: -1000;\">",
+        "nodeLabel": "body.fn > iframe"
+      },
+      {
+        "currTime": 9607.199999988079,
+        "element": {},
+        "lhId": "page-5-IFRAME",
+        "devtoolsNodePath": "1,HTML,1,BODY,21,IFRAME",
+        "selector": "body.fn > iframe#destination_publishing_iframe_foxnews_0",
+        "boundingRect": {
+          "top": 0,
+          "bottom": 0,
+          "left": 0,
+          "right": 0,
+          "width": 0,
+          "height": 0
+        },
+        "snippet": "<iframe sandbox=\"allow-scripts allow-same-origin\" id=\"destination_publishing_iframe_foxnews_0\" src=\"https://foxnews.demdex.net/dest5.html?d_nsid=0#https%3A%2F%2Fwww.foxnews.c…\" style=\"display: none; width: 0px; height: 0px;\">",
+        "nodeLabel": "body.fn > iframe#destination_publishing_iframe_foxnews_0"
+      },
+      {
+        "currTime": 9613.40000000596,
+        "element": {},
+        "lhId": "page-6-IFRAME",
+        "devtoolsNodePath": "1,HTML,1,BODY,22,IFRAME",
+        "selector": "body.fn > iframe",
+        "boundingRect": {
+          "top": 0,
+          "bottom": 0,
+          "left": 0,
+          "right": 0,
+          "width": 0,
+          "height": 0
+        },
+        "snippet": "<iframe src=\"https://s.amazon-adsystem.com/iu3?cm3ppd=1&amp;d=dtb-pub&amp;csif=t&amp;dl=n-sharethro…\" style=\"display: none;\">",
+        "nodeLabel": "body.fn > iframe"
+      },
+      {
+        "currTime": 10212.299999982119,
+        "element": {},
+        "lhId": "page-7-IFRAME",
+        "devtoolsNodePath": "1,HTML,1,BODY,19,DIV,2,IFRAME",
+        "selector": "body.fn > div#criteo-tags-div > iframe",
+        "boundingRect": {
+          "top": 0,
+          "bottom": 0,
+          "left": 0,
+          "right": 0,
+          "width": 0,
+          "height": 0
+        },
+        "snippet": "<iframe src=\"https://d534e36716ae7e1c83086a2cfbeb6ac2.safeframe.googlesyndication.com/s…\" style=\"visibility: hidden; display: none;\">",
+        "nodeLabel": "body.fn > div#criteo-tags-div > iframe"
+      },
+      {
+        "currTime": 12408.59999999404,
+        "element": {
+          "allowTransparency": "true",
+          "mediafilterProtected": true
+        },
+        "lhId": "page-8-IFRAME",
+        "devtoolsNodePath": "1,HTML,1,BODY,1,DIV,1,DIV,0,DIV,0,DIV,0,DIV,0,DIV,0,IFRAME",
+        "selector": "div.ad-container > div#desktop_desk-hp-lb1 > div#google_ads_iframe_/4145/fnc/desk/hp/lb1_0__container__ > iframe#google_ads_iframe_/4145/fnc/desk/hp/lb1_0",
+        "boundingRect": {
+          "top": 104,
+          "bottom": 354,
+          "left": 183,
+          "right": 1153,
+          "width": 970,
+          "height": 250
+        },
+        "snippet": "<iframe frameborder=\"0\" src=\"https://d534e36716ae7e1c83086a2cfbeb6ac2.safeframe.googlesyndication.com/s…\" id=\"google_ads_iframe_/4145/fnc/desk/hp/lb1_0\" name=\"1-0-38;108849;<!DOCTYPE html>",
+        "nodeLabel": "Advertisement"
+      },
+      {
+        "currTime": 13300.199999988079,
+        "element": {
+          "allowTransparency": "true"
+        },
+        "lhId": "page-9-IFRAME",
+        "devtoolsNodePath": "1,HTML,1,BODY,1,DIV,1,DIV,1,DIV,0,DIV,2,ASIDE,0,DIV,0,DIV,3,DIV,0,DIV,0,DIV,0,DIV,0,IFRAME",
+        "selector": "div.ad-container > div#desktop_desk-hp-ban1 > div#google_ads_iframe_/4145/fnc/desk/hp/ban1_0__container__ > iframe#google_ads_iframe_/4145/fnc/desk/hp/ban1_0",
+        "boundingRect": {
+          "top": 1253,
+          "bottom": 1503,
+          "left": 1019,
+          "right": 1319,
+          "width": 300,
+          "height": 250
+        },
+        "snippet": "<iframe id=\"google_ads_iframe_/4145/fnc/desk/hp/ban1_0\" name=\"google_ads_iframe_/4145/fnc/desk/hp/ban1_0\" width=\"300\" height=\"250\" scrolling=\"no\" marginwidth=\"0\" marginheight=\"0\" frameborder=\"0\" role=\"region\" aria-label=\"Advertisement\" tabindex=\"0\" srcdoc=\"\" sandbox=\"allow-forms allow-pointer-lock allow-popups allow-popups-to-escape-sandbox…\" data-google-container-id=\"4\" style=\"border: 0px; vertical-align: bottom;\">",
+        "nodeLabel": "Advertisement"
+      },
+      {
+        "currTime": 13361.59999999404,
+        "element": {
+          "allowTransparency": "true"
+        },
+        "lhId": "page-10-IFRAME",
+        "devtoolsNodePath": "1,HTML,1,BODY,1,DIV,0,HEADER,2,DIV,0,DIV,1,DIV,1,DIV,0,DIV,1,DIV,0,DIV,0,IFRAME",
+        "selector": "div.ad-container > div#desk-hp-mktupdte > div#google_ads_iframe_/4145/fnc/desk/hp/mktupdte_0__container__ > iframe#google_ads_iframe_/4145/fnc/desk/hp/mktupdte_0",
+        "boundingRect": {
+          "top": 63,
+          "bottom": 94,
+          "left": 1223,
+          "right": 1311,
+          "width": 88,
+          "height": 31
+        },
+        "snippet": "<iframe id=\"google_ads_iframe_/4145/fnc/desk/hp/mktupdte_0\" name=\"google_ads_iframe_/4145/fnc/desk/hp/mktupdte_0\" width=\"88\" height=\"31\" scrolling=\"no\" marginwidth=\"0\" marginheight=\"0\" frameborder=\"0\" role=\"region\" aria-label=\"Advertisement\" tabindex=\"0\" srcdoc=\"\" sandbox=\"allow-forms allow-pointer-lock allow-popups allow-popups-to-escape-sandbox…\" data-google-container-id=\"2\" style=\"border: 0px; vertical-align: bottom;\">",
+        "nodeLabel": "Advertisement"
+      },
+      {
+        "currTime": 13443.5,
+        "element": {},
+        "lhId": "page-11-IFRAME",
+        "devtoolsNodePath": "1,HTML,2,IFRAME",
+        "selector": "iframe#31f2dbc7769bc56",
+        "boundingRect": {
+          "top": 0,
+          "bottom": 0,
+          "left": 0,
+          "right": 0,
+          "width": 0,
+          "height": 0
+        },
+        "snippet": "<iframe sandbox=\"allow-scripts allow-same-origin\" id=\"31f2dbc7769bc56\" frameborder=\"0\" allowtransparency=\"true\" marginheight=\"0\" marginwidth=\"0\" width=\"0\" hspace=\"0\" vspace=\"0\" height=\"0\" style=\"height:0px;width:0px;display:none;\" scrolling=\"no\" src=\"https://js-sec.indexww.com/um/ixmatch.html\">",
+        "nodeLabel": "\n    "
+      },
+      {
+        "currTime": 13443.90000000596,
+        "element": {},
+        "lhId": "page-12-IFRAME",
+        "devtoolsNodePath": "1,HTML,3,IFRAME",
+        "selector": "iframe#32926226f5afc9b",
+        "boundingRect": {
+          "top": 0,
+          "bottom": 0,
+          "left": 0,
+          "right": 0,
+          "width": 0,
+          "height": 0
+        },
+        "snippet": "<iframe sandbox=\"allow-scripts allow-same-origin\" id=\"32926226f5afc9b\" frameborder=\"0\" allowtransparency=\"true\" marginheight=\"0\" marginwidth=\"0\" width=\"0\" hspace=\"0\" vspace=\"0\" height=\"0\" style=\"height:0px;width:0px;display:none;\" scrolling=\"no\" src=\"https://eus.rubiconproject.com/usync.html?us_privacy=1---\">",
+        "nodeLabel": "\n    "
+      },
+      {
+        "currTime": 13443.90000000596,
+        "element": {},
+        "lhId": "page-13-IFRAME",
+        "devtoolsNodePath": "1,HTML,4,IFRAME",
+        "selector": "iframe#33accc2d98ebf8c",
+        "boundingRect": {
+          "top": 0,
+          "bottom": 0,
+          "left": 0,
+          "right": 0,
+          "width": 0,
+          "height": 0
+        },
+        "snippet": "<iframe sandbox=\"allow-scripts allow-same-origin\" id=\"33accc2d98ebf8c\" frameborder=\"0\" allowtransparency=\"true\" marginheight=\"0\" marginwidth=\"0\" width=\"0\" hspace=\"0\" vspace=\"0\" height=\"0\" style=\"height:0px;width:0px;display:none;\" scrolling=\"no\" src=\"https://acdn.adnxs.com/dmp/async_usersync.html\">",
+        "nodeLabel": "\n    "
+      },
+      {
+        "currTime": 13444,
+        "element": {},
+        "lhId": "page-14-IFRAME",
+        "devtoolsNodePath": "1,HTML,5,IFRAME",
+        "selector": "iframe#349d7acd47a9b2a",
+        "boundingRect": {
+          "top": 0,
+          "bottom": 0,
+          "left": 0,
+          "right": 0,
+          "width": 0,
+          "height": 0
+        },
+        "snippet": "<iframe sandbox=\"allow-scripts allow-same-origin\" id=\"349d7acd47a9b2a\" frameborder=\"0\" allowtransparency=\"true\" marginheight=\"0\" marginwidth=\"0\" width=\"0\" hspace=\"0\" vspace=\"0\" height=\"0\" style=\"height:0px;width:0px;display:none;\" scrolling=\"no\" src=\"https://us-u.openx.net/w/1.0/pd?plm=6&amp;ph=821a7a03-0610-4f16-ae68-93099cfd1…\">",
+        "nodeLabel": "\n    "
+      },
+      {
+        "currTime": 13444,
+        "element": {},
+        "lhId": "page-15-IFRAME",
+        "devtoolsNodePath": "1,HTML,6,IFRAME",
+        "selector": "iframe#3502dc8c66d4e88",
+        "boundingRect": {
+          "top": 0,
+          "bottom": 0,
+          "left": 0,
+          "right": 0,
+          "width": 0,
+          "height": 0
+        },
+        "snippet": "<iframe sandbox=\"allow-scripts allow-same-origin\" id=\"3502dc8c66d4e88\" frameborder=\"0\" allowtransparency=\"true\" marginheight=\"0\" marginwidth=\"0\" width=\"0\" hspace=\"0\" vspace=\"0\" height=\"0\" style=\"height:0px;width:0px;display:none;\" scrolling=\"no\" src=\"https://ads.pubmatic.com/AdServer/js/user_sync.html?kdntuid=1&amp;p=158583&amp;us_…\">",
+        "nodeLabel": "\n    "
+      },
+      {
+        "currTime": 13444.09999999404,
+        "element": {},
+        "lhId": "page-16-IFRAME",
+        "devtoolsNodePath": "1,HTML,7,IFRAME",
+        "selector": "iframe#36f0bd8ede37005",
+        "boundingRect": {
+          "top": 0,
+          "bottom": 0,
+          "left": 0,
+          "right": 0,
+          "width": 0,
+          "height": 0
+        },
+        "snippet": "<iframe sandbox=\"allow-scripts allow-same-origin\" id=\"36f0bd8ede37005\" frameborder=\"0\" allowtransparency=\"true\" marginheight=\"0\" marginwidth=\"0\" width=\"0\" hspace=\"0\" vspace=\"0\" height=\"0\" style=\"height:0px;width:0px;display:none;\" scrolling=\"no\" src=\"https://eb2.3lift.com/sync?us_privacy=1---&amp;\">",
+        "nodeLabel": "\n    "
+      },
+      {
+        "currTime": 13494.199999988079,
+        "element": {},
+        "lhId": "page-17-IFRAME",
+        "devtoolsNodePath": "1,HTML,1,BODY,26,IFRAME",
+        "selector": "body.fn > iframe#ob-user-test",
+        "boundingRect": {
+          "top": 0,
+          "bottom": 0,
+          "left": 0,
+          "right": 0,
+          "width": 0,
+          "height": 0
+        },
+        "snippet": "<iframe id=\"ob-user-test\" style=\"display:none;width:0;height:0;\" src=\"https://widgets.outbrain.com/nanoWidget/externals/obUserFrame/test.html?ls…\">",
+        "nodeLabel": "body.fn > iframe#ob-user-test"
+      },
+      {
+        "currTime": 13494.299999982119,
+        "element": {},
+        "lhId": "page-18-IFRAME",
+        "devtoolsNodePath": "1,HTML,1,BODY,27,IFRAME",
+        "selector": "body.fn > iframe",
+        "boundingRect": {
+          "top": 0,
+          "bottom": 0,
+          "left": 0,
+          "right": 0,
+          "width": 0,
+          "height": 0
+        },
+        "snippet": "<iframe style=\"display:none;width:0;height:0;\" src=\"https://widgets.outbrain.com/nanoWidget/externals/cookie/put.html\">",
+        "nodeLabel": "body.fn > iframe"
+      },
+      {
+        "currTime": 16839.09999999404,
+        "element": {},
+        "lhId": "page-19-IFRAME",
+        "devtoolsNodePath": "1,HTML,1,BODY,28,IFRAME",
+        "selector": "body.fn > iframe#xdchannel",
+        "boundingRect": {
+          "top": 0,
+          "bottom": 0,
+          "left": 0,
+          "right": 0,
+          "width": 0,
+          "height": 0
+        },
+        "snippet": "<iframe id=\"xdchannel\" src=\"https://my.foxnews.com/xd-channel.html?_x_auth=foxid&amp;\" style=\"display: none;\">",
+        "nodeLabel": "body.fn > iframe#xdchannel"
+      },
+      {
+        "currTime": 16839.59999999404,
+        "element": {},
+        "lhId": "page-20-IFRAME",
+        "devtoolsNodePath": "1,HTML,1,BODY,29,IFRAME",
+        "selector": "body.fn > iframe#nation-xdcomm-auth",
+        "boundingRect": {
+          "top": 0,
+          "bottom": 0,
+          "left": 0,
+          "right": 0,
+          "width": 0,
+          "height": 0
+        },
+        "snippet": "<iframe src=\"https://try.nation.foxnews.com/js/nation-xdcomm/\" id=\"nation-xdcomm-auth\" border=\"0\" frameborder=\"0\" scrolling=\"no\" style=\"width:0%;height:0;display:none;\">",
+        "nodeLabel": "body.fn > iframe#nation-xdcomm-auth"
+      },
+      {
+        "currTime": 17845.5,
+        "element": {},
+        "lhId": "page-21-IFRAME",
+        "devtoolsNodePath": "1,HTML,1,BODY,31,IFRAME",
+        "selector": "body.fn > iframe#ifr-mktfutures",
+        "boundingRect": {
+          "top": 0,
+          "bottom": 0,
+          "left": 0,
+          "right": 0,
+          "width": 0,
+          "height": 0
+        },
+        "snippet": "<iframe id=\"ifr-mktfutures\" src=\"//static.foxnews.com/static/orion/html/markets/futures/frame.html\" style=\"width:0;height:0;display:none;\">",
+        "nodeLabel": "body.fn > iframe#ifr-mktfutures"
+      },
+      {
+        "currTime": 18663.79999998212,
+        "element": {},
+        "lhId": "page-22-IFRAME",
+        "devtoolsNodePath": "1,HTML,1,BODY,32,IFRAME",
+        "selector": "body.fn > iframe#frame-template",
+        "boundingRect": {
+          "top": 0,
+          "bottom": 0,
+          "left": 0,
+          "right": 0,
+          "width": 0,
+          "height": 0
+        },
+        "snippet": "<iframe id=\"frame-template\" src=\"//static.foxnews.com/static/orion/scripts/core/templates/app/iframe.html?v…\" style=\"display: none; opacity: 0; width: 0px; height: 0px;\">",
+        "nodeLabel": "body.fn > iframe#frame-template"
+      },
+      {
+        "currTime": 20283,
+        "element": {},
+        "lhId": "page-23-IFRAME",
+        "devtoolsNodePath": "1,HTML,1,BODY,33,IFRAME",
+        "selector": "body.fn > iframe",
+        "boundingRect": {
+          "top": 0,
+          "bottom": 0,
+          "left": 0,
+          "right": 0,
+          "width": 0,
+          "height": 0
+        },
+        "snippet": "<iframe height=\"0\" width=\"0\" style=\"display: none;\">",
+        "nodeLabel": "body.fn > iframe"
+      },
+      {
+        "currTime": 20291.59999999404,
+        "element": {},
+        "lhId": "page-24-IFRAME",
+        "devtoolsNodePath": "1,HTML,1,BODY,34,IFRAME",
+        "selector": "body.fn > iframe#criteo-syncframe-pbt",
+        "boundingRect": {
+          "top": 0,
+          "bottom": 0,
+          "left": 0,
+          "right": 0,
+          "width": 0,
+          "height": 0
+        },
+        "snippet": "<iframe src=\"https://gum.criteo.com/syncframe?origin=publishertag&amp;topUrl=www.foxnews.co…\" id=\"criteo-syncframe-pbt\" width=\"0\" height=\"0\" frameborder=\"0\" style=\"border-width: 0px; margin: 0px; display: none;\">",
+        "nodeLabel": "body.fn > iframe#criteo-syncframe-pbt"
+      },
+      {
+        "currTime": 22748.5,
+        "element": {},
+        "lhId": "page-25-IFRAME",
+        "devtoolsNodePath": "1,HTML,1,BODY,36,IFRAME",
+        "selector": "body.fn > iframe",
+        "boundingRect": {
+          "top": 0,
+          "bottom": 0,
+          "left": 0,
+          "right": 0,
+          "width": 0,
+          "height": 0
+        },
+        "snippet": "<iframe src=\"https://tpc.googlesyndication.com/sodar/sodar2/225/runner.html\" width=\"0\" height=\"0\" style=\"display: none;\">",
+        "nodeLabel": "body.fn > iframe"
+      },
+      {
+        "currTime": 22753.40000000596,
+        "element": {},
+        "lhId": "page-26-IFRAME",
+        "devtoolsNodePath": "1,HTML,1,BODY,37,IFRAME",
+        "selector": "body.fn > iframe",
+        "boundingRect": {
+          "top": 0,
+          "bottom": 0,
+          "left": 0,
+          "right": 0,
+          "width": 0,
+          "height": 0
+        },
+        "snippet": "<iframe src=\"https://www.google.com/recaptcha/api2/aframe\" width=\"0\" height=\"0\" style=\"display: none;\">",
+        "nodeLabel": "body.fn > iframe"
+      }
+    ],
+    "timeAlignTs": 268.90000000596046
+  }
+}
