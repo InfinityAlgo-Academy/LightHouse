@@ -128,8 +128,8 @@ Object {
             Object {
               "layout": 0,
               "render": 0,
-              "scripting": 152.10000000000002,
-              "total": 167.79100000000003,
+              "scripting": 151.72700000000003,
+              "total": 167.41800000000003,
               "url": "http://localhost:10200/events.html",
             },
             Object {

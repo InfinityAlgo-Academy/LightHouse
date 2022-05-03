@@ -13,6 +13,7 @@ const NetworkRequest = require('../lib/network-request.js');
 const NetworkRecords = require('../computed/network-records.js');
 const MainThreadTasks = require('../lib/tracehouse/main-thread-tasks.js');
 const {taskGroups} = require('../lib/tracehouse/task-groups.js');
+const LHError = require('../lib/lh-error.js');
 
 // The subset of EventTiming/EventDispatch events we care about.
 /** @typedef {'keydown'|'keypress'|'keyup'|'mousedown'|'mouseup'|'pointerdown'|'pointerup'|'click'} EventTimingType */
@@ -55,34 +56,6 @@ class WorkDuringInteraction extends Audit {
       supportedModes: ['timespan'],
       requiredArtifacts: ['traces', 'devtoolsLogs'],
     };
-  }
-
-  /**
-   * @param {Array<LH.TraceEvent>} frameTreeEvents
-   */
-  static findNavStartTs(frameTreeEvents) {
-    // Need to find the timestamp of navStart, even if there was no navStart in the trace.
-    // Cast a wide net for matching events, even though cross frame events and
-    // trace boundaries will break this.
-    // TODO: Switch to user timing event when https://crrev.com/c/3617408 is available.
-    const timingEvents = frameTreeEvents.filter(/** @return {e is EventTimingEvent} */ e => {
-      return e.name === 'EventTiming';
-    }).sort((a, b) => a.args.data.processingStart - b.args.data.processingStart);
-    const dispatchEvents = frameTreeEvents.filter(/** @return {e is EventDispatchEvent} */ e => {
-      return e.name === 'EventDispatch';
-    });
-    // Find corresponding timing/dispatch events. This would need to be much more robust for a real solution.
-    for (const type of ['keydown', 'keypress', 'keyup', 'mousedown', 'mouseup', 'pointerdown', 'pointerup', 'click']) { // eslint-disable-line max-len
-      const timingEventsForType = timingEvents.filter(e => e.args.data.type === type);
-      const dispatchEventsForType = dispatchEvents.filter(e => e.args.data.type === type);
-
-      if (timingEventsForType.length > 0 && timingEventsForType.length === dispatchEventsForType.length) { // eslint-disable-line max-len
-        return dispatchEventsForType[0].ts -
-            timingEventsForType[0].args.data.processingStart * 1000;
-      }
-    }
-
-    throw new Error('No corresponding timing/dispatch events found.');
   }
 
   /**
@@ -150,10 +123,11 @@ class WorkDuringInteraction extends Audit {
    * @param {EventTimingEvent} interactionEvent
    * @param {Array<LH.TraceEvent>} mainThreadEvents
    * @param {LH.Artifacts.ProcessedTrace['frames']} frames
+   * @param {LH.TraceEvent} timeOriginEvt
    * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
    * @return {Promise<Array<LH.Audit.Details.TableItem>>}
    */
-  static async mainThreadBreakdown(interactionEvent, mainThreadEvents, frames, networkRecords) {
+  static async mainThreadBreakdown(interactionEvent, mainThreadEvents, frames, timeOriginEvt, networkRecords) {
     // These trace events, when not triggered by a script inside a particular task, are just general Chrome overhead.
     const BROWSER_TASK_NAMES_SET = new Set([
       'CpuProfiler::StartProfiling',
@@ -277,7 +251,21 @@ class WorkDuringInteraction extends Audit {
       }
     }
 
-    const navStartTs = WorkDuringInteraction.findNavStartTs(mainThreadEvents);
+    // Get the time relative to navStart (which won't exist in a timespan trace).
+    // Only supported in 103.0.5040.0+.
+    let navStartTs;
+    if (timeOriginEvt.name === 'navigationStart') {
+      navStartTs = timeOriginEvt.ts;
+    } else if (timeOriginEvt.args.startTime !== undefined) {
+      // Only supported in 103.0.5040.0+.
+      navStartTs = timeOriginEvt.ts - timeOriginEvt.args.startTime * 1000;
+    } else {
+      throw new LHError(
+LHError.errors.UNSUPPORTED_OLD_CHROME,
+        {featureName: 'timestamped user-timing trace events'}
+      );
+    }
+
     const jsURLs = getJavaScriptURLs(networkRecords);
 
     const interactionData = interactionEvent.args.data;
@@ -371,6 +359,7 @@ class WorkDuringInteraction extends Audit {
       frameTreeEvents,
       frames,
       mainThreadEvents,
+      timeOriginEvt,
     } = await ProcessedTrace.request(trace, context);
     const interactionEvent = WorkDuringInteraction.findInteractionEvent(
         responsivenessEvent, frameTreeEvents);
@@ -380,7 +369,7 @@ class WorkDuringInteraction extends Audit {
     const devtoolsLog = artifacts.devtoolsLogs[WorkDuringInteraction.DEFAULT_PASS];
     const networkRecords = await NetworkRecords.request(devtoolsLog, context);
     const items = await WorkDuringInteraction.mainThreadBreakdown(
-      interactionEvent, mainThreadEvents, frames, networkRecords);
+      interactionEvent, mainThreadEvents, frames, timeOriginEvt, networkRecords);
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
