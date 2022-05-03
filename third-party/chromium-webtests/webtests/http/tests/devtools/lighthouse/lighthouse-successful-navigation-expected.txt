@@ -163,7 +163,7 @@ Auditing: `<input type="image">` elements have `[alt]` text
 Auditing: Form elements have associated labels
 Auditing: Links have a discernible name
 Auditing: Lists contain only `<li>` elements and script supporting elements (`<script>` and `<template>`).
-Auditing: List items (`<li>`) are contained within `<ul>` or `<ol>` parent elements
+Auditing: List items (`<li>`) are contained within `<ul>`, `<ol>` or `<menu>` parent elements
 Auditing: The document does not use `<meta http-equiv="refresh">`
 Auditing: `[user-scalable="no"]` is not used in the `<meta name="viewport">` element and the `[maximum-scale]` attribute is not less than 5.
 Auditing: `<object>` elements have alternate text

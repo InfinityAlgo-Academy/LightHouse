@@ -450,13 +450,13 @@
     "message": "L̂íŝt́ŝ ćôńt̂áîń ôńl̂ý `<li>` êĺêḿêńt̂ś âńd̂ śĉŕîṕt̂ śûṕp̂ór̂t́îńĝ él̂ém̂én̂t́ŝ (`<script>` án̂d́ `<template>`)."
   },
   "lighthouse-core/audits/accessibility/listitem.js | description": {
-    "message": "Ŝćr̂éêń r̂éâd́êŕŝ ŕêq́ûír̂é l̂íŝt́ ît́êḿŝ (`<li>`) t́ô b́ê ćôńt̂áîńêd́ ŵít̂h́îń â ṕâŕêńt̂ `<ul>` ór̂ `<ol>` t́ô b́ê án̂ńôún̂ćêd́ p̂ŕôṕêŕl̂ý. [L̂éâŕn̂ ḿôŕê](https://dequeuniversity.com/rules/axe/4.4/listitem)."
+    "message": "Ŝćr̂éêń r̂éâd́êŕŝ ŕêq́ûír̂é l̂íŝt́ ît́êḿŝ (`<li>`) t́ô b́ê ćôńt̂áîńêd́ ŵít̂h́îń â ṕâŕêńt̂ `<ul>`, `<ol>` ór̂ `<menu>` t́ô b́ê án̂ńôún̂ćêd́ p̂ŕôṕêŕl̂ý. [L̂éâŕn̂ ḿôŕê](https://dequeuniversity.com/rules/axe/4.4/listitem)."
   },
   "lighthouse-core/audits/accessibility/listitem.js | failureTitle": {
-    "message": "L̂íŝt́ ît́êḿŝ (`<li>`) ár̂é n̂ót̂ ćôńt̂áîńêd́ ŵít̂h́îń `<ul>` ôŕ `<ol>` p̂ár̂én̂t́ êĺêḿêńt̂ś."
+    "message": "L̂íŝt́ ît́êḿŝ (`<li>`) ár̂é n̂ót̂ ćôńt̂áîńêd́ ŵít̂h́îń `<ul>`, `<ol>` ôŕ `<menu>` p̂ár̂én̂t́ êĺêḿêńt̂ś."
   },
   "lighthouse-core/audits/accessibility/listitem.js | title": {
-    "message": "L̂íŝt́ ît́êḿŝ (`<li>`) ár̂é ĉón̂t́âín̂éd̂ ẃît́ĥín̂ `<ul>` ór̂ `<ol>` ṕâŕêńt̂ él̂ém̂én̂t́ŝ"
+    "message": "L̂íŝt́ ît́êḿŝ (`<li>`) ár̂é ĉón̂t́âín̂éd̂ ẃît́ĥín̂ `<ul>`, `<ol>` ór̂ `<menu>` ṕâŕêńt̂ él̂ém̂én̂t́ŝ"
   },
   "lighthouse-core/audits/accessibility/meta-refresh.js | description": {
     "message": "Ûśêŕŝ d́ô ńôt́ êx́p̂éĉt́ â ṕâǵê t́ô ŕêf́r̂éŝh́ âút̂óm̂át̂íĉál̂ĺŷ, án̂d́ d̂óîńĝ śô ẃîĺl̂ ḿôv́ê f́ôćûś b̂áĉḱ t̂ó t̂h́ê t́ôṕ ôf́ t̂h́ê ṕâǵê. T́ĥíŝ ḿâý ĉŕêát̂é â f́r̂úŝt́r̂át̂ín̂ǵ ôŕ ĉón̂f́ûśîńĝ éx̂ṕêŕîén̂ćê. [Ĺêár̂ń m̂ór̂é](https://dequeuniversity.com/rules/axe/4.4/meta-refresh)."

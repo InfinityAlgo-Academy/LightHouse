@@ -450,13 +450,13 @@
     "message": "Lists contain only `<li>` elements and script supporting elements (`<script>` and `<template>`)."
   },
   "lighthouse-core/audits/accessibility/listitem.js | description": {
-    "message": "Screen readers require list items (`<li>`) to be contained within a parent `<ul>` or `<ol>` to be announced properly. [Learn more](https://dequeuniversity.com/rules/axe/4.4/listitem)."
+    "message": "Screen readers require list items (`<li>`) to be contained within a parent `<ul>`, `<ol>` or `<menu>` to be announced properly. [Learn more](https://dequeuniversity.com/rules/axe/4.4/listitem)."
   },
   "lighthouse-core/audits/accessibility/listitem.js | failureTitle": {
-    "message": "List items (`<li>`) are not contained within `<ul>` or `<ol>` parent elements."
+    "message": "List items (`<li>`) are not contained within `<ul>`, `<ol>` or `<menu>` parent elements."
   },
   "lighthouse-core/audits/accessibility/listitem.js | title": {
-    "message": "List items (`<li>`) are contained within `<ul>` or `<ol>` parent elements"
+    "message": "List items (`<li>`) are contained within `<ul>`, `<ol>` or `<menu>` parent elements"
   },
   "lighthouse-core/audits/accessibility/meta-refresh.js | description": {
     "message": "Users do not expect a page to refresh automatically, and doing so will move focus back to the top of the page. This may create a frustrating or confusing experience. [Learn more](https://dequeuniversity.com/rules/axe/4.4/meta-refresh)."
