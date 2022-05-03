@@ -82,8 +82,9 @@ async function internalRun(url, tmpPath, configJson, options) {
   ];
 
   if (useFraggleRock) {
-    args.push('--fraggle-rock');
     configJson = convertToFraggleRockConfig(configJson);
+  } else {
+    args.push('--legacy-navigation');
   }
 
   // Config can be optionally provided.
