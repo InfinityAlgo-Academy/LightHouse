@@ -334,6 +334,37 @@ describe('CriticalRequestChain computed artifact', () => {
     });
   });
 
+  it('discards data urls at the end of the chain', async () => {
+    const {networkRecords, criticalChains} = await createChainsFromMockRecords(
+      [HIGH, HIGH, HIGH, HIGH],
+      // (0) main document ->
+      // (1)  data url ->
+      // (2)    network url
+      // (3)    data url
+      [[0, 1], [1, 2], [1, 3]],
+      networkRecords => {
+        networkRecords[1].protocol = 'data';
+        networkRecords[3].protocol = 'data';
+      }
+    );
+    assert.deepEqual(criticalChains, {
+      0: {
+        request: networkRecords[0],
+        children: {
+          1: {
+            request: networkRecords[1],
+            children: {
+              2: {
+                request: networkRecords[2],
+                children: {},
+              },
+            },
+          },
+        },
+      },
+    });
+  });
+
   it('discards iframes as non-critical', async () => {
     const {networkRecords, criticalChains} = await createChainsFromMockRecords(
       [HIGH, HIGH, HIGH, HIGH, HIGH],
