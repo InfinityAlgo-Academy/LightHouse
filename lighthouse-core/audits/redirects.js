@@ -5,13 +5,13 @@
  */
 'use strict';
 
-const Audit = require('./audit.js');
-const UnusedBytes = require('./byte-efficiency/byte-efficiency-audit.js');
-const i18n = require('../lib/i18n/i18n.js');
-const ProcessedTrace = require('../computed/processed-trace.js');
-const NetworkRecords = require('../computed/network-records.js');
-const MainResource = require('../computed/main-resource.js');
-const LanternInteractive = require('../computed/metrics/lantern-interactive.js');
+import Audit from './audit.js';
+import UnusedBytes from './byte-efficiency/byte-efficiency-audit.js';
+import i18n from '../lib/i18n/i18n.js';
+import ProcessedTrace from '../computed/processed-trace.js';
+import NetworkRecords from '../computed/network-records.js';
+import MainResource from '../computed/main-resource.js';
+import LanternInteractive from '../computed/metrics/lantern-interactive.js';
 
 const UIStrings = {
   /** Imperative title of a Lighthouse audit that tells the user to eliminate the redirects taken through multiple URLs to load the page. This is shown in a list of audits that Lighthouse generates. */
@@ -159,5 +159,5 @@ class Redirects extends Audit {
   }
 }
 
-module.exports = Redirects;
-module.exports.UIStrings = UIStrings;
+export default Redirects;
+export {UIStrings};

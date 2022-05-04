@@ -15,7 +15,7 @@
  *    - lighthouse-core/lib/tracehouse/trace-processor.js
  */
 
-const TracingProcessor = require('./tracehouse/trace-processor.js');
+import TracingProcessor from './tracehouse/trace-processor.js';
 
 const toplevelTaskNames = new Set([
   'RunTask', // m71+
@@ -170,4 +170,4 @@ function minifyTrace(inputTrace) {
   return {traceEvents: filterTraceEvents(inputTrace.traceEvents)};
 }
 
-module.exports = {minifyTrace};
+export default {minifyTrace};

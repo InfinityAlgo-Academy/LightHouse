@@ -6,7 +6,7 @@
  */
 'use strict';
 
-const ManualAudit = require('../../manual/manual-audit.js');
+import ManualAudit from '../../manual/manual-audit.js';
 
 /**
  * @fileoverview Manual A11y audit for tab order that follows DOM order.
@@ -25,4 +25,4 @@ class LogicalTabOrder extends ManualAudit {
   }
 }
 
-module.exports = LogicalTabOrder;
+export default LogicalTabOrder;

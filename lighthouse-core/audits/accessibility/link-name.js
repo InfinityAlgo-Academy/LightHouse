@@ -10,8 +10,9 @@
  * See base class in axe-audit.js for audit() implementation.
  */
 
-const AxeAudit = require('./axe-audit.js');
-const i18n = require('../../lib/i18n/i18n.js');
+import AxeAudit from './axe-audit.js';
+
+import i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of an accesibility audit that evaluates if all link elements have a non-generic name to screen readers. This title is descriptive of the successful state and is shown to users when no user action is required. */
@@ -42,5 +43,5 @@ class LinkName extends AxeAudit {
   }
 }
 
-module.exports = LinkName;
-module.exports.UIStrings = UIStrings;
+export default LinkName;
+export {UIStrings};

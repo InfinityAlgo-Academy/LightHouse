@@ -12,9 +12,10 @@
 /* global window */
 /* global d41d8cd98f00b204e9800998ecf8427e_LibraryDetectorTests */
 
-const fs = require('fs');
-const log = require('lighthouse-logger');
-const FRGatherer = require('../../fraggle-rock/gather/base-gatherer.js');
+import fs from 'fs';
+
+import log from 'lighthouse-logger';
+import FRGatherer from '../../fraggle-rock/gather/base-gatherer.js';
 const libDetectorSource = fs.readFileSync(
   require.resolve('js-library-detector/library/libraries.js'), 'utf8');
 
@@ -122,4 +123,4 @@ class Stacks extends FRGatherer {
   }
 }
 
-module.exports = Stacks;
+export default Stacks;

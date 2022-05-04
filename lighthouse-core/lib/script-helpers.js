@@ -26,4 +26,4 @@ function getRequestForScript(networkRecords, script) {
   return networkRequest;
 }
 
-module.exports = {getRequestForScript, isInline};
+export default {getRequestForScript, isInline};

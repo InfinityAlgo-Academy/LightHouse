@@ -6,7 +6,7 @@
  */
 'use strict';
 
-const ManualAudit = require('../../manual/manual-audit.js');
+import ManualAudit from '../../manual/manual-audit.js';
 
 /**
  * @fileoverview Manual A11y audit to check that landmark elements are used whenever possible.
@@ -25,4 +25,4 @@ class UseLandmarks extends ManualAudit {
   }
 }
 
-module.exports = UseLandmarks;
+export default UseLandmarks;

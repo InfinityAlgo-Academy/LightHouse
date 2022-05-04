@@ -11,8 +11,9 @@
  * https://docs.google.com/document/d/1XKcJP2CKmNKfOcDsVvliAQ-e1H9C1nf2H-pzTdyafAA/edit?usp=sharing
  */
 
-const Audit = require('./audit.js');
-const i18n = require('../lib/i18n/i18n.js');
+import Audit from './audit.js';
+
+import i18n from '../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of a diagnostic LH audit that provides details on animations that are not composited. */
@@ -202,5 +203,5 @@ class NonCompositedAnimations extends Audit {
   }
 }
 
-module.exports = NonCompositedAnimations;
-module.exports.UIStrings = UIStrings;
+export default NonCompositedAnimations;
+export {UIStrings};

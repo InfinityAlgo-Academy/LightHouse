@@ -6,7 +6,7 @@
  */
 'use strict';
 
-const ManualAudit = require('../../manual/manual-audit.js');
+import ManualAudit from '../../manual/manual-audit.js';
 
 /**
  * @fileoverview Manual A11y audit to avoid trapping keyboard focus in a region.
@@ -25,4 +25,4 @@ class FocusTraps extends ManualAudit {
   }
 }
 
-module.exports = FocusTraps;
+export default FocusTraps;

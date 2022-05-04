@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const Audit = require('./audit.js');
-const i18n = require('../lib/i18n/i18n.js');
+import Audit from './audit.js';
+import i18n from '../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on whether the largest above-the-fold image was loaded with sufficient priority. This descriptive title is shown to users when the image was loaded properly. */
@@ -80,5 +80,5 @@ class LargestContentfulPaintLazyLoaded extends Audit {
   }
 }
 
-module.exports = LargestContentfulPaintLazyLoaded;
-module.exports.UIStrings = UIStrings;
+export default LargestContentfulPaintLazyLoaded;
+export {UIStrings};

@@ -23,7 +23,7 @@
 
 /** @typedef {LH.Gatherer.FRTransitionalContext<LH.Gatherer.DependencyKey>['dependencies']} Dependencies */
 
-const log = require('lighthouse-logger');
+import log from 'lighthouse-logger';
 
 /**
  *
@@ -149,7 +149,7 @@ async function awaitArtifacts(artifactState) {
   return artifacts;
 }
 
-module.exports = {
+export default {
   getEmptyArtifactState,
   awaitArtifacts,
   collectPhaseArtifacts,

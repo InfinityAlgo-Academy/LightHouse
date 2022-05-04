@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const legacyDefaultConfig = require('../../config/default-config.js');
-const {deepClone} = require('../../config/config-helpers.js');
+import legacyDefaultConfig from '../../config/default-config.js';
+import {deepClone} from '../../config/config-helpers.js';
 
 /** @type {LH.Config.AuditJson[]} */
 const frAudits = [
@@ -199,4 +199,4 @@ const defaultConfig = {
   groups: legacyDefaultConfig.groups,
 };
 
-module.exports = defaultConfig;
+export default defaultConfig;

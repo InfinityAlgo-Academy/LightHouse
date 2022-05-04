@@ -5,17 +5,17 @@
  */
 'use strict';
 
-const path = require('path');
-const isDeepEqual = require('lodash/isEqual.js');
-const constants = require('./constants.js');
-const Budget = require('./budget.js');
-const ConfigPlugin = require('./config-plugin.js');
-const Runner = require('../runner.js');
-const i18n = require('../lib/i18n/i18n.js');
-const validation = require('../fraggle-rock/config/validation.js');
+import path from 'path';
+import isDeepEqual from 'lodash/isEqual.js';
+import constants from './constants.js';
+import {Budget} from './budget.js';
+import ConfigPlugin from './config-plugin.js';
+import {Runner} from '../runner.js';
+import i18n from '../lib/i18n/i18n.js';
+import * as validation from '../fraggle-rock/config/validation.js';
 
-/** @typedef {typeof import('../gather/gatherers/gatherer.js')} GathererConstructor */
-/** @typedef {typeof import('../audits/audit.js')} Audit */
+/** @typedef {typeof import('../gather/gatherers/gatherer.js')['Gatherer']} GathererConstructor */
+/** @typedef {typeof import('../audits/audit.js')['Audit']} Audit */
 /** @typedef {InstanceType<GathererConstructor>} Gatherer */
 
 function isBundledEnvironment() {
@@ -576,7 +576,7 @@ function deepCloneConfigJson(json) {
   return cloned;
 }
 
-module.exports = {
+export default {
   deepClone,
   deepCloneConfigJson,
   mergeConfigFragment,

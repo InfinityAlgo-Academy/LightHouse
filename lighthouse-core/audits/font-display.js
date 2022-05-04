@@ -5,14 +5,14 @@
  */
 'use strict';
 
-const Audit = require('./audit.js');
-const URL = require('../lib/url-shim.js');
+import Audit from './audit.js';
+import URL from '../lib/url-shim.js';
 const PASSING_FONT_DISPLAY_REGEX = /^(block|fallback|optional|swap)$/;
 const CSS_URL_REGEX = /url\((.*?)\)/;
 const CSS_URL_GLOBAL_REGEX = new RegExp(CSS_URL_REGEX, 'g');
-const i18n = require('../lib/i18n/i18n.js');
-const Sentry = require('../lib/sentry.js');
-const NetworkRecords = require('../computed/network-records.js');
+import i18n from '../lib/i18n/i18n.js';
+import Sentry from '../lib/sentry.js';
+import NetworkRecords from '../computed/network-records.js';
 
 const UIStrings = {
   /** Title of a diagnostic audit that provides detail on if all the text on a webpage was visible while the page was loading its webfonts. This descriptive title is shown to users when the amount is acceptable and no user action is required. */
@@ -189,5 +189,5 @@ class FontDisplay extends Audit {
   }
 }
 
-module.exports = FontDisplay;
-module.exports.UIStrings = UIStrings;
+export default FontDisplay;
+export {UIStrings};

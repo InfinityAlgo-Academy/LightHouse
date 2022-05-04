@@ -11,9 +11,10 @@
  * This protocol log can be used to recreate the network records using lib/network-recorder.js.
  */
 
-const NetworkMonitor = require('../driver/network-monitor.js');
-const MessageLog = require('../devtools-log.js');
-const FRGatherer = require('../../fraggle-rock/gather/base-gatherer.js');
+import NetworkMonitor from '../driver/network-monitor.js';
+
+import MessageLog from '../devtools-log.js';
+import FRGatherer from '../../fraggle-rock/gather/base-gatherer.js';
 
 class DevtoolsLog extends FRGatherer {
   static symbol = Symbol('DevtoolsLog');
@@ -63,4 +64,4 @@ class DevtoolsLog extends FRGatherer {
   }
 }
 
-module.exports = DevtoolsLog;
+export default DevtoolsLog;

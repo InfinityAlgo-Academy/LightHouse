@@ -186,7 +186,7 @@ function convertNodeTimingsToTrace(nodeTimings) {
   }
 }
 
-module.exports = {
+export default {
   simulationNamesToIgnore: [
     'unlabeled',
     // These node timings should be nearly identical to the ones produced for Interactive

@@ -5,9 +5,9 @@
  */
 'use strict';
 
-const fs = require('fs');
+import fs from 'fs';
 const source = fs.readFileSync(require.resolve('axe-core/axe.min.js'), 'utf8');
 
-module.exports = {
+export default {
   source,
 };

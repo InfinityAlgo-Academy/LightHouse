@@ -10,9 +10,9 @@
  */
 'use strict';
 
-const Audit = require('./audit.js');
-const URL = require('../lib/url-shim.js');
-const i18n = require('../lib/i18n/i18n.js');
+import Audit from './audit.js';
+import URL from '../lib/url-shim.js';
+import i18n from '../lib/i18n/i18n.js';
 
 /** @typedef {LH.Artifacts.ImageElement & Required<Pick<LH.Artifacts.ImageElement, 'naturalDimensions'>>} ImageWithNaturalDimensions */
 
@@ -327,5 +327,5 @@ function quantizeDpr(dpr) {
   return 1.0;
 }
 
-module.exports = ImageSizeResponsive;
-module.exports.UIStrings = UIStrings;
+export default ImageSizeResponsive;
+export {UIStrings};

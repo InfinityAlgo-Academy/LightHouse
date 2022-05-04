@@ -5,9 +5,9 @@
  */
 'use strict';
 
-const {URL} = require('../url-shim.js');
-const jsonld = require('jsonld');
-const schemaOrgContext = require('./assets/jsonldcontext.json');
+import {URL} from '../url-shim.js';
+import jsonld from 'jsonld';
+import schemaOrgContext from './assets/jsonldcontext.json';
 const SCHEMA_ORG_HOST = 'schema.org';
 
 /**
@@ -45,7 +45,7 @@ async function documentLoader(schemaUrl) {
  * @param {any} inputObject
  * @return {Promise<LH.StructuredData.ExpandedSchemaRepresentation|null>}
  */
-module.exports = async function expand(inputObject) {
+export default async function expand(inputObject) {
   try {
     return await jsonld.expand(inputObject, {documentLoader});
   } catch (err) {
@@ -53,4 +53,4 @@ module.exports = async function expand(inputObject) {
     if (err.details?.cause) throw err.details.cause;
     throw err;
   }
-};
+}

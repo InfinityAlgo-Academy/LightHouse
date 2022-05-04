@@ -5,12 +5,12 @@
  */
 'use strict';
 
-const Audit = require('./audit.js');
-const BootupTime = require('./bootup-time.js');
-const i18n = require('../lib/i18n/i18n.js');
-const thirdPartyWeb = require('../lib/third-party-web.js');
-const NetworkRecords = require('../computed/network-records.js');
-const MainThreadTasks = require('../computed/main-thread-tasks.js');
+import Audit from './audit.js';
+import BootupTime from './bootup-time.js';
+import i18n from '../lib/i18n/i18n.js';
+import thirdPartyWeb from '../lib/third-party-web.js';
+import NetworkRecords from '../computed/network-records.js';
+import MainThreadTasks from '../computed/main-thread-tasks.js';
 
 const UIStrings = {
   /** Title of a diagnostic audit that provides details about the code on a web page that the user doesn't control (referred to as "third-party code"). This descriptive title is shown to users when the amount is acceptable and no user action is required. */
@@ -255,5 +255,5 @@ class ThirdPartySummary extends Audit {
   }
 }
 
-module.exports = ThirdPartySummary;
-module.exports.UIStrings = UIStrings;
+export default ThirdPartySummary;
+export {UIStrings};

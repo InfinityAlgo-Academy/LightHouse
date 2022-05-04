@@ -187,7 +187,7 @@ class TcpConnection {
   }
 }
 
-module.exports = TcpConnection;
+export default TcpConnection;
 
 /**
  * @typedef DownloadOptions

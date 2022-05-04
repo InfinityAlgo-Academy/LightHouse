@@ -5,9 +5,9 @@
  */
 'use strict';
 
-const Audit = require('../audit.js');
+import Audit from '../audit.js';
 const regular3G = require('../../config/constants.js').throttling.mobileRegular3G;
-const ComputedFcp = require('../../computed/metrics/first-contentful-paint.js');
+import ComputedFcp from '../../computed/metrics/first-contentful-paint.js';
 
 class FirstContentfulPaint3G extends Audit {
   /**
@@ -64,4 +64,4 @@ class FirstContentfulPaint3G extends Audit {
   }
 }
 
-module.exports = FirstContentfulPaint3G;
+export default FirstContentfulPaint3G;

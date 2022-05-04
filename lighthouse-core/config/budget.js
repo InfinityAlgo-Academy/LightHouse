@@ -338,4 +338,4 @@ class Budget {
   }
 }
 
-module.exports = Budget;
+export {Budget};

@@ -5,12 +5,12 @@
  */
 'use strict';
 
-const Audit = require('./audit.js');
-const NetworkRequest = require('../lib/network-request.js');
-const {taskGroups} = require('../lib/tracehouse/task-groups.js');
-const i18n = require('../lib/i18n/i18n.js');
-const NetworkRecords = require('../computed/network-records.js');
-const MainThreadTasks = require('../computed/main-thread-tasks.js');
+import Audit from './audit.js';
+import NetworkRequest from '../lib/network-request.js';
+import {taskGroups} from '../lib/tracehouse/task-groups.js';
+import i18n from '../lib/i18n/i18n.js';
+import NetworkRecords from '../computed/network-records.js';
+import MainThreadTasks from '../computed/main-thread-tasks.js';
 
 const UIStrings = {
   /** Title of a diagnostic audit that provides detail on the time spent executing javascript files during the load. This descriptive title is shown to users when the amount is acceptable and no user action is required. */
@@ -216,5 +216,5 @@ class BootupTime extends Audit {
   }
 }
 
-module.exports = BootupTime;
-module.exports.UIStrings = UIStrings;
+export default BootupTime;
+export {UIStrings};

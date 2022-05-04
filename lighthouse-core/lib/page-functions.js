@@ -535,7 +535,7 @@ const getNodeDetailsString = `function getNodeDetails(element) {
   return (${getNodeDetails.toString()})(element);
 }`;
 
-module.exports = {
+export const pageFunctions = {
   wrapRuntimeEvalErrorInBrowserString: wrapRuntimeEvalErrorInBrowser.toString(),
   wrapRuntimeEvalErrorInBrowser,
   getElementsInDocument,

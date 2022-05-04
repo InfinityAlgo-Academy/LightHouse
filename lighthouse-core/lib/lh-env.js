@@ -5,9 +5,9 @@
  */
 'use strict';
 
-const process = require('process');
+import process from 'process';
 
-module.exports = {
+export default {
   // NODE_ENV is set to test by jest and by smokehouse CLI runner
   // CI as a catchall for everything we do in GitHub Actions
   isUnderTest: !!process.env.CI || process.env.NODE_ENV === 'test',

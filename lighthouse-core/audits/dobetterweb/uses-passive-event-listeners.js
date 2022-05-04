@@ -11,8 +11,8 @@
 
 'use strict';
 
-const ViolationAudit = require('../violation-audit.js');
-const i18n = require('../../lib/i18n/i18n.js');
+import ViolationAudit from '../violation-audit.js';
+import i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on the page's use of passive event listeners used to improve the scrolling performance of the page. This descriptive title is shown to users when the page does use passive listeners. */
@@ -64,5 +64,5 @@ class PassiveEventsAudit extends ViolationAudit {
   }
 }
 
-module.exports = PassiveEventsAudit;
-module.exports.UIStrings = UIStrings;
+export default PassiveEventsAudit;
+export {UIStrings};

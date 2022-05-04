@@ -14,4 +14,4 @@ const perfConfig = {
   },
 };
 
-module.exports = perfConfig;
+export default perfConfig;

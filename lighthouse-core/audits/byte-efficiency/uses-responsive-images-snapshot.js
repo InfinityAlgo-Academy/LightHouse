@@ -11,10 +11,10 @@
  */
 'use strict';
 
-const Audit = require('../audit.js');
-const UsesResponsiveImages = require('./uses-responsive-images.js');
-const URL = require('../../lib/url-shim.js');
-const i18n = require('../../lib/i18n/i18n.js');
+import Audit from '../audit.js';
+import UsesResponsiveImages from './uses-responsive-images.js';
+import URL from '../../lib/url-shim.js';
+import i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Descriptive title of a Lighthouse audit that checks if images match their displayed dimensions. This is displayed when the audit is passing. */
@@ -96,5 +96,5 @@ class UsesResponsiveImagesSnapshot extends Audit {
   }
 }
 
-module.exports = UsesResponsiveImagesSnapshot;
-module.exports.UIStrings = UIStrings;
+export default UsesResponsiveImagesSnapshot;
+export {UIStrings};

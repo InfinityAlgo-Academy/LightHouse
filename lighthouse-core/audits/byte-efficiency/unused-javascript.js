@@ -5,11 +5,11 @@
  */
 'use strict';
 
-const ByteEfficiencyAudit = require('./byte-efficiency-audit.js');
-const UnusedJavaScriptSummary = require('../../computed/unused-javascript-summary.js');
-const JsBundles = require('../../computed/js-bundles.js');
-const i18n = require('../../lib/i18n/i18n.js');
-const {getRequestForScript} = require('../../lib/script-helpers.js');
+import ByteEfficiencyAudit from './byte-efficiency-audit.js';
+import UnusedJavaScriptSummary from '../../computed/unused-javascript-summary.js';
+import JsBundles from '../../computed/js-bundles.js';
+import i18n from '../../lib/i18n/i18n.js';
+import {getRequestForScript} from '../../lib/script-helpers.js';
 
 const UIStrings = {
   /** Imperative title of a Lighthouse audit that tells the user to reduce JavaScript that is never evaluated during page load. This is displayed in a list of audit titles that Lighthouse generates. */
@@ -160,5 +160,5 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
   }
 }
 
-module.exports = UnusedJavaScript;
-module.exports.UIStrings = UIStrings;
+export default UnusedJavaScript;
+export {UIStrings};

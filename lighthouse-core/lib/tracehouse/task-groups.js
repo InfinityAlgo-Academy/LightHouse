@@ -105,7 +105,7 @@ for (const group of Object.values(taskGroups)) {
   }
 }
 
-module.exports = {
+export default {
   taskGroups,
   taskNameToGroup,
 };

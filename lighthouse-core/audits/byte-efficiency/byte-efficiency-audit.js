@@ -5,13 +5,13 @@
  */
 'use strict';
 
-const Audit = require('../audit.js');
-const linearInterpolation = require('../../lib/statistics.js').linearInterpolation;
-const Interactive = require('../../computed/metrics/lantern-interactive.js');
-const i18n = require('../../lib/i18n/i18n.js');
-const NetworkRecords = require('../../computed/network-records.js');
-const LoadSimulator = require('../../computed/load-simulator.js');
-const PageDependencyGraph = require('../../computed/page-dependency-graph.js');
+import Audit from '../audit.js';
+import {linearInterpolation} from '../../lib/statistics.js';
+import Interactive from '../../computed/metrics/lantern-interactive.js';
+import i18n from '../../lib/i18n/i18n.js';
+import NetworkRecords from '../../computed/network-records.js';
+import LoadSimulator from '../../computed/load-simulator.js';
+import PageDependencyGraph from '../../computed/page-dependency-graph.js';
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, {});
 
@@ -256,4 +256,4 @@ class UnusedBytes extends Audit {
   /* eslint-enable no-unused-vars */
 }
 
-module.exports = UnusedBytes;
+export default UnusedBytes;

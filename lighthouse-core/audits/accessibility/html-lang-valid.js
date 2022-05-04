@@ -10,8 +10,9 @@
  * See base class in axe-audit.js for audit() implementation.
  */
 
-const AxeAudit = require('./axe-audit.js');
-const i18n = require('../../lib/i18n/i18n.js');
+import AxeAudit from './axe-audit.js';
+
+import i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of an accesibility audit that evaluates if the value for root HTML tag's lang attribute is a valid BCP 47 language. This title is descriptive of the successful state and is shown to users when no user action is required. */
@@ -42,5 +43,5 @@ class HTMLLangValid extends AxeAudit {
   }
 }
 
-module.exports = HTMLLangValid;
-module.exports.UIStrings = UIStrings;
+export default HTMLLangValid;
+export {UIStrings};

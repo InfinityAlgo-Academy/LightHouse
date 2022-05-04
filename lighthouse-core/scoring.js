@@ -6,7 +6,7 @@
 
 'use strict';
 
-const Audit = require('./audits/audit.js');
+import {Audit} from './audits/audit.js';
 
 /**
  * Clamp figure to 2 decimal places
@@ -90,4 +90,4 @@ class ReportScoring {
   }
 }
 
-module.exports = ReportScoring;
+export {ReportScoring};

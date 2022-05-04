@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const Audit = require('../audit.js');
-const URL = require('../../lib/url-shim.js');
+import Audit from '../audit.js';
+import URL from '../../lib/url-shim.js';
 const BLOCKLIST = new Set([
   // English
   'click here',
@@ -74,7 +74,7 @@ const BLOCKLIST = new Set([
   'mer info',
   'mer information',
 ]);
-const i18n = require('../../lib/i18n/i18n.js');
+import i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of a Lighthouse audit that tests if each link on a page contains a sufficient description of what a user will find when they click it. Generic, non-descriptive text like "click here" doesn't give an indication of what the link leads to. This descriptive title is shown when all links on the page have sufficient textual descriptions. */
@@ -156,5 +156,5 @@ class LinkText extends Audit {
   }
 }
 
-module.exports = LinkText;
-module.exports.UIStrings = UIStrings;
+export default LinkText;
+export {UIStrings};

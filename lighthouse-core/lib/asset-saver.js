@@ -5,17 +5,17 @@
  */
 'use strict';
 
-const fs = require('fs');
-const path = require('path');
-const log = require('lighthouse-logger');
-const stream = require('stream');
-const {promisify} = require('util');
-const Simulator = require('./dependency-graph/simulator/simulator.js');
-const lanternTraceSaver = require('./lantern-trace-saver.js');
-const Metrics = require('./traces/pwmetrics-events.js');
-const NetworkAnalysisComputed = require('../computed/network-analysis.js');
-const LoadSimulatorComputed = require('../computed/load-simulator.js');
-const LHError = require('../lib/lh-error.js');
+import fs from 'fs';
+import path from 'path';
+import log from 'lighthouse-logger';
+import stream from 'stream';
+import {promisify} from 'util';
+import Simulator from './dependency-graph/simulator/simulator.js';
+import lanternTraceSaver from './lantern-trace-saver.js';
+import Metrics from './traces/pwmetrics-events.js';
+import NetworkAnalysisComputed from '../computed/network-analysis.js';
+import LoadSimulatorComputed from '../computed/load-simulator.js';
+import LHError from '../lib/lh-error.js';
 // TODO(esmodules): Rollup does not support `promisfy` or `stream.pipeline`. Bundled files
 // don't need anything in this file except for `stringifyReplacer`, so a check for
 // truthiness before using is enough.
@@ -327,7 +327,7 @@ function normalizeTimingEntries(timings) {
   }
 }
 
-module.exports = {
+export default {
   saveArtifacts,
   saveLhr,
   loadArtifacts,

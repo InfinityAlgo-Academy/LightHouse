@@ -5,9 +5,9 @@
  */
 'use strict';
 
-const log = require('lighthouse-logger');
-const manifestParser = require('../../lib/manifest-parser.js');
-const FRGatherer = require('../../fraggle-rock/gather/base-gatherer.js');
+import log from 'lighthouse-logger';
+import manifestParser from '../../lib/manifest-parser.js';
+import FRGatherer from '../../fraggle-rock/gather/base-gatherer.js';
 
 class WebAppManifest extends FRGatherer {
   /** @type {LH.Gatherer.GathererMeta} */
@@ -99,4 +99,4 @@ class WebAppManifest extends FRGatherer {
   }
 }
 
-module.exports = WebAppManifest;
+export default WebAppManifest;

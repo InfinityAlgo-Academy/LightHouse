@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const FRGatherer = require('../../../fraggle-rock/gather/base-gatherer.js');
+import FRGatherer from '../../../fraggle-rock/gather/base-gatherer.js';
 
 /* global fetch, location */
 
@@ -54,4 +54,4 @@ class RobotsTxt extends FRGatherer {
   }
 }
 
-module.exports = RobotsTxt;
+export default RobotsTxt;

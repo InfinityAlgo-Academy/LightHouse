@@ -5,9 +5,9 @@
  */
 'use strict';
 
-const Audit = require('./audit.js');
-const URL = require('../lib/url-shim.js');
-const NetworkRecords = require('../computed/network-records.js');
+import Audit from './audit.js';
+import URL from '../lib/url-shim.js';
+import NetworkRecords from '../computed/network-records.js';
 
 class NetworkRequests extends Audit {
   /**
@@ -100,4 +100,4 @@ class NetworkRequests extends Audit {
   }
 }
 
-module.exports = NetworkRequests;
+export default NetworkRequests;

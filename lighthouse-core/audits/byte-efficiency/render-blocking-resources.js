@@ -9,16 +9,16 @@
  */
 'use strict';
 
-const Audit = require('../audit.js');
-const i18n = require('../../lib/i18n/i18n.js');
-const BaseNode = require('../../lib/dependency-graph/base-node.js');
-const ByteEfficiencyAudit = require('./byte-efficiency-audit.js');
-const UnusedCSS = require('../../computed/unused-css.js');
-const NetworkRequest = require('../../lib/network-request.js');
-const ProcessedTrace = require('../../computed/processed-trace.js');
-const ProcessedNavigation = require('../../computed/processed-navigation.js');
-const LoadSimulator = require('../../computed/load-simulator.js');
-const FirstContentfulPaint = require('../../computed/metrics/first-contentful-paint.js');
+import Audit from '../audit.js';
+import i18n from '../../lib/i18n/i18n.js';
+import BaseNode from '../../lib/dependency-graph/base-node.js';
+import ByteEfficiencyAudit from './byte-efficiency-audit.js';
+import UnusedCSS from '../../computed/unused-css.js';
+import NetworkRequest from '../../lib/network-request.js';
+import ProcessedTrace from '../../computed/processed-trace.js';
+import ProcessedNavigation from '../../computed/processed-navigation.js';
+import LoadSimulator from '../../computed/load-simulator.js';
+import FirstContentfulPaint from '../../computed/metrics/first-contentful-paint.js';
 
 /** @typedef {import('../../lib/dependency-graph/simulator/simulator')} Simulator */
 /** @typedef {import('../../lib/dependency-graph/base-node.js').Node} Node */
@@ -304,5 +304,5 @@ class RenderBlockingResources extends Audit {
   }
 }
 
-module.exports = RenderBlockingResources;
-module.exports.UIStrings = UIStrings;
+export default RenderBlockingResources;
+export {UIStrings};

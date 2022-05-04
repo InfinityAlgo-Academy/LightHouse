@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const FRGatherer = require('../../fraggle-rock/gather/base-gatherer.js');
+import FRGatherer from '../../fraggle-rock/gather/base-gatherer.js';
 
 /**
  * @fileoverview Tracks unused CSS rules.
@@ -121,4 +121,4 @@ class CSSUsage extends FRGatherer {
   }
 }
 
-module.exports = CSSUsage;
+export default CSSUsage;

@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const LHError = require('../../lib/lh-error.js');
+import LHError from '../../lib/lh-error.js';
 const SessionEmitMonkeypatch = Symbol('monkeypatch');
 
 // Controls how long to wait for a response after sending a DevTools protocol command.
@@ -179,4 +179,4 @@ class ProtocolSession {
   }
 }
 
-module.exports = ProtocolSession;
+export default ProtocolSession;

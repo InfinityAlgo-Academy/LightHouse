@@ -10,11 +10,12 @@
  * Audit that checks whether fonts that use `font-display: optional` were preloaded.
  */
 
-const Audit = require('./audit.js');
-const i18n = require('./../lib/i18n/i18n.js');
-const FontDisplay = require('./../audits/font-display.js');
+import Audit from './audit.js';
+
+import i18n from './../lib/i18n/i18n.js';
+import FontDisplay from './../audits/font-display.js';
 const PASSING_FONT_DISPLAY_REGEX = /^(optional)$/;
-const NetworkRecords = require('../computed/network-records.js');
+import NetworkRecords from '../computed/network-records.js';
 
 const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on whether fonts that used `font-display: optional` were preloaded. This descriptive title is shown to users when all fonts that used `font-display: optional` were preloaded. */
@@ -103,5 +104,5 @@ class PreloadFontsAudit extends Audit {
   }
 }
 
-module.exports = PreloadFontsAudit;
-module.exports.UIStrings = UIStrings;
+export default PreloadFontsAudit;
+export {UIStrings};

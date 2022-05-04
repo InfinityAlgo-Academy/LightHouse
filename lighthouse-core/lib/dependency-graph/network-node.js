@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const BaseNode = require('./base-node.js');
-const NetworkRequest = require('../network-request.js');
+import {BaseNode} from './base-node.js';
+import {NetworkRequest} from '../network-request.js';
 
 class NetworkNode extends BaseNode {
   /**
@@ -96,4 +96,4 @@ class NetworkNode extends BaseNode {
   }
 }
 
-module.exports = NetworkNode;
+export {NetworkNode};

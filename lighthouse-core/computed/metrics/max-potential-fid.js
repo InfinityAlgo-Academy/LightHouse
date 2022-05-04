@@ -5,10 +5,10 @@
  */
 'use strict';
 
-const makeComputedArtifact = require('../computed-artifact.js');
-const NavigationMetric = require('./navigation-metric.js');
-const LanternMaxPotentialFID = require('./lantern-max-potential-fid.js');
-const TracingProcessor = require('../../lib/tracehouse/trace-processor.js');
+import makeComputedArtifact from '../computed-artifact.js';
+import NavigationMetric from './navigation-metric.js';
+import LanternMaxPotentialFID from './lantern-max-potential-fid.js';
+import TracingProcessor from '../../lib/tracehouse/trace-processor.js';
 
 class MaxPotentialFID extends NavigationMetric {
   /**
@@ -39,7 +39,7 @@ class MaxPotentialFID extends NavigationMetric {
   }
 }
 
-module.exports = makeComputedArtifact(
+export default makeComputedArtifact(
   MaxPotentialFID,
   ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL']
 );

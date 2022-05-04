@@ -5,16 +5,16 @@
  */
 'use strict';
 
-const BaseNode = require('../base-node.js');
-const TcpConnection = require('./tcp-connection.js');
-const ConnectionPool = require('./connection-pool.js');
-const DNSCache = require('./dns-cache.js');
+import {BaseNode} from '../base-node.js';
+import TcpConnection from './tcp-connection.js';
+import ConnectionPool from './connection-pool.js';
+import DNSCache from './dns-cache.js';
 const mobileSlow4G = require('../../../config/constants.js').throttling.mobileSlow4G;
-const SimulatorTimingMap = require('./simulator-timing-map.js');
+import SimulatorTimingMap from './simulator-timing-map.js';
 
-/** @typedef {BaseNode.Node} Node */
-/** @typedef {import('../network-node')} NetworkNode */
-/** @typedef {import('../cpu-node')} CpuNode */
+/** @typedef {import('../base-node.js').Node} Node */
+/** @typedef {import('../network-node').NetworkNode} NetworkNode */
+/** @typedef {import('../cpu-node').CPUNode} CpuNode */
 
 // see https://cs.chromium.org/search/?q=kDefaultMaxNumDelayableRequestsPerClient&sq=package:chromium&type=cs
 const DEFAULT_MAXIMUM_CONCURRENT_REQUESTS = 10;
@@ -520,4 +520,4 @@ class Simulator {
   }
 }
 
-module.exports = Simulator;
+export {Simulator};

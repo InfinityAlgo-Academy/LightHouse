@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const BaseNode = require('./base-node.js');
+import {BaseNode} from './base-node.js';
 
 class CPUNode extends BaseNode {
   /**
@@ -83,4 +83,4 @@ class CPUNode extends BaseNode {
   }
 }
 
-module.exports = CPUNode;
+export {CPUNode};

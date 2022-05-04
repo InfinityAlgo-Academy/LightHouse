@@ -5,9 +5,9 @@
  */
 'use strict';
 
-const Audit = require('./audit.js');
-const JsBundles = require('../computed/js-bundles.js');
-const i18n = require('./../lib/i18n/i18n.js');
+import Audit from './audit.js';
+import JsBundles from '../computed/js-bundles.js';
+import i18n from './../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Descriptive title of a Lighthouse audit that checks if a web page has 'unload' event listeners and finds none. */
@@ -83,5 +83,5 @@ class NoUnloadListeners extends Audit {
   }
 }
 
-module.exports = NoUnloadListeners;
-module.exports.UIStrings = UIStrings;
+export default NoUnloadListeners;
+export {UIStrings};

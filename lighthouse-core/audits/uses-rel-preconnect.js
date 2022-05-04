@@ -6,17 +6,17 @@
 
 'use strict';
 
-const Audit = require('./audit.js');
-const UnusedBytes = require('./byte-efficiency/byte-efficiency-audit.js');
-const URL = require('../lib/url-shim.js');
-const i18n = require('../lib/i18n/i18n.js');
-const NetworkRecords = require('../computed/network-records.js');
-const MainResource = require('../computed/main-resource.js');
-const LoadSimulator = require('../computed/load-simulator.js');
-const ProcessedTrace = require('../computed/processed-trace.js');
-const ProcessedNavigation = require('../computed/processed-navigation.js');
-const PageDependencyGraph = require('../computed/page-dependency-graph.js');
-const LanternLCP = require('../computed/metrics/lantern-largest-contentful-paint.js');
+import Audit from './audit.js';
+import UnusedBytes from './byte-efficiency/byte-efficiency-audit.js';
+import URL from '../lib/url-shim.js';
+import i18n from '../lib/i18n/i18n.js';
+import NetworkRecords from '../computed/network-records.js';
+import MainResource from '../computed/main-resource.js';
+import LoadSimulator from '../computed/load-simulator.js';
+import ProcessedTrace from '../computed/processed-trace.js';
+import ProcessedNavigation from '../computed/processed-navigation.js';
+import PageDependencyGraph from '../computed/page-dependency-graph.js';
+import LanternLCP from '../computed/metrics/lantern-largest-contentful-paint.js';
 
 // Preconnect establishes a "clean" socket. Chrome's socket manager will keep an unused socket
 // around for 10s. Meaning, the time delta between processing preconnect a request should be <10s,
@@ -250,5 +250,5 @@ class UsesRelPreconnectAudit extends Audit {
   }
 }
 
-module.exports = UsesRelPreconnectAudit;
-module.exports.UIStrings = UIStrings;
+export default UsesRelPreconnectAudit;
+export {UIStrings};

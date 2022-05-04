@@ -5,10 +5,10 @@
  */
 'use strict';
 
-const Audit = require('../audit.js');
-const i18n = require('../../lib/i18n/i18n.js');
-const NetworkRequest = require('../../lib/network-request.js');
-const NetworkRecords = require('../../computed/network-records.js');
+import Audit from '../audit.js';
+import i18n from '../../lib/i18n/i18n.js';
+import NetworkRequest from '../../lib/network-request.js';
+import NetworkRecords from '../../computed/network-records.js';
 
 const UIStrings = {
   /** Title of a diagnostic audit that provides detail on large network resources required during page load. 'Payloads' is roughly equivalent to 'resources'. This descriptive title is shown to users when the amount is acceptable and no user action is required. */
@@ -107,5 +107,5 @@ class TotalByteWeight extends Audit {
   }
 }
 
-module.exports = TotalByteWeight;
-module.exports.UIStrings = UIStrings;
+export default TotalByteWeight;
+export {UIStrings};

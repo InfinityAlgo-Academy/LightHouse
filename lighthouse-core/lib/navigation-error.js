@@ -5,9 +5,9 @@
  */
 'use strict';
 
-const LHError = require('./lh-error.js');
-const NetworkAnalyzer = require('./dependency-graph/simulator/network-analyzer.js');
-const NetworkRequest = require('./network-request.js');
+import LHError from './lh-error.js';
+import NetworkAnalyzer from './dependency-graph/simulator/network-analyzer.js';
+import NetworkRequest from './network-request.js';
 
 /**
  * Returns an error if the original network request failed or wasn't found.
@@ -146,7 +146,7 @@ function getPageLoadError(navigationError, context) {
 }
 
 
-module.exports = {
+export default {
   getNetworkError,
   getInterstitialError,
   getPageLoadError,

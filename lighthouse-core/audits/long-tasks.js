@@ -5,13 +5,13 @@
  */
 'use strict';
 
-const Audit = require('./audit.js');
-const NetworkRecords = require('../computed/network-records.js');
-const i18n = require('../lib/i18n/i18n.js');
-const MainThreadTasks = require('../computed/main-thread-tasks.js');
-const BootupTime = require('./bootup-time.js');
-const PageDependencyGraph = require('../computed/page-dependency-graph.js');
-const LoadSimulator = require('../computed/load-simulator.js');
+import Audit from './audit.js';
+import NetworkRecords from '../computed/network-records.js';
+import i18n from '../lib/i18n/i18n.js';
+import MainThreadTasks from '../computed/main-thread-tasks.js';
+import BootupTime from './bootup-time.js';
+import PageDependencyGraph from '../computed/page-dependency-graph.js';
+import LoadSimulator from '../computed/load-simulator.js';
 
 /** We don't always have timing data for short tasks, if we're missing timing data. Treat it as though it were 0ms. */
 const DEFAULT_TIMING = {startTime: 0, endTime: 0, duration: 0};
@@ -121,5 +121,5 @@ class LongTasks extends Audit {
   }
 }
 
-module.exports = LongTasks;
-module.exports.UIStrings = UIStrings;
+export default LongTasks;
+export {UIStrings};

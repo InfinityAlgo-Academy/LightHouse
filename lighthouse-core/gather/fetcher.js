@@ -15,13 +15,14 @@
 
 /** @typedef {{content: string|null, status: number|null}} FetchResponse */
 
-const log = require('lighthouse-logger');
-const {getBrowserVersion} = require('./driver/environment.js');
+import log from 'lighthouse-logger';
+
+import {getBrowserVersion} from './driver/environment.js';
 
 class Fetcher {
   /**
    * @param {LH.Gatherer.FRProtocolSession} session
-   * @param {import('./driver/execution-context.js')} executionContext
+   * @param {import('./driver/execution-context.js').ExecutionContext} executionContext
    */
   constructor(session, executionContext) {
     this.session = session;
@@ -315,4 +316,4 @@ class Fetcher {
   }
 }
 
-module.exports = Fetcher;
+export {Fetcher};

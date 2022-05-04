@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const log = require('lighthouse-logger');
-const i18n = require('../../lib/i18n/i18n.js');
+import log from 'lighthouse-logger';
+import i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
   /**
@@ -117,7 +117,7 @@ async function clearBrowserCaches(session) {
   log.timeEnd(status);
 }
 
-module.exports = {
+export {
   clearDataForOrigin,
   clearBrowserCaches,
   getImportantStorageWarning,

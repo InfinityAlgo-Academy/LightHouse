@@ -5,10 +5,10 @@
  */
 'use strict';
 
-const Audit = require('../audit.js');
-const i18n = require('../../lib/i18n/i18n.js');
-const ComputedLcp = require('../../computed/metrics/largest-contentful-paint.js');
-const LHError = require('../../lib/lh-error.js');
+import Audit from '../audit.js';
+import i18n from '../../lib/i18n/i18n.js';
+import ComputedLcp from '../../computed/metrics/largest-contentful-paint.js';
+import LHError from '../../lib/lh-error.js';
 
 const UIStrings = {
   /** Description of the Largest Contentful Paint (LCP) metric, which marks the time at which the largest text or image is painted by the browser. This is displayed within a tooltip when the user hovers on the metric name to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
@@ -111,5 +111,5 @@ class LargestContentfulPaint extends Audit {
   }
 }
 
-module.exports = LargestContentfulPaint;
-module.exports.UIStrings = UIStrings;
+export default LargestContentfulPaint;
+export {UIStrings};

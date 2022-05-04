@@ -11,8 +11,9 @@
  * user input in the provided trace).
  */
 
-const makeComputedArtifact = require('../computed-artifact.js');
-const ProcessedTrace = require('../processed-trace.js');
+import makeComputedArtifact from '../computed-artifact.js';
+
+import ProcessedTrace from '../processed-trace.js';
 
 class Responsiveness {
   /**
@@ -58,7 +59,7 @@ class Responsiveness {
   }
 }
 
-module.exports = makeComputedArtifact(Responsiveness, [
+export default makeComputedArtifact(Responsiveness, [
   'trace',
   'settings',
 ]);

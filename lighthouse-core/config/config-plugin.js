@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const i18n = require('../lib/i18n/i18n.js');
+import i18n from '../lib/i18n/i18n.js';
 
 /**
  * @param {unknown} arr
@@ -222,4 +222,4 @@ class ConfigPlugin {
   }
 }
 
-module.exports = ConfigPlugin;
+export default ConfigPlugin;

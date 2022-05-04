@@ -12,9 +12,9 @@
  */
 'use strict';
 
-const Audit = require('../audit.js');
-const i18n = require('../../lib/i18n/i18n.js');
-const MainResource = require('../../computed/main-resource.js');
+import Audit from '../audit.js';
+import i18n from '../../lib/i18n/i18n.js';
+import MainResource from '../../computed/main-resource.js';
 
 const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on if the charset is set properly for a page. This title is shown when the charset is defined correctly. Charset defines the character encoding (eg UTF-8) of the page content. */
@@ -89,8 +89,8 @@ class CharsetDefined extends Audit {
   }
 }
 
-module.exports = CharsetDefined;
-module.exports.UIStrings = UIStrings;
+export default CharsetDefined;
+export {UIStrings};
 module.exports.CHARSET_HTML_REGEX = CHARSET_HTML_REGEX;
 module.exports.CHARSET_HTTP_REGEX = CHARSET_HTTP_REGEX;
 module.exports.IANA_REGEX = IANA_REGEX;

@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const MainThreadTasks = require('./main-thread-tasks.js');
+import MainThreadTasks from './main-thread-tasks.js';
 
 const SAMPLER_TRACE_EVENT_NAME = 'FunctionCall-SynthesizedByProfilerModel';
 
@@ -589,4 +589,4 @@ class CpuProfilerModel {
   }
 }
 
-module.exports = CpuProfilerModel;
+export default CpuProfilerModel;

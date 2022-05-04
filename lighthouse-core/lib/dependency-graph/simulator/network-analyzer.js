@@ -6,7 +6,7 @@
 'use strict';
 
 const INITIAL_CWD = 14 * 1024;
-const URL = require('../../url-shim.js');
+import URL from '../../url-shim.js';
 
 // Assume that 40% of TTFB was server response time by default for static assets
 const DEFAULT_SERVER_RESPONSE_PERCENTAGE = 0.4;
@@ -457,7 +457,7 @@ class NetworkAnalyzer {
   }
 }
 
-module.exports = NetworkAnalyzer;
+export default NetworkAnalyzer;
 
 /**
  * @typedef NetworkAnalyzer.Summary

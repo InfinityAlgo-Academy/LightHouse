@@ -50,4 +50,4 @@ function getServiceWorkerRegistrations(session) {
   });
 }
 
-module.exports = {getServiceWorkerVersions, getServiceWorkerRegistrations};
+export {getServiceWorkerVersions, getServiceWorkerRegistrations};

@@ -5,14 +5,14 @@
  */
 'use strict';
 
-const makeComputedArtifact = require('./computed-artifact.js');
-const NetworkNode = require('../lib/dependency-graph/network-node.js');
-const CPUNode = require('../lib/dependency-graph/cpu-node.js');
-const TracingProcessor = require('../lib/tracehouse/trace-processor.js');
-const NetworkRequest = require('../lib/network-request.js');
-const ProcessedTrace = require('./processed-trace.js');
-const NetworkRecords = require('./network-records.js');
-const NetworkAnalyzer = require('../lib/dependency-graph/simulator/network-analyzer.js');
+import makeComputedArtifact from './computed-artifact.js';
+import NetworkNode from '../lib/dependency-graph/network-node.js';
+import CPUNode from '../lib/dependency-graph/cpu-node.js';
+import TracingProcessor from '../lib/tracehouse/trace-processor.js';
+import NetworkRequest from '../lib/network-request.js';
+import ProcessedTrace from './processed-trace.js';
+import NetworkRecords from './network-records.js';
+import NetworkAnalyzer from '../lib/dependency-graph/simulator/network-analyzer.js';
 
 /** @typedef {import('../lib/dependency-graph/base-node.js').Node} Node */
 /** @typedef {Omit<LH.Artifacts['URL'], 'initialUrl'|'finalUrl'>} URLArtifact */
@@ -504,7 +504,7 @@ class PageDependencyGraph {
   }
 }
 
-module.exports = makeComputedArtifact(PageDependencyGraph, ['devtoolsLog', 'trace', 'URL']);
+export default makeComputedArtifact(PageDependencyGraph, ['devtoolsLog', 'trace', 'URL']);
 
 /**
  * @typedef {Object} NetworkNodeOutput

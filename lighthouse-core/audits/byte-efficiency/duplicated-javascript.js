@@ -9,10 +9,11 @@
 /** @typedef {LH.Audit.ByteEfficiencyItem & {source: string, subItems: {type: 'subitems', items: SubItem[]}}} Item */
 /** @typedef {{url: string, sourceTransferBytes?: number}} SubItem */
 
-const ByteEfficiencyAudit = require('./byte-efficiency-audit.js');
-const ModuleDuplication = require('../../computed/module-duplication.js');
-const i18n = require('../../lib/i18n/i18n.js');
-const {getRequestForScript} = require('../../lib/script-helpers.js');
+import ByteEfficiencyAudit from './byte-efficiency-audit.js';
+
+import ModuleDuplication from '../../computed/module-duplication.js';
+import i18n from '../../lib/i18n/i18n.js';
+import {getRequestForScript} from '../../lib/script-helpers.js';
 
 const UIStrings = {
   /** Imperative title of a Lighthouse audit that tells the user to remove duplicate JavaScript from their code. This is displayed in a list of audit titles that Lighthouse generates. */
@@ -244,5 +245,5 @@ class DuplicatedJavascript extends ByteEfficiencyAudit {
   }
 }
 
-module.exports = DuplicatedJavascript;
-module.exports.UIStrings = UIStrings;
+export default DuplicatedJavascript;
+export {UIStrings};

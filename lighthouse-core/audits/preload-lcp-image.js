@@ -5,13 +5,13 @@
  */
 'use strict';
 
-const Audit = require('./audit.js');
-const i18n = require('../lib/i18n/i18n.js');
-const NetworkRequest = require('../lib/network-request.js');
-const MainResource = require('../computed/main-resource.js');
-const LanternLCP = require('../computed/metrics/lantern-largest-contentful-paint.js');
-const LoadSimulator = require('../computed/load-simulator.js');
-const UnusedBytes = require('./byte-efficiency/byte-efficiency-audit.js');
+import Audit from './audit.js';
+import i18n from '../lib/i18n/i18n.js';
+import NetworkRequest from '../lib/network-request.js';
+import MainResource from '../computed/main-resource.js';
+import LanternLCP from '../computed/metrics/lantern-largest-contentful-paint.js';
+import LoadSimulator from '../computed/load-simulator.js';
+import UnusedBytes from './byte-efficiency/byte-efficiency-audit.js';
 
 const UIStrings = {
   /** Title of a lighthouse audit that tells a user to preload an image in order to improve their LCP time. */
@@ -238,5 +238,5 @@ class PreloadLCPImageAudit extends Audit {
   }
 }
 
-module.exports = PreloadLCPImageAudit;
-module.exports.UIStrings = UIStrings;
+export default PreloadLCPImageAudit;
+export {UIStrings};

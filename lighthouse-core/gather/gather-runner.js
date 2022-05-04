@@ -5,25 +5,25 @@
  */
 'use strict';
 
-const log = require('lighthouse-logger');
-const NetworkRecords = require('../computed/network-records.js');
-const {getPageLoadError} = require('../lib/navigation-error.js');
-const emulation = require('../lib/emulation.js');
-const constants = require('../config/constants.js');
-const format = require('../../shared/localization/format.js');
-const {getBenchmarkIndex, getEnvironmentWarnings} = require('./driver/environment.js');
-const prepare = require('./driver/prepare.js');
-const storage = require('./driver/storage.js');
-const navigation = require('./driver/navigation.js');
-const serviceWorkers = require('./driver/service-workers.js');
-const WebAppManifest = require('./gatherers/web-app-manifest.js');
-const InstallabilityErrors = require('./gatherers/installability-errors.js');
-const NetworkUserAgent = require('./gatherers/network-user-agent.js');
-const Stacks = require('./gatherers/stacks.js');
-const {finalizeArtifacts} = require('../fraggle-rock/gather/base-artifacts.js');
+import log from 'lighthouse-logger';
+import NetworkRecords from '../computed/network-records.js';
+import {getPageLoadError} from '../lib/navigation-error.js';
+import emulation from '../lib/emulation.js';
+import constants from '../config/constants.js';
+import format from '../../shared/localization/format.js';
+import {getBenchmarkIndex, getEnvironmentWarnings} from './driver/environment.js';
+import * as prepare from './driver/prepare.js';
+import * as storage from './driver/storage.js';
+import * as navigation from './driver/navigation.js';
+import * as serviceWorkers from './driver/service-workers.js';
+import WebAppManifest from './gatherers/web-app-manifest.js';
+import InstallabilityErrors from './gatherers/installability-errors.js';
+import NetworkUserAgent from './gatherers/network-user-agent.js';
+import Stacks from './gatherers/stacks.js';
+import {finalizeArtifacts} from '../fraggle-rock/gather/base-artifacts.js';
 
-/** @typedef {import('../gather/driver.js')} Driver */
-/** @typedef {import('../lib/arbitrary-equality-map.js')} ArbitraryEqualityMap */
+/** @typedef {import('../gather/driver.js').Driver} Driver */
+/** @typedef {import('../lib/arbitrary-equality-map.js').ArbitraryEqualityMap} ArbitraryEqualityMap */
 
 /**
  * Each entry in each gatherer result array is the output of a gatherer phase:
@@ -626,4 +626,4 @@ class GatherRunner {
   }
 }
 
-module.exports = GatherRunner;
+export {GatherRunner};

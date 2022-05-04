@@ -18,11 +18,12 @@
 /** @typedef {LH.Audit.ByteEfficiencyItem & {subItems: {type: 'subitems', items: SubItem[]}}} Item */
 /** @typedef {{signal: string, location: LH.Audit.Details.SourceLocationValue}} SubItem */
 
-const ByteEfficiencyAudit = require('./byte-efficiency-audit.js');
-const JsBundles = require('../../computed/js-bundles.js');
-const i18n = require('../../lib/i18n/i18n.js');
-const thirdPartyWeb = require('../../lib/third-party-web.js');
-const {getRequestForScript} = require('../../lib/script-helpers.js');
+import ByteEfficiencyAudit from './byte-efficiency-audit.js';
+
+import JsBundles from '../../computed/js-bundles.js';
+import i18n from '../../lib/i18n/i18n.js';
+import thirdPartyWeb from '../../lib/third-party-web.js';
+import {getRequestForScript} from '../../lib/script-helpers.js';
 
 const UIStrings = {
   /** Title of a Lighthouse audit that tells the user about legacy polyfills and transforms used on the page. This is displayed in a list of audit titles that Lighthouse generates. */
@@ -466,5 +467,5 @@ class LegacyJavascript extends ByteEfficiencyAudit {
   }
 }
 
-module.exports = LegacyJavascript;
-module.exports.UIStrings = UIStrings;
+export default LegacyJavascript;
+export {UIStrings};

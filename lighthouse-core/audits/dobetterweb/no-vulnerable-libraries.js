@@ -12,11 +12,11 @@
 
 'use strict';
 
-const Audit = require('../audit.js');
-const Sentry = require('../../lib/sentry.js');
-const semver = require('semver');
-const snykDatabase = require('../../../third-party/snyk/snapshot.json');
-const i18n = require('../../lib/i18n/i18n.js');
+import Audit from '../audit.js';
+import Sentry from '../../lib/sentry.js';
+import semver from 'semver';
+import snykDatabase from '../../../third-party/snyk/snapshot.json';
+import i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on Javascript libraries the page uses. This descriptive title is shown to users when all Javascript libraries are free of known security vulnerabilities. */
@@ -221,5 +221,5 @@ class NoVulnerableLibrariesAudit extends Audit {
   }
 }
 
-module.exports = NoVulnerableLibrariesAudit;
-module.exports.UIStrings = UIStrings;
+export default NoVulnerableLibrariesAudit;
+export {UIStrings};

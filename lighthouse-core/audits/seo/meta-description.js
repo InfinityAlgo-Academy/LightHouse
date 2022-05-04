@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const Audit = require('../audit.js');
-const i18n = require('../../lib/i18n/i18n.js');
+import Audit from '../audit.js';
+import i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on the web page's document meta description. This descriptive title is shown when the document has a meta description. "meta" should be left untranslated because it refers to an HTML element. */
@@ -63,5 +63,5 @@ class Description extends Audit {
   }
 }
 
-module.exports = Description;
-module.exports.UIStrings = UIStrings;
+export default Description;
+export {UIStrings};

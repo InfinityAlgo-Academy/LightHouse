@@ -5,10 +5,10 @@
  */
 'use strict';
 
-const Audit = require('./audit.js');
-const i18n = require('../lib/i18n/i18n.js');
-const NetworkRecords = require('../computed/network-records.js');
-const NetworkAnalysisComputed = require('../computed/network-analysis.js');
+import Audit from './audit.js';
+import i18n from '../lib/i18n/i18n.js';
+import NetworkRecords from '../computed/network-records.js';
+import NetworkAnalysisComputed from '../computed/network-analysis.js';
 
 const UIStrings = {
   /** Descriptive title of a Lighthouse audit that tells the user the server latencies observed from each origin the page connected to. This is displayed in a list of audit titles that Lighthouse generates. */
@@ -85,5 +85,5 @@ class NetworkServerLatency extends Audit {
   }
 }
 
-module.exports = NetworkServerLatency;
-module.exports.UIStrings = UIStrings;
+export default NetworkServerLatency;
+export {UIStrings};

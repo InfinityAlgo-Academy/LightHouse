@@ -7,18 +7,16 @@
 
 /** @typedef {import('csp_evaluator/finding').Finding} Finding */
 
-const {
-  evaluateForFailure,
-  evaluateForSyntaxErrors,
-  evaluateForWarnings,
-} = require('csp_evaluator/dist/lighthouse/lighthouse_checks.js');
-const {Type} = require('csp_evaluator/dist/finding.js');
-const {CspParser} = require('csp_evaluator/dist/parser.js');
-const {Directive} = require('csp_evaluator/dist/csp.js');
+import {
+  evaluateForFailure, evaluateForSyntaxErrors, evaluateForWarnings,
+} from 'csp_evaluator/dist/lighthouse/lighthouse_checks.js';
 
-const log = require('lighthouse-logger');
-const i18n = require('../lib/i18n/i18n.js');
-const {isIcuMessage} = require('../../shared/localization/format.js');
+import {Type} from 'csp_evaluator/dist/finding.js';
+import {CspParser} from 'csp_evaluator/dist/parser.js';
+import {Directive} from 'csp_evaluator/dist/csp.js';
+import log from 'lighthouse-logger';
+import i18n from '../lib/i18n/i18n.js';
+import {isIcuMessage} from '../../shared/localization/format.js';
 
 const UIStrings = {
   /** Message shown when a CSP does not have a base-uri directive. Shown in a table with a list of other CSP vulnerabilities and suggestions. "CSP" stands for "Content Security Policy". "base-uri", "'none'", and "'self'" do not need to be translated. */
@@ -165,7 +163,7 @@ function evaluateRawCspsForXss(rawCsps) {
   return {bypasses, warnings, syntax};
 }
 
-module.exports = {
+export default {
   getTranslatedDescription,
   evaluateRawCspsForXss,
   parseCsp,

@@ -10,10 +10,10 @@
 
 'use strict';
 
-const Audit = require('./audit.js');
-const {taskGroups} = require('../lib/tracehouse/task-groups.js');
-const i18n = require('../lib/i18n/i18n.js');
-const MainThreadTasks = require('../computed/main-thread-tasks.js');
+import Audit from './audit.js';
+import {taskGroups} from '../lib/tracehouse/task-groups.js';
+import i18n from '../lib/i18n/i18n.js';
+import MainThreadTasks from '../computed/main-thread-tasks.js';
 
 const UIStrings = {
   /** Title of a diagnostic audit that provides detail on the main thread work the browser did to load the page. This descriptive title is shown to users when the amount is acceptable and no user action is required. */
@@ -130,5 +130,5 @@ class MainThreadWorkBreakdown extends Audit {
   }
 }
 
-module.exports = MainThreadWorkBreakdown;
-module.exports.UIStrings = UIStrings;
+export default MainThreadWorkBreakdown;
+export {UIStrings};

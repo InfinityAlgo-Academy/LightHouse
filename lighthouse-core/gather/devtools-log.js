@@ -58,4 +58,4 @@ class DevtoolsLog {
   }
 }
 
-module.exports = DevtoolsLog;
+export {DevtoolsLog};

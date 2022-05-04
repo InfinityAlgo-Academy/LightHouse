@@ -48,7 +48,7 @@ const clsRelevantAudits = [
   // 'preload-fonts', // actually in BP, rather than perf
 ];
 
-module.exports = {
+export default {
   fcpRelevantAudits,
   lcpRelevantAudits,
   tbtRelevantAudits,

@@ -5,21 +5,24 @@
  */
 'use strict';
 
-const path = require('path');
-const log = require('lighthouse-logger');
-const Runner = require('../../runner.js');
-const defaultConfig = require('./default-config.js');
-const {defaultNavigationConfig, nonSimulatedPassConfigOverrides} = require('../../config/constants.js'); // eslint-disable-line max-len
-const {
+import path from 'path';
+import log from 'lighthouse-logger';
+import Runner from '../../runner.js';
+import defaultConfig from './default-config.js';
+import {defaultNavigationConfig, nonSimulatedPassConfigOverrides} from '../../config/constants.js'; // eslint-disable-line max-len
+
+import {
   isFRGathererDefn,
   throwInvalidDependencyOrder,
   isValidArtifactDependency,
   throwInvalidArtifactDependency,
   assertArtifactTopologicalOrder,
   assertValidConfig,
-} = require('./validation.js');
-const {filterConfigByGatherMode, filterConfigByExplicitFilters} = require('./filters.js');
-const {
+} from './validation.js';
+
+import {filterConfigByGatherMode, filterConfigByExplicitFilters} from './filters.js';
+
+import {
   deepCloneConfigJson,
   resolveSettings,
   resolveAuditsToDefns,
@@ -27,7 +30,8 @@ const {
   mergePlugins,
   mergeConfigFragment,
   mergeConfigFragmentArrayByKey,
-} = require('../../config/config-helpers.js');
+} from '../../config/config-helpers.js';
+
 const defaultConfigPath = path.join(__dirname, './default-config.js');
 
 /** @typedef {LH.Config.FRContext & {gatherMode: LH.Gatherer.GatherMode}} ConfigContext */
@@ -278,4 +282,4 @@ function initializeConfig(configJSON, context) {
   return {config, warnings};
 }
 
-module.exports = {resolveWorkingCopy, initializeConfig};
+export default {resolveWorkingCopy, initializeConfig};

@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const ManualAudit = require('./manual-audit.js');
-const i18n = require('../../lib/i18n/i18n.js');
+import ManualAudit from './manual-audit.js';
+import i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of a Lighthouse audit that prompts the user to manually check that each page on their website uses a unique URL. */
@@ -35,5 +35,5 @@ class PWAEachPageHasURL extends ManualAudit {
   }
 }
 
-module.exports = PWAEachPageHasURL;
-module.exports.UIStrings = UIStrings;
+export default PWAEachPageHasURL;
+export {UIStrings};

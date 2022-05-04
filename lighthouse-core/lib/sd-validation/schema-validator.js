@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const walkObject = require('./helpers/walk-object.js');
-const schemaStructure = require('./assets/schema-tree.json');
+import walkObject from './helpers/walk-object.js';
+import schemaStructure from './assets/schema-tree.json';
 const TYPE_KEYWORD = '@type';
 const SCHEMA_ORG_URL_REGEX = /https?:\/\/schema\.org\//;
 
@@ -107,7 +107,7 @@ function validateObjectKeys(typeOrTypes, keys) {
  * @param {LH.StructuredData.ExpandedSchemaRepresentation|null} expandedObj Valid JSON-LD object in expanded form
  * @return {Array<Pick<LH.StructuredData.ValidationError, "message" | "validTypes" | "path">>}
  */
-module.exports = function validateSchemaOrg(expandedObj) {
+export default function validateSchemaOrg(expandedObj) {
   /** @type {Array<Pick<LH.StructuredData.ValidationError, "message" | "validTypes" | "path">>} */
   const errors = [];
 
@@ -143,4 +143,4 @@ module.exports = function validateSchemaOrg(expandedObj) {
   });
 
   return errors;
-};
+}

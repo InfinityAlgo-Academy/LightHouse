@@ -5,12 +5,12 @@
  */
 'use strict';
 
-const log = require('lighthouse-logger');
-const NetworkMonitor = require('./network-monitor.js');
-const {waitForFullyLoaded, waitForFrameNavigated, waitForUserToContinue} = require('./wait-for-condition.js'); // eslint-disable-line max-len
-const constants = require('../../config/constants.js');
-const i18n = require('../../lib/i18n/i18n.js');
-const URL = require('../../lib/url-shim.js');
+import log from 'lighthouse-logger';
+import {NetworkMonitor} from './network-monitor.js';
+import {waitForFullyLoaded, waitForFrameNavigated, waitForUserToContinue} from './wait-for-condition.js'; // eslint-disable-line max-len
+import constants from '../../config/constants.js';
+import i18n from '../../lib/i18n/i18n.js';
+import URL from '../../lib/url-shim.js';
 
 const UIStrings = {
   /**
@@ -176,4 +176,4 @@ function getNavigationWarnings(navigation) {
   return warnings;
 }
 
-module.exports = {gotoURL, getNavigationWarnings, UIStrings};
+export {gotoURL, getNavigationWarnings, UIStrings};

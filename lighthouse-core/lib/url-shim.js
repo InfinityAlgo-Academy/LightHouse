@@ -9,8 +9,9 @@
  * URL shim so we keep our code DRY
  */
 
-const {Util} = require('../util-commonjs.js');
-const LHError = require('../lib/lh-error.js');
+import {Util} from '../util-commonjs.js';
+
+import LHError from '../lib/lh-error.js';
 
 /** @typedef {import('./network-request.js')} NetworkRequest */
 
@@ -271,4 +272,4 @@ URLShim.INVALID_URL_DEBUG_STRING =
     'Lighthouse was unable to determine the URL of some script executions. ' +
     'It\'s possible a Chrome extension or other eval\'d code is the source.';
 
-module.exports = URLShim;
+export default URLShim;

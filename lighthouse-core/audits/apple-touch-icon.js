@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const Audit = require('./audit.js');
-const i18n = require('../lib/i18n/i18n.js');
+import Audit from './audit.js';
+import i18n from '../lib/i18n/i18n.js';
 
 /**
  * @fileoverview Audits if a page has an `apple-touch-icon` link element with a valid href.
@@ -68,5 +68,5 @@ class AppleTouchIcon extends Audit {
   }
 }
 
-module.exports = AppleTouchIcon;
-module.exports.UIStrings = UIStrings;
+export default AppleTouchIcon;
+export {UIStrings};

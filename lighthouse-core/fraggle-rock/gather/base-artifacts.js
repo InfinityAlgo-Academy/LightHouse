@@ -5,13 +5,11 @@
  */
 'use strict';
 
-const log = require('lighthouse-logger');
-const isDeepEqual = require('lodash/isEqual.js');
-const {
-  getBrowserVersion,
-  getBenchmarkIndex,
-  getEnvironmentWarnings,
-} = require('../../gather/driver/environment.js');
+import log from 'lighthouse-logger';
+import isDeepEqual from 'lodash/isEqual.js';
+import {
+  getBrowserVersion, getBenchmarkIndex, getEnvironmentWarnings,
+} from '../../gather/driver/environment.js';
 
 /**
  * @param {LH.Config.FRConfig} config
@@ -96,7 +94,7 @@ function finalizeArtifacts(baseArtifacts, gathererArtifacts) {
   return artifacts;
 }
 
-module.exports = {
+export {
   getBaseArtifacts,
   finalizeArtifacts,
 };

@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const log = require('lighthouse-logger');
+import log from 'lighthouse-logger';
 
 /** @typedef {import('@sentry/node').Breadcrumb} Breadcrumb */
 /** @typedef {import('@sentry/node').NodeClient} NodeClient */
@@ -141,4 +141,4 @@ function init(opts) {
   }
 }
 
-module.exports = sentryDelegate;
+export default sentryDelegate;

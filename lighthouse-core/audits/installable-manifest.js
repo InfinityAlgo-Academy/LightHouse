@@ -5,9 +5,9 @@
  */
 'use strict';
 
-const Audit = require('./audit.js');
-const i18n = require('../lib/i18n/i18n.js');
-const ManifestValues = require('../computed/manifest-values.js');
+import Audit from './audit.js';
+import i18n from '../lib/i18n/i18n.js';
+import ManifestValues from '../computed/manifest-values.js';
 
 /* eslint-disable max-len */
 const UIStrings = {
@@ -262,5 +262,5 @@ class InstallableManifest extends Audit {
   }
 }
 
-module.exports = InstallableManifest;
-module.exports.UIStrings = UIStrings;
+export default InstallableManifest;
+export {UIStrings};

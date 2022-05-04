@@ -5,24 +5,24 @@
  */
 'use strict';
 
-const isDeepEqual = require('lodash/isEqual.js');
-const Driver = require('./gather/driver.js');
-const GatherRunner = require('./gather/gather-runner.js');
-const ReportScoring = require('./scoring.js');
-const Audit = require('./audits/audit.js');
-const log = require('lighthouse-logger');
-const format = require('../shared/localization/format.js');
-const stackPacks = require('./lib/stack-packs.js');
-const assetSaver = require('./lib/asset-saver.js');
-const fs = require('fs');
-const path = require('path');
-const Sentry = require('./lib/sentry.js');
-const generateReport = require('../report/generator/report-generator.js').generateReport;
-const LHError = require('./lib/lh-error.js');
-const {version: lighthouseVersion} = require('../package.json');
+import isDeepEqual from 'lodash/isEqual.js';
+import {Driver} from './gather/driver.js';
+import {GatherRunner} from './gather/gather-runner.js';
+import {ReportScoring} from './scoring.js';
+import {Audit} from './audits/audit.js';
+import log from 'lighthouse-logger';
+import format from '../shared/localization/format.js';
+import stackPacks from './lib/stack-packs.js';
+import assetSaver from './lib/asset-saver.js';
+import fs from 'fs';
+import path from 'path';
+import Sentry from './lib/sentry.js';
+import {generateReport} from '../report/generator/report-generator.js';
+import LHError from './lib/lh-error.js';
+import {version as lighthouseVersion} from '../package.json';
 
-/** @typedef {import('./gather/connections/connection.js')} Connection */
-/** @typedef {import('./lib/arbitrary-equality-map.js')} ArbitraryEqualityMap */
+/** @typedef {import('./gather/connections/connection.js').Connection} Connection */
+/** @typedef {import('./lib/arbitrary-equality-map.js').ArbitraryEqualityMap} ArbitraryEqualityMap */
 /** @typedef {LH.Config.Config} Config */
 
 class Runner {
@@ -362,7 +362,6 @@ class Runner {
         // If artifact was an error, output error result on behalf of audit.
         if (artifacts[artifactName] instanceof Error) {
           /** @type {Error} */
-          // @ts-expect-error An artifact *could* be an Error, but caught here, so ignore elsewhere.
           const artifactError = artifacts[artifactName];
 
           Sentry.captureException(artifactError, {
@@ -510,4 +509,5 @@ class Runner {
   }
 }
 
-module.exports = Runner;
+// TODO(esmodules): make this not a class.
+export {Runner};

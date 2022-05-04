@@ -104,4 +104,4 @@ class FRGatherer {
   }
 }
 
-module.exports = FRGatherer;
+export default FRGatherer;

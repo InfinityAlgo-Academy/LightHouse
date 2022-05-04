@@ -6,7 +6,7 @@
  */
 'use strict';
 
-const ManualAudit = require('../../manual/manual-audit.js');
+import ManualAudit from '../../manual/manual-audit.js';
 
 /**
  * @fileoverview Manual A11y audit to check that offscreen content is hidden from
@@ -26,4 +26,4 @@ class OffscreenContentHidden extends ManualAudit {
   }
 }
 
-module.exports = OffscreenContentHidden;
+export default OffscreenContentHidden;

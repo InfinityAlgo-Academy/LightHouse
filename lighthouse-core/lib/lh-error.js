@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const i18n = require('./i18n/i18n.js');
+import i18n from './i18n/i18n.js';
 
 /* eslint-disable max-len */
 const UIStrings = {
@@ -417,5 +417,5 @@ const ERRORS = {
 LighthouseError.errors = ERRORS;
 LighthouseError.NO_ERROR = 'NO_ERROR';
 LighthouseError.UNKNOWN_ERROR = 'UNKNOWN_ERROR';
-module.exports = LighthouseError;
-module.exports.UIStrings = UIStrings;
+
+export {LighthouseError, UIStrings};

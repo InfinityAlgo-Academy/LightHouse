@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const Audit = require('../audit.js');
-const i18n = require('../../lib/i18n/i18n.js');
+import Audit from '../audit.js';
+import i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on the ability to paste into password fields. This descriptive title is shown to users when the page allows pasting of content into password fields. */
@@ -62,5 +62,5 @@ class PasswordInputsCanBePastedIntoAudit extends Audit {
   }
 }
 
-module.exports = PasswordInputsCanBePastedIntoAudit;
-module.exports.UIStrings = UIStrings;
+export default PasswordInputsCanBePastedIntoAudit;
+export {UIStrings};

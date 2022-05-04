@@ -6,7 +6,7 @@
  */
 'use strict';
 
-const ManualAudit = require('../../manual/manual-audit.js');
+import ManualAudit from '../../manual/manual-audit.js';
 
 /**
  * @fileoverview Manual A11y audit to check that the visual layout of the page matches the DOM.
@@ -25,4 +25,4 @@ class VisualOrderFollowsDOM extends ManualAudit {
   }
 }
 
-module.exports = VisualOrderFollowsDOM;
+export default VisualOrderFollowsDOM;

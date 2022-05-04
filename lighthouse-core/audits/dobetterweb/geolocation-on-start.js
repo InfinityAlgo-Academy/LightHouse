@@ -11,8 +11,8 @@
 
 'use strict';
 
-const ViolationAudit = require('../violation-audit.js');
-const i18n = require('../../lib/i18n/i18n.js');
+import ViolationAudit from '../violation-audit.js';
+import i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on geolocation permission requests while the page is loading. This descriptive title is shown to users when the page does not ask for geolocation permissions on load. */
@@ -66,5 +66,5 @@ class GeolocationOnStart extends ViolationAudit {
   }
 }
 
-module.exports = GeolocationOnStart;
-module.exports.UIStrings = UIStrings;
+export default GeolocationOnStart;
+export {UIStrings};

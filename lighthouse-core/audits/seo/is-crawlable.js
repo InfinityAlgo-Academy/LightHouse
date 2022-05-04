@@ -5,18 +5,20 @@
  */
 'use strict';
 
-const Audit = require('../audit.js');
+import Audit from '../audit.js';
+
 // TODO(esmodules): cast can be removed when this switches to import.
-const robotsParser = /** @type {typeof import('robots-parser').default} */ (/** @type {unknown} */(require('robots-parser'))); // eslint-disable-line max-len
-const URL = require('../../lib/url-shim.js');
-const MainResource = require('../../computed/main-resource.js');
+import robotsParser from 'robots-parser'; // eslint-disable-line max-len
+
+import URL from '../../lib/url-shim.js';
+import MainResource from '../../computed/main-resource.js';
 const BLOCKLIST = new Set([
   'noindex',
   'none',
 ]);
 const ROBOTS_HEADER = 'x-robots-tag';
 const UNAVAILABLE_AFTER = 'unavailable_after';
-const i18n = require('../../lib/i18n/i18n.js');
+import i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on if search-engine crawlers are blocked from indexing the page. This title is shown when the page is not blocked from indexing and can be crawled. */
@@ -151,5 +153,5 @@ class IsCrawlable extends Audit {
   }
 }
 
-module.exports = IsCrawlable;
-module.exports.UIStrings = UIStrings;
+export default IsCrawlable;
+export {UIStrings};

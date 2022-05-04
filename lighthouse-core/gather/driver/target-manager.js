@@ -10,7 +10,7 @@
   * listen for protocol events before each target is resumed.
   */
 
-const log = require('lighthouse-logger');
+import log from 'lighthouse-logger';
 
 /** @typedef {{target: LH.Crdp.Target.TargetInfo, session: LH.Gatherer.FRProtocolSession}} TargetWithSession */
 
@@ -122,4 +122,4 @@ class TargetManager {
   }
 }
 
-module.exports = TargetManager;
+export {TargetManager};

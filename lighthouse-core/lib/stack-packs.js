@@ -5,9 +5,9 @@
  */
 'use strict';
 
-const log = require('lighthouse-logger');
-const stackPacks = require('lighthouse-stack-packs');
-const i18n = require('./i18n/i18n.js');
+import log from 'lighthouse-logger';
+import stackPacks from 'lighthouse-stack-packs';
+import i18n from './i18n/i18n.js';
 
 /**
  * Pairs consisting of a stack pack's ID and the set of stacks needed to be
@@ -115,7 +115,7 @@ function getStackPacks(pageStacks) {
   return packs;
 }
 
-module.exports = {
+export default {
   getStackPacks,
   stackPacksToInclude,
 };

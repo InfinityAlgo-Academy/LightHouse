@@ -10,8 +10,8 @@
 
 'use strict';
 
-const Audit = require('../audit.js');
-const i18n = require('../../lib/i18n/i18n.js');
+import Audit from '../audit.js';
+import i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on the Javascript libraries that are used on the page. */
@@ -84,5 +84,5 @@ class JsLibrariesAudit extends Audit {
   }
 }
 
-module.exports = JsLibrariesAudit;
-module.exports.UIStrings = UIStrings;
+export default JsLibrariesAudit;
+export {UIStrings};

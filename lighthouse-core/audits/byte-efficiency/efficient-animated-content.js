@@ -8,9 +8,9 @@
  */
 'use strict';
 
-const NetworkRequest = require('../../lib/network-request.js');
-const ByteEfficiencyAudit = require('./byte-efficiency-audit.js');
-const i18n = require('../../lib/i18n/i18n.js');
+import NetworkRequest from '../../lib/network-request.js';
+import ByteEfficiencyAudit from './byte-efficiency-audit.js';
+import i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Imperative title of a Lighthouse audit that tells the user to use video formats rather than animated GIFs, which are wasteful. This is displayed in a list of audit titles that Lighthouse generates. */
@@ -88,5 +88,5 @@ class EfficientAnimatedContent extends ByteEfficiencyAudit {
   }
 }
 
-module.exports = EfficientAnimatedContent;
-module.exports.UIStrings = UIStrings;
+export default EfficientAnimatedContent;
+export {UIStrings};

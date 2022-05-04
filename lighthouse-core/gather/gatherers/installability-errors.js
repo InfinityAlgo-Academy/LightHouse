@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const log = require('lighthouse-logger');
-const FRGatherer = require('../../fraggle-rock/gather/base-gatherer.js');
+import log from 'lighthouse-logger';
+import FRGatherer from '../../fraggle-rock/gather/base-gatherer.js';
 
 class InstallabilityErrors extends FRGatherer {
   /** @type {LH.Gatherer.GathererMeta} */
@@ -45,4 +45,4 @@ class InstallabilityErrors extends FRGatherer {
   }
 }
 
-module.exports = InstallabilityErrors;
+export default InstallabilityErrors;

@@ -6,7 +6,7 @@
 
 'use strict';
 
-const fs = require('fs');
+import fs from 'fs';
 
 /**
  * @fileoverview Helper functions to transform an LHR into a proto-ready LHR.
@@ -127,7 +127,7 @@ if (require.main === module) {
     fs.writeFileSync(output, JSON.stringify(report), 'utf-8');
   }
 } else {
-  module.exports = {
+  export default {
     processForProto,
   };
 }
