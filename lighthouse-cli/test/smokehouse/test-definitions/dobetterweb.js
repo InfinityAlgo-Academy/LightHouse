@@ -307,6 +307,7 @@ const expectations = {
         },
       },
       'deprecations': {
+        // see https://github.com/GoogleChrome/lighthouse/issues/13895
         score: 0,
         details: {
           items: [
@@ -319,6 +320,7 @@ const expectations = {
                 line: '>0',
                 column: 9,
               },
+              subItems: undefined,
             },
             {
               _maxChromiumVersion: '103.0.5017.0',
@@ -330,6 +332,7 @@ const expectations = {
                 line: '>0',
                 column: 6,
               },
+              subItems: undefined,
             },
           ],
         },

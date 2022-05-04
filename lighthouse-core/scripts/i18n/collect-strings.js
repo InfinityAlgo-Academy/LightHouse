@@ -653,6 +653,15 @@ function resolveMessageCollisions(strings) {
 
   try {
     expect(collidingMessages).toEqual([
+      '$MARKDOWN_SNIPPET_0$ is deprecated. Please use $MARKDOWN_SNIPPET_1$ instead.',
+      '$MARKDOWN_SNIPPET_0$ is deprecated. Please use $MARKDOWN_SNIPPET_1$ instead.',
+      '$MARKDOWN_SNIPPET_0$ is deprecated. Please use $MARKDOWN_SNIPPET_1$ instead.',
+      '$MARKDOWN_SNIPPET_0$ is deprecated. Please use $MARKDOWN_SNIPPET_1$ instead.',
+      '$MARKDOWN_SNIPPET_0$ is deprecated. Please use $MARKDOWN_SNIPPET_1$ instead.',
+      '$MARKDOWN_SNIPPET_0$ is deprecated. Please use $MARKDOWN_SNIPPET_1$ instead.',
+      '$MARKDOWN_SNIPPET_0$ is deprecated. Please use $MARKDOWN_SNIPPET_1$ instead.',
+      '$MARKDOWN_SNIPPET_0$ is deprecated. Please use $MARKDOWN_SNIPPET_1$ or $MARKDOWN_SNIPPET_2$ instead.',
+      '$MARKDOWN_SNIPPET_0$ is deprecated. Please use $MARKDOWN_SNIPPET_1$ or $MARKDOWN_SNIPPET_2$ instead.',
       'ARIA $MARKDOWN_SNIPPET_0$ elements do not have accessible names.',
       'ARIA $MARKDOWN_SNIPPET_0$ elements do not have accessible names.',
       'ARIA $MARKDOWN_SNIPPET_0$ elements do not have accessible names.',
@@ -674,6 +683,8 @@ function resolveMessageCollisions(strings) {
       'Name',
       'Potential Savings',
       'Potential Savings',
+      'Triggering $MARKDOWN_SNIPPET_0$ from cross origin iframes has been deprecated and will be removed in the future.',
+      'Triggering $MARKDOWN_SNIPPET_0$ from cross origin iframes has been deprecated and will be removed in the future.',
       'Use the $MARKDOWN_SNIPPET_0$ component and set the appropriate $MARKDOWN_SNIPPET_1$. $LINK_START_0$Learn more$LINK_END_0$.',
       'Use the $MARKDOWN_SNIPPET_0$ component and set the appropriate $MARKDOWN_SNIPPET_1$. $LINK_START_0$Learn more$LINK_END_0$.',
     ]);

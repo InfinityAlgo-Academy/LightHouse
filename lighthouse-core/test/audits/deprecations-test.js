@@ -45,6 +45,14 @@ describe('Deprecations audit', () => {
               columnNumber: 100,
             },
           },
+          {
+            type: 'EventPath',
+            sourceCodeLocation: {
+              url: URL,
+              lineNumber: 100,
+              columnNumber: 100,
+            },
+          },
         ],
       },
       SourceMaps: [],
@@ -52,11 +60,22 @@ describe('Deprecations audit', () => {
     }, context);
 
     assert.equal(auditResult.score, 0);
-    expect(auditResult.displayValue).toBeDisplayString('2 warnings found');
-    assert.equal(auditResult.details.items.length, 2);
+    expect(auditResult.displayValue).toBeDisplayString('3 warnings found');
+    assert.equal(auditResult.details.items.length, 3);
     assert.equal(auditResult.details.items[0].value, 'Deprecation message 123');
     assert.equal(auditResult.details.items[0].source.url, URL);
     assert.equal(auditResult.details.items[0].source.line, 123);
     assert.equal(auditResult.details.items[0].source.column, 99);
+    assert.equal(auditResult.details.items[1].value, 'Deprecation message 456');
+    expect(auditResult.details.items[2].value).toBeDisplayString(
+      '`Event.path` is deprecated and will be removed. Please use `Event.composedPath()` instead.');
+    expect(auditResult.details.items[2].subItems.items[0]).toMatchObject({
+      text: expect.toBeDisplayString('Check the feature status page for more details.'),
+      url: 'https://chromestatus.com/feature/5726124632965120',
+    });
+    expect(auditResult.details.items[2].subItems.items[1]).toMatchObject({
+      text: expect.toBeDisplayString('This change will go into effect with milestone 109.'),
+      url: 'https://chromiumdash.appspot.com/schedule',
+    });
   });
 });
