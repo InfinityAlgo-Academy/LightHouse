@@ -5,13 +5,13 @@
  */
 'use strict';
 
-const assert = require('assert').strict;
+import {strict as assert} from 'assert';
 
-const Responsiveness = require('../../../computed/metrics/responsiveness.js');
-const createTestTrace = require('../../create-test-trace.js');
+import Responsiveness from '../../../computed/metrics/responsiveness.js';
+import createTestTrace from '../../create-test-trace.js';
 
-const interactionTrace = require('../../fixtures/traces/timespan-responsiveness-m103.trace.json');
-const noInteractionTrace = require('../../fixtures/traces/frame-metrics-m89.json');
+import interactionTrace from '../../fixtures/traces/timespan-responsiveness-m103.trace.json';
+import noInteractionTrace from '../../fixtures/traces/frame-metrics-m89.json';
 
 /* eslint-env jest */
 

@@ -5,10 +5,10 @@
  */
 'use strict';
 
-const ExperimentalInteractionToNextPaint =
-    require('../../../audits/metrics/experimental-interaction-to-next-paint.js');
-const interactionTrace = require('../../fixtures/traces/timespan-responsiveness-m103.trace.json');
-const noInteractionTrace = require('../../fixtures/traces/jumpy-cls-m90.json');
+import ExperimentalInteractionToNextPaint from
+  '../../../audits/metrics/experimental-interaction-to-next-paint.js';
+import interactionTrace from '../../fixtures/traces/timespan-responsiveness-m103.trace.json';
+import noInteractionTrace from '../../fixtures/traces/jumpy-cls-m90.json';
 
 /* eslint-env jest */
 
