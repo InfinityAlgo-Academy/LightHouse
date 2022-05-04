@@ -14,6 +14,7 @@ const NetworkRecords = require('../computed/network-records.js');
 const MainThreadTasks = require('../lib/tracehouse/main-thread-tasks.js');
 const {taskGroups} = require('../lib/tracehouse/task-groups.js');
 const LHError = require('../lib/lh-error.js');
+const TraceProcessor = require('../lib/tracehouse/trace-processor.js');
 
 // The subset of EventTiming/EventDispatch events we care about.
 /** @typedef {'keydown'|'keypress'|'keyup'|'mousedown'|'mouseup'|'pointerdown'|'pointerup'|'click'} EventTimingType */
@@ -67,67 +68,58 @@ class WorkDuringInteraction extends Audit {
    * TODO: this doesn't try to match inputs to interactions and break ties if more than
    * one interaction had this duration by returning the first found.
    * @param {ResponsivenessEvent} responsivenessEvent
-   * @param {Array<LH.TraceEvent>} interactionEvents
+   * @param {LH.Trace} trace
    * @return {EventTimingEvent}
    */
-  static findInteractionEvent(responsivenessEvent, interactionEvents) {
-    const {frame, data: {maxDuration, interactionType}} = responsivenessEvent.args;
-    const candidates = interactionEvents.filter(/** @return {evt is EventTimingEvent} */ evt => {
-      return evt.name === 'EventTiming';
+  static findInteractionEvent(responsivenessEvent, {traceEvents}) {
+    const candidates = traceEvents.filter(/** @return {evt is EventTimingEvent} */ evt => {
+      if (evt.name !== 'EventTiming') return false;
+      if (evt.args.frame !== responsivenessEvent.args.frame) return false;
+      return true;
     });
 
-    let interactionEvent;
+    const {data: {maxDuration, interactionType}} = responsivenessEvent.args;
+    let bestMatchEvent;
     let minDurationDiff = Number.POSITIVE_INFINITY;
     for (const candidate of candidates) {
-      const {frame: candidateFrame, data: {type, duration}} = candidate.args;
-
-      // Must be same-frame.
-      if (candidateFrame !== frame) continue;
-
-      // Check if type is compatible with responsiveness interactionType.
-      switch (interactionType) {
-        case 'keyboard': {
-          if (!KEYBOARD_EVENTS.has(type)) continue;
-          break;
-        }
-        case 'tapOrClick':
-        case 'drag': {
-          if (!CLICK_TAP_DRAG_EVENTS.has(type)) continue;
-          break;
-        }
-        default:
-          throw new Error(`unexpected responsiveness interactionType '${interactionType}'`);
+      const {type, duration} = candidate.args.data;
+      // Discard if type is incompatible with responsiveness interactionType.
+      if (interactionType === 'keyboard') {
+        if (!KEYBOARD_EVENTS.has(type)) continue;
+      } else if (interactionType === 'tapOrClick' || interactionType === 'drag') {
+        if (!CLICK_TAP_DRAG_EVENTS.has(type)) continue;
+      } else {
+        throw new Error(`unexpected responsiveness interactionType '${interactionType}'`);
       }
 
       const durationDiff = Math.abs(duration - maxDuration);
       if (durationDiff < minDurationDiff) {
-        interactionEvent = candidate;
+        bestMatchEvent = candidate;
         minDurationDiff = durationDiff;
       }
     }
 
-    if (!interactionEvent) {
+    if (!bestMatchEvent) {
       throw new Error(`no interaction event found for responsiveness type '${interactionType}'`);
     }
     if (minDurationDiff > 2) {
       // throw new Error(`no interaction event found within 2ms of responsiveness maxDuration (max: ${maxDuration}, closest ${interactionEvent.args.data.duration})`); // eslint-disable-line max-len
       // TODO: seems to regularly happen up to 3ms and as high as 4
-      console.warn(`no interaction event found within 2ms of responsiveness maxDuration (max: ${maxDuration}, closest ${interactionEvent.args.data.duration})`); // eslint-disable-line max-len
+      console.warn(`no interaction event found within 2ms of responsiveness maxDuration (max: ${maxDuration}, closest ${bestMatchEvent.args.data.duration})`); // eslint-disable-line max-len
     }
 
-    return interactionEvent;
+    return bestMatchEvent;
   }
 
   /**
    * TODO: extract shared methods from bootup-time instead of copy/pasting them here.
    * @param {EventTimingEvent} interactionEvent
-   * @param {Array<LH.TraceEvent>} mainThreadEvents
-   * @param {LH.Artifacts.ProcessedTrace['frames']} frames
-   * @param {LH.TraceEvent} timeOriginEvt
+   * @param {LH.Trace} trace
    * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
+   * @param {LH.Audit.Context} context
    * @return {Promise<Array<LH.Audit.Details.TableItem>>}
    */
-  static async mainThreadBreakdown(interactionEvent, mainThreadEvents, frames, timeOriginEvt, networkRecords) {
+  static async mainThreadBreakdown(interactionEvent, trace, networkRecords, context) {
     // These trace events, when not triggered by a script inside a particular task, are just general Chrome overhead.
     const BROWSER_TASK_NAMES_SET = new Set([
       'CpuProfiler::StartProfiling',
@@ -251,6 +243,11 @@ class WorkDuringInteraction extends Audit {
       }
     }
 
+    // frames is only used for URL attribution, so can include all frames, even if OOPIF.
+    const {frames, timeOriginEvt} = await ProcessedTrace.request(trace, context);
+
+    // TODO(bckenny): need to find *frame* navStart. This is wrong for frames
+    // that loaded more than a tiny bit later.
     // Get the time relative to navStart (which won't exist in a timespan trace).
     // Only supported in 103.0.5040.0+.
     let navStartTs;
@@ -261,10 +258,15 @@ class WorkDuringInteraction extends Audit {
       navStartTs = timeOriginEvt.ts - timeOriginEvt.args.startTime * 1000;
     } else {
       throw new LHError(
-LHError.errors.UNSUPPORTED_OLD_CHROME,
+        LHError.errors.UNSUPPORTED_OLD_CHROME,
         {featureName: 'timestamped user-timing trace events'}
       );
     }
+
+    // Limit to interactionEvent's thread.
+    const threadEvents = TraceProcessor.filteredTraceSort(trace.traceEvents, evt => {
+      return evt.pid === interactionEvent.pid && evt.tid === interactionEvent.tid;
+    });
 
     const jsURLs = getJavaScriptURLs(networkRecords);
 
@@ -282,9 +284,7 @@ LHError.errors.UNSUPPORTED_OLD_CHROME,
     /** @type {LH.Audit.Details.TableItem[]} */
     const items = [];
     for (const phase of phases) {
-      // TODO: see note below about mainThreadEvents/frames for oopif situations.
-      // const clippedEvents = clipEventsByTs(mainThreadEvents, phase.start, phase.end);
-      const tasks = await MainThreadTasks.getMainThreadTasks(mainThreadEvents, frames, phase.end);
+      const tasks = await MainThreadTasks.getMainThreadTasks(threadEvents, frames, phase.end);
       // Clip tasks to start and end time.
       clipTasksByTs(tasks, phase.start, phase.end);
       const executionTimings = getExecutionTimingsByURL(tasks, jsURLs);
@@ -353,23 +353,16 @@ LHError.errors.UNSUPPORTED_OLD_CHROME,
     if (responsivenessEvent === null) {
       return {score: null, notApplicable: true};
     }
-
-    // TODO: if frame is OOPIF, can't use mainThreadEvents for this and need to trim `frames`.
-    const {
-      frameTreeEvents,
-      frames,
-      mainThreadEvents,
-      timeOriginEvt,
-    } = await ProcessedTrace.request(trace, context);
-    const interactionEvent = WorkDuringInteraction.findInteractionEvent(
-        responsivenessEvent, frameTreeEvents);
+    const interactionEvent = WorkDuringInteraction.findInteractionEvent(responsivenessEvent, trace);
     // console.log('responsivenessEvent', responsivenessEvent);
     // console.log('interactionEvent', interactionEvent);
 
+    // Network records will usually be empty for timespans.
     const devtoolsLog = artifacts.devtoolsLogs[WorkDuringInteraction.DEFAULT_PASS];
     const networkRecords = await NetworkRecords.request(devtoolsLog, context);
+
     const items = await WorkDuringInteraction.mainThreadBreakdown(
-      interactionEvent, mainThreadEvents, frames, timeOriginEvt, networkRecords);
+          interactionEvent, trace, networkRecords, context);
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
