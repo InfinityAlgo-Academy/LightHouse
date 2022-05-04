@@ -65,13 +65,13 @@ const expectations = {
         displayValue: '10 requests • 165 KiB',
         details: {
           items: [
-            {resourceType: 'total', requestCount: 10, transferSize: '168000±1000'},
-            {resourceType: 'font', requestCount: 2, transferSize: '81000±1000'},
-            {resourceType: 'script', requestCount: 3, transferSize: '55000±1000'},
-            {resourceType: 'image', requestCount: 2, transferSize: '28000±1000'},
-            {resourceType: 'document', requestCount: 1, transferSize: '2200±150'},
-            {resourceType: 'other', requestCount: 1, transferSize: '1030±100'},
-            {resourceType: 'stylesheet', requestCount: 1, transferSize: '450±100'},
+            {resourceType: 'total', requestCount: 10, transferSize: '168521±1000'},
+            {resourceType: 'font', requestCount: 2, transferSize: '81096±1000'},
+            {resourceType: 'script', requestCount: 3, transferSize: '55170±1000'},
+            {resourceType: 'image', requestCount: 2, transferSize: '28359±1000'},
+            {resourceType: 'document', requestCount: 1, transferSize: '2283±150'},
+            {resourceType: 'other', requestCount: 1, transferSize: '1085±100'},
+            {resourceType: 'stylesheet', requestCount: 1, transferSize: '528±100'},
             {resourceType: 'media', requestCount: 0, transferSize: 0},
             {resourceType: 'third-party', requestCount: 0, transferSize: 0},
           ],
@@ -85,27 +85,27 @@ const expectations = {
             {
               resourceType: 'total',
               countOverBudget: '2 requests',
-              sizeOverBudget: '66000±1000',
+              sizeOverBudget: '66121±1000',
             },
             {
               resourceType: 'script',
               countOverBudget: '2 requests',
-              sizeOverBudget: '25000±1000',
+              sizeOverBudget: '24450±1000',
             },
             {
               resourceType: 'font',
               countOverBudget: undefined,
-              sizeOverBudget: '4000±500',
+              sizeOverBudget: '4296±500',
             },
             {
               resourceType: 'document',
               countOverBudget: '1 request',
-              sizeOverBudget: '1250±50',
+              sizeOverBudget: '1259±50',
             },
             {
               resourceType: 'stylesheet',
               countOverBudget: undefined,
-              sizeOverBudget: '450±100',
+              sizeOverBudget: '528±100',
             },
             {
               resourceType: 'image',
