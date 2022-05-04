@@ -9,12 +9,12 @@ const Audit = require('./audit.js');
 const ComputedResponsivenes = require('../computed/metrics/responsiveness.js');
 const ProcessedTrace = require('../computed/processed-trace.js');
 const i18n = require('../lib/i18n/i18n.js');
-const NetworkRequest = require('../lib/network-request.js');
 const NetworkRecords = require('../computed/network-records.js');
 const MainThreadTasks = require('../lib/tracehouse/main-thread-tasks.js');
 const {taskGroups} = require('../lib/tracehouse/task-groups.js');
 const LHError = require('../lib/lh-error.js');
 const TraceProcessor = require('../lib/tracehouse/trace-processor.js');
+const {getExecutionTimingsByURL} = require('../lib/tracehouse/task-summary.js');
 
 // The subset of EventTiming/EventDispatch events we care about.
 /** @typedef {'keydown'|'keypress'|'keyup'|'mousedown'|'mouseup'|'pointerdown'|'pointerup'|'click'} EventTimingType */
@@ -24,7 +24,7 @@ const TraceProcessor = require('../lib/tracehouse/trace-processor.js');
 /** @typedef {import('../lib/tracehouse/main-thread-tasks.js').TaskNode} TaskNode */
 
 const MAX_DURATION_THRESHOLD = 100;
-const TASK_THRESHOLD = 10;
+const TASK_THRESHOLD = 1;
 const KEYBOARD_EVENTS = new Set(['keydown', 'keypress', 'keyup']);
 const CLICK_TAP_DRAG_EVENTS = new Set([
   'mousedown', 'mouseup', 'pointerdown', 'pointerup', 'click']);
@@ -36,6 +36,10 @@ const UIStrings = {
   failureTitle: 'Minimize work during interactions',
   /** Description of the work-during-interaction metric. This description is displayed within a tooltip when the user hovers on the metric name to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'These were the main-thread tasks that blocked during an interaction. [Learn more](https://web.dev/inp/).',
+  inputDelay: 'Input Delay',
+  processingDelay: 'Processing Delay',
+  presentationDelay: 'Presentation Delay',
+
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
@@ -112,137 +116,69 @@ class WorkDuringInteraction extends Audit {
   }
 
   /**
-   * TODO: extract shared methods from bootup-time instead of copy/pasting them here.
+   * @param {TaskNode} task
+   * @param {TaskNode|undefined} parent
+   * @param {number} startTs
+   * @param {number} endTs
+   * @return {number}
+   */
+  static recursivelyClipTasks(task, parent, startTs, endTs) {
+    const taskEventStart = task.event.ts;
+    const taskEventEnd = task.endEvent?.ts ?? task.event.ts + Number(task.event.dur || 0);
+
+    task.startTime = Math.max(startTs, Math.min(endTs, taskEventStart)) / 1000;
+    task.endTime = Math.max(startTs, Math.min(endTs, taskEventEnd)) / 1000;
+    task.duration = task.endTime - task.startTime;
+
+    const childTime = task.children
+      .map(child => WorkDuringInteraction.recursivelyClipTasks(child, task, startTs, endTs))
+      .reduce((sum, child) => sum + child, 0);
+    task.selfTime = task.duration - childTime;
+    return task.duration;
+  }
+
+  /**
+   * Clip the tasks by the start and end points. Take the easy route and drop
+   * to duration 0 if out of bounds, since only durations are needed in the
+   * end (for now).
+   * Assumes owned tasks, so modifies in place. Can be called multiple times on
+   * the same `tasks` because always computed from original event timing.
+   * @param {Array<TaskNode>} tasks
+   * @param {number} startTs
+   * @param {number} endTs
+   */
+  static clipTasksByTs(tasks, startTs, endTs) {
+    for (const task of tasks) {
+      if (task.parent) continue;
+      WorkDuringInteraction.recursivelyClipTasks(task, undefined, startTs, endTs);
+    }
+  }
+
+  /**
+   * @param {number} navStartTs
+   * @param {EventTimingEvent} interactionEvent
+   */
+  static getPhaseTimes(navStartTs, interactionEvent) {
+    const interactionData = interactionEvent.args.data;
+    const startTs = navStartTs + interactionEvent.args.data.timeStamp * 1000;
+    const processingStartTs = navStartTs + interactionData.processingStart * 1000;
+    const processingEndTs = navStartTs + interactionData.processingEnd * 1000;
+    const endTs = startTs + interactionData.duration * 1000;
+    return {
+      inputDelay: {startTs, endTs: processingStartTs},
+      processingDelay: {startTs: processingStartTs, endTs: processingEndTs},
+      presentationDelay: {startTs: processingEndTs, endTs},
+    };
+  }
+
+  /**
    * @param {EventTimingEvent} interactionEvent
    * @param {LH.Trace} trace
    * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
    * @param {LH.Audit.Context} context
-   * @return {Promise<Array<LH.Audit.Details.TableItem>>}
+   * @return {Promise<{items: Array<LH.Audit.Details.TableItem>, navStartTs: number, phases: Record<string, {startTs: number, endTs: number}>}>}
    */
   static async mainThreadBreakdown(interactionEvent, trace, networkRecords, context) {
-    // These trace events, when not triggered by a script inside a particular task, are just general Chrome overhead.
-    const BROWSER_TASK_NAMES_SET = new Set([
-      'CpuProfiler::StartProfiling',
-    ]);
-
-    // These trace events, when not triggered by a script inside a particular task, are GC Chrome overhead.
-    const BROWSER_GC_TASK_NAMES_SET = new Set([
-      'V8.GCCompactor',
-      'MajorGC',
-      'MinorGC',
-    ]);
-
-    /**
-     * @param {LH.Artifacts.NetworkRequest[]} records
-     */
-    function getJavaScriptURLs(records) {
-      /** @type {Set<string>} */
-      const urls = new Set();
-      for (const record of records) {
-        if (record.resourceType === NetworkRequest.TYPES.Script) {
-          urls.add(record.url);
-        }
-      }
-
-      return urls;
-    }
-
-    /**
-     * @param {LH.Artifacts.TaskNode} task
-     * @param {Set<string>} jsURLs
-     * @return {string}
-     */
-    function getAttributableURLForTask(task, jsURLs) {
-      const jsURL = task.attributableURLs.find(url => jsURLs.has(url));
-      const fallbackURL = task.attributableURLs[0];
-      let attributableURL = jsURL || fallbackURL;
-      // If we can't find what URL was responsible for this execution, attribute it to the root page
-      // or Chrome depending on the type of work.
-      if (!attributableURL || attributableURL === 'about:blank') {
-        if (BROWSER_TASK_NAMES_SET.has(task.event.name)) attributableURL = 'Browser';
-        else if (BROWSER_GC_TASK_NAMES_SET.has(task.event.name)) attributableURL = 'Browser GC';
-        else attributableURL = 'Unattributable';
-      }
-
-      return attributableURL;
-    }
-
-    /**
-     * @param {LH.Artifacts.TaskNode[]} tasks
-     * @param {Set<string>} jsURLs
-     * @return {Map<string, Object<string, number>>}
-     */
-    function getExecutionTimingsByURL(tasks, jsURLs) {
-      /** @type {Map<string, Object<string, number>>} */
-      const result = new Map();
-
-      for (const task of tasks) {
-        const attributableURL = getAttributableURLForTask(task, jsURLs);
-        const timingByGroupId = result.get(attributableURL) || {};
-        const originalTime = timingByGroupId[task.group.id] || 0;
-        timingByGroupId[task.group.id] = originalTime + task.selfTime;
-        result.set(attributableURL, timingByGroupId);
-      }
-
-      return result;
-    }
-
-    /**
-     * From tracehouse/main-thread-tasks.js
-     * @param {TaskNode} task
-     * @param {TaskNode|undefined} parent
-     * @return {number}
-     */
-    function computeRecursiveSelfTime(task, parent) {
-      if (parent && task.endTime > parent.endTime) {
-        throw new Error('Fatal trace logic error - child cannot end after parent');
-      }
-
-      const childTime = task.children
-        .map(child => MainThreadTasks._computeRecursiveSelfTime(child, task))
-        .reduce((sum, child) => sum + child, 0);
-      task.selfTime = task.duration - childTime;
-      return task.duration;
-    }
-
-    /**
-     * Clip the tasks by the start and end points. Take the easy route and drop
-     * to duration 0 if out of bounds, since only durations are needed in the
-     * end (for now).
-     * Assumes owned tasks, so modifies in place.
-     * @param {Array<TaskNode>} tasks
-     * @param {number} start
-     * @param {number} end
-     */
-    function clipTasksByTs(tasks, start, end) {
-      for (const task of tasks) {
-        const taskEventStart = task.event.ts;
-        const taskEventEnd = task.endEvent?.ts ?? task.event.ts + Number(task.event.dur || 0);
-
-        task.startTime = Math.max(start, Math.min(end, taskEventStart));
-        task.endTime = Math.max(start, Math.min(end, taskEventEnd));
-        task.duration = task.endTime - task.startTime;
-      }
-
-      for (const task of tasks) {
-        if (task.parent) continue;
-        computeRecursiveSelfTime(task, undefined);
-      }
-
-      const firstTs = (tasks[0] || {startTime: 0}).startTime;
-      for (const task of tasks) {
-        task.startTime = (task.startTime - firstTs) / 1000;
-        task.endTime = (task.endTime - firstTs) / 1000;
-        task.duration /= 1000;
-        task.selfTime /= 1000;
-
-        // Check that we have selfTime which captures all other timing data.
-        if (!Number.isFinite(task.selfTime)) {
-          throw new Error('Invalid task timing data');
-        }
-      }
-    }
-
     // frames is only used for URL attribution, so can include all frames, even if OOPIF.
     const {frames, timeOriginEvt} = await ProcessedTrace.request(trace, context);
 
@@ -267,33 +203,26 @@ class WorkDuringInteraction extends Audit {
     const threadEvents = TraceProcessor.filteredTraceSort(trace.traceEvents, evt => {
       return evt.pid === interactionEvent.pid && evt.tid === interactionEvent.tid;
     });
+    const traceEndTs = threadEvents.reduce((endTs, evt) => {
+      return Math.max(evt.ts + (evt.dur || 0), endTs);
+    }, 0);
+    const threadTasks = await MainThreadTasks.getMainThreadTasks(threadEvents, frames, traceEndTs);
 
-    const jsURLs = getJavaScriptURLs(networkRecords);
-
-    const interactionData = interactionEvent.args.data;
-    const startTs = navStartTs + interactionEvent.args.data.timeStamp * 1000;
-    const processingStartTs = navStartTs + interactionData.processingStart * 1000;
-    const processingEndTs = navStartTs + interactionData.processingEnd * 1000;
-    const endTs = startTs + interactionData.duration * 1000;
-    const phases = [
-      {name: 'Input Delay', start: startTs, end: processingStartTs},
-      {name: 'Processing Delay', start: processingStartTs, end: processingEndTs},
-      {name: 'Presentation Delay', start: processingEndTs, end: endTs},
-    ];
+    const phases = WorkDuringInteraction.getPhaseTimes(navStartTs, interactionEvent);
 
     /** @type {LH.Audit.Details.TableItem[]} */
     const items = [];
-    for (const phase of phases) {
-      const tasks = await MainThreadTasks.getMainThreadTasks(threadEvents, frames, phase.end);
+    for (const [phaseName, phaseTimes] of Object.entries(phases)) {
       // Clip tasks to start and end time.
-      clipTasksByTs(tasks, phase.start, phase.end);
-      const executionTimings = getExecutionTimingsByURL(tasks, jsURLs);
+      WorkDuringInteraction.clipTasksByTs(threadTasks, phaseTimes.startTs, phaseTimes.endTs);
+      const executionTimings = getExecutionTimingsByURL(threadTasks, networkRecords);
 
       const results = [];
       for (const [url, timingByGroupId] of executionTimings) {
         // Add up the totalExecutionTime for all the taskGroups
         let totalExecutionTimeForURL = 0;
         for (const [groupId, timespanMs] of Object.entries(timingByGroupId)) {
+          if (timespanMs === 0) continue;
           timingByGroupId[groupId] = timespanMs;
           totalExecutionTimeForURL += timespanMs;
         }
@@ -314,7 +243,7 @@ class WorkDuringInteraction extends Audit {
       }
 
       const filteredResults = results
-        .filter(result => result.total > 1)
+        .filter(result => result.total > TASK_THRESHOLD)
         .sort((a, b) => b.total - a.total);
       if (filteredResults.length === 0) {
         // Add back so at least one entry is in there. Probably can just drop the (parent) item instead.
@@ -322,8 +251,8 @@ class WorkDuringInteraction extends Audit {
       }
 
       items.push({
-        phase: phase.name,
-        total: (phase.end - phase.start) / 1000,
+        phase: str_(UIStrings[/** @type {keyof UIStrings} */ (phaseName)]),
+        total: (phaseTimes.endTs - phaseTimes.startTs) / 1000,
         subItems: {
           type: 'subitems',
           items: filteredResults,
@@ -331,7 +260,11 @@ class WorkDuringInteraction extends Audit {
       });
     }
 
-    return items;
+    return {
+      items,
+      navStartTs,
+      phases,
+    };
   }
 
   /**
@@ -361,7 +294,7 @@ class WorkDuringInteraction extends Audit {
     const devtoolsLog = artifacts.devtoolsLogs[WorkDuringInteraction.DEFAULT_PASS];
     const networkRecords = await NetworkRecords.request(devtoolsLog, context);
 
-    const items = await WorkDuringInteraction.mainThreadBreakdown(
+    const {phases, navStartTs, items} = await WorkDuringInteraction.mainThreadBreakdown(
           interactionEvent, trace, networkRecords, context);
 
     /** @type {LH.Audit.Details.Table['headings']} */
@@ -377,7 +310,15 @@ class WorkDuringInteraction extends Audit {
 
     return {
       score: responsivenessEvent.args.data.maxDuration < MAX_DURATION_THRESHOLD ? 1 : 0,
-      details: Audit.makeTableDetails(headings, items),
+      details: {
+        ...Audit.makeTableDetails(headings, items),
+        debugData: {
+          type: 'debugdata',
+          interactionType: interactionEvent.args.data.type,
+          navStartTs,
+          phases,
+        },
+      },
     };
   }
 }

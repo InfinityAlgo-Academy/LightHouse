@@ -37,6 +37,25 @@ describe('Interaction to Next Paint', () => {
     expect(result).toMatchInlineSnapshot(`
 Object {
   "details": Object {
+    "debugData": Object {
+      "interactionType": "mousedown",
+      "navStartTs": 218687741273,
+      "phases": Object {
+        "inputDelay": Object {
+          "endTs": 218692850273,
+          "startTs": 218692802273,
+        },
+        "presentationDelay": Object {
+          "endTs": 218693194273,
+          "startTs": 218692894273,
+        },
+        "processingDelay": Object {
+          "endTs": 218692894273,
+          "startTs": 218692850273,
+        },
+      },
+      "type": "debugdata",
+    },
     "headings": Array [
       Object {
         "itemType": "text",
@@ -90,7 +109,11 @@ Object {
     ],
     "items": Array [
       Object {
-        "phase": "Input Delay",
+        "phase": Object {
+          "formattedDefault": "Input Delay",
+          "i18nId": "lighthouse-core/audits/work-during-interaction.js | inputDelay",
+          "values": undefined,
+        },
         "subItems": Object {
           "items": Array [
             Object {
@@ -106,7 +129,11 @@ Object {
         "total": 48,
       },
       Object {
-        "phase": "Processing Delay",
+        "phase": Object {
+          "formattedDefault": "Processing Delay",
+          "i18nId": "lighthouse-core/audits/work-during-interaction.js | processingDelay",
+          "values": undefined,
+        },
         "subItems": Object {
           "items": Array [
             Object {
@@ -122,28 +149,32 @@ Object {
         "total": 44,
       },
       Object {
-        "phase": "Presentation Delay",
+        "phase": Object {
+          "formattedDefault": "Presentation Delay",
+          "i18nId": "lighthouse-core/audits/work-during-interaction.js | presentationDelay",
+          "values": undefined,
+        },
         "subItems": Object {
           "items": Array [
             Object {
               "layout": 0,
               "render": 0,
-              "scripting": 151.72700000000003,
-              "total": 167.41800000000003,
+              "scripting": 151.72699996829033,
+              "total": 167.41800001263618,
               "url": "http://localhost:10200/events.html",
             },
             Object {
               "layout": 0,
               "render": 0,
-              "scripting": 1.6839999999999997,
-              "total": 12.910000000000005,
+              "scripting": 1.683999925851822,
+              "total": 12.910000056028366,
               "url": "Unattributable",
             },
             Object {
               "layout": 0,
               "render": 0,
-              "scripting": 0.637,
-              "total": 1.061,
+              "scripting": 0.6369999945163727,
+              "total": 1.0609999895095825,
               "url": "__puppeteer_evaluation_script__",
             },
           ],
