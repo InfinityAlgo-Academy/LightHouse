@@ -114,20 +114,28 @@ class UserFlow {
     const gatherResult = await navigationGather(requestor, options);
 
     this._addGatherStep(gatherResult, options);
-
-    return gatherResult;
   }
 
   /**
    * @param {StepOptions=} stepOptions
    */
   async startNavigation(stepOptions) {
-    /** @type {Promise<LH.Gatherer.FRGatherResult>} */
+    /** @type {Promise<void>} */
     let navigatePromise;
-    const continueNavigation = await new Promise(setContinueCallback => {
-      navigatePromise = this.navigate(() => {
-        return new Promise(setContinueCallback);
-      }, stepOptions);
+
+    // This promise will resolve when the navigation setup is done and Lighthouse is waiting for a page navigation.
+    const continueNavigation = await new Promise((resolveStart, rejectStart) => {
+      // The promise in this callback will not resolve until `continueNavigation` is invoked.
+      navigatePromise = this.navigate(() => new Promise(resolveStart), stepOptions)
+        .catch(err => {
+          if (this.currentNavigation) {
+            // If the navigation already started, re-throw the error so it is emitted when `navigatePromise` is awaited.
+            throw err;
+          } else {
+            // If the navigation has not started, reject the `continueNavigation` promise so the error is thrown in `startNavigation`.
+            rejectStart(err);
+          }
+        });
     });
 
     async function endNavigation() {
@@ -141,7 +149,9 @@ class UserFlow {
   async endNavigation() {
     if (this.currentTimespan) throw new Error('Timespan already in progress');
     if (!this.currentNavigation) throw new Error('No navigation in progress');
-    return this.currentNavigation.endNavigation();
+    const result = await this.currentNavigation.endNavigation();
+    this.currentNavigation = undefined;
+    return result;
   }
 
   /**
@@ -165,8 +175,6 @@ class UserFlow {
     this.currentTimespan = undefined;
 
     this._addGatherStep(gatherResult, options);
-
-    return gatherResult;
   }
 
   /**
@@ -180,8 +188,6 @@ class UserFlow {
     const gatherResult = await snapshotGather(options);
 
     this._addGatherStep(gatherResult, options);
-
-    return gatherResult;
   }
 
   /**
