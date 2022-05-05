@@ -9,6 +9,6 @@
   ],
   "include": [
     "**/*.js",
-    "../types/global-lh.d.ts",
+    "../types/*.d.ts",
   ],
 }

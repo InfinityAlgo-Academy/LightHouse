@@ -88,7 +88,7 @@ for (const [inFilename, outFilename] of Object.entries(files)) {
       }).toString(),
     // Add some types.
     // eslint-disable-next-line max-len
-    'mappings() {': '/** @return {Array<{lineNumber: number, columnNumber: number, sourceURL?: string, sourceLineNumber, sourceColumnNumber: number, name?: string, lastColumnNumber?: number}>} */\nmappings() {',
+    'mappings() {': '/** @return {Array<{lineNumber: number, columnNumber: number, sourceURL?: string, sourceLineNumber: number, sourceColumnNumber: number, name?: string, lastColumnNumber?: number}>} */\nmappings() {',
   };
 
   // Verify that all the above code is present.
