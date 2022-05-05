@@ -23,8 +23,7 @@ describe('stack-packs lib', () => {
     const result = lighthouseStackPacksDep
       .filter(p => !stackPacksLib.stackPacksToInclude.find(p2 => p2.packId === p.id))
       .map(p => p.id);
-    // TODO: waiting for this
-    expect(result).toEqual(['ezoic']);
+    expect(result).toEqual([]);
   });
 });
 
