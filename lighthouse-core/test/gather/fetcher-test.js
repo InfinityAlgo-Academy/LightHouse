@@ -7,7 +7,6 @@
 
 /* eslint-env jest */
 
-import {jest} from '@jest/globals';
 import Connection from '../../gather/connections/connection.js';
 import {fnAny, mockCommands} from '../test-utils.js';
 
@@ -28,14 +27,6 @@ beforeAll(async () => {
   Fetcher = (await import('../../gather/fetcher.js')).default;
 });
 
-/** @type {number} */
-let browserMilestone;
-jest.mock('../../gather/driver/environment.js', () => ({
-  getBrowserVersion: fnAny().mockImplementation(() => {
-    return Promise.resolve({milestone: browserMilestone});
-  }),
-}));
-
 /** @type {Connection} */
 let connectionStub;
 /** @type {Driver} */
@@ -46,37 +37,7 @@ let fetcher;
 beforeEach(() => {
   connectionStub = new Connection();
   driver = new Driver(connectionStub);
-  fetcher = new Fetcher(driver.defaultSession, driver.executionContext);
-  browserMilestone = 92;
-});
-
-describe('.fetchResource', () => {
-  beforeEach(() => {
-    fetcher._enabled = true;
-    fetcher._fetchResourceOverProtocol = fnAny().mockReturnValue(Promise.resolve('PROTOCOL'));
-    fetcher._fetchResourceIframe = fnAny().mockReturnValue(Promise.resolve('IFRAME'));
-  });
-
-  it('throws if fetcher not enabled', async () => {
-    fetcher._enabled = false;
-    const resultPromise = fetcher.fetchResource('https://example.com');
-    await expect(resultPromise).rejects.toThrow(/Must call `enable`/);
-  });
-
-  it('calls fetchResourceOverProtocol in newer chrome', async () => {
-    const result = await fetcher.fetchResource('https://example.com');
-    expect(result).toEqual('PROTOCOL');
-    expect(fetcher._fetchResourceOverProtocol).toHaveBeenCalled();
-    expect(fetcher._fetchResourceIframe).not.toHaveBeenCalled();
-  });
-
-  it('calls fetchResourceIframe in chrome before M92', async () => {
-    browserMilestone = 91;
-    const result = await fetcher.fetchResource('https://example.com');
-    expect(result).toEqual('IFRAME');
-    expect(fetcher._fetchResourceOverProtocol).not.toHaveBeenCalled();
-    expect(fetcher._fetchResourceIframe).toHaveBeenCalled();
-  });
+  fetcher = new Fetcher(driver.defaultSession);
 });
 
 describe('._readIOStream', () => {

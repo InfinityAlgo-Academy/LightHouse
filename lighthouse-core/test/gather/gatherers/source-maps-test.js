@@ -48,9 +48,7 @@ describe('SourceMaps gatherer', () => {
     const sendCommandMock = createMockSendCommandFn()
       .mockResponse('Debugger.enable', {})
       .mockResponse('Debugger.disable', {})
-      .mockResponse('Network.enable', {})
-      .mockResponse('Fetch.enable', {})
-      .mockResponse('Fetch.disable', {});
+      .mockResponse('Network.enable', {});
     const fetchMock = fnAny();
 
     for (const mapAndEvents of mapsAndEvents) {
