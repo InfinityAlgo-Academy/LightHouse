@@ -1,22 +1,24 @@
 #!/usr/bin/env node
-
 /**
  * @license Copyright 2019 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 /* eslint-disable no-console */
-const fs = require('fs');
-const path = require('path');
-const swapLocale = require('../shared/localization/swap-locale.js');
-const swapFlowLocale = require('../shared/localization/swap-flow-locale.js');
-const ReportGenerator = require('../report/generator/report-generator.js');
-const {defaultSettings} = require('../lighthouse-core/config/constants.js');
-const lighthouse = require('../lighthouse-core/index.js');
-const lhr = /** @type {LH.Result} */ (require('../lighthouse-core/test/results/sample_v2.json'));
-const {LH_ROOT, readJson} = require('../root.js');
+
+import fs from 'fs';
+import path from 'path';
+
+import swapLocale from '../shared/localization/swap-locale.js';
+import swapFlowLocale from '../shared/localization/swap-flow-locale.js';
+import ReportGenerator from '../report/generator/report-generator.js';
+import {defaultSettings} from '../lighthouse-core/config/constants.js';
+import lighthouse from '../lighthouse-core/index.js';
+import {LH_ROOT, readJson} from '../root.js';
+
+/** @type {LH.Result} */
+const lhr = readJson(`${LH_ROOT}/lighthouse-core/test/results/sample_v2.json`);
 
 /** @type {LH.FlowResult} */
 const flowResult = readJson(

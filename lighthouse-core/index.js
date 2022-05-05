@@ -92,7 +92,7 @@ function generateConfig(configJson, flags) {
 
 lighthouse.legacyNavigation = legacyNavigation;
 lighthouse.generateConfig = generateConfig;
-lighthouse.getAuditList = Runner.getAuditList;
+lighthouse.getAuditList = () => Runner.getAuditList();
 lighthouse.traceCategories = Driver.traceCategories;
 lighthouse.Audit = require('./audits/audit.js');
 lighthouse.Gatherer = require('./fraggle-rock/gather/base-gatherer.js');
