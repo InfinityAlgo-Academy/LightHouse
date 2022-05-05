@@ -12,6 +12,24 @@ const {navigationGather} = require('./gather/navigation-runner.js');
 const Runner = require('../runner.js');
 const {initializeConfig} = require('./config/config.js');
 
+/**
+ * Promise that is resolved externally.
+ * @template [T=void]
+ */
+class ExternalPromise {
+  constructor() {
+    /** @type {Promise<T>} */
+    this._innerPromise = new Promise((resolve, reject) => {
+      this.resolve = resolve;
+      this.reject = reject;
+    });
+
+    this.then = this._innerPromise.then.bind(this._innerPromise);
+    this.catch = this._innerPromise.catch.bind(this._innerPromise);
+    this.finally = this._innerPromise.finally.bind(this._innerPromise);
+  }
+}
+
 /** @typedef {Parameters<snapshotGather>[0]} FrOptions */
 /** @typedef {Omit<FrOptions, 'page'> & {name?: string}} UserFlowOptions */
 /** @typedef {Omit<FrOptions, 'page'> & {stepName?: string}} StepOptions */
@@ -120,23 +138,24 @@ class UserFlow {
    * @param {StepOptions=} stepOptions
    */
   async startNavigation(stepOptions) {
-    /** @type {Promise<void>} */
-    let navigatePromise;
+    /** @type {ExternalPromise<() => void>} */
+    const setupPromise = new ExternalPromise();
 
-    // This promise will resolve when the navigation setup is done and Lighthouse is waiting for a page navigation.
-    const continueNavigation = await new Promise((resolveStart, rejectStart) => {
-      // The promise in this callback will not resolve until `continueNavigation` is invoked.
-      navigatePromise = this.navigate(() => new Promise(resolveStart), stepOptions)
-        .catch(err => {
-          if (this.currentNavigation) {
-            // If the navigation already started, re-throw the error so it is emitted when `navigatePromise` is awaited.
-            throw err;
-          } else {
-            // If the navigation has not started, reject the `continueNavigation` promise so the error is thrown in `startNavigation`.
-            rejectStart(err);
-          }
-        });
+    // The promise in this callback will not resolve until `continueNavigation` is invoked.
+    const navigatePromise = this.navigate(
+      () => new Promise(continueNav => setupPromise.resolve(continueNav)),
+      stepOptions
+    ).catch(err => {
+      if (this.currentNavigation) {
+        // If the navigation already started, re-throw the error so it is emitted when `navigatePromise` is awaited.
+        throw err;
+      } else {
+        // If the navigation has not started, reject the `setupPromise` so the error throws when it is awaited in `startNavigation`.
+        setupPromise.reject(err);
+      }
     });
+
+    const continueNavigation = await setupPromise;
 
     async function endNavigation() {
       continueNavigation();
