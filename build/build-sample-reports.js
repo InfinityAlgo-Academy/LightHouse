@@ -18,9 +18,7 @@ import lighthouse from '../lighthouse-core/index.js';
 import {LH_ROOT, readJson} from '../root.js';
 
 /** @type {LH.Result} */
-const lhr = readJson(
-  `${LH_ROOT}/lighthouse-core/test/fixtures/fraggle-rock/reports/sample_v2.json`
-);
+const lhr = readJson(`${LH_ROOT}/lighthouse-core/test/results/sample_v2.json`);
 
 /** @type {LH.FlowResult} */
 const flowResult = readJson(
