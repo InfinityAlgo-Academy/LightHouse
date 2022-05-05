@@ -142,8 +142,9 @@ class UserFlow {
     const setupPromise = new ExternalPromise();
 
     // The promise in this callback will not resolve until `continueNavigation` is invoked.
+    // This allows us to control when the navigation should wrap up.
     const navigatePromise = this.navigate(
-      () => new Promise(continueNav => setupPromise.resolve(continueNav)),
+      () => new Promise(continueNavigation => setupPromise.resolve(continueNavigation)),
       stepOptions
     ).catch(err => {
       if (this.currentNavigation) {
