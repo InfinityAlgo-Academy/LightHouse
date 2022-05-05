@@ -11,7 +11,7 @@ import cpy from 'cpy';
 import {rollup} from 'rollup';
 
 import * as rollupPlugins from './rollup-plugins.js';
-import {LH_ROOT} from '../root.js';
+import {LH_ROOT, readJson} from '../root.js';
 
 const argv = process.argv.slice(2);
 const browserBrand = argv[0];
@@ -23,7 +23,7 @@ const sourceDir = `${LH_ROOT}/clients/extension`;
 const distDir = `${LH_ROOT}/dist/extension-${browserBrand}`;
 const packagePath = `${distDir}/../extension-${browserBrand}-package`;
 
-const manifestVersion = require(`${sourceDir}/manifest.json`).version;
+const manifestVersion = readJson(`${sourceDir}/manifest.json`).version;
 
 /**
  * Bundle and minify entry point.

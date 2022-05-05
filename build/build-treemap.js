@@ -4,11 +4,14 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import fs from 'fs';
-
 import {GhPagesApp} from './gh-pages-app.js';
 import {LH_ROOT} from '../root.js';
 import {getIcuMessageIdParts} from '../shared/localization/format.js';
+import locales from '../shared/localization/locales.js';
+import {UIStrings} from '../treemap/app/src/util.js';
+import {createCommonjsRefs} from '../lighthouse-core/scripts/esm-utils.js';
+
+const {require} = createCommonjsRefs(import.meta);
 
 /**
  * Extract only the strings needed for treemap into
@@ -16,10 +19,6 @@ import {getIcuMessageIdParts} from '../shared/localization/format.js';
  * are locale codes (en-US, es, etc.) and values are localized UIStrings.
  */
 function buildStrings() {
-  const locales = require('../shared/localization/locales.js');
-  // TODO(esmodules): use dynamic import when build/ is esm.
-  const utilCode = fs.readFileSync(LH_ROOT + '/treemap/app/src/util.js', 'utf-8');
-  const {UIStrings} = eval(utilCode.replace(/export {/g, 'module.exports = {'));
   const strings = /** @type {Record<LH.Locale, string>} */ ({});
 
   for (const [locale, lhlMessages] of Object.entries(locales)) {
