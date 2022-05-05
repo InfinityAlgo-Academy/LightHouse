@@ -20,7 +20,7 @@ import PubAdsPlugin from 'lighthouse-plugin-publisher-ads/plugin.js';
 
 import * as rollupPlugins from './rollup-plugins.js';
 import Runner from '../lighthouse-core/runner.js';
-import {LH_ROOT} from '../root.js';
+import {LH_ROOT, readJson} from '../root.js';
 import {createCommonjsRefs} from '../lighthouse-core/scripts/esm-utils.js';
 
 const {require} = createCommonjsRefs(import.meta);
@@ -49,7 +49,7 @@ const today = (() => {
   const day = new Intl.DateTimeFormat('en', {day: '2-digit'}).format(date);
   return `${month} ${day} ${year}`;
 })();
-const pkg = JSON.parse(fs.readFileSync(LH_ROOT + '/package.json', 'utf-8'));
+const pkg = readJson(`${LH_ROOT}/package.json`);
 const banner = `
 /**
  * Lighthouse v${pkg.version} ${COMMIT_HASH} (${today})
@@ -124,7 +124,7 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
   }
 
   shimsObj[require.resolve('../package.json')] =
-    `export const version = ${JSON.stringify(require('../package.json').version)}`;
+    `export const version = ${pkg.version}`;
 
   const bundle = await rollup({
     input: entryPath,

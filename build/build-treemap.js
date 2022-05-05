@@ -8,6 +8,7 @@ import {GhPagesApp} from './gh-pages-app.js';
 import {LH_ROOT} from '../root.js';
 import {getIcuMessageIdParts} from '../shared/localization/format.js';
 import locales from '../shared/localization/locales.js';
+// @ts-ignore: ignore project reference error
 import {UIStrings} from '../treemap/app/src/util.js';
 import {createCommonjsRefs} from '../lighthouse-core/scripts/esm-utils.js';
 
