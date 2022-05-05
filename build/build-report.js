@@ -11,7 +11,6 @@ import * as rollupPlugins from './rollup-plugins.js';
 import {LH_ROOT} from '../root.js';
 import {getIcuMessageIdParts} from '../shared/localization/format.js';
 import locales from '../shared/localization/locales.js';
-// @ts-ignore: ignore project reference error
 import {UIStrings as FlowUIStrings} from '../flow-report/src/i18n/ui-strings.js';
 
 /**

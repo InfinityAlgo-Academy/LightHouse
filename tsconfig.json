@@ -17,7 +17,6 @@
     "lighthouse-cli/**/*.js",
     "lighthouse-core/**/*.js",
     "clients/**/*.js",
-    "build/**/*.js",
     "./types/**/*.d.ts",
     "eslint-local-rules.js",
     "third-party/axe/valid-langs.js",

@@ -1,0 +1,14 @@
+{
+  "extends": "../tsconfig-base.json",
+  "compilerOptions": {
+    "outDir": "../.tmp/tsbuildinfo/build",
+  },
+  "references": [
+    {"path": "../"},
+    {"path": "../treemap/"},
+  ],
+  "include": [
+    "**/*.js",
+    "../types/global-lh.d.ts",
+  ],
+}
