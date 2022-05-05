@@ -6,7 +6,7 @@
 'use strict';
 
 import log from 'lighthouse-logger';
-import NetworkRequest from './network-request.js';
+import {NetworkRequest} from './network-request.js';
 import {EventEmitter} from 'events';
 
 /** @typedef {'requeststarted'|'requestloaded'} NetworkRecorderEvent */
@@ -334,4 +334,4 @@ class NetworkRecorder extends EventEmitter {
   }
 }
 
-export default NetworkRecorder;
+export {NetworkRecorder};

@@ -9,9 +9,9 @@
  * URL shim so we keep our code DRY
  */
 
-import {Util} from '../util-commonjs.js';
+import {Util} from '../util-commonjs.cjs';
 
-import LHError from '../lib/lh-error.js';
+import {LighthouseError} from '../lib/lh-error.js';
 
 /** @typedef {import('./network-request.js')} NetworkRequest */
 
@@ -261,7 +261,7 @@ class URLShim extends URL {
       // Use canonicalized URL (with trailing slashes and such)
       return new URL(url).href;
     } else {
-      throw new LHError(LHError.errors.INVALID_URL);
+      throw new LighthouseError(LighthouseError.errors.INVALID_URL);
     }
   }
 }

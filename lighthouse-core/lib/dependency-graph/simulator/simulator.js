@@ -9,8 +9,10 @@ import {BaseNode} from '../base-node.js';
 import TcpConnection from './tcp-connection.js';
 import ConnectionPool from './connection-pool.js';
 import DNSCache from './dns-cache.js';
-const mobileSlow4G = require('../../../config/constants.js').throttling.mobileSlow4G;
 import SimulatorTimingMap from './simulator-timing-map.js';
+import * as constants from '../../../config/constants.js';
+
+const mobileSlow4G = constants.throttling.mobileSlow4G;
 
 /** @typedef {import('../base-node.js').Node} Node */
 /** @typedef {import('../network-node').NetworkNode} NetworkNode */

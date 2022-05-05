@@ -9,7 +9,7 @@
 
 import TapTargetsAudit from '../../../audits/seo/tap-targets.js';
 
-import constants from '../../../config/constants.js';
+import * as constants from '../../../config/constants.js';
 import {strict as assert} from 'assert';
 
 /** @param {LH.SharedFlagsSettings['formFactor']} formFactor */

@@ -8,7 +8,7 @@
 import {jest} from '@jest/globals';
 import {strict as assert} from 'assert';
 import {runLighthouseInLR} from '../../lightrider/lightrider-entry.js';
-import Runner from '../../../lighthouse-core/runner.js';
+import {Runner} from '../../../lighthouse-core/runner.js';
 import LHError from '../../../lighthouse-core/lib/lh-error.js';
 
 /* eslint-env jest */

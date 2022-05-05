@@ -6,7 +6,7 @@
 'use strict';
 
 import RenderBlockingResourcesAudit from '../../../audits/byte-efficiency/render-blocking-resources.js'; // eslint-disable-line max-len
-import constants from '../../../config/constants.js';
+import * as constants from '../../../config/constants.js';
 import NetworkNode from '../../../lib/dependency-graph/network-node.js';
 import CPUNode from '../../../lib/dependency-graph/cpu-node.js';
 import Simulator from '../../../lib/dependency-graph/simulator/simulator.js';

@@ -7,7 +7,7 @@
 
 import {jest} from '@jest/globals';
 import BaseAudit from '../../../audits/audit.js';
-import constants from '../../../config/constants.js';
+import * as constants from '../../../config/constants.js';
 import BaseGatherer from '../../../fraggle-rock/gather/base-gatherer.js';
 import {initializeConfig} from '../../../fraggle-rock/config/config.js';
 import {LH_ROOT} from '../../../../root.js';

@@ -6,9 +6,9 @@
 'use strict';
 
 import log from 'lighthouse-logger';
-import ProtocolSession from './session.js';
-import ExecutionContext from '../../gather/driver/execution-context.js';
-import Fetcher from '../../gather/fetcher.js';
+import {ProtocolSession} from './session.js';
+import {ExecutionContext} from '../../gather/driver/execution-context.js';
+import {Fetcher} from '../../gather/fetcher.js';
 
 /** @return {*} */
 const throwNotConnectedFn = () => {

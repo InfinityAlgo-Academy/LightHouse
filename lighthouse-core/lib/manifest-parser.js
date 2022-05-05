@@ -6,7 +6,7 @@
 'use strict';
 
 import URL from './url-shim.js';
-import cssParsers from 'cssstyle/lib/parsers';
+import cssParsers from 'cssstyle/lib/parsers.js';
 
 const ALLOWED_DISPLAY_VALUES = [
   'fullscreen',

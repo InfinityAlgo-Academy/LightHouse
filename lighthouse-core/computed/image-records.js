@@ -6,7 +6,7 @@
 'use strict';
 
 import URL from '../lib/url-shim.js';
-import makeComputedArtifact from './computed-artifact.js';
+import {makeComputedArtifact} from './computed-artifact.js';
 
 class ImageRecords {
   /**

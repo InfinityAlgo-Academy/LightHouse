@@ -14,6 +14,7 @@ const url = require('url');
 
 module.exports = {
   LH_ROOT: __dirname,
+  lighthouseVersion: require('./package.json').version,
   /**
    * Return parsed json object.
    * Resolves path relative to importMeta.url (if provided) or LH_ROOT (if not provided).

@@ -5,7 +5,7 @@
  */
 'use strict';
 
-import makeComputedArtifact from './computed-artifact.js';
+import {makeComputedArtifact} from './computed-artifact.js';
 import JsBundles from './js-bundles.js';
 
 const RELATIVE_SIZE_THRESHOLD = 0.1;

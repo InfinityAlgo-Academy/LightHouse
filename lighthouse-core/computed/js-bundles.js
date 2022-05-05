@@ -6,7 +6,7 @@
 'use strict';
 
 import log from 'lighthouse-logger';
-import makeComputedArtifact from './computed-artifact.js';
+import {makeComputedArtifact} from './computed-artifact.js';
 import SDK from '../lib/cdt/SDK.js';
 
 /**

@@ -149,7 +149,7 @@ async function awaitArtifacts(artifactState) {
   return artifacts;
 }
 
-export default {
+export {
   getEmptyArtifactState,
   awaitArtifacts,
   collectPhaseArtifacts,

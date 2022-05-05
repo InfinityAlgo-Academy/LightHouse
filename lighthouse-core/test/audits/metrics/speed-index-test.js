@@ -11,7 +11,7 @@ import Audit from '../../../audits/metrics/speed-index.js';
 
 import {strict as assert} from 'assert';
 const options = Audit.defaultOptions;
-import constants from '../../../config/constants.js';
+import * as constants from '../../../config/constants.js';
 import pwaTrace from '../../fixtures/traces/progressive-app-m60.json';
 import pwaDevtoolsLog from '../../fixtures/traces/progressive-app-m60.devtools.log.json';
 

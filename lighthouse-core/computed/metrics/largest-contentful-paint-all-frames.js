@@ -9,7 +9,7 @@
  * @fileoverview Computed Largest Contentful Paint (LCP) for all frames.
  */
 
-import makeComputedArtifact from '../computed-artifact.js';
+import {makeComputedArtifact} from '../computed-artifact.js';
 
 import NavigationMetric from './navigation-metric.js';
 import LHError from '../../lib/lh-error.js';

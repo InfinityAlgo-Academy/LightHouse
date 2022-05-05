@@ -7,7 +7,7 @@
 
 import path from 'path';
 import log from 'lighthouse-logger';
-import Runner from '../../runner.js';
+import {Runner} from '../../runner.js';
 import defaultConfig from './default-config.js';
 import {defaultNavigationConfig, nonSimulatedPassConfigOverrides} from '../../config/constants.js'; // eslint-disable-line max-len
 
@@ -282,4 +282,4 @@ function initializeConfig(configJSON, context) {
   return {config, warnings};
 }
 
-export default {resolveWorkingCopy, initializeConfig};
+export {resolveWorkingCopy, initializeConfig};

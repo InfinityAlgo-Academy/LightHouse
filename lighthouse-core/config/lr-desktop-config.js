@@ -5,7 +5,7 @@
  */
 'use strict';
 
-import constants from './constants.js';
+import * as constants from './constants.js';
 
 /** @type {LH.Config.Json} */
 const config = {

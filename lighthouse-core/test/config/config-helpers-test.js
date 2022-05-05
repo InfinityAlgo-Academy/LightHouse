@@ -21,7 +21,7 @@ import {
   mergeConfigFragment,
   mergeConfigFragmentArrayByKey,
 } from '../../config/config-helpers.js';
-import Runner from '../../runner.js';
+import {Runner} from '../../runner.js';
 import Gatherer from '../../gather/gatherers/gatherer.js';
 import ImageElementsGatherer from '../../gather/gatherers/image-elements.js';
 import UserTimingsAudit from '../../audits/user-timings.js';

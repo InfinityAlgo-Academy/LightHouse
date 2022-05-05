@@ -6,7 +6,7 @@
 'use strict';
 
 import Audit from '../../audits/content-width.js';
-import constants from '../../config/constants.js';
+import * as constants from '../../config/constants.js';
 import {strict as assert} from 'assert';
 
 /* eslint-env jest */

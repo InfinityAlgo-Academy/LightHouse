@@ -21,7 +21,7 @@ import DevtoolsLogGatherer from '../../../gather/gatherers/devtools-log.js';
 import TraceGatherer from '../../../gather/gatherers/trace.js';
 import toDevtoolsLog from '../../network-records-to-devtools-log.js';
 import {fnAny} from '../../test-utils.js';
-// import runner from '../../../fraggle-rock/gather/navigation-runner.js';
+// import {Runner} from '../../../fraggle-rock/gather/navigation-runner.js';
 
 // Some imports needs to be done dynamically, so that their dependencies will be mocked.
 // See: https://jestjs.io/docs/ecmascript-modules#differences-between-esm-and-commonjs

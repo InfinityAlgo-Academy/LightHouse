@@ -5,7 +5,7 @@
  */
 'use strict';
 
-import makeComputedArtifact from '../computed-artifact.js';
+import {makeComputedArtifact} from '../computed-artifact.js';
 import NavigationMetric from './navigation-metric.js';
 import LanternSpeedIndex from './lantern-speed-index.js';
 import Speedline from '../speedline.js';

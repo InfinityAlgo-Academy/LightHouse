@@ -11,7 +11,7 @@ import {jest} from '@jest/globals';
 import {createMockSession, createMockDriver} from '../../fraggle-rock/gather/mock-driver.js';
 import {flushAllTimersAndMicrotasks, fnAny} from '../../test-utils.js';
 // import prepare from '../../../gather/driver/prepare.js';
-import constants from '../../../config/constants.js';
+import * as constants from '../../../config/constants.js';
 
 // Some imports needs to be done dynamically, so that their dependencies will be mocked.
 // See: https://jestjs.io/docs/ecmascript-modules#differences-between-esm-and-commonjs

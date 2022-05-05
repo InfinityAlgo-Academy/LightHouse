@@ -7,10 +7,14 @@
 
 /* eslint-disable max-len */
 
-import constants from './constants.js';
+import * as constants from './constants.js';
 
 import i18n from '../lib/i18n/i18n.js';
 import m2a from './metrics-to-audits.js';
+
+import {createCommonjsRefs} from '../scripts/esm-utils.js';
+
+const {require} = createCommonjsRefs(import.meta);
 
 const UIStrings = {
   /** Title of the Performance category of audits. Equivalent to 'Web performance', this term is inclusive of all web page speed and loading optimization topics. Also used as a label of a score gauge; try to limit to 20 characters. */

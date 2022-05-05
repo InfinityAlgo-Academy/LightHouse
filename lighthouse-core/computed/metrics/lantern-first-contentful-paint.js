@@ -5,7 +5,7 @@
  */
 'use strict';
 
-import makeComputedArtifact from '../computed-artifact.js';
+import {makeComputedArtifact} from '../computed-artifact.js';
 import LanternMetric from './lantern-metric.js';
 import BaseNode from '../../lib/dependency-graph/base-node.js';
 

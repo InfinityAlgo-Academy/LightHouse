@@ -8,7 +8,7 @@
 import Interactive from '../../../audits/metrics/interactive.js';
 import {strict as assert} from 'assert';
 const options = Interactive.defaultOptions;
-import constants from '../../../config/constants.js';
+import * as constants from '../../../config/constants.js';
 import acceptableTrace from '../../fixtures/traces/progressive-app-m60.json';
 import acceptableDevToolsLog from '../../fixtures/traces/progressive-app-m60.devtools.log.json';
 import redirectTrace from '../../fixtures/traces/site-with-redirect.json';

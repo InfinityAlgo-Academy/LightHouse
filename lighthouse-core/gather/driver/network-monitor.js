@@ -13,8 +13,8 @@
 import log from 'lighthouse-logger';
 
 import {EventEmitter} from 'events';
-import NetworkRecorder from '../../lib/network-recorder.js';
-import NetworkRequest from '../../lib/network-request.js';
+import {NetworkRecorder} from '../../lib/network-recorder.js';
+import {NetworkRequest} from '../../lib/network-request.js';
 import URL from '../../lib/url-shim.js';
 import {TargetManager} from './target-manager.js';
 

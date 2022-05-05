@@ -5,7 +5,7 @@
  */
 'use strict';
 
-import makeComputedArtifact from './computed-artifact.js';
+import {makeComputedArtifact} from './computed-artifact.js';
 import ByteEfficiencyAudit from '../audits/byte-efficiency/byte-efficiency-audit.js';
 import NetworkRecords from './network-records.js';
 

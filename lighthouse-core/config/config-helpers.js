@@ -7,7 +7,7 @@
 
 import path from 'path';
 import isDeepEqual from 'lodash/isEqual.js';
-import constants from './constants.js';
+import * as constants from './constants.js';
 import {Budget} from './budget.js';
 import ConfigPlugin from './config-plugin.js';
 import {Runner} from '../runner.js';
@@ -576,7 +576,7 @@ function deepCloneConfigJson(json) {
   return cloned;
 }
 
-export default {
+export {
   deepClone,
   deepCloneConfigJson,
   mergeConfigFragment,

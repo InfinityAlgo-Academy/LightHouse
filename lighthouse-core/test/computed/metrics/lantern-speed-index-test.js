@@ -5,7 +5,7 @@
  */
 'use strict';
 
-import constants from '../../../config/constants.js';
+import * as constants from '../../../config/constants.js';
 import LanternSpeedIndex from '../../../computed/metrics/lantern-speed-index.js';
 import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';
 import trace from '../../fixtures/traces/progressive-app-m60.json';

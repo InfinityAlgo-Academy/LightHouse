@@ -6,7 +6,7 @@
 'use strict';
 
 import TBTAudit from '../../../audits/metrics/total-blocking-time.js';
-import constants from '../../../config/constants.js';
+import * as constants from '../../../config/constants.js';
 import trace from '../../fixtures/traces/progressive-app-m60.json';
 import devtoolsLog from '../../fixtures/traces/progressive-app-m60.devtools.log.json';
 import lcpTrace from '../../fixtures/traces/lcp-m78.json';

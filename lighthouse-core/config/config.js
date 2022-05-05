@@ -5,14 +5,13 @@
  */
 'use strict';
 
-const defaultConfigPath = './default-config.js';
 import defaultConfig from './default-config.js';
-import constants from './constants.js';
+import * as constants from './constants.js';
 import format from '../../shared/localization/format.js';
-import validation from './../fraggle-rock/config/validation.js';
+import * as validation from './../fraggle-rock/config/validation.js';
 import log from 'lighthouse-logger';
 import path from 'path';
-import Runner from '../runner.js';
+import {Runner} from '../runner.js';
 
 import {
   mergePlugins,
@@ -23,6 +22,8 @@ import {
   deepClone,
   deepCloneConfigJson,
 } from './config-helpers.js';
+
+const defaultConfigPath = './default-config.js';
 
 /** @typedef {typeof import('../gather/gatherers/gatherer.js')} GathererConstructor */
 /** @typedef {InstanceType<GathererConstructor>} Gatherer */

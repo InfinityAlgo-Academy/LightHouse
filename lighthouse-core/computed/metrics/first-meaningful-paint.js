@@ -5,7 +5,7 @@
  */
 'use strict';
 
-import makeComputedArtifact from '../computed-artifact.js';
+import {makeComputedArtifact} from '../computed-artifact.js';
 import NavigationMetric from './navigation-metric.js';
 import LHError from '../../lib/lh-error.js';
 import LanternFirstMeaningfulPaint from './lantern-first-meaningful-paint.js';

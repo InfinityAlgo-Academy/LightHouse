@@ -7,7 +7,7 @@
 
 import emulation from '../../lib/emulation.js';
 import Driver from '../../gather/driver.js';
-import constants from '../../config/constants.js';
+import * as constants from '../../config/constants.js';
 import Connection from '../../gather/connections/connection.js';
 import {createMockSendCommandFn} from '../gather/mock-commands.js';
 

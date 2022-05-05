@@ -5,7 +5,7 @@
  */
 'use strict';
 
-import NetworkRequest from '../../lib/network-request.js';
+import {NetworkRequest} from '../../lib/network-request.js';
 
 /**
  * Return the body of the response with the given ID. Rejects if getting the

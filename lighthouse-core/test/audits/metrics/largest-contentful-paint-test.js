@@ -7,7 +7,7 @@
 
 import LCPAudit from '../../../audits/metrics/largest-contentful-paint.js';
 const defaultOptions = LCPAudit.defaultOptions;
-import constants from '../../../config/constants.js';
+import * as constants from '../../../config/constants.js';
 import trace from '../../fixtures/traces/lcp-m78.json';
 import devtoolsLog from '../../fixtures/traces/lcp-m78.devtools.log.json';
 import preLcpTrace from '../../fixtures/traces/progressive-app-m60.json';

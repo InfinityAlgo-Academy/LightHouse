@@ -13,7 +13,7 @@
  * @see https://web.dev/largest-contentful-paint
  */
 
-import makeComputedArtifact from '../computed-artifact.js';
+import {makeComputedArtifact} from '../computed-artifact.js';
 
 import NavigationMetric from './navigation-metric.js';
 import LHError from '../../lib/lh-error.js';

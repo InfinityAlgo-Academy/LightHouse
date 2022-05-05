@@ -5,7 +5,7 @@
  */
 'use strict';
 
-import makeComputedArtifact from '../computed-artifact.js';
+import {makeComputedArtifact} from '../computed-artifact.js';
 import NavigationMetric from './navigation-metric.js';
 import LanternMaxPotentialFID from './lantern-max-potential-fid.js';
 import TracingProcessor from '../../lib/tracehouse/trace-processor.js';

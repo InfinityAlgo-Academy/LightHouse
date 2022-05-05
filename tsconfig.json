@@ -16,6 +16,7 @@
     "root.js",
     "lighthouse-cli/**/*.js",
     "lighthouse-core/**/*.js",
+    "lighthouse-core/util-commonjs.cjs",
     "clients/**/*.js",
     "./types/**/*.d.ts",
     "eslint-local-rules.js",
@@ -29,7 +30,7 @@
     "lighthouse-core/test/fixtures/traces/lcp-m78.devtools.log.json",
     "third-party/snyk/snapshot.json",
     "lighthouse-core/audits/byte-efficiency/polyfill-graph-data.json",
-    "shared/localization/locales/en-US.json",
+    "shared/localization/locales/en-US.json", "lighthouse-core/util-commonjs.cjs",
   ],
   "exclude": [
     "lighthouse-core/test/audits/**/*.js",

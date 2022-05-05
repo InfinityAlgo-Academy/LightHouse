@@ -11,7 +11,7 @@
  * user input in the provided trace).
  */
 
-import makeComputedArtifact from '../computed-artifact.js';
+import {makeComputedArtifact} from '../computed-artifact.js';
 
 import ProcessedTrace from '../processed-trace.js';
 

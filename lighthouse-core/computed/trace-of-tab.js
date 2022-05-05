@@ -9,7 +9,7 @@
 
 import log from 'lighthouse-logger';
 
-import makeComputedArtifact from './computed-artifact.js';
+import {makeComputedArtifact} from './computed-artifact.js';
 import ProcessedTrace from './processed-trace.js';
 import ProcessedNavigation from './processed-navigation.js';
 

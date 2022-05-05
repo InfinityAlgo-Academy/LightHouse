@@ -6,7 +6,7 @@
 'use strict';
 
 import log from 'lighthouse-logger';
-import manifestParser from '../../lib/manifest-parser.js';
+import {parseManifest} from '../../lib/manifest-parser.js';
 import FRGatherer from '../../fraggle-rock/gather/base-gatherer.js';
 
 class WebAppManifest extends FRGatherer {
@@ -83,7 +83,7 @@ class WebAppManifest extends FRGatherer {
     log.time(status);
     const response = await WebAppManifest.fetchAppManifest(session);
     if (!response) return null;
-    const manifest = manifestParser(response.data, response.url, pageUrl);
+    const manifest = parseManifest(response.data, response.url, pageUrl);
     log.timeEnd(status);
     return manifest;
   }

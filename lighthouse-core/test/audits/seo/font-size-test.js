@@ -6,7 +6,7 @@
 'use strict';
 
 import FontSizeAudit from '../../../audits/seo/font-size.js';
-import constants from '../../../config/constants.js';
+import * as constants from '../../../config/constants.js';
 import {strict as assert} from 'assert';
 
 const URL = {

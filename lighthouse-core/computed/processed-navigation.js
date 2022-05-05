@@ -5,7 +5,7 @@
  */
 'use strict';
 
-import makeComputedArtifact from './computed-artifact.js';
+import {makeComputedArtifact} from './computed-artifact.js';
 import LHTraceProcessor from '../lib/lh-trace-processor.js';
 
 class ProcessedNavigation {

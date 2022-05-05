@@ -5,7 +5,7 @@
  */
 'use strict';
 
-import ArbitraryEqualityMap from '../lib/arbitrary-equality-map.js';
+import {ArbitraryEqualityMap} from '../lib/arbitrary-equality-map.js';
 import log from 'lighthouse-logger';
 
 /**
@@ -59,4 +59,4 @@ function makeComputedArtifact(computableArtifact, keys) {
   return Object.assign(computableArtifact, {request});
 }
 
-export default makeComputedArtifact;
+export {makeComputedArtifact};

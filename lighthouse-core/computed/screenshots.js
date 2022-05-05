@@ -5,7 +5,7 @@
  */
 'use strict';
 
-import makeComputedArtifact from './computed-artifact.js';
+import {makeComputedArtifact} from './computed-artifact.js';
 
 const SCREENSHOT_TRACE_NAME = 'Screenshot';
 

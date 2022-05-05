@@ -18,7 +18,7 @@ import CumulativeLayoutShift from './cumulative-layout-shift.js';
 import SpeedIndex from './speed-index.js';
 import MaxPotentialFID from './max-potential-fid.js';
 import TotalBlockingTime from './total-blocking-time.js';
-import makeComputedArtifact from '../computed-artifact.js';
+import {makeComputedArtifact} from '../computed-artifact.js';
 
 class TimingSummary {
   /**

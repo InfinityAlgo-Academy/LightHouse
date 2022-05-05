@@ -7,7 +7,7 @@
 
 import FMPAudit from '../../../audits/metrics/first-meaningful-paint.js';
 import Audit from '../../../audits/audit.js';
-import constants from '../../../config/constants.js';
+import * as constants from '../../../config/constants.js';
 import {strict as assert} from 'assert';
 import trace from '../../fixtures/traces/progressive-app-m60.json';
 import devtoolsLogs from '../../fixtures/traces/progressive-app-m60.devtools.log.json';

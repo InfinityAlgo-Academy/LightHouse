@@ -5,7 +5,7 @@
  */
 'use strict';
 
-import constants from '../../../scripts/lantern/constants.js';
+import * as constants from '../../../scripts/lantern/constants.js';
 
 /* eslint-env jest */
 

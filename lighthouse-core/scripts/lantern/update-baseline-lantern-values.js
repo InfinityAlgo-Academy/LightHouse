@@ -13,7 +13,7 @@ import {execFileSync} from 'child_process';
 
 import prettyJSONStringify from 'pretty-json-stringify';
 
-import constants from './constants.js';
+import * as constants from './constants.js';
 import {LH_ROOT, readJson} from '../../../root.js';
 
 const INPUT_PATH = process.argv[2] || constants.SITE_INDEX_WITH_GOLDEN_PATH;

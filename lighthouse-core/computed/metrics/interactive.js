@@ -5,7 +5,7 @@
  */
 'use strict';
 
-import makeComputedArtifact from '../computed-artifact.js';
+import {makeComputedArtifact} from '../computed-artifact.js';
 import NavigationMetric from './navigation-metric.js';
 import LanternInteractive from './lantern-interactive.js';
 import NetworkMonitor from '../../gather/driver/network-monitor.js';

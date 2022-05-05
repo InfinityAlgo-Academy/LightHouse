@@ -15,7 +15,7 @@ import RawProtocol from '../../lighthouse-core/gather/connections/raw.js';
 import log from 'lighthouse-logger';
 import {lookupLocale} from '../../lighthouse-core/lib/i18n/i18n.js';
 import {registerLocaleData, getCanonicalLocales} from '../../shared/localization/format.js';
-import constants from '../../lighthouse-core/config/constants.js';
+import * as constants from '../../lighthouse-core/config/constants.js';
 
 /** @typedef {import('../../lighthouse-core/gather/connections/connection.js')} Connection */
 

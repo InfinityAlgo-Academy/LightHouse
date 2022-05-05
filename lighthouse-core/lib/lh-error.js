@@ -5,7 +5,10 @@
  */
 'use strict';
 
+import { createCommonjsRefs } from '../scripts/esm-utils.js';
 import i18n from './i18n/i18n.js';
+
+const {__filename} = createCommonjsRefs(import.meta);
 
 /* eslint-disable max-len */
 const UIStrings = {

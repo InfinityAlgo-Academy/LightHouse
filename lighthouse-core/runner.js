@@ -17,9 +17,9 @@ import assetSaver from './lib/asset-saver.js';
 import fs from 'fs';
 import path from 'path';
 import Sentry from './lib/sentry.js';
-import {generateReport} from '../report/generator/report-generator.js';
-import LHError from './lib/lh-error.js';
-import {version as lighthouseVersion} from '../package.json';
+import ReportGenerator from '../report/generator/report-generator.js';
+import {LighthouseError} from './lib/lh-error.js';
+import {lighthouseVersion} from '../root.js';
 
 /** @typedef {import('./gather/connections/connection.js').Connection} Connection */
 /** @typedef {import('./lib/arbitrary-equality-map.js').ArbitraryEqualityMap} ArbitraryEqualityMap */
@@ -122,7 +122,7 @@ class Runner {
       }
 
       // Create the HTML, JSON, and/or CSV string
-      const report = generateReport(lhr, settings.output);
+      const report = ReportGenerator.generateReport(lhr, settings.output);
 
       return {lhr, artifacts, report};
     } catch (err) {
@@ -356,7 +356,8 @@ class Runner {
         if (noArtifact || noRequiredTrace || noRequiredDevtoolsLog) {
           log.warn('Runner',
               `${artifactName} gatherer, required by audit ${audit.meta.id}, did not run.`);
-          throw new LHError(LHError.errors.MISSING_REQUIRED_ARTIFACT, {artifactName});
+          throw new LighthouseError(
+            LighthouseError.errors.MISSING_REQUIRED_ARTIFACT, {artifactName});
         }
 
         // If artifact was an error, output error result on behalf of audit.
@@ -373,7 +374,7 @@ class Runner {
             ` encountered an error: ${artifactError.message}`);
 
           // Create a friendlier display error and mark it as expected to avoid duplicates in Sentry
-          const error = new LHError(LHError.errors.ERRORED_REQUIRED_ARTIFACT,
+          const error = new LighthouseError(LighthouseError.errors.ERRORED_REQUIRED_ARTIFACT,
               {artifactName, errorMessage: artifactError.message});
           // @ts-expect-error Non-standard property added to Error
           error.expected = true;
@@ -433,7 +434,8 @@ class Runner {
     ];
 
     for (const possibleErrorArtifact of possibleErrorArtifacts) {
-      if (possibleErrorArtifact instanceof LHError && possibleErrorArtifact.lhrRuntimeError) {
+      // eslint-disable-next-line max-len
+      if (possibleErrorArtifact instanceof LighthouseError && possibleErrorArtifact.lhrRuntimeError) {
         const errorMessage = possibleErrorArtifact.friendlyMessage || possibleErrorArtifact.message;
 
         return {

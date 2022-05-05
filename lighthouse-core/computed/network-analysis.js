@@ -5,7 +5,7 @@
  */
 'use strict';
 
-import makeComputedArtifact from './computed-artifact.js';
+import {makeComputedArtifact} from './computed-artifact.js';
 import NetworkAnalyzer from '../lib/dependency-graph/simulator/network-analyzer.js';
 import NetworkRecords from './network-records.js';
 

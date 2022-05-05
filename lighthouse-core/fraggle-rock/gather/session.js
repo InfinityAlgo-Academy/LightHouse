@@ -5,7 +5,8 @@
  */
 'use strict';
 
-import LHError from '../../lib/lh-error.js';
+import {LighthouseError} from '../../lib/lh-error.js';
+
 const SessionEmitMonkeypatch = Symbol('monkeypatch');
 
 // Controls how long to wait for a response after sending a DevTools protocol command.
@@ -150,9 +151,10 @@ class ProtocolSession {
     const timeoutPromise = new Promise((resolve, reject) => {
       if (timeoutMs === Infinity) return;
 
-      timeout = setTimeout(reject, timeoutMs, new LHError(LHError.errors.PROTOCOL_TIMEOUT, {
+      const error = new LighthouseError(LighthouseError.errors.PROTOCOL_TIMEOUT, {
         protocolMethod: method,
-      }));
+      });
+      timeout = setTimeout(reject, timeoutMs, error);
     });
 
     const resultPromise = this._session.send(method, ...params);
@@ -179,4 +181,4 @@ class ProtocolSession {
   }
 }
 
-export default ProtocolSession;
+export {ProtocolSession};

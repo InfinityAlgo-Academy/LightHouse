@@ -11,9 +11,9 @@
  * This protocol log can be used to recreate the network records using lib/network-recorder.js.
  */
 
-import NetworkMonitor from '../driver/network-monitor.js';
+import {NetworkMonitor} from '../driver/network-monitor.js';
 
-import MessageLog from '../devtools-log.js';
+import {DevtoolsLog as MessageLog} from '../devtools-log.js';
 import FRGatherer from '../../fraggle-rock/gather/base-gatherer.js';
 
 class DevtoolsLog extends FRGatherer {

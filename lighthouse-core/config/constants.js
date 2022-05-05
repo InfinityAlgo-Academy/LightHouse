@@ -158,7 +158,7 @@ const nonSimulatedPassConfigOverrides = {
   cpuQuietThresholdMs: 5250,
 };
 
-export default {
+export {
   throttling,
   screenEmulationMetrics,
   userAgents,

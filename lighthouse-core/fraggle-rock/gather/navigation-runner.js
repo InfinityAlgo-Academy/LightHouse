@@ -8,17 +8,17 @@
 import puppeteer from 'puppeteer-core';
 import log from 'lighthouse-logger';
 import Driver from './driver.js';
-import Runner from '../../runner.js';
+import {Runner} from '../../runner.js';
 import {getEmptyArtifactState, collectPhaseArtifacts, awaitArtifacts} from './runner-helpers.js';
-import prepare from '../../gather/driver/prepare.js';
+import * as prepare from '../../gather/driver/prepare.js';
 import {gotoURL} from '../../gather/driver/navigation.js';
-import storage from '../../gather/driver/storage.js';
+import * as storage from '../../gather/driver/storage.js';
 import emulation from '../../lib/emulation.js';
 import {defaultNavigationConfig} from '../../config/constants.js';
 import {initializeConfig} from '../config/config.js';
 import {getBaseArtifacts, finalizeArtifacts} from './base-artifacts.js';
 import format from '../../../shared/localization/format.js';
-import LighthouseError from '../../lib/lh-error.js';
+import {LighthouseError} from '../../lib/lh-error.js';
 import URL from '../../lib/url-shim.js';
 import {getPageLoadError} from '../../lib/navigation-error.js';
 import Trace from '../../gather/gatherers/trace.js';
@@ -349,7 +349,7 @@ async function navigationGather(requestor, options) {
   return {artifacts, runnerOptions};
 }
 
-export default {
+export {
   navigationGather,
   _setup,
   _setupNavigation,

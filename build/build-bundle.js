@@ -19,7 +19,7 @@ import {rollup} from 'rollup';
 import PubAdsPlugin from 'lighthouse-plugin-publisher-ads/plugin.js';
 
 import * as rollupPlugins from './rollup-plugins.js';
-import Runner from '../lighthouse-core/runner.js';
+import {Runner} from '../lighthouse-core/runner.js';
 import {LH_ROOT, readJson} from '../root.js';
 import {createCommonjsRefs} from '../lighthouse-core/scripts/esm-utils.js';
 

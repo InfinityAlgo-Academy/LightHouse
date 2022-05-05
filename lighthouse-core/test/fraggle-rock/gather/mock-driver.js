@@ -17,7 +17,7 @@ import {
   createMockOnceFn,
   createMockSendCommandFn,
 } from '../../gather/mock-commands.js';
-import constants from '../../../config/constants.js';
+import * as constants from '../../../config/constants.js';
 import {fnAny} from '../../test-utils.js';
 import {LH_ROOT} from '../../../../root.js';
 

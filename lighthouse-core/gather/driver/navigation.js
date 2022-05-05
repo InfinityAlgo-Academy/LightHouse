@@ -8,9 +8,13 @@
 import log from 'lighthouse-logger';
 import {NetworkMonitor} from './network-monitor.js';
 import {waitForFullyLoaded, waitForFrameNavigated, waitForUserToContinue} from './wait-for-condition.js'; // eslint-disable-line max-len
-import constants from '../../config/constants.js';
+import * as constants from '../../config/constants.js';
 import i18n from '../../lib/i18n/i18n.js';
 import URL from '../../lib/url-shim.js';
+
+import { createCommonjsRefs } from '../../scripts/esm-utils.js';
+
+const {__filename} = createCommonjsRefs(import.meta);
 
 const UIStrings = {
   /**

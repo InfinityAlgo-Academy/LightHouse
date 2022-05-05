@@ -6,9 +6,12 @@
 'use strict';
 
 import log from 'lighthouse-logger';
-import constants from '../../config/constants.js';
-import pageFunctions from '../../lib/page-functions.js';
+import * as constants from '../../config/constants.js';
+import {pageFunctions} from '../../lib/page-functions.js';
 import i18n from '../../lib/i18n/i18n.js';
+import { createCommonjsRefs } from '../../scripts/esm-utils.js';
+
+const {__filename} = createCommonjsRefs(import.meta);
 
 const UIStrings = {
   /**

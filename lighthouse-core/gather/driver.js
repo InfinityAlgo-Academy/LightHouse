@@ -7,7 +7,7 @@
 
 import {Fetcher} from './fetcher.js';
 import {ExecutionContext} from './driver/execution-context.js';
-import LHError from '../lib/lh-error.js';
+import {LighthouseError} from '../lib/lh-error.js';
 import {fetchResponseBodyFromCache} from '../gather/driver/network.js';
 import {EventEmitter} from 'events';
 import log from 'lighthouse-logger';
@@ -333,7 +333,7 @@ class Driver {
     let asyncTimeout;
     const timeoutPromise = new Promise((resolve, reject) => {
       if (timeout === Infinity) return;
-      asyncTimeout = setTimeout(reject, timeout, new LHError(LHError.errors.PROTOCOL_TIMEOUT, {
+      asyncTimeout = setTimeout(reject, timeout, new LighthouseError(LighthouseError.errors.PROTOCOL_TIMEOUT, {
         protocolMethod: method,
       }));
     });

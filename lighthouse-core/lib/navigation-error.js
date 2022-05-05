@@ -5,9 +5,9 @@
  */
 'use strict';
 
-import LHError from './lh-error.js';
+import {LighthouseError} from './lh-error.js';
 import NetworkAnalyzer from './dependency-graph/simulator/network-analyzer.js';
-import NetworkRequest from './network-request.js';
+import {NetworkRequest} from './network-request.js';
 
 /**
  * Returns an error if the original network request failed or wasn't found.
@@ -16,7 +16,7 @@ import NetworkRequest from './network-request.js';
  */
 function getNetworkError(mainRecord) {
   if (!mainRecord) {
-    return new LHError(LHError.errors.NO_DOCUMENT_REQUEST);
+    return new LighthouseError(LighthouseError.errors.NO_DOCUMENT_REQUEST);
   } else if (mainRecord.failed) {
     const netErr = mainRecord.localizedFailDescription;
     // Match all resolution and DNS failures
@@ -26,12 +26,14 @@ function getNetworkError(mainRecord) {
       netErr === 'net::ERR_NAME_RESOLUTION_FAILED' ||
       netErr.startsWith('net::ERR_DNS_')
     ) {
-      return new LHError(LHError.errors.DNS_FAILURE);
+      return new LighthouseError(LighthouseError.errors.DNS_FAILURE);
     } else {
-      return new LHError(LHError.errors.FAILED_DOCUMENT_REQUEST, {errorDetails: netErr});
+      return new LighthouseError(LighthouseError.errors.FAILED_DOCUMENT_REQUEST, {
+        errorDetails: netErr,
+      });
     }
   } else if (mainRecord.hasErrorStatusCode()) {
-    return new LHError(LHError.errors.ERRORED_DOCUMENT_REQUEST, {
+    return new LighthouseError(LighthouseError.errors.ERRORED_DOCUMENT_REQUEST, {
       statusCode: `${mainRecord.statusCode}`,
     });
   }
@@ -60,13 +62,13 @@ function getInterstitialError(mainRecord, networkRecords) {
 
   // If a request failed with the `net::ERR_CERT_*` collection of errors, then it's a security issue.
   if (mainRecord.localizedFailDescription.startsWith('net::ERR_CERT')) {
-    return new LHError(LHError.errors.INSECURE_DOCUMENT_REQUEST, {
+    return new LighthouseError(LighthouseError.errors.INSECURE_DOCUMENT_REQUEST, {
       securityMessages: mainRecord.localizedFailDescription,
     });
   }
 
   // If we made it this far, it's a generic Chrome interstitial error.
-  return new LHError(LHError.errors.CHROME_INTERSTITIAL_ERROR);
+  return new LighthouseError(LighthouseError.errors.CHROME_INTERSTITIAL_ERROR);
 }
 
 /**
@@ -85,7 +87,7 @@ function getNonHtmlError(finalRecord) {
   // mimeType is determined by the browser, we assume Chrome is determining mimeType correctly,
   // independently of 'Content-Type' response headers, and always sending mimeType if well-formed.
   if (HTML_MIME_TYPE !== finalRecord.mimeType) {
-    return new LHError(LHError.errors.NOT_HTML, {mimeType: finalRecord.mimeType});
+    return new LighthouseError(LighthouseError.errors.NOT_HTML, {mimeType: finalRecord.mimeType});
   }
 
   return undefined;
@@ -146,7 +148,7 @@ function getPageLoadError(navigationError, context) {
 }
 
 
-export default {
+export {
   getNetworkError,
   getInterstitialError,
   getPageLoadError,

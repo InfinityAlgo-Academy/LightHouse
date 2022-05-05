@@ -5,7 +5,7 @@
  */
 'use strict';
 
-import makeComputedArtifact from './computed-artifact.js';
+import {makeComputedArtifact} from './computed-artifact.js';
 import icons from '../lib/icons.js';
 
 const PWA_DISPLAY_VALUES = ['minimal-ui', 'fullscreen', 'standalone'];

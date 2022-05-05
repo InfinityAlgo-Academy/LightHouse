@@ -5,7 +5,7 @@
  */
 'use strict';
 
-import makeComputedArtifact from './computed-artifact.js';
+import {makeComputedArtifact} from './computed-artifact.js';
 import speedline from 'speedline-core';
 import LHError from '../lib/lh-error.js';
 import ProcessedTrace from './processed-trace.js';

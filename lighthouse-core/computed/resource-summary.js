@@ -5,12 +5,12 @@
  */
 'use strict';
 
-import makeComputedArtifact from './computed-artifact.js';
+import {makeComputedArtifact} from './computed-artifact.js';
 import NetworkRecords from './network-records.js';
 import URL from '../lib/url-shim.js';
-import NetworkRequest from '../lib/network-request.js';
-import Budget from '../config/budget.js';
-import {Util} from '../util-commonjs.js';
+import {NetworkRequest} from '../lib/network-request.js';
+import {Budget} from '../config/budget.js';
+import Util from '../util-commonjs.cjs';
 
 /** @typedef {{count: number, resourceSize: number, transferSize: number}} ResourceEntry */
 

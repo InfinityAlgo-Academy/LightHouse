@@ -6,7 +6,7 @@
 'use strict';
 
 import Parser from 'metaviewport-parser';
-import makeComputedArtifact from './computed-artifact.js';
+import {makeComputedArtifact} from './computed-artifact.js';
 
 class ViewportMeta {
   /**

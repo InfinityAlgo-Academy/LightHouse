@@ -8,7 +8,7 @@
 /* eslint-env jest */
 
 import {jest} from '@jest/globals';
-// import Runner from '../runner.js';
+// import {Runner} from '../runner.js';
 // import GatherRunner from '../gather/gather-runner.js';
 import driverMock from './gather/fake-driver.js';
 // import Config from '../config/config.js';

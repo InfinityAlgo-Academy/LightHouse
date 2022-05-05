@@ -5,7 +5,7 @@
  */
 'use strict';
 
-import makeComputedArtifact from '../computed-artifact.js';
+import {makeComputedArtifact} from '../computed-artifact.js';
 import ProcessedTrace from '../processed-trace.js';
 import LHError from '../../lib/lh-error.js';
 

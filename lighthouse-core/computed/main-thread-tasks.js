@@ -5,7 +5,7 @@
  */
 'use strict';
 
-import makeComputedArtifact from './computed-artifact.js';
+import {makeComputedArtifact} from './computed-artifact.js';
 import MainThreadTasks_ from '../lib/tracehouse/main-thread-tasks.js';
 import ProcessedTrace from './processed-trace.js';
 

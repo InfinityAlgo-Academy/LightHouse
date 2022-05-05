@@ -5,7 +5,7 @@
  */
 'use strict';
 
-import makeComputedArtifact from './computed-artifact.js';
+import {makeComputedArtifact} from './computed-artifact.js';
 import NetworkNode from '../lib/dependency-graph/network-node.js';
 import CPUNode from '../lib/dependency-graph/cpu-node.js';
 import TracingProcessor from '../lib/tracehouse/trace-processor.js';
