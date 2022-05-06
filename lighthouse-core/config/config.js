@@ -205,7 +205,7 @@ class Config {
   }
 
   /**
-   * @deprecated `Config.createConfigFromJson` should be used instead.
+   * @deprecated `Config.fromJson` should be used instead.
    * @constructor
    * @param {LH.Config.Json} configJSON
    * @param {{settings: LH.Config.Settings, passes: ?LH.Config.Pass[], audits: ?LH.Config.AuditDefn[]}} opts
