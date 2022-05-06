@@ -205,7 +205,7 @@ async function auditGatherSteps(gatherSteps, options) {
       // Step specific configs take precedence over a config for the entire flow.
       const configJson = gatherStep.config || options.config;
       const {gatherMode} = artifacts.GatherContext;
-      const {config} = initializeConfig(configJson, {...configContext, gatherMode});
+      const {config} = await initializeConfig(configJson, {...configContext, gatherMode});
       runnerOptions = {
         config,
         computedCache: new Map(),

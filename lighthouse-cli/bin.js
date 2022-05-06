@@ -116,7 +116,7 @@ async function begin() {
   }
 
   if (cliFlags.printConfig) {
-    const config = generateConfig(configJson, cliFlags);
+    const config = await generateConfig(configJson, cliFlags);
     process.stdout.write(config.getPrintString());
     return;
   }
