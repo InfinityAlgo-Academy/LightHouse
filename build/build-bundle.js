@@ -15,7 +15,7 @@ import {execSync} from 'child_process';
 
 import esMain from 'es-main';
 import {rollup} from 'rollup';
-// @ts-expect-error
+// @ts-expect-error: plugin has no types.
 import PubAdsPlugin from 'lighthouse-plugin-publisher-ads/plugin.js';
 
 import * as rollupPlugins from './rollup-plugins.js';

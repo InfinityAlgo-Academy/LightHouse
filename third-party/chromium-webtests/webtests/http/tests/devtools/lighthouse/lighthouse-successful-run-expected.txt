@@ -121,7 +121,6 @@ Gathering: TagsBlockingFirstPaint
 Gathering: FontSize
 Gathering: EmbeddedContent
 Gathering: RobotsTxt
-Getting browser version
 Gathering: TapTargets
 Gathering: Accessibility
 Gathering: TraceElements

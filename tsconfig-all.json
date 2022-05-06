@@ -10,7 +10,6 @@
     {"path": "./treemap/"},
     {"path": "./flow-report/"},
     {"path": "./shared/"},
-    {"path": "./build/"},
   ],
   "files": [],
   "include": [],

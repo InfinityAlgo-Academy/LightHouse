@@ -74,7 +74,7 @@ class Driver {
     const session = await this._page.target().createCDPSession();
     this._session = this.defaultSession = new ProtocolSession(session);
     this._executionContext = new ExecutionContext(this._session);
-    this._fetcher = new Fetcher(this._session, this._executionContext);
+    this._fetcher = new Fetcher(this._session);
     log.timeEnd(status);
   }
 

@@ -9,9 +9,9 @@ import Audit from './audit.js';
 import NetworkRecords from '../computed/network-records.js';
 import i18n from '../lib/i18n/i18n.js';
 import MainThreadTasks from '../computed/main-thread-tasks.js';
-import BootupTime from './bootup-time.js';
 import PageDependencyGraph from '../computed/page-dependency-graph.js';
 import LoadSimulator from '../computed/load-simulator.js';
+import {getJavaScriptURLs, getAttributableURLForTask} from '../lib/tracehouse/task-summary.js';
 
 /** We don't always have timing data for short tasks, if we're missing timing data. Treat it as though it were 0ms. */
 const DEFAULT_TIMING = {startTime: 0, endTime: 0, duration: 0};
@@ -78,7 +78,7 @@ class LongTasks extends Audit {
       }
     }
 
-    const jsURLs = BootupTime.getJavaScriptURLs(networkRecords);
+    const jsURLs = getJavaScriptURLs(networkRecords);
     // Only consider up to 20 long, top-level (no parent) tasks that have an explicit endTime
     const longtasks = tasks
       .map(t => {
@@ -91,7 +91,7 @@ class LongTasks extends Audit {
 
     // TODO(beytoven): Add start time that matches with the simulated throttling
     const results = longtasks.map(task => ({
-      url: BootupTime.getAttributableURLForTask(task, jsURLs),
+      url: getAttributableURLForTask(task, jsURLs),
       duration: task.duration,
       startTime: task.startTime,
     }));
