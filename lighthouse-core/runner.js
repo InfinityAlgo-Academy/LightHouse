@@ -20,6 +20,9 @@ import {Sentry} from './lib/sentry.js';
 import ReportGenerator from '../report/generator/report-generator.js';
 import {LighthouseError} from './lib/lh-error.js';
 import {lighthouseVersion} from '../root.js';
+import {createCommonjsRefs} from './scripts/esm-utils.js';
+
+const {__dirname} = createCommonjsRefs(import.meta);
 
 /** @typedef {import('./gather/connections/connection.js').Connection} Connection */
 /** @typedef {import('./lib/arbitrary-equality-map.js').ArbitraryEqualityMap} ArbitraryEqualityMap */

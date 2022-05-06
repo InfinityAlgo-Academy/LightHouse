@@ -13,6 +13,9 @@ import ConfigPlugin from './config-plugin.js';
 import {Runner} from '../runner.js';
 import i18n from '../lib/i18n/i18n.js';
 import * as validation from '../fraggle-rock/config/validation.js';
+import {createCommonjsRefs} from '../scripts/esm-utils.js';
+
+const {require} = createCommonjsRefs(import.meta);
 
 /** @typedef {typeof import('../gather/gatherers/gatherer.js')['Gatherer']} GathererConstructor */
 /** @typedef {typeof import('../audits/audit.js')['Audit']} Audit */
