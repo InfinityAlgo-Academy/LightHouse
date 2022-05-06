@@ -7,7 +7,4 @@
 
 import {begin} from './bin.js';
 
-begin().catch(err => {
-  process.stderr.write(err.stack);
-  process.exit(1);
-});
+await begin();

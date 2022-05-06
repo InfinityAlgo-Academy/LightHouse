@@ -255,7 +255,4 @@ async function begin() {
   process.exit(exitCode);
 }
 
-begin().catch(e => {
-  console.error(e);
-  process.exit(1);
-});
+await begin();
