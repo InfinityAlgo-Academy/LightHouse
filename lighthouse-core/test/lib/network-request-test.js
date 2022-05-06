@@ -9,7 +9,6 @@ import NetworkRequest from '../../lib/network-request.js';
 import NetworkRecorder from '../../lib/network-recorder.js';
 import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
 
-/* eslint-env jest */
 describe('NetworkRequest', () => {
   afterEach(() => {
     global.isLightrider = undefined;

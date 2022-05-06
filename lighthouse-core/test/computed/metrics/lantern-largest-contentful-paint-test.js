@@ -13,8 +13,6 @@ import LanternLargestContentfulPaint from '../../../computed/metrics/lantern-lar
 import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';
 
 const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
-
-/* eslint-env jest */
 describe('Metrics: Lantern LCP', () => {
   it('should compute predicted value', async () => {
     const gatherContext = {gatherMode: 'navigation'};

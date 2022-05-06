@@ -30,8 +30,6 @@ const getFakeContext = ({formFactor, throttlingMethod}) => ({
     screenEmulation: constants.screenEmulationMetrics[formFactor],
   },
 });
-
-/* eslint-env jest */
 describe('Performance: interactive audit', () => {
   it('should compute interactive', () => {
     const artifacts = {

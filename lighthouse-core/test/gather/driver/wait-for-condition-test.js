@@ -5,8 +5,6 @@
  */
 
 
-/* eslint-env jest */
-
 import {jest} from '@jest/globals';
 
 import wait from '../../../gather/driver/wait-for-condition.js';

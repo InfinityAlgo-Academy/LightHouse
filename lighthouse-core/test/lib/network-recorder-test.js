@@ -15,7 +15,6 @@ import redirectsDevtoolsLog from '../fixtures/wikipedia-redirect.devtoolslog.jso
 import redirectsScriptDevtoolsLog from '../fixtures/redirects-from-script.devtoolslog.json';
 import lrRequestDevtoolsLog from '../fixtures/lr.devtoolslog.json';
 
-/* eslint-env jest */
 describe('network recorder', function() {
   it('recordsFromLogs expands into records', function() {
     assert.equal(devtoolsLogItems.length, 555);

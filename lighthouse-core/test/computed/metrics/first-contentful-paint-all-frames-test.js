@@ -10,8 +10,6 @@ import FirstContentfulPaint from '../../../computed/metrics/first-contentful-pai
 import trace from '../../fixtures/traces/frame-metrics-m89.json';
 import devtoolsLog from '../../fixtures/traces/frame-metrics-m89.devtools.log.json';
 
-/* eslint-env jest */
-
 describe('Metrics: FCP all frames', () => {
   const gatherContext = {gatherMode: 'navigation'};
 

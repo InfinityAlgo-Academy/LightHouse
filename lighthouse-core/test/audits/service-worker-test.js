@@ -11,8 +11,6 @@ import ServiceWorker from '../../audits/service-worker.js';
 import URL from '../../lib/url-shim.js';
 import manifestParser from '../../lib/manifest-parser.js';
 
-/* eslint-env jest */
-
 function getBaseDirectory(urlStr) {
   const url = new URL(urlStr);
   return url.origin + url.pathname.substring(0, url.pathname.lastIndexOf('/') + 1);

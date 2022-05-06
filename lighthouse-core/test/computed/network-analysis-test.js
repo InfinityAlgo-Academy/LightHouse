@@ -8,8 +8,6 @@
 import NetworkAnalysis from '../../computed/network-analysis.js';
 import acceptableDevToolsLog from '../fixtures/traces/progressive-app-m60.devtools.log.json';
 
-/* eslint-env jest */
-
 describe('Network analysis computed', () => {
   it('should return network analysis', async () => {
     const result = await NetworkAnalysis.request(acceptableDevToolsLog, {computedCache: new Map()});

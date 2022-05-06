@@ -64,8 +64,6 @@ const createVariants = codeSnippets => {
 
   return variants;
 };
-
-/* eslint-env jest */
 describe('LegacyJavaScript audit', () => {
   it('passes code with no polyfills', async () => {
     const result = await getResult([

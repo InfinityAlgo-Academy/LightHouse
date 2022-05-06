@@ -5,8 +5,6 @@
  */
 
 
-/* eslint-env jest */
-
 import {jest} from '@jest/globals';
 
 import TraceElementsGatherer from '../../../gather/gatherers/trace-elements.js';

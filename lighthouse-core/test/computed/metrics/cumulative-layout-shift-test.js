@@ -5,8 +5,6 @@
  */
 
 
-/* eslint-env jest */
-
 import CumulativeLayoutShift from '../../../computed/metrics/cumulative-layout-shift.js';
 import createTestTrace from '../../create-test-trace.js';
 import jumpyClsTrace from '../../fixtures/traces/jumpy-cls-m90.json';

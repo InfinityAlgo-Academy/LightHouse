@@ -5,8 +5,6 @@
  */
 
 
-/* eslint-env jest */
-
 import * as bakery from '../../../scripts/i18n/bake-ctc-to-lhl.js';
 
 describe('Baking Placeholders', () => {

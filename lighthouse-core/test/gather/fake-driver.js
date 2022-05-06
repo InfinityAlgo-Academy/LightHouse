@@ -5,8 +5,6 @@
  */
 
 
-/* eslint-env jest */
-
 import {readJson} from '../../../root.js';
 import {fnAny} from '../test-utils.js';
 

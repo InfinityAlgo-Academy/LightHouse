@@ -9,8 +9,6 @@ import {strict as assert} from 'assert';
 
 import RobotsTxtAudit from '../../../audits/seo/robots-txt.js';
 
-/* eslint-env jest */
-
 describe('SEO: robots.txt audit', () => {
   it('fails and reports error when no robots.txt was provided', () => {
     const artifacts = {

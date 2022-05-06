@@ -11,8 +11,6 @@ import HreflangAudit from '../../../audits/seo/hreflang.js';
 
 const node = {};
 
-/* eslint-env jest */
-
 describe('SEO: Document has valid hreflang code', () => {
   it('fails when the language code provided in hreflang via link element is invalid', () => {
     const artifacts = {

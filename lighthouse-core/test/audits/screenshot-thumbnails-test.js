@@ -15,8 +15,6 @@ const noScreenshotsTrace = {traceEvents: pwaTrace.traceEvents.filter(e => e.name
 import pwaDevtoolsLog from '../fixtures/traces/progressive-app-m60.devtools.log.json';
 import {LH_ROOT} from '../../../root.js';
 
-/* eslint-env jest */
-
 describe('Screenshot thumbnails', () => {
   it('should extract thumbnails from a trace', () => {
     const options = {minimumTimelineDuration: 500};

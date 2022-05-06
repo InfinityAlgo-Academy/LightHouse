@@ -11,8 +11,6 @@ import devtoolsLog from '../../fixtures/traces/progressive-app-m60.devtools.log.
 import {calculateSumOfBlockingTime} from '../../../computed/metrics/tbt-utils.js';
 import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';
 
-/* eslint-env jest */
-
 const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
 
 describe('Metrics: TotalBlockingTime', () => {

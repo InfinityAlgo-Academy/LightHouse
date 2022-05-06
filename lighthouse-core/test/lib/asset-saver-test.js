@@ -28,8 +28,6 @@ function assertTraceEventsEqual(traceEventsA, traceEventsB) {
     assert.deepStrictEqual(evt, traceEventsB[i]);
   });
 }
-
-/* eslint-env jest */
 describe('asset-saver helper', () => {
   describe('saves files', function() {
     beforeAll(() => {

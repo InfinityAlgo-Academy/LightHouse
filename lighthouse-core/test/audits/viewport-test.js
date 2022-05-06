@@ -9,8 +9,6 @@ import {strict as assert} from 'assert';
 
 import Audit from '../../audits/viewport.js';
 
-/* eslint-env jest */
-
 describe('Mobile-friendly: viewport audit', () => {
   const makeMetaElements = viewport => [{name: 'viewport', content: viewport}];
   const fakeContext = {computedCache: new Map()};

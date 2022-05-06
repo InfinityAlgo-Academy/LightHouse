@@ -10,8 +10,6 @@ import {strict as assert} from 'assert';
 import HTTPStatusCodeAudit from '../../../audits/seo/http-status-code.js';
 import networkRecordsToDevtoolsLog from '../../network-records-to-devtools-log.js';
 
-/* eslint-env jest */
-
 describe('SEO: HTTP code audit', () => {
   it('fails when status code is unsuccesfull', () => {
     const statusCodes = [403, 404, 500];

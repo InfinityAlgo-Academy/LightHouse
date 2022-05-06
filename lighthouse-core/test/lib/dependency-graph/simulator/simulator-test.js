@@ -39,8 +39,6 @@ function cpuTask({tid, ts, duration}) {
   const dur = ((duration || 0) * 1000) / 5;
   return {tid, ts, dur};
 }
-
-/* eslint-env jest */
 describe('DependencyGraph/Simulator', () => {
   // Insulate the simulator tests from DNS multiplier changes
   let originalDNSMultiplier;

@@ -5,8 +5,6 @@
  */
 
 
-/* eslint-env jest */
-
 import {computeMedianRun, filterToValidRuns} from '../../lib/median-run.js';
 
 describe('Median Runs', () => {

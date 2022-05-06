@@ -15,8 +15,6 @@ const URL = {
 };
 const validViewport = 'width=device-width';
 
-/* eslint-env jest */
-
 describe('SEO: Font size audit', () => {
   const makeMetaElements = viewport => [{name: 'viewport', content: viewport}];
 

@@ -9,8 +9,6 @@
  * @fileoverview Refer to driver-test.js and source-maps-test.js for intended usage.
  */
 
-/* eslint-env jest */
-
 import {fnAny} from '../test-utils.js';
 
 /**

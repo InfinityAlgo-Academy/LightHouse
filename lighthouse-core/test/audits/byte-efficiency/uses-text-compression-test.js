@@ -19,8 +19,6 @@ function generateResponse(options) {
   }, options);
 }
 
-/* eslint-env jest */
-
 describe('Page uses optimized responses', () => {
   it('fails when responses are collectively unoptimized', () => {
     const auditResult = ResponsesAreCompressedAudit.audit_({

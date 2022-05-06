@@ -19,8 +19,6 @@ import traceM78 from '../../fixtures/traces/lcp-m78.json';
 import devtoolsLogM78 from '../../fixtures/traces/lcp-m78.devtools.log.json';
 import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';
 
-/* eslint-env jest */
-
 describe('Byte efficiency base audit', () => {
   let graph;
   let simulator;

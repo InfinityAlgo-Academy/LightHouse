@@ -11,8 +11,6 @@ import DocWriteUseAudit from '../../../audits/dobetterweb/no-document-write.js';
 
 const URL = 'https://example.com';
 
-/* eslint-env jest */
-
 describe('Page does not use document.write()', () => {
   it('passes when document.write() is not used', async () => {
     const auditResult = await DocWriteUseAudit.audit({

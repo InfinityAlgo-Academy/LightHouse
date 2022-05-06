@@ -5,8 +5,6 @@
  */
 
 
-/* eslint-env jest */
-
 import Autocomplete from '../../audits/autocomplete.js';
 
 describe('Best Practices: autocomplete audit', () => {

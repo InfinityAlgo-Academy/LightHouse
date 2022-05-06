@@ -5,8 +5,6 @@
  */
 
 
-/* eslint-env jest */
-
 import MainDocumentContent from '../../../gather/gatherers/main-document-content.js';
 import NetworkRecorder from '../../../lib/network-recorder.js';
 import {createMockContext} from '../../fraggle-rock/gather/mock-driver.js';

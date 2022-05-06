@@ -30,8 +30,6 @@ function youtubeProductUrl(id) {
 function youtubeResourceUrl(id) {
   return `https://i.ytimg.com/${id}/maxresdefault.jpg`;
 }
-
-/* eslint-env jest */
 describe('Third party facades audit', () => {
   it('correctly identifies a third party product with facade alternative', async () => {
     const artifacts = {

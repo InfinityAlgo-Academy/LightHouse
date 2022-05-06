@@ -11,8 +11,6 @@ import * as lighthouse from '../../../fraggle-rock/api.js';
 import {createTestState, getAuditsBreakdown} from './pptr-test-utils.js';
 import {LH_ROOT} from '../../../../root.js';
 
-/* eslint-env jest */
-
 jest.setTimeout(90_000);
 
 describe('Fraggle Rock API', () => {

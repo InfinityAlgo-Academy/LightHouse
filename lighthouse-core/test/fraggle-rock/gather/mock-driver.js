@@ -9,8 +9,6 @@
  * @fileoverview Mock fraggle rock driver for testing.
  */
 
-/* eslint-env jest */
-
 import {jest} from '@jest/globals';
 
 import {

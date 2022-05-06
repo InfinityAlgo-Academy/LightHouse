@@ -10,8 +10,6 @@ import {strict as assert} from 'assert';
 import Audit from '../../audits/is-on-https.js';
 import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
 
-/* eslint-env jest */
-
 describe('Security: HTTPS audit', () => {
   function getArtifacts(networkRecords, mixedContentIssues) {
     const devtoolsLog = networkRecordsToDevtoolsLog(networkRecords);

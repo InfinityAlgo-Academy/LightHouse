@@ -14,8 +14,6 @@ import iframeTrace from '../../fixtures/traces/iframe-m79.trace.json';
 import iframeDevtoolsLog from '../../fixtures/traces/iframe-m79.devtoolslog.json';
 import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';
 
-/* eslint-env jest */
-
 describe('Metrics: Lantern TTI', () => {
   const gatherContext = {gatherMode: 'navigation'};
 

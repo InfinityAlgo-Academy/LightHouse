@@ -7,8 +7,6 @@
 
 import UnsizedImagesAudit from '../../audits/unsized-images.js';
 
-/* eslint-env jest */
-
 function generateImage(props, src = 'https://google.com/logo.png', isCss = false,
   isInShadowDOM = false, computedStyles = {position: 'static'}, node = {boundingRect: {}}) {
   const image = {src, isCss, isInShadowDOM, computedStyles, node};

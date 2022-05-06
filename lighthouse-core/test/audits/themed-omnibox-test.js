@@ -33,8 +33,6 @@ function generateMockAuditContext() {
     computedCache: new Map(),
   };
 }
-
-/* eslint-env jest */
 describe('PWA: themed omnibox audit', () => {
   it('fails if page had no manifest', () => {
     const artifacts = generateMockArtifacts();

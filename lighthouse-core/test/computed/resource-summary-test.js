@@ -10,8 +10,6 @@ import {strict as assert} from 'assert';
 import ComputedResourceSummary from '../../computed/resource-summary.js';
 import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
 
-/* eslint-env jest */
-
 function mockArtifacts(networkRecords) {
   return {
     devtoolsLog: networkRecordsToDevtoolsLog(networkRecords),

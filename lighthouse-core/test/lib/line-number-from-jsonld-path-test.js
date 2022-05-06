@@ -9,7 +9,6 @@ import {strict as assert} from 'assert';
 
 import getLineNumberFromJsonLDPath from '../../lib/sd-validation/line-number-from-jsonld-path.js'; // eslint-disable-line max-len
 
-/* global describe, it */
 describe('getLineNumberFromJsonLDPath', () => {
   it('supports absolute schema URIs', () => {
     const lineNumber = getLineNumberFromJsonLDPath({

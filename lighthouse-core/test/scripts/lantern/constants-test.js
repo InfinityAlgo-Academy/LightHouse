@@ -7,8 +7,6 @@
 
 import * as constants from '../../../scripts/lantern/constants.js';
 
-/* eslint-env jest */
-
 /** @typedef {import('../../../scripts/lantern/constants.js').LanternSiteDefinition} LanternSite */
 
 describe('Lantern script helpers', () => {

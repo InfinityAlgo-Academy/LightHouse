@@ -10,8 +10,6 @@ import {jest} from '@jest/globals';
 import * as lighthouse from '../../../fraggle-rock/api.js';
 import {createTestState} from './pptr-test-utils.js';
 import {LH_ROOT} from '../../../../root.js';
-
-/* eslint-env jest */
 /* eslint-env browser */
 
 jest.setTimeout(90_000);

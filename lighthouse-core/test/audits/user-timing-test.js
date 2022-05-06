@@ -17,8 +17,6 @@ function generateArtifactsWithTrace(trace) {
     },
   };
 }
-
-/* eslint-env jest */
 describe('Performance: user-timings audit', () => {
   it('evaluates valid input correctly', () => {
     const artifacts = generateArtifactsWithTrace(traceEvents);

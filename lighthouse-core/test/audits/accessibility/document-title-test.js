@@ -9,8 +9,6 @@ import {strict as assert} from 'assert';
 
 import Audit from '../../../audits/accessibility/document-title.js';
 
-/* eslint-env jest */
-
 describe('Accessibility: document-title audit', () => {
   it('generates an audit output', () => {
     const artifacts = {

@@ -5,8 +5,6 @@
  */
 
 
-/* eslint-env jest */
-
 import TraceOfTab from '../../computed/trace-of-tab.js';
 import pwaTrace from '../fixtures/traces/progressive-app-m60.json';
 

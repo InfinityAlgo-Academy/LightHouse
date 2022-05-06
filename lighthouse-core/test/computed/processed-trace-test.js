@@ -5,8 +5,6 @@
  */
 
 
-/* eslint-env jest */
-
 import ProcessedTrace from '../../computed/processed-trace.js';
 import pwaTrace from '../fixtures/traces/progressive-app-m60.json';
 

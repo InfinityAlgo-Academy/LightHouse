@@ -8,8 +8,6 @@
 import Gatherer from '../../../fraggle-rock/gather/base-gatherer.js';
 import {fnAny} from '../../test-utils.js';
 
-/* eslint-env jest */
-
 /** @type {any} */
 const fakeParam = {};
 

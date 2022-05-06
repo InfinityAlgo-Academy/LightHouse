@@ -9,8 +9,6 @@ import ExperimentalInteractionToNextPaint from
 import interactionTrace from '../../fixtures/traces/timespan-responsiveness-m103.trace.json';
 import noInteractionTrace from '../../fixtures/traces/jumpy-cls-m90.json';
 
-/* eslint-env jest */
-
 describe('Interaction to Next Paint', () => {
   function getTestData() {
     const artifacts = {

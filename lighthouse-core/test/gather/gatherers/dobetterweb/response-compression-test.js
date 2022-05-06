@@ -5,8 +5,6 @@
  */
 
 
-/* eslint-env jest */
-
 import {createMockContext, mockDriverSubmodules} from '../../../fraggle-rock/gather/mock-driver.js';
 // import ResponseCompression from '../../../../gather/gatherers/dobetterweb/response-compression.js';
 

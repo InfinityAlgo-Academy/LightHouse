@@ -21,8 +21,6 @@ import jumpyClsTrace from '../fixtures/traces/jumpy-cls-m90.json';
 import jumpyClsDevtoolsLog from '../fixtures/traces/jumpy-cls-m90.devtoolslog.json';
 import {getURLArtifactFromDevtoolsLog} from '../test-utils.js';
 
-/* eslint-env jest */
-
 describe('Performance: metrics', () => {
   it('evaluates valid input correctly', async () => {
     const URL = getURLArtifactFromDevtoolsLog(pwaDevtoolsLog);

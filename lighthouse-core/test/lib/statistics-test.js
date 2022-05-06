@@ -5,8 +5,6 @@
  */
 
 
-/* eslint-env jest */
-
 import statistics from '../../lib/statistics.js';
 
 describe('statistics', () => {

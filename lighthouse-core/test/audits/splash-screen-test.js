@@ -33,8 +33,6 @@ function generateMockAuditContext() {
     computedCache: new Map(),
   };
 }
-
-/* eslint-env jest */
 describe('PWA: splash screen audit', () => {
   describe('basics', () => {
     it('fails if page had no manifest', () => {

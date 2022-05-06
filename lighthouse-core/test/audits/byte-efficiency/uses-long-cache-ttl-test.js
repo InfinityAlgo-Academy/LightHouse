@@ -12,8 +12,6 @@ import NetworkRequest from '../../../lib/network-request.js';
 const options = CacheHeadersAudit.defaultOptions;
 import networkRecordsToDevtoolsLog from '../../network-records-to-devtools-log.js';
 
-/* eslint-env jest */
-
 function networkRecord(options = {}) {
   const headers = [];
   Object.keys(options.headers || {}).forEach(name => {

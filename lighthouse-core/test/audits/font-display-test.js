@@ -8,8 +8,6 @@
 import FontDisplayAudit from '../../audits/font-display.js';
 import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
 
-/* eslint-env jest */
-
 describe('Performance: Font Display audit', () => {
   let networkRecords;
   let stylesheet;
