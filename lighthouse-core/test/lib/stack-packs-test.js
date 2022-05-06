@@ -10,11 +10,10 @@
 import lighthouseStackPacksDep from 'lighthouse-stack-packs';
 
 import stackPacksLib from '../../lib/stack-packs.js';
-import defaultConfig from '../../config/default-config.js';
 import Config from '../../config/config.js';
 
-function getAuditIds() {
-  const config = new Config(defaultConfig);
+async function getAuditIds() {
+  const config = await Config.createConfigFromJson();
   return config.audits.map(a => a.implementation.meta.id);
 }
 
@@ -234,8 +233,8 @@ Array [
 
   // Keys for plugin audits are allowed in this package.
   // Make sure none are typos of core audits.
-  it('snapshot unrecognized keys', () => {
-    const auditIds = getAuditIds();
+  it('snapshot unrecognized keys', async () => {
+    const auditIds = await getAuditIds();
 
     const unrecognizedKeys = new Set();
     for (const pack of lighthouseStackPacksDep) {
