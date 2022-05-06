@@ -1020,6 +1020,23 @@ export interface TraceEvent {
   };
 }
 
+declare module Trace {
+  /**
+   * Base event of a `ph: 'X'` 'complete' event. Extend with `name` and `args` as
+   * needed.
+   */
+  interface CompleteEvent {
+    ph: 'X';
+    cat: string;
+    pid: number;
+    tid: number;
+    dur: number;
+    ts: number;
+    tdur: number;
+    tts: number;
+  }
+}
+
 /**
  * A record of DevTools Debugging Protocol events.
  */

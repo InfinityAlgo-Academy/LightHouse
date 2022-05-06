@@ -11,24 +11,25 @@
  * user input in the provided trace).
  */
 
+/** @typedef {LH.Trace.CompleteEvent & {name: 'Responsiveness.Renderer.UserInteraction', args: {frame: string, data: {interactionType: 'drag'|'keyboard'|'tapOrClick', maxDuration: number}}}} ResponsivenessEvent */
+
 const makeComputedArtifact = require('../computed-artifact.js');
 const ProcessedTrace = require('../processed-trace.js');
 
 class Responsiveness {
   /**
    * @param {LH.Artifacts.ProcessedTrace} processedTrace
-   * @return {{timing: number}|null}
+   * @return {ResponsivenessEvent|null}
    */
   static getHighPercentileResponsiveness(processedTrace) {
-    const durations = processedTrace.frameTreeEvents
+    const responsivenessEvents = processedTrace.frameTreeEvents
       // https://source.chromium.org/chromium/chromium/src/+/main:third_party/blink/renderer/core/timing/responsiveness_metrics.cc;l=146-150;drc=a1a2302f30b0a58f7669a41c80acdf1fa11958dd
-      .filter(e => e.name === 'Responsiveness.Renderer.UserInteraction')
-      .map(evt => evt.args.data?.maxDuration)
-      .filter(/** @return {duration is number} */duration => duration !== undefined)
-      .sort((a, b) => b - a);
+      .filter(/** @return {e is ResponsivenessEvent} */ e => {
+        return e.name === 'Responsiveness.Renderer.UserInteraction';
+      }).sort((a, b) => b.args.data.maxDuration - a.args.data.maxDuration);
 
     // If there were no interactions with the page, the metric is N/A.
-    if (durations.length === 0) {
+    if (responsivenessEvents.length === 0) {
       return null;
     }
 
@@ -36,17 +37,15 @@ class Responsiveness {
     // keeps the 10 worst events around, so it can never be more than the 10th from
     // last array element. To keep things simpler, sort desc and pick from front.
     // See https://source.chromium.org/chromium/chromium/src/+/main:components/page_load_metrics/browser/responsiveness_metrics_normalization.cc;l=45-59;drc=cb0f9c8b559d9c7c3cb4ca94fc1118cc015d38ad
-    const index = Math.min(9, Math.floor(durations.length / 50));
+    const index = Math.min(9, Math.floor(responsivenessEvents.length / 50));
 
-    return {
-      timing: durations[index],
-    };
+    return responsivenessEvents[index];
   }
 
   /**
    * @param {{trace: LH.Trace, settings: Immutable<LH.Config.Settings>}} data
    * @param {LH.Artifacts.ComputedContext} context
-   * @return {Promise<LH.Artifacts.Metric|null>}
+   * @return {Promise<ResponsivenessEvent|null>}
    */
   static async compute_(data, context) {
     if (data.settings.throttlingMethod === 'simulate') {
@@ -54,7 +53,9 @@ class Responsiveness {
     }
 
     const processedTrace = await ProcessedTrace.request(data.trace, context);
-    return Responsiveness.getHighPercentileResponsiveness(processedTrace);
+    const event = Responsiveness.getHighPercentileResponsiveness(processedTrace);
+
+    return JSON.parse(JSON.stringify(event));
   }
 }
 
