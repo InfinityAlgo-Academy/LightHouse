@@ -25,7 +25,7 @@ const UIStrings = {
       'more](https://dequeuniversity.com/rules/axe/4.4/aria-allowed-attr).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 class ARIAAllowedAttr extends AxeAudit {
   /**

@@ -20,7 +20,7 @@ const UIStrings = {
     '[Learn more](https://web.dev/themed-omnibox/).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 /**
  * @fileoverview

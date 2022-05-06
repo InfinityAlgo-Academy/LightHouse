@@ -20,7 +20,7 @@ const UIStrings = {
     'more](https://web.dev/splash-screen/).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 /**
  * @fileoverview

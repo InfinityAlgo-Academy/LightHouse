@@ -26,7 +26,7 @@ const UIStrings = {
     '`apple-touch-icon` is preferred.',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 class AppleTouchIcon extends Audit {
   /**

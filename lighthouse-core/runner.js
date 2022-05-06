@@ -16,7 +16,7 @@ import stackPacks from './lib/stack-packs.js';
 import assetSaver from './lib/asset-saver.js';
 import fs from 'fs';
 import path from 'path';
-import Sentry from './lib/sentry.js';
+import {Sentry} from './lib/sentry.js';
 import ReportGenerator from '../report/generator/report-generator.js';
 import {LighthouseError} from './lib/lh-error.js';
 import {lighthouseVersion} from '../root.js';

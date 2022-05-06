@@ -20,7 +20,7 @@ const UIStrings = {
   description: 'Redirects introduce additional delays before the page can be loaded. [Learn more](https://web.dev/redirects/).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 class Redirects extends Audit {
   /**

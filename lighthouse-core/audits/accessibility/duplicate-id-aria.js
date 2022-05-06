@@ -23,7 +23,7 @@ const UIStrings = {
   description: 'The value of an ARIA ID must be unique to prevent other instances from being overlooked by assistive technologies. [Learn more](https://dequeuniversity.com/rules/axe/4.4/duplicate-id-aria).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 class DuplicateIdAria extends AxeAudit {
   /**

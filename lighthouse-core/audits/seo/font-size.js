@@ -37,7 +37,7 @@ const UIStrings = {
   columnFontSize: 'Font Size',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 /**
  * @param {Array<FailingNodeData>} fontSizeArtifact

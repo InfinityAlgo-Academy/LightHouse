@@ -16,7 +16,7 @@ const UIStrings = {
       'unique for the purpose of shareability on social media. [Learn more](https://web.dev/pwa-each-page-has-url/).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 /**
  * @fileoverview Manual PWA audit to ensure every page has a deep link.

@@ -10,9 +10,6 @@
 import {strict as assert} from 'assert';
 import ConfigPlugin from '../../config/config-plugin.js';
 import i18n from '../../lib/i18n/i18n.js';
-import {createCommonjsRefs} from '../../scripts/esm-utils.js';
-
-const {__filename} = createCommonjsRefs(import.meta);
 
 /**
  * @param {any} val
@@ -74,7 +71,7 @@ describe('ConfigPlugin', () => {
       title: 'this is a title',
       description: 'this is a description',
     };
-    const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+    const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
     const localizedPlugin = {
       groups: {

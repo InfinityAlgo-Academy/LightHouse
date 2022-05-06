@@ -25,7 +25,7 @@ const UIStrings = {
       'instead. [Learn more](https://web.dev/notification-on-start/).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 class NotificationOnStart extends ViolationAudit {
   /**

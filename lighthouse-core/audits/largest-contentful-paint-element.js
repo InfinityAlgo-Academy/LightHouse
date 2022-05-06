@@ -16,7 +16,7 @@ const UIStrings = {
     '[Learn More](https://web.dev/lighthouse-largest-contentful-paint/)',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 class LargestContentfulPaintElement extends Audit {
   /**

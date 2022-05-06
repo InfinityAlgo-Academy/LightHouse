@@ -32,7 +32,7 @@ const UIStrings = {
     'Try auditing the page in incognito mode or from a Chrome profile without extensions.',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 // These trace events, when not triggered by a script inside a particular task, are just general Chrome overhead.
 const BROWSER_TASK_NAMES_SET = new Set([

@@ -169,6 +169,8 @@ function lookupLocale(locales, possibleLocales) {
  * @param {Record<string, string>} fileStrings
  */
 function createIcuMessageFn(filename, fileStrings) {
+  filename = filename.replace('file://', '');
+
   /**
    * Combined so fn can access both caller's strings and i18n.UIStrings shared across LH.
    * @type {Record<string, string>}

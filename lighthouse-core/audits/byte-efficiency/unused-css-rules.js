@@ -18,7 +18,7 @@ const UIStrings = {
     '[Learn more](https://web.dev/unused-css-rules/).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 // Allow 10KiB of unused CSS to permit `:hover` and other styles not used on a non-interactive load.
 // @see https://github.com/GoogleChrome/lighthouse/issues/9353 for more discussion.

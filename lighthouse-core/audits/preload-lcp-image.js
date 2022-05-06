@@ -21,7 +21,7 @@ const UIStrings = {
     'image in order to improve LCP. [Learn more](https://web.dev/optimize-lcp/#preload-important-resources).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 class PreloadLCPImageAudit extends Audit {
   /**

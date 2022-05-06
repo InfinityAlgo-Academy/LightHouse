@@ -24,7 +24,7 @@ const UIStrings = {
       '[Learn more](https://dequeuniversity.com/rules/axe/4.4/frame-title).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 class FrameTitle extends AxeAudit {
   /**

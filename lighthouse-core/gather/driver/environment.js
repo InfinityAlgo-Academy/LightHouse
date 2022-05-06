@@ -9,9 +9,6 @@ import log from 'lighthouse-logger';
 import * as constants from '../../config/constants.js';
 import {pageFunctions} from '../../lib/page-functions.js';
 import i18n from '../../lib/i18n/i18n.js';
-import { createCommonjsRefs } from '../../scripts/esm-utils.js';
-
-const {__filename} = createCommonjsRefs(import.meta);
 
 const UIStrings = {
   /**
@@ -30,7 +27,7 @@ const UIStrings = {
  */
 const SLOW_CPU_BENCHMARK_INDEX_THRESHOLD = 1000;
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 /**
  * @param {LH.Gatherer.FRProtocolSession} session

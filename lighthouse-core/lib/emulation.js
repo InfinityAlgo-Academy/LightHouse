@@ -5,7 +5,7 @@
  */
 'use strict';
 
-import { lighthouseVersion } from "../../root.js";
+import {lighthouseVersion} from '../../root.js';
 
 const NO_THROTTLING_METRICS = {
   latency: 0,

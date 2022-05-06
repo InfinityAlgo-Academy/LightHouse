@@ -15,7 +15,7 @@ const UIStrings = {
       'visible. [Learn more](https://web.dev/first-meaningful-paint/).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 class FirstMeaningfulPaint extends Audit {
   /**

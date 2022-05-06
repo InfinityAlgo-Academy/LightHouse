@@ -21,7 +21,7 @@ const UIStrings = {
   explanation: 'Description text is empty.',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 class Description extends Audit {
   /**

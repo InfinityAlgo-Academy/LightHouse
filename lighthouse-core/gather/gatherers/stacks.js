@@ -17,7 +17,7 @@ import fs from 'fs';
 import log from 'lighthouse-logger';
 import FRGatherer from '../../fraggle-rock/gather/base-gatherer.js';
 
-import { createCommonjsRefs } from '../../scripts/esm-utils.js';
+import {createCommonjsRefs} from '../../scripts/esm-utils.js';
 
 const {require} = createCommonjsRefs(import.meta);
 

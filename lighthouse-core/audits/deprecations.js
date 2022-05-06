@@ -33,7 +33,7 @@ const UIStrings = {
   columnLine: 'Line',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 class Deprecations extends Audit {
   /**

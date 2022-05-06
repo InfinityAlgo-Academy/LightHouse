@@ -15,7 +15,7 @@ const UIStrings = {
                'takes the page to visibly respond to user input. [Learn more](https://web.dev/inp/).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 /**
  * @fileoverview This metric gives a high-percentile measure of responsiveness to input.

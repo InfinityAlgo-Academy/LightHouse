@@ -44,7 +44,7 @@ const UIStrings = {
     '[Learn more](https://web.dev/plugins/).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 /**
  * Verifies if given MIME type matches any known plugin MIME type

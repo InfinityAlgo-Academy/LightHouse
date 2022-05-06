@@ -15,7 +15,7 @@ const UIStrings = {
                'elements within the viewport. [Learn more](https://web.dev/cls/).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 /**
  * @fileoverview This metric represents the amount of visual shifting of DOM elements during page load.

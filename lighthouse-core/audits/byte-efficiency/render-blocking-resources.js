@@ -39,7 +39,7 @@ const UIStrings = {
     'JS/styles. [Learn more](https://web.dev/render-blocking-resources/).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 /**
  * Given a simulation's nodeTimings, return an object with the nodes/timing keyed by network URL

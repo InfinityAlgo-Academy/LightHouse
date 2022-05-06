@@ -90,16 +90,22 @@ function generateConfig(configJson, flags) {
   return new Config(configJson, flags);
 }
 
-lighthouse.legacyNavigation = legacyNavigation;
-lighthouse.generateConfig = generateConfig;
-lighthouse.getAuditList = () => Runner.getAuditList();
-lighthouse.traceCategories = Driver.traceCategories;
-lighthouse.Audit = require('./audits/audit.js');
-lighthouse.Gatherer = require('./fraggle-rock/gather/base-gatherer.js');
+function getAuditList() {
+  return Runner.getAuditList();
+}
 
 // Explicit type reference (hidden by makeComputedArtifact) for d.ts export.
 // TODO(esmodules): should be a workaround for module.export and can be removed when in esm.
-/** @type {typeof import('./computed/network-records.js')} */
-lighthouse.NetworkRecords = require('./computed/network-records.js');
+// /** @type {typeof import('./computed/network-records.js')} */
+// lighthouse.NetworkRecords = require('./computed/network-records.js');
 
 export default lighthouse;
+export {Audit} from './audits/audit.js';
+export {default as Gatherer} from './fraggle-rock/gather/base-gatherer.js';
+export {default as NetworkRecords} from './computed/network-records.js';
+export {
+  legacyNavigation,
+  generateConfig,
+  getAuditList,
+};
+export const traceCategories = Driver.traceCategories;

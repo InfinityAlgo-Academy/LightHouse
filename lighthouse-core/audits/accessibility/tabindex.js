@@ -25,7 +25,7 @@ const UIStrings = {
       'for users who rely on assistive technologies. [Learn more](https://dequeuniversity.com/rules/axe/4.4/tabindex).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 class TabIndex extends AxeAudit {
   /**

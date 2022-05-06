@@ -232,7 +232,7 @@ CTC is a name that is distinct and identifies this as the Chrome translation for
     };
 
     // Init the strings in this file with the i18n system.
-    const str_ = i18n.createIcuMessageFn(__filename, UIStrings);
+    const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
     // Create an IcuMessage instance with a replacement value for our localizable string.
     const icuMessage = str_(UIStrings.totalSize, {totalBytes: 10240});

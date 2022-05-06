@@ -7,9 +7,6 @@
 
 import log from 'lighthouse-logger';
 import i18n from '../../lib/i18n/i18n.js';
-import { createCommonjsRefs } from '../../scripts/esm-utils.js';
-
-const {__filename} = createCommonjsRefs(import.meta);
 
 const UIStrings = {
   /**
@@ -27,7 +24,7 @@ const UIStrings = {
   }`,
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 
 /**

@@ -18,7 +18,7 @@ import LanternLcp from '../computed/metrics/lantern-largest-contentful-paint.js'
 const SCORING_P10 = 3651;
 const SCORING_MEDIAN = 10000;
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, {});
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, {});
 
 class PredictivePerf extends Audit {
   /**

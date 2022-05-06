@@ -21,7 +21,7 @@ const UIStrings = {
     `other {# requests • {byteCount, number, bytes} KiB}}`,
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 class ResourceSummary extends Audit {
   /**

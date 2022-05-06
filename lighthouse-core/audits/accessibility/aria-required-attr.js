@@ -24,7 +24,7 @@ const UIStrings = {
       'of the element to screen readers. [Learn more](https://dequeuniversity.com/rules/axe/4.4/aria-required-attr).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 class ARIARequiredAttr extends AxeAudit {
   /**

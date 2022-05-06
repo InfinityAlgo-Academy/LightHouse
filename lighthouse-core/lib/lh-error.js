@@ -5,10 +5,7 @@
  */
 'use strict';
 
-import { createCommonjsRefs } from '../scripts/esm-utils.js';
 import i18n from './i18n/i18n.js';
-
-const {__filename} = createCommonjsRefs(import.meta);
 
 /* eslint-disable max-len */
 const UIStrings = {
@@ -92,7 +89,7 @@ const UIStrings = {
   oldChromeDoesNotSupportFeature: 'This version of Chrome is too old to support \'{featureName}\'. Use a newer version to see full results.',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 
 /**

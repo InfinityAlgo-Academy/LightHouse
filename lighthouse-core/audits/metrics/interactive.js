@@ -15,7 +15,7 @@ const UIStrings = {
     'interactive. [Learn more](https://web.dev/interactive/).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 /**
  * @fileoverview This audit identifies the time the page is "consistently interactive".

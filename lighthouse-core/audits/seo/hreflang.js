@@ -31,7 +31,7 @@ const UIStrings = {
   notFullyQualified: 'Relative href value',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 /**
  * @param {string} href

@@ -141,4 +141,4 @@ function init(opts) {
   }
 }
 
-export default sentryDelegate;
+export const Sentry = sentryDelegate;

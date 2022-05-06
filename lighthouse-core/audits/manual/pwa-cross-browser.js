@@ -17,7 +17,7 @@ const UIStrings = {
   'every major browser. [Learn more](https://web.dev/pwa-cross-browser/).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 /**
  * @fileoverview Manual PWA audit for cross browser support.

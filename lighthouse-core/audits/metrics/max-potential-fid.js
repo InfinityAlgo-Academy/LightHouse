@@ -15,7 +15,7 @@ const UIStrings = {
       'duration of the longest task. [Learn more](https://web.dev/lighthouse-max-potential-fid/).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 /**
  * @fileoverview This metric is the duration of the longest task after FCP. It is meant to capture

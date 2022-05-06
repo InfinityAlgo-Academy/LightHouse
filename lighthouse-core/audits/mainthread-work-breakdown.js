@@ -28,7 +28,7 @@ const UIStrings = {
   columnCategory: 'Category',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 /** @typedef {import('../lib/tracehouse/task-groups.js').TaskGroupIds} TaskGroupIds */
 

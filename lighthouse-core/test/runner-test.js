@@ -23,7 +23,7 @@ import i18n from '../lib/i18n/i18n.js';
 import {makeMocksForGatherRunner} from './test-utils.js';
 import {createCommonjsRefs} from '../scripts/esm-utils.js';
 
-const {require, __dirname, __filename} = createCommonjsRefs(import.meta);
+const {require, __dirname} = createCommonjsRefs(import.meta);
 
 // Some imports needs to be done dynamically, so that their dependencies will be mocked.
 // See: https://jestjs.io/docs/ecmascript-modules#differences-between-esm-and-commonjs
@@ -162,7 +162,6 @@ describe('Runner', () => {
       const config = new Config({
         settings: {
           auditMode: __dirname + '/fixtures/artifacts/perflog/',
-
         },
         audits: [
           'content-width',
@@ -199,7 +198,7 @@ describe('Runner', () => {
     it('serializes IcuMessages in gatherMode and is able to use them in auditMode', async () => {
       // Can use this to access shared UIStrings in i18n.js.
       // For future changes: exact messages aren't important, just choose ones with replacements.
-      const str_ = i18n.createMessageInstanceIdFn(__filename, {});
+      const str_ = i18n.createMessageInstanceIdFn(import.meta.url, {});
 
       // A gatherer that produces an IcuMessage runWarning and LighthouseError artifact.
       class WarningAndErrorGatherer extends Gatherer {

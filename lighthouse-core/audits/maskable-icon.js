@@ -20,7 +20,7 @@ const UIStrings = {
     'the app on a device. [Learn more](https://web.dev/maskable-icon-audit/).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 /**
  * @fileoverview

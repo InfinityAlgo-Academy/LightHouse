@@ -23,7 +23,7 @@ const UIStrings = {
   description: 'Assistive technologies, like screen readers, work inconsistently when `aria-hidden="true"` is set on the document `<body>`. [Learn more](https://dequeuniversity.com/rules/axe/4.4/aria-hidden-body).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 class AriaHiddenBody extends AxeAudit {
   /**

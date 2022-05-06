@@ -30,7 +30,7 @@ const UIStrings = {
       'if they don\'t have permission to crawl them. [Learn more](https://web.dev/is-crawable/).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 /**
  * Checks if given directive is a valid unavailable_after directive with a date in the past
