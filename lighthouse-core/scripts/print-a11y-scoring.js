@@ -8,7 +8,7 @@
 
 import Config from '../config/config.js';
 
-const config = await Config.createConfigFromJson();
+const config = await Config.fromJson();
 if (!config.categories || !config.audits) throw new Error('wut');
 
 const auditRefs = config.categories.accessibility.auditRefs;

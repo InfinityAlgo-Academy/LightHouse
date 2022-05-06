@@ -11,7 +11,7 @@ import stackPacksLib from '../../lib/stack-packs.js';
 import Config from '../../config/config.js';
 
 async function getAuditIds() {
-  const config = await Config.createConfigFromJson();
+  const config = await Config.fromJson();
   return config.audits.map(a => a.implementation.meta.id);
 }
 

@@ -82,7 +82,7 @@ beforeAll(async () => {
  * @param {LH.Config.Json} json
  */
 async function makeConfig(json) {
-  const config = await Config.createConfigFromJson(json);
+  const config = await Config.fromJson(json);
 
   // Since the config is for `gather-runner`, ensure it has `passes`.
   if (!config.passes) {

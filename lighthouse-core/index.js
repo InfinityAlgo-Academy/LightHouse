@@ -86,7 +86,7 @@ async function legacyNavigation(url, flags = {}, configJSON, userConnection) {
  * @return {Promise<Config>}
  */
 function generateConfig(configJson, flags) {
-  return Config.createConfigFromJson(configJson, flags);
+  return Config.fromJson(configJson, flags);
 }
 
 lighthouse.legacyNavigation = legacyNavigation;
