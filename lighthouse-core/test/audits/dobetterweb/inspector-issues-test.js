@@ -7,8 +7,6 @@
 
 import InspectorIssuesAudit from '../../../audits/dobetterweb/inspector-issues.js';
 
-/* eslint-env jest */
-
 describe('Has inspector issues audit', () => {
   let issues;
   beforeEach(() => {

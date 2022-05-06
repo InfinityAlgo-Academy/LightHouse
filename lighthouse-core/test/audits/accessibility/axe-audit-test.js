@@ -13,8 +13,6 @@ import AxeAudit from '../../../audits/accessibility/axe-audit.js';
 import Accesskeys from '../../../audits/accessibility/accesskeys.js';
 import format from '../../../../shared/localization/format.js';
 
-/* eslint-env jest */
-
 describe('Accessibility: axe-audit', () => {
   describe('audit()', () => {
     it('generates audit output using subclass meta', () => {

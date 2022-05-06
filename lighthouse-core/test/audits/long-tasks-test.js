@@ -12,8 +12,6 @@ import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
 const BASE_TS = 12345e3;
 const TASK_URL = 'https://pwa.rocks';
 
-/* eslint-env jest */
-
 /**
  * @param {Number} count
  * @param {Number} duration

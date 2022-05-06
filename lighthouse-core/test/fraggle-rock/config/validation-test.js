@@ -12,8 +12,6 @@ import BaseFRGatherer from '../../../fraggle-rock/gather/base-gatherer.js';
 import BaseLegacyGatherer from '../../../gather/gatherers/gatherer.js';
 import validation from '../../../fraggle-rock/config/validation.js';
 
-/* eslint-env jest */
-
 /** @typedef {LH.Gatherer.GathererMeta['supportedModes']} SupportedModes */
 
 let ExampleAudit = class extends BaseAudit {};

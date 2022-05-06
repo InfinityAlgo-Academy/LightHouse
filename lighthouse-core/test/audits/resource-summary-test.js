@@ -8,8 +8,6 @@
 import ResourceSummaryAudit from '../../audits/resource-summary.js';
 import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
 
-/* eslint-env jest */
-
 describe('Performance: Resource summary audit', () => {
   let artifacts;
   let context;

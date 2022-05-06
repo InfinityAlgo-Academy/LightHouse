@@ -11,7 +11,6 @@ import Metrics from '../../../lib/traces/pwmetrics-events.js';
 import dbwTrace from '../../results/artifacts/defaultPass.trace.json';
 import dbwResults from '../../results/sample_v2.json';
 
-/* eslint-env jest */
 describe('metrics events class', () => {
   it('exposes metric definitions', () => {
     assert.ok(Metrics.metricsDefinitions.length > 5, 'metrics not exposed');

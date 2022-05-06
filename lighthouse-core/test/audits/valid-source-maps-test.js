@@ -5,8 +5,6 @@
  */
 
 
-/* eslint-env jest */
-
 import {createScript, loadSourceMapFixture} from '../test-utils.js';
 import ValidSourceMaps from '../../audits/valid-source-maps.js';
 const largeBundle = loadSourceMapFixture('coursehero-bundle-1');

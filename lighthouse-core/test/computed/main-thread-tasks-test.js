@@ -5,8 +5,6 @@
  */
 
 
-/* eslint-env jest */
-
 import MainThreadTasks from '../../computed/main-thread-tasks.js';
 import pwaTrace from '../fixtures/traces/progressive-app-m60.json';
 

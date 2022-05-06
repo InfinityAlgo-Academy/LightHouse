@@ -7,8 +7,6 @@
 
 import LayoutShiftElementsAudit from '../../audits/layout-shift-elements.js';
 
-/* eslint-env jest */
-
 describe('Performance: layout-shift-elements audit', () => {
   it('correctly surfaces a single CLS element', async () => {
     const artifacts = {

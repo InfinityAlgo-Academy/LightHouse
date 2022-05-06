@@ -33,8 +33,6 @@ function generateMockAuditContext() {
   };
 }
 
-/* eslint-env jest */
-
 describe('Maskable Icon Audit', () => {
   const context = generateMockAuditContext();
 

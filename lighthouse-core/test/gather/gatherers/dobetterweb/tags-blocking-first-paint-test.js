@@ -5,8 +5,6 @@
  */
 
 
-/* eslint-env jest */
-
 import TagsBlockingFirstPaint from
   '../../../../gather/gatherers/dobetterweb/tags-blocking-first-paint.js';
 import {createMockContext} from '../../../fraggle-rock/gather/mock-driver.js';

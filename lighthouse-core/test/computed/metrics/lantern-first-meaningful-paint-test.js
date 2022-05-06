@@ -14,8 +14,6 @@ import LanternFirstMeaningfulPaint from
 import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';
 
 const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
-
-/* eslint-env jest */
 describe('Metrics: Lantern FMP', () => {
   it('should compute predicted value', async () => {
     const gatherContext = {gatherMode: 'navigation'};

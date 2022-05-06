@@ -9,7 +9,6 @@ import {strict as assert} from 'assert';
 
 import TcpConnection from '../../../../lib/dependency-graph/simulator/tcp-connection.js';
 
-/* eslint-env jest */
 describe('DependencyGraph/Simulator/TcpConnection', () => {
   describe('#constructor', () => {
     it('should create the connection', () => {

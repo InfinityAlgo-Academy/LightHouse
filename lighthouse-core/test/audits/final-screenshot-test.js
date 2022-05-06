@@ -9,8 +9,6 @@ import FinalScreenshotAudit from '../../audits/final-screenshot.js';
 import pwaTrace from '../fixtures/traces/progressive-app-m60.json';
 const noScreenshotsTrace = {traceEvents: pwaTrace.traceEvents.filter(e => e.name !== 'Screenshot')};
 
-/* eslint-env jest */
-
 describe('Final screenshot', () => {
   let context;
 

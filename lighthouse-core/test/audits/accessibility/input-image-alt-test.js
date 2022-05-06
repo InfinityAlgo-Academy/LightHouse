@@ -9,8 +9,6 @@ import {strict as assert} from 'assert';
 
 import Audit from '../../../audits/accessibility/input-image-alt.js';
 
-/* eslint-env jest */
-
 describe('Accessibility: input-image-alt audit', () => {
   it('generates an audit output', () => {
     const artifacts = {

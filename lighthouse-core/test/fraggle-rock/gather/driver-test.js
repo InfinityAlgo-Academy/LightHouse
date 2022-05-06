@@ -8,8 +8,6 @@
 import Driver from '../../../fraggle-rock/gather/driver.js';
 import {fnAny} from '../../test-utils.js';
 
-/* eslint-env jest */
-
 /** @type {Array<keyof LH.Gatherer.FRProtocolSession>} */
 const DELEGATED_FUNCTIONS = [
   'hasNextProtocolTimeout',

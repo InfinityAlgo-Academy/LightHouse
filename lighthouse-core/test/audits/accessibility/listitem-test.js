@@ -9,8 +9,6 @@ import {strict as assert} from 'assert';
 
 import Audit from '../../../audits/accessibility/listitem.js';
 
-/* eslint-env jest */
-
 describe('Accessibility: listitem audit', () => {
   it('generates an audit output', () => {
     const artifacts = {

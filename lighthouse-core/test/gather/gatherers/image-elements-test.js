@@ -5,8 +5,6 @@
  */
 
 
-/* eslint-env jest */
-
 import {jest} from '@jest/globals';
 
 import ImageElements from '../../../gather/gatherers/image-elements.js';

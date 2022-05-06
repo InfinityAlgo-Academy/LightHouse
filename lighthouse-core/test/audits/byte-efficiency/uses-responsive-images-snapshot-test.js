@@ -8,8 +8,6 @@
 import UsesResponsiveImagesSnapshot from
   '../../../audits/byte-efficiency/uses-responsive-images-snapshot.js';
 
-/* eslint-env jest */
-
 /**
  * @param {Partial<LH.Artifacts.ImageElement>=} partial
  * @return {LH.Artifacts.ImageElement}

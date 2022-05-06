@@ -13,8 +13,6 @@ import devtoolsLog from '../../fixtures/traces/progressive-app-m60.devtools.log.
 import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';
 import networkRecordsToDevtoolsLog from '../../network-records-to-devtools-log.js';
 import createTestTrace from '../../create-test-trace.js';
-
-/* eslint-env jest */
 describe('Metrics: Lantern FCP', () => {
   const gatherContext = {gatherMode: 'navigation'};
 

@@ -5,8 +5,6 @@
  */
 
 
-/* eslint-env jest */
-
 import {
   addRectTopAndBottom,
   getRectOverlapArea,

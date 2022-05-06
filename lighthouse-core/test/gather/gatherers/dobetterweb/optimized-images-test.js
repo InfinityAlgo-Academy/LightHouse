@@ -5,8 +5,6 @@
  */
 
 
-/* eslint-env jest */
-
 import OptimizedImages from '../../../../gather/gatherers/dobetterweb/optimized-images.js';
 import {createMockContext} from '../../../fraggle-rock/gather/mock-driver.js';
 

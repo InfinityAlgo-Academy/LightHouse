@@ -8,8 +8,6 @@
 import MainThreadTasks from '../../audits/main-thread-tasks.js';
 import acceptableTrace from '../fixtures/traces/progressive-app-m60.json';
 
-/* eslint-env jest */
-
 describe('Main thread tasks audit', () => {
   it('should work', async () => {
     const artifacts = {traces: {defaultPass: acceptableTrace}};

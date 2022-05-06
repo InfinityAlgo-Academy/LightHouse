@@ -8,8 +8,6 @@
 import CumulativeLayoutShift from '../../../audits/metrics/cumulative-layout-shift.js';
 import jumpyClsTrace from '../../fixtures/traces/jumpy-cls-m90.json';
 
-/* eslint-env jest */
-
 describe('Cumulative Layout Shift', () => {
   it('evaluates CLS correctly', async () => {
     const artifacts = {

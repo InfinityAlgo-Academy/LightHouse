@@ -6,8 +6,6 @@
 
 
 import LargestContentfulPaintElementAudit from '../../audits/largest-contentful-paint-element.js';
-
-/* eslint-env jest */
 describe('Performance: largest-contentful-paint-element audit', () => {
   it('correctly surfaces the LCP element', async () => {
     const artifacts = {

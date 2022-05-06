@@ -9,8 +9,6 @@ import assert from 'assert';
 
 import CrawlableAnchorsAudit from '../../../audits/seo/crawlable-anchors.js';
 
-/* eslint-env jest */
-
 function runAudit({
   rawHref = '',
   role = '',

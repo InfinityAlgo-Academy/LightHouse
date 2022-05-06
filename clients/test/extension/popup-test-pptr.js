@@ -5,8 +5,6 @@
  */
 'use strict';
 
-/* eslint-env jest */
-
 const path = require('path');
 const puppeteer = require('puppeteer-core');
 const {getChromePath} = require('chrome-launcher');

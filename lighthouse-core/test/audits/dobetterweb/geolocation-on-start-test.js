@@ -9,8 +9,6 @@ import {strict as assert} from 'assert';
 
 import GeolocationOnStartAudit from '../../../audits/dobetterweb/geolocation-on-start.js';
 
-/* eslint-env jest */
-
 describe('UX: geolocation audit', () => {
   it('fails when geolocation has been automatically requested', async () => {
     const text = 'Do not request geolocation permission without a user action.';

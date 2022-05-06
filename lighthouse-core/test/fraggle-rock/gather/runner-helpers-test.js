@@ -10,8 +10,6 @@ import Gatherer from '../../../fraggle-rock/gather/base-gatherer.js';
 import {defaultSettings} from '../../../config/constants.js';
 import {createMockDriver, createMockGathererInstance, createMockBaseArtifacts} from './mock-driver.js'; // eslint-disable-line max-len
 
-/* eslint-env jest */
-
 describe('collectArtifactDependencies', () => {
   /** @type {LH.Config.AnyArtifactDefn} */
   let artifact;

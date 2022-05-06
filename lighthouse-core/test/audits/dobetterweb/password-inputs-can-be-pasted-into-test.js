@@ -10,8 +10,6 @@ import {strict as assert} from 'assert';
 import PasswordInputsCanBePastedIntoAudit from
   '../../../audits/dobetterweb/password-inputs-can-be-pasted-into.js';
 
-/* eslint-env jest */
-
 describe('Password inputs can be pasted into', () => {
   it('passes when there are no password inputs preventing paste', () => {
     const auditResult = PasswordInputsCanBePastedIntoAudit.audit({

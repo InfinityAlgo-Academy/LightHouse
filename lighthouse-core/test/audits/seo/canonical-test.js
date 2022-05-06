@@ -10,8 +10,6 @@ import {strict as assert} from 'assert';
 import CanonicalAudit from '../../../audits/seo/canonical.js';
 import networkRecordsToDevtoolsLog from '../../network-records-to-devtools-log.js';
 
-/* eslint-env jest */
-
 describe('SEO: Document has valid canonical link', () => {
   /**
    * @param {Partial<LH.Artifacts.LinkElement>} overrides

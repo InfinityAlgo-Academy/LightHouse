@@ -13,8 +13,6 @@ import devtoolsLog from '../../fixtures/traces/progressive-app-m60.devtools.log.
 
 const defaultThrottling = constants.throttling.mobileSlow4G;
 const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
-
-/* eslint-env jest */
 describe('Metrics: Lantern Speed Index', () => {
   const gatherContext = {gatherMode: 'navigation'};
   it('should compute predicted value', async () => {

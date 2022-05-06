@@ -12,8 +12,6 @@ import NetworkRecords from '../../../computed/network-records.js';
 import networkRecordsToDevtoolsLog from '../../network-records-to-devtools-log.js';
 import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';
 
-/* eslint-env jest */
-
 describe('Resources are fetched over http/2', () => {
   let artifacts = {};
   let context = {};

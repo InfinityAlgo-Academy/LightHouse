@@ -8,8 +8,6 @@
 import NetworkRTT from '../../audits/network-rtt.js';
 import acceptableDevToolsLog from '../fixtures/traces/progressive-app-m60.devtools.log.json';
 
-/* eslint-env jest */
-
 describe('Network RTT audit', () => {
   it('should work', async () => {
     const artifacts = {devtoolsLogs: {defaultPass: acceptableDevToolsLog}};

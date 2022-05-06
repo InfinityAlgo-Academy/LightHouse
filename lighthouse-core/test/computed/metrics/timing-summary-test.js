@@ -8,8 +8,6 @@
 import TimingSummary from '../../../computed/metrics/timing-summary.js';
 import trace from '../../fixtures/traces/frame-metrics-m90.json';
 import devtoolsLog from '../../fixtures/traces/frame-metrics-m90.devtools.log.json';
-
-/* eslint-env jest */
 describe('Timing summary', () => {
   it('contains the correct data', async () => {
     const gatherContext = {gatherMode: 'navigation'};

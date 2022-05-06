@@ -8,8 +8,6 @@
 import NetworkRequests from '../../audits/network-requests.js';
 import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
 import cutoffLoadDevtoolsLog from '../fixtures/traces/cutoff-load-m83.devtoolslog.json';
-
-/* eslint-env jest */
 describe('Network requests audit', () => {
   it('should report finished and unfinished network requests', async () => {
     const artifacts = {

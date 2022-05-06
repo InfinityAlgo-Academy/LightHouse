@@ -40,8 +40,6 @@ const getFakeContext = ({formFactor, throttlingMethod}) => ({
   },
 });
 
-/* eslint-env jest */
-
 describe('Performance: total-blocking-time audit', () => {
   it('evaluates Total Blocking Time metric properly', async () => {
     const artifacts = generateArtifacts({trace, devtoolsLog});

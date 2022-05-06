@@ -9,8 +9,6 @@ import {strict as assert} from 'assert';
 
 import DeprecationsAudit from '../../audits/deprecations.js';
 
-/* eslint-env jest */
-
 describe('Deprecations audit', () => {
   it('passes when no deprecations were found', async () => {
     const context = {computedCache: new Map()};

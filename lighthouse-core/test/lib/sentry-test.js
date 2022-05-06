@@ -5,8 +5,6 @@
  */
 
 
-/* eslint-env jest */
-
 import {jest} from '@jest/globals';
 
 // import sentryNode from '@sentry/node';

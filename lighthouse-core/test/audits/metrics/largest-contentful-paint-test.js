@@ -38,8 +38,6 @@ const getFakeContext = ({formFactor, throttlingMethod}) => ({
   },
 });
 
-/* eslint-env jest */
-
 describe('Performance: largest-contentful-paint audit', () => {
   it('adjusts scoring based on form factor', async () => {
     const artifactsMobile = generateArtifacts({

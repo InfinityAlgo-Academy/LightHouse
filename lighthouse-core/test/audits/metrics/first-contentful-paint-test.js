@@ -31,8 +31,6 @@ const getFakeContext = ({formFactor, throttlingMethod}) => ({
 });
 
 
-/* eslint-env jest */
-
 describe('Performance: first-contentful-paint audit', () => {
   it('evaluates valid input correctly', async () => {
     const artifacts = {

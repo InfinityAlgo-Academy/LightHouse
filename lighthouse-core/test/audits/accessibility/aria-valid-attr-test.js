@@ -9,8 +9,6 @@ import {strict as assert} from 'assert';
 
 import Audit from '../../../audits/accessibility/aria-valid-attr.js';
 
-/* eslint-env jest */
-
 describe('Accessibility: aria-valid-attr audit', () => {
   it('generates an audit output', () => {
     const artifacts = {

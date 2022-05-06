@@ -12,7 +12,6 @@ import sampleJson from '../results/sample_v2.json';
 const {describeIfProtoExists, sampleResultsRoundtripStr} = getProtoRoundTrip();
 const roundTripJson = sampleResultsRoundtripStr && JSON.parse(sampleResultsRoundtripStr);
 
-/* eslint-env jest */
 describe('processing for proto', () => {
   it('doesn\'t modify the input object', () => {
     const input = JSON.parse(JSON.stringify(sampleJson));

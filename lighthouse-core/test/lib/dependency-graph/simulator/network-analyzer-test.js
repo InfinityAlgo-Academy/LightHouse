@@ -12,7 +12,6 @@ import NetworkRecords from '../../../../computed/network-records.js';
 import devtoolsLog from '../../../fixtures/traces/progressive-app-m60.devtools.log.json';
 import devtoolsLogWithRedirect from '../../../fixtures/traces/site-with-redirect.devtools.log.json';
 
-/* eslint-env jest */
 describe('DependencyGraph/Simulator/NetworkAnalyzer', () => {
   let recordId;
 

@@ -8,8 +8,6 @@
 import PreloadFontsAudit from '../../audits/preload-fonts.js';
 import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
 
-/* eslint-env jest */
-
 describe('Preload Fonts Audit', () => {
   let networkRecords;
   let stylesheet;

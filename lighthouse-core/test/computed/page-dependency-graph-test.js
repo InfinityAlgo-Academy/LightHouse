@@ -29,8 +29,6 @@ function createRequest(
 }
 
 const TOPLEVEL_TASK_NAME = 'TaskQueueManager::ProcessTaskFromWorkQueue';
-
-/* eslint-env jest */
 describe('PageDependencyGraph computed artifact:', () => {
   let processedTrace;
   let URL;

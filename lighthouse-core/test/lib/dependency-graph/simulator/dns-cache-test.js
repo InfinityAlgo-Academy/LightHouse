@@ -6,9 +6,8 @@
 
 
 import DNSCache from '../../../../lib/dependency-graph/simulator/dns-cache.js';
-const MULTIPLIER = DNSCache.RTT_MULTIPLIER;
 
-/* eslint-env jest */
+const MULTIPLIER = DNSCache.RTT_MULTIPLIER;
 
 describe('DependencyGraph/Simulator/DNSCache', () => {
   let dns;

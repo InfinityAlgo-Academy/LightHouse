@@ -5,8 +5,6 @@
  */
 
 
-/* eslint-env jest */
-
 import GlobalListenerGatherer from '../../../gather/gatherers/global-listeners.js';
 import {createMockSendCommandFn} from '../mock-commands.js';
 import Connection from '../../../gather/connections/connection.js';

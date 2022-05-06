@@ -8,8 +8,6 @@
 import NoUnloadListeners from '../../audits/no-unload-listeners.js';
 import {createScript} from '../test-utils.js';
 
-/* eslint-env jest */
-
 const testScripts = [
   {scriptId: '12', url: 'https://example.com/1.js'},
   {scriptId: '13', url: 'https://example.com/1.js'},

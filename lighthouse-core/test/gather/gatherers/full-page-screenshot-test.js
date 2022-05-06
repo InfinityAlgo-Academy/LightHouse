@@ -5,8 +5,6 @@
  */
 
 
-/* eslint-env jest */
-
 import {jest} from '@jest/globals';
 
 import {createMockContext, mockDriverSubmodules} from '../../fraggle-rock/gather/mock-driver.js';

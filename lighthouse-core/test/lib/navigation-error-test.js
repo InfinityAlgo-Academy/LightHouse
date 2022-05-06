@@ -5,8 +5,6 @@
  */
 
 
-/* eslint-env jest */
-
 import {
   getNetworkError,
   getInterstitialError,

@@ -13,8 +13,6 @@ import {Util} from '../../renderer/util.js';
 import {I18n} from '../../renderer/i18n.js';
 import {DetailsRenderer} from '../../renderer/details-renderer.js';
 
-/* eslint-env jest */
-
 describe('DetailsRenderer', () => {
   let renderer;
 
