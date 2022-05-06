@@ -1002,6 +1002,7 @@ export interface TraceEvent {
       /** Responsiveness data. */
       interactionType?: 'drag'|'keyboard'|'tapOrClick';
       maxDuration?: number;
+      type?: string;
     };
     frame?: string;
     name?: string;
