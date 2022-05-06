@@ -1232,6 +1232,11 @@
   resolved "https://registry.yarnpkg.com/@protobufjs/utf8/-/utf8-1.1.0.tgz#a777360b5b39a1a2e5106f8e858f2fd2d060c570"
   integrity sha1-p3c2C1s5oaLlEG+OhY8v0tBgxXA=
 
+"@puppeteer/replay@^0.1.2":
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/@puppeteer/replay/-/replay-0.1.2.tgz#40799c9c6f8ad8b2cf5099a8255a8c7d43bb4be2"
+  integrity sha512-tRNzEjj/OvqJQMy66hUYHyzqh5bhMQKl3pSeeLCHM4ZMDW3KXYbacCe8+cDAYZ+aZ5HW0O9tgdyXcsRVl7SsdQ==
+
 "@rollup/plugin-alias@^3.1.2":
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/@rollup/plugin-alias/-/plugin-alias-3.1.2.tgz#c585b05be4a7782d269c69d13def56f44e417772"

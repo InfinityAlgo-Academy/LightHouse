@@ -1,0 +1,124 @@
+{
+  "title": "mmocny",
+  "steps": [
+    {
+      "type": "setViewport",
+      "width": 1200,
+      "height": 1292,
+      "deviceScaleFactor": 1,
+      "isMobile": false,
+      "hasTouch": false,
+      "isLandscape": false
+    },
+    {
+      "type": "navigate",
+      "url": "https://mmocny.github.io/canvas-worker-raf-fps-meter/responsiveness.html",
+      "assertedEvents": [
+        {
+          "type": "navigation",
+          "url": "https://mmocny.github.io/canvas-worker-raf-fps-meter/responsiveness.html",
+          "title": "Responsiveness Test"
+        }
+      ]
+    },
+    {
+      "type": "click",
+      "selectors": [
+        [
+          "html"
+        ]
+      ],
+      "target": "main",
+      "offsetX": 66,
+      "offsetY": 66
+    },
+    {
+      "type": "click",
+      "selectors": [
+        [
+          "aria/Clicky"
+        ],
+        [
+          "body > input[type=button]:nth-child(1)"
+        ]
+      ],
+      "target": "main",
+      "offsetX": 30,
+      "offsetY": 15
+    },
+    {
+      "type": "click",
+      "selectors": [
+        [
+          "body > input[type=checkbox]:nth-child(3)"
+        ]
+      ],
+      "target": "main",
+      "offsetX": 8.453125,
+      "offsetY": 8
+    },
+    {
+      "type": "click",
+      "selectors": [
+        [
+          "aria/Typey"
+        ],
+        [
+          "body > input[type=text]:nth-child(2)"
+        ]
+      ],
+      "target": "main",
+      "offsetX": 84.453125,
+      "offsetY": 16
+    },
+    {
+      "type": "change",
+      "value": "type in th ebox",
+      "selectors": [
+        [
+          "aria/Typey"
+        ],
+        [
+          "body > input[type=text]:nth-child(2)"
+        ]
+      ],
+      "target": "main"
+    },
+    {
+      "type": "click",
+      "selectors": [
+        [
+          "html"
+        ]
+      ],
+      "target": "main",
+      "offsetX": 147,
+      "offsetY": 64
+    },
+    {
+      "type": "click",
+      "selectors": [
+        [
+          "aria/Clicky"
+        ],
+        [
+          "body > input[type=button]:nth-child(1)"
+        ]
+      ],
+      "target": "main",
+      "offsetX": 30,
+      "offsetY": 9
+    },
+    {
+      "type": "click",
+      "selectors": [
+        [
+          "body > input[type=checkbox]:nth-child(3)"
+        ]
+      ],
+      "target": "main",
+      "offsetX": 1.453125,
+      "offsetY": 7
+    }
+  ]
+}
