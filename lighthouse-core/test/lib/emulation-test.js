@@ -11,8 +11,6 @@ import constants from '../../config/constants.js';
 import Connection from '../../gather/connections/connection.js';
 import {createMockSendCommandFn} from '../gather/mock-commands.js';
 
-/* eslint-env jest */
-
 describe('emulation', () => {
   describe('emulate', () => {
     let driver;

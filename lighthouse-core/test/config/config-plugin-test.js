@@ -5,8 +5,6 @@
  */
 
 
-/* eslint-env jest */
-
 import {strict as assert} from 'assert';
 
 import ConfigPlugin from '../../config/config-plugin.js';

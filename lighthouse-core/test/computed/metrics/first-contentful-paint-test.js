@@ -14,8 +14,6 @@ import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';
 
 const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
 
-/* eslint-env jest */
-
 describe('Metrics: FCP', () => {
   const gatherContext = {gatherMode: 'navigation'};
 

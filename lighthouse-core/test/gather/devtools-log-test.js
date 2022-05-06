@@ -5,8 +5,6 @@
  */
 
 
-/* eslint-env jest */
-
 import {strict as assert} from 'assert';
 
 import DevtoolsLog from '../../gather/devtools-log.js';

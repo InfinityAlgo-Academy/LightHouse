@@ -9,8 +9,6 @@ import {strict as assert} from 'assert';
 
 import Audit from '../../audits/audit.js';
 
-/* eslint-env jest */
-
 // Extend the Audit class but fail to implement meta. It should throw errors.
 class A extends Audit {}
 class B extends Audit {

@@ -11,6 +11,7 @@
     {"path": "./report/"},
     {"path": "./report/generator/"},
     {"path": "./shared/"},
+    {"path": "./treemap/"},
   ],
   "include": [
     "root.js",

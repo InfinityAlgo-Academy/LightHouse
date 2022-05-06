@@ -9,8 +9,6 @@ import {strict as assert} from 'assert';
 
 import Audit from '../../../audits/seo/meta-description.js';
 
-/* eslint-env jest */
-
 describe('SEO: description audit', () => {
   const makeMetaElements = content => [{name: 'description', content}];
 

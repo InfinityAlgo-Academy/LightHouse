@@ -15,8 +15,6 @@ import devtoolsLogMainFrame from '../../fixtures/traces/lcp-m78.devtools.log.jso
 import invalidTrace from '../../fixtures/traces/progressive-app-m60.json';
 import invalidDevtoolsLog from '../../fixtures/traces/progressive-app-m60.devtools.log.json';
 
-/* eslint-env jest */
-
 describe('Metrics: LCP from all frames', () => {
   const gatherContext = {gatherMode: 'navigation'};
 

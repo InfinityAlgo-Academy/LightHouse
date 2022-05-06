@@ -5,8 +5,6 @@
  */
 
 
-/* eslint-env jest */
-
 import NetworkRecorder from '../../lighthouse-core/lib/network-recorder.js';
 import networkRecordsToDevtoolsLog from './network-records-to-devtools-log.js';
 import lcpDevtoolsLog from './fixtures/traces/lcp-m78.devtools.log.json';

@@ -5,8 +5,6 @@
  */
 
 
-/* eslint-env jest */
-
 /* eslint-disable no-console */
 
 import {generateTraceEvents, createTraceString} from '../../lib/timing-trace-saver.js';

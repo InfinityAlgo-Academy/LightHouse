@@ -10,8 +10,6 @@ import trace from '../fixtures/traces/progressive-app-m60.json';
 import devtoolsLog from '../fixtures/traces/progressive-app-m60.devtools.log.json';
 import MetricsAudit from '../../audits/metrics.js';
 
-/* eslint-env jest */
-
 describe('minify-trace', () => {
   it('has identical metrics to unminified', async () => {
     const artifacts = {

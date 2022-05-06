@@ -5,8 +5,6 @@
  */
 
 
-/* eslint-env jest */
-
 import ImageRecords from '../../computed/image-records.js';
 import NetworkRequest from '../../lib/network-request.js';
 

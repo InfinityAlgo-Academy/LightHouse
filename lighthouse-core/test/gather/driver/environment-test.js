@@ -5,8 +5,6 @@
  */
 
 
-/* eslint-env jest */
-
 import {defaultSettings} from '../../../config/constants.js';
 import environment from '../../../gather/driver/environment.js';
 import {createMockSession} from '../../fraggle-rock/gather/mock-driver.js';

@@ -12,8 +12,6 @@ import lcpTrace from '../fixtures/traces/lcp-m78.json';
 import lcpDevtoolsLog from '../fixtures/traces/lcp-m78.devtools.log.json';
 import {getURLArtifactFromDevtoolsLog} from '../test-utils.js';
 
-/* eslint-env jest */
-
 describe('Performance: Timing budget audit', () => {
   let artifacts;
   let context;

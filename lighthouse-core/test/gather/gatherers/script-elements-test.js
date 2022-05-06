@@ -5,8 +5,6 @@
  */
 
 
-/* eslint-env jest */
-
 import {createMockContext, mockDriverSubmodules} from '../../fraggle-rock/gather/mock-driver.js';
 // import ScriptElements from '../../../gather/gatherers/script-elements.js';
 import NetworkRequest from '../../../lib/network-request.js';

@@ -5,8 +5,6 @@
  */
 
 
-/* eslint-env jest */
-
 import {strict as assert} from 'assert';
 
 import makeComputedArtifact from '../../computed/computed-artifact.js';

@@ -24,8 +24,6 @@ function noUrlManifestParser(manifestSrc) {
   return manifestParser(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
 }
 
-/* eslint-env jest */
-
 describe('Manifest Parser', function() {
   it('should not parse empty string input', function() {
     const parsedManifest = noUrlManifestParser('');

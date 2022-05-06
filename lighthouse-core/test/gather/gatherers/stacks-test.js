@@ -5,8 +5,6 @@
  */
 
 
-/* eslint-env jest */
-
 import StacksGatherer from '../../../gather/gatherers/stacks.js';
 import {fnAny} from '../../test-utils.js';
 

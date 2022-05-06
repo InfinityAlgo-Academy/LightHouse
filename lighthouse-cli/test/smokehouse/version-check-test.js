@@ -6,8 +6,6 @@
 
 import {chromiumVersionCheck, compareVersions} from './version-check.js';
 
-/* eslint-env jest */
-
 describe('version check', () => {
   it('compareVersions', async () => {
     expect(compareVersions([100, 0, 0, 0], [100, 0, 0, 0])).toBe(0);

@@ -11,8 +11,6 @@ import TargetManager from '../../../gather/driver/target-manager.js';
 import {createMockSession} from '../../fraggle-rock/gather/mock-driver.js';
 import {fnAny} from '../../test-utils.js';
 
-/* eslint-env jest */
-
 jest.useFakeTimers();
 
 /**

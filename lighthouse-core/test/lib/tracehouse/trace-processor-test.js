@@ -23,8 +23,6 @@ import lcpTrace from '../../fixtures/traces/lcp-m78.json';
 import lcpAllFramesTrace from '../../fixtures/traces/frame-metrics-m89.json';
 import startedAfterNavstartTrace from '../../fixtures/traces/tracingstarted-after-navstart.json';
 
-/* eslint-env jest */
-
 describe('TraceProcessor', () => {
   describe('_riskPercentiles', () => {
     const defaultPercentiles = [0, 0.25, 0.5, 0.75, 0.9, 0.99, 1];

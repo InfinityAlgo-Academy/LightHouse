@@ -10,8 +10,6 @@ import {strict as assert} from 'assert';
 import IsCrawlableAudit from '../../../audits/seo/is-crawlable.js';
 import networkRecordsToDevtoolsLog from '../../network-records-to-devtools-log.js';
 
-/* eslint-env jest */
-
 describe('SEO: Is page crawlable audit', () => {
   const makeMetaElements = content => [{name: 'robots', content, node: {}}];
 

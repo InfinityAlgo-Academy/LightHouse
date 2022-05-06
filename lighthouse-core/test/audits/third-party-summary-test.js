@@ -10,8 +10,6 @@ import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
 import pwaTrace from '../fixtures/traces/progressive-app-m60.json';
 import pwaDevtoolsLog from '../fixtures/traces/progressive-app-m60.devtools.log.json';
 import noThirdPartyTrace from '../fixtures/traces/no-tracingstarted-m74.json';
-
-/* eslint-env jest */
 describe('Third party summary', () => {
   it('surface the discovered third parties', async () => {
     const artifacts = {

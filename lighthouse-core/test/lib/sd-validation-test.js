@@ -5,8 +5,6 @@
  */
 
 
-/* eslint-env jest */
-
 import {strict as assert} from 'assert';
 
 import validateJSONLD from '../../lib/sd-validation/sd-validation.js';

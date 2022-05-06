@@ -5,8 +5,6 @@
  */
 
 
-/* eslint-env jest */
-
 import fs from 'fs';
 
 import {LH_ROOT} from '../../../../root.js';

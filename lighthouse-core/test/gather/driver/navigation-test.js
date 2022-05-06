@@ -5,8 +5,6 @@
  */
 
 
-/* eslint-env jest */
-
 import 'lighthouse-logger'; // Needed otherwise `log.timeEnd` errors in navigation.js inexplicably.
 import {jest} from '@jest/globals';
 

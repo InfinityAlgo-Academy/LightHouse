@@ -5,8 +5,6 @@
  */
 
 
-/* eslint-env jest */
-
 import sampleJson from './results/sample_v2.json';
 
 describe('Sample JSON', () => {

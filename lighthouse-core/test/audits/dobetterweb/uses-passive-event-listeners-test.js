@@ -9,8 +9,6 @@ import {strict as assert} from 'assert';
 
 import PassiveEventsAudit from '../../../audits/dobetterweb/uses-passive-event-listeners.js';
 
-/* eslint-env jest */
-
 describe('Page uses passive events listeners where applicable', () => {
   it('fails when scroll blocking listeners should be passive', async () => {
     const text = 'Use passive event listeners when you do not use preventDefault';

@@ -9,8 +9,6 @@ import {strict as assert} from 'assert';
 
 import Audit from '../../../audits/accessibility/aria-required-parent.js';
 
-/* eslint-env jest */
-
 describe('Accessibility: aria-required-parent audit', () => {
   it('generates an audit output', () => {
     const artifacts = {

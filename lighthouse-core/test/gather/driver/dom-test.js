@@ -5,8 +5,6 @@
  */
 
 
-/* eslint-env jest */
-
 import {createMockSession} from '../../fraggle-rock/gather/mock-driver.js';
 import dom from '../../../gather/driver/dom.js';
 

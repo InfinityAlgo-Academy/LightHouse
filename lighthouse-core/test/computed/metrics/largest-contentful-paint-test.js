@@ -14,8 +14,6 @@ import invalidTrace from '../../fixtures/traces/progressive-app-m60.json';
 import invalidDevtoolsLog from '../../fixtures/traces/progressive-app-m60.devtools.log.json';
 import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';
 
-/* eslint-env jest */
-
 describe('Metrics: LCP', () => {
   const gatherContext = {gatherMode: 'navigation'};
 

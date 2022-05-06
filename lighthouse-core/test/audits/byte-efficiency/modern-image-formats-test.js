@@ -50,8 +50,6 @@ function generateArtifacts(images) {
   };
 }
 
-/* eslint-env jest */
-
 describe('Page uses optimized images', () => {
   it('ignores files when there is only insignificant savings', () => {
     const artifacts = generateArtifacts([{originalSize: 5000, jpegSize: 10000, webpSize: 4500}]);

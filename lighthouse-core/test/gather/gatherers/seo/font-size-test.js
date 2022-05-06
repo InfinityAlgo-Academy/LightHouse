@@ -5,11 +5,10 @@
  */
 
 
-/* eslint-env jest */
-
 import assert from 'assert';
 
 import FontSizeGather from '../../../../gather/gatherers/seo/font-size.js';
+
 let fontSizeGather;
 
 const TEXT_NODE_TYPE = 3;

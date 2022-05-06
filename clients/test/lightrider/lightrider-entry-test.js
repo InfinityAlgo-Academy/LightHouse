@@ -11,8 +11,6 @@ import {runLighthouseInLR} from '../../lightrider/lightrider-entry.js';
 import Runner from '../../../lighthouse-core/runner.js';
 import LHError from '../../../lighthouse-core/lib/lh-error.js';
 
-/* eslint-env jest */
-
 describe('lightrider-entry', () => {
   describe('#runLighthouseInLR', () => {
     it('returns a runtimeError LHR when lighthouse throws a runtimeError', async () => {

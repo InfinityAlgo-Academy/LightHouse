@@ -5,8 +5,6 @@
  */
 
 
-/* eslint-env jest */
-
 import {strict as assert} from 'assert';
 
 import devtoolsLog from '../fixtures/traces/progressive-app-m60.devtools.log.json';

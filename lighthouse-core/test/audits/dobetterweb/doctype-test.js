@@ -9,8 +9,6 @@ import {strict as assert} from 'assert';
 
 import Audit from '../../../audits/dobetterweb/doctype.js';
 
-/* eslint-env jest */
-
 describe('DOBETTERWEB: doctype audit', () => {
   it('fails when document does not contain a doctype', () => {
     const auditResult = Audit.audit({

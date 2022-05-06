@@ -10,8 +10,6 @@ import {Util} from '../../renderer/util.js';
 import {I18n} from '../../renderer/i18n.js';
 import sampleResult from '../../../lighthouse-core/test/results/sample_v2.json';
 
-/* eslint-env jest */
-
 describe('util helpers', () => {
   beforeEach(() => {
     Util.i18n = new I18n('en', {...Util.UIStrings});

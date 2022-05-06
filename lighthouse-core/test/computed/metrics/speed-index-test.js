@@ -14,8 +14,6 @@ import trace1msLayout from '../../fixtures/traces/speedindex-1ms-layout-m84.trac
 import devtoolsLog1msLayout from '../../fixtures/traces/speedindex-1ms-layout-m84.devtoolslog.json'; // eslint-disable-line max-len
 import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';
 
-/* eslint-env jest */
-
 describe('Metrics: Speed Index', () => {
   const gatherContext = {gatherMode: 'navigation'};
 

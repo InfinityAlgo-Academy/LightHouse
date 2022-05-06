@@ -21,8 +21,6 @@ import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';
 
 const mobileSlow4G = constants.throttling.mobileSlow4G;
 
-/* eslint-env jest */
-
 describe('Render blocking resources audit', () => {
   it('evaluates http2 input correctly', async () => {
     const artifacts = {

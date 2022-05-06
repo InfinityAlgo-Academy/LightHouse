@@ -29,8 +29,6 @@ const getFakeContext = ({formFactor, throttlingMethod}) => ({
     screenEmulation: constants.screenEmulationMetrics[formFactor],
   },
 });
-
-/* eslint-env jest */
 describe('Performance: first-meaningful-paint audit', () => {
   it('computes FMP correctly for valid trace', async () => {
     const artifacts = {

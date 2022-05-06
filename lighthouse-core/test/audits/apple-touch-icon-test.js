@@ -7,8 +7,6 @@
 
 import AppleTouchIcon from '../../audits/apple-touch-icon.js';
 
-/* eslint-env jest */
-
 describe('PWA: apple-touch-icon audit', () => {
   it(`fails when apple-touch-icon is not present`, () => {
     const artifacts = {

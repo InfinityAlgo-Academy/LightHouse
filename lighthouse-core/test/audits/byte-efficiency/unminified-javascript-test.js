@@ -12,8 +12,6 @@ import {createScript} from '../../test-utils.js';
 
 const KB = 1024;
 
-/* eslint-env jest */
-
 const resourceType = 'Script';
 describe('Page uses optimized responses', () => {
   it('fails when given unminified scripts', () => {

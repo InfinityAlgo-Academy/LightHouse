@@ -7,13 +7,12 @@
 
 
 import NetworkRecorder from '../../lighthouse-core/lib/network-recorder.js';
+
 /** @typedef {import('../../lighthouse-core/lib/network-request.js')} NetworkRequest */
 
 const idBase = '127122';
 const exampleUrl = 'https://testingurl.com/';
 const redirectSuffix = ':redirect';
-
-/* eslint-env jest */
 
 /**
  * Extract requestId without any `:redirect` strings.

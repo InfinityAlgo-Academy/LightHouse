@@ -11,8 +11,6 @@ import createTestTrace from '../../create-test-trace.js';
 import interactionTrace from '../../fixtures/traces/timespan-responsiveness-m103.trace.json';
 import noInteractionTrace from '../../fixtures/traces/frame-metrics-m89.json';
 
-/* eslint-env jest */
-
 const childFrameId = 'CAF4634127666E186C9C8B35627DBF0B';
 
 /**

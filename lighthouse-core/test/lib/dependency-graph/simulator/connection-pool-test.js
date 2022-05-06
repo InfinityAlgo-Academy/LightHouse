@@ -10,7 +10,6 @@ import {URL} from 'url';
 
 import ConnectionPool from '../../../../lib/dependency-graph/simulator/connection-pool.js';
 
-/* eslint-env jest */
 describe('DependencyGraph/Simulator/ConnectionPool', () => {
   const rtt = 100;
   const throughput = 10000 * 1024;

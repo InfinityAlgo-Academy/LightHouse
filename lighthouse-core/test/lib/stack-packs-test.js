@@ -5,8 +5,6 @@
  */
 
 
-/* eslint-env jest */
-
 import lighthouseStackPacksDep from 'lighthouse-stack-packs';
 
 import stackPacksLib from '../../lib/stack-packs.js';

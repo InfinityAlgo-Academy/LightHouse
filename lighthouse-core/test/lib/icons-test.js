@@ -13,7 +13,6 @@ import manifestParser from '../../lib/manifest-parser.js';
 const EXAMPLE_MANIFEST_URL = 'https://example.com/manifest.json';
 const EXAMPLE_DOC_URL = 'https://example.com/index.html';
 
-/* global describe, it */
 describe('Icons helper', () => {
   describe('icons exist check', () => {
     it('copes when no manifest is provided', () => {

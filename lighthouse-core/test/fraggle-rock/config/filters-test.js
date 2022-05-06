@@ -13,8 +13,6 @@ import {defaultSettings, defaultNavigationConfig} from '../../../config/constant
 import filters from '../../../fraggle-rock/config/filters.js';
 import {initializeConfig} from '../../../fraggle-rock/config/config.js';
 
-/* eslint-env jest */
-
 describe('Fraggle Rock Config Filtering', () => {
   const snapshotGatherer = new BaseGatherer();
   snapshotGatherer.meta = {supportedModes: ['snapshot']};

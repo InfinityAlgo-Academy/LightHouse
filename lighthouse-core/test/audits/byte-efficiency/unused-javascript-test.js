@@ -11,8 +11,6 @@ import UnusedJavaScript from '../../../audits/byte-efficiency/unused-javascript.
 import networkRecordsToDevtoolsLog from '../../network-records-to-devtools-log.js';
 import {createScript, loadSourceMapAndUsageFixture} from '../../test-utils.js';
 
-/* eslint-env jest */
-
 const scriptUrlToId = new Map();
 
 /**
