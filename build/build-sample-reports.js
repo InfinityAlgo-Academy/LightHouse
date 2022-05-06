@@ -203,7 +203,4 @@ async function generateErrorLHR() {
   return errorLhr;
 }
 
-buildSampleReports().catch((err) => {
-  console.error(err);
-  process.exit(1);
-});
+await buildSampleReports();

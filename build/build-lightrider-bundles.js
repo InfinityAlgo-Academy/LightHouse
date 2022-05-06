@@ -68,15 +68,8 @@ async function buildStaticServerBundle() {
   await bundle.close();
 }
 
-async function run() {
-  await Promise.all([
-    buildEntryPoint(),
-    buildReportGenerator(),
-    buildStaticServerBundle(),
-  ]);
-}
-
-run().catch(err => {
-  console.error(err);
-  process.exit(1);
-});
+await Promise.all([
+  buildEntryPoint(),
+  buildReportGenerator(),
+  buildStaticServerBundle(),
+]);
