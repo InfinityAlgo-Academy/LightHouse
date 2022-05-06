@@ -121,9 +121,9 @@ function resolveArtifactDependencies(artifact, gatherer, artifactDefnsBySymbol) 
  *
  * @param {LH.Config.ArtifactJson[]|null|undefined} artifacts
  * @param {string|undefined} configDir
- * @return {LH.Config.AnyArtifactDefn[] | null}
+ * @return {Promise<LH.Config.AnyArtifactDefn[] | null>}
  */
-function resolveArtifactsToDefns(artifacts, configDir) {
+async function resolveArtifactsToDefns(artifacts, configDir) {
   if (!artifacts) return null;
 
   const status = {msg: 'Resolve artifact definitions', id: 'lh:config:resolveArtifactsToDefns'};
@@ -133,12 +133,12 @@ function resolveArtifactsToDefns(artifacts, configDir) {
   const artifactDefnsBySymbol = new Map();
 
   const coreGathererList = Runner.getGathererList();
-  const artifactDefns = artifacts.map(artifactJson => {
+  const artifactDefnsPromises = artifacts.map(async (artifactJson) => {
     /** @type {LH.Config.GathererJson} */
     // @ts-expect-error - remove when legacy runner path is removed.
     const gathererJson = artifactJson.gatherer;
 
-    const gatherer = resolveGathererToDefn(gathererJson, coreGathererList, configDir);
+    const gatherer = await resolveGathererToDefn(gathererJson, coreGathererList, configDir);
     if (!isFRGathererDefn(gatherer)) {
       throw new Error(`${gatherer.instance.name} gatherer does not have a Fraggle Rock meta obj`);
     }
@@ -156,6 +156,7 @@ function resolveArtifactsToDefns(artifacts, configDir) {
     if (symbol) artifactDefnsBySymbol.set(symbol, artifact);
     return artifact;
   });
+  const artifactDefns = await Promise.all(artifactDefnsPromises);
 
   log.timeEnd(status);
   return artifactDefns;
@@ -242,28 +243,28 @@ function resolveNavigationsToDefns(navigations, artifactDefns, settings) {
 /**
  * @param {LH.Config.Json|undefined} configJSON
  * @param {ConfigContext} context
- * @return {{config: LH.Config.FRConfig, warnings: string[]}}
+ * @return {Promise<{config: LH.Config.FRConfig, warnings: string[]}>}
  */
-function initializeConfig(configJSON, context) {
+async function initializeConfig(configJSON, context) {
   const status = {msg: 'Initialize config', id: 'lh:config'};
   log.time(status, 'verbose');
 
   let {configWorkingCopy, configDir} = resolveWorkingCopy(configJSON, context); // eslint-disable-line prefer-const
 
   configWorkingCopy = resolveExtensions(configWorkingCopy);
-  configWorkingCopy = mergePlugins(configWorkingCopy, configDir, context.settingsOverrides);
+  configWorkingCopy = await mergePlugins(configWorkingCopy, configDir, context.settingsOverrides);
 
   const settings = resolveSettings(configWorkingCopy.settings || {}, context.settingsOverrides);
   overrideSettingsForGatherMode(settings, context);
 
-  const artifacts = resolveArtifactsToDefns(configWorkingCopy.artifacts, configDir);
+  const artifacts = await resolveArtifactsToDefns(configWorkingCopy.artifacts, configDir);
   const navigations = resolveNavigationsToDefns(configWorkingCopy.navigations, artifacts, settings);
 
   /** @type {LH.Config.FRConfig} */
   let config = {
     artifacts,
     navigations,
-    audits: resolveAuditsToDefns(configWorkingCopy.audits, configDir),
+    audits: await resolveAuditsToDefns(configWorkingCopy.audits, configDir),
     categories: configWorkingCopy.categories || null,
     groups: configWorkingCopy.groups || null,
     settings,

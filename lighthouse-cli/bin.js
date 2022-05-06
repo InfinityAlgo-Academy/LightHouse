@@ -120,7 +120,7 @@ async function begin() {
   }
 
   if (cliFlags.printConfig) {
-    const config = lighthouse.generateConfig(configJson, cliFlags);
+    const config = await lighthouse.generateConfig(configJson, cliFlags);
     process.stdout.write(config.getPrintString());
     return;
   }
