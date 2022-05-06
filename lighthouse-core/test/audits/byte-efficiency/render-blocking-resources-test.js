@@ -3,7 +3,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
+
+
+import {strict as assert} from 'assert';
 
 import RenderBlockingResourcesAudit from '../../../audits/byte-efficiency/render-blocking-resources.js'; // eslint-disable-line max-len
 import constants from '../../../config/constants.js';
@@ -11,7 +13,6 @@ import NetworkNode from '../../../lib/dependency-graph/network-node.js';
 import CPUNode from '../../../lib/dependency-graph/cpu-node.js';
 import Simulator from '../../../lib/dependency-graph/simulator/simulator.js';
 import NetworkRequest from '../../../lib/network-request.js';
-import {strict as assert} from 'assert';
 import trace from '../../fixtures/traces/progressive-app-m60.json';
 import devtoolsLog from '../../fixtures/traces/progressive-app-m60.devtools.log.json';
 import ampTrace from '../../fixtures/traces/amp-m86.trace.json';

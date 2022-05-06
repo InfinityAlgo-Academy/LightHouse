@@ -3,11 +3,12 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
+
+
+import {strict as assert} from 'assert';
 
 import BaseNode from '../../../lib/dependency-graph/base-node.js';
 import NetworkNode from '../../../lib/dependency-graph/network-node.js';
-import {strict as assert} from 'assert';
 
 function sortedById(nodeArray) {
   return nodeArray.sort((node1, node2) => node1.id.localeCompare(node2.id));

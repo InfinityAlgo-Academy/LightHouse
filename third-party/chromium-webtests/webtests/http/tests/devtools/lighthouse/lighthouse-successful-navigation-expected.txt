@@ -33,7 +33,6 @@ Navigating to http://127.0.0.1:8000/devtools/lighthouse/resources/lighthouse-bas
 Computing artifact: NetworkRecords$I
 Get webapp installability errors
 Computing artifact: MainResource$k
-Getting browser version
 Collect stacks
 Computing artifact: ProcessedTrace$g
 Computing artifact: ProcessedNavigation$7
