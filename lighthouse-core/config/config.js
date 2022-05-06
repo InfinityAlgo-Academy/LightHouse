@@ -156,7 +156,7 @@ class Config {
    * @param {LH.Config.Json=} configJSON
    * @param {LH.Flags=} flags
    */
-  static async createConfigFromJson(configJSON, flags) {
+  static async fromJson(configJSON, flags) {
     const status = {msg: 'Create config', id: 'lh:init:config'};
     log.time(status, 'verbose');
     let configPath = flags?.configPath;
