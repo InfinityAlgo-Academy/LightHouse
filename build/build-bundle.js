@@ -124,7 +124,7 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
   }
 
   shimsObj[require.resolve('../package.json')] =
-    `export const version = ${pkg.version}`;
+    `export const version = '${pkg.version}';`;
 
   const bundle = await rollup({
     input: entryPath,
