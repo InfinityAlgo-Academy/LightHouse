@@ -6,7 +6,7 @@
 'use strict';
 
 import {Audit} from './audit.js';
-import LHError from '../lib/lh-error.js';
+import {LighthouseError} from '../lib/lh-error.js';
 import ProcessedTrace from '../computed/processed-trace.js';
 import Screenshots from '../computed/screenshots.js';
 
@@ -41,7 +41,7 @@ class FinalScreenshot extends Audit {
       if (artifacts.GatherContext.gatherMode === 'timespan') return {notApplicable: true, score: 1};
 
       // If it was another mode, that's a fatal error.
-      throw new LHError(LHError.errors.NO_SCREENSHOTS);
+      throw new LighthouseError(LighthouseError.errors.NO_SCREENSHOTS);
     }
 
     return {

@@ -7,7 +7,7 @@
 
 import {makeComputedArtifact} from '../computed-artifact.js';
 import NavigationMetric from './navigation-metric.js';
-import LHError from '../../lib/lh-error.js';
+import {LighthouseError} from '../../lib/lh-error.js';
 import LanternFirstMeaningfulPaint from './lantern-first-meaningful-paint.js';
 
 class FirstMeaningfulPaint extends NavigationMetric {
@@ -28,7 +28,7 @@ class FirstMeaningfulPaint extends NavigationMetric {
   static async computeObservedMetric(data) {
     const {processedNavigation} = data;
     if (processedNavigation.timings.firstMeaningfulPaint === undefined) {
-      throw new LHError(LHError.errors.NO_FMP);
+      throw new LighthouseError(LighthouseError.errors.NO_FMP);
     }
 
     return {

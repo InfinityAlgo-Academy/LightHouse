@@ -7,7 +7,7 @@
 
 import {makeComputedArtifact} from '../computed-artifact.js';
 import ProcessedTrace from '../processed-trace.js';
-import LHError from '../../lib/lh-error.js';
+import {LighthouseError} from '../../lib/lh-error.js';
 
 /** @typedef {{ts: number, isMainFrame: boolean, weightedScore: number}} LayoutShiftEvent */
 
@@ -40,8 +40,8 @@ class CumulativeLayoutShift {
       // For all-frames CLS calculation, we rely on `weighted_score_delta`, which
       // was added in Chrome 90: https://crbug.com/1173139
       if (event.args.data.weighted_score_delta === undefined) {
-        throw new LHError(
-          LHError.errors.UNSUPPORTED_OLD_CHROME,
+        throw new LighthouseError(
+          LighthouseError.errors.UNSUPPORTED_OLD_CHROME,
           {featureName: 'Cumulative Layout Shift'}
         );
       }

@@ -25,7 +25,7 @@ import {
 
 const defaultConfigPath = './default-config.js';
 
-/** @typedef {typeof import('../gather/gatherers/gatherer.js')} GathererConstructor */
+/** @typedef {typeof import('../gather/gatherers/gatherer.js').Gatherer} GathererConstructor */
 /** @typedef {InstanceType<GathererConstructor>} Gatherer */
 
 /**

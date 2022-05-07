@@ -17,7 +17,7 @@ import {createCommonjsRefs} from '../scripts/esm-utils.js';
 
 const {require, __dirname} = createCommonjsRefs(import.meta);
 
-/** @typedef {typeof import('../gather/gatherers/gatherer.js')['Gatherer']} GathererConstructor */
+/** @typedef {typeof import('../gather/gatherers/gatherer.js').Gatherer} GathererConstructor */
 /** @typedef {typeof import('../audits/audit.js')['Audit']} Audit */
 /** @typedef {InstanceType<GathererConstructor>} Gatherer */
 
@@ -220,7 +220,18 @@ async function requireWrapper(requirePath) {
 
   try {
     const module = await import(requirePath);
-    return module.default;
+    if (module.default) return module.default;
+
+    // TODO: should we do this?
+    const methods = new Set(['meta']);
+    for (const key of Object.keys(module)) {
+      if (!(module[key] && module[key] instanceof Object)) continue;
+      if (Object.getOwnPropertyNames(module[key]).some(method => methods.has(method))) {
+        return module[key];
+      }
+    }
+
+    throw new Error(`module '${requirePath}' missing default export`);
   } catch (err) {
     // TODO: verify err was "this isn't esm"
     console.error(err);

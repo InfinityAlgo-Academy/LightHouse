@@ -10,7 +10,7 @@ import fs from 'fs';
 
 import assetSaver from '../../lib/asset-saver.js';
 import Metrics from '../../lib/traces/pwmetrics-events.js';
-import LHError from '../../lib/lh-error.js';
+import {LighthouseError} from '../../lib/lh-error.js';
 import traceEvents from '../fixtures/traces/progressive-app.json';
 import dbwTrace from '../results/artifacts/defaultPass.trace.json';
 import dbwResults from '../results/sample_v2.json';
@@ -282,10 +282,12 @@ describe('asset-saver helper', () => {
         /^Error: Connection refused by server.*test[\\/]lib[\\/]asset-saver-test\.js/s);
     });
 
-    it('round trips artifacts with an LHError member', async () => {
-      // Use an LHError that has an ICU replacement.
+    it('round trips artifacts with an LighthouseError member', async () => {
+      // Use an LighthouseError that has an ICU replacement.
       const protocolMethod = 'Page.getFastness';
-      const lhError = new LHError(LHError.errors.PROTOCOL_TIMEOUT, {protocolMethod});
+      const lhError = new LighthouseError(LighthouseError.errors.PROTOCOL_TIMEOUT, {
+        protocolMethod,
+      });
 
       const artifacts = {
         traces: {},
@@ -297,11 +299,11 @@ describe('asset-saver helper', () => {
       const roundTripArtifacts = await assetSaver.loadArtifacts(outputPath);
       expect(roundTripArtifacts).toStrictEqual(artifacts);
 
-      expect(roundTripArtifacts.ScriptElements).toBeInstanceOf(LHError);
+      expect(roundTripArtifacts.ScriptElements).toBeInstanceOf(LighthouseError);
       expect(roundTripArtifacts.ScriptElements.code).toEqual('PROTOCOL_TIMEOUT');
       expect(roundTripArtifacts.ScriptElements.protocolMethod).toEqual(protocolMethod);
       expect(roundTripArtifacts.ScriptElements.stack).toMatch(
-          /^LHError: PROTOCOL_TIMEOUT.*test[\\/]lib[\\/]asset-saver-test\.js/s);
+          /^LighthouseError: PROTOCOL_TIMEOUT.*test[\\/]lib[\\/]asset-saver-test\.js/s);
       expect(roundTripArtifacts.ScriptElements.friendlyMessage)
         .toBeDisplayString(/\(Method: Page\.getFastness\)/);
     });

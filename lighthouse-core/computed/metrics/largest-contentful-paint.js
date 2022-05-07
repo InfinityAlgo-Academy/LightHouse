@@ -16,7 +16,7 @@
 import {makeComputedArtifact} from '../computed-artifact.js';
 
 import NavigationMetric from './navigation-metric.js';
-import LHError from '../../lib/lh-error.js';
+import {LighthouseError} from '../../lib/lh-error.js';
 import LanternLargestContentfulPaint from './lantern-largest-contentful-paint.js';
 
 class LargestContentfulPaint extends NavigationMetric {
@@ -37,7 +37,7 @@ class LargestContentfulPaint extends NavigationMetric {
   static async computeObservedMetric(data) {
     const {processedNavigation} = data;
     if (processedNavigation.timings.largestContentfulPaint === undefined) {
-      throw new LHError(LHError.errors.NO_LCP);
+      throw new LighthouseError(LighthouseError.errors.NO_LCP);
     }
 
     return {

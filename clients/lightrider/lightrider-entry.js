@@ -9,8 +9,8 @@
 
 import {Buffer} from 'buffer';
 
-import lighthouse from '../../lighthouse-core/index.js';
-import LHError from '../../lighthouse-core/lib/lh-error.js';
+import {legacyNavigation} from '../../lighthouse-core/index.js';
+import {LighthouseError} from '../../lighthouse-core/lib/lh-error.js';
 import preprocessor from '../../lighthouse-core/lib/proto-preprocessor.js';
 import assetSaver from '../../lighthouse-core/lib/asset-saver.js';
 
@@ -23,7 +23,7 @@ const LR_PRESETS = {
   desktop: desktopConfig,
 };
 
-/** @typedef {import('../../lighthouse-core/gather/connections/connection.js')} Connection */
+/** @typedef {import('../../lighthouse-core/gather/connections/connection.js').Connection} Connection */
 
 // Rollup seems to overlook some references to `Buffer`, so it must be made explicit.
 // (`parseSourceMapFromDataUrl` breaks without this)
@@ -63,7 +63,7 @@ export async function runLighthouseInLR(connection, url, flags, lrOpts) {
   }
 
   try {
-    const runnerResult = await lighthouse.legacyNavigation(url, flags, config, connection);
+    const runnerResult = await legacyNavigation(url, flags, config, connection);
     if (!runnerResult) throw new Error('Lighthouse finished without a runnerResult');
 
     // pre process the LHR for proto
@@ -85,9 +85,9 @@ export async function runLighthouseInLR(connection, url, flags, lrOpts) {
   } catch (err) {
     // If an error ruined the entire lighthouse run, attempt to return a meaningful error.
     let runtimeError;
-    if (!(err instanceof LHError) || !err.lhrRuntimeError) {
+    if (!(err instanceof LighthouseError) || !err.lhrRuntimeError) {
       runtimeError = {
-        code: LHError.UNKNOWN_ERROR,
+        code: LighthouseError.UNKNOWN_ERROR,
         message: `Unknown error encountered with message '${err.message}'`,
       };
     } else {

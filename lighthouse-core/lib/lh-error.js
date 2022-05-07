@@ -114,7 +114,7 @@ class LighthouseError extends Error {
    */
   constructor(errorDefinition, properties) {
     super(errorDefinition.code);
-    this.name = 'LHError';
+    this.name = 'LighthouseError';
     this.code = errorDefinition.code;
     // Add additional properties to be ICU replacements in the error string.
     // `code` is always added as `errorCode` so callers don't need to specify the code multiple times.
@@ -148,7 +148,7 @@ class LighthouseError extends Error {
   }
 
   /**
-   * A JSON.stringify replacer to serialize LHErrors and (as a fallback) Errors.
+   * A JSON.stringify replacer to serialize LighthouseErrors and (as a fallback) Errors.
    * Returns a simplified version of the error object that can be reconstituted
    * as a copy of the original error at parse time.
    * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify#The_replacer_parameter
@@ -169,7 +169,7 @@ class LighthouseError extends Error {
       };
     }
 
-    // Unexpected errors won't be LHErrors, but we want them serialized as well.
+    // Unexpected errors won't be LighthouseErrors, but we want them serialized as well.
     if (err instanceof Error) {
       const {message, stack} = err;
       // @ts-expect-error - code can be helpful for e.g. node errors, so preserve it if it's present.
@@ -182,12 +182,12 @@ class LighthouseError extends Error {
       };
     }
 
-    throw new Error('Invalid value for LHError stringification');
+    throw new Error('Invalid value for LighthouseError stringification');
   }
 
   /**
    * A JSON.parse reviver. If any value passed in is a serialized Error or
-   * LHError, the error is recreated as the original object. Otherwise, the
+   * LighthouseError, the error is recreated as the original object. Otherwise, the
    * value is passed through unchanged.
    * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse#Using_the_reviver_parameter
    * @param {string} key

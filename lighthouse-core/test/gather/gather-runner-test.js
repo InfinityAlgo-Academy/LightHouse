@@ -8,14 +8,14 @@ import {strict as assert} from 'assert';
 
 import {jest} from '@jest/globals';
 
-import Gatherer from '../../gather/gatherers/gatherer.js';
+import {Gatherer} from '../../gather/gatherers/gatherer.js';
 // import GathererRunner_ from '../../gather/gather-runner.js';
 // import Config from '../../config/config.js';
 import unresolvedPerfLog from './../fixtures/unresolved-perflog.json';
-import LHError from '../../lib/lh-error.js';
+import {LighthouseError} from '../../lib/lh-error.js';
 import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
 // import Driver from '../../gather/driver.js';
-import Connection from '../../gather/connections/connection.js';
+import {Connection} from '../../gather/connections/connection.js';
 import {createMockSendCommandFn, createMockOnceFn} from './mock-commands.js';
 import {
   makeMocksForGatherRunner,
@@ -212,7 +212,7 @@ describe('GatherRunner', function() {
 
   it('loads a page and returns a pageLoadError', async () => {
     const url = 'https://example.com';
-    const error = new LHError(LHError.errors.NO_FCP);
+    const error = new LighthouseError(LighthouseError.errors.NO_FCP);
     const driver = {};
     const {gotoURL} = /** @type {any} */ (
       requireMockAny('../../gather/driver/navigation.js')
@@ -487,7 +487,7 @@ describe('GatherRunner', function() {
     const requestedUrl = 'https://example.com';
     // This page load error should be overriden by ERRORED_DOCUMENT_REQUEST (for being
     // more specific) since the main document network request failed with a 500.
-    const navigationError = new LHError(LHError.errors.NO_FCP);
+    const navigationError = new LighthouseError(LighthouseError.errors.NO_FCP);
     const driver = Object.assign({}, fakeDriver, {
       online: true,
       /** @param {string} url */
@@ -522,7 +522,7 @@ describe('GatherRunner', function() {
   it('returns a pageLoadError and no artifacts when there is a navigation error', async () => {
     const requestedUrl = 'https://example.com';
     // This time, NO_FCP should win because it's the only error left.
-    const navigationError = new LHError(LHError.errors.NO_FCP);
+    const navigationError = new LighthouseError(LighthouseError.errors.NO_FCP);
     const driver = Object.assign({}, fakeDriver, {
       online: true,
       endDevtoolsLog() {
@@ -561,7 +561,7 @@ describe('GatherRunner', function() {
   it('succeeds when there is a navigation error but loadFailureMode was warn', async () => {
     const requestedUrl = 'https://example.com';
     // NO_FCP should be ignored because it's a warn pass.
-    const navigationError = new LHError(LHError.errors.NO_FCP);
+    const navigationError = new LighthouseError(LighthouseError.errors.NO_FCP);
 
     const gotoUrlForAboutBlank = fnAny().mockResolvedValue({});
     const gotoUrlForRealUrl = fnAny()
@@ -861,7 +861,7 @@ describe('GatherRunner', function() {
           firstLoad = false;
           return {mainDocumentUrl: requestedUrl, timedOut: false, warnings: []};
         } else {
-          throw new LHError(LHError.errors.NO_FCP);
+          throw new LighthouseError(LighthouseError.errors.NO_FCP);
         }
       });
     const options = {driver, requestedUrl, settings: config.settings, computedCache: new Map()};
@@ -881,7 +881,7 @@ describe('GatherRunner', function() {
     expect(artifacts.Test3).toBeUndefined();
 
     // PageLoadError artifact has the error.
-    expect(artifacts.PageLoadError).toBeInstanceOf(LHError);
+    expect(artifacts.PageLoadError).toBeInstanceOf(LighthouseError);
     expect(artifacts.PageLoadError).toMatchObject({code: 'NO_FCP'});
 
     // firstPass has a saved trace and devtoolsLog, secondPass has an error trace and log.

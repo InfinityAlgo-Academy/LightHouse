@@ -375,7 +375,9 @@ class FontSize extends FRGatherer {
   }
 }
 
-module.exports = FontSize;
-module.exports.computeSelectorSpecificity = computeSelectorSpecificity;
-module.exports.getEffectiveFontRule = getEffectiveFontRule;
-module.exports.findMostSpecificMatchedCSSRule = findMostSpecificMatchedCSSRule;
+export default FontSize;
+export {
+  computeSelectorSpecificity,
+  getEffectiveFontRule,
+  findMostSpecificMatchedCSSRule,
+};

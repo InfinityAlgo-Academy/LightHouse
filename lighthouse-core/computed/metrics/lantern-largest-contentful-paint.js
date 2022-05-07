@@ -7,7 +7,7 @@
 
 import {makeComputedArtifact} from '../computed-artifact.js';
 import LanternMetric from './lantern-metric.js';
-import LHError from '../../lib/lh-error.js';
+import {LighthouseError} from '../../lib/lh-error.js';
 import LanternFirstContentfulPaint from './lantern-first-contentful-paint.js';
 
 /** @typedef {import('../../lib/dependency-graph/base-node.js').Node} Node */
@@ -47,7 +47,7 @@ class LanternLargestContentfulPaint extends LanternMetric {
   static getOptimisticGraph(dependencyGraph, processedNavigation) {
     const lcp = processedNavigation.timestamps.largestContentfulPaint;
     if (!lcp) {
-      throw new LHError(LHError.errors.NO_LCP);
+      throw new LighthouseError(LighthouseError.errors.NO_LCP);
     }
 
     return LanternFirstContentfulPaint.getFirstPaintBasedGraph(
@@ -65,7 +65,7 @@ class LanternLargestContentfulPaint extends LanternMetric {
   static getPessimisticGraph(dependencyGraph, processedNavigation) {
     const lcp = processedNavigation.timestamps.largestContentfulPaint;
     if (!lcp) {
-      throw new LHError(LHError.errors.NO_LCP);
+      throw new LighthouseError(LighthouseError.errors.NO_LCP);
     }
 
     return LanternFirstContentfulPaint.getFirstPaintBasedGraph(

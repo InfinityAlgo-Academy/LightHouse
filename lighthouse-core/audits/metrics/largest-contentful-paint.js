@@ -8,7 +8,7 @@
 import {Audit} from '../audit.js';
 import i18n from '../../lib/i18n/i18n.js';
 import ComputedLcp from '../../computed/metrics/largest-contentful-paint.js';
-import LHError from '../../lib/lh-error.js';
+import {LighthouseError} from '../../lib/lh-error.js';
 
 const UIStrings = {
   /** Description of the Largest Contentful Paint (LCP) metric, which marks the time at which the largest text or image is painted by the browser. This is displayed within a tooltip when the user hovers on the metric name to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
@@ -88,8 +88,8 @@ class LargestContentfulPaint extends Audit {
       // m79 is the minimum version which supports LCP
       // https://chromium.googlesource.com/chromium/src/+/master/docs/speed/metrics_changelog/lcp.md
       if (milestone < 79 && err.code === 'NO_LCP') {
-        throw new LHError(
-          LHError.errors.UNSUPPORTED_OLD_CHROME,
+        throw new LighthouseError(
+          LighthouseError.errors.UNSUPPORTED_OLD_CHROME,
           {featureName: 'Largest Contentful Paint'}
         );
       }
