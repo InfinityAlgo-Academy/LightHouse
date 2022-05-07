@@ -5,7 +5,7 @@
  */
 'use strict';
 
-import Audit from './audit.js';
+import {Audit} from './audit.js';
 import ComputedResourceSummary from '../computed/resource-summary.js';
 import i18n from '../lib/i18n/i18n.js';
 

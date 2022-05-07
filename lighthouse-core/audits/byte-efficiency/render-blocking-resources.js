@@ -9,12 +9,12 @@
  */
 'use strict';
 
-import Audit from '../audit.js';
+import {Audit} from '../audit.js';
 import i18n from '../../lib/i18n/i18n.js';
 import BaseNode from '../../lib/dependency-graph/base-node.js';
 import ByteEfficiencyAudit from './byte-efficiency-audit.js';
 import UnusedCSS from '../../computed/unused-css.js';
-import NetworkRequest from '../../lib/network-request.js';
+import {NetworkRequest} from '../../lib/network-request.js';
 import ProcessedTrace from '../../computed/processed-trace.js';
 import ProcessedNavigation from '../../computed/processed-navigation.js';
 import LoadSimulator from '../../computed/load-simulator.js';

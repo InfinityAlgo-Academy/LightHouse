@@ -12,7 +12,7 @@
  * https://github.com/GoogleChrome/lighthouse/issues/4356#issuecomment-375489925
  */
 
-import Audit from '../audit.js';
+import {Audit} from '../audit.js';
 
 import URL from '../../lib/url-shim.js';
 

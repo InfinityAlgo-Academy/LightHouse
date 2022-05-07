@@ -5,7 +5,7 @@
  */
 'use strict';
 
-import Audit from './audit.js';
+import {Audit} from './audit.js';
 
 class FullPageScreenshot extends Audit {
   /**

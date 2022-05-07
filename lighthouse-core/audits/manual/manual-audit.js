@@ -10,7 +10,7 @@
  * their site.
  */
 
-import Audit from '../audit.js';
+import {Audit} from '../audit.js';
 
 class ManualAudit extends Audit {
   /**

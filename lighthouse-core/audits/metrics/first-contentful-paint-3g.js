@@ -5,7 +5,7 @@
  */
 'use strict';
 
-import Audit from '../audit.js';
+import {Audit} from '../audit.js';
 const regular3G = require('../../config/constants.js').throttling.mobileRegular3G;
 import ComputedFcp from '../../computed/metrics/first-contentful-paint.js';
 

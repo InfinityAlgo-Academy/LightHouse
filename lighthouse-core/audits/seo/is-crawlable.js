@@ -5,7 +5,7 @@
  */
 'use strict';
 
-import Audit from '../audit.js';
+import {Audit} from '../audit.js';
 
 // TODO(esmodules): cast can be removed when this switches to import.
 import robotsParser from 'robots-parser'; // eslint-disable-line max-len

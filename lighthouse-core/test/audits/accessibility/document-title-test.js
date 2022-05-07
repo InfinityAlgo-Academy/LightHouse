@@ -7,7 +7,7 @@
 
 import {strict as assert} from 'assert';
 
-import Audit from '../../../audits/accessibility/document-title.js';
+import {Audit} from '../../../audits/accessibility/document-title.js';
 
 describe('Accessibility: document-title audit', () => {
   it('generates an audit output', () => {

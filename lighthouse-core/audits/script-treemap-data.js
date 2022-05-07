@@ -15,7 +15,7 @@
  * @typedef {Omit<LH.Treemap.Node, 'name'|'children'>} SourceData
  */
 
-import Audit from './audit.js';
+import {Audit} from './audit.js';
 
 import JsBundles from '../computed/js-bundles.js';
 import UnusedJavaScriptSummary from '../computed/unused-javascript-summary.js';

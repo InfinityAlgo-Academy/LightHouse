@@ -10,7 +10,7 @@
 import FRGatherer from '../../fraggle-rock/gather/base-gatherer.js';
 
 import emulation from '../../lib/emulation.js';
-import pageFunctions from '../../lib/page-functions.js';
+import {pageFunctions} from '../../lib/page-functions.js';
 import NetworkMonitor from '../driver/network-monitor.js';
 import {waitForNetworkIdle} from '../driver/wait-for-condition.js';
 

@@ -14,7 +14,7 @@
 import puppeteer from 'puppeteer-core';
 import {getChromePath} from 'chrome-launcher';
 
-import pageFunctions from '../lib/page-functions.js';
+import {pageFunctions} from '../lib/page-functions.js';
 
 /** @param {LH.Puppeteer.Page} page */
 async function runOctane(page) {

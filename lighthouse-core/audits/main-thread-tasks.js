@@ -5,7 +5,7 @@
  */
 'use strict';
 
-import Audit from './audit.js';
+import {Audit} from './audit.js';
 import MainThreadTasksComputed from '../computed/main-thread-tasks.js';
 
 class MainThreadTasks extends Audit {

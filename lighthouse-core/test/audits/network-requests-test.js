@@ -5,7 +5,7 @@
  */
 
 
-import NetworkRequests from '../../audits/network-requests.js';
+import {NetworkRequest}s from '../../audits/network-requests.js';
 import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
 import cutoffLoadDevtoolsLog from '../fixtures/traces/cutoff-load-m83.devtoolslog.json';
 describe('Network requests audit', () => {

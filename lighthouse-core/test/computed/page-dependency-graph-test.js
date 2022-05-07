@@ -9,7 +9,7 @@ import {strict as assert} from 'assert';
 
 import PageDependencyGraph from '../../computed/page-dependency-graph.js';
 import BaseNode from '../../lib/dependency-graph/base-node.js';
-import NetworkRequest from '../../lib/network-request.js';
+import {NetworkRequest} from '../../lib/network-request.js';
 import sampleTrace from '../fixtures/traces/iframe-m79.trace.json';
 import sampleDevtoolsLog from '../fixtures/traces/iframe-m79.devtoolslog.json';
 import {getURLArtifactFromDevtoolsLog} from '../test-utils.js';

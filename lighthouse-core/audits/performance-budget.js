@@ -5,7 +5,7 @@
  */
 'use strict';
 
-import Audit from './audit.js';
+import {Audit} from './audit.js';
 import ResourceSummary from '../computed/resource-summary.js';
 import MainResource from '../computed/main-resource.js';
 import Budget from '../config/budget.js';

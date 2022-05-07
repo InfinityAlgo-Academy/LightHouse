@@ -6,8 +6,8 @@
 'use strict';
 
 import parseCacheControl from 'parse-cache-control';
-import Audit from '../audit.js';
-import NetworkRequest from '../../lib/network-request.js';
+import {Audit} from '../audit.js';
+import {NetworkRequest} from '../../lib/network-request.js';
 import URL from '../../lib/url-shim.js';
 import {linearInterpolation} from '../../lib/statistics.js';
 import i18n from '../../lib/i18n/i18n.js';

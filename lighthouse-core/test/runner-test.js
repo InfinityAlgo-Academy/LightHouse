@@ -14,7 +14,7 @@ import {jest} from '@jest/globals';
 // import GatherRunner from '../gather/gather-runner.js';
 import driverMock from './gather/fake-driver.js';
 // import Config from '../config/config.js';
-import Audit from '../audits/audit.js';
+import {Audit} from '../audits/audit.js';
 import Gatherer from '../gather/gatherers/gatherer.js';
 import assetSaver from '../lib/asset-saver.js';
 import LHError from '../lib/lh-error.js';

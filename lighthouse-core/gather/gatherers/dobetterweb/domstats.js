@@ -14,7 +14,7 @@
 'use strict';
 
 import FRGatherer from '../../../fraggle-rock/gather/base-gatherer.js';
-import pageFunctions from '../../../lib/page-functions.js';
+import {pageFunctions} from '../../../lib/page-functions.js';
 
 /**
  * Calculates the maximum tree depth of the DOM.

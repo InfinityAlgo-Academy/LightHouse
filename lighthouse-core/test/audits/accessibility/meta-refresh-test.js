@@ -7,7 +7,7 @@
 
 import {strict as assert} from 'assert';
 
-import Audit from '../../../audits/accessibility/meta-refresh.js';
+import {Audit} from '../../../audits/accessibility/meta-refresh.js';
 
 describe('Accessibility: meta-refresh audit', () => {
   it('generates an audit output', () => {

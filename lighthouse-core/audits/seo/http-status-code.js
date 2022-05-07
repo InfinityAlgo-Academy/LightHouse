@@ -5,7 +5,7 @@
  */
 'use strict';
 
-import Audit from '../audit.js';
+import {Audit} from '../audit.js';
 const HTTP_UNSUCCESSFUL_CODE_LOW = 400;
 const HTTP_UNSUCCESSFUL_CODE_HIGH = 599;
 import i18n from '../../lib/i18n/i18n.js';

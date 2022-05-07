@@ -7,7 +7,7 @@
 
 import {strict as assert} from 'assert';
 
-import Audit from '../../audits/content-width.js';
+import {Audit} from '../../audits/content-width.js';
 import * as constants from '../../config/constants.js';
 
 /** @param {LH.SharedFlagsSettings['formFactor']} formFactor */

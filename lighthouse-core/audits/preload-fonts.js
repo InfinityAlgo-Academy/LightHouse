@@ -10,7 +10,7 @@
  * Audit that checks whether fonts that use `font-display: optional` were preloaded.
  */
 
-import Audit from './audit.js';
+import {Audit} from './audit.js';
 
 import i18n from './../lib/i18n/i18n.js';
 import FontDisplay from './../audits/font-display.js';

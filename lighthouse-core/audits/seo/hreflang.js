@@ -9,7 +9,7 @@
 /** @typedef {{source: Source, subItems: {type: 'subitems', items: SubItem[]}}} InvalidHreflang */
 /** @typedef {{reason: LH.IcuMessage}} SubItem */
 
-import Audit from '../audit.js';
+import {Audit} from '../audit.js';
 
 import i18n from '../../lib/i18n/i18n.js';
 import {isValidLang} from '../../../third-party/axe/valid-langs.js';

@@ -159,7 +159,7 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
         ...shimsObj,
         // Allows for plugins to import lighthouse.
         'lighthouse': `
-          import Audit from '${require.resolve('../lighthouse-core/audits/audit.js')}';
+          import {Audit} from '${require.resolve('../lighthouse-core/audits/audit.js')}';
           export {Audit};
         `,
         // Most node 'url' polyfills don't include the WHATWG `URL` property, but

@@ -9,7 +9,7 @@
 
 import i18n from '../../lib/i18n/i18n.js';
 
-import Audit from '../audit.js';
+import {Audit} from '../audit.js';
 import ComputedViewportMeta from '../../computed/viewport-meta.js';
 const MINIMAL_PERCENTAGE_OF_LEGIBLE_TEXT = 60;
 

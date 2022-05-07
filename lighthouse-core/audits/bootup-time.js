@@ -5,7 +5,7 @@
  */
 'use strict';
 
-import Audit from './audit.js';
+import {Audit} from './audit.js';
 import {taskGroups} from '../lib/tracehouse/task-groups.js';
 import i18n from '../lib/i18n/i18n.js';
 import NetworkRecords from '../computed/network-records.js';

@@ -5,7 +5,7 @@
  */
 'use strict';
 
-import Audit from './audit.js';
+import {Audit} from './audit.js';
 import LHError from '../lib/lh-error.js';
 import jpeg from 'jpeg-js';
 import Speedline from '../computed/speedline.js';

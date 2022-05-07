@@ -13,7 +13,6 @@
 
 import URL from './url-shim.js';
 
-
 // Lightrider X-Header names for timing information.
 // See: _updateTransferSizeForLightrider and _updateTimingsForLightrider.
 const HEADER_TCP = 'X-TCPMs';

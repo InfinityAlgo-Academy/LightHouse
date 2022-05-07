@@ -7,7 +7,7 @@
 
 import {strict as assert} from 'assert';
 
-import Audit from '../../../audits/accessibility/aria-roles.js';
+import {Audit} from '../../../audits/accessibility/aria-roles.js';
 
 describe('Accessibility: aria-roles audit', () => {
   it('generates an audit output', () => {

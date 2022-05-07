@@ -15,7 +15,7 @@ import i18n from '../lib/i18n/i18n.js';
 import * as validation from '../fraggle-rock/config/validation.js';
 import {createCommonjsRefs} from '../scripts/esm-utils.js';
 
-const {require} = createCommonjsRefs(import.meta);
+const {require, __dirname} = createCommonjsRefs(import.meta);
 
 /** @typedef {typeof import('../gather/gatherers/gatherer.js')['Gatherer']} GathererConstructor */
 /** @typedef {typeof import('../audits/audit.js')['Audit']} Audit */
@@ -210,13 +210,23 @@ function expandAuditShorthand(audit) {
 const bundledModules = new Map(/* BUILD_REPLACE_BUNDLED_MODULES */);
 
 /**
- * Wraps `require` with an entrypoint for bundled dynamic modules.
+ * Wraps `import`/`require` with an entrypoint for bundled dynamic modules.
  * See build-bundle.js
  * @param {string} requirePath
  */
 async function requireWrapper(requirePath) {
-  // This is async because eventually this function needs to do async dynamic imports.
-  return bundledModules.get(requirePath) || require(requirePath);
+  const bundledModule = bundledModules.get(requirePath);
+  if (bundledModule) return bundledModule;
+
+  try {
+    const module = await import(requirePath);
+    return module.default;
+  } catch (err) {
+    // TODO: verify err was "this isn't esm"
+    console.error(err);
+  }
+
+  return require(requirePath);
 }
 
 /**

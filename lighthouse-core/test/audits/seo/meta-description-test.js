@@ -7,7 +7,7 @@
 
 import {strict as assert} from 'assert';
 
-import Audit from '../../../audits/seo/meta-description.js';
+import {Audit} from '../../../audits/seo/meta-description.js';
 
 describe('SEO: description audit', () => {
   const makeMetaElements = content => [{name: 'description', content}];

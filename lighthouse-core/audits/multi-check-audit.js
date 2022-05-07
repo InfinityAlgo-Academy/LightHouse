@@ -9,7 +9,7 @@
  * @fileoverview Base class for boolean audits that can have multiple reasons for failure
  */
 
-import Audit from './audit.js';
+import {Audit} from './audit.js';
 
 class MultiCheckAudit extends Audit {
   /**

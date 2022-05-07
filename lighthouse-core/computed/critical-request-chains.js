@@ -6,7 +6,7 @@
 'use strict';
 
 import {makeComputedArtifact} from './computed-artifact.js';
-import NetworkRequest from '../lib/network-request.js';
+import {NetworkRequest} from '../lib/network-request.js';
 import MainResource from './main-resource.js';
 import PageDependencyGraph from './page-dependency-graph.js';
 

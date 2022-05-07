@@ -5,7 +5,7 @@
  */
 'use strict';
 
-import Audit from './audit.js';
+import {Audit} from './audit.js';
 import NetworkRecords from '../computed/network-records.js';
 import i18n from '../lib/i18n/i18n.js';
 import MainThreadTasks from '../computed/main-thread-tasks.js';

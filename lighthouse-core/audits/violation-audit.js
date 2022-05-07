@@ -5,7 +5,7 @@
  */
 'use strict';
 
-import Audit from './audit.js';
+import {Audit} from './audit.js';
 import JsBundles from '../computed/js-bundles.js';
 
 class ViolationAudit extends Audit {

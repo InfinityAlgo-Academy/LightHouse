@@ -15,7 +15,7 @@
 /** @typedef {{url: string}} IssueSubItem */
 /** @typedef {{issueType: string|LH.IcuMessage, subItems: Array<IssueSubItem>}} IssueItem */
 
-import Audit from '../audit.js';
+import {Audit} from '../audit.js';
 
 import i18n from '../../lib/i18n/i18n.js';
 

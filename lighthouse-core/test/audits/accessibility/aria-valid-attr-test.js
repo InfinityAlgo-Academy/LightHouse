@@ -7,7 +7,7 @@
 
 import {strict as assert} from 'assert';
 
-import Audit from '../../../audits/accessibility/aria-valid-attr.js';
+import {Audit} from '../../../audits/accessibility/aria-valid-attr.js';
 
 describe('Accessibility: aria-valid-attr audit', () => {
   it('generates an audit output', () => {

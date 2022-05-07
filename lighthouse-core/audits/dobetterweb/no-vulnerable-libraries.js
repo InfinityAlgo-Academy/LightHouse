@@ -12,7 +12,7 @@
 
 'use strict';
 
-import Audit from '../audit.js';
+import {Audit} from '../audit.js';
 import Sentry from '../../lib/sentry.js';
 import semver from 'semver';
 import snykDatabase from '../../../third-party/snyk/snapshot.json';

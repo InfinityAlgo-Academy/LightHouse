@@ -6,7 +6,7 @@
 'use strict';
 
 import FRGatherer from '../../fraggle-rock/gather/base-gatherer.js';
-import pageFunctions from '../../lib/page-functions.js';
+import {pageFunctions} from '../../lib/page-functions.js';
 
 /* globals getElementsInDocument getNodeDetails */
 

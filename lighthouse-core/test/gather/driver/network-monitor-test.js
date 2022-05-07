@@ -9,7 +9,7 @@ import {jest} from '@jest/globals';
 
 import {mockDriverSubmodules} from '../../fraggle-rock/gather/mock-driver.js';
 // import NetworkMonitor from '../../../gather/driver/network-monitor.js';
-import NetworkRequest from '../../../lib/network-request.js';
+import {NetworkRequest} from '../../../lib/network-request.js';
 import networkRecordsToDevtoolsLog from '../../network-records-to-devtools-log.js';
 import {fnAny, mockCommands} from '../../test-utils.js';
 

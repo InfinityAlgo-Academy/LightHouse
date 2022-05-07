@@ -13,7 +13,7 @@ import puppeteer from 'puppeteer';
 import AccessibilityGather from '../../../gather/gatherers/accessibility.js';
 import {LH_ROOT} from '../../../../root.js';
 import axeLib from '../../../../lighthouse-core/lib/axe.js';
-import pageFunctions from '../../../../lighthouse-core/lib/page-functions.js';
+import {pageFunctions} from '../../../../lighthouse-core/lib/page-functions.js';
 
 describe('Accessibility gatherer', () => {
   let accessibilityGather;

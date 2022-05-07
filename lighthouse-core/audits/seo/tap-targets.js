@@ -9,7 +9,7 @@
  * @fileoverview Checks that links, buttons, etc. are sufficiently large and that there's
  * no other tap target that's too close so that the user might accidentally tap on.
  */
-import Audit from '../audit.js';
+import {Audit} from '../audit.js';
 
 import ComputedViewportMeta from '../../computed/viewport-meta.js';
 

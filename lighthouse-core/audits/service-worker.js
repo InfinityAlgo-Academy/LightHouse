@@ -6,7 +6,7 @@
 'use strict';
 
 import URL from '../lib/url-shim.js';
-import Audit from './audit.js';
+import {Audit} from './audit.js';
 import i18n from '../lib/i18n/i18n.js';
 
 const UIStrings = {

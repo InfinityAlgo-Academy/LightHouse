@@ -5,7 +5,7 @@
  */
 'use strict';
 
-import Audit from './audit.js';
+import {Audit} from './audit.js';
 import LHError from '../lib/lh-error.js';
 import ProcessedTrace from '../computed/processed-trace.js';
 import Screenshots from '../computed/screenshots.js';

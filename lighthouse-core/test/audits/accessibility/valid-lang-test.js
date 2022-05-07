@@ -7,7 +7,7 @@
 
 import {strict as assert} from 'assert';
 
-import Audit from '../../../audits/accessibility/valid-lang.js';
+import {Audit} from '../../../audits/accessibility/valid-lang.js';
 
 describe('Accessibility: valid-lang audit', () => {
   it('generates an audit output', () => {

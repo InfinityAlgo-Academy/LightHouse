@@ -11,7 +11,7 @@
 
 import log from 'lighthouse-logger';
 import FRGatherer from '../../fraggle-rock/gather/base-gatherer.js';
-import pageFunctions from '../../lib/page-functions.js';
+import {pageFunctions} from '../../lib/page-functions.js';
 import FontSize from './seo/font-size.js';
 
 /* global window, getElementsInDocument, Image, getNodeDetails, ShadowRoot */

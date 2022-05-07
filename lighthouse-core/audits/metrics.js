@@ -5,7 +5,7 @@
  */
 'use strict';
 
-import Audit from './audit.js';
+import {Audit} from './audit.js';
 import ComputedTimingSummary from '../computed/metrics/timing-summary.js';
 
 /** @type {Set<keyof LH.Artifacts.TimingSummary>} */

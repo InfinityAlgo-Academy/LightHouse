@@ -6,7 +6,7 @@
 'use strict';
 
 import BaseNode from '../../lib/dependency-graph/base-node.js';
-import NetworkRequest from '../../lib/network-request.js';
+import {NetworkRequest} from '../../lib/network-request.js';
 import ProcessedTrace from '../processed-trace.js';
 import ProcessedNavigation from '../processed-navigation.js';
 import PageDependencyGraph from '../page-dependency-graph.js';

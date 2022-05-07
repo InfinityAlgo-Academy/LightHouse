@@ -5,7 +5,7 @@
  */
 'use strict';
 
-import Audit from './audit.js';
+import {Audit} from './audit.js';
 import i18n from '../lib/i18n/i18n.js';
 import LanternFcp from '../computed/metrics/lantern-first-contentful-paint.js';
 import LanternFmp from '../computed/metrics/lantern-first-meaningful-paint.js';

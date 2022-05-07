@@ -5,7 +5,7 @@
  */
 'use strict';
 
-import Audit from '../audit.js';
+import {Audit} from '../audit.js';
 import URL from '../../lib/url-shim.js';
 const BLOCKLIST = new Set([
   // English

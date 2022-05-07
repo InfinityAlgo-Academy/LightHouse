@@ -7,8 +7,8 @@
 
 import FRGatherer from '../../fraggle-rock/gather/base-gatherer.js';
 import NetworkRecords from '../../computed/network-records.js';
-import NetworkRequest from '../../lib/network-request.js';
-import pageFunctions from '../../lib/page-functions.js';
+import {NetworkRequest} from '../../lib/network-request.js';
+import {pageFunctions} from '../../lib/page-functions.js';
 import DevtoolsLog from './devtools-log.js';
 
 /* global getNodeDetails */

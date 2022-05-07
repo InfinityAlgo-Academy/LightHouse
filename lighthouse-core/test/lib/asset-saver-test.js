@@ -14,7 +14,7 @@ import LHError from '../../lib/lh-error.js';
 import traceEvents from '../fixtures/traces/progressive-app.json';
 import dbwTrace from '../results/artifacts/defaultPass.trace.json';
 import dbwResults from '../results/sample_v2.json';
-import Audit from '../../audits/audit.js';
+import {Audit} from '../../audits/audit.js';
 import {createCommonjsRefs} from '../../scripts/esm-utils.js';
 import fullTraceObj from '../fixtures/traces/progressive-app-m60.json';
 import devtoolsLog from '../fixtures/traces/progressive-app-m60.devtools.log.json';

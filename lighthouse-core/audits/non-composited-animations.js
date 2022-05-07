@@ -11,7 +11,7 @@
  * https://docs.google.com/document/d/1XKcJP2CKmNKfOcDsVvliAQ-e1H9C1nf2H-pzTdyafAA/edit?usp=sharing
  */
 
-import Audit from './audit.js';
+import {Audit} from './audit.js';
 
 import i18n from '../lib/i18n/i18n.js';
 

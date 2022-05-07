@@ -10,7 +10,7 @@
  * generate audit results using aXe rule names.
  */
 
-import Audit from '../audit.js';
+import {Audit} from '../audit.js';
 
 import i18n from '../../lib/i18n/i18n.js';
 

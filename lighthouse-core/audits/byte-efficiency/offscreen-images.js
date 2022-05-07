@@ -10,7 +10,7 @@
 'use strict';
 
 import ByteEfficiencyAudit from './byte-efficiency-audit.js';
-import NetworkRequest from '../../lib/network-request.js';
+import {NetworkRequest} from '../../lib/network-request.js';
 import Sentry from '../../lib/sentry.js';
 import URL from '../../lib/url-shim.js';
 import i18n from '../../lib/i18n/i18n.js';

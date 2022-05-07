@@ -12,7 +12,7 @@
 
 import log from 'lighthouse-logger';
 
-import Audit from './audit.js';
+import {Audit} from './audit.js';
 import JsBundles from '../computed/js-bundles.js';
 import i18n from '../lib/i18n/i18n.js';
 

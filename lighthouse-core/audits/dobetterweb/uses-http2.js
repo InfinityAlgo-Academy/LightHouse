@@ -13,13 +13,13 @@
 /** @typedef {import('../../lib/dependency-graph/simulator/simulator')} Simulator */
 /** @typedef {import('../../lib/dependency-graph/base-node.js').Node} Node */
 
-import Audit from '../audit.js';
+import {Audit} from '../audit.js';
 
 import ThirdParty from '../../lib/third-party-web.js';
 import URL from '../../lib/url-shim.js';
 import ByteEfficiencyAudit from '../byte-efficiency/byte-efficiency-audit.js';
 import Interactive from '../../computed/metrics/lantern-interactive.js';
-import NetworkRequest from '../../lib/network-request.js';
+import {NetworkRequest} from '../../lib/network-request.js';
 import NetworkRecords from '../../computed/network-records.js';
 import LoadSimulator from '../../computed/load-simulator.js';
 import PageDependencyGraph from '../../computed/page-dependency-graph.js';
