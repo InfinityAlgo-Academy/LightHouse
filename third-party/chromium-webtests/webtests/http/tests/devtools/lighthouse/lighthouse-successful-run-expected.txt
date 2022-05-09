@@ -94,7 +94,7 @@ Gathering in-page: SourceMaps
 Gathering in-page: FullPageScreenshot
 Gathering trace
 Gathering devtoolsLog & network records
-Computing artifact: NetworkRecords$J
+Computing artifact: NetworkRecords$N
 Running afterPass methods
 Gathering: CSSUsage
 Gathering: JsUsage
@@ -143,7 +143,7 @@ Navigating to http://127.0.0.1:8000/devtools/lighthouse/resources/lighthouse-bas
 Running pass methods
 Gathering in-page: ServiceWorker
 Gathering devtoolsLog & network records
-Computing artifact: NetworkRecords$J
+Computing artifact: NetworkRecords$N
 Running afterPass methods
 Gathering: ServiceWorker
 Disconnecting from browser...

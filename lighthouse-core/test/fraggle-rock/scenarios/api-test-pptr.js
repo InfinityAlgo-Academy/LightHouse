@@ -66,7 +66,7 @@ describe('Fraggle Rock API', () => {
       await setupTestPage();
 
       // Wait long enough to ensure a paint after button interaction.
-      await state.page.waitForTimeout(200);
+      await state.page.waitForTimeout(1000);
 
       const result = await run.endTimespan();
       if (!result) throw new Error('Lighthouse failed to produce a result');
@@ -82,9 +82,17 @@ describe('Fraggle Rock API', () => {
         notApplicableAudits,
       } = getAuditsBreakdown(lhr);
       // TODO(FR-COMPAT): This assertion can be removed when full compatibility is reached.
-      expect(auditResults.length).toMatchInlineSnapshot(`45`);
+      expect(auditResults.length).toMatchInlineSnapshot(`47`);
 
-      expect(notApplicableAudits.length).toMatchInlineSnapshot(`5`);
+      expect(notApplicableAudits.map((audit) => audit.id)).toMatchInlineSnapshot(`
+        Array [
+          "user-timings",
+          "preload-fonts",
+          "third-party-summary",
+          "non-composited-animations",
+          "unsized-images",
+        ]
+      `);
       expect(notApplicableAudits.map(audit => audit.id)).not.toContain('server-response-time');
       expect(notApplicableAudits.map(audit => audit.id)).not.toContain('total-blocking-time');
 
@@ -129,7 +137,7 @@ describe('Fraggle Rock API', () => {
       if (!result) throw new Error('Lighthouse failed to produce a result');
 
       const {auditResults, erroredAudits, notApplicableAudits} = getAuditsBreakdown(result.lhr);
-      expect(auditResults.length).toMatchInlineSnapshot(`45`);
+      expect(auditResults.length).toMatchInlineSnapshot(`47`);
 
       expect(notApplicableAudits.length).toMatchInlineSnapshot(`19`);
       expect(notApplicableAudits.map(audit => audit.id)).toContain('server-response-time');

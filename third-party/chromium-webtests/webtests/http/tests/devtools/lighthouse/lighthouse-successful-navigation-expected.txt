@@ -30,7 +30,7 @@ Cleaning origin data
 Cleaning browser cache
 Preparing network conditions
 Navigating to http://127.0.0.1:8000/devtools/lighthouse/resources/lighthouse-basic.html
-Computing artifact: NetworkRecords$J
+Computing artifact: NetworkRecords$N
 Get webapp installability errors
 Getting browser version
 Collect stacks

@@ -12,7 +12,9 @@
  */
 function getRequestForScript(networkRecords, script) {
   if (!script) return;
-  let networkRequest = networkRecords.find(request => request.url === script.src);
+  let networkRequest = script.requestId &&
+    networkRecords.find(request => request.requestId === script.requestId);
+  if (!networkRequest) networkRequest = networkRecords.find(request => request.url === script.src);
   while (networkRequest?.redirectDestination) {
     networkRequest = networkRequest.redirectDestination;
   }

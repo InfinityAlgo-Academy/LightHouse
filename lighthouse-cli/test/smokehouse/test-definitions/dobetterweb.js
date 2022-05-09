@@ -307,6 +307,7 @@ const expectations = {
         },
       },
       'deprecations': {
+        _maxChromiumVersion: '103.0.5017.0', // TODO: deprecation strings need to be translated
         // see https://github.com/GoogleChrome/lighthouse/issues/13895
         score: 0,
         details: {
