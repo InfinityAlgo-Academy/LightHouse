@@ -63,14 +63,14 @@ class ExperimentalInteractionToNextPaint extends Audit {
 
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
     const metricData = {trace, settings};
-    const responsivenessEvent = await ComputedResponsivenes.request(metricData, context);
+    const interactionEvent = await ComputedResponsivenes.request(metricData, context);
 
     // TODO: include the no-interaction state in the report instead of using n/a.
-    if (responsivenessEvent === null) {
+    if (interactionEvent === null) {
       return {score: null, notApplicable: true};
     }
 
-    const timing = responsivenessEvent.args.data.maxDuration;
+    const timing = interactionEvent.args.data.duration;
 
     return {
       score: Audit.computeLogNormalScore({p10: context.options.p10, median: context.options.median},

@@ -30,10 +30,10 @@ describe('Interaction to Next Paint', () => {
     const {artifacts, context} = getTestData();
     const result = await ExperimentalInteractionToNextPaint.audit(artifacts, context);
     expect(result).toEqual({
-      score: 0.63,
-      numericValue: 392,
+      score: 0.66,
+      numericValue: 368,
       numericUnit: 'millisecond',
-      displayValue: expect.toBeDisplayString('390 ms'),
+      displayValue: expect.toBeDisplayString('370 ms'),
     });
   });
 

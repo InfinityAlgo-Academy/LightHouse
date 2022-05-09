@@ -9092,11 +9092,9 @@
             "id": "experimental-interaction-to-next-paint",
             "title": "Interaction to Next Paint",
             "description": "Interaction to Next Paint measures page responsiveness, how long it takes the page to visibly respond to user input. [Learn more](https://web.dev/inp/).",
-            "score": 1,
-            "scoreDisplayMode": "numeric",
-            "numericValue": 60,
-            "numericUnit": "millisecond",
-            "displayValue": "60 ms"
+            "score": null,
+            "scoreDisplayMode": "error",
+            "errorMessage": "This version of Chrome is too old to support 'detailed EventTiming trace events'. Use a newer version to see full results."
           }
         },
         "configSettings": {
@@ -10033,12 +10031,6 @@
                   "timeInMs": 539.765
                 },
                 "path": "audits[network-server-latency].displayValue"
-              },
-              {
-                "values": {
-                  "timeInMs": 60
-                },
-                "path": "audits[experimental-interaction-to-next-paint].displayValue"
               }
             ],
             "lighthouse-core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": [
@@ -10431,6 +10423,15 @@
             ],
             "lighthouse-core/audits/metrics/experimental-interaction-to-next-paint.js | description": [
               "audits[experimental-interaction-to-next-paint].description"
+            ],
+            "lighthouse-core/lib/lh-error.js | oldChromeDoesNotSupportFeature": [
+              {
+                "values": {
+                  "errorCode": "UNSUPPORTED_OLD_CHROME",
+                  "featureName": "detailed EventTiming trace events"
+                },
+                "path": "audits[experimental-interaction-to-next-paint].errorMessage"
+              }
             ],
             "lighthouse-core/config/default-config.js | performanceCategoryTitle": [
               "categories.performance.title"
