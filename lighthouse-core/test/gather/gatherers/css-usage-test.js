@@ -72,16 +72,18 @@ describe('.getArtifact', () => {
     });
   });
 
-  it('ignores removed stylesheets', async () => {
+  it('ignores sheet if there was an error fetching content', async () => {
     const driver = createMockDriver();
     driver.defaultSession.on
       .mockEvent('CSS.styleSheetAdded', {header: {styleSheetId: '1'}})
-      .mockEvent('CSS.styleSheetAdded', {header: {styleSheetId: '2'}})
-      .mockEvent('CSS.styleSheetRemoved', {styleSheetId: '1'});
+      .mockEvent('CSS.styleSheetAdded', {header: {styleSheetId: '2'}});
     driver.defaultSession.sendCommand
       .mockResponse('DOM.enable')
       .mockResponse('CSS.enable')
       .mockResponse('CSS.startRuleUsageTracking')
+      .mockResponse('CSS.getStyleSheetText', () => {
+        throw new Error('Sheet not found');
+      })
       .mockResponse('CSS.getStyleSheetText', {text: 'CSS text 2'})
       .mockResponse('CSS.stopRuleUsageTracking', {
         ruleUsage: [
