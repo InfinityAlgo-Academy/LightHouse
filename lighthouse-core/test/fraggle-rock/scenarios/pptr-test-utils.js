@@ -31,15 +31,22 @@ export function createTestState() {
     browser: /** @type {import('puppeteer').Browser} */ (any('browser')),
     page: /** @type {import('puppeteer').Page} */ (any('page')),
     server: /** @type {StaticServer} */ (any('server')),
+    secondaryServer: /** @type {StaticServer} */ (any('server')),
     serverBaseUrl: '',
+    secondaryServerBaseUrl: '',
 
     installSetupAndTeardownHooks() {
       beforeAll(async () => {
         this.server = new Server();
+        this.secondaryServer = new Server();
         await this.server.listen(0, '127.0.0.1');
+        await this.secondaryServer.listen(0, '127.0.0.1');
         this.serverBaseUrl = `http://localhost:${this.server.getPort()}`;
+        this.secondaryServerBaseUrl = `http://localhost:${this.secondaryServer.getPort()}`;
         this.browser = await puppeteer.launch({
           headless: true,
+          executablePath: process.env.CHROME_PATH,
+          ignoreDefaultArgs: ['--enable-automation'],
         });
       });
 
@@ -54,6 +61,7 @@ export function createTestState() {
       afterAll(async () => {
         await this.browser.close();
         await this.server.close();
+        await this.secondaryServer.close();
       });
     },
   };
