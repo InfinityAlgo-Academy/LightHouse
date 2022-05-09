@@ -2,7 +2,7 @@
   "steps": [
     {
       "lhr": {
-        "lighthouseVersion": "9.5.0",
+        "lighthouseVersion": "9.6.0",
         "requestedUrl": "https://www.mikescerealshack.co/",
         "finalUrl": "https://www.mikescerealshack.co/",
         "fetchTime": "2022-03-08T15:35:57.356Z",
@@ -7549,7 +7549,7 @@
     },
     {
       "lhr": {
-        "lighthouseVersion": "9.5.0",
+        "lighthouseVersion": "9.6.0",
         "requestedUrl": "https://www.mikescerealshack.co/",
         "finalUrl": "https://www.mikescerealshack.co/search?q=call+of+duty",
         "fetchTime": "2022-03-08T15:36:08.267Z",
@@ -8666,7 +8666,7 @@
                 {
                   "mainThreadTime": 0,
                   "blockingTime": 0,
-                  "transferSize": 3888,
+                  "transferSize": 25228,
                   "entity": {
                     "type": "link",
                     "text": "Algolia",
@@ -8674,12 +8674,19 @@
                   },
                   "subItems": {
                     "type": "subitems",
-                    "items": []
+                    "items": [
+                      {
+                        "url": "https://mnl4bjjsnz-dsn.algolia.net/1/indexes/dev_OFFICE_SCENES/query",
+                        "mainThreadTime": 0,
+                        "blockingTime": 0,
+                        "transferSize": 25228
+                      }
+                    ]
                   }
                 }
               ],
               "summary": {
-                "wastedBytes": 3888,
+                "wastedBytes": 25228,
                 "wastedMs": 0
               }
             }
@@ -11003,7 +11010,7 @@
     },
     {
       "lhr": {
-        "lighthouseVersion": "9.5.0",
+        "lighthouseVersion": "9.6.0",
         "requestedUrl": "https://www.mikescerealshack.co/search?q=call+of+duty",
         "finalUrl": "https://www.mikescerealshack.co/search?q=call+of+duty",
         "fetchTime": "2022-03-08T15:36:22.894Z",
@@ -15811,7 +15818,7 @@
     },
     {
       "lhr": {
-        "lighthouseVersion": "9.5.0",
+        "lighthouseVersion": "9.6.0",
         "requestedUrl": "https://www.mikescerealshack.co/corrections",
         "finalUrl": "https://www.mikescerealshack.co/corrections",
         "fetchTime": "2022-03-08T15:36:29.745Z",
