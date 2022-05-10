@@ -94,7 +94,7 @@ Gathering in-page: SourceMaps
 Gathering in-page: FullPageScreenshot
 Gathering trace
 Gathering devtoolsLog & network records
-Computing artifact: NetworkRecords$M
+Computing artifact: NetworkRecords$J
 Running afterPass methods
 Gathering: CSSUsage
 Gathering: JsUsage
@@ -121,7 +121,7 @@ Getting browser version
 Gathering: TapTargets
 Gathering: Accessibility
 Gathering: TraceElements
-Computing artifact: ProcessedTrace$g
+Computing artifact: ProcessedTrace$h
 Computing artifact: ProcessedNavigation$7
 Gathering: InspectorIssues
 Gathering: SourceMaps
@@ -143,7 +143,7 @@ Navigating to http://127.0.0.1:8000/devtools/lighthouse/resources/lighthouse-bas
 Running pass methods
 Gathering in-page: ServiceWorker
 Gathering devtoolsLog & network records
-Computing artifact: NetworkRecords$M
+Computing artifact: NetworkRecords$J
 Running afterPass methods
 Gathering: ServiceWorker
 Disconnecting from browser...
@@ -205,7 +205,7 @@ Auditing: Serves images with appropriate resolution
 Auditing: Fonts with `font-display: optional` are preloaded
 Auditing: Avoids deprecated APIs
 Auditing: Minimizes main-thread work
-Computing artifact: MainThreadTasks$7
+Computing artifact: MainThreadTasks$8
 Auditing: JavaScript execution time
 Auditing: Preload key requests
 Auditing: Preconnect to required origins

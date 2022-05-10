@@ -6,19 +6,23 @@
 'use strict';
 
 const legacyDefaultConfig = require('../../config/default-config.js');
+const m2a = require('../../config/metrics-to-audits.js');
 const {deepClone} = require('../../config/config-helpers.js');
 
 /** @type {LH.Config.AuditJson[]} */
 const frAudits = [
   'byte-efficiency/uses-responsive-images-snapshot',
   'metrics/experimental-interaction-to-next-paint',
+  'work-during-interaction',
 ];
 
 /** @type {Record<string, LH.Config.AuditRefJson[]>} */
 const frCategoryAuditRefExtensions = {
   'performance': [
     {id: 'uses-responsive-images-snapshot', weight: 0},
-    {id: 'experimental-interaction-to-next-paint', weight: 0, group: 'metrics', acronym: 'INP'},
+    {id: 'experimental-interaction-to-next-paint', weight: 0, group: 'metrics', acronym: 'INP',
+      relevantAudits: m2a.inpRelevantAudits},
+    {id: 'work-during-interaction', weight: 0},
   ],
 };
 
