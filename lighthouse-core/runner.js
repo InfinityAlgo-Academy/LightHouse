@@ -366,6 +366,7 @@ class Runner {
         // If artifact was an error, output error result on behalf of audit.
         if (artifacts[artifactName] instanceof Error) {
           /** @type {Error} */
+          // @ts-expect-error: TODO why is this a type error now?
           const artifactError = artifacts[artifactName];
 
           Sentry.captureException(artifactError, {
