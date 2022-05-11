@@ -198,6 +198,19 @@ Object {
 `);
   });
 
+  it('evaluates INP correctly', async () => {
+    const {artifacts, context} = getTestData();
+    const clonedTrace = JSON.parse(JSON.stringify(artifacts.traces.defaultPass));
+    for (let i = 0; i < clonedTrace.traceEvents.length; i++) {
+      if (clonedTrace.traceEvents[i].name !== 'EventTiming') continue;
+      clonedTrace.traceEvents[i].args = {};
+    }
+    artifacts.traces.defaultPass = clonedTrace;
+
+    await expect(WorkDuringInteraction.audit(artifacts, context))
+      .rejects.toThrow('UNSUPPORTED_OLD_CHROME');
+  });
+
   it('is not applicable if using simulated throttling', async () => {
     const {artifacts, context} = getTestData();
     context.settings.throttlingMethod = 'simulate';

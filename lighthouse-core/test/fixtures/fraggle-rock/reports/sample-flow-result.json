@@ -9092,9 +9092,11 @@
             "id": "experimental-interaction-to-next-paint",
             "title": "Interaction to Next Paint",
             "description": "Interaction to Next Paint measures page responsiveness, how long it takes the page to visibly respond to user input. [Learn more](https://web.dev/inp/).",
-            "score": null,
-            "scoreDisplayMode": "error",
-            "errorMessage": "This version of Chrome is too old to support 'detailed EventTiming trace events'. Use a newer version to see full results."
+            "score": 1,
+            "scoreDisplayMode": "numeric",
+            "numericValue": 60,
+            "numericUnit": "millisecond",
+            "displayValue": "60 ms"
           },
           "work-during-interaction": {
             "id": "work-during-interaction",
@@ -10052,6 +10054,12 @@
                   "timeInMs": 539.765
                 },
                 "path": "audits[network-server-latency].displayValue"
+              },
+              {
+                "values": {
+                  "timeInMs": 60
+                },
+                "path": "audits[experimental-interaction-to-next-paint].displayValue"
               }
             ],
             "lighthouse-core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": [
@@ -10445,14 +10453,13 @@
             "lighthouse-core/audits/metrics/experimental-interaction-to-next-paint.js | description": [
               "audits[experimental-interaction-to-next-paint].description"
             ],
+            "lighthouse-core/audits/work-during-interaction.js | title": [
+              "audits[work-during-interaction].title"
+            ],
+            "lighthouse-core/audits/work-during-interaction.js | description": [
+              "audits[work-during-interaction].description"
+            ],
             "lighthouse-core/lib/lh-error.js | oldChromeDoesNotSupportFeature": [
-              {
-                "values": {
-                  "errorCode": "UNSUPPORTED_OLD_CHROME",
-                  "featureName": "detailed EventTiming trace events"
-                },
-                "path": "audits[experimental-interaction-to-next-paint].errorMessage"
-              },
               {
                 "values": {
                   "errorCode": "UNSUPPORTED_OLD_CHROME",
@@ -10460,12 +10467,6 @@
                 },
                 "path": "audits[work-during-interaction].errorMessage"
               }
-            ],
-            "lighthouse-core/audits/work-during-interaction.js | title": [
-              "audits[work-during-interaction].title"
-            ],
-            "lighthouse-core/audits/work-during-interaction.js | description": [
-              "audits[work-during-interaction].description"
             ],
             "lighthouse-core/config/default-config.js | performanceCategoryTitle": [
               "categories.performance.title"

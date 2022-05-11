@@ -235,7 +235,7 @@ describe('Metric: Responsiveness', () => {
       .rejects.toThrow(`unexpected responsiveness interactionType 'brainWave'`);
   });
 
-  it('throws an OLD_CHROME error if provided with the old trace event format', async () => {
+  it('returns a fallback timing event if provided with the old trace event format', async () => {
     const interactionEvents = [{
       ts: 500,
       maxDuration: 200,
@@ -250,8 +250,11 @@ describe('Metric: Responsiveness', () => {
       trace,
       settings: {throttlingMethod: 'provided'},
     };
-    await expect(Responsiveness.request(metricInputData, {computedCache: new Map()}))
-      .rejects.toThrow('UNSUPPORTED_OLD_CHROME');
+    const event = await Responsiveness.request(metricInputData, {computedCache: new Map()});
+    expect(event).toEqual({
+      name: 'FallbackTiming',
+      duration: 200,
+    });
   });
 
   it('only finds interaction events from the same frame as the responsiveness event', async () => {
