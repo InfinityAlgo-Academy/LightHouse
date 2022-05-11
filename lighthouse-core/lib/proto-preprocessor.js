@@ -7,6 +7,7 @@
 'use strict';
 
 import fs from 'fs';
+import esMain from 'es-main';
 
 /**
  * @fileoverview Helper functions to transform an LHR into a proto-ready LHR.
@@ -108,8 +109,7 @@ function processForProto(lhr) {
 }
 
 // Test if called from the CLI or as a module.
-// TODO: cjamcl
-if (require.main === module) {
+if (esMain(import.meta)) {
   // read in the argv for the input & output
   const args = process.argv.slice(2);
   let input;

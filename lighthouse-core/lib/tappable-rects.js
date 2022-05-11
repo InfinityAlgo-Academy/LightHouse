@@ -5,7 +5,7 @@
  */
 'use strict';
 
-import RectHelpers from './rect-helpers.js';
+import * as RectHelpers from './rect-helpers.js';
 
 /**
  * Merge client rects together and remove small ones. This may result in a larger overall

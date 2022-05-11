@@ -8,7 +8,7 @@
 import log from 'lighthouse-logger';
 import NetworkRecords from '../computed/network-records.js';
 import {getPageLoadError} from '../lib/navigation-error.js';
-import emulation from '../lib/emulation.js';
+import * as emulation from '../lib/emulation.js';
 import * as constants from '../config/constants.js';
 import format from '../../shared/localization/format.js';
 import {getBenchmarkIndex, getEnvironmentWarnings} from './driver/environment.js';

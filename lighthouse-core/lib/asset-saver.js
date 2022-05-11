@@ -16,6 +16,7 @@ import Metrics from './traces/pwmetrics-events.js';
 import NetworkAnalysisComputed from '../computed/network-analysis.js';
 import LoadSimulatorComputed from '../computed/load-simulator.js';
 import {LighthouseError} from '../lib/lh-error.js';
+
 // TODO(esmodules): Rollup does not support `promisfy` or `stream.pipeline`. Bundled files
 // don't need anything in this file except for `stringifyReplacer`, so a check for
 // truthiness before using is enough.
@@ -327,7 +328,7 @@ function normalizeTimingEntries(timings) {
   }
 }
 
-export default {
+export {
   saveArtifacts,
   saveLhr,
   loadArtifacts,

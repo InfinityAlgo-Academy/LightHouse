@@ -6,7 +6,7 @@
 'use strict';
 
 import {Audit} from './audit.js';
-import i18n from '../lib/i18n/i18n.js';
+import * as i18n from '../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on whether the largest above-the-fold image was loaded with sufficient priority. This descriptive title is shown to users when the image was loaded properly. */

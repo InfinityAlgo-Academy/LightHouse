@@ -8,7 +8,7 @@
 import {strict as assert} from 'assert';
 import fs from 'fs';
 
-import assetSaver from '../../lib/asset-saver.js';
+import * as assetSaver from '../../lib/asset-saver.js';
 import Metrics from '../../lib/traces/pwmetrics-events.js';
 import {LighthouseError} from '../../lib/lh-error.js';
 import traceEvents from '../fixtures/traces/progressive-app.json';

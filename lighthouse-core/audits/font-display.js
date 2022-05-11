@@ -10,8 +10,8 @@ import URL from '../lib/url-shim.js';
 const PASSING_FONT_DISPLAY_REGEX = /^(block|fallback|optional|swap)$/;
 const CSS_URL_REGEX = /url\((.*?)\)/;
 const CSS_URL_GLOBAL_REGEX = new RegExp(CSS_URL_REGEX, 'g');
-import i18n from '../lib/i18n/i18n.js';
-import Sentry from '../lib/sentry.js';
+import * as i18n from '../lib/i18n/i18n.js';
+import {Sentry} from '../lib/sentry.js';
 import NetworkRecords from '../computed/network-records.js';
 
 const UIStrings = {

@@ -5,16 +5,16 @@
  */
 'use strict';
 
-import BaseNode from '../../lib/dependency-graph/base-node.js';
+import {BaseNode} from '../../lib/dependency-graph/base-node.js';
 import {NetworkRequest} from '../../lib/network-request.js';
 import ProcessedTrace from '../processed-trace.js';
 import ProcessedNavigation from '../processed-navigation.js';
 import PageDependencyGraph from '../page-dependency-graph.js';
 import LoadSimulator from '../load-simulator.js';
 
-/** @typedef {BaseNode.Node} Node */
-/** @typedef {import('../../lib/dependency-graph/network-node')} NetworkNode */
-/** @typedef {import('../../lib/dependency-graph/simulator/simulator')} Simulator */
+/** @typedef {import('../../lib/dependency-graph/base-node.js').Node} Node */
+/** @typedef {import('../../lib/dependency-graph/network-node').NetworkNode} NetworkNode */
+/** @typedef {import('../../lib/dependency-graph/simulator/simulator').Simulator} Simulator */
 
 /**
  * @typedef Extras

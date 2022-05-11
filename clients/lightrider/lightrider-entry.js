@@ -11,8 +11,8 @@ import {Buffer} from 'buffer';
 
 import {legacyNavigation} from '../../lighthouse-core/index.js';
 import {LighthouseError} from '../../lighthouse-core/lib/lh-error.js';
-import preprocessor from '../../lighthouse-core/lib/proto-preprocessor.js';
-import assetSaver from '../../lighthouse-core/lib/asset-saver.js';
+import {processForProto} from '../../lighthouse-core/lib/proto-preprocessor.js';
+import * as assetSaver from '../../lighthouse-core/lib/asset-saver.js';
 
 import mobileConfig from '../../lighthouse-core/config/lr-mobile-config.js';
 import desktopConfig from '../../lighthouse-core/config/lr-desktop-config.js';
@@ -67,7 +67,7 @@ export async function runLighthouseInLR(connection, url, flags, lrOpts) {
     if (!runnerResult) throw new Error('Lighthouse finished without a runnerResult');
 
     // pre process the LHR for proto
-    const preprocessedLhr = preprocessor.processForProto(runnerResult.lhr);
+    const preprocessedLhr = processForProto(runnerResult.lhr);
 
     // When LR is called with |internal: {keep_raw_response: true, save_lighthouse_assets: true}|,
     // we log artifacts to raw_response.artifacts.

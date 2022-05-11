@@ -6,7 +6,7 @@
 'use strict';
 
 import {Audit} from './audit.js';
-import i18n from '../lib/i18n/i18n.js';
+import * as i18n from '../lib/i18n/i18n.js';
 import thirdPartyWeb from '../lib/third-party-web.js';
 import NetworkRecords from '../computed/network-records.js';
 import MainThreadTasks from '../computed/main-thread-tasks.js';

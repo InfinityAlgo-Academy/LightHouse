@@ -17,7 +17,7 @@
 
 import {Audit} from '../audit.js';
 
-import i18n from '../../lib/i18n/i18n.js';
+import * as i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on various types of problems with a website, like security or network errors. This descriptive title is shown to users when no issues were logged into the Chrome DevTools Issues panel. */

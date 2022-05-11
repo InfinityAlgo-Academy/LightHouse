@@ -8,7 +8,7 @@
 import {jest} from '@jest/globals';
 
 // import sentryNode from '@sentry/node';
-import Sentry from '../../lib/sentry.js';
+import {Sentry} from '../../lib/sentry.js';
 
 jest.mock('@sentry/node');
 

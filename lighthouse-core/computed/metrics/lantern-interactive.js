@@ -7,11 +7,11 @@
 
 import {makeComputedArtifact} from '../computed-artifact.js';
 import LanternMetric from './lantern-metric.js';
-import BaseNode from '../../lib/dependency-graph/base-node.js';
+import {BaseNode} from '../../lib/dependency-graph/base-node.js';
 import {NetworkRequest} from '../../lib/network-request.js';
 import LanternFirstMeaningfulPaint from './lantern-first-meaningful-paint.js';
 
-/** @typedef {BaseNode.Node} Node */
+/** @typedef {import('../../lib/dependency-graph/base-node.js').Node} Node */
 
 // Any CPU task of 20 ms or more will end up being a critical long task on mobile
 const CRITICAL_LONG_TASK_THRESHOLD = 20;

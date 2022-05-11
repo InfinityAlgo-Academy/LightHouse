@@ -7,7 +7,7 @@
 
 import {Audit} from '../audit.js';
 import ComputedFid from '../../computed/metrics/max-potential-fid.js';
-import i18n from '../../lib/i18n/i18n.js';
+import * as i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Description of the Maximum Potential First Input Delay metric that marks the maximum estimated time between the page receiving input (a user clicking, tapping, or typing) and the page responding. This description is displayed within a tooltip when the user hovers on the metric name to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */

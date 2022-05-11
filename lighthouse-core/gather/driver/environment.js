@@ -8,7 +8,7 @@
 import log from 'lighthouse-logger';
 import * as constants from '../../config/constants.js';
 import {pageFunctions} from '../../lib/page-functions.js';
-import i18n from '../../lib/i18n/i18n.js';
+import * as i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
   /**

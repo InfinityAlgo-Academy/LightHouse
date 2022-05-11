@@ -7,12 +7,12 @@
 
 import {makeComputedArtifact} from '../computed-artifact.js';
 import LanternMetric from './lantern-metric.js';
-import BaseNode from '../../lib/dependency-graph/base-node.js';
+import {BaseNode} from '../../lib/dependency-graph/base-node.js';
 import LanternFirstContentfulPaint from './lantern-first-contentful-paint.js';
 import LanternInteractive from './lantern-interactive.js';
 import {BLOCKING_TIME_THRESHOLD, calculateSumOfBlockingTime} from './tbt-utils.js';
 
-/** @typedef {BaseNode.Node} Node */
+/** @typedef {import('../../lib/dependency-graph/base-node.js').Node} Node */
 
 class LanternTotalBlockingTime extends LanternMetric {
   /**

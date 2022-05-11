@@ -7,9 +7,9 @@
 'use strict';
 
 import {Audit} from './audit.js';
-import UnusedBytes from './byte-efficiency/byte-efficiency-audit.js';
+import {ByteEfficiencyAudit} from './byte-efficiency/byte-efficiency-audit.js';
 import URL from '../lib/url-shim.js';
-import i18n from '../lib/i18n/i18n.js';
+import * as i18n from '../lib/i18n/i18n.js';
 import NetworkRecords from '../computed/network-records.js';
 import MainResource from '../computed/main-resource.js';
 import LoadSimulator from '../computed/load-simulator.js';
@@ -238,7 +238,7 @@ class UsesRelPreconnectAudit extends Audit {
     const details = Audit.makeOpportunityDetails(headings, results, maxWasted);
 
     return {
-      score: UnusedBytes.scoreForWastedMs(maxWasted),
+      score: ByteEfficiencyAudit.scoreForWastedMs(maxWasted),
       numericValue: maxWasted,
       numericUnit: 'millisecond',
       displayValue: maxWasted ?

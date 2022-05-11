@@ -6,7 +6,7 @@
 'use strict';
 
 import FRGatherer from '../../fraggle-rock/gather/base-gatherer.js';
-import serviceWorkers from '../driver/service-workers.js';
+import * as serviceWorkers from '../driver/service-workers.js';
 
 class ServiceWorker extends FRGatherer {
   /** @type {LH.Gatherer.GathererMeta} */

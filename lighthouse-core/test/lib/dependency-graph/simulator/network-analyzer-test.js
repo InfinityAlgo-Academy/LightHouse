@@ -7,7 +7,7 @@
 
 import {strict as assert} from 'assert';
 
-import NetworkAnalyzer from '../../../../lib/dependency-graph/simulator/network-analyzer.js';
+import {NetworkAnalyzer} from '../../../../lib/dependency-graph/simulator/network-analyzer.js';
 import NetworkRecords from '../../../../computed/network-records.js';
 import devtoolsLog from '../../../fixtures/traces/progressive-app-m60.devtools.log.json';
 import devtoolsLogWithRedirect from '../../../fixtures/traces/site-with-redirect.devtools.log.json';

@@ -7,7 +7,7 @@
 
 import thirdPartyWeb from '../lib/third-party-web.js';
 import {Audit} from './audit.js';
-import i18n from '../lib/i18n/i18n.js';
+import * as i18n from '../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on HTTP to HTTPS redirects. This descriptive title is shown to users when HTTP traffic is redirected to HTTPS. */

@@ -8,7 +8,7 @@
 import {Audit} from '../audit.js';
 import URL from '../../lib/url-shim.js';
 import MainResource from '../../computed/main-resource.js';
-import i18n from '../../lib/i18n/i18n.js';
+import * as i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on a page's rel=canonical link. This descriptive title is shown to users when the rel=canonical link is valid. "rel=canonical" is an HTML attribute and value and so should not be translated. */

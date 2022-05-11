@@ -13,11 +13,11 @@
  */
 'use strict';
 
-import ByteEfficiencyAudit from './byte-efficiency-audit.js';
+import {ByteEfficiencyAudit} from './byte-efficiency-audit.js';
 import {NetworkRequest} from '../../lib/network-request.js';
 import ImageRecords from '../../computed/image-records.js';
 import URL from '../../lib/url-shim.js';
-import i18n from '../../lib/i18n/i18n.js';
+import * as i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Imperative title of a Lighthouse audit that tells the user to resize images to match the display dimensions. This is displayed in a list of audit titles that Lighthouse generates. */
@@ -116,7 +116,7 @@ class UsesResponsiveImages extends ByteEfficiencyAudit {
    * @param {LH.Artifacts} artifacts
    * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
    * @param {LH.Audit.Context} context
-   * @return {Promise<ByteEfficiencyAudit.ByteEfficiencyProduct>}
+   * @return {Promise<import('./byte-efficiency-audit.js').ByteEfficiencyProduct>}
    */
   static async audit_(artifacts, networkRecords, context) {
     const images = await ImageRecords.request({
@@ -173,5 +173,4 @@ class UsesResponsiveImages extends ByteEfficiencyAudit {
 }
 
 export default UsesResponsiveImages;
-export {UIStrings};
-module.exports.str_ = str_;
+export {UIStrings, str_};

@@ -7,7 +7,7 @@
 
 import URL from '../lib/url-shim.js';
 import {Audit} from './audit.js';
-import i18n from '../lib/i18n/i18n.js';
+import * as i18n from '../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on a page's service worker. This descriptive title is shown to users when a service worker is registered and valid. */

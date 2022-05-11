@@ -18,10 +18,10 @@
 /** @typedef {LH.Audit.ByteEfficiencyItem & {subItems: {type: 'subitems', items: SubItem[]}}} Item */
 /** @typedef {{signal: string, location: LH.Audit.Details.SourceLocationValue}} SubItem */
 
-import ByteEfficiencyAudit from './byte-efficiency-audit.js';
+import {ByteEfficiencyAudit} from './byte-efficiency-audit.js';
 
 import JsBundles from '../../computed/js-bundles.js';
-import i18n from '../../lib/i18n/i18n.js';
+import * as i18n from '../../lib/i18n/i18n.js';
 import thirdPartyWeb from '../../lib/third-party-web.js';
 import {getRequestForScript} from '../../lib/script-helpers.js';
 

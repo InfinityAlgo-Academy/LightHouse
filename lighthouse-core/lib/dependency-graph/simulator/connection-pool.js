@@ -5,7 +5,7 @@
  */
 'use strict';
 
-import NetworkAnalyzer from './network-analyzer.js';
+import {NetworkAnalyzer} from './network-analyzer.js';
 import TcpConnection from './tcp-connection.js';
 
 const DEFAULT_SERVER_RESPONSE_TIME = 30;

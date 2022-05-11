@@ -89,4 +89,7 @@ class LoadSimulator {
   }
 }
 
+// TODO(esmodules): For all computed artifacts:
+//   const LoadSimulatorComputed = makeComputedArtifact(LoadSimulator, ['devtoolsLog', 'settings']);
+//   export {LoadSimulator as LoadSimulatorComputed};
 export default makeComputedArtifact(LoadSimulator, ['devtoolsLog', 'settings']);

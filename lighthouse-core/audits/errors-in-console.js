@@ -14,7 +14,7 @@ import log from 'lighthouse-logger';
 
 import {Audit} from './audit.js';
 import JsBundles from '../computed/js-bundles.js';
-import i18n from '../lib/i18n/i18n.js';
+import * as i18n from '../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on browser errors. This descriptive title is shown to users when no browser errors were logged into the devtools console. */

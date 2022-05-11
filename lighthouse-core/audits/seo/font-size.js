@@ -7,7 +7,7 @@
 
 /** @typedef {LH.Artifacts.FontSize['analyzedFailingNodesData'][0]} FailingNodeData */
 
-import i18n from '../../lib/i18n/i18n.js';
+import * as i18n from '../../lib/i18n/i18n.js';
 
 import {Audit} from '../audit.js';
 import ComputedViewportMeta from '../../computed/viewport-meta.js';

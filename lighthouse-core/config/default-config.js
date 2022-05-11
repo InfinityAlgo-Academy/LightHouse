@@ -9,7 +9,7 @@
 
 import * as constants from './constants.js';
 
-import i18n from '../lib/i18n/i18n.js';
+import * as i18n from '../lib/i18n/i18n.js';
 import {metricsToAudits} from './metrics-to-audits.js';
 
 const UIStrings = {

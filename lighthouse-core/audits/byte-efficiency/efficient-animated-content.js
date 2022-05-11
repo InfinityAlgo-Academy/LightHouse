@@ -9,8 +9,8 @@
 'use strict';
 
 import {NetworkRequest} from '../../lib/network-request.js';
-import ByteEfficiencyAudit from './byte-efficiency-audit.js';
-import i18n from '../../lib/i18n/i18n.js';
+import {ByteEfficiencyAudit} from './byte-efficiency-audit.js';
+import * as i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Imperative title of a Lighthouse audit that tells the user to use video formats rather than animated GIFs, which are wasteful. This is displayed in a list of audit titles that Lighthouse generates. */
@@ -54,7 +54,7 @@ class EfficientAnimatedContent extends ByteEfficiencyAudit {
   /**
    * @param {LH.Artifacts} artifacts
    * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
-   * @return {ByteEfficiencyAudit.ByteEfficiencyProduct}
+   * @return {import('./byte-efficiency-audit.js').ByteEfficiencyProduct}
    */
   static audit_(artifacts, networkRecords) {
     const unoptimizedContent = networkRecords.filter(

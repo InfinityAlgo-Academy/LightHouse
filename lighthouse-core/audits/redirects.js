@@ -6,8 +6,8 @@
 'use strict';
 
 import {Audit} from './audit.js';
-import UnusedBytes from './byte-efficiency/byte-efficiency-audit.js';
-import i18n from '../lib/i18n/i18n.js';
+import {ByteEfficiencyAudit} from './byte-efficiency/byte-efficiency-audit.js';
+import * as i18n from '../lib/i18n/i18n.js';
 import ProcessedTrace from '../computed/processed-trace.js';
 import NetworkRecords from '../computed/network-records.js';
 import MainResource from '../computed/main-resource.js';
@@ -148,7 +148,7 @@ class Redirects extends Audit {
       // We award a passing grade if you only have 1 redirect
       // TODO(phulce): reconsider if cases like the example in https://github.com/GoogleChrome/lighthouse/issues/8984
       // should fail this audit.
-      score: documentRequests.length <= 2 ? 1 : UnusedBytes.scoreForWastedMs(totalWastedMs),
+      score: documentRequests.length <= 2 ? 1 : ByteEfficiencyAudit.scoreForWastedMs(totalWastedMs),
       numericValue: totalWastedMs,
       numericUnit: 'millisecond',
       displayValue: totalWastedMs ?

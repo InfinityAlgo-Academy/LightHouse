@@ -8,9 +8,9 @@
 import URL from '../lib/url-shim.js';
 import {NetworkRequest} from '../lib/network-request.js';
 import {Audit} from './audit.js';
-import UnusedBytes from './byte-efficiency/byte-efficiency-audit.js';
+import {ByteEfficiencyAudit} from './byte-efficiency/byte-efficiency-audit.js';
 import CriticalRequestChains from '../computed/critical-request-chains.js';
-import i18n from '../lib/i18n/i18n.js';
+import * as i18n from '../lib/i18n/i18n.js';
 import MainResource from '../computed/main-resource.js';
 import PageDependencyGraph from '../computed/page-dependency-graph.js';
 import LoadSimulator from '../computed/load-simulator.js';
@@ -242,7 +242,7 @@ class UsesRelPreloadAudit extends Audit {
     const details = Audit.makeOpportunityDetails(headings, results, wastedMs);
 
     return {
-      score: UnusedBytes.scoreForWastedMs(wastedMs),
+      score: ByteEfficiencyAudit.scoreForWastedMs(wastedMs),
       numericValue: wastedMs,
       numericUnit: 'millisecond',
       displayValue: wastedMs ?

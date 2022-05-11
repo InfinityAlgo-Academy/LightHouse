@@ -8,8 +8,8 @@
 import {Audit} from './audit.js';
 import ResourceSummary from '../computed/resource-summary.js';
 import MainResource from '../computed/main-resource.js';
-import Budget from '../config/budget.js';
-import i18n from '../lib/i18n/i18n.js';
+import {Budget} from '../config/budget.js';
+import * as i18n from '../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of a Lighthouse audit that compares the size and quantity of page resources against targets set by the user. These targets are thought of as "performance budgets" because these metrics impact page performance (i.e. how quickly a page loads). */

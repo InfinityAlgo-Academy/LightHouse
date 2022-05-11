@@ -9,7 +9,7 @@
 
 import {Buffer} from 'buffer';
 
-import lighthouse from '../../lighthouse-core/index.js';
+import lighthouse, {legacyNavigation} from '../../lighthouse-core/index.js';
 import {navigation, startTimespan, snapshot} from '../../lighthouse-core/fraggle-rock/api.js';
 import {RawConnection} from '../../lighthouse-core/gather/connections/raw.js';
 import log from 'lighthouse-logger';
@@ -109,4 +109,6 @@ if (typeof self !== 'undefined') {
   // For the bundle smoke test.
   // @ts-expect-error
   global.runBundledLighthouse = lighthouse;
+  // @ts-expect-error
+  global.runBundledLighthouseLegacyNavigation = legacyNavigation;
 }

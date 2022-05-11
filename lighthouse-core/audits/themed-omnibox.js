@@ -7,8 +7,8 @@
 
 import MultiCheckAudit from './multi-check-audit.js';
 import ManifestValues from '../computed/manifest-values.js';
-import cssParsers from 'cssstyle/lib/parsers';
-import i18n from '../lib/i18n/i18n.js';
+import cssParsers from 'cssstyle/lib/parsers.js';
+import * as i18n from '../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on the theme color the web page has set for the browser's address bar. This descriptive title is shown to users when an address-bar theme color has been set. */

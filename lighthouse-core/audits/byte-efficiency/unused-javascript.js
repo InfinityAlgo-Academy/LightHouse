@@ -5,10 +5,10 @@
  */
 'use strict';
 
-import ByteEfficiencyAudit from './byte-efficiency-audit.js';
+import {ByteEfficiencyAudit} from './byte-efficiency-audit.js';
 import UnusedJavaScriptSummary from '../../computed/unused-javascript-summary.js';
 import JsBundles from '../../computed/js-bundles.js';
-import i18n from '../../lib/i18n/i18n.js';
+import * as i18n from '../../lib/i18n/i18n.js';
 import {getRequestForScript} from '../../lib/script-helpers.js';
 
 const UIStrings = {
@@ -77,7 +77,7 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
    * @param {LH.Artifacts} artifacts
    * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
    * @param {LH.Audit.Context} context
-   * @return {Promise<ByteEfficiencyAudit.ByteEfficiencyProduct>}
+   * @return {Promise<import('./byte-efficiency-audit.js').ByteEfficiencyProduct>}
    */
   static async audit_(artifacts, networkRecords, context) {
     const bundles = await JsBundles.request(artifacts, context);

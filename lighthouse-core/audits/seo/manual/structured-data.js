@@ -6,7 +6,7 @@
 'use strict';
 
 import ManualAudit from '../../manual/manual-audit.js';
-import i18n from '../../../lib/i18n/i18n.js';
+import * as i18n from '../../../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Description of a Lighthouse audit that provides detail on the structured data in a page. "Structured data" is a standardized data format on a page that helps a search engine categorize and understand its contents. This description is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */

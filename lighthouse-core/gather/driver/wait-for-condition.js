@@ -76,7 +76,7 @@ function waitForFcp(session, pauseAfterFcpMs, maxWaitForFcpMs) {
   /** @type {Promise<void>} */
   const promise = new Promise((resolve, reject) => {
     const maxWaitTimeout = setTimeout(() => {
-      reject(new {LighthouseError}({LighthouseError}.errors.NO_FCP));
+      reject(new LighthouseError(LighthouseError.errors.NO_FCP));
     }, maxWaitForFcpMs);
     /** @type {NodeJS.Timeout|undefined} */
     let loadTimeout;

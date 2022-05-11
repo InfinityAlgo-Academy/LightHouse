@@ -13,7 +13,7 @@
 'use strict';
 
 import {Audit} from '../audit.js';
-import i18n from '../../lib/i18n/i18n.js';
+import * as i18n from '../../lib/i18n/i18n.js';
 import MainResource from '../../computed/main-resource.js';
 
 const UIStrings = {

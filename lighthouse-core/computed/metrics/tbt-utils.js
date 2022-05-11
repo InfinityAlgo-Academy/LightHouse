@@ -51,7 +51,7 @@ function calculateSumOfBlockingTime(topLevelEvents, startTimeMs, endTimeMs) {
   return sumBlockingTime;
 }
 
-export default {
+export {
   BLOCKING_TIME_THRESHOLD,
   calculateSumOfBlockingTime,
 };

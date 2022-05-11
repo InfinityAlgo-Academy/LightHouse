@@ -6,7 +6,7 @@
 'use strict';
 
 import {Audit} from './audit.js';
-import i18n from '../lib/i18n/i18n.js';
+import * as i18n from '../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on the content size of a web site compared to the viewport, which is the size of the screen the site is displayed on. This descriptive title is shown to users when the site's content is sized appropriately. */

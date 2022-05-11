@@ -5,17 +5,18 @@
  */
 'use strict';
 
-const Audit = require('./audit.js');
-const ComputedResponsivenes = require('../computed/metrics/responsiveness.js');
-const ProcessedTrace = require('../computed/processed-trace.js');
-const i18n = require('../lib/i18n/i18n.js');
-const NetworkRecords = require('../computed/network-records.js');
-const MainThreadTasks = require('../lib/tracehouse/main-thread-tasks.js');
-const {taskGroups} = require('../lib/tracehouse/task-groups.js');
-const TraceProcessor = require('../lib/tracehouse/trace-processor.js');
-const {getExecutionTimingsByURL} = require('../lib/tracehouse/task-summary.js');
-const inpThresholds = require('./metrics/experimental-interaction-to-next-paint.js').defaultOptions;
-const LHError = require('../lib/lh-error.js');
+import {Audit} from './audit.js';
+import ComputedResponsivenes from '../computed/metrics/responsiveness.js';
+import ProcessedTrace from '../computed/processed-trace.js';
+import * as i18n from '../lib/i18n/i18n.js';
+import NetworkRecords from '../computed/network-records.js';
+import MainThreadTasks from '../lib/tracehouse/main-thread-tasks.js';
+import {taskGroups} from '../lib/tracehouse/task-groups.js';
+import TraceProcessor from '../lib/tracehouse/trace-processor.js';
+import {getExecutionTimingsByURL} from '../lib/tracehouse/task-summary.js';
+import ExperimentalInteractionToNextPaint
+  from './metrics/experimental-interaction-to-next-paint.js';
+import {LighthouseError} from '../lib/lh-error.js';
 
 /** @typedef {import('../computed/metrics/responsiveness.js').EventTimingEvent} EventTimingEvent */
 /** @typedef {import('../lib/tracehouse/main-thread-tasks.js').TaskNode} TaskNode */
@@ -237,8 +238,8 @@ class WorkDuringInteraction extends Audit {
     }
     // TODO: remove workaround once 103.0.5052.0 is sufficiently released.
     if (interactionEvent.name === 'FallbackTiming') {
-      throw new LHError(
-        LHError.errors.UNSUPPORTED_OLD_CHROME,
+      throw new LighthouseError(
+        LighthouseError.errors.UNSUPPORTED_OLD_CHROME,
         {featureName: 'detailed EventTiming trace events'}
       );
     }
@@ -266,7 +267,7 @@ class WorkDuringInteraction extends Audit {
     const duration = interactionEvent.args.data.duration;
     const displayValue = str_(UIStrings.displayValue, {timeInMs: duration, interactionType});
     return {
-      score: duration < inpThresholds.p10 ? 1 : 0,
+      score: duration < ExperimentalInteractionToNextPaint.defaultOptions.p10 ? 1 : 0,
       displayValue,
       details: {
         type: 'list',

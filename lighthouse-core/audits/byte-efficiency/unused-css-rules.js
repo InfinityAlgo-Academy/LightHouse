@@ -5,9 +5,9 @@
  */
 'use strict';
 
-import ByteEfficiencyAudit from './byte-efficiency-audit.js';
+import {ByteEfficiencyAudit} from './byte-efficiency-audit.js';
 import UnusedCSS from '../../computed/unused-css.js';
-import i18n from '../../lib/i18n/i18n.js';
+import * as i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Imperative title of a Lighthouse audit that tells the user to reduce content from their CSS that isn’t needed immediately and instead load that content at a later time. This is displayed in a list of audit titles that Lighthouse generates. */
@@ -42,7 +42,7 @@ class UnusedCSSRules extends ByteEfficiencyAudit {
    * @param {LH.Artifacts} artifacts
    * @param {LH.Artifacts.NetworkRequest[]} _
    * @param {LH.Audit.Context} context
-   * @return {Promise<ByteEfficiencyAudit.ByteEfficiencyProduct>}
+   * @return {Promise<import('./byte-efficiency-audit.js').ByteEfficiencyProduct>}
    */
   static async audit_(artifacts, _, context) {
     const unusedCssItems = await UnusedCSS.request({

@@ -6,8 +6,10 @@
 'use strict';
 
 import fs from 'fs';
-const source = fs.readFileSync(require.resolve('axe-core/axe.min.js'), 'utf8');
 
-export default {
-  source,
+// TODO(esmodules)
+const axeSource = fs.readFileSync(require.resolve('axe-core/axe.min.js'), 'utf8');
+
+export {
+  axeSource as source,
 };

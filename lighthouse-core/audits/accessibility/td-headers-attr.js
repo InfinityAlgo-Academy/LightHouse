@@ -13,7 +13,7 @@
 
 import AxeAudit from './axe-audit.js';
 
-import i18n from '../../lib/i18n/i18n.js';
+import * as i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of an accesibility audit that evaluates if all table cell elements in a table that use the headers HTML attribute use it correctly to refer to header cells within the same table. This title is descriptive of the successful state and is shown to users when no user action is required. */

@@ -15,7 +15,7 @@ import {Type} from 'csp_evaluator/dist/finding.js';
 import {CspParser} from 'csp_evaluator/dist/parser.js';
 import {Directive} from 'csp_evaluator/dist/csp.js';
 import log from 'lighthouse-logger';
-import i18n from '../lib/i18n/i18n.js';
+import * as i18n from '../lib/i18n/i18n.js';
 import {isIcuMessage} from '../../shared/localization/format.js';
 
 const UIStrings = {

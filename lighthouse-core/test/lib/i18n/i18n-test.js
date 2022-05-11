@@ -10,7 +10,7 @@ import path from 'path';
 import {jest} from '@jest/globals';
 import log from 'lighthouse-logger';
 
-import i18n from '../../../lib/i18n/i18n.js';
+import * as i18n from '../../../lib/i18n/i18n.js';
 import {createCommonjsRefs} from '../../../scripts/esm-utils.js';
 
 const {__dirname} = createCommonjsRefs(import.meta);

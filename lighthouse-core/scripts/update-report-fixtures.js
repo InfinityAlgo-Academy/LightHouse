@@ -6,7 +6,7 @@
 
 import * as cli from '../../lighthouse-cli/run.js';
 import * as cliFlags from '../../lighthouse-cli/cli-flags.js';
-import assetSaver from '../lib/asset-saver.js';
+import * as assetSaver from '../lib/asset-saver.js';
 import {server} from '../../lighthouse-cli/test/fixtures/static-server.js';
 import budgetedConfig from '../test/results/sample-config.js';
 

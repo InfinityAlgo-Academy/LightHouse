@@ -7,7 +7,7 @@
 
 import log from 'lighthouse-logger';
 import stackPacks from 'lighthouse-stack-packs';
-import i18n from './i18n/i18n.js';
+import * as i18n from './i18n/i18n.js';
 
 /**
  * Pairs consisting of a stack pack's ID and the set of stacks needed to be
@@ -114,7 +114,7 @@ function getStackPacks(pageStacks) {
   return packs;
 }
 
-export default {
+export {
   getStackPacks,
   stackPacksToInclude,
 };

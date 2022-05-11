@@ -17,7 +17,7 @@ import FRGatherer from '../../fraggle-rock/gather/base-gatherer.js';
 
 import {resolveNodeIdToObjectId} from '../driver/dom.js';
 import {pageFunctions} from '../../lib/page-functions.js';
-import RectHelpers from '../../lib/rect-helpers.js';
+import * as RectHelpers from '../../lib/rect-helpers.js';
 import {Sentry} from '../../lib/sentry.js';
 import Trace from './trace.js';
 import ProcessedTrace from '../../computed/processed-trace.js';

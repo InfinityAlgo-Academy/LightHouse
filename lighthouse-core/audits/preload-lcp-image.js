@@ -6,12 +6,12 @@
 'use strict';
 
 import {Audit} from './audit.js';
-import i18n from '../lib/i18n/i18n.js';
+import * as i18n from '../lib/i18n/i18n.js';
 import {NetworkRequest} from '../lib/network-request.js';
 import MainResource from '../computed/main-resource.js';
 import LanternLCP from '../computed/metrics/lantern-largest-contentful-paint.js';
 import LoadSimulator from '../computed/load-simulator.js';
-import UnusedBytes from './byte-efficiency/byte-efficiency-audit.js';
+import {ByteEfficiencyAudit} from './byte-efficiency/byte-efficiency-audit.js';
 
 const UIStrings = {
   /** Title of a lighthouse audit that tells a user to preload an image in order to improve their LCP time. */
@@ -229,7 +229,7 @@ class PreloadLCPImageAudit extends Audit {
     const details = Audit.makeOpportunityDetails(headings, results, wastedMs);
 
     return {
-      score: UnusedBytes.scoreForWastedMs(wastedMs),
+      score: ByteEfficiencyAudit.scoreForWastedMs(wastedMs),
       numericValue: wastedMs,
       numericUnit: 'millisecond',
       displayValue: wastedMs ? str_(i18n.UIStrings.displayValueMsSavings, {wastedMs}) : '',

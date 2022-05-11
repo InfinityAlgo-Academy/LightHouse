@@ -8,8 +8,8 @@
 import {Audit} from './audit.js';
 import TimingSummary from '../computed/metrics/timing-summary.js';
 import MainResource from '../computed/main-resource.js';
-import Budget from '../config/budget.js';
-import i18n from '../lib/i18n/i18n.js';
+import {Budget} from '../config/budget.js';
+import * as i18n from '../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of a Lighthouse audit that compares how quickly the page loads against targets set by the user. Timing budgets are a type of performance budget. */

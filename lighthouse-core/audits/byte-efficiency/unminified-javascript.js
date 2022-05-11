@@ -5,8 +5,8 @@
  */
 'use strict';
 
-import ByteEfficiencyAudit from './byte-efficiency-audit.js';
-import i18n from '../../lib/i18n/i18n.js';
+import {ByteEfficiencyAudit} from './byte-efficiency-audit.js';
+import * as i18n from '../../lib/i18n/i18n.js';
 import {computeJSTokenLength as computeTokenLength} from '../../lib/minification-estimator.js';
 import {getRequestForScript, isInline} from '../../lib/script-helpers.js';
 
@@ -73,7 +73,7 @@ class UnminifiedJavaScript extends ByteEfficiencyAudit {
   /**
    * @param {LH.Artifacts} artifacts
    * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
-   * @return {ByteEfficiencyAudit.ByteEfficiencyProduct}
+   * @return {import('./byte-efficiency-audit.js').ByteEfficiencyProduct}
    */
   static audit_(artifacts, networkRecords) {
     /** @type {Array<LH.Audit.ByteEfficiencyItem>} */

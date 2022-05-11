@@ -12,7 +12,7 @@
 import {Audit} from './audit.js';
 
 import JsBundles from '../computed/js-bundles.js';
-import i18n from '../lib/i18n/i18n.js';
+import * as i18n from '../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on the use of deprecated APIs. This descriptive title is shown to users when the page does not use deprecated APIs. */

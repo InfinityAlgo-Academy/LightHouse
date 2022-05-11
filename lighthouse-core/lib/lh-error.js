@@ -5,7 +5,7 @@
  */
 'use strict';
 
-import i18n from './i18n/i18n.js';
+import * as i18n from './i18n/i18n.js';
 
 /* eslint-disable max-len */
 const UIStrings = {

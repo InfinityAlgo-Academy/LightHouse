@@ -12,9 +12,9 @@
 'use strict';
 
 import {Audit} from '../audit.js';
-import UsesResponsiveImages from './uses-responsive-images.js';
+import * as UsesResponsiveImages from './uses-responsive-images.js';
 import URL from '../../lib/url-shim.js';
-import i18n from '../../lib/i18n/i18n.js';
+import * as i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Descriptive title of a Lighthouse audit that checks if images match their displayed dimensions. This is displayed when the audit is passing. */
@@ -58,7 +58,7 @@ class UsesResponsiveImagesSnapshot extends Audit {
     for (const image of artifacts.ImageElements) {
       if (!image.naturalDimensions) continue;
       const actual = image.naturalDimensions;
-      const displayed = UsesResponsiveImages.getDisplayedDimensions(
+      const displayed = UsesResponsiveImages.default.getDisplayedDimensions(
         {...image, naturalWidth: actual.width, naturalHeight: actual.height},
         artifacts.ViewportDimensions
       );

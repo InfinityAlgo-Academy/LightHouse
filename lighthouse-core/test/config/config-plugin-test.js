@@ -8,7 +8,7 @@
 import {strict as assert} from 'assert';
 
 import ConfigPlugin from '../../config/config-plugin.js';
-import i18n from '../../lib/i18n/i18n.js';
+import * as i18n from '../../lib/i18n/i18n.js';
 
 /**
  * @param {any} val

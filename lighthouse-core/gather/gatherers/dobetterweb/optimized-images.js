@@ -14,7 +14,7 @@ import log from 'lighthouse-logger';
 import FRGatherer from '../../../fraggle-rock/gather/base-gatherer.js';
 import URL from '../../../lib/url-shim.js';
 import {NetworkRequest} from '../../../lib/network-request.js';
-import Sentry from '../../../lib/sentry.js';
+import {Sentry} from '../../../lib/sentry.js';
 import NetworkRecords from '../../../computed/network-records.js';
 import DevtoolsLog from '../devtools-log.js';
 

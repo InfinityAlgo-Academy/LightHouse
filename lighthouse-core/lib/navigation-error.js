@@ -6,7 +6,7 @@
 'use strict';
 
 import {LighthouseError} from './lh-error.js';
-import NetworkAnalyzer from './dependency-graph/simulator/network-analyzer.js';
+import {NetworkAnalyzer} from './dependency-graph/simulator/network-analyzer.js';
 import {NetworkRequest} from './network-request.js';
 
 /**

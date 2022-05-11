@@ -13,7 +13,7 @@ import {Util} from '../util-commonjs.cjs';
 
 import {LighthouseError} from '../lib/lh-error.js';
 
-/** @typedef {import('./network-request.js')} NetworkRequest */
+/** @typedef {import('./network-request.js').NetworkRequest} NetworkRequest */
 
 const allowedProtocols = [
   'https:', 'http:', 'chrome:', 'chrome-extension:',

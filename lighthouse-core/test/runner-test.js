@@ -16,9 +16,9 @@ import driverMock from './gather/fake-driver.js';
 // import {Config} from '../config/config.js';
 import {Audit} from '../audits/audit.js';
 import {Gatherer} from '../gather/gatherers/gatherer.js';
-import assetSaver from '../lib/asset-saver.js';
+import * as assetSaver from '../lib/asset-saver.js';
 import {LighthouseError} from '../lib/lh-error.js';
-import i18n from '../lib/i18n/i18n.js';
+import * as i18n from '../lib/i18n/i18n.js';
 import {makeMocksForGatherRunner} from './test-utils.js';
 import {createCommonjsRefs} from '../scripts/esm-utils.js';
 

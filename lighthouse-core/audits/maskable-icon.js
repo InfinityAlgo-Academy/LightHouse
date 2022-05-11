@@ -7,7 +7,7 @@
 
 import {Audit} from './audit.js';
 import ManifestValues from '../computed/manifest-values.js';
-import i18n from '../lib/i18n/i18n.js';
+import * as i18n from '../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on if the manifest contains a maskable icon. This descriptive title is shown to users when the manifest contains at least one maskable icon. */

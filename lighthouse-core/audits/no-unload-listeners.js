@@ -7,7 +7,7 @@
 
 import {Audit} from './audit.js';
 import JsBundles from '../computed/js-bundles.js';
-import i18n from './../lib/i18n/i18n.js';
+import * as i18n from './../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Descriptive title of a Lighthouse audit that checks if a web page has 'unload' event listeners and finds none. */
