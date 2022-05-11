@@ -36,6 +36,7 @@ Computing artifact: MainResource$k
 Collect stacks
 Computing artifact: ProcessedTrace$h
 Computing artifact: ProcessedNavigation$7
+Computing artifact: Responsiveness
 Get webapp manifest
 Audit phase
 Analyzing and running audits...

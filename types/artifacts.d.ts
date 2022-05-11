@@ -573,7 +573,7 @@ declare module Artifacts {
   }
 
   interface TraceElement {
-    traceEventType: 'largest-contentful-paint'|'layout-shift'|'animation';
+    traceEventType: 'largest-contentful-paint'|'layout-shift'|'animation'|'responsiveness';
     score?: number;
     node: NodeDetails;
     nodeId?: number;

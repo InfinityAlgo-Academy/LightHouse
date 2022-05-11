@@ -1061,8 +1061,8 @@
 }
 
 /* Report */
-.lh-list > div:not(:last-child) {
-  padding-bottom: 20px;
+.lh-list > :not(:last-child) {
+  margin-bottom: calc(var(--default-padding) * 2);
 }
 
 .lh-header-container {

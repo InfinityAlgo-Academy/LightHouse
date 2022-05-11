@@ -40,6 +40,8 @@ const UIStrings = {
    * @example {mousedown} interactionType
    */
   displayValue: `{timeInMs, number, milliseconds}\xa0ms spent on event '{interactionType}'`,
+  /** Label for a column in a data table; entries will the UI element that was the target of a user interaction (for example, a button that was clicked on). Ideally fits within a ~40 character limit. */
+  eventTarget: 'Event target',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
@@ -59,7 +61,7 @@ class WorkDuringInteraction extends Audit {
       description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
       supportedModes: ['timespan'],
-      requiredArtifacts: ['traces', 'devtoolsLogs'],
+      requiredArtifacts: ['traces', 'devtoolsLogs', 'TraceElements'],
     };
   }
 
@@ -126,7 +128,7 @@ class WorkDuringInteraction extends Audit {
    * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
    * @return {{table: LH.Audit.Details.Table, phases: Record<string, {startTs: number, endTs: number}>}}
    */
-  static eventThreadBreakdown(interactionEvent, trace, processedTrace, networkRecords) {
+  static getThreadBreakdownTable(interactionEvent, trace, processedTrace, networkRecords) {
     // Limit to interactionEvent's thread.
     // TODO(bckenny): limit to interactionEvent's navigation.
     const threadEvents = TraceProcessor.filteredTraceSort(trace.traceEvents, evt => {
@@ -198,6 +200,23 @@ class WorkDuringInteraction extends Audit {
   }
 
   /**
+   * @param {LH.Artifacts['TraceElements']} traceElements
+   * @return {LH.Audit.Details.Table | undefined}
+   */
+  static getTraceElementTable(traceElements) {
+    const responsivenessElement = traceElements.find(el => el.traceEventType === 'responsiveness');
+    if (!responsivenessElement) return;
+
+    /** @type {LH.Audit.Details.Table['headings']} */
+    const headings = [
+      {key: 'node', itemType: 'node', text: str_(UIStrings.eventTarget)},
+    ];
+    const elementItems = [{node: Audit.makeNodeItem(responsivenessElement.node)}];
+
+    return Audit.makeTableDetails(headings, elementItems);
+  }
+
+  /**
    * @param {LH.Artifacts} artifacts
    * @param {LH.Audit.Context} context
    * @return {Promise<LH.Audit.Product>}
@@ -224,27 +243,34 @@ class WorkDuringInteraction extends Audit {
       );
     }
 
+    const auditDetailsItems = [];
+
+    const traceElementItem = WorkDuringInteraction.getTraceElementTable(artifacts.TraceElements);
+    if (traceElementItem) auditDetailsItems.push(traceElementItem);
+
     const devtoolsLog = artifacts.devtoolsLogs[WorkDuringInteraction.DEFAULT_PASS];
     // Network records will usually be empty for timespans.
     const networkRecords = await NetworkRecords.request(devtoolsLog, context);
     const processedTrace = await ProcessedTrace.request(trace, context);
-    const {table, phases} = WorkDuringInteraction.eventThreadBreakdown(
-          interactionEvent, trace, processedTrace, networkRecords);
+    const {table: breakdownTable, phases} = WorkDuringInteraction.getThreadBreakdownTable(
+        interactionEvent, trace, processedTrace, networkRecords);
+    auditDetailsItems.push(breakdownTable);
+
+    const interactionType = interactionEvent.args.data.type;
+    auditDetailsItems.push({
+      type: /** @type {const} */ ('debugdata'),
+      interactionType,
+      phases,
+    });
 
     const duration = interactionEvent.args.data.duration;
-    const interactionType = interactionEvent.args.data.type;
     const displayValue = str_(UIStrings.displayValue, {timeInMs: duration, interactionType});
-
     return {
       score: duration < inpThresholds.p10 ? 1 : 0,
       displayValue,
       details: {
-        ...table,
-        debugData: {
-          type: 'debugdata',
-          interactionType,
-          phases,
-        },
+        type: 'list',
+        items: auditDetailsItems,
       },
     };
   }

@@ -126,6 +126,7 @@ Gathering: Accessibility
 Gathering: TraceElements
 Computing artifact: ProcessedTrace$h
 Computing artifact: ProcessedNavigation$7
+Computing artifact: Responsiveness
 Gathering: InspectorIssues
 Gathering: SourceMaps
 Gathering: FullPageScreenshot
