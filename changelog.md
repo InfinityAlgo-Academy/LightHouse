@@ -1,3 +1,23 @@
+ <a name="9.6.1"></a>
+# 9.6.1 (2022-05-11)
+[Full Changelog](https://github.com/compare/v9.6.0...v9.6.1)
+
+We expect this release to ship in the DevTools of [Chrome 103](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
+
+## Core
+
+* fps: run at the end of timespan/snapshot ([#13989](https://github.com/GoogleChrome/lighthouse/pull/13989))
+* responsiveness: add element screenshot to INP diagnostic ([#13984](https://github.com/GoogleChrome/lighthouse/pull/13984))
+* responsiveness: add better INP fallback for old Chrome versions ([#13985](https://github.com/GoogleChrome/lighthouse/pull/13985))
+
+## Report
+
+* devtools: use absolute positioning for overlay ([#13988](https://github.com/GoogleChrome/lighthouse/pull/13988))
+
+## Tests
+
+* use origin-agent-cluster to actually test oopifs ([#13777](https://github.com/GoogleChrome/lighthouse/pull/13777))
+
 <a name="9.6.0"></a>
 # 9.6.0 (2022-05-09)
 [Full Changelog](https://github.com/compare/v9.5.0...v9.6.0)
