@@ -104,7 +104,6 @@ const defaultConfig = {
     {id: artifacts.EmbeddedContent, gatherer: 'seo/embedded-content'},
     {id: artifacts.FontSize, gatherer: 'seo/font-size'},
     {id: artifacts.Inputs, gatherer: 'inputs'},
-    {id: artifacts.FullPageScreenshot, gatherer: 'full-page-screenshot'},
     {id: artifacts.GlobalListeners, gatherer: 'global-listeners'},
     {id: artifacts.IFrameElements, gatherer: 'iframe-elements'},
     {id: artifacts.ImageElements, gatherer: 'image-elements'},
@@ -134,6 +133,9 @@ const defaultConfig = {
     // Artifact copies are renamed for compatibility with legacy artifacts.
     {id: artifacts.devtoolsLogs, gatherer: 'devtools-log-compat'},
     {id: artifacts.traces, gatherer: 'trace-compat'},
+
+    // FullPageScreenshot comes at the very end so all other node analysis is captured.
+    {id: artifacts.FullPageScreenshot, gatherer: 'full-page-screenshot'},
   ],
   navigations: [
     {
