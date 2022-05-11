@@ -25,11 +25,14 @@
  * @property {number} interactionId
  */
 /** @typedef {LH.Trace.AsyncEvent & {name: 'EventTiming', args: {data: EventTimingData}}} EventTimingEvent */
-
+/**
+ * A fallback EventTiming placeholder, used if updated EventTiming events are not available.
+ * TODO: Remove once 103.0.5052.0 is sufficiently released.
+ * @typedef {{name: 'FallbackTiming', duration: number}} FallbackTimingEvent
+ */
 
 const makeComputedArtifact = require('../computed-artifact.js');
 const ProcessedTrace = require('../processed-trace.js');
-const LHError = require('../../lib/lh-error.js');
 
 const KEYBOARD_EVENTS = new Set(['keydown', 'keypress', 'keyup']);
 const CLICK_TAP_DRAG_EVENTS = new Set([
@@ -77,7 +80,7 @@ class Responsiveness {
    * one interaction had this duration by returning the first found.
    * @param {ResponsivenessEvent} responsivenessEvent
    * @param {LH.Trace} trace
-   * @return {EventTimingEvent}
+   * @return {EventTimingEvent|FallbackTimingEvent}
    */
   static findInteractionEvent(responsivenessEvent, {traceEvents}) {
     const candidates = traceEvents.filter(/** @return {evt is EventTimingEvent} */ evt => {
@@ -85,12 +88,12 @@ class Responsiveness {
       return evt.name === 'EventTiming' && evt.ph !== 'e';
     });
 
-    if (candidates.length && !candidates[0].args.data.frame) {
+    if (candidates.length && !candidates.some(candidate => candidate.args.data?.frame)) {
       // Full EventTiming data added in https://crrev.com/c/3632661
-      throw new LHError(
-        LHError.errors.UNSUPPORTED_OLD_CHROME,
-        {featureName: 'detailed EventTiming trace events'}
-      );
+      return {
+        name: 'FallbackTiming',
+        duration: responsivenessEvent.args.data.maxDuration,
+      };
     }
 
     const {maxDuration, interactionType} = responsivenessEvent.args.data;
@@ -131,7 +134,7 @@ class Responsiveness {
   /**
    * @param {{trace: LH.Trace, settings: Immutable<LH.Config.Settings>}} data
    * @param {LH.Artifacts.ComputedContext} context
-   * @return {Promise<EventTimingEvent|null>}
+   * @return {Promise<EventTimingEvent|FallbackTimingEvent|null>}
    */
   static async compute_(data, context) {
     const {settings, trace} = data;
