@@ -210,11 +210,11 @@ function isStringOrIcuMessage(value) {
   return typeof value === 'string' || isIcuMessage(value);
 }
 
-export default {
+export {
   UIStrings,
   lookupLocale,
   createIcuMessageFn,
   isStringOrIcuMessage,
   // TODO: exported for backwards compatibility. Consider removing on future breaking change.
-  createMessageInstanceIdFn: createIcuMessageFn,
+  createIcuMessageFn as createMessageInstanceIdFn,
 };

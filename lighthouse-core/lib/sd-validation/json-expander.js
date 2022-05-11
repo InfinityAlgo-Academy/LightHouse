@@ -5,7 +5,7 @@
  */
 'use strict';
 
-import {URL} from '../url-shim.js';
+import URL from '../url-shim.js';
 import jsonld from 'jsonld';
 import schemaOrgContext from './assets/jsonldcontext.json';
 const SCHEMA_ORG_HOST = 'schema.org';

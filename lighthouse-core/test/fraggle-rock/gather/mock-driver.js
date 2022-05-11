@@ -20,7 +20,7 @@ import * as constants from '../../../config/constants.js';
 import {fnAny} from '../../test-utils.js';
 import {LH_ROOT} from '../../../../root.js';
 
-/** @typedef {import('../../../fraggle-rock/gather/driver.js')} Driver */
+/** @typedef {import('../../../fraggle-rock/gather/driver.js').Driver} Driver */
 /** @typedef {import('../../../gather/driver/execution-context.js')} ExecutionContext */
 
 function createMockSession() {

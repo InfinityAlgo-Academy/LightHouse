@@ -9,7 +9,7 @@ import {Simulator} from '../lighthouse-core/lib/dependency-graph/simulator/simul
 import {LighthouseError} from '../lighthouse-core/lib/lh-error.js';
 import {NetworkRequest as _NetworkRequest} from '../lighthouse-core/lib/network-request.js';
 import speedline from 'speedline-core';
-import TextSourceMap = require('../lighthouse-core/lib/cdt/generated/SourceMap.js');
+import TextSourceMap from '../lighthouse-core/lib/cdt/generated/SourceMap.js';
 import {ArbitraryEqualityMap} from '../lighthouse-core/lib/arbitrary-equality-map.js';
 import type { TaskNode as _TaskNode } from '../lighthouse-core/lib/tracehouse/main-thread-tasks.js';
 import AuditDetails from './lhr/audit-details'
@@ -571,7 +571,7 @@ declare module Artifacts {
   }
 
   interface TraceElement {
-    traceEventType: 'largest-contentful-paint'|'layout-shift'|'animation';
+    traceEventType: 'largest-contentful-paint'|'layout-shift'|'animation'|'responsiveness';
     score?: number;
     node: NodeDetails;
     nodeId?: number;
@@ -1000,6 +1000,7 @@ export interface TraceEvent {
       /** Responsiveness data. */
       interactionType?: 'drag'|'keyboard'|'tapOrClick';
       maxDuration?: number;
+      type?: string;
     };
     frame?: string;
     name?: string;
@@ -1032,6 +1033,23 @@ declare module Trace {
     ts: number;
     tdur: number;
     tts: number;
+  }
+
+  /**
+   * Base event of a `ph: 'b'|'e'|'n'` async event. Extend with `name`, `args`, and
+   * more specific `ph` (if needed).
+   */
+  interface AsyncEvent {
+    ph: 'b'|'e'|'n';
+    cat: string;
+    pid: number;
+    tid: number;
+    ts: number;
+    id: string;
+    scope?: string;
+    // TODO(bckenny): No dur on these. Sort out optional `dur` on trace events.
+    /** @deprecated there is no `dur` on async events. */
+    dur: number;
   }
 }
 

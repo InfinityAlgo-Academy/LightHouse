@@ -10,7 +10,7 @@ import {strict as assert} from 'assert';
 import CriticalRequestChains from '../../computed/critical-request-chains.js';
 import {NetworkRequest} from '../../lib/network-request.js';
 import createTestTrace from '../create-test-trace.js';
-import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
+import {networkRecordsToDevtoolsLog} from '../network-records-to-devtools-log.js';
 import {getURLArtifactFromDevtoolsLog} from '../test-utils.js';
 import wikipediaDevtoolsLog from '../fixtures/wikipedia-redirect.devtoolslog.json';
 

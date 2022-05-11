@@ -13,8 +13,8 @@ import {NetworkRequest} from '../../lib/network-request.js';
 import sampleTrace from '../fixtures/traces/iframe-m79.trace.json';
 import sampleDevtoolsLog from '../fixtures/traces/iframe-m79.devtoolslog.json';
 import {getURLArtifactFromDevtoolsLog} from '../test-utils.js';
-import NetworkRecorder from '../../lib/network-recorder.js';
-import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
+import {NetworkRecorder} from '../../lib/network-recorder.js';
+import {networkRecordsToDevtoolsLog} from '../network-records-to-devtools-log.js';
 
 function createRequest(
   requestId,

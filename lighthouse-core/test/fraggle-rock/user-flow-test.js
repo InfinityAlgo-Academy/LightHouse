@@ -261,7 +261,7 @@ describe('UserFlow', () => {
 
   describe('auditGatherSteps', () => {
     it('should audit gather steps', async () => {
-      const runnerActual = /** @type {typeof import('../../runner.js')} */ (
+      const runnerActual = /** @type {typeof import('../../runner.js').Runner} */ (
         jest.requireActual('../../runner.js'));
       mockRunner.getGathererList.mockImplementation(runnerActual.getGathererList);
       mockRunner.getAuditList.mockImplementation(runnerActual.getAuditList);

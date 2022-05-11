@@ -6,7 +6,7 @@
 
 
 import PreloadLCPImage from '../../audits/preload-lcp-image.js';
-import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
+import {networkRecordsToDevtoolsLog} from '../network-records-to-devtools-log.js';
 import createTestTrace from '../create-test-trace.js';
 
 const rootNodeUrl = 'http://example.com:3000';

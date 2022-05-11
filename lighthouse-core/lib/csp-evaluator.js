@@ -163,7 +163,7 @@ function evaluateRawCspsForXss(rawCsps) {
   return {bypasses, warnings, syntax};
 }
 
-export default {
+export {
   getTranslatedDescription,
   evaluateRawCspsForXss,
   parseCsp,

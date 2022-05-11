@@ -11,7 +11,7 @@ import RenderBlockingResourcesAudit from '../../../audits/byte-efficiency/render
 import * as constants from '../../../config/constants.js';
 import NetworkNode from '../../../lib/dependency-graph/network-node.js';
 import CPUNode from '../../../lib/dependency-graph/cpu-node.js';
-import Simulator from '../../../lib/dependency-graph/simulator/simulator.js';
+import {Simulator} from '../../../lib/dependency-graph/simulator/simulator.js';
 import {NetworkRequest} from '../../../lib/network-request.js';
 import trace from '../../fixtures/traces/progressive-app-m60.json';
 import devtoolsLog from '../../fixtures/traces/progressive-app-m60.devtools.log.json';

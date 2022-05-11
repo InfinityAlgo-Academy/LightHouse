@@ -153,7 +153,7 @@ function clearCPUThrottling(session) {
   return session.sendCommand('Emulation.setCPUThrottlingRate', NO_CPU_THROTTLE_METRICS);
 }
 
-export default {
+export {
   emulate,
   throttle,
   clearThrottling,

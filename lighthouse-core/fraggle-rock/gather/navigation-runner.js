@@ -7,13 +7,13 @@
 
 import puppeteer from 'puppeteer-core';
 import log from 'lighthouse-logger';
-import Driver from './driver.js';
+import {Driver} from './driver.js';
 import {Runner} from '../../runner.js';
 import {getEmptyArtifactState, collectPhaseArtifacts, awaitArtifacts} from './runner-helpers.js';
 import * as prepare from '../../gather/driver/prepare.js';
 import {gotoURL} from '../../gather/driver/navigation.js';
 import * as storage from '../../gather/driver/storage.js';
-import emulation from '../../lib/emulation.js';
+import * as emulation from '../../lib/emulation.js';
 import {defaultNavigationConfig} from '../../config/constants.js';
 import {initializeConfig} from '../config/config.js';
 import {getBaseArtifacts, finalizeArtifacts} from './base-artifacts.js';

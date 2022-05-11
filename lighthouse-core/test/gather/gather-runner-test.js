@@ -10,11 +10,11 @@ import {jest} from '@jest/globals';
 
 import {Gatherer} from '../../gather/gatherers/gatherer.js';
 // import GathererRunner_ from '../../gather/gather-runner.js';
-// import Config from '../../config/config.js';
+// import {Config} from '../../config/config.js';
 import unresolvedPerfLog from './../fixtures/unresolved-perflog.json';
 import {LighthouseError} from '../../lib/lh-error.js';
-import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
-// import Driver from '../../gather/driver.js';
+import {networkRecordsToDevtoolsLog} from '../network-records-to-devtools-log.js';
+// import {Driver} from '../../gather/driver.js';
 import {Connection} from '../../gather/connections/connection.js';
 import {createMockSendCommandFn, createMockOnceFn} from './mock-commands.js';
 import {
@@ -24,7 +24,7 @@ import {
   flushAllTimersAndMicrotasks,
   fnAny,
 } from '../test-utils.js';
-import fakeDriver from './fake-driver.js';
+import {fakeDriver} from './fake-driver.js';
 import {createCommonjsRefs} from '../../scripts/esm-utils.js';
 
 const {require} = createCommonjsRefs(import.meta);
@@ -60,21 +60,21 @@ function createTypeHackedGatherRunner() {
 // Some imports needs to be done dynamically, so that their dependencies will be mocked.
 // See: https://jestjs.io/docs/ecmascript-modules#differences-between-esm-and-commonjs
 //      https://github.com/facebook/jest/issues/10025
-/** @typedef {import('../../gather/driver.js')} Driver */
-/** @type {typeof import('../../gather/driver.js')} */
+/** @typedef {import('../../gather/driver.js').Driver} Driver */
+/** @type {typeof import('../../gather/driver.js').Driver} */
 let Driver;
-/** @type {typeof import('../../gather/gather-runner.js')} */
+/** @type {typeof import('../../gather/gather-runner.js').GatherRunner} */
 let GatherRunner_;
-/** @typedef {import('../../config/config.js')} Config */
-/** @type {typeof import('../../config/config.js')} */
+/** @typedef {import('../../config/config.js').Config} Config */
+/** @type {typeof import('../../config/config.js').Config} */
 let Config;
 
 /** @type {ReturnType<createTypeHackedGatherRunner>} */
 let GatherRunner;
 beforeAll(async () => {
-  Driver = (await import('../../gather/driver.js')).default;
-  GatherRunner_ = (await import('../../gather/gather-runner.js')).default;
-  Config = (await import('../../config/config.js')).default;
+  Driver = (await import('../../gather/driver.js')).Driver;
+  GatherRunner_ = (await import('../../gather/gather-runner.js')).GatherRunner;
+  Config = (await import('../../config/config.js')).Config;
   GatherRunner = createTypeHackedGatherRunner();
 });
 
@@ -109,7 +109,7 @@ class TestGathererNoArtifact extends Gatherer {
   afterPass() {}
 }
 
-/** @type {import('../../gather/driver.js')} */
+/** @type {import('../../gather/driver.js').Driver} */
 let driver;
 /** @type {Connection & {sendCommand: ReturnType<typeof createMockSendCommandFn>}} */
 let connectionStub;

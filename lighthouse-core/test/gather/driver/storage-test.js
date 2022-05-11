@@ -6,7 +6,7 @@
 
 
 import {createMockSession} from '../../fraggle-rock/gather/mock-driver.js';
-import storage from '../../../gather/driver/storage.js';
+import * as storage from '../../../gather/driver/storage.js';
 
 let sessionMock = createMockSession();
 

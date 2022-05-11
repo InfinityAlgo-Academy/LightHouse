@@ -272,4 +272,5 @@ URLShim.INVALID_URL_DEBUG_STRING =
     'Lighthouse was unable to determine the URL of some script executions. ' +
     'It\'s possible a Chrome extension or other eval\'d code is the source.';
 
+// TODO(esmodules): don't use default export
 export default URLShim;

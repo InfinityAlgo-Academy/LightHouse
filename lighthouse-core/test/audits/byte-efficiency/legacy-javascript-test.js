@@ -7,7 +7,7 @@
 
 import {readJson} from '../../../../root.js';
 import LegacyJavascript from '../../../audits/byte-efficiency/legacy-javascript.js';
-import networkRecordsToDevtoolsLog from '../../network-records-to-devtools-log.js';
+import {networkRecordsToDevtoolsLog} from '../../network-records-to-devtools-log.js';
 
 /**
  * @param {Array<{url: string, code: string, map?: LH.Artifacts.RawSourceMap}>} scripts

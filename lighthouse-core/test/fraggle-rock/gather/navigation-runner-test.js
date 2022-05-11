@@ -4,7 +4,6 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-
 import {jest} from '@jest/globals';
 
 import {
@@ -15,11 +14,11 @@ import {
 } from './mock-driver.js';
 import {initializeConfig} from '../../../fraggle-rock/config/config.js';
 import {defaultNavigationConfig} from '../../../config/constants.js';
-import LighthouseError from '../../../lib/lh-error.js';
+import {LighthouseError} from '../../../lib/lh-error.js';
 import DevtoolsLogGatherer from '../../../gather/gatherers/devtools-log.js';
 import TraceGatherer from '../../../gather/gatherers/trace.js';
-import toDevtoolsLog from '../../network-records-to-devtools-log.js';
 import {fnAny} from '../../test-utils.js';
+import {networkRecordsToDevtoolsLog} from '../../network-records-to-devtools-log.js';
 // import {Runner} from '../../../fraggle-rock/gather/navigation-runner.js';
 
 // Some imports needs to be done dynamically, so that their dependencies will be mocked.
@@ -48,7 +47,7 @@ describe('NavigationRunner', () => {
   let requestor;
   /** @type {ReturnType<typeof createMockDriver>} */
   let mockDriver;
-  /** @type {import('../../../fraggle-rock/gather/driver.js')} */
+  /** @type {import('../../../fraggle-rock/gather/driver.js').Driver} */
   let driver;
   /** @type {LH.Config.FRConfig} */
   let config;
@@ -429,7 +428,7 @@ describe('NavigationRunner', () => {
     it('finds page load errors in network records when available', async () => {
       const {navigation, gatherers} = createNavigation();
       mocks.navigationMock.gotoURL.mockResolvedValue({mainDocumentUrl: requestedUrl, warnings: []});
-      const devtoolsLog = toDevtoolsLog([{url: requestedUrl, failed: true}]);
+      const devtoolsLog = networkRecordsToDevtoolsLog([{url: requestedUrl, failed: true}]);
       gatherers.timespan.meta.symbol = DevtoolsLogGatherer.symbol;
       gatherers.timespan.getArtifact = fnAny().mockResolvedValue(devtoolsLog);
       gatherers.navigation.meta.symbol = TraceGatherer.symbol;
@@ -561,7 +560,7 @@ describe('NavigationRunner', () => {
 
   describe('navigation', () => {
     it('should throw on invalid URL', async () => {
-      const runnerActual = /** @type {typeof import('../../../runner.js')} */ (
+      const runnerActual = /** @type {typeof import('../../../runner.js').Runner} */ (
         jest.requireActual('../../../runner.js'));
       mockRunner.gather.mockImplementation(runnerActual.gather);
 

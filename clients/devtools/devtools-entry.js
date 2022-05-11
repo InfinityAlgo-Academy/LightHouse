@@ -11,7 +11,7 @@ import {Buffer} from 'buffer';
 
 import lighthouse from '../../lighthouse-core/index.js';
 import {navigation, startTimespan, snapshot} from '../../lighthouse-core/fraggle-rock/api.js';
-import RawProtocol from '../../lighthouse-core/gather/connections/raw.js';
+import {RawConnection} from '../../lighthouse-core/gather/connections/raw.js';
 import log from 'lighthouse-logger';
 import {lookupLocale} from '../../lighthouse-core/lib/i18n/i18n.js';
 import {registerLocaleData, getCanonicalLocales} from '../../shared/localization/format.js';
@@ -58,11 +58,11 @@ function createConfig(categoryIDs, device) {
 }
 
 /**
- * @param {RawProtocol.Port} port
- * @return {RawProtocol}
+ * @param {import('../../lighthouse-core/gather/connections/raw.js').Port} port
+ * @return {RawConnection}
  */
 function setUpWorkerConnection(port) {
-  return new RawProtocol(port);
+  return new RawConnection(port);
 }
 
 /** @param {(status: [string, string, string]) => void} listenCallback */

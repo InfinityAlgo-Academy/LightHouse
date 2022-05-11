@@ -8,7 +8,7 @@
 import {jest} from '@jest/globals';
 
 import ImageElements from '../../../gather/gatherers/image-elements.js';
-import NetworkRecorder from '../../../lib/network-recorder.js';
+import {NetworkRecorder} from '../../../lib/network-recorder.js';
 import {createMockContext, createMockDriver, createMockSession} from
   '../../fraggle-rock/gather/mock-driver.js';
 import {fnAny} from '../../test-utils.js';

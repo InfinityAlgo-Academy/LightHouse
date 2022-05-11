@@ -6,7 +6,7 @@
 'use strict';
 
 import log from 'lighthouse-logger';
-import Driver from './driver.js';
+import {Driver} from './driver.js';
 import {Runner} from '../../runner.js';
 import {getEmptyArtifactState, collectPhaseArtifacts, awaitArtifacts} from './runner-helpers.js';
 import {prepareTargetForTimespanMode} from '../../gather/driver/prepare.js';

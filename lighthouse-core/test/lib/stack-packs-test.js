@@ -8,7 +8,7 @@
 import lighthouseStackPacksDep from 'lighthouse-stack-packs';
 
 import stackPacksLib from '../../lib/stack-packs.js';
-import Config from '../../config/config.js';
+import {Config} from '../../config/config.js';
 
 async function getAuditIds() {
   const config = await Config.fromJson();

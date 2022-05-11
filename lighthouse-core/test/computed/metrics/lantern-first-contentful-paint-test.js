@@ -11,7 +11,7 @@ import LanternFirstContentfulPaint from '../../../computed/metrics/lantern-first
 import trace from '../../fixtures/traces/progressive-app-m60.json';
 import devtoolsLog from '../../fixtures/traces/progressive-app-m60.devtools.log.json';
 import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';
-import networkRecordsToDevtoolsLog from '../../network-records-to-devtools-log.js';
+import {networkRecordsToDevtoolsLog} from '../../network-records-to-devtools-log.js';
 import createTestTrace from '../../create-test-trace.js';
 describe('Metrics: Lantern FCP', () => {
   const gatherContext = {gatherMode: 'navigation'};

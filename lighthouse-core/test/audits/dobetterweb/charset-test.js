@@ -8,7 +8,7 @@
 import {strict as assert} from 'assert';
 
 import CharsetDefinedAudit from '../../../audits/dobetterweb/charset.js';
-import networkRecordsToDevtoolsLog from '../../network-records-to-devtools-log.js';
+import {networkRecordsToDevtoolsLog} from '../../network-records-to-devtools-log.js';
 
 const HTML_PRE = '<!doctype html><head>';
 const HTML_POST = '</head><body><h1>hello';

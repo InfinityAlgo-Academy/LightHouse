@@ -12,8 +12,8 @@ import {NetworkRequest} from '../../../lib/network-request.js';
 // Some imports needs to be done dynamically, so that their dependencies will be mocked.
 // See: https://jestjs.io/docs/ecmascript-modules#differences-between-esm-and-commonjs
 //      https://github.com/facebook/jest/issues/10025
-/** @typedef {import('../../../gather/gatherers/script-elements.js')} ScriptElements */
-/** @type {typeof import('../../../gather/gatherers/script-elements.js')} */
+/** @typedef {import('../../../gather/gatherers/script-elements.js').default} ScriptElements */
+/** @type {typeof import('../../../gather/gatherers/script-elements.js').default} */
 let ScriptElements;
 
 beforeAll(async () => {

@@ -13,7 +13,7 @@ import path from 'path';
 
 import chalk from 'chalk';
 
-import * as constants from './constants.js';
+import constants from './constants.js';
 import {readJson} from '../../../root.js';
 
 const INPUT_PATH = process.argv[2] || constants.SITE_INDEX_WITH_GOLDEN_WITH_COMPUTED_PATH;

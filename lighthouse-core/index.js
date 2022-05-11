@@ -8,7 +8,7 @@
 import {Runner} from './runner.js';
 import log from 'lighthouse-logger';
 import {CriConnection} from './gather/connections/cri.js';
-import Config from './config/config.js';
+import {Config} from './config/config.js';
 import URL from './lib/url-shim.js';
 import * as fraggleRock from './fraggle-rock/api.js';
 import {Driver} from './gather/driver.js';

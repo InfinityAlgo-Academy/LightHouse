@@ -48,9 +48,14 @@ const clsRelevantAudits = [
   // 'preload-fonts', // actually in BP, rather than perf
 ];
 
-export default {
+const inpRelevantAudits = [
+  'work-during-interaction',
+];
+
+export const metricsToAudits = {
   fcpRelevantAudits,
   lcpRelevantAudits,
   tbtRelevantAudits,
   clsRelevantAudits,
+  inpRelevantAudits,
 };

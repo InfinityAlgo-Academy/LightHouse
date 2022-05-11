@@ -9,7 +9,7 @@ import {strict as assert} from 'assert';
 
 import NetworkNode from '../../../../lib/dependency-graph/network-node.js';
 import CpuNode from '../../../../lib/dependency-graph/cpu-node.js';
-import Simulator from '../../../../lib/dependency-graph/simulator/simulator.js';
+import {Simulator} from '../../../../lib/dependency-graph/simulator/simulator.js';
 import DNSCache from '../../../../lib/dependency-graph/simulator/dns-cache.js';
 import PageDependencyGraph from '../../../../computed/page-dependency-graph.js';
 import {getURLArtifactFromDevtoolsLog} from '../../../test-utils.js';

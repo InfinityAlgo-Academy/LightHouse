@@ -9,8 +9,8 @@ import {jest} from '@jest/globals';
 
 jest.useFakeTimers();
 
-import Driver from '../../../gather/driver.js';
-import Connection from '../../../gather/connections/connection.js';
+import {Driver} from '../../../gather/driver.js';
+import {Connection} from '../../../gather/connections/connection.js';
 import JsUsage from '../../../gather/gatherers/js-usage.js';
 import {createMockSendCommandFn, createMockOnFn} from '../mock-commands.js';
 import {createMockContext} from '../../fraggle-rock/gather/mock-driver.js';

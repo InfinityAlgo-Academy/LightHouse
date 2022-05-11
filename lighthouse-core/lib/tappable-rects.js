@@ -94,6 +94,6 @@ function mergeTouchingClientRects(clientRects) {
   return clientRects;
 }
 
-export default {
+export {
   getTappableRectsFromClientRects,
 };

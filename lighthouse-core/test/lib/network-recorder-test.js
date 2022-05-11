@@ -7,8 +7,8 @@
 
 import {strict as assert} from 'assert';
 
-import NetworkRecorder from '../../lib/network-recorder.js';
-import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
+import {NetworkRecorder} from '../../lib/network-recorder.js';
+import {networkRecordsToDevtoolsLog} from '../network-records-to-devtools-log.js';
 import devtoolsLogItems from '../fixtures/artifacts/perflog/defaultPass.devtoolslog.json';
 import prefetchedScriptDevtoolsLog from '../fixtures/prefetched-script.devtoolslog.json';
 import redirectsDevtoolsLog from '../fixtures/wikipedia-redirect.devtoolslog.json';

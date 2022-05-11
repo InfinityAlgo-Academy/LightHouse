@@ -9,7 +9,7 @@ import {strict as assert} from 'assert';
 import CriticalRequestChains from '../../audits/critical-request-chains.js';
 import redditDevtoolsLog from '../fixtures/artifacts/perflog/defaultPass.devtoolslog.json';
 import createTestTrace from '../create-test-trace.js';
-import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
+import {networkRecordsToDevtoolsLog} from '../network-records-to-devtools-log.js';
 
 const FAILING_CHAIN_RECORDS = [
   {

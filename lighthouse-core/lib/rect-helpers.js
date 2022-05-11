@@ -233,7 +233,7 @@ function allRectsContainedWithinEachOther(rectListA, rectListB) {
   return true;
 }
 
-export default {
+export {
   rectContainsPoint,
   rectContains,
   addRectWidthAndHeight,

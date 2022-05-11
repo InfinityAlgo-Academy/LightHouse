@@ -170,4 +170,4 @@ function minifyTrace(inputTrace) {
   return {traceEvents: filterTraceEvents(inputTrace.traceEvents)};
 }
 
-export default {minifyTrace};
+export {minifyTrace};

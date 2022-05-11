@@ -10,7 +10,7 @@
 import FRGatherer from '../../../fraggle-rock/gather/base-gatherer.js';
 
 import {pageFunctions} from '../../../lib/page-functions.js';
-import RectHelpers from '../../../lib/rect-helpers.js';
+import * as RectHelpers from '../../../lib/rect-helpers.js';
 
 const TARGET_SELECTORS = [
   'button',

@@ -1658,6 +1658,30 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "Has a `<meta name=\"viewport\">` tag with `width` or `initial-scale`"
   },
+  "lighthouse-core/audits/work-during-interaction.js | description": {
+    "message": "This is the thread-blocking work occurring during the Interaction to Next Paint measurement. [Learn more](https://web.dev/inp/)."
+  },
+  "lighthouse-core/audits/work-during-interaction.js | displayValue": {
+    "message": "{timeInMs, number, milliseconds} ms spent on event '{interactionType}'"
+  },
+  "lighthouse-core/audits/work-during-interaction.js | eventTarget": {
+    "message": "Event target"
+  },
+  "lighthouse-core/audits/work-during-interaction.js | failureTitle": {
+    "message": "Minimize work during key interaction"
+  },
+  "lighthouse-core/audits/work-during-interaction.js | inputDelay": {
+    "message": "Input delay"
+  },
+  "lighthouse-core/audits/work-during-interaction.js | presentationDelay": {
+    "message": "Presentation delay"
+  },
+  "lighthouse-core/audits/work-during-interaction.js | processingDelay": {
+    "message": "Processing delay"
+  },
+  "lighthouse-core/audits/work-during-interaction.js | title": {
+    "message": "Minimizes work during key interaction"
+  },
   "lighthouse-core/config/default-config.js | a11yAriaGroupDescription": {
     "message": "These are opportunities to improve the usage of ARIA in your application which may enhance the experience for users of assistive technology, like a screen reader."
   },

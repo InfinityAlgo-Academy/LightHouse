@@ -6,7 +6,7 @@
 
 
 import ThirdPartySummary from '../../audits/third-party-summary.js';
-import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
+import {networkRecordsToDevtoolsLog} from '../network-records-to-devtools-log.js';
 import pwaTrace from '../fixtures/traces/progressive-app-m60.json';
 import pwaDevtoolsLog from '../fixtures/traces/progressive-app-m60.devtools.log.json';
 import noThirdPartyTrace from '../fixtures/traces/no-tracingstarted-m74.json';

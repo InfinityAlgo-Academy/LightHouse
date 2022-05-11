@@ -8,7 +8,7 @@
 import {strict as assert} from 'assert';
 
 import MainResource from '../../computed/main-resource.js';
-import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
+import {networkRecordsToDevtoolsLog} from '../network-records-to-devtools-log.js';
 import wikipediaDevtoolsLog from '../fixtures/wikipedia-redirect.devtoolslog.json';
 
 describe('MainResource computed artifact', () => {

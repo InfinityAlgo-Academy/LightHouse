@@ -14,7 +14,7 @@ import glob from 'glob';
 
 import {makeHash} from './hash.js';
 import LegacyJavascript from '../../audits/byte-efficiency/legacy-javascript.js';
-import networkRecordsToDevtoolsLog from '../../test/network-records-to-devtools-log.js';
+import {networkRecordsToDevtoolsLog} from '../../test/network-records-to-devtools-log.js';
 import {LH_ROOT, readJson} from '../../../root.js';
 
 const scriptDir = `${LH_ROOT}/lighthouse-core/scripts/legacy-javascript`;

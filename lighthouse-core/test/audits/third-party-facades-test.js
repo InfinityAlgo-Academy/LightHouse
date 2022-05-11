@@ -6,7 +6,7 @@
 
 
 import ThirdPartyFacades from '../../audits/third-party-facades.js';
-import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
+import {networkRecordsToDevtoolsLog} from '../network-records-to-devtools-log.js';
 import createTestTrace from '../create-test-trace.js';
 import pwaTrace from '../fixtures/traces/progressive-app-m60.json';
 import pwaDevtoolsLog from '../fixtures/traces/progressive-app-m60.devtools.log.json';

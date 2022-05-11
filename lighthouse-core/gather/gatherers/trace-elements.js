@@ -18,11 +18,12 @@ import FRGatherer from '../../fraggle-rock/gather/base-gatherer.js';
 import {resolveNodeIdToObjectId} from '../driver/dom.js';
 import {pageFunctions} from '../../lib/page-functions.js';
 import RectHelpers from '../../lib/rect-helpers.js';
-import Sentry from '../../lib/sentry.js';
+import {Sentry} from '../../lib/sentry.js';
 import Trace from './trace.js';
 import ProcessedTrace from '../../computed/processed-trace.js';
 import ProcessedNavigation from '../../computed/processed-navigation.js';
-import LighthouseError from '../../lib/lh-error.js';
+import {LighthouseError} from '../../lib/lh-error.js';
+import ComputedResponsiveness from '../../computed/metrics/responsiveness.js';
 
 /** @typedef {{nodeId: number, score?: number, animations?: {name?: string, failureReasonsMask?: number, unsupportedProperties?: string[]}[]}} TraceElementData */
 
@@ -144,6 +145,23 @@ class TraceElements extends FRGatherer {
   }
 
   /**
+   * @param {LH.Trace} trace
+   * @param {LH.Gatherer.FRTransitionalContext} context
+   * @return {Promise<TraceElementData|undefined>}
+   */
+  static async getResponsivenessElement(trace, context) {
+    const {settings} = context;
+    try {
+      const responsivenessEvent = await ComputedResponsiveness.request({trace, settings}, context);
+      if (!responsivenessEvent || responsivenessEvent.name === 'FallbackTiming') return;
+      return {nodeId: responsivenessEvent.args.data.nodeId};
+    } catch {
+      // Don't let responsiveness errors sink the rest of the gatherer.
+      return;
+    }
+  }
+
+  /**
    * Find the node ids of elements which are animated using the Animation trace events.
    * @param {Array<LH.TraceEvent>} mainThreadEvents
    * @return {Promise<Array<TraceElementData>>}
@@ -238,14 +256,15 @@ class TraceElements extends FRGatherer {
 
     const lcpNodeId = largestContentfulPaintEvt?.args?.data?.nodeId;
     const clsNodeData = TraceElements.getTopLayoutShiftElements(mainThreadEvents);
-    const animatedElementData =
-      await this.getAnimatedElements(mainThreadEvents);
+    const animatedElementData = await this.getAnimatedElements(mainThreadEvents);
+    const responsivenessElementData = await TraceElements.getResponsivenessElement(trace, context);
 
     /** @type {Map<string, TraceElementData[]>} */
     const backendNodeDataMap = new Map([
       ['largest-contentful-paint', lcpNodeId ? [{nodeId: lcpNodeId}] : []],
       ['layout-shift', clsNodeData],
       ['animation', animatedElementData],
+      ['responsiveness', responsivenessElementData ? [responsivenessElementData] : []],
     ]);
 
     const traceElements = [];

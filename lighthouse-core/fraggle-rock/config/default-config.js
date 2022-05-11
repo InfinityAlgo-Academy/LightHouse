@@ -7,18 +7,22 @@
 
 import legacyDefaultConfig from '../../config/default-config.js';
 import {deepClone} from '../../config/config-helpers.js';
+import {metricsToAudits} from '../../config/metrics-to-audits.js';
 
 /** @type {LH.Config.AuditJson[]} */
 const frAudits = [
   'byte-efficiency/uses-responsive-images-snapshot',
   'metrics/experimental-interaction-to-next-paint',
+  'work-during-interaction',
 ];
 
 /** @type {Record<string, LH.Config.AuditRefJson[]>} */
 const frCategoryAuditRefExtensions = {
   'performance': [
     {id: 'uses-responsive-images-snapshot', weight: 0},
-    {id: 'experimental-interaction-to-next-paint', weight: 0, group: 'metrics', acronym: 'INP'},
+    {id: 'experimental-interaction-to-next-paint', weight: 0, group: 'metrics', acronym: 'INP',
+      relevantAudits: metricsToAudits.inpRelevantAudits},
+    {id: 'work-during-interaction', weight: 0},
   ],
 };
 
@@ -100,7 +104,6 @@ const defaultConfig = {
     {id: artifacts.EmbeddedContent, gatherer: 'seo/embedded-content'},
     {id: artifacts.FontSize, gatherer: 'seo/font-size'},
     {id: artifacts.Inputs, gatherer: 'inputs'},
-    {id: artifacts.FullPageScreenshot, gatherer: 'full-page-screenshot'},
     {id: artifacts.GlobalListeners, gatherer: 'global-listeners'},
     {id: artifacts.IFrameElements, gatherer: 'iframe-elements'},
     {id: artifacts.ImageElements, gatherer: 'image-elements'},
@@ -130,6 +133,9 @@ const defaultConfig = {
     // Artifact copies are renamed for compatibility with legacy artifacts.
     {id: artifacts.devtoolsLogs, gatherer: 'devtools-log-compat'},
     {id: artifacts.traces, gatherer: 'trace-compat'},
+
+    // FullPageScreenshot comes at the very end so all other node analysis is captured.
+    {id: artifacts.FullPageScreenshot, gatherer: 'full-page-screenshot'},
   ],
   navigations: [
     {

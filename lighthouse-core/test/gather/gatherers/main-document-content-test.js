@@ -6,7 +6,7 @@
 
 
 import MainDocumentContent from '../../../gather/gatherers/main-document-content.js';
-import NetworkRecorder from '../../../lib/network-recorder.js';
+import {NetworkRecorder} from '../../../lib/network-recorder.js';
 import {createMockContext} from '../../fraggle-rock/gather/mock-driver.js';
 import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';
 import devtoolsLog from '../../fixtures/traces/lcp-m78.devtools.log.json';

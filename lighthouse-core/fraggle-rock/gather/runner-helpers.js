@@ -7,7 +7,7 @@
 
 /**
  * @typedef CollectPhaseArtifactOptions
- * @property {import('./driver.js')} driver
+ * @property {import('./driver.js').Driver} driver
  * @property {Array<LH.Config.AnyArtifactDefn>} artifactDefinitions
  * @property {ArtifactState} artifactState
  * @property {LH.FRBaseArtifacts} baseArtifacts

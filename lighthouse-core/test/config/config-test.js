@@ -9,7 +9,7 @@ import path from 'path';
 
 import log from 'lighthouse-logger';
 
-import Config from '../../config/config.js';
+import {Config} from '../../config/config.js';
 import defaultConfig from '../../config/default-config.js';
 import * as constants from '../../config/constants.js';
 import {Gatherer} from '../../gather/gatherers/gatherer.js';

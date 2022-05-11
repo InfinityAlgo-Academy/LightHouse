@@ -108,6 +108,7 @@ function processForProto(lhr) {
 }
 
 // Test if called from the CLI or as a module.
+// TODO: cjamcl
 if (require.main === module) {
   // read in the argv for the input & output
   const args = process.argv.slice(2);
@@ -126,8 +127,8 @@ if (require.main === module) {
     // write to output from argv
     fs.writeFileSync(output, JSON.stringify(report), 'utf-8');
   }
-} else {
-  export default {
-    processForProto,
-  };
 }
+
+export {
+  processForProto,
+};

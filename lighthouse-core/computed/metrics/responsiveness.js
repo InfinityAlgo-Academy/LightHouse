@@ -11,9 +11,38 @@
  * user input in the provided trace).
  */
 
-import {makeComputedArtifact} from '../computed-artifact.js';
+/** @typedef {LH.Trace.CompleteEvent & {name: 'Responsiveness.Renderer.UserInteraction', args: {frame: string, data: {interactionType: 'drag'|'keyboard'|'tapOrClick', maxDuration: number}}}} ResponsivenessEvent */
+/** @typedef {'keydown'|'keypress'|'keyup'|'mousedown'|'mouseup'|'pointerdown'|'pointerup'|'click'} EventTimingType */
+/**
+ * @typedef EventTimingData
+ * @property {string} frame
+ * @property {number} timeStamp The time of user interaction (in ms from navStart).
+ * @property {number} processingStart The start of interaction handling (in ms from navStart).
+ * @property {number} processingEnd The end of interaction handling (in ms from navStart).
+ * @property {number} duration The time from user interaction to browser paint (in ms).
+ * @property {EventTimingType} type
+ * @property {number} nodeId
+ * @property {number} interactionId
+ */
+/** @typedef {LH.Trace.AsyncEvent & {name: 'EventTiming', args: {data: EventTimingData}}} EventTimingEvent */
+/**
+ * A fallback EventTiming placeholder, used if updated EventTiming events are not available.
+ * TODO: Remove once 103.0.5052.0 is sufficiently released.
+ * @typedef {{name: 'FallbackTiming', duration: number}} FallbackTimingEvent
+ */
 
 import ProcessedTrace from '../processed-trace.js';
+import {makeComputedArtifact} from '../computed-artifact.js';
+
+const KEYBOARD_EVENTS = new Set(['keydown', 'keypress', 'keyup']);
+const CLICK_TAP_DRAG_EVENTS = new Set([
+  'mousedown', 'mouseup', 'pointerdown', 'pointerup', 'click']);
+/** A map of Responsiveness `interactionType` to matching EventTiming `type`s. */
+const interactionTypeToType = {
+  keyboard: KEYBOARD_EVENTS,
+  tapOrClick: CLICK_TAP_DRAG_EVENTS,
+  drag: CLICK_TAP_DRAG_EVENTS,
+};
 
 class Responsiveness {
   /**
@@ -42,19 +71,83 @@ class Responsiveness {
   }
 
   /**
+   * Finds the interaction event that was probably the responsivenessEvent.maxDuration
+   * source.
+   * Note that (presumably due to rounding to ms), the interaction duration may not
+   * be the same value as `maxDuration`, just the closest value. Function will throw
+   * if the closest match is off by more than 4ms.
+   * TODO: this doesn't try to match inputs to interactions and break ties if more than
+   * one interaction had this duration by returning the first found.
+   * @param {ResponsivenessEvent} responsivenessEvent
+   * @param {LH.Trace} trace
+   * @return {EventTimingEvent|FallbackTimingEvent}
+   */
+  static findInteractionEvent(responsivenessEvent, {traceEvents}) {
+    const candidates = traceEvents.filter(/** @return {evt is EventTimingEvent} */ evt => {
+      // Examine only beginning/instant EventTiming events.
+      return evt.name === 'EventTiming' && evt.ph !== 'e';
+    });
+
+    if (candidates.length && !candidates.some(candidate => candidate.args.data?.frame)) {
+      // Full EventTiming data added in https://crrev.com/c/3632661
+      return {
+        name: 'FallbackTiming',
+        duration: responsivenessEvent.args.data.maxDuration,
+      };
+    }
+
+    const {maxDuration, interactionType} = responsivenessEvent.args.data;
+    let bestMatchEvent;
+    let minDurationDiff = Number.POSITIVE_INFINITY;
+    for (const candidate of candidates) {
+      // Must be from same frame.
+      if (candidate.args.data.frame !== responsivenessEvent.args.frame) continue;
+
+      // TODO(bckenny): must be in same navigation as well.
+
+      const {type, duration} = candidate.args.data;
+      // Discard if type is incompatible with responsiveness interactionType.
+      const matchingTypes = interactionTypeToType[interactionType];
+      if (!matchingTypes) {
+        throw new Error(`unexpected responsiveness interactionType '${interactionType}'`);
+      }
+      if (!matchingTypes.has(type)) continue;
+
+      const durationDiff = Math.abs(duration - maxDuration);
+      if (durationDiff < minDurationDiff) {
+        bestMatchEvent = candidate;
+        minDurationDiff = durationDiff;
+      }
+    }
+
+    if (!bestMatchEvent) {
+      throw new Error(`no interaction event found for responsiveness type '${interactionType}'`);
+    }
+    // TODO: seems to regularly happen up to 3ms and as high as 4. Allow for up to 5ms to be sure.
+    if (minDurationDiff > 5) {
+      throw new Error(`no interaction event found within 5ms of responsiveness maxDuration (max: ${maxDuration}, closest ${bestMatchEvent.args.data.duration})`); // eslint-disable-line max-len
+    }
+
+    return bestMatchEvent;
+  }
+
+  /**
    * @param {{trace: LH.Trace, settings: Immutable<LH.Config.Settings>}} data
    * @param {LH.Artifacts.ComputedContext} context
-   * @return {Promise<ResponsivenessEvent|null>}
+   * @return {Promise<EventTimingEvent|FallbackTimingEvent|null>}
    */
   static async compute_(data, context) {
-    if (data.settings.throttlingMethod === 'simulate') {
+    const {settings, trace} = data;
+    if (settings.throttlingMethod === 'simulate') {
       throw new Error('Responsiveness currently unsupported by simulated throttling');
     }
 
-    const processedTrace = await ProcessedTrace.request(data.trace, context);
-    const event = Responsiveness.getHighPercentileResponsiveness(processedTrace);
+    const processedTrace = await ProcessedTrace.request(trace, context);
+    const responsivenessEvent = Responsiveness.getHighPercentileResponsiveness(processedTrace);
+    if (!responsivenessEvent) return null;
 
-    return JSON.parse(JSON.stringify(event));
+    const interactionEvent = Responsiveness.findInteractionEvent(responsivenessEvent, trace);
+    return JSON.parse(JSON.stringify(interactionEvent));
   }
 }
 

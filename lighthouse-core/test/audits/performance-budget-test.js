@@ -6,7 +6,7 @@
 
 
 import ResourceBudgetAudit from '../../audits/performance-budget.js';
-import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
+import {networkRecordsToDevtoolsLog} from '../network-records-to-devtools-log.js';
 
 describe('Performance: Resource budgets audit', () => {
   let artifacts;

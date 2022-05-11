@@ -7,9 +7,9 @@
 
 import {jest} from '@jest/globals';
 
-import Driver from '../../gather/driver.js';
-import Connection from '../../gather/connections/connection.js';
-import FakeDriver from './fake-driver.js';
+import {Driver} from '../../gather/driver.js';
+import {Connection} from '../../gather/connections/connection.js';
+import {fakeDriver} from './fake-driver.js';
 import {
   mockCommands,
   makePromiseInspectable,
@@ -17,7 +17,6 @@ import {
   fnAny,
 } from '../test-utils.js';
 
-const {protocolGetVersionResponse} = FakeDriver;
 const {createMockSendCommandFn} = mockCommands;
 
 jest.useFakeTimers();
@@ -122,7 +121,7 @@ describe('.sendCommand', () => {
 describe('.beginTrace', () => {
   beforeEach(() => {
     connectionStub.sendCommand = createMockSendCommandFn()
-      .mockResponse('Browser.getVersion', protocolGetVersionResponse)
+      .mockResponse('Browser.getVersion', fakeDriver.protocolGetVersionResponse)
       .mockResponse('Page.enable')
       .mockResponse('Tracing.start');
   });

@@ -4,13 +4,12 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-
 import {jest} from '@jest/globals';
 
 import {mockDriverSubmodules} from '../../fraggle-rock/gather/mock-driver.js';
 // import NetworkMonitor from '../../../gather/driver/network-monitor.js';
 import {NetworkRequest} from '../../../lib/network-request.js';
-import networkRecordsToDevtoolsLog from '../../network-records-to-devtools-log.js';
+import {networkRecordsToDevtoolsLog} from '../../network-records-to-devtools-log.js';
 import {fnAny, mockCommands} from '../../test-utils.js';
 
 const mocks = mockDriverSubmodules();
@@ -24,12 +23,12 @@ const createMockSendCommandFn =
 // Some imports needs to be done dynamically, so that their dependencies will be mocked.
 // See: https://jestjs.io/docs/ecmascript-modules#differences-between-esm-and-commonjs
 //      https://github.com/facebook/jest/issues/10025
-/** @typedef {import('../../../gather/driver/network-monitor.js')} NetworkMonitor */
-/** @type {typeof import('../../../gather/driver/network-monitor.js')} */
+/** @typedef {import('../../../gather/driver/network-monitor.js').NetworkMonitor} NetworkMonitor */
+/** @type {typeof import('../../../gather/driver/network-monitor.js').NetworkMonitor} */
 let NetworkMonitor;
 
 beforeAll(async () => {
-  NetworkMonitor = (await import('../../../gather/driver/network-monitor.js')).default;
+  NetworkMonitor = (await import('../../../gather/driver/network-monitor.js')).NetworkMonitor;
 });
 
 const tscErr = new Error('Typecheck constrait failed');

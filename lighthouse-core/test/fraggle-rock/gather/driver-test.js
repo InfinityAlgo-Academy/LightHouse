@@ -5,7 +5,7 @@
  */
 
 
-import Driver from '../../../fraggle-rock/gather/driver.js';
+import {Driver} from '../../../fraggle-rock/gather/driver.js';
 import {fnAny} from '../../test-utils.js';
 
 /** @type {Array<keyof LH.Gatherer.FRProtocolSession>} */

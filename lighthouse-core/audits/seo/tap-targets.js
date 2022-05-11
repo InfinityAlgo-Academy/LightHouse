@@ -23,7 +23,7 @@ import {
 } from '../../lib/rect-helpers.js';
 
 import {getTappableRectsFromClientRects} from '../../lib/tappable-rects.js';
-import i18n from '../../lib/i18n/i18n.js';
+import * as i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on whether tap targets (like buttons and links) on a page are big enough so they can easily be tapped on a mobile device. This descriptive title is shown when tap targets are easy to tap on. */
