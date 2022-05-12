@@ -6,7 +6,7 @@
 
 
 import MaskableIconAudit from '../../audits/maskable-icon.js';
-import manifestParser from '../../lib/manifest-parser.js';
+import {parseManifest} from '../../lib/manifest-parser.js';
 import manifest from '../fixtures/manifest.json';
 import manifestWithoutMaskable from '../fixtures/manifest-no-maskable-icon.json';
 
@@ -19,7 +19,7 @@ const EXAMPLE_DOC_URL = 'https://example.com/index.html';
  * @param {string}
  */
 function generateMockArtifacts(src = manifestSrc) {
-  const exampleManifest = manifestParser(src, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
+  const exampleManifest = parseManifest(src, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
 
   return {
     WebAppManifest: exampleManifest,

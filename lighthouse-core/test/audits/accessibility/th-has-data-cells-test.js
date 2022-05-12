@@ -7,7 +7,7 @@
 
 import {strict as assert} from 'assert';
 
-import {Audit} from '../../../audits/accessibility/th-has-data-cells.js';
+import Audit from '../../../audits/accessibility/th-has-data-cells.js';
 
 describe('Accessibility: th-has-data-cells audit', () => {
   it('generates an audit output', () => {

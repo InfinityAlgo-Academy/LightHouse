@@ -7,7 +7,7 @@
 
 import {strict as assert} from 'assert';
 
-import {Audit} from '../../../audits/accessibility/video-caption.js';
+import Audit from '../../../audits/accessibility/video-caption.js';
 
 describe('Accessibility: video-caption audit', () => {
   it('generates an audit output', () => {

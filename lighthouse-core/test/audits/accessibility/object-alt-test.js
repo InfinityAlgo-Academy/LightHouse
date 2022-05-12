@@ -7,7 +7,7 @@
 
 import {strict as assert} from 'assert';
 
-import {Audit} from '../../../audits/accessibility/object-alt.js';
+import Audit from '../../../audits/accessibility/object-alt.js';
 
 describe('Accessibility: object-alt audit', () => {
   it('generates an audit output', () => {

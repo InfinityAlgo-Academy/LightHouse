@@ -7,7 +7,7 @@
 
 import {strict as assert} from 'assert';
 
-import {Audit} from '../../audits/viewport.js';
+import Audit from '../../audits/viewport.js';
 
 describe('Mobile-friendly: viewport audit', () => {
   const makeMetaElements = viewport => [{name: 'viewport', content: viewport}];

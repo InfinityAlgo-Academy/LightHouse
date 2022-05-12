@@ -8,7 +8,7 @@
 import {strict as assert} from 'assert';
 
 import InstallableManifestAudit from '../../audits/installable-manifest.js';
-import manifestParser from '../../lib/manifest-parser.js';
+import {parseManifest} from '../../lib/manifest-parser.js';
 import manifest from '../fixtures/manifest.json';
 import manifestDirtyJpg from '../fixtures/manifest-dirty-jpg.json';
 
@@ -18,7 +18,7 @@ const EXAMPLE_MANIFEST_URL = 'https://example.com/manifest.json';
 const EXAMPLE_DOC_URL = 'https://example.com/index.html';
 
 function generateMockArtifacts(src = manifestSrc) {
-  const exampleManifest = manifestParser(src, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
+  const exampleManifest = parseManifest(src, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
 
   const clonedArtifacts = JSON.parse(JSON.stringify({
     WebAppManifest: exampleManifest,

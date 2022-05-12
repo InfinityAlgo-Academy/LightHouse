@@ -7,7 +7,7 @@
 
 import {strict as assert} from 'assert';
 
-import {Audit} from '../../../audits/accessibility/image-alt.js';
+import Audit from '../../../audits/accessibility/image-alt.js';
 
 describe('Accessibility: image-alt audit', () => {
   it('generates an audit output', () => {

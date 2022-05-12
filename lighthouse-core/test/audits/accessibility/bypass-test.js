@@ -7,7 +7,7 @@
 
 import {strict as assert} from 'assert';
 
-import {Audit} from '../../../audits/accessibility/bypass.js';
+import Audit from '../../../audits/accessibility/bypass.js';
 
 describe('Accessibility: bypass audit', () => {
   it('generates an audit output', () => {

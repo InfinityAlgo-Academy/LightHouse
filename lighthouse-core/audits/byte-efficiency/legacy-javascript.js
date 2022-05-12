@@ -24,6 +24,7 @@ import JsBundles from '../../computed/js-bundles.js';
 import * as i18n from '../../lib/i18n/i18n.js';
 import thirdPartyWeb from '../../lib/third-party-web.js';
 import {getRequestForScript} from '../../lib/script-helpers.js';
+import {readJson} from '../../../root.js';
 
 const UIStrings = {
   /** Title of a Lighthouse audit that tells the user about legacy polyfills and transforms used on the page. This is displayed in a list of audit titles that Lighthouse generates. */
@@ -329,7 +330,7 @@ class LegacyJavascript extends ByteEfficiencyAudit {
 
     let estimatedWastedBytesFromPolyfills = 0;
     /** @type {import('../../scripts/legacy-javascript/create-polyfill-size-estimation.js').PolyfillSizeEstimator} */
-    const graph = require('./polyfill-graph-data.json');
+    const graph = readJson('./polyfill-graph-data.json', import.meta);
     const modulesSeen = new Set();
     for (const result of polyfillResults) {
       const modules = graph.dependencies[result.name];

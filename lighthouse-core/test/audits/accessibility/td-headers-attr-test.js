@@ -7,7 +7,7 @@
 
 import {strict as assert} from 'assert';
 
-import {Audit} from '../../../audits/accessibility/td-headers-attr.js';
+import Audit from '../../../audits/accessibility/td-headers-attr.js';
 
 describe('Accessibility: td-headers-attr audit', () => {
   it('generates an audit output', () => {
