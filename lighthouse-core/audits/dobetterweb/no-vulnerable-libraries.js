@@ -15,8 +15,10 @@
 import {Audit} from '../audit.js';
 import {Sentry} from '../../lib/sentry.js';
 import semver from 'semver';
-import snykDatabase from '../../../third-party/snyk/snapshot.json';
 import * as i18n from '../../lib/i18n/i18n.js';
+import {LH_ROOT, readJson} from '../../../root.js';
+
+const snykDatabase = readJson(`${LH_ROOT}/third-party/snyk/snapshot.json`);
 
 const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on Javascript libraries the page uses. This descriptive title is shown to users when all Javascript libraries are free of known security vulnerabilities. */

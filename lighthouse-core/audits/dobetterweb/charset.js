@@ -90,7 +90,4 @@ class CharsetDefined extends Audit {
 }
 
 export default CharsetDefined;
-export {UIStrings};
-module.exports.CHARSET_HTML_REGEX = CHARSET_HTML_REGEX;
-module.exports.CHARSET_HTTP_REGEX = CHARSET_HTTP_REGEX;
-module.exports.IANA_REGEX = IANA_REGEX;
+export {UIStrings, CHARSET_HTML_REGEX, CHARSET_HTTP_REGEX, IANA_REGEX};

@@ -5,7 +5,7 @@
  */
 'use strict';
 
-import thirdPartyWeb from 'third-party-web/httparchive-nostats-subset';
+import thirdPartyWeb from 'third-party-web/httparchive-nostats-subset.js';
 
 /** @typedef {import("third-party-web").IEntity} ThirdPartyEntity */
 /** @typedef {import("third-party-web").IProduct} ThirdPartyProduct */

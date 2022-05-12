@@ -218,26 +218,25 @@ async function requireWrapper(requirePath) {
   const bundledModule = bundledModules.get(requirePath);
   if (bundledModule) return bundledModule;
 
-  try {
-    const module = await import(requirePath);
-    if (module.default) return module.default;
+  const importPath = requirePath.endsWith('.js') || requirePath.endsWith('.mjs') ?
+    requirePath :
+    `${requirePath}.js`;
+  const module = await import(importPath);
+  if (module.default) return module.default;
 
-    // TODO: should we do this?
-    const methods = new Set(['meta']);
-    for (const key of Object.keys(module)) {
-      if (!(module[key] && module[key] instanceof Object)) continue;
-      if (Object.getOwnPropertyNames(module[key]).some(method => methods.has(method))) {
-        return module[key];
-      }
-    }
-
-    throw new Error(`module '${requirePath}' missing default export`);
-  } catch (err) {
-    // TODO: verify err was "this isn't esm"
-    console.error(err);
+  // Find a valid named export.
+  // TODO(esmodules): actually make all the audits/gatherers use named exports
+  const methods = new Set(['meta']);
+  const possibleNamedExports = Object.keys(module).filter(key => {
+    if (!(module[key] && module[key] instanceof Object)) return false;
+    return Object.getOwnPropertyNames(module[key]).some(method => methods.has(method));
+  });
+  if (possibleNamedExports.length === 1) return possibleNamedExports[0];
+  if (possibleNamedExports.length > 1) {
+    throw new Error(`module '${importPath}' has too many possible exports`);
   }
 
-  return require(requirePath);
+  throw new Error(`module '${importPath}' missing default export`);
 }
 
 /**

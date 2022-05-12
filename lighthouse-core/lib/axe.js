@@ -6,8 +6,9 @@
 'use strict';
 
 import fs from 'fs';
+import {createCommonjsRefs} from '../scripts/esm-utils.js';
 
-// TODO(esmodules)
+const {require} = createCommonjsRefs(import.meta);
 const axeSource = fs.readFileSync(require.resolve('axe-core/axe.min.js'), 'utf8');
 
 export {
