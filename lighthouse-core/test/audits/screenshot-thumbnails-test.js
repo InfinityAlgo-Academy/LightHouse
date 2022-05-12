@@ -4,16 +4,16 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-
 import fs from 'fs';
 import path from 'path';
 import {strict as assert} from 'assert';
 
 import ScreenshotThumbnailsAudit from '../../audits/screenshot-thumbnails.js';
 import pwaTrace from '../fixtures/traces/progressive-app-m60.json';
-const noScreenshotsTrace = {traceEvents: pwaTrace.traceEvents.filter(e => e.name !== 'Screenshot')};
 import pwaDevtoolsLog from '../fixtures/traces/progressive-app-m60.devtools.log.json';
 import {LH_ROOT} from '../../../root.js';
+
+const noScreenshotsTrace = {traceEvents: pwaTrace.traceEvents.filter(e => e.name !== 'Screenshot')};
 
 describe('Screenshot thumbnails', () => {
   it('should extract thumbnails from a trace', () => {

@@ -7,12 +7,13 @@
 import {strict as assert} from 'assert';
 
 import FcpAudit from '../../../audits/metrics/first-contentful-paint.js';
-const options = FcpAudit.defaultOptions;
 import constants from '../../../config/constants.js';
 import pwaTrace from '../../fixtures/traces/progressive-app-m60.json';
 import pwaDevtoolsLog from '../../fixtures/traces/progressive-app-m60.devtools.log.json';
 import frameTrace from '../../fixtures/traces/frame-metrics-m90.json';
 import frameDevtoolsLog from '../../fixtures/traces/frame-metrics-m90.devtools.log.json';
+
+const options = FcpAudit.defaultOptions;
 
 /**
  * @param {{

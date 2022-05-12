@@ -4,14 +4,14 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-
 import LCPAudit from '../../../audits/metrics/largest-contentful-paint.js';
-const defaultOptions = LCPAudit.defaultOptions;
 import constants from '../../../config/constants.js';
 import trace from '../../fixtures/traces/lcp-m78.json';
 import devtoolsLog from '../../fixtures/traces/lcp-m78.devtools.log.json';
 import preLcpTrace from '../../fixtures/traces/progressive-app-m60.json';
 import preLcpDevtoolsLog from '../../fixtures/traces/progressive-app-m60.devtools.log.json';
+
+const defaultOptions = LCPAudit.defaultOptions;
 
 function generateArtifacts({trace, devtoolsLog, HostUserAgent}) {
   return {
