@@ -50,6 +50,7 @@ async function inlineFs(code, filepath) {
   // - if no expressions found or all are skipped, return null
 
   const fsSearch = /fs\.(?:readFileSync|readdirSync)\(/g;
+  // const fsSearch = /readJson|fs\.(?:readFileSync|readdirSync)\(/g;
   const foundIndices = [...code.matchAll(fsSearch)].map(e => e.index);
 
   // Return null for not-applicable files with as little work as possible.
@@ -72,6 +73,17 @@ async function inlineFs(code, filepath) {
       warnings.push(createWarning(err, filepath, err.loc));
       continue;
     }
+
+    // TODO ...
+    // assertEqualString(parsed.type, 'CallExpression');
+    // if (parsed.callee.type === 'Identifier' && parsed.callee.name === 'readJson') {
+    //   const content = await getReadFileReplacement(parsed, filepath);
+    //   const offsets = getNodeOffsets(parsed);
+    //   // TODO(bckenny): use options to customize `storeName` for source maps.
+    //   output.overwrite(offsets.start, offsets.end, content);
+    //   madeChange = true;
+    //   continue;
+    // }
 
     // If root of expression isn't the fs call, descend down chained methods on
     // the result (e.g. `fs.readdirSync().map(...)`) until reaching the fs call.
@@ -277,7 +289,7 @@ function collapseToStringLiteral(node, filepath) {
     }
 
     case 'Identifier': {
-      if (node.name === '__dirname') {
+      if (node.name === '__dirname' || node.name === 'dir') {
         return path.dirname(filepath);
       } else if (node.name === '__filename') {
         return filepath;

@@ -12,13 +12,17 @@
 
 'use strict';
 
+import fs from 'fs';
 import {Audit} from '../audit.js';
 import {Sentry} from '../../lib/sentry.js';
 import semver from 'semver';
 import * as i18n from '../../lib/i18n/i18n.js';
-import {LH_ROOT, readJson} from '../../../root.js';
+import {LH_ROOT} from '../../../root.js';
 
-const snykDatabase = readJson(`${LH_ROOT}/third-party/snyk/snapshot.json`);
+// TODO: support readJson in inline-fs
+// const snykDatabase = readJson(`${LH_ROOT}/third-party/snyk/snapshot.json`);
+const snykDatabase = JSON.parse(
+  fs.readFileSync(`${LH_ROOT}/third-party/snyk/snapshot.json`, 'utf-8'));
 
 const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on Javascript libraries the page uses. This descriptive title is shown to users when all Javascript libraries are free of known security vulnerabilities. */

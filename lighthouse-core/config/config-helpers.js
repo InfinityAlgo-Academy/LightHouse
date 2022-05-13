@@ -206,7 +206,7 @@ function expandAuditShorthand(audit) {
   }
 }
 
-/** @type {Map<string, any>} */
+/** @type {Map<string, Promise<any>>} */
 const bundledModules = new Map(/* BUILD_REPLACE_BUNDLED_MODULES */);
 
 /**
@@ -215,13 +215,17 @@ const bundledModules = new Map(/* BUILD_REPLACE_BUNDLED_MODULES */);
  * @param {string} requirePath
  */
 async function requireWrapper(requirePath) {
-  const bundledModule = bundledModules.get(requirePath);
-  if (bundledModule) return bundledModule;
+  /** @type {any} */
+  let module;
+  if (bundledModules.has(requirePath)) {
+    module = await bundledModules.get(requirePath);
+  } else if (requirePath.match(/\.(js|mjs|cjs)$/)) {
+    module = await import(requirePath);
+  } else {
+    requirePath += '.js';
+    module = await import(requirePath);
+  }
 
-  const importPath = requirePath.match(/\.(js|mjs|cjs)$/) ?
-    requirePath :
-    `${requirePath}.js`;
-  const module = await import(importPath);
   if (module.default) return module.default;
 
   // Find a valid named export.
@@ -233,10 +237,10 @@ async function requireWrapper(requirePath) {
   });
   if (possibleNamedExports.length === 1) return possibleNamedExports[0];
   if (possibleNamedExports.length > 1) {
-    throw new Error(`module '${importPath}' has too many possible exports`);
+    throw new Error(`module '${requirePath}' has too many possible exports`);
   }
 
-  throw new Error(`module '${importPath}' missing default export`);
+  throw new Error(`module '${requirePath}' missing default export`);
 }
 
 /**

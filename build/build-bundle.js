@@ -92,7 +92,7 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
 
   const bundledMapEntriesCode = dynamicModulePaths.map(modulePath => {
     const pathNoExt = modulePath.replace('.js', '');
-    return `['${pathNoExt}', require('${modulePath}')]`;
+    return `['${pathNoExt}', import('${modulePath}')]`;
   }).join(',\n');
 
   /** @type {Record<string, string>} */
