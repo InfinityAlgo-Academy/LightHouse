@@ -365,12 +365,29 @@ describe('Config', () => {
     }, {configPath}), /absolute path/);
   });
 
-  it('loads an audit relative to a config path', async () => {
-    const configPath = __filename;
+  ['', '.js', '.cjs'].forEach(variant => {
+    describe(`(${variant}) loads an audit`, () => {
+      it('loads an audit relative to a config path', async () => {
+        const configPath = __filename;
 
-    return assert.doesNotThrow(_ => Config.fromJson({
-      audits: ['../fixtures/valid-custom-audit'],
-    }, {configPath}));
+        return assert.doesNotThrow(_ => Config.fromJson({
+          audits: ['../fixtures/valid-custom-audit' + variant],
+        }, {configPath}));
+      });
+
+      it('loads an audit relative to the working directory', async () => {
+        // Construct an audit URL relative to current working directory, regardless
+        // of where test was started from.
+        const absoluteAuditPath =
+          path.resolve(__dirname, '../fixtures/valid-custom-audit' + variant);
+        assert.doesNotThrow(_ => require.resolve(absoluteAuditPath));
+        const relativePath = path.relative(process.cwd(), absoluteAuditPath);
+
+        return assert.doesNotThrow(_ => Config.fromJson({
+          audits: [relativePath],
+        }));
+      });
+    });
   });
 
   it('loads an audit from node_modules/', async () => {
@@ -381,18 +398,6 @@ describe('Config', () => {
       // Should throw an audit validation error, but *not* an audit not found error.
       return !/locate audit/.test(err) && /audit\(\) method/.test(err);
     });
-  });
-
-  it('loads an audit relative to the working directory', async () => {
-    // Construct an audit URL relative to current working directory, regardless
-    // of where test was started from.
-    const absoluteAuditPath = path.resolve(__dirname, '../fixtures/valid-custom-audit');
-    assert.doesNotThrow(_ => require.resolve(absoluteAuditPath));
-    const relativePath = path.relative(process.cwd(), absoluteAuditPath);
-
-    return assert.doesNotThrow(_ => Config.fromJson({
-      audits: [relativePath],
-    }));
   });
 
   it('throws but not for missing audit when audit has a dependency error', async () => {

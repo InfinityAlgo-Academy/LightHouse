@@ -32,7 +32,7 @@
     "lighthouse-core/test/fixtures/traces/lcp-m78.devtools.log.json",
     "third-party/snyk/snapshot.json",
     "lighthouse-core/audits/byte-efficiency/polyfill-graph-data.json",
-    "shared/localization/locales/en-US.json", "lighthouse-core/util-commonjs.cjs",
+    "shared/localization/locales/en-US.json",
   ],
   "exclude": [
     "lighthouse-core/test/audits/**/*.js",

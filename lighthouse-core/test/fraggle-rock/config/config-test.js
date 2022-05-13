@@ -478,7 +478,14 @@ describe('Fraggle Rock Config', () => {
       artifacts: [{id: 'artifact', gatherer: {instance: new BaseGatherer()}}],
     };
 
-    expect(initializeConfig(extensionConfig, {gatherMode: 'navigation'}))
-      .rejects.toThrow(/did not support any gather modes/);
+    // https://github.com/facebook/jest/issues/11438
+    // expect(initializeConfig(extensionConfig, {gatherMode: 'navigation'}))
+    //   .rejects.toThrow(/did not support any gather modes/);
+    try {
+      await initializeConfig(extensionConfig, {gatherMode: 'navigation'});
+      throw new Error('did not throw');
+    } catch (err) {
+      expect(err.message).toMatch(/did not support any gather modes/);
+    }
   });
 });

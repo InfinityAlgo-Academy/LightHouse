@@ -140,7 +140,8 @@ async function resolveArtifactsToDefns(artifacts, configDir) {
   const artifactDefnsBySymbol = new Map();
 
   const coreGathererList = Runner.getGathererList();
-  const artifactDefnsPromises = artifacts.map(async (artifactJson) => {
+  const artifactDefns = [];
+  for (const artifactJson of artifacts) {
     /** @type {LH.Config.GathererJson} */
     // @ts-expect-error - remove when legacy runner path is removed.
     const gathererJson = artifactJson.gatherer;
@@ -161,9 +162,8 @@ async function resolveArtifactsToDefns(artifacts, configDir) {
 
     const symbol = artifact.gatherer.instance.meta.symbol;
     if (symbol) artifactDefnsBySymbol.set(symbol, artifact);
-    return artifact;
-  });
-  const artifactDefns = await Promise.all(artifactDefnsPromises);
+    artifactDefns.push(artifact);
+  }
 
   log.timeEnd(status);
   return artifactDefns;
