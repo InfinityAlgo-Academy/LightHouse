@@ -19,10 +19,10 @@ import {Gatherer} from '../gather/gatherers/gatherer.js';
 import * as assetSaver from '../lib/asset-saver.js';
 import {LighthouseError} from '../lib/lh-error.js';
 import * as i18n from '../lib/i18n/i18n.js';
-import {makeMocksForGatherRunner} from './test-utils.js';
+import {importMock, makeMocksForGatherRunner} from './test-utils.js';
 import {createCommonjsRefs} from '../scripts/esm-utils.js';
 
-const {require, __dirname} = createCommonjsRefs(import.meta);
+const {__dirname} = createCommonjsRefs(import.meta);
 
 // Some imports needs to be done dynamically, so that their dependencies will be mocked.
 // See: https://jestjs.io/docs/ecmascript-modules#differences-between-esm-and-commonjs
@@ -34,10 +34,45 @@ let GatherRunner;
 /** @type {typeof import('../config/config.js').Config} */
 let Config;
 
+/** @type {jest.Mock} */
+let saveArtifactsSpy;
+/** @type {jest.Mock} */
+let saveLhrSpy;
+/** @type {jest.Mock} */
+let loadArtifactsSpy;
+/** @type {jest.Mock} */
+let gatherRunnerRunSpy;
+/** @type {jest.Mock} */
+let runAuditSpy;
+
+jest.unstable_mockModule('../lib/asset-saver.js', () => ({
+  saveArtifacts: saveArtifactsSpy = jest.fn(),
+  saveLhr: saveLhrSpy = jest.fn(),
+  loadArtifacts: loadArtifactsSpy = jest.fn(),
+  gatherRunnerRun: gatherRunnerRunSpy = jest.fn(),
+  runAudit: runAuditSpy = jest.fn(),
+}));
+
 beforeAll(async () => {
   Runner = (await import('../runner.js')).Runner;
   GatherRunner = (await import('../gather/gather-runner.js')).GatherRunner;
   Config = (await import('../config/config.js')).Config;
+});
+
+beforeEach(() => {
+  saveArtifactsSpy.mockImplementation(assetSaver.saveArtifacts);
+  saveLhrSpy.mockImplementation(() => {});
+  loadArtifactsSpy.mockImplementation(assetSaver.loadArtifacts);
+  gatherRunnerRunSpy = jest.spyOn(GatherRunner, 'run');
+  runAuditSpy = jest.spyOn(Runner, '_runAudit');
+});
+
+afterEach(() => {
+  saveArtifactsSpy.mockReset();
+  saveLhrSpy.mockReset();
+  loadArtifactsSpy.mockReset();
+  gatherRunnerRunSpy.mockRestore();
+  runAuditSpy.mockRestore();
 });
 
 makeMocksForGatherRunner();
@@ -62,33 +97,6 @@ describe('Runner', () => {
     const artifacts = await Runner.gather(gatherFn, opts);
     return Runner.audit(artifacts, opts);
   };
-
-  /** @type {jest.Mock} */
-  let saveArtifactsSpy;
-  /** @type {jest.Mock} */
-  let saveLhrSpy;
-  /** @type {jest.Mock} */
-  let loadArtifactsSpy;
-  /** @type {jest.Mock} */
-  let gatherRunnerRunSpy;
-  /** @type {jest.Mock} */
-  let runAuditSpy;
-
-  beforeEach(() => {
-    saveArtifactsSpy = jest.spyOn(assetSaver, 'saveArtifacts');
-    saveLhrSpy = jest.spyOn(assetSaver, 'saveLhr').mockImplementation(() => {});
-    loadArtifactsSpy = jest.spyOn(assetSaver, 'loadArtifacts');
-    gatherRunnerRunSpy = jest.spyOn(GatherRunner, 'run');
-    runAuditSpy = jest.spyOn(Runner, '_runAudit');
-  });
-
-  afterEach(() => {
-    saveArtifactsSpy.mockRestore();
-    saveLhrSpy.mockRestore();
-    loadArtifactsSpy.mockRestore();
-    gatherRunnerRunSpy.mockRestore();
-    runAuditSpy.mockRestore();
-  });
 
   const basicAuditMeta = {
     id: 'test-audit',
@@ -486,7 +494,7 @@ describe('Runner', () => {
       assert.strictEqual(auditResult.scoreDisplayMode, 'error');
       assert.ok(auditResult.errorMessage.includes(errorMessage));
 
-      fs.rmSync(resolvedPath, {recursive: true, force: true});
+      fs.rmSync(resolvedPath, {recursive: true});
     });
 
     it('only passes the requested artifacts to the audit (no optional artifacts)', async () => {
@@ -677,14 +685,14 @@ describe('Runner', () => {
     });
   });
 
-  it('only supports core audits with names matching their filename', () => {
+  it('only supports core audits with ids matching their filename', async () => {
     const coreAudits = Runner.getAuditList();
-    coreAudits.forEach(auditFilename => {
+    for (const auditFilename of coreAudits) {
       const auditPath = '../audits/' + auditFilename;
       const auditExpectedName = path.basename(auditFilename, '.js');
-      const AuditClass = require(auditPath);
+      const {default: AuditClass} = await import(auditPath);
       assert.strictEqual(AuditClass.meta.id, auditExpectedName);
-    });
+    }
   });
 
   it('results include artifacts when given artifacts and audits', async () => {
@@ -827,7 +835,7 @@ describe('Runner', () => {
         // Loads the page successfully in the first pass, fails with PAGE_HUNG in the second.
       });
 
-      const gotoURL = jest.requireMock('../gather/driver/navigation.js').gotoURL;
+      const {gotoURL} = await importMock('../gather/driver/navigation.js');
       gotoURL.mockImplementation((_, url) => {
         if (url.includes('blank')) return {mainDocumentUrl: '', warnings: []};
         if (firstLoad) {

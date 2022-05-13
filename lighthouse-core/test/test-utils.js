@@ -266,6 +266,21 @@ function getURLArtifactFromDevtoolsLog(devtoolsLog) {
   return {initialUrl: 'about:blank', requestedUrl, mainDocumentUrl, finalUrl: mainDocumentUrl};
 }
 
+/**
+ * Same as jest.requireMock(), but:
+ * 1) returns a Mock record instead of `unknown`
+ * 2) uses `import` instead of `require`
+ * Use only for modules that were mocked with unstable_mockModule.
+ *
+ * @param {string} moduleName
+ * @return {Promise<Record<string, jest.Mock>>}
+ */
+const importMock = async (moduleName) => {
+  const mock = await import(moduleName);
+  if (!mock[Object.keys(mock)[0]].mock) throw new Error(`${moduleName} was not mocked!`);
+  return mock;
+};
+
 export {
   getProtoRoundTrip,
   loadSourceMapFixture,
@@ -279,4 +294,5 @@ export {
   mockCommands,
   createScript,
   getURLArtifactFromDevtoolsLog,
+  importMock,
 };
