@@ -89,4 +89,4 @@ function filterToValidRuns(runs) {
     .filter(run => Number.isFinite(getNumericValue(run, 'interactive')));
 }
 
-export default {computeMedianRun, filterToValidRuns};
+export {computeMedianRun, filterToValidRuns};

@@ -5,7 +5,7 @@
  */
 'use strict';
 
-import TracingProcessor from '../../lib/tracehouse/trace-processor.js';
+import {TraceProcessor} from '../../lib/tracehouse/trace-processor.js';
 import ProcessedTrace from '../processed-trace.js';
 import ProcessedNavigation from '../processed-navigation.js';
 import NetworkRecords from '../network-records.js';
@@ -80,7 +80,7 @@ class Metric {
       processedNavigation,
     }, data);
 
-    TracingProcessor.assertHasToplevelEvents(augmentedData.processedTrace.mainThreadEvents);
+    TraceProcessor.assertHasToplevelEvents(augmentedData.processedTrace.mainThreadEvents);
 
     switch (settings.throttlingMethod) {
       case 'simulate':

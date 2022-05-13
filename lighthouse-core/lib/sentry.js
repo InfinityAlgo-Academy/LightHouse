@@ -48,7 +48,7 @@ const sentryDelegate = {
  * When called, replaces noops with actual Sentry implementation.
  * @param {{url: string, flags: LH.CliFlags, environmentData: NodeOptions}} opts
  */
-function init(opts) {
+async function init(opts) {
   // If error reporting is disabled, leave the functions as a noop
   if (!opts.flags.enableErrorReporting) {
     return;
@@ -60,7 +60,7 @@ function init(opts) {
   }
 
   try {
-    const Sentry = require('@sentry/node');
+    const Sentry = await import('@sentry/node');
     Sentry.init({
       ...opts.environmentData,
       dsn: SENTRY_URL,

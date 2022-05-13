@@ -7,7 +7,7 @@
 
 import {makeComputedArtifact} from '../computed-artifact.js';
 import ComputedMetric from './metric.js';
-import TraceProcessor from '../../lib/tracehouse/trace-processor.js';
+import {TraceProcessor} from '../../lib/tracehouse/trace-processor.js';
 import LanternTotalBlockingTime from './lantern-total-blocking-time.js';
 import TimetoInteractive from './interactive.js';
 import {calculateSumOfBlockingTime} from './tbt-utils.js';

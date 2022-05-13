@@ -70,4 +70,4 @@ class DNSCache {
 
 DNSCache.RTT_MULTIPLIER = DNS_RESOLUTION_RTT_MULTIPLIER;
 
-export default DNSCache;
+export {DNSCache};

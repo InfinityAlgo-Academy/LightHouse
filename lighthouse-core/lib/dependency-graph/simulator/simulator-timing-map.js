@@ -209,4 +209,4 @@ class SimulatorTimingMap {
   }
 }
 
-export default SimulatorTimingMap;
+export {SimulatorTimingMap};

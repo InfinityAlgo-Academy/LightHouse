@@ -6,7 +6,7 @@
 'use strict';
 
 import {NetworkAnalyzer} from './network-analyzer.js';
-import TcpConnection from './tcp-connection.js';
+import {TcpConnection} from './tcp-connection.js';
 
 const DEFAULT_SERVER_RESPONSE_TIME = 30;
 const TLS_SCHEMES = ['https', 'wss'];
@@ -15,7 +15,7 @@ const TLS_SCHEMES = ['https', 'wss'];
 // https://cs.chromium.org/chromium/src/net/socket/client_socket_pool_manager.cc?type=cs&q="int+g_max_sockets_per_group"
 const CONNECTIONS_PER_ORIGIN = 6;
 
-export default class ConnectionPool {
+export class ConnectionPool {
   /**
    * @param {LH.Artifacts.NetworkRequest[]} records
    * @param {Required<LH.Gatherer.Simulation.Options>} options

@@ -128,7 +128,7 @@ async function begin() {
     cliFlags.enableErrorReporting = await askPermission();
   }
   if (cliFlags.enableErrorReporting) {
-    Sentry.init({
+    await Sentry.init({
       url: urlUnderTest,
       flags: cliFlags,
       environmentData: {

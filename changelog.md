@@ -5613,7 +5613,7 @@ There were 128 PRs landed for this release. These are their stories.
 - Run well-known-PWA smokehouse tests in CI - #824
 - Fix several eslint warnings - #831
 - Test node v6 and v7 explicitly in CI - #832
-- Add tests for `getLogNormalDistribution` and `getRiskToResponsiveness` on `TracingProcessor` - #806
+- Add tests for `getLogNormalDistribution` and `getRiskToResponsiveness` on `TraceProcessor` - #806
 
 ### Docs
 - **CLI:** clarify description of `--select-chrome` flag - #829

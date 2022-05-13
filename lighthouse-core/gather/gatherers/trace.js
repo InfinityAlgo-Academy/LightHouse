@@ -13,7 +13,7 @@
 
 import FRGatherer from '../../fraggle-rock/gather/base-gatherer.js';
 
-import TraceProcessor from '../../lib/tracehouse/trace-processor.js';
+import {TraceProcessor} from '../../lib/tracehouse/trace-processor.js';
 
 class Trace extends FRGatherer {
   /** @type {LH.Trace} */

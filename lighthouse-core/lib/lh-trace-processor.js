@@ -6,7 +6,7 @@
 'use strict';
 
 import {LighthouseError} from '../lib/lh-error.js';
-import TraceProcessor from '../lib/tracehouse/trace-processor.js';
+import {TraceProcessor} from '../lib/tracehouse/trace-processor.js';
 
 // TraceProcessor throws generic errors, but we'd like our special localized and code-specific LighthouseError
 // objects to be thrown instead.

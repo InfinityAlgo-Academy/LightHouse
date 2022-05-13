@@ -12,7 +12,7 @@ import stream from 'stream';
 import {promisify} from 'util';
 import {Simulator} from './dependency-graph/simulator/simulator.js';
 import lanternTraceSaver from './lantern-trace-saver.js';
-import Metrics from './traces/pwmetrics-events.js';
+import {Metrics} from './traces/pwmetrics-events.js';
 import NetworkAnalysisComputed from '../computed/network-analysis.js';
 import LoadSimulatorComputed from '../computed/load-simulator.js';
 import {LighthouseError} from '../lib/lh-error.js';

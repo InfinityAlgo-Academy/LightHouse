@@ -951,8 +951,7 @@ class TraceProcessor {
   }
 }
 
-export default TraceProcessor;
-
+export {TraceProcessor};
 
 /**
  * @typedef ToplevelEvent

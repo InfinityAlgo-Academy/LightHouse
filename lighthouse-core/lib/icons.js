@@ -78,7 +78,7 @@ function containsMaskableIcon(manifest) {
   });
 }
 
-export default {
+export {
   doExist,
   pngSizedAtLeast,
   containsMaskableIcon,

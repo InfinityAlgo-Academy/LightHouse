@@ -10,9 +10,9 @@ import ComputedResponsivenes from '../computed/metrics/responsiveness.js';
 import ProcessedTrace from '../computed/processed-trace.js';
 import * as i18n from '../lib/i18n/i18n.js';
 import NetworkRecords from '../computed/network-records.js';
-import MainThreadTasks from '../lib/tracehouse/main-thread-tasks.js';
+import {MainThreadTasks} from '../lib/tracehouse/main-thread-tasks.js';
 import {taskGroups} from '../lib/tracehouse/task-groups.js';
-import TraceProcessor from '../lib/tracehouse/trace-processor.js';
+import {TraceProcessor} from '../lib/tracehouse/trace-processor.js';
 import {getExecutionTimingsByURL} from '../lib/tracehouse/task-summary.js';
 import ExperimentalInteractionToNextPaint
   from './metrics/experimental-interaction-to-next-paint.js';

@@ -6,7 +6,7 @@
 
 import {strict as assert} from 'assert';
 
-import ArbitraryEqualityMap from '../../lib/arbitrary-equality-map.js';
+import {ArbitraryEqualityMap} from '../../lib/arbitrary-equality-map.js';
 import trace from '../fixtures/traces/progressive-app-m60.json';
 
 describe('ArbitraryEqualityMap', () => {

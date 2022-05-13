@@ -6,12 +6,11 @@
 
 import {strict as assert} from 'assert';
 
-import MainThreadTasks from '../../../lib/tracehouse/main-thread-tasks.js';
-import TraceProcessor from '../../../lib/tracehouse/trace-processor.js';
+import {MainThreadTasks} from '../../../lib/tracehouse/main-thread-tasks.js';
+import {TraceProcessor} from '../../../lib/tracehouse/trace-processor.js';
 import {taskGroups} from '../../../lib/tracehouse/task-groups.js';
 import pwaTrace from '../../fixtures/traces/progressive-app.json';
 import noTracingStartedTrace from '../../fixtures/traces/no-tracingstarted-m74.json';
-import TracingProcessor from '../../../lib/tracehouse/trace-processor.js';
 
 describe('Main Thread Tasks', () => {
   const pid = 1;
@@ -53,7 +52,7 @@ describe('Main Thread Tasks', () => {
     while (queue.length) {
       const task = queue.shift();
       totalTime += task.selfTime;
-      totalTopLevelTime += TracingProcessor.isScheduleableTask(task.event) ? task.duration : 0;
+      totalTopLevelTime += TraceProcessor.isScheduleableTask(task.event) ? task.duration : 0;
       allTasks.push(task);
       queue.push(...task.children);
     }

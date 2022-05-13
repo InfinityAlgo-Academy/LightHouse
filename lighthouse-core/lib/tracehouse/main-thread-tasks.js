@@ -684,4 +684,4 @@ class MainThreadTasks {
   }
 }
 
-export default MainThreadTasks;
+export {MainThreadTasks};

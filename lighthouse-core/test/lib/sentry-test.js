@@ -9,12 +9,20 @@ import {jest} from '@jest/globals';
 // import sentryNode from '@sentry/node';
 import {Sentry} from '../../lib/sentry.js';
 
-jest.mock('@sentry/node');
+let sentryNodeMock;
+jest.unstable_mockModule('@sentry/node', () => (sentryNodeMock = {
+  init: jest.fn().mockReturnValue({install: jest.fn()}),
+  setExtras: jest.fn(),
+  captureException: jest.fn(),
+  withScope: (fn) => fn({
+    setLevel: () => {},
+    setTags: () => {},
+    setExtras: () => {},
+  }),
+}));
 
-// Must mock sentry it is imported.
-let sentryNode;
 beforeAll(async () => {
-  sentryNode = (await import('@sentry/node')).default;
+  await import('@sentry/node');
 });
 
 describe('Sentry', () => {
@@ -32,14 +40,10 @@ describe('Sentry', () => {
     // We want to have a fresh state for every test.
     originalSentry = {...Sentry};
 
-    sentryNode.init = jest.fn().mockReturnValue({install: jest.fn()});
-    sentryNode.setExtras = jest.fn();
-    sentryNode.captureException = jest.fn();
-    sentryNode.withScope = (fn) => fn({
-      setLevel: () => {},
-      setTags: () => {},
-      setExtras: () => {},
-    });
+    sentryNodeMock.init.mockReset().mockReturnValue({install: jest.fn()});
+    sentryNodeMock.setExtras.mockReset();
+    sentryNodeMock.captureException.mockReset();
+
     Sentry._shouldSample = jest.fn().mockReturnValue(true);
   });
 
@@ -49,21 +53,21 @@ describe('Sentry', () => {
   });
 
   describe('.init', () => {
-    it('should noop when !enableErrorReporting', () => {
-      Sentry.init({url: 'http://example.com', flags: {}});
-      expect(sentryNode.init).not.toHaveBeenCalled();
-      Sentry.init({url: 'http://example.com', flags: {enableErrorReporting: false}});
-      expect(sentryNode.init).not.toHaveBeenCalled();
+    it('should noop when !enableErrorReporting', async () => {
+      await Sentry.init({url: 'http://example.com', flags: {}});
+      expect(sentryNodeMock.init).not.toHaveBeenCalled();
+      await Sentry.init({url: 'http://example.com', flags: {enableErrorReporting: false}});
+      expect(sentryNodeMock.init).not.toHaveBeenCalled();
     });
 
-    it('should noop when not picked for sampling', () => {
+    it('should noop when not picked for sampling', async () => {
       Sentry._shouldSample.mockReturnValue(false);
-      Sentry.init({url: 'http://example.com', flags: {enableErrorReporting: true}});
-      expect(sentryNode.init).not.toHaveBeenCalled();
+      await Sentry.init({url: 'http://example.com', flags: {enableErrorReporting: true}});
+      expect(sentryNodeMock.init).not.toHaveBeenCalled();
     });
 
-    it('should initialize the Sentry client when enableErrorReporting', () => {
-      Sentry.init({
+    it('should initialize the Sentry client when enableErrorReporting', async () => {
+      await Sentry.init({
         url: 'http://example.com',
         flags: {
           enableErrorReporting: true,
@@ -73,9 +77,9 @@ describe('Sentry', () => {
         environmentData: {},
       });
 
-      expect(sentryNode.init).toHaveBeenCalled();
-      expect(sentryNode.setExtras).toHaveBeenCalled();
-      expect(sentryNode.setExtras.mock.calls[0][0]).toEqual({
+      expect(sentryNodeMock.init).toHaveBeenCalled();
+      expect(sentryNodeMock.setExtras).toHaveBeenCalled();
+      expect(sentryNodeMock.setExtras.mock.calls[0][0]).toEqual({
         channel: 'cli',
         url: 'http://example.com',
         formFactor: 'desktop',
@@ -86,49 +90,49 @@ describe('Sentry', () => {
 
   describe('.captureException', () => {
     it('should forward exceptions to Sentry client', async () => {
-      Sentry.init(configPayload);
+      await Sentry.init(configPayload);
       const error = new Error('oops');
       await Sentry.captureException(error);
 
-      expect(sentryNode.captureException).toHaveBeenCalled();
-      expect(sentryNode.captureException.mock.calls[0][0]).toBe(error);
+      expect(sentryNodeMock.captureException).toHaveBeenCalled();
+      expect(sentryNodeMock.captureException.mock.calls[0][0]).toBe(error);
     });
 
     it('should skip expected errors', async () => {
-      Sentry.init(configPayload);
+      await Sentry.init(configPayload);
       const error = new Error('oops');
       error.expected = true;
       await Sentry.captureException(error);
 
-      expect(sentryNode.captureException).not.toHaveBeenCalled();
+      expect(sentryNodeMock.captureException).not.toHaveBeenCalled();
     });
 
     it('should skip duplicate audit errors', async () => {
-      Sentry.init(configPayload);
+      await Sentry.init(configPayload);
       const error = new Error('A');
       await Sentry.captureException(error, {tags: {audit: 'my-audit'}});
       await Sentry.captureException(error, {tags: {audit: 'my-audit'}});
 
-      expect(sentryNode.captureException).toHaveBeenCalledTimes(1);
+      expect(sentryNodeMock.captureException).toHaveBeenCalledTimes(1);
     });
 
     it('should still allow different audit errors', async () => {
-      Sentry.init(configPayload);
+      await Sentry.init(configPayload);
       const errorA = new Error('A');
       const errorB = new Error('B');
       await Sentry.captureException(errorA, {tags: {audit: 'my-audit'}});
       await Sentry.captureException(errorB, {tags: {audit: 'my-audit'}});
 
-      expect(sentryNode.captureException).toHaveBeenCalledTimes(2);
+      expect(sentryNodeMock.captureException).toHaveBeenCalledTimes(2);
     });
 
     it('should skip duplicate gatherer errors', async () => {
-      Sentry.init(configPayload);
+      await Sentry.init(configPayload);
       const error = new Error('A');
       await Sentry.captureException(error, {tags: {gatherer: 'my-gatherer'}});
       await Sentry.captureException(error, {tags: {gatherer: 'my-gatherer'}});
 
-      expect(sentryNode.captureException).toHaveBeenCalledTimes(1);
+      expect(sentryNodeMock.captureException).toHaveBeenCalledTimes(1);
     });
   });
 });

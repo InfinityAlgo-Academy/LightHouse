@@ -8,7 +8,7 @@
 import {makeComputedArtifact} from './computed-artifact.js';
 import {NetworkNode} from '../lib/dependency-graph/network-node.js';
 import {CPUNode} from '../lib/dependency-graph/cpu-node.js';
-import TracingProcessor from '../lib/tracehouse/trace-processor.js';
+import {TraceProcessor} from '../lib/tracehouse/trace-processor.js';
 import {NetworkRequest} from '../lib/network-request.js';
 import ProcessedTrace from './processed-trace.js';
 import NetworkRecords from './network-records.js';
@@ -111,14 +111,14 @@ class PageDependencyGraph {
     const nodes = [];
     let i = 0;
 
-    TracingProcessor.assertHasToplevelEvents(mainThreadEvents);
+    TraceProcessor.assertHasToplevelEvents(mainThreadEvents);
 
     while (i < mainThreadEvents.length) {
       const evt = mainThreadEvents[i];
       i++;
 
       // Skip all trace events that aren't schedulable tasks with sizable duration
-      if (!TracingProcessor.isScheduleableTask(evt) || !evt.dur) {
+      if (!TraceProcessor.isScheduleableTask(evt) || !evt.dur) {
         continue;
       }
 

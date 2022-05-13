@@ -6,10 +6,10 @@
 'use strict';
 
 import {BaseNode} from '../base-node.js';
-import TcpConnection from './tcp-connection.js';
-import ConnectionPool from './connection-pool.js';
-import DNSCache from './dns-cache.js';
-import SimulatorTimingMap from './simulator-timing-map.js';
+import {TcpConnection} from './tcp-connection.js';
+import {ConnectionPool} from './connection-pool.js';
+import {DNSCache} from './dns-cache.js';
+import {SimulatorTimingMap} from './simulator-timing-map.js';
 import * as constants from '../../../config/constants.js';
 
 const mobileSlow4G = constants.throttling.mobileSlow4G;

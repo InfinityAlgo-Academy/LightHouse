@@ -6,7 +6,7 @@
 'use strict';
 
 import log from 'lighthouse-logger';
-import TraceProcessor from '../tracehouse/trace-processor.js';
+import {TraceProcessor} from '../tracehouse/trace-processor.js';
 
 /**
  * @param {LH.Result['audits']} auditResults
@@ -197,4 +197,5 @@ class Metrics {
   }
 }
 
-export default Metrics;
+// TODO(esmodule): rename?
+export {Metrics};

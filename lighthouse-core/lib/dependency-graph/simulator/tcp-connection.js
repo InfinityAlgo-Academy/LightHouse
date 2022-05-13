@@ -187,7 +187,7 @@ class TcpConnection {
   }
 }
 
-export default TcpConnection;
+export {TcpConnection};
 
 /**
  * @typedef DownloadOptions

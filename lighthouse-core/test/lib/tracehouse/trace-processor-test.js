@@ -6,7 +6,7 @@
 
 import {strict as assert} from 'assert';
 
-import TraceProcessor from '../../../lib/tracehouse/trace-processor.js';
+import {TraceProcessor} from '../../../lib/tracehouse/trace-processor.js';
 import createTestTrace from '../../create-test-trace.js';
 import pwaTrace from '../../fixtures/traces/progressive-app.json';
 import badNavStartTrace from '../../fixtures/traces/bad-nav-start-ts.json';

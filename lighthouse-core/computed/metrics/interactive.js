@@ -9,7 +9,7 @@ import {makeComputedArtifact} from '../computed-artifact.js';
 import NavigationMetric from './navigation-metric.js';
 import LanternInteractive from './lantern-interactive.js';
 import {NetworkMonitor} from '../../gather/driver/network-monitor.js';
-import TracingProcessor from '../../lib/tracehouse/trace-processor.js';
+import {TraceProcessor} from '../../lib/tracehouse/trace-processor.js';
 import {LighthouseError} from '../../lib/lh-error.js';
 
 const REQUIRED_QUIET_WINDOW = 5000;
@@ -160,7 +160,7 @@ class Interactive extends NavigationMetric {
       throw new LighthouseError(LighthouseError.errors.NO_DCL);
     }
 
-    const longTasks = TracingProcessor.getMainThreadTopLevelEvents(processedTrace)
+    const longTasks = TraceProcessor.getMainThreadTopLevelEvents(processedTrace)
         .filter(event => event.duration >= 50);
     const quietPeriodInfo = Interactive.findOverlappingQuietPeriods(
       longTasks,

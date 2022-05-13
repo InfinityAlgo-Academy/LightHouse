@@ -10,10 +10,10 @@ import {
   getExecutionTimingsByURL,
 } from '../../../lib/tracehouse/task-summary.js';
 import {NetworkRecorder} from '../../../lib/network-recorder.js';
-import MainThreadTasks from '../../../lib/tracehouse/main-thread-tasks.js';
+import {MainThreadTasks} from '../../../lib/tracehouse/main-thread-tasks.js';
 import ampTrace from '../../fixtures/traces/amp-m86.trace.json';
 import ampDevtoolsLog from '../../fixtures/traces/amp-m86.devtoolslog.json';
-import TraceProcessor from '../../../lib/tracehouse/trace-processor.js';
+import {TraceProcessor} from '../../../lib/tracehouse/trace-processor.js';
 import {networkRecordsToDevtoolsLog} from '../../network-records-to-devtools-log.js';
 import {taskGroups} from '../../../lib/tracehouse/task-groups.js';
 

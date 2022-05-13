@@ -22,6 +22,9 @@ import {
   deepClone,
   deepCloneConfigJson,
 } from './config-helpers.js';
+import {createCommonjsRefs} from '../scripts/esm-utils.js';
+
+const {__dirname} = createCommonjsRefs(import.meta);
 
 const defaultConfigPath = './default-config.js';
 

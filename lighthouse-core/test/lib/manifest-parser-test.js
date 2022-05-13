@@ -6,7 +6,7 @@
 
 import {strict as assert} from 'assert';
 
-import manifestParser from '../../lib/manifest-parser.js';
+import {parseManifest} from '../../lib/manifest-parser.js';
 import manifestStub from '../fixtures/manifest.json';
 
 const EXAMPLE_MANIFEST_URL = 'https://example.com/manifest.json';
@@ -20,7 +20,7 @@ const EXAMPLE_MANIFEST_BLOB_URL = 'blob:https://example.com/manifest.json';
  * @return {!ManifestNode<(!Manifest|undefined)>}
  */
 function noUrlManifestParser(manifestSrc) {
-  return manifestParser(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
+  return parseManifest(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
 }
 
 describe('Manifest Parser', function() {
@@ -47,13 +47,13 @@ describe('Manifest Parser', function() {
   });
 
   it('should warn on invalid manifest parser URL', function() {
-    const parsedManifest = manifestParser('{}', 'not a URL', EXAMPLE_DOC_URL);
+    const parsedManifest = parseManifest('{}', 'not a URL', EXAMPLE_DOC_URL);
     expect(parsedManifest.warning)
       .toEqual('ERROR: invalid manifest URL: \'not a URL\'');
   });
 
   it('should warn on valid but non-(HTTP|HTTPS) manifest parser URL', function() {
-    const parsedManifest = manifestParser('{}', EXAMPLE_MANIFEST_BLOB_URL, EXAMPLE_DOC_URL);
+    const parsedManifest = parseManifest('{}', EXAMPLE_MANIFEST_BLOB_URL, EXAMPLE_DOC_URL);
     expect(parsedManifest.warning)
       .toEqual('WARNING: manifest URL not available over a valid network protocol');
   });
@@ -61,7 +61,7 @@ describe('Manifest Parser', function() {
   describe('icon parsing', function() {
     // 9.7
     it('gives an empty array and an error for erroneous icons entry', () => {
-      const parsedManifest = manifestParser(
+      const parsedManifest = parseManifest(
         '{"icons": {"16": "img/icons/icon16.png"}}',
         EXAMPLE_MANIFEST_URL,
         EXAMPLE_DOC_URL
@@ -75,7 +75,7 @@ describe('Manifest Parser', function() {
     });
 
     it('gives an empty array and no error for missing icons entry', () => {
-      const parsedManifest = manifestParser('{}', EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
+      const parsedManifest = parseManifest('{}', EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
       expect(parsedManifest.warning).toBeUndefined();
       const icons = parsedManifest.value.icons;
       assert.ok(Array.isArray(icons.value));
@@ -84,7 +84,7 @@ describe('Manifest Parser', function() {
     });
 
     it('parses basic string', function() {
-      const parsedManifest = manifestParser(
+      const parsedManifest = parseManifest(
         '{"icons": [{"src": "192.png", "sizes": "192x192"}]}',
         EXAMPLE_MANIFEST_URL,
         EXAMPLE_DOC_URL
@@ -98,7 +98,7 @@ describe('Manifest Parser', function() {
     });
 
     it('finds four icons in the stub manifest', function() {
-      const parsedManifest = manifestParser(
+      const parsedManifest = parseManifest(
         JSON.stringify(manifestStub),
         EXAMPLE_MANIFEST_URL,
         EXAMPLE_DOC_URL
@@ -109,7 +109,7 @@ describe('Manifest Parser', function() {
 
     it('parses icons with extra whitespace', function() {
       const manifest = '{"icons": [{"src": "192.png", "sizes": " 192x192   256x256"}]}';
-      const parsedManifest = manifestParser(manifest, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
+      const parsedManifest = parseManifest(manifest, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
       const icons = parsedManifest.value.icons;
       const icon192 = icons.value[0];
       const icon192Sizes = icon192.value.sizes.value;
@@ -125,7 +125,7 @@ describe('Manifest Parser', function() {
           src: 17,
         }],
       });
-      const parsedManifest = manifestParser(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
+      const parsedManifest = parseManifest(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
       const icons = parsedManifest.value.icons;
       assert.equal(icons.value.length, 0);
     });
@@ -136,7 +136,7 @@ describe('Manifest Parser', function() {
           src: '/valid/path',
         }],
       });
-      const parsedManifest = manifestParser(manifestSrc, EXAMPLE_MANIFEST_BLOB_URL,
+      const parsedManifest = parseManifest(manifestSrc, EXAMPLE_MANIFEST_BLOB_URL,
         EXAMPLE_DOC_URL);
       const icons = parsedManifest.value.icons;
       expect(icons.value).toHaveLength(0);
@@ -149,7 +149,7 @@ describe('Manifest Parser', function() {
           src: '',
         }, {}],
       });
-      const parsedManifest = manifestParser(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
+      const parsedManifest = parseManifest(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
       const icons = parsedManifest.value.icons;
       assert.equal(icons.value.length, 0);
     });
@@ -161,7 +161,7 @@ describe('Manifest Parser', function() {
         }],
       });
       const manifestUrl = 'https://example.com/resources/manifest.webmanifest';
-      const parsedManifest = manifestParser(manifestSrc, manifestUrl, EXAMPLE_DOC_URL);
+      const parsedManifest = parseManifest(manifestSrc, manifestUrl, EXAMPLE_DOC_URL);
       const icons = parsedManifest.value.icons;
       assert.equal(icons.value.length, 1);
       const icon = icons.value[0].value;
@@ -230,7 +230,7 @@ describe('Manifest Parser', function() {
       const manifestUrl = 'https://example.com/manifest.json';
       const docUrl = 'https://example.com/index.html';
 
-      const parsedManifest = manifestParser(manifestSrc, manifestUrl, docUrl);
+      const parsedManifest = parseManifest(manifestSrc, manifestUrl, docUrl);
       const parsedUrl = parsedManifest.value.start_url;
       assert.ok(parsedUrl.warning);
       assert.equal(parsedUrl.value, docUrl);
@@ -243,7 +243,7 @@ describe('Manifest Parser', function() {
       const manifestUrl = 'https://example.com/manifest.json';
       const docUrl = 'https://example.com/index.html';
 
-      const parsedManifest = manifestParser(manifestSrc, manifestUrl, docUrl);
+      const parsedManifest = parseManifest(manifestSrc, manifestUrl, docUrl);
       const parsedUrl = parsedManifest.value.start_url;
       assert.ok(parsedUrl.warning);
       assert.equal(parsedUrl.value, docUrl);
@@ -256,7 +256,7 @@ describe('Manifest Parser', function() {
       const manifestUrl = 'https://example.com/manifest.json';
       const docUrl = 'https://example.com/index.html';
 
-      const parsedManifest = manifestParser(manifestSrc, manifestUrl, docUrl);
+      const parsedManifest = parseManifest(manifestSrc, manifestUrl, docUrl);
       const parsedUrl = parsedManifest.value.start_url;
       assert.ok(parsedUrl.warning);
       assert.equal(parsedUrl.value, docUrl);
@@ -267,7 +267,7 @@ describe('Manifest Parser', function() {
       const manifestUrl = 'https://example.com/manifest.json';
       const docUrl = 'https://example.com/index.html';
 
-      const parsedManifest = manifestParser(manifestSrc, manifestUrl, docUrl);
+      const parsedManifest = parseManifest(manifestSrc, manifestUrl, docUrl);
       const parsedUrl = parsedManifest.value.start_url;
       assert.ok(!parsedUrl.warning);
       assert.equal(parsedUrl.value, docUrl);
@@ -282,7 +282,7 @@ describe('Manifest Parser', function() {
       const manifestUrl = '';
       const docUrl = 'https://example.com/index.html';
 
-      const parsedManifest = manifestParser(manifestSrc, manifestUrl, docUrl);
+      const parsedManifest = parseManifest(manifestSrc, manifestUrl, docUrl);
       const parsedUrl = parsedManifest.value.start_url;
       assert.ok(parsedUrl.warning);
       assert.equal(parsedUrl.value, docUrl);
@@ -296,7 +296,7 @@ describe('Manifest Parser', function() {
       const manifestUrl = 'https://example.com/manifest.json';
       const docUrl = 'https://example.com/index.html';
 
-      const parsedManifest = manifestParser(manifestSrc, manifestUrl, docUrl);
+      const parsedManifest = parseManifest(manifestSrc, manifestUrl, docUrl);
       const parsedUrl = parsedManifest.value.start_url;
       assert.ok(parsedUrl.warning);
       assert.equal(parsedUrl.value, docUrl);
@@ -309,7 +309,7 @@ describe('Manifest Parser', function() {
       const manifestUrl = 'https://example.com/manifest.json';
       const docUrl = 'https://example.com:8080/index.html';
 
-      const parsedManifest = manifestParser(manifestSrc, manifestUrl, docUrl);
+      const parsedManifest = parseManifest(manifestSrc, manifestUrl, docUrl);
       const parsedUrl = parsedManifest.value.start_url;
       assert.ok(parsedUrl.warning);
       assert.equal(parsedUrl.value, docUrl);
@@ -322,7 +322,7 @@ describe('Manifest Parser', function() {
       const manifestUrl = 'https://example.com/manifest.json';
       const docUrl = 'https://example.com/index.html';
 
-      const parsedManifest = manifestParser(manifestSrc, manifestUrl, docUrl);
+      const parsedManifest = parseManifest(manifestSrc, manifestUrl, docUrl);
       const parsedUrl = parsedManifest.value.start_url;
       assert.ok(parsedUrl.warning);
       assert.equal(parsedUrl.value, docUrl);
@@ -335,7 +335,7 @@ describe('Manifest Parser', function() {
       const manifestUrl = 'https://example.com/manifest.json';
       const docUrl = 'https://example.com/index.html';
 
-      const parsedManifest = manifestParser(manifestSrc, manifestUrl, docUrl);
+      const parsedManifest = parseManifest(manifestSrc, manifestUrl, docUrl);
       const parsedUrl = parsedManifest.value.start_url;
       assert.ok(!parsedUrl.warning);
       assert.equal(parsedUrl.value, 'https://example.com/');
@@ -349,7 +349,7 @@ describe('Manifest Parser', function() {
       const manifestUrl = 'https://example.com/resources/manifest.webmanifest';
       const docUrl = 'https://example.com/index.html';
 
-      const parsedManifest = manifestParser(manifestSrc, manifestUrl, docUrl);
+      const parsedManifest = parseManifest(manifestSrc, manifestUrl, docUrl);
       const parsedUrl = parsedManifest.value.start_url;
       assert.ok(!parsedUrl.warning);
       assert.equal(parsedUrl.value, 'https://example.com/start_point.html');
@@ -453,7 +453,7 @@ describe('Manifest Parser', function() {
       };
       /* eslint-enable camelcase */
 
-      const parsedManifest = manifestParser(JSON.stringify(exampleManifest), EXAMPLE_MANIFEST_URL,
+      const parsedManifest = parseManifest(JSON.stringify(exampleManifest), EXAMPLE_MANIFEST_URL,
           EXAMPLE_DOC_URL);
       const applications = parsedManifest.value.related_applications.value;
       assert.equal(applications.length, 2);
@@ -477,7 +477,7 @@ describe('Manifest Parser', function() {
       };
       /* eslint-enable camelcase */
 
-      const parsedManifest = manifestParser(JSON.stringify(exampleManifest), EXAMPLE_MANIFEST_URL,
+      const parsedManifest = parseManifest(JSON.stringify(exampleManifest), EXAMPLE_MANIFEST_URL,
           EXAMPLE_DOC_URL);
       const applications = parsedManifest.value.related_applications.value;
       // First entry's url should be discarded but entry preserved due to valid id.
@@ -495,7 +495,7 @@ describe('Manifest Parser', function() {
      * @param {string} themeColor
      */
     function getParsedManifest(backgroundColor, themeColor) {
-      return manifestParser(`{
+      return parseManifest(`{
         "background_color": "${backgroundColor}",
         "theme_color": "${themeColor}"
       }`, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
@@ -565,7 +565,7 @@ describe('Manifest Parser', function() {
     it('warns when colors are not strings', () => {
       const bgColor = 15;
       const themeColor = false;
-      const parsedManifest = manifestParser(`{
+      const parsedManifest = parseManifest(`{
         "background_color": ${bgColor},
         "theme_color": ${themeColor}
       }`, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL).value;
