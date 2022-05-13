@@ -32,7 +32,7 @@ const UIStrings = {
   /** Label for a column in a data table; entries will be information on the time that the browser is delayed before responding to user input. Ideally fits within a ~40 character limit. */
   inputDelay: 'Input delay',
   /** Label for a column in a data table; entries will be information on the time taken by code processing user input that delays a response to the user. Ideally fits within a ~40 character limit. */
-  processingDelay: 'Processing delay',
+  processingTime: 'Processing time',
   /** Label for a column in a data table; entries will be information on the time that the browser is delayed before presenting a response to user input on screen. Ideally fits within a ~40 character limit. */
   presentationDelay: 'Presentation delay',
   /**
@@ -116,7 +116,7 @@ class WorkDuringInteraction extends Audit {
     const endTs = startTs + interactionData.duration * 1000;
     return {
       inputDelay: {startTs, endTs: processingStartTs},
-      processingDelay: {startTs: processingStartTs, endTs: processingEndTs},
+      processingTime: {startTs: processingStartTs, endTs: processingEndTs},
       presentationDelay: {startTs: processingEndTs, endTs},
     };
   }

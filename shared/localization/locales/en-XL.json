@@ -1676,8 +1676,8 @@
   "lighthouse-core/audits/work-during-interaction.js | presentationDelay": {
     "message": "P̂ŕêśêńt̂át̂íôń d̂él̂áŷ"
   },
-  "lighthouse-core/audits/work-during-interaction.js | processingDelay": {
-    "message": "P̂ŕôćêśŝín̂ǵ d̂él̂áŷ"
+  "lighthouse-core/audits/work-during-interaction.js | processingTime": {
+    "message": "P̂ŕôćêśŝín̂ǵ t̂ím̂é"
   },
   "lighthouse-core/audits/work-during-interaction.js | title": {
     "message": "M̂ín̂ím̂íẑéŝ ẃôŕk̂ d́ûŕîńĝ ḱêý îńt̂ér̂áĉt́îón̂"
