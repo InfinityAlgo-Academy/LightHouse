@@ -218,7 +218,7 @@ async function requireWrapper(requirePath) {
   const bundledModule = bundledModules.get(requirePath);
   if (bundledModule) return bundledModule;
 
-  const importPath = requirePath.endsWith('.js') || requirePath.endsWith('.mjs') ?
+  const importPath = requirePath.match(/\.(js|mjs|cjs)$/) ?
     requirePath :
     `${requirePath}.js`;
   const module = await import(importPath);
@@ -423,7 +423,8 @@ async function resolveAuditsToDefns(audits, configDir) {
   }
 
   const coreList = Runner.getAuditList();
-  const auditDefnsPromises = audits.map(async (auditJson) => {
+  const auditDefns = [];
+  for (const auditJson of audits) {
     const auditDefn = expandAuditShorthand(auditJson);
     let implementation;
     if ('implementation' in auditDefn) {
@@ -432,13 +433,12 @@ async function resolveAuditsToDefns(audits, configDir) {
       implementation = await requireAudit(auditDefn.path, coreList, configDir);
     }
 
-    return {
+    auditDefns.push({
       implementation,
       path: auditDefn.path,
       options: auditDefn.options || {},
-    };
-  });
-  const auditDefns = await Promise.all(auditDefnsPromises);
+    });
+  }
 
   const mergedAuditDefns = mergeOptionsOfItems(auditDefns);
   mergedAuditDefns.forEach(audit => validation.assertValidAudit(audit));

@@ -230,9 +230,7 @@ Array [
 
   // Keys for plugin audits are allowed in this package.
   // Make sure none are typos of core audits.
-  // TODO: debug error:
-  //       request for 'metaviewport-parser' is not yet fulfilled
-  it.skip('snapshot unrecognized keys', async () => {
+  it('snapshot unrecognized keys', async () => {
     const auditIds = await getAuditIds();
 
     const unrecognizedKeys = new Set();

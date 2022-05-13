@@ -1343,21 +1343,25 @@ describe('Config', () => {
       assert.equal(typeof gatherer.instance.beforePass, 'function');
     });
 
-    it('loads gatherers from custom paths', async () => {
-      const customPath = path.resolve(__dirname, '../fixtures/valid-custom-gatherer');
-      const gatherer = await loadGatherer(customPath);
-      assert.equal(gatherer.instance.name, 'CustomGatherer');
-      assert.equal(typeof gatherer.instance.beforePass, 'function');
-    });
+    ['', '.js', '.cjs'].forEach(variant => {
+      describe(`loads custom gatherer (variant: "${variant}")`, () => {
+        it('loads gatherers from custom paths', async () => {
+          const customPath = path.resolve(__dirname, '../fixtures/valid-custom-gatherer' + variant);
+          const gatherer = await loadGatherer(customPath);
+          assert.equal(gatherer.instance.name, 'CustomGatherer');
+          assert.equal(typeof gatherer.instance.beforePass, 'function');
+        });
 
-    it('loads a gatherer relative to a config path', async () => {
-      const config = await Config.fromJson({
-        passes: [{gatherers: ['../fixtures/valid-custom-gatherer']}],
-      }, {configPath: __filename});
-      const gatherer = config.passes[0].gatherers[0];
+        it('loads a gatherer relative to a config path', async () => {
+          const config = await Config.fromJson({
+            passes: [{gatherers: ['../fixtures/valid-custom-gatherer' + variant]}],
+          }, {configPath: __filename});
+          const gatherer = config.passes[0].gatherers[0];
 
-      assert.equal(gatherer.instance.name, 'CustomGatherer');
-      assert.equal(typeof gatherer.instance.beforePass, 'function');
+          assert.equal(gatherer.instance.name, 'CustomGatherer');
+          assert.equal(typeof gatherer.instance.beforePass, 'function');
+        });
+      });
     });
 
     it('returns gatherer when gatherer class, not package-name string, is provided', async () => {
