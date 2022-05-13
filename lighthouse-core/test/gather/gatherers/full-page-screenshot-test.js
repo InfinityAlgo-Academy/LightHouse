@@ -12,8 +12,8 @@ import {createMockContext, mockDriverSubmodules} from '../../fraggle-rock/gather
 // Some imports needs to be done dynamically, so that their dependencies will be mocked.
 // See: https://jestjs.io/docs/ecmascript-modules#differences-between-esm-and-commonjs
 //      https://github.com/facebook/jest/issues/10025
-/** @typedef {import('../../../gather/gatherers/full-page-screenshot.js')} FullPageScreenshotGatherer */
-/** @type {typeof import('../../../gather/gatherers/full-page-screenshot.js')} */
+/** @typedef {import('../../../gather/gatherers/full-page-screenshot.js').default} FullPageScreenshotGatherer */
+/** @type {typeof import('../../../gather/gatherers/full-page-screenshot.js').default} */
 let FullPageScreenshotGatherer;
 
 beforeAll(async () => {

@@ -26,7 +26,7 @@ const storageMock = {
   clearBrowserCaches: fnAny(),
   getImportantStorageWarning: fnAny(),
 };
-jest.mock('../../../gather/driver/storage.js', () => storageMock);
+jest.unstable_mockModule('../../../gather/driver/storage.js', () => storageMock);
 
 const url = 'https://example.com';
 let sessionMock = createMockSession();
@@ -38,9 +38,9 @@ beforeEach(() => {
     .mockResponse('Emulation.setCPUThrottlingRate')
     .mockResponse('Network.setBlockedURLs')
     .mockResponse('Network.setExtraHTTPHeaders');
-  storageMock.clearBrowserCaches = fnAny();
-  storageMock.clearDataForOrigin = fnAny();
-  storageMock.getImportantStorageWarning = fnAny();
+  storageMock.clearDataForOrigin.mockReset();
+  storageMock.clearBrowserCaches.mockReset();
+  storageMock.getImportantStorageWarning.mockReset();
 });
 
 afterEach(() => {

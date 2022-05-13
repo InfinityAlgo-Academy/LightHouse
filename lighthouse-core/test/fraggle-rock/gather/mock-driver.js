@@ -4,7 +4,6 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-
 /**
  * @fileoverview Mock fraggle rock driver for testing.
  */
@@ -207,7 +206,9 @@ function mockTargetManagerModule() {
     return instance;
   };
 
-  jest.mock('../../../gather/driver/target-manager.js', () => proxyCtor(targetManagerMock));
+  jest.unstable_mockModule('../../../gather/driver/target-manager.js', () => ({
+    TargetManager: proxyCtor(targetManagerMock),
+  }));
 
   return targetManagerMock;
 }
@@ -273,15 +274,19 @@ function mockDriverSubmodules() {
    * @return {(...args: any[]) => void}
    */
   const get = (target, name) => {
+    // @ts-expect-error: hack? What is going on here? Should we just remove the proxy stuff?
+    if (name === 'then') return target;
     if (!target[name]) throw new Error(`Target does not have property "${name}"`);
     return (...args) => target[name](...args);
   };
 
-  jest.mock('../../../gather/driver/navigation.js', () => new Proxy(navigationMock, {get}));
-  jest.mock('../../../gather/driver/prepare.js', () => new Proxy(prepareMock, {get}));
-  jest.mock('../../../gather/driver/storage.js', () => new Proxy(storageMock, {get}));
-  jest.mock('../../../gather/driver/network.js', () => new Proxy(networkMock, {get}));
-  jest.mock('../../../lib/emulation.js', () => new Proxy(emulationMock, {get}));
+  /* eslint-disable max-len */
+  jest.unstable_mockModule('../../../gather/driver/navigation.js', () => new Proxy(navigationMock, {get}));
+  jest.unstable_mockModule('../../../gather/driver/prepare.js', () => new Proxy(prepareMock, {get}));
+  jest.unstable_mockModule('../../../gather/driver/storage.js', () => new Proxy(storageMock, {get}));
+  jest.unstable_mockModule('../../../gather/driver/network.js', () => new Proxy(networkMock, {get}));
+  jest.unstable_mockModule('../../../lib/emulation.js', () => new Proxy(emulationMock, {get}));
+  /* eslint-enable max-len */
 
   reset();
 

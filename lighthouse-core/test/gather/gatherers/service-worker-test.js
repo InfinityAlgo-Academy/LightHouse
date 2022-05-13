@@ -24,7 +24,7 @@ beforeAll(async () => {
 
 const getServiceWorkerVersions = fnAny();
 const getServiceWorkerRegistrations = fnAny();
-jest.mock('../../../gather/driver/service-workers.js', () => ({
+jest.unstable_mockModule('../../../gather/driver/service-workers.js', () => ({
   getServiceWorkerVersions,
   getServiceWorkerRegistrations,
 }));
