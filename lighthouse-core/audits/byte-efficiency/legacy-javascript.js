@@ -18,17 +18,21 @@
 /** @typedef {LH.Audit.ByteEfficiencyItem & {subItems: {type: 'subitems', items: SubItem[]}}} Item */
 /** @typedef {{signal: string, location: LH.Audit.Details.SourceLocationValue}} SubItem */
 
+import fs from 'fs';
+
 import {ByteEfficiencyAudit} from './byte-efficiency-audit.js';
 
 import JsBundles from '../../computed/js-bundles.js';
 import * as i18n from '../../lib/i18n/i18n.js';
 import thirdPartyWeb from '../../lib/third-party-web.js';
 import {getRequestForScript} from '../../lib/script-helpers.js';
+import {LH_ROOT} from '../../../root.js';
 
-import graphJson from './polyfill-graph-data.json';
+const graphJson = fs.readFileSync(
+  `${LH_ROOT}/lighthouse-core/audits/byte-efficiency/polyfill-graph-data.json`, 'utf-8');
 
 /** @type {import('../../scripts/legacy-javascript/create-polyfill-size-estimation.js').PolyfillSizeEstimator} */
-const graph = graphJson;
+const graph = JSON.parse(graphJson);
 
 const UIStrings = {
   /** Title of a Lighthouse audit that tells the user about legacy polyfills and transforms used on the page. This is displayed in a list of audit titles that Lighthouse generates. */
