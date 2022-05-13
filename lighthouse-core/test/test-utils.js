@@ -204,7 +204,7 @@ function makeMocksForGatherRunner() {
     cleanBrowserCaches: jest.fn(),
     getImportantStorageWarning: jest.fn(),
   }));
-  jest.mock(require.resolve('../gather/driver/navigation.js'), () => ({
+  jest.unstable_mockModule(require.resolve('../gather/driver/navigation.js'), () => ({
     gotoURL: jest.fn().mockResolvedValue({
       mainDocumentUrl: 'http://example.com',
       warnings: [],

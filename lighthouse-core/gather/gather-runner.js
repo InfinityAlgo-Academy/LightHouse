@@ -71,6 +71,7 @@ class GatherRunner {
     log.time(status);
     try {
       const requestedUrl = passContext.url;
+      console.log(navigation.gotoURL.toString());
       const {mainDocumentUrl, warnings} = await navigation.gotoURL(driver, requestedUrl, {
         waitUntil: passContext.passConfig.recordTrace ?
           ['load', 'fcp'] : ['load'],

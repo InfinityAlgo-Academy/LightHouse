@@ -9,7 +9,7 @@
 
 import FRGatherer from '../../fraggle-rock/gather/base-gatherer.js';
 
-import {source as axeLibSource} from '../../lib/axe.js';
+import {axeSource} from '../../lib/axe.js';
 import {pageFunctions} from '../../lib/page-functions.js';
 
 /**
@@ -174,7 +174,7 @@ class Accessibility extends FRGatherer {
       args: [],
       useIsolation: true,
       deps: [
-        axeLibSource,
+        axeSource,
         pageFunctions.getNodeDetailsString,
         createAxeRuleResultArtifact,
       ],

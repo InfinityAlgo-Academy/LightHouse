@@ -15,7 +15,7 @@ import {fnAny} from '../../test-utils.js';
 // Some imports needs to be done dynamically, so that their dependencies will be mocked.
 // See: https://jestjs.io/docs/ecmascript-modules#differences-between-esm-and-commonjs
 //      https://github.com/facebook/jest/issues/10025
-/** @type {typeof import('../../../gather/gatherers/service-worker.js')} */
+/** @type {typeof import('../../../gather/gatherers/service-worker.js').default} */
 let ServiceWorkerGather;
 
 beforeAll(async () => {

@@ -12,5 +12,5 @@ const {require} = createCommonjsRefs(import.meta);
 const axeSource = fs.readFileSync(require.resolve('axe-core/axe.min.js'), 'utf8');
 
 export {
-  axeSource as source,
+  axeSource,
 };

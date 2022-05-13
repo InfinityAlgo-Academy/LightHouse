@@ -38,6 +38,21 @@ const requireMockAny = (moduleName) => {
   return jest.requireMock(moduleName);
 };
 
+/**
+ * Same as jest.requireMock(), but:
+ * 1) returns a Mock record instead of `unknown`
+ * 2) uses `import` instead of `require`
+ * Use only for modules that were mocked with unstable_mockModule.
+ *
+ * @param {string} moduleName
+ * @return {Promise<Record<string, jest.Mock>>}
+ */
+const importMock = async (moduleName) => {
+  const mock = await import(moduleName);
+  if (!mock[Object.keys(mock)[0]].mock) throw new Error(`${moduleName} was not mocked!`);
+  return mock;
+};
+
 makeMocksForGatherRunner();
 
 function createTypeHackedGatherRunner() {
@@ -169,12 +184,21 @@ beforeEach(() => {
   prepare.prepareTargetForNavigationMode = fnAny();
   prepare.prepareTargetForIndividualNavigation = fnAny().mockResolvedValue({warnings: []});
 
-  const navigation = requireMockAny('../../gather/driver/navigation.js');
-  navigation.gotoURL = fnAny().mockResolvedValue({
-    mainDocumentUrl: 'https://example.com',
-    timedOut: false,
-    warnings: [],
+  jest.unstable_mockModule('../../gather/driver/navigation.js', () => {
+    console.log('!!!');
+    return {
+      gotoURL: fnAny().mockResolvedValue({
+        mainDocumentUrl: 'https://example.com',
+        timedOut: false,
+        warnings: [],
+      }),
+    };
   });
+  // navigation.gotoURL = fnAny().mockResolvedValue({
+  //   mainDocumentUrl: 'https://example.com',
+  //   timedOut: false,
+  //   warnings: [],
+  // });
 });
 
 afterEach(() => {
@@ -183,11 +207,11 @@ afterEach(() => {
 });
 
 describe('GatherRunner', function() {
-  it('loads a page and updates passContext urls on redirect', () => {
+  it('loads a page and updates passContext urls on redirect', async () => {
     const url1 = 'https://example.com';
     const url2 = 'https://example.com/interstitial';
     const driver = {};
-    const gotoURL = requireMockAny('../../gather/driver/navigation.js').gotoURL;
+    const gotoURL = (await importMock('../../gather/driver/navigation.js')).gotoURL;
     gotoURL.mockResolvedValue({mainDocumentUrl: url2, warnings: []});
 
     const passContext = {
