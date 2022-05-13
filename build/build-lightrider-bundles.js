@@ -34,7 +34,6 @@ async function buildReportGenerator() {
       rollupPlugins.shim({
         [`${LH_ROOT}/report/generator/flow-report-assets.js`]: 'export default {}',
       }),
-      rollupPlugins.commonjs(),
       rollupPlugins.nodeResolve(),
       rollupPlugins.inlineFs({verbose: Boolean(process.env.DEBUG)}),
     ],
@@ -52,10 +51,6 @@ async function buildStaticServerBundle() {
   const bundle = await rollup({
     input: 'lighthouse-cli/test/fixtures/static-server.js',
     plugins: [
-      rollupPlugins.shim({
-        'es-main': 'export default function() { return false; }',
-      }),
-      rollupPlugins.commonjs(),
       rollupPlugins.nodeResolve(),
     ],
     external: ['mime-types', 'glob'],

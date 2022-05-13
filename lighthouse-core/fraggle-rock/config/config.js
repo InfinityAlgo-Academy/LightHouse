@@ -32,10 +32,9 @@ import {
   mergeConfigFragmentArrayByKey,
 } from '../../config/config-helpers.js';
 
-import {createCommonjsRefs} from '../../scripts/esm-utils.js';
+import {getModuleDirectory} from '../../scripts/esm-utils.js';
 
-const {__dirname} = createCommonjsRefs(import.meta);
-const defaultConfigPath = path.join(__dirname, './default-config.js');
+const defaultConfigPath = path.join(getModuleDirectory(import.meta), './default-config.js');
 
 /** @typedef {LH.Config.FRContext & {gatherMode: LH.Gatherer.GatherMode}} ConfigContext */
 

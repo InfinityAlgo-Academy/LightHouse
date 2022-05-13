@@ -20,9 +20,7 @@ import {Sentry} from './lib/sentry.js';
 import ReportGenerator from '../report/generator/report-generator.js';
 import {LighthouseError} from './lib/lh-error.js';
 import {lighthouseVersion} from '../root.js';
-import {createCommonjsRefs} from './scripts/esm-utils.js';
-
-const {__dirname} = createCommonjsRefs(import.meta);
+import {getModuleDirectory} from './scripts/esm-utils.js';
 
 /** @typedef {import('./gather/connections/connection.js').Connection} Connection */
 /** @typedef {import('./lib/arbitrary-equality-map.js').ArbitraryEqualityMap} ArbitraryEqualityMap */
@@ -466,19 +464,20 @@ class Runner {
       'manual/manual-audit.js',
     ];
 
+    const dir = getModuleDirectory(import.meta);
     const fileList = [
-      ...fs.readdirSync(path.join(__dirname, './audits')),
-      ...fs.readdirSync(path.join(__dirname, './audits/dobetterweb')).map(f => `dobetterweb/${f}`),
-      ...fs.readdirSync(path.join(__dirname, './audits/metrics')).map(f => `metrics/${f}`),
-      ...fs.readdirSync(path.join(__dirname, './audits/seo')).map(f => `seo/${f}`),
-      ...fs.readdirSync(path.join(__dirname, './audits/seo/manual')).map(f => `seo/manual/${f}`),
-      ...fs.readdirSync(path.join(__dirname, './audits/accessibility'))
+      ...fs.readdirSync(path.join(dir, './audits')),
+      ...fs.readdirSync(path.join(dir, './audits/dobetterweb')).map(f => `dobetterweb/${f}`),
+      ...fs.readdirSync(path.join(dir, './audits/metrics')).map(f => `metrics/${f}`),
+      ...fs.readdirSync(path.join(dir, './audits/seo')).map(f => `seo/${f}`),
+      ...fs.readdirSync(path.join(dir, './audits/seo/manual')).map(f => `seo/manual/${f}`),
+      ...fs.readdirSync(path.join(dir, './audits/accessibility'))
           .map(f => `accessibility/${f}`),
-      ...fs.readdirSync(path.join(__dirname, './audits/accessibility/manual'))
+      ...fs.readdirSync(path.join(dir, './audits/accessibility/manual'))
           .map(f => `accessibility/manual/${f}`),
-      ...fs.readdirSync(path.join(__dirname, './audits/byte-efficiency'))
+      ...fs.readdirSync(path.join(dir, './audits/byte-efficiency'))
           .map(f => `byte-efficiency/${f}`),
-      ...fs.readdirSync(path.join(__dirname, './audits/manual')).map(f => `manual/${f}`),
+      ...fs.readdirSync(path.join(dir, './audits/manual')).map(f => `manual/${f}`),
     ];
     return fileList.filter(f => {
       return /\.js$/.test(f) && !ignoredFiles.includes(f);
@@ -490,10 +489,11 @@ class Runner {
    * @return {Array<string>}
    */
   static getGathererList() {
+    const dir = getModuleDirectory(import.meta);
     const fileList = [
-      ...fs.readdirSync(path.join(__dirname, './gather/gatherers')),
-      ...fs.readdirSync(path.join(__dirname, './gather/gatherers/seo')).map(f => `seo/${f}`),
-      ...fs.readdirSync(path.join(__dirname, './gather/gatherers/dobetterweb'))
+      ...fs.readdirSync(path.join(dir, './gather/gatherers')),
+      ...fs.readdirSync(path.join(dir, './gather/gatherers/seo')).map(f => `seo/${f}`),
+      ...fs.readdirSync(path.join(dir, './gather/gatherers/dobetterweb'))
           .map(f => `dobetterweb/${f}`),
     ];
     return fileList.filter(f => /\.js$/.test(f) && f !== 'gatherer.js').sort();

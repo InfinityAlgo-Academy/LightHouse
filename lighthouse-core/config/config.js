@@ -22,9 +22,7 @@ import {
   deepClone,
   deepCloneConfigJson,
 } from './config-helpers.js';
-import {createCommonjsRefs} from '../scripts/esm-utils.js';
-
-const {__dirname} = createCommonjsRefs(import.meta);
+import {getModuleDirectory} from '../scripts/esm-utils.js';
 
 const defaultConfigPath = './default-config.js';
 
@@ -167,7 +165,7 @@ class Config {
 
     if (!configJSON) {
       configJSON = defaultConfig;
-      configPath = path.resolve(__dirname, defaultConfigPath);
+      configPath = path.resolve(getModuleDirectory(import.meta), defaultConfigPath);
     }
 
     if (configPath && !path.isAbsolute(configPath)) {

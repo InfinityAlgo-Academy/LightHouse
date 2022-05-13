@@ -15,8 +15,9 @@ import {execSync} from 'child_process';
 
 import esMain from 'es-main';
 import {rollup} from 'rollup';
-// @ts-expect-error: plugin has no types.
-import PubAdsPlugin from 'lighthouse-plugin-publisher-ads/plugin.js';
+// TODO(esmodules): convert pubads to esm
+// // @ts-expect-error: plugin has no types.
+// import PubAdsPlugin from 'lighthouse-plugin-publisher-ads/plugin.js';
 
 import * as rollupPlugins from './rollup-plugins.js';
 import {Runner} from '../lighthouse-core/runner.js';
@@ -30,8 +31,8 @@ const COMMIT_HASH = execSync('git rev-parse HEAD').toString().trim();
 
 // HACK: manually include the lighthouse-plugin-publisher-ads audits.
 /** @type {Array<string>} */
-// @ts-expect-error
-const pubAdsAudits = PubAdsPlugin.audits.map(a => a.path);
+// // @ts-expect-error
+// const pubAdsAudits = PubAdsPlugin.audits.map(a => a.path);
 
 /** @param {string} file */
 const isDevtools = file =>
@@ -82,12 +83,12 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
   ];
 
   // Include lighthouse-plugin-publisher-ads.
-  if (isDevtools(entryPath) || isLightrider(entryPath)) {
-    dynamicModulePaths.push('lighthouse-plugin-publisher-ads');
-    pubAdsAudits.forEach(pubAdAudit => {
-      dynamicModulePaths.push(pubAdAudit);
-    });
-  }
+  // if (isDevtools(entryPath) || isLightrider(entryPath)) {
+  //   dynamicModulePaths.push('lighthouse-plugin-publisher-ads');
+  //   pubAdsAudits.forEach(pubAdAudit => {
+  //     dynamicModulePaths.push(pubAdAudit);
+  //   });
+  // }
 
   const bundledMapEntriesCode = dynamicModulePaths.map(modulePath => {
     const pathNoExt = modulePath.replace('.js', '');
@@ -105,8 +106,11 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
     '@sentry/node',
     'source-map',
     'ws',
-    require.resolve('../lighthouse-core/gather/connections/cri.js'),
+    // require.resolve('../lighthouse-core/gather/connections/cri.js'),
   ];
+
+  shimsObj[require.resolve('../lighthouse-core/gather/connections/cri.js')] =
+    'export const CriConnection = {}';
 
   // Don't include the stringified report in DevTools - see devtools-report-assets.js
   // Don't include in Lightrider - HTML generation isn't supported, so report assets aren't needed.
@@ -134,6 +138,7 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
         delimiters: ['', ''],
         values: {
           '/* BUILD_REPLACE_BUNDLED_MODULES */': `[\n${bundledMapEntriesCode},\n]`,
+          // TODO(esmodules): remove
           '__dirname': (id) => `'${path.relative(LH_ROOT, path.dirname(id))}'`,
           '__filename': (id) => `'${path.relative(LH_ROOT, id)}'`,
           // This package exports to default in a way that causes Rollup to get confused,
@@ -147,6 +152,8 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
           // TODO: Use globalThis directly.
           'global.isLightrider': 'globalThis.isLightrider',
           'global.isDevtools': 'globalThis.isDevtools',
+          'esMain(import.meta)': 'false',
+          'import esMain from \'es-main\'': '',
         },
       }),
       rollupPlugins.alias({
@@ -162,11 +169,6 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
           import {Audit} from '${require.resolve('../lighthouse-core/audits/audit.js')}';
           export {Audit};
         `,
-        // Most node 'url' polyfills don't include the WHATWG `URL` property, but
-        // that's all that's needed, so make a mini-polyfill.
-        // @see https://github.com/GoogleChrome/lighthouse/issues/5273
-        // TODO: remove when not needed for pubads (https://github.com/googleads/publisher-ads-lighthouse-plugin/pull/325)
-        'url': 'export const URL = globalThis.URL;',
       }),
       rollupPlugins.json(),
       rollupPlugins.inlineFs({verbose: false}),
@@ -210,6 +212,8 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
     banner,
     format: 'iife',
     sourcemap: DEBUG,
+    // Suppress code splitting.
+    inlineDynamicImports: true,
   });
   await bundle.close();
 }

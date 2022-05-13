@@ -28,7 +28,16 @@ function createCommonjsRefs(importMeta) {
   return {require, __filename: filename, __dirname: dirname};
 }
 
+/**
+ * @param {ImportMeta} importMeta
+ */
+function getModuleDirectory(importMeta) {
+  const filename = url.fileURLToPath(importMeta.url);
+  return path.dirname(filename);
+}
+
 export {
   resolveModulePath,
   createCommonjsRefs,
+  getModuleDirectory,
 };

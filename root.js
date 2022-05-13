@@ -5,12 +5,14 @@
  */
 'use strict';
 
-const fs = require('fs');
-const path = require('path');
-const url = require('url');
+import fs from 'fs';
+import path from 'path';
+import {getModuleDirectory} from './lighthouse-core/scripts/esm-utils.js';
 
-// import {dirname} from 'path';
-// import {fileURLToPath} from 'url';
+const pkg = JSON.parse(fs.readFileSync('./package.json', 'utf-8'));
+
+const LH_ROOT = getModuleDirectory(import.meta);
+const lighthouseVersion = pkg.version;
 
 /**
  * Return parsed json object.
@@ -19,16 +21,13 @@ const url = require('url');
  * @param {ImportMeta=} importMeta
  */
 function readJson(filePath, importMeta) {
-  const dir = importMeta ? path.dirname(url.fileURLToPath(importMeta.url)) : __dirname;
+  const dir = importMeta ? getModuleDirectory(importMeta) : LH_ROOT;
   filePath = path.resolve(dir, filePath);
   return JSON.parse(fs.readFileSync(filePath, 'utf-8'));
 }
 
-module.exports = {
-  LH_ROOT: __dirname,
-  lighthouseVersion: require('./package.json').version,
+export {
+  LH_ROOT,
+  lighthouseVersion,
+  readJson,
 };
-
-// TODO(esmodules): make root.js and root package.json use type: module
-// yes, functions really must be exported like this to trick the commonjs->esm named import interop into working
-module.exports.readJson = readJson;

@@ -13,9 +13,9 @@ import ConfigPlugin from './config-plugin.js';
 import {Runner} from '../runner.js';
 import * as i18n from '../lib/i18n/i18n.js';
 import * as validation from '../fraggle-rock/config/validation.js';
-import {createCommonjsRefs} from '../scripts/esm-utils.js';
+import {createCommonjsRefs, getModuleDirectory} from '../scripts/esm-utils.js';
 
-const {require, __dirname} = createCommonjsRefs(import.meta);
+const {require} = createCommonjsRefs(import.meta);
 
 /** @typedef {typeof import('../gather/gatherers/gatherer.js').Gatherer} GathererConstructor */
 /** @typedef {typeof import('../audits/audit.js')['Audit']} Audit */
@@ -282,7 +282,7 @@ function requireAudit(auditPath, coreAuditList, configDir) {
       // Otherwise, attempt to find it elsewhere. This throws if not found.
       const absolutePath = resolveModulePath(auditPath, configDir, 'audit');
       // Use a relative path so bundler can easily expose it.
-      requirePath = path.relative(__dirname, absolutePath);
+      requirePath = path.relative(getModuleDirectory(import.meta), absolutePath);
     }
   }
 
@@ -502,7 +502,7 @@ function resolveModulePath(moduleIdentifier, configDir, category) {
   const errorString = 'Unable to locate ' + (category ? `${category}: ` : '') +
     `\`${moduleIdentifier}\`.
      Tried to require() from these locations:
-       ${__dirname}
+       ${getModuleDirectory(import.meta)}
        ${cwdPath}`;
 
   if (!configDir) {
