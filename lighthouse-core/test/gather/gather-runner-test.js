@@ -149,7 +149,7 @@ beforeEach(async () => {
   driver = new EmulationDriver(connectionStub);
   resetDefaultMockResponses();
 
-  const {gotoURL} = await importMock('../../gather/driver/navigation.js');
+  const {gotoURL} = await importMock('../../gather/driver/navigation.js', import.meta);
   gotoURL.mockReset().mockResolvedValue({
     mainDocumentUrl: 'https://example.com',
     timedOut: false,
@@ -167,7 +167,7 @@ describe('GatherRunner', function() {
     const url1 = 'https://example.com';
     const url2 = 'https://example.com/interstitial';
     const driver = {};
-    const {gotoURL} = await importMock('../../gather/driver/navigation.js');
+    const {gotoURL} = await importMock('../../gather/driver/navigation.js', import.meta);
     gotoURL.mockResolvedValue({mainDocumentUrl: url2, warnings: []});
 
     const passContext = {
@@ -194,7 +194,7 @@ describe('GatherRunner', function() {
     const url = 'https://example.com';
     const error = new LighthouseError(LighthouseError.errors.NO_FCP);
     const driver = {};
-    const {gotoURL} = await importMock('../../gather/driver/navigation.js');
+    const {gotoURL} = await importMock('../../gather/driver/navigation.js', import.meta);
     gotoURL.mockRejectedValue(error);
 
     const passContext = {
@@ -242,7 +242,7 @@ describe('GatherRunner', function() {
   it('collects requested and final URLs as an artifact', async () => {
     const requestedUrl = 'https://example.com';
     const mainDocumentUrl = 'https://example.com/interstitial';
-    const {gotoURL} = await importMock('../../gather/driver/navigation.js');
+    const {gotoURL} = await importMock('../../gather/driver/navigation.js', import.meta);
     gotoURL.mockResolvedValue({mainDocumentUrl, timedOut: false, warnings: []});
     const config = await makeConfig({passes: [{passName: 'defaultPass'}]});
     const options = {
@@ -456,7 +456,7 @@ describe('GatherRunner', function() {
       LighthouseRunWarnings: [],
     };
 
-    const prepare = await importMock('../../gather/driver/prepare.js');
+    const prepare = await importMock('../../gather/driver/prepare.js', import.meta);
     await GatherRunner.runPass(passContext);
     expect(prepare.prepareTargetForIndividualNavigation).toHaveBeenCalled();
   });
@@ -508,7 +508,7 @@ describe('GatherRunner', function() {
       },
     });
 
-    const {gotoURL} = await importMock('../../gather/driver/navigation.js');
+    const {gotoURL} = await importMock('../../gather/driver/navigation.js', import.meta);
     gotoURL.mockImplementation(
       /** @param {any} _ @param {string} url */
       (_, url) => url.includes('blank') ? null : Promise.reject(navigationError)
@@ -552,7 +552,7 @@ describe('GatherRunner', function() {
       },
     });
 
-    const {gotoURL} = await importMock('../../gather/driver/navigation.js');
+    const {gotoURL} = await importMock('../../gather/driver/navigation.js', import.meta);
     gotoURL.mockImplementation(
       /** @param {any} _ @param {string} url */
       (_, url) => url.includes('blank') ? gotoUrlForAboutBlank() : gotoUrlForRealUrl()
@@ -825,7 +825,7 @@ describe('GatherRunner', function() {
     let firstLoad = true;
     const driver = Object.assign({}, fakeDriver, {online: true});
 
-    const {gotoURL} = await importMock('../../gather/driver/navigation.js');
+    const {gotoURL} = await importMock('../../gather/driver/navigation.js', import.meta);
 
     gotoURL.mockImplementation(
       /**
@@ -1238,7 +1238,7 @@ describe('GatherRunner', function() {
         online: true,
       });
 
-      const {gotoURL} = await importMock('../../gather/driver/navigation.js');
+      const {gotoURL} = await importMock('../../gather/driver/navigation.js', import.meta);
       gotoURL.mockResolvedValue({mainDocumentUrl: requestedUrl, warnings: ['It is too slow']});
 
       return GatherRunner.run(config.passes, {
@@ -1270,7 +1270,7 @@ describe('GatherRunner', function() {
         online: true,
       });
 
-      const {gotoURL} = await importMock('../../gather/driver/navigation.js');
+      const {gotoURL} = await importMock('../../gather/driver/navigation.js', import.meta);
       gotoURL
         .mockResolvedValueOnce({finalUrl: requestedUrl, warnings: []})
         .mockResolvedValueOnce({finalUrl: requestedUrl, warnings: ['It is too slow']});

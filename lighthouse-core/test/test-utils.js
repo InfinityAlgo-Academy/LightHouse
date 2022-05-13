@@ -5,6 +5,8 @@
  */
 
 import fs from 'fs';
+import path from 'path';
+import url from 'url';
 
 import {jest} from '@jest/globals';
 
@@ -272,12 +274,17 @@ function getURLArtifactFromDevtoolsLog(devtoolsLog) {
  * 2) uses `import` instead of `require`
  * Use only for modules that were mocked with unstable_mockModule.
  *
- * @param {string} moduleName
+ * Resolves module path relative to importMeta.url.
+ *
+ * @param {string} modulePath
+ * @param {ImportMeta} importMeta
  * @return {Promise<Record<string, jest.Mock>>}
  */
-const importMock = async (moduleName) => {
-  const mock = await import(moduleName);
-  if (!mock[Object.keys(mock)[0]].mock) throw new Error(`${moduleName} was not mocked!`);
+const importMock = async (modulePath, importMeta) => {
+  const dir = path.dirname(url.fileURLToPath(importMeta.url));
+  modulePath = path.resolve(dir, modulePath);
+  const mock = await import(modulePath);
+  if (!mock[Object.keys(mock)[0]].mock) throw new Error(`${modulePath} was not mocked!`);
   return mock;
 };
 

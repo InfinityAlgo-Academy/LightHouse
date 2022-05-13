@@ -835,7 +835,7 @@ describe('Runner', () => {
         // Loads the page successfully in the first pass, fails with PAGE_HUNG in the second.
       });
 
-      const {gotoURL} = await importMock('../gather/driver/navigation.js');
+      const {gotoURL} = await importMock('../gather/driver/navigation.js', import.meta);
       gotoURL.mockImplementation((_, url) => {
         if (url.includes('blank')) return {mainDocumentUrl: '', warnings: []};
         if (firstLoad) {
