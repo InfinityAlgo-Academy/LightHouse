@@ -42,11 +42,11 @@ const flow = JSON.parse(fs.readFileSync(process.argv[2], 'utf-8'));
       if (step.type === 'setViewport') return;
 
       if (step.type === 'navigate' || step.assertedEvents?.find(e => e.type === 'navigation')) {
-        if (this.lhFlow.currentTimespan) {
+        if (this.lhFlow.isTimespanRunning()) {
           await this.lhFlow.endTimespan();
         }
         await this.lhFlow.startNavigation();
-      } else if (!this.lhFlow.currentTimespan) {
+      } else if (!this.lhFlow.isTimespanRunning()) {
         await this.lhFlow.startTimespan();
       }
     }
@@ -54,14 +54,14 @@ const flow = JSON.parse(fs.readFileSync(process.argv[2], 'utf-8'));
     async afterEachStep(step, flow) {
       await super.afterEachStep(step, flow);
       // Navigations should only be one step.
-      if (this.lhFlow.currentNavigation) {
+      if (this.lhFlow.isNavigationRunning()) {
         await this.lhFlow.endNavigation();
       }
     }
 
     async afterAllSteps(flow) {
       await super.afterAllSteps(flow);
-      if (this.lhFlow.currentTimespan) {
+      if (this.lhFlow.isNavigationRunning()) {
         await this.lhFlow.endTimespan();
       }
       const report = await this.lhFlow.generateReport();

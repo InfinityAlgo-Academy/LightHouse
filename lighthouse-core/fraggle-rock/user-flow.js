@@ -121,12 +121,26 @@ class UserFlow {
   }
 
   /**
+   * @return {boolean}
+   */
+  isNavigationRunning() {
+    return Boolean(this._currentNavigation);
+  }
+
+  /**
+   * @return {boolean}
+   */
+  isTimespanRunning() {
+    return Boolean(this._currentTimespan);
+  }
+
+  /**
    * @param {LH.NavigationRequestor} requestor
    * @param {StepOptions=} stepOptions
    */
   async navigate(requestor, stepOptions) {
-    if (this.currentTimespan) throw new Error('Timespan already in progress');
-    if (this.currentNavigation) throw new Error('Navigation already in progress');
+    if (this._currentTimespan) throw new Error('Timespan already in progress');
+    if (this._currentNavigation) throw new Error('Navigation already in progress');
 
     const options = this._getNextNavigationOptions(stepOptions);
     const gatherResult = await navigationGather(requestor, options);
@@ -147,7 +161,7 @@ class UserFlow {
       () => new Promise(continueNavigation => setupPromise.resolve(continueNavigation)),
       stepOptions
     ).catch(err => {
-      if (this.currentNavigation) {
+      if (this._currentNavigation) {
         // If the navigation already started, re-throw the error so it is emitted when `navigatePromise` is awaited.
         throw err;
       } else {
@@ -163,14 +177,14 @@ class UserFlow {
       return navigatePromise;
     }
 
-    this.currentNavigation = {endNavigation};
+    this._currentNavigation = {endNavigation};
   }
 
   async endNavigation() {
-    if (this.currentTimespan) throw new Error('Timespan already in progress');
-    if (!this.currentNavigation) throw new Error('No navigation in progress');
-    const result = await this.currentNavigation.endNavigation();
-    this.currentNavigation = undefined;
+    if (this._currentTimespan) throw new Error('Timespan already in progress');
+    if (!this._currentNavigation) throw new Error('No navigation in progress');
+    const result = await this._currentNavigation.endNavigation();
+    this._currentNavigation = undefined;
     return result;
   }
 
@@ -178,21 +192,21 @@ class UserFlow {
    * @param {StepOptions=} stepOptions
    */
   async startTimespan(stepOptions) {
-    if (this.currentTimespan) throw new Error('Timespan already in progress');
-    if (this.currentNavigation) throw new Error('Navigation already in progress');
+    if (this._currentTimespan) throw new Error('Timespan already in progress');
+    if (this._currentNavigation) throw new Error('Navigation already in progress');
 
     const options = {...this.options, ...stepOptions};
     const timespan = await startTimespanGather(options);
-    this.currentTimespan = {timespan, options};
+    this._currentTimespan = {timespan, options};
   }
 
   async endTimespan() {
-    if (!this.currentTimespan) throw new Error('No timespan in progress');
-    if (this.currentNavigation) throw new Error('Navigation already in progress');
+    if (!this._currentTimespan) throw new Error('No timespan in progress');
+    if (this._currentNavigation) throw new Error('Navigation already in progress');
 
-    const {timespan, options} = this.currentTimespan;
+    const {timespan, options} = this._currentTimespan;
     const gatherResult = await timespan.endTimespanGather();
-    this.currentTimespan = undefined;
+    this._currentTimespan = undefined;
 
     this._addGatherStep(gatherResult, options);
   }
@@ -201,8 +215,8 @@ class UserFlow {
    * @param {StepOptions=} stepOptions
    */
   async snapshot(stepOptions) {
-    if (this.currentTimespan) throw new Error('Timespan already in progress');
-    if (this.currentNavigation) throw new Error('Navigation already in progress');
+    if (this._currentTimespan) throw new Error('Timespan already in progress');
+    if (this._currentNavigation) throw new Error('Navigation already in progress');
 
     const options = {...this.options, ...stepOptions};
     const gatherResult = await snapshotGather(options);
