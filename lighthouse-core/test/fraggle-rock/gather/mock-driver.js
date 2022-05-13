@@ -153,7 +153,7 @@ function mockRunnerModule() {
     reset,
   };
 
-  jest.mock(`${LH_ROOT}/lighthouse-core/runner.js`, () => runnerModule);
+  jest.unstable_mockModule(`${LH_ROOT}/lighthouse-core/runner.js`, () => runnerModule);
 
   function reset() {
     runnerModule.getGathererList.mockReturnValue([]);

@@ -12,7 +12,7 @@ import {jest} from '@jest/globals';
 
 // import Runner from '../runner.js';
 // import GatherRunner from '../gather/gather-runner.js';
-import driverMock from './gather/fake-driver.js';
+import {fakeDriver as driverMock} from './gather/fake-driver.js';
 // import {Config} from '../config/config.js';
 import {Audit} from '../audits/audit.js';
 import {Gatherer} from '../gather/gatherers/gatherer.js';
@@ -27,22 +27,22 @@ const {require, __dirname} = createCommonjsRefs(import.meta);
 // Some imports needs to be done dynamically, so that their dependencies will be mocked.
 // See: https://jestjs.io/docs/ecmascript-modules#differences-between-esm-and-commonjs
 //      https://github.com/facebook/jest/issues/10025
-/** @type {typeof import('../runner.js')} */
+/** @type {typeof import('../runner.js').Runner} */
 let Runner;
-/** @type {typeof import('../gather/gather-runner.js')} */
+/** @type {typeof import('../gather/gather-runner.js').GatherRunner} */
 let GatherRunner;
-/** @type {typeof import('../config/config.js')} */
+/** @type {typeof import('../config/config.js').Config} */
 let Config;
 
 beforeAll(async () => {
-  Runner = (await import('../runner.js')).default;
-  GatherRunner = (await import('../gather/gather-runner.js')).default;
-  Config = (await import('../config/config.js')).default;
+  Runner = (await import('../runner.js')).Runner;
+  GatherRunner = (await import('../gather/gather-runner.js')).GatherRunner;
+  Config = (await import('../config/config.js')).Config;
 });
 
 makeMocksForGatherRunner();
 
-jest.mock('../gather/driver/service-workers.js', () => ({
+jest.unstable_mockModule('../gather/driver/service-workers.js', () => ({
   getServiceWorkerVersions: jest.fn().mockResolvedValue({versions: []}),
   getServiceWorkerRegistrations: jest.fn().mockResolvedValue({registrations: []}),
 }));

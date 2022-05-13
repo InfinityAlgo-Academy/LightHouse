@@ -7,7 +7,7 @@
 import {strict as assert} from 'assert';
 
 import ManifestValues from '../../computed/manifest-values.js';
-import manifestParser from '../../lib/manifest-parser.js';
+import {parseManifest} from '../../lib/manifest-parser.js';
 import manifest from '../fixtures/manifest.json';
 
 const manifestSrc = JSON.stringify(manifest);
@@ -27,7 +27,7 @@ function getMockContext() {
 function noUrlManifestParser(manifestSrc) {
   const EXAMPLE_MANIFEST_URL = 'https://example.com/manifest.json';
   const EXAMPLE_DOC_URL = 'https://example.com/index.html';
-  return manifestParser(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
+  return parseManifest(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
 }
 
 describe('ManifestValues computed artifact', () => {

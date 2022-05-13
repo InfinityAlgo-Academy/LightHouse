@@ -8,7 +8,7 @@ import {strict as assert} from 'assert';
 
 import devtoolsLog from '../fixtures/traces/progressive-app-m60.devtools.log.json';
 import LoadSimulator from '../../computed/load-simulator.js';
-import NetworkNode from '../../lib/dependency-graph/network-node.js';
+import {NetworkNode} from '../../lib/dependency-graph/network-node.js';
 
 function createNetworkNode() {
   return new NetworkNode({
