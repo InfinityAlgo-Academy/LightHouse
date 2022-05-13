@@ -33,9 +33,9 @@ const mockRunner = mockRunnerModule();
 // Establish the mocks before we import the file under test.
 /** @type {ReturnType<typeof createMockDriver>} */
 let mockDriver;
-jest.mock('../../../fraggle-rock/gather/driver.js', () =>
-  mockDriverModule(() => mockDriver.asDriver())
-);
+jest.unstable_mockModule('../../../fraggle-rock/gather/driver.js', () => ({
+  Driver: mockDriverModule(() => mockDriver.asDriver()),
+}));
 
 describe('Timespan Runner', () => {
   /** @type {ReturnType<typeof createMockPage>} */

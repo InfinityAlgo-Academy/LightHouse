@@ -6,6 +6,7 @@
 
 import {jest} from '@jest/globals';
 
+import {Runner} from '../../runner.js';
 import {createMockPage, mockRunnerModule} from './gather/mock-driver.js';
 // import UserFlow from '../../fraggle-rock/user-flow.js';
 
@@ -22,11 +23,11 @@ beforeAll(async () => {
 });
 
 const snapshotModule = {snapshotGather: jest.fn()};
-jest.mock('../../fraggle-rock/gather/snapshot-runner.js', () => snapshotModule);
+jest.unstable_mockModule('../../fraggle-rock/gather/snapshot-runner.js', () => snapshotModule);
 const navigationModule = {navigationGather: jest.fn()};
-jest.mock('../../fraggle-rock/gather/navigation-runner.js', () => navigationModule);
+jest.unstable_mockModule('../../fraggle-rock/gather/navigation-runner.js', () => navigationModule);
 const timespanModule = {startTimespanGather: jest.fn()};
-jest.mock('../../fraggle-rock/gather/timespan-runner.js', () => timespanModule);
+jest.unstable_mockModule('../../fraggle-rock/gather/timespan-runner.js', () => timespanModule);
 
 const mockRunner = mockRunnerModule();
 
@@ -260,10 +261,8 @@ describe('UserFlow', () => {
 
   describe('auditGatherSteps', () => {
     it('should audit gather steps', async () => {
-      const runnerActual = /** @type {typeof import('../../runner.js').Runner} */ (
-        jest.requireActual('../../runner.js'));
-      mockRunner.getGathererList.mockImplementation(runnerActual.getGathererList);
-      mockRunner.getAuditList.mockImplementation(runnerActual.getAuditList);
+      mockRunner.getGathererList.mockImplementation(Runner.getGathererList);
+      mockRunner.getAuditList.mockImplementation(Runner.getAuditList);
       mockRunner.audit.mockImplementation(artifacts => ({
         lhr: {
           finalUrl: artifacts.URL.finalUrl,

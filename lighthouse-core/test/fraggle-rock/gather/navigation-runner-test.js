@@ -19,6 +19,7 @@ import DevtoolsLogGatherer from '../../../gather/gatherers/devtools-log.js';
 import TraceGatherer from '../../../gather/gatherers/trace.js';
 import {fnAny} from '../../test-utils.js';
 import {networkRecordsToDevtoolsLog} from '../../network-records-to-devtools-log.js';
+import {Runner} from '../../../runner.js';
 // import {Runner} from '../../../fraggle-rock/gather/navigation-runner.js';
 
 // Some imports needs to be done dynamically, so that their dependencies will be mocked.
@@ -32,12 +33,10 @@ beforeAll(async () => {
 });
 
 const mocks = mockDriverSubmodules();
-
-/** @type {ReturnType<typeof mockRunnerModule>} */
-let mockRunner;
+const mockRunner = mockRunnerModule();
 
 // Establish the mocks before we import the file under test.
-jest.mock('../../../runner.js', () => mockRunner = mockRunnerModule());
+jest.unstable_mockModule('../../../runner.js', () => ({Runner: mockRunner}));
 
 /** @typedef {{meta: LH.Gatherer.GathererMeta<'Accessibility'>, getArtifact: jest.Mock<any, any>, startInstrumentation:jest.Mock<any, any>, stopInstrumentation: jest.Mock<any, any>, startSensitiveInstrumentation:jest.Mock<any, any>, stopSensitiveInstrumentation: jest.Mock<any, any>}} MockGatherer */
 
@@ -560,9 +559,7 @@ describe('NavigationRunner', () => {
 
   describe('navigation', () => {
     it('should throw on invalid URL', async () => {
-      const runnerActual = /** @type {typeof import('../../../runner.js').Runner} */ (
-        jest.requireActual('../../../runner.js'));
-      mockRunner.gather.mockImplementation(runnerActual.gather);
+      mockRunner.gather.mockImplementation(Runner.gather);
 
       const navigatePromise = runner.navigationGather(
         '',

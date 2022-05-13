@@ -31,9 +31,9 @@ const mockRunner = mockRunnerModule();
 /** @type {ReturnType<typeof createMockDriver>} */
 let mockDriver;
 
-jest.mock('../../../fraggle-rock/gather/driver.js', () =>
-  mockDriverModule(() => mockDriver.asDriver())
-);
+jest.unstable_mockModule('../../../fraggle-rock/gather/driver.js', () => ({
+  Driver: mockDriverModule(() => mockDriver.asDriver()),
+}));
 
 describe('Snapshot Runner', () => {
   /** @type {ReturnType<typeof createMockPage>} */
