@@ -8,13 +8,12 @@ import module from 'module';
 import url from 'url';
 import path from 'path';
 
-const require = module.createRequire(import.meta.url);
-
 /**
  * Commonjs equivalent of `require.resolve`.
  * @param {string} packageName
  */
 function resolveModulePath(packageName) {
+  const require = module.createRequire(import.meta.url);
   return require.resolve(packageName);
 }
 
@@ -22,7 +21,15 @@ function resolveModulePath(packageName) {
  * @param {ImportMeta} importMeta
  */
 function createCommonjsRefs(importMeta) {
-  const require = module.createRequire(importMeta.url);
+  // `build-bundle.js` converts this variable to true. `module.createRequire` cannot be
+  // made to work in a browser context. The only usage of this function in a module that is
+  // bundled is in `config-helpers.js`, but that is already guarded behind a check for
+  // a bundled environment. All other usages are from tests.
+  const isBundled = false;
+  const require = isBundled ?
+    // @ts-expect-error
+    /** @type {NodeRequire} */ (undefined) :
+    module.createRequire(importMeta.url);
   const filename = url.fileURLToPath(importMeta.url);
   const dirname = path.dirname(filename);
   return {require, __filename: filename, __dirname: dirname};
@@ -36,8 +43,16 @@ function getModuleDirectory(importMeta) {
   return path.dirname(filename);
 }
 
+/**
+ * @param {ImportMeta} importMeta
+ */
+function getModuleName(importMeta) {
+  return url.fileURLToPath(importMeta.url);
+}
+
 export {
   resolveModulePath,
   createCommonjsRefs,
   getModuleDirectory,
+  getModuleName,
 };

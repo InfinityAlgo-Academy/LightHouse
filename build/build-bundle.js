@@ -139,8 +139,8 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
         values: {
           '/* BUILD_REPLACE_BUNDLED_MODULES */': `[\n${bundledMapEntriesCode},\n]`,
           // TODO(esmodules): remove
-          '__dirname': (id) => `'${path.relative(LH_ROOT, path.dirname(id))}'`,
-          '__filename': (id) => `'${path.relative(LH_ROOT, id)}'`,
+          // '__dirname': (id) => `'${path.relative(LH_ROOT, path.dirname(id))}'`,
+          // '__filename': (id) => `'${path.relative(LH_ROOT, id)}'`,
           // This package exports to default in a way that causes Rollup to get confused,
           // resulting in MessageFormat being undefined.
           'require(\'intl-messageformat\').default': 'require(\'intl-messageformat\')',
@@ -152,8 +152,16 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
           // TODO: Use globalThis directly.
           'global.isLightrider': 'globalThis.isLightrider',
           'global.isDevtools': 'globalThis.isDevtools',
+          // For some reason, `shim` doesn't work to force this module to return false, so instead
+          // just replace usages of it with false.
           'esMain(import.meta)': 'false',
           'import esMain from \'es-main\'': '',
+          // By default Rollup converts `import.meta` to a big mess of `document.currentScript && ...`,
+          // and uses the output name as the url. Instead, do a simpler conversion and use the
+          // module path.
+          'import.meta': (id) => `{url: '${path.relative(LH_ROOT, id)}'}`,
+          // See esm-utils.js
+          'isBundled = false': 'isBundled = true',
         },
       }),
       rollupPlugins.alias({
@@ -168,6 +176,11 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
         'lighthouse': `
           import {Audit} from '${require.resolve('../lighthouse-core/audits/audit.js')}';
           export {Audit};
+        `,
+        'url': `
+          export const URL = globalThis.URL;
+          export const fileURLToPath = url => url;
+          export default {URL, fileURLToPath};
         `,
       }),
       rollupPlugins.json(),
@@ -225,7 +238,7 @@ async function cli(argv) {
   // Take paths relative to cwd and build.
   const [entryPath, distPath] = argv.slice(2)
     .map(filePath => path.resolve(process.cwd(), filePath));
-  await buildBundle(entryPath, distPath);
+  await buildBundle(entryPath, distPath, {minify: !process.env.DEBUG});
 }
 
 // Test if called from the CLI or as a module.

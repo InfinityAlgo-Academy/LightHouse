@@ -14,9 +14,7 @@ import {getAvailableLocales} from '../../../shared/localization/format.js';
 import log from 'lighthouse-logger';
 import {LH_ROOT} from '../../../root.js';
 import {isIcuMessage, formatMessage, DEFAULT_LOCALE} from '../../../shared/localization/format.js';
-import {createCommonjsRefs} from '../../scripts/esm-utils.js';
-
-const {__filename: FN} = createCommonjsRefs(import.meta);
+import {getModuleName} from '../../scripts/esm-utils.js';
 
 const UIStrings = {
   /** Used to show the duration in milliseconds that something lasted. The `{timeInMs}` placeholder will be replaced with the time duration, shown in milliseconds (e.g. 63 ms) */
@@ -190,7 +188,7 @@ function createIcuMessageFn(filename, fileStrings) {
     const keyname = Object.keys(mergedStrings).find(key => mergedStrings[key] === message);
     if (!keyname) throw new Error(`Could not locate: ${message}`);
 
-    const filenameToLookup = keyname in fileStrings ? filename : FN;
+    const filenameToLookup = keyname in fileStrings ? filename : getModuleName(import.meta);
     const unixStyleFilename = path.relative(LH_ROOT, filenameToLookup).replace(/\\/g, '/');
     const i18nId = `${unixStyleFilename} | ${keyname}`;
 
