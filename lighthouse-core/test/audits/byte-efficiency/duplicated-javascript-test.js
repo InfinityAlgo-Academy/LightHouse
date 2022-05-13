@@ -4,7 +4,6 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-
 import DuplicatedJavascript from '../../../audits/byte-efficiency/duplicated-javascript.js';
 import trace from '../../fixtures/traces/lcp-m78.json';
 import devtoolsLog from '../../fixtures/traces/lcp-m78.devtools.log.json';
