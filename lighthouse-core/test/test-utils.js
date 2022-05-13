@@ -177,7 +177,7 @@ async function flushAllTimersAndMicrotasks(ms = 1000) {
  * shouldn't concern themselves about.
  */
 function makeMocksForGatherRunner() {
-  jest.mock(require.resolve('../gather/driver/environment.js'), () => ({
+  jest.unstable_mockModule(require.resolve('../gather/driver/environment.js'), () => ({
     getBenchmarkIndex: () => Promise.resolve(150),
     getBrowserVersion: async () => ({userAgent: 'Chrome', milestone: 80}),
     getEnvironmentWarnings: () => [],
@@ -190,16 +190,16 @@ function makeMocksForGatherRunner() {
   jest.mock(require.resolve('../gather/gatherers/web-app-manifest.js'), () => ({
     getWebAppManifest: async () => null,
   }));
-  jest.mock(require.resolve('../lib/emulation.js'), () => ({
+  jest.unstable_mockModule(require.resolve('../lib/emulation.js'), () => ({
     emulate: jest.fn(),
     throttle: jest.fn(),
     clearThrottling: jest.fn(),
   }));
-  jest.mock(require.resolve('../gather/driver/prepare.js'), () => ({
+  jest.unstable_mockModule(require.resolve('../gather/driver/prepare.js'), () => ({
     prepareTargetForNavigationMode: jest.fn(),
     prepareTargetForIndividualNavigation: jest.fn().mockResolvedValue({warnings: []}),
   }));
-  jest.mock(require.resolve('../gather/driver/storage.js'), () => ({
+  jest.unstable_mockModule(require.resolve('../gather/driver/storage.js'), () => ({
     clearDataForOrigin: jest.fn(),
     cleanBrowserCaches: jest.fn(),
     getImportantStorageWarning: jest.fn(),
