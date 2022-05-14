@@ -4,7 +4,6 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-
 import {strict as assert} from 'assert';
 
 import FirstContentfulPaint from '../../../computed/metrics/first-contentful-paint.js'; // eslint-disable-line max-len
@@ -13,8 +12,6 @@ import devtoolsLog from '../../fixtures/traces/progressive-app-m60.devtools.log.
 import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';
 
 const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
-
-/* eslint-env jest */
 
 describe('Metrics: FCP', () => {
   const gatherContext = {gatherMode: 'navigation'};

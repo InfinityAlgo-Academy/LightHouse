@@ -4,7 +4,6 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-
 import {strict as assert} from 'assert';
 
 import manifestParser from '../../lib/manifest-parser.js';
@@ -23,8 +22,6 @@ const EXAMPLE_MANIFEST_BLOB_URL = 'blob:https://example.com/manifest.json';
 function noUrlManifestParser(manifestSrc) {
   return manifestParser(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
 }
-
-/* eslint-env jest */
 
 describe('Manifest Parser', function() {
   it('should not parse empty string input', function() {

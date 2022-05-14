@@ -4,10 +4,7 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-
 import LayoutShiftElementsAudit from '../../audits/layout-shift-elements.js';
-
-/* eslint-env jest */
 
 describe('Performance: layout-shift-elements audit', () => {
   it('correctly surfaces a single CLS element', async () => {

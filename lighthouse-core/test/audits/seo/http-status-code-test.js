@@ -4,13 +4,10 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-
 import {strict as assert} from 'assert';
 
 import HTTPStatusCodeAudit from '../../../audits/seo/http-status-code.js';
 import networkRecordsToDevtoolsLog from '../../network-records-to-devtools-log.js';
-
-/* eslint-env jest */
 
 describe('SEO: HTTP code audit', () => {
   it('fails when status code is unsuccesfull', () => {

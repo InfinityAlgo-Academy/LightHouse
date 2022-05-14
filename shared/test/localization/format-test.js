@@ -12,8 +12,6 @@ const i18n = require('../../../lighthouse-core/lib/i18n/i18n.js');
 const constants = require('../../../lighthouse-core/config/constants.js');
 const locales = require('../../localization/locales.js');
 
-/* eslint-env jest */
-
 describe('format', () => {
   describe('DEFAULT_LOCALE', () => {
     it('is the same as the default config locale', () => {

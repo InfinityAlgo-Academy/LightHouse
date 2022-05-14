@@ -4,7 +4,6 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-
 import {strict as assert} from 'assert';
 
 import SpeedIndex from '../../../computed/metrics/speed-index.js';
@@ -13,8 +12,6 @@ import devtoolsLog from '../../fixtures/traces/progressive-app-m60.devtools.log.
 import trace1msLayout from '../../fixtures/traces/speedindex-1ms-layout-m84.trace.json';
 import devtoolsLog1msLayout from '../../fixtures/traces/speedindex-1ms-layout-m84.devtoolslog.json'; // eslint-disable-line max-len
 import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';
-
-/* eslint-env jest */
 
 describe('Metrics: Speed Index', () => {
   const gatherContext = {gatherMode: 'navigation'};

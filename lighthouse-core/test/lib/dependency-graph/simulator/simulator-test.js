@@ -4,7 +4,6 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-
 import {strict as assert} from 'assert';
 
 import NetworkNode from '../../../../lib/dependency-graph/network-node.js';
@@ -39,8 +38,6 @@ function cpuTask({tid, ts, duration}) {
   const dur = ((duration || 0) * 1000) / 5;
   return {tid, ts, dur};
 }
-
-/* eslint-env jest */
 describe('DependencyGraph/Simulator', () => {
   // Insulate the simulator tests from DNS multiplier changes
   let originalDNSMultiplier;

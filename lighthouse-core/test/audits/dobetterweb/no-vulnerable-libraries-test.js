@@ -4,14 +4,12 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-
 import {strict as assert} from 'assert';
 
 import semver from 'semver';
 
 import NoVulnerableLibrariesAudit from '../../../audits/dobetterweb/no-vulnerable-libraries.js';
 
-/* eslint-env jest */
 describe('Avoids front-end JavaScript libraries with known vulnerabilities', () => {
   describe('#normalizeVersion', () => {
     it('should leave valid and unsavable versions untouched', () => {

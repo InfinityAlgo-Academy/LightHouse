@@ -4,14 +4,12 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-
 import {strict as assert} from 'assert';
 
 import Metrics from '../../../lib/traces/pwmetrics-events.js';
 import dbwTrace from '../../results/artifacts/defaultPass.trace.json';
 import dbwResults from '../../results/sample_v2.json';
 
-/* eslint-env jest */
 describe('metrics events class', () => {
   it('exposes metric definitions', () => {
     assert.ok(Metrics.metricsDefinitions.length > 5, 'metrics not exposed');

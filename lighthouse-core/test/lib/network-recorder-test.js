@@ -4,7 +4,6 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-
 import {strict as assert} from 'assert';
 
 import NetworkRecorder from '../../lib/network-recorder.js';
@@ -15,7 +14,6 @@ import redirectsDevtoolsLog from '../fixtures/wikipedia-redirect.devtoolslog.jso
 import redirectsScriptDevtoolsLog from '../fixtures/redirects-from-script.devtoolslog.json';
 import lrRequestDevtoolsLog from '../fixtures/lr.devtoolslog.json';
 
-/* eslint-env jest */
 describe('network recorder', function() {
   it('recordsFromLogs expands into records', function() {
     assert.equal(devtoolsLogItems.length, 555);

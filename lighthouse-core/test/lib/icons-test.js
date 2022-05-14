@@ -4,7 +4,6 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-
 import {strict as assert} from 'assert';
 
 import icons from '../../lib/icons.js';
@@ -13,7 +12,6 @@ import manifestParser from '../../lib/manifest-parser.js';
 const EXAMPLE_MANIFEST_URL = 'https://example.com/manifest.json';
 const EXAMPLE_DOC_URL = 'https://example.com/index.html';
 
-/* global describe, it */
 describe('Icons helper', () => {
   describe('icons exist check', () => {
     it('copes when no manifest is provided', () => {

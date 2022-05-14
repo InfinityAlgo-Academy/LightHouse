@@ -4,13 +4,10 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-
 import {strict as assert} from 'assert';
 
 import PasswordInputsCanBePastedIntoAudit from
   '../../../audits/dobetterweb/password-inputs-can-be-pasted-into.js';
-
-/* eslint-env jest */
 
 describe('Password inputs can be pasted into', () => {
   it('passes when there are no password inputs preventing paste', () => {

@@ -46,6 +46,8 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
       valueEl.textContent = 'Error!';
       const tooltip = this.dom.createChildOf(descriptionEl, 'span');
       tooltip.textContent = audit.result.errorMessage || 'Report error: no metric information';
+    } else if (audit.result.scoreDisplayMode === 'notApplicable') {
+      valueEl.textContent = '--';
     }
 
     return element;

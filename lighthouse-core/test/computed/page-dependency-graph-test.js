@@ -4,7 +4,6 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-
 import {strict as assert} from 'assert';
 
 import PageDependencyGraph from '../../computed/page-dependency-graph.js';
@@ -29,8 +28,6 @@ function createRequest(
 }
 
 const TOPLEVEL_TASK_NAME = 'TaskQueueManager::ProcessTaskFromWorkQueue';
-
-/* eslint-env jest */
 describe('PageDependencyGraph computed artifact:', () => {
   let processedTrace;
   let URL;

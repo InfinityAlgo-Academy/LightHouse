@@ -4,7 +4,6 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-
 import {strict as assert} from 'assert';
 
 import TraceProcessor from '../../../lib/tracehouse/trace-processor.js';
@@ -22,8 +21,6 @@ import backgroundTabTrace from '../../fixtures/traces/backgrounded-tab-missing-p
 import lcpTrace from '../../fixtures/traces/lcp-m78.json';
 import lcpAllFramesTrace from '../../fixtures/traces/frame-metrics-m89.json';
 import startedAfterNavstartTrace from '../../fixtures/traces/tracingstarted-after-navstart.json';
-
-/* eslint-env jest */
 
 describe('TraceProcessor', () => {
   describe('_riskPercentiles', () => {

@@ -77,7 +77,9 @@ echo -e "$check Locale JSON files copied."
 lh_webtests_dir="third-party/chromium-webtests/webtests/http/tests/devtools/lighthouse/"
 fe_webtests_dir="$dt_dir/test/webtests/http/tests/devtools/lighthouse"
 rsync -avh "$lh_webtests_dir" "$fe_webtests_dir" --exclude="OWNERS" --delete
-
+lh_webtests_exp_dir="third-party/chromium-webtests/webtests/platform/generic/http/tests/devtools/lighthouse/"
+fe_webtests_exp_dir="$dt_dir/test/webtests/platform/generic/http/tests/devtools/lighthouse"
+rsync -avh "$lh_webtests_exp_dir" "$fe_webtests_exp_dir" --exclude="OWNERS" --delete
 echo ""
 echo "Done. To run the webtests: "
 echo "    DEVTOOLS_PATH=\"$dt_dir\" yarn test-devtools"

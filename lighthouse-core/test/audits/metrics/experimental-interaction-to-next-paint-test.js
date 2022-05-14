@@ -9,8 +9,6 @@ import ExperimentalInteractionToNextPaint from
 import interactionTrace from '../../fixtures/traces/timespan-responsiveness-m103.trace.json';
 import noInteractionTrace from '../../fixtures/traces/jumpy-cls-m90.json';
 
-/* eslint-env jest */
-
 describe('Interaction to Next Paint', () => {
   function getTestData() {
     const artifacts = {
@@ -32,10 +30,30 @@ describe('Interaction to Next Paint', () => {
     const {artifacts, context} = getTestData();
     const result = await ExperimentalInteractionToNextPaint.audit(artifacts, context);
     expect(result).toEqual({
-      score: 0.63,
-      numericValue: 392,
+      score: 0.66,
+      numericValue: 368,
       numericUnit: 'millisecond',
-      displayValue: expect.toBeDisplayString('390 ms'),
+      displayValue: expect.toBeDisplayString('370 ms'),
+    });
+  });
+
+  it('falls back Responsiveness timing if no m103 EventTiming events', async () => {
+    const {artifacts, context} = getTestData();
+    const clonedTrace = JSON.parse(JSON.stringify(artifacts.traces.defaultPass));
+    for (let i = 0; i < clonedTrace.traceEvents.length; i++) {
+      if (clonedTrace.traceEvents[i].name !== 'EventTiming') continue;
+      clonedTrace.traceEvents[i].args = {};
+    }
+    artifacts.traces.defaultPass = clonedTrace;
+
+    const result = await ExperimentalInteractionToNextPaint.audit(artifacts, context);
+    // Conveniently, the matching responsiveness event has slightly different
+    // duration than the matching interaction event so can be tested against.
+    expect(result).toEqual({
+      score: 0.67,
+      numericValue: 364,
+      numericUnit: 'millisecond',
+      displayValue: expect.toBeDisplayString('360 ms'),
     });
   });
 
