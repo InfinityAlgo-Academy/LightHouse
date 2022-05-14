@@ -5,9 +5,11 @@
  */
 'use strict';
 
-const fetch = require('node-fetch');
+import {jest} from '@jest/globals';
 
-const InstallableManifestAudit = require('../../lighthouse-core/audits/installable-manifest.js');
+import fetch from 'node-fetch';
+
+import {UIStrings} from '../../lighthouse-core/audits/installable-manifest.js';
 
 jest.setTimeout(20_000);
 
@@ -76,7 +78,7 @@ Array [
   });
 
   it('are each handled explicitly in the gatherer', () => {
-    const errorStrings = Object.keys(InstallableManifestAudit.UIStrings)
+    const errorStrings = Object.keys(UIStrings)
       .filter(key => chromiumErrorIds.includes(key))
       .sort();
     expect(errorStrings).toEqual(chromiumErrorIds);

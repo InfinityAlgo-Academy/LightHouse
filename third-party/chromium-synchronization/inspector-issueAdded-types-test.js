@@ -5,9 +5,9 @@
  */
 'use strict';
 
-const fs = require('fs');
-const fetch = require('node-fetch');
-const {LH_ROOT} = require('../../root.js');
+import fs from 'fs';
+import fetch from 'node-fetch';
+import { LH_ROOT } from '../../root.js';
 
 const inspectorIssuesGathererPath = LH_ROOT +
   '/lighthouse-core/gather/gatherers/inspector-issues.js';
