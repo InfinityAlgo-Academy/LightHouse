@@ -5,10 +5,16 @@
  */
 'use strict';
 
+import fs from 'fs';
 import URL from '../url-shim.js';
 import jsonld from 'jsonld';
-import schemaOrgContext from './assets/jsonldcontext.json';
+import {LH_ROOT} from '../../../root.js';
+
 const SCHEMA_ORG_HOST = 'schema.org';
+
+/** @type {import('./assets/jsonldcontext.json')} */
+const schemaOrgContext = JSON.parse(fs.readFileSync(
+  LH_ROOT + '/lighthouse-core/lib/sd-validation/assets/jsonldcontext.json', 'utf-8'));
 
 /**
  * Custom loader that prevents network calls and allows us to return local version of the

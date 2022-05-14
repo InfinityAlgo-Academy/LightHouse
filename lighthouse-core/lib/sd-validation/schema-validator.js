@@ -5,8 +5,14 @@
  */
 'use strict';
 
+import fs from 'fs';
 import walkObject from './helpers/walk-object.js';
-import schemaStructure from './assets/schema-tree.json';
+import {LH_ROOT} from '../../../root.js';
+
+/** @type {import('./assets/schema-tree.json')} */
+const schemaStructure = JSON.parse(fs.readFileSync(
+  LH_ROOT + '/lighthouse-core/lib/sd-validation/assets/schema-tree.json', 'utf-8'));
+
 const TYPE_KEYWORD = '@type';
 const SCHEMA_ORG_URL_REGEX = /https?:\/\/schema\.org\//;
 
