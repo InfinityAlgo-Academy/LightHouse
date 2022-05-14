@@ -167,8 +167,8 @@ Object {
           },
           Object {
             "phase": Object {
-              "formattedDefault": "Processing delay",
-              "i18nId": "lighthouse-core/audits/work-during-interaction.js | processingDelay",
+              "formattedDefault": "Processing time",
+              "i18nId": "lighthouse-core/audits/work-during-interaction.js | processingTime",
               "values": undefined,
             },
             "subItems": Object {
@@ -227,7 +227,7 @@ Object {
             "endTs": 633282934296,
             "startTs": 633282649296,
           },
-          "processingDelay": Object {
+          "processingTime": Object {
             "endTs": 633282649296,
             "startTs": 633282608296,
           },

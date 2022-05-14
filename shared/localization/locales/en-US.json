@@ -1676,8 +1676,8 @@
   "lighthouse-core/audits/work-during-interaction.js | presentationDelay": {
     "message": "Presentation delay"
   },
-  "lighthouse-core/audits/work-during-interaction.js | processingDelay": {
-    "message": "Processing delay"
+  "lighthouse-core/audits/work-during-interaction.js | processingTime": {
+    "message": "Processing time"
   },
   "lighthouse-core/audits/work-during-interaction.js | title": {
     "message": "Minimizes work during key interaction"
