@@ -11,6 +11,8 @@ jobs:
     strategy:
       matrix:
         node: ['14', '16', '17']
+      # TODO remove
+      fail-fast: false
     runs-on: ubuntu-latest
     name: node ${{ matrix.node }}
     env:
