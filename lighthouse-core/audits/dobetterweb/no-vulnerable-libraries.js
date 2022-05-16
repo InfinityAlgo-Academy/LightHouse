@@ -19,8 +19,6 @@ import semver from 'semver';
 import * as i18n from '../../lib/i18n/i18n.js';
 import {LH_ROOT} from '../../../root.js';
 
-// TODO: support readJson in inline-fs
-// const snykDatabase = readJson(`${LH_ROOT}/third-party/snyk/snapshot.json`);
 const snykDatabase = JSON.parse(
   fs.readFileSync(`${LH_ROOT}/third-party/snyk/snapshot.json`, 'utf-8'));
 

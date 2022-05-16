@@ -17,6 +17,10 @@ const lighthouseVersion = pkg.version;
 /**
  * Return parsed json object.
  * Resolves path relative to importMeta.url (if provided) or LH_ROOT (if not provided).
+ *
+ * Note: Do not use this in lighthouse-core/ outside tests or scripts, as it
+ * will not be inlined when bundled. Instead, use `fs.readFileSync`.
+ *
  * @param {string} filePath Can be an absolute or relative path.
  * @param {ImportMeta=} importMeta
  */

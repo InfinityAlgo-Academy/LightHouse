@@ -337,9 +337,6 @@ class LegacyJavascript extends ByteEfficiencyAudit {
     const transformResults = matches.filter(m => m.name.startsWith('@'));
 
     let estimatedWastedBytesFromPolyfills = 0;
-    // TODO(esmoudles): if we want to use readJson, the inline-fs plugin needs to handle this.
-    // /** @type {import('../../scripts/legacy-javascript/create-polyfill-size-estimation.js').PolyfillSizeEstimator} */
-    // const graph = readJson('./polyfill-graph-data.json', import.meta);
     const modulesSeen = new Set();
     for (const result of polyfillResults) {
       const modules = graph.dependencies[result.name];
