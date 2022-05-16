@@ -186,7 +186,7 @@ export class ElementScreenshotRenderer {
         overlay.remove();
         return;
       }
-      overlay.appendChild(screenshotElement);
+      overlay.append(screenshotElement);
       overlay.addEventListener('click', () => overlay.remove());
     });
   }

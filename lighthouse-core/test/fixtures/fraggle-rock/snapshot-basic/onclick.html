@@ -27,7 +27,7 @@
     function addTemplate(selector) {
       /** @type {HTMLTemplateElement} */
       const template = document.querySelector(selector);
-      document.body.appendChild(template.content.cloneNode(true));
+      document.body.append(template.content.cloneNode(true));
     }
 
     document.addEventListener('click', () => {

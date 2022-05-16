@@ -18,13 +18,13 @@ setTimeout(() => {
   const link = document.createElement('link');
   link.rel = 'stylesheet';
   link.href = 'https://fonts.googleapis.com/css?family=Ranchers&display=block';
-  document.head.appendChild(link);
+  document.head.append(link);
 
   link.onload = () => {
     // Make sure LCP is waiting on the network so the above resources are considered important.
     const lcpElement = document.createElement('div');
     lcpElement.style.fontFamily = 'Ranchers';
     lcpElement.textContent = 'Here is some really tall text!'.repeat(50)
-    document.body.appendChild(lcpElement);
+    document.body.append(lcpElement);
   };
 }, 300);
