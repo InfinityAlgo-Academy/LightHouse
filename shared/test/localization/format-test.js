@@ -109,14 +109,14 @@ describe('format', () => {
   describe('#getFormatted', () => {
     it('returns the formatted string', () => {
       const UIStrings = {testMessage: 'happy test'};
-      const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+      const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
       const formattedStr = format.getFormatted(str_(UIStrings.testMessage), 'en');
       expect(formattedStr).toEqual('happy test');
     });
 
     it('returns the formatted string with replacements', () => {
       const UIStrings = {testMessage: 'replacement test ({errorCode})'};
-      const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+      const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
       const formattedStr = format.getFormatted(str_(UIStrings.testMessage,
           {errorCode: 'BOO'}), 'en');
       expect(formattedStr).toEqual('replacement test (BOO)');
@@ -125,7 +125,7 @@ describe('format', () => {
     it('throws an error for invalid locales', () => {
       // Populate a string to try to localize to a bad locale.
       const UIStrings = {testMessage: 'testy test'};
-      const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+      const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
       expect(_ => format.getFormatted(str_(UIStrings.testMessage), 'still-not-a-locale'))
         .toThrow(`Unsupported locale 'still-not-a-locale'`);
@@ -135,7 +135,7 @@ describe('format', () => {
       const UIStrings = {
         testMessage: 'needs {count, number, bytes}KB test {str} in {timeInMs, number, seconds}s',
       };
-      const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+      const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
       const replacements = {
         count: 2555,
@@ -178,7 +178,7 @@ describe('format', () => {
       format.registerLocaleData('en-XZ', localeData);
 
       const UIStrings = {testString: 'en-US string!'};
-      const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+      const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
       const formattedStr = format.getFormatted(str_(UIStrings.testString), 'en-XZ');
       expect(formattedStr).toEqual('en-XZ cuerda!');
     });
@@ -315,7 +315,7 @@ describe('format', () => {
           '=1{hellos 1 goodbye {in, number, bytes}} ' +
           'other{hellos, goodbyes {in, number, bytes}}}}}',
     };
-    const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+    const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
     it('formats a basic message', () => {
       const helloStr = str_(UIStrings.helloWorld);
