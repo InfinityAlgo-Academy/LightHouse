@@ -17,7 +17,6 @@
  * Dummy text for ensuring report robustness: </script> pre$`post %%LIGHTHOUSE_JSON%%
  * (this is handled by terser)
  */
-'use strict';
 
 /** @typedef {import('./dom.js').DOM} DOM */
 

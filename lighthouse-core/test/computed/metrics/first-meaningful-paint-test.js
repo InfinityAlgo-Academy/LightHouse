@@ -3,23 +3,17 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-const FirstMeaningfulPaint = require('../../../computed/metrics/first-meaningful-paint.js');
-const assert = require('assert').strict;
+import {strict as assert} from 'assert';
 
-const TRACE_FIXTURES = '../../fixtures/traces';
-const pwaTrace = require(`${TRACE_FIXTURES}/progressive-app-m60.json`);
-const pwaDevtoolsLog = require(`${TRACE_FIXTURES}/progressive-app-m60.devtools.log.json`);
-
-const badNavStartTrace = require(`${TRACE_FIXTURES}/bad-nav-start-ts.json`);
-const lateTracingStartedTrace = require(`${TRACE_FIXTURES}/tracingstarted-after-navstart.json`);
-const preactTrace = require(`${TRACE_FIXTURES}/preactjs.com_ts_of_undefined.json`);
-const noFMPtrace = require(`${TRACE_FIXTURES}/no_fmp_event.json`);
-
-const {getURLArtifactFromDevtoolsLog} = require('../../test-utils.js');
-
-/* eslint-env jest */
+import FirstMeaningfulPaint from '../../../computed/metrics/first-meaningful-paint.js';
+import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';
+import pwaTrace from '../../fixtures/traces/progressive-app-m60.json';
+import pwaDevtoolsLog from '../../fixtures/traces/progressive-app-m60.devtools.log.json';
+import badNavStartTrace from '../../fixtures/traces/bad-nav-start-ts.json';
+import lateTracingStartedTrace from '../../fixtures/traces/tracingstarted-after-navstart.json';
+import preactTrace from '../../fixtures/traces/preactjs.com_ts_of_undefined.json';
+import noFMPtrace from '../../fixtures/traces/no_fmp_event.json';
 
 describe('Metrics: FMP', () => {
   const gatherContext = {gatherMode: 'navigation'};

@@ -236,9 +236,9 @@ here](https://web.dev/performance-scoring/).
 ### What is the most exciting update in LH v8?
 
 We're really excited about the [interactive
-treemap](https://github.com/GoogleChrome/lighthouse/blob/v8changelog/changelog.md#treemap-release),
+treemap](https://github.com/GoogleChrome/lighthouse/releases/tag/v7.5.0#:~:text=We%20are%20releasing%20the%20Lighthouse%20Treemap),
 [filtering audits by
-metric](https://github.com/GoogleChrome/lighthouse/blob/v8changelog/changelog.md#:~:text=new%20metric%20filter),
+metric](https://github.com/GoogleChrome/lighthouse/releases/tag/v8.0.0#:~:text=The%20report%20includes%20a-,new%20metric%20filter,-.%20Pick%20a%20metric),
 and the new [Content Security Policy
 audit](https://web.dev/strict-csp/#adopting-a-strict-csp), which was a
 collaboration with the Google Web Security team.

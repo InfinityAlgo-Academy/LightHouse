@@ -3,14 +3,12 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-/* eslint-env jest */
+import lighthouseStackPacksDep from 'lighthouse-stack-packs';
 
-const lighthouseStackPacksDep = require('lighthouse-stack-packs');
-const stackPacksLib = require('../../lib/stack-packs.js');
-const defaultConfig = require('../../config/default-config.js');
-const Config = require('../../config/config.js');
+import stackPacksLib from '../../lib/stack-packs.js';
+import defaultConfig from '../../config/default-config.js';
+import Config from '../../config/config.js';
 
 function getAuditIds() {
   const config = new Config(defaultConfig);
@@ -22,8 +20,7 @@ describe('stack-packs lib', () => {
     const result = lighthouseStackPacksDep
       .filter(p => !stackPacksLib.stackPacksToInclude.find(p2 => p2.packId === p.id))
       .map(p => p.id);
-    // TODO: waiting for this
-    expect(result).toEqual(['ezoic']);
+    expect(result).toEqual([]);
   });
 });
 
@@ -39,6 +36,7 @@ Array [
   "joomla",
   "magento",
   "next.js",
+  "nuxt",
   "octobercms",
   "react",
   "wordpress",
@@ -163,6 +161,18 @@ Array [
       "uses-responsive-images",
       "user-timings",
       "preload-lcp-image",
+      "unsized-images",
+    ],
+  },
+  Object {
+    "id": "nuxt",
+    "keys": Array [
+      "modern-image-formats",
+      "offscreen-images",
+      "uses-optimized-images",
+      "uses-responsive-images",
+      "preload-lcp-image",
+      "unsized-images",
     ],
   },
   Object {

@@ -143,7 +143,6 @@ class SourceMaps extends FRGatherer {
    * @return {Promise<LH.Artifacts['SourceMaps']>}
    */
   async getArtifact(context) {
-    await context.driver.fetcher.enable();
     const eventProcessPromises = this._scriptParsedEvents
       .map((event) => this._retrieveMapFromScriptParsedEvent(context.driver, event));
     return Promise.all(eventProcessPromises);

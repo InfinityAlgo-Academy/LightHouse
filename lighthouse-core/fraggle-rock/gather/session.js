@@ -14,7 +14,7 @@ const DEFAULT_PROTOCOL_TIMEOUT = 30000;
 /** @implements {LH.Gatherer.FRProtocolSession} */
 class ProtocolSession {
   /**
-   * @param {import('puppeteer').CDPSession} session
+   * @param {LH.Puppeteer.CDPSession} session
    */
   constructor(session) {
     this._session = session;
@@ -93,10 +93,10 @@ class ProtocolSession {
    * @param {(session: ProtocolSession) => void} callback
    */
   addSessionAttachedListener(callback) {
-    /** @param {import('puppeteer').CDPSession} session */
+    /** @param {LH.Puppeteer.CDPSession} session */
     const listener = session => callback(new ProtocolSession(session));
     this._callbackMap.set(callback, listener);
-    this._session.connection().on('sessionattached', listener);
+    this._getConnection().on('sessionattached', listener);
   }
 
   /**
@@ -106,7 +106,7 @@ class ProtocolSession {
   removeSessionAttachedListener(callback) {
     const listener = this._callbackMap.get(callback);
     if (!listener) return;
-    this._session.connection().off('sessionattached', listener);
+    this._getConnection().off('sessionattached', listener);
   }
 
   /**
@@ -170,6 +170,12 @@ class ProtocolSession {
   async dispose() {
     this._session.removeAllListeners();
     await this._session.detach();
+  }
+
+  _getConnection() {
+    const connection = this._session.connection();
+    if (!connection) throw new Error('Connection has been closed.');
+    return connection;
   }
 }
 

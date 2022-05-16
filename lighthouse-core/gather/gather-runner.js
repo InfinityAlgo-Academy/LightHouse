@@ -183,11 +183,6 @@ class GatherRunner {
       const resetStorage = !options.settings.disableStorageReset;
       if (resetStorage) await storage.clearDataForOrigin(session, options.requestedUrl);
 
-      // Disable fetcher, in case a gatherer enabled it.
-      // This cleanup should be removed once the only usage of
-      // fetcher (fetching arbitrary URLs) is replaced by new protocol support.
-      await driver.fetcher.disable();
-
       await driver.disconnect();
     } catch (err) {
       // Ignore disconnecting error if browser was already closed.
@@ -524,12 +519,6 @@ class GatherRunner {
           await GatherRunner.populateBaseArtifacts(passContext);
           isFirstPass = false;
         }
-
-        // Disable fetcher for every pass, in case a gatherer enabled it.
-        // Noop if fetcher was never enabled.
-        // This cleanup should be removed once the only usage of
-        // fetcher (fetching arbitrary URLs) is replaced by new protocol support.
-        await driver.fetcher.disable();
       }
 
       await GatherRunner.disposeDriver(driver, options);

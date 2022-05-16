@@ -5,6 +5,7 @@
  */
 'use strict';
 
+const puppeteer = require('puppeteer-core');
 const log = require('lighthouse-logger');
 const Driver = require('./driver.js');
 const Runner = require('../../runner.js');
@@ -42,6 +43,9 @@ const NetworkRecords = require('../../computed/network-records.js');
  */
 
 /** @typedef {Omit<Parameters<typeof collectPhaseArtifacts>[0], 'phase'>} PhaseState */
+
+const DEFAULT_HOSTNAME = '127.0.0.1';
+const DEFAULT_PORT = 9222;
 
 /**
  * @param {{driver: Driver, config: LH.Config.FRConfig, options?: InternalOptions}} args
@@ -298,12 +302,12 @@ async function _cleanup({requestedUrl, driver, config}) {
 }
 
 /**
- * @param {LH.NavigationRequestor} requestor
- * @param {{page: import('puppeteer').Page, config?: LH.Config.Json, configContext?: LH.Config.FRContext}} options
+ * @param {LH.NavigationRequestor|undefined} requestor
+ * @param {{page?: LH.Puppeteer.Page, config?: LH.Config.Json, configContext?: LH.Config.FRContext}} options
  * @return {Promise<LH.Gatherer.FRGatherResult>}
  */
 async function navigationGather(requestor, options) {
-  const {page, configContext = {}} = options;
+  const {configContext = {}} = options;
   log.setLevel(configContext.logLevel || 'error');
 
   const {config} = initializeConfig(options.config, {...configContext, gatherMode: 'navigation'});
@@ -313,18 +317,29 @@ async function navigationGather(requestor, options) {
   };
 
   // We can't trigger the navigation through user interaction if we reset the page before starting.
-  if (typeof requestor !== 'string') {
+  const isCallback = typeof requestor === 'function';
+  if (isCallback) {
     internalOptions.skipAboutBlank = true;
   }
 
   const runnerOptions = {config, computedCache};
   const artifacts = await Runner.gather(
     async () => {
+      let {page} = options;
+
+      // For navigation mode, we shouldn't connect to a browser in audit mode,
+      // therefore we connect to the browser in the gatherFn callback.
+      if (!page) {
+        const {hostname = DEFAULT_HOSTNAME, port = DEFAULT_PORT} = configContext;
+        const browser = await puppeteer.connect({browserURL: `http://${hostname}:${port}`});
+        page = await browser.newPage();
+      }
+
       const driver = new Driver(page);
       const context = {
         driver,
         config,
-        requestor: typeof requestor === 'string' ? URL.normalizeUrl(requestor) : requestor,
+        requestor: isCallback ? requestor : URL.normalizeUrl(requestor),
         options: internalOptions,
       };
       const {baseArtifacts} = await _setup(context);

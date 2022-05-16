@@ -3,12 +3,12 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-/* eslint-env jest */
+import path from 'path';
 
-const path = require('path');
-const {
+import {jest} from '@jest/globals';
+
+import {
   deepClone,
   deepCloneConfigJson,
   resolveSettings,
@@ -18,12 +18,15 @@ const {
   mergePlugins,
   mergeConfigFragment,
   mergeConfigFragmentArrayByKey,
-} = require('../../config/config-helpers.js');
-const Runner = require('../../runner.js');
-const Gatherer = require('../../gather/gatherers/gatherer.js');
-const ImageElementsGatherer = require('../../gather/gatherers/image-elements.js');
-const UserTimingsAudit = require('../../audits/user-timings.js');
-const {LH_ROOT} = require('../../../root.js');
+} from '../../config/config-helpers.js';
+import Runner from '../../runner.js';
+import Gatherer from '../../gather/gatherers/gatherer.js';
+import ImageElementsGatherer from '../../gather/gatherers/image-elements.js';
+import UserTimingsAudit from '../../audits/user-timings.js';
+import {LH_ROOT} from '../../../root.js';
+import {createCommonjsRefs} from '../../scripts/esm-utils.js';
+
+const {require, __dirname} = createCommonjsRefs(import.meta);
 
 jest.mock('process', () => ({
   cwd: () => jest.fn(),

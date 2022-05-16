@@ -13,7 +13,7 @@ _Some incomplete notes_
   3. `defaultPass.devtoolslog.json`: A log of all the [DevTools Protocol](https://chromedevtools.github.io/devtools-protocol/) events. Primary signal about network requests and page state.
 * **Audit** - The [audits](../lighthouse-core/audits) are tests for a single feature/optimization/metric. Using the Artifacts as input, an audit evaluates a test and resolves to a numeric score. See [Understanding Results](./understanding-results.md) for details of the LHR (Lighthouse Result object).
   * **Computed Artifacts** - [Generated](../lighthouse-core/computed) on-demand from artifacts, these add additional meaning, and are often shared amongst multiple audits.
-* **Report** - The report UI, created client-side from the LHR. See [HTML Report Generation Overview](../report/readme.md) for details.
+* **Report** - The report UI, created client-side from the LHR. See [HTML Report Generation Overview](../report/README.md) for details.
 
 ### Audit/Report terminology
 * **Category** - Roll-up collection of audits and audit groups into a user-facing section of the report (eg. `Best Practices`). Applies weighting and overall scoring to the section. Examples: PWA, Accessibility, Best Practices.

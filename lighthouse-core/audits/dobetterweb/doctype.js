@@ -19,12 +19,14 @@ const UIStrings = {
     '[Learn more](https://web.dev/doctype/).',
   /** Explanatory message stating that the document has no doctype. */
   explanationNoDoctype: 'Document must contain a doctype',
+  /** Explanatory message stating that the document has wrong doctype */
+  explanationWrongDoctype: 'Document contains a doctype that triggers quirks-mode',
   /** Explanatory message stating that the publicId field is not empty. */
   explanationPublicId: 'Expected publicId to be an empty string',
   /** Explanatory message stating that the systemId field is not empty. */
   explanationSystemId: 'Expected systemId to be an empty string',
   /** Explanatory message stating that the doctype is set, but is not "html" and is therefore invalid. */
-  explanationBadDoctype: 'Doctype name must be the lowercase string `html`',
+  explanationBadDoctype: 'Doctype name must be the string `html`',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
@@ -56,9 +58,10 @@ class Doctype extends Audit {
     }
 
     // only set constants once we know there is a doctype
-    const doctypeName = artifacts.Doctype.name.trim();
+    const doctypeName = artifacts.Doctype.name;
     const doctypePublicId = artifacts.Doctype.publicId;
     const doctypeSystemId = artifacts.Doctype.systemId;
+    const compatMode = artifacts.Doctype.documentCompatMode;
 
     if (doctypePublicId !== '') {
       return {
@@ -74,17 +77,25 @@ class Doctype extends Audit {
       };
     }
 
-    /* Note that the value for name is case sensitive,
-       and must be the string `html`. For details see:
-       https://html.spec.whatwg.org/multipage/parsing.html#the-initial-insertion-mode */
-    if (doctypeName === 'html') {
-      return {
-        score: 1,
-      };
-    } else {
+    /* Note that the casing of this property is normalized to be lowercase.
+       see: https://html.spec.whatwg.org/#doctype-name-state */
+    if (doctypeName !== 'html') {
       return {
         score: 0,
         explanation: str_(UIStrings.explanationBadDoctype),
+      };
+    }
+
+    // Catch-all for any quirks-mode situations the above checks didn't get.
+    // https://github.com/GoogleChrome/lighthouse/issues/10030
+    if (compatMode === 'BackCompat') {
+      return {
+        score: 0,
+        explanation: str_(UIStrings.explanationWrongDoctype),
+      };
+    } else {
+      return {
+        score: 1,
       };
     }
   }

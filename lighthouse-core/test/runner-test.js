@@ -3,29 +3,49 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-require('./test-utils.js').makeMocksForGatherRunner();
+import fs from 'fs';
+import {strict as assert} from 'assert';
+import path from 'path';
+
+import {jest} from '@jest/globals';
+
+// import Runner from '../runner.js';
+// import GatherRunner from '../gather/gather-runner.js';
+import driverMock from './gather/fake-driver.js';
+// import Config from '../config/config.js';
+import Audit from '../audits/audit.js';
+import Gatherer from '../gather/gatherers/gatherer.js';
+import assetSaver from '../lib/asset-saver.js';
+import LHError from '../lib/lh-error.js';
+import i18n from '../lib/i18n/i18n.js';
+import {makeMocksForGatherRunner} from './test-utils.js';
+import {createCommonjsRefs} from '../scripts/esm-utils.js';
+
+const {require, __dirname, __filename} = createCommonjsRefs(import.meta);
+
+// Some imports needs to be done dynamically, so that their dependencies will be mocked.
+// See: https://jestjs.io/docs/ecmascript-modules#differences-between-esm-and-commonjs
+//      https://github.com/facebook/jest/issues/10025
+/** @type {typeof import('../runner.js')} */
+let Runner;
+/** @type {typeof import('../gather/gather-runner.js')} */
+let GatherRunner;
+/** @type {typeof import('../config/config.js')} */
+let Config;
+
+beforeAll(async () => {
+  Runner = (await import('../runner.js')).default;
+  GatherRunner = (await import('../gather/gather-runner.js')).default;
+  Config = (await import('../config/config.js')).default;
+});
+
+makeMocksForGatherRunner();
 
 jest.mock('../gather/driver/service-workers.js', () => ({
   getServiceWorkerVersions: jest.fn().mockResolvedValue({versions: []}),
   getServiceWorkerRegistrations: jest.fn().mockResolvedValue({registrations: []}),
 }));
-
-const Runner = require('../runner.js');
-const GatherRunner = require('../gather/gather-runner.js');
-const driverMock = require('./gather/fake-driver.js');
-const Config = require('../config/config.js');
-const Audit = require('../audits/audit.js');
-const Gatherer = require('../gather/gatherers/gatherer.js');
-const assetSaver = require('../lib/asset-saver.js');
-const fs = require('fs');
-const assert = require('assert').strict;
-const path = require('path');
-const LHError = require('../lib/lh-error.js');
-const i18n = require('../lib/i18n/i18n.js');
-
-/* eslint-env jest */
 
 describe('Runner', () => {
   const createGatherFn = url => {

@@ -14,7 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-'use strict';
 
 /** @typedef {import('./dom.js').DOM} DOM */
 
@@ -27,7 +26,6 @@
 
 import {Util} from './util.js';
 import {CriticalRequestChainRenderer} from './crc-details-renderer.js';
-import {SnippetRenderer} from './snippet-renderer.js';
 import {ElementScreenshotRenderer} from './element-screenshot-renderer.js';
 
 const URL_PREFIXES = ['http://', 'https://', 'data:'];
@@ -79,9 +77,8 @@ export class DetailsRenderer {
    * @return {Element}
    */
   _renderBytes(details) {
-    // TODO: handle displayUnit once we have something other than 'kb'
-    // Note that 'kb' is historical and actually represents KiB.
-    const value = Util.i18n.formatBytesToKiB(details.value, details.granularity);
+    // TODO: handle displayUnit once we have something other than 'KiB'
+    const value = Util.i18n.formatBytesToKiB(details.value, details.granularity || 0.1);
     const textEl = this._renderText(value);
     textEl.title = Util.i18n.formatBytes(details.value);
     return textEl;
@@ -92,9 +89,11 @@ export class DetailsRenderer {
    * @return {Element}
    */
   _renderMilliseconds(details) {
-    let value = Util.i18n.formatMilliseconds(details.value, details.granularity);
+    let value;
     if (details.displayUnit === 'duration') {
       value = Util.i18n.formatDuration(details.value);
+    } else {
+      value = Util.i18n.formatMilliseconds(details.value, details.granularity || 10);
     }
 
     return this._renderText(value);
@@ -173,7 +172,7 @@ export class DetailsRenderer {
    * @return {Element}
    */
   _renderNumeric(details) {
-    const value = Util.i18n.formatNumber(details.value, details.granularity);
+    const value = Util.i18n.formatNumber(details.value, details.granularity || 0.1);
     const element = this._dom.createElement('div', 'lh-numeric');
     element.textContent = value;
     return element;
@@ -472,15 +471,16 @@ export class DetailsRenderer {
   }
 
   /**
-   * @param {LH.Audit.Details.List} details
+   * @param {LH.FormattedIcu<LH.Audit.Details.List>} details
    * @return {Element}
    */
   _renderList(details) {
     const listContainer = this._dom.createElement('div', 'lh-list');
 
     details.items.forEach(item => {
-      const snippetEl = SnippetRenderer.render(this._dom, item, this);
-      listContainer.appendChild(snippetEl);
+      const listItem = this.render(item);
+      if (!listItem) return;
+      listContainer.append(listItem);
     });
 
     return listContainer;

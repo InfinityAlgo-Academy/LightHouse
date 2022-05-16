@@ -132,7 +132,7 @@ const SummaryTooltip: FunctionComponent<{
               {
                 !displayAsFraction && category.score !== null && <>
                   <span> · </span>
-                  <span>{i18n.formatNumber(category.score * 100)}</span>
+                  <span>{i18n.formatInteger(category.score * 100)}</span>
                 </>
               }
             </div>

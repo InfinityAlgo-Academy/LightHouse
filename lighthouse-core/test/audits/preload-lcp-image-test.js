@@ -4,13 +4,9 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-'use strict';
-
-/* eslint-env jest */
-
-const PreloadLCPImage = require('../../audits/preload-lcp-image.js');
-const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
-const createTestTrace = require('../create-test-trace.js');
+import PreloadLCPImage from '../../audits/preload-lcp-image.js';
+import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
+import createTestTrace from '../create-test-trace.js';
 
 const rootNodeUrl = 'http://example.com:3000';
 const mainDocumentNodeUrl = 'http://www.example.com:3000';

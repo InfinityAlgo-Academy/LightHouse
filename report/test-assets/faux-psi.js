@@ -3,7 +3,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 /** @fileoverview This file exercises two LH reports within the same DOM. */
 
@@ -18,7 +17,12 @@ const wait = (ms = 100) => new Promise(resolve => setTimeout(resolve, ms));
 (async function __initPsiReports__() {
   renderLHReport();
 
-  document.querySelector('button')?.addEventListener('click', () => {
+  document.querySelector('button#reanalyze')?.addEventListener('click', () => {
+    renderLHReport();
+  });
+
+  document.querySelector('button#translate')?.addEventListener('click', async () => {
+    await swapLhrLocale('es');
     renderLHReport();
   });
 })();
@@ -61,6 +65,8 @@ async function renderLHReport() {
           metaItemsEl,
           reportRootEl.querySelector('.lh-buttons')
         );
+        reportRootEl.querySelector('.lh-metrics-container')?.closest('.lh-category')?.classList
+            .add('lh--hoisted-meta');
       }
 
       container.append(reportRootEl);
@@ -79,6 +85,22 @@ async function renderLHReport() {
       container.textContent = 'Error: LHR failed to render.';
     }
   }
+}
+
+/**
+ * @param {LH.Locale} locale
+ */
+async function swapLhrLocale(locale) {
+  const response = await fetch(`https://www.gstatic.com/pagespeed/insights/ui/locales/${locale}.json`);
+  /** @type {import('../../shared/localization/locales').LhlMessages} */
+  const lhlMessages = await response.json();
+  console.log(lhlMessages);
+  if (!lhlMessages) throw new Error(`could not fetch data for locale: ${locale}`);
+
+  lighthouseRenderer.format.registerLocaleData(locale, lhlMessages);
+  // @ts-expect-error LHR global
+  window.__LIGHTHOUSE_JSON__ = lighthouseRenderer.swapLocale(window.__LIGHTHOUSE_JSON__, locale)
+    .lhr;
 }
 
 

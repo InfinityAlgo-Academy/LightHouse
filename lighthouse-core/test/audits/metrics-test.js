@@ -3,29 +3,22 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-const MetricsAudit = require('../../audits/metrics.js');
-const TTIComputed = require('../../computed/metrics/interactive.js');
+import {jest} from '@jest/globals';
 
-const pwaTrace = require('../fixtures/traces/progressive-app-m60.json');
-const pwaDevtoolsLog = require('../fixtures/traces/progressive-app-m60.devtools.log.json');
-
-const lcpTrace = require('../fixtures/traces/lcp-m78.json');
-const lcpDevtoolsLog = require('../fixtures/traces/lcp-m78.devtools.log.json');
-
-const lcpAllFramesTrace = require('../fixtures/traces/frame-metrics-m89.json');
-const lcpAllFramesDevtoolsLog = require('../fixtures/traces/frame-metrics-m89.devtools.log.json'); // eslint-disable-line max-len
-
-const clsAllFramesTrace = require('../fixtures/traces/frame-metrics-m90.json');
-const clsAllFramesDevtoolsLog = require('../fixtures/traces/frame-metrics-m90.devtools.log.json'); // eslint-disable-line max-len
-
-const jumpyClsTrace = require('../fixtures/traces/jumpy-cls-m90.json');
-const jumpyClsDevtoolsLog = require('../fixtures/traces/jumpy-cls-m90.devtoolslog.json');
-
-const {getURLArtifactFromDevtoolsLog} = require('../test-utils.js');
-
-/* eslint-env jest */
+import MetricsAudit from '../../audits/metrics.js';
+import TTIComputed from '../../computed/metrics/interactive.js';
+import pwaTrace from '../fixtures/traces/progressive-app-m60.json';
+import pwaDevtoolsLog from '../fixtures/traces/progressive-app-m60.devtools.log.json';
+import lcpTrace from '../fixtures/traces/lcp-m78.json';
+import lcpDevtoolsLog from '../fixtures/traces/lcp-m78.devtools.log.json';
+import lcpAllFramesTrace from '../fixtures/traces/frame-metrics-m89.json';
+import lcpAllFramesDevtoolsLog from '../fixtures/traces/frame-metrics-m89.devtools.log.json'; // eslint-disable-line max-len
+import clsAllFramesTrace from '../fixtures/traces/frame-metrics-m90.json';
+import clsAllFramesDevtoolsLog from '../fixtures/traces/frame-metrics-m90.devtools.log.json'; // eslint-disable-line max-len
+import jumpyClsTrace from '../fixtures/traces/jumpy-cls-m90.json';
+import jumpyClsDevtoolsLog from '../fixtures/traces/jumpy-cls-m90.devtoolslog.json';
+import {getURLArtifactFromDevtoolsLog} from '../test-utils.js';
 
 describe('Performance: metrics', () => {
   it('evaluates valid input correctly', async () => {
