@@ -52,7 +52,8 @@ function createConfig(categoryIDs, device) {
 
   return {
     extends: 'lighthouse:default',
-    plugins: ['lighthouse-plugin-publisher-ads'],
+    // TODO(esmodules): re-enable when pubads works again
+    // plugins: ['lighthouse-plugin-publisher-ads'],
     settings,
   };
 }
@@ -89,7 +90,7 @@ if (typeof self !== 'undefined') {
   // @ts-expect-error
   self.setUpWorkerConnection = setUpWorkerConnection;
   // @ts-expect-error
-  self.runLighthouse = lighthouse.legacyNavigation;
+  self.runLighthouse = legacyNavigation;
   // @ts-expect-error
   self.runLighthouseNavigation = navigation;
   // @ts-expect-error
