@@ -119,12 +119,12 @@ export class DetailsRenderer {
     }
 
     const element = this._dom.createElement('div', 'lh-text__url');
-    element.appendChild(this._renderLink({text: displayedPath, url}));
+    element.append(this._renderLink({text: displayedPath, url}));
 
     if (displayedHost) {
       const hostElem = this._renderText(displayedHost);
       hostElem.classList.add('lh-text__url-host');
-      element.appendChild(hostElem);
+      element.append(hostElem);
     }
 
     if (title) {
@@ -397,7 +397,7 @@ export class DetailsRenderer {
 
       if (valueElement) {
         const classes = `lh-table-column--${heading.valueType}`;
-        this._dom.createChildOf(rowElem, 'td', classes).appendChild(valueElement);
+        this._dom.createChildOf(rowElem, 'td', classes).append(valueElement);
       } else {
         // Empty cell is rendered for a column if:
         // - the pair is null
@@ -452,7 +452,7 @@ export class DetailsRenderer {
       const classes = `lh-table-column--${valueType}`;
       const labelEl = this._dom.createElement('div', 'lh-text');
       labelEl.textContent = heading.label;
-      this._dom.createChildOf(theadTrElem, 'th', classes).appendChild(labelEl);
+      this._dom.createChildOf(theadTrElem, 'th', classes).append(labelEl);
     }
 
     const tbodyElem = this._dom.createChildOf(tableElem, 'tbody');
@@ -495,13 +495,13 @@ export class DetailsRenderer {
     if (item.nodeLabel) {
       const nodeLabelEl = this._dom.createElement('div');
       nodeLabelEl.textContent = item.nodeLabel;
-      element.appendChild(nodeLabelEl);
+      element.append(nodeLabelEl);
     }
     if (item.snippet) {
       const snippetEl = this._dom.createElement('div');
       snippetEl.classList.add('lh-node__snippet');
       snippetEl.textContent = item.snippet;
-      element.appendChild(snippetEl);
+      element.append(snippetEl);
     }
     if (item.selector) {
       element.title = item.selector;
