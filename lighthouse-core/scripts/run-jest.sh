@@ -16,6 +16,9 @@
 DIRNAME="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 LH_ROOT="$DIRNAME/../.."
 
+# Copy jest stderr to file, while keeping the output in the terminal and not messing up carriage returns.
+# https://unix.stackexchange.com/a/333204
+# https://superuser.com/a/1124144
 exec 3>&1
 node --experimental-vm-modules ./node_modules/jest/bin/jest.js $* 2>&1 >&3 | tee >(sed 's/.*\r//' >.tmp/jest-stderr.txt)
 jest_exit=$?
