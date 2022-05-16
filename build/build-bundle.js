@@ -106,7 +106,6 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
     '@sentry/node',
     'source-map',
     'ws',
-    // require.resolve('../lighthouse-core/gather/connections/cri.js'),
   ];
 
   shimsObj[require.resolve('../lighthouse-core/gather/connections/cri.js')] =
@@ -138,9 +137,6 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
         delimiters: ['', ''],
         values: {
           '/* BUILD_REPLACE_BUNDLED_MODULES */': `[\n${bundledMapEntriesCode},\n]`,
-          // TODO(esmodules): remove
-          // '__dirname': (id) => `'${path.relative(LH_ROOT, path.dirname(id))}'`,
-          // '__filename': (id) => `'${path.relative(LH_ROOT, id)}'`,
           // This package exports to default in a way that causes Rollup to get confused,
           // resulting in MessageFormat being undefined.
           'require(\'intl-messageformat\').default': 'require(\'intl-messageformat\')',
