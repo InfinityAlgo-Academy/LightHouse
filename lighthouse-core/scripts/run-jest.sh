@@ -20,6 +20,8 @@ LH_ROOT="$DIRNAME/../.."
 
 EXTRA_FLAGS=()
 
+mkdir -p .tmp
+
 # Repeating once is typically enough, but just in case...
 count=5
 for i in $(seq $count); do
