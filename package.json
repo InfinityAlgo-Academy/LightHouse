@@ -36,7 +36,7 @@
     "smoke": "node lighthouse-cli/test/smokehouse/frontends/smokehouse-bin.js",
     "debug": "node --inspect-brk ./lighthouse-cli/index.js",
     "start": "yarn build-report --standalone && node ./lighthouse-cli/index.js",
-    "jest": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js",
+    "jest": "bash ./lighthouse-core/scripts/run-jest.sh",
     "test": "yarn diff:sample-json && yarn lint --quiet && yarn unit && yarn type-check",
     "test-bundle": "yarn smoke --runner bundle --retries=2",
     "test-clients": "yarn jest \"$PWD/clients/\" && yarn jest --testMatch=\"**/clients/test/**/*-test-pptr.js\"",
