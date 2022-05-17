@@ -17,6 +17,8 @@ const path = require('path');
 const expect = require('expect');
 const {SnapshotState, toMatchSnapshot, toMatchInlineSnapshot} = require('jest-snapshot');
 
+require('./jest-setup/setup.js');
+
 /** @type {Map<string, SnapshotState['prototype']>} */
 const snapshotStatesByTestFile = new Map();
 let snapshotTestFailed = false;
