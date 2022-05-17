@@ -9,7 +9,6 @@ module.exports = {
   setupFilesAfterEnv: ['./lighthouse-core/test/jest-setup/setup.js'],
   testEnvironment: 'node',
   testMatch: [
-    '**/lighthouse-core/**/*-test.js',
     '**/report/**/*-test.js',
     '**/lighthouse-core/test/fraggle-rock/**/*-test-pptr.js',
     '**/treemap/**/*-test.js',

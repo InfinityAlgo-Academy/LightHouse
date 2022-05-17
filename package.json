@@ -46,7 +46,7 @@
     "test-legacy-javascript": "bash lighthouse-core/scripts/test-legacy-javascript.sh",
     "test-docs": "yarn --cwd docs/recipes/ test",
     "test-proto": "yarn compile-proto && yarn build-proto-roundtrip",
-    "unit-core": "yarn jest \"lighthouse-core\"",
+    "unit-core": "yarn mocha lighthouse-core",
     "unit-cli": "yarn mocha \"lighthouse-cli/\"",
     "unit-report": "yarn mocha \"report/\"",
     "unit-treemap": "yarn jest \"treemap/.*-test.js\"",
