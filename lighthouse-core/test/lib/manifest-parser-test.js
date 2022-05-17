@@ -6,8 +6,10 @@
 
 import {strict as assert} from 'assert';
 
+import {readJson} from '../../../root.js';
 import manifestParser from '../../lib/manifest-parser.js';
-import manifestStub from '../fixtures/manifest.json';
+
+const manifestStub = readJson('../fixtures/manifest.json', import.meta);
 
 const EXAMPLE_MANIFEST_URL = 'https://example.com/manifest.json';
 const EXAMPLE_DOC_URL = 'https://example.com/index.html';

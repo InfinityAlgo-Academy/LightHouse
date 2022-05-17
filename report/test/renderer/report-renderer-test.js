@@ -15,7 +15,9 @@ import {DOM} from '../../renderer/dom.js';
 import {DetailsRenderer} from '../../renderer/details-renderer.js';
 import {CategoryRenderer} from '../../renderer/category-renderer.js';
 import {ReportRenderer} from '../../renderer/report-renderer.js';
-import sampleResultsOrig from '../../../lighthouse-core/test/results/sample_v2.json';
+import {readJson} from '../../../root.js';
+
+const sampleResultsOrig = readJson('../../../lighthouse-core/test/results/sample_v2.json', import.meta);
 
 const TIMESTAMP_REGEX = /\d+, \d{4}.*\d+:\d+/;
 

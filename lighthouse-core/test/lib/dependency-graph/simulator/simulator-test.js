@@ -12,8 +12,10 @@ import Simulator from '../../../../lib/dependency-graph/simulator/simulator.js';
 import DNSCache from '../../../../lib/dependency-graph/simulator/dns-cache.js';
 import PageDependencyGraph from '../../../../computed/page-dependency-graph.js';
 import {getURLArtifactFromDevtoolsLog} from '../../../test-utils.js';
-import pwaTrace from '../../../fixtures/traces/progressive-app-m60.json';
-import pwaDevtoolsLog from '../../../fixtures/traces/progressive-app-m60.devtools.log.json';
+import {readJson} from '../../../../../root.js';
+
+const pwaTrace = readJson('../../../fixtures/traces/progressive-app-m60.json', import.meta);
+const pwaDevtoolsLog = readJson('../../../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
 
 let nextRequestId = 1;
 let nextTid = 1;

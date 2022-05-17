@@ -4,9 +4,12 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
+import {readJson} from '../../../../root.js';
 import TimingSummary from '../../../computed/metrics/timing-summary.js';
-import trace from '../../fixtures/traces/frame-metrics-m90.json';
-import devtoolsLog from '../../fixtures/traces/frame-metrics-m90.devtools.log.json';
+
+const trace = readJson('../../fixtures/traces/frame-metrics-m90.json', import.meta);
+const devtoolsLog = readJson('../../fixtures/traces/frame-metrics-m90.devtools.log.json', import.meta);
+
 describe('Timing summary', () => {
   it('contains the correct data', async () => {
     const gatherContext = {gatherMode: 'navigation'};

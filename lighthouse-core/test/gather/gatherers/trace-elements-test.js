@@ -12,7 +12,9 @@ import Connection from '../../../gather/connections/connection.js';
 import createTestTrace from '../../create-test-trace.js';
 import {createMockSendCommandFn, createMockOnFn} from '../mock-commands.js';
 import {flushAllTimersAndMicrotasks, fnAny} from '../../test-utils.js';
-import animationTrace from '../../fixtures/traces/animation.json';
+import {readJson} from '../../../../root.js';
+
+const animationTrace = readJson('../../fixtures/traces/animation.json', import.meta);
 
 jest.useFakeTimers();
 

@@ -10,13 +10,15 @@ import fs from 'fs';
 import assetSaver from '../../lib/asset-saver.js';
 import Metrics from '../../lib/traces/pwmetrics-events.js';
 import LHError from '../../lib/lh-error.js';
-import traceEvents from '../fixtures/traces/progressive-app.json';
-import dbwTrace from '../results/artifacts/defaultPass.trace.json';
-import dbwResults from '../results/sample_v2.json';
 import Audit from '../../audits/audit.js';
 import {createCommonjsRefs} from '../../scripts/esm-utils.js';
-import fullTraceObj from '../fixtures/traces/progressive-app-m60.json';
-import devtoolsLog from '../fixtures/traces/progressive-app-m60.devtools.log.json';
+import {readJson} from '../../../root.js';
+
+const traceEvents = readJson('../fixtures/traces/progressive-app.json', import.meta);
+const dbwTrace = readJson('../results/artifacts/defaultPass.trace.json', import.meta);
+const dbwResults = readJson('../results/sample_v2.json', import.meta);
+const fullTraceObj = readJson('../fixtures/traces/progressive-app-m60.json', import.meta);
+const devtoolsLog = readJson('../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
 
 const {__dirname} = createCommonjsRefs(import.meta);
 

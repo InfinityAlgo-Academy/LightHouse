@@ -4,12 +4,13 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
+import {jest} from '@jest/globals';
+
 import {readJson} from '../../../root.js';
 import MetricsAudit from '../../audits/metrics.js';
 import TTIComputed from '../../computed/metrics/interactive.js';
 import {getURLArtifactFromDevtoolsLog} from '../test-utils.js';
 
-/* eslint-disable max-len */
 const pwaTrace = readJson('../fixtures/traces/progressive-app-m60.json', import.meta);
 const pwaDevtoolsLog = readJson('../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
 const lcpTrace = readJson('../fixtures/traces/lcp-m78.json', import.meta);
@@ -20,7 +21,6 @@ const clsAllFramesTrace = readJson('../fixtures/traces/frame-metrics-m90.json', 
 const clsAllFramesDevtoolsLog = readJson('../fixtures/traces/frame-metrics-m90.devtools.log.json', import.meta);
 const jumpyClsTrace = readJson('../fixtures/traces/jumpy-cls-m90.json', import.meta);
 const jumpyClsDevtoolsLog = readJson('../fixtures/traces/jumpy-cls-m90.devtoolslog.json', import.meta);
-/* eslint-enable max-len */
 
 describe('Performance: metrics', () => {
   it('evaluates valid input correctly', async () => {

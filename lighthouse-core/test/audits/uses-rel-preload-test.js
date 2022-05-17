@@ -7,11 +7,13 @@
 import {strict as assert} from 'assert';
 
 import UsesRelPreload from '../../audits/uses-rel-preload.js';
-import pwaTrace from '../fixtures/traces/progressive-app-m60.json';
-import pwaDevtoolsLog from '../fixtures/traces/progressive-app-m60.devtools.log.json';
 import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
 import createTestTrace from '../create-test-trace.js';
 import {getURLArtifactFromDevtoolsLog} from '../test-utils.js';
+import {readJson} from '../../../root.js';
+
+const pwaTrace = readJson('../fixtures/traces/progressive-app-m60.json', import.meta);
+const pwaDevtoolsLog = readJson('../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
 
 const defaultMainResourceUrl = 'http://www.example.com/';
 const defaultMainResource = {

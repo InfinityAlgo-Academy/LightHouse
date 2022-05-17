@@ -7,8 +7,10 @@
 import constants from '../../../config/constants.js';
 import LanternSpeedIndex from '../../../computed/metrics/lantern-speed-index.js';
 import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';
-import trace from '../../fixtures/traces/progressive-app-m60.json';
-import devtoolsLog from '../../fixtures/traces/progressive-app-m60.devtools.log.json';
+import {readJson} from '../../../../root.js';
+
+const trace = readJson('../../fixtures/traces/progressive-app-m60.json', import.meta);
+const devtoolsLog = readJson('../../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
 
 const defaultThrottling = constants.throttling.mobileSlow4G;
 const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);

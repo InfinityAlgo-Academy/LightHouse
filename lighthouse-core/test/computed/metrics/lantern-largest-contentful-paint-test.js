@@ -6,10 +6,12 @@
 
 import {strict as assert} from 'assert';
 
-import trace from '../../fixtures/traces/lcp-m78.json';
-import devtoolsLog from '../../fixtures/traces/lcp-m78.devtools.log.json';
+import {readJson} from '../../../../root.js';
 import LanternLargestContentfulPaint from '../../../computed/metrics/lantern-largest-contentful-paint.js'; // eslint-disable-line max-len
 import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';
+
+const trace = readJson('../../fixtures/traces/lcp-m78.json', import.meta);
+const devtoolsLog = readJson('../../fixtures/traces/lcp-m78.devtools.log.json', import.meta);
 
 const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
 describe('Metrics: Lantern LCP', () => {
