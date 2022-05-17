@@ -281,6 +281,10 @@ function getURLArtifactFromDevtoolsLog(devtoolsLog) {
  * @return {Promise<Record<string, jest.Mock>>}
  */
 const importMock = async (modulePath, importMeta) => {
+  if (process.env.CI) {
+    throw new Error('TODO: dynamic import crashes node in CI...');
+  }
+
   const dir = path.dirname(url.fileURLToPath(importMeta.url));
   modulePath = path.resolve(dir, modulePath);
   const mock = await import(modulePath);
