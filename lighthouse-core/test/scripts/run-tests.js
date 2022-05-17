@@ -18,18 +18,21 @@ import * as yargsHelpers from 'yargs/helpers';
 import glob from 'glob';
 
 import {LH_ROOT} from '../../../root.js';
+import jestConfig from '../../../jest.config.js';
 
 const y = yargs(yargsHelpers.hideBin(process.argv));
 const rawArgv = y
   .help('help')
   .usage('node $0 [<options>] <paths>')
-  // .example('node $0 -j=1 pwa seo', 'run pwa and seo tests serially')
-  // .example('node $0 --invert-match byte', 'run all smoke tests but `byte`')
   .option('_', {
     array: true,
     type: 'string',
   })
   .options({
+    'testMatch': {
+      type: 'string',
+      describe: 'Glob pattern for collecting test files',
+    },
     'update': {
       alias: 'u',
       type: 'boolean',
@@ -42,16 +45,21 @@ const rawArgv = y
 const argv =
   /** @type {Awaited<typeof rawArgv> & CamelCasify<Awaited<typeof rawArgv>>} */ (rawArgv);
 
-const allFoldersWithTests = [
-  'lighthouse-cli',
-  'lighthouse-core',
-  'report',
-  'flow-report',
-  'clients',
-  'shared',
-  'third-party',
+const defaultTestMatches = [
+  'lighthouse-core/**/*-test.js',
+  'lighthouse-cli/**/*-test.js',
+  'report/**/*-test.js',
+  'lighthouse-core/test/fraggle-rock/**/*-test-pptr.js',
+  'treemap/**/*-test.js',
+  'viewer/**/*-test.js',
+  'third-party/**/*-test.js',
+  'clients/test/**/*-test.js',
+  'shared/**/*-test.js',
+  'build/**/*-test.js',
 ];
-const allTestFiles = glob.sync(`{${allFoldersWithTests.join(',')}}/test/cli/*-test.js`, {cwd: LH_ROOT});
+
+const testsGlob = argv.testMatch || `{${defaultTestMatches.join(',')}}`;
+const allTestFiles = glob.sync(testsGlob, {cwd: LH_ROOT});
 const filteredTests = argv._.length ?
   allTestFiles.filter((file) => argv._.some(pattern => file.includes(pattern))) :
   allTestFiles;
@@ -66,7 +74,7 @@ const args = [
   '--require=lighthouse-core/test/mocha-setup.cjs',
   ...filteredTests,
 ];
-console.log(`Running command: ${argv.update ? 'SNAPSHOT_UPDATE=1' : ''} node ${args.join(' ')}`);
+console.log(`Running command: ${argv.update ? 'SNAPSHOT_UPDATE=1 ' : ''}node ${args.join(' ')}`);
 
 try {
   execFileSync('node_modules/mocha/bin/mocha', args, {
