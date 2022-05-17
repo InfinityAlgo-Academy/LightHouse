@@ -11,6 +11,7 @@
  */
 
 import {execFileSync} from 'child_process';
+import path from 'path';
 
 import yargs from 'yargs';
 import * as yargsHelpers from 'yargs/helpers';
@@ -64,11 +65,18 @@ const defaultTestMatches = [
 const mochaPassThruArgs = argv._.filter(arg => arg.startsWith('--'));
 const filterFilePatterns = argv._.filter(arg => !arg.startsWith('--'));
 
+// Collect all the possible test files, based off the provided testMatch glob pattern
+// or the default patterns defined above.
 const testsGlob = argv.testMatch || `{${defaultTestMatches.join(',')}}`;
-const allTestFiles = glob.sync(testsGlob, {cwd: LH_ROOT});
-const filteredTests = filterFilePatterns.length ?
-  allTestFiles.filter((file) => filterFilePatterns.some(pattern => file.includes(pattern))) :
-  allTestFiles;
+const allTestFiles = glob.sync(testsGlob, {cwd: LH_ROOT, absolute: true});
+
+// If provided, filter the test files using a basic string includes on the absolute path of
+// each test file. Map back to a relative path because it's nice to keep the printed commands shorter.
+const filteredTests = (
+  filterFilePatterns.length ?
+    allTestFiles.filter((file) => filterFilePatterns.some(pattern => file.includes(pattern))) :
+    allTestFiles
+).map(testPath => path.relative(process.cwd(), testPath));
 
 if (filterFilePatterns.length) {
   console.log(`applied test filters: ${JSON.stringify(filterFilePatterns, null, 2)}`);
