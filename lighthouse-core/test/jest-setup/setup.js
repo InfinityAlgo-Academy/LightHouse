@@ -5,8 +5,14 @@
  */
 
 const {default: {toBeCloseTo}} = require('expect/build/matchers.js');
+const SegfaultHandler = require('segfault-handler');
 
 const format = require('../../../shared/localization/format.js');
+
+SegfaultHandler.registerHandler('crash.log', function(signal, address, stack) {
+  console.error('segfault!');
+  console.error({signal, address, stack});
+});
 
 expect.extend({
   toBeDisplayString(received, expected) {
