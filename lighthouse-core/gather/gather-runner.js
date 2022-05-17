@@ -111,17 +111,8 @@ class GatherRunner {
    * @return {Promise<void>}
    */
   static async assertNoSameOriginServiceWorkerClients(session, pageUrl) {
-    /** @type {Array<LH.Crdp.ServiceWorker.ServiceWorkerRegistration>} */
-    let registrations;
-    /** @type {Array<LH.Crdp.ServiceWorker.ServiceWorkerVersion>} */
-    let versions;
-
-    let _;
-    let _0;
-    const data0 = await serviceWorkers.getServiceWorkerRegistrations(session);
-    registrations = data0.registrations;
-    const data = await serviceWorkers.getServiceWorkerVersions(session);
-    versions = data.versions;
+    const registrations = (await serviceWorkers.getServiceWorkerRegistrations(session)).registrations;
+    const versions = (await serviceWorkers.getServiceWorkerVersions(session)).versions;
     const origin = new URL(pageUrl).origin;
 
     registrations
@@ -383,7 +374,7 @@ class GatherRunner {
    * @return {Promise<LH.BaseArtifacts>}
    */
   static async initializeBaseArtifacts(options) {
-    const hostUserAgent = (await (options.driver.getBrowserVersion())).userAgent;
+    const hostUserAgent = (await options.driver.getBrowserVersion()).userAgent;
 
     // Whether Lighthouse was run on a mobile device (i.e. not on a desktop machine).
     const HostFormFactor = hostUserAgent.includes('Android') || hostUserAgent.includes('Mobile') ?

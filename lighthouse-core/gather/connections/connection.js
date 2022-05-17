@@ -136,7 +136,7 @@ class Connection {
       this._callbacks.delete(object.id);
 
       callback.resolve((async () => {
-        const _ = await Promise.resolve();
+        await Promise.resolve();
         if (object.error) {
           log.formatProtocol('method <= browser ERR', {method: callback.method}, 'error');
           throw LHError.fromProtocolMessage(callback.method, object.error);

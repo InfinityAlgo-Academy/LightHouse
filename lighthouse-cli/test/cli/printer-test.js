@@ -24,7 +24,7 @@ describe('Printer', () => {
   it('writes file for results', async () => {
     const path = './.test-file.json';
     const report = JSON.stringify(sampleResults);
-    const _ = await Printer.write(report, 'json', path);
+    await Printer.write(report, 'json', path);
     const fileContents = fs.readFileSync(path, 'utf8');
     assert.ok(/lighthouseVersion/gim.test(fileContents));
     fs.unlinkSync(path);

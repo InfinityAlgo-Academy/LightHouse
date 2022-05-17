@@ -200,7 +200,7 @@ describe('GatherRunner', function() {
       },
     };
 
-    const _ = await GatherRunner.loadPage(driver, passContext);
+    await GatherRunner.loadPage(driver, passContext);
     assert.equal(passContext.url, url2);
     assert.equal(passContext.baseArtifacts.URL.finalUrl, url2);
   });
@@ -749,7 +749,7 @@ describe('GatherRunner', function() {
       }],
     });
 
-    const _ = await GatherRunner.run(config.passes, {
+    await GatherRunner.run(config.passes, {
       driver: fakeDriver,
       requestedUrl: 'https://example.com',
       settings: config.settings,
@@ -1195,7 +1195,7 @@ describe('GatherRunner', function() {
       });
 
       try {
-        const _ = await GatherRunner.run(config.passes, {
+        await GatherRunner.run(config.passes, {
           driver: fakeDriver,
           requestedUrl: 'https://example.com',
           settings: config.settings,
@@ -1329,7 +1329,7 @@ describe('GatherRunner', function() {
         },
       });
 
-      const _ = await GatherRunner.run(config.passes, {
+      await GatherRunner.run(config.passes, {
         driver: unresolvedDriver,
         requestedUrl,
         settings: config.settings,

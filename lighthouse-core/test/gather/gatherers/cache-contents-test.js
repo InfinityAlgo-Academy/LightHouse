@@ -18,7 +18,7 @@ describe('Cache Contents gatherer', () => {
 
   it('throws an error when cache getter returns nothing', async () => {
     try {
-      const _ = await cacheContentGather.afterPass({
+      await cacheContentGather.afterPass({
         driver: {
           async evaluateAsync() {},
         },

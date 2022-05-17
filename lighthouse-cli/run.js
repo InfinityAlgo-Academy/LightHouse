@@ -177,12 +177,10 @@ async function potentiallyKillChrome(launchedChrome) {
     timeout = setTimeout(reject, 5000, new Error('Timed out waiting to kill Chrome'));
   });
 
-  try {
-    return await Promise.race([
-      launchedChrome.kill(),
-      timeoutPromise,
-    ]);
-  } catch (err) {
+  return Promise.race([
+    launchedChrome.kill(),
+    timeoutPromise,
+  ]).catch(async err => {
     const runningProcesses = await psList();
     if (!runningProcesses.some(proc => proc.pid === launchedChrome.pid)) {
       log.warn('CLI', 'Warning: Chrome process could not be killed because it already exited.');
@@ -190,9 +188,9 @@ async function potentiallyKillChrome(launchedChrome) {
     }
 
     throw new Error(`Couldn't quit Chrome process. ${err}`);
-  } finally {
+  }).finally(() => {
     clearTimeout(timeout);
-  }
+  });
 }
 
 /**

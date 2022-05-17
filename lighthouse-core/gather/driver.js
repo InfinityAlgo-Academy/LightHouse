@@ -441,7 +441,7 @@ class Driver {
       throw new Error('DOM domain enabled when starting trace');
     }
 
-    const _ = await this.sendCommand('Page.enable');
+    await this.sendCommand('Page.enable');
 
     // Enable Page domain to wait for Page.loadEventFired
     return this.sendCommand('Tracing.start', {

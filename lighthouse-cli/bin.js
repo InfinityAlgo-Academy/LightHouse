@@ -78,10 +78,10 @@ async function begin() {
       configJson = JSON.parse(fs.readFileSync(cliFlags.configPath, 'utf-8'));
     } else {
       const configModuleUrl = url.pathToFileURL(cliFlags.configPath).href;
-      configJson = (await ((import(configModuleUrl)))).default;
+      configJson = (await import(configModuleUrl)).default;
     }
   } else if (cliFlags.preset) {
-    configJson = (await ((import(`../lighthouse-core/config/${cliFlags.preset}-config.js`)))).default;
+    configJson = (await import(`../lighthouse-core/config/${cliFlags.preset}-config.js`)).default;
   }
 
   if (cliFlags.budgetPath) {

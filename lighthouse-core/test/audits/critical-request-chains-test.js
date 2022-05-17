@@ -135,7 +135,7 @@ describe('Performance: critical-request-chains audit', () => {
     const context = {computedCache: new Map()};
 
     try {
-      const _ = await CriticalRequestChains.audit(artifacts, context);
+      await CriticalRequestChains.audit(artifacts, context);
       throw new Error('should have failed');
     } catch (err) {
       assert.ok(err.message.includes('Unable to identify the main resource'));

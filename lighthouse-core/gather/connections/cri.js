@@ -33,22 +33,23 @@ class CriConnection extends Connection {
    * @override
    * @return {Promise<void>}
    */
-  async connect() {
-    try {
-      const response = await this._runJsonCommand('new');
-      return await this._connectToSocket/** @type {LH.DevToolsJsonTarget} */(response);
-    } catch (_) {
-      // COMPAT: headless didn't support `/json/new` before m59. (#970, crbug.com/699392)
-      // If no support, we fallback and reuse an existing open tab
-      log.warn('CriConnection', 'Cannot create new tab; reusing open tab.');
-      const tabs = await this._runJsonCommand('list');
-      if (!Array.isArray(tabs) || tabs.length === 0) {
-        throw new Error('Cannot create new tab, and no tabs already open.');
-      }
-      const firstTab = tabs[0];
-      await this._runJsonCommand(`activate/${firstTab.id}`);
-      return this._connectToSocket(firstTab);
-    }
+  connect() {
+    return this._runJsonCommand('new')
+      .then(response => this._connectToSocket(/** @type {LH.DevToolsJsonTarget} */(response)))
+      .catch(_ => {
+        // COMPAT: headless didn't support `/json/new` before m59. (#970, crbug.com/699392)
+        // If no support, we fallback and reuse an existing open tab
+        log.warn('CriConnection', 'Cannot create new tab; reusing open tab.');
+        return this._runJsonCommand('list').then(tabs => {
+          if (!Array.isArray(tabs) || tabs.length === 0) {
+            return Promise.reject(new Error('Cannot create new tab, and no tabs already open.'));
+          }
+          const firstTab = tabs[0];
+          // first, we activate it to a foreground tab, then we connect
+          return this._runJsonCommand(`activate/${firstTab.id}`)
+              .then(() => this._connectToSocket(firstTab));
+        });
+      });
   }
 
   /**
@@ -133,7 +134,7 @@ class CriConnection extends Connection {
       return;
     }
 
-    const _ = await this._runJsonCommand(`close/${this._pageId}`);
+    await this._runJsonCommand(`close/${this._pageId}`);
     if (this._ws) {
       this._ws.removeAllListeners();
       this._ws.close();

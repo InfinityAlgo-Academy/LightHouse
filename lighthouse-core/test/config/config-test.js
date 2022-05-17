@@ -336,7 +336,7 @@ describe('Config', () => {
       audits: ['is-on-https'],
     };
 
-    const _ = new Config(configJSON);
+    new Config(configJSON);
     assert.equal(configJSON.passes[0].gatherers.length, 3);
   });
 

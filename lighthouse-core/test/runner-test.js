@@ -116,7 +116,7 @@ describe('Runner', () => {
 
     it('-G gathers, quits, and doesn\'t run audits', async () => {
       const opts = {config: generateConfig({gatherMode: artifactsPath}), driverMock};
-      const _ = await runGatherAndAudit(createGatherFn(url), opts);
+      await runGatherAndAudit(createGatherFn(url), opts);
       expect(loadArtifactsSpy).not.toHaveBeenCalled();
       expect(saveArtifactsSpy).toHaveBeenCalled();
 
@@ -135,7 +135,7 @@ describe('Runner', () => {
     // uses the files on disk from the -G test. ;)
     it('-A audits from saved artifacts and doesn\'t gather', async () => {
       const opts = {config: generateConfig({auditMode: artifactsPath}), driverMock};
-      const _ = await runGatherAndAudit(createGatherFn(), opts);
+      await runGatherAndAudit(createGatherFn(), opts);
       expect(loadArtifactsSpy).toHaveBeenCalled();
       expect(gatherRunnerRunSpy).not.toHaveBeenCalled();
       expect(saveArtifactsSpy).not.toHaveBeenCalled();
@@ -173,7 +173,7 @@ describe('Runner', () => {
     it('-GA is a normal run but it saves artifacts and LHR to disk', async () => {
       const settings = {auditMode: artifactsPath, gatherMode: artifactsPath};
       const opts = {config: generateConfig(settings), driverMock};
-      const _ = await runGatherAndAudit(createGatherFn(url), opts);
+      await runGatherAndAudit(createGatherFn(url), opts);
       expect(loadArtifactsSpy).not.toHaveBeenCalled();
       expect(gatherRunnerRunSpy).toHaveBeenCalled();
       expect(saveArtifactsSpy).toHaveBeenCalled();
@@ -183,7 +183,7 @@ describe('Runner', () => {
 
     it('non -G/-A run doesn\'t save artifacts to disk', async () => {
       const opts = {config: generateConfig(), driverMock};
-      const _ = await runGatherAndAudit(createGatherFn(url), opts);
+      await runGatherAndAudit(createGatherFn(url), opts);
       expect(loadArtifactsSpy).not.toHaveBeenCalled();
       expect(gatherRunnerRunSpy).toHaveBeenCalled();
       expect(saveArtifactsSpy).not.toHaveBeenCalled();
@@ -261,7 +261,7 @@ describe('Runner', () => {
       ],
     });
 
-    const _ = await runGatherAndAudit(createGatherFn(url), {config, driverMock});
+    await runGatherAndAudit(createGatherFn(url), {config, driverMock});
     expect(gatherRunnerRunSpy).toHaveBeenCalled();
     assert.ok(typeof config.passes[0].gatherers[0] === 'object');
   });
@@ -276,7 +276,7 @@ describe('Runner', () => {
     });
 
     try {
-      const _ = await runGatherAndAudit(createGatherFn(url), {config, driverMock});
+      await runGatherAndAudit(createGatherFn(url), {config, driverMock});
       assert.ok(false);
     } catch (err) {
       assert.ok(/No browser artifacts are either/.test(err.message));
@@ -356,7 +356,7 @@ describe('Runner', () => {
     });
 
     try {
-      const _ = await runGatherAndAudit({}, {url, config, driverMock: badTraceDriver});
+      await runGatherAndAudit({}, {url, config, driverMock: badTraceDriver});
       assert.ok(false);
     } catch (_) {
       assert.ok(true);
@@ -608,7 +608,7 @@ describe('Runner', () => {
     });
 
     try {
-      const _ = await runGatherAndAudit(createGatherFn(url), {config, driverMock});
+      await runGatherAndAudit(createGatherFn(url), {config, driverMock});
       assert.ok(false);
     } catch (err) {
       assert.ok(/No audits to evaluate/.test(err.message));

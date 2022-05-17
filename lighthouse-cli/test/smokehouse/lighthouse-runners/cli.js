@@ -38,8 +38,8 @@ async function runLighthouse(url, configJson, testRunnerOptions = {}) {
   const tmpPath = await fs.mkdtemp(`${tmpDir}/smokehouse-`);
 
   try {
-    return await // Wait for internalRun() before removing scratch directory.
-    internalRun(url, tmpPath, configJson, testRunnerOptions);
+    // Wait for internalRun() before removing scratch directory.
+    return internalRun(url, tmpPath, configJson, testRunnerOptions);
   } finally {
     await !isDebug && fs.rm(tmpPath, {recursive: true, force: true});
   }

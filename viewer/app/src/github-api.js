@@ -152,7 +152,7 @@ export class GithubApi {
       return {etag, content: lhr};
     });
 
-    const _ = await idbKeyval.set(id, response);
+    await idbKeyval.set(id, response);
     logger.hide();
 
     return response.content;

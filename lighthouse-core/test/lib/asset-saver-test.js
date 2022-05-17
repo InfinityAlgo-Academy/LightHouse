@@ -116,7 +116,7 @@ describe('asset-saver helper', () => {
     });
 
     it('correctly saves a trace with metadata to disk', async () => {
-      const _ = await assetSaver.saveTrace(fullTraceObj, traceFilename);
+      await assetSaver.saveTrace(fullTraceObj, traceFilename);
       const traceFileContents = fs.readFileSync(traceFilename, 'utf8');
       const traceEventsFromDisk = JSON.parse(traceFileContents).traceEvents;
       assertTraceEventsEqual(traceEventsFromDisk, fullTraceObj.traceEvents);
@@ -134,7 +134,7 @@ describe('asset-saver helper', () => {
         },
       };
 
-      const _ = await assetSaver.saveTrace(trace, traceFilename);
+      await assetSaver.saveTrace(trace, traceFilename);
       const traceFileContents = fs.readFileSync(traceFilename, 'utf8');
       assert.deepStrictEqual(JSON.parse(traceFileContents), trace);
     });
@@ -153,7 +153,7 @@ describe('asset-saver helper', () => {
         },
       };
 
-      const _ = await assetSaver.saveTrace(trace, traceFilename);
+      await assetSaver.saveTrace(trace, traceFilename);
       const traceFileContents = fs.readFileSync(traceFilename, 'utf8');
       const traceEventsFromDisk = JSON.parse(traceFileContents).traceEvents;
       assertTraceEventsEqual(traceEventsFromDisk, trace.traceEvents);
@@ -173,7 +173,7 @@ describe('asset-saver helper', () => {
         traceEvents: longTraceEvents,
       };
 
-      const _ = await assetSaver.saveTrace(trace, traceFilename);
+      await assetSaver.saveTrace(trace, traceFilename);
       const fileStats = fs.lstatSync(traceFilename);
       assert.ok(fileStats.size > Math.pow(2, 28));
     }, 40 * 1000);

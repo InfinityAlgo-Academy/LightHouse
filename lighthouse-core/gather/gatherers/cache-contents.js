@@ -21,7 +21,7 @@ async function getCacheContents() {
   /** @type {Array<string>} */
   const requests = [];
 
-  const _ = await Promise.all(caches.map(async cache => {
+  await Promise.all(caches.map(async cache => {
     const reqs = await cache.keys();
     requests.push(...reqs.map(r => r.url));
   }));

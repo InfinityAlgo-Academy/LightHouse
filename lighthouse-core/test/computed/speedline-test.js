@@ -16,7 +16,7 @@ describe('Speedline gatherer', () => {
     const context = {computedCache: new Map()};
 
     try {
-      const _ = await Speedline.request({traceEvents: {boo: 'ya'}}, context);
+      await Speedline.request({traceEvents: {boo: 'ya'}}, context);
       assert.fail(true, true, 'Invalid trace did not throw exception in speedline');
     } catch (err) {
       assert.ok(err);
@@ -29,7 +29,7 @@ describe('Speedline gatherer', () => {
     const context = {computedCache: new Map()};
 
     try {
-      const _ = await Speedline.request({traceEvents: traceWithNoFrames}, context);
+      await Speedline.request({traceEvents: traceWithNoFrames}, context);
       assert.ok(false, 'Invalid trace did not throw exception in speedline');
     } catch (err) {
       assert.equal(err.message, 'NO_SCREENSHOTS');
@@ -54,7 +54,7 @@ describe('Speedline gatherer', () => {
     // Use fresh trace in case it has been altered by other require()s.
     const pwaTrace = readJson('lighthouse-core/test/fixtures/traces/progressive-app.json');
     const context = {computedCache: new Map()};
-    const _ = await Speedline.request({traceEvents: pwaTrace}, context);
+    await Speedline.request({traceEvents: pwaTrace}, context);
     // assert.deepEqual has issue with diffing large array, so manually loop.
     const freshTrace = readJson('lighthouse-core/test/fixtures/traces/progressive-app.json');
     assert.strictEqual(pwaTrace.length, freshTrace.length);

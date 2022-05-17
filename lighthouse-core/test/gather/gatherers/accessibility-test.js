@@ -25,7 +25,7 @@ describe('Accessibility gatherer', () => {
     const error = 'There was an error.';
 
     try {
-      const _ = await accessibilityGather.afterPass({
+      await accessibilityGather.afterPass({
         driver: {
           executionContext: {
             async evaluate() {

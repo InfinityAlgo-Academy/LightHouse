@@ -48,14 +48,7 @@ class TargetManager {
    */
   async _onSessionAttached(session) {
     try {
-      let target;
-
-      try {
-        target = await session.sendCommand('Target.getTargetInfo');
-      } catch (err) {
-        target = null;
-      }
-
+      const target = await session.sendCommand('Target.getTargetInfo').catch(() => null);
       const targetType = target?.targetInfo?.type;
       const hasValidTargetType = targetType === 'page' || targetType === 'iframe';
       if (!target || !hasValidTargetType) return;

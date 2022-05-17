@@ -92,7 +92,7 @@ describe('CLI bin', function() {
       // TODO(esmodules): change this test when config file is esm.
       const configPath = `${LH_ROOT}/lighthouse-core/config/lr-desktop-config.js`;
       cliFlags = {...cliFlags, configPath: configPath};
-      const actualConfig = (await (import(configPath))).default;
+      const actualConfig = (await import(configPath)).default;
       await bin.begin();
 
       expect(getRunLighthouseArgs()[2]).toEqual(actualConfig);
@@ -102,7 +102,7 @@ describe('CLI bin', function() {
       const configPath =
         `${LH_ROOT}/lighthouse-cli/test/fixtures/esm-config.js`;
       cliFlags = {...cliFlags, configPath: configPath};
-      const actualConfig = (await (import(configPath))).default;
+      const actualConfig = (await import(configPath)).default;
       await bin.begin();
 
       expect(getRunLighthouseArgs()[2]).toEqual(actualConfig);
@@ -111,7 +111,7 @@ describe('CLI bin', function() {
     it('should load the config from the preset', async () => {
       cliFlags = {...cliFlags, preset: 'experimental'};
       const actualConfig =
-        (await (import('../../../lighthouse-core/config/experimental-config.js'))).default;
+        (await import('../../../lighthouse-core/config/experimental-config.js')).default;
       await bin.begin();
 
       expect(getRunLighthouseArgs()[2]).toEqual(actualConfig);
@@ -177,7 +177,7 @@ describe('CLI bin', function() {
       await bin.begin();
 
       expect(getRunLighthouseArgs()[1]).toMatchObject({
-        precomputedLanternData: (await (import(lanternDataFile))).default,
+        precomputedLanternData: (await import(lanternDataFile)).default,
         precomputedLanternDataPath: lanternDataFile,
       });
     });
