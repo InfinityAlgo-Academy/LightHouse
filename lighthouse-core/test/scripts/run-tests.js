@@ -18,7 +18,6 @@ import * as yargsHelpers from 'yargs/helpers';
 import glob from 'glob';
 
 import {LH_ROOT} from '../../../root.js';
-import jestConfig from '../../../jest.config.js';
 
 const y = yargs(yargsHelpers.hideBin(process.argv));
 const rawArgv = y
