@@ -99,13 +99,14 @@ describe('Performance: page execution timings audit', () => {
     assert.equal(output.score, 1);
   });
 
-  it('should get no data when no events are present', async () => {
+  it('should get no data when no events are present', () => {
     const artifacts = {traces: {defaultPass: errorTrace}};
 
     const context = {options, computedCache: new Map()};
-    const output = await PageExecutionTimings.audit(artifacts, context);
-    assert.equal(output.details.items.length, 0);
-    assert.equal(output.score, 1);
-    assert.equal(Math.round(output.numericValue), 0);
+    return PageExecutionTimings.audit(artifacts, context).then(output => {
+      assert.equal(output.details.items.length, 0);
+      assert.equal(output.score, 1);
+      assert.equal(Math.round(output.numericValue), 0);
+    });
   });
 });

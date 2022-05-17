@@ -202,10 +202,10 @@ function mockTargetManagerModule() {
   const targetManagerMock = createMockTargetManager();
 
   /** @type {(instance: any) => (...args: any[]) => any} */
-  const proxyCtor = instance => (function() {
+  const proxyCtor = instance => function() {
     // IMPORTANT! This must be a `function` not an arrow function so it can be invoked as a constructor.
     return instance;
-  });
+  };
 
   jest.mock('../../../gather/driver/target-manager.js', () => proxyCtor(targetManagerMock));
 

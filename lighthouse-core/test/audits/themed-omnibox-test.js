@@ -33,82 +33,90 @@ function generateMockAuditContext() {
   };
 }
 describe('PWA: themed omnibox audit', () => {
-  it('fails if page had no manifest', async () => {
+  it('fails if page had no manifest', () => {
     const artifacts = generateMockArtifacts();
     artifacts.WebAppManifest = null;
     const context = generateMockAuditContext();
 
-    const result = await ThemedOmniboxAudit.audit(artifacts, context);
-    assert.strictEqual(result.score, 0);
-    assert.ok(result.explanation.includes('No manifest was fetched'), result.explanation);
+    return ThemedOmniboxAudit.audit(artifacts, context).then(result => {
+      assert.strictEqual(result.score, 0);
+      assert.ok(result.explanation.includes('No manifest was fetched'), result.explanation);
+    });
   });
 
   // Need to disable camelcase check for dealing with theme_color.
   /* eslint-disable camelcase */
-  it('fails when a minimal manifest contains no theme_color', async () => {
+  it('fails when a minimal manifest contains no theme_color', () => {
     const artifacts = generateMockArtifacts(JSON.stringify({
       start_url: '/',
     }));
     const context = generateMockAuditContext();
 
-    const result = await ThemedOmniboxAudit.audit(artifacts, context);
-    assert.equal(result.score, 0);
-    assert.ok(result.explanation);
+    return ThemedOmniboxAudit.audit(artifacts, context).then(result => {
+      assert.equal(result.score, 0);
+      assert.ok(result.explanation);
+    });
   });
 
-  it('succeeds when a minimal manifest contains a theme_color', async () => {
+  it('succeeds when a minimal manifest contains a theme_color', () => {
     const artifacts = generateMockArtifacts(JSON.stringify({
       theme_color: '#bada55',
     }));
     const context = generateMockAuditContext();
-    const result = await ThemedOmniboxAudit.audit(artifacts, context);
-    assert.equal(result.score, 1);
-    assert.equal(result.explanation, undefined);
+    return ThemedOmniboxAudit.audit(artifacts, context).then(result => {
+      assert.equal(result.score, 1);
+      assert.equal(result.explanation, undefined);
+    });
   });
 
   /* eslint-enable camelcase */
-  it('succeeds when a complete manifest contains a theme_color', async () => {
+  it('succeeds when a complete manifest contains a theme_color', () => {
     const artifacts = generateMockArtifacts();
     const context = generateMockAuditContext();
-    const result = await ThemedOmniboxAudit.audit(artifacts, context);
-    assert.equal(result.score, 1);
-    assert.equal(result.explanation, undefined);
+    return ThemedOmniboxAudit.audit(artifacts, context).then(result => {
+      assert.equal(result.score, 1);
+      assert.equal(result.explanation, undefined);
+    });
   });
 
-  it('fails and warns when no theme-color meta tag found', async () => {
+  it('fails and warns when no theme-color meta tag found', () => {
     const artifacts = generateMockArtifacts();
     artifacts.MetaElements = [];
     const context = generateMockAuditContext();
-    const result = await ThemedOmniboxAudit.audit(artifacts, context);
-    assert.equal(result.score, 0);
-    assert.ok(result.explanation);
+    return ThemedOmniboxAudit.audit(artifacts, context).then(result => {
+      assert.equal(result.score, 0);
+      assert.ok(result.explanation);
+    });
   });
 
-  it('fails and warns when theme-color has an invalid CSS color', async () => {
+  it('fails and warns when theme-color has an invalid CSS color', () => {
     const artifacts = generateMockArtifacts();
     artifacts.MetaElements = [{name: 'theme-color', content: '#1234567'}];
     const context = generateMockAuditContext();
-    const result = await ThemedOmniboxAudit.audit(artifacts, context);
-    assert.equal(result.score, 0);
-    assert.ok(result.explanation.includes('valid CSS color'));
+    return ThemedOmniboxAudit.audit(artifacts, context).then(result => {
+      assert.equal(result.score, 0);
+      assert.ok(result.explanation.includes('valid CSS color'));
+    });
   });
 
-  it('succeeds when theme-color present in the html', async () => {
+  it('succeeds when theme-color present in the html', () => {
     const artifacts = generateMockArtifacts();
     artifacts.MetaElements = [{name: 'theme-color', content: '#fafa33'}];
     const context = generateMockAuditContext();
-    const result = await ThemedOmniboxAudit.audit(artifacts, context);
-    assert.equal(result.score, 1);
-    assert.equal(result.explanation, undefined);
+    return ThemedOmniboxAudit.audit(artifacts, context).then(result => {
+      assert.equal(result.score, 1);
+      assert.equal(result.explanation, undefined);
+    });
   });
 
-  it('succeeds when theme-color has a CSS nickname content value', async () => {
+  it('succeeds when theme-color has a CSS nickname content value', () => {
     const artifacts = generateMockArtifacts();
     artifacts.MetaElements = [{name: 'theme-color', content: 'red'}];
     const context = generateMockAuditContext();
-    const result = await ThemedOmniboxAudit.audit(artifacts, context);
-    assert.equal(result.score, 1);
-    assert.equal(result.explanation, undefined);
+    return ThemedOmniboxAudit.audit(artifacts, context).then(result => {
+      assert.equal(result.score, 1);
+      assert.equal(result.explanation, undefined);
+    });
   });
 
   it('succeeds when theme-color has a CSS4 nickname content value', async () => {
@@ -121,22 +129,24 @@ describe('PWA: themed omnibox audit', () => {
     assert.equal(result.explanation, undefined);
   });
 
-  it('fails if HTML theme color is good, but manifest themecolor is bad', async () => {
+  it('fails if HTML theme color is good, but manifest themecolor is bad', () => {
     const artifacts = generateMockArtifacts(JSON.stringify({
       start_url: '/',
     }));
     const context = generateMockAuditContext();
-    const result = await ThemedOmniboxAudit.audit(artifacts, context);
-    assert.equal(result.score, 0);
-    assert.ok(result.explanation.includes('does not have `theme_color`'), result.explanation);
+    return ThemedOmniboxAudit.audit(artifacts, context).then(result => {
+      assert.equal(result.score, 0);
+      assert.ok(result.explanation.includes('does not have `theme_color`'), result.explanation);
+    });
   });
 
-  it('fails if HTML theme color is bad, and manifest themecolor is good', async () => {
+  it('fails if HTML theme color is bad, and manifest themecolor is good', () => {
     const artifacts = generateMockArtifacts();
     artifacts.MetaElements = [{name: 'theme-color'}];
     const context = generateMockAuditContext();
-    const result = await ThemedOmniboxAudit.audit(artifacts, context);
-    assert.equal(result.score, 0);
-    assert.ok(result.explanation.includes('theme-color meta tag'), result.explanation);
+    return ThemedOmniboxAudit.audit(artifacts, context).then(result => {
+      assert.equal(result.score, 0);
+      assert.ok(result.explanation.includes('theme-color meta tag'), result.explanation);
+    });
   });
 });

@@ -33,26 +33,23 @@ class CriConnection extends Connection {
    * @override
    * @return {Promise<void>}
    */
-  async connect() {
-    try {
-      const response = await this._runJsonCommand('new');
-      return this._connectToSocket(/** @type {LH.DevToolsJsonTarget} */(response));
-    } catch (_) {
-      // COMPAT: headless didn't support `/json/new` before m59. (#970, crbug.com/699392)
-      // If no support, we fallback and reuse an existing open tab
-      log.warn('CriConnection', 'Cannot create new tab; reusing open tab.');
-      return this._runJsonCommand('list').then(async tabs => {
-        if (!Array.isArray(tabs) || tabs.length === 0) {
-          return Promise.reject(new Error('Cannot create new tab, and no tabs already open.'));
-        }
-        const firstTab = tabs[0];
-
-        // first, we activate it to a foreground tab, then we connect
-        await this._runJsonCommand(`activate/${firstTab.id}`);
-
-        return this._connectToSocket(firstTab);
+  connect() {
+    return this._runJsonCommand('new')
+      .then(response => this._connectToSocket(/** @type {LH.DevToolsJsonTarget} */(response)))
+      .catch(_ => {
+        // COMPAT: headless didn't support `/json/new` before m59. (#970, crbug.com/699392)
+        // If no support, we fallback and reuse an existing open tab
+        log.warn('CriConnection', 'Cannot create new tab; reusing open tab.');
+        return this._runJsonCommand('list').then(tabs => {
+          if (!Array.isArray(tabs) || tabs.length === 0) {
+            return Promise.reject(new Error('Cannot create new tab, and no tabs already open.'));
+          }
+          const firstTab = tabs[0];
+          // first, we activate it to a foreground tab, then we connect
+          return this._runJsonCommand(`activate/${firstTab.id}`)
+              .then(() => this._connectToSocket(firstTab));
+        });
       });
-    }
   }
 
   /**
@@ -131,28 +128,30 @@ class CriConnection extends Connection {
    * @override
    * @return {Promise<void>}
    */
-  async disconnect() {
+  disconnect() {
     if (!this._ws) {
       log.warn('CriConnection', 'disconnect() was called without an established connection.');
       return Promise.resolve();
     }
 
-    const _ = await this._runJsonCommand(`close/${this._pageId}`);
-    if (this._ws) {
-      this._ws.removeAllListeners();
-      this._ws.close();
-      this._ws = null;
-    }
-    this._pageId = null;
+    return this._runJsonCommand(`close/${this._pageId}`).then(_ => {
+      if (this._ws) {
+        this._ws.removeAllListeners();
+        this._ws.close();
+        this._ws = null;
+      }
+      this._pageId = null;
+    });
   }
 
   /**
    * @override
    * @return {Promise<string>}
    */
-  async wsEndpoint() {
-    const response = await this._runJsonCommand('version');
-    return /** @type {LH.DevToolsJsonTarget} */ (response).webSocketDebuggerUrl;
+  wsEndpoint() {
+    return this._runJsonCommand('version').then(response => {
+      return /** @type {LH.DevToolsJsonTarget} */ (response).webSocketDebuggerUrl;
+    });
   }
 
 

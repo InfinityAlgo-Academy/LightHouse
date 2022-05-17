@@ -120,12 +120,13 @@ describe('DependencyGraph/Simulator/NetworkAnalyzer', () => {
       assert.deepStrictEqual(result, expected);
     });
 
-    it('should work on a real devtoolsLog', async () => {
-      const records = await NetworkRecords.request(devtoolsLog, {computedCache: new Map()});
-      const result = NetworkAnalyzer.estimateIfConnectionWasReused(records);
-      const distinctConnections = Array.from(result.values()).filter(item => !item).length;
-      assert.equal(result.size, 66);
-      assert.equal(distinctConnections, 3);
+    it('should work on a real devtoolsLog', () => {
+      return NetworkRecords.request(devtoolsLog, {computedCache: new Map()}).then(records => {
+        const result = NetworkAnalyzer.estimateIfConnectionWasReused(records);
+        const distinctConnections = Array.from(result.values()).filter(item => !item).length;
+        assert.equal(result.size, 66);
+        assert.equal(distinctConnections, 3);
+      });
     });
   });
 
@@ -195,23 +196,25 @@ describe('DependencyGraph/Simulator/NetworkAnalyzer', () => {
       assert.deepStrictEqual(result.get('https://example.com'), expected);
     });
 
-    it('should work on a real devtoolsLog', async () => {
-      const records = await NetworkRecords.request(devtoolsLog, {computedCache: new Map()});
-      const result = NetworkAnalyzer.estimateRTTByOrigin(records);
-      assertCloseEnough(result.get('https://pwa.rocks').min, 3);
-      assertCloseEnough(result.get('https://www.googletagmanager.com').min, 3);
-      assertCloseEnough(result.get('https://www.google-analytics.com').min, 4);
+    it('should work on a real devtoolsLog', () => {
+      return NetworkRecords.request(devtoolsLog, {computedCache: new Map()}).then(records => {
+        const result = NetworkAnalyzer.estimateRTTByOrigin(records);
+        assertCloseEnough(result.get('https://pwa.rocks').min, 3);
+        assertCloseEnough(result.get('https://www.googletagmanager.com').min, 3);
+        assertCloseEnough(result.get('https://www.google-analytics.com').min, 4);
+      });
     });
 
-    it('should approximate well with either method', async () => {
-      const records = await NetworkRecords.request(devtoolsLog, {computedCache: new Map()});
-      const result = NetworkAnalyzer.estimateRTTByOrigin(records).get(NetworkAnalyzer.SUMMARY);
-      const resultApprox = NetworkAnalyzer.estimateRTTByOrigin(records, {
-        forceCoarseEstimates: true,
-      }).get(NetworkAnalyzer.SUMMARY);
-      assertCloseEnough(result.min, resultApprox.min, 20);
-      assertCloseEnough(result.avg, resultApprox.avg, 30);
-      assertCloseEnough(result.median, resultApprox.median, 30);
+    it('should approximate well with either method', () => {
+      return NetworkRecords.request(devtoolsLog, {computedCache: new Map()}).then(records => {
+        const result = NetworkAnalyzer.estimateRTTByOrigin(records).get(NetworkAnalyzer.SUMMARY);
+        const resultApprox = NetworkAnalyzer.estimateRTTByOrigin(records, {
+          forceCoarseEstimates: true,
+        }).get(NetworkAnalyzer.SUMMARY);
+        assertCloseEnough(result.min, resultApprox.min, 20);
+        assertCloseEnough(result.avg, resultApprox.avg, 30);
+        assertCloseEnough(result.median, resultApprox.median, 30);
+      });
     });
   });
 
@@ -242,25 +245,27 @@ describe('DependencyGraph/Simulator/NetworkAnalyzer', () => {
       assert.deepStrictEqual(result.get('https://example.com'), expected);
     });
 
-    it('should work on a real devtoolsLog', async () => {
-      const records = await NetworkRecords.request(devtoolsLog, {computedCache: new Map()});
-      const result = NetworkAnalyzer.estimateServerResponseTimeByOrigin(records);
-      assertCloseEnough(result.get('https://pwa.rocks').avg, 162);
-      assertCloseEnough(result.get('https://www.googletagmanager.com').avg, 153);
-      assertCloseEnough(result.get('https://www.google-analytics.com').avg, 161);
+    it('should work on a real devtoolsLog', () => {
+      return NetworkRecords.request(devtoolsLog, {computedCache: new Map()}).then(records => {
+        const result = NetworkAnalyzer.estimateServerResponseTimeByOrigin(records);
+        assertCloseEnough(result.get('https://pwa.rocks').avg, 162);
+        assertCloseEnough(result.get('https://www.googletagmanager.com').avg, 153);
+        assertCloseEnough(result.get('https://www.google-analytics.com').avg, 161);
+      });
     });
 
-    it('should approximate well with either method', async () => {
-      const records = await NetworkRecords.request(devtoolsLog, {computedCache: new Map()});
-      const result = NetworkAnalyzer.estimateServerResponseTimeByOrigin(records).get(
-        NetworkAnalyzer.SUMMARY
-      );
-      const resultApprox = NetworkAnalyzer.estimateServerResponseTimeByOrigin(records, {
-        forceCoarseEstimates: true,
-      }).get(NetworkAnalyzer.SUMMARY);
-      assertCloseEnough(result.min, resultApprox.min, 20);
-      assertCloseEnough(result.avg, resultApprox.avg, 30);
-      assertCloseEnough(result.median, resultApprox.median, 30);
+    it('should approximate well with either method', () => {
+      return NetworkRecords.request(devtoolsLog, {computedCache: new Map()}).then(records => {
+        const result = NetworkAnalyzer.estimateServerResponseTimeByOrigin(records).get(
+          NetworkAnalyzer.SUMMARY
+        );
+        const resultApprox = NetworkAnalyzer.estimateServerResponseTimeByOrigin(records, {
+          forceCoarseEstimates: true,
+        }).get(NetworkAnalyzer.SUMMARY);
+        assertCloseEnough(result.min, resultApprox.min, 20);
+        assertCloseEnough(result.avg, resultApprox.avg, 30);
+        assertCloseEnough(result.median, resultApprox.median, 30);
+      });
     });
   });
 

@@ -183,7 +183,7 @@ afterEach(() => {
 });
 
 describe('GatherRunner', function() {
-  it('loads a page and updates passContext urls on redirect', async () => {
+  it('loads a page and updates passContext urls on redirect', () => {
     const url1 = 'https://example.com';
     const url2 = 'https://example.com/interstitial';
     const driver = {};
@@ -204,9 +204,10 @@ describe('GatherRunner', function() {
       },
     };
 
-    const _ = await GatherRunner.loadPage(driver, passContext);
-    assert.equal(passContext.url, url2);
-    assert.equal(passContext.baseArtifacts.URL.finalUrl, url2);
+    return GatherRunner.loadPage(driver, passContext).then(_ => {
+      assert.equal(passContext.url, url2);
+      assert.equal(passContext.baseArtifacts.URL.finalUrl, url2);
+    });
   });
 
   it('loads a page and returns a pageLoadError', async () => {
@@ -260,7 +261,7 @@ describe('GatherRunner', function() {
     expect(results.NetworkUserAgent).toContain('Mozilla');
   });
 
-  it('collects requested and final URLs as an artifact', async () => {
+  it('collects requested and final URLs as an artifact', () => {
     const requestedUrl = 'https://example.com';
     const mainDocumentUrl = 'https://example.com/interstitial';
     const gotoURL = requireMockAny('../../gather/driver/navigation.js').gotoURL;
@@ -273,11 +274,12 @@ describe('GatherRunner', function() {
       computedCache: new Map(),
     };
 
-    const artifacts = await GatherRunner.run(config.passes, options);
-    assert.deepStrictEqual(
-      artifacts.URL,
-      {initialUrl: 'about:blank', requestedUrl, mainDocumentUrl, finalUrl: mainDocumentUrl},
-      'did not find expected URL artifact');
+    return GatherRunner.run(config.passes, options).then(artifacts => {
+      assert.deepStrictEqual(
+        artifacts.URL,
+        {initialUrl: 'about:blank', requestedUrl, mainDocumentUrl, finalUrl: mainDocumentUrl},
+        'did not find expected URL artifact');
+    });
   });
 
   describe('collects HostFormFactor as an artifact', () => {
@@ -625,7 +627,7 @@ describe('GatherRunner', function() {
     assert.equal(calledTrace, true);
   });
 
-  it('tells the driver to end tracing', async () => {
+  it('tells the driver to end tracing', () => {
     const url = 'https://example.com';
     let calledTrace = false;
     const fakeTraceData = {traceEvents: ['reallyBelievableTraceEvents']};
@@ -645,9 +647,10 @@ describe('GatherRunner', function() {
     };
 
     const passContext = {url, driver, passConfig, computedCache: new Map()};
-    const passData = await GatherRunner.endRecording(passContext);
-    assert.equal(calledTrace, true);
-    assert.equal(passData.trace, fakeTraceData);
+    return GatherRunner.endRecording(passContext).then(passData => {
+      assert.equal(calledTrace, true);
+      assert.equal(passData.trace, fakeTraceData);
+    });
   });
 
   it('tells the driver to begin devtoolsLog collection', async () => {
@@ -673,7 +676,7 @@ describe('GatherRunner', function() {
     assert.equal(calledDevtoolsLogCollect, true);
   });
 
-  it('tells the driver to end devtoolsLog collection', async () => {
+  it('tells the driver to end devtoolsLog collection', () => {
     const url = 'https://example.com';
     let calledDevtoolsLogCollect = false;
 
@@ -694,9 +697,10 @@ describe('GatherRunner', function() {
     };
 
     const passContext = {url, driver, passConfig, computedCache: new Map()};
-    const passData = await GatherRunner.endRecording(passContext);
-    assert.equal(calledDevtoolsLogCollect, true);
-    assert.strictEqual(passData.devtoolsLog[0], fakeDevtoolsMessage);
+    return GatherRunner.endRecording(passContext).then(passData => {
+      assert.equal(calledDevtoolsLogCollect, true);
+      assert.strictEqual(passData.devtoolsLog[0], fakeDevtoolsMessage);
+    });
   });
 
   it('resets scroll position between every gatherer', async () => {
@@ -733,7 +737,7 @@ describe('GatherRunner', function() {
     ]);
   });
 
-  it('does as many passes as are required', async () => {
+  it('does as many passes as are required', () => {
     const t1 = new TestGatherer();
     const t2 = new TestGatherer();
 
@@ -752,18 +756,18 @@ describe('GatherRunner', function() {
       }],
     });
 
-    const _ = await GatherRunner.run(config.passes, {
+    return GatherRunner.run(config.passes, {
       driver: fakeDriver,
       requestedUrl: 'https://example.com',
       settings: config.settings,
       computedCache: new Map(),
+    }).then(_ => {
+      assert.ok(t1.called);
+      assert.ok(t2.called);
     });
-
-    assert.ok(t1.called);
-    assert.ok(t2.called);
   });
 
-  it('respects trace names', async () => {
+  it('respects trace names', () => {
     const config = makeConfig({
       passes: [{
         recordTrace: true,
@@ -782,11 +786,13 @@ describe('GatherRunner', function() {
       computedCache: new Map(),
     };
 
-    const artifacts = await GatherRunner.run(config.passes, options);
-    assert.ok(artifacts.traces.firstPass);
-    assert.ok(artifacts.devtoolsLogs.firstPass);
-    assert.ok(artifacts.traces.secondPass);
-    assert.ok(artifacts.devtoolsLogs.secondPass);
+    return GatherRunner.run(config.passes, options)
+      .then(artifacts => {
+        assert.ok(artifacts.traces.firstPass);
+        assert.ok(artifacts.devtoolsLogs.firstPass);
+        assert.ok(artifacts.traces.secondPass);
+        assert.ok(artifacts.devtoolsLogs.secondPass);
+      });
   });
 
   it('saves trace and devtoolsLog with error prefix when there was a runtime error', async () => {
@@ -982,7 +988,7 @@ describe('GatherRunner', function() {
       });
     });
 
-    it('supports sync and async return of artifacts from gatherers', async () => {
+    it('supports sync and async return of artifacts from gatherers', () => {
       const gatherers = [
         // sync
         new class BeforeSync extends Gatherer {
@@ -1026,15 +1032,15 @@ describe('GatherRunner', function() {
         }],
       });
 
-      const artifacts = await GatherRunner.run(config.passes, {
+      return GatherRunner.run(config.passes, {
         driver: fakeDriver,
         requestedUrl: 'https://example.com',
         settings: config.settings,
         computedCache: new Map(),
-      });
-
-      gathererNames.forEach(gathererName => {
-        assert.strictEqual(artifacts[gathererName], gathererName);
+      }).then(artifacts => {
+        gathererNames.forEach(gathererName => {
+          assert.strictEqual(artifacts[gathererName], gathererName);
+        });
       });
     });
 
@@ -1127,7 +1133,7 @@ describe('GatherRunner', function() {
       assert.deepStrictEqual(artifacts.LighthouseRunWarnings, runWarnings);
     });
 
-    it('supports sync and async throwing of errors from gatherers', async () => {
+    it('supports sync and async throwing of errors from gatherers', () => {
       const gatherers = [
         // sync
         new class BeforeSync extends Gatherer {
@@ -1174,21 +1180,21 @@ describe('GatherRunner', function() {
         }],
       });
 
-      const artifacts = await GatherRunner.run(config.passes, {
+      return GatherRunner.run(config.passes, {
         driver: fakeDriver,
         requestedUrl: 'https://example.com',
         settings: config.settings,
         computedCache: new Map(),
-      });
-
-      gathererNames.forEach(gathererName => {
-        const errorArtifact = artifacts[gathererName];
-        assert.ok(errorArtifact instanceof Error);
-        expect(errorArtifact).toMatchObject({message: gathererName});
+      }).then(artifacts => {
+        gathererNames.forEach(gathererName => {
+          const errorArtifact = artifacts[gathererName];
+          assert.ok(errorArtifact instanceof Error);
+          expect(errorArtifact).toMatchObject({message: gathererName});
+        });
       });
     });
 
-    it('rejects if a gatherer does not provide an artifact', async () => {
+    it('rejects if a gatherer does not provide an artifact', () => {
       const config = makeConfig({
         passes: [{
           recordTrace: true,
@@ -1199,21 +1205,15 @@ describe('GatherRunner', function() {
         }],
       });
 
-      try {
-        const _ = await GatherRunner.run(config.passes, {
-          driver: fakeDriver,
-          requestedUrl: 'https://example.com',
-          settings: config.settings,
-          computedCache: new Map(),
-        });
-
-        return assert.ok(false);
-      } catch (_) {
-        return assert.ok(true);
-      }
+      return GatherRunner.run(config.passes, {
+        driver: fakeDriver,
+        requestedUrl: 'https://example.com',
+        settings: config.settings,
+        computedCache: new Map(),
+      }).then(_ => assert.ok(false), _ => assert.ok(true));
     });
 
-    it('rejects when domain name can\'t be resolved', async () => {
+    it('rejects when domain name can\'t be resolved', () => {
       const config = makeConfig({
         passes: [{
           recordTrace: true,
@@ -1234,19 +1234,19 @@ describe('GatherRunner', function() {
         },
       });
 
-      const artifacts = await GatherRunner.run(config.passes, {
+      return GatherRunner.run(config.passes, {
         driver: unresolvedDriver,
         requestedUrl,
         settings: config.settings,
         computedCache: new Map(),
+      }).then(artifacts => {
+        assert.equal(artifacts.LighthouseRunWarnings.length, 1);
+        expect(artifacts.LighthouseRunWarnings[0])
+          .toBeDisplayString(/DNS servers could not resolve/);
       });
-
-      assert.equal(artifacts.LighthouseRunWarnings.length, 1);
-      expect(artifacts.LighthouseRunWarnings[0])
-        .toBeDisplayString(/DNS servers could not resolve/);
     });
 
-    it('resolves but warns when page times out', async () => {
+    it('resolves but warns when page times out', () => {
       const config = makeConfig({
         passes: [{
           recordTrace: true,
@@ -1263,17 +1263,17 @@ describe('GatherRunner', function() {
       const gotoURL = requireMockAny('../../gather/driver/navigation.js').gotoURL;
       gotoURL.mockResolvedValue({mainDocumentUrl: requestedUrl, warnings: ['It is too slow']});
 
-      const artifacts = await GatherRunner.run(config.passes, {
+      return GatherRunner.run(config.passes, {
         driver: timedoutDriver,
         requestedUrl,
         settings: config.settings,
         computedCache: new Map(),
+      }).then(artifacts => {
+        expect(artifacts.LighthouseRunWarnings).toEqual(['It is too slow']);
       });
-
-      expect(artifacts.LighthouseRunWarnings).toEqual(['It is too slow']);
     });
 
-    it('resolves and does not warn when page times out on non-fatal pass', async () => {
+    it('resolves and does not warn when page times out on non-fatal pass', () => {
       const config = makeConfig({
         passes: [{
           recordTrace: true,
@@ -1297,17 +1297,17 @@ describe('GatherRunner', function() {
         .mockResolvedValueOnce({finalUrl: requestedUrl, warnings: []})
         .mockResolvedValueOnce({finalUrl: requestedUrl, warnings: ['It is too slow']});
 
-      const artifacts = await GatherRunner.run(config.passes, {
+      return GatherRunner.run(config.passes, {
         driver: timedoutDriver,
         requestedUrl,
         settings: config.settings,
         computedCache: new Map(),
+      }).then(artifacts => {
+        expect(artifacts.LighthouseRunWarnings).toEqual([]);
       });
-
-      expect(artifacts.LighthouseRunWarnings).toEqual([]);
     });
 
-    it('resolves when domain name can\'t be resolved but is offline', async () => {
+    it('resolves when domain name can\'t be resolved but is offline', () => {
       const config = makeConfig({
         passes: [{
           recordTrace: true,
@@ -1329,14 +1329,15 @@ describe('GatherRunner', function() {
       });
 
       // why is context.url being set to null maindDocumenturl
-      const _ = await GatherRunner.run(config.passes, {
+      return GatherRunner.run(config.passes, {
         driver: unresolvedDriver,
         requestedUrl,
         settings: config.settings,
         computedCache: new Map(),
-      });
-
-      assert.ok(true);
+      })
+        .then(_ => {
+          assert.ok(true);
+        });
     });
   });
 });

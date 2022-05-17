@@ -31,7 +31,7 @@ const getFakeContext = ({formFactor, throttlingMethod}) => ({
 
 
 describe('Performance: speed-index audit', () => {
-  it('works on a real trace', async () => {
+  it('works on a real trace', () => {
     const artifacts = {
       GatherContext: {gatherMode: 'navigation'},
       traces: {defaultPass: pwaTrace},
@@ -39,8 +39,9 @@ describe('Performance: speed-index audit', () => {
     };
 
     const context = getFakeContext({formFactor: 'mobile', throttlingMethod: 'provided'});
-    const result = await Audit.audit(artifacts, context);
-    assert.equal(result.score, 1);
-    assert.equal(result.numericValue, 605);
+    return Audit.audit(artifacts, context).then(result => {
+      assert.equal(result.score, 1);
+      assert.equal(result.numericValue, 605);
+    });
   }, 10000);
 });

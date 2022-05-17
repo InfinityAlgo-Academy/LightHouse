@@ -86,25 +86,27 @@ const mockArtifacts = (chainNetworkRecords) => {
 };
 
 describe('Performance: critical-request-chains audit', () => {
-  it('calculates the correct chain result for failing example', async () => {
+  it('calculates the correct chain result for failing example', () => {
     const artifacts = mockArtifacts(FAILING_CHAIN_RECORDS);
     const context = {computedCache: new Map()};
-    const output = await CriticalRequestChains.audit(artifacts, context);
-    expect(output.displayValue).toBeDisplayString('2 chains found');
-    assert.equal(output.score, 0);
-    assert.ok(output.details);
+    return CriticalRequestChains.audit(artifacts, context).then(output => {
+      expect(output.displayValue).toBeDisplayString('2 chains found');
+      assert.equal(output.score, 0);
+      assert.ok(output.details);
+    });
   });
 
-  it('calculates the correct chain result for passing example', async () => {
+  it('calculates the correct chain result for passing example', () => {
     const artifacts = mockArtifacts(PASSING_CHAIN_RECORDS);
     const context = {computedCache: new Map()};
-    const output = await CriticalRequestChains.audit(artifacts, context);
-    assert.equal(output.details.longestChain.duration, 1000);
-    assert.equal(output.displayValue, '');
-    assert.equal(output.score, 1);
+    return CriticalRequestChains.audit(artifacts, context).then(output => {
+      assert.equal(output.details.longestChain.duration, 1000);
+      assert.equal(output.displayValue, '');
+      assert.equal(output.score, 1);
+    });
   });
 
-  it('calculates the correct chain result for a real devtools log', async () => {
+  it('calculates the correct chain result for a real devtools log', () => {
     const artifacts = {
       traces: {defaultPass: createTestTrace({topLevelTasks: [{ts: 0}]})},
       devtoolsLogs: {defaultPass: redditDevtoolsLog},
@@ -116,29 +118,29 @@ describe('Performance: critical-request-chains audit', () => {
       },
     };
     const context = {computedCache: new Map()};
-    const output = await CriticalRequestChains.audit(artifacts, context);
-    expect(output.details.longestChain.duration).toBeCloseTo(656.491);
-    expect(output.details.longestChain.transferSize).toEqual(2468);
-    expect(output).toHaveProperty('score', 0);
+    return CriticalRequestChains.audit(artifacts, context).then(output => {
+      expect(output.details.longestChain.duration).toBeCloseTo(656.491);
+      expect(output.details.longestChain.transferSize).toEqual(2468);
+      expect(output).toHaveProperty('score', 0);
+    });
   });
 
-  it('calculates the correct chain result for passing example (no 2.)', async () => {
+  it('calculates the correct chain result for passing example (no 2.)', () => {
     const artifacts = mockArtifacts(PASSING_CHAIN_RECORDS_2);
     const context = {computedCache: new Map()};
-    const output = await CriticalRequestChains.audit(artifacts, context);
-    assert.equal(output.displayValue, '');
-    assert.equal(output.score, 1);
+    return CriticalRequestChains.audit(artifacts, context).then(output => {
+      assert.equal(output.displayValue, '');
+      assert.equal(output.score, 1);
+    });
   });
 
-  it('throws an error for no main resource found for empty example', async () => {
+  it('throws an error for no main resource found for empty example', () => {
     const artifacts = mockArtifacts(EMPTY_CHAIN_RECORDS);
     const context = {computedCache: new Map()};
-
-    try {
-      const _ = await CriticalRequestChains.audit(artifacts, context);
+    return CriticalRequestChains.audit(artifacts, context).then(_ => {
       throw new Error('should have failed');
-    } catch (err) {
+    }).catch(err => {
       assert.ok(err.message.includes('Unable to identify the main resource'));
-    }
+    });
   });
 });

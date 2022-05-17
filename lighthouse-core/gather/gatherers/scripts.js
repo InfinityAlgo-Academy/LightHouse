@@ -118,13 +118,10 @@ class Scripts extends FRGatherer {
     // request one at a time.
     this._scriptContents = await runInSeriesOrParallel(
       this._scriptParsedEvents,
-      async ({scriptId}) => {
-        try {
-          const resp = await session.sendCommand('Debugger.getScriptSource', {scriptId});
-          return resp.scriptSource;
-        } catch (error) {
-          return undefined;
-        }
+      ({scriptId}) => {
+        return session.sendCommand('Debugger.getScriptSource', {scriptId})
+          .then((resp) => resp.scriptSource)
+          .catch(() => undefined);
       },
       formFactor === 'mobile' /* runInSeries */
     );

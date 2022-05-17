@@ -38,22 +38,23 @@ function generateArtifacts(records) {
 }
 
 describe('Total byte weight audit', () => {
-  it('passes when requests are small', async () => {
+  it('passes when requests are small', () => {
     const artifacts = generateArtifacts([
       ['file.html', 30],
       ['file.js', 50],
       ['file.jpg', 70],
     ]);
 
-    const result = await TotalByteWeight.audit(artifacts, {options, computedCache: new Map()});
-    assert.strictEqual(result.numericValue, 150 * 1024);
-    assert.strictEqual(result.score, 1);
-    const results = result.details.items;
-    assert.strictEqual(results.length, 3);
-    assert.strictEqual(results[0].totalBytes, 71680, 'results are sorted');
+    return TotalByteWeight.audit(artifacts, {options, computedCache: new Map()}).then(result => {
+      assert.strictEqual(result.numericValue, 150 * 1024);
+      assert.strictEqual(result.score, 1);
+      const results = result.details.items;
+      assert.strictEqual(results.length, 3);
+      assert.strictEqual(results[0].totalBytes, 71680, 'results are sorted');
+    });
   });
 
-  it('scores in the middle when a mixture of small and large requests are used', async () => {
+  it('scores in the middle when a mixture of small and large requests are used', () => {
     const artifacts = generateArtifacts([
       ['file.html', 30],
       ['file.js', 50],
@@ -68,23 +69,25 @@ describe('Total byte weight audit', () => {
       ['small6.js', 5],
     ]);
 
-    const result = await TotalByteWeight.audit(artifacts, {options, computedCache: new Map()});
-    assert.ok(0.40 < result.score && result.score < 0.6, 'score is around 0.5');
-    assert.strictEqual(result.numericValue, 4180 * 1024);
-    const results = result.details.items;
-    assert.strictEqual(results.length, 10, 'results are clipped at top 10');
+    return TotalByteWeight.audit(artifacts, {options, computedCache: new Map()}).then(result => {
+      assert.ok(0.40 < result.score && result.score < 0.6, 'score is around 0.5');
+      assert.strictEqual(result.numericValue, 4180 * 1024);
+      const results = result.details.items;
+      assert.strictEqual(results.length, 10, 'results are clipped at top 10');
+    });
   });
 
-  it('fails when requests are huge', async () => {
+  it('fails when requests are huge', () => {
     const artifacts = generateArtifacts([
       ['file.html', 3000],
       ['file.js', 5000],
       ['file.jpg', 7000],
     ]);
 
-    const result = await TotalByteWeight.audit(artifacts, {options, computedCache: new Map()});
-    assert.strictEqual(result.numericValue, 15000 * 1024);
-    assert.strictEqual(result.score, 0);
+    return TotalByteWeight.audit(artifacts, {options, computedCache: new Map()}).then(result => {
+      assert.strictEqual(result.numericValue, 15000 * 1024);
+      assert.strictEqual(result.score, 0);
+    });
   });
 
   it('ignores non-network requests', async () => {

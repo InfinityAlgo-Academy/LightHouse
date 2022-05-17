@@ -99,9 +99,8 @@ class ResponseCompression extends FRGatherer {
     const session = context.driver.defaultSession;
     const textRecords = ResponseCompression.filterUnoptimizedResponses(networkRecords);
 
-    return Promise.all(textRecords.map(async record => {
-      try {
-        const content = await fetchResponseBodyFromCache(session, record.requestId);
+    return Promise.all(textRecords.map(record => {
+      return fetchResponseBodyFromCache(session, record.requestId).then(content => {
         // if we don't have any content, gzipSize is already set to 0
         if (!content) {
           return record;
@@ -119,7 +118,7 @@ class ResponseCompression extends FRGatherer {
             resolve(record);
           });
         });
-      } catch (err) {
+      }).catch(err => {
         Sentry.captureException(err, {
           tags: {gatherer: 'ResponseCompression'},
           extra: {url: URL.elideDataURI(record.url)},
@@ -128,7 +127,7 @@ class ResponseCompression extends FRGatherer {
 
         record.gzipSize = undefined;
         return record;
-      }
+      });
     }));
   }
 

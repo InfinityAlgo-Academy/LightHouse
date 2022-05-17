@@ -155,7 +155,7 @@ describe('Optimized images', () => {
     ]);
   });
 
-  it('handles partial driver failure', async () => {
+  it('handles partial driver failure', () => {
     let calls = 0;
     context.driver.defaultSession.sendCommand.mockImplementation(() => {
       calls++;
@@ -166,11 +166,12 @@ describe('Optimized images', () => {
       }
     });
 
-    const artifact = await optimizedImages.afterPass(context, traceData);
-    const failed = artifact.find(record => record.failed);
+    return optimizedImages.afterPass(context, traceData).then(artifact => {
+      const failed = artifact.find(record => record.failed);
 
-    expect(artifact).toHaveLength(5);
-    expect(failed?.errMsg).toEqual('whoops driver failed');
+      expect(artifact).toHaveLength(5);
+      expect(failed?.errMsg).toEqual('whoops driver failed');
+    });
   });
 
   it('handles non-standard mime types too', async () => {

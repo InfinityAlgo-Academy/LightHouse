@@ -37,68 +37,67 @@ describe('Module Tests', function() {
   });
 
   describe('legacyNavigation', () => {
-    it('should throw an error when the first parameter is not defined', async function() {
-      try {
-        await legacyNavigation();
-        throw new Error('Should not have resolved when first arg is not a string');
-      } catch (err) {
-        assert.ok(err);
-      }
-    });
-
-    it('should throw an error when the first parameter is an empty string', async function() {
-      try {
-        await legacyNavigation('');
-        throw new Error('Should not have resolved when first arg is an empty string');
-      } catch (err) {
-        assert.ok(err);
-      }
-    });
-
-    it('should throw an error when the first parameter is not a string', async function() {
-      try {
-        await legacyNavigation({});
-        throw new Error('Should not have resolved when first arg is not a string');
-      } catch (err) {
-        assert.ok(err);
-      }
-    });
-
-    it('should throw an error when the second parameter is not an object', async function() {
-      try {
-        await legacyNavigation('chrome://version', 'flags');
-        throw new Error('Should not have resolved when second arg is not an object');
-      } catch (err) {
-        assert.ok(err);
-      }
-    });
-
-    it('should throw an error when the config is invalid', async function() {
-      try {
-        await legacyNavigation('chrome://version', {}, {});
-        throw new Error('Should not have resolved when second arg is not an object');
-      } catch (err) {
-        assert.ok(err);
-      }
-    });
-
-    it('should throw an error when the config contains incorrect audits', async function() {
-      try {
-        await legacyNavigation('chrome://version', {}, {
-          passes: [{
-            gatherers: [
-              'script-elements',
-            ],
-          }],
-          audits: [
-            'fluff',
-          ],
+    it('should throw an error when the first parameter is not defined', function() {
+      return legacyNavigation()
+        .then(() => {
+          throw new Error('Should not have resolved when first arg is not a string');
+        }, err => {
+          assert.ok(err);
         });
+    });
 
-        throw new Error('Should not have resolved');
-      } catch (err) {
-        assert.ok(err.message.includes('fluff'));
-      }
+    it('should throw an error when the first parameter is an empty string', function() {
+      return legacyNavigation('')
+        .then(() => {
+          throw new Error('Should not have resolved when first arg is an empty string');
+        }, err => {
+          assert.ok(err);
+        });
+    });
+
+    it('should throw an error when the first parameter is not a string', function() {
+      return legacyNavigation({})
+        .then(() => {
+          throw new Error('Should not have resolved when first arg is not a string');
+        }, err => {
+          assert.ok(err);
+        });
+    });
+
+    it('should throw an error when the second parameter is not an object', function() {
+      return legacyNavigation('chrome://version', 'flags')
+        .then(() => {
+          throw new Error('Should not have resolved when second arg is not an object');
+        }, err => {
+          assert.ok(err);
+        });
+    });
+
+    it('should throw an error when the config is invalid', function() {
+      return legacyNavigation('chrome://version', {}, {})
+        .then(() => {
+          throw new Error('Should not have resolved when second arg is not an object');
+        }, err => {
+          assert.ok(err);
+        });
+    });
+
+    it('should throw an error when the config contains incorrect audits', function() {
+      return legacyNavigation('chrome://version', {}, {
+        passes: [{
+          gatherers: [
+            'script-elements',
+          ],
+        }],
+        audits: [
+          'fluff',
+        ],
+      })
+        .then(() => {
+          throw new Error('Should not have resolved');
+        }, err => {
+          assert.ok(err.message.includes('fluff'));
+        });
     });
 
     it('should throw an error when the url is invalid', async () => {
@@ -121,10 +120,9 @@ describe('Module Tests', function() {
       }
     });
 
-    it('should return formatted LHR when given no categories', async function() {
+    it('should return formatted LHR when given no categories', function() {
       const exampleUrl = 'https://www.reddit.com/r/nba';
-
-      const results = await legacyNavigation(exampleUrl, {
+      return legacyNavigation(exampleUrl, {
         output: 'html',
       }, {
         settings: {
@@ -134,20 +132,20 @@ describe('Module Tests', function() {
         audits: [
           'viewport',
         ],
+      }).then(results => {
+        assert.ok(/<html/.test(results.report), 'did not create html report');
+        assert.ok(results.artifacts.ViewportDimensions, 'did not set artifacts');
+        assert.ok(results.lhr.lighthouseVersion);
+        assert.ok(results.lhr.fetchTime);
+        assert.equal(results.lhr.finalUrl, exampleUrl);
+        assert.equal(results.lhr.requestedUrl, exampleUrl);
+        assert.equal(Object.values(results.lhr.categories).length, 0);
+        assert.ok(results.lhr.audits.viewport);
+        assert.strictEqual(results.lhr.audits.viewport.score, 0);
+        assert.ok(results.lhr.audits.viewport.explanation);
+        assert.ok(results.lhr.timing);
+        assert.ok(results.lhr.timing.entries.length > 3, 'timing entries not populated');
       });
-
-      assert.ok(/<html/.test(results.report), 'did not create html report');
-      assert.ok(results.artifacts.ViewportDimensions, 'did not set artifacts');
-      assert.ok(results.lhr.lighthouseVersion);
-      assert.ok(results.lhr.fetchTime);
-      assert.equal(results.lhr.finalUrl, exampleUrl);
-      assert.equal(results.lhr.requestedUrl, exampleUrl);
-      assert.equal(Object.values(results.lhr.categories).length, 0);
-      assert.ok(results.lhr.audits.viewport);
-      assert.strictEqual(results.lhr.audits.viewport.score, 0);
-      assert.ok(results.lhr.audits.viewport.explanation);
-      assert.ok(results.lhr.timing);
-      assert.ok(results.lhr.timing.entries.length > 3, 'timing entries not populated');
     });
 
     it('should specify the channel as node by default', async function() {

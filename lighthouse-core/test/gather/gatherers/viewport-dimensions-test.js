@@ -16,8 +16,8 @@ describe('ViewportDimensions gatherer', () => {
     gatherer = new ViewportDimensionsGatherer();
   });
 
-  it('returns an artifact', async () => {
-    const artifact = await gatherer.afterPass({
+  it('returns an artifact', () => {
+    return gatherer.afterPass({
       driver: {
         executionContext: {
           async evaluate() {
@@ -31,10 +31,10 @@ describe('ViewportDimensions gatherer', () => {
           },
         },
       },
+    }).then(artifact => {
+      assert.ok(typeof artifact === 'object');
+      assert.ok(artifact.outerWidth === 400);
+      assert.ok(artifact.innerHeight === 600);
     });
-
-    assert.ok(typeof artifact === 'object');
-    assert.ok(artifact.outerWidth === 400);
-    assert.ok(artifact.innerHeight === 600);
   });
 });

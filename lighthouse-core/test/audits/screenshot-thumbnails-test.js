@@ -16,7 +16,7 @@ import {LH_ROOT} from '../../../root.js';
 const noScreenshotsTrace = {traceEvents: pwaTrace.traceEvents.filter(e => e.name !== 'Screenshot')};
 
 describe('Screenshot thumbnails', () => {
-  it('should extract thumbnails from a trace', async () => {
+  it('should extract thumbnails from a trace', () => {
     const options = {minimumTimelineDuration: 500};
     const settings = {throttlingMethod: 'provided'};
     const artifacts = {
@@ -26,20 +26,21 @@ describe('Screenshot thumbnails', () => {
     };
 
     const context = {settings, options, computedCache: new Map()};
-    const results = await ScreenshotThumbnailsAudit.audit(artifacts, context);
-    results.details.items.forEach((result, index) => {
-      const framePath = path.join(LH_ROOT,
-        `lighthouse-core/test/fixtures/traces/screenshots/progressive-app-frame-${index}.jpg`);
-      const expectedData = fs.readFileSync(framePath, 'base64');
-      const actualData = result.data.slice('data:image/jpeg;base64,'.length);
-      expect(actualData).toEqual(expectedData);
-    });
+    return ScreenshotThumbnailsAudit.audit(artifacts, context).then(results => {
+      results.details.items.forEach((result, index) => {
+        const framePath = path.join(LH_ROOT,
+          `lighthouse-core/test/fixtures/traces/screenshots/progressive-app-frame-${index}.jpg`);
+        const expectedData = fs.readFileSync(framePath, 'base64');
+        const actualData = result.data.slice('data:image/jpeg;base64,'.length);
+        expect(actualData).toEqual(expectedData);
+      });
 
-    assert.equal(results.score, 1);
-    assert.equal(results.details.items[0].timing, 82);
-    assert.equal(results.details.items[2].timing, 245);
-    assert.equal(results.details.items[9].timing, 818);
-    assert.equal(results.details.items[0].timestamp, 225414253815);
+      assert.equal(results.score, 1);
+      assert.equal(results.details.items[0].timing, 82);
+      assert.equal(results.details.items[2].timing, 245);
+      assert.equal(results.details.items[9].timing, 818);
+      assert.equal(results.details.items[0].timestamp, 225414253815);
+    });
   }, 10000);
 
   it('should throw when screenshots are missing in navigation', async () => {
@@ -69,7 +70,7 @@ describe('Screenshot thumbnails', () => {
     expect(results.notApplicable).toBe(true);
   });
 
-  it('should scale the timeline to last visual change', async () => {
+  it('should scale the timeline to last visual change', () => {
     const options = {minimumTimelineDuration: 500};
     const settings = {throttlingMethod: 'devtools'};
     const artifacts = {
@@ -79,12 +80,13 @@ describe('Screenshot thumbnails', () => {
     };
 
     const context = {settings, options, computedCache: new Map()};
-    const results = await ScreenshotThumbnailsAudit.audit(artifacts, context);
-    assert.equal(results.details.items[0].timing, 82);
-    assert.equal(results.details.items[9].timing, 818);
+    return ScreenshotThumbnailsAudit.audit(artifacts, context).then(results => {
+      assert.equal(results.details.items[0].timing, 82);
+      assert.equal(results.details.items[9].timing, 818);
+    });
   });
 
-  it('should scale the timeline to minimumTimelineDuration', async () => {
+  it('should scale the timeline to minimumTimelineDuration', () => {
     const settings = {throttlingMethod: 'simulate'};
     const artifacts = {
       GatherContext: {gatherMode: 'navigation'},
@@ -92,9 +94,10 @@ describe('Screenshot thumbnails', () => {
     };
 
     const context = {settings, options: {}, computedCache: new Map()};
-    const results = await ScreenshotThumbnailsAudit.audit(artifacts, context);
-    assert.equal(results.details.items[0].timing, 300);
-    assert.equal(results.details.items[9].timing, 3000);
+    return ScreenshotThumbnailsAudit.audit(artifacts, context).then(results => {
+      assert.equal(results.details.items[0].timing, 300);
+      assert.equal(results.details.items[9].timing, 3000);
+    });
   });
 
   it('should handle nonsense times', async () => {
