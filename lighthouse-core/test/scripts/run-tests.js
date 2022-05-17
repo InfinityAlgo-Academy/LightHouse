@@ -81,7 +81,7 @@ const args = [
   ...mochaPassThruArgs,
   ...filteredTests,
 ];
-if (argv.parallel) args.push('--parallel')
+if (argv.parallel) args.push('--parallel');
 console.log(`Running command: ${argv.update ? 'SNAPSHOT_UPDATE=1 ' : ''}node ${args.join(' ')}`);
 
 try {
