@@ -210,7 +210,8 @@
   },
   "resolutions": {
     "puppeteer/**/devtools-protocol": "0.0.995287",
-    "puppeteer-core/**/devtools-protocol": "0.0.995287"
+    "puppeteer-core/**/devtools-protocol": "0.0.995287",
+    "@digitalbazaar/http-client": "^3.1.0"
   },
   "repository": "GoogleChrome/lighthouse",
   "keywords": [
