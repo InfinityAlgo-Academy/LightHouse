@@ -23,7 +23,7 @@ describe('SEO: Is page crawlable audit', () => {
       ' Unavailable_after: 25-Aug-2007 15:00:00 EST',
     ];
 
-    const allRuns = robotsValues.map(robotsValue => {
+    const allRuns = robotsValues.map(async robotsValue => {
       const mainDocumentUrl = 'https://example.com/';
       const mainResource = {
         url: mainDocumentUrl,
@@ -38,16 +38,15 @@ describe('SEO: Is page crawlable audit', () => {
       };
 
       const context = {computedCache: new Map()};
-      return IsCrawlableAudit.audit(artifacts, context).then(auditResult => {
-        assert.equal(auditResult.score, 0);
-        assert.equal(auditResult.details.items.length, 1);
-      });
+      const auditResult = await IsCrawlableAudit.audit(artifacts, context);
+      assert.equal(auditResult.score, 0);
+      assert.equal(auditResult.details.items.length, 1);
     });
 
     return Promise.all(allRuns);
   });
 
-  it('succeeds when there are no blocking directives in the metatag', () => {
+  it('succeeds when there are no blocking directives in the metatag', async () => {
     const mainDocumentUrl = 'https://example.com/';
     const mainResource = {
       url: mainDocumentUrl,
@@ -63,12 +62,11 @@ describe('SEO: Is page crawlable audit', () => {
     };
 
     const context = {computedCache: new Map()};
-    return IsCrawlableAudit.audit(artifacts, context).then(auditResult => {
-      assert.equal(auditResult.score, 1);
-    });
+    const auditResult = await IsCrawlableAudit.audit(artifacts, context);
+    assert.equal(auditResult.score, 1);
   });
 
-  it('succeeds when there is no robots metatag', () => {
+  it('succeeds when there is no robots metatag', async () => {
     const mainDocumentUrl = 'https://example.com/';
     const mainResource = {
       url: mainDocumentUrl,
@@ -83,9 +81,8 @@ describe('SEO: Is page crawlable audit', () => {
     };
 
     const context = {computedCache: new Map()};
-    return IsCrawlableAudit.audit(artifacts, context).then(auditResult => {
-      assert.equal(auditResult.score, 1);
-    });
+    const auditResult = await IsCrawlableAudit.audit(artifacts, context);
+    assert.equal(auditResult.score, 1);
   });
 
   it('fails when page is blocked from indexing with a header', () => {
@@ -111,7 +108,7 @@ describe('SEO: Is page crawlable audit', () => {
       ],
     ];
 
-    const allRuns = robotsHeaders.map(headers => {
+    const allRuns = robotsHeaders.map(async headers => {
       const mainDocumentUrl = 'https://example.com/';
       const mainResource = {
         url: mainDocumentUrl,
@@ -126,16 +123,15 @@ describe('SEO: Is page crawlable audit', () => {
       };
 
       const context = {computedCache: new Map()};
-      return IsCrawlableAudit.audit(artifacts, context).then(auditResult => {
-        assert.equal(auditResult.score, 0);
-        assert.equal(auditResult.details.items.length, 1);
-      });
+      const auditResult = await IsCrawlableAudit.audit(artifacts, context);
+      assert.equal(auditResult.score, 0);
+      assert.equal(auditResult.details.items.length, 1);
     });
 
     return Promise.all(allRuns);
   });
 
-  it('succeeds when there are no blocking directives in the robots header', () => {
+  it('succeeds when there are no blocking directives in the robots header', async () => {
     const mainDocumentUrl = 'https://example.com/';
     const mainResource = {
       url: mainDocumentUrl,
@@ -153,12 +149,11 @@ describe('SEO: Is page crawlable audit', () => {
     };
 
     const context = {computedCache: new Map()};
-    return IsCrawlableAudit.audit(artifacts, context).then(auditResult => {
-      assert.equal(auditResult.score, 1);
-    });
+    const auditResult = await IsCrawlableAudit.audit(artifacts, context);
+    assert.equal(auditResult.score, 1);
   });
 
-  it('succeeds when there is no robots header and robots.txt is unavailable', () => {
+  it('succeeds when there is no robots header and robots.txt is unavailable', async () => {
     const mainDocumentUrl = 'https://example.com/';
     const mainResource = {
       url: mainDocumentUrl,
@@ -173,12 +168,11 @@ describe('SEO: Is page crawlable audit', () => {
     };
 
     const context = {computedCache: new Map()};
-    return IsCrawlableAudit.audit(artifacts, context).then(auditResult => {
-      assert.equal(auditResult.score, 1);
-    });
+    const auditResult = await IsCrawlableAudit.audit(artifacts, context);
+    assert.equal(auditResult.score, 1);
   });
 
-  it('ignores UA specific directives', () => {
+  it('ignores UA specific directives', async () => {
     const mainDocumentUrl = 'https://example.com/';
     const mainResource = {
       url: mainDocumentUrl,
@@ -196,9 +190,8 @@ describe('SEO: Is page crawlable audit', () => {
     };
 
     const context = {computedCache: new Map()};
-    return IsCrawlableAudit.audit(artifacts, context).then(auditResult => {
-      assert.equal(auditResult.score, 1);
-    });
+    const auditResult = await IsCrawlableAudit.audit(artifacts, context);
+    assert.equal(auditResult.score, 1);
   });
 
   it('fails when page is blocked from indexing by robots.txt', () => {
@@ -229,7 +222,7 @@ describe('SEO: Is page crawlable audit', () => {
       },
     ];
 
-    const allRuns = robotsTxts.map(robotsTxt => {
+    const allRuns = robotsTxts.map(async robotsTxt => {
       const mainDocumentUrl = 'http://example.com/test/page.html';
       const mainResource = {
         url: mainDocumentUrl,
@@ -244,10 +237,9 @@ describe('SEO: Is page crawlable audit', () => {
       };
 
       const context = {computedCache: new Map()};
-      return IsCrawlableAudit.audit(artifacts, context).then(auditResult => {
-        assert.equal(auditResult.score, 0);
-        assert.equal(auditResult.details.items.length, 1);
-      });
+      const auditResult = await IsCrawlableAudit.audit(artifacts, context);
+      assert.equal(auditResult.score, 0);
+      assert.equal(auditResult.details.items.length, 1);
     });
 
     return Promise.all(allRuns);
@@ -268,7 +260,7 @@ describe('SEO: Is page crawlable audit', () => {
       },
     ];
 
-    const allRuns = robotsTxts.map(robotsTxt => {
+    const allRuns = robotsTxts.map(async robotsTxt => {
       const mainDocumentUrl = 'http://example.com/test/page.html';
       const mainResource = {
         url: mainDocumentUrl,
@@ -283,15 +275,14 @@ describe('SEO: Is page crawlable audit', () => {
       };
 
       const context = {computedCache: new Map()};
-      return IsCrawlableAudit.audit(artifacts, context).then(auditResult => {
-        assert.equal(auditResult.score, 1);
-      });
+      const auditResult = await IsCrawlableAudit.audit(artifacts, context);
+      assert.equal(auditResult.score, 1);
     });
 
     return Promise.all(allRuns);
   });
 
-  it('returns all failing items', () => {
+  it('returns all failing items', async () => {
     const mainDocumentUrl = 'http://example.com/test/page.html';
     const mainResource = {
       url: mainDocumentUrl,
@@ -313,40 +304,39 @@ describe('SEO: Is page crawlable audit', () => {
     };
 
     const context = {computedCache: new Map()};
-    return IsCrawlableAudit.audit(artifacts, context).then(auditResult => {
-      assert.equal(auditResult.score, 0);
-      assert.equal(auditResult.details.items.length, 4);
+    const auditResult = await IsCrawlableAudit.audit(artifacts, context);
+    assert.equal(auditResult.score, 0);
+    assert.equal(auditResult.details.items.length, 4);
 
-      expect(auditResult.details.items).toMatchInlineSnapshot(`
-        Array [
-          Object {
-            "source": Object {
-              "boundingRect": undefined,
-              "lhId": undefined,
-              "nodeLabel": undefined,
-              "path": undefined,
-              "selector": undefined,
-              "snippet": "<meta name=\\"robots\\" content=\\"noindex\\" />",
-              "type": "node",
-            },
+    expect(auditResult.details.items).toMatchInlineSnapshot(`
+      Array [
+        Object {
+          "source": Object {
+            "boundingRect": undefined,
+            "lhId": undefined,
+            "nodeLabel": undefined,
+            "path": undefined,
+            "selector": undefined,
+            "snippet": "<meta name=\\"robots\\" content=\\"noindex\\" />",
+            "type": "node",
           },
-          Object {
-            "source": "x-robots-tag: none",
+        },
+        Object {
+          "source": "x-robots-tag: none",
+        },
+        Object {
+          "source": "x-robots-tag: noindex",
+        },
+        Object {
+          "source": Object {
+            "column": 0,
+            "line": 1,
+            "type": "source-location",
+            "url": "http://example.com/robots.txt",
+            "urlProvider": "network",
           },
-          Object {
-            "source": "x-robots-tag: noindex",
-          },
-          Object {
-            "source": Object {
-              "column": 0,
-              "line": 1,
-              "type": "source-location",
-              "url": "http://example.com/robots.txt",
-              "urlProvider": "network",
-            },
-          },
-        ]
-      `);
-    });
+        },
+      ]
+    `);
   });
 });

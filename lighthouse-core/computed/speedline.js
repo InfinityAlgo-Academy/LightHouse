@@ -19,7 +19,7 @@ class Speedline {
   static async compute_(trace, context) {
     // speedline() may throw without a promise, so we resolve immediately
     // to get in a promise chain.
-    return ProcessedTrace.request(trace, context).then(processedTrace => {
+    const speedline = await ProcessedTrace.request(trace, context).then(processedTrace => {
       // Use a shallow copy of traceEvents so speedline can sort as it pleases.
       // See https://github.com/GoogleChrome/lighthouse/issues/2333
       const traceEvents = trace.traceEvents.slice();
@@ -37,17 +37,17 @@ class Speedline {
       }
 
       throw err;
-    }).then(speedline => {
-      if (speedline.frames.length === 0) {
-        throw new LHError(LHError.errors.NO_SPEEDLINE_FRAMES);
-      }
-
-      if (speedline.speedIndex === 0) {
-        throw new LHError(LHError.errors.SPEEDINDEX_OF_ZERO);
-      }
-
-      return speedline;
     });
+
+    if (speedline.frames.length === 0) {
+      throw new LHError(LHError.errors.NO_SPEEDLINE_FRAMES);
+    }
+
+    if (speedline.speedIndex === 0) {
+      throw new LHError(LHError.errors.SPEEDINDEX_OF_ZERO);
+    }
+
+    return speedline;
   }
 }
 

@@ -31,7 +31,7 @@ const getFakeContext = ({formFactor, throttlingMethod}) => ({
   },
 });
 describe('Performance: interactive audit', () => {
-  it('should compute interactive', () => {
+  it('should compute interactive', async () => {
     const artifacts = {
       GatherContext: {gatherMode: 'navigation'},
       traces: {
@@ -43,14 +43,13 @@ describe('Performance: interactive audit', () => {
     };
 
     const context = getFakeContext({formFactor: 'mobile', throttlingMethod: 'provided'});
-    return Interactive.audit(artifacts, context).then(output => {
-      assert.equal(output.score, 1);
-      assert.equal(Math.round(output.numericValue), 1582);
-      expect(output.displayValue).toBeDisplayString('1.6\xa0s');
-    });
+    const output = await Interactive.audit(artifacts, context);
+    assert.equal(output.score, 1);
+    assert.equal(Math.round(output.numericValue), 1582);
+    expect(output.displayValue).toBeDisplayString('1.6\xa0s');
   });
 
-  it('should compute interactive on pages with redirect', () => {
+  it('should compute interactive on pages with redirect', async () => {
     const artifacts = {
       GatherContext: {gatherMode: 'navigation'},
       traces: {
@@ -62,10 +61,9 @@ describe('Performance: interactive audit', () => {
     };
 
     const context = getFakeContext({formFactor: 'mobile', throttlingMethod: 'provided'});
-    return Interactive.audit(artifacts, context).then(output => {
-      assert.equal(output.score, 0.97);
-      assert.equal(Math.round(output.numericValue), 2712);
-      expect(output.displayValue).toBeDisplayString('2.7\xa0s');
-    });
+    const output = await Interactive.audit(artifacts, context);
+    assert.equal(output.score, 0.97);
+    assert.equal(Math.round(output.numericValue), 2712);
+    expect(output.displayValue).toBeDisplayString('2.7\xa0s');
   });
 });

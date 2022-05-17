@@ -13,7 +13,7 @@ describe('SEO: HTTP code audit', () => {
   it('fails when status code is unsuccesfull', () => {
     const statusCodes = [403, 404, 500];
 
-    const allRuns = statusCodes.map(statusCode => {
+    const allRuns = statusCodes.map(async statusCode => {
       const mainDocumentUrl = 'https://example.com';
       const mainResource = {
         url: mainDocumentUrl,
@@ -27,16 +27,15 @@ describe('SEO: HTTP code audit', () => {
         URL: {mainDocumentUrl},
       };
 
-      return HTTPStatusCodeAudit.audit(artifacts, {computedCache: new Map()}).then(auditResult => {
-        assert.equal(auditResult.score, 0);
-        assert.ok(auditResult.displayValue.includes(statusCode), false);
-      });
+      const auditResult = await HTTPStatusCodeAudit.audit(artifacts, {computedCache: new Map()});
+      assert.equal(auditResult.score, 0);
+      assert.ok(auditResult.displayValue.includes(statusCode), false);
     });
 
     return Promise.all(allRuns);
   });
 
-  it('passes when status code is successful', () => {
+  it('passes when status code is successful', async () => {
     const mainDocumentUrl = 'https://example.com';
     const mainResource = {
       url: mainDocumentUrl,
@@ -50,9 +49,8 @@ describe('SEO: HTTP code audit', () => {
       URL: {mainDocumentUrl},
     };
 
-    return HTTPStatusCodeAudit.audit(artifacts, {computedCache: new Map()}).then(auditResult => {
-      assert.equal(auditResult.score, 1);
-    });
+    const auditResult = await HTTPStatusCodeAudit.audit(artifacts, {computedCache: new Map()});
+    assert.equal(auditResult.score, 1);
   });
 
   it('throws when main resource cannot be found in navigation', async () => {

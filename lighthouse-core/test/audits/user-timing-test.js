@@ -17,30 +17,29 @@ function generateArtifactsWithTrace(trace) {
   };
 }
 describe('Performance: user-timings audit', () => {
-  it('evaluates valid input correctly', () => {
+  it('evaluates valid input correctly', async () => {
     const artifacts = generateArtifactsWithTrace(traceEvents);
-    return UserTimingsAudit.audit(artifacts, {computedCache: new Map()}).then(auditResult => {
-      const excludedUTs = auditResult.details.items.filter(timing => {
-        return UserTimingsAudit.excludedPrefixes.some(prefix => timing.name.startsWith(prefix));
-      });
-      assert.equal(excludedUTs.length, 0, 'excluded usertimings included in results');
-
-      assert.equal(auditResult.score, 0);
-      expect(auditResult.displayValue).toBeDisplayString('2 user timings');
-
-      assert.equal(auditResult.details.items[0].name, 'measure_test');
-      assert.equal(auditResult.details.items[0].timingType, 'Measure');
-      assert.equal(auditResult.details.items[0].startTime, 0.002);
-      assert.equal(auditResult.details.items[0].duration, 1000.965);
-
-      assert.equal(auditResult.details.items[1].name, 'mark_test');
-      assert.equal(auditResult.details.items[1].timingType, 'Mark');
-      assert.equal(auditResult.details.items[1].startTime, 1000.954);
-      assert.equal(auditResult.details.items[1].duration, undefined);
+    const auditResult = await UserTimingsAudit.audit(artifacts, {computedCache: new Map()});
+    const excludedUTs = auditResult.details.items.filter(timing => {
+      return UserTimingsAudit.excludedPrefixes.some(prefix => timing.name.startsWith(prefix));
     });
+    assert.equal(excludedUTs.length, 0, 'excluded usertimings included in results');
+
+    assert.equal(auditResult.score, 0);
+    expect(auditResult.displayValue).toBeDisplayString('2 user timings');
+
+    assert.equal(auditResult.details.items[0].name, 'measure_test');
+    assert.equal(auditResult.details.items[0].timingType, 'Measure');
+    assert.equal(auditResult.details.items[0].startTime, 0.002);
+    assert.equal(auditResult.details.items[0].duration, 1000.965);
+
+    assert.equal(auditResult.details.items[1].name, 'mark_test');
+    assert.equal(auditResult.details.items[1].timingType, 'Mark');
+    assert.equal(auditResult.details.items[1].startTime, 1000.954);
+    assert.equal(auditResult.details.items[1].duration, undefined);
   });
 
-  it('doesn\'t throw when user_timing events have a colon', () => {
+  it('doesn\'t throw when user_timing events have a colon', async () => {
     const extraTraceEvents = traceEvents.concat([
       {
         'pid': 41904,
@@ -58,9 +57,8 @@ describe('Performance: user-timings audit', () => {
     ]);
 
     const artifacts = generateArtifactsWithTrace(extraTraceEvents);
-    return UserTimingsAudit.audit(artifacts, {computedCache: new Map()}).then(result => {
-      const fakeEvt = result.details.items.find(item => item.name === 'Zone:ZonePromise');
-      assert.ok(fakeEvt, 'failed to find user timing item with colon');
-    });
+    const result = await UserTimingsAudit.audit(artifacts, {computedCache: new Map()});
+    const fakeEvt = result.details.items.find(item => item.name === 'Zone:ZonePromise');
+    assert.ok(fakeEvt, 'failed to find user timing item with colon');
   });
 });

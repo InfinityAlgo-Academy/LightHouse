@@ -18,40 +18,40 @@ describe('Security: HTTPS audit', () => {
     };
   }
 
-  it('fails when there is more than one insecure record', () => {
-    return Audit.audit(getArtifacts([
+  it('fails when there is more than one insecure record', async () => {
+    const result = await Audit.audit(getArtifacts([
       {url: 'https://google.com/', parsedURL: {scheme: 'https', host: 'google.com'}},
       {url: 'http://insecure.com/image.jpeg', parsedURL: {scheme: 'http', host: 'insecure.com'}},
       {url: 'http://insecure.com/image.jpeg', parsedURL: {scheme: 'http', host: 'insecure.com'}}, // should be de-duped
       {url: 'http://insecure.com/image2.jpeg', parsedURL: {scheme: 'http', host: 'insecure.com'}},
       {url: 'https://google.com/', parsedURL: {scheme: 'https', host: 'google.com'}},
-    ]), {computedCache: new Map()}).then(result => {
-      assert.strictEqual(result.score, 0);
-      expect(result.displayValue).toBeDisplayString('2 insecure requests found');
-      assert.strictEqual(result.details.items.length, 2);
-    });
+    ]), {computedCache: new Map()});
+
+    assert.strictEqual(result.score, 0);
+    expect(result.displayValue).toBeDisplayString('2 insecure requests found');
+    assert.strictEqual(result.details.items.length, 2);
   });
 
-  it('fails when there is one insecure record', () => {
-    return Audit.audit(getArtifacts([
+  it('fails when there is one insecure record', async () => {
+    const result = await Audit.audit(getArtifacts([
       {url: 'https://google.com/', parsedURL: {scheme: 'https', host: 'google.com'}},
       {url: 'http://insecure.com/image.jpeg', parsedURL: {scheme: 'http', host: 'insecure.com'}},
       {url: 'https://google.com/', parsedURL: {scheme: 'https', host: 'google.com'}},
-    ]), {computedCache: new Map()}).then(result => {
-      assert.strictEqual(result.score, 0);
-      expect(result.displayValue).toBeDisplayString('1 insecure request found');
-      expect(result.details.items[0]).toMatchObject({url: 'http://insecure.com/image.jpeg'});
-    });
+    ]), {computedCache: new Map()});
+
+    assert.strictEqual(result.score, 0);
+    expect(result.displayValue).toBeDisplayString('1 insecure request found');
+    expect(result.details.items[0]).toMatchObject({url: 'http://insecure.com/image.jpeg'});
   });
 
-  it('passes when all records are secure', () => {
-    return Audit.audit(getArtifacts([
+  it('passes when all records are secure', async () => {
+    const result = await Audit.audit(getArtifacts([
       {url: 'https://google.com/', parsedURL: {scheme: 'https', host: 'google.com'}},
       {url: 'http://localhost/image.jpeg', parsedURL: {scheme: 'http', host: 'localhost'}},
       {url: 'https://google.com/', parsedURL: {scheme: 'https', host: 'google.com'}},
-    ]), {computedCache: new Map()}).then(result => {
-      assert.strictEqual(result.score, 1);
-    });
+    ]), {computedCache: new Map()});
+
+    assert.strictEqual(result.score, 1);
   });
 
   it('augmented with mixed-content InspectorIssues', async () => {

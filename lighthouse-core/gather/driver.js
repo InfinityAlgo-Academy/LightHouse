@@ -440,11 +440,12 @@ class Driver {
     }
 
     // Enable Page domain to wait for Page.loadEventFired
-    return this.sendCommand('Page.enable')
-      .then(_ => this.sendCommand('Tracing.start', {
+    const _ = await this.sendCommand('Page.enable');
+
+    return this.sendCommand('Tracing.start', {
         categories: uniqueCategories.join(','),
         options: 'sampling-frequency=10000', // 1000 is default and too slow.
-      }));
+      });
   }
 
   /**

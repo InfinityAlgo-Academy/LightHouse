@@ -12,54 +12,54 @@ import Speedline from '../../computed/speedline.js';
 import {readJson} from '../../../root.js';
 
 describe('Speedline gatherer', () => {
-  it('returns an error message on faulty trace data', () => {
+  it('returns an error message on faulty trace data', async () => {
     const context = {computedCache: new Map()};
-    return Speedline.request({traceEvents: {boo: 'ya'}}, context).then(_ => {
+
+    try {
+      const _ = await Speedline.request({traceEvents: {boo: 'ya'}}, context);
       assert.fail(true, true, 'Invalid trace did not throw exception in speedline');
-    }, err => {
+    } catch (err) {
       assert.ok(err);
       assert.ok(err.message.length);
-    });
+    }
   });
 
-  it('throws when no frames', () => {
+  it('throws when no frames', async () => {
     const traceWithNoFrames = pwaTrace.filter(evt => evt.name !== 'Screenshot');
     const context = {computedCache: new Map()};
-    return Speedline.request({traceEvents: traceWithNoFrames}, context).then(_ => {
+
+    try {
+      const _ = await Speedline.request({traceEvents: traceWithNoFrames}, context);
       assert.ok(false, 'Invalid trace did not throw exception in speedline');
-    }).catch(err => {
+    } catch (err) {
       assert.equal(err.message, 'NO_SCREENSHOTS');
-    });
+    }
   });
 
-  it('measures the pwa.rocks example', () => {
+  it('measures the pwa.rocks example', async () => {
     const context = {computedCache: new Map()};
-    return Speedline.request({traceEvents: pwaTrace}, context).then(speedline => {
-      assert.equal(speedline.perceptualSpeedIndex, undefined);
-      assert.equal(Math.floor(speedline.speedIndex), 549);
-    });
+    const speedline = await Speedline.request({traceEvents: pwaTrace}, context);
+    assert.equal(speedline.perceptualSpeedIndex, undefined);
+    assert.equal(Math.floor(speedline.speedIndex), 549);
   }, 10000);
 
-  it('measures SI of 3 frame trace (blank @1s, content @2s, more content @3s)', () => {
+  it('measures SI of 3 frame trace (blank @1s, content @2s, more content @3s)', async () => {
     const context = {computedCache: new Map()};
-    return Speedline.request(threeFrameTrace, context).then(speedline => {
-      assert.equal(speedline.perceptualSpeedIndex, undefined);
-      assert.equal(Math.floor(speedline.speedIndex), 2040);
-    });
+    const speedline = await Speedline.request(threeFrameTrace, context);
+    assert.equal(speedline.perceptualSpeedIndex, undefined);
+    assert.equal(Math.floor(speedline.speedIndex), 2040);
   }, 10000);
 
-  it('does not change order of events in traces', () => {
+  it('does not change order of events in traces', async () => {
     // Use fresh trace in case it has been altered by other require()s.
     const pwaTrace = readJson('lighthouse-core/test/fixtures/traces/progressive-app.json');
     const context = {computedCache: new Map()};
-    return Speedline.request({traceEvents: pwaTrace}, context)
-      .then(_ => {
-        // assert.deepEqual has issue with diffing large array, so manually loop.
-        const freshTrace = readJson('lighthouse-core/test/fixtures/traces/progressive-app.json');
-        assert.strictEqual(pwaTrace.length, freshTrace.length);
-        for (let i = 0; i < pwaTrace.length; i++) {
-          assert.deepStrictEqual(pwaTrace[i], freshTrace[i]);
-        }
-      });
+    const _ = await Speedline.request({traceEvents: pwaTrace}, context);
+    // assert.deepEqual has issue with diffing large array, so manually loop.
+    const freshTrace = readJson('lighthouse-core/test/fixtures/traces/progressive-app.json');
+    assert.strictEqual(pwaTrace.length, freshTrace.length);
+    for (let i = 0; i < pwaTrace.length; i++) {
+      assert.deepStrictEqual(pwaTrace[i], freshTrace[i]);
+    }
   }, 10000);
 });

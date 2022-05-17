@@ -67,7 +67,7 @@ describe('OffscreenImages audit', () => {
     context = {settings: {throttlingMethod: 'devtools'}, computedCache: new Map()};
   });
 
-  it('handles images without network record', () => {
+  it('handles images without network record', async () => {
     const topLevelTasks = [{ts: 1900, duration: 100}];
     const artifacts = {
       ViewportDimensions: DEFAULT_DIMENSIONS,
@@ -79,9 +79,8 @@ describe('OffscreenImages audit', () => {
       devtoolsLogs: {},
     };
 
-    return UnusedImages.audit_(artifacts, [], context).then(auditResult => {
-      assert.equal(auditResult.items.length, 0);
-    });
+    const auditResult = await UnusedImages.audit_(artifacts, [], context);
+    assert.equal(auditResult.items.length, 0);
   });
 
   it('does not find used images', async () => {
@@ -245,9 +244,8 @@ describe('OffscreenImages audit', () => {
       devtoolsLogs: {},
     };
 
-    return UnusedImages.audit_(artifacts, networkRecords, context).then(auditResult => {
-      assert.equal(auditResult.items.length, 0);
-    });
+    const auditResult = await UnusedImages.audit_(artifacts, networkRecords, context);
+    assert.equal(auditResult.items.length, 0);
   });
 
   it('fails images with an unspecified or arbitrary loading attribute', async () => {
@@ -284,12 +282,11 @@ describe('OffscreenImages audit', () => {
       devtoolsLogs: {},
     };
 
-    return UnusedImages.audit_(artifacts, networkRecords, context).then(auditResult => {
-      assert.equal(auditResult.items.length, 2);
-    });
+    const auditResult = await UnusedImages.audit_(artifacts, networkRecords, context);
+    assert.equal(auditResult.items.length, 2);
   });
 
-  it('finds images with 0 area', () => {
+  it('finds images with 0 area', async () => {
     const topLevelTasks = [{ts: 1900, duration: 100}];
     const networkRecord = generateRecord({resourceSizeInKb: 100});
     const artifacts = {
@@ -302,13 +299,12 @@ describe('OffscreenImages audit', () => {
       devtoolsLogs: {},
     };
 
-    return UnusedImages.audit_(artifacts, [networkRecord], context).then(auditResult => {
-      assert.equal(auditResult.items.length, 1);
-      assert.equal(auditResult.items[0].wastedBytes, 100 * 1024);
-    });
+    const auditResult = await UnusedImages.audit_(artifacts, [networkRecord], context);
+    assert.equal(auditResult.items.length, 1);
+    assert.equal(auditResult.items[0].wastedBytes, 100 * 1024);
   });
 
-  it('de-dupes images', () => {
+  it('de-dupes images', async () => {
     const urlB = 'https://google.com/logo2.png';
     const topLevelTasks = [{ts: 1900, duration: 100}];
     const networkRecords = [
@@ -352,12 +348,11 @@ describe('OffscreenImages audit', () => {
       devtoolsLogs: {},
     };
 
-    return UnusedImages.audit_(artifacts, networkRecords, context).then(auditResult => {
-      assert.equal(auditResult.items.length, 1);
-    });
+    const auditResult = await UnusedImages.audit_(artifacts, networkRecords, context);
+    assert.equal(auditResult.items.length, 1);
   });
 
-  it('disregards images loaded after TTI', () => {
+  it('disregards images loaded after TTI', async () => {
     const topLevelTasks = [{ts: 1900, duration: 100}];
     const networkRecord = generateRecord({resourceSizeInKb: 100, startTime: 3});
     const artifacts = {
@@ -371,12 +366,11 @@ describe('OffscreenImages audit', () => {
       devtoolsLogs: {},
     };
 
-    return UnusedImages.audit_(artifacts, [networkRecord], context).then(auditResult => {
-      assert.equal(auditResult.items.length, 0);
-    });
+    const auditResult = await UnusedImages.audit_(artifacts, [networkRecord], context);
+    assert.equal(auditResult.items.length, 0);
   });
 
-  it('disregards images loaded after Trace End when interactive throws error', () => {
+  it('disregards images loaded after Trace End when interactive throws error', async () => {
     const networkRecord = generateRecord({resourceSizeInKb: 100, startTime: 3});
     const artifacts = {
       ViewportDimensions: DEFAULT_DIMENSIONS,
@@ -389,12 +383,11 @@ describe('OffscreenImages audit', () => {
       devtoolsLogs: {},
     };
 
-    return UnusedImages.audit_(artifacts, [networkRecord], context).then(auditResult => {
-      assert.equal(auditResult.items.length, 0);
-    });
+    const auditResult = await UnusedImages.audit_(artifacts, [networkRecord], context);
+    assert.equal(auditResult.items.length, 0);
   });
 
-  it('finds images loaded before Trace End when TTI when interactive throws error', () => {
+  it('finds images loaded before Trace End when TTI when interactive throws error', async () => {
     const networkRecord = generateRecord({resourceSizeInKb: 100});
     const artifacts = {
       ViewportDimensions: DEFAULT_DIMENSIONS,
@@ -407,12 +400,11 @@ describe('OffscreenImages audit', () => {
       devtoolsLogs: {},
     };
 
-    return UnusedImages.audit_(artifacts, [networkRecord], context).then(auditResult => {
-      assert.equal(auditResult.items.length, 1);
-    });
+    const auditResult = await UnusedImages.audit_(artifacts, [networkRecord], context);
+    assert.equal(auditResult.items.length, 1);
   });
 
-  it('disregards images loaded after last long task (Lantern)', () => {
+  it('disregards images loaded after last long task (Lantern)', async () => {
     context = {settings: {throttlingMethod: 'simulate'}, computedCache: new Map()};
     const wastedSize = 100 * 1024;
     const recordA = {
@@ -467,14 +459,13 @@ describe('OffscreenImages audit', () => {
       },
     };
 
-    return UnusedImages.audit_(artifacts, [recordA, recordB], context).then(auditResult => {
-      assert.equal(auditResult.items.length, 1);
-      assert.equal(auditResult.items[0].url, recordA.url);
-      assert.equal(auditResult.items[0].wastedBytes, wastedSize);
-    });
+    const auditResult = await UnusedImages.audit_(artifacts, [recordA, recordB], context);
+    assert.equal(auditResult.items.length, 1);
+    assert.equal(auditResult.items[0].url, recordA.url);
+    assert.equal(auditResult.items[0].wastedBytes, wastedSize);
   });
 
-  it('finds images loaded before last long task (Lantern)', () => {
+  it('finds images loaded before last long task (Lantern)', async () => {
     context = {settings: {throttlingMethod: 'simulate'}, computedCache: new Map()};
     const wastedSize = 100 * 1024;
     const recordA = {
@@ -532,13 +523,12 @@ describe('OffscreenImages audit', () => {
       },
     };
 
-    return UnusedImages.audit_(artifacts, [recordA, recordB], context).then(auditResult => {
-      assert.equal(auditResult.items.length, 2);
-      assert.equal(auditResult.items[0].url, recordA.url);
-      assert.equal(auditResult.items[0].wastedBytes, wastedSize);
-      assert.equal(auditResult.items[1].url, recordB.url);
-      assert.equal(auditResult.items[1].wastedBytes, wastedSize);
-    });
+    const auditResult = await UnusedImages.audit_(artifacts, [recordA, recordB], context);
+    assert.equal(auditResult.items.length, 2);
+    assert.equal(auditResult.items[0].url, recordA.url);
+    assert.equal(auditResult.items[0].wastedBytes, wastedSize);
+    assert.equal(auditResult.items[1].url, recordB.url);
+    assert.equal(auditResult.items[1].wastedBytes, wastedSize);
   });
 
   it('rethrow error when interactive throws error in Lantern', async () => {
@@ -604,9 +594,8 @@ describe('OffscreenImages audit', () => {
       devtoolsLogs: {},
     };
 
-    return UnusedImages.audit_(artifacts, [networkRecord], context).then(auditResult => {
-      assert.equal(auditResult.items.length, 1);
-      assert.equal(auditResult.items[0].wastedBytes, wastedSize, 'correctly computes wastedBytes');
-    });
+    const auditResult = await UnusedImages.audit_(artifacts, [networkRecord], context);
+    assert.equal(auditResult.items.length, 1);
+    assert.equal(auditResult.items[0].wastedBytes, wastedSize, 'correctly computes wastedBytes');
   });
 });

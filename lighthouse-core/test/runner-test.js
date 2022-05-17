@@ -114,35 +114,33 @@ describe('Runner', () => {
       fs.rmSync(resolvedPath, {recursive: true, force: true});
     });
 
-    it('-G gathers, quits, and doesn\'t run audits', () => {
+    it('-G gathers, quits, and doesn\'t run audits', async () => {
       const opts = {config: generateConfig({gatherMode: artifactsPath}), driverMock};
-      return runGatherAndAudit(createGatherFn(url), opts).then(_ => {
-        expect(loadArtifactsSpy).not.toHaveBeenCalled();
-        expect(saveArtifactsSpy).toHaveBeenCalled();
+      const _ = await runGatherAndAudit(createGatherFn(url), opts);
+      expect(loadArtifactsSpy).not.toHaveBeenCalled();
+      expect(saveArtifactsSpy).toHaveBeenCalled();
 
-        const saveArtifactArg = saveArtifactsSpy.mock.calls[0][0];
-        assert.ok(saveArtifactArg.ViewportDimensions);
-        assert.ok(saveArtifactArg.devtoolsLogs.defaultPass.length > 100);
+      const saveArtifactArg = saveArtifactsSpy.mock.calls[0][0];
+      assert.ok(saveArtifactArg.ViewportDimensions);
+      assert.ok(saveArtifactArg.devtoolsLogs.defaultPass.length > 100);
 
-        expect(gatherRunnerRunSpy).toHaveBeenCalled();
-        expect(runAuditSpy).not.toHaveBeenCalled();
-        expect(saveLhrSpy).not.toHaveBeenCalled();
+      expect(gatherRunnerRunSpy).toHaveBeenCalled();
+      expect(runAuditSpy).not.toHaveBeenCalled();
+      expect(saveLhrSpy).not.toHaveBeenCalled();
 
-        assert.ok(fs.existsSync(resolvedPath));
-        assert.ok(fs.existsSync(`${resolvedPath}/artifacts.json`));
-      });
+      assert.ok(fs.existsSync(resolvedPath));
+      assert.ok(fs.existsSync(`${resolvedPath}/artifacts.json`));
     });
 
     // uses the files on disk from the -G test. ;)
-    it('-A audits from saved artifacts and doesn\'t gather', () => {
+    it('-A audits from saved artifacts and doesn\'t gather', async () => {
       const opts = {config: generateConfig({auditMode: artifactsPath}), driverMock};
-      return runGatherAndAudit(createGatherFn(), opts).then(_ => {
-        expect(loadArtifactsSpy).toHaveBeenCalled();
-        expect(gatherRunnerRunSpy).not.toHaveBeenCalled();
-        expect(saveArtifactsSpy).not.toHaveBeenCalled();
-        expect(saveLhrSpy).not.toHaveBeenCalled();
-        expect(runAuditSpy).toHaveBeenCalled();
-      });
+      const _ = await runGatherAndAudit(createGatherFn(), opts);
+      expect(loadArtifactsSpy).toHaveBeenCalled();
+      expect(gatherRunnerRunSpy).not.toHaveBeenCalled();
+      expect(saveArtifactsSpy).not.toHaveBeenCalled();
+      expect(saveLhrSpy).not.toHaveBeenCalled();
+      expect(runAuditSpy).toHaveBeenCalled();
     });
 
     it('-A throws if the settings change', async () => {
@@ -172,27 +170,25 @@ describe('Runner', () => {
       assert.strictEqual(lhr.runtimeError, undefined);
     });
 
-    it('-GA is a normal run but it saves artifacts and LHR to disk', () => {
+    it('-GA is a normal run but it saves artifacts and LHR to disk', async () => {
       const settings = {auditMode: artifactsPath, gatherMode: artifactsPath};
       const opts = {config: generateConfig(settings), driverMock};
-      return runGatherAndAudit(createGatherFn(url), opts).then(_ => {
-        expect(loadArtifactsSpy).not.toHaveBeenCalled();
-        expect(gatherRunnerRunSpy).toHaveBeenCalled();
-        expect(saveArtifactsSpy).toHaveBeenCalled();
-        expect(saveLhrSpy).toHaveBeenCalled();
-        expect(runAuditSpy).toHaveBeenCalled();
-      });
+      const _ = await runGatherAndAudit(createGatherFn(url), opts);
+      expect(loadArtifactsSpy).not.toHaveBeenCalled();
+      expect(gatherRunnerRunSpy).toHaveBeenCalled();
+      expect(saveArtifactsSpy).toHaveBeenCalled();
+      expect(saveLhrSpy).toHaveBeenCalled();
+      expect(runAuditSpy).toHaveBeenCalled();
     });
 
-    it('non -G/-A run doesn\'t save artifacts to disk', () => {
+    it('non -G/-A run doesn\'t save artifacts to disk', async () => {
       const opts = {config: generateConfig(), driverMock};
-      return runGatherAndAudit(createGatherFn(url), opts).then(_ => {
-        expect(loadArtifactsSpy).not.toHaveBeenCalled();
-        expect(gatherRunnerRunSpy).toHaveBeenCalled();
-        expect(saveArtifactsSpy).not.toHaveBeenCalled();
-        expect(saveLhrSpy).not.toHaveBeenCalled();
-        expect(runAuditSpy).toHaveBeenCalled();
-      });
+      const _ = await runGatherAndAudit(createGatherFn(url), opts);
+      expect(loadArtifactsSpy).not.toHaveBeenCalled();
+      expect(gatherRunnerRunSpy).toHaveBeenCalled();
+      expect(saveArtifactsSpy).not.toHaveBeenCalled();
+      expect(saveLhrSpy).not.toHaveBeenCalled();
+      expect(runAuditSpy).toHaveBeenCalled();
     });
 
     it('serializes IcuMessages in gatherMode and is able to use them in auditMode', async () => {
@@ -254,7 +250,7 @@ describe('Runner', () => {
     });
   });
 
-  it('expands gatherers', () => {
+  it('expands gatherers', async () => {
     const url = 'https://example.com';
     const config = new Config({
       passes: [{
@@ -265,14 +261,13 @@ describe('Runner', () => {
       ],
     });
 
-    return runGatherAndAudit(createGatherFn(url), {config, driverMock}).then(_ => {
-      expect(gatherRunnerRunSpy).toHaveBeenCalled();
-      assert.ok(typeof config.passes[0].gatherers[0] === 'object');
-    });
+    const _ = await runGatherAndAudit(createGatherFn(url), {config, driverMock});
+    expect(gatherRunnerRunSpy).toHaveBeenCalled();
+    assert.ok(typeof config.passes[0].gatherers[0] === 'object');
   });
 
 
-  it('rejects when given neither passes nor artifacts', () => {
+  it('rejects when given neither passes nor artifacts', async () => {
     const url = 'https://example.com';
     const config = new Config({
       audits: [
@@ -280,15 +275,15 @@ describe('Runner', () => {
       ],
     });
 
-    return runGatherAndAudit(createGatherFn(url), {config, driverMock})
-      .then(_ => {
-        assert.ok(false);
-      }, err => {
-        assert.ok(/No browser artifacts are either/.test(err.message));
-      });
+    try {
+      const _ = await runGatherAndAudit(createGatherFn(url), {config, driverMock});
+      assert.ok(false);
+    } catch (err) {
+      assert.ok(/No browser artifacts are either/.test(err.message));
+    }
   });
 
-  it('accepts audit options', () => {
+  it('accepts audit options', async () => {
     const url = 'https://example.com/';
 
     const calls = [];
@@ -318,15 +313,14 @@ describe('Runner', () => {
       ],
     });
 
-    return runGatherAndAudit({}, {url, config}).then(results => {
-      assert.equal(results.lhr.requestedUrl, url);
-      assert.equal(results.lhr.audits['eavesdrop-audit'].score, 1);
-      // assert that the options we received matched expectations
-      assert.deepEqual(calls, [{x: 1}, {x: 2}]);
-    });
+    const results = await runGatherAndAudit({}, {url, config});
+    assert.equal(results.lhr.requestedUrl, url);
+    assert.equal(results.lhr.audits['eavesdrop-audit'].score, 1);
+    // assert that the options we received matched expectations
+    assert.deepEqual(calls, [{x: 1}, {x: 2}]);
   });
 
-  it('accepts trace artifacts as paths and outputs appropriate data', () => {
+  it('accepts trace artifacts as paths and outputs appropriate data', async () => {
     const config = new Config({
       settings: {
         auditMode: __dirname + '/fixtures/artifacts/perflog/',
@@ -336,15 +330,14 @@ describe('Runner', () => {
       ],
     });
 
-    return runGatherAndAudit({}, {config, computedCache: new Map()}).then(results => {
-      const audits = results.lhr.audits;
-      assert.equal(audits['user-timings'].displayValue, '2 user timings');
-      assert.deepStrictEqual(audits['user-timings'].details.items.map(i => i.startTime),
-        [0.002, 1000.954]);
-    });
+    const results = await runGatherAndAudit({}, {config, computedCache: new Map()});
+    const audits = results.lhr.audits;
+    assert.equal(audits['user-timings'].displayValue, '2 user timings');
+    assert.deepStrictEqual(audits['user-timings'].details.items.map(i => i.startTime),
+      [0.002, 1000.954]);
   });
 
-  it('rejects when given an invalid trace artifact', () => {
+  it('rejects when given an invalid trace artifact', async () => {
     const url = 'https://example.com';
     const config = new Config({
       passes: [{
@@ -362,12 +355,12 @@ describe('Runner', () => {
       },
     });
 
-    return runGatherAndAudit({}, {url, config, driverMock: badTraceDriver})
-      .then(_ => {
-        assert.ok(false);
-      }, _ => {
-        assert.ok(true);
-      });
+    try {
+      const _ = await runGatherAndAudit({}, {url, config, driverMock: badTraceDriver});
+      assert.ok(false);
+    } catch (_) {
+      assert.ok(true);
+    }
   });
 
   it('finds correct timings for multiple gather/audit pairs run separately', async () => {
@@ -399,7 +392,7 @@ describe('Runner', () => {
   });
 
   describe('Bad required artifact handling', () => {
-    it('outputs an error audit result when trace required but not provided', () => {
+    it('outputs an error audit result when trace required but not provided', async () => {
       const config = new Config({
         settings: {
           auditMode: __dirname + '/fixtures/artifacts/empty-artifacts/',
@@ -410,12 +403,11 @@ describe('Runner', () => {
         ],
       });
 
-      return runGatherAndAudit({}, {config}).then(results => {
-        const auditResult = results.lhr.audits['user-timings'];
-        assert.strictEqual(auditResult.score, null);
-        assert.strictEqual(auditResult.scoreDisplayMode, 'error');
-        assert.ok(auditResult.errorMessage.includes('traces'));
-      });
+      const results = await runGatherAndAudit({}, {config});
+      const auditResult = results.lhr.audits['user-timings'];
+      assert.strictEqual(auditResult.score, null);
+      assert.strictEqual(auditResult.scoreDisplayMode, 'error');
+      assert.ok(auditResult.errorMessage.includes('traces'));
     });
 
     it('outputs an error audit result when devtoolsLog required but not provided', async () => {
@@ -436,7 +428,7 @@ describe('Runner', () => {
       assert.strictEqual(auditResult.errorMessage, 'Required devtoolsLogs gatherer did not run.');
     });
 
-    it('outputs an error audit result when missing a required artifact', () => {
+    it('outputs an error audit result when missing a required artifact', async () => {
       const config = new Config({
         settings: {
           auditMode: __dirname + '/fixtures/artifacts/empty-artifacts/',
@@ -447,12 +439,11 @@ describe('Runner', () => {
         ],
       });
 
-      return runGatherAndAudit({}, {config}).then(results => {
-        const auditResult = results.lhr.audits['content-width'];
-        assert.strictEqual(auditResult.score, null);
-        assert.strictEqual(auditResult.scoreDisplayMode, 'error');
-        assert.ok(auditResult.errorMessage.includes('ViewportDimensions'));
-      });
+      const results = await runGatherAndAudit({}, {config});
+      const auditResult = results.lhr.audits['content-width'];
+      assert.strictEqual(auditResult.score, null);
+      assert.strictEqual(auditResult.scoreDisplayMode, 'error');
+      assert.ok(auditResult.errorMessage.includes('ViewportDimensions'));
     });
 
     it('outputs an error audit result when required artifact was an Error', async () => {
@@ -566,7 +557,7 @@ describe('Runner', () => {
       requiredArtifacts: [],
     };
 
-    it('produces an error audit result when an audit throws an Error', () => {
+    it('produces an error audit result when an audit throws an Error', async () => {
       const errorMessage = 'Audit yourself';
       const config = new Config({
         settings: {
@@ -584,16 +575,15 @@ describe('Runner', () => {
         ],
       });
 
-      return runGatherAndAudit({}, {config}).then(results => {
-        const auditResult = results.lhr.audits['throwy-audit'];
-        assert.strictEqual(auditResult.score, null);
-        assert.strictEqual(auditResult.scoreDisplayMode, 'error');
-        assert.ok(auditResult.errorMessage.includes(errorMessage));
-      });
+      const results = await runGatherAndAudit({}, {config});
+      const auditResult = results.lhr.audits['throwy-audit'];
+      assert.strictEqual(auditResult.score, null);
+      assert.strictEqual(auditResult.scoreDisplayMode, 'error');
+      assert.ok(auditResult.errorMessage.includes(errorMessage));
     });
   });
 
-  it('accepts devtoolsLog in artifacts', () => {
+  it('accepts devtoolsLog in artifacts', async () => {
     const config = new Config({
       settings: {
         auditMode: __dirname + '/fixtures/artifacts/perflog/',
@@ -603,14 +593,13 @@ describe('Runner', () => {
       ],
     });
 
-    return runGatherAndAudit({}, {config, computedCache: new Map()}).then(results => {
-      const audits = results.lhr.audits;
-      assert.equal(audits['critical-request-chains'].displayValue, '5 chains found');
-      assert.equal(audits['critical-request-chains'].details.longestChain.transferSize, 2468);
-    });
+    const results = await runGatherAndAudit({}, {config, computedCache: new Map()});
+    const audits = results.lhr.audits;
+    assert.equal(audits['critical-request-chains'].displayValue, '5 chains found');
+    assert.equal(audits['critical-request-chains'].details.longestChain.transferSize, 2468);
   });
 
-  it('rejects when not given audits to run (and not -G)', () => {
+  it('rejects when not given audits to run (and not -G)', async () => {
     const url = 'https://example.com';
     const config = new Config({
       passes: [{
@@ -618,15 +607,15 @@ describe('Runner', () => {
       }],
     });
 
-    return runGatherAndAudit(createGatherFn(url), {config, driverMock})
-      .then(_ => {
-        assert.ok(false);
-      }, err => {
-        assert.ok(/No audits to evaluate/.test(err.message));
-      });
+    try {
+      const _ = await runGatherAndAudit(createGatherFn(url), {config, driverMock});
+      assert.ok(false);
+    } catch (err) {
+      assert.ok(/No audits to evaluate/.test(err.message));
+    }
   });
 
-  it('returns data even if no config categories are provided', () => {
+  it('returns data even if no config categories are provided', async () => {
     const url = 'https://example.com/';
     const config = new Config({
       passes: [{
@@ -637,17 +626,16 @@ describe('Runner', () => {
       ],
     });
 
-    return runGatherAndAudit(createGatherFn(url), {config, driverMock}).then(results => {
-      assert.ok(results.lhr.lighthouseVersion);
-      assert.ok(results.lhr.fetchTime);
-      assert.equal(results.lhr.requestedUrl, url);
-      assert.equal(results.lhr.audits['content-width'].id, 'content-width');
-      expect(gatherRunnerRunSpy).toHaveBeenCalled();
-    });
+    const results = await runGatherAndAudit(createGatherFn(url), {config, driverMock});
+    assert.ok(results.lhr.lighthouseVersion);
+    assert.ok(results.lhr.fetchTime);
+    assert.equal(results.lhr.requestedUrl, url);
+    assert.equal(results.lhr.audits['content-width'].id, 'content-width');
+    expect(gatherRunnerRunSpy).toHaveBeenCalled();
   });
 
 
-  it('returns categories', () => {
+  it('returns categories', async () => {
     const url = 'https://example.com/';
     const config = new Config({
       passes: [{
@@ -667,16 +655,15 @@ describe('Runner', () => {
       },
     });
 
-    return runGatherAndAudit(createGatherFn(url), {config, driverMock}).then(results => {
-      expect(gatherRunnerRunSpy).toHaveBeenCalled();
-      assert.ok(results.lhr.lighthouseVersion);
-      assert.ok(results.lhr.fetchTime);
-      assert.equal(results.lhr.requestedUrl, url);
-      assert.equal(results.lhr.audits['content-width'].id, 'content-width');
-      assert.equal(results.lhr.audits['content-width'].score, 1);
-      assert.equal(results.lhr.categories.category.score, 1);
-      assert.equal(results.lhr.categories.category.auditRefs[0].id, 'content-width');
-    });
+    const results = await runGatherAndAudit(createGatherFn(url), {config, driverMock});
+    expect(gatherRunnerRunSpy).toHaveBeenCalled();
+    assert.ok(results.lhr.lighthouseVersion);
+    assert.ok(results.lhr.fetchTime);
+    assert.equal(results.lhr.requestedUrl, url);
+    assert.equal(results.lhr.audits['content-width'].id, 'content-width');
+    assert.equal(results.lhr.audits['content-width'].score, 1);
+    assert.equal(results.lhr.categories.category.score, 1);
+    assert.equal(results.lhr.categories.category.auditRefs[0].id, 'content-width');
   });
 
   it('only supports core audits with names matching their filename', () => {
@@ -689,7 +676,7 @@ describe('Runner', () => {
     });
   });
 
-  it('results include artifacts when given artifacts and audits', () => {
+  it('results include artifacts when given artifacts and audits', async () => {
     const config = new Config({
       settings: {
         auditMode: __dirname + '/fixtures/artifacts/perflog/',
@@ -699,13 +686,12 @@ describe('Runner', () => {
       ],
     });
 
-    return runGatherAndAudit({}, {config}).then(results => {
-      assert.strictEqual(results.artifacts.ViewportDimensions.innerWidth, 412);
-      assert.strictEqual(results.artifacts.ViewportDimensions.innerHeight, 660);
-    });
+    const results = await runGatherAndAudit({}, {config});
+    assert.strictEqual(results.artifacts.ViewportDimensions.innerWidth, 412);
+    assert.strictEqual(results.artifacts.ViewportDimensions.innerHeight, 660);
   });
 
-  it('results include artifacts when given passes and audits', () => {
+  it('results include artifacts when given passes and audits', async () => {
     const url = 'https://example.com';
     const config = new Config({
       passes: [{
@@ -718,18 +704,17 @@ describe('Runner', () => {
       ],
     });
 
-    return runGatherAndAudit(createGatherFn(url), {config, driverMock}).then(results => {
-      // User-specified artifact.
-      assert.ok(results.artifacts.ViewportDimensions);
+    const results = await runGatherAndAudit(createGatherFn(url), {config, driverMock});
+    // User-specified artifact.
+    assert.ok(results.artifacts.ViewportDimensions);
 
-      // Default artifact.
-      const artifacts = results.artifacts;
-      const devtoolsLogs = artifacts.devtoolsLogs['firstPass'];
-      assert.equal(Array.isArray(devtoolsLogs), true, 'devtoolsLogs is not an array');
-    });
+    // Default artifact.
+    const artifacts = results.artifacts;
+    const devtoolsLogs = artifacts.devtoolsLogs['firstPass'];
+    assert.equal(Array.isArray(devtoolsLogs), true, 'devtoolsLogs is not an array');
   });
 
-  it('includes any LighthouseRunWarnings from artifacts in output', () => {
+  it('includes any LighthouseRunWarnings from artifacts in output', async () => {
     const config = new Config({
       settings: {
         auditMode: __dirname + '/fixtures/artifacts/perflog/',
@@ -737,15 +722,14 @@ describe('Runner', () => {
       audits: [],
     });
 
-    return runGatherAndAudit(createGatherFn(), {config, driverMock}).then(results => {
-      assert.deepStrictEqual(results.lhr.runWarnings, [
-        'I\'m a warning!',
-        'Also a warning',
-      ]);
-    });
+    const results = await runGatherAndAudit(createGatherFn(), {config, driverMock});
+    assert.deepStrictEqual(results.lhr.runWarnings, [
+      'I\'m a warning!',
+      'Also a warning',
+    ]);
   });
 
-  it('includes any LighthouseRunWarnings from audits in LHR', () => {
+  it('includes any LighthouseRunWarnings from audits in LHR', async () => {
     const warningString = 'Really important audit warning!';
 
     const config = new Config({
@@ -768,9 +752,8 @@ describe('Runner', () => {
       ],
     });
 
-    return runGatherAndAudit(createGatherFn(), {config, driverMock}).then(results => {
-      assert.deepStrictEqual(results.lhr.runWarnings, [warningString]);
-    });
+    const results = await runGatherAndAudit(createGatherFn(), {config, driverMock});
+    assert.deepStrictEqual(results.lhr.runWarnings, [warningString]);
   });
 
   describe('lhr.runtimeError', () => {
