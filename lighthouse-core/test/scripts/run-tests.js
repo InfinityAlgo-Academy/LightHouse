@@ -38,6 +38,10 @@ const rawArgv = y
       default: false,
       describe: 'Update snapshots',
     },
+    'parallel': {
+      type: 'boolean',
+      default: true,
+    },
   })
   .wrap(y.terminalWidth())
   .argv;
@@ -77,6 +81,7 @@ const args = [
   ...mochaPassThruArgs,
   ...filteredTests,
 ];
+if (argv.parallel) args.push('--parallel')
 console.log(`Running command: ${argv.update ? 'SNAPSHOT_UPDATE=1 ' : ''}node ${args.join(' ')}`);
 
 try {
