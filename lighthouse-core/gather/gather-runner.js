@@ -110,29 +110,42 @@ class GatherRunner {
    * @param {string} pageUrl
    * @return {Promise<void>}
    */
-  static async assertNoSameOriginServiceWorkerClients(session, pageUrl) {
-    const registrations = (await serviceWorkers.getServiceWorkerRegistrations(session)).registrations;
-    const versions = (await serviceWorkers.getServiceWorkerVersions(session)).versions;
-    const origin = new URL(pageUrl).origin;
+  static assertNoSameOriginServiceWorkerClients(session, pageUrl) {
+    /** @type {Array<LH.Crdp.ServiceWorker.ServiceWorkerRegistration>} */
+    let registrations;
+    /** @type {Array<LH.Crdp.ServiceWorker.ServiceWorkerVersion>} */
+    let versions;
 
-    registrations
-      .filter(reg => {
-        const swOrigin = new URL(reg.scopeURL).origin;
-
-        return origin === swOrigin;
+    return serviceWorkers.getServiceWorkerRegistrations(session)
+      .then(data => {
+        registrations = data.registrations;
       })
-      .forEach(reg => {
-        versions.forEach(ver => {
-          // Ignore workers unaffiliated with this registration
-          if (ver.registrationId !== reg.registrationId) {
-            return;
-          }
+      .then(_ => serviceWorkers.getServiceWorkerVersions(session))
+      .then(data => {
+        versions = data.versions;
+      })
+      .then(_ => {
+        const origin = new URL(pageUrl).origin;
 
-          // Throw if service worker for this origin has active controlledClients.
-          if (ver.controlledClients && ver.controlledClients.length > 0) {
-            throw new Error('You probably have multiple tabs open to the same origin.');
-          }
-        });
+        registrations
+          .filter(reg => {
+            const swOrigin = new URL(reg.scopeURL).origin;
+
+            return origin === swOrigin;
+          })
+          .forEach(reg => {
+            versions.forEach(ver => {
+              // Ignore workers unaffiliated with this registration
+              if (ver.registrationId !== reg.registrationId) {
+                return;
+              }
+
+              // Throw if service worker for this origin has active controlledClients.
+              if (ver.controlledClients && ver.controlledClients.length > 0) {
+                throw new Error('You probably have multiple tabs open to the same origin.');
+              }
+            });
+          });
       });
   }
 

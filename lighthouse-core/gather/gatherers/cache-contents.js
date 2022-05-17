@@ -13,21 +13,27 @@ const FRGatherer = require('../../fraggle-rock/gather/base-gatherer.js');
  * @return {Promise<Array<string>>}
  */
 /* c8 ignore start */
-async function getCacheContents() {
-  const cacheNames = await // Open each one.
-  caches.keys();
-
-  const caches = await Promise.all(cacheNames.map(cacheName => caches.open(cacheName)));
-  /** @type {Array<string>} */
-  const requests = [];
-
-  await Promise.all(caches.map(async cache => {
-    const reqs = await cache.keys();
-    requests.push(...reqs.map(r => r.url));
-  }));
-
+function getCacheContents() {
   // Get every cache by name.
-  return requests;
+  return caches.keys()
+
+      // Open each one.
+      .then(cacheNames => Promise.all(cacheNames.map(cacheName => caches.open(cacheName))))
+
+      .then(caches => {
+        /** @type {Array<string>} */
+        const requests = [];
+
+        // Take each cache and get any requests is contains, and bounce each one down to its URL.
+        return Promise.all(caches.map(cache => {
+          return cache.keys()
+              .then(reqs => {
+                requests.push(...reqs.map(r => r.url));
+              });
+        })).then(_ => {
+          return requests;
+        });
+      });
 }
 /* c8 ignore stop */
 

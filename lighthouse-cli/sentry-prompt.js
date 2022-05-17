@@ -18,10 +18,10 @@ const MESSAGE = `${log.reset}We're constantly trying to improve Lighthouse and i
 /**
  * @return {Promise<boolean>}
  */
-async function prompt() {
+function prompt() {
   if (!process.stdout.isTTY || process.env.CI) {
     // Default non-interactive sessions to false
-    return false;
+    return Promise.resolve(false);
   }
 
   /** @type {NodeJS.Timer|undefined} */
@@ -35,10 +35,11 @@ async function prompt() {
   });
 
   const timeoutPromise = new Promise((resolve) => {
-    timeout = setTimeout(async () => {
-      await prompt.close();
-      log.warn('CLI', 'No response to error logging preference, errors will not be reported.');
-      resolve(false);
+    timeout = setTimeout(() => {
+      prompt.close().then(() => {
+        log.warn('CLI', 'No response to error logging preference, errors will not be reported.');
+        resolve(false);
+      });
     }, MAXIMUM_WAIT_TIME);
   });
 
@@ -54,23 +55,22 @@ async function prompt() {
 /**
  * @return {Promise<boolean>}
  */
-async function askPermission() {
-  try {
+function askPermission() {
+  return Promise.resolve().then(_ => {
     const configstore = new Configstore('lighthouse');
     let isErrorReportingEnabled = configstore.get('isErrorReportingEnabled');
     if (typeof isErrorReportingEnabled === 'boolean') {
-      return isErrorReportingEnabled;
+      return Promise.resolve(isErrorReportingEnabled);
     }
 
-    const response = await prompt();
-    isErrorReportingEnabled = response;
-    configstore.set('isErrorReportingEnabled', isErrorReportingEnabled);
-
-    return isErrorReportingEnabled;
-    // Error accessing configstore; default to false.
-  } catch (_) {
-    return false;
-  }
+    return prompt()
+      .then(response => {
+        isErrorReportingEnabled = response;
+        configstore.set('isErrorReportingEnabled', isErrorReportingEnabled);
+        return isErrorReportingEnabled;
+      });
+  // Error accessing configstore; default to false.
+  }).catch(_ => false);
 }
 
 export {

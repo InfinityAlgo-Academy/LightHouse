@@ -168,7 +168,7 @@ async function fetchSourceRule(session, nodeId) {
     nodeId,
   });
   const sourceRule = getEffectiveFontRule(matchedRules);
-  if (!sourceRule) return;
+  if (!sourceRule) return undefined;
 
   return {
     type: sourceRule.type,

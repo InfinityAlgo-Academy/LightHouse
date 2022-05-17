@@ -107,7 +107,7 @@ export class LighthouseReportViewer {
    * @return {Promise<void>}
    * @private
    */
-  async _loadFromDeepLink() {
+  _loadFromDeepLink() {
     const params = new URLSearchParams(location.search);
 
     const gistId = params.get('gist');
@@ -120,7 +120,7 @@ export class LighthouseReportViewer {
         const hashParams = JSON.parse(TextEncoding.fromBase64(location.hash.substr(1), {gzip}));
         if (hashParams.lhr) {
           this._replaceReportHtml(hashParams.lhr);
-          return;
+          return Promise.resolve();
         } else {
           console.warn('URL hash is populated, but no LHR was found', hashParams);
         }
@@ -129,7 +129,7 @@ export class LighthouseReportViewer {
       }
     }
 
-    if (!gistId && !psiurl && !jsonurl) return;
+    if (!gistId && !psiurl && !jsonurl) return Promise.resolve();
 
     this._toggleLoadingBlur(true);
     let loadPromise = Promise.resolve();
@@ -142,36 +142,28 @@ export class LighthouseReportViewer {
         utm_source: params.get('utm_source') || undefined,
       });
     } else if (gistId) {
-      loadPromise = (async () => {
-        try {
-          const reportJson = await this._github.getGistFileContentAsJson(gistId);
-          this._reportIsFromGist = true;
-          this._replaceReportHtml(reportJson);
-        } catch (err) {
-          return logger.error(err.message);
-        }
-      })();
+      loadPromise = this._github.getGistFileContentAsJson(gistId).then(reportJson => {
+        this._reportIsFromGist = true;
+        this._replaceReportHtml(reportJson);
+      }).catch(err => logger.error(err.message));
     } else if (jsonurl) {
       const firebaseAuth = this._github.getFirebaseAuth();
-      loadPromise = (async () => {
-        try {
-          const token = await firebaseAuth.getAccessTokenIfLoggedIn();
-          await (token ? Promise.reject(new Error('Can only use jsonurl when not logged in')) : null);
-          const resp = await fetch(jsonurl);
-          const json = await resp.json();
+      loadPromise = firebaseAuth.getAccessTokenIfLoggedIn()
+        .then(token => {
+          return token
+            ? Promise.reject(new Error('Can only use jsonurl when not logged in'))
+            : null;
+        })
+        .then(() => fetch(jsonurl))
+        .then(resp => resp.json())
+        .then(json => {
           this._reportIsFromJSON = true;
           this._replaceReportHtml(json);
-        } catch (err) {
-          return logger.error(err.message);
-        }
-      })();
+        })
+        .catch(err => logger.error(err.message));
     }
 
-    try {
-      return await loadPromise;
-    } finally {
-      await this._toggleLoadingBlur(false);
-    }
+    return loadPromise.finally(() => this._toggleLoadingBlur(false));
   }
 
   /**
@@ -496,24 +488,25 @@ export class LighthouseReportViewer {
   /**
    * @param {PSIParams} params
    */
-  async _fetchFromPSI(params) {
+  _fetchFromPSI(params) {
     logger.log('Waiting for Lighthouse results ...');
-    const response = await this._psi.fetchPSI(params);
-    logger.hide();
+    return this._psi.fetchPSI(params).then(response => {
+      logger.hide();
 
-    if (!response.lighthouseResult) {
-      if (response.error) {
-        // eslint-disable-next-line no-console
-        console.error(response.error);
-        logger.error(response.error.message);
-      } else {
-        logger.error('PSI did not return a Lighthouse Result');
+      if (!response.lighthouseResult) {
+        if (response.error) {
+          // eslint-disable-next-line no-console
+          console.error(response.error);
+          logger.error(response.error.message);
+        } else {
+          logger.error('PSI did not return a Lighthouse Result');
+        }
+        return;
       }
-      return;
-    }
 
-    this._reportIsFromPSI = true;
-    this._replaceReportHtml(response.lighthouseResult);
+      this._reportIsFromPSI = true;
+      this._replaceReportHtml(response.lighthouseResult);
+    });
   }
 
   /**

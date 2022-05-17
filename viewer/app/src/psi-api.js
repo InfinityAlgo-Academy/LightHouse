@@ -33,7 +33,7 @@ class PSIApi {
    * @param {PSIParams} params
    * @return {Promise<PSIResponse>}
    */
-  async fetchPSI(params) {
+  fetchPSI(params) {
     const apiUrl = new URL(PSI_URL);
     // eslint-disable-next-line prefer-const
     for (let [name, value] of Object.entries(params)) {
@@ -45,8 +45,7 @@ class PSIApi {
       apiUrl.searchParams.append('category', singleCategory);
     }
     apiUrl.searchParams.append('key', PSI_KEY);
-    const res = await fetch(apiUrl.href);
-    return res.json();
+    return fetch(apiUrl.href).then(res => res.json());
   }
 }
 

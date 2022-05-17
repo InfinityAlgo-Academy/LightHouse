@@ -132,14 +132,9 @@ class Fetcher {
       timeoutHandle = setTimeout(reject, ms, new Error('Timed out fetching resource'));
     });
 
-    let wrappedPromise;
-
-    try {
-      wrappedPromise = await Promise.race([promise, timeoutPromise]);
-    } finally {
-      await clearTimeout(timeoutHandle);
-    }
-
+    /** @type {Promise<T>} */
+    const wrappedPromise = await Promise.race([promise, timeoutPromise])
+      .finally(() => clearTimeout(timeoutHandle));
     return wrappedPromise;
   }
 }

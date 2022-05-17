@@ -188,11 +188,10 @@ async function testPage(page, browser, url, config) {
   await new Promise((resolve, reject) => {
     page.target().createCDPSession()
       .then(session => {
-        (async () => {
-          await session.send('Page.enable');
+        session.send('Page.enable').then(() => {
           session.once('Page.domContentEventFired', resolve);
           page.goto(url);
-        })();
+        });
       })
       .catch(reject);
   });
@@ -230,31 +229,18 @@ async function testPage(page, browser, url, config) {
   let startLHResponse;
   while (!startLHResponse || startLHResponse.exceptionDetails) {
     if (startLHResponse) await new Promise(resolve => setTimeout(resolve, 1000));
-
-    try {
-      startLHResponse = await session.send('Runtime.evaluate', {
-        expression: startLighthouse,
-        awaitPromise: true,
-      });
-    } catch (err) {
-      startLHResponse = {
-        exceptionDetails: err,
-      };
-    }
-  }
-
-  let lhStartedResponse;
-
-  try {
-    lhStartedResponse = await session.send('Runtime.evaluate', {
-      expression: sniffLighthouseStarted,
+    startLHResponse = await session.send('Runtime.evaluate', {
+      expression: startLighthouse,
       awaitPromise: true,
-      returnByValue: true,
-    });
-  } catch (err) {
-    lhStartedResponse = await err;
+    }).catch(err => ({exceptionDetails: err}));
   }
 
+  /** @type {LH.Puppeteer.Protocol.Runtime.EvaluateResponse} */
+  const lhStartedResponse = await session.send('Runtime.evaluate', {
+    expression: sniffLighthouseStarted,
+    awaitPromise: true,
+    returnByValue: true,
+  }).catch(err => err);
   // Verify the first parameter to `startLighthouse`, which should be a url.
   // In M100 the LHR is returned on `collectLighthouseResults` which has just 1 options parameter containing `inspectedUrl`.
   // Don't try to check the exact value (because of redirects and such), just
@@ -267,17 +253,12 @@ async function testPage(page, browser, url, config) {
       JSON.stringify(lhStartedResponse.result.value)}`);
   }
 
-  let remoteLhrResponse;
-
-  try {
-    remoteLhrResponse = await session.send('Runtime.evaluate', {
-      expression: sniffLhr,
-      awaitPromise: true,
-      returnByValue: true,
-    });
-  } catch (err) {
-    remoteLhrResponse = await err;
-  }
+  /** @type {LH.Puppeteer.Protocol.Runtime.EvaluateResponse} */
+  const remoteLhrResponse = await session.send('Runtime.evaluate', {
+    expression: sniffLhr,
+    awaitPromise: true,
+    returnByValue: true,
+  }).catch(err => err);
 
   if (!remoteLhrResponse.result?.value?.lhr) {
     throw new Error('Problem sniffing LHR.');
@@ -341,7 +322,7 @@ async function run() {
     devtools: true,
   });
 
-  if ((await (browser.version())).startsWith('Headless')) {
+  if ((await browser.version()).startsWith('Headless')) {
     throw new Error('You cannot use headless');
   }
 
@@ -355,18 +336,12 @@ async function run() {
       const timeoutPromise = new Promise((_, reject) => {
         timeout = setTimeout(reject, 100_000, new Error('Timed out waiting for Lighthouse to run'));
       });
-      let result;
-
-      try {
-        result = await Promise.race([
-          testPage(page, browser, urlList[i], config),
-          timeoutPromise,
-        ]);
-      } finally {
+      const {lhr, artifacts} = await Promise.race([
+        testPage(page, browser, urlList[i], config),
+        timeoutPromise,
+      ]).finally(() => {
         clearTimeout(timeout);
-      }
-
-      const {lhr, artifacts} = result;
+      });
 
       fs.writeFileSync(`${argv.o}/lhr-${i}.json`, JSON.stringify(lhr, null, 2));
       fs.writeFileSync(`${argv.o}/artifacts-${i}.json`, JSON.stringify(artifacts, null, 2));

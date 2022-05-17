@@ -141,7 +141,7 @@ class ProtocolSession {
    * @param {LH.CrdpCommands[C]['paramsType']} params
    * @return {Promise<LH.CrdpCommands[C]['returnType']>}
    */
-  async sendCommand(method, ...params) {
+  sendCommand(method, ...params) {
     const timeoutMs = this.getNextProtocolTimeout();
     this._nextProtocolTimeout = undefined;
 
@@ -158,11 +158,9 @@ class ProtocolSession {
     const resultPromise = this._session.send(method, ...params);
     const resultWithTimeoutPromise = Promise.race([resultPromise, timeoutPromise]);
 
-    try {
-      return await resultWithTimeoutPromise;
-    } finally {
+    return resultWithTimeoutPromise.finally(() => {
       if (timeout) clearTimeout(timeout);
-    }
+    });
   }
 
   /**

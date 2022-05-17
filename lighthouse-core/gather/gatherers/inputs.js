@@ -58,7 +58,7 @@ function collectElements() {
     const parentFormIndex = parentFormEl ?
       [...formElToArtifact.keys()].indexOf(parentFormEl) :
       undefined;
-    const labelIndices = [...(inputEl.labels || [])].map((labelEl) => {
+    const labelIndices = [...inputEl.labels || []].map((labelEl) => {
       return [...labelElToArtifact.keys()].indexOf(labelEl);
     });
 

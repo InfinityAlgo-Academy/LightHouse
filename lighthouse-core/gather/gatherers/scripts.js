@@ -24,7 +24,7 @@ async function runInSeriesOrParallel(values, promiseMapper, runInSeries) {
     return results;
   } else {
     const promises = values.map(promiseMapper);
-    return Promise.all(promises);
+    return await Promise.all(promises);
   }
 }
 
@@ -118,13 +118,10 @@ class Scripts extends FRGatherer {
     // request one at a time.
     this._scriptContents = await runInSeriesOrParallel(
       this._scriptParsedEvents,
-      async ({scriptId}) => {
-        try {
-          const resp = await session.sendCommand('Debugger.getScriptSource', {scriptId});
-          return await resp.scriptSource;
-        } catch (err) {
-          return;
-        }
+      ({scriptId}) => {
+        return session.sendCommand('Debugger.getScriptSource', {scriptId})
+          .then((resp) => resp.scriptSource)
+          .catch(() => undefined);
       },
       formFactor === 'mobile' /* runInSeries */
     );

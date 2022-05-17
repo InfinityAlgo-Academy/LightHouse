@@ -47,7 +47,7 @@ class TotalBlockingTime extends ComputedMetric {
     if (data.processedNavigation) {
       const {firstContentfulPaint} = data.processedNavigation.timings;
       const metricData = ComputedMetric.getMetricComputationInput(data);
-      const interactiveTimeMs = (await (TimetoInteractive.request(metricData, context))).timing;
+      const interactiveTimeMs = (await TimetoInteractive.request(metricData, context)).timing;
 
       return {
         timing: calculateSumOfBlockingTime(

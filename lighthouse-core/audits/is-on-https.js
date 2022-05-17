@@ -71,52 +71,53 @@ class HTTPS extends Audit {
    * @param {LH.Audit.Context} context
    * @return {Promise<LH.Audit.Product>}
    */
-  static async audit(artifacts, context) {
+  static audit(artifacts, context) {
     const devtoolsLogs = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
-    const networkRecords = await NetworkRecords.request(devtoolsLogs, context);
-    const insecureURLs = networkRecords
-        .filter(record => !NetworkRequest.isSecureRequest(record))
-        .map(record => URL.elideDataURI(record.url));
+    return NetworkRecords.request(devtoolsLogs, context).then(networkRecords => {
+      const insecureURLs = networkRecords
+          .filter(record => !NetworkRequest.isSecureRequest(record))
+          .map(record => URL.elideDataURI(record.url));
 
-    /** @type {Array<{url: string, resolution?: LH.IcuMessage|string}>}  */
-    const items = Array.from(new Set(insecureURLs)).map(url => ({url, resolution: undefined}));
+      /** @type {Array<{url: string, resolution?: LH.IcuMessage|string}>}  */
+      const items = Array.from(new Set(insecureURLs)).map(url => ({url, resolution: undefined}));
 
-    /** @type {LH.Audit.Details.Table['headings']} */
-    const headings = [
-      {key: 'url', itemType: 'url', text: str_(UIStrings.columnInsecureURL)},
-      {key: 'resolution', itemType: 'text', text: str_(UIStrings.columnResolution)},
-    ];
+      /** @type {LH.Audit.Details.Table['headings']} */
+      const headings = [
+        {key: 'url', itemType: 'url', text: str_(UIStrings.columnInsecureURL)},
+        {key: 'resolution', itemType: 'text', text: str_(UIStrings.columnResolution)},
+      ];
 
-    for (const details of artifacts.InspectorIssues.mixedContentIssue) {
-      let item = items.find(item => item.url === details.insecureURL);
-      if (!item) {
-        item = {url: details.insecureURL};
-        items.push(item);
+      for (const details of artifacts.InspectorIssues.mixedContentIssue) {
+        let item = items.find(item => item.url === details.insecureURL);
+        if (!item) {
+          item = {url: details.insecureURL};
+          items.push(item);
+        }
+        item.resolution = resolutionToString[details.resolutionStatus] ?
+          str_(resolutionToString[details.resolutionStatus]) :
+          details.resolutionStatus;
       }
-      item.resolution = resolutionToString[details.resolutionStatus] ?
-        str_(resolutionToString[details.resolutionStatus]) :
-        details.resolutionStatus;
-    }
 
-    // If a resolution wasn't assigned from an InspectorIssue, then the item
-    // is not blocked by the browser but we've determined it is insecure anyhow.
-    // For example, if the URL is localhost, all `http` requests are valid
-    // (localhost is a secure context), but we still identify `http` requests
-    // as an "Allowed" insecure URL.
-    for (const item of items) {
-      if (!item.resolution) item.resolution = str_(UIStrings.allowed);
-    }
+      // If a resolution wasn't assigned from an InspectorIssue, then the item
+      // is not blocked by the browser but we've determined it is insecure anyhow.
+      // For example, if the URL is localhost, all `http` requests are valid
+      // (localhost is a secure context), but we still identify `http` requests
+      // as an "Allowed" insecure URL.
+      for (const item of items) {
+        if (!item.resolution) item.resolution = str_(UIStrings.allowed);
+      }
 
-    let displayValue;
-    if (items.length > 0) {
-      displayValue = str_(UIStrings.displayValue, {itemCount: items.length});
-    }
+      let displayValue;
+      if (items.length > 0) {
+        displayValue = str_(UIStrings.displayValue, {itemCount: items.length});
+      }
 
-    return {
-      score: Number(items.length === 0),
-      displayValue,
-      details: Audit.makeTableDetails(headings, items),
-    };
+      return {
+        score: Number(items.length === 0),
+        displayValue,
+        details: Audit.makeTableDetails(headings, items),
+      };
+    });
   }
 }
 

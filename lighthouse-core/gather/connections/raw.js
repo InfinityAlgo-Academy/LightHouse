@@ -33,13 +33,16 @@ class RawConnection extends Connection {
    * @override
    * @return {Promise<void>}
    */
-  async connect() {}
+  connect() {
+    return Promise.resolve();
+  }
 
   /**
    * @return {Promise<void>}
    */
-  async disconnect() {
+  disconnect() {
     this._port.close();
+    return Promise.resolve();
   }
 
   /**

@@ -128,30 +128,30 @@ class CriConnection extends Connection {
    * @override
    * @return {Promise<void>}
    */
-  async disconnect() {
+  disconnect() {
     if (!this._ws) {
       log.warn('CriConnection', 'disconnect() was called without an established connection.');
-      return;
+      return Promise.resolve();
     }
 
-    await this._runJsonCommand(`close/${this._pageId}`);
-    if (this._ws) {
-      this._ws.removeAllListeners();
-      this._ws.close();
-      this._ws = null;
-    }
-    this._pageId = null;
+    return this._runJsonCommand(`close/${this._pageId}`).then(_ => {
+      if (this._ws) {
+        this._ws.removeAllListeners();
+        this._ws.close();
+        this._ws = null;
+      }
+      this._pageId = null;
+    });
   }
 
   /**
    * @override
    * @return {Promise<string>}
    */
-  async wsEndpoint() {
-    const response = await this._runJsonCommand('version');
-    return (
-      /** @type {LH.DevToolsJsonTarget} */ response.webSocketDebuggerUrl
-    );
+  wsEndpoint() {
+    return this._runJsonCommand('version').then(response => {
+      return /** @type {LH.DevToolsJsonTarget} */ (response).webSocketDebuggerUrl;
+    });
   }
 
 

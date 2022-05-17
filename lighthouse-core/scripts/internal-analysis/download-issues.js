@@ -115,24 +115,16 @@ async function downloadIssues(urlToStartAt) {
   // Yes really do this in series to avoid hitting abuse limits of GitHub API
   for (const issue of issues) {
     await Promise.all([
-      (async () => {
-        try {
-          return await fetchAndInjectEvents(issue);
-        } catch (err) {
-          console.error('Events failed! Trying again', err);
-          await wait(60 * 1000);
-          return fetchAndInjectEvents(issue);
-        }
-      })(),
-      (async () => {
-        try {
-          return await fetchAndInjectComments(issue);
-        } catch (err) {
-          console.error('Comments failed! Trying again', err);
-          await wait(60 * 1000);
-          return fetchAndInjectComments(issue);
-        }
-      })(),
+      fetchAndInjectEvents(issue).catch(async err => {
+        console.error('Events failed! Trying again', err);
+        await wait(60 * 1000);
+        return fetchAndInjectEvents(issue);
+      }),
+      fetchAndInjectComments(issue).catch(async err => {
+        console.error('Comments failed! Trying again', err);
+        await wait(60 * 1000);
+        return fetchAndInjectComments(issue);
+      }),
     ]);
   }
 

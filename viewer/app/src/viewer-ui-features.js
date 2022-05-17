@@ -45,16 +45,11 @@ export class ViewerUIFeatures extends ReportUIFeatures {
       saveGistItem.setAttribute('disabled', 'true');
     }
 
-    (async () => {
-      try {
-        const i18nModule = await this._getI18nModule();
-        const locales = /** @type {LH.Locale[]} */ (
-          await i18nModule.format.getCanonicalLocales());
-        this._swapLocales.enable(locales);
-      } catch (err) {
-        return console.error(err);
-      }
-    })();
+    this._getI18nModule().then(async (i18nModule) => {
+      const locales = /** @type {LH.Locale[]} */ (
+        await i18nModule.format.getCanonicalLocales());
+      this._swapLocales.enable(locales);
+    }).catch(err => console.error(err));
   }
 
   /**

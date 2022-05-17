@@ -23,9 +23,7 @@ const FULL_PAGE_SCREENSHOT_QUALITY = 30;
  * @param {S} str
  */
 function kebabCaseToCamelCase(str) {
-  return (
-    /** @type {KebabToCamelCase<S>} */ str.replace(/(-\w)/g, m => m[1].toUpperCase())
-  );
+  return /** @type {KebabToCamelCase<S>} */ (str.replace(/(-\w)/g, m => m[1].toUpperCase()));
 }
 
 /* c8 ignore start */
@@ -64,7 +62,7 @@ class FullPageScreenshot extends FRGatherer {
    * @see https://bugs.chromium.org/p/chromium/issues/detail?id=770769
    */
   async getMaxTextureSize(context) {
-    return context.driver.executionContext.evaluate(pageFunctions.getMaxTextureSize, {
+    return await context.driver.executionContext.evaluate(pageFunctions.getMaxTextureSize, {
       args: [],
       useIsolation: true,
       deps: [],

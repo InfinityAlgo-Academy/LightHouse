@@ -330,7 +330,7 @@ class Driver {
    * @param {LH.CrdpCommands[C]['paramsType']} params
    * @return {Promise<LH.CrdpCommands[C]['returnType']>}
    */
-  async sendCommandToSession(method, sessionId, ...params) {
+  sendCommandToSession(method, sessionId, ...params) {
     const timeout = this._nextProtocolTimeout;
     this._nextProtocolTimeout = DEFAULT_PROTOCOL_TIMEOUT;
 
@@ -343,14 +343,12 @@ class Driver {
       }));
     });
 
-    try {
-      return await Promise.race([
-        this._innerSendCommand(method, sessionId, ...params),
-        timeoutPromise,
-      ]);
-    } finally {
+    return Promise.race([
+      this._innerSendCommand(method, sessionId, ...params),
+      timeoutPromise,
+    ]).finally(() => {
       asyncTimeout && clearTimeout(asyncTimeout);
-    }
+    });
   }
 
   /**
@@ -373,12 +371,12 @@ class Driver {
    * @param {LH.CrdpCommands[C]['paramsType']} params
    * @return {Promise<LH.CrdpCommands[C]['returnType']>}
    */
-  async _innerSendCommand(method, sessionId, ...params) {
+  _innerSendCommand(method, sessionId, ...params) {
     const domainCommand = /^(\w+)\.(enable|disable)$/.exec(method);
     if (domainCommand) {
       const enable = domainCommand[2] === 'enable';
       if (!this._shouldToggleDomain(domainCommand[1], sessionId, enable)) {
-        return;
+        return Promise.resolve();
       }
     }
     return this._connection.sendCommand(method, sessionId, ...params);
@@ -441,13 +439,12 @@ class Driver {
       throw new Error('DOM domain enabled when starting trace');
     }
 
-    await this.sendCommand('Page.enable');
-
     // Enable Page domain to wait for Page.loadEventFired
-    return this.sendCommand('Tracing.start', {
-      categories: uniqueCategories.join(','),
-      options: 'sampling-frequency=10000', // 1000 is default and too slow.
-    });
+    return this.sendCommand('Page.enable')
+      .then(_ => this.sendCommand('Tracing.start', {
+        categories: uniqueCategories.join(','),
+        options: 'sampling-frequency=10000', // 1000 is default and too slow.
+      }));
   }
 
   /**
