@@ -10,7 +10,7 @@
     fetch('/404?delay=7000').then(() => {
       const imageEl = document.createElement('img');
       imageEl.src = '/byte-efficiency/lighthouse-480x320.jpg?delay=7000';
-      document.body.appendChild(imageEl);
+      document.body.append(imageEl);
     })
   </script>
 </body>

@@ -3,19 +3,33 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-const {createMockDriver, mockTargetManagerModule} = require('../../fraggle-rock/gather/mock-driver.js'); // eslint-disable-line max-len
-const targetManagerMock = mockTargetManagerModule();
+import 'lighthouse-logger'; // Needed otherwise `log.timeEnd` errors in navigation.js inexplicably.
+import {jest} from '@jest/globals';
 
-const {gotoURL, getNavigationWarnings} = require('../../../gather/driver/navigation.js');
-const {
-  createMockOnceFn,
+import {createMockDriver, mockTargetManagerModule} from '../../fraggle-rock/gather/mock-driver.js';
+import {
+  mockCommands,
   makePromiseInspectable,
   flushAllTimersAndMicrotasks,
-} = require('../../test-utils.js');
+} from '../../test-utils.js';
+// import {gotoURL, getNavigationWarnings} from '../../../gather/driver/navigation.js';
 
-/* eslint-env jest */
+const {createMockOnceFn} = mockCommands;
+
+// Some imports needs to be done dynamically, so that their dependencies will be mocked.
+// See: https://jestjs.io/docs/ecmascript-modules#differences-between-esm-and-commonjs
+//      https://github.com/facebook/jest/issues/10025
+/** @type {import('../../../gather/driver/navigation.js')['gotoURL']} */
+let gotoURL;
+/** @type {import('../../../gather/driver/navigation.js')['getNavigationWarnings']} */
+let getNavigationWarnings;
+
+beforeAll(async () => {
+  ({gotoURL, getNavigationWarnings} = (await import('../../../gather/driver/navigation.js')));
+});
+
+const targetManagerMock = mockTargetManagerModule();
 
 jest.useFakeTimers();
 

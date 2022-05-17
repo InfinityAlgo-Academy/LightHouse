@@ -3,7 +3,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 /** @type {LH.Config.Json} */
 const config = {
@@ -202,7 +201,6 @@ const expectations = {
     finalUrl: 'http://localhost:10200/dobetterweb/dbw_tester.html',
     audits: {
       'errors-in-console': {
-        _minChromiumMilestone: 95,
         score: 0,
         details: {
           items: {
@@ -308,6 +306,8 @@ const expectations = {
         },
       },
       'deprecations': {
+        _maxChromiumVersion: '103.0.5017.0', // TODO: deprecation strings need to be translated
+        // see https://github.com/GoogleChrome/lighthouse/issues/13895
         score: 0,
         details: {
           items: [
@@ -426,7 +426,7 @@ const expectations = {
             width: 360,
             // Allow for differences in platforms.
             height: '1350±100',
-            data: /^data:image\/jpeg;.{500,}/,
+            data: /^data:image\/webp;.{500,}/,
           },
           nodes: {
             // Test that the numbers for individual elements are in the ballpark.

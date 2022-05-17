@@ -3,18 +3,17 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-/* eslint-env jest */
+import {jest} from '@jest/globals';
 
 jest.useFakeTimers();
 
-const Driver = require('../../../gather/driver.js');
-const Connection = require('../../../gather/connections/connection.js');
-const JsUsage = require('../../../gather/gatherers/js-usage.js');
-const {createMockSendCommandFn, createMockOnFn} = require('../mock-commands.js');
-const {createMockContext} = require('../../fraggle-rock/gather/mock-driver.js');
-const {flushAllTimersAndMicrotasks} = require('../../test-utils.js');
+import Driver from '../../../gather/driver.js';
+import Connection from '../../../gather/connections/connection.js';
+import JsUsage from '../../../gather/gatherers/js-usage.js';
+import {createMockSendCommandFn, createMockOnFn} from '../mock-commands.js';
+import {createMockContext} from '../../fraggle-rock/gather/mock-driver.js';
+import {flushAllTimersAndMicrotasks} from '../../test-utils.js';
 
 describe('JsUsage gatherer', () => {
   /**

@@ -9,8 +9,6 @@ const fetch = require('node-fetch');
 
 const InstallableManifestAudit = require('../../lighthouse-core/audits/installable-manifest.js');
 
-/* eslint-env jest */
-
 jest.setTimeout(20_000);
 
 describe('installabilityErrors', () => {
@@ -69,6 +67,7 @@ Array [
   "platform-not-supported-on-android",
   "prefer-related-applications",
   "prefer-related-applications-only-beta-stable",
+  "scheme-not-supported-for-webapk",
   "start-url-not-valid",
   "url-not-supported-for-webapk",
   "warn-not-offline-capable",

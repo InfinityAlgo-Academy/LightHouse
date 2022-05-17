@@ -3,14 +3,11 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-/* eslint-env jest */
-
-const GlobalListenerGatherer = require('../../../gather/gatherers/global-listeners.js');
-const {createMockSendCommandFn} = require('../mock-commands.js');
-const Connection = require('../../../gather/connections/connection.js');
-const Driver = require('../../../gather/driver.js');
+import GlobalListenerGatherer from '../../../gather/gatherers/global-listeners.js';
+import {createMockSendCommandFn} from '../mock-commands.js';
+import Connection from '../../../gather/connections/connection.js';
+import Driver from '../../../gather/driver.js';
 
 describe('Global Listener Gatherer', () => {
   it('remove duplicate listeners from artifacts', async () => {

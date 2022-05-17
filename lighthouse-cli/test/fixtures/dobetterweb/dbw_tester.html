@@ -131,7 +131,7 @@
   const shadowRoot = shadowRootContainer.attachShadow({mode: 'open'});
   for (let i = 0; i < 100; i++) {
     const span = document.createElement('span');
-    shadowRoot.appendChild(span);
+    shadowRoot.append(span);
   }
 </script>
 
@@ -239,7 +239,7 @@
 <script>
 function stampTemplate(id, location) {
   const template = document.querySelector('#' + id);
-  location.appendChild(template.content.cloneNode(true));
+  location.append(template.content.cloneNode(true));
 }
 
 function dateNowTest() {
@@ -378,7 +378,7 @@ function isOnHttps() {
   const blob = new Blob(['fake'])
   const img = document.createElement('img');
   img.src = URL.createObjectURL(blob);
-  document.body.appendChild(img); // PASS
+  document.body.append(img); // PASS
 }
 
 function noUnloadListenersTest() {
@@ -461,7 +461,7 @@ if (location.search === '') {
     fs.root.getFile(`empty-${Math.random()}.png`, {create: true, exclusive: true}, function (fileEntry) {
       const img = document.createElement('img');
       img.src = fileEntry.toURL();
-      document.body.appendChild(img);
+      document.body.append(img);
     }, console.error);
   }
 

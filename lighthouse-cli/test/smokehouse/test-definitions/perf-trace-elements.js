@@ -3,7 +3,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 /** @type {LH.Config.Json} */
 const config = {
@@ -108,10 +107,6 @@ const expectations = {
         score: '0.026 +/- 0.01',
       },
       {
-        // Requires compositor failure reasons to be in the trace
-        // for `failureReasonsMask` and `unsupportedProperties`
-        // https://chromiumdash.appspot.com/commit/995baabedf9e70d16deafc4bc37a2b215a9b8ec9
-        _minChromiumMilestone: 86,
         traceEventType: 'animation',
         node: {
           selector: 'body > div#animate-me',

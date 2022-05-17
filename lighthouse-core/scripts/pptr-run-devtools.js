@@ -3,7 +3,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 /**
  * USAGE:
@@ -26,9 +25,10 @@ import fs from 'fs';
 import readline from 'readline';
 import {fileURLToPath} from 'url';
 
-import puppeteer from 'puppeteer';
+import puppeteer from 'puppeteer-core';
 import yargs from 'yargs';
 import * as yargsHelpers from 'yargs/helpers';
+import {getChromePath} from 'chrome-launcher';
 
 import {parseChromeFlags} from '../../lighthouse-cli/run.js';
 
@@ -170,8 +170,8 @@ function isValidUrl(url) {
 }
 
 /**
- * @param {import('puppeteer').Page} page
- * @param {import('puppeteer').Browser} browser
+ * @param {LH.Puppeteer.Page} page
+ * @param {LH.Puppeteer.Browser} browser
  * @param {string} url
  * @param {LH.Config.Json=} config
  * @return {Promise<{lhr: LH.Result, artifacts: LH.Artifacts}>}
@@ -225,7 +225,7 @@ async function testPage(page, browser, url, config) {
     });
   }
 
-  /** @type {Omit<puppeteer.Protocol.Runtime.EvaluateResponse, 'result'>|undefined} */
+  /** @type {Omit<LH.Puppeteer.Protocol.Runtime.EvaluateResponse, 'result'>|undefined} */
   let startLHResponse;
   while (!startLHResponse || startLHResponse.exceptionDetails) {
     if (startLHResponse) await new Promise(resolve => setTimeout(resolve, 1000));
@@ -235,7 +235,7 @@ async function testPage(page, browser, url, config) {
     }).catch(err => ({exceptionDetails: err}));
   }
 
-  /** @type {puppeteer.Protocol.Runtime.EvaluateResponse} */
+  /** @type {LH.Puppeteer.Protocol.Runtime.EvaluateResponse} */
   const lhStartedResponse = await session.send('Runtime.evaluate', {
     expression: sniffLighthouseStarted,
     awaitPromise: true,
@@ -253,7 +253,7 @@ async function testPage(page, browser, url, config) {
       JSON.stringify(lhStartedResponse.result.value)}`);
   }
 
-  /** @type {puppeteer.Protocol.Runtime.EvaluateResponse} */
+  /** @type {LH.Puppeteer.Protocol.Runtime.EvaluateResponse} */
   const remoteLhrResponse = await session.send('Runtime.evaluate', {
     expression: sniffLhr,
     awaitPromise: true,
@@ -317,7 +317,7 @@ async function run() {
   }
 
   const browser = await puppeteer.launch({
-    executablePath: process.env.CHROME_PATH,
+    executablePath: getChromePath(),
     args: chromeFlags,
     devtools: true,
   });

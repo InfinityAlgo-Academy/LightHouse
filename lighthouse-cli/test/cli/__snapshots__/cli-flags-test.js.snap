@@ -2,7 +2,7 @@
 
 exports[`CLI flags array values do not support csv when appropriate 1`] = `
 Object {
-  "$0": "node_modules/jest/bin/jest.js",
+  "$0": "__REPLACED__",
   "_": Array [
     "http://www.example.com",
   ],
@@ -23,9 +23,9 @@ Object {
     "--enabled-features=NetworkService,VirtualTime",
   ],
   "chromeIgnoreDefaultFlags": false,
-  "fraggle-rock": false,
-  "fraggleRock": false,
   "hostname": "127.0.0.1",
+  "legacy-navigation": false,
+  "legacyNavigation": false,
   "list-all-audits": false,
   "list-locales": false,
   "list-trace-categories": false,
@@ -48,7 +48,7 @@ Object {
 
 exports[`CLI flags array values support csv when appropriate 1`] = `
 Object {
-  "$0": "node_modules/jest/bin/jest.js",
+  "$0": "__REPLACED__",
   "_": Array [
     "http://www.example.com",
   ],
@@ -57,9 +57,9 @@ Object {
   "chrome-ignore-default-flags": false,
   "chromeFlags": "",
   "chromeIgnoreDefaultFlags": false,
-  "fraggle-rock": false,
-  "fraggleRock": false,
   "hostname": "127.0.0.1",
+  "legacy-navigation": false,
+  "legacyNavigation": false,
   "list-all-audits": false,
   "list-locales": false,
   "list-trace-categories": false,
@@ -100,7 +100,7 @@ Object {
 
 exports[`CLI flags extraHeaders should convert extra headers to object 1`] = `
 Object {
-  "$0": "node_modules/jest/bin/jest.js",
+  "$0": "__REPLACED__",
   "_": Array [
     "http://www.example.com",
   ],
@@ -115,9 +115,9 @@ Object {
   "extraHeaders": Object {
     "foo": "bar",
   },
-  "fraggle-rock": false,
-  "fraggleRock": false,
   "hostname": "127.0.0.1",
+  "legacy-navigation": false,
+  "legacyNavigation": false,
   "list-all-audits": false,
   "list-locales": false,
   "list-trace-categories": false,
@@ -140,7 +140,7 @@ Object {
 
 exports[`CLI flags extraHeaders should read extra headers from file 1`] = `
 Object {
-  "$0": "node_modules/jest/bin/jest.js",
+  "$0": "__REPLACED__",
   "_": Array [
     "http://www.example.com",
   ],
@@ -157,9 +157,9 @@ Object {
     "Cookie": "monster=blue",
     "x-men": "wolverine",
   },
-  "fraggle-rock": false,
-  "fraggleRock": false,
   "hostname": "127.0.0.1",
+  "legacy-navigation": false,
+  "legacyNavigation": false,
   "list-all-audits": false,
   "list-locales": false,
   "list-trace-categories": false,
@@ -182,7 +182,7 @@ Object {
 
 exports[`CLI flags screenEmulation deviceScaleFactor parses a non-integer numeric value 1`] = `
 Object {
-  "$0": "node_modules/jest/bin/jest.js",
+  "$0": "__REPLACED__",
   "_": Array [
     "http://www.example.com",
   ],
@@ -191,9 +191,9 @@ Object {
   "chrome-ignore-default-flags": false,
   "chromeFlags": "",
   "chromeIgnoreDefaultFlags": false,
-  "fraggle-rock": false,
-  "fraggleRock": false,
   "hostname": "127.0.0.1",
+  "legacy-navigation": false,
+  "legacyNavigation": false,
   "list-all-audits": false,
   "list-locales": false,
   "list-trace-categories": false,
@@ -230,7 +230,7 @@ Object {
 
 exports[`CLI flags screenEmulation disabled parses the flag with no value as true 1`] = `
 Object {
-  "$0": "node_modules/jest/bin/jest.js",
+  "$0": "__REPLACED__",
   "_": Array [
     "http://www.example.com",
   ],
@@ -239,9 +239,9 @@ Object {
   "chrome-ignore-default-flags": false,
   "chromeFlags": "",
   "chromeIgnoreDefaultFlags": false,
-  "fraggle-rock": false,
-  "fraggleRock": false,
   "hostname": "127.0.0.1",
+  "legacy-navigation": false,
+  "legacyNavigation": false,
   "list-all-audits": false,
   "list-locales": false,
   "list-trace-categories": false,
@@ -278,7 +278,7 @@ Object {
 
 exports[`CLI flags screenEmulation mobile parses the flag with no value as true 1`] = `
 Object {
-  "$0": "node_modules/jest/bin/jest.js",
+  "$0": "__REPLACED__",
   "_": Array [
     "http://www.example.com",
   ],
@@ -287,9 +287,9 @@ Object {
   "chrome-ignore-default-flags": false,
   "chromeFlags": "",
   "chromeIgnoreDefaultFlags": false,
-  "fraggle-rock": false,
-  "fraggleRock": false,
   "hostname": "127.0.0.1",
+  "legacy-navigation": false,
+  "legacyNavigation": false,
   "list-all-audits": false,
   "list-locales": false,
   "list-trace-categories": false,
@@ -326,7 +326,7 @@ Object {
 
 exports[`CLI flags screenEmulation width parses a number value 1`] = `
 Object {
-  "$0": "node_modules/jest/bin/jest.js",
+  "$0": "__REPLACED__",
   "_": Array [
     "http://www.example.com",
   ],
@@ -335,9 +335,9 @@ Object {
   "chrome-ignore-default-flags": false,
   "chromeFlags": "",
   "chromeIgnoreDefaultFlags": false,
-  "fraggle-rock": false,
-  "fraggleRock": false,
   "hostname": "127.0.0.1",
+  "legacy-navigation": false,
+  "legacyNavigation": false,
   "list-all-audits": false,
   "list-locales": false,
   "list-trace-categories": false,
@@ -374,7 +374,7 @@ Object {
 
 exports[`CLI flags settings are accepted from a file path (inlined budgets) 1`] = `
 Object {
-  "$0": "node_modules/jest/bin/jest.js",
+  "$0": "__REPLACED__",
   "_": Array [
     "http://www.example.com",
   ],
@@ -390,9 +390,9 @@ Object {
   "chromeIgnoreDefaultFlags": false,
   "cli-flags-path": "__REPLACED__/lighthouse-cli/test/fixtures/cli-flags-path-inline-budgets.json",
   "cliFlagsPath": "__REPLACED__/lighthouse-cli/test/fixtures/cli-flags-path-inline-budgets.json",
-  "fraggle-rock": false,
-  "fraggleRock": false,
   "hostname": "127.0.0.1",
+  "legacy-navigation": false,
+  "legacyNavigation": false,
   "list-all-audits": false,
   "list-locales": false,
   "list-trace-categories": false,
@@ -415,7 +415,7 @@ Object {
 
 exports[`CLI flags settings are accepted from a file path 1`] = `
 Object {
-  "$0": "node_modules/jest/bin/jest.js",
+  "$0": "__REPLACED__",
   "_": Array [
     "http://www.example.com",
   ],
@@ -436,9 +436,9 @@ Object {
   "extraHeaders": Object {
     "X-Men": "wolverine",
   },
-  "fraggle-rock": false,
-  "fraggleRock": false,
   "hostname": "127.0.0.1",
+  "legacy-navigation": false,
+  "legacyNavigation": false,
   "list-all-audits": false,
   "list-locales": false,
   "list-trace-categories": false,

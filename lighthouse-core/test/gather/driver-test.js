@@ -3,21 +3,23 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-const Driver = require('../../gather/driver.js');
-const Connection = require('../../gather/connections/connection.js');
-const {protocolGetVersionResponse} = require('./fake-driver.js');
-const {
-  createMockSendCommandFn,
+import {jest} from '@jest/globals';
+
+import Driver from '../../gather/driver.js';
+import Connection from '../../gather/connections/connection.js';
+import FakeDriver from './fake-driver.js';
+import {
+  mockCommands,
   makePromiseInspectable,
   flushAllTimersAndMicrotasks,
-} = require('../test-utils.js');
+  fnAny,
+} from '../test-utils.js';
 
-/* eslint-env jest */
+const {protocolGetVersionResponse} = FakeDriver;
+const {createMockSendCommandFn} = mockCommands;
 
 jest.useFakeTimers();
-
 
 /**
  * @typedef DriverMockMethods
@@ -48,7 +50,7 @@ describe('.getRequestContent', () => {
     const mockTimeout = 5000;
     const driverTimeout = 1000;
     // @ts-expect-error
-    connectionStub.sendCommand = jest.fn()
+    connectionStub.sendCommand = fnAny()
       .mockImplementation(() => new Promise(r => setTimeout(r, mockTimeout)));
 
     // Fail if we don't reach our two assertions in the catch block
@@ -97,7 +99,7 @@ describe('.sendCommand', () => {
   it('.sendCommand timesout when commands take too long', async () => {
     const mockTimeout = 5000;
     // @ts-expect-error
-    connectionStub.sendCommand = jest.fn()
+    connectionStub.sendCommand = fnAny()
       .mockImplementation(() => new Promise(r => setTimeout(r, mockTimeout)));
 
     driver.setNextProtocolTimeout(10000);
