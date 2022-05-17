@@ -36,7 +36,13 @@ describe('Disconnect', () => {
       },
     });
 
-    await state.page.evaluate(() => fetch(`/onclick.html`).catch(() => null));
+    await state.page.evaluate(async () => {
+      try {
+        return await fetch(`/onclick.html`);
+      } catch (err) {
+        return null;
+      }
+    });
 
     const result = await timespan.endTimespan();
     if (!result) throw new Error('Lighthouse failed to produce a result');
@@ -59,7 +65,13 @@ describe('Disconnect', () => {
     session.on('Network.loadingFinished', debugListener);
     session.on('Network.loadingFailed', failedListener);
 
-    await state.page.evaluate(() => fetch(`/onclick.html`).catch(() => null));
+    await state.page.evaluate(async () => {
+      try {
+        return await fetch(`/onclick.html`);
+      } catch (err) {
+        return null;
+      }
+    });
 
     session.off('Network.requestWillBeSent', debugListener);
     session.off('Network.responseReceived', debugListener);

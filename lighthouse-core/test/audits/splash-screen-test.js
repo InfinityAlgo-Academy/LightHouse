@@ -34,112 +34,102 @@ function generateMockAuditContext() {
 }
 describe('PWA: splash screen audit', () => {
   describe('basics', () => {
-    it('fails if page had no manifest', () => {
+    it('fails if page had no manifest', async () => {
       const artifacts = generateMockArtifacts();
       artifacts.WebAppManifest = null;
       const context = generateMockAuditContext();
 
-      return SplashScreenAudit.audit(artifacts, context).then(result => {
-        assert.strictEqual(result.score, 0);
-        assert.ok(result.explanation.includes('No manifest was fetched'), result.explanation);
-      });
+      const result = await SplashScreenAudit.audit(artifacts, context);
+      assert.strictEqual(result.score, 0);
+      assert.ok(result.explanation.includes('No manifest was fetched'), result.explanation);
     });
 
-    it('fails with a non-parsable manifest', () => {
+    it('fails with a non-parsable manifest', async () => {
       const artifacts = generateMockArtifacts('{,:}');
       const context = generateMockAuditContext();
-      return SplashScreenAudit.audit(artifacts, context).then(result => {
-        assert.strictEqual(result.score, 0);
-        assert.ok(result.explanation.includes('failed to parse as valid JSON'));
-      });
+      const result = await SplashScreenAudit.audit(artifacts, context);
+      assert.strictEqual(result.score, 0);
+      assert.ok(result.explanation.includes('failed to parse as valid JSON'));
     });
 
-    it('fails when an empty manifest is present', () => {
+    it('fails when an empty manifest is present', async () => {
       const artifacts = generateMockArtifacts('{}');
       const context = generateMockAuditContext();
-      return SplashScreenAudit.audit(artifacts, context).then(result => {
-        assert.strictEqual(result.score, 0);
-        assert.ok(result.explanation);
-        assert.strictEqual(result.details.items[0].failures.length, 4);
-      });
+      const result = await SplashScreenAudit.audit(artifacts, context);
+      assert.strictEqual(result.score, 0);
+      assert.ok(result.explanation);
+      assert.strictEqual(result.details.items[0].failures.length, 4);
     });
 
-    it('passes with complete manifest and SW', () => {
+    it('passes with complete manifest and SW', async () => {
       const context = generateMockAuditContext();
-      return SplashScreenAudit.audit(generateMockArtifacts(), context).then(result => {
-        assert.strictEqual(result.score, 1, result.explanation);
-        assert.strictEqual(result.explanation, undefined, result.explanation);
-      });
+      const result = await SplashScreenAudit.audit(generateMockArtifacts(), context);
+      assert.strictEqual(result.score, 1, result.explanation);
+      assert.strictEqual(result.explanation, undefined, result.explanation);
     });
   });
 
   describe('one-off-failures', () => {
-    it('fails when a manifest contains no name', () => {
+    it('fails when a manifest contains no name', async () => {
       const artifacts = generateMockArtifacts();
       artifacts.WebAppManifest.value.name.value = undefined;
       const context = generateMockAuditContext();
 
-      return SplashScreenAudit.audit(artifacts, context).then(result => {
-        assert.strictEqual(result.score, 0);
-        assert.ok(result.explanation.includes('name'), result.explanation);
-      });
+      const result = await SplashScreenAudit.audit(artifacts, context);
+      assert.strictEqual(result.score, 0);
+      assert.ok(result.explanation.includes('name'), result.explanation);
     });
 
-    it('fails when a manifest contains no background color', () => {
+    it('fails when a manifest contains no background color', async () => {
       const artifacts = generateMockArtifacts();
       artifacts.WebAppManifest.value.background_color.value = undefined;
       const context = generateMockAuditContext();
 
-      return SplashScreenAudit.audit(artifacts, context).then(result => {
-        assert.strictEqual(result.score, 0);
-        assert.ok(result.explanation.includes('background_color'), result.explanation);
-      });
+      const result = await SplashScreenAudit.audit(artifacts, context);
+      assert.strictEqual(result.score, 0);
+      assert.ok(result.explanation.includes('background_color'), result.explanation);
     });
 
-    it('fails when a manifest contains invalid background color', () => {
+    it('fails when a manifest contains invalid background color', async () => {
       const artifacts = generateMockArtifacts(JSON.stringify({
         background_color: 'no',
       }));
       const context = generateMockAuditContext();
 
-      return SplashScreenAudit.audit(artifacts, context).then(result => {
-        assert.strictEqual(result.score, 0);
-        assert.ok(result.explanation.includes('background_color'), result.explanation);
-      });
+      const result = await SplashScreenAudit.audit(artifacts, context);
+      assert.strictEqual(result.score, 0);
+      assert.ok(result.explanation.includes('background_color'), result.explanation);
     });
 
-    it('fails when a manifest contains no theme color', () => {
+    it('fails when a manifest contains no theme color', async () => {
       const artifacts = generateMockArtifacts();
       artifacts.WebAppManifest.value.theme_color.value = undefined;
       const context = generateMockAuditContext();
 
-      return SplashScreenAudit.audit(artifacts, context).then(result => {
-        assert.strictEqual(result.score, 0);
-        assert.ok(result.explanation.includes('theme_color'), result.explanation);
-      });
+      const result = await SplashScreenAudit.audit(artifacts, context);
+      assert.strictEqual(result.score, 0);
+      assert.ok(result.explanation.includes('theme_color'), result.explanation);
     });
 
-    it('fails if page had no icons in the manifest', () => {
+    it('fails if page had no icons in the manifest', async () => {
       const artifacts = generateMockArtifacts();
       artifacts.WebAppManifest.value.icons.value = [];
       const context = generateMockAuditContext();
 
-      return SplashScreenAudit.audit(artifacts, context).then(result => {
-        assert.strictEqual(result.score, 0);
-        assert.ok(result.explanation.includes('PNG icon'), result.explanation);
-      });
+      const result = await SplashScreenAudit.audit(artifacts, context);
+      assert.strictEqual(result.score, 0);
+      assert.ok(result.explanation.includes('PNG icon'), result.explanation);
     });
 
-    it('fails if icons were present, but no valid PNG present', () => {
+    it('fails if icons were present, but no valid PNG present', async () => {
       const artifacts = generateMockArtifacts(manifestDirtyJpgSrc);
       const context = generateMockAuditContext();
 
-      return SplashScreenAudit.audit(artifacts, context).then(result => {
-        assert.strictEqual(result.score, 0);
-        assert.ok(result.explanation.includes('PNG icon'), result.explanation);
-        const failures = result.details.items[0].failures;
-        assert.strictEqual(failures.length, 1, failures);
-      });
+      const result = await SplashScreenAudit.audit(artifacts, context);
+      assert.strictEqual(result.score, 0);
+      assert.ok(result.explanation.includes('PNG icon'), result.explanation);
+      const failures = result.details.items[0].failures;
+      assert.strictEqual(failures.length, 1, failures);
     });
   });
 });

@@ -168,45 +168,41 @@ describe('Performance: Redirects audit', () => {
     expect(output.numericValue).toMatchInlineSnapshot(`1890`);
   });
 
-  it('fails when 3 redirects detected', () => {
+  it('fails when 3 redirects detected', async () => {
     const artifacts = mockArtifacts(FAILING_THREE_REDIRECTS, 'https://m.example.com/final');
     const context = {settings: {}, computedCache: new Map()};
-    return RedirectsAudit.audit(artifacts, context).then(output => {
-      expect(output.details.items).toHaveLength(4);
-      expect(Math.round(output.score * 100) / 100).toMatchInlineSnapshot(`0.24`);
-      expect(output.numericValue).toMatchInlineSnapshot(`3000`);
-    });
+    const output = await RedirectsAudit.audit(artifacts, context);
+    expect(output.details.items).toHaveLength(4);
+    expect(Math.round(output.score * 100) / 100).toMatchInlineSnapshot(`0.24`);
+    expect(output.numericValue).toMatchInlineSnapshot(`3000`);
   });
 
-  it('fails when 2 redirects detected', () => {
+  it('fails when 2 redirects detected', async () => {
     const artifacts = mockArtifacts(FAILING_TWO_REDIRECTS, 'https://www.lisairish.com/');
     const context = {settings: {}, computedCache: new Map()};
-    return RedirectsAudit.audit(artifacts, context).then(output => {
-      expect(output.details.items).toHaveLength(3);
-      expect(Math.round(output.score * 100) / 100).toMatchInlineSnapshot(`0.35`);
-      expect(output.numericValue).toMatchInlineSnapshot(`2000`);
-    });
+    const output = await RedirectsAudit.audit(artifacts, context);
+    expect(output.details.items).toHaveLength(3);
+    expect(Math.round(output.score * 100) / 100).toMatchInlineSnapshot(`0.35`);
+    expect(output.numericValue).toMatchInlineSnapshot(`2000`);
   });
 
-  it('passes when one redirect detected', () => {
+  it('passes when one redirect detected', async () => {
     const artifacts = mockArtifacts(SUCCESS_ONE_REDIRECT, 'https://www.lisairish.com/');
     const context = {settings: {}, computedCache: new Map()};
-    return RedirectsAudit.audit(artifacts, context).then(output => {
-      // If === 1 redirect, perfect score is expected, regardless of latency
-      // We will still generate a table and show wasted time
-      expect(output.details.items).toHaveLength(2);
-      expect(output.score).toEqual(1);
-      expect(output.numericValue).toMatchInlineSnapshot(`1000`);
-    });
+    const output = await RedirectsAudit.audit(artifacts, context);
+    // If === 1 redirect, perfect score is expected, regardless of latency
+    // We will still generate a table and show wasted time
+    expect(output.details.items).toHaveLength(2);
+    expect(output.score).toEqual(1);
+    expect(output.numericValue).toMatchInlineSnapshot(`1000`);
   });
 
-  it('passes when no redirect detected', () => {
+  it('passes when no redirect detected', async () => {
     const artifacts = mockArtifacts(SUCCESS_NOREDIRECT, 'https://www.google.com/');
     const context = {settings: {}, computedCache: new Map()};
-    return RedirectsAudit.audit(artifacts, context).then(output => {
-      assert.equal(output.score, 1);
-      assert.equal(output.details.items.length, 0);
-      assert.equal(output.numericValue, 0);
-    });
+    const output = await RedirectsAudit.audit(artifacts, context);
+    assert.equal(output.score, 1);
+    assert.equal(output.details.items.length, 0);
+    assert.equal(output.numericValue, 0);
   });
 });

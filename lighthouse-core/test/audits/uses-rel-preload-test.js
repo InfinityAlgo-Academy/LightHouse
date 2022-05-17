@@ -75,7 +75,7 @@ describe('Performance: uses-rel-preload audit', () => {
     ];
   }
 
-  it('should suggest preload resource', () => {
+  it('should suggest preload resource', async () => {
     const rootNodeUrl = 'http://example.com:3000';
     const mainDocumentNodeUrl = 'http://www.example.com:3000';
     const scriptNodeUrl = 'http://www.example.com/script.js';
@@ -152,27 +152,23 @@ describe('Performance: uses-rel-preload audit', () => {
     const artifacts = mockArtifacts(networkRecords, mainDocumentNodeUrl);
     artifacts.URL.requestedUrl = rootNodeUrl;
     const context = {settings: {}, computedCache: new Map()};
-    return UsesRelPreload.audit_(artifacts, context).then(
-      output => {
-        assert.equal(output.details.overallSavingsMs, 330);
-        assert.equal(output.details.items.length, 2);
-        assert.equal(output.details.items[0].url, scriptSubNodeUrl);
-        assert.equal(output.details.items[0].wastedMs, 330);
-        assert.equal(output.details.items[1].url, scriptAddedNodeUrl);
-        assert.equal(output.details.items[1].wastedMs, 180);
-      }
-    );
+    const output = await UsesRelPreload.audit_(artifacts, context);
+    assert.equal(output.details.overallSavingsMs, 330);
+    assert.equal(output.details.items.length, 2);
+    assert.equal(output.details.items[0].url, scriptSubNodeUrl);
+    assert.equal(output.details.items[0].wastedMs, 330);
+    assert.equal(output.details.items[1].url, scriptAddedNodeUrl);
+    assert.equal(output.details.items[1].wastedMs, 180);
   });
 
-  it(`should suggest preload for worthy records`, () => {
+  it(`should suggest preload for worthy records`, async () => {
     const networkRecords = getMockNetworkRecords();
 
     const artifacts = mockArtifacts(networkRecords, defaultMainResourceUrl);
     const context = {settings: {}, computedCache: new Map()};
-    return UsesRelPreload.audit_(artifacts, context).then(output => {
-      assert.equal(output.details.overallSavingsMs, 314);
-      assert.equal(output.details.items.length, 1);
-    });
+    const output = await UsesRelPreload.audit_(artifacts, context);
+    assert.equal(output.details.overallSavingsMs, 314);
+    assert.equal(output.details.items.length, 1);
   });
 
   it(`should warn about failed preload attempts`, async () => {
@@ -262,17 +258,16 @@ describe('Performance: uses-rel-preload audit', () => {
     expect(result.warnings).toBeUndefined();
   });
 
-  it(`shouldn't suggest preload for already preloaded records`, () => {
+  it(`shouldn't suggest preload for already preloaded records`, async () => {
     const networkRecords = getMockNetworkRecords();
     networkRecords[2].isLinkPreload = true;
 
     const artifacts = mockArtifacts(networkRecords, defaultMainResourceUrl);
     const context = {settings: {}, computedCache: new Map()};
-    return UsesRelPreload.audit_(artifacts, context).then(output => {
-      assert.equal(output.score, 1);
-      assert.equal(output.details.overallSavingsMs, 0);
-      assert.equal(output.details.items.length, 0);
-    });
+    const output = await UsesRelPreload.audit_(artifacts, context);
+    assert.equal(output.score, 1);
+    assert.equal(output.details.overallSavingsMs, 0);
+    assert.equal(output.details.items.length, 0);
   });
 
   it(`shouldn't suggest preload for requests in other frames`, async () => {
@@ -285,41 +280,38 @@ describe('Performance: uses-rel-preload audit', () => {
     expect(result).toMatchObject({score: 1, details: {overallSavingsMs: 0, items: []}});
   });
 
-  it(`shouldn't suggest preload for protocol data`, () => {
+  it(`shouldn't suggest preload for protocol data`, async () => {
     const networkRecords = getMockNetworkRecords();
     networkRecords[2].protocol = 'data';
 
     const artifacts = mockArtifacts(networkRecords, defaultMainResourceUrl);
     const context = {settings: {}, computedCache: new Map()};
-    return UsesRelPreload.audit_(artifacts, context).then(output => {
-      assert.equal(output.score, 1);
-      assert.equal(output.details.overallSavingsMs, 0);
-      assert.equal(output.details.items.length, 0);
-    });
+    const output = await UsesRelPreload.audit_(artifacts, context);
+    assert.equal(output.score, 1);
+    assert.equal(output.details.overallSavingsMs, 0);
+    assert.equal(output.details.items.length, 0);
   });
 
-  it(`shouldn't suggest preload for protocol blob`, () => {
+  it(`shouldn't suggest preload for protocol blob`, async () => {
     const networkRecords = getMockNetworkRecords();
     networkRecords[2].protocol = 'blob';
 
     const artifacts = mockArtifacts(networkRecords, defaultMainResourceUrl);
     const context = {settings: {}, computedCache: new Map()};
-    return UsesRelPreload.audit_(artifacts, context).then(output => {
-      assert.equal(output.numericValue, 0);
-      assert.equal(output.details.items.length, 0);
-    });
+    const output = await UsesRelPreload.audit_(artifacts, context);
+    assert.equal(output.numericValue, 0);
+    assert.equal(output.details.items.length, 0);
   });
 
-  it(`shouldn't suggest preload for protocol intent`, () => {
+  it(`shouldn't suggest preload for protocol intent`, async () => {
     const networkRecords = getMockNetworkRecords();
     networkRecords[2].protocol = 'intent';
 
     const artifacts = mockArtifacts(networkRecords, defaultMainResourceUrl);
     const context = {settings: {}, computedCache: new Map()};
-    return UsesRelPreload.audit_(artifacts, context).then(output => {
-      assert.equal(output.numericValue, 0);
-      assert.equal(output.details.items.length, 0);
-    });
+    const output = await UsesRelPreload.audit_(artifacts, context);
+    assert.equal(output.numericValue, 0);
+    assert.equal(output.details.items.length, 0);
   });
 
   it('does not throw on a real trace/devtools log', async () => {

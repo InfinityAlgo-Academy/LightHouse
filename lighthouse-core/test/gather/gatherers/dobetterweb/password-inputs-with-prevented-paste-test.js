@@ -16,8 +16,8 @@ describe('PasswordInputsWithPreventedPaste gatherer', () => {
     gatherer = new PasswordInputsWithPreventedPasteGatherer();
   });
 
-  it('returns an artifact', () => {
-    return gatherer
+  it('returns an artifact', async () => {
+    const artifact = await gatherer
       .afterPass({
         driver: {
           executionContext: {
@@ -32,10 +32,9 @@ describe('PasswordInputsWithPreventedPaste gatherer', () => {
             },
           },
         },
-      })
-      .then(artifact => {
-        assert.ok(typeof artifact === 'object');
-        assert.ok(artifact[0].node.snippet.length > 0);
       });
+
+    assert.ok(typeof artifact === 'object');
+    assert.ok(artifact[0].node.snippet.length > 0);
   });
 });

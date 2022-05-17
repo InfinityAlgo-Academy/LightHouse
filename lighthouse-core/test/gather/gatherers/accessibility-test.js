@@ -21,19 +21,24 @@ describe('Accessibility gatherer', () => {
     accessibilityGather = new AccessibilityGather();
   });
 
-  it('propagates error retrieving the results', () => {
+  it('propagates error retrieving the results', async () => {
     const error = 'There was an error.';
-    return accessibilityGather.afterPass({
-      driver: {
-        executionContext: {
-          async evaluate() {
-            throw new Error(error);
+
+    try {
+      await accessibilityGather.afterPass({
+        driver: {
+          executionContext: {
+            async evaluate() {
+              throw new Error(error);
+            },
           },
         },
-      },
-    }).then(
-      _ => assert.ok(false),
-      err => assert.ok(err.message.includes(error)));
+      });
+
+      return await assert.ok(false);
+    } catch (err) {
+      return assert.ok(err.message.includes(error));
+    }
   });
 });
 

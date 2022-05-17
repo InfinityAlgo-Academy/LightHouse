@@ -10,15 +10,14 @@ import Screenshots from '../../computed/screenshots.js';
 import pwaTrace from '../fixtures/traces/progressive-app.json';
 
 describe('Screenshot computed artifact', () => {
-  it('returns an artifact for a real trace', () => {
+  it('returns an artifact for a real trace', async () => {
     const context = {computedCache: new Map()};
-    return Screenshots.request({traceEvents: pwaTrace}, context).then(screenshots => {
-      assert.ok(Array.isArray(screenshots));
-      assert.equal(screenshots.length, 7);
+    const screenshots = await Screenshots.request({traceEvents: pwaTrace}, context);
+    assert.ok(Array.isArray(screenshots));
+    assert.equal(screenshots.length, 7);
 
-      const firstScreenshot = screenshots[0];
-      assert.ok(firstScreenshot.datauri.startsWith('data:image/jpeg;base64,'));
-      assert.ok(firstScreenshot.datauri.length > 42);
-    });
+    const firstScreenshot = screenshots[0];
+    assert.ok(firstScreenshot.datauri.startsWith('data:image/jpeg;base64,'));
+    assert.ok(firstScreenshot.datauri.length > 42);
   });
 });

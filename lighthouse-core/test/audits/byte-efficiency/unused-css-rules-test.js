@@ -42,16 +42,16 @@ describe('Best Practices: unused css rules audit', () => {
       context.computedCache.clear();
     });
 
-    it('ignores missing stylesheets', () => {
-      return UnusedCSSAudit.audit_(getArtifacts({
+    it('ignores missing stylesheets', async () => {
+      const result = await UnusedCSSAudit.audit_(getArtifacts({
         CSSUsage: {rules: [{styleSheetId: 'a', used: false}], stylesheets: []},
-      }), defaultNetworkRecords, context).then(result => {
-        assert.equal(result.items.length, 0);
-      });
+      }), defaultNetworkRecords, context);
+
+      assert.equal(result.items.length, 0);
     });
 
-    it('ignores stylesheets that are 100% used', () => {
-      return UnusedCSSAudit.audit_(getArtifacts({
+    it('ignores stylesheets that are 100% used', async () => {
+      const result = await UnusedCSSAudit.audit_(getArtifacts({
         CSSUsage: {rules: [
           {styleSheetId: 'a', used: true},
           {styleSheetId: 'a', used: true},
@@ -66,13 +66,13 @@ describe('Best Practices: unused css rules audit', () => {
             content: '.my.favorite.selector { rule: content; }',
           },
         ]},
-      }), defaultNetworkRecords, context).then(result => {
-        assert.equal(result.items.length, 0);
-      });
+      }), defaultNetworkRecords, context);
+
+      assert.equal(result.items.length, 0);
     });
 
-    it('fails when lots of rules are unused', () => {
-      return UnusedCSSAudit.audit_(getArtifacts({
+    it('fails when lots of rules are unused', async () => {
+      const result = await UnusedCSSAudit.audit_(getArtifacts({
         CSSUsage: {rules: [
           {styleSheetId: 'a', used: true, startOffset: 0, endOffset: 11}, // 44 * 25% = 11
           {styleSheetId: 'b', used: true, startOffset: 0, endOffset: 60000}, // 40000 * 3 * 50% = 60000
@@ -90,13 +90,13 @@ describe('Best Practices: unused css rules audit', () => {
             content: `${generate('123', 450)}`, // will be filtered out
           },
         ]},
-      }), defaultNetworkRecords, context).then(result => {
-        assert.equal(result.items.length, 2);
-        assert.equal(result.items[0].totalBytes, 100 * 1024);
-        assert.equal(result.items[1].totalBytes, 40000 * 3 * 0.2);
-        assert.equal(result.items[0].wastedPercent, 75);
-        assert.equal(result.items[1].wastedPercent, 50);
-      });
+      }), defaultNetworkRecords, context);
+
+      assert.equal(result.items.length, 2);
+      assert.equal(result.items[0].totalBytes, 100 * 1024);
+      assert.equal(result.items[1].totalBytes, 40000 * 3 * 0.2);
+      assert.equal(result.items[0].wastedPercent, 75);
+      assert.equal(result.items[1].wastedPercent, 50);
     });
 
     it('handles phantom network records without size data', async () => {
@@ -134,8 +134,8 @@ describe('Best Practices: unused css rules audit', () => {
       ]);
     });
 
-    it('does not include empty or small sheets', () => {
-      return UnusedCSSAudit.audit_(getArtifacts({
+    it('does not include empty or small sheets', async () => {
+      const result = await UnusedCSSAudit.audit_(getArtifacts({
         CSSUsage: {rules: [
           {styleSheetId: 'a', used: true, startOffset: 0, endOffset: 8000}, // 4000 * 3 / 2
           {styleSheetId: 'b', used: true, startOffset: 0, endOffset: 500}, // 500 * 3 / 3
@@ -161,10 +161,10 @@ describe('Best Practices: unused css rules audit', () => {
             content: '       ',
           },
         ]},
-      }), defaultNetworkRecords, context).then(result => {
-        assert.equal(result.items.length, 1);
-        assert.equal(Math.floor(result.items[0].wastedPercent), 33);
-      });
+      }), defaultNetworkRecords, context);
+
+      assert.equal(result.items.length, 1);
+      assert.equal(Math.floor(result.items[0].wastedPercent), 33);
     });
   });
 });

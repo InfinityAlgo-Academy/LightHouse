@@ -16,15 +16,17 @@ describe('Cache Contents gatherer', () => {
     cacheContentGather = new CacheContentGather();
   });
 
-  it('throws an error when cache getter returns nothing', () => {
-    return cacheContentGather.afterPass({
-      driver: {
-        evaluateAsync() {
-          return Promise.resolve();
+  it('throws an error when cache getter returns nothing', async () => {
+    try {
+      await cacheContentGather.afterPass({
+        driver: {
+          async evaluateAsync() {},
         },
-      },
-    }).then(
-      _ => assert.ok(false),
-      _ => assert.ok(true));
+      });
+
+      return await assert.ok(false);
+    } catch (_) {
+      return assert.ok(true);
+    }
   });
 });

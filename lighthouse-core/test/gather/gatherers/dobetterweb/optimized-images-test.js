@@ -112,9 +112,11 @@ describe('Optimized images', () => {
     optimizedImages = new OptimizedImages();
     context = createMockContext();
     context.url = 'http://google.com';
-    context.driver.defaultSession.sendCommand.mockImplementation((_, params) => {
+    context.driver.defaultSession.sendCommand.mockImplementation(async (_, params) => {
       const encodedSize = params.encoding === 'webp' ? 60 : 80;
-      return Promise.resolve({encodedSize});
+      return {
+        encodedSize,
+      };
     });
   });
 
@@ -155,23 +157,24 @@ describe('Optimized images', () => {
     ]);
   });
 
-  it('handles partial driver failure', () => {
+  it('handles partial driver failure', async () => {
     let calls = 0;
-    context.driver.defaultSession.sendCommand.mockImplementation(() => {
+    context.driver.defaultSession.sendCommand.mockImplementation(async () => {
       calls++;
       if (calls > 2) {
-        return Promise.reject(new Error('whoops driver failed'));
+        throw new Error('whoops driver failed');
       } else {
-        return Promise.resolve({encodedSize: 60});
+        return {
+          encodedSize: 60,
+        };
       }
     });
 
-    return optimizedImages.afterPass(context, traceData).then(artifact => {
-      const failed = artifact.find(record => record.failed);
+    const artifact = await optimizedImages.afterPass(context, traceData);
+    const failed = artifact.find(record => record.failed);
 
-      expect(artifact).toHaveLength(5);
-      expect(failed?.errMsg).toEqual('whoops driver failed');
-    });
+    expect(artifact).toHaveLength(5);
+    expect(failed?.errMsg).toEqual('whoops driver failed');
   });
 
   it('handles non-standard mime types too', async () => {
