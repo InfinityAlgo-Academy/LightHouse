@@ -30,22 +30,22 @@ class Connection {
   /**
    * @return {Promise<void>}
    */
-  connect() {
-    return Promise.reject(new Error('Not implemented'));
+  async connect() {
+    throw new Error('Not implemented');
   }
 
   /**
    * @return {Promise<void>}
    */
-  disconnect() {
-    return Promise.reject(new Error('Not implemented'));
+  async disconnect() {
+    throw new Error('Not implemented');
   }
 
   /**
    * @return {Promise<string>}
    */
-  wsEndpoint() {
-    return Promise.reject(new Error('Not implemented'));
+  async wsEndpoint() {
+    throw new Error('Not implemented');
   }
 
   /**
@@ -135,7 +135,8 @@ class Connection {
     if (callback) {
       this._callbacks.delete(object.id);
 
-      callback.resolve(Promise.resolve().then(_ => {
+      callback.resolve((async () => {
+        const _ = await Promise.resolve();
         if (object.error) {
           log.formatProtocol('method <= browser ERR', {method: callback.method}, 'error');
           throw LHError.fromProtocolMessage(callback.method, object.error);
@@ -143,8 +144,8 @@ class Connection {
 
         log.formatProtocol('method <= browser OK',
           {method: callback.method, params: object.result}, 'verbose');
-        return object.result;
-      }));
+        return await object.result;
+      })());
     } else {
       // In DevTools we receive responses to commands we did not send which we cannot act on, so we
       // just log these occurrences.

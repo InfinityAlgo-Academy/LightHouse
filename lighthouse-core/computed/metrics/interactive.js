@@ -154,7 +154,7 @@ class Interactive extends NavigationMetric {
    * @param {LH.Artifacts.NavigationMetricComputationData} data
    * @return {Promise<LH.Artifacts.Metric>}
    */
-  static computeObservedMetric(data) {
+  static async computeObservedMetric(data) {
     const {processedTrace, processedNavigation, networkRecords} = data;
 
     if (!processedNavigation.timestamps.domContentLoaded) {
@@ -177,7 +177,10 @@ class Interactive extends NavigationMetric {
       processedNavigation.timestamps.domContentLoaded / 1000
     ) * 1000;
     const timing = (timestamp - processedNavigation.timestamps.timeOrigin) / 1000;
-    return Promise.resolve({timing, timestamp});
+    return {
+      timing,
+      timestamp,
+    };
   }
 }
 

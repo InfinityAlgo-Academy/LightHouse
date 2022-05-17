@@ -39,8 +39,12 @@ class TimingSummary {
      * @param {TArtifacts} artifact
      * @return {Promise<TReturn|undefined>}
      */
-    const requestOrUndefined = (Artifact, artifact) => {
-      return Artifact.request(artifact, context).catch(_ => undefined);
+    const requestOrUndefined = async (Artifact, artifact) => {
+      try {
+        return await Artifact.request(artifact, context);
+      } catch (_) {
+        return;
+      }
     };
 
     /* eslint-disable max-len */

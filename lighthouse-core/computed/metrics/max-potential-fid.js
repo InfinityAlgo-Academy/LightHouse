@@ -25,7 +25,7 @@ class MaxPotentialFID extends NavigationMetric {
    * @param {LH.Artifacts.NavigationMetricComputationData} data
    * @return {Promise<LH.Artifacts.Metric>}
    */
-  static computeObservedMetric(data) {
+  static async computeObservedMetric(data) {
     const {firstContentfulPaint} = data.processedNavigation.timings;
 
     const events = TracingProcessor.getMainThreadTopLevelEvents(
@@ -33,9 +33,9 @@ class MaxPotentialFID extends NavigationMetric {
       firstContentfulPaint
     ).filter(evt => evt.duration >= 1);
 
-    return Promise.resolve({
+    return {
       timing: Math.max(...events.map(evt => evt.duration), 16),
-    });
+    };
   }
 }
 

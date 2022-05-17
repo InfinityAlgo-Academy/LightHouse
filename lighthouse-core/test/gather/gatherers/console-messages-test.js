@@ -19,9 +19,7 @@ class MockSession {
 
   off() {}
 
-  sendCommand() {
-    return Promise.resolve();
-  }
+  async sendCommand() {}
 
   fireForTest(command, event) {
     this.listeners.get(command)(event);

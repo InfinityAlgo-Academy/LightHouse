@@ -18,10 +18,10 @@ const MESSAGE = `${log.reset}We're constantly trying to improve Lighthouse and i
 /**
  * @return {Promise<boolean>}
  */
-function prompt() {
+async function prompt() {
   if (!process.stdout.isTTY || process.env.CI) {
     // Default non-interactive sessions to false
-    return Promise.resolve(false);
+    return false;
   }
 
   /** @type {NodeJS.Timer|undefined} */
@@ -36,18 +36,20 @@ function prompt() {
 
   const timeoutPromise = new Promise((resolve) => {
     timeout = setTimeout(() => {
-      prompt.close().then(() => {
+      (async () => {
+        await prompt.close();
         log.warn('CLI', 'No response to error logging preference, errors will not be reported.');
         resolve(false);
-      });
+      })();
     }, MAXIMUM_WAIT_TIME);
   });
 
   return Promise.race([
-    prompt.run().then(result => {
+    (async () => {
+      const result = await prompt.run();
       clearTimeout(/** @type {NodeJS.Timer} */ (timeout));
       return result;
-    }),
+    })(),
     timeoutPromise,
   ]);
 }
@@ -55,22 +57,24 @@ function prompt() {
 /**
  * @return {Promise<boolean>}
  */
-function askPermission() {
-  return Promise.resolve().then(_ => {
+async function askPermission() {
+  try {
+    const _ = await Promise.resolve();
     const configstore = new Configstore('lighthouse');
     let isErrorReportingEnabled = configstore.get('isErrorReportingEnabled');
     if (typeof isErrorReportingEnabled === 'boolean') {
-      return Promise.resolve(isErrorReportingEnabled);
+      return await isErrorReportingEnabled;
     }
 
-    return prompt()
-      .then(response => {
-        isErrorReportingEnabled = response;
-        configstore.set('isErrorReportingEnabled', isErrorReportingEnabled);
-        return isErrorReportingEnabled;
-      });
-  // Error accessing configstore; default to false.
-  }).catch(_ => false);
+    const response = await prompt();
+    isErrorReportingEnabled = response;
+    configstore.set('isErrorReportingEnabled', isErrorReportingEnabled);
+
+    return await isErrorReportingEnabled;
+    // Error accessing configstore; default to false.
+  } catch (_) {
+    return false;
+  }
 }
 
 export {

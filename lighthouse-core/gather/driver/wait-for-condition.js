@@ -440,28 +440,31 @@ async function waitForFullyLoaded(session, networkMonitor, options) {
   // Wait for all initial load promises. Resolves on cleanup function the clears load
   // timeout timer.
   /** @type {Promise<() => Promise<{timedOut: boolean}>>} */
-  const loadPromise = Promise.all([
-    resolveOnFcp.promise,
-    resolveOnLoadEvent.promise,
-    resolveOnNetworkIdle.promise,
-    resolveOnCriticalNetworkIdle.promise,
-  ]).then(() => {
-    resolveOnCPUIdle = waitForCPUIdle(session, cpuQuietThresholdMs);
-    return resolveOnCPUIdle.promise;
-  }).then(() => {
-    /** @return {Promise<{timedOut: boolean}>} */
-    const cleanupFn = async function() {
-      log.verbose('waitFor', 'loadEventFired and network considered idle');
-      return {timedOut: false};
-    };
+  const loadPromise = (async () => {
+    try {
+      await Promise.all([
+        resolveOnFcp.promise,
+        resolveOnLoadEvent.promise,
+        resolveOnNetworkIdle.promise,
+        resolveOnCriticalNetworkIdle.promise,
+      ]);
 
-    return cleanupFn;
-  }).catch(err => {
-    // Throw the error in the cleanupFn so we still cleanup all our handlers.
-    return function() {
-      throw err;
-    };
-  });
+      resolveOnCPUIdle = waitForCPUIdle(session, cpuQuietThresholdMs);
+      await resolveOnCPUIdle.promise;
+      /** @return {Promise<{timedOut: boolean}>} */
+      const cleanupFn0 = async function() {
+        log.verbose('waitFor', 'loadEventFired and network considered idle');
+        return {timedOut: false};
+      };
+
+      return await cleanupFn0;
+    } catch (err) {
+      // Throw the error in the cleanupFn so we still cleanup all our handlers.
+      return function() {
+        throw err;
+      };
+    }
+  })();
 
   // Last resort timeout. Resolves maxWaitForLoadedMs ms from now on
   // cleanup function that removes loadEvent and network idle listeners.

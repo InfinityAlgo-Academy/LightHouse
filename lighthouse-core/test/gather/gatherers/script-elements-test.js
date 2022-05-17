@@ -16,7 +16,7 @@ import NetworkRequest from '../../../lib/network-request.js';
 let ScriptElements;
 
 beforeAll(async () => {
-  ScriptElements = (await import('../../../gather/gatherers/script-elements.js')).default;
+  ScriptElements = (await (import('../../../gather/gatherers/script-elements.js'))).default;
 });
 
 const mocks = mockDriverSubmodules();

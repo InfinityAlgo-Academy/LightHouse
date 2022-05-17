@@ -64,7 +64,7 @@ async function generateFlowReport(flowResult) {
  */
 async function auditFlowArtifacts(flowArtifacts, config) {
   const {gatherSteps, name} = flowArtifacts;
-  return await auditGatherSteps(gatherSteps, {name, config});
+  return auditGatherSteps(gatherSteps, {name, config});
 }
 
 module.exports = {

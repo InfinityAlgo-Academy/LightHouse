@@ -228,9 +228,10 @@ class OffscreenImages extends ByteEfficiencyAudit {
       if (context.settings.throttlingMethod === 'simulate') {
         throw err;
       }
+      const tot = await ProcessedTrace.request(trace, context);
       // use end of trace as a substitute for finding interactive time
       items = OffscreenImages.filterObservedResults(unfilteredResults,
-        await ProcessedTrace.request(trace, context).then(tot => tot.timestamps.traceEnd));
+        await tot.timestamps.traceEnd);
     }
 
     /** @type {LH.Audit.Details.Opportunity['headings']} */

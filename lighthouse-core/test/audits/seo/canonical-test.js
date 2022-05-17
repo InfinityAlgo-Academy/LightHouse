@@ -26,7 +26,7 @@ describe('SEO: Document has valid canonical link', () => {
     };
   }
 
-  it('succeeds when there are no canonical links', () => {
+  it('succeeds when there are no canonical links', async () => {
     const mainDocumentUrl = 'https://example.com/';
     const mainResource = {url: mainDocumentUrl};
     const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
@@ -37,12 +37,11 @@ describe('SEO: Document has valid canonical link', () => {
     };
 
     const context = {computedCache: new Map()};
-    return CanonicalAudit.audit(artifacts, context).then(auditResult => {
-      assert.equal(auditResult.score, 1);
-    });
+    const auditResult = await CanonicalAudit.audit(artifacts, context);
+    assert.equal(auditResult.score, 1);
   });
 
-  it('fails when there are multiple canonical links', () => {
+  it('fails when there are multiple canonical links', async () => {
     const mainDocumentUrl = 'http://www.example.com/';
     const mainResource = {url: mainDocumentUrl};
     const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
@@ -56,14 +55,13 @@ describe('SEO: Document has valid canonical link', () => {
     };
 
     const context = {computedCache: new Map()};
-    return CanonicalAudit.audit(artifacts, context).then(auditResult => {
-      assert.equal(auditResult.score, 0);
-      expect(auditResult.explanation)
-        .toBeDisplayString('Multiple conflicting URLs (https://www.example.com, https://example.com)');
-    });
+    const auditResult = await CanonicalAudit.audit(artifacts, context);
+    assert.equal(auditResult.score, 0);
+    expect(auditResult.explanation)
+      .toBeDisplayString('Multiple conflicting URLs (https://www.example.com, https://example.com)');
   });
 
-  it('fails when canonical url is invalid', () => {
+  it('fails when canonical url is invalid', async () => {
     const mainDocumentUrl = 'http://www.example.com';
     const mainResource = {url: mainDocumentUrl};
     const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
@@ -76,14 +74,13 @@ describe('SEO: Document has valid canonical link', () => {
     };
 
     const context = {computedCache: new Map()};
-    return CanonicalAudit.audit(artifacts, context).then(auditResult => {
-      const {score, explanation} = auditResult;
-      assert.equal(score, 0);
-      expect(explanation).toBeDisplayString('Invalid URL (https:// example.com)');
-    });
+    const auditResult = await CanonicalAudit.audit(artifacts, context);
+    const {score, explanation} = auditResult;
+    assert.equal(score, 0);
+    expect(explanation).toBeDisplayString('Invalid URL (https:// example.com)');
   });
 
-  it('fails when canonical url is relative', () => {
+  it('fails when canonical url is relative', async () => {
     const mainDocumentUrl = 'https://example.com/de/';
     const mainResource = {url: mainDocumentUrl};
     const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
@@ -96,14 +93,13 @@ describe('SEO: Document has valid canonical link', () => {
     };
 
     const context = {computedCache: new Map()};
-    return CanonicalAudit.audit(artifacts, context).then(auditResult => {
-      const {score, explanation} = auditResult;
-      assert.equal(score, 0);
-      expect(explanation).toBeDisplayString('Is not an absolute URL (/)');
-    });
+    const auditResult = await CanonicalAudit.audit(artifacts, context);
+    const {score, explanation} = auditResult;
+    assert.equal(score, 0);
+    expect(explanation).toBeDisplayString('Is not an absolute URL (/)');
   });
 
-  it('fails when canonical points to a different hreflang', () => {
+  it('fails when canonical points to a different hreflang', async () => {
     const mainDocumentUrl = 'https://example.com/';
     const mainResource = {url: mainDocumentUrl};
     const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
@@ -118,11 +114,10 @@ describe('SEO: Document has valid canonical link', () => {
     };
 
     const context = {computedCache: new Map()};
-    return CanonicalAudit.audit(artifacts, context).then(auditResult => {
-      assert.equal(auditResult.score, 0);
-      expect(auditResult.explanation)
-        .toBeDisplayString('Points to another `hreflang` location (https://example.com/)');
-    });
+    const auditResult = await CanonicalAudit.audit(artifacts, context);
+    assert.equal(auditResult.score, 0);
+    expect(auditResult.explanation)
+      .toBeDisplayString('Points to another `hreflang` location (https://example.com/)');
   });
 
   it('passes when canonical points to the root while current URL is also the root', async () => {
@@ -145,7 +140,7 @@ describe('SEO: Document has valid canonical link', () => {
     assert.equal(auditResult.score, 1);
   });
 
-  it('fails when canonical points to the root while current URL is not the root', () => {
+  it('fails when canonical points to the root while current URL is not the root', async () => {
     const mainDocumentUrl = 'https://example.com/articles/cats-and-you';
     const mainResource = {url: mainDocumentUrl};
     const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
@@ -158,14 +153,13 @@ describe('SEO: Document has valid canonical link', () => {
     };
 
     const context = {computedCache: new Map()};
-    return CanonicalAudit.audit(artifacts, context).then(auditResult => {
-      assert.equal(auditResult.score, 0);
-      expect(auditResult.explanation).toBeDisplayString('Points to the domain\'s root URL (the ' +
-        'homepage), instead of an equivalent page of content');
-    });
+    const auditResult = await CanonicalAudit.audit(artifacts, context);
+    assert.equal(auditResult.score, 0);
+    expect(auditResult.explanation).toBeDisplayString('Points to the domain\'s root URL (the ' +
+      'homepage), instead of an equivalent page of content');
   });
 
-  it('succeeds when there are multiple identical canonical links', () => {
+  it('succeeds when there are multiple identical canonical links', async () => {
     const mainDocumentUrl = 'http://www.example.com/';
     const mainResource = {url: mainDocumentUrl};
     const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
@@ -179,12 +173,11 @@ describe('SEO: Document has valid canonical link', () => {
     };
 
     const context = {computedCache: new Map()};
-    return CanonicalAudit.audit(artifacts, context).then(auditResult => {
-      assert.equal(auditResult.score, 1);
-    });
+    const auditResult = await CanonicalAudit.audit(artifacts, context);
+    assert.equal(auditResult.score, 1);
   });
 
-  it('succeeds when valid canonical is provided via meta tag', () => {
+  it('succeeds when valid canonical is provided via meta tag', async () => {
     const mainDocumentUrl = 'http://example.com/articles/cats-and-you?utm_source=twitter';
     const mainResource = {url: mainDocumentUrl};
     const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
@@ -197,12 +190,11 @@ describe('SEO: Document has valid canonical link', () => {
     };
 
     const context = {computedCache: new Map()};
-    return CanonicalAudit.audit(artifacts, context).then(auditResult => {
-      assert.equal(auditResult.score, 1);
-    });
+    const auditResult = await CanonicalAudit.audit(artifacts, context);
+    assert.equal(auditResult.score, 1);
   });
 
-  it('succeeds when valid canonical is provided via header', () => {
+  it('succeeds when valid canonical is provided via header', async () => {
     const mainDocumentUrl = 'http://example.com/articles/cats?utm_source=twitter';
     const mainResource = {url: mainDocumentUrl};
     const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
@@ -215,12 +207,11 @@ describe('SEO: Document has valid canonical link', () => {
     };
 
     const context = {computedCache: new Map()};
-    return CanonicalAudit.audit(artifacts, context).then(auditResult => {
-      assert.equal(auditResult.score, 1);
-    });
+    const auditResult = await CanonicalAudit.audit(artifacts, context);
+    assert.equal(auditResult.score, 1);
   });
 
-  it('succeeds when invalid canonical is provided in body', () => {
+  it('succeeds when invalid canonical is provided in body', async () => {
     const mainDocumentUrl = 'http://example.com/articles/cats-and-you?utm_source=twitter';
     const mainResource = {url: mainDocumentUrl};
     const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
@@ -233,8 +224,7 @@ describe('SEO: Document has valid canonical link', () => {
     };
 
     const context = {computedCache: new Map()};
-    return CanonicalAudit.audit(artifacts, context).then(auditResult => {
-      assert.equal(auditResult.score, 1);
-    });
+    const auditResult = await CanonicalAudit.audit(artifacts, context);
+    assert.equal(auditResult.score, 1);
   });
 });

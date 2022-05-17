@@ -28,7 +28,7 @@ const createMockSendCommandFn =
 let NetworkMonitor;
 
 beforeAll(async () => {
-  NetworkMonitor = (await import('../../../gather/driver/network-monitor.js')).default;
+  NetworkMonitor = (await (import('../../../gather/driver/network-monitor.js'))).default;
 });
 
 const tscErr = new Error('Typecheck constrait failed');

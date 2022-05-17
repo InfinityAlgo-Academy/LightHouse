@@ -114,16 +114,15 @@ class ExecutionContext {
       const errorMessage = response.exceptionDetails.exception ?
         response.exceptionDetails.exception.description :
         response.exceptionDetails.text;
-      return Promise.reject(new Error(`Evaluation exception: ${errorMessage}`));
+      throw new Error(`Evaluation exception: ${errorMessage}`);
     }
     // Protocol should always return a 'result' object, but it is sometimes undefined.  See #6026.
     if (response.result === undefined) {
-      return Promise.reject(
-        new Error('Runtime.evaluate response did not contain a "result" object'));
+      throw new Error('Runtime.evaluate response did not contain a "result" object');
     }
     const value = response.result.value;
     if (value?.__failedInBrowser) {
-      return Promise.reject(Object.assign(new Error(), value));
+      throw Object.assign(new Error(), value);
     } else {
       return value;
     }

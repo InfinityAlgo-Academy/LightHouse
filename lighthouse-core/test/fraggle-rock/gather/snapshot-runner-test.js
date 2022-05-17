@@ -22,7 +22,7 @@ import {
 let snapshotGather;
 
 beforeAll(async () => {
-  snapshotGather = (await import('../../../fraggle-rock/gather/snapshot-runner.js')).snapshotGather;
+  snapshotGather = (await (import('../../../fraggle-rock/gather/snapshot-runner.js'))).snapshotGather;
 });
 
 const mockRunner = mockRunnerModule();

@@ -241,16 +241,21 @@ class TraceElements extends FRGatherer {
     }
 
     const processedTrace = await ProcessedTrace.request(trace, context);
-    const {largestContentfulPaintEvt} = await ProcessedNavigation
-      .request(processedTrace, context)
-      .catch(err => {
-        // If we were running in timespan mode and there was no paint, treat LCP as missing.
-        if (context.gatherMode === 'timespan' && err.code === LighthouseError.errors.NO_FCP.code) {
-          return {largestContentfulPaintEvt: undefined};
-        }
+    let result;
 
+    try {
+      result = await ProcessedNavigation
+        .request(processedTrace, context);
+    } catch (err) {
+      // If we were running in timespan mode and there was no paint, treat LCP as missing.
+      if (context.gatherMode === 'timespan' && err.code === LighthouseError.errors.NO_FCP.code) {
+        result = {largestContentfulPaintEvt: undefined};
+      } else {
         throw err;
-      });
+      }
+    }
+
+    const {largestContentfulPaintEvt} = result;
     const {mainThreadEvents} = processedTrace;
 
     const lcpNodeId = largestContentfulPaintEvt?.args?.data?.nodeId;

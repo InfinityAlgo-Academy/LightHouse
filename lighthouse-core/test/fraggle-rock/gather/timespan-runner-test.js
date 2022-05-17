@@ -24,7 +24,7 @@ let startTimespanGather;
 
 beforeAll(async () => {
   startTimespanGather =
-    (await import('../../../fraggle-rock/gather/timespan-runner.js')).startTimespanGather;
+    (await (import('../../../fraggle-rock/gather/timespan-runner.js'))).startTimespanGather;
 });
 
 const mockSubmodules = mockDriverSubmodules();

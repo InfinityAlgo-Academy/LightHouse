@@ -21,22 +21,24 @@ describe('Printer', () => {
     assert.notEqual(Printer.checkOutputPath(path), path);
   });
 
-  it('writes file for results', () => {
+  it('writes file for results', async () => {
     const path = './.test-file.json';
     const report = JSON.stringify(sampleResults);
-    return Printer.write(report, 'json', path).then(_ => {
-      const fileContents = fs.readFileSync(path, 'utf8');
-      assert.ok(/lighthouseVersion/gim.test(fileContents));
-      fs.unlinkSync(path);
-    });
+    const _ = await Printer.write(report, 'json', path);
+    const fileContents = fs.readFileSync(path, 'utf8');
+    assert.ok(/lighthouseVersion/gim.test(fileContents));
+    fs.unlinkSync(path);
   });
 
-  it('throws for invalid paths', () => {
+  it('throws for invalid paths', async () => {
     const path = '!/#@.json';
     const report = JSON.stringify(sampleResults);
-    return Printer.write(report, 'html', path).catch(err => {
+
+    try {
+      return await Printer.write(report, 'html', path);
+    } catch (err) {
       assert.ok(err.code === 'ENOENT');
-    });
+    }
   });
 
   it('returns output modes', () => {

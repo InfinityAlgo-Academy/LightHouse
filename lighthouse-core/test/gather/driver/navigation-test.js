@@ -113,7 +113,7 @@ describe('.gotoURL', () => {
   it('backfills requestedUrl when using a callback requestor', async () => {
     mockDriver.defaultSession.on = mockDriver.defaultSession.once = createMockOnceFn();
 
-    const requestor = () => Promise.resolve();
+    const requestor = async () => Promise.resolve();
 
     const loadPromise = makePromiseInspectable(
       gotoURL(driver, requestor, {waitUntil: ['navigated']})
@@ -132,7 +132,7 @@ describe('.gotoURL', () => {
   it('throws if no navigations found using a callback requestor', async () => {
     mockDriver.defaultSession.on = mockDriver.defaultSession.once = createMockOnceFn();
 
-    const requestor = () => Promise.resolve();
+    const requestor = async () => Promise.resolve();
 
     const loadPromise = makePromiseInspectable(
       gotoURL(driver, requestor, {waitUntil: ['navigated']})

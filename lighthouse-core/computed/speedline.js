@@ -17,37 +17,41 @@ class Speedline {
    * @return {Promise<LH.Artifacts.Speedline>}
    */
   static async compute_(trace, context) {
-    // speedline() may throw without a promise, so we resolve immediately
-    // to get in a promise chain.
-    return ProcessedTrace.request(trace, context).then(processedTrace => {
+    let speedline0;
+
+    try {
+      const processedTrace = await ProcessedTrace.request(trace, context);
       // Use a shallow copy of traceEvents so speedline can sort as it pleases.
       // See https://github.com/GoogleChrome/lighthouse/issues/2333
       const traceEvents = trace.traceEvents.slice();
       // Force use of timeOrigin as reference point for speedline
       // See https://github.com/GoogleChrome/lighthouse/issues/2095
       const timeOrigin = processedTrace.timestamps.timeOrigin;
-      return speedline(traceEvents, {
+
+      speedline0 = await speedline(traceEvents, {
         timeOrigin,
         fastMode: true,
         include: 'speedIndex',
       });
-    }).catch(err => {
+    } catch (err) {
       if (/No screenshots found in trace/.test(err.message)) {
         throw new LHError(LHError.errors.NO_SCREENSHOTS);
       }
 
       throw err;
-    }).then(speedline => {
-      if (speedline.frames.length === 0) {
-        throw new LHError(LHError.errors.NO_SPEEDLINE_FRAMES);
-      }
+    }
 
-      if (speedline.speedIndex === 0) {
-        throw new LHError(LHError.errors.SPEEDINDEX_OF_ZERO);
-      }
+    if (speedline0.frames.length === 0) {
+      throw new LHError(LHError.errors.NO_SPEEDLINE_FRAMES);
+    }
 
-      return speedline;
-    });
+    if (speedline0.speedIndex === 0) {
+      throw new LHError(LHError.errors.SPEEDINDEX_OF_ZERO);
+    }
+
+    // speedline() may throw without a promise, so we resolve immediately
+    // to get in a promise chain.
+    return speedline0;
   }
 }
 

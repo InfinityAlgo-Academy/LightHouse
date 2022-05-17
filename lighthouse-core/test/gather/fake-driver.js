@@ -22,66 +22,48 @@ function makeFakeDriver({protocolGetVersionResponse}) {
     },
     on: fnAny(),
     sendCommand: fnAny().mockResolvedValue(undefined),
-    getBrowserVersion() {
-      return Promise.resolve(Object.assign({}, protocolGetVersionResponse, {milestone: 71}));
+    async getBrowserVersion() {
+      return Object.assign({}, protocolGetVersionResponse, {milestone: 71});
     },
-    getBenchmarkIndex() {
-      return Promise.resolve(125.2);
+    async getBenchmarkIndex() {
+      return 125.2;
     },
-    getAppManifest() {
-      return Promise.resolve(null);
+    async getAppManifest() {
+      return null;
     },
-    connect() {
-      return Promise.resolve();
-    },
-    disconnect() {
-      return Promise.resolve();
-    },
-    dismissJavaScriptDialogs() {
-      return Promise.resolve();
-    },
-    assertNoSameOriginServiceWorkerClients() {
-      return Promise.resolve();
-    },
-    reloadForCleanStateIfNeeded() {
-      return Promise.resolve();
-    },
+    async connect() {},
+    async disconnect() {},
+    async dismissJavaScriptDialogs() {},
+    async assertNoSameOriginServiceWorkerClients() {},
+    async reloadForCleanStateIfNeeded() {},
     executionContext: {
-      evaluateAsync() {
-        return Promise.resolve({});
+      async evaluateAsync() {
+        return {};
       },
-      evaluate() {
-        return Promise.resolve({});
+      async evaluate() {
+        return {};
       },
-      cacheNativesOnNewDocument() {
-        return Promise.resolve();
-      },
+      async cacheNativesOnNewDocument() {},
     },
     /** @param {{x: number, y: number}} position */
-    scrollTo(position) {
+    async scrollTo(position) {
       scrollPosition = position;
-      return Promise.resolve();
     },
-    getScrollPosition() {
-      return Promise.resolve(scrollPosition);
+    async getScrollPosition() {
+      return scrollPosition;
     },
-    beginTrace() {
-      return Promise.resolve();
-    },
-    endTrace() {
-      return Promise.resolve(
-        readJson('lighthouse-core/test/fixtures/traces/progressive-app.json'));
+    async beginTrace() {},
+    async endTrace() {
+      return readJson('lighthouse-core/test/fixtures/traces/progressive-app.json');
     },
     beginDevtoolsLog() {},
     endDevtoolsLog() {
       return readJson(
         'lighthouse-core/test/fixtures/artifacts/perflog/defaultPass.devtoolslog.json');
     },
-    registerRequestIdleCallbackWrap() {
-      return Promise.resolve();
-    },
-    url() {
-      return Promise.resolve('about:blank');
+    async registerRequestIdleCallbackWrap() {},
+    async url() {
+      return 'about:blank';
     },
   };
 }

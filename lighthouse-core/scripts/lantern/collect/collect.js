@@ -258,10 +258,15 @@ async function main() {
     for (let i = 0; i < SAMPLES; i++) {
       const resultPromise = repeatUntilPassOrNull(() => runForWpt(url));
       // Push to results array as they finish, so the progress indicator can track progress.
-      resultPromise.then((result) => result && wptResults.push(result)).finally(() => {
-        wptResultsDone += 1;
-        updateProgress();
-      });
+      (async () => {
+        try {
+          const result = await resultPromise;
+          return await result && wptResults.push(result);
+        } finally {
+          wptResultsDone += 1;
+          updateProgress();
+        }
+      })();
       wptResultsPromises.push(resultPromise);
     }
 

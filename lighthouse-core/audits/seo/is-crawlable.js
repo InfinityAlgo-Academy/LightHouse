@@ -91,63 +91,61 @@ class IsCrawlable extends Audit {
    * @param {LH.Audit.Context} context
    * @return {Promise<LH.Audit.Product>}
    */
-  static audit(artifacts, context) {
+  static async audit(artifacts, context) {
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     const metaRobots = artifacts.MetaElements.find(meta => meta.name === 'robots');
 
-    return MainResource.request({devtoolsLog, URL: artifacts.URL}, context)
-      .then(mainResource => {
-        /** @type {LH.Audit.Details.Table['items']} */
-        const blockingDirectives = [];
+    const mainResource = await MainResource.request({devtoolsLog, URL: artifacts.URL}, context);
+    /** @type {LH.Audit.Details.Table['items']} */
+    const blockingDirectives = [];
 
-        if (metaRobots) {
-          const metaRobotsContent = metaRobots.content || '';
-          const isBlocking = hasBlockingDirective(metaRobotsContent);
+    if (metaRobots) {
+      const metaRobotsContent = metaRobots.content || '';
+      const isBlocking = hasBlockingDirective(metaRobotsContent);
 
-          if (isBlocking) {
-            blockingDirectives.push({
-              source: {
-                ...Audit.makeNodeItem(metaRobots.node),
-                snippet: `<meta name="robots" content="${metaRobotsContent}" />`,
-              },
-            });
-          }
-        }
+      if (isBlocking) {
+        blockingDirectives.push({
+          source: {
+            ...Audit.makeNodeItem(metaRobots.node),
+            snippet: `<meta name="robots" content="${metaRobotsContent}" />`,
+          },
+        });
+      }
+    }
 
-        mainResource.responseHeaders && mainResource.responseHeaders
-          .filter(h => h.name.toLowerCase() === ROBOTS_HEADER && !hasUserAgent(h.value) &&
-            hasBlockingDirective(h.value))
-          .forEach(h => blockingDirectives.push({source: `${h.name}: ${h.value}`}));
+    mainResource.responseHeaders && mainResource.responseHeaders
+      .filter(h => h.name.toLowerCase() === ROBOTS_HEADER && !hasUserAgent(h.value) &&
+        hasBlockingDirective(h.value))
+      .forEach(h => blockingDirectives.push({source: `${h.name}: ${h.value}`}));
 
-        if (artifacts.RobotsTxt.content) {
-          const robotsFileUrl = new URL('/robots.txt', mainResource.url);
-          const robotsTxt = robotsParser(robotsFileUrl.href, artifacts.RobotsTxt.content);
+    if (artifacts.RobotsTxt.content) {
+      const robotsFileUrl = new URL('/robots.txt', mainResource.url);
+      const robotsTxt = robotsParser(robotsFileUrl.href, artifacts.RobotsTxt.content);
 
-          if (!robotsTxt.isAllowed(mainResource.url)) {
-            const line = robotsTxt.getMatchingLineNumber(mainResource.url) || 1;
-            blockingDirectives.push({
-              source: {
-                type: /** @type {const} */ ('source-location'),
-                url: robotsFileUrl.href,
-                urlProvider: /** @type {const} */ ('network'),
-                line: line - 1,
-                column: 0,
-              },
-            });
-          }
-        }
+      if (!robotsTxt.isAllowed(mainResource.url)) {
+        const line = robotsTxt.getMatchingLineNumber(mainResource.url) || 1;
+        blockingDirectives.push({
+          source: {
+            type: /** @type {const} */ ('source-location'),
+            url: robotsFileUrl.href,
+            urlProvider: /** @type {const} */ ('network'),
+            line: line - 1,
+            column: 0,
+          },
+        });
+      }
+    }
 
-        /** @type {LH.Audit.Details.Table['headings']} */
-        const headings = [
-          {key: 'source', itemType: 'code', text: 'Blocking Directive Source'},
-        ];
-        const details = Audit.makeTableDetails(headings, blockingDirectives);
+    /** @type {LH.Audit.Details.Table['headings']} */
+    const headings = [
+      {key: 'source', itemType: 'code', text: 'Blocking Directive Source'},
+    ];
+    const details = Audit.makeTableDetails(headings, blockingDirectives);
 
-        return {
-          score: Number(blockingDirectives.length === 0),
-          details,
-        };
-      });
+    return {
+      score: Number(blockingDirectives.length === 0),
+      details,
+    };
   }
 }
 

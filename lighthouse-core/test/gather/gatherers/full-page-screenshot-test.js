@@ -18,7 +18,7 @@ let FullPageScreenshotGatherer;
 
 beforeAll(async () => {
   FullPageScreenshotGatherer =
-    (await import('../../../gather/gatherers/full-page-screenshot.js')).default;
+    (await (import('../../../gather/gatherers/full-page-screenshot.js'))).default;
 });
 
 const mocks = mockDriverSubmodules();

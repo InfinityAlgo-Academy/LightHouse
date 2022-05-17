@@ -11,7 +11,7 @@ import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
 import wikipediaDevtoolsLog from '../fixtures/wikipedia-redirect.devtoolslog.json';
 
 describe('MainResource computed artifact', () => {
-  it('returns an artifact', () => {
+  it('returns an artifact', async () => {
     const record = {
       url: 'https://example.com',
     };
@@ -23,12 +23,11 @@ describe('MainResource computed artifact', () => {
     const devtoolsLog = networkRecordsToDevtoolsLog(networkRecords);
 
     const context = {computedCache: new Map()};
-    return MainResource.request({URL, devtoolsLog}, context).then(output => {
-      assert.equal(output.url, record.url);
-    });
+    const output = await MainResource.request({URL, devtoolsLog}, context);
+    assert.equal(output.url, record.url);
   });
 
-  it('thows when main resource can\'t be found', () => {
+  it('thows when main resource can\'t be found', async () => {
     const networkRecords = [
       {url: 'https://example.com', resourceType: 'Script'},
     ];
@@ -36,25 +35,26 @@ describe('MainResource computed artifact', () => {
     const devtoolsLog = networkRecordsToDevtoolsLog(networkRecords);
 
     const context = {computedCache: new Map()};
-    return MainResource.request({URL, devtoolsLog}, context).then(() => {
+
+    try {
+      await MainResource.request({URL, devtoolsLog}, context);
       assert.ok(false, 'should have thrown');
-    }).catch(err => {
+    } catch (err) {
       assert.equal(err.message, 'Unable to identify the main resource');
-    });
+    }
   });
 
-  it('should identify correct main resource in the wikipedia fixture', () => {
+  it('should identify correct main resource in the wikipedia fixture', async () => {
     const wikiDevtoolsLog = wikipediaDevtoolsLog;
     const URL = {mainDocumentUrl: 'https://en.m.wikipedia.org/wiki/Main_Page'};
     const artifacts = {devtoolsLog: wikiDevtoolsLog, URL};
 
     const context = {computedCache: new Map()};
-    return MainResource.request(artifacts, context).then(output => {
-      assert.equal(output.url, 'https://en.m.wikipedia.org/wiki/Main_Page');
-    });
+    const output = await MainResource.request(artifacts, context);
+    assert.equal(output.url, 'https://en.m.wikipedia.org/wiki/Main_Page');
   });
 
-  it('should identify correct main resource with hash URLs', () => {
+  it('should identify correct main resource with hash URLs', async () => {
     const networkRecords = [
       {url: 'https://beta.httparchive.org/reports'},
       {url: 'https://beta.httparchive.org/reports/state-of-the-web'},
@@ -65,8 +65,7 @@ describe('MainResource computed artifact', () => {
     const artifacts = {URL, devtoolsLog};
 
     const context = {computedCache: new Map()};
-    return MainResource.request(artifacts, context).then(output => {
-      assert.equal(output.url, 'https://beta.httparchive.org/reports/state-of-the-web');
-    });
+    const output = await MainResource.request(artifacts, context);
+    assert.equal(output.url, 'https://beta.httparchive.org/reports/state-of-the-web');
   });
 });

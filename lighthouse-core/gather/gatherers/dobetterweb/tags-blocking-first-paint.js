@@ -90,13 +90,11 @@ async function collectTagsThatBlockFirstPaint() {
         // https://html.spec.whatwg.org/multipage/semantics.html#the-head-element
         if (scriptTag instanceof SVGScriptElement) return false;
 
-        return (
-          !scriptTag.hasAttribute('async') &&
-          !scriptTag.hasAttribute('defer') &&
-          !/^data:/.test(scriptTag.src) &&
-          !/^blob:/.test(scriptTag.src) &&
-          scriptTag.getAttribute('type') !== 'module'
-        );
+        return !scriptTag.hasAttribute('async') &&
+        !scriptTag.hasAttribute('defer') &&
+        !/^data:/.test(scriptTag.src) &&
+        !/^blob:/.test(scriptTag.src) &&
+        scriptTag.getAttribute('type') !== 'module';
       })
       .map(tag => {
         return {

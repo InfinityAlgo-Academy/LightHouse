@@ -20,8 +20,8 @@ let Driver;
 let Fetcher;
 
 beforeAll(async () => {
-  Driver = (await import('../../gather/driver.js')).default;
-  Fetcher = (await import('../../gather/fetcher.js')).default;
+  Driver = (await (import('../../gather/driver.js'))).default;
+  Fetcher = (await (import('../../gather/fetcher.js'))).default;
 });
 
 /** @type {Connection} */
@@ -91,8 +91,8 @@ describe('._fetchResourceOverProtocol', () => {
 
   beforeEach(() => {
     streamContents = 'STREAM CONTENTS';
-    fetcher._readIOStream = fnAny().mockImplementation(() => {
-      return Promise.resolve(streamContents);
+    fetcher._readIOStream = fnAny().mockImplementation(async () => {
+      return streamContents;
     });
   });
 

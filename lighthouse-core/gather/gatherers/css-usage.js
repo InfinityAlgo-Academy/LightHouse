@@ -38,12 +38,15 @@ class CSSUsage extends FRGatherer {
   async _onStylesheetAdded(event) {
     if (!this._session) throw new Error('Session not initialized');
     const styleSheetId = event.header.styleSheetId;
-    const sheetPromise = this._session.sendCommand('CSS.getStyleSheetText', {styleSheetId})
-      .then(content => ({
-        header: event.header,
-        content: content.text,
-      }))
-      .catch(/** @param {Error} err */ (err) => {
+    const sheetPromise = (async () => {
+      try {
+        const content = await this._session.sendCommand('CSS.getStyleSheetText', {styleSheetId});
+
+        return {
+          header: event.header,
+          content: content.text,
+        };
+      } catch (err) {
         log.warn(
           'CSSUsage',
           `Error fetching content of stylesheet with URL "${event.header.sourceURL}"`
@@ -58,7 +61,8 @@ class CSSUsage extends FRGatherer {
           level: 'error',
         });
         return err;
-      });
+      }
+    })();
     this._sheetPromises.set(styleSheetId, sheetPromise);
   }
 

@@ -123,15 +123,18 @@ function makePromiseInspectable(promise) {
   let resolvedValue = undefined;
   /** @type {any=} */
   let rejectionError = undefined;
-  const inspectablePromise = promise.then(value => {
-    isResolved = true;
-    resolvedValue = value;
-    return value;
-  }).catch(err => {
-    isRejected = true;
-    rejectionError = err;
-    throw err;
-  });
+  const inspectablePromise = (async () => {
+    try {
+      const value = await promise;
+      isResolved = true;
+      resolvedValue = value;
+      return await value;
+    } catch (err) {
+      isRejected = true;
+      rejectionError = err;
+      throw err;
+    }
+  })();
 
   return Object.assign(inspectablePromise, {
     isDone() {
@@ -168,7 +171,6 @@ function createDecomposedPromise() {
 async function flushAllTimersAndMicrotasks(ms = 1000) {
   for (let i = 0; i < ms; i++) {
     jest.advanceTimersByTime(1);
-    await Promise.resolve();
   }
 }
 
@@ -178,12 +180,12 @@ async function flushAllTimersAndMicrotasks(ms = 1000) {
  */
 function makeMocksForGatherRunner() {
   jest.mock(require.resolve('../gather/driver/environment.js'), () => ({
-    getBenchmarkIndex: () => Promise.resolve(150),
+    getBenchmarkIndex: async () => Promise.resolve(150),
     getBrowserVersion: async () => ({userAgent: 'Chrome', milestone: 80}),
     getEnvironmentWarnings: () => [],
   }));
   jest.mock(require.resolve('../gather/gatherers/stacks.js'),
-    () => ({collectStacks: () => Promise.resolve([])}));
+    () => ({collectStacks: async () => Promise.resolve([])}));
   jest.mock(require.resolve('../gather/gatherers/installability-errors.js'), () => ({
     getInstallabilityErrors: async () => ({errors: []}),
   }));

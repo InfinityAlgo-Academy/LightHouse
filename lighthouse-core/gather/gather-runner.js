@@ -110,42 +110,38 @@ class GatherRunner {
    * @param {string} pageUrl
    * @return {Promise<void>}
    */
-  static assertNoSameOriginServiceWorkerClients(session, pageUrl) {
+  static async assertNoSameOriginServiceWorkerClients(session, pageUrl) {
     /** @type {Array<LH.Crdp.ServiceWorker.ServiceWorkerRegistration>} */
     let registrations;
     /** @type {Array<LH.Crdp.ServiceWorker.ServiceWorkerVersion>} */
     let versions;
 
-    return serviceWorkers.getServiceWorkerRegistrations(session)
-      .then(data => {
-        registrations = data.registrations;
+    let _;
+    let _0;
+    const data0 = await serviceWorkers.getServiceWorkerRegistrations(session);
+    registrations = data0.registrations;
+    const data = await serviceWorkers.getServiceWorkerVersions(session);
+    versions = data.versions;
+    const origin = new URL(pageUrl).origin;
+
+    registrations
+      .filter(reg => {
+        const swOrigin = new URL(reg.scopeURL).origin;
+
+        return origin === swOrigin;
       })
-      .then(_ => serviceWorkers.getServiceWorkerVersions(session))
-      .then(data => {
-        versions = data.versions;
-      })
-      .then(_ => {
-        const origin = new URL(pageUrl).origin;
+      .forEach(reg => {
+        versions.forEach(ver => {
+          // Ignore workers unaffiliated with this registration
+          if (ver.registrationId !== reg.registrationId) {
+            return;
+          }
 
-        registrations
-          .filter(reg => {
-            const swOrigin = new URL(reg.scopeURL).origin;
-
-            return origin === swOrigin;
-          })
-          .forEach(reg => {
-            versions.forEach(ver => {
-              // Ignore workers unaffiliated with this registration
-              if (ver.registrationId !== reg.registrationId) {
-                return;
-              }
-
-              // Throw if service worker for this origin has active controlledClients.
-              if (ver.controlledClients && ver.controlledClients.length > 0) {
-                throw new Error('You probably have multiple tabs open to the same origin.');
-              }
-            });
-          });
+          // Throw if service worker for this origin has active controlledClients.
+          if (ver.controlledClients && ver.controlledClients.length > 0) {
+            throw new Error('You probably have multiple tabs open to the same origin.');
+          }
+        });
       });
   }
 
@@ -387,7 +383,7 @@ class GatherRunner {
    * @return {Promise<LH.BaseArtifacts>}
    */
   static async initializeBaseArtifacts(options) {
-    const hostUserAgent = (await options.driver.getBrowserVersion()).userAgent;
+    const hostUserAgent = (await (options.driver.getBrowserVersion())).userAgent;
 
     // Whether Lighthouse was run on a mobile device (i.e. not on a desktop machine).
     const HostFormFactor = hostUserAgent.includes('Android') || hostUserAgent.includes('Mobile') ?

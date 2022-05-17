@@ -19,7 +19,7 @@ import {fnAny} from '../../test-utils.js';
 let ServiceWorkerGather;
 
 beforeAll(async () => {
-  ServiceWorkerGather = (await import('../../../gather/gatherers/service-worker.js')).default;
+  ServiceWorkerGather = (await (import('../../../gather/gatherers/service-worker.js'))).default;
 });
 
 const getServiceWorkerVersions = fnAny();

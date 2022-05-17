@@ -167,52 +167,52 @@ class CriticalRequestChains extends Audit {
    * @param {LH.Audit.Context} context
    * @return {Promise<LH.Audit.Product>}
    */
-  static audit(artifacts, context) {
+  static async audit(artifacts, context) {
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     const URL = artifacts.URL;
-    return ComputedChains.request({devtoolsLog, trace, URL}, context).then(chains => {
-      let chainCount = 0;
-      /**
-       * @param {LH.Audit.Details.SimpleCriticalRequestNode} node
-       * @param {number} depth
-       */
-      function walk(node, depth) {
-        const childIds = Object.keys(node);
+    const chains = await ComputedChains.request({devtoolsLog, trace, URL}, context);
+    let chainCount = 0;
+    /**
+     * @param {LH.Audit.Details.SimpleCriticalRequestNode} node
+     * @param {number} depth
+     */
+    function walk(node, depth) {
+      const childIds = Object.keys(node);
 
-        childIds.forEach(id => {
-          const child = node[id];
-          if (child.children) {
-            walk(child.children, depth + 1);
-          } else {
-            // if the node doesn't have a children field, then it is a leaf, so +1
-            chainCount++;
-          }
-        }, '');
-      }
-      // Convert
-      const flattenedChains = CriticalRequestChains.flattenRequests(chains);
+      childIds.forEach(id => {
+        const child = node[id];
+        if (child.children) {
+          walk(child.children, depth + 1);
+        } else {
+          // if the node doesn't have a children field, then it is a leaf, so +1
+          chainCount++;
+        }
+      }, '');
+    }
+    // Convert
+    const flattenedChains = CriticalRequestChains.flattenRequests(chains);
 
-      // Account for initial navigation
-      const initialNavKey = Object.keys(flattenedChains)[0];
-      const initialNavChildren = initialNavKey && flattenedChains[initialNavKey].children;
-      if (initialNavChildren && Object.keys(initialNavChildren).length > 0) {
-        walk(initialNavChildren, 0);
-      }
+    // Account for initial navigation
+    const initialNavKey = Object.keys(flattenedChains)[0];
+    const initialNavChildren = initialNavKey && flattenedChains[initialNavKey].children;
+    if (initialNavChildren && Object.keys(initialNavChildren).length > 0) {
+      walk(initialNavChildren, 0);
+    }
 
-      const longestChain = CriticalRequestChains._getLongestChain(flattenedChains);
+    const longestChain = CriticalRequestChains._getLongestChain(flattenedChains);
 
-      return {
-        score: Number(chainCount === 0),
-        notApplicable: chainCount === 0,
-        displayValue: chainCount ? str_(UIStrings.displayValue, {itemCount: chainCount}) : '',
-        details: {
-          type: 'criticalrequestchain',
-          chains: flattenedChains,
-          longestChain,
-        },
-      };
-    });
+    return {
+      score: Number(chainCount === 0),
+      notApplicable: chainCount === 0,
+      displayValue: chainCount ? str_(UIStrings.displayValue, {itemCount: chainCount}) : '',
+
+      details: {
+        type: 'criticalrequestchain',
+        chains: flattenedChains,
+        longestChain,
+      },
+    };
   }
 }
 

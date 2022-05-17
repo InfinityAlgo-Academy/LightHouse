@@ -84,12 +84,13 @@ async function collectPhaseArtifacts(options) {
     const gatherer = artifactDefn.gatherer.instance;
 
     const priorArtifactPromise = priorPhaseArtifacts[artifactDefn.id] || Promise.resolve();
-    const artifactPromise = priorArtifactPromise.then(async () => {
+    const artifactPromise = (async () => {
+      await priorArtifactPromise;
       const dependencies = phase === 'getArtifact'
         ? await collectArtifactDependencies(artifactDefn, artifactState.getArtifact)
         : /** @type {Dependencies} */ ({});
 
-      return gatherer[phase]({
+      return await gatherer[phase]({
         gatherMode,
         driver,
         baseArtifacts,
@@ -97,7 +98,7 @@ async function collectPhaseArtifacts(options) {
         computedCache,
         settings,
       });
-    });
+    })();
 
     await artifactPromise.catch(() => {});
     artifactState[phase][artifactDefn.id] = artifactPromise;
@@ -122,7 +123,7 @@ async function collectArtifactDependencies(artifact, artifactsById) {
 
       const dependencyPromise = Promise.resolve()
         .then(() => dependencyArtifact)
-        .catch(err => Promise.reject(createDependencyError(dependency, err)));
+        .catch(async err => Promise.reject(createDependencyError(dependency, err)));
 
       return [dependencyName, await dependencyPromise];
     }
@@ -142,7 +143,14 @@ async function awaitArtifacts(artifactState) {
   const artifacts = {};
 
   for (const [id, promise] of Object.entries(artifactState.getArtifact)) {
-    const artifact = await promise.catch(err => err);
+    let artifact;
+
+    try {
+      artifact = await promise;
+    } catch (err) {
+      artifact = await err;
+    }
+
     if (artifact !== undefined) artifacts[id] = artifact;
   }
 

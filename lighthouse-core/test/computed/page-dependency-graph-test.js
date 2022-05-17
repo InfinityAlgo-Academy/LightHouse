@@ -60,33 +60,35 @@ describe('PageDependencyGraph computed artifact:', () => {
   });
 
   describe('#compute_', () => {
-    it('should compute the dependency graph', () => {
+    it('should compute the dependency graph', async () => {
       const context = {computedCache: new Map()};
-      return PageDependencyGraph.request({
+
+      const output = await PageDependencyGraph.request({
         trace: sampleTrace,
         devtoolsLog: sampleDevtoolsLog,
         URL: getURLArtifactFromDevtoolsLog(sampleDevtoolsLog),
-      }, context).then(output => {
-        assert.ok(output instanceof BaseNode, 'did not return a graph');
+      }, context);
 
-        const dependents = output.getDependents();
-        const nodeWithNestedDependents = dependents.find(node => node.getDependents().length);
-        assert.ok(nodeWithNestedDependents, 'did not link initiators');
-      });
+      assert.ok(output instanceof BaseNode, 'did not return a graph');
+
+      const dependents = output.getDependents();
+      const nodeWithNestedDependents = dependents.find(node => node.getDependents().length);
+      assert.ok(nodeWithNestedDependents, 'did not link initiators');
     });
 
-    it('should compute the dependency graph with URL backport', () => {
+    it('should compute the dependency graph with URL backport', async () => {
       const context = {computedCache: new Map()};
-      return PageDependencyGraph.request({
+
+      const output = await PageDependencyGraph.request({
         trace: sampleTrace,
         devtoolsLog: sampleDevtoolsLog,
-      }, context).then(output => {
-        assert.ok(output instanceof BaseNode, 'did not return a graph');
+      }, context);
 
-        const dependents = output.getDependents();
-        const nodeWithNestedDependents = dependents.find(node => node.getDependents().length);
-        assert.ok(nodeWithNestedDependents, 'did not link initiators');
-      });
+      assert.ok(output instanceof BaseNode, 'did not return a graph');
+
+      const dependents = output.getDependents();
+      const nodeWithNestedDependents = dependents.find(node => node.getDependents().length);
+      assert.ok(nodeWithNestedDependents, 'did not link initiators');
     });
   });
 

@@ -30,7 +30,10 @@ class SpeedIndex extends NavigationMetric {
     const speedline = await Speedline.request(data.trace, context);
     const timing = Math.round(speedline.speedIndex);
     const timestamp = (timing + speedline.beginning) * 1000;
-    return Promise.resolve({timing, timestamp});
+    return {
+      timing,
+      timestamp,
+    };
   }
 }
 
