@@ -23,6 +23,7 @@ const y = yargs(yargsHelpers.hideBin(process.argv));
 const rawArgv = y
   .help('help')
   .usage('node $0 [<options>] <paths>')
+  .parserConfiguration({'unknown-options-as-args': true})
   .option('_', {
     array: true,
     type: 'string',
@@ -57,20 +58,24 @@ const defaultTestMatches = [
   'build/**/*-test.js',
 ];
 
+const mochaPassThruArgs = argv._.filter(arg => arg.startsWith('--'));
+const filterFilePatterns = argv._.filter(arg => !arg.startsWith('--'));
+
 const testsGlob = argv.testMatch || `{${defaultTestMatches.join(',')}}`;
 const allTestFiles = glob.sync(testsGlob, {cwd: LH_ROOT});
-const filteredTests = argv._.length ?
-  allTestFiles.filter((file) => argv._.some(pattern => file.includes(pattern))) :
+const filteredTests = filterFilePatterns.length ?
+  allTestFiles.filter((file) => filterFilePatterns.some(pattern => file.includes(pattern))) :
   allTestFiles;
 
-if (argv._.length) {
-  console.log(`applied test filters: ${JSON.stringify(argv._, null, 2)}`);
+if (filterFilePatterns.length) {
+  console.log(`applied test filters: ${JSON.stringify(filterFilePatterns, null, 2)}`);
 }
 console.log(`running ${filteredTests.length} test files`);
 
 const args = [
   '--loader=testdouble',
   '--require=lighthouse-core/test/mocha-setup.cjs',
+  ...mochaPassThruArgs,
   ...filteredTests,
 ];
 console.log(`Running command: ${argv.update ? 'SNAPSHOT_UPDATE=1 ' : ''}node ${args.join(' ')}`);
