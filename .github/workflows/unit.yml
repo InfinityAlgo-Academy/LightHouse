@@ -58,21 +58,8 @@ jobs:
     - run: sudo apt-get install xvfb
 
     - name: yarn unit
-      if: ${{ matrix.node != env.LATEST_NODE }}
       run: xvfb-run --auto-servernum yarn unit:ci
 
-    # Only gather coverage on latest node, where c8 is the most accurate.
-    - name: yarn unit:coverage
-      if: ${{ matrix.node == env.LATEST_NODE }}
-      run: |
-        xvfb-run --auto-servernum yarn unit:cicoverage
-        yarn c8 report --reporter text-lcov > unit-coverage.lcov
-    - name: Upload test coverage to Codecov
-      if: ${{ matrix.node == env.LATEST_NODE }}
-      uses: codecov/codecov-action@6004246f47ab62d32be025ce173b241cd84ac58e
-      with:
-        flags: unit
-        file: ./unit-coverage.lcov
 
   # For windows, just test the potentially platform-specific code.
   unit-windows:
