@@ -187,8 +187,9 @@ describe('minification estimator', () => {
 
     it('should handle regular expression character classes', () => {
       // test a slash inside of a character class to make sure it doesn't end the regex
-      // The below is the string-equivalent of
-      /regex [^/]\//.test('this should be in string not comment 123456789');
+      // The below is the string-equivalent of…
+      // eslint-disable-next-line no-unused-vars
+      const x = /regex [^/]\//.test('this should be in string not comment 123456789');
 
       const js = `
         /regex [^/]\\//.test('this should be in string not comment 123456789')
@@ -201,7 +202,8 @@ describe('minification estimator', () => {
     it('should handle escaped regular expression characters', () => {
       // test an escaped [ to make sure we can still close regexes
       // This is the string-equivalent of
-      /regex \[/; // this should be in comment not string 123456789
+      // eslint-disable-next-line no-unused-vars
+      const x = /regex \[/; // this should be in comment not string 123456789
 
       const js = `
         /regex \\[/ // this should be in comment not string 123456789
