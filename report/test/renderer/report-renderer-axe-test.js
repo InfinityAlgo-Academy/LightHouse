@@ -6,9 +6,11 @@
 
 import puppeteer from 'puppeteer';
 
-import sampleResults from '../../../lighthouse-core/test/results/sample_v2.json';
 import reportGenerator from '../../generator/report-generator.js';
 import axeLib from '../../../lighthouse-core/lib/axe.js';
+import {readJson} from '../../../root.js';
+
+const sampleResults = readJson('lighthouse-core/test/results/sample_v2.json');
 
 describe('ReportRendererAxe', () => {
   describe('with aXe', () => {
@@ -76,10 +78,8 @@ describe('ReportRendererAxe', () => {
         };
       });
       expect(axeSummary).toMatchSnapshot();
-    },
+    }).timeout(20_000);
     // This test takes 10s on fast hardware, but can take longer in CI.
     // https://github.com/dequelabs/axe-core/tree/b573b1c1/doc/examples/jest_react#timeout-issues
-    /* timeout= */ 20_000
-    );
   });
 });

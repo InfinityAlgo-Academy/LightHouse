@@ -7,7 +7,7 @@
 import fs from 'fs';
 
 import jsdom from 'jsdom';
-import {jest} from '@jest/globals';
+import jestMock from 'jest-mock';
 
 import * as lighthouseRenderer from '../../clients/bundle.js';
 import {LH_ROOT} from '../../../root.js';
@@ -18,7 +18,7 @@ const sampleResultsStr =
 describe('lighthouseRenderer bundle', () => {
   let document;
   beforeAll(() => {
-    global.console.warn = jest.fn();
+    global.console.warn = jestMock.fn();
 
     const {window} = new jsdom.JSDOM();
     document = window.document;

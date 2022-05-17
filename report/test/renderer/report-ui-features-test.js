@@ -7,7 +7,7 @@
 import {strict as assert} from 'assert';
 
 import jsdom from 'jsdom';
-import {jest} from '@jest/globals';
+import jestMock from 'jest-mock';
 
 import reportAssets from '../../generator/report-assets.js';
 import {Util} from '../../renderer/util.js';
@@ -16,7 +16,9 @@ import {DetailsRenderer} from '../../renderer/details-renderer.js';
 import {ReportUIFeatures} from '../../renderer/report-ui-features.js';
 import {CategoryRenderer} from '../../renderer/category-renderer.js';
 import {ReportRenderer} from '../../renderer/report-renderer.js';
-import sampleResultsOrig from '../../../lighthouse-core/test/results/sample_v2.json';
+import {readJson} from '../../../root.js';
+
+const sampleResultsOrig = readJson('lighthouse-core/test/results/sample_v2.json');
 
 describe('ReportUIFeatures', () => {
   let sampleResults;
@@ -39,7 +41,7 @@ describe('ReportUIFeatures', () => {
   }
 
   beforeAll(() => {
-    global.console.warn = jest.fn();
+    global.console.warn = jestMock.fn();
 
     // Stub out matchMedia for Node.
     global.matchMedia = function() {
@@ -281,7 +283,7 @@ describe('ReportUIFeatures', () => {
       const getSaveEl = () => dom.find('a[data-action="save-html"]', container);
       expect(getSaveEl().classList.contains('lh-hidden')).toBeTruthy();
 
-      const getHtmlMock = jest.fn();
+      const getHtmlMock = jestMock.fn();
       container = render(sampleResults, {
         getStandaloneReportHTML: getHtmlMock,
       });
