@@ -88,6 +88,7 @@ class SourceMaps extends FRGatherer {
 
     if (!rawSourceMapUrl) {
       return {
+        scriptId: event.scriptId,
         scriptUrl,
         errorMessage: `Could not resolve map url: ${event.sourceMapURL}`,
       };
@@ -104,12 +105,14 @@ class SourceMaps extends FRGatherer {
         map.sections = map.sections.filter(section => section.map);
       }
       return {
+        scriptId: event.scriptId,
         scriptUrl,
         sourceMapUrl,
         map,
       };
     } catch (err) {
       return {
+        scriptId: event.scriptId,
         scriptUrl,
         sourceMapUrl,
         errorMessage: err.toString(),
@@ -140,7 +143,6 @@ class SourceMaps extends FRGatherer {
    * @return {Promise<LH.Artifacts['SourceMaps']>}
    */
   async getArtifact(context) {
-    await context.driver.fetcher.enable();
     const eventProcessPromises = this._scriptParsedEvents
       .map((event) => this._retrieveMapFromScriptParsedEvent(context.driver, event));
     return Promise.all(eventProcessPromises);

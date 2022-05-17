@@ -4,7 +4,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 /**
  * @fileoverview A smokehouse frontend for running from the command line. Parse
@@ -17,7 +16,7 @@ import path from 'path';
 import fs from 'fs';
 import url from 'url';
 
-import cloneDeep from 'lodash.clonedeep';
+import cloneDeep from 'lodash/cloneDeep.js';
 import yargs from 'yargs';
 import * as yargsHelpers from 'yargs/helpers';
 import log from 'lighthouse-logger';
@@ -186,6 +185,7 @@ async function begin() {
     console.log('\n✨ Be sure to have recently run this: yarn build-all');
   }
   const {runLighthouse} = await import(runnerPath);
+  runLighthouse.runnerName = argv.runner;
 
   // Find test definition file and filter by requestedTestIds.
   let testDefnPath = argv.testsPath || coreTestDefnsPath;

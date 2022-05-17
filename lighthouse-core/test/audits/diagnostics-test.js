@@ -3,20 +3,19 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-const Diagnostics = require('../../audits/diagnostics.js');
-
-const acceptableTrace = require('../fixtures/traces/progressive-app-m60.json');
-const acceptableDevToolsLog = require('../fixtures/traces/progressive-app-m60.devtools.log.json');
-
-/* eslint-env jest */
+import Diagnostics from '../../audits/diagnostics.js';
+import acceptableTrace from '../fixtures/traces/progressive-app-m60.json';
+import acceptableDevToolsLog from '../fixtures/traces/progressive-app-m60.devtools.log.json';
 
 describe('Diagnostics audit', () => {
   it('should work', async () => {
     const artifacts = {
       traces: {defaultPass: acceptableTrace},
       devtoolsLogs: {defaultPass: acceptableDevToolsLog},
+      URL: {
+        mainDocumentUrl: 'https://pwa.rocks/',
+      },
     };
 
     const result = await Diagnostics.audit(artifacts, {computedCache: new Map()});

@@ -107,5 +107,5 @@ class LanternLargestContentfulPaint extends LanternMetric {
 
 module.exports = makeComputedArtifact(
   LanternLargestContentfulPaint,
-  ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace']
+  ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL']
 );

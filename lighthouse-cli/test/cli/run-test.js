@@ -3,9 +3,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
-
-/* eslint-env jest */
 
 import {strict as assert} from 'assert';
 import path from 'path';
@@ -33,10 +30,14 @@ describe('CLI run', function() {
     let fileResults;
 
     beforeAll(async () => {
-      fs.symlinkSync(
-        `${LH_ROOT}/lighthouse-core/test/fixtures/config-plugins/lighthouse-plugin-simple`,
-        `${LH_ROOT}/lighthouse-plugin-simple`
-      );
+      try {
+        fs.symlinkSync(
+          `${LH_ROOT}/lighthouse-core/test/fixtures/config-plugins/lighthouse-plugin-simple`,
+          `${LH_ROOT}/lighthouse-plugin-simple`
+        );
+      } catch {
+        // Might exist already because process was killed before test finished.
+      }
 
       const url = 'http://localhost:10200/dobetterweb/dbw_tester.html';
       // eslint-disable-next-line max-len

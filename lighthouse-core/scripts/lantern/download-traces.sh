@@ -10,7 +10,7 @@ DIRNAME="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 LH_ROOT_PATH="$DIRNAME/../../.."
 cd $LH_ROOT_PATH
 
-if [[ -f lantern-data/version ]] && [[ "$VERSION" != "$(cat lantern-data/version)" ]]; then
+if ! [[ -f lantern-data/version ]] || [[ "$VERSION" != "$(cat lantern-data/version)" ]]; then
   if ! [[ "$CI" ]]; then
     echo "Version out of date. About to delete ./lantern-data..."
     echo "Press Space to continue, Ctrl+C to exit"
@@ -27,9 +27,9 @@ fi
 
 rm -rf lantern-data/
 mkdir -p lantern-data/ && cd lantern-data
-echo $VERSION > version
 
 curl -o golden-lantern-traces.zip -L https://storage.googleapis.com/lh-lantern-data/golden-lantern-traces-$VERSION.zip
 
 unzip -q golden-lantern-traces.zip
 rm golden-lantern-traces.zip
+echo $VERSION > version

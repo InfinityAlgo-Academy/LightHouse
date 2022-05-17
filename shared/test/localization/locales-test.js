@@ -8,8 +8,6 @@
 const locales = require('../../localization/locales.js');
 const assert = require('assert').strict;
 
-/* eslint-env jest */
-
 describe('locales', () => {
   it('has only canonical (or expected-deprecated) language tags', () => {
     // Map of deprecated codes to their canonical version. Depending on the ICU

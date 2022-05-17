@@ -3,7 +3,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an 'AS IS' BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 /* eslint-disable no-console */
 
@@ -21,7 +20,7 @@
 
 /**
  * @typedef PolyfillSizeEstimator
- * @property {Record<string, number[]>} dependencies indexed by the polyfill name. array of module indicies
+ * @property {Record<string, number[]>} dependencies indexed by the polyfill name. array of module indices
  * @property {number[]} moduleSizes indices in the arrays in `.dependencies` are for this array
  * @property {number} maxSize sum of `.moduleSizes`
  * @property {number} baseSize size of using core-js at all. sum of common modules, and does not show up
@@ -84,11 +83,11 @@ async function main() {
     `${VARIANT_DIR}/all-legacy-polyfills/all-legacy-polyfills-core-js-3/main.bundle.min.js`;
   const bundleContents = fs.readFileSync(bundlePath, 'utf-8');
   const bundleMap = JSON.parse(fs.readFileSync(bundlePath + '.map', 'utf-8'));
-  /** @type {Pick<LH.Artifacts, 'ScriptElements'|'SourceMaps'>} */
+  /** @type {Pick<LH.Artifacts, 'Scripts'|'SourceMaps'>} */
   const artifacts = {
-    // @ts-expect-error don't need most properties on ScriptElement.
-    ScriptElements: [{requestId: '', src: '', content: bundleContents}],
-    SourceMaps: [{scriptUrl: '', map: bundleMap}],
+    // @ts-expect-error don't need most properties on Script.
+    Scripts: [{scriptId: '', url: '', content: bundleContents}],
+    SourceMaps: [{scriptId: '', scriptUrl: '', map: bundleMap}],
   };
   const bundles = await JsBundles.compute_(artifacts);
   if ('errorMessage' in bundles[0].sizes) throw new Error(bundles[0].sizes.errorMessage);

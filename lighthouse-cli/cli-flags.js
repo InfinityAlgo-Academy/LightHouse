@@ -3,7 +3,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 /* eslint-disable max-len */
 
@@ -73,7 +72,6 @@ function getYargsParser(manualArgv) {
      */
     .option('cli-flags-path', {
       config: true,
-      configParser: (configPath) => JSON.parse(fs.readFileSync(configPath, 'utf-8')),
       describe: 'The path to a JSON file that contains the desired CLI flags to apply. Flags specified at the command line will still override the file-based ones.',
     })
 
@@ -123,10 +121,10 @@ function getYargsParser(manualArgv) {
         type: 'boolean',
         describe: 'Pause after page load to wait for permission to continue the run, evaluate `continueLighthouseRun` in the console to continue.',
       },
-      'fraggle-rock': {
+      'legacy-navigation': {
         type: 'boolean',
         default: false,
-        describe: '[EXPERIMENTAL] Use the new Fraggle Rock navigation runner to gather results.',
+        describe: '[DEPRECATED] Use the legacy navigation runner to gather results. Only use this if you are using a pre-10.0 custom Lighthouse config, or if Lighthouse unexpectedly fails after updating to 10.0. Please file a bug if you need this flag for Lighthouse to work.',
       },
       'additional-trace-categories': {
         type: 'string',
@@ -177,7 +175,7 @@ function getYargsParser(manualArgv) {
       },
       'enable-error-reporting': {
         type: 'boolean',
-        describe: 'Enables error reporting, overriding any saved preference. --no-enable-error-reporting will do the opposite. More: https://git.io/vFFTO',
+        describe: 'Enables error reporting, overriding any saved preference. --no-enable-error-reporting will do the opposite. More: https://github.com/GoogleChrome/lighthouse/blob/master/docs/error-reporting.md',
       },
       'gather-mode': {
         alias: 'G',

@@ -14,7 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-'use strict';
 
 /* eslint-env browser */
 
@@ -98,7 +97,7 @@ export class DOM {
    */
   createChildOf(parentElem, elementName, className) {
     const element = this.createElement(elementName, className);
-    parentElem.appendChild(element);
+    parentElem.append(element);
     return element;
   }
 
@@ -136,7 +135,7 @@ export class DOM {
     for (const segment of Util.splitMarkdownLink(text)) {
       if (!segment.isLink) {
         // Plain text segment.
-        element.appendChild(this._document.createTextNode(segment.text));
+        element.append(this._document.createTextNode(segment.text));
         continue;
       }
 
@@ -154,7 +153,7 @@ export class DOM {
       a.target = '_blank';
       a.textContent = segment.text;
       this.safelySetHref(a, url.href);
-      element.appendChild(a);
+      element.append(a);
     }
 
     return element;
@@ -211,9 +210,9 @@ export class DOM {
       if (segment.isCode) {
         const pre = this.createElement('code');
         pre.textContent = segment.text;
-        element.appendChild(pre);
+        element.append(pre);
       } else {
-        element.appendChild(this._document.createTextNode(segment.text));
+        element.append(this._document.createTextNode(segment.text));
       }
     }
 
@@ -293,12 +292,10 @@ export class DOM {
    * @param {string} filename
    */
   saveFile(blob, filename) {
-    const ext = blob.type.match('json') ? '.json' : '.html';
-
     const a = this.createElement('a');
-    a.download = `${filename}${ext}`;
+    a.download = filename;
     this.safelySetBlobHref(a, blob);
-    this._document.body.appendChild(a); // Firefox requires anchor to be in the DOM.
+    this._document.body.append(a); // Firefox requires anchor to be in the DOM.
     a.click();
 
     // cleanup.

@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "install-all": "yarn --cwd auth/ && yarn --cwd integration-test/ && yarn --cwd custom-gatherer-puppeteer/",
+    "install-all": "rm -rf /tmp/.junk && rm -f {auth,custom-gatherer-puppeteer,integration-test}/yarn.lock && yarn --cwd auth/ --cache-folder /tmp/.junk && yarn --cwd integration-test/ --cache-folder /tmp/.junk && yarn --cwd custom-gatherer-puppeteer/ --cache-folder /tmp/.junk",
     "integration-test": "yarn --cwd integration-test/ jest --config-path=docs-jest.config.js",
     "custom-gatherer-puppeteer-test": "yarn --cwd custom-gatherer-puppeteer/ test",
     "test": "yarn install-all && yarn integration-test && yarn custom-gatherer-puppeteer-test"

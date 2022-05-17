@@ -117,6 +117,9 @@ class CriticalRequestChains {
       // Ignore if some ancestor is not a critical request.
       if (networkPath.some(r => !CriticalRequestChains.isCritical(r, mainResource))) return;
 
+      // Ignore non-network things (like data urls).
+      if (NetworkRequest.isNonNetworkRequest(node.record)) return;
+
       addChain(networkPath);
     }, getNextNodes);
 
@@ -129,15 +132,8 @@ class CriticalRequestChains {
    * @return {Promise<LH.Artifacts.CriticalRequestNode>}
    */
   static async compute_(data, context) {
-    const mainResource = await MainResource.request({
-      URL: data.URL,
-      devtoolsLog: data.devtoolsLog,
-    }, context);
-
-    const graph = await PageDependencyGraph.request({
-      trace: data.trace,
-      devtoolsLog: data.devtoolsLog,
-    }, context);
+    const mainResource = await MainResource.request(data, context);
+    const graph = await PageDependencyGraph.request(data, context);
 
     return CriticalRequestChains.extractChainsFromGraph(mainResource, graph);
   }

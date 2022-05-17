@@ -3,17 +3,15 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-const LanternInteractive = require('../../../computed/metrics/lantern-interactive.js');
-const assert = require('assert').strict;
+import {strict as assert} from 'assert';
 
-const trace = require('../../fixtures/traces/progressive-app-m60.json');
-const devtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
-const iframeTrace = require('../../fixtures/traces/iframe-m79.trace.json');
-const iframeDevtoolsLog = require('../../fixtures/traces/iframe-m79.devtoolslog.json');
-
-/* eslint-env jest */
+import LanternInteractive from '../../../computed/metrics/lantern-interactive.js';
+import trace from '../../fixtures/traces/progressive-app-m60.json';
+import devtoolsLog from '../../fixtures/traces/progressive-app-m60.devtools.log.json';
+import iframeTrace from '../../fixtures/traces/iframe-m79.trace.json';
+import iframeDevtoolsLog from '../../fixtures/traces/iframe-m79.devtoolslog.json';
+import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';
 
 describe('Metrics: Lantern TTI', () => {
   const gatherContext = {gatherMode: 'navigation'};
@@ -21,8 +19,9 @@ describe('Metrics: Lantern TTI', () => {
   it('should compute predicted value', async () => {
     const settings = {};
     const context = {settings, computedCache: new Map()};
+    const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
     const result = await LanternInteractive.request({trace, devtoolsLog, gatherContext,
-      settings}, context);
+      settings, URL}, context);
 
     expect({
       timing: Math.round(result.timing),
@@ -38,11 +37,13 @@ describe('Metrics: Lantern TTI', () => {
   it('should compute predicted value on iframes with substantial layout', async () => {
     const settings = {};
     const context = {settings, computedCache: new Map()};
+    const URL = getURLArtifactFromDevtoolsLog(iframeDevtoolsLog);
     const result = await LanternInteractive.request({
       trace: iframeTrace,
       devtoolsLog: iframeDevtoolsLog,
       gatherContext,
       settings,
+      URL,
     }, context);
 
     expect({

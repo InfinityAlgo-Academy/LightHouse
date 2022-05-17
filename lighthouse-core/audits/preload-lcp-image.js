@@ -17,8 +17,8 @@ const UIStrings = {
   /** Title of a lighthouse audit that tells a user to preload an image in order to improve their LCP time. */
   title: 'Preload Largest Contentful Paint image',
   /** Description of a lighthouse audit that tells a user to preload an image in order to improve their LCP time.  */
-  description: 'Preload the image used by ' +
-    'the LCP element in order to improve your LCP time. [Learn more](https://web.dev/optimize-lcp/#preload-important-resources).',
+  description: 'If the LCP element is dynamically added to the page, you should preload the ' +
+    'image in order to improve LCP. [Learn more](https://web.dev/optimize-lcp/#preload-important-resources).',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
@@ -203,7 +203,7 @@ class PreloadLCPImageAudit extends Audit {
     const trace = artifacts.traces[PreloadLCPImageAudit.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[PreloadLCPImageAudit.DEFAULT_PASS];
     const URL = artifacts.URL;
-    const metricData = {trace, devtoolsLog, gatherContext, settings: context.settings};
+    const metricData = {trace, devtoolsLog, gatherContext, settings: context.settings, URL};
     const lcpElement = artifacts.TraceElements
       .find(element => element.traceEventType === 'largest-contentful-paint');
 

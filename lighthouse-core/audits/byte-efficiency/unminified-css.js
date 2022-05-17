@@ -53,15 +53,14 @@ class UnminifiedCSS extends ByteEfficiencyAudit {
   /**
    * @param {LH.Artifacts.CSSStyleSheetInfo} stylesheet
    * @param {LH.Artifacts.NetworkRequest|undefined} networkRecord
-   * @param {string} pageUrl
    * @return {{url: string, totalBytes: number, wastedBytes: number, wastedPercent: number}}
    */
-  static computeWaste(stylesheet, networkRecord, pageUrl) {
+  static computeWaste(stylesheet, networkRecord) {
     const content = stylesheet.content;
     const totalTokenLength = UnminifiedCSS.computeTokenLength(content);
 
     let url = stylesheet.header.sourceURL;
-    if (!url || url === pageUrl) {
+    if (!url || stylesheet.header.isInline) {
       const contentPreview = UnusedCSS.determineContentPreview(stylesheet.content);
       url = contentPreview;
     }
@@ -85,14 +84,13 @@ class UnminifiedCSS extends ByteEfficiencyAudit {
    * @return {ByteEfficiencyAudit.ByteEfficiencyProduct}
    */
   static audit_(artifacts, networkRecords) {
-    const pageUrl = artifacts.URL.finalUrl;
     const items = [];
     for (const stylesheet of artifacts.CSSUsage.stylesheets) {
       const networkRecord = networkRecords
         .find(record => record.url === stylesheet.header.sourceURL);
       if (!stylesheet.content) continue;
 
-      const result = UnminifiedCSS.computeWaste(stylesheet, networkRecord, pageUrl);
+      const result = UnminifiedCSS.computeWaste(stylesheet, networkRecord);
 
       // If the ratio is minimal, the file is likely already minified, so ignore it.
       // If the total number of bytes to be saved is quite small, it's also safe to ignore.

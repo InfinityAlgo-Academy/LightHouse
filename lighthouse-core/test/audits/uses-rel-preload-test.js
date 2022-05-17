@@ -4,17 +4,14 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-'use strict';
+import {strict as assert} from 'assert';
 
-/* eslint-env jest */
-
-const UsesRelPreload = require('../../audits/uses-rel-preload.js');
-const assert = require('assert').strict;
-
-const pwaTrace = require('../fixtures/traces/progressive-app-m60.json');
-const pwaDevtoolsLog = require('../fixtures/traces/progressive-app-m60.devtools.log.json');
-const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
-const createTestTrace = require('../create-test-trace.js');
+import UsesRelPreload from '../../audits/uses-rel-preload.js';
+import pwaTrace from '../fixtures/traces/progressive-app-m60.json';
+import pwaDevtoolsLog from '../fixtures/traces/progressive-app-m60.devtools.log.json';
+import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
+import createTestTrace from '../create-test-trace.js';
+import {getURLArtifactFromDevtoolsLog} from '../test-utils.js';
 
 const defaultMainResourceUrl = 'http://www.example.com/';
 const defaultMainResource = {
@@ -38,7 +35,12 @@ describe('Performance: uses-rel-preload audit', () => {
     return {
       traces: {[UsesRelPreload.DEFAULT_PASS]: createTestTrace({traceEnd: 5000})},
       devtoolsLogs: {[UsesRelPreload.DEFAULT_PASS]: networkRecordsToDevtoolsLog(networkRecords)},
-      URL: {finalUrl},
+      URL: {
+        initialUrl: 'about:blank',
+        requestedUrl: finalUrl,
+        mainDocumentUrl: finalUrl,
+        finalUrl,
+      },
     };
   };
 
@@ -148,6 +150,7 @@ describe('Performance: uses-rel-preload audit', () => {
     ];
 
     const artifacts = mockArtifacts(networkRecords, mainDocumentNodeUrl);
+    artifacts.URL.requestedUrl = rootNodeUrl;
     const context = {settings: {}, computedCache: new Map()};
     return UsesRelPreload.audit_(artifacts, context).then(
       output => {
@@ -321,7 +324,7 @@ describe('Performance: uses-rel-preload audit', () => {
 
   it('does not throw on a real trace/devtools log', async () => {
     const artifacts = {
-      URL: {finalUrl: 'https://pwa.rocks/'},
+      URL: getURLArtifactFromDevtoolsLog(pwaDevtoolsLog),
       traces: {
         [UsesRelPreload.DEFAULT_PASS]: pwaTrace,
       },

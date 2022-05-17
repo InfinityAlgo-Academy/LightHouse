@@ -5,6 +5,7 @@
  */
 'use strict';
 
+const log = require('lighthouse-logger');
 const Driver = require('./driver.js');
 const Runner = require('../../runner.js');
 const {
@@ -17,11 +18,13 @@ const {initializeConfig} = require('../config/config.js');
 const {getBaseArtifacts, finalizeArtifacts} = require('./base-artifacts.js');
 
 /**
- * @param {{page: import('puppeteer').Page, config?: LH.Config.Json, configContext?: LH.Config.FRContext}} options
- * @return {Promise<{endTimespan(): Promise<LH.RunnerResult|undefined>}>}
+ * @param {{page: LH.Puppeteer.Page, config?: LH.Config.Json, configContext?: LH.Config.FRContext}} options
+ * @return {Promise<{endTimespanGather(): Promise<LH.Gatherer.FRGatherResult>}>}
  */
-async function startTimespan(options) {
+async function startTimespanGather(options) {
   const {configContext = {}} = options;
+  log.setLevel(configContext.logLevel || 'error');
+
   const {config} = initializeConfig(options.config, {...configContext, gatherMode: 'timespan'});
   const driver = new Driver(options.page);
   await driver.connect();
@@ -29,7 +32,7 @@ async function startTimespan(options) {
   /** @type {Map<string, LH.ArbitraryEqualityMap>} */
   const computedCache = new Map();
   const artifactDefinitions = config.artifacts || [];
-  const requestedUrl = await options.page.url();
+  const initialUrl = await driver.url();
   const baseArtifacts = await getBaseArtifacts(config, driver, {gatherMode: 'timespan'});
   const artifactState = getEmptyArtifactState();
   /** @type {Omit<import('./runner-helpers.js').CollectPhaseArtifactOptions, 'phase'>} */
@@ -48,13 +51,16 @@ async function startTimespan(options) {
   await collectPhaseArtifacts({phase: 'startSensitiveInstrumentation', ...phaseOptions});
 
   return {
-    async endTimespan() {
-      const finalUrl = await options.page.url();
+    async endTimespanGather() {
+      const finalUrl = await driver.url();
+
       const runnerOptions = {config, computedCache};
       const artifacts = await Runner.gather(
         async () => {
-          baseArtifacts.URL.requestedUrl = requestedUrl;
-          baseArtifacts.URL.finalUrl = finalUrl;
+          baseArtifacts.URL = {
+            initialUrl,
+            finalUrl,
+          };
 
           await collectPhaseArtifacts({phase: 'stopSensitiveInstrumentation', ...phaseOptions});
           await collectPhaseArtifacts({phase: 'stopInstrumentation', ...phaseOptions});
@@ -66,11 +72,11 @@ async function startTimespan(options) {
         },
         runnerOptions
       );
-      return Runner.audit(artifacts, runnerOptions);
+      return {artifacts, runnerOptions};
     },
   };
 }
 
 module.exports = {
-  startTimespan,
+  startTimespanGather,
 };

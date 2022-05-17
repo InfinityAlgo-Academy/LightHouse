@@ -567,6 +567,12 @@ message I18n {
 
     // Label indicating that Lighthouse throttled the page using custom throttling settings.
     string runtime_custom = 57;
+
+    // This label is for a button that will show the user a trace of the page.
+    string view_trace_label = 58;
+
+    // This label is for a button that will show the user a trace of the page.
+    string view_original_trace_label = 59;
   }
 
   // The message holding all formatted strings used in the renderer.

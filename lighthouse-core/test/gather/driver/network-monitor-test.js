@@ -3,22 +3,33 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-const {mockDriverSubmodules} = require('../../fraggle-rock/gather/mock-driver.js');
+import {jest} from '@jest/globals';
+
+import {mockDriverSubmodules} from '../../fraggle-rock/gather/mock-driver.js';
+// import NetworkMonitor from '../../../gather/driver/network-monitor.js';
+import NetworkRequest from '../../../lib/network-request.js';
+import networkRecordsToDevtoolsLog from '../../network-records-to-devtools-log.js';
+import {fnAny, mockCommands} from '../../test-utils.js';
+
 const mocks = mockDriverSubmodules();
-
-const NetworkMonitor = require('../../../gather/driver/network-monitor.js');
-const NetworkRequest = require('../../../lib/network-request.js');
-const networkRecordsToDevtoolsLog = require('../../network-records-to-devtools-log.js');
-const {createMockSendCommandFn: createMockSendCommandFn_} = require('../../test-utils.js');
-
-/* eslint-env jest */
 
 jest.useFakeTimers();
 
 // This can be removed when FR becomes the default.
-const createMockSendCommandFn = createMockSendCommandFn_.bind(null, {useSessionId: false});
+const createMockSendCommandFn =
+  mockCommands.createMockSendCommandFn.bind(null, {useSessionId: false});
+
+// Some imports needs to be done dynamically, so that their dependencies will be mocked.
+// See: https://jestjs.io/docs/ecmascript-modules#differences-between-esm-and-commonjs
+//      https://github.com/facebook/jest/issues/10025
+/** @typedef {import('../../../gather/driver/network-monitor.js')} NetworkMonitor */
+/** @type {typeof import('../../../gather/driver/network-monitor.js')} */
+let NetworkMonitor;
+
+beforeAll(async () => {
+  NetworkMonitor = (await import('../../../gather/driver/network-monitor.js')).default;
+});
 
 const tscErr = new Error('Typecheck constrait failed');
 
@@ -37,11 +48,11 @@ describe('NetworkMonitor', () => {
   function createMockSession() {
     /** @type {any} */
     const session = {};
-    session.off = jest.fn();
-    session.removeProtocolMessageListener = jest.fn();
+    session.off = fnAny();
+    session.removeProtocolMessageListener = fnAny();
 
-    const on = (session.on = jest.fn());
-    const addProtocolMessageListener = (session.addProtocolMessageListener = jest.fn());
+    const on = (session.on = fnAny());
+    const addProtocolMessageListener = (session.addProtocolMessageListener = fnAny());
     sendCommandMock = session.sendCommand = createMockSendCommandFn()
       .mockResponse('Page.enable')
       .mockResponse('Network.enable');
@@ -157,22 +168,50 @@ describe('NetworkMonitor', () => {
     });
   });
 
-  describe('.getFinalNavigationUrl()', () => {
+  describe('.getNavigationUrls()', () => {
     it('should handle the empty case', async () => {
-      expect(await monitor.getFinalNavigationUrl()).toBe(undefined);
+      expect(await monitor.getNavigationUrls()).toEqual({});
     });
 
-    it('should return the last navigation', async () => {
+    it('should return the first and last navigation', async () => {
       sendCommandMock.mockResponse('Page.getResourceTree', {frameTree: {frame: {id: '1'}}});
       await monitor.enable();
 
       const type = 'Navigation';
       const frame = /** @type {*} */ ({id: '1', url: 'https://page.example.com'});
-      sessionMock.dispatch({method: 'Page.frameNavigated', params: {frame: {...frame, url: '1'}, type}}); // eslint-disable-line max-len
-      sessionMock.dispatch({method: 'Page.frameNavigated', params: {frame: {...frame, url: '2'}, type}}); // eslint-disable-line max-len
+      sessionMock.dispatch({method: 'Page.frameNavigated', params: {frame: {...frame, url: 'https://example.com'}, type}}); // eslint-disable-line max-len
+      sessionMock.dispatch({method: 'Page.frameNavigated', params: {frame: {...frame, url: 'https://intermediate.example.com'}, type}}); // eslint-disable-line max-len
       sessionMock.dispatch({method: 'Page.frameNavigated', params: {frame, type}});
 
-      expect(await monitor.getFinalNavigationUrl()).toEqual('https://page.example.com');
+      expect(await monitor.getNavigationUrls()).toEqual({
+        requestedUrl: 'https://example.com',
+        mainDocumentUrl: 'https://page.example.com',
+      });
+    });
+
+    it('should handle server redirects', async () => {
+      sendCommandMock.mockResponse('Page.getResourceTree', {frameTree: {frame: {id: '1'}}});
+      await monitor.enable();
+
+      // One server redirect followed by a client redirect
+      const devtoolsLog = networkRecordsToDevtoolsLog([
+        {requestId: '1', startTime: 100, url: 'https://example.com', priority: 'VeryHigh'},
+        {requestId: '1:redirect', startTime: 200, url: 'https://intermediate.example.com', priority: 'VeryHigh'},
+        {requestId: '2', startTime: 300, url: 'https://page.example.com', priority: 'VeryHigh'},
+      ]);
+      for (const event of devtoolsLog) {
+        sessionMock.dispatch(event);
+      }
+
+      const type = 'Navigation';
+      const frame = /** @type {*} */ ({id: '1', url: 'https://page.example.com'});
+      sessionMock.dispatch({method: 'Page.frameNavigated', params: {frame: {...frame, url: 'https://intermediate.example.com'}, type}}); // eslint-disable-line max-len
+      sessionMock.dispatch({method: 'Page.frameNavigated', params: {frame, type}});
+
+      expect(await monitor.getNavigationUrls()).toEqual({
+        requestedUrl: 'https://example.com',
+        mainDocumentUrl: 'https://page.example.com',
+      });
     });
 
     it('should ignore non-main-frame navigations', async () => {
@@ -185,7 +224,10 @@ describe('NetworkMonitor', () => {
       const iframe = /** @type {*} */ ({id: '2', url: 'https://iframe.example.com'});
       sessionMock.dispatch({method: 'Page.frameNavigated', params: {frame: iframe, type}});
 
-      expect(await monitor.getFinalNavigationUrl()).toEqual('https://page.example.com');
+      expect(await monitor.getNavigationUrls()).toEqual({
+        requestedUrl: 'https://page.example.com',
+        mainDocumentUrl: 'https://page.example.com',
+      });
     });
   });
 

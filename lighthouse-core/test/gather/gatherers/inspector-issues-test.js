@@ -3,15 +3,14 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-/* eslint-env jest */
+import {jest} from '@jest/globals';
 
-const InspectorIssues = require('../../../gather/gatherers/inspector-issues.js');
-const NetworkRequest = require('../../../lib/network-request.js');
-const {createMockContext} = require('../../fraggle-rock/gather/mock-driver.js');
-const {flushAllTimersAndMicrotasks} = require('../../test-utils.js');
-const networkRecordsToDevtoolsLog = require('../../network-records-to-devtools-log.js');
+import InspectorIssues from '../../../gather/gatherers/inspector-issues.js';
+import NetworkRequest from '../../../lib/network-request.js';
+import {createMockContext} from '../../fraggle-rock/gather/mock-driver.js';
+import {flushAllTimersAndMicrotasks} from '../../test-utils.js';
+import networkRecordsToDevtoolsLog from '../../network-records-to-devtools-log.js';
 
 jest.useFakeTimers();
 
@@ -54,14 +53,14 @@ function mockMixedContent(details) {
 }
 
 /**
- * @param {Partial<LH.Crdp.Audits.SameSiteCookieIssueDetails>=} details
+ * @param {Partial<LH.Crdp.Audits.CookieIssueDetails>=} details
  * @return {LH.Crdp.Audits.InspectorIssue} partial
  */
-function mockSameSiteCookie(details) {
+function mockCookie(details) {
   return {
-    code: 'SameSiteCookieIssue',
+    code: 'CookieIssue',
     details: {
-      sameSiteCookieIssueDetails: {
+      cookieIssueDetails: {
         cookie: {
           name: 'name',
           path: 'path',
@@ -142,6 +141,7 @@ function mockDeprecation(text) {
       deprecationIssueDetails: {
         message: text,
         deprecationType: 'test',
+        type: 'Untranslated',
         sourceCodeLocation: {
           url: 'https://www.example.com',
           lineNumber: 10,
@@ -156,11 +156,11 @@ describe('instrumentation', () => {
   it('collects inspector issues', async () => {
     const mockContext = createMockContext();
     const mockMixedContentIssue = mockMixedContent({resourceType: 'Audio'});
-    const mockSameSiteCookieIssue =
-      mockSameSiteCookie({cookieWarningReasons: ['WarnSameSiteNoneInsecure']});
+    const mockCookieIssue =
+      mockCookie({cookieWarningReasons: ['WarnSameSiteNoneInsecure']});
     mockContext.driver.defaultSession.on
       .mockEvent('Audits.issueAdded', {issue: mockMixedContentIssue})
-      .mockEvent('Audits.issueAdded', {issue: mockSameSiteCookieIssue});
+      .mockEvent('Audits.issueAdded', {issue: mockCookieIssue});
     mockContext.driver.defaultSession.sendCommand
       .mockResponse('Audits.enable')
       .mockResponse('Audits.disable');
@@ -172,7 +172,7 @@ describe('instrumentation', () => {
 
     expect(gatherer._issues).toEqual([
       mockMixedContentIssue,
-      mockSameSiteCookieIssue,
+      mockCookieIssue,
     ]);
   });
 });
@@ -182,7 +182,7 @@ describe('_getArtifact', () => {
     const gatherer = new InspectorIssues();
     gatherer._issues = [
       mockMixedContent({request: {requestId: '1'}}),
-      mockSameSiteCookie({request: {requestId: '2'}}),
+      mockCookie({request: {requestId: '2'}}),
       mockBlockedByResponse({request: {requestId: '3'}}),
       mockHeavyAd(),
       mockCSP(),
@@ -203,7 +203,7 @@ describe('_getArtifact', () => {
         insecureURL: 'https://example.com',
         mainResourceURL: 'https://example.com',
       }],
-      sameSiteCookieIssue: [{
+      cookieIssue: [{
         request: {requestId: '2'},
         cookie: {
           name: 'name',
@@ -238,6 +238,7 @@ describe('_getArtifact', () => {
           columnNumber: 10,
           lineNumber: 10,
         },
+        type: 'Untranslated',
       }],
       attributionReportingIssue: [],
       clientHintIssue: [],
@@ -257,8 +258,8 @@ describe('_getArtifact', () => {
     gatherer._issues = [
       mockMixedContent({request: {requestId: '1'}}),
       mockMixedContent({request: {requestId: '2'}}),
-      mockSameSiteCookie({request: {requestId: '3'}}),
-      mockSameSiteCookie({request: {requestId: '4'}}),
+      mockCookie({request: {requestId: '3'}}),
+      mockCookie({request: {requestId: '4'}}),
       mockBlockedByResponse({request: {requestId: '5'}}),
       mockBlockedByResponse({request: {requestId: '6'}}),
     ];
@@ -277,7 +278,7 @@ describe('_getArtifact', () => {
         insecureURL: 'https://example.com',
         mainResourceURL: 'https://example.com',
       }],
-      sameSiteCookieIssue: [{
+      cookieIssue: [{
         request: {requestId: '3'},
         cookie: {
           name: 'name',
@@ -351,7 +352,7 @@ describe('FR compat', () => {
         insecureURL: 'https://example.com',
         mainResourceURL: 'https://example.com',
       }],
-      sameSiteCookieIssue: [],
+      cookieIssue: [],
       blockedByResponseIssue: [],
       heavyAdIssue: [],
       clientHintIssue: [],
@@ -387,7 +388,7 @@ describe('FR compat', () => {
         insecureURL: 'https://example.com',
         mainResourceURL: 'https://example.com',
       }],
-      sameSiteCookieIssue: [],
+      cookieIssue: [],
       blockedByResponseIssue: [],
       clientHintIssue: [],
       heavyAdIssue: [],

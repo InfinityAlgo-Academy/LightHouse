@@ -3,17 +3,23 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-/* eslint-env jest */
+import {createMockContext, mockDriverSubmodules} from '../../fraggle-rock/gather/mock-driver.js';
+// import ScriptElements from '../../../gather/gatherers/script-elements.js';
+import NetworkRequest from '../../../lib/network-request.js';
 
-const {
-  createMockContext,
-  mockDriverSubmodules,
-} = require('../../fraggle-rock/gather/mock-driver.js');
+// Some imports needs to be done dynamically, so that their dependencies will be mocked.
+// See: https://jestjs.io/docs/ecmascript-modules#differences-between-esm-and-commonjs
+//      https://github.com/facebook/jest/issues/10025
+/** @typedef {import('../../../gather/gatherers/script-elements.js')} ScriptElements */
+/** @type {typeof import('../../../gather/gatherers/script-elements.js')} */
+let ScriptElements;
+
+beforeAll(async () => {
+  ScriptElements = (await import('../../../gather/gatherers/script-elements.js')).default;
+});
+
 const mocks = mockDriverSubmodules();
-const ScriptElements = require('../../../gather/gatherers/script-elements.js');
-const NetworkRequest = require('../../../lib/network-request.js');
 
 /**
  * @param {Partial<LH.Artifacts.NetworkRequest>=} partial
@@ -37,8 +43,6 @@ function mockElement(partial) {
     async: false,
     defer: false,
     source: 'head',
-    content: null,
-    requestId: null,
     node: null,
     ...partial,
   };
@@ -52,8 +56,6 @@ describe('_getArtifact', () => {
   let scriptElements;
   /** @type {LH.Artifacts.NetworkRequest[]} */
   let networkRecords;
-  /** @type {Record<string, string>} */
-  let scriptRecordContents;
   /** @type {LH.Artifacts.NetworkRequest} */
   let mainDocument;
 
@@ -64,10 +66,7 @@ describe('_getArtifact', () => {
     scriptElements = [];
     mainDocument = mockRecord({resourceType: NetworkRequest.TYPES.Document, requestId: '0'});
     networkRecords = [mainDocument];
-    scriptRecordContents = {};
     mockContext.driver._executionContext.evaluate.mockImplementation(() => scriptElements);
-    mocks.networkMock.fetchResponseBodyFromCache
-      .mockImplementation((_, id) => Promise.resolve(scriptRecordContents[id]));
   });
 
   it('collects script elements', async () => {
@@ -75,19 +74,16 @@ describe('_getArtifact', () => {
       mainDocument,
       mockRecord({url: 'https://example.com/script.js', requestId: '1'}),
     ];
-    scriptRecordContents = {
-      '1': '// SOURCED',
-    };
     scriptElements = [
       mockElement({src: 'https://example.com/script.js'}),
-      mockElement({content: '// INLINE'}),
+      mockElement({src: null}),
     ];
 
-    const artifact = await gatherer._getArtifact(mockContext.asContext(), networkRecords, 'mobile');
+    const artifact = await gatherer._getArtifact(mockContext.asContext(), networkRecords);
 
     expect(artifact).toEqual([
-      mockElement({src: 'https://example.com/script.js', requestId: '1', content: '// SOURCED'}),
-      mockElement({content: '// INLINE', requestId: '0'}),
+      mockElement({src: 'https://example.com/script.js'}),
+      mockElement({src: null}),
     ]);
   });
 
@@ -97,57 +93,17 @@ describe('_getArtifact', () => {
       mockRecord({url: 'https://example.com/script.js', requestId: '1'}),
       mockRecord({url: 'https://oopif.com/script.js', requestId: '2', sessionId: 'OOPIF'}),
     ];
-    scriptRecordContents = {
-      '1': '// SOURCED',
-      '2': '// OOPIF',
-    };
     // OOPIF would not produce script element
     scriptElements = [
       mockElement({src: 'https://example.com/script.js'}),
-      mockElement({content: '// INLINE'}),
+      mockElement({src: null}),
     ];
 
-    const artifact = await gatherer._getArtifact(mockContext.asContext(), networkRecords, 'mobile');
-
-    expect(artifact).toEqual([
-      mockElement({src: 'https://example.com/script.js', requestId: '1', content: '// SOURCED'}),
-      mockElement({content: '// INLINE', requestId: '0'}),
-    ]);
-  });
-
-  it('null content for sourced script with empty content', async () => {
-    networkRecords = [
-      mainDocument,
-      mockRecord({url: 'https://example.com/empty.js', requestId: '1'}),
-    ];
-    scriptRecordContents = {
-      '1': '',
-    };
-    scriptElements = [
-      mockElement({src: 'https://example.com/empty.js'}),
-    ];
-
-    const artifact = await gatherer._getArtifact(mockContext.asContext(), networkRecords, 'mobile');
-
-    expect(artifact).toEqual([
-      mockElement({src: 'https://example.com/empty.js'}),
-    ]);
-  });
-
-  it('handle erroneous network content', async () => {
-    networkRecords = [
-      mainDocument,
-      mockRecord({url: 'https://example.com/script.js', requestId: '1'}),
-    ];
-    mocks.networkMock.fetchResponseBodyFromCache.mockRejectedValue('Error');
-    scriptElements = [
-      mockElement({src: 'https://example.com/script.js'}),
-    ];
-
-    const artifact = await gatherer._getArtifact(mockContext.asContext(), networkRecords, 'mobile');
+    const artifact = await gatherer._getArtifact(mockContext.asContext(), networkRecords);
 
     expect(artifact).toEqual([
       mockElement({src: 'https://example.com/script.js'}),
+      mockElement({src: null}),
     ]);
   });
 
@@ -156,14 +112,11 @@ describe('_getArtifact', () => {
       mainDocument,
       mockRecord({url: 'https://example.com/script.js', requestId: '1'}),
     ];
-    scriptRecordContents = {
-      '1': '// SOURCED',
-    };
 
-    const artifact = await gatherer._getArtifact(mockContext.asContext(), networkRecords, 'mobile');
+    const artifact = await gatherer._getArtifact(mockContext.asContext(), networkRecords);
 
     expect(artifact).toEqual([
-      mockElement({src: 'https://example.com/script.js', requestId: '1', content: '// SOURCED', source: 'network'}),
+      mockElement({src: 'https://example.com/script.js', source: 'network'}),
     ]);
   });
 });

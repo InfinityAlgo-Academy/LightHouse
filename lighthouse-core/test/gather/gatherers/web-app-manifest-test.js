@@ -3,12 +3,12 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-/* eslint-env jest */
+import fs from 'fs';
 
-const WebAppManifest = require('../../../gather/gatherers/web-app-manifest.js');
-const {createMockSession} = require('../../fraggle-rock/gather/mock-driver.js');
+import {LH_ROOT} from '../../../../root.js';
+import WebAppManifest from '../../../gather/gatherers/web-app-manifest.js';
+import {createMockSession} from '../../fraggle-rock/gather/mock-driver.js';
 
 describe('WebAppManifest Gatherer', () => {
   let session = createMockSession();
@@ -35,12 +35,11 @@ describe('WebAppManifest Gatherer', () => {
     });
 
     it('should handle BOM-encoded manifest', async () => {
-      const fs = require('fs');
       const manifestWithoutBOM = fs
-        .readFileSync(__dirname + '/../../fixtures/manifest.json')
+        .readFileSync(LH_ROOT + '/lighthouse-core/test/fixtures/manifest.json')
         .toString();
       const manifestWithBOM = fs
-        .readFileSync(__dirname + '/../../fixtures/manifest-bom.json')
+        .readFileSync(LH_ROOT + '/lighthouse-core/test/fixtures/manifest-bom.json')
         .toString();
 
       session.sendCommand.mockResponse('Page.getAppManifest', {

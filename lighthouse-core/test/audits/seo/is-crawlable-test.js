@@ -3,13 +3,11 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-const IsCrawlableAudit = require('../../../audits/seo/is-crawlable.js');
-const assert = require('assert').strict;
-const networkRecordsToDevtoolsLog = require('../../network-records-to-devtools-log.js');
+import {strict as assert} from 'assert';
 
-/* eslint-env jest */
+import IsCrawlableAudit from '../../../audits/seo/is-crawlable.js';
+import networkRecordsToDevtoolsLog from '../../network-records-to-devtools-log.js';
 
 describe('SEO: Is page crawlable audit', () => {
   const makeMetaElements = content => [{name: 'robots', content, node: {}}];
@@ -26,15 +24,15 @@ describe('SEO: Is page crawlable audit', () => {
     ];
 
     const allRuns = robotsValues.map(robotsValue => {
-      const finalUrl = 'https://example.com/';
+      const mainDocumentUrl = 'https://example.com/';
       const mainResource = {
-        url: finalUrl,
+        url: mainDocumentUrl,
         responseHeaders: [],
       };
       const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
       const artifacts = {
         devtoolsLogs: {[IsCrawlableAudit.DEFAULT_PASS]: devtoolsLog},
-        URL: {finalUrl},
+        URL: {mainDocumentUrl},
         MetaElements: makeMetaElements(robotsValue),
         RobotsTxt: {},
       };
@@ -50,15 +48,15 @@ describe('SEO: Is page crawlable audit', () => {
   });
 
   it('succeeds when there are no blocking directives in the metatag', () => {
-    const finalUrl = 'https://example.com/';
+    const mainDocumentUrl = 'https://example.com/';
     const mainResource = {
-      url: finalUrl,
+      url: mainDocumentUrl,
       responseHeaders: [],
     };
     const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
     const artifacts = {
       devtoolsLogs: {[IsCrawlableAudit.DEFAULT_PASS]: devtoolsLog},
-      URL: {finalUrl},
+      URL: {mainDocumentUrl},
       requestMainResource: () => Promise.resolve(mainResource),
       MetaElements: makeMetaElements('all, noarchive'),
       RobotsTxt: {},
@@ -71,15 +69,15 @@ describe('SEO: Is page crawlable audit', () => {
   });
 
   it('succeeds when there is no robots metatag', () => {
-    const finalUrl = 'https://example.com/';
+    const mainDocumentUrl = 'https://example.com/';
     const mainResource = {
-      url: finalUrl,
+      url: mainDocumentUrl,
       responseHeaders: [],
     };
     const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
     const artifacts = {
       devtoolsLogs: {[IsCrawlableAudit.DEFAULT_PASS]: devtoolsLog},
-      URL: {finalUrl},
+      URL: {mainDocumentUrl},
       MetaElements: [],
       RobotsTxt: {},
     };
@@ -114,15 +112,15 @@ describe('SEO: Is page crawlable audit', () => {
     ];
 
     const allRuns = robotsHeaders.map(headers => {
-      const finalUrl = 'https://example.com/';
+      const mainDocumentUrl = 'https://example.com/';
       const mainResource = {
-        url: finalUrl,
+        url: mainDocumentUrl,
         responseHeaders: headers,
       };
       const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
       const artifacts = {
         devtoolsLogs: {[IsCrawlableAudit.DEFAULT_PASS]: devtoolsLog},
-        URL: {finalUrl},
+        URL: {mainDocumentUrl},
         MetaElements: [],
         RobotsTxt: {},
       };
@@ -138,9 +136,9 @@ describe('SEO: Is page crawlable audit', () => {
   });
 
   it('succeeds when there are no blocking directives in the robots header', () => {
-    const finalUrl = 'https://example.com/';
+    const mainDocumentUrl = 'https://example.com/';
     const mainResource = {
-      url: finalUrl,
+      url: mainDocumentUrl,
       responseHeaders: [
         {name: 'X-Robots-Tag', value: 'all, nofollow'},
         {name: 'X-Robots-Tag', value: 'unavailable_after: 25 Jun 2045 15:00:00 PST'},
@@ -149,7 +147,7 @@ describe('SEO: Is page crawlable audit', () => {
     const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
     const artifacts = {
       devtoolsLogs: {[IsCrawlableAudit.DEFAULT_PASS]: devtoolsLog},
-      URL: {finalUrl},
+      URL: {mainDocumentUrl},
       MetaElements: [],
       RobotsTxt: {},
     };
@@ -161,15 +159,15 @@ describe('SEO: Is page crawlable audit', () => {
   });
 
   it('succeeds when there is no robots header and robots.txt is unavailable', () => {
-    const finalUrl = 'https://example.com/';
+    const mainDocumentUrl = 'https://example.com/';
     const mainResource = {
-      url: finalUrl,
+      url: mainDocumentUrl,
       responseHeaders: [],
     };
     const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
     const artifacts = {
       devtoolsLogs: {[IsCrawlableAudit.DEFAULT_PASS]: devtoolsLog},
-      URL: {finalUrl},
+      URL: {mainDocumentUrl},
       MetaElements: [],
       RobotsTxt: {},
     };
@@ -181,9 +179,9 @@ describe('SEO: Is page crawlable audit', () => {
   });
 
   it('ignores UA specific directives', () => {
-    const finalUrl = 'https://example.com/';
+    const mainDocumentUrl = 'https://example.com/';
     const mainResource = {
-      url: finalUrl,
+      url: mainDocumentUrl,
       responseHeaders: [
         {name: 'x-robots-tag', value: 'googlebot: unavailable_after: 25 Jun 2007 15:00:00 PST'},
         {name: 'x-robots-tag', value: 'unavailable_after: 25 Jun 2045 15:00:00 PST'},
@@ -192,7 +190,7 @@ describe('SEO: Is page crawlable audit', () => {
     const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
     const artifacts = {
       devtoolsLogs: {[IsCrawlableAudit.DEFAULT_PASS]: devtoolsLog},
-      URL: {finalUrl},
+      URL: {mainDocumentUrl},
       MetaElements: [],
       RobotsTxt: {},
     };
@@ -232,15 +230,15 @@ describe('SEO: Is page crawlable audit', () => {
     ];
 
     const allRuns = robotsTxts.map(robotsTxt => {
-      const finalUrl = 'http://example.com/test/page.html';
+      const mainDocumentUrl = 'http://example.com/test/page.html';
       const mainResource = {
-        url: finalUrl,
+        url: mainDocumentUrl,
         responseHeaders: [],
       };
       const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
       const artifacts = {
         devtoolsLogs: {[IsCrawlableAudit.DEFAULT_PASS]: devtoolsLog},
-        URL: {finalUrl},
+        URL: {mainDocumentUrl},
         MetaElements: [],
         RobotsTxt: robotsTxt,
       };
@@ -271,15 +269,15 @@ describe('SEO: Is page crawlable audit', () => {
     ];
 
     const allRuns = robotsTxts.map(robotsTxt => {
-      const finalUrl = 'http://example.com/test/page.html';
+      const mainDocumentUrl = 'http://example.com/test/page.html';
       const mainResource = {
-        url: finalUrl,
+        url: mainDocumentUrl,
         responseHeaders: [],
       };
       const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
       const artifacts = {
         devtoolsLogs: {[IsCrawlableAudit.DEFAULT_PASS]: devtoolsLog},
-        URL: {finalUrl},
+        URL: {mainDocumentUrl},
         MetaElements: [],
         RobotsTxt: robotsTxt,
       };
@@ -294,9 +292,9 @@ describe('SEO: Is page crawlable audit', () => {
   });
 
   it('returns all failing items', () => {
-    const finalUrl = 'http://example.com/test/page.html';
+    const mainDocumentUrl = 'http://example.com/test/page.html';
     const mainResource = {
-      url: finalUrl,
+      url: mainDocumentUrl,
       responseHeaders: [
         {name: 'x-robots-tag', value: 'none'},
         {name: 'x-robots-tag', value: 'noindex'},
@@ -309,7 +307,7 @@ describe('SEO: Is page crawlable audit', () => {
     const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
     const artifacts = {
       devtoolsLogs: {[IsCrawlableAudit.DEFAULT_PASS]: devtoolsLog},
-      URL: {finalUrl},
+      URL: {mainDocumentUrl},
       MetaElements: makeMetaElements('noindex'),
       RobotsTxt: robotsTxt,
     };

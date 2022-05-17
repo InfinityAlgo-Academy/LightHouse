@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const isDeepEqual = require('lodash.isequal');
+const isDeepEqual = require('lodash/isEqual.js');
 const Driver = require('./gather/driver.js');
 const GatherRunner = require('./gather/gather-runner.js');
 const ReportScoring = require('./scoring.js');
@@ -149,7 +149,7 @@ class Runner {
       Sentry.captureBreadcrumb({
         message: 'Run started',
         category: 'lifecycle',
-        data: sentryContext?.extra,
+        data: sentryContext,
       });
 
       /** @type {LH.Artifacts} */
@@ -158,11 +158,6 @@ class Runner {
         // No browser required, just load the artifacts from disk.
         const path = this._getDataSavePath(settings);
         artifacts = assetSaver.loadArtifacts(path);
-        const requestedUrl = artifacts.URL.requestedUrl;
-
-        if (!requestedUrl) {
-          throw new Error('Cannot run audit mode on empty URL');
-        }
       } else {
         const runnerStatus = {msg: 'Gather phase', id: 'lh:runner:gather'};
         log.time(runnerStatus, 'verbose');

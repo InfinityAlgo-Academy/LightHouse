@@ -3,7 +3,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 import * as cli from '../../lighthouse-cli/run.js';
 import * as cliFlags from '../../lighthouse-cli/cli-flags.js';
@@ -17,10 +16,11 @@ const artifactPath = 'lighthouse-core/test/results/artifacts';
 const MAGIC_SERVER_PORT = 10200;
 
 /**
- * Update the report artifacts. If artifactName is set, only that artifact will be updated.
- * @param {keyof LH.Artifacts=} artifactName
+ * Update the report artifacts.
+ * If artifactNames is nonempty, only those artifacts will be updated.
+ * @param {Array<keyof LH.Artifacts>} artifactNames
  */
-async function update(artifactName) {
+async function update(artifactNames) {
   await server.listen(MAGIC_SERVER_PORT, 'localhost');
 
   const oldArtifacts = assetSaver.loadArtifacts(artifactPath);
@@ -34,31 +34,27 @@ async function update(artifactName) {
   await cli.runLighthouse(url, flags, budgetedConfig);
   await server.close();
 
-  let newArtifacts = assetSaver.loadArtifacts(artifactPath);
+  const newArtifacts = assetSaver.loadArtifacts(artifactPath);
 
-  // Normalize some data so it doesn't change on every update.
-  let baseTime = 0;
-  for (const timing of newArtifacts.Timing) {
-    // @ts-expect-error: Value actually is writeable at this point.
-    timing.startTime = baseTime++;
-    // @ts-expect-error: Value actually is writeable at this point.
-    timing.duration = 1;
+  assetSaver.normalizeTimingEntries(newArtifacts.Timing);
+
+  if (artifactNames.length === 0) {
+    await assetSaver.saveArtifacts(newArtifacts, artifactPath);
+    return;
   }
 
-  if (artifactName) {
-    // Revert everything except the one artifact
+  // Revert everything except these artifacts.
+  const artifactsToKeep = {...oldArtifacts};
+  for (const artifactName of artifactNames) {
     if (!(artifactName in newArtifacts) && !(artifactName in oldArtifacts)) {
       throw Error('Unknown artifact name: ' + artifactName);
     }
 
-    const newArtifactToKeep = newArtifacts[artifactName];
-
-    newArtifacts = oldArtifacts;
     // @ts-expect-error tsc can't yet express that artifactName is only a single type in each iteration, not a union of types.
-    newArtifacts[artifactName] = newArtifactToKeep;
+    artifactsToKeep[artifactName] = newArtifacts[artifactName];
   }
 
-  await assetSaver.saveArtifacts(newArtifacts, artifactPath);
+  await assetSaver.saveArtifacts(artifactsToKeep, artifactPath);
 }
 
-update(/** @type {keyof LH.Artifacts | undefined} */ (process.argv[2]));
+update(/** @type {Array<keyof LH.Artifacts>} */ (process.argv.slice(2)));

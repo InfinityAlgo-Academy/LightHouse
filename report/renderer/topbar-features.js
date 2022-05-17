@@ -3,7 +3,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 /* eslint-env browser */
 
@@ -199,7 +198,11 @@ export class TopbarFeatures {
   }
 
   _print() {
-    self.print();
+    if (this._reportUIFeatures._opts.onPrintOverride) {
+      this._reportUIFeatures._opts.onPrintOverride(this._dom.rootEl);
+    } else {
+      self.print();
+    }
   }
 
   /**
@@ -302,7 +305,8 @@ export class TopbarFeatures {
       categoriesAboveTheMiddle.length > 0 ? categoriesAboveTheMiddle.length - 1 : 0;
 
     // Category order matches gauge order in sticky header.
-    const gaugeWrapperEls = this.stickyHeaderEl.querySelectorAll('.lh-gauge__wrapper');
+    const gaugeWrapperEls =
+      this.stickyHeaderEl.querySelectorAll('.lh-gauge__wrapper, .lh-fraction__wrapper');
     const gaugeToHighlight = gaugeWrapperEls[highlightIndex];
     const origin = gaugeWrapperEls[0].getBoundingClientRect().left;
     const offset = gaugeToHighlight.getBoundingClientRect().left - origin;

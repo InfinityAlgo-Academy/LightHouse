@@ -47,10 +47,11 @@ class PredictivePerf extends Audit {
     const gatherContext = artifacts.GatherContext;
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+    const URL = artifacts.URL;
     /** @type {LH.Config.Settings} */
     // @ts-expect-error - TODO(bckenny): allow optional `throttling` settings
     const settings = {}; // Use default settings.
-    const computationData = {trace, devtoolsLog, gatherContext, settings};
+    const computationData = {trace, devtoolsLog, gatherContext, settings, URL};
     const fcp = await LanternFcp.request(computationData, context);
     const fmp = await LanternFmp.request(computationData, context);
     const tti = await LanternInteractive.request(computationData, context);

@@ -3,12 +3,8 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-const InspectorIssuesAudit =
-  require('../../../audits/dobetterweb/inspector-issues.js');
-
-/* eslint-env jest */
+import InspectorIssuesAudit from '../../../audits/dobetterweb/inspector-issues.js';
 
 describe('Has inspector issues audit', () => {
   let issues;
@@ -27,7 +23,7 @@ describe('Has inspector issues audit', () => {
       mixedContentIssue: [],
       navigatorUserAgentIssue: [],
       quirksModeIssue: [],
-      sameSiteCookieIssue: [],
+      cookieIssue: [],
       sharedArrayBufferIssue: [],
       twaQualityEnforcement: [],
     };
@@ -81,8 +77,8 @@ describe('Has inspector issues audit', () => {
     });
   });
 
-  it('correctly displays SameSite cookie issues', () => {
-    const samesiteIssues = [
+  it('correctly displays cookie issues', () => {
+    const cookieIssues = [
       {
         cookieUrl: 'www.samesitecookies.com',
       },
@@ -93,14 +89,14 @@ describe('Has inspector issues audit', () => {
         },
       },
     ];
-    issues.sameSiteCookieIssue.push(...samesiteIssues);
+    issues.cookieIssue.push(...cookieIssues);
 
     const auditResult = InspectorIssuesAudit.audit({
       InspectorIssues: issues,
     });
     expect(auditResult.score).toBe(0);
     expect(auditResult.details.items[0]).toMatchObject({
-      issueType: 'SameSite cookie',
+      issueType: 'Cookie',
       subItems: {
         type: 'subitems',
         items: [

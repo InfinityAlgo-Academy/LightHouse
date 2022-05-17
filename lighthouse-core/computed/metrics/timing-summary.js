@@ -26,11 +26,12 @@ class TimingSummary {
      * @param {LH.DevtoolsLog} devtoolsLog
      * @param {LH.Artifacts['GatherContext']} gatherContext
      * @param {ImmutableObject<LH.Config.Settings>} settings
+     * @param {LH.Artifacts['URL']} URL
      * @param {LH.Artifacts.ComputedContext} context
      * @return {Promise<{metrics: LH.Artifacts.TimingSummary, debugInfo: Record<string,boolean>}>}
      */
-  static async summarize(trace, devtoolsLog, gatherContext, settings, context) {
-    const metricComputationData = {trace, devtoolsLog, gatherContext, settings};
+  static async summarize(trace, devtoolsLog, gatherContext, settings, URL, context) {
+    const metricComputationData = {trace, devtoolsLog, gatherContext, settings, URL};
     /**
      * @template TArtifacts
      * @template TReturn
@@ -134,17 +135,23 @@ class TimingSummary {
     return {metrics, debugInfo};
   }
   /**
-   * @param {{trace: LH.Trace, devtoolsLog: LH.DevtoolsLog, gatherContext: LH.Artifacts['GatherContext']; settings: ImmutableObject<LH.Config.Settings>}} data
+   * @param {{trace: LH.Trace, devtoolsLog: LH.DevtoolsLog, gatherContext: LH.Artifacts['GatherContext']; settings: ImmutableObject<LH.Config.Settings>, URL: LH.Artifacts['URL']}} data
    * @param {LH.Artifacts.ComputedContext} context
    * @return {Promise<{metrics: LH.Artifacts.TimingSummary, debugInfo: Record<string,boolean>}>}
    */
   static async compute_(data, context) {
-    return TimingSummary.summarize(data.trace, data.devtoolsLog, data.gatherContext, data.settings,
-      context);
+    return TimingSummary.summarize(
+      data.trace,
+      data.devtoolsLog,
+      data.gatherContext,
+      data.settings,
+      data.URL,
+      context
+    );
   }
 }
 
 module.exports = makeComputedArtifact(
   TimingSummary,
-  ['devtoolsLog', 'gatherContext', 'settings', 'trace']
+  ['devtoolsLog', 'gatherContext', 'settings', 'trace', 'URL']
 );

@@ -8,6 +8,11 @@
 
 set -euo pipefail
 
+if ! type -P python3; then
+  echo "python3 could not be found"
+  exit 1
+fi
+
 # Get newest folder
 latest_content_shell_dir=$(ls -t "$LH_ROOT/.tmp/chromium-web-tests/content-shells/" | head -n1)
 export latest_content_shell="$LH_ROOT/.tmp/chromium-web-tests/content-shells/$latest_content_shell_dir"
@@ -49,9 +54,10 @@ set +e
 # Print the python command.
 set -x
 
-python \
+python3 \
   "$BLINK_TOOLS_PATH/latest/third_party/blink/tools/run_web_tests.py" \
   --layout-tests-directory="$DEVTOOLS_PATH/test/webtests" \
+  --additional-platform-directory="$DEVTOOLS_PATH/test/webtests/platform/generic" \
   --build-directory="$latest_content_shell/out" \
   $*
 status=$?
@@ -61,6 +67,6 @@ set -e
 
 rm -rf "$LH_ROOT/.tmp/layout-test-results"
 cp -r "$latest_content_shell/out/Release/layout-test-results" "$LH_ROOT/.tmp/layout-test-results"
-cp "$DEVTOOLS_PATH/test/webtests/http/tests/devtools/lighthouse/"*-expected.txt "$LH_ROOT/third-party/chromium-webtests/webtests/http/tests/devtools/lighthouse"
+cp "$DEVTOOLS_PATH/test/webtests/platform/generic/http/tests/devtools/lighthouse/"*-expected.txt "$LH_ROOT/third-party/chromium-webtests/webtests/platform/generic/http/tests/devtools/lighthouse"
 
 exit $status

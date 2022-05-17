@@ -3,13 +3,11 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-const CspXss = require('../../audits/csp-xss.js');
-const {Type} = require('csp_evaluator/dist/finding.js');
-const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
+import {Type} from 'csp_evaluator/dist/finding.js';
 
-/* eslint-env jest */
+import CspXss from '../../audits/csp-xss.js';
+import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
 
 const SEVERITY = {
   syntax: {
@@ -65,7 +63,6 @@ const STATIC_RESULTS = {
 
 it('audit basic header', async () => {
   const artifacts = {
-    URL: 'https://example.com',
     MetaElements: [],
     devtoolsLogs: {
       defaultPass: networkRecordsToDevtoolsLog([
@@ -76,6 +73,12 @@ it('audit basic header', async () => {
           ],
         },
       ]),
+    },
+    URL: {
+      initialUrl: 'about:blank',
+      requestedUrl: 'https://example.com',
+      mainDocumentUrl: 'https://example.com',
+      finalUrl: 'https://example.com',
     },
   };
   const results = await CspXss.audit(artifacts, {computedCache: new Map()});
@@ -109,7 +112,12 @@ it('audit basic header', async () => {
 
 it('marked N/A if no warnings found', async () => {
   const artifacts = {
-    URL: 'https://example.com',
+    URL: {
+      initialUrl: 'about:blank',
+      requestedUrl: 'https://example.com',
+      mainDocumentUrl: 'https://example.com',
+      finalUrl: 'https://example.com',
+    },
     MetaElements: [],
     devtoolsLogs: {
       defaultPass: networkRecordsToDevtoolsLog([
@@ -132,7 +140,12 @@ it('marked N/A if no warnings found', async () => {
 describe('getRawCsps', () => {
   it('basic case', async () => {
     const artifacts = {
-      URL: 'https://example.com',
+      URL: {
+        initialUrl: 'about:blank',
+        requestedUrl: 'https://example.com',
+        mainDocumentUrl: 'https://example.com',
+        finalUrl: 'https://example.com',
+      },
       MetaElements: [
         {
           httpEquiv: 'Content-Security-Policy',
@@ -170,7 +183,12 @@ describe('getRawCsps', () => {
 
   it('split on comma', async () => {
     const artifacts = {
-      URL: 'https://example.com',
+      URL: {
+        initialUrl: 'about:blank',
+        requestedUrl: 'https://example.com',
+        mainDocumentUrl: 'https://example.com',
+        finalUrl: 'https://example.com',
+      },
       MetaElements: [],
       devtoolsLogs: {
         defaultPass: networkRecordsToDevtoolsLog([
@@ -202,7 +220,12 @@ describe('getRawCsps', () => {
 
   it('ignore if empty', async () => {
     const artifacts = {
-      URL: 'https://example.com',
+      URL: {
+        initialUrl: 'about:blank',
+        requestedUrl: 'https://example.com',
+        mainDocumentUrl: 'https://example.com',
+        finalUrl: 'https://example.com',
+      },
       MetaElements: [],
       devtoolsLogs: {
         defaultPass: networkRecordsToDevtoolsLog([
@@ -232,7 +255,12 @@ describe('getRawCsps', () => {
 
   it('ignore if only whitespace', async () => {
     const artifacts = {
-      URL: 'https://example.com',
+      URL: {
+        initialUrl: 'about:blank',
+        requestedUrl: 'https://example.com',
+        mainDocumentUrl: 'https://example.com',
+        finalUrl: 'https://example.com',
+      },
       MetaElements: [],
       devtoolsLogs: {
         defaultPass: networkRecordsToDevtoolsLog([

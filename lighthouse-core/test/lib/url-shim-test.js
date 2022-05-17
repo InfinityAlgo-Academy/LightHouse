@@ -3,12 +3,11 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-/* eslint-env jest */
+import {strict as assert} from 'assert';
 
-const URL = require('../../lib/url-shim.js');
-const assert = require('assert').strict;
+import URL from '../../lib/url-shim.js';
+
 const superLongName =
     'https://example.com/thisIsASuperLongURLThatWillTriggerFilenameTruncationWhichWeWantToTest.js';
 
@@ -349,8 +348,10 @@ describe('URL Shim', () => {
       expect(URL.guessMimeType('data:image/png;DATA')).toEqual('image/png');
       expect(URL.guessMimeType('data:image/jpeg;DATA')).toEqual('image/jpeg');
       expect(URL.guessMimeType('data:image/svg+xml;DATA')).toEqual('image/svg+xml');
+      expect(URL.guessMimeType('data:image/svg+xml,DATA')).toEqual('image/svg+xml');
       expect(URL.guessMimeType('data:text/html;DATA')).toEqual(undefined);
       expect(URL.guessMimeType('data:image/jpg;DATA')).toEqual(undefined);
+      expect(URL.guessMimeType('data:text/plain,image/png;base64,DATA')).toEqual(undefined);
     });
 
     it('uses path extension for normal files', () => {

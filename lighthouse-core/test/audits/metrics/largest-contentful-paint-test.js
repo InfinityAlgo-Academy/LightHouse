@@ -3,17 +3,15 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-const LCPAudit = require('../../../audits/metrics/largest-contentful-paint.js');
+import LCPAudit from '../../../audits/metrics/largest-contentful-paint.js';
+import constants from '../../../config/constants.js';
+import trace from '../../fixtures/traces/lcp-m78.json';
+import devtoolsLog from '../../fixtures/traces/lcp-m78.devtools.log.json';
+import preLcpTrace from '../../fixtures/traces/progressive-app-m60.json';
+import preLcpDevtoolsLog from '../../fixtures/traces/progressive-app-m60.devtools.log.json';
+
 const defaultOptions = LCPAudit.defaultOptions;
-const constants = require('../../../config/constants.js');
-
-const trace = require('../../fixtures/traces/lcp-m78.json');
-const devtoolsLog = require('../../fixtures/traces/lcp-m78.devtools.log.json');
-
-const preLcpTrace = require('../../fixtures/traces/progressive-app-m60.json');
-const preLcpDevtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
 
 function generateArtifacts({trace, devtoolsLog, HostUserAgent}) {
   return {
@@ -39,8 +37,6 @@ const getFakeContext = ({formFactor, throttlingMethod}) => ({
     screenEmulation: constants.screenEmulationMetrics[formFactor],
   },
 });
-
-/* eslint-env jest */
 
 describe('Performance: largest-contentful-paint audit', () => {
   it('adjusts scoring based on form factor', async () => {

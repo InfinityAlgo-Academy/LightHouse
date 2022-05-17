@@ -40,5 +40,5 @@ class FirstMeaningfulPaint extends NavigationMetric {
 
 module.exports = makeComputedArtifact(
   FirstMeaningfulPaint,
-  ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace']
+  ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL']
 );

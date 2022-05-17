@@ -3,14 +3,19 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-jest.mock('raven');
+import {jest} from '@jest/globals';
 
-const raven = require('raven');
-const Sentry = require('../../lib/sentry.js');
+// import sentryNode from '@sentry/node';
+import Sentry from '../../lib/sentry.js';
 
-/* eslint-env jest */
+jest.mock('@sentry/node');
+
+// Must mock sentry it is imported.
+let sentryNode;
+beforeAll(async () => {
+  sentryNode = (await import('@sentry/node')).default;
+});
 
 describe('Sentry', () => {
   let configPayload;
@@ -27,9 +32,14 @@ describe('Sentry', () => {
     // We want to have a fresh state for every test.
     originalSentry = {...Sentry};
 
-    raven.config = jest.fn().mockReturnValue({install: jest.fn()});
-    raven.mergeContext = jest.fn();
-    raven.captureException = jest.fn().mockImplementation((err, opts, cb) => cb());
+    sentryNode.init = jest.fn().mockReturnValue({install: jest.fn()});
+    sentryNode.setExtras = jest.fn();
+    sentryNode.captureException = jest.fn();
+    sentryNode.withScope = (fn) => fn({
+      setLevel: () => {},
+      setTags: () => {},
+      setExtras: () => {},
+    });
     Sentry._shouldSample = jest.fn().mockReturnValue(true);
   });
 
@@ -41,18 +51,18 @@ describe('Sentry', () => {
   describe('.init', () => {
     it('should noop when !enableErrorReporting', () => {
       Sentry.init({url: 'http://example.com', flags: {}});
-      expect(raven.config).not.toHaveBeenCalled();
+      expect(sentryNode.init).not.toHaveBeenCalled();
       Sentry.init({url: 'http://example.com', flags: {enableErrorReporting: false}});
-      expect(raven.config).not.toHaveBeenCalled();
+      expect(sentryNode.init).not.toHaveBeenCalled();
     });
 
     it('should noop when not picked for sampling', () => {
       Sentry._shouldSample.mockReturnValue(false);
       Sentry.init({url: 'http://example.com', flags: {enableErrorReporting: true}});
-      expect(raven.config).not.toHaveBeenCalled();
+      expect(sentryNode.init).not.toHaveBeenCalled();
     });
 
-    it('should initialize the raven client when enableErrorReporting', () => {
+    it('should initialize the Sentry client when enableErrorReporting', () => {
       Sentry.init({
         url: 'http://example.com',
         flags: {
@@ -63,26 +73,25 @@ describe('Sentry', () => {
         environmentData: {},
       });
 
-      expect(raven.config).toHaveBeenCalled();
-      expect(raven.mergeContext).toHaveBeenCalled();
-      expect(raven.mergeContext.mock.calls[0][0]).toEqual({
-        extra: {
-          url: 'http://example.com',
-          formFactor: 'desktop',
-          throttlingMethod: 'devtools',
-        },
+      expect(sentryNode.init).toHaveBeenCalled();
+      expect(sentryNode.setExtras).toHaveBeenCalled();
+      expect(sentryNode.setExtras.mock.calls[0][0]).toEqual({
+        channel: 'cli',
+        url: 'http://example.com',
+        formFactor: 'desktop',
+        throttlingMethod: 'devtools',
       });
     });
   });
 
   describe('.captureException', () => {
-    it('should forward exceptions to raven client', async () => {
+    it('should forward exceptions to Sentry client', async () => {
       Sentry.init(configPayload);
       const error = new Error('oops');
       await Sentry.captureException(error);
 
-      expect(raven.captureException).toHaveBeenCalled();
-      expect(raven.captureException.mock.calls[0][0]).toBe(error);
+      expect(sentryNode.captureException).toHaveBeenCalled();
+      expect(sentryNode.captureException.mock.calls[0][0]).toBe(error);
     });
 
     it('should skip expected errors', async () => {
@@ -91,7 +100,7 @@ describe('Sentry', () => {
       error.expected = true;
       await Sentry.captureException(error);
 
-      expect(raven.captureException).not.toHaveBeenCalled();
+      expect(sentryNode.captureException).not.toHaveBeenCalled();
     });
 
     it('should skip duplicate audit errors', async () => {
@@ -100,7 +109,7 @@ describe('Sentry', () => {
       await Sentry.captureException(error, {tags: {audit: 'my-audit'}});
       await Sentry.captureException(error, {tags: {audit: 'my-audit'}});
 
-      expect(raven.captureException).toHaveBeenCalledTimes(1);
+      expect(sentryNode.captureException).toHaveBeenCalledTimes(1);
     });
 
     it('should still allow different audit errors', async () => {
@@ -110,7 +119,7 @@ describe('Sentry', () => {
       await Sentry.captureException(errorA, {tags: {audit: 'my-audit'}});
       await Sentry.captureException(errorB, {tags: {audit: 'my-audit'}});
 
-      expect(raven.captureException).toHaveBeenCalledTimes(2);
+      expect(sentryNode.captureException).toHaveBeenCalledTimes(2);
     });
 
     it('should skip duplicate gatherer errors', async () => {
@@ -119,7 +128,7 @@ describe('Sentry', () => {
       await Sentry.captureException(error, {tags: {gatherer: 'my-gatherer'}});
       await Sentry.captureException(error, {tags: {gatherer: 'my-gatherer'}});
 
-      expect(raven.captureException).toHaveBeenCalledTimes(1);
+      expect(sentryNode.captureException).toHaveBeenCalledTimes(1);
     });
   });
 });

@@ -36,5 +36,5 @@ class SpeedIndex extends NavigationMetric {
 
 module.exports = makeComputedArtifact(
   SpeedIndex,
-  ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace']
+  ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL']
 );
