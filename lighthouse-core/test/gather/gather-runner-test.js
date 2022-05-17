@@ -72,9 +72,9 @@ let Config;
 /** @type {ReturnType<createTypeHackedGatherRunner>} */
 let GatherRunner;
 beforeAll(async () => {
-  Driver = (await (import('../../gather/driver.js'))).default;
-  GatherRunner_ = (await (import('../../gather/gather-runner.js'))).default;
-  Config = (await (import('../../config/config.js'))).default;
+  Driver = (await import('../../gather/driver.js')).default;
+  GatherRunner_ = (await import('../../gather/gather-runner.js')).default;
+  Config = (await import('../../config/config.js')).default;
   GatherRunner = createTypeHackedGatherRunner();
 });
 

@@ -14,7 +14,7 @@ jest.mock('@sentry/node');
 // Must mock sentry it is imported.
 let sentryNode;
 beforeAll(async () => {
-  sentryNode = (await (import('@sentry/node'))).default;
+  sentryNode = (await import('@sentry/node')).default;
 });
 
 describe('Sentry', () => {

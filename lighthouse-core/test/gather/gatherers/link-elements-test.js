@@ -14,7 +14,7 @@ import {jest} from '@jest/globals';
 let LinkElements;
 
 beforeAll(async () => {
-  LinkElements = (await (import('../../../gather/gatherers/link-elements.js'))).default;
+  LinkElements = (await import('../../../gather/gatherers/link-elements.js')).default;
 });
 
 const mockMainResource = jest.fn();

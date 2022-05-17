@@ -24,42 +24,42 @@ describe('Performance: bootup-time audit', () => {
     const output = await BootupTime.audit(artifacts, {options: auditOptions, computedCache});
     expect(output.details.items).toMatchInlineSnapshot(`
 Array [
-Object {
-  "scriptParseCompile": 0.022,
-  "scripting": 7.619999999999981,
-  "total": 1025.2669999999957,
-  "url": "Unattributable",
-},
-Object {
-  "scriptParseCompile": 6.469,
-  "scripting": 97.69500000000002,
-  "total": 127.15300000000002,
-  "url": "https://www.googletagmanager.com/gtm.js?id=GTM-Q5SW",
-},
-Object {
-  "scriptParseCompile": 1.295,
-  "scripting": 31.776,
-  "total": 61.05500000000001,
-  "url": "https://pwa.rocks/script.js",
-},
-Object {
-  "scriptParseCompile": 9.629,
-  "scripting": 40.88899999999999,
-  "total": 55.246999999999986,
-  "url": "https://www.google-analytics.com/analytics.js",
-},
-Object {
-  "scriptParseCompile": 1.229,
-  "scripting": 6.131,
-  "total": 36.947,
-  "url": "https://pwa.rocks/",
-},
-Object {
-  "scriptParseCompile": 1.239,
-  "scripting": 25.210000000000004,
-  "total": 27.805000000000007,
-  "url": "https://www.google-analytics.com/plugins/ua/linkid.js",
-},
+  Object {
+    "scriptParseCompile": 0.022,
+    "scripting": 7.619999999999981,
+    "total": 1025.2669999999957,
+    "url": "Unattributable",
+  },
+  Object {
+    "scriptParseCompile": 6.469,
+    "scripting": 97.69500000000002,
+    "total": 127.15300000000002,
+    "url": "https://www.googletagmanager.com/gtm.js?id=GTM-Q5SW",
+  },
+  Object {
+    "scriptParseCompile": 1.295,
+    "scripting": 31.776,
+    "total": 61.05500000000001,
+    "url": "https://pwa.rocks/script.js",
+  },
+  Object {
+    "scriptParseCompile": 9.629,
+    "scripting": 40.88899999999999,
+    "total": 55.246999999999986,
+    "url": "https://www.google-analytics.com/analytics.js",
+  },
+  Object {
+    "scriptParseCompile": 1.229,
+    "scripting": 6.131,
+    "total": 36.947,
+    "url": "https://pwa.rocks/",
+  },
+  Object {
+    "scriptParseCompile": 1.239,
+    "scripting": 25.210000000000004,
+    "total": 27.805000000000007,
+    "url": "https://www.google-analytics.com/plugins/ua/linkid.js",
+  },
 ]
 `);
 

@@ -16,7 +16,7 @@ let ResponseCompression;
 
 beforeAll(async () => {
   ResponseCompression =
-    (await (import('../../../../gather/gatherers/dobetterweb/response-compression.js'))).default;
+    (await import('../../../../gather/gatherers/dobetterweb/response-compression.js')).default;
 });
 
 const mocks = mockDriverSubmodules();

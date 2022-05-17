@@ -20,8 +20,8 @@ let Driver;
 let Fetcher;
 
 beforeAll(async () => {
-  Driver = (await (import('../../gather/driver.js'))).default;
-  Fetcher = (await (import('../../gather/fetcher.js'))).default;
+  Driver = (await import('../../gather/driver.js')).default;
+  Fetcher = (await import('../../gather/fetcher.js')).default;
 });
 
 /** @type {Connection} */

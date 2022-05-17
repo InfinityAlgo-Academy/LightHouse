@@ -35,9 +35,9 @@ let GatherRunner;
 let Config;
 
 beforeAll(async () => {
-  Runner = (await (import('../runner.js'))).default;
-  GatherRunner = (await (import('../gather/gather-runner.js'))).default;
-  Config = (await (import('../config/config.js'))).default;
+  Runner = (await import('../runner.js')).default;
+  GatherRunner = (await import('../gather/gather-runner.js')).default;
+  Config = (await import('../config/config.js')).default;
 });
 
 makeMocksForGatherRunner();
