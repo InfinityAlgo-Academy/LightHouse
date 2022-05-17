@@ -63,14 +63,13 @@ console.log(`running ${filteredTests.length} test files`);
 
 const args = [
   '--loader=testdouble',
-  'node_modules/mocha/bin/mocha.js',
   '--require=lighthouse-core/test/mocha-setup.cjs',
   ...filteredTests,
 ];
 console.log(`Running command: ${argv.update ? 'SNAPSHOT_UPDATE=1' : ''} node ${args.join(' ')}`);
 
 try {
-  execFileSync('node', args, {
+  execFileSync('node_modules/mocha/bin/mocha', args, {
     cwd: LH_ROOT,
     env: {
       ...process.env,
