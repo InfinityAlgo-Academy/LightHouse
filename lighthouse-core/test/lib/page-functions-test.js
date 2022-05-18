@@ -65,7 +65,7 @@ describe('Page Functions', () => {
         name: 'Error',
         message: 'unknown error',
         // eslint-disable-next-line max-len
-        stack: expect.stringMatching(/^Error:.*wrapRuntimeEvalErrorInBrowser.*page-functions\.js:\d+:\d+/s),
+        stack: expect.stringMatching(/^Error.*wrapRuntimeEvalErrorInBrowser.*page-functions\.js:\d+:\d+/s),
       });
     });
   });
