@@ -11,6 +11,7 @@ import {Buffer} from 'buffer';
 
 import lighthouse from '../../lighthouse-core/index.js';
 import {navigation, startTimespan, snapshot} from '../../lighthouse-core/fraggle-rock/api.js';
+import Runner from '../../lighthouse-core/runner.js';
 import RawProtocol from '../../lighthouse-core/gather/connections/raw.js';
 import log from 'lighthouse-logger';
 import {lookupLocale} from '../../lighthouse-core/lib/i18n/i18n.js';
@@ -24,6 +25,7 @@ import constants from '../../lighthouse-core/config/constants.js';
 /** @type {BufferConstructor} */
 globalThis.Buffer = Buffer;
 
+console.log({Runner});
 /**
  * Returns a config, which runs only certain categories.
  * Varies the config to use based on device.

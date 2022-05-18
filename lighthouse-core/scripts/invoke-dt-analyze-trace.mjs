@@ -5,48 +5,28 @@
  */
 'use strict';
 
-require('../../clients/devtools-entry.js');
-const ReportGenerator = require('../../report/generator/report-generator.js');
-
-
-// If invoked as CLI, we're gonna read latest-run's trace and analyze that (as desktop)
-if (require.main !== module) {
-  console.error('Must invoke as CLI');
-}
+import fs from 'fs';
+import '../../clients/devtools/devtools-entry.js';
+import ReportGenerator from '../../report/generator/report-generator.js';
+import {LH_ROOT} from '../../root.js';
 
 /** @type {LH.Trace} */
 const trace = JSON.parse(
   // Gather with:
   //     lighthouse https://www.nytimes.com --preset=desktop --only-categories=performance -GA --throttling-method=devtools
-    require('fs').readFileSync(__dirname + '/../../latest-run/defaultPass.trace.json', 'utf8')
+  fs.readFileSync(`${LH_ROOT}/latest-run/defaultPass.trace.json`, 'utf8')
 );
-
-/**
-   * @param {LH.Trace} trace
-   */
-const getInitialUrl = trace => {
-  // TODO: this technique is wrong. it broke on the rv camping site.
-  const urls = trace.traceEvents.filter(e =>
-    (e.name === 'navigationStart' && e?.args?.data?.isLoadingMainFrame === true)
-    // || e.name === 'NavigationBodyLoader::StartLoadingBody'
-  )
-  .map(e => e.args.data?.documentLoaderURL || e.args.url)
-  .filter(Boolean);
-  // find most common item: https://stackoverflow.com/a/20762713/89484
-  return urls.sort(
-    (a, b) => urls.filter(v => v === a).length - urls.filter(v => v === b).length).pop();
-};
 
 // @ts-expect-error
 global.analyzeTrace(trace, {
   device: 'desktop',
-  url: getInitialUrl(trace),
+  url: 'https://placeholder.url',
 }).then(runnerResult => {
   const json = JSON.stringify(runnerResult.lhr, 2, null);
   const html = ReportGenerator.generateReportHtml(runnerResult.lhr);
 
-  require('fs').writeFileSync('./tracereport.json', json, 'utf8');
-  require('fs').writeFileSync('./tracereport.html', html, 'utf8');
+  fs.writeFileSync('./tracereport.json', json, 'utf8');
+  fs.writeFileSync('./tracereport.html', html, 'utf8');
   console.log('done. written to ./tracereport.html');
 });
 
