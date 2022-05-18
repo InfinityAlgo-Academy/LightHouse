@@ -26,7 +26,6 @@ import constants from '../../lighthouse-core/config/constants.js';
 /** @type {BufferConstructor} */
 globalThis.Buffer = Buffer;
 
-console.log({Runner});
 /**
  * Returns a config, which runs only certain categories.
  * Varies the config to use based on device.
@@ -75,11 +74,7 @@ function listenForStatus(listenCallback) {
 
 /**
  * With just a trace, provide Lighthouse performance report
- * From DevTools it'll look something like this
- *
-    self.analyzeTrace({traceEvents: tEvents}, {url: 'http://page', device: 'desktop'})
-      .then(console.log)
-      .catch(console.warn);
+ * See invoke-dt-analyze-trace.mjs for usage
  *
  * @param {LH.Trace} trace
  * @param {{device: "mobile" | "desktop", url: string}} opts
@@ -96,31 +91,25 @@ async function analyzeTrace(trace, opts) {
       output: ['json'],
       formFactor: opts.device,
       throttlingMethod: 'devtools', // can't do lantern right now, so need real throttling applied.
-      // In DevTools, emulation is applied _before_ Lighthouse starts (to deal with viewport emulation bugs). go/xcnjf
-      // As a result, we don't double-apply viewport emulation.
       screenEmulation: {disabled: true},
       traceBasedNetworkRecords: true,
     },
   };
 
-  // TODO: use FR's initializeConfig. it'll filter for navigation-y things.
-  // const config = lighthouse.generateConfig(configJSON, {});
-  // const runOpts = {url, config, computedCache: new Map()};
   const {config} = initializeConfig(configJSON, {gatherMode: 'navigation'});
   const runnerOptions = {config, computedCache: new Map()};
 
-  // const gatherFn = () => {
   /** @type {LH.DevtoolsLog} */
   const fakeDtLogs = [];
   fakeDtLogs.smuggledTrace = trace;
 
-  // /** @type {Partial<LH.Artifacts>} */
+  /** @type {Partial<LH.Artifacts>} */
   const artifacts = {
     traces: {defaultPass: trace},
     devtoolsLogs: {defaultPass: fakeDtLogs},
     GatherContext: {gatherMode: 'navigation'}, // todo: timespan???
     settings: config.settings,
-    URL: {requestedUrl: url, finalUrl: url},
+    URL: {initialUrl: url, finalUrl: url},
     HostFormFactor: opts.device,
     HostUserAgent: '',
     NetworkUserAgent: '',
@@ -133,17 +122,10 @@ async function analyzeTrace(trace, opts) {
     PageLoadError: null,
     WebAppManifest: null,
   };
-  // return Promise.resolve(artifacts);
-  // };
-  // return Runner.run(gatherFn, runOpts);
 
-  // const gatherResult = await navigationGather(...params);
-
-
-  // @ts-ignore I can't mock EVERY artifact ever.
-  const x = await Runner.audit(artifacts, runnerOptions);
-  console.log({x});
-  return x;
+  // @ts-expect-error We don't mock EVERY artifact
+  const runnerResult = await Runner.audit(artifacts, runnerOptions);
+  return runnerResult;
 }
 
 /**
