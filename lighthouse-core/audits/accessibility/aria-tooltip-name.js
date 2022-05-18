@@ -19,7 +19,7 @@ const UIStrings = {
   /** Title of an accessibility audit that evaluates if tooltip HTML elements do not have accessible names. This title is descriptive of the failing state and is shown to users when there is a failure that needs to be addressed. */
   failureTitle: 'ARIA `tooltip` elements do not have accessible names.',
   /** Description of a Lighthouse audit that tells the user *why* they should have accessible names for HTML elements. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
-  description: 'When an element doesn\'t have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://web.dev/aria-name/).',
+  description: 'When an element doesn\'t have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more](https://dequeuniversity.com/rules/axe/4.4/aria-tooltip-name).',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);

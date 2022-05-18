@@ -109,5 +109,5 @@ class LanternInteractive extends LanternMetric {
 
 module.exports = makeComputedArtifact(
   LanternInteractive,
-  ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace']
+  ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL']
 );

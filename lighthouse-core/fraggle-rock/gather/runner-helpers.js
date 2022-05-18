@@ -90,7 +90,6 @@ async function collectPhaseArtifacts(options) {
         : /** @type {Dependencies} */ ({});
 
       return gatherer[phase]({
-        url: await driver.url(),
         gatherMode,
         driver,
         baseArtifacts,

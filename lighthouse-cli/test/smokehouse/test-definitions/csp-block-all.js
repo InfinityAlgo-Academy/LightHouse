@@ -3,7 +3,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 /**
  * @param {[string, string][]} headers
@@ -15,27 +14,24 @@ function headersParam(headers) {
 }
 
 /**
- * Only allow the empty script with the source map.
- * Hash generated using https://strict-csp-codelab.glitch.me/csp_sha256_util.html
- * Easiest way to get script contents with whitespace is by copying script node in DevTools.
+ * Some script are required for the test.
+ * Allow scripts with the attribute nonce="00000000".
  */
 const blockAllExceptInlineScriptCsp = headersParam([[
   'Content-Security-Policy',
-  `default-src 'none'; script-src 'sha256-NCWlI90TxQpIfghtBWJyNU5Y92Nj8XhO+AYMm0gqGfQ='`,
+  `default-src 'none'; script-src 'nonce-00000000'`,
 ]]);
 
 /**
- * Same CSP as block-all-m91.js, but verifies correct behavior for M92.
  * @type {Smokehouse.ExpectedRunnerResult}
  */
 const expectations = {
   artifacts: {
-    _minChromiumMilestone: 92,
     RobotsTxt: {
       status: 200,
     },
     InspectorIssues: {
-      contentSecurityPolicy: [],
+      contentSecurityPolicyIssue: [],
     },
     SourceMaps: [{
       sourceMapUrl: 'http://localhost:10200/source-map/script.js.map',

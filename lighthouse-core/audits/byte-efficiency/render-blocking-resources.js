@@ -145,7 +145,7 @@ class RenderBlockingResources extends Audit {
     };
 
     const metricComputationData = {trace, devtoolsLog, gatherContext, simulator,
-      settings: metricSettings};
+      settings: metricSettings, URL: artifacts.URL};
 
     // Cast to just `LanternMetric` since we explicitly set `throttlingMethod: 'simulate'`.
     const fcpSimulation = /** @type {LH.Artifacts.LanternMetric} */
@@ -262,13 +262,12 @@ class RenderBlockingResources extends Audit {
     try {
       const unusedCssItems = await UnusedCSS.request({
         CSSUsage: artifacts.CSSUsage,
-        URL: artifacts.URL,
         devtoolsLog: artifacts.devtoolsLogs[Audit.DEFAULT_PASS],
       }, context);
       for (const item of unusedCssItems) {
         wastedBytesByUrl.set(item.url, item.wastedBytes);
       }
-    } catch (_) {}
+    } catch {}
 
     return wastedBytesByUrl;
   }

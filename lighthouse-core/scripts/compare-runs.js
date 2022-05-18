@@ -3,7 +3,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 /* eslint-disable no-console */
 
@@ -74,7 +73,8 @@ const rawArgv = y
 
 // Augmenting yargs type with auto-camelCasing breaks in tsc@4.1.2 and @types/yargs@15.0.11,
 // so for now cast to add yarg's camelCase properties to type.
-const argv = /** @type {typeof rawArgv & CamelCasify<typeof rawArgv>} */ (rawArgv);
+const argv =
+  /** @type {Awaited<typeof rawArgv> & CamelCasify<Awaited<typeof rawArgv>>} */ (rawArgv);
 
 const reportExcludeRegex =
   argv.reportExclude !== 'none' ? new RegExp(argv.reportExclude, 'i') : null;
@@ -232,7 +232,7 @@ function aggregateResults(name) {
       continue;
     }
 
-    if (argv.urlFilter && !lhr.requestedUrl.includes(argv.urlFilter)) continue;
+    if (argv.urlFilter && !lhr.requestedUrl?.includes(argv.urlFilter)) continue;
 
     const metrics = lhr.audits.metrics?.details ?
     /** @type {!LH.Audit.Details.Table} */ (lhr.audits.metrics.details).items[0] :

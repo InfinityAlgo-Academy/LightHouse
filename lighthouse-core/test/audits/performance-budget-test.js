@@ -3,12 +3,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-const ResourceBudgetAudit = require('../../audits/performance-budget.js');
-const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
-
-/* eslint-env jest */
+import ResourceBudgetAudit from '../../audits/performance-budget.js';
+import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
 
 describe('Performance: Resource budgets audit', () => {
   let artifacts;
@@ -24,7 +21,7 @@ describe('Performance: Resource budgets audit', () => {
           {url: 'http://third-party.com/file.jpg', resourceType: 'Image', transferSize: 70},
         ]),
       },
-      URL: {requestedUrl: 'http://example.com', finalUrl: 'http://example.com'},
+      URL: {requestedUrl: 'http://example.com', mainDocumentUrl: 'http://example.com', finalUrl: 'http://example.com'},
     };
     context = {computedCache: new Map(), settings: {}};
   });
@@ -189,7 +186,7 @@ describe('Performance: Resource budgets audit', () => {
               {url: 'http://third-party.com/script.js', resourceType: 'Script', transferSize: 50},
             ]),
           },
-          URL: {requestedUrl: 'http://example.com/file.html', finalUrl: 'http://example.com/file.html'},
+          URL: {requestedUrl: 'http://example.com/file.html', mainDocumentUrl: 'http://example.com/file.html', finalUrl: 'http://example.com/file.html'},
         };
         context.settings.budgets = [{
           path: '/',

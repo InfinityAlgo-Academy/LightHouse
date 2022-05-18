@@ -3,12 +3,10 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-/* eslint-env jest */
+import {strict as assert} from 'assert';
 
-const ErrorLogsAudit = require('../../audits/errors-in-console.js');
-const assert = require('assert').strict;
+import ErrorLogsAudit from '../../audits/errors-in-console.js';
 
 describe('ConsoleMessages error logs audit', () => {
   it('passes when no console messages were found', async () => {
@@ -16,7 +14,7 @@ describe('ConsoleMessages error logs audit', () => {
     const auditResult = await ErrorLogsAudit.audit({
       ConsoleMessages: [],
       SourceMaps: [],
-      ScriptElements: [],
+      Scripts: [],
     }, context);
     assert.equal(auditResult.score, 1);
     assert.ok(!auditResult.displayValue, 0);
@@ -34,7 +32,7 @@ describe('ConsoleMessages error logs audit', () => {
         },
       ],
       SourceMaps: [],
-      ScriptElements: [],
+      Scripts: [],
     }, context);
     assert.equal(auditResult.score, 1);
     assert.equal(auditResult.details.items.length, 0);
@@ -73,7 +71,7 @@ describe('ConsoleMessages error logs audit', () => {
         },
       ],
       SourceMaps: [],
-      ScriptElements: [],
+      Scripts: [],
     }, context);
 
     assert.equal(auditResult.score, 0);
@@ -101,7 +99,7 @@ describe('ConsoleMessages error logs audit', () => {
         },
       ],
       SourceMaps: [],
-      ScriptElements: [],
+      Scripts: [],
     }, context);
     assert.equal(auditResult.score, 0);
     assert.equal(auditResult.details.items.length, 1);
@@ -132,7 +130,7 @@ describe('ConsoleMessages error logs audit', () => {
         },
       }],
       SourceMaps: [],
-      ScriptElements: [],
+      Scripts: [],
     }, context);
     assert.equal(auditResult.score, 0);
     assert.equal(auditResult.details.items.length, 1);
@@ -155,7 +153,7 @@ describe('ConsoleMessages error logs audit', () => {
           },
         ],
         SourceMaps: [],
-        ScriptElements: [],
+        Scripts: [],
       }, context);
 
       expect(result.score).toBe(0);
@@ -172,7 +170,7 @@ describe('ConsoleMessages error logs audit', () => {
           },
         ],
         SourceMaps: [],
-        ScriptElements: [],
+        Scripts: [],
       }, context);
 
       expect(result.score).toBe(0);
@@ -189,7 +187,7 @@ describe('ConsoleMessages error logs audit', () => {
           },
         ],
         SourceMaps: [],
-        ScriptElements: [],
+        Scripts: [],
       }, context);
 
       expect(result.score).toBe(0);
@@ -208,7 +206,7 @@ describe('ConsoleMessages error logs audit', () => {
           },
         ],
         SourceMaps: [],
-        ScriptElements: [],
+        Scripts: [],
       }, context);
 
       expect(result.score).toBe(1);
@@ -227,7 +225,7 @@ describe('ConsoleMessages error logs audit', () => {
           },
         ],
         SourceMaps: [],
-        ScriptElements: [],
+        Scripts: [],
       }, context);
 
       expect(result.score).toBe(1);
@@ -253,7 +251,7 @@ describe('ConsoleMessages error logs audit', () => {
           },
         ],
         SourceMaps: [],
-        ScriptElements: [],
+        Scripts: [],
       }, context);
 
       expect(result.score).toBe(1);
@@ -274,7 +272,7 @@ describe('ConsoleMessages error logs audit', () => {
           'text': 'Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector',
         }],
         SourceMaps: [],
-        ScriptElements: [],
+        Scripts: [],
       }, context);
       assert.equal(auditResult.score, 1);
       assert.equal(auditResult.details.items.length, 0);

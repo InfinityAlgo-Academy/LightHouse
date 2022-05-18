@@ -17,8 +17,8 @@ const UIStrings = {
   /** Title of a lighthouse audit that tells a user to preload an image in order to improve their LCP time. */
   title: 'Preload Largest Contentful Paint image',
   /** Description of a lighthouse audit that tells a user to preload an image in order to improve their LCP time.  */
-  description: 'Preload the image used by ' +
-    'the LCP element in order to improve your LCP time. [Learn more](https://web.dev/optimize-lcp/#preload-important-resources).',
+  description: 'If the LCP element is dynamically added to the page, you should preload the ' +
+    'image in order to improve LCP. [Learn more](https://web.dev/optimize-lcp/#preload-important-resources).',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
@@ -198,12 +198,12 @@ class PreloadLCPImageAudit extends Audit {
    * @param {LH.Audit.Context} context
    * @return {Promise<LH.Audit.Product>}
    */
-  static async audit_(artifacts, context) {
+  static async audit(artifacts, context) {
     const gatherContext = artifacts.GatherContext;
     const trace = artifacts.traces[PreloadLCPImageAudit.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[PreloadLCPImageAudit.DEFAULT_PASS];
     const URL = artifacts.URL;
-    const metricData = {trace, devtoolsLog, gatherContext, settings: context.settings};
+    const metricData = {trace, devtoolsLog, gatherContext, settings: context.settings, URL};
     const lcpElement = artifacts.TraceElements
       .find(element => element.traceEventType === 'largest-contentful-paint');
 
@@ -235,16 +235,6 @@ class PreloadLCPImageAudit extends Audit {
       displayValue: wastedMs ? str_(i18n.UIStrings.displayValueMsSavings, {wastedMs}) : '',
       details,
     };
-  }
-
-  /**
-   * @return {Promise<LH.Audit.Product>}
-   */
-  static async audit() {
-    // Preload advice is dangerous until https://bugs.chromium.org/p/chromium/issues/detail?id=788757
-    // has been fixed and validated. All preload audits are on hold until then.
-    // See https://github.com/GoogleChrome/lighthouse/issues/11960 for more discussion.
-    return {score: 1, notApplicable: true, details: Audit.makeOpportunityDetails([], [], 0)};
   }
 }
 

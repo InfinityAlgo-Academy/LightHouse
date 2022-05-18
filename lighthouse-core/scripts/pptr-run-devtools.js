@@ -3,7 +3,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 /**
  * USAGE:
@@ -12,11 +11,11 @@
  *
  * To use with locally built DevTools and Lighthouse, run (assuming devtools at ~/src/devtools/devtools-frontend):
  *    yarn devtools
- *    yarn run-devtools --custom-devtools-frontend=file://$HOME/src/devtools/devtools-frontend/out/Default/gen/front_end
+ *    yarn run-devtools --chrome-flags=--custom-devtools-frontend=file://$HOME/src/devtools/devtools-frontend/out/Default/gen/front_end
  *
  * Or with the DevTools in .tmp:
  *   bash lighthouse-core/test/chromium-web-tests/setup.sh
- *   yarn run-devtools --custom-devtools-frontend=file://$PWD/.tmp/chromium-web-tests/devtools/devtools-frontend/out/Default/gen/front_end
+ *   yarn run-devtools --chrome-flags=--custom-devtools-frontend=file://$PWD/.tmp/chromium-web-tests/devtools/devtools-frontend/out/Default/gen/front_end
  *
  * URL list file: yarn run-devtools < path/to/urls.txt
  * Single URL: yarn run-devtools "https://example.com"
@@ -26,12 +25,15 @@ import fs from 'fs';
 import readline from 'readline';
 import {fileURLToPath} from 'url';
 
-import puppeteer from 'puppeteer';
+import puppeteer from 'puppeteer-core';
 import yargs from 'yargs';
 import * as yargsHelpers from 'yargs/helpers';
+import {getChromePath} from 'chrome-launcher';
+
+import {parseChromeFlags} from '../../lighthouse-cli/run.js';
 
 const y = yargs(yargsHelpers.hideBin(process.argv));
-const argv = y
+const argv_ = y
   .usage('$0 [url]')
   .help('help').alias('help', 'h')
   .option('_', {type: 'string'})
@@ -40,9 +42,9 @@ const argv = y
     default: 'latest-run/devtools-lhrs',
     alias: 'o',
   })
-  .option('custom-devtools-frontend', {
+  .option('chrome-flags', {
     type: 'string',
-    alias: 'd',
+    default: '',
   })
   .option('config', {
     type: 'string',
@@ -50,6 +52,7 @@ const argv = y
   })
   .argv;
 
+const argv = /** @type {Awaited<typeof argv_>} */ (argv_);
 /** @type {LH.Config.Json=} */
 const config = argv.config ? JSON.parse(argv.config) : undefined;
 
@@ -103,9 +106,12 @@ const sniffLighthouseStarted = `
 new Promise(resolve => {
   const panel = UI.panels.lighthouse || UI.panels.audits;
   const protocolService = panel.protocolService || panel._protocolService;
+  const functionName = protocolService.__proto__.startLighthouse ?
+    'startLighthouse' :
+    'collectLighthouseResults';
   (${addSniffer.toString()})(
     protocolService.__proto__,
-    'startLighthouse',
+    functionName,
     (inspectedURL) => resolve(inspectedURL)
   );
 });
@@ -164,8 +170,8 @@ function isValidUrl(url) {
 }
 
 /**
- * @param {import('puppeteer').Page} page
- * @param {import('puppeteer').Browser} browser
+ * @param {LH.Puppeteer.Page} page
+ * @param {LH.Puppeteer.Browser} browser
  * @param {string} url
  * @param {LH.Config.Json=} config
  * @return {Promise<{lhr: LH.Result, artifacts: LH.Artifacts}>}
@@ -219,7 +225,7 @@ async function testPage(page, browser, url, config) {
     });
   }
 
-  /** @type {Omit<puppeteer.Protocol.Runtime.EvaluateResponse, 'result'>|undefined} */
+  /** @type {Omit<LH.Puppeteer.Protocol.Runtime.EvaluateResponse, 'result'>|undefined} */
   let startLHResponse;
   while (!startLHResponse || startLHResponse.exceptionDetails) {
     if (startLHResponse) await new Promise(resolve => setTimeout(resolve, 1000));
@@ -229,21 +235,25 @@ async function testPage(page, browser, url, config) {
     }).catch(err => ({exceptionDetails: err}));
   }
 
-  /** @type {puppeteer.Protocol.Runtime.EvaluateResponse} */
+  /** @type {LH.Puppeteer.Protocol.Runtime.EvaluateResponse} */
   const lhStartedResponse = await session.send('Runtime.evaluate', {
     expression: sniffLighthouseStarted,
     awaitPromise: true,
     returnByValue: true,
   }).catch(err => err);
   // Verify the first parameter to `startLighthouse`, which should be a url.
+  // In M100 the LHR is returned on `collectLighthouseResults` which has just 1 options parameter containing `inspectedUrl`.
   // Don't try to check the exact value (because of redirects and such), just
   // make sure it exists.
-  if (!isValidUrl(lhStartedResponse.result.value)) {
+  if (
+    !isValidUrl(lhStartedResponse.result.value) &&
+    !isValidUrl(lhStartedResponse.result.value.inspectedURL)
+  ) {
     throw new Error(`Lighthouse did not start correctly. Got unexpected value for url: ${
       JSON.stringify(lhStartedResponse.result.value)}`);
   }
 
-  /** @type {puppeteer.Protocol.Runtime.EvaluateResponse} */
+  /** @type {LH.Puppeteer.Protocol.Runtime.EvaluateResponse} */
   const remoteLhrResponse = await session.send('Runtime.evaluate', {
     expression: sniffLhr,
     awaitPromise: true,
@@ -279,6 +289,7 @@ async function readUrlList() {
 }
 
 async function run() {
+  const chromeFlags = parseChromeFlags(argv['chromeFlags']);
   const outputDir = argv['output-dir'];
 
   // Create output directory.
@@ -291,7 +302,9 @@ async function run() {
     fs.mkdirSync(outputDir);
   }
 
-  const customDevtools = argv['custom-devtools-frontend'];
+  const customDevtools = chromeFlags
+    .find(f => f.startsWith('--custom-devtools-frontend='))
+    ?.replace('--custom-devtools-frontend=', '');
   if (customDevtools) {
     console.log(`Using custom devtools frontend: ${customDevtools}`);
     console.log('Make sure it has been built recently!');
@@ -304,8 +317,8 @@ async function run() {
   }
 
   const browser = await puppeteer.launch({
-    executablePath: process.env.CHROME_PATH,
-    args: customDevtools ? [`--custom-devtools-frontend=${customDevtools}`] : [],
+    executablePath: getChromePath(),
+    args: chromeFlags,
     devtools: true,
   });
 

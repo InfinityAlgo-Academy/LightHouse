@@ -3,15 +3,13 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-const UnusedImages =
-    require('../../../audits/byte-efficiency/offscreen-images.js');
-const assert = require('assert').strict;
-const createTestTrace = require('../../create-test-trace.js');
-const networkRecordsToDevtoolsLog = require('../../network-records-to-devtools-log.js');
+import {strict as assert} from 'assert';
 
-/* eslint-env jest */
+import UnusedImages from '../../../audits/byte-efficiency/offscreen-images.js';
+import createTestTrace from '../../create-test-trace.js';
+import networkRecordsToDevtoolsLog from '../../network-records-to-devtools-log.js';
+
 function generateRecord({
   resourceSizeInKb,
   url = 'https://google.com/logo.png',
@@ -461,6 +459,12 @@ describe('OffscreenImages audit', () => {
       ],
       traces: {defaultPass: createTestTrace({topLevelTasks})},
       devtoolsLogs: {defaultPass: devtoolsLog},
+      URL: {
+        initialUrl: 'about:blank',
+        requestedUrl: recordA.url,
+        mainDocumentUrl: recordA.url,
+        finalUrl: recordA.url,
+      },
     };
 
     return UnusedImages.audit_(artifacts, [recordA, recordB], context).then(auditResult => {
@@ -520,6 +524,12 @@ describe('OffscreenImages audit', () => {
       ],
       traces: {defaultPass: createTestTrace({topLevelTasks})},
       devtoolsLogs: {defaultPass: devtoolsLog},
+      URL: {
+        initialUrl: 'about:blank',
+        requestedUrl: recordA.url,
+        mainDocumentUrl: recordA.url,
+        finalUrl: recordA.url,
+      },
     };
 
     return UnusedImages.audit_(artifacts, [recordA, recordB], context).then(auditResult => {

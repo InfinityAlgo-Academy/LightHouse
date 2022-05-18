@@ -3,7 +3,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 /**
  * @fileoverview The relationship between these CLI modules:
@@ -24,7 +23,6 @@ import url from 'url';
 import module from 'module';
 
 import log from 'lighthouse-logger';
-import updateNotifier from 'update-notifier';
 
 import * as commands from './commands/commands.js';
 import * as Printer from './printer.js';
@@ -51,9 +49,6 @@ function isDev() {
  * @return {Promise<LH.RunnerResult|void>}
  */
 async function begin() {
-  // Tell user if there's a newer version of LH.
-  updateNotifier({pkg}).notify();
-
   const cliFlags = getFlags();
 
   // Process terminating command
@@ -141,12 +136,9 @@ async function begin() {
       url: urlUnderTest,
       flags: cliFlags,
       environmentData: {
-        name: 'redacted', // prevent sentry from using hostname
+        serverName: 'redacted', // prevent sentry from using hostname
         environment: isDev() ? 'development' : 'production',
         release: pkg.version,
-        tags: {
-          channel: 'cli',
-        },
       },
     });
   }

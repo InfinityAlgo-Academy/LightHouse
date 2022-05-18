@@ -4,8 +4,6 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 'use strict';
-
-/* eslint-env jest */
 /* eslint-disable new-cap */
 
 /**
@@ -40,8 +38,9 @@ expect.extend({
       const status = audit.score === 1 ?
         this.utils.EXPECTED_COLOR('○') :
         this.utils.RECEIVED_COLOR('✕');
-      const weight = this.utils.DIM_COLOR(`[weight: ${auditRef.weight}]`);
-      return `\t${status} ${weight} ${audit.id}`;
+      const attrs = this.utils.DIM_COLOR(`[weight: ${auditRef.weight}, score: ${audit.score}]`);
+      const error = audit.errorMessage ? ` ${audit.errorMessage}` : '';
+      return `\t${status} ${attrs} ${audit.id}${error}`;
     }).join('\n');
 
     if (score >= threshold) {

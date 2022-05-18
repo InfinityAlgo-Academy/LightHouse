@@ -3,33 +3,42 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-/* eslint-env jest */
+import {jest} from '@jest/globals';
 
-const {
+// import {snapshotGather} from '../../../fraggle-rock/gather/snapshot-runner.js';
+import {
   createMockDriver,
   createMockPage,
   createMockGathererInstance,
   mockDriverModule,
   mockRunnerModule,
-} = require('./mock-driver.js');
+} from './mock-driver.js';
 
-// Establish the mocks before we require our file under test.
+// Some imports needs to be done dynamically, so that their dependencies will be mocked.
+// See: https://jestjs.io/docs/ecmascript-modules#differences-between-esm-and-commonjs
+//      https://github.com/facebook/jest/issues/10025
+/** @type {import('../../../fraggle-rock/gather/snapshot-runner.js')['snapshotGather']} */
+let snapshotGather;
+
+beforeAll(async () => {
+  snapshotGather = (await import('../../../fraggle-rock/gather/snapshot-runner.js')).snapshotGather;
+});
+
+const mockRunner = mockRunnerModule();
+
+// Establish the mocks before we import the file under test.
 /** @type {ReturnType<typeof createMockDriver>} */
 let mockDriver;
-const mockRunner = mockRunnerModule();
 
 jest.mock('../../../fraggle-rock/gather/driver.js', () =>
   mockDriverModule(() => mockDriver.asDriver())
 );
 
-const {snapshot} = require('../../../fraggle-rock/gather/snapshot-runner.js');
-
 describe('Snapshot Runner', () => {
   /** @type {ReturnType<typeof createMockPage>} */
   let mockPage;
-  /** @type {import('puppeteer').Page} */
+  /** @type {LH.Puppeteer.Page} */
   let page;
   /** @type {ReturnType<typeof createMockGathererInstance>} */
   let gathererA;
@@ -64,25 +73,29 @@ describe('Snapshot Runner', () => {
   });
 
   it('should connect to the page and run', async () => {
-    await snapshot({page, config});
+    await snapshotGather({page, config});
     expect(mockDriver.connect).toHaveBeenCalled();
-    expect(mockRunner.run).toHaveBeenCalled();
+    expect(mockRunner.gather).toHaveBeenCalled();
+    expect(mockRunner.audit).not.toHaveBeenCalled();
   });
 
   it('should collect base artifacts', async () => {
-    mockPage.url.mockResolvedValue('https://lighthouse.example.com/');
+    mockDriver.url.mockResolvedValue('https://lighthouse.example.com/');
 
-    await snapshot({page, config});
-    const artifacts = await mockRunner.run.mock.calls[0][0]();
+    await snapshotGather({page, config});
+    const artifacts = await mockRunner.gather.mock.calls[0][0]();
     expect(artifacts).toMatchObject({
       fetchTime: expect.any(String),
-      URL: {finalUrl: 'https://lighthouse.example.com/'},
+      URL: {
+        initialUrl: 'https://lighthouse.example.com/',
+        finalUrl: 'https://lighthouse.example.com/',
+      },
     });
   });
 
   it('should collect snapshot artifacts', async () => {
-    await snapshot({page, config});
-    const artifacts = await mockRunner.run.mock.calls[0][0]();
+    await snapshotGather({page, config});
+    const artifacts = await mockRunner.gather.mock.calls[0][0]();
     expect(artifacts).toMatchObject({A: 'Artifact A', B: 'Artifact B'});
     expect(gathererA.getArtifact).toHaveBeenCalled();
     expect(gathererB.getArtifact).toHaveBeenCalled();
@@ -97,9 +110,9 @@ describe('Snapshot Runner', () => {
     };
 
     const configContext = {settingsOverrides};
-    await snapshot({page, config, configContext});
+    await snapshotGather({page, config, configContext});
 
-    expect(mockRunner.run.mock.calls[0][1]).toMatchObject({
+    expect(mockRunner.gather.mock.calls[0][1]).toMatchObject({
       config: {
         settings: settingsOverrides,
       },
@@ -107,8 +120,8 @@ describe('Snapshot Runner', () => {
   });
 
   it('should not invoke instrumentation methods', async () => {
-    await snapshot({page, config});
-    await mockRunner.run.mock.calls[0][0]();
+    await snapshotGather({page, config});
+    await mockRunner.gather.mock.calls[0][0]();
     expect(gathererA.startInstrumentation).not.toHaveBeenCalled();
     expect(gathererA.startSensitiveInstrumentation).not.toHaveBeenCalled();
     expect(gathererA.stopSensitiveInstrumentation).not.toHaveBeenCalled();
@@ -118,8 +131,8 @@ describe('Snapshot Runner', () => {
   it('should skip timespan artifacts', async () => {
     gathererB.meta.supportedModes = ['timespan'];
 
-    await snapshot({page, config});
-    const artifacts = await mockRunner.run.mock.calls[0][0]();
+    await snapshotGather({page, config});
+    const artifacts = await mockRunner.gather.mock.calls[0][0]();
     expect(artifacts).toMatchObject({A: 'Artifact A'});
     expect(artifacts).not.toHaveProperty('B');
     expect(gathererB.getArtifact).not.toHaveBeenCalled();
@@ -131,8 +144,8 @@ describe('Snapshot Runner', () => {
     // @ts-expect-error - the default fixture was defined as one without dependencies.
     gathererB.meta.dependencies = {ImageElements: dependencySymbol};
 
-    await snapshot({page, config});
-    const artifacts = await mockRunner.run.mock.calls[0][0]();
+    await snapshotGather({page, config});
+    const artifacts = await mockRunner.gather.mock.calls[0][0]();
     expect(artifacts).toMatchObject({A: 'Artifact A', B: 'Artifact B'});
     expect(gathererB.getArtifact.mock.calls[0][0]).toMatchObject({
       dependencies: {

@@ -6,11 +6,10 @@
 'use strict';
 
 const Audit = require('../audit.js');
-const NetworkRecords = require('../../computed/network-records.js');
 const HTTP_UNSUCCESSFUL_CODE_LOW = 400;
 const HTTP_UNSUCCESSFUL_CODE_HIGH = 599;
 const i18n = require('../../lib/i18n/i18n.js');
-const NetworkAnalyzer = require('../../lib/dependency-graph/simulator/network-analyzer.js');
+const MainResource = require('../../computed/main-resource.js');
 
 const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on the HTTP status code a page responds with. This descriptive title is shown when the page has responded with a valid HTTP status code. */
@@ -47,8 +46,7 @@ class HTTPStatusCode extends Audit {
   static async audit(artifacts, context) {
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     const URL = artifacts.URL;
-    const networkRecords = await NetworkRecords.request(devtoolsLog, context);
-    const mainResource = NetworkAnalyzer.findMainDocument(networkRecords, URL.finalUrl);
+    const mainResource = await MainResource.request({devtoolsLog, URL}, context);
 
     const statusCode = mainResource.statusCode;
 

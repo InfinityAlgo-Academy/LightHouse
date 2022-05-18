@@ -3,25 +3,24 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-const LanternFirstContentfulPaint = require('../../../computed/metrics/lantern-first-contentful-paint.js'); // eslint-disable-line max-len
-const assert = require('assert').strict;
-const networkRecordsToDevtoolsLog = require('../../network-records-to-devtools-log.js');
-const createTestTrace = require('../../create-test-trace.js');
+import {strict as assert} from 'assert';
 
-const trace = require('../../fixtures/traces/progressive-app-m60.json');
-const devtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
-
-/* eslint-env jest */
+import LanternFirstContentfulPaint from '../../../computed/metrics/lantern-first-contentful-paint.js'; // eslint-disable-line max-len
+import trace from '../../fixtures/traces/progressive-app-m60.json';
+import devtoolsLog from '../../fixtures/traces/progressive-app-m60.devtools.log.json';
+import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';
+import networkRecordsToDevtoolsLog from '../../network-records-to-devtools-log.js';
+import createTestTrace from '../../create-test-trace.js';
 describe('Metrics: Lantern FCP', () => {
   const gatherContext = {gatherMode: 'navigation'};
 
   it('should compute predicted value', async () => {
     const settings = {};
     const context = {settings, computedCache: new Map()};
+    const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
     const result = await LanternFirstContentfulPaint.request({trace, devtoolsLog, gatherContext,
-      settings}, context);
+      settings, URL}, context);
 
     expect({
       timing: Math.round(result.timing),
@@ -58,11 +57,17 @@ describe('Metrics: Lantern FCP', () => {
       },
     ]);
     const trace = createTestTrace({timeOrigin: 0, traceEnd: 2000});
+    const URL = {
+      requestedUrl: 'https://example.com/',
+      mainDocumentUrl: 'https://example.com/',
+      finalUrl: 'https://example.com/',
+    };
     const artifacts = {
       trace,
       devtoolsLog,
       gatherContext,
       settings,
+      URL,
     };
     const result = await LanternFirstContentfulPaint.request(artifacts, context);
 

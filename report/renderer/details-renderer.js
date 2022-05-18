@@ -14,7 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-'use strict';
 
 /** @typedef {import('./dom.js').DOM} DOM */
 
@@ -27,7 +26,6 @@
 
 import {Util} from './util.js';
 import {CriticalRequestChainRenderer} from './crc-details-renderer.js';
-import {SnippetRenderer} from './snippet-renderer.js';
 import {ElementScreenshotRenderer} from './element-screenshot-renderer.js';
 
 const URL_PREFIXES = ['http://', 'https://', 'data:'];
@@ -79,9 +77,8 @@ export class DetailsRenderer {
    * @return {Element}
    */
   _renderBytes(details) {
-    // TODO: handle displayUnit once we have something other than 'kb'
-    // Note that 'kb' is historical and actually represents KiB.
-    const value = Util.i18n.formatBytesToKiB(details.value, details.granularity);
+    // TODO: handle displayUnit once we have something other than 'KiB'
+    const value = Util.i18n.formatBytesToKiB(details.value, details.granularity || 0.1);
     const textEl = this._renderText(value);
     textEl.title = Util.i18n.formatBytes(details.value);
     return textEl;
@@ -92,9 +89,11 @@ export class DetailsRenderer {
    * @return {Element}
    */
   _renderMilliseconds(details) {
-    let value = Util.i18n.formatMilliseconds(details.value, details.granularity);
+    let value;
     if (details.displayUnit === 'duration') {
       value = Util.i18n.formatDuration(details.value);
+    } else {
+      value = Util.i18n.formatMilliseconds(details.value, details.granularity || 10);
     }
 
     return this._renderText(value);
@@ -120,12 +119,12 @@ export class DetailsRenderer {
     }
 
     const element = this._dom.createElement('div', 'lh-text__url');
-    element.appendChild(this._renderLink({text: displayedPath, url}));
+    element.append(this._renderLink({text: displayedPath, url}));
 
     if (displayedHost) {
       const hostElem = this._renderText(displayedHost);
       hostElem.classList.add('lh-text__url-host');
-      element.appendChild(hostElem);
+      element.append(hostElem);
     }
 
     if (title) {
@@ -173,7 +172,7 @@ export class DetailsRenderer {
    * @return {Element}
    */
   _renderNumeric(details) {
-    const value = Util.i18n.formatNumber(details.value, details.granularity);
+    const value = Util.i18n.formatNumber(details.value, details.granularity || 0.1);
     const element = this._dom.createElement('div', 'lh-numeric');
     element.textContent = value;
     return element;
@@ -398,7 +397,7 @@ export class DetailsRenderer {
 
       if (valueElement) {
         const classes = `lh-table-column--${heading.valueType}`;
-        this._dom.createChildOf(rowElem, 'td', classes).appendChild(valueElement);
+        this._dom.createChildOf(rowElem, 'td', classes).append(valueElement);
       } else {
         // Empty cell is rendered for a column if:
         // - the pair is null
@@ -453,7 +452,7 @@ export class DetailsRenderer {
       const classes = `lh-table-column--${valueType}`;
       const labelEl = this._dom.createElement('div', 'lh-text');
       labelEl.textContent = heading.label;
-      this._dom.createChildOf(theadTrElem, 'th', classes).appendChild(labelEl);
+      this._dom.createChildOf(theadTrElem, 'th', classes).append(labelEl);
     }
 
     const tbodyElem = this._dom.createChildOf(tableElem, 'tbody');
@@ -472,15 +471,16 @@ export class DetailsRenderer {
   }
 
   /**
-   * @param {LH.Audit.Details.List} details
+   * @param {LH.FormattedIcu<LH.Audit.Details.List>} details
    * @return {Element}
    */
   _renderList(details) {
     const listContainer = this._dom.createElement('div', 'lh-list');
 
     details.items.forEach(item => {
-      const snippetEl = SnippetRenderer.render(this._dom, item, this);
-      listContainer.appendChild(snippetEl);
+      const listItem = this.render(item);
+      if (!listItem) return;
+      listContainer.append(listItem);
     });
 
     return listContainer;
@@ -495,13 +495,13 @@ export class DetailsRenderer {
     if (item.nodeLabel) {
       const nodeLabelEl = this._dom.createElement('div');
       nodeLabelEl.textContent = item.nodeLabel;
-      element.appendChild(nodeLabelEl);
+      element.append(nodeLabelEl);
     }
     if (item.snippet) {
       const snippetEl = this._dom.createElement('div');
       snippetEl.classList.add('lh-node__snippet');
       snippetEl.textContent = item.snippet;
-      element.appendChild(snippetEl);
+      element.append(snippetEl);
     }
     if (item.selector) {
       element.title = item.selector;

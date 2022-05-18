@@ -109,6 +109,7 @@ class UnusedBytes extends Audit {
     const gatherContext = artifacts.GatherContext;
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+    const URL = artifacts.URL;
     const settings = context?.settings || {};
     const simulatorOptions = {
       devtoolsLog,
@@ -131,7 +132,7 @@ class UnusedBytes extends Audit {
       this.audit_(artifacts, networkRecords, context),
       // Page dependency graph is only used in navigation mode.
       gatherContext.gatherMode === 'navigation' ?
-        PageDependencyGraph.request({trace, devtoolsLog}, context) :
+        PageDependencyGraph.request({trace, devtoolsLog, URL}, context) :
         null,
       LoadSimulator.request(simulatorOptions, context),
     ]);

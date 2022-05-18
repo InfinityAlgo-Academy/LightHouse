@@ -78,12 +78,14 @@ function resolveWaitForFullyLoadedOptions(options) {
  * navigations.
  *
  * @param {LH.Gatherer.FRTransitionalDriver} driver
- * @param {string} url
+ * @param {LH.NavigationRequestor} requestor
  * @param {NavigationOptions} options
- * @return {Promise<{finalUrl: string, warnings: Array<LH.IcuMessage>}>}
+ * @return {Promise<{requestedUrl: string, mainDocumentUrl: string, warnings: Array<LH.IcuMessage>}>}
  */
-async function gotoURL(driver, url, options) {
-  const status = {msg: `Navigating to ${url}`, id: 'lh:driver:navigate'};
+async function gotoURL(driver, requestor, options) {
+  const status = typeof requestor === 'string' ?
+    {msg: `Navigating to ${requestor}`, id: 'lh:driver:navigate'} :
+    {msg: 'Navigating using a user defined function', id: 'lh:driver:navigate'};
   log.time(status);
 
   const session = driver.defaultSession;
@@ -94,9 +96,14 @@ async function gotoURL(driver, url, options) {
   await session.sendCommand('Page.enable');
   await session.sendCommand('Page.setLifecycleEventsEnabled', {enabled: true});
 
-  // No timeout needed for Page.navigate. See https://github.com/GoogleChrome/lighthouse/pull/6413
-  session.setNextProtocolTimeout(Infinity);
-  const waitforPageNavigateCmd = session.sendCommand('Page.navigate', {url});
+  let waitForNavigationTriggered;
+  if (typeof requestor === 'string') {
+    // No timeout needed for Page.navigate. See https://github.com/GoogleChrome/lighthouse/pull/6413
+    session.setNextProtocolTimeout(Infinity);
+    waitForNavigationTriggered = session.sendCommand('Page.navigate', {url: requestor});
+  } else {
+    waitForNavigationTriggered = requestor();
+  }
 
   const waitForNavigated = options.waitUntil.includes('navigated');
   const waitForLoad = options.waitUntil.includes('load');
@@ -119,10 +126,21 @@ async function gotoURL(driver, url, options) {
 
   const waitConditions = await Promise.all(waitConditionPromises);
   const timedOut = waitConditions.some(condition => condition.timedOut);
-  const finalUrl = (await networkMonitor.getFinalNavigationUrl()) || url;
+  const navigationUrls = await networkMonitor.getNavigationUrls();
+
+  let requestedUrl = navigationUrls.requestedUrl;
+  if (typeof requestor === 'string') {
+    if (requestedUrl && !URL.equalWithExcludedFragments(requestor, requestedUrl)) {
+      log.error('Navigation', 'Provided URL did not match initial navigation URL');
+    }
+    requestedUrl = requestor;
+  }
+  if (!requestedUrl) throw Error('No navigations detected when running user defined requestor.');
+
+  const mainDocumentUrl = navigationUrls.mainDocumentUrl || requestedUrl;
 
   // Bring `Page.navigate` errors back into the promise chain. See https://github.com/GoogleChrome/lighthouse/pull/6739.
-  await waitforPageNavigateCmd;
+  await waitForNavigationTriggered;
   await networkMonitor.disable();
 
   if (options.debugNavigation) {
@@ -131,26 +149,27 @@ async function gotoURL(driver, url, options) {
 
   log.timeEnd(status);
   return {
-    finalUrl,
-    warnings: getNavigationWarnings({timedOut, finalUrl, requestedUrl: url}),
+    requestedUrl,
+    mainDocumentUrl,
+    warnings: getNavigationWarnings({timedOut, mainDocumentUrl, requestedUrl}),
   };
 }
 
 /**
- * @param {{timedOut: boolean, requestedUrl: string, finalUrl: string; }} navigation
+ * @param {{timedOut: boolean, requestedUrl: string, mainDocumentUrl: string; }} navigation
  * @return {Array<LH.IcuMessage>}
  */
 function getNavigationWarnings(navigation) {
-  const {requestedUrl, finalUrl} = navigation;
+  const {requestedUrl, mainDocumentUrl} = navigation;
   /** @type {Array<LH.IcuMessage>} */
   const warnings = [];
 
   if (navigation.timedOut) warnings.push(str_(UIStrings.warningTimeout));
 
-  if (!URL.equalWithExcludedFragments(requestedUrl, finalUrl)) {
+  if (!URL.equalWithExcludedFragments(requestedUrl, mainDocumentUrl)) {
     warnings.push(str_(UIStrings.warningRedirected, {
       requested: requestedUrl,
-      final: finalUrl,
+      final: mainDocumentUrl,
     }));
   }
 

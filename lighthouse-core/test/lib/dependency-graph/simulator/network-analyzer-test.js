@@ -3,18 +3,14 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-const assert = require('assert').strict;
+import {strict as assert} from 'assert';
 
-const NetworkAnalyzer = require('../../../../lib/dependency-graph/simulator/network-analyzer.js');
-const NetworkRecords = require('../../../../computed/network-records.js');
-const devtoolsLog = require('../../../fixtures/traces/progressive-app-m60.devtools.log.json');
-const devtoolsLogWithRedirect = require(
-  '../../../fixtures/traces/site-with-redirect.devtools.log.json'
-);
+import NetworkAnalyzer from '../../../../lib/dependency-graph/simulator/network-analyzer.js';
+import NetworkRecords from '../../../../computed/network-records.js';
+import devtoolsLog from '../../../fixtures/traces/progressive-app-m60.devtools.log.json';
+import devtoolsLogWithRedirect from '../../../fixtures/traces/site-with-redirect.devtools.log.json';
 
-/* eslint-env jest */
 describe('DependencyGraph/Simulator/NetworkAnalyzer', () => {
   let recordId;
 
@@ -378,35 +374,14 @@ describe('DependencyGraph/Simulator/NetworkAnalyzer', () => {
   describe('#findMainDocument', () => {
     it('should find the main document', async () => {
       const records = await NetworkRecords.request(devtoolsLog, {computedCache: new Map()});
-      const mainDocument = NetworkAnalyzer.findMainDocument(records);
+      const mainDocument = NetworkAnalyzer.findResourceForUrl(records, 'https://pwa.rocks/');
       assert.equal(mainDocument.url, 'https://pwa.rocks/');
     });
 
-    it('should throw when it cannot be found', async () => {
-      expect(() => NetworkAnalyzer.findMainDocument([])).toThrow(/main resource/);
-    });
-
-    it('should break ties using position in array', async () => {
-      const records = [
-        {url: 'http://example.com', resourceType: 'Other'},
-        {url: 'https://example.com', resourceType: 'Other'},
-        {url: 'https://www.example.com', resourceType: 'Document', startTime: 0},
-        {url: 'https://www.iframe.com', resourceType: 'Document', startTime: 0},
-      ];
-      const mainDocument = NetworkAnalyzer.findMainDocument(records);
-      assert.equal(mainDocument.url, 'https://www.example.com');
-    });
-  });
-
-  describe('#findOptionalMainDocument', () => {
-    it('should find the main document', async () => {
+    it('should find the main document if the URL includes a fragment', async () => {
       const records = await NetworkRecords.request(devtoolsLog, {computedCache: new Map()});
-      const mainDocument = NetworkAnalyzer.findOptionalMainDocument(records);
+      const mainDocument = NetworkAnalyzer.findResourceForUrl(records, 'https://pwa.rocks/#info');
       assert.equal(mainDocument.url, 'https://pwa.rocks/');
-    });
-
-    it('should return undefined when it cannot be found', async () => {
-      expect(NetworkAnalyzer.findOptionalMainDocument([])).toBe(undefined);
     });
   });
 
@@ -414,7 +389,7 @@ describe('DependencyGraph/Simulator/NetworkAnalyzer', () => {
     it('should resolve to the same document when no redirect', async () => {
       const records = await NetworkRecords.request(devtoolsLog, {computedCache: new Map()});
 
-      const mainDocument = NetworkAnalyzer.findMainDocument(records, 'https://pwa.rocks/');
+      const mainDocument = NetworkAnalyzer.findResourceForUrl(records, 'https://pwa.rocks/');
       const finalDocument = NetworkAnalyzer.resolveRedirects(mainDocument);
       assert.equal(mainDocument.url, finalDocument.url);
       assert.equal(finalDocument.url, 'https://pwa.rocks/');
@@ -425,7 +400,7 @@ describe('DependencyGraph/Simulator/NetworkAnalyzer', () => {
         computedCache: new Map(),
       });
 
-      const mainDocument = NetworkAnalyzer.findMainDocument(records, 'http://www.vkontakte.ru/');
+      const mainDocument = NetworkAnalyzer.findResourceForUrl(records, 'http://www.vkontakte.ru/');
       const finalDocument = NetworkAnalyzer.resolveRedirects(mainDocument);
       assert.notEqual(mainDocument.url, finalDocument.url);
       assert.equal(finalDocument.url, 'https://m.vk.com/');

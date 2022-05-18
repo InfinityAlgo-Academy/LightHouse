@@ -64,7 +64,7 @@ class Driver {
   defaultSession = this;
 
   // eslint-disable-next-line no-invalid-this
-  fetcher = new Fetcher(this.defaultSession, this.executionContext);
+  fetcher = new Fetcher(this.defaultSession);
 
   /**
    * @param {Connection} connection
@@ -469,6 +469,11 @@ class Driver {
   endDevtoolsLog() {
     this._devtoolsLog.endRecording();
     return this._devtoolsLog.messages;
+  }
+
+  async url() {
+    const {frameTree} = await this.sendCommand('Page.getFrameTree');
+    return `${frameTree.frame.url}${frameTree.frame.urlFragment || ''}`;
   }
 }
 

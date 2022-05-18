@@ -20,6 +20,10 @@ const stackPacksToInclude = [
     requiredStacks: ['js:wordpress'],
   },
   {
+    packId: 'ezoic',
+    requiredStacks: ['js:ezoic'],
+  },
+  {
     packId: 'drupal',
     requiredStacks: ['js:drupal'],
   },
@@ -42,6 +46,10 @@ const stackPacksToInclude = [
   {
     packId: 'next.js',
     requiredStacks: ['js:next'],
+  },
+  {
+    packId: 'nuxt',
+    requiredStacks: ['js:nuxt'],
   },
   {
     packId: 'angular',

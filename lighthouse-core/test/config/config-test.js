@@ -3,20 +3,22 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-const Config = require('../../config/config.js');
-const assert = require('assert').strict;
-const path = require('path');
-const defaultConfig = require('../../config/default-config.js');
-const constants = require('../../config/constants.js');
-const log = require('lighthouse-logger');
-const Gatherer = require('../../gather/gatherers/gatherer.js');
-const Audit = require('../../audits/audit.js');
-const i18n = require('../../lib/i18n/i18n.js');
-const format = require('../../../shared/localization/format.js');
+import {strict as assert} from 'assert';
+import path from 'path';
 
-/* eslint-env jest */
+import log from 'lighthouse-logger';
+
+import Config from '../../config/config.js';
+import defaultConfig from '../../config/default-config.js';
+import constants from '../../config/constants.js';
+import Gatherer from '../../gather/gatherers/gatherer.js';
+import Audit from '../../audits/audit.js';
+import i18n from '../../lib/i18n/i18n.js';
+import format from '../../../shared/localization/format.js';
+import {createCommonjsRefs} from '../../scripts/esm-utils.js';
+
+const {require, __filename, __dirname} = createCommonjsRefs(import.meta);
 
 describe('Config', () => {
   let origConfig;
