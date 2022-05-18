@@ -12,6 +12,7 @@ import {Buffer} from 'buffer';
 import lighthouse from '../../lighthouse-core/index.js';
 import {navigation, startTimespan, snapshot} from '../../lighthouse-core/fraggle-rock/api.js';
 import Runner from '../../lighthouse-core/runner.js';
+import {initializeConfig} from '../../lighthouse-core/fraggle-rock/config/config.js';
 import RawProtocol from '../../lighthouse-core/gather/connections/raw.js';
 import log from 'lighthouse-logger';
 import {lookupLocale} from '../../lighthouse-core/lib/i18n/i18n.js';
@@ -84,7 +85,7 @@ function listenForStatus(listenCallback) {
  * @param {{device: "mobile" | "desktop", url: string}} opts
  * @return {Promise<LH.RunnerResult|undefined>}
  */
-function analyzeTrace(trace, opts) {
+async function analyzeTrace(trace, opts) {
   const url = opts.url;
 
   /** @type {LH.Config.Json} */
@@ -103,37 +104,46 @@ function analyzeTrace(trace, opts) {
   };
 
   // TODO: use FR's initializeConfig. it'll filter for navigation-y things.
-  const config = lighthouse.generateConfig(configJSON, {});
-  const runOpts = {url, config, computedCache: new Map()};
+  // const config = lighthouse.generateConfig(configJSON, {});
+  // const runOpts = {url, config, computedCache: new Map()};
+  const {config} = initializeConfig(configJSON, {gatherMode: 'navigation'});
+  const runnerOptions = {config, computedCache: new Map()};
 
-  const gatherFn = () => {
-    /** @type {LH.DevtoolsLog} */
-    const fakeDtLogs = [];
-    fakeDtLogs.smuggledTrace = trace;
+  // const gatherFn = () => {
+  /** @type {LH.DevtoolsLog} */
+  const fakeDtLogs = [];
+  fakeDtLogs.smuggledTrace = trace;
 
-    // /** @type {Partial<LH.Artifacts>} */
-    const artifacts = {
-      traces: {defaultPass: trace},
-      devtoolsLogs: {defaultPass: fakeDtLogs},
-
-      GatherContext: {gatherMode: 'navigation'}, // todo: timespan???
-      settings: config.settings,
-      URL: {requestedUrl: url, finalUrl: url},
-      HostFormFactor: opts.device,
-      HostUserAgent: '',
-      NetworkUserAgent: '',
-      Stacks: [],
-      InstallabilityErrors: {errors: []},
-      fetchTime: new Date().toJSON() || '',
-      LighthouseRunWarnings: [],
-      BenchmarkIndex: 1000,
-      Timing: [],
-      PageLoadError: null,
-      WebAppManifest: null,
-    };
-    return Promise.resolve(artifacts);
+  // /** @type {Partial<LH.Artifacts>} */
+  const artifacts = {
+    traces: {defaultPass: trace},
+    devtoolsLogs: {defaultPass: fakeDtLogs},
+    GatherContext: {gatherMode: 'navigation'}, // todo: timespan???
+    settings: config.settings,
+    URL: {requestedUrl: url, finalUrl: url},
+    HostFormFactor: opts.device,
+    HostUserAgent: '',
+    NetworkUserAgent: '',
+    Stacks: [],
+    InstallabilityErrors: {errors: []},
+    fetchTime: new Date().toJSON() || '',
+    LighthouseRunWarnings: [],
+    BenchmarkIndex: 1000,
+    Timing: [],
+    PageLoadError: null,
+    WebAppManifest: null,
   };
-  return Runner.run(gatherFn, runOpts);
+  // return Promise.resolve(artifacts);
+  // };
+  // return Runner.run(gatherFn, runOpts);
+
+  // const gatherResult = await navigationGather(...params);
+
+
+  // @ts-ignore I can't mock EVERY artifact ever.
+  const x = await Runner.audit(artifacts, runnerOptions);
+  console.log({x});
+  return x;
 }
 
 /**
