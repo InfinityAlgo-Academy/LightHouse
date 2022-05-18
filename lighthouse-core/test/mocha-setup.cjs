@@ -16,6 +16,8 @@ const path = require('path');
 
 const expect = require('expect');
 const {SnapshotState, toMatchSnapshot, toMatchInlineSnapshot} = require('jest-snapshot');
+const td = require('testdouble');
+const jestMock = require('jest-mock');
 
 require('./jest-setup/setup.js');
 
@@ -126,6 +128,29 @@ const makeFn = (mochaFn) => (fn, timeout) => {
 const {before, after} = require('mocha');
 global.beforeAll = makeFn(before);
 global.afterAll = makeFn(after);
+
+// Temporary code to allow some existing `jest` calls to continue to work.
+const fakeJest = global.jest = {
+  fn(cb) {
+    return jestMock.fn(cb);
+  },
+  spyOn(...args) {
+    return jestMock.spyOn(...args);
+  },
+  requireMock(modulePath) {
+    const mockedModule = require(modulePath);
+    if (!Object.values(mockedModule)[0].mock) throw new Error(`expected ${modulePath} to be mocked`);
+    return mockedModule;
+  },
+  mock(path, cb) {
+    const theMock = cb();
+    // testdouble breaks if `jest` is defined in global scope.
+    delete global.jest;
+    const result = td.replace(path, theMock);
+    global.jest = fakeJest;
+    return result
+  },
+};
 
 /** @type {Mocha.Test} */
 let mochaCurrentTest;
