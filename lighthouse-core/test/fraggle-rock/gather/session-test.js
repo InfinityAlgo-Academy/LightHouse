@@ -6,8 +6,6 @@
 
 import {EventEmitter} from 'events';
 
-import {jest} from '@jest/globals';
-
 import ProtocolSession from '../../../fraggle-rock/gather/session.js';
 import {
   flushAllTimersAndMicrotasks,

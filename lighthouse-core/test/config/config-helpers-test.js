@@ -6,8 +6,6 @@
 
 import path from 'path';
 
-import {jest} from '@jest/globals';
-
 import {
   deepClone,
   deepCloneConfigJson,

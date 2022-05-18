@@ -6,8 +6,6 @@
 
 import {strict as assert} from 'assert';
 
-import {jest} from '@jest/globals';
-
 import Gatherer from '../../gather/gatherers/gatherer.js';
 // import GathererRunner_ from '../../gather/gather-runner.js';
 // import Config from '../../config/config.js';

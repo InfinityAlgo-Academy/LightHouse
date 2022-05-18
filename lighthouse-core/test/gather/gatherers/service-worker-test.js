@@ -6,8 +6,6 @@
 
 import {strict as assert} from 'assert';
 
-import {jest} from '@jest/globals';
-
 import {fnAny} from '../../test-utils.js';
 
 // import ServiceWorkerGather from '../../../gather/gatherers/service-worker.js';
