@@ -41,6 +41,14 @@ const rawArgv = y
     },
     'parallel': {
       type: 'boolean',
+      // Although much faster, mocha's parallel test runner defers printing errors until
+      // all tests have finished. This is may be undesired for local development, so enable
+      // parallel mode by default only in CI.
+      // default: Boolean(process.env.CI),
+      // TODO: actually, running in parallel mode gets us built-in per-file test isolation,
+      // which is important for mocks. We might be able to avoid issues in non-parallel mode
+      // by using the programmatic mocha API and calling td.reset() on `suite end`, but this is
+      // unverified.
       default: true,
     },
   })
