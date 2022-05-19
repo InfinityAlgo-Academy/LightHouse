@@ -4,16 +4,13 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-'use strict';
 
-// READING FROM LATEST RUNNNNNNNNNNNNNNN
-const devtoolsLog = require('../../../latest-run/defaultPass.devtoolslog.json');
-const trace = require('../../../latest-run/defaultPass.trace.json');
+import {readJson} from '../../../root.js';
+import constructRecordsFromTrace from '../../lib/network-records-from-trace.js';
+import NetworkRecorder from '../../lib/network-recorder.js';
 
-const constructRecordsFromTrace = require('../../lib/network-records-from-trace.js');
-
-const NetworkRecorder = require('../../lib/network-recorder.js');
-
+const devtoolsLog = readJson('./latest-run/defaultPass.devtoolslog.json');
+const trace = readJson('./latest-run/defaultPass.trace.json');
 
 /* eslint-env jest */
 describe('NetworkRecordsFromTrace', () => {
@@ -27,7 +24,7 @@ describe('NetworkRecordsFromTrace', () => {
 
     // TODO this is currently testing just 1 request. ideally this "test" tries ALL requests that DTlog finds.
     const pred = /** @type {LH.Artifacts.NetworkRequest} */ (nr) =>
-      nr.requestId === '868B884023EA82545E754C3734974FE7';
+      nr.requestId === 'C8D5AE964B1514586C0AD1E089AB7020';
 
     const dtlNR = netReqsDTL.find(pred);
     const myTraceNR = netReqsTrace.find(pred);

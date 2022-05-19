@@ -50,7 +50,7 @@ class NetworkRecordsMaker {
 
   synthesizeRequests() {
     for (const [requestId, evtBag] of this.requestIdToEventsMap.entries()) {
-      let request = this.networkRecorder._findRealRequestAndSetSession(requestId);
+      let request = this.networkRecorder._findRealRequestAndSetSession(requestId, undefined); // TODO: undefined sessionId is fine?
 
       // This is a simple new request, create the NetworkRequest object
       if (!request) {
