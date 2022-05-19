@@ -6,6 +6,8 @@
 'use strict';
 
 module.exports = {
+  // Use heap-saving patched jest runner to prevent OOMs.
+  runner: 'jest-runner-iansu',
   setupFilesAfterEnv: ['./lighthouse-core/test/jest-setup/setup.js'],
   testEnvironment: 'node',
   testMatch: [
