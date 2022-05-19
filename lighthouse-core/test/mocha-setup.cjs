@@ -8,15 +8,19 @@
  * @fileoverview
  * - sets global.expect
  * - configures the mocha test runner to use jest-snapshot
+ * - symlinks `fixtures/config-plugins/lighthouse-plugin-simple` to a place where the default
+ *   config module resolution will find it
  */
 
 /* eslint-disable import/order */
 
+const fs = require('fs');
 const path = require('path');
 
 const expect = require('expect');
 const td = require('testdouble');
 const {SnapshotState, toMatchSnapshot, toMatchInlineSnapshot} = require('jest-snapshot');
+const { LH_ROOT } = require('../../root.js');
 
 require('./jest-setup/setup.js');
 
@@ -162,5 +166,18 @@ module.exports = {
         });
       }
     },
+  },
+  mochaGlobalSetup() {
+    try {
+      fs.symlinkSync(
+        `${LH_ROOT}/lighthouse-core/test/fixtures/config-plugins/lighthouse-plugin-simple`,
+        `${LH_ROOT}/lighthouse-plugin-simple`
+      );
+    } catch {
+      // Might exist already because process was killed before tests finished.
+    }
+  },
+  mochaGlobalTeardown() {
+    fs.unlinkSync(`${LH_ROOT}/lighthouse-plugin-simple`);
   },
 };

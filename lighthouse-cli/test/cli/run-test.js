@@ -30,15 +30,6 @@ describe('CLI run', function() {
     let fileResults;
 
     beforeAll(async () => {
-      try {
-        fs.symlinkSync(
-          `${LH_ROOT}/lighthouse-core/test/fixtures/config-plugins/lighthouse-plugin-simple`,
-          `${LH_ROOT}/lighthouse-plugin-simple`
-        );
-      } catch {
-        // Might exist already because process was killed before test finished.
-      }
-
       const url = 'http://localhost:10200/dobetterweb/dbw_tester.html';
       // eslint-disable-next-line max-len
       const samplev2ArtifactsPath = LH_ROOT + '/lighthouse-core/test/results/artifacts/';
@@ -66,7 +57,6 @@ describe('CLI run', function() {
 
     afterAll(() => {
       fs.unlinkSync(filename);
-      fs.unlinkSync(`${LH_ROOT}/lighthouse-plugin-simple`);
     });
 
     it('returns results that match the saved results', () => {
