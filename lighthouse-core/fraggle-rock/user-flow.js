@@ -11,24 +11,7 @@ const {startTimespanGather} = require('./gather/timespan-runner.js');
 const {navigationGather} = require('./gather/navigation-runner.js');
 const Runner = require('../runner.js');
 const {initializeConfig} = require('./config/config.js');
-
-/**
- * Promise that is resolved externally.
- * @template [T=void]
- */
-class ExternalPromise {
-  constructor() {
-    /** @type {Promise<T>} */
-    this._innerPromise = new Promise((resolve, reject) => {
-      this.resolve = resolve;
-      this.reject = reject;
-    });
-
-    this.then = this._innerPromise.then.bind(this._innerPromise);
-    this.catch = this._innerPromise.catch.bind(this._innerPromise);
-    this.finally = this._innerPromise.finally.bind(this._innerPromise);
-  }
-}
+const ExternalPromise = require('../lib/external-promise.js');
 
 /** @typedef {Parameters<snapshotGather>[0]} FrOptions */
 /** @typedef {Omit<FrOptions, 'page'> & {name?: string}} UserFlowOptions */
@@ -168,9 +151,8 @@ class UserFlow {
   async endNavigation() {
     if (this.currentTimespan) throw new Error('Timespan already in progress');
     if (!this.currentNavigation) throw new Error('No navigation in progress');
-    const result = await this.currentNavigation.endNavigation();
+    await this.currentNavigation.endNavigation();
     this.currentNavigation = undefined;
-    return result;
   }
 
   /**
