@@ -97,11 +97,11 @@ jobs:
       run: echo "CHROME_PATH=${env:GITHUB_WORKSPACE}\chrome-win\chrome" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
 
     - run: echo ${env:GITHUB_WORKSPACE}
-    - run: type %GITHUB_ENV%
+    - run: type ${env:GITHUB_ENV}
 
     # Chrome Stable is already installed by default.
     - name: Install Chrome ToT
-      run: bash %GITHUB_WORKSPACE%\lighthouse\lighthouse-core\scripts\download-chrome.sh
+      run: bash ${env:GITHUB_WORKSPACE}\lighthouse\lighthouse-core\scripts\download-chrome.sh
 
     - run: yarn install --frozen-lockfile --network-timeout 1000000
     - run: yarn build-report
