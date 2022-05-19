@@ -92,7 +92,7 @@ async function analyzeTrace(trace, opts) {
       formFactor: opts.device,
       throttlingMethod: 'devtools', // can't do lantern right now, so need real throttling applied.
       screenEmulation: {disabled: true},
-      traceBasedNetworkRecords: true,
+      __internalTraceBasedNetworkRecords: true,
     },
   };
 

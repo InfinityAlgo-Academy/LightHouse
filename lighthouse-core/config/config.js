@@ -452,7 +452,7 @@ class Config {
       requiredArtifacts.forEach(artifact => gatherers.add(artifact));
 
 
-      if (settings.traceBasedNetworkRecords && requiredArtifacts.includes('devtoolsLogs')) {
+      if (settings.__internalTraceBasedNetworkRecords && requiredArtifacts.includes('devtoolsLogs')) {
         gatherers.add('traces');
       }
 

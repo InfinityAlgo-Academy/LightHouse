@@ -542,7 +542,7 @@ class GatherRunner {
     baseArtifacts.devtoolsLogs[passName] = loadData.devtoolsLog;
     if (loadData.trace) baseArtifacts.traces[passName] = loadData.trace;
 
-    if (passContext.settings.traceBasedNetworkRecords && loadData.trace) {
+    if (passContext.settings.__internalTraceBasedNetworkRecords && loadData.trace) {
       baseArtifacts.devtoolsLogs[passName].smuggledTrace = loadData.trace;
     }
   }

@@ -1026,7 +1026,7 @@ export interface TraceEvent {
   };
 }
 /**
- * Minor hack for traceBasedNetworkRecords
+ * Minor hack for __internalTraceBasedNetworkRecords
  */
 interface AugmentedDevtoolsLog extends Array<Protocol.RawEventMessage> {
   smuggledTrace?: Trace;
