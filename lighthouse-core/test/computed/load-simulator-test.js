@@ -85,7 +85,6 @@ describe('Simulator artifact', () => {
 
     const settings = {throttlingMethod: 'simulate', precomputedLanternData};
     const context = {settings, computedCache: new Map()};
-    // TODO(paul-tracenetreq). update test to use trace fixtures instead.
     const simulator = await LoadSimulator.request({devtoolsLog, settings}, context);
     const result = simulator.simulate(createNetworkNode());
 

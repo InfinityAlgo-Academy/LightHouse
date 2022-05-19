@@ -6,7 +6,6 @@
 'use strict';
 
 const makeComputedArtifact = require('./computed-artifact.js');
-
 const NetworkRecorder = require('../lib/network-recorder.js');
 const constructRecordsFromTrace = require('../lib/network-records-from-trace.js');
 

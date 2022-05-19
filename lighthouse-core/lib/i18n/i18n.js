@@ -12,7 +12,6 @@ const lookupClosestLocale = require('lookup-closest-locale');
 const {getAvailableLocales} = require('../../../shared/localization/format.js');
 const log = require('lighthouse-logger');
 const {LH_ROOT} = require('../../../root.js');
-
 const {
   isIcuMessage,
   formatMessage,

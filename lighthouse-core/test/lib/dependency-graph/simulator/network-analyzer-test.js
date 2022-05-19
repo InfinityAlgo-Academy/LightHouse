@@ -120,7 +120,6 @@ describe('DependencyGraph/Simulator/NetworkAnalyzer', () => {
       assert.deepStrictEqual(result, expected);
     });
 
-    // TODO(paulirish-netreq): adapt to trace thing
     it('should work on a real devtoolsLog', () => {
       return NetworkRecords.request(devtoolsLog, {computedCache: new Map()}).then(records => {
         const result = NetworkAnalyzer.estimateIfConnectionWasReused(records);
@@ -197,7 +196,6 @@ describe('DependencyGraph/Simulator/NetworkAnalyzer', () => {
       assert.deepStrictEqual(result.get('https://example.com'), expected);
     });
 
-    // TODO(paulirish-netreq): adapt to trace thing
     it('should work on a real devtoolsLog', () => {
       return NetworkRecords.request(devtoolsLog, {computedCache: new Map()}).then(records => {
         const result = NetworkAnalyzer.estimateRTTByOrigin(records);
@@ -207,7 +205,6 @@ describe('DependencyGraph/Simulator/NetworkAnalyzer', () => {
       });
     });
 
-    // TODO(paulirish-netreq): adapt to trace thing
     it('should approximate well with either method', () => {
       return NetworkRecords.request(devtoolsLog, {computedCache: new Map()}).then(records => {
         const result = NetworkAnalyzer.estimateRTTByOrigin(records).get(NetworkAnalyzer.SUMMARY);
@@ -248,7 +245,6 @@ describe('DependencyGraph/Simulator/NetworkAnalyzer', () => {
       assert.deepStrictEqual(result.get('https://example.com'), expected);
     });
 
-    // TODO(paulirish-netreq): adapt to trace thing
     it('should work on a real devtoolsLog', () => {
       return NetworkRecords.request(devtoolsLog, {computedCache: new Map()}).then(records => {
         const result = NetworkAnalyzer.estimateServerResponseTimeByOrigin(records);
@@ -258,7 +254,6 @@ describe('DependencyGraph/Simulator/NetworkAnalyzer', () => {
       });
     });
 
-    // TODO(paulirish-netreq): adapt to trace thing
     it('should approximate well with either method', () => {
       return NetworkRecords.request(devtoolsLog, {computedCache: new Map()}).then(records => {
         const result = NetworkAnalyzer.estimateServerResponseTimeByOrigin(records).get(

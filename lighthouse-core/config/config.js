@@ -54,14 +54,13 @@ const BASE_ARTIFACT_NAMES = Object.keys(BASE_ARTIFACT_BLANKS);
 /**
  * @param {Config['passes']} passes
  * @param {Config['audits']} audits
- * @param {Config['settings']} settings
  */
-function assertValidPasses(passes, audits, settings) {
+function assertValidPasses(passes, audits) {
   if (!Array.isArray(passes)) {
     return;
   }
 
-  const requestedGatherers = Config.getGatherersRequestedByAudits(audits, settings);
+  const requestedGatherers = Config.getGatherersRequestedByAudits(audits);
   // Base artifacts are provided by GatherRunner, so start foundGatherers with them.
   const foundGatherers = new Set(BASE_ARTIFACT_NAMES);
 
@@ -213,7 +212,7 @@ class Config {
 
     Config.filterConfigIfNeeded(this);
 
-    assertValidPasses(this.passes, this.audits, this.settings);
+    assertValidPasses(this.passes, this.audits);
     validation.assertValidCategories(this.categories, this.audits, this.groups);
 
     log.timeEnd(status);
@@ -336,7 +335,7 @@ class Config {
         requestedAuditNames.has(auditDefn.implementation.meta.id));
 
     // 3. Resolve which gatherers will need to run
-    const requestedGathererIds = Config.getGatherersRequestedByAudits(audits, config.settings);
+    const requestedGathererIds = Config.getGatherersRequestedByAudits(audits);
 
     // 4. Filter to only the neccessary passes
     const passes = Config.generatePassesNeededByGatherers(config.passes, requestedGathererIds);
@@ -436,10 +435,9 @@ class Config {
   /**
    * From some requested audits, return names of all required and optional artifacts
    * @param {Config['audits']} audits
-   * @param {Config['settings']} settings
    * @return {Set<string>}
    */
-  static getGatherersRequestedByAudits(audits, settings) {
+  static getGatherersRequestedByAudits(audits) {
     // It's possible we weren't given any audits (but existing audit results), in which case
     // there is no need to do any work here.
     if (!audits) {
@@ -450,12 +448,6 @@ class Config {
     for (const auditDefn of audits) {
       const {requiredArtifacts, __internalOptionalArtifacts} = auditDefn.implementation.meta;
       requiredArtifacts.forEach(artifact => gatherers.add(artifact));
-
-
-      if (settings.__internalTraceBasedNetworkRecords && requiredArtifacts.includes('devtoolsLogs')) {
-        gatherers.add('traces');
-      }
-
       if (__internalOptionalArtifacts) {
         __internalOptionalArtifacts.forEach(artifact => gatherers.add(artifact));
       }
