@@ -101,7 +101,7 @@ jobs:
 
     # Chrome Stable is already installed by default.
     - name: Install Chrome ToT
-      run: bash ${env:GITHUB_WORKSPACE}\lighthouse\lighthouse-core\scripts\download-chrome.sh
+      run: bash ${env:GITHUB_WORKSPACE}\lighthouse-core\scripts\download-chrome.sh
 
     - run: yarn install --frozen-lockfile --network-timeout 1000000
     - run: yarn build-report
