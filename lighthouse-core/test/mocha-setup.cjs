@@ -6,10 +6,10 @@
 
 /**
  * @fileoverview
- * - sets global.expect
- * - configures the mocha test runner to use jest-snapshot
- * - symlinks `fixtures/config-plugins/lighthouse-plugin-simple` to a place where the default
- *   config module resolution will find it
+ *    - sets global.expect
+ *    - configures the mocha test runner to use jest-snapshot
+ *    - symlinks `fixtures/config-plugins/lighthouse-plugin-simple` to a place where the default
+ *      config module resolution will find it
  */
 
 /* eslint-disable import/order */
@@ -57,11 +57,7 @@ function makeTestTitle(test) {
   let next = test;
   const title = [];
 
-  for (;;) {
-    if (!next.parent) {
-      break;
-    }
-
+  while (next.parent) {
     title.push(next.title);
     next = next.parent;
   }
