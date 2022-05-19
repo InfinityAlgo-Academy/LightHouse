@@ -95,6 +95,7 @@ jobs:
     - name: Define ToT chrome path
       run: echo CHROME_PATH=%GITHUB_WORKSPACE%\chrome-win\chrome >> %GITHUB_ENV% && echo %CHROME_PATH%
 
+    - run: echo %GITHUB_WORKSPACE%
     - run: type %GITHUB_ENV%
 
     # Chrome Stable is already installed by default.
