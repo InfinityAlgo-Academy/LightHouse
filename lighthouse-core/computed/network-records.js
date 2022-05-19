@@ -7,7 +7,7 @@
 
 const makeComputedArtifact = require('./computed-artifact.js');
 const NetworkRecorder = require('../lib/network-recorder.js');
-const constructRecordsFromTrace = require('../lib/network-records-from-trace.js');
+const NetworkTraceInterpreter = require('../lib/network-trace-interpreter.js');
 
 class NetworkRecords {
   /**
@@ -17,7 +17,7 @@ class NetworkRecords {
   static async compute_(devtoolsLog) {
     // If we have a smuggledTrace thanks to traceBasedNetworkRecords, build from that.
     if (devtoolsLog.smuggledTrace) {
-      return constructRecordsFromTrace(devtoolsLog.smuggledTrace);
+      return NetworkTraceInterpreter.recordsFromTrace(devtoolsLog.smuggledTrace);
     } else {
       return NetworkRecorder.recordsFromLogs(devtoolsLog);
     }

@@ -35,7 +35,7 @@ global.analyzeTrace(trace, {
 
 /**
  * See also:
- *     yarn jest lighthouse-core/test/lib/network-records-from-trace-test.js
+ *     yarn jest lighthouse-core/test/lib/network-trace-interpreter-test.js
  * which compares the network requests we constructed from trace compared to the dtlog ones.
  * it currently only tests 1 netreq at a time.
  */

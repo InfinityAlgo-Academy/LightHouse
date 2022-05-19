@@ -21,7 +21,7 @@ const networkTraceEventNamesToAliases = {
 
 const networkTraceEventNames = Object.keys(networkTraceEventNamesToAliases);
 
-class NetworkRecordsMaker {
+class NetworkTraceInterpreter {
   constructor() {
     this.networkRecorder = new NetworkRecorder();
 
@@ -143,19 +143,20 @@ class NetworkRecordsMaker {
     records.sort((a, b) => a.startTime - b.startTime);
     return records;
   }
-}
-/**
- * @param {LH.Trace} trace
- * @return {Array<LH.Artifacts.NetworkRequest>}
- */
-function constructRecordsFromTrace(trace) {
-  const maker = new NetworkRecordsMaker();
 
-  for (const event of trace.traceEvents) {
-    maker.handleEvent(event);
+  /**
+   * @param {LH.Trace} trace
+   * @return {Array<LH.Artifacts.NetworkRequest>}
+   */
+  static recordsFromTrace(trace) {
+    const interpreter = new NetworkTraceInterpreter();
+
+    for (const event of trace.traceEvents) {
+      interpreter.handleEvent(event);
+    }
+    const requests = interpreter.synthesizeRequests();
+    return requests;
   }
-  const requests = maker.synthesizeRequests();
-  return requests;
 }
 
-module.exports = constructRecordsFromTrace;
+module.exports = NetworkTraceInterpreter;

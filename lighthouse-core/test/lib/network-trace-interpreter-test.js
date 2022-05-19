@@ -6,7 +6,7 @@
 
 
 import {readJson} from '../../../root.js';
-import constructRecordsFromTrace from '../../lib/network-records-from-trace.js';
+import NetworkTraceInterpreter from '../../lib/network-trace-interpreter.js';
 import NetworkRecorder from '../../lib/network-recorder.js';
 
 const devtoolsLog = readJson('./latest-run/defaultPass.devtoolslog.json');
@@ -16,7 +16,7 @@ const trace = readJson('./latest-run/defaultPass.trace.json');
 describe('NetworkRecordsFromTrace', () => {
   it('works', async () => {
     const netReqsDTL = NetworkRecorder.recordsFromLogs(devtoolsLog);
-    const netReqsTrace = constructRecordsFromTrace(trace);
+    const netReqsTrace = NetworkTraceInterpreter.recordsFromTrace(trace);
 
     const allReqIds = netReqsDTL.map((req) => req.requestId);
 
@@ -24,7 +24,7 @@ describe('NetworkRecordsFromTrace', () => {
 
     // TODO this is currently testing just 1 request. ideally this "test" tries ALL requests that DTlog finds.
     const pred = /** @type {LH.Artifacts.NetworkRequest} */ (nr) =>
-      nr.requestId === 'C8D5AE964B1514586C0AD1E089AB7020';
+      nr.requestId === '91983.2';
 
     const dtlNR = netReqsDTL.find(pred);
     const myTraceNR = netReqsTrace.find(pred);
