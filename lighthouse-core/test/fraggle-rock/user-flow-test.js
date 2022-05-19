@@ -4,6 +4,10 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
+import jestMock from 'jest-mock';
+import * as td from 'testdouble';
+
+import Runner from '../../runner.js';
 import {createMockPage, mockRunnerModule} from './gather/mock-driver.js';
 // import UserFlow from '../../fraggle-rock/user-flow.js';
 
@@ -19,12 +23,12 @@ beforeAll(async () => {
   ({UserFlow, auditGatherSteps} = await import('../../fraggle-rock/user-flow.js'));
 });
 
-const snapshotModule = {snapshotGather: jest.fn()};
-jest.mock('../../fraggle-rock/gather/snapshot-runner.js', () => snapshotModule);
-const navigationModule = {navigationGather: jest.fn()};
-jest.mock('../../fraggle-rock/gather/navigation-runner.js', () => navigationModule);
-const timespanModule = {startTimespanGather: jest.fn()};
-jest.mock('../../fraggle-rock/gather/timespan-runner.js', () => timespanModule);
+const snapshotModule = {snapshotGather: jestMock.fn()};
+td.replace('../../fraggle-rock/gather/snapshot-runner.js', snapshotModule);
+const navigationModule = {navigationGather: jestMock.fn()};
+td.replace('../../fraggle-rock/gather/navigation-runner.js', navigationModule);
+const timespanModule = {startTimespanGather: jestMock.fn()};
+td.replace('../../fraggle-rock/gather/timespan-runner.js', timespanModule);
 
 const mockRunner = mockRunnerModule();
 
@@ -70,7 +74,7 @@ describe('UserFlow', () => {
         computedCache: new Map(),
       },
     };
-    const timespan = {endTimespanGather: jest.fn().mockResolvedValue(timespanGatherResult)};
+    const timespan = {endTimespanGather: jestMock.fn().mockResolvedValue(timespanGatherResult)};
     timespanModule.startTimespanGather.mockReset();
     timespanModule.startTimespanGather.mockResolvedValue(timespan);
   });
@@ -258,10 +262,8 @@ describe('UserFlow', () => {
 
   describe('auditGatherSteps', () => {
     it('should audit gather steps', async () => {
-      const runnerActual = /** @type {typeof import('../../runner.js')} */ (
-        jest.requireActual('../../runner.js'));
-      mockRunner.getGathererList.mockImplementation(runnerActual.getGathererList);
-      mockRunner.getAuditList.mockImplementation(runnerActual.getAuditList);
+      mockRunner.getGathererList.mockImplementation(Runner.getGathererList);
+      mockRunner.getAuditList.mockImplementation(Runner.getAuditList);
       mockRunner.audit.mockImplementation(artifacts => ({
         lhr: {
           finalUrl: artifacts.URL.finalUrl,

@@ -5,6 +5,8 @@
  */
 
 // import {snapshotGather} from '../../../fraggle-rock/gather/snapshot-runner.js';
+import * as td from 'testdouble';
+
 import {
   createMockDriver,
   createMockPage,
@@ -29,9 +31,8 @@ const mockRunner = mockRunnerModule();
 /** @type {ReturnType<typeof createMockDriver>} */
 let mockDriver;
 
-jest.mock('../../../fraggle-rock/gather/driver.js', () =>
-  mockDriverModule(() => mockDriver.asDriver())
-);
+td.replace('../../../fraggle-rock/gather/driver.js',
+  mockDriverModule(() => mockDriver.asDriver()));
 
 describe('Snapshot Runner', () => {
   /** @type {ReturnType<typeof createMockPage>} */

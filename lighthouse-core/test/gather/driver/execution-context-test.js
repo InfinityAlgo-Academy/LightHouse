@@ -10,9 +10,10 @@ import {
   makePromiseInspectable,
   flushAllTimersAndMicrotasks,
   fnAny,
+  timers,
 } from '../../test-utils.js';
 
-jest.useFakeTimers();
+timers.useFakeTimers();
 
 // This can be removed when FR becomes the default.
 const createMockSendCommandFn =
@@ -84,7 +85,7 @@ describe('ExecutionContext', () => {
     expect(executionContext.getContextId()).toEqual(undefined);
   });
 
-  it.todo('TODO: should cache native objects in page');
+  // it('TODO: should cache native objects in page');
 });
 
 describe('.evaluateAsync', () => {

@@ -8,11 +8,11 @@ import {mockDriverSubmodules} from '../../fraggle-rock/gather/mock-driver.js';
 // import NetworkMonitor from '../../../gather/driver/network-monitor.js';
 import NetworkRequest from '../../../lib/network-request.js';
 import networkRecordsToDevtoolsLog from '../../network-records-to-devtools-log.js';
-import {fnAny, mockCommands} from '../../test-utils.js';
+import {fnAny, mockCommands, timers} from '../../test-utils.js';
 
 const mocks = mockDriverSubmodules();
 
-jest.useFakeTimers();
+timers.useFakeTimers();
 
 // This can be removed when FR becomes the default.
 const createMockSendCommandFn =

@@ -62,8 +62,8 @@ const defaultTestMatches = [
   'build/**/*-test.js',
 ];
 
-const mochaPassThruArgs = argv._.filter(arg => arg.startsWith('--'));
-const filterFilePatterns = argv._.filter(arg => !arg.startsWith('--'));
+const mochaPassThruArgs = argv._.filter(arg => typeof arg !== 'string' || arg.startsWith('--'));
+const filterFilePatterns = argv._.filter(arg => !(typeof arg !== 'string' || arg.startsWith('--')));
 
 // Collect all the possible test files, based off the provided testMatch glob pattern
 // or the default patterns defined above.
@@ -86,6 +86,7 @@ console.log(`running ${filteredTests.length} test files`);
 const args = [
   '--loader=testdouble',
   '--require=lighthouse-core/test/mocha-setup.cjs',
+  '--timeout=20000',
   ...mochaPassThruArgs,
   ...filteredTests,
 ];

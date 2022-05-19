@@ -32,8 +32,6 @@ let screenSize;
 let screenshotData;
 let mockContext = createMockContext();
 
-jest.setTimeout(10_000);
-
 beforeEach(() => {
   contentSize = {width: 100, height: 100};
   screenSize = {width: 100, height: 100, dpr: 1};

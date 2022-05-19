@@ -4,6 +4,8 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
+import jestMock from 'jest-mock';
+
 import {readJson} from '../../../root.js';
 import MetricsAudit from '../../audits/metrics.js';
 import TTIComputed from '../../computed/metrics/interactive.js';
@@ -157,7 +159,7 @@ describe('Performance: metrics', () => {
       },
     };
 
-    const mockTTIFn = jest.spyOn(TTIComputed, 'request');
+    const mockTTIFn = jestMock.spyOn(TTIComputed, 'request');
     mockTTIFn.mockRejectedValueOnce(new Error('TTI failed'));
     const context = {settings: {throttlingMethod: 'simulate'}, computedCache: new Map()};
     const result = await MetricsAudit.audit(artifacts, context);

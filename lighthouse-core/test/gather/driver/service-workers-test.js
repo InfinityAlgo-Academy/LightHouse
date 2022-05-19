@@ -5,7 +5,7 @@
  */
 
 import {createMockSession} from '../../fraggle-rock/gather/mock-driver.js';
-import {makePromiseInspectable, flushAllTimersAndMicrotasks} from '../../test-utils.js';
+import {makePromiseInspectable, flushAllTimersAndMicrotasks, timers} from '../../test-utils.js';
 import serviceWorkers from '../../../gather/driver/service-workers.js';
 
 let sessionMock = createMockSession();
@@ -15,7 +15,7 @@ beforeEach(() => {
 });
 
 afterEach(() => {
-  jest.useRealTimers();
+  timers.useRealTimers();
 });
 
 describe('.getServiceWorkerVersions', () => {
@@ -44,7 +44,7 @@ describe('.getServiceWorkerVersions', () => {
   });
 
   it('waits for currently installing workers', async () => {
-    jest.useFakeTimers();
+    timers.useFakeTimers();
     sessionMock.sendCommand
       .mockResponse('ServiceWorker.enable')
       .mockResponse('ServiceWorker.disable');

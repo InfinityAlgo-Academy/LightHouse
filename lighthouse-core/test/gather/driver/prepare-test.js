@@ -4,8 +4,10 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
+import * as td from 'testdouble';
+
 import {createMockSession, createMockDriver} from '../../fraggle-rock/gather/mock-driver.js';
-import {flushAllTimersAndMicrotasks, fnAny} from '../../test-utils.js';
+import {flushAllTimersAndMicrotasks, fnAny, timers} from '../../test-utils.js';
 // import prepare from '../../../gather/driver/prepare.js';
 import constants from '../../../config/constants.js';
 
@@ -24,7 +26,7 @@ const storageMock = {
   clearBrowserCaches: fnAny(),
   getImportantStorageWarning: fnAny(),
 };
-jest.mock('../../../gather/driver/storage.js', () => storageMock);
+td.replace('../../../gather/driver/storage.js', storageMock);
 
 const url = 'https://example.com';
 let sessionMock = createMockSession();
@@ -42,7 +44,7 @@ beforeEach(() => {
 });
 
 afterEach(() => {
-  jest.useRealTimers();
+  timers.useRealTimers();
 });
 
 describe('.prepareThrottlingAndNetwork()', () => {
@@ -267,7 +269,7 @@ describe('.prepareTargetForNavigationMode()', () => {
   });
 
   it('enables async stacks on every main frame navigation', async () => {
-    jest.useFakeTimers();
+    timers.useFakeTimers();
 
     sessionMock.sendCommand
       .mockResponse('Debugger.enable')
@@ -333,7 +335,7 @@ describe('.prepareTargetForNavigationMode()', () => {
   });
 
   it('handle javascript dialogs automatically', async () => {
-    jest.useFakeTimers();
+    timers.useFakeTimers();
 
     sessionMock.sendCommand.mockResponse('Page.handleJavaScriptDialog');
     sessionMock.on.mockEvent('Page.javascriptDialogOpening', {type: 'confirm'});

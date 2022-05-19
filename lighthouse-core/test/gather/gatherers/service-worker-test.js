@@ -6,6 +6,8 @@
 
 import {strict as assert} from 'assert';
 
+import * as td from 'testdouble';
+
 import {fnAny} from '../../test-utils.js';
 
 // import ServiceWorkerGather from '../../../gather/gatherers/service-worker.js';
@@ -22,10 +24,10 @@ beforeAll(async () => {
 
 const getServiceWorkerVersions = fnAny();
 const getServiceWorkerRegistrations = fnAny();
-jest.mock('../../../gather/driver/service-workers.js', () => ({
+td.replace('../../../gather/driver/service-workers.js', {
   getServiceWorkerVersions,
   getServiceWorkerRegistrations,
-}));
+});
 
 describe('service worker gatherer', () => {
   it('obtains the active service worker registration', async () => {

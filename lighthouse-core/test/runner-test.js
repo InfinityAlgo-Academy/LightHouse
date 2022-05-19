@@ -8,6 +8,9 @@ import fs from 'fs';
 import {strict as assert} from 'assert';
 import path from 'path';
 
+import jestMock from 'jest-mock';
+import * as td from 'testdouble';
+
 // import Runner from '../runner.js';
 // import GatherRunner from '../gather/gather-runner.js';
 import driverMock from './gather/fake-driver.js';
@@ -17,7 +20,7 @@ import Gatherer from '../gather/gatherers/gatherer.js';
 import assetSaver from '../lib/asset-saver.js';
 import LHError from '../lib/lh-error.js';
 import i18n from '../lib/i18n/i18n.js';
-import {makeMocksForGatherRunner} from './test-utils.js';
+import {importMock, makeMocksForGatherRunner} from './test-utils.js';
 import {createCommonjsRefs} from '../scripts/esm-utils.js';
 
 const {require, __dirname, __filename} = createCommonjsRefs(import.meta);
@@ -40,10 +43,10 @@ beforeAll(async () => {
 
 makeMocksForGatherRunner();
 
-jest.mock('../gather/driver/service-workers.js', () => ({
-  getServiceWorkerVersions: jest.fn().mockResolvedValue({versions: []}),
-  getServiceWorkerRegistrations: jest.fn().mockResolvedValue({registrations: []}),
-}));
+td.replace('../gather/driver/service-workers.js', {
+  getServiceWorkerVersions: jestMock.fn().mockResolvedValue({versions: []}),
+  getServiceWorkerRegistrations: jestMock.fn().mockResolvedValue({registrations: []}),
+});
 
 describe('Runner', () => {
   const createGatherFn = url => {
@@ -61,23 +64,23 @@ describe('Runner', () => {
     return Runner.audit(artifacts, opts);
   };
 
-  /** @type {jest.Mock} */
+  /** @type {jestMock} */
   let saveArtifactsSpy;
-  /** @type {jest.Mock} */
+  /** @type {jestMock} */
   let saveLhrSpy;
-  /** @type {jest.Mock} */
+  /** @type {jestMock} */
   let loadArtifactsSpy;
-  /** @type {jest.Mock} */
+  /** @type {jestMock} */
   let gatherRunnerRunSpy;
-  /** @type {jest.Mock} */
+  /** @type {jestMock} */
   let runAuditSpy;
 
   beforeEach(() => {
-    saveArtifactsSpy = jest.spyOn(assetSaver, 'saveArtifacts');
-    saveLhrSpy = jest.spyOn(assetSaver, 'saveLhr').mockImplementation(() => {});
-    loadArtifactsSpy = jest.spyOn(assetSaver, 'loadArtifacts');
-    gatherRunnerRunSpy = jest.spyOn(GatherRunner, 'run');
-    runAuditSpy = jest.spyOn(Runner, '_runAudit');
+    saveArtifactsSpy = jestMock.spyOn(assetSaver, 'saveArtifacts');
+    saveLhrSpy = jestMock.spyOn(assetSaver, 'saveLhr').mockImplementation(() => {});
+    loadArtifactsSpy = jestMock.spyOn(assetSaver, 'loadArtifacts');
+    gatherRunnerRunSpy = jestMock.spyOn(GatherRunner, 'run');
+    runAuditSpy = jestMock.spyOn(Runner, '_runAudit');
   });
 
   afterEach(() => {
@@ -501,7 +504,7 @@ describe('Runner', () => {
         }
       }
 
-      const auditMockFn = SimpleAudit.audit = jest.fn().mockReturnValue({score: 1});
+      const auditMockFn = SimpleAudit.audit = jestMock.fn().mockReturnValue({score: 1});
       const config = new Config({
         settings: {
           auditMode: __dirname + '/fixtures/artifacts/alphabet-artifacts/',
@@ -534,7 +537,7 @@ describe('Runner', () => {
         }
       }
 
-      const auditMockFn = SimpleAudit.audit = jest.fn().mockReturnValue({score: 1});
+      const auditMockFn = SimpleAudit.audit = jestMock.fn().mockReturnValue({score: 1});
       const config = new Config({
         settings: {
           auditMode: __dirname + '/fixtures/artifacts/alphabet-artifacts/',
@@ -827,7 +830,7 @@ describe('Runner', () => {
         // Loads the page successfully in the first pass, fails with PAGE_HUNG in the second.
       });
 
-      const gotoURL = jest.requireMock('../gather/driver/navigation.js').gotoURL;
+      const {gotoURL} = (await importMock('../gather/driver/navigation.js', import.meta)).default;
       gotoURL.mockImplementation((_, url) => {
         if (url.includes('blank')) return {mainDocumentUrl: '', warnings: []};
         if (firstLoad) {

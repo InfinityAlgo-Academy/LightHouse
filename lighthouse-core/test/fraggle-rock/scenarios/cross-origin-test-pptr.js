@@ -8,12 +8,13 @@ import * as lighthouse from '../../../fraggle-rock/api.js';
 import {createTestState} from './pptr-test-utils.js';
 import {LH_ROOT} from '../../../../root.js';
 
-/* eslint-env jest */
 /* eslint-env browser */
 
-jest.setTimeout(90_000);
+describe('Cross origin timespan', function () {
+  // @ts-expect-error
+  // eslint-disable-next-line no-invalid-this
+  this.timeout(120_000);
 
-describe('Cross origin timespan', () => {
   const state = createTestState();
 
   state.installSetupAndTeardownHooks();

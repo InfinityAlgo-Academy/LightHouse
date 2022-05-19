@@ -7,9 +7,9 @@
 import CSSUsage from '../../../gather/gatherers/css-usage.js';
 import {defaultSettings} from '../../../config/constants.js';
 import {createMockDriver, createMockBaseArtifacts} from '../../fraggle-rock/gather/mock-driver.js';
-import {flushAllTimersAndMicrotasks} from '../../test-utils.js';
+import {flushAllTimersAndMicrotasks, timers} from '../../test-utils.js';
 
-jest.useFakeTimers();
+timers.useFakeTimers();
 
 describe('.getArtifact', () => {
   it('gets CSS usage', async () => {

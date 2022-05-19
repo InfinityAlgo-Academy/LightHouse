@@ -7,6 +7,7 @@
 import path from 'path';
 
 import log from 'lighthouse-logger';
+import jestMock from 'jest-mock';
 
 import i18n from '../../../lib/i18n/i18n.js';
 import {createCommonjsRefs} from '../../../scripts/esm-utils.js';
@@ -46,7 +47,7 @@ describe('i18n', () => {
     });
 
     it('logs a warning if locale is not available and the default is used', () => {
-      const logListener = jest.fn();
+      const logListener = jestMock.fn();
       log.events.on('warning', logListener);
 
       expect(i18n.lookupLocale(invalidLocale)).toEqual('en-US');

@@ -8,6 +8,9 @@
  * @fileoverview Mock fraggle rock driver for testing.
  */
 
+import jestMock from 'jest-mock';
+import * as td from 'testdouble';
+
 import {
   createMockOnFn,
   createMockOnceFn,
@@ -128,7 +131,7 @@ function createMockDriver() {
     _page: page,
     _executionContext: context,
     _session: session,
-    url: jest.fn(() => page.url()),
+    url: jestMock.fn(() => page.url()),
     defaultSession: session,
     connect: fnAny(),
     disconnect: fnAny(),
@@ -151,7 +154,7 @@ function mockRunnerModule() {
     reset,
   };
 
-  jest.mock(`${LH_ROOT}/lighthouse-core/runner.js`, () => runnerModule);
+  td.replace(`${LH_ROOT}/lighthouse-core/runner.js`, runnerModule);
 
   function reset() {
     runnerModule.getGathererList.mockReturnValue([]);
@@ -204,7 +207,7 @@ function mockTargetManagerModule() {
     return instance;
   };
 
-  jest.mock('../../../gather/driver/target-manager.js', () => proxyCtor(targetManagerMock));
+  td.replace('../../../gather/driver/target-manager.js', proxyCtor(targetManagerMock));
 
   return targetManagerMock;
 }
@@ -274,11 +277,11 @@ function mockDriverSubmodules() {
     return (...args) => target[name](...args);
   };
 
-  jest.mock('../../../gather/driver/navigation.js', () => new Proxy(navigationMock, {get}));
-  jest.mock('../../../gather/driver/prepare.js', () => new Proxy(prepareMock, {get}));
-  jest.mock('../../../gather/driver/storage.js', () => new Proxy(storageMock, {get}));
-  jest.mock('../../../gather/driver/network.js', () => new Proxy(networkMock, {get}));
-  jest.mock('../../../lib/emulation.js', () => new Proxy(emulationMock, {get}));
+  td.replace('../../../gather/driver/navigation.js', new Proxy(navigationMock, {get}));
+  td.replace('../../../gather/driver/prepare.js', new Proxy(prepareMock, {get}));
+  td.replace('../../../gather/driver/storage.js', new Proxy(storageMock, {get}));
+  td.replace('../../../gather/driver/network.js', new Proxy(networkMock, {get}));
+  td.replace('../../../lib/emulation.js', new Proxy(emulationMock, {get}));
 
   reset();
 

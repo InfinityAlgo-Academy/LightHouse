@@ -6,6 +6,9 @@
 
 import path from 'path';
 
+import jestMock from 'jest-mock';
+import * as td from 'testdouble';
+
 import {
   deepClone,
   deepCloneConfigJson,
@@ -26,9 +29,9 @@ import {createCommonjsRefs} from '../../scripts/esm-utils.js';
 
 const {require, __dirname} = createCommonjsRefs(import.meta);
 
-jest.mock('process', () => ({
-  cwd: () => jest.fn(),
-}));
+td.replace('process', {
+  cwd: () => jestMock.fn(),
+});
 
 describe('.mergeConfigFragment', () => {
   it('should merge properties in like Object.assign', () => {
@@ -411,7 +414,7 @@ describe('.resolveModulePath', () => {
   const configFixturePath = path.resolve(__dirname, '../fixtures/config');
 
   beforeEach(() => {
-    process.cwd = jest.fn(() => configFixturePath);
+    process.cwd = jestMock.fn(() => configFixturePath);
   });
 
   it('lighthouse and plugins are installed in the same path', () => {
@@ -428,7 +431,7 @@ describe('.resolveModulePath', () => {
     });
 
     it('relative to the config path', () => {
-      process.cwd = jest.fn(() => path.resolve(configFixturePath, '../'));
+      process.cwd = jestMock.fn(() => path.resolve(configFixturePath, '../'));
       const pluginName = 'lighthouse-plugin-config-helper';
       const pathToPlugin = resolveModulePath(pluginName, configFixturePath, 'plugin');
       expect(pathToPlugin).toEqual(require.resolve(path.resolve(configFixturePath, pluginName)));
@@ -444,7 +447,7 @@ describe('.resolveModulePath', () => {
     it('in current working directory', () => {
       const pluginName = 'plugin-in-working-directory';
       const pluginDir = `${pluginsDirectory}/node_modules/plugin-in-working-directory`;
-      process.cwd = jest.fn(() => pluginsDirectory);
+      process.cwd = jestMock.fn(() => pluginsDirectory);
 
       const pathToPlugin = resolveModulePath(pluginName, null, 'plugin');
 
@@ -459,7 +462,7 @@ describe('.resolveModulePath', () => {
     it('relative to the config path', () => {
       const pluginName = 'plugin-in-config-directory';
       const configDirectory = `${pluginsDirectory}/config`;
-      process.cwd = jest.fn(() => '/usr/bin/node');
+      process.cwd = jestMock.fn(() => '/usr/bin/node');
 
       const pathToPlugin = resolveModulePath(pluginName, configDirectory, 'plugin');
 

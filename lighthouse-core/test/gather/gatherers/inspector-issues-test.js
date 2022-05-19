@@ -7,10 +7,10 @@
 import InspectorIssues from '../../../gather/gatherers/inspector-issues.js';
 import NetworkRequest from '../../../lib/network-request.js';
 import {createMockContext} from '../../fraggle-rock/gather/mock-driver.js';
-import {flushAllTimersAndMicrotasks} from '../../test-utils.js';
+import {flushAllTimersAndMicrotasks, timers} from '../../test-utils.js';
 import networkRecordsToDevtoolsLog from '../../network-records-to-devtools-log.js';
 
-jest.useFakeTimers();
+timers.useFakeTimers();
 
 /**
  * @param {Partial<LH.Artifacts.NetworkRequest>=} partial

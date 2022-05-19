@@ -6,9 +6,9 @@
 
 import TargetManager from '../../../gather/driver/target-manager.js';
 import {createMockSession} from '../../fraggle-rock/gather/mock-driver.js';
-import {fnAny} from '../../test-utils.js';
+import {fnAny, timers} from '../../test-utils.js';
 
-jest.useFakeTimers();
+timers.useFakeTimers();
 
 /**
  *

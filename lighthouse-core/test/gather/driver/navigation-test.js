@@ -10,6 +10,7 @@ import {
   mockCommands,
   makePromiseInspectable,
   flushAllTimersAndMicrotasks,
+  timers,
 } from '../../test-utils.js';
 // import {gotoURL, getNavigationWarnings} from '../../../gather/driver/navigation.js';
 
@@ -29,7 +30,7 @@ beforeAll(async () => {
 
 const targetManagerMock = mockTargetManagerModule();
 
-jest.useFakeTimers();
+timers.useFakeTimers();
 
 describe('.gotoURL', () => {
   /** @type {LH.Gatherer.FRTransitionalDriver} */

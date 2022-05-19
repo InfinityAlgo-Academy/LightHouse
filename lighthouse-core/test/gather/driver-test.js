@@ -12,12 +12,13 @@ import {
   makePromiseInspectable,
   flushAllTimersAndMicrotasks,
   fnAny,
+  timers,
 } from '../test-utils.js';
 
 const {protocolGetVersionResponse} = FakeDriver;
 const {createMockSendCommandFn} = mockCommands;
 
-jest.useFakeTimers();
+timers.useFakeTimers();
 
 /**
  * @typedef DriverMockMethods
@@ -86,7 +87,7 @@ describe('.evaluateAsync', () => {
     driver.setNextProtocolTimeout(5000);
     const evaluatePromise = makePromiseInspectable(driver.evaluateAsync('1 + 1'));
 
-    jest.advanceTimersByTime(5001);
+    timers.advanceTimersByTime(5001);
     await flushAllTimersAndMicrotasks();
     expect(evaluatePromise).toBeDone();
     await expect(evaluatePromise).rejects.toBeTruthy();
@@ -102,7 +103,7 @@ describe('.sendCommand', () => {
 
     driver.setNextProtocolTimeout(10000);
     const pageEnablePromise = driver.sendCommand('Page.enable');
-    jest.advanceTimersByTime(mockTimeout + 1);
+    timers.advanceTimersByTime(mockTimeout + 1);
     await pageEnablePromise;
 
     const driverTimeout = 5;

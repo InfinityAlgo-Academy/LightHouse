@@ -12,9 +12,10 @@ import {
   makePromiseInspectable,
   createDecomposedPromise,
   fnAny,
+  timers,
 } from '../../test-utils.js';
 
-jest.useFakeTimers();
+timers.useFakeTimers();
 
 describe('ProtocolSession', () => {
   const DEFAULT_TIMEOUT = 30_000;
@@ -212,7 +213,7 @@ describe('ProtocolSession', () => {
 
       const resultPromise = makePromiseInspectable(session.sendCommand('Page.navigate', {url: ''}));
 
-      await jest.advanceTimersByTime(DEFAULT_TIMEOUT + 1);
+      await timers.advanceTimersByTime(DEFAULT_TIMEOUT + 1);
       await flushAllTimersAndMicrotasks();
 
       expect(resultPromise).toBeDone();
@@ -229,12 +230,12 @@ describe('ProtocolSession', () => {
       session.setNextProtocolTimeout(60_000);
       const resultPromise = makePromiseInspectable(session.sendCommand('Page.navigate', {url: ''}));
 
-      await jest.advanceTimersByTime(DEFAULT_TIMEOUT + 1);
+      await timers.advanceTimersByTime(DEFAULT_TIMEOUT + 1);
       await flushAllTimersAndMicrotasks();
 
       expect(resultPromise).not.toBeDone();
 
-      await jest.advanceTimersByTime(DEFAULT_TIMEOUT + 1);
+      await timers.advanceTimersByTime(DEFAULT_TIMEOUT + 1);
       await flushAllTimersAndMicrotasks();
 
       expect(resultPromise).toBeDone();
@@ -251,7 +252,7 @@ describe('ProtocolSession', () => {
       session.setNextProtocolTimeout(Infinity);
       const resultPromise = makePromiseInspectable(session.sendCommand('Page.navigate', {url: ''}));
 
-      await jest.advanceTimersByTime(100_000);
+      await timers.advanceTimersByTime(100_000);
       await flushAllTimersAndMicrotasks();
 
       expect(resultPromise).not.toBeDone();

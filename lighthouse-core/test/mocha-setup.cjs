@@ -8,7 +8,6 @@
  * @fileoverview
  * - sets global.expect
  * - configures the mocha test runner to use jest-snapshot
- * - adds a fake jest global object to replicate jest.fn() mocks and timer stuff (@jest/fake-timers)
  */
 
 /* eslint-disable import/order */
@@ -17,29 +16,8 @@ const path = require('path');
 
 const expect = require('expect');
 const {SnapshotState, toMatchSnapshot, toMatchInlineSnapshot} = require('jest-snapshot');
-const td = require('testdouble');
-const jestMock = require('jest-mock');
-const {ModernFakeTimers} = require('@jest/fake-timers');
 
 require('./jest-setup/setup.js');
-
-const timerIdToRef = id => ({
-  id,
-  ref() {
-    return this;
-  },
-  unref() {
-    return this;
-  }
-});
-const timerRefToId = timer => (timer && timer.id) || undefined;
-const fakeTimers = new ModernFakeTimers({
-  global: globalThis,
-  config: {
-    idToRef: timerIdToRef,
-    refToId: timerRefToId
-  },
-});
 
 /** @type {Map<string, SnapshotState['prototype']>} */
 const snapshotStatesByTestFile = new Map();
@@ -149,38 +127,6 @@ const {before, after} = require('mocha');
 global.beforeAll = makeFn(before);
 global.afterAll = makeFn(after);
 
-// Temporary code to allow some existing `jest` calls to continue to work.
-const fakeJest = global.jest = {
-  fn(cb) {
-    return jestMock.fn(cb);
-  },
-  spyOn(...args) {
-    return jestMock.spyOn(...args);
-  },
-  requireMock(modulePath) {
-    const mockedModule = require(modulePath);
-    if (!Object.values(mockedModule)[0].mock) throw new Error(`expected ${modulePath} to be mocked`);
-    return mockedModule;
-  },
-  mock(path, cb) {
-    const theMock = cb ? cb() : jestMock.fn();
-    // testdouble breaks if `jest` is defined in global scope.
-    delete global.jest;
-    const result = td.replace(path, theMock);
-    global.jest = fakeJest;
-    return result
-  },
-  useFakeTimers() {
-    fakeTimers.useFakeTimers();
-  },
-  useRealTimers() {
-    fakeTimers.useRealTimers();
-  },
-  advanceTimersByTime(ms) {
-    fakeTimers.advanceTimersByTime(ms);
-  },
-};
-
 /** @type {Mocha.Test} */
 let mochaCurrentTest;
 module.exports = {
@@ -193,7 +139,7 @@ module.exports = {
       mochaCurrentTest = this.currentTest;
     },
     afterAll() {
-      fakeTimers.dispose();
+      // import('./test-utils.js').then(({timers}) => timers.dispose());
 
       for (const snapshotState of snapshotStatesByTestFile.values()) {
         // Jest adds `file://` to inline snapshot paths, and uses its own fs module to read things,
