@@ -20,6 +20,7 @@ import glob from 'glob';
 import {LH_ROOT} from '../../../root.js';
 
 const y = yargs(yargsHelpers.hideBin(process.argv));
+// TODO: -t => --fgrep
 const rawArgv = y
   .help('help')
   .usage('node $0 [<options>] <paths>')
@@ -45,10 +46,14 @@ const rawArgv = y
       // all tests have finished. This is may be undesired for local development, so enable
       // parallel mode by default only in CI.
       // default: Boolean(process.env.CI),
-      // TODO: actually, running in parallel mode gets us built-in per-file test isolation,
-      // which is important for mocks. We might be able to avoid issues in non-parallel mode
-      // by using the programmatic mocha API and calling td.reset() on `suite end`, but this is
-      // unverified.
+      // TODO: for some reason serial mode fails with many errors. ex:
+      //      yarn mocha lighthouse-core/test/gather/gatherers/ --parallel=false
+      //
+      //      1) a11y audits + aXe
+      //          "before all" hook for "only runs the axe rules we have audits defined for":
+      //      ...
+      //
+      // Increasing the timeout does not help.
       default: true,
     },
   })
@@ -95,14 +100,16 @@ const args = [
   '--loader=testdouble',
   '--require=lighthouse-core/test/mocha-setup.cjs',
   '--timeout=20000',
+  '--fail-zero',
   ...mochaPassThruArgs,
   ...filteredTests,
 ];
 if (argv.parallel) args.push('--parallel');
+if (process.env.CI) args.push('--forbid-only');
 console.log(`Running command: ${argv.update ? 'SNAPSHOT_UPDATE=1 ' : ''}node ${args.join(' ')}`);
 
 try {
-  execFileSync('node_modules/mocha/bin/mocha', args, {
+  execFileSync('node_modules/.bin/mocha', args, {
     cwd: LH_ROOT,
     env: {
       ...process.env,

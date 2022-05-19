@@ -15,6 +15,7 @@
 const path = require('path');
 
 const expect = require('expect');
+const td = require('testdouble');
 const {SnapshotState, toMatchSnapshot, toMatchInlineSnapshot} = require('jest-snapshot');
 
 require('./jest-setup/setup.js');
@@ -138,8 +139,10 @@ module.exports = {
       // Needed so `expect` extension method can access information about the current test.
       mochaCurrentTest = this.currentTest;
     },
-    afterAll() {
-      // import('./test-utils.js').then(({timers}) => timers.dispose());
+    async afterAll() {
+      const {timers} = await import('./test-utils.js');
+      timers.dispose();
+      td.reset();
 
       for (const snapshotState of snapshotStatesByTestFile.values()) {
         // Jest adds `file://` to inline snapshot paths, and uses its own fs module to read things,
