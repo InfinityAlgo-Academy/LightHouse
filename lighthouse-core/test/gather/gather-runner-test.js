@@ -34,6 +34,8 @@ const unresolvedPerfLog = readJson('./../fixtures/unresolved-perflog.json', impo
 const {require} = createCommonjsRefs(import.meta);
 
 makeMocksForGatherRunner();
+/** @type {jestMock.SpyInstance<Promise<void>, [session: any, pageUrl: string]>} */
+let assertNoSameOriginServiceWorkerClientsMock;
 
 function createTypeHackedGatherRunner() {
   return {
@@ -46,9 +48,6 @@ function createTypeHackedGatherRunner() {
     run: makeParamsOptional(GatherRunner_.run),
     runPass: makeParamsOptional(GatherRunner_.runPass),
     setupDriver: makeParamsOptional(GatherRunner_.setupDriver),
-    // Spies that should have mock implemenations most of the time.
-    assertNoSameOriginServiceWorkerClients: jestMock.spyOn(GatherRunner_,
-      'assertNoSameOriginServiceWorkerClients'),
   };
 }
 
@@ -70,6 +69,8 @@ beforeAll(async () => {
   Driver = (await import('../../gather/driver.js')).default;
   GatherRunner_ = (await import('../../gather/gather-runner.js')).default;
   Config = (await import('../../config/config.js')).default;
+  assertNoSameOriginServiceWorkerClientsMock =
+    jestMock.spyOn(GatherRunner_, 'assertNoSameOriginServiceWorkerClients');
   GatherRunner = createTypeHackedGatherRunner();
 });
 
@@ -110,10 +111,10 @@ let driver;
 let connectionStub;
 
 function resetDefaultMockResponses() {
-  GatherRunner.assertNoSameOriginServiceWorkerClients = jestMock.spyOn(GatherRunner_,
-    'assertNoSameOriginServiceWorkerClients');
-  GatherRunner.assertNoSameOriginServiceWorkerClients.mockReset();
-  GatherRunner.assertNoSameOriginServiceWorkerClients.mockResolvedValue();
+  assertNoSameOriginServiceWorkerClientsMock =
+    jestMock.spyOn(GatherRunner_, 'assertNoSameOriginServiceWorkerClients');
+  assertNoSameOriginServiceWorkerClientsMock.mockReset();
+  assertNoSameOriginServiceWorkerClientsMock.mockResolvedValue();
 
   connectionStub.sendCommand = createMockSendCommandFn()
     .mockResponse('Debugger.enable')
@@ -173,7 +174,7 @@ beforeEach(() => {
 });
 
 afterEach(() => {
-  GatherRunner.assertNoSameOriginServiceWorkerClients.mockRestore();
+  assertNoSameOriginServiceWorkerClientsMock.mockRestore();
   timers.useRealTimers();
 });
 
@@ -319,7 +320,7 @@ describe('GatherRunner', function() {
     let assertNoSameOriginServiceWorkerClients;
 
     beforeEach(() => {
-      GatherRunner.assertNoSameOriginServiceWorkerClients.mockRestore();
+      assertNoSameOriginServiceWorkerClientsMock.mockRestore();
       assertNoSameOriginServiceWorkerClients = GatherRunner_.assertNoSameOriginServiceWorkerClients;
       session = driver.defaultSession;
       connectionStub.sendCommand = createMockSendCommandFn()
