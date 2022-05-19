@@ -166,6 +166,19 @@ function lookupLocale(locales, possibleLocales) {
 }
 
 /**
+ * Basic memoize
+ * @param {(...args: any) => any} fn
+ */
+function memoize(fn) {
+  /** @type {Record<string, any>} */
+  const cache = {};
+  return function(/** @type {any[]} */ ...args) {
+    const key = String(args[0]);
+    return (key in cache) ? cache[key] : (cache[key] = fn.call(undefined, ...args));
+  };
+}
+
+/**
  * Returns a function that generates `LH.IcuMessage` objects to localize the
  * messages in `fileStrings` and the shared `i18n.UIStrings`.
  * @param {string} filename
@@ -199,7 +212,7 @@ function createIcuMessageFn(filename, fileStrings) {
     };
   };
 
-  return getIcuMessageFn;
+  return memoize(getIcuMessageFn);
 }
 
 /**
