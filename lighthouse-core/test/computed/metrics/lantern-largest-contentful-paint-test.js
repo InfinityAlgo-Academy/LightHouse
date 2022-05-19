@@ -29,7 +29,6 @@ describe('Metrics: Lantern LCP', () => {
       optimistic: Math.round(result.optimisticEstimate.timeInMs),
       pessimistic: Math.round(result.pessimisticEstimate.timeInMs),
     }).toMatchInlineSnapshot(
-      {},
       `
       Object {
         "optimistic": 2289,

@@ -10,7 +10,7 @@ import {LH_ROOT} from '../../../../root.js';
 
 /* eslint-env browser */
 
-describe('Cross origin timespan', function () {
+describe('Cross origin timespan', function() {
   // @ts-expect-error
   // eslint-disable-next-line no-invalid-this
   this.timeout(120_000);

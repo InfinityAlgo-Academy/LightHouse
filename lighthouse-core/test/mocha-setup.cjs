@@ -128,6 +128,12 @@ const {before, after} = require('mocha');
 global.beforeAll = makeFn(before);
 global.afterAll = makeFn(after);
 
+const testPlugins = [
+  'lighthouse-plugin-no-category',
+  'lighthouse-plugin-no-groups',
+  'lighthouse-plugin-simple',
+];
+
 /** @type {Mocha.Test} */
 let mochaCurrentTest;
 module.exports = {
@@ -164,16 +170,20 @@ module.exports = {
     },
   },
   mochaGlobalSetup() {
-    try {
-      fs.symlinkSync(
-        `${LH_ROOT}/lighthouse-core/test/fixtures/config-plugins/lighthouse-plugin-simple`,
-        `${LH_ROOT}/lighthouse-plugin-simple`
-      );
-    } catch {
-      // Might exist already because process was killed before tests finished.
+    for (const plugin of testPlugins) {
+      try {
+        fs.symlinkSync(
+          `${LH_ROOT}/lighthouse-core/test/fixtures/config-plugins/${plugin}`,
+          `${LH_ROOT}/${plugin}`
+        );
+      } catch {
+        // Might exist already because process was killed before tests finished.
+      }
     }
   },
   mochaGlobalTeardown() {
-    fs.unlinkSync(`${LH_ROOT}/lighthouse-plugin-simple`);
+    for (const plugin of testPlugins) {
+      fs.unlinkSync(`${LH_ROOT}/${plugin}`);
+    }
   },
 };

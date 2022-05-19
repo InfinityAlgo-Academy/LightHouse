@@ -10,7 +10,7 @@ import * as lighthouse from '../../../fraggle-rock/api.js';
 import {createTestState} from './pptr-test-utils.js';
 import {LH_ROOT} from '../../../../root.js';
 
-describe('Disconnect', function () {
+describe('Disconnect', function() {
   // @ts-expect-error
   // eslint-disable-next-line no-invalid-this
   this.timeout(120_000);

@@ -145,24 +145,20 @@ function createMockDriver() {
   };
 }
 
-function mockRunnerModule() {
-  const runnerModule = {
-    getAuditList: fnAny().mockReturnValue([]),
-    getGathererList: fnAny().mockReturnValue([]),
-    audit: fnAny(),
-    gather: fnAny(),
-    reset,
-  };
-
-  td.replace(`${LH_ROOT}/lighthouse-core/runner.js`, runnerModule);
-
-  function reset() {
+const runnerModule = {
+  getAuditList: fnAny().mockReturnValue([]),
+  getGathererList: fnAny().mockReturnValue([]),
+  audit: fnAny(),
+  gather: fnAny(),
+  reset() {
     runnerModule.getGathererList.mockReturnValue([]);
     runnerModule.getAuditList.mockReturnValue([]);
     runnerModule.audit.mockReset();
     runnerModule.gather.mockReset();
-  }
-
+  },
+};
+function mockRunnerModule() {
+  td.replace(`${LH_ROOT}/lighthouse-core/runner.js`, runnerModule);
   return runnerModule;
 }
 
