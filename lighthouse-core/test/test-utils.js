@@ -9,42 +9,15 @@ import path from 'path';
 import url from 'url';
 
 import * as td from 'testdouble';
-import {ModernFakeTimers} from '@jest/fake-timers';
 import jestMock from 'jest-mock';
 
 import {LH_ROOT} from '../../root.js';
 import {createCommonjsRefs} from '../scripts/esm-utils.js';
 import * as mockCommands from './gather/mock-commands.js';
 import NetworkRecorder from '../lib/network-recorder.js';
+import {timers} from './fake-timers.js';
 
 const {require} = createCommonjsRefs(import.meta);
-
-/**
- * @param {string} id
- */
-function timerIdToRef(id) {
-  return {
-    id,
-    ref() {
-      return this;
-    },
-    unref() {
-      return this;
-    },
-  };
-}
-/**
- * @param {{id: string}} timer
- */
-const timerRefToId = timer => (timer && timer.id) || undefined;
-const timers = new ModernFakeTimers({
-  global,
-  config: {
-    // @ts-expect-error
-    idToRef: timerIdToRef,
-    refToId: timerRefToId,
-  },
-});
 
 /**
  * Some tests use the result of a LHR processed by our proto serialization.

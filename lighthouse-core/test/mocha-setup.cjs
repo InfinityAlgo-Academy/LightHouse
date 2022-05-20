@@ -146,7 +146,8 @@ module.exports = {
       mochaCurrentTest = this.currentTest;
     },
     async afterAll() {
-      const {timers} = await import('./test-utils.js');
+      // TODO(esmodules)
+      const {timers} = await import('./fake-timers.js');
       timers.dispose();
       td.reset();
 
