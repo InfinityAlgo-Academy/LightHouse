@@ -7,7 +7,6 @@
 import path from 'path';
 
 import jestMock from 'jest-mock';
-import * as td from 'testdouble';
 
 import {
   deepClone,
@@ -29,8 +28,9 @@ import {createCommonjsRefs} from '../../scripts/esm-utils.js';
 
 const {require, __dirname} = createCommonjsRefs(import.meta);
 
-td.replace('process', {
-  cwd: () => jestMock.fn(),
+const originalCwd = process.cwd;
+afterAll(async () => {
+  process.cwd = originalCwd;
 });
 
 describe('.mergeConfigFragment', () => {
