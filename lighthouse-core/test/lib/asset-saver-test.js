@@ -6,13 +6,15 @@
 
 import {strict as assert} from 'assert';
 import fs from 'fs';
+import os from 'os';
+import path from 'path';
 
 import assetSaver from '../../lib/asset-saver.js';
 import Metrics from '../../lib/traces/pwmetrics-events.js';
 import LHError from '../../lib/lh-error.js';
 import Audit from '../../audits/audit.js';
 import {createCommonjsRefs} from '../../scripts/esm-utils.js';
-import {readJson} from '../../../root.js';
+import {LH_ROOT, readJson} from '../../../root.js';
 
 const traceEvents = readJson('../fixtures/traces/progressive-app.json', import.meta);
 const dbwTrace = readJson('../results/artifacts/defaultPass.trace.json', import.meta);
@@ -31,6 +33,9 @@ function assertTraceEventsEqual(traceEventsA, traceEventsB) {
 }
 describe('asset-saver helper', () => {
   describe('saves files', function() {
+    const tmpDir = `${LH_ROOT}/.tmp/asset-saver-test`;
+    fs.mkdirSync(tmpDir, {recursive: true});
+
     beforeAll(() => {
       const artifacts = {
         devtoolsLogs: {
@@ -43,11 +48,11 @@ describe('asset-saver helper', () => {
         },
       };
 
-      return assetSaver.saveAssets(artifacts, dbwResults.audits, process.cwd() + '/the_file');
+      return assetSaver.saveAssets(artifacts, dbwResults.audits, `${tmpDir}/the_file`);
     });
 
     it('trace file saved to disk with trace events and extra fakeEvents', () => {
-      const traceFilename = 'the_file-0.trace.json';
+      const traceFilename = tmpDir + '/the_file-0.trace.json';
       const traceFileContents = fs.readFileSync(traceFilename, 'utf8');
       const traceEventsOnDisk = JSON.parse(traceFileContents).traceEvents;
       const traceEventsWithoutExtrasOnDisk = traceEventsOnDisk.slice(0, traceEvents.length);
@@ -58,7 +63,7 @@ describe('asset-saver helper', () => {
     });
 
     it('devtools log file saved to disk with data', () => {
-      const filename = 'the_file-0.devtoolslog.json';
+      const filename = tmpDir + '/the_file-0.devtoolslog.json';
       const fileContents = fs.readFileSync(filename, 'utf8');
       assert.ok(fileContents.includes('"message": "first"'));
       fs.unlinkSync(filename);
