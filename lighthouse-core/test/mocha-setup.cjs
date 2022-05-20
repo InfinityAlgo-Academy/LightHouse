@@ -20,7 +20,7 @@ const path = require('path');
 const expect = require('expect');
 const td = require('testdouble');
 const {SnapshotState, toMatchSnapshot, toMatchInlineSnapshot} = require('jest-snapshot');
-const { LH_ROOT } = require('../../root.js');
+const {LH_ROOT} = require('../../root.js');
 
 require('./jest-setup/setup.js');
 

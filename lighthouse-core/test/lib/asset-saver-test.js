@@ -6,8 +6,6 @@
 
 import {strict as assert} from 'assert';
 import fs from 'fs';
-import os from 'os';
-import path from 'path';
 
 import assetSaver from '../../lib/asset-saver.js';
 import Metrics from '../../lib/traces/pwmetrics-events.js';
