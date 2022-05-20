@@ -33,7 +33,6 @@ const unresolvedPerfLog = readJson('./../fixtures/unresolved-perflog.json', impo
 
 const {require} = createCommonjsRefs(import.meta);
 
-makeMocksForGatherRunner();
 /** @type {jestMock.SpyInstance<Promise<void>, [session: any, pageUrl: string]>} */
 let assertNoSameOriginServiceWorkerClientsMock;
 
@@ -66,6 +65,7 @@ let Config;
 /** @type {ReturnType<createTypeHackedGatherRunner>} */
 let GatherRunner;
 beforeAll(async () => {
+  makeMocksForGatherRunner();
   Driver = (await import('../../gather/driver.js')).default;
   GatherRunner_ = (await import('../../gather/gather-runner.js')).default;
   Config = (await import('../../config/config.js')).default;

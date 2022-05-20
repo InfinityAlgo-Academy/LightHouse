@@ -18,36 +18,71 @@ import glob from 'glob';
 
 import {LH_ROOT} from '../../../root.js';
 
-// Some tests have an intractable bug related to unwanted module replacement cross-contamination.
-// It's unclear why this isn't a problem for other tests. For now, we isolate these in different processes.
-// TODO: consider adding all tests that use mockResponse()?
+// Some tests replace real modules with mocks in the global scope of the test file
+// (outside beforeAll / a test unit). Before doing any lifecycle stuff, Mocha will load
+// all test files (everything if --no-parallel, else each worker will load a subset of the files
+// all at once). This results in unexpected mocks contaminating other test files.
+//
+// Tests do other undesired things in the global scope too, such as enabling fake timers.
+//
+// For now, we isolate a number of tests until they can be refactored.
+//
+// Note: the above is a best guess as to how the following test files are polluting the global scope.
+//       Another method may be the reason for some, and some may not be troublesome themselves and
+//       were added simply because it failed when another test file did the polluting.
+//       I didn't explore each file individually–I just kept adding to this list until
+//       `yarn mocha --no-parallel lighthouse-core/test` stopped failing.
+//
+// To run tests without isolation, and all in one process:
+//    yarn mocha --no-isolation --no-parallel lighthouse-core/test
+//
+// Because mocha workers can divide up test files that mess with global scope in a way that
+// _just happens_ to not cause anything to fail, ensure that this command works:
+//    yarn mocha --no-parallel lighthouse-core/test
 const testsToIsolate = new Set([
-  // For example, this test uses `mockResponse` and errors because the TargetManager mock is seemingly not really replacing
-  // `lighthouse-core/gather/driver/target-manager.js`, meaning `navigation.js` loads a NetworkMonitor using a real TargetManager
-  // which results in unexpected protocol commands (throwing an error in mock-commands.js `mockFnImpl`).
-  // Repro command:
-  //    yarn mocha --no-isolation lighthouse-core/test/gather/driver/navigation-test.js lighthouse-core/test/gather/gather-runner-test.js lighthouse-core/test/audits
-  //        (audits tests are to force jobs >> workers. gather-runner-test because it also does mocky things)
-  // Probably related, this also fails:
-  //    yarn mocha --no-isolation --parallel=false lighthouse-core/test/gather/driver/navigation-test.js lighthouse-core/test/gather/gather-runner-test.js
+  // grep -lRE '^timers\.useFakeTimers' lighthouse-core/test
+  'lighthouse-core/test/fraggle-rock/gather/session-test.js',
+  'lighthouse-core/test/gather/driver-test.js',
+  'lighthouse-core/test/gather/driver/execution-context-test.js',
   'lighthouse-core/test/gather/driver/navigation-test.js',
-  // I didn't explore why these had problems–I just kept adding to this list until tests stopped failing.
-  'lighthouse-core/test/config/config-test.js',
+  'lighthouse-core/test/gather/driver/network-monitor-test.js',
+  'lighthouse-core/test/gather/driver/target-manager-test.js',
+  'lighthouse-core/test/gather/driver/wait-for-condition-test.js',
+  'lighthouse-core/test/gather/gatherers/css-usage-test.js',
+  'lighthouse-core/test/gather/gatherers/image-elements-test.js',
+  'lighthouse-core/test/gather/gatherers/inspector-issues-test.js',
+  'lighthouse-core/test/gather/gatherers/js-usage-test.js',
+  'lighthouse-core/test/gather/gatherers/source-maps-test.js',
+  'lighthouse-core/test/gather/gatherers/trace-elements-test.js',
+  'lighthouse-core/test/gather/gatherers/trace-test.js',
+
+  // grep -lRE '^td\.replace' lighthouse-core/test
   'lighthouse-core/test/fraggle-rock/gather/navigation-runner-test.js',
   'lighthouse-core/test/fraggle-rock/gather/snapshot-runner-test.js',
   'lighthouse-core/test/fraggle-rock/gather/timespan-runner-test.js',
-  'lighthouse-core/test/fraggle-rock/scenarios/api-test-pptr.js',
-  'lighthouse-core/test/fraggle-rock/scenarios/cross-origin-test-pptr.js',
-  'lighthouse-core/test/fraggle-rock/scenarios/disconnect-test-pptr.js',
+  'lighthouse-core/test/fraggle-rock/user-flow-test.js',
+  'lighthouse-core/test/gather/driver/prepare-test.js',
+  'lighthouse-core/test/gather/gatherers/link-elements-test.js',
+  'lighthouse-core/test/gather/gatherers/service-worker-test.js',
+  'lighthouse-core/test/lib/sentry-test.js',
+  'lighthouse-core/test/runner-test.js',
+
+  // grep -lRE 'mockDriverSubmodules|mockRunnerModule|mockDriverModule|mockDriverSubmodules|makeMocksForGatherRunner' lighthouse-core/test
+  'lighthouse-core/test/fraggle-rock/gather/navigation-runner-test.js',
+  'lighthouse-core/test/fraggle-rock/gather/snapshot-runner-test.js',
+  'lighthouse-core/test/fraggle-rock/gather/timespan-runner-test.js',
   'lighthouse-core/test/fraggle-rock/user-flow-test.js',
   'lighthouse-core/test/gather/driver/network-monitor-test.js',
-  'lighthouse-core/test/gather/driver/prepare-test.js',
   'lighthouse-core/test/gather/gather-runner-test.js',
+  'lighthouse-core/test/gather/gatherers/dobetterweb/response-compression-test.js',
   'lighthouse-core/test/gather/gatherers/full-page-screenshot-test.js',
-  'lighthouse-core/test/gather/gatherers/service-worker-test.js',
-  'lighthouse-core/test/index-test.js',
-  'lighthouse-core/test/lib/emulation-test.js',
+  'lighthouse-core/test/gather/gatherers/script-elements-test.js',
   'lighthouse-core/test/runner-test.js',
+
+  // ?
+  'lighthouse-core/test/config/config-test.js',
+  'lighthouse-core/test/fraggle-rock/config/config-test.js',
+  'lighthouse-core/test/lib/emulation-test.js',
 ]);
 
 const y = yargs(yargsHelpers.hideBin(process.argv));
@@ -82,7 +117,7 @@ const rawArgv = y
       // parallel mode by default only in CI.
       // default: Boolean(process.env.CI),
       // TODO: for some reason serial mode fails with many errors. ex:
-      //      yarn mocha lighthouse-core/test/gather/gatherers/ --parallel=false
+      //      yarn mocha lighthouse-core/test/gather/gatherers/ --no-parallel
       //
       //      1) a11y audits + aXe
       //          "before all" hook for "only runs the axe rules we have audits defined for":
@@ -180,5 +215,5 @@ function runMochaCLI(tests) {
 if (testsToRunTogether.length) runMochaCLI(testsToRunTogether);
 for (const test of testsToRunIsolated) {
   console.log(`Running test in isolation: ${test}`);
-  runMochaCLI([test]);
+  // runMochaCLI([test]);
 }
