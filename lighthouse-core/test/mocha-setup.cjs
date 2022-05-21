@@ -175,7 +175,7 @@ module.exports = {
       try {
         fs.symlinkSync(
           `${LH_ROOT}/lighthouse-core/test/fixtures/config-plugins/${plugin}`,
-          `${LH_ROOT}/${plugin}`
+          `${LH_ROOT}/node_modules/${plugin}`
         );
       } catch {
         // Might exist already because process was killed before tests finished.
@@ -184,7 +184,7 @@ module.exports = {
   },
   mochaGlobalTeardown() {
     for (const plugin of testPlugins) {
-      fs.unlinkSync(`${LH_ROOT}/${plugin}`);
+      fs.unlinkSync(`${LH_ROOT}/node_modules/${plugin}`);
     }
   },
 };
