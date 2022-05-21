@@ -37,7 +37,8 @@ import {LH_ROOT} from '../../../root.js';
 //    yarn mocha --no-isolation --no-parallel lighthouse-core/test
 //
 // Because mocha workers can divide up test files that mess with global scope in a way that
-// _just happens_ to not cause anything to fail, ensure that this command works:
+// _just happens_ to not cause anything to fail, use this command works to verify that
+// all necessary tests are isolated:
 //    yarn mocha --no-parallel lighthouse-core/test
 const testsToIsolate = new Set([
   // grep -lRE '^timers\.useFakeTimers' lighthouse-core/test
