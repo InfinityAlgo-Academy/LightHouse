@@ -87,7 +87,8 @@ describe('asset-saver helper', () => {
   });
 
   describe('saveTrace', () => {
-    const traceFilename = 'test-trace-0.json';
+    fs.mkdirSync(`${LH_ROOT}/.tmp`, {recursive: true});
+    const traceFilename = `${LH_ROOT}/.tmp/test-trace-0.json`;
 
     afterEach(() => {
       fs.unlinkSync(traceFilename);

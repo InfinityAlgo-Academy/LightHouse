@@ -108,18 +108,11 @@ const rawArgv = y
     'parallel': {
       type: 'boolean',
       // Although much faster, mocha's parallel test runner defers printing errors until
-      // all tests have finished. This is may be undesired for local development, so enable
+      // all tests have finished. This may be undesired for local development, so enable
       // parallel mode by default only in CI.
-      // default: Boolean(process.env.CI),
-      // TODO: for some reason serial mode fails with many errors. ex:
-      //      yarn mocha lighthouse-core/test/gather/gatherers/ --no-parallel
-      //
-      //      1) a11y audits + aXe
-      //          "before all" hook for "only runs the axe rules we have audits defined for":
-      //      ...
-      //
-      // Increasing the timeout does not help.
-      default: true,
+      // Also, good to default to false locally because that avoids missing cross-file
+      // test contamination by chance of mocha splitting up the work in a way that hides it.
+      default: Boolean(process.env.CI),
     },
   })
   .wrap(y.terminalWidth())
