@@ -210,5 +210,5 @@ function runMochaCLI(tests) {
 if (testsToRunTogether.length) runMochaCLI(testsToRunTogether);
 for (const test of testsToRunIsolated) {
   console.log(`Running test in isolation: ${test}`);
-  // runMochaCLI([test]);
+  runMochaCLI([test]);
 }
