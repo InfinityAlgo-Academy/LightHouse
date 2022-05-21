@@ -57,15 +57,17 @@ jobs:
 
     - run: sudo apt-get install xvfb
 
-    - name: yarn unit
+    # TODO(DONT MERGE): just test core here
+    - name: yarn unit-core
       if: ${{ matrix.node != env.LATEST_NODE }}
       run: xvfb-run --auto-servernum yarn unit:ci
 
     # Only gather coverage on latest node, where c8 is the most accurate.
     - name: yarn unit:coverage
       if: ${{ matrix.node == env.LATEST_NODE }}
+      # TODO(DONT MERGE): just test core here
       run: |
-        xvfb-run --auto-servernum yarn unit:cicoverage
+        xvfb-run --auto-servernum yarn unit-core
         yarn c8 report --reporter text-lcov > unit-coverage.lcov
     - name: Upload test coverage to Codecov
       if: ${{ matrix.node == env.LATEST_NODE }}
