@@ -27,12 +27,6 @@ import {LH_ROOT} from '../../../root.js';
 //
 // For now, we isolate a number of tests until they can be refactored.
 //
-// Note: the above is a best guess as to how the following test files are polluting the global scope.
-//       Another method may be the reason for some, and some may not be troublesome themselves and
-//       were added simply because it failed when another test file did the polluting.
-//       I didn't explore each file individually–I just kept adding to this list until
-//       `yarn mocha --no-parallel lighthouse-core/test` stopped failing.
-//
 // To run tests without isolation, and all in one process:
 //    yarn mocha --no-isolation --no-parallel lighthouse-core/test
 //
