@@ -215,6 +215,7 @@ class ExecutionContext {
       window.__nativePerformance = window.performance;
       window.__nativeFetch = window.fetch;
       window.__ElementMatches = window.Element.prototype.matches;
+      window.__HTMLElementBoundingClientRect = window.HTMLElement.prototype.getBoundingClientRect;
       // Ensure the native `performance.now` is not overwritable.
       const performance = window.performance;
       const performanceNow = window.performance.now;
