@@ -61,7 +61,7 @@ jobs:
     # TODO(DONT MERGE): just test core here
     - name: yarn unit-core
       if: ${{ matrix.node != env.LATEST_NODE }}
-      run: xvfb-run --auto-servernum yarn unit:ci
+      run: xvfb-run --auto-servernum yarn unit-core
 
     # Only gather coverage on latest node, where c8 is the most accurate.
     - name: yarn unit:coverage
