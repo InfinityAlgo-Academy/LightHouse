@@ -944,9 +944,8 @@ export interface TraceCpuProfile {
 /**
  * @see https://docs.google.com/document/d/1CvAClvFfyA5R-PhYUmn5OOQtYMH4h6I0nSsKchNAySU/preview
  */
-export interface TraceEvent {
+export interface TraceEvent extends TraceEventBase {
   name: string;
-  cat: string;
   args: {
     fileName?: string;
     snapshot?: string;
@@ -1002,6 +1001,7 @@ export interface TraceEvent {
       /* Network requests */
       priority?: string;
       requestMethod?: string;
+      encodedDataLength?: number;
       mimeType?: string;
       fromCache?: boolean;
       /** Responsiveness data. */
@@ -1013,10 +1013,6 @@ export interface TraceEvent {
     name?: string;
     labels?: string;
   };
-  pid: number;
-  tid: number;
-  /** Timestamp of the event in microseconds. */
-  ts: number;
   dur: number;
   ph: 'B'|'b'|'D'|'E'|'e'|'F'|'I'|'M'|'N'|'n'|'O'|'R'|'S'|'T'|'X';
   s?: 't';
@@ -1025,6 +1021,7 @@ export interface TraceEvent {
     local?: string;
   };
 }
+
 /**
  * Minor hack for __internalTraceBasedNetworkRecords
  */
@@ -1033,17 +1030,25 @@ interface AugmentedDevtoolsLog extends Array<Protocol.RawEventMessage> {
 }
 
 declare module Trace {
+
+  interface Base {
+    // Comma-separated list of category names.
+    cat: string;
+    // Process id of the process that generated the event.
+    pid: number;
+    // Thread id of the thread that generated the event.
+    tid: number;
+    // Timestamp of the event in microseconds. This value is monotonically increasing among all events generated in the same thread.
+    ts: number;
+  }
+
   /**
    * Base event of a `ph: 'X'` 'complete' event. Extend with `name` and `args` as
    * needed.
    */
-  interface CompleteEvent {
+  interface CompleteEvent extends Base {
     ph: 'X';
-    cat: string;
-    pid: number;
-    tid: number;
     dur: number;
-    ts: number;
     tdur: number;
     tts: number;
   }
@@ -1052,18 +1057,106 @@ declare module Trace {
    * Base event of a `ph: 'b'|'e'|'n'` async event. Extend with `name`, `args`, and
    * more specific `ph` (if needed).
    */
-  interface AsyncEvent {
+  interface AsyncEvent extends Base {
     ph: 'b'|'e'|'n';
-    cat: string;
-    pid: number;
-    tid: number;
-    ts: number;
     id: string;
     scope?: string;
     // TODO(bckenny): No dur on these. Sort out optional `dur` on trace events.
     /** @deprecated there is no `dur` on async events. */
     dur: number;
   }
+
+  interface RequestStartEvent extends Base {
+    args: {};
+    name: 'requestStart';
+    // Denotes a mark of the event RequestStart.
+    ph: 'R';
+    // Thread timestamp of the event. This value is monotonically increasing among all events generated in the same thread.
+    tts?: number;
+  }
+
+  interface ResourceSendRequestEvent extends Base {
+    args: {
+      data: {
+        frame: string;
+        priority: string;
+        requestId: string;
+        requestMethod: string;
+        stackTrace?: {
+          columnNumber: number;
+          functionName: string;
+          lineNumber: number;
+          scriptId: string;
+          url: string;
+        }[];
+        url: string;
+      };
+    };
+    name: 'ResourceSendRequest';
+    // Denotes an event ResourceSendRequest. There are no begining/ending phases.
+    ph: 'I';
+    s: string;
+    // Thread timestamp of the event. This value is monotonically increasing among all events generated in the same thread.
+    tts: number;
+  }
+  interface ResourceReceiveResponseEvent extends Base {
+    args: {
+      data: {
+        encodedDataLength?: number;
+        frame: string;
+        fromCache?: boolean;
+        fromServiceWorker?: boolean;
+        mimeType: string;
+        requestId: string;
+        responseTime?: number;
+        statusCode: number;
+        timing?: {
+          connectEnd: number;
+          connectStart: number;
+          dnsEnd: number;
+          dnsStart: number;
+          proxyEnd: number;
+          proxyStart: number;
+          pushEnd: number;
+          pushStart: number;
+          receiveHeadersEnd: number;
+          requestTime: number;
+          sendEnd: number;
+          sendStart: number;
+          sslEnd: number;
+          sslStart: number;
+          workerReady: number;
+          workerStart: number;
+        };
+      };
+    };
+    name: 'ResourceReceiveResponse';
+    // Denotes an event ResourceReceiveResponse. There are no begining/ending phases.
+    ph: 'I';
+    s: string;
+    // Thread timestamp of the event. This value is monotonically increasing among all events generated in the same thread.
+    tts: number;
+  }
+
+  interface ResourceFinishEvent extends Base {
+    args: {
+      data: {
+        decodedBodyLength?: number;
+        didFail: boolean;
+        encodedDataLength?: number;
+        finishTime?: number;
+        networkTime?: number;
+        requestId: string;
+      };
+    };
+    name: 'ResourceFinish';
+    // Denotes an event ResourceFinish. There are no begining/ending phases.
+    ph: 'I';
+    s: string;
+    // Thread timestamp of the event. This value is monotonically increasing among all events generated in the same thread.
+    tts: number;
+  }
+
 }
 
 /**

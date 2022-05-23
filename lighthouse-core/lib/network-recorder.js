@@ -99,24 +99,24 @@ class NetworkRecorder extends EventEmitter {
     }
 
     // On redirect, another requestWillBeSent message is fired for the same requestId.
-    // Update/finish the previous network request and create a new one for the redirect.
+    // Update/finish the original network request and create a new one for the post-redirect request.
     const modifiedData = {
       ...data,
       // Copy over the initiator as well to match DevTools behavior
       initiator: originalRequest.initiator,
       requestId: `${originalRequest.requestId}:redirect`,
     };
-    const redirectedRequest = new NetworkRequest();
+    const postRedirectRequest = new NetworkRequest();
 
-    redirectedRequest.onRequestWillBeSent(modifiedData);
+    postRedirectRequest.onRequestWillBeSent(modifiedData);
     originalRequest.onRedirectResponse(data);
-    log.verbose('network', `${originalRequest.url} redirected to ${redirectedRequest.url}`);
+    log.verbose('network', `${originalRequest.url} redirected to ${postRedirectRequest.url}`);
 
-    originalRequest.redirectDestination = redirectedRequest;
-    redirectedRequest.redirectSource = originalRequest;
+    originalRequest.redirectDestination = postRedirectRequest;
+    postRedirectRequest.redirectSource = originalRequest;
 
-    // Start the redirect request before finishing the original so we don't get erroneous quiet periods
-    this.onRequestStarted(redirectedRequest);
+    // Start the post-redirect request before finishing the original so we don't get erroneous quiet periods
+    this.onRequestStarted(postRedirectRequest);
     this.onRequestFinished(originalRequest);
   }
 
@@ -295,9 +295,16 @@ class NetworkRecorder extends EventEmitter {
     const networkRecorder = new NetworkRecorder();
     // playback all the devtools messages to recreate network records
     devtoolsLog.forEach(message => networkRecorder.dispatch(message));
+    return this.finalizeConstructedRecords(networkRecorder.getRawRecords());
+  }
 
+  /**
+   * Set up redirect relationships between records
+   * @param {Array<LH.Artifacts.NetworkRequest>} allRecords
+   */
+  static finalizeConstructedRecords(allRecords) {
     // get out the list of records & filter out invalid records
-    const records = networkRecorder.getRawRecords().filter(record => record.isValid);
+    const records = allRecords.filter(record => record.isValid);
 
     /** @type {Map<string, NetworkRequest[]>} */
     const recordsByURL = new Map();

@@ -8,7 +8,7 @@ import fs from 'fs';
 
 import '../../clients/devtools/devtools-entry.js';
 import ReportGenerator from '../../report/generator/report-generator.js';
-import {LH_ROOT} from '../../root.js';
+import {LH_ROOT, readJson} from '../../root.js';
 
 /** @type {LH.Trace} */
 const trace = JSON.parse(
@@ -27,7 +27,11 @@ global.analyzeTrace(trace, {
 
   fs.writeFileSync('./tracereport.json', json, 'utf8');
   fs.writeFileSync('./tracereport.html', html, 'utf8');
+
+  const lhr = readJson('./tracereport.json');
   console.log('done. written to ./tracereport.html');
+  console.log(`CLS:`, lhr.audits['cumulative-layout-shift'].numericValue);
+  console.log('fetchtime:', (new Date() - new Date(lhr.fetchTime)) / 1000, 'sec ago.');
 });
 
 

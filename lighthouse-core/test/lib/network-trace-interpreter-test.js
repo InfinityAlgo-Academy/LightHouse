@@ -12,29 +12,41 @@ import NetworkRecorder from '../../lib/network-recorder.js';
 const devtoolsLog = readJson('./latest-run/defaultPass.devtoolslog.json');
 const trace = readJson('./latest-run/defaultPass.trace.json');
 
+
+const EXEMPLAR_REQUEST_ID = '35093.11';
 /* eslint-env jest */
-describe('NetworkRecordsFromTrace', () => {
-  it('works', async () => {
-    const netReqsDTL = NetworkRecorder.recordsFromLogs(devtoolsLog);
-    const netReqsTrace = NetworkTraceInterpreter.recordsFromTrace(trace);
+describe('recordsFromTrace', () => {
+  const netReqsDTL = NetworkRecorder.recordsFromLogs(devtoolsLog);
+  const netReqsTrace = NetworkTraceInterpreter.recordsFromTrace(trace);
 
-    const allReqIds = netReqsDTL.map((req) => req.requestId);
+  /** @param {LH.Artifacts.NetworkRequest[]} arr */
+  const idsAndUrls = arr => arr.map((req) => `${req.requestId} -- ${req.url}`).sort();
 
-    console.log('Try replacing with another req Id!', allReqIds);
+  it('Generates the same request IDs', async () => {
+    const allReqIdsDTL = idsAndUrls(netReqsDTL);
+    const allReqIdsTrace = idsAndUrls(netReqsTrace);
 
+    expect(allReqIdsTrace).toMatchObject(allReqIdsDTL);
+    expect(allReqIdsDTL).toMatchObject(allReqIdsTrace);
+
+    expect(allReqIdsTrace.length).toBe(allReqIdsDTL.length);
+  });
+
+  it('Generates the same request data', async () => {
     // TODO this is currently testing just 1 request. ideally this "test" tries ALL requests that DTlog finds.
     const pred = /** @type {LH.Artifacts.NetworkRequest} */ (nr) =>
-      nr.requestId === '91983.2';
+      nr.requestId === EXEMPLAR_REQUEST_ID;
 
     const dtlNR = netReqsDTL.find(pred);
     const myTraceNR = netReqsTrace.find(pred);
-
-    if (!dtlNR) throw new Error('no matching request found in devtools logs');
-    if (!myTraceNR) throw new Error('no matching request found in devtools logs');
+    if (!dtlNR || !myTraceNR) {
+      console.error(`no matching request found. try one of these:`, idsAndUrls(netReqsDTL));
+      throw new Error('request not found');
+    }
 
     // TODO: handle these…
-    dtlNR.initiatorRequest = undefined;
-    dtlNR.redirectDestination = undefined;
+    // dtlNR.initiatorRequest = undefined;
+    // dtlNR.redirectDestination = undefined;
     dtlNR.responseHeaders = [];
     dtlNR.responseHeadersText = '';
 

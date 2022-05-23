@@ -44,6 +44,9 @@ class NetworkTraceInterpreter {
     }
 
     const evtBag = this.requestIdToEventsMap.get(requestId) || {};
+    if (evtBag[networkTraceEventNamesToAliases[event.name]]) {
+      console.log('we got an overwrite', event);
+    }
     evtBag[networkTraceEventNamesToAliases[event.name]] = event;
     this.requestIdToEventsMap.set(requestId, evtBag);
   }
@@ -55,16 +58,15 @@ class NetworkTraceInterpreter {
       // This is a simple new request, create the NetworkRequest object
       if (!request) {
         request = new NetworkRequest();
+      } else {
+        // We have a redirect
+        console.log('redirect!', request.url);
       }
 
       // If we have an incomplete set of events here, we choose to drop the network
       // request rather than attempt to synthesize the missing data.
       if (!evtBag || !evtBag.sendRequest || !evtBag.receiveResponse || !evtBag.resourceFinish) {
-        continue;
-      }
-
-      if (evtBag.sendRequest.args.data?.url?.startsWith('data:')) {
-        // TODO: handle the fact that data uris don't have a timing block at all :/
+        console.error('missing something!');
         continue;
       }
 
@@ -102,7 +104,7 @@ class NetworkTraceInterpreter {
         timestamp: evtBag.receiveResponse.args.data?.responseTime,
         response: {
           status: evtBag.receiveResponse.args.data?.statusCode,
-          timing: evtBag.receiveResponse.args.data?.timing,
+          timing: evtBag.receiveResponse.args.data?.timing, // data: URI requests have no timing obj in the trace
           headers: {}, // not available, required, tho
           mimeType: evtBag.receiveResponse.args.data?.mimeType,
           fromServiceWorker: evtBag.receiveResponse.args.data?.fromServiceWorker,
@@ -124,6 +126,8 @@ class NetworkTraceInterpreter {
       // Finish (or fail)
       /** @type {LH.Crdp.Network.LoadingFinishedEvent} */
       const loadingFinishedEventData = {
+        requestId,
+        encodedDataLength: evtBag.resourceFinish.args.data?.encodedDataLength,
         timestamp: evtBag.resourceFinish.args.data?.finishTime,
       };
       if (evtBag.resourceFinish.args.data?.didFail) {
@@ -138,10 +142,7 @@ class NetworkTraceInterpreter {
       //   and a bunch of stuff in recordsFromLogs
     } // eo loop
 
-    // TODO: i'm curious about this isValid thing, but we have it in recordsFromLogs…
-    const records = this.networkRecorder.getRawRecords().filter(record => record.isValid);
-    records.sort((a, b) => a.startTime - b.startTime);
-    return records;
+    return this.networkRecorder.getRawRecords();
   }
 
   /**
@@ -155,7 +156,7 @@ class NetworkTraceInterpreter {
       interpreter.handleEvent(event);
     }
     const requests = interpreter.synthesizeRequests();
-    return requests;
+    return NetworkRecorder.finalizeConstructedRecords(requests);
   }
 }
 
