@@ -56,8 +56,8 @@ module.exports = {
     'no-unused-vars': [2, {
       vars: 'all',
       args: 'after-used',
-      argsIgnorePattern: '(^reject$|^_+$)',
-      varsIgnorePattern: '(^_$)',
+      argsIgnorePattern: '^(reject|_+)$',
+      varsIgnorePattern: '^(_|h|Fragment)$',
     }],
     'space-infix-ops': 2,
     'strict': [2, 'global'],

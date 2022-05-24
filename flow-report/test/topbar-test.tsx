@@ -5,7 +5,7 @@
  */
 
 import {jest} from '@jest/globals';
-import {FunctionComponent} from 'preact';
+import {h, FunctionComponent} from 'preact';
 import {act, render} from '@testing-library/preact';
 
 import {FlowResultContext, OptionsContext} from '../src/util';

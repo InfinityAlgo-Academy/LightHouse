@@ -7,7 +7,7 @@
 import {jest} from '@jest/globals';
 import {render} from '@testing-library/preact';
 import {renderHook} from '@testing-library/preact-hooks';
-import {FunctionComponent} from 'preact';
+import {h, FunctionComponent} from 'preact';
 import {act} from 'preact/test-utils';
 
 import {FlowResultContext, useExternalRenderer, useHashState} from '../src/util';

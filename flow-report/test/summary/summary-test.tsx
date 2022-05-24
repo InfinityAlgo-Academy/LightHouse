@@ -5,7 +5,7 @@
  */
 
 import {render} from '@testing-library/preact';
-import {FunctionComponent} from 'preact';
+import {h, FunctionComponent} from 'preact';
 
 import {I18nProvider} from '../../src/i18n/i18n';
 import {SummaryHeader, SummaryFlowStep} from '../../src/summary/summary';

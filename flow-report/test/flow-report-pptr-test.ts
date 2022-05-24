@@ -4,13 +4,10 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import {jest} from '@jest/globals';
 import puppeteer, {Browser, Page} from 'puppeteer';
 
 import ReportGenerator from '../../report/generator/report-generator.js';
 import {flowResult} from './sample-flow';
-
-jest.setTimeout(35_000);
 
 describe('Lighthouse Flow Report', () => {
   console.log('\n✨ Be sure to have recently run this: yarn build-report');
