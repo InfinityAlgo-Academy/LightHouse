@@ -5,9 +5,11 @@
  */
 
 import {minifyTrace} from '../../lib/minify-trace.js';
-import trace from '../fixtures/traces/progressive-app-m60.json';
-import devtoolsLog from '../fixtures/traces/progressive-app-m60.devtools.log.json';
 import MetricsAudit from '../../audits/metrics.js';
+import {readJson} from '../../../root.js';
+
+const trace = readJson('../fixtures/traces/progressive-app-m60.json', import.meta);
+const devtoolsLog = readJson('../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
 
 describe('minify-trace', () => {
   it('has identical metrics to unminified', async () => {

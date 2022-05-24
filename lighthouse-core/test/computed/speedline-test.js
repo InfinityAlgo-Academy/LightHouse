@@ -6,10 +6,11 @@
 
 import {strict as assert} from 'assert';
 
-import pwaTrace from '../fixtures/traces/progressive-app.json';
-import threeFrameTrace from '../fixtures/traces/threeframes-blank_content_more.json';
 import Speedline from '../../computed/speedline.js';
 import {readJson} from '../../../root.js';
+
+const pwaTrace = readJson('../fixtures/traces/progressive-app.json', import.meta);
+const threeFrameTrace = readJson('../fixtures/traces/threeframes-blank_content_more.json', import.meta);
 
 describe('Speedline gatherer', () => {
   it('returns an error message on faulty trace data', () => {

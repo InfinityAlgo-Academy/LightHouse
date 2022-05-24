@@ -6,8 +6,10 @@
 
 import {strict as assert} from 'assert';
 
+import {readJson} from '../../../root.js';
 import Screenshots from '../../computed/screenshots.js';
-import pwaTrace from '../fixtures/traces/progressive-app.json';
+
+const pwaTrace = readJson('../fixtures/traces/progressive-app.json', import.meta);
 
 describe('Screenshot computed artifact', () => {
   it('returns an artifact for a real trace', () => {

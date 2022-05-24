@@ -7,8 +7,10 @@
 import CpuProfileModel from '../../../lib/tracehouse/cpu-profile-model.js';
 import TraceProcessor from '../../../lib/tracehouse/trace-processor.js';
 import MainThreadTasks from '../../../lib/tracehouse/main-thread-tasks.js';
-import profilerTrace from '../../fixtures/traces/cpu-profiler-m86.trace.json';
 import CpuProfilerModel from '../../../lib/tracehouse/cpu-profile-model.js';
+import {readJson} from '../../../../root.js';
+
+const profilerTrace = readJson('../../fixtures/traces/cpu-profiler-m86.trace.json', import.meta);
 
 describe('CPU Profiler Model', () => {
   /** @type {LH.TraceCpuProfile} */
