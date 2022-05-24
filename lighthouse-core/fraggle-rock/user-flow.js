@@ -104,26 +104,12 @@ class UserFlow {
   }
 
   /**
-   * @return {boolean}
-   */
-  isNavigationRunning() {
-    return Boolean(this._currentNavigation);
-  }
-
-  /**
-   * @return {boolean}
-   */
-  isTimespanRunning() {
-    return Boolean(this._currentTimespan);
-  }
-
-  /**
    * @param {LH.NavigationRequestor} requestor
    * @param {StepOptions=} stepOptions
    */
   async navigate(requestor, stepOptions) {
-    if (this._currentTimespan) throw new Error('Timespan already in progress');
-    if (this._currentNavigation) throw new Error('Navigation already in progress');
+    if (this.currentTimespan) throw new Error('Timespan already in progress');
+    if (this.currentNavigation) throw new Error('Navigation already in progress');
 
     const options = this._getNextNavigationOptions(stepOptions);
     const gatherResult = await navigationGather(requestor, options);
@@ -139,12 +125,11 @@ class UserFlow {
     const setupPromise = new ExternalPromise();
 
     // The promise in this callback will not resolve until `continueNavigation` is invoked.
-    // This allows us to control when the navigation should wrap up.
     const navigatePromise = this.navigate(
-      () => new Promise(continueNavigation => setupPromise.resolve(continueNavigation)),
+      () => new Promise(continueNav => setupPromise.resolve(continueNav)),
       stepOptions
     ).catch(err => {
-      if (this._currentNavigation) {
+      if (this.currentNavigation) {
         // If the navigation already started, re-throw the error so it is emitted when `navigatePromise` is awaited.
         throw err;
       } else {
@@ -160,35 +145,35 @@ class UserFlow {
       return navigatePromise;
     }
 
-    this._currentNavigation = {endNavigation};
+    this.currentNavigation = {endNavigation};
   }
 
   async endNavigation() {
-    if (this._currentTimespan) throw new Error('Timespan already in progress');
-    if (!this._currentNavigation) throw new Error('No navigation in progress');
-    await this._currentNavigation.endNavigation();
-    this._currentNavigation = undefined;
+    if (this.currentTimespan) throw new Error('Timespan already in progress');
+    if (!this.currentNavigation) throw new Error('No navigation in progress');
+    await this.currentNavigation.endNavigation();
+    this.currentNavigation = undefined;
   }
 
   /**
    * @param {StepOptions=} stepOptions
    */
   async startTimespan(stepOptions) {
-    if (this._currentTimespan) throw new Error('Timespan already in progress');
-    if (this._currentNavigation) throw new Error('Navigation already in progress');
+    if (this.currentTimespan) throw new Error('Timespan already in progress');
+    if (this.currentNavigation) throw new Error('Navigation already in progress');
 
     const options = {...this.options, ...stepOptions};
     const timespan = await startTimespanGather(options);
-    this._currentTimespan = {timespan, options};
+    this.currentTimespan = {timespan, options};
   }
 
   async endTimespan() {
-    if (!this._currentTimespan) throw new Error('No timespan in progress');
-    if (this._currentNavigation) throw new Error('Navigation already in progress');
+    if (!this.currentTimespan) throw new Error('No timespan in progress');
+    if (this.currentNavigation) throw new Error('Navigation already in progress');
 
-    const {timespan, options} = this._currentTimespan;
+    const {timespan, options} = this.currentTimespan;
     const gatherResult = await timespan.endTimespanGather();
-    this._currentTimespan = undefined;
+    this.currentTimespan = undefined;
 
     this._addGatherStep(gatherResult, options);
   }
@@ -197,8 +182,8 @@ class UserFlow {
    * @param {StepOptions=} stepOptions
    */
   async snapshot(stepOptions) {
-    if (this._currentTimespan) throw new Error('Timespan already in progress');
-    if (this._currentNavigation) throw new Error('Navigation already in progress');
+    if (this.currentTimespan) throw new Error('Timespan already in progress');
+    if (this.currentNavigation) throw new Error('Navigation already in progress');
 
     const options = {...this.options, ...stepOptions};
     const gatherResult = await snapshotGather(options);
