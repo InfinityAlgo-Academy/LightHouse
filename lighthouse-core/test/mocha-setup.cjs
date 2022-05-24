@@ -106,6 +106,12 @@ expect.extend({
 // @ts-expect-error
 global.expect = expect;
 
+// Force marky to not use Node's performance, which will get messed up by fake timers.
+const performance = global.performance;
+global.performance = undefined;
+require('marky');
+global.performance = performance;
+
 /**
  * @param {Mocha.HookFunction} mochaFn
  * @return {jest.Lifecycle}

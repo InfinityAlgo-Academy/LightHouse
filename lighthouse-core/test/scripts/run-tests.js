@@ -114,6 +114,11 @@ const rawArgv = y
       // test contamination by chance of mocha splitting up the work in a way that hides it.
       default: Boolean(process.env.CI),
     },
+    'bail': {
+      alias: 'b',
+      type: 'boolean',
+      default: false,
+    },
   })
   .wrap(y.terminalWidth())
   .argv;
@@ -172,8 +177,23 @@ const baseArgs = [
   '--fail-zero',
   ...mochaPassThruArgs,
 ];
+if (argv.bail) baseArgs.push('--bail');
 if (argv.parallel) baseArgs.push('--parallel');
 if (process.env.CI) baseArgs.push('--forbid-only');
+
+let didFail = false;
+
+/**
+ * @param {number} code
+ */
+function exit(code) {
+  if (code === 0) {
+    console.log('Tests passed');
+  } else {
+    console.log('Tests failed');
+  }
+  process.exit(code);
+}
 
 /**
  * @param {string[]} tests
@@ -196,7 +216,11 @@ function runMochaCLI(tests) {
       stdio: 'inherit',
     });
   } catch {
-    process.exit(1);
+    if (argv.bail) {
+      exit(1);
+    } else {
+      didFail = true;
+    }
   }
 }
 
@@ -205,3 +229,5 @@ for (const test of testsToRunIsolated) {
   console.log(`Running test in isolation: ${test}`);
   runMochaCLI([test]);
 }
+
+exit(didFail ? 1 : 0);
