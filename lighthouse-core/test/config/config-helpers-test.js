@@ -28,9 +28,10 @@ import {createCommonjsRefs} from '../../scripts/esm-utils.js';
 
 const {require, __dirname} = createCommonjsRefs(import.meta);
 
-jest.mock('process', () => ({
-  cwd: () => jest.fn(),
-}));
+const originalCwd = process.cwd;
+afterAll(() => {
+  process.cwd = originalCwd;
+});
 
 describe('.mergeConfigFragment', () => {
   it('should merge properties in like Object.assign', () => {
