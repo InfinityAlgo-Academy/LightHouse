@@ -29,7 +29,7 @@ import {createCommonjsRefs} from '../../scripts/esm-utils.js';
 const {require, __dirname} = createCommonjsRefs(import.meta);
 
 const originalCwd = process.cwd;
-afterAll(async () => {
+afterAll(() => {
   process.cwd = originalCwd;
 });
 
