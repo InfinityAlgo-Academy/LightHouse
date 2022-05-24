@@ -9097,6 +9097,14 @@
             "numericValue": 60,
             "numericUnit": "millisecond",
             "displayValue": "60 ms"
+          },
+          "work-during-interaction": {
+            "id": "work-during-interaction",
+            "title": "Minimizes work during key interaction",
+            "description": "This is the thread-blocking work occurring during the Interaction to Next Paint measurement. [Learn more](https://web.dev/inp/).",
+            "score": null,
+            "scoreDisplayMode": "error",
+            "errorMessage": "This version of Chrome is too old to support 'detailed EventTiming trace events'. Use a newer version to see full results."
           }
         },
         "configSettings": {
@@ -9314,7 +9322,14 @@
                 "id": "experimental-interaction-to-next-paint",
                 "weight": 0,
                 "group": "metrics",
-                "acronym": "INP"
+                "acronym": "INP",
+                "relevantAudits": [
+                  "work-during-interaction"
+                ]
+              },
+              {
+                "id": "work-during-interaction",
+                "weight": 0
               }
             ],
             "id": "performance",
@@ -9940,12 +9955,18 @@
             },
             {
               "startTime": 80,
+              "name": "lh:audit:work-during-interaction",
+              "duration": 1,
+              "entryType": "measure"
+            },
+            {
+              "startTime": 81,
               "name": "lh:runner:generate",
               "duration": 1,
               "entryType": "measure"
             }
           ],
-          "total": 81
+          "total": 82
         },
         "i18n": {
           "rendererFormattedStrings": {
@@ -10431,6 +10452,21 @@
             ],
             "lighthouse-core/audits/metrics/experimental-interaction-to-next-paint.js | description": [
               "audits[experimental-interaction-to-next-paint].description"
+            ],
+            "lighthouse-core/audits/work-during-interaction.js | title": [
+              "audits[work-during-interaction].title"
+            ],
+            "lighthouse-core/audits/work-during-interaction.js | description": [
+              "audits[work-during-interaction].description"
+            ],
+            "lighthouse-core/lib/lh-error.js | oldChromeDoesNotSupportFeature": [
+              {
+                "values": {
+                  "errorCode": "UNSUPPORTED_OLD_CHROME",
+                  "featureName": "detailed EventTiming trace events"
+                },
+                "path": "audits[work-during-interaction].errorMessage"
+              }
             ],
             "lighthouse-core/config/default-config.js | performanceCategoryTitle": [
               "categories.performance.title"

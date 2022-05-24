@@ -3,14 +3,10 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
-
-/* eslint-env jest */
 
 import {jest} from '@jest/globals';
 
 import CSSUsage from '../../../gather/gatherers/css-usage.js';
-
 import {defaultSettings} from '../../../config/constants.js';
 import {createMockDriver, createMockBaseArtifacts} from '../../fraggle-rock/gather/mock-driver.js';
 import {flushAllTimersAndMicrotasks} from '../../test-utils.js';
@@ -75,16 +71,18 @@ describe('.getArtifact', () => {
     });
   });
 
-  it('ignores removed stylesheets', async () => {
+  it('ignores sheet if there was an error fetching content', async () => {
     const driver = createMockDriver();
     driver.defaultSession.on
       .mockEvent('CSS.styleSheetAdded', {header: {styleSheetId: '1'}})
-      .mockEvent('CSS.styleSheetAdded', {header: {styleSheetId: '2'}})
-      .mockEvent('CSS.styleSheetRemoved', {styleSheetId: '1'});
+      .mockEvent('CSS.styleSheetAdded', {header: {styleSheetId: '2'}});
     driver.defaultSession.sendCommand
       .mockResponse('DOM.enable')
       .mockResponse('CSS.enable')
       .mockResponse('CSS.startRuleUsageTracking')
+      .mockResponse('CSS.getStyleSheetText', () => {
+        throw new Error('Sheet not found');
+      })
       .mockResponse('CSS.getStyleSheetText', {text: 'CSS text 2'})
       .mockResponse('CSS.stopRuleUsageTracking', {
         ruleUsage: [

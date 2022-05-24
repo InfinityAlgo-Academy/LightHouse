@@ -13,8 +13,6 @@ import {Util} from '../../renderer/util.js';
 import {I18n} from '../../renderer/i18n.js';
 import {DetailsRenderer} from '../../renderer/details-renderer.js';
 
-/* eslint-env jest */
-
 describe('DetailsRenderer', () => {
   let renderer;
 
@@ -190,24 +188,24 @@ describe('DetailsRenderer', () => {
     });
 
     it('renders lists', () => {
-      const snippet = {
-        type: 'snippet',
-        lines: [{lineNumber: 1, content: ''}],
-        title: 'Some snippet',
-        lineMessages: [],
-        generalMessages: [],
-        lineCount: 100,
+      const table = {
+        type: 'table',
+        headings: [{text: '', key: 'numeric', itemType: 'numeric'}],
+        items: [{numeric: 1234.567}],
       };
 
       const el = renderer.render({
         type: 'list',
-        items: [snippet, snippet],
+        items: [table, table],
       });
 
       assert.equal(el.localName, 'div');
       assert.ok(el.classList.contains('lh-list'), 'has list class');
       assert.ok(el.children.length, 2, 'renders all items');
-      assert.ok(el.children[0].textContent.includes('Some snippet'), 'renders item content');
+      for (const child of el.children) {
+        assert.ok(child.classList.contains('lh-table'));
+        assert.equal(child.textContent, '1,234.6');
+      }
     });
 
     it('does not render internal-only screenshot details', () => {

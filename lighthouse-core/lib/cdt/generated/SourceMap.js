@@ -149,7 +149,7 @@ class TextSourceMap {
         }
         return mappings.slice(startIndex, endIndex);
     }
-    /** @return {Array<{lineNumber: number, columnNumber: number, sourceURL?: string, sourceLineNumber, sourceColumnNumber: number, name?: string, lastColumnNumber?: number}>} */
+    /** @return {Array<{lineNumber: number, columnNumber: number, sourceURL?: string, sourceLineNumber: number, sourceColumnNumber: number, name?: string, lastColumnNumber?: number}>} */
 mappings() {
         if (this.mappingsInternal === null) {
             this.mappingsInternal = [];

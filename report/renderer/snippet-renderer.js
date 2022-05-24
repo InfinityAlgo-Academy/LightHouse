@@ -128,7 +128,7 @@ export class SnippetRenderer {
     // access the full element detail. Just being able to see the outer HTML isn't very useful.
     if (details.node && dom.isDevTools()) {
       const nodeContainer = dom.find('.lh-snippet__node', header);
-      nodeContainer.appendChild(detailsRenderer.renderNode(details.node));
+      nodeContainer.append(detailsRenderer.renderNode(details.node));
     }
 
     return header;
@@ -163,7 +163,7 @@ export class SnippetRenderer {
     const lineContent = content + (truncated ? '…' : '');
     const lineContentEl = dom.find('.lh-snippet__line code', contentLine);
     if (contentType === LineContentType.MESSAGE) {
-      lineContentEl.appendChild(dom.convertMarkdownLinkSnippets(lineContent));
+      lineContentEl.append(dom.convertMarkdownLinkSnippets(lineContent));
     } else {
       lineContentEl.textContent = lineContent;
     }

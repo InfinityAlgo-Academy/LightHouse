@@ -3,11 +3,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
-
-/* eslint-env jest */
 
 import {jest} from '@jest/globals';
+
 import {createMockPage, mockRunnerModule} from './gather/mock-driver.js';
 // import UserFlow from '../../fraggle-rock/user-flow.js';
 
@@ -163,6 +161,58 @@ describe('UserFlow', () => {
       // Check that we didn't mutate the original objects.
       expect(configContext).toEqual({settingsOverrides: {maxWaitForLoad: 1000}});
       expect(configContextExplicit).toEqual({skipAboutBlank: false});
+    });
+  });
+
+  describe('.startNavigation()', () => {
+    it('should only run navigation setup', async () => {
+      let setupDone = false;
+      let teardownDone = false;
+      navigationModule.navigationGather.mockImplementation(async cb => {
+        setupDone = true;
+        // @ts-expect-error
+        await cb();
+        teardownDone = true;
+      });
+      const flow = new UserFlow(mockPage.asPage());
+      await flow.startNavigation();
+      expect(setupDone).toBeTruthy();
+      expect(teardownDone).toBeFalsy();
+    });
+
+    it('should throw errors from the setup phase', async () => {
+      navigationModule.navigationGather.mockRejectedValue(new Error('Setup Error'));
+      const flow = new UserFlow(mockPage.asPage());
+      const startPromise = flow.startNavigation();
+      await expect(startPromise).rejects.toThrowError('Setup Error');
+    });
+  });
+
+  describe('.endNavigation()', () => {
+    it('should throw if a timespan is active', async () => {
+      const flow = new UserFlow(mockPage.asPage());
+      await flow.startTimespan();
+      await expect(flow.startNavigation()).rejects.toThrowError('Timespan already in progress');
+    });
+
+    it('should throw if a navigation is not active', async () => {
+      const flow = new UserFlow(mockPage.asPage());
+      await expect(flow.endNavigation()).rejects.toThrowError('No navigation in progress');
+    });
+
+    it('should throw errors from the teardown phase', async () => {
+      navigationModule.navigationGather.mockImplementation(async cb => {
+        // @ts-expect-error
+        await cb();
+        throw new Error('Teardown Error');
+      });
+      const flow = new UserFlow(mockPage.asPage());
+
+      // Should not throw the error here.
+      await flow.startNavigation();
+
+      const teardownPromise = flow.endNavigation();
+      await expect(teardownPromise).rejects.toThrowError('Teardown Error');
     });
   });
 

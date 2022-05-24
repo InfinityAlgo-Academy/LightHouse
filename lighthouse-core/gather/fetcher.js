@@ -6,124 +6,55 @@
 'use strict';
 
 /**
- * @fileoverview Fetcher is a utility for making requests within the context of the page.
- * Requests can circumvent CORS, and so are good for fetching source maps that may be hosted
- * on a different origin.
+ * @fileoverview Fetcher is a utility for making requests to any arbitrary resource,
+ * ignoring normal browser constraints such as CORS.
  */
 
-/* global document */
+/* global fetch */
 
 /** @typedef {{content: string|null, status: number|null}} FetchResponse */
-
-const log = require('lighthouse-logger');
-const {getBrowserVersion} = require('./driver/environment.js');
 
 class Fetcher {
   /**
    * @param {LH.Gatherer.FRProtocolSession} session
-   * @param {import('./driver/execution-context.js')} executionContext
    */
-  constructor(session, executionContext) {
+  constructor(session) {
     this.session = session;
-    this.executionContext = executionContext;
-    /** @type {Map<string, (event: LH.Crdp.Fetch.RequestPausedEvent) => void>} */
-    this._onRequestPausedHandlers = new Map();
-    this._onRequestPaused = this._onRequestPaused.bind(this);
-    this._enabled = false;
   }
 
   /**
-   * Chrome M92 and above:
-   * We use `Network.loadNetworkResource` to fetch each resource.
-   *
-   * Chrome <M92:
-   * The Fetch domain accepts patterns for controlling what requests are intercepted, but we
-   * enable the domain for all patterns and filter events at a lower level to support multiple
-   * concurrent usages. Reasons for this:
-   *
-   * 1) only one set of patterns may be applied for the entire domain.
-   * 2) every request that matches the patterns are paused and only resumes when certain Fetch
-   *    commands are sent. So a listener of the `Fetch.requestPaused` event must either handle
-   *    the requests it cares about, or explicitly allow them to continue.
-   * 3) if multiple commands to continue the same request are sent, protocol errors occur.
-   *
-   * So instead we have one global `Fetch.enable` / `Fetch.requestPaused` pair, and allow specific
-   * urls to be intercepted via `fetcher._setOnRequestPausedHandler`.
-   */
-  async enable() {
-    if (this._enabled) return;
-
-    this._enabled = true;
-    await this.session.sendCommand('Fetch.enable', {
-      patterns: [{requestStage: 'Request'}, {requestStage: 'Response'}],
-    });
-    await this.session.on('Fetch.requestPaused', this._onRequestPaused);
-  }
-
-  async disable() {
-    if (!this._enabled) return;
-
-    this._enabled = false;
-    await this.session.off('Fetch.requestPaused', this._onRequestPaused);
-    await this.session.sendCommand('Fetch.disable');
-    this._onRequestPausedHandlers.clear();
-  }
-
-  /**
-   * @param {string} url
-   * @param {(event: LH.Crdp.Fetch.RequestPausedEvent) => void} handler
-   */
-  async _setOnRequestPausedHandler(url, handler) {
-    this._onRequestPausedHandlers.set(url, handler);
-  }
-
-  /**
-   * @param {LH.Crdp.Fetch.RequestPausedEvent} event
-   */
-  _onRequestPaused(event) {
-    const handler = this._onRequestPausedHandlers.get(event.request.url);
-    if (handler) {
-      handler(event);
-    } else {
-      // Nothing cares about this URL, so continue.
-      this.session.sendCommand('Fetch.continueRequest', {requestId: event.requestId}).catch(err => {
-        log.error('Fetcher', `Failed to continueRequest: ${err.message}`);
-      });
-    }
-  }
-
-  /**
-   * `Network.loadNetworkResource` was introduced in M88.
-   * The long timeout bug with `IO.read` was fixed in M92:
-   * https://bugs.chromium.org/p/chromium/issues/detail?id=1191757
-   * Lightrider has a bug forcing us to use the old version for now:
-   * https://docs.google.com/document/d/1V-DxgsOFMPxUuFrdGPQpyiCqSljvgNlOqXCtqDtd0b8/edit?usp=sharing&resourcekey=0-aIaIqcHFKG-0dX4MAudBEw
-   * @return {Promise<boolean>}
-   */
-  async shouldUseLegacyFetcher() {
-    const {milestone} = await getBrowserVersion(this.session);
-    return milestone < 92 || Boolean(global.isLightrider);
-  }
-
-  /**
-   * Requires that `fetcher.enable` has been called.
-   *
-   * Fetches any resource in a way that circumvents CORS.
+   * Fetches any resource using the network directly.
    *
    * @param {string} url
    * @param {{timeout: number}=} options timeout is in ms
    * @return {Promise<FetchResponse>}
    */
   async fetchResource(url, options = {timeout: 2_000}) {
-    if (!this._enabled) {
-      throw new Error('Must call `enable` before using fetchResource');
-    }
-
-    if (await this.shouldUseLegacyFetcher()) {
-      return this._fetchResourceIframe(url, options);
+    // In Lightrider, `Network.loadNetworkResource` is not implemented, but fetch
+    // is configured to work for any resource.
+    if (global.isLightrider) {
+      return this._wrapWithTimeout(this._fetchWithFetchApi(url), options.timeout);
     }
 
     return this._fetchResourceOverProtocol(url, options);
+  }
+
+  /**
+   * @param {string} url
+   * @return {Promise<FetchResponse>}
+   */
+  async _fetchWithFetchApi(url) {
+    const response = await fetch(url);
+
+    let content = null;
+    try {
+      content = await response.text();
+    } catch {}
+
+    return {
+      content,
+      status: response.status,
+    };
   }
 
   /**
@@ -173,36 +104,13 @@ class Fetcher {
   }
 
   /**
-   * @param {string} requestId
-   * @return {Promise<string>}
-   */
-  async _resolveResponseBody(requestId) {
-    const responseBody = await this.session.sendCommand('Fetch.getResponseBody', {requestId});
-    if (responseBody.base64Encoded) {
-      return Buffer.from(responseBody.body, 'base64').toString();
-    }
-    return responseBody.body;
-  }
-
-  /**
    * @param {string} url
    * @param {{timeout: number}} options timeout is in ms
    * @return {Promise<FetchResponse>}
    */
   async _fetchResourceOverProtocol(url, options) {
     const startTime = Date.now();
-
-    /** @type {NodeJS.Timeout} */
-    let timeoutHandle;
-    const timeoutPromise = new Promise((_, reject) => {
-      timeoutHandle = setTimeout(reject, options.timeout, new Error('Timed out fetching resource'));
-    });
-
-    const responsePromise = this._loadNetworkResource(url);
-
-    /** @type {{stream: LH.Crdp.IO.StreamHandle|null, status: number|null}} */
-    const response = await Promise.race([responsePromise, timeoutPromise])
-      .finally(() => clearTimeout(timeoutHandle));
+    const response = await this._wrapWithTimeout(this._loadNetworkResource(url), options.timeout);
 
     const isOk = response.status && response.status >= 200 && response.status <= 299;
     if (!response.stream || !isOk) return {status: response.status, content: null};
@@ -213,105 +121,21 @@ class Fetcher {
   }
 
   /**
-   * Fetches resource by injecting an iframe into the page.
-   * @param {string} url
-   * @param {{timeout: number}} options timeout is in ms
-   * @return {Promise<FetchResponse>}
+   * @template T
+   * @param {Promise<T>} promise
+   * @param {number} ms
    */
-  async _fetchResourceIframe(url, options) {
-    /** @type {Promise<FetchResponse>} */
-    const requestInterceptionPromise = new Promise((resolve, reject) => {
-      /** @param {LH.Crdp.Fetch.RequestPausedEvent} event */
-      const handlerAsync = async event => {
-        const {requestId, responseStatusCode} = event;
-
-        // The first requestPaused event is for the request stage. Continue it.
-        if (!responseStatusCode) {
-          // Remove cookies so we aren't buying stuff on Amazon.
-          const headers = Object.entries(event.request.headers)
-            .filter(([name]) => name !== 'Cookie')
-            .map(([name, value]) => {
-              return {name, value};
-            });
-
-          await this.session.sendCommand('Fetch.continueRequest', {
-            requestId,
-            headers,
-          });
-          return;
-        }
-
-        if (responseStatusCode >= 200 && responseStatusCode <= 299) {
-          resolve({
-            status: responseStatusCode,
-            content: await this._resolveResponseBody(requestId),
-          });
-        } else {
-          resolve({status: responseStatusCode, content: null});
-        }
-
-        // Fail the request (from the page's perspective) so that the iframe never loads.
-        await this.session.sendCommand('Fetch.failRequest', {requestId, errorReason: 'Aborted'});
-      };
-      this._setOnRequestPausedHandler(url, event => handlerAsync(event).catch(reject));
-    });
-
-    /**
-     * @param {string} src
-     */
-    /* c8 ignore start */
-    function injectIframe(src) {
-      const iframe = document.createElement('iframe');
-      // Try really hard not to affect the page.
-      iframe.style.display = 'none';
-      iframe.style.visibility = 'hidden';
-      iframe.style.position = 'absolute';
-      iframe.style.top = '-1000px';
-      iframe.style.left = '-1000px';
-      iframe.style.width = '1px';
-      iframe.style.height = '1px';
-      iframe.src = src;
-      iframe.onload = iframe.onerror = () => {
-        iframe.remove();
-        iframe.onload = null;
-        iframe.onerror = null;
-      };
-      document.body.appendChild(iframe);
-    }
-    /* c8 ignore stop */
-
+  async _wrapWithTimeout(promise, ms) {
     /** @type {NodeJS.Timeout} */
-    let asyncTimeout;
-    /** @type {Promise<never>} */
+    let timeoutHandle;
     const timeoutPromise = new Promise((_, reject) => {
-      asyncTimeout = setTimeout(reject, options.timeout, new Error('Timed out fetching resource.'));
+      timeoutHandle = setTimeout(reject, ms, new Error('Timed out fetching resource'));
     });
 
-    const racePromise = Promise.race([
-      timeoutPromise,
-      requestInterceptionPromise,
-    ]).finally(() => clearTimeout(asyncTimeout));
-
-    // Temporarily disable auto-attaching for this iframe.
-    await this.session.sendCommand('Target.setAutoAttach', {
-      autoAttach: false,
-      waitForDebuggerOnStart: false,
-    });
-
-    const injectionPromise = this.executionContext.evaluate(injectIframe, {
-      args: [url],
-      useIsolation: true,
-    });
-
-    const [fetchResult] = await Promise.all([racePromise, injectionPromise]);
-
-    await this.session.sendCommand('Target.setAutoAttach', {
-      flatten: true,
-      autoAttach: true,
-      waitForDebuggerOnStart: true,
-    });
-
-    return fetchResult;
+    /** @type {Promise<T>} */
+    const wrappedPromise = await Promise.race([promise, timeoutPromise])
+      .finally(() => clearTimeout(timeoutHandle));
+    return wrappedPromise;
   }
 }
 

@@ -3,9 +3,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 import {strict as assert} from 'assert';
+
 import LargestContentfulPaintAllFrames from '../../../computed/metrics/largest-contentful-paint-all-frames.js'; // eslint-disable-line max-len
 import traceAllFrames from '../../fixtures/traces/frame-metrics-m89.json';
 import devtoolsLogAllFrames from '../../fixtures/traces/frame-metrics-m89.devtools.log.json';
@@ -13,8 +13,6 @@ import traceMainFrame from '../../fixtures/traces/lcp-m78.json';
 import devtoolsLogMainFrame from '../../fixtures/traces/lcp-m78.devtools.log.json';
 import invalidTrace from '../../fixtures/traces/progressive-app-m60.json';
 import invalidDevtoolsLog from '../../fixtures/traces/progressive-app-m60.devtools.log.json';
-
-/* eslint-env jest */
 
 describe('Metrics: LCP from all frames', () => {
   const gatherContext = {gatherMode: 'navigation'};

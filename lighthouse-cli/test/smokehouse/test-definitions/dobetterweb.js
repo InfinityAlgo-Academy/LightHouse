@@ -431,7 +431,7 @@ const expectations = {
           nodes: {
             // Test that the numbers for individual elements are in the ballpark.
             // Exact ordering and IDs between FR and legacy differ, so fork the expectations.
-            'page-0-IMG': {
+            '5-11-IMG': {
               _legacyOnly: true,
               top: '650±50',
               bottom: '650±50',
@@ -440,7 +440,7 @@ const expectations = {
               width: '120±20',
               height: '20±20',
             },
-            'page-2-IMG': {
+            '9-1-IMG': {
               _fraggleRockOnly: true,
               top: '650±50',
               bottom: '650±50',
