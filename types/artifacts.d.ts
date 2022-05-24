@@ -573,7 +573,7 @@ declare module Artifacts {
   }
 
   interface TraceElement {
-    traceEventType: 'largest-contentful-paint'|'layout-shift'|'animation';
+    traceEventType: 'largest-contentful-paint'|'layout-shift'|'animation'|'responsiveness';
     score?: number;
     node: NodeDetails;
     nodeId?: number;
@@ -1002,6 +1002,7 @@ export interface TraceEvent {
       /** Responsiveness data. */
       interactionType?: 'drag'|'keyboard'|'tapOrClick';
       maxDuration?: number;
+      type?: string;
     };
     frame?: string;
     name?: string;
@@ -1018,6 +1019,40 @@ export interface TraceEvent {
   id2?: {
     local?: string;
   };
+}
+
+declare module Trace {
+  /**
+   * Base event of a `ph: 'X'` 'complete' event. Extend with `name` and `args` as
+   * needed.
+   */
+  interface CompleteEvent {
+    ph: 'X';
+    cat: string;
+    pid: number;
+    tid: number;
+    dur: number;
+    ts: number;
+    tdur: number;
+    tts: number;
+  }
+
+  /**
+   * Base event of a `ph: 'b'|'e'|'n'` async event. Extend with `name`, `args`, and
+   * more specific `ph` (if needed).
+   */
+  interface AsyncEvent {
+    ph: 'b'|'e'|'n';
+    cat: string;
+    pid: number;
+    tid: number;
+    ts: number;
+    id: string;
+    scope?: string;
+    // TODO(bckenny): No dur on these. Sort out optional `dur` on trace events.
+    /** @deprecated there is no `dur` on async events. */
+    dur: number;
+  }
 }
 
 /**

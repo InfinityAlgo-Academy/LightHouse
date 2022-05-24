@@ -279,7 +279,7 @@ export class LighthouseReportViewer {
     // Reset container content.
     container.innerHTML = '';
     const rootEl = document.createElement('div');
-    container.appendChild(rootEl);
+    container.append(rootEl);
 
     // Only give gist-saving callback if current report isn't from a gist.
     let saveGistCallback;

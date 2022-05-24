@@ -9,4 +9,4 @@
 const dummyDiv = document.createElement('div');
 dummyDiv.innerHTML = 'Hello!';
 
-document.body.appendChild(dummyDiv);
+document.body.append(dummyDiv);

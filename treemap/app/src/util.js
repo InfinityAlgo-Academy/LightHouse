@@ -38,7 +38,7 @@ class TreemapUtil {
 
   /**
    * @param {LH.Treemap.Node} node
-   * @param {(node: NodeWithElement, path: string[]) => void} fn
+   * @param {(node: import('./main.js').NodeWithElement, path: string[]) => void} fn
    * @param {string[]=} path
    */
   static walk(node, fn, path) {
@@ -118,7 +118,7 @@ class TreemapUtil {
    */
   static createChildOf(parentElem, elementName, className) {
     const element = this.createElement(elementName, className);
-    parentElem.appendChild(element);
+    parentElem.append(element);
     return element;
   }
 

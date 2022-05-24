@@ -13,8 +13,6 @@ import {DOM} from '../../renderer/dom.js';
 import {Util} from '../../renderer/util.js';
 import {I18n} from '../../renderer/i18n.js';
 
-/* eslint-env jest */
-
 describe('DOM', () => {
   /** @type {DOM} */
   let dom;
