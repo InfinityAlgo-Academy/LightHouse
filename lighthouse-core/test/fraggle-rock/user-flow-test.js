@@ -194,12 +194,12 @@ describe('UserFlow', () => {
     it('should throw if a timespan is active', async () => {
       const flow = new UserFlow(mockPage.asPage());
       await flow.startTimespan();
-      await expect(flow.startNavigation()).rejects.toBeTruthy();
+      await expect(flow.startNavigation()).rejects.toThrowError('Timespan already in progress');
     });
 
     it('should throw if a navigation is not active', async () => {
       const flow = new UserFlow(mockPage.asPage());
-      await expect(flow.endNavigation()).rejects.toBeTruthy();
+      await expect(flow.endNavigation()).rejects.toThrowError('No navigation in progress');
     });
 
     it('should throw errors from the teardown phase', async () => {
@@ -214,7 +214,7 @@ describe('UserFlow', () => {
       await flow.startNavigation();
 
       const teardownPromise = flow.endNavigation();
-      expect(teardownPromise).rejects.toThrowError('Teardown Error');
+      await expect(teardownPromise).rejects.toThrowError('Teardown Error');
     });
   });
 
