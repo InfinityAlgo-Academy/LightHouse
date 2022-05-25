@@ -104,6 +104,20 @@ class UserFlow {
   }
 
   /**
+   * @return {boolean}
+   */
+  isNavigationRunning() {
+    return Boolean(this.currentNavigation);
+  }
+
+  /**
+   * @return {boolean}
+   */
+  isTimespanRunning() {
+    return Boolean(this.currentTimespan);
+  }
+
+  /**
    * @param {LH.NavigationRequestor} requestor
    * @param {StepOptions=} stepOptions
    */

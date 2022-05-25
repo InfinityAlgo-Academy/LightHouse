@@ -61,7 +61,7 @@ const flow = JSON.parse(fs.readFileSync(process.argv[2], 'utf-8'));
 
     async afterAllSteps(flow) {
       await super.afterAllSteps(flow);
-      if (this.lhFlow.isNavigationRunning()) {
+      if (this.lhFlow.isTimespanRunning()) {
         await this.lhFlow.endTimespan();
       }
       const report = await this.lhFlow.generateReport();
