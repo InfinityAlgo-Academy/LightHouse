@@ -199,4 +199,5 @@ function createTestTrace(options) {
   return {traceEvents};
 }
 
+// TODO(esmodules)
 export default createTestTrace;

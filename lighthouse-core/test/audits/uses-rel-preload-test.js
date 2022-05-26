@@ -8,7 +8,7 @@ import {strict as assert} from 'assert';
 
 import UsesRelPreload from '../../audits/uses-rel-preload.js';
 import {networkRecordsToDevtoolsLog} from '../network-records-to-devtools-log.js';
-import {createTestTrace} from '../create-test-trace.js';
+import createTestTrace from '../create-test-trace.js';
 import {getURLArtifactFromDevtoolsLog} from '../test-utils.js';
 import {readJson} from '../../../root.js';
 
