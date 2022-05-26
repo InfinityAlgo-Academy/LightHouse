@@ -21,7 +21,9 @@ describe('Page Functions', () => {
     global.Node = Node;
     global.HTMLElement = HTMLElement;
     global.document = document;
-    global.window = {};
+    global.window = {
+      HTMLElement, // for getBoundingClientRect fallback.
+    };
   });
 
   afterAll(() => {

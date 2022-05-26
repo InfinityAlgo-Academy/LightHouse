@@ -434,8 +434,10 @@ function getNodeLabel(element) {
  * @return {LH.Artifacts.Rect}
  */
 function getBoundingClientRect(element) {
+  const realBoundingClientRect = window.__HTMLElementBoundingClientRect ||
+    window.HTMLElement.prototype.getBoundingClientRect;
   // The protocol does not serialize getters, so extract the values explicitly.
-  const rect = element.getBoundingClientRect();
+  const rect = realBoundingClientRect.call(element);
   return {
     top: Math.round(rect.top),
     bottom: Math.round(rect.bottom),

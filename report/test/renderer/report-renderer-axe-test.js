@@ -6,9 +6,11 @@
 
 import puppeteer from 'puppeteer';
 
-import sampleResults from '../../../lighthouse-core/test/results/sample_v2.json';
 import reportGenerator from '../../generator/report-generator.js';
 import axeLib from '../../../lighthouse-core/lib/axe.js';
+import {readJson} from '../../../root.js';
+
+const sampleResults = readJson('../../../lighthouse-core/test/results/sample_v2.json', import.meta);
 
 describe('ReportRendererAxe', () => {
   describe('with aXe', () => {

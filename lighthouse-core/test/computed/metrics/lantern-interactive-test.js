@@ -6,12 +6,14 @@
 
 import {strict as assert} from 'assert';
 
+import {readJson} from '../../../../root.js';
 import LanternInteractive from '../../../computed/metrics/lantern-interactive.js';
-import trace from '../../fixtures/traces/progressive-app-m60.json';
-import devtoolsLog from '../../fixtures/traces/progressive-app-m60.devtools.log.json';
-import iframeTrace from '../../fixtures/traces/iframe-m79.trace.json';
-import iframeDevtoolsLog from '../../fixtures/traces/iframe-m79.devtoolslog.json';
 import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';
+
+const trace = readJson('../../fixtures/traces/progressive-app-m60.json', import.meta);
+const devtoolsLog = readJson('../../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
+const iframeTrace = readJson('../../fixtures/traces/iframe-m79.trace.json', import.meta);
+const iframeDevtoolsLog = readJson('../../fixtures/traces/iframe-m79.devtoolslog.json', import.meta);
 
 describe('Metrics: Lantern TTI', () => {
   const gatherContext = {gatherMode: 'navigation'};

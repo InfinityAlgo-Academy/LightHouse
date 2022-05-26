@@ -6,7 +6,9 @@
 
 import {getProtoRoundTrip} from '../test-utils.js';
 import {processForProto} from '../../lib/proto-preprocessor.js';
-import sampleJson from '../results/sample_v2.json';
+import {readJson} from '../../../root.js';
+
+const sampleJson = readJson('../results/sample_v2.json', import.meta);
 
 const {describeIfProtoExists, sampleResultsRoundtripStr} = getProtoRoundTrip();
 const roundTripJson = sampleResultsRoundtripStr && JSON.parse(sampleResultsRoundtripStr);

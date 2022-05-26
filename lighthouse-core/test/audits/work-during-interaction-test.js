@@ -6,9 +6,11 @@
 
 /* eslint-disable no-irregular-whitespace */
 
+import {readJson} from '../../../root.js';
 import WorkDuringInteraction from '../../audits/work-during-interaction.js';
-import interactionTrace from '../fixtures/traces/timespan-responsiveness-m103.trace.json';
-import noInteractionTrace from '../fixtures/traces/jumpy-cls-m90.json';
+
+const interactionTrace = readJson('../fixtures/traces/timespan-responsiveness-m103.trace.json', import.meta);
+const noInteractionTrace = readJson('../fixtures/traces/jumpy-cls-m90.json', import.meta);
 
 describe('Interaction to Next Paint', () => {
   function getTestData() {

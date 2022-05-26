@@ -6,12 +6,14 @@
 
 import {strict as assert} from 'assert';
 
+import {readJson} from '../../../../root.js';
 import LargestContentfulPaint from '../../../computed/metrics/largest-contentful-paint.js'; // eslint-disable-line max-len
-import trace from '../../fixtures/traces/lcp-m78.json';
-import devtoolsLog from '../../fixtures/traces/lcp-m78.devtools.log.json';
-import invalidTrace from '../../fixtures/traces/progressive-app-m60.json';
-import invalidDevtoolsLog from '../../fixtures/traces/progressive-app-m60.devtools.log.json';
 import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';
+
+const trace = readJson('../../fixtures/traces/lcp-m78.json', import.meta);
+const devtoolsLog = readJson('../../fixtures/traces/lcp-m78.devtools.log.json', import.meta);
+const invalidTrace = readJson('../../fixtures/traces/progressive-app-m60.json', import.meta);
+const invalidDevtoolsLog = readJson('../../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
 
 describe('Metrics: LCP', () => {
   const gatherContext = {gatherMode: 'navigation'};
