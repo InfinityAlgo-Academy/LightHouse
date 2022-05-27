@@ -92,14 +92,8 @@ async function buildFlowReport() {
 }
 
 async function buildEsModulesBundle() {
-  const bundle = await rollup.rollup({
-    input: 'report/clients/bundle.js',
-    plugins: [
-      rollupPlugins.commonjs(),
-      // Exclude this 30kb from the devtools bundle for now.
-      // But include the type detail for bundle.esm.d.ts generation
-      rollupPlugins.shim({
-        [`${LH_ROOT}/shared/localization/i18n-module.js`]: `
+  // Include the type detail for bundle.esm.d.ts generation
+  const i18nModuleShim = `
 /**
  * Returns a new LHR with all strings changed to the new requestedLocale.
  * @param {LH.Result} lhr
@@ -125,7 +119,15 @@ function registerLocaleData(locale, lhlMessages) {
   // Stub function only included for types
 }
 export const format = {registerLocaleData};
-        `,
+`;
+
+  const bundle = await rollup.rollup({
+    input: 'report/clients/bundle.js',
+    plugins: [
+      rollupPlugins.commonjs(),
+      // Exclude this 30kb from the devtools bundle for now.
+      rollupPlugins.shim({
+        [`${LH_ROOT}/shared/localization/i18n-module.js`]: i18nModuleShim,
       }),
     ],
   });
