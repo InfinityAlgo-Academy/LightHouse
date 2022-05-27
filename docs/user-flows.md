@@ -42,7 +42,24 @@ Instead of providing a URL to navigate to, you can provide a callback function. 
 
 This callback function _must_ perform an action that will trigger a navigation. Any interactions completed before the callback promise resolves will be captured by the navigation.
 
-#### Code
+#### How to Use
+
+<details>
+<summary>
+DevTools
+</summary>
+
+1. Go to the page you want to test
+2. Select "Navigation (Default)" as your mode
+3. Click "Analyze page load"
+
+> Note: DevTools only generates a report for a standalone navigation, it cannot be combined with other steps in a user flow report.
+
+![Lighthouse DevTools panel in navigation mode](https://user-images.githubusercontent.com/6752989/168673207-1e901e72-3461-4bae-a581-e80963beea54.png)
+</details>
+
+<details>
+<summary>Node API</summary>
 
 ```js
 import {writeFileSync} from 'fs';
@@ -69,6 +86,8 @@ async function main() {
 
 main();
 ```
+</details>
+<br>
 
 ### Timespan
 
@@ -90,7 +109,26 @@ Timespan reports analyze an arbitrary period of time, typically containing user 
 - Measure layout shifts and JavaScript execution time on a series of interactions.
 - Discover performance opportunities to improve the experience for long-lived pages and SPAs.
 
-#### Code
+#### How to use
+
+<details>
+<summary>
+DevTools
+</summary>
+
+1. Go to the page you want to test
+2. Select "Timespan" as your mode
+3. Click "Start timespan"
+4. Interact with the page
+5. Click "End timespan"
+
+> Note: DevTools only generates a report for a standalone timespan, it cannot be combined with other steps in a user flow report.
+
+![Lighthouse DevTools panel in timespan mode](https://user-images.githubusercontent.com/6752989/168679184-b7eff86a-a141-414d-b76a-4da78a165aa8.png)
+</details>
+
+<details>
+<summary>Node API</summary>
 
 ```js
 import {writeFileSync} from 'fs';
@@ -117,6 +155,8 @@ async function main() {
 
 main();
 ```
+</details>
+<br>
 
 ### Snapshot
 
@@ -136,7 +176,25 @@ Snapshot reports analyze the page in a particular state, typically after the use
 - Find accessibility issues in single page applications or complex forms.
 - Evaluate best practices of menus and UI elements hidden behind interaction.
 
-#### Code
+#### How to use
+
+<details>
+<summary>
+DevTools
+</summary>
+
+1. Go to the page you want to test
+2. Interact with the page so it's in a state you want to test
+3. Select "Snapshot" as your mode
+4. Click "Analyze page state".
+
+> Note: DevTools only generates a report for a standalone snapshot, it cannot be combined with other steps in a user flow report.
+
+<img width="1203" alt="Screen Shot 2022-05-16 at 1 30 08 PM" src="https://user-images.githubusercontent.com/6752989/168677313-8be0591a-8e17-488c-b602-b47e487a75a3.png">
+</details>
+
+<details>
+<summary>Node API</summary>
 
 ```js
 import {writeFileSync} from 'fs';
@@ -159,6 +217,8 @@ async function main() {
 
 main();
 ```
+</details>
+<br>
 
 ## Creating a Flow
 
@@ -188,10 +248,9 @@ When mapping a user flow onto the Lighthouse modes, strive for each report to ha
 
 The below example codifies a user flow for an ecommerce site where the user navigates to the homepage, searches for a product, and clicks on the detail link.
 
-![Lighthouse User Flows Diagram](https://user-images.githubusercontent.com/2301202/135164371-20cc5c8c-e876-467f-985c-f85683afa8ee.png)
+![Lighthouse User Flows Diagram](https://user-images.githubusercontent.com/6752989/168678568-69aaa82f-0459-4c2a-8f46-467d7f06d237.png)
 
-
-### Code
+### Complete user Flow Code
 
 ```js
 import {writeFileSync} from 'fs';
