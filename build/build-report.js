@@ -98,8 +98,32 @@ async function buildEsModulesBundle() {
       rollupPlugins.commonjs(),
       // Exclude this 30kb from the devtools bundle for now.
       rollupPlugins.shim({
-        [`${LH_ROOT}/shared/localization/i18n-module.js`]:
-            'export const swapLocale = _ => {}; export const format = _ => {};',
+        [`${LH_ROOT}/shared/localization/i18n-module.js`]: `
+/**
+ * Returns a new LHR with all strings changed to the new requestedLocale.
+ * @param {LH.Result} lhr
+ * @param {LH.Locale} requestedLocale
+ * @return {{lhr: LH.Result, missingIcuMessageIds: string[]}}
+ */
+export function swapLocale(lhr, requestedLocale) {
+  return {
+    lhr,
+    missingIcuMessageIds: []
+  };
+};
+
+/**
+ * Populate the i18n string lookup dict with locale data
+ * Used when the host environment selects the locale and serves lighthouse the intended locale file
+ * @see https://docs.google.com/document/d/1jnt3BqKB-4q3AE94UWFA0Gqspx8Sd_jivlB7gQMlmfk/edit
+ * @param {LH.Locale} locale
+ * @param {Record<string, {message: string}>} lhlMessages
+ */
+function registerLocaleData(locale, lhlMessages) {
+    LOCALE_MESSAGES[locale] = lhlMessages;
+}
+export const format = {registerLocaleData};
+        `,
       }),
     ],
   });
