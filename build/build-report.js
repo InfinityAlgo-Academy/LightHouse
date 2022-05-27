@@ -97,6 +97,7 @@ async function buildEsModulesBundle() {
     plugins: [
       rollupPlugins.commonjs(),
       // Exclude this 30kb from the devtools bundle for now.
+      // But include the type detail for bundle.esm.d.ts generation
       rollupPlugins.shim({
         [`${LH_ROOT}/shared/localization/i18n-module.js`]: `
 /**
@@ -106,6 +107,7 @@ async function buildEsModulesBundle() {
  * @return {{lhr: LH.Result, missingIcuMessageIds: string[]}}
  */
 export function swapLocale(lhr, requestedLocale) {
+  // Stub function only included for types
   return {
     lhr,
     missingIcuMessageIds: [],
@@ -120,7 +122,7 @@ export function swapLocale(lhr, requestedLocale) {
  * @param {Record<string, {message: string}>} lhlMessages
  */
 function registerLocaleData(locale, lhlMessages) {
-  // ...
+  // Stub function only included for types
 }
 export const format = {registerLocaleData};
         `,
