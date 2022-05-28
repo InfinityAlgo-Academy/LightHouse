@@ -10,8 +10,8 @@ Tests that lighthouse panel passes flags.
 [ ] Publisher Ads
 [x] Legacy navigation
 [x] Clear storage
-[ ] Simulated throttling
-Generate report: enabled visible
+Throttling method: devtools
+Analyze page load: enabled visible
 
 =============== Lighthouse Results ===============
 formFactor: desktop

@@ -14,9 +14,10 @@
   });
 
   const containerElement = LighthouseTestRunner.getContainerElement();
-  const checkboxes = containerElement.querySelectorAll('.checkbox');
+  const ensureDisabledNames = ['Accessibility', 'Best practices', 'SEO', 'Progressive Web App'];
+  const checkboxes = Array.from(containerElement.querySelectorAll('.checkbox'));
   for (const checkbox of checkboxes) {
-    if (checkbox.textElement.textContent === 'Performance' || checkbox.textElement.textContent === 'Clear storage') {
+    if (!ensureDisabledNames.includes(checkbox.textElement.textContent)) {
       continue;
     }
 
