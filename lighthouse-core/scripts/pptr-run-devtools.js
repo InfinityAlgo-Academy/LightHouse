@@ -90,7 +90,7 @@ function addSniffer(receiver, methodName, override) {
 }
 
 const sniffLhr = `
-new Promise(resolve => {
+new Promise((resolve, reject) => {
   const panel = UI.panels.lighthouse || UI.panels.audits;
   const methodName = panel.__proto__.buildReportUI ?
     'buildReportUI' : '_buildReportUI';
@@ -98,6 +98,11 @@ new Promise(resolve => {
     panel.__proto__,
     methodName,
     (lhr, artifacts) => resolve({lhr, artifacts})
+  );
+  (${addSniffer.toString()})(
+    panel.statusView.__proto__,
+    'renderBugReport',
+    reject
   );
 });
 `;
@@ -259,6 +264,12 @@ async function testPage(page, browser, url, config) {
     awaitPromise: true,
     returnByValue: true,
   }).catch(err => err);
+
+  const errorMsg = remoteLhrResponse.exceptionDetails?.exception?.description;
+  if (errorMsg) {
+    console.error('Exception thrown during Lighthouse run:');
+    throw new Error(errorMsg);
+  }
 
   if (!remoteLhrResponse.result?.value?.lhr) {
     throw new Error('Problem sniffing LHR.');
