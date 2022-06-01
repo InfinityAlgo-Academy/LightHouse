@@ -1,3 +1,30 @@
+<a name="9.6.2"></a>
+# 9.6.2 (2022-06-01)
+[Full Changelog](https://github.com/compare/v9.6.1...v9.6.2)
+
+We expect this release to ship in the DevTools of [Chrome 104](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
+
+## Core
+
+* driver: fix legacy runner hanging oopifs in some cases ([#14074](https://github.com/GoogleChrome/lighthouse/pull/14074))
+
+## Report
+
+* avoid really slow regexes for data urls ([#13791](https://github.com/GoogleChrome/lighthouse/pull/13791))
+
+## Clients
+
+* psi: expose the swapLocale types ([#14062](https://github.com/GoogleChrome/lighthouse/pull/14062))
+
+## Tests
+
+* smoke: fix ToT node id failures ([#14077](https://github.com/GoogleChrome/lighthouse/pull/14077))
+* devtools: sync web tests ([#14061](https://github.com/GoogleChrome/lighthouse/pull/14061))
+
+## Misc
+
+* build: fix lightrider report generator bundle ([#14031](https://github.com/GoogleChrome/lighthouse/pull/14031))
+
  <a name="9.6.1"></a>
 # 9.6.1 (2022-05-11)
 [Full Changelog](https://github.com/compare/v9.6.0...v9.6.1)
