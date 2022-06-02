@@ -56,9 +56,13 @@ const expectations = {
         // Note: The first number (5) in these ids comes from an executionContextId, and has the potential to change.
         // The following P is the same element as above but from a different JS context. This element
         // starts with height ~18 and grows over time. See screenshot.html.
-        '5-1-P': {_legacyOnly: true, ...elements.p},
-        '5-2-BODY': {_legacyOnly: true, ...elements.body},
-        '5-3-HTML': {_legacyOnly: true},
+        '5-1-P': {_legacyOnly: true, ...elements.p, _maxChromiumVersion: '104.0.5098.0'},
+        '5-2-BODY': {_legacyOnly: true, ...elements.body, _maxChromiumVersion: '104.0.5098.0'},
+        '5-3-HTML': {_legacyOnly: true, _maxChromiumVersion: '104.0.5098.0'},
+        // Legacy runner execution context ID changed after 104.0.5100.0
+        '4-1-P': {_legacyOnly: true, ...elements.p, _minChromiumVersion: '104.0.5100.0'},
+        '4-2-BODY': {_legacyOnly: true, ...elements.body, _minChromiumVersion: '104.0.5100.0'},
+        '4-3-HTML': {_legacyOnly: true, _minChromiumVersion: '104.0.5100.0'},
 
         // Fraggle rock should contain the same elements just with different ids.
         '9-0-P': {_fraggleRockOnly: true, ...elements.p},
