@@ -225,15 +225,16 @@ async function runLighthouse(url, flags, config) {
       flags.port = launchedChrome.port;
     }
 
-    if (flags.fraggleRock) {
-      flags.channel = 'fraggle-rock-cli';
+    if (flags.legacyNavigation) {
+      log.warn('CLI', 'Legacy navigation CLI is deprecated');
+      flags.channel = 'legacy-navigation-cli';
     } else {
       flags.channel = 'cli';
     }
 
-    const runnerResult = flags.fraggleRock ?
-       await lighthouse(url, flags, config) :
-       await lighthouse.legacyNavigation(url, flags, config);
+    const runnerResult = flags.legacyNavigation ?
+       await lighthouse.legacyNavigation(url, flags, config) :
+       await lighthouse(url, flags, config);
 
     // If in gatherMode only, there will be no runnerResult.
     if (runnerResult) {

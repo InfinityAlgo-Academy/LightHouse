@@ -3,16 +3,25 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-/* eslint-env jest */
+import {jest} from '@jest/globals';
 
-const {
-  createMockContext,
-  mockDriverSubmodules,
-} = require('../../fraggle-rock/gather/mock-driver.js');
+import {createMockContext, mockDriverSubmodules} from '../../fraggle-rock/gather/mock-driver.js';
+// import FullPageScreenshotGatherer from '../../../gather/gatherers/full-page-screenshot.js';
+
+// Some imports needs to be done dynamically, so that their dependencies will be mocked.
+// See: https://jestjs.io/docs/ecmascript-modules#differences-between-esm-and-commonjs
+//      https://github.com/facebook/jest/issues/10025
+/** @typedef {import('../../../gather/gatherers/full-page-screenshot.js')} FullPageScreenshotGatherer */
+/** @type {typeof import('../../../gather/gatherers/full-page-screenshot.js')} */
+let FullPageScreenshotGatherer;
+
+beforeAll(async () => {
+  FullPageScreenshotGatherer =
+    (await import('../../../gather/gatherers/full-page-screenshot.js')).default;
+});
+
 const mocks = mockDriverSubmodules();
-const FullPageScreenshotGatherer = require('../../../gather/gatherers/full-page-screenshot.js');
 
 // Headless's default value is (1024 * 16), but this varies by device
 const maxTextureSizeMock = 1024 * 8;

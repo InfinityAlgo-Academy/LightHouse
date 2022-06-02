@@ -450,13 +450,13 @@
     "message": "L̂íŝt́ŝ ćôńt̂áîń ôńl̂ý `<li>` êĺêḿêńt̂ś âńd̂ śĉŕîṕt̂ śûṕp̂ór̂t́îńĝ él̂ém̂én̂t́ŝ (`<script>` án̂d́ `<template>`)."
   },
   "lighthouse-core/audits/accessibility/listitem.js | description": {
-    "message": "Ŝćr̂éêń r̂éâd́êŕŝ ŕêq́ûír̂é l̂íŝt́ ît́êḿŝ (`<li>`) t́ô b́ê ćôńt̂áîńêd́ ŵít̂h́îń â ṕâŕêńt̂ `<ul>` ór̂ `<ol>` t́ô b́ê án̂ńôún̂ćêd́ p̂ŕôṕêŕl̂ý. [L̂éâŕn̂ ḿôŕê](https://dequeuniversity.com/rules/axe/4.4/listitem)."
+    "message": "Ŝćr̂éêń r̂éâd́êŕŝ ŕêq́ûír̂é l̂íŝt́ ît́êḿŝ (`<li>`) t́ô b́ê ćôńt̂áîńêd́ ŵít̂h́îń â ṕâŕêńt̂ `<ul>`, `<ol>` ór̂ `<menu>` t́ô b́ê án̂ńôún̂ćêd́ p̂ŕôṕêŕl̂ý. [L̂éâŕn̂ ḿôŕê](https://dequeuniversity.com/rules/axe/4.4/listitem)."
   },
   "lighthouse-core/audits/accessibility/listitem.js | failureTitle": {
-    "message": "L̂íŝt́ ît́êḿŝ (`<li>`) ár̂é n̂ót̂ ćôńt̂áîńêd́ ŵít̂h́îń `<ul>` ôŕ `<ol>` p̂ár̂én̂t́ êĺêḿêńt̂ś."
+    "message": "L̂íŝt́ ît́êḿŝ (`<li>`) ár̂é n̂ót̂ ćôńt̂áîńêd́ ŵít̂h́îń `<ul>`, `<ol>` ôŕ `<menu>` p̂ár̂én̂t́ êĺêḿêńt̂ś."
   },
   "lighthouse-core/audits/accessibility/listitem.js | title": {
-    "message": "L̂íŝt́ ît́êḿŝ (`<li>`) ár̂é ĉón̂t́âín̂éd̂ ẃît́ĥín̂ `<ul>` ór̂ `<ol>` ṕâŕêńt̂ él̂ém̂én̂t́ŝ"
+    "message": "L̂íŝt́ ît́êḿŝ (`<li>`) ár̂é ĉón̂t́âín̂éd̂ ẃît́ĥín̂ `<ul>`, `<ol>` ór̂ `<menu>` ṕâŕêńt̂ él̂ém̂én̂t́ŝ"
   },
   "lighthouse-core/audits/accessibility/meta-refresh.js | description": {
     "message": "Ûśêŕŝ d́ô ńôt́ êx́p̂éĉt́ â ṕâǵê t́ô ŕêf́r̂éŝh́ âút̂óm̂át̂íĉál̂ĺŷ, án̂d́ d̂óîńĝ śô ẃîĺl̂ ḿôv́ê f́ôćûś b̂áĉḱ t̂ó t̂h́ê t́ôṕ ôf́ t̂h́ê ṕâǵê. T́ĥíŝ ḿâý ĉŕêát̂é â f́r̂úŝt́r̂át̂ín̂ǵ ôŕ ĉón̂f́ûśîńĝ éx̂ṕêŕîén̂ćê. [Ĺêár̂ń m̂ór̂é](https://dequeuniversity.com/rules/axe/4.4/meta-refresh)."
@@ -1190,6 +1190,9 @@
   "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": {
     "message": "Ĉúm̂úl̂át̂ív̂é L̂áŷóût́ Ŝh́îf́t̂ ḿêáŝúr̂éŝ t́ĥé m̂óv̂ém̂én̂t́ ôf́ v̂íŝíb̂ĺê él̂ém̂én̂t́ŝ ẃît́ĥín̂ t́ĥé v̂íêẃp̂ór̂t́. [L̂éâŕn̂ ḿôŕê](https://web.dev/cls/)."
   },
+  "lighthouse-core/audits/metrics/experimental-interaction-to-next-paint.js | description": {
+    "message": "Îńt̂ér̂áĉt́îón̂ t́ô Ńêx́t̂ Ṕâín̂t́ m̂éâśûŕêś p̂áĝé r̂éŝṕôńŝív̂én̂éŝś, ĥóŵ ĺôńĝ ít̂ t́âḱêś t̂h́ê ṕâǵê t́ô v́îśîb́l̂ý r̂éŝṕôńd̂ t́ô úŝér̂ ín̂ṕût́. [L̂éâŕn̂ ḿôŕê](https://web.dev/inp/)."
+  },
   "lighthouse-core/audits/metrics/first-contentful-paint.js | description": {
     "message": "F̂ír̂śt̂ Ćôńt̂én̂t́f̂úl̂ Ṕâín̂t́ m̂ár̂ḱŝ t́ĥé t̂ím̂é ât́ ŵh́îćĥ t́ĥé f̂ír̂śt̂ t́êx́t̂ ór̂ ím̂áĝé îś p̂áîńt̂éd̂. [Ĺêár̂ń m̂ór̂é](https://web.dev/first-contentful-paint/)."
   },
@@ -1655,6 +1658,30 @@
   "lighthouse-core/audits/viewport.js | title": {
     "message": "Ĥáŝ á `<meta name=\"viewport\">` t̂áĝ ẃît́ĥ `width` ór̂ `initial-scale`"
   },
+  "lighthouse-core/audits/work-during-interaction.js | description": {
+    "message": "T̂h́îś îś t̂h́ê t́ĥŕêád̂-b́l̂óĉḱîńĝ ẃôŕk̂ óĉćûŕr̂ín̂ǵ d̂úr̂ín̂ǵ t̂h́ê Ín̂t́êŕâćt̂íôń t̂ó N̂éx̂t́ P̂áîńt̂ ḿêáŝúr̂ém̂én̂t́. [L̂éâŕn̂ ḿôŕê](https://web.dev/inp/)."
+  },
+  "lighthouse-core/audits/work-during-interaction.js | displayValue": {
+    "message": "{timeInMs, number, milliseconds} m̂ś ŝṕêńt̂ ón̂ év̂én̂t́ '{interactionType}'"
+  },
+  "lighthouse-core/audits/work-during-interaction.js | eventTarget": {
+    "message": "Êv́êńt̂ t́âŕĝét̂"
+  },
+  "lighthouse-core/audits/work-during-interaction.js | failureTitle": {
+    "message": "M̂ín̂ím̂íẑé ŵór̂ḱ d̂úr̂ín̂ǵ k̂éŷ ín̂t́êŕâćt̂íôń"
+  },
+  "lighthouse-core/audits/work-during-interaction.js | inputDelay": {
+    "message": "Îńp̂út̂ d́êĺâý"
+  },
+  "lighthouse-core/audits/work-during-interaction.js | presentationDelay": {
+    "message": "P̂ŕêśêńt̂át̂íôń d̂él̂áŷ"
+  },
+  "lighthouse-core/audits/work-during-interaction.js | processingTime": {
+    "message": "P̂ŕôćêśŝín̂ǵ t̂ím̂é"
+  },
+  "lighthouse-core/audits/work-during-interaction.js | title": {
+    "message": "M̂ín̂ím̂íẑéŝ ẃôŕk̂ d́ûŕîńĝ ḱêý îńt̂ér̂áĉt́îón̂"
+  },
   "lighthouse-core/config/default-config.js | a11yAriaGroupDescription": {
     "message": "T̂h́êśê ár̂é ôṕp̂ór̂t́ûńît́îéŝ t́ô ím̂ṕr̂óv̂é t̂h́ê úŝáĝé ôf́ ÂŔÎÁ îń ŷóûŕ âṕp̂ĺîćât́îón̂ ẃĥíĉh́ m̂áŷ én̂h́âńĉé t̂h́ê éx̂ṕêŕîén̂ćê f́ôŕ ûśêŕŝ óf̂ áŝśîśt̂ív̂é t̂éĉh́n̂ól̂óĝý, l̂ík̂é â śĉŕêén̂ ŕêád̂ér̂."
   },
@@ -1960,6 +1987,9 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | imageResourceType": {
     "message": "Îḿâǵê"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | interactionToNextPaint": {
+    "message": "Îńt̂ér̂áĉt́îón̂ t́ô Ńêx́t̂ Ṕâín̂t́"
   },
   "lighthouse-core/lib/i18n/i18n.js | interactiveMetric": {
     "message": "T̂ím̂é t̂ó Îńt̂ér̂áĉt́îv́ê"

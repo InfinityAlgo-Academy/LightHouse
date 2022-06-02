@@ -6,46 +6,46 @@ Tests that audits panel prevents run of unauditable pages.
 
 ========== Lighthouse Start Audit State ==========
 [ ] Performance
-[ ] Progressive Web App
-[ ] Best practices
 [ ] Accessibility
+[ ] Best practices
 [ ] SEO
+[ ] Progressive Web App
 [ ] Publisher Ads
 [x] Legacy navigation
 [x] Clear storage
-[x] Simulated throttling
+Throttling method: simulate
 Help text: At least one category must be selected.
-Generate report: disabled visible
+Analyze page load: disabled visible
 
 
 **Allows audit with a single category**
 
 ========== Lighthouse Start Audit State ==========
 [x] Performance
-[ ] Progressive Web App
-[ ] Best practices
 [ ] Accessibility
+[ ] Best practices
 [ ] SEO
+[ ] Progressive Web App
 [ ] Publisher Ads
 [x] Legacy navigation
 [x] Clear storage
-[x] Simulated throttling
-Generate report: enabled visible
+Throttling method: simulate
+Analyze page load: enabled visible
 
 
 **Allows audit on undockable page**
 
 ========== Lighthouse Start Audit State ==========
 [x] Performance
-[ ] Progressive Web App
-[ ] Best practices
 [ ] Accessibility
+[ ] Best practices
 [ ] SEO
+[ ] Progressive Web App
 [ ] Publisher Ads
 [x] Legacy navigation
 [x] Clear storage
-[x] Simulated throttling
-Generate report: enabled visible
+Throttling method: simulate
+Analyze page load: enabled visible
 
 
 **Prevents audit on internal page**
@@ -53,14 +53,14 @@ URL: about:blank
 
 ========== Lighthouse Start Audit State ==========
 [x] Performance
-[ ] Progressive Web App
-[ ] Best practices
 [ ] Accessibility
+[ ] Best practices
 [ ] SEO
+[ ] Progressive Web App
 [ ] Publisher Ads
 [x] Legacy navigation
 [x] Clear storage
-[x] Simulated throttling
+Throttling method: simulate
 Help text: Can only audit HTTP/HTTPS pages and Chrome extensions. Navigate to a different page to start an audit.
-Generate report: disabled visible
+Analyze page load: disabled visible
 

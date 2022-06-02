@@ -4,8 +4,6 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-/* eslint-env jest */
-
 import {strict as assert} from 'assert';
 
 import jsdom from 'jsdom';
@@ -15,7 +13,9 @@ import {I18n} from '../../renderer/i18n.js';
 import {DOM} from '../../renderer/dom.js';
 import {DetailsRenderer} from '../../renderer/details-renderer.js';
 import {CategoryRenderer} from '../../renderer/category-renderer.js';
-import sampleResultsOrig from '../../../lighthouse-core/test/results/sample_v2.json';
+import {readJson} from '../../../root.js';
+
+const sampleResultsOrig = readJson('../../../lighthouse-core/test/results/sample_v2.json', import.meta);
 
 describe('CategoryRenderer', () => {
   let renderer;

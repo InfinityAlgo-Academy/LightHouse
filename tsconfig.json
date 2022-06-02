@@ -11,6 +11,7 @@
     {"path": "./report/"},
     {"path": "./report/generator/"},
     {"path": "./shared/"},
+    {"path": "./treemap/"},
   ],
   "include": [
     "root.js",
@@ -99,6 +100,7 @@
     "lighthouse-core/test/lib/timing-trace-saver-test.js",
     "lighthouse-core/test/lib/tracehouse/cpu-profile-model-test.js",
     "lighthouse-core/test/lib/tracehouse/main-thread-tasks-test.js",
+    "lighthouse-core/test/lib/tracehouse/task-summary-test.js",
     "lighthouse-core/test/lib/tracehouse/trace-processor-test.js",
     "lighthouse-core/test/lib/traces/pwmetrics-events-test.js",
     "lighthouse-core/test/lib/url-shim-test.js",

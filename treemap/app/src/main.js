@@ -15,6 +15,8 @@ import {I18n} from '../../../report/renderer/i18n.js';
 import {TextEncoding} from '../../../report/renderer/text-encoding.js';
 import {Logger} from '../../../report/renderer/logger.js';
 
+/** @typedef {LH.Treemap.Node & {dom?: HTMLElement}} NodeWithElement */
+
 const DUPLICATED_MODULES_IGNORE_THRESHOLD = 1024;
 const DUPLICATED_MODULES_IGNORE_ROOT_RATIO = 0.01;
 

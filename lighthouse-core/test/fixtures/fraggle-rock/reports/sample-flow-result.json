@@ -2742,8 +2742,8 @@
           },
           "listitem": {
             "id": "listitem",
-            "title": "List items (`<li>`) are contained within `<ul>` or `<ol>` parent elements",
-            "description": "Screen readers require list items (`<li>`) to be contained within a parent `<ul>` or `<ol>` to be announced properly. [Learn more](https://dequeuniversity.com/rules/axe/4.4/listitem).",
+            "title": "List items (`<li>`) are contained within `<ul>`, `<ol>` or `<menu>` parent elements",
+            "description": "Screen readers require list items (`<li>`) to be contained within a parent `<ul>`, `<ol>` or `<menu>` to be announced properly. [Learn more](https://dequeuniversity.com/rules/axe/4.4/listitem).",
             "score": 1,
             "scoreDisplayMode": "binary",
             "details": {
@@ -9087,6 +9087,24 @@
               "headings": [],
               "items": []
             }
+          },
+          "experimental-interaction-to-next-paint": {
+            "id": "experimental-interaction-to-next-paint",
+            "title": "Interaction to Next Paint",
+            "description": "Interaction to Next Paint measures page responsiveness, how long it takes the page to visibly respond to user input. [Learn more](https://web.dev/inp/).",
+            "score": 1,
+            "scoreDisplayMode": "numeric",
+            "numericValue": 60,
+            "numericUnit": "millisecond",
+            "displayValue": "60 ms"
+          },
+          "work-during-interaction": {
+            "id": "work-during-interaction",
+            "title": "Minimizes work during key interaction",
+            "description": "This is the thread-blocking work occurring during the Interaction to Next Paint measurement. [Learn more](https://web.dev/inp/).",
+            "score": null,
+            "scoreDisplayMode": "error",
+            "errorMessage": "This version of Chrome is too old to support 'detailed EventTiming trace events'. Use a newer version to see full results."
           }
         },
         "configSettings": {
@@ -9299,6 +9317,19 @@
                 "id": "script-treemap-data",
                 "weight": 0,
                 "group": "hidden"
+              },
+              {
+                "id": "experimental-interaction-to-next-paint",
+                "weight": 0,
+                "group": "metrics",
+                "acronym": "INP",
+                "relevantAudits": [
+                  "work-during-interaction"
+                ]
+              },
+              {
+                "id": "work-during-interaction",
+                "weight": 0
               }
             ],
             "id": "performance",
@@ -9912,12 +9943,30 @@
             },
             {
               "startTime": 78,
+              "name": "lh:audit:experimental-interaction-to-next-paint",
+              "duration": 1,
+              "entryType": "measure"
+            },
+            {
+              "startTime": 79,
+              "name": "lh:computed:Responsiveness",
+              "duration": 1,
+              "entryType": "measure"
+            },
+            {
+              "startTime": 80,
+              "name": "lh:audit:work-during-interaction",
+              "duration": 1,
+              "entryType": "measure"
+            },
+            {
+              "startTime": 81,
               "name": "lh:runner:generate",
               "duration": 1,
               "entryType": "measure"
             }
           ],
-          "total": 79
+          "total": 82
         },
         "i18n": {
           "rendererFormattedStrings": {
@@ -10005,6 +10054,12 @@
                   "timeInMs": 539.765
                 },
                 "path": "audits[network-server-latency].displayValue"
+              },
+              {
+                "values": {
+                  "timeInMs": 60
+                },
+                "path": "audits[experimental-interaction-to-next-paint].displayValue"
               }
             ],
             "lighthouse-core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": [
@@ -10391,6 +10446,27 @@
             ],
             "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | description": [
               "audits[uses-passive-event-listeners].description"
+            ],
+            "lighthouse-core/lib/i18n/i18n.js | interactionToNextPaint": [
+              "audits[experimental-interaction-to-next-paint].title"
+            ],
+            "lighthouse-core/audits/metrics/experimental-interaction-to-next-paint.js | description": [
+              "audits[experimental-interaction-to-next-paint].description"
+            ],
+            "lighthouse-core/audits/work-during-interaction.js | title": [
+              "audits[work-during-interaction].title"
+            ],
+            "lighthouse-core/audits/work-during-interaction.js | description": [
+              "audits[work-during-interaction].description"
+            ],
+            "lighthouse-core/lib/lh-error.js | oldChromeDoesNotSupportFeature": [
+              {
+                "values": {
+                  "errorCode": "UNSUPPORTED_OLD_CHROME",
+                  "featureName": "detailed EventTiming trace events"
+                },
+                "path": "audits[work-during-interaction].errorMessage"
+              }
             ],
             "lighthouse-core/config/default-config.js | performanceCategoryTitle": [
               "categories.performance.title"
@@ -11726,8 +11802,8 @@
           },
           "listitem": {
             "id": "listitem",
-            "title": "List items (`<li>`) are contained within `<ul>` or `<ol>` parent elements",
-            "description": "Screen readers require list items (`<li>`) to be contained within a parent `<ul>` or `<ol>` to be announced properly. [Learn more](https://dequeuniversity.com/rules/axe/4.4/listitem).",
+            "title": "List items (`<li>`) are contained within `<ul>`, `<ol>` or `<menu>` parent elements",
+            "description": "Screen readers require list items (`<li>`) to be contained within a parent `<ul>`, `<ol>` or `<menu>` to be announced properly. [Learn more](https://dequeuniversity.com/rules/axe/4.4/listitem).",
             "score": 1,
             "scoreDisplayMode": "binary",
             "details": {
@@ -16757,8 +16833,8 @@
           },
           "listitem": {
             "id": "listitem",
-            "title": "List items (`<li>`) are contained within `<ul>` or `<ol>` parent elements",
-            "description": "Screen readers require list items (`<li>`) to be contained within a parent `<ul>` or `<ol>` to be announced properly. [Learn more](https://dequeuniversity.com/rules/axe/4.4/listitem).",
+            "title": "List items (`<li>`) are contained within `<ul>`, `<ol>` or `<menu>` parent elements",
+            "description": "Screen readers require list items (`<li>`) to be contained within a parent `<ul>`, `<ol>` or `<menu>` to be announced properly. [Learn more](https://dequeuniversity.com/rules/axe/4.4/listitem).",
             "score": 1,
             "scoreDisplayMode": "binary",
             "details": {

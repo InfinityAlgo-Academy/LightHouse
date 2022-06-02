@@ -3,14 +3,16 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-/* eslint-env jest */
+import {strict as assert} from 'assert';
 
-const pkg = require('../../package.json');
-const assert = require('assert').strict;
-const lighthouse = require('../index.js');
-const legacyNavigation = lighthouse.legacyNavigation;
+import lighthouse from '../index.js';
+import {LH_ROOT, readJson} from '../../root.js';
+
+const pkg = readJson('package.json');
+
+const {legacyNavigation} = lighthouse;
+const TEST_DIR = `${LH_ROOT}/lighthouse-core/test`;
 
 describe('Module Tests', function() {
   it('should have a main attribute defined in the package.json', function() {
@@ -125,7 +127,7 @@ describe('Module Tests', function() {
         output: 'html',
       }, {
         settings: {
-          auditMode: __dirname + '/fixtures/artifacts/perflog/',
+          auditMode: TEST_DIR + '/fixtures/artifacts/perflog/',
           formFactor: 'mobile',
         },
         audits: [
@@ -151,7 +153,7 @@ describe('Module Tests', function() {
       const exampleUrl = 'https://www.reddit.com/r/nba';
       const results = await legacyNavigation(exampleUrl, {}, {
         settings: {
-          auditMode: __dirname + '/fixtures/artifacts/perflog/',
+          auditMode: TEST_DIR + '/fixtures/artifacts/perflog/',
           formFactor: 'mobile',
         },
         audits: [],
@@ -163,7 +165,7 @@ describe('Module Tests', function() {
       const exampleUrl = 'https://www.reddit.com/r/nba';
       const results = await legacyNavigation(exampleUrl, {}, {
         settings: {
-          auditMode: __dirname + '/fixtures/artifacts/perflog/',
+          auditMode: TEST_DIR + '/fixtures/artifacts/perflog/',
           formFactor: 'mobile',
           channel: 'custom',
         },

@@ -3,18 +3,18 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-/* eslint-env jest */
+import {jest} from '@jest/globals';
 
-const TraceElementsGatherer = require('../../../gather/gatherers/trace-elements.js');
-const Driver = require('../../../gather/driver.js');
-const Connection = require('../../../gather/connections/connection.js');
-const createTestTrace = require('../../create-test-trace.js');
-const {createMockSendCommandFn, createMockOnFn} = require('../mock-commands.js');
-const {flushAllTimersAndMicrotasks} = require('../../test-utils.js');
+import TraceElementsGatherer from '../../../gather/gatherers/trace-elements.js';
+import Driver from '../../../gather/driver.js';
+import Connection from '../../../gather/connections/connection.js';
+import createTestTrace from '../../create-test-trace.js';
+import {createMockSendCommandFn, createMockOnFn} from '../mock-commands.js';
+import {flushAllTimersAndMicrotasks, fnAny} from '../../test-utils.js';
+import {readJson} from '../../../../root.js';
 
-const animationTrace = require('../../fixtures/traces/animation.json');
+const animationTrace = readJson('../../fixtures/traces/animation.json', import.meta);
 
 jest.useFakeTimers();
 
@@ -783,8 +783,8 @@ describe('FR compat', () => {
   it('uses loadData in legacy mode', async () => {
     const trace = ['1', '2'];
     const gatherer = new TraceElementsGatherer();
-    gatherer._getArtifact = jest.fn();
-    gatherer.stopInstrumentation = jest.fn();
+    gatherer._getArtifact = fnAny();
+    gatherer.stopInstrumentation = fnAny();
 
     await gatherer.afterPass({}, {trace});
 
@@ -795,8 +795,8 @@ describe('FR compat', () => {
   it('uses dependency in legacy mode', async () => {
     const trace = ['1', '2'];
     const gatherer = new TraceElementsGatherer();
-    gatherer._getArtifact = jest.fn();
-    gatherer.stopInstrumentation = jest.fn();
+    gatherer._getArtifact = fnAny();
+    gatherer.stopInstrumentation = fnAny();
 
     const context = {dependencies: {Trace: trace}};
     await gatherer.getArtifact(context);

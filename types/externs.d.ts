@@ -23,6 +23,7 @@ declare global {
     __nativeFetch: typeof fetch,
     __nativeURL: typeof URL;
     __ElementMatches: Element['matches'];
+    __HTMLElementBoundingClientRect: HTMLElement['getBoundingClientRect'];
 
     /** Used for monitoring long tasks in the test page. */
     ____lastLongTask?: number;
@@ -149,8 +150,8 @@ export interface CliFlags extends Flags {
   quiet: boolean;
   /** A flag to print the normalized config for the given config and options, then exit. */
   printConfig: boolean;
-  /** Use the new Fraggle Rock navigation runner to gather CLI results. */
-  fraggleRock: boolean;
+  /** Use the legacy navigation runner to gather CLI results. */
+  legacyNavigation: boolean;
   /** Path to the file where precomputed lantern data should be read from. */
   precomputedLanternDataPath?: string;
   /** Path to the file where precomputed lantern data should be written to. */

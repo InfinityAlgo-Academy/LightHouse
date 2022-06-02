@@ -117,6 +117,9 @@ class CriticalRequestChains {
       // Ignore if some ancestor is not a critical request.
       if (networkPath.some(r => !CriticalRequestChains.isCritical(r, mainResource))) return;
 
+      // Ignore non-network things (like data urls).
+      if (NetworkRequest.isNonNetworkRequest(node.record)) return;
+
       addChain(networkPath);
     }, getNextNodes);
 

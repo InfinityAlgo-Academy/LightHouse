@@ -3,12 +3,12 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-const TargetManager = require('../../../gather/driver/target-manager.js');
-const {createMockSession} = require('../../fraggle-rock/gather/mock-driver.js');
+import {jest} from '@jest/globals';
 
-/* eslint-env jest */
+import TargetManager from '../../../gather/driver/target-manager.js';
+import {createMockSession} from '../../fraggle-rock/gather/mock-driver.js';
+import {fnAny} from '../../test-utils.js';
 
 jest.useFakeTimers();
 
@@ -103,7 +103,7 @@ describe('TargetManager', () => {
       sessionMock.sendCommand
         .mockResponse('Target.getTargetInfo', {targetInfo})
         .mockResponse('Target.setAutoAttach');
-      targetManager.addTargetAttachedListener(jest.fn().mockImplementation(() => {
+      targetManager.addTargetAttachedListener(fnAny().mockImplementation(() => {
         const setAutoAttachCalls = sessionMock.sendCommand.mock.calls
           .filter(call => call[0] === 'Target.setAutoAttach');
         expect(setAutoAttachCalls).toHaveLength(0);
@@ -114,14 +114,14 @@ describe('TargetManager', () => {
     it('should handle target closed gracefully', async () => {
       sessionMock.sendCommand.mockResponse('Target.getTargetInfo', {targetInfo});
       const targetClosedError = new Error('Target closed');
-      targetManager.addTargetAttachedListener(jest.fn().mockRejectedValue(targetClosedError));
+      targetManager.addTargetAttachedListener(fnAny().mockRejectedValue(targetClosedError));
       await targetManager.enable();
     });
 
     it('should throw other listener errors', async () => {
       sessionMock.sendCommand.mockResponse('Target.getTargetInfo', {targetInfo});
       const targetClosedError = new Error('Fatal error');
-      targetManager.addTargetAttachedListener(jest.fn().mockRejectedValue(targetClosedError));
+      targetManager.addTargetAttachedListener(fnAny().mockRejectedValue(targetClosedError));
       await expect(targetManager.enable()).rejects.toMatchObject({message: 'Fatal error'});
     });
 

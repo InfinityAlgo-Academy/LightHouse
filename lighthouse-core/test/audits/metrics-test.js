@@ -3,29 +3,24 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-const MetricsAudit = require('../../audits/metrics.js');
-const TTIComputed = require('../../computed/metrics/interactive.js');
+import {jest} from '@jest/globals';
 
-const pwaTrace = require('../fixtures/traces/progressive-app-m60.json');
-const pwaDevtoolsLog = require('../fixtures/traces/progressive-app-m60.devtools.log.json');
+import {readJson} from '../../../root.js';
+import MetricsAudit from '../../audits/metrics.js';
+import TTIComputed from '../../computed/metrics/interactive.js';
+import {getURLArtifactFromDevtoolsLog} from '../test-utils.js';
 
-const lcpTrace = require('../fixtures/traces/lcp-m78.json');
-const lcpDevtoolsLog = require('../fixtures/traces/lcp-m78.devtools.log.json');
-
-const lcpAllFramesTrace = require('../fixtures/traces/frame-metrics-m89.json');
-const lcpAllFramesDevtoolsLog = require('../fixtures/traces/frame-metrics-m89.devtools.log.json'); // eslint-disable-line max-len
-
-const clsAllFramesTrace = require('../fixtures/traces/frame-metrics-m90.json');
-const clsAllFramesDevtoolsLog = require('../fixtures/traces/frame-metrics-m90.devtools.log.json'); // eslint-disable-line max-len
-
-const jumpyClsTrace = require('../fixtures/traces/jumpy-cls-m90.json');
-const jumpyClsDevtoolsLog = require('../fixtures/traces/jumpy-cls-m90.devtoolslog.json');
-
-const {getURLArtifactFromDevtoolsLog} = require('../test-utils.js');
-
-/* eslint-env jest */
+const pwaTrace = readJson('../fixtures/traces/progressive-app-m60.json', import.meta);
+const pwaDevtoolsLog = readJson('../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
+const lcpTrace = readJson('../fixtures/traces/lcp-m78.json', import.meta);
+const lcpDevtoolsLog = readJson('../fixtures/traces/lcp-m78.devtools.log.json', import.meta);
+const lcpAllFramesTrace = readJson('../fixtures/traces/frame-metrics-m89.json', import.meta);
+const lcpAllFramesDevtoolsLog = readJson('../fixtures/traces/frame-metrics-m89.devtools.log.json', import.meta);
+const clsAllFramesTrace = readJson('../fixtures/traces/frame-metrics-m90.json', import.meta);
+const clsAllFramesDevtoolsLog = readJson('../fixtures/traces/frame-metrics-m90.devtools.log.json', import.meta);
+const jumpyClsTrace = readJson('../fixtures/traces/jumpy-cls-m90.json', import.meta);
+const jumpyClsDevtoolsLog = readJson('../fixtures/traces/jumpy-cls-m90.devtoolslog.json', import.meta);
 
 describe('Performance: metrics', () => {
   it('evaluates valid input correctly', async () => {

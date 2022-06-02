@@ -4,8 +4,6 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-/* eslint-env jest */
-
 import fs from 'fs';
 
 import {jest} from '@jest/globals';
@@ -64,7 +62,7 @@ beforeEach(async () => {
     view: false,
     verbose: false,
     quiet: false,
-    fraggleRock: false,
+    legacyNavigation: false,
     port: 0,
     hostname: '',
     // Command modes
