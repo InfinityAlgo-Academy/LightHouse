@@ -74,7 +74,7 @@ async function runBundledLighthouse(url, configJson, testRunnerOptions) {
 
   // Launch and connect to Chrome.
   const launchedChrome = await ChromeLauncher.launch({
-    chromeFlags: ['--disable-features=EarlyCodeCache'],
+    chromeFlags: ['--disable-features=EarlyCodeCache,EarlyBodyLoad'],
   });
   const port = launchedChrome.port;
 
