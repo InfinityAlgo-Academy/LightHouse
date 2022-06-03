@@ -79,6 +79,7 @@ async function internalRun(url, tmpPath, configJson, options) {
     `-A=${artifactsDirectory}`,
     '--port=0',
     '--quiet',
+    '--chrome-flags="--disable-features=EarlyCodeCache"',
   ];
 
   if (useFraggleRock) {

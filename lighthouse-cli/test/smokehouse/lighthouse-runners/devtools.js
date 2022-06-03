@@ -85,6 +85,7 @@ async function runLighthouse(url, configJson, testRunnerOptions = {}) {
   const outputDir = fs.mkdtempSync(os.tmpdir() + '/lh-smoke-cdt-runner-');
   const chromeFlags = [
     `--custom-devtools-frontend=file://${devtoolsDir}/out/Default/gen/front_end`,
+    '--disable-features=EarlyCodeCache',
   ];
   const args = [
     'run-devtools',
