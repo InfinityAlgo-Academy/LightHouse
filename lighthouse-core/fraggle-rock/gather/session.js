@@ -25,6 +25,12 @@ class ProtocolSession {
     this._callbackMap = new WeakMap();
   }
 
+  sessionId() {
+    return this._targetInfo && this._targetInfo.type === 'iframe' ?
+      this._targetInfo.targetId :
+      undefined;
+  }
+
   /** @param {LH.Crdp.Target.TargetInfo} targetInfo */
   setTargetInfo(targetInfo) {
     this._targetInfo = targetInfo;
@@ -93,21 +99,25 @@ class ProtocolSession {
   }
 
   /**
-   * Bind to our custom event that fires for *any* protocol event.
+   * Bind to puppeteer's '*' event that fires for *any* protocol event,
+   * and wrap it with data about the protocol message instead of just the event.
    * @param {(payload: LH.Protocol.RawEventMessage) => void} callback
    */
   addProtocolMessageListener(callback) {
     /**
-     * @param {string} type
-     * @param {LH.Protocol.RawEventMessage} payload
+     * @param {any} method
+     * @param {any} event
      */
-    const listener = (type, payload) => callback(payload);
+    const listener = (method, event) => callback({
+      method,
+      params: event,
+      sessionId: this.sessionId(),
+    });
     this._callbackMap.set(callback, listener);
     this._session.on('*', /** @type {*} */ (listener));
   }
 
   /**
-   * Unbind to our custom event that fires for *any* protocol event.
    * @param {(payload: LH.Protocol.RawEventMessage) => void} callback
    */
   removeProtocolMessageListener(callback) {
