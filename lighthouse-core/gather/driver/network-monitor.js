@@ -107,6 +107,7 @@ class NetworkMonitor {
 
     this._session.on('Page.frameNavigated', this._onFrameNavigated);
     this._targetManager.addTargetAttachedListener(this._onTargetAttached);
+    this._session.addProtocolMessageListener(this._onProtocolMessage);
 
     await this._session.sendCommand('Page.enable');
     await this._targetManager.enable();
@@ -120,6 +121,7 @@ class NetworkMonitor {
 
     this._session.off('Page.frameNavigated', this._onFrameNavigated);
     this._targetManager.removeTargetAttachedListener(this._onTargetAttached);
+    this._session.removeProtocolMessageListener(this._onProtocolMessage);
 
     for (const session of this._sessions.values()) {
       session.removeProtocolMessageListener(this._onProtocolMessage);
