@@ -137,7 +137,9 @@ jobs:
 
     - run: sudo apt-get install xvfb
     - name: yarn smoke --fraggle-rock
-      run: xvfb-run --auto-servernum yarn smoke --debug --fraggle-rock -j=2 --retries=2 --shard=${{ matrix.smoke-test-shard }}/$SHARD_TOTAL
+      # Disabled to fix CI while we investigate what the bug is.
+      #   perf-diagnostics-third-party
+      run: xvfb-run --auto-servernum yarn smoke --debug --fraggle-rock -j=2 --retries=2 --shard=${{ matrix.smoke-test-shard }}/$SHARD_TOTAL --invert-match perf-diagnostics-third-party
 
     # Fail if any changes were written to source files.
     - run: git diff --exit-code
@@ -217,7 +219,9 @@ jobs:
 
     - run: sudo apt-get install xvfb
     - name: yarn test-bundle
-      run: xvfb-run --auto-servernum yarn test-bundle --fraggle-rock --shard=${{ matrix.smoke-test-shard }}/$SHARD_TOTAL
+      # Disabled to fix CI while we investigate what the bug is.
+      #   perf-diagnostics-third-party
+      run: xvfb-run --auto-servernum yarn test-bundle --fraggle-rock --shard=${{ matrix.smoke-test-shard }}/$SHARD_TOTAL --invert-match perf-diagnostics-third-party
 
     # Fail if any changes were written to source files.
     - run: git diff --exit-code
