@@ -82,7 +82,8 @@ class CriConnection extends Connection {
    */
   _runJsonCommand(command) {
     return new Promise((resolve, reject) => {
-      const request = http.get({
+      const request = http.request({
+        method: 'PUT', // GET and POST are deprecated: https://crrev.com/c/3595822
         hostname: this.hostname,
         port: this.port,
         path: '/json/' + command,
@@ -108,6 +109,8 @@ class CriConnection extends Connection {
           reject(new Error(`Protocol JSON API error (${command}), status: ${response.statusCode}`));
         });
       });
+
+      request.end();
 
       // This error handler is critical to ensuring Lighthouse exits cleanly even when Chrome crashes.
       // See https://github.com/GoogleChrome/lighthouse/pull/8583.
