@@ -6,7 +6,6 @@
 'use strict';
 
 const LHError = require('../../lib/lh-error.js');
-const SessionEmitMonkeypatch = Symbol('monkeypatch');
 
 // Controls how long to wait for a response after sending a DevTools protocol command.
 const DEFAULT_PROTOCOL_TIMEOUT = 30000;
@@ -24,22 +23,12 @@ class ProtocolSession {
     this._nextProtocolTimeout = undefined;
     /** @type {WeakMap<any, any>} */
     this._callbackMap = new WeakMap();
+  }
 
-    // FIXME: Monkeypatch puppeteer to be able to listen to *all* protocol events.
-    // This patched method will now emit a copy of every event on `*`.
-    const originalEmit = session.emit;
-    // @ts-expect-error - Test for the monkeypatch.
-    if (originalEmit[SessionEmitMonkeypatch]) return;
-    session.emit = (method, ...args) => {
-      // OOPIF sessions need to emit their sessionId so downstream processors can recognize
-      // the target the event came from.
-      const sessionId = this._targetInfo && this._targetInfo.type === 'iframe' ?
-        this._targetInfo.targetId : undefined;
-      originalEmit.call(session, '*', {method, params: args[0], sessionId});
-      return originalEmit.call(session, method, ...args);
-    };
-    // @ts-expect-error - It's monkeypatching 🤷‍♂️.
-    session.emit[SessionEmitMonkeypatch] = true;
+  sessionId() {
+    return this._targetInfo && this._targetInfo.type === 'iframe' ?
+      this._targetInfo.targetId :
+      undefined;
   }
 
   /** @param {LH.Crdp.Target.TargetInfo} targetInfo */
@@ -110,19 +99,31 @@ class ProtocolSession {
   }
 
   /**
-   * Bind to our custom event that fires for *any* protocol event.
+   * Bind to puppeteer's '*' event that fires for *any* protocol event,
+   * and wrap it with data about the protocol message instead of just the event.
    * @param {(payload: LH.Protocol.RawEventMessage) => void} callback
    */
   addProtocolMessageListener(callback) {
-    this._session.on('*', /** @type {*} */ (callback));
+    /**
+     * @param {any} method
+     * @param {any} event
+     */
+    const listener = (method, event) => callback({
+      method,
+      params: event,
+      sessionId: this.sessionId(),
+    });
+    this._callbackMap.set(callback, listener);
+    this._session.on('*', /** @type {*} */ (listener));
   }
 
   /**
-   * Unbind to our custom event that fires for *any* protocol event.
    * @param {(payload: LH.Protocol.RawEventMessage) => void} callback
    */
   removeProtocolMessageListener(callback) {
-    this._session.off('*', /** @type {*} */ (callback));
+    const listener = this._callbackMap.get(callback);
+    if (!listener) return;
+    this._session.off('*', /** @type {*} */ (listener));
   }
 
   /**
