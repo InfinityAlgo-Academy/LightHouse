@@ -35,17 +35,22 @@ async function buildReportGenerator() {
         [`${LH_ROOT}/report/generator/flow-report-assets.js`]: 'export default {}',
       }),
       rollupPlugins.commonjs(),
-      rollupPlugins.nodeResolve(),
       rollupPlugins.inlineFs({verbose: Boolean(process.env.DEBUG)}),
     ],
   });
 
   await bundle.write({
     file: 'dist/lightrider/report-generator-bundle.js',
-    format: 'umd',
+    format: 'iife',
     name: 'ReportGenerator',
   });
   await bundle.close();
+
+  // Typically one would use `umd` to export to the window object, but for some reason rollup
+  // adds a `require('fs')` when used above, which errors in google3 build.
+  const outPath = `${LH_ROOT}/dist/lightrider/report-generator-bundle.js`;
+  fs.writeFileSync(outPath,
+    fs.readFileSync(outPath, 'utf-8') + '\nwindow.ReportGenerator = ReportGenerator;\n');
 }
 
 async function buildStaticServerBundle() {
