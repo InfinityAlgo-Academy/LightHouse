@@ -432,7 +432,7 @@ const expectations = {
             // Test that the numbers for individual elements are in the ballpark.
             // Exact ordering and IDs between FR and legacy differ, so fork the expectations.
             '4-11-IMG': {
-              _minChromiumVersion: '104.0.5100.0',
+              _minChromiumVersion: '104',
               _legacyOnly: true,
               top: '650±50',
               bottom: '650±50',
@@ -443,7 +443,7 @@ const expectations = {
             },
             // Legacy runner execution context ID changed after 104.0.5100.0
             '5-11-IMG': {
-              _maxChromiumVersion: '104.0.5098.0',
+              _maxChromiumVersion: '103',
               _legacyOnly: true,
               top: '650±50',
               bottom: '650±50',
