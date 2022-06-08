@@ -103,7 +103,7 @@ class NetworkMonitor {
     };
 
     this._networkRecorder.on('requeststarted', reEmit('requeststarted'));
-    this._networkRecorder.on('requestloaded', reEmit('requestloaded'));
+    this._networkRecorder.on('requestfinished', reEmit('requestfinished'));
 
     this._session.on('Page.frameNavigated', this._onFrameNavigated);
     await this._session.sendCommand('Page.enable');

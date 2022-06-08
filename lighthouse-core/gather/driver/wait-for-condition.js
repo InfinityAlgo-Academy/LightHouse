@@ -173,7 +173,7 @@ function waitForNetworkIdle(session, networkMonitor, networkQuietOptions) {
     };
 
     networkMonitor.on('requeststarted', logStatus);
-    networkMonitor.on('requestloaded', logStatus);
+    networkMonitor.on('requestfinished', logStatus);
     networkMonitor.on(busyEvent, logStatus);
 
     if (!networkQuietOptions.pretendDCLAlreadyFired) {
@@ -193,7 +193,7 @@ function waitForNetworkIdle(session, networkMonitor, networkQuietOptions) {
       networkMonitor.removeListener(busyEvent, onBusy);
       networkMonitor.removeListener(idleEvent, onIdle);
       networkMonitor.removeListener('requeststarted', logStatus);
-      networkMonitor.removeListener('requestloaded', logStatus);
+      networkMonitor.removeListener('requestfinished', logStatus);
       networkMonitor.removeListener(busyEvent, logStatus);
     };
   });

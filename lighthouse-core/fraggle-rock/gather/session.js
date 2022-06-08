@@ -13,10 +13,10 @@ const DEFAULT_PROTOCOL_TIMEOUT = 30000;
 /** @implements {LH.Gatherer.FRProtocolSession} */
 class ProtocolSession {
   /**
-   * @param {LH.Puppeteer.CDPSession} session
+   * @param {LH.Puppeteer.CDPSession} cdpSession
    */
-  constructor(session) {
-    this._session = session;
+  constructor(cdpSession) {
+    this._cdpSession = cdpSession;
     /** @type {LH.Crdp.Target.TargetInfo|undefined} */
     this._targetInfo = undefined;
     /** @type {number|undefined} */
@@ -64,7 +64,7 @@ class ProtocolSession {
    * @param {(...args: LH.CrdpEvents[E]) => void} callback
    */
   on(eventName, callback) {
-    this._session.on(eventName, /** @type {*} */ (callback));
+    this._cdpSession.on(eventName, /** @type {*} */ (callback));
   }
 
   /**
@@ -74,7 +74,7 @@ class ProtocolSession {
    * @param {(...args: LH.CrdpEvents[E]) => void} callback
    */
   once(eventName, callback) {
-    this._session.once(eventName, /** @type {*} */ (callback));
+    this._cdpSession.once(eventName, /** @type {*} */ (callback));
   }
 
   /**
@@ -114,7 +114,7 @@ class ProtocolSession {
       sessionId: this.sessionId(),
     });
     this._callbackMap.set(callback, listener);
-    this._session.on('*', /** @type {*} */ (listener));
+    this._cdpSession.on('*', /** @type {*} */ (listener));
   }
 
   /**
@@ -123,7 +123,7 @@ class ProtocolSession {
   removeProtocolMessageListener(callback) {
     const listener = this._callbackMap.get(callback);
     if (!listener) return;
-    this._session.off('*', /** @type {*} */ (listener));
+    this._cdpSession.off('*', /** @type {*} */ (listener));
   }
 
   /**
@@ -133,7 +133,7 @@ class ProtocolSession {
    * @param {(...args: LH.CrdpEvents[E]) => void} callback
    */
   off(eventName, callback) {
-    this._session.off(eventName, /** @type {*} */ (callback));
+    this._cdpSession.off(eventName, /** @type {*} */ (callback));
   }
 
   /**
@@ -156,7 +156,7 @@ class ProtocolSession {
       }));
     });
 
-    const resultPromise = this._session.send(method, ...params);
+    const resultPromise = this._cdpSession.send(method, ...params);
     const resultWithTimeoutPromise = Promise.race([resultPromise, timeoutPromise]);
 
     return resultWithTimeoutPromise.finally(() => {
@@ -169,12 +169,12 @@ class ProtocolSession {
    * @return {Promise<void>}
    */
   async dispose() {
-    this._session.removeAllListeners();
-    await this._session.detach();
+    this._cdpSession.removeAllListeners();
+    await this._cdpSession.detach();
   }
 
   _getConnection() {
-    const connection = this._session.connection();
+    const connection = this._cdpSession.connection();
     if (!connection) throw new Error('Connection has been closed.');
     return connection;
   }
