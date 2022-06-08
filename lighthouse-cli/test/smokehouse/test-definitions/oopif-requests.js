@@ -52,7 +52,7 @@ const expectations = {
             _includes: [
               {url: 'http://localhost:10200/oopif-requests.html', finished: true, statusCode: 200, resourceType: 'Document'},
               {url: 'https://www.paulirish.com/2012/why-moving-elements-with-translate-is-better-than-posabs-topleft/', finished: true, statusCode: 200, resourceType: 'Document'},
-              // TODO: there should NOT be two requests with this same URL
+              // FYI: Youtube has a ServiceWorker which sometimes cancels the document request. As a result, there will sometimes be multiple requests for this file.
               {url: 'https://www.youtube.com/embed/NZelrwd_iRs', finished: true, statusCode: 200, resourceType: 'Document'},
               // Subresource of youtube embed
               {url: /https:\/\/www\.youtube\.com\/.*?\/embed.js/, finished: true, statusCode: 200, resourceType: 'Script'},
@@ -60,10 +60,6 @@ const expectations = {
               {url: /^https:\/\/disqus\.com\/embed\/comments\//, finished: true, statusCode: 200, resourceType: 'Document'},
               // Disqus subframe (that's a new OOPIF)
               {url: 'https://accounts.google.com/o/oauth2/iframe', finished: true, statusCode: 200, resourceType: 'Document'},
-            ],
-            _excludes: [
-              {url: 'https://www.youtube.com/embed/NZelrwd_iRs', finished: false},
-              {url: 'https://www.youtube.com/embed/NZelrwd_iRs', statusCode: -1},
             ],
           },
         },
