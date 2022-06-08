@@ -164,7 +164,8 @@ function waitForNetworkIdle(session, networkMonitor, networkQuietOptions) {
       const inflightRecords = networkMonitor.getInflightRequests();
       // If there are more than 20 inflight requests, load is still in full swing.
       // Wait until it calms down a bit to be a little less spammy.
-      if (inflightRecords.length < 20) {
+      if (log.isVerbose() && inflightRecords.length < 20 && inflightRecords.length > 0) {
+        log.verbose('waitFor', `=== Waiting on ${inflightRecords.length} requests to finish`);
         for (const record of inflightRecords) {
           log.verbose('waitFor', `Waiting on ${record.url.slice(0, 120)} to finish`);
         }
