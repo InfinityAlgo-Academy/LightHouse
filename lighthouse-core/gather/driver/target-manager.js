@@ -27,10 +27,11 @@ class TargetManager {
     /** @type {Map<string, TargetWithSession>} */
     this._targets = new Map();
 
-    /** @param {LH.Crdp.Page.FrameNavigatedEvent} event */
+    /** @param {LH.Crdp.Target.AttachedToTargetEvent} event */
     this._onFrameNavigated = async event => {
       // Child frames are handled in `_onSessionAttached`.
-      if (event.frame.parentId) return;
+      if (event.targetInfo.type === 'iframe') return;
+      // if (event.frame.parentId) return;
 
       // It's not entirely clear when this is necessary, but when the page switches processes on
       // navigating from about:blank to the `requestedUrl`, resetting `setAutoAttach` has been
@@ -89,7 +90,7 @@ class TargetManager {
     this._enabled = true;
     this._targets = new Map();
 
-    this._session.on('Page.frameNavigated', this._onFrameNavigated);
+    this._session.on('Target.attachedToTarget', this._onFrameNavigated);
     this._session.addSessionAttachedListener(this._onSessionAttached);
 
     await this._session.sendCommand('Page.enable');
@@ -100,7 +101,7 @@ class TargetManager {
    * @return {Promise<void>}
    */
   async disable() {
-    this._session.off('Page.frameNavigated', this._onFrameNavigated);
+    this._session.off('Target.attachedToTarget', this._onFrameNavigated);
     this._session.removeSessionAttachedListener(this._onSessionAttached);
 
     this._enabled = false;

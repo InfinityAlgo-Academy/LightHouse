@@ -76,7 +76,7 @@ class Driver {
       this._handleTargetAttached(event).catch(this._handleEventError);
     });
 
-    this.on('Page.frameNavigated', event => {
+    this.on('Target.attachedToTarget', event => {
       // We're only interested in setting autoattach on the root via this method.
       // `_handleTargetAttached` takes care of the recursive piece.
       if (event.frame.parentId) return;
