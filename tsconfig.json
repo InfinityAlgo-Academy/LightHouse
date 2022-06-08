@@ -1,8 +1,6 @@
 {
   "extends": "./tsconfig-base.json",
   "compilerOptions": {
-    "outDir": ".tmp/tsbuildinfo/",
-
     // TODO(esmodules): included to support require('file.json'). Remove on the switch to ES Modules.
     "resolveJsonModule": true,
   },
