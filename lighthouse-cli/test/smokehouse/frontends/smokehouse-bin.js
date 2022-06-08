@@ -227,10 +227,12 @@ async function begin() {
     if (serverForOffline) await serverForOffline.close();
   }
 
+  console.log('succ?', smokehouseResult.success);
   if (!smokehouseResult.success) {
     const failedTestResults = smokehouseResult.testResults.filter(r => r.failed);
 
     // For CI, save failed runs to directory to be uploaded.
+    console.log('about to save failures');
     if (process.env.CI) {
       const failuresDir = `${LH_ROOT}/.tmp/smokehouse-ci-failures`;
       fs.mkdirSync(failuresDir, {recursive: true});
@@ -238,6 +240,7 @@ async function begin() {
       for (const testResult of failedTestResults) {
         for (let i = 0; i < testResult.runs.length; i++) {
           const run = testResult.runs[i];
+          console.log('writing', `${failuresDir}/${testResult.id}-${i}.json`);
           fs.writeFileSync(`${failuresDir}/${testResult.id}-${i}.json`, JSON.stringify({
             ...run,
             lighthouseLog: run.lighthouseLog.split('\n'),

@@ -53,7 +53,7 @@ const expectations = {
               {url: 'http://localhost:10200/oopif-requests.html', finished: true, statusCode: 200, resourceType: 'Document'},
               // Paulirish iframe and subresource
               {url: 'https://www.paulirish.com/2012/why-moving-elements-with-translate-is-better-than-posabs-topleft/', finished: true, statusCode: 200, resourceType: 'Document'},
-              {url: 'https://www.googletagmanager.com/gtag/js?id=G-PGXNGYWP8E', finished: true, statusCode: 200, resourceType: 'Script'},
+              {url: 'https://www.googletagmandager.com/gtag/js?id=G-PGXNGYWP8E', finished: true, statusCode: 200, resourceType: 'Script'},
               // Youtube iframe (OOPIF) and some subresources
               // FYI: Youtube has a ServiceWorker which sometimes cancels the document request. As a result, there will sometimes be multiple requests for this file.
               {url: 'https://www.youtube.com/embed/NZelrwd_iRs', finished: true, statusCode: 200, resourceType: 'Document'},
