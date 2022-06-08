@@ -61,6 +61,10 @@ const expectations = {
               // Disqus subframe (that's a new OOPIF)
               {url: 'https://accounts.google.com/o/oauth2/iframe', finished: true, statusCode: 200, resourceType: 'Document'},
             ],
+            _excludes: [
+              {url: 'https://www.youtube.com/embed/NZelrwd_iRs', finished: false},
+              {url: 'https://www.youtube.com/embed/NZelrwd_iRs', statusCode: -1},
+            ],
           },
         },
       },
