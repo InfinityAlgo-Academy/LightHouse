@@ -47,11 +47,20 @@ const expectations = {
       'network-requests': {
         details: {
           items: {
-          // We want to make sure we are finding the iframe's requests (paulirish.com) *AND*
-          // the iframe's iframe's iframe's requests (youtube.com/doubleclick/etc).
-          // - paulirish.com ~40-60 requests
-          // - paulirish.com + all descendant iframes ~80-90 requests
-            length: '>70',
+            // We want to make sure we are finding the iframe's requests (paulirish.com) *AND*
+            // the iframe's iframe's iframe's requests (youtube.com/doubleclick/etc).
+            _includes: [
+              {url: 'http://localhost:10200/oopif-requests.html', finished: true, statusCode: 200, resourceType: 'Document'},
+              {url: 'https://www.paulirish.com/2012/why-moving-elements-with-translate-is-better-than-posabs-topleft/', finished: true, statusCode: 200, resourceType: 'Document'},
+              // TODO: there should NOT be two requests with this same URL
+              {url: 'https://www.youtube.com/embed/NZelrwd_iRs', finished: true, statusCode: 200, resourceType: 'Document'},
+              // Subresource of youtube embed
+              {url: /https:\/\/www\.youtube\.com\/.*?\/embed.js/, finished: true, statusCode: 200, resourceType: 'Script'},
+              // Disqus iframe (OOPIF)
+              {url: /^https:\/\/disqus\.com\/embed\/comments\//, finished: true, statusCode: 200, resourceType: 'Document'},
+              // Disqus subframe (that's a new OOPIF)
+              {url: 'https://accounts.google.com/o/oauth2/iframe', finished: true, statusCode: 200, resourceType: 'Document'},
+            ],
           },
         },
       },
