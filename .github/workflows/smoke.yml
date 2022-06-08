@@ -12,16 +12,16 @@ jobs:
     strategy:
       matrix:
         chrome-channel: ['stable', 'ToT']
-        smoke-test-shard: [1, 2, 3]
+        smoke-test-shard: [1]
       # e.g. if set 1 fails, continue with set 2 anyway
       fail-fast: false
     runs-on: ubuntu-latest
     env:
       # The total number of shards. Set dynamically when length of *single* matrix variable is
       # computable. See https://github.community/t/get-length-of-strategy-matrix-or-get-all-matrix-options/18342
-      SHARD_TOTAL: 3
+      SHARD_TOTAL: 1
     # Job named e.g. "Chrome stable 1/3".
-    name: Chrome ${{ matrix.chrome-channel }} ${{ matrix.smoke-test-shard }}/3
+    name: Chrome ${{ matrix.chrome-channel }} ${{ matrix.smoke-test-shard }}/1
 
     steps:
     - name: git clone
@@ -76,11 +76,11 @@ jobs:
   smoke-windows:
     strategy:
       matrix:
-        smoke-test-shard: [1, 2]
+        smoke-test-shard: [1]
       # e.g. if set 1 fails, continue with set 2 anyway
       fail-fast: false
     runs-on: windows-latest
-    name: Windows smoke ${{ matrix.smoke-test-shard }}/2
+    name: Windows smoke ${{ matrix.smoke-test-shard }}/1
 
     steps:
     - name: git clone
@@ -96,7 +96,7 @@ jobs:
 
     - name: Run smoke tests
       # Windows bots are slow, so only run enough tests to verify matching behavior.
-      run: yarn smoke --debug -j=2 --retries=5 --shard=${{ matrix.smoke-test-shard }}/2 dbw oopif offline lantern metrics
+      run: yarn smoke --debug -j=2 --retries=5 --shard=${{ matrix.smoke-test-shard }}/1 dbw oopif offline lantern metrics
 
     # Fail if any changes were written to source files.
     - run: git diff --exit-code
@@ -111,15 +111,15 @@ jobs:
   smoke-fr:
     strategy:
       matrix:
-        smoke-test-shard: [1, 2, 3]
+        smoke-test-shard: [1]
       # e.g. if set 1 fails, continue with set 2 anyway
       fail-fast: false
     runs-on: ubuntu-latest
     env:
       # The total number of shards. Set dynamically when length of *single* matrix variable is
       # computable. See https://github.community/t/get-length-of-strategy-matrix-or-get-all-matrix-options/18342
-      SHARD_TOTAL: 3
-    name: Fraggle Rock ${{ matrix.smoke-test-shard }}/3
+      SHARD_TOTAL: 1
+    name: Fraggle Rock ${{ matrix.smoke-test-shard }}/1
 
     steps:
     - name: git clone
@@ -153,15 +153,15 @@ jobs:
   smoke-bundle:
     strategy:
       matrix:
-        smoke-test-shard: [1, 2, 3]
+        smoke-test-shard: [1]
       # e.g. if set 1 fails, continue with set 2 anyway
       fail-fast: false
     runs-on: ubuntu-latest
     env:
       # The total number of shards. Set dynamically when length of *single* matrix variable is
       # computable. See https://github.community/t/get-length-of-strategy-matrix-or-get-all-matrix-options/18342
-      SHARD_TOTAL: 3
-    name: Bundled Lighthouse ${{ matrix.smoke-test-shard }}/3
+      SHARD_TOTAL: 1
+    name: Bundled Lighthouse ${{ matrix.smoke-test-shard }}/1
 
     steps:
     - name: git clone
@@ -193,15 +193,15 @@ jobs:
   smoke-bundle-fr:
     strategy:
       matrix:
-        smoke-test-shard: [1, 2, 3]
+        smoke-test-shard: [1]
       # e.g. if set 1 fails, continue with set 2 anyway
       fail-fast: false
     runs-on: ubuntu-latest
     env:
       # The total number of shards. Set dynamically when length of *single* matrix variable is
       # computable. See https://github.community/t/get-length-of-strategy-matrix-or-get-all-matrix-options/18342
-      SHARD_TOTAL: 3
-    name: Bundled Fraggle Rock ${{ matrix.smoke-test-shard }}/3
+      SHARD_TOTAL: 1
+    name: Bundled Fraggle Rock ${{ matrix.smoke-test-shard }}/1
 
     steps:
     - name: git clone
