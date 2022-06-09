@@ -166,6 +166,7 @@ jobs:
       working-directory: ${{ github.workspace }}/lighthouse
     
     - run: yarn patch-package
+      working-directory: ${{ github.workspace }}/lighthouse
 
     - name: Define ToT chrome path
       run: echo "CHROME_PATH=/Users/runner/chrome-mac-tot/Chromium.app/Contents/MacOS/Chromium" >> $GITHUB_ENV
