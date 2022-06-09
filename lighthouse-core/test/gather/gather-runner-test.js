@@ -5,6 +5,7 @@
  */
 
 import {strict as assert} from 'assert';
+import {createRequire} from 'module';
 
 import {jest} from '@jest/globals';
 
@@ -24,12 +25,11 @@ import {
   fnAny,
 } from '../test-utils.js';
 import fakeDriver from './fake-driver.js';
-import {createCommonjsRefs} from '../../scripts/esm-utils.js';
 import {readJson} from '../../../root.js';
 
 const unresolvedPerfLog = readJson('./../fixtures/unresolved-perflog.json', import.meta);
 
-const {require} = createCommonjsRefs(import.meta);
+const require = createRequire(import.meta.url);
 
 /**
  * Same as jest.requireMock(), but uses `any` instead of `unknown`.

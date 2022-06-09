@@ -30,6 +30,7 @@
     "third-party/snyk/snapshot.json",
     "lighthouse-core/audits/byte-efficiency/polyfill-graph-data.json",
     "shared/localization/locales/en-US.json",
+    "esm-utils.mjs",
   ],
   "exclude": [
     "lighthouse-core/test/audits/**/*.js",

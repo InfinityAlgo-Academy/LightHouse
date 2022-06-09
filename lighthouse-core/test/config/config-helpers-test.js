@@ -5,6 +5,7 @@
  */
 
 import path from 'path';
+import {createRequire} from 'module';
 
 import {jest} from '@jest/globals';
 
@@ -24,9 +25,10 @@ import Gatherer from '../../gather/gatherers/gatherer.js';
 import ImageElementsGatherer from '../../gather/gatherers/image-elements.js';
 import UserTimingsAudit from '../../audits/user-timings.js';
 import {LH_ROOT} from '../../../root.js';
-import {createCommonjsRefs} from '../../scripts/esm-utils.js';
+import {getModuleDirectory} from '../../../esm-utils.mjs';
 
-const {require, __dirname} = createCommonjsRefs(import.meta);
+const require = createRequire(import.meta.url);
+const moduleDir = getModuleDirectory(import.meta);
 
 const originalCwd = process.cwd;
 afterAll(() => {
@@ -348,7 +350,7 @@ describe('.resolveGathererToDefn', () => {
   });
 
   it('should find relative to configDir', () => {
-    const configDir = path.resolve(__dirname, '../../gather/');
+    const configDir = path.resolve(moduleDir, '../../gather/');
     const result = resolveGathererToDefn('gatherers/image-elements', [], configDir);
     expect(result).toEqual({
       path: 'gatherers/image-elements',
@@ -378,7 +380,7 @@ describe('.resolveAuditsToDefns', () => {
   });
 
   it('should find relative to configDir', () => {
-    const configDir = path.resolve(__dirname, '../../');
+    const configDir = path.resolve(moduleDir, '../../');
     const result = resolveAuditsToDefns(['audits/user-timings'], configDir);
 
     expect(result).toEqual([
@@ -411,7 +413,7 @@ describe('.resolveAuditsToDefns', () => {
 });
 
 describe('.resolveModulePath', () => {
-  const configFixturePath = path.resolve(__dirname, '../fixtures/config');
+  const configFixturePath = path.resolve(moduleDir, '../fixtures/config');
 
   beforeEach(() => {
     process.cwd = jest.fn(() => configFixturePath);
@@ -439,7 +441,7 @@ describe('.resolveModulePath', () => {
   });
 
   describe('lighthouse and plugins are installed by npm', () => {
-    const pluginsDirectory = path.resolve(__dirname, '../fixtures/config/');
+    const pluginsDirectory = path.resolve(moduleDir, '../fixtures/config/');
 
     // working directory/
     //   |-- node_modules/

@@ -7,6 +7,7 @@
 import fs from 'fs';
 import {strict as assert} from 'assert';
 import path from 'path';
+import {createRequire} from 'module';
 
 import {jest} from '@jest/globals';
 
@@ -20,9 +21,11 @@ import assetSaver from '../lib/asset-saver.js';
 import LHError from '../lib/lh-error.js';
 import i18n from '../lib/i18n/i18n.js';
 import {makeMocksForGatherRunner} from './test-utils.js';
-import {createCommonjsRefs} from '../scripts/esm-utils.js';
+import {getModuleDirectory, getModulePath} from '../../esm-utils.mjs';
 
-const {require, __dirname, __filename} = createCommonjsRefs(import.meta);
+const require = createRequire(import.meta.url);
+const modulePath = getModulePath(import.meta);
+const moduleDir = getModuleDirectory(import.meta);
 
 // Some imports needs to be done dynamically, so that their dependencies will be mocked.
 // See: https://jestjs.io/docs/ecmascript-modules#differences-between-esm-and-commonjs
@@ -160,7 +163,7 @@ describe('Runner', () => {
     it('does not include a top-level runtimeError when gatherers were successful', async () => {
       const config = new Config({
         settings: {
-          auditMode: __dirname + '/fixtures/artifacts/perflog/',
+          auditMode: moduleDir + '/fixtures/artifacts/perflog/',
 
         },
         audits: [
@@ -198,7 +201,7 @@ describe('Runner', () => {
     it('serializes IcuMessages in gatherMode and is able to use them in auditMode', async () => {
       // Can use this to access shared UIStrings in i18n.js.
       // For future changes: exact messages aren't important, just choose ones with replacements.
-      const str_ = i18n.createMessageInstanceIdFn(__filename, {});
+      const str_ = i18n.createMessageInstanceIdFn(modulePath, {});
 
       // A gatherer that produces an IcuMessage runWarning and LighthouseError artifact.
       class WarningAndErrorGatherer extends Gatherer {
@@ -310,7 +313,7 @@ describe('Runner', () => {
 
     const config = new Config({
       settings: {
-        auditMode: __dirname + '/fixtures/artifacts/empty-artifacts/',
+        auditMode: moduleDir + '/fixtures/artifacts/empty-artifacts/',
       },
       audits: [
         {implementation: EavesdropAudit, options: {x: 1}},
@@ -329,7 +332,7 @@ describe('Runner', () => {
   it('accepts trace artifacts as paths and outputs appropriate data', () => {
     const config = new Config({
       settings: {
-        auditMode: __dirname + '/fixtures/artifacts/perflog/',
+        auditMode: moduleDir + '/fixtures/artifacts/perflog/',
       },
       audits: [
         'user-timings',
@@ -402,7 +405,7 @@ describe('Runner', () => {
     it('outputs an error audit result when trace required but not provided', () => {
       const config = new Config({
         settings: {
-          auditMode: __dirname + '/fixtures/artifacts/empty-artifacts/',
+          auditMode: moduleDir + '/fixtures/artifacts/empty-artifacts/',
         },
         audits: [
           // requires traces[Audit.DEFAULT_PASS]
@@ -421,7 +424,7 @@ describe('Runner', () => {
     it('outputs an error audit result when devtoolsLog required but not provided', async () => {
       const config = new Config({
         settings: {
-          auditMode: __dirname + '/fixtures/artifacts/empty-artifacts/',
+          auditMode: moduleDir + '/fixtures/artifacts/empty-artifacts/',
         },
         audits: [
           // requires devtoolsLogs[Audit.DEFAULT_PASS]
@@ -439,7 +442,7 @@ describe('Runner', () => {
     it('outputs an error audit result when missing a required artifact', () => {
       const config = new Config({
         settings: {
-          auditMode: __dirname + '/fixtures/artifacts/empty-artifacts/',
+          auditMode: moduleDir + '/fixtures/artifacts/empty-artifacts/',
         },
         audits: [
           // requires the ViewportDimensions artifact
@@ -457,7 +460,7 @@ describe('Runner', () => {
 
     it('outputs an error audit result when required artifact was an Error', async () => {
       // Start with empty-artifacts.
-      const baseArtifacts = assetSaver.loadArtifacts(__dirname +
+      const baseArtifacts = assetSaver.loadArtifacts(moduleDir +
           '/fixtures/artifacts/empty-artifacts/');
 
       // Add error and save artifacts using assetSaver to serialize Error object.
@@ -506,7 +509,7 @@ describe('Runner', () => {
       const auditMockFn = SimpleAudit.audit = jest.fn().mockReturnValue({score: 1});
       const config = new Config({
         settings: {
-          auditMode: __dirname + '/fixtures/artifacts/alphabet-artifacts/',
+          auditMode: moduleDir + '/fixtures/artifacts/alphabet-artifacts/',
         },
         audits: [
           SimpleAudit,
@@ -539,7 +542,7 @@ describe('Runner', () => {
       const auditMockFn = SimpleAudit.audit = jest.fn().mockReturnValue({score: 1});
       const config = new Config({
         settings: {
-          auditMode: __dirname + '/fixtures/artifacts/alphabet-artifacts/',
+          auditMode: moduleDir + '/fixtures/artifacts/alphabet-artifacts/',
         },
         audits: [
           SimpleAudit,
@@ -570,7 +573,7 @@ describe('Runner', () => {
       const errorMessage = 'Audit yourself';
       const config = new Config({
         settings: {
-          auditMode: __dirname + '/fixtures/artifacts/empty-artifacts/',
+          auditMode: moduleDir + '/fixtures/artifacts/empty-artifacts/',
         },
         audits: [
           class ThrowyAudit extends Audit {
@@ -596,7 +599,7 @@ describe('Runner', () => {
   it('accepts devtoolsLog in artifacts', () => {
     const config = new Config({
       settings: {
-        auditMode: __dirname + '/fixtures/artifacts/perflog/',
+        auditMode: moduleDir + '/fixtures/artifacts/perflog/',
       },
       audits: [
         'critical-request-chains',
@@ -692,7 +695,7 @@ describe('Runner', () => {
   it('results include artifacts when given artifacts and audits', () => {
     const config = new Config({
       settings: {
-        auditMode: __dirname + '/fixtures/artifacts/perflog/',
+        auditMode: moduleDir + '/fixtures/artifacts/perflog/',
       },
       audits: [
         'content-width',
@@ -732,7 +735,7 @@ describe('Runner', () => {
   it('includes any LighthouseRunWarnings from artifacts in output', () => {
     const config = new Config({
       settings: {
-        auditMode: __dirname + '/fixtures/artifacts/perflog/',
+        auditMode: moduleDir + '/fixtures/artifacts/perflog/',
       },
       audits: [],
     });
@@ -750,7 +753,7 @@ describe('Runner', () => {
 
     const config = new Config({
       settings: {
-        auditMode: __dirname + '/fixtures/artifacts/empty-artifacts/',
+        auditMode: moduleDir + '/fixtures/artifacts/empty-artifacts/',
       },
       audits: [
         class WarningAudit extends Audit {
