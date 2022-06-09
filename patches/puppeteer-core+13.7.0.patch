@@ -1,0 +1,25 @@
+diff --git a/node_modules/puppeteer-core/lib/cjs/puppeteer/common/FrameManager.js b/node_modules/puppeteer-core/lib/cjs/puppeteer/common/FrameManager.js
+index 2b2faee..89abbc7 100644
+--- a/node_modules/puppeteer-core/lib/cjs/puppeteer/common/FrameManager.js
++++ b/node_modules/puppeteer-core/lib/cjs/puppeteer/common/FrameManager.js
+@@ -109,6 +109,7 @@ class FrameManager extends EventEmitter_js_1.EventEmitter {
+                 client === this._client
+                     ? this._networkManager.initialize()
+                     : Promise.resolve(),
++                client.send('Runtime.runIfWaitingForDebugger'),
+             ]);
+         }
+         catch (error) {
+diff --git a/node_modules/puppeteer-core/lib/cjs/puppeteer/common/Page.js b/node_modules/puppeteer-core/lib/cjs/puppeteer/common/Page.js
+index 6715c12..eba8dc3 100644
+--- a/node_modules/puppeteer-core/lib/cjs/puppeteer/common/Page.js
++++ b/node_modules/puppeteer-core/lib/cjs/puppeteer/common/Page.js
+@@ -176,7 +176,7 @@ class Page extends EventEmitter_js_1.EventEmitter {
+             this._frameManager.initialize(),
+             this._client.send('Target.setAutoAttach', {
+                 autoAttach: true,
+-                waitForDebuggerOnStart: false,
++                waitForDebuggerOnStart: true,
+                 flatten: true,
+             }),
+             this._client.send('Performance.enable'),
