@@ -49,7 +49,6 @@ jobs:
     - run: yarn install --frozen-lockfile --network-timeout 1000000
     - run: yarn build-report
     - run: yarn reset-link
-    - run: yarn patch-package
 
     - run: sudo apt-get install xvfb
     - name: Run smoke tests
@@ -135,6 +134,7 @@ jobs:
     - run: yarn install --frozen-lockfile --network-timeout 1000000
     - run: yarn build-report
     - run: yarn reset-link
+    - run: yarn patch-package
 
     - run: sudo apt-get install xvfb
     - name: yarn smoke --fraggle-rock
@@ -215,6 +215,7 @@ jobs:
     - run: yarn install --frozen-lockfile --network-timeout 1000000
     - run: yarn build-report
     - run: yarn build-devtools
+    - run: yarn patch-package
 
     - run: sudo apt-get install xvfb
     - name: yarn test-bundle
