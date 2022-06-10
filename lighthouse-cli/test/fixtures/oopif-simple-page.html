@@ -12,6 +12,20 @@
     window.addEventListener('load', () => {
       fetch('simple-script.js').then(r => r.text()).then(eval);
     });
+
+    eval(`
+    function fn1() {
+      console.log('hello from eval world');
+    }
+    fn1();
+    `);
+    eval(`
+    function fn2() {
+      console.log('hello from _named_ eval world');
+    }
+    fn2();
+    //# sourceURL=eval.js
+    `);
   </script>
 </head>
 <body>

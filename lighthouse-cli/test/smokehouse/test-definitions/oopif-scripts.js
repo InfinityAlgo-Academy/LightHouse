@@ -110,7 +110,7 @@ const expectations = {
         source: 'network',
       },
     ],
-    // Same here, except we get inline scripts of the iframe.
+    // Same here, except we get inline and eval scripts of the iframe.
     Scripts: {
       _includes: [
         {
@@ -120,6 +120,25 @@ const expectations = {
         {
           url: 'http://localhost:10200/oopif-simple-page.html',
           content: /new Worker/,
+        },
+        // fetch('simple-script.js').then(r => r.text()).then(eval);
+        {
+          name: '<eval script>',
+          url: 'http://localhost:10200/oopif-simple-page.html',
+          content: /🪁/,
+          stackTrace: undefined,
+        },
+        {
+          name: 'eval.js',
+          url: 'eval.js',
+          content: /hello from _named_ eval world/,
+          stackTrace: {},
+        },
+        {
+          name: '<eval script>',
+          url: 'http://localhost:10200/oopif-simple-page.html',
+          content: /hello from eval world/,
+          stackTrace: {},
         },
       ],
       _excludes: [{}],

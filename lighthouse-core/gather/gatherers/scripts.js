@@ -29,20 +29,20 @@ async function runInSeriesOrParallel(values, promiseMapper, runInSeries) {
 }
 
 /**
- * Returns true if the script was created via our own calls
- * to Runtime.evaluate.
  * @param {LH.Crdp.Debugger.ScriptParsedEvent} script
  */
-function isLighthouseRuntimeEvaluateScript(script) {
-  // Scripts created by Runtime.evaluate that run on the main session/frame
-  // result in an empty string for the embedderName.
-  // Or, it means the script was dynamically created (eval, new Function, onload, ...)
-  if (!script.embedderName) return true;
+function shouldIgnoreScript(script) {
+  // This is a script with unknown origin, with the following contents:
+  //     (function(e) { console.log(e.type, e); })
+  if (!script.embedderName && !script.url &&
+      script.hash === '1d7af28c44a2ce87939cce2567600eb962a4de285e4b243d541d98e5b50b60d9') {
+    return true;
+  }
 
-  // Otherwise, when running our own code inside other frames, the embedderName
-  // is set to the frame's url. In that case, we rely on the special sourceURL that
-  // we set.
-  return script.hasSourceURL && script.url === '_lighthouse-eval.js';
+  return script.hasSourceURL && [
+    '_lighthouse-eval.js',
+    '__puppeteer_evaluation_script__',
+  ].includes(script.url);
 }
 
 /**
@@ -59,6 +59,12 @@ class Scripts extends FRGatherer {
 
   /** @type {Array<string | undefined>} */
   _scriptContents = [];
+
+  /** @type {Array<string | undefined>} */
+  _scriptFrameUrls = [];
+
+  /** @type {Map<string, string>} */
+  _frameIdToUrl = new Map();
 
   /** @type {string|null|undefined} */
   _mainSessionId = null;
@@ -85,8 +91,13 @@ class Scripts extends FRGatherer {
     // it also blocks scripts from the same origin but that happen to run in a different process,
     // like a worker.
     if (event.method === 'Debugger.scriptParsed' && !sessionId) {
-      if (!isLighthouseRuntimeEvaluateScript(event.params)) {
+      if (!shouldIgnoreScript(event.params)) {
         this._scriptParsedEvents.push(event.params);
+        this._scriptFrameUrls.push(
+          event.params.executionContextAuxData?.frameId ?
+            this._frameIdToUrl.get(event.params.executionContextAuxData?.frameId) :
+            undefined
+        );
       }
     }
   }
@@ -98,6 +109,10 @@ class Scripts extends FRGatherer {
     const session = context.driver.defaultSession;
     session.addProtocolMessageListener(this.onProtocolMessage);
     await session.sendCommand('Debugger.enable');
+
+    session.on('Page.frameNavigated', (event) => {
+      this._frameIdToUrl.set(event.frame.id, event.frame.url);
+    });
   }
 
   /**
@@ -137,15 +152,26 @@ class Scripts extends FRGatherer {
       // It's nice to display the user-provided value in Lighthouse, so we add a field 'name'
       // to make it clear this is for presentational purposes.
       // See https://chromium-review.googlesource.com/c/v8/v8/+/2317310
+      let name = event.url;
+      // embedderName is optional on the protocol because backends like Node may not set it.
+      // For our purposes, it is always set. But just in case it isn't... fallback to the url.
+      let url = event.embedderName || event.url;
+
+      // Some eval'd scripts may not have a name or url, so let's set them.
+      if (!name) name = '<eval script>';
+      if (!url && event.stackTrace?.callFrames.length) url = event.stackTrace.callFrames[0].url;
+      if (!url) {
+        url = this._scriptFrameUrls[i] || '';
+      }
+
       return {
-        name: event.url,
+        name,
         ...event,
-        // embedderName is optional on the protocol because backends like Node may not set it.
-        // For our purposes, it is always set. But just in case it isn't... fallback to the url.
-        url: event.embedderName || event.url,
+        url,
         content: this._scriptContents[i],
       };
-    });
+    // If we can't name a script or know its url, just ignore it.
+    }).filter(script => script.name && script.url);
 
     return scripts;
   }
