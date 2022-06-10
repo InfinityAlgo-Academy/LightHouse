@@ -101,6 +101,11 @@ class SourceMaps extends FRGatherer {
       const map = isSourceMapADataUri ?
           this.parseSourceMapFromDataUrl(rawSourceMapUrl) :
           await this.fetchSourceMap(driver, rawSourceMapUrl);
+
+      if (typeof map.version !== 'number') throw new Error('Map has no numeric `version` field');
+      if (!Array.isArray(map.sources)) throw new Error('Map has no `sources` list');
+      if (typeof map.mappings !== 'string') throw new Error('Map has no `mappings` field');
+
       if (map.sections) {
         map.sections = map.sections.filter(section => section.map);
       }

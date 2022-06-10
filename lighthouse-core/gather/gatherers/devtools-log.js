@@ -12,7 +12,6 @@
  */
 
 const NetworkMonitor = require('../driver/network-monitor.js');
-const MessageLog = require('../devtools-log.js');
 const FRGatherer = require('../../fraggle-rock/gather/base-gatherer.js');
 
 class DevtoolsLog extends FRGatherer {
@@ -30,7 +29,7 @@ class DevtoolsLog extends FRGatherer {
     /** @type {NetworkMonitor|undefined} */
     this._networkMonitor = undefined;
 
-    this._messageLog = new MessageLog(/^(Page|Network)\./);
+    this._messageLog = new DevtoolsMessageLog(/^(Page|Network|Target|Runtime)\./);
 
     /** @param {LH.Protocol.RawEventMessage} e */
     this._onProtocolMessage = e => this._messageLog.record(e);
@@ -63,4 +62,59 @@ class DevtoolsLog extends FRGatherer {
   }
 }
 
+
+/**
+ * This class saves all protocol messages whose method match a particular
+ * regex filter. Used when saving assets for later analysis by another tool such as
+ * Webpagetest.
+ */
+class DevtoolsMessageLog {
+  /**
+   * @param {RegExp=} regexFilter
+   */
+  constructor(regexFilter) {
+    this._filter = regexFilter;
+
+    /** @type {LH.DevtoolsLog} */
+    this._messages = [];
+    this._isRecording = false;
+  }
+
+  /**
+   * @return {LH.DevtoolsLog}
+   */
+  get messages() {
+    return this._messages;
+  }
+
+  reset() {
+    this._messages = [];
+  }
+
+  beginRecording() {
+    this._isRecording = true;
+  }
+
+  endRecording() {
+    this._isRecording = false;
+  }
+
+  /**
+   * Records a message if method matches filter and recording has been started.
+   * @param {LH.Protocol.RawEventMessage} message
+   */
+  record(message) {
+    // We're not recording, skip the rest of the checks.
+    if (!this._isRecording) return;
+    // The event was likely an internal puppeteer method that uses Symbols.
+    if (typeof message.method !== 'string') return;
+    // The event didn't pass our filter, do not record it.
+    if (this._filter && !this._filter.test(message.method)) return;
+
+    // We passed all the checks, record the message.
+    this._messages.push(message);
+  }
+}
+
 module.exports = DevtoolsLog;
+module.exports.DevtoolsMessageLog = DevtoolsMessageLog;

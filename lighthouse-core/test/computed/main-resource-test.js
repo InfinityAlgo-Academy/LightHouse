@@ -6,9 +6,11 @@
 
 import {strict as assert} from 'assert';
 
+import {readJson} from '../../../root.js';
 import MainResource from '../../computed/main-resource.js';
 import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
-import wikipediaDevtoolsLog from '../fixtures/wikipedia-redirect.devtoolslog.json';
+
+const wikipediaDevtoolsLog = readJson('../fixtures/wikipedia-redirect.devtoolslog.json', import.meta);
 
 describe('MainResource computed artifact', () => {
   it('returns an artifact', () => {

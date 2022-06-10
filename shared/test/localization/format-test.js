@@ -400,6 +400,14 @@ describe('format', () => {
         .toThrow(`Provided value "sirNotAppearingInThisString" does not match any placeholder in ICU message "Hello {timeInMs, number, seconds} World"`);
     });
 
+    it('throws an error if a value is provided for a message with no placeholders', () => {
+      expect(_ => str_(UIStrings.helloWorld, {
+        extraCreditValue: 100,
+      }))
+        // eslint-disable-next-line max-len
+        .toThrow(`Provided value "extraCreditValue" does not match any placeholder in ICU message "Hello World"`);
+    });
+
     it('formats correctly with NaN and Infinity numeric values', () => {
       const helloInfinityStr = str_(UIStrings.helloBytesWorld, {in: Infinity});
       expect(helloInfinityStr).toBeDisplayString('Hello ∞ World');

@@ -11,21 +11,23 @@
   */
 
 const log = require('lighthouse-logger');
+const ProtocolSession = require('../../fraggle-rock/gather/session.js');
 
 /** @typedef {{target: LH.Crdp.Target.TargetInfo, session: LH.Gatherer.FRProtocolSession}} TargetWithSession */
 
 class TargetManager {
-  /** @param {LH.Gatherer.FRProtocolSession} session */
-  constructor(session) {
+  /** @param {LH.Puppeteer.CDPSession} cdpSession */
+  constructor(cdpSession) {
     this._enabled = false;
-    this._session = session;
+    this._rootCdpSession = cdpSession;
+
     /** @type {Array<(targetWithSession: TargetWithSession) => Promise<void>|void>} */
     this._listeners = [];
 
     this._onSessionAttached = this._onSessionAttached.bind(this);
 
     /** @type {Map<string, TargetWithSession>} */
-    this._targets = new Map();
+    this._targetIdToTargets = new Map();
 
     /** @param {LH.Crdp.Page.FrameNavigatedEvent} event */
     this._onFrameNavigated = async event => {
@@ -35,7 +37,7 @@ class TargetManager {
       // It's not entirely clear when this is necessary, but when the page switches processes on
       // navigating from about:blank to the `requestedUrl`, resetting `setAutoAttach` has been
       // necessary in the past.
-      await this._session.sendCommand('Target.setAutoAttach', {
+      await this._rootCdpSession.send('Target.setAutoAttach', {
         autoAttach: true,
         flatten: true,
         waitForDebuggerOnStart: true,
@@ -44,9 +46,11 @@ class TargetManager {
   }
 
   /**
-   * @param {LH.Gatherer.FRProtocolSession} session
+   * @param {LH.Puppeteer.CDPSession} cdpSession
    */
-  async _onSessionAttached(session) {
+  async _onSessionAttached(cdpSession) {
+    const session = new ProtocolSession(cdpSession);
+
     try {
       const target = await session.sendCommand('Target.getTargetInfo').catch(() => null);
       const targetType = target?.targetInfo?.type;
@@ -55,13 +59,13 @@ class TargetManager {
 
       const targetId = target.targetInfo.targetId;
       session.setTargetInfo(target.targetInfo);
-      if (this._targets.has(targetId)) return;
+      if (this._targetIdToTargets.has(targetId)) return;
 
       const targetName = target.targetInfo.url || target.targetInfo.targetId;
       log.verbose('target-manager', `target ${targetName} attached`);
 
       const targetWithSession = {target: target.targetInfo, session};
-      this._targets.set(targetId, targetWithSession);
+      this._targetIdToTargets.set(targetId, targetWithSession);
       for (const listener of this._listeners) await listener(targetWithSession);
 
       await session.sendCommand('Target.setAutoAttach', {
@@ -87,24 +91,32 @@ class TargetManager {
     if (this._enabled) return;
 
     this._enabled = true;
-    this._targets = new Map();
+    this._targetIdToTargets = new Map();
 
-    this._session.on('Page.frameNavigated', this._onFrameNavigated);
-    this._session.addSessionAttachedListener(this._onSessionAttached);
+    this._rootCdpSession.on('Page.frameNavigated', this._onFrameNavigated);
 
-    await this._session.sendCommand('Page.enable');
-    await this._onSessionAttached(this._session);
+    const rootConnection = this._rootCdpSession.connection();
+    if (!rootConnection) {
+      throw new Error('Connection has been closed.');
+    }
+    rootConnection.on('sessionattached', this._onSessionAttached);
+
+    await this._rootCdpSession.send('Page.enable');
+
+    // Start with the already attached root session.
+    await this._onSessionAttached(this._rootCdpSession);
   }
 
   /**
    * @return {Promise<void>}
    */
   async disable() {
-    this._session.off('Page.frameNavigated', this._onFrameNavigated);
-    this._session.removeSessionAttachedListener(this._onSessionAttached);
+    this._rootCdpSession.off('Page.frameNavigated', this._onFrameNavigated);
+    // No need to remove listener if connection is already closed.
+    this._rootCdpSession.connection()?.off('sessionattached', this._onSessionAttached);
 
     this._enabled = false;
-    this._targets = new Map();
+    this._targetIdToTargets = new Map();
   }
 
   /**

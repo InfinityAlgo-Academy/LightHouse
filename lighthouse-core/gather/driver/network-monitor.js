@@ -90,7 +90,10 @@ class NetworkMonitor {
     this._frameNavigations = [];
     this._sessions = new Map();
     this._networkRecorder = new NetworkRecorder();
-    this._targetManager = new TargetManager(this._session);
+    /** @type {LH.Puppeteer.CDPSession} */
+    // @ts-expect-error - temporarily reach in to get CDPSession
+    const rootCdpSession = this._session._cdpSession;
+    this._targetManager = new TargetManager(rootCdpSession);
 
     /**
      * Reemit the same network recorder events.
@@ -103,13 +106,20 @@ class NetworkMonitor {
     };
 
     this._networkRecorder.on('requeststarted', reEmit('requeststarted'));
-    this._networkRecorder.on('requestloaded', reEmit('requestloaded'));
+    this._networkRecorder.on('requestfinished', reEmit('requestfinished'));
 
     this._session.on('Page.frameNavigated', this._onFrameNavigated);
-    this._targetManager.addTargetAttachedListener(this._onTargetAttached);
-
     await this._session.sendCommand('Page.enable');
-    await this._targetManager.enable();
+
+    // Legacy driver does its own target management.
+    // @ts-expect-error
+    const isLegacyRunner = Boolean(this._session._domainEnabledCounts);
+    if (isLegacyRunner) {
+      this._session.addProtocolMessageListener(this._onProtocolMessage);
+    } else {
+      this._targetManager.addTargetAttachedListener(this._onTargetAttached);
+      await this._targetManager.enable();
+    }
   }
 
   /**
@@ -119,13 +129,21 @@ class NetworkMonitor {
     if (!this._targetManager) return;
 
     this._session.off('Page.frameNavigated', this._onFrameNavigated);
-    this._targetManager.removeTargetAttachedListener(this._onTargetAttached);
 
-    for (const session of this._sessions.values()) {
-      session.removeProtocolMessageListener(this._onProtocolMessage);
+    // Legacy driver does its own target management.
+    // @ts-expect-error
+    const isLegacyRunner = Boolean(this._session._domainEnabledCounts);
+    if (isLegacyRunner) {
+      this._session.removeProtocolMessageListener(this._onProtocolMessage);
+    } else {
+      this._targetManager.removeTargetAttachedListener(this._onTargetAttached);
+
+      for (const session of this._sessions.values()) {
+        session.removeProtocolMessageListener(this._onProtocolMessage);
+      }
+
+      await this._targetManager.disable();
     }
-
-    await this._targetManager.disable();
 
     this._frameNavigations = [];
     this._networkRecorder = undefined;

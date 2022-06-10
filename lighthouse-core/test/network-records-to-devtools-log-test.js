@@ -5,8 +5,10 @@
  */
 
 import NetworkRecorder from '../../lighthouse-core/lib/network-recorder.js';
+import {readJson} from '../../root.js';
 import networkRecordsToDevtoolsLog from './network-records-to-devtools-log.js';
-import lcpDevtoolsLog from './fixtures/traces/lcp-m78.devtools.log.json';
+
+const lcpDevtoolsLog = readJson('./fixtures/traces/lcp-m78.devtools.log.json', import.meta);
 
 describe('networkRecordsToDevtoolsLog', () => {
   it('should generate the four messages per request', () => {

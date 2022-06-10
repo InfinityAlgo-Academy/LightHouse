@@ -9,7 +9,7 @@ const log = require('lighthouse-logger');
 const NetworkRequest = require('./network-request.js');
 const EventEmitter = require('events').EventEmitter;
 
-/** @typedef {'requeststarted'|'requestloaded'} NetworkRecorderEvent */
+/** @typedef {'requeststarted'|'requestfinished'} NetworkRecorderEvent */
 
 class NetworkRecorder extends EventEmitter {
   /**
@@ -71,7 +71,7 @@ class NetworkRecorder extends EventEmitter {
    * @private
    */
   onRequestFinished(request) {
-    this.emit('requestloaded', request);
+    this.emit('requestfinished', request);
   }
 
   // The below methods proxy network data into the NetworkRequest object which mimics the

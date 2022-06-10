@@ -31,12 +31,12 @@ async function buildReportGenerator() {
   const bundle = await rollup({
     input: 'report/generator/report-generator.js',
     plugins: [
+      rollupPlugins.inlineFs({verbose: Boolean(process.env.DEBUG)}),
       rollupPlugins.shim({
         [`${LH_ROOT}/report/generator/flow-report-assets.js`]: 'export default {}',
+        'fs': 'export default {}',
       }),
       rollupPlugins.commonjs(),
-      rollupPlugins.nodeResolve(),
-      rollupPlugins.inlineFs({verbose: Boolean(process.env.DEBUG)}),
     ],
   });
 
