@@ -27,6 +27,7 @@ class ProtocolSession {
 
   sessionId() {
     return this._targetInfo && this._targetInfo.type === 'iframe' ?
+      // TODO: use this._session.id() for real session id.
       this._targetInfo.targetId :
       undefined;
   }
@@ -75,27 +76,6 @@ class ProtocolSession {
    */
   once(eventName, callback) {
     this._cdpSession.once(eventName, /** @type {*} */ (callback));
-  }
-
-  /**
-   * Bind to the puppeteer `sessionattached` listener and return an LH ProtocolSession.
-   * @param {(session: ProtocolSession) => void} callback
-   */
-  addSessionAttachedListener(callback) {
-    /** @param {LH.Puppeteer.CDPSession} session */
-    const listener = session => callback(new ProtocolSession(session));
-    this._callbackMap.set(callback, listener);
-    this._getConnection().on('sessionattached', listener);
-  }
-
-  /**
-   * Unbind to the puppeteer `sessionattached` listener.
-   * @param {(session: ProtocolSession) => void} callback
-   */
-  removeSessionAttachedListener(callback) {
-    const listener = this._callbackMap.get(callback);
-    if (!listener) return;
-    this._getConnection().off('sessionattached', listener);
   }
 
   /**
@@ -171,12 +151,6 @@ class ProtocolSession {
   async dispose() {
     this._cdpSession.removeAllListeners();
     await this._cdpSession.detach();
-  }
-
-  _getConnection() {
-    const connection = this._cdpSession.connection();
-    if (!connection) throw new Error('Connection has been closed.');
-    return connection;
   }
 }
 

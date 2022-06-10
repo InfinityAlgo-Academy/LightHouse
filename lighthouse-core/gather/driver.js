@@ -208,16 +208,6 @@ class Driver {
     // OOPIF handling in legacy driver is implicit.
   }
 
-  /** @param {(session: LH.Gatherer.FRProtocolSession) => void} callback */
-  addSessionAttachedListener(callback) { // eslint-disable-line no-unused-vars
-    // OOPIF handling in legacy driver is implicit.
-  }
-
-  /** @param {(session: LH.Gatherer.FRProtocolSession) => void} callback */
-  removeSessionAttachedListener(callback) { // eslint-disable-line no-unused-vars
-    // OOPIF handling in legacy driver is implicit.
-  }
-
   /**
    * Debounce enabling or disabling domains to prevent driver users from
    * stomping on each other. Maintains an internal count of the times a domain

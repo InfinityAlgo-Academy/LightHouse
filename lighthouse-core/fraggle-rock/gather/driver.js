@@ -26,8 +26,6 @@ const throwingSession = {
   off: throwNotConnectedFn,
   addProtocolMessageListener: throwNotConnectedFn,
   removeProtocolMessageListener: throwNotConnectedFn,
-  addSessionAttachedListener: throwNotConnectedFn,
-  removeSessionAttachedListener: throwNotConnectedFn,
   sendCommand: throwNotConnectedFn,
   dispose: throwNotConnectedFn,
 };

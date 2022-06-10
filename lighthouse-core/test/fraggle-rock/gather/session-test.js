@@ -150,44 +150,6 @@ describe('ProtocolSession', () => {
     });
   });
 
-  describe('.addSessionAttachedListener', () => {
-    it('should listen for new sessions', () => {
-      const mockOn = fnAny();
-      // @ts-expect-error - we want to use a more limited, controllable test
-      puppeteerSession = {connection: () => ({on: mockOn}), emit: fnAny()};
-      session = new ProtocolSession(puppeteerSession);
-
-      // Make sure we listen for the event.
-      const listener = fnAny();
-      session.addSessionAttachedListener(listener);
-      expect(mockOn).toHaveBeenCalledWith('sessionattached', expect.any(Function));
-
-      // Make sure we wrap the return in a ProtocolSession.
-      mockOn.mock.calls[0][1]({emit: fnAny()});
-      expect(listener).toHaveBeenCalledWith(expect.any(ProtocolSession));
-    });
-  });
-
-  describe('.removeSessionAttachedListener', () => {
-    it('should stop listening for new sessions', () => {
-      const mockOn = fnAny();
-      const mockOff = fnAny();
-      // @ts-expect-error - we want to use a more limited, controllable test
-      puppeteerSession = {connection: () => ({on: mockOn, off: mockOff}), emit: fnAny()};
-      session = new ProtocolSession(puppeteerSession);
-
-      // Make sure we listen for the event.
-      const userListener = fnAny();
-      session.addSessionAttachedListener(userListener);
-      expect(mockOn).toHaveBeenCalledWith('sessionattached', expect.any(Function));
-
-      // Make sure we unlisten the mapped function, not just the user's listener.
-      const installedListener = mockOn.mock.calls[0][1];
-      session.removeSessionAttachedListener(userListener);
-      expect(mockOff).toHaveBeenCalledWith('sessionattached', installedListener);
-    });
-  });
-
   describe('.sendCommand', () => {
     it('delegates to puppeteer', async () => {
       const send = puppeteerSession.send = fnAny().mockResolvedValue(123);
