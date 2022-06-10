@@ -32,13 +32,6 @@ async function runInSeriesOrParallel(values, promiseMapper, runInSeries) {
  * @param {LH.Crdp.Debugger.ScriptParsedEvent} script
  */
 function shouldIgnoreScript(script) {
-  // This is a script with unknown origin, with the following contents:
-  //     (function(e) { console.log(e.type, e); })
-  if (!script.embedderName && !script.url &&
-      script.hash === '1d7af28c44a2ce87939cce2567600eb962a4de285e4b243d541d98e5b50b60d9') {
-    return true;
-  }
-
   return script.hasSourceURL && [
     '_lighthouse-eval.js',
     '__puppeteer_evaluation_script__',
@@ -168,8 +161,11 @@ class Scripts extends FRGatherer {
         url,
         content: this._scriptContents[i],
       };
+    })
     // If we can't name a script or know its url, just ignore it.
-    }).filter(script => script.name && script.url);
+    .filter(script => script.name && script.url)
+    // This is a script with unknown origin, but seems to come from Puppeteer.
+    .filter(script => script.content !== '(function(e) { console.log(e.type, e); })');
 
     return scripts;
   }
