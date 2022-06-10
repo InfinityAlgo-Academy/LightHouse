@@ -149,17 +149,18 @@ function assertValidFlags(flags) {
   }
 }
 
-
 /**
  * @implements {LH.Config.Config}
  */
 class Config {
   /**
-   * @constructor
-   * @param {LH.Config.Json=} configJSON
+   * Resolves the provided config (inherits from extended config, if set), resolves
+   * all referenced modules, and validates.
+   * @param {LH.Config.Json=} configJSON If not provided, uses the default config.
    * @param {LH.Flags=} flags
+   * @return {Promise<Config>}
    */
-  constructor(configJSON, flags) {
+  static async fromJson(configJSON, flags) {
     const status = {msg: 'Create config', id: 'lh:init:config'};
     log.time(status, 'verbose');
     let configPath = flags?.configPath;
@@ -188,7 +189,7 @@ class Config {
     const configDir = configPath ? path.dirname(configPath) : undefined;
 
     // Validate and merge in plugins (if any).
-    configJSON = mergePlugins(configJSON, configDir, flags);
+    configJSON = await mergePlugins(configJSON, configDir, flags);
 
     if (flags) {
       assertValidFlags(flags);
@@ -198,14 +199,28 @@ class Config {
     // Augment passes with necessary defaults and require gatherers.
     const passesWithDefaults = Config.augmentPassesWithDefaults(configJSON.passes);
     Config.adjustDefaultPassForThrottling(settings, passesWithDefaults);
-    const passes = Config.requireGatherers(passesWithDefaults, configDir);
+    const passes = await Config.requireGatherers(passesWithDefaults, configDir);
 
+    const audits = await Config.requireAudits(configJSON.audits, configDir);
+
+    const config = new Config(configJSON, {settings, passes, audits});
+    log.timeEnd(status);
+    return config;
+  }
+
+  /**
+   * @deprecated `Config.fromJson` should be used instead.
+   * @constructor
+   * @param {LH.Config.Json} configJSON
+   * @param {{settings: LH.Config.Settings, passes: ?LH.Config.Pass[], audits: ?LH.Config.AuditDefn[]}} opts
+   */
+  constructor(configJSON, opts) {
     /** @type {LH.Config.Settings} */
-    this.settings = settings;
+    this.settings = opts.settings;
     /** @type {?Array<LH.Config.Pass>} */
-    this.passes = passes;
+    this.passes = opts.passes;
     /** @type {?Array<LH.Config.AuditDefn>} */
-    this.audits = Config.requireAudits(configJSON.audits, configDir);
+    this.audits = opts.audits;
     /** @type {?Record<string, LH.Config.Category>} */
     this.categories = configJSON.categories || null;
     /** @type {?Record<string, LH.Config.Group>} */
@@ -215,8 +230,6 @@ class Config {
 
     assertValidPasses(this.passes, this.audits);
     validation.assertValidCategories(this.categories, this.audits, this.groups);
-
-    log.timeEnd(status);
   }
 
   /**
@@ -499,12 +512,12 @@ class Config {
    * leaving only an array of AuditDefns.
    * @param {LH.Config.Json['audits']} audits
    * @param {string=} configDir
-   * @return {Config['audits']}
+   * @return {Promise<Config['audits']>}
    */
-  static requireAudits(audits, configDir) {
+  static async requireAudits(audits, configDir) {
     const status = {msg: 'Requiring audits', id: 'lh:config:requireAudits'};
     log.time(status, 'verbose');
-    const auditDefns = resolveAuditsToDefns(audits, configDir);
+    const auditDefns = await resolveAuditsToDefns(audits, configDir);
     log.timeEnd(status);
     return auditDefns;
   }
@@ -515,9 +528,9 @@ class Config {
    * provided) using `resolveModulePath`, returning an array of full Passes.
    * @param {?Array<Required<LH.Config.PassJson>>} passes
    * @param {string=} configDir
-   * @return {Config['passes']}
+   * @return {Promise<Config['passes']>}
    */
-  static requireGatherers(passes, configDir) {
+  static async requireGatherers(passes, configDir) {
     if (!passes) {
       return null;
     }
@@ -525,9 +538,11 @@ class Config {
     log.time(status, 'verbose');
 
     const coreList = Runner.getGathererList();
-    const fullPasses = passes.map(pass => {
-      const gathererDefns = pass.gatherers
-        .map(gatherer => resolveGathererToDefn(gatherer, coreList, configDir));
+    const fullPassesPromises = passes.map(async (pass) => {
+      const gathererDefns = await Promise.all(
+        pass.gatherers
+          .map(gatherer => resolveGathererToDefn(gatherer, coreList, configDir))
+      );
 
       // De-dupe gatherers by artifact name because artifact IDs must be unique at runtime.
       const uniqueDefns = Array.from(
@@ -537,6 +552,8 @@ class Config {
 
       return Object.assign(pass, {gatherers: uniqueDefns});
     });
+    const fullPasses = await Promise.all(fullPassesPromises);
+
     log.timeEnd(status);
     return fullPasses;
   }
