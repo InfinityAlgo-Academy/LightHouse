@@ -226,10 +226,7 @@ async function cli(argv) {
 
 // Test if called from the CLI or as a module.
 if (esMain(import.meta)) {
-  cli(process.argv).catch(err => {
-    console.error(err);
-    process.exit(1);
-  });
+  await cli(process.argv);
 }
 
 export {

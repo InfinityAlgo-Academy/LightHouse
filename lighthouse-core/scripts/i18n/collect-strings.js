@@ -726,10 +726,7 @@ async function main() {
 
 // Test if called from the CLI or as a module.
 if (esMain(import.meta)) {
-  main().catch(err => {
-    console.error(err.stack);
-    process.exit(1);
-  });
+  await main();
 }
 
 export {

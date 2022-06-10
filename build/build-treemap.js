@@ -42,7 +42,7 @@ function buildStrings() {
 /**
  * Build treemap app, optionally deploying to gh-pages if `--deploy` flag was set.
  */
-async function run() {
+async function main() {
   const app = new GhPagesApp({
     name: 'treemap',
     appDir: `${LH_ROOT}/treemap/app`,
@@ -77,7 +77,4 @@ async function run() {
   }
 }
 
-run().catch(err => {
-  console.error(err);
-  process.exit(1);
-});
+await main();

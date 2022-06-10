@@ -88,7 +88,7 @@ async function packageExtension() {
   });
 }
 
-async function run() {
+async function main() {
   await Promise.all([
     buildEntryPoint(),
     copyAssets(),
@@ -97,7 +97,4 @@ async function run() {
   await packageExtension();
 }
 
-run().catch(err => {
-  console.error(err);
-  process.exit(1);
-});
+await main();
