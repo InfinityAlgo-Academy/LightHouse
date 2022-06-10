@@ -15,38 +15,34 @@ const {EventEmitter} = require('events');
 const NetworkRecorder = require('../../lib/network-recorder.js');
 const NetworkRequest = require('../../lib/network-request.js');
 const URL = require('../../lib/url-shim.js');
-const TargetManager = require('./target-manager.js');
 
 /** @typedef {import('../../lib/network-recorder.js').NetworkRecorderEvent} NetworkRecorderEvent */
 /** @typedef {'network-2-idle'|'network-critical-idle'|'networkidle'|'networkbusy'|'network-critical-busy'|'network-2-busy'} NetworkMonitorEvent_ */
 /** @typedef {NetworkRecorderEvent|NetworkMonitorEvent_} NetworkMonitorEvent */
-/** @typedef {Record<NetworkMonitorEvent_, []> & Record<NetworkRecorderEvent, [NetworkRequest]> & {protocolmessage: [LH.Protocol.RawEventMessage]}} NetworkMonitorEventMap */
+/** @typedef {Record<NetworkMonitorEvent_, []> & Record<NetworkRecorderEvent, [NetworkRequest]>} NetworkMonitorEventMap */
 /** @typedef {LH.Protocol.StrictEventEmitter<NetworkMonitorEventMap>} NetworkMonitorEmitter */
 
 /** @implements {NetworkMonitorEmitter} */
 class NetworkMonitor {
   /** @type {NetworkRecorder|undefined} */
   _networkRecorder = undefined;
-  /** @type {TargetManager|undefined} */
-  _targetManager = undefined;
   /** @type {Array<LH.Crdp.Page.Frame>} */
   _frameNavigations = [];
 
-  /** @param {LH.Gatherer.FRProtocolSession} session */
-  constructor(session) {
-    this._session = session;
+  // TODO(FR-COMPAT): switch to real TargetManager when legacy removed.
+  /** @param {LH.Gatherer.FRTransitionalDriver['targetManager']} targetManager */
+  constructor(targetManager) {
+    /** @type {LH.Gatherer.FRTransitionalDriver['targetManager']} */
+    this._targetManager = targetManager;
 
-    this._onTargetAttached = this._onTargetAttached.bind(this);
-
-    /** @type {Map<string, LH.Gatherer.FRProtocolSession>} */
-    this._sessions = new Map();
+    /** @type {LH.Gatherer.FRProtocolSession} */
+    this._session = targetManager.rootSession();
 
     /** @param {LH.Crdp.Page.FrameNavigatedEvent} event */
     this._onFrameNavigated = event => this._frameNavigations.push(event.frame);
 
     /** @param {LH.Protocol.RawEventMessage} event */
     this._onProtocolMessage = event => {
-      this.emit('protocolmessage', event);
       if (!this._networkRecorder) return;
       this._networkRecorder.dispatch(event);
     };
@@ -70,30 +66,13 @@ class NetworkMonitor {
   }
 
   /**
-   * @param {{target: {targetId: string}, session: LH.Gatherer.FRProtocolSession}} session
-   */
-  async _onTargetAttached({session, target}) {
-    const targetId = target.targetId;
-
-    this._sessions.set(targetId, session);
-    session.addProtocolMessageListener(this._onProtocolMessage);
-
-    await session.sendCommand('Network.enable');
-  }
-
-  /**
    * @return {Promise<void>}
    */
   async enable() {
-    if (this._targetManager) return;
+    if (this._networkRecorder) return;
 
     this._frameNavigations = [];
-    this._sessions = new Map();
     this._networkRecorder = new NetworkRecorder();
-    /** @type {LH.Puppeteer.CDPSession} */
-    // @ts-expect-error - temporarily reach in to get CDPSession
-    const rootCdpSession = this._session._cdpSession;
-    this._targetManager = new TargetManager(rootCdpSession);
 
     /**
      * Reemit the same network recorder events.
@@ -109,46 +88,20 @@ class NetworkMonitor {
     this._networkRecorder.on('requestfinished', reEmit('requestfinished'));
 
     this._session.on('Page.frameNavigated', this._onFrameNavigated);
-    await this._session.sendCommand('Page.enable');
-
-    // Legacy driver does its own target management.
-    // @ts-expect-error
-    const isLegacyRunner = Boolean(this._session._domainEnabledCounts);
-    if (isLegacyRunner) {
-      this._session.addProtocolMessageListener(this._onProtocolMessage);
-    } else {
-      this._targetManager.addTargetAttachedListener(this._onTargetAttached);
-      await this._targetManager.enable();
-    }
+    this._targetManager.on('protocolevent', this._onProtocolMessage);
   }
 
   /**
    * @return {Promise<void>}
    */
   async disable() {
-    if (!this._targetManager) return;
+    if (!this._networkRecorder) return;
 
     this._session.off('Page.frameNavigated', this._onFrameNavigated);
-
-    // Legacy driver does its own target management.
-    // @ts-expect-error
-    const isLegacyRunner = Boolean(this._session._domainEnabledCounts);
-    if (isLegacyRunner) {
-      this._session.removeProtocolMessageListener(this._onProtocolMessage);
-    } else {
-      this._targetManager.removeTargetAttachedListener(this._onTargetAttached);
-
-      for (const session of this._sessions.values()) {
-        session.removeProtocolMessageListener(this._onProtocolMessage);
-      }
-
-      await this._targetManager.disable();
-    }
+    this._targetManager.off('protocolevent', this._onProtocolMessage);
 
     this._frameNavigations = [];
     this._networkRecorder = undefined;
-    this._targetManager = undefined;
-    this._sessions = new Map();
   }
 
   /** @return {Promise<{requestedUrl?: string, mainDocumentUrl?: string}>} */

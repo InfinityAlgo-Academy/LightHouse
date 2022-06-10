@@ -11,8 +11,9 @@
  * This protocol log can be used to recreate the network records using lib/network-recorder.js.
  */
 
-const NetworkMonitor = require('../driver/network-monitor.js');
 const FRGatherer = require('../../fraggle-rock/gather/base-gatherer.js');
+
+/** @typedef {import('../driver/target-manager.js')} TargetManager */
 
 class DevtoolsLog extends FRGatherer {
   static symbol = Symbol('DevtoolsLog');
@@ -25,9 +26,6 @@ class DevtoolsLog extends FRGatherer {
 
   constructor() {
     super();
-
-    /** @type {NetworkMonitor|undefined} */
-    this._networkMonitor = undefined;
 
     this._messageLog = new DevtoolsMessageLog(/^(Page|Network|Target|Runtime)\./);
 
@@ -42,16 +40,16 @@ class DevtoolsLog extends FRGatherer {
     this._messageLog.reset();
     this._messageLog.beginRecording();
 
-    this._networkMonitor = new NetworkMonitor(driver.defaultSession);
-    this._networkMonitor.on('protocolmessage', this._onProtocolMessage);
-    this._networkMonitor.enable();
+    driver.targetManager.on('protocolevent', this._onProtocolMessage);
+    await driver.defaultSession.sendCommand('Page.enable');
   }
 
-  async stopSensitiveInstrumentation() {
-    if (!this._networkMonitor) return;
+  /**
+   * @param {LH.Gatherer.FRTransitionalContext} passContext
+   */
+  async stopSensitiveInstrumentation({driver}) {
     this._messageLog.endRecording();
-    this._networkMonitor.disable();
-    this._networkMonitor.off('protocolmessage', this._onProtocolMessage);
+    driver.targetManager.off('protocolevent', this._onProtocolMessage);
   }
 
   /**

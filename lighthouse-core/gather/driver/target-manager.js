@@ -5,70 +5,125 @@
  */
 'use strict';
 
-/**
-  * @fileoverview This class tracks multiple targets (the page itself and its OOPIFs) and allows consumers to
-  * listen for protocol events before each target is resumed.
-  */
-
+const EventEmitter = require('events').EventEmitter;
 const log = require('lighthouse-logger');
 const ProtocolSession = require('../../fraggle-rock/gather/session.js');
 
-/** @typedef {{target: LH.Crdp.Target.TargetInfo, session: LH.Gatherer.FRProtocolSession}} TargetWithSession */
+/**
+ * @typedef {{
+ *   target: LH.Crdp.Target.TargetInfo,
+ *   cdpSession: LH.Puppeteer.CDPSession,
+ *   session: LH.Gatherer.FRProtocolSession,
+ *   protocolListener: (event: unknown) => void,
+ * }} TargetWithSession
+ */
 
-class TargetManager {
+// Add protocol event types to EventEmitter.
+/** @typedef {{'protocolevent': [LH.Protocol.RawEventMessage]}} ProtocolEventRecord */
+/** @typedef {new () => LH.Protocol.StrictEventEmitter<ProtocolEventRecord>} CrdpEventMessageEmitter */
+const ProtocolEventEmitter = /** @type {CrdpEventMessageEmitter} */ (EventEmitter);
+
+/**
+ * Tracks targets (the page itself, its iframes, their iframes, etc) as they
+ * appear and allows listeners to the flattened protocol events from all targets.
+ */
+class TargetManager extends ProtocolEventEmitter {
   /** @param {LH.Puppeteer.CDPSession} cdpSession */
   constructor(cdpSession) {
+    super();
+
     this._enabled = false;
     this._rootCdpSession = cdpSession;
 
-    /** @type {Array<(targetWithSession: TargetWithSession) => Promise<void>|void>} */
-    this._listeners = [];
-
-    this._onSessionAttached = this._onSessionAttached.bind(this);
-
-    /** @type {Map<string, TargetWithSession>} */
+    /**
+     * A map of target id to target/session information. Used to ensure unique
+     * attached targets.
+     * @type {Map<string, TargetWithSession>}
+     * */
     this._targetIdToTargets = new Map();
 
-    /** @param {LH.Crdp.Page.FrameNavigatedEvent} event */
-    this._onFrameNavigated = async event => {
-      // Child frames are handled in `_onSessionAttached`.
-      if (event.frame.parentId) return;
+    this._onSessionAttached = this._onSessionAttached.bind(this);
+    this._onFrameNavigated = this._onFrameNavigated.bind(this);
+  }
 
-      // It's not entirely clear when this is necessary, but when the page switches processes on
-      // navigating from about:blank to the `requestedUrl`, resetting `setAutoAttach` has been
-      // necessary in the past.
-      await this._rootCdpSession.send('Target.setAutoAttach', {
-        autoAttach: true,
-        flatten: true,
-        waitForDebuggerOnStart: true,
-      });
-    };
+  /**
+   * @param {LH.Crdp.Page.FrameNavigatedEvent} frameNavigatedEvent
+   */
+  async _onFrameNavigated(frameNavigatedEvent) {
+    // Child frames are handled in `_onSessionAttached`.
+    if (frameNavigatedEvent.frame.parentId) return;
+
+    // It's not entirely clear when this is necessary, but when the page switches processes on
+    // navigating from about:blank to the `requestedUrl`, resetting `setAutoAttach` has been
+    // necessary in the past.
+    await this._rootCdpSession.send('Target.setAutoAttach', {
+      autoAttach: true,
+      flatten: true,
+      waitForDebuggerOnStart: true,
+    });
+  }
+
+  /**
+   * @param {string} sessionId
+   * @return {LH.Gatherer.FRProtocolSession}
+   */
+  _findSession(sessionId) {
+    for (const {session, cdpSession} of this._targetIdToTargets.values()) {
+      if (cdpSession.id() === sessionId) return session;
+    }
+
+    throw new Error(`session not found`);
+  }
+
+  /**
+   * Returns the root session.
+   * @return {LH.Gatherer.FRProtocolSession}
+   */
+  rootSession() {
+    const rootSessionId = this._rootCdpSession.id();
+    return this._findSession(rootSessionId);
   }
 
   /**
    * @param {LH.Puppeteer.CDPSession} cdpSession
    */
   async _onSessionAttached(cdpSession) {
-    const session = new ProtocolSession(cdpSession);
+    const newSession = new ProtocolSession(cdpSession);
 
     try {
-      const target = await session.sendCommand('Target.getTargetInfo').catch(() => null);
+      const target = await newSession.sendCommand('Target.getTargetInfo').catch(() => null);
       const targetType = target?.targetInfo?.type;
       const hasValidTargetType = targetType === 'page' || targetType === 'iframe';
+      // TODO: should detach from target in this case?
+      // See pptr: https://github.com/puppeteer/puppeteer/blob/733cbecf487c71483bee8350e37030edb24bc021/src/common/Page.ts#L495-L526
       if (!target || !hasValidTargetType) return;
 
+      // No need to continue if target has already been seen.
       const targetId = target.targetInfo.targetId;
-      session.setTargetInfo(target.targetInfo);
       if (this._targetIdToTargets.has(targetId)) return;
 
+      newSession.setTargetInfo(target.targetInfo);
       const targetName = target.targetInfo.url || target.targetInfo.targetId;
       log.verbose('target-manager', `target ${targetName} attached`);
 
-      const targetWithSession = {target: target.targetInfo, session};
-      this._targetIdToTargets.set(targetId, targetWithSession);
-      for (const listener of this._listeners) await listener(targetWithSession);
+      const trueProtocolListener = this._getProtocolEventListener(newSession.id());
+      /** @type {(event: unknown) => void} */
+      // @ts-expect-error - pptr currently typed only for single arg emits.
+      const protocolListener = trueProtocolListener;
+      cdpSession.on('*', protocolListener);
 
-      await session.sendCommand('Target.setAutoAttach', {
+      const targetWithSession = {
+        target: target.targetInfo,
+        cdpSession,
+        session: newSession,
+        protocolListener,
+      };
+      this._targetIdToTargets.set(targetId, targetWithSession);
+
+      // We want to receive information about network requests from iframes, so enable the Network domain.
+      await newSession.sendCommand('Network.enable');
+      // We also want to receive information about subtargets of subtargets, so make sure we autoattach recursively.
+      await newSession.sendCommand('Target.setAutoAttach', {
         autoAttach: true,
         flatten: true,
         waitForDebuggerOnStart: true,
@@ -80,8 +135,28 @@ class TargetManager {
       throw err;
     } finally {
       // Resume the target if it was paused, but if it's unnecessary, we don't care about the error.
-      await session.sendCommand('Runtime.runIfWaitingForDebugger').catch(() => {});
+      await newSession.sendCommand('Runtime.runIfWaitingForDebugger').catch(() => {});
     }
+  }
+
+  /**
+   * Returns a listener for all protocol events from session, and augments the
+   * event with the sessionId.
+   * @param {string} sessionId
+   */
+  _getProtocolEventListener(sessionId) {
+    /**
+     * @template {keyof LH.Protocol.RawEventMessageRecord} EventName
+     * @param {EventName} method
+     * @param {LH.Protocol.RawEventMessageRecord[EventName]['params']} params
+     */
+    const onProtocolEvent = (method, params) => {
+      // Cast because tsc 4.7 still can't quite track the dependent parameters.
+      const payload = /** @type {LH.Protocol.RawEventMessage} */ ({method, params, sessionId});
+      this.emit('protocolevent', payload);
+    };
+
+    return onProtocolEvent;
   }
 
   /**
@@ -115,22 +190,12 @@ class TargetManager {
     // No need to remove listener if connection is already closed.
     this._rootCdpSession.connection()?.off('sessionattached', this._onSessionAttached);
 
+    for (const {cdpSession, protocolListener} of this._targetIdToTargets.values()) {
+      cdpSession.off('*', protocolListener);
+    }
+
     this._enabled = false;
     this._targetIdToTargets = new Map();
-  }
-
-  /**
-   * @param {(targetWithSession: TargetWithSession) => Promise<void>|void} listener
-   */
-  addTargetAttachedListener(listener) {
-    this._listeners.push(listener);
-  }
-
-  /**
-   * @param {(targetWithSession: TargetWithSession) => Promise<void>|void} listener
-   */
-  removeTargetAttachedListener(listener) {
-    this._listeners = this._listeners.filter(entry => entry !== listener);
   }
 }
 
