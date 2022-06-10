@@ -160,9 +160,7 @@ class Scripts extends FRGatherer {
       // Some eval'd scripts may not have a name or url, so let's set them.
       if (!name) name = '<eval script>';
       if (!url && event.stackTrace?.callFrames.length) url = event.stackTrace.callFrames[0].url;
-      if (!url) {
-        url = this._scriptFrameUrls[i] || '';
-      }
+      if (!url) url = this._scriptFrameUrls[i] || '';
 
       return {
         name,
