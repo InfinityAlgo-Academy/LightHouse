@@ -65,6 +65,7 @@ class Scripts extends FRGatherer {
   constructor() {
     super();
     this.onProtocolMessage = this.onProtocolMessage.bind(this);
+    this.onFrameNavigated = this.onFrameNavigated.bind(this);
   }
 
   /**
@@ -96,16 +97,21 @@ class Scripts extends FRGatherer {
   }
 
   /**
+   * @param {LH.Crdp.Page.FrameNavigatedEvent} event
+   */
+  onFrameNavigated(event) {
+    this._frameIdToUrl.set(event.frame.id, event.frame.url);
+  }
+
+  /**
    * @param {LH.Gatherer.FRTransitionalContext} context
    */
   async startInstrumentation(context) {
     const session = context.driver.defaultSession;
     session.addProtocolMessageListener(this.onProtocolMessage);
     await session.sendCommand('Debugger.enable');
-
-    session.on('Page.frameNavigated', (event) => {
-      this._frameIdToUrl.set(event.frame.id, event.frame.url);
-    });
+    await session.sendCommand('Page.enable');
+    session.on('Page.frameNavigated', this.onFrameNavigated);
   }
 
   /**
@@ -134,6 +140,8 @@ class Scripts extends FRGatherer {
       formFactor === 'mobile' /* runInSeries */
     );
     await session.sendCommand('Debugger.disable');
+    await session.sendCommand('Page.disable');
+    session.off('Page.frameNavigated', this.onFrameNavigated);
   }
 
   async getArtifact() {
