@@ -13,7 +13,7 @@ const devtoolsLog = readJson('./latest-run/defaultPass.devtoolslog.json');
 const trace = readJson('./latest-run/defaultPass.trace.json');
 
 
-const EXEMPLAR_REQUEST_ID = '35093.11';
+const EXEMPLAR_REQUEST_ID = '17107.2';
 /* eslint-env jest */
 describe('recordsFromTrace', () => {
   const netReqsDTL = NetworkRecorder.recordsFromLogs(devtoolsLog);

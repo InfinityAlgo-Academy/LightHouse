@@ -87,82 +87,116 @@ class NetworkTraceInterpreter {
 
     return this.networkRecorder.getRawRecords();
   }
+
+  /**
+   * @param {string} requestId
+   * @return {NetworkRequest}
+   */
+  getRequest(requestId) {
+    let request = this.networkRecorder._findRealRequestAndSetSession(requestId, undefined);
+    if (!request) {
+      request = new NetworkRequest();
+    }
+    return request;
+  }
+
   /**
    *
    * @param {LH.Trace.ResourceSendRequestEvent} event
    */
   onSendRequest(event) {
+    const requestId = event.args.data.requestId;
+    // const request = this.getRequest(requestId);
+
     // Handle request
     /** @type {LH.Crdp.Network.RequestWillBeSentEvent} */
     const requestWillBeSentEventData = {
       // documentURL:     // brendan: Required, get from frame info?
-      frameId: evtBag.sendRequest.args.data?.frame,
+      frameId: event.args.data?.frame,
       // initiator:    // not available AFAICT
       request: {
-        initialPriority: evtBag.sendRequest.args.data?.priority,
-        method: evtBag.sendRequest.args.data?.requestMethod,
-        url: evtBag.sendRequest.args.data?.url,
+        initialPriority: event.args.data?.priority,
+        method: event.args.data?.requestMethod,
+        url: event.args.data?.url,
         headers: {}, // not available, required, tho
         referrerPolicy: 'unsafe-url', // not populated, but required…
         // .isLinkPreload: // not there
       },
       initiator: {type: 'other'}, // No preload signals in trace…
       requestId,
-      timestamp: evtBag.receiveResponse.args.data?.timing?.requestTime ??
-            evtBag.receiveResponse.ts / 1_000_000,
-      type: evtBag.receiveResponse.args.data?.mimeType === 'text/html' ? 'Document' : undefined, // This is imperfect.
     };
-    request.onRequestWillBeSent(requestWillBeSentEventData);
+    this.networkRecorder.onRequestWillBeSent({params: requestWillBeSentEventData});
   }
 
-  onResponseReceived(event) {
-    // TODO: not entirely sure this is memorycache, but perhaps.
-    // also LOL that even blink has to guess about this. https://source.chromium.org/chromium/chromium/src/+/main:third_party/blink/renderer/platform/loader/fetch/url_loader/web_url_loader.cc;l=796-798;drc=62b6100d21dde58ad66fb6f42383bfa975f6d4ba
-    request.fromMemoryCache = evtBag.receiveResponse.args.data?.fromCache;
 
-    this.networkRecorder.onRequestStarted(request);
+  /**
+   * @param {LH.Trace.ResourceReceiveResponseEvent} event
+   */
+  onResponseReceived(event) {
+    const requestId = event.args.data.requestId;
+    // const request = this.getRequest(requestId);
+
+    // this.networkRecorder.onRequestStarted(request);
 
     // Handle response
     /** @type {LH.Crdp.Network.ResponseReceivedEvent} */
     const responseReceivedEventData = {
-      timestamp: evtBag.receiveResponse.args.data?.responseTime,
+      timestamp: event.args.data?.responseTime,
       response: {
-        status: evtBag.receiveResponse.args.data?.statusCode,
-        timing: evtBag.receiveResponse.args.data?.timing, // data: URI requests have no timing obj in the trace
+        status: event.args.data?.statusCode,
+        timing: event.args.data?.timing, // data: URI requests have no timing obj in the trace
         headers: {}, // not available, required, tho
-        mimeType: evtBag.receiveResponse.args.data?.mimeType,
-        fromServiceWorker: evtBag.receiveResponse.args.data?.fromServiceWorker,
+        mimeType: event.args.data?.mimeType,
+        fromServiceWorker: event.args.data?.fromServiceWorker,
         encodedDataLength: 0, // zero only because the full total is set in DataReceived
-        url: evtBag.sendRequest.args.data?.url,
       },
-      frameId: evtBag.receiveResponse.args.data?.frame,
+      frameId: event.args.data?.frame,
+      requestId,
     };
-    request.onResponseReceived(responseReceivedEventData);
+    this.networkRecorder.onResponseReceived({params: responseReceivedEventData});
+
+    // TODO: not entirely sure this is memorycache, but perhaps.
+    // also LOL that even blink has to guess about this. https://source.chromium.org/chromium/chromium/src/+/main:third_party/blink/renderer/platform/loader/fetch/url_loader/web_url_loader.cc;l=796-798;drc=62b6100d21dde58ad66fb6f42383bfa975f6d4ba
+    const request = this.networkRecorder._findRealRequestAndSetSession(requestId, undefined);
+    request.fromMemoryCache = event.args.data?.fromCache;
   }
 
+  /**
+   * @param {LH.Trace.ResourceReceivedDataEvent} event
+   */
   onDataReceived(event) {
+    const requestId = event.args.data.requestId;
+    // const request = this.getRequest(requestId);
+
     // Set resourceSize & transferSize
     /** @type {LH.Crdp.Network.DataReceivedEvent} */
     const dataReceivedEventData = {
-      encodedDataLength: evtBag.resourceFinish.args.data?.encodedDataLength,
-      dataLength: evtBag.resourceFinish.args.data?.decodedBodyLength,
+      encodedDataLength: event.args.data?.encodedDataLength,
+      dataLength: event.args.data?.encodedDataLength,
+      requestId,
     };
-    request.onDataReceived(dataReceivedEventData);
+    this.networkRecorder.onDataReceived({params: dataReceivedEventData});
   }
+
+  /**
+   * @param {LH.Trace.ResourceFinishEvent} event
+   */
   onLoadingFinished(event) {
+    const requestId = event.args.data.requestId;
+    // const request = this.getRequest(requestId);
+
     // Finish (or fail)
     /** @type {LH.Crdp.Network.LoadingFinishedEvent} */
     const loadingFinishedEventData = {
       requestId,
-      encodedDataLength: evtBag.resourceFinish.args.data?.encodedDataLength,
-      timestamp: evtBag.resourceFinish.args.data?.finishTime,
+      encodedDataLength: event.args.data?.encodedDataLength,
+      timestamp: event.args.data?.finishTime,
     };
-    if (evtBag.resourceFinish.args.data?.didFail) {
-      request.onLoadingFailed(loadingFinishedEventData);
+    if (event.args.data?.didFail) {
+      this.networkRecorder.onLoadingFailed({params: loadingFinishedEventData});
     } else {
-      request.onLoadingFinished(loadingFinishedEventData);
+      this.networkRecorder.onLoadingFinished({params: loadingFinishedEventData});
     }
-    this.networkRecorder.onRequestFinished(request);
   }
 
   /**
@@ -175,8 +209,9 @@ class NetworkTraceInterpreter {
     for (const event of trace.traceEvents) {
       interpreter.handleEvent(event);
     }
-    const requests = interpreter.synthesizeRequests();
-    return NetworkRecorder.finalizeConstructedRecords(requests);
+    // const requests = interpreter.synthesizeRequests();
+
+    return NetworkRecorder.finalizeConstructedRecords(interpreter.networkRecorder.getRawRecords());
   }
 }
 
