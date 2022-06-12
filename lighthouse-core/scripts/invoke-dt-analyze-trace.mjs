@@ -32,6 +32,7 @@ global.analyzeTrace(trace, {
   console.log('done. written to ./tracereport.html');
   console.log(`CLS:`, lhr.audits['cumulative-layout-shift'].numericValue);
   console.log('fetchtime:', (new Date() - new Date(lhr.fetchTime)) / 1000, 'sec ago.');
+  console.log(`reqs:`, lhr.audits['network-requests'].details.items);
 });
 
 

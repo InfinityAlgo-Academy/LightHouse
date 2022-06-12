@@ -96,7 +96,7 @@ async function analyzeTrace(trace, opts) {
     },
   };
 
-  const {config} = initializeConfig(configJSON, {gatherMode: 'navigation'});
+  const {config} = await initializeConfig(configJSON, {gatherMode: 'navigation'});
   const runnerOptions = {config, computedCache: new Map()};
 
   /** @type {LH.DevtoolsLog} */

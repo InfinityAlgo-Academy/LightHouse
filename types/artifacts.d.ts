@@ -1101,6 +1101,19 @@ declare module Trace {
     // Thread timestamp of the event. This value is monotonically increasing among all events generated in the same thread.
     tts: number;
   }
+
+  interface ResourceReceivedDataEvent extends Base {
+    args: {
+      data: {
+        encodedDataLength: number;
+        frame: string;
+        requestId: string;
+      }
+    };
+    name: 'ResourceReceivedData';
+    ph: 'I';
+  }
+
   interface ResourceReceiveResponseEvent extends Base {
     args: {
       data: {
