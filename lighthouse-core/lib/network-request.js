@@ -282,7 +282,9 @@ class NetworkRequest {
    * @param {LH.Crdp.Network.ResponseReceivedEvent['type']=} resourceType
    */
   _onResponse(response, timestamp, resourceType) {
+    console.log('onresponse', this.url, response.url);
     this.url = response.url;
+
 
     this.connectionId = String(response.connectionId);
     this.connectionReused = response.connectionReused;

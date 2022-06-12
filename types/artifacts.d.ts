@@ -1156,11 +1156,10 @@ declare module Trace {
   interface ResourceFinishEvent extends Base {
     args: {
       data: {
-        decodedBodyLength?: number;
+        decodedBodyLength: number;
         didFail: boolean;
-        encodedDataLength?: number;
-        finishTime?: number;
-        networkTime?: number;
+        encodedDataLength: number;
+        finishTime: number;
         requestId: string;
       };
     };

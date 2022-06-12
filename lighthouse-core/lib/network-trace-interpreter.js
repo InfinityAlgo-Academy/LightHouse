@@ -36,68 +36,14 @@ class NetworkTraceInterpreter {
       return;
     }
 
-
     switch (event.name) {
-      case 'ResourceWillSendRequest': return this.onSendRequest(event);
+      // case 'ResourceWillSendRequest': return this.onSendRequest(event); // CDP doesnt have the equiv, thus the left whisker.
       case 'ResourceSendRequest': return this.onSendRequest(event);
       case 'ResourceReceiveResponse': return this.onResponseReceived(event);
       case 'ResourceReceivedData': return this.onResponseReceived(event);
       case 'ResourceFinish': return this.onDataReceived(event);
       default: return;
     }
-  }
-
-  //   const requestId = event.args.data?.requestId;
-  //   if (!requestId) {
-  //     throw new Error('network trace events expected to have a requestId');
-  //   }
-
-  //   const evtBag = this.requestIdToEventsMap.get(requestId) || {};
-  //   if (evtBag[networkTraceEventNamesToAliases[event.name]]) {
-  //     console.log('we got an overwrite', event);
-  //   }
-  //   evtBag[networkTraceEventNamesToAliases[event.name]] = event;
-  //   this.requestIdToEventsMap.set(requestId, evtBag);
-  // }
-
-  synthesizeRequests() {
-    for (const [requestId, evtBag] of this.requestIdToEventsMap.entries()) {
-      let request = this.networkRecorder._findRealRequestAndSetSession(requestId, undefined); // TODO: undefined sessionId is fine?
-
-      // This is a simple new request, create the NetworkRequest object
-      if (!request) {
-        request = new NetworkRequest();
-      } else {
-        // We have a redirect
-        console.log('redirect!', request.url);
-      }
-
-      // If we have an incomplete set of events here, we choose to drop the network
-      // request rather than attempt to synthesize the missing data.
-      if (!evtBag || !evtBag.sendRequest || !evtBag.receiveResponse || !evtBag.resourceFinish) {
-        console.error('missing something!');
-        continue;
-      }
-    }
-
-    // TODO: something about redirects.
-    //   i see stuff in onRequestWillBeSent i'm skipping…
-    //   and a bunch of stuff in recordsFromLogs
-    // } // eo loop
-
-    return this.networkRecorder.getRawRecords();
-  }
-
-  /**
-   * @param {string} requestId
-   * @return {NetworkRequest}
-   */
-  getRequest(requestId) {
-    let request = this.networkRecorder._findRealRequestAndSetSession(requestId, undefined);
-    if (!request) {
-      request = new NetworkRequest();
-    }
-    return request;
   }
 
   /**
@@ -135,7 +81,10 @@ class NetworkTraceInterpreter {
   onResponseReceived(event) {
     const requestId = event.args.data.requestId;
     // const request = this.getRequest(requestId);
-
+    const request = this.networkRecorder._findRealRequestAndSetSession(requestId, undefined);
+    if (!request) {
+      throw new Error(`mismatched event: ${JSON.stringify(event)}`);
+    }
     // this.networkRecorder.onRequestStarted(request);
 
     // Handle response
@@ -149,6 +98,7 @@ class NetworkTraceInterpreter {
         mimeType: event.args.data?.mimeType,
         fromServiceWorker: event.args.data?.fromServiceWorker,
         encodedDataLength: 0, // zero only because the full total is set in DataReceived
+        url: request.url,
       },
       frameId: event.args.data?.frame,
       requestId,
@@ -157,8 +107,9 @@ class NetworkTraceInterpreter {
 
     // TODO: not entirely sure this is memorycache, but perhaps.
     // also LOL that even blink has to guess about this. https://source.chromium.org/chromium/chromium/src/+/main:third_party/blink/renderer/platform/loader/fetch/url_loader/web_url_loader.cc;l=796-798;drc=62b6100d21dde58ad66fb6f42383bfa975f6d4ba
-    const request = this.networkRecorder._findRealRequestAndSetSession(requestId, undefined);
-    request.fromMemoryCache = event.args.data?.fromCache;
+    if (request) {
+      request.fromMemoryCache = !!event.args.data?.fromCache;
+    }
   }
 
   /**
