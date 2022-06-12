@@ -944,7 +944,7 @@ export interface TraceCpuProfile {
 /**
  * @see https://docs.google.com/document/d/1CvAClvFfyA5R-PhYUmn5OOQtYMH4h6I0nSsKchNAySU/preview
  */
-export interface TraceEvent extends TraceEventBase {
+export interface TraceEvent extends Trace.Base {
   name: string;
   args: {
     fileName?: string;
