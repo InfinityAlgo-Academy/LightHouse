@@ -7,6 +7,7 @@
 import fs from 'fs';
 import {strict as assert} from 'assert';
 import path from 'path';
+import {createRequire} from 'module';
 
 import {jest} from '@jest/globals';
 
@@ -20,9 +21,11 @@ import assetSaver from '../lib/asset-saver.js';
 import LHError from '../lib/lh-error.js';
 import i18n from '../lib/i18n/i18n.js';
 import {makeMocksForGatherRunner} from './test-utils.js';
-import {createCommonjsRefs} from '../scripts/esm-utils.js';
+import {getModuleDirectory, getModulePath} from '../../esm-utils.mjs';
 
-const {require, __dirname, __filename} = createCommonjsRefs(import.meta);
+const require = createRequire(import.meta.url);
+const modulePath = getModulePath(import.meta);
+const moduleDir = getModuleDirectory(import.meta);
 
 // Some imports needs to be done dynamically, so that their dependencies will be mocked.
 // See: https://jestjs.io/docs/ecmascript-modules#differences-between-esm-and-commonjs
@@ -100,7 +103,7 @@ describe('Runner', () => {
 
   describe('Gather Mode & Audit Mode', () => {
     const url = 'https://example.com';
-    const generateConfig = settings => new Config({
+    const generateConfig = settings => Config.fromJson({
       passes: [{
         gatherers: ['viewport-dimensions'],
       }],
@@ -114,8 +117,8 @@ describe('Runner', () => {
       fs.rmSync(resolvedPath, {recursive: true, force: true});
     });
 
-    it('-G gathers, quits, and doesn\'t run audits', () => {
-      const opts = {config: generateConfig({gatherMode: artifactsPath}), driverMock};
+    it('-G gathers, quits, and doesn\'t run audits', async () => {
+      const opts = {config: await generateConfig({gatherMode: artifactsPath}), driverMock};
       return runGatherAndAudit(createGatherFn(url), opts).then(_ => {
         expect(loadArtifactsSpy).not.toHaveBeenCalled();
         expect(saveArtifactsSpy).toHaveBeenCalled();
@@ -134,8 +137,8 @@ describe('Runner', () => {
     });
 
     // uses the files on disk from the -G test. ;)
-    it('-A audits from saved artifacts and doesn\'t gather', () => {
-      const opts = {config: generateConfig({auditMode: artifactsPath}), driverMock};
+    it('-A audits from saved artifacts and doesn\'t gather', async () => {
+      const opts = {config: await generateConfig({auditMode: artifactsPath}), driverMock};
       return runGatherAndAudit(createGatherFn(), opts).then(_ => {
         expect(loadArtifactsSpy).toHaveBeenCalled();
         expect(gatherRunnerRunSpy).not.toHaveBeenCalled();
@@ -148,7 +151,7 @@ describe('Runner', () => {
     it('-A throws if the settings change', async () => {
       // Change throttlingMethod from its default of 'simulate'
       const settings = {auditMode: artifactsPath, throttlingMethod: 'provided'};
-      const opts = {config: generateConfig(settings), driverMock};
+      const opts = {config: await generateConfig(settings), driverMock};
       try {
         await runGatherAndAudit(createGatherFn(), opts);
         assert.fail('should have thrown');
@@ -158,10 +161,9 @@ describe('Runner', () => {
     });
 
     it('does not include a top-level runtimeError when gatherers were successful', async () => {
-      const config = new Config({
+      const config = await Config.fromJson({
         settings: {
-          auditMode: __dirname + '/fixtures/artifacts/perflog/',
-
+          auditMode: moduleDir + '/fixtures/artifacts/perflog/',
         },
         audits: [
           'content-width',
@@ -172,9 +174,9 @@ describe('Runner', () => {
       assert.strictEqual(lhr.runtimeError, undefined);
     });
 
-    it('-GA is a normal run but it saves artifacts and LHR to disk', () => {
+    it('-GA is a normal run but it saves artifacts and LHR to disk', async () => {
       const settings = {auditMode: artifactsPath, gatherMode: artifactsPath};
-      const opts = {config: generateConfig(settings), driverMock};
+      const opts = {config: await generateConfig(settings), driverMock};
       return runGatherAndAudit(createGatherFn(url), opts).then(_ => {
         expect(loadArtifactsSpy).not.toHaveBeenCalled();
         expect(gatherRunnerRunSpy).toHaveBeenCalled();
@@ -184,8 +186,8 @@ describe('Runner', () => {
       });
     });
 
-    it('non -G/-A run doesn\'t save artifacts to disk', () => {
-      const opts = {config: generateConfig(), driverMock};
+    it('non -G/-A run doesn\'t save artifacts to disk', async () => {
+      const opts = {config: await generateConfig(), driverMock};
       return runGatherAndAudit(createGatherFn(url), opts).then(_ => {
         expect(loadArtifactsSpy).not.toHaveBeenCalled();
         expect(gatherRunnerRunSpy).toHaveBeenCalled();
@@ -198,7 +200,7 @@ describe('Runner', () => {
     it('serializes IcuMessages in gatherMode and is able to use them in auditMode', async () => {
       // Can use this to access shared UIStrings in i18n.js.
       // For future changes: exact messages aren't important, just choose ones with replacements.
-      const str_ = i18n.createMessageInstanceIdFn(__filename, {});
+      const str_ = i18n.createMessageInstanceIdFn(modulePath, {});
 
       // A gatherer that produces an IcuMessage runWarning and LighthouseError artifact.
       class WarningAndErrorGatherer extends Gatherer {
@@ -208,7 +210,7 @@ describe('Runner', () => {
           throw new LHError(LHError.errors.UNSUPPORTED_OLD_CHROME, {featureName: 'VRML'});
         }
       }
-      const gatherConfig = new Config({
+      const gatherConfig = await Config.fromJson({
         settings: {gatherMode: artifactsPath},
         passes: [{gatherers: [WarningAndErrorGatherer]}],
       });
@@ -238,7 +240,7 @@ describe('Runner', () => {
         }
         static audit() {}
       }
-      const auditConfig = new Config({
+      const auditConfig = await Config.fromJson({
         settings: {auditMode: artifactsPath},
         audits: [{implementation: DummyAudit}],
       });
@@ -254,9 +256,9 @@ describe('Runner', () => {
     });
   });
 
-  it('expands gatherers', () => {
+  it('expands gatherers', async () => {
     const url = 'https://example.com';
-    const config = new Config({
+    const config = await Config.fromJson({
       passes: [{
         gatherers: ['viewport-dimensions'],
       }],
@@ -271,10 +273,9 @@ describe('Runner', () => {
     });
   });
 
-
-  it('rejects when given neither passes nor artifacts', () => {
+  it('rejects when given neither passes nor artifacts', async () => {
     const url = 'https://example.com';
-    const config = new Config({
+    const config = await Config.fromJson({
       audits: [
         'content-width',
       ],
@@ -288,7 +289,7 @@ describe('Runner', () => {
       });
   });
 
-  it('accepts audit options', () => {
+  it('accepts audit options', async () => {
     const url = 'https://example.com/';
 
     const calls = [];
@@ -308,9 +309,9 @@ describe('Runner', () => {
       }
     }
 
-    const config = new Config({
+    const config = await Config.fromJson({
       settings: {
-        auditMode: __dirname + '/fixtures/artifacts/empty-artifacts/',
+        auditMode: moduleDir + '/fixtures/artifacts/empty-artifacts/',
       },
       audits: [
         {implementation: EavesdropAudit, options: {x: 1}},
@@ -326,10 +327,10 @@ describe('Runner', () => {
     });
   });
 
-  it('accepts trace artifacts as paths and outputs appropriate data', () => {
-    const config = new Config({
+  it('accepts trace artifacts as paths and outputs appropriate data', async () => {
+    const config = await Config.fromJson({
       settings: {
-        auditMode: __dirname + '/fixtures/artifacts/perflog/',
+        auditMode: moduleDir + '/fixtures/artifacts/perflog/',
       },
       audits: [
         'user-timings',
@@ -344,9 +345,9 @@ describe('Runner', () => {
     });
   });
 
-  it('rejects when given an invalid trace artifact', () => {
+  it('rejects when given an invalid trace artifact', async () => {
     const url = 'https://example.com';
-    const config = new Config({
+    const config = await Config.fromJson({
       passes: [{
         recordTrace: true,
         gatherers: [],
@@ -371,7 +372,7 @@ describe('Runner', () => {
   });
 
   it('finds correct timings for multiple gather/audit pairs run separately', async () => {
-    const config = new Config({
+    const config = await Config.fromJson({
       passes: [{
         gatherers: ['viewport-dimensions'],
       }],
@@ -399,10 +400,10 @@ describe('Runner', () => {
   });
 
   describe('Bad required artifact handling', () => {
-    it('outputs an error audit result when trace required but not provided', () => {
-      const config = new Config({
+    it('outputs an error audit result when trace required but not provided', async () => {
+      const config = await Config.fromJson({
         settings: {
-          auditMode: __dirname + '/fixtures/artifacts/empty-artifacts/',
+          auditMode: moduleDir + '/fixtures/artifacts/empty-artifacts/',
         },
         audits: [
           // requires traces[Audit.DEFAULT_PASS]
@@ -410,18 +411,17 @@ describe('Runner', () => {
         ],
       });
 
-      return runGatherAndAudit({}, {config}).then(results => {
-        const auditResult = results.lhr.audits['user-timings'];
-        assert.strictEqual(auditResult.score, null);
-        assert.strictEqual(auditResult.scoreDisplayMode, 'error');
-        assert.ok(auditResult.errorMessage.includes('traces'));
-      });
+      const results = await runGatherAndAudit({}, {config});
+      const auditResult = results.lhr.audits['user-timings'];
+      assert.strictEqual(auditResult.score, null);
+      assert.strictEqual(auditResult.scoreDisplayMode, 'error');
+      assert.ok(auditResult.errorMessage.includes('traces'));
     });
 
     it('outputs an error audit result when devtoolsLog required but not provided', async () => {
-      const config = new Config({
+      const config = await Config.fromJson({
         settings: {
-          auditMode: __dirname + '/fixtures/artifacts/empty-artifacts/',
+          auditMode: moduleDir + '/fixtures/artifacts/empty-artifacts/',
         },
         audits: [
           // requires devtoolsLogs[Audit.DEFAULT_PASS]
@@ -436,10 +436,10 @@ describe('Runner', () => {
       assert.strictEqual(auditResult.errorMessage, 'Required devtoolsLogs gatherer did not run.');
     });
 
-    it('outputs an error audit result when missing a required artifact', () => {
-      const config = new Config({
+    it('outputs an error audit result when missing a required artifact', async () => {
+      const config = await Config.fromJson({
         settings: {
-          auditMode: __dirname + '/fixtures/artifacts/empty-artifacts/',
+          auditMode: moduleDir + '/fixtures/artifacts/empty-artifacts/',
         },
         audits: [
           // requires the ViewportDimensions artifact
@@ -457,7 +457,7 @@ describe('Runner', () => {
 
     it('outputs an error audit result when required artifact was an Error', async () => {
       // Start with empty-artifacts.
-      const baseArtifacts = assetSaver.loadArtifacts(__dirname +
+      const baseArtifacts = assetSaver.loadArtifacts(moduleDir +
           '/fixtures/artifacts/empty-artifacts/');
 
       // Add error and save artifacts using assetSaver to serialize Error object.
@@ -471,7 +471,7 @@ describe('Runner', () => {
       await assetSaver.saveArtifacts(artifacts, resolvedPath);
 
       // Load artifacts via auditMode.
-      const config = new Config({
+      const config = await Config.fromJson({
         settings: {
           auditMode: resolvedPath,
         },
@@ -504,9 +504,9 @@ describe('Runner', () => {
       }
 
       const auditMockFn = SimpleAudit.audit = jest.fn().mockReturnValue({score: 1});
-      const config = new Config({
+      const config = await Config.fromJson({
         settings: {
-          auditMode: __dirname + '/fixtures/artifacts/alphabet-artifacts/',
+          auditMode: moduleDir + '/fixtures/artifacts/alphabet-artifacts/',
         },
         audits: [
           SimpleAudit,
@@ -537,9 +537,9 @@ describe('Runner', () => {
       }
 
       const auditMockFn = SimpleAudit.audit = jest.fn().mockReturnValue({score: 1});
-      const config = new Config({
+      const config = await Config.fromJson({
         settings: {
-          auditMode: __dirname + '/fixtures/artifacts/alphabet-artifacts/',
+          auditMode: moduleDir + '/fixtures/artifacts/alphabet-artifacts/',
         },
         audits: [
           SimpleAudit,
@@ -566,11 +566,11 @@ describe('Runner', () => {
       requiredArtifacts: [],
     };
 
-    it('produces an error audit result when an audit throws an Error', () => {
+    it('produces an error audit result when an audit throws an Error', async () => {
       const errorMessage = 'Audit yourself';
-      const config = new Config({
+      const config = await Config.fromJson({
         settings: {
-          auditMode: __dirname + '/fixtures/artifacts/empty-artifacts/',
+          auditMode: moduleDir + '/fixtures/artifacts/empty-artifacts/',
         },
         audits: [
           class ThrowyAudit extends Audit {
@@ -593,10 +593,10 @@ describe('Runner', () => {
     });
   });
 
-  it('accepts devtoolsLog in artifacts', () => {
-    const config = new Config({
+  it('accepts devtoolsLog in artifacts', async () => {
+    const config = await Config.fromJson({
       settings: {
-        auditMode: __dirname + '/fixtures/artifacts/perflog/',
+        auditMode: moduleDir + '/fixtures/artifacts/perflog/',
       },
       audits: [
         'critical-request-chains',
@@ -610,9 +610,9 @@ describe('Runner', () => {
     });
   });
 
-  it('rejects when not given audits to run (and not -G)', () => {
+  it('rejects when not given audits to run (and not -G)', async () => {
     const url = 'https://example.com';
-    const config = new Config({
+    const config = await Config.fromJson({
       passes: [{
         gatherers: ['viewport-dimensions'],
       }],
@@ -626,9 +626,9 @@ describe('Runner', () => {
       });
   });
 
-  it('returns data even if no config categories are provided', () => {
+  it('returns data even if no config categories are provided', async () => {
     const url = 'https://example.com/';
-    const config = new Config({
+    const config = await Config.fromJson({
       passes: [{
         gatherers: ['viewport-dimensions'],
       }],
@@ -646,10 +646,9 @@ describe('Runner', () => {
     });
   });
 
-
-  it('returns categories', () => {
+  it('returns categories', async () => {
     const url = 'https://example.com/';
-    const config = new Config({
+    const config = await Config.fromJson({
       passes: [{
         gatherers: ['viewport-dimensions'],
       }],
@@ -689,10 +688,10 @@ describe('Runner', () => {
     });
   });
 
-  it('results include artifacts when given artifacts and audits', () => {
-    const config = new Config({
+  it('results include artifacts when given artifacts and audits', async () => {
+    const config = await Config.fromJson({
       settings: {
-        auditMode: __dirname + '/fixtures/artifacts/perflog/',
+        auditMode: moduleDir + '/fixtures/artifacts/perflog/',
       },
       audits: [
         'content-width',
@@ -705,9 +704,9 @@ describe('Runner', () => {
     });
   });
 
-  it('results include artifacts when given passes and audits', () => {
+  it('results include artifacts when given passes and audits', async () => {
     const url = 'https://example.com';
-    const config = new Config({
+    const config = await Config.fromJson({
       passes: [{
         passName: 'firstPass',
         gatherers: ['meta-elements', 'viewport-dimensions'],
@@ -729,10 +728,10 @@ describe('Runner', () => {
     });
   });
 
-  it('includes any LighthouseRunWarnings from artifacts in output', () => {
-    const config = new Config({
+  it('includes any LighthouseRunWarnings from artifacts in output', async () => {
+    const config = await Config.fromJson({
       settings: {
-        auditMode: __dirname + '/fixtures/artifacts/perflog/',
+        auditMode: moduleDir + '/fixtures/artifacts/perflog/',
       },
       audits: [],
     });
@@ -745,12 +744,12 @@ describe('Runner', () => {
     });
   });
 
-  it('includes any LighthouseRunWarnings from audits in LHR', () => {
+  it('includes any LighthouseRunWarnings from audits in LHR', async () => {
     const warningString = 'Really important audit warning!';
 
-    const config = new Config({
+    const config = await Config.fromJson({
       settings: {
-        auditMode: __dirname + '/fixtures/artifacts/empty-artifacts/',
+        auditMode: moduleDir + '/fixtures/artifacts/empty-artifacts/',
       },
       audits: [
         class WarningAudit extends Audit {
@@ -809,7 +808,7 @@ describe('Runner', () => {
     };
 
     it('includes a top-level runtimeError when a gatherer throws one', async () => {
-      const config = new Config(configJson);
+      const config = await Config.fromJson(configJson);
       const {lhr} = await runGatherAndAudit(createGatherFn('https://example.com/'), {config, driverMock});
 
       // Audit error included the runtimeError
@@ -840,7 +839,7 @@ describe('Runner', () => {
         }
       });
 
-      const config = new Config(configJson);
+      const config = await Config.fromJson(configJson);
       const {lhr} = await runGatherAndAudit(
         createGatherFn(url),
         {config, driverMock: errorDriverMock}
@@ -868,7 +867,7 @@ describe('Runner', () => {
     };
 
     try {
-      await runGatherAndAudit(createGatherFn('https://example.com/'), {driverMock: erroringDriver, config: new Config()});
+      await runGatherAndAudit(createGatherFn('https://example.com/'), {driverMock: erroringDriver, config: await Config.fromJson()});
       assert.fail('should have thrown');
     } catch (err) {
       assert.equal(err.code, LHError.errors.PROTOCOL_TIMEOUT.code);
@@ -879,7 +878,7 @@ describe('Runner', () => {
 
   it('can handle array of outputs', async () => {
     const url = 'https://example.com';
-    const config = new Config({
+    const config = await Config.fromJson({
       extends: 'lighthouse:default',
       settings: {
         onlyCategories: ['performance'],

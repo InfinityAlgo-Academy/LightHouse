@@ -4,19 +4,19 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
+import {readJson} from '../../../../root.js';
 import MainDocumentContent from '../../../gather/gatherers/main-document-content.js';
 import NetworkRecorder from '../../../lib/network-recorder.js';
 import {createMockContext} from '../../fraggle-rock/gather/mock-driver.js';
 import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';
-import devtoolsLog from '../../fixtures/traces/lcp-m78.devtools.log.json';
 
-// @ts-expect-error
+const devtoolsLog = readJson('../../fixtures/traces/lcp-m78.devtools.log.json', import.meta);
+
 const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
 
 describe('FR compat', () => {
   it('uses loadData in legacy mode', async () => {
     const gatherer = new MainDocumentContent();
-    // @ts-expect-error
     const networkRecords = NetworkRecorder.recordsFromLogs(devtoolsLog);
     const mockContext = createMockContext();
     mockContext.baseArtifacts.URL = URL;
@@ -25,7 +25,6 @@ describe('FR compat', () => {
 
     const artifact = await gatherer.afterPass(
       mockContext.asLegacyContext(),
-      // @ts-expect-error
       {devtoolsLog, networkRecords}
     );
 
@@ -42,7 +41,6 @@ describe('FR compat', () => {
     /** @type {LH.Gatherer.FRTransitionalContext<'DevtoolsLog'>} */
     const context = {
       ...mockContext.asContext(),
-      // @ts-expect-error
       dependencies: {DevtoolsLog: devtoolsLog},
     };
 

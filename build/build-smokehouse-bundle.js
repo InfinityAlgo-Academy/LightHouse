@@ -14,7 +14,7 @@ const bundleOutFile = `${distDir}/smokehouse-bundle.js`;
 const smokehouseLibFilename = './lighthouse-cli/test/smokehouse/frontends/lib.js';
 const smokehouseCliFilename = `${LH_ROOT}/lighthouse-cli/test/smokehouse/lighthouse-runners/cli.js`;
 
-async function build() {
+async function main() {
   const bundle = await rollup({
     input: smokehouseLibFilename,
     context: 'globalThis',
@@ -37,7 +37,4 @@ async function build() {
   await bundle.close();
 }
 
-build().catch(err => {
-  console.error(err);
-  process.exit(1);
-});
+await main();

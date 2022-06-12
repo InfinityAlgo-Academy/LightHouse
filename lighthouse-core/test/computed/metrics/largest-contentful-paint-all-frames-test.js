@@ -6,13 +6,15 @@
 
 import {strict as assert} from 'assert';
 
+import {readJson} from '../../../../root.js';
 import LargestContentfulPaintAllFrames from '../../../computed/metrics/largest-contentful-paint-all-frames.js'; // eslint-disable-line max-len
-import traceAllFrames from '../../fixtures/traces/frame-metrics-m89.json';
-import devtoolsLogAllFrames from '../../fixtures/traces/frame-metrics-m89.devtools.log.json';
-import traceMainFrame from '../../fixtures/traces/lcp-m78.json';
-import devtoolsLogMainFrame from '../../fixtures/traces/lcp-m78.devtools.log.json';
-import invalidTrace from '../../fixtures/traces/progressive-app-m60.json';
-import invalidDevtoolsLog from '../../fixtures/traces/progressive-app-m60.devtools.log.json';
+
+const traceAllFrames = readJson('../../fixtures/traces/frame-metrics-m89.json', import.meta);
+const devtoolsLogAllFrames = readJson('../../fixtures/traces/frame-metrics-m89.devtools.log.json', import.meta);
+const traceMainFrame = readJson('../../fixtures/traces/lcp-m78.json', import.meta);
+const devtoolsLogMainFrame = readJson('../../fixtures/traces/lcp-m78.devtools.log.json', import.meta);
+const invalidTrace = readJson('../../fixtures/traces/progressive-app-m60.json', import.meta);
+const invalidDevtoolsLog = readJson('../../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
 
 describe('Metrics: LCP from all frames', () => {
   const gatherContext = {gatherMode: 'navigation'};

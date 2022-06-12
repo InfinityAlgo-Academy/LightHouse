@@ -30,20 +30,20 @@ describe('getBaseArtifacts', () => {
   });
 
   it('should fetch benchmark index', async () => {
-    const {config} = initializeConfig(undefined, {gatherMode: 'navigation'});
+    const {config} = await initializeConfig(undefined, {gatherMode: 'navigation'});
     const artifacts = await getBaseArtifacts(config, driverMock.asDriver(), {gatherMode});
     expect(artifacts.BenchmarkIndex).toEqual(500);
   });
 
   it('should fetch host user agent', async () => {
-    const {config} = initializeConfig(undefined, {gatherMode: 'navigation'});
+    const {config} = await initializeConfig(undefined, {gatherMode: 'navigation'});
     const artifacts = await getBaseArtifacts(config, driverMock.asDriver(), {gatherMode});
     expect(artifacts.HostUserAgent).toContain('Macintosh');
     expect(artifacts.HostFormFactor).toEqual('desktop');
   });
 
   it('should return settings', async () => {
-    const {config} = initializeConfig(undefined, {gatherMode: 'navigation'});
+    const {config} = await initializeConfig(undefined, {gatherMode: 'navigation'});
     const artifacts = await getBaseArtifacts(config, driverMock.asDriver(), {gatherMode});
     expect(artifacts.settings).toEqual(config.settings);
   });
@@ -56,7 +56,7 @@ describe('finalizeArtifacts', () => {
   let gathererArtifacts = {};
 
   beforeEach(async () => {
-    const {config} = initializeConfig(undefined, {gatherMode});
+    const {config} = await initializeConfig(undefined, {gatherMode});
     const driver = getMockDriverForArtifacts().asDriver();
     baseArtifacts = await getBaseArtifacts(config, driver, {gatherMode});
     baseArtifacts.URL = {initialUrl: 'about:blank', finalUrl: 'https://example.com'};

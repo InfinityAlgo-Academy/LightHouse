@@ -12,7 +12,7 @@ import {readFileSync, writeFileSync} from 'fs';
 
 import prettyJSONStringify from 'pretty-json-stringify';
 
-import {resolveModulePath} from './esm-utils.js';
+import {resolveModulePath} from '../../esm-utils.mjs';
 
 const libDetectorSource = readFileSync(
   resolveModulePath('js-library-detector/library/libraries.js'),

@@ -7,7 +7,7 @@
 import {jest} from '@jest/globals';
 
 import TargetManager from '../../../gather/driver/target-manager.js';
-import {createMockSession} from '../../fraggle-rock/gather/mock-driver.js';
+import {createMockCdpSession} from '../../fraggle-rock/gather/mock-driver.js';
 import {fnAny} from '../../test-utils.js';
 
 jest.useFakeTimers();
@@ -30,36 +30,34 @@ function createTargetInfo(overrides) {
 }
 
 describe('TargetManager', () => {
-  let sessionMock = createMockSession();
-  let sendCommandMock = sessionMock.sendCommand;
-  let targetManager = new TargetManager(sessionMock.asSession());
+  let sessionMock = createMockCdpSession();
+  let sendMock = sessionMock.send;
+  let targetManager = new TargetManager(sessionMock.asCdpSession());
   let targetInfo = createTargetInfo();
 
   beforeEach(() => {
-    sessionMock = createMockSession();
-    sessionMock.sendCommand
+    sessionMock = createMockCdpSession();
+    sessionMock.send
       .mockResponse('Page.enable')
       .mockResponse('Runtime.runIfWaitingForDebugger');
-    sendCommandMock = sessionMock.sendCommand;
-    targetManager = new TargetManager(sessionMock.asSession());
+    sendMock = sessionMock.send;
+    targetManager = new TargetManager(sessionMock.asCdpSession());
     targetInfo = createTargetInfo();
   });
 
   describe('.enable()', () => {
     it('should autoattach to root session', async () => {
-      sessionMock.sendCommand
+      sessionMock.send
         .mockResponse('Target.getTargetInfo', {targetInfo})
         .mockResponse('Target.setAutoAttach');
       await targetManager.enable();
 
-      const invocations = sendCommandMock.findAllInvocations('Target.setAutoAttach');
-      expect(invocations).toHaveLength(1);
-
-      expect(sessionMock.setTargetInfo).toHaveBeenCalledWith(targetInfo);
+      expect(sendMock.findAllInvocations('Target.setAutoAttach')).toHaveLength(1);
+      expect(sendMock.findAllInvocations('Runtime.runIfWaitingForDebugger')).toHaveLength(1);
     });
 
     it('should autoattach to further unique sessions', async () => {
-      sessionMock.sendCommand
+      sessionMock.send
         .mockResponse('Target.getTargetInfo', {targetInfo}) // original, attach
         .mockResponse('Target.getTargetInfo', {targetInfo}) // duplicate, no attach
         .mockResponse('Target.getTargetInfo', {targetInfo: {...targetInfo, targetId: '1'}}) // unique, attach
@@ -75,36 +73,46 @@ describe('TargetManager', () => {
         .mockResponse('Runtime.runIfWaitingForDebugger');
       await targetManager.enable();
 
-      expect(sessionMock.addSessionAttachedListener).toHaveBeenCalled();
-      const sessionListener = sessionMock.addSessionAttachedListener.mock.calls[0][0];
+      expect(sessionMock.connection().on).toHaveBeenCalled();
+      const sessionListener = sessionMock.connection().on.mock.calls[0][1];
 
-      await sessionListener(sessionMock);
-      expect(sendCommandMock.findAllInvocations('Target.setAutoAttach')).toHaveLength(1);
+      // Original, attach.
+      expect(sendMock.findAllInvocations('Target.getTargetInfo')).toHaveLength(1);
+      expect(sendMock.findAllInvocations('Target.setAutoAttach')).toHaveLength(1);
 
+      // Duplicate, no attach.
       await sessionListener(sessionMock);
-      expect(sendCommandMock.findAllInvocations('Target.setAutoAttach')).toHaveLength(2);
+      expect(sendMock.findAllInvocations('Target.getTargetInfo')).toHaveLength(2);
+      expect(sendMock.findAllInvocations('Target.setAutoAttach')).toHaveLength(1);
 
+      // Unique, attach.
       await sessionListener(sessionMock);
-      expect(sendCommandMock.findAllInvocations('Target.setAutoAttach')).toHaveLength(3);
+      expect(sendMock.findAllInvocations('Target.getTargetInfo')).toHaveLength(3);
+      expect(sendMock.findAllInvocations('Target.setAutoAttach')).toHaveLength(2);
+
+      // Unique, attach.
+      await sessionListener(sessionMock);
+      expect(sendMock.findAllInvocations('Target.getTargetInfo')).toHaveLength(4);
+      expect(sendMock.findAllInvocations('Target.setAutoAttach')).toHaveLength(3);
     });
 
     it('should ignore non-frame targets', async () => {
       targetInfo.type = 'worker';
-      sessionMock.sendCommand
+      sessionMock.send
         .mockResponse('Target.getTargetInfo', {targetInfo})
         .mockResponse('Target.setAutoAttach');
       await targetManager.enable();
 
-      const invocations = sendCommandMock.findAllInvocations('Target.setAutoAttach');
+      const invocations = sendMock.findAllInvocations('Target.setAutoAttach');
       expect(invocations).toHaveLength(0);
     });
 
     it('should fire listeners before target attached', async () => {
-      sessionMock.sendCommand
+      sessionMock.send
         .mockResponse('Target.getTargetInfo', {targetInfo})
         .mockResponse('Target.setAutoAttach');
       targetManager.addTargetAttachedListener(fnAny().mockImplementation(() => {
-        const setAutoAttachCalls = sessionMock.sendCommand.mock.calls
+        const setAutoAttachCalls = sessionMock.send.mock.calls
           .filter(call => call[0] === 'Target.setAutoAttach');
         expect(setAutoAttachCalls).toHaveLength(0);
       }));
@@ -112,29 +120,29 @@ describe('TargetManager', () => {
     });
 
     it('should handle target closed gracefully', async () => {
-      sessionMock.sendCommand.mockResponse('Target.getTargetInfo', {targetInfo});
+      sessionMock.send.mockResponse('Target.getTargetInfo', {targetInfo});
       const targetClosedError = new Error('Target closed');
       targetManager.addTargetAttachedListener(fnAny().mockRejectedValue(targetClosedError));
       await targetManager.enable();
     });
 
     it('should throw other listener errors', async () => {
-      sessionMock.sendCommand.mockResponse('Target.getTargetInfo', {targetInfo});
+      sessionMock.send.mockResponse('Target.getTargetInfo', {targetInfo});
       const targetClosedError = new Error('Fatal error');
       targetManager.addTargetAttachedListener(fnAny().mockRejectedValue(targetClosedError));
       await expect(targetManager.enable()).rejects.toMatchObject({message: 'Fatal error'});
     });
 
     it('should resume the target when finished', async () => {
-      sessionMock.sendCommand.mockResponse('Target.getTargetInfo', {});
+      sessionMock.send.mockResponse('Target.getTargetInfo', {});
       await targetManager.enable();
 
-      const invocations = sendCommandMock.findAllInvocations('Runtime.runIfWaitingForDebugger');
+      const invocations = sendMock.findAllInvocations('Runtime.runIfWaitingForDebugger');
       expect(invocations).toHaveLength(1);
     });
 
     it('should autoattach on main frame navigation', async () => {
-      sessionMock.sendCommand
+      sessionMock.send
         .mockResponse('Target.getTargetInfo', {targetInfo})
         .mockResponse('Target.setAutoAttach')
         .mockResponse('Target.setAutoAttach');
@@ -143,12 +151,12 @@ describe('TargetManager', () => {
       const onFrameNavigation = sessionMock.on.getListeners('Page.frameNavigated')[0];
       onFrameNavigation({frame: {}}); // note the lack of a `parentId`
 
-      const invocations = sendCommandMock.findAllInvocations('Target.setAutoAttach');
+      const invocations = sendMock.findAllInvocations('Target.setAutoAttach');
       expect(invocations).toHaveLength(2);
     });
 
     it('should not autoattach on subframe navigation', async () => {
-      sessionMock.sendCommand
+      sessionMock.send
         .mockResponse('Target.getTargetInfo', {targetInfo})
         .mockResponse('Target.setAutoAttach')
         .mockResponse('Target.setAutoAttach');
@@ -157,19 +165,19 @@ describe('TargetManager', () => {
       const onFrameNavigation = sessionMock.on.getListeners('Page.frameNavigated')[0];
       onFrameNavigation({frame: {parentId: 'root'}});
 
-      const invocations = sendCommandMock.findAllInvocations('Target.setAutoAttach');
+      const invocations = sendMock.findAllInvocations('Target.setAutoAttach');
       expect(invocations).toHaveLength(1);
     });
 
     it('should be idempotent', async () => {
-      sessionMock.sendCommand
+      sessionMock.send
         .mockResponse('Target.getTargetInfo', {targetInfo})
         .mockResponse('Target.setAutoAttach');
       await targetManager.enable();
       await targetManager.enable();
       await targetManager.enable();
 
-      const invocations = sendCommandMock.findAllInvocations('Target.setAutoAttach');
+      const invocations = sendMock.findAllInvocations('Target.setAutoAttach');
       expect(invocations).toHaveLength(1);
     });
   });
@@ -179,7 +187,7 @@ describe('TargetManager', () => {
       await targetManager.disable();
 
       expect(sessionMock.off).toHaveBeenCalled();
-      expect(sessionMock.removeSessionAttachedListener).toHaveBeenCalled();
+      expect(sessionMock.connection().off).toHaveBeenCalled();
     });
   });
 });

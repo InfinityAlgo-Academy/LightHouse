@@ -431,7 +431,8 @@ const expectations = {
           nodes: {
             // Test that the numbers for individual elements are in the ballpark.
             // Exact ordering and IDs between FR and legacy differ, so fork the expectations.
-            'page-0-IMG': {
+            '4-11-IMG': {
+              _minChromiumVersion: '104',
               _legacyOnly: true,
               top: '650±50',
               bottom: '650±50',
@@ -440,7 +441,18 @@ const expectations = {
               width: '120±20',
               height: '20±20',
             },
-            'page-2-IMG': {
+            // Legacy runner execution context ID changed after 104.0.5100.0
+            '5-11-IMG': {
+              _maxChromiumVersion: '103',
+              _legacyOnly: true,
+              top: '650±50',
+              bottom: '650±50',
+              left: '10±10',
+              right: '120±20',
+              width: '120±20',
+              height: '20±20',
+            },
+            '9-1-IMG': {
               _fraggleRockOnly: true,
               top: '650±50',
               bottom: '650±50',

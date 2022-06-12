@@ -33,12 +33,46 @@ function createMockSession() {
     off: fnAny(),
     addProtocolMessageListener: createMockOnFn(),
     removeProtocolMessageListener: fnAny(),
-    addSessionAttachedListener: createMockOnFn(),
-    removeSessionAttachedListener: fnAny(),
     dispose: fnAny(),
 
     /** @return {LH.Gatherer.FRProtocolSession} */
     asSession() {
+      // @ts-expect-error - We'll rely on the tests passing to know this matches.
+      return this;
+    },
+  };
+}
+
+function createMockCdpSession() {
+  const connection = createMockCdpConnection();
+
+  return {
+    send: createMockSendCommandFn({useSessionId: false}),
+    once: createMockOnceFn(),
+    on: createMockOnFn(),
+    off: fnAny(),
+    removeAllListeners: fnAny(),
+    detach: fnAny(),
+
+    connection() {
+      return connection;
+    },
+
+    /** @return {LH.Puppeteer.CDPSession} */
+    asCdpSession() {
+      // @ts-expect-error - We'll rely on the tests passing to know this matches.
+      return this;
+    },
+  };
+}
+
+function createMockCdpConnection() {
+  return {
+    on: createMockOnFn(),
+    off: fnAny(),
+
+    /** @return {LH.Puppeteer.Connection} */
+    asCdpConnection() {
       // @ts-expect-error - We'll rely on the tests passing to know this matches.
       return this;
     },
@@ -304,6 +338,7 @@ export {
   createMockDriver,
   createMockPage,
   createMockSession,
+  createMockCdpSession,
   createMockGathererInstance,
   createMockBaseArtifacts,
   createMockContext,

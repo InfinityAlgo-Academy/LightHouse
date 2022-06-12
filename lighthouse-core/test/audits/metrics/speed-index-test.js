@@ -6,10 +6,12 @@
 
 import {strict as assert} from 'assert';
 
+import {readJson} from '../../../../root.js';
 import Audit from '../../../audits/metrics/speed-index.js';
 import constants from '../../../config/constants.js';
-import pwaTrace from '../../fixtures/traces/progressive-app-m60.json';
-import pwaDevtoolsLog from '../../fixtures/traces/progressive-app-m60.devtools.log.json';
+
+const pwaTrace = readJson('../../fixtures/traces/progressive-app-m60.json', import.meta);
+const pwaDevtoolsLog = readJson('../../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
 
 const options = Audit.defaultOptions;
 

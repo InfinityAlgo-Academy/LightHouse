@@ -5,15 +5,15 @@
  */
 
 import fs from 'fs';
+import {createRequire} from 'module';
 
 import {jest} from '@jest/globals';
 
 import {LH_ROOT} from '../../root.js';
-import {createCommonjsRefs} from '../scripts/esm-utils.js';
 import * as mockCommands from './gather/mock-commands.js';
 import NetworkRecorder from '../lib/network-recorder.js';
 
-const {require} = createCommonjsRefs(import.meta);
+const require = createRequire(import.meta.url);
 
 /**
  * Some tests use the result of a LHR processed by our proto serialization.

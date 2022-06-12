@@ -12,11 +12,13 @@ import NetworkNode from '../../../lib/dependency-graph/network-node.js';
 import CPUNode from '../../../lib/dependency-graph/cpu-node.js';
 import Simulator from '../../../lib/dependency-graph/simulator/simulator.js';
 import NetworkRequest from '../../../lib/network-request.js';
-import trace from '../../fixtures/traces/progressive-app-m60.json';
-import devtoolsLog from '../../fixtures/traces/progressive-app-m60.devtools.log.json';
-import ampTrace from '../../fixtures/traces/amp-m86.trace.json';
-import ampDevtoolsLog from '../../fixtures/traces/amp-m86.devtoolslog.json';
 import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';
+import {readJson} from '../../../../root.js';
+
+const trace = readJson('../../fixtures/traces/progressive-app-m60.json', import.meta);
+const devtoolsLog = readJson('../../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
+const ampTrace = readJson('../../fixtures/traces/amp-m86.trace.json', import.meta);
+const ampDevtoolsLog = readJson('../../fixtures/traces/amp-m86.devtoolslog.json', import.meta);
 
 const mobileSlow4G = constants.throttling.mobileSlow4G;
 

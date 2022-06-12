@@ -6,12 +6,14 @@
 
 import {strict as assert} from 'assert';
 
+import {readJson} from '../../../../root.js';
 import Interactive from '../../../audits/metrics/interactive.js';
 import constants from '../../../config/constants.js';
-import acceptableTrace from '../../fixtures/traces/progressive-app-m60.json';
-import acceptableDevToolsLog from '../../fixtures/traces/progressive-app-m60.devtools.log.json';
-import redirectTrace from '../../fixtures/traces/site-with-redirect.json';
-import redirectDevToolsLog from '../../fixtures/traces/site-with-redirect.devtools.log.json';
+
+const acceptableTrace = readJson('../../fixtures/traces/progressive-app-m60.json', import.meta);
+const acceptableDevToolsLog = readJson('../../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
+const redirectTrace = readJson('../../fixtures/traces/site-with-redirect.json', import.meta);
+const redirectDevToolsLog = readJson('../../fixtures/traces/site-with-redirect.devtools.log.json', import.meta);
 
 const options = Interactive.defaultOptions;
 

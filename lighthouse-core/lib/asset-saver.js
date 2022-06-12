@@ -288,10 +288,9 @@ async function saveAssets(artifacts, audits, pathWithBasename) {
     fs.writeFileSync(devtoolsLogFilename, JSON.stringify(passAssets.devtoolsLog, null, 2));
     log.log('saveAssets', 'devtools log saved to disk: ' + devtoolsLogFilename);
 
-    const streamTraceFilename = `${pathWithBasename}-${index}${traceSuffix}`;
-    log.log('saveAssets', 'streaming trace file to disk: ' + streamTraceFilename);
-    await saveTrace(passAssets.traceData, streamTraceFilename);
-    log.log('saveAssets', 'trace file streamed to disk: ' + streamTraceFilename);
+    const traceFilename = `${pathWithBasename}-${index}${traceSuffix}`;
+    await saveTrace(passAssets.traceData, traceFilename);
+    log.log('saveAssets', 'trace file streamed to disk: ' + traceFilename);
   });
 
   await Promise.all(saveAll);

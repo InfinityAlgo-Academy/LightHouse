@@ -4,13 +4,15 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
+import {readJson} from '../../../../root.js';
 import TBTAudit from '../../../audits/metrics/total-blocking-time.js';
 import constants from '../../../config/constants.js';
-import trace from '../../fixtures/traces/progressive-app-m60.json';
-import devtoolsLog from '../../fixtures/traces/progressive-app-m60.devtools.log.json';
-import lcpTrace from '../../fixtures/traces/lcp-m78.json';
-import lcpDevtoolsLog from '../../fixtures/traces/lcp-m78.devtools.log.json';
 import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';
+
+const trace = readJson('../../fixtures/traces/progressive-app-m60.json', import.meta);
+const devtoolsLog = readJson('../../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
+const lcpTrace = readJson('../../fixtures/traces/lcp-m78.json', import.meta);
+const lcpDevtoolsLog = readJson('../../fixtures/traces/lcp-m78.devtools.log.json', import.meta);
 
 const defaultOptions = TBTAudit.defaultOptions;
 

@@ -6,9 +6,11 @@
 
 import ProcessedTrace from '../../computed/processed-trace.js';
 import ProcessedNavigation from '../../computed/processed-navigation.js';
-import pwaTrace from '../fixtures/traces/progressive-app-m60.json';
-import noFCPtrace from '../fixtures/traces/airhorner_no_fcp.json';
-import noNavStartTrace from '../fixtures/traces/no_navstart_event.json';
+import {readJson} from '../../../root.js';
+
+const pwaTrace = readJson('../fixtures/traces/progressive-app-m60.json', import.meta);
+const noFCPtrace = readJson('../fixtures/traces/airhorner_no_fcp.json', import.meta);
+const noNavStartTrace = readJson('../fixtures/traces/no_navstart_event.json', import.meta);
 
 describe('ProcessedTrace', () => {
   it('computes the artifact', async () => {

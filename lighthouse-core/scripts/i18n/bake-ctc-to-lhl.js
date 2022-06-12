@@ -80,7 +80,7 @@ function bakePlaceholders(messages) {
         // Need a global replace due to plural ICU copying placeholders
         // (and therefore ICU vars) multiple times.
         const regex = new RegExp('\\$' + placeholder + '\\$', 'g');
-        message = message.replace(regex, content);
+        message = message.replace(regex, () => content);
       }
     }
 

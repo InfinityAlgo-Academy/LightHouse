@@ -4,9 +4,8 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import {EventEmitter} from 'events';
-
 import {jest} from '@jest/globals';
+import {CDPSession} from 'puppeteer/lib/cjs/puppeteer/common/Connection.js';
 
 import ProtocolSession from '../../../fraggle-rock/gather/session.js';
 import {
@@ -28,42 +27,38 @@ describe('ProtocolSession', () => {
 
   beforeEach(() => {
     // @ts-expect-error - Individual mock functions are applied as necessary.
-    puppeteerSession = {emit: fnAny(), send: fnAny().mockResolvedValue()};
+    puppeteerSession = new CDPSession({_rawSend: fnAny()});
     session = new ProtocolSession(puppeteerSession);
   });
 
   describe('ProtocolSession', () => {
     it('should emit a copy of events on "*"', () => {
-      // @ts-expect-error - we want to use a more limited test of a real event emitter.
-      puppeteerSession = new EventEmitter();
       session = new ProtocolSession(puppeteerSession);
 
       const regularListener = fnAny();
       const allListener = fnAny();
 
-      puppeteerSession.on('Foo', regularListener);
-      puppeteerSession.on('*', allListener);
-      puppeteerSession.emit('Foo', 1);
+      session.on('Network.dataReceived', regularListener);
+      session.addProtocolMessageListener(allListener);
+      puppeteerSession.emit('Network.dataReceived', 1);
       puppeteerSession.emit('Bar', 1);
 
       expect(regularListener).toHaveBeenCalledTimes(1);
       expect(allListener).toHaveBeenCalledTimes(2);
-      expect(allListener).toHaveBeenCalledWith({method: 'Foo', params: 1});
+      expect(allListener).toHaveBeenCalledWith({method: 'Network.dataReceived', params: 1});
       expect(allListener).toHaveBeenCalledWith({method: 'Bar', params: 1});
     });
 
     it('should not fire duplicate events', () => {
-      // @ts-expect-error - we want to use a more limited test of a real event emitter.
-      puppeteerSession = new EventEmitter();
       session = new ProtocolSession(puppeteerSession);
       session = new ProtocolSession(puppeteerSession);
 
       const regularListener = fnAny();
       const allListener = fnAny();
 
-      puppeteerSession.on('Foo', regularListener);
-      puppeteerSession.on('*', allListener);
-      puppeteerSession.emit('Foo', 1);
+      session.on('Network.dataReceived', regularListener);
+      session.addProtocolMessageListener(allListener);
+      puppeteerSession.emit('Network.dataReceived', 1);
       puppeteerSession.emit('Bar', 1);
 
       expect(regularListener).toHaveBeenCalledTimes(1);
@@ -71,14 +66,12 @@ describe('ProtocolSession', () => {
     });
 
     it('should include sessionId for iframes', () => {
-      // @ts-expect-error - we want to use a more limited test of a real event emitter.
-      puppeteerSession = new EventEmitter();
       session = new ProtocolSession(puppeteerSession);
 
       const listener = fnAny();
       const targetInfo = {title: '', url: '', attached: true, canAccessOpener: false};
 
-      puppeteerSession.on('*', listener);
+      session.addProtocolMessageListener(listener);
       session.setTargetInfo({targetId: 'page', type: 'page', ...targetInfo});
       puppeteerSession.emit('Foo', 1);
       session.setTargetInfo({targetId: 'iframe', type: 'iframe', ...targetInfo});
@@ -120,8 +113,6 @@ describe('ProtocolSession', () => {
 
   describe('.addProtocolMessageListener', () => {
     it('should listen for any event', () => {
-      // @ts-expect-error - we want to use a more limited test of a real event emitter.
-      puppeteerSession = new EventEmitter();
       session = new ProtocolSession(puppeteerSession);
 
       const regularListener = fnAny();
@@ -134,7 +125,7 @@ describe('ProtocolSession', () => {
       puppeteerSession.emit('Debugger.scriptParsed', {script: 'details'});
 
       expect(regularListener).toHaveBeenCalledTimes(1);
-      expect(regularListener).toHaveBeenCalledWith();
+      expect(regularListener).toHaveBeenCalledWith(undefined);
       expect(allListener).toHaveBeenCalledTimes(2);
       expect(allListener).toHaveBeenCalledWith({method: 'Page.frameNavigated', params: undefined});
       expect(allListener).toHaveBeenCalledWith({
@@ -146,8 +137,6 @@ describe('ProtocolSession', () => {
 
   describe('.removeProtocolMessageListener', () => {
     it('should stop listening for any event', () => {
-      // @ts-expect-error - we want to use a more limited test of a real event emitter.
-      puppeteerSession = new EventEmitter();
       session = new ProtocolSession(puppeteerSession);
 
       const allListener = fnAny();
@@ -158,44 +147,6 @@ describe('ProtocolSession', () => {
       session.removeProtocolMessageListener(allListener);
       puppeteerSession.emit('Page.frameNavigated');
       expect(allListener).toHaveBeenCalledTimes(1);
-    });
-  });
-
-  describe('.addSessionAttachedListener', () => {
-    it('should listen for new sessions', () => {
-      const mockOn = fnAny();
-      // @ts-expect-error - we want to use a more limited, controllable test
-      puppeteerSession = {connection: () => ({on: mockOn}), emit: fnAny()};
-      session = new ProtocolSession(puppeteerSession);
-
-      // Make sure we listen for the event.
-      const listener = fnAny();
-      session.addSessionAttachedListener(listener);
-      expect(mockOn).toHaveBeenCalledWith('sessionattached', expect.any(Function));
-
-      // Make sure we wrap the return in a ProtocolSession.
-      mockOn.mock.calls[0][1]({emit: fnAny()});
-      expect(listener).toHaveBeenCalledWith(expect.any(ProtocolSession));
-    });
-  });
-
-  describe('.removeSessionAttachedListener', () => {
-    it('should stop listening for new sessions', () => {
-      const mockOn = fnAny();
-      const mockOff = fnAny();
-      // @ts-expect-error - we want to use a more limited, controllable test
-      puppeteerSession = {connection: () => ({on: mockOn, off: mockOff}), emit: fnAny()};
-      session = new ProtocolSession(puppeteerSession);
-
-      // Make sure we listen for the event.
-      const userListener = fnAny();
-      session.addSessionAttachedListener(userListener);
-      expect(mockOn).toHaveBeenCalledWith('sessionattached', expect.any(Function));
-
-      // Make sure we unlisten the mapped function, not just the user's listener.
-      const installedListener = mockOn.mock.calls[0][1];
-      session.removeSessionAttachedListener(userListener);
-      expect(mockOff).toHaveBeenCalledWith('sessionattached', installedListener);
     });
   });
 

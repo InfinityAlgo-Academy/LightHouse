@@ -216,10 +216,7 @@ ${makeGenericCreateComponentFunctionCode(compiledTemplates)}
 }
 
 if (esMain(import.meta)) {
-  main().catch(err => {
-    console.error(err);
-    process.exit(1);
-  });
+  await main();
 }
 
 export {normalizeTextNodeText};
