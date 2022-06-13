@@ -64,35 +64,21 @@ class Scripts extends FRGatherer {
 
   constructor() {
     super();
-    this.onProtocolMessage = this.onProtocolMessage.bind(this);
     this.onFrameNavigated = this.onFrameNavigated.bind(this);
+    this.onScriptParsed = this.onScriptParsed.bind(this);
   }
 
   /**
-   * @param {LH.Protocol.RawEventMessage} event
+   * @param {LH.Crdp.Debugger.ScriptParsedEvent} event
    */
-  onProtocolMessage(event) {
-    // Go read the comments in network-recorder.js _findRealRequestAndSetSession.
-    let sessionId = event.sessionId;
-    if (this._mainSessionId === null) {
-      this._mainSessionId = sessionId;
-    }
-    if (this._mainSessionId === sessionId) {
-      sessionId = undefined;
-    }
-
-    // We want to ignore scripts from OOPIFs. In reality, this does more than block just OOPIFs,
-    // it also blocks scripts from the same origin but that happen to run in a different process,
-    // like a worker.
-    if (event.method === 'Debugger.scriptParsed' && !sessionId) {
-      if (!shouldIgnoreScript(event.params)) {
-        this._scriptParsedEvents.push(event.params);
-        this._scriptFrameUrls.push(
-          event.params.executionContextAuxData?.frameId ?
-            this._frameIdToUrl.get(event.params.executionContextAuxData?.frameId) :
-            undefined
-        );
-      }
+  onScriptParsed(event) {
+    if (!shouldIgnoreScript(event)) {
+      this._scriptParsedEvents.push(event);
+      this._scriptFrameUrls.push(
+        event.executionContextAuxData?.frameId ?
+          this._frameIdToUrl.get(event.executionContextAuxData?.frameId) :
+          undefined
+      );
     }
   }
 
@@ -108,7 +94,7 @@ class Scripts extends FRGatherer {
    */
   async startInstrumentation(context) {
     const session = context.driver.defaultSession;
-    session.addProtocolMessageListener(this.onProtocolMessage);
+    session.on('Debugger.scriptParsed', this.onScriptParsed);
     await session.sendCommand('Debugger.enable');
     await session.sendCommand('Page.enable');
     session.on('Page.frameNavigated', this.onFrameNavigated);
@@ -121,7 +107,7 @@ class Scripts extends FRGatherer {
     const session = context.driver.defaultSession;
     const formFactor = context.baseArtifacts.HostFormFactor;
 
-    session.removeProtocolMessageListener(this.onProtocolMessage);
+    session.off('Debugger.scriptParsed', this.onScriptParsed);
 
     // Without this line the Debugger domain will be off in FR runner,
     // because only the legacy gatherer has special handling for multiple,
