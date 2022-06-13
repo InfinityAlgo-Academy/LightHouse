@@ -27,7 +27,7 @@ export class PwaCategoryRenderer extends CategoryRenderer {
   render(category, groupDefinitions = {}) {
     const categoryElem = this.dom.createElement('div', 'lh-category');
     categoryElem.id = category.id;
-    categoryElem.appendChild(this.renderCategoryHeader(category, groupDefinitions));
+    categoryElem.append(this.renderCategoryHeader(category, groupDefinitions));
 
     const auditRefs = category.auditRefs;
 
@@ -35,13 +35,13 @@ export class PwaCategoryRenderer extends CategoryRenderer {
     // all put in a top-level clump that isn't expandable/collapsible.
     const regularAuditRefs = auditRefs.filter(ref => ref.result.scoreDisplayMode !== 'manual');
     const auditsElem = this._renderAudits(regularAuditRefs, groupDefinitions);
-    categoryElem.appendChild(auditsElem);
+    categoryElem.append(auditsElem);
 
     // Manual audits are still in a manual clump.
     const manualAuditRefs = auditRefs.filter(ref => ref.result.scoreDisplayMode === 'manual');
     const manualElem = this.renderClump('manual',
       {auditRefs: manualAuditRefs, description: category.manualDescription});
-    categoryElem.appendChild(manualElem);
+    categoryElem.append(manualElem);
 
     return categoryElem;
   }

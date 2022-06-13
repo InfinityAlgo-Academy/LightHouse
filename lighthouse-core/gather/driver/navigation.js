@@ -131,7 +131,10 @@ async function gotoURL(driver, requestor, options) {
   let requestedUrl = navigationUrls.requestedUrl;
   if (typeof requestor === 'string') {
     if (requestedUrl && !URL.equalWithExcludedFragments(requestor, requestedUrl)) {
-      log.error('Navigation', 'Provided URL did not match initial navigation URL');
+      log.error(
+        'Navigation',
+        `Provided URL (${requestor}) did not match initial navigation URL (${requestedUrl})`
+      );
     }
     requestedUrl = requestor;
   }

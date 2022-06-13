@@ -310,7 +310,8 @@ async function navigationGather(requestor, options) {
   const {configContext = {}} = options;
   log.setLevel(configContext.logLevel || 'error');
 
-  const {config} = initializeConfig(options.config, {...configContext, gatherMode: 'navigation'});
+  const {config} =
+    await initializeConfig(options.config, {...configContext, gatherMode: 'navigation'});
   const computedCache = new Map();
   const internalOptions = {
     skipAboutBlank: configContext.skipAboutBlank,
@@ -326,6 +327,7 @@ async function navigationGather(requestor, options) {
   const artifacts = await Runner.gather(
     async () => {
       let {page} = options;
+      const normalizedRequestor = isCallback ? requestor : URL.normalizeUrl(requestor);
 
       // For navigation mode, we shouldn't connect to a browser in audit mode,
       // therefore we connect to the browser in the gatherFn callback.
@@ -339,7 +341,7 @@ async function navigationGather(requestor, options) {
       const context = {
         driver,
         config,
-        requestor: isCallback ? requestor : URL.normalizeUrl(requestor),
+        requestor: normalizedRequestor,
         options: internalOptions,
       };
       const {baseArtifacts} = await _setup(context);

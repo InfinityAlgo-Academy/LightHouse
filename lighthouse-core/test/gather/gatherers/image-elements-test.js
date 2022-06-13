@@ -6,14 +6,15 @@
 
 import {jest} from '@jest/globals';
 
+import {readJson} from '../../../../root.js';
 import ImageElements from '../../../gather/gatherers/image-elements.js';
 import NetworkRecorder from '../../../lib/network-recorder.js';
 import {createMockContext, createMockDriver, createMockSession} from
   '../../fraggle-rock/gather/mock-driver.js';
 import {fnAny} from '../../test-utils.js';
-import devtoolsLog from '../../fixtures/traces/lcp-m78.devtools.log.json';
 
-// @ts-expect-error
+const devtoolsLog = readJson('../../fixtures/traces/lcp-m78.devtools.log.json', import.meta);
+
 const networkRecords = NetworkRecorder.recordsFromLogs(devtoolsLog);
 
 jest.useFakeTimers();
@@ -309,7 +310,6 @@ describe('FR compat', () => {
     mockContext.driver._executionContext.evaluate.mockReturnValue([mockElement()]);
 
     const artifact = await gatherer.afterPass(mockContext.asLegacyContext(), {
-      // @ts-expect-error
       devtoolsLog,
       networkRecords,
     });

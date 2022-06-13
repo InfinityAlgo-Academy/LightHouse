@@ -6,21 +6,23 @@
 
 import {strict as assert} from 'assert';
 
+import {readJson} from '../../../../root.js';
 import TraceProcessor from '../../../lib/tracehouse/trace-processor.js';
 import createTestTrace from '../../create-test-trace.js';
-import pwaTrace from '../../fixtures/traces/progressive-app.json';
-import badNavStartTrace from '../../fixtures/traces/bad-nav-start-ts.json';
-import lateTracingStartedTrace from '../../fixtures/traces/tracingstarted-after-navstart.json';
-import noTracingStartedTrace from '../../fixtures/traces/no-tracingstarted-m74.json';
-import preactTrace from '../../fixtures/traces/preactjs.com_ts_of_undefined.json';
-import noFMPtrace from '../../fixtures/traces/no_fmp_event.json';
-import noFCPtrace from '../../fixtures/traces/airhorner_no_fcp.json';
-import timespanTrace from '../../fixtures/traces/timespan-trace-m91.json';
-import noNavStartTrace from '../../fixtures/traces/no_navstart_event.json';
-import backgroundTabTrace from '../../fixtures/traces/backgrounded-tab-missing-paints.json';
-import lcpTrace from '../../fixtures/traces/lcp-m78.json';
-import lcpAllFramesTrace from '../../fixtures/traces/frame-metrics-m89.json';
-import startedAfterNavstartTrace from '../../fixtures/traces/tracingstarted-after-navstart.json';
+
+const pwaTrace = readJson('../../fixtures/traces/progressive-app.json', import.meta);
+const badNavStartTrace = readJson('../../fixtures/traces/bad-nav-start-ts.json', import.meta);
+const lateTracingStartedTrace = readJson('../../fixtures/traces/tracingstarted-after-navstart.json', import.meta);
+const noTracingStartedTrace = readJson('../../fixtures/traces/no-tracingstarted-m74.json', import.meta);
+const preactTrace = readJson('../../fixtures/traces/preactjs.com_ts_of_undefined.json', import.meta);
+const noFMPtrace = readJson('../../fixtures/traces/no_fmp_event.json', import.meta);
+const noFCPtrace = readJson('../../fixtures/traces/airhorner_no_fcp.json', import.meta);
+const timespanTrace = readJson('../../fixtures/traces/timespan-trace-m91.json', import.meta);
+const noNavStartTrace = readJson('../../fixtures/traces/no_navstart_event.json', import.meta);
+const backgroundTabTrace = readJson('../../fixtures/traces/backgrounded-tab-missing-paints.json', import.meta);
+const lcpTrace = readJson('../../fixtures/traces/lcp-m78.json', import.meta);
+const lcpAllFramesTrace = readJson('../../fixtures/traces/frame-metrics-m89.json', import.meta);
+const startedAfterNavstartTrace = readJson('../../fixtures/traces/tracingstarted-after-navstart.json', import.meta);
 
 describe('TraceProcessor', () => {
   describe('_riskPercentiles', () => {

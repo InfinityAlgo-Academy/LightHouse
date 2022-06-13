@@ -5,13 +5,13 @@
  */
 
 import {strict as assert} from 'assert';
+import {createRequire} from 'module';
 
 import {jest} from '@jest/globals';
 
 import Gatherer from '../../gather/gatherers/gatherer.js';
 // import GathererRunner_ from '../../gather/gather-runner.js';
 // import Config from '../../config/config.js';
-import unresolvedPerfLog from './../fixtures/unresolved-perflog.json';
 import LHError from '../../lib/lh-error.js';
 import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
 // import Driver from '../../gather/driver.js';
@@ -25,9 +25,11 @@ import {
   fnAny,
 } from '../test-utils.js';
 import fakeDriver from './fake-driver.js';
-import {createCommonjsRefs} from '../../scripts/esm-utils.js';
+import {readJson} from '../../../root.js';
 
-const {require} = createCommonjsRefs(import.meta);
+const unresolvedPerfLog = readJson('./../fixtures/unresolved-perflog.json', import.meta);
+
+const require = createRequire(import.meta.url);
 
 /**
  * Same as jest.requireMock(), but uses `any` instead of `unknown`.
@@ -81,8 +83,8 @@ beforeAll(async () => {
 /**
  * @param {LH.Config.Json} json
  */
-function makeConfig(json) {
-  const config = new Config(json);
+async function makeConfig(json) {
+  const config = await Config.fromJson(json);
 
   // Since the config is for `gather-runner`, ensure it has `passes`.
   if (!config.passes) {
@@ -238,7 +240,7 @@ describe('GatherRunner', function() {
   it('collects benchmark as an artifact', async () => {
     const requestedUrl = 'https://example.com';
     const driver = fakeDriver;
-    const config = makeConfig({passes: [{passName: 'defaultPass'}]});
+    const config = await makeConfig({passes: [{passName: 'defaultPass'}]});
     const options = {requestedUrl, driver, settings: config.settings, computedCache: new Map()};
 
     const results = await GatherRunner.run(config.passes, options);
@@ -248,7 +250,7 @@ describe('GatherRunner', function() {
   it('collects host user agent as an artifact', async () => {
     const requestedUrl = 'https://example.com';
     const driver = fakeDriver;
-    const config = makeConfig({passes: [{passName: 'defaultPass'}]});
+    const config = await makeConfig({passes: [{passName: 'defaultPass'}]});
     const options = {requestedUrl, driver, settings: config.settings, computedCache: new Map()};
 
     const results = await GatherRunner.run(config.passes, options);
@@ -259,14 +261,14 @@ describe('GatherRunner', function() {
   it('collects network user agent as an artifact', async () => {
     const requestedUrl = 'https://example.com';
     const driver = fakeDriver;
-    const config = makeConfig({passes: [{passName: 'defaultPass'}]});
+    const config = await makeConfig({passes: [{passName: 'defaultPass'}]});
     const options = {requestedUrl, driver, settings: config.settings, computedCache: new Map()};
 
     const results = await GatherRunner.run(config.passes, options);
     expect(results.NetworkUserAgent).toContain('Mozilla');
   });
 
-  it('collects requested and final URLs as an artifact', () => {
+  it('collects requested and final URLs as an artifact', async () => {
     const requestedUrl = 'https://example.com';
     const mainDocumentUrl = 'https://example.com/interstitial';
     const gotoURL = requireMockAny('../../gather/driver/navigation.js').gotoURL;
@@ -274,7 +276,7 @@ describe('GatherRunner', function() {
     fakeDriver.url = jest.fn()
       .mockResolvedValueOnce('about:blank')
       .mockResolvedValueOnce(mainDocumentUrl);
-    const config = makeConfig({passes: [{passName: 'defaultPass'}]});
+    const config = await makeConfig({passes: [{passName: 'defaultPass'}]});
     const options = {
       requestedUrl,
       driver: fakeDriver,
@@ -305,7 +307,7 @@ describe('GatherRunner', function() {
             return Promise.resolve({userAgent: userAgent});
           },
         });
-        const config = makeConfig({
+        const config = await makeConfig({
           passes: [{passName: 'defaultPass'}],
           settings: {},
         });
@@ -505,7 +507,7 @@ describe('GatherRunner', function() {
       },
     });
 
-    const config = makeConfig({
+    const config = await makeConfig({
       passes: [{
         recordTrace: true,
         passName: 'firstPass',
@@ -544,7 +546,7 @@ describe('GatherRunner', function() {
       (_, url) => url.includes('blank') ? null : Promise.reject(navigationError)
     );
 
-    const config = makeConfig({
+    const config = await makeConfig({
       passes: [{
         recordTrace: true,
         passName: 'firstPass',
@@ -588,7 +590,7 @@ describe('GatherRunner', function() {
       (_, url) => url.includes('blank') ? gotoUrlForAboutBlank() : gotoUrlForRealUrl()
     );
 
-    const config = makeConfig({
+    const config = await makeConfig({
       passes: [{passName: 'defaultPass', recordTrace: true}, {
         loadFailureMode: 'warn',
         recordTrace: true,
@@ -745,11 +747,11 @@ describe('GatherRunner', function() {
     ]);
   });
 
-  it('does as many passes as are required', () => {
+  it('does as many passes as are required', async () => {
     const t1 = new TestGatherer();
     const t2 = new TestGatherer();
 
-    const config = makeConfig({
+    const config = await makeConfig({
       passes: [{
         recordTrace: true,
         passName: 'firstPass',
@@ -775,8 +777,8 @@ describe('GatherRunner', function() {
     });
   });
 
-  it('respects trace names', () => {
-    const config = makeConfig({
+  it('respects trace names', async () => {
+    const config = await makeConfig({
       passes: [{
         recordTrace: true,
         passName: 'firstPass',
@@ -812,7 +814,7 @@ describe('GatherRunner', function() {
       endDevtoolsLog: () => [],
     });
 
-    const config = makeConfig({
+    const config = await makeConfig({
       passes: [{
         passName: 'firstPass',
         recordTrace: true,
@@ -835,7 +837,7 @@ describe('GatherRunner', function() {
     const t1 = new (class Test1 extends TestGatherer {})();
     const t2 = new (class Test2 extends TestGatherer {})();
     const t3 = new (class Test3 extends TestGatherer {})();
-    const config = makeConfig({
+    const config = await makeConfig({
       passes: [{
         passName: 'firstPass',
         recordTrace: true,
@@ -975,7 +977,7 @@ describe('GatherRunner', function() {
           }
         },
       ];
-      const config = makeConfig({
+      const config = await makeConfig({
         passes: [{
           passName: 'defaultPass',
           gatherers: gatherers.map(G => ({instance: new G()})),
@@ -996,7 +998,7 @@ describe('GatherRunner', function() {
       });
     });
 
-    it('supports sync and async return of artifacts from gatherers', () => {
+    it('supports sync and async return of artifacts from gatherers', async () => {
       const gatherers = [
         // sync
         new class BeforeSync extends Gatherer {
@@ -1033,7 +1035,7 @@ describe('GatherRunner', function() {
         })(),
       ].map(instance => ({instance}));
       const gathererNames = gatherers.map(gatherer => gatherer.instance.name);
-      const config = makeConfig({
+      const config = await makeConfig({
         passes: [{
           passName: 'defaultPass',
           gatherers,
@@ -1126,7 +1128,7 @@ describe('GatherRunner', function() {
         }
       }
 
-      const config = makeConfig({
+      const config = await makeConfig({
         passes: [{
           passName: 'defaultPass',
           gatherers: [{instance: new WarningGatherer()}],
@@ -1141,7 +1143,7 @@ describe('GatherRunner', function() {
       assert.deepStrictEqual(artifacts.LighthouseRunWarnings, runWarnings);
     });
 
-    it('supports sync and async throwing of errors from gatherers', () => {
+    it('supports sync and async throwing of errors from gatherers', async () => {
       const gatherers = [
         // sync
         new class BeforeSync extends Gatherer {
@@ -1181,7 +1183,7 @@ describe('GatherRunner', function() {
         })(),
       ].map(instance => ({instance}));
       const gathererNames = gatherers.map(gatherer => gatherer.instance.name);
-      const config = makeConfig({
+      const config = await makeConfig({
         passes: [{
           passName: 'defaultPass',
           gatherers,
@@ -1202,8 +1204,8 @@ describe('GatherRunner', function() {
       });
     });
 
-    it('rejects if a gatherer does not provide an artifact', () => {
-      const config = makeConfig({
+    it('rejects if a gatherer does not provide an artifact', async () => {
+      const config = await makeConfig({
         passes: [{
           recordTrace: true,
           passName: 'firstPass',
@@ -1221,8 +1223,8 @@ describe('GatherRunner', function() {
       }).then(_ => assert.ok(false), _ => assert.ok(true));
     });
 
-    it('rejects when domain name can\'t be resolved', () => {
-      const config = makeConfig({
+    it('rejects when domain name can\'t be resolved', async () => {
+      const config = await makeConfig({
         passes: [{
           recordTrace: true,
           passName: 'firstPass',
@@ -1254,8 +1256,8 @@ describe('GatherRunner', function() {
       });
     });
 
-    it('resolves but warns when page times out', () => {
-      const config = makeConfig({
+    it('resolves but warns when page times out', async () => {
+      const config = await makeConfig({
         passes: [{
           recordTrace: true,
           passName: 'firstPass',
@@ -1281,8 +1283,8 @@ describe('GatherRunner', function() {
       });
     });
 
-    it('resolves and does not warn when page times out on non-fatal pass', () => {
-      const config = makeConfig({
+    it('resolves and does not warn when page times out on non-fatal pass', async () => {
+      const config = await makeConfig({
         passes: [{
           recordTrace: true,
           passName: 'firstPass',
@@ -1315,8 +1317,8 @@ describe('GatherRunner', function() {
       });
     });
 
-    it('resolves when domain name can\'t be resolved but is offline', () => {
-      const config = makeConfig({
+    it('resolves when domain name can\'t be resolved but is offline', async () => {
+      const config = await makeConfig({
         passes: [{
           recordTrace: true,
           passName: 'firstPass',

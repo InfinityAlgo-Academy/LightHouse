@@ -6,10 +6,12 @@
 
 import {strict as assert} from 'assert';
 
+import {readJson} from '../../../../root.js';
 import Responsiveness from '../../../computed/metrics/responsiveness.js';
 import createTestTrace from '../../create-test-trace.js';
-import interactionTrace from '../../fixtures/traces/timespan-responsiveness-m103.trace.json';
-import noInteractionTrace from '../../fixtures/traces/frame-metrics-m89.json';
+
+const interactionTrace = readJson('../../fixtures/traces/timespan-responsiveness-m103.trace.json', import.meta);
+const noInteractionTrace = readJson('../../fixtures/traces/frame-metrics-m89.json', import.meta);
 
 const childFrameId = 'CAF4634127666E186C9C8B35627DBF0B';
 

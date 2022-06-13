@@ -4,12 +4,12 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
+import {readJson} from '../../../../root.js';
 import LCPAudit from '../../../audits/metrics/largest-contentful-paint.js';
 import constants from '../../../config/constants.js';
-import trace from '../../fixtures/traces/lcp-m78.json';
-import devtoolsLog from '../../fixtures/traces/lcp-m78.devtools.log.json';
-import preLcpTrace from '../../fixtures/traces/progressive-app-m60.json';
-import preLcpDevtoolsLog from '../../fixtures/traces/progressive-app-m60.devtools.log.json';
+
+const trace = readJson('../../fixtures/traces/lcp-m78.json', import.meta);
+const devtoolsLog = readJson('../../fixtures/traces/lcp-m78.devtools.log.json', import.meta);
 
 const defaultOptions = LCPAudit.defaultOptions;
 
@@ -61,30 +61,5 @@ describe('Performance: largest-contentful-paint audit', () => {
     expect(outputDesktop.numericValue).toBeCloseTo(1121.711, 1);
     expect(outputDesktop.score).toBe(0.92);
     expect(outputDesktop.displayValue).toBeDisplayString('1.1\xa0s');
-  });
-
-  it('throws error when old Chrome does not support LCP', async () => {
-    const artifactsOldChrome = generateArtifacts({
-      trace: preLcpTrace,
-      devtoolsLog: preLcpDevtoolsLog,
-      HostUserAgent: 'Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5 Build/MRA58N) ' +
-        'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.78 ' +
-        'Mobile Safari/537.36 Chrome-Lighthouse',
-    });
-    const contextOldChrome = getFakeContext({formFactor: 'mobile', throttlingMethod: 'provided'});
-
-    await expect(LCPAudit.audit(artifactsOldChrome, contextOldChrome))
-      .rejects.toThrow(/UNSUPPORTED_OLD_CHROME/);
-
-    const artifactsNewChrome = generateArtifacts({
-      trace: preLcpTrace,
-      devtoolsLog: preLcpDevtoolsLog,
-      HostUserAgent: 'Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5 Build/MRA58N) ' +
-        'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 ' +
-        'Mobile Safari/537.36 Chrome-Lighthouse',
-    });
-    const contextNewChrome = getFakeContext({formFactor: 'mobile', throttlingMethod: 'provided'});
-
-    await expect(LCPAudit.audit(artifactsNewChrome, contextNewChrome)).rejects.toThrow(/NO_LCP/);
   });
 });

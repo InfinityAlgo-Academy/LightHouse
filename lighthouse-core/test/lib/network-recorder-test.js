@@ -6,13 +6,15 @@
 
 import {strict as assert} from 'assert';
 
+import {readJson} from '../../../root.js';
 import NetworkRecorder from '../../lib/network-recorder.js';
 import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
-import devtoolsLogItems from '../fixtures/artifacts/perflog/defaultPass.devtoolslog.json';
-import prefetchedScriptDevtoolsLog from '../fixtures/prefetched-script.devtoolslog.json';
-import redirectsDevtoolsLog from '../fixtures/wikipedia-redirect.devtoolslog.json';
-import redirectsScriptDevtoolsLog from '../fixtures/redirects-from-script.devtoolslog.json';
-import lrRequestDevtoolsLog from '../fixtures/lr.devtoolslog.json';
+
+const devtoolsLogItems = readJson('../fixtures/artifacts/perflog/defaultPass.devtoolslog.json', import.meta);
+const prefetchedScriptDevtoolsLog = readJson('../fixtures/prefetched-script.devtoolslog.json', import.meta);
+const redirectsDevtoolsLog = readJson('../fixtures/wikipedia-redirect.devtoolslog.json', import.meta);
+const redirectsScriptDevtoolsLog = readJson('../fixtures/redirects-from-script.devtoolslog.json', import.meta);
+const lrRequestDevtoolsLog = readJson('../fixtures/lr.devtoolslog.json', import.meta);
 
 describe('network recorder', function() {
   it('recordsFromLogs expands into records', function() {

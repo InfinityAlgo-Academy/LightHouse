@@ -4,12 +4,14 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
+import {readJson} from '../../../../root.js';
 import UsesHTTP2Audit from '../../../audits/dobetterweb/uses-http2.js';
-import trace from '../../fixtures/traces/progressive-app-m60.json';
-import devtoolsLog from '../../fixtures/traces/progressive-app-m60.devtools.log.json';
 import NetworkRecords from '../../../computed/network-records.js';
 import networkRecordsToDevtoolsLog from '../../network-records-to-devtools-log.js';
 import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';
+
+const trace = readJson('../../fixtures/traces/progressive-app-m60.json', import.meta);
+const devtoolsLog = readJson('../../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
 
 describe('Resources are fetched over http/2', () => {
   let artifacts = {};

@@ -118,7 +118,7 @@ class TreemapUtil {
    */
   static createChildOf(parentElem, elementName, className) {
     const element = this.createElement(elementName, className);
-    parentElem.appendChild(element);
+    parentElem.append(element);
     return element;
   }
 

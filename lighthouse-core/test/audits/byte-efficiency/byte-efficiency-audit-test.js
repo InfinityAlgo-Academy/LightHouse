@@ -12,11 +12,13 @@ import CPUNode from '../../../lib/dependency-graph/cpu-node.js';
 import Simulator from '../../../lib/dependency-graph/simulator/simulator.js';
 import PageDependencyGraph from '../../../computed/page-dependency-graph.js';
 import LoadSimulator from '../../../computed/load-simulator.js';
-import trace from '../../fixtures/traces/progressive-app-m60.json';
-import devtoolsLog from '../../fixtures/traces/progressive-app-m60.devtools.log.json';
-import traceM78 from '../../fixtures/traces/lcp-m78.json';
-import devtoolsLogM78 from '../../fixtures/traces/lcp-m78.devtools.log.json';
 import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';
+import {readJson} from '../../../../root.js';
+
+const trace = readJson('../../fixtures/traces/progressive-app-m60.json', import.meta);
+const devtoolsLog = readJson('../../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
+const traceM78 = readJson('../../fixtures/traces/lcp-m78.json', import.meta);
+const devtoolsLogM78 = readJson('../../fixtures/traces/lcp-m78.devtools.log.json', import.meta);
 
 describe('Byte efficiency base audit', () => {
   let graph;

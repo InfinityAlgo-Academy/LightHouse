@@ -6,11 +6,13 @@
 
 import {strict as assert} from 'assert';
 
-import trace from '../../fixtures/traces/progressive-app-m60.json';
-import devtoolsLog from '../../fixtures/traces/progressive-app-m60.devtools.log.json';
+import {readJson} from '../../../../root.js';
 import LanternFirstMeaningfulPaint from
   '../../../computed/metrics/lantern-first-meaningful-paint.js';
 import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';
+
+const trace = readJson('../../fixtures/traces/progressive-app-m60.json', import.meta);
+const devtoolsLog = readJson('../../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
 
 const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
 describe('Metrics: Lantern FMP', () => {

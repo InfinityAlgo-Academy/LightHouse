@@ -7,11 +7,14 @@
 import {strict as assert} from 'assert';
 
 import LanternFirstContentfulPaint from '../../../computed/metrics/lantern-first-contentful-paint.js'; // eslint-disable-line max-len
-import trace from '../../fixtures/traces/progressive-app-m60.json';
-import devtoolsLog from '../../fixtures/traces/progressive-app-m60.devtools.log.json';
 import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';
 import networkRecordsToDevtoolsLog from '../../network-records-to-devtools-log.js';
 import createTestTrace from '../../create-test-trace.js';
+import {readJson} from '../../../../root.js';
+
+const trace = readJson('../../fixtures/traces/progressive-app-m60.json', import.meta);
+const devtoolsLog = readJson('../../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
+
 describe('Metrics: Lantern FCP', () => {
   const gatherContext = {gatherMode: 'navigation'};
 

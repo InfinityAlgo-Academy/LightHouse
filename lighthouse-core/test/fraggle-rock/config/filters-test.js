@@ -525,8 +525,36 @@ describe('Fraggle Rock Config Filtering', () => {
       });
     });
 
-    it('should preserve full-page-screenshot', () => {
-      config = initializeConfig(undefined, {gatherMode: 'navigation'}).config;
+    it('should keep all audits if there are no categories', () => {
+      config = {
+        ...config,
+        audits: [
+          ...audits,
+          {implementation: NavigationOnlyAudit, options: {}},
+        ],
+        categories: {},
+      };
+
+      const filtered = filters.filterConfigByExplicitFilters(config, {
+        onlyAudits: null,
+        onlyCategories: null,
+        skipAudits: null,
+      });
+      expect(filtered).toMatchObject({
+        navigations: [{id: 'firstPass'}],
+        artifacts: [{id: 'Snapshot'}, {id: 'Timespan'}],
+        audits: [
+          {implementation: SnapshotAudit},
+          {implementation: TimespanAudit},
+          {implementation: NavigationAudit},
+          {implementation: ManualAudit},
+          {implementation: NavigationOnlyAudit},
+        ],
+      });
+    });
+
+    it('should preserve full-page-screenshot', async () => {
+      config = (await initializeConfig(undefined, {gatherMode: 'navigation'})).config;
 
       const filtered = filters.filterConfigByExplicitFilters(config, {
         onlyAudits: ['color-contrast'],

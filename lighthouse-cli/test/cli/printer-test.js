@@ -7,8 +7,10 @@
 import {strict as assert} from 'assert';
 import fs from 'fs';
 
+import {readJson} from '../../../root.js';
 import * as Printer from '../../printer.js';
-import sampleResults from '../../../lighthouse-core/test/results/sample_v2.json';
+
+const sampleResults = readJson('../../../lighthouse-core/test/results/sample_v2.json', import.meta);
 
 describe('Printer', () => {
   it('accepts valid output paths', () => {

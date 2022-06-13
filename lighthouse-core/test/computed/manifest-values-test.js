@@ -6,9 +6,11 @@
 
 import {strict as assert} from 'assert';
 
+import {readJson} from '../../../root.js';
 import ManifestValues from '../../computed/manifest-values.js';
 import manifestParser from '../../lib/manifest-parser.js';
-import manifest from '../fixtures/manifest.json';
+
+const manifest = readJson('../fixtures/manifest.json', import.meta);
 
 const manifestSrc = JSON.stringify(manifest);
 

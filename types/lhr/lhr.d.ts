@@ -59,6 +59,8 @@ declare module Result {
     networkUserAgent: string;
     /** The benchmark index number that indicates rough device class. */
     benchmarkIndex: number;
+    /** Many benchmark indexes. */
+    benchmarkIndexes?: number[];
     /** The version of libraries with which these results were generated. Ex: axe-core. */
     credits?: Record<string, string|undefined>,
   }

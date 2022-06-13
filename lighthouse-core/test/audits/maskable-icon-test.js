@@ -4,10 +4,12 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
+import {readJson} from '../../../root.js';
 import MaskableIconAudit from '../../audits/maskable-icon.js';
 import manifestParser from '../../lib/manifest-parser.js';
-import manifest from '../fixtures/manifest.json';
-import manifestWithoutMaskable from '../fixtures/manifest-no-maskable-icon.json';
+
+const manifest = readJson('../fixtures/manifest.json', import.meta);
+const manifestWithoutMaskable = readJson('../fixtures/manifest-no-maskable-icon.json', import.meta);
 
 const manifestSrc = JSON.stringify(manifest);
 const manifestWithoutMaskableSrc = JSON.stringify(manifestWithoutMaskable);

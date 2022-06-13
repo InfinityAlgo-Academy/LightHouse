@@ -6,12 +6,14 @@
 
 import {strict as assert} from 'assert';
 
+import {readJson} from '../../../../root.js';
 import SpeedIndex from '../../../computed/metrics/speed-index.js';
-import trace from '../../fixtures/traces/progressive-app-m60.json';
-import devtoolsLog from '../../fixtures/traces/progressive-app-m60.devtools.log.json';
-import trace1msLayout from '../../fixtures/traces/speedindex-1ms-layout-m84.trace.json';
-import devtoolsLog1msLayout from '../../fixtures/traces/speedindex-1ms-layout-m84.devtoolslog.json'; // eslint-disable-line max-len
 import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';
+
+const trace = readJson('../../fixtures/traces/progressive-app-m60.json', import.meta);
+const devtoolsLog = readJson('../../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
+const trace1msLayout = readJson('../../fixtures/traces/speedindex-1ms-layout-m84.trace.json', import.meta);
+const devtoolsLog1msLayout = readJson('../../fixtures/traces/speedindex-1ms-layout-m84.devtoolslog.json', import.meta); // eslint-disable-line max-len
 
 describe('Metrics: Speed Index', () => {
   const gatherContext = {gatherMode: 'navigation'};

@@ -6,11 +6,13 @@
 
 import {strict as assert} from 'assert';
 
+import {readJson} from '../../../root.js';
 import PageExecutionTimings from '../../audits/mainthread-work-breakdown.js';
-import acceptableTrace from '../fixtures/traces/progressive-app-m60.json';
-import siteWithRedirectTrace from '../fixtures/traces/site-with-redirect.json';
-import loadTrace from '../fixtures/traces/load.json';
-import errorTrace from '../fixtures/traces/no_fmp_event.json';
+
+const acceptableTrace = readJson('../fixtures/traces/progressive-app-m60.json', import.meta);
+const siteWithRedirectTrace = readJson('../fixtures/traces/site-with-redirect.json', import.meta);
+const loadTrace = readJson('../fixtures/traces/load.json', import.meta);
+const errorTrace = readJson('../fixtures/traces/no_fmp_event.json', import.meta);
 
 const options = PageExecutionTimings.defaultOptions;
 

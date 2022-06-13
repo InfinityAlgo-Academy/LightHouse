@@ -21,7 +21,9 @@ describe('Page Functions', () => {
     global.Node = Node;
     global.HTMLElement = HTMLElement;
     global.document = document;
-    global.window = {};
+    global.window = {
+      HTMLElement, // for getBoundingClientRect fallback.
+    };
   });
 
   afterAll(() => {
@@ -167,7 +169,7 @@ describe('Page Functions', () => {
       parentEl.className = 'dont-use-this';
       const childEl = document.createElement('div');
       childEl.className = 'child';
-      parentEl.appendChild(childEl);
+      parentEl.append(childEl);
       assert.equal(pageFunctions.getNodeSelector(childEl), 'div#wrapper > div.child');
     });
   });
@@ -183,7 +185,7 @@ describe('Page Functions', () => {
       const el = document.createElement('div');
       const childEl = document.createElement('div');
       childEl.setAttribute('aria-label', 'Something');
-      el.appendChild(childEl);
+      el.append(childEl);
       assert.equal(pageFunctions.getNodeLabel(el), 'Something');
     });
 
@@ -204,7 +206,7 @@ describe('Page Functions', () => {
     it('Returns null if there is no better label', () => {
       const el = document.createElement('div');
       const childEl = document.createElement('span');
-      el.appendChild(childEl);
+      el.append(childEl);
       assert.equal(pageFunctions.getNodeLabel(el), null);
     });
   });
@@ -225,8 +227,9 @@ describe('Page Functions', () => {
 
     it('returns node path through shadow root', () => {
       const el = document.createElement('div');
-      const main = el.appendChild(document.createElement('main'));
-      const shadowRoot = main.attachShadow({mode: 'open'});
+      const mainEl = document.createElement('main');
+      el.append(mainEl);
+      const shadowRoot = mainEl.attachShadow({mode: 'open'});
       const sectionEl = document.createElement('section');
       const img = document.createElement('img');
       img.src = '#';
@@ -245,7 +248,7 @@ describe('Page Functions', () => {
       const childEl = document.createElement('p');
       childEl.id = 'child';
       childEl.className = 'child-el';
-      el.appendChild(childEl);
+      el.append(childEl);
       const {nodeLabel} = pageFunctions.getNodeDetails(el);
       assert.equal(nodeLabel, 'div#parent');
     });

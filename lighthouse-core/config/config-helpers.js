@@ -211,7 +211,8 @@ const bundledModules = new Map(/* BUILD_REPLACE_BUNDLED_MODULES */);
  * See build-bundle.js
  * @param {string} requirePath
  */
-function requireWrapper(requirePath) {
+async function requireWrapper(requirePath) {
+  // This is async because eventually this function needs to do async dynamic imports.
   return bundledModules.get(requirePath) || require(requirePath);
 }
 
@@ -219,9 +220,9 @@ function requireWrapper(requirePath) {
  * @param {string} gathererPath
  * @param {Array<string>} coreGathererList
  * @param {string=} configDir
- * @return {LH.Config.GathererDefn}
+ * @return {Promise<LH.Config.GathererDefn>}
  */
-function requireGatherer(gathererPath, coreGathererList, configDir) {
+async function requireGatherer(gathererPath, coreGathererList, configDir) {
   const coreGatherer = coreGathererList.find(a => a === `${gathererPath}.js`);
 
   let requirePath = `../gather/gatherers/${gathererPath}`;
@@ -230,7 +231,7 @@ function requireGatherer(gathererPath, coreGathererList, configDir) {
     requirePath = resolveModulePath(gathererPath, configDir, 'gatherer');
   }
 
-  const GathererClass = /** @type {GathererConstructor} */ (requireWrapper(requirePath));
+  const GathererClass = /** @type {GathererConstructor} */ (await requireWrapper(requirePath));
 
   return {
     instance: new GathererClass(),
@@ -243,7 +244,7 @@ function requireGatherer(gathererPath, coreGathererList, configDir) {
  * @param {string} auditPath
  * @param {Array<string>} coreAuditList
  * @param {string=} configDir
- * @return {LH.Config.AuditDefn['implementation']}
+ * @return {Promise<LH.Config.AuditDefn['implementation']>}
  */
 function requireAudit(auditPath, coreAuditList, configDir) {
   // See if the audit is a Lighthouse core audit.
@@ -328,9 +329,9 @@ function resolveSettings(settingsJson = {}, overrides = undefined) {
  * @param {LH.Config.Json} configJSON
  * @param {string | undefined} configDir
  * @param {{plugins?: string[]} | undefined} flags
- * @return {LH.Config.Json}
+ * @return {Promise<LH.Config.Json>}
  */
-function mergePlugins(configJSON, configDir, flags) {
+async function mergePlugins(configJSON, configDir, flags) {
   const configPlugins = configJSON.plugins || [];
   const flagPlugins = flags?.plugins || [];
   const pluginNames = new Set([...configPlugins, ...flagPlugins]);
@@ -342,7 +343,7 @@ function mergePlugins(configJSON, configDir, flags) {
     const pluginPath = isBundledEnvironment() ?
         pluginName :
         resolveModulePath(pluginName, configDir, 'plugin');
-    const rawPluginJson = requireWrapper(pluginPath);
+    const rawPluginJson = await requireWrapper(pluginPath);
     const pluginJson = ConfigPlugin.parsePlugin(rawPluginJson, pluginName);
 
     configJSON = mergeConfigFragment(configJSON, pluginJson);
@@ -360,9 +361,9 @@ function mergePlugins(configJSON, configDir, flags) {
  * @param {LH.Config.GathererJson} gathererJson
  * @param {Array<string>} coreGathererList
  * @param {string=} configDir
- * @return {LH.Config.GathererDefn}
+ * @return {Promise<LH.Config.GathererDefn>}
  */
-function resolveGathererToDefn(gathererJson, coreGathererList, configDir) {
+async function resolveGathererToDefn(gathererJson, coreGathererList, configDir) {
   const gathererDefn = expandGathererShorthand(gathererJson);
   if (gathererDefn.instance) {
     return {
@@ -391,21 +392,21 @@ function resolveGathererToDefn(gathererJson, coreGathererList, configDir) {
  * leaving only an array of AuditDefns.
  * @param {LH.Config.Json['audits']} audits
  * @param {string=} configDir
- * @return {Array<LH.Config.AuditDefn>|null}
+ * @return {Promise<Array<LH.Config.AuditDefn>|null>}
  */
-function resolveAuditsToDefns(audits, configDir) {
+async function resolveAuditsToDefns(audits, configDir) {
   if (!audits) {
     return null;
   }
 
   const coreList = Runner.getAuditList();
-  const auditDefns = audits.map(auditJson => {
+  const auditDefnsPromises = audits.map(async (auditJson) => {
     const auditDefn = expandAuditShorthand(auditJson);
     let implementation;
     if ('implementation' in auditDefn) {
       implementation = auditDefn.implementation;
     } else {
-      implementation = requireAudit(auditDefn.path, coreList, configDir);
+      implementation = await requireAudit(auditDefn.path, coreList, configDir);
     }
 
     return {
@@ -414,6 +415,7 @@ function resolveAuditsToDefns(audits, configDir) {
       options: auditDefn.options || {},
     };
   });
+  const auditDefns = await Promise.all(auditDefnsPromises);
 
   const mergedAuditDefns = mergeOptionsOfItems(auditDefns);
   mergedAuditDefns.forEach(audit => validation.assertValidAudit(audit));

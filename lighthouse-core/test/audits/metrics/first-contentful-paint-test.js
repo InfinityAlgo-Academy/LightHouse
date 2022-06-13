@@ -6,12 +6,14 @@
 
 import {strict as assert} from 'assert';
 
+import {readJson} from '../../../../root.js';
 import FcpAudit from '../../../audits/metrics/first-contentful-paint.js';
 import constants from '../../../config/constants.js';
-import pwaTrace from '../../fixtures/traces/progressive-app-m60.json';
-import pwaDevtoolsLog from '../../fixtures/traces/progressive-app-m60.devtools.log.json';
-import frameTrace from '../../fixtures/traces/frame-metrics-m90.json';
-import frameDevtoolsLog from '../../fixtures/traces/frame-metrics-m90.devtools.log.json';
+
+const pwaTrace = readJson('../../fixtures/traces/progressive-app-m60.json', import.meta);
+const pwaDevtoolsLog = readJson('../../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
+const frameTrace = readJson('../../fixtures/traces/frame-metrics-m90.json', import.meta);
+const frameDevtoolsLog = readJson('../../fixtures/traces/frame-metrics-m90.devtools.log.json', import.meta);
 
 const options = FcpAudit.defaultOptions;
 

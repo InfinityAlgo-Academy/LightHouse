@@ -8,8 +8,10 @@ import {strict as assert} from 'assert';
 
 import NetworkAnalyzer from '../../../../lib/dependency-graph/simulator/network-analyzer.js';
 import NetworkRecords from '../../../../computed/network-records.js';
-import devtoolsLog from '../../../fixtures/traces/progressive-app-m60.devtools.log.json';
-import devtoolsLogWithRedirect from '../../../fixtures/traces/site-with-redirect.devtools.log.json';
+import {readJson} from '../../../../../root.js';
+
+const devtoolsLog = readJson('../../../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
+const devtoolsLogWithRedirect = readJson('../../../fixtures/traces/site-with-redirect.devtools.log.json', import.meta);
 
 describe('DependencyGraph/Simulator/NetworkAnalyzer', () => {
   let recordId;
