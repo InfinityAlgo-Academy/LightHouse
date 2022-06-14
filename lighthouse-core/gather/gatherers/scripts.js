@@ -158,7 +158,8 @@ class Scripts extends FRGatherer {
     })
     // If we can't name a script or know its url, just ignore it.
     .filter(script => script.name && script.url)
-    // This is a script with unknown origin, but seems to come from Puppeteer.
+    // This script comes from Chromium debugger internals.
+    // https://source.chromium.org/chromium/chromium/src/+/main:third_party/blink/renderer/core/inspector/thread_debugger.cc;l=522;drc=1f67b0dc03c0b4e45a922f7e1ef3a2b28640b673
     .filter(script => script.content !== '(function(e) { console.log(e.type, e); })');
 
     return scripts;
