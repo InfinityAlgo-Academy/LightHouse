@@ -164,6 +164,58 @@ describe('UserFlow', () => {
     });
   });
 
+  describe('.startNavigation()', () => {
+    it('should only run navigation setup', async () => {
+      let setupDone = false;
+      let teardownDone = false;
+      navigationModule.navigationGather.mockImplementation(async cb => {
+        setupDone = true;
+        // @ts-expect-error
+        await cb();
+        teardownDone = true;
+      });
+      const flow = new UserFlow(mockPage.asPage());
+      await flow.startNavigation();
+      expect(setupDone).toBeTruthy();
+      expect(teardownDone).toBeFalsy();
+    });
+
+    it('should throw errors from the setup phase', async () => {
+      navigationModule.navigationGather.mockRejectedValue(new Error('Setup Error'));
+      const flow = new UserFlow(mockPage.asPage());
+      const startPromise = flow.startNavigation();
+      await expect(startPromise).rejects.toThrowError('Setup Error');
+    });
+  });
+
+  describe('.endNavigation()', () => {
+    it('should throw if a timespan is active', async () => {
+      const flow = new UserFlow(mockPage.asPage());
+      await flow.startTimespan();
+      await expect(flow.startNavigation()).rejects.toThrowError('Timespan already in progress');
+    });
+
+    it('should throw if a navigation is not active', async () => {
+      const flow = new UserFlow(mockPage.asPage());
+      await expect(flow.endNavigation()).rejects.toThrowError('No navigation in progress');
+    });
+
+    it('should throw errors from the teardown phase', async () => {
+      navigationModule.navigationGather.mockImplementation(async cb => {
+        // @ts-expect-error
+        await cb();
+        throw new Error('Teardown Error');
+      });
+      const flow = new UserFlow(mockPage.asPage());
+
+      // Should not throw the error here.
+      await flow.startNavigation();
+
+      const teardownPromise = flow.endNavigation();
+      await expect(teardownPromise).rejects.toThrowError('Teardown Error');
+    });
+  });
+
   describe('.startTimespan()', () => {
     it('should throw if a timespan is active', async () => {
       const flow = new UserFlow(mockPage.asPage());
