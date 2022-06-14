@@ -55,7 +55,6 @@ import redirectScripts from './test-definitions/redirects-scripts.js';
 import redirectsSingleClient from './test-definitions/redirects-single-client.js';
 import redirectsSingleServer from './test-definitions/redirects-single-server.js';
 import redirectsSelf from './test-definitions/redirects-self.js';
-import redirectsHash from './test-definitions/redirects-hash.js';
 import screenshot from './test-definitions/screenshot.js';
 import seoFailing from './test-definitions/seo-failing.js';
 import seoPassing from './test-definitions/seo-passing.js';
@@ -117,7 +116,6 @@ const smokeTests = [
   redirectsSingleClient,
   redirectsSingleServer,
   redirectsSelf,
-  redirectsHash,
   screenshot,
   seoFailing,
   seoPassing,
