@@ -38,7 +38,7 @@ class TreemapUtil {
 
   /**
    * @param {LH.Treemap.Node} node
-   * @param {(node: NodeWithElement, path: string[]) => void} fn
+   * @param {(node: import('./main.js').NodeWithElement, path: string[]) => void} fn
    * @param {string[]=} path
    */
   static walk(node, fn, path) {
@@ -118,7 +118,7 @@ class TreemapUtil {
    */
   static createChildOf(parentElem, elementName, className) {
     const element = this.createElement(elementName, className);
-    parentElem.appendChild(element);
+    parentElem.append(element);
     return element;
   }
 
@@ -139,16 +139,6 @@ class TreemapUtil {
     // `typed-query-selector` types that don't require differentiating between
     // e.g. HTMLAnchorElement and SVGAElement. See https://github.com/GoogleChrome/lighthouse/issues/12011
     return /** @type {ParseSelector<T>} */ (result);
-  }
-
-  /**
-   * @param {number} value
-   * @param {string} unit
-   */
-  static format(value, unit) {
-    if (unit === 'bytes') return this.i18n.formatBytes(value);
-    if (unit === 'time') return `${this.i18n.formatNumber(value)}\xa0ms`;
-    return `${this.i18n.formatNumber(value)}\xa0${unit}`;
   }
 
   /**

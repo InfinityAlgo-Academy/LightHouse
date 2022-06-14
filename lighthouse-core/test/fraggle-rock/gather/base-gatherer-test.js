@@ -3,11 +3,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-const Gatherer = require('../../../fraggle-rock/gather/base-gatherer.js');
-
-/* eslint-env jest */
+import Gatherer from '../../../fraggle-rock/gather/base-gatherer.js';
+import {fnAny} from '../../test-utils.js';
 
 /** @type {any} */
 const fakeParam = {};
@@ -30,8 +28,8 @@ describe('BaseGatherer', () => {
   describe('.beforePass', () => {
     it('delegates to startInstrumentation by default', async () => {
       class MyGatherer extends Gatherer {
-        startInstrumentation = jest.fn();
-        startSensitiveInstrumentation = jest.fn();
+        startInstrumentation = fnAny();
+        startSensitiveInstrumentation = fnAny();
       }
 
       const gatherer = new MyGatherer();
@@ -59,8 +57,8 @@ describe('BaseGatherer', () => {
       class MyGatherer extends Gatherer {
         /** @type {LH.Gatherer.GathererMeta} */
         meta = {supportedModes: ['timespan']};
-        stopInstrumentation = jest.fn();
-        stopSensitiveInstrumentation = jest.fn();
+        stopInstrumentation = fnAny();
+        stopSensitiveInstrumentation = fnAny();
       }
 
       const gatherer = new MyGatherer();
@@ -73,8 +71,8 @@ describe('BaseGatherer', () => {
       class MyGatherer extends Gatherer {
         /** @type {LH.Gatherer.GathererMeta<'Trace'>} */
         meta = {supportedModes: ['timespan'], dependencies: {Trace: Symbol('Trace')}};
-        stopInstrumentation = jest.fn();
-        stopSensitiveInstrumentation = jest.fn();
+        stopInstrumentation = fnAny();
+        stopSensitiveInstrumentation = fnAny();
       }
 
       const gatherer = new MyGatherer();

@@ -3,15 +3,15 @@ Tests that audits panel works when only the pwa category is selected.
 
 ========== Lighthouse Start Audit State ==========
 [ ] Performance
-[x] Progressive Web App
-[ ] Best practices
 [ ] Accessibility
+[ ] Best practices
 [ ] SEO
+[x] Progressive Web App
 [ ] Publisher Ads
 [x] Legacy navigation
 [x] Clear storage
-[x] Simulated throttling
-Generate report: enabled visible
+Throttling method: simulate
+Analyze page load: enabled visible
 
 =============== Audits run ===============
 apple-touch-icon

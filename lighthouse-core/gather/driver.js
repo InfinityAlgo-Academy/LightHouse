@@ -12,7 +12,7 @@ const {fetchResponseBodyFromCache} = require('../gather/driver/network.js');
 const EventEmitter = require('events').EventEmitter;
 
 const log = require('lighthouse-logger');
-const DevtoolsLog = require('./devtools-log.js');
+const DevtoolsMessageLog = require('./gatherers/devtools-log.js').DevtoolsMessageLog;
 const TraceGatherer = require('./gatherers/trace.js');
 
 // Pulled in for Connection type checking.
@@ -41,7 +41,7 @@ class Driver {
    * @private
    * Used to save network and lifecycle protocol traffic. Just Page and Network are needed.
    */
-  _devtoolsLog = new DevtoolsLog(/^(Page|Network)\./);
+  _devtoolsLog = new DevtoolsMessageLog(/^(Page|Network)\./);
 
   /**
    * @private
@@ -64,7 +64,7 @@ class Driver {
   defaultSession = this;
 
   // eslint-disable-next-line no-invalid-this
-  fetcher = new Fetcher(this.defaultSession, this.executionContext);
+  fetcher = new Fetcher(this.defaultSession);
 
   /**
    * @param {Connection} connection
@@ -208,16 +208,6 @@ class Driver {
     // OOPIF handling in legacy driver is implicit.
   }
 
-  /** @param {(session: LH.Gatherer.FRProtocolSession) => void} callback */
-  addSessionAttachedListener(callback) { // eslint-disable-line no-unused-vars
-    // OOPIF handling in legacy driver is implicit.
-  }
-
-  /** @param {(session: LH.Gatherer.FRProtocolSession) => void} callback */
-  removeSessionAttachedListener(callback) { // eslint-disable-line no-unused-vars
-    // OOPIF handling in legacy driver is implicit.
-  }
-
   /**
    * Debounce enabling or disabling domains to prevent driver users from
    * stomping on each other. Maintains an internal count of the times a domain
@@ -304,20 +294,27 @@ class Driver {
       return;
     }
 
-    // Events from subtargets will be stringified and sent back on `Target.receivedMessageFromTarget`.
-    // We want to receive information about network requests from iframes, so enable the Network domain.
-    await this.sendCommandToSession('Network.enable', event.sessionId);
+    // Note: This is only reached for _out of process_ iframes (OOPIFs).
+    // If the iframe is in the same process as its embedding document, that means they
+    // share the same target.
 
-    // We also want to receive information about subtargets of subtargets, so make sure we autoattach recursively.
-    await this.sendCommandToSession('Target.setAutoAttach', event.sessionId, {
-      autoAttach: true,
-      flatten: true,
-      // Pause targets on startup so we don't miss anything
-      waitForDebuggerOnStart: true,
-    });
-
-    // We suspended the target when we auto-attached, so make sure it goes back to being normal.
-    await this.sendCommandToSession('Runtime.runIfWaitingForDebugger', event.sessionId);
+    // A target won't acknowledge/respond to protocol methods (or, at least for Network.enable)
+    // until it is resumed. But also we're paranoid about sending Network.enable _slightly_ too late,
+    // so we issue that method first. Therefore, we don't await on this serially, but await all at once.
+    await Promise.all([
+      // Events from subtargets will be stringified and sent back on `Target.receivedMessageFromTarget`.
+      // We want to receive information about network requests from iframes, so enable the Network domain.
+      this.sendCommandToSession('Network.enable', event.sessionId),
+      // We also want to receive information about subtargets of subtargets, so make sure we autoattach recursively.
+      this.sendCommandToSession('Target.setAutoAttach', event.sessionId, {
+        autoAttach: true,
+        flatten: true,
+        // Pause targets on startup so we don't miss anything
+        waitForDebuggerOnStart: true,
+      }),
+      // We suspended the target when we auto-attached, so make sure it goes back to being normal.
+      this.sendCommandToSession('Runtime.runIfWaitingForDebugger', event.sessionId),
+    ]);
   }
 
   /**

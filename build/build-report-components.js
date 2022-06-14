@@ -3,7 +3,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 /**
  * @typedef CompiledComponent
@@ -13,9 +12,12 @@
  * @property {string} functionCode
  */
 
-const fs = require('fs');
-const jsdom = require('jsdom');
-const {LH_ROOT} = require('../root.js');
+import fs from 'fs';
+
+import jsdom from 'jsdom';
+import esMain from 'es-main';
+
+import {LH_ROOT} from '../root.js';
 
 const html = fs.readFileSync(LH_ROOT + '/report/assets/templates.html', 'utf-8');
 const {window} = new jsdom.JSDOM(html);
@@ -213,11 +215,8 @@ ${makeGenericCreateComponentFunctionCode(compiledTemplates)}
   fs.writeFileSync(LH_ROOT + '/report/renderer/components.js', code);
 }
 
-if (require.main === module) {
-  main().catch(err => {
-    console.error(err);
-    process.exit(1);
-  });
+if (esMain(import.meta)) {
+  await main();
 }
 
-module.exports = {normalizeTextNodeText};
+export {normalizeTextNodeText};

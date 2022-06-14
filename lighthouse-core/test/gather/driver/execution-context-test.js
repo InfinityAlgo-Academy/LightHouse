@@ -3,28 +3,29 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-const ExecutionContext = require('../../../gather/driver/execution-context.js');
-const {
-  createMockSendCommandFn: createMockSendCommandFn_,
+import {jest} from '@jest/globals';
+
+import ExecutionContext from '../../../gather/driver/execution-context.js';
+import {
+  mockCommands,
   makePromiseInspectable,
   flushAllTimersAndMicrotasks,
-} = require('../../test-utils.js');
-
-/* eslint-env jest */
+  fnAny,
+} from '../../test-utils.js';
 
 jest.useFakeTimers();
 
 // This can be removed when FR becomes the default.
-const createMockSendCommandFn = createMockSendCommandFn_.bind(null, {useSessionId: false});
+const createMockSendCommandFn =
+  mockCommands.createMockSendCommandFn.bind(null, {useSessionId: false});
 
 /** @return {LH.Gatherer.FRProtocolSession} */
 function createMockSession() {
   /** @type {any} */
   const session = {};
-  session.hasNextProtocolTimeout = jest.fn().mockReturnValue(false);
-  session.setNextProtocolTimeout = jest.fn();
+  session.hasNextProtocolTimeout = fnAny().mockReturnValue(false);
+  session.setNextProtocolTimeout = fnAny();
   return session;
 }
 
@@ -55,7 +56,7 @@ describe('ExecutionContext', () => {
   });
 
   it('should clear context on frame navigations', async () => {
-    const onMock = sessionMock.on = jest.fn();
+    const onMock = sessionMock.on = fnAny();
 
     const executionContext = new ExecutionContext(sessionMock);
 
@@ -69,7 +70,7 @@ describe('ExecutionContext', () => {
   });
 
   it('should clear context on execution context destroyed', async () => {
-    const onMock = sessionMock.on = jest.fn();
+    const onMock = sessionMock.on = fnAny();
 
     const executionContext = new ExecutionContext(sessionMock);
 
@@ -96,7 +97,7 @@ describe('.evaluateAsync', () => {
 
   beforeEach(() => {
     sessionMock = createMockSession();
-    sessionMock.on = jest.fn();
+    sessionMock.on = fnAny();
     executionContext = new ExecutionContext(sessionMock);
   });
 
@@ -112,8 +113,8 @@ describe('.evaluateAsync', () => {
   });
 
   it('uses a high default timeout', async () => {
-    const setNextProtocolTimeout = sessionMock.setNextProtocolTimeout = jest.fn();
-    sessionMock.hasNextProtocolTimeout = jest.fn().mockReturnValue(false);
+    const setNextProtocolTimeout = sessionMock.setNextProtocolTimeout = fnAny();
+    sessionMock.hasNextProtocolTimeout = fnAny().mockReturnValue(false);
     sessionMock.sendCommand = createMockSendCommandFn().mockRejectedValue(new Error('Timeout'));
 
     const evaluatePromise = makePromiseInspectable(executionContext.evaluateAsync('1 + 1'));
@@ -126,9 +127,9 @@ describe('.evaluateAsync', () => {
 
   it('uses the specific timeout given', async () => {
     const expectedTimeout = 5000;
-    const setNextProtocolTimeout = sessionMock.setNextProtocolTimeout = jest.fn();
-    sessionMock.hasNextProtocolTimeout = jest.fn().mockReturnValue(true);
-    sessionMock.getNextProtocolTimeout = jest.fn().mockReturnValue(expectedTimeout);
+    const setNextProtocolTimeout = sessionMock.setNextProtocolTimeout = fnAny();
+    sessionMock.hasNextProtocolTimeout = fnAny().mockReturnValue(true);
+    sessionMock.getNextProtocolTimeout = fnAny().mockReturnValue(expectedTimeout);
     sessionMock.sendCommand = createMockSendCommandFn().mockRejectedValue(new Error('Timeout'));
 
     const evaluatePromise = makePromiseInspectable(executionContext.evaluateAsync('1 + 1'));
@@ -196,7 +197,7 @@ describe('.evaluate', () => {
 
   beforeEach(() => {
     sessionMock = createMockSession();
-    sessionMock.on = jest.fn();
+    sessionMock.on = fnAny();
     executionContext = new ExecutionContext(sessionMock);
   });
 
@@ -250,7 +251,7 @@ const fetch = globalThis.__nativeFetch || globalThis.fetch;
   it('transforms parameters into an expression (basic)', async () => {
     // Mock so the argument can be intercepted, and the generated code
     // can be evaluated without the error catching code.
-    const mockFn = executionContext._evaluateInContext = jest.fn()
+    const mockFn = executionContext._evaluateInContext = fnAny()
       .mockImplementation(() => Promise.resolve());
 
     /** @param {number} value */
@@ -273,7 +274,7 @@ const fetch = globalThis.__nativeFetch || globalThis.fetch;
   it('transforms parameters into an expression (arrows)', async () => {
     // Mock so the argument can be intercepted, and the generated code
     // can be evaluated without the error catching code.
-    const mockFn = executionContext._evaluateInContext = jest.fn()
+    const mockFn = executionContext._evaluateInContext = fnAny()
       .mockImplementation(() => Promise.resolve());
 
     /** @param {number} value */
@@ -296,7 +297,7 @@ const fetch = globalThis.__nativeFetch || globalThis.fetch;
   it('transforms parameters into an expression (complex)', async () => {
     // Mock so the argument can be intercepted, and the generated code
     // can be evaluated without the error catching code.
-    const mockFn = executionContext._evaluateInContext = jest.fn()
+    const mockFn = executionContext._evaluateInContext = fnAny()
       .mockImplementation(() => Promise.resolve());
 
     /**

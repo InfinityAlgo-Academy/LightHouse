@@ -21,7 +21,7 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user *why* they should try to pass. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'Each ARIA `role` supports a specific subset of `aria-*` attributes. ' +
       'Mismatching these invalidates the `aria-*` attributes. [Learn ' +
-      'more](https://web.dev/aria-allowed-attr/).',
+      'more](https://dequeuniversity.com/rules/axe/4.4/aria-allowed-attr).',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);

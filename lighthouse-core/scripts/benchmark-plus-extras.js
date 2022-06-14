@@ -12,6 +12,7 @@
 /* global document */
 
 import puppeteer from 'puppeteer-core';
+import {getChromePath} from 'chrome-launcher';
 
 import pageFunctions from '../lib/page-functions.js';
 
@@ -73,7 +74,7 @@ async function main() {
   process.stdout.write(`Launching Chrome...\n`);
   const browser = await puppeteer.launch({
     headless: true,
-    executablePath: process.env.CHROME_PATH,
+    executablePath: getChromePath(),
   });
 
   const page = await browser.newPage();
@@ -90,7 +91,4 @@ async function main() {
   await browser.close();
 }
 
-main().catch(err => {
-  process.stderr.write(err.stack);
-  process.exit(1);
-});
+await main();

@@ -12,8 +12,6 @@ const i18n = require('../../../lighthouse-core/lib/i18n/i18n.js');
 const constants = require('../../../lighthouse-core/config/constants.js');
 const locales = require('../../localization/locales.js');
 
-/* eslint-env jest */
-
 describe('format', () => {
   describe('DEFAULT_LOCALE', () => {
     it('is the same as the default config locale', () => {
@@ -400,6 +398,14 @@ describe('format', () => {
       }))
         // eslint-disable-next-line max-len
         .toThrow(`Provided value "sirNotAppearingInThisString" does not match any placeholder in ICU message "Hello {timeInMs, number, seconds} World"`);
+    });
+
+    it('throws an error if a value is provided for a message with no placeholders', () => {
+      expect(_ => str_(UIStrings.helloWorld, {
+        extraCreditValue: 100,
+      }))
+        // eslint-disable-next-line max-len
+        .toThrow(`Provided value "extraCreditValue" does not match any placeholder in ICU message "Hello World"`);
     });
 
     it('formats correctly with NaN and Infinity numeric values', () => {

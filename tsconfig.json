@@ -1,8 +1,6 @@
 {
   "extends": "./tsconfig-base.json",
   "compilerOptions": {
-    "outDir": ".tmp/tsbuildinfo/",
-
     // TODO(esmodules): included to support require('file.json'). Remove on the switch to ES Modules.
     "resolveJsonModule": true,
   },
@@ -11,6 +9,7 @@
     {"path": "./report/"},
     {"path": "./report/generator/"},
     {"path": "./shared/"},
+    {"path": "./treemap/"},
   ],
   "include": [
     "root.js",
@@ -31,6 +30,7 @@
     "third-party/snyk/snapshot.json",
     "lighthouse-core/audits/byte-efficiency/polyfill-graph-data.json",
     "shared/localization/locales/en-US.json",
+    "esm-utils.mjs",
   ],
   "exclude": [
     "lighthouse-core/test/audits/**/*.js",
@@ -47,11 +47,11 @@
     "lighthouse-core/test/config/config-test.js",
     "lighthouse-core/test/config/default-config-test.js",
     "lighthouse-core/test/create-test-trace.js",
-    "lighthouse-core/test/gather/devtools-log-test.js",
     "lighthouse-core/test/gather/driver/wait-for-condition-test.js",
     "lighthouse-core/test/gather/gatherers/accessibility-test.js",
     "lighthouse-core/test/gather/gatherers/cache-contents-test.js",
     "lighthouse-core/test/gather/gatherers/console-messages-test.js",
+    "lighthouse-core/test/gather/gatherers/devtools-log-test.js",
     "lighthouse-core/test/gather/gatherers/dobetterweb/optimized-images-test.js",
     "lighthouse-core/test/gather/gatherers/dobetterweb/password-inputs-with-prevented-paste-test.js",
     "lighthouse-core/test/gather/gatherers/dobetterweb/response-compression-test.js",
@@ -99,6 +99,7 @@
     "lighthouse-core/test/lib/timing-trace-saver-test.js",
     "lighthouse-core/test/lib/tracehouse/cpu-profile-model-test.js",
     "lighthouse-core/test/lib/tracehouse/main-thread-tasks-test.js",
+    "lighthouse-core/test/lib/tracehouse/task-summary-test.js",
     "lighthouse-core/test/lib/tracehouse/trace-processor-test.js",
     "lighthouse-core/test/lib/traces/pwmetrics-events-test.js",
     "lighthouse-core/test/lib/url-shim-test.js",

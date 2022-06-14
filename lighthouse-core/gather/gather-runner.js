@@ -20,6 +20,7 @@ const WebAppManifest = require('./gatherers/web-app-manifest.js');
 const InstallabilityErrors = require('./gatherers/installability-errors.js');
 const NetworkUserAgent = require('./gatherers/network-user-agent.js');
 const Stacks = require('./gatherers/stacks.js');
+const URL = require('../lib/url-shim.js');
 const {finalizeArtifacts} = require('../fraggle-rock/gather/base-artifacts.js');
 
 /** @typedef {import('../gather/driver.js')} Driver */
@@ -182,11 +183,6 @@ class GatherRunner {
       const session = driver.defaultSession;
       const resetStorage = !options.settings.disableStorageReset;
       if (resetStorage) await storage.clearDataForOrigin(session, options.requestedUrl);
-
-      // Disable fetcher, in case a gatherer enabled it.
-      // This cleanup should be removed once the only usage of
-      // fetcher (fetching arbitrary URLs) is replaced by new protocol support.
-      await driver.fetcher.disable();
 
       await driver.disconnect();
     } catch (err) {
@@ -496,6 +492,20 @@ class GatherRunner {
       const baseArtifacts = await GatherRunner.initializeBaseArtifacts(options);
       baseArtifacts.BenchmarkIndex = await getBenchmarkIndex(driver.executionContext);
 
+      // Hack for running benchmarkIndex extra times.
+      // Add a `bidx=20` query param, eg: https://www.example.com/?bidx=50
+      const parsedUrl = URL.isValid(options.requestedUrl) && new URL(options.requestedUrl);
+      if (options.settings.channel === 'lr' && parsedUrl && parsedUrl.searchParams.has('bidx')) {
+        const bidxRunCount = parsedUrl.searchParams.get('bidx') || 0;
+        // Add the first bidx into the new set
+        const indexes = [baseArtifacts.BenchmarkIndex];
+        for (let i = 0; i < bidxRunCount; i++) {
+          const bidx = await getBenchmarkIndex(driver.executionContext);
+          indexes.push(bidx);
+        }
+        baseArtifacts.BenchmarkIndexes = indexes;
+      }
+
       await GatherRunner.setupDriver(driver, options);
 
       let isFirstPass = true;
@@ -524,12 +534,6 @@ class GatherRunner {
           await GatherRunner.populateBaseArtifacts(passContext);
           isFirstPass = false;
         }
-
-        // Disable fetcher for every pass, in case a gatherer enabled it.
-        // Noop if fetcher was never enabled.
-        // This cleanup should be removed once the only usage of
-        // fetcher (fetching arbitrary URLs) is replaced by new protocol support.
-        await driver.fetcher.disable();
       }
 
       await GatherRunner.disposeDriver(driver, options);

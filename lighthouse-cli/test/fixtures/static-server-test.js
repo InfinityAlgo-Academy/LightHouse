@@ -10,7 +10,6 @@ import fetch from 'node-fetch';
 
 import {server} from './static-server.js';
 
-/* eslint-env jest */
 
 describe('Server', () => {
   beforeAll(async () => {

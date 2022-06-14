@@ -107,10 +107,6 @@ const expectations = {
         score: '0.026 +/- 0.01',
       },
       {
-        // Requires compositor failure reasons to be in the trace
-        // for `failureReasonsMask` and `unsupportedProperties`
-        // https://chromiumdash.appspot.com/commit/995baabedf9e70d16deafc4bc37a2b215a9b8ec9
-        _minChromiumMilestone: 86,
         traceEventType: 'animation',
         node: {
           selector: 'body > div#animate-me',

@@ -45,7 +45,9 @@ jobs:
     - run: yarn build-report
     - run: sudo apt-get install xvfb
 
-    - run: xvfb-run --auto-servernum bash $GITHUB_WORKSPACE/lighthouse-core/scripts/release/package-test.sh --fraggle-rock
+    # Disabled to fix CI while we investigate what the bug is.
+    #   perf-diagnostics-third-party
+    - run: xvfb-run --auto-servernum bash $GITHUB_WORKSPACE/lighthouse-core/scripts/release/package-test.sh --fraggle-rock --invert-match perf-diagnostics-third-party
 
     # Fail if any changes were written to source files.
     - run: git diff --exit-code

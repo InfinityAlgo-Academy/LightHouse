@@ -57,8 +57,8 @@ export class SwapLocaleFeature {
         const optionLocaleDisplay = new Intl.DisplayNames([locale], {type: 'language'});
 
         const optionLocaleName = optionLocaleDisplay.of(locale);
-        const currentLocaleName = currentLocaleDisplay.of(locale);
-        if (optionLocaleName !== currentLocaleName) {
+        const currentLocaleName = currentLocaleDisplay.of(locale) || locale;
+        if (optionLocaleName && optionLocaleName !== currentLocaleName) {
           optionEl.textContent = `${optionLocaleName} – ${currentLocaleName}`;
         } else {
           optionEl.textContent = currentLocaleName;

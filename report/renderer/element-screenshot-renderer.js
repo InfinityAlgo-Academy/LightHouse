@@ -186,7 +186,7 @@ export class ElementScreenshotRenderer {
         overlay.remove();
         return;
       }
-      overlay.appendChild(screenshotElement);
+      overlay.append(screenshotElement);
       overlay.addEventListener('click', () => overlay.remove());
     });
   }
@@ -251,9 +251,6 @@ export class ElementScreenshotRenderer {
       elementPreviewSizeSC,
       {width: screenshot.width, height: screenshot.height}
     );
-
-    const contentEl = dom.find('div.lh-element-screenshot__content', containerEl);
-    contentEl.style.top = `-${elementPreviewSizeDC.height}px`;
 
     const imageEl = dom.find('div.lh-element-screenshot__image', containerEl);
     imageEl.style.width = elementPreviewSizeDC.width + 'px';

@@ -3,13 +3,15 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
+
 
 /* eslint-disable no-console */
 
-const fs = require('fs');
-const ts = require('typescript');
-const {LH_ROOT} = require('../root.js');
+import fs from 'fs';
+
+import ts from 'typescript';
+
+import {LH_ROOT} from '../root.js';
 
 const outDir = `${LH_ROOT}/lighthouse-core/lib/cdt/generated`;
 const files = {
@@ -86,7 +88,7 @@ for (const [inFilename, outFilename] of Object.entries(files)) {
       }).toString(),
     // Add some types.
     // eslint-disable-next-line max-len
-    'mappings() {': '/** @return {Array<{lineNumber: number, columnNumber: number, sourceURL?: string, sourceLineNumber, sourceColumnNumber: number, name?: string, lastColumnNumber?: number}>} */\nmappings() {',
+    'mappings() {': '/** @return {Array<{lineNumber: number, columnNumber: number, sourceURL?: string, sourceLineNumber: number, sourceColumnNumber: number, name?: string, lastColumnNumber?: number}>} */\nmappings() {',
   };
 
   // Verify that all the above code is present.

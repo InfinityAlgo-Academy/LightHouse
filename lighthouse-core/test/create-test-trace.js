@@ -3,18 +3,20 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
+
 
 const pid = 1111;
 const tid = 222;
+const browserPid = 13725;
 const rootFrame = '3EFC2700D7BC3F4734CAF2F726EFB78C';
-const frameUrl = 'https://example.com/';
+const defaultUrl = 'https://example.com/';
 
 /** @typedef {{ts: number, duration: number, children?: Array<ChildTaskDef>}} TopLevelTaskDef */
 /** @typedef {{ts: number, duration: number, url: string | undefined}} ChildTaskDef */
 /** @typedef {{frame: string}} ChildFrame */
 /**
  * @typedef TraceOptions
+ * @property {string} [frameUrl]
  * @property {number} [timeOrigin]
  * @property {number} [largestContentfulPaint]
  * @property {number} [traceEnd]
@@ -33,11 +35,8 @@ function getTopLevelTask({ts, duration}) {
     pid,
     tid,
     ph: 'X',
-    cat: 'disabled-by-default-lighthouse',
-    args: {
-      src_file: '../../third_party/blink/renderer/core/fake_runner.cc',
-      src_func: 'FakeRunnerFinished',
-    },
+    cat: 'disabled-by-default-devtools.timeline',
+    args: {},
   };
 }
 
@@ -52,12 +51,11 @@ function getChildTask({ts, duration, url}) {
     pid,
     tid,
     ph: 'X',
-    cat: 'disabled-by-default-lighthouse',
+    cat: 'devtools.timeline',
     args: {
-      src_file: '../../third_party/blink/renderer/core/fake_runner.cc',
-      src_func: 'FakeRunnerFinished',
       data: {
         url,
+        functionName: 'fakeFunction',
       },
     },
   };
@@ -70,9 +68,25 @@ function getChildTask({ts, duration, url}) {
  * @param {TraceOptions} options
  */
 function createTestTrace(options) {
+  const frameUrl = options.frameUrl ?? defaultUrl;
   const timeOrigin = (options.timeOrigin || 0) * 1000;
 
   const traceEvents = [{
+    name: 'TracingStartedInBrowser',
+    ts: timeOrigin,
+    pid: browserPid,
+    tid,
+    ph: 'I',
+    cat: 'disabled-by-default-devtools.timeline',
+    args: {
+      data: {
+        frameTreeNodeId: 6,
+        persistentIds: true,
+        frames: [{frame: rootFrame, url: 'about:blank', name: '', processId: pid}],
+      },
+    },
+    s: 't',
+  }, {
     name: 'navigationStart',
     ts: timeOrigin,
     pid,
@@ -81,23 +95,11 @@ function createTestTrace(options) {
     cat: 'blink.user_timing',
     args: {
       frame: rootFrame,
-      data: {documentLoaderURL: 'https://example.com/'},
-    },
-  }, {
-    name: 'TracingStartedInBrowser',
-    ts: timeOrigin,
-    pid,
-    tid,
-    ph: 'I',
-    cat: 'disabled-by-default-devtools.timeline',
-    args: {
       data: {
-        frameTreeNodeId: 6,
-        persistentIds: true,
-        frames: [{frame: rootFrame, url: frameUrl, name: '', processId: pid}],
+        documentLoaderURL: frameUrl,
+        isLoadingMainFrame: true,
       },
     },
-    s: 't',
   }, {
     // Needed to identify main thread for TracingStartedInBrowser.
     name: 'thread_name',
@@ -111,7 +113,7 @@ function createTestTrace(options) {
     // Used for identifying frame tree.
     name: 'FrameCommittedInBrowser',
     ts: timeOrigin,
-    pid,
+    pid: browserPid,
     tid,
     ph: 'I',
     cat: 'disabled-by-default-devtools.timeline',
@@ -149,7 +151,7 @@ function createTestTrace(options) {
       traceEvents.push({
         name: 'FrameCommittedInBrowser',
         ts: timeOrigin + 20,
-        pid,
+        pid: browserPid,
         tid,
         ph: 'I',
         cat: 'disabled-by-default-devtools.timeline',
@@ -174,7 +176,7 @@ function createTestTrace(options) {
       tid,
       ph: 'R',
       cat: 'loading,rail,devtools.timeline',
-      args: {frame: rootFrame, data: {size: 50}},
+      args: {frame: rootFrame, isMainFrame: true, data: {size: 50}},
     });
   }
 
@@ -197,4 +199,4 @@ function createTestTrace(options) {
   return {traceEvents};
 }
 
-module.exports = createTestTrace;
+export default createTestTrace;

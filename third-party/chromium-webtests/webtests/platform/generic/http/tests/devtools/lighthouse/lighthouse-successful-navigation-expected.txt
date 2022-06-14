@@ -3,15 +3,15 @@ Tests that navigation mode works correctly.
 
 ========== Lighthouse Start Audit State ==========
 [x] Performance
-[x] Progressive Web App
-[x] Best practices
 [x] Accessibility
+[x] Best practices
 [x] SEO
+[x] Progressive Web App
 [x] Publisher Ads
 [ ] Legacy navigation
 [x] Clear storage
-[x] Simulated throttling
-Generate report: enabled visible
+Throttling method: simulate
+Analyze page load: enabled visible
 
 =============== Lighthouse Status Updates ===============
 Loading…
@@ -30,13 +30,13 @@ Cleaning origin data
 Cleaning browser cache
 Preparing network conditions
 Navigating to http://127.0.0.1:8000/devtools/lighthouse/resources/lighthouse-basic.html
-Computing artifact: NetworkRecords$I
+Computing artifact: NetworkRecords$J
 Get webapp installability errors
 Computing artifact: MainResource$k
-Getting browser version
 Collect stacks
-Computing artifact: ProcessedTrace$f
+Computing artifact: ProcessedTrace$h
 Computing artifact: ProcessedNavigation$7
+Computing artifact: Responsiveness
 Get webapp manifest
 Audit phase
 Analyzing and running audits...
@@ -94,7 +94,7 @@ Auditing: Serves images with appropriate resolution
 Auditing: Fonts with `font-display: optional` are preloaded
 Auditing: Avoids deprecated APIs
 Auditing: Minimizes main-thread work
-Computing artifact: MainThreadTasks$7
+Computing artifact: MainThreadTasks$8
 Auditing: JavaScript execution time
 Auditing: Preload key requests
 Auditing: Preconnect to required origins
@@ -163,7 +163,7 @@ Auditing: `<input type="image">` elements have `[alt]` text
 Auditing: Form elements have associated labels
 Auditing: Links have a discernible name
 Auditing: Lists contain only `<li>` elements and script supporting elements (`<script>` and `<template>`).
-Auditing: List items (`<li>`) are contained within `<ul>` or `<ol>` parent elements
+Auditing: List items (`<li>`) are contained within `<ul>`, `<ol>` or `<menu>` parent elements
 Auditing: The document does not use `<meta http-equiv="refresh">`
 Auditing: `[user-scalable="no"]` is not used in the `<meta name="viewport">` element and the `[maximum-scale]` attribute is not less than 5.
 Auditing: `<object>` elements have alternate text

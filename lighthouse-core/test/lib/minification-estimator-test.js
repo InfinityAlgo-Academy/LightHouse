@@ -3,16 +3,20 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-const fs = require('fs');
-const assert = require('assert').strict;
-const {computeCSSTokenLength, computeJSTokenLength} = require('../../lib/minification-estimator.js'); // eslint-disable-line max-len
+import fs from 'fs';
+import {strict as assert} from 'assert';
+import {createRequire} from 'module';
+
+import {computeCSSTokenLength, computeJSTokenLength} from '../../lib/minification-estimator.js'; // eslint-disable-line max-len
+import {LH_ROOT} from '../../../root.js';
+
+const require = createRequire(import.meta.url);
 
 const angularJs = fs.readFileSync(require.resolve('angular/angular.js'), 'utf8');
-const courseheroFilename = `${__dirname}/../../test/fixtures/source-maps/coursehero-bundle-2.js`;
+const courseheroFilename =
+  `${LH_ROOT}/lighthouse-core/test/fixtures/source-maps/coursehero-bundle-2.js`;
 const courseheroJs = fs.readFileSync(courseheroFilename, 'utf8');
-/* eslint-env jest */
 
 describe('minification estimator', () => {
   describe('CSS', () => {

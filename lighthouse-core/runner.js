@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const {isEqual: isDeepEqual} = require('lodash');
+const isDeepEqual = require('lodash/isEqual.js');
 const Driver = require('./gather/driver.js');
 const GatherRunner = require('./gather/gather-runner.js');
 const ReportScoring = require('./scoring.js');
@@ -95,6 +95,7 @@ class Runner {
           networkUserAgent: artifacts.NetworkUserAgent,
           hostUserAgent: artifacts.HostUserAgent,
           benchmarkIndex: artifacts.BenchmarkIndex,
+          benchmarkIndexes: artifacts.BenchmarkIndexes,
           credits,
         },
         audits: auditResultsById,

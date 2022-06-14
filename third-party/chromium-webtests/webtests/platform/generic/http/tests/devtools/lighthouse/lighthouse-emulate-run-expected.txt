@@ -3,15 +3,15 @@ Tests that mobile emulation works.
 
 ========== Lighthouse Start Audit State ==========
 [x] Performance
-[x] Progressive Web App
-[x] Best practices
 [x] Accessibility
+[x] Best practices
 [x] SEO
+[x] Progressive Web App
 [ ] Publisher Ads
 [x] Legacy navigation
 [x] Clear storage
-[x] Simulated throttling
-Generate report: enabled visible
+Throttling method: simulate
+Analyze page load: enabled visible
 
 =============== Lighthouse Results ===============
 URL: http://127.0.0.1:8000/devtools/lighthouse/resources/lighthouse-emulate-pass.html

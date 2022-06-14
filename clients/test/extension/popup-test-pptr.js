@@ -5,10 +5,9 @@
  */
 'use strict';
 
-/* eslint-env jest */
-
 const path = require('path');
 const puppeteer = require('puppeteer-core');
+const {getChromePath} = require('chrome-launcher');
 const {DEFAULT_CATEGORIES, STORAGE_KEYS} =
   require('../../extension/scripts/settings-controller.js');
 const {LH_ROOT} = require('../../../root.js');
@@ -40,7 +39,7 @@ describe('Lighthouse chrome popup', function() {
     // start puppeteer
     browser = await puppeteer.launch({
       headless: false,
-      executablePath: process.env.CHROME_PATH,
+      executablePath: getChromePath(),
     });
 
     page = await browser.newPage();

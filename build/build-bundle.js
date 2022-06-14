@@ -3,28 +3,35 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 /**
  * @fileoverview Script to bundle lighthouse entry points so that they can be run
  * in the browser (as long as they have access to a debugger protocol Connection).
  */
 
-const fs = require('fs');
-const path = require('path');
-const rollup = require('rollup');
-const rollupPlugins = require('./rollup-plugins.js');
-const Runner = require('../lighthouse-core/runner.js');
-const {LH_ROOT} = require('../root.js');
+import fs from 'fs';
+import path from 'path';
+import {execSync} from 'child_process';
+import {createRequire} from 'module';
 
-const COMMIT_HASH = require('child_process')
-  .execSync('git rev-parse HEAD')
-  .toString().trim();
+import esMain from 'es-main';
+import {rollup} from 'rollup';
+// @ts-expect-error: plugin has no types.
+import PubAdsPlugin from 'lighthouse-plugin-publisher-ads/plugin.js';
+
+import * as rollupPlugins from './rollup-plugins.js';
+import Runner from '../lighthouse-core/runner.js';
+import {LH_ROOT, readJson} from '../root.js';
+
+const require = createRequire(import.meta.url);
+
+/** The commit hash for the current HEAD. */
+const COMMIT_HASH = execSync('git rev-parse HEAD').toString().trim();
 
 // HACK: manually include the lighthouse-plugin-publisher-ads audits.
 /** @type {Array<string>} */
 // @ts-expect-error
-const pubAdsAudits = require('lighthouse-plugin-publisher-ads/plugin.js').audits.map(a => a.path);
+const pubAdsAudits = PubAdsPlugin.audits.map(a => a.path);
 
 /** @param {string} file */
 const isDevtools = file =>
@@ -42,7 +49,7 @@ const today = (() => {
   const day = new Intl.DateTimeFormat('en', {day: '2-digit'}).format(date);
   return `${month} ${day} ${year}`;
 })();
-const pkg = JSON.parse(fs.readFileSync(LH_ROOT + '/package.json', 'utf-8'));
+const pkg = readJson(`${LH_ROOT}/package.json`);
 const banner = `
 /**
  * Lighthouse v${pkg.version} ${COMMIT_HASH} (${today})
@@ -62,7 +69,7 @@ const banner = `
  * @param {{minify: boolean}=} opts
  * @return {Promise<void>}
  */
-async function build(entryPath, distPath, opts = {minify: true}) {
+async function buildBundle(entryPath, distPath, opts = {minify: true}) {
   if (fs.existsSync(LH_ROOT + '/lighthouse-logger/node_modules')) {
     throw new Error('delete `lighthouse-logger/node_modules` because it messes up rollup bundle');
   }
@@ -117,9 +124,9 @@ async function build(entryPath, distPath, opts = {minify: true}) {
   }
 
   shimsObj[require.resolve('../package.json')] =
-    `export const version = ${JSON.stringify(require('../package.json').version)}`;
+    `export const version = '${pkg.version}';`;
 
-  const bundle = await rollup.rollup({
+  const bundle = await rollup({
     input: entryPath,
     context: 'globalThis',
     plugins: [
@@ -214,19 +221,15 @@ async function cli(argv) {
   // Take paths relative to cwd and build.
   const [entryPath, distPath] = argv.slice(2)
     .map(filePath => path.resolve(process.cwd(), filePath));
-  await build(entryPath, distPath);
+  await buildBundle(entryPath, distPath);
 }
 
 // Test if called from the CLI or as a module.
-if (require.main === module) {
-  cli(process.argv).catch(err => {
-    console.error(err);
-    process.exit(1);
-  });
-} else {
-  module.exports = {
-    /** The commit hash for the current HEAD. */
-    COMMIT_HASH,
-    build,
-  };
+if (esMain(import.meta)) {
+  await cli(process.argv);
 }
+
+export {
+  COMMIT_HASH,
+  buildBundle,
+};

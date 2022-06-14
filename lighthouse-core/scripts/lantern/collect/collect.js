@@ -26,8 +26,7 @@ if (!process.env.WPT_KEY) throw new Error('missing WPT_KEY');
 const WPT_KEY = process.env.WPT_KEY;
 const DEBUG = process.env.DEBUG;
 
-/** @type {typeof common.ProgressLogger['prototype']} */
-let log;
+const log = new common.ProgressLogger();
 
 /** @type {Summary} */
 let summary;
@@ -206,8 +205,6 @@ function assertLhr(lhr) {
 }
 
 async function main() {
-  log = new common.ProgressLogger();
-
   // Resume state from previous invocation of script.
   summary = common.loadSummary();
 
@@ -324,8 +321,8 @@ async function main() {
   log.closeProgress();
 }
 
-main().catch(err => {
+try {
+  await main();
+} finally {
   if (log) log.closeProgress();
-  process.stderr.write(`Fatal error in collect:\n\n  ${err.stack}`);
-  process.exit(1);
-});
+}

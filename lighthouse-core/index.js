@@ -5,7 +5,6 @@
  */
 'use strict';
 
-const puppeteer = require('puppeteer-core');
 const Runner = require('./runner.js');
 const log = require('lighthouse-logger');
 const ChromeProtocol = require('./gather/connections/cri.js');
@@ -14,9 +13,6 @@ const URL = require('./lib/url-shim.js');
 const fraggleRock = require('./fraggle-rock/api.js');
 
 /** @typedef {import('./gather/connections/connection.js')} Connection */
-
-const DEFAULT_HOSTNAME = '127.0.0.1';
-const DEFAULT_PORT = 9222;
 
 /*
  * The relationship between these root modules:
@@ -42,15 +38,12 @@ const DEFAULT_PORT = 9222;
  * @return {Promise<LH.RunnerResult|undefined>}
  */
 async function lighthouse(url, flags = {}, configJSON, page) {
-  if (!page) {
-    const {hostname = DEFAULT_HOSTNAME, port = DEFAULT_PORT} = flags;
-    const browser = await puppeteer.connect({browserURL: `http://${hostname}:${port}`});
-    page = await browser.newPage();
-  }
   const configContext = {
     configPath: flags.configPath,
     settingsOverrides: flags,
     logLevel: flags.logLevel,
+    hostname: flags.hostname,
+    port: flags.port,
   };
   return fraggleRock.navigation(url, {page, config: configJSON, configContext});
 }
@@ -71,7 +64,7 @@ async function legacyNavigation(url, flags = {}, configJSON, userConnection) {
   flags.logLevel = flags.logLevel || 'error';
   log.setLevel(flags.logLevel);
 
-  const config = generateConfig(configJSON, flags);
+  const config = await generateConfig(configJSON, flags);
   const computedCache = new Map();
   const options = {config, computedCache};
   const connection = userConnection || new ChromeProtocol(flags.port, flags.hostname);
@@ -90,10 +83,10 @@ async function legacyNavigation(url, flags = {}, configJSON, userConnection) {
  *   not present, the default config is used.
  * @param {LH.Flags=} flags Optional settings for the Lighthouse run. If present,
  *   they will override any settings in the config.
- * @return {Config}
+ * @return {Promise<Config>}
  */
 function generateConfig(configJson, flags) {
-  return new Config(configJson, flags);
+  return Config.fromJson(configJson, flags);
 }
 
 lighthouse.legacyNavigation = legacyNavigation;
@@ -101,7 +94,7 @@ lighthouse.generateConfig = generateConfig;
 lighthouse.getAuditList = Runner.getAuditList;
 lighthouse.traceCategories = require('./gather/driver.js').traceCategories;
 lighthouse.Audit = require('./audits/audit.js');
-lighthouse.Gatherer = require('./gather/gatherers/gatherer.js');
+lighthouse.Gatherer = require('./fraggle-rock/gather/base-gatherer.js');
 
 // Explicit type reference (hidden by makeComputedArtifact) for d.ts export.
 // TODO(esmodules): should be a workaround for module.export and can be removed when in esm.

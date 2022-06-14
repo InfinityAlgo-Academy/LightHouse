@@ -7,11 +7,7 @@
 
 /**
  * @fileoverview Audits a page to determine if it is calling deprecated APIs.
- * This is done by collecting console log messages and filtering them by ones
- * that contain deprecated API warnings sent by Chrome.
  */
-
-// TODO: when M97 is sufficiently old, drop support for console messages
 
 const Audit = require('./audit.js');
 const JsBundles = require('../computed/js-bundles.js');
@@ -48,7 +44,7 @@ class Deprecations extends Audit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['ConsoleMessages', 'InspectorIssues', 'SourceMaps', 'Scripts'],
+      requiredArtifacts: ['InspectorIssues', 'SourceMaps', 'Scripts'],
     };
   }
 
@@ -58,32 +54,21 @@ class Deprecations extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
-    const entries = artifacts.ConsoleMessages;
     const bundles = await JsBundles.request(artifacts, context);
 
-    let deprecations;
-    if (artifacts.InspectorIssues.deprecationIssue.length) {
-      deprecations = artifacts.InspectorIssues.deprecationIssue
-        .map(deprecation => {
-          const {scriptId, url, lineNumber, columnNumber} = deprecation.sourceCodeLocation;
-          const bundle = bundles.find(bundle => bundle.script.scriptId === scriptId);
-          return {
-            value: deprecation.message || '',
-            // Protocol.Audits.SourceCodeLocation.columnNumber is 1-indexed, but we use 0-indexed.
-            source: Audit.makeSourceLocation(url, lineNumber, columnNumber - 1, bundle),
-          };
-        });
-    } else {
-      // Backcompat for <M97.
-      // https://bugs.chromium.org/p/chromium/issues/detail?id=1248484
-      deprecations = entries.filter(log => log.source === 'deprecation')
-        .map(log => {
-          return {
-            value: log.text,
-            source: Audit.makeSourceLocationFromConsoleMessage(log),
-          };
-        });
-    }
+    const deprecations = artifacts.InspectorIssues.deprecationIssue
+      // TODO: translate these strings.
+      // see https://github.com/GoogleChrome/lighthouse/issues/13895
+      .filter(deprecation => !deprecation.type || deprecation.type === 'Untranslated')
+      .map(deprecation => {
+        const {scriptId, url, lineNumber, columnNumber} = deprecation.sourceCodeLocation;
+        const bundle = bundles.find(bundle => bundle.script.scriptId === scriptId);
+        return {
+          value: deprecation.message || '',
+          // Protocol.Audits.SourceCodeLocation.columnNumber is 1-indexed, but we use 0-indexed.
+          source: Audit.makeSourceLocation(url, lineNumber, columnNumber - 1, bundle),
+        };
+      });
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [

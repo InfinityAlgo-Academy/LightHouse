@@ -57,6 +57,7 @@ set -x
 python3 \
   "$BLINK_TOOLS_PATH/latest/third_party/blink/tools/run_web_tests.py" \
   --layout-tests-directory="$DEVTOOLS_PATH/test/webtests" \
+  --additional-platform-directory="$DEVTOOLS_PATH/test/webtests/platform/generic" \
   --build-directory="$latest_content_shell/out" \
   $*
 status=$?
@@ -66,6 +67,6 @@ set -e
 
 rm -rf "$LH_ROOT/.tmp/layout-test-results"
 cp -r "$latest_content_shell/out/Release/layout-test-results" "$LH_ROOT/.tmp/layout-test-results"
-cp "$DEVTOOLS_PATH/test/webtests/http/tests/devtools/lighthouse/"*-expected.txt "$LH_ROOT/third-party/chromium-webtests/webtests/http/tests/devtools/lighthouse"
+cp "$DEVTOOLS_PATH/test/webtests/platform/generic/http/tests/devtools/lighthouse/"*-expected.txt "$LH_ROOT/third-party/chromium-webtests/webtests/platform/generic/http/tests/devtools/lighthouse"
 
 exit $status
