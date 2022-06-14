@@ -260,11 +260,14 @@ describe('UserFlow', () => {
       await expect(flowResultPromise).rejects.toThrow(/Need at least one step/);
     });
 
-    it('should throw after a dry run', async () => {
+    it('should return shell object after a dry run', async () => {
       const flow = new UserFlow(mockPage.asPage(), {dryRun: true});
       await flow.snapshot();
-      const flowResultPromise = flow.createFlowResult();
-      await expect(flowResultPromise).rejects.toThrow(/Cannot.*dry run/);
+      const flowResult = await flow.createFlowResult();
+      await expect(flowResult).toEqual({
+        name: 'Dry run',
+        steps: [],
+      });
     });
 
     it('should audit active gather steps', async () => {

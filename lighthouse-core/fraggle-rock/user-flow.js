@@ -169,7 +169,12 @@ class UserFlow {
    * @returns {Promise<LH.FlowResult>}
    */
   async createFlowResult() {
-    if (this._dryRun) throw new Error('Cannot get flow result from a dry run');
+    if (this._dryRun) {
+      return {
+        name: 'Dry run',
+        steps: [],
+      };
+    }
     return auditGatherSteps(this._gatherSteps, {
       name: this._name,
       config: this._options.config,
@@ -181,7 +186,7 @@ class UserFlow {
    * @return {Promise<string>}
    */
   async generateReport() {
-    if (this._dryRun) throw new Error('Cannot generate a flow report from a dry run');
+    if (this._dryRun) return '<h1>Cannot generate a flow report from a dry run</h1>';
     const flowResult = await this.createFlowResult();
     return generateFlowReportHtml(flowResult);
   }
@@ -190,7 +195,6 @@ class UserFlow {
    * @return {LH.UserFlow.FlowArtifacts}
    */
   createArtifactsJson() {
-    if (this._dryRun) throw new Error('Cannot create flow artifacts from a dry run');
     return {
       gatherSteps: this._gatherSteps,
       name: this._name,

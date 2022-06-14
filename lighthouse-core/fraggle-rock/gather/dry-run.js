@@ -16,7 +16,7 @@ const {gotoURL} = require('../../gather/driver/navigation.js');
  */
 async function dryRunSetup(gatherMode, options) {
   const {page, config: configJson, configContext} = options;
-  const {config} = initializeConfig(configJson, {...configContext, gatherMode});
+  const {config} = await initializeConfig(configJson, {...configContext, gatherMode});
   const driver = new Driver(page);
   await driver.connect();
   await emulation.emulate(driver.defaultSession, config.settings);
