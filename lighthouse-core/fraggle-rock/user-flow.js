@@ -28,8 +28,8 @@ class UserFlow {
     this._options = {page, ...options};
     /** @type {string|undefined} */
     this._name = options?.name;
-    /** @type {boolean|undefined} */
-    this._dryRun = options?.dryRun;
+    /** @type {boolean} */
+    this._dryRun = options?.dryRun === true;
     /** @type {LH.UserFlow.GatherStep[]} */
     this._gatherSteps = [];
     /** @type {GatherStepRunnerOptions} */
