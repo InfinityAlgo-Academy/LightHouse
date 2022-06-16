@@ -133,9 +133,13 @@ export class DOM {
     const element = this.createElement('span');
 
     for (const segment of Util.splitMarkdownLink(text)) {
+      const processedSegment = segment.text.includes('`') ?
+        this.convertMarkdownCodeSnippets(segment.text) :
+        segment.text;
+
       if (!segment.isLink) {
         // Plain text segment.
-        element.append(this._document.createTextNode(segment.text));
+        element.append(processedSegment);
         continue;
       }
 
@@ -151,7 +155,7 @@ export class DOM {
       const a = this.createElement('a');
       a.rel = 'noopener';
       a.target = '_blank';
-      a.textContent = segment.text;
+      a.append(processedSegment);
       this.safelySetHref(a, url.href);
       element.append(a);
     }

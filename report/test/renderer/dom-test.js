@@ -96,6 +96,21 @@ describe('DOM', () => {
           'and some text afterwards.', 'link with spaces in brackets');
     });
 
+    it('correctly converts code snippets', () => {
+      let result = dom.convertMarkdownLinkSnippets(
+        'Some `code`. [Learn more](http://example.com).');
+      assert.equal(result.innerHTML,
+        '<span>Some <code>code</code>. </span>' +
+        '<a rel="noopener" target="_blank" href="http://example.com/">Learn more</a>.');
+
+      result = dom.convertMarkdownLinkSnippets(
+        '[link with `code`](https://example.com/foo) and some text afterwards.');
+      assert.equal(result.innerHTML,
+        '<a rel="noopener" target="_blank" href="https://example.com/foo">' +
+        '<span>link with <code>code</code></span>' +
+        '</a> and some text afterwards.', 'link with code snippet inside');
+    });
+
     it('handles invalid urls', () => {
       const text = 'Text has [bad](https:///) link.';
       assert.throws(() => {
@@ -120,8 +135,9 @@ describe('DOM', () => {
       const text = 'Ensuring `<td>` cells using the `[headers]` are good. ' +
           '[Learn more](https://dequeuniversity.com/rules/axe/3.1/td-headers-attr).';
       const result = dom.convertMarkdownLinkSnippets(text);
-      assert.equal(result.innerHTML, 'Ensuring `&lt;td&gt;` cells using the `[headers]` are ' +
-          'good. <a rel="noopener" target="_blank" href="https://dequeuniversity.com/rules/axe/3.1/td-headers-attr">Learn more</a>.');
+      assert.equal(result.innerHTML,
+          '<span>Ensuring <code>&lt;td&gt;</code> cells using the <code>[headers]</code> are ' +
+          'good. </span><a rel="noopener" target="_blank" href="https://dequeuniversity.com/rules/axe/3.1/td-headers-attr">Learn more</a>.');
     });
 
     it('appends utm params to the URLs with https://developers.google.com origin', () => {
