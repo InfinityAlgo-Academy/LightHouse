@@ -141,13 +141,21 @@ class Scripts extends FRGatherer {
       // See https://chromium-review.googlesource.com/c/v8/v8/+/2317310
       let name = event.url;
       // embedderName is optional on the protocol because backends like Node may not set it.
-      // For our purposes, it is always set. But just in case it isn't... fallback to the url.
-      let url = event.embedderName || event.url;
+      // For our purposes, it is always set, although it may be an empty string for scripts
+      // compiled from a string at runtime. See following comments.
+      let url = event.embedderName;
 
-      // Some eval'd scripts may not have a name or url, so let's set them.
-      if (!name) name = '<eval script>';
+      // If a url is not on the event, then the script was compiled from a string (or possibly is from the protocol,
+      // but we've filtered out our protocol Runtime.evaluate scripts by this point) via eval, setTimeout, etc.
+      // We can provide a more useful indicator of the source of the script by looking at the callFrame,
+      // but that may not be present (it is only the top-level call frame, no async stack frames). As a final
+      // fallback, we grab the frame url of the execution context at the time the script was parsed.
+      if (!name) name = '<compiled from string>';
       if (!url && event.stackTrace?.callFrames.length) url = event.stackTrace.callFrames[0].url;
       if (!url) url = this._scriptFrameUrls[i] || '';
+
+      // Finally, if all else failed, fallback to the event.url. Maybe that will be OK.
+      if (!url) url = event.url;
 
       return {
         name,
