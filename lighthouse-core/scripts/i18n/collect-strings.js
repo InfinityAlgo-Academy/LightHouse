@@ -21,7 +21,7 @@ import {collectAndBakeCtcStrings} from './bake-ctc-to-lhl.js';
 import {pruneObsoleteLhlMessages} from './prune-obsolete-lhl-messages.js';
 import {countTranslatedMessages} from './count-translated.js';
 import {LH_ROOT} from '../../../root.js';
-import {resolveModulePath} from '../esm-utils.js';
+import {resolveModulePath} from '../../../esm-utils.mjs';
 
 // Match declarations of UIStrings, terminating in either a `};\n` (very likely to always be right)
 // or `}\n\n` (allowing semicolon to be optional, but insisting on a double newline so that an
@@ -726,10 +726,7 @@ async function main() {
 
 // Test if called from the CLI or as a module.
 if (esMain(import.meta)) {
-  main().catch(err => {
-    console.error(err.stack);
-    process.exit(1);
-  });
+  await main();
 }
 
 export {

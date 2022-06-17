@@ -13,6 +13,7 @@ const baseArtifactKeySource = {
   fetchTime: '',
   LighthouseRunWarnings: '',
   BenchmarkIndex: '',
+  BenchmarkIndexes: '',
   settings: '',
   Timing: '',
   URL: '',
@@ -292,6 +293,8 @@ function filterConfigByExplicitFilters(config, filters) {
     baseAuditIds = getAuditIdsInCategories(config.categories, onlyCategories);
   } else if (onlyAudits) {
     baseAuditIds = new Set();
+  } else if (!config.categories || !Object.keys(config.categories).length) {
+    baseAuditIds = new Set(config.audits?.map(audit => audit.implementation.meta.id));
   }
 
   const auditIdsToKeep = new Set(

@@ -6,6 +6,8 @@ on:
 
 jobs:
   publish:
+    # Prevent forks from running this job.
+    if: (github.event_name == 'schedule' && github.repository == 'GoogleChrome/lighthouse') || (github.event_name != 'schedule')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1

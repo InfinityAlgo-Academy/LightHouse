@@ -39,7 +39,4 @@ async function run() {
   }
 }
 
-run().catch(err => {
-  process.stderr.write(err.stack);
-  process.exit(1);
-});
+await run();

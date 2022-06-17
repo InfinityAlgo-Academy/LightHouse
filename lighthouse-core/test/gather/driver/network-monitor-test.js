@@ -232,14 +232,14 @@ describe('NetworkMonitor', () => {
   });
 
   describe('EventEmitter', () => {
-    it('should reemit the requeststarted / requestloaded events', async () => {
+    it('should reemit the requeststarted / requestfinished events', async () => {
       await monitor.enable();
       /** @type {Array<string>} */
       const startedLog = [];
       /** @type {Array<string>} */
       const loadedLog = [];
       monitor.on('requeststarted', /** @param {*} r */ r => startedLog.push(r));
-      monitor.on('requestloaded', /** @param {*} r */ r => loadedLog.push(r));
+      monitor.on('requestfinished', /** @param {*} r */ r => loadedLog.push(r));
       for (const message of devtoolsLog) sessionMock.dispatch(message);
       expect(startedLog).toHaveLength(4);
       expect(loadedLog).toHaveLength(4);

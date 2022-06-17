@@ -21,6 +21,7 @@ import InstallabilityErrors from './gatherers/installability-errors.js';
 import NetworkUserAgent from './gatherers/network-user-agent.js';
 import Stacks from './gatherers/stacks.js';
 import {finalizeArtifacts} from '../fraggle-rock/gather/base-artifacts.js';
+import URLShim from '../lib/url-shim.js';
 
 /** @typedef {import('../gather/driver.js').Driver} Driver */
 /** @typedef {import('../lib/arbitrary-equality-map.js').ArbitraryEqualityMap} ArbitraryEqualityMap */
@@ -490,6 +491,20 @@ class GatherRunner {
 
       const baseArtifacts = await GatherRunner.initializeBaseArtifacts(options);
       baseArtifacts.BenchmarkIndex = await getBenchmarkIndex(driver.executionContext);
+
+      // Hack for running benchmarkIndex extra times.
+      // Add a `bidx=20` query param, eg: https://www.example.com/?bidx=50
+      const parsedUrl = URLShim.isValid(options.requestedUrl) && new URL(options.requestedUrl);
+      if (options.settings.channel === 'lr' && parsedUrl && parsedUrl.searchParams.has('bidx')) {
+        const bidxRunCount = parsedUrl.searchParams.get('bidx') || 0;
+        // Add the first bidx into the new set
+        const indexes = [baseArtifacts.BenchmarkIndex];
+        for (let i = 0; i < bidxRunCount; i++) {
+          const bidx = await getBenchmarkIndex(driver.executionContext);
+          indexes.push(bidx);
+        }
+        baseArtifacts.BenchmarkIndexes = indexes;
+      }
 
       await GatherRunner.setupDriver(driver, options);
 

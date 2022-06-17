@@ -151,15 +151,7 @@ async function generateFlowResult() {
   }
 }
 
-(async () => {
-  try {
-    if (args.rebaselineArtifacts) {
-      await rebaselineArtifacts(args.rebaselineArtifacts);
-    }
-    await generateFlowResult();
-  } catch (err) {
-    console.error(err);
-    process.exit(1);
-  }
-})();
-
+if (args.rebaselineArtifacts) {
+  await rebaselineArtifacts(args.rebaselineArtifacts);
+}
+await generateFlowResult();

@@ -65,29 +65,15 @@ class Scripts extends FRGatherer {
 
   constructor() {
     super();
-    this.onProtocolMessage = this.onProtocolMessage.bind(this);
+    this.onScriptParsed = this.onScriptParsed.bind(this);
   }
 
   /**
-   * @param {LH.Protocol.RawEventMessage} event
+   * @param {LH.Crdp.Debugger.ScriptParsedEvent} params
    */
-  onProtocolMessage(event) {
-    // Go read the comments in network-recorder.js _findRealRequestAndSetSession.
-    let sessionId = event.sessionId;
-    if (this._mainSessionId === null) {
-      this._mainSessionId = sessionId;
-    }
-    if (this._mainSessionId === sessionId) {
-      sessionId = undefined;
-    }
-
-    // We want to ignore scripts from OOPIFs. In reality, this does more than block just OOPIFs,
-    // it also blocks scripts from the same origin but that happen to run in a different process,
-    // like a worker.
-    if (event.method === 'Debugger.scriptParsed' && !sessionId) {
-      if (!isLighthouseRuntimeEvaluateScript(event.params)) {
-        this._scriptParsedEvents.push(event.params);
-      }
+  onScriptParsed(params) {
+    if (!isLighthouseRuntimeEvaluateScript(params)) {
+      this._scriptParsedEvents.push(params);
     }
   }
 
@@ -96,7 +82,7 @@ class Scripts extends FRGatherer {
    */
   async startInstrumentation(context) {
     const session = context.driver.defaultSession;
-    session.addProtocolMessageListener(this.onProtocolMessage);
+    session.on('Debugger.scriptParsed', this.onScriptParsed);
     await session.sendCommand('Debugger.enable');
   }
 
@@ -107,7 +93,7 @@ class Scripts extends FRGatherer {
     const session = context.driver.defaultSession;
     const formFactor = context.baseArtifacts.HostFormFactor;
 
-    session.removeProtocolMessageListener(this.onProtocolMessage);
+    session.off('Debugger.scriptParsed', this.onScriptParsed);
 
     // Without this line the Debugger domain will be off in FR runner,
     // because only the legacy gatherer has special handling for multiple,

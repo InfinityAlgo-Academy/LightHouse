@@ -91,7 +91,4 @@ async function main() {
   await browser.close();
 }
 
-main().catch(err => {
-  process.stderr.write(err.stack);
-  process.exit(1);
-});
+await main();

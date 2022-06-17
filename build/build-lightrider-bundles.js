@@ -31,11 +31,12 @@ async function buildReportGenerator() {
   const bundle = await rollup({
     input: 'report/generator/report-generator.js',
     plugins: [
+      rollupPlugins.inlineFs({verbose: Boolean(process.env.DEBUG)}),
       rollupPlugins.shim({
         [`${LH_ROOT}/report/generator/flow-report-assets.js`]: 'export default {}',
+        'fs': 'export default {}',
       }),
-      rollupPlugins.nodeResolve(),
-      rollupPlugins.inlineFs({verbose: Boolean(process.env.DEBUG)}),
+      rollupPlugins.commonjs(),
     ],
   });
 
@@ -63,15 +64,8 @@ async function buildStaticServerBundle() {
   await bundle.close();
 }
 
-async function run() {
-  await Promise.all([
-    buildEntryPoint(),
-    buildReportGenerator(),
-    buildStaticServerBundle(),
-  ]);
-}
-
-run().catch(err => {
-  console.error(err);
-  process.exit(1);
-});
+await Promise.all([
+  buildEntryPoint(),
+  buildReportGenerator(),
+  buildStaticServerBundle(),
+]);

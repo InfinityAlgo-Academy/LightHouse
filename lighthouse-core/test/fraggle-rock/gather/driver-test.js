@@ -44,15 +44,15 @@ for (const fnName of DELEGATED_FUNCTIONS) {
 
     it('should use connected session for default', async () => {
       await driver.connect();
-      if (!driver._session) throw new Error('Driver did not connect');
+      if (!driver.defaultSession) throw new Error('Driver did not connect');
 
       /** @type {any} */
       const args = [1, {arg: 2}];
       const returnValue = {foo: 'bar'};
-      driver._session[fnName] = fnAny().mockReturnValue(returnValue);
+      driver.defaultSession[fnName] = fnAny().mockReturnValue(returnValue);
       // @ts-expect-error - typescript can't handle this union type.
       const actualResult = driver.defaultSession[fnName](...args);
-      expect(driver._session[fnName]).toHaveBeenCalledWith(...args);
+      expect(driver.defaultSession[fnName]).toHaveBeenCalledWith(...args);
       expect(actualResult).toEqual(returnValue);
     });
   });

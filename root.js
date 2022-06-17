@@ -7,7 +7,7 @@
 
 import fs from 'fs';
 import path from 'path';
-import {getModuleDirectory} from './lighthouse-core/scripts/esm-utils.js';
+import {getModuleDirectory} from './esm-utils.mjs';
 
 const pkg = JSON.parse(fs.readFileSync('./package.json', 'utf-8'));
 

@@ -100,7 +100,7 @@ function collectAllCustomElementsFromICU(icuElements, seenElementsById = new Map
  * @param {string} lhlMessage Used for clear error logging.
  * @return {Record<string, string | number>}
  */
-function _preformatValues(messageFormatter, values, lhlMessage) {
+function _preformatValues(messageFormatter, values = {}, lhlMessage) {
   const elementMap = collectAllCustomElementsFromICU(messageFormatter.getAst().elements);
   const argumentElements = [...elementMap.values()];
 
@@ -165,11 +165,15 @@ function _preformatValues(messageFormatter, values, lhlMessage) {
  * is assumed to already be in the given locale.
  * If you need to localize a messagem `getFormatted` is probably what you want.
  * @param {string} message
- * @param {Record<string, string | number>} values
+ * @param {Record<string, string | number>|undefined} values
  * @param {LH.Locale} locale
  * @return {string}
  */
-function formatMessage(message, values = {}, locale) {
+function formatMessage(message, values, locale) {
+  // Parsing and formatting can be slow. Don't attempt if the string can't
+  // contain ICU placeholders, in which case formatting is already complete.
+  if (!message.includes('{') && values === undefined) return message;
+
   // When using accented english, force the use of a different locale for number formatting.
   const localeForMessageFormat = (locale === 'en-XA' || locale === 'en-XL') ? 'de-DE' : locale;
 

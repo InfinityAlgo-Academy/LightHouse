@@ -33,23 +33,9 @@ class CriConnection extends Connection {
    * @override
    * @return {Promise<void>}
    */
-  connect() {
-    return this._runJsonCommand('new')
-      .then(response => this._connectToSocket(/** @type {LH.DevToolsJsonTarget} */(response)))
-      .catch(_ => {
-        // COMPAT: headless didn't support `/json/new` before m59. (#970, crbug.com/699392)
-        // If no support, we fallback and reuse an existing open tab
-        log.warn('CriConnection', 'Cannot create new tab; reusing open tab.');
-        return this._runJsonCommand('list').then(tabs => {
-          if (!Array.isArray(tabs) || tabs.length === 0) {
-            return Promise.reject(new Error('Cannot create new tab, and no tabs already open.'));
-          }
-          const firstTab = tabs[0];
-          // first, we activate it to a foreground tab, then we connect
-          return this._runJsonCommand(`activate/${firstTab.id}`)
-              .then(() => this._connectToSocket(firstTab));
-        });
-      });
+  async connect() {
+    const response = await this._runJsonCommand('new');
+    return this._connectToSocket(/** @type {LH.DevToolsJsonTarget} */(response));
   }
 
   /**
@@ -82,7 +68,8 @@ class CriConnection extends Connection {
    */
   _runJsonCommand(command) {
     return new Promise((resolve, reject) => {
-      const request = http.get({
+      const request = http.request({
+        method: 'PUT', // GET and POST are deprecated: https://crrev.com/c/3595822
         hostname: this.hostname,
         port: this.port,
         path: '/json/' + command,
@@ -108,6 +95,8 @@ class CriConnection extends Connection {
           reject(new Error(`Protocol JSON API error (${command}), status: ${response.statusCode}`));
         });
       });
+
+      request.end();
 
       // This error handler is critical to ensuring Lighthouse exits cleanly even when Chrome crashes.
       // See https://github.com/GoogleChrome/lighthouse/pull/8583.

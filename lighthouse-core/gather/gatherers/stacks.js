@@ -17,11 +17,11 @@ import fs from 'fs';
 import log from 'lighthouse-logger';
 import FRGatherer from '../../fraggle-rock/gather/base-gatherer.js';
 
-import {createCommonjsRefs} from '../../scripts/esm-utils.js';
+import {createRequire} from 'module';
 
 // This is removed by rollup, because the only usage is to resolve a module path
 // but that is replaced by the inline-fs plugin, leaving `require` unused.
-const {require} = /* #__PURE__ */ createCommonjsRefs(import.meta);
+const require = /* #__PURE__ */ createRequire(import.meta.url);
 
 const libDetectorSource = fs.readFileSync(
   require.resolve('js-library-detector/library/libraries.js'), 'utf8');

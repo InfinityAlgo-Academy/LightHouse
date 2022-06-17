@@ -6,6 +6,7 @@
 'use strict';
 
 import path from 'path';
+import {createRequire} from 'module';
 import isDeepEqual from 'lodash/isEqual.js';
 import * as constants from './constants.js';
 import {Budget} from './budget.js';
@@ -13,9 +14,9 @@ import ConfigPlugin from './config-plugin.js';
 import {Runner} from '../runner.js';
 import * as i18n from '../lib/i18n/i18n.js';
 import * as validation from '../fraggle-rock/config/validation.js';
-import {createCommonjsRefs, getModuleDirectory} from '../scripts/esm-utils.js';
+import {getModuleDirectory} from '../../esm-utils.mjs';
 
-const {require} = createCommonjsRefs(import.meta);
+const require = createRequire(import.meta.url);
 
 /** @typedef {typeof import('../gather/gatherers/gatherer.js').Gatherer} GathererConstructor */
 /** @typedef {typeof import('../audits/audit.js')['Audit']} Audit */

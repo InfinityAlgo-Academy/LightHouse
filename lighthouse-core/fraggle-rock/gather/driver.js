@@ -16,7 +16,7 @@ const throwNotConnectedFn = () => {
 };
 
 /** @type {LH.Gatherer.FRProtocolSession} */
-const defaultSession = {
+const throwingSession = {
   setTargetInfo: throwNotConnectedFn,
   hasNextProtocolTimeout: throwNotConnectedFn,
   getNextProtocolTimeout: throwNotConnectedFn,
@@ -26,8 +26,6 @@ const defaultSession = {
   off: throwNotConnectedFn,
   addProtocolMessageListener: throwNotConnectedFn,
   removeProtocolMessageListener: throwNotConnectedFn,
-  addSessionAttachedListener: throwNotConnectedFn,
-  removeSessionAttachedListener: throwNotConnectedFn,
   sendCommand: throwNotConnectedFn,
   dispose: throwNotConnectedFn,
 };
@@ -39,14 +37,12 @@ class Driver {
    */
   constructor(page) {
     this._page = page;
-    /** @type {LH.Gatherer.FRProtocolSession|undefined} */
-    this._session = undefined;
     /** @type {ExecutionContext|undefined} */
     this._executionContext = undefined;
     /** @type {Fetcher|undefined} */
     this._fetcher = undefined;
 
-    this.defaultSession = defaultSession;
+    this.defaultSession = throwingSession;
   }
 
   /** @return {LH.Gatherer.FRTransitionalDriver['executionContext']} */
@@ -68,20 +64,20 @@ class Driver {
 
   /** @return {Promise<void>} */
   async connect() {
-    if (this._session) return;
+    if (this.defaultSession !== throwingSession) return;
     const status = {msg: 'Connecting to browser', id: 'lh:driver:connect'};
     log.time(status);
     const session = await this._page.target().createCDPSession();
-    this._session = this.defaultSession = new ProtocolSession(session);
-    this._executionContext = new ExecutionContext(this._session);
-    this._fetcher = new Fetcher(this._session);
+    this.defaultSession = new ProtocolSession(session);
+    this._executionContext = new ExecutionContext(this.defaultSession);
+    this._fetcher = new Fetcher(this.defaultSession);
     log.timeEnd(status);
   }
 
   /** @return {Promise<void>} */
   async disconnect() {
-    if (!this._session) return;
-    await this._session.dispose();
+    if (this.defaultSession === throwingSession) return;
+    await this.defaultSession.dispose();
   }
 }
 
