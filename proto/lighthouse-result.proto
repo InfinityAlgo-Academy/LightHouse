@@ -223,6 +223,15 @@ message LighthouseResult {
 
   // Gather mode used to collect artifacts.
   string gather_mode = 16;
+
+  // URL of the page before Lighthouse starts.
+  string initial_url = 17;
+
+  // URL of the main document request of the final navigation.
+  string main_document_url = 18;
+
+  // URL of the page after Lighthouse finishes.
+  string final_page_url = 19;
 }
 
 // Message containing a category
