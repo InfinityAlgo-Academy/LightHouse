@@ -31,6 +31,7 @@ import {runLighthouse} from './run.js';
 import lighthouse from '../lighthouse-core/index.js';
 import {askPermission} from './sentry-prompt.js';
 import {LH_ROOT} from '../root.js';
+import {getConfigDisplayString} from '../lighthouse-core/fraggle-rock/config/config.js';
 
 const pkg = JSON.parse(fs.readFileSync(LH_ROOT + '/package.json', 'utf-8'));
 
@@ -120,8 +121,13 @@ async function begin() {
   }
 
   if (cliFlags.printConfig) {
-    const config = await lighthouse.generateConfig(configJson, cliFlags);
-    process.stdout.write(config.getPrintString());
+    if (cliFlags.legacyNavigation) {
+      const config = await lighthouse.generateLegacyConfig(configJson, cliFlags);
+      process.stdout.write(config.getPrintString());
+    } else {
+      const config = await lighthouse.generateConfig(configJson, cliFlags);
+      process.stdout.write(getConfigDisplayString(config));
+    }
     return;
   }
 

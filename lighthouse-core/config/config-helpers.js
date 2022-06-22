@@ -578,6 +578,20 @@ function deepCloneConfigJson(json) {
   return cloned;
 }
 
+/**
+ * @param {LH.Flags} flags
+ * @return {LH.Config.FRContext}
+ */
+function flagsToFRContext(flags) {
+  return {
+    configPath: flags?.configPath,
+    settingsOverrides: flags,
+    logLevel: flags?.logLevel,
+    hostname: flags?.hostname,
+    port: flags?.port,
+  };
+}
+
 module.exports = {
   deepClone,
   deepCloneConfigJson,
@@ -589,4 +603,5 @@ module.exports = {
   resolveGathererToDefn,
   resolveModulePath,
   resolveSettings,
+  flagsToFRContext,
 };
