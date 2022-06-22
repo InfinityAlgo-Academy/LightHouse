@@ -67,6 +67,8 @@ declare module Protocol {
     once<E extends keyof TEventRecord>(event: E, listener: (...args: TEventRecord[E]) => void): void;
 
     emit<E extends keyof TEventRecord>(event: E, ...request: TEventRecord[E]): void;
+
+    listenerCount<E extends keyof TEventRecord>(event: E): number;
   }
 }
 

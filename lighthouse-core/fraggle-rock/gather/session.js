@@ -5,26 +5,45 @@
  */
 'use strict';
 
+const EventEmitter = require('events').EventEmitter;
 const LHError = require('../../lib/lh-error.js');
 
 // Controls how long to wait for a response after sending a DevTools protocol command.
 const DEFAULT_PROTOCOL_TIMEOUT = 30000;
 
+/** @typedef {new () => LH.Protocol.StrictEventEmitter<LH.CrdpEvents>} CrdpEventMessageEmitter */
+const CrdpEventEmitter = /** @type {CrdpEventMessageEmitter} */ (EventEmitter);
+
 /** @implements {LH.Gatherer.FRProtocolSession} */
-class ProtocolSession {
+class ProtocolSession extends CrdpEventEmitter {
   /**
    * @param {LH.Puppeteer.CDPSession} cdpSession
    */
   constructor(cdpSession) {
+    super();
+
     this._cdpSession = cdpSession;
     /** @type {LH.Crdp.Target.TargetInfo|undefined} */
     this._targetInfo = undefined;
     /** @type {number|undefined} */
     this._nextProtocolTimeout = undefined;
+
+    this._handleProtocolEvent = this._handleProtocolEvent.bind(this);
+    this._cdpSession.on('*', this._handleProtocolEvent);
   }
 
   id() {
     return this._cdpSession.id();
+  }
+
+  /**
+   * Re-emit protocol events from the underlying CDPSession.
+   * @template {keyof LH.CrdpEvents} E
+   * @param {E} method
+   * @param {LH.CrdpEvents[E]} params
+   */
+  _handleProtocolEvent(method, ...params) {
+    this.emit(method, ...params);
   }
 
   /** @param {LH.Crdp.Target.TargetInfo} targetInfo */
@@ -51,36 +70,6 @@ class ProtocolSession {
    */
   setNextProtocolTimeout(ms) {
     this._nextProtocolTimeout = ms;
-  }
-
-  /**
-   * Bind listeners for protocol events.
-   * @template {keyof LH.CrdpEvents} E
-   * @param {E} eventName
-   * @param {(...args: LH.CrdpEvents[E]) => void} callback
-   */
-  on(eventName, callback) {
-    this._cdpSession.on(eventName, /** @type {*} */ (callback));
-  }
-
-  /**
-   * Bind listeners for protocol events.
-   * @template {keyof LH.CrdpEvents} E
-   * @param {E} eventName
-   * @param {(...args: LH.CrdpEvents[E]) => void} callback
-   */
-  once(eventName, callback) {
-    this._cdpSession.once(eventName, /** @type {*} */ (callback));
-  }
-
-  /**
-   * Bind listeners for protocol events.
-   * @template {keyof LH.CrdpEvents} E
-   * @param {E} eventName
-   * @param {(...args: LH.CrdpEvents[E]) => void} callback
-   */
-  off(eventName, callback) {
-    this._cdpSession.off(eventName, /** @type {*} */ (callback));
   }
 
   /**
@@ -116,7 +105,7 @@ class ProtocolSession {
    * @return {Promise<void>}
    */
   async dispose() {
-    this._cdpSession.removeAllListeners();
+    this._cdpSession.off('*', this._handleProtocolEvent);
     await this._cdpSession.detach();
   }
 }

@@ -63,6 +63,8 @@ class NetworkMonitor {
     this.removeListener = emitter.removeListener.bind(emitter);
     /** @type {typeof emitter['removeAllListeners']} */
     this.removeAllListeners = emitter.removeAllListeners.bind(emitter);
+    /** @type {typeof emitter['listenerCount']} */
+    this.listenerCount = emitter.listenerCount.bind(emitter);
   }
 
   /**

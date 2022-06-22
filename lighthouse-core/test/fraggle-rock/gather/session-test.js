@@ -4,6 +4,8 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
+import {EventEmitter} from 'events';
+
 import {jest} from '@jest/globals';
 import {CDPSession} from 'puppeteer/lib/cjs/puppeteer/common/Connection.js';
 
@@ -27,35 +29,70 @@ describe('ProtocolSession', () => {
 
   beforeEach(() => {
     // @ts-expect-error - Individual mock functions are applied as necessary.
-    puppeteerSession = new CDPSession({_rawSend: fnAny()});
+    puppeteerSession = new CDPSession({_rawSend: fnAny(), send: fnAny()}, '', 'root');
     session = new ProtocolSession(puppeteerSession);
   });
 
-  /** @type {Array<'on'|'off'|'once'>} */
-  const delegateMethods = ['on', 'once', 'off'];
-  for (const method of delegateMethods) {
-    describe(`.${method}`, () => {
-      it('delegates to puppeteer', async () => {
-        const puppeteerFn = puppeteerSession[method] = fnAny();
-        const callback = () => undefined;
+  describe('responds to events from the underlying CDPSession', () => {
+    it('once', async () => {
+      const callback = fnAny();
 
-        session[method]('Page.frameNavigated', callback);
-        expect(puppeteerFn).toHaveBeenCalledWith('Page.frameNavigated', callback);
-      });
+      session.once('Page.frameNavigated', callback);
+      puppeteerSession.emit('Page.frameNavigated', {id: 1});
+      expect(callback).toHaveBeenCalledTimes(1);
+      expect(callback).toHaveBeenCalledWith({id: 1});
+
+      puppeteerSession.emit('Page.frameNavigated', {id: 2});
+      expect(callback).toHaveBeenCalledTimes(1);
     });
-  }
+
+    it('on', async () => {
+      const callback = fnAny();
+
+      session.on('Page.frameNavigated', callback);
+      puppeteerSession.emit('Page.frameNavigated', {id: 1});
+      expect(callback).toHaveBeenCalledTimes(1);
+      expect(callback).toHaveBeenCalledWith({id: 1});
+
+      puppeteerSession.emit('Page.frameNavigated', {id: 2});
+      expect(callback).toHaveBeenCalledTimes(2);
+      expect(callback).toHaveBeenCalledWith({id: 2});
+    });
+
+    it('off', async () => {
+      const callback = fnAny();
+
+      session.on('Page.frameNavigated', callback);
+      puppeteerSession.emit('Page.frameNavigated', {id: 1});
+      expect(callback).toHaveBeenCalledTimes(1);
+      expect(callback).toHaveBeenCalledWith({id: 1});
+
+      session.off('Page.frameNavigated', callback);
+      puppeteerSession.emit('Page.frameNavigated', {id: 2});
+      expect(callback).toHaveBeenCalledTimes(1);
+    });
+  });
 
   describe('.dispose', () => {
     it('should detach from the session', async () => {
       const detach = fnAny();
-      const removeAllListeners = fnAny();
+      class MockCdpSession extends EventEmitter {
+        constructor() {
+          super();
+
+          this.detach = detach;
+        }
+      }
+
       // @ts-expect-error - we want to use a more limited test.
-      puppeteerSession = {detach, emit: fnAny(), removeAllListeners};
+      puppeteerSession = new MockCdpSession();
       session = new ProtocolSession(puppeteerSession);
+
+      expect(puppeteerSession.listenerCount('*')).toBe(1);
 
       await session.dispose();
       expect(detach).toHaveBeenCalled();
-      expect(removeAllListeners).toHaveBeenCalled();
+      expect(puppeteerSession.listenerCount('*')).toBe(0);
     });
   });
 

@@ -151,14 +151,13 @@ describe('NetworkMonitor', () => {
     });
 
     it('should have idempotent enable', async () => {
-      // Two initial calls for TargetManager.enable().
-      expect(rootCdpSessionMock.on).toHaveBeenCalledTimes(2);
+      const initialListenerCount = targetManager.listenerCount('protocolevent');
       await monitor.enable();
       await monitor.enable();
       await monitor.enable();
       await monitor.enable();
-      // Only one more call.
-      expect(rootCdpSessionMock.on).toHaveBeenCalledTimes(3);
+      // Only one more listener added for `monitor.enable()`.
+      expect(targetManager.listenerCount('protocolevent')).toBe(initialListenerCount + 1);
     });
   });
 

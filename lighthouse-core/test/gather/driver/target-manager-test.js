@@ -118,13 +118,19 @@ describe('TargetManager', () => {
     });
 
     it('should listen to target before resuming', async () => {
+      let targetListeningAsserted = false;
+
+      // Intercept listener for all protocol events and ensure target is still paused.
       sessionMock.on = /** @type {typeof sessionMock.on} */ (fnAny()
         .mockImplementation(/** @param {string} eventName */ (eventName) => {
-          // Intercept listener for all protocol events and ensure target is still paused.
-          if (eventName === '*') {
-            expect(sendMock.findAllInvocations('Target.getTargetInfo')).toHaveLength(1);
-            expect(sendMock.findAllInvocations('Target.setAutoAttach')).toHaveLength(0);
-            expect(sendMock.findAllInvocations('Runtime.runIfWaitingForDebugger')).toHaveLength(0);
+          const getTargetInfoCount = sendMock.findAllInvocations('Target.getTargetInfo').length;
+          const setAutoAttachCount = sendMock.findAllInvocations('Target.setAutoAttach').length;
+          const resumeCount = sendMock.findAllInvocations('Runtime.runIfWaitingForDebugger').length;
+
+          // There may be many listeners for all protocol events, so just ensure this one occurred.
+          if (eventName === '*' &&
+              getTargetInfoCount === 1 && setAutoAttachCount === 0 && resumeCount === 0) {
+            targetListeningAsserted = true;
           }
         }));
 
@@ -132,7 +138,14 @@ describe('TargetManager', () => {
         .mockResponse('Target.getTargetInfo', {targetInfo})
         .mockResponse('Network.enable')
         .mockResponse('Target.setAutoAttach');
+
+      expect(sendMock.findAllInvocations('Target.getTargetInfo')).toHaveLength(0);
+      expect(sendMock.findAllInvocations('Target.setAutoAttach')).toHaveLength(0);
+      expect(sendMock.findAllInvocations('Runtime.runIfWaitingForDebugger')).toHaveLength(0);
+
       await targetManager.enable();
+
+      expect(targetListeningAsserted).toBe(true);
 
       expect(sendMock.findAllInvocations('Target.getTargetInfo')).toHaveLength(1);
       expect(sendMock.findAllInvocations('Target.setAutoAttach')).toHaveLength(1);
