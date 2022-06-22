@@ -287,7 +287,12 @@ describe('GatherRunner', function() {
     return GatherRunner.run(config.passes, options).then(artifacts => {
       assert.deepStrictEqual(
         artifacts.URL,
-        {initialUrl: 'about:blank', requestedUrl, mainDocumentUrl, finalPageUrl: mainDocumentUrl},
+        {
+          initialPageUrl: 'about:blank',
+          requestedUrl,
+          mainDocumentUrl,
+          finalPageUrl: mainDocumentUrl,
+        },
         'did not find expected URL artifact');
     });
   });

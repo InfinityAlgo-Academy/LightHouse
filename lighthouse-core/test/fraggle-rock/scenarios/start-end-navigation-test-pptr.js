@@ -40,7 +40,7 @@ describe('Start/End navigation', () => {
     const artifacts = flowArtifacts.gatherSteps[0].artifacts;
 
     expect(artifacts.URL).toEqual({
-      initialUrl: `${state.serverBaseUrl}/links-to-index.html`,
+      initialPageUrl: `${state.serverBaseUrl}/links-to-index.html`,
       requestedUrl: `${state.serverBaseUrl}/?redirect=/index.html`,
       mainDocumentUrl: `${state.serverBaseUrl}/index.html`,
       finalPageUrl: `${state.serverBaseUrl}/index.html`,

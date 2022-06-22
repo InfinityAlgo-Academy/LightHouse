@@ -14,7 +14,7 @@ interface Result {
   /** Gather mode used to collect artifacts for this result. */
   gatherMode: Result.GatherMode;
   /** The URL of the page before Lighthouse starts. */
-  initialUrl: string;
+  initialPageUrl: string;
   /** The URL that Lighthouse initially navigated to. Will be `undefined` in timespan/snapshot. */
   requestedUrl?: string;
   /** URL of the last document request during a Lighthouse navigation. Will be `undefined` in timespan/snapshot. */

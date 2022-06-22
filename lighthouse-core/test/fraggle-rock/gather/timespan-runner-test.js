@@ -110,7 +110,7 @@ describe('Timespan Runner', () => {
     expect(artifacts).toMatchObject({
       fetchTime: expect.any(String),
       URL: {
-        initialUrl: 'https://start.example.com/',
+        initialPageUrl: 'https://start.example.com/',
         finalPageUrl: 'https://end.example.com/',
       },
     });

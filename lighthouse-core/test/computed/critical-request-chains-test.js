@@ -56,7 +56,7 @@ async function createChainsFromMockRecords(prioritiesList, edges, setExtrasFn, r
 
   const trace = createTestTrace({topLevelTasks: [{ts: 0}]});
   const URL = {
-    initialUrl: 'about:blank',
+    initialPageUrl: 'about:blank',
     requestedUrl: docUrl,
     mainDocumentUrl: docUrl,
     finalPageUrl: docUrl,

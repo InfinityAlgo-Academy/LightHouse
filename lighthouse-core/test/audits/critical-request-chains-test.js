@@ -79,7 +79,7 @@ const mockArtifacts = (chainNetworkRecords) => {
       [CriticalRequestChains.DEFAULT_PASS]: devtoolsLog,
     },
     URL: {
-      initialUrl: 'about:blank',
+      initialPageUrl: 'about:blank',
       requestedUrl: finalPageUrl,
       mainDocumentUrl: finalPageUrl,
       finalPageUrl,
@@ -113,7 +113,7 @@ describe('Performance: critical-request-chains audit', () => {
       traces: {defaultPass: createTestTrace({topLevelTasks: [{ts: 0}]})},
       devtoolsLogs: {defaultPass: redditDevtoolsLog},
       URL: {
-        initialUrl: 'about:blank',
+        initialPageUrl: 'about:blank',
         requestedUrl: 'https://www.reddit.com/r/nba',
         mainDocumentUrl: 'https://www.reddit.com/r/nba',
         finalPageUrl: 'https://www.reddit.com/r/nba',

@@ -1,6 +1,6 @@
 {
   "lighthouseVersion": "9.5.0",
-  "initialUrl": "about:blank",
+  "initialPageUrl": "about:blank",
   "requestedUrl": "http://localhost:10200/dobetterweb/dbw_tester.html",
   "mainDocumentUrl": "http://localhost:10200/dobetterweb/dbw_tester.html",
   "finalPageUrl": "http://localhost:10200/dobetterweb/dbw_tester.html",

@@ -120,10 +120,10 @@ class NetworkMonitor {
     if (this._networkRecorder) {
       const records = this._networkRecorder.getRawRecords();
 
-      let initialUrlRequest = records.find(record => record.url === requestedUrl);
-      while (initialUrlRequest?.redirectSource) {
-        initialUrlRequest = initialUrlRequest.redirectSource;
-        requestedUrl = initialUrlRequest.url;
+      let initialPageUrlRequest = records.find(record => record.url === requestedUrl);
+      while (initialPageUrlRequest?.redirectSource) {
+        initialPageUrlRequest = initialPageUrlRequest.redirectSource;
+        requestedUrl = initialPageUrlRequest.url;
       }
     }
 

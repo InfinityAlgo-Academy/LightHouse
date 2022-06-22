@@ -37,7 +37,7 @@ const expectations = {
   },
   artifacts: {
     URL: {
-      initialUrl: 'about:blank',
+      initialPageUrl: 'about:blank',
       requestedUrl: `http://localhost:10200/js-redirect.html?delay=2000&jsDelay=5000&jsRedirect=%2Fonline-only.html%3Fdelay%3D1000%26redirect%3D%2Fredirects-final.html%253FpushState`,
       mainDocumentUrl: 'http://localhost:10200/redirects-final.html?pushState',
       finalPageUrl: 'http://localhost:10200/push-state',

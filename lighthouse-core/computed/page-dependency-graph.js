@@ -15,7 +15,7 @@ const NetworkRecords = require('./network-records.js');
 const NetworkAnalyzer = require('../lib/dependency-graph/simulator/network-analyzer.js');
 
 /** @typedef {import('../lib/dependency-graph/base-node.js').Node} Node */
-/** @typedef {Omit<LH.Artifacts['URL'], 'initialUrl'|'finalPageUrl'>} URLArtifact */
+/** @typedef {Omit<LH.Artifacts['URL'], 'initialPageUrl'|'finalPageUrl'>} URLArtifact */
 
 // Shorter tasks have negligible impact on simulation results.
 const SIGNIFICANT_DUR_THRESHOLD_MS = 10;

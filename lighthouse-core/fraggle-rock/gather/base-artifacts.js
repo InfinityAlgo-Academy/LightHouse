@@ -36,7 +36,7 @@ async function getBaseArtifacts(config, driver, context) {
       'mobile' : 'desktop',
     // Contextual artifacts whose collection changes based on gather mode.
     URL: {
-      initialUrl: '',
+      initialPageUrl: '',
       finalPageUrl: '',
     },
     PageLoadError: null,
@@ -86,11 +86,11 @@ function finalizeArtifacts(baseArtifacts, gathererArtifacts) {
   artifacts.LighthouseRunWarnings = deduplicateWarnings(warnings);
 
   if (artifacts.PageLoadError && !artifacts.URL.finalPageUrl) {
-    artifacts.URL.finalPageUrl = artifacts.URL.requestedUrl || artifacts.URL.initialUrl;
+    artifacts.URL.finalPageUrl = artifacts.URL.requestedUrl || artifacts.URL.initialPageUrl;
   }
 
   // Check that the runner remembered to mutate the special-case URL artifact.
-  if (!artifacts.URL.initialUrl) throw new Error('Runner did not set initialUrl');
+  if (!artifacts.URL.initialPageUrl) throw new Error('Runner did not set initialPageUrl');
   if (!artifacts.URL.finalPageUrl) throw new Error('Runner did not set finalPageUrl');
 
   return artifacts;

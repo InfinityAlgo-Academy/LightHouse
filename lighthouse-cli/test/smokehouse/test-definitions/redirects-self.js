@@ -11,7 +11,7 @@ const expectations = {
   artifacts: {
     MainDocumentContent: /Redirect to myself/,
     URL: {
-      initialUrl: 'about:blank',
+      initialPageUrl: 'about:blank',
       requestedUrl: 'http://localhost:10200/redirects-self.html',
       mainDocumentUrl: 'http://localhost:10200/redirects-self.html?done=',
       finalPageUrl: 'http://localhost:10200/redirects-self.html',

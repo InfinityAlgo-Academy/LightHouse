@@ -38,7 +38,7 @@ describe('Performance: uses-rel-preload audit', () => {
       traces: {[UsesRelPreload.DEFAULT_PASS]: createTestTrace({traceEnd: 5000})},
       devtoolsLogs: {[UsesRelPreload.DEFAULT_PASS]: networkRecordsToDevtoolsLog(networkRecords)},
       URL: {
-        initialUrl: 'about:blank',
+        initialPageUrl: 'about:blank',
         requestedUrl: finalPageUrl,
         mainDocumentUrl: finalPageUrl,
         finalPageUrl,

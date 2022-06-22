@@ -87,7 +87,7 @@ describe('Snapshot Runner', () => {
     expect(artifacts).toMatchObject({
       fetchTime: expect.any(String),
       URL: {
-        initialUrl: 'https://lighthouse.example.com/',
+        initialPageUrl: 'https://lighthouse.example.com/',
         finalPageUrl: 'https://lighthouse.example.com/',
       },
     });

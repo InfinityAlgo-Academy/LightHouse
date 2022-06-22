@@ -156,7 +156,7 @@ async function generateErrorLHR() {
     Stacks: [],
     settings: defaultSettings,
     URL: {
-      initialUrl: 'about:blank',
+      initialPageUrl: 'about:blank',
       requestedUrl: 'http://fakeurl.com',
       mainDocumentUrl: 'http://fakeurl.com',
       finalPageUrl: 'http://fakeurl.com',

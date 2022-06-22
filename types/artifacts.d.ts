@@ -191,7 +191,7 @@ declare module Artifacts {
 
   interface URL {
     /** URL of the main frame before Lighthouse starts. */
-    initialUrl: string;
+    initialPageUrl: string;
     /**
      * URL of the initially requested URL during a Lighthouse navigation.
      * Will be `undefined` in timespan/snapshot.

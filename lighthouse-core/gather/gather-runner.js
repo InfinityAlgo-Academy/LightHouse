@@ -409,7 +409,7 @@ class GatherRunner {
       settings: options.settings,
       GatherContext: {gatherMode: 'navigation'},
       URL: {
-        initialUrl: await options.driver.url(),
+        initialPageUrl: await options.driver.url(),
         requestedUrl: options.requestedUrl,
         mainDocumentUrl: '',
         finalPageUrl: '',

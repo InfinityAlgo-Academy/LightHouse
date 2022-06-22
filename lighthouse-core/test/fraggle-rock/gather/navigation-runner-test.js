@@ -112,7 +112,7 @@ describe('NavigationRunner', () => {
     navigation = createNavigation().navigation;
     computedCache = new Map();
     baseArtifacts = createMockBaseArtifacts();
-    baseArtifacts.URL = {initialUrl: '', finalPageUrl: ''};
+    baseArtifacts.URL = {initialPageUrl: '', finalPageUrl: ''};
 
     mockDriver = createMockDriver();
     mockDriver.url
@@ -159,7 +159,7 @@ describe('NavigationRunner', () => {
       const {baseArtifacts} = await runner._setup({driver, config});
       expect(baseArtifacts).toMatchObject({
         URL: {
-          initialUrl: '',
+          initialPageUrl: '',
           finalPageUrl: '',
         },
       });
@@ -229,7 +229,7 @@ describe('NavigationRunner', () => {
       const {artifacts} = await run();
       expect(artifacts.URL).toBeUndefined();
       expect(baseArtifacts.URL).toEqual({
-        initialUrl: 'about:blank',
+        initialPageUrl: 'about:blank',
         requestedUrl,
         mainDocumentUrl: requestedUrl,
         finalPageUrl: requestedUrl,
@@ -287,7 +287,7 @@ describe('NavigationRunner', () => {
       expect(artifacts.LighthouseRunWarnings).toHaveLength(1);
 
       expect(baseArtifacts.URL).toEqual({
-        initialUrl: 'about:blank',
+        initialPageUrl: 'about:blank',
         requestedUrl,
         mainDocumentUrl: requestedUrl,
         finalPageUrl: requestedUrl,

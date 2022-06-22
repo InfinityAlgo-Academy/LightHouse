@@ -215,9 +215,9 @@ async function _computeNavigationResult(
  */
 async function _navigation(navigationContext) {
   const artifactState = getEmptyArtifactState();
-  const initialUrl = await navigationContext.driver.url();
+  const initialPageUrl = await navigationContext.driver.url();
   const phaseState = {
-    url: initialUrl,
+    url: initialPageUrl,
     gatherMode: /** @type {const} */ ('navigation'),
     driver: navigationContext.driver,
     computedCache: navigationContext.computedCache,
@@ -236,7 +236,7 @@ async function _navigation(navigationContext) {
   // If we haven't set all the required urls yet, set them here.
   if (!Object.values(phaseState.baseArtifacts).every(Boolean)) {
     phaseState.baseArtifacts.URL = {
-      initialUrl,
+      initialPageUrl,
       requestedUrl: navigateResult.requestedUrl,
       mainDocumentUrl: navigateResult.mainDocumentUrl,
       finalPageUrl: await navigationContext.driver.url(),
