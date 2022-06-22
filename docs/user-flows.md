@@ -216,7 +216,7 @@ As this flow has multiple steps, the flow report summarizes everything and allow
 - Keep timespan recordings _short_ and focused on a single interaction sequence or page transition.
 - Use snapshot recordings when a substantial portion of the page content has changed.
 - Always wait for transitions and interactions to finish before ending a timespan. The puppeteer APIs `page.waitForSelector`/`page.waitForFunction`/`page.waitForResponse`/`page.waitForTimeout` are your friends here.
-- Quickly validate your user flow by doing a dry run: `api.startFlow(page, {dryRun: true})`.
+- Quickly validate your user flow with: `api.startFlow(page, {dryRun: true})`.
 
 ## Related Reading
 
