@@ -34,7 +34,6 @@ function main() {
     console.log('Unable to download because of error:', error);
   }
 }
-main();
 
 function onUploadedCommitPosition(commitPosition) {
   const contentShellDirPath = path.resolve(CACHE_PATH, commitPosition, 'out', TARGET);
@@ -175,4 +174,10 @@ function getContentShellBinaryPath(dirPath) {
   if (process.platform === 'darwin') {
     return path.resolve(dirPath, 'Content Shell.app', 'Contents', 'MacOS', 'Content Shell');
   }
+}
+
+if (process.argv[2] === '--resolve-executable-path') {
+  console.log(getContentShellBinaryPath(process.argv[3]));
+} else {
+  main();
 }
