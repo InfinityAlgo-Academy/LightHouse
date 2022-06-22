@@ -12,7 +12,7 @@ import Metrics from '../../lib/traces/pwmetrics-events.js';
 import LHError from '../../lib/lh-error.js';
 import Audit from '../../audits/audit.js';
 import {getModuleDirectory} from '../../../esm-utils.mjs';
-import {readJson} from '../../../root.js';
+import {LH_ROOT, readJson} from '../../../root.js';
 
 const traceEvents = readJson('../fixtures/traces/progressive-app.json', import.meta);
 const dbwTrace = readJson('../results/artifacts/defaultPass.trace.json', import.meta);
@@ -31,7 +31,10 @@ function assertTraceEventsEqual(traceEventsA, traceEventsB) {
 }
 describe('asset-saver helper', () => {
   describe('saves files', function() {
+    const tmpDir = `${LH_ROOT}/.tmp/asset-saver-test`;
+
     beforeAll(() => {
+      fs.mkdirSync(tmpDir, {recursive: true});
       const artifacts = {
         devtoolsLogs: {
           [Audit.DEFAULT_PASS]: [{message: 'first'}, {message: 'second'}],
@@ -43,11 +46,11 @@ describe('asset-saver helper', () => {
         },
       };
 
-      return assetSaver.saveAssets(artifacts, dbwResults.audits, process.cwd() + '/the_file');
+      return assetSaver.saveAssets(artifacts, dbwResults.audits, `${tmpDir}/the_file`);
     });
 
     it('trace file saved to disk with trace events and extra fakeEvents', () => {
-      const traceFilename = 'the_file-0.trace.json';
+      const traceFilename = tmpDir + '/the_file-0.trace.json';
       const traceFileContents = fs.readFileSync(traceFilename, 'utf8');
       const traceEventsOnDisk = JSON.parse(traceFileContents).traceEvents;
       const traceEventsWithoutExtrasOnDisk = traceEventsOnDisk.slice(0, traceEvents.length);
@@ -58,7 +61,7 @@ describe('asset-saver helper', () => {
     });
 
     it('devtools log file saved to disk with data', () => {
-      const filename = 'the_file-0.devtoolslog.json';
+      const filename = tmpDir + '/the_file-0.devtoolslog.json';
       const fileContents = fs.readFileSync(filename, 'utf8');
       assert.ok(fileContents.includes('"message": "first"'));
       fs.unlinkSync(filename);
@@ -84,7 +87,11 @@ describe('asset-saver helper', () => {
   });
 
   describe('saveTrace', () => {
-    const traceFilename = 'test-trace-0.json';
+    const traceFilename = `${LH_ROOT}/.tmp/test-trace-0.json`;
+
+    beforeAll(() => {
+      fs.mkdirSync(`${LH_ROOT}/.tmp`, {recursive: true});
+    });
 
     afterEach(() => {
       fs.unlinkSync(traceFilename);
