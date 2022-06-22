@@ -111,6 +111,8 @@ class UserFlow {
    */
   async navigate(requestor, stepOptions) {
     if (this.currentTimespan) throw new Error('Timespan already in progress');
+    if (this.currentNavigation) throw new Error('Navigation already in progress');
+
     const options = this._getNextNavigationOptions(stepOptions);
 
     if (this._dryRun) {
@@ -123,10 +125,63 @@ class UserFlow {
   }
 
   /**
+   * This is an alternative to `navigate()` that can be used to analyze a navigation triggered by user interaction.
+   * For more on user triggered navigations, see https://github.com/GoogleChrome/lighthouse/blob/master/docs/user-flows.md#triggering-a-navigation-via-user-interactions.
+   *
+   * @param {StepOptions=} stepOptions
+   */
+  async startNavigation(stepOptions) {
+    /** @type {(value: () => void) => void} */
+    let completeSetup;
+    /** @type {(value: any) => void} */
+    let rejectDuringSetup;
+
+    // This promise will resolve once the setup is done
+    // and Lighthouse is waiting for a page navigation to be triggered.
+    const navigationSetupPromise = new Promise((resolve, reject) => {
+      completeSetup = resolve;
+      rejectDuringSetup = reject;
+    });
+
+    // The promise in this callback will not resolve until `continueNavigation` is invoked,
+    // because `continueNavigation` is passed along to `navigateSetupPromise`
+    // and extracted into `continueAndAwaitResult` below.
+    const navigationResultPromise = this.navigate(
+      () => new Promise(continueNavigation => completeSetup(continueNavigation)),
+      stepOptions
+    ).catch(err => {
+      if (this.currentNavigation) {
+        // If the navigation already started, re-throw the error so it is emitted when `navigationResultPromise` is awaited.
+        throw err;
+      } else {
+        // If the navigation has not started, reject the `navigationSetupPromise` so the error throws when it is awaited in `startNavigation`.
+        rejectDuringSetup(err);
+      }
+    });
+
+    const continueNavigation = await navigationSetupPromise;
+
+    async function continueAndAwaitResult() {
+      continueNavigation();
+      await navigationResultPromise;
+    }
+
+    this.currentNavigation = {continueAndAwaitResult};
+  }
+
+  async endNavigation() {
+    if (this.currentTimespan) throw new Error('Timespan already in progress');
+    if (!this.currentNavigation) throw new Error('No navigation in progress');
+    await this.currentNavigation.continueAndAwaitResult();
+    this.currentNavigation = undefined;
+  }
+
+  /**
    * @param {StepOptions=} stepOptions
    */
   async startTimespan(stepOptions) {
     if (this.currentTimespan) throw new Error('Timespan already in progress');
+    if (this.currentNavigation) throw new Error('Navigation already in progress');
     const options = {...this._options, ...stepOptions};
 
     if (this._dryRun) {
@@ -141,6 +196,7 @@ class UserFlow {
   async endTimespan() {
     if (this._dryRun) return;
     if (!this.currentTimespan) throw new Error('No timespan in progress');
+    if (this.currentNavigation) throw new Error('Navigation already in progress');
 
     const {timespan, options} = this.currentTimespan;
     const gatherResult = await timespan.endTimespanGather();
@@ -154,6 +210,7 @@ class UserFlow {
    */
   async snapshot(stepOptions) {
     if (this.currentTimespan) throw new Error('Timespan already in progress');
+    if (this.currentNavigation) throw new Error('Navigation already in progress');
     const options = {...this._options, ...stepOptions};
 
     if (this._dryRun) {

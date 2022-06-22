@@ -6,6 +6,23 @@
 
 declare module Protocol {
   /**
+   * An intermediate type, used to create a record of all possible Crdp raw event
+   * messages, keyed on method. e.g. {
+   *   'Domain.method1Name': {method: 'Domain.method1Name', params: EventPayload1},
+   *   'Domain.method2Name': {method: 'Domain.method2Name', params: EventPayload2},
+   * }
+   */
+  type RawEventMessageRecord = {
+    [K in keyof LH.CrdpEvents]: {
+      method: K,
+      // Drop [] for `undefined` (so a JS value is valid).
+      params: LH.CrdpEvents[K] extends [] ? undefined: LH.CrdpEvents[K][number]
+      // If sessionId is not set, it means the event was from the root target.
+      sessionId?: string;
+    };
+  }
+
+  /**
    * Union of raw (over the wire) message format of all possible Crdp events,
    * of the form `{method: 'Domain.event', params: eventPayload}`.
    */
@@ -51,23 +68,6 @@ declare module Protocol {
 
     emit<E extends keyof TEventRecord>(event: E, ...request: TEventRecord[E]): void;
   }
-}
-
-/**
- * An intermediate type, used to create a record of all possible Crdp raw event
- * messages, keyed on method. e.g. {
- *   'Domain.method1Name': {method: 'Domain.method1Name', params: EventPayload1},
- *   'Domain.method2Name': {method: 'Domain.method2Name', params: EventPayload2},
- * }
- */
-type RawEventMessageRecord = {
-  [K in keyof LH.CrdpEvents]: {
-    method: K,
-    // Drop [] for `undefined` (so a JS value is valid).
-    params: LH.CrdpEvents[K] extends [] ? undefined: LH.CrdpEvents[K][number]
-    // If sessionId is not set, it means the event was from the root target.
-    sessionId?: string;
-  };
 }
 
 export default Protocol;

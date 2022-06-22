@@ -21,15 +21,10 @@ class ProtocolSession {
     this._targetInfo = undefined;
     /** @type {number|undefined} */
     this._nextProtocolTimeout = undefined;
-    /** @type {WeakMap<any, any>} */
-    this._callbackMap = new WeakMap();
   }
 
-  sessionId() {
-    return this._targetInfo && this._targetInfo.type === 'iframe' ?
-      // TODO: use this._session.id() for real session id.
-      this._targetInfo.targetId :
-      undefined;
+  id() {
+    return this._cdpSession.id();
   }
 
   /** @param {LH.Crdp.Target.TargetInfo} targetInfo */
@@ -76,34 +71,6 @@ class ProtocolSession {
    */
   once(eventName, callback) {
     this._cdpSession.once(eventName, /** @type {*} */ (callback));
-  }
-
-  /**
-   * Bind to puppeteer's '*' event that fires for *any* protocol event,
-   * and wrap it with data about the protocol message instead of just the event.
-   * @param {(payload: LH.Protocol.RawEventMessage) => void} callback
-   */
-  addProtocolMessageListener(callback) {
-    /**
-     * @param {any} method
-     * @param {any} event
-     */
-    const listener = (method, event) => callback({
-      method,
-      params: event,
-      sessionId: this.sessionId(),
-    });
-    this._callbackMap.set(callback, listener);
-    this._cdpSession.on('*', /** @type {*} */ (listener));
-  }
-
-  /**
-   * @param {(payload: LH.Protocol.RawEventMessage) => void} callback
-   */
-  removeProtocolMessageListener(callback) {
-    const listener = this._callbackMap.get(callback);
-    if (!listener) return;
-    this._cdpSession.off('*', /** @type {*} */ (listener));
   }
 
   /**

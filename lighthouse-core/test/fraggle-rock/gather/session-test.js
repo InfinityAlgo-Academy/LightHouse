@@ -31,58 +31,6 @@ describe('ProtocolSession', () => {
     session = new ProtocolSession(puppeteerSession);
   });
 
-  describe('ProtocolSession', () => {
-    it('should emit a copy of events on "*"', () => {
-      session = new ProtocolSession(puppeteerSession);
-
-      const regularListener = fnAny();
-      const allListener = fnAny();
-
-      session.on('Network.dataReceived', regularListener);
-      session.addProtocolMessageListener(allListener);
-      puppeteerSession.emit('Network.dataReceived', 1);
-      puppeteerSession.emit('Bar', 1);
-
-      expect(regularListener).toHaveBeenCalledTimes(1);
-      expect(allListener).toHaveBeenCalledTimes(2);
-      expect(allListener).toHaveBeenCalledWith({method: 'Network.dataReceived', params: 1});
-      expect(allListener).toHaveBeenCalledWith({method: 'Bar', params: 1});
-    });
-
-    it('should not fire duplicate events', () => {
-      session = new ProtocolSession(puppeteerSession);
-      session = new ProtocolSession(puppeteerSession);
-
-      const regularListener = fnAny();
-      const allListener = fnAny();
-
-      session.on('Network.dataReceived', regularListener);
-      session.addProtocolMessageListener(allListener);
-      puppeteerSession.emit('Network.dataReceived', 1);
-      puppeteerSession.emit('Bar', 1);
-
-      expect(regularListener).toHaveBeenCalledTimes(1);
-      expect(allListener).toHaveBeenCalledTimes(2);
-    });
-
-    it('should include sessionId for iframes', () => {
-      session = new ProtocolSession(puppeteerSession);
-
-      const listener = fnAny();
-      const targetInfo = {title: '', url: '', attached: true, canAccessOpener: false};
-
-      session.addProtocolMessageListener(listener);
-      session.setTargetInfo({targetId: 'page', type: 'page', ...targetInfo});
-      puppeteerSession.emit('Foo', 1);
-      session.setTargetInfo({targetId: 'iframe', type: 'iframe', ...targetInfo});
-      puppeteerSession.emit('Bar', 1);
-
-      expect(listener).toHaveBeenCalledTimes(2);
-      expect(listener).toHaveBeenCalledWith({method: 'Foo', params: 1});
-      expect(listener).toHaveBeenCalledWith({method: 'Bar', params: 1, sessionId: 'iframe'});
-    });
-  });
-
   /** @type {Array<'on'|'off'|'once'>} */
   const delegateMethods = ['on', 'once', 'off'];
   for (const method of delegateMethods) {
@@ -108,45 +56,6 @@ describe('ProtocolSession', () => {
       await session.dispose();
       expect(detach).toHaveBeenCalled();
       expect(removeAllListeners).toHaveBeenCalled();
-    });
-  });
-
-  describe('.addProtocolMessageListener', () => {
-    it('should listen for any event', () => {
-      session = new ProtocolSession(puppeteerSession);
-
-      const regularListener = fnAny();
-      const allListener = fnAny();
-
-      session.on('Page.frameNavigated', regularListener);
-      session.addProtocolMessageListener(allListener);
-
-      puppeteerSession.emit('Page.frameNavigated');
-      puppeteerSession.emit('Debugger.scriptParsed', {script: 'details'});
-
-      expect(regularListener).toHaveBeenCalledTimes(1);
-      expect(regularListener).toHaveBeenCalledWith(undefined);
-      expect(allListener).toHaveBeenCalledTimes(2);
-      expect(allListener).toHaveBeenCalledWith({method: 'Page.frameNavigated', params: undefined});
-      expect(allListener).toHaveBeenCalledWith({
-        method: 'Debugger.scriptParsed',
-        params: {script: 'details'},
-      });
-    });
-  });
-
-  describe('.removeProtocolMessageListener', () => {
-    it('should stop listening for any event', () => {
-      session = new ProtocolSession(puppeteerSession);
-
-      const allListener = fnAny();
-
-      session.addProtocolMessageListener(allListener);
-      puppeteerSession.emit('Page.frameNavigated');
-      expect(allListener).toHaveBeenCalled();
-      session.removeProtocolMessageListener(allListener);
-      puppeteerSession.emit('Page.frameNavigated');
-      expect(allListener).toHaveBeenCalledTimes(1);
     });
   });
 

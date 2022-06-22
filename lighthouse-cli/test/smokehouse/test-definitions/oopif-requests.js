@@ -47,11 +47,28 @@ const expectations = {
       'network-requests': {
         details: {
           items: {
-          // We want to make sure we are finding the iframe's requests (paulirish.com) *AND*
-          // the iframe's iframe's iframe's requests (youtube.com/doubleclick/etc).
-          // - paulirish.com ~40-60 requests
-          // - paulirish.com + all descendant iframes ~80-90 requests
-            length: '>70',
+            // We want to make sure we are finding the iframe's requests (paulirish.com) *AND*
+            // the iframe's iframe's iframe's requests (youtube.com/doubleclick/etc).
+            _includes: [
+              {url: 'http://localhost:10200/oopif-requests.html', finished: true, statusCode: 200, resourceType: 'Document'},
+
+              // Paulirish iframe and subresource
+              {url: 'https://www.paulirish.com/2012/why-moving-elements-with-translate-is-better-than-posabs-topleft/', finished: true, statusCode: 200, resourceType: 'Document'},
+              {url: 'https://www.paulirish.com/avatar150.jpg', finished: true, statusCode: 200, resourceType: 'Image'},
+              {url: 'https://www.googletagmanager.com/gtag/js?id=G-PGXNGYWP8E', finished: true, statusCode: 200, resourceType: 'Script'},
+              {url: /^https:\/\/fonts\.googleapis\.com\/css/, finished: true, statusCode: 200, resourceType: 'Stylesheet'},
+
+              // Youtube iframe (OOPIF) and some subresources
+              // FYI: Youtube has a ServiceWorker which sometimes cancels the document request. As a result, there will sometimes be multiple requests for this file.
+              {url: 'https://www.youtube.com/embed/NZelrwd_iRs', finished: true, statusCode: 200, resourceType: 'Document'},
+              {url: /^https:\/\/www\.youtube\.com\/.*?player.*?css/, finished: true, statusCode: 200, resourceType: 'Stylesheet'},
+              {url: /^https:\/\/www\.youtube\.com\/.*?\/embed.js/, finished: true, statusCode: 200, resourceType: 'Script'},
+
+              // Disqus iframe (OOPIF)
+              {url: /^https:\/\/disqus\.com\/embed\/comments\//, finished: true, statusCode: 200, resourceType: 'Document'},
+              // Disqus subframe (that's a new OOPIF)
+              {url: 'https://accounts.google.com/o/oauth2/iframe', finished: true, statusCode: 200, resourceType: 'Document'},
+            ],
           },
         },
       },

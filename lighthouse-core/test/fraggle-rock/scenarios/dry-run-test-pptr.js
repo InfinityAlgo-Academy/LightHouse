@@ -30,6 +30,10 @@ describe('Dry Run', () => {
     const flow = await api.startFlow(state.page, {dryRun: true});
     await flow.navigate(pageUrl);
 
+    await flow.startNavigation();
+    await state.page.goto(pageUrl);
+    await flow.endNavigation();
+
     await flow.startTimespan();
     await state.page.click('button');
     await flow.endTimespan();

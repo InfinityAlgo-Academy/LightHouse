@@ -1,6 +1,6 @@
 <a name="9.5.0"></a>
 # 9.5.0 (2022-03-09)
-[Full Changelog](https://github.com/compare/v9.4.0...v9.5.0)
+[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v9.4.0...v9.5.0)
 
 We expect this release to ship in the DevTools of [Chrome 101](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
 
@@ -54,7 +54,7 @@ Thanks to our new contributor 👽🐷🐰🐯🐻!
 
 <a name="9.4.0"></a>
 # 9.4.0 (2022-02-16)
-[Full Changelog](https://github.com/compare/v9.3.1...v9.4.0)
+[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v9.3.1...v9.4.0)
 
 We expect this release to ship in the DevTools of [Chrome 100](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
 
@@ -99,7 +99,7 @@ We expect this release to ship in the DevTools of [Chrome 100](https://chromiumd
 
 <a name="9.3.1"></a>
 # 9.3.1 (2022-01-31)
-[Full Changelog](https://github.com/compare/v9.3.0...v9.3.1)
+[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v9.3.0...v9.3.1)
 
 ## Report
 
@@ -107,7 +107,7 @@ We expect this release to ship in the DevTools of [Chrome 100](https://chromiumd
 
 <a name="9.3.0"></a>
 # 9.3.0 (2022-01-31)
-[Full Changelog](https://github.com/compare/v9.2.0...v9.3.0)
+[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v9.2.0...v9.3.0)
 
 We expect this release to ship in the DevTools of [Chrome 100](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
 
