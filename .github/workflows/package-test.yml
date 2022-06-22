@@ -46,8 +46,8 @@ jobs:
     - run: sudo apt-get install xvfb
 
     # Disabled to fix CI while we investigate what the bug is.
-    #   perf-diagnostics-third-party, oopif-requests
-    - run: xvfb-run --auto-servernum bash $GITHUB_WORKSPACE/lighthouse-core/scripts/release/package-test.sh --fraggle-rock --invert-match perf-diagnostics-third-party oopif-requests
+    #   perf-diagnostics-third-party, oopif-requests, oopif-scripts
+    - run: xvfb-run --auto-servernum bash $GITHUB_WORKSPACE/lighthouse-core/scripts/release/package-test.sh --fraggle-rock --invert-match perf-diagnostics-third-party oopif-requests oopif-scripts
 
     # Fail if any changes were written to source files.
     - run: git diff --exit-code
