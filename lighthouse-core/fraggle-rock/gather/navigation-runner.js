@@ -239,7 +239,7 @@ async function _navigation(navigationContext) {
       initialUrl,
       requestedUrl: navigateResult.requestedUrl,
       mainDocumentUrl: navigateResult.mainDocumentUrl,
-      finalPageUrl: navigateResult.mainDocumentUrl,
+      finalPageUrl: await navigationContext.driver.url(),
     };
   }
   phaseState.url = navigateResult.mainDocumentUrl;

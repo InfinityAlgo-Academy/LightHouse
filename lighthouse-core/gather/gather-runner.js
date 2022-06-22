@@ -83,8 +83,8 @@ class GatherRunner {
       passContext.url = mainDocumentUrl;
       const {URL} = passContext.baseArtifacts;
       if (!URL.finalPageUrl || !URL.mainDocumentUrl) {
-        URL.finalPageUrl = mainDocumentUrl;
         URL.mainDocumentUrl = mainDocumentUrl;
+        URL.finalPageUrl = await passContext.driver.url();
       }
       if (passContext.passConfig.loadFailureMode === 'fatal') {
         passContext.LighthouseRunWarnings.push(...warnings);
