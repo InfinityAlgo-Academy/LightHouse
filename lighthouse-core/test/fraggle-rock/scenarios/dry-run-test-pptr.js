@@ -41,13 +41,17 @@ describe('Dry Run', () => {
     expect(finalUrl).toEqual(`${pageUrl}#done`);
 
     // Ensure Lighthouse emulated a mobile device.
+    // Device scale factor override is not shared between sessions
+    // https://bugs.chromium.org/p/chromium/issues/detail?id=1337089
     const deviceMetrics = await state.page.evaluate(() => ({
       width: document.documentElement.clientWidth,
       height: document.documentElement.clientHeight,
+      // deviceScaleFactor: window.devicePixelRatio,
     }));
     expect(deviceMetrics).toEqual({
       height: 640,
       width: 360,
+      // deviceScaleFactor: 2,
     });
 
     expect(flow.createArtifactsJson()).toEqual({
