@@ -9,7 +9,7 @@
     "initialUrl": "about:blank",
     "requestedUrl": "https://www.reddit.com/r/nba",
     "mainDocumentUrl": "https://www.reddit.com/r/nba",
-    "finalUrl": "https://www.reddit.com/r/nba"
+    "finalPageUrl": "https://www.reddit.com/r/nba"
   },
   "GatherContext": {
     "gatherMode": "navigation"

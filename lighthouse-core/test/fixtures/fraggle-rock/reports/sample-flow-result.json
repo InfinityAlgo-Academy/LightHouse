@@ -3,7 +3,10 @@
     {
       "lhr": {
         "lighthouseVersion": "9.5.0",
+        "initialUrl": "about:blank",
         "requestedUrl": "https://www.mikescerealshack.co/",
+        "mainDocumentUrl": "https://www.mikescerealshack.co/",
+        "finalPageUrl": "https://www.mikescerealshack.co/",
         "finalUrl": "https://www.mikescerealshack.co/",
         "fetchTime": "2022-03-15T21:49:33.335Z",
         "gatherMode": "navigation",
@@ -7438,8 +7441,8 @@
     {
       "lhr": {
         "lighthouseVersion": "9.5.0",
-        "requestedUrl": "https://www.mikescerealshack.co/",
-        "finalUrl": "https://www.mikescerealshack.co/search?q=call+of+duty",
+        "initialUrl": "https://www.mikescerealshack.co/",
+        "finalPageUrl": "https://www.mikescerealshack.co/search?q=call+of+duty",
         "fetchTime": "2022-03-15T21:49:45.271Z",
         "gatherMode": "timespan",
         "runWarnings": [],
@@ -10587,8 +10590,8 @@
     {
       "lhr": {
         "lighthouseVersion": "9.5.0",
-        "requestedUrl": "https://www.mikescerealshack.co/search?q=call+of+duty",
-        "finalUrl": "https://www.mikescerealshack.co/search?q=call+of+duty",
+        "initialUrl": "https://www.mikescerealshack.co/search?q=call+of+duty",
+        "finalPageUrl": "https://www.mikescerealshack.co/search?q=call+of+duty",
         "fetchTime": "2022-03-15T21:49:59.811Z",
         "gatherMode": "snapshot",
         "runWarnings": [],
@@ -14221,7 +14224,10 @@
     {
       "lhr": {
         "lighthouseVersion": "9.5.0",
+        "initialUrl": "https://www.mikescerealshack.co/search?q=call+of+duty",
         "requestedUrl": "https://www.mikescerealshack.co/corrections",
+        "mainDocumentUrl": "https://www.mikescerealshack.co/corrections",
+        "finalPageUrl": "https://www.mikescerealshack.co/corrections",
         "finalUrl": "https://www.mikescerealshack.co/corrections",
         "fetchTime": "2022-03-15T21:50:06.558Z",
         "gatherMode": "navigation",

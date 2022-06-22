@@ -29,7 +29,7 @@ const expectations = {
       initialUrl: 'about:blank',
       requestedUrl: 'http://localhost:10200/online-only.html?delay=2000&redirect=%2Fredirects-final.html#hash',
       mainDocumentUrl: 'http://localhost:10200/redirects-final.html',
-      finalUrl: 'http://localhost:10200/redirects-final.html#hash',
+      finalPageUrl: 'http://localhost:10200/redirects-final.html#hash',
     },
   },
   lhr: {

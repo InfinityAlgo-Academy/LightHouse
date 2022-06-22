@@ -175,7 +175,7 @@
     "initialUrl": "about:blank",
     "requestedUrl": "http://localhost:10200/dobetterweb/dbw_tester.html",
     "mainDocumentUrl": "http://localhost:10200/dobetterweb/dbw_tester.html",
-    "finalUrl": "http://localhost:10200/dobetterweb/dbw_tester.html"
+    "finalPageUrl": "http://localhost:10200/dobetterweb/dbw_tester.html"
   },
   "Timing": [
     {
