@@ -132,7 +132,7 @@
     "archiver": "^3.0.0",
     "c8": "^7.4.0",
     "chalk": "^2.4.1",
-    "chrome-devtools-frontend": "1.0.922924",
+    "chrome-devtools-frontend": "1.0.1012379",
     "concurrently": "^6.4.0",
     "conventional-changelog-cli": "^2.1.1",
     "cpy": "^8.1.2",
