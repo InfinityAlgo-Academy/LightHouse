@@ -43,10 +43,14 @@ function createMockSession() {
   };
 }
 
-function createMockCdpSession() {
+/**
+ * @param {string} sessionId
+ */
+function createMockCdpSession(sessionId = 'DEFAULT_ID') {
   const connection = createMockCdpConnection();
 
   return {
+    id: () => sessionId,
     send: createMockSendCommandFn({useSessionId: false}),
     once: createMockOnceFn(),
     on: createMockOnFn(),
@@ -128,26 +132,15 @@ function createMockExecutionContext() {
   };
 }
 
-function createMockTargetManager() {
+/** @param {ReturnType<typeof createMockSession>} session */
+function createMockTargetManager(session) {
   return {
+    rootSession: () => session,
     enable: fnAny(),
     disable: fnAny(),
-    addTargetAttachedListener: createMockOnFn(),
-    removeTargetAttachedListener: fnAny(),
-    /** @param {LH.Gatherer.FRProtocolSession} session */
-    mockEnable(session) {
-      this.enable.mockImplementation(async () => {
-        const listeners = this.addTargetAttachedListener.mock.calls.map(call => call[0]);
-        const targetWithSession = {target: {type: 'page', targetId: 'page'}, session};
-        for (const listener of listeners) await listener(targetWithSession);
-      });
-    },
-    reset() {
-      this.enable = fnAny();
-      this.disable = fnAny();
-      this.addTargetAttachedListener = createMockOnFn();
-      this.removeTargetAttachedListener = fnAny();
-    },
+    on: createMockOnFn(),
+    off: fnAny(),
+
     /** @return {import('../../../gather/driver/target-manager.js')} */
     asTargetManager() {
       // @ts-expect-error - We'll rely on the tests passing to know this matches.
@@ -160,6 +153,7 @@ function createMockDriver() {
   const page = createMockPage();
   const session = createMockSession();
   const context = createMockExecutionContext();
+  const targetManager = createMockTargetManager(session);
 
   return {
     _page: page,
@@ -170,6 +164,7 @@ function createMockDriver() {
     connect: fnAny(),
     disconnect: fnAny(),
     executionContext: context.asExecutionContext(),
+    targetManager: targetManager.asTargetManager(),
 
     /** @return {Driver} */
     asDriver() {
@@ -232,20 +227,6 @@ function createMockBaseArtifacts() {
   };
 }
 
-function mockTargetManagerModule() {
-  const targetManagerMock = createMockTargetManager();
-
-  /** @type {(instance: any) => (...args: any[]) => any} */
-  const proxyCtor = instance => function() {
-    // IMPORTANT! This must be a `function` not an arrow function so it can be invoked as a constructor.
-    return instance;
-  };
-
-  jest.mock('../../../gather/driver/target-manager.js', () => proxyCtor(targetManagerMock));
-
-  return targetManagerMock;
-}
-
 function createMockContext() {
   return {
     driver: createMockDriver(),
@@ -286,7 +267,6 @@ function mockDriverSubmodules() {
   const networkMock = {
     fetchResponseBodyFromCache: fnAny(),
   };
-  const targetManagerMock = mockTargetManagerModule();
 
   function reset() {
     navigationMock.gotoURL = fnAny().mockResolvedValue({finalUrl: 'https://example.com', warnings: [], timedOut: false});
@@ -298,7 +278,6 @@ function mockDriverSubmodules() {
     emulationMock.clearThrottling = fnAny();
     emulationMock.emulate = fnAny();
     networkMock.fetchResponseBodyFromCache = fnAny().mockResolvedValue('');
-    targetManagerMock.reset();
   }
 
   /**
@@ -325,14 +304,12 @@ function mockDriverSubmodules() {
     storageMock,
     emulationMock,
     networkMock,
-    targetManagerMock,
     reset,
   };
 }
 
 export {
   mockRunnerModule,
-  mockTargetManagerModule,
   mockDriverModule,
   mockDriverSubmodules,
   createMockDriver,
