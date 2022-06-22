@@ -489,4 +489,7 @@ function getAssertionReport(actual, expected, reportOptions = {}) {
   };
 }
 
-export {getAssertionReport};
+export {
+  getAssertionReport,
+  findDifference,
+};
