@@ -15,8 +15,10 @@ For an always up-to-date definition of the LHR, take a look [at our typedefs](ht
 | lighthouseVersion | The version of Lighthouse with which this result was generated. |
 | fetchTime | The ISO-8601 timestamp of when the result was generated. |
 | userAgent | The user agent string of the version of Chrome that was used by Lighthouse. |
+| initialUrl | The URL of the page before Lighthouse starts. |
 | requestedUrl | The URL that was supplied to Lighthouse and initially navigated to. |
-| finalUrl | The URL that Lighthouse ended up auditing after redirects were followed. |
+| mainDocumentUrl | The URL of the main document request during the final page navigation. |
+| finalPageUrl | The URL of the page after all redirects, history API updates, etc. |
 | [audits](#audits) | An object containing the results of the audits. |
 | [configSettings](#config-settings) | An object containing information about the configuration used by Lighthouse. |
 | [timing](#timing) | An object containing information about how long Lighthouse spent auditing. |
@@ -31,8 +33,10 @@ For an always up-to-date definition of the LHR, take a look [at our typedefs](ht
   "lighthouseVersion": "5.1.0",
   "fetchTime": "2019-05-05T20:50:54.185Z",
   "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3358.0 Safari/537.36",
+  "initialUrl": "about:blank",
   "requestedUrl": "http://example.com",
-  "finalUrl": "https://www.example.com/",
+  "mainDocumentUrl": "https://www.example.com/",
+  "finalPageUrl": "https://www.example.com/",
   "audits": {...},
   "configSettings": {...},
   "timing": {...},

@@ -32,7 +32,7 @@ function runAudit({
       node,
     }],
     URL: {
-      finalUrl: 'http://example.com',
+      finalPageUrl: 'http://example.com',
     },
   });
 

@@ -23,7 +23,7 @@ const config = {
 const expectations = {
   lhr: {
     requestedUrl: 'https://jakearchibald.github.io/svgomg/',
-    finalUrl: 'https://jakearchibald.github.io/svgomg/',
+    finalPageUrl: 'https://jakearchibald.github.io/svgomg/',
     audits: {
       'service-worker': {
         score: 1,

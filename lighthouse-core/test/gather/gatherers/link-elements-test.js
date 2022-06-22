@@ -53,7 +53,7 @@ describe('Link Elements gatherer', () => {
     };
     const baseArtifacts = {
       URL: {
-        finalUrl: url,
+        finalPageUrl: url,
       },
     };
     const passContext = {driver, url, baseArtifacts, computedCache: new Map()};

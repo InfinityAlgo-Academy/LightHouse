@@ -57,7 +57,7 @@ describe('Long tasks audit', () => {
     initialUrl: 'about:blank',
     requestedUrl: TASK_URL,
     mainDocumentUrl: TASK_URL,
-    finalUrl: TASK_URL,
+    finalPageUrl: TASK_URL,
   };
 
   it('should pass and be non-applicable if there are no long tasks', async () => {

@@ -14,7 +14,7 @@
   const {lhr} = await LighthouseTestRunner.waitForResults();
 
   TestRunner.addResult('\n=============== Lighthouse Results ===============');
-  TestRunner.addResult(`URL: ${lhr.finalUrl}`);
+  TestRunner.addResult(`URL: ${lhr.finalPageUrl}`);
   TestRunner.addResult(`Version: ${lhr.lighthouseVersion}`);
   TestRunner.addResult(`formFactor: ${lhr.configSettings.formFactor}`);
   TestRunner.addResult(`screenEmulation: ${JSON.stringify(lhr.configSettings.screenEmulation, null, 2)}`);

@@ -14,7 +14,7 @@ const scriptNodeUrl = 'http://www.example.com/script.js';
 const imageUrl = 'http://www.example.com/image.png';
 
 describe('Performance: preload-lcp audit', () => {
-  const mockArtifacts = (networkRecords, finalUrl, imageUrl) => {
+  const mockArtifacts = (networkRecords, finalPageUrl, imageUrl) => {
     return {
       GatherContext: {gatherMode: 'navigation'},
       traces: {
@@ -26,9 +26,9 @@ describe('Performance: preload-lcp audit', () => {
       devtoolsLogs: {[PreloadLCPImage.DEFAULT_PASS]: networkRecordsToDevtoolsLog(networkRecords)},
       URL: {
         initialUrl: 'about:blank',
-        requestedUrl: finalUrl,
-        mainDocumentUrl: finalUrl,
-        finalUrl,
+        requestedUrl: finalPageUrl,
+        mainDocumentUrl: finalPageUrl,
+        finalPageUrl,
       },
       TraceElements: [
         {

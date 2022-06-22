@@ -18,7 +18,7 @@ const config = {
 const expectations = {
   lhr: {
     requestedUrl: 'http://localhost:10200/perf/animations.html',
-    finalUrl: 'http://localhost:10200/perf/animations.html',
+    finalPageUrl: 'http://localhost:10200/perf/animations.html',
     audits: {
       'non-composited-animations': {
         score: null,

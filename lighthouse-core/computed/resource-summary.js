@@ -58,7 +58,7 @@ class ResourceSummary {
     if (budget?.options?.firstPartyHostnames) {
       firstPartyHosts = budget.options.firstPartyHostnames;
     } else {
-      const rootDomain = Util.getRootDomain(URLArtifact.finalUrl);
+      const rootDomain = Util.getRootDomain(URLArtifact.finalPageUrl);
       firstPartyHosts = [`*.${rootDomain}`];
     }
 

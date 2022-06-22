@@ -33,15 +33,15 @@ const defaultMainResource = {
 };
 
 describe('Performance: uses-rel-preload audit', () => {
-  const mockArtifacts = (networkRecords, finalUrl) => {
+  const mockArtifacts = (networkRecords, finalPageUrl) => {
     return {
       traces: {[UsesRelPreload.DEFAULT_PASS]: createTestTrace({traceEnd: 5000})},
       devtoolsLogs: {[UsesRelPreload.DEFAULT_PASS]: networkRecordsToDevtoolsLog(networkRecords)},
       URL: {
         initialUrl: 'about:blank',
-        requestedUrl: finalUrl,
-        mainDocumentUrl: finalUrl,
-        finalUrl,
+        requestedUrl: finalPageUrl,
+        mainDocumentUrl: finalPageUrl,
+        finalPageUrl,
       },
     };
   };

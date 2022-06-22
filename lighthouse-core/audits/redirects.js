@@ -43,10 +43,10 @@ class Redirects extends Audit {
    * Example:
    *    GET /initialUrl => 302 /firstRedirect
    *    GET /firstRedirect => 200 /firstRedirect, window.location = '/secondRedirect'
-   *    GET /secondRedirect => 302 /finalUrl
-   *    GET /finalUrl => 200 /finalUrl
+   *    GET /secondRedirect => 302 /finalPageUrl
+   *    GET /finalPageUrl => 200 /finalPageUrl
    *
-   * Returns network records [/initialUrl, /firstRedirect, /secondRedirect, /thirdRedirect, /finalUrl]
+   * Returns network records [/initialUrl, /firstRedirect, /secondRedirect, /thirdRedirect, /finalPageUrl]
    *
    * @param {LH.Artifacts.NetworkRequest} mainResource
    * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords

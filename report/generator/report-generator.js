@@ -101,7 +101,7 @@ class ReportGenerator {
 
     const rows = [];
     const topLevelKeys = /** @type {const} */(
-      ['requestedUrl', 'finalUrl', 'fetchTime', 'gatherMode']);
+      ['requestedUrl', 'finalPageUrl', 'fetchTime', 'gatherMode']);
 
     // First we have metadata about the LHR.
     rows.push(rowFormatter(topLevelKeys));

@@ -207,7 +207,7 @@ declare module Artifacts {
      * Wil be the URL of the main frame after Lighthouse finishes in timespan/snapshot.
      * TODO: Use the main frame URL in navigation mode as well.
      */
-    finalUrl: string;
+    finalPageUrl: string;
   }
 
   interface NodeDetails {

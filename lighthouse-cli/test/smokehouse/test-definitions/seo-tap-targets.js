@@ -117,7 +117,7 @@ const expectedGatheredTapTargets = [
  */
 const expectations = {
   lhr: {
-    finalUrl: BASE_URL + 'seo-tap-targets.html',
+    finalPageUrl: BASE_URL + 'seo-tap-targets.html',
     requestedUrl: BASE_URL + 'seo-tap-targets.html',
     audits: {
       'tap-targets': {

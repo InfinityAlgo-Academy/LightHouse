@@ -51,7 +51,7 @@ export class GithubApi {
         filename = getFlowResultFilenamePrefix(jsonFile);
       } else {
         filename = getLhrFilenamePrefix({
-          finalUrl: jsonFile.finalUrl,
+          finalPageUrl: jsonFile.finalPageUrl,
           fetchTime: jsonFile.fetchTime,
         });
       }

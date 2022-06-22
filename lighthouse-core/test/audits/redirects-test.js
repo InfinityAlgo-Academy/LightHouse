@@ -103,7 +103,7 @@ const FAILING_CLIENTSIDE = [
 ];
 
 describe('Performance: Redirects audit', () => {
-  const mockArtifacts = (networkRecords, finalUrl) => {
+  const mockArtifacts = (networkRecords, finalPageUrl) => {
     const devtoolsLog = networkRecordsToDevtoolsLog(networkRecords);
     const frameUrl = networkRecords[0].url;
 
@@ -114,8 +114,8 @@ describe('Performance: Redirects audit', () => {
       URL: {
         initialUrl: 'about:blank',
         requestedUrl: networkRecords[0].url,
-        mainDocumentUrl: finalUrl,
-        finalUrl,
+        mainDocumentUrl: finalPageUrl,
+        finalPageUrl,
       },
     };
   };

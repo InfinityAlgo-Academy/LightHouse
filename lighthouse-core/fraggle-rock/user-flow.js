@@ -47,7 +47,7 @@ class UserFlow {
    * @return {string}
    */
   _getDefaultStepName(artifacts) {
-    const shortUrl = this._shortenUrl(artifacts.URL.finalUrl);
+    const shortUrl = this._shortenUrl(artifacts.URL.finalPageUrl);
     switch (artifacts.GatherContext.gatherMode) {
       case 'navigation':
         return `Navigation report (${shortUrl})`;
@@ -267,7 +267,7 @@ async function auditGatherSteps(gatherSteps, options) {
     steps.push({lhr: result.lhr, name});
   }
 
-  const url = new URL(gatherSteps[0].artifacts.URL.finalUrl);
+  const url = new URL(gatherSteps[0].artifacts.URL.finalPageUrl);
   const flowName = options.name || `User flow (${url.hostname})`;
   return {steps, name: flowName};
 }

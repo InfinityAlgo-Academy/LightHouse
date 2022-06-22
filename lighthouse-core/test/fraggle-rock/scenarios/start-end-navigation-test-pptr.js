@@ -43,11 +43,11 @@ describe('Start/End navigation', () => {
       initialUrl: `${state.serverBaseUrl}/links-to-index.html`,
       requestedUrl: `${state.serverBaseUrl}/?redirect=/index.html`,
       mainDocumentUrl: `${state.serverBaseUrl}/index.html`,
-      finalUrl: `${state.serverBaseUrl}/index.html`,
+      finalPageUrl: `${state.serverBaseUrl}/index.html`,
     });
 
     expect(lhr.requestedUrl).toEqual(`${state.serverBaseUrl}/?redirect=/index.html`);
-    expect(lhr.finalUrl).toEqual(`${state.serverBaseUrl}/index.html`);
+    expect(lhr.finalPageUrl).toEqual(`${state.serverBaseUrl}/index.html`);
 
     const {erroredAudits} = getAuditsBreakdown(lhr);
     expect(erroredAudits).toHaveLength(0);

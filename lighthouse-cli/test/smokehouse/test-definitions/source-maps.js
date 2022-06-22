@@ -44,7 +44,7 @@ const expectations = {
   },
   lhr: {
     requestedUrl: 'http://localhost:10200/source-map/source-map-tester.html',
-    finalUrl: 'http://localhost:10200/source-map/source-map-tester.html',
+    finalPageUrl: 'http://localhost:10200/source-map/source-map-tester.html',
     audits: {},
   },
 };

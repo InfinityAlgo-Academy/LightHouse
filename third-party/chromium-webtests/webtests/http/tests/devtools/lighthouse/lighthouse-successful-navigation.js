@@ -60,7 +60,7 @@
 
   const {artifacts, lhr} = await LighthouseTestRunner.waitForResults();
   TestRunner.addResult('\n=============== Lighthouse Results ===============');
-  TestRunner.addResult(`URL: ${lhr.finalUrl}`);
+  TestRunner.addResult(`URL: ${lhr.finalPageUrl}`);
   TestRunner.addResult(`Version: ${lhr.lighthouseVersion}`);
   TestRunner.addResult(`ViewportDimensions: ${JSON.stringify(artifacts.ViewportDimensions, null, 2)}`);
   TestRunner.addResult('\n');

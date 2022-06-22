@@ -82,8 +82,8 @@ class GatherRunner {
       });
       passContext.url = mainDocumentUrl;
       const {URL} = passContext.baseArtifacts;
-      if (!URL.finalUrl || !URL.mainDocumentUrl) {
-        URL.finalUrl = mainDocumentUrl;
+      if (!URL.finalPageUrl || !URL.mainDocumentUrl) {
+        URL.finalPageUrl = mainDocumentUrl;
         URL.mainDocumentUrl = mainDocumentUrl;
       }
       if (passContext.passConfig.loadFailureMode === 'fatal') {
@@ -412,7 +412,7 @@ class GatherRunner {
         initialUrl: await options.driver.url(),
         requestedUrl: options.requestedUrl,
         mainDocumentUrl: '',
-        finalUrl: '',
+        finalPageUrl: '',
       },
       Timing: [],
       PageLoadError: null,

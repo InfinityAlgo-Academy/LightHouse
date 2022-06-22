@@ -21,7 +21,7 @@ const config = {
 const expectations = {
   lhr: {
     requestedUrl: 'https://airhorner.com',
-    finalUrl: 'https://airhorner.com/',
+    finalPageUrl: 'https://airhorner.com/',
     audits: {
       'service-worker': {
         score: 1,

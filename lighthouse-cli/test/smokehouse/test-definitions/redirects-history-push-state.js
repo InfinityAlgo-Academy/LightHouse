@@ -30,7 +30,7 @@ const expectations = {
     requestedUrl: `http://localhost:10200/js-redirect.html?delay=2000&jsDelay=5000&jsRedirect=%2Fonline-only.html%3Fdelay%3D1000%26redirect%3D%2Fredirects-final.html%253FpushState`,
     // Note that the final URL is the URL of the network requested resource and not that page we end up on.
     // http://localhost:10200/push-state
-    finalUrl: 'http://localhost:10200/redirects-final.html?pushState',
+    finalPageUrl: 'http://localhost:10200/redirects-final.html?pushState',
     audits: {
     },
     runWarnings: [

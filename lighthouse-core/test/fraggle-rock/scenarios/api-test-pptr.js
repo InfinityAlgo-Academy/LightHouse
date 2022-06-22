@@ -42,7 +42,7 @@ describe('Fraggle Rock API', () => {
       const url = `${state.serverBaseUrl}/onclick.html#done`;
       expect(artifacts.URL).toEqual({
         initialUrl: url,
-        finalUrl: url,
+        finalPageUrl: url,
       });
 
       const accessibility = lhr.categories.accessibility;
@@ -77,7 +77,7 @@ describe('Fraggle Rock API', () => {
       const {lhr, artifacts} = result;
       expect(artifacts.URL).toEqual({
         initialUrl: 'about:blank',
-        finalUrl: `${state.serverBaseUrl}/onclick.html#done`,
+        finalPageUrl: `${state.serverBaseUrl}/onclick.html#done`,
       });
 
       const bestPractices = lhr.categories['best-practices'];
@@ -138,7 +138,7 @@ describe('Fraggle Rock API', () => {
 
       expect(result.artifacts.URL).toEqual({
         initialUrl,
-        finalUrl: `${initialUrl}#done`,
+        finalPageUrl: `${initialUrl}#done`,
       });
 
       const {auditResults, erroredAudits, notApplicableAudits} = getAuditsBreakdown(result.lhr);
@@ -168,7 +168,7 @@ describe('Fraggle Rock API', () => {
         initialUrl: 'about:blank',
         requestedUrl: url,
         mainDocumentUrl: url,
-        finalUrl: url,
+        finalPageUrl: url,
       });
 
       const {auditResults, failedAudits, erroredAudits} = getAuditsBreakdown(lhr);
@@ -209,12 +209,12 @@ describe('Fraggle Rock API', () => {
 
       const {lhr, artifacts} = result;
       expect(lhr.requestedUrl).toEqual(requestedUrl);
-      expect(lhr.finalUrl).toEqual(mainDocumentUrl);
+      expect(lhr.finalPageUrl).toEqual(mainDocumentUrl);
       expect(artifacts.URL).toEqual({
         initialUrl,
         requestedUrl,
         mainDocumentUrl,
-        finalUrl: mainDocumentUrl,
+        finalPageUrl: mainDocumentUrl,
       });
 
       const {auditResults, failedAudits, erroredAudits} = getAuditsBreakdown(lhr);

@@ -58,7 +58,7 @@ const expectations = {
   },
   lhr: {
     requestedUrl: 'http://localhost:10200/perf/perf-budgets/load-things.html',
-    finalUrl: 'http://localhost:10200/perf/perf-budgets/load-things.html',
+    finalPageUrl: 'http://localhost:10200/perf/perf-budgets/load-things.html',
     audits: {
       'resource-summary': {
         score: null,

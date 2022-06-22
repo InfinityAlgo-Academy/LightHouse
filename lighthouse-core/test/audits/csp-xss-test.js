@@ -78,7 +78,7 @@ it('audit basic header', async () => {
       initialUrl: 'about:blank',
       requestedUrl: 'https://example.com',
       mainDocumentUrl: 'https://example.com',
-      finalUrl: 'https://example.com',
+      finalPageUrl: 'https://example.com',
     },
   };
   const results = await CspXss.audit(artifacts, {computedCache: new Map()});
@@ -116,7 +116,7 @@ it('marked N/A if no warnings found', async () => {
       initialUrl: 'about:blank',
       requestedUrl: 'https://example.com',
       mainDocumentUrl: 'https://example.com',
-      finalUrl: 'https://example.com',
+      finalPageUrl: 'https://example.com',
     },
     MetaElements: [],
     devtoolsLogs: {
@@ -144,7 +144,7 @@ describe('getRawCsps', () => {
         initialUrl: 'about:blank',
         requestedUrl: 'https://example.com',
         mainDocumentUrl: 'https://example.com',
-        finalUrl: 'https://example.com',
+        finalPageUrl: 'https://example.com',
       },
       MetaElements: [
         {
@@ -187,7 +187,7 @@ describe('getRawCsps', () => {
         initialUrl: 'about:blank',
         requestedUrl: 'https://example.com',
         mainDocumentUrl: 'https://example.com',
-        finalUrl: 'https://example.com',
+        finalPageUrl: 'https://example.com',
       },
       MetaElements: [],
       devtoolsLogs: {
@@ -224,7 +224,7 @@ describe('getRawCsps', () => {
         initialUrl: 'about:blank',
         requestedUrl: 'https://example.com',
         mainDocumentUrl: 'https://example.com',
-        finalUrl: 'https://example.com',
+        finalPageUrl: 'https://example.com',
       },
       MetaElements: [],
       devtoolsLogs: {
@@ -259,7 +259,7 @@ describe('getRawCsps', () => {
         initialUrl: 'about:blank',
         requestedUrl: 'https://example.com',
         mainDocumentUrl: 'https://example.com',
-        finalUrl: 'https://example.com',
+        finalPageUrl: 'https://example.com',
       },
       MetaElements: [],
       devtoolsLogs: {

@@ -71,7 +71,7 @@ const expectations = {
   },
   lhr: {
     requestedUrl: 'http://localhost:10200/screenshot.html?width=1000px&height=1000px',
-    finalUrl: 'http://localhost:10200/screenshot.html?width=1000px&height=1000px',
+    finalPageUrl: 'http://localhost:10200/screenshot.html?width=1000px&height=1000px',
     audits: {},
   },
 };

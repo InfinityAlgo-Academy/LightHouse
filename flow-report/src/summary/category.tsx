@@ -157,8 +157,8 @@ const SummaryCategory: FunctionComponent<{
   category: LH.ReportResult.Category|undefined,
   href: string,
   gatherMode: LH.Result.GatherMode,
-  finalUrl: string,
-}> = ({category, href, gatherMode, finalUrl}) => {
+  finalPageUrl: string,
+}> = ({category, href, gatherMode, finalPageUrl}) => {
   return (
     <div className="SummaryCategory">
       {
@@ -169,7 +169,7 @@ const SummaryCategory: FunctionComponent<{
               href={href}
               gatherMode={gatherMode}
             />
-            <SummaryTooltip category={category} gatherMode={gatherMode} url={finalUrl}/>
+            <SummaryTooltip category={category} gatherMode={gatherMode} url={finalPageUrl}/>
           </div> :
           <div className="SummaryCategory__null" data-testid="SummaryCategory__null"/>
       }

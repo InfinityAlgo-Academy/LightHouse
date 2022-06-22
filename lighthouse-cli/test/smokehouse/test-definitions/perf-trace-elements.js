@@ -133,7 +133,7 @@ const expectations = {
   },
   lhr: {
     requestedUrl: 'http://localhost:10200/perf/trace-elements.html',
-    finalUrl: 'http://localhost:10200/perf/trace-elements.html',
+    finalPageUrl: 'http://localhost:10200/perf/trace-elements.html',
     audits: {
       'largest-contentful-paint-element': {
         score: null,

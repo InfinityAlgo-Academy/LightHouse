@@ -19,7 +19,7 @@ const config = {
 const expectations = {
   lhr: {
     requestedUrl: 'http://localhost:10200/byte-efficiency/gzip.html',
-    finalUrl: 'http://localhost:10200/byte-efficiency/gzip.html',
+    finalPageUrl: 'http://localhost:10200/byte-efficiency/gzip.html',
     audits: {
       'network-requests': {
         details: {

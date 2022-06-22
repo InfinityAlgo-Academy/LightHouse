@@ -111,7 +111,7 @@ describe('Timespan Runner', () => {
       fetchTime: expect.any(String),
       URL: {
         initialUrl: 'https://start.example.com/',
-        finalUrl: 'https://end.example.com/',
+        finalPageUrl: 'https://end.example.com/',
       },
     });
   });

@@ -63,7 +63,7 @@ class CrawlableAnchors extends Audit {
 
       // checking if rawHref is a valid
       try {
-        new URL(rawHref, url.finalUrl);
+        new URL(rawHref, url.finalPageUrl);
       } catch (e) {
         return true;
       }

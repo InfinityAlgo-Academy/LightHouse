@@ -201,7 +201,7 @@ describe('getAssertionReport', () => {
       lhr: {
         audits: {},
         requestedUrl: 'http://localhost:10200/dobetterweb/dbw_tester.html',
-        finalUrl: 'http://localhost:10200/dobetterweb/dbw_tester.html',
+        finalPageUrl: 'http://localhost:10200/dobetterweb/dbw_tester.html',
       },
     });
     expect(report).toMatchObject({passed: 3, failed: 0, log: ''});
@@ -218,7 +218,7 @@ describe('getAssertionReport', () => {
           },
         },
         requestedUrl: 'http://localhost:10200/dobetterweb/dbw_tester.html',
-        finalUrl: 'http://localhost:10200/dobetterweb/dbw_tester.html',
+        finalPageUrl: 'http://localhost:10200/dobetterweb/dbw_tester.html',
       },
     });
     expect(report).toMatchObject({passed: 3, failed: 1});
@@ -236,7 +236,7 @@ describe('getAssertionReport', () => {
           },
         },
         requestedUrl: 'http://localhost:10200/dobetterweb/dbw_tester.html',
-        finalUrl: 'http://localhost:10200/dobetterweb/dbw_tester.html',
+        finalPageUrl: 'http://localhost:10200/dobetterweb/dbw_tester.html',
       },
     });
     expect(report).toMatchObject({passed: 3, failed: 1});
@@ -255,7 +255,7 @@ describe('getAssertionReport', () => {
           },
         },
         requestedUrl: 'http://localhost:10200/dobetterweb/dbw_tester.html',
-        finalUrl: 'http://localhost:10200/dobetterweb/dbw_tester.html',
+        finalPageUrl: 'http://localhost:10200/dobetterweb/dbw_tester.html',
       },
     });
     expect(report).toMatchObject({passed: 3, failed: 1});

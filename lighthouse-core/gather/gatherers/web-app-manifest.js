@@ -94,8 +94,8 @@ class WebAppManifest extends FRGatherer {
    */
   getArtifact(context) {
     const driver = context.driver;
-    const {finalUrl} = context.baseArtifacts.URL;
-    return WebAppManifest.getWebAppManifest(driver.defaultSession, finalUrl);
+    const {finalPageUrl} = context.baseArtifacts.URL;
+    return WebAppManifest.getWebAppManifest(driver.defaultSession, finalPageUrl);
   }
 }
 

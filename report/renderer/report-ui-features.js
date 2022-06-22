@@ -242,7 +242,7 @@ export class ReportUIFeatures {
 
     tablesWithUrls.forEach((tableEl) => {
       const rowEls = getTableRows(tableEl);
-      const thirdPartyRows = this._getThirdPartyRows(rowEls, this.json.finalUrl);
+      const thirdPartyRows = this._getThirdPartyRows(rowEls, this.json.finalPageUrl);
 
       // create input box
       const filterTemplate = this._dom.createComponent('3pFilter');
@@ -318,13 +318,13 @@ export class ReportUIFeatures {
    * From a table with URL entries, finds the rows containing third-party URLs
    * and returns them.
    * @param {HTMLElement[]} rowEls
-   * @param {string} finalUrl
+   * @param {string} finalPageUrl
    * @return {Array<HTMLElement>}
    */
-  _getThirdPartyRows(rowEls, finalUrl) {
+  _getThirdPartyRows(rowEls, finalPageUrl) {
     /** @type {Array<HTMLElement>} */
     const thirdPartyRows = [];
-    const finalUrlRootDomain = Util.getRootDomain(finalUrl);
+    const finalPageUrlRootDomain = Util.getRootDomain(finalPageUrl);
 
     for (const rowEl of rowEls) {
       if (rowEl.classList.contains('lh-sub-item-row')) continue;
@@ -334,7 +334,7 @@ export class ReportUIFeatures {
 
       const datasetUrl = urlItem.dataset.url;
       if (!datasetUrl) continue;
-      const isThirdParty = Util.getRootDomain(datasetUrl) !== finalUrlRootDomain;
+      const isThirdParty = Util.getRootDomain(datasetUrl) !== finalPageUrlRootDomain;
       if (!isThirdParty) continue;
 
       thirdPartyRows.push(rowEl);

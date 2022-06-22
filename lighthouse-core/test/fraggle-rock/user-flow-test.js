@@ -41,7 +41,7 @@ describe('UserFlow', () => {
     snapshotModule.snapshotGather.mockReset();
     snapshotModule.snapshotGather.mockResolvedValue({
       artifacts: {
-        URL: {finalUrl: 'https://www.example.com'},
+        URL: {finalPageUrl: 'https://www.example.com'},
         GatherContext: {gatherMode: 'snapshot'},
       },
       runnerOptions: {
@@ -53,7 +53,7 @@ describe('UserFlow', () => {
     navigationModule.navigationGather.mockReset();
     navigationModule.navigationGather.mockResolvedValue({
       artifacts: {
-        URL: {finalUrl: 'https://www.example.com'},
+        URL: {finalPageUrl: 'https://www.example.com'},
         GatherContext: {gatherMode: 'navigation'},
       },
       runnerOptions: {
@@ -64,7 +64,7 @@ describe('UserFlow', () => {
 
     const timespanGatherResult = {
       artifacts: {
-        URL: {finalUrl: 'https://www.example.com'},
+        URL: {finalPageUrl: 'https://www.example.com'},
         GatherContext: {gatherMode: 'timespan'},
       },
       runnerOptions: {
@@ -278,7 +278,7 @@ describe('UserFlow', () => {
     it('should audit active gather steps', async () => {
       mockRunner.audit.mockImplementation(artifacts => ({
         lhr: {
-          finalUrl: artifacts.URL.finalUrl,
+          finalPageUrl: artifacts.URL.finalPageUrl,
           gatherMode: artifacts.GatherContext.gatherMode,
         },
       }));
@@ -293,15 +293,15 @@ describe('UserFlow', () => {
       expect(flowResult).toMatchObject({
         steps: [
           {
-            lhr: {finalUrl: 'https://www.example.com', gatherMode: 'navigation'},
+            lhr: {finalPageUrl: 'https://www.example.com', gatherMode: 'navigation'},
             name: 'Navigation report (www.example.com/)',
           },
           {
-            lhr: {finalUrl: 'https://www.example.com', gatherMode: 'timespan'},
+            lhr: {finalPageUrl: 'https://www.example.com', gatherMode: 'timespan'},
             name: 'My Timespan',
           },
           {
-            lhr: {finalUrl: 'https://www.example.com', gatherMode: 'snapshot'},
+            lhr: {finalPageUrl: 'https://www.example.com', gatherMode: 'snapshot'},
             name: 'My Snapshot',
           },
         ],
@@ -318,7 +318,7 @@ describe('UserFlow', () => {
       mockRunner.getAuditList.mockImplementation(runnerActual.getAuditList);
       mockRunner.audit.mockImplementation(artifacts => ({
         lhr: {
-          finalUrl: artifacts.URL.finalUrl,
+          finalPageUrl: artifacts.URL.finalPageUrl,
           gatherMode: artifacts.GatherContext.gatherMode,
         },
       }));
@@ -356,7 +356,7 @@ describe('UserFlow', () => {
               initialUrl: 'https://www.example.com',
               requestedUrl: 'https://www.example.com',
               mainDocumentUrl: 'https://www.example.com',
-              finalUrl: 'https://www.example.com',
+              finalPageUrl: 'https://www.example.com',
             },
             GatherContext: {gatherMode: 'navigation'},
           },
@@ -367,7 +367,7 @@ describe('UserFlow', () => {
           artifacts: {
             URL: {
               initialUrl: 'https://www.example.com',
-              finalUrl: 'https://www.example.com',
+              finalPageUrl: 'https://www.example.com',
             },
             GatherContext: {gatherMode: 'timespan'},
           },
@@ -379,7 +379,7 @@ describe('UserFlow', () => {
           artifacts: {
             URL: {
               initialUrl: 'https://www.example.com',
-              finalUrl: 'https://www.example.com',
+              finalPageUrl: 'https://www.example.com',
             },
             GatherContext: {gatherMode: 'snapshot'},
           },
@@ -425,15 +425,15 @@ describe('UserFlow', () => {
       expect(flowResult).toMatchObject({
         steps: [
           {
-            lhr: {finalUrl: 'https://www.example.com', gatherMode: 'navigation'},
+            lhr: {finalPageUrl: 'https://www.example.com', gatherMode: 'navigation'},
             name: 'Navigation',
           },
           {
-            lhr: {finalUrl: 'https://www.example.com', gatherMode: 'timespan'},
+            lhr: {finalPageUrl: 'https://www.example.com', gatherMode: 'timespan'},
             name: 'Timespan',
           },
           {
-            lhr: {finalUrl: 'https://www.example.com', gatherMode: 'snapshot'},
+            lhr: {finalPageUrl: 'https://www.example.com', gatherMode: 'snapshot'},
             name: 'Snapshot',
           },
         ],

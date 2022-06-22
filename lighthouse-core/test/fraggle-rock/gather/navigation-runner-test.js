@@ -112,7 +112,7 @@ describe('NavigationRunner', () => {
     navigation = createNavigation().navigation;
     computedCache = new Map();
     baseArtifacts = createMockBaseArtifacts();
-    baseArtifacts.URL = {initialUrl: '', finalUrl: ''};
+    baseArtifacts.URL = {initialUrl: '', finalPageUrl: ''};
 
     mockDriver = createMockDriver();
     mockDriver.url.mockReturnValue('about:blank');
@@ -158,7 +158,7 @@ describe('NavigationRunner', () => {
       expect(baseArtifacts).toMatchObject({
         URL: {
           initialUrl: '',
-          finalUrl: '',
+          finalPageUrl: '',
         },
       });
     });
@@ -230,7 +230,7 @@ describe('NavigationRunner', () => {
         initialUrl: 'about:blank',
         requestedUrl,
         mainDocumentUrl: requestedUrl,
-        finalUrl: requestedUrl,
+        finalPageUrl: requestedUrl,
       });
     });
 
@@ -268,7 +268,7 @@ describe('NavigationRunner', () => {
 
       // Ensure the first real page load fails.
       mocks.navigationMock.gotoURL.mockImplementation((driver, url) => {
-        if (url === 'about:blank') return {finalUrl: 'about:blank', warnings: []};
+        if (url === 'about:blank') return {finalPageUrl: 'about:blank', warnings: []};
         throw new LighthouseError(LighthouseError.errors.PAGE_HUNG);
       });
 
@@ -288,7 +288,7 @@ describe('NavigationRunner', () => {
         initialUrl: 'about:blank',
         requestedUrl,
         mainDocumentUrl: requestedUrl,
-        finalUrl: requestedUrl,
+        finalPageUrl: requestedUrl,
       });
     });
   });
@@ -415,7 +415,7 @@ describe('NavigationRunner', () => {
       mocks.navigationMock.gotoURL.mockImplementation(
         /** @param {*} context @param {string} url */
         (context, url) => {
-          if (url.includes('blank')) return {finalUrl: 'about:blank', warnings: []};
+          if (url.includes('blank')) return {finalPageUrl: 'about:blank', warnings: []};
           throw noFcp;
         }
       );

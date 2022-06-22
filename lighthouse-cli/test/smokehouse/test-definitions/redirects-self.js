@@ -13,7 +13,7 @@ const expectations = {
   },
   lhr: {
     requestedUrl: 'http://localhost:10200/redirects-self.html',
-    finalUrl: 'http://localhost:10200/redirects-self.html?done=',
+    finalPageUrl: 'http://localhost:10200/redirects-self.html?done=',
     audits: {
     },
     runWarnings: [

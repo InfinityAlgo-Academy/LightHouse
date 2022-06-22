@@ -388,7 +388,7 @@ function collateResults(localConsole, actual, expected) {
   }
 
   return [
-    makeComparison('final url', actual.lhr.finalUrl, expected.lhr.finalUrl),
+    makeComparison('final url', actual.lhr.finalPageUrl, expected.lhr.finalPageUrl),
     runtimeErrorAssertion,
     runWarningsAssertion,
     ...requestCountAssertion,

@@ -12,7 +12,7 @@ const getLhrFilenamePrefix = require('../../generator/file-namer.js').getLhrFile
 describe('file-namer helper', () => {
   it('generates filename prefixes', () => {
     const results = {
-      finalUrl: 'https://testexample.com',
+      finalPageUrl: 'https://testexample.com',
       fetchTime: '2017-01-06T02:34:56.217Z',
     };
     const str = getLhrFilenamePrefix(results);

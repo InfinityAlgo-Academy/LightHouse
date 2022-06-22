@@ -75,7 +75,7 @@ describe('Lighthouse Treemap', () => {
         timeout: 30000,
       });
       const options = await page.evaluate(() => window.__treemapOptions);
-      expect(options.lhr.finalUrl).toBe(debugOptions.lhr.finalUrl);
+      expect(options.lhr.finalPageUrl).toBe(debugOptions.lhr.finalPageUrl);
     });
 
     /**
@@ -98,20 +98,20 @@ describe('Lighthouse Treemap', () => {
 
     it('from encoded fragment (no gzip)', async () => {
       const options = JSON.parse(JSON.stringify(debugOptions));
-      options.lhr.finalUrl += '😃😃😃';
+      options.lhr.finalPageUrl += '😃😃😃';
       await loadFromEncodedUrl({options, usesGzip: false});
 
       const optionsInPage = await page.evaluate(() => window.__treemapOptions);
-      expect(optionsInPage.lhr.finalUrl).toBe(options.lhr.finalUrl);
+      expect(optionsInPage.lhr.finalPageUrl).toBe(options.lhr.finalPageUrl);
     });
 
     it('from encoded fragment (gzip)', async () => {
       const options = JSON.parse(JSON.stringify(debugOptions));
-      options.lhr.finalUrl += '😃😃😃';
+      options.lhr.finalPageUrl += '😃😃😃';
       await loadFromEncodedUrl({options, usesGzip: true});
 
       const optionsInPage = await page.evaluate(() => window.__treemapOptions);
-      expect(optionsInPage.lhr.finalUrl).toBe(options.lhr.finalUrl);
+      expect(optionsInPage.lhr.finalPageUrl).toBe(options.lhr.finalPageUrl);
     });
 
     describe('handles errors', () => {

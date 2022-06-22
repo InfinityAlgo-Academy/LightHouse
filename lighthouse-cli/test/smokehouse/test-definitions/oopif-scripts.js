@@ -44,7 +44,7 @@ const config = {
 const expectations = {
   lhr: {
     requestedUrl: 'http://localhost:10200/oopif-scripts.html',
-    finalUrl: 'http://localhost:10200/oopif-scripts.html',
+    finalPageUrl: 'http://localhost:10200/oopif-scripts.html',
     audits: {
       'network-requests': {
         details: {
