@@ -11,7 +11,7 @@ const LHError = require('../../lib/lh-error.js');
 // Controls how long to wait for a response after sending a DevTools protocol command.
 const DEFAULT_PROTOCOL_TIMEOUT = 30000;
 
-/** @typedef {new () => LH.Protocol.StrictEventEmitter<LH.CrdpEvents>} CrdpEventMessageEmitter */
+/** @typedef {LH.Protocol.StrictEventEmitterClass<LH.CrdpEvents>} CrdpEventMessageEmitter */
 const CrdpEventEmitter = /** @type {CrdpEventMessageEmitter} */ (EventEmitter);
 
 /** @implements {LH.Gatherer.FRProtocolSession} */

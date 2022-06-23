@@ -16,14 +16,14 @@ const NetworkRecorder = require('../../lib/network-recorder.js');
 const NetworkRequest = require('../../lib/network-request.js');
 const URL = require('../../lib/url-shim.js');
 
-/** @typedef {import('../../lib/network-recorder.js').NetworkRecorderEvent} NetworkRecorderEvent */
+/** @typedef {import('../../lib/network-recorder.js').NetworkRecorderEventMap} NetworkRecorderEventMap */
 /** @typedef {'network-2-idle'|'network-critical-idle'|'networkidle'|'networkbusy'|'network-critical-busy'|'network-2-busy'} NetworkMonitorEvent_ */
-/** @typedef {NetworkRecorderEvent|NetworkMonitorEvent_} NetworkMonitorEvent */
-/** @typedef {Record<NetworkMonitorEvent_, []> & Record<NetworkRecorderEvent, [NetworkRequest]>} NetworkMonitorEventMap */
-/** @typedef {LH.Protocol.StrictEventEmitter<NetworkMonitorEventMap>} NetworkMonitorEmitter */
+/** @typedef {Record<NetworkMonitorEvent_, []> & NetworkRecorderEventMap} NetworkMonitorEventMap */
+/** @typedef {keyof NetworkMonitorEventMap} NetworkMonitorEvent */
+/** @typedef {LH.Protocol.StrictEventEmitterClass<NetworkMonitorEventMap>} NetworkMonitorEmitter */
+const NetworkMonitorEventEmitter = /** @type {NetworkMonitorEmitter} */ (EventEmitter);
 
-/** @implements {NetworkMonitorEmitter} */
-class NetworkMonitor {
+class NetworkMonitor extends NetworkMonitorEventEmitter {
   /** @type {NetworkRecorder|undefined} */
   _networkRecorder = undefined;
   /** @type {Array<LH.Crdp.Page.Frame>} */
@@ -32,6 +32,8 @@ class NetworkMonitor {
   // TODO(FR-COMPAT): switch to real TargetManager when legacy removed.
   /** @param {LH.Gatherer.FRTransitionalDriver['targetManager']} targetManager */
   constructor(targetManager) {
+    super();
+
     /** @type {LH.Gatherer.FRTransitionalDriver['targetManager']} */
     this._targetManager = targetManager;
 
@@ -46,25 +48,6 @@ class NetworkMonitor {
       if (!this._networkRecorder) return;
       this._networkRecorder.dispatch(event);
     };
-
-    // Attach the event emitter types to this class.
-    const emitter = /** @type {NetworkMonitorEmitter} */ (new EventEmitter());
-    /** @type {typeof emitter['emit']} */
-    this.emit = emitter.emit.bind(emitter);
-    /** @type {typeof emitter['on']} */
-    this.on = emitter.on.bind(emitter);
-    /** @type {typeof emitter['once']} */
-    this.once = emitter.once.bind(emitter);
-    /** @type {typeof emitter['off']} */
-    this.off = emitter.off.bind(emitter);
-    /** @type {typeof emitter['addListener']} */
-    this.addListener = emitter.addListener.bind(emitter);
-    /** @type {typeof emitter['removeListener']} */
-    this.removeListener = emitter.removeListener.bind(emitter);
-    /** @type {typeof emitter['removeAllListeners']} */
-    this.removeAllListeners = emitter.removeAllListeners.bind(emitter);
-    /** @type {typeof emitter['listenerCount']} */
-    this.listenerCount = emitter.listenerCount.bind(emitter);
   }
 
   /**
@@ -78,7 +61,7 @@ class NetworkMonitor {
 
     /**
      * Reemit the same network recorder events.
-     * @param {NetworkRecorderEvent} event
+     * @param {keyof NetworkRecorderEventMap} event
      * @return {(r: NetworkRequest) => void}
      */
     const reEmit = event => r => {

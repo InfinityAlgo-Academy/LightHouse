@@ -19,8 +19,8 @@ const ProtocolSession = require('../../fraggle-rock/gather/session.js');
  */
 
 // Add protocol event types to EventEmitter.
-/** @typedef {{'protocolevent': [LH.Protocol.RawEventMessage]}} ProtocolEventRecord */
-/** @typedef {new () => LH.Protocol.StrictEventEmitter<ProtocolEventRecord>} ProtocolEventMessageEmitter */
+/** @typedef {{'protocolevent': [LH.Protocol.RawEventMessage]}} ProtocolEventMap */
+/** @typedef {LH.Protocol.StrictEventEmitterClass<ProtocolEventMap>} ProtocolEventMessageEmitter */
 const ProtocolEventEmitter = /** @type {ProtocolEventMessageEmitter} */ (EventEmitter);
 
 /**
