@@ -141,8 +141,9 @@ describe('Performance: preload-lcp audit', () => {
         {url: 'http://www.example.com/image.png', initiatorType: 'script'},
         {url: 'http://www.example.com/script.js', initiatorType: 'parser'},
         {url: 'http://www.example.com:3000', initiatorType: 'other'},
+        {url: 'http://example.com:3000', initiatorType: 'other'},
       ],
-      pathLength: 3,
+      pathLength: 4,
     });
   });
 
@@ -173,8 +174,9 @@ describe('Performance: preload-lcp audit', () => {
         {url: 'http://www.example.com/image.png', initiatorType: 'script'},
         {url: 'http://www.example.com/script.js', initiatorType: 'parser'},
         {url: 'http://www.example.com:3000', initiatorType: 'other'},
+        {url: 'http://example.com:3000', initiatorType: 'other'},
       ],
-      pathLength: 3,
+      pathLength: 4,
     });
   });
 });
