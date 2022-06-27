@@ -10,12 +10,18 @@ import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
 
 const cutoffLoadDevtoolsLog = readJson('../fixtures/traces/cutoff-load-m83.devtoolslog.json', import.meta);
 
+const GatherContext = {
+  gatherMode: 'navigation',
+};
+
 describe('Network requests audit', () => {
   it('should report finished and unfinished network requests', async () => {
     const artifacts = {
       devtoolsLogs: {
         [NetworkRequests.DEFAULT_PASS]: cutoffLoadDevtoolsLog,
       },
+      URL: {mainDocumentUrl: 'https://googlechrome.github.io/lighthouse/viewer/'},
+      GatherContext,
     };
 
     const output = await NetworkRequests.audit(artifacts, {computedCache: new Map()});
@@ -62,6 +68,8 @@ describe('Network requests audit', () => {
       devtoolsLogs: {
         [NetworkRequests.DEFAULT_PASS]: networkRecordsToDevtoolsLog(records),
       },
+      URL: {mainDocumentUrl: 'https://example.com/0'},
+      GatherContext,
     };
     const output = await NetworkRequests.audit(artifacts, {computedCache: new Map()});
 
@@ -73,6 +81,78 @@ describe('Network requests audit', () => {
       startTime: 500,
       endTime: undefined,
       finished: true,
+    }]);
+  });
+
+  it('should report if records are from the main frame', async () => {
+    const records = [
+      {url: 'https://example.com/'},
+      {url: 'https://iframed.local/', frameId: '71D866EC199B90A2E0B2D9CF88DCBC4E'},
+    ];
+
+    const artifacts = {
+      devtoolsLogs: {
+        [NetworkRequests.DEFAULT_PASS]: networkRecordsToDevtoolsLog(records),
+      },
+      URL: {mainDocumentUrl: 'https://example.com/'},
+      GatherContext,
+    };
+    const output = await NetworkRequests.audit(artifacts, {computedCache: new Map()});
+
+    expect(output.details.items).toMatchObject([{
+      url: 'https://example.com/',
+      experimentalFromMainFrame: true,
+    }, {
+      url: 'https://iframed.local/',
+      experimentalFromMainFrame: undefined,
+    }]);
+  });
+
+  it('should not include main frame information outside of navigations', async () => {
+    const records = [
+      {url: 'https://example.com/'},
+      {url: 'https://iframed.local/', frameId: '71D866EC199B90A2E0B2D9CF88DCBC4E'},
+    ];
+
+    const artifacts = {
+      devtoolsLogs: {
+        [NetworkRequests.DEFAULT_PASS]: networkRecordsToDevtoolsLog(records),
+      },
+      URL: {mainDocumentUrl: 'https://example.com/'},
+      GatherContext: {gatherMode: 'timespan'},
+    };
+    const output = await NetworkRequests.audit(artifacts, {computedCache: new Map()});
+
+    expect(output.details.items).toMatchObject([{
+      url: 'https://example.com/',
+      experimentalFromMainFrame: undefined,
+    }, {
+      url: 'https://iframed.local/',
+      experimentalFromMainFrame: undefined,
+    }]);
+  });
+
+  it('should include if network request was preloaded', async () => {
+    const records = [
+      {url: 'https://example.com/'},
+      {url: 'https://example.com/img.jpg', isLinkPreload: true},
+    ];
+
+    const artifacts = {
+      devtoolsLogs: {
+        [NetworkRequests.DEFAULT_PASS]: networkRecordsToDevtoolsLog(records),
+      },
+      URL: {mainDocumentUrl: 'https://example.com/'},
+      GatherContext,
+    };
+    const output = await NetworkRequests.audit(artifacts, {computedCache: new Map()});
+
+    expect(output.details.items).toMatchObject([{
+      url: 'https://example.com/',
+      isLinkPreload: undefined,
+    }, {
+      url: 'https://example.com/img.jpg',
+      isLinkPreload: true,
     }]);
   });
 });

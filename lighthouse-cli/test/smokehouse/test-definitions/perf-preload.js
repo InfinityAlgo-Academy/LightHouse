@@ -78,6 +78,11 @@ const expectations = {
       'network-requests': {
         details: {
           items: {
+            _includes: [
+              {url: 'http://localhost:10200/preload.html', isLinkPreload: undefined, experimentalFromMainFrame: true},
+              {url: 'http://localhost:10200/perf/level-2.js?warning&delay=500', isLinkPreload: true, experimentalFromMainFrame: true},
+              {url: 'http://localhost:10200/perf/preload_tester.js', isLinkPreload: undefined, experimentalFromMainFrame: true},
+            ],
             length: '>5',
           },
         },
