@@ -4,6 +4,8 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
+import {EventEmitter} from 'events';
+
 import {jest} from '@jest/globals';
 import {CDPSession} from 'puppeteer/lib/cjs/puppeteer/common/Connection.js';
 
@@ -27,126 +29,70 @@ describe('ProtocolSession', () => {
 
   beforeEach(() => {
     // @ts-expect-error - Individual mock functions are applied as necessary.
-    puppeteerSession = new CDPSession({_rawSend: fnAny()});
+    puppeteerSession = new CDPSession({_rawSend: fnAny(), send: fnAny()}, '', 'root');
     session = new ProtocolSession(puppeteerSession);
   });
 
-  describe('ProtocolSession', () => {
-    it('should emit a copy of events on "*"', () => {
-      session = new ProtocolSession(puppeteerSession);
+  describe('responds to events from the underlying CDPSession', () => {
+    it('once', async () => {
+      const callback = fnAny();
 
-      const regularListener = fnAny();
-      const allListener = fnAny();
+      session.once('Page.frameNavigated', callback);
+      puppeteerSession.emit('Page.frameNavigated', {id: 1});
+      expect(callback).toHaveBeenCalledTimes(1);
+      expect(callback).toHaveBeenCalledWith({id: 1});
 
-      session.on('Network.dataReceived', regularListener);
-      session.addProtocolMessageListener(allListener);
-      puppeteerSession.emit('Network.dataReceived', 1);
-      puppeteerSession.emit('Bar', 1);
-
-      expect(regularListener).toHaveBeenCalledTimes(1);
-      expect(allListener).toHaveBeenCalledTimes(2);
-      expect(allListener).toHaveBeenCalledWith({method: 'Network.dataReceived', params: 1});
-      expect(allListener).toHaveBeenCalledWith({method: 'Bar', params: 1});
+      puppeteerSession.emit('Page.frameNavigated', {id: 2});
+      expect(callback).toHaveBeenCalledTimes(1);
     });
 
-    it('should not fire duplicate events', () => {
-      session = new ProtocolSession(puppeteerSession);
-      session = new ProtocolSession(puppeteerSession);
+    it('on', async () => {
+      const callback = fnAny();
 
-      const regularListener = fnAny();
-      const allListener = fnAny();
+      session.on('Page.frameNavigated', callback);
+      puppeteerSession.emit('Page.frameNavigated', {id: 1});
+      expect(callback).toHaveBeenCalledTimes(1);
+      expect(callback).toHaveBeenCalledWith({id: 1});
 
-      session.on('Network.dataReceived', regularListener);
-      session.addProtocolMessageListener(allListener);
-      puppeteerSession.emit('Network.dataReceived', 1);
-      puppeteerSession.emit('Bar', 1);
-
-      expect(regularListener).toHaveBeenCalledTimes(1);
-      expect(allListener).toHaveBeenCalledTimes(2);
+      puppeteerSession.emit('Page.frameNavigated', {id: 2});
+      expect(callback).toHaveBeenCalledTimes(2);
+      expect(callback).toHaveBeenCalledWith({id: 2});
     });
 
-    it('should include sessionId for iframes', () => {
-      session = new ProtocolSession(puppeteerSession);
+    it('off', async () => {
+      const callback = fnAny();
 
-      const listener = fnAny();
-      const targetInfo = {title: '', url: '', attached: true, canAccessOpener: false};
+      session.on('Page.frameNavigated', callback);
+      puppeteerSession.emit('Page.frameNavigated', {id: 1});
+      expect(callback).toHaveBeenCalledTimes(1);
+      expect(callback).toHaveBeenCalledWith({id: 1});
 
-      session.addProtocolMessageListener(listener);
-      session.setTargetInfo({targetId: 'page', type: 'page', ...targetInfo});
-      puppeteerSession.emit('Foo', 1);
-      session.setTargetInfo({targetId: 'iframe', type: 'iframe', ...targetInfo});
-      puppeteerSession.emit('Bar', 1);
-
-      expect(listener).toHaveBeenCalledTimes(2);
-      expect(listener).toHaveBeenCalledWith({method: 'Foo', params: 1});
-      expect(listener).toHaveBeenCalledWith({method: 'Bar', params: 1, sessionId: 'iframe'});
+      session.off('Page.frameNavigated', callback);
+      puppeteerSession.emit('Page.frameNavigated', {id: 2});
+      expect(callback).toHaveBeenCalledTimes(1);
     });
   });
-
-  /** @type {Array<'on'|'off'|'once'>} */
-  const delegateMethods = ['on', 'once', 'off'];
-  for (const method of delegateMethods) {
-    describe(`.${method}`, () => {
-      it('delegates to puppeteer', async () => {
-        const puppeteerFn = puppeteerSession[method] = fnAny();
-        const callback = () => undefined;
-
-        session[method]('Page.frameNavigated', callback);
-        expect(puppeteerFn).toHaveBeenCalledWith('Page.frameNavigated', callback);
-      });
-    });
-  }
 
   describe('.dispose', () => {
     it('should detach from the session', async () => {
       const detach = fnAny();
-      const removeAllListeners = fnAny();
+      class MockCdpSession extends EventEmitter {
+        constructor() {
+          super();
+
+          this.detach = detach;
+        }
+      }
+
       // @ts-expect-error - we want to use a more limited test.
-      puppeteerSession = {detach, emit: fnAny(), removeAllListeners};
+      puppeteerSession = new MockCdpSession();
       session = new ProtocolSession(puppeteerSession);
+
+      expect(puppeteerSession.listenerCount('*')).toBe(1);
 
       await session.dispose();
       expect(detach).toHaveBeenCalled();
-      expect(removeAllListeners).toHaveBeenCalled();
-    });
-  });
-
-  describe('.addProtocolMessageListener', () => {
-    it('should listen for any event', () => {
-      session = new ProtocolSession(puppeteerSession);
-
-      const regularListener = fnAny();
-      const allListener = fnAny();
-
-      session.on('Page.frameNavigated', regularListener);
-      session.addProtocolMessageListener(allListener);
-
-      puppeteerSession.emit('Page.frameNavigated');
-      puppeteerSession.emit('Debugger.scriptParsed', {script: 'details'});
-
-      expect(regularListener).toHaveBeenCalledTimes(1);
-      expect(regularListener).toHaveBeenCalledWith(undefined);
-      expect(allListener).toHaveBeenCalledTimes(2);
-      expect(allListener).toHaveBeenCalledWith({method: 'Page.frameNavigated', params: undefined});
-      expect(allListener).toHaveBeenCalledWith({
-        method: 'Debugger.scriptParsed',
-        params: {script: 'details'},
-      });
-    });
-  });
-
-  describe('.removeProtocolMessageListener', () => {
-    it('should stop listening for any event', () => {
-      session = new ProtocolSession(puppeteerSession);
-
-      const allListener = fnAny();
-
-      session.addProtocolMessageListener(allListener);
-      puppeteerSession.emit('Page.frameNavigated');
-      expect(allListener).toHaveBeenCalled();
-      session.removeProtocolMessageListener(allListener);
-      puppeteerSession.emit('Page.frameNavigated');
-      expect(allListener).toHaveBeenCalledTimes(1);
+      expect(puppeteerSession.listenerCount('*')).toBe(0);
     });
   });
 

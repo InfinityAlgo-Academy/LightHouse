@@ -7,7 +7,7 @@
 import 'lighthouse-logger'; // Needed otherwise `log.timeEnd` errors in navigation.js inexplicably.
 import {jest} from '@jest/globals';
 
-import {createMockDriver, mockTargetManagerModule} from '../../fraggle-rock/gather/mock-driver.js';
+import {createMockDriver} from '../../fraggle-rock/gather/mock-driver.js';
 import {
   mockCommands,
   makePromiseInspectable,
@@ -29,8 +29,6 @@ beforeAll(async () => {
   ({gotoURL, getNavigationWarnings} = (await import('../../../gather/driver/navigation.js')));
 });
 
-const targetManagerMock = mockTargetManagerModule();
-
 jest.useFakeTimers();
 
 describe('.gotoURL', () => {
@@ -42,7 +40,6 @@ describe('.gotoURL', () => {
   beforeEach(() => {
     mockDriver = createMockDriver();
     driver = mockDriver.asDriver();
-    targetManagerMock.mockEnable(driver.defaultSession);
 
     mockDriver.defaultSession.sendCommand
       .mockResponse('Page.enable') // network monitor's Page.enable
@@ -52,10 +49,6 @@ describe('.gotoURL', () => {
       .mockResponse('Page.navigate')
       .mockResponse('Runtime.evaluate')
       .mockResponse('Page.getResourceTree', {frameTree: {frame: {id: 'ABC'}}});
-  });
-
-  afterEach(() => {
-    targetManagerMock.reset();
   });
 
   it('will track redirects through gotoURL load with warning', async () => {

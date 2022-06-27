@@ -30,6 +30,8 @@ import {fnAny} from '../test-utils.js';
  *    - `findInvocation` which asserts that `sendCommand` was invoked with the given command and
  *      returns the protocol message argument.
  *
+ * To mock an error response, use `send.mockResponse('Command', () => Promise.reject(error))`.
+ *
  * There are two variants of sendCommand, one that expects a sessionId as the second positional
  * argument (legacy Lighthouse `Connection.sendCommand`) and one that does not (Fraggle Rock
  * `ProtocolSession.sendCommand`).

@@ -45,14 +45,15 @@ jobs:
           ${{ env.BLINK_TOOLS_PATH }}
           ${{ github.workspace }}/lighthouse/.tmp/chromium-web-tests/content-shells
           ${{ github.workspace }}/.gclient
+          ${{ github.workspace }}/.gclient_entries
         # This hash key changes:
         # 1) every monday (so invalidates once a week)
         # 2) every commit to CDT touching files important to Lighthouse web tests
         # 3) every change to file in Lighthouse repo important to running these tests.
         #
         # The number is how many times this hash key was manually updated to break the cache.
-        key: ${{ runner.os }}-5-${{ env.WEEK_OF_THE_YEAR }}-${{ hashFiles('cdt-test-hash.txt') }}
-        restore-keys: ${{ runner.os }}-5
+        key: ${{ runner.os }}-7-${{ env.WEEK_OF_THE_YEAR }}-${{ hashFiles('cdt-test-hash.txt') }}
+        restore-keys: ${{ runner.os }}-7
     - name: Set GHA_DEVTOOLS_CACHE_HIT
       if: steps.devtools-cache.outputs.cache-hit == 'true'
       run: echo "GHA_DEVTOOLS_CACHE_HIT=1" >> $GITHUB_ENV
@@ -73,10 +74,47 @@ jobs:
       uses: actions/cache@v3
       with:
         path: |
-          ${{ env.DEVTOOLS_PATH }}/out/Default/gen/front_end
-          ${{ env.DEVTOOLS_PATH }}/test/webtests
+          ${{ env.DEVTOOLS_PATH }}
           ${{ github.workspace }}/.gclient
+          ${{ github.workspace }}/.gclient_entries
         key: devtools-build-artifacts-${{ github.run_id }}
+
+  e2e:
+    needs: [build]
+    runs-on: macos-latest
+
+    steps:
+    - name: git clone
+      uses: actions/checkout@v2
+      with:
+        path: lighthouse
+
+    - name: Use Node.js 14.x
+      uses: actions/setup-node@v1
+      with:
+        node-version: 14.x
+
+    - run: yarn --frozen-lockfile --network-timeout 1000000
+      working-directory: ${{ github.workspace }}/lighthouse
+
+    - name: Set $PATH
+      run: echo "$DEPOT_TOOLS_PATH" >> $GITHUB_PATH
+    # For vpython.
+    - name: Download depot tools
+      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/chromium-web-tests/download-depot-tools.sh
+
+    - name: Load build artifacts
+      id: devtools-build-artifacts
+      uses: actions/cache@v3
+      with:
+        path: |
+          ${{ env.DEVTOOLS_PATH }}
+          ${{ github.workspace }}/.gclient
+          ${{ github.workspace }}/.gclient_entries
+        key: devtools-build-artifacts-${{ github.run_id }}
+
+    - name: Run e2e tests
+      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/devtools-tests/run-e2e-tests.sh
 
   web-tests:
     needs: [build]
@@ -98,9 +136,9 @@ jobs:
       uses: actions/cache@v3
       with:
         path: |
-          ${{ env.DEVTOOLS_PATH }}/out/Default/gen/front_end
-          ${{ env.DEVTOOLS_PATH }}/test/webtests
+          ${{ env.DEVTOOLS_PATH }}
           ${{ github.workspace }}/.gclient
+          ${{ github.workspace }}/.gclient_entries
         key: devtools-build-artifacts-${{ github.run_id }}
 
     - name: Download Blink Tools
@@ -147,9 +185,9 @@ jobs:
       uses: actions/cache@v3
       with:
         path: |
-          ${{ env.DEVTOOLS_PATH }}/out/Default/gen/front_end
-          ${{ env.DEVTOOLS_PATH }}/test/webtests
+          ${{ env.DEVTOOLS_PATH }}
           ${{ github.workspace }}/.gclient
+          ${{ github.workspace }}/.gclient_entries
         key: devtools-build-artifacts-${{ github.run_id }}
 
     - name: Download Blink Tools

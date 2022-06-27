@@ -6,8 +6,8 @@
 'use strict';
 
 import log from 'lighthouse-logger';
-import {ProtocolSession} from './session.js';
 import {ExecutionContext} from '../../gather/driver/execution-context.js';
+import {TargetManager} from '../../gather/driver/target-manager.js';
 import {Fetcher} from '../../gather/fetcher.js';
 
 /** @return {*} */
@@ -24,8 +24,6 @@ const throwingSession = {
   on: throwNotConnectedFn,
   once: throwNotConnectedFn,
   off: throwNotConnectedFn,
-  addProtocolMessageListener: throwNotConnectedFn,
-  removeProtocolMessageListener: throwNotConnectedFn,
   sendCommand: throwNotConnectedFn,
   dispose: throwNotConnectedFn,
 };
@@ -37,6 +35,8 @@ class Driver {
    */
   constructor(page) {
     this._page = page;
+    /** @type {TargetManager|undefined} */
+    this._targetManager = undefined;
     /** @type {ExecutionContext|undefined} */
     this._executionContext = undefined;
     /** @type {Fetcher|undefined} */
@@ -57,6 +57,11 @@ class Driver {
     return this._fetcher;
   }
 
+  get targetManager() {
+    if (!this._targetManager) return throwNotConnectedFn();
+    return this._targetManager;
+  }
+
   /** @return {Promise<string>} */
   async url() {
     return this._page.url();
@@ -67,8 +72,10 @@ class Driver {
     if (this.defaultSession !== throwingSession) return;
     const status = {msg: 'Connecting to browser', id: 'lh:driver:connect'};
     log.time(status);
-    const session = await this._page.target().createCDPSession();
-    this.defaultSession = new ProtocolSession(session);
+    const cdpSession = await this._page.target().createCDPSession();
+    this._targetManager = new TargetManager(cdpSession);
+    await this._targetManager.enable();
+    this.defaultSession = this._targetManager.rootSession();
     this._executionContext = new ExecutionContext(this.defaultSession);
     this._fetcher = new Fetcher(this.defaultSession);
     log.timeEnd(status);
@@ -77,6 +84,7 @@ class Driver {
   /** @return {Promise<void>} */
   async disconnect() {
     if (this.defaultSession === throwingSession) return;
+    this._targetManager?.disable();
     await this.defaultSession.dispose();
   }
 }

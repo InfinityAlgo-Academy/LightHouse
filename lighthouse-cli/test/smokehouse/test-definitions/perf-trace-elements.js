@@ -184,6 +184,25 @@ const expectations = {
           },
         },
       },
+      'preload-lcp-image': {
+        score: 1,
+        numericValue: 0,
+        details: {
+          items: [{
+            url: 'http://localhost:10200/dobetterweb/lighthouse-480x318.jpg',
+          }],
+          debugData: {
+            initiatorPath: [{
+              url: 'http://localhost:10200/dobetterweb/lighthouse-480x318.jpg',
+              initiatorType: 'other',
+            }, {
+              url: 'http://localhost:10200/perf/trace-elements.html',
+              initiatorType: 'other',
+            }],
+            pathLength: 2,
+          },
+        },
+      },
     },
   },
 };

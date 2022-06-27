@@ -1785,7 +1785,21 @@
                   "wastedMs": 0
                 }
               ],
-              "overallSavingsMs": 0
+              "overallSavingsMs": 0,
+              "debugData": {
+                "type": "debugdata",
+                "initiatorPath": [
+                  {
+                    "url": "https://www.mikescerealshack.co/logo-text.svg",
+                    "initiatorType": "parser"
+                  },
+                  {
+                    "url": "https://www.mikescerealshack.co/",
+                    "initiatorType": "other"
+                  }
+                ],
+                "pathLength": 2
+              }
             }
           },
           "csp-xss": {
@@ -15855,7 +15869,21 @@
                   "wastedMs": 0
                 }
               ],
-              "overallSavingsMs": 0
+              "overallSavingsMs": 0,
+              "debugData": {
+                "type": "debugdata",
+                "initiatorPath": [
+                  {
+                    "url": "https://www.mikescerealshack.co/oscar-actually.jpg",
+                    "initiatorType": "parser"
+                  },
+                  {
+                    "url": "https://www.mikescerealshack.co/corrections",
+                    "initiatorType": "other"
+                  }
+                ],
+                "pathLength": 2
+              }
             }
           },
           "csp-xss": {

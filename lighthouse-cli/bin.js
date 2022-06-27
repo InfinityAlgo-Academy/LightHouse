@@ -27,10 +27,11 @@ import * as commands from './commands/commands.js';
 import * as Printer from './printer.js';
 import {getFlags} from './cli-flags.js';
 import {runLighthouse} from './run.js';
-import {generateConfig} from '../lighthouse-core/index.js';
+import {generateConfig, generateLegacyConfig} from '../lighthouse-core/index.js';
 import {askPermission} from './sentry-prompt.js';
 import {LH_ROOT} from '../root.js';
 import {Sentry} from '../lighthouse-core/lib/sentry.js';
+import {getConfigDisplayString} from '../lighthouse-core/fraggle-rock/config/config.js';
 
 const pkg = JSON.parse(fs.readFileSync(LH_ROOT + '/package.json', 'utf-8'));
 
@@ -116,8 +117,13 @@ async function begin() {
   }
 
   if (cliFlags.printConfig) {
-    const config = await generateConfig(configJson, cliFlags);
-    process.stdout.write(config.getPrintString());
+    if (cliFlags.legacyNavigation) {
+      const config = await generateLegacyConfig(configJson, cliFlags);
+      process.stdout.write(config.getPrintString());
+    } else {
+      const config = await generateConfig(configJson, cliFlags);
+      process.stdout.write(getConfigDisplayString(config));
+    }
     return;
   }
 
