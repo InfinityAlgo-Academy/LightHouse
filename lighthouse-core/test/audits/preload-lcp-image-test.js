@@ -135,6 +135,16 @@ describe('Performance: preload-lcp audit', () => {
     expect(results.details.overallSavingsMs).toEqual(180);
     expect(results.details.items[0].url).toEqual(imageUrl);
     expect(results.details.items[0].wastedMs).toEqual(180);
+
+    // debugData should be included even if image shouldn't be preloaded.
+    expect(results.details.debugData).toMatchObject({
+      initiatorPath: [
+        {url: 'http://www.example.com/image.png', initiatorType: 'script'},
+        {url: 'http://www.example.com/script.js', initiatorType: 'parser'},
+        {url: 'http://www.example.com:3000', initiatorType: 'other'},
+      ],
+      pathLength: 3,
+    });
   });
 
   it('should suggest preloading when LCP is waiting on the image', async () => {
@@ -159,5 +169,13 @@ describe('Performance: preload-lcp audit', () => {
     expect(results.details.overallSavingsMs).toEqual(30);
     expect(results.details.items[0].url).toEqual(imageUrl);
     expect(results.details.items[0].wastedMs).toEqual(30);
+    expect(results.details.debugData).toMatchObject({
+      initiatorPath: [
+        {url: 'http://www.example.com/image.png', initiatorType: 'script'},
+        {url: 'http://www.example.com/script.js', initiatorType: 'parser'},
+        {url: 'http://www.example.com:3000', initiatorType: 'other'},
+      ],
+      pathLength: 3,
+    });
   });
 });
