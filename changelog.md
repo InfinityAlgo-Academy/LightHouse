@@ -1,3 +1,14 @@
+<a name="9.6.3"></a>
+# 9.6.3 (2022-06-28)
+[Full Changelog](https://github.com/compare/v9.6.2...v9.6.3)
+
+This is an npm-only release and affects only the raw JSON report. We have no plans to release this specific version to DevTools or PSI, but the changes will be rolled up into the next release in those clients.
+
+## Core
+
+* network-requests: add frame and preload debug data ([#14161](https://github.com/GoogleChrome/lighthouse/pull/14161))
+* preload-lcp-image: enrich debugData ([#14155](https://github.com/GoogleChrome/lighthouse/pull/14155))
+
 <a name="9.6.2"></a>
 # 9.6.2 (2022-06-01)
 [Full Changelog](https://github.com/compare/v9.6.1...v9.6.2)
