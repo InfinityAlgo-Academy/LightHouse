@@ -68,6 +68,7 @@ function setUpWorkerConnection(port) {
 /** @param {(status: [string, string, string]) => void} listenCallback */
 function listenForStatus(listenCallback) {
   log.events.addListener('status', listenCallback);
+  log.events.addListener('warning', listenCallback);
 }
 
 /**

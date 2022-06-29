@@ -11,8 +11,6 @@ import * as jsdom from 'jsdom';
 
 import {LH_ROOT} from '../../root.js';
 
-/* eslint-env jest */
-
 const PAGE = fs.readFileSync(path.join(LH_ROOT, 'viewer/app/index.html'), 'utf8');
 
 function setupJsDomGlobals() {

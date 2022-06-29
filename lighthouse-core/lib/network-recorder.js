@@ -9,9 +9,16 @@ const log = require('lighthouse-logger');
 const NetworkRequest = require('./network-request.js');
 const EventEmitter = require('events').EventEmitter;
 
-/** @typedef {'requeststarted'|'requestloaded'} NetworkRecorderEvent */
+/**
+ * @typedef {{
+ *   requeststarted: [NetworkRequest],
+ *   requestfinished: [NetworkRequest],
+ * }} NetworkRecorderEventMap
+ */
+/** @typedef {LH.Protocol.StrictEventEmitterClass<NetworkRecorderEventMap>} RequestEmitter */
+const RequestEventEmitter = /** @type {RequestEmitter} */ (EventEmitter);
 
-class NetworkRecorder extends EventEmitter {
+class NetworkRecorder extends RequestEventEmitter {
   /**
    * Creates an instance of NetworkRecorder.
    */
@@ -36,22 +43,6 @@ class NetworkRecorder extends EventEmitter {
   }
 
   /**
-   * @param {NetworkRecorderEvent} event
-   * @param {*} listener
-   */
-  on(event, listener) {
-    return super.on(event, listener);
-  }
-
-  /**
-   * @param {NetworkRecorderEvent} event
-   * @param {*} listener
-   */
-  once(event, listener) {
-    return super.once(event, listener);
-  }
-
-  /**
    * Listener for the DevTools SDK NetworkManager's RequestStarted event, which includes both
    * web socket and normal request creation.
    * @param {NetworkRequest} request
@@ -71,7 +62,7 @@ class NetworkRecorder extends EventEmitter {
    * @private
    */
   onRequestFinished(request) {
-    this.emit('requestloaded', request);
+    this.emit('requestfinished', request);
   }
 
   // The below methods proxy network data into the NetworkRequest object which mimics the

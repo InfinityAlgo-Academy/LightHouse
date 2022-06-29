@@ -3,17 +3,15 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-/* eslint-env jest */
+import {readJson} from '../../../../root.js';
+import MainDocumentContent from '../../../gather/gatherers/main-document-content.js';
+import NetworkRecorder from '../../../lib/network-recorder.js';
+import {createMockContext} from '../../fraggle-rock/gather/mock-driver.js';
+import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';
 
-const MainDocumentContent = require('../../../gather/gatherers/main-document-content.js');
-const NetworkRecorder = require('../../../lib/network-recorder.js');
-const {createMockContext} = require('../../fraggle-rock/gather/mock-driver.js');
-const {getURLArtifactFromDevtoolsLog} = require('../../test-utils.js');
+const devtoolsLog = readJson('../../fixtures/traces/lcp-m78.devtools.log.json', import.meta);
 
-const devtoolsLog =
-  /** @type {LH.DevtoolsLog} */ (require('../../fixtures/traces/lcp-m78.devtools.log.json'));
 const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
 
 describe('FR compat', () => {

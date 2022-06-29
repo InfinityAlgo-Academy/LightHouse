@@ -17,8 +17,11 @@ import {saveFile} from '../../report/renderer/api';
 function saveHtml(flowResult: LH.FlowResult, htmlStr: string) {
   const blob = new Blob([htmlStr], {type: 'text/html'});
   const filename = getFlowResultFilenamePrefix(flowResult) + '.html';
-  saveFile(blob, filename);
+  saveHtml.saveFile(blob, filename);
 }
+
+// Store `saveFile` here so we can do dependency injection.
+saveHtml.saveFile = saveFile;
 
 /* eslint-disable max-len */
 const Logo: FunctionComponent = () => {
@@ -68,7 +71,7 @@ const TopbarButton: FunctionComponent<{
   );
 };
 
-export const Topbar: FunctionComponent<{onMenuClick: JSX.MouseEventHandler<HTMLButtonElement>}> =
+const Topbar: FunctionComponent<{onMenuClick: JSX.MouseEventHandler<HTMLButtonElement>}> =
 ({onMenuClick}) => {
   const flowResult = useFlowResult();
   const strings = useLocalizedStrings();
@@ -117,4 +120,9 @@ export const Topbar: FunctionComponent<{onMenuClick: JSX.MouseEventHandler<HTMLB
       }
     </div>
   );
+};
+
+export {
+  Topbar,
+  saveHtml,
 };

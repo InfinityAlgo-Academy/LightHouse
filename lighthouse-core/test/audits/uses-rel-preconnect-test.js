@@ -4,14 +4,11 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-'use strict';
+import {strict as assert} from 'assert';
 
-/* eslint-env jest */
-
-const UsesRelPreconnect = require('../../audits/uses-rel-preconnect.js');
-const assert = require('assert').strict;
-const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
-const createTestTrace = require('../create-test-trace.js');
+import UsesRelPreconnect from '../../audits/uses-rel-preconnect.js';
+import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
+import createTestTrace from '../create-test-trace.js';
 
 const mainResource = {
   url: 'https://www.example.com/',

@@ -164,7 +164,8 @@ function waitForNetworkIdle(session, networkMonitor, networkQuietOptions) {
       const inflightRecords = networkMonitor.getInflightRequests();
       // If there are more than 20 inflight requests, load is still in full swing.
       // Wait until it calms down a bit to be a little less spammy.
-      if (inflightRecords.length < 20) {
+      if (log.isVerbose() && inflightRecords.length < 20 && inflightRecords.length > 0) {
+        log.verbose('waitFor', `=== Waiting on ${inflightRecords.length} requests to finish`);
         for (const record of inflightRecords) {
           log.verbose('waitFor', `Waiting on ${record.url.slice(0, 120)} to finish`);
         }
@@ -172,7 +173,7 @@ function waitForNetworkIdle(session, networkMonitor, networkQuietOptions) {
     };
 
     networkMonitor.on('requeststarted', logStatus);
-    networkMonitor.on('requestloaded', logStatus);
+    networkMonitor.on('requestfinished', logStatus);
     networkMonitor.on(busyEvent, logStatus);
 
     if (!networkQuietOptions.pretendDCLAlreadyFired) {
@@ -192,7 +193,7 @@ function waitForNetworkIdle(session, networkMonitor, networkQuietOptions) {
       networkMonitor.removeListener(busyEvent, onBusy);
       networkMonitor.removeListener(idleEvent, onIdle);
       networkMonitor.removeListener('requeststarted', logStatus);
-      networkMonitor.removeListener('requestloaded', logStatus);
+      networkMonitor.removeListener('requestfinished', logStatus);
       networkMonitor.removeListener(busyEvent, logStatus);
     };
   });

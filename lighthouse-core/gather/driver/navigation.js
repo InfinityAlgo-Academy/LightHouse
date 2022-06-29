@@ -89,7 +89,7 @@ async function gotoURL(driver, requestor, options) {
   log.time(status);
 
   const session = driver.defaultSession;
-  const networkMonitor = new NetworkMonitor(driver.defaultSession);
+  const networkMonitor = new NetworkMonitor(driver.targetManager);
 
   // Enable the events and network monitor needed to track navigation progress.
   await networkMonitor.enable();
@@ -131,7 +131,10 @@ async function gotoURL(driver, requestor, options) {
   let requestedUrl = navigationUrls.requestedUrl;
   if (typeof requestor === 'string') {
     if (requestedUrl && !URL.equalWithExcludedFragments(requestor, requestedUrl)) {
-      log.error('Navigation', 'Provided URL did not match initial navigation URL');
+      log.error(
+        'Navigation',
+        `Provided URL (${requestor}) did not match initial navigation URL (${requestedUrl})`
+      );
     }
     requestedUrl = requestor;
   }

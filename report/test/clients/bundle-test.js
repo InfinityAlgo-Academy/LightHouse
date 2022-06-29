@@ -4,7 +4,6 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-
 import fs from 'fs';
 
 import jsdom from 'jsdom';
@@ -15,9 +14,6 @@ import {LH_ROOT} from '../../../root.js';
 
 const sampleResultsStr =
   fs.readFileSync(LH_ROOT + '/lighthouse-core/test/results/sample_v2.json', 'utf-8');
-
-
-/* eslint-env jest */
 
 describe('lighthouseRenderer bundle', () => {
   let document;

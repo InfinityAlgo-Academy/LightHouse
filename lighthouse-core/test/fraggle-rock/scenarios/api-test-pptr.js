@@ -3,15 +3,12 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 import {jest} from '@jest/globals';
 
 import * as lighthouse from '../../../fraggle-rock/api.js';
 import {createTestState, getAuditsBreakdown} from './pptr-test-utils.js';
 import {LH_ROOT} from '../../../../root.js';
-
-/* eslint-env jest */
 
 jest.setTimeout(90_000);
 
@@ -52,8 +49,7 @@ describe('Fraggle Rock API', () => {
       expect(accessibility.score).toBeLessThan(1);
 
       const {auditResults, erroredAudits, failedAudits} = getAuditsBreakdown(lhr);
-      // TODO(FR-COMPAT): This assertion can be removed when full compatibility is reached.
-      expect(auditResults.length).toMatchInlineSnapshot(`73`);
+      expect(auditResults.map(audit => audit.id).sort()).toMatchSnapshot();
 
       expect(erroredAudits).toHaveLength(0);
       expect(failedAudits.map(audit => audit.id)).toContain('label');
@@ -92,10 +88,9 @@ describe('Fraggle Rock API', () => {
         failedAudits,
         notApplicableAudits,
       } = getAuditsBreakdown(lhr);
-      // TODO(FR-COMPAT): This assertion can be removed when full compatibility is reached.
-      expect(auditResults.length).toMatchInlineSnapshot(`45`);
+      expect(auditResults.map(audit => audit.id).sort()).toMatchSnapshot();
 
-      expect(notApplicableAudits.length).toMatchInlineSnapshot(`5`);
+      expect(notApplicableAudits.map(audit => audit.id).sort()).toMatchSnapshot();
       expect(notApplicableAudits.map(audit => audit.id)).not.toContain('total-blocking-time');
 
       expect(erroredAudits).toHaveLength(0);
@@ -145,9 +140,9 @@ describe('Fraggle Rock API', () => {
       });
 
       const {auditResults, erroredAudits, notApplicableAudits} = getAuditsBreakdown(result.lhr);
-      expect(auditResults.length).toMatchInlineSnapshot(`45`);
+      expect(auditResults.map(audit => audit.id).sort()).toMatchSnapshot();
 
-      expect(notApplicableAudits.length).toMatchInlineSnapshot(`18`);
+      expect(notApplicableAudits.map(audit => audit.id).sort()).toMatchSnapshot();
       expect(notApplicableAudits.map(audit => audit.id)).not.toContain('total-blocking-time');
 
       expect(erroredAudits).toHaveLength(0);
@@ -175,8 +170,7 @@ describe('Fraggle Rock API', () => {
       });
 
       const {auditResults, failedAudits, erroredAudits} = getAuditsBreakdown(lhr);
-      // TODO(FR-COMPAT): This assertion can be removed when full compatibility is reached.
-      expect(auditResults.length).toMatchInlineSnapshot(`152`);
+      expect(auditResults.map(audit => audit.id).sort()).toMatchSnapshot();
       expect(erroredAudits).toHaveLength(0);
 
       const failedAuditIds = failedAudits.map(audit => audit.id);
@@ -221,8 +215,7 @@ describe('Fraggle Rock API', () => {
       });
 
       const {auditResults, failedAudits, erroredAudits} = getAuditsBreakdown(lhr);
-      // TODO(FR-COMPAT): This assertion can be removed when full compatibility is reached.
-      expect(auditResults.length).toMatchInlineSnapshot(`152`);
+      expect(auditResults.map(audit => audit.id).sort()).toMatchSnapshot();
       expect(erroredAudits).toHaveLength(0);
 
       const failedAuditIds = failedAudits.map(audit => audit.id);

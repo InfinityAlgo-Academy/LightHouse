@@ -3,17 +3,11 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-/* eslint-env jest */
-
-const {
-  getBaseArtifacts,
-  finalizeArtifacts,
-} = require('../../../fraggle-rock/gather/base-artifacts.js');
-const {initializeConfig} = require('../../../fraggle-rock/config/config.js');
-const {createMockDriver} = require('./mock-driver.js');
-const LighthouseError = require('../../../lib/lh-error.js');
+import {getBaseArtifacts, finalizeArtifacts} from '../../../fraggle-rock/gather/base-artifacts.js';
+import {initializeConfig} from '../../../fraggle-rock/config/config.js';
+import {createMockDriver} from './mock-driver.js';
+import LighthouseError from '../../../lib/lh-error.js';
 
 function getMockDriverForArtifacts() {
   const driverMock = createMockDriver();
@@ -36,20 +30,20 @@ describe('getBaseArtifacts', () => {
   });
 
   it('should fetch benchmark index', async () => {
-    const {config} = initializeConfig(undefined, {gatherMode: 'navigation'});
+    const {config} = await initializeConfig(undefined, {gatherMode: 'navigation'});
     const artifacts = await getBaseArtifacts(config, driverMock.asDriver(), {gatherMode});
     expect(artifacts.BenchmarkIndex).toEqual(500);
   });
 
   it('should fetch host user agent', async () => {
-    const {config} = initializeConfig(undefined, {gatherMode: 'navigation'});
+    const {config} = await initializeConfig(undefined, {gatherMode: 'navigation'});
     const artifacts = await getBaseArtifacts(config, driverMock.asDriver(), {gatherMode});
     expect(artifacts.HostUserAgent).toContain('Macintosh');
     expect(artifacts.HostFormFactor).toEqual('desktop');
   });
 
   it('should return settings', async () => {
-    const {config} = initializeConfig(undefined, {gatherMode: 'navigation'});
+    const {config} = await initializeConfig(undefined, {gatherMode: 'navigation'});
     const artifacts = await getBaseArtifacts(config, driverMock.asDriver(), {gatherMode});
     expect(artifacts.settings).toEqual(config.settings);
   });
@@ -62,7 +56,7 @@ describe('finalizeArtifacts', () => {
   let gathererArtifacts = {};
 
   beforeEach(async () => {
-    const {config} = initializeConfig(undefined, {gatherMode});
+    const {config} = await initializeConfig(undefined, {gatherMode});
     const driver = getMockDriverForArtifacts().asDriver();
     baseArtifacts = await getBaseArtifacts(config, driver, {gatherMode});
     baseArtifacts.URL = {initialUrl: 'about:blank', finalUrl: 'https://example.com'};

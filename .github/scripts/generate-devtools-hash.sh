@@ -16,4 +16,5 @@ cd "$LH_ROOT"
 bash .github/scripts/print-devtools-relevant-commits.sh
 md5 \
   lighthouse-core/test/chromium-web-tests/* \
-  third-party/chromium-webtests/webtests/http/tests/devtools/lighthouse/**/*.*
+  third-party/chromium-webtests/webtests/http/tests/devtools/lighthouse/**/*.* \
+  third-party/devtools-tests/e2e/**/*.*

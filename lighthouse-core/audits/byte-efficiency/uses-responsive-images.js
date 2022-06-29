@@ -33,6 +33,9 @@ const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
 const IGNORE_THRESHOLD_IN_BYTES = 4096;
 
+// Ignore up to 12KB of waste if an effort was made with breakpoints.
+const IGNORE_THRESHOLD_IN_BYTES_BREAKPOINTS_PRESENT = 12288;
+
 class UsesResponsiveImages extends ByteEfficiencyAudit {
   /**
    * @return {LH.Audit.Meta}
@@ -112,6 +115,18 @@ class UsesResponsiveImages extends ByteEfficiencyAudit {
     };
   }
 
+
+  /**
+   * @param {LH.Artifacts.ImageElement} image
+   * @return {number};
+   */
+  static determineAllowableWaste(image) {
+    if (image.srcset || image.isPicture) {
+      return IGNORE_THRESHOLD_IN_BYTES_BREAKPOINTS_PRESENT;
+    }
+    return IGNORE_THRESHOLD_IN_BYTES;
+  }
+
   /**
    * @param {LH.Artifacts} artifacts
    * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
@@ -126,6 +141,8 @@ class UsesResponsiveImages extends ByteEfficiencyAudit {
     const ViewportDimensions = artifacts.ViewportDimensions;
     /** @type {Map<string, LH.Audit.ByteEfficiencyItem>} */
     const resultsMap = new Map();
+    /** @type {Array<string>} */
+    const passedImageList = [];
     for (const image of images) {
       // Give SVG a free pass because creating a "responsive" SVG is of questionable value.
       // Ignore CSS images because it's difficult to determine what is a spritesheet,
@@ -147,15 +164,23 @@ class UsesResponsiveImages extends ByteEfficiencyAudit {
         );
       if (!processed) continue;
 
-      // Don't warn about an image that was later used appropriately
+      // Verify the image wastes more than the minimum.
+      const exceedsAllowableWaste = processed.wastedBytes > this.determineAllowableWaste(image);
+
       const existing = resultsMap.get(processed.url);
-      if (!existing || existing.wastedBytes > processed.wastedBytes) {
-        resultsMap.set(processed.url, processed);
+      // Don't warn about an image that was later used appropriately, or wastes a trivial amount of data.
+      if (exceedsAllowableWaste && !passedImageList.includes(processed.url)) {
+        if ((!existing || existing.wastedBytes > processed.wastedBytes)) {
+          resultsMap.set(processed.url, processed);
+        }
+      } else {
+        // Ensure this url passes for future tests.
+        resultsMap.delete(processed.url);
+        passedImageList.push(processed.url);
       }
     }
 
-    const items = Array.from(resultsMap.values())
-        .filter(item => item.wastedBytes > IGNORE_THRESHOLD_IN_BYTES);
+    const items = Array.from(resultsMap.values());
 
     /** @type {LH.Audit.Details.Opportunity['headings']} */
     const headings = [

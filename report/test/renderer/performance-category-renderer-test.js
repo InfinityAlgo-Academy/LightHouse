@@ -4,8 +4,6 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-/* eslint-env jest */
-
 import {strict as assert} from 'assert';
 
 import jsdom from 'jsdom';
@@ -16,7 +14,9 @@ import URL from '../../../lighthouse-core/lib/url-shim.js';
 import {DOM} from '../../renderer/dom.js';
 import {DetailsRenderer} from '../../renderer/details-renderer.js';
 import {PerformanceCategoryRenderer} from '../../renderer/performance-category-renderer.js';
-import sampleResultsOrig from '../../../lighthouse-core/test/results/sample_v2.json';
+import {readJson} from '../../../root.js';
+
+const sampleResultsOrig = readJson('../../../lighthouse-core/test/results/sample_v2.json', import.meta);
 
 describe('PerfCategoryRenderer', () => {
   let category;
@@ -77,6 +77,26 @@ describe('PerfCategoryRenderer', () => {
         'cumulative-layout-shift',
       ]
     );
+  });
+
+  it('renders notApplicable metrics with n/a text', () => {
+    const perfWithNaMetric = JSON.parse(JSON.stringify(category));
+    const tbt = perfWithNaMetric.auditRefs.find(audit => audit.id === 'total-blocking-time');
+    assert(tbt);
+    const {id, title, description} = tbt.result;
+    tbt.result = {
+      id,
+      title,
+      description,
+      scoreDisplayMode: 'notApplicable',
+      score: null,
+    };
+
+    const perfDom = renderer.render(perfWithNaMetric, sampleResults.categoryGroups);
+    const tbtElement = perfDom.querySelector('.lh-metric#total-blocking-time');
+    assert(tbtElement);
+    assert.equal(tbtElement.querySelector('.lh-metric__title').textContent, 'Total Blocking Time');
+    assert.equal(tbtElement.querySelector('.lh-metric__value').textContent, '--');
   });
 
   it('does not render metrics section if no metric group audits', () => {

@@ -320,7 +320,4 @@ async function main() {
   createSummarySizes();
 }
 
-main().catch(err => {
-  console.error(err);
-  process.exit(1);
-});
+await main();

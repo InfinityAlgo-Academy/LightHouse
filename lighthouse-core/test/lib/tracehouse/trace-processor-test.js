@@ -3,27 +3,26 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-const TraceProcessor = require('../../../lib/tracehouse/trace-processor.js');
+import {strict as assert} from 'assert';
 
-const assert = require('assert').strict;
-const fs = require('fs');
-const createTestTrace = require('../../create-test-trace.js');
-const pwaTrace = require('../../fixtures/traces/progressive-app.json');
-const badNavStartTrace = require('../../fixtures/traces/bad-nav-start-ts.json');
-const lateTracingStartedTrace = require('../../fixtures/traces/tracingstarted-after-navstart.json');
-const noTracingStartedTrace = require('../../fixtures/traces/no-tracingstarted-m74.json');
-const preactTrace = require('../../fixtures/traces/preactjs.com_ts_of_undefined.json');
-const noFMPtrace = require('../../fixtures/traces/no_fmp_event.json');
-const noFCPtrace = require('../../fixtures/traces/airhorner_no_fcp.json');
-const timespanTrace = require('../../fixtures/traces/timespan-trace-m91.json');
-const noNavStartTrace = require('../../fixtures/traces/no_navstart_event.json');
-const backgroundTabTrace = require('../../fixtures/traces/backgrounded-tab-missing-paints.json');
-const lcpTrace = require('../../fixtures/traces/lcp-m78.json');
-const lcpAllFramesTrace = require('../../fixtures/traces/frame-metrics-m89.json');
+import {readJson} from '../../../../root.js';
+import TraceProcessor from '../../../lib/tracehouse/trace-processor.js';
+import createTestTrace from '../../create-test-trace.js';
 
-/* eslint-env jest */
+const pwaTrace = readJson('../../fixtures/traces/progressive-app.json', import.meta);
+const badNavStartTrace = readJson('../../fixtures/traces/bad-nav-start-ts.json', import.meta);
+const lateTracingStartedTrace = readJson('../../fixtures/traces/tracingstarted-after-navstart.json', import.meta);
+const noTracingStartedTrace = readJson('../../fixtures/traces/no-tracingstarted-m74.json', import.meta);
+const preactTrace = readJson('../../fixtures/traces/preactjs.com_ts_of_undefined.json', import.meta);
+const noFMPtrace = readJson('../../fixtures/traces/no_fmp_event.json', import.meta);
+const noFCPtrace = readJson('../../fixtures/traces/airhorner_no_fcp.json', import.meta);
+const timespanTrace = readJson('../../fixtures/traces/timespan-trace-m91.json', import.meta);
+const noNavStartTrace = readJson('../../fixtures/traces/no_navstart_event.json', import.meta);
+const backgroundTabTrace = readJson('../../fixtures/traces/backgrounded-tab-missing-paints.json', import.meta);
+const lcpTrace = readJson('../../fixtures/traces/lcp-m78.json', import.meta);
+const lcpAllFramesTrace = readJson('../../fixtures/traces/frame-metrics-m89.json', import.meta);
+const startedAfterNavstartTrace = readJson('../../fixtures/traces/tracingstarted-after-navstart.json', import.meta);
 
 describe('TraceProcessor', () => {
   describe('_riskPercentiles', () => {
@@ -412,9 +411,8 @@ describe('TraceProcessor', () => {
     });
 
     it('sorts events by increasing timestamp', () => {
-      const trace = JSON.parse(fs.readFileSync(__dirname +
-          '/../../fixtures/traces/tracingstarted-after-navstart.json', 'utf8'));
-      const shuffledEvents = trace.traceEvents.slice().sort(() => Math.random() * 2 - 1);
+      const shuffledEvents =
+        startedAfterNavstartTrace.traceEvents.slice().sort(() => Math.random() * 2 - 1);
       const processedTrace = TraceProcessor.processTrace({traceEvents: shuffledEvents});
 
       let lastTs = -Infinity;

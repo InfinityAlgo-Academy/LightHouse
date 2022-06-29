@@ -9,6 +9,7 @@
 
 import {Buffer} from 'buffer';
 
+import log from 'lighthouse-logger';
 import lighthouse from '../../lighthouse-core/index.js';
 import LHError from '../../lighthouse-core/lib/lh-error.js';
 import preprocessor from '../../lighthouse-core/lib/proto-preprocessor.js';
@@ -103,8 +104,16 @@ export async function runLighthouseInLR(connection, url, flags, lrOpts) {
   }
 }
 
+/** @param {(status: [string, string, string]) => void} listenCallback */
+function listenForStatus(listenCallback) {
+  log.events.addListener('status', listenCallback);
+  log.events.addListener('warning', listenCallback);
+}
+
 // Expose on window for browser-residing consumers of file.
 if (typeof window !== 'undefined') {
   // @ts-expect-error - not worth typing a property on `window`.
   window.runLighthouseInLR = runLighthouseInLR;
+  // @ts-expect-error
+  self.listenForStatus = listenForStatus;
 }

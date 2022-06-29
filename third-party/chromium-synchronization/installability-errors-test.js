@@ -9,8 +9,6 @@ const fetch = require('node-fetch');
 
 const InstallableManifestAudit = require('../../lighthouse-core/audits/installable-manifest.js');
 
-/* eslint-env jest */
-
 jest.setTimeout(20_000);
 
 describe('installabilityErrors', () => {

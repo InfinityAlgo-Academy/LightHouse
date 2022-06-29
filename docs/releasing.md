@@ -36,6 +36,18 @@ We follow [semver](https://semver.org/) versioning semantics (`vMajor.Minor.Patc
 
 ## Release Process
 
+### Update various dependencies
+
+In general, Lighthouse should be using the latest version of all of these dependencies:
+
+1. https://github.com/GoogleChrome/lighthouse-stack-packs
+1. `puppeteer` and `puppeteer-core`
+1. `third-party-web`
+1. `snyk`
+1. `axe-core`
+1. `js-library-detector`
+1. `chrome-launcher`
+
 ### On the scheduled release date
 
 Before starting, you should announce to the LH eng channel that you are releasing,

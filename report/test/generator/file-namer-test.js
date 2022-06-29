@@ -9,7 +9,6 @@ const assert = require('assert').strict;
 
 const getLhrFilenamePrefix = require('../../generator/file-namer.js').getLhrFilenamePrefix;
 
-/* eslint-env jest */
 describe('file-namer helper', () => {
   it('generates filename prefixes', () => {
     const results = {

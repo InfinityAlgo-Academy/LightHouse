@@ -16,8 +16,6 @@ import '../../../lighthouse-core/lib/i18n/i18n.js';
 
 const NBSP = '\xa0';
 
-/* eslint-env jest */
-
 describe('util helpers', () => {
   it('formats a number', () => {
     const i18n = new I18n('en', {...Util.UIStrings});

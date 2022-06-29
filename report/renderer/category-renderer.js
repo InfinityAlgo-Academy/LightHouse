@@ -72,9 +72,9 @@ export class CategoryRenderer {
     }
 
     const titleEl = this.dom.find('.lh-audit__title', auditEl);
-    titleEl.appendChild(this.dom.convertMarkdownCodeSnippets(audit.result.title));
+    titleEl.append(this.dom.convertMarkdownCodeSnippets(audit.result.title));
     const descEl = this.dom.find('.lh-audit__description', auditEl);
-    descEl.appendChild(this.dom.convertMarkdownLinkSnippets(audit.result.description));
+    descEl.append(this.dom.convertMarkdownLinkSnippets(audit.result.description));
 
     for (const relevantMetric of audit.relevantMetrics || []) {
       const adornEl = this.dom.createChildOf(descEl, 'span', 'lh-audit__adorn');
@@ -84,19 +84,16 @@ export class CategoryRenderer {
 
     if (audit.stackPacks) {
       audit.stackPacks.forEach(pack => {
-        const packElm = this.dom.createElement('div');
-        packElm.classList.add('lh-audit__stackpack');
-
-        const packElmImg = this.dom.createElement('img');
-        packElmImg.classList.add('lh-audit__stackpack__img');
+        const packElmImg = this.dom.createElement('img', 'lh-audit__stackpack__img');
         packElmImg.src = pack.iconDataURL;
         packElmImg.alt = pack.title;
-        packElm.appendChild(packElmImg);
 
-        packElm.appendChild(this.dom.convertMarkdownLinkSnippets(pack.description));
+        const snippets = this.dom.convertMarkdownLinkSnippets(pack.description);
+        const packElm = this.dom.createElement('div', 'lh-audit__stackpack');
+        packElm.append(packElmImg, snippets);
 
         this.dom.find('.lh-audit__stackpacks', auditEl)
-          .appendChild(packElm);
+          .append(packElm);
       });
     }
 
@@ -105,12 +102,12 @@ export class CategoryRenderer {
       const elem = this.detailsRenderer.render(audit.result.details);
       if (elem) {
         elem.classList.add('lh-details');
-        header.appendChild(elem);
+        header.append(elem);
       }
     }
 
     // Add chevron SVG to the end of the summary
-    this.dom.find('.lh-chevron-container', auditEl).appendChild(this._createChevron());
+    this.dom.find('.lh-chevron-container', auditEl).append(this._createChevron());
     this._setRatingClass(auditEl, audit.result.score, scoreDisplayMode);
 
     if (audit.result.scoreDisplayMode === 'error') {
@@ -132,7 +129,7 @@ export class CategoryRenderer {
     const warningsEl = this.dom.createChildOf(summaryEl, 'div', 'lh-warnings');
     this.dom.createChildOf(warningsEl, 'span').textContent = strings.warningHeader;
     if (warnings.length === 1) {
-      warningsEl.appendChild(this.dom.createTextNode(warnings.join('')));
+      warningsEl.append(this.dom.createTextNode(warnings.join('')));
     } else {
       const warningsUl = this.dom.createChildOf(warningsEl, 'ul');
       for (const warning of warnings) {
@@ -207,11 +204,11 @@ export class CategoryRenderer {
 
     const gaugeContainerEl = this.dom.find('.lh-score__gauge', component);
     const gaugeEl = this.renderCategoryScore(category, groupDefinitions, options);
-    gaugeContainerEl.appendChild(gaugeEl);
+    gaugeContainerEl.append(gaugeEl);
 
     if (category.description) {
       const descEl = this.dom.convertMarkdownLinkSnippets(category.description);
-      this.dom.find('.lh-category-header__description', component).appendChild(descEl);
+      this.dom.find('.lh-category-header__description', component).append(descEl);
     }
 
     return component;
@@ -230,13 +227,13 @@ export class CategoryRenderer {
 
     this.dom.createChildOf(auditGroupHeader, 'span', 'lh-audit-group__title')
       .textContent = group.title;
-    groupEl.appendChild(auditGroupHeader);
+    groupEl.append(auditGroupHeader);
 
     let footerEl = null;
     if (group.description) {
       footerEl = this.dom.convertMarkdownLinkSnippets(group.description);
       footerEl.classList.add('lh-audit-group__description', 'lh-audit-group__footer');
-      groupEl.appendChild(footerEl);
+      groupEl.append(footerEl);
     }
 
     return [groupEl, footerEl];
@@ -300,7 +297,7 @@ export class CategoryRenderer {
   renderUnexpandableClump(auditRefs, groupDefinitions) {
     const clumpElement = this.dom.createElement('div');
     const elements = this._renderGroupedAudits(auditRefs, groupDefinitions);
-    elements.forEach(elem => clumpElement.appendChild(elem));
+    elements.forEach(elem => clumpElement.append(elem));
     return clumpElement;
   }
 
@@ -334,7 +331,7 @@ export class CategoryRenderer {
     if (description) {
       const descriptionEl = this.dom.convertMarkdownLinkSnippets(description);
       descriptionEl.classList.add('lh-audit-group__description', 'lh-audit-group__footer');
-      el.appendChild(descriptionEl);
+      el.append(descriptionEl);
     }
 
     this.dom.find('.lh-clump-toggletext--show', el).textContent = Util.i18n.strings.show;
@@ -426,7 +423,7 @@ export class CategoryRenderer {
     const content = this.dom.find('.lh-fraction__content', tmpl);
     const text = this.dom.createElement('span');
     text.textContent = `${numPassed}/${numPassableAudits}`;
-    content.appendChild(text);
+    content.append(text);
 
     let rating = Util.calculateRating(fraction);
 
@@ -530,7 +527,7 @@ export class CategoryRenderer {
   render(category, groupDefinitions = {}, options) {
     const element = this.dom.createElement('div', 'lh-category');
     element.id = category.id;
-    element.appendChild(this.renderCategoryHeader(category, groupDefinitions, options));
+    element.append(this.renderCategoryHeader(category, groupDefinitions, options));
 
     // Top level clumps for audits, in order they will appear in the report.
     /** @type {Map<TopLevelClumpId, Array<LH.ReportResult.AuditRef>>} */
@@ -563,13 +560,13 @@ export class CategoryRenderer {
       if (clumpId === 'failed') {
         const clumpElem = this.renderUnexpandableClump(auditRefs, groupDefinitions);
         clumpElem.classList.add(`lh-clump--failed`);
-        element.appendChild(clumpElem);
+        element.append(clumpElem);
         continue;
       }
 
       const description = clumpId === 'manual' ? category.manualDescription : undefined;
       const clumpElem = this.renderClump(clumpId, {auditRefs, description});
-      element.appendChild(clumpElem);
+      element.append(clumpElem);
     }
 
     return element;

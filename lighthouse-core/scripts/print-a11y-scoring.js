@@ -7,9 +7,8 @@
 // node lighthouse-core/scripts/print-a11y-scoring.js
 
 import Config from '../config/config.js';
-import defaultConfig from '../config/default-config.js';
 
-const config = new Config(defaultConfig);
+const config = await Config.fromJson();
 if (!config.categories || !config.audits) throw new Error('wut');
 
 const auditRefs = config.categories.accessibility.auditRefs;
