@@ -208,6 +208,15 @@ describe('#getNonHtmlError', () => {
     expect(getNonHtmlError(mainRecord)).toBeUndefined();
   });
 
+  it('passes when the page is of MIME type application/xhtml+xml', () => {
+    const url = 'http://the-page.com';
+    const mainRecord = new NetworkRequest();
+    const mimeType = 'application/xhtml+xml';
+    mainRecord.url = url;
+    mainRecord.mimeType = mimeType;
+    expect(getNonHtmlError(mainRecord)).toBeUndefined();
+  });
+
   it('fails when the page is not of MIME type text/html', () => {
     const url = 'http://the-page.com';
     const mimeType = 'application/xml';
@@ -245,6 +254,7 @@ describe('#getPageLoadError', () => {
       url: 'http://the-page.com',
       networkRecords: [mainRecord],
       loadFailureMode: LoadFailureMode.fatal,
+      warnings: [],
     };
     mainRecord.url = context.url;
     mainRecord.mimeType = 'text/html';
@@ -258,6 +268,7 @@ describe('#getPageLoadError', () => {
       url: 'http://example.com/#/page/list',
       networkRecords: [mainRecord],
       loadFailureMode: LoadFailureMode.fatal,
+      warnings: [],
     };
     mainRecord.url = 'http://example.com';
     mainRecord.mimeType = 'text/html';
@@ -271,6 +282,7 @@ describe('#getPageLoadError', () => {
       url: 'http://the-page.com',
       networkRecords: [mainRecord],
       loadFailureMode: LoadFailureMode.ignore,
+      warnings: [],
     };
     mainRecord.url = context.url;
     mainRecord.failed = true;
@@ -285,6 +297,7 @@ describe('#getPageLoadError', () => {
       url: 'http://the-page.com',
       networkRecords: [mainRecord],
       loadFailureMode: LoadFailureMode.fatal,
+      warnings: [],
     };
     const finalRecord = new NetworkRequest();
 
@@ -304,6 +317,7 @@ describe('#getPageLoadError', () => {
       url: 'http://the-page.com',
       networkRecords: [mainRecord, interstitialRecord],
       loadFailureMode: LoadFailureMode.fatal,
+      warnings: [],
     };
 
     mainRecord.url = context.url;
@@ -321,6 +335,7 @@ describe('#getPageLoadError', () => {
       url: 'http://the-page.com',
       networkRecords: [mainRecord],
       loadFailureMode: LoadFailureMode.fatal,
+      warnings: [],
     };
 
     mainRecord.url = context.url;
@@ -336,6 +351,7 @@ describe('#getPageLoadError', () => {
       url: 'http://the-page.com',
       networkRecords: [mainRecord],
       loadFailureMode: LoadFailureMode.fatal,
+      warnings: [],
     };
 
     mainRecord.url = context.url;
@@ -345,12 +361,31 @@ describe('#getPageLoadError', () => {
     expect(error.message).toEqual('NOT_HTML');
   });
 
+  it('warns with XHTML type', () => {
+    const mainRecord = new NetworkRequest();
+    const context = {
+      url: 'http://the-page.com',
+      networkRecords: [mainRecord],
+      loadFailureMode: LoadFailureMode.fatal,
+      warnings: [],
+    };
+
+    mainRecord.url = context.url;
+    mainRecord.mimeType = 'application/xhtml+xml';
+
+    const error = getPageLoadError(undefined, context);
+    expect(error).toBeUndefined();
+    expect(context.warnings[0]).toBeDisplayString(
+      'The page MIME type is XHTML: Lighthouse does not explicitly support this document type');
+  });
+
   it('fails with nav error last', () => {
     const mainRecord = new NetworkRequest();
     const context = {
       url: 'http://the-page.com',
       networkRecords: [mainRecord],
       loadFailureMode: LoadFailureMode.fatal,
+      warnings: [],
     };
 
     mainRecord.url = context.url;
@@ -366,6 +401,7 @@ describe('#getPageLoadError', () => {
       url: 'http://the-page.com',
       networkRecords: [mainRecord],
       loadFailureMode: LoadFailureMode.warn,
+      warnings: [],
     };
 
     mainRecord.url = context.url;
@@ -381,6 +417,7 @@ describe('#getPageLoadError', () => {
       url: 'http://the-page.com',
       networkRecords: [mainRecord],
       loadFailureMode: LoadFailureMode.fatal,
+      warnings: [],
     };
     const finalRecord = new NetworkRequest();
 

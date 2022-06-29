@@ -178,6 +178,7 @@ async function _computeNavigationResult(
       url: mainDocumentUrl,
       loadFailureMode: navigationContext.navigation.loadFailureMode,
       networkRecords: debugData.records,
+      warnings,
     })
     : navigationError;
 

@@ -604,6 +604,7 @@ class GatherRunner {
       url: passContext.url,
       loadFailureMode: passConfig.loadFailureMode,
       networkRecords: loadData.networkRecords,
+      warnings: passContext.LighthouseRunWarnings,
     });
     if (pageLoadError) {
       const localizedMessage = format.getFormatted(pageLoadError.friendlyMessage,
