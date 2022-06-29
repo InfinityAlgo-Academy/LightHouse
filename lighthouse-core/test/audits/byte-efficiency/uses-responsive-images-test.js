@@ -28,8 +28,15 @@ function generateSize(width, height, prefix = 'displayed') {
   return size;
 }
 
-function generateImage(clientSize, naturalDimensions, src = 'https://google.com/logo.png') {
-  return {src, ...clientSize, naturalDimensions, node: {devtoolsNodePath: '1,HTML,1,IMG'}};
+function generateImage(clientSize, naturalDimensions, src = 'https://google.com/logo.png', srcset = '', isPicture = false) {
+  return {
+    src,
+    srcset,
+    ...clientSize,
+    naturalDimensions,
+    isPicture,
+    node: {devtoolsNodePath: '1,HTML,1,IMG'},
+  };
 }
 
 describe('Page uses responsive images', () => {
@@ -132,7 +139,13 @@ describe('Page uses responsive images', () => {
   });
 
   it('identifies when images are not wasteful', async () => {
-    const networkRecords = [generateRecord(100, 300, 'https://google.com/logo.png'), generateRecord(90, 500, 'https://google.com/logo2.png'), generateRecord(20, 100, 'data:image/jpeg;base64,foobar')];
+    const networkRecords = [
+      generateRecord(100, 300, 'https://google.com/logo.png'),
+      generateRecord(90, 500, 'https://google.com/logo2.png'),
+      generateRecord(100, 300, 'https://google.com/logo3a.png'),
+      generateRecord(100, 300, 'https://google.com/logo3b.png'),
+      generateRecord(100, 300, 'https://google.com/logo3c.png'),
+      generateRecord(20, 100, 'data:image/jpeg;base64,foobar')];
     const auditResult = await UsesResponsiveImagesAudit.audit_({
       ViewportDimensions: {innerWidth: 1000, innerHeight: 1000, devicePixelRatio: 2},
       ImageElements: [
@@ -148,6 +161,26 @@ describe('Page uses responsive images', () => {
         ),
         generateImage(
           generateSize(100, 100),
+          {width: 210, height: 210},
+          'https://google.com/logo3a.png',
+          '',
+          false
+        ),
+        generateImage(
+          generateSize(100, 100),
+          {width: 210, height: 210},
+          'https://google.com/logo3b.png',
+          '',
+          true
+        ),
+        generateImage(
+          generateSize(100, 100),
+          {width: 210, height: 210},
+          'https://google.com/logo3c.png',
+          'https://google.com/logo3c.png https://google.com/logo3c-2x.png 2x'
+        ),
+        generateImage(
+          generateSize(100, 100),
           {width: 80, height: 80},
           'data:image/jpeg;base64,foobar'
         ),
@@ -157,7 +190,10 @@ describe('Page uses responsive images', () => {
       {computedCache: new Map()}
     );
 
-    assert.equal(auditResult.items.length, 2);
+    assert.equal(auditResult.items.length, 3);
+    assert.equal(auditResult.items[0].url, 'https://google.com/logo.png');
+    assert.equal(auditResult.items[1].url, 'https://google.com/logo3a.png');
+    assert.equal(auditResult.items[2].url, 'https://google.com/logo2.png');
   });
 
   it('ignores vectors', async () => {
