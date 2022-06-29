@@ -15,7 +15,7 @@ import NetworkRequest from '../../../lib/network-request.js';
 /** @type {typeof import('../../../gather/gatherers/script-elements.js')} */
 let ScriptElements;
 
-beforeAll(async () => {
+before(async () => {
   ScriptElements = (await import('../../../gather/gatherers/script-elements.js')).default;
 });
 

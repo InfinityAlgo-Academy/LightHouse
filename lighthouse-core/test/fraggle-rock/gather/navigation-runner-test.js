@@ -4,7 +4,8 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import {jest} from '@jest/globals';
+import * as td from 'testdouble';
+import jestMock from 'jest-mock';
 
 import {
   createMockDriver,
@@ -27,19 +28,18 @@ import {fnAny} from '../../test-utils.js';
 /** @type {import('../../../fraggle-rock/gather/navigation-runner.js')} */
 let runner;
 
-beforeAll(async () => {
+before(async () => {
   runner = (await import('../../../fraggle-rock/gather/navigation-runner.js'));
 });
 
 const mocks = mockDriverSubmodules();
 
-/** @type {ReturnType<typeof mockRunnerModule>} */
-let mockRunner;
+const mockRunner = mockRunnerModule();
 
 // Establish the mocks before we import the file under test.
-jest.mock('../../../runner.js', () => mockRunner = mockRunnerModule());
+td.replace('../../../runner.js', mockRunner);
 
-/** @typedef {{meta: LH.Gatherer.GathererMeta<'Accessibility'>, getArtifact: jest.Mock<any, any>, startInstrumentation:jest.Mock<any, any>, stopInstrumentation: jest.Mock<any, any>, startSensitiveInstrumentation:jest.Mock<any, any>, stopSensitiveInstrumentation: jest.Mock<any, any>}} MockGatherer */
+/** @typedef {{meta: LH.Gatherer.GathererMeta<'Accessibility'>, getArtifact: Mock<any, any>, startInstrumentation: Mock<any, any>, stopInstrumentation: Mock<any, any>, startSensitiveInstrumentation: Mock<any, any>, stopSensitiveInstrumentation:  Mock<any, any>}} MockGatherer */
 
 describe('NavigationRunner', () => {
   let requestedUrl = '';
@@ -365,7 +365,7 @@ describe('NavigationRunner', () => {
     it('passes through an error in dependencies', async () => {
       const {navigation} = createNavigation();
       const err = new Error('Error in dependency chain');
-      navigation.artifacts[0].gatherer.instance.startInstrumentation = jest
+      navigation.artifacts[0].gatherer.instance.startInstrumentation = jestMock
         .fn()
         .mockRejectedValue(err);
       navigation.artifacts[1].dependencies = {Accessibility: {id: 'Timespan'}};
@@ -560,8 +560,7 @@ describe('NavigationRunner', () => {
 
   describe('navigation', () => {
     it('should throw on invalid URL', async () => {
-      const runnerActual = /** @type {typeof import('../../../runner.js')} */ (
-        jest.requireActual('../../../runner.js'));
+      const {default: runnerActual} = await import('../../../runner.js');
       mockRunner.gather.mockImplementation(runnerActual.gather);
 
       const navigatePromise = runner.navigationGather(

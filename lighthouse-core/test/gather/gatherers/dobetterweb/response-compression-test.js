@@ -14,7 +14,7 @@ import {createMockContext, mockDriverSubmodules} from '../../../fraggle-rock/gat
 /** @type {typeof import('../../../../gather/gatherers/dobetterweb/response-compression.js')} */
 let ResponseCompression;
 
-beforeAll(async () => {
+before(async () => {
   ResponseCompression =
     (await import('../../../../gather/gatherers/dobetterweb/response-compression.js')).default;
 });

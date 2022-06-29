@@ -4,16 +4,17 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import {jest} from '@jest/globals';
+import jestMock from 'jest-mock';
+import * as td from 'testdouble';
 
 // import sentryNode from '@sentry/node';
 import Sentry from '../../lib/sentry.js';
 
-jest.mock('@sentry/node');
+td.replace('@sentry/node', jestMock.fn());
 
 // Must mock sentry it is imported.
 let sentryNode;
-beforeAll(async () => {
+before(async () => {
   sentryNode = (await import('@sentry/node')).default;
 });
 
@@ -32,15 +33,15 @@ describe('Sentry', () => {
     // We want to have a fresh state for every test.
     originalSentry = {...Sentry};
 
-    sentryNode.init = jest.fn().mockReturnValue({install: jest.fn()});
-    sentryNode.setExtras = jest.fn();
-    sentryNode.captureException = jest.fn();
+    sentryNode.init = jestMock.fn().mockReturnValue({install: jestMock.fn()});
+    sentryNode.setExtras = jestMock.fn();
+    sentryNode.captureException = jestMock.fn();
     sentryNode.withScope = (fn) => fn({
       setLevel: () => {},
       setTags: () => {},
       setExtras: () => {},
     });
-    Sentry._shouldSample = jest.fn().mockReturnValue(true);
+    Sentry._shouldSample = jestMock.fn().mockReturnValue(true);
   });
 
   afterEach(() => {

@@ -44,12 +44,12 @@ describe('DependencyGraph/Simulator', () => {
   // Insulate the simulator tests from DNS multiplier changes
   let originalDNSMultiplier;
 
-  beforeAll(() => {
+  before(() => {
     originalDNSMultiplier = DNSCache.RTT_MULTIPLIER;
     DNSCache.RTT_MULTIPLIER = 1;
   });
 
-  afterAll(() => {
+  after(() => {
     DNSCache.RTT_MULTIPLIER = originalDNSMultiplier;
   });
 

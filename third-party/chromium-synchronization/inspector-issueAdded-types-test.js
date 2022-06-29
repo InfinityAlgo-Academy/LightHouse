@@ -17,7 +17,7 @@ describe('issueAdded types', () => {
   /** @type {Array<LH.Crdp.Audits.InspectorIssueDetails>} */
   let inspectorIssueDetailsTypes;
 
-  beforeAll(async () => {
+  before(async () => {
     const browserProtocolUrl =
       'https://raw.githubusercontent.com/ChromeDevTools/devtools-protocol/master/json/browser_protocol.json';
     const json = await fetch(browserProtocolUrl).then(r => r.json());

@@ -22,7 +22,7 @@ describe('PwaCategoryRenderer', () => {
   let pwaRenderer;
   let sampleResults;
 
-  beforeAll(() => {
+  before(() => {
     Util.i18n = new I18n('en', {...Util.UIStrings});
 
     const {document} = new jsdom.JSDOM().window;
@@ -39,7 +39,7 @@ describe('PwaCategoryRenderer', () => {
     category = JSON.parse(JSON.stringify(pwaCategory));
   });
 
-  afterAll(() => {
+  after(() => {
     Util.i18n = undefined;
   });
 

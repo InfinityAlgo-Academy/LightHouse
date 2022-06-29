@@ -7,7 +7,7 @@
 import {strict as assert} from 'assert';
 
 import jsdom from 'jsdom';
-import {jest} from '@jest/globals';
+import jestMock from 'jest-mock';
 
 import reportAssets from '../../generator/report-assets.js';
 import {Util} from '../../renderer/util.js';
@@ -40,8 +40,8 @@ describe('ReportUIFeatures', () => {
     return container;
   }
 
-  beforeAll(() => {
-    global.console.warn = jest.fn();
+  before(() => {
+    global.console.warn = jestMock.fn();
 
     // Stub out matchMedia for Node.
     global.matchMedia = function() {
@@ -80,7 +80,7 @@ describe('ReportUIFeatures', () => {
     render(sampleResults);
   });
 
-  afterAll(() => {
+  after(() => {
     global.window = undefined;
     global.HTMLElement = undefined;
     global.HTMLInputElement = undefined;
@@ -105,7 +105,7 @@ describe('ReportUIFeatures', () => {
     describe('third-party filtering', () => {
       let container;
 
-      beforeAll(() => {
+      before(() => {
         const lhr = JSON.parse(JSON.stringify(sampleResults));
         lhr.requestedUrl = lhr.finalUrl = 'http://www.example.com';
         const webpAuditItemTemplate = {
@@ -283,7 +283,7 @@ describe('ReportUIFeatures', () => {
       const getSaveEl = () => dom.find('a[data-action="save-html"]', container);
       expect(getSaveEl().classList.contains('lh-hidden')).toBeTruthy();
 
-      const getHtmlMock = jest.fn();
+      const getHtmlMock = jestMock.fn();
       container = render(sampleResults, {
         getStandaloneReportHTML: getHtmlMock,
       });
@@ -428,7 +428,7 @@ describe('ReportUIFeatures', () => {
     describe('_getNextSelectableNode', () => {
       let createDiv;
 
-      beforeAll(() => {
+      before(() => {
         createDiv = () => dom.document().createElement('div');
       });
 

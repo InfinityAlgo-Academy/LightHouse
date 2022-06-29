@@ -4,11 +4,8 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import {jest} from '@jest/globals';
-
 import {createMockContext} from '../../fraggle-rock/gather/mock-driver.js';
 import FullPageScreenshotGatherer from '../../../gather/gatherers/full-page-screenshot.js';
-
 
 // Headless's default value is (1024 * 16), but this varies by device
 const maxTextureSizeMock = 1024 * 8;
@@ -20,8 +17,6 @@ let screenSize;
 /** @type {string[]} */
 let screenshotData;
 let mockContext = createMockContext();
-
-jest.setTimeout(10_000);
 
 beforeEach(() => {
   contentSize = {width: 100, height: 100};

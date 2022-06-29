@@ -6,7 +6,7 @@
 
 import {strict as assert} from 'assert';
 
-import {jest} from '@jest/globals';
+import * as td from 'testdouble';
 
 import {fnAny} from '../../test-utils.js';
 
@@ -18,16 +18,16 @@ import {fnAny} from '../../test-utils.js';
 /** @type {typeof import('../../../gather/gatherers/service-worker.js')} */
 let ServiceWorkerGather;
 
-beforeAll(async () => {
+before(async () => {
   ServiceWorkerGather = (await import('../../../gather/gatherers/service-worker.js')).default;
 });
 
 const getServiceWorkerVersions = fnAny();
 const getServiceWorkerRegistrations = fnAny();
-jest.mock('../../../gather/driver/service-workers.js', () => ({
+td.replace('../../../gather/driver/service-workers.js', {
   getServiceWorkerVersions,
   getServiceWorkerRegistrations,
-}));
+});
 
 describe('service worker gatherer', () => {
   it('obtains the active service worker registration', async () => {

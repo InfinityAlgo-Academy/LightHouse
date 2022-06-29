@@ -26,14 +26,15 @@ function makeRect(opts) {
 describe('ElementScreenshotRenderer', () => {
   let dom;
 
-  beforeAll(() => {
+  before(() => {
     Util.i18n = new I18n('en', {...Util.UIStrings});
 
     const {document} = new jsdom.JSDOM().window;
     dom = new DOM(document);
+    Util.resetUniqueSuffix();
   });
 
-  afterAll(() => {
+  after(() => {
     Util.i18n = undefined;
   });
 

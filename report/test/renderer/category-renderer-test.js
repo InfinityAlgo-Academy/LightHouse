@@ -21,7 +21,7 @@ describe('CategoryRenderer', () => {
   let renderer;
   let sampleResults;
 
-  beforeAll(() => {
+  before(() => {
     Util.i18n = new I18n('en', {...Util.UIStrings});
 
     const {document} = new jsdom.JSDOM().window;
@@ -32,7 +32,7 @@ describe('CategoryRenderer', () => {
     sampleResults = Util.prepareReportResult(sampleResultsOrig);
   });
 
-  afterAll(() => {
+  after(() => {
     Util.i18n = undefined;
   });
 

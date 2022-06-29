@@ -4,20 +4,20 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import {jest} from '@jest/globals';
+import jestMock from 'jest-mock';
 
 import {readJson} from '../../../../root.js';
 import ImageElements from '../../../gather/gatherers/image-elements.js';
 import NetworkRecorder from '../../../lib/network-recorder.js';
 import {createMockContext, createMockDriver, createMockSession} from
   '../../fraggle-rock/gather/mock-driver.js';
-import {fnAny} from '../../test-utils.js';
+import {fnAny, timers} from '../../test-utils.js';
 
 const devtoolsLog = readJson('../../fixtures/traces/lcp-m78.devtools.log.json', import.meta);
 
 const networkRecords = NetworkRecorder.recordsFromLogs(devtoolsLog);
 
-jest.useFakeTimers();
+timers.useFakeTimers();
 
 /**
  * @param {Partial<LH.Artifacts.ImageElement>=} partial
@@ -64,9 +64,9 @@ function mockElement(partial = {}) {
 
 function makeImageElements() {
   const gatherer = new ImageElements();
-  jest.spyOn(gatherer, 'collectExtraDetails');
-  jest.spyOn(gatherer, 'fetchSourceRules');
-  jest.spyOn(gatherer, 'fetchElementWithSizeInformation');
+  jestMock.spyOn(gatherer, 'collectExtraDetails');
+  jestMock.spyOn(gatherer, 'fetchSourceRules');
+  jestMock.spyOn(gatherer, 'fetchElementWithSizeInformation');
   return gatherer;
 }
 
@@ -247,7 +247,7 @@ describe('.collectExtraDetails', () => {
       mockElement({isInShadowDOM: false, isCss: false}),
     ];
     gatherer.fetchSourceRules = fnAny().mockImplementation(async () => {
-      jest.advanceTimersByTime(6000);
+      timers.advanceTimersByTime(6000);
     });
 
     await gatherer.collectExtraDetails(driver, elements);

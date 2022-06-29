@@ -33,7 +33,7 @@ describe('asset-saver helper', () => {
   describe('saves files', function() {
     const tmpDir = `${LH_ROOT}/.tmp/asset-saver-test`;
 
-    beforeAll(() => {
+    before(() => {
       fs.mkdirSync(tmpDir, {recursive: true});
       const artifacts = {
         devtoolsLogs: {
@@ -89,7 +89,7 @@ describe('asset-saver helper', () => {
   describe('saveTrace', () => {
     const traceFilename = `${LH_ROOT}/.tmp/test-trace-0.json`;
 
-    beforeAll(() => {
+    before(() => {
       fs.mkdirSync(`${LH_ROOT}/.tmp`, {recursive: true});
     });
 

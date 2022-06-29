@@ -41,13 +41,13 @@ jobs:
     # Run tests that require headfull Chrome.
     - run: sudo apt-get install xvfb
     - name: yarn test-clients
-      run: xvfb-run --auto-servernum bash $GITHUB_WORKSPACE/.github/scripts/jest-retry.sh yarn test-clients
+      run: xvfb-run --auto-servernum bash $GITHUB_WORKSPACE/.github/scripts/test-retry.sh yarn test-clients
     - name: yarn test-docs
       run: xvfb-run --auto-servernum yarn test-docs
     - name: yarn test-viewer
-      run: xvfb-run --auto-servernum bash $GITHUB_WORKSPACE/.github/scripts/jest-retry.sh yarn test-viewer
+      run: xvfb-run --auto-servernum bash $GITHUB_WORKSPACE/.github/scripts/test-retry.sh yarn test-viewer
     - name: yarn test-treemap
-      run: xvfb-run --auto-servernum bash $GITHUB_WORKSPACE/.github/scripts/jest-retry.sh yarn test-treemap
+      run: xvfb-run --auto-servernum bash $GITHUB_WORKSPACE/.github/scripts/test-retry.sh yarn test-treemap
 
     - run: yarn diff:sample-json
     - run: yarn diff:flow-sample-json

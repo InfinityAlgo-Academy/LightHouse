@@ -4,19 +4,17 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import {jest} from '@jest/globals';
-
 import TraceElementsGatherer from '../../../gather/gatherers/trace-elements.js';
 import Driver from '../../../gather/driver.js';
 import Connection from '../../../gather/connections/connection.js';
 import createTestTrace from '../../create-test-trace.js';
 import {createMockSendCommandFn, createMockOnFn} from '../mock-commands.js';
-import {flushAllTimersAndMicrotasks, fnAny} from '../../test-utils.js';
+import {flushAllTimersAndMicrotasks, fnAny, timers} from '../../test-utils.js';
 import {readJson} from '../../../../root.js';
 
 const animationTrace = readJson('../../fixtures/traces/animation.json', import.meta);
 
-jest.useFakeTimers();
+timers.useFakeTimers();
 
 function makeLayoutShiftTraceEvent(score, impactedNodes, had_recent_input = false) { // eslint-disable-line camelcase
   return {

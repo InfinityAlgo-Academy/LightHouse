@@ -29,7 +29,7 @@ describe('CLI run', function() {
     /** @type {LH.Result} */
     let fileResults;
 
-    beforeAll(async () => {
+    before(async () => {
       const url = 'http://localhost:10200/dobetterweb/dbw_tester.html';
       // eslint-disable-next-line max-len
       const samplev2ArtifactsPath = LH_ROOT + '/lighthouse-core/test/results/artifacts/';
@@ -38,8 +38,6 @@ describe('CLI run', function() {
       const flags = getFlags([
         '--output=json',
         `--output-path=${filename}`,
-        // Jest allows us to resolve this module with no setup.
-        // https://github.com/GoogleChrome/lighthouse/pull/13045#discussion_r708690607
         '--plugins=lighthouse-plugin-simple',
         // Use sample artifacts to avoid gathering during a unit test.
         `--audit-mode=${samplev2ArtifactsPath}`,
@@ -55,9 +53,9 @@ describe('CLI run', function() {
 
       assert.ok(fs.existsSync(filename));
       fileResults = JSON.parse(fs.readFileSync(filename, 'utf-8'));
-    }, 60 * 1000);
+    });
 
-    afterAll(() => {
+    after(() => {
       fs.unlinkSync(filename);
     });
 
@@ -90,7 +88,7 @@ describe('CLI run', function() {
       assert.ok(groupNames.includes('lighthouse-plugin-simple-new-group'));
     });
   });
-});
+}).timeout(60_000);
 
 describe('flag coercing', () => {
   it('should force to array', () => {

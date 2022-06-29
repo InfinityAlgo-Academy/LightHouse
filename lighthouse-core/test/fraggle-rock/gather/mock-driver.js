@@ -4,12 +4,12 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-
 /**
  * @fileoverview Mock fraggle rock driver for testing.
  */
 
-import {jest} from '@jest/globals';
+import jestMock from 'jest-mock';
+import * as td from 'testdouble';
 
 import {
   createMockOnFn,
@@ -159,7 +159,7 @@ function createMockDriver() {
     _page: page,
     _executionContext: context,
     _session: session,
-    url: jest.fn(() => page.url()),
+    url: jestMock.fn(() => page.url()),
     defaultSession: session,
     connect: fnAny(),
     disconnect: fnAny(),
@@ -174,24 +174,20 @@ function createMockDriver() {
   };
 }
 
-function mockRunnerModule() {
-  const runnerModule = {
-    getAuditList: fnAny().mockReturnValue([]),
-    getGathererList: fnAny().mockReturnValue([]),
-    audit: fnAny(),
-    gather: fnAny(),
-    reset,
-  };
-
-  jest.mock(`${LH_ROOT}/lighthouse-core/runner.js`, () => runnerModule);
-
-  function reset() {
+const runnerModule = {
+  getAuditList: fnAny().mockReturnValue([]),
+  getGathererList: fnAny().mockReturnValue([]),
+  audit: fnAny(),
+  gather: fnAny(),
+  reset() {
     runnerModule.getGathererList.mockReturnValue([]);
     runnerModule.getAuditList.mockReturnValue([]);
     runnerModule.audit.mockReset();
     runnerModule.gather.mockReset();
-  }
-
+  },
+};
+function mockRunnerModule() {
+  td.replace(`${LH_ROOT}/lighthouse-core/runner.js`, runnerModule);
   return runnerModule;
 }
 
@@ -290,11 +286,11 @@ function mockDriverSubmodules() {
     return (...args) => target[name](...args);
   };
 
-  jest.mock('../../../gather/driver/navigation.js', () => new Proxy(navigationMock, {get}));
-  jest.mock('../../../gather/driver/prepare.js', () => new Proxy(prepareMock, {get}));
-  jest.mock('../../../gather/driver/storage.js', () => new Proxy(storageMock, {get}));
-  jest.mock('../../../gather/driver/network.js', () => new Proxy(networkMock, {get}));
-  jest.mock('../../../lib/emulation.js', () => new Proxy(emulationMock, {get}));
+  td.replace('../../../gather/driver/navigation.js', new Proxy(navigationMock, {get}));
+  td.replace('../../../gather/driver/prepare.js', new Proxy(prepareMock, {get}));
+  td.replace('../../../gather/driver/storage.js', new Proxy(storageMock, {get}));
+  td.replace('../../../gather/driver/network.js', new Proxy(networkMock, {get}));
+  td.replace('../../../lib/emulation.js', new Proxy(emulationMock, {get}));
 
   reset();
 

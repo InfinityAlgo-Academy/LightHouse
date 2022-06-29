@@ -35,7 +35,7 @@ describe('Lighthouse chrome popup', function() {
   let page;
   const pageErrors = [];
 
-  beforeAll(async function() {
+  before(async function() {
     // start puppeteer
     browser = await puppeteer.launch({
       headless: false,
@@ -78,7 +78,7 @@ describe('Lighthouse chrome popup', function() {
     await page.goto('file://' + path.join(lighthouseExtensionPath, 'popup.html'), {waitUntil: 'networkidle2'});
   }, 10 * 1000);
 
-  afterAll(async () => {
+  after(async () => {
     if (browser) {
       await browser.close();
     }

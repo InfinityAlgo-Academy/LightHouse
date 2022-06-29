@@ -8,7 +8,10 @@
 module.exports = {
   extends: '../../../.eslintrc.js',
   env: {
-    jest: true,
+    mocha: true,
+  },
+  globals: {
+    expect: true,
   },
   rules: {
     'new-cap': 0,

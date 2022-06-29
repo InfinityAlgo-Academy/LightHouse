@@ -4,8 +4,6 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import {jest} from '@jest/globals';
-
 import Driver from '../../gather/driver.js';
 import Connection from '../../gather/connections/connection.js';
 import FakeDriver from './fake-driver.js';
@@ -14,12 +12,13 @@ import {
   makePromiseInspectable,
   flushAllTimersAndMicrotasks,
   fnAny,
+  timers,
 } from '../test-utils.js';
 
 const {protocolGetVersionResponse} = FakeDriver;
 const {createMockSendCommandFn} = mockCommands;
 
-jest.useFakeTimers();
+timers.useFakeTimers();
 
 /**
  * @typedef DriverMockMethods
@@ -88,7 +87,7 @@ describe('.evaluateAsync', () => {
     driver.setNextProtocolTimeout(5000);
     const evaluatePromise = makePromiseInspectable(driver.evaluateAsync('1 + 1'));
 
-    jest.advanceTimersByTime(5001);
+    timers.advanceTimersByTime(5001);
     await flushAllTimersAndMicrotasks();
     expect(evaluatePromise).toBeDone();
     await expect(evaluatePromise).rejects.toBeTruthy();
@@ -104,7 +103,7 @@ describe('.sendCommand', () => {
 
     driver.setNextProtocolTimeout(10000);
     const pageEnablePromise = driver.sendCommand('Page.enable');
-    jest.advanceTimersByTime(mockTimeout + 1);
+    timers.advanceTimersByTime(mockTimeout + 1);
     await pageEnablePromise;
 
     const driverTimeout = 5;

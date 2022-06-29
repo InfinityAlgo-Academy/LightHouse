@@ -4,15 +4,14 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import {jest} from '@jest/globals';
-
-jest.useFakeTimers();
 
 import Driver from '../../../gather/driver.js';
 import Connection from '../../../gather/connections/connection.js';
 import SourceMaps from '../../../gather/gatherers/source-maps.js';
 import {createMockSendCommandFn, createMockOnFn} from '../mock-commands.js';
-import {flushAllTimersAndMicrotasks, fnAny} from '../../test-utils.js';
+import {flushAllTimersAndMicrotasks, fnAny, timers} from '../../test-utils.js';
+
+timers.useFakeTimers();
 
 const mapJson = JSON.stringify({
   version: 3,

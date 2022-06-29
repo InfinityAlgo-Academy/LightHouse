@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Ex: bash jest-retry.sh yarn test-viewer
+# Ex: bash test-retry.sh yarn test-viewer
 
 ##
 # @license Copyright 2021 The Lighthouse Authors. All Rights Reserved.

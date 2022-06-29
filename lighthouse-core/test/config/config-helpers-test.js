@@ -7,7 +7,7 @@
 import path from 'path';
 import {createRequire} from 'module';
 
-import {jest} from '@jest/globals';
+import jestMock from 'jest-mock';
 
 import {
   deepClone,
@@ -31,7 +31,7 @@ const require = createRequire(import.meta.url);
 const moduleDir = getModuleDirectory(import.meta);
 
 const originalCwd = process.cwd;
-afterAll(() => {
+after(() => {
   process.cwd = originalCwd;
 });
 
@@ -416,7 +416,7 @@ describe('.resolveModulePath', () => {
   const configFixturePath = path.resolve(moduleDir, '../fixtures/config');
 
   beforeEach(() => {
-    process.cwd = jest.fn(() => configFixturePath);
+    process.cwd = jestMock.fn(() => configFixturePath);
   });
 
   it('lighthouse and plugins are installed in the same path', () => {
@@ -433,7 +433,7 @@ describe('.resolveModulePath', () => {
     });
 
     it('relative to the config path', () => {
-      process.cwd = jest.fn(() => path.resolve(configFixturePath, '../'));
+      process.cwd = jestMock.fn(() => path.resolve(configFixturePath, '../'));
       const pluginName = 'lighthouse-plugin-config-helper';
       const pathToPlugin = resolveModulePath(pluginName, configFixturePath, 'plugin');
       expect(pathToPlugin).toEqual(require.resolve(path.resolve(configFixturePath, pluginName)));
@@ -449,7 +449,7 @@ describe('.resolveModulePath', () => {
     it('in current working directory', () => {
       const pluginName = 'plugin-in-working-directory';
       const pluginDir = `${pluginsDirectory}/node_modules/plugin-in-working-directory`;
-      process.cwd = jest.fn(() => pluginsDirectory);
+      process.cwd = jestMock.fn(() => pluginsDirectory);
 
       const pathToPlugin = resolveModulePath(pluginName, null, 'plugin');
 
@@ -464,7 +464,7 @@ describe('.resolveModulePath', () => {
     it('relative to the config path', () => {
       const pluginName = 'plugin-in-config-directory';
       const configDirectory = `${pluginsDirectory}/config`;
-      process.cwd = jest.fn(() => '/usr/bin/node');
+      process.cwd = jestMock.fn(() => '/usr/bin/node');
 
       const pathToPlugin = resolveModulePath(pluginName, configDirectory, 'plugin');
 

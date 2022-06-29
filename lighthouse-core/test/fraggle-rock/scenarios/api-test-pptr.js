@@ -4,21 +4,22 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import {jest} from '@jest/globals';
+import jestMock from 'jest-mock';
 
 import * as lighthouse from '../../../fraggle-rock/api.js';
 import {createTestState, getAuditsBreakdown} from './pptr-test-utils.js';
 import {LH_ROOT} from '../../../../root.js';
 
-jest.setTimeout(90_000);
+describe('Fraggle Rock API', function() {
+  // eslint-disable-next-line no-invalid-this
+  this.timeout(120_000);
 
-describe('Fraggle Rock API', () => {
   const state = createTestState();
 
   state.installSetupAndTeardownHooks();
 
   async function setupTestPage() {
-    await state.page.goto(`${state.serverBaseUrl}/onclick.html`);
+    await state.page.goto(`${state.serverBaseUrl}/onclick.html`, {timeout: 90_000});
     // Wait for the javascript to run.
     await state.page.waitForSelector('button');
     await state.page.click('button');
@@ -195,7 +196,7 @@ describe('Fraggle Rock API', () => {
       const mainDocumentUrl = `${serverBaseUrl}/index.html`;
       await page.goto(initialUrl);
 
-      const requestor = jest.fn(async () => {
+      const requestor = jestMock.fn(async () => {
         await page.click('a');
       });
 

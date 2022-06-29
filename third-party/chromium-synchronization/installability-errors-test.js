@@ -9,12 +9,10 @@ const fetch = require('node-fetch');
 
 const InstallableManifestAudit = require('../../lighthouse-core/audits/installable-manifest.js');
 
-jest.setTimeout(20_000);
-
 describe('installabilityErrors', () => {
   let chromiumErrorIds;
 
-  beforeAll(async () => {
+  before(async () => {
     const installableLoggingGitTilesUrl =
       'https://chromium.googlesource.com/chromium/src/+/main/components/webapps/browser/installable/installable_logging.cc?format=TEXT';
     const resp = await fetch(installableLoggingGitTilesUrl);

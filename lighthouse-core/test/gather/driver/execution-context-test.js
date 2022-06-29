@@ -4,17 +4,16 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import {jest} from '@jest/globals';
-
 import ExecutionContext from '../../../gather/driver/execution-context.js';
 import {
   mockCommands,
   makePromiseInspectable,
   flushAllTimersAndMicrotasks,
   fnAny,
+  timers,
 } from '../../test-utils.js';
 
-jest.useFakeTimers();
+timers.useFakeTimers();
 
 // This can be removed when FR becomes the default.
 const createMockSendCommandFn =
@@ -86,7 +85,7 @@ describe('ExecutionContext', () => {
     expect(executionContext.getContextId()).toEqual(undefined);
   });
 
-  it.todo('should cache native objects in page');
+  // it('TODO: should cache native objects in page');
 });
 
 describe('.evaluateAsync', () => {

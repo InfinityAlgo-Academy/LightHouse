@@ -16,6 +16,7 @@ lcov.info
 lighthouse-cli/results
 results.html
 last-run-results.html
+/lighthouse-plugin-simple
 
 *.trace.json
 *.devtoolslog.json

@@ -40,11 +40,11 @@ describe('Accessibility gatherer', () => {
 describe('a11y audits + aXe', () => {
   let browser;
 
-  beforeAll(async () => {
+  before(async () => {
     browser = await puppeteer.launch();
   });
 
-  afterAll(async () => {
+  after(async () => {
     await browser.close();
   });
 

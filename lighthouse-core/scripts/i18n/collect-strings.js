@@ -11,7 +11,7 @@ import fs from 'fs';
 import path from 'path';
 
 import glob from 'glob';
-import expect from 'expect';
+import {expect} from 'expect';
 import tsc from 'typescript';
 import MessageParser from 'intl-messageformat-parser';
 import esMain from 'es-main';

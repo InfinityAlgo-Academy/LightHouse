@@ -4,9 +4,24 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-const {default: {toBeCloseTo}} = require('expect/build/matchers.js');
+import {expect} from 'expect';
 
-const format = require('../../../shared/localization/format.js');
+import * as format from '../../../shared/localization/format.js';
+
+// TODO: the `message` value of these matchers seems to be ignored. Ex:
+//
+//        expect({a: 'A'}).toMatchObject({
+//          a: expect.toBeDisplayString('B'),
+//        });
+//
+// Error: expect(received).toMatchObject(expected)
+// - Expected  - 1
+// + Received  + 1
+//
+//   Object {
+// -   "a": toBeDisplayString<B>,
+// +   "a": "A",
+//   }
 
 expect.extend({
   toBeDisplayString(received, expected) {
@@ -38,17 +53,31 @@ expect.extend({
 
     return {message, pass};
   },
+  toBeApproximately(received, expected, precision = 2) {
+    let pass = false;
+    let expectedDiff = 0;
+    let receivedDiff = 0;
 
-  // Expose toBeCloseTo() so it can be used as an asymmetric matcher.
-  toBeApproximately(...args) {
-    // If called asymmetrically, a fake matcher `this` object needs to be passed
-    // in (see https://github.com/facebook/jest/issues/8295). There's no effect
-    // because it's only used for the printing of full failures, which isn't
-    // done for asymmetric matchers anyways.
-    const thisObj = (this && this.utils) ? this :
-        {isNot: false, promise: ''};
-    // @ts-expect-error
-    return toBeCloseTo.call(thisObj, ...args);
+    if (received === Infinity && expected === Infinity) {
+      pass = true; // Infinity - Infinity is NaN
+    } else if (received === -Infinity && expected === -Infinity) {
+      pass = true; // -Infinity - -Infinity is NaN
+    } else {
+      expectedDiff = Math.pow(10, -precision) / 2;
+      receivedDiff = Math.abs(expected - received);
+      pass = receivedDiff < expectedDiff;
+    }
+
+    const message = () =>
+      [
+        `${this.utils.matcherHint('.toBeDisplayString')}\n`,
+        `Expected number to be close to:`,
+        `  ${this.utils.printExpected(expected)}`,
+        `Received:`,
+        `  ${this.utils.printReceived(received)}`,
+      ].join('\n');
+
+    return {message, pass};
   },
   /**
     * Asserts that an inspectable promise created by makePromiseInspectable is currently resolved or rejected.

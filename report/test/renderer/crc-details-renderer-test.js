@@ -72,7 +72,7 @@ describe('DetailsRenderer', () => {
   let dom;
   let detailsRenderer;
 
-  beforeAll(() => {
+  before(() => {
     Util.i18n = new I18n('en', {...Util.UIStrings});
 
     const {document} = new jsdom.JSDOM().window;
@@ -80,7 +80,7 @@ describe('DetailsRenderer', () => {
     detailsRenderer = new DetailsRenderer(dom);
   });
 
-  afterAll(() => {
+  after(() => {
     Util.i18n = undefined;
   });
 

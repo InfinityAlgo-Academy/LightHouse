@@ -21,7 +21,6 @@ class MainDocumentContent extends FRGatherer {
   };
 
   /**
-   *
    * @param {LH.Gatherer.FRTransitionalContext} context
    * @param {LH.Artifacts['DevtoolsLog']} devtoolsLog
    * @return {Promise<LH.Artifacts['MainDocumentContent']>}
@@ -34,7 +33,6 @@ class MainDocumentContent extends FRGatherer {
   }
 
   /**
-   *
    * @param {LH.Gatherer.FRTransitionalContext<'DevtoolsLog'>} context
    * @return {Promise<LH.Artifacts['MainDocumentContent']>}
    */

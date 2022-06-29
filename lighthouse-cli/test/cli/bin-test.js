@@ -6,39 +6,33 @@
 
 import fs from 'fs';
 
-import {jest} from '@jest/globals';
+import * as td from 'testdouble';
+import jestMock from 'jest-mock';
 
-import {LH_ROOT} from '../../../root.js';
+import {LH_ROOT, readJson} from '../../../root.js';
 
-const mockRunLighthouse = jest.fn();
-
-jest.unstable_mockModule('../../run.js', () => {
-  return {runLighthouse: mockRunLighthouse};
-});
-
-const mockGetFlags = jest.fn();
-jest.unstable_mockModule('../../cli-flags.js', () => {
-  return {getFlags: mockGetFlags};
-});
-
-const mockAskPermission = jest.fn();
-jest.unstable_mockModule('../../sentry-prompt.js', () => {
-  return {askPermission: mockAskPermission};
-});
-
-const mockSentryInit = jest.fn();
-jest.mock('../../../lighthouse-core/lib/sentry.js', () => {
-  return {init: mockSentryInit};
-});
-
-const mockLoggerSetLevel = jest.fn();
-jest.unstable_mockModule('lighthouse-logger', () => {
-  return {default: {setLevel: mockLoggerSetLevel}};
-});
+const mockRunLighthouse = jestMock.fn();
+const mockGetFlags = jestMock.fn();
+const mockAskPermission = jestMock.fn();
+const mockSentryInit = jestMock.fn();
+const mockLoggerSetLevel = jestMock.fn();
 
 /** @type {import('../../bin.js')} */
 let bin;
-beforeAll(async () => {
+before(async () => {
+  td.replaceEsm('../../run.js', {
+    runLighthouse: mockRunLighthouse,
+  });
+  td.replaceEsm('../../cli-flags.js', {
+    getFlags: mockGetFlags,
+  });
+  td.replaceEsm('../../sentry-prompt.js', {
+    askPermission: mockAskPermission,
+  });
+  td.replace('../../../lighthouse-core/lib/sentry.js', {
+    init: mockSentryInit,
+  });
+  td.replaceEsm('lighthouse-logger', undefined, {setLevel: mockLoggerSetLevel});
   bin = await import('../../bin.js');
 });
 
@@ -177,7 +171,7 @@ describe('CLI bin', function() {
       await bin.begin();
 
       expect(getRunLighthouseArgs()[1]).toMatchObject({
-        precomputedLanternData: (await import(lanternDataFile)).default,
+        precomputedLanternData: readJson(lanternDataFile),
         precomputedLanternDataPath: lanternDataFile,
       });
     });

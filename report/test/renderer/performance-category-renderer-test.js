@@ -23,7 +23,7 @@ describe('PerfCategoryRenderer', () => {
   let renderer;
   let sampleResults;
 
-  beforeAll(() => {
+  before(() => {
     Util.i18n = new I18n('en', {...Util.UIStrings});
 
     const {document} = new jsdom.JSDOM().window;
@@ -36,7 +36,7 @@ describe('PerfCategoryRenderer', () => {
     category = sampleResults.categories.performance;
   });
 
-  afterAll(() => {
+  after(() => {
     Util.i18n = undefined;
   });
 
@@ -390,7 +390,7 @@ Array [
     let getDescriptionsAfterCheckedToggle;
 
     describe('works if there is a performance category', () => {
-      beforeAll(() => {
+      before(() => {
         container = renderer.render(category, sampleResults.categoryGroups);
         const metricsAuditGroup = container.querySelector(metricsSelector);
         toggle = metricsAuditGroup.querySelector(toggleSelector);

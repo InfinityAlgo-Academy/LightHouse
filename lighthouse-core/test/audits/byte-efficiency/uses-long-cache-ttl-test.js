@@ -31,13 +31,13 @@ function networkRecord(options = {}) {
 describe('Cache headers audit', () => {
   // Stub Date.now so the tests are not sensitive to timing.
   let dateNowFn;
-  beforeAll(() => {
+  before(() => {
     dateNowFn = Date.now;
     const now = Date.now();
     Date.now = () => now;
   });
 
-  afterAll(() => {
+  after(() => {
     Date.now = dateNowFn;
   });
 

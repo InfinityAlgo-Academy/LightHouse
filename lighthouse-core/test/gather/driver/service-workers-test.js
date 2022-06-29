@@ -4,10 +4,8 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import {jest} from '@jest/globals';
-
 import {createMockSession} from '../../fraggle-rock/gather/mock-driver.js';
-import {makePromiseInspectable, flushAllTimersAndMicrotasks} from '../../test-utils.js';
+import {makePromiseInspectable, flushAllTimersAndMicrotasks, timers} from '../../test-utils.js';
 import serviceWorkers from '../../../gather/driver/service-workers.js';
 
 let sessionMock = createMockSession();
@@ -17,7 +15,7 @@ beforeEach(() => {
 });
 
 afterEach(() => {
-  jest.useRealTimers();
+  timers.useRealTimers();
 });
 
 describe('.getServiceWorkerVersions', () => {
@@ -46,7 +44,7 @@ describe('.getServiceWorkerVersions', () => {
   });
 
   it('waits for currently installing workers', async () => {
-    jest.useFakeTimers();
+    timers.useFakeTimers();
     sessionMock.sendCommand
       .mockResponse('ServiceWorker.enable')
       .mockResponse('ServiceWorker.disable');

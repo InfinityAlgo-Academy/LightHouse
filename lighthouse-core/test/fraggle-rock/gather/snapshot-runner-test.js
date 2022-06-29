@@ -4,9 +4,9 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import {jest} from '@jest/globals';
-
 // import {snapshotGather} from '../../../fraggle-rock/gather/snapshot-runner.js';
+import * as td from 'testdouble';
+
 import {
   createMockDriver,
   createMockPage,
@@ -21,7 +21,7 @@ import {
 /** @type {import('../../../fraggle-rock/gather/snapshot-runner.js')['snapshotGather']} */
 let snapshotGather;
 
-beforeAll(async () => {
+before(async () => {
   snapshotGather = (await import('../../../fraggle-rock/gather/snapshot-runner.js')).snapshotGather;
 });
 
@@ -31,9 +31,8 @@ const mockRunner = mockRunnerModule();
 /** @type {ReturnType<typeof createMockDriver>} */
 let mockDriver;
 
-jest.mock('../../../fraggle-rock/gather/driver.js', () =>
-  mockDriverModule(() => mockDriver.asDriver())
-);
+td.replace('../../../fraggle-rock/gather/driver.js',
+  mockDriverModule(() => mockDriver.asDriver()));
 
 describe('Snapshot Runner', () => {
   /** @type {ReturnType<typeof createMockPage>} */

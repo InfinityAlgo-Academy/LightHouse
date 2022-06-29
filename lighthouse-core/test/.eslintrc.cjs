@@ -6,7 +6,10 @@
 
 module.exports = {
   env: {
-    jest: true,
+    mocha: true,
+  },
+  globals: {
+    expect: true,
   },
   rules: {
     // TODO(esmodules): move to root eslint when all code is ESM

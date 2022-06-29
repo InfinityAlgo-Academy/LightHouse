@@ -4,23 +4,21 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import {jest} from '@jest/globals';
-
 import * as lighthouse from '../../../fraggle-rock/api.js';
 import {createTestState, getAuditsBreakdown} from './pptr-test-utils.js';
 import {LH_ROOT} from '../../../../root.js';
 
-/* eslint-env jest */
 /* eslint-env browser */
 
-jest.setTimeout(90_000);
+describe('Start/End navigation', function() {
+  // eslint-disable-next-line no-invalid-this
+  this.timeout(120_000);
 
-describe('Start/End navigation', () => {
   const state = createTestState();
 
   state.installSetupAndTeardownHooks();
 
-  beforeAll(() => {
+  before(() => {
     state.server.baseDir = `${LH_ROOT}/lighthouse-core/test/fixtures/fraggle-rock/navigation-basic`;
   });
 

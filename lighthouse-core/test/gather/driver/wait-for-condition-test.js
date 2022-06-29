@@ -4,8 +4,6 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import {jest} from '@jest/globals';
-
 import wait from '../../../gather/driver/wait-for-condition.js';
 import {
   mockCommands,
@@ -13,11 +11,12 @@ import {
   flushAllTimersAndMicrotasks,
   createDecomposedPromise,
   fnAny,
+  timers,
 } from '../../test-utils.js';
 
 const {createMockOnceFn} = mockCommands;
 
-jest.useFakeTimers();
+timers.useFakeTimers();
 
 function createMockWaitForFn() {
   const {promise, resolve, reject} = createDecomposedPromise();
@@ -195,7 +194,7 @@ describe('waitForFullyLoaded()', () => {
     await flushAllTimersAndMicrotasks();
     expect(loadPromise).not.toBeDone(`Did not wait for CPU idle`);
 
-    jest.advanceTimersByTime(60001);
+    timers.advanceTimersByTime(60001);
     await flushAllTimersAndMicrotasks();
     expect(loadPromise).toBeDone(`Did not wait for timeout`);
     // Check that we cancelled all our listeners
@@ -268,7 +267,7 @@ describe('waitForFcp()', () => {
     await flushAllTimersAndMicrotasks();
     expect(waitPromise).not.toBeDone('Did not wait for pauseAfterFcpMs');
 
-    jest.advanceTimersByTime(5001);
+    timers.advanceTimersByTime(5001);
     await flushAllTimersAndMicrotasks();
     expect(waitPromise).toBeDone('Did not resolve after pauseAfterFcpMs');
 
@@ -283,7 +282,7 @@ describe('waitForFcp()', () => {
     await flushAllTimersAndMicrotasks();
     expect(waitPromise).not.toBeDone('Resolved before timeout');
 
-    jest.advanceTimersByTime(5001);
+    timers.advanceTimersByTime(5001);
     await flushAllTimersAndMicrotasks();
     expect(waitPromise).toBeDone('Did not resolve after timeout');
     await expect(waitPromise).rejects.toMatchObject({code: 'NO_FCP'});

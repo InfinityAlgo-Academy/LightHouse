@@ -22,12 +22,12 @@ describe('DetailsRenderer', () => {
     renderer = new DetailsRenderer(dom, options);
   }
 
-  beforeAll(() => {
+  before(() => {
     Util.i18n = new I18n('en', {...Util.UIStrings});
     createRenderer();
   });
 
-  afterAll(() => {
+  after(() => {
     Util.i18n = undefined;
   });
 

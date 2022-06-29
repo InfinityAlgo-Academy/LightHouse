@@ -4,7 +4,7 @@
     // Limit to base JS and DOM defs.
     "lib": ["es2020", "dom", "dom.iterable"],
     // Selectively include types from node_modules/.
-    "types": ["node", "jest"],
+    "types": ["node", "mocha"],
 
     "jsx": "react-jsx",
     "jsxImportSource": "preact",
@@ -19,5 +19,6 @@
     "**/*.ts",
     "**/*.tsx",
     "./types",
+    "../types/test.d.ts",
   ],
 }

@@ -1,4 +1,0 @@
-{
-  "type": "commonjs",
-  "//": "jest only supports commonjs for setup modules"
-}

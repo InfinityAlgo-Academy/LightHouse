@@ -19,7 +19,7 @@ let Driver;
 /** @type {typeof import('../../gather/fetcher.js')} */
 let Fetcher;
 
-beforeAll(async () => {
+before(async () => {
   Driver = (await import('../../gather/driver.js')).default;
   Fetcher = (await import('../../gather/fetcher.js')).default;
 });

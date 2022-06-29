@@ -62,7 +62,7 @@ jobs:
       run: xvfb-run --auto-servernum yarn unit:ci
 
     # Only gather coverage on latest node, where c8 is the most accurate.
-    - name: yarn unit:coverage
+    - name: yarn unit:cicoverage
       if: ${{ matrix.node == env.LATEST_NODE }}
       run: |
         xvfb-run --auto-servernum yarn unit:cicoverage
@@ -91,8 +91,8 @@ jobs:
     - run: yarn install --frozen-lockfile --network-timeout 1000000
     - run: yarn build-report
 
-    - name: yarn unit-cli
-      run: yarn unit-cli
+    # TODO: fix run-mocha-tests.js on windows.
+    # - run: yarn unit-cli
     - run: yarn diff:sample-json
 
     # Fail if any changes were written to any source files or generated untracked files (ex, from -GA).

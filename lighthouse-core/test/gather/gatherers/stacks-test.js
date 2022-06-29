@@ -8,7 +8,7 @@ import StacksGatherer from '../../../gather/gatherers/stacks.js';
 import {fnAny} from '../../test-utils.js';
 
 describe('StacksGatherer', () => {
-  /** @type {{executionContext: {evaluate: jest.Mock}}} */
+  /** @type {{executionContext: {evaluate: Mock<any, any>}}} */
   let driver;
 
   beforeEach(() => {

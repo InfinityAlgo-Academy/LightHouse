@@ -4,7 +4,7 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import {beforeAll, beforeEach, afterAll, afterEach} from '@jest/globals';
+import {before, beforeEach, after, afterEach} from 'mocha';
 import puppeteer from 'puppeteer-core';
 import {getChromePath} from 'chrome-launcher';
 
@@ -25,7 +25,7 @@ const FLAKY_AUDIT_IDS_APPLICABILITY = new Set([
 function createTestState() {
   /** @param {string} name @return {any} */
   const any = name => new Proxy({}, {get: () => {
-    throw new Error(`${name} used without invoking \`state.beforeAll\``);
+    throw new Error(`${name} used without invoking \`state.before\``);
   }});
 
   return {
@@ -37,7 +37,7 @@ function createTestState() {
     secondaryServerBaseUrl: '',
 
     installSetupAndTeardownHooks() {
-      beforeAll(async () => {
+      before(async () => {
         this.server = new Server();
         this.secondaryServer = new Server();
         await this.server.listen(0, '127.0.0.1');
@@ -59,7 +59,7 @@ function createTestState() {
         await this.page.close();
       });
 
-      afterAll(async () => {
+      after(async () => {
         await this.browser.close();
         await this.server.close();
         await this.secondaryServer.close();
