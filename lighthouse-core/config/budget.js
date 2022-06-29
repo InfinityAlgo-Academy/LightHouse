@@ -137,11 +137,11 @@ class Budget {
    * If multiple budgets match based on thier 'path' property,
    * then the last-listed of those budgets is returned.
    * @param {Immutable<Array<LH.Budget>>|null} budgets
-   * @param {string} url
+   * @param {string|undefined} url
    * @return {Immutable<LH.Budget> | undefined} budget
    */
   static getMatchingBudget(budgets, url) {
-    if (budgets === null) return;
+    if (budgets === null || url === undefined) return;
 
     // Applies the LAST matching budget.
     for (let i = budgets.length - 1; i >= 0; i--) {

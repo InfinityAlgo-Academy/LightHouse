@@ -10,7 +10,6 @@ coverage/**
 
 !.eslintrc.js
 
-lighthouse-core/lib/cdt/generated/SourceMap.js
 lighthouse-core/scripts/legacy-javascript/variants
 
 third-party/**

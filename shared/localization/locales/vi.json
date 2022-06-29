@@ -3,7 +3,7 @@
     "message": "Tất cả báo cáo"
   },
   "flow-report/src/i18n/ui-strings.js | categories": {
-    "message": "Categories"
+    "message": "Danh mục"
   },
   "flow-report/src/i18n/ui-strings.js | categoryAccessibility": {
     "message": "Hỗ trợ tiếp cận"
@@ -24,40 +24,46 @@
     "message": "Máy tính"
   },
   "flow-report/src/i18n/ui-strings.js | helpDialogTitle": {
-    "message": "Understanding the Lighthouse Flow Report"
+    "message": "Tìm hiểu về Báo cáo luồng Lighthouse"
   },
   "flow-report/src/i18n/ui-strings.js | helpLabel": {
-    "message": "Understanding Flows"
+    "message": "Tìm hiểu về Luồng"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionNavigation": {
-    "message": "Use Navigation reports to..."
+    "message": "Sử dụng chế độ Báo cáo di chuyển để…"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionSnapshot": {
-    "message": "Use Snapshot reports to..."
+    "message": "Sử dụng chế độ Báo cáo ảnh chụp nhanh để..."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionTimespan": {
-    "message": "Use Timespan reports to..."
+    "message": "Sử dụng chế độ Báo cáo khoảng thời gian để..."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation1": {
-    "message": "Obtain a Lighthouse Performance score."
+    "message": "Đạt được điểm Hiệu suất Lighthouse."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation2": {
-    "message": "Measure page load Performance metrics such as Largest Contentful Paint and Speed Index."
+    "message": "Đo lường các chỉ số về Hiệu suất tải trang, chẳng hạn như Thời gian hiển thị nội dung lớn nhất và Chỉ số tốc độ."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation3": {
-    "message": "Assess Progressive Web App capabilities."
+    "message": "Đánh giá các chức năng của Ứng dụng web tiến bộ."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseSnapshot1": {
-    "message": "Find accessibility issues in single page applications or complex forms."
+    "message": "Tìm các vấn đề về khả năng hỗ trợ tiếp cận trong các ứng dụng trang đơn hoặc các biểu mẫu phức tạp."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseSnapshot2": {
-    "message": "Evaluate best practices of menus and UI elements hidden behind interaction."
+    "message": "Đánh giá các phương pháp hay nhất về trình đơn và các thành phần trên giao diện người dùng ẩn phía sau sự tương tác."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan1": {
-    "message": "Measure layout shifts and JavaScript execution time on a series of interactions."
+    "message": "Đo lường mức thay đổi bố cục và thời gian thực thi JavaScript trên một chuỗi các tương tác."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan2": {
-    "message": "Discover performance opportunities to improve the experience for long-lived pages and single-page applications."
+    "message": "Khám phá các cơ hội về hiệu suất để cải thiện trải nghiệm cho những trang tồn tại lâu dài và các ứng dụng trang đơn."
+  },
+  "flow-report/src/i18n/ui-strings.js | highestImpact": {
+    "message": "Tác động lớn nhất"
+  },
+  "flow-report/src/i18n/ui-strings.js | informativeAuditCount": {
+    "message": "{numInformative,plural, =1{{numInformative} kiểm tra giàu thông tin}other{{numInformative} kiểm tra giàu thông tin}}"
   },
   "flow-report/src/i18n/ui-strings.js | mobile": {
     "message": "Di động"
@@ -66,10 +72,19 @@
     "message": "Tải trang"
   },
   "flow-report/src/i18n/ui-strings.js | navigationLongDescription": {
-    "message": "Navigation reports analyze a single page load, exactly like the original Lighthouse reports."
+    "message": "Báo cáo di chuyển phân tích một lượt tải trang, giống hệt như các báo cáo Lighthouse gốc."
   },
   "flow-report/src/i18n/ui-strings.js | navigationReport": {
     "message": "Báo cáo di chuyển trên trang"
+  },
+  "flow-report/src/i18n/ui-strings.js | navigationReportCount": {
+    "message": "{numNavigation,plural, =1{{numNavigation} báo cáo di chuyển trên trang}other{{numNavigation} báo cáo di chuyển trên trang}}"
+  },
+  "flow-report/src/i18n/ui-strings.js | passableAuditCount": {
+    "message": "{numPassableAudits,plural, =1{{numPassableAudits} kiểm tra đạt đủ điều kiện}other{{numPassableAudits} kiểm tra đạt đủ điều kiện}}"
+  },
+  "flow-report/src/i18n/ui-strings.js | passedAuditCount": {
+    "message": "{numPassed,plural, =1{{numPassed} kiểm tra đã đạt}other{{numPassed} kiểm tra đã đạt}}"
   },
   "flow-report/src/i18n/ui-strings.js | ratingAverage": {
     "message": "Trung bình"
@@ -84,16 +99,19 @@
     "message": "Tốt"
   },
   "flow-report/src/i18n/ui-strings.js | save": {
-    "message": "Save"
+    "message": "Lưu"
   },
   "flow-report/src/i18n/ui-strings.js | snapshotDescription": {
     "message": "Trạng thái đã chụp của trang"
   },
   "flow-report/src/i18n/ui-strings.js | snapshotLongDescription": {
-    "message": "Snapshot reports analyze the page in a particular state, typically after user interactions."
+    "message": "Báo cáo ảnh chụp nhanh phân tích trang ở một trạng thái cụ thể, thường là sau khi người dùng tương tác."
   },
   "flow-report/src/i18n/ui-strings.js | snapshotReport": {
     "message": "Báo cáo tổng quan"
+  },
+  "flow-report/src/i18n/ui-strings.js | snapshotReportCount": {
+    "message": "{numSnapshot,plural, =1{{numSnapshot} báo cáo ảnh chụp nhanh}other{{numSnapshot} báo cáo ảnh chụp nhanh}}"
   },
   "flow-report/src/i18n/ui-strings.js | summary": {
     "message": "Tóm tắt"
@@ -102,10 +120,13 @@
     "message": "Sự tương tác của người dùng"
   },
   "flow-report/src/i18n/ui-strings.js | timespanLongDescription": {
-    "message": "Timespan reports analyze an arbitrary period of time, typically containing user interactions."
+    "message": "Báo cáo khoảng thời gian phân tích một khoảng thời gian bất kỳ, thường chứa các tương tác của người dùng."
   },
   "flow-report/src/i18n/ui-strings.js | timespanReport": {
     "message": "Báo cáo khoảng thời gian"
+  },
+  "flow-report/src/i18n/ui-strings.js | timespanReportCount": {
+    "message": "{numTimespan,plural, =1{{numTimespan} báo cáo khoảng thời gian}other{{numTimespan} báo cáo khoảng thời gian}}"
   },
   "flow-report/src/i18n/ui-strings.js | title": {
     "message": "Báo cáo luồng người dùng Lighthouse"
@@ -396,10 +417,10 @@
     "message": "Khi dùng một hình ảnh làm nút `<input>`, thì việc cung cấp văn bản thay thế có thể giúp người dùng trình đọc màn hình hiểu rõ mục đích của nút đó. [Tìm hiểu thêm](https://web.dev/input-image-alt/)."
   },
   "lighthouse-core/audits/accessibility/input-image-alt.js | failureTitle": {
-    "message": "Các phần tử `<input type=\"image\">` không có văn bản `[alt]`"
+    "message": "Các thành phần `<input type=\"image\">` không có văn bản `[alt]`"
   },
   "lighthouse-core/audits/accessibility/input-image-alt.js | title": {
-    "message": "Các phần tử `<input type=\"image\">` có văn bản `[alt]`"
+    "message": "Các thành phần `<input type=\"image\">` có văn bản `[alt]`"
   },
   "lighthouse-core/audits/accessibility/label.js | description": {
     "message": "Các nhãn đảm bảo rằng những công nghệ hỗ trợ, chẳng hạn như trình đọc màn hình, thông báo các biện pháp kiểm soát biểu mẫu đúng cách. [Tìm hiểu thêm](https://web.dev/label/)."
@@ -456,13 +477,13 @@
     "message": "`[user-scalable=\"no\"]` không được sử dụng trong phần tử `<meta name=\"viewport\">` và thuộc tính `[maximum-scale]` không nhỏ hơn 5."
   },
   "lighthouse-core/audits/accessibility/object-alt.js | description": {
-    "message": "Trình đọc màn hình không thể dịch nội dung không ở dạng văn bản. Khi bạn thêm văn bản thay thế vào các phần tử `<object>`, trình đọc màn hình sẽ truyền đạt được ý nghĩa cho người dùng. [Tìm hiểu thêm](https://web.dev/object-alt/)."
+    "message": "Trình đọc màn hình không dịch được nội dung không ở dạng văn bản. Bằng việc thêm văn bản thay thế vào các thành phần `<object>`, bạn có thể giúp trình đọc màn hình truyền đạt ý nghĩa cho người dùng. [Tìm hiểu thêm](https://web.dev/object-alt/)."
   },
   "lighthouse-core/audits/accessibility/object-alt.js | failureTitle": {
-    "message": "Các phần tử `<object>` không có văn bản `[alt]`"
+    "message": "Các thành phần `<object>` không có văn bản thay thế"
   },
   "lighthouse-core/audits/accessibility/object-alt.js | title": {
-    "message": "Các phần tử `<object>` có văn bản `[alt]`"
+    "message": "Các thành phần `<object>` có văn bản thay thế"
   },
   "lighthouse-core/audits/accessibility/tabindex.js | description": {
     "message": "Giá trị lớn hơn 0 ngụ ý thứ tự di chuyển rõ ràng. Mặc dù hợp lệ về mặt kỹ thuật nhưng điều này thường tạo ra trải nghiệm khó chịu cho những người dùng bị lệ thuộc vào công nghệ hỗ trợ. [Tìm hiểu thêm](https://web.dev/tabindex/)."
@@ -1031,6 +1052,9 @@
   "lighthouse-core/audits/installable-manifest.js | not-offline-capable": {
     "message": "Trang không hoạt động khi không có mạng"
   },
+  "lighthouse-core/audits/installable-manifest.js | pipeline-restarted": {
+    "message": "Đã gỡ cài đặt PWA và đang đặt lại quá trình kiểm tra khả năng cài đặt."
+  },
   "lighthouse-core/audits/installable-manifest.js | platform-not-supported-on-android": {
     "message": "Nền tảng ứng dụng đã chỉ định chưa được hỗ trợ trên Android"
   },
@@ -1039,6 +1063,9 @@
   },
   "lighthouse-core/audits/installable-manifest.js | prefer-related-applications-only-beta-stable": {
     "message": "Chỉ hỗ trợ prefer_related_applications cho các kênh Chính thức và Thử nghiệm của Chrome trên Android."
+  },
+  "lighthouse-core/audits/installable-manifest.js | protocol-timeout": {
+    "message": "Lighthouse không xác định được có trình chạy dịch vụ hay không. Vui lòng thử lại bằng một phiên bản Chrome mới hơn."
   },
   "lighthouse-core/audits/installable-manifest.js | start-url-not-valid": {
     "message": "URL bắt đầu của tệp kê khai là không hợp lệ"
@@ -1191,7 +1218,7 @@
     "message": "Thời gian dưới nền của máy chủ"
   },
   "lighthouse-core/audits/no-unload-listeners.js | description": {
-    "message": "Sự kiện `unload` kích hoạt theo cách không ổn định và việc làm theo sự kiện này có thể ngăn chặn các hoạt động tối ưu hóa trình duyệt, chẳng hạn như Bộ nhớ đệm cho thao tác tiến/lùi. Hãy cân nhắc dùng sự kiện `pagehide` hoặc `visibilitychange`. [Tìm hiểu thêm](https://developers.google.com/web/updates/2018/07/page-lifecycle-api#the-unload-event)"
+    "message": "Sự kiện `unload` kích hoạt không ổn định và việc làm theo sự kiện này có thể ngăn không cho trình duyệt tối ưu hoá, chẳng hạn như tính năng Bộ nhớ đệm cho thao tác tiến/lùi. Hãy chuyển sang dùng sự kiện `pagehide` hoặc `visibilitychange`. [Tìm hiểu thêm](https://web.dev/bfcache/#never-use-the-unload-event)"
   },
   "lighthouse-core/audits/no-unload-listeners.js | failureTitle": {
     "message": "Đăng ký trình xử lý sự kiện `unload`"
@@ -1270,9 +1297,6 @@
   },
   "lighthouse-core/audits/seo/canonical.js | explanationConflict": {
     "message": "Nhiều URL xung đột ({urlList})"
-  },
-  "lighthouse-core/audits/seo/canonical.js | explanationDifferentDomain": {
-    "message": "Trỏ đến một miền khác ({url})"
   },
   "lighthouse-core/audits/seo/canonical.js | explanationInvalid": {
     "message": "URL không hợp lệ ({url})."
@@ -1740,7 +1764,7 @@
     "message": "Đây là những hoạt động kiểm tra được chỉ định trong [Danh sách kiểm tra ứng dụng web tiến bộ (PWA)](https://developers.google.com/web/progressive-web-apps/checklist) cơ bản, nhưng Lighthouse không tự động kiểm tra các mục này. Các hoạt động kiểm tra này không ảnh hưởng đến điểm số của bạn, nhưng bạn nên xác minh theo cách thủ công."
   },
   "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
-    "message": "Ứng dụng web tiến bộ"
+    "message": "PWA"
   },
   "lighthouse-core/config/default-config.js | pwaInstallableGroupTitle": {
     "message": "Có thể cài đặt"
@@ -2042,30 +2066,6 @@
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "URL bạn cung cấp có vẻ không hợp lệ."
   },
-  "treemap/app/src/util.js | allLabel": {
-    "message": "Tất cả"
-  },
-  "treemap/app/src/util.js | allScriptsDropdownLabel": {
-    "message": "Tất cả tập lệnh"
-  },
-  "treemap/app/src/util.js | coverageColumnName": {
-    "message": "Độ bao phủ"
-  },
-  "treemap/app/src/util.js | duplicateModulesLabel": {
-    "message": "Mô-đun trùng lặp"
-  },
-  "treemap/app/src/util.js | resourceBytesLabel": {
-    "message": "Số byte tài nguyên"
-  },
-  "treemap/app/src/util.js | tableColumnName": {
-    "message": "Tên"
-  },
-  "treemap/app/src/util.js | toggleTableButtonLabel": {
-    "message": "Ẩn/hiện bảng"
-  },
-  "treemap/app/src/util.js | unusedBytesLabel": {
-    "message": "Số byte chưa dùng đến"
-  },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "Đối với nội dung động, hãy sử dụng [`amp-anim`](https://amp.dev/documentation/components/amp-anim/) để giảm thiểu mức sử dụng CPU khi nội dung nằm ngoài màn hình."
   },
@@ -2103,7 +2103,7 @@
     "message": "Cân nhắc dùng tiện ích `BreakpointObserver` trong Component Dev Kit (CDK) để quản lý các điểm ngắt hình ảnh. [Tìm hiểu thêm](https://material.angular.io/cdk/layout/overview)."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | efficient-animated-content": {
-    "message": "Hãy cân nhắc tải ảnh GIF lên một dịch vụ để có thể nhúng ảnh này ở dạng video HTML5."
+    "message": "Hãy cân nhắc tải ảnh GIF lên một dịch vụ để có thể nhúng ảnh đó ở dạng video HTML5."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | font-display": {
     "message": "Chỉ định `@font-display` khi xác định phông chữ tùy chỉnh trong giao diện của bạn."
@@ -2148,10 +2148,10 @@
     "message": "Đảm bảo rằng bạn đang sử dụng [Kiểu hình ảnh thích ứng](https://www.drupal.org/docs/8/mobile-guide/responsive-images-in-drupal-8) gốc do Drupal cung cấp (có trong Drupal 8 trở lên). Hãy sử dụng Kiểu hình ảnh thích ứng khi hiển thị các trường hình ảnh thông qua chế độ xem, giao diện xem hoặc hình ảnh tải lên bằng trình chỉnh sửa WYSIWYG."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | efficient-animated-content": {
-    "message": "Hãy cân nhắc tải ảnh GIF lên một dịch vụ để có thể nhúng ảnh này ở dạng video HTML5."
+    "message": "Hãy cân nhắc tải ảnh GIF lên một dịch vụ để có thể nhúng ảnh đó ở dạng video HTML5."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | modern-image-formats": {
-    "message": "Hãy cân nhắc sử dụng một [trình bổ trợ](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=webp) hoặc dịch vụ tự động chuyển đổi các hình ảnh đã tải lên sang định dạng tối ưu."
+    "message": "Hãy cân nhắc dùng một [trình bổ trợ](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=webp) hoặc dịch vụ tự động chuyển đổi hình ảnh đã tải lên sang định dạng tối ưu."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | offscreen-images": {
     "message": "Hãy cài đặt một [trình bổ trợ tải từng phần của Joomla](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=lazy%20loading) giúp trì hoãn mọi hình ảnh ngoài màn hình, hoặc chuyển sang một mẫu cung cấp chức năng đó. Kể từ Joomla 4.0, mọi hình ảnh mới sẽ [tự động](https://github.com/joomla/joomla-cms/pull/30748) có thuộc tính`loading` nhận được từ lõi."
@@ -2225,6 +2225,36 @@
   "node_modules/lighthouse-stack-packs/packs/magento.js | uses-rel-preload": {
     "message": "Có thể thêm thẻ `<link rel=preload>` bằng cách [sửa đổi bố cục của một giao diện](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
   },
+  "node_modules/lighthouse-stack-packs/packs/next.js | modern-image-formats": {
+    "message": "Hãy dùng `Next.js` API Image Optimization (Tối ưu hoá hình ảnh) để cung cấp các định dạng hiện đại như `WebP` và `AVIF`. [Tìm hiểu thêm](https://nextjs.org/docs/api-reference/next/image#acceptable-formats)."
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | offscreen-images": {
+    "message": "Hãy dùng phần tử `next/image` (được đặt là `loading=\"lazy\"` theo mặc định). [Tìm hiểu thêm](https://nextjs.org/docs/api-reference/next/image#loading)."
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | render-blocking-resources": {
+    "message": "Hãy dùng phần tử `next/script` để trì hoãn việc tải các tập lệnh không quan trọng của bên thứ ba. [Tìm hiểu thêm](https://nextjs.org/docs/basic-features/script)."
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | unused-css-rules": {
+    "message": "Hãy cân nhắc đặt `PurgeCSS` trong cấu hình `Next.js` để xoá các quy tắc không sử dụng khỏi biểu định kiểu. [Tìm hiểu thêm](https://purgecss.com/guides/next.html)."
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | unused-javascript": {
+    "message": "Hãy dùng `Webpack Bundle Analyzer` để phát hiện mã JavaScript không sử dụng. [Tìm hiểu thêm](https://github.com/vercel/next.js/tree/canary/packages/next-bundle-analyzer)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | user-timings": {
+    "message": "Hãy cân nhắc dùng `Next.js Analytics` để đo lường hiệu suất của ứng dụng trong thực tế. [Tìm hiểu thêm](https://nextjs.org/docs/advanced-features/measuring-performance)."
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | uses-long-cache-ttl": {
+    "message": "Định cấu hình bộ nhớ đệm cho các trang `Server-side Rendered` (SSR) và thành phần không thay đổi được. [Tìm hiểu thêm](https://nextjs.org/docs/going-to-production#caching)."
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | uses-optimized-images": {
+    "message": "Hãy dùng phần tử `next/image` thay cho `<img>` để tối ưu hoá hình ảnh. [Tìm hiểu thêm](https://nextjs.org/docs/basic-features/image-optimization)."
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | uses-responsive-images": {
+    "message": "Hãy dùng phần tử `next/image` để đặt `sizes` phù hợp. [Tìm hiểu thêm](https://nextjs.org/docs/api-reference/next/image#sizes)."
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | uses-text-compression": {
+    "message": "Hãy bật tính năng nén trên máy chủ Next.js của bạn. [Tìm hiểu thêm](https://nextjs.org/docs/api-reference/next.config.js/compression)."
+  },
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | efficient-animated-content": {
     "message": "[Thay thế ảnh GIF động bằng video](https://web.dev/replace-gifs-with-videos/) để tải trang web nhanh hơn, đồng thời cân nhắc sử dụng các định dạng tệp hiện đại như [WebM](https://web.dev/replace-gifs-with-videos/#create-webm-videos) hay [AV1](https://developers.google.com/web/updates/2018/09/chrome-70-media-updates#av1-decoder) để cải thiện hiệu quả nén thêm hơn 30% so với codec video tiên tiến hiện tại là VP9."
   },
@@ -2289,10 +2319,10 @@
     "message": "Sử dụng Trình phân tích tài nguyên React DevTools, công cụ dùng API Trình phân tích tài nguyên để đo lường hiệu suất hiển thị của các thành phần. [Tìm hiểu thêm.](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)"
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | efficient-animated-content": {
-    "message": "Hãy cân nhắc tải ảnh GIF lên một dịch vụ để có thể nhúng ảnh này ở dạng video HTML5."
+    "message": "Hãy cân nhắc tải ảnh GIF lên một dịch vụ để có thể nhúng ảnh đó ở dạng video HTML5."
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | modern-image-formats": {
-    "message": "Hãy cân nhắc sử dụng một [trình bổ trợ](https://wordpress.org/plugins/search/convert+webp/) hoặc dịch vụ tự động chuyển đổi các hình ảnh đã tải lên sang định dạng tối ưu."
+    "message": "Hãy cân nhắc dùng một [trình bổ trợ](https://wordpress.org/plugins/search/convert+webp/) hoặc dịch vụ tự động chuyển đổi hình ảnh đã tải lên sang định dạng tối ưu."
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | offscreen-images": {
     "message": "Cài đặt một [plugin tải từng phần của WordPress](https://wordpress.org/plugins/search/lazy+load/) để trì hoãn mọi hình ảnh ngoài màn hình, hoặc chuyển sang một giao diện cung cấp chức năng đó. Ngoài ra, hãy cân nhắc sử dụng [plugin AMP (Accelerated Mobile Pages)](https://wordpress.org/plugins/amp/)."
@@ -2333,6 +2363,9 @@
   "report/renderer/util.js | calculatorLink": {
     "message": "Xem máy tính."
   },
+  "report/renderer/util.js | collapseView": {
+    "message": "Chế độ xem thu gọn"
+  },
   "report/renderer/util.js | crcInitialNavigation": {
     "message": "Điều hướng ban đầu"
   },
@@ -2369,8 +2402,14 @@
   "report/renderer/util.js | errorMissingAuditInfo": {
     "message": "Lỗi báo cáo: không có thông tin kiểm tra"
   },
+  "report/renderer/util.js | expandView": {
+    "message": "Chế độ xem mở rộng"
+  },
   "report/renderer/util.js | footerIssue": {
     "message": "Tạo vấn đề"
+  },
+  "report/renderer/util.js | hide": {
+    "message": "Ẩn"
   },
   "report/renderer/util.js | labDataTitle": {
     "message": "Dữ liệu của phòng thí nghiệm"
@@ -2392,6 +2431,12 @@
   },
   "report/renderer/util.js | passedAuditsGroupTitle": {
     "message": "Số lần kiểm tra đạt yêu cầu"
+  },
+  "report/renderer/util.js | runtimeAnalysisWindow": {
+    "message": "Lượt tải trang đầu tiên"
+  },
+  "report/renderer/util.js | runtimeCustom": {
+    "message": "Chế độ điều tiết tuỳ chỉnh"
   },
   "report/renderer/util.js | runtimeDesktopEmulation": {
     "message": "Màn hình mô phỏng"
@@ -2420,8 +2465,20 @@
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "Tác nhân người dùng (mạng)"
   },
+  "report/renderer/util.js | runtimeSingleLoad": {
+    "message": "Một lượt tải trang"
+  },
+  "report/renderer/util.js | runtimeSingleLoadTooltip": {
+    "message": "Dữ liệu này được lấy trong một lượt tải trang, thay vì dữ liệu trường tóm tắt nhiều phiên."
+  },
+  "report/renderer/util.js | runtimeSlow4g": {
+    "message": "Chế độ điều tiết mạng 4G chậm"
+  },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "Không xác định"
+  },
+  "report/renderer/util.js | show": {
+    "message": "Hiện"
   },
   "report/renderer/util.js | showRelevantAudits": {
     "message": "Hiển thị các lượt kiểm tra liên quan đến:"
@@ -2452,5 +2509,29 @@
   },
   "report/renderer/util.js | warningHeader": {
     "message": "Cảnh báo: "
+  },
+  "treemap/app/src/util.js | allLabel": {
+    "message": "Tất cả"
+  },
+  "treemap/app/src/util.js | allScriptsDropdownLabel": {
+    "message": "Tất cả tập lệnh"
+  },
+  "treemap/app/src/util.js | coverageColumnName": {
+    "message": "Độ bao phủ"
+  },
+  "treemap/app/src/util.js | duplicateModulesLabel": {
+    "message": "Mô-đun trùng lặp"
+  },
+  "treemap/app/src/util.js | resourceBytesLabel": {
+    "message": "Số byte tài nguyên"
+  },
+  "treemap/app/src/util.js | tableColumnName": {
+    "message": "Tên"
+  },
+  "treemap/app/src/util.js | toggleTableButtonLabel": {
+    "message": "Ẩn/hiện bảng"
+  },
+  "treemap/app/src/util.js | unusedBytesLabel": {
+    "message": "Số byte chưa dùng đến"
   }
 }

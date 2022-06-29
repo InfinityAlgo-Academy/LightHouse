@@ -3,7 +3,7 @@
     "message": "Alle rapporten"
   },
   "flow-report/src/i18n/ui-strings.js | categories": {
-    "message": "Categories"
+    "message": "Categorieën"
   },
   "flow-report/src/i18n/ui-strings.js | categoryAccessibility": {
     "message": "Toegankelijkheid"
@@ -24,40 +24,46 @@
     "message": "Desktop"
   },
   "flow-report/src/i18n/ui-strings.js | helpDialogTitle": {
-    "message": "Understanding the Lighthouse Flow Report"
+    "message": "Het rapport van de Lighthouse-stroom begrijpen"
   },
   "flow-report/src/i18n/ui-strings.js | helpLabel": {
-    "message": "Understanding Flows"
+    "message": "Begrijpen hoe stromen werken"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionNavigation": {
-    "message": "Use Navigation reports to..."
+    "message": "Navigatierapporten gebruiken…"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionSnapshot": {
-    "message": "Use Snapshot reports to..."
+    "message": "Momentopnamerapporten gebruiken…"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionTimespan": {
-    "message": "Use Timespan reports to..."
+    "message": "Tijdsduurrapporten gebruiken…"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation1": {
-    "message": "Obtain a Lighthouse Performance score."
+    "message": "Lighthouse-prestatiescore ophalen."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation2": {
-    "message": "Measure page load Performance metrics such as Largest Contentful Paint and Speed Index."
+    "message": "Prestatiestatistieken voor het laden van de pagina meten, zoals de Grootste weergave met content (LCP) en de snelheidsindex."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation3": {
-    "message": "Assess Progressive Web App capabilities."
+    "message": "Mogelijkheden van progressive web-apps evalueren."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseSnapshot1": {
-    "message": "Find accessibility issues in single page applications or complex forms."
+    "message": "Toegankelijkheidsproblemen opsporen in apps met één pagina of in complexe formulieren."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseSnapshot2": {
-    "message": "Evaluate best practices of menus and UI elements hidden behind interaction."
+    "message": "Praktische tips evalueren voor menu's en UI-elementen die achter interactie verborgen zijn."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan1": {
-    "message": "Measure layout shifts and JavaScript execution time on a series of interactions."
+    "message": "Indelingsverschuivingen en de JavaScript-uitvoeringstijd meten voor verschillende interacties."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan2": {
-    "message": "Discover performance opportunities to improve the experience for long-lived pages and single-page applications."
+    "message": "Ontdek mogelijkheden om de functionaliteit van langdurige pagina's en apps met één pagina te verbeteren."
+  },
+  "flow-report/src/i18n/ui-strings.js | highestImpact": {
+    "message": "Hoogste impact"
+  },
+  "flow-report/src/i18n/ui-strings.js | informativeAuditCount": {
+    "message": "{numInformative,plural, =1{{numInformative} informatieve controle}other{{numInformative} informatieve controles}}"
   },
   "flow-report/src/i18n/ui-strings.js | mobile": {
     "message": "Mobiel"
@@ -66,10 +72,19 @@
     "message": "Laden van pagina"
   },
   "flow-report/src/i18n/ui-strings.js | navigationLongDescription": {
-    "message": "Navigation reports analyze a single page load, exactly like the original Lighthouse reports."
+    "message": "In navigatierapporten wordt het laden van één pagina geanalyseerd, net als in de oorspronkelijke Lighthouse-rapporten."
   },
   "flow-report/src/i18n/ui-strings.js | navigationReport": {
     "message": "Navigatierapport"
+  },
+  "flow-report/src/i18n/ui-strings.js | navigationReportCount": {
+    "message": "{numNavigation,plural, =1{{numNavigation} navigatierapport}other{{numNavigation} navigatierapporten}}"
+  },
+  "flow-report/src/i18n/ui-strings.js | passableAuditCount": {
+    "message": "{numPassableAudits,plural, =1{{numPassableAudits} controle die kan worden doorstaan}other{{numPassableAudits} controles die kunnen worden doorstaan}}"
+  },
+  "flow-report/src/i18n/ui-strings.js | passedAuditCount": {
+    "message": "{numPassed,plural, =1{{numPassed} controle doorstaan}other{{numPassed} controles doorstaan}}"
   },
   "flow-report/src/i18n/ui-strings.js | ratingAverage": {
     "message": "Gemiddeld"
@@ -84,16 +99,19 @@
     "message": "Goed"
   },
   "flow-report/src/i18n/ui-strings.js | save": {
-    "message": "Save"
+    "message": "Opslaan"
   },
   "flow-report/src/i18n/ui-strings.js | snapshotDescription": {
     "message": "Vastgelegde staat van pagina"
   },
   "flow-report/src/i18n/ui-strings.js | snapshotLongDescription": {
-    "message": "Snapshot reports analyze the page in a particular state, typically after user interactions."
+    "message": "In momentopnamerapporten worden pagina's in een bepaalde situatie geanalyseerd, doorgaans na interactie van de gebruiker."
   },
   "flow-report/src/i18n/ui-strings.js | snapshotReport": {
     "message": "Momentopnamerapport"
+  },
+  "flow-report/src/i18n/ui-strings.js | snapshotReportCount": {
+    "message": "{numSnapshot,plural, =1{{numSnapshot} momentopnamerapport}other{{numSnapshot} momentopnamerapporten}}"
   },
   "flow-report/src/i18n/ui-strings.js | summary": {
     "message": "Overzicht"
@@ -102,10 +120,13 @@
     "message": "Gebruikersinteracties"
   },
   "flow-report/src/i18n/ui-strings.js | timespanLongDescription": {
-    "message": "Timespan reports analyze an arbitrary period of time, typically containing user interactions."
+    "message": "In tijdsduurrapporten wordt een bepaalde tijdsduur geanalyseerd die meestal gebruikersinteracties omvat."
   },
   "flow-report/src/i18n/ui-strings.js | timespanReport": {
     "message": "Perioderapport"
+  },
+  "flow-report/src/i18n/ui-strings.js | timespanReportCount": {
+    "message": "{numTimespan,plural, =1{{numTimespan} perioderapport}other{{numTimespan} perioderapporten}}"
   },
   "flow-report/src/i18n/ui-strings.js | title": {
     "message": "Lighthouse-rapport over gebruikersstroom"
@@ -456,13 +477,13 @@
     "message": "`[user-scalable=\"no\"]` wordt niet gebruikt in het `<meta name=\"viewport\">`-element en het `[maximum-scale]`-kenmerk is niet minder dan 5."
   },
   "lighthouse-core/audits/accessibility/object-alt.js | description": {
-    "message": "Schermlezers kunnen alleen tekstcontent vertalen. Als je alt-tekst aan `<object>`-elementen toevoegt, kunnen schermlezers de betekenis overbrengen aan gebruikers. [Meer informatie](https://web.dev/object-alt/)"
+    "message": "Schermlezers kunnen geen andere content dan tekst vertalen. Als je alternatieve tekst aan `<object>`-elementen toevoegt, kunnen schermlezers de betekenis overbrengen aan gebruikers. [Meer informatie](https://web.dev/object-alt/)"
   },
   "lighthouse-core/audits/accessibility/object-alt.js | failureTitle": {
-    "message": "`<object>`-elementen bevatten geen `[alt]`-tekst"
+    "message": "`<object>`-elementen bevatten geen alternatieve tekst"
   },
   "lighthouse-core/audits/accessibility/object-alt.js | title": {
-    "message": "`<object>`-elementen bevatten `[alt]`-tekst"
+    "message": "`<object>`-elementen bevatten alternatieve tekst"
   },
   "lighthouse-core/audits/accessibility/tabindex.js | description": {
     "message": "Een waarde groter dan 0 impliceert een expliciete navigatievolgorde. Hoewel dit technisch geldig is, is dit vaak vervelend voor gebruikers die afhankelijk zijn van hulptechnologieën. [Meer informatie](https://web.dev/tabindex/)"
@@ -1031,6 +1052,9 @@
   "lighthouse-core/audits/installable-manifest.js | not-offline-capable": {
     "message": "De pagina werkt niet offline"
   },
+  "lighthouse-core/audits/installable-manifest.js | pipeline-restarted": {
+    "message": "PWA is verwijderd en de installeerbaarheidschecks worden gereset."
+  },
   "lighthouse-core/audits/installable-manifest.js | platform-not-supported-on-android": {
     "message": "Het opgegeven app-platform wordt niet ondersteund op Android"
   },
@@ -1039,6 +1063,9 @@
   },
   "lighthouse-core/audits/installable-manifest.js | prefer-related-applications-only-beta-stable": {
     "message": "prefer_related_applications wordt alleen ondersteund op bèta- en stabiele kanalen van Chrome op Android."
+  },
+  "lighthouse-core/audits/installable-manifest.js | protocol-timeout": {
+    "message": "Lighthouse kan niet bepalen of er een service worker is. Probeer het met een nieuwere versie van Chrome."
   },
   "lighthouse-core/audits/installable-manifest.js | start-url-not-valid": {
     "message": "De start-URL voor het manifest is ongeldig"
@@ -1191,7 +1218,7 @@
     "message": "Wachttijden van server-backend"
   },
   "lighthouse-core/audits/no-unload-listeners.js | description": {
-    "message": "De gebeurtenis `unload` wordt niet op een betrouwbare manier geactiveerd en hierop wachten kan ervoor zorgen dat browseroptimalisaties zoals de Back-Forward Cache niet worden uitgevoerd. Overweeg in plaats daarvan de gebeurtenissen `pagehide` of `visibilitychange` te gebruiken. [Meer informatie](https://developers.google.com/web/updates/2018/07/page-lifecycle-api#the-unload-event)"
+    "message": "De gebeurtenis `unload` wordt niet op een betrouwbare manier geactiveerd en hierop wachten kan ervoor zorgen dat browseroptimalisaties zoals de Back-Forward Cache niet worden uitgevoerd. Gebruik in plaats daarvan de gebeurtenis `pagehide` of `visibilitychange`. [Meer informatie](https://web.dev/bfcache/#never-use-the-unload-event)"
   },
   "lighthouse-core/audits/no-unload-listeners.js | failureTitle": {
     "message": "Registreert een `unload`-listener"
@@ -1270,9 +1297,6 @@
   },
   "lighthouse-core/audits/seo/canonical.js | explanationConflict": {
     "message": "Meerdere conflicterende URL's ({urlList})"
-  },
-  "lighthouse-core/audits/seo/canonical.js | explanationDifferentDomain": {
-    "message": "Wijst naar een ander domein ({url})"
   },
   "lighthouse-core/audits/seo/canonical.js | explanationInvalid": {
     "message": "Ongeldige URL ({url})"
@@ -1740,7 +1764,7 @@
     "message": "Deze controles worden vereist door de baseline [PWA-checklist](https://developers.google.com/web/progressive-web-apps/checklist) maar worden niet automatisch gecontroleerd door Lighthouse. Ze zijn niet van invloed op je score, maar het is wel belangrijk dat je ze handmatig verifieert."
   },
   "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
-    "message": "Progressive web-app"
+    "message": "PWA"
   },
   "lighthouse-core/config/default-config.js | pwaInstallableGroupTitle": {
     "message": "Installeerbaar"
@@ -2042,30 +2066,6 @@
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "Het lijkt erop dat je een ongeldige URL hebt opgegeven."
   },
-  "treemap/app/src/util.js | allLabel": {
-    "message": "Alle"
-  },
-  "treemap/app/src/util.js | allScriptsDropdownLabel": {
-    "message": "Alle scripts"
-  },
-  "treemap/app/src/util.js | coverageColumnName": {
-    "message": "Dekking"
-  },
-  "treemap/app/src/util.js | duplicateModulesLabel": {
-    "message": "Dubbele modules"
-  },
-  "treemap/app/src/util.js | resourceBytesLabel": {
-    "message": "Resourcebytes"
-  },
-  "treemap/app/src/util.js | tableColumnName": {
-    "message": "Naam"
-  },
-  "treemap/app/src/util.js | toggleTableButtonLabel": {
-    "message": "Tabel schakelen"
-  },
-  "treemap/app/src/util.js | unusedBytesLabel": {
-    "message": "Ongebruikte bytes"
-  },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "Gebruik in het geval van content met animatie [`amp-anim`](https://amp.dev/documentation/components/amp-anim/) om het CPU-gebruik te minimaliseren als de content niet in beeld is."
   },
@@ -2225,6 +2225,36 @@
   "node_modules/lighthouse-stack-packs/packs/magento.js | uses-rel-preload": {
     "message": "`<link rel=preload>`-tags kunnen worden toegevoegd door [de lay-out van een thema te wijzigen](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
   },
+  "node_modules/lighthouse-stack-packs/packs/next.js | modern-image-formats": {
+    "message": "Gebruik de Image Optimization API van `Next.js` om moderne indelingen zoals `WebP` en `AVIF` weer te geven. [Meer informatie](https://nextjs.org/docs/api-reference/next/image#acceptable-formats)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | offscreen-images": {
+    "message": "Gebruik de component `next/image`. Deze is standaard ingesteld op `loading=\"lazy\"`. [Meer informatie](https://nextjs.org/docs/api-reference/next/image#loading)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | render-blocking-resources": {
+    "message": "Gebruik de component `next/script` om het laden van niet-kritieke scripts van derden uit te stellen. [Meer informatie](https://nextjs.org/docs/basic-features/script)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | unused-css-rules": {
+    "message": "Je kunt eventueel `PurgeCSS` instellen in de `Next.js`-instellingen om niet-gebruikte regels uit stylesheets te verwijderen. [Meer informatie](https://purgecss.com/guides/next.html)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | unused-javascript": {
+    "message": "Gebruik `Webpack Bundle Analyzer` om ongebruikte JavaScript-code te detecteren. [Meer informatie](https://github.com/vercel/next.js/tree/canary/packages/next-bundle-analyzer)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | user-timings": {
+    "message": "Je kunt eventueel `Next.js Analytics` gebruiken om de daadwerkelijke prestaties van je app te meten. [Meer informatie](https://nextjs.org/docs/advanced-features/measuring-performance)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | uses-long-cache-ttl": {
+    "message": "Opslaan in het cachegeheugen instellen voor onveranderbare items en `Server-side Rendered`-pagina's (SSR). [Meer informatie](https://nextjs.org/docs/going-to-production#caching)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | uses-optimized-images": {
+    "message": "Gebruik in plaats van `<img>` de component `next/image` om afbeeldingen te optimaliseren. [Meer informatie](https://nextjs.org/docs/basic-features/image-optimization)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | uses-responsive-images": {
+    "message": "Gebruik de component `next/image` om de juiste `sizes` in te stellen. [Meer informatie](https://nextjs.org/docs/api-reference/next/image#sizes)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | uses-text-compression": {
+    "message": "Zet de compressie op je Next.js-server aan. [Meer informatie](https://nextjs.org/docs/api-reference/next.config.js/compression)"
+  },
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | efficient-animated-content": {
     "message": "[Vervang geanimeerde gif's door video](https://web.dev/replace-gifs-with-videos/) zodat de webpagina sneller laadt en overweeg moderne bestandsindelingen zoals [webm](https://web.dev/replace-gifs-with-videos/#create-webm-videos) of [av1](https://developers.google.com/web/updates/2018/09/chrome-70-media-updates#av1-decoder) te gebruiken voor een tot 30% efficiëntere compressie vergeleken met de huidige geavanceerde videocodec, vp9."
   },
@@ -2333,6 +2363,9 @@
   "report/renderer/util.js | calculatorLink": {
     "message": "Rekenmachine bekijken"
   },
+  "report/renderer/util.js | collapseView": {
+    "message": "Weergave samenvouwen"
+  },
   "report/renderer/util.js | crcInitialNavigation": {
     "message": "Beginnavigatie"
   },
@@ -2369,8 +2402,14 @@
   "report/renderer/util.js | errorMissingAuditInfo": {
     "message": "Rapportfout: geen controlegegevens"
   },
+  "report/renderer/util.js | expandView": {
+    "message": "Weergave uitvouwen"
+  },
   "report/renderer/util.js | footerIssue": {
     "message": "Een probleem melden"
+  },
+  "report/renderer/util.js | hide": {
+    "message": "Verbergen"
   },
   "report/renderer/util.js | labDataTitle": {
     "message": "Labgegevens"
@@ -2392,6 +2431,12 @@
   },
   "report/renderer/util.js | passedAuditsGroupTitle": {
     "message": "Geslaagde controles"
+  },
+  "report/renderer/util.js | runtimeAnalysisWindow": {
+    "message": "Eerste keer laden van de pagina"
+  },
+  "report/renderer/util.js | runtimeCustom": {
+    "message": "Aangepaste throttling"
   },
   "report/renderer/util.js | runtimeDesktopEmulation": {
     "message": "Desktopemulatie"
@@ -2420,8 +2465,20 @@
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "User-agent (netwerk)"
   },
+  "report/renderer/util.js | runtimeSingleLoad": {
+    "message": "Laden van één pagina"
+  },
+  "report/renderer/util.js | runtimeSingleLoadTooltip": {
+    "message": "Deze gegevens zijn afkomstig van het laden van één pagina, in tegenstelling tot veldgegevens die veel sessies samenvatten."
+  },
+  "report/renderer/util.js | runtimeSlow4g": {
+    "message": "Langzame 4G-throttling"
+  },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "Onbekend"
+  },
+  "report/renderer/util.js | show": {
+    "message": "Tonen"
   },
   "report/renderer/util.js | showRelevantAudits": {
     "message": "Audits laten zien die relevant zijn voor:"
@@ -2452,5 +2509,29 @@
   },
   "report/renderer/util.js | warningHeader": {
     "message": "Waarschuwingen: "
+  },
+  "treemap/app/src/util.js | allLabel": {
+    "message": "Alle"
+  },
+  "treemap/app/src/util.js | allScriptsDropdownLabel": {
+    "message": "Alle scripts"
+  },
+  "treemap/app/src/util.js | coverageColumnName": {
+    "message": "Dekking"
+  },
+  "treemap/app/src/util.js | duplicateModulesLabel": {
+    "message": "Dubbele modules"
+  },
+  "treemap/app/src/util.js | resourceBytesLabel": {
+    "message": "Resourcebytes"
+  },
+  "treemap/app/src/util.js | tableColumnName": {
+    "message": "Naam"
+  },
+  "treemap/app/src/util.js | toggleTableButtonLabel": {
+    "message": "Tabel schakelen"
+  },
+  "treemap/app/src/util.js | unusedBytesLabel": {
+    "message": "Ongebruikte bytes"
   }
 }

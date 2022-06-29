@@ -3,16 +3,13 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-const LongTasks = require('../../audits/long-tasks.js');
-const createTestTrace = require('../create-test-trace.js');
-const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
+import LongTasks from '../../audits/long-tasks.js';
+import createTestTrace from '../create-test-trace.js';
+import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
 
 const BASE_TS = 12345e3;
 const TASK_URL = 'https://pwa.rocks';
-
-/* eslint-env jest */
 
 /**
  * @param {Number} count
@@ -56,9 +53,16 @@ function generateTraceWithLongTasks({count, duration = 200, withChildTasks = fal
 
 describe('Long tasks audit', () => {
   const devtoolsLog = networkRecordsToDevtoolsLog([{url: TASK_URL}]);
+  const URL = {
+    initialUrl: 'about:blank',
+    requestedUrl: TASK_URL,
+    mainDocumentUrl: TASK_URL,
+    finalUrl: TASK_URL,
+  };
 
   it('should pass and be non-applicable if there are no long tasks', async () => {
     const artifacts = {
+      URL,
       traces: {defaultPass: generateTraceWithLongTasks({count: 0})},
       devtoolsLogs: {defaultPass: devtoolsLog},
     };
@@ -71,6 +75,7 @@ describe('Long tasks audit', () => {
 
   it('should return a list of long tasks with duration >= 50 ms', async () => {
     const artifacts = {
+      URL,
       traces: {defaultPass: generateTraceWithLongTasks({count: 4})},
       devtoolsLogs: {defaultPass: devtoolsLog},
     };
@@ -98,6 +103,7 @@ describe('Long tasks audit', () => {
       ],
     });
     const artifacts = {
+      URL,
       traces: {defaultPass: trace},
       devtoolsLogs: {defaultPass: devtoolsLog},
     };
@@ -113,6 +119,7 @@ describe('Long tasks audit', () => {
 
   it('should not filter out tasks with duration >= 50 ms only after throttling', async () => {
     const artifacts = {
+      URL,
       traces: {defaultPass: generateTraceWithLongTasks({count: 4, duration: 25})},
       devtoolsLogs: {defaultPass: networkRecordsToDevtoolsLog([
         {url: TASK_URL, timing: {connectEnd: 50, connectStart: 0.01, sslStart: 25, sslEnd: 40}},
@@ -148,6 +155,7 @@ describe('Long tasks audit', () => {
   it('should populate url when tasks have an attributable url', async () => {
     const trace = generateTraceWithLongTasks({count: 1, duration: 300, withChildTasks: true});
     const artifacts = {
+      URL,
       traces: {defaultPass: trace},
       devtoolsLogs: {defaultPass: devtoolsLog},
     };

@@ -3,26 +3,24 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-/* eslint-env jest */
-const JsBundles = require('../../computed/js-bundles.js');
-const {loadSourceMapFixture} = require('../test-utils.js');
+import JsBundles from '../../computed/js-bundles.js';
+import {createScript, loadSourceMapFixture} from '../test-utils.js';
 
 describe('JsBundles computed artifact', () => {
   it('collates script element and source map', async () => {
     const artifacts = {
       SourceMaps: [{
-        scriptUrl: 'https://www.example.com/app.js', map: {sources: ['index.js'], mappings: 'AAAA'},
+        scriptId: '1', scriptUrl: 'https://www.example.com/app.js', map: {sources: ['index.js'], mappings: 'AAAA'},
       }],
-      ScriptElements: [{src: 'https://www.example.com/app.js', content: ''}],
+      Scripts: [{scriptId: '1', url: 'https://www.example.com/app.js', content: ''}].map(createScript),
     };
     const context = {computedCache: new Map()};
     const results = await JsBundles.request(artifacts, context);
     expect(results).toHaveLength(1);
     const result = results[0];
     expect(result.rawMap).toBe(artifacts.SourceMaps[0].map);
-    expect(result.script).toBe(artifacts.ScriptElements[0]);
+    expect(result.script).toBe(artifacts.Scripts[0]);
   });
 
   it('works (simple map)', async () => {
@@ -30,8 +28,8 @@ describe('JsBundles computed artifact', () => {
     // https://github.com/danvk/source-map-explorer/tree/4b95f6e7dfe0058d791dcec2107fee43a1ebf02e/tests
     const {map, content} = loadSourceMapFixture('foo.min');
     const artifacts = {
-      SourceMaps: [{scriptUrl: 'https://example.com/foo.min.js', map}],
-      ScriptElements: [{src: 'https://example.com/foo.min.js', content}],
+      SourceMaps: [{scriptId: '1', scriptUrl: 'https://example.com/foo.min.js', map}],
+      Scripts: [{scriptId: '1', url: 'https://example.com/foo.min.js', content}].map(createScript),
     };
     const context = {computedCache: new Map()};
     const results = await JsBundles.request(artifacts, context);
@@ -77,8 +75,8 @@ describe('JsBundles computed artifact', () => {
     const {map, content} = loadSourceMapFixture('foo.min');
     map.sources[1] = null;
     const artifacts = {
-      SourceMaps: [{scriptUrl: 'https://example.com/foo.min.js', map}],
-      ScriptElements: [{src: 'https://example.com/foo.min.js', content}],
+      SourceMaps: [{scriptId: '1', scriptUrl: 'https://example.com/foo.min.js', map}],
+      Scripts: [{scriptId: '1', url: 'https://example.com/foo.min.js', content}].map(createScript),
     };
     const context = {computedCache: new Map()};
     const results = await JsBundles.request(artifacts, context);
@@ -119,8 +117,8 @@ describe('JsBundles computed artifact', () => {
   it('works (complex map)', async () => {
     const {map, content} = loadSourceMapFixture('squoosh');
     const artifacts = {
-      SourceMaps: [{scriptUrl: 'https://squoosh.app/main-app.js', map}],
-      ScriptElements: [{src: 'https://squoosh.app/main-app.js', content}],
+      SourceMaps: [{scriptId: '1', scriptUrl: 'https://squoosh.app/main-app.js', map}],
+      Scripts: [{scriptId: '1', url: 'https://squoosh.app/main-app.js', content}].map(createScript),
     };
     const context = {computedCache: new Map()};
     const results = await JsBundles.request(artifacts, context);
@@ -241,8 +239,8 @@ describe('JsBundles computed artifact', () => {
 
     async function test() {
       const artifacts = {
-        SourceMaps: [{scriptUrl: 'https://example.com/foo.min.js', map}],
-        ScriptElements: [{src: 'https://example.com/foo.min.js', content}],
+        SourceMaps: [{scriptId: '1', scriptUrl: 'https://example.com/foo.min.js', map}],
+        Scripts: [{scriptId: '1', url: 'https://example.com/foo.min.js', content}].map(createScript),
       };
       const context = {computedCache: new Map()};
       const results = await JsBundles.request(artifacts, context);

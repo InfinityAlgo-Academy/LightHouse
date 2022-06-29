@@ -3,15 +3,15 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-const UsesHTTP2Audit = require('../../../audits/dobetterweb/uses-http2.js');
-const trace = require('../../fixtures/traces/progressive-app-m60.json');
-const devtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
-const NetworkRecords = require('../../../computed/network-records.js');
-const networkRecordsToDevtoolsLog = require('../../network-records-to-devtools-log.js');
+import {readJson} from '../../../../root.js';
+import UsesHTTP2Audit from '../../../audits/dobetterweb/uses-http2.js';
+import NetworkRecords from '../../../computed/network-records.js';
+import networkRecordsToDevtoolsLog from '../../network-records-to-devtools-log.js';
+import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';
 
-/* eslint-env jest */
+const trace = readJson('../../fixtures/traces/progressive-app-m60.json', import.meta);
+const devtoolsLog = readJson('../../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
 
 describe('Resources are fetched over http/2', () => {
   let artifacts = {};
@@ -23,6 +23,8 @@ describe('Resources are fetched over http/2', () => {
     artifacts = {
       traces: {defaultPass: trace},
       devtoolsLogs: {defaultPass: devtoolsLog},
+      GatherContext: {gatherMode: 'navigation'},
+      URL: getURLArtifactFromDevtoolsLog(devtoolsLog),
     };
   });
 
@@ -72,5 +74,24 @@ describe('Resources are fetched over http/2', () => {
     // make sure we report less savings
     expect(result.numericValue).toMatchInlineSnapshot(`500`);
     expect(result.details.overallSavingsMs).toMatchInlineSnapshot(`500`);
+  });
+
+  it('should return table items for timespan mode', async () => {
+    const records = await NetworkRecords.compute_(artifacts.devtoolsLogs.defaultPass);
+    records.forEach(record => (record.protocol = 'HTTP/1.1'));
+    artifacts.devtoolsLogs.defaultPass = networkRecordsToDevtoolsLog(records);
+    artifacts.GatherContext.gatherMode = 'timespan';
+    const result = await UsesHTTP2Audit.audit(artifacts, context);
+    const hosts = new Set(result.details.items.map(item => new URL(item.url).host));
+
+    // make sure we don't pull in domains with only a few requests (GTM, GA)
+    expect(hosts).toEqual(new Set(['pwa.rocks']));
+    // make sure we flag all the rest
+    expect(result.details.items).toHaveLength(60);
+    // no savings calculated
+    expect(result.numericValue).toBeUndefined();
+    expect(result.details.overallSavingsMs).toBeUndefined();
+    // make sure we have a failing score
+    expect(result.score).toEqual(0);
   });
 });

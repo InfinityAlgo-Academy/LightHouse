@@ -3,7 +3,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 /**
  * @fileoverview These functions define {Rect}s and {Size}s using two different coordinate spaces:
@@ -18,7 +17,7 @@
 /**
  * @typedef InstallOverlayFeatureParams
  * @property {DOM} dom
- * @property {Element} reportEl
+ * @property {Element} rootEl
  * @property {Element} overlayContainerEl
  * @property {LH.Audit.Details.FullPageScreenshot} fullPageScreenshot
  */
@@ -135,7 +134,7 @@ export class ElementScreenshotRenderer {
    * @param {LH.Audit.Details.FullPageScreenshot['screenshot']} screenshot
    */
   static installFullPageScreenshot(el, screenshot) {
-    el.style.setProperty('--element-screenshot-url', `url(${screenshot.data})`);
+    el.style.setProperty('--element-screenshot-url', `url('${screenshot.data}')`);
   }
 
   /**
@@ -143,14 +142,14 @@ export class ElementScreenshotRenderer {
    * @param {InstallOverlayFeatureParams} opts
    */
   static installOverlayFeature(opts) {
-    const {dom, reportEl, overlayContainerEl, fullPageScreenshot} = opts;
+    const {dom, rootEl, overlayContainerEl, fullPageScreenshot} = opts;
     const screenshotOverlayClass = 'lh-screenshot-overlay--enabled';
     // Don't install the feature more than once.
-    if (reportEl.classList.contains(screenshotOverlayClass)) return;
-    reportEl.classList.add(screenshotOverlayClass);
+    if (rootEl.classList.contains(screenshotOverlayClass)) return;
+    rootEl.classList.add(screenshotOverlayClass);
 
     // Add a single listener to the provided element to handle all clicks within (event delegation).
-    reportEl.addEventListener('click', e => {
+    rootEl.addEventListener('click', e => {
       const target = /** @type {?HTMLElement} */ (e.target);
       if (!target) return;
       // Only activate the overlay for clicks on the screenshot *preview* of an element, not the full-size too.
@@ -187,7 +186,7 @@ export class ElementScreenshotRenderer {
         overlay.remove();
         return;
       }
-      overlay.appendChild(screenshotElement);
+      overlay.append(screenshotElement);
       overlay.addEventListener('click', () => overlay.remove());
     });
   }
@@ -252,9 +251,6 @@ export class ElementScreenshotRenderer {
       elementPreviewSizeSC,
       {width: screenshot.width, height: screenshot.height}
     );
-
-    const contentEl = dom.find('div.lh-element-screenshot__content', containerEl);
-    contentEl.style.top = `-${elementPreviewSizeDC.height}px`;
 
     const imageEl = dom.find('div.lh-element-screenshot__image', containerEl);
     imageEl.style.width = elementPreviewSizeDC.width + 'px';

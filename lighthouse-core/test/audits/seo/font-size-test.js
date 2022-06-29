@@ -3,19 +3,17 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-const FontSizeAudit = require('../../../audits/seo/font-size.js');
-const constants = require('../../../config/constants.js');
-const assert = require('assert').strict;
+import {strict as assert} from 'assert';
+
+import FontSizeAudit from '../../../audits/seo/font-size.js';
+import constants from '../../../config/constants.js';
 
 const URL = {
   requestedUrl: 'https://example.com',
   finalUrl: 'https://example.com',
 };
 const validViewport = 'width=device-width';
-
-/* eslint-env jest */
 
 describe('SEO: Font size audit', () => {
   const makeMetaElements = viewport => [{name: 'viewport', content: viewport}];
@@ -335,6 +333,7 @@ describe('SEO: Font size audit', () => {
         urlProvider: 'network',
         line: 50,
         column: 50,
+        original: undefined,
       });
     });
 
@@ -360,6 +359,7 @@ describe('SEO: Font size audit', () => {
         urlProvider: 'network',
         line: 15,
         column: 10,
+        original: undefined,
       });
     });
 
@@ -385,6 +385,7 @@ describe('SEO: Font size audit', () => {
         urlProvider: 'network',
         line: 5,
         column: 15,
+        original: undefined,
       });
     });
 
@@ -411,6 +412,7 @@ describe('SEO: Font size audit', () => {
         urlProvider: 'comment',
         line: 10,
         column: 10,
+        original: undefined,
       });
     });
   });

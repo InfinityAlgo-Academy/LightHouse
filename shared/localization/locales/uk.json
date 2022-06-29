@@ -3,13 +3,13 @@
     "message": "Усі звіти"
   },
   "flow-report/src/i18n/ui-strings.js | categories": {
-    "message": "Categories"
+    "message": "Категорії"
   },
   "flow-report/src/i18n/ui-strings.js | categoryAccessibility": {
     "message": "Спеціальні можливості"
   },
   "flow-report/src/i18n/ui-strings.js | categoryBestPractices": {
-    "message": "Практичні поради"
+    "message": "Оптимальні методи"
   },
   "flow-report/src/i18n/ui-strings.js | categoryPerformance": {
     "message": "Ефективність"
@@ -24,40 +24,46 @@
     "message": "Версія для комп’ютера"
   },
   "flow-report/src/i18n/ui-strings.js | helpDialogTitle": {
-    "message": "Understanding the Lighthouse Flow Report"
+    "message": "Пояснення звіту Lighthouse про послідовність переходів"
   },
   "flow-report/src/i18n/ui-strings.js | helpLabel": {
-    "message": "Understanding Flows"
+    "message": "Пояснення звіту про переходи"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionNavigation": {
-    "message": "Use Navigation reports to..."
+    "message": "Звіти про навігацію допоможуть вам…"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionSnapshot": {
-    "message": "Use Snapshot reports to..."
+    "message": "Звіти про стан на певний момент часу допоможуть вам…"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionTimespan": {
-    "message": "Use Timespan reports to..."
+    "message": "Звіти про період часу допоможуть вам…"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation1": {
-    "message": "Obtain a Lighthouse Performance score."
+    "message": "Отримати оцінку ефективності в Lighthouse."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation2": {
-    "message": "Measure page load Performance metrics such as Largest Contentful Paint and Speed Index."
+    "message": "Вимірювати показники ефективності завантаження сторінки, такі як візуалізація великого контенту й індекс швидкості."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation3": {
-    "message": "Assess Progressive Web App capabilities."
+    "message": "Оцінювати можливості прогресивного веб-додатка."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseSnapshot1": {
-    "message": "Find accessibility issues in single page applications or complex forms."
+    "message": "Знаходити проблеми з доступністю в односторінкових додатках чи складних формах."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseSnapshot2": {
-    "message": "Evaluate best practices of menus and UI elements hidden behind interaction."
+    "message": "Оцінювати меню й елементи інтерфейсу на відповідність оптимальним методам підтримки взаємодії."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan1": {
-    "message": "Measure layout shifts and JavaScript execution time on a series of interactions."
+    "message": "Вимірювати зміщення макета й час виконання JavaScript для серії взаємодій."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan2": {
-    "message": "Discover performance opportunities to improve the experience for long-lived pages and single-page applications."
+    "message": "Знаходити можливості покращити ефективність постійних сторінок і односторінкових додатків."
+  },
+  "flow-report/src/i18n/ui-strings.js | highestImpact": {
+    "message": "Найвагоміші"
+  },
+  "flow-report/src/i18n/ui-strings.js | informativeAuditCount": {
+    "message": "{numInformative,plural, =1{{numInformative} інформативна перевірка}one{{numInformative} інформативна перевірка}few{{numInformative} інформативні перевірки}many{{numInformative} інформативних перевірок}other{{numInformative} інформативної перевірки}}"
   },
   "flow-report/src/i18n/ui-strings.js | mobile": {
     "message": "Мобільна версія"
@@ -66,10 +72,19 @@
     "message": "Завантаження сторінки"
   },
   "flow-report/src/i18n/ui-strings.js | navigationLongDescription": {
-    "message": "Navigation reports analyze a single page load, exactly like the original Lighthouse reports."
+    "message": "Звіти про навігацію аналізують завантаження однієї сторінки, як і оригінальні звіти Lighthouse."
   },
   "flow-report/src/i18n/ui-strings.js | navigationReport": {
     "message": "Звіт про навігацію"
+  },
+  "flow-report/src/i18n/ui-strings.js | navigationReportCount": {
+    "message": "{numNavigation,plural, =1{{numNavigation} звіт про навігацію}one{{numNavigation} звіт про навігацію}few{{numNavigation} звіти про навігацію}many{{numNavigation} звітів про навігацію}other{{numNavigation} звіту про навігацію}}"
+  },
+  "flow-report/src/i18n/ui-strings.js | passableAuditCount": {
+    "message": "{numPassableAudits,plural, =1{Можна здійснити {numPassableAudits} перевірку}one{Можна здійснити {numPassableAudits} перевірку}few{Можна здійснити {numPassableAudits} перевірки}many{Можна здійснити {numPassableAudits} перевірок}other{Можна здійснити {numPassableAudits} перевірки}}"
+  },
+  "flow-report/src/i18n/ui-strings.js | passedAuditCount": {
+    "message": "{numPassed,plural, =1{{numPassed} перевірку пройдено}one{{numPassed} перевірку пройдено}few{{numPassed} перевірки пройдено}many{{numPassed} перевірок пройдено}other{{numPassed} перевірки пройдено}}"
   },
   "flow-report/src/i18n/ui-strings.js | ratingAverage": {
     "message": "Посередньо"
@@ -84,16 +99,19 @@
     "message": "Добре"
   },
   "flow-report/src/i18n/ui-strings.js | save": {
-    "message": "Save"
+    "message": "Зберегти"
   },
   "flow-report/src/i18n/ui-strings.js | snapshotDescription": {
     "message": "Зафіксований статус сторінки"
   },
   "flow-report/src/i18n/ui-strings.js | snapshotLongDescription": {
-    "message": "Snapshot reports analyze the page in a particular state, typically after user interactions."
+    "message": "Звіти про стан на певний момент часу аналізують сторінку в конкретному стані, зазвичай після дій користувача."
   },
   "flow-report/src/i18n/ui-strings.js | snapshotReport": {
-    "message": "Звіт про поточний статус"
+    "message": "Звіт про стан на певний момент часу"
+  },
+  "flow-report/src/i18n/ui-strings.js | snapshotReportCount": {
+    "message": "{numSnapshot,plural, =1{{numSnapshot} звіт про стан на певний момент часу}one{{numSnapshot} звіт про стан на певний момент часу}few{{numSnapshot} звіти про стан на певний момент часу}many{{numSnapshot} звітів про стан на певний момент часу}other{{numSnapshot} звіту про стан на певний момент часу}}"
   },
   "flow-report/src/i18n/ui-strings.js | summary": {
     "message": "Підсумок"
@@ -102,10 +120,13 @@
     "message": "Взаємодії користувача"
   },
   "flow-report/src/i18n/ui-strings.js | timespanLongDescription": {
-    "message": "Timespan reports analyze an arbitrary period of time, typically containing user interactions."
+    "message": "Звіти про період часу аналізують довільний період часу та зазвичай містять дані про дії користувачів."
   },
   "flow-report/src/i18n/ui-strings.js | timespanReport": {
     "message": "Звіт про період часу"
+  },
+  "flow-report/src/i18n/ui-strings.js | timespanReportCount": {
+    "message": "{numTimespan,plural, =1{{numTimespan} звіт про період часу}one{{numTimespan} звіт про період часу}few{{numTimespan} звіти про період часу}many{{numTimespan} звітів про період часу}other{{numTimespan} звіту про період часу}}"
   },
   "flow-report/src/i18n/ui-strings.js | title": {
     "message": "Звіт про послідовність переходів у Lighthouse"
@@ -456,13 +477,13 @@
     "message": "Параметр `[user-scalable=\"no\"]` не використовується в елементі `<meta name=\"viewport\">`, а атрибут `[maximum-scale]` має значення не менше 5."
   },
   "lighthouse-core/audits/accessibility/object-alt.js | description": {
-    "message": "Програми зчитування з екрана розпізнають лише текст. Якщо додати текст заміщення до елементів `<object>`, це допоможе таким програмам передати їх значення користувачам. [Докладніше](https://web.dev/object-alt/)."
+    "message": "Програми зчитування з екрана розпізнають лише текст. Якщо додати текст заміщення до елементів `<object>`, програми зможуть краще передати їх значення користувачам. [Докладніше.](https://web.dev/object-alt/)"
   },
   "lighthouse-core/audits/accessibility/object-alt.js | failureTitle": {
-    "message": "Елементи `<object>` не містять текст `[alt]`"
+    "message": "Елементи `<object>` не містять тексту заміщення"
   },
   "lighthouse-core/audits/accessibility/object-alt.js | title": {
-    "message": "Елементи `<object>` містять текст `[alt]`"
+    "message": "Елементи `<object>` містять текст заміщення"
   },
   "lighthouse-core/audits/accessibility/tabindex.js | description": {
     "message": "Значення, що перевищує 0, передбачає явне встановлення порядку навігації. Хоча технічно воно дійсне, це часто ускладнює взаємодію для користувачів, які застосовують допоміжні технології. [Докладніше](https://web.dev/tabindex/)."
@@ -1031,6 +1052,9 @@
   "lighthouse-core/audits/installable-manifest.js | not-offline-capable": {
     "message": "Сторінка не працює офлайн"
   },
+  "lighthouse-core/audits/installable-manifest.js | pipeline-restarted": {
+    "message": "Прогресивний веб-додаток видалено. Перевірки придатності для встановлення скидаються."
+  },
   "lighthouse-core/audits/installable-manifest.js | platform-not-supported-on-android": {
     "message": "Указана платформа додатка не підтримується на Android"
   },
@@ -1039,6 +1063,9 @@
   },
   "lighthouse-core/audits/installable-manifest.js | prefer-related-applications-only-beta-stable": {
     "message": "Властивість prefer_related_applications підтримується лише в бета-версії Chrome і стабільних версіях на Android."
+  },
+  "lighthouse-core/audits/installable-manifest.js | protocol-timeout": {
+    "message": "Сервісу Lighthouse не вдалося знайти синтаксис Service Worker. Повторіть спробу в новішій версії Chrome."
   },
   "lighthouse-core/audits/installable-manifest.js | start-url-not-valid": {
     "message": "Початкова URL-адреса в маніфесті недійсна"
@@ -1191,7 +1218,7 @@
     "message": "Затримка сервера"
   },
   "lighthouse-core/audits/no-unload-listeners.js | description": {
-    "message": "Подія \"`unload`\" активується ненадійно, і її прослуховування може запобігти оптимізації веб-переглядача, наприклад функції \"Зворотний кеш\". Спробуйте натомість скористатися подією \"`pagehide`\" або \"`visibilitychange`\". [Докладніше](https://developers.google.com/web/updates/2018/07/page-lifecycle-api#the-unload-event)"
+    "message": "Подія \"`unload`\" активується ненадійно, і її прослуховування може запобігти оптимізації веб-переглядача, наприклад механізму зворотного кешу. Натомість скористайтеся подією \"`pagehide`\" або \"`visibilitychange`\". [Докладніше](https://web.dev/bfcache/#never-use-the-unload-event)"
   },
   "lighthouse-core/audits/no-unload-listeners.js | failureTitle": {
     "message": "Реєструє прослуховувач події \"`unload`\""
@@ -1270,9 +1297,6 @@
   },
   "lighthouse-core/audits/seo/canonical.js | explanationConflict": {
     "message": "Кілька URL-адрес конфліктують ({urlList})"
-  },
-  "lighthouse-core/audits/seo/canonical.js | explanationDifferentDomain": {
-    "message": "Указує на інший домен ({url})"
   },
   "lighthouse-core/audits/seo/canonical.js | explanationInvalid": {
     "message": "Недійсна URL-адреса ({url})"
@@ -1686,7 +1710,7 @@
     "message": "Сумісність веб-переглядача"
   },
   "lighthouse-core/config/default-config.js | bestPracticesCategoryTitle": {
-    "message": "Практичні поради"
+    "message": "Оптимальні методи"
   },
   "lighthouse-core/config/default-config.js | bestPracticesGeneralGroupTitle": {
     "message": "Загальні"
@@ -2042,30 +2066,6 @@
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "Схоже, указана вами URL-адреса недійсна."
   },
-  "treemap/app/src/util.js | allLabel": {
-    "message": "Усе"
-  },
-  "treemap/app/src/util.js | allScriptsDropdownLabel": {
-    "message": "Усі скрипти"
-  },
-  "treemap/app/src/util.js | coverageColumnName": {
-    "message": "Дані про використання"
-  },
-  "treemap/app/src/util.js | duplicateModulesLabel": {
-    "message": "Задубльовані модулі"
-  },
-  "treemap/app/src/util.js | resourceBytesLabel": {
-    "message": "Розмір ресурсу в байтах"
-  },
-  "treemap/app/src/util.js | tableColumnName": {
-    "message": "Назва"
-  },
-  "treemap/app/src/util.js | toggleTableButtonLabel": {
-    "message": "Показати або сховати таблицю"
-  },
-  "treemap/app/src/util.js | unusedBytesLabel": {
-    "message": "Невикористані байти"
-  },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "Для анімованого контенту застосовуйте [`amp-anim`](https://amp.dev/documentation/components/amp-anim/), щоб зменшити використання ЦП, коли контент поза межами екрана."
   },
@@ -2225,6 +2225,36 @@
   "node_modules/lighthouse-stack-packs/packs/magento.js | uses-rel-preload": {
     "message": "Теги `<link rel=preload>` можна додати, лише [змінивши макет теми](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
   },
+  "node_modules/lighthouse-stack-packs/packs/next.js | modern-image-formats": {
+    "message": "Щоб показувати нові формати, як-от `WebP` і `AVIF`, використовуйте `Next.js` Image Optimization API. [Докладніше.](https://nextjs.org/docs/api-reference/next/image#acceptable-formats)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | offscreen-images": {
+    "message": "Використовуйте компонент`next/image`, який за умовчанням `loading=\"lazy\"`. [Докладніше.](https://nextjs.org/docs/api-reference/next/image#loading)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | render-blocking-resources": {
+    "message": "Щоб відкласти завантаження некритичних сторонніх скриптів, використайте компонент `next/script`. [Докладніше.](https://nextjs.org/docs/basic-features/script)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | unused-css-rules": {
+    "message": "Щоб вилучати з таблиць стилів правила, які не використовуються, налаштуйте плагін `PurgeCSS` у конфігурації `Next.js`. [Докладніше.](https://purgecss.com/guides/next.html)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | unused-javascript": {
+    "message": "Щоб виявити код JavaScript, який не застосовується, скористайтесь інструментом `Webpack Bundle Analyzer`. [Докладніше](https://github.com/vercel/next.js/tree/canary/packages/next-bundle-analyzer)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | user-timings": {
+    "message": "Щоб отримувати показники ефективності додатка під час взаємодії з користувачами, використовуйте `Next.js Analytics`. [Докладніше.](https://nextjs.org/docs/advanced-features/measuring-performance)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | uses-long-cache-ttl": {
+    "message": "Налашуйте кешування для незмінюваних об’єктів і сторінок`Server-side Rendered` (SSR). [Докладніше.](https://nextjs.org/docs/going-to-production#caching)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | uses-optimized-images": {
+    "message": "Щоб оптимізувати зображення, замість `<img>` використовуйте компонент `next/image`. [Докладніше.](https://nextjs.org/docs/basic-features/image-optimization)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | uses-responsive-images": {
+    "message": "Щоб налаштувати потрібні `sizes`, використовуйте компонент `next/image`. [Докладніше.](https://nextjs.org/docs/api-reference/next/image#sizes)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | uses-text-compression": {
+    "message": "Увімкніть стиснення на сервері Next.js. [Докладніше.](https://nextjs.org/docs/api-reference/next.config.js/compression)"
+  },
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | efficient-animated-content": {
     "message": "[Замініть анімації GIF на відео](https://web.dev/replace-gifs-with-videos/) для швидшого завантаження веб-сторінок і скористайтеся сучасними форматами файлів, як-от [WebM](https://web.dev/replace-gifs-with-videos/#create-webm-videos) або [AV1](https://developers.google.com/web/updates/2018/09/chrome-70-media-updates#av1-decoder), для підвищення ефективності стиснення більш як на 30% порівняно із сучасним відеокодеком VP9."
   },
@@ -2333,6 +2363,9 @@
   "report/renderer/util.js | calculatorLink": {
     "message": "Показати калькулятор."
   },
+  "report/renderer/util.js | collapseView": {
+    "message": "Згорнути"
+  },
   "report/renderer/util.js | crcInitialNavigation": {
     "message": "Початкова навігація"
   },
@@ -2369,8 +2402,14 @@
   "report/renderer/util.js | errorMissingAuditInfo": {
     "message": "Повідомлення про помилку: немає інформації про перевірку"
   },
+  "report/renderer/util.js | expandView": {
+    "message": "Розгорнути"
+  },
   "report/renderer/util.js | footerIssue": {
     "message": "Повідомити про проблему"
+  },
+  "report/renderer/util.js | hide": {
+    "message": "Сховати"
   },
   "report/renderer/util.js | labDataTitle": {
     "message": "Дані тестів"
@@ -2392,6 +2431,12 @@
   },
   "report/renderer/util.js | passedAuditsGroupTitle": {
     "message": "Виконані перевірки"
+  },
+  "report/renderer/util.js | runtimeAnalysisWindow": {
+    "message": "Перше завантаження сторінки"
+  },
+  "report/renderer/util.js | runtimeCustom": {
+    "message": "Спеціальне обмеження пропускної спроможності"
   },
   "report/renderer/util.js | runtimeDesktopEmulation": {
     "message": "Емульований комп'ютер"
@@ -2420,8 +2465,20 @@
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "Агент користувача (мережа)"
   },
+  "report/renderer/util.js | runtimeSingleLoad": {
+    "message": "Одне завантаження сторінки"
+  },
+  "report/renderer/util.js | runtimeSingleLoadTooltip": {
+    "message": "Було взято дані одного завантаження сторінки, а не дані поля, що охоплюють кілька сеансів."
+  },
+  "report/renderer/util.js | runtimeSlow4g": {
+    "message": "Обмеження пропускної спроможності для мережі 4G з низькою швидкістю"
+  },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "Невідомо"
+  },
+  "report/renderer/util.js | show": {
+    "message": "Показати"
   },
   "report/renderer/util.js | showRelevantAudits": {
     "message": "Показано аудити, релевантні для:"
@@ -2452,5 +2509,29 @@
   },
   "report/renderer/util.js | warningHeader": {
     "message": "Застереження. "
+  },
+  "treemap/app/src/util.js | allLabel": {
+    "message": "Усе"
+  },
+  "treemap/app/src/util.js | allScriptsDropdownLabel": {
+    "message": "Усі скрипти"
+  },
+  "treemap/app/src/util.js | coverageColumnName": {
+    "message": "Дані про використання"
+  },
+  "treemap/app/src/util.js | duplicateModulesLabel": {
+    "message": "Задубльовані модулі"
+  },
+  "treemap/app/src/util.js | resourceBytesLabel": {
+    "message": "Розмір ресурсу в байтах"
+  },
+  "treemap/app/src/util.js | tableColumnName": {
+    "message": "Назва"
+  },
+  "treemap/app/src/util.js | toggleTableButtonLabel": {
+    "message": "Показати або сховати таблицю"
+  },
+  "treemap/app/src/util.js | unusedBytesLabel": {
+    "message": "Невикористані байти"
   }
 }

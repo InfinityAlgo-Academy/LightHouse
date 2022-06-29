@@ -29,7 +29,7 @@ class Metrics extends Audit {
       title: 'Metrics',
       description: 'Collects all available metrics.',
       supportedModes: ['navigation'],
-      requiredArtifacts: ['traces', 'devtoolsLogs', 'GatherContext'],
+      requiredArtifacts: ['traces', 'devtoolsLogs', 'GatherContext', 'URL'],
     };
   }
 
@@ -42,8 +42,9 @@ class Metrics extends Audit {
     const gatherContext = artifacts.GatherContext;
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+    const URL = artifacts.URL;
     const summary = await ComputedTimingSummary
-      .request({trace, devtoolsLog, gatherContext, settings: context.settings}, context);
+      .request({trace, devtoolsLog, gatherContext, settings: context.settings, URL}, context);
     const metrics = summary.metrics;
     const debugInfo = summary.debugInfo;
 

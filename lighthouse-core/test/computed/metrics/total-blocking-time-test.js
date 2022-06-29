@@ -3,14 +3,16 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-const TotalBlockingTime = require('../../../computed/metrics/total-blocking-time.js');
-const trace = require('../../fixtures/traces/progressive-app-m60.json');
-const devtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
-const {calculateSumOfBlockingTime} = require('../../../computed/metrics/tbt-utils.js');
+import TotalBlockingTime from '../../../computed/metrics/total-blocking-time.js';
+import {calculateSumOfBlockingTime} from '../../../computed/metrics/tbt-utils.js';
+import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';
+import {readJson} from '../../../../root.js';
 
-/* eslint-env jest */
+const trace = readJson('../../fixtures/traces/progressive-app-m60.json', import.meta);
+const devtoolsLog = readJson('../../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
+
+const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
 
 describe('Metrics: TotalBlockingTime', () => {
   const gatherContext = {gatherMode: 'navigation'};
@@ -18,8 +20,10 @@ describe('Metrics: TotalBlockingTime', () => {
   it('should compute a simulated value', async () => {
     const settings = {throttlingMethod: 'simulate'};
     const context = {settings, computedCache: new Map()};
-    const result = await TotalBlockingTime.request({trace, devtoolsLog, gatherContext, settings},
-      context);
+    const result = await TotalBlockingTime.request(
+      {trace, devtoolsLog, gatherContext, settings, URL},
+      context
+    );
 
     expect({
       timing: Math.round(result.timing),
@@ -37,8 +41,10 @@ describe('Metrics: TotalBlockingTime', () => {
   it('should compute an observed value', async () => {
     const settings = {throttlingMethod: 'provided'};
     const context = {settings, computedCache: new Map()};
-    const result = await TotalBlockingTime.request({trace, devtoolsLog, gatherContext, settings},
-      context);
+    const result = await TotalBlockingTime.request(
+      {trace, devtoolsLog, gatherContext, settings, URL},
+      context
+    );
     expect(result.timing).toBeCloseTo(48.3, 1);
   });
 

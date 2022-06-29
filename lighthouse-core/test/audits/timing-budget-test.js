@@ -3,15 +3,15 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-const TimingBudgetAudit = require('../../audits/timing-budget.js');
-const trace = require('../fixtures/traces/progressive-app-m60.json');
-const devtoolsLog = require('../fixtures/traces/progressive-app-m60.devtools.log.json');
-const lcpTrace = require('../fixtures/traces/lcp-m78.json');
-const lcpDevtoolsLog = require('../fixtures/traces/lcp-m78.devtools.log.json');
+import {readJson} from '../../../root.js';
+import TimingBudgetAudit from '../../audits/timing-budget.js';
+import {getURLArtifactFromDevtoolsLog} from '../test-utils.js';
 
-/* eslint-env jest */
+const trace = readJson('../fixtures/traces/progressive-app-m60.json', import.meta);
+const devtoolsLog = readJson('../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
+const lcpTrace = readJson('../fixtures/traces/lcp-m78.json', import.meta);
+const lcpDevtoolsLog = readJson('../fixtures/traces/lcp-m78.devtools.log.json', import.meta);
 
 describe('Performance: Timing budget audit', () => {
   let artifacts;
@@ -23,7 +23,7 @@ describe('Performance: Timing budget audit', () => {
         defaultPass: devtoolsLog,
       },
       traces: {defaultPass: trace},
-      URL: {requestedUrl: 'http://example.com', finalUrl: 'http://example.com'},
+      URL: getURLArtifactFromDevtoolsLog(devtoolsLog),
     };
 
     context = {
@@ -126,6 +126,7 @@ describe('Performance: Timing budget audit', () => {
       it('supports Largest Contentful Paint', async () => {
         artifacts.devtoolsLogs.defaultPass = lcpDevtoolsLog;
         artifacts.traces.defaultPass = lcpTrace;
+        artifacts.URL = getURLArtifactFromDevtoolsLog(lcpDevtoolsLog);
 
         // Use an observed throttlingMethod so we don't have to worry about the value changing in the future.
         context.settings.throttlingMethod = 'provided';

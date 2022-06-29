@@ -8,7 +8,7 @@ import {render} from '@testing-library/preact';
 import {FunctionComponent} from 'preact';
 
 import {I18nProvider} from '../../src/i18n/i18n';
-import {SidebarHeader, SidebarSummary} from '../../src/sidebar/sidebar';
+import {SidebarHeader, SidebarRuntimeSettings, SidebarSummary} from '../../src/sidebar/sidebar';
 import {FlowResultContext} from '../../src/util';
 import {flowResult} from '../sample-flow';
 
@@ -43,5 +43,47 @@ describe('SidebarSummary', () => {
 
     expect(link.href).toEqual('file:///Users/example/report.html/#');
     expect(link.classList).toContain('Sidebar--current');
+  });
+});
+
+describe('SidebarRuntimeSettings', () => {
+  it('displays default runtime settings', async () => {
+    const settings = {
+      formFactor: 'mobile',
+      throttlingMethod: 'simulate',
+      throttling: {
+        cpuSlowdownMultiplier: 4,
+        requestLatencyMs: 150 * 3.75,
+        downloadThroughputKbps: 1.6 * 1024 * 0.9,
+        uploadThroughputKbps: 750 * 0.9,
+        throughputKbps: 1.6 * 1024,
+        rttMs: 150,
+      },
+    } as any;
+    const root = render(<SidebarRuntimeSettings settings={settings}/>, {wrapper});
+
+    expect(root.getByText('Emulated Moto G4')).toBeTruthy();
+    expect(root.getByText('Slow 4G throttling')).toBeTruthy();
+    expect(root.getByText('4x slowdown'));
+  });
+
+  it('displays custom runtime settings', async () => {
+    const settings = {
+      formFactor: 'desktop',
+      throttlingMethod: 'devtools',
+      throttling: {
+        cpuSlowdownMultiplier: 1,
+        requestLatencyMs: 1,
+        downloadThroughputKbps: 1,
+        uploadThroughputKbps: 1,
+        throughputKbps: 1,
+        rttMs: 1,
+      },
+    } as any;
+    const root = render(<SidebarRuntimeSettings settings={settings}/>, {wrapper});
+
+    expect(root.getByText('Emulated Desktop')).toBeTruthy();
+    expect(root.getByText('Custom throttling')).toBeTruthy();
+    expect(root.getByText('1x slowdown'));
   });
 });

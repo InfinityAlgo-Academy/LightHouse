@@ -27,6 +27,8 @@ module.exports = {
       ],
       'newlines-between': 'always',
     }],
+    'import/group-exports': 2,
+    'import/exports-last': 2,
     '@typescript-eslint/type-annotation-spacing': 2,
   },
   overrides: [

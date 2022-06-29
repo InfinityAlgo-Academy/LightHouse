@@ -3,19 +3,18 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-const assert = require('assert').strict;
+import {strict as assert} from 'assert';
 
-const LargestContentfulPaintAllFrames = require('../../../computed/metrics/largest-contentful-paint-all-frames.js'); // eslint-disable-line max-len
-const traceAllFrames = require('../../fixtures/traces/frame-metrics-m89.json');
-const devtoolsLogAllFrames = require('../../fixtures/traces/frame-metrics-m89.devtools.log.json');
-const traceMainFrame = require('../../fixtures/traces/lcp-m78.json');
-const devtoolsLogMainFrame = require('../../fixtures/traces/lcp-m78.devtools.log.json');
-const invalidTrace = require('../../fixtures/traces/progressive-app-m60.json');
-const invalidDevtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
+import {readJson} from '../../../../root.js';
+import LargestContentfulPaintAllFrames from '../../../computed/metrics/largest-contentful-paint-all-frames.js'; // eslint-disable-line max-len
 
-/* eslint-env jest */
+const traceAllFrames = readJson('../../fixtures/traces/frame-metrics-m89.json', import.meta);
+const devtoolsLogAllFrames = readJson('../../fixtures/traces/frame-metrics-m89.devtools.log.json', import.meta);
+const traceMainFrame = readJson('../../fixtures/traces/lcp-m78.json', import.meta);
+const devtoolsLogMainFrame = readJson('../../fixtures/traces/lcp-m78.devtools.log.json', import.meta);
+const invalidTrace = readJson('../../fixtures/traces/progressive-app-m60.json', import.meta);
+const invalidDevtoolsLog = readJson('../../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
 
 describe('Metrics: LCP from all frames', () => {
   const gatherContext = {gatherMode: 'navigation'};

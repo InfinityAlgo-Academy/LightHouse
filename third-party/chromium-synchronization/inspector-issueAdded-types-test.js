@@ -13,8 +13,6 @@ const inspectorIssuesGathererPath = LH_ROOT +
   '/lighthouse-core/gather/gatherers/inspector-issues.js';
 const inspectorIssuesGathererSource = fs.readFileSync(inspectorIssuesGathererPath, 'utf-8');
 
-/* eslint-env jest */
-
 describe('issueAdded types', () => {
   /** @type {Array<LH.Crdp.Audits.InspectorIssueDetails>} */
   let inspectorIssueDetailsTypes;
@@ -31,18 +29,27 @@ describe('issueAdded types', () => {
       .sort();
   });
 
-  // TODO: https://github.com/GoogleChrome/lighthouse/issues/13147
-  it.skip('should notify us if something changed', () => {
+  it('should notify us if something changed', () => {
     expect(inspectorIssueDetailsTypes).toMatchInlineSnapshot(`
-      Array [
-        "blockedByResponseIssueDetails",
-        "contentSecurityPolicyIssueDetails",
-        "heavyAdIssueDetails",
-        "mixedContentIssueDetails",
-        "sameSiteCookieIssueDetails",
-        "sharedArrayBufferTransferIssueDetails",
-      ]
-    `);
+Array [
+  "attributionReportingIssueDetails",
+  "blockedByResponseIssueDetails",
+  "clientHintIssueDetails",
+  "contentSecurityPolicyIssueDetails",
+  "cookieIssueDetails",
+  "corsIssueDetails",
+  "deprecationIssueDetails",
+  "federatedAuthRequestIssueDetails",
+  "genericIssueDetails",
+  "heavyAdIssueDetails",
+  "lowTextContrastIssueDetails",
+  "mixedContentIssueDetails",
+  "navigatorUserAgentIssueDetails",
+  "quirksModeIssueDetails",
+  "sharedArrayBufferIssueDetails",
+  "twaQualityEnforcementDetails",
+]
+`);
   });
 
   // TODO: https://github.com/GoogleChrome/lighthouse/issues/13147

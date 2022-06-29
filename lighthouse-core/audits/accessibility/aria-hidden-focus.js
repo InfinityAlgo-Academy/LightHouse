@@ -19,7 +19,7 @@ const UIStrings = {
   /** Title of an accesibility audit that checks if all elements that have an aria-hidden attribute do not contain focusable descendent elements. This title is descriptive of the failing state and is shown to users when there is a failure that needs to be addressed. */
   failureTitle: '`[aria-hidden="true"]` elements contain focusable descendents',
   /** Description of a Lighthouse audit that tells the user *why* they should try to pass. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
-  description: 'Focusable descendents within an `[aria-hidden="true"]` element prevent those interactive elements from being available to users of assistive technologies like screen readers. [Learn more](https://web.dev/aria-hidden-focus/).',
+  description: 'Focusable descendents within an `[aria-hidden="true"]` element prevent those interactive elements from being available to users of assistive technologies like screen readers. [Learn more](https://dequeuniversity.com/rules/axe/4.4/aria-hidden-focus).',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);

@@ -21,7 +21,7 @@ const UIStrings = {
   'columnValue': 'Failure reason',
   /**
    * @description [ICU Syntax] Label for an audit identifying the number of installability errors found in the page.
-  */
+   */
   'displayValue': `{itemCount, plural,
     =1 {1 reason}
     other {# reasons}
@@ -50,15 +50,15 @@ const UIStrings = {
    * for the current page encloses the scope and start URL from the manifest. */
   'no-matching-service-worker': `No matching service worker detected. You may need to reload the page, or check that the scope of the service worker for the current page encloses the scope and start URL from the manifest.`,
   /**
-  * @description Error message explaining that the manifest does not contain a suitable icon.
-  * @example {192} value0
-  */
+   * @description Error message explaining that the manifest does not contain a suitable icon.
+   * @example {192} value0
+   */
   'manifest-missing-suitable-icon': `Manifest does not contain a suitable icon - PNG, SVG or WebP format of at least {value0}\xa0px is required, the sizes attribute must be set, and the purpose attribute, if set, must include "any".`,
 
   /**
-  * @description Error message explaining that the manifest does not supply an icon of the correct format.
-  * @example {192} value0
-  */
+   * @description Error message explaining that the manifest does not supply an icon of the correct format.
+   * @example {192} value0
+   */
   'no-acceptable-icon': `No supplied icon is at least {value0}\xa0px square in PNG, SVG or WebP format, with the purpose attribute unset or set to "any"`,
 
   /** Error message explaining that the icon could not be downloaded. */
@@ -93,6 +93,15 @@ const UIStrings = {
   'manifest-location-changed': `Manifest URL changed while the manifest was being fetched.`,
   /** Warning message explaining that the page does not work offline. */
   'warn-not-offline-capable': `Page does not work offline. The page will not be regarded as installable after Chrome 93, stable release August 2021.`,
+  /** Error message explaining that Lighthouse failed while detecting a service worker, and directing the user to try again in a new Chrome. */
+  'protocol-timeout': `Lighthouse could not determine if there was a service worker. Please try with a newer version of Chrome.`,
+  /** Message logged when the web app has been uninstalled o desktop, signalling that the install banner state is being reset. */
+  'pipeline-restarted': 'PWA has been uninstalled and installability checks resetting.',
+  /**
+   * @description Error message explaining that the URL of the manifest uses a scheme that is not supported on Android.
+   * @example {data:} scheme
+   */
+  'scheme-not-supported-for-webapk': 'The manifest URL scheme ({scheme}) is not supported on Android.',
 };
 /* eslint-enable max-len */
 
@@ -121,7 +130,7 @@ class InstallableManifest extends Audit {
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
       supportedModes: ['navigation'],
-      requiredArtifacts: ['URL', 'WebAppManifest', 'InstallabilityErrors'],
+      requiredArtifacts: ['WebAppManifest', 'InstallabilityErrors'],
     };
   }
 
@@ -144,8 +153,24 @@ class InstallableManifest extends Audit {
         continue;
       }
 
+      // Filter out errorId 'pipeline-restarted' since it only applies when the PWA is uninstalled.
+      if (err.errorId === 'pipeline-restarted') {
+        continue;
+      }
+
       // @ts-expect-error errorIds from protocol should match up against the strings dict
       const matchingString = UIStrings[err.errorId];
+
+      if (err.errorId === 'scheme-not-supported-for-webapk') {
+        // If there was no manifest, then there will be at lest one other installability error.
+        // We can ignore this error if that's the case.
+        const manifestUrl = artifacts.WebAppManifest?.url;
+        if (!manifestUrl) continue;
+
+        const scheme = new URL(manifestUrl).protocol;
+        i18nErrors.push(str_(matchingString, {scheme}));
+        continue;
+      }
 
       // Handle an errorId we don't recognize.
       if (matchingString === undefined) {
@@ -160,7 +185,7 @@ class InstallableManifest extends Audit {
        * If there is an argument value, get it.
        * We only expect a `minimum-icon-size-in-pixels` errorArg[0] for two errorIds, currently.
        */
-      const value0 = err.errorArguments && err.errorArguments.length && err.errorArguments[0].value;
+      const value0 = err.errorArguments?.length && err.errorArguments[0].value;
 
       if (matchingString && err.errorArguments.length !== UIStringArguments.length) {
         // Matching string, but have the incorrect number of arguments for the message.
@@ -186,7 +211,6 @@ class InstallableManifest extends Audit {
    *
    */
   static async audit(artifacts, context) {
-    const manifestValues = await ManifestValues.request(artifacts, context);
     const {i18nErrors, warnings} = InstallableManifest.getInstallabilityErrors(artifacts);
 
     const manifestUrl = artifacts.WebAppManifest ? artifacts.WebAppManifest.url : null;
@@ -201,10 +225,16 @@ class InstallableManifest extends Audit {
     const errorReasons = i18nErrors.map(reason => {
       return {reason};
     });
-    /** DevTools InstallabilityErrors does not emit an error unless there is a manifest, so include manifestValues's error */
-    if (manifestValues.isParseFailure) {
-      errorReasons.push({
-        reason: manifestValues.parseFailureReason});
+
+    // If InstallabilityErrors is empty, double check ManifestValues to make sure nothing was missed.
+    // InstallabilityErrors can be empty erroneously in our DevTools web tests.
+    if (!errorReasons.length) {
+      const manifestValues = await ManifestValues.request(artifacts, context);
+      if (manifestValues.isParseFailure) {
+        errorReasons.push({
+          reason: manifestValues.parseFailureReason,
+        });
+      }
     }
 
     // Include the detailed pass/fail checklist as a diagnostic.

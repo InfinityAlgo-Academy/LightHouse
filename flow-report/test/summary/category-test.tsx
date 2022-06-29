@@ -11,7 +11,6 @@ import {SummaryTooltip} from '../../src/summary/category';
 import {flowResult} from '../sample-flow';
 import {I18nProvider} from '../../src/i18n/i18n';
 import {FlowResultContext} from '../../src/util';
-import {ReportRendererProvider} from '../../src/wrappers/report-renderer';
 
 let wrapper: FunctionComponent;
 
@@ -19,11 +18,9 @@ beforeEach(() => {
   // Include sample flowResult for locale in I18nProvider.
   wrapper = ({children}) => (
     <FlowResultContext.Provider value={flowResult}>
-      <ReportRendererProvider>
-        <I18nProvider>
-          {children}
-        </I18nProvider>
-      </ReportRendererProvider>
+      <I18nProvider>
+        {children}
+      </I18nProvider>
     </FlowResultContext.Provider>
   );
 });

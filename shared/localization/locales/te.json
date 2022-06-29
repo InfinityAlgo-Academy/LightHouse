@@ -3,7 +3,7 @@
     "message": "అన్ని రిపోర్ట్‌లు"
   },
   "flow-report/src/i18n/ui-strings.js | categories": {
-    "message": "Categories"
+    "message": "కేటగిరీలు"
   },
   "flow-report/src/i18n/ui-strings.js | categoryAccessibility": {
     "message": "యాక్సెసిబిలిటీ"
@@ -24,40 +24,46 @@
     "message": "డెస్క్‌టాప్"
   },
   "flow-report/src/i18n/ui-strings.js | helpDialogTitle": {
-    "message": "Understanding the Lighthouse Flow Report"
+    "message": "Lighthouse ఫ్లో రిపోర్ట్‌ను అర్థం చేసుకోవడం"
   },
   "flow-report/src/i18n/ui-strings.js | helpLabel": {
-    "message": "Understanding Flows"
+    "message": "ఫ్లో రిపోర్ట్‌లను అర్థం చేసుకోవడం"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionNavigation": {
-    "message": "Use Navigation reports to..."
+    "message": "నావిగేషన్ రిపోర్ట్‌లను ఉపయోగించి..."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionSnapshot": {
-    "message": "Use Snapshot reports to..."
+    "message": "స్నాప్‌షాట్ రిపోర్ట్‌లను ఉపయోగించి..."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionTimespan": {
-    "message": "Use Timespan reports to..."
+    "message": "కాలవ్యవధి రిపోర్ట్‌లను ఉపయోగించి..."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation1": {
-    "message": "Obtain a Lighthouse Performance score."
+    "message": "Lighthouse పనితీరు స్కోర్‌ను పొందండి."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation2": {
-    "message": "Measure page load Performance metrics such as Largest Contentful Paint and Speed Index."
+    "message": "కంటెంట్ కలిగి ఉండే అతిపెద్ద పెయింట్, వేగం ఇండెక్స్ వంటి పేజీ లోడ్ పనితీరు కొలమానాలను లెక్కించండి."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation3": {
-    "message": "Assess Progressive Web App capabilities."
+    "message": "ప్రోగ్రెసివ్ వెబ్ యాప్ సామర్థ్యాలను అంచనా వేయండి."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseSnapshot1": {
-    "message": "Find accessibility issues in single page applications or complex forms."
+    "message": "సింగిల్ పేజీ యాప్‌లు లేదా సంక్లిష్ట ఫారమ్‌లలో ఉన్న యాక్సెసిబిలిటీ సమస్యలను కనుగొనండి."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseSnapshot2": {
-    "message": "Evaluate best practices of menus and UI elements hidden behind interaction."
+    "message": "ఇంటరాక్షన్ లోపల ఉన్న మెనూలు, UI ఎలిమెంట్‌ల బెస్ట్ ప్రాక్టీసులను పరిశీలించండి."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan1": {
-    "message": "Measure layout shifts and JavaScript execution time on a series of interactions."
+    "message": "వివిధ ఇంటరాక్షన్‌లకు సంబంధించిన లేఅవుట్ షిఫ్ట్‌లను, JavaScript అమలయ్యే సమయాన్ని లెక్కించండి."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan2": {
-    "message": "Discover performance opportunities to improve the experience for long-lived pages and single-page applications."
+    "message": "దీర్ఘకాలిక పేజీలు, సింగిల్-పేజీ యాప్‌ల అనుభవాన్ని మెరుగుపరచడానికి పనితీరు అవకాశాలను కనుగొనండి."
+  },
+  "flow-report/src/i18n/ui-strings.js | highestImpact": {
+    "message": "అత్యంత ప్రభావవంతమైనవి"
+  },
+  "flow-report/src/i18n/ui-strings.js | informativeAuditCount": {
+    "message": "{numInformative,plural, =1{{numInformative} సమాచారాత్మక ఆడిట్}other{{numInformative} సమాచారాత్మక ఆడిట్‌లు}}"
   },
   "flow-report/src/i18n/ui-strings.js | mobile": {
     "message": "మొబైల్"
@@ -66,10 +72,19 @@
     "message": "పేజీ లోడ్"
   },
   "flow-report/src/i18n/ui-strings.js | navigationLongDescription": {
-    "message": "Navigation reports analyze a single page load, exactly like the original Lighthouse reports."
+    "message": "నావిగేషన్ రిపోర్ట్‌లు, ఒరిజినల్ Lighthouse రిపోర్ట్‌ల మాదిరిగానే సింగిల్ పేజీ లోడ్‌ను విశ్లేషిస్తాయి."
   },
   "flow-report/src/i18n/ui-strings.js | navigationReport": {
     "message": "నావిగేషన్ రిపోర్ట్"
+  },
+  "flow-report/src/i18n/ui-strings.js | navigationReportCount": {
+    "message": "{numNavigation,plural, =1{{numNavigation} నావిగేషన్ రిపోర్ట్}other{{numNavigation} నావిగేషన్ రిపోర్ట్‌లు}}"
+  },
+  "flow-report/src/i18n/ui-strings.js | passableAuditCount": {
+    "message": "{numPassableAudits,plural, =1{పాస్ అయ్యే అవకాశం ఉన్న {numPassableAudits} ఆడిట్}other{పాస్ అయ్యే అవకాశం ఉన్న {numPassableAudits} ఆడిట్‌లు}}"
+  },
+  "flow-report/src/i18n/ui-strings.js | passedAuditCount": {
+    "message": "{numPassed,plural, =1{{numPassed} ఆడిట్ పాస్ అయ్యింది}other{{numPassed} ఆడిట్‌లు పాస్ అయ్యాయి}}"
   },
   "flow-report/src/i18n/ui-strings.js | ratingAverage": {
     "message": "ఓ మోస్తరుగా ఉంది"
@@ -84,16 +99,19 @@
     "message": "బాగుంది"
   },
   "flow-report/src/i18n/ui-strings.js | save": {
-    "message": "Save"
+    "message": "సేవ్ చేయండి"
   },
   "flow-report/src/i18n/ui-strings.js | snapshotDescription": {
     "message": "పేజీ తాలూకు క్యాప్చర్ చేయబడిన స్టేట్"
   },
   "flow-report/src/i18n/ui-strings.js | snapshotLongDescription": {
-    "message": "Snapshot reports analyze the page in a particular state, typically after user interactions."
+    "message": "స్నాప్‌షాట్ రిపోర్ట్‌లు, ఒక నిర్దిష్ట స్థితిలో ఉన్న పేజీని విశ్లేషిస్తాయి, సాధారణంగా ఈ విశ్లేషణ అనేది యూజర్ ఇంటరాక్షన్‌ల తర్వాత జరుగుతుంది."
   },
   "flow-report/src/i18n/ui-strings.js | snapshotReport": {
     "message": "స్నాప్‌షాట్ రిపోర్ట్"
+  },
+  "flow-report/src/i18n/ui-strings.js | snapshotReportCount": {
+    "message": "{numSnapshot,plural, =1{{numSnapshot} స్నాప్‌షాట్ రిపోర్ట్}other{{numSnapshot} స్నాప్‌షాట్ రిపోర్ట్‌లు}}"
   },
   "flow-report/src/i18n/ui-strings.js | summary": {
     "message": "సారాంశం"
@@ -102,10 +120,13 @@
     "message": "యూజర్ ఇంటరాక్షన్‌లు"
   },
   "flow-report/src/i18n/ui-strings.js | timespanLongDescription": {
-    "message": "Timespan reports analyze an arbitrary period of time, typically containing user interactions."
+    "message": "కాలవ్యవధి రిపోర్ట్‌లు ఒక యాదృచ్ఛిక సమయ వ్యవధిని విశ్లేషిస్తాయి, సాధారణంగా ఈ వ్యవధి యూజర్ ఇంటరాక్షన్‌లను కలిగి ఉంటుంది."
   },
   "flow-report/src/i18n/ui-strings.js | timespanReport": {
     "message": "పేజీలో యూజర్ ఇంటరాక్టివిటీకి సంబంధించిన రిపోర్ట్"
+  },
+  "flow-report/src/i18n/ui-strings.js | timespanReportCount": {
+    "message": "{numTimespan,plural, =1{{numTimespan} కాలవ్యవధి రిపోర్ట్}other{{numTimespan} కాలవ్యవధి రిపోర్ట్‌లు}}"
   },
   "flow-report/src/i18n/ui-strings.js | title": {
     "message": "Lighthouse యూజర్ ఫ్లో రిపోర్ట్"
@@ -315,10 +336,10 @@
     "message": "శీర్షిక అన్నది స్క్రీన్ రీడర్ వినియోగదారులకు పేజీ గురించి అవగాహన కలుగజేస్తుంది, అలాగే శోధన ఇంజిన్ వినియోగదారులు ఒక పేజీ వారి శోధనకు సంబంధితమైనదో కాదో గుర్తించడానికి చాలా ఎక్కువగా దీనిపై ఆధారపడుతుంటారు. [మరింత తెలుసుకోండి](https://web.dev/document-title/)."
   },
   "lighthouse-core/audits/accessibility/document-title.js | failureTitle": {
-    "message": "పత్రంలో '`<title>`' మూలకం లేదు"
+    "message": "డాక్యుమెంట్‌లో '`<title>`' మూలకం లేదు"
   },
   "lighthouse-core/audits/accessibility/document-title.js | title": {
-    "message": "పత్రంలో '`<title>`' మూలకం ఉంది"
+    "message": "డాక్యుమెంట్‌లో '`<title>`' మూలకం ఉంది"
   },
   "lighthouse-core/audits/accessibility/duplicate-id-active.js | description": {
     "message": "దృష్టి కేంద్రీకరించదగిన అన్ని మూలకాలు సహాయక సాంకేతిక పరిజ్ఞానాలకు కనిపించేలా ఉండటానికి వాటికి తప్పనిసరిగా విభిన్నమైన `id` ఉండాలి. [మరింత తెలుసుకోండి](https://web.dev/duplicate-id-active/)."
@@ -396,10 +417,10 @@
     "message": "ఒక చిత్రం '`<input>`' బటన్‌గా ఉపయోగిస్తున్నప్పుడు, ప్రత్యామ్నాయ వచనం అందించడమనేది బటన్ ప్రయోజనాన్ని అర్థం చేసుకోవడంలో స్క్రీన్ రీడర్ వినియోగదారులకు సహాయం చేస్తుంది. [మరింత తెలుసుకోండి](https://web.dev/input-image-alt/)."
   },
   "lighthouse-core/audits/accessibility/input-image-alt.js | failureTitle": {
-    "message": "'`<input type=\"image\">`' మూలకాలలో '`[alt]`' వచనం లేదు"
+    "message": "`<input type=\"image\">` ఎలిమెంట్‌లలో `[alt]` టెక్స్ట్ లేదు"
   },
   "lighthouse-core/audits/accessibility/input-image-alt.js | title": {
-    "message": "'`<input type=\"image\">`' మూలకాలు '`[alt]`' వచనాన్ని కలిగి ఉన్నాయి"
+    "message": "`<input type=\"image\">` ఎలిమెంట్‌లు `[alt]` టెక్స్ట్‌ను కలిగి ఉన్నాయి"
   },
   "lighthouse-core/audits/accessibility/label.js | description": {
     "message": "స్క్రీన్ రీడర్‌ల లాంటి సహాయక సాంకేతిక పరిజ్ఞానాల ద్వారా ఫారమ్ నియంత్రణలు సక్రమంగా ప్రకటించబడుతున్నాయని లేబుళ్లు నిర్ధారిస్తున్నాయి. [మరింత తెలుసుకోండి](https://web.dev/label/)."
@@ -441,10 +462,10 @@
     "message": "వినియోగదారులు పేజీ ఆటోమేటిక్‌గా రిఫ్రెష్ కావాలని కోరుకోరు, అలా చేయడం వలన దృష్టి కేంద్రీకరణ తిరిగి పేజీ పైభాగంలోకి వెళ్తుంది. ఇది విసుగు తెప్పించే లేదా అయోమయానికి గురి చేసే అనుభవం అందించవచ్చు. [మరింత తెలుసుకోండి](https://web.dev/meta-refresh/)."
   },
   "lighthouse-core/audits/accessibility/meta-refresh.js | failureTitle": {
-    "message": "పత్రం '`<meta http-equiv=\"refresh\">`'ను వినియోగిస్తోంది"
+    "message": "డాక్యుమెంట్‌ '`<meta http-equiv=\"refresh\">`'ను వినియోగిస్తోంది"
   },
   "lighthouse-core/audits/accessibility/meta-refresh.js | title": {
-    "message": "పత్రంలో '`<meta http-equiv=\"refresh\">`'ను వినియోగించలేదు"
+    "message": "డాక్యుమెంట్‌లో '`<meta http-equiv=\"refresh\">`'ను వినియోగించలేదు"
   },
   "lighthouse-core/audits/accessibility/meta-viewport.js | description": {
     "message": "జూమ్ చేయగల సామర్థ్యం నిలిపివేస్తే, స్క్రీన్ మ్యాగ్నిఫికేషన్‌పై ఆధారపడే తక్కువ కంటిచూపు ఉన్న వినియోగదారులు వెబ్ పేజీ కంటెంట్‌లను సరిగ్గా చూడలేరు. [మరింత తెలుసుకోండి](https://web.dev/meta-viewport/)."
@@ -456,13 +477,13 @@
     "message": "'`[user-scalable=\"no\"]`' అన్నది '`<meta name=\"viewport\">`' మూలకంలో ఉపయోగించలేదు, అలాగే '`[maximum-scale]`' లక్షణం 5 కంటే తక్కువగా లేదు."
   },
   "lighthouse-core/audits/accessibility/object-alt.js | description": {
-    "message": "స్క్రీన్ రీడర్‌లు వచనేతర కంటెంట్‌ను అనువదించలేవు. '`<object>`' మూలకాలకు ప్రత్యామ్నాయ వచనాన్ని జోడించడం వలన స్క్రీన్ రీడర్‌లు వాటి అర్థాన్ని వినియోగదారులకు సరిగ్గా అందించగలుగుతాయి. [మరింత తెలుసుకోండి](https://web.dev/object-alt/)."
+    "message": "స్క్రీన్ రీడర్‌లు టెక్స్ట్ మినహా వేరే కంటెంట్‌ను అనువదించలేవు. `<object>` ఎలిమెంట్‌లకు ప్రత్యామ్నాయ టెక్స్ట్‌ను జోడించడం వలన స్క్రీన్ రీడర్‌లు వాటి అర్థాన్ని యూజర్‌లకు సరిగ్గా అందించగలుగుతాయి. [మరింత తెలుసుకోండి](https://web.dev/object-alt/)."
   },
   "lighthouse-core/audits/accessibility/object-alt.js | failureTitle": {
-    "message": "'`<object>`' మూలకాలలో '`[alt]`' వచనం లేదు"
+    "message": "`<object>` ఎలిమెంట్‌లలో ప్రత్యామ్నాయ టెక్స్ట్ లేదు"
   },
   "lighthouse-core/audits/accessibility/object-alt.js | title": {
-    "message": "'`<object>`' మూలకాలు '`[alt]`' వచనాన్ని కలిగి ఉన్నాయి"
+    "message": "`<object>` ఎలిమెంట్‌లు ప్రత్యామ్నాయ టెక్స్ట్‌ను కలిగి ఉన్నాయి"
   },
   "lighthouse-core/audits/accessibility/tabindex.js | description": {
     "message": "0 కంటే పెద్ద విలువ విశిష్ఠమైన నావిగేషన్ క్రమాన్ని సూచిస్తుంది. సాంకేతికంగా చెల్లుబాటు అయినప్పటికీ, సహాయక సాంకేతిక పరిజ్ఞానంపై ఆధారపడిన వినియోగదారులకు ఇది తరచూ విసుగు తెప్పించే అనుభవాలను సృష్టిస్తుంది. [మరింత తెలుసుకోండి](https://web.dev/tabindex/)."
@@ -759,7 +780,7 @@
     "message": "'Doctype' పేరు తప్పనిసరిగా లోయర్-కేస్ స్ట్రింగ్ రూపంలో ఉండాలి `html`"
   },
   "lighthouse-core/audits/dobetterweb/doctype.js | explanationNoDoctype": {
-    "message": "పత్రంలో తప్పనిసరిగా doctype ఉండాలి"
+    "message": "డాక్యుమెంట్‌లో తప్పనిసరిగా doctype ఉండాలి"
   },
   "lighthouse-core/audits/dobetterweb/doctype.js | explanationPublicId": {
     "message": "'publicId' ఒక ఖాళీ స్ట్రింగ్‌గా వదిలిపెట్టాలి"
@@ -1031,6 +1052,9 @@
   "lighthouse-core/audits/installable-manifest.js | not-offline-capable": {
     "message": "ఆఫ్‌లైన్‌లో పేజీ పని చేయదు"
   },
+  "lighthouse-core/audits/installable-manifest.js | pipeline-restarted": {
+    "message": "PWA అన్‌ఇన్‌స్టాల్ చేయబడింది, ఇన్‌స్టాల్ సామర్థ్య తనిఖీలు రీసెట్ అవుతున్నాయి."
+  },
   "lighthouse-core/audits/installable-manifest.js | platform-not-supported-on-android": {
     "message": "పేర్కొన్న అప్లికేషన్ ప్లాట్‌ఫామ్‌కు Androidలో సపోర్ట్ లేదు"
   },
@@ -1038,7 +1062,10 @@
     "message": "మ్యానిఫెస్ట్ prefer_related_applicationsని ఈ విధంగా పేర్కొంటుంది: true"
   },
   "lighthouse-core/audits/installable-manifest.js | prefer-related-applications-only-beta-stable": {
-    "message": "కేవలం Chrome బీటా మరియు Androidలోని స్థిర ఛానెల్‌లలో మాత్రమే prefer_related_applicationsకి సపోర్ట్ ఉంది."
+    "message": "కేవలం Chrome బీటా మరియు Androidలోని స్థిర ఛానెళ్లలో మాత్రమే prefer_related_applicationsకి సపోర్ట్ ఉంది."
+  },
+  "lighthouse-core/audits/installable-manifest.js | protocol-timeout": {
+    "message": "సర్వీస్ వర్కర్ ఉన్నారో, లేదో Lighthouse గుర్తించలేకపోయింది. దయచేసి Chrome కొత్త వెర్షన్‌తో ట్రై చేయండి."
   },
   "lighthouse-core/audits/installable-manifest.js | start-url-not-valid": {
     "message": "మ్యానిఫెస్ట్ ప్రారంభ URL చెల్లదు"
@@ -1191,7 +1218,7 @@
     "message": "సర్వర్ బ్యాక్ఎండ్ ప్రతిస్పందన సమయాలు"
   },
   "lighthouse-core/audits/no-unload-listeners.js | description": {
-    "message": "ఈ `unload` ఈవెంట్ ఆశించినట్టు పని చేయదు. దాని కోసం వేచి ఉంటే, వెనుకకు-ముందుకు కాష్ లాంటి బ్రౌజర్ ఆప్టిమైజేషన్‌లు నిరోధించబడవచ్చు. బదులుగా `pagehide` లేదా `visibilitychange` ఈవెంట్‌లను ఉపయోగించడాన్ని పరిశీలించండి. [మరింత తెలుసుకోండి](https://developers.google.com/web/updates/2018/07/page-lifecycle-api#the-unload-event)"
+    "message": "ఈ `unload` ఈవెంట్ ఆశించినట్టు పని చేయదు, దాని కోసం వేచి ఉంటే, వెనుకకు-ముందుకు కాష్ లాంటి బ్రౌజర్ ఆప్టిమైజేషన్‌లు నిరోధించబడవచ్చు. బదులుగా `pagehide` లేదా `visibilitychange` ఈవెంట్‌లను ఉపయోగించండి. [మరింత తెలుసుకోండి](https://web.dev/bfcache/#never-use-the-unload-event)"
   },
   "lighthouse-core/audits/no-unload-listeners.js | failureTitle": {
     "message": "`unload` లిజనర్‌గా రిజిస్టర్ చేస్తుంది"
@@ -1271,9 +1298,6 @@
   "lighthouse-core/audits/seo/canonical.js | explanationConflict": {
     "message": "వైరుధ్యమైన అనేక URLలు ({urlList})"
   },
-  "lighthouse-core/audits/seo/canonical.js | explanationDifferentDomain": {
-    "message": "వేరొక డొమైన్ ({url})కు సూచిస్తోంది"
-  },
   "lighthouse-core/audits/seo/canonical.js | explanationInvalid": {
     "message": "చెల్లని URL ({url})"
   },
@@ -1287,10 +1311,10 @@
     "message": "అలాంటి కంటెంట్‌ను కలిగిన పేజీకి బదులుగా డొమైన్ యొక్క మూలాధార URL (హోమ్‌పేజీ)ని సూచిస్తుంది"
   },
   "lighthouse-core/audits/seo/canonical.js | failureTitle": {
-    "message": "పత్రంలో చెల్లుబాటు అయ్యే '`rel=canonical`' లేదు"
+    "message": "డాక్యుమెంట్‌లో చెల్లుబాటు అయ్యే '`rel=canonical`' లేదు"
   },
   "lighthouse-core/audits/seo/canonical.js | title": {
-    "message": "పత్రంలో చెల్లుబాటు అయ్యే '`rel=canonical`' ఉంది"
+    "message": "డాక్యుమెంట్‌లో చెల్లుబాటు అయ్యే '`rel=canonical`' ఉంది"
   },
   "lighthouse-core/audits/seo/crawlable-anchors.js | columnFailingLink": {
     "message": "క్రాల్ చేయలేని లింక్"
@@ -1326,25 +1350,25 @@
     "message": "మొబైల్ స్క్రీన్‌ల కోసం ఆప్టిమైజ్ చేసిన వీక్షణ పోర్ట్ మెటా ట్యాగ్ అందుబాటులో లేదు కనుక వచనం సముచితంగా లేదు."
   },
   "lighthouse-core/audits/seo/font-size.js | failureTitle": {
-    "message": "పత్రంలో సముచితమైన ఫాంట్ పరిమాణాలను ఉపయోగించలేదు"
+    "message": "డాక్యుమెంట్‌లో సముచితమైన ఫాంట్ పరిమాణాలను ఉపయోగించలేదు"
   },
   "lighthouse-core/audits/seo/font-size.js | legibleText": {
     "message": "స్పష్టమైన టెక్స్ట్"
   },
   "lighthouse-core/audits/seo/font-size.js | title": {
-    "message": "పత్రంలో ఫాంట్ పరిమాణాలు సముచితంగా ఉన్నాయి"
+    "message": "డాక్యుమెంట్‌లో ఫాంట్ పరిమాణాలు సముచితంగా ఉన్నాయి"
   },
   "lighthouse-core/audits/seo/hreflang.js | description": {
     "message": "'hreflang' లింక్‌లు అన్నవి నిర్దిష్ట భాష లేదా ప్రాంతం కోసం పేజీ యొక్క ఏ వెర్షన్‌ను శోధన ఫలితాలలో చూపాలన్నది శోధన ఇంజిన్‌లకు తెలియజేస్తాయి. [మరింత తెలుసుకోండి](https://web.dev/hreflang/)."
   },
   "lighthouse-core/audits/seo/hreflang.js | failureTitle": {
-    "message": "పత్రంలో చెల్లుబాటు అయ్యే ``hreflang`` లేదు"
+    "message": "డాక్యుమెంట్‌లో చెల్లుబాటు అయ్యే ``hreflang`` లేదు"
   },
   "lighthouse-core/audits/seo/hreflang.js | notFullyQualified": {
     "message": "సంబంధిత href విలువ"
   },
   "lighthouse-core/audits/seo/hreflang.js | title": {
-    "message": "పత్రంలో చెల్లుబాటు అయ్యే '`hreflang`' ఉంది"
+    "message": "డాక్యుమెంట్‌లో చెల్లుబాటు అయ్యే '`hreflang`' ఉంది"
   },
   "lighthouse-core/audits/seo/hreflang.js | unexpectedLanguage": {
     "message": "ఉహించని భాష కోడ్"
@@ -1392,19 +1416,19 @@
     "message": "వివరణ వచనం ఖాళీగా ఉంది."
   },
   "lighthouse-core/audits/seo/meta-description.js | failureTitle": {
-    "message": "పత్రంలో మెటా వివరణ లేదు"
+    "message": "డాక్యుమెంట్‌లో మెటా వివరణ లేదు"
   },
   "lighthouse-core/audits/seo/meta-description.js | title": {
-    "message": "పత్రంలో మెటా వివరణ ఉంది"
+    "message": "డాక్యుమెంట్‌లో మెటా వివరణ ఉంది"
   },
   "lighthouse-core/audits/seo/plugins.js | description": {
     "message": "ప్లగ్ఇన్ కంటెంట్‌ను శోధన ఇంజిన్‌లు సూచిక చేయలేవు. అలాగే, చాలా పరికరాలలో ప్లగ్ఇన్‌లు నియంత్రించబడతాయి లేదా వాటికి మద్దతు ఉండదు. [మరింత తెలుసుకోండి](https://web.dev/plugins/)."
   },
   "lighthouse-core/audits/seo/plugins.js | failureTitle": {
-    "message": "పత్రంలో ప్లగ్ఇన్‌లు ఉపయోగించబడుతున్నాయి"
+    "message": "డాక్యుమెంట్‌లో ప్లగ్ఇన్‌లు ఉపయోగించబడుతున్నాయి"
   },
   "lighthouse-core/audits/seo/plugins.js | title": {
-    "message": "పత్రంలో ప్లగ్ఇన్‌లు నివారించబడ్డాయి"
+    "message": "డాక్యుమెంట్‌లో ప్లగ్ఇన్‌లు నివారించబడ్డాయి"
   },
   "lighthouse-core/audits/seo/robots-txt.js | description": {
     "message": "మీ robots.txt ఫైల్ పాడైతే, మీరు మీ వెబ్‌సైట్‌ను ఎలా క్రాల్ చేయాలనుకుంటున్నారు లేదా సూచిక చేయాలనుకుంటున్నారు అన్నది crawlerలకు అర్థం కాకపోవచ్చు. [మరింత తెలుసుకోండి](https://web.dev/robots-txt/)."
@@ -1449,7 +1473,7 @@
     "message": "ప్రధాన డాక్యుమెంట్ కోసం సర్వర్ ప్రతిస్పందన సమయాన్ని తక్కువగా ఉంచండి ఎందుకంటే అన్ని ఇతర రిక్వెస్ట్‌లు దానిపై ఆధారపడి ఉంటాయి. [మరింత తెలుసుకోండి](https://web.dev/time-to-first-byte/)."
   },
   "lighthouse-core/audits/server-response-time.js | displayValue": {
-    "message": "రూట్ పత్రం {timeInMs, number, milliseconds} మి.సె తీసుకుంది"
+    "message": "రూట్ డాక్యుమెంట్‌ {timeInMs, number, milliseconds} మి.సె తీసుకుంది"
   },
   "lighthouse-core/audits/server-response-time.js | failureTitle": {
     "message": "ప్రారంభ సర్వర్ ప్రతిస్పందన సమయాన్ని తగ్గించండి"
@@ -1740,7 +1764,7 @@
     "message": "మౌళికమైన [PWA తనిఖీ లిస్ట్‌](https://developers.google.com/web/progressive-web-apps/checklist) ప్రకారం ఈ తనిఖీలను తప్పనిసరిగా నిర్వహించాలి, కానీ ఇవి Lighthouse ద్వారా ఆటోమేటిక్‌గా తనిఖీ చేయబడవు. ఇవి మీ స్కోర్‌పై ప్రభావం చూపవు, కానీ మీరు వీటిని మాన్యువల్‌గా అయినా ధృవీకరించడం ముఖ్యం."
   },
   "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
-    "message": "ప్రోగ్రెసివ్ వెబ్ యాప్"
+    "message": "PWA"
   },
   "lighthouse-core/config/default-config.js | pwaInstallableGroupTitle": {
     "message": "ఇన్‌స్టాల్ చేయదగినవి"
@@ -1917,7 +1941,7 @@
     "message": "ఆదా చేయగల వ్యవధి {wastedMs, number, milliseconds} మి.సెలు"
   },
   "lighthouse-core/lib/i18n/i18n.js | documentResourceType": {
-    "message": "పత్రం"
+    "message": "డాక్యుమెంట్‌"
   },
   "lighthouse-core/lib/i18n/i18n.js | firstContentfulPaintMetric": {
     "message": "First Contentful Paint"
@@ -2041,30 +2065,6 @@
   },
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "మీరు అందించిన URL చెల్లనిదిగా కనిపిస్తోంది."
-  },
-  "treemap/app/src/util.js | allLabel": {
-    "message": "అన్నీ"
-  },
-  "treemap/app/src/util.js | allScriptsDropdownLabel": {
-    "message": "అన్ని స్క్రిప్ట్‌లు"
-  },
-  "treemap/app/src/util.js | coverageColumnName": {
-    "message": "కవరేజీ"
-  },
-  "treemap/app/src/util.js | duplicateModulesLabel": {
-    "message": "డూప్లికేట్ మాడ్యూల్‌లు"
-  },
-  "treemap/app/src/util.js | resourceBytesLabel": {
-    "message": "రిసోర్స్ బైట్‌లు"
-  },
-  "treemap/app/src/util.js | tableColumnName": {
-    "message": "పేరు"
-  },
-  "treemap/app/src/util.js | toggleTableButtonLabel": {
-    "message": "టోగుల్ టేబుల్"
-  },
-  "treemap/app/src/util.js | unusedBytesLabel": {
-    "message": "వినియోగించని బైట్‌లు"
   },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "యానిమేట్ చేసిన కంటెంట్ కోసం, కంటెంట్ ఆఫ్‌స్క్రీన్‌లో ఉన్నప్పుడు CPU వినియోగాన్ని తగ్గించడానికి, [`amp-anim`](https://amp.dev/documentation/components/amp-anim/)ను ఉపయోగించండి."
@@ -2202,7 +2202,7 @@
     "message": "సరికొత్త చిత్ర ఫార్మాట్‌లను అందించే వివిధ రకాల మూడవ పక్ష ఎక్స్‌టెన్షన్‌ల కోసం [Magento మార్కెట్‌ప్లేస్](https://marketplace.magento.com/catalogsearch/result/?q=webp)‌లో వెతకడానికి ప్రయత్నించండి."
   },
   "node_modules/lighthouse-stack-packs/packs/magento.js | offscreen-images": {
-    "message": "వెబ్ ప్లాట్‌ఫామ్‌లోని [లేజీ లోడింగ్](https://web.dev/native-lazy-loading) ఫీచర్‌ను వినియోగించడం కోసం మీ ఉత్పత్తి, కేటలాగ్ టెంప్లేట్‌లను సవరించడానికి ప్రయత్నించండి."
+    "message": "వెబ్ ప్లాట్‌ఫామ్‌లోని [లేజీ లోడింగ్](https://web.dev/native-lazy-loading) ఫీచర్‌ను వినియోగించడం కోసం మీ ఉత్పత్తి, కేటలాగ్ టెంప్లేట్‌లను ఎడిట్ చేయడానికి ప్రయత్నించండి."
   },
   "node_modules/lighthouse-stack-packs/packs/magento.js | server-response-time": {
     "message": "Magento సంబంధిత [వార్నిష్ ఇంటిగ్రేషన్‌](https://devdocs.magento.com/guides/v2.3/config-guide/varnish/config-varnish.html)ను ఉపయోగించండి."
@@ -2224,6 +2224,36 @@
   },
   "node_modules/lighthouse-stack-packs/packs/magento.js | uses-rel-preload": {
     "message": "[థీమ్ లేఅవుట్‌ను సవరించడం](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html) ద్వారా `<link rel=preload>` ట్యాగ్‌లను జోడించవచ్చు."
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | modern-image-formats": {
+    "message": "`WebP`, `AVIF` వంటి ఆధునిక ఫార్మాట్‌లను పూర్తిగా వినియోగించుకోవడం కోసం `Next.js` ఇమేజ్ ఆప్టిమైజేషన్ APIని ఉపయోగించండి. [మరింత తెలుసుకోండి](https://nextjs.org/docs/api-reference/next/image#acceptable-formats)."
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | offscreen-images": {
+    "message": "`loading=\"lazy\"`ను ఆటోమేటిక్ సెట్టింగ్‌గా కలిగిన `next/image`ను ఉపయోగించండి. [మరింత తెలుసుకోండి](https://nextjs.org/docs/api-reference/next/image#loading)."
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | render-blocking-resources": {
+    "message": "`next/script` కాంపోనెంట్‌ను ఉపయోగించి సాధారణ థర్డ్-పార్టీ స్క్రిప్ట్‌ల లోడింగ్‌ను మినహాయించండి. [మరింత తెలుసుకోండి](https://nextjs.org/docs/basic-features/script)."
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | unused-css-rules": {
+    "message": "వినియోగంలో లేని నియమాలను స్టైల్‌షీట్‌ల నుండి తీసివేయడానికి `Next.js`లో `PurgeCSS` కాన్ఫిగరేషన్‌ను సెటప్ చేయవచ్చు, దాన్ని పరిశీలించండి. [మరింత తెలుసుకోండి](https://purgecss.com/guides/next.html)."
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | unused-javascript": {
+    "message": "`Webpack Bundle Analyzer`ను ఉపయోగించి వినియోగంలో లేని JavaScript కోడ్‌ను గుర్తించండి. [మరింత తెలుసుకోండి](https://github.com/vercel/next.js/tree/canary/packages/next-bundle-analyzer)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | user-timings": {
+    "message": "మీ యాప్ వాస్తవ పనితీరును అంచనా వేయడానికి `Next.js Analytics`ను ఉపయోగించవచ్చు, దాన్ని పరిశీలించండి. [మరింత తెలుసుకోండి](https://nextjs.org/docs/advanced-features/measuring-performance)."
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | uses-long-cache-ttl": {
+    "message": "మారకుండా ఉండే అస్సెట్‌లు, `Server-side Rendered` (SSR) పేజీలకు కాష్‌ను కాన్ఫిగర్ చేయండి. [మరింత తెలుసుకోండి](https://nextjs.org/docs/going-to-production#caching)."
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | uses-optimized-images": {
+    "message": "ఇమేజ్‌లను ఆప్టిమైజ్ చేయడానికి `<img>`కు బదులుగా `next/image` కాంపోనెంట్‌ను ఉపయోగించండి. [మరింత తెలుసుకోండి](https://nextjs.org/docs/basic-features/image-optimization)."
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | uses-responsive-images": {
+    "message": "సరైన `sizes`ను సెట్ చేయడానికి `next/image` కాంపోనెంట్‌ను ఉపయోగించండి. [మరింత తెలుసుకోండి](https://nextjs.org/docs/api-reference/next/image#sizes)."
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | uses-text-compression": {
+    "message": "మీ Next.js సర్వర్‌లో కుదింపును ఎనేబుల్ చేయండి. [మరింత తెలుసుకోండి](https://nextjs.org/docs/api-reference/next.config.js/compression)."
   },
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | efficient-animated-content": {
     "message": "వెబ్ పేజీ మరింత వేగంగా లోడ్ కేవడానికి [యానిమేట్ చేసిన GIFలను వీడియోతో భర్తీ చేయండి](https://web.dev/replace-gifs-with-videos/), అలాగే కుదింపు సామర్థ్యాన్ని ప్రస్తుత స్టేట్-ఆఫ్-ది-ఆర్ట్ వీడియో కోడెక్, VP9 కంటే 30% ఎక్కువగా ఉంటే [WebM](https://web.dev/replace-gifs-with-videos/#create-webm-videos) లేదా [AV1](https://developers.google.com/web/updates/2018/09/chrome-70-media-updates#av1-decoder) లాంటి ఆధునిక ఫైల్ ఫార్మాట్‌లను ఉపయోగించవచ్చు, దాన్ని పరిశీలించండి."
@@ -2333,6 +2363,9 @@
   "report/renderer/util.js | calculatorLink": {
     "message": "కాలిక్యులేటర్‌ను చూడండి."
   },
+  "report/renderer/util.js | collapseView": {
+    "message": "వీక్షణను కుదించండి"
+  },
   "report/renderer/util.js | crcInitialNavigation": {
     "message": "ప్రారంభ నావిగేషన్"
   },
@@ -2369,8 +2402,14 @@
   "report/renderer/util.js | errorMissingAuditInfo": {
     "message": "రిపోర్ట్‌ ఎర్రర్: ఆడిట్ సమాచారం లేదు"
   },
+  "report/renderer/util.js | expandView": {
+    "message": "వీక్షణను విస్తరించండి"
+  },
   "report/renderer/util.js | footerIssue": {
     "message": "సమస్యను ఫైల్ చేయండి"
+  },
+  "report/renderer/util.js | hide": {
+    "message": "దాచండి"
   },
   "report/renderer/util.js | labDataTitle": {
     "message": "ల్యాబ్ డేటా"
@@ -2392,6 +2431,12 @@
   },
   "report/renderer/util.js | passedAuditsGroupTitle": {
     "message": "ఉత్తీర్ణత సాధించిన ఆడిట్‌లు"
+  },
+  "report/renderer/util.js | runtimeAnalysisWindow": {
+    "message": "మొదటి పేజీ లోడ్"
+  },
+  "report/renderer/util.js | runtimeCustom": {
+    "message": "అనుకూల త్రోట్లింగ్"
   },
   "report/renderer/util.js | runtimeDesktopEmulation": {
     "message": "అనుకరణ డెస్క్‌టాప్"
@@ -2420,8 +2465,20 @@
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "వెబ్‌సైట్ యాక్సెస్ సాధనం (నెట్‌వర్క్)"
   },
+  "report/renderer/util.js | runtimeSingleLoad": {
+    "message": "సింగిల్ పేజీ లోడ్"
+  },
+  "report/renderer/util.js | runtimeSingleLoadTooltip": {
+    "message": "అనేక సెషన్‌లను కలిగిన ఫీల్డ్ డేటా లాగా కాకుండా, ఈ డేటా సింగిల్ పేజీ లోడ్ నుండి తీసుకోబడింది."
+  },
+  "report/renderer/util.js | runtimeSlow4g": {
+    "message": "నెమ్మదిగా ఉన్న 4G థ్రోట్లింగ్"
+  },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "తెలియదు"
+  },
+  "report/renderer/util.js | show": {
+    "message": "చూపండి"
   },
   "report/renderer/util.js | showRelevantAudits": {
     "message": "వీటికి సంబంధించిన ఆడిట్‌లను చూపండి:"
@@ -2452,5 +2509,29 @@
   },
   "report/renderer/util.js | warningHeader": {
     "message": "హెచ్చరికలు: "
+  },
+  "treemap/app/src/util.js | allLabel": {
+    "message": "అన్నీ"
+  },
+  "treemap/app/src/util.js | allScriptsDropdownLabel": {
+    "message": "అన్ని స్క్రిప్ట్‌లు"
+  },
+  "treemap/app/src/util.js | coverageColumnName": {
+    "message": "కవరేజీ"
+  },
+  "treemap/app/src/util.js | duplicateModulesLabel": {
+    "message": "డూప్లికేట్ మాడ్యూల్‌లు"
+  },
+  "treemap/app/src/util.js | resourceBytesLabel": {
+    "message": "రిసోర్స్ బైట్‌లు"
+  },
+  "treemap/app/src/util.js | tableColumnName": {
+    "message": "పేరు"
+  },
+  "treemap/app/src/util.js | toggleTableButtonLabel": {
+    "message": "టోగుల్ టేబుల్"
+  },
+  "treemap/app/src/util.js | unusedBytesLabel": {
+    "message": "వినియోగించని బైట్‌లు"
   }
 }

@@ -99,7 +99,7 @@ Configuration:
   --screenEmulation              Sets screen emulation parameters. See also --preset. Use --screenEmulation.disabled to disable. Otherwise set these 4 parameters individually: --screenEmulation.mobile --screenEmulation.width=360 --screenEmulation.height=640 --screenEmulation.deviceScaleFactor=2
   --emulatedUserAgent            Sets useragent emulation  [string]
   --max-wait-for-load            The timeout (in milliseconds) to wait before the page is considered done loading and the run should continue. WARNING: Very high values can lead to large traces and instability  [number]
-  --enable-error-reporting       Enables error reporting, overriding any saved preference. --no-enable-error-reporting will do the opposite. More: https://git.io/vFFTO  [boolean]
+  --enable-error-reporting       Enables error reporting, overriding any saved preference. --no-enable-error-reporting will do the opposite. More: https://github.com/GoogleChrome/lighthouse/blob/master/docs/error-reporting.md  [boolean]
   --gather-mode, -G              Collect artifacts from a connected browser and save to disk. (Artifacts folder path may optionally be provided). If audit-mode is not also enabled, the run will quit early.
   --audit-mode, -A               Process saved artifacts from disk. (Artifacts folder path may be provided, otherwise defaults to ./latest-run/)
   --only-audits                  Only run the specified audits  [array]
@@ -313,7 +313,7 @@ yarn type-check
 
 ### Docs
 
-Some of our docs have tests that run only in CI by default. If you end up needing to modify our documentation, you'll need to run `yarn test-docs` locally to make sure they pass.
+Some of our docs have tests that run only in CI by default. If you end up needing to modify our documentation, you'll need to run `yarn build-pack && yarn test-docs` locally to make sure they pass.
 
 **Additional Dependencies**
 - `brew install jq`

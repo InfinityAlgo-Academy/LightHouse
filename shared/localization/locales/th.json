@@ -3,7 +3,7 @@
     "message": "รายงานทั้งหมด"
   },
   "flow-report/src/i18n/ui-strings.js | categories": {
-    "message": "Categories"
+    "message": "หมวดหมู่"
   },
   "flow-report/src/i18n/ui-strings.js | categoryAccessibility": {
     "message": "การช่วยเหลือพิเศษ"
@@ -24,40 +24,46 @@
     "message": "เดสก์ท็อป"
   },
   "flow-report/src/i18n/ui-strings.js | helpDialogTitle": {
-    "message": "Understanding the Lighthouse Flow Report"
+    "message": "ทำความเข้าใจรายงานโฟลว์ของ Lighthouse"
   },
   "flow-report/src/i18n/ui-strings.js | helpLabel": {
-    "message": "Understanding Flows"
+    "message": "ทำความเข้าใจโฟลว์"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionNavigation": {
-    "message": "Use Navigation reports to..."
+    "message": "ใช้รายงานการไปยังส่วนต่างๆ เพื่อ..."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionSnapshot": {
-    "message": "Use Snapshot reports to..."
+    "message": "ใช้รายงานภาพรวมเพื่อ..."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionTimespan": {
-    "message": "Use Timespan reports to..."
+    "message": "ใช้รายงานระยะเวลาเพื่อ..."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation1": {
-    "message": "Obtain a Lighthouse Performance score."
+    "message": "รับคะแนนประสิทธิภาพของ Lighthouse"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation2": {
-    "message": "Measure page load Performance metrics such as Largest Contentful Paint and Speed Index."
+    "message": "วัดเมตริกประสิทธิภาพของการโหลดหน้าเว็บ เช่น Largest Contentful Paint และดัชนีความเร็ว"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation3": {
-    "message": "Assess Progressive Web App capabilities."
+    "message": "ประเมินความสามารถของ Progressive Web App"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseSnapshot1": {
-    "message": "Find accessibility issues in single page applications or complex forms."
+    "message": "ค้นหาปัญหาด้านการช่วยเหลือพิเศษในแอปพลิเคชันหน้าเว็บเดียวหรือรูปแบบที่ซับซ้อน"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseSnapshot2": {
-    "message": "Evaluate best practices of menus and UI elements hidden behind interaction."
+    "message": "ประเมินแนวทางปฏิบัติแนะนำของเมนูและองค์ประกอบ UI ที่ซ่อนอยู่หลังการโต้ตอบ"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan1": {
-    "message": "Measure layout shifts and JavaScript execution time on a series of interactions."
+    "message": "วัดการเปลี่ยนแปลงเลย์เอาต์และเวลาในการดำเนินการ JavaScript จากชุดการโต้ตอบต่างๆ"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan2": {
-    "message": "Discover performance opportunities to improve the experience for long-lived pages and single-page applications."
+    "message": "สำรวจโอกาสของประสิทธิภาพในการปรับปรุงประสบการณ์ของหน้าเว็บที่มีอายุยาวนานและแอปพลิเคชันหน้าเว็บเดียว"
+  },
+  "flow-report/src/i18n/ui-strings.js | highestImpact": {
+    "message": "มีประสิทธิภาพสูงสุด"
+  },
+  "flow-report/src/i18n/ui-strings.js | informativeAuditCount": {
+    "message": "{numInformative,plural, =1{การตรวจสอบที่เป็นประโยชน์ {numInformative} ครั้ง}other{การตรวจสอบที่เป็นประโยชน์ {numInformative} ครั้ง}}"
   },
   "flow-report/src/i18n/ui-strings.js | mobile": {
     "message": "อุปกรณ์เคลื่อนที่"
@@ -66,10 +72,19 @@
     "message": "การโหลดหน้าเว็บ"
   },
   "flow-report/src/i18n/ui-strings.js | navigationLongDescription": {
-    "message": "Navigation reports analyze a single page load, exactly like the original Lighthouse reports."
+    "message": "รายงานการไปยังส่วนต่างๆ จะวิเคราะห์การโหลดหน้าเว็บ 1 ครั้ง เช่นเดียวกับรายงานดั้งเดิมของ Lighthouse ทุกประการ"
   },
   "flow-report/src/i18n/ui-strings.js | navigationReport": {
     "message": "รายงานการนำทาง"
+  },
+  "flow-report/src/i18n/ui-strings.js | navigationReportCount": {
+    "message": "{numNavigation,plural, =1{รายงานการนำทาง {numNavigation} ฉบับ}other{รายงานการนำทาง {numNavigation} ฉบับ}}"
+  },
+  "flow-report/src/i18n/ui-strings.js | passableAuditCount": {
+    "message": "{numPassableAudits,plural, =1{การตรวจสอบที่ผ่านได้ {numPassableAudits} ครั้ง}other{การตรวจสอบที่ผ่านได้ {numPassableAudits} ครั้ง}}"
+  },
+  "flow-report/src/i18n/ui-strings.js | passedAuditCount": {
+    "message": "{numPassed,plural, =1{การตรวจสอบที่ผ่าน {numPassed} ครั้ง}other{การตรวจสอบที่ผ่าน {numPassed} ครั้ง}}"
   },
   "flow-report/src/i18n/ui-strings.js | ratingAverage": {
     "message": "เฉยๆ"
@@ -84,16 +99,19 @@
     "message": "ดี"
   },
   "flow-report/src/i18n/ui-strings.js | save": {
-    "message": "Save"
+    "message": "บันทึก"
   },
   "flow-report/src/i18n/ui-strings.js | snapshotDescription": {
     "message": "จับภาพสถานะของหน้าเว็บแล้ว"
   },
   "flow-report/src/i18n/ui-strings.js | snapshotLongDescription": {
-    "message": "Snapshot reports analyze the page in a particular state, typically after user interactions."
+    "message": "รายงานภาพรวมจะวิเคราะห์หน้าเว็บในสถานะหนึ่ง โดยทั่วไปจะเกิดขึ้นหลังจากการโต้ตอบของผู้ใช้"
   },
   "flow-report/src/i18n/ui-strings.js | snapshotReport": {
     "message": "รายงานสแนปชอต"
+  },
+  "flow-report/src/i18n/ui-strings.js | snapshotReportCount": {
+    "message": "{numSnapshot,plural, =1{รายงานสแนปชอต {numSnapshot} ฉบับ}other{รายงานสแนปชอต {numSnapshot} ฉบับ}}"
   },
   "flow-report/src/i18n/ui-strings.js | summary": {
     "message": "สรุป"
@@ -102,10 +120,13 @@
     "message": "การโต้ตอบของผู้ใช้"
   },
   "flow-report/src/i18n/ui-strings.js | timespanLongDescription": {
-    "message": "Timespan reports analyze an arbitrary period of time, typically containing user interactions."
+    "message": "รายงานระยะเวลาจะวิเคราะห์ระยะเวลาที่กำหนดเอง ซึ่งมักจะมีการโต้ตอบของผู้ใช้"
   },
   "flow-report/src/i18n/ui-strings.js | timespanReport": {
     "message": "รายงานระยะเวลา"
+  },
+  "flow-report/src/i18n/ui-strings.js | timespanReportCount": {
+    "message": "{numTimespan,plural, =1{รายงานระยะเวลา {numTimespan} ฉบับ}other{รายงานระยะเวลา {numTimespan} ฉบับ}}"
   },
   "flow-report/src/i18n/ui-strings.js | title": {
     "message": "รายงานโฟลว์ผู้ใช้ Lighthouse"
@@ -459,10 +480,10 @@
     "message": "โปรแกรมอ่านหน้าจอแปลเนื้อหาที่ไม่ใช่ข้อความไม่ได้ การเพิ่มข้อความแสดงแทนลงในองค์ประกอบ `<object>` ช่วยโปรแกรมอ่านหน้าจอถ่ายทอดความหมายให้แก่ผู้ใช้ [ดูข้อมูลเพิ่มเติม](https://web.dev/object-alt/)"
   },
   "lighthouse-core/audits/accessibility/object-alt.js | failureTitle": {
-    "message": "องค์ประกอบ `<object>` ไม่มีข้อความ `[alt]`"
+    "message": "องค์ประกอบ `<object>` ไม่มีข้อความแสดงแทน"
   },
   "lighthouse-core/audits/accessibility/object-alt.js | title": {
-    "message": "องค์ประกอบ `<object>` มีข้อความ `[alt]`"
+    "message": "องค์ประกอบ `<object>` มีข้อความแสดงแทน"
   },
   "lighthouse-core/audits/accessibility/tabindex.js | description": {
     "message": "ค่าที่มากกว่า 0 หมายความว่ามีการจัดเรียงการนำทางที่ชัดเจน แม้ว่าการทำงานนี้จะไม่มีปัญหาในทางเทคนิค แต่มักก่อให้เกิดประสบการณ์การใช้งานที่น่าหงุดหงิดสำหรับผู้ใช้เทคโนโลยีอำนวยความสะดวก [ดูข้อมูลเพิ่มเติม](https://web.dev/tabindex/)"
@@ -1031,6 +1052,9 @@
   "lighthouse-core/audits/installable-manifest.js | not-offline-capable": {
     "message": "หน้าใช้งานแบบออฟไลน์ไม่ได้"
   },
+  "lighthouse-core/audits/installable-manifest.js | pipeline-restarted": {
+    "message": "ถอนการติดตั้ง PWA แล้วและกำลังรีเซ็ตการตรวจสอบความสามารถในการติดตั้ง"
+  },
   "lighthouse-core/audits/installable-manifest.js | platform-not-supported-on-android": {
     "message": "แพลตฟอร์มแอปพลิเคชันที่ระบุไว้ใช้ไม่ได้ใน Android"
   },
@@ -1039,6 +1063,9 @@
   },
   "lighthouse-core/audits/installable-manifest.js | prefer-related-applications-only-beta-stable": {
     "message": "prefer_related_applications ใช้ได้เฉพาะใน Chrome เบต้า และเวอร์ชันเสถียรใน Android เท่านั้น"
+  },
+  "lighthouse-core/audits/installable-manifest.js | protocol-timeout": {
+    "message": "Lighthouse ระบุไม่ได้ว่ามี Service Worker หรือไม่ โปรดลองใช้ Chrome เวอร์ชันใหม่กว่านี้"
   },
   "lighthouse-core/audits/installable-manifest.js | start-url-not-valid": {
     "message": "URL เริ่มต้นของไฟล์ Manifest ไม่ถูกต้อง"
@@ -1191,7 +1218,7 @@
     "message": "เวลาในการตอบสนองจากแบ็กเอนด์ของเซิร์ฟเวอร์"
   },
   "lighthouse-core/audits/no-unload-listeners.js | description": {
-    "message": "เหตุการณ์ `unload` เริ่มทำงานโดยไม่มีความเสถียร และการ Listen อาจทำให้การเพิ่มประสิทธิภาพเบราว์เซอร์อย่างแคชย้อนหลังไม่ทำงาน ลองพิจารณาใช้เหตุการณ์ `pagehide` หรือ `visibilitychange` แทน [ดูข้อมูลเพิ่มเติม](https://developers.google.com/web/updates/2018/07/page-lifecycle-api#the-unload-event)"
+    "message": "เหตุการณ์ `unload` เริ่มทำงานโดยไม่มีความเสถียร และการ Listen อาจทำให้การเพิ่มประสิทธิภาพเบราว์เซอร์อย่างแคชย้อนหลังไม่ทำงาน ใช้เหตุการณ์ `pagehide` หรือ `visibilitychange` แทน [ดูข้อมูลเพิ่มเติม](https://web.dev/bfcache/#never-use-the-unload-event)"
   },
   "lighthouse-core/audits/no-unload-listeners.js | failureTitle": {
     "message": "ลงทะเบียน Listener `unload`"
@@ -1270,9 +1297,6 @@
   },
   "lighthouse-core/audits/seo/canonical.js | explanationConflict": {
     "message": "URL หลายรายการขัดแย้งกัน ({urlList})"
-  },
-  "lighthouse-core/audits/seo/canonical.js | explanationDifferentDomain": {
-    "message": "ชี้ไปที่โดเมนอื่น ({url})"
   },
   "lighthouse-core/audits/seo/canonical.js | explanationInvalid": {
     "message": "URL ไม่ถูกต้อง ({url})"
@@ -1740,7 +1764,7 @@
     "message": "การตรวจสอบเหล่านี้เป็นสิ่งที่ต้องทำใน[รายการตรวจสอบ PWA](https://developers.google.com/web/progressive-web-apps/checklist) ซึ่งเป็นเกณฑ์พื้นฐาน แต่ Lighthouse ไม่ได้ทำการตรวจสอบดังกล่าวโดยอัตโนมัติ การตรวจสอบจะไม่ส่งผลต่อคะแนนของคุณ แต่คุณควรตรวจสอบด้วยตนเอง"
   },
   "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
-    "message": "Progressive Web App"
+    "message": "PWA"
   },
   "lighthouse-core/config/default-config.js | pwaInstallableGroupTitle": {
     "message": "ติดตั้งได้"
@@ -2042,30 +2066,6 @@
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "ดูเหมือนว่า URL ที่ระบุจะไม่ถูกต้อง"
   },
-  "treemap/app/src/util.js | allLabel": {
-    "message": "ทั้งหมด"
-  },
-  "treemap/app/src/util.js | allScriptsDropdownLabel": {
-    "message": "สคริปต์ทั้งหมด"
-  },
-  "treemap/app/src/util.js | coverageColumnName": {
-    "message": "การครอบคลุม"
-  },
-  "treemap/app/src/util.js | duplicateModulesLabel": {
-    "message": "โมดูลที่ซ้ำกัน"
-  },
-  "treemap/app/src/util.js | resourceBytesLabel": {
-    "message": "ขนาดไฟล์ทรัพยากร (ไบต์)"
-  },
-  "treemap/app/src/util.js | tableColumnName": {
-    "message": "ชื่อ"
-  },
-  "treemap/app/src/util.js | toggleTableButtonLabel": {
-    "message": "ซ่อน/แสดงตาราง"
-  },
-  "treemap/app/src/util.js | unusedBytesLabel": {
-    "message": "ไบต์ที่ไม่ได้ใช้"
-  },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "สำหรับเนื้อหาที่เป็นภาพเคลื่อนไหว ให้ใช้ [`amp-anim`](https://amp.dev/documentation/components/amp-anim/) เพื่อลดการใช้ CPU ขณะที่เนื้อหาไม่ได้อยู่ในหน้าจอ"
   },
@@ -2225,6 +2225,36 @@
   "node_modules/lighthouse-stack-packs/packs/magento.js | uses-rel-preload": {
     "message": "เพิ่มแท็ก `<link rel=preload>` ได้โดย[แก้ไขเลย์เอาต์ของธีม](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)"
   },
+  "node_modules/lighthouse-stack-packs/packs/next.js | modern-image-formats": {
+    "message": "ใช้ `Next.js` Image Optimization API ซึ่งจะให้รูปแบบที่ทันสมัย เช่น `WebP` และ `AVIF` [ดูข้อมูลเพิ่มเติม](https://nextjs.org/docs/api-reference/next/image#acceptable-formats)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | offscreen-images": {
+    "message": "ใช้คอมโพเนนต์ `next/image` ซึ่งมีค่าเริ่มต้นเป็น `loading=\"lazy\"` [ดูข้อมูลเพิ่มเติม](https://nextjs.org/docs/api-reference/next/image#loading)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | render-blocking-resources": {
+    "message": "ใช้คอมโพเนนต์ `next/script` เพื่อเลื่อนการโหลดสคริปต์บุคคลที่สามที่ไม่สำคัญ [ดูข้อมูลเพิ่มเติม](https://nextjs.org/docs/basic-features/script)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | unused-css-rules": {
+    "message": "พิจารณาตั้งค่า `PurgeCSS` ในการกำหนดค่า `Next.js` เพื่อนำกฎที่ไม่ได้ใช้ออกจากสไตล์ชีต [ดูข้อมูลเพิ่มเติม](https://purgecss.com/guides/next.html)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | unused-javascript": {
+    "message": "ใช้ `Webpack Bundle Analyzer` เพื่อตรวจหาโค้ด JavaScript ที่ไม่ได้ใช้ [ดูข้อมูลเพิ่มเติม](https://github.com/vercel/next.js/tree/canary/packages/next-bundle-analyzer)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | user-timings": {
+    "message": "พิจารณาใช้ `Next.js Analytics` เพื่อวัดประสิทธิภาพแอปในการใช้งานจริง [ดูข้อมูลเพิ่มเติม](https://nextjs.org/docs/advanced-features/measuring-performance)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | uses-long-cache-ttl": {
+    "message": "กำหนดค่าการแคชสำหรับเนื้อหาและหน้า `Server-side Rendered` (SSR) ที่เปลี่ยนแปลงไม่ได้ [ดูข้อมูลเพิ่มเติม](https://nextjs.org/docs/going-to-production#caching)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | uses-optimized-images": {
+    "message": "ใช้คอมโพเนนต์ `next/image` แทน `<img>` เพื่อเพิ่มประสิทธิภาพรูปภาพ [ดูข้อมูลเพิ่มเติม](https://nextjs.org/docs/basic-features/image-optimization)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | uses-responsive-images": {
+    "message": "ใช้คอมโพเนนต์ `next/image` เพื่อกำหนด `sizes` ที่เหมาะสม [ดูข้อมูลเพิ่มเติม](https://nextjs.org/docs/api-reference/next/image#sizes)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | uses-text-compression": {
+    "message": "เปิดใช้การบีบอัดในเซิร์ฟเวอร์ Next.js ของคุณ [ดูข้อมูลเพิ่มเติม](https://nextjs.org/docs/api-reference/next.config.js/compression)"
+  },
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | efficient-animated-content": {
     "message": "[นำวิดีโอมาแทนที่ GIF แบบภาพเคลื่อนไหว](https://web.dev/replace-gifs-with-videos/)เพื่อให้หน้าเว็บโหลดเร็วขึ้น และลองใช้รูปแบบไฟล์สมัยใหม่ เช่น [WebM](https://web.dev/replace-gifs-with-videos/#create-webm-videos) หรือ [AV1](https://developers.google.com/web/updates/2018/09/chrome-70-media-updates#av1-decoder) เพื่อปรับปรุงประสิทธิภาพในการบีบอัดมากกว่า 30% เมื่อเทียบกับ VP9 ซึ่งเป็นตัวแปลงรหัสวิดีโอที่ทันสมัยซึ่งใช้อยู่ในปัจจุบัน"
   },
@@ -2333,6 +2363,9 @@
   "report/renderer/util.js | calculatorLink": {
     "message": "ดูเครื่องคิดเลข"
   },
+  "report/renderer/util.js | collapseView": {
+    "message": "ยุบมุมมอง"
+  },
   "report/renderer/util.js | crcInitialNavigation": {
     "message": "การนำทางเริ่มต้น"
   },
@@ -2369,8 +2402,14 @@
   "report/renderer/util.js | errorMissingAuditInfo": {
     "message": "ข้อผิดพลาดในรายงาน: ไม่มีข้อมูลการตรวจสอบ"
   },
+  "report/renderer/util.js | expandView": {
+    "message": "ขยายมุมมอง"
+  },
   "report/renderer/util.js | footerIssue": {
     "message": "รายงานปัญหา"
+  },
+  "report/renderer/util.js | hide": {
+    "message": "ซ่อน"
   },
   "report/renderer/util.js | labDataTitle": {
     "message": "ข้อมูลในห้องทดลอง"
@@ -2392,6 +2431,12 @@
   },
   "report/renderer/util.js | passedAuditsGroupTitle": {
     "message": "การตรวจสอบที่ผ่านแล้ว"
+  },
+  "report/renderer/util.js | runtimeAnalysisWindow": {
+    "message": "การโหลดหน้าเว็บเริ่มต้น"
+  },
+  "report/renderer/util.js | runtimeCustom": {
+    "message": "การควบคุมที่กำหนดเอง"
   },
   "report/renderer/util.js | runtimeDesktopEmulation": {
     "message": "เดสก์ท็อปจำลอง"
@@ -2420,8 +2465,20 @@
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "User Agent (เครือข่าย)"
   },
+  "report/renderer/util.js | runtimeSingleLoad": {
+    "message": "การโหลดหน้าเว็บ 1 ครั้ง"
+  },
+  "report/renderer/util.js | runtimeSingleLoadTooltip": {
+    "message": "ข้อมูลนี้มาจากการโหลดหน้าเว็บ 1 ครั้ง ซึ่งตรงกันข้ามกับข้อมูลภาคสนามที่สรุปหลายเซสชัน"
+  },
+  "report/renderer/util.js | runtimeSlow4g": {
+    "message": "การควบคุม 4G แบบช้า"
+  },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "ไม่ทราบ"
+  },
+  "report/renderer/util.js | show": {
+    "message": "แสดง"
   },
   "report/renderer/util.js | showRelevantAudits": {
     "message": "แสดงการตรวจสอบที่เกี่ยวข้องกับรายการต่อไปนี้"
@@ -2452,5 +2509,29 @@
   },
   "report/renderer/util.js | warningHeader": {
     "message": "คำเตือน "
+  },
+  "treemap/app/src/util.js | allLabel": {
+    "message": "ทั้งหมด"
+  },
+  "treemap/app/src/util.js | allScriptsDropdownLabel": {
+    "message": "สคริปต์ทั้งหมด"
+  },
+  "treemap/app/src/util.js | coverageColumnName": {
+    "message": "การครอบคลุม"
+  },
+  "treemap/app/src/util.js | duplicateModulesLabel": {
+    "message": "โมดูลที่ซ้ำกัน"
+  },
+  "treemap/app/src/util.js | resourceBytesLabel": {
+    "message": "ขนาดไฟล์ทรัพยากร (ไบต์)"
+  },
+  "treemap/app/src/util.js | tableColumnName": {
+    "message": "ชื่อ"
+  },
+  "treemap/app/src/util.js | toggleTableButtonLabel": {
+    "message": "ซ่อน/แสดงตาราง"
+  },
+  "treemap/app/src/util.js | unusedBytesLabel": {
+    "message": "ไบต์ที่ไม่ได้ใช้"
   }
 }

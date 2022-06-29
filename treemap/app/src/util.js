@@ -3,7 +3,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 /* eslint-env browser */
 
@@ -11,7 +10,7 @@
 /** @template {string} T @typedef {import('typed-query-selector/parser').ParseSelector<T, Element>} ParseSelector */
 /** @template T @typedef {import('../../../report/renderer/i18n').I18n<T>} I18n */
 
-export const UIStrings = {
+const UIStrings = {
   /** Label for a button that alternates between showing or hiding a table. */
   toggleTableButtonLabel: 'Toggle Table',
   /** Text for an option in a dropdown menu. When selected, the app shows information for all scripts that were found in a web page. */
@@ -30,7 +29,7 @@ export const UIStrings = {
   duplicateModulesLabel: 'Duplicate Modules',
 };
 
-export class TreemapUtil {
+class TreemapUtil {
   /** @type {I18n<typeof TreemapUtil['UIStrings']>} */
   // @ts-expect-error: Is set in main.
   static i18n = null;
@@ -39,7 +38,7 @@ export class TreemapUtil {
 
   /**
    * @param {LH.Treemap.Node} node
-   * @param {(node: NodeWithElement, path: string[]) => void} fn
+   * @param {(node: import('./main.js').NodeWithElement, path: string[]) => void} fn
    * @param {string[]=} path
    */
   static walk(node, fn, path) {
@@ -119,7 +118,7 @@ export class TreemapUtil {
    */
   static createChildOf(parentElem, elementName, className) {
     const element = this.createElement(elementName, className);
-    parentElem.appendChild(element);
+    parentElem.append(element);
     return element;
   }
 
@@ -140,16 +139,6 @@ export class TreemapUtil {
     // `typed-query-selector` types that don't require differentiating between
     // e.g. HTMLAnchorElement and SVGAElement. See https://github.com/GoogleChrome/lighthouse/issues/12011
     return /** @type {ParseSelector<T>} */ (result);
-  }
-
-  /**
-   * @param {number} value
-   * @param {string} unit
-   */
-  static format(value, unit) {
-    if (unit === 'bytes') return this.i18n.formatBytes(value);
-    if (unit === 'time') return `${this.i18n.formatNumber(value)}\xa0ms`;
-    return `${this.i18n.formatNumber(value)}\xa0${unit}`;
   }
 
   /**
@@ -216,3 +205,8 @@ TreemapUtil.COLOR_HUES = [
   15.9,
   199.5,
 ];
+
+export {
+  TreemapUtil,
+  UIStrings,
+};

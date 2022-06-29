@@ -3,7 +3,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 /**
  * @fileoverview Smoke test runner.
@@ -13,16 +12,16 @@
 
 /* eslint-disable no-console */
 
-import cloneDeep from 'lodash.clonedeep';
+import cloneDeep from 'lodash/cloneDeep.js';
 
-import smokeTests from '../test-definitions/core-tests.js';
-import {runSmokehouse} from '../smokehouse.js';
+import smokeTests from '../core-tests.js';
+import {runSmokehouse, getShardedDefinitions} from '../smokehouse.js';
 
 /**
  * @param {Smokehouse.SmokehouseLibOptions} options
  */
 async function smokehouse(options) {
-  const {urlFilterRegex, skip, modify, ...smokehouseOptions} = options;
+  const {urlFilterRegex, skip, modify, shardArg, ...smokehouseOptions} = options;
 
   const clonedTests = cloneDeep(smokeTests);
   const modifiedTests = [];
@@ -41,7 +40,9 @@ async function smokehouse(options) {
     modifiedTests.push(test);
   }
 
-  return runSmokehouse(modifiedTests, smokehouseOptions);
+  const shardedTests = getShardedDefinitions(modifiedTests, shardArg);
+
+  return runSmokehouse(shardedTests, smokehouseOptions);
 }
 
 export {smokehouse};

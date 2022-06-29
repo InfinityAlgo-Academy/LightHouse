@@ -5,22 +5,13 @@
  */
 
 import {FunctionComponent} from 'preact';
-import {useLayoutEffect, useRef} from 'preact/hooks';
 
-import {useReportRenderer} from '../wrappers/report-renderer';
+import {convertMarkdownCodeSnippets} from '../../../report/renderer/api';
+import {useExternalRenderer} from '../util';
 
 export const Markdown: FunctionComponent<{text: string}> = ({text}) => {
-  const {dom} = useReportRenderer();
-  const ref = useRef<HTMLSpanElement>(null);
-
-  useLayoutEffect(() => {
-    if (ref.current) {
-      const md = dom.convertMarkdownCodeSnippets(text);
-      ref.current.appendChild(md);
-    }
-    return () => {
-      if (ref.current) ref.current.innerHTML = '';
-    };
+  const ref = useExternalRenderer<HTMLSpanElement>(() => {
+    return convertMarkdownCodeSnippets(text);
   }, [text]);
 
   return <span ref={ref}/>;

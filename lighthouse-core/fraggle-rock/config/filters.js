@@ -5,6 +5,8 @@
  */
 'use strict';
 
+const log = require('lighthouse-logger');
+
 const Audit = require('../../audits/audit.js');
 
 /** @type {Record<keyof LH.FRBaseArtifacts, string>} */
@@ -12,6 +14,7 @@ const baseArtifactKeySource = {
   fetchTime: '',
   LighthouseRunWarnings: '',
   BenchmarkIndex: '',
+  BenchmarkIndexes: '',
   settings: '',
   Timing: '',
   URL: '',
@@ -45,7 +48,7 @@ function getAuditIdsInCategories(allCategories, onlyCategories) {
 
   onlyCategories = onlyCategories || Object.keys(allCategories);
   const categories = onlyCategories.map(categoryId => allCategories[categoryId]);
-  const auditRefs = categories.flatMap(category => category.auditRefs);
+  const auditRefs = categories.flatMap(category => category?.auditRefs || []);
   return new Set(auditRefs.map(auditRef => auditRef.id));
 }
 
@@ -195,6 +198,24 @@ function filterCategoriesByExplicitFilters(categories, onlyCategories) {
 }
 
 /**
+ * Logs a warning if any specified onlyCategory is not a known category that can
+ * be included.
+ *
+ * @param {LH.Config.Config['categories']} allCategories
+ * @param {string[] | null} onlyCategories
+ * @return {void}
+ */
+function warnOnUnknownOnlyCategories(allCategories, onlyCategories) {
+  if (!onlyCategories) return;
+
+  for (const onlyCategoryId of onlyCategories) {
+    if (!allCategories?.[onlyCategoryId]) {
+      log.warn('config', `unrecognized category in 'onlyCategories': ${onlyCategoryId}`);
+    }
+  }
+}
+
+/**
  * Filters a categories object and their auditRefs down to the set that can be computed using
  * only the specified audits.
  *
@@ -266,11 +287,15 @@ function filterConfigByGatherMode(config, mode) {
 function filterConfigByExplicitFilters(config, filters) {
   const {onlyAudits, onlyCategories, skipAudits} = filters;
 
+  warnOnUnknownOnlyCategories(config.categories, onlyCategories);
+
   let baseAuditIds = getAuditIdsInCategories(config.categories, undefined);
   if (onlyCategories) {
     baseAuditIds = getAuditIdsInCategories(config.categories, onlyCategories);
   } else if (onlyAudits) {
     baseAuditIds = new Set();
+  } else if (!config.categories || !Object.keys(config.categories).length) {
+    baseAuditIds = new Set(config.audits?.map(audit => audit.implementation.meta.id));
   }
 
   const auditIdsToKeep = new Set(

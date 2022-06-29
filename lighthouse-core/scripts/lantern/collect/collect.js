@@ -3,7 +3,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 /** @typedef {import('./common.js').Result} Result */
 /** @typedef {import('./common.js').Summary} Summary */
@@ -27,8 +26,7 @@ if (!process.env.WPT_KEY) throw new Error('missing WPT_KEY');
 const WPT_KEY = process.env.WPT_KEY;
 const DEBUG = process.env.DEBUG;
 
-/** @type {typeof common.ProgressLogger['prototype']} */
-let log;
+const log = new common.ProgressLogger();
 
 /** @type {Summary} */
 let summary;
@@ -195,8 +193,7 @@ function assertLhr(lhr) {
   if (!lhr) throw new Error('missing lhr');
   if (lhr.runtimeError) throw new Error(`runtime error: ${lhr.runtimeError}`);
   const metrics = common.getMetrics(lhr);
-  if (metrics &&
-      metrics.firstContentfulPaint &&
+  if (metrics?.firstContentfulPaint &&
       metrics.firstMeaningfulPaint &&
       metrics.interactive &&
       // WPT won't have this, we'll just get from the trace.
@@ -208,8 +205,6 @@ function assertLhr(lhr) {
 }
 
 async function main() {
-  log = new common.ProgressLogger();
-
   // Resume state from previous invocation of script.
   summary = common.loadSummary();
 
@@ -326,8 +321,8 @@ async function main() {
   log.closeProgress();
 }
 
-main().catch(err => {
+try {
+  await main();
+} finally {
   if (log) log.closeProgress();
-  process.stderr.write(`Fatal error in collect:\n\n  ${err.stack}`);
-  process.exit(1);
-});
+}

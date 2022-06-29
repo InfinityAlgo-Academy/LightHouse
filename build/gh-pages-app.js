@@ -3,20 +3,21 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-const fs = require('fs');
-const path = require('path');
-const rollup = require('rollup');
-const rollupPlugins = require('./rollup-plugins.js');
-const cpy = require('cpy');
-const ghPages = require('gh-pages');
-const glob = require('glob');
-const lighthousePackage = require('../package.json');
-const terser = require('terser');
-const {LH_ROOT} = require('../root.js');
+import fs from 'fs';
+import path from 'path';
+
+import {rollup} from 'rollup';
+import cpy from 'cpy';
+import ghPages from 'gh-pages';
+import glob from 'glob';
+import * as terser from 'terser';
+
+import * as rollupPlugins from './rollup-plugins.js';
+import {LH_ROOT, readJson} from '../root.js';
 
 const ghPagesDistDir = `${LH_ROOT}/dist/gh-pages`;
+const lighthousePackage = readJson(`${LH_ROOT}/package.json`);
 
 const license = `/*
 * @license Copyright 2020 The Lighthouse Authors. All Rights Reserved.
@@ -37,7 +38,7 @@ const license = `/*
 /**
  * Literal string (representing JS, CSS, etc...), or an object with a path, which would
  * be interpreted relative to opts.appDir and be glob-able.
- * @typedef {{path: string, rollup?: boolean, rollupPlugins?: rollup.Plugin[]} | string} Source
+ * @typedef {{path: string, rollup?: boolean, rollupPlugins?: import('rollup').Plugin[]} | string} Source
  */
 
 /**
@@ -79,19 +80,21 @@ class GhPagesApp {
   constructor(opts) {
     this.opts = opts;
     this.distDir = `${ghPagesDistDir}/${opts.name}`;
+    /** @type {string[]} */
+    this.preloadScripts = [];
   }
 
   async build() {
     fs.rmSync(this.distDir, {recursive: true, force: true});
+
+    const bundledJs = await this._compileJs();
+    safeWriteFile(`${this.distDir}/src/bundled.js`, bundledJs);
 
     const html = await this._compileHtml();
     safeWriteFile(`${this.distDir}/index.html`, html);
 
     const css = await this._compileCss();
     safeWriteFile(`${this.distDir}/styles/bundled.css`, css);
-
-    const bundledJs = await this._compileJs();
-    safeWriteFile(`${this.distDir}/src/bundled.js`, bundledJs);
 
     for (const {path, destDir, rename} of this.opts.assets) {
       const dir = destDir ? `${this.distDir}/${destDir}` : this.distDir;
@@ -143,7 +146,7 @@ class GhPagesApp {
 
   /**
    * @param {string} input
-   * @param {rollup.Plugin[]=} plugins
+   * @param {import('rollup').Plugin[]=} plugins
    * @return {Promise<string>}
    */
   async _rollupSource(input, plugins) {
@@ -152,7 +155,8 @@ class GhPagesApp {
       rollupPlugins.commonjs(),
     ];
     if (!process.env.DEBUG) plugins.push(rollupPlugins.terser());
-    const bundle = await rollup.rollup({
+    const bundle = await rollup({
+      preserveEntrySignatures: 'strict',
       input,
       plugins,
     });
@@ -166,6 +170,8 @@ class GhPagesApp {
         safeWriteFile(`${this.distDir}/src/${output[i].fileName}`, code);
       }
     }
+    const scripts = output[0].imports.map(fileName => `src/${fileName}`);
+    this.preloadScripts.push(...scripts);
     return output[0].code;
   }
 
@@ -177,6 +183,17 @@ class GhPagesApp {
       for (const [key, value] of Object.entries(this.opts.htmlReplacements)) {
         htmlSrc = htmlSrc.replace(key, value);
       }
+    }
+
+    if (this.preloadScripts.length) {
+      const preloads = this.preloadScripts.map(fileName =>
+        `<link rel="preload" href="${fileName}" as="script" crossorigin="anonymous" />`
+      ).join('\n');
+      const endHeadIndex = htmlSrc.indexOf('</head>');
+      if (endHeadIndex === -1) {
+        throw new Error('HTML file needs a <head> element to inject preloads');
+      }
+      htmlSrc = htmlSrc.slice(0, endHeadIndex) + preloads + htmlSrc.slice(endHeadIndex);
     }
 
     return htmlSrc;
@@ -194,7 +211,7 @@ class GhPagesApp {
     const contents = [
       `"use strict";`,
       versionJs,
-      ...await this._resolveSourcesList(this.opts.javascripts),
+      ...(await this._resolveSourcesList(this.opts.javascripts)),
     ];
     if (process.env.DEBUG) return contents.join('\n');
 
@@ -210,4 +227,4 @@ class GhPagesApp {
   }
 }
 
-module.exports = GhPagesApp;
+export {GhPagesApp};

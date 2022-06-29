@@ -5,32 +5,33 @@
  */
 
 import {FunctionComponent} from 'preact';
-import {useLayoutEffect, useRef, useState} from 'preact/hooks';
+import {useLayoutEffect, useMemo, useRef, useState} from 'preact/hooks';
 
-import {ReportRendererProvider} from './wrappers/report-renderer';
 import {Sidebar} from './sidebar/sidebar';
 import {Summary} from './summary/summary';
-import {classNames, FlowResultContext, useHashState} from './util';
+import {classNames, FlowResultContext, OptionsContext, useHashState} from './util';
 import {Report} from './wrappers/report';
 import {Topbar} from './topbar';
 import {Header} from './header';
 import {I18nProvider} from './i18n/i18n';
+import {Styles} from './wrappers/styles';
+
+function getAnchorElement(hashState: LH.FlowResult.HashState|null) {
+  if (!hashState || !hashState.anchor) return null;
+  return document.getElementById(hashState.anchor);
+}
 
 const Content: FunctionComponent = () => {
   const hashState = useHashState();
   const ref = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
-    if (hashState && hashState.anchor) {
-      const el = document.getElementById(hashState.anchor);
-      if (el) {
-        el.scrollIntoView({behavior: 'smooth'});
-        return;
-      }
+    const el = getAnchorElement(hashState);
+    if (el) {
+      el.scrollIntoView();
+    } else if (ref.current) {
+      ref.current.scrollTop = 0;
     }
-
-    // Scroll to top no anchor is found.
-    if (ref.current) ref.current.scrollTop = 0;
   }, [hashState]);
 
   return (
@@ -47,19 +48,24 @@ const Content: FunctionComponent = () => {
   );
 };
 
-export const App: FunctionComponent<{flowResult: LH.FlowResult}> = ({flowResult}) => {
+export const App: FunctionComponent<{
+  flowResult: LH.FlowResult,
+  options?: LH.FlowReportOptions
+}> = ({flowResult, options}) => {
   const [collapsed, setCollapsed] = useState(false);
+  const optionsValue = useMemo(() => options || {}, [options]);
   return (
-    <FlowResultContext.Provider value={flowResult}>
-      <ReportRendererProvider>
+    <OptionsContext.Provider value={optionsValue}>
+      <FlowResultContext.Provider value={flowResult}>
         <I18nProvider>
+          <Styles/>
           <div className={classNames('App', {'App--collapsed': collapsed})} data-testid="App">
             <Topbar onMenuClick={() => setCollapsed(c => !c)} />
             <Sidebar/>
             <Content/>
           </div>
         </I18nProvider>
-      </ReportRendererProvider>
-    </FlowResultContext.Provider>
+      </FlowResultContext.Provider>
+    </OptionsContext.Provider>
   );
 };

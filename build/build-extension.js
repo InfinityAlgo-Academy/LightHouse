@@ -3,15 +3,15 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-const fs = require('fs');
-const mkdir = fs.promises.mkdir;
-const archiver = require('archiver');
-const cpy = require('cpy');
-const browserify = require('browserify');
-const path = require('path');
-const {LH_ROOT} = require('../root.js');
+import fs from 'fs';
+
+import archiver from 'archiver';
+import cpy from 'cpy';
+import {rollup} from 'rollup';
+
+import * as rollupPlugins from './rollup-plugins.js';
+import {LH_ROOT, readJson} from '../root.js';
 
 const argv = process.argv.slice(2);
 const browserBrand = argv[0];
@@ -23,35 +23,37 @@ const sourceDir = `${LH_ROOT}/clients/extension`;
 const distDir = `${LH_ROOT}/dist/extension-${browserBrand}`;
 const packagePath = `${distDir}/../extension-${browserBrand}-package`;
 
-const manifestVersion = require(`${sourceDir}/manifest.json`).version;
+const manifestVersion = readJson(`${sourceDir}/manifest.json`).version;
 
 /**
- * Browserify and minify entry point.
+ * Bundle and minify entry point.
  */
 async function buildEntryPoint() {
-  const inFile = `${sourceDir}/scripts/${sourceName}`;
-  const outFile = `${distDir}/scripts/${distName}`;
-  const bundleStream = browserify(inFile).bundle();
-
-  await mkdir(path.dirname(outFile), {recursive: true});
-  await new Promise((resolve, reject) => {
-    const writeStream = fs.createWriteStream(outFile);
-    writeStream.on('finish', resolve);
-    writeStream.on('error', reject);
-
-    bundleStream.pipe(writeStream);
+  const bundle = await rollup({
+    input: `${sourceDir}/scripts/${sourceName}`,
+    plugins: [
+      rollupPlugins.shim({
+        [`${LH_ROOT}/report/generator/flow-report-assets.js`]: 'export default {}',
+      }),
+      rollupPlugins.replace({
+        '___BROWSER_BRAND___': browserBrand,
+      }),
+      rollupPlugins.commonjs(),
+      rollupPlugins.nodeResolve(),
+      rollupPlugins.inlineFs({verbose: false}),
+      rollupPlugins.terser(),
+    ],
   });
 
-  let outCode = fs.readFileSync(outFile, 'utf-8');
-  outCode = outCode.replace('___BROWSER_BRAND___', browserBrand);
-  fs.writeFileSync(outFile, outCode);
+  await bundle.write({
+    file: `${distDir}/scripts/${distName}`,
+    format: 'iife',
+  });
+  await bundle.close();
 }
 
-/**
- * @return {Promise<void>}
- */
 function copyAssets() {
-  return cpy([
+  cpy([
     '*.html',
     'styles/**/*.css',
     'images/**/*',
@@ -68,7 +70,7 @@ function copyAssets() {
  * @return {Promise<void>}
  */
 async function packageExtension() {
-  await mkdir(packagePath, {recursive: true});
+  await fs.promises.mkdir(packagePath, {recursive: true});
 
   return new Promise((resolve, reject) => {
     const archive = archiver('zip', {
@@ -86,7 +88,7 @@ async function packageExtension() {
   });
 }
 
-async function run() {
+async function main() {
   await Promise.all([
     buildEntryPoint(),
     copyAssets(),
@@ -95,4 +97,4 @@ async function run() {
   await packageExtension();
 }
 
-run();
+await main();

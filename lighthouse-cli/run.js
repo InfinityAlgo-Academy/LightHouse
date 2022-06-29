@@ -3,7 +3,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 /* eslint-disable no-console */
 
@@ -175,7 +174,7 @@ async function potentiallyKillChrome(launchedChrome) {
   /** @type {NodeJS.Timeout} */
   let timeout;
   const timeoutPromise = new Promise((_, reject) => {
-    timeout = setTimeout(() => reject(new Error('Timed out waiting to kill Chrome')), 5000);
+    timeout = setTimeout(reject, 5000, new Error('Timed out waiting to kill Chrome'));
   });
 
   return Promise.race([
@@ -192,23 +191,6 @@ async function potentiallyKillChrome(launchedChrome) {
   }).finally(() => {
     clearTimeout(timeout);
   });
-}
-
-/**
- * @param {string} url
- * @param {LH.CliFlags} flags
- * @param {LH.Config.Json|undefined} config
- * @param {ChromeLauncher.LaunchedChrome} launchedChrome
- * @return {Promise<LH.RunnerResult|undefined>}
- */
-async function runLighthouseWithFraggleRock(url, flags, config, launchedChrome) {
-  const fraggleRock = (await import('../lighthouse-core/fraggle-rock/api.js')).default;
-  const puppeteer = (await import('puppeteer')).default;
-  const browser = await puppeteer.connect({browserURL: `http://localhost:${launchedChrome.port}`});
-  const page = await browser.newPage();
-  flags.channel = 'fraggle-rock-cli';
-  const configContext = {configPath: flags.configPath, settingsOverrides: flags};
-  return fraggleRock.navigation({url, page, config, configContext});
 }
 
 /**
@@ -232,6 +214,10 @@ async function runLighthouse(url, flags, config) {
   let launchedChrome;
 
   try {
+    if (url && flags.auditMode && !flags.gatherMode) {
+      log.warn('CLI', 'URL parameter is ignored if -A flag is used without -G flag');
+    }
+
     const shouldGather = flags.gatherMode || flags.gatherMode === flags.auditMode;
     const shouldUseLocalChrome = URL.isLikeLocalhost(flags.hostname);
     if (shouldGather && shouldUseLocalChrome) {
@@ -239,8 +225,15 @@ async function runLighthouse(url, flags, config) {
       flags.port = launchedChrome.port;
     }
 
-    const runnerResult = flags.fraggleRock && launchedChrome ?
-       await runLighthouseWithFraggleRock(url, flags, config, launchedChrome) :
+    if (flags.legacyNavigation) {
+      log.warn('CLI', 'Legacy navigation CLI is deprecated');
+      flags.channel = 'legacy-navigation-cli';
+    } else {
+      flags.channel = 'cli';
+    }
+
+    const runnerResult = flags.legacyNavigation ?
+       await lighthouse.legacyNavigation(url, flags, config) :
        await lighthouse(url, flags, config);
 
     // If in gatherMode only, there will be no runnerResult.
@@ -254,7 +247,7 @@ async function runLighthouse(url, flags, config) {
     // Runtime errors indicate something was *very* wrong with the page result.
     // We don't want the user to have to parse the report to figure it out, so we'll still exit
     // with an error code after we saved the results.
-    if (runnerResult && runnerResult.lhr.runtimeError) {
+    if (runnerResult?.lhr.runtimeError) {
       const {runtimeError} = runnerResult.lhr;
       return printErrorAndExit({
         name: 'LHError',

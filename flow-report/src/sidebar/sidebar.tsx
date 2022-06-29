@@ -6,21 +6,20 @@
 
 import {FunctionComponent} from 'preact';
 
+import {Util} from '../../../report/renderer/util';
 import {Separator} from '../common';
 import {useI18n, useLocalizedStrings} from '../i18n/i18n';
-import {CpuIcon, EnvIcon, SummaryIcon} from '../icons';
+import {CpuIcon, EnvIcon, NetworkIcon, SummaryIcon} from '../icons';
 import {classNames, useHashState, useFlowResult} from '../util';
 import {SidebarFlow} from './flow';
 
-export const SidebarSummary: FunctionComponent = () => {
+const SidebarSummary: FunctionComponent = () => {
   const hashState = useHashState();
   const strings = useLocalizedStrings();
 
-  const url = new URL(location.href);
-  url.hash = '#';
   return (
     <a
-      href={url.href}
+      href="#"
       className={classNames('SidebarSummary', {'Sidebar--current': hashState === null})}
       data-testid="SidebarSummary"
     >
@@ -32,8 +31,10 @@ export const SidebarSummary: FunctionComponent = () => {
   );
 };
 
-const SidebarRuntimeSettings: FunctionComponent<{settings: LH.ConfigSettings}> = ({settings}) => {
+const SidebarRuntimeSettings: FunctionComponent<{settings: LH.ConfigSettings}> =
+({settings}) => {
   const strings = useLocalizedStrings();
+  const env = Util.getEmulationDescriptions(settings);
 
   return (
     <div className="SidebarRuntimeSettings">
@@ -42,9 +43,18 @@ const SidebarRuntimeSettings: FunctionComponent<{settings: LH.ConfigSettings}> =
           <EnvIcon/>
         </div>
         {
-          settings.formFactor === 'desktop' ?
-            strings.runtimeDesktopEmulation :
-            strings.runtimeMobileEmulation
+          env.deviceEmulation
+        }
+      </div>
+      <div
+        className="SidebarRuntimeSettings__item"
+        title={strings.runtimeSettingsNetworkThrottling}
+      >
+        <div className="SidebarRuntimeSettings__item--icon">
+          <NetworkIcon/>
+        </div>
+        {
+          env.summary
         }
       </div>
       <div className="SidebarRuntimeSettings__item" title={strings.runtimeSettingsCPUThrottling}>
@@ -59,7 +69,7 @@ const SidebarRuntimeSettings: FunctionComponent<{settings: LH.ConfigSettings}> =
   );
 };
 
-export const SidebarHeader: FunctionComponent<{title: string, date: string}> = ({title, date}) => {
+const SidebarHeader: FunctionComponent<{title: string, date: string}> = ({title, date}) => {
   const i18n = useI18n();
   return (
     <div className="SidebarHeader">
@@ -69,7 +79,7 @@ export const SidebarHeader: FunctionComponent<{title: string, date: string}> = (
   );
 };
 
-export const Sidebar: FunctionComponent = () => {
+const Sidebar: FunctionComponent = () => {
   const flowResult = useFlowResult();
   const firstLhr = flowResult.steps[0].lhr;
   return (
@@ -83,4 +93,11 @@ export const Sidebar: FunctionComponent = () => {
       <SidebarRuntimeSettings settings={firstLhr.configSettings}/>
     </div>
   );
+};
+
+export {
+  SidebarSummary,
+  SidebarRuntimeSettings,
+  SidebarHeader,
+  Sidebar,
 };

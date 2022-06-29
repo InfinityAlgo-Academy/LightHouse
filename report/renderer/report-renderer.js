@@ -17,7 +17,6 @@
  * Dummy text for ensuring report robustness: </script> pre$`post %%LIGHTHOUSE_JSON%%
  * (this is handled by terser)
  */
-'use strict';
 
 /** @typedef {import('./dom.js').DOM} DOM */
 
@@ -29,6 +28,7 @@ import {PerformanceCategoryRenderer} from './performance-category-renderer.js';
 import {PwaCategoryRenderer} from './pwa-category-renderer.js';
 import {Util} from './util.js';
 
+
 export class ReportRenderer {
   /**
    * @param {DOM} dom
@@ -36,22 +36,43 @@ export class ReportRenderer {
   constructor(dom) {
     /** @type {DOM} */
     this._dom = dom;
+    /** @type {LH.Renderer.Options} */
+    this._opts = {};
   }
 
   /**
    * @param {LH.Result} lhr
-   * @param {Element} container Parent element to render the report into.
+   * @param {HTMLElement?} rootEl Report root element containing the report
+   * @param {LH.Renderer.Options=} opts
    * @return {!Element}
    */
-  renderReport(lhr, container) {
+  renderReport(lhr, rootEl, opts) {
+    // Allow legacy report rendering API
+    if (!this._dom.rootEl && rootEl) {
+      console.warn('Please adopt the new report API in renderer/api.js.');
+      const closestRoot = rootEl.closest('.lh-root');
+      if (closestRoot) {
+        this._dom.rootEl = /** @type {HTMLElement} */ (closestRoot);
+      } else {
+        rootEl.classList.add('lh-root', 'lh-vars');
+        this._dom.rootEl = rootEl;
+      }
+    } else if (this._dom.rootEl && rootEl) {
+      // Handle legacy flow-report case
+      this._dom.rootEl = rootEl;
+    }
+    if (opts) {
+      this._opts = opts;
+    }
+
     this._dom.setLighthouseChannel(lhr.configSettings.channel || 'unknown');
 
     const report = Util.prepareReportResult(lhr);
 
-    container.textContent = ''; // Remove previous report.
-    container.appendChild(this._renderReport(report));
+    this._dom.rootEl.textContent = ''; // Remove previous report.
+    this._dom.rootEl.append(this._renderReport(report));
 
-    return container;
+    return this._dom.rootEl;
   }
 
   /**
@@ -106,7 +127,7 @@ export class ReportRenderer {
       : 'Chromium';
     const channel = report.configSettings.channel;
     const benchmarkIndex = report.environment.benchmarkIndex.toFixed(0);
-    const axeVersion = report.environment.credits['axe-core'];
+    const axeVersion = report.environment.credits?.['axe-core'];
 
     // [CSS icon class, textContent, tooltipText]
     const metaItems = [
@@ -157,11 +178,13 @@ export class ReportRenderer {
     const message = this._dom.find('.lh-warnings__msg', container);
     message.textContent = Util.i18n.strings.toplevelWarningsMessage;
 
-    const warnings = this._dom.find('ul', container);
+    const warnings = [];
     for (const warningString of report.runWarnings) {
-      const warning = warnings.appendChild(this._dom.createElement('li'));
-      warning.appendChild(this._dom.convertMarkdownLinkSnippets(warningString));
+      const warning = this._dom.createElement('li');
+      warning.append(this._dom.convertMarkdownLinkSnippets(warningString));
+      warnings.push(warning);
     }
+    this._dom.find('ul', container).append(...warnings);
 
     return container;
   }
@@ -197,12 +220,13 @@ export class ReportRenderer {
         gaugeWrapperEl.addEventListener('click', e => {
           if (!gaugeWrapperEl.matches('[href^="#"]')) return;
           const selector = gaugeWrapperEl.getAttribute('href');
-          const reportRoot = gaugeWrapperEl.closest('.lh-vars');
+          const reportRoot = this._dom.rootEl;
           if (!selector || !reportRoot) return;
           const destEl = this._dom.find(selector, reportRoot);
           e.preventDefault();
           destEl.scrollIntoView();
         });
+        this._opts.onPageAnchorRendered?.(gaugeWrapperEl);
       }
 
 
@@ -237,7 +261,7 @@ export class ReportRenderer {
     Util.reportJson = report;
 
     const fullPageScreenshot =
-      report.audits['full-page-screenshot'] && report.audits['full-page-screenshot'].details &&
+      report.audits['full-page-screenshot']?.details &&
       report.audits['full-page-screenshot'].details.type === 'full-page-screenshot' ?
       report.audits['full-page-screenshot'].details : undefined;
     const detailsRenderer = new DetailsRenderer(this._dom, {
@@ -253,11 +277,11 @@ export class ReportRenderer {
     };
 
     const headerContainer = this._dom.createElement('div');
-    headerContainer.appendChild(this._renderReportHeader());
+    headerContainer.append(this._renderReportHeader());
 
     const reportContainer = this._dom.createElement('div', 'lh-container');
     const reportSection = this._dom.createElement('div', 'lh-report');
-    reportSection.appendChild(this._renderReportWarnings(report));
+    reportSection.append(this._renderReportWarnings(report));
 
     let scoreHeader;
     const isSoloCategory = Object.keys(report.categories).length === 1;
@@ -274,23 +298,23 @@ export class ReportRenderer {
       const scoresContainer = this._dom.find('.lh-scores-container', headerContainer);
       scoreHeader.append(
         ...this._renderScoreGauges(report, categoryRenderer, specificCategoryRenderers));
-      scoresContainer.appendChild(scoreHeader);
-      scoresContainer.appendChild(scoreScale);
+      scoresContainer.append(scoreHeader, scoreScale);
 
       const stickyHeader = this._dom.createElement('div', 'lh-sticky-header');
       stickyHeader.append(
         ...this._renderScoreGauges(report, categoryRenderer, specificCategoryRenderers));
-      reportContainer.appendChild(stickyHeader);
+      reportContainer.append(stickyHeader);
     }
 
-    const categories = reportSection.appendChild(this._dom.createElement('div', 'lh-categories'));
+    const categories = this._dom.createElement('div', 'lh-categories');
+    reportSection.append(categories);
     const categoryOptions = {gatherMode: report.gatherMode};
     for (const category of Object.values(report.categories)) {
       const renderer = specificCategoryRenderers[category.id] || categoryRenderer;
       // .lh-category-wrapper is full-width and provides horizontal rules between categories.
-      // .lh-category within has the max-width: var(--report-content-width);
+      // .lh-category within has the max-width: var(--report-content-max-width);
       const wrapper = renderer.dom.createChildOf(categories, 'div', 'lh-category-wrapper');
-      wrapper.appendChild(renderer.render(
+      wrapper.append(renderer.render(
         category,
         report.categoryGroups,
         categoryOptions
@@ -300,18 +324,21 @@ export class ReportRenderer {
     categoryRenderer.injectFinalScreenshot(categories, report.audits, scoreScale);
 
     const reportFragment = this._dom.createFragment();
-    reportFragment.append(this._dom.createComponent('styles'));
-    const topbarDocumentFragment = this._renderReportTopbar(report);
+    if (!this._opts.omitGlobalStyles) {
+      reportFragment.append(this._dom.createComponent('styles'));
+    }
 
-    reportFragment.appendChild(topbarDocumentFragment);
-    reportFragment.appendChild(reportContainer);
-    reportContainer.appendChild(headerContainer);
-    reportContainer.appendChild(reportSection);
-    reportSection.appendChild(this._renderReportFooter(report));
+    if (!this._opts.omitTopbar) {
+      reportFragment.append(this._renderReportTopbar(report));
+    }
+
+    reportFragment.append(reportContainer);
+    reportSection.append(this._renderReportFooter(report));
+    reportContainer.append(headerContainer, reportSection);
 
     if (fullPageScreenshot) {
       ElementScreenshotRenderer.installFullPageScreenshot(
-        reportContainer, fullPageScreenshot.screenshot);
+        this._dom.rootEl, fullPageScreenshot.screenshot);
     }
 
     return reportFragment;

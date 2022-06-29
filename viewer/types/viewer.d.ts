@@ -15,6 +15,8 @@ import '../../report/types/augment-dom';
 // Import for LH globals needed for report files.
 import '../../report/types/html-renderer';
 
+import '../../flow-report/types/flow-report';
+
 declare global {
   var ReportGenerator: typeof _ReportGenerator;
   var logger: _Logger;

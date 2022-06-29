@@ -31,6 +31,13 @@ jobs:
     - run: yarn install --frozen-lockfile --network-timeout 1000000
     - run: yarn build-all
 
+    # Run pptr tests using ToT Chrome instead of stable default.
+    - name: Define ToT chrome path
+      run: echo "CHROME_PATH=/home/runner/chrome-linux-tot/chrome" >> $GITHUB_ENV
+    - name: Install Chrome ToT
+      working-directory: /home/runner
+      run: bash $GITHUB_WORKSPACE/lighthouse-core/scripts/download-chrome.sh && mv chrome-linux chrome-linux-tot
+
     # Run tests that require headfull Chrome.
     - run: sudo apt-get install xvfb
     - name: yarn test-clients
@@ -43,6 +50,7 @@ jobs:
       run: xvfb-run --auto-servernum bash $GITHUB_WORKSPACE/.github/scripts/jest-retry.sh yarn test-treemap
 
     - run: yarn diff:sample-json
+    - run: yarn diff:flow-sample-json
     - run: yarn type-check
     - run: yarn lint
     - run: yarn test-lantern

@@ -109,7 +109,8 @@ class UnusedBytes extends Audit {
     const gatherContext = artifacts.GatherContext;
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
-    const settings = context && context.settings || {};
+    const URL = artifacts.URL;
+    const settings = context?.settings || {};
     const simulatorOptions = {
       devtoolsLog,
       settings,
@@ -131,7 +132,7 @@ class UnusedBytes extends Audit {
       this.audit_(artifacts, networkRecords, context),
       // Page dependency graph is only used in navigation mode.
       gatherContext.gatherMode === 'navigation' ?
-        PageDependencyGraph.request({trace, devtoolsLog}, context) :
+        PageDependencyGraph.request({trace, devtoolsLog, URL}, context) :
         null,
       LoadSimulator.request(simulatorOptions, context),
     ]);
@@ -201,17 +202,6 @@ class UnusedBytes extends Audit {
   }
 
   /**
-   * @param {number} wastedBytes
-   * @param {Simulator} simulator
-   */
-  static computeWastedMsWithThroughput(wastedBytes, simulator) {
-    const bitsPerSecond = simulator.getOptions().throughput;
-    const wastedBits = wastedBytes * 8;
-    const wastedMs = wastedBits / bitsPerSecond * 1000;
-    return wastedMs;
-  }
-
-  /**
    * @param {ByteEfficiencyProduct} result
    * @param {Node|null} graph
    * @param {Simulator} simulator
@@ -230,7 +220,7 @@ class UnusedBytes extends Audit {
         providedWastedBytesByUrl: result.wastedBytesByUrl,
       });
     } else {
-      wastedMs = this.computeWastedMsWithThroughput(wastedBytes, simulator);
+      wastedMs = simulator.computeWastedMsFromWastedBytes(wastedBytes);
     }
 
     let displayValue = result.displayValue || '';

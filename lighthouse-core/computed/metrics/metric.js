@@ -34,6 +34,7 @@ class Metric {
       devtoolsLog: data.devtoolsLog,
       gatherContext: data.gatherContext,
       settings: data.settings,
+      URL: data.URL,
     };
   }
 

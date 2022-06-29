@@ -3,15 +3,14 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 import {strict as assert} from 'assert';
 
 import {Util} from '../../renderer/util.js';
 import {I18n} from '../../renderer/i18n.js';
-import sampleResult from '../../../lighthouse-core/test/results/sample_v2.json';
+import {readJson} from '../../../root.js';
 
-/* eslint-env jest */
+const sampleResult = readJson('../../../lighthouse-core/test/results/sample_v2.json', import.meta);
 
 describe('util helpers', () => {
   beforeEach(() => {
@@ -57,7 +56,7 @@ describe('util helpers', () => {
     });
 
     // eslint-disable-next-line max-len
-    assert.equal(descriptions.networkThrottling, '565\xa0ms HTTP RTT, 1,400\xa0Kbps down, 600\xa0Kbps up (DevTools)');
+    assert.equal(descriptions.networkThrottling, '565\xa0ms HTTP RTT, 1,400\xa0kb/s down, 600\xa0kb/s up (DevTools)');
     assert.equal(descriptions.cpuThrottling, '4.5x slowdown (DevTools)');
   });
 
@@ -72,7 +71,7 @@ describe('util helpers', () => {
     });
 
     // eslint-disable-next-line max-len
-    assert.equal(descriptions.networkThrottling, '150\xa0ms TCP RTT, 1,600\xa0Kbps throughput (Simulated)');
+    assert.equal(descriptions.networkThrottling, '150\xa0ms TCP RTT, 1,600\xa0kb/s throughput (Simulated)');
     assert.equal(descriptions.cpuThrottling, '2x slowdown (Simulated)');
   });
 
@@ -154,6 +153,28 @@ describe('util helpers', () => {
         // Original audit results should be restored.
         const preparedResult = Util.prepareReportResult(clonedSampleResult);
         assert.deepStrictEqual(preparedResult.audits, sampleResult.audits);
+      });
+
+      it('corrects performance category without hidden group', () => {
+        const clonedSampleResult = JSON.parse(JSON.stringify(sampleResult));
+
+        clonedSampleResult.lighthouseVersion = '8.6.0';
+        delete clonedSampleResult.categoryGroups['hidden'];
+        for (const auditRef of clonedSampleResult.categories['performance'].auditRefs) {
+          if (auditRef.group === 'hidden') {
+            delete auditRef.group;
+          } else if (!auditRef.group) {
+            auditRef.group = 'diagnostics';
+          }
+        }
+        assert.notDeepStrictEqual(clonedSampleResult.categories, sampleResult.categories);
+        assert.notDeepStrictEqual(clonedSampleResult.categoryGroups, sampleResult.categoryGroups);
+
+        // Original audit results should be restored.
+        const clonedPreparedResult = Util.prepareReportResult(clonedSampleResult);
+        const preparedResult = Util.prepareReportResult(sampleResult);
+        assert.deepStrictEqual(clonedPreparedResult.categories, preparedResult.categories);
+        assert.deepStrictEqual(clonedPreparedResult.categoryGroups, preparedResult.categoryGroups);
       });
     });
 

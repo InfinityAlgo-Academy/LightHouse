@@ -3,17 +3,31 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 /** @fileoverview This file exercises two LH reports within the same DOM. */
 
 /** @typedef {import('../clients/bundle.js')} lighthouseRenderer */
-
 /** @type {lighthouseRenderer} */
 // @ts-expect-error
 const lighthouseRenderer = window['report'];
 
+const wait = (ms = 100) => new Promise(resolve => setTimeout(resolve, ms));
+
+
 (async function __initPsiReports__() {
+  renderLHReport();
+
+  document.querySelector('button#reanalyze')?.addEventListener('click', () => {
+    renderLHReport();
+  });
+
+  document.querySelector('button#translate')?.addEventListener('click', async () => {
+    await swapLhrLocale('es');
+    renderLHReport();
+  });
+})();
+
+async function renderLHReport() {
   // @ts-expect-error
   const mobileLHR = window.__LIGHTHOUSE_JSON__;
   const desktopLHR = JSON.parse(JSON.stringify(mobileLHR));
@@ -26,42 +40,67 @@ const lighthouseRenderer = window['report'];
   for (const [tabId, lhr] of Object.entries(lhrs)) {
     await distinguishLHR(lhr, tabId);
 
-    const container = document.querySelector(`#${tabId} main`);
+    const container = document.querySelector(`section#${tabId} .reportContainer`);
     if (!container) throw new Error('Unexpected DOM. Bailing.');
 
-    renderLHReport(lhr, container);
+    try {
+      container.textContent = 'Analyzing…';
+      await wait(500);
+      for (const el of container.childNodes) el.remove();
+
+      const reportRootEl = lighthouseRenderer.renderReport(lhr, {
+        omitTopbar: true,
+        disableFireworks: true,
+        disableDarkMode: true,
+      });
+      // TODO: display warnings if appropriate.
+      for (const el of reportRootEl.querySelectorAll('.lh-warnings--toplevel')) {
+        el.setAttribute('hidden', 'true');
+      }
+
+      // Move env block
+      const metaItemsEl = reportRootEl.querySelector('.lh-meta__items');
+      if (metaItemsEl) {
+        reportRootEl.querySelector('.lh-metrics-container')?.parentNode?.insertBefore(
+          metaItemsEl,
+          reportRootEl.querySelector('.lh-buttons')
+        );
+        reportRootEl.querySelector('.lh-metrics-container')?.closest('.lh-category')?.classList
+            .add('lh--hoisted-meta');
+      }
+
+      container.append(reportRootEl);
+
+      // Override some LH styles. (To find .lh-vars we must descend from reportRootEl's parent)
+      for (const el of container.querySelectorAll('article.lh-vars')) {
+        // Ensure these css var names are not stale.
+        el.style.setProperty('--report-content-max-width', '100%');
+        el.style.setProperty('--edge-gap-padding', '0');
+      }
+      for (const el of reportRootEl.querySelectorAll('footer.lh-footer')) {
+        el.style.display = 'none';
+      }
+    } catch (e) {
+      console.error(e);
+      container.textContent = 'Error: LHR failed to render.';
+    }
   }
-})();
+}
 
 /**
- * @param {LH.Result} lhrData
- * @param {HTMLElement} reportContainer
+ * @param {LH.Locale} locale
  */
-function renderLHReport(lhrData, reportContainer) {
-  /**
-   * @param {Document} doc
-   */
-  function getRenderer(doc) {
-    const dom = new lighthouseRenderer.DOM(doc);
-    return new lighthouseRenderer.ReportRenderer(dom);
-  }
+async function swapLhrLocale(locale) {
+  const response = await fetch(`https://www.gstatic.com/pagespeed/insights/ui/locales/${locale}.json`);
+  /** @type {import('../../shared/localization/locales').LhlMessages} */
+  const lhlMessages = await response.json();
+  console.log(lhlMessages);
+  if (!lhlMessages) throw new Error(`could not fetch data for locale: ${locale}`);
 
-  const renderer = getRenderer(reportContainer.ownerDocument);
-  reportContainer.classList.add('lh-root', 'lh-vars');
-
-  try {
-    renderer.renderReport(lhrData, reportContainer);
-    // TODO: handle topbar removal better
-    // TODO: display warnings if appropriate.
-    for (const el of reportContainer.querySelectorAll('.lh-topbar, .lh-warnings')) {
-      el.setAttribute('hidden', 'true');
-    }
-    const features = new lighthouseRenderer.ReportUIFeatures(renderer._dom);
-    features.initFeatures(lhrData);
-  } catch (e) {
-    console.error(e);
-    reportContainer.textContent = 'Error: LHR failed to render.';
-  }
+  lighthouseRenderer.format.registerLocaleData(locale, lhlMessages);
+  // @ts-expect-error LHR global
+  window.__LIGHTHOUSE_JSON__ = lighthouseRenderer.swapLocale(window.__LIGHTHOUSE_JSON__, locale)
+    .lhr;
 }
 
 
@@ -72,19 +111,19 @@ function renderLHReport(lhrData, reportContainer) {
  * @param {string} tabId
  */
 async function distinguishLHR(lhr, tabId) {
-  lhr.categories.performance.title += ` ${tabId}`; // for easier identification
   if (tabId === 'desktop') {
     lhr.categories.performance.score = 0.81;
   }
 
-  const finalSSDetails = lhr.audits['final-screenshot'] && lhr.audits['final-screenshot'].details;
-  if (!finalSSDetails || finalSSDetails.type !== 'screenshot') throw new Error();
-  finalSSDetails.data = await decorateScreenshot(finalSSDetails.data, tabId);
+  const finalSSDetails = lhr.audits['final-screenshot']?.details;
+  if (finalSSDetails && finalSSDetails.type === 'screenshot') {
+    finalSSDetails.data = await decorateScreenshot(finalSSDetails.data, tabId);
+  }
 
-  const fpSSDetails = lhr.audits['full-page-screenshot'] &&
-      lhr.audits['full-page-screenshot'].details;
-  if (!fpSSDetails || fpSSDetails.type !== 'full-page-screenshot') throw new Error();
-  fpSSDetails.screenshot.data = await decorateScreenshot(fpSSDetails.screenshot.data, tabId);
+  const fpSSDetails = lhr.audits['full-page-screenshot']?.details;
+  if (fpSSDetails && fpSSDetails.type === 'full-page-screenshot') {
+    fpSSDetails.screenshot.data = await decorateScreenshot(fpSSDetails.screenshot.data, tabId);
+  }
 }
 
 /**

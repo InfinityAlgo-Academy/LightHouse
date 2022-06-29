@@ -58,7 +58,7 @@ class IssuesPanelEntries extends Audit {
   static getMixedContentRow(mixedContentIssues) {
     const requestUrls = new Set();
     for (const issue of mixedContentIssues) {
-      const requestUrl = (issue.request && issue.request.url) || issue.mainResourceURL;
+      const requestUrl = issue.request?.url || issue.mainResourceURL;
       requestUrls.add(requestUrl);
     }
     return {
@@ -71,19 +71,19 @@ class IssuesPanelEntries extends Audit {
   }
 
   /**
-   * @param {Array<LH.Crdp.Audits.SameSiteCookieIssueDetails>} sameSiteCookieIssues
+   * @param {Array<LH.Crdp.Audits.CookieIssueDetails>} CookieIssues
    * @return {LH.Audit.Details.TableItem}
    */
-  static getSameSiteCookieRow(sameSiteCookieIssues) {
+  static getCookieRow(CookieIssues) {
     const requestUrls = new Set();
-    for (const issue of sameSiteCookieIssues) {
-      const requestUrl = (issue.request && issue.request.url) || issue.cookieUrl;
+    for (const issue of CookieIssues) {
+      const requestUrl = (issue.request?.url) || issue.cookieUrl;
       if (requestUrl) {
         requestUrls.add(requestUrl);
       }
     }
     return {
-      issueType: 'SameSite cookie',
+      issueType: 'Cookie',
       subItems: {
         type: 'subitems',
         items: Array.from(requestUrls).map(url => {
@@ -102,7 +102,7 @@ class IssuesPanelEntries extends Audit {
   static getBlockedByResponseRow(blockedByResponseIssues) {
     const requestUrls = new Set();
     for (const issue of blockedByResponseIssues) {
-      const requestUrl = issue.request && issue.request.url;
+      const requestUrl = issue.request?.url;
       if (requestUrl) {
         requestUrls.add(requestUrl);
       }
@@ -161,19 +161,19 @@ class IssuesPanelEntries extends Audit {
     /** @type LH.Audit.Details.TableItem[] */
     const items = [];
 
-    if (issues.mixedContent.length) {
-      items.push(this.getMixedContentRow(issues.mixedContent));
+    if (issues.mixedContentIssue.length) {
+      items.push(this.getMixedContentRow(issues.mixedContentIssue));
     }
-    if (issues.sameSiteCookies.length) {
-      items.push(this.getSameSiteCookieRow(issues.sameSiteCookies));
+    if (issues.cookieIssue.length) {
+      items.push(this.getCookieRow(issues.cookieIssue));
     }
-    if (issues.blockedByResponse.length) {
-      items.push(this.getBlockedByResponseRow(issues.blockedByResponse));
+    if (issues.blockedByResponseIssue.length) {
+      items.push(this.getBlockedByResponseRow(issues.blockedByResponseIssue));
     }
-    if (issues.heavyAds.length) {
+    if (issues.heavyAdIssue.length) {
       items.push({issueType: str_(UIStrings.issueTypeHeavyAds)});
     }
-    const cspIssues = issues.contentSecurityPolicy.filter(issue => {
+    const cspIssues = issues.contentSecurityPolicyIssue.filter(issue => {
       // kTrustedTypesSinkViolation and kTrustedTypesPolicyViolation aren't currently supported by the Issues panel
       return issue.contentSecurityPolicyViolationType !== 'kTrustedTypesSinkViolation' &&
         issue.contentSecurityPolicyViolationType !== 'kTrustedTypesPolicyViolation';

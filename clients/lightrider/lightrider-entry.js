@@ -7,23 +7,29 @@
 
 /* global globalThis */
 
-const lighthouse = require('../../lighthouse-core/index.js');
+import {Buffer} from 'buffer';
 
-const LHError = require('../../lighthouse-core/lib/lh-error.js');
-const preprocessor = require('../../lighthouse-core/lib/proto-preprocessor.js');
-const assetSaver = require('../../lighthouse-core/lib/asset-saver.js');
+import log from 'lighthouse-logger';
+import lighthouse from '../../lighthouse-core/index.js';
+import LHError from '../../lighthouse-core/lib/lh-error.js';
+import preprocessor from '../../lighthouse-core/lib/proto-preprocessor.js';
+import assetSaver from '../../lighthouse-core/lib/asset-saver.js';
+
+import mobileConfig from '../../lighthouse-core/config/lr-mobile-config.js';
+import desktopConfig from '../../lighthouse-core/config/lr-desktop-config.js';
 
 /** @type {Record<'mobile'|'desktop', LH.Config.Json>} */
 const LR_PRESETS = {
-  mobile: require('../../lighthouse-core/config/lr-mobile-config.js'),
-  desktop: require('../../lighthouse-core/config/lr-desktop-config.js'),
+  mobile: mobileConfig,
+  desktop: desktopConfig,
 };
 
 /** @typedef {import('../../lighthouse-core/gather/connections/connection.js')} Connection */
 
 // Rollup seems to overlook some references to `Buffer`, so it must be made explicit.
 // (`parseSourceMapFromDataUrl` breaks without this)
-globalThis.Buffer = require('buffer').Buffer;
+/** @type {BufferConstructor} */
+globalThis.Buffer = Buffer;
 
 /**
  * Run lighthouse for connection and provide similar results as in CLI.
@@ -35,7 +41,7 @@ globalThis.Buffer = require('buffer').Buffer;
  * @param {{lrDevice?: 'desktop'|'mobile', categoryIDs?: Array<string>, logAssets: boolean, configOverride?: LH.Config.Json}} lrOpts Options coming from Lightrider
  * @return {Promise<string>}
  */
-async function runLighthouseInLR(connection, url, flags, lrOpts) {
+export async function runLighthouseInLR(connection, url, flags, lrOpts) {
   const {lrDevice, categoryIDs, logAssets, configOverride} = lrOpts;
 
   // Certain fixes need to kick in under LR, see https://github.com/GoogleChrome/lighthouse/issues/5839
@@ -58,7 +64,7 @@ async function runLighthouseInLR(connection, url, flags, lrOpts) {
   }
 
   try {
-    const runnerResult = await lighthouse(url, flags, config, connection);
+    const runnerResult = await lighthouse.legacyNavigation(url, flags, config, connection);
     if (!runnerResult) throw new Error('Lighthouse finished without a runnerResult');
 
     // pre process the LHR for proto
@@ -98,15 +104,16 @@ async function runLighthouseInLR(connection, url, flags, lrOpts) {
   }
 }
 
-if (typeof module !== 'undefined' && module.exports) {
-  // Export for require()ing into unit tests.
-  module.exports = {
-    runLighthouseInLR,
-  };
+/** @param {(status: [string, string, string]) => void} listenCallback */
+function listenForStatus(listenCallback) {
+  log.events.addListener('status', listenCallback);
+  log.events.addListener('warning', listenCallback);
 }
 
 // Expose on window for browser-residing consumers of file.
 if (typeof window !== 'undefined') {
   // @ts-expect-error - not worth typing a property on `window`.
   window.runLighthouseInLR = runLighthouseInLR;
+  // @ts-expect-error
+  self.listenForStatus = listenForStatus;
 }

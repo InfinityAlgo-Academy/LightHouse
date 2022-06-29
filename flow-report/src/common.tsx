@@ -12,11 +12,11 @@ import {getFilmstripFrames, getScreenDimensions, getFullPageScreenshot} from './
 
 const ANIMATION_FRAME_DURATION_MS = 500;
 
-export const Separator: FunctionComponent = () => {
+const Separator: FunctionComponent = () => {
   return <div className="Separator" role="separator"></div>;
 };
 
-export const FlowStepIcon: FunctionComponent<{mode: LH.Result.GatherMode}> = ({mode}) => {
+const FlowStepIcon: FunctionComponent<{mode: LH.Result.GatherMode}> = ({mode}) => {
   return <>
     {
       mode === 'navigation' && <NavigationIcon/>
@@ -30,7 +30,7 @@ export const FlowStepIcon: FunctionComponent<{mode: LH.Result.GatherMode}> = ({m
   </>;
 };
 
-export const FlowSegment: FunctionComponent<{mode?: LH.Result.GatherMode}> = ({mode}) => {
+const FlowSegment: FunctionComponent<{mode?: LH.Result.GatherMode}> = ({mode}) => {
   return (
     <div className="FlowSegment">
       <div className="FlowSegment__top-line"/>
@@ -71,7 +71,7 @@ const FlowStepAnimatedThumbnail: FunctionComponent<{
   );
 };
 
-export const FlowStepThumbnail: FunctionComponent<{
+const FlowStepThumbnail: FunctionComponent<{
   lhr: LH.Result,
   width?: number,
   height?: number,
@@ -93,7 +93,7 @@ export const FlowStepThumbnail: FunctionComponent<{
   }
 
   let thumbnail;
-  if (frames && frames.length) {
+  if (frames?.length) {
     thumbnail = frames[frames.length - 1].data;
     if (lhr.gatherMode === 'timespan') {
       return <FlowStepAnimatedThumbnail frames={frames} width={width} height={height} />;
@@ -113,4 +113,11 @@ export const FlowStepThumbnail: FunctionComponent<{
         />
     }
   </>;
+};
+
+export {
+  Separator,
+  FlowStepIcon,
+  FlowSegment,
+  FlowStepThumbnail,
 };

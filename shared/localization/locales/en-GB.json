@@ -24,31 +24,31 @@
     "message": "Desktop"
   },
   "flow-report/src/i18n/ui-strings.js | helpDialogTitle": {
-    "message": "Understanding the Lighthouse Flow Report"
+    "message": "Understanding the Lighthouse flow report"
   },
   "flow-report/src/i18n/ui-strings.js | helpLabel": {
-    "message": "Understanding Flows"
+    "message": "Understanding flows"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionNavigation": {
-    "message": "Use Navigation reports to..."
+    "message": "Use Navigation reports to…"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionSnapshot": {
-    "message": "Use Snapshot reports to..."
+    "message": "Use Snapshot reports to…"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionTimespan": {
-    "message": "Use Timespan reports to..."
+    "message": "Use Timespan reports to…"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation1": {
-    "message": "Obtain a Lighthouse Performance score."
+    "message": "Obtain a Lighthouse performance score."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation2": {
-    "message": "Measure page load Performance metrics such as Largest Contentful Paint and Speed Index."
+    "message": "Measure page load performance metrics, such as largest contentful paint and speed index."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation3": {
-    "message": "Assess Progressive Web App capabilities."
+    "message": "Assess progressive web app capabilities."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseSnapshot1": {
-    "message": "Find accessibility issues in single page applications or complex forms."
+    "message": "Find accessibility issues in single-page applications or complex forms."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseSnapshot2": {
     "message": "Evaluate best practices of menus and UI elements hidden behind interaction."
@@ -59,6 +59,12 @@
   "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan2": {
     "message": "Discover performance opportunities to improve the experience for long-lived pages and single-page applications."
   },
+  "flow-report/src/i18n/ui-strings.js | highestImpact": {
+    "message": "Highest impact"
+  },
+  "flow-report/src/i18n/ui-strings.js | informativeAuditCount": {
+    "message": "{numInformative,plural, =1{{numInformative} informative audit}other{{numInformative} informative audits}}"
+  },
   "flow-report/src/i18n/ui-strings.js | mobile": {
     "message": "Mobile"
   },
@@ -66,10 +72,19 @@
     "message": "Page load"
   },
   "flow-report/src/i18n/ui-strings.js | navigationLongDescription": {
-    "message": "Navigation reports analyze a single page load, exactly like the original Lighthouse reports."
+    "message": "Navigation reports analyse a single page load, exactly like the original Lighthouse reports."
   },
   "flow-report/src/i18n/ui-strings.js | navigationReport": {
     "message": "Navigation report"
+  },
+  "flow-report/src/i18n/ui-strings.js | navigationReportCount": {
+    "message": "{numNavigation,plural, =1{{numNavigation} navigation report}other{{numNavigation} navigation reports}}"
+  },
+  "flow-report/src/i18n/ui-strings.js | passableAuditCount": {
+    "message": "{numPassableAudits,plural, =1{{numPassableAudits} passable audit}other{{numPassableAudits} passable audits}}"
+  },
+  "flow-report/src/i18n/ui-strings.js | passedAuditCount": {
+    "message": "{numPassed,plural, =1{{numPassed} audit passed}other{{numPassed} audits passed}}"
   },
   "flow-report/src/i18n/ui-strings.js | ratingAverage": {
     "message": "Average"
@@ -90,10 +105,13 @@
     "message": "Captured state of page"
   },
   "flow-report/src/i18n/ui-strings.js | snapshotLongDescription": {
-    "message": "Snapshot reports analyze the page in a particular state, typically after user interactions."
+    "message": "Snapshot reports analyse the page in a particular state, typically after user interactions."
   },
   "flow-report/src/i18n/ui-strings.js | snapshotReport": {
     "message": "Snapshot report"
+  },
+  "flow-report/src/i18n/ui-strings.js | snapshotReportCount": {
+    "message": "{numSnapshot,plural, =1{{numSnapshot} snapshot report}other{{numSnapshot} snapshot reports}}"
   },
   "flow-report/src/i18n/ui-strings.js | summary": {
     "message": "Summary"
@@ -102,10 +120,13 @@
     "message": "User interactions"
   },
   "flow-report/src/i18n/ui-strings.js | timespanLongDescription": {
-    "message": "Timespan reports analyze an arbitrary period of time, typically containing user interactions."
+    "message": "Timespan reports analyse an arbitrary period of time, typically containing user interactions."
   },
   "flow-report/src/i18n/ui-strings.js | timespanReport": {
     "message": "Timespan report"
+  },
+  "flow-report/src/i18n/ui-strings.js | timespanReportCount": {
+    "message": "{numTimespan,plural, =1{{numTimespan} timespan report}other{{numTimespan} timespan reports}}"
   },
   "flow-report/src/i18n/ui-strings.js | title": {
     "message": "Lighthouse user flow report"
@@ -456,13 +477,13 @@
     "message": "`[user-scalable=\"no\"]` is not used in the `<meta name=\"viewport\">` element and the `[maximum-scale]` attribute is not less than 5."
   },
   "lighthouse-core/audits/accessibility/object-alt.js | description": {
-    "message": "Screen readers cannot translate non-text content. Adding alt text to `<object>` elements helps screen readers convey meaning to users. [Learn more](https://web.dev/object-alt/)."
+    "message": "Screen readers cannot translate non-text content. Adding alternative text to `<object>` elements helps screen readers convey meaning to users. [Learn more](https://web.dev/object-alt/)."
   },
   "lighthouse-core/audits/accessibility/object-alt.js | failureTitle": {
-    "message": "`<object>` elements do not have `[alt]` text"
+    "message": "`<object>` elements do not have alternative text"
   },
   "lighthouse-core/audits/accessibility/object-alt.js | title": {
-    "message": "`<object>` elements have `[alt]` text"
+    "message": "`<object>` elements have alternative text"
   },
   "lighthouse-core/audits/accessibility/tabindex.js | description": {
     "message": "A value greater than 0 implies an explicit navigation ordering. Although technically valid, this often creates frustrating experiences for users who rely on assistive technologies. [Learn more](https://web.dev/tabindex/)."
@@ -1031,6 +1052,9 @@
   "lighthouse-core/audits/installable-manifest.js | not-offline-capable": {
     "message": "Page does not work offline"
   },
+  "lighthouse-core/audits/installable-manifest.js | pipeline-restarted": {
+    "message": "PWA has been uninstalled and installability checks resetting."
+  },
   "lighthouse-core/audits/installable-manifest.js | platform-not-supported-on-android": {
     "message": "The specified application platform is not supported on Android"
   },
@@ -1039,6 +1063,9 @@
   },
   "lighthouse-core/audits/installable-manifest.js | prefer-related-applications-only-beta-stable": {
     "message": "prefer_related_applications is only supported on Chrome Beta and Stable channels on Android."
+  },
+  "lighthouse-core/audits/installable-manifest.js | protocol-timeout": {
+    "message": "Lighthouse could not determine if there was a service worker. Please try with a newer version of Chrome."
   },
   "lighthouse-core/audits/installable-manifest.js | start-url-not-valid": {
     "message": "Manifest start URL is not valid"
@@ -1191,7 +1218,7 @@
     "message": "Server Back-end Latencies"
   },
   "lighthouse-core/audits/no-unload-listeners.js | description": {
-    "message": "The `unload` event does not fire reliably and listening for it can prevent browser optimisations like the back-forward cache. Consider using the `pagehide` or `visibilitychange` events instead. [Learn more](https://developers.google.com/web/updates/2018/07/page-lifecycle-api#the-unload-event)"
+    "message": "The `unload` event does not fire reliably and listening for it can prevent browser optimisations like the back-forward cache. Use `pagehide` or `visibilitychange` events instead. [Learn more](https://web.dev/bfcache/#never-use-the-unload-event)"
   },
   "lighthouse-core/audits/no-unload-listeners.js | failureTitle": {
     "message": "Registers an `unload` listener"
@@ -1270,9 +1297,6 @@
   },
   "lighthouse-core/audits/seo/canonical.js | explanationConflict": {
     "message": "Multiple conflicting URLs ({urlList})"
-  },
-  "lighthouse-core/audits/seo/canonical.js | explanationDifferentDomain": {
-    "message": "Points to a different domain ({url})"
   },
   "lighthouse-core/audits/seo/canonical.js | explanationInvalid": {
     "message": "Invalid URL ({url})"
@@ -1740,7 +1764,7 @@
     "message": "These checks are required by the baseline [PWA checklist](https://developers.google.com/web/progressive-web-apps/checklist) but are not automatically checked by Lighthouse. They do not affect your score but it's important that you verify them manually."
   },
   "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
-    "message": "progressive web app"
+    "message": "PWA"
   },
   "lighthouse-core/config/default-config.js | pwaInstallableGroupTitle": {
     "message": "Installable"
@@ -2042,30 +2066,6 @@
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "The URL that you have provided appears to be invalid."
   },
-  "treemap/app/src/util.js | allLabel": {
-    "message": "All"
-  },
-  "treemap/app/src/util.js | allScriptsDropdownLabel": {
-    "message": "All scripts"
-  },
-  "treemap/app/src/util.js | coverageColumnName": {
-    "message": "Coverage"
-  },
-  "treemap/app/src/util.js | duplicateModulesLabel": {
-    "message": "Duplicate modules"
-  },
-  "treemap/app/src/util.js | resourceBytesLabel": {
-    "message": "Resource bytes"
-  },
-  "treemap/app/src/util.js | tableColumnName": {
-    "message": "Name"
-  },
-  "treemap/app/src/util.js | toggleTableButtonLabel": {
-    "message": "Toggle table"
-  },
-  "treemap/app/src/util.js | unusedBytesLabel": {
-    "message": "Unused bytes"
-  },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "For animated content, use [`amp-anim`](https://amp.dev/documentation/components/amp-anim/) to minimise CPU usage when the content is offscreen."
   },
@@ -2103,7 +2103,7 @@
     "message": "Consider using the `BreakpointObserver` utility in the Component Dev Kit (CDK) to manage image breakpoints. [Learn more](https://material.angular.io/cdk/layout/overview)."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | efficient-animated-content": {
-    "message": "Consider uploading your GIF to a service which will make it available to embed as an HTML5 video."
+    "message": "Consider uploading your GIF to a service that will make it available to embed as an HTML5 video."
   },
   "node_modules/lighthouse-stack-packs/packs/drupal.js | font-display": {
     "message": "Specify `@font-display` when defining custom fonts in your theme."
@@ -2148,7 +2148,7 @@
     "message": "Ensure that you are using the native [Responsive Image Styles](https://www.drupal.org/docs/8/mobile-guide/responsive-images-in-drupal-8) provided from Drupal (available in Drupal 8 and above). Use the Responsive Image Styles when rendering image fields through view modes, views or images uploaded through the WYSIWYG editor."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | efficient-animated-content": {
-    "message": "Consider uploading your GIF to a service which will make it available to embed as an HTML5 video."
+    "message": "Consider uploading your GIF to a service that will make it available to embed as an HTML5 video."
   },
   "node_modules/lighthouse-stack-packs/packs/joomla.js | modern-image-formats": {
     "message": "Consider using a [plug-in](https://extensions.joomla.org/instant-search/?jed_live%5Bquery%5D=webp) or service that will automatically convert your uploaded images to the optimal formats."
@@ -2225,6 +2225,36 @@
   "node_modules/lighthouse-stack-packs/packs/magento.js | uses-rel-preload": {
     "message": "`<link rel=preload>` tags can be added by [modifying a themes's layout](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
   },
+  "node_modules/lighthouse-stack-packs/packs/next.js | modern-image-formats": {
+    "message": "Use the `Next.js` Image optimisation API to serve modern formats like `WebP` and `AVIF`. [Learn more](https://nextjs.org/docs/api-reference/next/image#acceptable-formats)."
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | offscreen-images": {
+    "message": "Use the `next/image` component, which defaults to `loading=\"lazy\"`. [Learn more](https://nextjs.org/docs/api-reference/next/image#loading)."
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | render-blocking-resources": {
+    "message": "Use the `next/script` component to defer loading of non-critical third-party scripts. [Learn more](https://nextjs.org/docs/basic-features/script)."
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | unused-css-rules": {
+    "message": "Consider setting up `PurgeCSS` in `Next.js` configuration to remove unused rules from stylesheets. [Learn more](https://purgecss.com/guides/next.html)."
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | unused-javascript": {
+    "message": "Use `Webpack Bundle Analyzer` to detect unused JavaScript code. [Learn mode](https://github.com/vercel/next.js/tree/canary/packages/next-bundle-analyzer)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | user-timings": {
+    "message": "Consider using `Next.js Analytics` to measure your app's real-world performance. [Learn more](https://nextjs.org/docs/advanced-features/measuring-performance)."
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | uses-long-cache-ttl": {
+    "message": "Configure caching for immutable assets and `Server-side Rendered` (SSR) pages. [Learn more](https://nextjs.org/docs/going-to-production#caching)."
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | uses-optimized-images": {
+    "message": "Use the `next/image` component instead of `<img>` to optimise images. [Learn more](https://nextjs.org/docs/basic-features/image-optimization)."
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | uses-responsive-images": {
+    "message": "Use the `next/image` component to set the appropriate `sizes`. [Learn more](https://nextjs.org/docs/api-reference/next/image#sizes)."
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | uses-text-compression": {
+    "message": "Enable compression on your Next.js server. [Learn more](https://nextjs.org/docs/api-reference/next.config.js/compression)."
+  },
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | efficient-animated-content": {
     "message": "[Replace animated GIFs with video](https://web.dev/replace-gifs-with-videos/) for faster web page loads, and consider using modern file formats, such as [WebM](https://web.dev/replace-gifs-with-videos/#create-webm-videos) or [AV1,](https://developers.google.com/web/updates/2018/09/chrome-70-media-updates#av1-decoder) to improve compression efficiency by greater than 30% over the current state-of-the-art video codec, VP9."
   },
@@ -2289,7 +2319,7 @@
     "message": "Use the React DevTools Profiler, which makes use of the Profiler API, to measure the rendering performance of your components. [Learn more.](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)"
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | efficient-animated-content": {
-    "message": "Consider uploading your GIF to a service which will make it available to embed as an HTML5 video."
+    "message": "Consider uploading your GIF to a service that will make it available to embed as an HTML5 video."
   },
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | modern-image-formats": {
     "message": "Consider using a [plug-in](https://wordpress.org/plugins/search/convert+webp/) or service that will automatically convert your uploaded images to the optimal formats."
@@ -2333,6 +2363,9 @@
   "report/renderer/util.js | calculatorLink": {
     "message": "See calculator."
   },
+  "report/renderer/util.js | collapseView": {
+    "message": "Collapse view"
+  },
   "report/renderer/util.js | crcInitialNavigation": {
     "message": "Initial Navigation"
   },
@@ -2369,8 +2402,14 @@
   "report/renderer/util.js | errorMissingAuditInfo": {
     "message": "Report error: no audit information"
   },
+  "report/renderer/util.js | expandView": {
+    "message": "Expand view"
+  },
   "report/renderer/util.js | footerIssue": {
     "message": "File an issue"
+  },
+  "report/renderer/util.js | hide": {
+    "message": "Hide"
   },
   "report/renderer/util.js | labDataTitle": {
     "message": "Lab Data"
@@ -2392,6 +2431,12 @@
   },
   "report/renderer/util.js | passedAuditsGroupTitle": {
     "message": "Passed audits"
+  },
+  "report/renderer/util.js | runtimeAnalysisWindow": {
+    "message": "Initial page load"
+  },
+  "report/renderer/util.js | runtimeCustom": {
+    "message": "Custom throttling"
   },
   "report/renderer/util.js | runtimeDesktopEmulation": {
     "message": "Emulated desktop"
@@ -2420,8 +2465,20 @@
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "User agent (network)"
   },
+  "report/renderer/util.js | runtimeSingleLoad": {
+    "message": "Single page load"
+  },
+  "report/renderer/util.js | runtimeSingleLoadTooltip": {
+    "message": "This data is taken from a single page load, as opposed to field data summarising many sessions."
+  },
+  "report/renderer/util.js | runtimeSlow4g": {
+    "message": "Slow 4G throttling"
+  },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "Unknown"
+  },
+  "report/renderer/util.js | show": {
+    "message": "Show"
   },
   "report/renderer/util.js | showRelevantAudits": {
     "message": "Show audits relevant to:"
@@ -2452,5 +2509,29 @@
   },
   "report/renderer/util.js | warningHeader": {
     "message": "Warnings: "
+  },
+  "treemap/app/src/util.js | allLabel": {
+    "message": "All"
+  },
+  "treemap/app/src/util.js | allScriptsDropdownLabel": {
+    "message": "All scripts"
+  },
+  "treemap/app/src/util.js | coverageColumnName": {
+    "message": "Coverage"
+  },
+  "treemap/app/src/util.js | duplicateModulesLabel": {
+    "message": "Duplicate modules"
+  },
+  "treemap/app/src/util.js | resourceBytesLabel": {
+    "message": "Resource bytes"
+  },
+  "treemap/app/src/util.js | tableColumnName": {
+    "message": "Name"
+  },
+  "treemap/app/src/util.js | toggleTableButtonLabel": {
+    "message": "Toggle table"
+  },
+  "treemap/app/src/util.js | unusedBytesLabel": {
+    "message": "Unused bytes"
   }
 }

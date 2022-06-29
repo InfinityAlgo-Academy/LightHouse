@@ -3,7 +3,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 /**
  * @fileoverview An end-to-end test runner for Lighthouse. Takes a set of smoke
@@ -32,6 +31,8 @@
  * @property {Run[]} runs
  */
 
+import assert from 'assert';
+
 import log from 'lighthouse-logger';
 
 import {runLighthouse as cliLighthouseRunner} from './lighthouse-runners/cli.js';
@@ -55,7 +56,7 @@ async function runSmokehouse(smokeTestDefns, smokehouseOptions) {
     useFraggleRock,
     jobs = DEFAULT_CONCURRENT_RUNS,
     retries = DEFAULT_RETRIES,
-    lighthouseRunner = cliLighthouseRunner,
+    lighthouseRunner = Object.assign(cliLighthouseRunner, {runnerName: 'cli'}),
     takeNetworkRequestUrls,
   } = smokehouseOptions;
   assertPositiveInteger('jobs', jobs);
@@ -157,7 +158,11 @@ async function runSmokeTest(smokeTestDefn, testOptions) {
     }
 
     // Assert result.
-    report = getAssertionReport(result, expectations, {isDebug});
+    report = getAssertionReport(result, expectations, {
+      runner: lighthouseRunner.runnerName,
+      isDebug,
+      useFraggleRock,
+    });
 
     runs.push({
       ...result,
@@ -227,6 +232,53 @@ function getAssertionLog(count) {
   return `${count} assertion${plural}`;
 }
 
+/**
+ * Parses the cli `shardArg` flag into `shardNumber/shardTotal`. Splits
+ * `testDefns` into `shardTotal` shards and returns the `shardNumber`th shard.
+ * Shards will differ in size by at most 1.
+ * Shard params must be 1 ≤ shardNumber ≤ shardTotal.
+ * @param {Array<Smokehouse.TestDfn>} testDefns
+ * @param {string=} shardArg
+ * @return {Array<Smokehouse.TestDfn>}
+ */
+function getShardedDefinitions(testDefns, shardArg) {
+  if (!shardArg) return testDefns;
+
+  // eslint-disable-next-line max-len
+  const errorMessage = `'shard' must be of the form 'n/d' and n and d must be positive integers with 1 ≤ n ≤ d. Got '${shardArg}'`;
+  const match = /^(?<shardNumber>\d+)\/(?<shardTotal>\d+)$/.exec(shardArg);
+  assert(match?.groups, errorMessage);
+  const shardNumber = Number(match.groups.shardNumber);
+  const shardTotal = Number(match.groups.shardTotal);
+  assert(shardNumber > 0 && Number.isInteger(shardNumber), errorMessage);
+  assert(shardTotal > 0 && Number.isInteger(shardTotal));
+  assert(shardNumber <= shardTotal, errorMessage);
+
+  // Array is sharded with `Math.ceil(length / shardTotal)` shards first
+  // and then the remaining `Math.floor(length / shardTotal) shards.
+  // e.g. `[0, 1, 2, 3]` split into 3 shards is `[[0, 1], [2], [3]]`.
+  const baseSize = Math.floor(testDefns.length / shardTotal);
+  const biggerSize = baseSize + 1;
+  const biggerShardCount = testDefns.length % shardTotal;
+
+  // Since we don't have tests for this file, construct all shards so correct
+  // structure can be asserted.
+  const shards = [];
+  let index = 0;
+  for (let i = 0; i < shardTotal; i++) {
+    const shardSize = i < biggerShardCount ? biggerSize : baseSize;
+    shards.push(testDefns.slice(index, index + shardSize));
+    index += shardSize;
+  }
+  assert.strictEqual(shards.length, shardTotal);
+  assert.deepStrictEqual(shards.flat(), testDefns);
+
+  const shardDefns = shards[shardNumber - 1];
+  console.log(`In this shard (${shardArg}), running: ${shardDefns.map(d => d.id).join(' ')}\n`);
+  return shardDefns;
+}
+
 export {
   runSmokehouse,
+  getShardedDefinitions,
 };

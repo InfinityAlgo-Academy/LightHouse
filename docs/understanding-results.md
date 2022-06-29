@@ -6,7 +6,7 @@ The result object contains all the audit information Lighthouse determined about
 
 The top-level Lighthouse Result object (LHR) is what the lighthouse node module returns and the entirety of the JSON output of the CLI. It contains some metadata about the run and the results in the various subproperties below.
 
-For an always up-to-date definition of the LHR, take a look [at our typedefs](https://github.com/GoogleChrome/lighthouse/blob/master/types/lhr.d.ts).
+For an always up-to-date definition of the LHR, take a look [at our typedefs](https://github.com/GoogleChrome/lighthouse/blob/master/types/lhr/lhr.d.ts).
 
 ### Properties
 
@@ -60,7 +60,7 @@ An object containing the results of the audits, keyed by their name.
 | displayValue | <code>string&#124;undefined</code> | The string to display in the report alongside audit results. If empty, nothing additional is shown. This is typically used to explain additional information such as the number and nature of failing items. |
 | score | <code>number&#124;null</code> | The scored value determined by the audit provided in the numeric range `0-1`, or null if `scoreDisplayMode` indicates not scored. |
 | scoreDisplayMode | <code>"binary" &#124; "numeric" &#124; "error" &#124; "manual" &#124; "notApplicable" &#124; "informative"</code> | A string identifying how the score should be interpreted for display i.e. is the audit pass/fail (score of 1 or 0), did it fail, should it be ignored, or are there shades of gray (scores between 0-1 inclusive). If set as `informative`, `notApplicable`, `manual`, or `error`, then `score` will be null and should be ignored. |
-| details | `Object` | Extra information found by the audit necessary for display. The structure of this object varies from audit to audit. The [structure of this object](https://github.com/GoogleChrome/lighthouse/blob/master/types/audit-details.d.ts) is somewhat stable between minor version bumps as this object is used to render the HTML report. |
+| details | `Object` | Extra information found by the audit necessary for display. The structure of this object varies from audit to audit. The [structure of this object](https://github.com/GoogleChrome/lighthouse/blob/master/types/lhr/audit-details.d.ts) is somewhat stable between minor version bumps as this object is used to render the HTML report. |
 
 
 ### Example

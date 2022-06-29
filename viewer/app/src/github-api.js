@@ -3,7 +3,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 /* global logger */
 
@@ -12,7 +11,8 @@
 import idbKeyval from 'idb-keyval';
 
 import {FirebaseAuth} from './firebase-auth.js';
-import {getLhrFilenamePrefix} from '../../../report/generator/file-namer.js';
+// eslint-disable-next-line max-len
+import {getLhrFilenamePrefix, getFlowResultFilenamePrefix} from '../../../report/generator/file-namer.js';
 
 /**
  * Wrapper around the GitHub API for reading/writing gists.
@@ -33,7 +33,7 @@ export class GithubApi {
 
   /**
    * Creates a gist under the users account.
-   * @param {LH.Result} jsonFile The gist file body.
+   * @param {LH.Result|LH.FlowResult} jsonFile The gist file body.
    * @return {Promise<string>} id of the created gist.
    */
   async createGist(jsonFile) {
@@ -46,10 +46,15 @@ export class GithubApi {
 
     try {
       const accessToken = await this._auth.getAccessToken();
-      const filename = getLhrFilenamePrefix({
-        finalUrl: jsonFile.finalUrl,
-        fetchTime: jsonFile.fetchTime,
-      });
+      let filename;
+      if ('steps' in jsonFile) {
+        filename = getFlowResultFilenamePrefix(jsonFile);
+      } else {
+        filename = getLhrFilenamePrefix({
+          finalUrl: jsonFile.finalUrl,
+          fetchTime: jsonFile.fetchTime,
+        });
+      }
       const body = {
         description: 'Lighthouse json report',
         public: false,
@@ -96,7 +101,7 @@ export class GithubApi {
       }
 
       return idbKeyval.get(id).then(/** @param {?CachableGist} cachedGist */ (cachedGist) => {
-        if (cachedGist && cachedGist.etag) {
+        if (cachedGist?.etag) {
           headers.set('If-None-Match', cachedGist.etag);
         }
 
@@ -111,7 +116,8 @@ export class GithubApi {
           }
 
           if (!resp.ok) {
-            if (resp.status === 304) {
+            // Should only be 304 if cachedGist exists and etag was sent, but double check.
+            if (resp.status === 304 && cachedGist) {
               return Promise.resolve(cachedGist);
             } else if (resp.status === 404) {
               // Delete the entry from IDB if it no longer exists on the server.
@@ -151,7 +157,6 @@ export class GithubApi {
       // not return a 304 and so will be overwritten.
       return idbKeyval.set(id, response).then(_ => {
         logger.hide();
-        // @ts-expect-error - TODO(bckenny): tsc unable to flatten promise chain here
         return response.content;
       });
     });

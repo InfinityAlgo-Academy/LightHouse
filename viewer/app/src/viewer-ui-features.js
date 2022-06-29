@@ -3,9 +3,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
-
-/* global ReportGenerator */
 
 /** @typedef {import('../../../report/renderer/dom').DOM} DOM */
 /** @typedef {import('../../../shared/localization/locales').LhlMessages} LhlMessages */
@@ -20,10 +17,12 @@ import {SwapLocaleFeature} from '../../../report/renderer/swap-locale-feature.js
 export class ViewerUIFeatures extends ReportUIFeatures {
   /**
    * @param {DOM} dom
-   * @param {{saveGist?: function(LH.Result): void, refresh: function(LH.Result): void}} callbacks
+   * @param {{saveGist?: function(LH.Result): void, refresh: function(LH.Result): void, getStandaloneReportHTML: function(): string}} callbacks
    */
   constructor(dom, callbacks) {
-    super(dom);
+    super(dom, {
+      getStandaloneReportHTML: callbacks.getStandaloneReportHTML,
+    });
 
     this._saveGistCallback = callbacks.saveGist;
     this._refreshCallback = callbacks.refresh;
@@ -42,7 +41,7 @@ export class ViewerUIFeatures extends ReportUIFeatures {
     // Disable option to save as gist if no callback for saving.
     if (!this._saveGistCallback) {
       const saveGistItem =
-        this._dom.find('.lh-tools__dropdown a[data-action="save-gist"]', this._document);
+        this._dom.find('.lh-tools__dropdown a[data-action="save-gist"]', this._dom.rootEl);
       saveGistItem.setAttribute('disabled', 'true');
     }
 
@@ -51,15 +50,6 @@ export class ViewerUIFeatures extends ReportUIFeatures {
         await i18nModule.format.getCanonicalLocales());
       this._swapLocales.enable(locales);
     }).catch(err => console.error(err));
-  }
-
-  /**
-   * Uses ReportGenerator to create the html that recreates this report.
-   * @return {string}
-   * @override
-   */
-  getReportHtml() {
-    return ReportGenerator.generateReportHtml(this.json);
   }
 
   /**
@@ -75,7 +65,7 @@ export class ViewerUIFeatures extends ReportUIFeatures {
 
     // Disable save-gist option after saving.
     const saveGistItem =
-      this._dom.find('.lh-tools__dropdown a[data-action="save-gist"]', this._document);
+      this._dom.find('.lh-tools__dropdown a[data-action="save-gist"]', this._dom.rootEl);
     saveGistItem.setAttribute('disabled', 'true');
   }
 

@@ -20,6 +20,7 @@ const WebAppManifest = require('./gatherers/web-app-manifest.js');
 const InstallabilityErrors = require('./gatherers/installability-errors.js');
 const NetworkUserAgent = require('./gatherers/network-user-agent.js');
 const Stacks = require('./gatherers/stacks.js');
+const URL = require('../lib/url-shim.js');
 const {finalizeArtifacts} = require('../fraggle-rock/gather/base-artifacts.js');
 
 /** @typedef {import('../gather/driver.js')} Driver */
@@ -71,7 +72,7 @@ class GatherRunner {
     log.time(status);
     try {
       const requestedUrl = passContext.url;
-      const {finalUrl, warnings} = await navigation.gotoURL(driver, requestedUrl, {
+      const {mainDocumentUrl, warnings} = await navigation.gotoURL(driver, requestedUrl, {
         waitUntil: passContext.passConfig.recordTrace ?
           ['load', 'fcp'] : ['load'],
         debugNavigation: passContext.settings.debugNavigation,
@@ -79,7 +80,12 @@ class GatherRunner {
         maxWaitForLoad: passContext.settings.maxWaitForLoad,
         ...passContext.passConfig,
       });
-      passContext.url = finalUrl;
+      passContext.url = mainDocumentUrl;
+      const {URL} = passContext.baseArtifacts;
+      if (!URL.finalUrl || !URL.mainDocumentUrl) {
+        URL.finalUrl = mainDocumentUrl;
+        URL.mainDocumentUrl = mainDocumentUrl;
+      }
       if (passContext.passConfig.loadFailureMode === 'fatal') {
         passContext.LighthouseRunWarnings.push(...warnings);
       }
@@ -177,11 +183,6 @@ class GatherRunner {
       const session = driver.defaultSession;
       const resetStorage = !options.settings.disableStorageReset;
       if (resetStorage) await storage.clearDataForOrigin(session, options.requestedUrl);
-
-      // Disable fetcher, in case a gatherer enabled it.
-      // This cleanup should be removed once the only usage of
-      // fetcher (fetching arbitrary URLs) is replaced by new protocol support.
-      await driver.fetcher.disable();
 
       await driver.disconnect();
     } catch (err) {
@@ -407,7 +408,12 @@ class GatherRunner {
       devtoolsLogs: {},
       settings: options.settings,
       GatherContext: {gatherMode: 'navigation'},
-      URL: {requestedUrl: options.requestedUrl, finalUrl: options.requestedUrl},
+      URL: {
+        initialUrl: await options.driver.url(),
+        requestedUrl: options.requestedUrl,
+        mainDocumentUrl: '',
+        finalUrl: '',
+      },
       Timing: [],
       PageLoadError: null,
     };
@@ -422,21 +428,39 @@ class GatherRunner {
   static async populateBaseArtifacts(passContext) {
     const status = {msg: 'Populate base artifacts', id: 'lh:gather:populateBaseArtifacts'};
     log.time(status);
+
     const baseArtifacts = passContext.baseArtifacts;
 
-    // Copy redirected URL to artifact.
-    baseArtifacts.URL.finalUrl = passContext.url;
-
     // Fetch the manifest, if it exists.
-    baseArtifacts.WebAppManifest = await WebAppManifest.getWebAppManifest(
-      passContext.driver.defaultSession, passContext.url);
-
-    if (baseArtifacts.WebAppManifest) {
-      baseArtifacts.InstallabilityErrors = await InstallabilityErrors.getInstallabilityErrors(
-        passContext.driver.defaultSession);
+    try {
+      baseArtifacts.WebAppManifest = await WebAppManifest.getWebAppManifest(
+        passContext.driver.defaultSession, passContext.url);
+    } catch (err) {
+      log.error('GatherRunner WebAppManifest', err);
+      baseArtifacts.WebAppManifest = null;
     }
 
-    baseArtifacts.Stacks = await Stacks.collectStacks(passContext.driver.executionContext);
+    try {
+      baseArtifacts.InstallabilityErrors = await InstallabilityErrors.getInstallabilityErrors(
+        passContext.driver.defaultSession);
+    } catch (err) {
+      log.error('GatherRunner InstallabilityErrors', err);
+      baseArtifacts.InstallabilityErrors = {
+        errors: [
+          {
+            errorId: 'protocol-timeout',
+            errorArguments: [],
+          },
+        ],
+      };
+    }
+
+    try {
+      baseArtifacts.Stacks = await Stacks.collectStacks(passContext.driver.executionContext);
+    } catch (err) {
+      log.error('GatherRunner Stacks', err);
+      baseArtifacts.Stacks = [];
+    }
 
     // Find the NetworkUserAgent actually used in the devtoolsLogs.
     const devtoolsLog = baseArtifacts.devtoolsLogs[passContext.passConfig.passName];
@@ -468,6 +492,20 @@ class GatherRunner {
       const baseArtifacts = await GatherRunner.initializeBaseArtifacts(options);
       baseArtifacts.BenchmarkIndex = await getBenchmarkIndex(driver.executionContext);
 
+      // Hack for running benchmarkIndex extra times.
+      // Add a `bidx=20` query param, eg: https://www.example.com/?bidx=50
+      const parsedUrl = URL.isValid(options.requestedUrl) && new URL(options.requestedUrl);
+      if (options.settings.channel === 'lr' && parsedUrl && parsedUrl.searchParams.has('bidx')) {
+        const bidxRunCount = parsedUrl.searchParams.get('bidx') || 0;
+        // Add the first bidx into the new set
+        const indexes = [baseArtifacts.BenchmarkIndex];
+        for (let i = 0; i < bidxRunCount; i++) {
+          const bidx = await getBenchmarkIndex(driver.executionContext);
+          indexes.push(bidx);
+        }
+        baseArtifacts.BenchmarkIndexes = indexes;
+      }
+
       await GatherRunner.setupDriver(driver, options);
 
       let isFirstPass = true;
@@ -496,12 +534,6 @@ class GatherRunner {
           await GatherRunner.populateBaseArtifacts(passContext);
           isFirstPass = false;
         }
-
-        // Disable fetcher for every pass, in case a gatherer enabled it.
-        // Noop if fetcher was never enabled.
-        // This cleanup should be removed once the only usage of
-        // fetcher (fetching arbitrary URLs) is replaced by new protocol support.
-        await driver.fetcher.disable();
       }
 
       await GatherRunner.disposeDriver(driver, options);
@@ -549,7 +581,7 @@ class GatherRunner {
       driver.defaultSession,
       passContext.settings,
       {
-        url: passContext.url,
+        requestor: passContext.url,
         disableStorageReset: !passConfig.useThrottling,
         disableThrottling: !passConfig.useThrottling,
         blockedUrlPatterns: passConfig.blockedUrlPatterns,
@@ -572,6 +604,7 @@ class GatherRunner {
       url: passContext.url,
       loadFailureMode: passConfig.loadFailureMode,
       networkRecords: loadData.networkRecords,
+      warnings: passContext.LighthouseRunWarnings,
     });
     if (pageLoadError) {
       const localizedMessage = format.getFormatted(pageLoadError.friendlyMessage,

@@ -52,4 +52,7 @@ module.exports = {
     lowerBound,
     upperBound,
   },
+  DevToolsPath: {
+    EmptyUrlString: '',
+  },
 };

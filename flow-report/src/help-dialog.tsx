@@ -97,7 +97,6 @@ export const HelpDialog: FunctionComponent<{onClose: () => void}> = ({
           availableCategories={[
             strings.categoryPerformance,
             strings.categoryBestPractices,
-            strings.categorySeo,
           ]}
         />
         <HelpDialogColumn

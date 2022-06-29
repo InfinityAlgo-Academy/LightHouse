@@ -39,9 +39,9 @@ const UIStrings = {
   /** Title of the Accessibility category of audits. This section contains audits focused on making web content accessible to all users. Also used as a label of a score gauge; try to limit to 20 characters. */
   a11yCategoryTitle: 'Accessibility',
   /** Description of the Accessibility category. This is displayed at the top of a list of audits focused on making web content accessible to all users. No character length limits. 'improve the accessibility of your web app' becomes link text to additional documentation. */
-  a11yCategoryDescription: 'These checks highlight opportunities to [improve the accessibility of your web app](https://developers.google.com/web/fundamentals/accessibility). Only a subset of accessibility issues can be automatically detected so manual testing is also encouraged.',
+  a11yCategoryDescription: 'These checks highlight opportunities to [improve the accessibility of your web app](https://web.dev/lighthouse-accessibility/). Only a subset of accessibility issues can be automatically detected so manual testing is also encouraged.',
   /** Description of the Accessibility manual checks category. This description is displayed above a list of accessibility audits that currently have no automated test and so must be verified manually by the user. No character length limits. 'conducting an accessibility review' becomes link text to additional documentation. */
-  a11yCategoryManualDescription: 'These items address areas which an automated testing tool cannot cover. Learn more in our guide on [conducting an accessibility review](https://developers.google.com/web/fundamentals/accessibility/how-to-review).',
+  a11yCategoryManualDescription: 'These items address areas which an automated testing tool cannot cover. Learn more in our guide on [conducting an accessibility review](https://web.dev/how-to-review/).',
   /** Title of the best practices section of the Accessibility category. Within this section are audits with descriptive titles that highlight common accessibility best practices. */
   a11yBestPracticesGroupTitle: 'Best practices',
   /** Description of the best practices section within the Accessibility category. Within this section are audits with descriptive titles that highlight common accessibility best practices. */
@@ -143,8 +143,9 @@ const defaultConfig = {
       'link-elements',
       'meta-elements',
       'script-elements',
+      'scripts',
       'iframe-elements',
-      'form-elements',
+      'inputs',
       'main-document-content',
       'global-listeners',
       'dobetterweb/doctype',
@@ -413,10 +414,10 @@ const defaultConfig = {
       supportedModes: ['navigation', 'timespan', 'snapshot'],
       auditRefs: [
         {id: 'first-contentful-paint', weight: 10, group: 'metrics', acronym: 'FCP', relevantAudits: m2a.fcpRelevantAudits},
-        {id: 'speed-index', weight: 10, group: 'metrics', acronym: 'SI'},
-        {id: 'largest-contentful-paint', weight: 25, group: 'metrics', acronym: 'LCP', relevantAudits: m2a.lcpRelevantAudits},
         {id: 'interactive', weight: 10, group: 'metrics', acronym: 'TTI'},
+        {id: 'speed-index', weight: 10, group: 'metrics', acronym: 'SI'},
         {id: 'total-blocking-time', weight: 30, group: 'metrics', acronym: 'TBT', relevantAudits: m2a.tbtRelevantAudits},
+        {id: 'largest-contentful-paint', weight: 25, group: 'metrics', acronym: 'LCP', relevantAudits: m2a.lcpRelevantAudits},
         {id: 'cumulative-layout-shift', weight: 15, group: 'metrics', acronym: 'CLS', relevantAudits: m2a.clsRelevantAudits},
 
         // These are our "invisible" metrics. Not displayed, but still in the LHR.
@@ -463,6 +464,7 @@ const defaultConfig = {
         {id: 'non-composited-animations', weight: 0},
         {id: 'unsized-images', weight: 0},
         {id: 'viewport', weight: 0},
+        {id: 'no-unload-listeners', weight: 0},
 
         // Budget audits.
         {id: 'performance-budget', weight: 0, group: 'budgets'},
@@ -566,7 +568,6 @@ const defaultConfig = {
         {id: 'doctype', weight: 1, group: 'best-practices-browser-compat'},
         {id: 'charset', weight: 1, group: 'best-practices-browser-compat'},
         // General Group
-        {id: 'no-unload-listeners', weight: 1, group: 'best-practices-general'},
         {id: 'js-libraries', weight: 0, group: 'best-practices-general'},
         {id: 'deprecations', weight: 1, group: 'best-practices-general'},
         {id: 'errors-in-console', weight: 1, group: 'best-practices-general'},

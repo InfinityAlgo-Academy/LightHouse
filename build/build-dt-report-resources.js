@@ -3,21 +3,20 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-const browserify = require('browserify');
-const fs = require('fs');
-const path = require('path');
-const assert = require('assert').strict;
-const {LH_ROOT} = require('../root.js');
+import fs from 'fs';
+import path from 'path';
+import {strict as assert} from 'assert';
+
+import {rollup} from 'rollup';
+
+import * as rollupPlugins from './rollup-plugins.js';
+import {LH_ROOT} from '../root.js';
 
 const distDir = path.join(LH_ROOT, 'dist', 'dt-report-resources');
-const bundleOutFile = `${distDir}/report-generator.js`;
-const generatorFilename = `./report/generator/report-generator.js`;
-const htmlReportAssets = require('../report/generator/report-assets.js');
+const bundleOutFile = `${distDir}/report-generator.mjs`;
 
 /**
- * Used to save cached resources (Runtime.cachedResources).
  * @param {string} name
  * @param {string} content
  */
@@ -29,17 +28,27 @@ function writeFile(name, content) {
 fs.rmSync(distDir, {recursive: true, force: true});
 fs.mkdirSync(distDir, {recursive: true});
 
-writeFile('report.js', htmlReportAssets.REPORT_JAVASCRIPT);
-writeFile('report.css', '/* TODO: remove after devtools roll deletes file. */');
-writeFile('standalone-template.html', htmlReportAssets.REPORT_TEMPLATE);
-writeFile('report.d.ts', 'export {}');
-writeFile('report-generator.d.ts', 'export {}');
+writeFile('report-generator.mjs.d.ts', 'export {}');
 
-const pathToReportAssets = require.resolve('../clients/devtools-report-assets.js');
-browserify(generatorFilename, {standalone: 'Lighthouse.ReportGenerator'})
-  // Shims './report/generator/report-assets.js' to resolve to devtools-report-assets.js
-  .require(pathToReportAssets, {expose: './report-assets.js'})
-  .bundle((err, src) => {
-    if (err) throw err;
-    fs.writeFileSync(bundleOutFile, src.toString());
+async function buildReportGenerator() {
+  const bundle = await rollup({
+    input: 'report/generator/report-generator.js',
+    plugins: [
+      rollupPlugins.shim({
+        [`${LH_ROOT}/report/generator/flow-report-assets.js`]: 'export default {}',
+      }),
+      rollupPlugins.commonjs(),
+      rollupPlugins.nodeResolve(),
+      rollupPlugins.inlineFs({verbose: Boolean(process.env.DEBUG)}),
+    ],
   });
+
+  await bundle.write({
+    file: bundleOutFile,
+    format: 'umd',
+    name: 'Lighthouse.ReportGenerator',
+  });
+  await bundle.close();
+}
+
+await buildReportGenerator();

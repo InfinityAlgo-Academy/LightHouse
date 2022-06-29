@@ -3,7 +3,7 @@
     "message": "Vsa poročila"
   },
   "flow-report/src/i18n/ui-strings.js | categories": {
-    "message": "Categories"
+    "message": "Kategorije"
   },
   "flow-report/src/i18n/ui-strings.js | categoryAccessibility": {
     "message": "Dostopnost"
@@ -24,40 +24,46 @@
     "message": "Namizna različica"
   },
   "flow-report/src/i18n/ui-strings.js | helpDialogTitle": {
-    "message": "Understanding the Lighthouse Flow Report"
+    "message": "Razumevanje poročila o toku orodja Lighthouse"
   },
   "flow-report/src/i18n/ui-strings.js | helpLabel": {
-    "message": "Understanding Flows"
+    "message": "Razumevanje tokov"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionNavigation": {
-    "message": "Use Navigation reports to..."
+    "message": "Uporaba poročil o pomikanju za …"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionSnapshot": {
-    "message": "Use Snapshot reports to..."
+    "message": "Uporaba poročil o povzetku za …"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseInstructionTimespan": {
-    "message": "Use Timespan reports to..."
+    "message": "Uporaba poročil o časovnem obdobju za …"
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation1": {
-    "message": "Obtain a Lighthouse Performance score."
+    "message": "Pridobivanje rezultata uspešnosti orodja Lighthouse."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation2": {
-    "message": "Measure page load Performance metrics such as Largest Contentful Paint and Speed Index."
+    "message": "Izvajanje meritev uspešnosti nalaganja strani, kot sta največji vsebinski izris in indeks hitrosti."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseNavigation3": {
-    "message": "Assess Progressive Web App capabilities."
+    "message": "Ocenjevanje zmožnosti modernih spletnih aplikacij."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseSnapshot1": {
-    "message": "Find accessibility issues in single page applications or complex forms."
+    "message": "Iskanje težav z dostopnostjo v enostranskih aplikacijah ali kompleksnih obrazcih."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseSnapshot2": {
-    "message": "Evaluate best practices of menus and UI elements hidden behind interaction."
+    "message": "Ovrednotenje najboljših postopkov menijev in elementov uporabniškega vmesnika, skritimi za interakcijo."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan1": {
-    "message": "Measure layout shifts and JavaScript execution time on a series of interactions."
+    "message": "Merjenje pomikov postavitev in časa izvajanja JavaScripta v seriji interakcij."
   },
   "flow-report/src/i18n/ui-strings.js | helpUseCaseTimespan2": {
-    "message": "Discover performance opportunities to improve the experience for long-lived pages and single-page applications."
+    "message": "Odkrivanje priložnosti za uspešnost zaradi izboljšanja izkušnje pri dolgotrajnih straneh in enostranskih aplikacijah."
+  },
+  "flow-report/src/i18n/ui-strings.js | highestImpact": {
+    "message": "Največji vpliv"
+  },
+  "flow-report/src/i18n/ui-strings.js | informativeAuditCount": {
+    "message": "{numInformative,plural, =1{{numInformative} informativna revizija}one{{numInformative} informativna revizija}two{{numInformative} informativni reviziji}few{{numInformative} informativne revizije}other{{numInformative} informativnih revizij}}"
   },
   "flow-report/src/i18n/ui-strings.js | mobile": {
     "message": "Mobilna različica"
@@ -66,10 +72,19 @@
     "message": "Nalaganje strani"
   },
   "flow-report/src/i18n/ui-strings.js | navigationLongDescription": {
-    "message": "Navigation reports analyze a single page load, exactly like the original Lighthouse reports."
+    "message": "Poročila o pomikanju analizirajo nalaganje ene strani, enako kot izvirna poročila orodja Lighthouse."
   },
   "flow-report/src/i18n/ui-strings.js | navigationReport": {
     "message": "Poročilo o pomikanju"
+  },
+  "flow-report/src/i18n/ui-strings.js | navigationReportCount": {
+    "message": "{numNavigation,plural, =1{{numNavigation} poročilo o pomikanju}one{{numNavigation} poročilo o pomikanju}two{{numNavigation} poročili o pomikanju}few{{numNavigation} poročila o pomikanju}other{{numNavigation} poročil o pomikanju}}"
+  },
+  "flow-report/src/i18n/ui-strings.js | passableAuditCount": {
+    "message": "{numPassableAudits,plural, =1{{numPassableAudits} morebitno uspešna revizija}one{{numPassableAudits} morebitno uspešna revizija}two{{numPassableAudits} morebitno uspešni reviziji}few{{numPassableAudits} morebitno uspešne revizije}other{{numPassableAudits} morebitno uspešnih revizij}}"
+  },
+  "flow-report/src/i18n/ui-strings.js | passedAuditCount": {
+    "message": "{numPassed,plural, =1{Uspešno je bila opravljena {numPassed} revizija.}one{Uspešno je bila opravljena {numPassed} revizija.}two{Uspešno sta bili opravljeni {numPassed} reviziji.}few{Uspešno so bile opravljene {numPassed} revizije.}other{Uspešno je bilo opravljenih {numPassed} revizij.}}"
   },
   "flow-report/src/i18n/ui-strings.js | ratingAverage": {
     "message": "Povprečno"
@@ -84,16 +99,19 @@
     "message": "Dobro"
   },
   "flow-report/src/i18n/ui-strings.js | save": {
-    "message": "Save"
+    "message": "Shrani"
   },
   "flow-report/src/i18n/ui-strings.js | snapshotDescription": {
     "message": "Zajeto stanje strani"
   },
   "flow-report/src/i18n/ui-strings.js | snapshotLongDescription": {
-    "message": "Snapshot reports analyze the page in a particular state, typically after user interactions."
+    "message": "Poročila o povzetku analizirajo stran v določenem stanju, običajno po uporabniških interakcijah."
   },
   "flow-report/src/i18n/ui-strings.js | snapshotReport": {
     "message": "Poročilo o povzetku"
+  },
+  "flow-report/src/i18n/ui-strings.js | snapshotReportCount": {
+    "message": "{numSnapshot,plural, =1{{numSnapshot} poročilo o povzetku}one{{numSnapshot} poročilo o povzetku}two{{numSnapshot} poročili o povzetku}few{{numSnapshot} poročila o povzetku}other{{numSnapshot} poročil o povzetku}}"
   },
   "flow-report/src/i18n/ui-strings.js | summary": {
     "message": "Povzetek"
@@ -102,10 +120,13 @@
     "message": "Uporabniške interakcije"
   },
   "flow-report/src/i18n/ui-strings.js | timespanLongDescription": {
-    "message": "Timespan reports analyze an arbitrary period of time, typically containing user interactions."
+    "message": "Poročila o časovnem obdobju analizirajo poljubno časovno obdobje, ki običajno vsebuje uporabniške interakcije."
   },
   "flow-report/src/i18n/ui-strings.js | timespanReport": {
     "message": "Poročilo o časovnem obdobju"
+  },
+  "flow-report/src/i18n/ui-strings.js | timespanReportCount": {
+    "message": "{numTimespan,plural, =1{{numTimespan} poročilo o časovnem obdobju}one{{numTimespan} poročilo o časovnem obdobju}two{{numTimespan} poročili o časovnem obdobju}few{{numTimespan} poročila o časovnem obdobju}other{{numTimespan} poročil o časovnem obdobju}}"
   },
   "flow-report/src/i18n/ui-strings.js | title": {
     "message": "Poročilo o toku uporabnikov orodja Lighthouse"
@@ -459,10 +480,10 @@
     "message": "Bralniki zaslona ne morejo prevesti vsebine, ki ni besedilna. Če elementom `<object>` dodate nadomestno besedilo, bralnikom zaslona pomagate prenesti pomen uporabnikom. [Več o tem](https://web.dev/object-alt/)."
   },
   "lighthouse-core/audits/accessibility/object-alt.js | failureTitle": {
-    "message": "Elementi `<object>` nimajo besedila `[alt]`"
+    "message": "Elementi `<object>` nimajo nadomestnega besedila"
   },
   "lighthouse-core/audits/accessibility/object-alt.js | title": {
-    "message": "Elementi `<object>` imajo besedilo `[alt]`"
+    "message": "Elementi `<object>` imajo nadomestno besedilo"
   },
   "lighthouse-core/audits/accessibility/tabindex.js | description": {
     "message": "Vrednost, večja od 0, kaže na izrecno razporeditev pomikanja. Čeprav je načeloma veljavna, pogosto vodi v zoprne izkušnje za uporabnike, ki se zanašajo na pomožne tehnologije. [Več o tem](https://web.dev/tabindex/)."
@@ -1031,6 +1052,9 @@
   "lighthouse-core/audits/installable-manifest.js | not-offline-capable": {
     "message": "Stran ne deluje brez povezave"
   },
+  "lighthouse-core/audits/installable-manifest.js | pipeline-restarted": {
+    "message": "Aplikacija MSA je odmeščena in preverjanja namestljivosti se ponastavljajo."
+  },
   "lighthouse-core/audits/installable-manifest.js | platform-not-supported-on-android": {
     "message": "Navedeno okolje aplikacije ni podprto v sistemu Android"
   },
@@ -1039,6 +1063,9 @@
   },
   "lighthouse-core/audits/installable-manifest.js | prefer-related-applications-only-beta-stable": {
     "message": "Vrednost »prefer_related_applications« je podprta samo v Chromu Beta in stabilnih različicah Chroma v sistemu Android."
+  },
+  "lighthouse-core/audits/installable-manifest.js | protocol-timeout": {
+    "message": "Lighthouse ni uspel zaznati procesa storitve. Poskusite z novejšo različico Chroma."
   },
   "lighthouse-core/audits/installable-manifest.js | start-url-not-valid": {
     "message": "Začetni URL manifesta ni veljaven"
@@ -1191,7 +1218,7 @@
     "message": "Zakasnitve strežnikovega zaledja"
   },
   "lighthouse-core/audits/no-unload-listeners.js | description": {
-    "message": "Dogodek `unload` se ne aktivira zanesljivo in poslušanje, kdaj se aktivira, lahko prepreči optimizacije brskalnika, kot je predpomnjenje pomikanja naprej in nazaj. Razmislite o uporabi dogodka `pagehide` ali `visibilitychange`. [Več o tem](https://developers.google.com/web/updates/2018/07/page-lifecycle-api#the-unload-event)"
+    "message": "Dogodek `unload` se ne aktivira zanesljivo in poslušanje, kdaj se aktivira, lahko prepreči optimizacije brskalnika, kot je predpomnjenje pomikanja naprej in nazaj. Uporabite dogodke `pagehide` ali `visibilitychange`. [Več o tem](https://web.dev/bfcache/#never-use-the-unload-event)"
   },
   "lighthouse-core/audits/no-unload-listeners.js | failureTitle": {
     "message": "Registrira poslušalca dogodka `unload`"
@@ -1270,9 +1297,6 @@
   },
   "lighthouse-core/audits/seo/canonical.js | explanationConflict": {
     "message": "Več URL-jev v sporu ({urlList})"
-  },
-  "lighthouse-core/audits/seo/canonical.js | explanationDifferentDomain": {
-    "message": "Kaže na drugo domeno ({url})"
   },
   "lighthouse-core/audits/seo/canonical.js | explanationInvalid": {
     "message": "Neveljaven URL ({url})"
@@ -1740,7 +1764,7 @@
     "message": "Ta preverjanja zahteva osnovni [kontrolni seznam za MSA](https://developers.google.com/web/progressive-web-apps/checklist), vendar jih Lighthouse ne opravi samodejno. Preverjanja vplivajo na vaš rezultat, vendar je pomembno, da jih opravite ročno."
   },
   "lighthouse-core/config/default-config.js | pwaCategoryTitle": {
-    "message": "Moderna spletna aplikacija"
+    "message": "MSA"
   },
   "lighthouse-core/config/default-config.js | pwaInstallableGroupTitle": {
     "message": "Namestljivo"
@@ -2042,30 +2066,6 @@
   "lighthouse-core/lib/lh-error.js | urlInvalid": {
     "message": "Videti je, da ste navedli neveljaven URL."
   },
-  "treemap/app/src/util.js | allLabel": {
-    "message": "Vse"
-  },
-  "treemap/app/src/util.js | allScriptsDropdownLabel": {
-    "message": "Vsi skripti"
-  },
-  "treemap/app/src/util.js | coverageColumnName": {
-    "message": "Pokritost"
-  },
-  "treemap/app/src/util.js | duplicateModulesLabel": {
-    "message": "Podvojeni moduli"
-  },
-  "treemap/app/src/util.js | resourceBytesLabel": {
-    "message": "Bajti sredstva"
-  },
-  "treemap/app/src/util.js | tableColumnName": {
-    "message": "Ime"
-  },
-  "treemap/app/src/util.js | toggleTableButtonLabel": {
-    "message": "Preklop tabele"
-  },
-  "treemap/app/src/util.js | unusedBytesLabel": {
-    "message": "Neuporabljeni bajti"
-  },
   "node_modules/lighthouse-stack-packs/packs/amp.js | efficient-animated-content": {
     "message": "Za animirano vsebino uporabite [`amp-anim`](https://amp.dev/documentation/components/amp-anim/), da zmanjšate uporabo CPE-ja, ko vsebina ni na zaslonu."
   },
@@ -2225,6 +2225,36 @@
   "node_modules/lighthouse-stack-packs/packs/magento.js | uses-rel-preload": {
     "message": "Oznake `<link rel=preload>` lahko dodate tako, da [spremenite postavitev teme](https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/layouts/xml-manage.html)."
   },
+  "node_modules/lighthouse-stack-packs/packs/next.js | modern-image-formats": {
+    "message": "Uporabite API za optimizacijo slik `Next.js` za prikazovanje sodobnih oblik datotek, kot sta `WebP` in `AVIF`. [Več o tem](https://nextjs.org/docs/api-reference/next/image#acceptable-formats)."
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | offscreen-images": {
+    "message": "Uporabite komponento `next/image` s privzeto vrednostjo `loading=\"lazy\"`. [Več o tem](https://nextjs.org/docs/api-reference/next/image#loading)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | render-blocking-resources": {
+    "message": "S komponento `next/script` odložite nalaganje manj pomembnih skriptov drugih ponudnikov. [Več o tem](https://nextjs.org/docs/basic-features/script)."
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | unused-css-rules": {
+    "message": "Razmislite o nastavitvi elementa `PurgeCSS` v konfiguraciji `Next.js`, če želite iz datotek s slogi odstraniti neuporabljena pravila. [Več o tem](https://purgecss.com/guides/next.html)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | unused-javascript": {
+    "message": "Uporabite `Webpack Bundle Analyzer` za zaznavanje neuporabljene kode JavaScript. [Več o tem](https://github.com/vercel/next.js/tree/canary/packages/next-bundle-analyzer)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | user-timings": {
+    "message": "Razmislite o uporabi elementa `Next.js Analytics` za merjenje dejanskega delovanja aplikacije. [Več o tem](https://nextjs.org/docs/advanced-features/measuring-performance)."
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | uses-long-cache-ttl": {
+    "message": "Konfigurirajte predpomnjenje za nespremenljive elemente in strani `Server-side Rendered` (SSR). [Več o tem](https://nextjs.org/docs/going-to-production#caching)."
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | uses-optimized-images": {
+    "message": "Za optimizacijo slik uporabite komponento `next/image` namesto komponente `<img>`. [Več o tem](https://nextjs.org/docs/basic-features/image-optimization)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | uses-responsive-images": {
+    "message": "Uporabite komponento `next/image` za nastavitev ustreznega nabora `sizes`. [Več o tem](https://nextjs.org/docs/api-reference/next/image#sizes)"
+  },
+  "node_modules/lighthouse-stack-packs/packs/next.js | uses-text-compression": {
+    "message": "Omogočite stiskanje v strežniku Next.js. [Več o tem](https://nextjs.org/docs/api-reference/next.config.js/compression)."
+  },
   "node_modules/lighthouse-stack-packs/packs/octobercms.js | efficient-animated-content": {
     "message": "Za hitrejše nalaganje spletnih strani lahko [animirane slike GIF nadomestite z videoposnetki](https://web.dev/replace-gifs-with-videos/), razmislite pa tudi o uporabi sodobnih oblik datotek, kot je [WebM](https://web.dev/replace-gifs-with-videos/#create-webm-videos) ali [AV1](https://developers.google.com/web/updates/2018/09/chrome-70-media-updates#av1-decoder), da učinkovitost stiskanja izboljšate za več kot 30 % v primerjavi s trenutno najboljšim videokodekom VP9."
   },
@@ -2333,6 +2363,9 @@
   "report/renderer/util.js | calculatorLink": {
     "message": "Oglejte si kalkulator."
   },
+  "report/renderer/util.js | collapseView": {
+    "message": "Strni pogled"
+  },
   "report/renderer/util.js | crcInitialNavigation": {
     "message": "Začetno krmarjenje"
   },
@@ -2369,8 +2402,14 @@
   "report/renderer/util.js | errorMissingAuditInfo": {
     "message": "Napaka sporočila: ni podatkov o pregledu"
   },
+  "report/renderer/util.js | expandView": {
+    "message": "Razširi pogled"
+  },
   "report/renderer/util.js | footerIssue": {
     "message": "Prijavi težavo"
+  },
+  "report/renderer/util.js | hide": {
+    "message": "Skrij"
   },
   "report/renderer/util.js | labDataTitle": {
     "message": "Laboratorijski podatki"
@@ -2392,6 +2431,12 @@
   },
   "report/renderer/util.js | passedAuditsGroupTitle": {
     "message": "Uspešni pregledi"
+  },
+  "report/renderer/util.js | runtimeAnalysisWindow": {
+    "message": "Začetno nalaganje st rani"
+  },
+  "report/renderer/util.js | runtimeCustom": {
+    "message": "Zaviranje po meri"
   },
   "report/renderer/util.js | runtimeDesktopEmulation": {
     "message": "Emulirano namizje"
@@ -2420,8 +2465,20 @@
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "Uporabnikov posrednik (omrežje)"
   },
+  "report/renderer/util.js | runtimeSingleLoad": {
+    "message": "Nalaganje ene strani"
+  },
+  "report/renderer/util.js | runtimeSingleLoadTooltip": {
+    "message": "Ti podatki za razliko od podatkov iz polja, ki povzemajo več sej, izvirajo iz nalaganja ene strani."
+  },
+  "report/renderer/util.js | runtimeSlow4g": {
+    "message": "Počasno zaviranje pri povezavi 4G"
+  },
   "report/renderer/util.js | runtimeUnknown": {
     "message": "Neznano"
+  },
+  "report/renderer/util.js | show": {
+    "message": "Pokaži"
   },
   "report/renderer/util.js | showRelevantAudits": {
     "message": "Prikaz revizij, pomembnih za to:"
@@ -2452,5 +2509,29 @@
   },
   "report/renderer/util.js | warningHeader": {
     "message": "Opozorila: "
+  },
+  "treemap/app/src/util.js | allLabel": {
+    "message": "Vse"
+  },
+  "treemap/app/src/util.js | allScriptsDropdownLabel": {
+    "message": "Vsi skripti"
+  },
+  "treemap/app/src/util.js | coverageColumnName": {
+    "message": "Pokritost"
+  },
+  "treemap/app/src/util.js | duplicateModulesLabel": {
+    "message": "Podvojeni moduli"
+  },
+  "treemap/app/src/util.js | resourceBytesLabel": {
+    "message": "Bajti sredstva"
+  },
+  "treemap/app/src/util.js | tableColumnName": {
+    "message": "Ime"
+  },
+  "treemap/app/src/util.js | toggleTableButtonLabel": {
+    "message": "Preklop tabele"
+  },
+  "treemap/app/src/util.js | unusedBytesLabel": {
+    "message": "Neuporabljeni bajti"
   }
 }

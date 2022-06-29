@@ -17,13 +17,10 @@ then
   git --no-pager log -1
 
   # Update to keep current.
-  # Don't update in CI-defer to the weekly cache invalidation.
-  if [ -z "${CI:-}" ]; then
-    git reset --hard
-    git clean -fd
-    git pull --ff-only -f origin main
-    gclient sync --delete_unversioned_trees --reset
-  fi
+  git reset --hard
+  git clean -fd
+  git pull --ff-only -f origin main
+  gclient sync --delete_unversioned_trees --reset
 
   exit 0
 fi

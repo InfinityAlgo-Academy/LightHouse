@@ -3,14 +3,18 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-const InstallableManifestAudit = require('../../audits/installable-manifest.js');
-const assert = require('assert').strict;
-const manifestParser = require('../../lib/manifest-parser.js');
+import {strict as assert} from 'assert';
 
-const manifestSrc = JSON.stringify(require('../fixtures/manifest.json'));
-const manifestDirtyJpgSrc = JSON.stringify(require('../fixtures/manifest-dirty-jpg.json'));
+import {readJson} from '../../../root.js';
+import InstallableManifestAudit from '../../audits/installable-manifest.js';
+import manifestParser from '../../lib/manifest-parser.js';
+
+const manifest = readJson('../fixtures/manifest.json', import.meta);
+const manifestDirtyJpg = readJson('../fixtures/manifest-dirty-jpg.json', import.meta);
+
+const manifestSrc = JSON.stringify(manifest);
+const manifestDirtyJpgSrc = JSON.stringify(manifestDirtyJpg);
 const EXAMPLE_MANIFEST_URL = 'https://example.com/manifest.json';
 const EXAMPLE_DOC_URL = 'https://example.com/index.html';
 
@@ -29,8 +33,6 @@ function generateMockAuditContext() {
     computedCache: new Map(),
   };
 }
-
-/* eslint-env jest */
 describe('PWA: webapp install banner audit', () => {
   describe('basics', () => {
     it('fails if page had no manifest', () => {
@@ -59,11 +61,12 @@ describe('PWA: webapp install banner audit', () => {
 
     it('fails with a non-parsable manifest', () => {
       const artifacts = generateMockArtifacts('{,:}');
+      artifacts.InstallabilityErrors.errors.push({errorId: 'manifest-empty', errorArguments: []});
       const context = generateMockAuditContext();
       return InstallableManifestAudit.audit(artifacts, context).then(result => {
         assert.strictEqual(result.score, 0);
         const items = result.details.items;
-        assert.ok(items[0].reason.includes('failed to parse as valid JSON'));
+        expect(items[0].reason).toBeDisplayString(/could not be parsed/);
       });
     });
 
@@ -191,6 +194,39 @@ describe('PWA: webapp install banner audit', () => {
       return InstallableManifestAudit.audit(artifacts, context).then(result => {
         assert.strictEqual(result.score, 1);
       });
+    });
+
+    it('adds scheme to invalid scheme error message', async () => {
+      const artifacts = generateMockArtifacts();
+      artifacts.WebAppManifest.url = 'data:application/json;base64,AAAAAAAAAA';
+      artifacts.InstallabilityErrors.errors.push({
+        errorId: 'scheme-not-supported-for-webapk',
+        errorArguments: [],
+      });
+      const context = generateMockAuditContext();
+
+      const result = await InstallableManifestAudit.audit(artifacts, context);
+      expect(result.score).toEqual(0);
+      expect(result.details.items[0].reason).toBeDisplayString(
+        'The manifest URL scheme (data:) is not supported on Android.'
+      );
+    });
+
+    it('ignores invalid scheme error if there was no manifest url', async () => {
+      const artifacts = generateMockArtifacts();
+      artifacts.WebAppManifest = undefined;
+      artifacts.InstallabilityErrors.errors.push(
+        {errorId: 'no-manifest', errorArguments: []},
+        {errorId: 'scheme-not-supported-for-webapk', errorArguments: []}
+      );
+      const context = generateMockAuditContext();
+
+      const result = await InstallableManifestAudit.audit(artifacts, context);
+      expect(result.score).toEqual(0);
+      expect(result.details.items).toHaveLength(1);
+      expect(result.details.items[0].reason).toBeDisplayString(
+        'Page has no manifest <link> URL'
+      );
     });
   });
 

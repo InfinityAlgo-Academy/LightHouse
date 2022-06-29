@@ -3,19 +3,18 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-/* eslint-env jest */
+import {jest} from '@jest/globals';
 
-const ImageElements = require('../../../gather/gatherers/image-elements.js');
-const NetworkRecorder = require('../../../lib/network-recorder.js');
-const {
-  createMockContext,
-  createMockDriver,
-  createMockSession,
-} = require('../../fraggle-rock/gather/mock-driver.js');
+import {readJson} from '../../../../root.js';
+import ImageElements from '../../../gather/gatherers/image-elements.js';
+import NetworkRecorder from '../../../lib/network-recorder.js';
+import {createMockContext, createMockDriver, createMockSession} from
+  '../../fraggle-rock/gather/mock-driver.js';
+import {fnAny} from '../../test-utils.js';
 
-const devtoolsLog = /** @type {LH.DevtoolsLog} */ (require('../../fixtures/traces/lcp-m78.devtools.log.json')); // eslint-disable-line max-len
+const devtoolsLog = readJson('../../fixtures/traces/lcp-m78.devtools.log.json', import.meta);
+
 const networkRecords = NetworkRecorder.recordsFromLogs(devtoolsLog);
 
 jest.useFakeTimers();
@@ -237,8 +236,8 @@ describe('.collectExtraDetails', () => {
   beforeEach(() => {
     driver = createMockDriver().asDriver();
     gatherer = makeImageElements();
-    gatherer.fetchSourceRules = jest.fn();
-    gatherer.fetchElementWithSizeInformation = jest.fn();
+    gatherer.fetchSourceRules = fnAny();
+    gatherer.fetchElementWithSizeInformation = fnAny();
   });
 
   it('respects the overall time budget for source rules', async () => {
@@ -247,7 +246,7 @@ describe('.collectExtraDetails', () => {
       mockElement({isInShadowDOM: false, isCss: false}),
       mockElement({isInShadowDOM: false, isCss: false}),
     ];
-    gatherer.fetchSourceRules = jest.fn().mockImplementation(async () => {
+    gatherer.fetchSourceRules = fnAny().mockImplementation(async () => {
       jest.advanceTimersByTime(6000);
     });
 

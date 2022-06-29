@@ -17,10 +17,13 @@ const pageFunctions = require('../../lib/page-functions.js');
  */
 /* c8 ignore start */
 function collectIFrameElements() {
+  const realBoundingClientRect = window.__HTMLElementBoundingClientRect ||
+    window.HTMLElement.prototype.getBoundingClientRect;
+
   // @ts-expect-error - put into scope via stringification
   const iFrameElements = getElementsInDocument('iframe'); // eslint-disable-line no-undef
   return iFrameElements.map(/** @param {HTMLIFrameElement} node */ (node) => {
-    const clientRect = node.getBoundingClientRect();
+    const clientRect = realBoundingClientRect.call(node);
     const {top, bottom, left, right, width, height} = clientRect;
     return {
       id: node.id,
@@ -39,7 +42,7 @@ class IFrameElements extends FRGatherer {
   /** @type {LH.Gatherer.GathererMeta} */
   meta = {
     supportedModes: ['snapshot', 'navigation'],
-  }
+  };
 
   /**
    * @param {LH.Gatherer.FRTransitionalContext} passContext

@@ -7,11 +7,10 @@
 
 /**
  * @fileoverview Audits a page to determine if it is calling deprecated APIs.
- * This is done by collecting console log messages and filtering them by ones
- * that contain deprecated API warnings sent by Chrome.
  */
 
 const Audit = require('./audit.js');
+const JsBundles = require('../computed/js-bundles.js');
 const i18n = require('../lib/i18n/i18n.js');
 
 const UIStrings = {
@@ -45,27 +44,31 @@ class Deprecations extends Audit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['ConsoleMessages'],
+      requiredArtifacts: ['InspectorIssues', 'SourceMaps', 'Scripts'],
     };
   }
 
   /**
    * @param {LH.Artifacts} artifacts
-   * @return {LH.Audit.Product}
+   * @param {LH.Audit.Context} context
+   * @return {Promise<LH.Audit.Product>}
    */
-  static audit(artifacts) {
-    const entries = artifacts.ConsoleMessages;
+  static async audit(artifacts, context) {
+    const bundles = await JsBundles.request(artifacts, context);
 
-    const deprecations = entries.filter(log => log.source === 'deprecation')
-    // TODO(M91): Temporary ignore until Chrome M91 became stable version.
-    // M91 doesn't throw deprecation on ::-webkit-details-marker.
-    .filter(log => !log.text.includes('::-webkit-details-marker'))
-    .map(log => {
-      return {
-        value: log.text,
-        source: Audit.makeSourceLocationFromConsoleMessage(log),
-      };
-    });
+    const deprecations = artifacts.InspectorIssues.deprecationIssue
+      // TODO: translate these strings.
+      // see https://github.com/GoogleChrome/lighthouse/issues/13895
+      .filter(deprecation => !deprecation.type || deprecation.type === 'Untranslated')
+      .map(deprecation => {
+        const {scriptId, url, lineNumber, columnNumber} = deprecation.sourceCodeLocation;
+        const bundle = bundles.find(bundle => bundle.script.scriptId === scriptId);
+        return {
+          value: deprecation.message || '',
+          // Protocol.Audits.SourceCodeLocation.columnNumber is 1-indexed, but we use 0-indexed.
+          source: Audit.makeSourceLocation(url, lineNumber, columnNumber - 1, bundle),
+        };
+      });
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [

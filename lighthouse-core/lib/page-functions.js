@@ -138,7 +138,17 @@ function getOuterHTMLSnippet(element, ignoreAttrs = [], snippetCharacterLimit = 
         dirty = true;
       }
 
-      if (dirty) clone.setAttribute(attributeName, attributeValue);
+      if (dirty) {
+        // Style attributes can be blocked by the CSP if they are set via `setAttribute`.
+        // If we are trying to set the style attribute, use `el.style.cssText` instead.
+        // https://github.com/GoogleChrome/lighthouse/issues/13630
+        if (attributeName === 'style') {
+          const elementWithStyle = /** @type {HTMLElement} */ (clone);
+          elementWithStyle.style.cssText = attributeValue;
+        } else {
+          clone.setAttribute(attributeName, attributeValue);
+        }
+      }
       charCount += attributeName.length + attributeValue.length;
     }
 
@@ -208,7 +218,8 @@ function computeBenchmarkIndex() {
 
     while (Date.now() - start < 500) {
       let s = '';
-      for (let j = 0; j < 10000; j++) s += 'a'; // eslint-disable-line no-unused-vars
+      for (let j = 0; j < 10000; j++) s += 'a';
+      if (s.length === 1) throw new Error('will never happen, but prevents compiler optimizations');
 
       iterations++;
     }
@@ -423,8 +434,10 @@ function getNodeLabel(element) {
  * @return {LH.Artifacts.Rect}
  */
 function getBoundingClientRect(element) {
+  const realBoundingClientRect = window.__HTMLElementBoundingClientRect ||
+    window.HTMLElement.prototype.getBoundingClientRect;
   // The protocol does not serialize getters, so extract the values explicitly.
-  const rect = element.getBoundingClientRect();
+  const rect = realBoundingClientRect.call(element);
   return {
     top: Math.round(rect.top),
     bottom: Math.round(rect.bottom),

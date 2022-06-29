@@ -2,7 +2,7 @@
 
 Smokehouse is the Lighthouse end-to-end/smoke test runner. It takes in a set of URLs (usually pointing to custom-built test sites), runs Lighthouse on them, and compares the results against a set of expectations.
 
-By default this is done using the Lighthouse CLI (to exercise the full pipeline) with the tests listed in [`smokehouse/test-definitions/core-tests.js`](./test-definitions/core-tests.js).
+By default this is done using the Lighthouse CLI (to exercise the full pipeline) with the tests listed in [`smokehouse/core-tests.js`](./core-tests.js).
 
 ## Options
 
@@ -64,16 +64,26 @@ Individual elements of an array can be asserted by using numeric properties in a
 
 However, if an array literal is used as the expectation, an extra condition is enforced that the actual array _must_ have the same length as the provided expected array.
 
+Arrays can be checked against a subset of elements using the special `_includes` property. The value of `_includes` _must_ be an array. Each assertion in `_includes` will remove the matching item from consideration for the rest.
+
+Arrays can be asserted to not match any elements using the special `_excludes` property. The value of `_excludes` _must_ be an array. If an `_includes` check is defined before an `_excludes` check, only the element not matched under the previous will be considered.
+
 **Examples**:
 | Actual | Expected | Result |
 | -- | -- | -- |
 | `[{url: 'http://badssl.com'}, {url: 'http://example.com'}]` | `{1: {url: 'http://example.com'}}` | ✅ PASS |
 | `[{timeInMs: 5}, {timeInMs: 15}]` | `{length: 2}` | ✅ PASS |
+| `[{timeInMs: 5}, {timeInMs: 15}]` | `{_includes: [{timeInMs: 5}]}` | ✅ PASS |
+| `[{timeInMs: 5}, {timeInMs: 15}]` | `{_includes: [{timeInMs: 5}, {timeInMs: 5}]}` | ❌ FAIL |
+| `[{timeInMs: 5}, {timeInMs: 15}]` | `{_includes: [{timeInMs: 5}], _excludes: [{timeInMs: 5}]}` | ✅ PASS |
+| `[{timeInMs: 5}, {timeInMs: 15}]` | `{_includes: [{timeInMs: 5}], _excludes: [{timeInMs: 15}]}` | ❌ FAIL |
+| `[{timeInMs: 5}, {timeInMs: 15}]` | `{_includes: [{timeInMs: 5}], _excludes: [{}]}` | ❌ FAIL |
 | `[{timeInMs: 5}, {timeInMs: 15}]` | `[{timeInMs: 5}]` | ❌ FAIL |
 
 ### Special environment checks
 
-If an expectation requires a minimum version of Chromium, use `_minChromiumMilestone: xx` to conditionally ignore that entire object in the expectation.
+If an expectation requires a minimum version of Chromium, use `_minChromiumVersion: xx.x.x.x` to conditionally ignore that entire object in the expectation.
+Can be as specific as you like (`_minChromiumVersion: xx` works too).
 
 **Examples**:
 ```js
@@ -81,7 +91,7 @@ If an expectation requires a minimum version of Chromium, use `_minChromiumMiles
   artifacts: {
     InspectorIssues: {
       // Mixed Content issues weren't added to the protocol until M84.
-      _minChromiumMilestone: 84, // The entire `InspectorIssues` is ignored for older Chrome.
+      _minChromiumVersion: '84', // The entire `InspectorIssues` is ignored for older Chrome.
       mixedContent: [
         {
           resourceType: 'Image',
@@ -99,6 +109,15 @@ If an expectation requires a minimum version of Chromium, use `_minChromiumMiles
     }
   },
 ```
+
+All pruning checks:
+
+- `_minChromiumVersion`
+- `_maxChromiumVersion`
+- `_legacyOnly`
+- `_fraggleRockOnly`
+- `_skipInBundled`
+- `_runner` (set to same value provided to CLI --runner flag, ex: `'devtools'`)
 
 ## Pipeline
 
@@ -118,14 +137,15 @@ Smokehouse Frontends                                        Lighthouse Runners
 |            |    |            |               |   <lhr   |   +--------------+
 +------------+    |            +-------+-------+          |   |              |
                   |                    ^                  +-->+   bundle.js  |
-+------------+    |                    |                      |              |
-|            |    |                    |                      +--------------+
-|   lib.js   +----+                    v
-|            |                +--------+--------+
-+------------+                |                 |
-                              |  report/assert  |
-                              |                 |
-                              +-----------------+
++------------+    |                    |                  |   |              |
+|            |    |                    |                  |   +--------------+
+|   lib.js   +----+                    v                  |
+|            |                +--------+--------+         |
++------------+                |                 |         |   +--------------+
+                              |  report/assert  |         |   |              |
+                              |                 |         +-->+  devtools.js |
+                              +-----------------+             |              |
+                                                              +--------------+
 ```
 
 ### Smokehouse frontends
@@ -142,6 +162,7 @@ Smokehouse Frontends                                        Lighthouse Runners
 
 - `lighthouse-runners/cli.js` - the original test runner, exercising the Lighthouse CLI from command-line argument parsing to the results written to disk on completion.
 - `lighthouse-runners/bundle.js` - a smoke test runner that operates on an already-bundled version of Lighthouse for end-to-end testing of that version.
+- `lighthouse-runners/devtools.js` - a smoke test runner that operates on Lighthouse running from inside DevTools.
 
 ## Custom smoke tests (for plugins et al.)
 

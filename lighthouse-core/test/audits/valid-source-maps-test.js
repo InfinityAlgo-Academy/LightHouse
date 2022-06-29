@@ -3,12 +3,10 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-/* eslint-env jest */
+import {createScript, loadSourceMapFixture} from '../test-utils.js';
+import ValidSourceMaps from '../../audits/valid-source-maps.js';
 
-const {loadSourceMapFixture} = require('../test-utils.js');
-const ValidSourceMaps = require('../../audits/valid-source-maps.js');
 const largeBundle = loadSourceMapFixture('coursehero-bundle-1');
 const smallBundle = loadSourceMapFixture('coursehero-bundle-2');
 const LARGE_JS_BYTE_THRESHOLD = 500 * 1024;
@@ -27,7 +25,7 @@ describe('Valid source maps audit', () => {
   it('passes when no script elements or source maps are provided', async () => {
     const artifacts = {
       URL: {finalUrl: 'https://example.com'},
-      ScriptElements: [],
+      Scripts: [],
       SourceMaps: [],
     };
 
@@ -38,13 +36,13 @@ describe('Valid source maps audit', () => {
   it('passes when all large, first-party JS have corresponding source maps', async () => {
     const artifacts = {
       URL: {finalUrl: 'https://example.com'},
-      ScriptElements: [
-        {src: 'https://example.com/script1.min.js', content: largeBundle.content},
-        {src: 'https://example.com/script2.min.js', content: largeBundle.content},
-      ],
+      Scripts: [
+        {scriptId: '1', url: 'https://example.com/script1.min.js', content: largeBundle.content},
+        {scriptId: '2', url: 'https://example.com/script2.min.js', content: largeBundle.content},
+      ].map(createScript),
       SourceMaps: [
-        {scriptUrl: 'https://example.com/script1.min.js', map: largeBundle.map},
-        {scriptUrl: 'https://example.com/script2.min.js', map: largeBundle.map},
+        {scriptId: '1', scriptUrl: 'https://example.com/script1.min.js', map: largeBundle.map},
+        {scriptId: '2', scriptUrl: 'https://example.com/script2.min.js', map: largeBundle.map},
       ],
     };
 
@@ -55,12 +53,12 @@ describe('Valid source maps audit', () => {
   it('fails when any large, first-party JS has no corresponding source map', async () => {
     const artifacts = {
       URL: {finalUrl: 'https://example.com'},
-      ScriptElements: [
-        {src: 'https://example.com/script1.min.js', content: largeBundle.content},
-        {src: 'https://example.com/script2.min.js', content: largeBundle.content},
-      ],
+      Scripts: [
+        {scriptId: '1', url: 'https://example.com/script1.min.js', content: largeBundle.content},
+        {scriptId: '2', url: 'https://example.com/script2.min.js', content: largeBundle.content},
+      ].map(createScript),
       SourceMaps: [
-        {scriptUrl: 'https://example.com/script1.min.js', map: largeBundle.map},
+        {scriptId: '1', scriptUrl: 'https://example.com/script1.min.js', map: largeBundle.map},
         //  Missing corresponding source map for large, first-party JS (script2.min.js)
       ],
     };
@@ -75,12 +73,12 @@ describe('Valid source maps audit', () => {
   it('passes when small, first-party JS have no corresponding source maps', async () => {
     const artifacts = {
       URL: {finalUrl: 'https://example.com'},
-      ScriptElements: [
-        {src: 'https://example.com/script1.min.js', content: largeBundle.content},
-        {src: 'https://example.com/script2.min.js', content: smallBundle.content},
-      ],
+      Scripts: [
+        {scriptId: '1', url: 'https://example.com/script1.min.js', content: largeBundle.content},
+        {scriptId: '2', url: 'https://example.com/script2.min.js', content: smallBundle.content},
+      ].map(createScript),
       SourceMaps: [
-        {scriptUrl: 'https://example.com/script1.min.js', map: largeBundle.map},
+        {scriptId: '1', scriptUrl: 'https://example.com/script1.min.js', map: largeBundle.map},
         //  Missing corresponding source map for small, first-party JS (script2.min.js)
       ],
     };
@@ -92,12 +90,12 @@ describe('Valid source maps audit', () => {
   it('passes when large, third-party JS have no corresponding source maps', async () => {
     const artifacts = {
       URL: {finalUrl: 'https://example.com'},
-      ScriptElements: [
-        {src: 'https://example.com/script1.min.js', content: largeBundle.content},
-        {src: 'https://d36mpcpuzc4ztk.cloudfront.net/script2.js', content: largeBundle.content},
-      ],
+      Scripts: [
+        {scriptId: '1', url: 'https://example.com/script1.min.js', content: largeBundle.content},
+        {scriptId: '2', url: 'https://d36mpcpuzc4ztk.cloudfront.net/script2.js', content: largeBundle.content},
+      ].map(createScript),
       SourceMaps: [
-        {scriptUrl: 'https://example.com/script1.min.js', map: largeBundle.map},
+        {scriptId: '1', scriptUrl: 'https://example.com/script1.min.js', map: largeBundle.map},
       ],
     };
 
@@ -112,13 +110,13 @@ describe('Valid source maps audit', () => {
 
     const artifacts = {
       URL: {finalUrl: 'https://example.com'},
-      ScriptElements: [
-        {src: 'https://example.com/script1.min.js', content: bundleNormal.content},
-        {src: 'https://example.com/script2.min.js', content: bundleWithMissingContent.content},
-      ],
+      Scripts: [
+        {scriptId: '1', url: 'https://example.com/script1.min.js', content: bundleNormal.content},
+        {scriptId: '2', url: 'https://example.com/script2.min.js', content: bundleWithMissingContent.content},
+      ].map(createScript),
       SourceMaps: [
-        {scriptUrl: 'https://example.com/script1.min.js', map: bundleNormal.map},
-        {scriptUrl: 'https://example.com/script2.min.js', map: bundleWithMissingContent.map},
+        {scriptId: '1', scriptUrl: 'https://example.com/script1.min.js', map: bundleNormal.map},
+        {scriptId: '2', scriptUrl: 'https://example.com/script2.min.js', map: bundleWithMissingContent.map},
       ],
     };
 
@@ -142,12 +140,12 @@ describe('Valid source maps audit', () => {
 
     const artifacts = {
       URL: {finalUrl: 'https://example.com'},
-      ScriptElements: [
-        {src: 'https://example.com/script1.min.js', content: bundleWithMissingContent.content},
-        {src: 'https://example.com/script2.min.js', content: largeBundle.content},
-      ],
+      Scripts: [
+        {scriptId: '1', url: 'https://example.com/script1.min.js', content: bundleWithMissingContent.content},
+        {scriptId: '2', url: 'https://example.com/script2.min.js', content: largeBundle.content},
+      ].map(createScript),
       SourceMaps: [
-        {scriptUrl: 'https://example.com/script1.min.js', map: bundleWithMissingContent.map},
+        {scriptId: '1', scriptUrl: 'https://example.com/script1.min.js', map: bundleWithMissingContent.map},
       ],
     };
 

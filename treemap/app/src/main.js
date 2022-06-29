@@ -3,7 +3,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 /* eslint-env browser */
 
@@ -16,6 +15,8 @@ import {I18n} from '../../../report/renderer/i18n.js';
 import {TextEncoding} from '../../../report/renderer/text-encoding.js';
 import {Logger} from '../../../report/renderer/logger.js';
 
+/** @typedef {LH.Treemap.Node & {dom?: HTMLElement}} NodeWithElement */
+
 const DUPLICATED_MODULES_IGNORE_THRESHOLD = 1024;
 const DUPLICATED_MODULES_IGNORE_ROOT_RATIO = 0.01;
 
@@ -24,6 +25,8 @@ if (!logEl) {
   throw new Error('logger element not found');
 }
 const logger = new Logger(logEl);
+// `getGistFileContentAsJson` expects logger to be defined globally.
+window.logger = logger;
 
 /** @type {TreemapViewer} */
 let treemapViewer;
@@ -72,7 +75,7 @@ class TreemapViewer {
     /** @type {WeakMap<LH.Treemap.Node, LH.Treemap.NodePath>} */
     this.nodeToPathMap = new WeakMap();
 
-    this.documentUrl = new URL(options.lhr.requestedUrl);
+    this.documentUrl = new URL(options.lhr.finalUrl);
     this.el = el;
     this.getHueForD1NodeName = TreemapUtil.stableHasher(TreemapUtil.COLOR_HUES);
 
@@ -438,7 +441,7 @@ class TreemapViewer {
       if (node.children) return;
 
       const depthOneNode = this.nodeToDepthOneNodeMap.get(node);
-      const bundleNode = depthOneNode && depthOneNode.children ? depthOneNode : undefined;
+      const bundleNode = depthOneNode?.children ? depthOneNode : undefined;
 
       let name;
       if (bundleNode) {
@@ -587,7 +590,8 @@ class TreemapViewer {
     ];
 
     if (bytes !== undefined && total !== undefined) {
-      const percentStr = TreemapUtil.i18n.formatPercent(bytes / total);
+      const percent = total === 0 ? 1 : bytes / total;
+      const percentStr = TreemapUtil.i18n.formatPercent(percent);
       let str = `${TreemapUtil.i18n.formatBytesWithBestUnit(bytes)} (${percentStr})`;
       // Only add label for bytes on the root node.
       if (node === this.currentTreemapRoot) {
@@ -756,7 +760,9 @@ class LighthouseTreemap {
     TreemapUtil.find('.treemap-placeholder').classList.add('hidden');
     TreemapUtil.find('main').classList.remove('hidden');
 
-    const i18n = new I18n(options.lhr.configSettings.locale, {
+    const locale = options.lhr.configSettings.locale;
+    document.documentElement.lang = locale;
+    const i18n = new I18n(locale, {
       // Set missing renderer strings to default (english) values.
       ...TreemapUtil.UIStrings,
       // `strings` is generated in build/build-treemap.js
@@ -787,16 +793,40 @@ class LighthouseTreemap {
   }
 
   /**
+   * Coerce json into LH.Treemap.Options
+   * Accepts if json is an lhr, or {lhr: ...} or {lighthouseResult: ...}
+   * Throws error if json does not match expectations.
    * @param {any} json
    * @return {LH.Treemap.Options}
    */
-  convertToOptions(json) {
+  coerceToOptions(json) {
+    /** @type {LH.Treemap.Options['lhr']|null} */
+    let lhr = null;
     if (json && typeof json === 'object') {
-      if (json.audits) json = {lhr: json};
-      if (json.lhr && json.lhr.audits && typeof json.lhr.audits === 'object') return json;
+      for (const maybeLhr of [json, json.lhr, json.lighthouseResult]) {
+        if (maybeLhr?.audits && typeof maybeLhr.audits === 'object') {
+          lhr = maybeLhr;
+          break;
+        }
+      }
     }
 
-    throw new Error('unknown json');
+    if (!lhr) {
+      throw new Error('provided json is not a Lighthouse result');
+    }
+
+    if (!lhr.audits['script-treemap-data']) {
+      throw new Error('provided Lighthouse result is missing audit: `script-treemap-data`');
+    }
+
+    if (lhr === json.lhr) {
+      // Special case: file was {lhr: ...} and potentially has other properties.
+      // LH.Treemap.Options only has `lhr` currently, but may have more in the future.
+      return json;
+    }
+
+    // json was exactly a LHR, or a PSI result object aka {lighthouseResult}
+    return {lhr};
   }
 
   /**
@@ -818,7 +848,7 @@ class LighthouseTreemap {
         const gistId = match[0];
         history.pushState({}, '', `${LighthouseTreemap.APP_URL}?gist=${gistId}`);
         const json = await this._github.getGistFileContentAsJson(gistId);
-        const options = this.convertToOptions(json);
+        const options = this.coerceToOptions(json);
         this.init(options);
       }
     } catch (err) {
@@ -834,7 +864,7 @@ class LighthouseTreemap {
     let options;
     try {
       json = JSON.parse(str);
-      options = this.convertToOptions(json);
+      options = this.coerceToOptions(json);
     } catch (e) {
       logger.error('Could not parse JSON file.');
     }
@@ -867,7 +897,7 @@ class LighthouseTreemap {
     // Try paste as json content.
     try {
       const json = JSON.parse(e.clipboardData.getData('text'));
-      const options = this.convertToOptions(json);
+      const options = this.coerceToOptions(json);
       this.init(options);
 
       if (window.ga) {
@@ -898,47 +928,26 @@ async function main() {
 
   if (window.__treemapOptions) {
     // Prefer the hardcoded options from a saved HTML file above all.
-    app.init(window.__treemapOptions);
+    app.init(app.coerceToOptions(window.__treemapOptions));
   } else if ('debug' in params) {
     const response = await fetch('debug.json');
-    app.init(await response.json());
+    const json = await response.json();
+    const options = app.coerceToOptions(json);
+    app.init(options);
   } else if (params.lhr) {
-    const options = {
-      lhr: params.lhr,
-    };
+    const options = app.coerceToOptions(params.lhr);
     app.init(options);
   } else if (params.gist) {
-    let json;
-    let options;
-    try {
-      json = await app._github.getGistFileContentAsJson(params.gist || '');
-      options = app.convertToOptions(json);
-    } catch (err) {
-      logger.log(err);
-    }
-    if (options) app.init(options);
-  } else {
-    // TODO: remove for v8.
-    window.addEventListener('message', e => {
-      if (e.source !== self.opener) return;
-
-      /** @type {LH.Treemap.Options} */
-      const options = e.data;
-      const {lhr} = options;
-      if (!lhr) return logger.error('Error: Invalid options');
-
-      const documentUrl = lhr.requestedUrl;
-      if (!documentUrl) return logger.error('Error: Invalid options');
-
-      app.init(options);
-    });
-  }
-
-  // TODO: remove for v8.
-  // If the page was opened as a popup, tell the opening window we're ready.
-  if (self.opener && !self.opener.closed) {
-    self.opener.postMessage({opened: true}, '*');
+    const json = await app._github.getGistFileContentAsJson(params.gist || '');
+    const options = app.coerceToOptions(json);
+    app.init(options);
   }
 }
 
-document.addEventListener('DOMContentLoaded', main);
+document.addEventListener('DOMContentLoaded', async () => {
+  try {
+    await main();
+  } catch (err) {
+    logger.error(err);
+  }
+});

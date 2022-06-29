@@ -21,11 +21,16 @@ import Protocol_ from './protocol';
 import * as Settings from './lhr/settings';
 import StructuredData_ from './structured-data';
 import Treemap_ from './lhr/treemap';
+import UserFlow_ from './user-flow';
+import puppeteer from 'puppeteer-core';
 
 // Construct hierarchy of global types under the LH namespace.
 declare global {
   module LH {
     export type ArbitraryEqualityMap = ArbitraryEqualityMap_;
+    export type NavigationRequestor = string | (() => Promise<void> | void);
+
+    export import Puppeteer = puppeteer;
 
     // artifacts.d.ts
     export import Artifacts = Artifacts_.Artifacts;
@@ -44,6 +49,8 @@ declare global {
     export import Crdp = _Crdp;
     export import CrdpEvents = _CrdpMappings.Events;
     export import CrdpCommands = _CrdpMappings.Commands;
+
+    export import UserFlow = UserFlow_;
 
     // externs.d.ts
     export import Flags = Externs.Flags;

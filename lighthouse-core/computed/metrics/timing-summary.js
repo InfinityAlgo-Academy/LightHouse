@@ -26,11 +26,12 @@ class TimingSummary {
      * @param {LH.DevtoolsLog} devtoolsLog
      * @param {LH.Artifacts['GatherContext']} gatherContext
      * @param {ImmutableObject<LH.Config.Settings>} settings
+     * @param {LH.Artifacts['URL']} URL
      * @param {LH.Artifacts.ComputedContext} context
      * @return {Promise<{metrics: LH.Artifacts.TimingSummary, debugInfo: Record<string,boolean>}>}
      */
-  static async summarize(trace, devtoolsLog, gatherContext, settings, context) {
-    const metricComputationData = {trace, devtoolsLog, gatherContext, settings};
+  static async summarize(trace, devtoolsLog, gatherContext, settings, URL, context) {
+    const metricComputationData = {trace, devtoolsLog, gatherContext, settings, URL};
     /**
      * @template TArtifacts
      * @template TReturn
@@ -67,22 +68,22 @@ class TimingSummary {
     /** @type {LH.Artifacts.TimingSummary} */
     const metrics = {
       // Include the simulated/observed performance metrics
-      firstContentfulPaint: firstContentfulPaint && firstContentfulPaint.timing,
-      firstContentfulPaintTs: firstContentfulPaint && firstContentfulPaint.timestamp,
-      firstContentfulPaintAllFrames: firstContentfulPaintAllFrames && firstContentfulPaintAllFrames.timing,
-      firstContentfulPaintAllFramesTs: firstContentfulPaintAllFrames && firstContentfulPaintAllFrames.timestamp,
-      firstMeaningfulPaint: firstMeaningfulPaint && firstMeaningfulPaint.timing,
-      firstMeaningfulPaintTs: firstMeaningfulPaint && firstMeaningfulPaint.timestamp,
-      largestContentfulPaint: largestContentfulPaint && largestContentfulPaint.timing,
-      largestContentfulPaintTs: largestContentfulPaint && largestContentfulPaint.timestamp,
-      largestContentfulPaintAllFrames: largestContentfulPaintAllFrames && largestContentfulPaintAllFrames.timing,
-      largestContentfulPaintAllFramesTs: largestContentfulPaintAllFrames && largestContentfulPaintAllFrames.timestamp,
-      interactive: interactive && interactive.timing,
-      interactiveTs: interactive && interactive.timestamp,
-      speedIndex: speedIndex && speedIndex.timing,
-      speedIndexTs: speedIndex && speedIndex.timestamp,
-      totalBlockingTime: totalBlockingTime && totalBlockingTime.timing,
-      maxPotentialFID: maxPotentialFID && maxPotentialFID.timing,
+      firstContentfulPaint: firstContentfulPaint?.timing,
+      firstContentfulPaintTs: firstContentfulPaint?.timestamp,
+      firstContentfulPaintAllFrames: firstContentfulPaintAllFrames?.timing,
+      firstContentfulPaintAllFramesTs: firstContentfulPaintAllFrames?.timestamp,
+      firstMeaningfulPaint: firstMeaningfulPaint?.timing,
+      firstMeaningfulPaintTs: firstMeaningfulPaint?.timestamp,
+      largestContentfulPaint: largestContentfulPaint?.timing,
+      largestContentfulPaintTs: largestContentfulPaint?.timestamp,
+      largestContentfulPaintAllFrames: largestContentfulPaintAllFrames?.timing,
+      largestContentfulPaintAllFramesTs: largestContentfulPaintAllFrames?.timestamp,
+      interactive: interactive?.timing,
+      interactiveTs: interactive?.timestamp,
+      speedIndex: speedIndex?.timing,
+      speedIndexTs: speedIndex?.timestamp,
+      totalBlockingTime: totalBlockingTime?.timing,
+      maxPotentialFID: maxPotentialFID?.timing,
       cumulativeLayoutShift,
       cumulativeLayoutShiftMainFrame,
       totalCumulativeLayoutShift,
@@ -91,26 +92,26 @@ class TimingSummary {
       observedTimeOrigin: processedTrace.timings.timeOrigin,
       observedTimeOriginTs: processedTrace.timestamps.timeOrigin,
       // For now, navigationStart is always timeOrigin.
-      observedNavigationStart: processedNavigation && processedNavigation.timings.timeOrigin,
-      observedNavigationStartTs: processedNavigation && processedNavigation.timestamps.timeOrigin,
-      observedFirstPaint: processedNavigation && processedNavigation.timings.firstPaint,
-      observedFirstPaintTs: processedNavigation && processedNavigation.timestamps.firstPaint,
-      observedFirstContentfulPaint: processedNavigation && processedNavigation.timings.firstContentfulPaint,
-      observedFirstContentfulPaintTs: processedNavigation && processedNavigation.timestamps.firstContentfulPaint,
-      observedFirstContentfulPaintAllFrames: processedNavigation && processedNavigation.timings.firstContentfulPaintAllFrames,
-      observedFirstContentfulPaintAllFramesTs: processedNavigation && processedNavigation.timestamps.firstContentfulPaintAllFrames,
-      observedFirstMeaningfulPaint: processedNavigation && processedNavigation.timings.firstMeaningfulPaint,
-      observedFirstMeaningfulPaintTs: processedNavigation && processedNavigation.timestamps.firstMeaningfulPaint,
-      observedLargestContentfulPaint: processedNavigation && processedNavigation.timings.largestContentfulPaint,
-      observedLargestContentfulPaintTs: processedNavigation && processedNavigation.timestamps.largestContentfulPaint,
-      observedLargestContentfulPaintAllFrames: processedNavigation && processedNavigation.timings.largestContentfulPaintAllFrames,
-      observedLargestContentfulPaintAllFramesTs: processedNavigation && processedNavigation.timestamps.largestContentfulPaintAllFrames,
+      observedNavigationStart: processedNavigation?.timings.timeOrigin,
+      observedNavigationStartTs: processedNavigation?.timestamps.timeOrigin,
+      observedFirstPaint: processedNavigation?.timings.firstPaint,
+      observedFirstPaintTs: processedNavigation?.timestamps.firstPaint,
+      observedFirstContentfulPaint: processedNavigation?.timings.firstContentfulPaint,
+      observedFirstContentfulPaintTs: processedNavigation?.timestamps.firstContentfulPaint,
+      observedFirstContentfulPaintAllFrames: processedNavigation?.timings.firstContentfulPaintAllFrames,
+      observedFirstContentfulPaintAllFramesTs: processedNavigation?.timestamps.firstContentfulPaintAllFrames,
+      observedFirstMeaningfulPaint: processedNavigation?.timings.firstMeaningfulPaint,
+      observedFirstMeaningfulPaintTs: processedNavigation?.timestamps.firstMeaningfulPaint,
+      observedLargestContentfulPaint: processedNavigation?.timings.largestContentfulPaint,
+      observedLargestContentfulPaintTs: processedNavigation?.timestamps.largestContentfulPaint,
+      observedLargestContentfulPaintAllFrames: processedNavigation?.timings.largestContentfulPaintAllFrames,
+      observedLargestContentfulPaintAllFramesTs: processedNavigation?.timestamps.largestContentfulPaintAllFrames,
       observedTraceEnd: processedTrace.timings.traceEnd,
       observedTraceEndTs: processedTrace.timestamps.traceEnd,
-      observedLoad: processedNavigation && processedNavigation.timings.load,
-      observedLoadTs: processedNavigation && processedNavigation.timestamps.load,
-      observedDomContentLoaded: processedNavigation && processedNavigation.timings.domContentLoaded,
-      observedDomContentLoadedTs: processedNavigation && processedNavigation.timestamps.domContentLoaded,
+      observedLoad: processedNavigation?.timings.load,
+      observedLoadTs: processedNavigation?.timestamps.load,
+      observedDomContentLoaded: processedNavigation?.timings.domContentLoaded,
+      observedDomContentLoadedTs: processedNavigation?.timestamps.domContentLoaded,
       observedCumulativeLayoutShift: cumulativeLayoutShift,
       observedCumulativeLayoutShiftMainFrame: cumulativeLayoutShiftMainFrame,
       observedTotalCumulativeLayoutShift: totalCumulativeLayoutShift,
@@ -128,20 +129,29 @@ class TimingSummary {
 
     /** @type {Record<string,boolean>} */
     const debugInfo = {
-      lcpInvalidated: !!(processedNavigation && processedNavigation.lcpInvalidated),
+      lcpInvalidated: !!processedNavigation?.lcpInvalidated,
     };
 
     return {metrics, debugInfo};
   }
   /**
-   * @param {{trace: LH.Trace, devtoolsLog: LH.DevtoolsLog, gatherContext: LH.Artifacts['GatherContext']; settings: ImmutableObject<LH.Config.Settings>}} data
+   * @param {{trace: LH.Trace, devtoolsLog: LH.DevtoolsLog, gatherContext: LH.Artifacts['GatherContext']; settings: ImmutableObject<LH.Config.Settings>, URL: LH.Artifacts['URL']}} data
    * @param {LH.Artifacts.ComputedContext} context
    * @return {Promise<{metrics: LH.Artifacts.TimingSummary, debugInfo: Record<string,boolean>}>}
    */
   static async compute_(data, context) {
-    return TimingSummary.summarize(data.trace, data.devtoolsLog, data.gatherContext, data.settings,
-      context);
+    return TimingSummary.summarize(
+      data.trace,
+      data.devtoolsLog,
+      data.gatherContext,
+      data.settings,
+      data.URL,
+      context
+    );
   }
 }
 
-module.exports = makeComputedArtifact(TimingSummary);
+module.exports = makeComputedArtifact(
+  TimingSummary,
+  ['devtoolsLog', 'gatherContext', 'settings', 'trace', 'URL']
+);

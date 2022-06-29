@@ -9,7 +9,8 @@
  * URL shim so we keep our code DRY
  */
 
-const Util = require('../util-commonjs.js');
+const {Util} = require('../util-commonjs.js');
+const LHError = require('../lib/lh-error.js');
 
 /** @typedef {import('./network-request.js')} NetworkRequest */
 
@@ -235,9 +236,9 @@ class URLShim extends URL {
     }
 
     if (url.protocol === 'data:') {
-      const match = url.pathname.match(/image\/(png|jpeg|svg\+xml|webp|gif|avif)(?=;)/);
+      const match = url.pathname.match(/^(image\/(png|jpeg|svg\+xml|webp|gif|avif))[;,]/);
       if (!match) return undefined;
-      return match[0];
+      return match[1];
     }
 
     const match = url.pathname.toLowerCase().match(/\.(png|jpeg|jpg|svg|webp|gif|avif)$/);
@@ -247,6 +248,20 @@ class URLShim extends URL {
     if (ext === 'svg') return 'image/svg+xml';
     if (ext === 'jpg') return 'image/jpeg';
     return `image/${ext}`;
+  }
+
+  /**
+   * @param {string|undefined} url
+   * @return {string}
+   */
+  static normalizeUrl(url) {
+    // Verify the url is valid and that protocol is allowed
+    if (url && this.isValid(url) && this.isProtocolAllowed(url)) {
+      // Use canonicalized URL (with trailing slashes and such)
+      return new URL(url).href;
+    } else {
+      throw new LHError(LHError.errors.INVALID_URL);
+    }
   }
 }
 

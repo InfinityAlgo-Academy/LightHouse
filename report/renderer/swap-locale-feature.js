@@ -3,7 +3,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 /**
  * @fileoverview Creates a <select> element, filled with all supported locales
@@ -33,17 +32,17 @@ export class SwapLocaleFeature {
       throw new Error('missing icuMessagePaths');
     }
 
-    this._dom.find('.lh-tools-locale', this._dom.document()).classList.remove('lh-hidden');
+    this._dom.find('.lh-tools-locale', this._dom.rootEl).classList.remove('lh-hidden');
 
     const currentLocale = this._reportUIFeatures.json.configSettings.locale;
 
-    const containerEl = this._dom.find('.lh-tools-locale__selector-wrapper', this._dom.document());
+    const containerEl = this._dom.find('.lh-tools-locale__selector-wrapper', this._dom.rootEl);
     containerEl.removeAttribute('aria-hidden');
     const selectEl = this._dom.createChildOf(containerEl, 'select', 'lh-locale-selector');
     selectEl.name = 'lh-locale-list';
     selectEl.setAttribute('role', 'menuitem');
 
-    const toggleEl = this._dom.find('.lh-tool-locale__button', this._dom.document());
+    const toggleEl = this._dom.find('.lh-tool-locale__button', this._dom.rootEl);
     toggleEl.addEventListener('click', () => {
       toggleEl.classList.toggle('lh-active');
     });
@@ -53,18 +52,13 @@ export class SwapLocaleFeature {
       optionEl.value = locale;
       if (locale === currentLocale) optionEl.selected = true;
 
-      // @ts-expect-error: waiting for typescript 4.5. Might need to add "ES2020.Intl"
-      // to tsconfig libs.
-      // https://github.com/microsoft/TypeScript/pull/44022#issuecomment-915087098
       if (window.Intl && Intl.DisplayNames) {
-        // @ts-expect-error
         const currentLocaleDisplay = new Intl.DisplayNames([currentLocale], {type: 'language'});
-        // @ts-expect-error
         const optionLocaleDisplay = new Intl.DisplayNames([locale], {type: 'language'});
 
         const optionLocaleName = optionLocaleDisplay.of(locale);
-        const currentLocaleName = currentLocaleDisplay.of(locale);
-        if (optionLocaleName !== currentLocaleName) {
+        const currentLocaleName = currentLocaleDisplay.of(locale) || locale;
+        if (optionLocaleName && optionLocaleName !== currentLocaleName) {
           optionEl.textContent = `${optionLocaleName} – ${currentLocaleName}`;
         } else {
           optionEl.textContent = currentLocaleName;

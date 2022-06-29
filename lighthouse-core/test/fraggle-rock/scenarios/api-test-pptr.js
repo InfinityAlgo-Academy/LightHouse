@@ -3,15 +3,12 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 import {jest} from '@jest/globals';
 
 import * as lighthouse from '../../../fraggle-rock/api.js';
 import {createTestState, getAuditsBreakdown} from './pptr-test-utils.js';
 import {LH_ROOT} from '../../../../root.js';
-
-/* eslint-env jest */
 
 jest.setTimeout(90_000);
 
@@ -41,13 +38,18 @@ describe('Fraggle Rock API', () => {
       const result = await lighthouse.snapshot({page: state.page});
       if (!result) throw new Error('Lighthouse failed to produce a result');
 
-      const {lhr} = result;
+      const {lhr, artifacts} = result;
+      const url = `${state.serverBaseUrl}/onclick.html#done`;
+      expect(artifacts.URL).toEqual({
+        initialUrl: url,
+        finalUrl: url,
+      });
+
       const accessibility = lhr.categories.accessibility;
       expect(accessibility.score).toBeLessThan(1);
 
       const {auditResults, erroredAudits, failedAudits} = getAuditsBreakdown(lhr);
-      // TODO(FR-COMPAT): This assertion can be removed when full compatibility is reached.
-      expect(auditResults.length).toMatchInlineSnapshot(`74`);
+      expect(auditResults.map(audit => audit.id).sort()).toMatchSnapshot();
 
       expect(erroredAudits).toHaveLength(0);
       expect(failedAudits.map(audit => audit.id)).toContain('label');
@@ -65,10 +67,18 @@ describe('Fraggle Rock API', () => {
 
       await setupTestPage();
 
+      // Wait long enough to ensure a paint after button interaction.
+      await state.page.waitForTimeout(200);
+
       const result = await run.endTimespan();
       if (!result) throw new Error('Lighthouse failed to produce a result');
 
-      const {lhr} = result;
+      const {lhr, artifacts} = result;
+      expect(artifacts.URL).toEqual({
+        initialUrl: 'about:blank',
+        finalUrl: `${state.serverBaseUrl}/onclick.html#done`,
+      });
+
       const bestPractices = lhr.categories['best-practices'];
       expect(bestPractices.score).toBeLessThan(1);
 
@@ -78,11 +88,9 @@ describe('Fraggle Rock API', () => {
         failedAudits,
         notApplicableAudits,
       } = getAuditsBreakdown(lhr);
-      // TODO(FR-COMPAT): This assertion can be removed when full compatibility is reached.
-      expect(auditResults.length).toMatchInlineSnapshot(`44`);
+      expect(auditResults.map(audit => audit.id).sort()).toMatchSnapshot();
 
-      expect(notApplicableAudits.length).toMatchInlineSnapshot(`5`);
-      expect(notApplicableAudits.map(audit => audit.id)).not.toContain('server-response-time');
+      expect(notApplicableAudits.map(audit => audit.id).sort()).toMatchSnapshot();
       expect(notApplicableAudits.map(audit => audit.id)).not.toContain('total-blocking-time');
 
       expect(erroredAudits).toHaveLength(0);
@@ -110,7 +118,8 @@ describe('Fraggle Rock API', () => {
 
     it('should compute results from timespan after page load', async () => {
       const {page, serverBaseUrl} = state;
-      await page.goto(`${serverBaseUrl}/onclick.html`);
+      const initialUrl = `${serverBaseUrl}/onclick.html`;
+      await page.goto(initialUrl);
       await page.waitForSelector('button');
 
       const run = await lighthouse.startTimespan({page});
@@ -118,15 +127,22 @@ describe('Fraggle Rock API', () => {
       await page.click('button');
       await page.waitForSelector('input');
 
+      // Wait long enough to ensure a paint after button interaction.
+      await page.waitForTimeout(200);
+
       const result = await run.endTimespan();
 
       if (!result) throw new Error('Lighthouse failed to produce a result');
 
-      const {auditResults, erroredAudits, notApplicableAudits} = getAuditsBreakdown(result.lhr);
-      expect(auditResults.length).toMatchInlineSnapshot(`44`);
+      expect(result.artifacts.URL).toEqual({
+        initialUrl,
+        finalUrl: `${initialUrl}#done`,
+      });
 
-      expect(notApplicableAudits.length).toMatchInlineSnapshot(`19`);
-      expect(notApplicableAudits.map(audit => audit.id)).toContain('server-response-time');
+      const {auditResults, erroredAudits, notApplicableAudits} = getAuditsBreakdown(result.lhr);
+      expect(auditResults.map(audit => audit.id).sort()).toMatchSnapshot();
+
+      expect(notApplicableAudits.map(audit => audit.id).sort()).toMatchSnapshot();
       expect(notApplicableAudits.map(audit => audit.id)).not.toContain('total-blocking-time');
 
       expect(erroredAudits).toHaveLength(0);
@@ -141,13 +157,20 @@ describe('Fraggle Rock API', () => {
 
     it('should compute both snapshot & timespan results', async () => {
       const {page, serverBaseUrl} = state;
-      const result = await lighthouse.navigation({page, url: `${serverBaseUrl}/index.html`});
+      const url = `${serverBaseUrl}/index.html`;
+      const result = await lighthouse.navigation(url, {page});
       if (!result) throw new Error('Lighthouse failed to produce a result');
 
-      const {lhr} = result;
+      const {lhr, artifacts} = result;
+      expect(artifacts.URL).toEqual({
+        initialUrl: 'about:blank',
+        requestedUrl: url,
+        mainDocumentUrl: url,
+        finalUrl: url,
+      });
+
       const {auditResults, failedAudits, erroredAudits} = getAuditsBreakdown(lhr);
-      // TODO(FR-COMPAT): This assertion can be removed when full compatibility is reached.
-      expect(auditResults.length).toMatchInlineSnapshot(`152`);
+      expect(auditResults.map(audit => audit.id).sort()).toMatchSnapshot();
       expect(erroredAudits).toHaveLength(0);
 
       const failedAuditIds = failedAudits.map(audit => audit.id);
@@ -158,7 +181,55 @@ describe('Fraggle Rock API', () => {
       expect(lhr.audits).toHaveProperty('total-byte-weight');
       const details = lhr.audits['total-byte-weight'].details;
       if (!details || details.type !== 'table') throw new Error('Unexpected byte weight details');
-      expect(details.items).toMatchObject([{url: `${serverBaseUrl}/index.html`}]);
+      expect(details.items).toMatchObject([{url}]);
+
+      // Check that performance metrics were computed.
+      expect(lhr.audits).toHaveProperty('first-contentful-paint');
+      expect(Number.isFinite(lhr.audits['first-contentful-paint'].numericValue)).toBe(true);
+    });
+
+    it('should compute results with callback requestor', async () => {
+      const {page, serverBaseUrl} = state;
+      const initialUrl = `${serverBaseUrl}/links-to-index.html`;
+      const requestedUrl = `${serverBaseUrl}/?redirect=/index.html`;
+      const mainDocumentUrl = `${serverBaseUrl}/index.html`;
+      await page.goto(initialUrl);
+
+      const requestor = jest.fn(async () => {
+        await page.click('a');
+      });
+
+      const result = await lighthouse.navigation(requestor, {page});
+      if (!result) throw new Error('Lighthouse failed to produce a result');
+
+      expect(requestor).toHaveBeenCalled();
+
+      const {lhr, artifacts} = result;
+      expect(lhr.requestedUrl).toEqual(requestedUrl);
+      expect(lhr.finalUrl).toEqual(mainDocumentUrl);
+      expect(artifacts.URL).toEqual({
+        initialUrl,
+        requestedUrl,
+        mainDocumentUrl,
+        finalUrl: mainDocumentUrl,
+      });
+
+      const {auditResults, failedAudits, erroredAudits} = getAuditsBreakdown(lhr);
+      expect(auditResults.map(audit => audit.id).sort()).toMatchSnapshot();
+      expect(erroredAudits).toHaveLength(0);
+
+      const failedAuditIds = failedAudits.map(audit => audit.id);
+      expect(failedAuditIds).toContain('label');
+      expect(failedAuditIds).toContain('errors-in-console');
+
+      // Check that network request information was computed.
+      expect(lhr.audits).toHaveProperty('total-byte-weight');
+      const details = lhr.audits['total-byte-weight'].details;
+      if (!details || details.type !== 'table') throw new Error('Unexpected byte weight details');
+      expect(details.items).toMatchObject([
+        {url: mainDocumentUrl},
+        {url: `${serverBaseUrl}/?redirect=/index.html`},
+      ]);
 
       // Check that performance metrics were computed.
       expect(lhr.audits).toHaveProperty('first-contentful-paint');

@@ -3,17 +3,18 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-/* eslint-env jest */
-const PageExecutionTimings = require('../../audits/mainthread-work-breakdown.js');
-const assert = require('assert').strict;
+import {strict as assert} from 'assert';
+
+import {readJson} from '../../../root.js';
+import PageExecutionTimings from '../../audits/mainthread-work-breakdown.js';
+
+const acceptableTrace = readJson('../fixtures/traces/progressive-app-m60.json', import.meta);
+const siteWithRedirectTrace = readJson('../fixtures/traces/site-with-redirect.json', import.meta);
+const loadTrace = readJson('../fixtures/traces/load.json', import.meta);
+const errorTrace = readJson('../fixtures/traces/no_fmp_event.json', import.meta);
+
 const options = PageExecutionTimings.defaultOptions;
-
-const acceptableTrace = require('../fixtures/traces/progressive-app-m60.json');
-const siteWithRedirectTrace = require('../fixtures/traces/site-with-redirect.json');
-const loadTrace = require('../fixtures/traces/load.json');
-const errorTrace = require('../fixtures/traces/no_fmp_event.json');
 
 const acceptableTraceExpectations = {
   parseHTML: 14,
@@ -77,7 +78,7 @@ describe('Performance: page execution timings audit', () => {
 
     assert.equal(Math.round(output.numericValue), 4081);
     assert.equal(output.details.items.length, 7);
-    assert.equal(output.score, 0.49);
+    assert.equal(output.score, 0.48);
   });
 
   it('should compute the correct values for the redirect trace', async () => {

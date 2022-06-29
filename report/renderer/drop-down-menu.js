@@ -3,7 +3,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 /* eslint-env browser */
 
@@ -36,11 +35,11 @@ export class DropDownMenu {
    * @param {function(MouseEvent): any} menuClickHandler
    */
   setup(menuClickHandler) {
-    this._toggleEl = this._dom.find('button.lh-tools__button', this._dom.document());
+    this._toggleEl = this._dom.find('.lh-topbar button.lh-tools__button', this._dom.rootEl);
     this._toggleEl.addEventListener('click', this.onToggleClick);
     this._toggleEl.addEventListener('keydown', this.onToggleKeydown);
 
-    this._menuEl = this._dom.find('div.lh-tools__dropdown', this._dom.document());
+    this._menuEl = this._dom.find('.lh-topbar div.lh-tools__dropdown', this._dom.rootEl);
     this._menuEl.addEventListener('keydown', this.onMenuKeydown);
     this._menuEl.addEventListener('click', menuClickHandler);
   }

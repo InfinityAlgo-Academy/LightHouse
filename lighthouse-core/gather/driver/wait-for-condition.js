@@ -5,7 +5,7 @@
  */
 'use strict';
 
-/* global window, performance */
+/* global window */
 
 const log = require('lighthouse-logger');
 const LHError = require('../../lib/lh-error.js');
@@ -114,7 +114,7 @@ function waitForFcp(session, pauseAfterFcpMs, maxWaitForFcpMs) {
  * `networkQuietThresholdMs` ms and a method to cancel internal network listeners/timeout.
  * @param {LH.Gatherer.FRProtocolSession} session
  * @param {NetworkMonitor} networkMonitor
- * @param {{networkQuietThresholdMs: number, busyEvent: NetworkMonitorEvent, idleEvent: NetworkMonitorEvent, isIdle(recorder: NetworkMonitor): boolean}} networkQuietOptions
+ * @param {{networkQuietThresholdMs: number, busyEvent: NetworkMonitorEvent, idleEvent: NetworkMonitorEvent, isIdle(recorder: NetworkMonitor): boolean, pretendDCLAlreadyFired?: boolean}} networkQuietOptions
  * @return {CancellableWait}
  */
 function waitForNetworkIdle(session, networkMonitor, networkQuietOptions) {
@@ -164,7 +164,8 @@ function waitForNetworkIdle(session, networkMonitor, networkQuietOptions) {
       const inflightRecords = networkMonitor.getInflightRequests();
       // If there are more than 20 inflight requests, load is still in full swing.
       // Wait until it calms down a bit to be a little less spammy.
-      if (inflightRecords.length < 20) {
+      if (log.isVerbose() && inflightRecords.length < 20 && inflightRecords.length > 0) {
+        log.verbose('waitFor', `=== Waiting on ${inflightRecords.length} requests to finish`);
         for (const record of inflightRecords) {
           log.verbose('waitFor', `Waiting on ${record.url.slice(0, 120)} to finish`);
         }
@@ -172,20 +173,27 @@ function waitForNetworkIdle(session, networkMonitor, networkQuietOptions) {
     };
 
     networkMonitor.on('requeststarted', logStatus);
-    networkMonitor.on('requestloaded', logStatus);
+    networkMonitor.on('requestfinished', logStatus);
     networkMonitor.on(busyEvent, logStatus);
 
-    session.once('Page.domContentEventFired', domContentLoadedListener);
+    if (!networkQuietOptions.pretendDCLAlreadyFired) {
+      session.once('Page.domContentEventFired', domContentLoadedListener);
+    } else {
+      domContentLoadedListener();
+    }
+
     let canceled = false;
     cancel = () => {
       if (canceled) return;
       canceled = true;
-      idleTimeout && clearTimeout(idleTimeout);
-      session.off('Page.domContentEventFired', domContentLoadedListener);
+      if (idleTimeout) clearTimeout(idleTimeout);
+      if (!networkQuietOptions.pretendDCLAlreadyFired) {
+        session.off('Page.domContentEventFired', domContentLoadedListener);
+      }
       networkMonitor.removeListener(busyEvent, onBusy);
       networkMonitor.removeListener(idleEvent, onIdle);
       networkMonitor.removeListener('requeststarted', logStatus);
-      networkMonitor.removeListener('requestloaded', logStatus);
+      networkMonitor.removeListener('requestfinished', logStatus);
       networkMonitor.removeListener(busyEvent, logStatus);
     };
   });
