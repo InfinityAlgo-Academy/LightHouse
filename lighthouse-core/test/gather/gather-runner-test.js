@@ -25,9 +25,9 @@ import {
   fnAny,
   timers,
   requireMock,
+  readJson,
 } from '../test-utils.js';
 import fakeDriver from './fake-driver.js';
-import {readJson} from '../../../root.js';
 
 const unresolvedPerfLog = readJson('./../fixtures/unresolved-perflog.json', import.meta);
 

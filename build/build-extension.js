@@ -11,7 +11,8 @@ import cpy from 'cpy';
 import {rollup} from 'rollup';
 
 import * as rollupPlugins from './rollup-plugins.js';
-import {LH_ROOT, readJson} from '../root.js';
+import {LH_ROOT} from '../root.js';
+import {readJson} from '../lighthouse-core/test/test-utils.js';
 
 const argv = process.argv.slice(2);
 const browserBrand = argv[0];

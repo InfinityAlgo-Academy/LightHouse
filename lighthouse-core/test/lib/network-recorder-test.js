@@ -6,9 +6,9 @@
 
 import {strict as assert} from 'assert';
 
-import {readJson} from '../../../root.js';
 import NetworkRecorder from '../../lib/network-recorder.js';
 import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
+import {readJson} from '../test-utils.js';
 
 const devtoolsLogItems = readJson('../fixtures/artifacts/perflog/defaultPass.devtoolslog.json', import.meta);
 const prefetchedScriptDevtoolsLog = readJson('../fixtures/prefetched-script.devtoolslog.json', import.meta);

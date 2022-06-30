@@ -11,7 +11,8 @@ import fs from 'fs';
 import open from 'open';
 
 import reportGenerator from '../../report/generator/report-generator.js';
-import {LH_ROOT, readJson} from '../../root.js';
+import {LH_ROOT} from '../../root.js';
+import {readJson} from '../test/test-utils.js';
 
 const flow = readJson('lighthouse-core/test/fixtures/fraggle-rock/reports/sample-flow-result.json');
 const htmlReport = reportGenerator.generateFlowReportHtml(flow);

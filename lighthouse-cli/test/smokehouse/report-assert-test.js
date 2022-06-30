@@ -6,8 +6,8 @@
 
 /* eslint-disable no-control-regex */
 
+import {readJson} from '../../../lighthouse-core/test/test-utils.js';
 import {findDifferences, getAssertionReport} from './report-assert.js';
-import {readJson} from '../../../root.js';
 
 describe('findDiffersences', () => {
   const testCases = {

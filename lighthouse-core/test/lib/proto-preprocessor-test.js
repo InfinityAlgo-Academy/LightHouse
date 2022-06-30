@@ -4,9 +4,8 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import {getProtoRoundTrip} from '../test-utils.js';
+import {getProtoRoundTrip, readJson} from '../test-utils.js';
 import {processForProto} from '../../lib/proto-preprocessor.js';
-import {readJson} from '../../../root.js';
 
 const sampleJson = readJson('../results/sample_v2.json', import.meta);
 

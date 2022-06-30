@@ -6,10 +6,10 @@
 
 import {strict as assert} from 'assert';
 
-import {readJson} from '../../../root.js';
 import CriticalRequestChains from '../../audits/critical-request-chains.js';
 import createTestTrace from '../create-test-trace.js';
 import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
+import {readJson} from '../test-utils.js';
 
 const redditDevtoolsLog = readJson('../fixtures/artifacts/perflog/defaultPass.devtoolslog.json', import.meta);
 

@@ -6,12 +6,11 @@
 
 import {strict as assert} from 'assert';
 
-import {readJson} from '../../../root.js';
 import CriticalRequestChains from '../../computed/critical-request-chains.js';
 import NetworkRequest from '../../lib/network-request.js';
 import createTestTrace from '../create-test-trace.js';
 import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
-import {getURLArtifactFromDevtoolsLog} from '../test-utils.js';
+import {getURLArtifactFromDevtoolsLog, readJson} from '../test-utils.js';
 
 const wikipediaDevtoolsLog = readJson('../fixtures/wikipedia-redirect.devtoolslog.json', import.meta);
 

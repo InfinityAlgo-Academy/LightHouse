@@ -6,8 +6,7 @@
 
 import TotalBlockingTime from '../../../computed/metrics/total-blocking-time.js';
 import {calculateSumOfBlockingTime} from '../../../computed/metrics/tbt-utils.js';
-import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';
-import {readJson} from '../../../../root.js';
+import {getURLArtifactFromDevtoolsLog, readJson} from '../../test-utils.js';
 
 const trace = readJson('../../fixtures/traces/progressive-app-m60.json', import.meta);
 const devtoolsLog = readJson('../../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);

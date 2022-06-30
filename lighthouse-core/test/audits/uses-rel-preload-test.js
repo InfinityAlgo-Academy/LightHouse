@@ -9,8 +9,7 @@ import {strict as assert} from 'assert';
 import UsesRelPreload from '../../audits/uses-rel-preload.js';
 import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
 import createTestTrace from '../create-test-trace.js';
-import {getURLArtifactFromDevtoolsLog} from '../test-utils.js';
-import {readJson} from '../../../root.js';
+import {getURLArtifactFromDevtoolsLog, readJson} from '../test-utils.js';
 
 const pwaTrace = readJson('../fixtures/traces/progressive-app-m60.json', import.meta);
 const pwaDevtoolsLog = readJson('../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);

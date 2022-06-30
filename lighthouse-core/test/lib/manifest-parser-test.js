@@ -6,8 +6,8 @@
 
 import {strict as assert} from 'assert';
 
-import {readJson} from '../../../root.js';
 import manifestParser from '../../lib/manifest-parser.js';
+import {readJson} from '../test-utils.js';
 
 const manifestStub = readJson('../fixtures/manifest.json', import.meta);
 

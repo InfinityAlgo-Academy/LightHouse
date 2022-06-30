@@ -19,7 +19,7 @@ import path from 'path';
 import chalk from 'chalk';
 
 import constants from './constants.js';
-import {readJson} from '../../../root.js';
+import {readJson} from '../../test/test-utils.js';
 
 const GOOD_DIFF_AS_PERCENT_THRESHOLD = 0.2;
 const OK_DIFF_AS_PERCENT_THRESHOLD = 0.5;

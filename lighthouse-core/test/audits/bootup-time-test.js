@@ -6,8 +6,8 @@
 
 import {strict as assert} from 'assert';
 
-import {readJson} from '../../../root.js';
 import BootupTime from '../../audits/bootup-time.js';
+import {readJson} from '../test-utils.js';
 
 const acceptableTrace = readJson('../fixtures/traces/progressive-app-m60.json', import.meta);
 const acceptableDevtoolsLogs = readJson('../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);

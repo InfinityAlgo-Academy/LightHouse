@@ -9,8 +9,7 @@ import {strict as assert} from 'assert';
 import FMPAudit from '../../../audits/metrics/first-meaningful-paint.js';
 import Audit from '../../../audits/audit.js';
 import constants from '../../../config/constants.js';
-import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';
-import {readJson} from '../../../../root.js';
+import {getURLArtifactFromDevtoolsLog, readJson} from '../../test-utils.js';
 
 const trace = readJson('../../fixtures/traces/progressive-app-m60.json', import.meta);
 const devtoolsLogs = readJson('../../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);

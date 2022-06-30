@@ -6,9 +6,9 @@
 
 import {strict as assert} from 'assert';
 
-import {readJson} from '../../../root.js';
 import InstallableManifestAudit from '../../audits/installable-manifest.js';
 import manifestParser from '../../lib/manifest-parser.js';
+import {readJson} from '../test-utils.js';
 
 const manifest = readJson('../fixtures/manifest.json', import.meta);
 const manifestDirtyJpg = readJson('../fixtures/manifest-dirty-jpg.json', import.meta);

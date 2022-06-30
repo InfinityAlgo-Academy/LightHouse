@@ -21,7 +21,8 @@ import PubAdsPlugin from 'lighthouse-plugin-publisher-ads/plugin.js';
 
 import * as rollupPlugins from './rollup-plugins.js';
 import Runner from '../lighthouse-core/runner.js';
-import {LH_ROOT, readJson} from '../root.js';
+import {LH_ROOT} from '../root.js';
+import {readJson} from '../lighthouse-core/test/test-utils.js';
 
 const require = createRequire(import.meta.url);
 

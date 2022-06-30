@@ -6,9 +6,9 @@
 
 import {strict as assert} from 'assert';
 
-import {readJson} from '../../../../root.js';
 import TraceProcessor from '../../../lib/tracehouse/trace-processor.js';
 import createTestTrace from '../../create-test-trace.js';
+import {readJson} from '../../test-utils.js';
 
 const pwaTrace = readJson('../../fixtures/traces/progressive-app.json', import.meta);
 const badNavStartTrace = readJson('../../fixtures/traces/bad-nav-start-ts.json', import.meta);

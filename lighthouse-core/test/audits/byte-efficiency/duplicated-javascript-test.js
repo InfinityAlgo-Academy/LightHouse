@@ -4,12 +4,12 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import {readJson} from '../../../../root.js';
 import DuplicatedJavascript from '../../../audits/byte-efficiency/duplicated-javascript.js';
 import {
   loadSourceMapFixture,
   createScript,
   getURLArtifactFromDevtoolsLog,
+  readJson,
 } from '../../test-utils.js';
 
 const trace = readJson('../../fixtures/traces/lcp-m78.json', import.meta);

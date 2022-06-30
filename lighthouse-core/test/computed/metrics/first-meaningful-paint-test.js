@@ -6,9 +6,8 @@
 
 import {strict as assert} from 'assert';
 
-import {readJson} from '../../../../root.js';
 import FirstMeaningfulPaint from '../../../computed/metrics/first-meaningful-paint.js';
-import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';
+import {getURLArtifactFromDevtoolsLog, readJson} from '../../test-utils.js';
 
 const pwaTrace = readJson('../../fixtures/traces/progressive-app-m60.json', import.meta);
 const pwaDevtoolsLog = readJson('../../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);

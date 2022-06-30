@@ -9,7 +9,8 @@ import fs from 'fs';
 import * as td from 'testdouble';
 import jestMock from 'jest-mock';
 
-import {LH_ROOT, readJson} from '../../../root.js';
+import {LH_ROOT} from '../../../root.js';
+import {readJson} from '../../../lighthouse-core/test/test-utils.js';
 
 const mockRunLighthouse = jestMock.fn();
 const mockGetFlags = jestMock.fn();

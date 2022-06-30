@@ -6,8 +6,8 @@
 
 import {strict as assert} from 'assert';
 
-import {readJson} from '../../../root.js';
 import Screenshots from '../../computed/screenshots.js';
+import {readJson} from '../test-utils.js';
 
 const pwaTrace = readJson('../fixtures/traces/progressive-app.json', import.meta);
 

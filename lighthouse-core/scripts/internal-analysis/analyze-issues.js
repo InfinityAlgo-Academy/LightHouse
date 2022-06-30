@@ -17,7 +17,7 @@
 
 import log from 'lighthouse-logger';
 
-import {readJson} from '../../../root.js';
+import {readJson} from '../../test/test-utils.js';
 
 /** @typedef {import('./download-issues.js').AugmentedGitHubIssue} AugmentedGitHubIssue */
 

@@ -6,8 +6,8 @@
 
 import {strict as assert} from 'assert';
 
-import {readJson} from '../../../root.js';
 import PageExecutionTimings from '../../audits/mainthread-work-breakdown.js';
+import {readJson} from '../test-utils.js';
 
 const acceptableTrace = readJson('../fixtures/traces/progressive-app-m60.json', import.meta);
 const siteWithRedirectTrace = readJson('../fixtures/traces/site-with-redirect.json', import.meta);

@@ -6,8 +6,8 @@
 
 import {strict as assert} from 'assert';
 
-import {readJson} from '../../../root.js';
 import UserTimingsAudit from '../../audits/user-timings.js';
+import {readJson} from '../test-utils.js';
 
 const traceEvents = readJson('../fixtures/traces/trace-user-timings.json', import.meta);
 

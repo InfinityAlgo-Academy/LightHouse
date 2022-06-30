@@ -8,7 +8,8 @@
 
 import glob from 'glob';
 
-import {LH_ROOT, readJson} from '../../../root.js';
+import {LH_ROOT} from '../../../root.js';
+import {readJson} from '../../test/test-utils.js';
 
 /** @type {LhlMessages} */
 const enUsLhl = readJson('shared/localization/locales/en-US.json');

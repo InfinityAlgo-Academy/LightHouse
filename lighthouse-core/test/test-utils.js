@@ -16,6 +16,7 @@ import {LH_ROOT} from '../../root.js';
 import * as mockCommands from './gather/mock-commands.js';
 import NetworkRecorder from '../lib/network-recorder.js';
 import {timers} from './test-env/fake-timers.js';
+import {getModuleDirectory} from '../../esm-utils.mjs';
 
 const require = createRequire(import.meta.url);
 
@@ -308,6 +309,22 @@ function requireMock(modulePath, importMeta) {
   return mock;
 }
 
+/**
+ * Return parsed json object.
+ * Resolves path relative to importMeta.url (if provided) or LH_ROOT (if not provided).
+ *
+ * Note: Do not use this in lighthouse-core/ outside tests or scripts, as it
+ * will not be inlined when bundled. Instead, use `fs.readFileSync`.
+ *
+ * @param {string} filePath Can be an absolute or relative path.
+ * @param {ImportMeta=} importMeta
+ */
+function readJson(filePath, importMeta) {
+  const dir = importMeta ? getModuleDirectory(importMeta) : LH_ROOT;
+  filePath = path.resolve(dir, filePath);
+  return JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+}
+
 export {
   timers,
   getProtoRoundTrip,
@@ -324,4 +341,5 @@ export {
   getURLArtifactFromDevtoolsLog,
   importMock,
   requireMock,
+  readJson,
 };

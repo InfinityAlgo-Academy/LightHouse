@@ -6,8 +6,8 @@
 
 import {strict as assert} from 'assert';
 
-import {readJson} from '../../../../root.js';
 import Metrics from '../../../lib/traces/pwmetrics-events.js';
+import {readJson} from '../../test-utils.js';
 
 const dbwTrace = readJson('../../results/artifacts/defaultPass.trace.json', import.meta);
 const dbwResults = readJson('../../results/sample_v2.json', import.meta);

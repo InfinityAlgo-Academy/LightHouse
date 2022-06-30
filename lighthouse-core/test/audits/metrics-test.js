@@ -6,10 +6,9 @@
 
 import jestMock from 'jest-mock';
 
-import {readJson} from '../../../root.js';
 import MetricsAudit from '../../audits/metrics.js';
 import TTIComputed from '../../computed/metrics/interactive.js';
-import {getURLArtifactFromDevtoolsLog} from '../test-utils.js';
+import {getURLArtifactFromDevtoolsLog, readJson} from '../test-utils.js';
 
 const pwaTrace = readJson('../fixtures/traces/progressive-app-m60.json', import.meta);
 const pwaDevtoolsLog = readJson('../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);

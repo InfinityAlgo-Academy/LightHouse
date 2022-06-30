@@ -6,9 +6,8 @@
 
 import {strict as assert} from 'assert';
 
-import {readJson} from '../../../../root.js';
 import Interactive from '../../../computed/metrics/interactive.js';
-import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';
+import {getURLArtifactFromDevtoolsLog, readJson} from '../../test-utils.js';
 
 const trace = readJson('../../fixtures/traces/progressive-app-m60.json', import.meta);
 const devtoolsLog = readJson('../../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);

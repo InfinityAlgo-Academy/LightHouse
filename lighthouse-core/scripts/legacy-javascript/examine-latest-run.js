@@ -22,7 +22,8 @@ import colors from 'colors';
 
 import LegacyJavascript from '../../audits/byte-efficiency/legacy-javascript.js';
 import format from '../../../shared/localization/format.js';
-import {LH_ROOT, readJson} from '../../../root.js';
+import {LH_ROOT} from '../../../root.js';
+import {readJson} from '../../test/test-utils.js';
 
 const LATEST_RUN_DIR = path.join(LH_ROOT, 'latest-run');
 

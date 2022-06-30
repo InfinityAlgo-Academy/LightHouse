@@ -10,7 +10,7 @@ import MainThreadTasks from '../../../lib/tracehouse/main-thread-tasks.js';
 import TraceProcessor from '../../../lib/tracehouse/trace-processor.js';
 import {taskGroups} from '../../../lib/tracehouse/task-groups.js';
 import TracingProcessor from '../../../lib/tracehouse/trace-processor.js';
-import {readJson} from '../../../../root.js';
+import {readJson} from '../../test-utils.js';
 
 const pwaTrace = readJson('../../fixtures/traces/progressive-app.json', import.meta);
 const noTracingStartedTrace = readJson('../../fixtures/traces/no-tracingstarted-m74.json', import.meta);

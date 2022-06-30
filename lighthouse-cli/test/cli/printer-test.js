@@ -7,7 +7,7 @@
 import {strict as assert} from 'assert';
 import fs from 'fs';
 
-import {readJson} from '../../../root.js';
+import {readJson} from '../../../lighthouse-core/test/test-utils.js';
 import * as Printer from '../../printer.js';
 
 const sampleResults = readJson('../../../lighthouse-core/test/results/sample_v2.json', import.meta);

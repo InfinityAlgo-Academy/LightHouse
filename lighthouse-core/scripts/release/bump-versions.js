@@ -8,7 +8,7 @@ import fs from 'fs';
 
 import glob from 'glob';
 
-import {readJson} from '../../../root.js';
+import {readJson} from '../../test/test-utils.js';
 
 const NEW_VERSION = process.argv[2];
 if (!/^\d+\.\d+\.\d+(-dev\.\d{8})?$/.test(NEW_VERSION)) {

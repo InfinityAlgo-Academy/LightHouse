@@ -6,7 +6,7 @@
 
 import ProcessedTrace from '../../computed/processed-trace.js';
 import ProcessedNavigation from '../../computed/processed-navigation.js';
-import {readJson} from '../../../root.js';
+import {readJson} from '../test-utils.js';
 
 const pwaTrace = readJson('../fixtures/traces/progressive-app-m60.json', import.meta);
 const noFCPtrace = readJson('../fixtures/traces/airhorner_no_fcp.json', import.meta);

@@ -15,7 +15,8 @@ import swapFlowLocale from '../shared/localization/swap-flow-locale.js';
 import ReportGenerator from '../report/generator/report-generator.js';
 import {defaultSettings} from '../lighthouse-core/config/constants.js';
 import lighthouse from '../lighthouse-core/index.js';
-import {LH_ROOT, readJson} from '../root.js';
+import {LH_ROOT} from '../root.js';
+import {readJson} from '../lighthouse-core/test/test-utils.js';
 
 /** @type {LH.Result} */
 const lhr = readJson(`${LH_ROOT}/lighthouse-core/test/results/sample_v2.json`);

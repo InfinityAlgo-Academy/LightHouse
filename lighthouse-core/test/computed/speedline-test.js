@@ -7,7 +7,7 @@
 import {strict as assert} from 'assert';
 
 import Speedline from '../../computed/speedline.js';
-import {readJson} from '../../../root.js';
+import {readJson} from '../test-utils.js';
 
 const pwaTrace = readJson('../fixtures/traces/progressive-app.json', import.meta);
 const threeFrameTrace = readJson('../fixtures/traces/threeframes-blank_content_more.json', import.meta);

@@ -12,8 +12,7 @@ import CPUNode from '../../../lib/dependency-graph/cpu-node.js';
 import Simulator from '../../../lib/dependency-graph/simulator/simulator.js';
 import PageDependencyGraph from '../../../computed/page-dependency-graph.js';
 import LoadSimulator from '../../../computed/load-simulator.js';
-import {getURLArtifactFromDevtoolsLog} from '../../test-utils.js';
-import {readJson} from '../../../../root.js';
+import {getURLArtifactFromDevtoolsLog, readJson} from '../../test-utils.js';
 
 const trace = readJson('../../fixtures/traces/progressive-app-m60.json', import.meta);
 const devtoolsLog = readJson('../../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);

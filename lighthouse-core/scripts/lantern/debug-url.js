@@ -11,7 +11,8 @@ import path from 'path';
 import {execFileSync} from 'child_process';
 
 import constants from './constants.js';
-import {LH_ROOT, readJson} from '../../../root.js';
+import {LH_ROOT} from '../../../root.js';
+import {readJson} from '../../test/test-utils.js';
 
 const INPUT_URL = process.argv[2];
 if (!INPUT_URL) throw new Error('Usage $0: <url>');

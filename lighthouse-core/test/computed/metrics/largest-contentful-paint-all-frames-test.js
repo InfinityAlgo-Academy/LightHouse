@@ -6,8 +6,8 @@
 
 import {strict as assert} from 'assert';
 
-import {readJson} from '../../../../root.js';
 import LargestContentfulPaintAllFrames from '../../../computed/metrics/largest-contentful-paint-all-frames.js'; // eslint-disable-line max-len
+import {readJson} from '../../test-utils.js';
 
 const traceAllFrames = readJson('../../fixtures/traces/frame-metrics-m89.json', import.meta);
 const devtoolsLogAllFrames = readJson('../../fixtures/traces/frame-metrics-m89.devtools.log.json', import.meta);
