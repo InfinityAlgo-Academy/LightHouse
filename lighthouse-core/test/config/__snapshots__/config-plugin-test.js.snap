@@ -23,6 +23,9 @@ Object {
       ],
       "description": "A nice plugin for nice testing",
       "manualDescription": undefined,
+      "supportedModes": Array [
+        "navigation",
+      ],
       "title": "Nice Plugin",
     },
   },

@@ -39,6 +39,7 @@ const nicePlugin = {
       {id: 'nice-audit', weight: 1, group: 'group-a'},
       {id: 'installable-manifest', weight: 220},
     ],
+    supportedModes: ['navigation'],
   },
 };
 
@@ -115,6 +116,7 @@ describe('ConfigPlugin', () => {
       auditRefs: [
         {id: 'evil-audit', weight: 0, group: undefined},
       ],
+      supportedModes: ['navigation'],
     };
 
     const evilPlugin = {
@@ -242,11 +244,32 @@ describe('ConfigPlugin', () => {
       assert.ok(pluginJson);
     });
 
+    it('accepts a category with no supportedModes', () => {
+      const pluginClone = deepClone(nicePlugin);
+      delete pluginClone.category.supportedModes;
+      const pluginJson = ConfigPlugin.parsePlugin(pluginClone, nicePluginName);
+      assert.ok(pluginJson);
+    });
+
     it('throws if category has an invalid manualDescription', () => {
       const pluginClone = deepClone(nicePlugin);
       pluginClone.category.manualDescription = 55;
       assert.throws(() => ConfigPlugin.parsePlugin(pluginClone, nicePluginName),
         /^Error: lighthouse-plugin-nice-plugin has an invalid category manualDescription/);
+    });
+
+    it('throws if supported modes is not an array', () => {
+      const pluginClone = deepClone(nicePlugin);
+      pluginClone.category.supportedModes = 55;
+      assert.throws(() => ConfigPlugin.parsePlugin(pluginClone, nicePluginName),
+        /^Error: lighthouse-plugin-nice-plugin supportedModes must be an array/);
+    });
+
+    it('throws if supported modes is not an array of valid gather modes', () => {
+      const pluginClone = deepClone(nicePlugin);
+      pluginClone.category.supportedModes = ['invalid-mode'];
+      assert.throws(() => ConfigPlugin.parsePlugin(pluginClone, nicePluginName),
+        /^Error: lighthouse-plugin-nice-plugin supportedModes must be an array/);
     });
 
     describe('`category.auditRefs`', () => {

@@ -24,6 +24,24 @@ function isObjectOfUnknownProperties(val) {
 }
 
 /**
+ * @param {unknown} str
+ * @return {str is LH.Gatherer.GatherMode}
+ */
+function objectIsGatherMode(str) {
+  if (typeof str !== 'string') return false;
+  return str === 'navigation' || str === 'timespan' || str === 'snapshot';
+}
+
+/**
+ * @param {unknown} arr
+ * @return {arr is Array<LH.Gatherer.GatherMode>}
+ */
+function isArrayOfGatherModes(arr) {
+  if (!Array.isArray(arr)) return false;
+  return arr.every(objectIsGatherMode);
+}
+
+/**
  * Asserts that obj has no own properties, throwing a nice error message if it does.
  * Plugin and object name are included for nicer logging.
  * @param {Record<string, unknown>} obj
@@ -124,6 +142,7 @@ class ConfigPlugin {
       description,
       manualDescription,
       auditRefs: auditRefsJson,
+      supportedModes,
       ...invalidRest
     } = categoryJson;
 
@@ -138,6 +157,12 @@ class ConfigPlugin {
     if (!i18n.isStringOrIcuMessage(manualDescription) && manualDescription !== undefined) {
       throw new Error(`${pluginName} has an invalid category manualDescription.`);
     }
+    if (!isArrayOfGatherModes(supportedModes) && supportedModes !== undefined) {
+      throw new Error(
+        `${pluginName} supportedModes must be an array, ` +
+        `valid array values are "navigation", "timespan", and "snapshot".`
+      );
+    }
     const auditRefs = ConfigPlugin._parseAuditRefsList(auditRefsJson, pluginName);
 
     return {
@@ -145,6 +170,7 @@ class ConfigPlugin {
       auditRefs,
       description: description,
       manualDescription: manualDescription,
+      supportedModes,
     };
   }
 
