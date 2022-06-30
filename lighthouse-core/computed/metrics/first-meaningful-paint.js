@@ -7,7 +7,7 @@
 
 const makeComputedArtifact = require('../computed-artifact.js');
 const NavigationMetric = require('./navigation-metric.js');
-const LHError = require('../../lib/lh-error.js');
+const LighthouseError = require('../../lib/lh-error.js');
 const LanternFirstMeaningfulPaint = require('./lantern-first-meaningful-paint.js');
 
 class FirstMeaningfulPaint extends NavigationMetric {
@@ -28,7 +28,7 @@ class FirstMeaningfulPaint extends NavigationMetric {
   static async computeObservedMetric(data) {
     const {processedNavigation} = data;
     if (processedNavigation.timings.firstMeaningfulPaint === undefined) {
-      throw new LHError(LHError.errors.NO_FMP);
+      throw new LighthouseError(LighthouseError.errors.NO_FMP);
     }
 
     return {

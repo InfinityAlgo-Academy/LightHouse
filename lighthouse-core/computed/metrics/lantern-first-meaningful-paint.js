@@ -7,7 +7,7 @@
 
 const makeComputedArtifact = require('../computed-artifact.js');
 const LanternMetric = require('./lantern-metric.js');
-const LHError = require('../../lib/lh-error.js');
+const LighthouseError = require('../../lib/lh-error.js');
 const LanternFirstContentfulPaint = require('./lantern-first-contentful-paint.js');
 
 /** @typedef {import('../../lib/dependency-graph/base-node.js').Node} Node */
@@ -32,7 +32,7 @@ class LanternFirstMeaningfulPaint extends LanternMetric {
   static getOptimisticGraph(dependencyGraph, processedNavigation) {
     const fmp = processedNavigation.timestamps.firstMeaningfulPaint;
     if (!fmp) {
-      throw new LHError(LHError.errors.NO_FMP);
+      throw new LighthouseError(LighthouseError.errors.NO_FMP);
     }
 
     return LanternFirstContentfulPaint.getFirstPaintBasedGraph(
@@ -52,7 +52,7 @@ class LanternFirstMeaningfulPaint extends LanternMetric {
   static getPessimisticGraph(dependencyGraph, processedNavigation) {
     const fmp = processedNavigation.timestamps.firstMeaningfulPaint;
     if (!fmp) {
-      throw new LHError(LHError.errors.NO_FMP);
+      throw new LighthouseError(LighthouseError.errors.NO_FMP);
     }
 
     return LanternFirstContentfulPaint.getFirstPaintBasedGraph(

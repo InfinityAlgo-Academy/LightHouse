@@ -14,7 +14,7 @@ import _CrdpMappings from 'devtools-protocol/types/protocol-mapping';
 import * as Externs from './externs';
 import Gatherer_ from './gatherer';
 import * as I18n from './lhr/i18n';
-import LHError = require('../lighthouse-core/lib/lh-error.js');
+import LighthouseError_ = require('../lighthouse-core/lib/lh-error.js');
 import LHResult from './lhr/lhr';
 import FlowResult_ from './lhr/flow';
 import Protocol_ from './protocol';
@@ -59,7 +59,7 @@ declare global {
     export import DevToolsJsonTarget = Externs.DevToolsJsonTarget;
 
     export import Gatherer = Gatherer_;
-    export import LighthouseError = LHError;
+    export import LighthouseError = LighthouseError_;
     export import Result = LHResult;
     export import FlowResult = FlowResult_;
 

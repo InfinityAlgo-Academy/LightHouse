@@ -108,14 +108,14 @@ function init(opts) {
       const sampledErrorMatch = SAMPLED_ERRORS.find(sample => sample.pattern.test(err.message));
       if (sampledErrorMatch && sampledErrorMatch.rate <= Math.random()) return;
 
-      // @ts-expect-error - properties added to protocol method LHErrors.
+      // @ts-expect-error - properties added to protocol method LighthouseErrors.
       if (err.protocolMethod) {
         // Protocol errors all share same stack trace, so add more to fingerprint
-        // @ts-expect-error - properties added to protocol method LHErrors.
+        // @ts-expect-error - properties added to protocol method LighthouseErrors.
         opts.fingerprint = ['{{ default }}', err.protocolMethod, err.protocolError];
 
         opts.tags = opts.tags || {};
-        // @ts-expect-error - properties added to protocol method LHErrors.
+        // @ts-expect-error - properties added to protocol method LighthouseErrors.
         opts.tags.protocolMethod = err.protocolMethod;
       }
 

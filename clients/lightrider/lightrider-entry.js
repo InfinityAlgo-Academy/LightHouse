@@ -11,7 +11,7 @@ import {Buffer} from 'buffer';
 
 import log from 'lighthouse-logger';
 import lighthouse from '../../lighthouse-core/index.js';
-import LHError from '../../lighthouse-core/lib/lh-error.js';
+import LighthouseError from '../../lighthouse-core/lib/lh-error.js';
 import preprocessor from '../../lighthouse-core/lib/proto-preprocessor.js';
 import assetSaver from '../../lighthouse-core/lib/asset-saver.js';
 
@@ -86,9 +86,9 @@ export async function runLighthouseInLR(connection, url, flags, lrOpts) {
   } catch (err) {
     // If an error ruined the entire lighthouse run, attempt to return a meaningful error.
     let runtimeError;
-    if (!(err instanceof LHError) || !err.lhrRuntimeError) {
+    if (!(err instanceof LighthouseError) || !err.lhrRuntimeError) {
       runtimeError = {
-        code: LHError.UNKNOWN_ERROR,
+        code: LighthouseError.UNKNOWN_ERROR,
         message: `Unknown error encountered with message '${err.message}'`,
       };
     } else {

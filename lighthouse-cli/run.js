@@ -250,7 +250,7 @@ async function runLighthouse(url, flags, config) {
     if (runnerResult?.lhr.runtimeError) {
       const {runtimeError} = runnerResult.lhr;
       return printErrorAndExit({
-        name: 'LHError',
+        name: 'LighthouseError',
         friendlyMessage: runtimeError.message,
         code: runtimeError.code,
         message: runtimeError.message,

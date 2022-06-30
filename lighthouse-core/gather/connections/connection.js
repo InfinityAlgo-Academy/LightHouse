@@ -7,7 +7,7 @@
 
 const EventEmitter = require('events').EventEmitter;
 const log = require('lighthouse-logger');
-const LHError = require('../../lib/lh-error.js');
+const LighthouseError = require('../../lib/lh-error.js');
 
 // TODO(bckenny): CommandCallback properties should be tied by command type after
 // https://github.com/Microsoft/TypeScript/pull/22348. See driver.js TODO.
@@ -138,7 +138,7 @@ class Connection {
       callback.resolve(Promise.resolve().then(_ => {
         if (object.error) {
           log.formatProtocol('method <= browser ERR', {method: callback.method}, 'error');
-          throw LHError.fromProtocolMessage(callback.method, object.error);
+          throw LighthouseError.fromProtocolMessage(callback.method, object.error);
         }
 
         log.formatProtocol('method <= browser OK',

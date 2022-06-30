@@ -8,7 +8,7 @@
 /* global window */
 
 const log = require('lighthouse-logger');
-const LHError = require('../../lib/lh-error.js');
+const LighthouseError = require('../../lib/lh-error.js');
 const ExecutionContext = require('./execution-context.js');
 
 /** @typedef {import('./network-monitor.js')} NetworkMonitor */
@@ -75,7 +75,7 @@ function waitForFcp(session, pauseAfterFcpMs, maxWaitForFcpMs) {
   /** @type {Promise<void>} */
   const promise = new Promise((resolve, reject) => {
     const maxWaitTimeout = setTimeout(() => {
-      reject(new LHError(LHError.errors.NO_FCP));
+      reject(new LighthouseError(LighthouseError.errors.NO_FCP));
     }, maxWaitForFcpMs);
     /** @type {NodeJS.Timeout|undefined} */
     let loadTimeout;
@@ -476,7 +476,7 @@ async function waitForFullyLoaded(session, networkMonitor, options) {
         log.warn('waitFor', 'Page appears to be hung, killing JavaScript...');
         await session.sendCommand('Emulation.setScriptExecutionDisabled', {value: true});
         await session.sendCommand('Runtime.terminateExecution');
-        throw new LHError(LHError.errors.PAGE_HUNG);
+        throw new LighthouseError(LighthouseError.errors.PAGE_HUNG);
       }
 
       return {timedOut: true};

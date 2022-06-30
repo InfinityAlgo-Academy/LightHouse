@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const LHError = require('./lh-error.js');
+const LighthouseError = require('./lh-error.js');
 const NetworkAnalyzer = require('./dependency-graph/simulator/network-analyzer.js');
 const NetworkRequest = require('./network-request.js');
 const i18n = require('./i18n/i18n.js');
@@ -32,7 +32,7 @@ const XHTML_MIME_TYPE = 'application/xhtml+xml';
  */
 function getNetworkError(mainRecord) {
   if (!mainRecord) {
-    return new LHError(LHError.errors.NO_DOCUMENT_REQUEST);
+    return new LighthouseError(LighthouseError.errors.NO_DOCUMENT_REQUEST);
   } else if (mainRecord.failed) {
     const netErr = mainRecord.localizedFailDescription;
     // Match all resolution and DNS failures
@@ -42,12 +42,13 @@ function getNetworkError(mainRecord) {
       netErr === 'net::ERR_NAME_RESOLUTION_FAILED' ||
       netErr.startsWith('net::ERR_DNS_')
     ) {
-      return new LHError(LHError.errors.DNS_FAILURE);
+      return new LighthouseError(LighthouseError.errors.DNS_FAILURE);
     } else {
-      return new LHError(LHError.errors.FAILED_DOCUMENT_REQUEST, {errorDetails: netErr});
+      return new LighthouseError(
+        LighthouseError.errors.FAILED_DOCUMENT_REQUEST, {errorDetails: netErr});
     }
   } else if (mainRecord.hasErrorStatusCode()) {
-    return new LHError(LHError.errors.ERRORED_DOCUMENT_REQUEST, {
+    return new LighthouseError(LighthouseError.errors.ERRORED_DOCUMENT_REQUEST, {
       statusCode: `${mainRecord.statusCode}`,
     });
   }
@@ -76,13 +77,13 @@ function getInterstitialError(mainRecord, networkRecords) {
 
   // If a request failed with the `net::ERR_CERT_*` collection of errors, then it's a security issue.
   if (mainRecord.localizedFailDescription.startsWith('net::ERR_CERT')) {
-    return new LHError(LHError.errors.INSECURE_DOCUMENT_REQUEST, {
+    return new LighthouseError(LighthouseError.errors.INSECURE_DOCUMENT_REQUEST, {
       securityMessages: mainRecord.localizedFailDescription,
     });
   }
 
   // If we made it this far, it's a generic Chrome interstitial error.
-  return new LHError(LHError.errors.CHROME_INTERSTITIAL_ERROR);
+  return new LighthouseError(LighthouseError.errors.CHROME_INTERSTITIAL_ERROR);
 }
 
 /**
@@ -98,7 +99,7 @@ function getNonHtmlError(finalRecord) {
   // mimeType is determined by the browser, we assume Chrome is determining mimeType correctly,
   // independently of 'Content-Type' response headers, and always sending mimeType if well-formed.
   if (finalRecord.mimeType !== HTML_MIME_TYPE && finalRecord.mimeType !== XHTML_MIME_TYPE) {
-    return new LHError(LHError.errors.NOT_HTML, {
+    return new LighthouseError(LighthouseError.errors.NOT_HTML, {
       mimeType: finalRecord.mimeType,
     });
   }

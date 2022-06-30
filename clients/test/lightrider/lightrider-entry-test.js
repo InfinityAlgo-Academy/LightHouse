@@ -9,13 +9,13 @@ import jestMock from 'jest-mock';
 import {strict as assert} from 'assert';
 import {runLighthouseInLR} from '../../lightrider/lightrider-entry.js';
 import Runner from '../../../lighthouse-core/runner.js';
-import LHError from '../../../lighthouse-core/lib/lh-error.js';
+import LighthouseError from '../../../lighthouse-core/lib/lh-error.js';
 
 describe('lightrider-entry', () => {
   describe('#runLighthouseInLR', () => {
     it('returns a runtimeError LHR when lighthouse throws a runtimeError', async () => {
-      const connectionError = new LHError(
-        LHError.errors.FAILED_DOCUMENT_REQUEST,
+      const connectionError = new LighthouseError(
+        LighthouseError.errors.FAILED_DOCUMENT_REQUEST,
         {errorDetails: 'Bad connection req'}
       );
       assert.strictEqual(connectionError.lhrRuntimeError, true);
@@ -53,7 +53,7 @@ describe('lightrider-entry', () => {
 
       const result = await runLighthouseInLR(mockConnection, url, {output}, {});
       const parsedResult = JSON.parse(result);
-      assert.strictEqual(parsedResult.runtimeError.code, LHError.UNKNOWN_ERROR);
+      assert.strictEqual(parsedResult.runtimeError.code, LighthouseError.UNKNOWN_ERROR);
       assert.ok(parsedResult.runtimeError.message.includes(errorMsg));
     });
 

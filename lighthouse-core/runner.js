@@ -18,7 +18,7 @@ const fs = require('fs');
 const path = require('path');
 const Sentry = require('./lib/sentry.js');
 const generateReport = require('../report/generator/report-generator.js').generateReport;
-const LHError = require('./lib/lh-error.js');
+const LighthouseError = require('./lib/lh-error.js');
 const {version: lighthouseVersion} = require('../package.json');
 
 /** @typedef {import('./gather/connections/connection.js')} Connection */
@@ -357,7 +357,8 @@ class Runner {
         if (noArtifact || noRequiredTrace || noRequiredDevtoolsLog) {
           log.warn('Runner',
               `${artifactName} gatherer, required by audit ${audit.meta.id}, did not run.`);
-          throw new LHError(LHError.errors.MISSING_REQUIRED_ARTIFACT, {artifactName});
+          throw new LighthouseError(
+            LighthouseError.errors.MISSING_REQUIRED_ARTIFACT, {artifactName});
         }
 
         // If artifact was an error, output error result on behalf of audit.
@@ -375,7 +376,7 @@ class Runner {
             ` encountered an error: ${artifactError.message}`);
 
           // Create a friendlier display error and mark it as expected to avoid duplicates in Sentry
-          const error = new LHError(LHError.errors.ERRORED_REQUIRED_ARTIFACT,
+          const error = new LighthouseError(LighthouseError.errors.ERRORED_REQUIRED_ARTIFACT,
               {artifactName, errorMessage: artifactError.message});
           // @ts-expect-error Non-standard property added to Error
           error.expected = true;
@@ -435,7 +436,8 @@ class Runner {
     ];
 
     for (const possibleErrorArtifact of possibleErrorArtifacts) {
-      if (possibleErrorArtifact instanceof LHError && possibleErrorArtifact.lhrRuntimeError) {
+      // eslint-disable-next-line max-len
+      if (possibleErrorArtifact instanceof LighthouseError && possibleErrorArtifact.lhrRuntimeError) {
         const errorMessage = possibleErrorArtifact.friendlyMessage || possibleErrorArtifact.message;
 
         return {

@@ -15,7 +15,7 @@ const {taskGroups} = require('../lib/tracehouse/task-groups.js');
 const TraceProcessor = require('../lib/tracehouse/trace-processor.js');
 const {getExecutionTimingsByURL} = require('../lib/tracehouse/task-summary.js');
 const inpThresholds = require('./metrics/experimental-interaction-to-next-paint.js').defaultOptions;
-const LHError = require('../lib/lh-error.js');
+const LighthouseError = require('../lib/lh-error.js');
 
 /** @typedef {import('../computed/metrics/responsiveness.js').EventTimingEvent} EventTimingEvent */
 /** @typedef {import('../lib/tracehouse/main-thread-tasks.js').TaskNode} TaskNode */
@@ -237,8 +237,8 @@ class WorkDuringInteraction extends Audit {
     }
     // TODO: remove workaround once 103.0.5052.0 is sufficiently released.
     if (interactionEvent.name === 'FallbackTiming') {
-      throw new LHError(
-        LHError.errors.UNSUPPORTED_OLD_CHROME,
+      throw new LighthouseError(
+        LighthouseError.errors.UNSUPPORTED_OLD_CHROME,
         {featureName: 'detailed EventTiming trace events'}
       );
     }

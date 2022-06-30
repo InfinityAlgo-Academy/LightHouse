@@ -11,7 +11,7 @@ const LanternInteractive = require('./lantern-interactive.js');
 
 const NetworkMonitor = require('../../gather/driver/network-monitor.js');
 const TracingProcessor = require('../../lib/tracehouse/trace-processor.js');
-const LHError = require('../../lib/lh-error.js');
+const LighthouseError = require('../../lib/lh-error.js');
 
 const REQUIRED_QUIET_WINDOW = 5000;
 const ALLOWED_CONCURRENT_REQUESTS = 2;
@@ -133,10 +133,10 @@ class Interactive extends NavigationMetric {
       }
     }
 
-    throw new LHError(
+    throw new LighthouseError(
       cpuCandidate
-        ? LHError.errors.NO_TTI_NETWORK_IDLE_PERIOD
-        : LHError.errors.NO_TTI_CPU_IDLE_PERIOD
+        ? LighthouseError.errors.NO_TTI_NETWORK_IDLE_PERIOD
+        : LighthouseError.errors.NO_TTI_CPU_IDLE_PERIOD
     );
   }
 
@@ -158,7 +158,7 @@ class Interactive extends NavigationMetric {
     const {processedTrace, processedNavigation, networkRecords} = data;
 
     if (!processedNavigation.timestamps.domContentLoaded) {
-      throw new LHError(LHError.errors.NO_DCL);
+      throw new LighthouseError(LighthouseError.errors.NO_DCL);
     }
 
     const longTasks = TracingProcessor.getMainThreadTopLevelEvents(processedTrace)

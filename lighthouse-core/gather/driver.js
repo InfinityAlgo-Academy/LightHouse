@@ -7,7 +7,7 @@
 
 const Fetcher = require('./fetcher.js');
 const ExecutionContext = require('./driver/execution-context.js');
-const LHError = require('../lib/lh-error.js');
+const LighthouseError = require('../lib/lh-error.js');
 const {fetchResponseBodyFromCache} = require('../gather/driver/network.js');
 const EventEmitter = require('events').EventEmitter;
 
@@ -343,7 +343,8 @@ class Driver {
     let asyncTimeout;
     const timeoutPromise = new Promise((resolve, reject) => {
       if (timeout === Infinity) return;
-      asyncTimeout = setTimeout(reject, timeout, new LHError(LHError.errors.PROTOCOL_TIMEOUT, {
+      // eslint-disable-next-line max-len
+      asyncTimeout = setTimeout(reject, timeout, new LighthouseError(LighthouseError.errors.PROTOCOL_TIMEOUT, {
         protocolMethod: method,
       }));
     });

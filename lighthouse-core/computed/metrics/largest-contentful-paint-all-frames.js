@@ -11,7 +11,7 @@
 
 const makeComputedArtifact = require('../computed-artifact.js');
 const NavigationMetric = require('./navigation-metric.js');
-const LHError = require('../../lib/lh-error.js');
+const LighthouseError = require('../../lib/lh-error.js');
 
 class LargestContentfulPaintAllFrames extends NavigationMetric {
   /**
@@ -29,7 +29,7 @@ class LargestContentfulPaintAllFrames extends NavigationMetric {
   static async computeObservedMetric(data) {
     const {processedNavigation} = data;
     if (processedNavigation.timings.largestContentfulPaintAllFrames === undefined) {
-      throw new LHError(LHError.errors.NO_LCP_ALL_FRAMES);
+      throw new LighthouseError(LighthouseError.errors.NO_LCP_ALL_FRAMES);
     }
 
     return {

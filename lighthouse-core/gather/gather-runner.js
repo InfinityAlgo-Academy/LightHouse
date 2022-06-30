@@ -90,7 +90,7 @@ class GatherRunner {
         passContext.LighthouseRunWarnings.push(...warnings);
       }
     } catch (err) {
-      // If it's one of our loading-based LHErrors, we'll treat it as a page load error.
+      // If it's one of our loading-based LighthouseErrors, we'll treat it as a page load error.
       if (err.code === 'NO_FCP' || err.code === 'PAGE_HUNG') {
         return {navigationError: err};
       }

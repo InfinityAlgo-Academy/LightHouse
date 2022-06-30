@@ -19,7 +19,7 @@ import driverMock from './gather/fake-driver.js';
 import Audit from '../audits/audit.js';
 import Gatherer from '../gather/gatherers/gatherer.js';
 import assetSaver from '../lib/asset-saver.js';
-import LHError from '../lib/lh-error.js';
+import LighthouseError from '../lib/lh-error.js';
 import i18n from '../lib/i18n/i18n.js';
 import {importMock, makeMocksForGatherRunner} from './test-utils.js';
 import {getModuleDirectory, getModulePath} from '../../esm-utils.mjs';
@@ -208,7 +208,8 @@ describe('Runner', () => {
         afterPass(passContext) {
           const warning = str_(i18n.UIStrings.displayValueByteSavings, {wastedBytes: 2222});
           passContext.LighthouseRunWarnings.push(warning);
-          throw new LHError(LHError.errors.UNSUPPORTED_OLD_CHROME, {featureName: 'VRML'});
+          throw new LighthouseError(
+            LighthouseError.errors.UNSUPPORTED_OLD_CHROME, {featureName: 'VRML'});
         }
       }
       const gatherConfig = await Config.fromJson({
@@ -222,7 +223,7 @@ describe('Runner', () => {
       expect(artifacts.LighthouseRunWarnings[0]).not.toBe('string');
       expect(artifacts.LighthouseRunWarnings[0]).toBeDisplayString('Potential savings of 2 KiB');
       expect(artifacts.WarningAndErrorGatherer).toMatchObject({
-        name: 'LHError',
+        name: 'LighthouseError',
         code: 'UNSUPPORTED_OLD_CHROME',
         // eslint-disable-next-line max-len
         friendlyMessage: expect.toBeDisplayString(`This version of Chrome is too old to support 'VRML'. Use a newer version to see full results.`),
@@ -774,15 +775,15 @@ describe('Runner', () => {
   });
 
   describe('lhr.runtimeError', () => {
-    const NO_FCP = LHError.errors.NO_FCP;
+    const NO_FCP = LighthouseError.errors.NO_FCP;
     class RuntimeErrorGatherer extends Gatherer {
       afterPass() {
-        throw new LHError(NO_FCP);
+        throw new LighthouseError(NO_FCP);
       }
     }
     class RuntimeError2Gatherer extends Gatherer {
       afterPass() {
-        throw new LHError(LHError.errors.NO_SCREENSHOTS);
+        throw new LighthouseError(LighthouseError.errors.NO_SCREENSHOTS);
       }
     }
     class WarningAudit extends Audit {
@@ -836,7 +837,7 @@ describe('Runner', () => {
           firstLoad = false;
           return {mainDocumentUrl: url, warnings: []};
         } else {
-          throw new LHError(LHError.errors.PAGE_HUNG);
+          throw new LighthouseError(LighthouseError.errors.PAGE_HUNG);
         }
       });
 
@@ -851,7 +852,7 @@ describe('Runner', () => {
       expect(lhr.audits['test-audit'].errorMessage).toEqual(expect.stringContaining(NO_FCP.code));
 
       // But top-level runtimeError is the pageLoadError.
-      expect(lhr.runtimeError.code).toEqual(LHError.errors.PAGE_HUNG.code);
+      expect(lhr.runtimeError.code).toEqual(LighthouseError.errors.PAGE_HUNG.code);
       expect(lhr.runtimeError.message).toMatch(/because the page stopped responding/);
     });
   });
@@ -859,8 +860,8 @@ describe('Runner', () => {
   it('localized errors thrown from driver', async () => {
     const erroringDriver = {...driverMock,
       async connect() {
-        const err = new LHError(
-          LHError.errors.PROTOCOL_TIMEOUT,
+        const err = new LighthouseError(
+          LighthouseError.errors.PROTOCOL_TIMEOUT,
           {protocolMethod: 'Method.Failure'}
         );
         throw err;
@@ -871,7 +872,7 @@ describe('Runner', () => {
       await runGatherAndAudit(createGatherFn('https://example.com/'), {driverMock: erroringDriver, config: await Config.fromJson()});
       assert.fail('should have thrown');
     } catch (err) {
-      assert.equal(err.code, LHError.errors.PROTOCOL_TIMEOUT.code);
+      assert.equal(err.code, LighthouseError.errors.PROTOCOL_TIMEOUT.code);
       assert.ok(/^Waiting for DevTools protocol.*Method: Method.Failure/.test(err.friendlyMessage),
         'did not localize error message');
     }

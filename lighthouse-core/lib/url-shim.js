@@ -10,7 +10,7 @@
  */
 
 const {Util} = require('../util-commonjs.js');
-const LHError = require('../lib/lh-error.js');
+const LighthouseError = require('../lib/lh-error.js');
 
 /** @typedef {import('./network-request.js')} NetworkRequest */
 
@@ -260,7 +260,7 @@ class URLShim extends URL {
       // Use canonicalized URL (with trailing slashes and such)
       return new URL(url).href;
     } else {
-      throw new LHError(LHError.errors.INVALID_URL);
+      throw new LighthouseError(LighthouseError.errors.INVALID_URL);
     }
   }
 }

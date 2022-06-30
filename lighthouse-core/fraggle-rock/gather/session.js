@@ -6,7 +6,7 @@
 'use strict';
 
 const EventEmitter = require('events').EventEmitter;
-const LHError = require('../../lib/lh-error.js');
+const LighthouseError = require('../../lib/lh-error.js');
 
 // Controls how long to wait for a response after sending a DevTools protocol command.
 const DEFAULT_PROTOCOL_TIMEOUT = 30000;
@@ -87,7 +87,8 @@ class ProtocolSession extends CrdpEventEmitter {
     const timeoutPromise = new Promise((resolve, reject) => {
       if (timeoutMs === Infinity) return;
 
-      timeout = setTimeout(reject, timeoutMs, new LHError(LHError.errors.PROTOCOL_TIMEOUT, {
+      // eslint-disable-next-line max-len
+      timeout = setTimeout(reject, timeoutMs, new LighthouseError(LighthouseError.errors.PROTOCOL_TIMEOUT, {
         protocolMethod: method,
       }));
     });
