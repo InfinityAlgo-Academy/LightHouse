@@ -8,7 +8,7 @@ lighthouse-cli/test/fixtures/byte-efficiency/bundle.js
 
 coverage/**
 
-!.eslintrc.js
+!.eslintrc.cjs
 
 lighthouse-core/scripts/legacy-javascript/variants
 
