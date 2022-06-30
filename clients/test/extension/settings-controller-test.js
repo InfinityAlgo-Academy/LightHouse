@@ -5,9 +5,9 @@
  */
 'use strict';
 
-const SettingsController = require('../../extension/scripts/settings-controller.js');
-const defaultConfig = require('../../../lighthouse-core/config/default-config.js');
-const format = require('../../../shared/localization/format.js');
+import * as SettingsController from '../../extension/scripts/settings-controller.js';
+import defaultConfig from '../../../lighthouse-core/config/default-config.js';
+import * as format from '../../../shared/localization/format.js';
 
 describe('Lighthouse chrome extension SettingsController', () => {
   it('default categories should be correct', () => {

@@ -39,7 +39,6 @@ async function buildEntryPoint() {
       rollupPlugins.replace({
         '___BROWSER_BRAND___': browserBrand,
       }),
-      rollupPlugins.commonjs(),
       rollupPlugins.nodeResolve(),
       rollupPlugins.inlineFs({verbose: false}),
       rollupPlugins.terser(),

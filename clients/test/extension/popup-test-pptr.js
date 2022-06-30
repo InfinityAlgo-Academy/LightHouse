@@ -5,12 +5,11 @@
  */
 'use strict';
 
-const path = require('path');
-const puppeteer = require('puppeteer-core');
-const {getChromePath} = require('chrome-launcher');
-const {DEFAULT_CATEGORIES, STORAGE_KEYS} =
-  require('../../extension/scripts/settings-controller.js');
-const {LH_ROOT} = require('../../../root.js');
+import path from 'path';
+import puppeteer from 'puppeteer-core';
+import {getChromePath} from 'chrome-launcher';
+import {DEFAULT_CATEGORIES, STORAGE_KEYS} from '../../extension/scripts/settings-controller.js';
+import {LH_ROOT} from '../../../root.js';
 
 const lighthouseExtensionPath = path.resolve(LH_ROOT, 'dist/extension-chrome');
 

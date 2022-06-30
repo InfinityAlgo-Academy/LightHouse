@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const SettingsController = require('./settings-controller.js');
+import * as SettingsController from './settings-controller.js';
 
 const VIEWER_URL = 'https://googlechrome.github.io/lighthouse/viewer/';
 const optionsVisibleClass = 'main--options-visible';
