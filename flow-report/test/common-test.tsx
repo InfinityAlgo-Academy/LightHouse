@@ -7,7 +7,6 @@
 import jestMock from 'jest-mock';
 import {act, render} from '@testing-library/preact';
 
-// @ts-ignore: File is not under 'rootDir'
 import {timers} from '../../lighthouse-core/test/test-env/fake-timers.js';
 import {FlowStepThumbnail} from '../src/common';
 

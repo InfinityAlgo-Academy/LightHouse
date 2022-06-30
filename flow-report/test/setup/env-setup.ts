@@ -11,7 +11,6 @@ import jestMock from 'jest-mock';
 import {JSDOM} from 'jsdom';
 import * as preact from 'preact';
 
-// @ts-ignore: File is not under 'rootDir'
 import {LH_ROOT} from '../../../root.js';
 
 // These modules aren't imported correctly if these directories aren't defined to use ES modules.
