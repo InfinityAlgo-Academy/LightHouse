@@ -84,10 +84,10 @@ rsync -avh "$lh_webtests_exp_dir" "$fe_webtests_exp_dir" --exclude="OWNERS" --de
 # copy e2e tests
 lh_e2e_dir="third-party/devtools-tests/e2e/lighthouse/"
 fe_e2e_dir="$dt_dir/test/e2e/lighthouse"
-rsync -avh "$lh_e2e_dir" "$fe_e2e_dir" --exclude="OWNERS" --exclude="BUILD.gn" --delete
+rsync -avh "$lh_e2e_dir" "$fe_e2e_dir" --exclude="OWNERS" --delete
 lh_e2e_res_dir="third-party/devtools-tests/e2e/resources/lighthouse/"
 fe_e2e_res_dir="$dt_dir/test/e2e/resources/lighthouse"
-rsync -avh "$lh_e2e_res_dir" "$fe_e2e_res_dir" --exclude="OWNERS" --exclude="BUILD.gn" --delete
+rsync -avh "$lh_e2e_res_dir" "$fe_e2e_res_dir" --exclude="OWNERS" --delete
 
 echo ""
 echo "Done. To run the webtests: "

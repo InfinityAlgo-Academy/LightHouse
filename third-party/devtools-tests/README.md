@@ -9,6 +9,6 @@ See `lighthouse-core/test/chromium-web-tests/README.md` for more.
 ## Sync
 
 ```sh
-rsync -ahvz --exclude='OWNERS' --exclude='BUILD.gn' ~/src/devtools/devtools-frontend/test/e2e/lighthouse/ third-party/devtools-tests/e2e/lighthouse/
-rsync -ahvz --exclude='OWNERS' --exclude='BUILD.gn' ~/src/devtools/devtools-frontend/test/e2e/resources/lighthouse/ third-party/devtools-tests/e2e/resources/lighthouse/
+rsync -ahvz --exclude='OWNERS' ~/src/devtools/devtools-frontend/test/e2e/lighthouse/ third-party/devtools-tests/e2e/lighthouse/
+rsync -ahvz --exclude='OWNERS' ~/src/devtools/devtools-frontend/test/e2e/resources/lighthouse/ third-party/devtools-tests/e2e/resources/lighthouse/
 ```
