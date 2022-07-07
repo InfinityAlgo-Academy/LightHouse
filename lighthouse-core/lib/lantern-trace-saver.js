@@ -154,7 +154,7 @@ function convertNodeTimingsToTrace(nodeTimings) {
       ...requestData,
       decodedBodyLength: record.resourceSize,
       didFail: !!record.failed,
-      finishTime: endTime,
+      finishTime: toMicroseconds(endTime) / (1000 * 1000),
     };
 
     /** @type {LH.TraceEvent[]} */
