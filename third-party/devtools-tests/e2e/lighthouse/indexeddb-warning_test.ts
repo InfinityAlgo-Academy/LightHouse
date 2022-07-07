@@ -6,10 +6,13 @@ import {assert} from 'chai';
 
 import {waitFor} from '../../shared/helper.js';
 import {describe, it} from '../../shared/mocha-extensions.js';
-import {navigateToLighthouseTab} from '../helpers/lighthouse-helpers.js';
+import {clearSiteData, navigateToLighthouseTab, waitForStorageUsage} from '../helpers/lighthouse-helpers.js';
 
-describe('IndexedDB warning', function() {
-  this.timeout(20_000);
+describe('IndexedDB warning', async function() {
+  beforeEach(async function() {
+    // e2e tests in application/ create websql and indexeddb items and don't clean up after themselves
+    await clearSiteData();
+  });
 
   it('displays when important data may affect performance', async () => {
     await navigateToLighthouseTab('empty.html');
@@ -19,6 +22,8 @@ describe('IndexedDB warning', function() {
     assert.strictEqual(warningText1, '');
 
     await navigateToLighthouseTab('lighthouse/lighthouse-storage.html');
+    // Wait for storage state to lazily update
+    await waitForStorageUsage(quota => quota > 0);
 
     warningElem = await waitFor('.lighthouse-warning-text:not(.hidden)');
     const expected =

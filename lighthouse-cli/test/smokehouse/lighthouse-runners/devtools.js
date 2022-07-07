@@ -21,10 +21,10 @@ const devtoolsDir =
  * @param {string[]} logs
  * @param {string} command
  * @param {string[]} args
+ * @return {Promise<boolean>} true if command exited successfully.
  */
-async function spawnAndLog(logs, command, args) {
-  /** @type {Promise<void>} */
-  const promise = new Promise((resolve) => {
+function spawnAndLog(logs, command, args) {
+  return new Promise((resolve) => {
     const spawnHandle = spawn(command, args);
     spawnHandle.on('close', code => {
       if (code) {
@@ -32,7 +32,7 @@ async function spawnAndLog(logs, command, args) {
       } else {
         logs.push('[SUCCESS] Command exited with code: 0\n');
       }
-      resolve();
+      resolve(code === 0);
     });
     spawnHandle.on('error', (error) => {
       logs.push(`ERROR: ${error.toString()}`);
@@ -48,21 +48,22 @@ async function spawnAndLog(logs, command, args) {
       logs.push(`STDERR: ${data}`);
     });
   });
-  await promise;
 }
 
-/** @type {Promise<void>} */
+/** @type {Promise<boolean>} */
 let buildDevtoolsPromise;
 /**
- * @param {string[]} logs
  * Download/pull latest DevTools, build Lighthouse for DevTools, roll to DevTools, and build DevTools.
+ * @param {string[]} logs
  */
 async function buildDevtools(logs) {
-  if (process.env.CI) return;
+  if (process.env.CI) return true;
 
   process.env.DEVTOOLS_PATH = devtoolsDir;
-  await spawnAndLog(logs, 'bash', ['lighthouse-core/test/chromium-web-tests/download-devtools.sh']);
-  await spawnAndLog(logs, 'bash', ['lighthouse-core/test/chromium-web-tests/roll-devtools.sh']);
+  const success =
+    await spawnAndLog(logs, 'bash', ['lighthouse-core/test/devtools-tests/download-devtools.sh']) &&
+    await spawnAndLog(logs, 'bash', ['lighthouse-core/test/devtools-tests/roll-devtools.sh']);
+  return success;
 }
 
 /**
@@ -80,7 +81,10 @@ async function runLighthouse(url, configJson, testRunnerOptions = {}) {
   const logs = [];
 
   if (!buildDevtoolsPromise) buildDevtoolsPromise = buildDevtools(logs);
-  await buildDevtoolsPromise;
+  if (!await buildDevtoolsPromise) {
+    const log = logs.join('') + '\n';
+    throw new Error(`failed to build devtools:\n${log}`);
+  }
 
   const outputDir = fs.mkdtempSync(os.tmpdir() + '/lh-smoke-cdt-runner-');
   const chromeFlags = [

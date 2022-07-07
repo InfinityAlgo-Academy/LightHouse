@@ -7,7 +7,7 @@
 ##
 
 # Prints to stdout text that, when it changes, indicates that the devtools tests
-# should update its dependencies (devtools frontend, content shell, blink tools).
+# should rebuild the devtools frontend.
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 LH_ROOT="$SCRIPT_DIR/../.."
@@ -15,6 +15,5 @@ LH_ROOT="$SCRIPT_DIR/../.."
 cd "$LH_ROOT"
 bash .github/scripts/print-devtools-relevant-commits.sh
 md5 \
-  lighthouse-core/test/chromium-web-tests/* \
-  third-party/chromium-webtests/webtests/http/tests/devtools/lighthouse/**/*.* \
+  lighthouse-core/test/devtools-tests/* \
   third-party/devtools-tests/e2e/**/*.*

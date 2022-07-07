@@ -8,7 +8,6 @@ on:
 env:
   DEPOT_TOOLS_PATH: ${{ github.workspace }}/depot-tools
   DEVTOOLS_PATH: ${{ github.workspace }}/devtools-frontend
-  BLINK_TOOLS_PATH: ${{ github.workspace }}/blink_tools
 
 jobs:
   build:
@@ -35,15 +34,13 @@ jobs:
     # Caches are invalidated at least once a week, so that's the max time between testing
     # with the latest dependencies. Any commit to the DevTools repo touching Lighthouse
     # code will invalidate the cache sooner.
-    - name: Cache depot tools, devtools, blink tools and content shell
+    - name: Cache depot tools and devtools
       id: devtools-cache
       uses: actions/cache@v3
       with:
         path: |
           ${{ env.DEPOT_TOOLS_PATH }}
           ${{ env.DEVTOOLS_PATH }}
-          ${{ env.BLINK_TOOLS_PATH }}
-          ${{ github.workspace }}/lighthouse/.tmp/chromium-web-tests/content-shells
           ${{ github.workspace }}/.gclient
           ${{ github.workspace }}/.gclient_entries
         # This hash key changes:
@@ -52,8 +49,8 @@ jobs:
         # 3) every change to file in Lighthouse repo important to running these tests.
         #
         # The number is how many times this hash key was manually updated to break the cache.
-        key: ${{ runner.os }}-7-${{ env.WEEK_OF_THE_YEAR }}-${{ hashFiles('cdt-test-hash.txt') }}
-        restore-keys: ${{ runner.os }}-7
+        key: ${{ runner.os }}-8-${{ env.WEEK_OF_THE_YEAR }}-${{ hashFiles('cdt-test-hash.txt') }}
+        restore-keys: ${{ runner.os }}-8
     - name: Set GHA_DEVTOOLS_CACHE_HIT
       if: steps.devtools-cache.outputs.cache-hit == 'true'
       run: echo "GHA_DEVTOOLS_CACHE_HIT=1" >> $GITHUB_ENV
@@ -62,12 +59,12 @@ jobs:
       working-directory: ${{ github.workspace }}/lighthouse
 
     - name: Download depot tools
-      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/chromium-web-tests/download-depot-tools.sh
+      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/devtools-tests/download-depot-tools.sh
     - name: Download DevTools Frontend
-      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/chromium-web-tests/download-devtools.sh
+      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/devtools-tests/download-devtools.sh
 
     - name: Roll Lighthouse + build DevTools
-      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/chromium-web-tests/roll-devtools.sh
+      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/devtools-tests/roll-devtools.sh
 
     - name: Cache build artifacts
       id: devtools-build-artifacts
@@ -101,7 +98,7 @@ jobs:
       run: echo "$DEPOT_TOOLS_PATH" >> $GITHUB_PATH
     # For vpython.
     - name: Download depot tools
-      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/chromium-web-tests/download-depot-tools.sh
+      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/devtools-tests/download-depot-tools.sh
 
     - name: Load build artifacts
       id: devtools-build-artifacts
@@ -115,49 +112,6 @@ jobs:
 
     - name: Run e2e tests
       run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/devtools-tests/run-e2e-tests.sh
-
-  web-tests:
-    needs: [build]
-    runs-on: macos-latest
-
-    steps:
-    - name: git clone
-      uses: actions/checkout@v2
-      with:
-        path: lighthouse
-
-    - name: Use Node.js 14.x
-      uses: actions/setup-node@v1
-      with:
-        node-version: 14.x
-
-    - name: Load build artifacts
-      id: devtools-build-artifacts
-      uses: actions/cache@v3
-      with:
-        path: |
-          ${{ env.DEVTOOLS_PATH }}
-          ${{ github.workspace }}/.gclient
-          ${{ github.workspace }}/.gclient_entries
-        key: devtools-build-artifacts-${{ github.run_id }}
-
-    - name: Download Blink Tools
-      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/chromium-web-tests/download-blink-tools.sh
-    - name: Download Content Shell
-      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/chromium-web-tests/download-content-shell.sh
-
-    - name: Install python deps
-      run: python3 -m pip install six requests
-
-    - name: Run Web Tests
-      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/chromium-web-tests/run-web-tests.sh
-
-    - name: Upload results
-      uses: actions/upload-artifact@v2
-      if: failure()
-      with:
-        name: results
-        path: ${{ github.workspace }}/lighthouse/.tmp/layout-test-results
 
   smoke:
     needs: [build]
@@ -189,11 +143,6 @@ jobs:
           ${{ github.workspace }}/.gclient
           ${{ github.workspace }}/.gclient_entries
         key: devtools-build-artifacts-${{ github.run_id }}
-
-    - name: Download Blink Tools
-      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/chromium-web-tests/download-blink-tools.sh
-    - name: Download Content Shell
-      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/chromium-web-tests/download-content-shell.sh
 
     - run: yarn --frozen-lockfile --network-timeout 1000000
       working-directory: ${{ github.workspace }}/lighthouse

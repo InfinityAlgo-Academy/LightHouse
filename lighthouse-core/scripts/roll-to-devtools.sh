@@ -73,14 +73,6 @@ fe_locales_dir="$fe_lh_dir/locales"
 rsync -avh "$lh_locales_dir" "$fe_locales_dir" --exclude="*.ctc.json" --delete
 echo -e "$check Locale JSON files copied."
 
-# copy webtests
-lh_webtests_dir="third-party/chromium-webtests/webtests/http/tests/devtools/lighthouse/"
-fe_webtests_dir="$dt_dir/test/webtests/http/tests/devtools/lighthouse"
-rsync -avh "$lh_webtests_dir" "$fe_webtests_dir" --exclude="OWNERS" --delete
-lh_webtests_exp_dir="third-party/chromium-webtests/webtests/platform/generic/http/tests/devtools/lighthouse/"
-fe_webtests_exp_dir="$dt_dir/test/webtests/platform/generic/http/tests/devtools/lighthouse"
-rsync -avh "$lh_webtests_exp_dir" "$fe_webtests_exp_dir" --exclude="OWNERS" --delete
-
 # copy e2e tests
 lh_e2e_dir="third-party/devtools-tests/e2e/lighthouse/"
 fe_e2e_dir="$dt_dir/test/e2e/lighthouse"
@@ -90,5 +82,5 @@ fe_e2e_res_dir="$dt_dir/test/e2e/resources/lighthouse"
 rsync -avh "$lh_e2e_res_dir" "$fe_e2e_res_dir" --exclude="OWNERS" --delete
 
 echo ""
-echo "Done. To run the webtests: "
+echo "Done. To run the e2e tests: "
 echo "    DEVTOOLS_PATH=\"$dt_dir\" yarn test-devtools"

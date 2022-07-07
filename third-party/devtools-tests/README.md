@@ -4,7 +4,7 @@ These tests are rolled into the Chromium DevTools Frontend codebase. They "belon
 
 Run with `sh lighthouse-core/test/devtools-tests/test-locally.sh`.
 
-See `lighthouse-core/test/chromium-web-tests/README.md` for more.
+See `lighthouse-core/test/devtools-tests/README.md` for more.
 
 ## Sync
 

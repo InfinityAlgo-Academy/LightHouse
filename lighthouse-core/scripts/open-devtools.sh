@@ -23,7 +23,7 @@ fi
 
 # If using the default .tmp devtools checkout, make sure it's up to date first.
 if [ -z "${DEVTOOLS_PATH:-}" ]; then
-  source "$LH_ROOT/lighthouse-core/test/chromium-web-tests/setup.sh"
+  source "$LH_ROOT/lighthouse-core/test/devtools-tests/setup.sh"
 fi
 
 echo "CHROME_PATH: $CHROME_PATH"

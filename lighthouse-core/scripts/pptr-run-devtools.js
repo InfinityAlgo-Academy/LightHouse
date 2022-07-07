@@ -14,7 +14,7 @@
  *    yarn run-devtools --chrome-flags=--custom-devtools-frontend=file://$HOME/src/devtools/devtools-frontend/out/Default/gen/front_end
  *
  * Or with the DevTools in .tmp:
- *   bash lighthouse-core/test/chromium-web-tests/setup.sh
+ *   bash lighthouse-core/test/devtools-tests/setup.sh
  *   yarn run-devtools --chrome-flags=--custom-devtools-frontend=file://$PWD/.tmp/chromium-web-tests/devtools/devtools-frontend/out/Default/gen/front_end
  *
  * URL list file: yarn run-devtools < path/to/urls.txt
