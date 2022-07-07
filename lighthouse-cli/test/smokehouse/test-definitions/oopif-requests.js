@@ -27,8 +27,8 @@ const config = {
     // to complete.
     maxWaitForLoad: 180000,
   },
-  passes: [{
-    passName: 'defaultPass',
+  navigations: [{
+    id: 'default',
     // CI machines are pretty weak which lead to many more long tasks than normal.
     // Reduce our requirement for CPU quiet.
     cpuQuietThresholdMs: 500,

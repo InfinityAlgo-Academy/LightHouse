@@ -53,7 +53,7 @@ const DEFAULT_RETRIES = 0;
 async function runSmokehouse(smokeTestDefns, smokehouseOptions) {
   const {
     isDebug,
-    useFraggleRock,
+    useLegacyNavigation,
     jobs = DEFAULT_CONCURRENT_RUNS,
     retries = DEFAULT_RETRIES,
     lighthouseRunner = Object.assign(cliLighthouseRunner, {runnerName: 'cli'}),
@@ -65,7 +65,13 @@ async function runSmokehouse(smokeTestDefns, smokehouseOptions) {
   // Run each testDefn in parallel based on the concurrencyLimit.
   const concurrentMapper = new ConcurrentMapper();
 
-  const testOptions = {isDebug, useFraggleRock, retries, lighthouseRunner, takeNetworkRequestUrls};
+  const testOptions = {
+    isDebug,
+    useLegacyNavigation,
+    retries,
+    lighthouseRunner,
+    takeNetworkRequestUrls,
+  };
   const smokePromises = smokeTestDefns.map(testDefn => {
     // If defn is set to `runSerially`, we'll run it in succession with other tests, not parallel.
     const concurrency = testDefn.runSerially ? 1 : jobs;
@@ -119,14 +125,34 @@ function purpleify(str) {
 }
 
 /**
+ * @param {LH.Config.Json=} configJson
+ * @return {LH.Config.Json|undefined}
+ */
+function convertToLegacyConfig(configJson) {
+  if (!configJson) return configJson;
+  if (!configJson.navigations) return configJson;
+
+  return {
+    ...configJson,
+    passes: configJson.navigations.map(nav => ({...nav, passName: nav.id.concat('Pass')})),
+  };
+}
+
+/**
  * Run Lighthouse in the selected runner.
  * @param {Smokehouse.TestDfn} smokeTestDefn
- * @param {{isDebug?: boolean, useFraggleRock?: boolean, retries: number, lighthouseRunner: Smokehouse.LighthouseRunner, takeNetworkRequestUrls?: () => string[]}} testOptions
+ * @param {{isDebug?: boolean, useLegacyNavigation?: boolean, retries: number, lighthouseRunner: Smokehouse.LighthouseRunner, takeNetworkRequestUrls?: () => string[]}} testOptions
  * @return {Promise<SmokehouseResult>}
  */
 async function runSmokeTest(smokeTestDefn, testOptions) {
-  const {id, config: configJson, expectations} = smokeTestDefn;
-  const {lighthouseRunner, retries, isDebug, useFraggleRock, takeNetworkRequestUrls} = testOptions;
+  const {id, expectations} = smokeTestDefn;
+  const {
+    lighthouseRunner,
+    retries,
+    isDebug,
+    useLegacyNavigation,
+    takeNetworkRequestUrls,
+  } = testOptions;
   const requestedUrl = expectations.lhr.requestedUrl;
 
   console.log(`${purpleify(id)} smoketest starting…`);
@@ -143,10 +169,15 @@ async function runSmokeTest(smokeTestDefn, testOptions) {
       bufferedConsole.log(`  Retrying run (${i} out of ${retries} retries)…`);
     }
 
+    let configJson = smokeTestDefn.config;
+    if (useLegacyNavigation) {
+      configJson = convertToLegacyConfig(configJson);
+    }
+
     // Run Lighthouse.
     try {
       result = {
-        ...await lighthouseRunner(requestedUrl, configJson, {isDebug, useFraggleRock}),
+        ...await lighthouseRunner(requestedUrl, configJson, {isDebug, useLegacyNavigation}),
         networkRequests: takeNetworkRequestUrls ? takeNetworkRequestUrls() : undefined,
       };
     } catch (e) {
@@ -161,7 +192,7 @@ async function runSmokeTest(smokeTestDefn, testOptions) {
     report = getAssertionReport(result, expectations, {
       runner: lighthouseRunner.runnerName,
       isDebug,
-      useFraggleRock,
+      useLegacyNavigation,
     });
 
     runs.push({

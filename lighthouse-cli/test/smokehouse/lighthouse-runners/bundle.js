@@ -47,7 +47,7 @@ if (!isMainThread && parentPort) {
 /**
  * @param {string} url
  * @param {LH.Config.Json|undefined} configJson
- * @param {{isDebug?: boolean, useFraggleRock?: boolean}} testRunnerOptions
+ * @param {{isDebug?: boolean, useLegacyNavigation?: boolean}} testRunnerOptions
  * @return {Promise<{lhr: LH.Result, artifacts: LH.Artifacts}>}
  */
 async function runBundledLighthouse(url, configJson, testRunnerOptions) {
@@ -80,15 +80,15 @@ async function runBundledLighthouse(url, configJson, testRunnerOptions) {
   try {
     const logLevel = testRunnerOptions.isDebug ? 'info' : undefined;
     let runnerResult;
-    if (testRunnerOptions.useFraggleRock) {
+    if (testRunnerOptions.useLegacyNavigation) {
+      const connection = new ChromeProtocol(port);
+      runnerResult =
+        await lighthouse.legacyNavigation(url, {port, logLevel}, configJson, connection);
+    } else {
       // Puppeteer is not included in the bundle, we must create the page here.
       const browser = await puppeteer.connect({browserURL: `http://localhost:${port}`});
       const page = await browser.newPage();
       runnerResult = await lighthouse(url, {port, logLevel}, configJson, page);
-    } else {
-      const connection = new ChromeProtocol(port);
-      runnerResult =
-        await lighthouse.legacyNavigation(url, {port, logLevel}, configJson, connection);
     }
     if (!runnerResult) throw new Error('No runnerResult');
 
@@ -106,7 +106,7 @@ async function runBundledLighthouse(url, configJson, testRunnerOptions) {
  * Launch Chrome and do a full Lighthouse run via the Lighthouse DevTools bundle.
  * @param {string} url
  * @param {LH.Config.Json=} configJson
- * @param {{isDebug?: boolean, useFraggleRock?: boolean}=} testRunnerOptions
+ * @param {{isDebug?: boolean, useLegacyNavigation?: boolean}=} testRunnerOptions
  * @return {Promise<{lhr: LH.Result, artifacts: LH.Artifacts, log: string}>}
  */
 async function runLighthouse(url, configJson, testRunnerOptions = {}) {

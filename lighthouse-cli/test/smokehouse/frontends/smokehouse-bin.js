@@ -135,10 +135,10 @@ async function begin() {
         default: false,
         describe: 'Save test artifacts and output verbose logs',
       },
-      'fraggle-rock': {
+      'legacy-navigation': {
         type: 'boolean',
         default: false,
-        describe: 'Use the new Fraggle Rock runner',
+        describe: 'Use the legacy navigation runner',
       },
       'jobs': {
         type: 'number',
@@ -216,7 +216,7 @@ async function begin() {
       jobs,
       retries,
       isDebug: argv.debug,
-      useFraggleRock: argv.fraggleRock,
+      useLegacyNavigation: argv.legacyNavigation,
       lighthouseRunner: runLighthouse,
       takeNetworkRequestUrls,
     };

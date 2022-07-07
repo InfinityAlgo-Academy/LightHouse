@@ -28,9 +28,9 @@ jobs:
     # Fail if any changes were written to source files.
     - run: git diff --exit-code
 
-  package-test-fr:
+  package-test-legacy:
     runs-on: ubuntu-latest
-    name: Package Test Fraggle Rock
+    name: Package Test Legacy Navigation
 
     steps:
     - name: git clone
@@ -45,7 +45,7 @@ jobs:
     - run: yarn build-report
     - run: sudo apt-get install xvfb
 
-    - run: xvfb-run --auto-servernum bash $GITHUB_WORKSPACE/lighthouse-core/scripts/release/package-test.sh --fraggle-rock
+    - run: xvfb-run --auto-servernum bash $GITHUB_WORKSPACE/lighthouse-core/scripts/release/package-test.sh --legacy-navigation
 
     # Fail if any changes were written to source files.
     - run: git diff --exit-code

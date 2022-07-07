@@ -115,7 +115,7 @@ jobs:
         name: Smokehouse (windows)
         path: .tmp/smokehouse-ci-failures/
 
-  smoke-fr:
+  smoke-legacy:
     strategy:
       matrix:
         smoke-test-shard: [1, 2, 3]
@@ -126,7 +126,7 @@ jobs:
       # The total number of shards. Set dynamically when length of *single* matrix variable is
       # computable. See https://github.community/t/get-length-of-strategy-matrix-or-get-all-matrix-options/18342
       SHARD_TOTAL: 3
-    name: Fraggle Rock ${{ matrix.smoke-test-shard }}/3
+    name: Legacy Navigation ${{ matrix.smoke-test-shard }}/3
 
     steps:
     - name: git clone
@@ -150,7 +150,7 @@ jobs:
 
     - run: sudo apt-get install xvfb
     - name: yarn smoke --fraggle-rock
-      run: xvfb-run --auto-servernum yarn smoke --debug --fraggle-rock -j=2 --retries=2 --shard=${{ matrix.smoke-test-shard }}/$SHARD_TOTAL
+      run: xvfb-run --auto-servernum yarn smoke --debug --legacy-navigation -j=2 --retries=2 --shard=${{ matrix.smoke-test-shard }}/$SHARD_TOTAL
 
     # Fail if any changes were written to source files.
     - run: git diff --exit-code
@@ -159,7 +159,7 @@ jobs:
       if: failure()
       uses: actions/upload-artifact@v1
       with:
-        name: Smokehouse (fr)
+        name: Smokehouse (legacy)
         path: .tmp/smokehouse-ci-failures/
 
   smoke-bundle:
@@ -209,7 +209,7 @@ jobs:
         name: Smokehouse (bundled)
         path: .tmp/smokehouse-ci-failures/
 
-  smoke-bundle-fr:
+  smoke-bundle-legacy:
     strategy:
       matrix:
         smoke-test-shard: [1, 2, 3]
@@ -220,7 +220,7 @@ jobs:
       # The total number of shards. Set dynamically when length of *single* matrix variable is
       # computable. See https://github.community/t/get-length-of-strategy-matrix-or-get-all-matrix-options/18342
       SHARD_TOTAL: 3
-    name: Bundled Fraggle Rock ${{ matrix.smoke-test-shard }}/3
+    name: Bundled Legacy Navigation ${{ matrix.smoke-test-shard }}/3
 
     steps:
     - name: git clone
@@ -244,7 +244,7 @@ jobs:
 
     - run: sudo apt-get install xvfb
     - name: yarn test-bundle
-      run: xvfb-run --auto-servernum yarn test-bundle --fraggle-rock --shard=${{ matrix.smoke-test-shard }}/$SHARD_TOTAL
+      run: xvfb-run --auto-servernum yarn test-bundle --legacy-navigation --shard=${{ matrix.smoke-test-shard }}/$SHARD_TOTAL
 
     # Fail if any changes were written to source files.
     - run: git diff --exit-code
