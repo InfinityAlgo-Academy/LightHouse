@@ -246,7 +246,6 @@ Useful documentation, examples, and recipes to get you started.
 
 **Recipes**
 
-- [gulp](docs/recipes/gulp) - helpful for CI integration
 - [Plugin](./docs/recipes/lighthouse-plugin-example) - example Lighthouse plugin
 - [Custom Audit example](./docs/recipes/custom-audit) - extend Lighthouse, run your own audits
 
