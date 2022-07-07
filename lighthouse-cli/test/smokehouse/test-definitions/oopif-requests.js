@@ -45,6 +45,9 @@ const expectations = {
     finalUrl: 'http://localhost:10200/oopif-requests.html',
     audits: {
       'network-requests': {
+        // Multiple session attach handling fixed in M105
+        // https://chromiumdash.appspot.com/commit/f42337f1d623ec913397610ccf01b5526e9e919d
+        _minChromiumVersion: '105',
         details: {
           items: {
             // We want to make sure we are finding the iframe's requests (paulirish.com) *AND*

@@ -49,6 +49,9 @@ const expectations = {
       'network-requests': {
         details: {
           items: {
+            // Multiple session attach handling fixed in M105
+            // https://chromiumdash.appspot.com/commit/f42337f1d623ec913397610ccf01b5526e9e919d
+            _minChromiumVersion: '105',
             _includes: [
               {url: 'http://localhost:10200/oopif-scripts.html'},
               {url: 'http://localhost:10200/oopif-simple-page.html'},

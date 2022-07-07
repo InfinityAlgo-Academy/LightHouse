@@ -73,7 +73,6 @@ jobs:
         name: Smokehouse (ubuntu; chrome ${{ matrix.chrome-channel }})
         path: .tmp/smokehouse-ci-failures/
 
-  # Only run smoke tests for windows against stable chrome.
   smoke-windows:
     strategy:
       matrix:
@@ -91,6 +90,13 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 14.x
+
+    - name: Define ToT chrome path
+      run: echo "CHROME_PATH=${env:GITHUB_WORKSPACE}\chrome-win\chrome.exe" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
+
+    # Chrome Stable is already installed by default.
+    - name: Install Chrome ToT
+      run: bash ${env:GITHUB_WORKSPACE}\lighthouse-core\scripts\download-chrome.sh
 
     - run: yarn install --frozen-lockfile --network-timeout 1000000
     - run: yarn build-report
@@ -135,11 +141,16 @@ jobs:
     - run: yarn build-report
     - run: yarn reset-link
 
+    - name: Define ToT chrome path
+      run: echo "CHROME_PATH=/home/runner/chrome-linux-tot/chrome" >> $GITHUB_ENV
+
+    - name: Install Chrome ToT
+      working-directory: /home/runner
+      run: bash $GITHUB_WORKSPACE/lighthouse-core/scripts/download-chrome.sh && mv chrome-linux chrome-linux-tot
+
     - run: sudo apt-get install xvfb
     - name: yarn smoke --fraggle-rock
-      # Disabled to fix CI while we investigate what the bug is.
-      #   perf-diagnostics-third-party, oopif-requests, oopif-scripts
-      run: xvfb-run --auto-servernum yarn smoke --debug --fraggle-rock -j=2 --retries=2 --shard=${{ matrix.smoke-test-shard }}/$SHARD_TOTAL --invert-match perf-diagnostics-third-party oopif-requests oopif-scripts
+      run: xvfb-run --auto-servernum yarn smoke --debug --fraggle-rock -j=2 --retries=2 --shard=${{ matrix.smoke-test-shard }}/$SHARD_TOTAL
 
     # Fail if any changes were written to source files.
     - run: git diff --exit-code
@@ -176,6 +187,13 @@ jobs:
     - run: yarn install --frozen-lockfile --network-timeout 1000000
     - run: yarn build-report
     - run: yarn build-devtools
+
+    - name: Define ToT chrome path
+      run: echo "CHROME_PATH=/home/runner/chrome-linux-tot/chrome" >> $GITHUB_ENV
+
+    - name: Install Chrome ToT
+      working-directory: /home/runner
+      run: bash $GITHUB_WORKSPACE/lighthouse-core/scripts/download-chrome.sh && mv chrome-linux chrome-linux-tot
 
     - run: sudo apt-get install xvfb
     - name: yarn test-bundle
@@ -217,11 +235,16 @@ jobs:
     - run: yarn build-report
     - run: yarn build-devtools
 
+    - name: Define ToT chrome path
+      run: echo "CHROME_PATH=/home/runner/chrome-linux-tot/chrome" >> $GITHUB_ENV
+
+    - name: Install Chrome ToT
+      working-directory: /home/runner
+      run: bash $GITHUB_WORKSPACE/lighthouse-core/scripts/download-chrome.sh && mv chrome-linux chrome-linux-tot
+
     - run: sudo apt-get install xvfb
     - name: yarn test-bundle
-      # Disabled to fix CI while we investigate what the bug is.
-      #   perf-diagnostics-third-party, oopif-requests, oopif-scripts
-      run: xvfb-run --auto-servernum yarn test-bundle --fraggle-rock --shard=${{ matrix.smoke-test-shard }}/$SHARD_TOTAL --invert-match perf-diagnostics-third-party oopif-requests oopif-scripts
+      run: xvfb-run --auto-servernum yarn test-bundle --fraggle-rock --shard=${{ matrix.smoke-test-shard }}/$SHARD_TOTAL
 
     # Fail if any changes were written to source files.
     - run: git diff --exit-code

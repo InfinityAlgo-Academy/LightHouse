@@ -28,10 +28,12 @@ const expectations = {
             {
               product: 'YouTube Embedded Player (Video)',
               blockingTime: 0, // Note: Only 0 if the iframe was out-of-process
-              transferSize: '>400000', // Transfer size is imprecise.
               subItems: {
                 type: 'subitems',
                 items: {
+                  // Multiple session attach handling fixed in M105
+                  // https://chromiumdash.appspot.com/commit/f42337f1d623ec913397610ccf01b5526e9e919d
+                  _minChromiumVersion: '105',
                   length: '>5', // We don't care exactly how many it has, just ensure we surface the subresources.
                 },
               },

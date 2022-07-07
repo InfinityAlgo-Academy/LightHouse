@@ -41,7 +41,7 @@ class Driver {
    * @private
    * Used to save network and lifecycle protocol traffic. Just Page and Network are needed.
    */
-  _devtoolsLog = new DevtoolsMessageLog(/^(Page|Network)\./);
+  _devtoolsLog = new DevtoolsMessageLog(/^(Page|Network|Target|Runtime)\./);
 
   /**
    * @private
