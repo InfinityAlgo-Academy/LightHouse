@@ -190,6 +190,10 @@ function getTestFiles() {
       allTestFiles.filter((file) => filterFilePatterns.some(pattern => file.includes(pattern))) :
       allTestFiles
   ).map(testPath => path.relative(process.cwd(), testPath));
+  // Get us back to forward slashes (b/c of path.relative above).
+  if (process.platform === 'win32') {
+    filteredTests = filteredTests.map(testPath => testPath.replace(/\\/g, '/'));
+  }
 
   if (argv.onlyFailures) {
     const failedTests = getFailedTests();
@@ -288,6 +292,17 @@ function runMochaCLI(tests) {
     ...baseArgs,
     ...tests,
   ];
+
+  // Limit on windows is 8192 characters. This includes the invocation of the shell program
+  // (typically `C:\Windows\system32\cmd.exe /d /s /c "npx mocha ..."`), which we can't account
+  // for simply. Instead, use a limit of 8000.
+  if (process.platform === 'win32' && [file, ...args].join(' ').length > 8000) {
+    const halfPoint = Math.floor(tests.length / 2);
+    runMochaCLI(tests.slice(0, halfPoint));
+    runMochaCLI(tests.slice(halfPoint));
+    return;
+  }
+
   console.log(
     `Running command: ${argv.update ? 'SNAPSHOT_UPDATE=1 ' : ''}${file} ${args.join(' ')}`);
   try {
@@ -300,6 +315,7 @@ function runMochaCLI(tests) {
         LH_FAILED_TESTS_FILE: `${failedTestsDir}/output-${numberMochaInvocations}.json`,
       },
       stdio: 'inherit',
+      shell: process.platform === 'win32',
     });
   } catch {
     if (argv.bail) {

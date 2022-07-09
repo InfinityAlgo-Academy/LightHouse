@@ -282,9 +282,7 @@ function getURLArtifactFromDevtoolsLog(devtoolsLog) {
  * @return {Promise<Record<string, Mock<any, any>>>}
  */
 async function importMock(modulePath, importMeta) {
-  const dir = path.dirname(url.fileURLToPath(importMeta.url));
-  modulePath = path.resolve(dir, modulePath);
-  const mock = await import(modulePath);
+  const mock = await import(new URL(modulePath, importMeta.url).href);
   if (!Object.keys(mock).some(key => mock[key]?.mock)) {
     throw new Error(`${modulePath} was not mocked!`);
   }
